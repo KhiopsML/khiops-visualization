@@ -1,0 +1,31 @@
+@import "khiops-library/src/lib/styles/theme.scss";
+
+#tree-select-comp {
+    overflow: auto;
+	padding: 1em 0;
+	mat-icon {
+		margin-right: 0.4em;
+		font-size: 1.4em;
+	}
+
+	// .tree-node {
+	// 	mat-icon {
+	// 		color: $yellowMain;
+	// 	}
+	// }
+
+	// .tree-leaf {
+	// 	mat-icon {
+	// 		// color: darken($yellowMain, 20%);
+	// 		color: mat-color($primary);
+	// 	}
+	// }
+
+	span {
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		// max-width: 200px;
+		overflow: hidden;
+	}
+
+}

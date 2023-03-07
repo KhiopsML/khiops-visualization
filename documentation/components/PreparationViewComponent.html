@@ -1,0 +1,1865 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>visualization-component documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">visualization-component documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li
+  >
+  PreparationViewComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/khiops-visualization/components/preparation-view/preparation-view.component.ts</code>
+</p>
+
+
+
+    <p class="comment">
+        <h3>Extends</h3>
+    </p>
+    <p class="comment">
+                <code><a href="../interfaces/T.html" target="_self" >SelectableTabComponent</a></code>
+    </p>
+
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-preparation-view</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./preparation-view.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./preparation-view.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#appDatas" >appDatas</a>
+                            </li>
+                            <li>
+                                <a href="#appVariableGraphDetails" >appVariableGraphDetails</a>
+                            </li>
+                            <li>
+                                <a href="#currentIntervalDatas" >currentIntervalDatas</a>
+                            </li>
+                            <li>
+                                <a href="#distributionSelectedBarIndex" >distributionSelectedBarIndex</a>
+                            </li>
+                            <li>
+                                <a href="#informationsDatas" >informationsDatas</a>
+                            </li>
+                            <li>
+                                <a href="#isRegressionOrExplanatoryAnalysis" >isRegressionOrExplanatoryAnalysis</a>
+                            </li>
+                            <li>
+                                <a href="#matrixRegSelectedCell" >matrixRegSelectedCell</a>
+                            </li>
+                            <li>
+                                <a href="#preparation2dDatas" >preparation2dDatas</a>
+                            </li>
+                            <li>
+                                <a href="#preparationDatas" >preparationDatas</a>
+                            </li>
+                            <li>
+                                <a href="#sizes" >sizes</a>
+                            </li>
+                            <li>
+                                <a href="#summaryDatas" >summaryDatas</a>
+                            </li>
+                            <li>
+                                <a href="#tabConfig" >tabConfig</a>
+                            </li>
+                            <li>
+                                <a href="#tabIndex" >tabIndex</a>
+                            </li>
+                            <li>
+                                <a href="#targetVariableStatsDatas" >targetVariableStatsDatas</a>
+                            </li>
+                            <li>
+                                <a href="#targetVariableStatsInformations" >targetVariableStatsInformations</a>
+                            </li>
+                            <li>
+                                <a href="#variablesDatas" >variablesDatas</a>
+                            </li>
+                            <li>
+                                <a href="#variablesDisplayedColumns" >variablesDisplayedColumns</a>
+                            </li>
+                            <li>
+                                <a href="#loadingView" >loadingView</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onSelectListItemChanged" >onSelectListItemChanged</a>
+                            </li>
+                            <li>
+                                <a href="#onShowLevelDistributionGraph" >onShowLevelDistributionGraph</a>
+                            </li>
+                            <li>
+                                <a href="#onSplitDragEnd" >onSplitDragEnd</a>
+                            </li>
+                            <li>
+                                <a href="#loaded" >loaded</a>
+                            </li>
+                            <li>
+                                <a href="#loadView" >loadView</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnChanges" >ngOnChanges</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#preparationSource" >preparationSource</a>
+                            </li>
+                            <li>
+                                <a href="#selectedTab" >selectedTab</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(preparationDatasService: <a href="../injectables/PreparationDatasService.html" target="_self">PreparationDatasService</a>, translate: <a href="../interfaces/T.html" target="_self">TranslateService</a>, khiopsLibraryService: <a href="../injectables/KhiopsLibraryService.html" target="_self">KhiopsLibraryService</a>, evaluationDatasService: <a href="../injectables/EvaluationDatasService.html" target="_self">EvaluationDatasService</a>, dialog: MatDialog, preparation2dDatasService: <a href="../injectables/Preparation2dDatasService.html" target="_self">Preparation2dDatasService</a>, appService: <a href="../injectables/AppService.html" target="_self">AppService</a>, modelingDatasService: <a href="../injectables/ModelingDatasService.html" target="_self">ModelingDatasService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="143" class="link-to-prism">src/app/khiops-visualization/components/preparation-view/preparation-view.component.ts:143</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>preparationDatasService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/PreparationDatasService.html" target="_self" >PreparationDatasService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>translate</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../interfaces/T.html" target="_self" >TranslateService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>khiopsLibraryService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/KhiopsLibraryService.html" target="_self" >KhiopsLibraryService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>evaluationDatasService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/EvaluationDatasService.html" target="_self" >EvaluationDatasService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>dialog</td>
+                                                  
+                                                        <td>
+                                                                    <code>MatDialog</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>preparation2dDatasService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/Preparation2dDatasService.html" target="_self" >Preparation2dDatasService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>appService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AppService.html" target="_self" >AppService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>modelingDatasService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ModelingDatasService.html" target="_self" >ModelingDatasService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section>
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="preparationSource"></a>
+                        <b>preparationSource</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;preparationReport&#x27;</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/khiops-visualization/components/preparation-view/preparation-view.component.ts:59</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="selectedTab"></a>
+                        <b>selectedTab</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4" colspan="2">
+                                    <div class="io-line">Inherited from         <code><a href="../interfaces/T.html" target="_self" >SelectableTabComponent</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in         <code><a href="../interfaces/T.html#source" target="_self" >SelectableTabComponent:15</a></code>
+</div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="159"
+                            class="link-to-prism">src/app/khiops-visualization/components/preparation-view/preparation-view.component.ts:159</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onSelectListItemChanged"></a>
+                    <span class="name">
+                        <span ><b>onSelectListItemChanged</b></span>
+                        <a href="#onSelectListItemChanged"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onSelectListItemChanged(item: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="199"
+                            class="link-to-prism">src/app/khiops-visualization/components/preparation-view/preparation-view.component.ts:199</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>item</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onShowLevelDistributionGraph"></a>
+                    <span class="name">
+                        <span ><b>onShowLevelDistributionGraph</b></span>
+                        <a href="#onShowLevelDistributionGraph"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onShowLevelDistributionGraph(datas: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="207"
+                            class="link-to-prism">src/app/khiops-visualization/components/preparation-view/preparation-view.component.ts:207</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>datas</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onSplitDragEnd"></a>
+                    <span class="name">
+                        <span ><b>onSplitDragEnd</b></span>
+                        <a href="#onSplitDragEnd"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onSplitDragEnd(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, item: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="190"
+                            class="link-to-prism">src/app/khiops-visualization/components/preparation-view/preparation-view.component.ts:190</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>event</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>item</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loaded"></a>
+                    <span class="name">
+                        <span ><b>loaded</b></span>
+                        <a href="#loaded"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loaded()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/T.html" target="_self" >SelectableTabComponent</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/T.html#source" target="_self" >SelectableTabComponent:32</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadView"></a>
+                    <span class="name">
+                        <span ><b>loadView</b></span>
+                        <a href="#loadView"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadView()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/T.html" target="_self" >SelectableTabComponent</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/T.html#source" target="_self" >SelectableTabComponent:39</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnChanges"></a>
+                    <span class="name">
+                        <span ><b>ngOnChanges</b></span>
+                        <a href="#ngOnChanges"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnChanges(changes: <a href="../undefineds/C.html" target="_self">SimpleChanges</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/T.html" target="_self" >SelectableTabComponent</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/T.html#source" target="_self" >SelectableTabComponent:22</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>changes</td>
+                                    <td>
+                                                <code><a href="../miscellaneous/typealiases.html#C" target="_self" >SimpleChanges</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="appDatas"></a>
+                    <span class="name">
+                        <span ><b>appDatas</b></span>
+                        <a href="#appDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">src/app/khiops-visualization/components/preparation-view/preparation-view.component.ts:62</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="appVariableGraphDetails"></a>
+                    <span class="name">
+                        <span ><b>appVariableGraphDetails</b></span>
+                        <a href="#appVariableGraphDetails"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../components/VariableGraphDetailsComponent.html" target="_self" >VariableGraphDetailsComponent</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(&#x27;appVariableGraphDetails&#x27;, {static: false})<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/app/khiops-visualization/components/preparation-view/preparation-view.component.ts:57</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentIntervalDatas"></a>
+                    <span class="name">
+                        <span ><b>currentIntervalDatas</b></span>
+                        <a href="#currentIntervalDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">src/app/khiops-visualization/components/preparation-view/preparation-view.component.ts:67</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="distributionSelectedBarIndex"></a>
+                    <span class="name">
+                        <span ><b>distributionSelectedBarIndex</b></span>
+                        <a href="#distributionSelectedBarIndex"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">src/app/khiops-visualization/components/preparation-view/preparation-view.component.ts:69</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="informationsDatas"></a>
+                    <span class="name">
+                        <span ><b>informationsDatas</b></span>
+                        <a href="#informationsDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">src/app/khiops-visualization/components/preparation-view/preparation-view.component.ts:65</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isRegressionOrExplanatoryAnalysis"></a>
+                    <span class="name">
+                        <span ><b>isRegressionOrExplanatoryAnalysis</b></span>
+                        <a href="#isRegressionOrExplanatoryAnalysis"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="142" class="link-to-prism">src/app/khiops-visualization/components/preparation-view/preparation-view.component.ts:142</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="matrixRegSelectedCell"></a>
+                    <span class="name">
+                        <span ><b>matrixRegSelectedCell</b></span>
+                        <a href="#matrixRegSelectedCell"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">src/app/khiops-visualization/components/preparation-view/preparation-view.component.ts:68</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="preparation2dDatas"></a>
+                    <span class="name">
+                        <span ><b>preparation2dDatas</b></span>
+                        <a href="#preparation2dDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="140" class="link-to-prism">src/app/khiops-visualization/components/preparation-view/preparation-view.component.ts:140</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="preparationDatas"></a>
+                    <span class="name">
+                        <span ><b>preparationDatas</b></span>
+                        <a href="#preparationDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">src/app/khiops-visualization/components/preparation-view/preparation-view.component.ts:61</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sizes"></a>
+                    <span class="name">
+                        <span ><b>sizes</b></span>
+                        <a href="#sizes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">src/app/khiops-visualization/components/preparation-view/preparation-view.component.ts:63</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="summaryDatas"></a>
+                    <span class="name">
+                        <span ><b>summaryDatas</b></span>
+                        <a href="#summaryDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">src/app/khiops-visualization/components/preparation-view/preparation-view.component.ts:64</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="tabConfig"></a>
+                    <span class="name">
+                        <span ><b>tabConfig</b></span>
+                        <a href="#tabConfig"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>AppConfig.common.HOME</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Inherited from         <code><a href="../interfaces/T.html" target="_self" >SelectableTabComponent</a></code>
+</div>
+                            </td>
+                        </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../interfaces/T.html#source" target="_self" >SelectableTabComponent:139</a></code>
+</div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="tabIndex"></a>
+                    <span class="name">
+                        <span ><b>tabIndex</b></span>
+                        <a href="#tabIndex"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>1</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Inherited from         <code><a href="../interfaces/T.html" target="_self" >SelectableTabComponent</a></code>
+</div>
+                            </td>
+                        </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../interfaces/T.html#source" target="_self" >SelectableTabComponent:138</a></code>
+</div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="targetVariableStatsDatas"></a>
+                    <span class="name">
+                        <span ><b>targetVariableStatsDatas</b></span>
+                        <a href="#targetVariableStatsDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">src/app/khiops-visualization/components/preparation-view/preparation-view.component.ts:66</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="targetVariableStatsInformations"></a>
+                    <span class="name">
+                        <span ><b>targetVariableStatsInformations</b></span>
+                        <a href="#targetVariableStatsInformations"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="143" class="link-to-prism">src/app/khiops-visualization/components/preparation-view/preparation-view.component.ts:143</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="variablesDatas"></a>
+                    <span class="name">
+                        <span ><b>variablesDatas</b></span>
+                        <a href="#variablesDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="141" class="link-to-prism">src/app/khiops-visualization/components/preparation-view/preparation-view.component.ts:141</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="variablesDisplayedColumns"></a>
+                    <span class="name">
+                        <span ><b>variablesDisplayedColumns</b></span>
+                        <a href="#variablesDisplayedColumns"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/GridColumnsI.html" target="_self" >GridColumnsI[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[{
+		headerName: &#x27;Rank&#x27;,
+		field: &#x27;rank&#x27;,
+		tooltip: this.translate.get(&#x27;TOOLTIPS.PREPARATION.VARIABLES.RANK&#x27;)
+	}, {
+		headerName: &#x27;Name&#x27;,
+		field: &#x27;name&#x27;,
+		tooltip: this.translate.get(&#x27;TOOLTIPS.PREPARATION.VARIABLES.NAME&#x27;)
+	}, {
+		headerName: &#x27;Level&#x27;,
+		field: &#x27;level&#x27;,
+		tooltip: this.translate.get(&#x27;TOOLTIPS.PREPARATION.VARIABLES.LEVEL&#x27;)
+	}, {
+		headerName: &#x27;Parts&#x27;,
+		field: &#x27;parts&#x27;,
+		tooltip: this.translate.get(&#x27;TOOLTIPS.PREPARATION.VARIABLES.PARTS&#x27;)
+	}, {
+		headerName: &#x27;Values&#x27;,
+		field: &#x27;values&#x27;,
+		tooltip: this.translate.get(&#x27;TOOLTIPS.PREPARATION.VARIABLES.VALUES&#x27;)
+	}, {
+		headerName: &#x27;Type&#x27;,
+		field: &#x27;type&#x27;,
+		tooltip: this.translate.get(&#x27;TOOLTIPS.PREPARATION.VARIABLES.TYPE&#x27;)
+	}, {
+		headerName: &#x27;Mode&#x27;,
+		field: &#x27;mode&#x27;,
+		show: false,
+		tooltip: this.translate.get(&#x27;TOOLTIPS.PREPARATION.VARIABLES.MODE&#x27;)
+	}, {
+		headerName: &#x27;Mode coverage&#x27;,
+		field: &#x27;modeCoverage&#x27;,
+		show: false,
+		tooltip: this.translate.get(&#x27;TOOLTIPS.PREPARATION.VARIABLES.MODE_COVERAGE&#x27;)
+	}, {
+		headerName: &#x27;Min&#x27;,
+		field: &#x27;min&#x27;,
+		show: false,
+		tooltip: this.translate.get(&#x27;TOOLTIPS.PREPARATION.VARIABLES.MIN&#x27;)
+	}, {
+		headerName: &#x27;Max&#x27;,
+		field: &#x27;max&#x27;,
+		show: false,
+		tooltip: this.translate.get(&#x27;TOOLTIPS.PREPARATION.VARIABLES.MAX&#x27;)
+	}, {
+		headerName: &#x27;Mean&#x27;,
+		field: &#x27;mean&#x27;,
+		show: false,
+		tooltip: this.translate.get(&#x27;TOOLTIPS.PREPARATION.VARIABLES.MEAN&#x27;)
+	}, {
+		headerName: &#x27;Std dev&#x27;,
+		field: &#x27;stdDev&#x27;,
+		show: false,
+		tooltip: this.translate.get(&#x27;TOOLTIPS.PREPARATION.VARIABLES.STD_DEV&#x27;)
+	}, {
+		headerName: &#x27;Missing number&#x27;,
+		field: &#x27;missingNumber&#x27;,
+		show: false,
+		tooltip: this.translate.get(&#x27;TOOLTIPS.PREPARATION.VARIABLES.MISSING_NUMBER&#x27;)
+	}, {
+		headerName: &#x27;Derivation rule&#x27;,
+		field: &#x27;derivationRule&#x27;,
+		show: false,
+		tooltip: this.translate.get(&#x27;TOOLTIPS.PREPARATION.VARIABLES.DERIVATION_RULE&#x27;)
+	}]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">src/app/khiops-visualization/components/preparation-view/preparation-view.component.ts:71</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadingView"></a>
+                    <span class="name">
+                        <span ><b>loadingView</b></span>
+                        <a href="#loadingView"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Inherited from         <code><a href="../interfaces/T.html" target="_self" >SelectableTabComponent</a></code>
+</div>
+                            </td>
+                        </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../interfaces/T.html#source" target="_self" >SelectableTabComponent:18</a></code>
+</div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+	Component,
+	ViewChild,
+	Input
+} from &#x27;@angular/core&#x27;;
+import {
+	PreparationDatasService
+} from &#x27;../../providers/preparation-datas.service&#x27;;
+import {
+	AppConfig
+} from &#x27;src/environments/environment&#x27;;
+import {
+	AppService
+} from &#x27;../../providers/app.service&#x27;;
+import {
+	SelectableTabComponent
+} from &#x27;@khiops-library/components/selectable-tab/selectable-tab.component&#x27;;
+import {
+	ModelingDatasService
+} from &#x27;src/app/providers/modeling-datas.service&#x27;;
+import {
+	MatDialog,
+	MatDialogRef,
+	MatDialogConfig
+} from &#x27;@angular/material/dialog&#x27;;
+import {
+	EvaluationDatasService
+} from &#x27;src/app/providers/evaluation-datas.service&#x27;;
+import {
+	Preparation2dDatasService
+} from &#x27;src/app/providers/preparation2d-datas.service&#x27;;
+import {
+	LevelDistributionGraphCanvasComponent
+} from &#x27;../commons/level-distribution-graph-canvas/level-distribution-graph-canvas.component&#x27;;
+import {
+	VariableGraphDetailsComponent
+} from &#x27;../commons/variable-graph-details/variable-graph-details.component&#x27;;
+import {
+	TranslateService
+} from &#x27;@ngstack/translate&#x27;;
+import {
+	GridColumnsI
+} from &#x27;@khiops-library/interfaces/grid-columns&#x27;;
+import {
+	KhiopsLibraryService
+} from &#x27;@khiops-library/providers/khiops-library.service&#x27;;
+
+@Component({
+	selector: &#x27;app-preparation-view&#x27;,
+	templateUrl: &#x27;./preparation-view.component.html&#x27;,
+	styleUrls: [&#x27;./preparation-view.component.scss&#x27;]
+})
+export class PreparationViewComponent extends SelectableTabComponent {
+
+	@ViewChild(&#x27;appVariableGraphDetails&#x27;, {
+		static: false
+	}) appVariableGraphDetails: VariableGraphDetailsComponent;
+
+	@Input() preparationSource &#x3D; &#x27;preparationReport&#x27;; // By default
+
+	preparationDatas: any;
+	appDatas: any;
+	sizes: any;
+	summaryDatas: any[any];
+	informationsDatas: any[any];
+	targetVariableStatsDatas: any[];
+	currentIntervalDatas: any;
+	matrixRegSelectedCell &#x3D; 0;
+	distributionSelectedBarIndex &#x3D; 0;
+
+	variablesDisplayedColumns: GridColumnsI[] &#x3D; [{
+		headerName: &#x27;Rank&#x27;,
+		field: &#x27;rank&#x27;,
+		tooltip: this.translate.get(&#x27;TOOLTIPS.PREPARATION.VARIABLES.RANK&#x27;)
+	}, {
+		headerName: &#x27;Name&#x27;,
+		field: &#x27;name&#x27;,
+		tooltip: this.translate.get(&#x27;TOOLTIPS.PREPARATION.VARIABLES.NAME&#x27;)
+	}, {
+		headerName: &#x27;Level&#x27;,
+		field: &#x27;level&#x27;,
+		tooltip: this.translate.get(&#x27;TOOLTIPS.PREPARATION.VARIABLES.LEVEL&#x27;)
+	}, {
+		headerName: &#x27;Parts&#x27;,
+		field: &#x27;parts&#x27;,
+		tooltip: this.translate.get(&#x27;TOOLTIPS.PREPARATION.VARIABLES.PARTS&#x27;)
+	}, {
+		headerName: &#x27;Values&#x27;,
+		field: &#x27;values&#x27;,
+		tooltip: this.translate.get(&#x27;TOOLTIPS.PREPARATION.VARIABLES.VALUES&#x27;)
+	}, {
+		headerName: &#x27;Type&#x27;,
+		field: &#x27;type&#x27;,
+		tooltip: this.translate.get(&#x27;TOOLTIPS.PREPARATION.VARIABLES.TYPE&#x27;)
+	}, {
+		headerName: &#x27;Mode&#x27;,
+		field: &#x27;mode&#x27;,
+		show: false,
+		tooltip: this.translate.get(&#x27;TOOLTIPS.PREPARATION.VARIABLES.MODE&#x27;)
+	}, {
+		headerName: &#x27;Mode coverage&#x27;,
+		field: &#x27;modeCoverage&#x27;,
+		show: false,
+		tooltip: this.translate.get(&#x27;TOOLTIPS.PREPARATION.VARIABLES.MODE_COVERAGE&#x27;)
+	}, {
+		headerName: &#x27;Min&#x27;,
+		field: &#x27;min&#x27;,
+		show: false,
+		tooltip: this.translate.get(&#x27;TOOLTIPS.PREPARATION.VARIABLES.MIN&#x27;)
+	}, {
+		headerName: &#x27;Max&#x27;,
+		field: &#x27;max&#x27;,
+		show: false,
+		tooltip: this.translate.get(&#x27;TOOLTIPS.PREPARATION.VARIABLES.MAX&#x27;)
+	}, {
+		headerName: &#x27;Mean&#x27;,
+		field: &#x27;mean&#x27;,
+		show: false,
+		tooltip: this.translate.get(&#x27;TOOLTIPS.PREPARATION.VARIABLES.MEAN&#x27;)
+	}, {
+		headerName: &#x27;Std dev&#x27;,
+		field: &#x27;stdDev&#x27;,
+		show: false,
+		tooltip: this.translate.get(&#x27;TOOLTIPS.PREPARATION.VARIABLES.STD_DEV&#x27;)
+	}, {
+		headerName: &#x27;Missing number&#x27;,
+		field: &#x27;missingNumber&#x27;,
+		show: false,
+		tooltip: this.translate.get(&#x27;TOOLTIPS.PREPARATION.VARIABLES.MISSING_NUMBER&#x27;)
+	}, {
+		headerName: &#x27;Derivation rule&#x27;,
+		field: &#x27;derivationRule&#x27;,
+		show: false,
+		tooltip: this.translate.get(&#x27;TOOLTIPS.PREPARATION.VARIABLES.DERIVATION_RULE&#x27;)
+	}];
+
+	// managed by selectable-tab component
+	tabIndex &#x3D; 1;
+	tabConfig &#x3D; AppConfig.common.HOME;
+	preparation2dDatas: any;
+	variablesDatas: any;
+	isRegressionOrExplanatoryAnalysis: boolean;
+	targetVariableStatsInformations: any;
+
+	constructor(
+		private preparationDatasService: PreparationDatasService,
+		private translate: TranslateService,
+		private khiopsLibraryService: KhiopsLibraryService,
+		private evaluationDatasService: EvaluationDatasService,
+		private dialog: MatDialog,
+		private preparation2dDatasService: Preparation2dDatasService,
+		private appService: AppService,
+		private modelingDatasService: ModelingDatasService) {
+
+		super();
+
+	}
+
+	ngOnInit() {
+		const trackView &#x3D; this.preparationSource &#x3D;&#x3D;&#x3D; &#x27;preparationReport&#x27; ? &#x27;preparation&#x27; : &#x27;textPreparation&#x27;
+		this.khiopsLibraryService.trackEvent(&#x27;page_view&#x27;, trackView);
+
+		this.appDatas &#x3D; this.appService.getDatas().datas;
+		this.preparationDatas &#x3D; this.preparationDatasService.getDatas(this.preparationSource);
+		this.preparation2dDatas &#x3D; this.preparation2dDatasService.getDatas();
+
+		this.sizes &#x3D; this.appService.getViewSplitSizes(&#x27;preparationView&#x27;);
+		this.summaryDatas &#x3D; this.preparationDatasService.getSummaryDatas();
+		this.informationsDatas &#x3D; this.preparationDatasService.getInformationsDatas(this.preparationSource);
+		this.targetVariableStatsDatas &#x3D; this.preparationDatasService.getTargetVariableStatsDatas();
+		this.targetVariableStatsInformations &#x3D; this.preparationDatasService.getTargetVariableStatsInformations();
+		this.variablesDatas &#x3D; this.preparationDatasService.getVariablesDatas(this.preparationSource);
+
+		// Remove level and parts if not supervised analysis
+		if (!this.preparationDatasService.isSupervised()) {
+			this.variablesDisplayedColumns.splice(2, 2);
+		}
+
+		const includesTargetParts &#x3D; this.preparationDatasService.includesTargetParts(this.variablesDatas);
+		if (includesTargetParts) {
+			this.variablesDisplayedColumns.splice(3, 0, {
+				headerName: &#x27;Target parts&#x27;,
+				field: &#x27;targetParts&#x27;,
+				tooltip: this.translate.get(&#x27;TOOLTIPS.PREPARATION.VARIABLES.TARGET_PARTS&#x27;)
+			});
+		}
+
+	}
+
+	onSplitDragEnd(event: any, item: any) {
+		this.appService.resizeAndSetSplitSizes(item, this.sizes, event.sizes, &#x27;preparationView&#x27;);
+
+		// Resize to update graphs dimensions
+		if (this.appVariableGraphDetails) {
+			this.appVariableGraphDetails.resize();
+		}
+	}
+
+	onSelectListItemChanged(item: any) {
+		const modelingVariable &#x3D; this.preparationDatasService.setSelectedVariable(item, this.preparationSource);
+		this.modelingDatasService.setSelectedVariable(modelingVariable);
+
+		// check if current variable is explanatory on change
+		this.isRegressionOrExplanatoryAnalysis &#x3D; this.preparationDatasService.isExplanatoryAnalysis() || this.evaluationDatasService.isRegressionAnalysis();
+	}
+
+	onShowLevelDistributionGraph(datas: any) {
+		const config &#x3D; new MatDialogConfig();
+		config.width &#x3D; AppConfig.common.LEVEL_DISTRIBUTION_GRAPH.WIDTH;
+		config.height &#x3D; AppConfig.common.LEVEL_DISTRIBUTION_GRAPH.HEIGHT;
+		const dialogRef: MatDialogRef &lt; LevelDistributionGraphCanvasComponent &gt; &#x3D; this.dialog.open(LevelDistributionGraphCanvasComponent, config);
+		dialogRef.componentInstance.datas &#x3D; datas;
+	}
+
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div id&#x3D;&quot;preparation-view-comp&quot; fxFlexFill&gt;
+	&lt;div fxLayout&#x3D;&quot;column&quot; fxFlexFill fxLayoutAlign&#x3D;&quot;center center&quot; *ngIf&#x3D;&quot;loadingView&quot;&gt;
+		&lt;mat-spinner diameter&#x3D;&quot;40&quot; color&#x3D;&quot;accent&quot; mode&#x3D;&quot;indeterminate&quot;&gt;&lt;/mat-spinner&gt;
+	&lt;/div&gt;
+	&lt;as-split *ngIf&#x3D;&quot;!loadingView &amp;&amp; sizes&quot; direction&#x3D;&quot;vertical&quot; (dragEnd)&#x3D;&quot;onSplitDragEnd($event, &#x27;row&#x27;)&quot;&gt;
+		&lt;as-split-area [size]&#x3D;&quot;sizes.row[0]&quot;&gt;
+			&lt;as-split direction&#x3D;&quot;horizontal&quot; (dragEnd)&#x3D;&quot;onSplitDragEnd($event, &#x27;row0Col&#x27;)&quot;&gt;
+				&lt;as-split-area [size]&#x3D;&quot;sizes.row0Col[0]&quot;&gt;
+					&lt;kl-informations-block id&#x3D;&quot;preparation-informations-block-summary&quot;
+						title&#x3D;&quot;{{ &#x27;GLOBAL.SUMMARY&#x27; | translate }}&quot; [inputDatas]&#x3D;&quot;summaryDatas&quot;&gt;&lt;/kl-informations-block&gt;
+				&lt;/as-split-area&gt;
+				&lt;as-split-area [size]&#x3D;&quot;sizes.row0Col[1]&quot;&gt;
+					&lt;app-target-variable-stats-canvas *ngIf&#x3D;&quot;targetVariableStatsDatas&quot;
+						id&#x3D;&quot;preparation-target-variable-stats&quot; fxFlexFill [inputDatas]&#x3D;&quot;targetVariableStatsDatas&quot;&gt;
+					&lt;/app-target-variable-stats-canvas&gt;
+					&lt;kl-no-data fxFlexFill *ngIf&#x3D;&quot;!targetVariableStatsDatas &amp;&amp; !targetVariableStatsInformations&quot;
+						[message]&#x3D;&quot;&#x27;NO_DATAS.NO_VARIABLE_DETAILS&#x27;&quot;&gt;
+					&lt;/kl-no-data&gt;
+					&lt;kl-informations-block id&#x3D;&quot;preparation-informations-block-summary&quot;
+						*ngIf&#x3D;&quot;targetVariableStatsInformations &amp;&amp; !targetVariableStatsDatas&quot;
+						title&#x3D;&quot;{{ &#x27;GLOBAL.TARGET_VARIABLE_STATS&#x27; | translate }}&quot;
+						[inputDatas]&#x3D;&quot;targetVariableStatsInformations&quot;&gt;&lt;/kl-informations-block&gt;
+				&lt;/as-split-area&gt;
+				&lt;as-split-area [size]&#x3D;&quot;sizes.row0Col[2]&quot;&gt;
+					&lt;kl-informations-block id&#x3D;&quot;preparation-informations-block-informations&quot; icon&#x3D;&quot;info&quot; darkTheme&#x3D;&quot;true&quot;
+						title&#x3D;&quot;{{ &#x27;GLOBAL.INFORMATIONS&#x27; | translate }}&quot; [inputDatas]&#x3D;&quot;informationsDatas&quot;&gt;
+					&lt;/kl-informations-block&gt;
+				&lt;/as-split-area&gt;
+			&lt;/as-split&gt;
+		&lt;/as-split-area&gt;
+		&lt;as-split-area [size]&#x3D;&quot;sizes.row[1]&quot;&gt;
+			&lt;as-split direction&#x3D;&quot;horizontal&quot; (dragEnd)&#x3D;&quot;onSplitDragEnd($event, &#x27;row1Col&#x27;)&quot;&gt;
+				&lt;as-split-area [size]&#x3D;&quot;sizes.row1Col[0]&quot;&gt;
+					&lt;as-split direction&#x3D;&quot;vertical&quot; (dragEnd)&#x3D;&quot;onSplitDragEnd($event, &#x27;row1Col0Row&#x27;)&quot;&gt;
+						&lt;as-split-area class&#x3D;&quot;variables-list-container&quot; [size]&#x3D;&quot;sizes.row1Col0Row[0]&quot;&gt;
+							&lt;kl-ag-grid id&#x3D;&quot;preparation-variables-list&quot; class&#x3D;&quot;variables-list&quot; fxFlexFill
+								[showLevelDistribution]&#x3D;&quot;true&quot; [showSearch]&#x3D;&quot;true&quot; [watchResize]&#x3D;&quot;true&quot;
+								[displayCount]&#x3D;&quot;true&quot; (selectListItem)&#x3D;&quot;onSelectListItemChanged($event)&quot;
+								titleTooltip&#x3D;&quot;{{ &#x27;TOOLTIPS.PREPARATION.VARIABLES.TITLE&#x27; | translate }}&quot;
+								[showLineSelection]&#x3D;&quot;true&quot; [showColumnsSelection]&#x3D;&quot;true&quot; [rowHeight]&#x3D;&quot;30&quot;
+								[inputDatas]&#x3D;&quot;variablesDatas&quot; [displayedColumns]&#x3D;&quot;variablesDisplayedColumns&quot;
+								[selectedVariable]&#x3D;&quot;preparationDatas.selectedVariable&quot;
+								(showLevelDistributionGraph)&#x3D;&quot;onShowLevelDistributionGraph($event)&quot;&gt;
+							&lt;/kl-ag-grid&gt;
+						&lt;/as-split-area&gt;
+						&lt;as-split-area [size]&#x3D;&quot;sizes.row1Col0Row[1]&quot; fxLayout&#x3D;&quot;row&quot;&gt;
+							&lt;as-split direction&#x3D;&quot;horizontal&quot; disabled&gt;
+								&lt;as-split-area fxFlex&#x3D;&quot;50%&quot;&gt;
+									&lt;app-description-block id&#x3D;&quot;preparation-description-block-variable&quot;
+										title&#x3D;&quot;{{ &#x27;GLOBAL.NAME&#x27; | translate }}&quot;
+										[value]&#x3D;&quot;preparationDatas.selectedVariable.name&quot;&gt;&lt;/app-description-block&gt;
+								&lt;/as-split-area&gt;
+								&lt;as-split-area fxFlex&#x3D;&quot;50%&quot;&gt;
+									&lt;app-description-block id&#x3D;&quot;preparation-description-block-derivation&quot;
+										title&#x3D;&quot;{{ &#x27;GLOBAL.DERIVATION_RULE&#x27; | translate }}&quot;
+										[value]&#x3D;&quot;preparationDatas.selectedVariable.derivationRule&quot;&gt;
+									&lt;/app-description-block&gt;
+								&lt;/as-split-area&gt;
+							&lt;/as-split&gt;
+
+						&lt;/as-split-area&gt;
+					&lt;/as-split&gt;
+				&lt;/as-split-area&gt;
+				&lt;as-split-area [size]&#x3D;&quot;sizes.row1Col[1]&quot;&gt;
+					&lt;app-var-details-preparation [preparationSource]&#x3D;&quot;preparationSource&quot;&gt;&lt;/app-var-details-preparation&gt;
+				&lt;/as-split-area&gt;
+			&lt;/as-split&gt;
+		&lt;/as-split-area&gt;
+	&lt;/as-split&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./preparation-view.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">#preparation-view-comp {
+
+	background: white;
+
+	#preparation-target-variable-stats {
+		padding: 0 em;
+	}
+
+	app-regression-matrix{
+		overflow: hidden;
+	}
+
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div id="preparation-view-comp" fxFlexFill>	<div fxLayout="column" fxFlexFill fxLayoutAlign="center center" *ngIf="loadingView">		<mat-spinner diameter="40" color="accent" mode="indeterminate"></mat-spinner>	</div>	<as-split *ngIf="!loadingView && sizes" direction="vertical" (dragEnd)="onSplitDragEnd($event, \'row\')">		<as-split-area [size]="sizes.row[0]">			<as-split direction="horizontal" (dragEnd)="onSplitDragEnd($event, \'row0Col\')">				<as-split-area [size]="sizes.row0Col[0]">					<kl-informations-block id="preparation-informations-block-summary"						title="{{ \'GLOBAL.SUMMARY\' | translate }}" [inputDatas]="summaryDatas"></kl-informations-block>				</as-split-area>				<as-split-area [size]="sizes.row0Col[1]">					<app-target-variable-stats-canvas *ngIf="targetVariableStatsDatas"						id="preparation-target-variable-stats" fxFlexFill [inputDatas]="targetVariableStatsDatas">					</app-target-variable-stats-canvas>					<kl-no-data fxFlexFill *ngIf="!targetVariableStatsDatas && !targetVariableStatsInformations"						[message]="\'NO_DATAS.NO_VARIABLE_DETAILS\'">					</kl-no-data>					<kl-informations-block id="preparation-informations-block-summary"						*ngIf="targetVariableStatsInformations && !targetVariableStatsDatas"						title="{{ \'GLOBAL.TARGET_VARIABLE_STATS\' | translate }}"						[inputDatas]="targetVariableStatsInformations"></kl-informations-block>				</as-split-area>				<as-split-area [size]="sizes.row0Col[2]">					<kl-informations-block id="preparation-informations-block-informations" icon="info" darkTheme="true"						title="{{ \'GLOBAL.INFORMATIONS\' | translate }}" [inputDatas]="informationsDatas">					</kl-informations-block>				</as-split-area>			</as-split>		</as-split-area>		<as-split-area [size]="sizes.row[1]">			<as-split direction="horizontal" (dragEnd)="onSplitDragEnd($event, \'row1Col\')">				<as-split-area [size]="sizes.row1Col[0]">					<as-split direction="vertical" (dragEnd)="onSplitDragEnd($event, \'row1Col0Row\')">						<as-split-area class="variables-list-container" [size]="sizes.row1Col0Row[0]">							<kl-ag-grid id="preparation-variables-list" class="variables-list" fxFlexFill								[showLevelDistribution]="true" [showSearch]="true" [watchResize]="true"								[displayCount]="true" (selectListItem)="onSelectListItemChanged($event)"								titleTooltip="{{ \'TOOLTIPS.PREPARATION.VARIABLES.TITLE\' | translate }}"								[showLineSelection]="true" [showColumnsSelection]="true" [rowHeight]="30"								[inputDatas]="variablesDatas" [displayedColumns]="variablesDisplayedColumns"								[selectedVariable]="preparationDatas.selectedVariable"								(showLevelDistributionGraph)="onShowLevelDistributionGraph($event)">							</kl-ag-grid>						</as-split-area>						<as-split-area [size]="sizes.row1Col0Row[1]" fxLayout="row">							<as-split direction="horizontal" disabled>								<as-split-area fxFlex="50%">									<app-description-block id="preparation-description-block-variable"										title="{{ \'GLOBAL.NAME\' | translate }}"										[value]="preparationDatas.selectedVariable.name"></app-description-block>								</as-split-area>								<as-split-area fxFlex="50%">									<app-description-block id="preparation-description-block-derivation"										title="{{ \'GLOBAL.DERIVATION_RULE\' | translate }}"										[value]="preparationDatas.selectedVariable.derivationRule">									</app-description-block>								</as-split-area>							</as-split>						</as-split-area>					</as-split>				</as-split-area>				<as-split-area [size]="sizes.row1Col[1]">					<app-var-details-preparation [preparationSource]="preparationSource"></app-var-details-preparation>				</as-split-area>			</as-split>		</as-split-area>	</as-split></div></div>'
+    var COMPONENTS = [{'name': 'AgGridComponent', 'selector': 'kl-ag-grid'},{'name': 'AnnotationComponent', 'selector': 'app-annotation'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AppVersionComponent', 'selector': 'kl-app-version'},{'name': 'AxisComponent', 'selector': 'app-axis'},{'name': 'AxisViewComponent', 'selector': 'app-axis-view'},{'name': 'BtnFullscreenComponent', 'selector': 'kl-btn-fullscreen'},{'name': 'CellStatsComponent', 'selector': 'kl-cell-stats'},{'name': 'ChartNextComponent', 'selector': 'kl-chart-next'},{'name': 'CheckboxCellComponent', 'selector': 'kl-checkbox-cell'},{'name': 'ClusterDetailsComponent', 'selector': 'app-cluster-details'},{'name': 'CompositionComponent', 'selector': 'app-composition'},{'name': 'ConfirmDialogComponent', 'selector': 'kl-confirm-dialog'},{'name': 'CoocurenceMatrixComponent', 'selector': 'app-coocurence-matrix'},{'name': 'DescriptionBlockComponent', 'selector': 'app-description-block'},{'name': 'DistributionGraphCanvasComponent', 'selector': 'kl-distribution-graph-canvas'},{'name': 'EvaluationViewComponent', 'selector': 'app-evaluation-view'},{'name': 'ExternalDatasComponent', 'selector': 'app-external-datas'},{'name': 'FileLoaderComponent', 'selector': 'kl-file-loader'},{'name': 'GraphHeaderComponent', 'selector': 'kl-graph-header'},{'name': 'HeaderManageViewComponent', 'selector': 'app-header-manage-view'},{'name': 'HeaderTitleComponent', 'selector': 'kl-header-title'},{'name': 'HeaderToolsComponent', 'selector': 'kl-header-tools'},{'name': 'HierarchySelectComponent', 'selector': 'app-hierarchy-select'},{'name': 'HomeLayoutComponent', 'selector': 'app-home-layout'},{'name': 'HomeLayoutComponent', 'selector': 'app-home-layout'},{'name': 'IconCellComponent', 'selector': 'kl-icon-cell'},{'name': 'ImportExtDatasComponent', 'selector': 'app-import-ext-datas'},{'name': 'ImportExtDatasListComponent', 'selector': 'app-import-ext-datas-list'},{'name': 'ImportFileLoaderComponent', 'selector': 'kl-import-file-loader'},{'name': 'InformationsBlockComponent', 'selector': 'kl-informations-block'},{'name': 'LegendComponent', 'selector': 'kl-legend'},{'name': 'LevelDistributionGraphCanvasComponent', 'selector': 'app-level-distribution-graph'},{'name': 'LibVersionComponent', 'selector': 'kl-lib-version'},{'name': 'LoadExtDatasComponent', 'selector': 'app-load-ext-datas'},{'name': 'ManageViewsComponent', 'selector': 'app-manage-views'},{'name': 'MatrixCanvasComponent', 'selector': 'kl-matrix-canvas'},{'name': 'MatrixContainerComponent', 'selector': 'app-matrix-container'},{'name': 'MatrixTooltipComponent', 'selector': 'kl-matrix-tooltip'},{'name': 'ModelingViewComponent', 'selector': 'app-modeling-view'},{'name': 'NoDataComponent', 'selector': 'kl-no-data'},{'name': 'Preparation2dViewComponent', 'selector': 'app-preparation-2d-view'},{'name': 'PreparationViewComponent', 'selector': 'app-preparation-view'},{'name': 'ProjectViewComponent', 'selector': 'app-project-view'},{'name': 'ProjectViewComponent', 'selector': 'app-project-view'},{'name': 'RegressionMatrixComponent', 'selector': 'app-regression-matrix'},{'name': 'ReleaseButtonComponent', 'selector': 'kl-release-button'},{'name': 'ReleaseNotesComponent', 'selector': 'kl-release-notes'},{'name': 'ScrollableGraphCanvasComponent', 'selector': ''},{'name': 'SelectableComponent', 'selector': ''},{'name': 'SelectableTabComponent', 'selector': ''},{'name': 'SelectedClustersComponent', 'selector': 'app-selected-clusters'},{'name': 'SelectToggleButtonComponent', 'selector': 'app-select-toggle-button'},{'name': 'SelectTrainedPredictorComponent', 'selector': 'app-select-trained-predictor'},{'name': 'TargetDistributionGraphCanvasComponent', 'selector': 'app-target-distribution-graph-canvas'},{'name': 'TargetLiftGraphComponent', 'selector': 'app-target-lift-graph'},{'name': 'TargetVariableStatsCanvasComponent', 'selector': 'app-target-variable-stats-canvas'},{'name': 'TreeDetailsComponent', 'selector': 'app-tree-details'},{'name': 'TreeHyperComponent', 'selector': 'app-tree-hyper'},{'name': 'TreeLeafDetailsComponent', 'selector': 'app-tree-leaf-details'},{'name': 'TreePreparationViewComponent', 'selector': 'app-tree-preparation-view'},{'name': 'TreeSelectComponent', 'selector': 'app-tree-select'},{'name': 'TreeSelectComponent', 'selector': 'app-tree-select'},{'name': 'UnfoldHierarchyComponent', 'selector': 'app-unfold-hierarchy'},{'name': 'UserSettingsComponent', 'selector': 'app-user-settings'},{'name': 'UserSettingsComponent', 'selector': 'app-user-settings'},{'name': 'VarDetailsPreparation2dComponent', 'selector': 'app-var-details-preparation-2d'},{'name': 'VarDetailsPreparationComponent', 'selector': 'app-var-details-preparation'},{'name': 'VarDetailsTreePreparationComponent', 'selector': 'app-var-details-tree-preparation'},{'name': 'VariableGraphDetailsComponent', 'selector': 'app-variable-graph-details'},{'name': 'VariableGraphDetailsComponent', 'selector': 'app-variable-graph-details'},{'name': 'WatchResizeComponent', 'selector': ''}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'PreparationViewComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'PreparationViewComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

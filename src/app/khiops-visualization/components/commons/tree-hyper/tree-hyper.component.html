@@ -1,0 +1,22 @@
+<div fxLayout="column" id="tree-hyper-comp" id="tree-hyper-comp" fxFlex [ngClass]="{'fullscreen': isFullscreen}">
+	<div id="graph-header-comp" fxLayoutAlign="start center" class="mat-elevation-z1">
+		<h1 fxFlex>{{ 'GLOBAL.HYPER_TREE' | translate }}</h1>
+		<app-select-toggle-button *ngIf="distributionDatas && distributionDatas.treeHyperDisplayedValues"
+			[displayedValues]="distributionDatas.treeHyperDisplayedValues"
+			(selectToggleButtonChanged)="onSelectToggleButtonChanged($event)" [buttonTitle]="buttonTitle">
+		</app-select-toggle-button>
+		<div id="graph-header-tools" fxLayout="column" fxLayoutAlign="end center">
+			<mat-checkbox [checked]="visualization.purity" (change)="togglePurityVisualization($event.checked)">
+				{{ 'GLOBAL.DISPLAY_PURITY_BY_OPACITY' | translate }}
+			</mat-checkbox>
+		</div>
+		<div id="graph-header-tools" fxLayout="column" fxLayoutAlign="end center">
+			<mat-checkbox [checked]="visualization.population" (change)="togglePopulationVisualization($event.checked)">
+				{{ 'GLOBAL.DISPLAY_LEAF_SIZES_BY_POPULATION' | translate }}
+			</mat-checkbox>
+		</div>
+		<kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">
+		</kl-btn-fullscreen>
+	</div>
+	<div id="hyperTree"></div>
+</div>

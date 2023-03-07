@@ -1,0 +1,45 @@
+#preparation-2d-view-comp {
+
+	background: white;
+
+	::ng-deep .mat-tab-label {
+		// height: 48px !important;
+		opacity: 1;
+	}
+
+	#coocurence-matrix-cells-container {
+		::ng-deep .comp-header {
+			margin-right: 1px !important;
+		}
+	}
+
+	#coocurence-matrix-cells-container {
+		margin: 1em 1px 0 0 !important;
+	}
+
+	::ng-deep .mat-tab-header {
+		display: -webkit-box !important; // align tabs to the left
+	}
+
+	#preparation-2d-matrix-coocurence {
+		padding: 0 1em;
+	}
+
+	::ng-deep .mat-tab-body-content {
+		overflow: hidden !important;
+		height: calc(100% - 1px);
+		width: calc(100% - 1px);
+	}
+
+	::ng-deep .cdk-column-id {
+		min-width: 40px;
+		max-width: 40px;
+	}
+
+	::ng-deep .cdk-column-Coverage,
+	::ng-deep .cdk-column-Frequency {
+		min-width: 100px;
+		max-width: 100px;
+	}
+
+}

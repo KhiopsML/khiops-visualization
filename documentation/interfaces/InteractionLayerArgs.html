@@ -1,0 +1,522 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>visualization-component documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">visualization-component documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content interface">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Interfaces</li>
+  <li
+  >
+  InteractionLayerArgs</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/khiops-hypertree/components/layers/interaction-layer.ts</code>
+        </p>
+
+
+
+            <p class="comment">
+                <h3>Extends</h3>
+            </p>
+            <p class="comment">
+                        <code><a href="../interfaces/ILayerArgs.html" target="_self" >ILayerArgs</a></code>
+            </p>
+
+        <section>
+            <h3 id="index">Index</h3>
+            <table class="table table-sm table-bordered index-table">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Properties</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                        <a href="#mouseRadius" 
+>
+                                            mouseRadius
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#onClick" 
+>
+                                            onClick
+                                        </a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+
+
+            <section>
+                <h3 id="inputs">Properties</h3>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="mouseRadius"></a>
+                                        <span class="name "><b>mouseRadius</b>
+                                            <a href="#mouseRadius">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>mouseRadius:     <code></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="onClick"></a>
+                                        <span class="name "><b>onClick</b>
+                                            <a href="#onClick">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>onClick:     <code></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+
+
+
+
+
+                        </tbody>
+                    </table>
+            </section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import * as d3              from &#x27;d3&#x27;
+import { ILayer }           from &#x27;../layerstack/layer&#x27;
+import { ILayerView }       from &#x27;../layerstack/layer&#x27;
+import { ILayerArgs }           from &#x27;../layerstack/layer&#x27;
+import { LayerStack }           from &#x27;../layerstack/layerstack&#x27;
+import { N }                    from &#x27;../../models/n/n&#x27;
+import { C, CptoCk, CktoCp }    from &#x27;../../models/transformation/hyperbolic-math&#x27;  
+import { ArrtoC, CsubC, CmulR } from &#x27;../../models/transformation/hyperbolic-math&#x27;   
+import { πify, sigmoid }        from &#x27;../../models/transformation/hyperbolic-math&#x27;
+
+export interface InteractionLayerArgs extends ILayerArgs
+{ 
+    mouseRadius,
+    onClick
+}
+
+export class InteractionLayer implements ILayer
+{
+    view:       ILayerView
+    args:       InteractionLayerArgs    
+    name &#x3D;      &#x27;interaction&#x27;
+   
+    constructor(view:ILayerView, args:InteractionLayerArgs) {        
+        this.view &#x3D; view
+        this.args &#x3D; args 
+    }
+
+    update &#x3D; {
+        parent:         ()&#x3D;&gt; this.initMouseStuff(),
+        data:           ()&#x3D;&gt; {},
+        transformation: ()&#x3D;&gt; {},
+        style:          ()&#x3D;&gt; {}
+    }
+
+    currMousePosAsArr &#x3D; ()&#x3D;&gt; d3.mouse(this.view.parent.node())
+    currMousePosAsC &#x3D; ()&#x3D;&gt; ArrtoC(this.currMousePosAsArr())
+    findNodeByCell &#x3D; ()&#x3D;&gt; {
+        var m &#x3D; this.currMousePosAsArr()
+        var find &#x3D; this.view.unitdisk.cache.voronoiDiagram.find(m[0], m[1])
+        return find ? find.data : undefined
+    }
+
+    private initMouseStuff() {
+        var dragStartPoint &#x3D; null
+        var dragStartElement &#x3D; null
+        /*var drag &#x3D; d3.drag()
+            //.filter(()&#x3D;&gt; console.log(d3.event.type); return true; )
+            .on(&quot;start&quot;, ()&#x3D;&gt; this.onDragStart(
+                dragStartElement &#x3D; this.findNodeByCell(),
+                dragStartPoint &#x3D; this.currMousePosAsC()
+            ))
+            .on(&quot;end&quot;,   ()&#x3D;&gt; this.onDragEnd(
+                dragStartElement,
+                dragStartPoint,
+                this.currMousePosAsC()
+            ))
+            .on(&quot;drag&quot;,  ()&#x3D;&gt; this.onDragByNode(
+                dragStartElement,
+                dragStartPoint,
+                this.currMousePosAsC()
+            ))*/
+
+        let lasttransform &#x3D; null
+        var zoom &#x3D; d3.zoom() // zoomevents: start, end, mulitiple, 
+            //.scaleExtent([.51, 1.49])      
+            .on(&quot;zoom&quot;, ()&#x3D;&gt; {
+                console.assert(d3.event)
+                /*
+                const tid &#x3D; d3.event.sourceEvent.touches[0].identifier || &#x27;mouse&#x27;
+                */
+
+                if (d3.event &amp;&amp; 
+                    d3.event.sourceEvent &amp;&amp; 
+                    d3.event.sourceEvent.type &#x3D;&#x3D;&#x3D; &#x27;wheel&#x27;)
+                {
+                    const mΔ &#x3D; d3.event.sourceEvent.deltaY
+                    const λΔ &#x3D; mΔ/100*2*Math.PI/16                
+                    const oldλp &#x3D; this.view.unitdisk.args.transformation.state.λ
+                    const newλp &#x3D; oldλp - λΔ
+                    
+                    const min &#x3D; .1 * Math.PI
+                    const max &#x3D; .8 * Math.PI*2
+                    //if (newλp.θ &gt;&#x3D; max) console.log(&#x27;to big&#x27;)
+                    //if (newλp.θ &lt;&#x3D; min) console.log(&#x27;to small&#x27;)
+
+                    if (newλp &lt; max &amp;&amp; newλp &gt; min) 
+                        this.onDragλ(newλp)
+                } 
+                //               
+                else if (d3.event &amp;&amp; 
+                    d3.event.sourceEvent &amp;&amp; 
+                    d3.event.sourceEvent.type &#x3D;&#x3D;&#x3D; &#x27;touchmove&#x27;) {
+                    // :D                    
+                    if (d3.event.transform.k !&#x3D;&#x3D; lasttransform) {
+                        lasttransform &#x3D; d3.event.transform.k
+
+                        const newλp &#x3D; d3.event.transform.k+.5
+                        
+                        //console.log(&#x27;touch zoom&#x27;, newλp.θ)
+                        const min &#x3D; .1 * Math.PI
+                        const max &#x3D; .8 * Math.PI*2
+                        //if (newλp.θ &gt;&#x3D; max) console.log(&#x27;to big&#x27;)
+                        //if (newλp.θ &lt;&#x3D; min) console.log(&#x27;to small&#x27;)
+
+                        if (newλp.θ &lt; max &amp;&amp; newλp.θ &gt; min) 
+                            this.onDragλ(newλp)                        
+                    }
+                    else {
+                        //console.log(&#x27;touch drag&#x27;)
+                        this.onDragByNode(
+                            dragStartElement,
+                            dragStartPoint,
+                            this.currMousePosAsC()
+                        )
+                    }
+                }
+                //
+                else {
+                    this.onDragByNode(
+                        dragStartElement,
+                        dragStartPoint,
+                        this.currMousePosAsC()
+                    )
+                }
+            })
+            .on(&quot;start&quot;, ()&#x3D;&gt; {
+                //console.log(&#x27;start&#x27;)
+                this.onDragStart(
+                    dragStartElement &#x3D; this.findNodeByCell(),
+                    dragStartPoint &#x3D; this.currMousePosAsC()
+            )})
+            .on(&quot;end&quot;,   ()&#x3D;&gt; { 
+                //console.log(&#x27;end&#x27;)
+                this.onDragEnd(
+                    dragStartElement,
+                    dragStartPoint,
+                    this.currMousePosAsC() 
+            )})
+
+        //var transform &#x3D; d3.zoomTransform(selection.node());
+        //var transform &#x3D; d3.zoomTransform(this); in event sinks
+        const htapi &#x3D; this.view.hypertree.api
+        //const hoverpath &#x3D; this.view.hypertree.args.objects.pathes.firstornull(e&#x3D;&gt; type&#x3D;&#x3D;&#x3D;&#x27;HoverPath&#x27;)[0]
+        const hoverpath &#x3D; this.view.hypertree.args.objects.pathes[0]
+
+        this.view.parent.append(&#x27;circle&#x27;)
+            .attr(&quot;class&quot;, &quot;mouse-circle&quot;)
+            .attr(&quot;r&quot;, this.args.mouseRadius)
+            .on(&quot;dblclick&quot;,  d&#x3D;&gt; this.onDblClick(this.findNodeByCell()))
+            //.on(&quot;click&quot;,     d&#x3D;&gt; this.onClick(findNodeByCell()))
+            .on(&quot;mousemove&quot;, d&#x3D;&gt; htapi.setPathHead(hoverpath, this.findNodeByCell()))
+            .on(&quot;mouseout&quot;,  d&#x3D;&gt; htapi.setPathHead(hoverpath, undefined))
+            //.call(drag)
+            .call(zoom)
+            .on(&quot;dblclick.zoom&quot;, null)
+    }
+
+    //-----------------------------------------------------------------------------------------
+
+    private ping(p:C) {
+        /*
+        if (this.view.hypertree.args.objects.traces.length &#x3D;&#x3D;&#x3D; 0)
+            this.view.hypertree.args.objects.traces.push({
+                id: &#x27;gibt eh nur ans&#x27;,
+                points: []
+            })
+        this.view.hypertree.args.objects.traces[0].points.push(p)
+        */
+    }
+
+    private onDragStart &#x3D; (n:N, m:C)&#x3D;&gt; {
+        this.ping(m)                                             //#####################
+        
+        if (!this.animationTimer)
+            this.view.unitdisk.args.transformation.onDragStart(m)
+    }
+
+    private onDragλ &#x3D; (l:number)&#x3D;&gt; {
+        this.view.unitdisk.args.transformation.onDragλ(l)
+        this.view.hypertree.updateLayoutPath_(this.view.unitdisk.args.transformation.cache.centerNode) // hmmm?
+        this.view.hypertree.update.transformation()
+    }
+
+    private onDragByNode &#x3D; (n:N, s:C, e:C)&#x3D;&gt; {  
+        if (n &amp;&amp; n.name &#x3D;&#x3D; &#x27;θ&#x27;) {
+            this.view.unitdisk.args.transformation.onDragθ(s, e)
+            this.view.hypertree.update.transformation()
+        }
+        else if (n &amp;&amp; n.name &#x3D;&#x3D; &#x27;λ&#x27;) {            
+            this.onDragλ(πify(CktoCp(CmulR(e, -1)).θ)/2/Math.PI)
+        }
+        else {
+            this.view.unitdisk.args.transformation.onDragP(s, e)
+            this.view.hypertree.update.transformation()
+            this.ping(e)                                         //#####################            
+        }
+    }
+
+    private onDragEnd &#x3D; (n:N, s:C, e:C)&#x3D;&gt; {
+        
+        const ti3 &#x3D; d3.timer(()&#x3D;&gt; {                              //#####################            
+            ti3.stop()
+            this.view.hypertree.args.objects.traces.length &#x3D; 0            
+            this.view.hypertree.update.transformation()
+        }, 2000)
+
+        this.ping(e)                                             //#####################
+        
+        var dc &#x3D; CsubC(s, e)        
+        var dist &#x3D; Math.sqrt(dc.re*dc.re + dc.im*dc.im)
+        
+        if (dist &lt; .006)
+            this.onClick(n, e) // sollte on click sein und auch timer berücksichtigen oder?        
+
+        // immer?
+        this.view.unitdisk.args.transformation.onDragEnd(e)
+        this.view.hypertree.update.transformation()
+    }
+
+    private animationTimer &#x3D; null
+    private cancelAnimationTimer &#x3D; ()&#x3D;&gt; { 
+        this.animationTimer.stop(); this.animationTimer &#x3D; null 
+    }
+    private animateTo(n:N, m:C) : void
+    {
+        if (this.animationTimer)
+            return
+
+        this.onDragStart(n, m)
+
+        var md &#x3D; CktoCp(m), initR &#x3D; md.r, step &#x3D; 1, steps &#x3D; 20
+        this.animationTimer &#x3D; d3.timer(()&#x3D;&gt; {            
+            md.r &#x3D; initR * (1 - sigmoid(step++/steps))
+            if (step &gt; steps) {
+                this.cancelAnimationTimer()    
+                this.onDragEnd(n, m, CptoCk(md))
+            }
+            else  
+                this.onDragByNode(n, m, CptoCk(md))
+        },1)
+    }
+
+    //-----------------------------------------------------------------------------------------
+
+    private dblClickTimer &#x3D; null
+    private cancelClickTimer &#x3D; ()&#x3D;&gt; {
+        clearTimeout(this.dblClickTimer); this.dblClickTimer &#x3D; null 
+    }
+    private onClick &#x3D; (n:N, m) &#x3D;&gt; {
+        if (d3.event &amp;&amp; d3.event.preventDefault) 
+            d3.event.preventDefault()
+            
+        m &#x3D; m || this.currMousePosAsC()
+        //m &#x3D; n.cache
+
+        if (!this.dblClickTimer) 
+            this.dblClickTimer &#x3D; setTimeout(() &#x3D;&gt; {
+                this.dblClickTimer &#x3D; null
+                
+                if (n !&#x3D; this.view.unitdisk.args.transformation.cache.centerNode)
+                    this.animateTo(n, m)
+                else                
+                    this.args.onClick(n, m)
+            },
+            300)
+        else 
+            this.cancelClickTimer()
+    }
+
+    private onDblClick &#x3D; (n:N) &#x3D;&gt; {
+        d3.event.preventDefault()
+        var m &#x3D; this.currMousePosAsC()
+
+        this.cancelClickTimer()
+        //this.animateTo(n, ArrtoC(d3.mouse(this.args.parent)))
+        this.args.onClick(n, m)
+    }    
+}
+
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
+            var COMPODOC_CURRENT_PAGE_URL = 'InteractionLayerArgs.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

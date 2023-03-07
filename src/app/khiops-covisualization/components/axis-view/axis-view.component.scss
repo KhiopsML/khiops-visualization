@@ -1,0 +1,23 @@
+#axis-view-comp {
+
+	#axis-container {
+		position: relative;
+	}
+
+	#app-axis-context-container {
+		position: absolute;
+		top: 0;
+		right: 0;
+		height: 100%;
+		width: 100%;
+		background-color: #ffffff;
+		z-index: 10;
+
+	}
+
+	#loading-axis {
+		span {
+			margin-top: 1em;
+		}
+	}
+}

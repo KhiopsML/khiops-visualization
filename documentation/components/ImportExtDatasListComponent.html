@@ -1,0 +1,1083 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>visualization-component documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">visualization-component documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li
+  >
+  ImportExtDatasListComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/khiops-covisualization/components/commons/import-ext-datas-list/import-ext-datas-list.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-import-ext-datas-list</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./import-ext-datas-list.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./import-ext-datas-list.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#importedDatas" >importedDatas</a>
+                            </li>
+                            <li>
+                                <a href="#importExtDatas" >importExtDatas</a>
+                            </li>
+                            <li>
+                                <a href="#isLoadingDatas" >isLoadingDatas</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#translate" >translate</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#closeImport" >closeImport</a>
+                            </li>
+                            <li>
+                                <a href="#constructImportedDatasTable" >constructImportedDatasTable</a>
+                            </li>
+                            <li>
+                                <a href="#datasLoaded" >datasLoaded</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onClickOnClose" >onClickOnClose</a>
+                            </li>
+                            <li>
+                                <a href="#openLoadExternalDataDialog" >openLoadExternalDataDialog</a>
+                            </li>
+                            <li>
+                                <a href="#removeExtDatasFromList" >removeExtDatasFromList</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(importExtDatasService: <a href="../injectables/ImportExtDatasService.html" target="_self">ImportExtDatasService</a>, dialog: MatDialog, snackBar: MatSnackBar, translate: <a href="../interfaces/T.html" target="_self">TranslateService</a>, dialogRef: <a href="../components/ImportExtDatasListComponent.html" target="_self">MatDialogRef&lt;ImportExtDatasListComponent&gt;</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/app/khiops-covisualization/components/commons/import-ext-datas-list/import-ext-datas-list.component.ts:49</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>importExtDatasService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ImportExtDatasService.html" target="_self" >ImportExtDatasService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>dialog</td>
+                                                  
+                                                        <td>
+                                                                    <code>MatDialog</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>snackBar</td>
+                                                  
+                                                        <td>
+                                                                    <code>MatSnackBar</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>translate</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../interfaces/T.html" target="_self" >TranslateService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>dialogRef</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../components/ImportExtDatasListComponent.html" target="_self" >MatDialogRef&lt;ImportExtDatasListComponent&gt;</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="closeImport"></a>
+                    <span class="name">
+                        <span ><b>closeImport</b></span>
+                        <a href="#closeImport"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>closeImport()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="144"
+                            class="link-to-prism">src/app/khiops-covisualization/components/commons/import-ext-datas-list/import-ext-datas-list.component.ts:144</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="constructImportedDatasTable"></a>
+                    <span class="name">
+                        <span ><b>constructImportedDatasTable</b></span>
+                        <a href="#constructImportedDatasTable"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>constructImportedDatasTable()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="61"
+                            class="link-to-prism">src/app/khiops-covisualization/components/commons/import-ext-datas-list/import-ext-datas-list.component.ts:61</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="datasLoaded"></a>
+                    <span class="name">
+                        <span ><b>datasLoaded</b></span>
+                        <a href="#datasLoaded"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>datasLoaded(fileDatas: <a href="../classes/FileVO.html" target="_self">FileVO</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="149"
+                            class="link-to-prism">src/app/khiops-covisualization/components/commons/import-ext-datas-list/import-ext-datas-list.component.ts:149</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>fileDatas</td>
+                                    <td>
+                                                <code><a href="../classes/FileVO.html" target="_self" >FileVO</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="106"
+                            class="link-to-prism">src/app/khiops-covisualization/components/commons/import-ext-datas-list/import-ext-datas-list.component.ts:106</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onClickOnClose"></a>
+                    <span class="name">
+                        <span ><b>onClickOnClose</b></span>
+                        <a href="#onClickOnClose"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onClickOnClose()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="130"
+                            class="link-to-prism">src/app/khiops-covisualization/components/commons/import-ext-datas-list/import-ext-datas-list.component.ts:130</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openLoadExternalDataDialog"></a>
+                    <span class="name">
+                        <span ><b>openLoadExternalDataDialog</b></span>
+                        <a href="#openLoadExternalDataDialog"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openLoadExternalDataDialog()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="135"
+                            class="link-to-prism">src/app/khiops-covisualization/components/commons/import-ext-datas-list/import-ext-datas-list.component.ts:135</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeExtDatasFromList"></a>
+                    <span class="name">
+                        <span ><b>removeExtDatasFromList</b></span>
+                        <a href="#removeExtDatasFromList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>removeExtDatasFromList(e)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="108"
+                            class="link-to-prism">src/app/khiops-covisualization/components/commons/import-ext-datas-list/import-ext-datas-list.component.ts:108</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>e</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="importedDatas"></a>
+                    <span class="name">
+                        <span ><b>importedDatas</b></span>
+                        <a href="#importedDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">src/app/khiops-covisualization/components/commons/import-ext-datas-list/import-ext-datas-list.component.ts:48</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="importExtDatas"></a>
+                    <span class="name">
+                        <span ><b>importExtDatas</b></span>
+                        <a href="#importExtDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/FileVO.html" target="_self" >FileVO</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/app/khiops-covisualization/components/commons/import-ext-datas-list/import-ext-datas-list.component.ts:47</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isLoadingDatas"></a>
+                    <span class="name">
+                        <span ><b>isLoadingDatas</b></span>
+                        <a href="#isLoadingDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/app/khiops-covisualization/components/commons/import-ext-datas-list/import-ext-datas-list.component.ts:49</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="translate"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>translate</b></span>
+                        <a href="#translate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/T.html" target="_self" >TranslateService</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">src/app/khiops-covisualization/components/commons/import-ext-datas-list/import-ext-datas-list.component.ts:55</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+	Component,
+	OnInit
+} from &#x27;@angular/core&#x27;;
+import {
+	MatDialogRef,
+	MatDialog,
+	MatDialogConfig
+} from &#x27;@angular/material/dialog&#x27;;
+
+import * as _ from &#x27;lodash&#x27;; // Important to import lodash in karma
+import {
+	ImportExtDatasService
+} from &#x27;src/app/providers/import-ext-datas.service&#x27;;
+import {
+	TranslateService
+} from &#x27;@ngstack/translate&#x27;;
+import {
+	FileVO
+} from &#x27;@khiops-library/model/file-vo&#x27;;
+import {
+	ExtDatasVO
+} from &#x27;src/app/model/ext-datas-vo&#x27;;
+import {
+	IconCellComponent
+} from &#x27;@khiops-library/components/ag-grid/icon-cell/icon-cell.component&#x27;;
+import {
+	MatSnackBar
+} from &#x27;@angular/material/snack-bar&#x27;;
+import {
+	EventsService
+} from &#x27;src/app/providers/events.service&#x27;;
+import {
+	AppConfig
+} from &#x27;src/environments/environment&#x27;;
+import {
+	LoadExtDatasComponent
+} from &#x27;../load-ext-datas/load-ext-datas.component&#x27;;
+
+@Component({
+	selector: &#x27;app-import-ext-datas-list&#x27;,
+	templateUrl: &#x27;./import-ext-datas-list.component.html&#x27;,
+	styleUrls: [&#x27;./import-ext-datas-list.component.scss&#x27;]
+})
+export class ImportExtDatasListComponent implements OnInit {
+
+	importExtDatas: FileVO;
+	importedDatas: any;
+	isLoadingDatas &#x3D; false;
+
+	constructor(
+		private importExtDatasService: ImportExtDatasService,
+		private dialog: MatDialog,
+		private snackBar: MatSnackBar,
+		public translate: TranslateService,
+		private dialogRef: MatDialogRef &lt; ImportExtDatasListComponent &gt; ) {
+
+		this.constructImportedDatasTable();
+	}
+
+	constructImportedDatasTable() {
+
+		this.importedDatas &#x3D; {
+			displayedColumns: [{
+					headerName: &#x27;file name&#x27;,
+					field: &#x27;filename&#x27;
+				},
+				{
+					headerName: &#x27;join key&#x27;,
+					field: &#x27;joinKey&#x27;
+				},
+				{
+					headerName: &#x27;field&#x27;,
+					field: &#x27;field&#x27;
+				},
+				{
+					headerName: &#x27;dimension&#x27;,
+					field: &#x27;dimension&#x27;
+				},
+				{
+					headerName: &#x27;&#x27;,
+					field: &#x27;remove&#x27;,
+					cellRendererFramework: IconCellComponent,
+					cellRendererParams: {
+						icon: &#x27;delete&#x27;,
+						action: this.removeExtDatasFromList.bind(this)
+					}
+				}
+			],
+			values: []
+		};
+
+		const importedValues: ExtDatasVO[] &#x3D; this.importExtDatasService.getImportedDatas();
+		if (importedValues.length &gt; 0) {
+			for (let i &#x3D; 0; i &lt; importedValues.length; i++) {
+				this.importedDatas.values.push({
+					filename: importedValues[i].filename,
+					field: importedValues[i].field.name,
+					joinKey: importedValues[i].joinKey,
+					dimension: importedValues[i].dimension,
+				});
+			}
+		}
+	}
+
+	ngOnInit() {}
+
+	removeExtDatasFromList(e) {
+		const importedDatas &#x3D; this.importExtDatasService.removeImportedDatas(e.data.filename, e.data.dimension, e.data.joinKey, e.data.separator, e.data.field);
+		this.snackBar.open(this.translate.get(&#x27;SNACKS.EXTERNAL_DATA_DELETED&#x27;), null, {
+			duration: 2000,
+			panelClass: &#x27;success&#x27;
+		});
+		if (importedDatas) {
+			this.snackBar.open(this.translate.get(&#x27;SNACKS.EXTERNAL_DATA_DELETED&#x27;), null, {
+				duration: 2000,
+				panelClass: &#x27;success&#x27;
+			});
+
+		} else {
+			this.snackBar.open(this.translate.get(&#x27;SNACKS.EXTERNAL_DATA_DELETE_ERROR&#x27;), null, {
+				duration: 2000,
+				panelClass: &#x27;error&#x27;
+			});
+		}
+		// Update datas table
+		this.constructImportedDatasTable();
+	}
+
+	onClickOnClose() {
+		this.dialogRef.close();
+		this.openLoadExternalDataDialog();
+	}
+
+	openLoadExternalDataDialog() {
+		const config &#x3D; new MatDialogConfig();
+		config.width &#x3D; AppConfig.common.MANAGE_VIEWS.WIDTH;
+		config.maxWidth &#x3D; AppConfig.common.MANAGE_VIEWS.MAX_WIDTH;
+		const dialogRef: MatDialogRef &lt; LoadExtDatasComponent &gt; &#x3D; this.dialog.open(LoadExtDatasComponent, config);
+		dialogRef.disableClose &#x3D; true;
+		dialogRef.afterClosed().toPromise().then(() &#x3D;&gt; {});
+	}
+
+	closeImport() {
+		this.importExtDatas &#x3D; undefined;
+		this.constructImportedDatasTable();
+	}
+
+	datasLoaded(fileDatas: FileVO) {
+		this.importExtDatas &#x3D; fileDatas;
+	}
+
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div id&#x3D;&quot;import-ext-datas-list-comp&quot; fxFlexFill #manageViews fxLayout&#x3D;&quot;column&quot;&gt;
+	&lt;div *ngIf&#x3D;&quot;!importExtDatas&quot; fxFlexFill&gt;
+		&lt;div fxLayout&#x3D;&quot;row&quot; id&#x3D;&quot;import-ext-datas-header&quot; fxLayoutAlign&#x3D;&quot;center center&quot;&gt;
+			&lt;h2 fxFlex&gt;{{ &#x27;GLOBAL.EXTERNAL_DATA&#x27; | translate | uppercase }}&lt;/h2&gt;
+			&lt;button class&#x3D;&quot;grey-btn&quot; mat-icon-button matTooltip&#x3D;&quot;{{ &#x27;GLOBAL.CLOSE&#x27; | translate }}&quot; (click)&#x3D;&quot;onClickOnClose()&quot;&gt;
+				&lt;mat-icon fxFlexFill fxLayoutAlign&#x3D;&quot;center center&quot;&gt;close&lt;/mat-icon&gt;
+			 &lt;/button&gt;
+		&lt;/div&gt;
+		&lt;div *ngIf&#x3D;&quot;!isLoadingDatas&quot; id&#x3D;&quot;import-ext-datas-content&quot; fxLayout&#x3D;&quot;column&quot; fxFlexFill
+			fxLayoutAlign&#x3D;&quot;start center&quot;&gt;
+			&lt;div *ngIf&#x3D;&quot;importedDatas &amp;&amp; importedDatas.values&quot; id&#x3D;&quot;import-ext-datas-list-table&quot; fxFlexFill
+				fxLayout&#x3D;&quot;column&quot; fxLayoutAlign&#x3D;&quot;start center&quot;&gt;
+				&lt;h1 fxFlexFill class&#x3D;&quot;small-title&quot;&gt;{{ &#x27;GLOBAL.IMPORTED_EXTERNAL_DATA&#x27; | translate }}&lt;/h1&gt;
+				&lt;kl-ag-grid fxFlexFill [showLevelDistribution]&#x3D;&quot;false&quot;  [showSearch]&#x3D;&quot;false&quot;
+					[showLineSelection]&#x3D;&quot;false&quot; [showColumnsSelection]&#x3D;&quot;false&quot; [rowHeight]&#x3D;&quot;40&quot;
+					[inputDatas]&#x3D;&quot;importedDatas.values&quot; [title]&#x3D;&quot;&#x27;&#x27;&quot; [smallTitle]&#x3D;&quot;true&quot; [sizeColumnsToFit]&#x3D;&quot;true&quot;
+					[displayedColumns]&#x3D;&quot;importedDatas.displayedColumns&quot;&gt;
+				&lt;/kl-ag-grid&gt;
+			&lt;/div&gt;
+			&lt;kl-import-file-loader fxFlexFill (datasLoaded)&#x3D;&quot;datasLoaded($event)&quot;&gt;&lt;/kl-import-file-loader&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;app-import-ext-datas *ngIf&#x3D;&quot;importExtDatas &amp;&amp; !isLoadingDatas&quot; [importExtDatas]&#x3D;&quot;importExtDatas&quot;
+		(closeImport)&#x3D;&quot;closeImport()&quot;&gt;
+	&lt;/app-import-ext-datas&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./import-ext-datas-list.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">@import &quot;khiops-library/src/lib/styles/theme.scss&quot;;
+
+#import-ext-datas-list-comp {
+
+	padding-bottom: 1.6em;
+
+	#import-ext-datas-header {
+		height: 68px;
+
+		h2 {
+			margin-left: 1em;
+		}
+
+		button {
+			margin-left: 1em;
+		}
+	}
+
+	#import-ext-datas-content {
+		overflow: hidden;
+		max-height: 70vh;
+
+		#import-ext-datas-list-table {
+			padding: 1em;
+			margin-bottom: 1em;
+		}
+	}
+
+	#import-ext-datas-content-empty {
+		margin: 3em;
+
+		span {
+			text-align: center;
+		}
+	}
+
+	kl-ag-grid {
+		border: 1px solid #eee;
+		min-height: 212px;
+		max-height: 212px;
+		height: 212px !important;
+
+		::ng-deep .ag-center-cols-viewport {
+			overflow-x: hidden;
+		}
+
+	}
+
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div id="import-ext-datas-list-comp" fxFlexFill #manageViews fxLayout="column">	<div *ngIf="!importExtDatas" fxFlexFill>		<div fxLayout="row" id="import-ext-datas-header" fxLayoutAlign="center center">			<h2 fxFlex>{{ \'GLOBAL.EXTERNAL_DATA\' | translate | uppercase }}</h2>			<button class="grey-btn" mat-icon-button matTooltip="{{ \'GLOBAL.CLOSE\' | translate }}" (click)="onClickOnClose()">				<mat-icon fxFlexFill fxLayoutAlign="center center">close</mat-icon>			 </button>		</div>		<div *ngIf="!isLoadingDatas" id="import-ext-datas-content" fxLayout="column" fxFlexFill			fxLayoutAlign="start center">			<div *ngIf="importedDatas && importedDatas.values" id="import-ext-datas-list-table" fxFlexFill				fxLayout="column" fxLayoutAlign="start center">				<h1 fxFlexFill class="small-title">{{ \'GLOBAL.IMPORTED_EXTERNAL_DATA\' | translate }}</h1>				<kl-ag-grid fxFlexFill [showLevelDistribution]="false"  [showSearch]="false"					[showLineSelection]="false" [showColumnsSelection]="false" [rowHeight]="40"					[inputDatas]="importedDatas.values" [title]="\'\'" [smallTitle]="true" [sizeColumnsToFit]="true"					[displayedColumns]="importedDatas.displayedColumns">				</kl-ag-grid>			</div>			<kl-import-file-loader fxFlexFill (datasLoaded)="datasLoaded($event)"></kl-import-file-loader>		</div>	</div>	<app-import-ext-datas *ngIf="importExtDatas && !isLoadingDatas" [importExtDatas]="importExtDatas"		(closeImport)="closeImport()">	</app-import-ext-datas></div></div>'
+    var COMPONENTS = [{'name': 'AgGridComponent', 'selector': 'kl-ag-grid'},{'name': 'AnnotationComponent', 'selector': 'app-annotation'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AppVersionComponent', 'selector': 'kl-app-version'},{'name': 'AxisComponent', 'selector': 'app-axis'},{'name': 'AxisViewComponent', 'selector': 'app-axis-view'},{'name': 'BtnFullscreenComponent', 'selector': 'kl-btn-fullscreen'},{'name': 'CellStatsComponent', 'selector': 'kl-cell-stats'},{'name': 'ChartNextComponent', 'selector': 'kl-chart-next'},{'name': 'CheckboxCellComponent', 'selector': 'kl-checkbox-cell'},{'name': 'ClusterDetailsComponent', 'selector': 'app-cluster-details'},{'name': 'CompositionComponent', 'selector': 'app-composition'},{'name': 'ConfirmDialogComponent', 'selector': 'kl-confirm-dialog'},{'name': 'CoocurenceMatrixComponent', 'selector': 'app-coocurence-matrix'},{'name': 'DescriptionBlockComponent', 'selector': 'app-description-block'},{'name': 'DistributionGraphCanvasComponent', 'selector': 'kl-distribution-graph-canvas'},{'name': 'EvaluationViewComponent', 'selector': 'app-evaluation-view'},{'name': 'ExternalDatasComponent', 'selector': 'app-external-datas'},{'name': 'FileLoaderComponent', 'selector': 'kl-file-loader'},{'name': 'GraphHeaderComponent', 'selector': 'kl-graph-header'},{'name': 'HeaderManageViewComponent', 'selector': 'app-header-manage-view'},{'name': 'HeaderTitleComponent', 'selector': 'kl-header-title'},{'name': 'HeaderToolsComponent', 'selector': 'kl-header-tools'},{'name': 'HierarchySelectComponent', 'selector': 'app-hierarchy-select'},{'name': 'HomeLayoutComponent', 'selector': 'app-home-layout'},{'name': 'HomeLayoutComponent', 'selector': 'app-home-layout'},{'name': 'IconCellComponent', 'selector': 'kl-icon-cell'},{'name': 'ImportExtDatasComponent', 'selector': 'app-import-ext-datas'},{'name': 'ImportExtDatasListComponent', 'selector': 'app-import-ext-datas-list'},{'name': 'ImportFileLoaderComponent', 'selector': 'kl-import-file-loader'},{'name': 'InformationsBlockComponent', 'selector': 'kl-informations-block'},{'name': 'LegendComponent', 'selector': 'kl-legend'},{'name': 'LevelDistributionGraphCanvasComponent', 'selector': 'app-level-distribution-graph'},{'name': 'LibVersionComponent', 'selector': 'kl-lib-version'},{'name': 'LoadExtDatasComponent', 'selector': 'app-load-ext-datas'},{'name': 'ManageViewsComponent', 'selector': 'app-manage-views'},{'name': 'MatrixCanvasComponent', 'selector': 'kl-matrix-canvas'},{'name': 'MatrixContainerComponent', 'selector': 'app-matrix-container'},{'name': 'MatrixTooltipComponent', 'selector': 'kl-matrix-tooltip'},{'name': 'ModelingViewComponent', 'selector': 'app-modeling-view'},{'name': 'NoDataComponent', 'selector': 'kl-no-data'},{'name': 'Preparation2dViewComponent', 'selector': 'app-preparation-2d-view'},{'name': 'PreparationViewComponent', 'selector': 'app-preparation-view'},{'name': 'ProjectViewComponent', 'selector': 'app-project-view'},{'name': 'ProjectViewComponent', 'selector': 'app-project-view'},{'name': 'RegressionMatrixComponent', 'selector': 'app-regression-matrix'},{'name': 'ReleaseButtonComponent', 'selector': 'kl-release-button'},{'name': 'ReleaseNotesComponent', 'selector': 'kl-release-notes'},{'name': 'ScrollableGraphCanvasComponent', 'selector': ''},{'name': 'SelectableComponent', 'selector': ''},{'name': 'SelectableTabComponent', 'selector': ''},{'name': 'SelectedClustersComponent', 'selector': 'app-selected-clusters'},{'name': 'SelectToggleButtonComponent', 'selector': 'app-select-toggle-button'},{'name': 'SelectTrainedPredictorComponent', 'selector': 'app-select-trained-predictor'},{'name': 'TargetDistributionGraphCanvasComponent', 'selector': 'app-target-distribution-graph-canvas'},{'name': 'TargetLiftGraphComponent', 'selector': 'app-target-lift-graph'},{'name': 'TargetVariableStatsCanvasComponent', 'selector': 'app-target-variable-stats-canvas'},{'name': 'TreeDetailsComponent', 'selector': 'app-tree-details'},{'name': 'TreeHyperComponent', 'selector': 'app-tree-hyper'},{'name': 'TreeLeafDetailsComponent', 'selector': 'app-tree-leaf-details'},{'name': 'TreePreparationViewComponent', 'selector': 'app-tree-preparation-view'},{'name': 'TreeSelectComponent', 'selector': 'app-tree-select'},{'name': 'TreeSelectComponent', 'selector': 'app-tree-select'},{'name': 'UnfoldHierarchyComponent', 'selector': 'app-unfold-hierarchy'},{'name': 'UserSettingsComponent', 'selector': 'app-user-settings'},{'name': 'UserSettingsComponent', 'selector': 'app-user-settings'},{'name': 'VarDetailsPreparation2dComponent', 'selector': 'app-var-details-preparation-2d'},{'name': 'VarDetailsPreparationComponent', 'selector': 'app-var-details-preparation'},{'name': 'VarDetailsTreePreparationComponent', 'selector': 'app-var-details-tree-preparation'},{'name': 'VariableGraphDetailsComponent', 'selector': 'app-variable-graph-details'},{'name': 'VariableGraphDetailsComponent', 'selector': 'app-variable-graph-details'},{'name': 'WatchResizeComponent', 'selector': ''}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'ImportExtDatasListComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'ImportExtDatasListComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

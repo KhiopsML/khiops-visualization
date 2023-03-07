@@ -1,0 +1,53 @@
+@import "../../styles/theme.scss";
+
+#graph-header-comp {
+	padding-top: 0.4em;
+	max-height: 60px;
+	margin-bottom: 1em !important;
+	overflow: hidden;
+
+	h1 {
+		margin-top: auto !important;
+		margin-bottom: auto !important;
+
+		span {
+			line-height: 1em;
+		}
+
+		em {
+			font-size: 0.8em;
+		}
+	}
+
+	.limit-warning {
+		color: $redMain;
+		font-size: 0.9em;
+		padding-top: 6px;
+
+		mat-icon {
+			font-size: 1.6em;
+		}
+	}
+
+	#graph-header-tools {
+		margin-right: 4px;
+		height: 100%;
+		// background: mat-color($primary, 50, 0.5);
+		padding: 3px 8px;
+		border-radius: 5px;
+		// border: 1px solid mat-color($primary, 50);
+
+		h2 {
+			font-size: 0.8em;
+			margin: 0;
+		}
+
+		.mat-slider-horizontal {
+			min-width: 88px !important;
+			height: 28px !important;
+			padding: 0 !important;
+			margin-top: -17px;
+		}
+	}
+
+}

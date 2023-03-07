@@ -1,0 +1,47 @@
+<div id="home-layout-comp" fxFlexFill role="main">
+	<mat-sidenav-container fxFlexFill>
+		<mat-sidenav #sidenav mode="over" position="end" disableClose="true" [(opened)]="opened">
+			<app-user-settings (toggleNavDrawerChanged)="onToggleNavDrawerChanged($event)" [opened]="opened">
+			</app-user-settings>
+		</mat-sidenav>
+		<mat-sidenav-content>
+			<div class="container" [hidden]="appDatas && appDatas.datas && isCompatibleJson" fxLayout="column">
+				<kl-header-title [title]="appTitle" [logo]="'./assets/logo.png'"></kl-header-title>
+				<!-- <kl-app-version id="version" [appVersion]="appVersion"></kl-app-version> -->
+				<kl-file-loader #fileLoader [onFileLoaderDataChanged]="onFileLoaderDataChangedCb"
+					[applicationName]="appName"></kl-file-loader>
+			</div>
+			<div *ngIf="appDatas && appDatas.datas && isCompatibleJson" class="container" fxLayout="column">
+				<kl-header-title [title]="appTitle" [logo]="'./assets/logo.png'"></kl-header-title>
+				<mat-tab-group #tabsMenu mat-align-tabs="center" color="primary" [@.disabled]="true"
+					[selectedIndex]="activeTab" (selectedTabChange)="onSelectedTabChanged($event)">
+					<mat-tab label="{{ 'TITLE.PROJECT' | translate }}">
+						<ng-template matTabLabel>
+							<label title="{{ 'TOOLTIPS.TABS.PROJECT' | translate }}">{{ 'TITLE.PROJECT' | translate }}</label>
+						</ng-template>
+					</mat-tab>
+					<mat-tab label="{{ 'TITLE.AXIS' | translate }}">
+						<ng-template matTabLabel>
+							<label title="{{ 'TOOLTIPS.TABS.AXIS' | translate }}">{{ 'TITLE.AXIS' | translate }}</label>
+						</ng-template>
+					</mat-tab>
+					<mat-tab *ngIf="isContextDimensions" label="{{ 'TITLE.CONTEXT' | translate }}">
+						<ng-template matTabLabel>
+							<label title="{{ 'TOOLTIPS.TABS.CONTEXT' | translate }}">{{ 'TITLE.CONTEXT' | translate }}</label>
+						</ng-template>
+					</mat-tab>
+				</mat-tab-group>
+				<app-project-view *ngIf="activeTab === 0" [selectedTab]="selectedTab"></app-project-view>
+				<app-axis-view *ngIf="activeTab !== 0" [selectedTab]="selectedTab" [openContextView]="openContextView">
+				</app-axis-view>
+			</div>
+			<div id="header-right" layout="row" fxLayoutAlign="center center">
+				<app-header-manage-view *ngIf="activeTab !== 0 && appDatas && appDatas.datas && isCompatibleJson"></app-header-manage-view>
+				<kl-header-tools fxFlex [appVersion]="appVersion" *ngIf="appDatas && appDatas.datas && isCompatibleJson"
+					(toggleNavDrawerChanged)="onToggleNavDrawerChanged($event)">
+				</kl-header-tools>
+				<kl-release-button (isUpdateAvailable)="isUpdateAvailable($event)"></kl-release-button>
+			</div>
+		</mat-sidenav-content>
+	</mat-sidenav-container>
+</div>

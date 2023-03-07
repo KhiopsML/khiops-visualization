@@ -1,0 +1,29 @@
+@import "khiops-library/src/lib/styles/theme.scss";
+
+#level-distribution-graph-canvas-comp {
+
+	kl-chart-next {
+		padding-top: 30px;
+		height: 90% !important;
+	}
+
+	.comp-header-tools {
+		h2 {
+			margin: 0.8em 1em 0em 2em;
+		}
+
+		kl-header-tools {
+			button {
+				background: white !important;
+			}
+		}
+
+	}
+
+}
+
+#level-distribution-graph-canvas-comp.selected {
+	>div {
+		box-shadow: none !important;
+	}
+}

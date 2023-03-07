@@ -1,0 +1,13 @@
+<div id="confirm-dialog-comp">
+	<h1 *ngIf="title" style="margin-left: 0; margin-bottom: 1.5rem">
+		{{title}}
+	</h1>
+	<mat-dialog-content>
+		{{message}}
+	</mat-dialog-content>
+	<mat-dialog-actions align="end">
+		<button mat-button [mat-dialog-close]="'confirm'" cdkFocusInitial>{{ confirmButtonText }}</button>
+		<button *ngIf="displayRejectBtn" mat-button [mat-dialog-close]="'reject'">{{ 'GLOBAL.NO' | translate }}</button>
+		<button *ngIf="displayCancelBtn" mat-button [mat-dialog-close]="'cancel'">{{ 'GLOBAL.CANCEL' | translate }}</button>
+	</mat-dialog-actions>
+</div>

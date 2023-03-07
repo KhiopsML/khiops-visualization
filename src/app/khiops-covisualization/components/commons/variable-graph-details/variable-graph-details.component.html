@@ -1,0 +1,11 @@
+<div id="variable-graph-details-comp" fxLayout="column" fxFlexFill>
+	<kl-graph-header [smallTitle]="true" [selectedVariable]="selectedNode" [title]="title"
+		(scaleValueChanged)="onScaleValueChanged($event)">
+	</kl-graph-header>
+	<kl-distribution-graph-canvas #distributionGraph fxFlex fxLayout="column" [position]="position"
+		id="{{'cluster-distribution-'+position}}" [attr.id]="'cluster-distribution-'+position" [scaleValue]="scaleValue"
+		[inputDatas]="graphDetails" [activeEntries]="activeEntries" [hideGraphOptions]="true"
+		[graphOptions]="graphOptions" (selectedItemChanged)="onSelectBarChanged($event)"
+		(scrollPositionChanged)="onScrollPositionChanged($event)" [scrollPosition]="scrollPosition">
+	</kl-distribution-graph-canvas>
+</div>

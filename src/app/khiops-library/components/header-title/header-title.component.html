@@ -1,0 +1,6 @@
+<div id="header-title-comp" fxLayout="row" fxLayoutAlign="center center">
+	<img id="header-title-logo" src="{{ logo }}" alt="{{ 'ARIA.SERVICE_LOGO' | translate }}">
+	<span id="header-title-text" *ngIf="displayedTitle">
+		<strong>{{ displayedTitle[0] }}</strong> {{ displayedTitle[1] }}
+	</span>
+</div>

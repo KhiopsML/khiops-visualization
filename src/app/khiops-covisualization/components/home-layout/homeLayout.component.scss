@@ -1,0 +1,39 @@
+@import "khiops-library/src/lib/styles/theme.scss";
+
+#home-layout-comp {
+
+	// ::selection {
+	// 	color: none;
+	// 	background: none;
+	// }
+
+	.mat-tab-label-container {
+		margin-right: 15em;
+	}
+
+	#header-right {
+		position: absolute;
+		top: 0;
+		right: 0;
+		height: 58px;
+		z-index: 1000;
+	}
+
+	#version {
+		position: absolute;
+		right: 0;
+		top: 1.8em;
+	}
+
+	mat-tab-group {
+		width: 100%;
+	}
+
+	app-project-view,
+	app-axis-view {
+		height: calc(100% - 74px);
+		width: calc(100% - 14px);
+		background: #f6f6f6;
+		padding: 8px 4px 6px 6px;
+	}
+}

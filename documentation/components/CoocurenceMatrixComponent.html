@@ -1,0 +1,1999 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>visualization-component documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">visualization-component documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li
+  >
+  CoocurenceMatrixComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/khiops-visualization/components/commons/coocurence-matrix/coocurence-matrix.component.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Test it with iris2d file</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="../miscellaneous/typealiases.html#C" target="_self" >OnChanges</a></code>
+                    <code><a href="https://angular.io/api/core/AfterViewInit" target="_blank" >AfterViewInit</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-coocurence-matrix</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./coocurence-matrix.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./coocurence-matrix.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#isFullscreen" >isFullscreen</a>
+                            </li>
+                            <li>
+                                <a href="#matrixCanvas" >matrixCanvas</a>
+                            </li>
+                            <li>
+                                <a href="#matrixCells" >matrixCells</a>
+                            </li>
+                            <li>
+                                <a href="#matrixModes" >matrixModes</a>
+                            </li>
+                            <li>
+                                <a href="#matrixOptions" >matrixOptions</a>
+                            </li>
+                            <li>
+                                <a href="#matrixTargets" >matrixTargets</a>
+                            </li>
+                            <li>
+                                <a href="#minMaxValues" >minMaxValues</a>
+                            </li>
+                            <li>
+                                <a href="#preparation2dDatas" >preparation2dDatas</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#selectableService" >selectableService</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#changeMatrixMode" >changeMatrixMode</a>
+                            </li>
+                            <li>
+                                <a href="#changeMatrixTarget" >changeMatrixTarget</a>
+                            </li>
+                            <li>
+                                <a href="#changeMatrixType" >changeMatrixType</a>
+                            </li>
+                            <li>
+                                <a href="#constructModeSelectBox" >constructModeSelectBox</a>
+                            </li>
+                            <li>
+                                <a href="#constructTargetSelectBox" >constructTargetSelectBox</a>
+                            </li>
+                            <li>
+                                <a href="#ngAfterViewInit" >ngAfterViewInit</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnChanges" >ngOnChanges</a>
+                            </li>
+                            <li>
+                                <a href="#onCellSelected" >onCellSelected</a>
+                            </li>
+                            <li>
+                                <a href="#onMatrixAxisInverted" >onMatrixAxisInverted</a>
+                            </li>
+                            <li>
+                                <a href="#onSelectCellRowChanged" >onSelectCellRowChanged</a>
+                            </li>
+                            <li>
+                                <a href="#onSelectedMatrixTabChanged" >onSelectedMatrixTabChanged</a>
+                            </li>
+                            <li>
+                                <a href="#onToggleFullscreen" >onToggleFullscreen</a>
+                            </li>
+                            <li>
+                                <a href="#selectTargetSelectBox" >selectTargetSelectBox</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#selectedVariable" >selectedVariable</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#selectCellRowChanged" >selectCellRowChanged</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(selectableService: <a href="../injectables/SelectableService.html" target="_self">SelectableService</a>, translate: <a href="../interfaces/T.html" target="_self">TranslateService</a>, khiopsLibraryService: <a href="../injectables/KhiopsLibraryService.html" target="_self">KhiopsLibraryService</a>, appService: <a href="../injectables/AppService.html" target="_self">AppService</a>, preparation2dDatasService: <a href="../injectables/Preparation2dDatasService.html" target="_self">Preparation2dDatasService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="81" class="link-to-prism">src/app/khiops-visualization/components/commons/coocurence-matrix/coocurence-matrix.component.ts:81</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>selectableService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/SelectableService.html" target="_self" >SelectableService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>translate</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../interfaces/T.html" target="_self" >TranslateService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>khiopsLibraryService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/KhiopsLibraryService.html" target="_self" >KhiopsLibraryService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>appService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AppService.html" target="_self" >AppService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>preparation2dDatasService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/Preparation2dDatasService.html" target="_self" >Preparation2dDatasService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section>
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="selectedVariable"></a>
+                        <b>selectedVariable</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/Preparation2dVariableVO.html" target="_self" >Preparation2dVariableVO</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="73" class="link-to-prism">src/app/khiops-visualization/components/commons/coocurence-matrix/coocurence-matrix.component.ts:73</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+    <section>
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="selectCellRowChanged"></a>
+                        <b>selectCellRowChanged</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>EventEmitter&lt;any&gt;</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">src/app/khiops-visualization/components/commons/coocurence-matrix/coocurence-matrix.component.ts:74</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="changeMatrixMode"></a>
+                    <span class="name">
+                        <span ><b>changeMatrixMode</b></span>
+                        <a href="#changeMatrixMode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>changeMatrixMode(mode: <a href="../interfaces/MatrixModeI.html" target="_self">MatrixModeI</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="257"
+                            class="link-to-prism">src/app/khiops-visualization/components/commons/coocurence-matrix/coocurence-matrix.component.ts:257</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>mode</td>
+                                    <td>
+                                                <code><a href="../interfaces/MatrixModeI.html" target="_self" >MatrixModeI</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="changeMatrixTarget"></a>
+                    <span class="name">
+                        <span ><b>changeMatrixTarget</b></span>
+                        <a href="#changeMatrixTarget"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>changeMatrixTarget(target: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="266"
+                            class="link-to-prism">src/app/khiops-visualization/components/commons/coocurence-matrix/coocurence-matrix.component.ts:266</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>target</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="changeMatrixType"></a>
+                    <span class="name">
+                        <span ><b>changeMatrixType</b></span>
+                        <a href="#changeMatrixType"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>changeMatrixType(type: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="251"
+                            class="link-to-prism">src/app/khiops-visualization/components/commons/coocurence-matrix/coocurence-matrix.component.ts:251</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>type</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="constructModeSelectBox"></a>
+                    <span class="name">
+                        <span ><b>constructModeSelectBox</b></span>
+                        <a href="#constructModeSelectBox"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>constructModeSelectBox()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="138"
+                            class="link-to-prism">src/app/khiops-visualization/components/commons/coocurence-matrix/coocurence-matrix.component.ts:138</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="constructTargetSelectBox"></a>
+                    <span class="name">
+                        <span ><b>constructTargetSelectBox</b></span>
+                        <a href="#constructTargetSelectBox"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>constructTargetSelectBox()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="221"
+                            class="link-to-prism">src/app/khiops-visualization/components/commons/coocurence-matrix/coocurence-matrix.component.ts:221</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngAfterViewInit"></a>
+                    <span class="name">
+                        <span ><b>ngAfterViewInit</b></span>
+                        <a href="#ngAfterViewInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngAfterViewInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="94"
+                            class="link-to-prism">src/app/khiops-visualization/components/commons/coocurence-matrix/coocurence-matrix.component.ts:94</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnChanges"></a>
+                    <span class="name">
+                        <span ><b>ngOnChanges</b></span>
+                        <a href="#ngOnChanges"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnChanges(changes: <a href="../undefineds/C.html" target="_self">SimpleChanges</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="112"
+                            class="link-to-prism">src/app/khiops-visualization/components/commons/coocurence-matrix/coocurence-matrix.component.ts:112</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>changes</td>
+                                    <td>
+                                                <code><a href="../miscellaneous/typealiases.html#C" target="_self" >SimpleChanges</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onCellSelected"></a>
+                    <span class="name">
+                        <span ><b>onCellSelected</b></span>
+                        <a href="#onCellSelected"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onCellSelected(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="278"
+                            class="link-to-prism">src/app/khiops-visualization/components/commons/coocurence-matrix/coocurence-matrix.component.ts:278</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>event</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onMatrixAxisInverted"></a>
+                    <span class="name">
+                        <span ><b>onMatrixAxisInverted</b></span>
+                        <a href="#onMatrixAxisInverted"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onMatrixAxisInverted()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="272"
+                            class="link-to-prism">src/app/khiops-visualization/components/commons/coocurence-matrix/coocurence-matrix.component.ts:272</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onSelectCellRowChanged"></a>
+                    <span class="name">
+                        <span ><b>onSelectCellRowChanged</b></span>
+                        <a href="#onSelectCellRowChanged"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onSelectCellRowChanged(rowItem: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="288"
+                            class="link-to-prism">src/app/khiops-visualization/components/commons/coocurence-matrix/coocurence-matrix.component.ts:288</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>rowItem</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onSelectedMatrixTabChanged"></a>
+                    <span class="name">
+                        <span ><b>onSelectedMatrixTabChanged</b></span>
+                        <a href="#onSelectedMatrixTabChanged"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onSelectedMatrixTabChanged(e)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="206"
+                            class="link-to-prism">src/app/khiops-visualization/components/commons/coocurence-matrix/coocurence-matrix.component.ts:206</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>e</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onToggleFullscreen"></a>
+                    <span class="name">
+                        <span ><b>onToggleFullscreen</b></span>
+                        <a href="#onToggleFullscreen"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onToggleFullscreen(isFullscreen: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="199"
+                            class="link-to-prism">src/app/khiops-visualization/components/commons/coocurence-matrix/coocurence-matrix.component.ts:199</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>isFullscreen</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectTargetSelectBox"></a>
+                    <span class="name">
+                        <span ><b>selectTargetSelectBox</b></span>
+                        <a href="#selectTargetSelectBox"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>selectTargetSelectBox(selected: null)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="231"
+                            class="link-to-prism">src/app/khiops-visualization/components/commons/coocurence-matrix/coocurence-matrix.component.ts:231</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Default value</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>selected</td>
+                                    <td>
+                                            <code>null</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>null</code>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isFullscreen"></a>
+                    <span class="name">
+                        <span ><b>isFullscreen</b></span>
+                        <a href="#isFullscreen"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="81" class="link-to-prism">src/app/khiops-visualization/components/commons/coocurence-matrix/coocurence-matrix.component.ts:81</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="matrixCanvas"></a>
+                    <span class="name">
+                        <span ><b>matrixCanvas</b></span>
+                        <a href="#matrixCanvas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../components/MatrixCanvasComponent.html" target="_self" >MatrixCanvasComponent</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(&#x27;matrixCanvas&#x27;, {static: false})<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">src/app/khiops-visualization/components/commons/coocurence-matrix/coocurence-matrix.component.ts:70</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="matrixCells"></a>
+                    <span class="name">
+                        <span ><b>matrixCells</b></span>
+                        <a href="#matrixCells"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/CoocurenceCellsVO.html" target="_self" >CoocurenceCellsVO</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="79" class="link-to-prism">src/app/khiops-visualization/components/commons/coocurence-matrix/coocurence-matrix.component.ts:79</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="matrixModes"></a>
+                    <span class="name">
+                        <span ><b>matrixModes</b></span>
+                        <a href="#matrixModes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/MatrixModesI.html" target="_self" >MatrixModesI</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new MatrixModesI()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="77" class="link-to-prism">src/app/khiops-visualization/components/commons/coocurence-matrix/coocurence-matrix.component.ts:77</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="matrixOptions"></a>
+                    <span class="name">
+                        <span ><b>matrixOptions</b></span>
+                        <a href="#matrixOptions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/MatrixOptionsI.html" target="_self" >MatrixOptionsI</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new MatrixOptionsI()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="76" class="link-to-prism">src/app/khiops-visualization/components/commons/coocurence-matrix/coocurence-matrix.component.ts:76</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="matrixTargets"></a>
+                    <span class="name">
+                        <span ><b>matrixTargets</b></span>
+                        <a href="#matrixTargets"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/T.html" target="_self" >MatrixTargetsI</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new MatrixTargetsI()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="78" class="link-to-prism">src/app/khiops-visualization/components/commons/coocurence-matrix/coocurence-matrix.component.ts:78</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="minMaxValues"></a>
+                    <span class="name">
+                        <span ><b>minMaxValues</b></span>
+                        <a href="#minMaxValues"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="80" class="link-to-prism">src/app/khiops-visualization/components/commons/coocurence-matrix/coocurence-matrix.component.ts:80</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="preparation2dDatas"></a>
+                    <span class="name">
+                        <span ><b>preparation2dDatas</b></span>
+                        <a href="#preparation2dDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/Preparation2dDatasVO.html" target="_self" >Preparation2dDatasVO</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">src/app/khiops-visualization/components/commons/coocurence-matrix/coocurence-matrix.component.ts:72</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectableService"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>selectableService</b></span>
+                        <a href="#selectableService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../injectables/SelectableService.html" target="_self" >SelectableService</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="83" class="link-to-prism">src/app/khiops-visualization/components/commons/coocurence-matrix/coocurence-matrix.component.ts:83</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+	Component,
+	SimpleChanges,
+	Input,
+	OnChanges,
+	AfterViewInit,
+	ViewChild,
+	Output,
+	EventEmitter
+} from &#x27;@angular/core&#x27;;
+import {
+	Preparation2dDatasService
+} from &#x27;../../../providers/preparation2d-datas.service&#x27;;
+import {
+	SelectableService
+} from &#x27;@khiops-library/components/selectable/selectable.service&#x27;;
+import {
+	TranslateService
+} from &#x27;@ngstack/translate&#x27;;
+import {
+	AppConfig
+} from &#x27;src/environments/environment&#x27;;
+import _ from &#x27;lodash&#x27;;
+import {
+	deepEqual
+} from &#x27;fast-equals&#x27;;
+import {
+	MatrixCanvasComponent
+} from &#x27;@khiops-library/components/matrix-canvas/matrix-canvas.component&#x27;;
+import {
+	AppService
+} from &#x27;src/app/providers/app.service&#x27;;
+import {
+	Preparation2dDatasVO
+} from &#x27;src/app/model/preparation2d-datas-vo&#x27;;
+import {
+	Preparation2dVariableVO
+} from &#x27;src/app/model/preparation2d-variable-vo&#x27;;
+import {
+	CoocurenceCellsVO
+} from &#x27;src/app/model/coocurence-cells-vo&#x27;;
+import {
+	MatrixModesI
+} from &#x27;@khiops-library/interfaces/matrix-modes&#x27;;
+import {
+	MatrixTargetsI
+} from &#x27;@khiops-library/interfaces/matrix-targets&#x27;;
+import {
+	MatrixOptionsI
+} from &#x27;@khiops-library/interfaces/matrix-options&#x27;;
+import {
+	MatrixModeI
+} from &#x27;@khiops-library/interfaces/matrix-mode&#x27;;
+import {
+	KhiopsLibraryService
+} from &#x27;@khiops-library/providers/khiops-library.service&#x27;;
+
+/**
+ * Test it with iris2d file
+ */
+@Component({
+	selector: &#x27;app-coocurence-matrix&#x27;,
+	templateUrl: &#x27;./coocurence-matrix.component.html&#x27;,
+	styleUrls: [&#x27;./coocurence-matrix.component.scss&#x27;]
+})
+export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
+
+	@ViewChild(&#x27;matrixCanvas&#x27;, {
+		static: false
+	}) matrixCanvas: MatrixCanvasComponent;
+
+	preparation2dDatas: Preparation2dDatasVO;
+	@Input() selectedVariable: Preparation2dVariableVO;
+	@Output() selectCellRowChanged: EventEmitter &lt; any &gt; &#x3D; new EventEmitter();
+
+	matrixOptions: MatrixOptionsI &#x3D; new MatrixOptionsI();
+	matrixModes: MatrixModesI &#x3D; new MatrixModesI();
+	matrixTargets: MatrixTargetsI &#x3D; new MatrixTargetsI();
+	matrixCells: CoocurenceCellsVO;
+	minMaxValues: any; // dynamic and complex value object
+	isFullscreen &#x3D; false;
+
+	constructor(public selectableService: SelectableService,
+		private translate: TranslateService,
+		private khiopsLibraryService: KhiopsLibraryService,
+		private appService: AppService,
+		private preparation2dDatasService: Preparation2dDatasService) {
+
+		this.preparation2dDatas &#x3D; this.preparation2dDatasService.getDatas();
+		this.minMaxValues &#x3D; this.preparation2dDatasService.getGlobalMinAndMax2dValues(this.preparation2dDatasService.getVariablesd2Datas());
+
+	}
+
+	ngAfterViewInit() {
+
+		setTimeout(() &#x3D;&gt; { // Avoid ExpressionChangedAfterItHasBeenCheckedError
+
+			this.matrixOptions.selected &#x3D; localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + &#x27;MATRIX_TYPE_OPTION&#x27;) || this.matrixOptions.types[0];
+
+			this.preparation2dDatasService.getMatrixCanvasDatas(this.preparation2dDatas.selectedVariable);
+
+			// Check if there is a saved selected cell into json
+			const defaultCellIndex &#x3D; this.appService.getSavedDatas(&#x27;selected2dCell&#x27;) || 0;
+			this.preparation2dDatasService.setSelectedCellIndex(defaultCellIndex);
+
+			this.preparation2dDatasService.getCurrentCellDatas();
+
+		});
+
+	}
+
+	ngOnChanges(changes: SimpleChanges) {
+
+		if (changes.selectedVariable &amp;&amp;
+			changes.selectedVariable.currentValue &amp;&amp;
+			!deepEqual(changes.selectedVariable.currentValue, changes.selectedVariable.previousValue)) {
+
+			// this.preparation2dDatasService.setSelectedVariable(changes.selectedVariable.currentValue);
+			this.constructTargetSelectBox();
+			this.constructModeSelectBox();
+			this.selectTargetSelectBox();
+			this.preparation2dDatasService.getMatrixCanvasDatas(this.preparation2dDatas.selectedVariable);
+			this.preparation2dDatasService.setSelectedCellIndex(0);
+
+			this.preparation2dDatasService.getCurrentCellDatas();
+
+			this.matrixCells &#x3D; this.preparation2dDatasService.getMatrixCoocurenceCellsDatas();
+
+			// initialize with first cell index
+			this.onCellSelected({
+				datas: {
+					index: 0
+				}
+			});
+		}
+	}
+
+	constructModeSelectBox() {
+		let varName1 &#x3D; this.preparation2dDatas.selectedVariable.name1;
+		let varName2 &#x3D; this.preparation2dDatas.selectedVariable.name2;
+		if (this.preparation2dDatasService.isAxisInverted()) {
+			varName1 &#x3D; this.preparation2dDatas.selectedVariable.name2;
+			varName2 &#x3D; this.preparation2dDatas.selectedVariable.name1;
+		}
+
+		if (this.matrixTargets.targets.length &gt; 0) {
+			this.matrixModes.types &#x3D; [{
+				mode: &#x27;MUTUAL_INFO_TARGET_WITH_CELL&#x27;,
+				title: &#x27;I (&#x27; + this.translate.get(&#x27;GLOBAL.TARGET&#x27;) + &#x27; | &#x27; + varName2 + &#x27; , &#x27; + varName1 + &#x27;)&#x27;
+			}, {
+				mode: &#x27;FREQUENCY&#x27;,
+				title: &#x27;Frequency&#x27;
+			}, {
+				mode: &#x27;FREQUENCY_CELL&#x27;,
+				title: &#x27;Frequency (&#x27; + this.translate.get(&#x27;GLOBAL.TARGET&#x27;) + &#x27; | &#x27; + varName2 + &#x27; , &#x27; + varName1 + &#x27;)&#x27;
+			}, {
+				mode: &#x27;PROB_TARGET_WITH_CELL&#x27;,
+				title: &#x27;P (&#x27; + this.translate.get(&#x27;GLOBAL.TARGET&#x27;) + &#x27; | &#x27; + varName2 + &#x27; , &#x27; + varName1 + &#x27;)&#x27;
+			}, {
+				mode: &#x27;PROB_CELL_WITH_TARGET&#x27;,
+				title: &#x27;P (&#x27; + varName2 + &#x27; , &#x27; + varName1 + &#x27; | &#x27; + this.translate.get(&#x27;GLOBAL.TARGET&#x27;) + &#x27;)&#x27;
+			}, {
+				mode: &#x27;CELL_INTEREST&#x27;,
+				title: &#x27;Cells Interests&#x27;
+			}];
+		} else {
+			this.matrixModes.types &#x3D; [{
+				mode: &#x27;MUTUAL_INFO&#x27;,
+				title: &#x27;I (&#x27; + varName1 + &#x27; , &#x27; + varName2 + &#x27;)&#x27;
+			}, {
+				mode: &#x27;FREQUENCY&#x27;,
+				title: &#x27;Frequency&#x27;
+			}, {
+				mode: &#x27;PROB_CELL&#x27;,
+				title: &#x27;P (&#x27; + varName2 + &#x27; | &#x27; + varName1 + &#x27;)&#x27;
+			}, {
+				mode: &#x27;PROB_CELL_REVERSE&#x27;,
+				title: &#x27;P (&#x27; + varName1 + &#x27; | &#x27; + varName2 + &#x27;)&#x27;
+			}];
+		}
+		if (!this.matrixModes.selected) {
+			// Get previous selected target if compatible
+			const previousSelectedModeIndex &#x3D; localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + &#x27;MATRIX_MODE_OPTION_INDEX&#x27;);
+			if (previousSelectedModeIndex) {
+				this.matrixModes.selected &#x3D; this.matrixModes.types[previousSelectedModeIndex];
+				this.matrixModes.selectedIndex &#x3D; previousSelectedModeIndex;
+			} else {
+				// Select first by default
+				this.matrixModes.selected &#x3D; this.matrixModes.types[0];
+				this.matrixModes.selectedIndex &#x3D; 0;
+			}
+		} else {
+			// In case of variable selection change
+			// We must update the combobox
+			this.matrixModes.selected &#x3D; this.matrixModes.types[this.matrixModes.selectedIndex];
+		}
+	}
+
+	onToggleFullscreen(isFullscreen: any) {
+		this.isFullscreen &#x3D; isFullscreen;
+		setTimeout(() &#x3D;&gt; {
+			this.matrixCanvas.drawMatrix();
+		});
+	}
+
+	onSelectedMatrixTabChanged(e) {
+		const matrixOptionsToggle &#x3D; document.getElementById(&#x27;matrix-option-toggle&#x27;);
+		if (e.index &#x3D;&#x3D;&#x3D; 1) {
+			// this.khiopsLibraryService.trackEvent(&#x27;click&#x27;, &#x27;matrix_tab&#x27;, &#x27;cells&#x27;);
+			matrixOptionsToggle.style.display &#x3D; &#x27;none&#x27;;
+		} else {
+			// this.khiopsLibraryService.trackEvent(&#x27;click&#x27;, &#x27;matrix_tab&#x27;, &#x27;matrix&#x27;);
+
+			matrixOptionsToggle.style.display &#x3D; &#x27;flex&#x27;;
+
+			// Redraw matrix otherwise it is empty
+			this.matrixCanvas.drawMatrix();
+		}
+	}
+
+	constructTargetSelectBox() {
+		// Add optional targets if available
+		if (this.preparation2dDatasService.getTargetsIfAvailable()) {
+			this.matrixTargets.targets &#x3D; this.preparation2dDatasService.getTargetsIfAvailable();
+		} else {
+			this.matrixTargets.targets &#x3D; [];
+			this.matrixTargets.selected &#x3D; undefined;
+		}
+	}
+
+	selectTargetSelectBox(selected &#x3D; null) {
+
+		// Add optional targets if available
+		if (this.preparation2dDatasService.getTargetsIfAvailable() &amp;&amp;
+			(this.matrixModes.selected.mode &#x3D;&#x3D;&#x3D; &#x27;FREQUENCY_CELL&#x27; ||
+				this.matrixModes.selected.mode &#x3D;&#x3D;&#x3D; &#x27;PROB_TARGET_WITH_CELL&#x27; ||
+				this.matrixModes.selected.mode &#x3D;&#x3D;&#x3D; &#x27;MUTUAL_INFO_TARGET_WITH_CELL&#x27; ||
+				this.matrixModes.selected.mode &#x3D;&#x3D;&#x3D; &#x27;PROB_CELL_WITH_TARGET&#x27;)) {
+			// Get previous selected target if compatible
+			const previousSelectedTarget &#x3D; localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + &#x27;MATRIX_TARGET_OPTION&#x27;);
+			if (previousSelectedTarget &amp;&amp; this.matrixTargets.targets.includes(previousSelectedTarget)) {
+				this.matrixTargets.selected &#x3D; previousSelectedTarget;
+			}
+			// Keep last selected target if defined
+			this.matrixTargets.selected &#x3D; selected || previousSelectedTarget || this.matrixTargets.targets[0];
+		} else {
+			this.matrixTargets.selected &#x3D; undefined;
+		}
+	}
+
+	changeMatrixType(type: string) {
+		// this.khiopsLibraryService.trackEvent(&#x27;click&#x27;, &#x27;matrix_type&#x27;, type);
+		localStorage.setItem(AppConfig.common.GLOBAL.LS_ID + &#x27;MATRIX_TYPE_OPTION&#x27;, type);
+		this.matrixOptions.selected &#x3D; type;
+	}
+
+	changeMatrixMode(mode: MatrixModeI) {
+		// this.khiopsLibraryService.trackEvent(&#x27;click&#x27;, &#x27;matrix_mode&#x27;, mode.mode);
+		this.matrixModes.selected &#x3D; mode;
+		this.matrixModes.selectedIndex &#x3D; this.matrixModes.types.findIndex(e &#x3D;&gt; e.mode &#x3D;&#x3D;&#x3D; mode.mode);
+		localStorage.setItem(AppConfig.common.GLOBAL.LS_ID + &#x27;MATRIX_MODE_OPTION_INDEX&#x27;, this.matrixModes.selectedIndex.toString());
+		this.constructTargetSelectBox();
+		this.selectTargetSelectBox(this.matrixTargets.selected);
+	}
+
+	changeMatrixTarget(target: string) {
+		// this.khiopsLibraryService.trackEvent(&#x27;click&#x27;, &#x27;matrix_target&#x27;);
+		this.matrixTargets.selected &#x3D; target;
+		localStorage.setItem(AppConfig.common.GLOBAL.LS_ID + &#x27;MATRIX_TARGET_OPTION&#x27;, target);
+	}
+
+	onMatrixAxisInverted() {
+		this.preparation2dDatasService.toggleIsAxisInverted();
+		this.constructModeSelectBox();
+		this.selectCellRowChanged.emit(0);
+	}
+
+	onCellSelected(event: any) {
+		if (event.datas) {
+			const currentIndex &#x3D; event.datas.index;
+			this.preparation2dDatasService.setSelectedCellIndex(currentIndex);
+			this.preparation2dDatasService.getCurrentCellDatas();
+			this.selectCellRowChanged.emit(currentIndex);
+		}
+
+	}
+
+	onSelectCellRowChanged(rowItem: any) {
+		const currentIndex &#x3D; rowItem.id;
+		this.preparation2dDatasService.setSelectedCellIndex(currentIndex);
+		this.preparation2dDatasService.getCurrentCellDatas();
+		this.selectCellRowChanged.emit(currentIndex);
+	}
+
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div id&#x3D;&quot;coocurence-matrix-comp&quot; fxFlexFill fxLayout&#x3D;&quot;column&quot;&gt;
+	&lt;kl-no-data fxFlexFill [hidden]&#x3D;&quot;preparation2dDatas.matrixDatas&quot;&gt;&lt;/kl-no-data&gt;
+	&lt;mat-tab-group color&#x3D;&quot;warn&quot; fxFlexFill [@.disabled]&#x3D;&quot;true&quot; [selectedIndex]&#x3D;&quot;0&quot; fxLayout&#x3D;&quot;column&quot; color&#x3D;&quot;primary&quot;
+		(selectedTabChange)&#x3D;&quot;onSelectedMatrixTabChanged($event)&quot;&gt;
+		&lt;mat-tab label&#x3D;&quot;{{ &#x27;GLOBAL.MATRIX&#x27; | translate }}&quot;&gt;
+			&lt;ng-template matTabContent&gt;
+				&lt;div fxFlexFill fxLayout&#x3D;&quot;column&quot; [ngClass]&#x3D;&quot;{&#x27;fullscreen&#x27;: isFullscreen}&quot;&gt;
+					&lt;div fxLayout&#x3D;&quot;row&quot; fxLayoutAlign&#x3D;&quot;start center&quot; class&#x3D;&quot;comp-header&quot;&gt;
+						&lt;div fxFlex fxLayout&#x3D;&quot;row&quot; fxLayoutAlign&#x3D;&quot;start center&quot;&gt;
+							&lt;div fxFlex fxLayout&#x3D;&quot;row&quot; fxLayoutAlign&#x3D;&quot;start center&quot;&gt;
+								&lt;h2 title&#x3D;&quot;{{ &#x27;TOOLTIPS.PREPARATION_2D.COOCURENCE_MATRIX.TITLE&#x27; | translate }}&quot;&gt;
+									{{ &#x27;GLOBAL.COOCURENCE&#x27; | translate }} &lt;/h2&gt;
+								&lt;button class&#x3D;&quot;button-accent&quot; mat-stroked-button color&#x3D;&quot;accent&quot; [matMenuTriggerFor]&#x3D;&quot;matrixModesTypes&quot;&gt;{{ matrixModes.selected &amp;&amp; matrixModes.selected.title | translate }} &lt;em&gt;&amp;#9698;&lt;/em&gt;&lt;/button&gt;
+								&lt;mat-menu #matrixModesTypes&gt;
+									&lt;button mat-menu-item *ngFor&#x3D;&quot;let opt of matrixModes.types&quot; (click)&#x3D;&quot;changeMatrixMode(opt)&quot;&gt;{{ opt.title | translate }}&lt;/button&gt;
+								&lt;/mat-menu&gt;
+							&lt;/div&gt;
+							&lt;div fxLayout&#x3D;&quot;row&quot; fxLayoutAlign&#x3D;&quot;start center&quot; *ngIf&#x3D;&quot;matrixTargets.selected&quot;&gt;
+								&lt;h2&gt;{{ &#x27;GLOBAL.TARGET&#x27; | translate }} &lt;/h2&gt;
+								&lt;button class&#x3D;&quot;button-accent&quot; mat-stroked-button color&#x3D;&quot;accent&quot; [matMenuTriggerFor]&#x3D;&quot;matrixSelectTargets&quot;&gt;{{ matrixTargets.selected }} &lt;em&gt;&amp;#9698;&lt;/em&gt;&lt;/button&gt;
+								&lt;mat-menu #matrixSelectTargets&gt;
+									&lt;button mat-menu-item *ngFor&#x3D;&quot;let target of matrixTargets.targets&quot; (click)&#x3D;&quot;changeMatrixTarget(target)&quot;&gt;{{ target }}&lt;/button&gt;
+								&lt;/mat-menu&gt;
+							&lt;/div&gt;
+							&lt;kl-btn-fullscreen (toggleFullscreen)&#x3D;&quot;onToggleFullscreen($event)&quot;&gt;
+							&lt;/kl-btn-fullscreen&gt;
+						&lt;/div&gt;
+					&lt;/div&gt;
+					&lt;kl-matrix-canvas #matrixCanvas fxFlex fxLayout&#x3D;&quot;row&quot; (cellSelected)&#x3D;&quot;onCellSelected($event)&quot;
+						[id]&#x3D;&quot;&#x27;coocurence-matrix-comp&#x27;&quot; [selectedCell]&#x3D;&quot;preparation2dDatas.selectedCell&quot;
+						[isAxisInverted]&#x3D;&quot;preparation2dDatas.isAxisInverted&quot; [minMaxValues]&#x3D;&quot;minMaxValues&quot;
+						(matrixAxisInverted)&#x3D;&quot;onMatrixAxisInverted()&quot; [inputDatas]&#x3D;&quot;preparation2dDatas.matrixDatas&quot;
+						[graphTargets]&#x3D;&quot;matrixTargets.targets&quot; [graphType]&#x3D;&quot;matrixOptions.selected&quot;
+						[graphMode]&#x3D;&quot;matrixModes.selected&quot; [graphTarget]&#x3D;&quot;matrixTargets.selected&quot;&gt;
+					&lt;/kl-matrix-canvas&gt;
+				&lt;/div&gt;
+			&lt;/ng-template&gt;
+		&lt;/mat-tab&gt;
+		&lt;mat-tab label&#x3D;&quot;{{ &#x27;GLOBAL.CELLS&#x27; | translate }}&quot;&gt;
+			&lt;ng-template matTabContent&gt;
+				&lt;div class&#x3D;&quot;variables-list-container&quot; fxFlexFill&gt;
+					&lt;kl-ag-grid id&#x3D;&quot;coocurence-matrix-cells-container&quot; class&#x3D;&quot;variables-list&quot;
+						[showLevelDistribution]&#x3D;&quot;false&quot; [showSearch]&#x3D;&quot;false&quot; [displayCount]&#x3D;&quot;false&quot;
+						[selectedVariable]&#x3D;&quot;preparation2dDatas.selectedCell&quot; [smallTitle]&#x3D;&quot;true&quot;
+						(selectListItem)&#x3D;&quot;onSelectCellRowChanged($event)&quot; [showLineSelection]&#x3D;&quot;true&quot;
+						[showColumnsSelection]&#x3D;&quot;false&quot; [rowHeight]&#x3D;&quot;30&quot; [inputDatas]&#x3D;&quot;matrixCells.values&quot;
+						[title]&#x3D;&quot;matrixCells.title&quot; [displayedColumns]&#x3D;&quot;matrixCells.displayedColumns&quot;&gt;
+					&lt;/kl-ag-grid&gt;
+				&lt;/div&gt;
+			&lt;/ng-template&gt;
+		&lt;/mat-tab&gt;
+		&lt;mat-tab disabled&gt;
+			&lt;ng-template mat-tab-label&gt;
+				&lt;mat-button-toggle-group id&#x3D;&quot;matrix-option-toggle&quot; #group&#x3D;&quot;matButtonToggleGroup&quot;
+					[value]&#x3D;&quot;matrixOptions.selected&quot;&gt;
+					&lt;mat-button-toggle *ngFor&#x3D;&quot;let opt of matrixOptions.types&quot; [value]&#x3D;&quot;opt&quot;
+						title&#x3D;&quot;{{ &#x27;TOOLTIPS.COMMONS.MATRIX_MODE&#x27; | translate }}&quot; (click)&#x3D;&quot;changeMatrixType(opt)&quot;&gt;
+						&lt;span&gt;{{ opt | translate }}&lt;/span&gt;
+					&lt;/mat-button-toggle&gt;
+				&lt;/mat-button-toggle-group&gt;
+			&lt;/ng-template&gt;
+		&lt;/mat-tab&gt;
+	&lt;/mat-tab-group&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./coocurence-matrix.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">@import &quot;khiops-library/src/lib/styles/theme.scss&quot;;
+
+#coocurence-matrix-comp {
+
+	.comp-header {
+		margin-top: 1.4em !important;
+		margin-bottom: 1em !important;
+
+		button {
+			white-space: pre-wrap;
+			text-transform: none;
+		}
+	}
+
+	::ng-deep .mat-tab-disabled {
+		opacity: 1 !important;
+	}
+
+	::ng-deep .mat-tab-header {
+		z-index: 999 !important;
+		height: 48px !important;
+	}
+
+	::ng-deep .mat-tab-labels {
+		justify-content: start !important;
+	}
+
+	::ng-deep .mat-tab-label {
+		height: 48px !important;
+		height: 48px !important;
+		margin: 0 !important;
+	}
+
+	::ng-deep .mat-tab-label-container {
+		width: 100% !important;
+	}
+
+	::ng-deep .mat-tab-label.mat-tab-disabled {
+		position: absolute !important;
+		right: 0 !important;
+		padding-right: 0 !important;
+	}
+
+	::ng-deep .mat-tab-label.mat-tab-disabled:hover {
+		background-color: transparent !important;
+	}
+
+	::ng-deep mat-button-toggle-group {
+		margin-right: 0.8em;
+
+		::ng-deep .mat-button-toggle-label-content {
+			line-height: 34px !important;
+			top: -2px !important;
+		}
+
+		.mat-button-toggle {
+			color: mat-color($primary, 500) !important;
+		}
+
+		.mat-button-toggle-checked {
+			background-color: mat-color($primary, 500) !important;
+			color: white !important;
+		}
+
+	}
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div id="coocurence-matrix-comp" fxFlexFill fxLayout="column">	<kl-no-data fxFlexFill [hidden]="preparation2dDatas.matrixDatas"></kl-no-data>	<mat-tab-group color="warn" fxFlexFill [@.disabled]="true" [selectedIndex]="0" fxLayout="column" color="primary"		(selectedTabChange)="onSelectedMatrixTabChanged($event)">		<mat-tab label="{{ \'GLOBAL.MATRIX\' | translate }}">			<ng-template matTabContent>				<div fxFlexFill fxLayout="column" [ngClass]="{\'fullscreen\': isFullscreen}">					<div fxLayout="row" fxLayoutAlign="start center" class="comp-header">						<div fxFlex fxLayout="row" fxLayoutAlign="start center">							<div fxFlex fxLayout="row" fxLayoutAlign="start center">								<h2 title="{{ \'TOOLTIPS.PREPARATION_2D.COOCURENCE_MATRIX.TITLE\' | translate }}">									{{ \'GLOBAL.COOCURENCE\' | translate }} </h2>								<button class="button-accent" mat-stroked-button color="accent" [matMenuTriggerFor]="matrixModesTypes">{{ matrixModes.selected && matrixModes.selected.title | translate }} <em>&#9698;</em></button>								<mat-menu #matrixModesTypes>									<button mat-menu-item *ngFor="let opt of matrixModes.types" (click)="changeMatrixMode(opt)">{{ opt.title | translate }}</button>								</mat-menu>							</div>							<div fxLayout="row" fxLayoutAlign="start center" *ngIf="matrixTargets.selected">								<h2>{{ \'GLOBAL.TARGET\' | translate }} </h2>								<button class="button-accent" mat-stroked-button color="accent" [matMenuTriggerFor]="matrixSelectTargets">{{ matrixTargets.selected }} <em>&#9698;</em></button>								<mat-menu #matrixSelectTargets>									<button mat-menu-item *ngFor="let target of matrixTargets.targets" (click)="changeMatrixTarget(target)">{{ target }}</button>								</mat-menu>							</div>							<kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">							</kl-btn-fullscreen>						</div>					</div>					<kl-matrix-canvas #matrixCanvas fxFlex fxLayout="row" (cellSelected)="onCellSelected($event)"						[id]="\'coocurence-matrix-comp\'" [selectedCell]="preparation2dDatas.selectedCell"						[isAxisInverted]="preparation2dDatas.isAxisInverted" [minMaxValues]="minMaxValues"						(matrixAxisInverted)="onMatrixAxisInverted()" [inputDatas]="preparation2dDatas.matrixDatas"						[graphTargets]="matrixTargets.targets" [graphType]="matrixOptions.selected"						[graphMode]="matrixModes.selected" [graphTarget]="matrixTargets.selected">					</kl-matrix-canvas>				</div>			</ng-template>		</mat-tab>		<mat-tab label="{{ \'GLOBAL.CELLS\' | translate }}">			<ng-template matTabContent>				<div class="variables-list-container" fxFlexFill>					<kl-ag-grid id="coocurence-matrix-cells-container" class="variables-list"						[showLevelDistribution]="false" [showSearch]="false" [displayCount]="false"						[selectedVariable]="preparation2dDatas.selectedCell" [smallTitle]="true"						(selectListItem)="onSelectCellRowChanged($event)" [showLineSelection]="true"						[showColumnsSelection]="false" [rowHeight]="30" [inputDatas]="matrixCells.values"						[title]="matrixCells.title" [displayedColumns]="matrixCells.displayedColumns">					</kl-ag-grid>				</div>			</ng-template>		</mat-tab>		<mat-tab disabled>			<ng-template mat-tab-label>				<mat-button-toggle-group id="matrix-option-toggle" #group="matButtonToggleGroup"					[value]="matrixOptions.selected">					<mat-button-toggle *ngFor="let opt of matrixOptions.types" [value]="opt"						title="{{ \'TOOLTIPS.COMMONS.MATRIX_MODE\' | translate }}" (click)="changeMatrixType(opt)">						<span>{{ opt | translate }}</span>					</mat-button-toggle>				</mat-button-toggle-group>			</ng-template>		</mat-tab>	</mat-tab-group></div></div>'
+    var COMPONENTS = [{'name': 'AgGridComponent', 'selector': 'kl-ag-grid'},{'name': 'AnnotationComponent', 'selector': 'app-annotation'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AppVersionComponent', 'selector': 'kl-app-version'},{'name': 'AxisComponent', 'selector': 'app-axis'},{'name': 'AxisViewComponent', 'selector': 'app-axis-view'},{'name': 'BtnFullscreenComponent', 'selector': 'kl-btn-fullscreen'},{'name': 'CellStatsComponent', 'selector': 'kl-cell-stats'},{'name': 'ChartNextComponent', 'selector': 'kl-chart-next'},{'name': 'CheckboxCellComponent', 'selector': 'kl-checkbox-cell'},{'name': 'ClusterDetailsComponent', 'selector': 'app-cluster-details'},{'name': 'CompositionComponent', 'selector': 'app-composition'},{'name': 'ConfirmDialogComponent', 'selector': 'kl-confirm-dialog'},{'name': 'CoocurenceMatrixComponent', 'selector': 'app-coocurence-matrix'},{'name': 'DescriptionBlockComponent', 'selector': 'app-description-block'},{'name': 'DistributionGraphCanvasComponent', 'selector': 'kl-distribution-graph-canvas'},{'name': 'EvaluationViewComponent', 'selector': 'app-evaluation-view'},{'name': 'ExternalDatasComponent', 'selector': 'app-external-datas'},{'name': 'FileLoaderComponent', 'selector': 'kl-file-loader'},{'name': 'GraphHeaderComponent', 'selector': 'kl-graph-header'},{'name': 'HeaderManageViewComponent', 'selector': 'app-header-manage-view'},{'name': 'HeaderTitleComponent', 'selector': 'kl-header-title'},{'name': 'HeaderToolsComponent', 'selector': 'kl-header-tools'},{'name': 'HierarchySelectComponent', 'selector': 'app-hierarchy-select'},{'name': 'HomeLayoutComponent', 'selector': 'app-home-layout'},{'name': 'HomeLayoutComponent', 'selector': 'app-home-layout'},{'name': 'IconCellComponent', 'selector': 'kl-icon-cell'},{'name': 'ImportExtDatasComponent', 'selector': 'app-import-ext-datas'},{'name': 'ImportExtDatasListComponent', 'selector': 'app-import-ext-datas-list'},{'name': 'ImportFileLoaderComponent', 'selector': 'kl-import-file-loader'},{'name': 'InformationsBlockComponent', 'selector': 'kl-informations-block'},{'name': 'LegendComponent', 'selector': 'kl-legend'},{'name': 'LevelDistributionGraphCanvasComponent', 'selector': 'app-level-distribution-graph'},{'name': 'LibVersionComponent', 'selector': 'kl-lib-version'},{'name': 'LoadExtDatasComponent', 'selector': 'app-load-ext-datas'},{'name': 'ManageViewsComponent', 'selector': 'app-manage-views'},{'name': 'MatrixCanvasComponent', 'selector': 'kl-matrix-canvas'},{'name': 'MatrixContainerComponent', 'selector': 'app-matrix-container'},{'name': 'MatrixTooltipComponent', 'selector': 'kl-matrix-tooltip'},{'name': 'ModelingViewComponent', 'selector': 'app-modeling-view'},{'name': 'NoDataComponent', 'selector': 'kl-no-data'},{'name': 'Preparation2dViewComponent', 'selector': 'app-preparation-2d-view'},{'name': 'PreparationViewComponent', 'selector': 'app-preparation-view'},{'name': 'ProjectViewComponent', 'selector': 'app-project-view'},{'name': 'ProjectViewComponent', 'selector': 'app-project-view'},{'name': 'RegressionMatrixComponent', 'selector': 'app-regression-matrix'},{'name': 'ReleaseButtonComponent', 'selector': 'kl-release-button'},{'name': 'ReleaseNotesComponent', 'selector': 'kl-release-notes'},{'name': 'ScrollableGraphCanvasComponent', 'selector': ''},{'name': 'SelectableComponent', 'selector': ''},{'name': 'SelectableTabComponent', 'selector': ''},{'name': 'SelectedClustersComponent', 'selector': 'app-selected-clusters'},{'name': 'SelectToggleButtonComponent', 'selector': 'app-select-toggle-button'},{'name': 'SelectTrainedPredictorComponent', 'selector': 'app-select-trained-predictor'},{'name': 'TargetDistributionGraphCanvasComponent', 'selector': 'app-target-distribution-graph-canvas'},{'name': 'TargetLiftGraphComponent', 'selector': 'app-target-lift-graph'},{'name': 'TargetVariableStatsCanvasComponent', 'selector': 'app-target-variable-stats-canvas'},{'name': 'TreeDetailsComponent', 'selector': 'app-tree-details'},{'name': 'TreeHyperComponent', 'selector': 'app-tree-hyper'},{'name': 'TreeLeafDetailsComponent', 'selector': 'app-tree-leaf-details'},{'name': 'TreePreparationViewComponent', 'selector': 'app-tree-preparation-view'},{'name': 'TreeSelectComponent', 'selector': 'app-tree-select'},{'name': 'TreeSelectComponent', 'selector': 'app-tree-select'},{'name': 'UnfoldHierarchyComponent', 'selector': 'app-unfold-hierarchy'},{'name': 'UserSettingsComponent', 'selector': 'app-user-settings'},{'name': 'UserSettingsComponent', 'selector': 'app-user-settings'},{'name': 'VarDetailsPreparation2dComponent', 'selector': 'app-var-details-preparation-2d'},{'name': 'VarDetailsPreparationComponent', 'selector': 'app-var-details-preparation'},{'name': 'VarDetailsTreePreparationComponent', 'selector': 'app-var-details-tree-preparation'},{'name': 'VariableGraphDetailsComponent', 'selector': 'app-variable-graph-details'},{'name': 'VariableGraphDetailsComponent', 'selector': 'app-variable-graph-details'},{'name': 'WatchResizeComponent', 'selector': ''}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'CoocurenceMatrixComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'CoocurenceMatrixComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

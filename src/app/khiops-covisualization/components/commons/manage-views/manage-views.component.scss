@@ -1,0 +1,111 @@
+@import "khiops-library/src/lib/styles/theme.scss";
+
+#manage-views-comp {
+	#manage-views-header {
+		height: 68px;
+
+		h2 {
+			margin-left: 1em;
+		}
+
+		button {
+			margin-left: 1em;
+		}
+	}
+
+	#manage-views-content {
+		overflow: auto;
+		max-height: 70vh;
+
+		.views-container {
+
+			// border: 2px solid $yellowMain;
+			border: 2px solid mat-color($accent, 400);
+			border-radius: 5px;
+			box-shadow: 0 2px 6px 0px rgba(0, 0, 0, 0.1);
+			padding: 3px;
+			margin-top: 20px;
+			display: flex;
+			overflow: auto;
+
+			.parent-box {
+
+				height: 150px;
+
+				.child-box {
+					border: 1px mat-color($primary, 300);
+					margin: 10px;
+					border-style: solid;
+					height: 0 !important;
+				}
+
+				.child-box:last-child {
+					margin-bottom: 0;
+				}
+
+				.child-box.disabled {
+					border-style: dashed;
+				}
+
+			}
+
+			.box {
+				border: 1px mat-color($primary, 300);
+				border-style: solid;
+				margin: 10px;
+				cursor: pointer;
+				height: 140px;
+				text-align: center;
+				background: white;
+				color: mat-color($primary, 500);;
+				font-size: 0.9em;
+				box-shadow: 0 2px 6px 0px rgba(0, 0, 0, 0.1);
+				border-radius: 3px;
+				min-width: 90px;
+				padding: 5px;
+			}
+
+			.box:hover {
+				background: rgba(0, 0, 0, .03);
+			}
+
+			.box.disabled {
+				background: #ddd;
+				color: #777;
+				box-shadow: none;
+				border-style: dashed;
+
+			}
+
+			.box-dimension {
+				border: 0px !important;
+				box-shadow: none;
+			}
+
+			.box-dimension:hover {
+				background: white;
+			}
+
+			.box-dimension.disabled:hover {
+				background: #ddd;
+			}
+		}
+
+		.views-container.disabled {
+			border-style: dashed;
+			background: #ddd;
+			color: #777;
+			border: 2px solid #999;
+
+			.box {
+				background: #ddd;
+				color: #777;
+			}
+		}
+
+		#views-container-right {
+			margin-left: 20px;
+		}
+
+	}
+}

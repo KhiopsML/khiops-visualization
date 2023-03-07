@@ -1,0 +1,38 @@
+@import "khiops-library/src/lib/styles/theme.scss";
+
+#hierarchy-select-comp {
+
+
+	padding: 0.6em;
+	margin: 0 !important;
+	position: relative;
+	position: sticky;
+    width: 100%;
+
+	h1 {
+		margin: 0 1em 0 0.4em;
+	}
+
+	button.enabled {
+		color: mat-color($primary, 500);
+	}
+
+	#hierarchy-select-header{
+	}
+
+	#hierarchy-select-content {
+		width: 100%;
+		margin-top: 1em;
+		padding: 0.5em;
+
+		span {
+			font-weight: 400;
+			color: darken(mat-color($primary, 900), 20%);
+		}
+
+		strong {
+			font-weight: 500;
+			color: mat-color($primary, 500);
+		}
+	}
+}

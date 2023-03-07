@@ -1,0 +1,21 @@
+@import "../../styles/theme.scss";
+
+.informations-block-comp {
+
+	h1 {
+		mat-icon {
+			margin-right: 0.2em;
+		}
+	}
+
+	span {
+		margin: 0em 2em;
+		word-break: break-all;
+
+		strong {
+			font-size: 0.95em;
+			font-weight: 500;
+			color: darken(mat-color($primary), 20%);
+		}
+	}
+}

@@ -1,0 +1,11 @@
+<div id="load-ext-datas-comp" fxFlexFill fxLayoutAlign="center center" fxLayout="column">
+	<div fxLayout="row" id="load-ext-datas-header" fxLayoutAlign="center center">
+		<h2 fxFlex>{{ 'GLOBAL.EXTERNAL_DATA' | translate | uppercase }}</h2>
+	</div>
+	<div id="load-ext-datas-content" fxFlexFill fxLayoutAlign="center center" fxLayout="column">
+		<mat-spinner *ngIf="!loadingDatasStatus" diameter="40" color="accent" mode="indeterminate"></mat-spinner>
+		<mat-progress-bar *ngIf="loadingDatasStatus" mode="determinate" [value]="loadingDatasPercent">
+		</mat-progress-bar>
+		<span>{{loadingDatasStatus}}</span>
+	</div>
+</div>

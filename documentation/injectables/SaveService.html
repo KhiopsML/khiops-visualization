@@ -1,0 +1,1204 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>visualization-component documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">visualization-component documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Injectables</li>
+  <li >SaveService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/khiops-covisualization/providers/save.service.ts</code>
+        </p>
+
+
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#computeCatPartition" >computeCatPartition</a>
+                            </li>
+                            <li>
+                                <a href="#computeNumPartition" >computeNumPartition</a>
+                            </li>
+                            <li>
+                                <a href="#constructDatasToSave" >constructDatasToSave</a>
+                            </li>
+                            <li>
+                                <a href="#truncateJsonCells" >truncateJsonCells</a>
+                            </li>
+                            <li>
+                                <a href="#truncateJsonHierarchy" >truncateJsonHierarchy</a>
+                            </li>
+                            <li>
+                                <a href="#truncateJsonPartition" >truncateJsonPartition</a>
+                            </li>
+                            <li>
+                                <a href="#updateSummariesCells" >updateSummariesCells</a>
+                            </li>
+                            <li>
+                                <a href="#updateSummariesParts" >updateSummariesParts</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(appService: <a href="../injectables/AppService.html" target="_self">AppService</a>, treenodesService: <a href="../injectables/TreenodesService.html" target="_self">TreenodesService</a>, importExtDatasService: <a href="../injectables/ImportExtDatasService.html" target="_self">ImportExtDatasService</a>, dimensionsService: <a href="../injectables/DimensionsDatasService.html" target="_self">DimensionsDatasService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/khiops-covisualization/providers/save.service.ts:33</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>appService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AppService.html" target="_self" >AppService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>treenodesService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/TreenodesService.html" target="_self" >TreenodesService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>importExtDatasService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ImportExtDatasService.html" target="_self" >ImportExtDatasService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>dimensionsService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/DimensionsDatasService.html" target="_self" >DimensionsDatasService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="computeCatPartition"></a>
+                    <span class="name">
+                        <span ><b>computeCatPartition</b></span>
+                        <a href="#computeCatPartition"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>computeCatPartition(nodes, dimIndex, currentTruncatedPartition)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="148"
+                            class="link-to-prism">src/app/khiops-covisualization/providers/save.service.ts:148</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>nodes</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>dimIndex</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>currentTruncatedPartition</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="computeNumPartition"></a>
+                    <span class="name">
+                        <span ><b>computeNumPartition</b></span>
+                        <a href="#computeNumPartition"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>computeNumPartition(nodes, dimIndex, currentTruncatedPartition)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="194"
+                            class="link-to-prism">src/app/khiops-covisualization/providers/save.service.ts:194</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>nodes</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>dimIndex</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>currentTruncatedPartition</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="constructDatasToSave"></a>
+                    <span class="name">
+                        <span ><b>constructDatasToSave</b></span>
+                        <a href="#constructDatasToSave"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>constructDatasToSave()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="42"
+                            class="link-to-prism">src/app/khiops-covisualization/providers/save.service.ts:42</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="truncateJsonCells"></a>
+                    <span class="name">
+                        <span ><b>truncateJsonCells</b></span>
+                        <a href="#truncateJsonCells"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>truncateJsonCells(CC)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="265"
+                            class="link-to-prism">src/app/khiops-covisualization/providers/save.service.ts:265</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>CC</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="truncateJsonHierarchy"></a>
+                    <span class="name">
+                        <span ><b>truncateJsonHierarchy</b></span>
+                        <a href="#truncateJsonHierarchy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>truncateJsonHierarchy(datas)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="72"
+                            class="link-to-prism">src/app/khiops-covisualization/providers/save.service.ts:72</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>datas</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="truncateJsonPartition"></a>
+                    <span class="name">
+                        <span ><b>truncateJsonPartition</b></span>
+                        <a href="#truncateJsonPartition"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>truncateJsonPartition(datas)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="125"
+                            class="link-to-prism">src/app/khiops-covisualization/providers/save.service.ts:125</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>datas</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateSummariesCells"></a>
+                    <span class="name">
+                        <span ><b>updateSummariesCells</b></span>
+                        <a href="#updateSummariesCells"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>updateSummariesCells(datas)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="256"
+                            class="link-to-prism">src/app/khiops-covisualization/providers/save.service.ts:256</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>datas</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateSummariesParts"></a>
+                    <span class="name">
+                        <span ><b>updateSummariesParts</b></span>
+                        <a href="#updateSummariesParts"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>updateSummariesParts(datas)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="245"
+                            class="link-to-prism">src/app/khiops-covisualization/providers/save.service.ts:245</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>datas</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+	Injectable
+} from &#x27;@angular/core&#x27;;
+import {
+	AppService
+} from &#x27;./app.service&#x27;;
+import {
+	TreenodesService
+} from &#x27;./treenodes.service&#x27;;
+import {
+	DimensionsDatasService
+} from &#x27;./dimensions-datas.service&#x27;;
+import _ from &#x27;lodash&#x27;;
+import {
+	SavedDatasVO
+} from &#x27;../model/saved-datas-vo&#x27;;
+import {
+	TreeNodeVO
+} from &#x27;../model/tree-node-vo&#x27;;
+import {
+	UtilsService
+} from &#x27;@khiops-library/providers/utils.service&#x27;;
+import {
+	DimensionVO
+} from &#x27;@khiops-library/model/dimension-vo&#x27;;
+import {
+	ImportExtDatasService
+} from &#x27;./import-ext-datas.service&#x27;;
+
+@Injectable({
+	providedIn: &#x27;root&#x27;
+})
+export class SaveService {
+
+	constructor(
+		private appService: AppService,
+		private treenodesService: TreenodesService,
+		private importExtDatasService: ImportExtDatasService,
+		private dimensionsService: DimensionsDatasService
+	) {}
+
+	constructDatasToSave() {
+		const appDatas &#x3D; this.appService.getDatas().datas;
+		const initialDatas &#x3D; _.cloneDeep(this.appService.getInitialDatas().datas);
+
+		// Copy dimensionHierarchies into initial datas to save nodes names and annotations
+		initialDatas.coclusteringReport.dimensionHierarchies &#x3D; appDatas.coclusteringReport.dimensionHierarchies;
+
+		const selectedDimensions &#x3D; this.dimensionsService.getDimensionsToSave();
+
+		// Check if user has changed something
+		if (selectedDimensions.length &gt; 0) {
+			const splitSizes &#x3D; this.appService.getSplitSizes();
+			const viewsLayout &#x3D; this.appService.getViewsLayout();
+			const selectedNodes &#x3D; this.treenodesService.getSelectedNodes();
+			const collapsedNodes &#x3D; this.treenodesService.getCollapsedNodesToSave();
+			const importedDatas &#x3D; this.importExtDatasService.getImportedDatas();
+
+			initialDatas.savedDatas &#x3D; new SavedDatasVO(
+				viewsLayout,
+				splitSizes,
+				selectedNodes,
+				selectedDimensions,
+				collapsedNodes,
+				importedDatas
+			);
+		}
+
+		return initialDatas;
+	}
+
+	truncateJsonHierarchy(datas) {
+		// console.log(&quot;SaveService -&gt; truncateJsonHierarchy -&gt; datas&quot;, datas)
+
+		const truncatedHierarchy &#x3D; _.cloneDeep(datas.coclusteringReport.dimensionHierarchies);
+
+		Object.keys(datas.savedDatas.collapsedNodes).forEach((dim) &#x3D;&gt; {
+			const dimIndex &#x3D; this.dimensionsService.dimensionsDatas.selectedDimensions.findIndex(e &#x3D;&gt; e.name &#x3D;&#x3D;&#x3D; dim);
+
+			const nodes &#x3D; datas.savedDatas.collapsedNodes[dim];
+			const dimHierarchy &#x3D; truncatedHierarchy.find(e &#x3D;&gt; e.name &#x3D;&#x3D;&#x3D; dim);
+
+			const nodesLength &#x3D; nodes.length;
+			for (let i &#x3D; 0; i &lt; nodesLength; i++) {
+
+				const nodeName &#x3D; nodes[i];
+				let nodeChildren &#x3D; [];
+
+				const nodeDetails: TreeNodeVO &#x3D; this.dimensionsService.dimensionsDatas.dimensionsClusters[dimIndex].find(e &#x3D;&gt; e.cluster &#x3D;&#x3D;&#x3D; nodeName);
+
+				// Get children list for tests purpose
+				nodeDetails.getChildrenList();
+
+				if (nodeDetails &amp;&amp; nodeDetails.childrenList) {
+					nodeChildren &#x3D; nodeDetails.childrenList;
+					const nodeChildrenLength &#x3D; nodeChildren.length;
+					for (let j &#x3D; nodeChildrenLength - 1; j &gt;&#x3D; 0; j--) {
+						const nodeIndex &#x3D; dimHierarchy.clusters.findIndex(e &#x3D;&gt; e.cluster &#x3D;&#x3D;&#x3D; nodeChildren[j]);
+						if (nodeChildren[j] !&#x3D;&#x3D; nodeName) { // Do not remove current collapsed node
+							if (nodeIndex !&#x3D;&#x3D; -1) {
+								dimHierarchy.clusters.splice(nodeIndex, 1);
+							}
+						} else {
+							// Set the isLeaf of the last collapsed node
+							dimHierarchy.clusters[nodeIndex].isLeaf &#x3D; true;
+						}
+
+					}
+				}
+
+			}
+
+		});
+
+		// Sort clusters by leaf and rank
+		for (let k &#x3D; 0; k &lt; truncatedHierarchy.length; k++) {
+			truncatedHierarchy[k].clusters &#x3D; _.sortBy(truncatedHierarchy[k].clusters, [(e) &#x3D;&gt; e.isLeaf &#x3D;&#x3D;&#x3D; false, &#x27;rank&#x27;]);
+		}
+
+		datas.coclusteringReport.dimensionHierarchies &#x3D; truncatedHierarchy;
+		return datas;
+
+	}
+
+	truncateJsonPartition(datas) {
+
+		const truncatedPartition &#x3D; _.cloneDeep(datas.coclusteringReport.dimensionPartitions);
+
+		Object.keys(datas.savedDatas.collapsedNodes).forEach((dim, key) &#x3D;&gt; {
+			const nodes &#x3D; datas.savedDatas.collapsedNodes[dim];
+
+			const dimIndex &#x3D; this.treenodesService.dimensionsDatas.selectedDimensions.findIndex(e &#x3D;&gt; e.name &#x3D;&#x3D;&#x3D; dim);
+			const dimVO: DimensionVO &#x3D; this.treenodesService.dimensionsDatas.selectedDimensions.find(e &#x3D;&gt; e.name &#x3D;&#x3D;&#x3D; dim);
+			const dimIndexInitial &#x3D; this.treenodesService.dimensionsDatas.dimensions.findIndex(e &#x3D;&gt; e.name &#x3D;&#x3D;&#x3D; dim);
+
+			if (dimVO.isCategorical) {
+				this.computeCatPartition(nodes, dimIndex, truncatedPartition[dimIndexInitial]);
+			} else {
+				this.computeNumPartition(nodes, dimIndex, truncatedPartition[dimIndexInitial]);
+			}
+		});
+
+		datas.coclusteringReport.dimensionPartitions &#x3D; truncatedPartition;
+		return datas;
+
+	}
+
+	computeCatPartition(nodes, dimIndex, currentTruncatedPartition) {
+
+		const nodesLength &#x3D; nodes.length;
+		for (let i &#x3D; 0; i &lt; nodesLength; i++) {
+
+			const nodeName &#x3D; nodes[i];
+			let nodeChildren &#x3D; [];
+			const currentDefaultGroup &#x3D; currentTruncatedPartition.valueGroups[currentTruncatedPartition.defaultGroupIndex].values;
+			const nodeDetails: TreeNodeVO &#x3D; this.treenodesService.dimensionsDatas.dimensionsClusters[dimIndex].find(e &#x3D;&gt; e.cluster &#x3D;&#x3D;&#x3D; nodeName);
+			if (nodeDetails &amp;&amp; nodeDetails.childrenList) {
+				nodeChildren &#x3D; nodeDetails.childrenList;
+
+				let cancatValueGroup;
+				const nodeChildrenLength &#x3D; nodeChildren.length;
+				// for (let j &#x3D; nodeChildrenLength - 1; j &gt;&#x3D; 0; j--) {
+				for (let j &#x3D; 0; j &lt; nodeChildrenLength; j++) {
+					if (currentTruncatedPartition) {
+						if (currentTruncatedPartition.valueGroups) {
+							if (nodeChildren[j] !&#x3D;&#x3D; nodeName) { // Do not remove current collapsed node
+								const nodeIndex &#x3D; currentTruncatedPartition.valueGroups.findIndex(e &#x3D;&gt; e.cluster &#x3D;&#x3D;&#x3D; nodeChildren[j]);
+								// console.log(&quot;SaveService -&gt; computeCatPartition -&gt; nodeIndex&quot;, nodeChildren[j] , nodeIndex)
+								const node &#x3D; currentTruncatedPartition.valueGroups[nodeIndex];
+								if (node) { // Because nodes are not present into partition values
+									if (!cancatValueGroup) {
+										cancatValueGroup &#x3D; node;
+									} else {
+										cancatValueGroup &#x3D; UtilsService.concat2ObjectsValues(cancatValueGroup, node);
+										// Remove it from initial values
+										currentTruncatedPartition.valueGroups.splice(nodeIndex, 1);
+									}
+									cancatValueGroup.cluster &#x3D; nodeName;
+
+								}
+							}
+						}
+					}
+				}
+			}
+
+			// Now find currentDefaultGroup into new constructed currentTruncatedPartition.valueGroups to set defaultGroupIndex
+			currentTruncatedPartition.defaultGroupIndex &#x3D; currentTruncatedPartition.valueGroups.findIndex(e &#x3D;&gt; e.values.includes(currentDefaultGroup[0]));
+
+		}
+
+	}
+
+	computeNumPartition(nodes, dimIndex, currentTruncatedPartition) {
+
+		const nodesLength &#x3D; nodes.length;
+		for (let i &#x3D; 0; i &lt; nodesLength; i++) {
+
+			const nodeName &#x3D; nodes[i];
+			let nodeChildren &#x3D; [];
+
+			const nodeDetails: TreeNodeVO &#x3D; this.treenodesService.dimensionsDatas.dimensionsClusters[dimIndex].find(e &#x3D;&gt; e.cluster &#x3D;&#x3D;&#x3D; nodeName);
+			if (nodeDetails &amp;&amp; nodeDetails.childrenList) {
+				nodeChildren &#x3D; nodeDetails.childrenList;
+				const nodeChildrenLength &#x3D; nodeChildren.length;
+				for (let j &#x3D; 0; j &lt; nodeChildrenLength; j++) {
+
+					if (currentTruncatedPartition) {
+						if (currentTruncatedPartition.intervals) {
+							if (nodeChildren[j] !&#x3D;&#x3D; nodeName) { // Do not remove current collapsed node
+								const intervalIndex &#x3D; currentTruncatedPartition.intervals.findIndex(e &#x3D;&gt; e.cluster &#x3D;&#x3D;&#x3D; nodeChildren[j]);
+								const currentInterval &#x3D; currentTruncatedPartition.intervals[intervalIndex];
+								if (currentInterval) { // Because nodes are not present into partition values
+
+									currentTruncatedPartition.intervals.splice(intervalIndex, 1);
+								}
+							}
+						}
+					}
+				}
+				// Add the current parent node after children deletion
+				let currentNodeBound: any &#x3D; nodeDetails.bounds;
+				currentNodeBound &#x3D; currentNodeBound.replaceAll(&#x27;[&#x27;, &#x27;&#x27;);
+				currentNodeBound &#x3D; currentNodeBound.replaceAll(&#x27;]&#x27;, &#x27;&#x27;);
+				currentNodeBound &#x3D; currentNodeBound.split(&#x27;;&#x27;);
+				// convert each array string to number
+				for (let j &#x3D; 0; j &lt; currentNodeBound.length; j++) {
+					currentNodeBound[j] &#x3D; 1 * currentNodeBound[j];
+				}
+				currentTruncatedPartition.intervals.push({
+					cluster: nodeDetails.cluster,
+					bounds: currentNodeBound
+				});
+				// Sort intervals
+				currentTruncatedPartition.intervals.sort(function (a, b) {
+					return a.bounds[0] - b.bounds[0];
+				});
+				// console.table(currentTruncatedPartition.intervals);
+			}
+
+		}
+
+	}
+
+	updateSummariesParts(datas) {
+
+		for (let i &#x3D; 0; i &lt; datas.coclusteringReport.dimensionSummaries.length; i++) {
+			const dimIndex &#x3D; this.dimensionsService.dimensionsDatas.selectedDimensions.findIndex(e &#x3D;&gt; e.name &#x3D;&#x3D;&#x3D; datas.coclusteringReport.dimensionSummaries[i].name);
+			datas.coclusteringReport.dimensionSummaries[dimIndex].parts &#x3D; datas.coclusteringReport.dimensionHierarchies[dimIndex].clusters.filter(e &#x3D;&gt; e.isLeaf &#x3D;&#x3D;&#x3D; true).length
+		}
+
+		return datas;
+
+	}
+
+	updateSummariesCells(datas) {
+
+		// the &quot;cells&quot; field in &quot;summary&quot; must contain the number of non-empty cells, which can be less than the theoretical number of cells. It is obtained by counting the number of elements in the list &quot;cellPartIndexes&quot; or in &quot;cellFrequencies&quot;
+		datas.coclusteringReport.summary.cells &#x3D; datas.coclusteringReport.cellFrequencies.length;
+
+		return datas;
+
+	}
+
+	truncateJsonCells(CC) {
+
+		const CI &#x3D; _.cloneDeep(this.appService.getInitialDatas().datas);
+
+		const transitionMatrix &#x3D; [];
+
+		// Step 1: we build the transition matrix which makes it possible to pass from the part indices of the CI to the part indices of the CC
+		for (let k &#x3D; 0; k &lt; CI.coclusteringReport.dimensionHierarchies.length; k++) {
+
+			let initialVariable;
+			let currentVariable;
+			if (CC.coclusteringReport.dimensionPartitions[k].type &#x3D;&#x3D;&#x3D; &#x27;Numerical&#x27;) {
+				initialVariable &#x3D; CI.coclusteringReport.dimensionPartitions[
+					k
+				].intervals.map((e) &#x3D;&gt; e.bounds);
+				currentVariable &#x3D; CC.coclusteringReport.dimensionPartitions[
+					k
+				].intervals.map((e) &#x3D;&gt; e.bounds);
+			} else {
+				initialVariable &#x3D; CI.coclusteringReport.dimensionPartitions[
+					k
+				].valueGroups.map((e) &#x3D;&gt; e.values);
+				currentVariable &#x3D; CC.coclusteringReport.dimensionPartitions[
+					k
+				].valueGroups.map((e) &#x3D;&gt; e.values);
+			}
+
+			// Loop the parts of the CI variable: for each part, we try to associate its index in the partition of the initial coclustering with its index in the partition of the final coclustering. We use the fact that the partitions are nested and that their order does not change: an &quot;initial&quot; part is either kept as it is in the current coclustering or included in a folded part in the current coclustering
+			let currentP &#x3D; 0; // initialize the index of the part of the current variable
+			let currentPart &#x3D; currentVariable[currentP]; // we initialize the current part
+
+			// parcours des parties initiales
+			for (let initialP &#x3D; 0; initialP &lt; initialVariable.length; initialP++) {
+				let initialPart &#x3D; initialVariable[initialP];
+				if (!transitionMatrix[k]) {
+					transitionMatrix[k] &#x3D; [];
+				}
+
+				if (CC.coclusteringReport.dimensionPartitions[k].type &#x3D;&#x3D;&#x3D; &#x27;Numerical&#x27;) {
+					while (
+						!(
+							initialPart[0] &gt;&#x3D; currentVariable[currentP][0] &amp;&amp;
+							initialPart[1] &lt;&#x3D; currentVariable[currentP][1]
+						)
+					) {
+						currentPart &#x3D; currentVariable[currentP];
+						currentP &#x3D; currentP + 1;
+					}
+				} else {
+					// The inclusion test consists of going through the modalities of the initial part
+					// and check that they are all in the list of modalities of the current part.
+					if (
+
+						!(
+							initialPart.every((value, index) &#x3D;&gt;
+								currentPart.includes(value)
+							)
+						)
+					) {
+						currentP &#x3D; currentP + 1;
+						currentPart &#x3D; currentVariable[currentP];
+					}
+				}
+
+				transitionMatrix[k][initialP] &#x3D; currentP;
+			}
+		}
+		// console.log(&#x27;transitionMatrix&#x27;, transitionMatrix);
+
+		// Step 2: build the list of cells in the current coclustering by calculating the indexes of these cells and their resGroup
+		let indexesCCList &#x3D; [];
+		let resGroup &#x3D; [];
+
+		// Browse the cells of the initial coclustering json file (&quot;cellPartIndexes&quot; field)
+		for (let i &#x3D; 0; i &lt; CI.coclusteringReport.cellPartIndexes.length; i++) {
+			let index_initiaux &#x3D; CI.coclusteringReport.cellPartIndexes[i]; // Read indexes in the json file
+			let currentIndexes &#x3D; [];
+			for (
+				let k &#x3D; 0; k &lt; CI.coclusteringReport.dimensionHierarchies.length; k++
+			) {
+				// Calculation of indexes from the transition matrix calculated in step 1
+				currentIndexes.push(transitionMatrix[k][index_initiaux[k]]);
+			}
+			if (
+				indexesCCList.indexOf(currentIndexes.toString()) !&#x3D;&#x3D; -1
+			) {
+				const index &#x3D; resGroup.findIndex(
+					(e) &#x3D;&gt; e.key &#x3D;&#x3D;&#x3D; currentIndexes.toString()
+				);
+				resGroup[index].value &#x3D;
+					resGroup[index].value + CI.coclusteringReport.cellFrequencies[i];
+			} else {
+				resGroup.push({
+					key: currentIndexes.toString(),
+					value: CI.coclusteringReport.cellFrequencies[i],
+				});
+				indexesCCList.push(currentIndexes.toString());
+			}
+		}
+
+		resGroup.sort(function (a, b) {
+			if (a.value &#x3D;&#x3D;&#x3D; b.value) {
+				return (
+					parseFloat(a.key.replaceAll(&#x27;,&#x27;, &#x27;&#x27;)) -
+					parseFloat(b.key.replaceAll(&#x27;,&#x27;, &#x27;&#x27;))
+				);
+			}
+			return b.value - a.value;
+		});
+		// console.table(resGroup);
+		CC.coclusteringReport.cellFrequencies &#x3D; resGroup.map(e &#x3D;&gt; e.value);
+		CC.coclusteringReport.cellPartIndexes &#x3D; resGroup.map(e &#x3D;&gt; e.key.split(&#x27;,&#x27;));
+
+		// Convert cellPartIndexes strings to integers
+		for (let k &#x3D; 0; k &lt; CC.coclusteringReport.cellPartIndexes.length; k++) {
+			CC.coclusteringReport.cellPartIndexes[k] &#x3D; CC.coclusteringReport.cellPartIndexes[k].map(function (x) {
+				return parseInt(x, 10);
+			});
+		}
+		return CC;
+
+	}
+
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'SaveService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

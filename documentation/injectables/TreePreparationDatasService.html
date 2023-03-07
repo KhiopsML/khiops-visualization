@@ -1,0 +1,2716 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>visualization-component documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">visualization-component documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Injectables</li>
+  <li >TreePreparationDatasService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/khiops-visualization/providers/tree-preparation-datas.service.ts</code>
+        </p>
+
+
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#treePreparationDatas" >treePreparationDatas</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#computeNodesFreqsComparedToOthers" >computeNodesFreqsComparedToOthers</a>
+                            </li>
+                            <li>
+                                <a href="#constructDimensionTree" >constructDimensionTree</a>
+                            </li>
+                            <li>
+                                <a href="#formatTreeNodesDatas" >formatTreeNodesDatas</a>
+                            </li>
+                            <li>
+                                <a href="#getCurrentIntervalDatas" >getCurrentIntervalDatas</a>
+                            </li>
+                            <li>
+                                <a href="#getDatas" >getDatas</a>
+                            </li>
+                            <li>
+                                <a href="#getFirstNodeLeaf" >getFirstNodeLeaf</a>
+                            </li>
+                            <li>
+                                <a href="#getInformationsDatas" >getInformationsDatas</a>
+                            </li>
+                            <li>
+                                <a href="#getLeafRules" >getLeafRules</a>
+                            </li>
+                            <li>
+                                <a href="#getNodeFromName" >getNodeFromName</a>
+                            </li>
+                            <li>
+                                <a href="#getNodesLinkedToOneNode" >getNodesLinkedToOneNode</a>
+                            </li>
+                            <li>
+                                <a href="#getRecursiveNodeDatasRules" >getRecursiveNodeDatasRules</a>
+                            </li>
+                            <li>
+                                <a href="#getSelectedNode" >getSelectedNode</a>
+                            </li>
+                            <li>
+                                <a href="#getSelectedNodes" >getSelectedNodes</a>
+                            </li>
+                            <li>
+                                <a href="#getSelectedVariable" >getSelectedVariable</a>
+                            </li>
+                            <li>
+                                <a href="#getSelectedVariableRank" >getSelectedVariableRank</a>
+                            </li>
+                            <li>
+                                <a href="#getSummaryDatas" >getSummaryDatas</a>
+                            </li>
+                            <li>
+                                <a href="#getTargetVariable" >getTargetVariable</a>
+                            </li>
+                            <li>
+                                <a href="#getTargetVariableStatsDatas" >getTargetVariableStatsDatas</a>
+                            </li>
+                            <li>
+                                <a href="#getTargetVariableStatsInformations" >getTargetVariableStatsInformations</a>
+                            </li>
+                            <li>
+                                <a href="#getTreeDetails" >getTreeDetails</a>
+                            </li>
+                            <li>
+                                <a href="#getTreeLeafRules" >getTreeLeafRules</a>
+                            </li>
+                            <li>
+                                <a href="#getVariableFromName" >getVariableFromName</a>
+                            </li>
+                            <li>
+                                <a href="#getVariableFromRank" >getVariableFromRank</a>
+                            </li>
+                            <li>
+                                <a href="#getVariablesDatas" >getVariablesDatas</a>
+                            </li>
+                            <li>
+                                <a href="#initialize" >initialize</a>
+                            </li>
+                            <li>
+                                <a href="#initSelectedNodes" >initSelectedNodes</a>
+                            </li>
+                            <li>
+                                <a href="#setSelectedFlattenTree" >setSelectedFlattenTree</a>
+                            </li>
+                            <li>
+                                <a href="#setSelectedNode" >setSelectedNode</a>
+                            </li>
+                            <li>
+                                <a href="#setSelectedNodes" >setSelectedNodes</a>
+                            </li>
+                            <li>
+                                <a href="#setSelectedVariable" >setSelectedVariable</a>
+                            </li>
+                            <li>
+                                <a href="#toggleNode" >toggleNode</a>
+                            </li>
+                            <li>
+                                <a href="#toggleNodeIntoDimenstionTree" >toggleNodeIntoDimenstionTree</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(translate: <a href="../interfaces/T.html" target="_self">TranslateService</a>, khiopsLibraryService: <a href="../injectables/KhiopsLibraryService.html" target="_self">KhiopsLibraryService</a>, appService: <a href="../injectables/AppService.html" target="_self">AppService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/app/khiops-visualization/providers/tree-preparation-datas.service.ts:53</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>translate</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../interfaces/T.html" target="_self" >TranslateService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>khiopsLibraryService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/KhiopsLibraryService.html" target="_self" >KhiopsLibraryService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>appService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AppService.html" target="_self" >AppService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="computeNodesFreqsComparedToOthers"></a>
+                    <span class="name">
+                        <span ><b>computeNodesFreqsComparedToOthers</b></span>
+                        <a href="#computeNodesFreqsComparedToOthers"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>computeNodesFreqsComparedToOthers()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="155"
+                            class="link-to-prism">src/app/khiops-visualization/providers/tree-preparation-datas.service.ts:155</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="constructDimensionTree"></a>
+                    <span class="name">
+                        <span ><b>constructDimensionTree</b></span>
+                        <a href="#constructDimensionTree"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>constructDimensionTree()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="144"
+                            class="link-to-prism">src/app/khiops-visualization/providers/tree-preparation-datas.service.ts:144</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatTreeNodesDatas"></a>
+                    <span class="name">
+                        <span ><b>formatTreeNodesDatas</b></span>
+                        <a href="#formatTreeNodesDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>formatTreeNodesDatas(item)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="170"
+                            class="link-to-prism">src/app/khiops-visualization/providers/tree-preparation-datas.service.ts:170</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>item</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getCurrentIntervalDatas"></a>
+                    <span class="name">
+                        <span ><b>getCurrentIntervalDatas</b></span>
+                        <a href="#getCurrentIntervalDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getCurrentIntervalDatas(index?)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="231"
+                            class="link-to-prism">src/app/khiops-visualization/providers/tree-preparation-datas.service.ts:231</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>index</td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getDatas"></a>
+                    <span class="name">
+                        <span ><b>getDatas</b></span>
+                        <a href="#getDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getDatas()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="82"
+                            class="link-to-prism">src/app/khiops-visualization/providers/tree-preparation-datas.service.ts:82</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/T.html" target="_self" >TreePreparationDatasVO</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getFirstNodeLeaf"></a>
+                    <span class="name">
+                        <span ><b>getFirstNodeLeaf</b></span>
+                        <a href="#getFirstNodeLeaf"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getFirstNodeLeaf(node)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="95"
+                            class="link-to-prism">src/app/khiops-visualization/providers/tree-preparation-datas.service.ts:95</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>node</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getInformationsDatas"></a>
+                    <span class="name">
+                        <span ><b>getInformationsDatas</b></span>
+                        <a href="#getInformationsDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getInformationsDatas()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="221"
+                            class="link-to-prism">src/app/khiops-visualization/providers/tree-preparation-datas.service.ts:221</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getLeafRules"></a>
+                    <span class="name">
+                        <span ><b>getLeafRules</b></span>
+                        <a href="#getLeafRules"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getLeafRules()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="227"
+                            class="link-to-prism">src/app/khiops-visualization/providers/tree-preparation-datas.service.ts:227</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getNodeFromName"></a>
+                    <span class="name">
+                        <span ><b>getNodeFromName</b></span>
+                        <a href="#getNodeFromName"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getNodeFromName(name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="200"
+                            class="link-to-prism">src/app/khiops-visualization/providers/tree-preparation-datas.service.ts:200</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>name</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getNodesLinkedToOneNode"></a>
+                    <span class="name">
+                        <span ><b>getNodesLinkedToOneNode</b></span>
+                        <a href="#getNodesLinkedToOneNode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getNodesLinkedToOneNode(id: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="103"
+                            class="link-to-prism">src/app/khiops-visualization/providers/tree-preparation-datas.service.ts:103</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>{}</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getRecursiveNodeDatasRules"></a>
+                    <span class="name">
+                        <span ><b>getRecursiveNodeDatasRules</b></span>
+                        <a href="#getRecursiveNodeDatasRules"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getRecursiveNodeDatasRules(node: <a href="../classes/TreeNodeVO.html" target="_self">TreeNodeVO</a>, rules)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="637"
+                            class="link-to-prism">src/app/khiops-visualization/providers/tree-preparation-datas.service.ts:637</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>node</td>
+                                    <td>
+                                                <code><a href="../classes/TreeNodeVO.html" target="_self" >TreeNodeVO</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>rules</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getSelectedNode"></a>
+                    <span class="name">
+                        <span ><b>getSelectedNode</b></span>
+                        <a href="#getSelectedNode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getSelectedNode()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="456"
+                            class="link-to-prism">src/app/khiops-visualization/providers/tree-preparation-datas.service.ts:456</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/TreeNodeVO.html" target="_self" >TreeNodeVO</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getSelectedNodes"></a>
+                    <span class="name">
+                        <span ><b>getSelectedNodes</b></span>
+                        <a href="#getSelectedNodes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getSelectedNodes()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="452"
+                            class="link-to-prism">src/app/khiops-visualization/providers/tree-preparation-datas.service.ts:452</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>TreeNodeVO[]</code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getSelectedVariable"></a>
+                    <span class="name">
+                        <span ><b>getSelectedVariable</b></span>
+                        <a href="#getSelectedVariable"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getSelectedVariable()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="183"
+                            class="link-to-prism">src/app/khiops-visualization/providers/tree-preparation-datas.service.ts:183</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getSelectedVariableRank"></a>
+                    <span class="name">
+                        <span ><b>getSelectedVariableRank</b></span>
+                        <a href="#getSelectedVariableRank"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getSelectedVariableRank()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="187"
+                            class="link-to-prism">src/app/khiops-visualization/providers/tree-preparation-datas.service.ts:187</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getSummaryDatas"></a>
+                    <span class="name">
+                        <span ><b>getSummaryDatas</b></span>
+                        <a href="#getSummaryDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getSummaryDatas()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="215"
+                            class="link-to-prism">src/app/khiops-visualization/providers/tree-preparation-datas.service.ts:215</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getTargetVariable"></a>
+                    <span class="name">
+                        <span ><b>getTargetVariable</b></span>
+                        <a href="#getTargetVariable"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getTargetVariable()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="422"
+                            class="link-to-prism">src/app/khiops-visualization/providers/tree-preparation-datas.service.ts:422</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getTargetVariableStatsDatas"></a>
+                    <span class="name">
+                        <span ><b>getTargetVariableStatsDatas</b></span>
+                        <a href="#getTargetVariableStatsDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getTargetVariableStatsDatas()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="369"
+                            class="link-to-prism">src/app/khiops-visualization/providers/tree-preparation-datas.service.ts:369</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getTargetVariableStatsInformations"></a>
+                    <span class="name">
+                        <span ><b>getTargetVariableStatsInformations</b></span>
+                        <a href="#getTargetVariableStatsInformations"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getTargetVariableStatsInformations()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="405"
+                            class="link-to-prism">src/app/khiops-visualization/providers/tree-preparation-datas.service.ts:405</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getTreeDetails"></a>
+                    <span class="name">
+                        <span ><b>getTreeDetails</b></span>
+                        <a href="#getTreeDetails"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getTreeDetails()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="505"
+                            class="link-to-prism">src/app/khiops-visualization/providers/tree-preparation-datas.service.ts:505</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/GridDatasI.html" target="_self" >GridDatasI</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getTreeLeafRules"></a>
+                    <span class="name">
+                        <span ><b>getTreeLeafRules</b></span>
+                        <a href="#getTreeLeafRules"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getTreeLeafRules()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="571"
+                            class="link-to-prism">src/app/khiops-visualization/providers/tree-preparation-datas.service.ts:571</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/GridDatasI.html" target="_self" >GridDatasI</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getVariableFromName"></a>
+                    <span class="name">
+                        <span ><b>getVariableFromName</b></span>
+                        <a href="#getVariableFromName"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getVariableFromName(name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="191"
+                            class="link-to-prism">src/app/khiops-visualization/providers/tree-preparation-datas.service.ts:191</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>name</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getVariableFromRank"></a>
+                    <span class="name">
+                        <span ><b>getVariableFromRank</b></span>
+                        <a href="#getVariableFromRank"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getVariableFromRank(rank: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="208"
+                            class="link-to-prism">src/app/khiops-visualization/providers/tree-preparation-datas.service.ts:208</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>rank</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getVariablesDatas"></a>
+                    <span class="name">
+                        <span ><b>getVariablesDatas</b></span>
+                        <a href="#getVariablesDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getVariablesDatas()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="353"
+                            class="link-to-prism">src/app/khiops-visualization/providers/tree-preparation-datas.service.ts:353</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="initialize"></a>
+                    <span class="name">
+                        <span ><b>initialize</b></span>
+                        <a href="#initialize"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>initialize()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="62"
+                            class="link-to-prism">src/app/khiops-visualization/providers/tree-preparation-datas.service.ts:62</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="initSelectedNodes"></a>
+                    <span class="name">
+                        <span ><b>initSelectedNodes</b></span>
+                        <a href="#initSelectedNodes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>initSelectedNodes()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="86"
+                            class="link-to-prism">src/app/khiops-visualization/providers/tree-preparation-datas.service.ts:86</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setSelectedFlattenTree"></a>
+                    <span class="name">
+                        <span ><b>setSelectedFlattenTree</b></span>
+                        <a href="#setSelectedFlattenTree"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setSelectedFlattenTree(rank)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="134"
+                            class="link-to-prism">src/app/khiops-visualization/providers/tree-preparation-datas.service.ts:134</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>rank</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setSelectedNode"></a>
+                    <span class="name">
+                        <span ><b>setSelectedNode</b></span>
+                        <a href="#setSelectedNode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setSelectedNode(node, trustedNodeSelection)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="460"
+                            class="link-to-prism">src/app/khiops-visualization/providers/tree-preparation-datas.service.ts:460</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>node</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>trustedNodeSelection</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setSelectedNodes"></a>
+                    <span class="name">
+                        <span ><b>setSelectedNodes</b></span>
+                        <a href="#setSelectedNodes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setSelectedNodes(nodes: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, trustedNodeSelection?)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="427"
+                            class="link-to-prism">src/app/khiops-visualization/providers/tree-preparation-datas.service.ts:427</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>nodes</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>trustedNodeSelection</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setSelectedVariable"></a>
+                    <span class="name">
+                        <span ><b>setSelectedVariable</b></span>
+                        <a href="#setSelectedVariable"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setSelectedVariable(object: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="115"
+                            class="link-to-prism">src/app/khiops-visualization/providers/tree-preparation-datas.service.ts:115</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toggleNode"></a>
+                    <span class="name">
+                        <span ><b>toggleNode</b></span>
+                        <a href="#toggleNode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>toggleNode(trustedNodeSelection: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="474"
+                            class="link-to-prism">src/app/khiops-visualization/providers/tree-preparation-datas.service.ts:474</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>trustedNodeSelection</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toggleNodeIntoDimenstionTree"></a>
+                    <span class="name">
+                        <span ><b>toggleNodeIntoDimenstionTree</b></span>
+                        <a href="#toggleNodeIntoDimenstionTree"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>toggleNodeIntoDimenstionTree(node: <a href="../classes/TreeNodeVO.html" target="_self">TreeNodeVO</a>, nodeToFind, parent?, i?)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="478"
+                            class="link-to-prism">src/app/khiops-visualization/providers/tree-preparation-datas.service.ts:478</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>node</td>
+                                    <td>
+                                                <code><a href="../classes/TreeNodeVO.html" target="_self" >TreeNodeVO</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>nodeToFind</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>parent</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>i</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+            <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="treePreparationDatas"></a>
+                    <span class="name">
+                        <span ><b>treePreparationDatas</b></span>
+                        <a href="#treePreparationDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/T.html" target="_self" >TreePreparationDatasVO</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/app/khiops-visualization/providers/tree-preparation-datas.service.ts:53</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+	Injectable
+} from &#x27;@angular/core&#x27;;
+import _ from &#x27;lodash&#x27;; // Important to import lodash in karma
+import {
+	AppService
+} from &#x27;./app.service&#x27;;
+import {
+	TranslateService
+} from &#x27;@ngstack/translate&#x27;;
+import {
+	BarVO
+} from &#x27;../model/bar-vo&#x27;;
+import {
+	UtilsService
+} from &#x27;@khiops-library/providers/utils.service&#x27;;
+import {
+	VariableVO
+} from &#x27;../model/variable-vo&#x27;;
+import {
+	VariableDetailsVO
+} from &#x27;../model/variableDetails-vo&#x27;;
+import {
+	ChartDatasetVO
+} from &#x27;@khiops-library/model/chartDataset-vo&#x27;;
+import {
+	KhiopsLibraryService
+} from &#x27;@khiops-library/providers/khiops-library.service&#x27;;
+import {
+	SummaryVO
+} from &#x27;../model/summary-vo&#x27;;
+import {
+	InformationsVO
+} from &#x27;../model/informations-vo&#x27;;
+import {
+	TreePreparationVariableVO
+} from &#x27;../model/tree-preparation-variable-vo&#x27;;
+import {
+	TreeNodeVO
+} from &#x27;../model/tree-node-vo&#x27;;
+import {
+	TreePreparationDatasVO
+} from &#x27;../model/tree-preparation-datas-vo&#x27;;
+import {
+	GridDatasI
+} from &#x27;@khiops-library/interfaces/grid-datas&#x27;;
+
+@Injectable({
+	providedIn: &#x27;root&#x27;
+})
+export class TreePreparationDatasService {
+
+	treePreparationDatas: TreePreparationDatasVO;
+
+	constructor(
+		private translate: TranslateService,
+		private khiopsLibraryService: KhiopsLibraryService,
+		private appService: AppService) {
+
+	}
+
+	initialize(): any {
+
+		const appDatas &#x3D; this.appService.getDatas().datas;
+		this.treePreparationDatas &#x3D; new TreePreparationDatasVO(appDatas);
+
+		// select the first item of the list by default
+		if (this.treePreparationDatas.isValid()) {
+			let defaultVariable &#x3D; appDatas.treePreparationReport.variablesStatistics[0];
+
+			// Check if there is a saved selected variable into json
+			const savedSelectedRank &#x3D; this.appService.getSavedDatas(&#x27;selectedRank&#x27;);
+			if (savedSelectedRank) {
+				defaultVariable &#x3D; this.getVariableFromRank(savedSelectedRank);
+			}
+
+			this.setSelectedVariable(defaultVariable);
+		}
+
+	}
+
+	getDatas(): TreePreparationDatasVO {
+		return this.treePreparationDatas;
+	}
+
+	initSelectedNodes() {
+		const appDatas &#x3D; this.appService.getDatas().datas;
+		const variablesDetailedStatistics &#x3D; appDatas &amp;&amp; appDatas.treePreparationReport &amp;&amp;
+			appDatas.treePreparationReport.variablesDetailedStatistics;
+		const dimensions &#x3D; variablesDetailedStatistics[this.treePreparationDatas.selectedVariable.rank].dataGrid.dimensions;
+		const firstpartition &#x3D; dimensions[0].partition[0];
+		this.setSelectedNodes(firstpartition, firstpartition[0]);
+	}
+
+	getFirstNodeLeaf(node): any {
+		if (node.children.length &gt; 0 &amp;&amp; node.children[0].isLeaf &#x3D;&#x3D;&#x3D; false) {
+			return this.getFirstNodeLeaf(node.children[0]);
+		} else {
+			return node.children[0];
+		}
+	}
+
+	getNodesLinkedToOneNode(id: any) {
+		const appDatas &#x3D; this.appService.getDatas().datas;
+		const variablesDetailedStatistics &#x3D; appDatas &amp;&amp; appDatas.treePreparationReport &amp;&amp;
+			appDatas.treePreparationReport.variablesDetailedStatistics;
+
+		const dimensions &#x3D; variablesDetailedStatistics[this.treePreparationDatas.selectedVariable.rank].dataGrid.dimensions;
+		const dimIndex &#x3D; dimensions.findIndex(e &#x3D;&gt; e.variable &#x3D;&#x3D;&#x3D; this.treePreparationDatas.selectedVariable.name);
+		const dimDatas &#x3D; dimensions[dimIndex].partition;
+		const dimDatasIndex &#x3D; dimDatas.findIndex(e &#x3D;&gt; e.includes(id));
+		return [dimDatasIndex, dimDatas[dimDatasIndex]];
+	}
+
+	setSelectedVariable(object: any): any {
+		if (object) {
+			const variable &#x3D; this.getVariableFromName(object.name);
+			if (variable) {
+				// Init datas
+				this.treePreparationDatas.selectedNodes &#x3D; undefined;
+				this.treePreparationDatas.selectedNode &#x3D; undefined;
+
+				// Init selected variable and construct tree
+				this.treePreparationDatas.selectedVariable &#x3D; new TreePreparationVariableVO(variable, variable.name);
+				this.setSelectedFlattenTree(object.rank);
+				this.computeNodesFreqsComparedToOthers();
+				this.treePreparationDatas.computeTreeColorsMap();
+				this.constructDimensionTree();
+				return this.treePreparationDatas.selectedVariable;
+			}
+		}
+	}
+
+	setSelectedFlattenTree(rank): void {
+		const appDatas &#x3D; this.appService.getDatas().datas;
+		const treeDatas &#x3D; appDatas &amp;&amp; appDatas.treePreparationReport &amp;&amp;
+			appDatas.treePreparationReport.treeDetails;
+		if (treeDatas &amp;&amp; treeDatas[rank] &amp;&amp; treeDatas[rank].treeNodes) {
+			const flattenTree &#x3D; UtilsService.flattenTree([], _.cloneDeep(treeDatas[rank].treeNodes));
+			this.treePreparationDatas.selectedFlattenTree &#x3D; flattenTree;
+		}
+	}
+
+	constructDimensionTree() {
+		const appDatas &#x3D; this.appService.getDatas().datas;
+		const treeDatas &#x3D; appDatas &amp;&amp; appDatas.treePreparationReport &amp;&amp;
+			appDatas.treePreparationReport.treeDetails;
+		const currentRank &#x3D; this.getSelectedVariableRank();
+		if (currentRank &amp;&amp; treeDatas &amp;&amp; treeDatas[currentRank]) {
+			this.treePreparationDatas.dimensionTree &#x3D; _.cloneDeep([treeDatas[currentRank].treeNodes]);
+			this.treePreparationDatas.dimensionTree[0] &#x3D; this.formatTreeNodesDatas(this.treePreparationDatas.dimensionTree[0]);
+		}
+	}
+
+	computeNodesFreqsComparedToOthers() {
+		let treeLeafs &#x3D; this.treePreparationDatas &amp;&amp;
+			this.treePreparationDatas.selectedFlattenTree &amp;&amp;
+			this.treePreparationDatas.selectedFlattenTree.map(e &#x3D;&gt; e.targetValues &amp;&amp; e.targetValues.frequencies);
+		if (treeLeafs) {
+			treeLeafs &#x3D; treeLeafs.filter(function (e) {
+				return e !&#x3D;&#x3D; undefined;
+			});
+			treeLeafs &#x3D; UtilsService.sumArrayItemsOfArray(treeLeafs);
+			const [minVal, maxVal] &#x3D; UtilsService.getMinAndMaxFromArray(treeLeafs);
+			this.treePreparationDatas.maxFrequencies &#x3D; maxVal;
+			this.treePreparationDatas.minFrequencies &#x3D; minVal;
+		}
+	}
+
+	formatTreeNodesDatas(item) {
+
+		const color &#x3D; this.treePreparationDatas.treeColorsMap[item.nodeId];
+		item &#x3D; new TreeNodeVO(item, this.treePreparationDatas.classesCount, color);
+
+		if (item &amp;&amp; item.children) {
+			for (let i &#x3D; 0; i &lt; item.children.length; i++) {
+				item.children[i] &#x3D; this.formatTreeNodesDatas(item.children[i]);
+			}
+		}
+		return item;
+	}
+
+	getSelectedVariable(): any {
+		return this.treePreparationDatas.selectedVariable;
+	}
+
+	getSelectedVariableRank(): any {
+		return this.treePreparationDatas.selectedVariable.rank;
+	}
+
+	getVariableFromName(name: string): any {
+		let variable: any;
+		const appDatas &#x3D; this.appService.getDatas().datas;
+		if (appDatas.treePreparationReport &amp;&amp; appDatas.treePreparationReport.variablesStatistics) {
+			variable &#x3D; appDatas.treePreparationReport.variablesStatistics.find(e &#x3D;&gt; e.name &#x3D;&#x3D;&#x3D; name);
+		}
+		return variable;
+	}
+
+	getNodeFromName(name: string): any {
+		let node: any;
+		if (this.treePreparationDatas.selectedFlattenTree) {
+			node &#x3D; this.treePreparationDatas.selectedFlattenTree.find(e &#x3D;&gt; e.nodeId &#x3D;&#x3D;&#x3D; name);
+		}
+		return node;
+	}
+
+	getVariableFromRank(rank: string): any {
+		let variable: any;
+		const appDatas &#x3D; this.appService.getDatas().datas;
+		variable &#x3D; appDatas.treePreparationReport.variablesStatistics.find(e &#x3D;&gt; e.rank &#x3D;&#x3D;&#x3D; rank);
+		return variable;
+	}
+
+	getSummaryDatas(): any {
+		const appDatas &#x3D; this.appService.getDatas().datas;
+		const summaryVO &#x3D; new SummaryVO(appDatas.treePreparationReport.summary);
+		return summaryVO.formatDatas();
+	}
+
+	getInformationsDatas(): any {
+		const appDatas &#x3D; this.appService.getDatas().datas;
+		const informationsDatas &#x3D; new InformationsVO(appDatas.treePreparationReport.summary);
+		return informationsDatas.formatDatas();
+	}
+
+	getLeafRules(): any {
+		return this.treePreparationDatas.selectedVariable;
+	}
+
+	getCurrentIntervalDatas(index ? ): any {
+
+		index &#x3D; index || 0;
+
+		const datas &#x3D; [];
+		let title &#x3D; &#x27;&#x27;;
+		const displayedColumns &#x3D; [];
+
+		// init the object
+		this.treePreparationDatas.currentIntervalDatas &#x3D; {
+			title: title,
+			values: datas,
+			displayedColumns: displayedColumns,
+		};
+
+		if (index !&#x3D;&#x3D; -1) { // otherwise it&#x27;s a node selection
+
+			const appDatas &#x3D; this.appService.getDatas().datas;
+			if (appDatas.treePreparationReport &amp;&amp; appDatas.treePreparationReport.variablesDetailedStatistics) {
+
+				const currentVar &#x3D; appDatas.treePreparationReport.variablesDetailedStatistics[this.treePreparationDatas.selectedVariable.rank];
+				const variableDetails: VariableDetailsVO &#x3D; new VariableDetailsVO(currentVar, this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_TABLE_SIZE);
+
+				if (variableDetails &amp;&amp; variableDetails.dataGrid) {
+					const currentVariableType &#x3D; variableDetails.dataGrid.dimensions[0].type;
+
+					if (currentVariableType &#x3D;&#x3D;&#x3D; &#x27;Numerical&#x27;) {
+
+						displayedColumns.push({
+							headerName: this.translate.get(&#x27;GLOBAL.INTERVAL_OF&#x27;) + variableDetails.dataGrid.dimensions[0].variable,
+							field: &#x27;interval&#x27;
+						});
+
+						// init datas array
+						datas[0] &#x3D; {};
+						if (variableDetails.dataGrid.dimensions[0].partition[index].length &gt; 0) {
+							datas[0][&#x27;interval&#x27;] &#x3D; JSON.stringify(variableDetails.dataGrid.dimensions[0].partition[index]);
+						} else {
+							datas[0][&#x27;interval&#x27;] &#x3D; this.translate.get(&#x27;GLOBAL.MISSING&#x27;);
+						}
+
+						title &#x3D; this.translate.get(&#x27;GLOBAL.CURRENT_INTERVAL&#x27;);
+
+					} else if (currentVariableType &#x3D;&#x3D;&#x3D; &#x27;Categorical&#x27;) {
+
+						let dimensionLength &#x3D; 0;
+						let startIter &#x3D; 0;
+
+						const currentVal: any &#x3D; variableDetails.dataGrid.dimensions[0].partition[index][0];
+
+						displayedColumns.push({
+							headerName: this.translate.get(&#x27;GLOBAL.VALUES_OF&#x27;) + variableDetails.dataGrid.dimensions[0].variable,
+							field: &#x27;values&#x27;
+						});
+						displayedColumns.push({
+							headerName: this.translate.get(&#x27;GLOBAL.FREQUENCY&#x27;),
+							field: &#x27;frequency&#x27;
+						});
+
+						const partValuesLength &#x3D; UtilsService.flatten(variableDetails.dataGrid.dimensions[0].partition).length;
+						const partLength &#x3D; variableDetails.dataGrid.dimensions[0].partition.length;
+						const isMultiDimPartition &#x3D; partValuesLength !&#x3D;&#x3D; partLength;
+						const defaultGroupIndex &#x3D; variableDetails.dataGrid.dimensions[0].defaultGroupIndex;
+
+						// If multi dimension array, trash cat is managed at the end of treatment
+						if (!isMultiDimPartition) {
+							startIter &#x3D; variableDetails.inputValues.values.indexOf(currentVal);
+							if (index &#x3D;&#x3D;&#x3D; defaultGroupIndex) {
+								dimensionLength &#x3D; variableDetails.inputValues.values.length;
+							} else {
+								dimensionLength &#x3D; startIter + variableDetails.dataGrid.dimensions[0].partition[index].length;
+							}
+
+						} else {
+							startIter &#x3D; 0;
+							dimensionLength &#x3D; variableDetails.dataGrid.dimensions[0].partition[index].length;
+						}
+
+						for (let i &#x3D; startIter; i &lt; dimensionLength; i++) {
+							let currentPartitionInput;
+							if (isMultiDimPartition) {
+								currentPartitionInput &#x3D; variableDetails.dataGrid.dimensions[0].partition[index][i];
+							} else {
+								currentPartitionInput &#x3D; variableDetails.inputValues.values[i];
+							}
+
+							datas[i - startIter] &#x3D; {};
+							datas[i - startIter][&#x27;values&#x27;] &#x3D; currentPartitionInput;
+							const currentValueIndex: any &#x3D; variableDetails.inputValues.values.indexOf(currentPartitionInput);
+							datas[i - startIter][&#x27;frequency&#x27;] &#x3D; variableDetails.inputValues.frequencies[currentValueIndex];
+						}
+
+						// trash cat management for multi dim
+						if (isMultiDimPartition &amp;&amp; index &#x3D;&#x3D;&#x3D; defaultGroupIndex) {
+							const inputValuesLength &#x3D; variableDetails.inputValues.values.length;
+							const unpartitionnedValuesLength &#x3D; inputValuesLength - partValuesLength;
+							if (unpartitionnedValuesLength !&#x3D;&#x3D; 0) {
+								for (let i &#x3D; partValuesLength; i &lt; inputValuesLength; i++) {
+									const currentPartitionInput &#x3D; variableDetails.inputValues.values[i];
+									datas.push({
+										values: currentPartitionInput,
+										frequency: variableDetails.inputValues.frequencies[i],
+									});
+								}
+							}
+						}
+
+						title &#x3D; this.translate.get(&#x27;GLOBAL.CURRENT_GROUP&#x27;);
+					}
+
+					if (variableDetails.isLimitedDatas) {
+						title +&#x3D; &#x27; ( * &#x27; + this.translate.get(&#x27;GLOBAL.LIMIT_GRAPH_DATAS_WARNING&#x27;) + &#x27;)&#x27;;
+					}
+
+				}
+				this.treePreparationDatas.currentIntervalDatas.title &#x3D; title;
+			}
+		}
+
+		return this.treePreparationDatas.currentIntervalDatas;
+	}
+
+	getVariablesDatas(): any {
+		const appDatas &#x3D; this.appService.getDatas().datas;
+		const currentDatas &#x3D; appDatas.treePreparationReport.variablesStatistics;
+		const currentDetailedDatas &#x3D; appDatas.treePreparationReport.variablesDetailedStatistics;
+		const variableDatas &#x3D; [];
+
+		if (currentDatas &amp;&amp; currentDetailedDatas) {
+
+			for (let i &#x3D; 0; i &lt; currentDatas.length; i++) {
+				const varItem: VariableVO &#x3D; new VariableVO(currentDatas[i], currentDetailedDatas[currentDatas[i].rank]);
+				variableDatas.push(varItem);
+			}
+		}
+		return variableDatas;
+	}
+
+	getTargetVariableStatsDatas(): any {
+		let variableStatsDatas;
+
+		const appDatas &#x3D; this.appService.getDatas().datas;
+		if (appDatas.treePreparationReport &amp;&amp; appDatas.treePreparationReport.summary) {
+			variableStatsDatas &#x3D; {
+				datasets: [],
+				labels: [&#x27;&#x27;]
+			};
+			const currentDatas &#x3D; appDatas.treePreparationReport.summary.targetValues;
+
+			if (currentDatas) {
+
+				for (let i &#x3D; 0; i &lt; currentDatas.values.length; i++) {
+					const currentDataSet &#x3D; new ChartDatasetVO();
+
+					const graphItem: BarVO &#x3D; new BarVO();
+					graphItem.name &#x3D; currentDatas.values[i];
+					graphItem.value &#x3D; currentDatas.frequencies[i] * 100 / UtilsService.arraySum(currentDatas.frequencies) / 100;
+					graphItem.extra.value &#x3D; currentDatas.frequencies[i];
+					graphItem.extra.percent &#x3D; currentDatas.frequencies[i] * 100 / UtilsService.arraySum(currentDatas.frequencies);
+
+					currentDataSet.label &#x3D; graphItem.name;
+					currentDataSet.data.push(graphItem.value);
+					currentDataSet.extra.push(graphItem);
+					variableStatsDatas.datasets.push(currentDataSet);
+				}
+
+			}
+			if (variableStatsDatas.datasets.length &#x3D;&#x3D;&#x3D; 0) {
+				variableStatsDatas &#x3D; undefined;
+			}
+		}
+		return variableStatsDatas;
+	}
+
+	getTargetVariableStatsInformations(): any {
+		const appDatas &#x3D; this.appService.getDatas().datas;
+		let informationsDatas;
+		if (appDatas.treePreparationReport.summary.targetDescriptiveStats) {
+			informationsDatas &#x3D; [];
+			for (const item in appDatas.treePreparationReport.summary.targetDescriptiveStats) {
+				if (item) {
+					informationsDatas.push({
+						title: item,
+						value: appDatas.treePreparationReport.summary.targetDescriptiveStats[item]
+					});
+				}
+			}
+		}
+		return informationsDatas;
+	}
+
+	getTargetVariable(): any {
+		const appDatas &#x3D; this.appService.getDatas().datas;
+		return appDatas.treePreparationReport.summary.targetVariable;
+	}
+
+	setSelectedNodes(nodes: any, trustedNodeSelection ? ) {
+		const selectedNodes &#x3D; [];
+		for (let i &#x3D; 0; i &lt; nodes.length; i++) {
+			const nodeDatas &#x3D; this.getNodeFromName(nodes[i]);
+			if (nodeDatas) {
+				const color &#x3D; this.treePreparationDatas.treeColorsMap[nodeDatas.nodeId];
+				// Define the trusted node selection to go to clicked node into hyper tree
+				const treeNodeVo &#x3D; new TreeNodeVO(nodeDatas, this.treePreparationDatas.classesCount, color, nodeDatas.nodeId &#x3D;&#x3D;&#x3D; trustedNodeSelection);
+				selectedNodes.push(treeNodeVo);
+
+				// Save current selected node
+				if (trustedNodeSelection &amp;&amp; trustedNodeSelection &#x3D;&#x3D;&#x3D; nodes[i]) {
+					this.setSelectedNode(nodeDatas, trustedNodeSelection)
+				}
+			}
+		}
+
+		const diff &#x3D; UtilsService.deepDiff(this.treePreparationDatas.selectedNodes, selectedNodes);
+		if (!this.treePreparationDatas.selectedNodes || !_.isEmpty(diff)) {
+			// clone it to emit onchange
+			this.treePreparationDatas.selectedNodes &#x3D; _.cloneDeep(selectedNodes);
+		}
+
+	}
+
+	getSelectedNodes(): TreeNodeVO[] {
+		return this.treePreparationDatas.selectedNodes;
+	}
+
+	getSelectedNode(): TreeNodeVO {
+		return this.treePreparationDatas.selectedNode;
+	}
+
+	setSelectedNode(node, trustedNodeSelection) {
+		const nodeDatas &#x3D; this.getNodeFromName(node.nodeId);
+		const color &#x3D; this.treePreparationDatas.treeColorsMap[nodeDatas.nodeId];
+		// Define the trusted node selection to go to clicked node into hyper tree
+		const treeNodeVo &#x3D; new TreeNodeVO(nodeDatas, this.treePreparationDatas.classesCount, color, nodeDatas.nodeId &#x3D;&#x3D;&#x3D; trustedNodeSelection);
+
+		const diff &#x3D; UtilsService.deepDiff(this.treePreparationDatas.selectedNode, treeNodeVo);
+		if (!this.treePreparationDatas.selectedNode || !_.isEmpty(diff)) {
+			// clone it to emit onchange
+			this.treePreparationDatas.selectedNode &#x3D; _.cloneDeep(treeNodeVo);
+		}
+	}
+
+
+	toggleNode(trustedNodeSelection: string) {
+		this.toggleNodeIntoDimenstionTree(this.treePreparationDatas.dimensionTree[0], trustedNodeSelection);
+	}
+
+	toggleNodeIntoDimenstionTree(node: TreeNodeVO, nodeToFind, parent ? , i ? ) {
+		if (node &amp;&amp; node.nodeId &#x3D;&#x3D;&#x3D; nodeToFind) {
+			if (parent.children[i].children) {
+				parent.children[i].isCollapsed &#x3D; true;
+				parent.children[i].collapsedChildren &#x3D; parent.children[i].children;
+				delete parent.children[i].children;
+			} else {
+				parent.children[i].isCollapsed &#x3D; false;
+				parent.children[i].children &#x3D; parent.children[i].collapsedChildren;
+				delete parent.children[i].collapsedChildren;
+			}
+
+			return true;
+		}
+		if (node &amp;&amp; node.children &amp;&amp; node.children.length &gt; 0) {
+			for (let i &#x3D; 0; i &lt; node.children.length; i++) {
+				if (node.children[i]) {
+					const res &#x3D; this.toggleNodeIntoDimenstionTree(node.children[i], nodeToFind, node, i);
+					if (res) {
+						return res;
+					}
+				}
+			}
+		}
+
+	}
+
+	getTreeDetails(): GridDatasI {
+		const treeDetails: GridDatasI &#x3D; {
+			title: this.translate.get(&#x27;GLOBAL.NODES_SELECTION_DETAILS&#x27;) + &#x27; : &#x27; + this.treePreparationDatas.selectedNodes.map(e &#x3D;&gt; e.nodeId).join(&#x27;, &#x27;),
+			values: [],
+			displayedColumns: []
+		};
+
+		if (this.treePreparationDatas.selectedNodes[0]) {
+
+			const isLeafSelection &#x3D; this.treePreparationDatas.selectedNodes[0].isLeaf;
+
+			treeDetails.displayedColumns &#x3D; [{
+					headerName: &#x27;Node Id&#x27;,
+					field: &#x27;nodeId&#x27;
+				},
+				{
+					headerName: &#x27;Values&#x27;,
+					field: &#x27;values&#x27;
+				},
+				{
+					headerName: &#x27;Frequencies&#x27;,
+					field: &#x27;frequencies&#x27;
+				}
+			];
+
+			// if (!isLeafSelection) {
+			// 	this.treeDetails.displayedColumns.push({
+			// 		headerName: &#x27;Partition&#x27;,
+			// 		field: &#x27;partition&#x27;
+			// 	}, {
+			// 		headerName: &#x27;Type&#x27;,
+			// 		field: &#x27;type&#x27;
+			// 	}, {
+			// 		headerName: &#x27;Variable&#x27;,
+			// 		field: &#x27;variable&#x27;
+			// 	});
+			// }
+
+			for (let i &#x3D; 0; i &lt; this.treePreparationDatas.selectedNodes.length; i++) {
+				const currentNode &#x3D; this.treePreparationDatas.selectedNodes[i];
+				if (currentNode &amp;&amp; currentNode.isLeaf) {
+					// it&#x27;s a leaf
+					const rowData: any &#x3D; {
+						_id: currentNode.nodeId,
+						nodeId: currentNode.nodeId,
+						values: JSON.stringify(currentNode.targetValues.values),
+						frequencies: JSON.stringify(currentNode.targetValues.frequencies),
+					};
+					// if (!isLeafSelection) {
+					// 	rowData.partition &#x3D; JSON.stringify(currentNode.partition);
+					// 	rowData.type &#x3D; currentNode.type;
+					// 	rowData.variable &#x3D; currentNode.variable;
+					// }
+					treeDetails.values.push(rowData);
+
+				} else {
+					// it&#x27;s a node
+				}
+
+			}
+		}
+
+		return treeDetails;
+
+	}
+
+	getTreeLeafRules(): GridDatasI {
+		const treeLeafRules: GridDatasI &#x3D; {
+			title: this.translate.get(&#x27;GLOBAL.LEAF_RULES&#x27;) + &#x27; : &#x27; + this.treePreparationDatas.selectedNode.nodeId,
+			values: [],
+			displayedColumns: []
+		};
+
+		if (this.treePreparationDatas.selectedNodes[0]) {
+
+			treeLeafRules.displayedColumns &#x3D; [{
+					headerName: &#x27;Variable&#x27;,
+					field: &#x27;variable&#x27;
+				},
+				{
+					headerName: &#x27;Type&#x27;,
+					field: &#x27;type&#x27;
+				},
+				{
+					headerName: &#x27;Partition&#x27;,
+					field: &#x27;partition&#x27;
+				}
+			];
+
+			// get a hierarchy branch with all recursive parents
+			const nodeHierarchy: TreeNodeVO &#x3D; UtilsService.returnHierarchy(
+				_.cloneDeep(this.treePreparationDatas.dimensionTree),
+				this.treePreparationDatas.selectedNode.id
+			)
+
+			// get obj rules into one array
+			let rules: TreeNodeVO[] &#x3D; [];
+			if (nodeHierarchy) {
+				rules &#x3D; this.getRecursiveNodeDatasRules(nodeHierarchy[0], rules);
+			}
+
+			// construct the grid
+			for (let i &#x3D; 0; i &lt; rules.length; i++) {
+				// Find index of the current node to get correct partition info
+				let currentChildrenId &#x3D; rules[i].children[0].nodeId;
+				let partitionIndex &#x3D; rules[i].childNodes.findIndex((e: TreeNodeVO) &#x3D;&gt; e.nodeId &#x3D;&#x3D;&#x3D; currentChildrenId);
+				let partition: any[] &#x3D; rules[i].partition[partitionIndex];
+
+				// Limit partition to 10 first elements
+				let displayedPartition: string;
+				if (partition.length &gt; 10) {
+					displayedPartition &#x3D; partition.slice(0, 10).join(&#x27;, &#x27;) + &#x27; ...&#x27;;
+				} else {
+					displayedPartition &#x3D; partition.join(&#x27;, &#x27;);
+				}
+
+				// Add data row
+				const rowData: any &#x3D; {
+					_id: rules[i].nodeId,
+					variable: rules[i].variable,
+					type: rules[i].type,
+					partition: &#x27;[&#x27; + displayedPartition + &#x27;]&#x27;
+				};
+
+				treeLeafRules.values.push(rowData);
+
+			}
+		}
+
+		return treeLeafRules;
+	}
+
+	getRecursiveNodeDatasRules(node: TreeNodeVO, rules) {
+		if (node.children &amp;&amp; node.children.length &gt; 0) {
+			rules.push(node);
+			return this.getRecursiveNodeDatasRules(node.children[0], rules);
+		} else {
+			return rules;
+		}
+	}
+
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'TreePreparationDatasService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

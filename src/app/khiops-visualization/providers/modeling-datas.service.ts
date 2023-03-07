@@ -1,0 +1,198 @@
+import {
+	Injectable
+} from '@angular/core';
+import {
+	AppService
+} from './app.service';
+import {
+	TranslateService
+} from '@ngstack/translate';
+import * as _ from 'lodash'; // Important to import lodash in karma
+import {
+	PreparationDatasService
+} from './preparation-datas.service';
+import {
+	ModelingPredictorVO
+} from '../model/modeling-predictor-vo';
+import {
+	SummaryVO
+} from '../model/summary-vo';
+import {
+	Preparation2dDatasService
+} from './preparation2d-datas.service';
+import {
+	TreePreparationDatasService
+} from './tree-preparation-datas.service';
+import {
+	ModelingDatasVO
+} from '../model/modeling-datas-vo';
+
+@Injectable({
+	providedIn: 'root'
+})
+export class ModelingDatasService {
+
+	modelingDatas: ModelingDatasVO;
+
+	constructor(private translate: TranslateService,
+		private appService: AppService,
+		private preparationDatasService: PreparationDatasService,
+		private treePreparationDatasService: TreePreparationDatasService,
+		private preparation2dDatasService: Preparation2dDatasService
+	) {
+
+	}
+
+	initialize(): any {
+		this.modelingDatas = new ModelingDatasVO();
+
+		// at init select the corresponding var
+		// get the variable selected into PreparationDatasService
+		const preparationSource = this.preparationDatasService.getAvailablePreparationReport();
+		const preparationSelectedVar = this.preparationDatasService.getSelectedVariable(preparationSource);
+		// select the first item of the list by default
+		if (preparationSelectedVar) {
+			// this.setSelectedVariable(this.getVariableFromName(preparationSelectedVar.name));
+			this.setSelectedVariable(preparationSelectedVar);
+		} else {
+			// If json is incomplete, set the modeling variable to the first
+			this.initSelectedVariable();
+		}
+	}
+
+	getDatas(): ModelingDatasVO {
+		return this.modelingDatas;
+	}
+
+	setSelectedVariable(object: any): void {
+		if (this.modelingDatas && object) {
+			this.modelingDatas.selectedVariable = object;
+		} else {
+			this.initSelectedVariable();
+		}
+	}
+
+	removeSelectedVariable(): void {
+		this.modelingDatas.selectedVariable = undefined;
+	}
+
+	getSelectedVariable(): any {
+		return this.modelingDatas.selectedVariable;
+	}
+
+	initSelectedVariable(): any {
+		const appDatas = this.appService.getDatas().datas;
+		if (appDatas && appDatas.modelingReport && appDatas.modelingReport.trainedPredictorsDetails) {
+			const variables = appDatas.modelingReport.trainedPredictorsDetails;
+			const variable = variables[Object.keys(variables)[0]].selectedVariables[0];
+			this.setSelectedVariable(this.getVariableFromName(variable.name));
+
+			// Also set the preparation selected variable if json is incomplete
+			const preparationSource = this.preparationDatasService.getAvailablePreparationReport();
+			this.preparationDatasService.setSelectedVariable(variable, preparationSource);
+		}
+	}
+
+	getVariableFromName(name: string): any {
+
+		let variable: any;
+		const appDatas = this.appService.getDatas().datas;
+
+		if (appDatas && appDatas.modelingReport && appDatas.modelingReport.trainedPredictorsDetails) {
+			Object.keys(appDatas.modelingReport.trainedPredictorsDetails).forEach(function (key) {
+				variable = appDatas.modelingReport.trainedPredictorsDetails[key].selectedVariables.find(e => e.name === name);
+				if (variable) {
+					return variable;
+				}
+			});
+		}
+		return variable;
+	}
+
+	getTrainedPredictorDisplayedColumns(): string[] {
+		const displayedColumns = [];
+		if (this.modelingDatas.trainedPredictorsListDatas) {
+			const typicalData = this.modelingDatas.trainedPredictorsListDatas[0];
+			Object.keys(typicalData).forEach((key) => {
+				// Add columns of available objects (defined into ModelingPredictorVO)
+				if (key !== '_id' && typicalData[key] !== undefined) {
+					displayedColumns.push({
+						headerName: key,
+						field: key,
+						tooltip: this.translate.get('TOOLTIPS.MODELING.VARIABLES.' + key.toUpperCase())
+					});
+				}
+			});
+		}
+
+		return displayedColumns;
+	}
+
+	getSummaryDatas(): any {
+		let summaryDatas;
+		const appDatas = this.appService.getDatas().datas;
+		const preparationSource = this.preparationDatasService.getAvailablePreparationReport();
+		if (appDatas[preparationSource] && appDatas[preparationSource].summary) {
+			const summaryVO = new SummaryVO(appDatas[preparationSource].summary);
+			summaryDatas = summaryVO.formatDatas();
+		}
+		return summaryDatas;
+	}
+
+	getTrainedPredictorsSummaryDatas(): any {
+		const appDatas = this.appService.getDatas().datas;
+		const trainedPredictorsSummaryDatas = [];
+
+		for (let i = 0; i < appDatas.modelingReport.trainedPredictors.length; i++) {
+			trainedPredictorsSummaryDatas.push({
+				title: appDatas.modelingReport.trainedPredictors[i].name,
+				value: appDatas.modelingReport.trainedPredictors[i].variables + ' ' + this.translate.get('GLOBAL.VARIABLES')
+			});
+		}
+
+		return trainedPredictorsSummaryDatas;
+	}
+
+	setSelectedPredictor(predictor) {
+		this.modelingDatas.selectedPredictor = predictor;
+	}
+
+	getSelectedPredictor(): any {
+		return this.modelingDatas.selectedPredictor;
+	}
+
+	getTrainedPredictorListDatas(): any {
+		const appDatas = this.appService.getDatas().datas;
+		const selectedPredictor = this.getSelectedPredictor();
+		if (selectedPredictor &&
+			selectedPredictor.rank &&
+			appDatas.modelingReport.trainedPredictorsDetails &&
+			appDatas.modelingReport.trainedPredictorsDetails[selectedPredictor.rank]) {
+			const currentDatas = appDatas.modelingReport.trainedPredictorsDetails[selectedPredictor.rank].selectedVariables;
+
+			// Get a typical data object
+			const availableKeys = Object.keys(currentDatas[0]);
+
+			this.modelingDatas.trainedPredictorsListDatas = [];
+			for (let i = 0; i < currentDatas.length; i++) {
+				// Find the corresponding rank of the current variable into preparation, 2d or tree
+				const currentVar = currentDatas[i];
+
+				const preparationSource = this.preparationDatasService.getPreparationSourceFromVariable(currentVar);
+				let currentVarDetails = this.preparationDatasService.getVariableFromName(currentVar.name, preparationSource);
+				if (!currentVarDetails) {
+					currentVarDetails = this.treePreparationDatasService.getVariableFromName(currentVar.name);
+				}
+				if (!currentVarDetails) {
+					currentVarDetails = this.preparation2dDatasService.getVariableFromNames(currentVar.name.split('`')[0], currentVar.name.split('`')[1]);
+				}
+				const varItem: ModelingPredictorVO = new ModelingPredictorVO(currentVar, availableKeys);
+				this.modelingDatas.trainedPredictorsListDatas.push(varItem);
+			}
+		} else {
+			this.modelingDatas.trainedPredictorsListDatas = undefined;
+		}
+		return this.modelingDatas.trainedPredictorsListDatas;
+	}
+
+}

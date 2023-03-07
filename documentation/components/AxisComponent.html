@@ -1,0 +1,1514 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>visualization-component documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">visualization-component documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li
+  >
+  AxisComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/khiops-covisualization/components/commons/axis/axis.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+                    <code><a href="https://angular.io/api/core/AfterViewInit" target="_blank" >AfterViewInit</a></code>
+                    <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-axis</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./axis.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./axis.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#appVariableGraphDetails" >appVariableGraphDetails</a>
+                            </li>
+                            <li>
+                                <a href="#column0Index" >column0Index</a>
+                            </li>
+                            <li>
+                                <a href="#column1Index" >column1Index</a>
+                            </li>
+                            <li>
+                                <a href="#column2Index" >column2Index</a>
+                            </li>
+                            <li>
+                                <a href="#column3Index" >column3Index</a>
+                            </li>
+                            <li>
+                                <a href="#column4Index" >column4Index</a>
+                            </li>
+                            <li>
+                                <a href="#dimensionsClusters" >dimensionsClusters</a>
+                            </li>
+                            <li>
+                                <a href="#dimensionsSelectionChangedSub" >dimensionsSelectionChangedSub</a>
+                            </li>
+                            <li>
+                                <a href="#dimensionsTree" >dimensionsTree</a>
+                            </li>
+                            <li>
+                                <a href="#invertedPosition" >invertedPosition</a>
+                            </li>
+                            <li>
+                                <a href="#selectedComposition" >selectedComposition</a>
+                            </li>
+                            <li>
+                                <a href="#selectedDimension" >selectedDimension</a>
+                            </li>
+                            <li>
+                                <a href="#selectedNode" >selectedNode</a>
+                            </li>
+                            <li>
+                                <a href="#sizes" >sizes</a>
+                            </li>
+                            <li>
+                                <a href="#viewLayout" >viewLayout</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#computeComponentsSizes" >computeComponentsSizes</a>
+                            </li>
+                            <li>
+                                <a href="#initializeView" >initializeView</a>
+                            </li>
+                            <li>
+                                <a href="#ngAfterViewInit" >ngAfterViewInit</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onSplitDragEnd" >onSplitDragEnd</a>
+                            </li>
+                            <li>
+                                <a href="#selectedCompositionChanged" >selectedCompositionChanged</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#axisLayout" >axisLayout</a>
+                            </li>
+                            <li>
+                                <a href="#dimensionsDatas" >dimensionsDatas</a>
+                            </li>
+                            <li>
+                                <a href="#position" >position</a>
+                            </li>
+                            <li>
+                                <a href="#sizeId" >sizeId</a>
+                            </li>
+                            <li>
+                                <a href="#viewId" >viewId</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(appService: <a href="../injectables/AppService.html" target="_self">AppService</a>, eventsService: <a href="../injectables/EventsService.html" target="_self">EventsService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/app/khiops-covisualization/components/commons/axis/axis.component.ts:57</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>appService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AppService.html" target="_self" >AppService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>eventsService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/EventsService.html" target="_self" >EventsService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section>
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="axisLayout"></a>
+                        <b>axisLayout</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/khiops-covisualization/components/commons/axis/axis.component.ts:40</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="dimensionsDatas"></a>
+                        <b>dimensionsDatas</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/khiops-covisualization/components/commons/axis/axis.component.ts:39</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="position"></a>
+                        <b>position</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/app/khiops-covisualization/components/commons/axis/axis.component.ts:38</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="sizeId"></a>
+                        <b>sizeId</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/khiops-covisualization/components/commons/axis/axis.component.ts:37</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="viewId"></a>
+                        <b>viewId</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/khiops-covisualization/components/commons/axis/axis.component.ts:36</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="computeComponentsSizes"></a>
+                    <span class="name">
+                        <span ><b>computeComponentsSizes</b></span>
+                        <a href="#computeComponentsSizes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>computeComponentsSizes()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="104"
+                            class="link-to-prism">src/app/khiops-covisualization/components/commons/axis/axis.component.ts:104</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Compute the index of visible components
+to get correct width split value from local storage
+because sizes[sizeId] is an array of visible components length</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="initializeView"></a>
+                    <span class="name">
+                        <span ><b>initializeView</b></span>
+                        <a href="#initializeView"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>initializeView()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="81"
+                            class="link-to-prism">src/app/khiops-covisualization/components/commons/axis/axis.component.ts:81</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngAfterViewInit"></a>
+                    <span class="name">
+                        <span ><b>ngAfterViewInit</b></span>
+                        <a href="#ngAfterViewInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngAfterViewInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="77"
+                            class="link-to-prism">src/app/khiops-covisualization/components/commons/axis/axis.component.ts:77</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="73"
+                            class="link-to-prism">src/app/khiops-covisualization/components/commons/axis/axis.component.ts:73</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="69"
+                            class="link-to-prism">src/app/khiops-covisualization/components/commons/axis/axis.component.ts:69</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onSplitDragEnd"></a>
+                    <span class="name">
+                        <span ><b>onSplitDragEnd</b></span>
+                        <a href="#onSplitDragEnd"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onSplitDragEnd(event, item)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="87"
+                            class="link-to-prism">src/app/khiops-covisualization/components/commons/axis/axis.component.ts:87</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>event</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>item</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedCompositionChanged"></a>
+                    <span class="name">
+                        <span ><b>selectedCompositionChanged</b></span>
+                        <a href="#selectedCompositionChanged"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>selectedCompositionChanged(composition)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="131"
+                            class="link-to-prism">src/app/khiops-covisualization/components/commons/axis/axis.component.ts:131</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>composition</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="appVariableGraphDetails"></a>
+                    <span class="name">
+                        <span ><b>appVariableGraphDetails</b></span>
+                        <a href="#appVariableGraphDetails"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../components/VariableGraphDetailsComponent.html" target="_self" >VariableGraphDetailsComponent</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(&#x27;appVariableGraphDetails&#x27;, {static: false})<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/khiops-covisualization/components/commons/axis/axis.component.ts:34</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="column0Index"></a>
+                    <span class="name">
+                        <span ><b>column0Index</b></span>
+                        <a href="#column0Index"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">src/app/khiops-covisualization/components/commons/axis/axis.component.ts:48</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="column1Index"></a>
+                    <span class="name">
+                        <span ><b>column1Index</b></span>
+                        <a href="#column1Index"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>1</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/app/khiops-covisualization/components/commons/axis/axis.component.ts:49</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="column2Index"></a>
+                    <span class="name">
+                        <span ><b>column2Index</b></span>
+                        <a href="#column2Index"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>2</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">src/app/khiops-covisualization/components/commons/axis/axis.component.ts:50</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="column3Index"></a>
+                    <span class="name">
+                        <span ><b>column3Index</b></span>
+                        <a href="#column3Index"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>3</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">src/app/khiops-covisualization/components/commons/axis/axis.component.ts:51</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="column4Index"></a>
+                    <span class="name">
+                        <span ><b>column4Index</b></span>
+                        <a href="#column4Index"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>4</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/khiops-covisualization/components/commons/axis/axis.component.ts:52</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dimensionsClusters"></a>
+                    <span class="name">
+                        <span ><b>dimensionsClusters</b></span>
+                        <a href="#dimensionsClusters"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">src/app/khiops-covisualization/components/commons/axis/axis.component.ts:46</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dimensionsSelectionChangedSub"></a>
+                    <span class="name">
+                        <span ><b>dimensionsSelectionChangedSub</b></span>
+                        <a href="#dimensionsSelectionChangedSub"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/app/khiops-covisualization/components/commons/axis/axis.component.ts:56</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dimensionsTree"></a>
+                    <span class="name">
+                        <span ><b>dimensionsTree</b></span>
+                        <a href="#dimensionsTree"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/khiops-covisualization/components/commons/axis/axis.component.ts:45</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="invertedPosition"></a>
+                    <span class="name">
+                        <span ><b>invertedPosition</b></span>
+                        <a href="#invertedPosition"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">src/app/khiops-covisualization/components/commons/axis/axis.component.ts:55</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedComposition"></a>
+                    <span class="name">
+                        <span ><b>selectedComposition</b></span>
+                        <a href="#selectedComposition"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/app/khiops-covisualization/components/commons/axis/axis.component.ts:57</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedDimension"></a>
+                    <span class="name">
+                        <span ><b>selectedDimension</b></span>
+                        <a href="#selectedDimension"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/DimensionVO.html" target="_self" >DimensionVO</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/app/khiops-covisualization/components/commons/axis/axis.component.ts:43</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedNode"></a>
+                    <span class="name">
+                        <span ><b>selectedNode</b></span>
+                        <a href="#selectedNode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/DimensionVO.html" target="_self" >DimensionVO</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/app/khiops-covisualization/components/commons/axis/axis.component.ts:44</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sizes"></a>
+                    <span class="name">
+                        <span ><b>sizes</b></span>
+                        <a href="#sizes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/app/khiops-covisualization/components/commons/axis/axis.component.ts:41</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="viewLayout"></a>
+                    <span class="name">
+                        <span ><b>viewLayout</b></span>
+                        <a href="#viewLayout"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/DimensionViewLayoutVO.html" target="_self" >DimensionViewLayoutVO</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/app/khiops-covisualization/components/commons/axis/axis.component.ts:54</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+	Component,
+	OnInit,
+	Input,
+	OnDestroy,
+	ViewChild,
+	AfterViewInit
+} from &#x27;@angular/core&#x27;;
+import {
+	AppService
+} from &#x27;src/app/providers/app.service&#x27;;
+import {
+	DimensionViewLayoutVO
+} from &#x27;src/app/model/view-layout-vo&#x27;;
+import {
+	VariableGraphDetailsComponent
+} from &#x27;../variable-graph-details/variable-graph-details.component&#x27;;
+import {
+	DimensionVO
+} from &#x27;@khiops-library/model/dimension-vo&#x27;;
+import {
+	EventsService
+} from &#x27;src/app/providers/events.service&#x27;;
+
+@Component({
+	selector: &#x27;app-axis&#x27;,
+	templateUrl: &#x27;./axis.component.html&#x27;,
+	styleUrls: [&#x27;./axis.component.scss&#x27;]
+})
+export class AxisComponent implements OnInit, AfterViewInit, OnDestroy {
+
+	@ViewChild(&#x27;appVariableGraphDetails&#x27;, {
+		static: false
+	}) appVariableGraphDetails: VariableGraphDetailsComponent;
+
+	@Input() viewId: string;
+	@Input() sizeId: string;
+	@Input() position: number;
+	@Input() dimensionsDatas: any;
+	@Input() axisLayout: any;
+	sizes: any;
+
+	selectedDimension: DimensionVO;
+	selectedNode: DimensionVO;
+	dimensionsTree: [];
+	dimensionsClusters: [];
+
+	column0Index &#x3D; 0;
+	column1Index &#x3D; 1;
+	column2Index &#x3D; 2;
+	column3Index &#x3D; 3;
+	column4Index &#x3D; 4;
+
+	viewLayout: DimensionViewLayoutVO;
+	invertedPosition: number;
+	dimensionsSelectionChangedSub: any;
+	selectedComposition: any;
+
+	constructor(private appService: AppService,
+		private eventsService: EventsService
+	) {
+
+		this.dimensionsSelectionChangedSub &#x3D; this.eventsService.dimensionsSelectionChanged.subscribe(selectedDimensions &#x3D;&gt; {
+			// Re init view when dimension change to update sizes
+			this.initializeView();
+		});
+	}
+
+	ngOnInit() {
+		this.initializeView();
+	}
+
+	ngOnDestroy() {
+		this.dimensionsSelectionChangedSub.unsubscribe();
+	}
+
+	ngAfterViewInit() {
+
+	}
+
+	initializeView() {
+		this.sizes &#x3D; this.appService.getViewSplitSizes(this.viewId);
+		this.computeComponentsSizes();
+		this.invertedPosition &#x3D; this.position &#x3D;&#x3D;&#x3D; 0 ? 1 : 0;
+	}
+
+	onSplitDragEnd(event, item) {
+		if (event &amp;&amp; item) {
+			this.appService.resizeAndSetSplitSizes(item, this.sizes, event.sizes, this.viewId, true);
+			this.computeComponentsSizes();
+		}
+
+		// Resize to update graphs dimensions
+		if (this.appVariableGraphDetails) {
+			this.appVariableGraphDetails.resize();
+		}
+	}
+
+	/**
+	 * Compute the index of visible components
+	 * to get correct width split value from local storage
+	 * because sizes[sizeId] is an array of visible components length
+	 */
+	computeComponentsSizes() {
+		this.viewLayout &#x3D; this.appService.getViewsLayout().dimensionsViewsLayoutsVO[this.position];
+		if (this.viewLayout) {
+			let i &#x3D; 0;
+			if (this.viewLayout.isHierarchyChecked) {
+				this.column0Index &#x3D; i;
+				i++;
+			}
+			if (this.viewLayout.isClustersChecked) {
+				this.column1Index &#x3D; i;
+				i++;
+			}
+			if (this.viewLayout.isAnnotationChecked || this.viewLayout.isCompositionChecked) {
+				this.column2Index &#x3D; i;
+				i++;
+			}
+			if (this.viewLayout.isExternalDataChecked) {
+				this.column3Index &#x3D; i;
+				i++;
+			}
+			if (this.viewLayout.isDistributionChecked) {
+				this.column4Index &#x3D; i;
+				i++;
+			}
+		}
+	}
+
+	selectedCompositionChanged(composition) {
+		this.selectedComposition &#x3D; composition;
+	}
+
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div id&#x3D;&quot;axis-comp&quot; fxFlexFill *ngIf&#x3D;&quot;axisLayout&quot;&gt;
+	&lt;as-split direction&#x3D;&quot;horizontal&quot; (dragEnd)&#x3D;&quot;onSplitDragEnd($event, sizeId)&quot; fxFlexFill&gt;
+		&lt;as-split-area [size]&#x3D;&quot;sizes[sizeId][column0Index]&quot; order&#x3D;&quot;1&quot; [visible]&#x3D;&quot;axisLayout.isHierarchyChecked&quot;&gt;
+			&lt;div fxFlexFill fxLayout&#x3D;&quot;column&quot; [attr.id]&#x3D;&quot;&#x27;tree-comp-&#x27;+position&quot;&gt;
+				&lt;div fxFlexFill fxLayout&#x3D;&quot;column&quot; class&#x3D;&quot;selected-area-inner-div&quot;&gt;
+					&lt;app-hierarchy-select [position]&#x3D;&quot;position&quot; [selectedNode]&#x3D;&quot;dimensionsDatas.selectedNodes[position]&quot;
+						[selectedDimension]&#x3D;&quot;dimensionsDatas.selectedDimensions[position]&quot;
+						[dimensions]&#x3D;&quot;dimensionsDatas.selectedDimensions&quot;&gt;&lt;/app-hierarchy-select&gt;
+					&lt;app-tree-select [selectedNode]&#x3D;&quot;dimensionsDatas.selectedNodes[position]&quot; [position]&#x3D;&quot;position&quot;
+						[dimensionsTree]&#x3D;&quot;dimensionsDatas.dimensionsTrees[position]&quot;
+						[selectedDimension]&#x3D;&quot;dimensionsDatas.selectedDimensions[position]&quot;&gt;&lt;/app-tree-select&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+		&lt;/as-split-area&gt;
+		&lt;as-split-area [size]&#x3D;&quot;sizes[sizeId][column1Index]&quot; class&#x3D;&quot;app-cluster-details-container&quot; order&#x3D;&quot;2&quot;
+			*ngIf&#x3D;&quot;axisLayout.isClustersChecked&quot;&gt;
+			&lt;app-cluster-details [position]&#x3D;&quot;position&quot; [selectedNode]&#x3D;&quot;dimensionsDatas.selectedNodes[position]&quot;
+				[dimensionsTree]&#x3D;&quot;dimensionsDatas.dimensionsTrees[position]&quot;
+				[selectedDimension]&#x3D;&quot;dimensionsDatas.selectedDimensions[position]&quot;&gt;&lt;/app-cluster-details&gt;
+		&lt;/as-split-area&gt;
+		&lt;as-split-area [size]&#x3D;&quot;sizes[sizeId][column2Index]&quot; order&#x3D;&quot;3&quot;
+			*ngIf&#x3D;&quot;axisLayout.isAnnotationChecked || axisLayout.isCompositionChecked&quot;&gt;
+			&lt;as-split direction&#x3D;&quot;vertical&quot; fxFlexFill&gt;
+				&lt;as-split-area [size]&#x3D;&quot;30&quot; order&#x3D;&quot;1&quot; *ngIf&#x3D;&quot;axisLayout.isAnnotationChecked&quot;&gt;
+					&lt;app-annotation [attr.id]&#x3D;&quot;&#x27;cluster-annotation-&#x27;+position&quot; [position]&#x3D;&quot;position&quot;
+						[selectedNode]&#x3D;&quot;dimensionsDatas.selectedNodes[position]&quot;&gt;&lt;/app-annotation&gt;
+				&lt;/as-split-area&gt;
+				&lt;as-split-area [size]&#x3D;&quot;70&quot; order&#x3D;&quot;1&quot; *ngIf&#x3D;&quot;axisLayout.isCompositionChecked&quot;&gt;
+					&lt;app-composition [position]&#x3D;&quot;position&quot;
+						[selectedDimension]&#x3D;&quot;dimensionsDatas.selectedDimensions[position]&quot;
+						[selectedNode]&#x3D;&quot;dimensionsDatas.selectedNodes[position]&quot;
+						(selectedCompositionChanged)&#x3D;&quot;selectedCompositionChanged($event)&quot;
+						[dimensionsClusters]&#x3D;&quot;dimensionsDatas.dimensionsClusters[position]&quot;&gt;&lt;/app-composition&gt;
+				&lt;/as-split-area&gt;
+			&lt;/as-split&gt;
+		&lt;/as-split-area&gt;
+		&lt;as-split-area [size]&#x3D;&quot;sizes[sizeId][column3Index]&quot; order&#x3D;&quot;4&quot; *ngIf&#x3D;&quot;axisLayout.isExternalDataChecked&quot;&gt;
+			&lt;app-external-datas [inputValue]&#x3D;&quot;selectedComposition &amp;&amp; selectedComposition.value&quot;
+				[attr.id]&#x3D;&quot;&#x27;external-datas-&#x27;+position&quot; [position]&#x3D;&quot;position&quot;
+				[externalData]&#x3D;&quot;selectedComposition &amp;&amp; selectedComposition.externalData&quot;&gt;&lt;/app-external-datas&gt;
+		&lt;/as-split-area&gt;
+		&lt;as-split-area [size]&#x3D;&quot;sizes[sizeId][column4Index]&quot; order&#x3D;&quot;5&quot;
+			*ngIf&#x3D;&quot;axisLayout.isDistributionChecked &amp;&amp; (position &#x3D;&#x3D;&#x3D; 0 || position &#x3D;&#x3D;&#x3D; 1)&quot;&gt;
+			&lt;app-variable-graph-details #appVariableGraphDetails [position]&#x3D;&quot;position&quot;
+				[selectedDimensions]&#x3D;&quot;dimensionsDatas.selectedDimensions&quot;
+				[selectedDimension]&#x3D;&quot;dimensionsDatas.selectedDimensions[position]&quot;
+				[dimensionsTree]&#x3D;&quot;dimensionsDatas.dimensionsTrees[position]&quot;
+				[selectedNode]&#x3D;&quot;dimensionsDatas.selectedNodes[invertedPosition]&quot;&gt;
+			&lt;/app-variable-graph-details&gt;
+		&lt;/as-split-area&gt;
+	&lt;/as-split&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./axis.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">#axis-comp {
+	background: white;
+
+	.app-cluster-details-container {
+		overflow: hidden !important;
+	}
+
+	app-tree-select{
+		overflow: auto;
+		height: 100%;
+	}
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div id="axis-comp" fxFlexFill *ngIf="axisLayout">	<as-split direction="horizontal" (dragEnd)="onSplitDragEnd($event, sizeId)" fxFlexFill>		<as-split-area [size]="sizes[sizeId][column0Index]" order="1" [visible]="axisLayout.isHierarchyChecked">			<div fxFlexFill fxLayout="column" [attr.id]="\'tree-comp-\'+position">				<div fxFlexFill fxLayout="column" class="selected-area-inner-div">					<app-hierarchy-select [position]="position" [selectedNode]="dimensionsDatas.selectedNodes[position]"						[selectedDimension]="dimensionsDatas.selectedDimensions[position]"						[dimensions]="dimensionsDatas.selectedDimensions"></app-hierarchy-select>					<app-tree-select [selectedNode]="dimensionsDatas.selectedNodes[position]" [position]="position"						[dimensionsTree]="dimensionsDatas.dimensionsTrees[position]"						[selectedDimension]="dimensionsDatas.selectedDimensions[position]"></app-tree-select>				</div>			</div>		</as-split-area>		<as-split-area [size]="sizes[sizeId][column1Index]" class="app-cluster-details-container" order="2"			*ngIf="axisLayout.isClustersChecked">			<app-cluster-details [position]="position" [selectedNode]="dimensionsDatas.selectedNodes[position]"				[dimensionsTree]="dimensionsDatas.dimensionsTrees[position]"				[selectedDimension]="dimensionsDatas.selectedDimensions[position]"></app-cluster-details>		</as-split-area>		<as-split-area [size]="sizes[sizeId][column2Index]" order="3"			*ngIf="axisLayout.isAnnotationChecked || axisLayout.isCompositionChecked">			<as-split direction="vertical" fxFlexFill>				<as-split-area [size]="30" order="1" *ngIf="axisLayout.isAnnotationChecked">					<app-annotation [attr.id]="\'cluster-annotation-\'+position" [position]="position"						[selectedNode]="dimensionsDatas.selectedNodes[position]"></app-annotation>				</as-split-area>				<as-split-area [size]="70" order="1" *ngIf="axisLayout.isCompositionChecked">					<app-composition [position]="position"						[selectedDimension]="dimensionsDatas.selectedDimensions[position]"						[selectedNode]="dimensionsDatas.selectedNodes[position]"						(selectedCompositionChanged)="selectedCompositionChanged($event)"						[dimensionsClusters]="dimensionsDatas.dimensionsClusters[position]"></app-composition>				</as-split-area>			</as-split>		</as-split-area>		<as-split-area [size]="sizes[sizeId][column3Index]" order="4" *ngIf="axisLayout.isExternalDataChecked">			<app-external-datas [inputValue]="selectedComposition && selectedComposition.value"				[attr.id]="\'external-datas-\'+position" [position]="position"				[externalData]="selectedComposition && selectedComposition.externalData"></app-external-datas>		</as-split-area>		<as-split-area [size]="sizes[sizeId][column4Index]" order="5"			*ngIf="axisLayout.isDistributionChecked && (position === 0 || position === 1)">			<app-variable-graph-details #appVariableGraphDetails [position]="position"				[selectedDimensions]="dimensionsDatas.selectedDimensions"				[selectedDimension]="dimensionsDatas.selectedDimensions[position]"				[dimensionsTree]="dimensionsDatas.dimensionsTrees[position]"				[selectedNode]="dimensionsDatas.selectedNodes[invertedPosition]">			</app-variable-graph-details>		</as-split-area>	</as-split></div></div>'
+    var COMPONENTS = [{'name': 'AgGridComponent', 'selector': 'kl-ag-grid'},{'name': 'AnnotationComponent', 'selector': 'app-annotation'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AppVersionComponent', 'selector': 'kl-app-version'},{'name': 'AxisComponent', 'selector': 'app-axis'},{'name': 'AxisViewComponent', 'selector': 'app-axis-view'},{'name': 'BtnFullscreenComponent', 'selector': 'kl-btn-fullscreen'},{'name': 'CellStatsComponent', 'selector': 'kl-cell-stats'},{'name': 'ChartNextComponent', 'selector': 'kl-chart-next'},{'name': 'CheckboxCellComponent', 'selector': 'kl-checkbox-cell'},{'name': 'ClusterDetailsComponent', 'selector': 'app-cluster-details'},{'name': 'CompositionComponent', 'selector': 'app-composition'},{'name': 'ConfirmDialogComponent', 'selector': 'kl-confirm-dialog'},{'name': 'CoocurenceMatrixComponent', 'selector': 'app-coocurence-matrix'},{'name': 'DescriptionBlockComponent', 'selector': 'app-description-block'},{'name': 'DistributionGraphCanvasComponent', 'selector': 'kl-distribution-graph-canvas'},{'name': 'EvaluationViewComponent', 'selector': 'app-evaluation-view'},{'name': 'ExternalDatasComponent', 'selector': 'app-external-datas'},{'name': 'FileLoaderComponent', 'selector': 'kl-file-loader'},{'name': 'GraphHeaderComponent', 'selector': 'kl-graph-header'},{'name': 'HeaderManageViewComponent', 'selector': 'app-header-manage-view'},{'name': 'HeaderTitleComponent', 'selector': 'kl-header-title'},{'name': 'HeaderToolsComponent', 'selector': 'kl-header-tools'},{'name': 'HierarchySelectComponent', 'selector': 'app-hierarchy-select'},{'name': 'HomeLayoutComponent', 'selector': 'app-home-layout'},{'name': 'HomeLayoutComponent', 'selector': 'app-home-layout'},{'name': 'IconCellComponent', 'selector': 'kl-icon-cell'},{'name': 'ImportExtDatasComponent', 'selector': 'app-import-ext-datas'},{'name': 'ImportExtDatasListComponent', 'selector': 'app-import-ext-datas-list'},{'name': 'ImportFileLoaderComponent', 'selector': 'kl-import-file-loader'},{'name': 'InformationsBlockComponent', 'selector': 'kl-informations-block'},{'name': 'LegendComponent', 'selector': 'kl-legend'},{'name': 'LevelDistributionGraphCanvasComponent', 'selector': 'app-level-distribution-graph'},{'name': 'LibVersionComponent', 'selector': 'kl-lib-version'},{'name': 'LoadExtDatasComponent', 'selector': 'app-load-ext-datas'},{'name': 'ManageViewsComponent', 'selector': 'app-manage-views'},{'name': 'MatrixCanvasComponent', 'selector': 'kl-matrix-canvas'},{'name': 'MatrixContainerComponent', 'selector': 'app-matrix-container'},{'name': 'MatrixTooltipComponent', 'selector': 'kl-matrix-tooltip'},{'name': 'ModelingViewComponent', 'selector': 'app-modeling-view'},{'name': 'NoDataComponent', 'selector': 'kl-no-data'},{'name': 'Preparation2dViewComponent', 'selector': 'app-preparation-2d-view'},{'name': 'PreparationViewComponent', 'selector': 'app-preparation-view'},{'name': 'ProjectViewComponent', 'selector': 'app-project-view'},{'name': 'ProjectViewComponent', 'selector': 'app-project-view'},{'name': 'RegressionMatrixComponent', 'selector': 'app-regression-matrix'},{'name': 'ReleaseButtonComponent', 'selector': 'kl-release-button'},{'name': 'ReleaseNotesComponent', 'selector': 'kl-release-notes'},{'name': 'ScrollableGraphCanvasComponent', 'selector': ''},{'name': 'SelectableComponent', 'selector': ''},{'name': 'SelectableTabComponent', 'selector': ''},{'name': 'SelectedClustersComponent', 'selector': 'app-selected-clusters'},{'name': 'SelectToggleButtonComponent', 'selector': 'app-select-toggle-button'},{'name': 'SelectTrainedPredictorComponent', 'selector': 'app-select-trained-predictor'},{'name': 'TargetDistributionGraphCanvasComponent', 'selector': 'app-target-distribution-graph-canvas'},{'name': 'TargetLiftGraphComponent', 'selector': 'app-target-lift-graph'},{'name': 'TargetVariableStatsCanvasComponent', 'selector': 'app-target-variable-stats-canvas'},{'name': 'TreeDetailsComponent', 'selector': 'app-tree-details'},{'name': 'TreeHyperComponent', 'selector': 'app-tree-hyper'},{'name': 'TreeLeafDetailsComponent', 'selector': 'app-tree-leaf-details'},{'name': 'TreePreparationViewComponent', 'selector': 'app-tree-preparation-view'},{'name': 'TreeSelectComponent', 'selector': 'app-tree-select'},{'name': 'TreeSelectComponent', 'selector': 'app-tree-select'},{'name': 'UnfoldHierarchyComponent', 'selector': 'app-unfold-hierarchy'},{'name': 'UserSettingsComponent', 'selector': 'app-user-settings'},{'name': 'UserSettingsComponent', 'selector': 'app-user-settings'},{'name': 'VarDetailsPreparation2dComponent', 'selector': 'app-var-details-preparation-2d'},{'name': 'VarDetailsPreparationComponent', 'selector': 'app-var-details-preparation'},{'name': 'VarDetailsTreePreparationComponent', 'selector': 'app-var-details-tree-preparation'},{'name': 'VariableGraphDetailsComponent', 'selector': 'app-variable-graph-details'},{'name': 'VariableGraphDetailsComponent', 'selector': 'app-variable-graph-details'},{'name': 'WatchResizeComponent', 'selector': ''}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'AxisComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'AxisComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

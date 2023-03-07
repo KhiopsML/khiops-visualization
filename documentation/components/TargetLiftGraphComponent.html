@@ -1,0 +1,1855 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>visualization-component documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">visualization-component documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li
+  >
+  TargetLiftGraphComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/khiops-visualization/components/commons/target-lift-graph/target-lift-graph.component.ts</code>
+</p>
+
+
+
+    <p class="comment">
+        <h3>Extends</h3>
+    </p>
+    <p class="comment">
+                <code><a href="../components/SelectableComponent.html" target="_self" >SelectableComponent</a></code>
+    </p>
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+                    <code><a href="../miscellaneous/typealiases.html#C" target="_self" >OnChanges</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-target-lift-graph</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./target-lift-graph.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./target-lift-graph.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#buttonTitle" >buttonTitle</a>
+                            </li>
+                            <li>
+                                <a href="#colorSet" >colorSet</a>
+                            </li>
+                            <li>
+                                <a href="#componentType" >componentType</a>
+                            </li>
+                            <li>
+                                <a href="#evaluationDatas" >evaluationDatas</a>
+                            </li>
+                            <li>
+                                <a href="#isFullscreen" >isFullscreen</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#ngzone" >ngzone</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#selectableService" >selectableService</a>
+                            </li>
+                            <li>
+                                <a href="#targetLift" >targetLift</a>
+                            </li>
+                            <li>
+                                <a href="#targetLiftAllGraph" >targetLiftAllGraph</a>
+                            </li>
+                            <li>
+                                <a href="#targetLiftGraph" >targetLiftGraph</a>
+                            </li>
+                            <li>
+                                <a href="#title" >title</a>
+                            </li>
+                            <li>
+                                <a href="#titleWithoutDetails" >titleWithoutDetails</a>
+                            </li>
+                            <li>
+                                <a href="#view" >view</a>
+                            </li>
+                            <li>
+                                <a href="#xAxisLabel" >xAxisLabel</a>
+                            </li>
+                            <li>
+                                <a href="#yAxisLabel" >yAxisLabel</a>
+                            </li>
+                            <li>
+                                <a href="#selectedServiceChangeSub" >selectedServiceChangeSub</a>
+                            </li>
+                            <li>
+                                <a href="#el" >el</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#changeTargetLift" >changeTargetLift</a>
+                            </li>
+                            <li>
+                                <a href="#getDatas" >getDatas</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnChanges" >ngOnChanges</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onSelectToggleButtonChanged" >onSelectToggleButtonChanged</a>
+                            </li>
+                            <li>
+                                <a href="#onToggleFullscreen" >onToggleFullscreen</a>
+                            </li>
+                            <li>
+                                <a href="#ngAfterViewInit" >ngAfterViewInit</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <a href="#onClick" >onClick</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#selectedVariable" >selectedVariable</a>
+                            </li>
+                            <li>
+                                <a href="#id" >id</a>
+                            </li>
+                            <li>
+                                <a href="#type" >type</a>
+                            </li>
+                            <li>
+                                <a href="#watchResize" >watchResize</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>HostListeners</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#click" >click</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(selectableService: <a href="../injectables/SelectableService.html" target="_self">SelectableService</a>, evaluationDatasService: <a href="../injectables/EvaluationDatasService.html" target="_self">EvaluationDatasService</a>, translate: <a href="../interfaces/T.html" target="_self">TranslateService</a>, khiopsLibraryService: <a href="../injectables/KhiopsLibraryService.html" target="_self">KhiopsLibraryService</a>, ngzone: <a href="../interfaces/N.html" target="_self">NgZone</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/app/khiops-visualization/components/commons/target-lift-graph/target-lift-graph.component.ts:54</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>selectableService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/SelectableService.html" target="_self" >SelectableService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>evaluationDatasService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/EvaluationDatasService.html" target="_self" >EvaluationDatasService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>translate</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../interfaces/T.html" target="_self" >TranslateService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>khiopsLibraryService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/KhiopsLibraryService.html" target="_self" >KhiopsLibraryService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>ngzone</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../interfaces/N.html" target="_self" >NgZone</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section>
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="selectedVariable"></a>
+                        <b>selectedVariable</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/khiops-visualization/components/commons/target-lift-graph/target-lift-graph.component.ts:39</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="id"></a>
+                        <b>id</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[any]</code>
+
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4" colspan="2">
+                                    <div class="io-line">Inherited from         <code><a href="../components/WatchResizeComponent.html" target="_self" >WatchResizeComponent</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in         <code><a href="../components/WatchResizeComponent.html#source" target="_self" >WatchResizeComponent:23</a></code>
+</div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="type"></a>
+                        <b>type</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[any]</code>
+
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4" colspan="2">
+                                    <div class="io-line">Inherited from         <code><a href="../components/SelectableComponent.html" target="_self" >SelectableComponent</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in         <code><a href="../components/SelectableComponent.html#source" target="_self" >SelectableComponent:24</a></code>
+</div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="watchResize"></a>
+                        <b>watchResize</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4" colspan="2">
+                                    <div class="io-line">Inherited from         <code><a href="../components/WatchResizeComponent.html" target="_self" >WatchResizeComponent</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in         <code><a href="../components/WatchResizeComponent.html#source" target="_self" >WatchResizeComponent:16</a></code>
+</div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+    <section>
+    <h3>HostListeners</h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="click"></a>
+                    <span class="name">
+                        <span ><b>click</b></span>
+                        <a href="#click"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <i>Arguments : </i><code>'$event' </code>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>click(event)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../components/SelectableComponent.html" target="_self" >SelectableComponent</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../components/SelectableComponent.html#source" target="_self" >SelectableComponent:70</a></code>
+</div>
+                </td>
+            </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="changeTargetLift"></a>
+                    <span class="name">
+                        <span ><b>changeTargetLift</b></span>
+                        <a href="#changeTargetLift"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>changeTargetLift(target)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="147"
+                            class="link-to-prism">src/app/khiops-visualization/components/commons/target-lift-graph/target-lift-graph.component.ts:147</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>target</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getDatas"></a>
+                    <span class="name">
+                        <span ><b>getDatas</b></span>
+                        <a href="#getDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getDatas()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="97"
+                            class="link-to-prism">src/app/khiops-visualization/components/commons/target-lift-graph/target-lift-graph.component.ts:97</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnChanges"></a>
+                    <span class="name">
+                        <span ><b>ngOnChanges</b></span>
+                        <a href="#ngOnChanges"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnChanges(changes: <a href="../undefineds/C.html" target="_self">SimpleChanges</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="83"
+                            class="link-to-prism">src/app/khiops-visualization/components/commons/target-lift-graph/target-lift-graph.component.ts:83</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>changes</td>
+                                    <td>
+                                                <code><a href="../miscellaneous/typealiases.html#C" target="_self" >SimpleChanges</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="81"
+                            class="link-to-prism">src/app/khiops-visualization/components/commons/target-lift-graph/target-lift-graph.component.ts:81</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onSelectToggleButtonChanged"></a>
+                    <span class="name">
+                        <span ><b>onSelectToggleButtonChanged</b></span>
+                        <a href="#onSelectToggleButtonChanged"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onSelectToggleButtonChanged(displayedValues)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="129"
+                            class="link-to-prism">src/app/khiops-visualization/components/commons/target-lift-graph/target-lift-graph.component.ts:129</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>displayedValues</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onToggleFullscreen"></a>
+                    <span class="name">
+                        <span ><b>onToggleFullscreen</b></span>
+                        <a href="#onToggleFullscreen"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onToggleFullscreen(isFullscreen: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="89"
+                            class="link-to-prism">src/app/khiops-visualization/components/commons/target-lift-graph/target-lift-graph.component.ts:89</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>isFullscreen</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngAfterViewInit"></a>
+                    <span class="name">
+                        <span ><b>ngAfterViewInit</b></span>
+                        <a href="#ngAfterViewInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngAfterViewInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../components/WatchResizeComponent.html" target="_self" >WatchResizeComponent</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../components/WatchResizeComponent.html#source" target="_self" >WatchResizeComponent:57</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../components/SelectableComponent.html" target="_self" >SelectableComponent</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../components/SelectableComponent.html#source" target="_self" >SelectableComponent:62</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onClick"></a>
+                    <span class="name">
+                        <span ><b>onClick</b></span>
+                        <a href="#onClick"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onClick(event)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@HostListener(&#x27;click&#x27;, [&#x27;$event&#x27;])<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../components/SelectableComponent.html" target="_self" >SelectableComponent</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../components/SelectableComponent.html#source" target="_self" >SelectableComponent:70</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>event</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="buttonTitle"></a>
+                    <span class="name">
+                        <span ><b>buttonTitle</b></span>
+                        <a href="#buttonTitle"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">src/app/khiops-visualization/components/commons/target-lift-graph/target-lift-graph.component.ts:48</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="colorSet"></a>
+                    <span class="name">
+                        <span ><b>colorSet</b></span>
+                        <a href="#colorSet"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/ChartColorsSetI.html" target="_self" >ChartColorsSetI</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/app/khiops-visualization/components/commons/target-lift-graph/target-lift-graph.component.ts:43</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="componentType"></a>
+                    <span class="name">
+                        <span ><b>componentType</b></span>
+                        <a href="#componentType"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;ndLineChart&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">src/app/khiops-visualization/components/commons/target-lift-graph/target-lift-graph.component.ts:51</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="evaluationDatas"></a>
+                    <span class="name">
+                        <span ><b>evaluationDatas</b></span>
+                        <a href="#evaluationDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/app/khiops-visualization/components/commons/target-lift-graph/target-lift-graph.component.ts:47</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isFullscreen"></a>
+                    <span class="name">
+                        <span ><b>isFullscreen</b></span>
+                        <a href="#isFullscreen"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/app/khiops-visualization/components/commons/target-lift-graph/target-lift-graph.component.ts:49</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngzone"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>ngzone</b></span>
+                        <a href="#ngzone"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/N.html" target="_self" >NgZone</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Inherited from         <code><a href="../components/WatchResizeComponent.html" target="_self" >WatchResizeComponent</a></code>
+</div>
+                            </td>
+                        </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../components/WatchResizeComponent.html#source" target="_self" >WatchResizeComponent:60</a></code>
+</div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectableService"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>selectableService</b></span>
+                        <a href="#selectableService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../injectables/SelectableService.html" target="_self" >SelectableService</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Inherited from         <code><a href="../components/SelectableComponent.html" target="_self" >SelectableComponent</a></code>
+</div>
+                            </td>
+                        </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../components/SelectableComponent.html#source" target="_self" >SelectableComponent:56</a></code>
+</div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="targetLift"></a>
+                    <span class="name">
+                        <span ><b>targetLift</b></span>
+                        <a href="#targetLift"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/app/khiops-visualization/components/commons/target-lift-graph/target-lift-graph.component.ts:41</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="targetLiftAllGraph"></a>
+                    <span class="name">
+                        <span ><b>targetLiftAllGraph</b></span>
+                        <a href="#targetLiftAllGraph"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/app/khiops-visualization/components/commons/target-lift-graph/target-lift-graph.component.ts:53</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="targetLiftGraph"></a>
+                    <span class="name">
+                        <span ><b>targetLiftGraph</b></span>
+                        <a href="#targetLiftGraph"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/app/khiops-visualization/components/commons/target-lift-graph/target-lift-graph.component.ts:42</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="title"></a>
+                    <span class="name">
+                        <span ><b>title</b></span>
+                        <a href="#title"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/khiops-visualization/components/commons/target-lift-graph/target-lift-graph.component.ts:52</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="titleWithoutDetails"></a>
+                    <span class="name">
+                        <span ><b>titleWithoutDetails</b></span>
+                        <a href="#titleWithoutDetails"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/app/khiops-visualization/components/commons/target-lift-graph/target-lift-graph.component.ts:54</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="view"></a>
+                    <span class="name">
+                        <span ><b>view</b></span>
+                        <a href="#view"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/app/khiops-visualization/components/commons/target-lift-graph/target-lift-graph.component.ts:44</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="xAxisLabel"></a>
+                    <span class="name">
+                        <span ><b>xAxisLabel</b></span>
+                        <a href="#xAxisLabel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/khiops-visualization/components/commons/target-lift-graph/target-lift-graph.component.ts:45</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="yAxisLabel"></a>
+                    <span class="name">
+                        <span ><b>yAxisLabel</b></span>
+                        <a href="#yAxisLabel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">src/app/khiops-visualization/components/commons/target-lift-graph/target-lift-graph.component.ts:46</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedServiceChangeSub"></a>
+                    <span class="name">
+                        <span ><b>selectedServiceChangeSub</b></span>
+                        <a href="#selectedServiceChangeSub"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Inherited from         <code><a href="../components/SelectableComponent.html" target="_self" >SelectableComponent</a></code>
+</div>
+                            </td>
+                        </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../components/SelectableComponent.html#source" target="_self" >SelectableComponent:25</a></code>
+</div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="el"></a>
+                    <span class="name">
+                        <span ><b>el</b></span>
+                        <a href="#el"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Element</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Inherited from         <code><a href="../components/WatchResizeComponent.html" target="_self" >WatchResizeComponent</a></code>
+</div>
+                            </td>
+                        </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../components/WatchResizeComponent.html#source" target="_self" >WatchResizeComponent:17</a></code>
+</div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+	Component,
+	OnChanges,
+	Input,
+	NgZone,
+	SimpleChanges,
+	OnInit
+} from &#x27;@angular/core&#x27;;
+import {
+	EvaluationDatasService
+} from &#x27;src/app/providers/evaluation-datas.service&#x27;;
+import {
+	KhiopsLibraryService
+} from &#x27;@khiops-library/providers/khiops-library.service&#x27;;
+import {
+	TranslateService
+} from &#x27;@ngstack/translate&#x27;;
+import {
+	SelectableComponent
+} from &#x27;@khiops-library/components/selectable/selectable.component&#x27;;
+import {
+	SelectableService
+} from &#x27;@khiops-library/components/selectable/selectable.service&#x27;;
+import {
+	AppConfig
+} from &#x27;src/environments/environment&#x27;;
+import _ from &#x27;lodash&#x27;;
+import {
+	ChartColorsSetI
+} from &#x27;@khiops-library/interfaces/chart-colors-set&#x27;;
+
+@Component({
+	selector: &#x27;app-target-lift-graph&#x27;,
+	templateUrl: &#x27;./target-lift-graph.component.html&#x27;,
+	styleUrls: [&#x27;./target-lift-graph.component.scss&#x27;]
+})
+export class TargetLiftGraphComponent extends SelectableComponent implements OnInit, OnChanges {
+
+	@Input() selectedVariable;
+
+	targetLift: any;
+	targetLiftGraph: any;
+	colorSet: ChartColorsSetI;
+	view: &#x27;&#x27;;
+	xAxisLabel: string;
+	yAxisLabel: string;
+	evaluationDatas: any;
+	buttonTitle: string;
+	isFullscreen &#x3D; false;
+
+	componentType &#x3D; &#x27;ndLineChart&#x27;; // needed to copy datas
+	title: string;
+	targetLiftAllGraph: any;
+	titleWithoutDetails: string;
+
+	constructor(public selectableService: SelectableService,
+		private evaluationDatasService: EvaluationDatasService,
+		private translate: TranslateService,
+		private khiopsLibraryService: KhiopsLibraryService,
+		public ngzone: NgZone
+	) {
+		super(selectableService, ngzone);
+		this.evaluationDatas &#x3D; this.evaluationDatasService.getDatas();
+
+		this.legendColorSet &#x3D; _.cloneDeep(this.khiopsLibraryService.getGraphColorSet()[1]);
+		this.colorSet &#x3D; _.cloneDeep(this.khiopsLibraryService.getGraphColorSet()[1]);
+
+		// this.getDatas();
+
+		if (this.evaluationDatasService.isRegressionAnalysis()) {
+			this.xAxisLabel &#x3D; this.translate.get(&#x27;GLOBAL.RANK_ERROR&#x27;) + &#x27; %&#x27;;
+			this.yAxisLabel &#x3D; this.translate.get(&#x27;GLOBAL.POPULATION&#x27;) + &#x27; %&#x27;;
+		} else {
+			this.xAxisLabel &#x3D; this.translate.get(&#x27;GLOBAL.POPULATION&#x27;) + &#x27; %&#x27;;
+			this.yAxisLabel &#x3D; this.translate.get(&#x27;GLOBAL.TARGET_MODALITY&#x27;) + &#x27; %&#x27;;
+		}
+
+		this.buttonTitle &#x3D; this.translate.get(&#x27;GLOBAL.FILTER_CURVES&#x27;);
+	}
+
+	ngOnInit() {}
+
+	ngOnChanges(changes: SimpleChanges) {
+		if (changes.selectedVariable &amp;&amp; changes.selectedVariable.currentValue) {
+			this.getDatas();
+		}
+	}
+
+	onToggleFullscreen(isFullscreen: any) {
+		this.isFullscreen &#x3D; isFullscreen;
+		setTimeout(() &#x3D;&gt; {
+			this.getDatas();
+
+		});
+	}
+
+	getDatas() {
+		const currentTarget &#x3D; this.targetLift &amp;&amp; this.targetLift.selected || undefined;
+		this.targetLift &#x3D; this.evaluationDatasService.getLiftTargets(currentTarget);
+
+		const filteredValues &#x3D; localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + &#x27;TARGET_LIFT_VALUES&#x27;);
+		if (filteredValues) {
+			this.evaluationDatasService.setLiftGraphDisplayedValues(JSON.parse(filteredValues));
+		}
+
+		if (this.targetLift) {
+
+			// Get previous selected target if compatible
+			const previousSelectedTarget &#x3D; localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + &#x27;TARGET_LIFT&#x27;);
+			if (previousSelectedTarget &amp;&amp; this.targetLift.targets.includes(previousSelectedTarget)) {
+				this.targetLift.selected &#x3D; previousSelectedTarget;
+			}
+
+			this.titleWithoutDetails &#x3D; this.translate.get(&#x27;GLOBAL.CUMULATIVE_GAIN_CHART_OF&#x27;);
+			this.title &#x3D; this.translate.get(&#x27;GLOBAL.CUMULATIVE_GAIN_CHART_OF&#x27;) + &#x27; &#x27; + this.targetLift.selected; // for copy graph datas
+			this.targetLiftGraph &#x3D; this.evaluationDatasService.getLiftGraphDatas(this.targetLift.selected);
+			// get all datas to copy
+			this.targetLiftAllGraph &#x3D; this.evaluationDatasService.getLiftGraphDatas(this.targetLift.selected, true);
+		} else {
+			// it is a regression
+			this.titleWithoutDetails &#x3D; this.translate.get(&#x27;GLOBAL.REC_CURVES&#x27;);
+			this.title &#x3D; this.translate.get(&#x27;GLOBAL.REC_CURVES&#x27;); // for copy graph datas
+			this.targetLiftGraph &#x3D; this.evaluationDatasService.getLiftGraphDatas();
+			// get all datas to copy
+			this.targetLiftAllGraph &#x3D; this.evaluationDatasService.getLiftGraphDatas(null, true);
+		}
+	}
+
+	onSelectToggleButtonChanged(displayedValues) {
+		// this.khiopsLibraryService.trackEvent(&#x27;click&#x27;, &#x27;toggle_target_lift_values&#x27;);
+		localStorage.setItem(this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID + &#x27;TARGET_LIFT_VALUES&#x27;, JSON.stringify(displayedValues));
+		this.evaluationDatasService.setLiftGraphDisplayedValues(displayedValues);
+		this.getDatas();
+
+		this.colorSet &#x3D; _.cloneDeep(this.khiopsLibraryService.getGraphColorSet()[1]);
+
+		// Remove hidden curves colors
+		let i &#x3D; displayedValues.length;
+		while (i--) {
+			if (displayedValues[i].show &#x3D;&#x3D;&#x3D; false) {
+				this.colorSet.domain.splice(i, 1);
+			}
+		}
+
+	}
+
+	changeTargetLift(target) {
+		// this.khiopsLibraryService.trackEvent(&#x27;click&#x27;, &#x27;change_target_lift&#x27;);
+		this.title &#x3D; this.translate.get(&#x27;GLOBAL.CUMULATIVE_GAIN_CHART_OF&#x27;) + &#x27; &#x27; + this.targetLift.selected;
+		localStorage.setItem(this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID + &#x27;TARGET_LIFT&#x27;, target);
+		this.targetLift.selected &#x3D; target;
+		this.getDatas();
+	}
+
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div id&#x3D;&quot;target-lift-graph-comp&quot; fxFlexFill fxLayout&#x3D;&quot;column&quot; [ngClass]&#x3D;&quot;{&#x27;fullscreen&#x27;: isFullscreen}&quot;&gt;
+	&lt;div fxLayout&#x3D;&quot;row&quot; fxLayoutAlign&#x3D;&quot;start center&quot; class&#x3D;&quot;comp-header&quot;&gt;
+		&lt;div fxFlex fxLayout&#x3D;&quot;row&quot; fxLayoutAlign&#x3D;&quot;start center&quot;&gt;
+			&lt;div fxFlex fxLayout&#x3D;&quot;row&quot; fxLayoutAlign&#x3D;&quot;start center&quot;&gt;
+				&lt;h1&gt;{{ titleWithoutDetails }}&lt;/h1&gt;
+				&lt;div fxLayout&#x3D;&quot;row&quot; fxLayoutAlign&#x3D;&quot;start center&quot; *ngIf&#x3D;&quot;targetLift&quot;&gt;
+					&lt;button mat-stroked-button title&#x3D;&quot;{{ &#x27;TOOLTIPS.EVALUATION.GAIN_CHART.SELECT&#x27; | translate }}&quot; class&#x3D;&quot;button-accent&quot; color&#x3D;&quot;accent&quot; [matMenuTriggerFor]&#x3D;&quot;targetLiftSelect&quot;&gt;{{ targetLift.selected }} &lt;em&gt;&amp;#9698;&lt;/em&gt;&lt;/button&gt;
+					&lt;mat-menu #targetLiftSelect&gt;
+						&lt;button mat-menu-item *ngFor&#x3D;&quot;let target of targetLift.targets&quot; (click)&#x3D;&quot;changeTargetLift(target)&quot;&gt;{{ target }}&lt;/button&gt;
+					&lt;/mat-menu&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+			&lt;div class&#x3D;&quot;comp-header-tools screenshot-hide&quot; fxLayout&#x3D;&quot;row&quot;&gt;
+				&lt;app-select-toggle-button [displayedValues]&#x3D;&quot;evaluationDatas.liftGraphDisplayedValues&quot;
+					(selectToggleButtonChanged)&#x3D;&quot;onSelectToggleButtonChanged($event)&quot; [buttonTitle]&#x3D;&quot;buttonTitle&quot;&gt;
+				&lt;/app-select-toggle-button&gt;
+			&lt;/div&gt;
+			&lt;kl-btn-fullscreen (toggleFullscreen)&#x3D;&quot;onToggleFullscreen($event)&quot;&gt;
+			&lt;/kl-btn-fullscreen&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div fxFlex fxLayout&#x3D;&quot;column&quot; *ngIf&#x3D;&quot;targetLiftGraph&quot; class&#x3D;&quot;graph-comp-chart-container&quot;&gt;
+		&lt;ngx-charts-line-chart [results]&#x3D;&quot;targetLiftGraph&quot; [xAxis]&#x3D;&quot;true&quot; [yAxis]&#x3D;&quot;true&quot; [scheme]&#x3D;&quot;colorSet&quot;
+			[showXAxisLabel]&#x3D;&quot;true&quot; [showYAxisLabel]&#x3D;&quot;true&quot; [xAxisLabel]&#x3D;&quot;xAxisLabel&quot;
+			[xAxisTicks]&#x3D;&quot;[0, 25, 50, 75, 100]&quot; [yAxisTicks]&#x3D;&quot;[0, 25, 50, 75, 100]&quot; [yAxisLabel]&#x3D;&quot;yAxisLabel&quot;&gt;
+		&lt;/ngx-charts-line-chart&gt;
+	&lt;/div&gt;
+	&lt;div class&#x3D;&quot;clear-bottom-graph&quot;&gt;&lt;/div&gt;
+	&lt;kl-legend [inputDatas]&#x3D;&quot;evaluationDatas.liftGraphDisplayedValues&quot; [type]&#x3D;&quot;&#x27;chart-nd-dynamic&#x27;&quot;
+		[colorSet]&#x3D;&quot;legendColorSet&quot; [position]&#x3D;&quot;&#x27;bottom&#x27;&quot;&gt;&lt;/kl-legend&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./target-lift-graph.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">@import &quot;khiops-library/src/lib/styles/theme.scss&quot;;
+
+#target-lift-graph-comp {
+	padding: 1px;
+
+	.comp-header {
+		margin: 10px 1px;
+
+		h1 {
+			margin-right: 1em !important;
+		}
+
+		button {
+			white-space: pre-wrap !important;
+		}
+
+	}
+
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div id="target-lift-graph-comp" fxFlexFill fxLayout="column" [ngClass]="{\'fullscreen\': isFullscreen}">	<div fxLayout="row" fxLayoutAlign="start center" class="comp-header">		<div fxFlex fxLayout="row" fxLayoutAlign="start center">			<div fxFlex fxLayout="row" fxLayoutAlign="start center">				<h1>{{ titleWithoutDetails }}</h1>				<div fxLayout="row" fxLayoutAlign="start center" *ngIf="targetLift">					<button mat-stroked-button title="{{ \'TOOLTIPS.EVALUATION.GAIN_CHART.SELECT\' | translate }}" class="button-accent" color="accent" [matMenuTriggerFor]="targetLiftSelect">{{ targetLift.selected }} <em>&#9698;</em></button>					<mat-menu #targetLiftSelect>						<button mat-menu-item *ngFor="let target of targetLift.targets" (click)="changeTargetLift(target)">{{ target }}</button>					</mat-menu>				</div>			</div>			<div class="comp-header-tools screenshot-hide" fxLayout="row">				<app-select-toggle-button [displayedValues]="evaluationDatas.liftGraphDisplayedValues"					(selectToggleButtonChanged)="onSelectToggleButtonChanged($event)" [buttonTitle]="buttonTitle">				</app-select-toggle-button>			</div>			<kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">			</kl-btn-fullscreen>		</div>	</div>	<div fxFlex fxLayout="column" *ngIf="targetLiftGraph" class="graph-comp-chart-container">		<ngx-charts-line-chart [results]="targetLiftGraph" [xAxis]="true" [yAxis]="true" [scheme]="colorSet"			[showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisLabel]="xAxisLabel"			[xAxisTicks]="[0, 25, 50, 75, 100]" [yAxisTicks]="[0, 25, 50, 75, 100]" [yAxisLabel]="yAxisLabel">		</ngx-charts-line-chart>	</div>	<div class="clear-bottom-graph"></div>	<kl-legend [inputDatas]="evaluationDatas.liftGraphDisplayedValues" [type]="\'chart-nd-dynamic\'"		[colorSet]="legendColorSet" [position]="\'bottom\'"></kl-legend></div></div>'
+    var COMPONENTS = [{'name': 'AgGridComponent', 'selector': 'kl-ag-grid'},{'name': 'AnnotationComponent', 'selector': 'app-annotation'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AppVersionComponent', 'selector': 'kl-app-version'},{'name': 'AxisComponent', 'selector': 'app-axis'},{'name': 'AxisViewComponent', 'selector': 'app-axis-view'},{'name': 'BtnFullscreenComponent', 'selector': 'kl-btn-fullscreen'},{'name': 'CellStatsComponent', 'selector': 'kl-cell-stats'},{'name': 'ChartNextComponent', 'selector': 'kl-chart-next'},{'name': 'CheckboxCellComponent', 'selector': 'kl-checkbox-cell'},{'name': 'ClusterDetailsComponent', 'selector': 'app-cluster-details'},{'name': 'CompositionComponent', 'selector': 'app-composition'},{'name': 'ConfirmDialogComponent', 'selector': 'kl-confirm-dialog'},{'name': 'CoocurenceMatrixComponent', 'selector': 'app-coocurence-matrix'},{'name': 'DescriptionBlockComponent', 'selector': 'app-description-block'},{'name': 'DistributionGraphCanvasComponent', 'selector': 'kl-distribution-graph-canvas'},{'name': 'EvaluationViewComponent', 'selector': 'app-evaluation-view'},{'name': 'ExternalDatasComponent', 'selector': 'app-external-datas'},{'name': 'FileLoaderComponent', 'selector': 'kl-file-loader'},{'name': 'GraphHeaderComponent', 'selector': 'kl-graph-header'},{'name': 'HeaderManageViewComponent', 'selector': 'app-header-manage-view'},{'name': 'HeaderTitleComponent', 'selector': 'kl-header-title'},{'name': 'HeaderToolsComponent', 'selector': 'kl-header-tools'},{'name': 'HierarchySelectComponent', 'selector': 'app-hierarchy-select'},{'name': 'HomeLayoutComponent', 'selector': 'app-home-layout'},{'name': 'HomeLayoutComponent', 'selector': 'app-home-layout'},{'name': 'IconCellComponent', 'selector': 'kl-icon-cell'},{'name': 'ImportExtDatasComponent', 'selector': 'app-import-ext-datas'},{'name': 'ImportExtDatasListComponent', 'selector': 'app-import-ext-datas-list'},{'name': 'ImportFileLoaderComponent', 'selector': 'kl-import-file-loader'},{'name': 'InformationsBlockComponent', 'selector': 'kl-informations-block'},{'name': 'LegendComponent', 'selector': 'kl-legend'},{'name': 'LevelDistributionGraphCanvasComponent', 'selector': 'app-level-distribution-graph'},{'name': 'LibVersionComponent', 'selector': 'kl-lib-version'},{'name': 'LoadExtDatasComponent', 'selector': 'app-load-ext-datas'},{'name': 'ManageViewsComponent', 'selector': 'app-manage-views'},{'name': 'MatrixCanvasComponent', 'selector': 'kl-matrix-canvas'},{'name': 'MatrixContainerComponent', 'selector': 'app-matrix-container'},{'name': 'MatrixTooltipComponent', 'selector': 'kl-matrix-tooltip'},{'name': 'ModelingViewComponent', 'selector': 'app-modeling-view'},{'name': 'NoDataComponent', 'selector': 'kl-no-data'},{'name': 'Preparation2dViewComponent', 'selector': 'app-preparation-2d-view'},{'name': 'PreparationViewComponent', 'selector': 'app-preparation-view'},{'name': 'ProjectViewComponent', 'selector': 'app-project-view'},{'name': 'ProjectViewComponent', 'selector': 'app-project-view'},{'name': 'RegressionMatrixComponent', 'selector': 'app-regression-matrix'},{'name': 'ReleaseButtonComponent', 'selector': 'kl-release-button'},{'name': 'ReleaseNotesComponent', 'selector': 'kl-release-notes'},{'name': 'ScrollableGraphCanvasComponent', 'selector': ''},{'name': 'SelectableComponent', 'selector': ''},{'name': 'SelectableTabComponent', 'selector': ''},{'name': 'SelectedClustersComponent', 'selector': 'app-selected-clusters'},{'name': 'SelectToggleButtonComponent', 'selector': 'app-select-toggle-button'},{'name': 'SelectTrainedPredictorComponent', 'selector': 'app-select-trained-predictor'},{'name': 'TargetDistributionGraphCanvasComponent', 'selector': 'app-target-distribution-graph-canvas'},{'name': 'TargetLiftGraphComponent', 'selector': 'app-target-lift-graph'},{'name': 'TargetVariableStatsCanvasComponent', 'selector': 'app-target-variable-stats-canvas'},{'name': 'TreeDetailsComponent', 'selector': 'app-tree-details'},{'name': 'TreeHyperComponent', 'selector': 'app-tree-hyper'},{'name': 'TreeLeafDetailsComponent', 'selector': 'app-tree-leaf-details'},{'name': 'TreePreparationViewComponent', 'selector': 'app-tree-preparation-view'},{'name': 'TreeSelectComponent', 'selector': 'app-tree-select'},{'name': 'TreeSelectComponent', 'selector': 'app-tree-select'},{'name': 'UnfoldHierarchyComponent', 'selector': 'app-unfold-hierarchy'},{'name': 'UserSettingsComponent', 'selector': 'app-user-settings'},{'name': 'UserSettingsComponent', 'selector': 'app-user-settings'},{'name': 'VarDetailsPreparation2dComponent', 'selector': 'app-var-details-preparation-2d'},{'name': 'VarDetailsPreparationComponent', 'selector': 'app-var-details-preparation'},{'name': 'VarDetailsTreePreparationComponent', 'selector': 'app-var-details-tree-preparation'},{'name': 'VariableGraphDetailsComponent', 'selector': 'app-variable-graph-details'},{'name': 'VariableGraphDetailsComponent', 'selector': 'app-variable-graph-details'},{'name': 'WatchResizeComponent', 'selector': ''}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'TargetLiftGraphComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'TargetLiftGraphComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

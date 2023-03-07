@@ -1,0 +1,11 @@
+<div fxLayout="column" id="tree-select-comp" fxFlex [ngClass]="{'fullscreen': isFullscreen}">
+	<div id="graph-header-comp" fxLayoutAlign="start center" class="mat-elevation-z1">
+		<h1 fxFlex>{{ 'GLOBAL.DECISION_TREE' | translate }}</h1>
+		<kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">
+		</kl-btn-fullscreen>
+	</div>
+	<div *ngIf="dimensionTree" id="tree-select-comp-content" fxFlex>
+		<div id="{{'tree_' + position}}"></div>
+	</div>
+	<kl-no-data fxFlex *ngIf="!dimensionTree"></kl-no-data>
+</div>

@@ -1,0 +1,36 @@
+@import "khiops-library/src/lib/styles/theme.scss";
+
+#tree-hyper-comp {
+	height: 100%;
+	padding: 0;
+
+	#graph-header-comp {
+		flex-wrap: wrap;
+		padding: 5px 0;
+
+		#graph-header-tools {
+			mat-checkbox {
+				margin: 0 0 0 1rem;
+			}
+
+			::ng-deep .mat-checkbox-layout .mat-checkbox-label {
+				width: 130px !important;
+				white-space: normal !important;
+				line-height: inherit !important;
+			}
+		}
+	}
+
+	#hyperTree {
+		position: relative;
+		height: 100%;
+
+		::ng-deep .unitdisk-nav {
+			svg {
+				position: absolute !important;
+			}
+		}
+
+	}
+
+}

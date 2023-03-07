@@ -1,0 +1,105 @@
+<div id="home-layout-comp" fxFlexFill role="main">
+	<mat-sidenav-container fxFlexFill>
+		<mat-sidenav #sidenav mode="over" position="end" disableClose="true" [(opened)]="opened">
+			<app-user-settings (toggleNavDrawerChanged)="onToggleNavDrawerChanged($event)" [opened]="opened">
+			</app-user-settings>
+		</mat-sidenav>
+		<mat-sidenav-content>
+			<div class="container">
+				<kl-header-title *ngIf="isElectron || isWebDebug" [title]="appTitle" [logo]="'./assets/logo.png'">
+				</kl-header-title>
+				<kl-file-loader #fileLoader [hidden]="appDatas && appDatas.datas && isCompatibleJson"
+					[onFileLoaderDataChanged]="onFileLoaderDataChangedCb" [applicationName]="appName"></kl-file-loader>
+				<div fxFlexFill *ngIf="appDatas && appDatas.datas && isCompatibleJson">
+					<mat-tab-group id="main-tab-group" color="primary" fxFlexFill [@.disabled]="true"
+						[ngClass]="{'mat-tab-group-center': isElectron}" [selectedIndex]="activeTab"
+						(selectedTabChange)="onSelectedTabChanged($event)">
+						<mat-tab label="{{ 'TITLE.PROJECT' | translate }}" *ngIf="isElectron || isWebDebug">
+							<ng-template matTabLabel>
+								<label title="{{ 'TOOLTIPS.TABS.PROJECT' | translate }}">{{ 'TITLE.PROJECT' | translate }}</label>
+							</ng-template>
+							<ng-template matTabContent>
+								<app-project-view [selectedTab]="selectedTab"></app-project-view>
+							</ng-template>
+						</mat-tab>
+						<mat-tab label="{{ 'TITLE.PREPARATION' | translate }}"
+							*ngIf="appDatas.datas.preparationReport && appDatas.datas.preparationReport.variablesStatistics">
+							<ng-template matTabLabel>
+								<label title="{{ 'TOOLTIPS.TABS.PREPARATION' | translate }}" >{{ 'TITLE.PREPARATION' | translate }}</label>
+							</ng-template>
+							<ng-template matTabContent>
+								<app-preparation-view [selectedTab]="selectedTab"></app-preparation-view>
+							</ng-template>
+						</mat-tab>
+						<mat-tab label="{{ 'TITLE.TEXT_PREPARATION' | translate }}"
+							*ngIf="appDatas.datas.textPreparationReport && appDatas.datas.textPreparationReport.variablesStatistics">
+							<ng-template matTabLabel>
+								<label title="{{ 'TOOLTIPS.TABS.TEXT_PREPARATION' | translate }}" >{{ 'TITLE.TEXT_PREPARATION' | translate }}</label>
+							</ng-template>
+							<ng-template matTabContent>
+								<app-preparation-view [selectedTab]="selectedTab"
+									[preparationSource]="'textPreparationReport'"></app-preparation-view>
+							</ng-template>
+						</mat-tab>
+						<mat-tab label="{{ 'TITLE.TREE_PREPARATION' | translate }}"
+							*ngIf="appDatas.datas.treePreparationReport && appDatas.datas.treePreparationReport.variablesStatistics">
+							<ng-template matTabLabel>
+								<label title="{{ 'TOOLTIPS.TABS.TREE_PREPARATION' | translate }}" >{{ 'TITLE.TREE_PREPARATION' | translate }}</label>
+							</ng-template>
+							<ng-template matTabContent>
+								<app-tree-preparation-view [selectedTab]="selectedTab"></app-tree-preparation-view>
+							</ng-template>
+						</mat-tab>
+						<mat-tab label="{{ 'TITLE.PREPARATION_2D' | translate }}"
+							*ngIf="appDatas.datas.bivariatePreparationReport">
+							<ng-template matTabLabel>
+								<label title="{{ 'TOOLTIPS.TABS.PREPARATION_2D' | translate }}" >{{ 'TITLE.PREPARATION_2D' | translate }}</label>
+							</ng-template>
+							<ng-template matTabContent>
+								<app-preparation-2d-view [selectedTab]="selectedTab"></app-preparation-2d-view>
+							</ng-template>
+						</mat-tab>
+						<mat-tab label="{{ 'TITLE.MODELING' | translate }}" *ngIf="appDatas.datas.modelingReport">
+							<ng-template matTabLabel>
+								<label title="{{ 'TOOLTIPS.TABS.MODELING' | translate }}" >{{ 'TITLE.MODELING' | translate }}</label>
+							</ng-template>
+							<ng-template matTabContent>
+								<app-modeling-view [selectedTab]="selectedTab"></app-modeling-view>
+							</ng-template>
+						</mat-tab>
+						<mat-tab label="{{ 'TITLE.EVALUATION' | translate }}"
+							*ngIf="appDatas.datas.trainEvaluationReport || appDatas.datas.evaluationReport || appDatas.datas.testEvaluationReport">
+							<ng-template matTabLabel>
+								<label title="{{ 'TOOLTIPS.TABS.EVALUATION' | translate }}" >{{ 'TITLE.EVALUATION' | translate }}</label>
+							</ng-template>
+							<ng-template matTabContent>
+								<app-evaluation-view [selectedTab]="selectedTab"></app-evaluation-view>
+							</ng-template>
+						</mat-tab>
+					</mat-tab-group>
+				</div>
+				<div id="header-right" fxLayoutAlign="start center" layout="row">
+					<kl-release-button (isUpdateAvailable)="isUpdateAvailable($event)"></kl-release-button>
+					<div fxLayoutAlign="center center" fxLayout="row" *ngIf="!updateAvailableStatus || isLargeScreen">
+						<kl-header-tools [appVersion]="appVersion"
+							*ngIf="appDatas && appDatas.datas && isCompatibleJson"
+							(toggleNavDrawerChanged)="onToggleNavDrawerChanged($event)">
+						</kl-header-tools>
+					</div>
+					<button id="more-btn" attr.aria-label="{{ 'ARIA.HEADER.DISPLAY_MORE_OPTIONS' | translate }}"
+					mat-icon-button [matMenuTriggerFor]="menu" class="yellow-btn" *ngIf="updateAvailableStatus && !isLargeScreen && appDatas && appDatas.datas">
+						<mat-icon>more_vert</mat-icon>
+					  </button>
+					<mat-menu backdropClass="more-menu" #menu="matMenu">
+						<div class="more-menu-wrapper" fxLayoutAlign="center center" fxLayout="row">
+							<kl-header-tools [appVersion]="appVersion"
+								*ngIf="appDatas && appDatas.datas && isCompatibleJson"
+								(toggleNavDrawerChanged)="onToggleNavDrawerChanged($event)">
+							</kl-header-tools>
+						</div>
+					</mat-menu>
+				</div>
+			</div>
+		</mat-sidenav-content>
+	</mat-sidenav-container>
+</div>

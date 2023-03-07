@@ -1,0 +1,22 @@
+<div id="matrix-tooltip-comp">
+	<div *ngIf="cell" fxLayout="column" fxFlex fxLayoutAlign="start start">
+		<div id="tooltip-title" fxLayout="column" fxLayoutAlign="start start">
+			<span>{{ cell.xnamePart }} : {{ cell.xDisplayaxisPart }}</span>
+			<span>{{ cell.ynamePart }} : {{ cell.yDisplayaxisPart }}</span>
+		</div>
+		<div id="tooltip-content" fxLayout="column" fxLayoutAlign="start start">
+			<span *ngIf="cell.displayedValue.type !== 'HELLINGER'"
+				>{{ "MATRIX_MODES." + cell.displayedValue.type | translate }} =
+				{{ cell.displayedValue.value | toPrecision }}</span
+			>
+			<span *ngIf="cell.displayedValue.type !== 'FREQUENCY'"
+				>F = {{ cell.displayedFreqValue | toPrecision }}</span
+			>
+			<span>EF = {{ cell.displayedValue.ef | toPrecision }}</span>
+			<span *ngIf="cell.displayedValue.type === 'HELLINGER'"
+				>{{ "MATRIX_MODES." + cell.displayedValue.type | translate }} =
+				{{ cell.displayedValue.extra | toPrecision }}</span
+			>
+		</div>
+	</div>
+</div>

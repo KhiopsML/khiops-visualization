@@ -1,0 +1,10 @@
+.target-distribution-graph-canvas-comp {
+	padding: 10px 1px 1px 1px;
+
+	::ng-deep .bar-chart {
+		g[ng-reflect-height="0"] {
+			display: none !important;
+		}
+	}
+
+}

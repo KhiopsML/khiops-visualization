@@ -1,0 +1,17 @@
+<div id="select-toggle-button-comp">
+	<button mat-stroked-button color="primary" matBadge="-" matBadgeSize="small"  [matBadgeHidden]="isSelectAllChecked"
+		matBadgeColor="accent" [matMenuTriggerFor]="selectToggleButton">
+		{{ buttonTitle }} <em>&#9698;</em>
+	</button>
+	<mat-menu #selectToggleButton>
+		<button mat-menu-item class="checkbox-select-all"  (click)="$event.stopPropagation()">
+			<mat-checkbox [checked]="isSelectAllChecked" [indeterminate]="isSelectAllIndeterminate" (change)="toggleGraphOptionAllValue($event)">{{ selectAllCheckboxText }}</mat-checkbox>
+		</button>
+		<button mat-menu-item class="checkbox-select" *ngFor="let opt of currentItemsToShow, let i=index;" (click)="$event.stopPropagation()">
+			<mat-checkbox [checked]="opt.show" (change)="toggleGraphOptionValue($event, opt)">{{ opt.name }}</mat-checkbox>
+		</button>
+		<mat-paginator *ngIf="displayedValues.length > pageSize" (page)="onPageChange($event)"
+			(click)="$event.stopPropagation()" [length]="displayedValues.length" [pageSize]="pageSize">
+		</mat-paginator>
+	</mat-menu>
+</div>

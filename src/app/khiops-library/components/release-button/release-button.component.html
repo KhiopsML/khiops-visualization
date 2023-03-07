@@ -1,0 +1,6 @@
+<div id="release-button-comp" *ngIf="updateAvailable" fxLayout="row" fxLayoutAlign="center center">
+	<ydd-progress-button (action)="launchUpdate($event)" [progress]="progressData" [design]="designData">
+		{{ btnText }}
+	</ydd-progress-button>
+
+</div>

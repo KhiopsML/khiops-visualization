@@ -1,0 +1,21 @@
+<div id="hierarchy-select-comp" class="mat-elevation-z1" fxLayout="column" fxLayoutAlign="end center">
+	<div id="hierarchy-select-header" class="comp-header-tools" fxFlexFill fxLayout="row" fxLayoutAlign="start center">
+		<h1 title="{{ 'TOOLTIPS.AXIS.DIMENSION.STATISTICS' | translate }}">{{ 'GLOBAL.HIERARCHY' | translate }}</h1>
+		<div fxFlex>
+			<button class="button-accent" title="{{ 'TOOLTIPS.AXIS.DIMENSION.SELECT' | translate }}" mat-stroked-button color="accent" [matMenuTriggerFor]="selectDimension">{{ selectedDimension.name }} <em>&#9698;</em></button>
+			<mat-menu #selectDimension>
+				<button mat-menu-item *ngFor="let dimension of dimensions; let i = index"  (click)="changeSelectedDimension(dimension, i)">{{ dimension.name  }}</button>
+			</mat-menu>
+		</div>
+		<button mat-icon-button color="accent" attr.aria-label="{{ 'TOOLTIPS.AXIS.DIMENSION.STATISTICS' | translate }}" matTooltip="{{ 'GLOBAL.STATISTICS' | translate }}" (click)="showStats = !showStats"  [ngClass]="{'enabled': showStats}">
+			<mat-icon>info</mat-icon>
+		</button>
+	</div>
+	<div id="hierarchy-select-content" *ngIf="showStats" [@slideInOut] fxLayoutAlign="start start" fxLayout="column">
+		<span>{{ 'GLOBAL.TYPE' | translate }} : <strong>{{ selectedDimension.type }}</strong></span>
+		<!-- <span>{{ 'GLOBAL.INTERVAL' | translate }} : <strong>{{ selectedNode.shortDescription }}</strong></span> -->
+		<span>{{ 'GLOBAL.INTERVAL' | translate }} : <strong>{{ selectedNode.name }}</strong></span>
+		<span>{{ 'GLOBAL.FREQUENCY' | translate }} : <strong>{{ selectedNode.frequency }}</strong></span>
+		<span>{{ 'GLOBAL.INTERVALS' | translate }} : <strong>{{ intervals }}</strong></span>
+	</div>
+</div>

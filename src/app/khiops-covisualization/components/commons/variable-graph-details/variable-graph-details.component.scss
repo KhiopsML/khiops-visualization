@@ -1,0 +1,21 @@
+#variable-graph-details-comp {
+	height: 100%;
+	position: relative;
+
+	kl-graph-header {
+		height: 50px;
+
+		#graph-header-comp {
+			padding-bottom: 0 !important;
+			max-height: 60px !important;
+			margin-top: 0 !important;
+		}
+	}
+
+	kl-distribution-graph-canvas {
+		overflow: hidden;
+
+
+	}
+
+}

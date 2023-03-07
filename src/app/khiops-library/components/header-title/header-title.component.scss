@@ -1,0 +1,46 @@
+@import "../../styles/theme.scss";
+
+#header-title-comp {
+	position: absolute;
+	background: white;
+	top: 0px;
+	left: 20px;
+	overflow: hidden;
+	z-index: 1000;
+
+	#header-title-text {
+
+		max-width: 120px;
+		line-height: 16px;
+		font-size: 1rem;
+		margin-left: 0.4em;
+		font-weight: 300;
+		color: mat-color($primary);
+		margin-top: 2px;
+
+		strong {
+			font-size: 1.1rem;
+			font-weight: 500;
+			text-transform: uppercase;
+			color: darken(mat-color($primary), 20%);
+		}
+	}
+
+	@media screen and (max-width: 1000px) {
+		#header-title-text {
+			font-size: 0.9rem;
+		}
+	}
+
+	@media screen and (max-width: 1024px) {
+		#header-title-text {
+			display: none;
+		}
+	}
+
+	#header-title-logo {
+		z-index: 100;
+		width: 52px;
+		height: 52px;
+	}
+}

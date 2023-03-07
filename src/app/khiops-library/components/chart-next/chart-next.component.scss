@@ -1,0 +1,20 @@
+.chart-next-comp {
+
+	overflow-x: auto;
+	overflow-y: hidden;
+	height: 100%;
+
+	.kl-chart-next-canvas-comp {
+		height: 100%;
+		overflow: hidden;
+		max-width: 50000px; // Avoid canvas break
+		min-width: 300px;
+
+		canvas {
+			min-width: 300px;
+			max-width: 50000px;
+			image-rendering: pixelated;
+			image-rendering: crisp-edges;
+		}
+	}
+}

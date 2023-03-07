@@ -1,0 +1,39 @@
+#matrix-container-comp {
+	background: white;
+
+	#matrix-container-comp-matrix-wrapper {
+		.comp-header {
+			padding: 1.2em 0.4em 1.2em 0 !important;
+			margin: 0;
+			overflow: hidden;
+
+			button {
+				text-transform: none;
+			}
+
+			button:first-child {
+				margin-left: 1rem;
+			}
+
+			#matrix-conditionalOnContext-checkbox {
+				margin: auto 1rem;
+
+				::ng-deep .mat-checkbox-label {
+					max-width: 100px !important;
+					line-height: 14px !important;
+					white-space: pre-line !important;
+				}
+			}
+
+			::ng-deep mat-button-toggle-group {
+
+				::ng-deep .mat-button-toggle-label-content {
+					line-height: 34px !important;
+					top: -2px !important;
+				}
+
+			}
+		}
+	}
+
+}

@@ -1,0 +1,29 @@
+#tree-preparation-view-comp {
+
+	background: white;
+
+	#tree-preparation-target-variable-stats {
+		padding: 0 em;
+	}
+
+	app-regression-matrix {
+		overflow: hidden;
+	}
+
+	app-tree-select {
+		width: 100%;
+		height: 100%;
+	}
+
+	app-tree-details {
+		width: 100%;
+		height: 100%;
+	}
+
+	app-tree-hyper {
+		display: block !important;
+		width: 100%;
+		height: 100%;
+	}
+
+}

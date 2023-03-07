@@ -1,0 +1,2529 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>visualization-component documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">visualization-component documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content class">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Classes</li>
+  <li >InteractionLayer2</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/khiops-hypertree/components/layers/interaction-layer-2.ts</code>
+        </p>
+
+
+
+
+            <p class="comment">
+                <h3>Implements</h3>
+            </p>
+            <p class="comment">
+                            <code><a href="../interfaces/ILayer.html" target="_self" >ILayer</a></code>
+            </p>
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#args" >args</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#currMousePosAsArr" >currMousePosAsArr</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#currMousePosAsC" >currMousePosAsC</a>
+                            </li>
+                            <li>
+                                <a href="#dST" >dST</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#findNodeByCell" >findNodeByCell</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#findUnculledNodeByCell" >findUnculledNodeByCell</a>
+                            </li>
+                            <li>
+                                <a href="#hoverpath" >hoverpath</a>
+                            </li>
+                            <li>
+                                <a href="#htapi" >htapi</a>
+                            </li>
+                            <li>
+                                <a href="#mousedown" >mousedown</a>
+                            </li>
+                            <li>
+                                <a href="#name" >name</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#nopinch" >nopinch</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#panStart" >panStart</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#pinchcenter" >pinchcenter</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#pinchInitDist" >pinchInitDist</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#pinchInitλp" >pinchInitλp</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#pinchPreservingNode" >pinchPreservingNode</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#pinchState" >pinchState</a>
+                            </li>
+                            <li>
+                                <a href="#update" >update</a>
+                            </li>
+                            <li>
+                                <a href="#view" >view</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#click" >click</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#delay" >delay</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#dist" >dist</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#findTrace" >findTrace</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#fireMouseDown" >fireMouseDown</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#fireMouseEvent" >fireMouseEvent</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#fireMouseMove" >fireMouseMove</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#fireMouseUp" >fireMouseUp</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#fireMouseWheelEvent" >fireMouseWheelEvent</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#fireNodeHover" >fireNodeHover</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#fireTouchEvent" >fireTouchEvent</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#onPointerEnd" >onPointerEnd</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#onPointerMove" >onPointerMove</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#onPointerStart" >onPointerStart</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#ripple" >ripple</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#updateParent" >updateParent</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(view: <a href="../interfaces/ILayerView.html" target="_self">ILayerView</a>, args: <a href="../interfaces/InteractionLayer2Args.html" target="_self">InteractionLayer2Args</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:59</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>view</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../interfaces/ILayerView.html" target="_self" >ILayerView</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>args</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../interfaces/InteractionLayer2Args.html" target="_self" >InteractionLayer2Args</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="args"></a>
+                    <span class="name">
+                        <span ><b>args</b></span>
+                        <a href="#args"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/InteractionLayer2Args.html" target="_self" >InteractionLayer2Args</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:53</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currMousePosAsArr"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>currMousePosAsArr</b></span>
+                        <a href="#currMousePosAsArr"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="404" class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:404</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currMousePosAsC"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>currMousePosAsC</b></span>
+                        <a href="#currMousePosAsC"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="405" class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:405</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dST"></a>
+                    <span class="name">
+                        <span ><b>dST</b></span>
+                        <a href="#dST"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:57</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findNodeByCell"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>findNodeByCell</b></span>
+                        <a href="#findNodeByCell"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="406" class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:406</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findUnculledNodeByCell"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>findUnculledNodeByCell</b></span>
+                        <a href="#findUnculledNodeByCell"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="412" class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:412</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="hoverpath"></a>
+                    <span class="name">
+                        <span ><b>hoverpath</b></span>
+                        <a href="#hoverpath"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:59</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="htapi"></a>
+                    <span class="name">
+                        <span ><b>htapi</b></span>
+                        <a href="#htapi"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:58</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="mousedown"></a>
+                    <span class="name">
+                        <span ><b>mousedown</b></span>
+                        <a href="#mousedown"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:56</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="name"></a>
+                    <span class="name">
+                        <span ><b>name</b></span>
+                        <a href="#name"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;interaction-2&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:54</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="nopinch"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>nopinch</b></span>
+                        <a href="#nopinch"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="245" class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:245</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="panStart"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>panStart</b></span>
+                        <a href="#panStart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#C" target="_self" >C</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="242" class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:242</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pinchcenter"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>pinchcenter</b></span>
+                        <a href="#pinchcenter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#C" target="_self" >C</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="246" class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:246</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pinchInitDist"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>pinchInitDist</b></span>
+                        <a href="#pinchInitDist"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="243" class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:243</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pinchInitλp"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>pinchInitλp</b></span>
+                        <a href="#pinchInitλp"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="244" class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:244</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pinchPreservingNode"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>pinchPreservingNode</b></span>
+                        <a href="#pinchPreservingNode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="247" class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:247</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pinchState"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>pinchState</b></span>
+                        <a href="#pinchState"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>literal type</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="233" class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:233</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="update"></a>
+                    <span class="name">
+                        <span ><b>update</b></span>
+                        <a href="#update"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+        parent: () &#x3D;&gt; this.updateParent(),
+        data: () &#x3D;&gt; {},
+        transformation: () &#x3D;&gt; {},
+        style: () &#x3D;&gt; {}
+    }</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:69</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="view"></a>
+                    <span class="name">
+                        <span ><b>view</b></span>
+                        <a href="#view"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/ILayerView.html" target="_self" >ILayerView</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:52</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="click"></a>
+                    <span class="name">
+                        <span class="modifier">Private</span>
+                        <span ><b>click</b></span>
+                        <a href="#click"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>click(m: <a href="../undefineds/C.html" target="_self">C</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="391"
+                            class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:391</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>m</td>
+                                    <td>
+                                                <code><a href="../miscellaneous/typealiases.html#C" target="_self" >C</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="delay"></a>
+                    <span class="name">
+                        <span class="modifier">Private</span>
+                        <span ><b>delay</b></span>
+                        <a href="#delay"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>delay(ms)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="153"
+                            class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:153</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ms</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dist"></a>
+                    <span class="name">
+                        <span class="modifier">Private</span>
+                        <span ><b>dist</b></span>
+                        <a href="#dist"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>dist(a: <a href="../undefineds/C.html" target="_self">C</a>, b: <a href="../undefineds/C.html" target="_self">C</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="433"
+                            class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:433</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>a</td>
+                                    <td>
+                                                <code><a href="../miscellaneous/typealiases.html#C" target="_self" >C</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>b</td>
+                                    <td>
+                                                <code><a href="../miscellaneous/typealiases.html#C" target="_self" >C</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findTrace"></a>
+                    <span class="name">
+                        <span class="modifier">Private</span>
+                        <span ><b>findTrace</b></span>
+                        <a href="#findTrace"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findTrace(pid)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="400"
+                            class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:400</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>pid</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="fireMouseDown"></a>
+                    <span class="name">
+                        <span class="modifier">Private</span>
+                        <span ><b>fireMouseDown</b></span>
+                        <a href="#fireMouseDown"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>fireMouseDown()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="105"
+                            class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:105</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="fireMouseEvent"></a>
+                    <span class="name">
+                        <span class="modifier">Private</span>
+                        <span ><b>fireMouseEvent</b></span>
+                        <a href="#fireMouseEvent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>fireMouseEvent(eventName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="161"
+                            class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:161</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>eventName</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="fireMouseMove"></a>
+                    <span class="name">
+                        <span class="modifier">Private</span>
+                        <span ><b>fireMouseMove</b></span>
+                        <a href="#fireMouseMove"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>fireMouseMove()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="110"
+                            class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:110</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="fireMouseUp"></a>
+                    <span class="name">
+                        <span class="modifier">Private</span>
+                        <span ><b>fireMouseUp</b></span>
+                        <a href="#fireMouseUp"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>fireMouseUp()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="120"
+                            class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:120</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="fireMouseWheelEvent"></a>
+                    <span class="name">
+                        <span class="modifier">Private</span>
+                        <span ><b>fireMouseWheelEvent</b></span>
+                        <a href="#fireMouseWheelEvent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>fireMouseWheelEvent()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="172"
+                            class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:172</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="fireNodeHover"></a>
+                    <span class="name">
+                        <span class="modifier">Private</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>fireNodeHover</b></span>
+                        <a href="#fireNodeHover"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>fireNodeHover(n)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="125"
+                            class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:125</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>n</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="fireTouchEvent"></a>
+                    <span class="name">
+                        <span class="modifier">Private</span>
+                        <span ><b>fireTouchEvent</b></span>
+                        <a href="#fireTouchEvent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>fireTouchEvent(eventName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="201"
+                            class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:201</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>eventName</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onPointerEnd"></a>
+                    <span class="name">
+                        <span class="modifier">Private</span>
+                        <span ><b>onPointerEnd</b></span>
+                        <a href="#onPointerEnd"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onPointerEnd(pid, m)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="320"
+                            class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:320</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>pid</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>m</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onPointerMove"></a>
+                    <span class="name">
+                        <span class="modifier">Private</span>
+                        <span ><b>onPointerMove</b></span>
+                        <a href="#onPointerMove"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onPointerMove(pid, m)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="279"
+                            class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:279</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>pid</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>m</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onPointerStart"></a>
+                    <span class="name">
+                        <span class="modifier">Private</span>
+                        <span ><b>onPointerStart</b></span>
+                        <a href="#onPointerStart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onPointerStart(pid, m: <a href="../undefineds/C.html" target="_self">C</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="249"
+                            class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:249</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>pid</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>m</td>
+                                    <td>
+                                                <code><a href="../miscellaneous/typealiases.html#C" target="_self" >C</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ripple"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>ripple</b></span>
+                        <a href="#ripple"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>ripple(n: <a href="../interfaces/N.html" target="_self">N</a>, m: <a href="../undefineds/C.html" target="_self">C</a>, ok, useClip)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="352"
+                            class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:352</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Default value</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>n</td>
+                                    <td>
+                                                <code><a href="../interfaces/N.html" target="_self" >N</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>m</td>
+                                    <td>
+                                                <code><a href="../miscellaneous/typealiases.html#C" target="_self" >C</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>ok</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>useClip</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>true</code>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateParent"></a>
+                    <span class="name">
+                        <span class="modifier">Private</span>
+                        <span ><b>updateParent</b></span>
+                        <a href="#updateParent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateParent()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="76"
+                            class="link-to-prism">src/app/khiops-hypertree/components/layers/interaction-layer-2.ts:76</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import * as d3 from &#x27;d3&#x27;
+import {
+    ILayer
+} from &#x27;../layerstack/layer&#x27;
+import {
+    ILayerView
+} from &#x27;../layerstack/layer&#x27;
+import {
+    ILayerArgs
+} from &#x27;../layerstack/layer&#x27;
+import {
+    LayerStack
+} from &#x27;../layerstack/layerstack&#x27;
+import {
+    N
+} from &#x27;../../models/n/n&#x27;
+import {
+    C,
+    Cp,
+    maxR
+} from &#x27;../../models/transformation/hyperbolic-math&#x27;
+import {
+    CptoCk,
+    CktoCp,
+    ArrtoC
+} from &#x27;../../models/transformation/hyperbolic-math&#x27;
+import {
+    CaddC,
+    CsubC,
+    CmulR
+} from &#x27;../../models/transformation/hyperbolic-math&#x27;
+import {
+    clone
+} from &#x27;../../models/transformation/hyperbolic-math&#x27;
+import {
+    compose,
+    shift
+} from &#x27;../../models/transformation/hyperbolic-math&#x27;
+import {
+    setHoverNodeCache
+} from &#x27;../../models/hypertree/preset-process&#x27;
+
+
+const π &#x3D; Math.PI
+
+export interface InteractionLayer2Args extends ILayerArgs {
+    mouseRadius,
+    onClick
+}
+
+export class InteractionLayer2 implements ILayer {
+    view: ILayerView
+    args: InteractionLayer2Args
+    name &#x3D; &#x27;interaction-2&#x27;
+
+    mousedown: boolean
+    dST
+    htapi
+    hoverpath
+
+    constructor(view: ILayerView, args: InteractionLayer2Args) {
+        this.view &#x3D; view
+        this.args &#x3D; args
+        this.htapi &#x3D; this.view.hypertree.api
+        this.hoverpath &#x3D; this.view.hypertree.args.objects.pathes[0]
+        this.mousedown &#x3D; false
+    }
+
+    update &#x3D; {
+        parent: () &#x3D;&gt; this.updateParent(),
+        data: () &#x3D;&gt; {},
+        transformation: () &#x3D;&gt; {},
+        style: () &#x3D;&gt; {}
+    }
+
+    private updateParent() {
+        const mousehandlers &#x3D; de &#x3D;&gt; de
+            .on(&#x27;wheel&#x27;, e &#x3D;&gt; this.fireMouseWheelEvent())
+
+            .on(&#x27;mousedown&#x27;, e &#x3D;&gt; this.fireMouseDown())
+            .on(&#x27;mousemove&#x27;, e &#x3D;&gt; { this.fireNodeHover(this.findNodeByCell()); this.fireMouseMove() })
+            .on(&#x27;mouseup&#x27;, e &#x3D;&gt; this.fireMouseUp())
+            .on(&#x27;mouseout&#x27;, e &#x3D;&gt; { this.fireNodeHover(undefined); this.htapi.setPathHead(this.hoverpath, undefined) })
+
+            .on(&#x27;touchstart&#x27;, e &#x3D;&gt; this.fireTouchEvent(&#x27;onPointerStart&#x27;))
+            .on(&#x27;touchmove&#x27;, e &#x3D;&gt; this.fireTouchEvent(&#x27;onPointerMove&#x27;))
+            .on(&#x27;touchend&#x27;, e &#x3D;&gt; this.fireTouchEvent(&#x27;onPointerEnd&#x27;))
+            .on(&#x27;touchcancel&#x27;, e &#x3D;&gt; this.fireTouchEvent(&#x27;onPointerEnd&#x27;))
+
+        this.view.parent
+            .append(&#x27;circle&#x27;)
+            .attr(&#x27;class&#x27;, &#x27;mouse-circle&#x27;)
+            .attr(&#x27;r&#x27;, 5)
+            .call(mousehandlers)
+
+        this.view.parent
+            .append(&#x27;circle&#x27;)
+            .attr(&#x27;class&#x27;, &#x27;mouse-circle-cursor&#x27;)
+            .attr(&#x27;r&#x27;, this.args.mouseRadius)
+            .call(mousehandlers)
+    }
+
+    // just to keep the list above clear
+
+    private fireMouseDown() {
+        this.mousedown &#x3D; true
+        this.fireMouseEvent(&#x27;onPointerStart&#x27;)
+    }
+
+    private fireMouseMove() {
+        if (this.mousedown)
+            this.fireMouseEvent(&#x27;onPointerMove&#x27;)
+        else {
+            if (!this.view.hypertree.isInitializing &amp;&amp;
+                !this.view.hypertree.isAnimationRunning())
+                this.htapi.setPathHead(this.hoverpath, this.findNodeByCell())
+        }
+    }
+
+    private fireMouseUp() {
+        this.mousedown &#x3D; false
+        this.fireMouseEvent(&#x27;onPointerEnd&#x27;)
+    }
+
+    private async fireNodeHover(n) {
+        //fire onNodeHover if the node is close enough
+        //or if the node is undefined, we will also tell the onNodeHover function
+
+        if (this.mousedown) { //when we are dragging, hide the popup
+            setHoverNodeCache(undefined, this.view.unitdisk.cache);
+            this.view.hypertree.args.interaction.onHoverNodeChange(undefined);
+            return;
+        }
+
+        if ((!this.view.unitdisk.cache.lastHovered &amp;&amp; !n) || (this.view.unitdisk.cache.lastHovered &amp;&amp; n &amp;&amp; this.view.unitdisk.cache.lastHovered.data.id &#x3D;&#x3D;&#x3D; n.data.id)) return;
+
+        if ((n &amp;&amp; n.distScale &gt; 0.5)) {
+            setHoverNodeCache(n, this.view.unitdisk.cache);
+            if (this.view.hypertree.args.interaction.onHoverNodeChange) {
+                this.view.hypertree.args.interaction.onHoverNodeChange(n);
+            }
+        } else {
+            await this.delay(100);
+            if (!this.view.unitdisk.cache.lastHovered) return;
+
+            setHoverNodeCache(undefined, this.view.unitdisk.cache);
+            if (this.view.hypertree.args.interaction.onHoverNodeChange) {
+                this.view.hypertree.args.interaction.onHoverNodeChange(undefined);
+            }
+        }
+    }
+
+    private delay(ms) {
+        return new Promise((resolve) &#x3D;&gt; {
+            setTimeout(() &#x3D;&gt; resolve(null), ms);
+        })
+    }
+
+    //-----------------------------------------------------------------------------------------
+
+    private fireMouseEvent(eventName: string) {
+        d3.event.stopPropagation()
+        d3.event.preventDefault()
+
+        const m &#x3D; this.currMousePosAsC()
+        requestAnimationFrame(() &#x3D;&gt; {
+            if (this[eventName](&#x27;mouse&#x27;, m))
+                this.view.hypertree.update.transformation()
+        })
+    }
+
+    private fireMouseWheelEvent() {
+        d3.event.stopPropagation()
+        d3.event.preventDefault()
+
+        const mΔ &#x3D; d3.event.deltaY
+        const oldλp &#x3D; this.view.unitdisk.args.transformation.state.λ
+        const Δsens &#x3D; this.view.hypertree.args.interaction.wheelFactor
+        const newλp &#x3D; (mΔ &gt;&#x3D; 0 ? oldλp / Δsens : oldλp * Δsens) //- λΔ
+
+        if (newλp &gt; this.view.hypertree.args.interaction.λbounds[0] &amp;&amp;
+            newλp &lt; this.view.hypertree.args.interaction.λbounds[1]) {
+            const m &#x3D; this.currMousePosAsArr()
+
+            requestAnimationFrame(() &#x3D;&gt; {
+                const t &#x3D; this.view.unitdisk.args.transformation
+                const preservingNode &#x3D; this.findUnculledNodeByCell(ArrtoC(m))
+                t.onDragλ(newλp)
+                this.view.hypertree.updateLayoutPath_(preservingNode) // only path to center
+                t.state.P &#x3D; compose(t.state, shift(t.state, {
+                    re: 0,
+                    im: 0
+                }, preservingNode.cache)).P
+
+                this.view.hypertree.update.transformation()
+            })
+            //this.view.layerstack.layers[&#x27;labels-force&#x27;].update.force()   
+        }
+    }
+
+    private fireTouchEvent(eventName: string) {
+        d3.event.stopPropagation()
+        d3.event.preventDefault()
+
+        const changedTouches &#x3D; d3.event.changedTouches
+        let update &#x3D; false
+        for (let i &#x3D; 0; i &lt; changedTouches.length; ++i) {
+            const t &#x3D; changedTouches[i]
+            const pid &#x3D; t.identifier
+            const m &#x3D; ArrtoC(d3.touches(this.view.parent.node(), changedTouches)[i])
+
+            update &#x3D; this[eventName](pid, m) || update
+        }
+        requestAnimationFrame(() &#x3D;&gt; {
+            if (update)
+                this.view.hypertree.update.transformation()
+        })
+    }
+
+    //-----------------------------------------------------------------------------------------
+
+    /*
+    interface DragState: {    
+        onPointerStart: (pid:number, m:C)&#x3D;&gt; void,
+        onPointerMove:  (pid:number, m:C)&#x3D;&gt; void,
+        onPointerEnd:  (pid:number, m:C)&#x3D;&gt; void,
+    }
+    */
+    // NoInteractionState extends Dragstate
+    // MouseDownState extends Dragstate
+    // PanState extends Dragstate
+    // PinchState extends Dragstate
+    private pinchState: {
+        pinchInitDist: number,
+        pinchInitλp: number,
+        pinchcenter: C,
+        pinchPreservingNode: N
+        onPointerStart,
+        onPointerMove,
+        onPointerEnd
+    }
+    private panStart: C &#x3D; null
+    private pinchInitDist: number &#x3D; null
+    private pinchInitλp: number &#x3D; null
+    private nopinch: boolean &#x3D; null
+    private pinchcenter: C &#x3D; null
+    private pinchPreservingNode &#x3D; null
+
+    private onPointerStart(pid, m: C) {
+        if (CktoCp(m).r &gt;&#x3D; 1)
+            return false
+
+        this.view.hypertree.args.objects.traces.push({
+            id: pid,
+            points: [m]
+        })
+
+        if (this.view.hypertree.args.objects.traces.length &#x3D;&#x3D;&#x3D; 1) {
+            //this.view.unitdisk.args.transformation.onDragStart(m)
+            this.dST &#x3D; clone(this.view.unitdisk.args.transformation.state)
+            this.view.unitdisk.isDraging &#x3D; true
+            //console.log(still » pan || pinch » pan)
+            this.panStart &#x3D; m
+            this.nopinch &#x3D; true
+        } else if (this.view.hypertree.args.objects.traces.length &#x3D;&#x3D;&#x3D; 2) {
+            const t0 &#x3D; this.view.hypertree.args.objects.traces[0]
+            const t0e &#x3D; t0.points[t0.points.length - 1]
+            this.pinchcenter &#x3D; CmulR(CaddC(t0e, m), .5)
+            this.view.unitdisk.pinchcenter &#x3D; this.pinchcenter
+            this.pinchPreservingNode &#x3D; this.findUnculledNodeByCell(this.pinchcenter)
+            this.pinchInitDist &#x3D; this.dist(t0e, m)
+            this.pinchInitλp &#x3D; this.view.unitdisk.args.transformation.state.λ
+            this.nopinch &#x3D; false
+            //console.log(&#x27;pan » pinch&#x27;)
+        } else {}
+        return false
+    }
+
+    private onPointerMove(pid, m) {
+        const trace &#x3D; this.findTrace(pid)
+        if (!trace) {
+            // console.warn(&#x27;onPointerMove &#x27;)
+            return false
+        }
+        trace.points.push(m)
+
+        if (this.view.hypertree.args.objects.traces.length &#x3D;&#x3D;&#x3D; 1) {
+            //this.view.unitdisk.args.transformation.onDragP(this.panStart, m)
+            const t &#x3D; this.view.unitdisk.args.transformation
+            t.state.P &#x3D; compose(this.dST, shift(this.dST, this.panStart, maxR(m, .9))).P
+        } else if (this.view.hypertree.args.objects.traces.length &#x3D;&#x3D;&#x3D; 2) {
+            const t0 &#x3D; this.view.hypertree.args.objects.traces[0]
+            const t0e &#x3D; t0.points[t0.points.length - 1]
+            const t1 &#x3D; this.view.hypertree.args.objects.traces[1]
+            const t1e &#x3D; t1.points[t1.points.length - 1]
+            const dist &#x3D; this.dist(t0e, t1e)
+            const f &#x3D; dist / this.pinchInitDist
+            const newλp &#x3D; this.pinchInitλp * f
+
+            if (newλp &gt; this.view.hypertree.args.interaction.λbounds[0] &amp;&amp;
+                newλp &lt; this.view.hypertree.args.interaction.λbounds[1]) {
+                const pinchcenter2 &#x3D; maxR(CmulR(CaddC(t0e, t1e), .5), this.args.mouseRadius)
+
+                const t &#x3D; this.view.unitdisk.args.transformation
+                t.onDragλ(newλp)
+                this.view.hypertree.updateLayoutPath_(this.pinchPreservingNode) // only path to center
+                t.state.P &#x3D; compose(t.state, shift(t.state, {
+                    re: 0,
+                    im: 0
+                }, this.pinchPreservingNode.cache)).P
+                t.state.P &#x3D; compose(t.state, shift(t.state, this.pinchcenter, pinchcenter2)).P
+
+                this.pinchcenter &#x3D; CmulR(CaddC(this.pinchcenter, pinchcenter2), .5)
+                this.view.unitdisk.pinchcenter &#x3D; this.pinchcenter
+            }
+        } else {}
+        return true
+    }
+
+    private onPointerEnd(pid, m) {
+        this.view.hypertree.args.objects.traces &#x3D; this.view.hypertree.args.objects.traces.filter(e &#x3D;&gt; e.id !&#x3D;&#x3D; pid)
+
+        this.pinchcenter &#x3D; undefined
+        this.view.unitdisk.pinchcenter &#x3D; this.pinchcenter
+        this.pinchPreservingNode &#x3D; undefined
+
+        if (this.view.hypertree.args.objects.traces.length &#x3D;&#x3D;&#x3D; 0) {
+            //this.view.unitdisk.args.transformation.onDragEnd(m)
+            this.dST &#x3D; undefined
+            this.view.unitdisk.isDraging &#x3D; false
+
+            if (this.dist(this.panStart, m) &lt; .006 &amp;&amp; this.nopinch) {
+                if (CktoCp(m).r &lt; 1) {
+                    this.click(m)
+                    return false
+                }
+            }
+        } else if (this.view.hypertree.args.objects.traces.length &#x3D;&#x3D;&#x3D; 1) {
+            //this.view.unitdisk.args.transformation.onDragStart(m)
+            const otherPoints &#x3D; this.view.hypertree.args.objects.traces[0].points
+            this.panStart &#x3D; otherPoints[otherPoints.length - 1] //others.lastpoint
+
+            this.dST &#x3D; clone(this.view.unitdisk.args.transformation.state)
+            this.view.unitdisk.isDraging &#x3D; true
+            //console.log(&#x27;pinch --&gt; pan&#x27;)
+        } else {}
+        return true
+    }
+
+    //-----------------------------------------------------------------------------------------
+
+    public ripple(n: N, m: C, ok, useClip &#x3D; true) {
+        if (useClip &amp;&amp; !this.view.unitdisk.layerStack.layers[&#x27;cells&#x27;].args.invisible) {
+            const rippleClip &#x3D; this.view.parent
+                .append(&#x27;clipPath&#x27;)
+                .attr(&#x27;id&#x27;, &#x60;cell-clip-${n.mergeId}&#x60;)
+                .html(&#x60;&lt;use xlink:href&#x3D;&quot;#cell-${n.mergeId}&quot;&gt;&lt;/use&gt;&#x60;)
+
+            const rippleCircle &#x3D; this.view.parent
+                .insert(&#x27;g&#x27;, &#x27;:first-child&#x27;)
+                .attr(&#x27;class&#x27;, &#x27;ripple-world&#x27;)
+                .attr(&#x27;clip-path&#x27;, &#x60;url(#cell-clip-${n.mergeId})&#x60;)
+                .append(&#x27;circle&#x27;)
+                .attr(&#x27;class&#x27;, &#x27;ripple-circle&#x27;)
+                .attr(&#x27;r&#x27;, .1)
+                .attr(&#x27;cx&#x27;, m.re)
+                .attr(&#x27;cy&#x27;, m.im)
+                .attr(&#x27;transform-origin&#x27;, &#x60;${m.re}  ${m.im}&#x60;)
+                .on(&#x27;animationend&#x27;, () &#x3D;&gt; {
+                    rippleCircle.remove()
+                    rippleClip.remove()
+                    ok()
+                })
+        } else {
+            const rippleCircle &#x3D; this.view.parent
+                .insert(&#x27;g&#x27;, &#x27;:first-child&#x27;)
+                .attr(&#x27;class&#x27;, &#x27;ripple-world&#x27;)
+                .append(&#x27;circle&#x27;)
+                .attr(&#x27;class&#x27;, &#x27;ripple-circle&#x27;)
+                .attr(&#x27;r&#x27;, .1)
+                .attr(&#x27;cx&#x27;, m.re)
+                .attr(&#x27;cy&#x27;, m.im)
+                .attr(&#x27;transform-origin&#x27;, &#x60;${m.re}  ${m.im}&#x60;)
+                .on(&#x27;animationend&#x27;, () &#x3D;&gt; {
+                    rippleCircle.remove()
+                    ok()
+                })
+        }
+    }
+
+    private click(m: C) {
+        const q &#x3D; this.view.unitdisk.cache.voronoiDiagram.find(m.re, m.im)
+        const n &#x3D; q ? q.data : undefined
+        // console.log(&#x27;click&#x27;, this.dist(this.panStart, m), n, this.view.unitdisk.args.transformation.cache.centerNode)
+
+        if (!this.view.hypertree.isAnimationRunning())
+            this.view.hypertree.args.interaction.onNodeClick(n, m, this)
+    }
+
+    private findTrace(pid) {
+        return this.view.hypertree.args.objects.traces.find(e &#x3D;&gt; e.id &#x3D;&#x3D;&#x3D; pid)
+    }
+
+    private currMousePosAsArr &#x3D; () &#x3D;&gt; d3.mouse(this.view.parent.node())
+    private currMousePosAsC &#x3D; () &#x3D;&gt; ArrtoC(this.currMousePosAsArr())
+    private findNodeByCell &#x3D; () &#x3D;&gt; {
+        var m &#x3D; this.currMousePosAsArr()
+        var find &#x3D; this.view.unitdisk.cache.voronoiDiagram.find(m[0], m[1])
+        return find ? find.data : undefined
+    }
+
+    private findUnculledNodeByCell &#x3D; (m: C) &#x3D;&gt; {
+        const voronoiLayout &#x3D; d3.voronoi &lt; N &gt; ()
+            .x(d &#x3D;&gt; {
+                // console.assert(typeof d.cache.re &#x3D;&#x3D;&#x3D; &#x27;number&#x27;);
+                return d.cache.re;
+            })
+            .y(d &#x3D;&gt; {
+                // console.assert(typeof d.cache.re &#x3D;&#x3D;&#x3D; &#x27;number&#x27;);
+                return d.cache.im;
+            })
+            //.x(d&#x3D;&gt; d.cache.re)
+            //.y(d&#x3D;&gt; d.cache.im)
+            .extent([
+                [-2, -2],
+                [2, 2]
+            ])
+        const voronoiDiagram &#x3D; voronoiLayout(this.view.unitdisk.cache.unculledNodes)
+        const find &#x3D; voronoiDiagram.find(m.re, m.im)
+        return find ? find.data : undefined
+    }
+
+    private dist(a: C, b: C) {
+        const diff &#x3D; CsubC(a, b)
+        return Math.sqrt(diff.re * diff.re + diff.im * diff.im)
+    }
+}
+
+interface DragState {
+    onPointerStart(pid: number, m: C): void
+    onPointerMove(pid: number, m: C): void
+    onPointerEnd(pid: number, m: C): void
+}
+
+class NoInteractionState implements DragState {
+    constructor() {
+
+    }
+    public onPointerStart(pid: number, m: C) {
+
+    }
+    public onPointerMove(pid: number, m: C) {
+
+    }
+    public onPointerEnd(pid: number, m: C) {
+
+    }
+}
+
+class MouseDownState implements DragState {
+    constructor() {
+
+    }
+    public onPointerStart(pid: number, m: C) {
+
+    }
+    public onPointerMove(pid: number, m: C) {
+
+    }
+    public onPointerEnd(pid: number, m: C) {
+
+    }
+}
+
+/*
+class PanState implements DragState {    
+    private panStart:C    
+    constructor() {
+
+    }
+    public onPointerStart(pid:number, m:C) {
+        //this.view.unitdisk.args.transformation.onDragStart(m)
+        this.dST &#x3D; clone(this.view.unitdisk.args.transformation.state)
+        this.view.unitdisk.args.transformation.dST &#x3D; this.dST
+        //console.log(still » pan || pinch » pan)
+        this.panStart &#x3D; m
+        this.nopinch &#x3D; true
+    }
+    public onPointerMove(pid:number, m:C) {
+        //this.view.unitdisk.args.transformation.onDragP(this.panStart, m)
+        const t &#x3D; this.view.unitdisk.args.transformation
+        t.state.P &#x3D; compose(this.dST, shift(this.dST, this.panStart, maxR(m, .9))).P
+    }
+    public onPointerEnd(pid:number, m:C) {
+        //this.view.unitdisk.args.transformation.onDragEnd(m)
+        this.dST &#x3D; undefined
+        this.view.unitdisk.args.transformation.dST &#x3D; undefined
+
+        if (this.dist(this.panStart, m) &lt; .006 &amp;&amp; this.nopinch)
+            if (CktoCp(m).r &lt; 1)
+                this.click(m)
+    }
+}
+
+class PinchState implements DragState {    
+    pinchInitDist:       number
+    pinchInitλp:         number
+    pinchcenter:         C
+    pinchPreservingNode: N
+    constructor() {
+
+    }
+    public onPointerStart(pid:number, m:C) {
+        const t0 &#x3D; this.view.hypertree.args.objects.traces[0]
+        const t0e &#x3D; t0.points[t0.points.length-1]
+        this.pinchcenter &#x3D; CmulR(CaddC(t0e, m), .5)
+        this.view.unitdisk.pinchcenter &#x3D; this.pinchcenter
+        this.pinchPreservingNode &#x3D; this.findUnculledNodeByCell(this.pinchcenter)            
+        this.pinchInitDist &#x3D; this.dist(t0e, m)
+        this.pinchInitλp &#x3D; this.view.unitdisk.args.transformation.state.λ
+        this.nopinch &#x3D; false
+        //console.log(&#x27;pan » pinch&#x27;)
+    }
+    public onPointerMove(pid:number, m:C) {
+        const t0 &#x3D; this.view.hypertree.args.objects.traces[0]
+        const t0e &#x3D; t0.points[t0.points.length-1]
+        const t1 &#x3D; this.view.hypertree.args.objects.traces[1]
+        const t1e &#x3D; t1.points[t1.points.length-1]
+        const dist &#x3D; this.dist(t0e, t1e)
+        const f &#x3D; dist / this.pinchInitDist
+        const newλp &#x3D; this.pinchInitλp * f
+        
+        if (newλp &gt; this.view.hypertree.args.interaction.λbounds[0] &amp;&amp;
+            newλp &lt; this.view.hypertree.args.interaction.λbounds[1] ) 
+        {
+            const pinchcenter2 &#x3D; maxR(CmulR(CaddC(t0e, t1e), .5), this.args.mouseRadius)
+            
+            const t &#x3D; this.view.unitdisk.args.transformation
+            t.onDragλ(newλp)
+            this.view.hypertree.updateLayoutPath_(this.pinchPreservingNode) // only path to center
+            t.state.P &#x3D; compose(t.state, shift(t.state, { re:0, im:0 }, this.pinchPreservingNode.cache )).P
+            t.state.P &#x3D; compose(t.state, shift(t.state, this.pinchcenter, pinchcenter2)).P
+
+            this.pinchcenter &#x3D; CmulR(CaddC(this.pinchcenter, pinchcenter2), .5)
+            this.view.unitdisk.pinchcenter &#x3D; this.pinchcenter                
+        }
+    }
+    public onPointerEnd(pid:number, m:C) {
+        //this.view.unitdisk.args.transformation.onDragStart(m)
+        const otherPoints &#x3D; this.view.hypertree.args.objects.traces[0].points
+        this.panStart &#x3D; otherPoints[otherPoints.length-1] //others.lastpoint
+
+        this.dST &#x3D; clone(this.view.unitdisk.args.transformation.state)
+        this.view.unitdisk.args.transformation.dST &#x3D; this.dST
+        //console.log(still » pan || pinch » pan)            
+        this.nopinch &#x3D; true
+    }
+}
+*/</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
+            var COMPODOC_CURRENT_PAGE_URL = 'InteractionLayer2.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

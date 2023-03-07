@@ -1,0 +1,67 @@
+<div id="unfold-hierarchy-comp" fxFlexFill #unfoldHierarchy fxLayout="column">
+	<div fxLayout="column" fxFlexFill fxLayoutAlign="center center" *ngIf="!clustersPerDimDatas || loadingHierarchy">
+		<mat-spinner diameter="40" color="accent" mode="indeterminate"></mat-spinner>
+	</div>
+	<div fxFlexFill fxLayout="column" *ngIf="clustersPerDimDatas && !loadingHierarchy">
+		<div fxLayout="row" id="unfold-hierarchy-header" fxLayoutAlign="center center">
+			<h2 fxFlex>{{ 'GLOBAL.UNFOLD_HIERARCHY' | translate | uppercase }}</h2>
+			<button mat-stroked-button (click)="onClickOnCancel()">{{ 'GLOBAL.CANCEL' | translate }}</button>
+			<button mat-flat-button (click)="onClickOnSave()" color="primary">{{ 'GLOBAL.OK' | translate }}</button>
+		</div>
+		<div id="unfold-hierarchy-content" fxLayout="column">
+			<div fxLayout="row" id="unfold-hierarchy-settings" fxLayoutAlign="start start">
+				<div fxLayout="column">
+					<span>{{ 'GLOBAL.NUMBER_OF_CLUSTERS' | translate }} : <b>{{ currentUnfoldHierarchy }}</b></span>
+					<mat-slider [max]="hierarchyDatas.totalClusters" [min]="hierarchyDatas.minClusters"
+						[thumbLabel]="true" (input)="onHierarchyChanged($event)" [(ngModel)]="currentUnfoldHierarchy"
+						[step]="1">
+					</mat-slider>
+				</div>
+				<div fxLayout="column" class="increment">
+					<button mat-stroked-button (click)="increaseUnfoldHierarchy()">+</button>
+					<button mat-stroked-button (click)="decreaseUnfoldHierarchy()">-</button>
+				</div>
+				<div fxLayout="column" fxFlex fxLayoutAlign="center end">
+					<span>{{ 'GLOBAL.CELLS' | translate }}: {{ currentCellsPerCluster }}</span>
+					<span>{{ 'GLOBAL.INFORMATION_RATE' | translate }}: {{ currentInformationPerCluster | toPrecision:1 }}%</span>
+					<span class="non-info-warning" *ngIf="currentInformationPerCluster === 0" fxLayoutAlign="start center">
+						{{ 'GLOBAL.NON_INFORMATIVE_COCLUSTERING' | translate }}
+						<mat-icon fxLayoutAlign="center center">warning</mat-icon>
+					</span>
+				</div>
+			</div>
+			<div fxFlex fxLayout="column">
+				<div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
+					<div fxFlex fxLayout="row" fxLayoutAlign="start center">
+						<h1>{{ 'GLOBAL.INFORMATION_RATE' | translate  }}</h1>
+					</div>
+				</div>
+				<kl-chart-next title="{{ 'TOOLTIPS.AXIS.UNFOLD_HIERARCHY.INFO_RATE_CHART' | translate }}"
+					[canvasIdContainer]="'info-per-cluster-graph-canvas'" fxFlex [inputDatas]="infoPerCluster"
+					[enableSelection]="false" [colorSet]="colorSetInfoPerCluster" [chartOptions]="infoPerClusterChartOptions">
+				</kl-chart-next>
+			</div>
+			<div fxFlex fxLayout="column">
+				<div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
+					<div fxFlex fxLayout="row" fxLayoutAlign="start center">
+						<h1>{{ 'GLOBAL.NB_OF_CLUSTERS_PER_DIM' | translate  }}</h1>
+					</div>
+					<kl-legend fxLayoutAlign="end end" fxLayout="row" [inputDatas]="legend" [type]="'chart-nd'"
+						[tooltip]="unfoldHierarchyLegend" (legendItemClicked)="highlightChartLine($event)"
+						[colorSet]="colorSetClusterPerDim">
+					</kl-legend>
+				</div>
+				<kl-chart-next [canvasIdContainer]="'clusters-per-dim-graph-canvas'" fxFlex
+					[inputDatas]="clustersPerDimDatas" [enableSelection]="false" [colorSet]="colorSetClusterPerDim"
+					[selectedLineChartItem]="selectedLineChartItem" [chartOptions]="clustersPerDimDatasChartOptions">
+				</kl-chart-next>
+			</div>
+			<div fxFlex id="unfold-hierarchy-table" fxLayout="column">
+				<kl-ag-grid fxFlex [showLevelDistribution]="false" [showSearch]="false" [showColumnsSelection]="false"
+					[inputDatas]="dimensions" [title]="unfoldHierarchyTableTitle" [smallTitle]="true"
+					[sizeColumnsToFit]="true" (gridCheckboxChanged)="onGridCheckboxChanged($event)"
+					[rowSelection]="'multiple'" [displayedColumns]="hierarchyDisplayedColumns"></kl-ag-grid>
+			</div>
+		</div>
+	</div>
+</div>

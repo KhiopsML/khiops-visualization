@@ -1,0 +1,18 @@
+<div id="graph-header-comp" fxFlexFill fxLayout="row" fxLayoutAlign="start center" class="mat-elevation-z1">
+	<h1 fxLayout="column" fxLayoutAlign="start start" fxFlex [ngClass]="{'small-title': smallTitle === true}">
+		<span>{{ title || selectedVariable && selectedVariable.name }}</span>
+		<span class="limit-warning" *ngIf="selectedVariable && selectedVariable.parts > barChartLimit" fxLayoutAlign="start center">
+			<mat-icon fxLayoutAlign="center center">warning</mat-icon>
+			{{ 'GLOBAL.TOO_MANY_VALUES' | translate }}
+		</span>
+	</h1>
+	<div id="graph-header-tools" fxLayout="column" fxLayoutAlign="center center">
+		<h2>{{ 'GLOBAL.SCALE' | translate }}</h2>
+		<mat-slider attr.aria-label="{{ 'ARIA.CHARTS.UPDATE_GRAPH_SCALE' | translate }}" [max]="maxScale"
+			[min]="minScale" [step]="stepScale" [thumbLabel]="false" [(ngModel)]="scaleValue"
+			(input)="onScaleChanged($event)">
+		</mat-slider>
+	</div>
+	<kl-btn-fullscreen *ngIf="toggleFullscreen.observers.length > 0" (toggleFullscreen)="onToggleFullscreen($event)">
+	</kl-btn-fullscreen>
+</div>

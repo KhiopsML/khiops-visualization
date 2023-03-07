@@ -1,0 +1,34 @@
+@import "khiops-library/src/lib/styles/theme.scss";
+
+#user-settings-comp {
+	width: 460px !important;
+
+	h2 {
+		text-align: center;
+		text-transform: uppercase;
+		margin: 0;
+	}
+
+	#user-settings-header {
+		padding: 1em;
+		height: 58px;
+	}
+
+	#user-settings-content {
+		padding: 2em;
+		overflow: auto;
+
+		h2 {
+			margin-top: 2em;
+		}
+
+	}
+
+	::ng-deep mat-slide-toggle {
+		margin-top: 20px;
+
+		span {
+			white-space: pre-wrap;
+		}
+	}
+}

@@ -1,0 +1,27 @@
+#header-manage-view-comp {
+	margin-right: 1.8em;
+
+	button {
+		margin-left: 0.6em;
+		min-width: 40px;
+		height: 38px;
+		max-height: 38px;
+	}
+
+	#button-manage-views {
+		padding: 0;
+		min-width: 40px;
+		line-height: 32px !important;
+		padding: 0 0.4em !important;
+	}
+
+	#button-context.is-toggled {
+		background: #af0e44;
+	}
+
+	span{
+		font-weight: 300;
+		font-size: 0.9em;
+	}
+
+}

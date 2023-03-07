@@ -1,0 +1,65 @@
+import {
+	Component,
+	Input,
+	NgZone,
+	SimpleChanges,
+	OnChanges,
+	OnInit
+} from '@angular/core';
+import {
+	TreeNodeVO
+} from 'src/app/model/tree-node-vo';
+import {
+	SelectableService
+} from '@khiops-library/components/selectable/selectable.service';
+import {
+	SelectableComponent
+} from '@khiops-library/components/selectable/selectable.component';
+import {
+	TranslateService
+} from '@ngstack/translate';
+import { AnnotationService } from 'src/app/providers/annotation.service';
+
+
+@Component({
+	selector: 'app-annotation',
+	templateUrl: './annotation.component.html',
+	styleUrls: ['./annotation.component.scss']
+})
+export class AnnotationComponent extends SelectableComponent implements OnInit, OnChanges {
+
+	@Input() selectedNode: TreeNodeVO;
+	@Input() position: number;
+	value: string;
+	id: any;
+	componentType = 'descriptions'; // needed to copy datas
+	title: string;
+
+	constructor(
+		private annotationService: AnnotationService,
+		private translate: TranslateService,
+		public selectableService: SelectableService,
+		public ngzone: NgZone) {
+			super(selectableService, ngzone);
+		}
+
+	ngOnInit() {
+		this.id = 'cluster-annotation-' + this.position;
+	}
+
+	ngOnChanges(changes: SimpleChanges) {
+		if (changes.selectedNode && changes.selectedNode.currentValue) {
+			this.value = changes.selectedNode.currentValue.description;
+			this.title = this.translate.get('GLOBAL.ANNOTATION_OF', {
+				name: changes.selectedNode.currentValue.name
+			});
+		}
+	}
+
+	onAnnotationChanged(annotation) {
+		this.value = annotation;
+		this.selectedNode.updateAnnotation(annotation);
+		this.annotationService.setNodeAnnotation(this.selectedNode, annotation);
+	}
+
+}

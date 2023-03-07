@@ -1,0 +1,32 @@
+@import "khiops-library/src/lib/styles/theme.scss";
+
+#tree-select-comp {
+	padding: 0;
+	height: 100%;
+    overflow: auto;
+
+	::ng-deep .tree-icon.is-leaf {
+		height: 18px !important;
+		width: 18px !important;
+		font-size: 0 !important;
+		border-radius: 10px !important;
+		min-height: 18px !important;
+		min-width: 18px !important;
+		max-height: 18px !important;
+		max-width: 18px !important;
+	}
+
+	#graph-header-comp {
+		z-index: 10;
+	}
+
+	#tree-select-comp-content {
+		overflow: auto;
+		padding: 1em 0;
+		margin: 1px;
+	}
+
+}
+#tree-select-comp.loadingView {
+	// visibility: hidden;
+}

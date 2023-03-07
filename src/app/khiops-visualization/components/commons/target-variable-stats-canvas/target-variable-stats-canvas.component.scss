@@ -1,0 +1,17 @@
+.target-variable-stats-canvas-comp {
+	position: relative;
+	padding-top: 1px;
+	padding-bottom: 1px;
+
+	#target-variable-stats-graph-wrapper {
+		position: relative;
+	}
+
+	::ng-deep .kl-chart-next-canvas-comp {
+		min-width: 200px !important;
+
+		canvas {
+			min-width: 200px !important;
+		}
+	}
+}

@@ -1,0 +1,2391 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>visualization-component documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">visualization-component documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li
+  >
+  TreeHyperComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/khiops-visualization/components/commons/tree-hyper/tree-hyper.component.ts</code>
+</p>
+
+
+
+    <p class="comment">
+        <h3>Extends</h3>
+    </p>
+    <p class="comment">
+                <code><a href="../components/SelectableComponent.html" target="_self" >SelectableComponent</a></code>
+    </p>
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+                    <code><a href="https://angular.io/api/core/AfterViewInit" target="_blank" >AfterViewInit</a></code>
+                    <code><a href="../miscellaneous/typealiases.html#C" target="_self" >OnChanges</a></code>
+                    <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-tree-hyper</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./tree-hyper.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./tree-hyper.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#buttonTitle" >buttonTitle</a>
+                            </li>
+                            <li>
+                                <a href="#componentType" >componentType</a>
+                            </li>
+                            <li>
+                                <a href="#ht" >ht</a>
+                            </li>
+                            <li>
+                                <a href="#isFullscreen" >isFullscreen</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#ngzone" >ngzone</a>
+                            </li>
+                            <li>
+                                <a href="#options" >options</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#selectableService" >selectableService</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#translate" >translate</a>
+                            </li>
+                            <li>
+                                <a href="#visualization" >visualization</a>
+                            </li>
+                            <li>
+                                <a href="#selectedServiceChangeSub" >selectedServiceChangeSub</a>
+                            </li>
+                            <li>
+                                <a href="#el" >el</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#filterVisibleNodes" >filterVisibleNodes</a>
+                            </li>
+                            <li>
+                                <a href="#initHyperTree" >initHyperTree</a>
+                            </li>
+                            <li>
+                                <a href="#ngAfterViewInit" >ngAfterViewInit</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnChanges" >ngOnChanges</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onSelectToggleButtonChanged" >onSelectToggleButtonChanged</a>
+                            </li>
+                            <li>
+                                <a href="#onToggleFullscreen" >onToggleFullscreen</a>
+                            </li>
+                            <li>
+                                <a href="#togglePopulationVisualization" >togglePopulationVisualization</a>
+                            </li>
+                            <li>
+                                <a href="#togglePurityVisualization" >togglePurityVisualization</a>
+                            </li>
+                            <li>
+                                <a href="#onClick" >onClick</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#dimensionTree" >dimensionTree</a>
+                            </li>
+                            <li>
+                                <a href="#displayedValues" >displayedValues</a>
+                            </li>
+                            <li>
+                                <a href="#selectedNode" >selectedNode</a>
+                            </li>
+                            <li>
+                                <a href="#selectedNodes" >selectedNodes</a>
+                            </li>
+                            <li>
+                                <a href="#id" >id</a>
+                            </li>
+                            <li>
+                                <a href="#type" >type</a>
+                            </li>
+                            <li>
+                                <a href="#watchResize" >watchResize</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#selectTreeItemChanged" >selectTreeItemChanged</a>
+                            </li>
+                            <li>
+                                <a href="#treeHyperDisplayedValuesChanged" >treeHyperDisplayedValuesChanged</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>HostListeners</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#click" >click</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(ngzone: <a href="../interfaces/N.html" target="_self">NgZone</a>, treePreparationDatasService: <a href="../injectables/TreePreparationDatasService.html" target="_self">TreePreparationDatasService</a>, khiopsLibraryService: <a href="../injectables/KhiopsLibraryService.html" target="_self">KhiopsLibraryService</a>, distributionDatasService: <a href="../injectables/DistributionDatasService.html" target="_self">DistributionDatasService</a>, selectableService: <a href="../injectables/SelectableService.html" target="_self">SelectableService</a>, translate: <a href="../interfaces/T.html" target="_self">TranslateService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">src/app/khiops-visualization/components/commons/tree-hyper/tree-hyper.component.ts:71</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>ngzone</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../interfaces/N.html" target="_self" >NgZone</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>treePreparationDatasService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/TreePreparationDatasService.html" target="_self" >TreePreparationDatasService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>khiopsLibraryService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/KhiopsLibraryService.html" target="_self" >KhiopsLibraryService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>distributionDatasService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/DistributionDatasService.html" target="_self" >DistributionDatasService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>selectableService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/SelectableService.html" target="_self" >SelectableService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>translate</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../interfaces/T.html" target="_self" >TranslateService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section>
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="dimensionTree"></a>
+                        <b>dimensionTree</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">src/app/khiops-visualization/components/commons/tree-hyper/tree-hyper.component.ts:55</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="displayedValues"></a>
+                        <b>displayedValues</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/app/khiops-visualization/components/commons/tree-hyper/tree-hyper.component.ts:56</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="selectedNode"></a>
+                        <b>selectedNode</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/app/khiops-visualization/components/commons/tree-hyper/tree-hyper.component.ts:54</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="selectedNodes"></a>
+                        <b>selectedNodes</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/app/khiops-visualization/components/commons/tree-hyper/tree-hyper.component.ts:53</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="id"></a>
+                        <b>id</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[any]</code>
+
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4" colspan="2">
+                                    <div class="io-line">Inherited from         <code><a href="../components/WatchResizeComponent.html" target="_self" >WatchResizeComponent</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in         <code><a href="../components/WatchResizeComponent.html#source" target="_self" >WatchResizeComponent:23</a></code>
+</div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="type"></a>
+                        <b>type</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[any]</code>
+
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4" colspan="2">
+                                    <div class="io-line">Inherited from         <code><a href="../components/SelectableComponent.html" target="_self" >SelectableComponent</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in         <code><a href="../components/SelectableComponent.html#source" target="_self" >SelectableComponent:24</a></code>
+</div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="watchResize"></a>
+                        <b>watchResize</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4" colspan="2">
+                                    <div class="io-line">Inherited from         <code><a href="../components/WatchResizeComponent.html" target="_self" >WatchResizeComponent</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in         <code><a href="../components/WatchResizeComponent.html#source" target="_self" >WatchResizeComponent:16</a></code>
+</div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+    <section>
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="selectTreeItemChanged"></a>
+                        <b>selectTreeItemChanged</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>EventEmitter&lt;any&gt;</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/app/khiops-visualization/components/commons/tree-hyper/tree-hyper.component.ts:57</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="treeHyperDisplayedValuesChanged"></a>
+                        <b>treeHyperDisplayedValuesChanged</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>EventEmitter&lt;any&gt;</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/app/khiops-visualization/components/commons/tree-hyper/tree-hyper.component.ts:58</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section>
+    <h3>HostListeners</h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="click"></a>
+                    <span class="name">
+                        <span ><b>click</b></span>
+                        <a href="#click"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <i>Arguments : </i><code>'$event' </code>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>click(event)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../components/SelectableComponent.html" target="_self" >SelectableComponent</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../components/SelectableComponent.html#source" target="_self" >SelectableComponent:70</a></code>
+</div>
+                </td>
+            </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filterVisibleNodes"></a>
+                    <span class="name">
+                        <span ><b>filterVisibleNodes</b></span>
+                        <a href="#filterVisibleNodes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>filterVisibleNodes(n)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="424"
+                            class="link-to-prism">src/app/khiops-visualization/components/commons/tree-hyper/tree-hyper.component.ts:424</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>n</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="initHyperTree"></a>
+                    <span class="name">
+                        <span ><b>initHyperTree</b></span>
+                        <a href="#initHyperTree"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>initHyperTree(initView)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="133"
+                            class="link-to-prism">src/app/khiops-visualization/components/commons/tree-hyper/tree-hyper.component.ts:133</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Default value</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>initView</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>true</code>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngAfterViewInit"></a>
+                    <span class="name">
+                        <span ><b>ngAfterViewInit</b></span>
+                        <a href="#ngAfterViewInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngAfterViewInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../components/WatchResizeComponent.html" target="_self" >WatchResizeComponent</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../components/WatchResizeComponent.html#source" target="_self" >WatchResizeComponent:115</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnChanges"></a>
+                    <span class="name">
+                        <span ><b>ngOnChanges</b></span>
+                        <a href="#ngOnChanges"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnChanges(changes: <a href="../undefineds/C.html" target="_self">SimpleChanges</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="438"
+                            class="link-to-prism">src/app/khiops-visualization/components/commons/tree-hyper/tree-hyper.component.ts:438</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>changes</td>
+                                    <td>
+                                                <code><a href="../miscellaneous/typealiases.html#C" target="_self" >SimpleChanges</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../components/SelectableComponent.html" target="_self" >SelectableComponent</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../components/SelectableComponent.html#source" target="_self" >SelectableComponent:436</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="92"
+                            class="link-to-prism">src/app/khiops-visualization/components/commons/tree-hyper/tree-hyper.component.ts:92</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onSelectToggleButtonChanged"></a>
+                    <span class="name">
+                        <span ><b>onSelectToggleButtonChanged</b></span>
+                        <a href="#onSelectToggleButtonChanged"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onSelectToggleButtonChanged(displayedValues: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="518"
+                            class="link-to-prism">src/app/khiops-visualization/components/commons/tree-hyper/tree-hyper.component.ts:518</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>displayedValues</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onToggleFullscreen"></a>
+                    <span class="name">
+                        <span ><b>onToggleFullscreen</b></span>
+                        <a href="#onToggleFullscreen"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onToggleFullscreen(isFullscreen: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="97"
+                            class="link-to-prism">src/app/khiops-visualization/components/commons/tree-hyper/tree-hyper.component.ts:97</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>isFullscreen</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="togglePopulationVisualization"></a>
+                    <span class="name">
+                        <span ><b>togglePopulationVisualization</b></span>
+                        <a href="#togglePopulationVisualization"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>togglePopulationVisualization(state)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="108"
+                            class="link-to-prism">src/app/khiops-visualization/components/commons/tree-hyper/tree-hyper.component.ts:108</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>state</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="togglePurityVisualization"></a>
+                    <span class="name">
+                        <span ><b>togglePurityVisualization</b></span>
+                        <a href="#togglePurityVisualization"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>togglePurityVisualization(state)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="101"
+                            class="link-to-prism">src/app/khiops-visualization/components/commons/tree-hyper/tree-hyper.component.ts:101</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>state</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onClick"></a>
+                    <span class="name">
+                        <span ><b>onClick</b></span>
+                        <a href="#onClick"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onClick(event)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@HostListener(&#x27;click&#x27;, [&#x27;$event&#x27;])<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../components/SelectableComponent.html" target="_self" >SelectableComponent</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../components/SelectableComponent.html#source" target="_self" >SelectableComponent:70</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>event</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="buttonTitle"></a>
+                    <span class="name">
+                        <span ><b>buttonTitle</b></span>
+                        <a href="#buttonTitle"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/khiops-visualization/components/commons/tree-hyper/tree-hyper.component.ts:59</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="componentType"></a>
+                    <span class="name">
+                        <span ><b>componentType</b></span>
+                        <a href="#componentType"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;hyptree&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">src/app/khiops-visualization/components/commons/tree-hyper/tree-hyper.component.ts:61</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ht"></a>
+                    <span class="name">
+                        <span ><b>ht</b></span>
+                        <a href="#ht"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/Hypertree.html" target="_self" >Hypertree</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">src/app/khiops-visualization/components/commons/tree-hyper/tree-hyper.component.ts:71</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isFullscreen"></a>
+                    <span class="name">
+                        <span ><b>isFullscreen</b></span>
+                        <a href="#isFullscreen"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">src/app/khiops-visualization/components/commons/tree-hyper/tree-hyper.component.ts:62</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngzone"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>ngzone</b></span>
+                        <a href="#ngzone"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/N.html" target="_self" >NgZone</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Inherited from         <code><a href="../components/WatchResizeComponent.html" target="_self" >WatchResizeComponent</a></code>
+</div>
+                            </td>
+                        </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../components/WatchResizeComponent.html#source" target="_self" >WatchResizeComponent:74</a></code>
+</div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="options"></a>
+                    <span class="name">
+                        <span ><b>options</b></span>
+                        <a href="#options"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">src/app/khiops-visualization/components/commons/tree-hyper/tree-hyper.component.ts:69</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectableService"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>selectableService</b></span>
+                        <a href="#selectableService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../injectables/SelectableService.html" target="_self" >SelectableService</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Inherited from         <code><a href="../components/SelectableComponent.html" target="_self" >SelectableComponent</a></code>
+</div>
+                            </td>
+                        </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../components/SelectableComponent.html#source" target="_self" >SelectableComponent:78</a></code>
+</div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="translate"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>translate</b></span>
+                        <a href="#translate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/T.html" target="_self" >TranslateService</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="79" class="link-to-prism">src/app/khiops-visualization/components/commons/tree-hyper/tree-hyper.component.ts:79</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="visualization"></a>
+                    <span class="name">
+                        <span ><b>visualization</b></span>
+                        <a href="#visualization"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+		population: false,
+		purity: false
+	}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">src/app/khiops-visualization/components/commons/tree-hyper/tree-hyper.component.ts:64</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedServiceChangeSub"></a>
+                    <span class="name">
+                        <span ><b>selectedServiceChangeSub</b></span>
+                        <a href="#selectedServiceChangeSub"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Inherited from         <code><a href="../components/SelectableComponent.html" target="_self" >SelectableComponent</a></code>
+</div>
+                            </td>
+                        </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../components/SelectableComponent.html#source" target="_self" >SelectableComponent:25</a></code>
+</div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="el"></a>
+                    <span class="name">
+                        <span ><b>el</b></span>
+                        <a href="#el"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Element</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Inherited from         <code><a href="../components/WatchResizeComponent.html" target="_self" >WatchResizeComponent</a></code>
+</div>
+                            </td>
+                        </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../components/WatchResizeComponent.html#source" target="_self" >WatchResizeComponent:17</a></code>
+</div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+	Component,
+	OnInit,
+	NgZone,
+	OnDestroy,
+	OnChanges,
+	Output,
+	EventEmitter,
+	SimpleChanges,
+	AfterViewInit,
+	Input
+} from &#x27;@angular/core&#x27;;
+import _ from &#x27;lodash&#x27;;
+import {
+	SelectableComponent
+} from &#x27;@khiops-library/components/selectable/selectable.component&#x27;;
+import {
+	SelectableService
+} from &#x27;@khiops-library/components/selectable/selectable.service&#x27;;
+import {
+	TranslateService
+} from &#x27;@ngstack/translate&#x27;;
+import * as hyt from &#x27;@khiops-hypertree/js/d3-hypertree&#x27;;
+import {
+	UtilsService
+} from &#x27;@khiops-library/providers/utils.service&#x27;;
+import {
+	TreePreparationDatasService
+} from &#x27;src/app/providers/tree-preparation-datas.service&#x27;;
+import {
+	Hypertree
+} from &#x27;@khiops-hypertree/js/components/hypertree/hypertree&#x27;;
+import {
+	AppConfig
+} from &#x27;src/environments/environment&#x27;;
+import {
+	DistributionDatasService
+} from &#x27;src/app/providers/distribution-datas.service&#x27;;
+import {
+	TreeNodeVO
+} from &#x27;src/app/model/tree-node-vo&#x27;;
+import {
+	KhiopsLibraryService
+} from &#x27;@khiops-library/providers/khiops-library.service&#x27;;
+
+@Component({
+	selector: &#x27;app-tree-hyper&#x27;,
+	templateUrl: &#x27;./tree-hyper.component.html&#x27;,
+	styleUrls: [&#x27;./tree-hyper.component.scss&#x27;]
+})
+export class TreeHyperComponent extends SelectableComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
+
+	@Input() selectedNodes: any;
+	@Input() selectedNode: any;
+	@Input() dimensionTree: any;
+	@Input() displayedValues: any;
+	@Output() selectTreeItemChanged: EventEmitter &lt; any &gt; &#x3D; new EventEmitter();
+	@Output() treeHyperDisplayedValuesChanged: EventEmitter &lt; any &gt; &#x3D; new EventEmitter();
+	buttonTitle: string;
+
+	componentType &#x3D; &#x27;hyptree&#x27;; // needed to copy datas
+	isFullscreen &#x3D; false;
+
+	visualization: any &#x3D; {
+		population: false,
+		purity: false
+	};
+
+	options: any;
+
+	ht: Hypertree;
+
+	constructor(
+		public ngzone: NgZone,
+		private treePreparationDatasService: TreePreparationDatasService,
+		private khiopsLibraryService: KhiopsLibraryService,
+		private distributionDatasService: DistributionDatasService,
+		public selectableService: SelectableService,
+		public translate: TranslateService) {
+
+		super(selectableService, ngzone);
+
+		this.buttonTitle &#x3D; this.translate.get(&#x27;GLOBAL.VALUES&#x27;);
+
+		const previousVisualizationPopulationState &#x3D; JSON.parse(localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + &#x27;SETTING_HYPERTREE_VISU_POPULATION&#x27;));
+		this.visualization.population &#x3D; previousVisualizationPopulationState &#x3D;&#x3D;&#x3D; undefined ? AppConfig.common.HYPERTREE.VISU_POPULATION : previousVisualizationPopulationState;
+
+		const previousVisualizationPurityState &#x3D; JSON.parse(localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + &#x27;SETTING_HYPERTREE_VISU_PURITY&#x27;));
+		this.visualization.purity &#x3D; previousVisualizationPurityState &#x3D;&#x3D;&#x3D; undefined ? AppConfig.common.HYPERTREE.VISU_PURITY : previousVisualizationPurityState;
+	}
+
+	ngOnInit() {
+		this.treePreparationDatas &#x3D; this.treePreparationDatasService.getDatas();
+		this.distributionDatas &#x3D; this.distributionDatasService.getDatas();
+	}
+
+	onToggleFullscreen(isFullscreen: any) {
+		this.isFullscreen &#x3D; isFullscreen;
+	}
+
+	togglePurityVisualization(state) {
+		// this.khiopsLibraryService.trackEvent(&#x27;click&#x27;, &#x27;toggle_purity_tree&#x27;, state);
+		this.visualization.purity &#x3D; state;
+		this.ht.api.updateNodesVisualization();
+		localStorage.setItem(AppConfig.common.GLOBAL.LS_ID + &#x27;SETTING_HYPERTREE_VISU_PURITY&#x27;, state);
+	}
+
+	togglePopulationVisualization(state) {
+		// this.khiopsLibraryService.trackEvent(&#x27;click&#x27;, &#x27;toggle_population_tree&#x27;, state);
+		this.visualization.population &#x3D; state;
+		this.ht.api.updateNodesVisualization();
+		localStorage.setItem(AppConfig.common.GLOBAL.LS_ID + &#x27;SETTING_HYPERTREE_VISU_POPULATION&#x27;, state);
+	}
+
+	ngAfterViewInit() {
+
+		// @ts-ignore
+		// const args:hyt.HypertreeArgs &#x3D;
+		// {
+		// 	// dataloader: hyt.loaders.generators.nT1
+		// 	dataloader: ok &#x3D;&gt; ok(this.dimensionTree),
+		// };
+
+		// const ht:any &#x3D; new hyt.Hypertree(
+		// 	{ parent:  document.querySelector(&#x27;#hyperTree&#x27;) },
+		// 	args
+		// )
+
+		// @ts-ignore
+
+	}
+
+	initHyperTree(initView &#x3D; true) {
+
+		// Max diameter of a node
+		const Dmax &#x3D; 0.2;
+
+		this.options &#x3D; {
+			dataloader: ok &#x3D;&gt; ok(this.dimensionTree[0]),
+			langInitBFS: (ht, n) &#x3D;&gt; n.precalc.label &#x3D; n.data.id,
+			filter: {
+				cullingRadius: 1,
+				rangeCullingWeight: {
+					min: 0,
+					max: 0
+				},
+				maxlabels: 100000
+			},
+			geometry: {
+				nodeRadius: (ud, n) &#x3D;&gt; {
+					// console.log(&quot;🚀 ~ file: tree-hyper.component.ts ~ line 106 ~ TreeHyperComponent ~ initHyperTree ~ n&quot;, n)
+					if (this.treePreparationDatas &amp;&amp; n.data.isLeaf) {
+						if (this.visualization.population) {
+							let totalFreqsToShow &#x3D; this.displayedValues ? 0 : n.data.totalFreqs;
+							if (this.displayedValues) {
+								for (let i &#x3D; 0; i &lt; n.data.targetValues.values.length; i++) {
+									if (this.displayedValues.find(e &#x3D;&gt; e.show &amp;&amp; e.name &#x3D;&#x3D;&#x3D; n.data.targetValues.values[i])) {
+										totalFreqsToShow +&#x3D; n.data.targetValues.frequencies[i];
+									}
+								}
+							}
+							// display of the size of the leaves of the hypertree according to their population #60
+							const percent &#x3D; (totalFreqsToShow - this.treePreparationDatas.minFrequencies) / (this.treePreparationDatas.maxFrequencies - this.treePreparationDatas.minFrequencies) * 100;
+							const D &#x3D; Dmax * percent / 100;
+							return D;
+						} else {
+							const isVisible &#x3D; this.filterVisibleNodes(n);
+							if (isVisible) {
+								return 0.03;
+							} else {
+								return 0;
+							}
+						}
+					} else {
+						if (n.data.isCollapsed) {
+							return 0.005;
+						} else {
+							return 0.001;
+
+						}
+					}
+				},
+
+				// linkWidth:  (ud, n) &#x3D;&gt; {
+				// override link path width
+				// 	return 0.005;
+				// },
+
+				nodeScale: (ud, n) &#x3D;&gt; {
+					// nodes leafs circle size
+					return 1;
+				},
+				nodeFilter: (n) &#x3D;&gt; {
+					return n.data.isLeaf || n.data.isCollapsed;
+					// callback to show / hide nodes circles
+					// return true;
+				},
+				// clipRadius: 1,
+				// captionFont: &#x27;16.5px Roboto&#x27;,
+				captionHeight: .04, // Node text overlay white bg
+				captionBackground: &#x27;all&#x27;,
+
+				layerOptions: {
+					&#x27;link-arcs&#x27;: {
+						// invisible: true,
+						strokeWidth: n &#x3D;&gt; {
+							// console.log(&quot;🚀 ~ file: tree-hyper.c~ n&quot;, n)
+							// if (this.treePreparationDatas &amp;&amp; this.visualization.population) {
+							// 	const nodeSize &#x3D; (((n.data.totalFreqs - this.treePreparationDatas.minFrequencies) * 100) / (this.treePreparationDatas.maxFrequencies - this.treePreparationDatas.minFrequencies)) / 1000;
+							// 	// console.log(&quot;🚀 ~ file: tree-hyper.component.ts ~ line 148 ~ TreeHyperComponent ~ initHyperTree ~ nodeSize&quot;, nodeSize)
+							// 	if (isNaN(nodeSize)) {
+							// 		return 0.001;
+							// 	} else {
+							// 		return nodeSize;
+							// 	}
+							// }
+							// else {
+							// 	return 0.001;
+							// }
+							// if (this.visualization.population) {
+							// if (this.displayedValues) {
+							// 	let isVisible &#x3D; false;
+							// 	for (let i &#x3D; 0; i &lt; n.data.targetValues.values.length; i++) {
+							// 		if (this.displayedValues.find(e &#x3D;&gt; e.show &amp;&amp; e.name &#x3D;&#x3D;&#x3D; n.data.targetValues.values[i])) {
+							// 			isVisible &#x3D; true;
+							// 		}
+							// 	}
+							// 	if (isVisible) {
+							// 		return 0.001;
+							// 	}
+							// }
+
+							// }
+
+							const isVisible &#x3D; this.filterVisibleNodes(n);
+							if (isVisible) {
+								return 0.001;
+							} else {
+								return 0;
+							}
+						}
+					},
+					&#x27;stem-arc&#x27;: {
+						invisible: true,
+						hideOnDrag: true,
+						// strokeWidth: n &#x3D;&gt; {
+						// 	return 0;
+						// },
+						w: 0
+					},
+					symbols: {
+						invisible: true,
+						hideOnDrag: true
+					},
+					cells: {
+						invisible: true,
+						hideOnDrag: true
+					},
+					λ: {
+						invisible: true,
+						hideOnDrag: true
+					},
+					labels: {
+						hideOnDrag: false,
+						background: n &#x3D;&gt; {
+							return false;
+						},
+						isVisible: n &#x3D;&gt; {
+							const isVisible &#x3D; this.filterVisibleNodes(n);
+							if (isVisible) {
+								return &#x27;block&#x27;;
+							} else {
+								return &#x27;none&#x27;;
+							}
+
+						}
+					},
+					&#x27;labels-force&#x27;: {
+						invisible: true,
+						// hideOnDrag: true,
+						// background: n &#x3D;&gt; true
+					},
+					// images: {
+					// 	width: .05,
+					// 	height: .05
+					// },
+					nodes: {
+						opacity: n &#x3D;&gt; {
+							const node: TreeNodeVO &#x3D; n.data;
+							// return 0.2;
+
+							if (this.treePreparationDatas &amp;&amp; node.isLeaf) {
+								if (this.visualization.purity) {
+									return Math.sqrt(node.purity);
+								} else {
+									return 0.9;
+								}
+							} else {
+								return 0.9;
+							}
+						},
+						fill: n &#x3D;&gt; {
+							const node: TreeNodeVO &#x3D; n.data;
+							// console.log(&quot;🚀 ~ file: tree-hyper.component.ts ~ line 135 ~ TreeHyperComponent ~ initHyperTree ~ n&quot;, n)
+							return node.color;
+						},
+						hideOnDrag: false,
+						// strokeWidth: n &#x3D;&gt; n.parent ? .1 : .001,
+						strokeWidth: n &#x3D;&gt; {
+							const node: TreeNodeVO &#x3D; n.data;
+							// Selected Path stroke width
+							// console.log(&quot;🚀 ~ file: tree-hyper.component.ts ~ line 147 ~ TreeHyperComponent ~ initHyperTree ~ n&quot;, n)
+							return 0.01;
+						},
+						stroke: n &#x3D;&gt; {
+							const node: TreeNodeVO &#x3D; n.data;
+							// console.log(&quot;🚀 ~ file: tree-hyper.component.ts ~ line 138 ~ TreeHyperComponent ~ initHyperTree ~ n&quot;, n)
+							// if (n.hasOutChildren) return &#x27;#ff000010&#x27; // has filtered children
+							// if (!n.parent) return &#x27;#999&#x27; // root
+							// return &#x27;#a5d6a710&#x27; // default green (leafes)
+							return node.color;
+						},
+					},
+				},
+			},
+			interaction: {
+				mouseRadius: 5,
+				// onNodeSelect: (n) &#x3D;&gt; {
+				// 	console.log(&quot;🚀 ~ ---------------------- ~ line 1461 ~ onNodeSelect, n&quot;, n)
+				// 	this.ht.api.goto({
+				// 		re: -n.layout.z.re,
+				// 		im: -n.layout.z.im
+				// 	}, null)
+				// 	//   .then(() &#x3D;&gt; l.view.hypertree.drawDetailFrame())
+				// },
+				// onNodeClick: (hypertree, n) &#x3D;&gt; {
+				//   console.log(&quot;🚀 ~ ---------------------- ~ line 1461 ~ onNodeClick, n&quot;, hypertree, n)
+
+				// },
+
+				onNodeHover: (n) &#x3D;&gt; {
+					console.log(&quot;🚀 ~ file: index.html ~ line 1461 ~ onNodeHover, n&quot;, n)
+				},
+
+				// the node click area is the voronoi cell in euclidean space.
+				// this way, wherever the user clicks, a node can be associated.
+				onNodeClick: (n, m, l) &#x3D;&gt; {
+					// console.log(&#x60;#onNodeClick: Node&#x3D;${n}, click coordinates&#x3D;${m}, source layer&#x3D;${l}&#x60;)
+
+					this.ngzone.run(() &#x3D;&gt; {
+						const trustedNodeSelection &#x3D; n.data.id;
+						let [index, nodesToSelect] &#x3D; this.treePreparationDatasService.getNodesLinkedToOneNode(trustedNodeSelection);
+						if (!nodesToSelect) {
+							// it&#x27;s a folder selection
+							nodesToSelect &#x3D; [trustedNodeSelection]
+							//
+							// remove datas from tree
+							// this.treePreparationDatasService.toggleNode(trustedNodeSelection);
+
+							// const currentNode &#x3D; UtilsService.deepFind(this.ht.data, trustedNode.id);
+							// console.log(&quot;🚀 ~ file: tree-hyper.component.ts ~ line 250 ~ TreeHyperComponent ~ this.ngzone.run ~ this.ht.data&quot;, this.ht.data)
+							// this.initHyperTree(false)
+
+							// this.ht.initPromise
+							// .then(()&#x3D;&gt; new Promise((ok, err)&#x3D;&gt; this.ht.animateUp(ok, err)))
+							// .then(()&#x3D;&gt; this.ht.api.gotoHome())
+							// .then(()&#x3D;&gt; this.ht.api.gotoλ(0.15))
+							// .then(() &#x3D;&gt; this.ht.api.gotoNode(this.ht.data))
+							// this.ht.api.setModel(this.options);
+							// this.ht.api.gotoHome(100)
+							// setTimeout(() &#x3D;&gt; {
+							// this.ht.api.updateNodesDatas(this.options);
+							// const userSelectedNode &#x3D; UtilsService.deepFind(this.ht.data, trustedNodeSelection);
+
+							// 	setTimeout(() &#x3D;&gt; {
+							// this.ht.api.gotoNode(userSelectedNode, 0)
+							// 	}, 200);
+							// }, 200);
+
+							// setTimeout(() &#x3D;&gt; {
+							// 	const userSelectedNode &#x3D; UtilsService.deepFind(this.ht.data, trustedNodeSelection);
+							// 	this.ht.api.gotoNode(userSelectedNode)
+							// });
+
+						} else {}
+						this.treePreparationDatasService.setSelectedNodes(nodesToSelect, trustedNodeSelection);
+						// to update charts
+						this.selectTreeItemChanged.emit(n.data);
+
+					});
+
+					// this.ht.api.goto({
+					// 	re: -n.layout.z.re,
+					// 	im: -n.layout.z.im
+					// }, null)
+					//   .then(() &#x3D;&gt; l.view.hypertree.drawDetailFrame())
+
+				},
+
+				// center node is defined as node with minimal distance to the center.
+				// onCenterNodeChange: n &#x3D;&gt; console.log(&#x60;#onCenterNodeChange: Node&#x3D;${n}&#x60;, n)
+			}
+		};
+
+		this.ngzone.run(() &#x3D;&gt; {
+			this.ht &#x3D; new hyt.Hypertree({
+				parent: document.querySelector(&#x27;#hyperTree&#x27;)
+			}, this.options);
+		});
+
+		if (initView) {
+			// zoom out
+			this.ht.initPromise
+				.then(() &#x3D;&gt; this.ht.api.gotoλ(0.15));
+		} else {
+
+		}
+
+		// ht.initPromise
+		// .then(() &#x3D;&gt; new Promise((ok, err) &#x3D;&gt; ht.animateUp(ok, err)))
+		// .then(() &#x3D;&gt; ht.drawDetailFrame())
+	}
+
+	filterVisibleNodes(n) {
+		let isVisible &#x3D; false;
+		if (this.displayedValues) {
+			for (let i &#x3D; 0; i &lt; n.data.targetValues.values.length; i++) {
+				if (this.displayedValues.find(e &#x3D;&gt; e.show &amp;&amp; e.name &#x3D;&#x3D;&#x3D; n.data.targetValues.values[i])) {
+					isVisible &#x3D; true;
+				}
+			}
+		}
+		return isVisible;
+	}
+
+	ngOnDestroy() {}
+
+	ngOnChanges(changes: SimpleChanges) {
+		// console.log(&quot;🚀 ~ file: tree-hyper.component.ts ~ line 220 ~ TreeHyperComponent ~ ngOnChanges ~ changes&quot;, changes)
+		let userSelectedNode;
+		if (changes.dimensionTree &amp;&amp; changes.dimensionTree.currentValue) {
+			this.initHyperTree();
+		}
+		if (changes.displayedValues &amp;&amp; changes.displayedValues.currentValue) {
+			this.ht.api.updateNodesVisualization();
+
+		}
+		this.ngzone.run(() &#x3D;&gt; {
+			if (changes.selectedNodes &amp;&amp; changes.selectedNodes.previousValue) {
+
+				// remove previous paths
+				for (let i &#x3D; 0; i &lt; changes.selectedNodes.previousValue.length; i++) {
+					const node &#x3D; changes.selectedNodes.previousValue[i];
+					const dataTree &#x3D; UtilsService.deepFind(this.ht.data, node.id);
+					if (dataTree) {
+						this.ht.api.removePath(&#x27;SelectionPath&#x27;, dataTree);
+					}
+				}
+			}
+
+			if (changes.selectedNodes &amp;&amp; changes.selectedNodes.currentValue) {
+
+				// draw new selection paths
+				for (let i &#x3D; 0; i &lt; changes.selectedNodes.currentValue.length; i++) {
+					const node &#x3D; changes.selectedNodes.currentValue[i];
+					const dataTree &#x3D; UtilsService.deepFind(this.ht.data, node.id);
+					this.ht.api.addPath(&#x27;SelectionPath&#x27;, dataTree, node.color);
+				}
+
+				// Find trusted node to center view on it
+				const trustedNode &#x3D; this.selectedNodes.find(e &#x3D;&gt; e.isTrusted);
+				if (trustedNode) {
+					// it&#x27;s a user click event
+					userSelectedNode &#x3D; UtilsService.deepFind(this.ht.data, trustedNode.id);
+				} else {
+					// it&#x27;s a redirection from another component
+					// So take the first node
+					userSelectedNode &#x3D; UtilsService.deepFind(this.ht.data, this.selectedNodes[0].id);
+				}
+
+				// var animationNode1 &#x3D; this.ht.data.children[1]
+				// console.log(&quot;🚀 ~ file: tree-hyper.component.ts ~ line 212 ~ TreeHyperComponent ~ ngOnChanges ~ userSelectedNode&quot;, userSelectedNode)
+				// this.ht.api.addPath(&#x27;SelectionPath&#x27;, userSelectedNode);
+
+				if (userSelectedNode.data.isLeaf) {
+					this.ht.initPromise
+						// .then(()&#x3D;&gt; new Promise((ok, err)&#x3D;&gt; this.ht.animateUp(ok, err)))
+						// .then(()&#x3D;&gt; this.ht.api.gotoHome())
+						// .then(()&#x3D;&gt; this.ht.api.gotoλ(0.15))
+						.then(() &#x3D;&gt; this.ht.api.gotoNode(userSelectedNode))
+				} else {
+					//
+
+				}
+
+
+			}
+			if (changes.selectedNode &amp;&amp; changes.selectedNode.currentValue) {
+				userSelectedNode &#x3D; UtilsService.deepFind(this.ht.data, this.selectedNode.id);
+				// if (userSelectedNode.data.isLeaf) {
+				this.ht.initPromise
+					// .then(()&#x3D;&gt; new Promise((ok, err)&#x3D;&gt; this.ht.animateUp(ok, err)))
+					// .then(()&#x3D;&gt; this.ht.api.gotoHome())
+					// .then(()&#x3D;&gt; this.ht.api.gotoλ(0.15))
+					.then(() &#x3D;&gt; this.ht.api.gotoNode(userSelectedNode));
+				// } else {
+				//
+				// console.log(&quot;🚀 ~ file: tree-hyper.component.ts ~ line 302 ~ TreeHyperComponent ~ this.ngzone.run ~ userSelectedNode&quot;, userSelectedNode)
+
+				// }
+
+			}
+
+		});
+
+	}
+
+	onSelectToggleButtonChanged(displayedValues: any) {
+		this.treeHyperDisplayedValuesChanged.emit(displayedValues);
+	}
+
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div fxLayout&#x3D;&quot;column&quot; id&#x3D;&quot;tree-hyper-comp&quot; id&#x3D;&quot;tree-hyper-comp&quot; fxFlex [ngClass]&#x3D;&quot;{&#x27;fullscreen&#x27;: isFullscreen}&quot;&gt;
+	&lt;div id&#x3D;&quot;graph-header-comp&quot; fxLayoutAlign&#x3D;&quot;start center&quot; class&#x3D;&quot;mat-elevation-z1&quot;&gt;
+		&lt;h1 fxFlex&gt;{{ &#x27;GLOBAL.HYPER_TREE&#x27; | translate }}&lt;/h1&gt;
+		&lt;app-select-toggle-button *ngIf&#x3D;&quot;distributionDatas &amp;&amp; distributionDatas.treeHyperDisplayedValues&quot;
+			[displayedValues]&#x3D;&quot;distributionDatas.treeHyperDisplayedValues&quot;
+			(selectToggleButtonChanged)&#x3D;&quot;onSelectToggleButtonChanged($event)&quot; [buttonTitle]&#x3D;&quot;buttonTitle&quot;&gt;
+		&lt;/app-select-toggle-button&gt;
+		&lt;div id&#x3D;&quot;graph-header-tools&quot; fxLayout&#x3D;&quot;column&quot; fxLayoutAlign&#x3D;&quot;end center&quot;&gt;
+			&lt;mat-checkbox [checked]&#x3D;&quot;visualization.purity&quot; (change)&#x3D;&quot;togglePurityVisualization($event.checked)&quot;&gt;
+				{{ &#x27;GLOBAL.DISPLAY_PURITY_BY_OPACITY&#x27; | translate }}
+			&lt;/mat-checkbox&gt;
+		&lt;/div&gt;
+		&lt;div id&#x3D;&quot;graph-header-tools&quot; fxLayout&#x3D;&quot;column&quot; fxLayoutAlign&#x3D;&quot;end center&quot;&gt;
+			&lt;mat-checkbox [checked]&#x3D;&quot;visualization.population&quot; (change)&#x3D;&quot;togglePopulationVisualization($event.checked)&quot;&gt;
+				{{ &#x27;GLOBAL.DISPLAY_LEAF_SIZES_BY_POPULATION&#x27; | translate }}
+			&lt;/mat-checkbox&gt;
+		&lt;/div&gt;
+		&lt;kl-btn-fullscreen (toggleFullscreen)&#x3D;&quot;onToggleFullscreen($event)&quot;&gt;
+		&lt;/kl-btn-fullscreen&gt;
+	&lt;/div&gt;
+	&lt;div id&#x3D;&quot;hyperTree&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./tree-hyper.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">@import &quot;khiops-library/src/lib/styles/theme.scss&quot;;
+
+#tree-hyper-comp {
+	height: 100%;
+	padding: 0;
+
+	#graph-header-comp {
+		flex-wrap: wrap;
+		padding: 5px 0;
+
+		#graph-header-tools {
+			mat-checkbox {
+				margin: 0 0 0 1rem;
+			}
+
+			::ng-deep .mat-checkbox-layout .mat-checkbox-label {
+				width: 130px !important;
+				white-space: normal !important;
+				line-height: inherit !important;
+			}
+		}
+	}
+
+	#hyperTree {
+		position: relative;
+		height: 100%;
+
+		::ng-deep .unitdisk-nav {
+			svg {
+				position: absolute !important;
+			}
+		}
+
+	}
+
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div fxLayout="column" id="tree-hyper-comp" id="tree-hyper-comp" fxFlex [ngClass]="{\'fullscreen\': isFullscreen}">	<div id="graph-header-comp" fxLayoutAlign="start center" class="mat-elevation-z1">		<h1 fxFlex>{{ \'GLOBAL.HYPER_TREE\' | translate }}</h1>		<app-select-toggle-button *ngIf="distributionDatas && distributionDatas.treeHyperDisplayedValues"			[displayedValues]="distributionDatas.treeHyperDisplayedValues"			(selectToggleButtonChanged)="onSelectToggleButtonChanged($event)" [buttonTitle]="buttonTitle">		</app-select-toggle-button>		<div id="graph-header-tools" fxLayout="column" fxLayoutAlign="end center">			<mat-checkbox [checked]="visualization.purity" (change)="togglePurityVisualization($event.checked)">				{{ \'GLOBAL.DISPLAY_PURITY_BY_OPACITY\' | translate }}			</mat-checkbox>		</div>		<div id="graph-header-tools" fxLayout="column" fxLayoutAlign="end center">			<mat-checkbox [checked]="visualization.population" (change)="togglePopulationVisualization($event.checked)">				{{ \'GLOBAL.DISPLAY_LEAF_SIZES_BY_POPULATION\' | translate }}			</mat-checkbox>		</div>		<kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">		</kl-btn-fullscreen>	</div>	<div id="hyperTree"></div></div></div>'
+    var COMPONENTS = [{'name': 'AgGridComponent', 'selector': 'kl-ag-grid'},{'name': 'AnnotationComponent', 'selector': 'app-annotation'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AppVersionComponent', 'selector': 'kl-app-version'},{'name': 'AxisComponent', 'selector': 'app-axis'},{'name': 'AxisViewComponent', 'selector': 'app-axis-view'},{'name': 'BtnFullscreenComponent', 'selector': 'kl-btn-fullscreen'},{'name': 'CellStatsComponent', 'selector': 'kl-cell-stats'},{'name': 'ChartNextComponent', 'selector': 'kl-chart-next'},{'name': 'CheckboxCellComponent', 'selector': 'kl-checkbox-cell'},{'name': 'ClusterDetailsComponent', 'selector': 'app-cluster-details'},{'name': 'CompositionComponent', 'selector': 'app-composition'},{'name': 'ConfirmDialogComponent', 'selector': 'kl-confirm-dialog'},{'name': 'CoocurenceMatrixComponent', 'selector': 'app-coocurence-matrix'},{'name': 'DescriptionBlockComponent', 'selector': 'app-description-block'},{'name': 'DistributionGraphCanvasComponent', 'selector': 'kl-distribution-graph-canvas'},{'name': 'EvaluationViewComponent', 'selector': 'app-evaluation-view'},{'name': 'ExternalDatasComponent', 'selector': 'app-external-datas'},{'name': 'FileLoaderComponent', 'selector': 'kl-file-loader'},{'name': 'GraphHeaderComponent', 'selector': 'kl-graph-header'},{'name': 'HeaderManageViewComponent', 'selector': 'app-header-manage-view'},{'name': 'HeaderTitleComponent', 'selector': 'kl-header-title'},{'name': 'HeaderToolsComponent', 'selector': 'kl-header-tools'},{'name': 'HierarchySelectComponent', 'selector': 'app-hierarchy-select'},{'name': 'HomeLayoutComponent', 'selector': 'app-home-layout'},{'name': 'HomeLayoutComponent', 'selector': 'app-home-layout'},{'name': 'IconCellComponent', 'selector': 'kl-icon-cell'},{'name': 'ImportExtDatasComponent', 'selector': 'app-import-ext-datas'},{'name': 'ImportExtDatasListComponent', 'selector': 'app-import-ext-datas-list'},{'name': 'ImportFileLoaderComponent', 'selector': 'kl-import-file-loader'},{'name': 'InformationsBlockComponent', 'selector': 'kl-informations-block'},{'name': 'LegendComponent', 'selector': 'kl-legend'},{'name': 'LevelDistributionGraphCanvasComponent', 'selector': 'app-level-distribution-graph'},{'name': 'LibVersionComponent', 'selector': 'kl-lib-version'},{'name': 'LoadExtDatasComponent', 'selector': 'app-load-ext-datas'},{'name': 'ManageViewsComponent', 'selector': 'app-manage-views'},{'name': 'MatrixCanvasComponent', 'selector': 'kl-matrix-canvas'},{'name': 'MatrixContainerComponent', 'selector': 'app-matrix-container'},{'name': 'MatrixTooltipComponent', 'selector': 'kl-matrix-tooltip'},{'name': 'ModelingViewComponent', 'selector': 'app-modeling-view'},{'name': 'NoDataComponent', 'selector': 'kl-no-data'},{'name': 'Preparation2dViewComponent', 'selector': 'app-preparation-2d-view'},{'name': 'PreparationViewComponent', 'selector': 'app-preparation-view'},{'name': 'ProjectViewComponent', 'selector': 'app-project-view'},{'name': 'ProjectViewComponent', 'selector': 'app-project-view'},{'name': 'RegressionMatrixComponent', 'selector': 'app-regression-matrix'},{'name': 'ReleaseButtonComponent', 'selector': 'kl-release-button'},{'name': 'ReleaseNotesComponent', 'selector': 'kl-release-notes'},{'name': 'ScrollableGraphCanvasComponent', 'selector': ''},{'name': 'SelectableComponent', 'selector': ''},{'name': 'SelectableTabComponent', 'selector': ''},{'name': 'SelectedClustersComponent', 'selector': 'app-selected-clusters'},{'name': 'SelectToggleButtonComponent', 'selector': 'app-select-toggle-button'},{'name': 'SelectTrainedPredictorComponent', 'selector': 'app-select-trained-predictor'},{'name': 'TargetDistributionGraphCanvasComponent', 'selector': 'app-target-distribution-graph-canvas'},{'name': 'TargetLiftGraphComponent', 'selector': 'app-target-lift-graph'},{'name': 'TargetVariableStatsCanvasComponent', 'selector': 'app-target-variable-stats-canvas'},{'name': 'TreeDetailsComponent', 'selector': 'app-tree-details'},{'name': 'TreeHyperComponent', 'selector': 'app-tree-hyper'},{'name': 'TreeLeafDetailsComponent', 'selector': 'app-tree-leaf-details'},{'name': 'TreePreparationViewComponent', 'selector': 'app-tree-preparation-view'},{'name': 'TreeSelectComponent', 'selector': 'app-tree-select'},{'name': 'TreeSelectComponent', 'selector': 'app-tree-select'},{'name': 'UnfoldHierarchyComponent', 'selector': 'app-unfold-hierarchy'},{'name': 'UserSettingsComponent', 'selector': 'app-user-settings'},{'name': 'UserSettingsComponent', 'selector': 'app-user-settings'},{'name': 'VarDetailsPreparation2dComponent', 'selector': 'app-var-details-preparation-2d'},{'name': 'VarDetailsPreparationComponent', 'selector': 'app-var-details-preparation'},{'name': 'VarDetailsTreePreparationComponent', 'selector': 'app-var-details-tree-preparation'},{'name': 'VariableGraphDetailsComponent', 'selector': 'app-variable-graph-details'},{'name': 'VariableGraphDetailsComponent', 'selector': 'app-variable-graph-details'},{'name': 'WatchResizeComponent', 'selector': ''}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'TreeHyperComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'TreeHyperComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

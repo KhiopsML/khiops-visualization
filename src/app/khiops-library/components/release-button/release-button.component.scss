@@ -1,0 +1,19 @@
+@import "../../styles/theme.scss";
+
+#release-button-comp {
+
+	margin-right: 1em;
+
+	::ng-deep ydd-progress-button {
+		button {
+
+			// border: 1px solid black;
+			>span:first-child {
+				padding: 10px 14px !important;
+				font-size: 0.8em;
+				font-weight: 300 !important;
+				letter-spacing: 0 !important;
+			}
+		}
+	}
+}

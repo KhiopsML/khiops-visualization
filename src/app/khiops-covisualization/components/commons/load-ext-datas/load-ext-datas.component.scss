@@ -1,0 +1,23 @@
+@import "khiops-library/src/lib/styles/theme.scss";
+
+#load-ext-datas-comp {
+	#load-ext-datas-header {
+		height: 68px;
+
+		h2 {
+			margin-left: 1em;
+		}
+
+	}
+
+	#load-ext-datas-content {
+
+		mat-progress-bar {
+			margin-top: 1em;
+		}
+
+		span {
+			margin: 1em;
+		}
+	}
+}

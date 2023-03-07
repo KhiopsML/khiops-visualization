@@ -1,0 +1,16 @@
+<div id="header-tools-comp" fxFlexFill fxLayout="row" fxLayoutAlign="center center">
+	<!-- <kl-app-version *ngIf="showMenu" [appVersion]="appVersion"></kl-app-version> -->
+	<button *ngIf="showMenu" mat-icon-button (click)="toggleSideBar()" class="yellow-btn"
+		attr.aria-label="{{ 'ARIA.HEADER.DISPLAY_SETTINGS' | translate }}" matTooltip="{{ 'GLOBAL.SETTINGS' | translate }}">
+		<mat-icon fxFlexFill fxLayoutAlign="center center">settings</mat-icon>
+	</button>
+	<button class="grey-btn" mat-icon-button matTooltip="{{ 'GLOBAL.COPY_DATAS' | translate }}" (click)="copyDatas()"
+		attr.aria-label="{{ 'GLOBAL.COPY_DATAS' | translate }}">
+        <mat-icon fxFlexFill fxLayoutAlign="center center">filter_none</mat-icon>
+     </button>
+	<button class="grey-btn" mat-icon-button  matTooltip="{{ 'GLOBAL.COPY_IMAGE' | translate }}" fxLayoutAlign="center center" (click)="copyImage()"
+		attr.aria-label="{{ 'GLOBAL.COPY_IMAGE' | translate }}">
+		<mat-icon fxFlexFill fxLayoutAlign="center center" fxFlexFill fxLayoutAlign="center center" *ngIf="!isCopyingImage">filter</mat-icon>
+		<mat-spinner fxFlexFill fxLayoutAlign="center center" *ngIf="isCopyingImage" diameter="20" color="accent" mode="indeterminate"></mat-spinner>
+	</button>
+</div>

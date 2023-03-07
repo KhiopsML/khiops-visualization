@@ -1,0 +1,2019 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>visualization-component documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">visualization-component documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li
+  >
+  UnfoldHierarchyComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/khiops-covisualization/components/commons/unfold-hierarchy/unfold-hierarchy.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-unfold-hierarchy</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./unfold-hierarchy.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./unfold-hierarchy.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#barChartSeries" >barChartSeries</a>
+                            </li>
+                            <li>
+                                <a href="#chartOptions" >chartOptions</a>
+                            </li>
+                            <li>
+                                <a href="#clustersPerDimDatas" >clustersPerDimDatas</a>
+                            </li>
+                            <li>
+                                <a href="#clustersPerDimDatasChartOptions" >clustersPerDimDatasChartOptions</a>
+                            </li>
+                            <li>
+                                <a href="#colorSetClusterPerDim" >colorSetClusterPerDim</a>
+                            </li>
+                            <li>
+                                <a href="#colorSetInfoPerCluster" >colorSetInfoPerCluster</a>
+                            </li>
+                            <li>
+                                <a href="#currentCellsPerCluster" >currentCellsPerCluster</a>
+                            </li>
+                            <li>
+                                <a href="#currentInformationPerCluster" >currentInformationPerCluster</a>
+                            </li>
+                            <li>
+                                <a href="#currentUnfoldHierarchy" >currentUnfoldHierarchy</a>
+                            </li>
+                            <li>
+                                <a href="#dimensions" >dimensions</a>
+                            </li>
+                            <li>
+                                <a href="#dimensionsDatas" >dimensionsDatas</a>
+                            </li>
+                            <li>
+                                <a href="#hierarchyDatas" >hierarchyDatas</a>
+                            </li>
+                            <li>
+                                <a href="#hierarchyDisplayedColumns" >hierarchyDisplayedColumns</a>
+                            </li>
+                            <li>
+                                <a href="#infoPerCluster" >infoPerCluster</a>
+                            </li>
+                            <li>
+                                <a href="#infoPerClusterChartOptions" >infoPerClusterChartOptions</a>
+                            </li>
+                            <li>
+                                <a href="#legend" >legend</a>
+                            </li>
+                            <li>
+                                <a href="#lineChartSeries" >lineChartSeries</a>
+                            </li>
+                            <li>
+                                <a href="#loadingHierarchy" >loadingHierarchy</a>
+                            </li>
+                            <li>
+                                <a href="#nbClusterPerDimLegend" >nbClusterPerDimLegend</a>
+                            </li>
+                            <li>
+                                <a href="#previousHierarchyRank" >previousHierarchyRank</a>
+                            </li>
+                            <li>
+                                <a href="#selectedLineChartItem" >selectedLineChartItem</a>
+                            </li>
+                            <li>
+                                <a href="#unfoldHierarchyLegend" >unfoldHierarchyLegend</a>
+                            </li>
+                            <li>
+                                <a href="#unfoldHierarchyTableTitle" >unfoldHierarchyTableTitle</a>
+                            </li>
+                            <li>
+                                <a href="#unfoldSelection" >unfoldSelection</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#decreaseUnfoldHierarchy" >decreaseUnfoldHierarchy</a>
+                            </li>
+                            <li>
+                                <a href="#highlightChartLine" >highlightChartLine</a>
+                            </li>
+                            <li>
+                                <a href="#increaseUnfoldHierarchy" >increaseUnfoldHierarchy</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onClickOnCancel" >onClickOnCancel</a>
+                            </li>
+                            <li>
+                                <a href="#onClickOnSave" >onClickOnSave</a>
+                            </li>
+                            <li>
+                                <a href="#onGridCheckboxChanged" >onGridCheckboxChanged</a>
+                            </li>
+                            <li>
+                                <a href="#onHierarchyChanged" >onHierarchyChanged</a>
+                            </li>
+                            <li>
+                                <a href="#yLeftTickFormat" >yLeftTickFormat</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(translate: <a href="../interfaces/T.html" target="_self">TranslateService</a>, dimensionsService: <a href="../injectables/DimensionsDatasService.html" target="_self">DimensionsDatasService</a>, treenodesService: <a href="../injectables/TreenodesService.html" target="_self">TreenodesService</a>, clustersService: <a href="../injectables/ClustersService.html" target="_self">ClustersService</a>, khiopsLibraryService: <a href="../injectables/KhiopsLibraryService.html" target="_self">KhiopsLibraryService</a>, dialogRef: <a href="../components/UnfoldHierarchyComponent.html" target="_self">MatDialogRef&lt;UnfoldHierarchyComponent&gt;</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="110" class="link-to-prism">src/app/khiops-covisualization/components/commons/unfold-hierarchy/unfold-hierarchy.component.ts:110</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>translate</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../interfaces/T.html" target="_self" >TranslateService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>dimensionsService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/DimensionsDatasService.html" target="_self" >DimensionsDatasService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>treenodesService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/TreenodesService.html" target="_self" >TreenodesService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>clustersService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ClustersService.html" target="_self" >ClustersService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>khiopsLibraryService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/KhiopsLibraryService.html" target="_self" >KhiopsLibraryService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>dialogRef</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../components/UnfoldHierarchyComponent.html" target="_self" >MatDialogRef&lt;UnfoldHierarchyComponent&gt;</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="decreaseUnfoldHierarchy"></a>
+                    <span class="name">
+                        <span ><b>decreaseUnfoldHierarchy</b></span>
+                        <a href="#decreaseUnfoldHierarchy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>decreaseUnfoldHierarchy()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="205"
+                            class="link-to-prism">src/app/khiops-covisualization/components/commons/unfold-hierarchy/unfold-hierarchy.component.ts:205</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="highlightChartLine"></a>
+                    <span class="name">
+                        <span ><b>highlightChartLine</b></span>
+                        <a href="#highlightChartLine"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>highlightChartLine(name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="132"
+                            class="link-to-prism">src/app/khiops-covisualization/components/commons/unfold-hierarchy/unfold-hierarchy.component.ts:132</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>name</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="increaseUnfoldHierarchy"></a>
+                    <span class="name">
+                        <span ><b>increaseUnfoldHierarchy</b></span>
+                        <a href="#increaseUnfoldHierarchy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>increaseUnfoldHierarchy()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="197"
+                            class="link-to-prism">src/app/khiops-covisualization/components/commons/unfold-hierarchy/unfold-hierarchy.component.ts:197</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="136"
+                            class="link-to-prism">src/app/khiops-covisualization/components/commons/unfold-hierarchy/unfold-hierarchy.component.ts:136</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onClickOnCancel"></a>
+                    <span class="name">
+                        <span ><b>onClickOnCancel</b></span>
+                        <a href="#onClickOnCancel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onClickOnCancel()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="188"
+                            class="link-to-prism">src/app/khiops-covisualization/components/commons/unfold-hierarchy/unfold-hierarchy.component.ts:188</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onClickOnSave"></a>
+                    <span class="name">
+                        <span ><b>onClickOnSave</b></span>
+                        <a href="#onClickOnSave"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onClickOnSave()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="176"
+                            class="link-to-prism">src/app/khiops-covisualization/components/commons/unfold-hierarchy/unfold-hierarchy.component.ts:176</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onGridCheckboxChanged"></a>
+                    <span class="name">
+                        <span ><b>onGridCheckboxChanged</b></span>
+                        <a href="#onGridCheckboxChanged"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onGridCheckboxChanged(event)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="227"
+                            class="link-to-prism">src/app/khiops-covisualization/components/commons/unfold-hierarchy/unfold-hierarchy.component.ts:227</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>event</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onHierarchyChanged"></a>
+                    <span class="name">
+                        <span ><b>onHierarchyChanged</b></span>
+                        <a href="#onHierarchyChanged"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onHierarchyChanged(event)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="213"
+                            class="link-to-prism">src/app/khiops-covisualization/components/commons/unfold-hierarchy/unfold-hierarchy.component.ts:213</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>event</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="yLeftTickFormat"></a>
+                    <span class="name">
+                        <span ><b>yLeftTickFormat</b></span>
+                        <a href="#yLeftTickFormat"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>yLeftTickFormat()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="193"
+                            class="link-to-prism">src/app/khiops-covisualization/components/commons/unfold-hierarchy/unfold-hierarchy.component.ts:193</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="barChartSeries"></a>
+                    <span class="name">
+                        <span ><b>barChartSeries</b></span>
+                        <a href="#barChartSeries"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/app/khiops-covisualization/components/commons/unfold-hierarchy/unfold-hierarchy.component.ts:42</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="chartOptions"></a>
+                    <span class="name">
+                        <span ><b>chartOptions</b></span>
+                        <a href="#chartOptions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+		elements: {
+			point: {
+				radius: 0
+			}
+		},
+		plugins: {
+			tooltip: {
+				enabled: false
+			}
+		},
+		scales: {
+			y: {
+				title: {
+					display: true,
+					text: &#x27;&#x27;
+				},
+				gridLines: {
+					color: &#x27;#eeeeee&#x27;
+				}
+			},
+			x: {
+				title: {
+					display: true,
+					text: &#x27;&#x27;
+				},
+				gridLines: {
+					display: false
+				}
+			}
+		}
+	}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">src/app/khiops-covisualization/components/commons/unfold-hierarchy/unfold-hierarchy.component.ts:74</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="clustersPerDimDatas"></a>
+                    <span class="name">
+                        <span ><b>clustersPerDimDatas</b></span>
+                        <a href="#clustersPerDimDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/khiops-covisualization/components/commons/unfold-hierarchy/unfold-hierarchy.component.ts:39</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="clustersPerDimDatasChartOptions"></a>
+                    <span class="name">
+                        <span ><b>clustersPerDimDatasChartOptions</b></span>
+                        <a href="#clustersPerDimDatasChartOptions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>_.cloneDeep(this.chartOptions)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="106" class="link-to-prism">src/app/khiops-covisualization/components/commons/unfold-hierarchy/unfold-hierarchy.component.ts:106</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="colorSetClusterPerDim"></a>
+                    <span class="name">
+                        <span ><b>colorSetClusterPerDim</b></span>
+                        <a href="#colorSetClusterPerDim"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/app/khiops-covisualization/components/commons/unfold-hierarchy/unfold-hierarchy.component.ts:43</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="colorSetInfoPerCluster"></a>
+                    <span class="name">
+                        <span ><b>colorSetInfoPerCluster</b></span>
+                        <a href="#colorSetInfoPerCluster"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/app/khiops-covisualization/components/commons/unfold-hierarchy/unfold-hierarchy.component.ts:44</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentCellsPerCluster"></a>
+                    <span class="name">
+                        <span ><b>currentCellsPerCluster</b></span>
+                        <a href="#currentCellsPerCluster"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="109" class="link-to-prism">src/app/khiops-covisualization/components/commons/unfold-hierarchy/unfold-hierarchy.component.ts:109</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentInformationPerCluster"></a>
+                    <span class="name">
+                        <span ><b>currentInformationPerCluster</b></span>
+                        <a href="#currentInformationPerCluster"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>100</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/app/khiops-covisualization/components/commons/unfold-hierarchy/unfold-hierarchy.component.ts:47</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentUnfoldHierarchy"></a>
+                    <span class="name">
+                        <span ><b>currentUnfoldHierarchy</b></span>
+                        <a href="#currentUnfoldHierarchy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/khiops-covisualization/components/commons/unfold-hierarchy/unfold-hierarchy.component.ts:36</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dimensions"></a>
+                    <span class="name">
+                        <span ><b>dimensions</b></span>
+                        <a href="#dimensions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/app/khiops-covisualization/components/commons/unfold-hierarchy/unfold-hierarchy.component.ts:49</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dimensionsDatas"></a>
+                    <span class="name">
+                        <span ><b>dimensionsDatas</b></span>
+                        <a href="#dimensionsDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/khiops-covisualization/components/commons/unfold-hierarchy/unfold-hierarchy.component.ts:35</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="hierarchyDatas"></a>
+                    <span class="name">
+                        <span ><b>hierarchyDatas</b></span>
+                        <a href="#hierarchyDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/khiops-covisualization/components/commons/unfold-hierarchy/unfold-hierarchy.component.ts:37</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="hierarchyDisplayedColumns"></a>
+                    <span class="name">
+                        <span ><b>hierarchyDisplayedColumns</b></span>
+                        <a href="#hierarchyDisplayedColumns"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[{
+			headerName: &#x27;Dimension&#x27;,
+			field: &#x27;name&#x27;
+		},
+		{
+			headerName: &#x27;Number of Cluster&#x27;,
+			field: &#x27;currentHierarchyClusterCount&#x27;
+		},
+		{
+			headerName: &#x27;Max Number of Cluster&#x27;,
+			field: &#x27;initialParts&#x27;
+		},
+		{
+			headerName: &#x27;FoldUnfold&#x27;,
+			field: &#x27;hierarchyFold&#x27;,
+			cellRendererFramework: CheckboxCellComponent
+		}
+	]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/app/khiops-covisualization/components/commons/unfold-hierarchy/unfold-hierarchy.component.ts:56</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="infoPerCluster"></a>
+                    <span class="name">
+                        <span ><b>infoPerCluster</b></span>
+                        <a href="#infoPerCluster"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/khiops-covisualization/components/commons/unfold-hierarchy/unfold-hierarchy.component.ts:40</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="infoPerClusterChartOptions"></a>
+                    <span class="name">
+                        <span ><b>infoPerClusterChartOptions</b></span>
+                        <a href="#infoPerClusterChartOptions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>_.cloneDeep(this.chartOptions)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="107" class="link-to-prism">src/app/khiops-covisualization/components/commons/unfold-hierarchy/unfold-hierarchy.component.ts:107</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="legend"></a>
+                    <span class="name">
+                        <span ><b>legend</b></span>
+                        <a href="#legend"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="108" class="link-to-prism">src/app/khiops-covisualization/components/commons/unfold-hierarchy/unfold-hierarchy.component.ts:108</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="lineChartSeries"></a>
+                    <span class="name">
+                        <span ><b>lineChartSeries</b></span>
+                        <a href="#lineChartSeries"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/app/khiops-covisualization/components/commons/unfold-hierarchy/unfold-hierarchy.component.ts:41</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadingHierarchy"></a>
+                    <span class="name">
+                        <span ><b>loadingHierarchy</b></span>
+                        <a href="#loadingHierarchy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/app/khiops-covisualization/components/commons/unfold-hierarchy/unfold-hierarchy.component.ts:38</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="nbClusterPerDimLegend"></a>
+                    <span class="name">
+                        <span ><b>nbClusterPerDimLegend</b></span>
+                        <a href="#nbClusterPerDimLegend"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">src/app/khiops-covisualization/components/commons/unfold-hierarchy/unfold-hierarchy.component.ts:46</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="previousHierarchyRank"></a>
+                    <span class="name">
+                        <span ><b>previousHierarchyRank</b></span>
+                        <a href="#previousHierarchyRank"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/khiops-covisualization/components/commons/unfold-hierarchy/unfold-hierarchy.component.ts:45</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedLineChartItem"></a>
+                    <span class="name">
+                        <span ><b>selectedLineChartItem</b></span>
+                        <a href="#selectedLineChartItem"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>undefined</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/app/khiops-covisualization/components/commons/unfold-hierarchy/unfold-hierarchy.component.ts:54</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="unfoldHierarchyLegend"></a>
+                    <span class="name">
+                        <span ><b>unfoldHierarchyLegend</b></span>
+                        <a href="#unfoldHierarchyLegend"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="110" class="link-to-prism">src/app/khiops-covisualization/components/commons/unfold-hierarchy/unfold-hierarchy.component.ts:110</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="unfoldHierarchyTableTitle"></a>
+                    <span class="name">
+                        <span ><b>unfoldHierarchyTableTitle</b></span>
+                        <a href="#unfoldHierarchyTableTitle"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/khiops-covisualization/components/commons/unfold-hierarchy/unfold-hierarchy.component.ts:52</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="unfoldSelection"></a>
+                    <span class="name">
+                        <span ><b>unfoldSelection</b></span>
+                        <a href="#unfoldSelection"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">src/app/khiops-covisualization/components/commons/unfold-hierarchy/unfold-hierarchy.component.ts:50</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+	Component,
+	OnInit
+} from &#x27;@angular/core&#x27;;
+import {
+	DimensionsDatasService
+} from &#x27;src/app/providers/dimensions-datas.service&#x27;;
+import {
+	MatDialogRef
+} from &#x27;@angular/material/dialog&#x27;;
+import {
+	KhiopsLibraryService
+} from &#x27;@khiops-library/providers/khiops-library.service&#x27;;
+import {
+	TranslateService
+} from &#x27;@ngstack/translate&#x27;;
+import {
+	CheckboxCellComponent
+} from &#x27;@khiops-library/components/ag-grid/checkbox-cell/checkbox-cell.component&#x27;;
+import * as _ from &#x27;lodash&#x27;; // Important to import lodash in karma
+import {
+	TreenodesService
+} from &#x27;src/app/providers/treenodes.service&#x27;;
+import {
+	ClustersService
+} from &#x27;src/app/providers/clusters.service&#x27;;
+
+@Component({
+	selector: &#x27;app-unfold-hierarchy&#x27;,
+	templateUrl: &#x27;./unfold-hierarchy.component.html&#x27;,
+	styleUrls: [&#x27;./unfold-hierarchy.component.scss&#x27;]
+})
+export class UnfoldHierarchyComponent implements OnInit {
+
+	dimensionsDatas: any;
+	currentUnfoldHierarchy &#x3D; 0;
+	hierarchyDatas: any;
+	loadingHierarchy &#x3D; false;
+	clustersPerDimDatas: any;
+	infoPerCluster: any;
+	lineChartSeries &#x3D; [];
+	barChartSeries &#x3D; [];
+	colorSetClusterPerDim: any;
+	colorSetInfoPerCluster: any;
+	previousHierarchyRank: any;
+	nbClusterPerDimLegend: any[];
+	currentInformationPerCluster &#x3D; 100;
+
+	dimensions: any[];
+	unfoldSelection: any[];
+
+	unfoldHierarchyTableTitle &#x3D; &#x27;&#x27;;
+
+	selectedLineChartItem &#x3D; undefined;
+
+	hierarchyDisplayedColumns &#x3D; [{
+			headerName: &#x27;Dimension&#x27;,
+			field: &#x27;name&#x27;
+		},
+		{
+			headerName: &#x27;Number of Cluster&#x27;,
+			field: &#x27;currentHierarchyClusterCount&#x27;
+		},
+		{
+			headerName: &#x27;Max Number of Cluster&#x27;,
+			field: &#x27;initialParts&#x27;
+		},
+		{
+			headerName: &#x27;FoldUnfold&#x27;,
+			field: &#x27;hierarchyFold&#x27;,
+			cellRendererFramework: CheckboxCellComponent
+		}
+	];
+	chartOptions &#x3D; {
+		elements: {
+			point: {
+				radius: 0
+			}
+		},
+		plugins: {
+			tooltip: {
+				enabled: false
+			}
+		},
+		scales: {
+			y: {
+				title: {
+					display: true,
+					text: &#x27;&#x27;
+				},
+				gridLines: {
+					color: &#x27;#eeeeee&#x27;
+				}
+			},
+			x: {
+				title: {
+					display: true,
+					text: &#x27;&#x27;
+				},
+				gridLines: {
+					display: false
+				}
+			}
+		}
+	};
+	clustersPerDimDatasChartOptions &#x3D; _.cloneDeep(this.chartOptions);
+	infoPerClusterChartOptions &#x3D; _.cloneDeep(this.chartOptions);
+	legend: any;
+	currentCellsPerCluster &#x3D; 0;
+	unfoldHierarchyLegend: string;
+
+	constructor(
+		private translate: TranslateService,
+		private dimensionsService: DimensionsDatasService,
+		private treenodesService: TreenodesService,
+		private clustersService: ClustersService,
+		private khiopsLibraryService: KhiopsLibraryService,
+		private dialogRef: MatDialogRef &lt; UnfoldHierarchyComponent &gt; ) {
+
+		this.hierarchyDatas &#x3D; this.treenodesService.getHierarchyDatas();
+
+		this.unfoldHierarchyTableTitle &#x3D; this.translate.get(&#x27;GLOBAL.NB_OF_CLUSTERS_PER_DIM&#x27;);
+		this.unfoldHierarchyLegend &#x3D; this.translate.get(&#x27;TOOLTIPS.AXIS.UNFOLD_HIERARCHY.LEGEND&#x27;);
+
+		this.clustersPerDimDatasChartOptions.scales.x.title.text &#x3D; this.translate.get(&#x27;GLOBAL.TOTAL_NUMBER_OF_CLUSTERS&#x27;);
+		this.clustersPerDimDatasChartOptions.scales.y.title.text &#x3D; this.translate.get(&#x27;GLOBAL.NB_OF_CLUSTERS_PER_DIM&#x27;);
+
+		this.infoPerClusterChartOptions.scales.x.title.text &#x3D; this.translate.get(&#x27;GLOBAL.TOTAL_NUMBER_OF_CLUSTERS&#x27;);
+		this.infoPerClusterChartOptions.scales.y.title.text &#x3D; this.translate.get(&#x27;GLOBAL.INFORMATION_RATE&#x27;);
+	}
+
+	highlightChartLine(name: string) {
+		this.selectedLineChartItem &#x3D; name;
+	}
+
+	ngOnInit() {
+
+		// this.previousHierarchyRank &#x3D; copy(this.hierarchyDatas.selectedUnfoldHierarchy);
+		this.previousHierarchyRank &#x3D; _.cloneDeep(this.hierarchyDatas.selectedUnfoldHierarchy);
+		this.currentUnfoldHierarchy &#x3D; this.previousHierarchyRank;
+
+		setTimeout(() &#x3D;&gt; {
+			this.dimensionsDatas &#x3D; this.dimensionsService.getDatas();
+			this.dimensions &#x3D; _.cloneDeep(this.dimensionsDatas.dimensions);
+
+			// Reset current herarchy cluster count if modal has been dismissed
+			this.treenodesService.updateCurrentHierarchyClustersCount(this.currentUnfoldHierarchy);
+
+			// get graph details datas
+			this.clustersPerDimDatas &#x3D; this.clustersService.getClustersPerDimDatas(this.currentUnfoldHierarchy);
+			this.currentCellsPerCluster &#x3D; this.clustersService.getCurrentCellsPerCluster();
+
+			// compute legend labels
+			this.legend &#x3D; [{
+				series: []
+			}];
+			// Do not insert bar chart legend (nb of clusters)
+			for (let i &#x3D; 0; i &lt; this.clustersPerDimDatas.datasets.length - 1; i++) {
+				this.legend[0].series.push({
+					name: this.clustersPerDimDatas.datasets[i].label
+				});
+			}
+
+			this.colorSetClusterPerDim &#x3D; _.cloneDeep(this.khiopsLibraryService.getGraphColorSet()[0]);
+			this.colorSetInfoPerCluster &#x3D; _.cloneDeep(this.khiopsLibraryService.getGraphColorSet()[0]);
+
+			// set the current hierarchy selection to black
+			this.colorSetInfoPerCluster.domain[1] &#x3D; &#x27;#000000&#x27;;
+			this.colorSetClusterPerDim.domain[this.clustersPerDimDatas.datasets.length - 1] &#x3D; &#x27;#000000&#x27;;
+
+			this.infoPerCluster &#x3D; this.clustersService.getInfoPerCluster(this.currentUnfoldHierarchy);
+		}); // Do not freeze ui during graph render
+
+	}
+
+	onClickOnSave() {
+		// this.khiopsLibraryService.trackEvent(&#x27;click&#x27;, &#x27;unfold_hierarchy&#x27;, &#x27;nb_clusters&#x27;, this.currentUnfoldHierarchy);
+
+		this.loadingHierarchy &#x3D; true;
+		setTimeout(() &#x3D;&gt; {
+			this.treenodesService.setSelectedUnfoldHierarchy(this.currentUnfoldHierarchy);
+			this.treenodesService.unfoldHierarchy(this.previousHierarchyRank, this.currentUnfoldHierarchy);
+			this.loadingHierarchy &#x3D; false;
+			this.dialogRef.close();
+		}); // do not freeze during computing
+	}
+
+	onClickOnCancel() {
+		this.treenodesService.updateCurrentHierarchyClustersCount(this.previousHierarchyRank);
+		this.dialogRef.close();
+	}
+
+	yLeftTickFormat() {
+		return &#x27;&#x27;;
+	}
+
+	increaseUnfoldHierarchy() {
+		if (this.hierarchyDatas.totalClusters &gt; this.currentUnfoldHierarchy) {
+			this.onHierarchyChanged({
+				value: this.currentUnfoldHierarchy + 1
+			});
+		}
+	}
+
+	decreaseUnfoldHierarchy() {
+		if (this.hierarchyDatas.minClusters &lt; this.currentUnfoldHierarchy) {
+			this.onHierarchyChanged({
+				value: this.currentUnfoldHierarchy - 1
+			});
+		}
+	}
+
+	onHierarchyChanged(event) {
+		this.currentUnfoldHierarchy &#x3D; event.value;
+		this.clustersPerDimDatas &#x3D; this.clustersService.getClustersPerDimDatas(this.currentUnfoldHierarchy);
+		this.infoPerCluster &#x3D; this.clustersService.getInfoPerCluster(this.currentUnfoldHierarchy);
+		this.currentInformationPerCluster &#x3D; this.infoPerCluster.datasets[0].data[this.currentUnfoldHierarchy - this.dimensions.length];
+		this.treenodesService.updateCurrentHierarchyClustersCount(this.currentUnfoldHierarchy);
+
+		// Dimension changed, clone to update array
+		this.dimensions &#x3D; _.cloneDeep(this.dimensionsDatas.dimensions);
+
+		this.currentCellsPerCluster &#x3D; this.clustersService.getCurrentCellsPerCluster();
+
+	}
+
+	onGridCheckboxChanged(event) {
+		this.treenodesService.toggleDimensionHierarchyFold(event.data.name, event.state);
+	}
+
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div id&#x3D;&quot;unfold-hierarchy-comp&quot; fxFlexFill #unfoldHierarchy fxLayout&#x3D;&quot;column&quot;&gt;
+	&lt;div fxLayout&#x3D;&quot;column&quot; fxFlexFill fxLayoutAlign&#x3D;&quot;center center&quot; *ngIf&#x3D;&quot;!clustersPerDimDatas || loadingHierarchy&quot;&gt;
+		&lt;mat-spinner diameter&#x3D;&quot;40&quot; color&#x3D;&quot;accent&quot; mode&#x3D;&quot;indeterminate&quot;&gt;&lt;/mat-spinner&gt;
+	&lt;/div&gt;
+	&lt;div fxFlexFill fxLayout&#x3D;&quot;column&quot; *ngIf&#x3D;&quot;clustersPerDimDatas &amp;&amp; !loadingHierarchy&quot;&gt;
+		&lt;div fxLayout&#x3D;&quot;row&quot; id&#x3D;&quot;unfold-hierarchy-header&quot; fxLayoutAlign&#x3D;&quot;center center&quot;&gt;
+			&lt;h2 fxFlex&gt;{{ &#x27;GLOBAL.UNFOLD_HIERARCHY&#x27; | translate | uppercase }}&lt;/h2&gt;
+			&lt;button mat-stroked-button (click)&#x3D;&quot;onClickOnCancel()&quot;&gt;{{ &#x27;GLOBAL.CANCEL&#x27; | translate }}&lt;/button&gt;
+			&lt;button mat-flat-button (click)&#x3D;&quot;onClickOnSave()&quot; color&#x3D;&quot;primary&quot;&gt;{{ &#x27;GLOBAL.OK&#x27; | translate }}&lt;/button&gt;
+		&lt;/div&gt;
+		&lt;div id&#x3D;&quot;unfold-hierarchy-content&quot; fxLayout&#x3D;&quot;column&quot;&gt;
+			&lt;div fxLayout&#x3D;&quot;row&quot; id&#x3D;&quot;unfold-hierarchy-settings&quot; fxLayoutAlign&#x3D;&quot;start start&quot;&gt;
+				&lt;div fxLayout&#x3D;&quot;column&quot;&gt;
+					&lt;span&gt;{{ &#x27;GLOBAL.NUMBER_OF_CLUSTERS&#x27; | translate }} : &lt;b&gt;{{ currentUnfoldHierarchy }}&lt;/b&gt;&lt;/span&gt;
+					&lt;mat-slider [max]&#x3D;&quot;hierarchyDatas.totalClusters&quot; [min]&#x3D;&quot;hierarchyDatas.minClusters&quot;
+						[thumbLabel]&#x3D;&quot;true&quot; (input)&#x3D;&quot;onHierarchyChanged($event)&quot; [(ngModel)]&#x3D;&quot;currentUnfoldHierarchy&quot;
+						[step]&#x3D;&quot;1&quot;&gt;
+					&lt;/mat-slider&gt;
+				&lt;/div&gt;
+				&lt;div fxLayout&#x3D;&quot;column&quot; class&#x3D;&quot;increment&quot;&gt;
+					&lt;button mat-stroked-button (click)&#x3D;&quot;increaseUnfoldHierarchy()&quot;&gt;+&lt;/button&gt;
+					&lt;button mat-stroked-button (click)&#x3D;&quot;decreaseUnfoldHierarchy()&quot;&gt;-&lt;/button&gt;
+				&lt;/div&gt;
+				&lt;div fxLayout&#x3D;&quot;column&quot; fxFlex fxLayoutAlign&#x3D;&quot;center end&quot;&gt;
+					&lt;span&gt;{{ &#x27;GLOBAL.CELLS&#x27; | translate }}: {{ currentCellsPerCluster }}&lt;/span&gt;
+					&lt;span&gt;{{ &#x27;GLOBAL.INFORMATION_RATE&#x27; | translate }}: {{ currentInformationPerCluster | toPrecision:1 }}%&lt;/span&gt;
+					&lt;span class&#x3D;&quot;non-info-warning&quot; *ngIf&#x3D;&quot;currentInformationPerCluster &#x3D;&#x3D;&#x3D; 0&quot; fxLayoutAlign&#x3D;&quot;start center&quot;&gt;
+						{{ &#x27;GLOBAL.NON_INFORMATIVE_COCLUSTERING&#x27; | translate }}
+						&lt;mat-icon fxLayoutAlign&#x3D;&quot;center center&quot;&gt;warning&lt;/mat-icon&gt;
+					&lt;/span&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+			&lt;div fxFlex fxLayout&#x3D;&quot;column&quot;&gt;
+				&lt;div fxLayout&#x3D;&quot;row&quot; fxLayoutAlign&#x3D;&quot;start center&quot; class&#x3D;&quot;comp-header&quot;&gt;
+					&lt;div fxFlex fxLayout&#x3D;&quot;row&quot; fxLayoutAlign&#x3D;&quot;start center&quot;&gt;
+						&lt;h1&gt;{{ &#x27;GLOBAL.INFORMATION_RATE&#x27; | translate  }}&lt;/h1&gt;
+					&lt;/div&gt;
+				&lt;/div&gt;
+				&lt;kl-chart-next title&#x3D;&quot;{{ &#x27;TOOLTIPS.AXIS.UNFOLD_HIERARCHY.INFO_RATE_CHART&#x27; | translate }}&quot;
+					[canvasIdContainer]&#x3D;&quot;&#x27;info-per-cluster-graph-canvas&#x27;&quot; fxFlex [inputDatas]&#x3D;&quot;infoPerCluster&quot;
+					[enableSelection]&#x3D;&quot;false&quot; [colorSet]&#x3D;&quot;colorSetInfoPerCluster&quot; [chartOptions]&#x3D;&quot;infoPerClusterChartOptions&quot;&gt;
+				&lt;/kl-chart-next&gt;
+			&lt;/div&gt;
+			&lt;div fxFlex fxLayout&#x3D;&quot;column&quot;&gt;
+				&lt;div fxLayout&#x3D;&quot;row&quot; fxLayoutAlign&#x3D;&quot;start center&quot; class&#x3D;&quot;comp-header&quot;&gt;
+					&lt;div fxFlex fxLayout&#x3D;&quot;row&quot; fxLayoutAlign&#x3D;&quot;start center&quot;&gt;
+						&lt;h1&gt;{{ &#x27;GLOBAL.NB_OF_CLUSTERS_PER_DIM&#x27; | translate  }}&lt;/h1&gt;
+					&lt;/div&gt;
+					&lt;kl-legend fxLayoutAlign&#x3D;&quot;end end&quot; fxLayout&#x3D;&quot;row&quot; [inputDatas]&#x3D;&quot;legend&quot; [type]&#x3D;&quot;&#x27;chart-nd&#x27;&quot;
+						[tooltip]&#x3D;&quot;unfoldHierarchyLegend&quot; (legendItemClicked)&#x3D;&quot;highlightChartLine($event)&quot;
+						[colorSet]&#x3D;&quot;colorSetClusterPerDim&quot;&gt;
+					&lt;/kl-legend&gt;
+				&lt;/div&gt;
+				&lt;kl-chart-next [canvasIdContainer]&#x3D;&quot;&#x27;clusters-per-dim-graph-canvas&#x27;&quot; fxFlex
+					[inputDatas]&#x3D;&quot;clustersPerDimDatas&quot; [enableSelection]&#x3D;&quot;false&quot; [colorSet]&#x3D;&quot;colorSetClusterPerDim&quot;
+					[selectedLineChartItem]&#x3D;&quot;selectedLineChartItem&quot; [chartOptions]&#x3D;&quot;clustersPerDimDatasChartOptions&quot;&gt;
+				&lt;/kl-chart-next&gt;
+			&lt;/div&gt;
+			&lt;div fxFlex id&#x3D;&quot;unfold-hierarchy-table&quot; fxLayout&#x3D;&quot;column&quot;&gt;
+				&lt;kl-ag-grid fxFlex [showLevelDistribution]&#x3D;&quot;false&quot; [showSearch]&#x3D;&quot;false&quot; [showColumnsSelection]&#x3D;&quot;false&quot;
+					[inputDatas]&#x3D;&quot;dimensions&quot; [title]&#x3D;&quot;unfoldHierarchyTableTitle&quot; [smallTitle]&#x3D;&quot;true&quot;
+					[sizeColumnsToFit]&#x3D;&quot;true&quot; (gridCheckboxChanged)&#x3D;&quot;onGridCheckboxChanged($event)&quot;
+					[rowSelection]&#x3D;&quot;&#x27;multiple&#x27;&quot; [displayedColumns]&#x3D;&quot;hierarchyDisplayedColumns&quot;&gt;&lt;/kl-ag-grid&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./unfold-hierarchy.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">@import &quot;khiops-library/src/lib/styles/theme.scss&quot;;
+
+#unfold-hierarchy-comp {
+
+	#unfold-hierarchy-header {
+		padding: 0 0 1em 0;
+		height: 68px;
+
+		h2 {
+			margin-left: 1em;
+		}
+
+		button {
+			margin-left: 1em;
+		}
+	}
+
+	#unfold-hierarchy-content {
+		flex: 1;
+		overflow-y: auto;
+		overflow-x: hidden;
+
+		kl-chart-next {
+			min-height: 135px;
+		}
+
+		#unfold-hierarchy-settings {
+
+			background: rgba(0, 0, 0, .03);
+			margin-bottom: 3em;
+			border-radius: 5px;
+			padding: 1em;
+
+			.mat-slider-horizontal {
+				min-width: 300px;
+			}
+
+			.increment {
+				margin-left: 2em;
+
+				button {
+					padding: 0;
+					min-width: 30px;
+					margin: 1px;
+					max-height: 30px;
+					line-height: 30px;
+				}
+			}
+
+			.non-info-warning {
+				color: #374779;
+				margin-top: 5px;
+
+				mat-icon {
+					margin-left: 7px;
+				}
+			}
+		}
+
+		#unfold-hierarchy-table {
+			margin-top: 3em;
+
+			kl-ag-grid {
+				border: 1px solid #eee;
+				min-height: 242px;
+				max-height: 242px;
+
+				::ng-deep .ag-center-cols-viewport {
+					overflow-x: hidden;
+				}
+			}
+		}
+
+	}
+
+	::ng-deep .chart-legend li:last-child {
+		display: none !important;
+	}
+
+	::ng-deep .chart-legend .legend-wrap {
+		width: calc(100% - 40px) !important;
+	}
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div id="unfold-hierarchy-comp" fxFlexFill #unfoldHierarchy fxLayout="column">	<div fxLayout="column" fxFlexFill fxLayoutAlign="center center" *ngIf="!clustersPerDimDatas || loadingHierarchy">		<mat-spinner diameter="40" color="accent" mode="indeterminate"></mat-spinner>	</div>	<div fxFlexFill fxLayout="column" *ngIf="clustersPerDimDatas && !loadingHierarchy">		<div fxLayout="row" id="unfold-hierarchy-header" fxLayoutAlign="center center">			<h2 fxFlex>{{ \'GLOBAL.UNFOLD_HIERARCHY\' | translate | uppercase }}</h2>			<button mat-stroked-button (click)="onClickOnCancel()">{{ \'GLOBAL.CANCEL\' | translate }}</button>			<button mat-flat-button (click)="onClickOnSave()" color="primary">{{ \'GLOBAL.OK\' | translate }}</button>		</div>		<div id="unfold-hierarchy-content" fxLayout="column">			<div fxLayout="row" id="unfold-hierarchy-settings" fxLayoutAlign="start start">				<div fxLayout="column">					<span>{{ \'GLOBAL.NUMBER_OF_CLUSTERS\' | translate }} : <b>{{ currentUnfoldHierarchy }}</b></span>					<mat-slider [max]="hierarchyDatas.totalClusters" [min]="hierarchyDatas.minClusters"						[thumbLabel]="true" (input)="onHierarchyChanged($event)" [(ngModel)]="currentUnfoldHierarchy"						[step]="1">					</mat-slider>				</div>				<div fxLayout="column" class="increment">					<button mat-stroked-button (click)="increaseUnfoldHierarchy()">+</button>					<button mat-stroked-button (click)="decreaseUnfoldHierarchy()">-</button>				</div>				<div fxLayout="column" fxFlex fxLayoutAlign="center end">					<span>{{ \'GLOBAL.CELLS\' | translate }}: {{ currentCellsPerCluster }}</span>					<span>{{ \'GLOBAL.INFORMATION_RATE\' | translate }}: {{ currentInformationPerCluster | toPrecision:1 }}%</span>					<span class="non-info-warning" *ngIf="currentInformationPerCluster === 0" fxLayoutAlign="start center">						{{ \'GLOBAL.NON_INFORMATIVE_COCLUSTERING\' | translate }}						<mat-icon fxLayoutAlign="center center">warning</mat-icon>					</span>				</div>			</div>			<div fxFlex fxLayout="column">				<div fxLayout="row" fxLayoutAlign="start center" class="comp-header">					<div fxFlex fxLayout="row" fxLayoutAlign="start center">						<h1>{{ \'GLOBAL.INFORMATION_RATE\' | translate  }}</h1>					</div>				</div>				<kl-chart-next title="{{ \'TOOLTIPS.AXIS.UNFOLD_HIERARCHY.INFO_RATE_CHART\' | translate }}"					[canvasIdContainer]="\'info-per-cluster-graph-canvas\'" fxFlex [inputDatas]="infoPerCluster"					[enableSelection]="false" [colorSet]="colorSetInfoPerCluster" [chartOptions]="infoPerClusterChartOptions">				</kl-chart-next>			</div>			<div fxFlex fxLayout="column">				<div fxLayout="row" fxLayoutAlign="start center" class="comp-header">					<div fxFlex fxLayout="row" fxLayoutAlign="start center">						<h1>{{ \'GLOBAL.NB_OF_CLUSTERS_PER_DIM\' | translate  }}</h1>					</div>					<kl-legend fxLayoutAlign="end end" fxLayout="row" [inputDatas]="legend" [type]="\'chart-nd\'"						[tooltip]="unfoldHierarchyLegend" (legendItemClicked)="highlightChartLine($event)"						[colorSet]="colorSetClusterPerDim">					</kl-legend>				</div>				<kl-chart-next [canvasIdContainer]="\'clusters-per-dim-graph-canvas\'" fxFlex					[inputDatas]="clustersPerDimDatas" [enableSelection]="false" [colorSet]="colorSetClusterPerDim"					[selectedLineChartItem]="selectedLineChartItem" [chartOptions]="clustersPerDimDatasChartOptions">				</kl-chart-next>			</div>			<div fxFlex id="unfold-hierarchy-table" fxLayout="column">				<kl-ag-grid fxFlex [showLevelDistribution]="false" [showSearch]="false" [showColumnsSelection]="false"					[inputDatas]="dimensions" [title]="unfoldHierarchyTableTitle" [smallTitle]="true"					[sizeColumnsToFit]="true" (gridCheckboxChanged)="onGridCheckboxChanged($event)"					[rowSelection]="\'multiple\'" [displayedColumns]="hierarchyDisplayedColumns"></kl-ag-grid>			</div>		</div>	</div></div></div>'
+    var COMPONENTS = [{'name': 'AgGridComponent', 'selector': 'kl-ag-grid'},{'name': 'AnnotationComponent', 'selector': 'app-annotation'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AppVersionComponent', 'selector': 'kl-app-version'},{'name': 'AxisComponent', 'selector': 'app-axis'},{'name': 'AxisViewComponent', 'selector': 'app-axis-view'},{'name': 'BtnFullscreenComponent', 'selector': 'kl-btn-fullscreen'},{'name': 'CellStatsComponent', 'selector': 'kl-cell-stats'},{'name': 'ChartNextComponent', 'selector': 'kl-chart-next'},{'name': 'CheckboxCellComponent', 'selector': 'kl-checkbox-cell'},{'name': 'ClusterDetailsComponent', 'selector': 'app-cluster-details'},{'name': 'CompositionComponent', 'selector': 'app-composition'},{'name': 'ConfirmDialogComponent', 'selector': 'kl-confirm-dialog'},{'name': 'CoocurenceMatrixComponent', 'selector': 'app-coocurence-matrix'},{'name': 'DescriptionBlockComponent', 'selector': 'app-description-block'},{'name': 'DistributionGraphCanvasComponent', 'selector': 'kl-distribution-graph-canvas'},{'name': 'EvaluationViewComponent', 'selector': 'app-evaluation-view'},{'name': 'ExternalDatasComponent', 'selector': 'app-external-datas'},{'name': 'FileLoaderComponent', 'selector': 'kl-file-loader'},{'name': 'GraphHeaderComponent', 'selector': 'kl-graph-header'},{'name': 'HeaderManageViewComponent', 'selector': 'app-header-manage-view'},{'name': 'HeaderTitleComponent', 'selector': 'kl-header-title'},{'name': 'HeaderToolsComponent', 'selector': 'kl-header-tools'},{'name': 'HierarchySelectComponent', 'selector': 'app-hierarchy-select'},{'name': 'HomeLayoutComponent', 'selector': 'app-home-layout'},{'name': 'HomeLayoutComponent', 'selector': 'app-home-layout'},{'name': 'IconCellComponent', 'selector': 'kl-icon-cell'},{'name': 'ImportExtDatasComponent', 'selector': 'app-import-ext-datas'},{'name': 'ImportExtDatasListComponent', 'selector': 'app-import-ext-datas-list'},{'name': 'ImportFileLoaderComponent', 'selector': 'kl-import-file-loader'},{'name': 'InformationsBlockComponent', 'selector': 'kl-informations-block'},{'name': 'LegendComponent', 'selector': 'kl-legend'},{'name': 'LevelDistributionGraphCanvasComponent', 'selector': 'app-level-distribution-graph'},{'name': 'LibVersionComponent', 'selector': 'kl-lib-version'},{'name': 'LoadExtDatasComponent', 'selector': 'app-load-ext-datas'},{'name': 'ManageViewsComponent', 'selector': 'app-manage-views'},{'name': 'MatrixCanvasComponent', 'selector': 'kl-matrix-canvas'},{'name': 'MatrixContainerComponent', 'selector': 'app-matrix-container'},{'name': 'MatrixTooltipComponent', 'selector': 'kl-matrix-tooltip'},{'name': 'ModelingViewComponent', 'selector': 'app-modeling-view'},{'name': 'NoDataComponent', 'selector': 'kl-no-data'},{'name': 'Preparation2dViewComponent', 'selector': 'app-preparation-2d-view'},{'name': 'PreparationViewComponent', 'selector': 'app-preparation-view'},{'name': 'ProjectViewComponent', 'selector': 'app-project-view'},{'name': 'ProjectViewComponent', 'selector': 'app-project-view'},{'name': 'RegressionMatrixComponent', 'selector': 'app-regression-matrix'},{'name': 'ReleaseButtonComponent', 'selector': 'kl-release-button'},{'name': 'ReleaseNotesComponent', 'selector': 'kl-release-notes'},{'name': 'ScrollableGraphCanvasComponent', 'selector': ''},{'name': 'SelectableComponent', 'selector': ''},{'name': 'SelectableTabComponent', 'selector': ''},{'name': 'SelectedClustersComponent', 'selector': 'app-selected-clusters'},{'name': 'SelectToggleButtonComponent', 'selector': 'app-select-toggle-button'},{'name': 'SelectTrainedPredictorComponent', 'selector': 'app-select-trained-predictor'},{'name': 'TargetDistributionGraphCanvasComponent', 'selector': 'app-target-distribution-graph-canvas'},{'name': 'TargetLiftGraphComponent', 'selector': 'app-target-lift-graph'},{'name': 'TargetVariableStatsCanvasComponent', 'selector': 'app-target-variable-stats-canvas'},{'name': 'TreeDetailsComponent', 'selector': 'app-tree-details'},{'name': 'TreeHyperComponent', 'selector': 'app-tree-hyper'},{'name': 'TreeLeafDetailsComponent', 'selector': 'app-tree-leaf-details'},{'name': 'TreePreparationViewComponent', 'selector': 'app-tree-preparation-view'},{'name': 'TreeSelectComponent', 'selector': 'app-tree-select'},{'name': 'TreeSelectComponent', 'selector': 'app-tree-select'},{'name': 'UnfoldHierarchyComponent', 'selector': 'app-unfold-hierarchy'},{'name': 'UserSettingsComponent', 'selector': 'app-user-settings'},{'name': 'UserSettingsComponent', 'selector': 'app-user-settings'},{'name': 'VarDetailsPreparation2dComponent', 'selector': 'app-var-details-preparation-2d'},{'name': 'VarDetailsPreparationComponent', 'selector': 'app-var-details-preparation'},{'name': 'VarDetailsTreePreparationComponent', 'selector': 'app-var-details-tree-preparation'},{'name': 'VariableGraphDetailsComponent', 'selector': 'app-variable-graph-details'},{'name': 'VariableGraphDetailsComponent', 'selector': 'app-variable-graph-details'},{'name': 'WatchResizeComponent', 'selector': ''}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'UnfoldHierarchyComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'UnfoldHierarchyComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

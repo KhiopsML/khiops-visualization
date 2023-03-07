@@ -1,0 +1,8 @@
+<div class="informations-block-comp" fxFlexFill fxLayoutAlign="start start" fxLayout="column" *ngIf="inputDatas" tabindex="0">
+	<h1 fxLayout="row" fxLayoutAlign="start center">
+		<mat-icon>{{ icon }}</mat-icon>
+		{{ title }}
+	</h1>
+	<span *ngFor="let data of inputDatas"><strong>{{ data.title | translate }} : </strong> {{ data.value }}</span>
+</div>
+<kl-no-data fxFlexFill *ngIf="!inputDatas"></kl-no-data>

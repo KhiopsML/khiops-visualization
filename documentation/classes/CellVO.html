@@ -1,0 +1,1931 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>visualization-component documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">visualization-component documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content class">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Classes</li>
+  <li >CellVO</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/khiops-library/model/cell-vo.ts</code>
+        </p>
+
+
+
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#_id" >_id</a>
+                            </li>
+                            <li>
+                                <a href="#cellFreq" >cellFreq</a>
+                            </li>
+                            <li>
+                                <a href="#cellFreqHash" >cellFreqHash</a>
+                            </li>
+                            <li>
+                                <a href="#cellFreqs" >cellFreqs</a>
+                            </li>
+                            <li>
+                                <a href="#cellHellingerAbsoluteValue" >cellHellingerAbsoluteValue</a>
+                            </li>
+                            <li>
+                                <a href="#cellHellingerValue" >cellHellingerValue</a>
+                            </li>
+                            <li>
+                                <a href="#cellInterest" >cellInterest</a>
+                            </li>
+                            <li>
+                                <a href="#cellProbs" >cellProbs</a>
+                            </li>
+                            <li>
+                                <a href="#cellProbsRev" >cellProbsRev</a>
+                            </li>
+                            <li>
+                                <a href="#cellTargetProb" >cellTargetProb</a>
+                            </li>
+                            <li>
+                                <a href="#concatName" >concatName</a>
+                            </li>
+                            <li>
+                                <a href="#coverage" >coverage</a>
+                            </li>
+                            <li>
+                                <a href="#displayedFreqValue" >displayedFreqValue</a>
+                            </li>
+                            <li>
+                                <a href="#displayedValue" >displayedValue</a>
+                            </li>
+                            <li>
+                                <a href="#freqColVals" >freqColVals</a>
+                            </li>
+                            <li>
+                                <a href="#freqLineVals" >freqLineVals</a>
+                            </li>
+                            <li>
+                                <a href="#h" >h</a>
+                            </li>
+                            <li>
+                                <a href="#hCanvas" >hCanvas</a>
+                            </li>
+                            <li>
+                                <a href="#id" >id</a>
+                            </li>
+                            <li>
+                                <a href="#index" >index</a>
+                            </li>
+                            <li>
+                                <a href="#infosMutExtra" >infosMutExtra</a>
+                            </li>
+                            <li>
+                                <a href="#infosMutValue" >infosMutValue</a>
+                            </li>
+                            <li>
+                                <a href="#matrixTotal" >matrixTotal</a>
+                            </li>
+                            <li>
+                                <a href="#targetCellFreq" >targetCellFreq</a>
+                            </li>
+                            <li>
+                                <a href="#w" >w</a>
+                            </li>
+                            <li>
+                                <a href="#wCanvas" >wCanvas</a>
+                            </li>
+                            <li>
+                                <a href="#x" >x</a>
+                            </li>
+                            <li>
+                                <a href="#xaxisPart" >xaxisPart</a>
+                            </li>
+                            <li>
+                                <a href="#xaxisPartValues" >xaxisPartValues</a>
+                            </li>
+                            <li>
+                                <a href="#xCanvas" >xCanvas</a>
+                            </li>
+                            <li>
+                                <a href="#xDisplayaxisPart" >xDisplayaxisPart</a>
+                            </li>
+                            <li>
+                                <a href="#xnamePart" >xnamePart</a>
+                            </li>
+                            <li>
+                                <a href="#y" >y</a>
+                            </li>
+                            <li>
+                                <a href="#yaxisPart" >yaxisPart</a>
+                            </li>
+                            <li>
+                                <a href="#yaxisPartValues" >yaxisPartValues</a>
+                            </li>
+                            <li>
+                                <a href="#yCanvas" >yCanvas</a>
+                            </li>
+                            <li>
+                                <a href="#yDisplayaxisPart" >yDisplayaxisPart</a>
+                            </li>
+                            <li>
+                                <a href="#ynamePart" >ynamePart</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#addConcatName" >addConcatName</a>
+                            </li>
+                            <li>
+                                <a href="#formatValues" >formatValues</a>
+                            </li>
+                            <li>
+                                <a href="#merge" >merge</a>
+                            </li>
+                            <li>
+                                <a href="#setCoordValues" >setCoordValues</a>
+                            </li>
+                            <li>
+                                <a href="#setIndex" >setIndex</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(values?)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:68</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>values</td>
+                                                  
+                                                  
+                                                    <td>
+                                                            Yes
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_id"></a>
+                    <span class="name">
+                        <span ><b>_id</b></span>
+                        <a href="#_id"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:14</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cellFreq"></a>
+                    <span class="name">
+                        <span ><b>cellFreq</b></span>
+                        <a href="#cellFreq"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:15</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cellFreqHash"></a>
+                    <span class="name">
+                        <span ><b>cellFreqHash</b></span>
+                        <a href="#cellFreqHash"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>literal type</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:16</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cellFreqs"></a>
+                    <span class="name">
+                        <span ><b>cellFreqs</b></span>
+                        <a href="#cellFreqs"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:59</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cellHellingerAbsoluteValue"></a>
+                    <span class="name">
+                        <span ><b>cellHellingerAbsoluteValue</b></span>
+                        <a href="#cellHellingerAbsoluteValue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:63</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cellHellingerValue"></a>
+                    <span class="name">
+                        <span ><b>cellHellingerValue</b></span>
+                        <a href="#cellHellingerValue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:62</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cellInterest"></a>
+                    <span class="name">
+                        <span ><b>cellInterest</b></span>
+                        <a href="#cellInterest"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:27</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cellProbs"></a>
+                    <span class="name">
+                        <span ><b>cellProbs</b></span>
+                        <a href="#cellProbs"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:64</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cellProbsRev"></a>
+                    <span class="name">
+                        <span ><b>cellProbsRev</b></span>
+                        <a href="#cellProbsRev"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:65</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cellTargetProb"></a>
+                    <span class="name">
+                        <span ><b>cellTargetProb</b></span>
+                        <a href="#cellTargetProb"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:28</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="concatName"></a>
+                    <span class="name">
+                        <span ><b>concatName</b></span>
+                        <a href="#concatName"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string[]</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:50</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="coverage"></a>
+                    <span class="name">
+                        <span ><b>coverage</b></span>
+                        <a href="#coverage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:66</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="displayedFreqValue"></a>
+                    <span class="name">
+                        <span ><b>displayedFreqValue</b></span>
+                        <a href="#displayedFreqValue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:17</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="displayedValue"></a>
+                    <span class="name">
+                        <span ><b>displayedValue</b></span>
+                        <a href="#displayedValue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>literal type</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:18</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="freqColVals"></a>
+                    <span class="name">
+                        <span ><b>freqColVals</b></span>
+                        <a href="#freqColVals"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:67</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="freqLineVals"></a>
+                    <span class="name">
+                        <span ><b>freqLineVals</b></span>
+                        <a href="#freqLineVals"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:68</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="h"></a>
+                    <span class="name">
+                        <span ><b>h</b></span>
+                        <a href="#h"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>literal type</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:46</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="hCanvas"></a>
+                    <span class="name">
+                        <span ><b>hCanvas</b></span>
+                        <a href="#hCanvas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:32</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="id"></a>
+                    <span class="name">
+                        <span ><b>id</b></span>
+                        <a href="#id"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:26</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="index"></a>
+                    <span class="name">
+                        <span ><b>index</b></span>
+                        <a href="#index"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:25</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="infosMutExtra"></a>
+                    <span class="name">
+                        <span ><b>infosMutExtra</b></span>
+                        <a href="#infosMutExtra"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:61</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="infosMutValue"></a>
+                    <span class="name">
+                        <span ><b>infosMutValue</b></span>
+                        <a href="#infosMutValue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:60</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="matrixTotal"></a>
+                    <span class="name">
+                        <span ><b>matrixTotal</b></span>
+                        <a href="#matrixTotal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>number[]</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:33</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="targetCellFreq"></a>
+                    <span class="name">
+                        <span ><b>targetCellFreq</b></span>
+                        <a href="#targetCellFreq"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:24</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="w"></a>
+                    <span class="name">
+                        <span ><b>w</b></span>
+                        <a href="#w"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>literal type</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:42</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="wCanvas"></a>
+                    <span class="name">
+                        <span ><b>wCanvas</b></span>
+                        <a href="#wCanvas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:31</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="x"></a>
+                    <span class="name">
+                        <span ><b>x</b></span>
+                        <a href="#x"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>literal type</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:34</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="xaxisPart"></a>
+                    <span class="name">
+                        <span ><b>xaxisPart</b></span>
+                        <a href="#xaxisPart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:51</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="xaxisPartValues"></a>
+                    <span class="name">
+                        <span ><b>xaxisPartValues</b></span>
+                        <a href="#xaxisPartValues"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string[]</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:53</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="xCanvas"></a>
+                    <span class="name">
+                        <span ><b>xCanvas</b></span>
+                        <a href="#xCanvas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:29</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="xDisplayaxisPart"></a>
+                    <span class="name">
+                        <span ><b>xDisplayaxisPart</b></span>
+                        <a href="#xDisplayaxisPart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:55</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="xnamePart"></a>
+                    <span class="name">
+                        <span ><b>xnamePart</b></span>
+                        <a href="#xnamePart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:57</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="y"></a>
+                    <span class="name">
+                        <span ><b>y</b></span>
+                        <a href="#y"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>literal type</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:38</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="yaxisPart"></a>
+                    <span class="name">
+                        <span ><b>yaxisPart</b></span>
+                        <a href="#yaxisPart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:52</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="yaxisPartValues"></a>
+                    <span class="name">
+                        <span ><b>yaxisPartValues</b></span>
+                        <a href="#yaxisPartValues"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string[]</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:54</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="yCanvas"></a>
+                    <span class="name">
+                        <span ><b>yCanvas</b></span>
+                        <a href="#yCanvas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:30</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="yDisplayaxisPart"></a>
+                    <span class="name">
+                        <span ><b>yDisplayaxisPart</b></span>
+                        <a href="#yDisplayaxisPart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:56</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ynamePart"></a>
+                    <span class="name">
+                        <span ><b>ynamePart</b></span>
+                        <a href="#ynamePart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:58</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addConcatName"></a>
+                    <span class="name">
+                        <span ><b>addConcatName</b></span>
+                        <a href="#addConcatName"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addConcatName(name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="146"
+                            class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:146</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>name</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatValues"></a>
+                    <span class="name">
+                        <span ><b>formatValues</b></span>
+                        <a href="#formatValues"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>formatValues()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="140"
+                            class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:140</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="merge"></a>
+                    <span class="name">
+                        <span ><b>merge</b></span>
+                        <a href="#merge"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>merge(obj, way, nodeVO)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="171"
+                            class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:171</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>obj</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>way</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>nodeVO</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setCoordValues"></a>
+                    <span class="name">
+                        <span ><b>setCoordValues</b></span>
+                        <a href="#setCoordValues"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setCoordValues(i, j, xValues: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, yValues: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="152"
+                            class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:152</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>i</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>j</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>xValues</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>yValues</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setIndex"></a>
+                    <span class="name">
+                        <span ><b>setIndex</b></span>
+                        <a href="#setIndex"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setIndex(currentIndex: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="134"
+                            class="link-to-prism">src/app/khiops-library/model/cell-vo.ts:134</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>currentIndex</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+	UtilsService
+} from &#x27;../providers/utils.service&#x27;;
+
+export class CellVO {
+
+	/*
+		WARNING
+		Do not make nested objects here
+		to allow Object.assign()
+		and optimize performances
+	*/
+
+	_id: any;
+	cellFreq: number;
+	cellFreqHash: {};
+	displayedFreqValue: number;
+	displayedValue: {
+		type: string,
+		value: number,
+		extra : 0,
+		ef: number
+	};
+	targetCellFreq: number;
+	index: number;
+	id: number; // KV for row identification (regression table case)
+	cellInterest: number;
+	cellTargetProb: number;
+	xCanvas: number;
+	yCanvas: number;
+	wCanvas: number;
+	hCanvas: number;
+	matrixTotal: number[];
+	x: {
+		standard: number,
+		frequency: number
+	};
+	y: {
+		standard: number,
+		frequency: number
+	};
+	w: {
+		standard: number,
+		frequency: number
+	};
+	h: {
+		standard: number,
+		frequency: number
+	};
+	concatName: string[];
+	xaxisPart: string;
+	yaxisPart: string;
+	xaxisPartValues: string[];
+	yaxisPartValues: string[];
+	xDisplayaxisPart: string;
+	yDisplayaxisPart: string;
+	xnamePart: string;
+	ynamePart: string;
+	cellFreqs: any[];
+	infosMutValue: any[];
+	infosMutExtra: any[];
+	cellHellingerValue: any[];
+	cellHellingerAbsoluteValue: any[];
+	cellProbs: any[];
+	cellProbsRev: any[];
+	coverage;
+	freqColVals: any[];
+	freqLineVals: any[];
+
+	constructor(values ? ) {
+		this.xCanvas &#x3D; values &amp;&amp; values.xCanvas || 0;
+		this.yCanvas &#x3D; values &amp;&amp; values.yCanvas || 0;
+		this.wCanvas &#x3D; values &amp;&amp; values.wCanvas || 0;
+		this.hCanvas &#x3D; values &amp;&amp; values.hCanvas || 0;
+		this.cellFreq &#x3D; values &amp;&amp; values.cellFreq || 0;
+		this.displayedValue &#x3D; values &amp;&amp; values.displayedValue;
+		this.targetCellFreq &#x3D; values &amp;&amp; values.targetCellFreq || 0;
+		this.index &#x3D; values &amp;&amp; values.index || 0;
+		this.id &#x3D; this.index;
+		this.matrixTotal &#x3D; values &amp;&amp; values.matrixTotal || [];
+
+		// Generate id for grid
+		this._id &#x3D; this.index;
+
+		this.cellInterest &#x3D; values &amp;&amp; values.cellInterest || 0;
+		this.cellTargetProb &#x3D; values &amp;&amp; values.cellTargetProb || 0;
+
+		this.x &#x3D; {
+			standard: values &amp;&amp; values.x &amp;&amp; values.x.standard || 0,
+			frequency: values &amp;&amp; values.x &amp;&amp; values.x.frequency || 0
+		};
+		this.y &#x3D; {
+			standard: values &amp;&amp; values.y &amp;&amp; values.y.standard || 0,
+			frequency: values &amp;&amp; values.y &amp;&amp; values.y.frequency || 0
+		};
+		this.w &#x3D; {
+			standard: values &amp;&amp; values.w &amp;&amp; values.w.standard || 0,
+			frequency: values &amp;&amp; values.w &amp;&amp; values.w.frequency || 0
+		};
+		this.h &#x3D; {
+			standard: values &amp;&amp; values.h &amp;&amp; values.h.standard || 0,
+			frequency: values &amp;&amp; values.h &amp;&amp; values.h.frequency || 0
+		};
+
+		this.concatName &#x3D; values &amp;&amp; values.concatName || [];
+
+		this.cellFreqs &#x3D; values &amp;&amp; values.cellFreqs || [];
+		this.infosMutValue &#x3D; values &amp;&amp; values.infosMutValue || [];
+		this.infosMutExtra &#x3D; values &amp;&amp; values.infosMutExtra || [];
+		this.cellHellingerValue &#x3D; values &amp;&amp; values.cellHellingerValue || [];
+		this.cellHellingerAbsoluteValue &#x3D; values &amp;&amp; values.cellHellingerAbsoluteValue || [];
+		this.cellProbs &#x3D; values &amp;&amp; values.cellProbs || [];
+		this.cellProbsRev &#x3D; values &amp;&amp; values.cellProbsRev || [];
+		this.freqColVals &#x3D; values &amp;&amp; values.freqColVals || [];
+		this.freqLineVals &#x3D; values &amp;&amp; values.freqLineVals || [];
+
+		this.xnamePart &#x3D; values &amp;&amp; values.xnamePart || &#x27;&#x27;;
+		this.ynamePart &#x3D; values &amp;&amp; values.ynamePart || &#x27;&#x27;;
+
+		this.xaxisPart &#x3D; values &amp;&amp; values.xaxisPart || &#x27;&#x27;;
+		this.yaxisPart &#x3D; values &amp;&amp; values.yaxisPart || &#x27;&#x27;;
+		this.xaxisPartValues &#x3D; values &amp;&amp; values.xaxisPart || [];
+		this.yaxisPartValues &#x3D; values &amp;&amp; values.yaxisPart || [];
+		this.xDisplayaxisPart &#x3D; values &amp;&amp; values.xDisplayaxisPart || this.xaxisPart;
+		this.yDisplayaxisPart &#x3D; values &amp;&amp; values.yDisplayaxisPart || this.yaxisPart;
+
+		this.cellFreqHash &#x3D; values &amp;&amp; values.cellFreqHash || {};
+
+		if (values) {
+			this.formatValues();
+		}
+	}
+
+	setIndex(currentIndex: number) {
+		this.index &#x3D; currentIndex;
+		this.id &#x3D; currentIndex + 1; // cells begin from 0 and rows from 1 ...
+		this._id &#x3D; currentIndex;
+	}
+
+	formatValues() {
+		this.cellTargetProb &#x3D; UtilsService.initNumberIfNan(this.cellTargetProb);
+		this.cellFreq &#x3D; UtilsService.initNumberIfNan(this.cellFreq);
+		this.targetCellFreq &#x3D; UtilsService.initNumberIfNan(this.targetCellFreq);
+	}
+
+	addConcatName(name: string) {
+		if (!this.concatName.includes(name)) {
+			this.concatName.push(name);
+		}
+	}
+
+	setCoordValues(i, j, xValues: any, yValues: any) {
+		this.x &#x3D; {
+			standard: xValues.standard[i],
+			frequency: xValues.frequency[i],
+		};
+		this.y &#x3D; {
+			standard: yValues.standard[j],
+			frequency: yValues.frequency[j],
+		};
+		this.w &#x3D; {
+			standard: xValues.standard[i + 1] - this.x.standard,
+			frequency: xValues.frequency[i + 1] - this.x.frequency,
+		};
+		this.h &#x3D; {
+			standard: yValues.standard[j + 1] - this.y.standard,
+			frequency: yValues.frequency[j + 1] - this.y.frequency,
+		};
+	}
+
+	merge(obj, way, nodeVO) {
+
+		if (obj.x.standard &lt; this.x.standard) {
+			this.x.standard &#x3D; obj.x.standard;
+		}
+		if (obj.x.frequency &lt; this.x.frequency) {
+			this.x.frequency &#x3D; obj.x.frequency;
+		}
+		if (obj.y.standard &lt; this.y.standard) {
+			this.y.standard &#x3D; obj.y.standard;
+		}
+		if (obj.y.frequency &lt; this.y.frequency) {
+			this.y.frequency &#x3D; obj.y.frequency;
+		}
+
+		if (way &#x3D;&#x3D;&#x3D; 0) { // x node
+			this.w.standard &#x3D; this.w.standard + obj.w.standard;
+			this.w.frequency &#x3D; this.w.frequency + obj.w.frequency;
+			this.xaxisPart &#x3D; nodeVO.name;
+			this.xDisplayaxisPart &#x3D; nodeVO.shortDescription;
+		}
+		if (way &#x3D;&#x3D;&#x3D; 1) { // y node
+			this.h.standard &#x3D; this.h.standard + obj.h.standard;
+			this.h.frequency &#x3D; this.h.frequency + obj.h.frequency;
+			this.yaxisPart &#x3D; nodeVO.name;
+			this.yDisplayaxisPart &#x3D; nodeVO.shortDescription;
+		}
+
+		this.cellFreq &#x3D; this.cellFreq + obj.cellFreq;
+		this.cellFreqs &#x3D; UtilsService.sumArrayItems([this.cellFreqs, obj.cellFreqs]);
+
+		if (way &#x3D;&#x3D;&#x3D; 0) { // x node
+			this.freqColVals &#x3D; UtilsService.sumArrayItems([this.freqColVals, obj.freqColVals]);
+		}
+		if (way &#x3D;&#x3D;&#x3D; 1) { // y node
+			this.freqLineVals &#x3D; UtilsService.sumArrayItems([this.freqLineVals, obj.freqLineVals]);
+		}
+
+		// Reinit zero exceptions informations on merge
+		this.infosMutExtra &#x3D; [];
+	}
+
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
+            var COMPODOC_CURRENT_PAGE_URL = 'CellVO.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

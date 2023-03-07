@@ -1,0 +1,941 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>visualization-component documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">visualization-component documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content class">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Classes</li>
+  <li >UnitDisk</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/khiops-hypertree/components/unitdisk/unitdisk.ts</code>
+        </p>
+
+
+
+
+            <p class="comment">
+                <h3>Implements</h3>
+            </p>
+            <p class="comment">
+                            <code><a href="../interfaces/IUnitDisk.html" target="_self" >IUnitDisk</a></code>
+            </p>
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#api" >api</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#args" >args</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#cache" >cache</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#cacheMeta" >cacheMeta</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#isDraging" >isDraging</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#layerStack" >layerStack</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#mainsvg" >mainsvg</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#pinchcenter" >pinchcenter</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#update" >update</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#view" >view</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#voronoiLayout" >voronoiLayout</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#updateParent" >updateParent</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(view: <a href="../interfaces/UnitDiskView.html" target="_self">UnitDiskView</a>, args: <a href="../interfaces/UnitDiskArgs.html" target="_self">UnitDiskArgs</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">src/app/khiops-hypertree/components/unitdisk/unitdisk.ts:62</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>view</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../interfaces/UnitDiskView.html" target="_self" >UnitDiskView</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>args</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../interfaces/UnitDiskArgs.html" target="_self" >UnitDiskArgs</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="api"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>api</b></span>
+                        <a href="#api"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+        setTransform: (t:string, tn:string)&#x3D;&gt; this.mainsvg.attr(&#x27;transform&#x27;, t)        
+    }</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">src/app/khiops-hypertree/components/unitdisk/unitdisk.ts:71</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="args"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>args</b></span>
+                        <a href="#args"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/UnitDiskArgs.html" target="_self" >UnitDiskArgs</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/khiops-hypertree/components/unitdisk/unitdisk.ts:52</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cache"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>cache</b></span>
+                        <a href="#cache"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/TransformationCache.html" target="_self" >TransformationCache</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/app/khiops-hypertree/components/unitdisk/unitdisk.ts:53</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cacheMeta"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>cacheMeta</b></span>
+                        <a href="#cacheMeta"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">src/app/khiops-hypertree/components/unitdisk/unitdisk.ts:60</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isDraging"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>isDraging</b></span>
+                        <a href="#isDraging"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/app/khiops-hypertree/components/unitdisk/unitdisk.ts:58</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="layerStack"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>layerStack</b></span>
+                        <a href="#layerStack"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/LayerStack.html" target="_self" >LayerStack</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/app/khiops-hypertree/components/unitdisk/unitdisk.ts:56</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="mainsvg"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>mainsvg</b></span>
+                        <a href="#mainsvg"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">src/app/khiops-hypertree/components/unitdisk/unitdisk.ts:62</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pinchcenter"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>pinchcenter</b></span>
+                        <a href="#pinchcenter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#C" target="_self" >C</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/app/khiops-hypertree/components/unitdisk/unitdisk.ts:57</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="update"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>update</b></span>
+                        <a href="#update"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+        parent: ()&#x3D;&gt; this.updateParent(),
+        cache:  ()&#x3D;&gt; this.args.cacheUpdate(this, this.cache), // gehört nicht hier her
+        data:   ()&#x3D;&gt; this.update.layout(),
+        layout: ()&#x3D;&gt; { 
+            this.args.cacheUpdate(this, this.cache)
+            this.layerStack.update.data()  
+        },
+        transformation: ()&#x3D;&gt; {
+        // console.log(&quot;🚀 ~ file: unitdisk.ts ~ line 84 ~ transformation&quot;)
+            this.args.cacheUpdate(this, this.cache)
+            this.layerStack.update.data()  
+        },
+        pathes: ()&#x3D;&gt; {
+            this.args.cacheUpdate(this, this.cache)
+            this.layerStack.update.pathes()  
+            //this.layerStack.update.transformation()            
+        }
+    }</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="75" class="link-to-prism">src/app/khiops-hypertree/components/unitdisk/unitdisk.ts:75</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="view"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>view</b></span>
+                        <a href="#view"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/UnitDiskView.html" target="_self" >UnitDiskView</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">src/app/khiops-hypertree/components/unitdisk/unitdisk.ts:51</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="voronoiLayout"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>voronoiLayout</b></span>
+                        <a href="#voronoiLayout"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/N.html" target="_self" >d3.VoronoiLayout&lt;N&gt;</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/app/khiops-hypertree/components/unitdisk/unitdisk.ts:54</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateParent"></a>
+                    <span class="name">
+                        <span class="modifier">Private</span>
+                        <span ><b>updateParent</b></span>
+                        <a href="#updateParent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateParent()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="95"
+                            class="link-to-prism">src/app/khiops-hypertree/components/unitdisk/unitdisk.ts:95</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import * as d3                     from &#x27;d3&#x27;
+import { N }                       from &#x27;../../models/n/n&#x27;
+import { navdata }                 from &#x27;../../models/n/n-loaders&#x27;
+import { C, CktoCp, CptoCk }       from &#x27;../../models/transformation/hyperbolic-math&#x27;
+import { CmulR, CsubC, CaddC }     from &#x27;../../models/transformation/hyperbolic-math&#x27;
+import { dfsFlat }                 from &#x27;../../models/transformation/hyperbolic-math&#x27;
+import { PanTransformation }       from &#x27;../../models/transformation/hyperbolic-transformation&#x27;
+import { NegTransformation }       from &#x27;../../models/transformation/hyperbolic-transformation&#x27;
+import { TransformationCache }     from &#x27;../../models/transformation/hyperbolic-transformation&#x27;
+import { LayerStack }              from &#x27;../layerstack/layerstack&#x27;
+// import { HypertreeMeta }           from &#x27;../meta/hypertree-meta/hypertree-meta&#x27;
+// import { HypertreeMetaNav }        from &#x27;../meta/hypertree-meta/hypertree-meta&#x27;
+import { UnitDiskArgs }            from &#x27;../../models/unitdisk/unitdisk-model&#x27;
+import { UnitDiskView }            from &#x27;../../models/unitdisk/unitdisk-model&#x27;
+
+import { navBackgroundLayers }     from &#x27;./layers-background&#x27;
+import { navBgNodeR }              from &#x27;./layers-background&#x27;
+import { navParameterLayers }      from &#x27;./layers-parameter&#x27;
+
+//----------------------------------------------------------------------------------------
+
+export interface IUnitDisk
+{  
+    view:               UnitDiskView
+    args:               UnitDiskArgs
+
+    cache    
+    voronoiLayout :     d3.VoronoiLayout&lt;N&gt;
+    layerStack:         LayerStack
+    // HypertreeMetaType
+    navParameter?:      UnitDisk,
+    isDraging?:         boolean
+
+    api: {
+        setTransform: (t:string, tn:string)&#x3D;&gt; void
+    }
+
+    update: {
+        cache:          ()&#x3D;&gt; void,
+        data:           ()&#x3D;&gt; void,
+        layout:         ()&#x3D;&gt; void,
+        transformation: ()&#x3D;&gt; void,
+        pathes:         ()&#x3D;&gt; void
+    }
+}
+
+//----------------------------------------------------------------------------------------
+
+export class UnitDisk implements IUnitDisk
+{
+    public view          : UnitDiskView
+    public args          : UnitDiskArgs        
+    public cache         : TransformationCache // zeigt auf transformation.cache
+    public voronoiLayout : d3.VoronoiLayout&lt;N&gt;
+    
+    public layerStack    : LayerStack    
+    public pinchcenter   : C
+    public isDraging     : boolean
+    // public HypertreeMetaType &#x3D; HypertreeMeta
+    public cacheMeta
+
+    private mainsvg // d3 select          
+        
+    constructor(view:UnitDiskView, args : UnitDiskArgs) {
+        this.view &#x3D; view
+        this.args &#x3D; args
+        this.cache &#x3D; args.transformation.cache
+        this.update.parent()
+    }
+    
+    public api &#x3D; {
+        setTransform: (t:string, tn:string)&#x3D;&gt; this.mainsvg.attr(&#x27;transform&#x27;, t)        
+    }
+
+    public update &#x3D; {
+        parent: ()&#x3D;&gt; this.updateParent(),
+        cache:  ()&#x3D;&gt; this.args.cacheUpdate(this, this.cache), // gehört nicht hier her
+        data:   ()&#x3D;&gt; this.update.layout(),
+        layout: ()&#x3D;&gt; { 
+            this.args.cacheUpdate(this, this.cache)
+            this.layerStack.update.data()  
+        },
+        transformation: ()&#x3D;&gt; {
+        // console.log(&quot;🚀 ~ file: unitdisk.ts ~ line 84 ~ transformation&quot;)
+            this.args.cacheUpdate(this, this.cache)
+            this.layerStack.update.data()  
+        },
+        pathes: ()&#x3D;&gt; {
+            this.args.cacheUpdate(this, this.cache)
+            this.layerStack.update.pathes()  
+            //this.layerStack.update.transformation()            
+        }
+    }
+
+    private updateParent() {      
+        // console.log(&#x27;UPDATING UNITDISK PARENT&#x27;)  
+        this.mainsvg &#x3D; d3.select(this.view.parent).append(&#x27;g&#x27;)
+            .attr(&#x27;class&#x27;, this.view.className)
+            .attr(&#x27;transform&#x27;, this.view.position)
+        
+        this.mainsvg.append(&#x27;clipPath&#x27;)
+            .attr(&#x27;id&#x27;, &#x27;circle-clip&#x27; + this.args.clipRadius)
+            .append(&#x27;circle&#x27;)
+                .attr(&#x27;r&#x27;, this.args.clipRadius)       
+
+        this.voronoiLayout &#x3D; d3.voronoi&lt;N&gt;()
+            .x(d&#x3D;&gt; { console.assert(typeof d.cache.re &#x3D;&#x3D;&#x3D; &#x27;number&#x27;); return d.cache.re})
+            .y(d&#x3D;&gt; { console.assert(typeof d.cache.re &#x3D;&#x3D;&#x3D; &#x27;number&#x27;); return d.cache.im})
+            //.x(d&#x3D;&gt; d.cache.re)
+            //.y(d&#x3D;&gt; d.cache.im)
+            .extent([[-2,-2], [2,2]])
+       
+        this.layerStack &#x3D; new LayerStack({ 
+            parent: this.mainsvg,
+            unitdisk: this
+        })
+    }
+}
+
+//----------------------------------------------------------------------------------------
+
+export class UnitDiskNav implements IUnitDisk
+{
+    public view          : UnitDiskView
+    public args          : UnitDiskArgs
+    public cache         // redircteds NOT xD to view.cache    
+    public layerStack
+    
+    get voronoiLayout() : d3.VoronoiLayout&lt;N&gt; {
+        return this.mainView.voronoiLayout;
+    }
+
+    public mainView      : UnitDisk // public wegen hypertreemeta
+    public navBackground : UnitDisk // public wegen hypertreemeta
+    public navParameter  : UnitDisk // public wegen hypertreemeta
+
+    // public HypertreeMetaType &#x3D; HypertreeMetaNav
+
+    constructor(view:UnitDiskView, args:UnitDiskArgs) {
+        this.view &#x3D; view
+        this.args &#x3D; args
+
+        this.mainView &#x3D; new UnitDisk(view, args)
+        this.cache &#x3D; this.mainView.cache        
+        this.layerStack &#x3D; this.mainView.layerStack
+        
+        this.navBackground &#x3D; new UnitDisk({
+            parent:             view.parent,
+            className:          &#x27;nav-background-disc&#x27;,
+            position:           &#x27;translate(95,95) scale(70)&#x27;,
+            hypertree:          view.hypertree
+        },
+        {
+            data:               args.data,
+            decorator:          null,
+            
+            cacheUpdate:        null,
+            transformation:     args.transformation,
+            transform:          (n:N)&#x3D;&gt; n.layout.z,
+            
+            nodeRadius:         ()&#x3D;&gt; navBgNodeR,
+            nodeScale:          args.nodeScale,
+            nodeFilter:         args.nodeFilter,
+            linkWidth:          args.linkWidth,
+            linkCurvature:      args.linkCurvature,
+            layers:             navBackgroundLayers,
+            layerOptions:       {}, //args.layerOptions,
+            offsetEmoji:        args.offsetLabels,
+            offsetLabels:       args.offsetLabels,
+            clipRadius:         1,
+            captionBackground:  args.captionBackground,
+            captionFont:        args.captionFont, 
+            captionHeight:      args.captionHeight,
+        })
+
+        var navTransformation &#x3D;
+            new NegTransformation(
+                new PanTransformation(args.transformation.state))
+        
+        //var ncount &#x3D; 1        
+        this.navParameter &#x3D; new UnitDisk({
+            parent:             view.parent,
+            className:          &#x27;nav-parameter-disc&#x27;,
+            position:           &#x27;translate(95,95) scale(70)&#x27;,
+            hypertree:          view.hypertree
+        },
+        {            
+            data:               navdata(),
+            decorator:          null,
+            layers:             navParameterLayers,
+            layerOptions:       {}, //args.layerOptions,
+            cacheUpdate:        (ud:UnitDisk, cache:TransformationCache)&#x3D;&gt; {
+                var t0 &#x3D; performance.now()
+                cache.unculledNodes &#x3D; dfsFlat(ud.args.data)
+                function setCacheZ(n:N, v) {
+                    n.cache             &#x3D; v
+                    n.cachep            &#x3D; CktoCp(n.cache)
+                    n.strCache          &#x3D; n.cache.re + &#x27; &#x27; + n.cache.im
+                    n.scaleStrText      &#x3D; &#x60; scale(1)&#x60;
+                    n.transformStrCache &#x3D; &#x60; translate(${n.strCache})&#x60;
+                }
+                const spr &#x3D; 1.08
+                setCacheZ(cache.unculledNodes[0], CmulR(args.transformation.state.P, -1))               
+                setCacheZ(cache.unculledNodes[1], CmulR(args.transformation.state.θ, -spr))
+                setCacheZ(cache.unculledNodes[2], CptoCk({ θ:args.transformation.state.λ*2*Math.PI, r:-spr}))                
+
+                cache.voronoiDiagram &#x3D; ud.voronoiLayout(cache.unculledNodes)
+                cache.cells &#x3D; &lt;any&gt;cache.voronoiDiagram.polygons()
+                ud.cacheMeta &#x3D; { minWeight:[0], Δ:[performance.now()-t0] }              
+            },
+            transformation:     navTransformation,
+            transform:          (n:any)&#x3D;&gt; CmulR(n, -1),
+            //caption:            (n:N)&#x3D;&gt; undefined,
+            nodeRadius:         ()&#x3D;&gt; .16,
+            nodeScale:          ()&#x3D;&gt; 1,
+            nodeFilter:         ()&#x3D;&gt; true,
+            linkWidth:          args.linkWidth,
+            linkCurvature:      args.linkCurvature,
+            offsetEmoji:        args.offsetLabels,
+            offsetLabels:       args.offsetLabels,
+            clipRadius:         1.7,
+            captionBackground:  args.captionBackground,
+            captionFont:        args.captionFont,          
+            captionHeight:      args.captionHeight  
+        })
+    }
+    
+    public api &#x3D; {
+        setTransform: (t:string, tn:string)&#x3D;&gt; {
+            this.mainView.api.setTransform(t, null)
+            this.navBackground.api.setTransform(tn, null)
+            this.navParameter.api.setTransform(tn, null)
+        }
+    }
+
+    update &#x3D; {
+        data: ()&#x3D;&gt; { 
+            // TODO: wenns h bei jeden des gleiche ist dann getter
+            this.navBackground.args.data &#x3D; this.args.data
+            this.mainView.args.data &#x3D; this.args.data
+
+            this.update.layout()
+        },
+        cache: ()&#x3D;&gt; { 
+            this.mainView.update.cache()
+            this.navParameter.update.cache()
+        },
+        layout: ()&#x3D;&gt; {
+            this.mainView.update.cache()
+            this.navParameter.update.cache()
+
+            this.navBackground.layerStack.update.data() 
+            this.mainView.layerStack.update.data()
+            this.navParameter.layerStack.update.data()        
+        },
+        transformation: ()&#x3D;&gt; {
+            this.mainView.update.cache()
+            this.navParameter.update.cache()
+
+            this.mainView.layerStack.update.data()        
+            this.navParameter.layerStack.update.data()        
+            this.navBackground.layerStack.update.pathes()
+        },
+        pathes: ()&#x3D;&gt; {
+            this.mainView.update.cache()
+            this.mainView.layerStack.update.data()
+            this.navBackground.layerStack.update.pathes()
+            this.navParameter.layerStack.update.data() // wegen node hover
+        }
+    }
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
+            var COMPODOC_CURRENT_PAGE_URL = 'UnitDisk.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

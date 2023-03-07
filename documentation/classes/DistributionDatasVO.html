@@ -1,0 +1,1450 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>visualization-component documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">visualization-component documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content class">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Classes</li>
+  <li >DistributionDatasVO</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/khiops-visualization/model/distribution-datas-vo.ts</code>
+        </p>
+
+
+
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#appDatas" >appDatas</a>
+                            </li>
+                            <li>
+                                <a href="#distributionGraphDatas" >distributionGraphDatas</a>
+                            </li>
+                            <li>
+                                <a href="#distributionGraphOptions" >distributionGraphOptions</a>
+                            </li>
+                            <li>
+                                <a href="#distributionGraphOptionsX" >distributionGraphOptionsX</a>
+                            </li>
+                            <li>
+                                <a href="#distributionType" >distributionType</a>
+                            </li>
+                            <li>
+                                <a href="#distributionTypeX" >distributionTypeX</a>
+                            </li>
+                            <li>
+                                <a href="#preparationSource" >preparationSource</a>
+                            </li>
+                            <li>
+                                <a href="#targetDistributionDisplayedValues" >targetDistributionDisplayedValues</a>
+                            </li>
+                            <li>
+                                <a href="#targetDistributionGraphDatas" >targetDistributionGraphDatas</a>
+                            </li>
+                            <li>
+                                <a href="#targetDistributionType" >targetDistributionType</a>
+                            </li>
+                            <li>
+                                <a href="#treeHyperDisplayedValues" >treeHyperDisplayedValues</a>
+                            </li>
+                            <li>
+                                <a href="#treeHyperGraphDatas" >treeHyperGraphDatas</a>
+                            </li>
+                            <li>
+                                <a href="#treeNodedistributionGraphDatas" >treeNodedistributionGraphDatas</a>
+                            </li>
+                            <li>
+                                <a href="#treeNodeTargetDistributionDisplayedValues" >treeNodeTargetDistributionDisplayedValues</a>
+                            </li>
+                            <li>
+                                <a href="#treeNodeTargetDistributionGraphDatas" >treeNodeTargetDistributionGraphDatas</a>
+                            </li>
+                            <li>
+                                <a href="#treeNodeTargetDistributionType" >treeNodeTargetDistributionType</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#checkTargetDistributionGraphDatas" >checkTargetDistributionGraphDatas</a>
+                            </li>
+                            <li>
+                                <a href="#checkTreeHyperGraphDatas" >checkTreeHyperGraphDatas</a>
+                            </li>
+                            <li>
+                                <a href="#checkTreeNodeTargetDistributionGraphDatas" >checkTreeNodeTargetDistributionGraphDatas</a>
+                            </li>
+                            <li>
+                                <a href="#initTargetDistributionGraphDatas" >initTargetDistributionGraphDatas</a>
+                            </li>
+                            <li>
+                                <a href="#initTreeHyperGraphDatas" >initTreeHyperGraphDatas</a>
+                            </li>
+                            <li>
+                                <a href="#initTreeNodeTargetDistributionGraphDatas" >initTreeNodeTargetDistributionGraphDatas</a>
+                            </li>
+                            <li>
+                                <a href="#isValid" >isValid</a>
+                            </li>
+                            <li>
+                                <a href="#setDefaultGraphOptions" >setDefaultGraphOptions</a>
+                            </li>
+                            <li>
+                                <a href="#setHistogramGraphOptions" >setHistogramGraphOptions</a>
+                            </li>
+                            <li>
+                                <a href="#setTargetDistributionType" >setTargetDistributionType</a>
+                            </li>
+                            <li>
+                                <a href="#setTreeNodeTargetDistributionType" >setTreeNodeTargetDistributionType</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(appDatas)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">src/app/khiops-visualization/model/distribution-datas-vo.ts:51</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>appDatas</td>
+                                                  
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="appDatas"></a>
+                    <span class="name">
+                        <span ><b>appDatas</b></span>
+                        <a href="#appDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>undefined</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/app/khiops-visualization/model/distribution-datas-vo.ts:47</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="distributionGraphDatas"></a>
+                    <span class="name">
+                        <span ><b>distributionGraphDatas</b></span>
+                        <a href="#distributionGraphDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>literal type</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>undefined</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/khiops-visualization/model/distribution-datas-vo.ts:20</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="distributionGraphOptions"></a>
+                    <span class="name">
+                        <span ><b>distributionGraphOptions</b></span>
+                        <a href="#distributionGraphOptions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>literal type</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>undefined</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/app/khiops-visualization/model/distribution-datas-vo.ts:10</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="distributionGraphOptionsX"></a>
+                    <span class="name">
+                        <span ><b>distributionGraphOptionsX</b></span>
+                        <a href="#distributionGraphOptionsX"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>literal type</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>undefined</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/khiops-visualization/model/distribution-datas-vo.ts:15</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="distributionType"></a>
+                    <span class="name">
+                        <span ><b>distributionType</b></span>
+                        <a href="#distributionType"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;GLOBAL.COVERAGE&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="7" class="link-to-prism">src/app/khiops-visualization/model/distribution-datas-vo.ts:7</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="distributionTypeX"></a>
+                    <span class="name">
+                        <span ><b>distributionTypeX</b></span>
+                        <a href="#distributionTypeX"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">src/app/khiops-visualization/model/distribution-datas-vo.ts:8</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="preparationSource"></a>
+                    <span class="name">
+                        <span ><b>preparationSource</b></span>
+                        <a href="#preparationSource"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/khiops-visualization/model/distribution-datas-vo.ts:45</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="targetDistributionDisplayedValues"></a>
+                    <span class="name">
+                        <span ><b>targetDistributionDisplayedValues</b></span>
+                        <a href="#targetDistributionDisplayedValues"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/khiops-visualization/model/distribution-datas-vo.ts:30</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="targetDistributionGraphDatas"></a>
+                    <span class="name">
+                        <span ><b>targetDistributionGraphDatas</b></span>
+                        <a href="#targetDistributionGraphDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>literal type</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>undefined</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/khiops-visualization/model/distribution-datas-vo.ts:32</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="targetDistributionType"></a>
+                    <span class="name">
+                        <span ><b>targetDistributionType</b></span>
+                        <a href="#targetDistributionType"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;GLOBAL.PROBABILITIES&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/khiops-visualization/model/distribution-datas-vo.ts:31</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="treeHyperDisplayedValues"></a>
+                    <span class="name">
+                        <span ><b>treeHyperDisplayedValues</b></span>
+                        <a href="#treeHyperDisplayedValues"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/khiops-visualization/model/distribution-datas-vo.ts:37</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="treeHyperGraphDatas"></a>
+                    <span class="name">
+                        <span ><b>treeHyperGraphDatas</b></span>
+                        <a href="#treeHyperGraphDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>literal type</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>undefined</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">src/app/khiops-visualization/model/distribution-datas-vo.ts:48</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="treeNodedistributionGraphDatas"></a>
+                    <span class="name">
+                        <span ><b>treeNodedistributionGraphDatas</b></span>
+                        <a href="#treeNodedistributionGraphDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>literal type</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>undefined</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/khiops-visualization/model/distribution-datas-vo.ts:25</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="treeNodeTargetDistributionDisplayedValues"></a>
+                    <span class="name">
+                        <span ><b>treeNodeTargetDistributionDisplayedValues</b></span>
+                        <a href="#treeNodeTargetDistributionDisplayedValues"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/app/khiops-visualization/model/distribution-datas-vo.ts:38</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="treeNodeTargetDistributionGraphDatas"></a>
+                    <span class="name">
+                        <span ><b>treeNodeTargetDistributionGraphDatas</b></span>
+                        <a href="#treeNodeTargetDistributionGraphDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>literal type</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>undefined</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/khiops-visualization/model/distribution-datas-vo.ts:40</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="treeNodeTargetDistributionType"></a>
+                    <span class="name">
+                        <span ><b>treeNodeTargetDistributionType</b></span>
+                        <a href="#treeNodeTargetDistributionType"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;GLOBAL.PROBABILITIES&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/khiops-visualization/model/distribution-datas-vo.ts:39</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkTargetDistributionGraphDatas"></a>
+                    <span class="name">
+                        <span ><b>checkTargetDistributionGraphDatas</b></span>
+                        <a href="#checkTargetDistributionGraphDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>checkTargetDistributionGraphDatas()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="151"
+                            class="link-to-prism">src/app/khiops-visualization/model/distribution-datas-vo.ts:151</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkTreeHyperGraphDatas"></a>
+                    <span class="name">
+                        <span ><b>checkTreeHyperGraphDatas</b></span>
+                        <a href="#checkTreeHyperGraphDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>checkTreeHyperGraphDatas()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="137"
+                            class="link-to-prism">src/app/khiops-visualization/model/distribution-datas-vo.ts:137</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkTreeNodeTargetDistributionGraphDatas"></a>
+                    <span class="name">
+                        <span ><b>checkTreeNodeTargetDistributionGraphDatas</b></span>
+                        <a href="#checkTreeNodeTargetDistributionGraphDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>checkTreeNodeTargetDistributionGraphDatas()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="131"
+                            class="link-to-prism">src/app/khiops-visualization/model/distribution-datas-vo.ts:131</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="initTargetDistributionGraphDatas"></a>
+                    <span class="name">
+                        <span ><b>initTargetDistributionGraphDatas</b></span>
+                        <a href="#initTargetDistributionGraphDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>initTargetDistributionGraphDatas()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="143"
+                            class="link-to-prism">src/app/khiops-visualization/model/distribution-datas-vo.ts:143</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="initTreeHyperGraphDatas"></a>
+                    <span class="name">
+                        <span ><b>initTreeHyperGraphDatas</b></span>
+                        <a href="#initTreeHyperGraphDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>initTreeHyperGraphDatas()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="123"
+                            class="link-to-prism">src/app/khiops-visualization/model/distribution-datas-vo.ts:123</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="initTreeNodeTargetDistributionGraphDatas"></a>
+                    <span class="name">
+                        <span ><b>initTreeNodeTargetDistributionGraphDatas</b></span>
+                        <a href="#initTreeNodeTargetDistributionGraphDatas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>initTreeNodeTargetDistributionGraphDatas()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="66"
+                            class="link-to-prism">src/app/khiops-visualization/model/distribution-datas-vo.ts:66</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isValid"></a>
+                    <span class="name">
+                        <span ><b>isValid</b></span>
+                        <a href="#isValid"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isValid()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="60"
+                            class="link-to-prism">src/app/khiops-visualization/model/distribution-datas-vo.ts:60</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Check if current datas are valid</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setDefaultGraphOptions"></a>
+                    <span class="name">
+                        <span ><b>setDefaultGraphOptions</b></span>
+                        <a href="#setDefaultGraphOptions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setDefaultGraphOptions()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="74"
+                            class="link-to-prism">src/app/khiops-visualization/model/distribution-datas-vo.ts:74</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setHistogramGraphOptions"></a>
+                    <span class="name">
+                        <span ><b>setHistogramGraphOptions</b></span>
+                        <a href="#setHistogramGraphOptions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setHistogramGraphOptions()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="92"
+                            class="link-to-prism">src/app/khiops-visualization/model/distribution-datas-vo.ts:92</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setTargetDistributionType"></a>
+                    <span class="name">
+                        <span ><b>setTargetDistributionType</b></span>
+                        <a href="#setTargetDistributionType"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setTargetDistributionType(type: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="157"
+                            class="link-to-prism">src/app/khiops-visualization/model/distribution-datas-vo.ts:157</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>type</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setTreeNodeTargetDistributionType"></a>
+                    <span class="name">
+                        <span ><b>setTreeNodeTargetDistributionType</b></span>
+                        <a href="#setTreeNodeTargetDistributionType"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setTreeNodeTargetDistributionType(type: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="163"
+                            class="link-to-prism">src/app/khiops-visualization/model/distribution-datas-vo.ts:163</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>type</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+	AppConfig
+} from &quot;src/environments/environment&quot;;
+
+export class DistributionDatasVO {
+
+	distributionType &#x3D; &#x27;GLOBAL.COVERAGE&#x27;;
+	distributionTypeX &#x3D; &#x27;&#x27;;
+
+	distributionGraphOptions: {
+		types: string[],
+		selected: string
+	} &#x3D; undefined;
+
+	distributionGraphOptionsX: {
+		types: string[],
+		selected: string
+	} &#x3D; undefined;
+
+	distributionGraphDatas: {
+		datasets: any[],
+		labels: any[]
+	} &#x3D; undefined;
+
+	treeNodedistributionGraphDatas: {
+		datasets: any[],
+		labels: any[]
+	} &#x3D; undefined;
+
+	targetDistributionDisplayedValues: any;
+	targetDistributionType &#x3D; &#x27;GLOBAL.PROBABILITIES&#x27;;
+	targetDistributionGraphDatas: {
+		datasets: any[],
+		labels: any[]
+	} &#x3D; undefined;
+
+	treeHyperDisplayedValues: any;
+	treeNodeTargetDistributionDisplayedValues: any;
+	treeNodeTargetDistributionType &#x3D; &#x27;GLOBAL.PROBABILITIES&#x27;;
+	treeNodeTargetDistributionGraphDatas: {
+		datasets: any[],
+		labels: any[]
+	} &#x3D; undefined;
+
+	preparationSource &#x3D; &#x27;&#x27;;
+
+	appDatas: any &#x3D; undefined;
+	treeHyperGraphDatas: {
+		datasets: any[],
+		labels: any[]
+	} &#x3D; undefined;
+
+	constructor(appDatas) {
+		this.appDatas &#x3D; appDatas;
+	}
+
+	/**
+	 * Check if current datas are valid
+	 */
+	isValid(): boolean {
+		return this.appDatas &amp;&amp;
+			this.appDatas[this.preparationSource] &amp;&amp;
+			this.appDatas[this.preparationSource].variablesDetailedStatistics;
+	}
+
+	initTreeNodeTargetDistributionGraphDatas() {
+		this.treeNodeTargetDistributionGraphDatas &#x3D; {
+			datasets: [],
+			labels: []
+		};
+		// this.treeNodeTargetDistributionDisplayedValues &#x3D; undefined; // No !!! otherwise the select box do not work
+	}
+
+	setDefaultGraphOptions() {
+		this.distributionGraphOptionsX &#x3D; undefined;
+		this.distributionGraphOptions &#x3D; {
+			types: [
+				&#x27;GLOBAL.COVERAGE&#x27;, &#x27;GLOBAL.FREQUENCY&#x27;
+			],
+			selected: undefined
+		};
+		const savedOption &#x3D; localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + &#x27;DISTRIBUTION_GRAPH_OPTION&#x27;);
+		if (this.distributionGraphOptions.types.includes(savedOption)) {
+			this.distributionGraphOptions.selected &#x3D; savedOption
+		} else {
+			this.distributionGraphOptions.selected &#x3D; this.distributionGraphOptions.types[0]
+		}
+		this.distributionType &#x3D; this.distributionGraphOptions.selected;
+		this.distributionTypeX &#x3D; &#x27;&#x27;;
+	}
+
+	setHistogramGraphOptions() {
+		this.distributionGraphOptions &#x3D; {
+			types: [
+				&#x27;yLin&#x27;, &#x27;yLog&#x27;
+			],
+			selected: undefined
+		};
+		const savedOption &#x3D; localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + &#x27;DISTRIBUTION_GRAPH_OPTION&#x27;);
+		if (this.distributionGraphOptions.types.includes(savedOption)) {
+			this.distributionGraphOptions.selected &#x3D; savedOption
+		} else {
+			this.distributionGraphOptions.selected &#x3D; this.distributionGraphOptions.types[0]
+		}
+
+		this.distributionGraphOptionsX &#x3D; {
+			types: [
+				&#x27;xLin&#x27; //, &#x27;xLog&#x27;
+			],
+			selected: undefined
+		};
+		const savedOptionX &#x3D; localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + &#x27;DISTRIBUTION_GRAPH_OPTION_X&#x27;);
+		if (this.distributionGraphOptionsX.types.includes(savedOptionX)) {
+			this.distributionGraphOptionsX.selected &#x3D; savedOptionX
+		} else {
+			this.distributionGraphOptionsX.selected &#x3D; this.distributionGraphOptionsX.types[0]
+		}
+		this.distributionType &#x3D; this.distributionGraphOptions.selected;
+		this.distributionTypeX &#x3D; this.distributionGraphOptionsX.selected;
+
+	}
+
+	initTreeHyperGraphDatas() {
+		this.treeHyperGraphDatas &#x3D; {
+			datasets: [],
+			labels: []
+		};
+		// this.treeNodeTargetDistributionDisplayedValues &#x3D; undefined; // No !!! otherwise the select box do not work
+	}
+
+	checkTreeNodeTargetDistributionGraphDatas() {
+		if (this.treeNodeTargetDistributionGraphDatas &amp;&amp; this.treeNodeTargetDistributionGraphDatas.datasets.length &#x3D;&#x3D;&#x3D; 0) {
+			this.treeNodeTargetDistributionGraphDatas &#x3D; undefined;
+		}
+	}
+
+	checkTreeHyperGraphDatas() {
+		if (this.treeHyperGraphDatas &amp;&amp; this.treeHyperGraphDatas.datasets.length &#x3D;&#x3D;&#x3D; 0) {
+			this.treeHyperGraphDatas &#x3D; undefined;
+		}
+	}
+
+	initTargetDistributionGraphDatas() {
+		this.targetDistributionGraphDatas &#x3D; {
+			datasets: [],
+			labels: []
+		};
+		// this.targetDistributionDisplayedValues &#x3D; undefined; // No !!! otherwise the select box do not work
+	}
+
+	checkTargetDistributionGraphDatas() {
+		if (this.targetDistributionGraphDatas &amp;&amp; this.targetDistributionGraphDatas.datasets.length &#x3D;&#x3D;&#x3D; 0) {
+			this.targetDistributionGraphDatas &#x3D; undefined;
+		}
+	}
+
+	setTargetDistributionType(type: string) {
+		if (type) {
+			this.targetDistributionType &#x3D; type;
+		}
+	}
+
+	setTreeNodeTargetDistributionType(type: string) {
+		if (type) {
+			this.treeNodeTargetDistributionType &#x3D; type;
+		}
+	}
+
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
+            var COMPODOC_CURRENT_PAGE_URL = 'DistributionDatasVO.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
