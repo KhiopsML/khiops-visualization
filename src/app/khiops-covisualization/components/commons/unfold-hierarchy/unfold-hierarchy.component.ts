@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import {
 	DimensionsDatasService
-} from 'src/app/providers/dimensions-datas.service';
+} from '@khiops-covisualization/providers/dimensions-datas.service';
 import {
 	MatDialogRef
 } from '@angular/material/dialog';
@@ -20,10 +20,10 @@ import {
 import * as _ from 'lodash'; // Important to import lodash in karma
 import {
 	TreenodesService
-} from 'src/app/providers/treenodes.service';
+} from '@khiops-covisualization/providers/treenodes.service';
 import {
 	ClustersService
-} from 'src/app/providers/clusters.service';
+} from '@khiops-covisualization/providers/clusters.service';
 
 @Component({
 	selector: 'app-unfold-hierarchy',
@@ -54,22 +54,22 @@ export class UnfoldHierarchyComponent implements OnInit {
 	selectedLineChartItem = undefined;
 
 	hierarchyDisplayedColumns = [{
-			headerName: 'Dimension',
-			field: 'name'
-		},
-		{
-			headerName: 'Number of Cluster',
-			field: 'currentHierarchyClusterCount'
-		},
-		{
-			headerName: 'Max Number of Cluster',
-			field: 'initialParts'
-		},
-		{
-			headerName: 'FoldUnfold',
-			field: 'hierarchyFold',
-			cellRendererFramework: CheckboxCellComponent
-		}
+		headerName: 'Dimension',
+		field: 'name'
+	},
+	{
+		headerName: 'Number of Cluster',
+		field: 'currentHierarchyClusterCount'
+	},
+	{
+		headerName: 'Max Number of Cluster',
+		field: 'initialParts'
+	},
+	{
+		headerName: 'FoldUnfold',
+		field: 'hierarchyFold',
+		cellRendererFramework: CheckboxCellComponent
+	}
 	];
 	chartOptions = {
 		elements: {
@@ -115,7 +115,7 @@ export class UnfoldHierarchyComponent implements OnInit {
 		private treenodesService: TreenodesService,
 		private clustersService: ClustersService,
 		private khiopsLibraryService: KhiopsLibraryService,
-		private dialogRef: MatDialogRef < UnfoldHierarchyComponent > ) {
+		private dialogRef: MatDialogRef<UnfoldHierarchyComponent>) {
 
 		this.hierarchyDatas = this.treenodesService.getHierarchyDatas();
 

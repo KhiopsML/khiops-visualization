@@ -7,34 +7,29 @@ import {
 } from 'src/environments/environment';
 import {
 	AppService
-} from 'src/app/providers/app.service';
+} from '@khiops-visualization/providers/app.service';
 import {
 	DistributionDatasService
-} from 'src/app/providers/distribution-datas.service';
+} from '@khiops-visualization/providers/distribution-datas.service';
 import {
 	ModelingDatasService
-} from 'src/app/providers/modeling-datas.service';
+} from '@khiops-visualization/providers/modeling-datas.service';
 import {
 	EvaluationDatasService
-} from 'src/app/providers/evaluation-datas.service';
+} from '@khiops-visualization/providers/evaluation-datas.service';
 import {
 	PreparationDatasService
-} from 'src/app/providers/preparation-datas.service';
-let pjson;
-try {
-	pjson = require('../../../../package.json');
-} catch (e) {
-	console.warn('Can not access pjson on browser', e);
-}
+} from '@khiops-visualization/providers/preparation-datas.service';
+import pjson from "package.json";
 import {
 	SelectableTabComponent
 } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import {
 	Preparation2dDatasService
-} from 'src/app/providers/preparation2d-datas.service';
+} from '@khiops-visualization/providers/preparation2d-datas.service';
 import {
 	TreePreparationDatasService
-} from 'src/app/providers/tree-preparation-datas.service';
+} from '@khiops-visualization/providers/tree-preparation-datas.service';
 import {
 	TranslateService
 } from '@ngstack/translate';
@@ -63,7 +58,7 @@ export class ProjectViewComponent extends SelectableTabComponent implements OnIn
 
 	// managed by selectable-tab component
 	tabIndex = 0;
-	tabConfig = AppConfig.common.HOME;
+	tabConfig = AppConfig.visualizationCommon.HOME;
 
 	logsDisplayedColumns: GridColumnsI[] = [{
 		headerName: 'Task',

@@ -25,7 +25,7 @@ try {
 	styleUrls: ['./user-settings.component.scss']
 })
 export class UserSettingsComponent implements OnChanges {
-	@Output() toggleNavDrawerChanged: EventEmitter < any > = new EventEmitter();
+	@Output() toggleNavDrawerChanged: EventEmitter<any> = new EventEmitter();
 	@Input() opened: boolean;
 
 	allowCookies: boolean;
@@ -33,7 +33,7 @@ export class UserSettingsComponent implements OnChanges {
 	contrastValue: number;
 	initialAllowCookies: boolean;
 
-	constructor(private khiopsLibraryService: KhiopsLibraryService) {}
+	constructor(private khiopsLibraryService: KhiopsLibraryService) { }
 
 	ngOnChanges(changes: SimpleChanges) {
 		if (changes.opened && changes.opened.currentValue) {
@@ -46,14 +46,14 @@ export class UserSettingsComponent implements OnChanges {
 		this.khiopsLibraryService.trackEvent('page_view', 'settings');
 
 		// Font size
-		this.fontSize = localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + 'FONT_SIZE') || AppConfig.common.GLOBAL.FONT_SIZE;
-		localStorage.setItem(AppConfig.common.GLOBAL.LS_ID + 'FONT_SIZE', this.fontSize);
-		AppConfig.common.GLOBAL.FONT_SIZE = this.fontSize;
+		this.fontSize = localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'FONT_SIZE') || AppConfig.covisualizationCommon.GLOBAL.FONT_SIZE;
+		localStorage.setItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'FONT_SIZE', this.fontSize);
+		AppConfig.covisualizationCommon.GLOBAL.FONT_SIZE = this.fontSize;
 
 		// Matrix contrast
-		this.contrastValue = parseInt(localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST'), 10) || AppConfig.common.GLOBAL.MATRIX_CONTRAST;
-		localStorage.setItem(AppConfig.common.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST', this.contrastValue.toString());
-		AppConfig.common.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
+		this.contrastValue = parseInt(localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST'), 10) || AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST;
+		localStorage.setItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST', this.contrastValue.toString());
+		AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
 
 		// Allow cookies
 		this.allowCookies = (storage.getSync('COOKIE_CONSENT') === 'true') || false;
@@ -62,23 +62,23 @@ export class UserSettingsComponent implements OnChanges {
 
 	onClickOnCancel() {
 		// reset font_size on cancel
-		const previousFontSize = localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + 'FONT_SIZE');
+		const previousFontSize = localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'FONT_SIZE');
 		this.onFontSizeChanged({
 			value: previousFontSize
 		});
-		localStorage.setItem(AppConfig.common.GLOBAL.LS_ID + 'FONT_SIZE', previousFontSize);
-		AppConfig.common.GLOBAL.FONT_SIZE = parseInt(previousFontSize, 10);
+		localStorage.setItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'FONT_SIZE', previousFontSize);
+		AppConfig.covisualizationCommon.GLOBAL.FONT_SIZE = parseInt(previousFontSize, 10);
 
 		this.toggleNavDrawerChanged.emit();
 	}
 
 	onClickOnSave() {
 		// Save all items
-		localStorage.setItem(AppConfig.common.GLOBAL.LS_ID + 'FONT_SIZE', this.fontSize);
-		AppConfig.common.GLOBAL.FONT_SIZE = this.fontSize;
+		localStorage.setItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'FONT_SIZE', this.fontSize);
+		AppConfig.covisualizationCommon.GLOBAL.FONT_SIZE = this.fontSize;
 
-		localStorage.setItem(AppConfig.common.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST', this.contrastValue.toString());
-		AppConfig.common.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
+		localStorage.setItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST', this.contrastValue.toString());
+		AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
 
 		storage.setSync('COOKIE_CONSENT', this.allowCookies.toString());
 

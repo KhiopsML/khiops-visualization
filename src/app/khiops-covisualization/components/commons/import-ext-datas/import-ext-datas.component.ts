@@ -10,11 +10,11 @@ import {
 } from '@angular/material/dialog';
 import {
 	DimensionsDatasService
-} from 'src/app/providers/dimensions-datas.service';
+} from '@khiops-covisualization/providers/dimensions-datas.service';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import {
 	ImportExtDatasService
-} from 'src/app/providers/import-ext-datas.service';
+} from '@khiops-covisualization/providers/import-ext-datas.service';
 import {
 	TranslateService
 } from '@ngstack/translate';
@@ -23,7 +23,7 @@ import {
 } from '@khiops-library/model/file-vo';
 import {
 	ExtDatasVO
-} from 'src/app/model/ext-datas-vo';
+} from '@khiops-covisualization/model/ext-datas-vo';
 import {
 	DimensionVO
 } from '@khiops-library/model/dimension-vo';
@@ -55,7 +55,7 @@ export class ImportExtDatasComponent implements OnInit {
 	};
 	@Input() importExtDatas: FileVO;
 
-	@Output() closeImport: EventEmitter < any > = new EventEmitter();
+	@Output() closeImport: EventEmitter<any> = new EventEmitter();
 
 	constructor(
 		private dimensionsService: DimensionsDatasService,
@@ -129,18 +129,18 @@ export class ImportExtDatasComponent implements OnInit {
 		};
 
 		this.fieldsToImport.displayedColumns = [{
-				headerName: 'name',
-				field: 'name'
-			},
-			// {
-			// 	headerName: 'type',
-			// 	field: 'type'
-			// },
-			{
-				headerName: 'import',
-				field: 'import',
-				cellRendererFramework: CheckboxCellComponent
-			}
+			headerName: 'name',
+			field: 'name'
+		},
+		// {
+		// 	headerName: 'type',
+		// 	field: 'type'
+		// },
+		{
+			headerName: 'import',
+			field: 'import',
+			cellRendererFramework: CheckboxCellComponent
+		}
 		];
 
 		const selectedKeyIndex = this.formatedDatas.keys.findIndex(e => e === this.joinKeys.selected);

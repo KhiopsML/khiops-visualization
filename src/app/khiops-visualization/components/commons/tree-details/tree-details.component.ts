@@ -12,7 +12,7 @@ import _ from "lodash";
 import { SelectableService } from "@khiops-library/components/selectable/selectable.service";
 import { GridDatasI } from "@khiops-library/interfaces/grid-datas";
 import { TranslateService } from "@ngstack/translate";
-import { TreePreparationDatasService } from "src/app/providers/tree-preparation-datas.service";
+import { TreePreparationDatasService } from "@khiops-visualization/providers/tree-preparation-datas.service";
 
 @Component({
 	selector: "app-tree-details",
@@ -20,8 +20,7 @@ import { TreePreparationDatasService } from "src/app/providers/tree-preparation-
 	styleUrls: ["./tree-details.component.scss"],
 })
 export class TreeDetailsComponent
-	implements OnInit, AfterViewInit, OnChanges, OnDestroy
-{
+	implements OnInit, AfterViewInit, OnChanges, OnDestroy {
 	@Input() selectedNodes: any;
 	@Input() selectedNode: any;
 
@@ -32,13 +31,13 @@ export class TreeDetailsComponent
 		public selectableService: SelectableService,
 		private treePreparationDatasService: TreePreparationDatasService,
 		public translate: TranslateService
-	) {}
+	) { }
 
-	ngOnInit() {}
+	ngOnInit() { }
 
-	ngAfterViewInit() {}
+	ngAfterViewInit() { }
 
-	ngOnDestroy() {}
+	ngOnDestroy() { }
 
 	ngOnChanges(changes: SimpleChanges) {
 		if (changes.selectedNodes && changes.selectedNodes.currentValue) {

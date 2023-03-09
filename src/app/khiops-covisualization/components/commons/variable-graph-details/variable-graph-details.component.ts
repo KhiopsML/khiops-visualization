@@ -24,13 +24,13 @@ import {
 } from '@khiops-library/components/distribution-graph-canvas/distribution-graph-canvas.component';
 import {
 	EventsService
-} from 'src/app/providers/events.service';
+} from '@khiops-covisualization/providers/events.service';
 import {
 	TreenodesService
-} from 'src/app/providers/treenodes.service';
+} from '@khiops-covisualization/providers/treenodes.service';
 import {
 	ClustersService
-} from 'src/app/providers/clusters.service';
+} from '@khiops-covisualization/providers/clusters.service';
 import {
 	ChartColorsSetI
 } from '@khiops-library/interfaces/chart-colors-set';
@@ -47,7 +47,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges, OnDestr
 	}) distributionGraph: DistributionGraphCanvasComponent;
 
 	@Input() selectedNode;
-	@Output() selectedItemChanged: EventEmitter < any > = new EventEmitter();
+	@Output() selectedItemChanged: EventEmitter<any> = new EventEmitter();
 	@Input() position: number;
 	@Input() dimensionsTree: any;
 	@Input() selectedDimension: DimensionVO;

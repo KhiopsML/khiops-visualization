@@ -10,19 +10,19 @@ import {
 } from '@angular/core';
 import {
 	PreparationDatasService
-} from 'src/app/providers/preparation-datas.service';
+} from '@khiops-visualization/providers/preparation-datas.service';
 import {
 	DistributionDatasService
-} from 'src/app/providers/distribution-datas.service';
+} from '@khiops-visualization/providers/distribution-datas.service';
 import {
 	DistributionGraphCanvasComponent
 } from '@khiops-library/components/distribution-graph-canvas/distribution-graph-canvas.component';
 import {
 	TargetDistributionGraphCanvasComponent
-} from '../target-distribution-graph-canvas/target-distribution-graph-canvas.component';
+} from '@khiops-visualization/components/commons/target-distribution-graph-canvas/target-distribution-graph-canvas.component';
 import {
 	TreePreparationDatasService
-} from 'src/app/providers/tree-preparation-datas.service';
+} from '@khiops-visualization/providers/tree-preparation-datas.service';
 import {
 	AppConfig
 } from 'src/environments/environment';
@@ -49,7 +49,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
 	@Input() preparationSource;
 	@Input() position = 0; // in case of multiple component in the same page
 
-	@Output() selectedItemChanged: EventEmitter < any > = new EventEmitter();
+	@Output() selectedItemChanged: EventEmitter<any> = new EventEmitter();
 
 	preparationDatas: any;
 	distributionDatas: any;
@@ -68,7 +68,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
 		private preparationDatasService: PreparationDatasService,
 		private treePreparationDatasService: TreePreparationDatasService,
 		private distributionDatasService: DistributionDatasService) {
-		this.targetDistributionGraphType = localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + 'TARGET_DISTRIBUTION_GRAPH_OPTION');
+		this.targetDistributionGraphType = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'TARGET_DISTRIBUTION_GRAPH_OPTION');
 	}
 
 	ngOnInit() {

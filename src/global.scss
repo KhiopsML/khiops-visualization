@@ -1,7 +1,7 @@
 @import "theme.scss";
-@import "../components/ag-grid/ag-grid-theme.scss";
-@import "../components/ag-grid/ag-theme-balham.scss";
-@import "../components/ag-grid/ag-theme-material.scss";
+@import "app/khiops-library/components/ag-grid/ag-grid-theme.scss";
+@import "app/khiops-library/components/ag-grid/ag-theme-balham.scss";
+@import "app/khiops-library/components/ag-grid/ag-theme-material.scss";
 
 html,
 body {

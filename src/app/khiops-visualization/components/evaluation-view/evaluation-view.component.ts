@@ -13,7 +13,7 @@ import {
 } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import {
 	EvaluationDatasService
-} from 'src/app/providers/evaluation-datas.service';
+} from '@khiops-visualization/providers/evaluation-datas.service';
 import {
 	KhiopsLibraryService
 } from '@khiops-library/providers/khiops-library.service';
@@ -30,7 +30,7 @@ export class EvaluationViewComponent extends SelectableTabComponent implements O
 
 	// managed by selectable-tab component
 	tabIndex = 4;
-	tabConfig = AppConfig.common.HOME;
+	tabConfig = AppConfig.visualizationCommon.HOME;
 	evaluationDatas: any;
 
 	constructor(private khiopsLibraryService: KhiopsLibraryService,

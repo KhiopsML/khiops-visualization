@@ -9,34 +9,34 @@ import {
 } from '@angular/material/dialog';
 import {
 	Preparation2dDatasService
-} from '../../providers/preparation2d-datas.service';
+} from '@khiops-visualization/providers/preparation2d-datas.service';
 import {
 	AppConfig
 } from 'src/environments/environment';
 import {
 	AppService
-} from '../../providers/app.service';
+} from '@khiops-visualization/providers/app.service';
 import {
 	SelectableTabComponent
 } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import {
 	PreparationDatasService
-} from 'src/app/providers/preparation-datas.service';
+} from '@khiops-visualization/providers/preparation-datas.service';
 import {
 	LevelDistributionGraphCanvasComponent
-} from '../commons/level-distribution-graph-canvas/level-distribution-graph-canvas.component';
+} from '@khiops-visualization/components/commons/level-distribution-graph-canvas/level-distribution-graph-canvas.component';
 import {
 	TargetDistributionGraphCanvasComponent
-} from '../commons/target-distribution-graph-canvas/target-distribution-graph-canvas.component';
+} from '@khiops-visualization/components/commons/target-distribution-graph-canvas/target-distribution-graph-canvas.component';
 import {
 	ModelingDatasService
-} from 'src/app/providers/modeling-datas.service';
+} from '@khiops-visualization/providers/modeling-datas.service';
 import {
 	TranslateService
 } from '@ngstack/translate';
 import {
 	Distribution2dDatasService
-} from 'src/app/providers/distribution2d-datas.service';
+} from '@khiops-visualization/providers/distribution2d-datas.service';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 
@@ -113,7 +113,7 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
 
 	// managed by selectable-tab component
 	tabIndex = 2;
-	tabConfig = AppConfig.common.HOME;
+	tabConfig = AppConfig.visualizationCommon.HOME;
 	currentCellIndex: any;
 	variables2dDatas: any;
 	targetDistributionGraphDatas: any;
@@ -158,9 +158,9 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
 
 	onShowLevelDistributionGraph(datas: any) {
 		const config = new MatDialogConfig();
-		config.width = AppConfig.common.LEVEL_DISTRIBUTION_GRAPH.WIDTH;
-		config.height = AppConfig.common.LEVEL_DISTRIBUTION_GRAPH.HEIGHT;
-		const dialogRef: MatDialogRef < LevelDistributionGraphCanvasComponent > = this.dialog.open(LevelDistributionGraphCanvasComponent, config);
+		config.width = AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.WIDTH;
+		config.height = AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.HEIGHT;
+		const dialogRef: MatDialogRef<LevelDistributionGraphCanvasComponent> = this.dialog.open(LevelDistributionGraphCanvasComponent, config);
 		dialogRef.componentInstance.levelDistributionTitle = this.levelDistributionTitle;
 		dialogRef.componentInstance.datas = datas;
 	}

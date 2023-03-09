@@ -9,10 +9,10 @@ import {
 } from '@angular/core';
 import {
 	AppService
-} from 'src/app/providers/app.service';
+} from '@khiops-visualization/providers/app.service';
 import {
 	TreePreparationDatasService
-} from 'src/app/providers/tree-preparation-datas.service';
+} from '@khiops-visualization/providers/tree-preparation-datas.service';
 import {
 	VariableGraphDetailsComponent
 } from '../variable-graph-details/variable-graph-details.component';
@@ -53,7 +53,7 @@ export class VarDetailsTreePreparationComponent implements OnInit, AfterViewInit
 
 	}
 
-	ngOnDestroy() {}
+	ngOnDestroy() { }
 
 	ngOnChanges(changes: SimpleChanges) {
 

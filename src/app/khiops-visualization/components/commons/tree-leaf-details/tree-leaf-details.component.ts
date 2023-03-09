@@ -14,22 +14,22 @@ import {
 } from '@khiops-library/components/selectable/selectable.service';
 import {
 	DistributionDatasService
-} from 'src/app/providers/distribution-datas.service';
+} from '@khiops-visualization/providers/distribution-datas.service';
 import {
 	TranslateService
 } from '@ngstack/translate';
 import {
 	TreePreparationDatasService
-} from 'src/app/providers/tree-preparation-datas.service';
+} from '@khiops-visualization/providers/tree-preparation-datas.service';
 import {
 	GridDatasI
 } from '@khiops-library/interfaces/grid-datas';
 import {
 	TreePreparationDatasVO
-} from 'src/app/model/tree-preparation-datas-vo';
+} from '@khiops-visualization/model/tree-preparation-datas-vo';
 import {
 	DistributionDatasVO
-} from 'src/app/model/distribution-datas-vo';
+} from '@khiops-visualization/model/distribution-datas-vo';
 import {
 	UtilsService
 } from '@khiops-library/providers/utils.service';
@@ -40,7 +40,7 @@ import {
 	styleUrls: ['./tree-leaf-details.component.scss'],
 })
 export class TreeLeafDetailsComponent
-implements OnInit, AfterViewInit, OnChanges, OnDestroy {
+	implements OnInit, AfterViewInit, OnChanges, OnDestroy {
 	@Input() selectedNode: any;
 	@Input() displayedValues: any;
 
@@ -60,16 +60,16 @@ implements OnInit, AfterViewInit, OnChanges, OnDestroy {
 		private treePreparationDatasService: TreePreparationDatasService,
 		private distributionDatasService: DistributionDatasService,
 		public translate: TranslateService
-	) {}
+	) { }
 
 	ngOnInit() {
 		this.treePreparationDatas = this.treePreparationDatasService.getDatas();
 		this.distributionDatas = this.distributionDatasService.getDatas();
 	}
 
-	ngAfterViewInit() {}
+	ngAfterViewInit() { }
 
-	ngOnDestroy() {}
+	ngOnDestroy() { }
 
 	updateComponentDatas() {
 		setTimeout(() => {
@@ -95,7 +95,7 @@ implements OnInit, AfterViewInit, OnChanges, OnDestroy {
 		}
 	}
 
-	onSelectedTreeLeafDetailsTabChanged(e) {}
+	onSelectedTreeLeafDetailsTabChanged(e) { }
 
 	onTreeNodeTargetDistributionGraphTypeChanged(type: any) {
 		this.treeNodeTargetDistributionGraphType = type;
@@ -105,9 +105,9 @@ implements OnInit, AfterViewInit, OnChanges, OnDestroy {
 		);
 	}
 
-	onSelectedTreeNodeDistributionGraphItemChanged(index: any) {}
+	onSelectedTreeNodeDistributionGraphItemChanged(index: any) { }
 
-	onSelectedTreeNodeTargetDistributionGraphItemChanged(index: any) {}
+	onSelectedTreeNodeTargetDistributionGraphItemChanged(index: any) { }
 
 	onTreeNodeTargetDistributionGraphDisplayedValuesChanged(displayedValues) {
 		this.distributionDatasService.setTreeNodeTargetDistributionDisplayedValues(

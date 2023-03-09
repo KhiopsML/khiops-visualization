@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import {
 	Preparation2dDatasService
-} from '../../../providers/preparation2d-datas.service';
+} from '@khiops-visualization/providers/preparation2d-datas.service';
 import {
 	SelectableService
 } from '@khiops-library/components/selectable/selectable.service';
@@ -29,16 +29,16 @@ import {
 } from '@khiops-library/components/matrix-canvas/matrix-canvas.component';
 import {
 	AppService
-} from 'src/app/providers/app.service';
+} from '@khiops-visualization/providers/app.service';
 import {
 	Preparation2dDatasVO
-} from 'src/app/model/preparation2d-datas-vo';
+} from '@khiops-visualization/model/preparation2d-datas-vo';
 import {
 	Preparation2dVariableVO
-} from 'src/app/model/preparation2d-variable-vo';
+} from '@khiops-visualization/model/preparation2d-variable-vo';
 import {
 	CoocurenceCellsVO
-} from 'src/app/model/coocurence-cells-vo';
+} from '@khiops-visualization/model/coocurence-cells-vo';
 import {
 	MatrixModesI
 } from '@khiops-library/interfaces/matrix-modes';
@@ -71,7 +71,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
 
 	preparation2dDatas: Preparation2dDatasVO;
 	@Input() selectedVariable: Preparation2dVariableVO;
-	@Output() selectCellRowChanged: EventEmitter < any > = new EventEmitter();
+	@Output() selectCellRowChanged: EventEmitter<any> = new EventEmitter();
 
 	matrixOptions: MatrixOptionsI = new MatrixOptionsI();
 	matrixModes: MatrixModesI = new MatrixModesI();
@@ -95,7 +95,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
 
 		setTimeout(() => { // Avoid ExpressionChangedAfterItHasBeenCheckedError
 
-			this.matrixOptions.selected = localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + 'MATRIX_TYPE_OPTION') || this.matrixOptions.types[0];
+			this.matrixOptions.selected = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_TYPE_OPTION') || this.matrixOptions.types[0];
 
 			this.preparation2dDatasService.getMatrixCanvasDatas(this.preparation2dDatas.selectedVariable);
 
@@ -180,7 +180,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
 		}
 		if (!this.matrixModes.selected) {
 			// Get previous selected target if compatible
-			const previousSelectedModeIndex = localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + 'MATRIX_MODE_OPTION_INDEX');
+			const previousSelectedModeIndex = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_MODE_OPTION_INDEX');
 			if (previousSelectedModeIndex) {
 				this.matrixModes.selected = this.matrixModes.types[previousSelectedModeIndex];
 				this.matrixModes.selectedIndex = previousSelectedModeIndex;
@@ -237,7 +237,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
 				this.matrixModes.selected.mode === 'MUTUAL_INFO_TARGET_WITH_CELL' ||
 				this.matrixModes.selected.mode === 'PROB_CELL_WITH_TARGET')) {
 			// Get previous selected target if compatible
-			const previousSelectedTarget = localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + 'MATRIX_TARGET_OPTION');
+			const previousSelectedTarget = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_TARGET_OPTION');
 			if (previousSelectedTarget && this.matrixTargets.targets.includes(previousSelectedTarget)) {
 				this.matrixTargets.selected = previousSelectedTarget;
 			}
@@ -250,7 +250,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
 
 	changeMatrixType(type: string) {
 		// this.khiopsLibraryService.trackEvent('click', 'matrix_type', type);
-		localStorage.setItem(AppConfig.common.GLOBAL.LS_ID + 'MATRIX_TYPE_OPTION', type);
+		localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_TYPE_OPTION', type);
 		this.matrixOptions.selected = type;
 	}
 
@@ -258,7 +258,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
 		// this.khiopsLibraryService.trackEvent('click', 'matrix_mode', mode.mode);
 		this.matrixModes.selected = mode;
 		this.matrixModes.selectedIndex = this.matrixModes.types.findIndex(e => e.mode === mode.mode);
-		localStorage.setItem(AppConfig.common.GLOBAL.LS_ID + 'MATRIX_MODE_OPTION_INDEX', this.matrixModes.selectedIndex.toString());
+		localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_MODE_OPTION_INDEX', this.matrixModes.selectedIndex.toString());
 		this.constructTargetSelectBox();
 		this.selectTargetSelectBox(this.matrixTargets.selected);
 	}
@@ -266,7 +266,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
 	changeMatrixTarget(target: string) {
 		// this.khiopsLibraryService.trackEvent('click', 'matrix_target');
 		this.matrixTargets.selected = target;
-		localStorage.setItem(AppConfig.common.GLOBAL.LS_ID + 'MATRIX_TARGET_OPTION', target);
+		localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_TARGET_OPTION', target);
 	}
 
 	onMatrixAxisInverted() {

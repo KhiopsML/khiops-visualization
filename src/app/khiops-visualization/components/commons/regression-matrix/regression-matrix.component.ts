@@ -10,10 +10,10 @@ import {
 } from '@angular/core';
 import {
 	PreparationDatasService
-} from 'src/app/providers/preparation-datas.service';
+} from '@khiops-visualization/providers/preparation-datas.service';
 import {
 	Preparation2dDatasService
-} from 'src/app/providers/preparation2d-datas.service';
+} from '@khiops-visualization/providers/preparation2d-datas.service';
 import {
 	AppConfig
 } from 'src/environments/environment';
@@ -26,13 +26,13 @@ import {
 } from '@khiops-library/components/matrix-canvas/matrix-canvas.component';
 import {
 	AppService
-} from 'src/app/providers/app.service';
+} from '@khiops-visualization/providers/app.service';
 import {
 	PreparationVariableVO
-} from 'src/app/model/preparation-variable-vo';
+} from '@khiops-visualization/model/preparation-variable-vo';
 import {
 	Preparation2dDatasVO
-} from 'src/app/model/preparation2d-datas-vo';
+} from '@khiops-visualization/model/preparation2d-datas-vo';
 import {
 	MatrixOptionsI
 } from '@khiops-library/interfaces/matrix-options';
@@ -60,7 +60,7 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
 		static: false
 	}) matrixCanvas: MatrixCanvasComponent;
 
-	@Output() selectedCellChanged: EventEmitter < number > = new EventEmitter();
+	@Output() selectedCellChanged: EventEmitter<number> = new EventEmitter();
 	@Input() selectedVariable: PreparationVariableVO;
 	@Input() selectedCell: number;
 	@Input() preparationSource;
@@ -80,12 +80,12 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
 		this.preparation2dDatas = this.preparation2dDatasService.getDatas();
 	}
 
-	ngOnInit() {}
+	ngOnInit() { }
 
 	ngAfterViewInit() {
 
 		this.minMaxValues = this.preparation2dDatasService.getGlobalMinAndMax2dValues(this.preparationDatasService.getVariablesDatas(this.preparationSource));
-		this.matrixOptions.selected = localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + 'MATRIX_TYPE_OPTION') || this.matrixOptions.types[0];
+		this.matrixOptions.selected = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_TYPE_OPTION') || this.matrixOptions.types[0];
 		this.preparation2dDatasService.getMatrixCanvasDatas(this.preparation2dDatas.selectedVariable);
 
 		// Check if there is a saved selected cell into json
@@ -133,25 +133,25 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
 		const varName2 = this.preparation2dDatas.selectedVariable.nameY;
 
 		this.matrixModes.types = [{
-				mode: 'MUTUAL_INFO',
-				title: 'I (' + varName1 + ' , ' + varName2 + ')'
-			},
-			{
-				mode: 'FREQUENCY',
-				title: 'Frequency'
-			},
-			{
-				mode: 'PROB_CELL',
-				title: 'P (' + varName2 + ' | ' + varName1 + ')'
-			},
-			{
-				mode: 'PROB_CELL_REVERSE',
-				title: 'P (' + varName1 + ' | ' + varName2 + ')'
-			}
+			mode: 'MUTUAL_INFO',
+			title: 'I (' + varName1 + ' , ' + varName2 + ')'
+		},
+		{
+			mode: 'FREQUENCY',
+			title: 'Frequency'
+		},
+		{
+			mode: 'PROB_CELL',
+			title: 'P (' + varName2 + ' | ' + varName1 + ')'
+		},
+		{
+			mode: 'PROB_CELL_REVERSE',
+			title: 'P (' + varName1 + ' | ' + varName2 + ')'
+		}
 		];
 		if (!this.matrixModes.selected) {
 			// Get previous selected target if compatible
-			const previousSelectedModeIndex = localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + 'MATRIX_MODE_OPTION_INDEX');
+			const previousSelectedModeIndex = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_MODE_OPTION_INDEX');
 			if (previousSelectedModeIndex) {
 				this.matrixModes.selected = this.matrixModes.types[previousSelectedModeIndex];
 				this.matrixModes.selectedIndex = previousSelectedModeIndex;
@@ -169,7 +169,7 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
 
 	changeMatrixType(type: string) {
 		// this.khiopsLibraryService.trackEvent('click', 'matrix_type', type);
-		localStorage.setItem(AppConfig.common.GLOBAL.LS_ID + 'MATRIX_TYPE_OPTION', type);
+		localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_TYPE_OPTION', type);
 		this.matrixOptions.selected = type;
 	}
 
@@ -184,7 +184,7 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
 		// this.khiopsLibraryService.trackEvent('click', 'matrix_mode', mode.mode);
 		this.matrixModes.selected = mode;
 		this.matrixModes.selectedIndex = this.matrixModes.types.findIndex(e => e.mode === mode.mode);
-		localStorage.setItem(AppConfig.common.GLOBAL.LS_ID + 'MATRIX_MODE_OPTION_INDEX', this.matrixModes.selectedIndex.toString());
+		localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_MODE_OPTION_INDEX', this.matrixModes.selectedIndex.toString());
 	}
 
 	onMatrixAxisInverted() {

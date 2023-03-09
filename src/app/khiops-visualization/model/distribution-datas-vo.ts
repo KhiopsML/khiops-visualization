@@ -79,7 +79,7 @@ export class DistributionDatasVO {
 			],
 			selected: undefined
 		};
-		const savedOption = localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + 'DISTRIBUTION_GRAPH_OPTION');
+		const savedOption = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'DISTRIBUTION_GRAPH_OPTION');
 		if (this.distributionGraphOptions.types.includes(savedOption)) {
 			this.distributionGraphOptions.selected = savedOption
 		} else {
@@ -96,7 +96,7 @@ export class DistributionDatasVO {
 			],
 			selected: undefined
 		};
-		const savedOption = localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + 'DISTRIBUTION_GRAPH_OPTION');
+		const savedOption = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'DISTRIBUTION_GRAPH_OPTION');
 		if (this.distributionGraphOptions.types.includes(savedOption)) {
 			this.distributionGraphOptions.selected = savedOption
 		} else {
@@ -109,7 +109,7 @@ export class DistributionDatasVO {
 			],
 			selected: undefined
 		};
-		const savedOptionX = localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + 'DISTRIBUTION_GRAPH_OPTION_X');
+		const savedOptionX = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'DISTRIBUTION_GRAPH_OPTION_X');
 		if (this.distributionGraphOptionsX.types.includes(savedOptionX)) {
 			this.distributionGraphOptionsX.selected = savedOptionX
 		} else {

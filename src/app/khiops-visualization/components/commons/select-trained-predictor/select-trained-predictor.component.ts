@@ -25,11 +25,11 @@ export class SelectTrainedPredictorComponent implements OnInit {
 	@Input() inputDatas: any;
 	selectedPredictor: any;
 
-	@Output() selectedPredictorChanged: EventEmitter < any > = new EventEmitter();
+	@Output() selectedPredictorChanged: EventEmitter<any> = new EventEmitter();
 
 	constructor(
 		private khiopsLibraryService: KhiopsLibraryService
-	) {}
+	) { }
 
 	ngOnInit() {
 		// select by default Selective Naive Bayes
@@ -38,8 +38,8 @@ export class SelectTrainedPredictorComponent implements OnInit {
 		// Get previous selected target if compatible
 		let previousSelectedPredictor;
 		try {
-			previousSelectedPredictor = JSON.parse(localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + 'SELECTED_TRAIN_PREDICTOR'));
-		} catch (e) {}
+			previousSelectedPredictor = JSON.parse(localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SELECTED_TRAIN_PREDICTOR'));
+		} catch (e) { }
 		if (previousSelectedPredictor) {
 			if (this.inputDatas.find(e => e.name === previousSelectedPredictor.name)) {
 				defaultSelection = previousSelectedPredictor;

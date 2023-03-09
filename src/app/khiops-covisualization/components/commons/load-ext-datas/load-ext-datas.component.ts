@@ -7,11 +7,11 @@ import {
 } from '@angular/material/dialog';
 import {
 	ImportExtDatasService
-} from 'src/app/providers/import-ext-datas.service';
+} from '@khiops-covisualization/providers/import-ext-datas.service';
 import {
 	TranslateService
 } from '@ngstack/translate';
-import { EventsService } from 'src/app/providers/events.service';
+import { EventsService } from '@khiops-covisualization/providers/events.service';
 
 @Component({
 	selector: 'app-load-ext-datas',

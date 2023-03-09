@@ -17,26 +17,25 @@ import {
 } from '@ag-grid-community/angular';
 import {
 	SelectableComponent
-} from '../selectable/selectable.component';
+} from '@khiops-library/components/selectable/selectable.component';
 import {
 	SelectableService
-} from '../selectable/selectable.service';
+} from '@khiops-library/components/selectable/selectable.service';
 import {
 	TranslateService
 } from '@ngstack/translate';
 import {
 	KhiopsLibraryService
-} from '../../providers/khiops-library.service';
+} from '@khiops-library/providers/khiops-library.service';
 import {
 	Module,
-	GridOptions
-} from '@ag-grid-community/all-modules';
-import {
+	GridOptions,
 	ClientSideRowModelModule
-} from '@ag-grid-community/client-side-row-model';
+} from '@ag-grid-community/all-modules';
+
 import {
 	UtilsService
-} from '../../providers/utils.service';
+} from '@khiops-library/providers/utils.service';
 import _ from 'lodash';
 
 @Component({
@@ -103,11 +102,11 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 	availableColumns: any = [];
 	datas: any;
 
-	@Output() selectListItem: EventEmitter < any > = new EventEmitter();
-	@Output() doubleClickListItem: EventEmitter < any > = new EventEmitter();
-	@Output() dataTypeChanged: EventEmitter < any > = new EventEmitter();
-	@Output() gridCheckboxChanged: EventEmitter < any > = new EventEmitter();
-	@Output() showLevelDistributionGraph: EventEmitter < any > = new EventEmitter();
+	@Output() selectListItem: EventEmitter<any> = new EventEmitter();
+	@Output() doubleClickListItem: EventEmitter<any> = new EventEmitter();
+	@Output() dataTypeChanged: EventEmitter<any> = new EventEmitter();
+	@Output() gridCheckboxChanged: EventEmitter<any> = new EventEmitter();
+	@Output() showLevelDistributionGraph: EventEmitter<any> = new EventEmitter();
 	isSmallDiv: any;
 	divWidth: number;
 
@@ -119,7 +118,7 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 		selected: undefined
 	};
 
-	gridOptions = < GridOptions > {
+	gridOptions = <GridOptions>{
 		suppressAnimationFrame: true,
 		enableBrowserTooltips: true,
 		animateRows: false
@@ -142,20 +141,20 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 
 		try {
 			this.cellsSizes = JSON.parse(localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + 'CELL_AG_GRID')) || {};
-		} catch (e) {}
+		} catch (e) { }
 		try {
 			this.visibleColumns = JSON.parse(localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + 'COLUMNS_AG_GRID')) || {};
-		} catch (e) {}
+		} catch (e) { }
 		try {
 			this.gridModes = JSON.parse(localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + 'MODES_AG_GRID')) || {}; // 'fitToSpace' or 'fitToContent'
-		} catch (e) {}
+		} catch (e) { }
 	}
 
 	sizeChanged(width) {
 		this.divWidth = width;
 		this.checkIsSmallDiv();
 
-		if (this.agGrid && this.agGrid.api && this.gridMode === 'fitToSpace' /*&& width*/ ) {
+		if (this.agGrid && this.agGrid.api && this.gridMode === 'fitToSpace' /*&& width*/) {
 			// this.resizeColumnsToFit();
 			setTimeout(() => {
 				// this.agGrid.api.sizeColumnsToFit();
@@ -397,60 +396,60 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 		this.gridCheckboxChanged.emit(e);
 	}
 
-	updateTable(updateSelectedVariable? ) {
+	updateTable(updateSelectedVariable?) {
 
 		this.rowData = [];
 
 		if (this.displayedColumns && this.inputDatas) {
 
 			// if (this.columnDefs.length === 0) {
-				this.columnDefs = [];
-				// Reset column defs in case of show/hide colum to reorder
-				if (this.agGrid && this.agGrid.api) {
-					this.agGrid.api.setColumnDefs(this.columnDefs);
-				}
+			this.columnDefs = [];
+			// Reset column defs in case of show/hide colum to reorder
+			if (this.agGrid && this.agGrid.api) {
+				this.agGrid.api.setColumnDefs(this.columnDefs);
+			}
 			// }
 
 			// if (this.columnDefs.length === 0) {
 
-				// Advanced tables (for instance unfold hierarchy)
-				for (let i = 0; i < this.displayedColumns.length; i++) {
+			// Advanced tables (for instance unfold hierarchy)
+			for (let i = 0; i < this.displayedColumns.length; i++) {
 
-					const col = this.displayedColumns[i];
+				const col = this.displayedColumns[i];
 
-					this.columnDefs.push({
-						headerName: col.headerName,
-						headerTooltip: col.tooltip ? col.headerName + ': ' + col.tooltip : col.headerName,
-						// tooltipShowDelay: 500,
-						colId: col.headerName,
-						field: col.field,
-						sortable: true,
-						suppressMovable: true,
-						resizable: true,
-						valueFormatter: this.enablePrecision ?
-							params => params.value && UtilsService.getPrecisionNumber(params.value, this.AppConfig.GLOBAL.TO_FIXED) : undefined,
-						hide: col.show === false, // ! if undefined : show it
-						width: this.cellsSizes[this.id] && this.cellsSizes[this.id][col.field],
-						cellRendererFramework: col.cellRendererFramework,
-						cellRendererParams: col.cellRendererParams,
-						comparator: function (a, b) {
-							const result = a - b;
-							if (isNaN(result)) {
-								if (!a || a === '' || a === 'undefined') {
-									a = '0';
-								}
-								if (!b || b === '' || b === 'undefined') {
-									b = '0';
-								}
-								return a.toString().trim().localeCompare(b.toString().trim(), undefined, {
-									numeric: true
-								});
-							} else {
-								return result;
+				this.columnDefs.push({
+					headerName: col.headerName,
+					headerTooltip: col.tooltip ? col.headerName + ': ' + col.tooltip : col.headerName,
+					// tooltipShowDelay: 500,
+					colId: col.headerName,
+					field: col.field,
+					sortable: true,
+					suppressMovable: true,
+					resizable: true,
+					valueFormatter: this.enablePrecision ?
+						params => params.value && UtilsService.getPrecisionNumber(params.value, this.AppConfig.GLOBAL.TO_FIXED) : undefined,
+					hide: col.show === false, // ! if undefined : show it
+					width: this.cellsSizes[this.id] && this.cellsSizes[this.id][col.field],
+					cellRendererFramework: col.cellRendererFramework,
+					cellRendererParams: col.cellRendererParams,
+					comparator: function (a, b) {
+						const result = a - b;
+						if (isNaN(result)) {
+							if (!a || a === '' || a === 'undefined') {
+								a = '0';
 							}
+							if (!b || b === '' || b === 'undefined') {
+								b = '0';
+							}
+							return a.toString().trim().localeCompare(b.toString().trim(), undefined, {
+								numeric: true
+							});
+						} else {
+							return result;
 						}
-					});
-				}
+					}
+				});
+			}
 			// }
 
 			for (let i = 0; i < this.inputDatas.length; i++) {
@@ -636,7 +635,7 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 		localStorage.setItem(
 			this.AppConfig.GLOBAL.LS_ID + 'CELL_AG_GRID',
 			JSON.stringify(this.cellsSizes)
-			);
+		);
 
 		// FIX : if table is fitted to available space at start,
 		// then user fitToContent and fitToSpace, header col width are broken

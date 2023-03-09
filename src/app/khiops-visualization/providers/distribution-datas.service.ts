@@ -120,7 +120,7 @@ export class DistributionDatasService {
 	}
 
 	// tslint:disable-next-line:typedef-whitespace
-	getTargetDistributionGraphDatas(selectedVariable, type ? : string, initActiveEntries ? : boolean): any {
+	getTargetDistributionGraphDatas(selectedVariable, type?: string, initActiveEntries?: boolean): any {
 
 		if (initActiveEntries === undefined) {
 			initActiveEntries = initActiveEntries || true;
@@ -141,14 +141,14 @@ export class DistributionDatasService {
 					const partition = variableDetails.dataGrid.dimensions[1].partition;
 
 					[this.distributionDatas.targetDistributionGraphDatas, this.distributionDatas.targetDistributionDisplayedValues] =
-					this.computeTargetDistributionGraph(
-						partition,
-						currentDatas,
-						currentDatas,
-						currentXAxis,
-						this.distributionDatas.targetDistributionDisplayedValues,
-						this.distributionDatas.targetDistributionType
-					);
+						this.computeTargetDistributionGraph(
+							partition,
+							currentDatas,
+							currentDatas,
+							currentXAxis,
+							this.distributionDatas.targetDistributionDisplayedValues,
+							this.distributionDatas.targetDistributionType
+						);
 				}
 			}
 		}
@@ -158,7 +158,7 @@ export class DistributionDatasService {
 
 	}
 
-	getTreeNodeTargetDistributionGraphDatas(selectedNode, type ? : string): any {
+	getTreeNodeTargetDistributionGraphDatas(selectedNode, type?: string): any {
 
 		this.distributionDatas.initTreeNodeTargetDistributionGraphDatas();
 		this.distributionDatas.setTreeNodeTargetDistributionType(type);
@@ -187,14 +187,14 @@ export class DistributionDatasService {
 			//get selectednode index
 			const currentXAxis = [selectedNode.nodeId];
 			[this.distributionDatas.treeNodeTargetDistributionGraphDatas, this.distributionDatas.treeNodeTargetDistributionDisplayedValues] =
-			this.computeTargetDistributionGraph(
-				allTargetValues,
-				currentDatas,
-				[fullTarget],
-				[currentXAxis],
-				this.distributionDatas.treeNodeTargetDistributionDisplayedValues,
-				this.distributionDatas.treeNodeTargetDistributionType
-			);
+				this.computeTargetDistributionGraph(
+					allTargetValues,
+					currentDatas,
+					[fullTarget],
+					[currentXAxis],
+					this.distributionDatas.treeNodeTargetDistributionDisplayedValues,
+					this.distributionDatas.treeNodeTargetDistributionType
+				);
 
 		}
 		this.distributionDatas.checkTreeNodeTargetDistributionGraphDatas();
@@ -231,8 +231,8 @@ export class DistributionDatasService {
 				targetDistributionGraphDatas.datasets.push(currentDataSet);
 
 				let l: number = currentXAxis.length;
-				if (l > AppConfig.common.GLOBAL.DISTRIBUTION_GRAPH_LENGTH) {
-					l = AppConfig.common.GLOBAL.DISTRIBUTION_GRAPH_LENGTH;
+				if (l > AppConfig.visualizationCommon.GLOBAL.DISTRIBUTION_GRAPH_LENGTH) {
+					l = AppConfig.visualizationCommon.GLOBAL.DISTRIBUTION_GRAPH_LENGTH;
 				}
 
 				for (let i = 0; i < l; i++) {
@@ -281,7 +281,7 @@ export class DistributionDatasService {
 
 
 	// tslint:disable-next-line:typedef-whitespace
-	getdistributionGraphDatas(selectedVariable, type ? : string, initActiveEntries ? : boolean, typeX ? : string): any {
+	getdistributionGraphDatas(selectedVariable, type?: string, initActiveEntries?: boolean, typeX?: string): any {
 		let distributionsGraphDetails = {
 			datasets: [],
 			labels: []
@@ -341,7 +341,7 @@ export class DistributionDatasService {
 	 * Get distribution when only one var selected
 	 * For tree node leaf details
 	 */
-	getTreeNodeDistributionGraphDatas(selectedNode, type ? : string): any {
+	getTreeNodeDistributionGraphDatas(selectedNode, type?: string): any {
 		let distributionsGraphDetails = {
 			datasets: [],
 			labels: []
@@ -392,8 +392,8 @@ export class DistributionDatasService {
 			const [frequencyArray, coverageArray] = this.getAllFrequencyAndCoverageValues(currentDatas, dimensions, partition);
 
 			let l: number = currentDatas.length;
-			if (l > AppConfig.common.GLOBAL.DISTRIBUTION_GRAPH_LENGTH) {
-				l = AppConfig.common.GLOBAL.DISTRIBUTION_GRAPH_LENGTH;
+			if (l > AppConfig.visualizationCommon.GLOBAL.DISTRIBUTION_GRAPH_LENGTH) {
+				l = AppConfig.visualizationCommon.GLOBAL.DISTRIBUTION_GRAPH_LENGTH;
 			}
 
 			for (let i = 0; i < l; i++) {
@@ -539,8 +539,8 @@ export class DistributionDatasService {
 		levelDistributionGraphDatas.datasets.push(currentDataSet);
 
 		let l = inputDatas.length;
-		if (l > AppConfig.common.LEVEL_DISTRIBUTION_GRAPH.MAX_VARIABLES) {
-			l = AppConfig.common.LEVEL_DISTRIBUTION_GRAPH.MAX_VARIABLES;
+		if (l > AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.MAX_VARIABLES) {
+			l = AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.MAX_VARIABLES;
 		}
 
 		for (let i = 0; i < l; i++) {
@@ -568,8 +568,8 @@ export class DistributionDatasService {
 			// define x axis
 			currentName = index === 0 ? '[' : ']';
 			currentName += currentXAxis.toString();
-			if (currentName.length > AppConfig.common.GLOBAL.MAX_GRAPH_TOOLTIP_LABEL_LENGTH) {
-				currentName = currentName.substring(0, AppConfig.common.GLOBAL.MAX_GRAPH_TOOLTIP_LABEL_LENGTH) + ' ... ]';
+			if (currentName.length > AppConfig.visualizationCommon.GLOBAL.MAX_GRAPH_TOOLTIP_LABEL_LENGTH) {
+				currentName = currentName.substring(0, AppConfig.visualizationCommon.GLOBAL.MAX_GRAPH_TOOLTIP_LABEL_LENGTH) + ' ... ]';
 			} else {
 				currentName += ']';
 			}

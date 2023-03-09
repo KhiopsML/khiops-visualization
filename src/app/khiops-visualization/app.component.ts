@@ -55,7 +55,7 @@ export class AppComponent implements OnInit, OnDestroy {
 		this.appService.initialize();
 
 		if (this.electronService.isElectron()) {
-			storage.setDataPath(os.tmpdir() + '/\\' + AppConfig.common.GLOBAL.LS_ID);
+			storage.setDataPath(os.tmpdir() + '/\\' + AppConfig.visualizationCommon.GLOBAL.LS_ID);
 			console.log('user data path', storage.getDataPath());
 			// console.log('Mode electron');
 			// console.log('Electron ipcRenderer', this.electronService.ipcRenderer);
@@ -85,7 +85,7 @@ export class AppComponent implements OnInit, OnDestroy {
 		config.hasBackdrop = false;
 		config.disableClose = false;
 
-		const dialogRef: MatDialogRef < ConfirmDialogComponent > = this.dialog.open(ConfirmDialogComponent, config);
+		const dialogRef: MatDialogRef<ConfirmDialogComponent> = this.dialog.open(ConfirmDialogComponent, config);
 		dialogRef.updatePosition({
 			bottom: '50px',
 			right: '50px'
@@ -110,5 +110,5 @@ export class AppComponent implements OnInit, OnDestroy {
 
 	}
 
-	ngOnDestroy() {}
+	ngOnDestroy() { }
 }

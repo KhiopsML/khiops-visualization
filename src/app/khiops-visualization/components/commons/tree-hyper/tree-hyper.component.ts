@@ -20,25 +20,25 @@ import {
 import {
 	TranslateService
 } from '@ngstack/translate';
-import * as hyt from '@khiops-hypertree/js/d3-hypertree';
+import * as hyt from '@khiops-hypertree/d3-hypertree';
 import {
 	UtilsService
 } from '@khiops-library/providers/utils.service';
 import {
 	TreePreparationDatasService
-} from 'src/app/providers/tree-preparation-datas.service';
+} from '@khiops-visualization/providers/tree-preparation-datas.service';
 import {
 	Hypertree
-} from '@khiops-hypertree/js/components/hypertree/hypertree';
+} from '@khiops-hypertree/components/hypertree/hypertree';
 import {
 	AppConfig
 } from 'src/environments/environment';
 import {
 	DistributionDatasService
-} from 'src/app/providers/distribution-datas.service';
+} from '@khiops-visualization/providers/distribution-datas.service';
 import {
 	TreeNodeVO
-} from 'src/app/model/tree-node-vo';
+} from '@khiops-visualization/model/tree-node-vo';
 import {
 	KhiopsLibraryService
 } from '@khiops-library/providers/khiops-library.service';
@@ -54,8 +54,8 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 	@Input() selectedNode: any;
 	@Input() dimensionTree: any;
 	@Input() displayedValues: any;
-	@Output() selectTreeItemChanged: EventEmitter < any > = new EventEmitter();
-	@Output() treeHyperDisplayedValuesChanged: EventEmitter < any > = new EventEmitter();
+	@Output() selectTreeItemChanged: EventEmitter<any> = new EventEmitter();
+	@Output() treeHyperDisplayedValuesChanged: EventEmitter<any> = new EventEmitter();
 	buttonTitle: string;
 
 	componentType = 'hyptree'; // needed to copy datas
@@ -82,11 +82,11 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 
 		this.buttonTitle = this.translate.get('GLOBAL.VALUES');
 
-		const previousVisualizationPopulationState = JSON.parse(localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + 'SETTING_HYPERTREE_VISU_POPULATION'));
-		this.visualization.population = previousVisualizationPopulationState === undefined ? AppConfig.common.HYPERTREE.VISU_POPULATION : previousVisualizationPopulationState;
+		const previousVisualizationPopulationState = JSON.parse(localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_HYPERTREE_VISU_POPULATION'));
+		this.visualization.population = previousVisualizationPopulationState === undefined ? AppConfig.visualizationCommon.HYPERTREE.VISU_POPULATION : previousVisualizationPopulationState;
 
-		const previousVisualizationPurityState = JSON.parse(localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + 'SETTING_HYPERTREE_VISU_PURITY'));
-		this.visualization.purity = previousVisualizationPurityState === undefined ? AppConfig.common.HYPERTREE.VISU_PURITY : previousVisualizationPurityState;
+		const previousVisualizationPurityState = JSON.parse(localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_HYPERTREE_VISU_PURITY'));
+		this.visualization.purity = previousVisualizationPurityState === undefined ? AppConfig.visualizationCommon.HYPERTREE.VISU_PURITY : previousVisualizationPurityState;
 	}
 
 	ngOnInit() {
@@ -102,14 +102,14 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 		// this.khiopsLibraryService.trackEvent('click', 'toggle_purity_tree', state);
 		this.visualization.purity = state;
 		this.ht.api.updateNodesVisualization();
-		localStorage.setItem(AppConfig.common.GLOBAL.LS_ID + 'SETTING_HYPERTREE_VISU_PURITY', state);
+		localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_HYPERTREE_VISU_PURITY', state);
 	}
 
 	togglePopulationVisualization(state) {
 		// this.khiopsLibraryService.trackEvent('click', 'toggle_population_tree', state);
 		this.visualization.population = state;
 		this.ht.api.updateNodesVisualization();
-		localStorage.setItem(AppConfig.common.GLOBAL.LS_ID + 'SETTING_HYPERTREE_VISU_POPULATION', state);
+		localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_HYPERTREE_VISU_POPULATION', state);
 	}
 
 	ngAfterViewInit() {
@@ -382,7 +382,7 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 							// 	this.ht.api.gotoNode(userSelectedNode)
 							// });
 
-						} else {}
+						} else { }
 						this.treePreparationDatasService.setSelectedNodes(nodesToSelect, trustedNodeSelection);
 						// to update charts
 						this.selectTreeItemChanged.emit(n.data);
@@ -433,7 +433,7 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 		return isVisible;
 	}
 
-	ngOnDestroy() {}
+	ngOnDestroy() { }
 
 	ngOnChanges(changes: SimpleChanges) {
 		// console.log("🚀 ~ file: tree-hyper.component.ts ~ line 220 ~ TreeHyperComponent ~ ngOnChanges ~ changes", changes)
@@ -487,7 +487,7 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 						// .then(()=> new Promise((ok, err)=> this.ht.animateUp(ok, err)))
 						// .then(()=> this.ht.api.gotoHome())
 						// .then(()=> this.ht.api.gotoλ(0.15))
-						.then(() => this.ht.api.gotoNode(userSelectedNode))
+						.then(() => this.ht.api.gotoNode(userSelectedNode, 0))
 				} else {
 					//
 
@@ -502,7 +502,7 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 					// .then(()=> new Promise((ok, err)=> this.ht.animateUp(ok, err)))
 					// .then(()=> this.ht.api.gotoHome())
 					// .then(()=> this.ht.api.gotoλ(0.15))
-					.then(() => this.ht.api.gotoNode(userSelectedNode));
+					.then(() => this.ht.api.gotoNode(userSelectedNode, 0));
 				// } else {
 				//
 				// console.log("🚀 ~ file: tree-hyper.component.ts ~ line 302 ~ TreeHyperComponent ~ this.ngzone.run ~ userSelectedNode", userSelectedNode)

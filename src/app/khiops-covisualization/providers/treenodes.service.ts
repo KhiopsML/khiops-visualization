@@ -241,10 +241,10 @@ export class TreenodesService {
 		if (currentIndex !== -1) {
 			// Invert values if already selected
 			[this.dimensionsDatas.selectedNodes[currentIndex],
-				this.dimensionsDatas.selectedNodes[position]
+			this.dimensionsDatas.selectedNodes[position]
 			] = [this.dimensionsDatas.selectedNodes[position],
-				this.dimensionsDatas.selectedNodes[currentIndex]
-			];
+			this.dimensionsDatas.selectedNodes[currentIndex]
+				];
 		}
 	}
 
@@ -353,7 +353,7 @@ export class TreenodesService {
 	initDefaultUnfoldRank() {
 		// for big files, first unfold to default rank to optimize perf
 		const hierarchyDatas = this.getHierarchyDatas();
-		const unfoldRank = AppConfig.common.UNFOLD_HIERARCHY.DEFAULT_UNFOLD;
+		const unfoldRank = AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.DEFAULT_UNFOLD;
 		if (hierarchyDatas.totalClusters > unfoldRank) {
 			this.setSelectedUnfoldHierarchy(unfoldRank);
 			this.unfoldHierarchy(0, unfoldRank, true);

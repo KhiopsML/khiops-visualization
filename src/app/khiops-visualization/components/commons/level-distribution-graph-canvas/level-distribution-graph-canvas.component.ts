@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import {
 	DistributionDatasService
-} from 'src/app/providers/distribution-datas.service';
+} from '@khiops-visualization/providers/distribution-datas.service';
 import {
 	KhiopsLibraryService
 } from '@khiops-library/providers/khiops-library.service';
@@ -59,9 +59,9 @@ export class LevelDistributionGraphCanvasComponent extends ScrollableGraphCanvas
 	// define an id to be copied into clipboard
 	id: any = 'level-distribution-graph-canvas-comp';
 
-	maxScale: number = AppConfig.common.LEVEL_DISTRIBUTION_GRAPH.MAX_LENGTH;
-	minScale: number = AppConfig.common.LEVEL_DISTRIBUTION_GRAPH.MIN_LENGTH;
-	stepScale: number = AppConfig.common.LEVEL_DISTRIBUTION_GRAPH.STEP;
+	maxScale: number = AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.MAX_LENGTH;
+	minScale: number = AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.MIN_LENGTH;
+	stepScale: number = AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.STEP;
 	chartOptions: ChartOptions;
 
 	componentType = '1dBarChart'; // needed to copy datas
@@ -106,7 +106,7 @@ export class LevelDistributionGraphCanvasComponent extends ScrollableGraphCanvas
 			this.resizeGraph();
 		}, 500); // do it after dialog creation complete
 
-		if (this.inputDatas.labels.length === AppConfig.common.LEVEL_DISTRIBUTION_GRAPH.MAX_VARIABLES) {
+		if (this.inputDatas.labels.length === AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.MAX_VARIABLES) {
 			this.snackBar.open(this.translate.get('SNACKS.TOO_MANY_VARIABLES'), null, {
 				duration: 5000,
 				panelClass: 'warning'

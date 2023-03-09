@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import {
 	EvaluationDatasService
-} from 'src/app/providers/evaluation-datas.service';
+} from '@khiops-visualization/providers/evaluation-datas.service';
 import {
 	KhiopsLibraryService
 } from '@khiops-library/providers/khiops-library.service';
@@ -78,7 +78,7 @@ export class TargetLiftGraphComponent extends SelectableComponent implements OnI
 		this.buttonTitle = this.translate.get('GLOBAL.FILTER_CURVES');
 	}
 
-	ngOnInit() {}
+	ngOnInit() { }
 
 	ngOnChanges(changes: SimpleChanges) {
 		if (changes.selectedVariable && changes.selectedVariable.currentValue) {
@@ -98,7 +98,7 @@ export class TargetLiftGraphComponent extends SelectableComponent implements OnI
 		const currentTarget = this.targetLift && this.targetLift.selected || undefined;
 		this.targetLift = this.evaluationDatasService.getLiftTargets(currentTarget);
 
-		const filteredValues = localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + 'TARGET_LIFT_VALUES');
+		const filteredValues = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'TARGET_LIFT_VALUES');
 		if (filteredValues) {
 			this.evaluationDatasService.setLiftGraphDisplayedValues(JSON.parse(filteredValues));
 		}
@@ -106,7 +106,7 @@ export class TargetLiftGraphComponent extends SelectableComponent implements OnI
 		if (this.targetLift) {
 
 			// Get previous selected target if compatible
-			const previousSelectedTarget = localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + 'TARGET_LIFT');
+			const previousSelectedTarget = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'TARGET_LIFT');
 			if (previousSelectedTarget && this.targetLift.targets.includes(previousSelectedTarget)) {
 				this.targetLift.selected = previousSelectedTarget;
 			}

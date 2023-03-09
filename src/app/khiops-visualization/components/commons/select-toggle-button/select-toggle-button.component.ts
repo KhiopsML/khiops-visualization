@@ -16,10 +16,10 @@ import {
 import _ from 'lodash';
 import {
 	ChartToggleValuesI
-} from 'src/app/interfaces/chart-toggle-values';
+} from '@khiops-visualization/interfaces/chart-toggle-values';
 import {
 	PageChangeEventI
-} from 'src/app/interfaces/page-change-event';
+} from '@khiops-visualization/interfaces/page-change-event';
 import {
 	AppConfig
 } from 'src/environments/environment';
@@ -36,13 +36,13 @@ export class SelectToggleButtonComponent implements OnInit, OnChanges {
 	isSelectAllChecked = true;
 	isSelectAllIndeterminate = false;
 	selectAllCheckboxText: string;
-	@Output() selectToggleButtonChanged: EventEmitter < ChartToggleValuesI[] > = new EventEmitter();
+	@Output() selectToggleButtonChanged: EventEmitter<ChartToggleValuesI[]> = new EventEmitter();
 	currentItemsToShow: ChartToggleValuesI[];
 
-	pageSize: number = AppConfig.common.GLOBAL.MAT_MENU_PAGINATION;
+	pageSize: number = AppConfig.visualizationCommon.GLOBAL.MAT_MENU_PAGINATION;
 
 	constructor(private khiopsLibraryService: KhiopsLibraryService,
-		private translate: TranslateService) {}
+		private translate: TranslateService) { }
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes.displayedValues && changes.displayedValues.currentValue) {

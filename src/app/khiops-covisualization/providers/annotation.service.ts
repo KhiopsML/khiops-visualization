@@ -6,10 +6,10 @@ import {
 } from '../model/tree-node-vo';
 import {
 	AppService
-} from 'src/app/providers/app.service';
+} from '@khiops-covisualization/providers/app.service';
 import {
 	DimensionsDatasService
-} from 'src/app/providers/dimensions-datas.service';
+} from '@khiops-covisualization/providers/dimensions-datas.service';
 
 @Injectable({
 	providedIn: 'root'

@@ -1,128 +1,123 @@
 import {
-	Component,
-	OnInit,
-	Output,
-	ViewChild,
-	OnDestroy,
-	EventEmitter,
-	Input
-} from '@angular/core';
-import {
-	SelectableTabComponent
-} from '@khiops-library/components/selectable-tab/selectable-tab.component';
-import {
-	AppConfig
-} from 'src/environments/environment';
-import {
-	AppService
-} from 'src/app/providers/app.service';
-import {
-	DimensionsDatasService
-} from 'src/app/providers/dimensions-datas.service';
-import {
-	ViewLayoutVO
-} from 'src/app/model/view-layout-vo';
-import {
-	AxisComponent
-} from '../commons/axis/axis.component';
-import {
-	EventsService
-} from 'src/app/providers/events.service';
-import {
-	KhiopsLibraryService
-} from '@khiops-library/providers/khiops-library.service';
+  Component,
+  OnInit,
+  Output,
+  ViewChild,
+  OnDestroy,
+  EventEmitter,
+  Input,
+} from '@angular/core'
+import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component'
+import { AppConfig } from 'src/environments/environment'
+import { AppService } from '@khiops-covisualization/providers/app.service'
+import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service'
+import { ViewLayoutVO } from '@khiops-covisualization/model/view-layout-vo'
+import { AxisComponent } from '../commons/axis/axis.component'
+import { EventsService } from '@khiops-covisualization/providers/events.service'
+import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service'
 
 @Component({
-	selector: 'app-axis-view',
-	templateUrl: './axis-view.component.html',
-	styleUrls: ['./axis-view.component.scss']
+  selector: 'app-axis-view',
+  templateUrl: './axis-view.component.html',
+  styleUrls: ['./axis-view.component.scss'],
 })
-export class AxisViewComponent extends SelectableTabComponent implements OnInit, OnDestroy {
+export class AxisViewComponent extends SelectableTabComponent
+  implements OnInit, OnDestroy {
+  @ViewChild('axisAppPos0', {
+    static: false,
+  })
+  axisAppPos0: AxisComponent
 
-	@ViewChild('axisAppPos0', {
-		static: false
-	}) axisAppPos0: AxisComponent;
+  @ViewChild('axisAppPos1', {
+    static: false,
+  })
+  axisAppPos1: AxisComponent
 
-	@ViewChild('axisAppPos1', {
-		static: false
-	}) axisAppPos1: AxisComponent;
+  tabConfig = AppConfig.covisualizationCommon.HOME
+  sizes: any
+  dimensionsDatas: any
+  @Output() toggleContext: EventEmitter<any> = new EventEmitter()
+  @Input() openContextView = false
+  viewsLayout: ViewLayoutVO
+  viewsLayoutChangedSub: any
+  dimensionsSelectionChangedSub: any
+  dimensionsDatasChangedSub: any
+  isBigJsonFile = false
 
-	tabConfig = AppConfig.common.HOME;
-	sizes: any;
-	dimensionsDatas: any;
-	@Output() toggleContext: EventEmitter < any > = new EventEmitter();
-	@Input() openContextView = false;
-	viewsLayout: ViewLayoutVO;
-	viewsLayoutChangedSub: any;
-	dimensionsSelectionChangedSub: any;
-	dimensionsDatasChangedSub: any;
-	isBigJsonFile = false;
+  constructor(
+    private appService: AppService,
+    private khiopsLibraryService: KhiopsLibraryService,
+    private eventsService: EventsService,
+    private dimensionsService: DimensionsDatasService,
+  ) {
+    super()
+    this.loadingView = true
+    this.isBigJsonFile = this.appService.isBigJsonFile()
 
-	constructor(
-		private appService: AppService,
-		private khiopsLibraryService: KhiopsLibraryService,
-		private eventsService: EventsService,
-		private dimensionsService: DimensionsDatasService
-	) {
-		super();
-		this.loadingView = true;
-		this.isBigJsonFile = this.appService.isBigJsonFile();
+    setTimeout(() => {
+      this.sizes = this.appService.getViewSplitSizes('axisView')
+      this.dimensionsDatas = this.dimensionsService.getDatas()
+      this.dimensionsService.updateDimensions()
 
-		setTimeout(() => {
-			this.sizes = this.appService.getViewSplitSizes('axisView');
-			this.dimensionsDatas = this.dimensionsService.getDatas();
-			this.dimensionsService.updateDimensions();
+      // const isLimitedDatas = this.treenodesService.initDefaultUnfoldRank();
+      // if (isLimitedDatas) {
+      // 	this.snackBar.open(this.translate.get('SNACKS.UNFOLDED_DATAS_PERFORMANCE_WARNING', {
+      // 		count: AppConfig.common.UNFOLD_HIERARCHY.DEFAULT_UNFOLD
+      // 	}), this.translate.get('GLOBAL.OK'), {
+      // 		duration: 10000,
+      // 		panelClass: 'warning',
+      // 		verticalPosition: 'top'
+      // 	});
+      // }
 
-			// const isLimitedDatas = this.treenodesService.initDefaultUnfoldRank();
-			// if (isLimitedDatas) {
-			// 	this.snackBar.open(this.translate.get('SNACKS.UNFOLDED_DATAS_PERFORMANCE_WARNING', {
-			// 		count: AppConfig.common.UNFOLD_HIERARCHY.DEFAULT_UNFOLD
-			// 	}), this.translate.get('GLOBAL.OK'), {
-			// 		duration: 10000,
-			// 		panelClass: 'warning',
-			// 		verticalPosition: 'top'
-			// 	});
-			// }
+      this.viewsLayout = this.appService.initViewsLayout(
+        this.dimensionsDatas.selectedDimensions,
+      )
 
-			this.viewsLayout = this.appService.initViewsLayout(this.dimensionsDatas.selectedDimensions);
+      // Listen for view layout changes
+      this.viewsLayoutChangedSub = this.appService.viewsLayoutChanged.subscribe(
+        (viewsLayout) => {
+          this.viewsLayout = viewsLayout
+        },
+      )
 
-			// Listen for view layout changes
-			this.viewsLayoutChangedSub = this.appService.viewsLayoutChanged.subscribe(viewsLayout => {
-				this.viewsLayout = viewsLayout;
-			});
+      this.dimensionsSelectionChangedSub = this.eventsService.dimensionsSelectionChanged.subscribe(
+        (selectedDimensions) => {
+          this.viewsLayout = this.appService.updateViewsLayout(
+            selectedDimensions,
+          )
+          this.sizes = this.appService.getViewSplitSizes('axisView')
+        },
+      )
 
-			this.dimensionsSelectionChangedSub = this.eventsService.dimensionsSelectionChanged.subscribe(selectedDimensions => {
-				this.viewsLayout = this.appService.updateViewsLayout(selectedDimensions);
-				this.sizes = this.appService.getViewSplitSizes('axisView');
-			});
+      // this.dimensionsDatasChangedSub = this.eventsService.dimensionsDatasChanged.subscribe(e => {
+      // 	this.treenodesService.collapseNodesSaved();
+      // });
+    }, 500) // To show loader when big files
+  }
 
-			// this.dimensionsDatasChangedSub = this.eventsService.dimensionsDatasChanged.subscribe(e => {
-			// 	this.treenodesService.collapseNodesSaved();
-			// });
+  ngOnInit() {}
 
-		}, 500); // To show loader when big files
+  ngOnDestroy() {
+    this.viewsLayoutChangedSub?.unsubscribe()
+    this.dimensionsSelectionChangedSub?.unsubscribe()
+    // this.dimensionsDatasChangedSub.unsubscribe();
+  }
 
-	}
+  onSplitDragEnd(event, item) {
+    this.appService.resizeAndSetSplitSizes(
+      item,
+      this.sizes,
+      event.sizes,
+      'axisView',
+    )
 
-	ngOnInit() {
-	}
+    // Resize graph when area is resized
+    this.axisAppPos0.onSplitDragEnd(null, null)
+    this.axisAppPos1.onSplitDragEnd(null, null)
+  }
 
-	ngOnDestroy() {
-		this.viewsLayoutChangedSub?.unsubscribe();
-		this.dimensionsSelectionChangedSub?.unsubscribe();
-		// this.dimensionsDatasChangedSub.unsubscribe();
-	}
-
-	onSplitDragEnd(event, item) {
-		this.appService.resizeAndSetSplitSizes(item, this.sizes, event.sizes, 'axisView');
-
-		// Resize graph when area is resized
-		this.axisAppPos0.onSplitDragEnd(null, null);
-		this.axisAppPos1.onSplitDragEnd(null, null);
-	}
-
-	clickOutsideContext() {
-		this.toggleContext.emit();
-	}
-
+  clickOutsideContext() {
+    this.toggleContext.emit()
+  }
 }

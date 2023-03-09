@@ -32,7 +32,7 @@ try {
 	styleUrls: ['./user-settings.component.scss']
 })
 export class UserSettingsComponent implements OnChanges {
-	@Output() toggleNavDrawerChanged: EventEmitter < any > = new EventEmitter();
+	@Output() toggleNavDrawerChanged: EventEmitter<any> = new EventEmitter();
 	@Input() opened: boolean;
 
 	numberPrecisionExample;
@@ -46,7 +46,7 @@ export class UserSettingsComponent implements OnChanges {
 
 	constructor(private translate: TranslateService,
 		private snackBar: MatSnackBar,
-		private khiopsLibraryService: KhiopsLibraryService) {}
+		private khiopsLibraryService: KhiopsLibraryService) { }
 
 	ngOnChanges(changes: SimpleChanges) {
 		if (changes.opened && changes.opened.currentValue) {
@@ -64,14 +64,14 @@ export class UserSettingsComponent implements OnChanges {
 		// AppConfig.common.GLOBAL.FONT_SIZE = this.fontSize;
 
 		// Global number precision
-		this.numberPrecision = localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + 'SETTING_NUMBER_PRECISION') || AppConfig.common.GLOBAL.TO_FIXED;
-		localStorage.setItem(AppConfig.common.GLOBAL.LS_ID + 'SETTING_NUMBER_PRECISION', this.numberPrecision);
-		AppConfig.common.GLOBAL.TO_FIXED = this.numberPrecision;
+		this.numberPrecision = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_NUMBER_PRECISION') || AppConfig.visualizationCommon.GLOBAL.TO_FIXED;
+		localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_NUMBER_PRECISION', this.numberPrecision);
+		AppConfig.visualizationCommon.GLOBAL.TO_FIXED = this.numberPrecision;
 
 		// Matrix contrast
-		this.contrastValue = parseInt(localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST'), 10) || AppConfig.common.GLOBAL.MATRIX_CONTRAST;
-		localStorage.setItem(AppConfig.common.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST', this.contrastValue.toString());
-		AppConfig.common.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
+		this.contrastValue = parseInt(localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST'), 10) || AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST;
+		localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST', this.contrastValue.toString());
+		AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
 
 		// Curve lift smooth datas
 		// this.liftCurveSmooth = parseInt(localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + 'LIFT_CURVE_SMOOTH'), 10) || AppConfig.common.LIFT_CURVE.LIFT_CURVE_SMOOTH;
@@ -101,17 +101,17 @@ export class UserSettingsComponent implements OnChanges {
 
 	onClickOnSave() {
 		// Save all items
-		localStorage.setItem(AppConfig.common.GLOBAL.LS_ID + 'SETTING_NUMBER_PRECISION', this.numberPrecision);
-		AppConfig.common.GLOBAL.TO_FIXED = this.numberPrecision;
+		localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_NUMBER_PRECISION', this.numberPrecision);
+		AppConfig.visualizationCommon.GLOBAL.TO_FIXED = this.numberPrecision;
 
 		// localStorage.setItem(AppConfig.common.GLOBAL.LS_ID + 'LIFT_CURVE_SMOOTH', this.liftCurveSmooth.toString());
 		// AppConfig.common.LIFT_CURVE.LIFT_CURVE_SMOOTH = this.liftCurveSmooth;
 
-		localStorage.setItem(AppConfig.common.GLOBAL.LS_ID + 'FONT_SIZE', this.fontSize);
-		AppConfig.common.GLOBAL.FONT_SIZE = this.fontSize;
+		localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'FONT_SIZE', this.fontSize);
+		AppConfig.visualizationCommon.GLOBAL.FONT_SIZE = this.fontSize;
 
-		localStorage.setItem(AppConfig.common.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST', this.contrastValue.toString());
-		AppConfig.common.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
+		localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST', this.contrastValue.toString());
+		AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
 
 		// Close the nav drawer
 		this.toggleNavDrawerChanged.emit(true);

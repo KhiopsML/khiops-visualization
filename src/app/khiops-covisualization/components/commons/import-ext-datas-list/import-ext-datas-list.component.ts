@@ -11,7 +11,7 @@ import {
 import * as _ from 'lodash'; // Important to import lodash in karma
 import {
 	ImportExtDatasService
-} from 'src/app/providers/import-ext-datas.service';
+} from '@khiops-covisualization/providers/import-ext-datas.service';
 import {
 	TranslateService
 } from '@ngstack/translate';
@@ -20,7 +20,7 @@ import {
 } from '@khiops-library/model/file-vo';
 import {
 	ExtDatasVO
-} from 'src/app/model/ext-datas-vo';
+} from '@khiops-covisualization/model/ext-datas-vo';
 import {
 	IconCellComponent
 } from '@khiops-library/components/ag-grid/icon-cell/icon-cell.component';
@@ -29,7 +29,7 @@ import {
 } from '@angular/material/snack-bar';
 import {
 	EventsService
-} from 'src/app/providers/events.service';
+} from '@khiops-covisualization/providers/events.service';
 import {
 	AppConfig
 } from 'src/environments/environment';
@@ -53,7 +53,7 @@ export class ImportExtDatasListComponent implements OnInit {
 		private dialog: MatDialog,
 		private snackBar: MatSnackBar,
 		public translate: TranslateService,
-		private dialogRef: MatDialogRef < ImportExtDatasListComponent > ) {
+		private dialogRef: MatDialogRef<ImportExtDatasListComponent>) {
 
 		this.constructImportedDatasTable();
 	}
@@ -62,30 +62,30 @@ export class ImportExtDatasListComponent implements OnInit {
 
 		this.importedDatas = {
 			displayedColumns: [{
-					headerName: 'file name',
-					field: 'filename'
-				},
-				{
-					headerName: 'join key',
-					field: 'joinKey'
-				},
-				{
-					headerName: 'field',
-					field: 'field'
-				},
-				{
-					headerName: 'dimension',
-					field: 'dimension'
-				},
-				{
-					headerName: '',
-					field: 'remove',
-					cellRendererFramework: IconCellComponent,
-					cellRendererParams: {
-						icon: 'delete',
-						action: this.removeExtDatasFromList.bind(this)
-					}
+				headerName: 'file name',
+				field: 'filename'
+			},
+			{
+				headerName: 'join key',
+				field: 'joinKey'
+			},
+			{
+				headerName: 'field',
+				field: 'field'
+			},
+			{
+				headerName: 'dimension',
+				field: 'dimension'
+			},
+			{
+				headerName: '',
+				field: 'remove',
+				cellRendererFramework: IconCellComponent,
+				cellRendererParams: {
+					icon: 'delete',
+					action: this.removeExtDatasFromList.bind(this)
 				}
+			}
 			],
 			values: []
 		};
@@ -103,7 +103,7 @@ export class ImportExtDatasListComponent implements OnInit {
 		}
 	}
 
-	ngOnInit() {}
+	ngOnInit() { }
 
 	removeExtDatasFromList(e) {
 		const importedDatas = this.importExtDatasService.removeImportedDatas(e.data.filename, e.data.dimension, e.data.joinKey, e.data.separator, e.data.field);
@@ -134,11 +134,11 @@ export class ImportExtDatasListComponent implements OnInit {
 
 	openLoadExternalDataDialog() {
 		const config = new MatDialogConfig();
-		config.width = AppConfig.common.MANAGE_VIEWS.WIDTH;
-		config.maxWidth = AppConfig.common.MANAGE_VIEWS.MAX_WIDTH;
-		const dialogRef: MatDialogRef < LoadExtDatasComponent > = this.dialog.open(LoadExtDatasComponent, config);
+		config.width = AppConfig.covisualizationCommon.MANAGE_VIEWS.WIDTH;
+		config.maxWidth = AppConfig.covisualizationCommon.MANAGE_VIEWS.MAX_WIDTH;
+		const dialogRef: MatDialogRef<LoadExtDatasComponent> = this.dialog.open(LoadExtDatasComponent, config);
 		dialogRef.disableClose = true;
-		dialogRef.afterClosed().toPromise().then(() => {});
+		dialogRef.afterClosed().toPromise().then(() => { });
 	}
 
 	closeImport() {

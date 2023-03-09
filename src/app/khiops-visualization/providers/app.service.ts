@@ -87,7 +87,7 @@ export class AppService {
 			}
 		};
 
-		const storedSplitValues = localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + 'SPLIT_SIZES');
+		const storedSplitValues = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SPLIT_SIZES');
 
 		// Set default split sizes if not into local storage
 		this.splitSizes = UtilsService.setDefaultLSValues(storedSplitValues, this.splitSizes);
@@ -95,30 +95,30 @@ export class AppService {
 	}
 
 	initGlobalConfigVariables(): any {
-		AppConfig.common.GLOBAL.FONT_SIZE = parseInt(localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + 'FONT_SIZE'), 10) || AppConfig.common.GLOBAL.FONT_SIZE;
-		AppConfig.common.GLOBAL.TO_FIXED = parseInt(localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + 'SETTING_NUMBER_PRECISION'), 10) || AppConfig.common.GLOBAL.TO_FIXED;
-		AppConfig.common.GLOBAL.MATRIX_CONTRAST = parseInt(localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST'), 10) || AppConfig.common.GLOBAL.MATRIX_CONTRAST;
+		AppConfig.visualizationCommon.GLOBAL.FONT_SIZE = parseInt(localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'FONT_SIZE'), 10) || AppConfig.visualizationCommon.GLOBAL.FONT_SIZE;
+		AppConfig.visualizationCommon.GLOBAL.TO_FIXED = parseInt(localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_NUMBER_PRECISION'), 10) || AppConfig.visualizationCommon.GLOBAL.TO_FIXED;
+		AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST = parseInt(localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST'), 10) || AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST;
 		// AppConfig.common.LIFT_CURVE.LIFT_CURVE_SMOOTH = parseInt(localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + 'LIFT_CURVE_SMOOTH'), 10) || AppConfig.common.LIFT_CURVE.LIFT_CURVE_SMOOTH;
-		AppConfig.common.LIFT_CURVE.LIFT_CURVE_SMOOTH = AppConfig.common.LIFT_CURVE.LIFT_CURVE_SMOOTH;
+		AppConfig.visualizationCommon.LIFT_CURVE.LIFT_CURVE_SMOOTH = AppConfig.visualizationCommon.LIFT_CURVE.LIFT_CURVE_SMOOTH;
 
 		this.khiopsLibraryService.setAppConfig(AppConfig);
 	}
 
 	initSessionVariables(): any {
-		localStorage.removeItem(AppConfig.common.GLOBAL.LS_ID + 'MATRIX_MODE_OPTION_INDEX');
-		localStorage.removeItem(AppConfig.common.GLOBAL.LS_ID + 'MATRIX_TYPE_OPTION');
-		localStorage.removeItem(AppConfig.common.GLOBAL.LS_ID + 'TARGET_DISTRIBUTION_GRAPH_OPTION');
-		localStorage.removeItem(AppConfig.common.GLOBAL.LS_ID + 'MATRIX_MODE_OPTION');
-		localStorage.removeItem(AppConfig.common.GLOBAL.LS_ID + 'TARGET_LIFT_VALUES');
-		localStorage.removeItem(AppConfig.common.GLOBAL.LS_ID + 'MATRIX_TARGET_OPTION');
-		localStorage.removeItem(AppConfig.common.GLOBAL.LS_ID + 'TARGET_LIFT_VALUES');
-		localStorage.removeItem(AppConfig.common.GLOBAL.LS_ID + 'TARGET_LIFT');
-		localStorage.removeItem(AppConfig.common.GLOBAL.LS_ID + 'SELECTED_TRAIN_PREDICTOR');
-		localStorage.removeItem(AppConfig.common.GLOBAL.LS_ID + 'DISTRIBUTION_GRAPH_OPTION');
-		localStorage.removeItem(AppConfig.common.GLOBAL.LS_ID + 'OPTIONS_AG_GRID_SEARCH_MODELING-VARIABLES-LIST');
-		localStorage.removeItem(AppConfig.common.GLOBAL.LS_ID + 'OPTIONS_AG_GRID_SEARCH_PREPARATION-2D-VARIABLES-LIST');
-		localStorage.removeItem(AppConfig.common.GLOBAL.LS_ID + 'OPTIONS_AG_GRID_SEARCH_PREPARATION-VARIABLES-LIST');
-		localStorage.removeItem(AppConfig.common.GLOBAL.LS_ID + 'OPTIONS_AG_GRID_SEARCH_TREE-PREPARATION-VARIABLES-LIST');
+		localStorage.removeItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_MODE_OPTION_INDEX');
+		localStorage.removeItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_TYPE_OPTION');
+		localStorage.removeItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'TARGET_DISTRIBUTION_GRAPH_OPTION');
+		localStorage.removeItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_MODE_OPTION');
+		localStorage.removeItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'TARGET_LIFT_VALUES');
+		localStorage.removeItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_TARGET_OPTION');
+		localStorage.removeItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'TARGET_LIFT_VALUES');
+		localStorage.removeItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'TARGET_LIFT');
+		localStorage.removeItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SELECTED_TRAIN_PREDICTOR');
+		localStorage.removeItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'DISTRIBUTION_GRAPH_OPTION');
+		localStorage.removeItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'OPTIONS_AG_GRID_SEARCH_MODELING-VARIABLES-LIST');
+		localStorage.removeItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'OPTIONS_AG_GRID_SEARCH_PREPARATION-2D-VARIABLES-LIST');
+		localStorage.removeItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'OPTIONS_AG_GRID_SEARCH_PREPARATION-VARIABLES-LIST');
+		localStorage.removeItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'OPTIONS_AG_GRID_SEARCH_TREE-PREPARATION-VARIABLES-LIST');
 	}
 
 	setFileDatas(datas: any): any {
@@ -195,7 +195,7 @@ export class AppService {
 
 	setSplitSizes(splitSizes) {
 		this.splitSizes = splitSizes;
-		localStorage.setItem(AppConfig.common.GLOBAL.LS_ID + 'SPLIT_SIZES', JSON.stringify(this.splitSizes));
+		localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SPLIT_SIZES', JSON.stringify(this.splitSizes));
 	}
 
 	resizeAndSetSplitSizes(item, sizes, itemSize, view) {

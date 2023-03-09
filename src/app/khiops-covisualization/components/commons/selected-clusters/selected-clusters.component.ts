@@ -5,22 +5,22 @@ import {
 } from '@angular/core';
 import {
 	SelectedClusterVO
-} from 'src/app/model/selected-cluster';
+} from '@khiops-covisualization/model/selected-cluster';
 import {
 	TreeNodeVO
-} from 'src/app/model/tree-node-vo';
+} from '@khiops-covisualization/model/tree-node-vo';
 import {
 	DimensionsDatasService
-} from 'src/app/providers/dimensions-datas.service';
+} from '@khiops-covisualization/providers/dimensions-datas.service';
 import {
 	EventsService
-} from 'src/app/providers/events.service';
+} from '@khiops-covisualization/providers/events.service';
 import {
 	TranslateService
 } from '@ngstack/translate';
 import {
 	ClustersService
-} from 'src/app/providers/clusters.service';
+} from '@khiops-covisualization/providers/clusters.service';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 

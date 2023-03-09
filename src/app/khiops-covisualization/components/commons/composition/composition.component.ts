@@ -11,19 +11,19 @@ import {
 } from '@ngstack/translate';
 import {
 	CompositionVO
-} from 'src/app/model/composition-vo';
+} from '@khiops-covisualization/model/composition-vo';
 import {
 	DimensionVO
 } from '@khiops-library/model/dimension-vo';
 import {
 	EventsService
-} from 'src/app/providers/events.service';
+} from '@khiops-covisualization/providers/events.service';
 import {
 	ClustersService
-} from 'src/app/providers/clusters.service';
+} from '@khiops-covisualization/providers/clusters.service';
 import {
 	TreenodesService
-} from 'src/app/providers/treenodes.service';
+} from '@khiops-covisualization/providers/treenodes.service';
 
 @Component({
 	selector: 'app-composition',
@@ -37,7 +37,7 @@ export class CompositionComponent implements OnInit, OnDestroy {
 	@Input() position: number;
 	@Input() selectedDimension: DimensionVO;
 
-	@Output() selectedCompositionChanged: EventEmitter < any > = new EventEmitter();
+	@Output() selectedCompositionChanged: EventEmitter<any> = new EventEmitter();
 
 	compositionDisplayedColumns = [{
 		headerName: 'cluster',

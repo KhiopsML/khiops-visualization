@@ -10,16 +10,16 @@ import {
 } from '@angular/core';
 import {
 	AppService
-} from 'src/app/providers/app.service';
+} from '@khiops-visualization/providers/app.service';
 import {
 	EvaluationDatasService
-} from 'src/app/providers/evaluation-datas.service';
+} from '@khiops-visualization/providers/evaluation-datas.service';
 import {
 	PreparationDatasService
-} from 'src/app/providers/preparation-datas.service';
+} from '@khiops-visualization/providers/preparation-datas.service';
 import {
 	Preparation2dDatasService
-} from 'src/app/providers/preparation2d-datas.service';
+} from '@khiops-visualization/providers/preparation2d-datas.service';
 import {
 	VariableGraphDetailsComponent
 } from '../variable-graph-details/variable-graph-details.component';
@@ -53,7 +53,7 @@ export class VarDetailsPreparationComponent implements OnInit, AfterViewInit, On
 		private preparationDatasService: PreparationDatasService,
 		private evaluationDatasService: EvaluationDatasService,
 		private preparation2dDatasService: Preparation2dDatasService,
-		private appService: AppService) {}
+		private appService: AppService) { }
 
 	ngOnInit() {
 		this.appDatas = this.appService.getDatas().datas;
@@ -66,7 +66,7 @@ export class VarDetailsPreparationComponent implements OnInit, AfterViewInit, On
 
 	}
 
-	ngOnDestroy() {}
+	ngOnDestroy() { }
 
 	ngOnChanges(changes: SimpleChanges) {
 		this.preparationDatas = this.preparationDatasService.getDatas(this.preparationSource);

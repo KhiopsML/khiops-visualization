@@ -9,10 +9,10 @@ import {
 } from '@angular/core';
 import {
 	AppService
-} from 'src/app/providers/app.service';
+} from '@khiops-visualization/providers/app.service';
 import {
 	Preparation2dDatasService
-} from 'src/app/providers/preparation2d-datas.service';
+} from '@khiops-visualization/providers/preparation2d-datas.service';
 import {
 	TargetDistributionGraphCanvasComponent
 } from '../target-distribution-graph-canvas/target-distribution-graph-canvas.component';
@@ -21,7 +21,7 @@ import {
 } from 'src/environments/environment';
 import {
 	Distribution2dDatasService
-} from 'src/app/providers/distribution2d-datas.service';
+} from '@khiops-visualization/providers/distribution2d-datas.service';
 
 @Component({
 	selector: 'app-var-details-preparation-2d',
@@ -37,7 +37,7 @@ export class VarDetailsPreparation2dComponent implements OnInit, AfterViewInit, 
 	preparation2dDatas: any;
 	appDatas: any;
 	sizes: any;
-	scaleValue = localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + 'SCALE_VALUE') || AppConfig.common.GLOBAL.DEFAULT_GRAPH_SCALE;
+	scaleValue = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SCALE_VALUE') || AppConfig.visualizationCommon.GLOBAL.DEFAULT_GRAPH_SCALE;
 	currentCellIndex: any;
 	targetDistributionGraphType: string
 	distribution2dDatas: any;
@@ -47,7 +47,7 @@ export class VarDetailsPreparation2dComponent implements OnInit, AfterViewInit, 
 		private preparation2dDatasService: Preparation2dDatasService,
 		private appService: AppService) {
 
-		this.targetDistributionGraphType = localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + 'TARGET_DISTRIBUTION_GRAPH_OPTION');
+		this.targetDistributionGraphType = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'TARGET_DISTRIBUTION_GRAPH_OPTION');
 
 		this.appDatas = this.appService.getDatas().datas;
 		this.preparation2dDatas = this.preparation2dDatasService.getDatas();
@@ -65,7 +65,7 @@ export class VarDetailsPreparation2dComponent implements OnInit, AfterViewInit, 
 
 	}
 
-	ngOnDestroy() {}
+	ngOnDestroy() { }
 
 	ngOnChanges(changes: SimpleChanges) {
 

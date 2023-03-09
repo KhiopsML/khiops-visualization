@@ -9,22 +9,22 @@ import {
 } from '@angular/core';
 import {
 	AppService
-} from 'src/app/providers/app.service';
+} from '@khiops-covisualization/providers/app.service';
 import {
 	DimensionsDatasService
-} from 'src/app/providers/dimensions-datas.service';
+} from '@khiops-covisualization/providers/dimensions-datas.service';
 import {
 	MatrixCanvasComponent
 } from '@khiops-library/components/matrix-canvas/matrix-canvas.component';
 import {
 	ViewLayoutVO
-} from 'src/app/model/view-layout-vo';
+} from '@khiops-covisualization/model/view-layout-vo';
 import {
 	EventsService
-} from 'src/app/providers/events.service';
+} from '@khiops-covisualization/providers/events.service';
 import {
 	TreenodesService
-} from 'src/app/providers/treenodes.service';
+} from '@khiops-covisualization/providers/treenodes.service';
 import {
 	AppConfig
 } from 'src/environments/environment';
@@ -77,7 +77,7 @@ export class MatrixContainerComponent implements OnInit, OnChanges, OnDestroy {
 		private eventsService: EventsService,
 		private dimensionsService: DimensionsDatasService
 	) {
-		this.matrixOptions.selected = localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + 'MATRIX_TYPE_OPTION') || this.matrixOptions.types[0];
+		this.matrixOptions.selected = localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'MATRIX_TYPE_OPTION') || this.matrixOptions.types[0];
 
 		// Set it to false if no context
 		this.conditionalOnContext = this.dimensionsService.isContextDimensions();
@@ -136,25 +136,25 @@ export class MatrixContainerComponent implements OnInit, OnChanges, OnDestroy {
 		const varName2 = this.dimensionsDatas.matrixDatas.variable.nameY;
 
 		this.matrixModes.types = [{
-				mode: 'MUTUAL_INFO',
-				title: 'I (' + varName1 + ' , ' + varName2 + ')'
-			},
-			{
-				mode: 'FREQUENCY',
-				title: 'Frequency'
-			},
-			{
-				mode: 'PROB_CELL',
-				title: 'P (' + varName2 + ' | ' + varName1 + ')'
-			},
-			{
-				mode: 'PROB_CELL_REVERSE',
-				title: 'P (' + varName1 + ' | ' + varName2 + ')'
-			},
-			{
-				mode: 'HELLINGER',
-				title: 'H (' + varName1 + ' , ' + varName2 + ')'
-			}
+			mode: 'MUTUAL_INFO',
+			title: 'I (' + varName1 + ' , ' + varName2 + ')'
+		},
+		{
+			mode: 'FREQUENCY',
+			title: 'Frequency'
+		},
+		{
+			mode: 'PROB_CELL',
+			title: 'P (' + varName2 + ' | ' + varName1 + ')'
+		},
+		{
+			mode: 'PROB_CELL_REVERSE',
+			title: 'P (' + varName1 + ' | ' + varName2 + ')'
+		},
+		{
+			mode: 'HELLINGER',
+			title: 'H (' + varName1 + ' , ' + varName2 + ')'
+		}
 		];
 		if (!this.matrixModes.selectedIndex) {
 			// Select MUTUAL_INFO by default
@@ -184,7 +184,7 @@ export class MatrixContainerComponent implements OnInit, OnChanges, OnDestroy {
 
 	changeMatrixType(type: any) {
 		// this.khiopsLibraryService.trackEvent('click', 'matrix_type', type);
-		localStorage.setItem(AppConfig.common.GLOBAL.LS_ID + 'MATRIX_TYPE_OPTION', type);
+		localStorage.setItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'MATRIX_TYPE_OPTION', type);
 		this.matrixOptions.selected = type;
 	}
 

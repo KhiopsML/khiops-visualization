@@ -5,7 +5,7 @@ import {
 import _ from 'lodash';
 import {
 	ExtDatasVO
-} from 'src/app/model/ext-datas-vo';
+} from '@khiops-covisualization/model/ext-datas-vo';
 import {
 	FileVO
 } from '@khiops-library/model/file-vo';
@@ -37,7 +37,7 @@ export class ImportExtDatasService {
 		this.savedExternalDatas = {};
 	}
 
-	formatImportedDatas(fileDatas: FileVO, joinKey ? , fieldName ? , separator ? : string): any {
+	formatImportedDatas(fileDatas: FileVO, joinKey?, fieldName?, separator?: string): any {
 
 		// init the object
 		const formatedDatas = {

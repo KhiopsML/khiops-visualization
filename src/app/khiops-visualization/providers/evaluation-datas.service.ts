@@ -98,7 +98,7 @@ export class EvaluationDatasService {
 	}
 
 	// tslint:disable-next-line:typedef-whitespace
-	getConfusionMatrix(type ? : string): any {
+	getConfusionMatrix(type?: string): any {
 
 		const appDatas = this.appService.getDatas().datas;
 
@@ -314,7 +314,7 @@ export class EvaluationDatasService {
 	}
 
 	// tslint:disable-next-line:typedef-whitespace
-	getLiftGraphDatas(target ? : string, mustGetAllDatas ? : boolean): any {
+	getLiftGraphDatas(target?: string, mustGetAllDatas?: boolean): any {
 
 		// Generate X axis values
 		const xAxis = new Array(1001);
@@ -323,7 +323,7 @@ export class EvaluationDatasService {
 			xAxis[i] = (Number(xAxis[i - 1]) + 0.001).toFixed(3);
 		}
 
-		let smoothParam = AppConfig.common.LIFT_CURVE.LIFT_CURVE_SMOOTH;
+		let smoothParam = AppConfig.visualizationCommon.LIFT_CURVE.LIFT_CURVE_SMOOTH;
 		if (mustGetAllDatas) {
 			smoothParam = 1;
 		}
@@ -352,7 +352,7 @@ export class EvaluationDatasService {
 				for (let j = 0; j < graphDatas.length; j++) {
 					this.evaluationDatas.liftGraphDisplayedValues.push({
 						name: graphDatas[j].name,
-						show: j < AppConfig.common.GLOBAL.LIFT_CHART_COUNT
+						show: j < AppConfig.visualizationCommon.GLOBAL.LIFT_CHART_COUNT
 					});
 				}
 			} else {
@@ -380,7 +380,7 @@ export class EvaluationDatasService {
 	}
 
 	// tslint:disable-next-line:typedef-whitespace
-	generateLiftCurveValuesForEvaluation(xAxis, smoothParam, type, target ? : string) {
+	generateLiftCurveValuesForEvaluation(xAxis, smoothParam, type, target?: string) {
 
 		let currentReport: any;
 		// get the correct report : train or test
@@ -464,7 +464,7 @@ export class EvaluationDatasService {
 		return graphDatas;
 	}
 
-	getLiftTargets(currentTarget ? ): any {
+	getLiftTargets(currentTarget?): any {
 		const appDatas = this.appService.getDatas().datas;
 		let targetLift;
 

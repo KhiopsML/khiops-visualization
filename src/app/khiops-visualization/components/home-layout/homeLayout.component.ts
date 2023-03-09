@@ -8,9 +8,6 @@ import {
 	HostListener,
 	AfterViewInit
 } from '@angular/core';
-import {
-	ActivatedRoute
-} from '@angular/router';
 
 import {
 	FileLoaderComponent
@@ -26,19 +23,19 @@ import {
 } from '@khiops-library/providers/electron.service';
 import {
 	AppService
-} from 'src/app/providers/app.service';
+} from '@khiops-visualization/providers/app.service';
 import {
 	DistributionDatasService
-} from 'src/app/providers/distribution-datas.service';
+} from '@khiops-visualization/providers/distribution-datas.service';
 import {
 	ModelingDatasService
-} from 'src/app/providers/modeling-datas.service';
+} from '@khiops-visualization/providers/modeling-datas.service';
 import {
 	EvaluationDatasService
-} from 'src/app/providers/evaluation-datas.service';
+} from '@khiops-visualization/providers/evaluation-datas.service';
 import {
 	PreparationDatasService
-} from 'src/app/providers/preparation-datas.service';
+} from '@khiops-visualization/providers/preparation-datas.service';
 import {
 	LibVersionService
 } from '@khiops-library/components/lib-version/lib-version.service';
@@ -47,7 +44,7 @@ import {
 } from '@khiops-library/components/selectable/selectable.service';
 import {
 	Preparation2dDatasService
-} from 'src/app/providers/preparation2d-datas.service';
+} from '@khiops-visualization/providers/preparation2d-datas.service';
 import {
 	MatSnackBar
 } from '@angular/material/snack-bar';
@@ -56,7 +53,7 @@ import {
 } from '@khiops-library/providers/file-saver.service';
 import {
 	SaveService
-} from 'src/app/providers/save.service';
+} from '@khiops-visualization/providers/save.service';
 import {
 	MatDialogRef,
 	MatDialog,
@@ -67,24 +64,19 @@ import {
 } from '@khiops-library/components/confirm-dialog/confirm-dialog.component';
 import {
 	TreePreparationDatasService
-} from 'src/app/providers/tree-preparation-datas.service';
+} from '@khiops-visualization/providers/tree-preparation-datas.service';
 import {
 	ReleaseNotesComponent
 } from '@khiops-library/components/release-notes/release-notes.component';
 import {
 	KhiopsLibraryService
 } from '@khiops-library/providers/khiops-library.service';
-let pjson;
+import pjson from 'package.json';
 let ipcRenderer;
 try {
 	ipcRenderer = require('electron').ipcRenderer;
 } catch (e) {
 	console.warn('Can not access ipcRenderer', e);
-}
-try {
-	pjson = require('../../../../package.json');
-} catch (e) {
-	console.warn('Can not access pjson', e);
 }
 
 let remote: any;
@@ -100,7 +92,7 @@ let shell: any;
 export class HomeLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	appDatas: any;
-	activeTab = AppConfig.common.HOME.ACTIVE_TAB_INDEX;
+	activeTab = AppConfig.visualizationCommon.HOME.ACTIVE_TAB_INDEX;
 	translations: any;
 	@ViewChild('fileLoader', {
 		static: false
@@ -117,13 +109,12 @@ export class HomeLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 	public selectedTab: Object;
 	currentDatas: any;
 	isCompatibleJson: boolean;
-	currentChannel = localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + 'CHANNEL') || 'latest';
-	showReleaseNotes = localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + 'SHOW_RELEASE_NOTES');
+	currentChannel = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'CHANNEL') || 'latest';
+	showReleaseNotes = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SHOW_RELEASE_NOTES');
 	updateAvailableStatus: boolean;
 	isLargeScreen: boolean;
 
 	constructor(
-		private route: ActivatedRoute,
 		private translate: TranslateService,
 		private ngzone: NgZone,
 		private saveService: SaveService,
@@ -149,13 +140,13 @@ export class HomeLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 		}
 
 		if (pjson) {
-			this.appTitle = pjson.title;
+			this.appTitle = pjson.title.visualization;
 			this.appName = pjson.name;
 			this.appVersion = pjson.version;
 		}
 
 		// set saved font size from ls
-		const fontSize = AppConfig.common.GLOBAL.FONT_SIZE;
+		const fontSize = AppConfig.visualizationCommon.GLOBAL.FONT_SIZE;
 		document.body.classList.add('font-' + fontSize);
 
 		this.appDatas = this.appService.getDatas();
@@ -229,12 +220,12 @@ export class HomeLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 			// And launch http://localhost:4200/#/khiops-visualization/
 			this.isWebDebug = true;
 
-			this.route.queryParams
-				.subscribe(params => {
-					console.log(params && params.file);
-					// this.fileLoader.openFile(params && params.file)
-					this.fileLoader.loadWebFile(params && params.file);
-				});
+			// this.route.queryParams
+			// 	.subscribe(params => {
+			// 		console.log(params && params.file);
+			// 		// this.fileLoader.openFile(params && params.file)
+			// 		this.fileLoader.loadWebFile(params && params.file);
+			// 	});
 
 
 			// this.fileLoader.loadDebugFile();
@@ -325,58 +316,58 @@ export class HomeLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 			const menu1 = {
 				label: this.translate.get('MENU.FILE'),
 				submenu: [{
-						label: this.translate.get('MENU.OPEN'),
-						click: () => {
-							// this.khiopsLibraryService.trackEvent('click', 'open_file');
-							this.openFileDialog();
-						}
-					},
-					{
-						type: 'separator'
-					},
-					{
-						type: 'separator'
-					},
-					{
-						label: this.translate.get('MENU.CLOSE_FILE'),
-						click: () => {
-							// this.khiopsLibraryService.trackEvent('click', 'close_file');
-							this.closeFile();
-						}
-					},
-					// {
-					// 	type: 'separator'
-					// },
-					// {
-					// 	label: this.translate.get('MENU.SAVE'),
-					// 	click: () => {
-					// 		this.save();
-					// 	}
-					// },
-					// {
-					// 	label: this.translate.get('MENU.SAVE_AS'),
-					// 	click: () => {
-					// 		this.saveAs();
-					// 	}
-					// },
-					{
-						type: 'separator'
-					},
-					{
-						label: this.translate.get('MENU.RESTART_APP'),
-						click: () => {
-							// this.khiopsLibraryService.trackEvent('click', 'restart_app');
-							remote.app.relaunch();
-							remote.app.exit(0);
-						}
-					},
-					{
-						label: this.translate.get('MENU.EXIT'),
-						click: () => {
-							// this.khiopsLibraryService.trackEvent('click', 'exit_app');
-							remote.app.quit();
-						}
+					label: this.translate.get('MENU.OPEN'),
+					click: () => {
+						// this.khiopsLibraryService.trackEvent('click', 'open_file');
+						this.openFileDialog();
 					}
+				},
+				{
+					type: 'separator'
+				},
+				{
+					type: 'separator'
+				},
+				{
+					label: this.translate.get('MENU.CLOSE_FILE'),
+					click: () => {
+						// this.khiopsLibraryService.trackEvent('click', 'close_file');
+						this.closeFile();
+					}
+				},
+				// {
+				// 	type: 'separator'
+				// },
+				// {
+				// 	label: this.translate.get('MENU.SAVE'),
+				// 	click: () => {
+				// 		this.save();
+				// 	}
+				// },
+				// {
+				// 	label: this.translate.get('MENU.SAVE_AS'),
+				// 	click: () => {
+				// 		this.saveAs();
+				// 	}
+				// },
+				{
+					type: 'separator'
+				},
+				{
+					label: this.translate.get('MENU.RESTART_APP'),
+					click: () => {
+						// this.khiopsLibraryService.trackEvent('click', 'restart_app');
+						remote.app.relaunch();
+						remote.app.exit(0);
+					}
+				},
+				{
+					label: this.translate.get('MENU.EXIT'),
+					click: () => {
+						// this.khiopsLibraryService.trackEvent('click', 'exit_app');
+						remote.app.quit();
+					}
+				}
 				]
 			};
 
@@ -397,105 +388,105 @@ export class HomeLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 			const menu2 = {
 				label: this.translate.get('MENU.HELP'),
 				submenu: [{
-						role: 'toggleDevTools',
-						click: () => {
-							this.khiopsLibraryService.trackEvent('page_view', 'debugger');
-						}
-					}, {
-						type: 'separator'
-					}, {
-						label: this.translate.get('GLOBAL.VERSION') + ' ' + this.appVersion,
-						click: () => {
-							// this.openReleaseNotesDialog();
-						}
-					}, {
-						label: this.translate.get('GLOBAL.LIB_VERSION') + ' ' + LibVersionService.getVersion()
-					},
-					{
-						label: this.translate.get('GLOBAL.RELEASE_NOTES'),
-						click: () => {
-							this.khiopsLibraryService.trackEvent('page_view', 'release_notes');
-							this.openReleaseNotesDialog();
-						}
-					},
-					{
-						label: this.translate.get('MENU.CHANNELS'),
-						submenu: [{
-								label: this.translate.get('MENU.LATEST'),
-								type: 'radio',
-								click: () => {
-									if (this.currentChannel !== 'latest') {
-										// this.khiopsLibraryService.trackEvent('click', 'release', 'latest');
-										this.setChannel('latest');
-									}
-								},
-								checked: this.currentChannel === 'latest'
-							},
-							{
-								label: this.translate.get('MENU.BETA'),
-								type: 'radio',
-								click: () => {
-
-									if (this.currentChannel !== 'beta') {
-										// this.khiopsLibraryService.trackEvent('click', 'release', 'beta');
-										this.dialogRef.closeAll();
-										this.ngzone.run(() => {
-											const config = new MatDialogConfig();
-											const dialogRef: MatDialogRef < ConfirmDialogComponent > = this.dialog.open(ConfirmDialogComponent, config);
-											dialogRef.componentInstance.title = this.translate.get('GLOBAL.ENABLE_BETA_VERSIONS');
-											dialogRef.componentInstance.message = this.translate.get('GLOBAL.BETA_VERSIONS_WARNING');
-											dialogRef.afterClosed().toPromise().then((e) => {
-												if (e === 'confirm') {
-													// User confirm
-													this.setChannel('beta');
-												} else if (e === 'cancel') {
-													this.setChannel('latest');
-													// re construct the menu to set channel to latest
-													this.constructMenu();
-												}
-											});
-										});
-									}
-								},
-								checked: this.currentChannel === 'beta'
-							}
-						]
+					role: 'toggleDevTools',
+					click: () => {
+						this.khiopsLibraryService.trackEvent('page_view', 'debugger');
 					}
+				}, {
+					type: 'separator'
+				}, {
+					label: this.translate.get('GLOBAL.VERSION') + ' ' + this.appVersion,
+					click: () => {
+						// this.openReleaseNotesDialog();
+					}
+				}, {
+					label: this.translate.get('GLOBAL.LIB_VERSION') + ' ' + LibVersionService.getVersion()
+				},
+				{
+					label: this.translate.get('GLOBAL.RELEASE_NOTES'),
+					click: () => {
+						this.khiopsLibraryService.trackEvent('page_view', 'release_notes');
+						this.openReleaseNotesDialog();
+					}
+				},
+				{
+					label: this.translate.get('MENU.CHANNELS'),
+					submenu: [{
+						label: this.translate.get('MENU.LATEST'),
+						type: 'radio',
+						click: () => {
+							if (this.currentChannel !== 'latest') {
+								// this.khiopsLibraryService.trackEvent('click', 'release', 'latest');
+								this.setChannel('latest');
+							}
+						},
+						checked: this.currentChannel === 'latest'
+					},
+					{
+						label: this.translate.get('MENU.BETA'),
+						type: 'radio',
+						click: () => {
+
+							if (this.currentChannel !== 'beta') {
+								// this.khiopsLibraryService.trackEvent('click', 'release', 'beta');
+								this.dialogRef.closeAll();
+								this.ngzone.run(() => {
+									const config = new MatDialogConfig();
+									const dialogRef: MatDialogRef<ConfirmDialogComponent> = this.dialog.open(ConfirmDialogComponent, config);
+									dialogRef.componentInstance.title = this.translate.get('GLOBAL.ENABLE_BETA_VERSIONS');
+									dialogRef.componentInstance.message = this.translate.get('GLOBAL.BETA_VERSIONS_WARNING');
+									dialogRef.afterClosed().toPromise().then((e) => {
+										if (e === 'confirm') {
+											// User confirm
+											this.setChannel('beta');
+										} else if (e === 'cancel') {
+											this.setChannel('latest');
+											// re construct the menu to set channel to latest
+											this.constructMenu();
+										}
+									});
+								});
+							}
+						},
+						checked: this.currentChannel === 'beta'
+					}
+					]
+				}
 				]
 			};
 
 			const menu3 = {
 				label: this.translate.get('MENU.VIEW'),
 				submenu: [{
-						role: 'togglefullscreen',
-						click: () => {
-							// this.khiopsLibraryService.trackEvent('click', 'full_screen');
-						}
-					},
-					{
-						type: 'separator'
-					},
-					{
-						role: 'resetZoom',
-						accelerator: 'CommandOrControl+nummult',
-						click: () => {
-							// this.khiopsLibraryService.trackEvent('click', 'zoom', 'reset');
-						}
-					},
-					{
-						role: 'zoomIn',
-						accelerator: 'CommandOrControl+numadd',
-						click: () => {
-							// this.khiopsLibraryService.trackEvent('click', 'zoom', 'in');
-						}
-					},
-					{
-						role: 'zoomOut',
-						accelerator: 'CommandOrControl+numsub',
-						click: () => {
-							// this.khiopsLibraryService.trackEvent('click', 'zoom', 'out');
-						}
+					role: 'togglefullscreen',
+					click: () => {
+						// this.khiopsLibraryService.trackEvent('click', 'full_screen');
 					}
+				},
+				{
+					type: 'separator'
+				},
+				{
+					role: 'resetZoom',
+					accelerator: 'CommandOrControl+nummult',
+					click: () => {
+						// this.khiopsLibraryService.trackEvent('click', 'zoom', 'reset');
+					}
+				},
+				{
+					role: 'zoomIn',
+					accelerator: 'CommandOrControl+numadd',
+					click: () => {
+						// this.khiopsLibraryService.trackEvent('click', 'zoom', 'in');
+					}
+				},
+				{
+					role: 'zoomOut',
+					accelerator: 'CommandOrControl+numsub',
+					click: () => {
+						// this.khiopsLibraryService.trackEvent('click', 'zoom', 'out');
+					}
+				}
 				]
 			};
 
@@ -542,14 +533,14 @@ export class HomeLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.dialogRef.closeAll();
 		this.ngzone.run(() => {
 			const config = new MatDialogConfig();
-			const dialogRef: MatDialogRef < ReleaseNotesComponent > = this.dialog.open(ReleaseNotesComponent, config);
+			const dialogRef: MatDialogRef<ReleaseNotesComponent> = this.dialog.open(ReleaseNotesComponent, config);
 			dialogRef.componentInstance.appVersion = this.appVersion;
 		});
 	}
 
 	setChannel(channel) {
 
-		localStorage.setItem(AppConfig.common.GLOBAL.LS_ID + 'CHANNEL', channel);
+		localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'CHANNEL', channel);
 		this.currentChannel = channel;
 
 		(async () => {

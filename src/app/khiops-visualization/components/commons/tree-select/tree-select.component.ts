@@ -22,7 +22,7 @@ import {
 
 import {
 	AppService
-} from 'src/app/providers/app.service';
+} from '@khiops-visualization/providers/app.service';
 import {
 	MatSnackBar
 } from '@angular/material/snack-bar';
@@ -31,7 +31,7 @@ import {
 } from '@ngstack/translate';
 import {
 	TreePreparationDatasService
-} from 'src/app/providers/tree-preparation-datas.service';
+} from '@khiops-visualization/providers/tree-preparation-datas.service';
 
 @Component({
 	selector: 'app-tree-select',
@@ -45,7 +45,7 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 	@Input() detectChange: any;
 	@Input() dimensionTree: any;
 
-	@Output() selectTreeItemChanged: EventEmitter < any > = new EventEmitter();
+	@Output() selectTreeItemChanged: EventEmitter<any> = new EventEmitter();
 	treeSelectedNodeChangedSub: any;
 	componentType = 'kvtree'; // needed to copy datas
 	tree: any;
@@ -67,9 +67,9 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 		super(selectableService, ngzone);
 	}
 
-	ngOnInit() {}
+	ngOnInit() { }
 
-	ngOnDestroy() {}
+	ngOnDestroy() { }
 
 	ngOnChanges(changes: SimpleChanges) {
 		if (changes.dimensionTree && changes.dimensionTree.currentValue) {
@@ -103,7 +103,7 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 		}
 	}
 
-	initTree(selectedNodes ? ) {
+	initTree(selectedNodes?) {
 
 		// @ts-ignore
 		this.tree = new TreeView(this.dimensionTree, 'tree_' + this.position, {
@@ -138,11 +138,11 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 				this.selectTreeItemChanged.emit(e.data);
 			});
 		});
-		this.tree.on('expand', (e) => {});
-		this.tree.on('expandAll', (e) => {});
-		this.tree.on('collapse', (e) => {});
-		this.tree.on('collapseAll', (e) => {});
-		this.tree.on('updateNodeName', (e) => {});
+		this.tree.on('expand', (e) => { });
+		this.tree.on('expandAll', (e) => { });
+		this.tree.on('collapse', (e) => { });
+		this.tree.on('collapseAll', (e) => { });
+		this.tree.on('updateNodeName', (e) => { });
 		this.tree.on('error', (e) => {
 			this.snackBar.open(this.translate.get(e.data), null, {
 				duration: 4000,

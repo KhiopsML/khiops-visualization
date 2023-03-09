@@ -17,7 +17,7 @@ import {
 } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import {
 	ModelingDatasService
-} from 'src/app/providers/modeling-datas.service';
+} from '@khiops-visualization/providers/modeling-datas.service';
 import {
 	MatDialog,
 	MatDialogRef,
@@ -25,10 +25,10 @@ import {
 } from '@angular/material/dialog';
 import {
 	EvaluationDatasService
-} from 'src/app/providers/evaluation-datas.service';
+} from '@khiops-visualization/providers/evaluation-datas.service';
 import {
 	Preparation2dDatasService
-} from 'src/app/providers/preparation2d-datas.service';
+} from '@khiops-visualization/providers/preparation2d-datas.service';
 import {
 	LevelDistributionGraphCanvasComponent
 } from '../commons/level-distribution-graph-canvas/level-distribution-graph-canvas.component';
@@ -136,7 +136,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
 
 	// managed by selectable-tab component
 	tabIndex = 1;
-	tabConfig = AppConfig.common.HOME;
+	tabConfig = AppConfig.visualizationCommon.HOME;
 	preparation2dDatas: any;
 	variablesDatas: any;
 	isRegressionOrExplanatoryAnalysis: boolean;
@@ -206,9 +206,9 @@ export class PreparationViewComponent extends SelectableTabComponent {
 
 	onShowLevelDistributionGraph(datas: any) {
 		const config = new MatDialogConfig();
-		config.width = AppConfig.common.LEVEL_DISTRIBUTION_GRAPH.WIDTH;
-		config.height = AppConfig.common.LEVEL_DISTRIBUTION_GRAPH.HEIGHT;
-		const dialogRef: MatDialogRef < LevelDistributionGraphCanvasComponent > = this.dialog.open(LevelDistributionGraphCanvasComponent, config);
+		config.width = AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.WIDTH;
+		config.height = AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.HEIGHT;
+		const dialogRef: MatDialogRef<LevelDistributionGraphCanvasComponent> = this.dialog.open(LevelDistributionGraphCanvasComponent, config);
 		dialogRef.componentInstance.datas = datas;
 	}
 

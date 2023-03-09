@@ -4,16 +4,16 @@ import {
 } from '@angular/core';
 import {
 	AppService
-} from 'src/app/providers/app.service';
+} from '@khiops-covisualization/providers/app.service';
 import {
 	MatDialogRef
 } from '@angular/material/dialog';
 import {
 	DimensionsDatasService
-} from 'src/app/providers/dimensions-datas.service';
+} from '@khiops-covisualization/providers/dimensions-datas.service';
 import {
 	ViewLayoutVO
-} from 'src/app/model/view-layout-vo';
+} from '@khiops-covisualization/model/view-layout-vo';
 import copy from 'fast-copy';
 import * as _ from 'lodash'; // Important to import lodash in karma
 
@@ -32,7 +32,7 @@ export class ManageViewsComponent implements OnInit {
 	// matRippleColor = 'rgba(251, 179, 58, .4)';
 	matRippleColor = 'rgba(80, 124, 182, .4)';
 
-	constructor(private appService: AppService, private dimensionsService: DimensionsDatasService, private dialogRef: MatDialogRef < ManageViewsComponent > ) {
+	constructor(private appService: AppService, private dimensionsService: DimensionsDatasService, private dialogRef: MatDialogRef<ManageViewsComponent>) {
 		this.dimensionsDatas = this.dimensionsService.getDatas();
 
 		// this.viewsLayout = copy(this.appService.getViewsLayout());
@@ -52,7 +52,7 @@ export class ManageViewsComponent implements OnInit {
 		}
 	}
 
-	ngOnInit() {}
+	ngOnInit() { }
 
 	onClickOnSave() {
 		this.appService.saveViewsLayout(this.viewsLayout);
