@@ -1,7 +1,7 @@
 // @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-@import '~@angular/material/theming';
+@use '@angular/material' as mat;
 
-@include mat-core();
+@include mat.core();
 $mat-theme-ignore-duplication-warnings: true;
 
 $md-khiopsmain:(

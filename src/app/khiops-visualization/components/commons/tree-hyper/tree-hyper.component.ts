@@ -20,7 +20,7 @@ import {
 import {
 	TranslateService
 } from '@ngstack/translate';
-import * as hyt from '@khiops-hypertree/d3-hypertree';
+import * as hyt from '@khiops-hypertree/js/d3-hypertree';
 import {
 	UtilsService
 } from '@khiops-library/providers/utils.service';
@@ -29,7 +29,7 @@ import {
 } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import {
 	Hypertree
-} from '@khiops-hypertree/components/hypertree/hypertree';
+} from '@khiops-hypertree/js/components/hypertree/hypertree';
 import {
 	AppConfig
 } from 'src/environments/environment';

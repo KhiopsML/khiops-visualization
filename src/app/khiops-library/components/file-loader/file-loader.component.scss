@@ -1,3 +1,5 @@
+@import '../../../../theme.scss';
+
 .file-loader-comp {
 	button {
 		margin: 0.6em 0;
@@ -29,7 +31,7 @@
 	.file-loader-img {
 		width: 500px;
 		height: 185px;
-		background-image: url('../../assets/images/load-file.png');
+		background-image: url('../../../../assets/load-file.png');
 	}
 
 }
