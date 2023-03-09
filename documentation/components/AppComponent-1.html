@@ -155,12 +155,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(electronService: <a href="../injectables/ElectronService.html" target="_self">ElectronService</a>, dialogRef: MatDialog, appService: <a href="../injectables/AppService.html" target="_self">AppService</a>, dialog: MatDialog, khiopsLibraryService: <a href="../injectables/KhiopsLibraryService.html" target="_self">KhiopsLibraryService</a>, translate: <a href="../interfaces/T.html" target="_self">TranslateService</a>)</code>
+<code>constructor(electronService: <a href="../injectables/ElectronService.html" target="_self">ElectronService</a>, dialogRef: MatDialog, appService: <a href="../injectables/AppService.html" target="_self">AppService</a>, dialog: MatDialog, khiopsLibraryService: <a href="../injectables/KhiopsLibraryService.html" target="_self">KhiopsLibraryService</a>, translate: TranslateService)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">src/app/khiops-covisualization/app.component.ts:46</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">src/app/khiops-covisualization/app.component.ts:48</a></div>
                             </td>
                         </tr>
 
@@ -241,7 +241,7 @@
                                                         <td>translate</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../interfaces/T.html" target="_self" >TranslateService</a></code>
+                                                                    <code>TranslateService</code>
                                                         </td>
                                                   
                                                     <td>
@@ -287,8 +287,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="82"
-                            class="link-to-prism">src/app/khiops-covisualization/app.component.ts:82</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="86"
+                            class="link-to-prism">src/app/khiops-covisualization/app.component.ts:86</a></div>
                 </td>
             </tr>
 
@@ -324,8 +324,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="115"
-                            class="link-to-prism">src/app/khiops-covisualization/app.component.ts:115</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="120"
+                            class="link-to-prism">src/app/khiops-covisualization/app.component.ts:120</a></div>
                 </td>
             </tr>
 
@@ -361,8 +361,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="70"
-                            class="link-to-prism">src/app/khiops-covisualization/app.component.ts:70</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="73"
+                            class="link-to-prism">src/app/khiops-covisualization/app.component.ts:73</a></div>
                 </td>
             </tr>
 
@@ -415,14 +415,16 @@ import {
 import {
 	UtilsService
 } from &#x27;@khiops-library/providers/utils.service&#x27;;
-let storage;
-let os;
-try {
-	storage &#x3D; require(&#x27;electron-json-storage&#x27;);
-	os &#x3D; require(&#x27;os&#x27;);
-} catch (e) {
-	console.warn(&#x27;Can not access storage&#x27;, e);
-}
+
+// TODO remove electron
+// let storage;
+// let os;
+// try {
+// 	storage &#x3D; require(&#x27;electron-json-storage&#x27;);
+// 	os &#x3D; require(&#x27;os&#x27;);
+// } catch (e) {
+// 	console.warn(&#x27;Can not access storage&#x27;, e);
+// }
 
 
 @Component({
@@ -442,27 +444,29 @@ export class AppComponent implements OnInit, OnDestroy {
 
 		this.appService.initialize();
 
-		if (this.electronService.isElectron()) {
-			storage.setDataPath(os.tmpdir() + &#x27;/\\&#x27; + AppConfig.common.GLOBAL.LS_ID);
-			console.log(&#x27;user data path&#x27;, storage.getDataPath());
-			// console.log(&#x27;Mode electron&#x27;);
-			// console.log(&#x27;Electron ipcRenderer&#x27;, this.electronService.ipcRenderer);
-			// console.log(&#x27;NodeJS childProcess&#x27;, this.electronService.childProcess);
-		} else {
-			// console.log(&#x27;Mode web&#x27;);
-		}
+		// TODO remove electron
+		// if (this.electronService.isElectron()) {
+		// 	storage.setDataPath(os.tmpdir() + &#x27;/\\&#x27; + AppConfig.covisualizationCommon.GLOBAL.LS_ID);
+		// 	console.log(&#x27;user data path&#x27;, storage.getDataPath());
+		// 	// console.log(&#x27;Mode electron&#x27;);
+		// 	// console.log(&#x27;Electron ipcRenderer&#x27;, this.electronService.ipcRenderer);
+		// 	// console.log(&#x27;NodeJS childProcess&#x27;, this.electronService.childProcess);
+		// } else {
+		// 	// console.log(&#x27;Mode web&#x27;);
+		// }
 	}
 
 	ngOnInit() {
-		if (this.electronService.isElectron()) {
-			var consent &#x3D; storage.getSync(&#x27;COOKIE_CONSENT&#x27;);
-			if (UtilsService.isEmpty(consent)) {
-				this.initCookieConsent();
-			} else if (consent &#x3D;&#x3D;&#x3D; &#x27;true&#x27;) {
+		// TODO remove electron
+		// if (this.electronService.isElectron()) {
+		// 	var consent &#x3D; storage.getSync(&#x27;COOKIE_CONSENT&#x27;);
+		// 	if (UtilsService.isEmpty(consent)) {
+		// 		this.initCookieConsent();
+		// 	} else if (consent &#x3D;&#x3D;&#x3D; &#x27;true&#x27;) {
 
-				this.khiopsLibraryService.initMatomo();
-			}
-		}
+		// 		this.khiopsLibraryService.initMatomo();
+		// 	}
+		// }
 	}
 
 	initCookieConsent() {
@@ -473,7 +477,7 @@ export class AppComponent implements OnInit, OnDestroy {
 		config.hasBackdrop &#x3D; false;
 		config.disableClose &#x3D; false;
 
-		const dialogRef: MatDialogRef &lt; ConfirmDialogComponent &gt; &#x3D; this.dialog.open(ConfirmDialogComponent, config);
+		const dialogRef: MatDialogRef&lt;ConfirmDialogComponent&gt; &#x3D; this.dialog.open(ConfirmDialogComponent, config);
 		dialogRef.updatePosition({
 			bottom: &#x27;50px&#x27;,
 			right: &#x27;50px&#x27;
@@ -485,7 +489,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
 		dialogRef.afterClosed().toPromise().then((e) &#x3D;&gt; {
 			const acceptCookies &#x3D; e &#x3D;&#x3D;&#x3D; &#x27;confirm&#x27; ? &#x27;true&#x27; : &#x27;false&#x27;;
-			storage.setSync(&#x27;COOKIE_CONSENT&#x27;, acceptCookies);
+			// TODO remove electron
+			// storage.setSync(&#x27;COOKIE_CONSENT&#x27;, acceptCookies);
 
 			this.khiopsLibraryService.initMatomo();
 			this.khiopsLibraryService.trackEvent(&#x27;cookie_consent&#x27;, acceptCookies);
@@ -498,14 +503,13 @@ export class AppComponent implements OnInit, OnDestroy {
 
 	}
 
-	ngOnDestroy() {}
+	ngOnDestroy() { }
 }
 </code></pre>
     </div>
 
     <div class="tab-pane fade " id="c-templateData">
-        <pre class="line-numbers"><code class="language-html">&lt;router-outlet&gt;&lt;/router-outlet&gt;
-</code></pre>
+        <pre class="line-numbers"><code class="language-html">&lt;app-home-layout&gt;&lt;/app-home-layout&gt;</code></pre>
     </div>
 
 
@@ -534,7 +538,7 @@ export class AppComponent implements OnInit, OnDestroy {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><router-outlet></router-outlet></div>'
+        var COMPONENT_TEMPLATE = '<div><app-home-layout></app-home-layout></div>'
     var COMPONENTS = [{'name': 'AgGridComponent', 'selector': 'kl-ag-grid'},{'name': 'AnnotationComponent', 'selector': 'app-annotation'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AppVersionComponent', 'selector': 'kl-app-version'},{'name': 'AxisComponent', 'selector': 'app-axis'},{'name': 'AxisViewComponent', 'selector': 'app-axis-view'},{'name': 'BtnFullscreenComponent', 'selector': 'kl-btn-fullscreen'},{'name': 'CellStatsComponent', 'selector': 'kl-cell-stats'},{'name': 'ChartNextComponent', 'selector': 'kl-chart-next'},{'name': 'CheckboxCellComponent', 'selector': 'kl-checkbox-cell'},{'name': 'ClusterDetailsComponent', 'selector': 'app-cluster-details'},{'name': 'CompositionComponent', 'selector': 'app-composition'},{'name': 'ConfirmDialogComponent', 'selector': 'kl-confirm-dialog'},{'name': 'CoocurenceMatrixComponent', 'selector': 'app-coocurence-matrix'},{'name': 'DescriptionBlockComponent', 'selector': 'app-description-block'},{'name': 'DistributionGraphCanvasComponent', 'selector': 'kl-distribution-graph-canvas'},{'name': 'EvaluationViewComponent', 'selector': 'app-evaluation-view'},{'name': 'ExternalDatasComponent', 'selector': 'app-external-datas'},{'name': 'FileLoaderComponent', 'selector': 'kl-file-loader'},{'name': 'GraphHeaderComponent', 'selector': 'kl-graph-header'},{'name': 'HeaderManageViewComponent', 'selector': 'app-header-manage-view'},{'name': 'HeaderTitleComponent', 'selector': 'kl-header-title'},{'name': 'HeaderToolsComponent', 'selector': 'kl-header-tools'},{'name': 'HierarchySelectComponent', 'selector': 'app-hierarchy-select'},{'name': 'HomeLayoutComponent', 'selector': 'app-home-layout'},{'name': 'HomeLayoutComponent', 'selector': 'app-home-layout'},{'name': 'IconCellComponent', 'selector': 'kl-icon-cell'},{'name': 'ImportExtDatasComponent', 'selector': 'app-import-ext-datas'},{'name': 'ImportExtDatasListComponent', 'selector': 'app-import-ext-datas-list'},{'name': 'ImportFileLoaderComponent', 'selector': 'kl-import-file-loader'},{'name': 'InformationsBlockComponent', 'selector': 'kl-informations-block'},{'name': 'LegendComponent', 'selector': 'kl-legend'},{'name': 'LevelDistributionGraphCanvasComponent', 'selector': 'app-level-distribution-graph'},{'name': 'LibVersionComponent', 'selector': 'kl-lib-version'},{'name': 'LoadExtDatasComponent', 'selector': 'app-load-ext-datas'},{'name': 'ManageViewsComponent', 'selector': 'app-manage-views'},{'name': 'MatrixCanvasComponent', 'selector': 'kl-matrix-canvas'},{'name': 'MatrixContainerComponent', 'selector': 'app-matrix-container'},{'name': 'MatrixTooltipComponent', 'selector': 'kl-matrix-tooltip'},{'name': 'ModelingViewComponent', 'selector': 'app-modeling-view'},{'name': 'NoDataComponent', 'selector': 'kl-no-data'},{'name': 'Preparation2dViewComponent', 'selector': 'app-preparation-2d-view'},{'name': 'PreparationViewComponent', 'selector': 'app-preparation-view'},{'name': 'ProjectViewComponent', 'selector': 'app-project-view'},{'name': 'ProjectViewComponent', 'selector': 'app-project-view'},{'name': 'RegressionMatrixComponent', 'selector': 'app-regression-matrix'},{'name': 'ReleaseButtonComponent', 'selector': 'kl-release-button'},{'name': 'ReleaseNotesComponent', 'selector': 'kl-release-notes'},{'name': 'ScrollableGraphCanvasComponent', 'selector': ''},{'name': 'SelectableComponent', 'selector': ''},{'name': 'SelectableTabComponent', 'selector': ''},{'name': 'SelectedClustersComponent', 'selector': 'app-selected-clusters'},{'name': 'SelectToggleButtonComponent', 'selector': 'app-select-toggle-button'},{'name': 'SelectTrainedPredictorComponent', 'selector': 'app-select-trained-predictor'},{'name': 'TargetDistributionGraphCanvasComponent', 'selector': 'app-target-distribution-graph-canvas'},{'name': 'TargetLiftGraphComponent', 'selector': 'app-target-lift-graph'},{'name': 'TargetVariableStatsCanvasComponent', 'selector': 'app-target-variable-stats-canvas'},{'name': 'TreeDetailsComponent', 'selector': 'app-tree-details'},{'name': 'TreeHyperComponent', 'selector': 'app-tree-hyper'},{'name': 'TreeLeafDetailsComponent', 'selector': 'app-tree-leaf-details'},{'name': 'TreePreparationViewComponent', 'selector': 'app-tree-preparation-view'},{'name': 'TreeSelectComponent', 'selector': 'app-tree-select'},{'name': 'TreeSelectComponent', 'selector': 'app-tree-select'},{'name': 'UnfoldHierarchyComponent', 'selector': 'app-unfold-hierarchy'},{'name': 'UserSettingsComponent', 'selector': 'app-user-settings'},{'name': 'UserSettingsComponent', 'selector': 'app-user-settings'},{'name': 'VarDetailsPreparation2dComponent', 'selector': 'app-var-details-preparation-2d'},{'name': 'VarDetailsPreparationComponent', 'selector': 'app-var-details-preparation'},{'name': 'VarDetailsTreePreparationComponent', 'selector': 'app-var-details-tree-preparation'},{'name': 'VariableGraphDetailsComponent', 'selector': 'app-variable-graph-details'},{'name': 'VariableGraphDetailsComponent', 'selector': 'app-variable-graph-details'},{'name': 'WatchResizeComponent', 'selector': ''}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'AppComponent-1'};

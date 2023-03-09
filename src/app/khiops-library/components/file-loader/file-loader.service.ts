@@ -172,55 +172,56 @@ export class FileLoaderService {
 		this.fileLoaderDatas.isLoadingDatas = true;
 		this.fileLoaderDatas.isBigJsonFile = false;
 
-		return new Promise((resolve, reject) => {
+		// TODO remove electron
+		// return new Promise((resolve, reject) => {
 
-			this.electronService.fs.stat(filename, (err, stats) => {
-				if (err) {
-					reject();
-				} else {
+		// 	this.electronService.fs.stat(filename, (err, stats) => {
+		// 		if (err) {
+		// 			reject();
+		// 		} else {
 
-					this.electronService.fs.readFile(filename, 'utf-8', (errReadFile, datas) => {
+		// 			this.electronService.fs.readFile(filename, 'utf-8', (errReadFile, datas) => {
 
-						if (errReadFile) {
-							if (errReadFile.toString().startsWith('Error: Cannot create a string longer')) {
-								this.fileLoaderDatas.isBigJsonFile = true;
-								this.fileLoaderDatas.loadingInfo = '';
-								const currentDatas = {};
-								const stream = this.electronService.fs.createReadStream(filename, {
-									encoding: 'utf8'
-								});
-								const getStream = stream.pipe(JSONStream.parse([{
-									emitKey: true
-								}]));
-								getStream
-									.pipe(es.map((datas) => {
-										this.fileLoaderDatas.loadingInfo = datas.key;
-										currentDatas[datas.key] = datas.value;
-									}));
+		// 				if (errReadFile) {
+		// 					if (errReadFile.toString().startsWith('Error: Cannot create a string longer')) {
+		// 						this.fileLoaderDatas.isBigJsonFile = true;
+		// 						this.fileLoaderDatas.loadingInfo = '';
+		// 						const currentDatas = {};
+		// 						const stream = this.electronService.fs.createReadStream(filename, {
+		// 							encoding: 'utf8'
+		// 						});
+		// 						const getStream = stream.pipe(JSONStream.parse([{
+		// 							emitKey: true
+		// 						}]));
+		// 						getStream
+		// 							.pipe(es.map((datas) => {
+		// 								this.fileLoaderDatas.loadingInfo = datas.key;
+		// 								currentDatas[datas.key] = datas.value;
+		// 							}));
 
-								getStream.on('end', () => {
-									this.fileLoaderDatas.datas = currentDatas;
-									this.fileLoaderDatas.datas.filename = filename;
-									resolve(this.fileLoaderDatas.datas);
-								}).on('error', () => {
-									reject();
-								});
-							} else {
-								this.fileLoaderDatas.isLoadingDatas = false;
-								reject(errReadFile);
-							}
-						} else {
-							this.fileLoaderDatas.isLoadingDatas = false;
-							this.fileLoaderDatas.datas = JSON.parse(datas);
-							this.fileLoaderDatas.datas.filename = filename;
-							resolve(this.fileLoaderDatas.datas);
-						}
-					});
+		// 						getStream.on('end', () => {
+		// 							this.fileLoaderDatas.datas = currentDatas;
+		// 							this.fileLoaderDatas.datas.filename = filename;
+		// 							resolve(this.fileLoaderDatas.datas);
+		// 						}).on('error', () => {
+		// 							reject();
+		// 						});
+		// 					} else {
+		// 						this.fileLoaderDatas.isLoadingDatas = false;
+		// 						reject(errReadFile);
+		// 					}
+		// 				} else {
+		// 					this.fileLoaderDatas.isLoadingDatas = false;
+		// 					this.fileLoaderDatas.datas = JSON.parse(datas);
+		// 					this.fileLoaderDatas.datas.filename = filename;
+		// 					resolve(this.fileLoaderDatas.datas);
+		// 				}
+		// 			});
 
-				}
-			});
+		// 		}
+		// 	});
 
-		});
+		// });
 
 	}
 

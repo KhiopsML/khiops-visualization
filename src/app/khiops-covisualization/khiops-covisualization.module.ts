@@ -74,6 +74,7 @@ export function setupTranslateFactory(service: TranslateService) {
 		HttpClientModule,
 		AngularSplitModule,
 		TranslateModule.forChild(),
+		KhiopsLibraryModule
 	],
 	providers: [
 		ElectronService,

@@ -337,7 +337,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(distributionDatasService: <a href="../injectables/DistributionDatasService.html" target="_self">DistributionDatasService</a>, selectableService: <a href="../injectables/SelectableService.html" target="_self">SelectableService</a>, translate: <a href="../interfaces/T.html" target="_self">TranslateService</a>, snackBar: MatSnackBar, khiopsLibraryService: <a href="../injectables/KhiopsLibraryService.html" target="_self">KhiopsLibraryService</a>, ngzone: <a href="../interfaces/N.html" target="_self">NgZone</a>)</code>
+<code>constructor(distributionDatasService: <a href="../injectables/DistributionDatasService.html" target="_self">DistributionDatasService</a>, selectableService: <a href="../injectables/SelectableService.html" target="_self">SelectableService</a>, translate: TranslateService, snackBar: MatSnackBar, khiopsLibraryService: <a href="../injectables/KhiopsLibraryService.html" target="_self">KhiopsLibraryService</a>, ngzone: <a href="https://angular.io/api/core/NgZone" target="_blank">NgZone</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -387,7 +387,7 @@
                                                         <td>translate</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../interfaces/T.html" target="_self" >TranslateService</a></code>
+                                                                    <code>TranslateService</code>
                                                         </td>
                                                   
                                                     <td>
@@ -423,7 +423,7 @@
                                                         <td>ngzone</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../interfaces/N.html" target="_self" >NgZone</a></code>
+                                                                        <code><a href="https://angular.io/api/core/NgZone" target="_blank" >NgZone</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -1302,7 +1302,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>ngOnChanges(changes: <a href="../undefineds/C.html" target="_self">SimpleChanges</a>)</code>
+<code>ngOnChanges(changes: <a href="https://angular.io/api/core/SimpleChanges" target="_blank">SimpleChanges</a>)</code>
                 </td>
             </tr>
 
@@ -1339,7 +1339,7 @@
                                 <tr>
                                     <td>changes</td>
                                     <td>
-                                                <code><a href="../miscellaneous/typealiases.html#C" target="_self" >SimpleChanges</a></code>
+                                                <code><a href="https://angular.io/api/core/SimpleChanges" target="_blank" >SimpleChanges</a></code>
                                     </td>
 
                                     <td>
@@ -1650,7 +1650,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#C" target="_self" >ChartOptions</a></code>
+                        <i>Type : </i>    <code>ChartOptions</code>
 
                     </td>
                 </tr>
@@ -1862,7 +1862,7 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Default value : </i><code>AppConfig.common.LEVEL_DISTRIBUTION_GRAPH.MAX_LENGTH</code>
+                        <i>Default value : </i><code>AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.MAX_LENGTH</code>
                     </td>
                 </tr>
                     <tr>
@@ -1893,7 +1893,7 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Default value : </i><code>AppConfig.common.LEVEL_DISTRIBUTION_GRAPH.MIN_LENGTH</code>
+                        <i>Default value : </i><code>AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.MIN_LENGTH</code>
                     </td>
                 </tr>
                     <tr>
@@ -1919,7 +1919,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/N.html" target="_self" >NgZone</a></code>
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/NgZone" target="_blank" >NgZone</a></code>
 
                     </td>
                 </tr>
@@ -1992,7 +1992,7 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Default value : </i><code>AppConfig.common.LEVEL_DISTRIBUTION_GRAPH.STEP</code>
+                        <i>Default value : </i><code>AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.STEP</code>
                     </td>
                 </tr>
                     <tr>
@@ -2120,7 +2120,7 @@
 } from &#x27;@angular/core&#x27;;
 import {
 	DistributionDatasService
-} from &#x27;src/app/providers/distribution-datas.service&#x27;;
+} from &#x27;@khiops-visualization/providers/distribution-datas.service&#x27;;
 import {
 	KhiopsLibraryService
 } from &#x27;@khiops-library/providers/khiops-library.service&#x27;;
@@ -2170,9 +2170,9 @@ export class LevelDistributionGraphCanvasComponent extends ScrollableGraphCanvas
 	// define an id to be copied into clipboard
 	id: any &#x3D; &#x27;level-distribution-graph-canvas-comp&#x27;;
 
-	maxScale: number &#x3D; AppConfig.common.LEVEL_DISTRIBUTION_GRAPH.MAX_LENGTH;
-	minScale: number &#x3D; AppConfig.common.LEVEL_DISTRIBUTION_GRAPH.MIN_LENGTH;
-	stepScale: number &#x3D; AppConfig.common.LEVEL_DISTRIBUTION_GRAPH.STEP;
+	maxScale: number &#x3D; AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.MAX_LENGTH;
+	minScale: number &#x3D; AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.MIN_LENGTH;
+	stepScale: number &#x3D; AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.STEP;
 	chartOptions: ChartOptions;
 
 	componentType &#x3D; &#x27;1dBarChart&#x27;; // needed to copy datas
@@ -2217,7 +2217,7 @@ export class LevelDistributionGraphCanvasComponent extends ScrollableGraphCanvas
 			this.resizeGraph();
 		}, 500); // do it after dialog creation complete
 
-		if (this.inputDatas.labels.length &#x3D;&#x3D;&#x3D; AppConfig.common.LEVEL_DISTRIBUTION_GRAPH.MAX_VARIABLES) {
+		if (this.inputDatas.labels.length &#x3D;&#x3D;&#x3D; AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.MAX_VARIABLES) {
 			this.snackBar.open(this.translate.get(&#x27;SNACKS.TOO_MANY_VARIABLES&#x27;), null, {
 				duration: 5000,
 				panelClass: &#x27;warning&#x27;
@@ -2271,9 +2271,7 @@ export class LevelDistributionGraphCanvasComponent extends ScrollableGraphCanvas
                 <p class="comment">
                     <code>./level-distribution-graph-canvas.component.scss</code>
                 </p>
-                <pre class="line-numbers"><code class="language-scss">@import &quot;khiops-library/src/lib/styles/theme.scss&quot;;
-
-#level-distribution-graph-canvas-comp {
+                <pre class="line-numbers"><code class="language-scss">#level-distribution-graph-canvas-comp {
 
 	kl-chart-next {
 		padding-top: 30px;

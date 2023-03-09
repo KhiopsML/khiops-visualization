@@ -76,7 +76,7 @@
     <p class="comment">
                     <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
                     <code><a href="https://angular.io/api/core/AfterViewInit" target="_blank" >AfterViewInit</a></code>
-                    <code><a href="../miscellaneous/typealiases.html#C" target="_self" >OnChanges</a></code>
+                    <code><a href="https://angular.io/api/core/OnChanges" target="_blank" >OnChanges</a></code>
                     <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
     </p>
 
@@ -340,7 +340,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>ngOnChanges(changes: <a href="../undefineds/C.html" target="_self">SimpleChanges</a>)</code>
+<code>ngOnChanges(changes: <a href="https://angular.io/api/core/SimpleChanges" target="_blank">SimpleChanges</a>)</code>
                 </td>
             </tr>
 
@@ -371,7 +371,7 @@
                                 <tr>
                                     <td>changes</td>
                                     <td>
-                                                <code><a href="../miscellaneous/typealiases.html#C" target="_self" >SimpleChanges</a></code>
+                                                <code><a href="https://angular.io/api/core/SimpleChanges" target="_blank" >SimpleChanges</a></code>
                                     </td>
 
                                     <td>
@@ -849,7 +849,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Default value : </i><code>localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + &#x27;SCALE_VALUE&#x27;) || AppConfig.common.GLOBAL.DEFAULT_GRAPH_SCALE</code>
+                        <i>Default value : </i><code>localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + &#x27;SCALE_VALUE&#x27;) || AppConfig.visualizationCommon.GLOBAL.DEFAULT_GRAPH_SCALE</code>
                     </td>
                 </tr>
                     <tr>
@@ -900,7 +900,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/T.html" target="_self" >TargetDistributionGraphCanvasComponent</a></code>
+                        <i>Type : </i>        <code><a href="../components/TargetDistributionGraphCanvasComponent.html" target="_self" >TargetDistributionGraphCanvasComponent</a></code>
 
                     </td>
                 </tr>
@@ -965,10 +965,10 @@
 } from &#x27;@angular/core&#x27;;
 import {
 	AppService
-} from &#x27;src/app/providers/app.service&#x27;;
+} from &#x27;@khiops-visualization/providers/app.service&#x27;;
 import {
 	Preparation2dDatasService
-} from &#x27;src/app/providers/preparation2d-datas.service&#x27;;
+} from &#x27;@khiops-visualization/providers/preparation2d-datas.service&#x27;;
 import {
 	TargetDistributionGraphCanvasComponent
 } from &#x27;../target-distribution-graph-canvas/target-distribution-graph-canvas.component&#x27;;
@@ -977,7 +977,7 @@ import {
 } from &#x27;src/environments/environment&#x27;;
 import {
 	Distribution2dDatasService
-} from &#x27;src/app/providers/distribution2d-datas.service&#x27;;
+} from &#x27;@khiops-visualization/providers/distribution2d-datas.service&#x27;;
 
 @Component({
 	selector: &#x27;app-var-details-preparation-2d&#x27;,
@@ -993,7 +993,7 @@ export class VarDetailsPreparation2dComponent implements OnInit, AfterViewInit, 
 	preparation2dDatas: any;
 	appDatas: any;
 	sizes: any;
-	scaleValue &#x3D; localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + &#x27;SCALE_VALUE&#x27;) || AppConfig.common.GLOBAL.DEFAULT_GRAPH_SCALE;
+	scaleValue &#x3D; localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + &#x27;SCALE_VALUE&#x27;) || AppConfig.visualizationCommon.GLOBAL.DEFAULT_GRAPH_SCALE;
 	currentCellIndex: any;
 	targetDistributionGraphType: string
 	distribution2dDatas: any;
@@ -1003,7 +1003,7 @@ export class VarDetailsPreparation2dComponent implements OnInit, AfterViewInit, 
 		private preparation2dDatasService: Preparation2dDatasService,
 		private appService: AppService) {
 
-		this.targetDistributionGraphType &#x3D; localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + &#x27;TARGET_DISTRIBUTION_GRAPH_OPTION&#x27;);
+		this.targetDistributionGraphType &#x3D; localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + &#x27;TARGET_DISTRIBUTION_GRAPH_OPTION&#x27;);
 
 		this.appDatas &#x3D; this.appService.getDatas().datas;
 		this.preparation2dDatas &#x3D; this.preparation2dDatasService.getDatas();
@@ -1021,7 +1021,7 @@ export class VarDetailsPreparation2dComponent implements OnInit, AfterViewInit, 
 
 	}
 
-	ngOnDestroy() {}
+	ngOnDestroy() { }
 
 	ngOnChanges(changes: SimpleChanges) {
 
@@ -1111,11 +1111,7 @@ export class VarDetailsPreparation2dComponent implements OnInit, AfterViewInit, 
                 <p class="comment">
                     <code>./var-details-preparation-2d.component.scss</code>
                 </p>
-                <pre class="line-numbers"><code class="language-scss">@import &quot;khiops-library/src/lib/styles/theme.scss&quot;;
-
-#app-var-details-preparation-2d-comp {
-
-}
+                <pre class="line-numbers"><code class="language-scss">
 </code></pre>
     </div>
 

@@ -33,15 +33,16 @@ import { EventsService } from '@khiops-covisualization/providers/events.service'
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service'
 import pjson from 'package.json'
 
-let ipcRenderer
-try {
-	ipcRenderer = require('electron').ipcRenderer
-} catch (e) {
-	console.warn('Can not access ipcRenderer', e)
-}
+// TODO remove electron
+// let ipcRenderer
+// try {
+// 	ipcRenderer = require('electron').ipcRenderer
+// } catch (e) {
+// 	console.warn('Can not access ipcRenderer', e)
+// }
 
-let remote: any
-let shell: any
+// let remote: any
+// let shell: any
 
 @Component({
 	selector: 'app-home-layout',
@@ -111,11 +112,13 @@ export class HomeLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 		private dialog: MatDialog,
 	) {
 		this.isElectron = this.electronService.isElectron()
-		if (this.isElectron) {
-			const electron = require('electron')
-			remote = require('@electron/remote')
-			shell = electron.shell
-		}
+
+		// TODO remove electron
+		// if (this.isElectron) {
+		// 	const electron = require('electron')
+		// 	remote = require('@electron/remote')
+		// 	shell = electron.shell
+		// }
 
 		if (pjson) {
 			this.appTitle = pjson.title.covisualization
@@ -174,35 +177,36 @@ export class HomeLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 	ngAfterViewInit() {
 		this.constructMenu()
 		if (this.isElectron) {
-			; (async () => {
-				await ipcRenderer.invoke('launch-check-for-update')
-			})()
+			// TODO remove electron
+			// (async () => {
+			// 	await ipcRenderer.invoke('launch-check-for-update')
+			// })()
 
-			// debug
-			if (!AppConfig.production) {
-				setTimeout(() => {
-					this.fileLoader.loadDebugFile()
-				}) // do it async to avoid ExpressionChangedAfterItHasBeenCheckedError
-			}
+			// // debug
+			// if (!AppConfig.production) {
+			// 	setTimeout(() => {
+			// 		this.fileLoader.loadDebugFile()
+			// 	}) // do it async to avoid ExpressionChangedAfterItHasBeenCheckedError
+			// }
 
-			if (ipcRenderer) {
-				// Get input file on windows
-				const inputFile = ipcRenderer.sendSync('get-input-file')
-				// const inputFile = ipcRenderer.invoke('get-input-file');
-				if (inputFile && inputFile !== '.') {
-					setTimeout(() => {
-						this.fileLoader.openFile(inputFile)
-					})
-				}
-				// Get input files on Mac or Linux
-				ipcRenderer.on('file-open-system', (event, arg) => {
-					if (arg) {
-						setTimeout(() => {
-							this.fileLoader.openFile(arg)
-						})
-					}
-				})
-			}
+			// if (ipcRenderer) {
+			// 	// Get input file on windows
+			// 	const inputFile = ipcRenderer.sendSync('get-input-file')
+			// 	// const inputFile = ipcRenderer.invoke('get-input-file');
+			// 	if (inputFile && inputFile !== '.') {
+			// 		setTimeout(() => {
+			// 			this.fileLoader.openFile(inputFile)
+			// 		})
+			// 	}
+			// 	// Get input files on Mac or Linux
+			// 	ipcRenderer.on('file-open-system', (event, arg) => {
+			// 		if (arg) {
+			// 			setTimeout(() => {
+			// 				this.fileLoader.openFile(arg)
+			// 			})
+			// 		}
+			// 	})
+			// }
 		} else {
 			// Uncomment this to debug on ng:serve:web mode
 			// Also comment *ngIf="isElectron" in homeLayout.html
@@ -215,47 +219,49 @@ export class HomeLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 			}
 		}
 
-		if (ipcRenderer) {
-			ipcRenderer.on('before-quit', (event, arg) => {
-				console.info('before-quit', event, arg)
-				this.saveBeforeQuit()
-			})
-		}
+		// TODO remove electron
+		// if (ipcRenderer) {
+		// 	ipcRenderer.on('before-quit', (event, arg) => {
+		// 		console.info('before-quit', event, arg)
+		// 		this.saveBeforeQuit()
+		// 	})
+		// }
 	}
 
 	saveBeforeQuit(mustRestart: boolean = false) {
-		this.dialogRef.closeAll()
-		this.ngzone.run(() => {
-			const config = new MatDialogConfig()
-			const dialogRef: MatDialogRef<ConfirmDialogComponent> = this.dialog.open(
-				ConfirmDialogComponent,
-				config,
-			)
-			dialogRef.componentInstance.message = this.translate.get(
-				'GLOBAL.SAVE_BEFORE_QUIT',
-			)
-			dialogRef.componentInstance.displayRejectBtn = true
+		// TODO remove electron
+		// this.dialogRef.closeAll()
+		// this.ngzone.run(() => {
+		// 	const config = new MatDialogConfig()
+		// 	const dialogRef: MatDialogRef<ConfirmDialogComponent> = this.dialog.open(
+		// 		ConfirmDialogComponent,
+		// 		config,
+		// 	)
+		// 	dialogRef.componentInstance.message = this.translate.get(
+		// 		'GLOBAL.SAVE_BEFORE_QUIT',
+		// 	)
+		// 	dialogRef.componentInstance.displayRejectBtn = true
 
-			dialogRef
-				.afterClosed()
-				.toPromise()
-				.then((e) => {
-					if (e === 'confirm') {
-						this.save()
-						if (mustRestart) {
-							remote.app.relaunch()
-						}
-						remote.app.exit(0)
-					} else if (e === 'cancel') {
-						// Do nothing
-					} else if (e === 'reject') {
-						if (mustRestart) {
-							remote.app.relaunch()
-						}
-						remote.app.exit(0)
-					}
-				})
-		})
+		// 	dialogRef
+		// 		.afterClosed()
+		// 		.toPromise()
+		// 		.then((e) => {
+		// 			if (e === 'confirm') {
+		// 				this.save()
+		// 				if (mustRestart) {
+		// 					remote.app.relaunch()
+		// 				}
+		// 				remote.app.exit(0)
+		// 			} else if (e === 'cancel') {
+		// 				// Do nothing
+		// 			} else if (e === 'reject') {
+		// 				if (mustRestart) {
+		// 					remote.app.relaunch()
+		// 				}
+		// 				remote.app.exit(0)
+		// 			}
+		// 		})
+		// })
 	}
 
 	isUpdateAvailable(status: boolean) {
@@ -352,265 +358,266 @@ export class HomeLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 	constructMenu() {
 		const opendFiles = this.fileLoader.getOpenedFiles()
 
-		if (this.electronService.isElectron()) {
-			const menu1 = {
-				label: this.translate.get('MENU.FILE'),
-				submenu: [
-					{
-						label: this.translate.get('MENU.OPEN'),
-						click: () => {
-							// this.khiopsLibraryService.trackEvent('click', 'open_file');
-							this.openFileDialog()
-						},
-					},
-					{
-						type: 'separator',
-					},
-					{
-						type: 'separator',
-					},
-					{
-						label: this.translate.get('MENU.CLOSE_FILE'),
-						click: () => {
-							// this.khiopsLibraryService.trackEvent('click', 'close_file');
-							this.closeFile()
-						},
-					},
-					{
-						type: 'separator',
-					},
-					{
-						label: this.translate.get('MENU.SAVE'),
-						click: () => {
-							// this.khiopsLibraryService.trackEvent('click', 'save');
-							this.save()
-						},
-					},
-					{
-						label: this.translate.get('MENU.SAVE_AS'),
-						click: () => {
-							// this.khiopsLibraryService.trackEvent('click', 'save_as');
-							this.saveAs()
-						},
-					},
-					{
-						label: this.translate.get('MENU.SAVE_CURRENT_HIERARCHY_AS'),
-						click: () => {
-							// this.khiopsLibraryService.trackEvent('click', 'save_current_hierarchy');
-							this.saveCurrentHierarchyAs()
-						},
-					},
-					{
-						type: 'separator',
-					},
-					{
-						label: this.translate.get('MENU.RESTART_APP'),
-						click: () => {
-							// this.khiopsLibraryService.trackEvent('click', 'restart_app');
-							this.saveBeforeQuit(true)
-						},
-					},
-					{
-						label: this.translate.get('MENU.EXIT'),
-						click: () => {
-							// this.khiopsLibraryService.trackEvent('click', 'exit_app');
-							this.saveBeforeQuit()
-						},
-					},
-				],
-			}
+		// TODO remove electron
+		// if (this.electronService.isElectron()) {
+		// 	const menu1 = {
+		// 		label: this.translate.get('MENU.FILE'),
+		// 		submenu: [
+		// 			{
+		// 				label: this.translate.get('MENU.OPEN'),
+		// 				click: () => {
+		// 					// this.khiopsLibraryService.trackEvent('click', 'open_file');
+		// 					this.openFileDialog()
+		// 				},
+		// 			},
+		// 			{
+		// 				type: 'separator',
+		// 			},
+		// 			{
+		// 				type: 'separator',
+		// 			},
+		// 			{
+		// 				label: this.translate.get('MENU.CLOSE_FILE'),
+		// 				click: () => {
+		// 					// this.khiopsLibraryService.trackEvent('click', 'close_file');
+		// 					this.closeFile()
+		// 				},
+		// 			},
+		// 			{
+		// 				type: 'separator',
+		// 			},
+		// 			{
+		// 				label: this.translate.get('MENU.SAVE'),
+		// 				click: () => {
+		// 					// this.khiopsLibraryService.trackEvent('click', 'save');
+		// 					this.save()
+		// 				},
+		// 			},
+		// 			{
+		// 				label: this.translate.get('MENU.SAVE_AS'),
+		// 				click: () => {
+		// 					// this.khiopsLibraryService.trackEvent('click', 'save_as');
+		// 					this.saveAs()
+		// 				},
+		// 			},
+		// 			{
+		// 				label: this.translate.get('MENU.SAVE_CURRENT_HIERARCHY_AS'),
+		// 				click: () => {
+		// 					// this.khiopsLibraryService.trackEvent('click', 'save_current_hierarchy');
+		// 					this.saveCurrentHierarchyAs()
+		// 				},
+		// 			},
+		// 			{
+		// 				type: 'separator',
+		// 			},
+		// 			{
+		// 				label: this.translate.get('MENU.RESTART_APP'),
+		// 				click: () => {
+		// 					// this.khiopsLibraryService.trackEvent('click', 'restart_app');
+		// 					this.saveBeforeQuit(true)
+		// 				},
+		// 			},
+		// 			{
+		// 				label: this.translate.get('MENU.EXIT'),
+		// 				click: () => {
+		// 					// this.khiopsLibraryService.trackEvent('click', 'exit_app');
+		// 					this.saveBeforeQuit()
+		// 				},
+		// 			},
+		// 		],
+		// 	}
 
-			// insert history files
-			if (opendFiles.files.length > 0) {
-				// in reverse order
-				for (let i = opendFiles.files.length - 1; i >= 0; i--) {
-					menu1.submenu.splice(2, 0, {
-						label: this.fileLoader.getOpenedFiles().files[i],
-						click: () => {
-							// this.khiopsLibraryService.trackEvent('click', 'open_file');
-							this.openFile(this.fileLoader.getOpenedFiles().files[i])
-						},
-					})
-				}
-			}
+		// 	// insert history files
+		// 	if (opendFiles.files.length > 0) {
+		// 		// in reverse order
+		// 		for (let i = opendFiles.files.length - 1; i >= 0; i--) {
+		// 			menu1.submenu.splice(2, 0, {
+		// 				label: this.fileLoader.getOpenedFiles().files[i],
+		// 				click: () => {
+		// 					// this.khiopsLibraryService.trackEvent('click', 'open_file');
+		// 					this.openFile(this.fileLoader.getOpenedFiles().files[i])
+		// 				},
+		// 			})
+		// 		}
+		// 	}
 
-			const menu2 = {
-				label: this.translate.get('MENU.HELP'),
-				submenu: [
-					{
-						role: 'toggleDevTools',
-						click: () => {
-							this.khiopsLibraryService.trackEvent('page_view', 'debugger')
-						},
-					},
-					{
-						type: 'separator',
-					},
-					{
-						label: this.translate.get('GLOBAL.VERSION') + ' ' + this.appVersion,
-						click: () => {
-							// this.openReleaseNotesDialog();
-						},
-					},
-					{
-						label:
-							this.translate.get('GLOBAL.LIB_VERSION') +
-							' ' +
-							LibVersionService.getVersion(),
-					},
-					{
-						label: this.translate.get('GLOBAL.RELEASE_NOTES'),
-						click: () => {
-							this.khiopsLibraryService.trackEvent('page_view', 'release_notes')
-							this.openReleaseNotesDialog()
-						},
-					},
-					{
-						label: this.translate.get('MENU.CHANNELS'),
-						submenu: [
-							{
-								label: this.translate.get('MENU.LATEST'),
-								type: 'radio',
-								click: () => {
-									if (this.currentChannel !== 'latest') {
-										// this.khiopsLibraryService.trackEvent('click', 'release', 'latest');
-										this.setChannel('latest')
-									}
-								},
-								checked: this.currentChannel === 'latest',
-							},
-							{
-								label: this.translate.get('MENU.BETA'),
-								type: 'radio',
-								click: () => {
-									if (this.currentChannel !== 'beta') {
-										// this.khiopsLibraryService.trackEvent('click', 'release', 'beta');
+		// 	const menu2 = {
+		// 		label: this.translate.get('MENU.HELP'),
+		// 		submenu: [
+		// 			{
+		// 				role: 'toggleDevTools',
+		// 				click: () => {
+		// 					this.khiopsLibraryService.trackEvent('page_view', 'debugger')
+		// 				},
+		// 			},
+		// 			{
+		// 				type: 'separator',
+		// 			},
+		// 			{
+		// 				label: this.translate.get('GLOBAL.VERSION') + ' ' + this.appVersion,
+		// 				click: () => {
+		// 					// this.openReleaseNotesDialog();
+		// 				},
+		// 			},
+		// 			{
+		// 				label:
+		// 					this.translate.get('GLOBAL.LIB_VERSION') +
+		// 					' ' +
+		// 					LibVersionService.getVersion(),
+		// 			},
+		// 			{
+		// 				label: this.translate.get('GLOBAL.RELEASE_NOTES'),
+		// 				click: () => {
+		// 					this.khiopsLibraryService.trackEvent('page_view', 'release_notes')
+		// 					this.openReleaseNotesDialog()
+		// 				},
+		// 			},
+		// 			{
+		// 				label: this.translate.get('MENU.CHANNELS'),
+		// 				submenu: [
+		// 					{
+		// 						label: this.translate.get('MENU.LATEST'),
+		// 						type: 'radio',
+		// 						click: () => {
+		// 							if (this.currentChannel !== 'latest') {
+		// 								// this.khiopsLibraryService.trackEvent('click', 'release', 'latest');
+		// 								this.setChannel('latest')
+		// 							}
+		// 						},
+		// 						checked: this.currentChannel === 'latest',
+		// 					},
+		// 					{
+		// 						label: this.translate.get('MENU.BETA'),
+		// 						type: 'radio',
+		// 						click: () => {
+		// 							if (this.currentChannel !== 'beta') {
+		// 								// this.khiopsLibraryService.trackEvent('click', 'release', 'beta');
 
-										this.dialogRef.closeAll()
-										this.ngzone.run(() => {
-											const config = new MatDialogConfig()
-											const dialogRef: MatDialogRef<ConfirmDialogComponent> = this.dialog.open(
-												ConfirmDialogComponent,
-												config,
-											)
-											dialogRef.componentInstance.title = this.translate.get(
-												'GLOBAL.ENABLE_BETA_VERSIONS',
-											)
-											dialogRef.componentInstance.message = this.translate.get(
-												'GLOBAL.BETA_VERSIONS_WARNING',
-											)
-											dialogRef
-												.afterClosed()
-												.toPromise()
-												.then((e) => {
-													if (e === 'confirm') {
-														// User confirm
-														this.setChannel('beta')
-													} else if (e === 'cancel') {
-														this.setChannel('latest')
-														// re construct the menu to set channel to latest
-														this.constructMenu()
-													}
-												})
-										})
-									}
-								},
-								checked: this.currentChannel === 'beta',
-							},
-						],
-					},
-				],
-			}
+		// 								this.dialogRef.closeAll()
+		// 								this.ngzone.run(() => {
+		// 									const config = new MatDialogConfig()
+		// 									const dialogRef: MatDialogRef<ConfirmDialogComponent> = this.dialog.open(
+		// 										ConfirmDialogComponent,
+		// 										config,
+		// 									)
+		// 									dialogRef.componentInstance.title = this.translate.get(
+		// 										'GLOBAL.ENABLE_BETA_VERSIONS',
+		// 									)
+		// 									dialogRef.componentInstance.message = this.translate.get(
+		// 										'GLOBAL.BETA_VERSIONS_WARNING',
+		// 									)
+		// 									dialogRef
+		// 										.afterClosed()
+		// 										.toPromise()
+		// 										.then((e) => {
+		// 											if (e === 'confirm') {
+		// 												// User confirm
+		// 												this.setChannel('beta')
+		// 											} else if (e === 'cancel') {
+		// 												this.setChannel('latest')
+		// 												// re construct the menu to set channel to latest
+		// 												this.constructMenu()
+		// 											}
+		// 										})
+		// 								})
+		// 							}
+		// 						},
+		// 						checked: this.currentChannel === 'beta',
+		// 					},
+		// 				],
+		// 			},
+		// 		],
+		// 	}
 
-			const menu3 = {
-				label: this.translate.get('MENU.VIEW'),
-				submenu: [
-					{
-						role: 'togglefullscreen',
-						click: () => {
-							// this.khiopsLibraryService.trackEvent('click', 'full_screen');
-						},
-					},
-					{
-						type: 'separator',
-					},
-					{
-						role: 'resetZoom',
-						accelerator: 'CommandOrControl+nummult',
-						click: () => {
-							// this.khiopsLibraryService.trackEvent('click', 'zoom', 'reset');
-						},
-					},
-					{
-						role: 'zoomIn',
-						accelerator: 'CommandOrControl+numadd',
-						click: () => {
-							// this.khiopsLibraryService.trackEvent('click', 'zoom', 'in');
-						},
-					},
-					{
-						role: 'zoomOut',
-						accelerator: 'CommandOrControl+numsub',
-						click: () => {
-							// this.khiopsLibraryService.trackEvent('click', 'zoom', 'out');
-						},
-					},
-				],
-			}
+		// 	const menu3 = {
+		// 		label: this.translate.get('MENU.VIEW'),
+		// 		submenu: [
+		// 			{
+		// 				role: 'togglefullscreen',
+		// 				click: () => {
+		// 					// this.khiopsLibraryService.trackEvent('click', 'full_screen');
+		// 				},
+		// 			},
+		// 			{
+		// 				type: 'separator',
+		// 			},
+		// 			{
+		// 				role: 'resetZoom',
+		// 				accelerator: 'CommandOrControl+nummult',
+		// 				click: () => {
+		// 					// this.khiopsLibraryService.trackEvent('click', 'zoom', 'reset');
+		// 				},
+		// 			},
+		// 			{
+		// 				role: 'zoomIn',
+		// 				accelerator: 'CommandOrControl+numadd',
+		// 				click: () => {
+		// 					// this.khiopsLibraryService.trackEvent('click', 'zoom', 'in');
+		// 				},
+		// 			},
+		// 			{
+		// 				role: 'zoomOut',
+		// 				accelerator: 'CommandOrControl+numsub',
+		// 				click: () => {
+		// 					// this.khiopsLibraryService.trackEvent('click', 'zoom', 'out');
+		// 				},
+		// 			},
+		// 		],
+		// 	}
 
-			const menu4 = {
-				label: this.translate.get('MENU.REPORT_A_BUG'),
-				submenu: [
-					{
-						label: this.translate.get('MENU.REPORT_A_BUG'),
-						click: () => {
-							this.khiopsLibraryService.trackEvent('page_view', 'report_issue')
-							// const body =
-							// 	"\n\n\n\n---\nVersion: " +
-							// 	this.appVersion +
-							// 	"\nKhiops lib version: " +
-							// 	LibVersionService.getVersion();
-							// const url =
-							// 	"https://github.com/khiopsrelease/kc-release/issues/new?assignees=&labels=bug&body=";
-							// shell.openExternal(url + encodeURIComponent(body));
-							const emailId = 'bug.khiopsvisualization@orange.com'
-							const subject =
-								this.appTitle + ': ' + this.translate.get('MENU.REPORT_A_BUG')
-							const message =
-								'\n\n--------------------------------------------------\n' +
-								this.translate.get('GLOBAL.VERSION') +
-								': ' +
-								this.appVersion +
-								'\n' +
-								this.translate.get('GLOBAL.LIB_VERSION') +
-								': ' +
-								LibVersionService.getVersion() +
-								'\n'
-							shell.openExternal(
-								'mailto:' +
-								emailId +
-								'?subject=' +
-								subject +
-								'&body=' +
-								encodeURIComponent(message),
-								'_self',
-							)
-						},
-					},
-				],
-			}
+		// 	const menu4 = {
+		// 		label: this.translate.get('MENU.REPORT_A_BUG'),
+		// 		submenu: [
+		// 			{
+		// 				label: this.translate.get('MENU.REPORT_A_BUG'),
+		// 				click: () => {
+		// 					this.khiopsLibraryService.trackEvent('page_view', 'report_issue')
+		// 					// const body =
+		// 					// 	"\n\n\n\n---\nVersion: " +
+		// 					// 	this.appVersion +
+		// 					// 	"\nKhiops lib version: " +
+		// 					// 	LibVersionService.getVersion();
+		// 					// const url =
+		// 					// 	"https://github.com/khiopsrelease/kc-release/issues/new?assignees=&labels=bug&body=";
+		// 					// shell.openExternal(url + encodeURIComponent(body));
+		// 					const emailId = 'bug.khiopsvisualization@orange.com'
+		// 					const subject =
+		// 						this.appTitle + ': ' + this.translate.get('MENU.REPORT_A_BUG')
+		// 					const message =
+		// 						'\n\n--------------------------------------------------\n' +
+		// 						this.translate.get('GLOBAL.VERSION') +
+		// 						': ' +
+		// 						this.appVersion +
+		// 						'\n' +
+		// 						this.translate.get('GLOBAL.LIB_VERSION') +
+		// 						': ' +
+		// 						LibVersionService.getVersion() +
+		// 						'\n'
+		// 					shell.openExternal(
+		// 						'mailto:' +
+		// 						emailId +
+		// 						'?subject=' +
+		// 						subject +
+		// 						'&body=' +
+		// 						encodeURIComponent(message),
+		// 						'_self',
+		// 					)
+		// 				},
+		// 			},
+		// 		],
+		// 	}
 
-			const menuTemplate = []
-			menuTemplate.push(menu1)
-			menuTemplate.push(menu3)
-			menuTemplate.push(menu2)
-			menuTemplate.push(menu4)
+		// 	const menuTemplate = []
+		// 	menuTemplate.push(menu1)
+		// 	menuTemplate.push(menu3)
+		// 	menuTemplate.push(menu2)
+		// 	menuTemplate.push(menu4)
 
-			if (remote && remote.Menu) {
-				const menu = remote.Menu.buildFromTemplate(menuTemplate)
-				remote.Menu.setApplicationMenu(menu)
-			}
-		}
+		// 	if (remote && remote.Menu) {
+		// 		const menu = remote.Menu.buildFromTemplate(menuTemplate)
+		// 		remote.Menu.setApplicationMenu(menu)
+		// 	}
+		// }
 	}
 
 	openReleaseNotesDialog(): void {
@@ -626,14 +633,15 @@ export class HomeLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 	}
 
 	setChannel(channel) {
-		localStorage.setItem(
-			AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'CHANNEL',
-			channel,
-		)
-		this.currentChannel = channel
-			; (async () => {
-				await ipcRenderer.invoke('launch-check-for-update')
-			})()
+		// TODO remove electron
+		// localStorage.setItem(
+		// 	AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'CHANNEL',
+		// 	channel,
+		// )
+		// this.currentChannel = channel
+		// 	; (async () => {
+		// 		await ipcRenderer.invoke('launch-check-for-update')
+		// 	})()
 	}
 
 	closeFile() {

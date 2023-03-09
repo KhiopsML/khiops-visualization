@@ -174,7 +174,8 @@ const providers = [
 		FormsModule,
 		HttpClientModule,
 		AngularSplitModule,
-		TranslateModule.forChild()
+		TranslateModule.forChild(),
+		KhiopsLibraryModule
 	],
 	providers: providers,
 	bootstrap: [AppComponent],

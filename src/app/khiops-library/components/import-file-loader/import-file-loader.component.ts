@@ -17,9 +17,11 @@ import {
 import {
 	FileVO
 } from '../../model/file-vo';
-import {
-	ElectronService
-} from '../../providers/electron.service';
+
+// TODO remove electron
+// import {
+// 	ElectronService
+// } from '../../providers/electron.service';
 
 let dialog: any;
 
@@ -30,18 +32,20 @@ let dialog: any;
 })
 export class ImportFileLoaderComponent implements OnInit {
 
-	@Output() datasLoaded: EventEmitter < any > = new EventEmitter();
+	@Output() datasLoaded: EventEmitter<any> = new EventEmitter();
 	filename: any;
 	isLoadingDatas: boolean;
 
 	constructor(private ngzone: NgZone,
-		private electronService: ElectronService,
+		// private electronService: ElectronService,
 		private importFileLoaderService: ImportFileLoaderService,
 		private snackBar: MatSnackBar,
 		public translate: TranslateService) {
-		if (this.electronService.isElectron()) {
-			dialog = require('@electron/remote').dialog;
-		}
+
+		// TODO remove electron
+		// if (this.electronService.isElectron()) {
+		// 	dialog = require('@electron/remote').dialog;
+		// }
 	}
 
 	ngOnInit() {
@@ -95,7 +99,7 @@ export class ImportFileLoaderComponent implements OnInit {
 
 	closeFile() {
 		this.ngzone.run(
-			() => {}
+			() => { }
 		);
 	}
 

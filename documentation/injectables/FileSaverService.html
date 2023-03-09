@@ -105,7 +105,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(electronService: <a href="../injectables/ElectronService.html" target="_self">ElectronService</a>, fileLoaderService: <a href="../injectables/FileLoaderService.html" target="_self">FileLoaderService</a>, ngzone: <a href="../interfaces/N.html" target="_self">NgZone</a>, snackBar: MatSnackBar, translate: <a href="../interfaces/T.html" target="_self">TranslateService</a>, khiopsLibraryService: <a href="../injectables/KhiopsLibraryService.html" target="_self">KhiopsLibraryService</a>)</code>
+<code>constructor(electronService: <a href="../injectables/ElectronService.html" target="_self">ElectronService</a>, fileLoaderService: <a href="../injectables/FileLoaderService.html" target="_self">FileLoaderService</a>, ngzone: <a href="https://angular.io/api/core/NgZone" target="_blank">NgZone</a>, snackBar: MatSnackBar, translate: TranslateService, khiopsLibraryService: <a href="../injectables/KhiopsLibraryService.html" target="_self">KhiopsLibraryService</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -155,7 +155,7 @@
                                                         <td>ngzone</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../interfaces/N.html" target="_self" >NgZone</a></code>
+                                                                        <code><a href="https://angular.io/api/core/NgZone" target="_blank" >NgZone</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -179,7 +179,7 @@
                                                         <td>translate</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../interfaces/T.html" target="_self" >TranslateService</a></code>
+                                                                    <code>TranslateService</code>
                                                         </td>
                                                   
                                                     <td>
@@ -233,8 +233,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="42"
-                            class="link-to-prism">src/app/khiops-library/providers/file-saver.service.ts:42</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="43"
+                            class="link-to-prism">src/app/khiops-library/providers/file-saver.service.ts:43</a></div>
                 </td>
             </tr>
 
@@ -307,8 +307,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="63"
-                            class="link-to-prism">src/app/khiops-library/providers/file-saver.service.ts:63</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="64"
+                            class="link-to-prism">src/app/khiops-library/providers/file-saver.service.ts:64</a></div>
                 </td>
             </tr>
 
@@ -372,8 +372,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="80"
-                            class="link-to-prism">src/app/khiops-library/providers/file-saver.service.ts:80</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="81"
+                            class="link-to-prism">src/app/khiops-library/providers/file-saver.service.ts:81</a></div>
                 </td>
             </tr>
 
@@ -468,9 +468,10 @@ export class FileSaverService {
 		private translate: TranslateService,
 		private khiopsLibraryService: KhiopsLibraryService
 	) {
-		if (this.electronService.isElectron()) {
-			dialog &#x3D; require(&#x27;@electron/remote&#x27;).dialog;
-		}
+		// TODO remove electron
+		// if (this.electronService.isElectron()) {
+		// 	dialog &#x3D; require(&#x27;@electron/remote&#x27;).dialog;
+		// }
 	}
 
 	save(appName, datas) {
@@ -513,19 +514,20 @@ export class FileSaverService {
 
 	saveFile(filename, datas) {
 
-		this.electronService.fs.writeFileSync(
-			filename,
-			JSON.stringify(datas, null, 2), // spacing level &#x3D; 2
-			this.khiopsLibraryService.getAppConfig().common.FILE_SAVE.ENCODING
-		);
-		this.ngzone.run(
-			() &#x3D;&gt; {
-				this.snackBar.open(this.translate.get(&#x27;SNACKS.SAVE_FILE_SUCCESS&#x27;), null, {
-					duration: 4000,
-					panelClass: &#x27;success&#x27;
-				});
-			}
-		);
+		// TODO remove electron
+		// this.electronService.fs.writeFileSync(
+		// 	filename,
+		// 	JSON.stringify(datas, null, 2), // spacing level &#x3D; 2
+		// 	this.khiopsLibraryService.getAppConfig().common.FILE_SAVE.ENCODING
+		// );
+		// this.ngzone.run(
+		// 	() &#x3D;&gt; {
+		// 		this.snackBar.open(this.translate.get(&#x27;SNACKS.SAVE_FILE_SUCCESS&#x27;), null, {
+		// 			duration: 4000,
+		// 			panelClass: &#x27;success&#x27;
+		// 		});
+		// 	}
+		// );
 	}
 
 }

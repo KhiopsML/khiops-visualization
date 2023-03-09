@@ -82,7 +82,7 @@
     <p class="comment">
                     <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
                     <code><a href="https://angular.io/api/core/AfterViewInit" target="_blank" >AfterViewInit</a></code>
-                    <code><a href="../miscellaneous/typealiases.html#C" target="_self" >OnChanges</a></code>
+                    <code><a href="https://angular.io/api/core/OnChanges" target="_blank" >OnChanges</a></code>
                     <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
     </p>
 
@@ -304,7 +304,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(ngzone: <a href="../interfaces/N.html" target="_self">NgZone</a>, treePreparationDatasService: <a href="../injectables/TreePreparationDatasService.html" target="_self">TreePreparationDatasService</a>, khiopsLibraryService: <a href="../injectables/KhiopsLibraryService.html" target="_self">KhiopsLibraryService</a>, distributionDatasService: <a href="../injectables/DistributionDatasService.html" target="_self">DistributionDatasService</a>, selectableService: <a href="../injectables/SelectableService.html" target="_self">SelectableService</a>, translate: <a href="../interfaces/T.html" target="_self">TranslateService</a>)</code>
+<code>constructor(ngzone: <a href="https://angular.io/api/core/NgZone" target="_blank">NgZone</a>, treePreparationDatasService: <a href="../injectables/TreePreparationDatasService.html" target="_self">TreePreparationDatasService</a>, khiopsLibraryService: <a href="../injectables/KhiopsLibraryService.html" target="_self">KhiopsLibraryService</a>, distributionDatasService: <a href="../injectables/DistributionDatasService.html" target="_self">DistributionDatasService</a>, selectableService: <a href="../injectables/SelectableService.html" target="_self">SelectableService</a>, translate: TranslateService)</code>
                     </td>
                 </tr>
                         <tr>
@@ -330,7 +330,7 @@
                                                         <td>ngzone</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../interfaces/N.html" target="_self" >NgZone</a></code>
+                                                                        <code><a href="https://angular.io/api/core/NgZone" target="_blank" >NgZone</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -390,7 +390,7 @@
                                                         <td>translate</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../interfaces/T.html" target="_self" >TranslateService</a></code>
+                                                                    <code>TranslateService</code>
                                                         </td>
                                                   
                                                     <td>
@@ -865,7 +865,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>ngOnChanges(changes: <a href="../undefineds/C.html" target="_self">SimpleChanges</a>)</code>
+<code>ngOnChanges(changes: <a href="https://angular.io/api/core/SimpleChanges" target="_blank">SimpleChanges</a>)</code>
                 </td>
             </tr>
 
@@ -896,7 +896,7 @@
                                 <tr>
                                     <td>changes</td>
                                     <td>
-                                                <code><a href="../miscellaneous/typealiases.html#C" target="_self" >SimpleChanges</a></code>
+                                                <code><a href="https://angular.io/api/core/SimpleChanges" target="_blank" >SimpleChanges</a></code>
                                     </td>
 
                                     <td>
@@ -1423,7 +1423,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../classes/Hypertree.html" target="_self" >Hypertree</a></code>
+                        <i>Type : </i>    <code>Hypertree</code>
 
                     </td>
                 </tr>
@@ -1475,7 +1475,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/N.html" target="_self" >NgZone</a></code>
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/NgZone" target="_blank" >NgZone</a></code>
 
                     </td>
                 </tr>
@@ -1569,7 +1569,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/T.html" target="_self" >TranslateService</a></code>
+                        <i>Type : </i>    <code>TranslateService</code>
 
                     </td>
                 </tr>
@@ -1716,7 +1716,7 @@ import {
 } from &#x27;@khiops-library/providers/utils.service&#x27;;
 import {
 	TreePreparationDatasService
-} from &#x27;src/app/providers/tree-preparation-datas.service&#x27;;
+} from &#x27;@khiops-visualization/providers/tree-preparation-datas.service&#x27;;
 import {
 	Hypertree
 } from &#x27;@khiops-hypertree/js/components/hypertree/hypertree&#x27;;
@@ -1725,10 +1725,10 @@ import {
 } from &#x27;src/environments/environment&#x27;;
 import {
 	DistributionDatasService
-} from &#x27;src/app/providers/distribution-datas.service&#x27;;
+} from &#x27;@khiops-visualization/providers/distribution-datas.service&#x27;;
 import {
 	TreeNodeVO
-} from &#x27;src/app/model/tree-node-vo&#x27;;
+} from &#x27;@khiops-visualization/model/tree-node-vo&#x27;;
 import {
 	KhiopsLibraryService
 } from &#x27;@khiops-library/providers/khiops-library.service&#x27;;
@@ -1744,8 +1744,8 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 	@Input() selectedNode: any;
 	@Input() dimensionTree: any;
 	@Input() displayedValues: any;
-	@Output() selectTreeItemChanged: EventEmitter &lt; any &gt; &#x3D; new EventEmitter();
-	@Output() treeHyperDisplayedValuesChanged: EventEmitter &lt; any &gt; &#x3D; new EventEmitter();
+	@Output() selectTreeItemChanged: EventEmitter&lt;any&gt; &#x3D; new EventEmitter();
+	@Output() treeHyperDisplayedValuesChanged: EventEmitter&lt;any&gt; &#x3D; new EventEmitter();
 	buttonTitle: string;
 
 	componentType &#x3D; &#x27;hyptree&#x27;; // needed to copy datas
@@ -1772,11 +1772,11 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 
 		this.buttonTitle &#x3D; this.translate.get(&#x27;GLOBAL.VALUES&#x27;);
 
-		const previousVisualizationPopulationState &#x3D; JSON.parse(localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + &#x27;SETTING_HYPERTREE_VISU_POPULATION&#x27;));
-		this.visualization.population &#x3D; previousVisualizationPopulationState &#x3D;&#x3D;&#x3D; undefined ? AppConfig.common.HYPERTREE.VISU_POPULATION : previousVisualizationPopulationState;
+		const previousVisualizationPopulationState &#x3D; JSON.parse(localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + &#x27;SETTING_HYPERTREE_VISU_POPULATION&#x27;));
+		this.visualization.population &#x3D; previousVisualizationPopulationState &#x3D;&#x3D;&#x3D; undefined ? AppConfig.visualizationCommon.HYPERTREE.VISU_POPULATION : previousVisualizationPopulationState;
 
-		const previousVisualizationPurityState &#x3D; JSON.parse(localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + &#x27;SETTING_HYPERTREE_VISU_PURITY&#x27;));
-		this.visualization.purity &#x3D; previousVisualizationPurityState &#x3D;&#x3D;&#x3D; undefined ? AppConfig.common.HYPERTREE.VISU_PURITY : previousVisualizationPurityState;
+		const previousVisualizationPurityState &#x3D; JSON.parse(localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + &#x27;SETTING_HYPERTREE_VISU_PURITY&#x27;));
+		this.visualization.purity &#x3D; previousVisualizationPurityState &#x3D;&#x3D;&#x3D; undefined ? AppConfig.visualizationCommon.HYPERTREE.VISU_PURITY : previousVisualizationPurityState;
 	}
 
 	ngOnInit() {
@@ -1792,14 +1792,14 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 		// this.khiopsLibraryService.trackEvent(&#x27;click&#x27;, &#x27;toggle_purity_tree&#x27;, state);
 		this.visualization.purity &#x3D; state;
 		this.ht.api.updateNodesVisualization();
-		localStorage.setItem(AppConfig.common.GLOBAL.LS_ID + &#x27;SETTING_HYPERTREE_VISU_PURITY&#x27;, state);
+		localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + &#x27;SETTING_HYPERTREE_VISU_PURITY&#x27;, state);
 	}
 
 	togglePopulationVisualization(state) {
 		// this.khiopsLibraryService.trackEvent(&#x27;click&#x27;, &#x27;toggle_population_tree&#x27;, state);
 		this.visualization.population &#x3D; state;
 		this.ht.api.updateNodesVisualization();
-		localStorage.setItem(AppConfig.common.GLOBAL.LS_ID + &#x27;SETTING_HYPERTREE_VISU_POPULATION&#x27;, state);
+		localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + &#x27;SETTING_HYPERTREE_VISU_POPULATION&#x27;, state);
 	}
 
 	ngAfterViewInit() {
@@ -2072,7 +2072,7 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 							// 	this.ht.api.gotoNode(userSelectedNode)
 							// });
 
-						} else {}
+						} else { }
 						this.treePreparationDatasService.setSelectedNodes(nodesToSelect, trustedNodeSelection);
 						// to update charts
 						this.selectTreeItemChanged.emit(n.data);
@@ -2123,7 +2123,7 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 		return isVisible;
 	}
 
-	ngOnDestroy() {}
+	ngOnDestroy() { }
 
 	ngOnChanges(changes: SimpleChanges) {
 		// console.log(&quot;🚀 ~ file: tree-hyper.component.ts ~ line 220 ~ TreeHyperComponent ~ ngOnChanges ~ changes&quot;, changes)
@@ -2177,7 +2177,7 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 						// .then(()&#x3D;&gt; new Promise((ok, err)&#x3D;&gt; this.ht.animateUp(ok, err)))
 						// .then(()&#x3D;&gt; this.ht.api.gotoHome())
 						// .then(()&#x3D;&gt; this.ht.api.gotoλ(0.15))
-						.then(() &#x3D;&gt; this.ht.api.gotoNode(userSelectedNode))
+						.then(() &#x3D;&gt; this.ht.api.gotoNode(userSelectedNode, 0))
 				} else {
 					//
 
@@ -2192,7 +2192,7 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 					// .then(()&#x3D;&gt; new Promise((ok, err)&#x3D;&gt; this.ht.animateUp(ok, err)))
 					// .then(()&#x3D;&gt; this.ht.api.gotoHome())
 					// .then(()&#x3D;&gt; this.ht.api.gotoλ(0.15))
-					.then(() &#x3D;&gt; this.ht.api.gotoNode(userSelectedNode));
+					.then(() &#x3D;&gt; this.ht.api.gotoNode(userSelectedNode, 0));
 				// } else {
 				//
 				// console.log(&quot;🚀 ~ file: tree-hyper.component.ts ~ line 302 ~ TreeHyperComponent ~ this.ngzone.run ~ userSelectedNode&quot;, userSelectedNode)
@@ -2243,7 +2243,7 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
                 <p class="comment">
                     <code>./tree-hyper.component.scss</code>
                 </p>
-                <pre class="line-numbers"><code class="language-scss">@import &quot;khiops-library/src/lib/styles/theme.scss&quot;;
+                <pre class="line-numbers"><code class="language-scss">@import &#x27;../../../../../../libs/khiops-hypertree/dist/d3-hypertree-light.css&#x27;;
 
 #tree-hyper-comp {
 	height: 100%;

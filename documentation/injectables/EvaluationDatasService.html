@@ -167,7 +167,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(translate: <a href="../interfaces/T.html" target="_self">TranslateService</a>, appService: <a href="../injectables/AppService.html" target="_self">AppService</a>)</code>
+<code>constructor(translate: TranslateService, appService: <a href="../injectables/AppService.html" target="_self">AppService</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -193,7 +193,7 @@
                                                         <td>translate</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../interfaces/T.html" target="_self" >TranslateService</a></code>
+                                                                    <code>TranslateService</code>
                                                         </td>
                                                   
                                                     <td>
@@ -1443,7 +1443,7 @@ export class EvaluationDatasService {
 	}
 
 	// tslint:disable-next-line:typedef-whitespace
-	getConfusionMatrix(type ? : string): any {
+	getConfusionMatrix(type?: string): any {
 
 		const appDatas &#x3D; this.appService.getDatas().datas;
 
@@ -1659,7 +1659,7 @@ export class EvaluationDatasService {
 	}
 
 	// tslint:disable-next-line:typedef-whitespace
-	getLiftGraphDatas(target ? : string, mustGetAllDatas ? : boolean): any {
+	getLiftGraphDatas(target?: string, mustGetAllDatas?: boolean): any {
 
 		// Generate X axis values
 		const xAxis &#x3D; new Array(1001);
@@ -1668,7 +1668,7 @@ export class EvaluationDatasService {
 			xAxis[i] &#x3D; (Number(xAxis[i - 1]) + 0.001).toFixed(3);
 		}
 
-		let smoothParam &#x3D; AppConfig.common.LIFT_CURVE.LIFT_CURVE_SMOOTH;
+		let smoothParam &#x3D; AppConfig.visualizationCommon.LIFT_CURVE.LIFT_CURVE_SMOOTH;
 		if (mustGetAllDatas) {
 			smoothParam &#x3D; 1;
 		}
@@ -1697,7 +1697,7 @@ export class EvaluationDatasService {
 				for (let j &#x3D; 0; j &lt; graphDatas.length; j++) {
 					this.evaluationDatas.liftGraphDisplayedValues.push({
 						name: graphDatas[j].name,
-						show: j &lt; AppConfig.common.GLOBAL.LIFT_CHART_COUNT
+						show: j &lt; AppConfig.visualizationCommon.GLOBAL.LIFT_CHART_COUNT
 					});
 				}
 			} else {
@@ -1725,7 +1725,7 @@ export class EvaluationDatasService {
 	}
 
 	// tslint:disable-next-line:typedef-whitespace
-	generateLiftCurveValuesForEvaluation(xAxis, smoothParam, type, target ? : string) {
+	generateLiftCurveValuesForEvaluation(xAxis, smoothParam, type, target?: string) {
 
 		let currentReport: any;
 		// get the correct report : train or test
@@ -1809,7 +1809,7 @@ export class EvaluationDatasService {
 		return graphDatas;
 	}
 
-	getLiftTargets(currentTarget ? ): any {
+	getLiftTargets(currentTarget?): any {
 		const appDatas &#x3D; this.appService.getDatas().datas;
 		let targetLift;
 

@@ -176,7 +176,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(eventsService: <a href="../injectables/EventsService.html" target="_self">EventsService</a>, importExtDatasService: <a href="../injectables/ImportExtDatasService.html" target="_self">ImportExtDatasService</a>, translate: <a href="../interfaces/T.html" target="_self">TranslateService</a>, dialogRef: <a href="../components/LoadExtDatasComponent.html" target="_self">MatDialogRef&lt;LoadExtDatasComponent&gt;</a>)</code>
+<code>constructor(eventsService: <a href="../injectables/EventsService.html" target="_self">EventsService</a>, importExtDatasService: <a href="../injectables/ImportExtDatasService.html" target="_self">ImportExtDatasService</a>, translate: TranslateService, dialogRef: <a href="../components/LoadExtDatasComponent.html" target="_self">MatDialogRef&lt;LoadExtDatasComponent&gt;</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -226,7 +226,7 @@
                                                         <td>translate</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../interfaces/T.html" target="_self" >TranslateService</a></code>
+                                                                    <code>TranslateService</code>
                                                         </td>
                                                   
                                                     <td>
@@ -378,7 +378,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/T.html" target="_self" >TranslateService</a></code>
+                        <i>Type : </i>    <code>TranslateService</code>
 
                     </td>
                 </tr>
@@ -406,11 +406,11 @@ import {
 } from &#x27;@angular/material/dialog&#x27;;
 import {
 	ImportExtDatasService
-} from &#x27;src/app/providers/import-ext-datas.service&#x27;;
+} from &#x27;@khiops-covisualization/providers/import-ext-datas.service&#x27;;
 import {
 	TranslateService
 } from &#x27;@ngstack/translate&#x27;;
-import { EventsService } from &#x27;src/app/providers/events.service&#x27;;
+import { EventsService } from &#x27;@khiops-covisualization/providers/events.service&#x27;;
 
 @Component({
 	selector: &#x27;app-load-ext-datas&#x27;,
@@ -465,7 +465,7 @@ export class LoadExtDatasComponent implements OnInit {
                 <p class="comment">
                     <code>./load-ext-datas.component.scss</code>
                 </p>
-                <pre class="line-numbers"><code class="language-scss">@import &quot;khiops-library/src/lib/styles/theme.scss&quot;;
+                <pre class="line-numbers"><code class="language-scss">@import &quot;../../../../../theme.scss&quot;;
 
 #load-ext-datas-comp {
 	#load-ext-datas-header {

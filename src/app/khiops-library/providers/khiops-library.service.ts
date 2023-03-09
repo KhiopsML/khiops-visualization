@@ -4,10 +4,10 @@ import {
 import {
 	ChartColorsSetI
 } from '../interfaces/chart-colors-set';
-// TODO does not work on web browser
-import {
-	machineIdSync
-} from 'node-machine-id';
+// TODO does not work on web browser | remove electron
+// import {
+// 	machineIdSync
+// } from 'node-machine-id';
 
 declare const window: any;
 
@@ -114,16 +114,18 @@ export class KhiopsLibraryService {
 				_paq.push(['trackPageView']);
 
 				(() => {
-					let id;
-					try {
-						id = machineIdSync();
-					} catch (e) {
-						console.error('failed to get matomo id');
-					}
+					// TODO remove electron
+					// let id;
+					// try {
+					// 	id = machineIdSync();
+					// } catch (e) {
+					// 	console.error('failed to get matomo id');
+					// }
 
 					_paq.push(['setTrackerUrl', this.appConfig.common.TRACKER.TRACKER_URL + 'matomo.php']);
 					_paq.push(['setSiteId', this.appConfig.common.TRACKER.SITE_ID]);
-					id && _paq.push(['setUserId', id]);
+					// TODO remove electron
+					// id && _paq.push(['setUserId', id]);
 					var d = document,
 						g = d.createElement('script'),
 						s = d.getElementsByTagName('script')[0];

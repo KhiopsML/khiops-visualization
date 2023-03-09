@@ -59,7 +59,7 @@ export class FileLoaderComponent implements OnInit {
 		);
 	}
 
-	loadWebFile(file ? : string) {
+	loadWebFile(file?: string) {
 
 		this.onFileLoaderDataChanged(undefined);
 
@@ -78,33 +78,34 @@ export class FileLoaderComponent implements OnInit {
 
 		// this.khiopsLibraryService.trackEvent('click', 'open_file');
 
-		let dialog: any;
-		try {
-			dialog = require('@electron/remote').dialog;
-		} catch (e) {
-			console.warn('Can not access Electron on browser', e);
-		}
-		const associationFiles = ['json'];
-		if (this.applicationName === 'khiops-visualization') {
-			associationFiles.push('khj');
-		} else {
-			associationFiles.push('khcj');
-		}
+		// TODO remove electron
+		// let dialog: any;
+		// try {
+		// 	dialog = require('@electron/remote').dialog;
+		// } catch (e) {
+		// 	console.warn('Can not access Electron on browser', e);
+		// }
+		// const associationFiles = ['json'];
+		// if (this.applicationName === 'khiops-visualization') {
+		// 	associationFiles.push('khj');
+		// } else {
+		// 	associationFiles.push('khcj');
+		// }
 
-		dialog.showOpenDialog(null, {
-			properties: ['openFile'],
-			filters: [{
-				name: this.translate.get('GLOBAL.FILES'),
-				extensions: associationFiles
-			}]
-		}).then(result => {
-			if (result && !result.canceled && result.filePaths) {
-				this.openFile(result.filePaths[0]);
-				return;
-			}
-		}).catch(err => {
-			console.log(err);
-		});
+		// dialog.showOpenDialog(null, {
+		// 	properties: ['openFile'],
+		// 	filters: [{
+		// 		name: this.translate.get('GLOBAL.FILES'),
+		// 		extensions: associationFiles
+		// 	}]
+		// }).then(result => {
+		// 	if (result && !result.canceled && result.filePaths) {
+		// 		this.openFile(result.filePaths[0]);
+		// 		return;
+		// 	}
+		// }).catch(err => {
+		// 	console.log(err);
+		// });
 	}
 
 	openFile(filename) {

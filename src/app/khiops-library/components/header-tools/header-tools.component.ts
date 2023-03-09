@@ -6,15 +6,16 @@ import {
 	Output
 } from '@angular/core';
 import html2canvas from 'html2canvas';
-import {
-	nativeImage
-} from 'electron';
-let clipboard: any;
-try {
-	clipboard = require('electron').clipboard;
-} catch (e) {
-	console.warn('Can not access Electron clipboard on browser', e);
-}
+// TODO remove electron
+// import {
+// 	nativeImage
+// } from 'electron';
+// let clipboard: any;
+// try {
+// 	clipboard = require('electron').clipboard;
+// } catch (e) {
+// 	console.warn('Can not access Electron clipboard on browser', e);
+// }
 import {
 	MatSnackBar
 } from '@angular/material/snack-bar';
@@ -46,7 +47,7 @@ export class HeaderToolsComponent implements OnInit {
 	@Input() appVersion: any;
 	@Input() showMenu = true;
 	isCopyingImage = false;
-	@Output() toggleNavDrawerChanged: EventEmitter < any > = new EventEmitter();
+	@Output() toggleNavDrawerChanged: EventEmitter<any> = new EventEmitter();
 	eltsToHide: any;
 
 	constructor(public selectableService: SelectableService,
@@ -67,7 +68,7 @@ export class HeaderToolsComponent implements OnInit {
 		}));
 	}
 
-	ngOnInit() {}
+	ngOnInit() { }
 
 	copyDatas() {
 		// this.khiopsLibraryService.trackEvent('click', 'copy_datas', 'text');
@@ -110,8 +111,9 @@ export class HeaderToolsComponent implements OnInit {
 						canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height);
 						const base64data = canvas.toDataURL('image/jpeg');
 
-						const natImage = nativeImage.createFromDataURL(base64data);
-						clipboard.writeImage(natImage);
+						// TODO remove electron
+						// const natImage = nativeImage.createFromDataURL(base64data);
+						// clipboard.writeImage(natImage);
 
 						// Show useless header informations for screenshots when done
 						// TODO there is an option into the lib to do that

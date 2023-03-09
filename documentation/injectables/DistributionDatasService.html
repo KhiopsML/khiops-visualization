@@ -173,7 +173,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(translate: <a href="../interfaces/T.html" target="_self">TranslateService</a>, treePreparationDatasService: <a href="../injectables/TreePreparationDatasService.html" target="_self">TreePreparationDatasService</a>, preparationDatasService: <a href="../injectables/PreparationDatasService.html" target="_self">PreparationDatasService</a>, khiopsLibraryService: <a href="../injectables/KhiopsLibraryService.html" target="_self">KhiopsLibraryService</a>, appService: <a href="../injectables/AppService.html" target="_self">AppService</a>)</code>
+<code>constructor(translate: TranslateService, treePreparationDatasService: <a href="../injectables/TreePreparationDatasService.html" target="_self">TreePreparationDatasService</a>, preparationDatasService: <a href="../injectables/PreparationDatasService.html" target="_self">PreparationDatasService</a>, khiopsLibraryService: <a href="../injectables/KhiopsLibraryService.html" target="_self">KhiopsLibraryService</a>, appService: <a href="../injectables/AppService.html" target="_self">AppService</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -199,7 +199,7 @@
                                                         <td>translate</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../interfaces/T.html" target="_self" >TranslateService</a></code>
+                                                                    <code>TranslateService</code>
                                                         </td>
                                                   
                                                     <td>
@@ -1908,7 +1908,7 @@ export class DistributionDatasService {
 	}
 
 	// tslint:disable-next-line:typedef-whitespace
-	getTargetDistributionGraphDatas(selectedVariable, type ? : string, initActiveEntries ? : boolean): any {
+	getTargetDistributionGraphDatas(selectedVariable, type?: string, initActiveEntries?: boolean): any {
 
 		if (initActiveEntries &#x3D;&#x3D;&#x3D; undefined) {
 			initActiveEntries &#x3D; initActiveEntries || true;
@@ -1929,14 +1929,14 @@ export class DistributionDatasService {
 					const partition &#x3D; variableDetails.dataGrid.dimensions[1].partition;
 
 					[this.distributionDatas.targetDistributionGraphDatas, this.distributionDatas.targetDistributionDisplayedValues] &#x3D;
-					this.computeTargetDistributionGraph(
-						partition,
-						currentDatas,
-						currentDatas,
-						currentXAxis,
-						this.distributionDatas.targetDistributionDisplayedValues,
-						this.distributionDatas.targetDistributionType
-					);
+						this.computeTargetDistributionGraph(
+							partition,
+							currentDatas,
+							currentDatas,
+							currentXAxis,
+							this.distributionDatas.targetDistributionDisplayedValues,
+							this.distributionDatas.targetDistributionType
+						);
 				}
 			}
 		}
@@ -1946,7 +1946,7 @@ export class DistributionDatasService {
 
 	}
 
-	getTreeNodeTargetDistributionGraphDatas(selectedNode, type ? : string): any {
+	getTreeNodeTargetDistributionGraphDatas(selectedNode, type?: string): any {
 
 		this.distributionDatas.initTreeNodeTargetDistributionGraphDatas();
 		this.distributionDatas.setTreeNodeTargetDistributionType(type);
@@ -1975,14 +1975,14 @@ export class DistributionDatasService {
 			//get selectednode index
 			const currentXAxis &#x3D; [selectedNode.nodeId];
 			[this.distributionDatas.treeNodeTargetDistributionGraphDatas, this.distributionDatas.treeNodeTargetDistributionDisplayedValues] &#x3D;
-			this.computeTargetDistributionGraph(
-				allTargetValues,
-				currentDatas,
-				[fullTarget],
-				[currentXAxis],
-				this.distributionDatas.treeNodeTargetDistributionDisplayedValues,
-				this.distributionDatas.treeNodeTargetDistributionType
-			);
+				this.computeTargetDistributionGraph(
+					allTargetValues,
+					currentDatas,
+					[fullTarget],
+					[currentXAxis],
+					this.distributionDatas.treeNodeTargetDistributionDisplayedValues,
+					this.distributionDatas.treeNodeTargetDistributionType
+				);
 
 		}
 		this.distributionDatas.checkTreeNodeTargetDistributionGraphDatas();
@@ -2019,8 +2019,8 @@ export class DistributionDatasService {
 				targetDistributionGraphDatas.datasets.push(currentDataSet);
 
 				let l: number &#x3D; currentXAxis.length;
-				if (l &gt; AppConfig.common.GLOBAL.DISTRIBUTION_GRAPH_LENGTH) {
-					l &#x3D; AppConfig.common.GLOBAL.DISTRIBUTION_GRAPH_LENGTH;
+				if (l &gt; AppConfig.visualizationCommon.GLOBAL.DISTRIBUTION_GRAPH_LENGTH) {
+					l &#x3D; AppConfig.visualizationCommon.GLOBAL.DISTRIBUTION_GRAPH_LENGTH;
 				}
 
 				for (let i &#x3D; 0; i &lt; l; i++) {
@@ -2069,7 +2069,7 @@ export class DistributionDatasService {
 
 
 	// tslint:disable-next-line:typedef-whitespace
-	getdistributionGraphDatas(selectedVariable, type ? : string, initActiveEntries ? : boolean, typeX ? : string): any {
+	getdistributionGraphDatas(selectedVariable, type?: string, initActiveEntries?: boolean, typeX?: string): any {
 		let distributionsGraphDetails &#x3D; {
 			datasets: [],
 			labels: []
@@ -2129,7 +2129,7 @@ export class DistributionDatasService {
 	 * Get distribution when only one var selected
 	 * For tree node leaf details
 	 */
-	getTreeNodeDistributionGraphDatas(selectedNode, type ? : string): any {
+	getTreeNodeDistributionGraphDatas(selectedNode, type?: string): any {
 		let distributionsGraphDetails &#x3D; {
 			datasets: [],
 			labels: []
@@ -2180,8 +2180,8 @@ export class DistributionDatasService {
 			const [frequencyArray, coverageArray] &#x3D; this.getAllFrequencyAndCoverageValues(currentDatas, dimensions, partition);
 
 			let l: number &#x3D; currentDatas.length;
-			if (l &gt; AppConfig.common.GLOBAL.DISTRIBUTION_GRAPH_LENGTH) {
-				l &#x3D; AppConfig.common.GLOBAL.DISTRIBUTION_GRAPH_LENGTH;
+			if (l &gt; AppConfig.visualizationCommon.GLOBAL.DISTRIBUTION_GRAPH_LENGTH) {
+				l &#x3D; AppConfig.visualizationCommon.GLOBAL.DISTRIBUTION_GRAPH_LENGTH;
 			}
 
 			for (let i &#x3D; 0; i &lt; l; i++) {
@@ -2327,8 +2327,8 @@ export class DistributionDatasService {
 		levelDistributionGraphDatas.datasets.push(currentDataSet);
 
 		let l &#x3D; inputDatas.length;
-		if (l &gt; AppConfig.common.LEVEL_DISTRIBUTION_GRAPH.MAX_VARIABLES) {
-			l &#x3D; AppConfig.common.LEVEL_DISTRIBUTION_GRAPH.MAX_VARIABLES;
+		if (l &gt; AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.MAX_VARIABLES) {
+			l &#x3D; AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.MAX_VARIABLES;
 		}
 
 		for (let i &#x3D; 0; i &lt; l; i++) {
@@ -2356,8 +2356,8 @@ export class DistributionDatasService {
 			// define x axis
 			currentName &#x3D; index &#x3D;&#x3D;&#x3D; 0 ? &#x27;[&#x27; : &#x27;]&#x27;;
 			currentName +&#x3D; currentXAxis.toString();
-			if (currentName.length &gt; AppConfig.common.GLOBAL.MAX_GRAPH_TOOLTIP_LABEL_LENGTH) {
-				currentName &#x3D; currentName.substring(0, AppConfig.common.GLOBAL.MAX_GRAPH_TOOLTIP_LABEL_LENGTH) + &#x27; ... ]&#x27;;
+			if (currentName.length &gt; AppConfig.visualizationCommon.GLOBAL.MAX_GRAPH_TOOLTIP_LABEL_LENGTH) {
+				currentName &#x3D; currentName.substring(0, AppConfig.visualizationCommon.GLOBAL.MAX_GRAPH_TOOLTIP_LABEL_LENGTH) + &#x27; ... ]&#x27;;
 			} else {
 				currentName +&#x3D; &#x27;]&#x27;;
 			}

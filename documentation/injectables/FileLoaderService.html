@@ -137,7 +137,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(electronService: <a href="../injectables/ElectronService.html" target="_self">ElectronService</a>, http: <a href="../undefineds/C.html" target="_self">HttpClient</a>, khiopsLibraryService: <a href="../injectables/KhiopsLibraryService.html" target="_self">KhiopsLibraryService</a>)</code>
+<code>constructor(electronService: <a href="../injectables/ElectronService.html" target="_self">ElectronService</a>, http: <a href="https://angular.io/api/common/http/HttpClient" target="_blank">HttpClient</a>, khiopsLibraryService: <a href="../injectables/KhiopsLibraryService.html" target="_self">KhiopsLibraryService</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -175,7 +175,7 @@
                                                         <td>http</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../miscellaneous/typealiases.html#C" target="_self" >HttpClient</a></code>
+                                                                        <code><a href="https://angular.io/api/common/http/HttpClient" target="_blank" >HttpClient</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -303,8 +303,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="252"
-                            class="link-to-prism">src/app/khiops-library/components/file-loader/file-loader.service.ts:252</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="253"
+                            class="link-to-prism">src/app/khiops-library/components/file-loader/file-loader.service.ts:253</a></div>
                 </td>
             </tr>
 
@@ -372,8 +372,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="263"
-                            class="link-to-prism">src/app/khiops-library/components/file-loader/file-loader.service.ts:263</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="264"
+                            class="link-to-prism">src/app/khiops-library/components/file-loader/file-loader.service.ts:264</a></div>
                 </td>
             </tr>
 
@@ -612,8 +612,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="227"
-                            class="link-to-prism">src/app/khiops-library/components/file-loader/file-loader.service.ts:227</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="228"
+                            class="link-to-prism">src/app/khiops-library/components/file-loader/file-loader.service.ts:228</a></div>
                 </td>
             </tr>
 
@@ -909,55 +909,56 @@ export class FileLoaderService {
 		this.fileLoaderDatas.isLoadingDatas &#x3D; true;
 		this.fileLoaderDatas.isBigJsonFile &#x3D; false;
 
-		return new Promise((resolve, reject) &#x3D;&gt; {
+		// TODO remove electron
+		// return new Promise((resolve, reject) &#x3D;&gt; {
 
-			this.electronService.fs.stat(filename, (err, stats) &#x3D;&gt; {
-				if (err) {
-					reject();
-				} else {
+		// 	this.electronService.fs.stat(filename, (err, stats) &#x3D;&gt; {
+		// 		if (err) {
+		// 			reject();
+		// 		} else {
 
-					this.electronService.fs.readFile(filename, &#x27;utf-8&#x27;, (errReadFile, datas) &#x3D;&gt; {
+		// 			this.electronService.fs.readFile(filename, &#x27;utf-8&#x27;, (errReadFile, datas) &#x3D;&gt; {
 
-						if (errReadFile) {
-							if (errReadFile.toString().startsWith(&#x27;Error: Cannot create a string longer&#x27;)) {
-								this.fileLoaderDatas.isBigJsonFile &#x3D; true;
-								this.fileLoaderDatas.loadingInfo &#x3D; &#x27;&#x27;;
-								const currentDatas &#x3D; {};
-								const stream &#x3D; this.electronService.fs.createReadStream(filename, {
-									encoding: &#x27;utf8&#x27;
-								});
-								const getStream &#x3D; stream.pipe(JSONStream.parse([{
-									emitKey: true
-								}]));
-								getStream
-									.pipe(es.map((datas) &#x3D;&gt; {
-										this.fileLoaderDatas.loadingInfo &#x3D; datas.key;
-										currentDatas[datas.key] &#x3D; datas.value;
-									}));
+		// 				if (errReadFile) {
+		// 					if (errReadFile.toString().startsWith(&#x27;Error: Cannot create a string longer&#x27;)) {
+		// 						this.fileLoaderDatas.isBigJsonFile &#x3D; true;
+		// 						this.fileLoaderDatas.loadingInfo &#x3D; &#x27;&#x27;;
+		// 						const currentDatas &#x3D; {};
+		// 						const stream &#x3D; this.electronService.fs.createReadStream(filename, {
+		// 							encoding: &#x27;utf8&#x27;
+		// 						});
+		// 						const getStream &#x3D; stream.pipe(JSONStream.parse([{
+		// 							emitKey: true
+		// 						}]));
+		// 						getStream
+		// 							.pipe(es.map((datas) &#x3D;&gt; {
+		// 								this.fileLoaderDatas.loadingInfo &#x3D; datas.key;
+		// 								currentDatas[datas.key] &#x3D; datas.value;
+		// 							}));
 
-								getStream.on(&#x27;end&#x27;, () &#x3D;&gt; {
-									this.fileLoaderDatas.datas &#x3D; currentDatas;
-									this.fileLoaderDatas.datas.filename &#x3D; filename;
-									resolve(this.fileLoaderDatas.datas);
-								}).on(&#x27;error&#x27;, () &#x3D;&gt; {
-									reject();
-								});
-							} else {
-								this.fileLoaderDatas.isLoadingDatas &#x3D; false;
-								reject(errReadFile);
-							}
-						} else {
-							this.fileLoaderDatas.isLoadingDatas &#x3D; false;
-							this.fileLoaderDatas.datas &#x3D; JSON.parse(datas);
-							this.fileLoaderDatas.datas.filename &#x3D; filename;
-							resolve(this.fileLoaderDatas.datas);
-						}
-					});
+		// 						getStream.on(&#x27;end&#x27;, () &#x3D;&gt; {
+		// 							this.fileLoaderDatas.datas &#x3D; currentDatas;
+		// 							this.fileLoaderDatas.datas.filename &#x3D; filename;
+		// 							resolve(this.fileLoaderDatas.datas);
+		// 						}).on(&#x27;error&#x27;, () &#x3D;&gt; {
+		// 							reject();
+		// 						});
+		// 					} else {
+		// 						this.fileLoaderDatas.isLoadingDatas &#x3D; false;
+		// 						reject(errReadFile);
+		// 					}
+		// 				} else {
+		// 					this.fileLoaderDatas.isLoadingDatas &#x3D; false;
+		// 					this.fileLoaderDatas.datas &#x3D; JSON.parse(datas);
+		// 					this.fileLoaderDatas.datas.filename &#x3D; filename;
+		// 					resolve(this.fileLoaderDatas.datas);
+		// 				}
+		// 			});
 
-				}
-			});
+		// 		}
+		// 	});
 
-		});
+		// });
 
 	}
 

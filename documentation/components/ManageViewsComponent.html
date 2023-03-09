@@ -594,16 +594,16 @@
 } from &#x27;@angular/core&#x27;;
 import {
 	AppService
-} from &#x27;src/app/providers/app.service&#x27;;
+} from &#x27;@khiops-covisualization/providers/app.service&#x27;;
 import {
 	MatDialogRef
 } from &#x27;@angular/material/dialog&#x27;;
 import {
 	DimensionsDatasService
-} from &#x27;src/app/providers/dimensions-datas.service&#x27;;
+} from &#x27;@khiops-covisualization/providers/dimensions-datas.service&#x27;;
 import {
 	ViewLayoutVO
-} from &#x27;src/app/model/view-layout-vo&#x27;;
+} from &#x27;@khiops-covisualization/model/view-layout-vo&#x27;;
 import copy from &#x27;fast-copy&#x27;;
 import * as _ from &#x27;lodash&#x27;; // Important to import lodash in karma
 
@@ -622,7 +622,7 @@ export class ManageViewsComponent implements OnInit {
 	// matRippleColor &#x3D; &#x27;rgba(251, 179, 58, .4)&#x27;;
 	matRippleColor &#x3D; &#x27;rgba(80, 124, 182, .4)&#x27;;
 
-	constructor(private appService: AppService, private dimensionsService: DimensionsDatasService, private dialogRef: MatDialogRef &lt; ManageViewsComponent &gt; ) {
+	constructor(private appService: AppService, private dimensionsService: DimensionsDatasService, private dialogRef: MatDialogRef&lt;ManageViewsComponent&gt;) {
 		this.dimensionsDatas &#x3D; this.dimensionsService.getDatas();
 
 		// this.viewsLayout &#x3D; copy(this.appService.getViewsLayout());
@@ -642,7 +642,7 @@ export class ManageViewsComponent implements OnInit {
 		}
 	}
 
-	ngOnInit() {}
+	ngOnInit() { }
 
 	onClickOnSave() {
 		this.appService.saveViewsLayout(this.viewsLayout);
@@ -731,7 +731,7 @@ export class ManageViewsComponent implements OnInit {
                 <p class="comment">
                     <code>./manage-views.component.scss</code>
                 </p>
-                <pre class="line-numbers"><code class="language-scss">@import &quot;khiops-library/src/lib/styles/theme.scss&quot;;
+                <pre class="line-numbers"><code class="language-scss">@import &quot;../../../../../theme.scss&quot;;
 
 #manage-views-comp {
 	#manage-views-header {

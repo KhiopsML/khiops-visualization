@@ -81,7 +81,7 @@
     </p>
     <p class="comment">
                     <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
-                    <code><a href="../miscellaneous/typealiases.html#C" target="_self" >OnChanges</a></code>
+                    <code><a href="https://angular.io/api/core/OnChanges" target="_blank" >OnChanges</a></code>
     </p>
 
 
@@ -287,7 +287,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(selectableService: <a href="../injectables/SelectableService.html" target="_self">SelectableService</a>, evaluationDatasService: <a href="../injectables/EvaluationDatasService.html" target="_self">EvaluationDatasService</a>, translate: <a href="../interfaces/T.html" target="_self">TranslateService</a>, khiopsLibraryService: <a href="../injectables/KhiopsLibraryService.html" target="_self">KhiopsLibraryService</a>, ngzone: <a href="../interfaces/N.html" target="_self">NgZone</a>)</code>
+<code>constructor(selectableService: <a href="../injectables/SelectableService.html" target="_self">SelectableService</a>, evaluationDatasService: <a href="../injectables/EvaluationDatasService.html" target="_self">EvaluationDatasService</a>, translate: TranslateService, khiopsLibraryService: <a href="../injectables/KhiopsLibraryService.html" target="_self">KhiopsLibraryService</a>, ngzone: <a href="https://angular.io/api/core/NgZone" target="_blank">NgZone</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -337,7 +337,7 @@
                                                         <td>translate</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../interfaces/T.html" target="_self" >TranslateService</a></code>
+                                                                    <code>TranslateService</code>
                                                         </td>
                                                   
                                                     <td>
@@ -361,7 +361,7 @@
                                                         <td>ngzone</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../interfaces/N.html" target="_self" >NgZone</a></code>
+                                                                        <code><a href="https://angular.io/api/core/NgZone" target="_blank" >NgZone</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -654,7 +654,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>ngOnChanges(changes: <a href="../undefineds/C.html" target="_self">SimpleChanges</a>)</code>
+<code>ngOnChanges(changes: <a href="https://angular.io/api/core/SimpleChanges" target="_blank">SimpleChanges</a>)</code>
                 </td>
             </tr>
 
@@ -685,7 +685,7 @@
                                 <tr>
                                     <td>changes</td>
                                     <td>
-                                                <code><a href="../miscellaneous/typealiases.html#C" target="_self" >SimpleChanges</a></code>
+                                                <code><a href="https://angular.io/api/core/SimpleChanges" target="_blank" >SimpleChanges</a></code>
                                     </td>
 
                                     <td>
@@ -1199,7 +1199,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/N.html" target="_self" >NgZone</a></code>
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/NgZone" target="_blank" >NgZone</a></code>
 
                     </td>
                 </tr>
@@ -1537,7 +1537,7 @@
 } from &#x27;@angular/core&#x27;;
 import {
 	EvaluationDatasService
-} from &#x27;src/app/providers/evaluation-datas.service&#x27;;
+} from &#x27;@khiops-visualization/providers/evaluation-datas.service&#x27;;
 import {
 	KhiopsLibraryService
 } from &#x27;@khiops-library/providers/khiops-library.service&#x27;;
@@ -1607,7 +1607,7 @@ export class TargetLiftGraphComponent extends SelectableComponent implements OnI
 		this.buttonTitle &#x3D; this.translate.get(&#x27;GLOBAL.FILTER_CURVES&#x27;);
 	}
 
-	ngOnInit() {}
+	ngOnInit() { }
 
 	ngOnChanges(changes: SimpleChanges) {
 		if (changes.selectedVariable &amp;&amp; changes.selectedVariable.currentValue) {
@@ -1627,7 +1627,7 @@ export class TargetLiftGraphComponent extends SelectableComponent implements OnI
 		const currentTarget &#x3D; this.targetLift &amp;&amp; this.targetLift.selected || undefined;
 		this.targetLift &#x3D; this.evaluationDatasService.getLiftTargets(currentTarget);
 
-		const filteredValues &#x3D; localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + &#x27;TARGET_LIFT_VALUES&#x27;);
+		const filteredValues &#x3D; localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + &#x27;TARGET_LIFT_VALUES&#x27;);
 		if (filteredValues) {
 			this.evaluationDatasService.setLiftGraphDisplayedValues(JSON.parse(filteredValues));
 		}
@@ -1635,7 +1635,7 @@ export class TargetLiftGraphComponent extends SelectableComponent implements OnI
 		if (this.targetLift) {
 
 			// Get previous selected target if compatible
-			const previousSelectedTarget &#x3D; localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + &#x27;TARGET_LIFT&#x27;);
+			const previousSelectedTarget &#x3D; localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + &#x27;TARGET_LIFT&#x27;);
 			if (previousSelectedTarget &amp;&amp; this.targetLift.targets.includes(previousSelectedTarget)) {
 				this.targetLift.selected &#x3D; previousSelectedTarget;
 			}
@@ -1724,8 +1724,7 @@ export class TargetLiftGraphComponent extends SelectableComponent implements OnI
                 <p class="comment">
                     <code>./target-lift-graph.component.scss</code>
                 </p>
-                <pre class="line-numbers"><code class="language-scss">@import &quot;khiops-library/src/lib/styles/theme.scss&quot;;
-
+                <pre class="line-numbers"><code class="language-scss">
 #target-lift-graph-comp {
 	padding: 1px;
 

@@ -5,12 +5,14 @@ import { UtilsService } from '@khiops-library/providers/utils.service'
 import { ViewLayoutVO } from '../model/view-layout-vo'
 import copy from 'fast-copy'
 import * as _ from 'lodash' // Important to import lodash in karma
-let ipcRenderer
-try {
-	ipcRenderer = require('electron').ipcRenderer
-} catch (e) {
-	console.warn('Can not access ipcRenderer', e)
-}
+
+// TODO remove electron
+// let ipcRenderer
+// try {
+// 	ipcRenderer = require('electron').ipcRenderer
+// } catch (e) {
+// 	console.warn('Can not access ipcRenderer', e)
+// }
 
 @Injectable({
 	providedIn: 'root',
@@ -74,24 +76,24 @@ export class AppService {
 		)
 	}
 
-	// TODO remove it and add to electron app after refactoring
 	setFileDatas(datas: any): any {
 		this.appDatas.datas = datas
 		this.initialDatas.datas = _.cloneDeep(datas)
 		this.setSavedDatas(datas)
 
+		// TODO remove electron
 		// Set the filename to the title bar
-		if (datas) {
-			; (async () => {
-				try {
-					await ipcRenderer.invoke('set-title-bar-name', {
-						title: 'Khiops Covisualization ' + datas.filename,
-					})
-				} catch (error) {
-					console.log('error', error)
-				}
-			})()
-		}
+		// if (datas) {
+		// 	; (async () => {
+		// 		try {
+		// 			await ipcRenderer.invoke('set-title-bar-name', {
+		// 				title: 'Khiops Covisualization ' + datas.filename,
+		// 			})
+		// 		} catch (error) {
+		// 			console.log('error', error)
+		// 		}
+		// 	})()
+		// }
 	}
 
 	getSavedDatas(type): any {

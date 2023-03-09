@@ -12,12 +12,13 @@ import {
 	KhiopsLibraryService
 } from '../../providers/khiops-library.service';
 
-let ipcRenderer;
-try {
-	ipcRenderer = require('electron').ipcRenderer;
-} catch (e) {
-	console.warn('Can not access ipcRenderer', e);
-}
+// TODO remove electron
+// let ipcRenderer;
+// try {
+// 	ipcRenderer = require('electron').ipcRenderer;
+// } catch (e) {
+// 	console.warn('Can not access ipcRenderer', e);
+// }
 
 @Component({
 	selector: 'kl-release-button',
@@ -27,7 +28,7 @@ try {
 export class ReleaseButtonComponent implements OnInit {
 
 	btnText: string;
-	@Output() isUpdateAvailable: EventEmitter < any > = new EventEmitter();
+	@Output() isUpdateAvailable: EventEmitter<any> = new EventEmitter();
 
 	progressData = {
 		animation: 'fill'
@@ -51,62 +52,63 @@ export class ReleaseButtonComponent implements OnInit {
 
 	constructor(public ngzone: NgZone,
 		private khiopsLibraryService: KhiopsLibraryService,
-		private translate: TranslateService, ) {}
+		private translate: TranslateService,) { }
 
 	ngOnInit() {
 
 	}
 
 	ngAfterViewInit() {
-		if (ipcRenderer) {
+		// TODO remove electron
+		// if (ipcRenderer) {
 
-			ipcRenderer.on('update-available', (event, arg) => {
-				console.info('update-available', event, arg);
-				this.ngzone.run(() => {
-					const version = arg && arg.version;
-					// this.btnText = this.translate.get('UPDATE.UPDATE_AVAILABLE') + ' : ' + version;
-					this.btnText = this.translate.get('UPDATE.UPDATE_AVAILABLE');
-					this.updateAvailable = true;
-					this.isUpdateAvailable.emit(this.updateAvailable);
-				});
-			});
-			ipcRenderer.on('update-not-available', (event, arg) => {
-				console.info('update-not-available', event, arg);
-				this.ngzone.run(() => {
-					this.updateAvailable = false;
-					this.isUpdateAvailable.emit(this.updateAvailable);
-				});
-			});
-			ipcRenderer.on('update-error', (event, arg) => {
-				console.info('update-error', event, arg);
-				this.updateAvailable = false;
-				this.isUpdateAvailable.emit(this.updateAvailable);
-			});
-			ipcRenderer.on('download-progress-info', (event, arg) => {
-				console.info('download-progress-info', arg && arg.percent);
+		// 	ipcRenderer.on('update-available', (event, arg) => {
+		// 		console.info('update-available', event, arg);
+		// 		this.ngzone.run(() => {
+		// 			const version = arg && arg.version;
+		// 			// this.btnText = this.translate.get('UPDATE.UPDATE_AVAILABLE') + ' : ' + version;
+		// 			this.btnText = this.translate.get('UPDATE.UPDATE_AVAILABLE');
+		// 			this.updateAvailable = true;
+		// 			this.isUpdateAvailable.emit(this.updateAvailable);
+		// 		});
+		// 	});
+		// 	ipcRenderer.on('update-not-available', (event, arg) => {
+		// 		console.info('update-not-available', event, arg);
+		// 		this.ngzone.run(() => {
+		// 			this.updateAvailable = false;
+		// 			this.isUpdateAvailable.emit(this.updateAvailable);
+		// 		});
+		// 	});
+		// 	ipcRenderer.on('update-error', (event, arg) => {
+		// 		console.info('update-error', event, arg);
+		// 		this.updateAvailable = false;
+		// 		this.isUpdateAvailable.emit(this.updateAvailable);
+		// 	});
+		// 	ipcRenderer.on('download-progress-info', (event, arg) => {
+		// 		console.info('download-progress-info', arg && arg.percent);
 
-				if (this.btn) {
+		// 		if (this.btn) {
 
-					this.ngzone.run(() => {
-						this.btn.progressValue = parseInt(arg && arg.percent, 10);
-						if (arg.percent === 100) {
-							setInterval(() => {
-								this.btnText = this.translate.get('UPDATE.DOWNLOAD_COMPLETE');
-							}, 200);
-							// stop the progress with success status
-							const sub = this.btn.progressStop('success').subscribe({
-								complete() {
-									sub.unsubscribe();
-								}
-							});
-						} else {
-							this.btnText = this.translate.get('UPDATE.DOWNLOADING') + ' ... ' + this.btn.progressValue + '%';
-						}
-					});
-				}
+		// 			this.ngzone.run(() => {
+		// 				this.btn.progressValue = parseInt(arg && arg.percent, 10);
+		// 				if (arg.percent === 100) {
+		// 					setInterval(() => {
+		// 						this.btnText = this.translate.get('UPDATE.DOWNLOAD_COMPLETE');
+		// 					}, 200);
+		// 					// stop the progress with success status
+		// 					const sub = this.btn.progressStop('success').subscribe({
+		// 						complete() {
+		// 							sub.unsubscribe();
+		// 						}
+		// 					});
+		// 				} else {
+		// 					this.btnText = this.translate.get('UPDATE.DOWNLOADING') + ' ... ' + this.btn.progressValue + '%';
+		// 				}
+		// 			});
+		// 		}
 
-			});
-		}
+		// 	});
+		// }
 	}
 
 	launchUpdate = (instance) => {
@@ -116,9 +118,10 @@ export class ReleaseButtonComponent implements OnInit {
 		this.btn.progressInit();
 		this.btnText = this.translate.get('UPDATE.WAITING_FOR_DOWNLOAD') + ' ...';
 
-		(async () => {
-			await ipcRenderer.invoke('launch-update-available');
-		})();
+		// TODO remove electron
+		// (async () => {
+		// 	await ipcRenderer.invoke('launch-update-available');
+		// })();
 	}
 
 }

@@ -78,19 +78,7 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                <a href="#childProcess" >childProcess</a>
-                            </li>
-                            <li>
-                                <a href="#fs" >fs</a>
-                            </li>
-                            <li>
-                                <a href="#ipcRenderer" >ipcRenderer</a>
-                            </li>
-                            <li>
                                 <a href="#isElectron" >isElectron</a>
-                            </li>
-                            <li>
-                                <a href="#webFrame" >webFrame</a>
                             </li>
                         </ul>
                     </td>
@@ -116,7 +104,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/khiops-library/providers/electron.service.ts:27</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/app/khiops-library/providers/electron.service.ts:23</a></div>
                             </td>
                         </tr>
 
@@ -130,66 +118,6 @@
     <h3 id="inputs">
         Properties
     </h3>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="childProcess"></a>
-                    <span class="name">
-                        <span ><b>childProcess</b></span>
-                        <a href="#childProcess"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/khiops-library/providers/electron.service.ts:26</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="fs"></a>
-                    <span class="name">
-                        <span ><b>fs</b></span>
-                        <a href="#fs"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/khiops-library/providers/electron.service.ts:27</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="ipcRenderer"></a>
-                    <span class="name">
-                        <span ><b>ipcRenderer</b></span>
-                        <a href="#ipcRenderer"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/app/khiops-library/providers/electron.service.ts:23</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
     <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -208,27 +136,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/app/khiops-library/providers/electron.service.ts:47</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="webFrame"></a>
-                    <span class="name">
-                        <span ><b>webFrame</b></span>
-                        <a href="#webFrame"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/khiops-library/providers/electron.service.ts:24</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/khiops-library/providers/electron.service.ts:52</a></div>
                         </td>
                     </tr>
 
@@ -244,51 +152,58 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
 	Injectable
 } from &#x27;@angular/core&#x27;;
-import {
-	ipcRenderer,
-	webFrame,
-	// remote
-} from &#x27;electron&#x27;;
-import * as childProcess from &#x27;child_process&#x27;;
-// import * as fs from &#x27;fs&#x27;;
-let fs: any;
-try {
-	fs &#x3D; require(&#x27;fs&#x27;);
-} catch (e) {
-	console.warn(e);
-}
+
+// TODO remove electron
+////import {
+////	ipcRenderer,
+////	webFrame,
+//// remote
+////} from &#x27;electron&#x27;;
+//// import * as childProcess from &#x27;child_process&#x27;;
+//// import * as fs from &#x27;fs&#x27;;
+//// let fs: any;
+//// try {
+//// 	fs &#x3D; require(&#x27;fs&#x27;);
+//// } catch (e) {
+//// 	console.warn(e);
+//// }
 
 @Injectable({
 	providedIn: &#x27;root&#x27;
 })
 export class ElectronService {
 
-	ipcRenderer: typeof ipcRenderer;
-	webFrame: typeof webFrame;
-	// remote: any;
-	childProcess: typeof childProcess;
-	fs: typeof fs;
+	// TODO remove electron
+	//// ipcRenderer: typeof ipcRenderer;
+	//// webFrame: typeof webFrame;
+	// // remote: any;
+	//// childProcess: typeof childProcess;
+	//// fs: typeof fs;
 
 	constructor() {
 		// Conditional imports
-		if (this.isElectron()) {
-			// this.ipcRenderer &#x3D; window.require(&#x27;electron&#x27;).ipcRenderer;
-			// this.webFrame &#x3D; window.require(&#x27;electron&#x27;).webFrame;
-			// this.remote &#x3D; window.require(&#x27;@electron/remote&#x27;);
-			// this.childProcess &#x3D; require(&#x27;@electron/remote&#x27;).require(&#x27;child_process&#x27;);
-			// this.fs &#x3D; require(&#x27;@electron/remote&#x27;).require(&#x27;fs&#x27;);
 
-			this.ipcRenderer &#x3D; window.require(&#x27;electron&#x27;).ipcRenderer;
-			this.webFrame &#x3D; window.require(&#x27;electron&#x27;).webFrame;
+		// TODO remove electron
+		// if (this.isElectron()) {
+		// 	// this.ipcRenderer &#x3D; window.require(&#x27;electron&#x27;).ipcRenderer;
+		// 	// this.webFrame &#x3D; window.require(&#x27;electron&#x27;).webFrame;
+		// 	// this.remote &#x3D; window.require(&#x27;@electron/remote&#x27;);
+		// 	// this.childProcess &#x3D; require(&#x27;@electron/remote&#x27;).require(&#x27;child_process&#x27;);
+		// 	// this.fs &#x3D; require(&#x27;@electron/remote&#x27;).require(&#x27;fs&#x27;);
 
-			this.childProcess &#x3D; window.require(&#x27;child_process&#x27;);
-			this.fs &#x3D; window.require(&#x27;fs&#x27;);
+		// 	this.ipcRenderer &#x3D; window.require(&#x27;electron&#x27;).ipcRenderer;
+		// 	this.webFrame &#x3D; window.require(&#x27;electron&#x27;).webFrame;
 
-		}
+		// 	this.childProcess &#x3D; window.require(&#x27;child_process&#x27;);
+		// 	this.fs &#x3D; window.require(&#x27;fs&#x27;);
+
+		// }
 	}
 
 	isElectron &#x3D; () &#x3D;&gt; {
-		return !!(window &amp;&amp; window.process &amp;&amp; window.process.type);
+		// TODO remove electron
+		//// return !!(window &amp;&amp; window.process &amp;&amp; window.process.type);
+		return false;
 	}
 
 }

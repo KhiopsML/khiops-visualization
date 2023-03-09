@@ -469,11 +469,11 @@ export class SelectTrainedPredictorComponent implements OnInit {
 	@Input() inputDatas: any;
 	selectedPredictor: any;
 
-	@Output() selectedPredictorChanged: EventEmitter &lt; any &gt; &#x3D; new EventEmitter();
+	@Output() selectedPredictorChanged: EventEmitter&lt;any&gt; &#x3D; new EventEmitter();
 
 	constructor(
 		private khiopsLibraryService: KhiopsLibraryService
-	) {}
+	) { }
 
 	ngOnInit() {
 		// select by default Selective Naive Bayes
@@ -482,8 +482,8 @@ export class SelectTrainedPredictorComponent implements OnInit {
 		// Get previous selected target if compatible
 		let previousSelectedPredictor;
 		try {
-			previousSelectedPredictor &#x3D; JSON.parse(localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + &#x27;SELECTED_TRAIN_PREDICTOR&#x27;));
-		} catch (e) {}
+			previousSelectedPredictor &#x3D; JSON.parse(localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + &#x27;SELECTED_TRAIN_PREDICTOR&#x27;));
+		} catch (e) { }
 		if (previousSelectedPredictor) {
 			if (this.inputDatas.find(e &#x3D;&gt; e.name &#x3D;&#x3D;&#x3D; previousSelectedPredictor.name)) {
 				defaultSelection &#x3D; previousSelectedPredictor;
@@ -526,9 +526,7 @@ export class SelectTrainedPredictorComponent implements OnInit {
                 <p class="comment">
                     <code>./select-trained-predictor.component.scss</code>
                 </p>
-                <pre class="line-numbers"><code class="language-scss">@import &quot;khiops-library/src/lib/styles/theme.scss&quot;;
-
-#select-trained-predictor-comp {
+                <pre class="line-numbers"><code class="language-scss">#select-trained-predictor-comp {
 
 	border-bottom: 0px !important;
 	padding: 0.6em;

@@ -262,7 +262,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(translate: <a href="../interfaces/T.html" target="_self">TranslateService</a>, dimensionsService: <a href="../injectables/DimensionsDatasService.html" target="_self">DimensionsDatasService</a>, treenodesService: <a href="../injectables/TreenodesService.html" target="_self">TreenodesService</a>, clustersService: <a href="../injectables/ClustersService.html" target="_self">ClustersService</a>, khiopsLibraryService: <a href="../injectables/KhiopsLibraryService.html" target="_self">KhiopsLibraryService</a>, dialogRef: <a href="../components/UnfoldHierarchyComponent.html" target="_self">MatDialogRef&lt;UnfoldHierarchyComponent&gt;</a>)</code>
+<code>constructor(translate: TranslateService, dimensionsService: <a href="../injectables/DimensionsDatasService.html" target="_self">DimensionsDatasService</a>, treenodesService: <a href="../injectables/TreenodesService.html" target="_self">TreenodesService</a>, clustersService: <a href="../injectables/ClustersService.html" target="_self">ClustersService</a>, khiopsLibraryService: <a href="../injectables/KhiopsLibraryService.html" target="_self">KhiopsLibraryService</a>, dialogRef: <a href="../components/UnfoldHierarchyComponent.html" target="_self">MatDialogRef&lt;UnfoldHierarchyComponent&gt;</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -288,7 +288,7 @@
                                                         <td>translate</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../interfaces/T.html" target="_self" >TranslateService</a></code>
+                                                                    <code>TranslateService</code>
                                                         </td>
                                                   
                                                     <td>
@@ -1188,22 +1188,22 @@
                 <tr>
                     <td class="col-md-4">
                         <i>Default value : </i><code>[{
-			headerName: &#x27;Dimension&#x27;,
-			field: &#x27;name&#x27;
-		},
-		{
-			headerName: &#x27;Number of Cluster&#x27;,
-			field: &#x27;currentHierarchyClusterCount&#x27;
-		},
-		{
-			headerName: &#x27;Max Number of Cluster&#x27;,
-			field: &#x27;initialParts&#x27;
-		},
-		{
-			headerName: &#x27;FoldUnfold&#x27;,
-			field: &#x27;hierarchyFold&#x27;,
-			cellRendererFramework: CheckboxCellComponent
-		}
+		headerName: &#x27;Dimension&#x27;,
+		field: &#x27;name&#x27;
+	},
+	{
+		headerName: &#x27;Number of Cluster&#x27;,
+		field: &#x27;currentHierarchyClusterCount&#x27;
+	},
+	{
+		headerName: &#x27;Max Number of Cluster&#x27;,
+		field: &#x27;initialParts&#x27;
+	},
+	{
+		headerName: &#x27;FoldUnfold&#x27;,
+		field: &#x27;hierarchyFold&#x27;,
+		cellRendererFramework: CheckboxCellComponent
+	}
 	]</code>
                     </td>
                 </tr>
@@ -1521,7 +1521,7 @@
 } from &#x27;@angular/core&#x27;;
 import {
 	DimensionsDatasService
-} from &#x27;src/app/providers/dimensions-datas.service&#x27;;
+} from &#x27;@khiops-covisualization/providers/dimensions-datas.service&#x27;;
 import {
 	MatDialogRef
 } from &#x27;@angular/material/dialog&#x27;;
@@ -1537,10 +1537,10 @@ import {
 import * as _ from &#x27;lodash&#x27;; // Important to import lodash in karma
 import {
 	TreenodesService
-} from &#x27;src/app/providers/treenodes.service&#x27;;
+} from &#x27;@khiops-covisualization/providers/treenodes.service&#x27;;
 import {
 	ClustersService
-} from &#x27;src/app/providers/clusters.service&#x27;;
+} from &#x27;@khiops-covisualization/providers/clusters.service&#x27;;
 
 @Component({
 	selector: &#x27;app-unfold-hierarchy&#x27;,
@@ -1571,22 +1571,22 @@ export class UnfoldHierarchyComponent implements OnInit {
 	selectedLineChartItem &#x3D; undefined;
 
 	hierarchyDisplayedColumns &#x3D; [{
-			headerName: &#x27;Dimension&#x27;,
-			field: &#x27;name&#x27;
-		},
-		{
-			headerName: &#x27;Number of Cluster&#x27;,
-			field: &#x27;currentHierarchyClusterCount&#x27;
-		},
-		{
-			headerName: &#x27;Max Number of Cluster&#x27;,
-			field: &#x27;initialParts&#x27;
-		},
-		{
-			headerName: &#x27;FoldUnfold&#x27;,
-			field: &#x27;hierarchyFold&#x27;,
-			cellRendererFramework: CheckboxCellComponent
-		}
+		headerName: &#x27;Dimension&#x27;,
+		field: &#x27;name&#x27;
+	},
+	{
+		headerName: &#x27;Number of Cluster&#x27;,
+		field: &#x27;currentHierarchyClusterCount&#x27;
+	},
+	{
+		headerName: &#x27;Max Number of Cluster&#x27;,
+		field: &#x27;initialParts&#x27;
+	},
+	{
+		headerName: &#x27;FoldUnfold&#x27;,
+		field: &#x27;hierarchyFold&#x27;,
+		cellRendererFramework: CheckboxCellComponent
+	}
 	];
 	chartOptions &#x3D; {
 		elements: {
@@ -1632,7 +1632,7 @@ export class UnfoldHierarchyComponent implements OnInit {
 		private treenodesService: TreenodesService,
 		private clustersService: ClustersService,
 		private khiopsLibraryService: KhiopsLibraryService,
-		private dialogRef: MatDialogRef &lt; UnfoldHierarchyComponent &gt; ) {
+		private dialogRef: MatDialogRef&lt;UnfoldHierarchyComponent&gt;) {
 
 		this.hierarchyDatas &#x3D; this.treenodesService.getHierarchyDatas();
 
@@ -1824,7 +1824,7 @@ export class UnfoldHierarchyComponent implements OnInit {
                 <p class="comment">
                     <code>./unfold-hierarchy.component.scss</code>
                 </p>
-                <pre class="line-numbers"><code class="language-scss">@import &quot;khiops-library/src/lib/styles/theme.scss&quot;;
+                <pre class="line-numbers"><code class="language-scss">@import &quot;../../../../../theme.scss&quot;;
 
 #unfold-hierarchy-comp {
 

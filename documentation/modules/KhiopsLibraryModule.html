@@ -963,342 +963,206 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-	NgModule,
-	APP_INITIALIZER
-} from &#x27;@angular/core&#x27;;
-import {
-	LibVersionComponent
-} from &#x27;./components/lib-version/lib-version.component&#x27;;
-import {
-	SelectableComponent
-} from &#x27;./components/selectable/selectable.component&#x27;;
-import {
-	FileLoaderComponent
-} from &#x27;./components/file-loader/file-loader.component&#x27;;
-import {
-	HeaderToolsComponent
-} from &#x27;./components/header-tools/header-tools.component&#x27;;
-import {
-	InformationsBlockComponent
-} from &#x27;./components/informations-block/informations-block.component&#x27;;
-import {
-	HttpClientModule
-} from &#x27;@angular/common/http&#x27;;
-import {
-	FlexLayoutModule
-} from &#x27;@angular/flex-layout&#x27;;
-import {
-	HotkeyModule
-} from &#x27;angular2-hotkeys&#x27;;
-import {
-	ResizableModule
-} from &#x27;angular-resizable-element&#x27;;
-import {
-	NgxChartsModule
-} from &#x27;@swimlane/ngx-charts&#x27;;
-import {
-	ProgressButtonModule
-} from &#x27;progress-button&#x27;;
-import {
-	MatSlideToggleModule
-} from &#x27;@angular/material/slide-toggle&#x27;;
-import {
-	MatButtonModule
-} from &#x27;@angular/material/button&#x27;;
-import {
-	MatButtonToggleModule
-} from &#x27;@angular/material/button-toggle&#x27;;
-import {
-	MatCheckboxModule
-} from &#x27;@angular/material/checkbox&#x27;;
-import {
-	MatDialogModule
-} from &#x27;@angular/material/dialog&#x27;;
-import {
-	MatExpansionModule
-} from &#x27;@angular/material/expansion&#x27;;
-import {
-	MatFormFieldModule
-} from &#x27;@angular/material/form-field&#x27;;
-import {
-	MatGridListModule
-} from &#x27;@angular/material/grid-list&#x27;;
-import {
-	MatIconModule
-} from &#x27;@angular/material/icon&#x27;;
-import {
-	MatInputModule
-} from &#x27;@angular/material/input&#x27;;
-import {
-	MatBadgeModule
-} from &#x27;@angular/material/badge&#x27;;
-import {
-	MatMenuModule
-} from &#x27;@angular/material/menu&#x27;;
-import {
-	MatPaginatorModule
-} from &#x27;@angular/material/paginator&#x27;;
-import {
-	MatProgressSpinnerModule
-} from &#x27;@angular/material/progress-spinner&#x27;;
-import {
-	MatProgressBarModule
-} from &#x27;@angular/material/progress-bar&#x27;;
-import {
-	MatRippleModule
-} from &#x27;@angular/material/core&#x27;;
-import {
-	MatSelectModule
-} from &#x27;@angular/material/select&#x27;;
-import {
-	MatSidenavModule
-} from &#x27;@angular/material/sidenav&#x27;;
-import {
-	MatSliderModule
-} from &#x27;@angular/material/slider&#x27;;
-import {
-	MatSnackBarModule
-} from &#x27;@angular/material/snack-bar&#x27;;
-import {
-	MatSortModule
-} from &#x27;@angular/material/sort&#x27;;
-import {
-	MatTableModule
-} from &#x27;@angular/material/table&#x27;;
-import {
-	MatTabsModule
-} from &#x27;@angular/material/tabs&#x27;;
-import {
-	MatToolbarModule
-} from &#x27;@angular/material/toolbar&#x27;;
-import {
-	MatTooltipModule
-} from &#x27;@angular/material/tooltip&#x27;;
-import {
-	CommonModule
-} from &#x27;@angular/common&#x27;;
-import {
-	TranslateModule,
-	TranslateService
-} from &#x27;@ngstack/translate&#x27;;
-import {
-	ReleaseNotesComponent
-} from &#x27;./components/release-notes/release-notes.component&#x27;;
-import {
-	TranslatePipe
-} from &#x27;./pipes/translate.pipe&#x27;;
-import {
-	ToPrecisionPipe
-} from &#x27;./pipes/toPrecision.pipe&#x27;;
-import {
-	HeaderTitleComponent
-} from &#x27;./components/header-title/header-title.component&#x27;;
-import {
-	NoDataComponent
-} from &#x27;./components/no-data/no-data.component&#x27;;
-import {
-	LegendComponent
-} from &#x27;./components/legend/legend.component&#x27;;
-import {
-	SelectableTabComponent
-} from &#x27;./components/selectable-tab/selectable-tab.component&#x27;;
-import {
-	CellStatsComponent
-} from &#x27;./components/cell-stats/cell-stats.component&#x27;;
-import {
-	GraphHeaderComponent
-} from &#x27;./components/graph-header/graph-header.component&#x27;;
-import {
-	FormsModule
-} from &#x27;@angular/forms&#x27;;
-import {
-	AppVersionComponent
-} from &#x27;./components/app-version/app-version.component&#x27;;
-import {
-	MatrixCanvasComponent
-} from &#x27;./components/matrix-canvas/matrix-canvas.component&#x27;;
-import {
-	AgGridComponent
-} from &#x27;./components/ag-grid/ag-grid.component&#x27;;
-import {
-	MatrixTooltipComponent
-} from &#x27;./components/matrix-tooltip/matrix-tooltip.component&#x27;;
-import {
-	CheckboxCellComponent
-} from &#x27;./components/ag-grid/checkbox-cell/checkbox-cell.component&#x27;;
-import {
-	IconCellComponent
-} from &#x27;./components/ag-grid/icon-cell/icon-cell.component&#x27;;
-import {
-	DistributionGraphCanvasComponent
-} from &#x27;./components/distribution-graph-canvas/distribution-graph-canvas.component&#x27;;
-import {
-	ScrollableGraphCanvasComponent
-} from &#x27;./components/scrollable-graph-canvas/scrollable-graph-canvas.component&#x27;;
-import {
-	AgGridModule
-} from &#x27;@ag-grid-community/angular&#x27;;
-import {
-	ChartNextComponent
-} from &#x27;./components/chart-next/chart-next.component&#x27;;
-import {
-	RowIdentifierPipe
-} from &#x27;./pipes/rowIdentifierPipe.pipe&#x27;;
-import {
-	ImportFileLoaderComponent
-} from &#x27;./components/import-file-loader/import-file-loader.component&#x27;;
-import {
-	WatchResizeComponent
-} from &#x27;./components/watch-resize/watch-resize.component&#x27;;
-import {
-	ReleaseButtonComponent
-} from &#x27;./components/release-button/release-button.component&#x27;;
-import {
-	ConfirmDialogComponent
-} from &#x27;./components/confirm-dialog/confirm-dialog.component&#x27;;
-import {
-	MarkdownModule
-} from &#x27;ngx-markdown&#x27;;
-import {
-	BtnFullscreenComponent
-} from &#x27;./components/btn-fullscreen/btn-fullscreen.component&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { NgModule, APP_INITIALIZER } from &#x27;@angular/core&#x27;
+import { LibVersionComponent } from &#x27;./components/lib-version/lib-version.component&#x27;
+import { SelectableComponent } from &#x27;./components/selectable/selectable.component&#x27;
+import { FileLoaderComponent } from &#x27;./components/file-loader/file-loader.component&#x27;
+import { HeaderToolsComponent } from &#x27;./components/header-tools/header-tools.component&#x27;
+import { InformationsBlockComponent } from &#x27;./components/informations-block/informations-block.component&#x27;
+import { HttpClientModule } from &#x27;@angular/common/http&#x27;
+import { FlexLayoutModule } from &#x27;@angular/flex-layout&#x27;
+import { HotkeyModule } from &#x27;angular2-hotkeys&#x27;
+import { ResizableModule } from &#x27;angular-resizable-element&#x27;
+import { NgxChartsModule } from &#x27;@swimlane/ngx-charts&#x27;
+import { ProgressButtonModule } from &#x27;progress-button&#x27;
+import { MatSlideToggleModule } from &#x27;@angular/material/slide-toggle&#x27;
+import { MatButtonModule } from &#x27;@angular/material/button&#x27;
+import { MatButtonToggleModule } from &#x27;@angular/material/button-toggle&#x27;
+import { MatCheckboxModule } from &#x27;@angular/material/checkbox&#x27;
+import { MatDialogModule } from &#x27;@angular/material/dialog&#x27;
+import { MatExpansionModule } from &#x27;@angular/material/expansion&#x27;
+import { MatFormFieldModule } from &#x27;@angular/material/form-field&#x27;
+import { MatGridListModule } from &#x27;@angular/material/grid-list&#x27;
+import { MatIconModule } from &#x27;@angular/material/icon&#x27;
+import { MatInputModule } from &#x27;@angular/material/input&#x27;
+import { MatBadgeModule } from &#x27;@angular/material/badge&#x27;
+import { MatMenuModule } from &#x27;@angular/material/menu&#x27;
+import { MatPaginatorModule } from &#x27;@angular/material/paginator&#x27;
+import { MatProgressSpinnerModule } from &#x27;@angular/material/progress-spinner&#x27;
+import { MatProgressBarModule } from &#x27;@angular/material/progress-bar&#x27;
+import { MatRippleModule } from &#x27;@angular/material/core&#x27;
+import { MatSelectModule } from &#x27;@angular/material/select&#x27;
+import { MatSidenavModule } from &#x27;@angular/material/sidenav&#x27;
+import { MatSliderModule } from &#x27;@angular/material/slider&#x27;
+import { MatSnackBarModule } from &#x27;@angular/material/snack-bar&#x27;
+import { MatSortModule } from &#x27;@angular/material/sort&#x27;
+import { MatTableModule } from &#x27;@angular/material/table&#x27;
+import { MatTabsModule } from &#x27;@angular/material/tabs&#x27;
+import { MatToolbarModule } from &#x27;@angular/material/toolbar&#x27;
+import { MatTooltipModule } from &#x27;@angular/material/tooltip&#x27;
+import { CommonModule } from &#x27;@angular/common&#x27;
+import { TranslateModule, TranslateService } from &#x27;@ngstack/translate&#x27;
+import { ReleaseNotesComponent } from &#x27;./components/release-notes/release-notes.component&#x27;
+import { TranslatePipe } from &#x27;./pipes/translate.pipe&#x27;
+import { ToPrecisionPipe } from &#x27;./pipes/toPrecision.pipe&#x27;
+import { HeaderTitleComponent } from &#x27;./components/header-title/header-title.component&#x27;
+import { NoDataComponent } from &#x27;./components/no-data/no-data.component&#x27;
+import { LegendComponent } from &#x27;./components/legend/legend.component&#x27;
+import { SelectableTabComponent } from &#x27;./components/selectable-tab/selectable-tab.component&#x27;
+import { CellStatsComponent } from &#x27;./components/cell-stats/cell-stats.component&#x27;
+import { GraphHeaderComponent } from &#x27;./components/graph-header/graph-header.component&#x27;
+import { FormsModule } from &#x27;@angular/forms&#x27;
+import { AppVersionComponent } from &#x27;./components/app-version/app-version.component&#x27;
+import { MatrixCanvasComponent } from &#x27;./components/matrix-canvas/matrix-canvas.component&#x27;
+import { AgGridComponent } from &#x27;./components/ag-grid/ag-grid.component&#x27;
+import { MatrixTooltipComponent } from &#x27;./components/matrix-tooltip/matrix-tooltip.component&#x27;
+import { CheckboxCellComponent } from &#x27;./components/ag-grid/checkbox-cell/checkbox-cell.component&#x27;
+import { IconCellComponent } from &#x27;./components/ag-grid/icon-cell/icon-cell.component&#x27;
+import { DistributionGraphCanvasComponent } from &#x27;./components/distribution-graph-canvas/distribution-graph-canvas.component&#x27;
+import { ScrollableGraphCanvasComponent } from &#x27;./components/scrollable-graph-canvas/scrollable-graph-canvas.component&#x27;
+import { AgGridModule } from &#x27;@ag-grid-community/angular&#x27;
+import { ChartNextComponent } from &#x27;./components/chart-next/chart-next.component&#x27;
+import { RowIdentifierPipe } from &#x27;./pipes/rowIdentifierPipe.pipe&#x27;
+import { ImportFileLoaderComponent } from &#x27;./components/import-file-loader/import-file-loader.component&#x27;
+import { WatchResizeComponent } from &#x27;./components/watch-resize/watch-resize.component&#x27;
+import { ReleaseButtonComponent } from &#x27;./components/release-button/release-button.component&#x27;
+import { ConfirmDialogComponent } from &#x27;./components/confirm-dialog/confirm-dialog.component&#x27;
+import { MarkdownModule } from &#x27;ngx-markdown&#x27;
+import { BtnFullscreenComponent } from &#x27;./components/btn-fullscreen/btn-fullscreen.component&#x27;
 
 @NgModule({
-	imports: [
-		MarkdownModule.forRoot(),
-		ProgressButtonModule,
-		CommonModule,
-		HttpClientModule,
-		MatSlideToggleModule,
-		MatBadgeModule,
-		MatTableModule,
-		MatProgressSpinnerModule,
-		MatProgressBarModule,
-		MatTabsModule,
-		MatSnackBarModule,
-		MatGridListModule,
-		MatSortModule,
-		MatToolbarModule,
-		MatButtonModule,
-		MatTooltipModule,
-		MatFormFieldModule,
-		FlexLayoutModule,
-		MatSelectModule,
-		MatMenuModule,
-		MatSidenavModule,
-		MatExpansionModule,
-		MatCheckboxModule,
-		MatInputModule,
-		MatIconModule,
-		MatPaginatorModule,
-		MatRippleModule,
-		MatSliderModule,
-		NgxChartsModule,
-		AgGridModule.withComponents([]),
-		FormsModule,
-		MatButtonToggleModule,
-		MatDialogModule,
-		ResizableModule,
-		HotkeyModule.forRoot(),
-		TranslateModule.forRoot({
-			activeLang: &#x27;en&#x27;
-		})
-	],
-	declarations: [
-		CellStatsComponent,
-		WatchResizeComponent,
-		SelectableComponent,
-		FileLoaderComponent,
-		ReleaseNotesComponent,
-		ConfirmDialogComponent,
-		HeaderToolsComponent,
-		BtnFullscreenComponent,
-		GraphHeaderComponent,
-		TranslatePipe,
-		RowIdentifierPipe,
-		ToPrecisionPipe,
-		LibVersionComponent,
-		HeaderTitleComponent,
-		NoDataComponent,
-		LegendComponent,
-		SelectableTabComponent,
-		AppVersionComponent,
-		InformationsBlockComponent,
-		MatrixCanvasComponent,
-		AgGridComponent,
-		MatrixTooltipComponent,
-		CheckboxCellComponent,
-		IconCellComponent,
-		DistributionGraphCanvasComponent,
-		ScrollableGraphCanvasComponent,
-		ChartNextComponent,
-		RowIdentifierPipe,
-		ImportFileLoaderComponent,
-		ReleaseButtonComponent
-	],
-	providers: [
-		TranslateService,
-	],
-	exports: [
-		ProgressButtonModule,
-		CommonModule,
-		HttpClientModule,
-		MatTableModule,
-		MatProgressSpinnerModule,
-		MatProgressBarModule,
-		MatBadgeModule,
-		MatTabsModule,
-		MatSlideToggleModule,
-		MatSnackBarModule,
-		MatGridListModule,
-		MatSortModule,
-		MatToolbarModule,
-		MatButtonModule,
-		MatTooltipModule,
-		MatFormFieldModule,
-		FlexLayoutModule,
-		MatSelectModule,
-		MatMenuModule,
-		MatSidenavModule,
-		MatCheckboxModule,
-		MatInputModule,
-		MatExpansionModule,
-		MatIconModule,
-		MatPaginatorModule,
-		MatSliderModule,
-		FormsModule,
-		MatButtonToggleModule,
-		MatDialogModule,
-		MatRippleModule,
-		TranslateModule,
-		WatchResizeComponent,
-		SelectableComponent,
-		ReleaseNotesComponent,
-		ConfirmDialogComponent,
-		FileLoaderComponent,
-		HeaderToolsComponent,
-		LibVersionComponent,
-		HeaderTitleComponent,
-		NoDataComponent,
-		LegendComponent,
-		SelectableTabComponent,
-		BtnFullscreenComponent,
-		GraphHeaderComponent,
-		AppVersionComponent,
-		ToPrecisionPipe,
-		TranslatePipe,
-		InformationsBlockComponent,
-		MatrixCanvasComponent,
-		AgGridComponent,
-		MatrixTooltipComponent,
-		CheckboxCellComponent,
-		IconCellComponent,
-		DistributionGraphCanvasComponent,
-		ChartNextComponent,
-		ImportFileLoaderComponent,
-		ReleaseButtonComponent
-	]
+  imports: [
+    MarkdownModule.forRoot(),
+    ProgressButtonModule,
+    CommonModule,
+    HttpClientModule,
+    MatSlideToggleModule,
+    MatBadgeModule,
+    MatTableModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
+    MatTabsModule,
+    MatSnackBarModule,
+    MatGridListModule,
+    MatSortModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatTooltipModule,
+    MatFormFieldModule,
+    FlexLayoutModule,
+    MatSelectModule,
+    MatMenuModule,
+    MatSidenavModule,
+    MatExpansionModule,
+    MatCheckboxModule,
+    MatInputModule,
+    MatIconModule,
+    MatPaginatorModule,
+    MatRippleModule,
+    MatSliderModule,
+    NgxChartsModule,
+    AgGridModule,
+    FormsModule,
+    MatButtonToggleModule,
+    MatDialogModule,
+    ResizableModule,
+    HotkeyModule.forRoot(),
+    TranslateModule.forRoot({
+      activeLang: &#x27;en&#x27;,
+    }),
+  ],
+  declarations: [
+    CellStatsComponent,
+    WatchResizeComponent,
+    SelectableComponent,
+    FileLoaderComponent,
+    ReleaseNotesComponent,
+    ConfirmDialogComponent,
+    HeaderToolsComponent,
+    BtnFullscreenComponent,
+    GraphHeaderComponent,
+    TranslatePipe,
+    RowIdentifierPipe,
+    ToPrecisionPipe,
+    LibVersionComponent,
+    HeaderTitleComponent,
+    NoDataComponent,
+    LegendComponent,
+    SelectableTabComponent,
+    AppVersionComponent,
+    InformationsBlockComponent,
+    MatrixCanvasComponent,
+    AgGridComponent,
+    MatrixTooltipComponent,
+    CheckboxCellComponent,
+    IconCellComponent,
+    DistributionGraphCanvasComponent,
+    ScrollableGraphCanvasComponent,
+    ChartNextComponent,
+    RowIdentifierPipe,
+    ImportFileLoaderComponent,
+    ReleaseButtonComponent,
+  ],
+  providers: [TranslateService],
+  exports: [
+    ProgressButtonModule,
+    CommonModule,
+    HttpClientModule,
+    MatTableModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
+    MatBadgeModule,
+    MatTabsModule,
+    MatSlideToggleModule,
+    MatSnackBarModule,
+    MatGridListModule,
+    MatSortModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatTooltipModule,
+    MatFormFieldModule,
+    FlexLayoutModule,
+    MatSelectModule,
+    MatMenuModule,
+    MatSidenavModule,
+    MatCheckboxModule,
+    MatInputModule,
+    MatExpansionModule,
+    MatIconModule,
+    MatPaginatorModule,
+    MatSliderModule,
+    FormsModule,
+    MatButtonToggleModule,
+    MatDialogModule,
+    MatRippleModule,
+    TranslateModule,
+    WatchResizeComponent,
+    SelectableComponent,
+    ReleaseNotesComponent,
+    ConfirmDialogComponent,
+    FileLoaderComponent,
+    HeaderToolsComponent,
+    LibVersionComponent,
+    HeaderTitleComponent,
+    NoDataComponent,
+    LegendComponent,
+    SelectableTabComponent,
+    BtnFullscreenComponent,
+    GraphHeaderComponent,
+    AppVersionComponent,
+    ToPrecisionPipe,
+    TranslatePipe,
+    InformationsBlockComponent,
+    MatrixCanvasComponent,
+    AgGridComponent,
+    MatrixTooltipComponent,
+    CheckboxCellComponent,
+    IconCellComponent,
+    DistributionGraphCanvasComponent,
+    ChartNextComponent,
+    ImportFileLoaderComponent,
+    ReleaseButtonComponent,
+  ],
 })
 export class KhiopsLibraryModule {}
 </code></pre>

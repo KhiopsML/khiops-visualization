@@ -13,12 +13,14 @@ import {
 	KhiopsLibraryService
 } from '@khiops-library/providers/khiops-library.service';
 import * as _ from 'lodash'; // Important to import lodash in karma
-let storage;
-try {
-	storage = require('electron-json-storage');
-} catch (e) {
-	console.warn('Can not access storage', e);
-}
+
+// TODO remove electron
+// let storage;
+// try {
+// 	storage = require('electron-json-storage');
+// } catch (e) {
+// 	console.warn('Can not access storage', e);
+// }
 @Component({
 	selector: 'app-user-settings',
 	templateUrl: './user-settings.component.html',
@@ -56,7 +58,8 @@ export class UserSettingsComponent implements OnChanges {
 		AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
 
 		// Allow cookies
-		this.allowCookies = (storage.getSync('COOKIE_CONSENT') === 'true') || false;
+		// TODO remove electron
+		// this.allowCookies = (storage.getSync('COOKIE_CONSENT') === 'true') || false;
 		this.initialAllowCookies = _.cloneDeep(this.allowCookies);
 	}
 
@@ -80,7 +83,8 @@ export class UserSettingsComponent implements OnChanges {
 		localStorage.setItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST', this.contrastValue.toString());
 		AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
 
-		storage.setSync('COOKIE_CONSENT', this.allowCookies.toString());
+		// TODO remove electron
+		// storage.setSync('COOKIE_CONSENT', this.allowCookies.toString());
 
 		if (this.initialAllowCookies !== this.allowCookies) {
 			if (this.allowCookies === true) {

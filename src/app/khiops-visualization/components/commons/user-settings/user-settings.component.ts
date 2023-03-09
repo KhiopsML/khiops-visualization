@@ -19,12 +19,14 @@ import {
 import {
 	TranslateService
 } from '@ngstack/translate';
-let storage;
-try {
-	storage = require('electron-json-storage');
-} catch (e) {
-	console.warn('Can not access storage', e);
-}
+
+// TODO remove electron
+// let storage;
+// try {
+// 	storage = require('electron-json-storage');
+// } catch (e) {
+// 	console.warn('Can not access storage', e);
+// }
 
 @Component({
 	selector: 'app-user-settings',
@@ -82,7 +84,8 @@ export class UserSettingsComponent implements OnChanges {
 		// });
 
 		// Allow cookies
-		this.allowCookies = (storage.getSync('COOKIE_CONSENT') === 'true') || false;
+		// TODO remove electron
+		// this.allowCookies = (storage.getSync('COOKIE_CONSENT') === 'true') || false;
 		this.initialAllowCookies = _.cloneDeep(this.allowCookies);
 
 	}
@@ -119,7 +122,8 @@ export class UserSettingsComponent implements OnChanges {
 		// this.khiopsLibraryService.trackEvent('click', 'settings', 'significant_number', this.numberPrecision);
 		// this.khiopsLibraryService.trackEvent('click', 'settings', 'matrix_contrast', this.contrastValue);
 
-		storage.setSync('COOKIE_CONSENT', this.allowCookies.toString());
+		// TODO remove electron
+		// storage.setSync('COOKIE_CONSENT', this.allowCookies.toString());
 
 		if (this.initialAllowCookies !== this.allowCookies) {
 			if (this.allowCookies === true) {

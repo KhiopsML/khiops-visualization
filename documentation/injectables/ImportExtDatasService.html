@@ -134,7 +134,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(translate: <a href="../interfaces/T.html" target="_self">TranslateService</a>, appService: <a href="../injectables/AppService.html" target="_self">AppService</a>, importFileLoaderService: <a href="../injectables/ImportFileLoaderService.html" target="_self">ImportFileLoaderService</a>)</code>
+<code>constructor(translate: TranslateService, appService: <a href="../injectables/AppService.html" target="_self">AppService</a>, importFileLoaderService: <a href="../injectables/ImportFileLoaderService.html" target="_self">ImportFileLoaderService</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -160,7 +160,7 @@
                                                         <td>translate</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../interfaces/T.html" target="_self" >TranslateService</a></code>
+                                                                    <code>TranslateService</code>
                                                         </td>
                                                   
                                                     <td>
@@ -786,7 +786,7 @@
 import _ from &#x27;lodash&#x27;;
 import {
 	ExtDatasVO
-} from &#x27;src/app/model/ext-datas-vo&#x27;;
+} from &#x27;@khiops-covisualization/model/ext-datas-vo&#x27;;
 import {
 	FileVO
 } from &#x27;@khiops-library/model/file-vo&#x27;;
@@ -818,7 +818,7 @@ export class ImportExtDatasService {
 		this.savedExternalDatas &#x3D; {};
 	}
 
-	formatImportedDatas(fileDatas: FileVO, joinKey ? , fieldName ? , separator ? : string): any {
+	formatImportedDatas(fileDatas: FileVO, joinKey?, fieldName?, separator?: string): any {
 
 		// init the object
 		const formatedDatas &#x3D; {
@@ -962,7 +962,8 @@ export class ImportExtDatasService {
 		this.importExtDatas &#x3D; this.appService.getSavedDatas(&#x27;importedDatas&#x27;) || [];
 	}
 
-}</code></pre>
+}
+</code></pre>
     </div>
 
 </div>

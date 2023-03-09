@@ -93,54 +93,6 @@
     </table>
 </section>
 
-            <section>
-    <h3 id="constructor">Constructor</h3>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-<code>constructor(electronService: <a href="../injectables/ElectronService.html" target="_self">ElectronService</a>)</code>
-                    </td>
-                </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/khiops-library/components/import-file-loader/import-file-loader.service.ts:15</a></div>
-                            </td>
-                        </tr>
-
-                <tr>
-                    <td class="col-md-4">
-                            <div>
-                                    <b>Parameters :</b>
-                                    <table class="params">
-                                        <thead>
-                                            <tr>
-                                                <td>Name</td>
-                                                    <td>Type</td>
-                                                <td>Optional</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr>
-                                                        <td>electronService</td>
-                                                  
-                                                        <td>
-                                                                        <code><a href="../injectables/ElectronService.html" target="_self" >ElectronService</a></code>
-                                                        </td>
-                                                  
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-                                                </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-</section>
 
             <section>
     
@@ -167,8 +119,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="19"
-                            class="link-to-prism">src/app/khiops-library/components/import-file-loader/import-file-loader.service.ts:19</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="22"
+                            class="link-to-prism">src/app/khiops-library/components/import-file-loader/import-file-loader.service.ts:22</a></div>
                 </td>
             </tr>
 
@@ -226,34 +178,38 @@
 	Injectable
 } from &#x27;@angular/core&#x27;;
 import _ from &#x27;lodash&#x27;;
-import {
-	FileVO
-} from &#x27;../../model/file-vo&#x27;;
-import {
-	ElectronService
-} from &#x27;../../providers/electron.service&#x27;;
+
+// TODO remove electron
+// import {
+// 	FileVO
+// } from &#x27;../../model/file-vo&#x27;;
+// import {
+// 	ElectronService
+// } from &#x27;../../providers/electron.service&#x27;;
 
 @Injectable({
 	providedIn: &#x27;root&#x27;
 })
 export class ImportFileLoaderService {
 
-	constructor(private electronService: ElectronService) {}
+	// TODO remove electron
+	// constructor(private electronService: ElectronService) {}
 
 	readFile(filename: string): any {
 
-		return new Promise((resolve, reject) &#x3D;&gt; {
+		// TODO remove electron
+		// return new Promise((resolve, reject) &#x3D;&gt; {
 
-			this.electronService.fs.readFile(filename, &#x27;utf-8&#x27;, (err, datas: any) &#x3D;&gt; {
-				if (err) {
-					reject();
-				} else {
-					resolve(
-						new FileVO(datas, filename)
-					);
-				}
-			});
-		});
+		// 	this.electronService.fs.readFile(filename, &#x27;utf-8&#x27;, (err, datas: any) &#x3D;&gt; {
+		// 		if (err) {
+		// 			reject();
+		// 		} else {
+		// 			resolve(
+		// 				new FileVO(datas, filename)
+		// 			);
+		// 		}
+		// 	});
+		// });
 
 	}
 

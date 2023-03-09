@@ -75,7 +75,7 @@
     </p>
     <p class="comment">
                     <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
-                    <code><a href="../miscellaneous/typealiases.html#C" target="_self" >OnChanges</a></code>
+                    <code><a href="https://angular.io/api/core/OnChanges" target="_blank" >OnChanges</a></code>
                     <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
                     <code><a href="https://angular.io/api/core/AfterViewInit" target="_blank" >AfterViewInit</a></code>
     </p>
@@ -281,7 +281,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(translate: <a href="../interfaces/T.html" target="_self">TranslateService</a>, treenodesService: <a href="../injectables/TreenodesService.html" target="_self">TreenodesService</a>, clustersService: <a href="../injectables/ClustersService.html" target="_self">ClustersService</a>, eventsService: <a href="../injectables/EventsService.html" target="_self">EventsService</a>, khiopsLibraryService: <a href="../injectables/KhiopsLibraryService.html" target="_self">KhiopsLibraryService</a>)</code>
+<code>constructor(translate: TranslateService, treenodesService: <a href="../injectables/TreenodesService.html" target="_self">TreenodesService</a>, clustersService: <a href="../injectables/ClustersService.html" target="_self">ClustersService</a>, eventsService: <a href="../injectables/EventsService.html" target="_self">EventsService</a>, khiopsLibraryService: <a href="../injectables/KhiopsLibraryService.html" target="_self">KhiopsLibraryService</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -307,7 +307,7 @@
                                                         <td>translate</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../interfaces/T.html" target="_self" >TranslateService</a></code>
+                                                                    <code>TranslateService</code>
                                                         </td>
                                                   
                                                     <td>
@@ -663,7 +663,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>ngOnChanges(changes: <a href="../undefineds/C.html" target="_self">SimpleChanges</a>)</code>
+<code>ngOnChanges(changes: <a href="https://angular.io/api/core/SimpleChanges" target="_blank">SimpleChanges</a>)</code>
                 </td>
             </tr>
 
@@ -694,7 +694,7 @@
                                 <tr>
                                     <td>changes</td>
                                     <td>
-                                                <code><a href="../miscellaneous/typealiases.html#C" target="_self" >SimpleChanges</a></code>
+                                                <code><a href="https://angular.io/api/core/SimpleChanges" target="_blank" >SimpleChanges</a></code>
                                     </td>
 
                                     <td>
@@ -1500,13 +1500,13 @@ import {
 } from &#x27;@khiops-library/components/distribution-graph-canvas/distribution-graph-canvas.component&#x27;;
 import {
 	EventsService
-} from &#x27;src/app/providers/events.service&#x27;;
+} from &#x27;@khiops-covisualization/providers/events.service&#x27;;
 import {
 	TreenodesService
-} from &#x27;src/app/providers/treenodes.service&#x27;;
+} from &#x27;@khiops-covisualization/providers/treenodes.service&#x27;;
 import {
 	ClustersService
-} from &#x27;src/app/providers/clusters.service&#x27;;
+} from &#x27;@khiops-covisualization/providers/clusters.service&#x27;;
 import {
 	ChartColorsSetI
 } from &#x27;@khiops-library/interfaces/chart-colors-set&#x27;;
@@ -1523,7 +1523,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges, OnDestr
 	}) distributionGraph: DistributionGraphCanvasComponent;
 
 	@Input() selectedNode;
-	@Output() selectedItemChanged: EventEmitter &lt; any &gt; &#x3D; new EventEmitter();
+	@Output() selectedItemChanged: EventEmitter&lt;any&gt; &#x3D; new EventEmitter();
 	@Input() position: number;
 	@Input() dimensionsTree: any;
 	@Input() selectedDimension: DimensionVO;

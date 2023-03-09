@@ -76,7 +76,7 @@
     <p class="comment">
                     <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
                     <code><a href="https://angular.io/api/core/AfterViewInit" target="_blank" >AfterViewInit</a></code>
-                    <code><a href="../miscellaneous/typealiases.html#C" target="_self" >OnChanges</a></code>
+                    <code><a href="https://angular.io/api/core/OnChanges" target="_blank" >OnChanges</a></code>
                     <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
     </p>
 
@@ -249,7 +249,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(ngzone: <a href="../interfaces/N.html" target="_self">NgZone</a>, selectableService: <a href="../injectables/SelectableService.html" target="_self">SelectableService</a>, treePreparationDatasService: <a href="../injectables/TreePreparationDatasService.html" target="_self">TreePreparationDatasService</a>, distributionDatasService: <a href="../injectables/DistributionDatasService.html" target="_self">DistributionDatasService</a>, translate: <a href="../interfaces/T.html" target="_self">TranslateService</a>)</code>
+<code>constructor(ngzone: <a href="https://angular.io/api/core/NgZone" target="_blank">NgZone</a>, selectableService: <a href="../injectables/SelectableService.html" target="_self">SelectableService</a>, treePreparationDatasService: <a href="../injectables/TreePreparationDatasService.html" target="_self">TreePreparationDatasService</a>, distributionDatasService: <a href="../injectables/DistributionDatasService.html" target="_self">DistributionDatasService</a>, translate: TranslateService)</code>
                     </td>
                 </tr>
                         <tr>
@@ -275,7 +275,7 @@
                                                         <td>ngzone</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../interfaces/N.html" target="_self" >NgZone</a></code>
+                                                                        <code><a href="https://angular.io/api/core/NgZone" target="_blank" >NgZone</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -323,7 +323,7 @@
                                                         <td>translate</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../interfaces/T.html" target="_self" >TranslateService</a></code>
+                                                                    <code>TranslateService</code>
                                                         </td>
                                                   
                                                     <td>
@@ -443,7 +443,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>ngOnChanges(changes: <a href="../undefineds/C.html" target="_self">SimpleChanges</a>)</code>
+<code>ngOnChanges(changes: <a href="https://angular.io/api/core/SimpleChanges" target="_blank">SimpleChanges</a>)</code>
                 </td>
             </tr>
 
@@ -474,7 +474,7 @@
                                 <tr>
                                     <td>changes</td>
                                     <td>
-                                                <code><a href="../miscellaneous/typealiases.html#C" target="_self" >SimpleChanges</a></code>
+                                                <code><a href="https://angular.io/api/core/SimpleChanges" target="_blank" >SimpleChanges</a></code>
                                     </td>
 
                                     <td>
@@ -1084,7 +1084,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/N.html" target="_self" >NgZone</a></code>
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/NgZone" target="_blank" >NgZone</a></code>
 
                     </td>
                 </tr>
@@ -1200,7 +1200,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/T.html" target="_self" >TranslateService</a></code>
+                        <i>Type : </i>    <code>TranslateService</code>
 
                     </td>
                 </tr>
@@ -1278,7 +1278,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/T.html" target="_self" >TreePreparationDatasVO</a></code>
+                        <i>Type : </i>        <code><a href="../classes/TreePreparationDatasVO.html" target="_self" >TreePreparationDatasVO</a></code>
 
                     </td>
                 </tr>
@@ -1313,22 +1313,22 @@ import {
 } from &#x27;@khiops-library/components/selectable/selectable.service&#x27;;
 import {
 	DistributionDatasService
-} from &#x27;src/app/providers/distribution-datas.service&#x27;;
+} from &#x27;@khiops-visualization/providers/distribution-datas.service&#x27;;
 import {
 	TranslateService
 } from &#x27;@ngstack/translate&#x27;;
 import {
 	TreePreparationDatasService
-} from &#x27;src/app/providers/tree-preparation-datas.service&#x27;;
+} from &#x27;@khiops-visualization/providers/tree-preparation-datas.service&#x27;;
 import {
 	GridDatasI
 } from &#x27;@khiops-library/interfaces/grid-datas&#x27;;
 import {
 	TreePreparationDatasVO
-} from &#x27;src/app/model/tree-preparation-datas-vo&#x27;;
+} from &#x27;@khiops-visualization/model/tree-preparation-datas-vo&#x27;;
 import {
 	DistributionDatasVO
-} from &#x27;src/app/model/distribution-datas-vo&#x27;;
+} from &#x27;@khiops-visualization/model/distribution-datas-vo&#x27;;
 import {
 	UtilsService
 } from &#x27;@khiops-library/providers/utils.service&#x27;;
@@ -1339,7 +1339,7 @@ import {
 	styleUrls: [&#x27;./tree-leaf-details.component.scss&#x27;],
 })
 export class TreeLeafDetailsComponent
-implements OnInit, AfterViewInit, OnChanges, OnDestroy {
+	implements OnInit, AfterViewInit, OnChanges, OnDestroy {
 	@Input() selectedNode: any;
 	@Input() displayedValues: any;
 
@@ -1359,16 +1359,16 @@ implements OnInit, AfterViewInit, OnChanges, OnDestroy {
 		private treePreparationDatasService: TreePreparationDatasService,
 		private distributionDatasService: DistributionDatasService,
 		public translate: TranslateService
-	) {}
+	) { }
 
 	ngOnInit() {
 		this.treePreparationDatas &#x3D; this.treePreparationDatasService.getDatas();
 		this.distributionDatas &#x3D; this.distributionDatasService.getDatas();
 	}
 
-	ngAfterViewInit() {}
+	ngAfterViewInit() { }
 
-	ngOnDestroy() {}
+	ngOnDestroy() { }
 
 	updateComponentDatas() {
 		setTimeout(() &#x3D;&gt; {
@@ -1394,7 +1394,7 @@ implements OnInit, AfterViewInit, OnChanges, OnDestroy {
 		}
 	}
 
-	onSelectedTreeLeafDetailsTabChanged(e) {}
+	onSelectedTreeLeafDetailsTabChanged(e) { }
 
 	onTreeNodeTargetDistributionGraphTypeChanged(type: any) {
 		this.treeNodeTargetDistributionGraphType &#x3D; type;
@@ -1404,9 +1404,9 @@ implements OnInit, AfterViewInit, OnChanges, OnDestroy {
 		);
 	}
 
-	onSelectedTreeNodeDistributionGraphItemChanged(index: any) {}
+	onSelectedTreeNodeDistributionGraphItemChanged(index: any) { }
 
-	onSelectedTreeNodeTargetDistributionGraphItemChanged(index: any) {}
+	onSelectedTreeNodeTargetDistributionGraphItemChanged(index: any) { }
 
 	onTreeNodeTargetDistributionGraphDisplayedValuesChanged(displayedValues) {
 		this.distributionDatasService.setTreeNodeTargetDistributionDisplayedValues(
@@ -1484,9 +1484,7 @@ implements OnInit, AfterViewInit, OnChanges, OnDestroy {
                 <p class="comment">
                     <code>./tree-leaf-details.component.scss</code>
                 </p>
-                <pre class="line-numbers"><code class="language-scss">@import &quot;khiops-library/src/lib/styles/theme.scss&quot;;
-
-#tree-leaf-details-comp {
+                <pre class="line-numbers"><code class="language-scss">#tree-leaf-details-comp {
 
 	&gt;h1 {}
 

@@ -197,7 +197,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(importExtDatasService: <a href="../injectables/ImportExtDatasService.html" target="_self">ImportExtDatasService</a>, dialog: MatDialog, snackBar: MatSnackBar, translate: <a href="../interfaces/T.html" target="_self">TranslateService</a>, dialogRef: <a href="../components/ImportExtDatasListComponent.html" target="_self">MatDialogRef&lt;ImportExtDatasListComponent&gt;</a>)</code>
+<code>constructor(importExtDatasService: <a href="../injectables/ImportExtDatasService.html" target="_self">ImportExtDatasService</a>, dialog: MatDialog, snackBar: MatSnackBar, translate: TranslateService, dialogRef: <a href="../components/ImportExtDatasListComponent.html" target="_self">MatDialogRef&lt;ImportExtDatasListComponent&gt;</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -259,7 +259,7 @@
                                                         <td>translate</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../interfaces/T.html" target="_self" >TranslateService</a></code>
+                                                                    <code>TranslateService</code>
                                                         </td>
                                                   
                                                     <td>
@@ -713,7 +713,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/T.html" target="_self" >TranslateService</a></code>
+                        <i>Type : </i>    <code>TranslateService</code>
 
                     </td>
                 </tr>
@@ -745,7 +745,7 @@ import {
 import * as _ from &#x27;lodash&#x27;; // Important to import lodash in karma
 import {
 	ImportExtDatasService
-} from &#x27;src/app/providers/import-ext-datas.service&#x27;;
+} from &#x27;@khiops-covisualization/providers/import-ext-datas.service&#x27;;
 import {
 	TranslateService
 } from &#x27;@ngstack/translate&#x27;;
@@ -754,7 +754,7 @@ import {
 } from &#x27;@khiops-library/model/file-vo&#x27;;
 import {
 	ExtDatasVO
-} from &#x27;src/app/model/ext-datas-vo&#x27;;
+} from &#x27;@khiops-covisualization/model/ext-datas-vo&#x27;;
 import {
 	IconCellComponent
 } from &#x27;@khiops-library/components/ag-grid/icon-cell/icon-cell.component&#x27;;
@@ -763,7 +763,7 @@ import {
 } from &#x27;@angular/material/snack-bar&#x27;;
 import {
 	EventsService
-} from &#x27;src/app/providers/events.service&#x27;;
+} from &#x27;@khiops-covisualization/providers/events.service&#x27;;
 import {
 	AppConfig
 } from &#x27;src/environments/environment&#x27;;
@@ -787,7 +787,7 @@ export class ImportExtDatasListComponent implements OnInit {
 		private dialog: MatDialog,
 		private snackBar: MatSnackBar,
 		public translate: TranslateService,
-		private dialogRef: MatDialogRef &lt; ImportExtDatasListComponent &gt; ) {
+		private dialogRef: MatDialogRef&lt;ImportExtDatasListComponent&gt;) {
 
 		this.constructImportedDatasTable();
 	}
@@ -796,30 +796,30 @@ export class ImportExtDatasListComponent implements OnInit {
 
 		this.importedDatas &#x3D; {
 			displayedColumns: [{
-					headerName: &#x27;file name&#x27;,
-					field: &#x27;filename&#x27;
-				},
-				{
-					headerName: &#x27;join key&#x27;,
-					field: &#x27;joinKey&#x27;
-				},
-				{
-					headerName: &#x27;field&#x27;,
-					field: &#x27;field&#x27;
-				},
-				{
-					headerName: &#x27;dimension&#x27;,
-					field: &#x27;dimension&#x27;
-				},
-				{
-					headerName: &#x27;&#x27;,
-					field: &#x27;remove&#x27;,
-					cellRendererFramework: IconCellComponent,
-					cellRendererParams: {
-						icon: &#x27;delete&#x27;,
-						action: this.removeExtDatasFromList.bind(this)
-					}
+				headerName: &#x27;file name&#x27;,
+				field: &#x27;filename&#x27;
+			},
+			{
+				headerName: &#x27;join key&#x27;,
+				field: &#x27;joinKey&#x27;
+			},
+			{
+				headerName: &#x27;field&#x27;,
+				field: &#x27;field&#x27;
+			},
+			{
+				headerName: &#x27;dimension&#x27;,
+				field: &#x27;dimension&#x27;
+			},
+			{
+				headerName: &#x27;&#x27;,
+				field: &#x27;remove&#x27;,
+				cellRendererFramework: IconCellComponent,
+				cellRendererParams: {
+					icon: &#x27;delete&#x27;,
+					action: this.removeExtDatasFromList.bind(this)
 				}
+			}
 			],
 			values: []
 		};
@@ -837,7 +837,7 @@ export class ImportExtDatasListComponent implements OnInit {
 		}
 	}
 
-	ngOnInit() {}
+	ngOnInit() { }
 
 	removeExtDatasFromList(e) {
 		const importedDatas &#x3D; this.importExtDatasService.removeImportedDatas(e.data.filename, e.data.dimension, e.data.joinKey, e.data.separator, e.data.field);
@@ -868,11 +868,11 @@ export class ImportExtDatasListComponent implements OnInit {
 
 	openLoadExternalDataDialog() {
 		const config &#x3D; new MatDialogConfig();
-		config.width &#x3D; AppConfig.common.MANAGE_VIEWS.WIDTH;
-		config.maxWidth &#x3D; AppConfig.common.MANAGE_VIEWS.MAX_WIDTH;
-		const dialogRef: MatDialogRef &lt; LoadExtDatasComponent &gt; &#x3D; this.dialog.open(LoadExtDatasComponent, config);
+		config.width &#x3D; AppConfig.covisualizationCommon.MANAGE_VIEWS.WIDTH;
+		config.maxWidth &#x3D; AppConfig.covisualizationCommon.MANAGE_VIEWS.MAX_WIDTH;
+		const dialogRef: MatDialogRef&lt;LoadExtDatasComponent&gt; &#x3D; this.dialog.open(LoadExtDatasComponent, config);
 		dialogRef.disableClose &#x3D; true;
-		dialogRef.afterClosed().toPromise().then(() &#x3D;&gt; {});
+		dialogRef.afterClosed().toPromise().then(() &#x3D;&gt; { });
 	}
 
 	closeImport() {
@@ -922,7 +922,7 @@ export class ImportExtDatasListComponent implements OnInit {
                 <p class="comment">
                     <code>./import-ext-datas-list.component.scss</code>
                 </p>
-                <pre class="line-numbers"><code class="language-scss">@import &quot;khiops-library/src/lib/styles/theme.scss&quot;;
+                <pre class="line-numbers"><code class="language-scss">@import &quot;../../../../../theme.scss&quot;;
 
 #import-ext-datas-list-comp {
 

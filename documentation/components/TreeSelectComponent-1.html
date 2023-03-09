@@ -82,7 +82,7 @@
     <p class="comment">
                     <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
                     <code><a href="https://angular.io/api/core/AfterViewInit" target="_blank" >AfterViewInit</a></code>
-                    <code><a href="../miscellaneous/typealiases.html#C" target="_self" >OnChanges</a></code>
+                    <code><a href="https://angular.io/api/core/OnChanges" target="_blank" >OnChanges</a></code>
                     <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
     </p>
 
@@ -301,7 +301,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(ngzone: <a href="../interfaces/N.html" target="_self">NgZone</a>, appService: <a href="../injectables/AppService.html" target="_self">AppService</a>, treePreparationDatasService: <a href="../injectables/TreePreparationDatasService.html" target="_self">TreePreparationDatasService</a>, selectableService: <a href="../injectables/SelectableService.html" target="_self">SelectableService</a>, snackBar: MatSnackBar, translate: <a href="../interfaces/T.html" target="_self">TranslateService</a>)</code>
+<code>constructor(ngzone: <a href="https://angular.io/api/core/NgZone" target="_blank">NgZone</a>, appService: <a href="../injectables/AppService.html" target="_self">AppService</a>, treePreparationDatasService: <a href="../injectables/TreePreparationDatasService.html" target="_self">TreePreparationDatasService</a>, selectableService: <a href="../injectables/SelectableService.html" target="_self">SelectableService</a>, snackBar: MatSnackBar, translate: TranslateService)</code>
                     </td>
                 </tr>
                         <tr>
@@ -327,7 +327,7 @@
                                                         <td>ngzone</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../interfaces/N.html" target="_self" >NgZone</a></code>
+                                                                        <code><a href="https://angular.io/api/core/NgZone" target="_blank" >NgZone</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -387,7 +387,7 @@
                                                         <td>translate</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../interfaces/T.html" target="_self" >TranslateService</a></code>
+                                                                    <code>TranslateService</code>
                                                         </td>
                                                   
                                                     <td>
@@ -914,7 +914,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>ngOnChanges(changes: <a href="../undefineds/C.html" target="_self">SimpleChanges</a>)</code>
+<code>ngOnChanges(changes: <a href="https://angular.io/api/core/SimpleChanges" target="_blank">SimpleChanges</a>)</code>
                 </td>
             </tr>
 
@@ -945,7 +945,7 @@
                                 <tr>
                                     <td>changes</td>
                                     <td>
-                                                <code><a href="../miscellaneous/typealiases.html#C" target="_self" >SimpleChanges</a></code>
+                                                <code><a href="https://angular.io/api/core/SimpleChanges" target="_blank" >SimpleChanges</a></code>
                                     </td>
 
                                     <td>
@@ -1299,7 +1299,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/N.html" target="_self" >NgZone</a></code>
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/NgZone" target="_blank" >NgZone</a></code>
 
                     </td>
                 </tr>
@@ -1393,7 +1393,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/T.html" target="_self" >TranslateService</a></code>
+                        <i>Type : </i>    <code>TranslateService</code>
 
                     </td>
                 </tr>
@@ -1580,7 +1580,7 @@ import {
 
 import {
 	AppService
-} from &#x27;src/app/providers/app.service&#x27;;
+} from &#x27;@khiops-visualization/providers/app.service&#x27;;
 import {
 	MatSnackBar
 } from &#x27;@angular/material/snack-bar&#x27;;
@@ -1589,7 +1589,7 @@ import {
 } from &#x27;@ngstack/translate&#x27;;
 import {
 	TreePreparationDatasService
-} from &#x27;src/app/providers/tree-preparation-datas.service&#x27;;
+} from &#x27;@khiops-visualization/providers/tree-preparation-datas.service&#x27;;
 
 @Component({
 	selector: &#x27;app-tree-select&#x27;,
@@ -1603,7 +1603,7 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 	@Input() detectChange: any;
 	@Input() dimensionTree: any;
 
-	@Output() selectTreeItemChanged: EventEmitter &lt; any &gt; &#x3D; new EventEmitter();
+	@Output() selectTreeItemChanged: EventEmitter&lt;any&gt; &#x3D; new EventEmitter();
 	treeSelectedNodeChangedSub: any;
 	componentType &#x3D; &#x27;kvtree&#x27;; // needed to copy datas
 	tree: any;
@@ -1625,9 +1625,9 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 		super(selectableService, ngzone);
 	}
 
-	ngOnInit() {}
+	ngOnInit() { }
 
-	ngOnDestroy() {}
+	ngOnDestroy() { }
 
 	ngOnChanges(changes: SimpleChanges) {
 		if (changes.dimensionTree &amp;&amp; changes.dimensionTree.currentValue) {
@@ -1661,7 +1661,7 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 		}
 	}
 
-	initTree(selectedNodes ? ) {
+	initTree(selectedNodes?) {
 
 		// @ts-ignore
 		this.tree &#x3D; new TreeView(this.dimensionTree, &#x27;tree_&#x27; + this.position, {
@@ -1696,11 +1696,11 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 				this.selectTreeItemChanged.emit(e.data);
 			});
 		});
-		this.tree.on(&#x27;expand&#x27;, (e) &#x3D;&gt; {});
-		this.tree.on(&#x27;expandAll&#x27;, (e) &#x3D;&gt; {});
-		this.tree.on(&#x27;collapse&#x27;, (e) &#x3D;&gt; {});
-		this.tree.on(&#x27;collapseAll&#x27;, (e) &#x3D;&gt; {});
-		this.tree.on(&#x27;updateNodeName&#x27;, (e) &#x3D;&gt; {});
+		this.tree.on(&#x27;expand&#x27;, (e) &#x3D;&gt; { });
+		this.tree.on(&#x27;expandAll&#x27;, (e) &#x3D;&gt; { });
+		this.tree.on(&#x27;collapse&#x27;, (e) &#x3D;&gt; { });
+		this.tree.on(&#x27;collapseAll&#x27;, (e) &#x3D;&gt; { });
+		this.tree.on(&#x27;updateNodeName&#x27;, (e) &#x3D;&gt; { });
 		this.tree.on(&#x27;error&#x27;, (e) &#x3D;&gt; {
 			this.snackBar.open(this.translate.get(e.data), null, {
 				duration: 4000,
@@ -1745,9 +1745,7 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
                 <p class="comment">
                     <code>./tree-select.component.scss</code>
                 </p>
-                <pre class="line-numbers"><code class="language-scss">@import &quot;khiops-library/src/lib/styles/theme.scss&quot;;
-
-#tree-select-comp {
+                <pre class="line-numbers"><code class="language-scss">#tree-select-comp {
 	padding: 0;
 	height: 100%;
     overflow: auto;

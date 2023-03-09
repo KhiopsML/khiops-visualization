@@ -34,9 +34,10 @@ export class FileSaverService {
 		private translate: TranslateService,
 		private khiopsLibraryService: KhiopsLibraryService
 	) {
-		if (this.electronService.isElectron()) {
-			dialog = require('@electron/remote').dialog;
-		}
+		// TODO remove electron
+		// if (this.electronService.isElectron()) {
+		// 	dialog = require('@electron/remote').dialog;
+		// }
 	}
 
 	save(appName, datas) {
@@ -79,19 +80,20 @@ export class FileSaverService {
 
 	saveFile(filename, datas) {
 
-		this.electronService.fs.writeFileSync(
-			filename,
-			JSON.stringify(datas, null, 2), // spacing level = 2
-			this.khiopsLibraryService.getAppConfig().common.FILE_SAVE.ENCODING
-		);
-		this.ngzone.run(
-			() => {
-				this.snackBar.open(this.translate.get('SNACKS.SAVE_FILE_SUCCESS'), null, {
-					duration: 4000,
-					panelClass: 'success'
-				});
-			}
-		);
+		// TODO remove electron
+		// this.electronService.fs.writeFileSync(
+		// 	filename,
+		// 	JSON.stringify(datas, null, 2), // spacing level = 2
+		// 	this.khiopsLibraryService.getAppConfig().common.FILE_SAVE.ENCODING
+		// );
+		// this.ngzone.run(
+		// 	() => {
+		// 		this.snackBar.open(this.translate.get('SNACKS.SAVE_FILE_SUCCESS'), null, {
+		// 			duration: 4000,
+		// 			panelClass: 'success'
+		// 		});
+		// 	}
+		// );
 	}
 
 }

@@ -29,14 +29,16 @@ import {
 import {
 	UtilsService
 } from '@khiops-library/providers/utils.service';
-let storage;
-let os;
-try {
-	storage = require('electron-json-storage');
-	os = require('os');
-} catch (e) {
-	console.warn('Can not access storage', e);
-}
+
+// TODO remove electron
+// let storage;
+// let os;
+// try {
+// 	storage = require('electron-json-storage');
+// 	os = require('os');
+// } catch (e) {
+// 	console.warn('Can not access storage', e);
+// }
 
 @Component({
 	selector: 'app-root',
@@ -54,27 +56,29 @@ export class AppComponent implements OnInit, OnDestroy {
 		// console.log('AppConfig', AppConfig);
 		this.appService.initialize();
 
-		if (this.electronService.isElectron()) {
-			storage.setDataPath(os.tmpdir() + '/\\' + AppConfig.visualizationCommon.GLOBAL.LS_ID);
-			console.log('user data path', storage.getDataPath());
-			// console.log('Mode electron');
-			// console.log('Electron ipcRenderer', this.electronService.ipcRenderer);
-			// console.log('NodeJS childProcess', this.electronService.childProcess);
-		} else {
-			// console.log('Mode web');
-		}
+		// TODO remove electron
+		// if (this.electronService.isElectron()) {
+		// 	storage.setDataPath(os.tmpdir() + '/\\' + AppConfig.visualizationCommon.GLOBAL.LS_ID);
+		// 	console.log('user data path', storage.getDataPath());
+		// 	// console.log('Mode electron');
+		// 	// console.log('Electron ipcRenderer', this.electronService.ipcRenderer);
+		// 	// console.log('NodeJS childProcess', this.electronService.childProcess);
+		// } else {
+		// 	// console.log('Mode web');
+		// }
 	}
 
 	ngOnInit() {
-		if (this.electronService.isElectron()) {
-			var consent = storage.getSync('COOKIE_CONSENT');
-			if (UtilsService.isEmpty(consent)) {
-				this.initCookieConsent();
-			} else if (consent === 'true') {
+		// TODO remove electron
+		// if (this.electronService.isElectron()) {
+		// 	var consent = storage.getSync('COOKIE_CONSENT');
+		// 	if (UtilsService.isEmpty(consent)) {
+		// 		this.initCookieConsent();
+		// 	} else if (consent === 'true') {
 
-				this.khiopsLibraryService.initMatomo();
-			}
-		}
+		// 		this.khiopsLibraryService.initMatomo();
+		// 	}
+		// }
 	}
 
 	initCookieConsent() {
@@ -97,7 +101,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
 		dialogRef.afterClosed().toPromise().then((e) => {
 			const acceptCookies = e === 'confirm' ? 'true' : 'false';
-			storage.setSync('COOKIE_CONSENT', acceptCookies);
+
+			// TODO remove electron
+			// storage.setSync('COOKIE_CONSENT', acceptCookies);
 
 			this.khiopsLibraryService.initMatomo();
 			this.khiopsLibraryService.trackEvent('cookie_consent', acceptCookies);

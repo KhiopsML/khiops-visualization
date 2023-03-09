@@ -76,7 +76,7 @@
     <p class="comment">
                     <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
                     <code><a href="https://angular.io/api/core/AfterViewInit" target="_blank" >AfterViewInit</a></code>
-                    <code><a href="../miscellaneous/typealiases.html#C" target="_self" >OnChanges</a></code>
+                    <code><a href="https://angular.io/api/core/OnChanges" target="_blank" >OnChanges</a></code>
                     <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
     </p>
 
@@ -398,7 +398,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>ngOnChanges(changes: <a href="../undefineds/C.html" target="_self">SimpleChanges</a>)</code>
+<code>ngOnChanges(changes: <a href="https://angular.io/api/core/SimpleChanges" target="_blank">SimpleChanges</a>)</code>
                 </td>
             </tr>
 
@@ -429,7 +429,7 @@
                                 <tr>
                                     <td>changes</td>
                                     <td>
-                                                <code><a href="../miscellaneous/typealiases.html#C" target="_self" >SimpleChanges</a></code>
+                                                <code><a href="https://angular.io/api/core/SimpleChanges" target="_blank" >SimpleChanges</a></code>
                                     </td>
 
                                     <td>
@@ -1090,16 +1090,16 @@
 } from &#x27;@angular/core&#x27;;
 import {
 	AppService
-} from &#x27;src/app/providers/app.service&#x27;;
+} from &#x27;@khiops-visualization/providers/app.service&#x27;;
 import {
 	EvaluationDatasService
-} from &#x27;src/app/providers/evaluation-datas.service&#x27;;
+} from &#x27;@khiops-visualization/providers/evaluation-datas.service&#x27;;
 import {
 	PreparationDatasService
-} from &#x27;src/app/providers/preparation-datas.service&#x27;;
+} from &#x27;@khiops-visualization/providers/preparation-datas.service&#x27;;
 import {
 	Preparation2dDatasService
-} from &#x27;src/app/providers/preparation2d-datas.service&#x27;;
+} from &#x27;@khiops-visualization/providers/preparation2d-datas.service&#x27;;
 import {
 	VariableGraphDetailsComponent
 } from &#x27;../variable-graph-details/variable-graph-details.component&#x27;;
@@ -1133,7 +1133,7 @@ export class VarDetailsPreparationComponent implements OnInit, AfterViewInit, On
 		private preparationDatasService: PreparationDatasService,
 		private evaluationDatasService: EvaluationDatasService,
 		private preparation2dDatasService: Preparation2dDatasService,
-		private appService: AppService) {}
+		private appService: AppService) { }
 
 	ngOnInit() {
 		this.appDatas &#x3D; this.appService.getDatas().datas;
@@ -1146,7 +1146,7 @@ export class VarDetailsPreparationComponent implements OnInit, AfterViewInit, On
 
 	}
 
-	ngOnDestroy() {}
+	ngOnDestroy() { }
 
 	ngOnChanges(changes: SimpleChanges) {
 		this.preparationDatas &#x3D; this.preparationDatasService.getDatas(this.preparationSource);
@@ -1241,12 +1241,7 @@ export class VarDetailsPreparationComponent implements OnInit, AfterViewInit, On
                 <p class="comment">
                     <code>./var-details-preparation.component.scss</code>
                 </p>
-                <pre class="line-numbers"><code class="language-scss">@import &quot;khiops-library/src/lib/styles/theme.scss&quot;;
-
-#app-var-details-preparation-comp {
-
-}
-</code></pre>
+                <pre class="line-numbers"><code class="language-scss"></code></pre>
     </div>
 
     <div class="tab-pane fade " id="c-tree">
