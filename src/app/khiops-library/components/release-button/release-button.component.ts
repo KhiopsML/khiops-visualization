@@ -8,9 +8,9 @@ import {
 import {
 	TranslateService
 } from '@ngstack/translate';
-import {
-	KhiopsLibraryService
-} from '../../providers/khiops-library.service';
+// import {
+// 	KhiopsLibraryService
+// } from '../../providers/khiops-library.service';
 
 // TODO remove electron
 // let ipcRenderer;
@@ -51,7 +51,7 @@ export class ReleaseButtonComponent implements OnInit {
 	btn: any;
 
 	constructor(public ngzone: NgZone,
-		private khiopsLibraryService: KhiopsLibraryService,
+		// private khiopsLibraryService: KhiopsLibraryService,
 		private translate: TranslateService,) { }
 
 	ngOnInit() {

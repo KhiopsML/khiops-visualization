@@ -9,17 +9,17 @@ import {
 } from '@angular/core'
 import { MatTabGroup, MatTabHeader, MatTab } from '@angular/material/tabs'
 import { AppConfig } from 'src/environments/environment'
-import { ConfirmDialogComponent } from '@khiops-library/components/confirm-dialog/confirm-dialog.component'
+// import { ConfirmDialogComponent } from '@khiops-library/components/confirm-dialog/confirm-dialog.component'
 import { FileLoaderComponent } from '@khiops-library/components/file-loader/file-loader.component'
 import { AppService } from '@khiops-covisualization/providers/app.service'
-import { ElectronService } from '@khiops-library/providers/electron.service'
+// import { ElectronService } from '@khiops-library/providers/electron.service'
 import { TranslateService } from '@ngstack/translate'
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service'
-import { LibVersionService } from '@khiops-library/components/lib-version/lib-version.service'
+// import { LibVersionService } from '@khiops-library/components/lib-version/lib-version.service'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service'
 import { FileSaverService } from '@khiops-library/providers/file-saver.service'
-import * as _ from 'lodash' // Important to import lodash in karma
+// import * as _ from 'lodash' // Important to import lodash in karma
 import { SaveService } from '@khiops-covisualization/providers/save.service'
 import {
 	MatDialogRef,
@@ -103,7 +103,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 		private snackBar: MatSnackBar,
 		private khiopsLibraryService: KhiopsLibraryService,
 		public selectableService: SelectableService,
-		private electronService: ElectronService,
+		// private electronService: ElectronService,
 		private importExtDatasService: ImportExtDatasService,
 		private dimensionsService: DimensionsDatasService,
 		private fileSaverService: FileSaverService,
@@ -111,7 +111,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 		private eventsService: EventsService,
 		private dialog: MatDialog,
 	) {
-		this.isElectron = this.electronService.isElectron()
+		// this.isElectron = this.electronService.isElectron()
 
 		// TODO remove electron
 		// if (this.isElectron) {

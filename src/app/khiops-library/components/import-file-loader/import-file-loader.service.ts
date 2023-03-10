@@ -1,7 +1,7 @@
 import {
 	Injectable
 } from '@angular/core';
-import _ from 'lodash';
+// import _ from 'lodash';
 
 // TODO remove electron
 // import {

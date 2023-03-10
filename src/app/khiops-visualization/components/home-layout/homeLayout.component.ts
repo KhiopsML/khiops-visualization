@@ -36,9 +36,9 @@ import {
 import {
 	PreparationDatasService
 } from '@khiops-visualization/providers/preparation-datas.service';
-import {
-	LibVersionService
-} from '@khiops-library/components/lib-version/lib-version.service';
+// import {
+// 	LibVersionService
+// } from '@khiops-library/components/lib-version/lib-version.service';
 import {
 	SelectableService
 } from '@khiops-library/components/selectable/selectable.service';
@@ -59,9 +59,9 @@ import {
 	MatDialog,
 	MatDialogConfig
 } from '@angular/material/dialog';
-import {
-	ConfirmDialogComponent
-} from '@khiops-library/components/confirm-dialog/confirm-dialog.component';
+// import {
+// 	ConfirmDialogComponent
+// } from '@khiops-library/components/confirm-dialog/confirm-dialog.component';
 import {
 	TreePreparationDatasService
 } from '@khiops-visualization/providers/tree-preparation-datas.service';

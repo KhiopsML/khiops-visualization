@@ -6,15 +6,15 @@ import {
 import {
 	ConfirmDialogComponent
 } from '@khiops-library/components/confirm-dialog/confirm-dialog.component';
-import {
-	ElectronService
-} from '@khiops-library/providers/electron.service';
+// import {
+// 	ElectronService
+// } from '@khiops-library/providers/electron.service';
 import {
 	TranslateService
 } from '@ngstack/translate';
-import {
-	AppConfig
-} from 'src/environments/environment';
+// import {
+// 	AppConfig
+// } from 'src/environments/environment';
 import {
 	MatDialogRef,
 	MatDialog,
@@ -26,9 +26,9 @@ import {
 import {
 	AppService
 } from './providers/app.service';
-import {
-	UtilsService
-} from '@khiops-library/providers/utils.service';
+// import {
+// 	UtilsService
+// } from '@khiops-library/providers/utils.service';
 
 // TODO remove electron
 // let storage;
@@ -47,7 +47,8 @@ import {
 })
 export class AppComponent implements OnInit, OnDestroy {
 
-	constructor(private electronService: ElectronService,
+	constructor(
+		// private electronService: ElectronService,
 		private dialogRef: MatDialog,
 		private appService: AppService,
 		private dialog: MatDialog,

@@ -15,7 +15,7 @@ import {
 } from '@ngstack/translate';
 import {
 	KhiopsLibraryService
-} from '../../providers/khiops-library.service';
+} from '@khiops-library/providers/khiops-library.service';
 
 @Component({
 	selector: 'kl-file-loader',

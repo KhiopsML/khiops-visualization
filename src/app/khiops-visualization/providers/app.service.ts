@@ -1,7 +1,7 @@
 import {
 	Injectable
 } from '@angular/core';
-import * as _ from 'lodash'; // Important to import lodash in karma
+// import * as _ from 'lodash'; // Important to import lodash in karma
 import {
 	AppConfig
 } from 'src/environments/environment';
@@ -101,6 +101,8 @@ export class AppService {
 		AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST = parseInt(localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST'), 10) || AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST;
 		// AppConfig.common.LIFT_CURVE.LIFT_CURVE_SMOOTH = parseInt(localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + 'LIFT_CURVE_SMOOTH'), 10) || AppConfig.common.LIFT_CURVE.LIFT_CURVE_SMOOTH;
 		AppConfig.visualizationCommon.LIFT_CURVE.LIFT_CURVE_SMOOTH = AppConfig.visualizationCommon.LIFT_CURVE.LIFT_CURVE_SMOOTH;
+
+		AppConfig.common = { ...AppConfig.visualizationCommon };
 
 		this.khiopsLibraryService.setAppConfig(AppConfig);
 	}

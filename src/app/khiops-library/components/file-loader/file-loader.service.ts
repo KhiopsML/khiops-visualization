@@ -7,13 +7,13 @@ import {
 import {
 	KhiopsLibraryService
 } from '../../providers/khiops-library.service';
-import _ from 'lodash';
+// import _ from 'lodash';
 import {
 	ElectronService
 } from '../../providers/electron.service';
 
-import * as es from 'event-stream';
-import * as JSONStream from 'JSONStream';
+// import * as es from 'event-stream';
+// import * as JSONStream from 'JSONStream';
 
 @Injectable({
 	providedIn: 'root'
@@ -28,7 +28,10 @@ export class FileLoaderService {
 	};
 	tmp = {};
 
-	constructor(private electronService: ElectronService, private http: HttpClient, private khiopsLibraryService: KhiopsLibraryService) {
+	constructor(
+		// private electronService: ElectronService,
+		private http: HttpClient,
+		private khiopsLibraryService: KhiopsLibraryService) {
 		this.initialize();
 	}
 

@@ -17,9 +17,9 @@ import {
 import {
 	KhiopsLibraryService
 } from './khiops-library.service';
-import {
-	ElectronService
-} from './electron.service';
+// import {
+// 	ElectronService
+// } from './electron.service';
 let dialog: any;
 
 @Injectable({
@@ -27,7 +27,7 @@ let dialog: any;
 })
 export class FileSaverService {
 	constructor(
-		private electronService: ElectronService,
+		//private electronService: ElectronService,
 		private fileLoaderService: FileLoaderService,
 		private ngzone: NgZone,
 		private snackBar: MatSnackBar,
