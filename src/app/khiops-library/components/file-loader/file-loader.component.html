@@ -1,14 +1,23 @@
 <div class="file-loader-comp">
 	<div *ngIf="!fileLoaderDatas.isLoadingDatas" fxLayout="column" fxLayoutAlign="center center">
 		<div class="file-loader-img"></div>
-		<button *ngIf="!isProdMode" attr.aria-label="{{ translate.get('GLOBAL.LOAD_DEFAULT_FILE') }}" (click)="loadDebugFile()" mat-stroked-button color="primary">{{ translate.get('GLOBAL.LOAD_DEFAULT_FILE') }}</button>
-		<span *ngIf="!isProdMode">{{ translate.get('GLOBAL.OR') }}</span>
-		<button attr.aria-label="{{ translate.get('GLOBAL.OPEN_FILE') }}" (click)="openFileDialog()" mat-flat-button color="primary">{{ translate.get('GLOBAL.OPEN_FILE') }}</button>
+		<!-- <button *ngIf="!isProdMode" attr.aria-label="{{ translate.get('GLOBAL.LOAD_DEFAULT_FILE') }}"
+			(click)="loadDebugFile()" mat-stroked-button color="primary">{{ translate.get('GLOBAL.LOAD_DEFAULT_FILE')
+			}}</button>
+		<span *ngIf="!isProdMode">{{ translate.get('GLOBAL.OR') }}</span> -->
+		<!-- <button attr.aria-label="{{ translate.get('GLOBAL.OPEN_FILE') }}" (click)="openFileDialog()" mat-flat-button
+			color="primary">{{ translate.get('GLOBAL.OPEN_FILE') }}</button> -->
+		<button type="button" mat-flat-button color="primary" (click)="fileInput.click()">{{
+			translate.get('GLOBAL.OPEN_FILE') }}</button>
+		<input hidden (change)="openFileDialog($event)" #fileInput type="file" id="file">
 	</div>
 	<div id="loading-indicator" *ngIf="fileLoaderDatas.isLoadingDatas && !fileLoaderDatas.datas">
 		<mat-spinner diameter="40" color="accent" mode="indeterminate"></mat-spinner>
-		<span *ngIf="!fileLoaderDatas.isBigJsonFile" attr.aria-label="{{ translate.get('GLOBAL.LOADING_FILE') }}">{{ translate.get('GLOBAL.LOADING_FILE') }} ...</span>
-		<span *ngIf="fileLoaderDatas.isBigJsonFile" attr.aria-label="{{ translate.get('GLOBAL.LOADING_FILE') }}">{{ translate.get('GLOBAL.BIG_FILES_LOADING_WARNING') }}</span>
-		<span *ngIf="fileLoaderDatas.isBigJsonFile">{{translate.get('GLOBAL.LOADING')}} {{fileLoaderDatas.loadingInfo}}</span>
+		<span *ngIf="!fileLoaderDatas.isBigJsonFile" attr.aria-label="{{ translate.get('GLOBAL.LOADING_FILE') }}">{{
+			translate.get('GLOBAL.LOADING_FILE') }} ...</span>
+		<span *ngIf="fileLoaderDatas.isBigJsonFile" attr.aria-label="{{ translate.get('GLOBAL.LOADING_FILE') }}">{{
+			translate.get('GLOBAL.BIG_FILES_LOADING_WARNING') }}</span>
+		<span *ngIf="fileLoaderDatas.isBigJsonFile">{{translate.get('GLOBAL.LOADING')}}
+			{{fileLoaderDatas.loadingInfo}}</span>
 	</div>
 </div>

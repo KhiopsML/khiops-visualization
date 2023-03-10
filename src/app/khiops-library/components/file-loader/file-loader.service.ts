@@ -7,10 +7,11 @@ import {
 import {
 	KhiopsLibraryService
 } from '../../providers/khiops-library.service';
+
 // import _ from 'lodash';
-import {
-	ElectronService
-} from '../../providers/electron.service';
+// import {
+// 	ElectronService
+// } from '../../providers/electron.service';
 
 // import * as es from 'event-stream';
 // import * as JSONStream from 'JSONStream';
@@ -175,9 +176,24 @@ export class FileLoaderService {
 		this.fileLoaderDatas.isLoadingDatas = true;
 		this.fileLoaderDatas.isBigJsonFile = false;
 
-		// TODO remove electron
-		// return new Promise((resolve, reject) => {
+		return new Promise((resolve, reject) => {
+			let reader = new FileReader()
 
+			reader.addEventListener('loadend', async (e) => {
+				this.fileLoaderDatas.isLoadingDatas = false;
+				this.fileLoaderDatas.datas = JSON.parse(e.target.result.toString());
+				this.fileLoaderDatas.datas.filename = filename;
+				resolve(this.fileLoaderDatas.datas);
+			});
+			reader.addEventListener('error', () => {
+				reader.abort();
+				reject(new Error('failed to process file'))
+			});
+			reader.readAsText(filename);
+		})
+
+		// TODO remove electron
+		//return new Promise((resolve, reject) => {
 		// 	this.electronService.fs.stat(filename, (err, stats) => {
 		// 		if (err) {
 		// 			reject();

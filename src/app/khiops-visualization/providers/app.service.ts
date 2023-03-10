@@ -181,7 +181,7 @@ export class AppService {
 				return false;
 			}
 		}
-		return true;
+		return false;
 	}
 
 	getViewSplitSizes(view): any {

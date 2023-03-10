@@ -74,8 +74,7 @@ export class FileLoaderComponent implements OnInit {
 		);
 	}
 
-	openFileDialog() {
-
+	openFileDialog(e) {
 		// this.khiopsLibraryService.trackEvent('click', 'open_file');
 
 		// TODO remove electron
@@ -106,6 +105,7 @@ export class FileLoaderComponent implements OnInit {
 		// }).catch(err => {
 		// 	console.log(err);
 		// });
+		if (e.target.files) this.openFile(e.target.files[0]);
 	}
 
 	openFile(filename) {

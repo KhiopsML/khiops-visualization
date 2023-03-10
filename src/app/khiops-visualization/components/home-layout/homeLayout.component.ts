@@ -18,9 +18,9 @@ import {
 import {
 	TranslateService
 } from '@ngstack/translate';
-import {
-	ElectronService
-} from '@khiops-library/providers/electron.service';
+// import {
+// 	ElectronService
+// } from '@khiops-library/providers/electron.service';
 import {
 	AppService
 } from '@khiops-visualization/providers/app.service';
@@ -105,8 +105,8 @@ export class HomeLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 	appVersion: any;
 	appName: any;
 	opened = false;
-	isElectron = this.electronService.isElectron();
-	isWebDebug = false; // Debug web mode
+	isElectron = false;
+	isWebDebug = true; // Debug web mode
 	titleBar: any;
 	public selectedTab: Object;
 	currentDatas: any;
@@ -121,7 +121,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 		private ngzone: NgZone,
 		private saveService: SaveService,
 		private dialogRef: MatDialog,
-		private electronService: ElectronService,
+		// private electronService: ElectronService,
 		private appService: AppService,
 		private snackBar: MatSnackBar,
 		private fileSaverService: FileSaverService,
@@ -222,7 +222,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 			// Uncomment this to debug on yarn ng:serve:web mode
 			// Also set isWebDebug = true
 			// And launch http://localhost:4200/#/khiops-visualization/
-			this.isWebDebug = true;
+			// this.isWebDebug = true;
 
 			// this.route.queryParams
 			// 	.subscribe(params => {
@@ -236,7 +236,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 			// -----------------------------------------------------------------
 
 			// if datas are already set (for instance by Khiops SaaS web instance)
-			if (this.appService.getDatas()) {
+			if (this.appService.getDatas().datas) {
 				this.initializeHome();
 			}
 		}
@@ -565,7 +565,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	openFileDialog() {
 		this.dialogRef.closeAll();
-		this.fileLoader.openFileDialog();
+		this.fileLoader.openFileDialog(null);
 	}
 
 	openFile(filename) {
