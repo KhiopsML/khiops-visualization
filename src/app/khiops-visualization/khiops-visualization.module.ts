@@ -162,7 +162,8 @@ const providers = [
 		UserSettingsComponent,
 		CoocurenceMatrixComponent,
 		RegressionMatrixComponent,
-		TargetDistributionGraphCanvasComponent
+		TargetDistributionGraphCanvasComponent,
+		AppComponent
 	],
 	imports: [
 		CommonModule,
@@ -177,8 +178,10 @@ const providers = [
 		TranslateModule.forChild(),
 		KhiopsLibraryModule
 	],
+	exports: [
+		AppComponent
+	],
 	providers: providers,
-	bootstrap: [AppComponent],
 	entryComponents: [
 		ReleaseNotesComponent,
 		ConfirmDialogComponent,

@@ -41,7 +41,7 @@ import {
 // }
 
 @Component({
-	selector: 'app-root',
+	selector: 'app-root-visualization',
 	templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit, OnDestroy {
