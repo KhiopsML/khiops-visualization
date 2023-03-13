@@ -46,7 +46,7 @@
     "@swimlane/ngx-charts": "19.1.0",
     "angular-resizable-element": "3.3.5",
     "angular-split": "5.0.0",
-    "angular2-hotkeys": "2.2.0",
+    "angular2-hotkeys": "13.1.0",
     "chart.js": "file:./libs/Chart.js",
     "d3": "^4.13.0",
     "d3-force-gravity": "^1.0.2",
