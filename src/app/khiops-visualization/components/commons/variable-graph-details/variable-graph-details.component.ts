@@ -49,7 +49,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
 	@Input() preparationSource;
 	@Input() position = 0; // in case of multiple component in the same page
 
-	@Output() selectedItemChanged: EventEmitter<any> = new EventEmitter();
+	@Output() selectedItemChanged: EventEmitter < any > = new EventEmitter();
 
 	preparationDatas: any;
 	distributionDatas: any;

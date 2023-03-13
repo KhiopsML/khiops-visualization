@@ -25,11 +25,11 @@ export class SelectTrainedPredictorComponent implements OnInit {
 	@Input() inputDatas: any;
 	selectedPredictor: any;
 
-	@Output() selectedPredictorChanged: EventEmitter<any> = new EventEmitter();
+	@Output() selectedPredictorChanged: EventEmitter < any > = new EventEmitter();
 
 	constructor(
 		private khiopsLibraryService: KhiopsLibraryService
-	) { }
+	) {}
 
 	ngOnInit() {
 		// select by default Selective Naive Bayes

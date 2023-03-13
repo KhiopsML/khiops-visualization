@@ -126,7 +126,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
 		this.isRegressionOrExplanatoryAnalysis = this.preparationDatasService.isExplanatoryAnalysis() || this.evaluationDatasService.isRegressionAnalysis();
 	}
 
-	onSplitDragEnd(event, item?) {
+	onSplitDragEnd(event, item ? ) {
 		this.appService.resizeAndSetSplitSizes(item, this.sizes, event.sizes, 'modelingView');
 
 		// Resize to update graphs dimensions
@@ -192,7 +192,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
 		const config = new MatDialogConfig();
 		config.width = AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.WIDTH;
 		config.height = AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.HEIGHT;
-		const dialogRef: MatDialogRef<LevelDistributionGraphCanvasComponent> = this.dialog.open(LevelDistributionGraphCanvasComponent, config);
+		const dialogRef: MatDialogRef < LevelDistributionGraphCanvasComponent > = this.dialog.open(LevelDistributionGraphCanvasComponent, config);
 		dialogRef.componentInstance.datas = datas;
 	}
 

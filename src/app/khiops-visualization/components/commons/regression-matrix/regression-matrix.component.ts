@@ -60,7 +60,7 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
 		static: false
 	}) matrixCanvas: MatrixCanvasComponent;
 
-	@Output() selectedCellChanged: EventEmitter<number> = new EventEmitter();
+	@Output() selectedCellChanged: EventEmitter < number > = new EventEmitter();
 	@Input() selectedVariable: PreparationVariableVO;
 	@Input() selectedCell: number;
 	@Input() preparationSource;
@@ -80,7 +80,7 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
 		this.preparation2dDatas = this.preparation2dDatasService.getDatas();
 	}
 
-	ngOnInit() { }
+	ngOnInit() {}
 
 	ngAfterViewInit() {
 
@@ -133,21 +133,21 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
 		const varName2 = this.preparation2dDatas.selectedVariable.nameY;
 
 		this.matrixModes.types = [{
-			mode: 'MUTUAL_INFO',
-			title: 'I (' + varName1 + ' , ' + varName2 + ')'
-		},
-		{
-			mode: 'FREQUENCY',
-			title: 'Frequency'
-		},
-		{
-			mode: 'PROB_CELL',
-			title: 'P (' + varName2 + ' | ' + varName1 + ')'
-		},
-		{
-			mode: 'PROB_CELL_REVERSE',
-			title: 'P (' + varName1 + ' | ' + varName2 + ')'
-		}
+				mode: 'MUTUAL_INFO',
+				title: 'I (' + varName1 + ' , ' + varName2 + ')'
+			},
+			{
+				mode: 'FREQUENCY',
+				title: 'Frequency'
+			},
+			{
+				mode: 'PROB_CELL',
+				title: 'P (' + varName2 + ' | ' + varName1 + ')'
+			},
+			{
+				mode: 'PROB_CELL_REVERSE',
+				title: 'P (' + varName1 + ' | ' + varName2 + ')'
+			}
 		];
 		if (!this.matrixModes.selected) {
 			// Get previous selected target if compatible

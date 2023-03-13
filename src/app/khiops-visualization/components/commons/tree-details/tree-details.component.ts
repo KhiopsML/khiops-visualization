@@ -20,7 +20,8 @@ import { TreePreparationDatasService } from "@khiops-visualization/providers/tre
 	styleUrls: ["./tree-details.component.scss"],
 })
 export class TreeDetailsComponent
-	implements OnInit, AfterViewInit, OnChanges, OnDestroy {
+	implements OnInit, AfterViewInit, OnChanges, OnDestroy
+{
 	@Input() selectedNodes: any;
 	@Input() selectedNode: any;
 
@@ -31,13 +32,13 @@ export class TreeDetailsComponent
 		public selectableService: SelectableService,
 		private treePreparationDatasService: TreePreparationDatasService,
 		public translate: TranslateService
-	) { }
+	) {}
 
-	ngOnInit() { }
+	ngOnInit() {}
 
-	ngAfterViewInit() { }
+	ngAfterViewInit() {}
 
-	ngOnDestroy() { }
+	ngOnDestroy() {}
 
 	ngOnChanges(changes: SimpleChanges) {
 		if (changes.selectedNodes && changes.selectedNodes.currentValue) {

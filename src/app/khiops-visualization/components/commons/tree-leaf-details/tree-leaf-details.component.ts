@@ -40,7 +40,7 @@ import {
 	styleUrls: ['./tree-leaf-details.component.scss'],
 })
 export class TreeLeafDetailsComponent
-	implements OnInit, AfterViewInit, OnChanges, OnDestroy {
+implements OnInit, AfterViewInit, OnChanges, OnDestroy {
 	@Input() selectedNode: any;
 	@Input() displayedValues: any;
 
@@ -60,16 +60,16 @@ export class TreeLeafDetailsComponent
 		private treePreparationDatasService: TreePreparationDatasService,
 		private distributionDatasService: DistributionDatasService,
 		public translate: TranslateService
-	) { }
+	) {}
 
 	ngOnInit() {
 		this.treePreparationDatas = this.treePreparationDatasService.getDatas();
 		this.distributionDatas = this.distributionDatasService.getDatas();
 	}
 
-	ngAfterViewInit() { }
+	ngAfterViewInit() {}
 
-	ngOnDestroy() { }
+	ngOnDestroy() {}
 
 	updateComponentDatas() {
 		setTimeout(() => {
@@ -95,7 +95,7 @@ export class TreeLeafDetailsComponent
 		}
 	}
 
-	onSelectedTreeLeafDetailsTabChanged(e) { }
+	onSelectedTreeLeafDetailsTabChanged(e) {}
 
 	onTreeNodeTargetDistributionGraphTypeChanged(type: any) {
 		this.treeNodeTargetDistributionGraphType = type;
@@ -105,9 +105,9 @@ export class TreeLeafDetailsComponent
 		);
 	}
 
-	onSelectedTreeNodeDistributionGraphItemChanged(index: any) { }
+	onSelectedTreeNodeDistributionGraphItemChanged(index: any) {}
 
-	onSelectedTreeNodeTargetDistributionGraphItemChanged(index: any) { }
+	onSelectedTreeNodeTargetDistributionGraphItemChanged(index: any) {}
 
 	onTreeNodeTargetDistributionGraphDisplayedValuesChanged(displayedValues) {
 		this.distributionDatasService.setTreeNodeTargetDistributionDisplayedValues(

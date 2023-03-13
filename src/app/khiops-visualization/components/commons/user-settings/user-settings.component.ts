@@ -34,7 +34,7 @@ import {
 	styleUrls: ['./user-settings.component.scss']
 })
 export class UserSettingsComponent implements OnChanges {
-	@Output() toggleNavDrawerChanged: EventEmitter<any> = new EventEmitter();
+	@Output() toggleNavDrawerChanged: EventEmitter < any > = new EventEmitter();
 	@Input() opened: boolean;
 
 	numberPrecisionExample;
@@ -48,7 +48,7 @@ export class UserSettingsComponent implements OnChanges {
 
 	constructor(private translate: TranslateService,
 		private snackBar: MatSnackBar,
-		private khiopsLibraryService: KhiopsLibraryService) { }
+		private khiopsLibraryService: KhiopsLibraryService) {}
 
 	ngOnChanges(changes: SimpleChanges) {
 		if (changes.opened && changes.opened.currentValue) {

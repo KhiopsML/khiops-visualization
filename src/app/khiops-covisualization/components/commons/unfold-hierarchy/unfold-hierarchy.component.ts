@@ -54,22 +54,22 @@ export class UnfoldHierarchyComponent implements OnInit {
 	selectedLineChartItem = undefined;
 
 	hierarchyDisplayedColumns = [{
-		headerName: 'Dimension',
-		field: 'name'
-	},
-	{
-		headerName: 'Number of Cluster',
-		field: 'currentHierarchyClusterCount'
-	},
-	{
-		headerName: 'Max Number of Cluster',
-		field: 'initialParts'
-	},
-	{
-		headerName: 'FoldUnfold',
-		field: 'hierarchyFold',
-		cellRendererFramework: CheckboxCellComponent
-	}
+			headerName: 'Dimension',
+			field: 'name'
+		},
+		{
+			headerName: 'Number of Cluster',
+			field: 'currentHierarchyClusterCount'
+		},
+		{
+			headerName: 'Max Number of Cluster',
+			field: 'initialParts'
+		},
+		{
+			headerName: 'FoldUnfold',
+			field: 'hierarchyFold',
+			cellRendererFramework: CheckboxCellComponent
+		}
 	];
 	chartOptions = {
 		elements: {
@@ -115,7 +115,7 @@ export class UnfoldHierarchyComponent implements OnInit {
 		private treenodesService: TreenodesService,
 		private clustersService: ClustersService,
 		private khiopsLibraryService: KhiopsLibraryService,
-		private dialogRef: MatDialogRef<UnfoldHierarchyComponent>) {
+		private dialogRef: MatDialogRef < UnfoldHierarchyComponent > ) {
 
 		this.hierarchyDatas = this.treenodesService.getHierarchyDatas();
 

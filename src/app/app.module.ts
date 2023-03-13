@@ -1,9 +1,19 @@
-import { NgModule } from '@angular/core'
-import { BrowserModule } from '@angular/platform-browser'
-import { KhiopsVisualizationModule } from './khiops-visualization/khiops-visualization.module'
-import { KhiopsCovisualizationModule } from './khiops-covisualization/khiops-covisualization.module'
+import {
+	NgModule
+} from '@angular/core'
+import {
+	BrowserModule
+} from '@angular/platform-browser'
+import {
+	KhiopsVisualizationModule
+} from './khiops-visualization/khiops-visualization.module'
+import {
+	KhiopsCovisualizationModule
+} from './khiops-covisualization/khiops-covisualization.module'
 
-import { AppComponent } from './app.component'
+import {
+	AppComponent
+} from './app.component'
 
 @NgModule({
 	declarations: [AppComponent],
@@ -15,4 +25,4 @@ import { AppComponent } from './app.component'
 	providers: [],
 	bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

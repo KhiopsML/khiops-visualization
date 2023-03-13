@@ -537,7 +537,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.dialogRef.closeAll();
 		this.ngzone.run(() => {
 			const config = new MatDialogConfig();
-			const dialogRef: MatDialogRef<ReleaseNotesComponent> = this.dialog.open(ReleaseNotesComponent, config);
+			const dialogRef: MatDialogRef < ReleaseNotesComponent > = this.dialog.open(ReleaseNotesComponent, config);
 			dialogRef.componentInstance.appVersion = this.appVersion;
 		});
 	}

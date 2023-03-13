@@ -5,9 +5,9 @@ import {
 	EventEmitter,
 	OnInit
 } from '@angular/core';
-import {
-	MatDialogRef
-} from '@angular/material/dialog';
+// import {
+// 	MatDialogRef
+// } from '@angular/material/dialog';
 import {
 	DimensionsDatasService
 } from '@khiops-covisualization/providers/dimensions-datas.service';
@@ -21,9 +21,9 @@ import {
 import {
 	FileVO
 } from '@khiops-library/model/file-vo';
-import {
-	ExtDatasVO
-} from '@khiops-covisualization/model/ext-datas-vo';
+// import {
+// 	ExtDatasVO
+// } from '@khiops-covisualization/model/ext-datas-vo';
 import {
 	DimensionVO
 } from '@khiops-library/model/dimension-vo';
@@ -55,7 +55,7 @@ export class ImportExtDatasComponent implements OnInit {
 	};
 	@Input() importExtDatas: FileVO;
 
-	@Output() closeImport: EventEmitter<any> = new EventEmitter();
+	@Output() closeImport: EventEmitter < any > = new EventEmitter();
 
 	constructor(
 		private dimensionsService: DimensionsDatasService,
@@ -129,18 +129,18 @@ export class ImportExtDatasComponent implements OnInit {
 		};
 
 		this.fieldsToImport.displayedColumns = [{
-			headerName: 'name',
-			field: 'name'
-		},
-		// {
-		// 	headerName: 'type',
-		// 	field: 'type'
-		// },
-		{
-			headerName: 'import',
-			field: 'import',
-			cellRendererFramework: CheckboxCellComponent
-		}
+				headerName: 'name',
+				field: 'name'
+			},
+			// {
+			// 	headerName: 'type',
+			// 	field: 'type'
+			// },
+			{
+				headerName: 'import',
+				field: 'import',
+				cellRendererFramework: CheckboxCellComponent
+			}
 		];
 
 		const selectedKeyIndex = this.formatedDatas.keys.findIndex(e => e === this.joinKeys.selected);

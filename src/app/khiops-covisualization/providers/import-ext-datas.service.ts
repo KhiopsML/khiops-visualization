@@ -37,7 +37,7 @@ export class ImportExtDatasService {
 		this.savedExternalDatas = {};
 	}
 
-	formatImportedDatas(fileDatas: FileVO, joinKey?, fieldName?, separator?: string): any {
+	formatImportedDatas(fileDatas: FileVO, joinKey ? , fieldName ? , separator ? : string): any {
 
 		// init the object
 		const formatedDatas = {

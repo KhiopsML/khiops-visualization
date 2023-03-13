@@ -32,7 +32,7 @@ export class ManageViewsComponent implements OnInit {
 	// matRippleColor = 'rgba(251, 179, 58, .4)';
 	matRippleColor = 'rgba(80, 124, 182, .4)';
 
-	constructor(private appService: AppService, private dimensionsService: DimensionsDatasService, private dialogRef: MatDialogRef<ManageViewsComponent>) {
+	constructor(private appService: AppService, private dimensionsService: DimensionsDatasService, private dialogRef: MatDialogRef < ManageViewsComponent > ) {
 		this.dimensionsDatas = this.dimensionsService.getDatas();
 
 		// this.viewsLayout = copy(this.appService.getViewsLayout());
@@ -52,7 +52,7 @@ export class ManageViewsComponent implements OnInit {
 		}
 	}
 
-	ngOnInit() { }
+	ngOnInit() {}
 
 	onClickOnSave() {
 		this.appService.saveViewsLayout(this.viewsLayout);

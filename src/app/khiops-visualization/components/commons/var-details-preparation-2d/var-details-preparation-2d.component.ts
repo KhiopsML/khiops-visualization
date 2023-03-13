@@ -65,7 +65,7 @@ export class VarDetailsPreparation2dComponent implements OnInit, AfterViewInit, 
 
 	}
 
-	ngOnDestroy() { }
+	ngOnDestroy() {}
 
 	ngOnChanges(changes: SimpleChanges) {
 

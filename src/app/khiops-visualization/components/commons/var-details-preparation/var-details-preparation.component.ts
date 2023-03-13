@@ -53,7 +53,7 @@ export class VarDetailsPreparationComponent implements OnInit, AfterViewInit, On
 		private preparationDatasService: PreparationDatasService,
 		private evaluationDatasService: EvaluationDatasService,
 		private preparation2dDatasService: Preparation2dDatasService,
-		private appService: AppService) { }
+		private appService: AppService) {}
 
 	ngOnInit() {
 		this.appDatas = this.appService.getDatas().datas;
@@ -66,7 +66,7 @@ export class VarDetailsPreparationComponent implements OnInit, AfterViewInit, On
 
 	}
 
-	ngOnDestroy() { }
+	ngOnDestroy() {}
 
 	ngOnChanges(changes: SimpleChanges) {
 		this.preparationDatas = this.preparationDatasService.getDatas(this.preparationSource);

@@ -136,25 +136,25 @@ export class MatrixContainerComponent implements OnInit, OnChanges, OnDestroy {
 		const varName2 = this.dimensionsDatas.matrixDatas.variable.nameY;
 
 		this.matrixModes.types = [{
-			mode: 'MUTUAL_INFO',
-			title: 'I (' + varName1 + ' , ' + varName2 + ')'
-		},
-		{
-			mode: 'FREQUENCY',
-			title: 'Frequency'
-		},
-		{
-			mode: 'PROB_CELL',
-			title: 'P (' + varName2 + ' | ' + varName1 + ')'
-		},
-		{
-			mode: 'PROB_CELL_REVERSE',
-			title: 'P (' + varName1 + ' | ' + varName2 + ')'
-		},
-		{
-			mode: 'HELLINGER',
-			title: 'H (' + varName1 + ' , ' + varName2 + ')'
-		}
+				mode: 'MUTUAL_INFO',
+				title: 'I (' + varName1 + ' , ' + varName2 + ')'
+			},
+			{
+				mode: 'FREQUENCY',
+				title: 'Frequency'
+			},
+			{
+				mode: 'PROB_CELL',
+				title: 'P (' + varName2 + ' | ' + varName1 + ')'
+			},
+			{
+				mode: 'PROB_CELL_REVERSE',
+				title: 'P (' + varName1 + ' | ' + varName2 + ')'
+			},
+			{
+				mode: 'HELLINGER',
+				title: 'H (' + varName1 + ' , ' + varName2 + ')'
+			}
 		];
 		if (!this.matrixModes.selectedIndex) {
 			// Select MUTUAL_INFO by default

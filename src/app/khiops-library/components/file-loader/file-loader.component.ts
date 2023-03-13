@@ -59,7 +59,7 @@ export class FileLoaderComponent implements OnInit {
 		);
 	}
 
-	loadWebFile(file?: string) {
+	loadWebFile(file ? : string) {
 
 		this.onFileLoaderDataChanged(undefined);
 
@@ -74,7 +74,7 @@ export class FileLoaderComponent implements OnInit {
 		);
 	}
 
-	openFileDialog(e) {
+	openFileDialog() {
 		// this.khiopsLibraryService.trackEvent('click', 'open_file');
 
 		// TODO remove electron

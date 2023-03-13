@@ -13,11 +13,8 @@
 	</div>
 	<div id="loading-indicator" *ngIf="fileLoaderDatas.isLoadingDatas && !fileLoaderDatas.datas">
 		<mat-spinner diameter="40" color="accent" mode="indeterminate"></mat-spinner>
-		<span *ngIf="!fileLoaderDatas.isBigJsonFile" attr.aria-label="{{ translate.get('GLOBAL.LOADING_FILE') }}">{{
-			translate.get('GLOBAL.LOADING_FILE') }} ...</span>
-		<span *ngIf="fileLoaderDatas.isBigJsonFile" attr.aria-label="{{ translate.get('GLOBAL.LOADING_FILE') }}">{{
-			translate.get('GLOBAL.BIG_FILES_LOADING_WARNING') }}</span>
-		<span *ngIf="fileLoaderDatas.isBigJsonFile">{{translate.get('GLOBAL.LOADING')}}
-			{{fileLoaderDatas.loadingInfo}}</span>
+		<span *ngIf="!fileLoaderDatas.isBigJsonFile" attr.aria-label="{{ translate.get('GLOBAL.LOADING_FILE') }}">{{ translate.get('GLOBAL.LOADING_FILE') }} ...</span>
+		<span *ngIf="fileLoaderDatas.isBigJsonFile" attr.aria-label="{{ translate.get('GLOBAL.LOADING_FILE') }}">{{ translate.get('GLOBAL.BIG_FILES_LOADING_WARNING') }}</span>
+		<span *ngIf="fileLoaderDatas.isBigJsonFile">{{translate.get('GLOBAL.LOADING')}} {{fileLoaderDatas.loadingInfo}}</span>
 	</div>
 </div>

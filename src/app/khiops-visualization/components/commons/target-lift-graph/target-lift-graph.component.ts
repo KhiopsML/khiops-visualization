@@ -78,7 +78,7 @@ export class TargetLiftGraphComponent extends SelectableComponent implements OnI
 		this.buttonTitle = this.translate.get('GLOBAL.FILTER_CURVES');
 	}
 
-	ngOnInit() { }
+	ngOnInit() {}
 
 	ngOnChanges(changes: SimpleChanges) {
 		if (changes.selectedVariable && changes.selectedVariable.currentValue) {

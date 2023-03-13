@@ -89,7 +89,7 @@ export class AppComponent implements OnInit, OnDestroy {
 		config.hasBackdrop = false;
 		config.disableClose = false;
 
-		const dialogRef: MatDialogRef<ConfirmDialogComponent> = this.dialog.open(ConfirmDialogComponent, config);
+		const dialogRef: MatDialogRef < ConfirmDialogComponent > = this.dialog.open(ConfirmDialogComponent, config);
 		dialogRef.updatePosition({
 			bottom: '50px',
 			right: '50px'
@@ -116,5 +116,5 @@ export class AppComponent implements OnInit, OnDestroy {
 
 	}
 
-	ngOnDestroy() { }
+	ngOnDestroy() {}
 }

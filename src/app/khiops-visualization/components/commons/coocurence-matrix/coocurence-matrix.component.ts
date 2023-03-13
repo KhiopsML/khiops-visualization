@@ -71,7 +71,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
 
 	preparation2dDatas: Preparation2dDatasVO;
 	@Input() selectedVariable: Preparation2dVariableVO;
-	@Output() selectCellRowChanged: EventEmitter<any> = new EventEmitter();
+	@Output() selectCellRowChanged: EventEmitter < any > = new EventEmitter();
 
 	matrixOptions: MatrixOptionsI = new MatrixOptionsI();
 	matrixModes: MatrixModesI = new MatrixModesI();

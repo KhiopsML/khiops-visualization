@@ -32,7 +32,7 @@ let dialog: any;
 })
 export class ImportFileLoaderComponent implements OnInit {
 
-	@Output() datasLoaded: EventEmitter<any> = new EventEmitter();
+	@Output() datasLoaded: EventEmitter < any > = new EventEmitter();
 	filename: any;
 	isLoadingDatas: boolean;
 
@@ -99,7 +99,7 @@ export class ImportFileLoaderComponent implements OnInit {
 
 	closeFile() {
 		this.ngzone.run(
-			() => { }
+			() => {}
 		);
 	}
 

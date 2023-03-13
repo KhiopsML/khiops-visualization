@@ -120,7 +120,7 @@ export class DistributionDatasService {
 	}
 
 	// tslint:disable-next-line:typedef-whitespace
-	getTargetDistributionGraphDatas(selectedVariable, type?: string, initActiveEntries?: boolean): any {
+	getTargetDistributionGraphDatas(selectedVariable, type ? : string, initActiveEntries ? : boolean): any {
 
 		if (initActiveEntries === undefined) {
 			initActiveEntries = initActiveEntries || true;
@@ -141,14 +141,14 @@ export class DistributionDatasService {
 					const partition = variableDetails.dataGrid.dimensions[1].partition;
 
 					[this.distributionDatas.targetDistributionGraphDatas, this.distributionDatas.targetDistributionDisplayedValues] =
-						this.computeTargetDistributionGraph(
-							partition,
-							currentDatas,
-							currentDatas,
-							currentXAxis,
-							this.distributionDatas.targetDistributionDisplayedValues,
-							this.distributionDatas.targetDistributionType
-						);
+					this.computeTargetDistributionGraph(
+						partition,
+						currentDatas,
+						currentDatas,
+						currentXAxis,
+						this.distributionDatas.targetDistributionDisplayedValues,
+						this.distributionDatas.targetDistributionType
+					);
 				}
 			}
 		}
@@ -158,7 +158,7 @@ export class DistributionDatasService {
 
 	}
 
-	getTreeNodeTargetDistributionGraphDatas(selectedNode, type?: string): any {
+	getTreeNodeTargetDistributionGraphDatas(selectedNode, type ? : string): any {
 
 		this.distributionDatas.initTreeNodeTargetDistributionGraphDatas();
 		this.distributionDatas.setTreeNodeTargetDistributionType(type);
@@ -187,14 +187,14 @@ export class DistributionDatasService {
 			//get selectednode index
 			const currentXAxis = [selectedNode.nodeId];
 			[this.distributionDatas.treeNodeTargetDistributionGraphDatas, this.distributionDatas.treeNodeTargetDistributionDisplayedValues] =
-				this.computeTargetDistributionGraph(
-					allTargetValues,
-					currentDatas,
-					[fullTarget],
-					[currentXAxis],
-					this.distributionDatas.treeNodeTargetDistributionDisplayedValues,
-					this.distributionDatas.treeNodeTargetDistributionType
-				);
+			this.computeTargetDistributionGraph(
+				allTargetValues,
+				currentDatas,
+				[fullTarget],
+				[currentXAxis],
+				this.distributionDatas.treeNodeTargetDistributionDisplayedValues,
+				this.distributionDatas.treeNodeTargetDistributionType
+			);
 
 		}
 		this.distributionDatas.checkTreeNodeTargetDistributionGraphDatas();
@@ -281,7 +281,7 @@ export class DistributionDatasService {
 
 
 	// tslint:disable-next-line:typedef-whitespace
-	getdistributionGraphDatas(selectedVariable, type?: string, initActiveEntries?: boolean, typeX?: string): any {
+	getdistributionGraphDatas(selectedVariable, type ? : string, initActiveEntries ? : boolean, typeX ? : string): any {
 		let distributionsGraphDetails = {
 			datasets: [],
 			labels: []
@@ -341,7 +341,7 @@ export class DistributionDatasService {
 	 * Get distribution when only one var selected
 	 * For tree node leaf details
 	 */
-	getTreeNodeDistributionGraphDatas(selectedNode, type?: string): any {
+	getTreeNodeDistributionGraphDatas(selectedNode, type ? : string): any {
 		let distributionsGraphDetails = {
 			datasets: [],
 			labels: []

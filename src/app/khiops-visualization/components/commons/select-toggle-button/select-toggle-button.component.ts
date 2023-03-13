@@ -36,13 +36,13 @@ export class SelectToggleButtonComponent implements OnInit, OnChanges {
 	isSelectAllChecked = true;
 	isSelectAllIndeterminate = false;
 	selectAllCheckboxText: string;
-	@Output() selectToggleButtonChanged: EventEmitter<ChartToggleValuesI[]> = new EventEmitter();
+	@Output() selectToggleButtonChanged: EventEmitter < ChartToggleValuesI[] > = new EventEmitter();
 	currentItemsToShow: ChartToggleValuesI[];
 
 	pageSize: number = AppConfig.visualizationCommon.GLOBAL.MAT_MENU_PAGINATION;
 
 	constructor(private khiopsLibraryService: KhiopsLibraryService,
-		private translate: TranslateService) { }
+		private translate: TranslateService) {}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes.displayedValues && changes.displayedValues.currentValue) {

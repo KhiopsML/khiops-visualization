@@ -53,7 +53,7 @@ export class VarDetailsTreePreparationComponent implements OnInit, AfterViewInit
 
 	}
 
-	ngOnDestroy() { }
+	ngOnDestroy() {}
 
 	ngOnChanges(changes: SimpleChanges) {
 

@@ -8,7 +8,7 @@ import pjson from 'package.json'
 })
 export class LibVersionService {
 
-	constructor() { }
+	constructor() {}
 
 	static getVersion() {
 		return pjson && pjson.version || undefined;

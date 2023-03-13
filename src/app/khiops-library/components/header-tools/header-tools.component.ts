@@ -47,7 +47,7 @@ export class HeaderToolsComponent implements OnInit {
 	@Input() appVersion: any;
 	@Input() showMenu = true;
 	isCopyingImage = false;
-	@Output() toggleNavDrawerChanged: EventEmitter<any> = new EventEmitter();
+	@Output() toggleNavDrawerChanged: EventEmitter < any > = new EventEmitter();
 	eltsToHide: any;
 
 	constructor(public selectableService: SelectableService,
@@ -68,7 +68,7 @@ export class HeaderToolsComponent implements OnInit {
 		}));
 	}
 
-	ngOnInit() { }
+	ngOnInit() {}
 
 	copyDatas() {
 		// this.khiopsLibraryService.trackEvent('click', 'copy_datas', 'text');

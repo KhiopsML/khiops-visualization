@@ -150,7 +150,7 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
 		const config = new MatDialogConfig();
 		config.width = AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.WIDTH;
 		config.height = AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.HEIGHT;
-		const dialogRef: MatDialogRef<LevelDistributionGraphCanvasComponent> = this.dialog.open(LevelDistributionGraphCanvasComponent, config);
+		const dialogRef: MatDialogRef < LevelDistributionGraphCanvasComponent > = this.dialog.open(LevelDistributionGraphCanvasComponent, config);
 		dialogRef.componentInstance.datas = datas;
 	}
 

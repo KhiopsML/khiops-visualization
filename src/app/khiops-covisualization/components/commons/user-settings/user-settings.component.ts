@@ -27,7 +27,7 @@ import * as _ from 'lodash'; // Important to import lodash in karma
 	styleUrls: ['./user-settings.component.scss']
 })
 export class UserSettingsComponent implements OnChanges {
-	@Output() toggleNavDrawerChanged: EventEmitter<any> = new EventEmitter();
+	@Output() toggleNavDrawerChanged: EventEmitter < any > = new EventEmitter();
 	@Input() opened: boolean;
 
 	allowCookies: boolean;
@@ -35,7 +35,7 @@ export class UserSettingsComponent implements OnChanges {
 	contrastValue: number;
 	initialAllowCookies: boolean;
 
-	constructor(private khiopsLibraryService: KhiopsLibraryService) { }
+	constructor(private khiopsLibraryService: KhiopsLibraryService) {}
 
 	ngOnChanges(changes: SimpleChanges) {
 		if (changes.opened && changes.opened.currentValue) {

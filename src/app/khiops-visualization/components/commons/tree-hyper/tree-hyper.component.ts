@@ -54,8 +54,8 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 	@Input() selectedNode: any;
 	@Input() dimensionTree: any;
 	@Input() displayedValues: any;
-	@Output() selectTreeItemChanged: EventEmitter<any> = new EventEmitter();
-	@Output() treeHyperDisplayedValuesChanged: EventEmitter<any> = new EventEmitter();
+	@Output() selectTreeItemChanged: EventEmitter < any > = new EventEmitter();
+	@Output() treeHyperDisplayedValuesChanged: EventEmitter < any > = new EventEmitter();
 	buttonTitle: string;
 
 	componentType = 'hyptree'; // needed to copy datas
@@ -382,7 +382,7 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 							// 	this.ht.api.gotoNode(userSelectedNode)
 							// });
 
-						} else { }
+						} else {}
 						this.treePreparationDatasService.setSelectedNodes(nodesToSelect, trustedNodeSelection);
 						// to update charts
 						this.selectTreeItemChanged.emit(n.data);
@@ -433,7 +433,7 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 		return isVisible;
 	}
 
-	ngOnDestroy() { }
+	ngOnDestroy() {}
 
 	ngOnChanges(changes: SimpleChanges) {
 		// console.log("🚀 ~ file: tree-hyper.component.ts ~ line 220 ~ TreeHyperComponent ~ ngOnChanges ~ changes", changes)
@@ -487,7 +487,7 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 						// .then(()=> new Promise((ok, err)=> this.ht.animateUp(ok, err)))
 						// .then(()=> this.ht.api.gotoHome())
 						// .then(()=> this.ht.api.gotoλ(0.15))
-						.then(() => this.ht.api.gotoNode(userSelectedNode, 0))
+						.then(() => this.ht.api.gotoNode(userSelectedNode))
 				} else {
 					//
 
@@ -502,7 +502,7 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 					// .then(()=> new Promise((ok, err)=> this.ht.animateUp(ok, err)))
 					// .then(()=> this.ht.api.gotoHome())
 					// .then(()=> this.ht.api.gotoλ(0.15))
-					.then(() => this.ht.api.gotoNode(userSelectedNode, 0));
+					.then(() => this.ht.api.gotoNode(userSelectedNode));
 				// } else {
 				//
 				// console.log("🚀 ~ file: tree-hyper.component.ts ~ line 302 ~ TreeHyperComponent ~ this.ngzone.run ~ userSelectedNode", userSelectedNode)

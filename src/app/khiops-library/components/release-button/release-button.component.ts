@@ -28,7 +28,7 @@ import {
 export class ReleaseButtonComponent implements OnInit {
 
 	btnText: string;
-	@Output() isUpdateAvailable: EventEmitter<any> = new EventEmitter();
+	@Output() isUpdateAvailable: EventEmitter < any > = new EventEmitter();
 
 	progressData = {
 		animation: 'fill'
@@ -52,7 +52,7 @@ export class ReleaseButtonComponent implements OnInit {
 
 	constructor(public ngzone: NgZone,
 		// private khiopsLibraryService: KhiopsLibraryService,
-		private translate: TranslateService,) { }
+		private translate: TranslateService, ) {}
 
 	ngOnInit() {
 

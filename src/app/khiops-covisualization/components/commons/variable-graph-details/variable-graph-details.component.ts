@@ -47,7 +47,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges, OnDestr
 	}) distributionGraph: DistributionGraphCanvasComponent;
 
 	@Input() selectedNode;
-	@Output() selectedItemChanged: EventEmitter<any> = new EventEmitter();
+	@Output() selectedItemChanged: EventEmitter < any > = new EventEmitter();
 	@Input() position: number;
 	@Input() dimensionsTree: any;
 	@Input() selectedDimension: DimensionVO;

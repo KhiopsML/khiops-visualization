@@ -241,10 +241,10 @@ export class TreenodesService {
 		if (currentIndex !== -1) {
 			// Invert values if already selected
 			[this.dimensionsDatas.selectedNodes[currentIndex],
-			this.dimensionsDatas.selectedNodes[position]
+				this.dimensionsDatas.selectedNodes[position]
 			] = [this.dimensionsDatas.selectedNodes[position],
-			this.dimensionsDatas.selectedNodes[currentIndex]
-				];
+				this.dimensionsDatas.selectedNodes[currentIndex]
+			];
 		}
 	}
 

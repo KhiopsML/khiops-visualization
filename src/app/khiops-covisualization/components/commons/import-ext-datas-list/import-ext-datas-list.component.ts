@@ -27,9 +27,9 @@ import {
 import {
 	MatSnackBar
 } from '@angular/material/snack-bar';
-import {
-	EventsService
-} from '@khiops-covisualization/providers/events.service';
+// import {
+// 	EventsService
+// } from '@khiops-covisualization/providers/events.service';
 import {
 	AppConfig
 } from 'src/environments/environment';
@@ -53,7 +53,7 @@ export class ImportExtDatasListComponent implements OnInit {
 		private dialog: MatDialog,
 		private snackBar: MatSnackBar,
 		public translate: TranslateService,
-		private dialogRef: MatDialogRef<ImportExtDatasListComponent>) {
+		private dialogRef: MatDialogRef < ImportExtDatasListComponent > ) {
 
 		this.constructImportedDatasTable();
 	}
@@ -62,30 +62,30 @@ export class ImportExtDatasListComponent implements OnInit {
 
 		this.importedDatas = {
 			displayedColumns: [{
-				headerName: 'file name',
-				field: 'filename'
-			},
-			{
-				headerName: 'join key',
-				field: 'joinKey'
-			},
-			{
-				headerName: 'field',
-				field: 'field'
-			},
-			{
-				headerName: 'dimension',
-				field: 'dimension'
-			},
-			{
-				headerName: '',
-				field: 'remove',
-				cellRendererFramework: IconCellComponent,
-				cellRendererParams: {
-					icon: 'delete',
-					action: this.removeExtDatasFromList.bind(this)
+					headerName: 'file name',
+					field: 'filename'
+				},
+				{
+					headerName: 'join key',
+					field: 'joinKey'
+				},
+				{
+					headerName: 'field',
+					field: 'field'
+				},
+				{
+					headerName: 'dimension',
+					field: 'dimension'
+				},
+				{
+					headerName: '',
+					field: 'remove',
+					cellRendererFramework: IconCellComponent,
+					cellRendererParams: {
+						icon: 'delete',
+						action: this.removeExtDatasFromList.bind(this)
+					}
 				}
-			}
 			],
 			values: []
 		};
@@ -103,7 +103,7 @@ export class ImportExtDatasListComponent implements OnInit {
 		}
 	}
 
-	ngOnInit() { }
+	ngOnInit() {}
 
 	removeExtDatasFromList(e) {
 		const importedDatas = this.importExtDatasService.removeImportedDatas(e.data.filename, e.data.dimension, e.data.joinKey, e.data.separator, e.data.field);
@@ -136,9 +136,9 @@ export class ImportExtDatasListComponent implements OnInit {
 		const config = new MatDialogConfig();
 		config.width = AppConfig.covisualizationCommon.MANAGE_VIEWS.WIDTH;
 		config.maxWidth = AppConfig.covisualizationCommon.MANAGE_VIEWS.MAX_WIDTH;
-		const dialogRef: MatDialogRef<LoadExtDatasComponent> = this.dialog.open(LoadExtDatasComponent, config);
+		const dialogRef: MatDialogRef < LoadExtDatasComponent > = this.dialog.open(LoadExtDatasComponent, config);
 		dialogRef.disableClose = true;
-		dialogRef.afterClosed().toPromise().then(() => { });
+		dialogRef.afterClosed().toPromise().then(() => {});
 	}
 
 	closeImport() {

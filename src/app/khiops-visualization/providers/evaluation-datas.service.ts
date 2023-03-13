@@ -98,7 +98,7 @@ export class EvaluationDatasService {
 	}
 
 	// tslint:disable-next-line:typedef-whitespace
-	getConfusionMatrix(type?: string): any {
+	getConfusionMatrix(type ? : string): any {
 
 		const appDatas = this.appService.getDatas().datas;
 
@@ -314,7 +314,7 @@ export class EvaluationDatasService {
 	}
 
 	// tslint:disable-next-line:typedef-whitespace
-	getLiftGraphDatas(target?: string, mustGetAllDatas?: boolean): any {
+	getLiftGraphDatas(target ? : string, mustGetAllDatas ? : boolean): any {
 
 		// Generate X axis values
 		const xAxis = new Array(1001);
@@ -380,7 +380,7 @@ export class EvaluationDatasService {
 	}
 
 	// tslint:disable-next-line:typedef-whitespace
-	generateLiftCurveValuesForEvaluation(xAxis, smoothParam, type, target?: string) {
+	generateLiftCurveValuesForEvaluation(xAxis, smoothParam, type, target ? : string) {
 
 		let currentReport: any;
 		// get the correct report : train or test
@@ -464,7 +464,7 @@ export class EvaluationDatasService {
 		return graphDatas;
 	}
 
-	getLiftTargets(currentTarget?): any {
+	getLiftTargets(currentTarget ? ): any {
 		const appDatas = this.appService.getDatas().datas;
 		let targetLift;
 
