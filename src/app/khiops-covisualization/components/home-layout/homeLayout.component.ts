@@ -239,7 +239,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 			// TODO add a isWebDebug like into khiops visu
 
 			// if datas are already set (for instance by Khiops SaaS web instance)
-			if (this.appService.getDatas()) {
+			if (this.appService.getDatas().datas) {
 				this.initializeHome();
 			}
 		}

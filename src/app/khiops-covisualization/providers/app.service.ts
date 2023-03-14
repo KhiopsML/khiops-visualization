@@ -165,6 +165,7 @@ export class AppService {
 	}
 
 	initGlobalConfigVariables(): any {
+		AppConfig.common = {...AppConfig.covisualizationCommon};
 		this.khiopsLibraryService.setAppConfig(AppConfig);
 	}
 

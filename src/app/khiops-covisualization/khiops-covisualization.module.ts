@@ -86,7 +86,7 @@ export function setupTranslateFactory(service: TranslateService) {
 			multi: true,
 		},
 	],
-	bootstrap: [AppComponent],
+	exports: [AppComponent],
 	entryComponents: [
 		ReleaseNotesComponent,
 		UnfoldHierarchyComponent,
