@@ -28,6 +28,14 @@
 				'error'
 			];
 
+			function scrollIntoView(node, center = true) {
+				if (!node.scrollIntoViewIfNeeded) {
+					node.scrollIntoView(center);
+				} else {
+					node.scrollIntoViewIfNeeded(center);
+				}
+			}
+
 			/**
 			 * A utilite function to check to see if something is a DOM object
 			 * @param {object} Object to test
@@ -288,9 +296,10 @@
 						parent.classList.add("selected");
 
 						if (!e.isTrusted) {
-							parent.scrollIntoViewIfNeeded({
-								// block: 'center'
-							});
+							scrollIntoView(parent);
+							// parent.scrollIntoView({
+							// 	// block: 'center'
+							// });
 						}
 
 					};
@@ -465,7 +474,8 @@
 
 			TreeView.prototype.scrollToNode = function (nodeId) {
 				var el = document.getElementById('tree-leaf-' + nodeId);
-				//el.parentNode.scrollIntoViewIfNeeded(nodeId);
+				// el.parentNode.scrollIntoView(nodeId);
+				scrollIntoView(el.parentNode);
 			};
 
 			TreeView.prototype.selectNode = function (nodeId, propagateEvent = true) {
@@ -495,9 +505,10 @@
 							if (currentNode && currentNode.parentNode) {
 								currentNode.parentNode.classList.add("selected");
 
-								currentNode.parentNode.scrollIntoViewIfNeeded({
-									// block: 'center'
-								});
+								// currentNode.parentNode.scrollIntoView({
+								// 	// block: 'center'
+								// });
+								scrollIntoView(currentNode.parentNode);
 							}
 						}
 					}
@@ -551,9 +562,10 @@
 									// }
 
 									if (currentNodeToSelect.isTrusted) {
-										// currentNode.parentNode.scrollIntoViewIfNeeded({
+										// currentNode.parentNode.scrollIntoView({
 										// 	block: 'center'
 										// });
+										scrollIntoView(currentNode.parentNode);
 									}
 
 								}
