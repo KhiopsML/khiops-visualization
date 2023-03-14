@@ -30,7 +30,8 @@
 
 			function scrollIntoView(node, center = true) {
 				if (!node.scrollIntoViewIfNeeded) {
-					node.scrollIntoView(center);
+					const options = {behavior: "smooth", block: center ? "center": "start"}
+					node.scrollIntoView(options);
 				} else {
 					node.scrollIntoViewIfNeeded(center);
 				}
