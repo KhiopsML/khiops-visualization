@@ -703,7 +703,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 	openFileDialog() {
 		this.dialogRef.closeAll();
 
-		this.fileLoader.openFileDialog();
+		this.fileLoader.openFileDialog(null);
 	}
 
 	openFile(filename) {

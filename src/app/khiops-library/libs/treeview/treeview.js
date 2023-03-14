@@ -465,7 +465,7 @@
 
 			TreeView.prototype.scrollToNode = function (nodeId) {
 				var el = document.getElementById('tree-leaf-' + nodeId);
-				el.parentNode.scrollIntoViewIfNeeded(nodeId);
+				//el.parentNode.scrollIntoViewIfNeeded(nodeId);
 			};
 
 			TreeView.prototype.selectNode = function (nodeId, propagateEvent = true) {
@@ -551,9 +551,9 @@
 									// }
 
 									if (currentNodeToSelect.isTrusted) {
-										currentNode.parentNode.scrollIntoViewIfNeeded({
-											block: 'center'
-										});
+										// currentNode.parentNode.scrollIntoViewIfNeeded({
+										// 	block: 'center'
+										// });
 									}
 
 								}

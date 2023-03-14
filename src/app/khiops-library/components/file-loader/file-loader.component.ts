@@ -74,7 +74,7 @@ export class FileLoaderComponent implements OnInit {
 		);
 	}
 
-	openFileDialog() {
+	openFileDialog(e) {
 		// this.khiopsLibraryService.trackEvent('click', 'open_file');
 
 		// TODO remove electron

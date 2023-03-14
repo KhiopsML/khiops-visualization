@@ -20,6 +20,10 @@
 				"build": {
 					"builder": "@angular-devkit/build-angular:browser",
 					"options": {
+						"allowedCommonJsDependencies": [
+							"lodash",
+							"pan-zoom"
+						],
 						"outputPath": "dist/visualization-component",
 						"index": "src/index.html",
 						"main": "src/main.ts",
@@ -31,7 +35,9 @@
 							"src/assets"
 						],
 						"styles": [
-							"src/styles.scss"
+							"src/styles.scss",
+							"src/app/khiops-library/libs/treeview/treeview.scss",
+							"./libs/khiops-hypertree/dist/d3-hypertree-light.css"
 						],
 						"scripts": []
 					},
