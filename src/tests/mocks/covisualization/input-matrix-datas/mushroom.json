@@ -1,0 +1,119 @@
+{
+	"variable": {
+		"nameX": "GillSize",
+		"nameY": "GillSpacing",
+		"xParts": 2,
+		"yParts": 2
+	},
+	"matrixCellDatas": [{
+		"xCanvas": 0,
+		"yCanvas": 0,
+		"wCanvas": 387,
+		"hCanvas": 466,
+		"cellFreq": 6824,
+		"displayedValue": {
+			"type": "FREQUENCY",
+			"value": 4568,
+			"extra": 0
+		},
+		"targetCellFreq": 0,
+		"index": 0,
+		"id": 0,
+		"_id": 0,
+		"cellInterest": 0,
+		"cellContrib": 0,
+		"cellTargetProb": 0,
+		"x": {
+			"standard": 0,
+			"frequency": 0
+		},
+		"y": {
+			"standard": 0,
+			"frequency": 0
+		},
+		"w": {
+			"standard": 100,
+			"frequency": 100
+		},
+		"h": {
+			"standard": 50,
+			"frequency": 81.08365019011407
+		},
+		"concatName": [],
+		"cellFreqs": [6824],
+		"infosMutValue": [0.07199293384652662],
+		"infosMutExtra": [],
+		"cellContribsValue": [0.0023385687632267796],
+		"cellContribsExtra": [],
+		"cellHellingerValue": [0.007515275188061776],
+		"cellHellingerAbsoluteValue": [0.0008036940483205177],
+		"cellProbs": [0.8108365019011406],
+		"cellProbsRev": [1],
+		"freqColVals": [8416],
+		"freqLineVals": [6824],
+		"xnamePart": "GillSize",
+		"ynamePart": "GillSpacing",
+		"xaxisPart": "A1",
+		"yaxisPart": "{CLOSE}",
+		"xaxisPartValues": "{BROAD}",
+		"yaxisPartValues": "{CLOSE}",
+		"xDisplayaxisPart": "A1",
+		"yDisplayaxisPart": "{CLOSE}",
+		"cellFreqHash": {}
+	}, {
+		"xCanvas": 0,
+		"yCanvas": 466,
+		"wCanvas": 387,
+		"hCanvas": 466,
+		"cellFreq": 1592,
+		"displayedValue": {
+			"type": "FREQUENCY",
+			"value": 1312,
+			"extra": 0
+		},
+		"targetCellFreq": 0,
+		"index": 2,
+		"id": 2,
+		"_id": 2,
+		"cellInterest": 0,
+		"cellContrib": 0,
+		"cellTargetProb": 0,
+		"x": {
+			"standard": 0,
+			"frequency": 0
+		},
+		"y": {
+			"standard": 50,
+			"frequency": 81.08365019011407
+		},
+		"w": {
+			"standard": 100,
+			"frequency": 100
+		},
+		"h": {
+			"standard": 50,
+			"frequency": 18.91634980988593
+		},
+		"concatName": [],
+		"cellFreqs": [1592],
+		"infosMutValue": [-0.5385157108027768],
+		"infosMutExtra": [],
+		"cellContribsValue": [0.011298170686170311],
+		"cellContribsExtra": [],
+		"cellHellingerValue": [-0.025056165260785163],
+		"cellHellingerAbsoluteValue": [0.004154245208380759],
+		"cellProbs": [0.18916349809885932],
+		"cellProbsRev": [1],
+		"freqColVals": [8416],
+		"freqLineVals": [1592],
+		"xnamePart": "GillSize",
+		"ynamePart": "GillSpacing",
+		"xaxisPart": "A1",
+		"yaxisPart": "{CROWDED}",
+		"xaxisPartValues": "{BROAD}",
+		"yaxisPartValues": "{CROWDED}",
+		"xDisplayaxisPart": "A1",
+		"yDisplayaxisPart": "{CROWDED}",
+		"cellFreqHash": {}
+	}]
+}

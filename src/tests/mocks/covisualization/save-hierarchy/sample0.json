@@ -1,0 +1,312 @@
+{
+	"tool": "Khiops Coclustering",
+	"version": "9.0",
+	"coclusteringReport": {
+		"summary": {
+			"instances": 18000,
+			"cells": 4,
+			"nullCost": 475117.0072,
+			"cost": 463525.8001,
+			"level": 0.02439653159,
+			"initialDimensions": 3,
+			"frequencyVariable": "Frequence",
+			"dictionary": "Exemple",
+			"database": "C:\\Users\\yfco6286\\Desktop\\Exemple\\Exemple.txt"
+		},
+		"dimensionSummaries": [
+			{
+				"name": "A",
+				"type": "Numerical",
+				"parts": 2,
+				"initialParts": 3,
+				"values": 18000,
+				"interest": 1,
+				"description": "",
+				"min": 1,
+				"max": 3
+			},
+			{
+				"name": "B",
+				"type": "Numerical",
+				"parts": 2,
+				"initialParts": 3,
+				"values": 18000,
+				"interest": 1,
+				"description": "",
+				"min": 1,
+				"max": 3
+			},
+			{
+				"name": "C",
+				"type": "Numerical",
+				"parts": 1,
+				"initialParts": 2,
+				"values": 18000,
+				"interest": 1,
+				"description": "",
+				"min": 1,
+				"max": 2
+			}
+		],
+		"dimensionPartitions": [
+			{
+				"name": "A",
+				"type": "Numerical",
+				"intervals": [
+					{ "cluster": "]-inf;1.5]", "bounds": [1, 1.5] },
+					{ "cluster": "]1.5;+inf[", "bounds": [1.5, 3] }
+				]
+			},
+			{
+				"name": "B",
+				"type": "Numerical",
+				"intervals": [
+					{ "cluster": "]-inf;2.5]", "bounds": [1, 2.5] },
+					{ "cluster": "]2.5;+inf[", "bounds": [2.5, 3] }
+				]
+			},
+			{
+				"name": "C",
+				"type": "Numerical",
+				"intervals": [{ "cluster": "]-inf;+inf[", "bounds": [1, 2] }]
+			}
+		],
+		"dimensionHierarchies": [
+			{
+				"name": "A",
+				"type": "Numerical",
+				"clusters": [
+					{
+						"cluster": "]-inf;1.5]",
+						"parentCluster": "]-inf;+inf[",
+						"frequency": 5500,
+						"interest": 0.530792,
+						"hierarchicalLevel": 1,
+						"rank": 1,
+						"hierarchicalRank": 8,
+						"isLeaf": true
+					},
+					{
+						"cluster": "]1.5;+inf[",
+						"parentCluster": "]-inf;+inf[",
+						"frequency": 12500,
+						"interest": 0.766451,
+						"hierarchicalLevel": 0.573349,
+						"rank": 4,
+						"hierarchicalRank": 7,
+						"isLeaf": true
+					},
+					{
+						"cluster": "]-inf;+inf[",
+						"parentCluster": "",
+						"frequency": 18000,
+						"interest": 0.694444,
+						"hierarchicalLevel": 0,
+						"rank": 2,
+						"hierarchicalRank": 3,
+						"isLeaf": false
+					}
+				]
+			},
+			{
+				"name": "B",
+				"type": "Numerical",
+				"clusters": [
+					{
+						"cluster": "]-inf;2.5]",
+						"parentCluster": "]-inf;+inf[",
+						"frequency": 13500,
+						"interest": 0.759079,
+						"hierarchicalLevel": 0.566834,
+						"rank": 2,
+						"hierarchicalRank": 6,
+						"isLeaf": true
+					},
+					{
+						"cluster": "]2.5;+inf[",
+						"parentCluster": "]-inf;+inf[",
+						"frequency": 4500,
+						"interest": 0.500374,
+						"hierarchicalLevel": 1,
+						"rank": 5,
+						"hierarchicalRank": 8,
+						"isLeaf": true
+					},
+					{
+						"cluster": "]-inf;+inf[",
+						"parentCluster": "",
+						"frequency": 18000,
+						"interest": 0.694403,
+						"hierarchicalLevel": 0.0234084,
+						"rank": 4,
+						"hierarchicalRank": 5,
+						"isLeaf": false
+					}
+				]
+			},
+			{
+				"name": "C",
+				"type": "Numerical",
+				"clusters": [
+					{
+						"cluster": "]-inf;+inf[",
+						"parentCluster": "",
+						"frequency": 18000,
+						"interest": 1,
+						"hierarchicalLevel": -0.00100919,
+						"rank": 2,
+						"hierarchicalRank": 4,
+						"isLeaf": true
+					}
+				]
+			}
+		],
+		"cellPartIndexes": [
+			[1, 0, 0],
+			[0, 0, 0],
+			[1, 1, 0],
+			[0, 1, 0]
+		],
+		"cellFrequencies": [10000, 3500, 2500, 2000]
+	},
+	"filename": "C:\\Users\\jcdf8453\\Desktop\\resres0.json",
+	"savedDatas": {
+		"viewsLayout": {
+			"isDimensionsChecked": true,
+			"isCoocurenceChecked": true,
+			"dimensionsViewsLayoutsVO": [
+				{
+					"isChecked": true,
+					"isHierarchyChecked": true,
+					"isClustersChecked": true,
+					"isAnnotationChecked": true,
+					"isCompositionChecked": true,
+					"isExternalDataChecked": false,
+					"isDistributionChecked": true,
+					"name": "A"
+				},
+				{
+					"isChecked": true,
+					"isHierarchyChecked": true,
+					"isClustersChecked": true,
+					"isAnnotationChecked": true,
+					"isCompositionChecked": true,
+					"isExternalDataChecked": false,
+					"isDistributionChecked": true,
+					"name": "B"
+				},
+				{
+					"isChecked": true,
+					"isHierarchyChecked": true,
+					"isClustersChecked": true,
+					"isAnnotationChecked": true,
+					"isCompositionChecked": true,
+					"isExternalDataChecked": false,
+					"isDistributionChecked": false,
+					"name": "C"
+				}
+			]
+		},
+		"splitSizes": {
+			"axisView": {
+				"col": [70, 30],
+				"col0Row": [51.816745655608216, 48.183254344391784],
+				"col1Row": [20, 80],
+				"col0Row0Col": [
+					57.45924875974485, 29.677533664068033, 0, 12.863217576187102
+				],
+				"col0Row0Col2Row": [50, 50],
+				"col0Row1Col": [
+					31.305267187477043, 31.181425748612057, 33.02945130147867,
+					4.483855762432241
+				],
+				"col0Row1Col2Row": [30, 70]
+			},
+			"contextView": {
+				"col": [70, 30],
+				"col0Row0Col": [25, 25, 25, 25],
+				"col0Row0Col2Row": [30, 70]
+			}
+		},
+		"selectedDimensions": [
+			{ "name": "A" },
+			{ "name": "B" },
+			{ "name": "C" }
+		],
+		"collapsedNodes": {},
+		"selectedNodes": [
+			{
+				"isParentCluster": false,
+				"isUnfoldedByDefault": false,
+				"id": 0,
+				"_id": "]-inf;1.5]",
+				"nbClusters": 3,
+				"leafPosition": -1,
+				"hierarchy": "A",
+				"cluster": "]-inf;1.5]",
+				"bounds": "[1;1.5]",
+				"name": "]-inf;1.5]",
+				"shortDescription": "[1;1.5]",
+				"parentCluster": "]-inf;+inf[",
+				"parentShortDescription": "[1;3]",
+				"description": "",
+				"frequency": 5500,
+				"interest": 0.530792,
+				"hierarchicalLevel": 1,
+				"rank": 1,
+				"hierarchicalRank": 8,
+				"isLeaf": true,
+				"isCollapsed": false,
+				"matrixIndex": 0
+			},
+			{
+				"isParentCluster": false,
+				"isUnfoldedByDefault": false,
+				"id": 0,
+				"_id": "]-inf;2.5]",
+				"nbClusters": 3,
+				"leafPosition": -1,
+				"hierarchy": "B",
+				"cluster": "]-inf;2.5]",
+				"bounds": "[1;2.5]",
+				"name": "]-inf;2.5]",
+				"shortDescription": "[1;2.5]",
+				"parentCluster": "]-inf;+inf[",
+				"parentShortDescription": "[1;3]",
+				"description": "",
+				"frequency": 13500,
+				"interest": 0.759079,
+				"hierarchicalLevel": 0.566834,
+				"rank": 2,
+				"hierarchicalRank": 6,
+				"isLeaf": true,
+				"isCollapsed": false,
+				"matrixIndex": 0
+			},
+			{
+				"isParentCluster": true,
+				"isUnfoldedByDefault": false,
+				"id": 0,
+				"_id": "]-inf;+inf[",
+				"nbClusters": 2,
+				"leafPosition": -1,
+				"hierarchy": "C",
+				"cluster": "]-inf;+inf[",
+				"bounds": "[1;2]",
+				"name": "]-inf;+inf[",
+				"shortDescription": "[1;2]",
+				"parentCluster": "",
+				"parentShortDescription": "",
+				"description": "",
+				"frequency": 18000,
+				"interest": 1,
+				"hierarchicalLevel": -0.00100919,
+				"rank": 2,
+				"hierarchicalRank": 4,
+				"isLeaf": true,
+				"isCollapsed": false,
+				"matrixIndex": 0
+			}
+		]
+	}
+}

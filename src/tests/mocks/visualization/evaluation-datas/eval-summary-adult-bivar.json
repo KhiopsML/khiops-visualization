@@ -1,0 +1,11 @@
+[{
+	"_id": "Train0",
+	"type": "Train",
+	"dictionary": "Adult",
+	"instances": 34174
+}, {
+	"_id": "Test1",
+	"type": "Test",
+	"dictionary": "Adult",
+	"instances": 14668
+}]

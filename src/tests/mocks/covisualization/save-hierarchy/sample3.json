@@ -1,0 +1,678 @@
+{
+	"tool": "Khiops Coclustering",
+	"version": "9.0",
+	"coclusteringReport": {
+		"summary": {
+			"instances": 48842,
+			"cells": 90,
+			"nullCost": 172512.3361,
+			"cost": 170861.8452,
+			"level": 0.009567378933,
+			"initialDimensions": 3,
+			"frequencyVariable": "",
+			"dictionary": "Adult",
+			"database": "C:\\My Program Files\\Khiops\\samples\\Adult\\Adult.txt"
+		},
+		"dimensionSummaries": [
+			{
+				"name": "workclass",
+				"type": "Categorical",
+				"parts": 5,
+				"initialParts": 5,
+				"values": 8,
+				"interest": 1,
+				"description": ""
+			},
+			{
+				"name": "education",
+				"type": "Categorical",
+				"parts": 6,
+				"initialParts": 6,
+				"values": 16,
+				"interest": 1,
+				"description": ""
+			},
+			{
+				"name": "race",
+				"type": "Categorical",
+				"parts": 3,
+				"initialParts": 3,
+				"values": 5,
+				"interest": 1,
+				"description": ""
+			}
+		],
+		"dimensionPartitions": [
+			{
+				"name": "workclass",
+				"type": "Categorical",
+				"valueGroups": [
+					{
+						"cluster": "{Private, Never-worked}",
+						"values": ["Private", "Never-worked"],
+						"valueFrequencies": [36705, 10],
+						"valueTypicalities": [1, 0.00631547]
+					},
+					{
+						"cluster": "{Self-emp-not-inc, Without-pay}",
+						"values": ["Self-emp-not-inc", "Without-pay"],
+						"valueFrequencies": [3862, 21],
+						"valueTypicalities": [1, 0.0170314]
+					},
+					{
+						"cluster": "{Self-emp-inc}",
+						"values": ["Self-emp-inc"],
+						"valueFrequencies": [1695],
+						"valueTypicalities": [1]
+					},
+					{
+						"cluster": "{Local-gov}",
+						"values": ["Local-gov"],
+						"valueFrequencies": [3136],
+						"valueTypicalities": [1]
+					},
+					{
+						"cluster": "{State-gov, Federal-gov}",
+						"values": ["State-gov", "Federal-gov"],
+						"valueFrequencies": [1981, 1432],
+						"valueTypicalities": [1, 0.751503]
+					}
+				],
+				"defaultGroupIndex": 0
+			},
+			{
+				"name": "education",
+				"type": "Categorical",
+				"valueGroups": [
+					{
+						"cluster": "{Masters}",
+						"values": ["Masters"],
+						"valueFrequencies": [2657],
+						"valueTypicalities": [1]
+					},
+					{
+						"cluster": "{Prof-school, Doctorate}",
+						"values": ["Prof-school", "Doctorate"],
+						"valueFrequencies": [834, 594],
+						"valueTypicalities": [1, 0.637427]
+					},
+					{
+						"cluster": "{Bachelors}",
+						"values": ["Bachelors"],
+						"valueFrequencies": [8025],
+						"valueTypicalities": [1]
+					},
+					{
+						"cluster": "{11th, 10th, 9th, ...}",
+						"values": [
+							"11th",
+							"10th",
+							"9th",
+							"12th",
+							"5th-6th",
+							"1st-4th",
+							"Preschool"
+						],
+						"valueFrequencies": [
+							1812, 1389, 756, 657, 509, 247, 83
+						],
+						"valueTypicalities": [
+							1, 0.669287, 0.482129, 0.437507, 0.321142, 0.224428,
+							0.0734718
+						]
+					},
+					{
+						"cluster": "{HS-grad, 7th-8th}",
+						"values": ["HS-grad", "7th-8th"],
+						"valueFrequencies": [15784, 955],
+						"valueTypicalities": [1, 0.307222]
+					},
+					{
+						"cluster": "{Some-college, Assoc-voc, Assoc-acdm}",
+						"values": ["Some-college", "Assoc-voc", "Assoc-acdm"],
+						"valueFrequencies": [10878, 2061, 1601],
+						"valueTypicalities": [1, 0.451626, 0.364259]
+					}
+				],
+				"defaultGroupIndex": 3
+			},
+			{
+				"name": "race",
+				"type": "Categorical",
+				"valueGroups": [
+					{
+						"cluster": "{Black, Amer-Indian-Eskimo, Other}",
+						"values": ["Black", "Amer-Indian-Eskimo", "Other"],
+						"valueFrequencies": [4685, 470, 406],
+						"valueTypicalities": [1, 0.203334, 0.0793321]
+					},
+					{
+						"cluster": "{White}",
+						"values": ["White"],
+						"valueFrequencies": [41762],
+						"valueTypicalities": [1]
+					},
+					{
+						"cluster": "{Asian-Pac-Islander}",
+						"values": ["Asian-Pac-Islander"],
+						"valueFrequencies": [1519],
+						"valueTypicalities": [1]
+					}
+				],
+				"defaultGroupIndex": 0
+			}
+		],
+		"dimensionHierarchies": [
+			{
+				"name": "workclass",
+				"type": "Categorical",
+				"clusters": [
+					{
+						"cluster": "{Private, Never-worked}",
+						"parentCluster": "A4",
+						"frequency": 36715,
+						"interest": 1,
+						"hierarchicalLevel": 1,
+						"rank": 1,
+						"hierarchicalRank": 14,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Self-emp-not-inc, Without-pay}",
+						"parentCluster": "A11",
+						"frequency": 3883,
+						"interest": 0.631076,
+						"hierarchicalLevel": 1,
+						"rank": 3,
+						"hierarchicalRank": 14,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Self-emp-inc}",
+						"parentCluster": "A11",
+						"frequency": 1695,
+						"interest": 0.520087,
+						"hierarchicalLevel": 1,
+						"rank": 5,
+						"hierarchicalRank": 14,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Local-gov}",
+						"parentCluster": "A10",
+						"frequency": 3136,
+						"interest": 0.731783,
+						"hierarchicalLevel": 1,
+						"rank": 7,
+						"hierarchicalRank": 14,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{State-gov, Federal-gov}",
+						"parentCluster": "A10",
+						"frequency": 3413,
+						"interest": 0.714628,
+						"hierarchicalLevel": 1,
+						"rank": 9,
+						"hierarchicalRank": 14,
+						"isLeaf": true
+					},
+					{
+						"cluster": "A4",
+						"parentCluster": "A1",
+						"frequency": 42293,
+						"interest": 0.946895,
+						"hierarchicalLevel": 0.460017,
+						"rank": 2,
+						"hierarchicalRank": 6,
+						"isLeaf": false
+					},
+					{
+						"cluster": "A11",
+						"parentCluster": "A4",
+						"frequency": 5578,
+						"interest": 0.59735,
+						"hierarchicalLevel": 0.992616,
+						"rank": 4,
+						"hierarchicalRank": 13,
+						"isLeaf": false
+					},
+					{
+						"cluster": "A1",
+						"parentCluster": "",
+						"frequency": 48842,
+						"interest": 0.916853,
+						"hierarchicalLevel": 0,
+						"rank": 6,
+						"hierarchicalRank": 3,
+						"isLeaf": false
+					},
+					{
+						"cluster": "A10",
+						"parentCluster": "A1",
+						"frequency": 6549,
+						"interest": 0.722843,
+						"hierarchicalLevel": 0.969985,
+						"rank": 8,
+						"hierarchicalRank": 12,
+						"isLeaf": false
+					}
+				]
+			},
+			{
+				"name": "education",
+				"type": "Categorical",
+				"clusters": [
+					{
+						"cluster": "{Masters}",
+						"parentCluster": "B7",
+						"frequency": 2657,
+						"interest": 0.925422,
+						"hierarchicalLevel": 1,
+						"rank": 1,
+						"hierarchicalRank": 14,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Prof-school, Doctorate}",
+						"parentCluster": "B7",
+						"frequency": 1428,
+						"interest": 0.861048,
+						"hierarchicalLevel": 1,
+						"rank": 3,
+						"hierarchicalRank": 14,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Bachelors}",
+						"parentCluster": "B5",
+						"frequency": 8025,
+						"interest": 0.702419,
+						"hierarchicalLevel": 1,
+						"rank": 5,
+						"hierarchicalRank": 14,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{11th, 10th, 9th, ...}",
+						"parentCluster": "B6",
+						"frequency": 5453,
+						"interest": 1,
+						"hierarchicalLevel": 1,
+						"rank": 7,
+						"hierarchicalRank": 14,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{HS-grad, 7th-8th}",
+						"parentCluster": "B9",
+						"frequency": 16739,
+						"interest": 0.789143,
+						"hierarchicalLevel": 1,
+						"rank": 9,
+						"hierarchicalRank": 14,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Some-college, Assoc-voc, Assoc-acdm}",
+						"parentCluster": "B9",
+						"frequency": 14540,
+						"interest": 0.640142,
+						"hierarchicalLevel": 1,
+						"rank": 11,
+						"hierarchicalRank": 14,
+						"isLeaf": true
+					},
+					{
+						"cluster": "B7",
+						"parentCluster": "B5",
+						"frequency": 4085,
+						"interest": 0.902919,
+						"hierarchicalLevel": 0.835027,
+						"rank": 2,
+						"hierarchicalRank": 9,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B5",
+						"parentCluster": "B2",
+						"frequency": 12110,
+						"interest": 0.770053,
+						"hierarchicalLevel": 0.642472,
+						"rank": 4,
+						"hierarchicalRank": 7,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B2",
+						"parentCluster": "",
+						"frequency": 48842,
+						"interest": 0.763594,
+						"hierarchicalLevel": -0.00444976,
+						"rank": 6,
+						"hierarchicalRank": 4,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B6",
+						"parentCluster": "B2",
+						"frequency": 36732,
+						"interest": 0.761465,
+						"hierarchicalLevel": 0.744563,
+						"rank": 8,
+						"hierarchicalRank": 8,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B9",
+						"parentCluster": "B6",
+						"frequency": 31279,
+						"interest": 0.71988,
+						"hierarchicalLevel": 0.934117,
+						"rank": 10,
+						"hierarchicalRank": 11,
+						"isLeaf": false
+					}
+				]
+			},
+			{
+				"name": "race",
+				"type": "Categorical",
+				"clusters": [
+					{
+						"cluster": "{Black, Amer-Indian-Eskimo, Other}",
+						"parentCluster": "C3",
+						"frequency": 5561,
+						"interest": 1,
+						"hierarchicalLevel": 1,
+						"rank": 1,
+						"hierarchicalRank": 14,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{White}",
+						"parentCluster": "C8",
+						"frequency": 41762,
+						"interest": 0.789153,
+						"hierarchicalLevel": 1,
+						"rank": 3,
+						"hierarchicalRank": 14,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Asian-Pac-Islander}",
+						"parentCluster": "C8",
+						"frequency": 1519,
+						"interest": 0.631871,
+						"hierarchicalLevel": 1,
+						"rank": 5,
+						"hierarchicalRank": 14,
+						"isLeaf": true
+					},
+					{
+						"cluster": "C3",
+						"parentCluster": "",
+						"frequency": 48842,
+						"interest": 0.808268,
+						"hierarchicalLevel": 0.258131,
+						"rank": 2,
+						"hierarchicalRank": 5,
+						"isLeaf": false
+					},
+					{
+						"cluster": "C8",
+						"parentCluster": "C3",
+						"frequency": 43281,
+						"interest": 0.783633,
+						"hierarchicalLevel": 0.896295,
+						"rank": 4,
+						"hierarchicalRank": 10,
+						"isLeaf": false
+					}
+				]
+			}
+		],
+		"cellPartIndexes": [
+			[0, 4, 1],
+			[0, 5, 1],
+			[0, 2, 1],
+			[0, 3, 1],
+			[0, 4, 0],
+			[1, 4, 1],
+			[0, 0, 1],
+			[0, 5, 0],
+			[1, 5, 1],
+			[4, 5, 1],
+			[0, 3, 0],
+			[3, 5, 1],
+			[4, 4, 1],
+			[3, 4, 1],
+			[4, 2, 1],
+			[0, 1, 1],
+			[3, 2, 1],
+			[1, 2, 1],
+			[3, 0, 1],
+			[2, 5, 1],
+			[2, 4, 1],
+			[2, 2, 1],
+			[0, 2, 0],
+			[1, 3, 1],
+			[0, 5, 2],
+			[4, 0, 1],
+			[0, 2, 2],
+			[0, 4, 2],
+			[1, 1, 1],
+			[4, 5, 0],
+			[1, 0, 1],
+			[4, 1, 1],
+			[2, 1, 1],
+			[4, 4, 0],
+			[3, 4, 0],
+			[3, 5, 0],
+			[3, 3, 1],
+			[0, 3, 2],
+			[2, 0, 1],
+			[3, 2, 0],
+			[4, 2, 0],
+			[0, 0, 2],
+			[2, 3, 1],
+			[4, 3, 1],
+			[0, 0, 0],
+			[1, 4, 0],
+			[3, 1, 1],
+			[3, 0, 0],
+			[0, 1, 2],
+			[1, 5, 0],
+			[4, 5, 2],
+			[3, 3, 0],
+			[4, 2, 2],
+			[1, 4, 2],
+			[1, 3, 0],
+			[1, 2, 2],
+			[4, 3, 0],
+			[4, 0, 0],
+			[1, 2, 0],
+			[4, 0, 2],
+			[4, 1, 2],
+			[3, 2, 2],
+			[2, 2, 2],
+			[1, 5, 2],
+			[0, 1, 0],
+			[4, 1, 0],
+			[2, 4, 0],
+			[4, 4, 2],
+			[3, 5, 2],
+			[2, 4, 2],
+			[3, 4, 2],
+			[2, 1, 2],
+			[2, 5, 2],
+			[2, 2, 0],
+			[2, 0, 2],
+			[2, 5, 0],
+			[3, 1, 0],
+			[1, 0, 2],
+			[1, 0, 0],
+			[1, 1, 2],
+			[3, 0, 2],
+			[2, 0, 0],
+			[1, 1, 0],
+			[3, 1, 2],
+			[2, 3, 0],
+			[2, 1, 0],
+			[1, 3, 2],
+			[3, 3, 2],
+			[2, 3, 2],
+			[4, 3, 2]
+		],
+		"cellFrequencies": [
+			11174, 9572, 4903, 3823, 1779, 1333, 1277, 1216, 940, 845, 791, 673,
+			650, 630, 607, 593, 583, 550, 465, 430, 418, 391, 357, 318, 317,
+			315, 296, 276, 261, 243, 193, 188, 168, 165, 159, 155, 144, 102, 98,
+			96, 95, 92, 80, 76, 74, 66, 64, 56, 56, 53, 45, 44, 42, 34, 31, 31,
+			29, 28, 26, 26, 26, 21, 18, 18, 17, 16, 15, 15, 14, 13, 12, 12, 10,
+			9, 9, 9, 8, 8, 6, 6, 5, 5, 5, 4, 4, 4, 4, 3, 2, 2
+		]
+	},
+	"filename": "./mocks/sample3.json",
+	"savedDatas": {
+		"viewsLayout": {
+			"isDimensionsChecked": true,
+			"isCoocurenceChecked": true,
+			"dimensionsViewsLayoutsVO": [
+				{
+					"isChecked": true,
+					"isHierarchyChecked": true,
+					"isClustersChecked": true,
+					"isAnnotationChecked": true,
+					"isCompositionChecked": true,
+					"isExternalDataChecked": false,
+					"isDistributionChecked": true,
+					"name": "workclass"
+				},
+				{
+					"isChecked": true,
+					"isHierarchyChecked": true,
+					"isClustersChecked": true,
+					"isAnnotationChecked": true,
+					"isCompositionChecked": true,
+					"isExternalDataChecked": false,
+					"isDistributionChecked": true,
+					"name": "education"
+				},
+				{
+					"isChecked": true,
+					"isHierarchyChecked": true,
+					"isClustersChecked": true,
+					"isAnnotationChecked": true,
+					"isCompositionChecked": true,
+					"isExternalDataChecked": false,
+					"isDistributionChecked": false,
+					"name": "race"
+				}
+			]
+		},
+		"splitSizes": {
+			"axisView": {
+				"col": [70, 30],
+				"col0Row": [51.816745655608216, 48.183254344391784],
+				"col1Row": [20, 80],
+				"col0Row0Col": [25, 62.136782423812896, 0, 12.863217576187102],
+				"col0Row0Col2Row": [50, 50],
+				"col0Row1Col": [
+					31.305267187477043, 31.181425748612057, 33.02945130147867,
+					4.483855762432241
+				],
+				"col0Row1Col2Row": [30, 70]
+			},
+			"contextView": {
+				"col": [70, 30],
+				"col0Row0Col": [25, 25, 25, 25],
+				"col0Row0Col2Row": [30, 70]
+			}
+		},
+		"selectedDimensions": [
+			{ "name": "workclass" },
+			{ "name": "education" },
+			{ "name": "race" }
+		],
+		"collapsedNodes": {
+			"workclass": ["A4", "A10"],
+			"education": ["B5", "B6"],
+			"race": ["C8"]
+		},
+		"selectedNodes": [
+			{
+				"isParentCluster": false,
+				"isUnfoldedByDefault": false,
+				"id": 0,
+				"_id": "{Private, Never-worked}",
+				"nbClusters": 5,
+				"leafPosition": -1,
+				"hierarchy": "workclass",
+				"cluster": "{Private, Never-worked}",
+				"bounds": "{Private, Never-worked}",
+				"name": "{Private, Never-worked}",
+				"shortDescription": "{Private, Never-worked}",
+				"parentCluster": "A4",
+				"parentShortDescription": "A4",
+				"description": "",
+				"frequency": 36715,
+				"interest": 1,
+				"hierarchicalLevel": 1,
+				"rank": 1,
+				"hierarchicalRank": 14,
+				"isLeaf": true,
+				"isCollapsed": false,
+				"matrixIndex": 0
+			},
+			{
+				"isParentCluster": false,
+				"isUnfoldedByDefault": false,
+				"id": 0,
+				"_id": "{Masters}",
+				"nbClusters": 6,
+				"leafPosition": -1,
+				"hierarchy": "education",
+				"cluster": "{Masters}",
+				"bounds": "{Masters}",
+				"name": "{Masters}",
+				"shortDescription": "{Masters}",
+				"parentCluster": "B7",
+				"parentShortDescription": "B7",
+				"description": "",
+				"frequency": 2657,
+				"interest": 0.925422,
+				"hierarchicalLevel": 1,
+				"rank": 1,
+				"hierarchicalRank": 14,
+				"isLeaf": true,
+				"isCollapsed": false,
+				"matrixIndex": 0
+			},
+			{
+				"isParentCluster": false,
+				"isUnfoldedByDefault": false,
+				"id": 0,
+				"_id": "{Black, Amer-Indian-Eskimo, Other}",
+				"nbClusters": 3,
+				"leafPosition": -1,
+				"hierarchy": "race",
+				"cluster": "{Black, Amer-Indian-Eskimo, Other}",
+				"bounds": "{Black, Amer-Indian-Eskimo, Other}",
+				"name": "{Black, Amer-Indian-Eskimo, Other}",
+				"shortDescription": "{Black, Amer-Indian-Eskimo, Other}",
+				"parentCluster": "C3",
+				"parentShortDescription": "C3",
+				"description": "",
+				"frequency": 5561,
+				"interest": 1,
+				"hierarchicalLevel": 1,
+				"rank": 1,
+				"hierarchicalRank": 14,
+				"isLeaf": true,
+				"isCollapsed": false,
+				"matrixIndex": 0
+			}
+		]
+	}
+}

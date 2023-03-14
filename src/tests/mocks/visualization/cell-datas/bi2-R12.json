@@ -1,0 +1,16 @@
+{
+	"values": [
+		[{
+			"GLOBAL.VALUES_OFclass": "less",
+			"GLOBAL.FREQUENCY": 37155
+		}],
+		[{
+			"GLOBAL.VALUES_OFsex": "Male",
+			"GLOBAL.FREQUENCY": 32650
+		}]
+	],
+	"displayedColumns": [
+		["GLOBAL.VALUES_OFclass", "GLOBAL.FREQUENCY"],
+		["GLOBAL.VALUES_OFsex", "GLOBAL.FREQUENCY"]
+	]
+}

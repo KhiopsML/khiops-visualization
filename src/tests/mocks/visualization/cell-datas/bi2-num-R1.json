@@ -1,0 +1,15 @@
+{
+	"values": [
+		[{
+			"GLOBAL.VALUES_OFeducation": "HS-grad",
+			"GLOBAL.FREQUENCY": 15784
+		}],
+		[{
+			"GLOBAL.INTERVAL_OFeducation_num": "[ 1; 3.5 ]"
+		}]
+	],
+	"displayedColumns": [
+		["GLOBAL.VALUES_OFeducation", "GLOBAL.FREQUENCY"],
+		["GLOBAL.INTERVAL_OFeducation_num"]
+	]
+}

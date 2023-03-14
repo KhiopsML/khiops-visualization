@@ -1,0 +1,37 @@
+[{
+	"cellFreq": 0,
+	"targetCellFreq": 0,
+	"index": 2,
+	"cellProb": 0,
+	"cellProbRev": 0,
+	"cellInterest": 0,
+	"cellContrib": 0,
+	"cellTargetProb": 0
+}, {
+	"cellFreq": 31,
+	"targetCellFreq": 0,
+	"index": 0,
+	"cellProb": 0,
+	"cellProbRev": 0,
+	"cellInterest": 0.406488,
+	"cellContrib": 0,
+	"cellTargetProb": 0
+}, {
+	"cellFreq": 33,
+	"targetCellFreq": 4,
+	"index": 3,
+	"cellProb": null,
+	"cellProbRev": 0.04040404040404041,
+	"cellInterest": 0.287083,
+	"cellContrib": -0.07008489112679218,
+	"cellTargetProb": 0
+}, {
+	"cellFreq": 35,
+	"targetCellFreq": 33,
+	"index": 1,
+	"cellProb": 0.9428571428571428,
+	"cellProbRev": 0.3333333333333333,
+	"cellInterest": 0.306429,
+	"cellContrib": -0.10584501186715403,
+	"cellTargetProb": 0.4852941176470588
+}]

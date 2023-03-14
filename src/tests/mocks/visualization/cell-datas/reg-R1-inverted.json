@@ -1,0 +1,15 @@
+{
+	"values": [
+		[{
+			"GLOBAL.INTERVAL_OFage": "[ 17; 19.5 ]"
+		}],
+		[{
+			"GLOBAL.VALUES_OFmarital_status": "Married-civ-spouse",
+			"GLOBAL.FREQUENCY": 15653
+		}]
+	],
+	"displayedColumns": [
+		["GLOBAL.INTERVAL_OFage"],
+		["GLOBAL.VALUES_OFmarital_status", "GLOBAL.FREQUENCY"]
+	]
+}

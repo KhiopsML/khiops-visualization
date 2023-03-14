@@ -1,0 +1,23 @@
+{
+	"title": "GLOBAL.CONFUSION_MATRIX_OF",
+	"values": [{
+		"target": "$less",
+		"0": 24576,
+		"1": 3231
+	}, {
+		"target": "$more",
+		"0": 1452,
+		"1": 4915
+	}],
+	"displayedColumns": [{
+		"headerName": "Target",
+		"field": "target",
+		"tooltip": "TOOLTIPS.EVALUATION.CONFUSION_MATRIX.TARGET"
+	}, {
+		"headerName": "less",
+		"field": "0"
+	}, {
+		"headerName": "more",
+		"field": "1"
+	}]
+}

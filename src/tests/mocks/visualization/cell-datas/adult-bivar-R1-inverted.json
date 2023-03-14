@@ -1,0 +1,78 @@
+{
+	"values": [
+		[{
+			"GLOBAL.VALUES_OFnative_country": "United-States",
+			"GLOBAL.FREQUENCY": 31267
+		}, {
+			"GLOBAL.VALUES_OFnative_country": "Philippines",
+			"GLOBAL.FREQUENCY": 203
+		}, {
+			"GLOBAL.VALUES_OFnative_country": "Germany",
+			"GLOBAL.FREQUENCY": 150
+		}, {
+			"GLOBAL.VALUES_OFnative_country": "Canada",
+			"GLOBAL.FREQUENCY": 121
+		}, {
+			"GLOBAL.VALUES_OFnative_country": "Cuba",
+			"GLOBAL.FREQUENCY": 100
+		}, {
+			"GLOBAL.VALUES_OFnative_country": "India",
+			"GLOBAL.FREQUENCY": 98
+		}, {
+			"GLOBAL.VALUES_OFnative_country": "China",
+			"GLOBAL.FREQUENCY": 89
+		}, {
+			"GLOBAL.VALUES_OFnative_country": "England",
+			"GLOBAL.FREQUENCY": 84
+		}, {
+			"GLOBAL.VALUES_OFnative_country": "South",
+			"GLOBAL.FREQUENCY": 82
+		}, {
+			"GLOBAL.VALUES_OFnative_country": "Italy",
+			"GLOBAL.FREQUENCY": 75
+		}, {
+			"GLOBAL.VALUES_OFnative_country": "Japan",
+			"GLOBAL.FREQUENCY": 63
+		}, {
+			"GLOBAL.VALUES_OFnative_country": "Poland",
+			"GLOBAL.FREQUENCY": 58
+		}, {
+			"GLOBAL.VALUES_OFnative_country": "Portugal",
+			"GLOBAL.FREQUENCY": 48
+		}, {
+			"GLOBAL.VALUES_OFnative_country": "Taiwan",
+			"GLOBAL.FREQUENCY": 46
+		}, {
+			"GLOBAL.VALUES_OFnative_country": "Iran",
+			"GLOBAL.FREQUENCY": 38
+		}, {
+			"GLOBAL.VALUES_OFnative_country": "Greece",
+			"GLOBAL.FREQUENCY": 36
+		}, {
+			"GLOBAL.VALUES_OFnative_country": "France",
+			"GLOBAL.FREQUENCY": 26
+		}, {
+			"GLOBAL.VALUES_OFnative_country": "Ireland",
+			"GLOBAL.FREQUENCY": 24
+		}, {
+			"GLOBAL.VALUES_OFnative_country": "Thailand",
+			"GLOBAL.FREQUENCY": 23
+		}, {
+			"GLOBAL.VALUES_OFnative_country": "Cambodia",
+			"GLOBAL.FREQUENCY": 21
+		}, {
+			"GLOBAL.VALUES_OFnative_country": "Hong",
+			"GLOBAL.FREQUENCY": 17
+		}, {
+			"GLOBAL.VALUES_OFnative_country": "Yugoslavia",
+			"GLOBAL.FREQUENCY": 16
+		}],
+		[{
+			"GLOBAL.INTERVAL_OFcapital_loss": "[ 0; 70 ]"
+		}]
+	],
+	"displayedColumns": [
+		["GLOBAL.VALUES_OFnative_country", "GLOBAL.FREQUENCY"],
+		["GLOBAL.INTERVAL_OFcapital_loss"]
+	]
+}

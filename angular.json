@@ -190,24 +190,6 @@
 					"options": {
 						"browserTarget": "khiops-webcomponent:build"
 					}
-				},
-				"test": {
-					"builder": "@angular-devkit/build-angular:karma",
-					"options": {
-						"main": "projects/khiops-webcomponent/src/test.ts",
-						"polyfills": "projects/khiops-webcomponent/src/polyfills.ts",
-						"tsConfig": "projects/khiops-webcomponent/tsconfig.spec.json",
-						"karmaConfig": "projects/khiops-webcomponent/karma.conf.js",
-						"inlineStyleLanguage": "scss",
-						"assets": [
-							"projects/khiops-webcomponent/src/favicon.ico",
-							"projects/khiops-webcomponent/src/assets"
-						],
-						"styles": [
-							"projects/khiops-webcomponent/src/styles.scss"
-						],
-						"scripts": []
-					}
 				}
 			}
 		},
@@ -289,24 +271,6 @@
 					"builder": "@angular-devkit/build-angular:extract-i18n",
 					"options": {
 						"browserTarget": "khiops-pwa:build"
-					}
-				},
-				"test": {
-					"builder": "@angular-devkit/build-angular:karma",
-					"options": {
-						"main": "projects/khiops-pwa/src/test.ts",
-						"polyfills": "projects/khiops-pwa/src/polyfills.ts",
-						"tsConfig": "projects/khiops-pwa/tsconfig.spec.json",
-						"karmaConfig": "projects/khiops-pwa/karma.conf.js",
-						"inlineStyleLanguage": "scss",
-						"assets": [
-							"projects/khiops-pwa/src/favicon.ico",
-							"projects/khiops-pwa/src/assets"
-						],
-						"styles": [
-							"projects/khiops-pwa/src/styles.scss"
-						],
-						"scripts": []
 					}
 				}
 			}

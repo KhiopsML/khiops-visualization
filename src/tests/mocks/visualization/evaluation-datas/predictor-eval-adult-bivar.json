@@ -1,0 +1,73 @@
+[{
+	"type": "Train",
+	"rank": "R1",
+	"family": "MAP Naive Bayes",
+	"currentEvaluationType": "Train",
+	"name": "MAP Naive Bayes",
+	"accuracy": 0.862966,
+	"compression": 0.46234,
+	"auc": 0.917185,
+	"robustness": "",
+	"gini": 0.8343700000000001,
+	"_id": "TrainMAP Naive Bayes"
+}, {
+	"type": "Train",
+	"rank": "R2",
+	"family": "Selective Naive Bayes",
+	"currentEvaluationType": "Train",
+	"name": "Selective Naive Bayes",
+	"accuracy": 0.866916,
+	"compression": 0.481479,
+	"auc": 0.923507,
+	"robustness": "",
+	"gini": 0.8470139999999999,
+	"_id": "TrainSelective Naive Bayes"
+}, {
+	"type": "Train",
+	"rank": "R3",
+	"family": "Train",
+	"currentEvaluationType": "Train",
+	"name": "Optimal",
+	"accuracy": 1,
+	"compression": 1,
+	"auc": 1,
+	"robustness": "",
+	"gini": 1,
+	"_id": "TrainOptimal"
+}, {
+	"type": "Test",
+	"rank": "R1",
+	"family": "MAP Naive Bayes",
+	"currentEvaluationType": "Test",
+	"name": "MAP Naive Bayes",
+	"accuracy": 0.865353,
+	"compression": 0.447265,
+	"auc": 0.913415,
+	"robustness": 0.9958895969733478,
+	"gini": 0.82683,
+	"_id": "TestMAP Naive Bayes"
+}, {
+	"type": "Test",
+	"rank": "R2",
+	"family": "Selective Naive Bayes",
+	"currentEvaluationType": "Test",
+	"name": "Selective Naive Bayes",
+	"accuracy": 0.869035,
+	"compression": 0.469923,
+	"auc": 0.920437,
+	"robustness": 0.996675715506217,
+	"gini": 0.8408739999999999,
+	"_id": "TestSelective Naive Bayes"
+}, {
+	"type": "Test",
+	"rank": "R3",
+	"family": "Test",
+	"currentEvaluationType": "Test",
+	"name": "Optimal",
+	"accuracy": 1,
+	"compression": 1,
+	"auc": 1,
+	"robustness": 1,
+	"gini": 1,
+	"_id": "TestOptimal"
+}]

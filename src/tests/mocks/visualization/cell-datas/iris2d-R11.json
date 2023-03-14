@@ -1,0 +1,15 @@
+{
+	"values": [
+		[{
+			"GLOBAL.VALUES_OFClass2": "",
+			"GLOBAL.FREQUENCY": 62
+		}],
+		[{
+			"GLOBAL.INTERVAL_OFSepalLength": "[ 4.3; 5.75 ]"
+		}]
+	],
+	"displayedColumns": [
+		["GLOBAL.VALUES_OFClass2", "GLOBAL.FREQUENCY"],
+		["GLOBAL.INTERVAL_OFSepalLength"]
+	]
+}
