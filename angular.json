@@ -22,7 +22,9 @@
 					"options": {
 						"allowedCommonJsDependencies": [
 							"lodash",
-							"pan-zoom"
+							"pan-zoom",
+							"clone-deep",
+							"@khiops-hypertree/js/d3-hypertree"
 						],
 						"outputPath": "dist/visualization-component",
 						"index": "src/index.html",
