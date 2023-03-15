@@ -225,12 +225,13 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 				const dataset = this.chart.data.datasets[i];
 				dataset.borderColor[index] = 'rgba(0, 0, 0, 1)';
 				dataset.borderSkipped = false;
-				dataset.borderWidth = {
-					top: 2,
-					right: 2,
-					bottom: 0,
-					left: 2
-				}
+				// dataset.borderWidth = {
+				// 	top: 2,
+				// 	right: 2,
+				// 	bottom: 0,
+				// 	left: 2
+				// }
+				dataset.borderWidth = 2;
 			}
 		}
 	}
@@ -240,12 +241,13 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 			const dataset = this.chart.data.datasets[i];
 			if (!dataset.borderWidth) {
 				dataset.borderSkipped = false;
-				dataset.borderWidth = {
-					top: 2,
-					right: 2,
-					bottom: 0,
-					left: 2
-				}
+				// dataset.borderWidth = {
+				// 	top: 2,
+				// 	right: 2,
+				// 	bottom: 0,
+				// 	left: 2
+				// };
+				dataset.borderWidth = 2;
 			}
 
 			dataset.backgroundColor =
