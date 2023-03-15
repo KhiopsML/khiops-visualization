@@ -10,17 +10,27 @@ import {
 import {
 	KhiopsCovisualizationModule
 } from './khiops-covisualization/khiops-covisualization.module'
-
 import {
 	AppComponent
-} from './app.component'
+} from './app.component';
+import {
+	AppRoutingModule
+} from './app-routing.module';
+import {
+	MenuComponent
+} from './menu.component';
+import {
+	MatButtonModule
+} from '@angular/material/button';
 
 @NgModule({
-	declarations: [AppComponent],
+	declarations: [AppComponent, MenuComponent],
 	imports: [
 		BrowserModule,
 		KhiopsVisualizationModule,
-		KhiopsCovisualizationModule
+		KhiopsCovisualizationModule,
+		AppRoutingModule,
+		MatButtonModule
 	],
 	providers: [],
 	bootstrap: [AppComponent],
