@@ -1,8 +1,8 @@
 <div class="import-file-loader-comp" fxFlexFill fxLayout="column">
 
 	<div *ngIf="!isLoadingDatas" class="import-file-loader-row" fxLayout="row" fxLayoutAlign="start center">
-		<button (click)=" openFileDialog()" class="yellow-btn" mat-flat-button>
-		{{ translate.get('GLOBAL.IMPORT_NEW_FILE') }}</button>
+		<button class="yellow-btn" type="button" mat-flat-button color="primary" (click)="fileInput.click()">{{ translate.get('GLOBAL.IMPORT_NEW_FILE') }}</button>
+		<input hidden (change)="openFileDialog($event)" #fileInput type="file" id="file" accept=".txt">
 	</div>
 
 	<div id="loading-indicator" fxFlexFill *ngIf="isLoadingDatas" fxLayoutAlign="center center">

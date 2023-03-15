@@ -85,8 +85,8 @@ export class ImportExtDatasService {
 		return formatedDatas;
 	}
 
-	addImportedDatas(filename, dimension, joinKey, separator, field) {
-		const data = new ExtDatasVO(filename, dimension, joinKey, separator, field);
+	addImportedDatas(filename, dimension, joinKey, separator, field, file) {
+		const data = new ExtDatasVO(filename, dimension, joinKey, separator, field, file);
 		if (!this.importExtDatas.find(e => e.filename === filename && e.dimension === dimension && e.joinKey === joinKey && e.field.name === field.name)) {
 			this.importExtDatas.push(data);
 			return data;
@@ -128,8 +128,9 @@ export class ImportExtDatasService {
 					const externalDatas: ExtDatasVO = this.importExtDatas[i];
 					const joinKey = externalDatas.joinKey;
 					const fieldName = externalDatas.field.name;
+					console.log(externalDatas);
 
-					this.importFileLoaderService.readFile(externalDatas.filename).then((fileDatas: FileVO) => {
+					this.importFileLoaderService.readFile(externalDatas.file).then((fileDatas: FileVO) => {
 
 						setTimeout(() => {
 							percentIndex++;

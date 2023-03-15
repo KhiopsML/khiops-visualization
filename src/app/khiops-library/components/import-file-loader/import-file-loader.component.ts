@@ -52,21 +52,23 @@ export class ImportFileLoaderComponent implements OnInit {
 		this.isLoadingDatas = false;
 	}
 
-	openFileDialog() {
-		dialog.showOpenDialog({
-			properties: ['openFile'],
-			filters: [{
-				name: 'TXT',
-				extensions: ['txt']
-			}]
-		}).then(result => {
-			if (result && !result.canceled && result.filePaths) {
-				this.openFile(result.filePaths[0]);
-				return;
-			}
-		}).catch(err => {
-			console.log(err);
-		});
+	openFileDialog(e) {
+		// TODO remove electron
+		// dialog.showOpenDialog({
+		// 	properties: ['openFile'],
+		// 	filters: [{
+		// 		name: 'TXT',
+		// 		extensions: ['txt']
+		// 	}]
+		// }).then(result => {
+		// 	if (result && !result.canceled && result.filePaths) {
+		// 		this.openFile(result.filePaths[0]);
+		// 		return;
+		// 	}
+		// }).catch(err => {
+		// 	console.log(err);
+		// });
+		if (e.target.files) this.openFile(e.target.files[0]);
 	}
 
 	openFile(filename) {

@@ -85,7 +85,8 @@ export class ImportExtDatasComponent implements OnInit {
 					this.selectedDimension.name,
 					this.joinKeys.selected,
 					this.separatorInput,
-					currentField
+					currentField,
+					this.importExtDatas.file
 				);
 				if (importedData) {
 					this.snackBar.open(this.translate.get('SNACKS.EXTERNAL_DATA_ADDED'), null, {

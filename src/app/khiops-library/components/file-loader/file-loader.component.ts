@@ -29,6 +29,7 @@ export class FileLoaderComponent implements OnInit {
 	@Input() onFileLoaderDataChanged: Function;
 	fileLoaderDatas: any;
 	isProdMode = false;
+	associationFiles = []
 
 	constructor(private ngzone: NgZone,
 		private fileLoaderService: FileLoaderService,
@@ -38,6 +39,13 @@ export class FileLoaderComponent implements OnInit {
 
 		this.fileLoaderDatas = this.fileLoaderService.getDatas();
 		this.isProdMode = this.khiopsLibraryService.getAppConfig().production;
+		const associationFiles = ['.json'];
+		if (this.applicationName === 'khiops-visualization') {
+			associationFiles.push('.khj');
+		} else {
+			associationFiles.push('.khcj');
+		}
+		this.associationFiles = [...associationFiles];
 	}
 
 	ngOnInit() {

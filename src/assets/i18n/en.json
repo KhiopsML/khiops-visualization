@@ -251,7 +251,7 @@
 		"FIELDS": "Fields",
 		"GLOBAL": "Global",
 		"LOCAL": "Local",
-		"IMPORTING_EXT_DATA": "Importing external data {fieldsName} into {dimension} dimension ...",
+		"IMPORTING_EXT_DATA": "Importing external data {fieldName} into {dimension} dimension ...",
 		"PAIR_VARIABLES": "Pair variables",
 		"ZOOM_IN": "Zoom in",
 		"RESET_ZOOM": "Reset zoom",

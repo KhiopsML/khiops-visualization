@@ -9,7 +9,7 @@
 			color="primary">{{ translate.get('GLOBAL.OPEN_FILE') }}</button> -->
 		<button type="button" mat-flat-button color="primary" (click)="fileInput.click()">{{
 			translate.get('GLOBAL.OPEN_FILE') }}</button>
-		<input hidden (change)="openFileDialog($event)" #fileInput type="file" id="file">
+		<input hidden (change)="openFileDialog($event)" #fileInput type="file" id="file" [accept]="associationFiles">
 	</div>
 	<div id="loading-indicator" *ngIf="fileLoaderDatas.isLoadingDatas && !fileLoaderDatas.datas">
 		<mat-spinner diameter="40" color="accent" mode="indeterminate"></mat-spinner>
