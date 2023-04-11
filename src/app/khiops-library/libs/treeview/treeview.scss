@@ -43,7 +43,7 @@
 }
 
 .tree-leaf .tree-icon.is-leaf {
-	color: mat-color($primary);
+	color: map_get($md-khiopsmain, 500);
 	padding-left: 0.1em;
     padding-right: 0.1em;
     border-radius: 4px;
@@ -65,7 +65,7 @@
 }
 
 .tree-leaf .tree-leaf-text:hover {
-	color: mat-color($primary);
+	color: map_get($md-khiopsmain, 500);
 }
 
 .tree-leaf .tree-leaf-content:before,
@@ -79,7 +79,7 @@
 }
 
 .tree-leaf .tree-leaf-content.selected {
-	background: mat-color($primary, 500);
+	background: map_get($md-khiopsmain, 500);
 	border-radius: 4px;
 	// transition: background-color 0.3s !important;
 	transition: background-color 0s !important;
@@ -128,7 +128,7 @@
 
 		input {
 			width: 174px;
-			border: 3px solid mat-color($primary, 500);
+			border: 3px solid map_get($md-khiopsmain, 500);
 			padding: 1px 8px 0 8px !important;
 			font-size: 1em;
 			float: left;

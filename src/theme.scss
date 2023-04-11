@@ -1,9 +1,3 @@
-// @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-@import '~@angular/material/theming';
-
-@include mat-core();
-$mat-theme-ignore-duplication-warnings: true;
-
 $md-khiopsmain:(
     50 : #ebedf3,
     100 : #cdd2e2,
@@ -36,13 +30,6 @@ $md-khiopsmain:(
         A700 : #ffffff,
     )
 );
-
-$primary: mat-palette($md-khiopsmain);
-$accent:  mat-palette($mat-pink);
-$secondary:    mat-palette($mat-blue-grey);
-$warn:    mat-palette($mat-blue-grey);
-$theme: mat-light-theme($primary, $accent, $warn);
-@include angular-material-theme($theme);
 
 $yellowMain : #fbb33a;
 $redMain : #fb473a;

@@ -1,12 +1,13 @@
 import {
 	Component,
 	OnInit,
-	OnDestroy,
+	// OnDestroy,
 	ViewEncapsulation,
 	ViewChild,
 	NgZone,
 	HostListener,
-	AfterViewInit
+	// AfterViewInit,
+	Input
 } from '@angular/core';
 
 import {
@@ -91,9 +92,17 @@ import pjson from 'package.json';
 	encapsulation: ViewEncapsulation.None
 
 })
-export class HomeLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
+export class HomeLayoutComponent implements OnInit /*, OnDestroy, AfterViewInit */ {
 
-	appDatas: any;
+	get appDatas(): any {
+		return this.appService.getDatas();
+	}
+	@Input() set appDatas(value: any) {
+		console.log(value);
+		this.appService.setFileDatas(value);
+		if (value && value.datas) this.initializeHome();
+	}
+
 	activeTab = AppConfig.visualizationCommon.HOME.ACTIVE_TAB_INDEX;
 	translations: any;
 	@ViewChild('fileLoader', {
@@ -152,7 +161,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 		const fontSize = AppConfig.visualizationCommon.GLOBAL.FONT_SIZE;
 		document.body.classList.add('font-' + fontSize);
 
-		this.appDatas = this.appService.getDatas();
+		// this.appDatas = this.appService.getDatas();
 
 	}
 
@@ -161,9 +170,9 @@ export class HomeLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.isLargeScreen = window.innerWidth > 1400; // TODO put it into conf
 	}
 
-	ngOnDestroy() {
+	// ngOnDestroy() {
 
-	}
+	// }
 
 	onSelectedTabChanged(e) {
 
@@ -177,71 +186,71 @@ export class HomeLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.khiopsLibraryService.trackEvent('page_view', 'visit', this.appVersion);
 	}
 
-	ngAfterViewInit() {
+	// ngAfterViewInit() {
 
-		this.constructMenu();
+	// 	this.constructMenu();
 
-		if (this.isElectron) {
+	// 	if (this.isElectron) {
 
-			// TODO remove electron
-			// (async () => {
-			// 	try {
-			// 		await ipcRenderer.invoke('launch-check-for-update');
-			// 	} catch (error) {
-			// 		console.log('error', error);
-			// 	}
-			// })();
+	// 		// TODO remove electron
+	// 		// (async () => {
+	// 		// 	try {
+	// 		// 		await ipcRenderer.invoke('launch-check-for-update');
+	// 		// 	} catch (error) {
+	// 		// 		console.log('error', error);
+	// 		// 	}
+	// 		// })();
 
-			// // debug
-			// if (!AppConfig.production && this.isElectron) {
-			// 	setTimeout(() => {
-			// 		this.fileLoader.loadDebugFile();
-			// 	}); // do it async to avoid ExpressionChangedAfterItHasBeenCheckedError
-			// }
+	// 		// // debug
+	// 		// if (!AppConfig.production && this.isElectron) {
+	// 		// 	setTimeout(() => {
+	// 		// 		this.fileLoader.loadDebugFile();
+	// 		// 	}); // do it async to avoid ExpressionChangedAfterItHasBeenCheckedError
+	// 		// }
 
-			// if (ipcRenderer) {
-			// 	// Get input file on windows
-			// 	const inputFile = ipcRenderer.sendSync('get-input-file');
-			// 	if (inputFile && inputFile !== '.') {
-			// 		setTimeout(() => {
-			// 			this.fileLoader.openFile(inputFile);
-			// 		});
-			// 	}
-			// 	// Get input files on Mac or Linux
-			// 	ipcRenderer.on('file-open-system', (event, arg) => {
-			// 		if (arg) {
-			// 			setTimeout(() => {
-			// 				this.fileLoader.openFile(arg);
-			// 			});
-			// 		}
-			// 	});
-			// }
+	// 		// if (ipcRenderer) {
+	// 		// 	// Get input file on windows
+	// 		// 	const inputFile = ipcRenderer.sendSync('get-input-file');
+	// 		// 	if (inputFile && inputFile !== '.') {
+	// 		// 		setTimeout(() => {
+	// 		// 			this.fileLoader.openFile(inputFile);
+	// 		// 		});
+	// 		// 	}
+	// 		// 	// Get input files on Mac or Linux
+	// 		// 	ipcRenderer.on('file-open-system', (event, arg) => {
+	// 		// 		if (arg) {
+	// 		// 			setTimeout(() => {
+	// 		// 				this.fileLoader.openFile(arg);
+	// 		// 			});
+	// 		// 		}
+	// 		// 	});
+	// 		// }
 
-		} else {
-			// -----------------------------------------------------------------
-			// Uncomment this to debug on yarn ng:serve:web mode
-			// Also set isWebDebug = true
-			// And launch http://localhost:4200/#/khiops-visualization/
-			// this.isWebDebug = true;
+	// 	} else {
+	// 		// -----------------------------------------------------------------
+	// 		// Uncomment this to debug on yarn ng:serve:web mode
+	// 		// Also set isWebDebug = true
+	// 		// And launch http://localhost:4200/#/khiops-visualization/
+	// 		// this.isWebDebug = true;
 
-			// this.route.queryParams
-			// 	.subscribe(params => {
-			// 		console.log(params && params.file);
-			// 		// this.fileLoader.openFile(params && params.file)
-			// 		this.fileLoader.loadWebFile(params && params.file);
-			// 	});
+	// 		// this.route.queryParams
+	// 		// 	.subscribe(params => {
+	// 		// 		console.log(params && params.file);
+	// 		// 		// this.fileLoader.openFile(params && params.file)
+	// 		// 		this.fileLoader.loadWebFile(params && params.file);
+	// 		// 	});
 
 
-			// this.fileLoader.loadDebugFile();
-			// -----------------------------------------------------------------
+	// 		// this.fileLoader.loadDebugFile();
+	// 		// -----------------------------------------------------------------
 
-			// if datas are already set (for instance by Khiops SaaS web instance)
-			if (this.appService.getDatas().datas) {
-				this.initializeHome();
-			}
-		}
+	// 		// if datas are already set (for instance by Khiops SaaS web instance)
+	// 		if (this.appService.getDatas().datas) {
+	// 			this.initializeHome();
+	// 		}
+	// 	}
 
-	}
+	// }
 
 	isUpdateAvailable(status: boolean) {
 		this.updateAvailableStatus = status;

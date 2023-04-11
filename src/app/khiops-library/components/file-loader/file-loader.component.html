@@ -7,7 +7,7 @@
 		<span *ngIf="!isProdMode">{{ translate.get('GLOBAL.OR') }}</span> -->
 		<!-- <button attr.aria-label="{{ translate.get('GLOBAL.OPEN_FILE') }}" (click)="openFileDialog()" mat-flat-button
 			color="primary">{{ translate.get('GLOBAL.OPEN_FILE') }}</button> -->
-		<button type="button" mat-flat-button color="primary" (click)="fileInput.click()">{{
+		<button type="button" mat-flat-button color="primary" (click)="onClickOpen(fileInput)">{{
 			translate.get('GLOBAL.OPEN_FILE') }}</button>
 		<input hidden (change)="openFileDialog($event)" #fileInput type="file" id="file" [accept]="associationFiles">
 	</div>

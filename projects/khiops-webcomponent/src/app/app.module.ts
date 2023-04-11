@@ -1,16 +1,27 @@
-import { NgModule } from '@angular/core';
+import { Injector, NgModule } from '@angular/core';
+import { createCustomElement } from '@angular/elements';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppComponent } from './app.component';
+import { AppComponent as visualizationComponent } from "@khiops-visualization/app.component";
+import { AppComponent as covisualizationComponent } from "@khiops-covisualization/app.component";
+import { KhiopsCovisualizationModule } from '@khiops-covisualization/khiops-covisualization.module';
+import { KhiopsVisualizationModule } from '@khiops-visualization/khiops-visualization.module';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
   imports: [
-    BrowserModule
+    BrowserModule,
+	KhiopsVisualizationModule,
+	KhiopsCovisualizationModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: []
 })
-export class AppModule { }
+export class AppModule {
+  constructor(private injector: Injector) {}
+
+  ngDoBootstrap() {
+    const visuElement = createCustomElement(visualizationComponent, {injector: this.injector});
+	const covisuElement = createCustomElement(covisualizationComponent, {injector: this.injector});
+
+	customElements.define('khiops-visualization', visuElement);
+	customElements.define('khiops-covisualization', covisuElement);
+  }
+}

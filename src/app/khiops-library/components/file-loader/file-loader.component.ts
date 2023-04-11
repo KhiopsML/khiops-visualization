@@ -1,8 +1,11 @@
+import { EventsService } from '@khiops-library/providers/events.service';
 import {
 	Component,
 	OnInit,
 	NgZone,
-	Input
+	Input,
+	Output,
+	EventEmitter
 } from '@angular/core';
 import {
 	FileLoaderService
@@ -16,6 +19,7 @@ import {
 import {
 	KhiopsLibraryService
 } from '@khiops-library/providers/khiops-library.service';
+import { ConfigService } from '@khiops-library/providers/config.service';
 
 @Component({
 	selector: 'kl-file-loader',
@@ -27,6 +31,7 @@ export class FileLoaderComponent implements OnInit {
 
 	@Input() applicationName: string;
 	@Input() onFileLoaderDataChanged: Function;
+	@Output('onFileOpen') onFileOpen: EventEmitter<any> = new EventEmitter<any>();
 	fileLoaderDatas: any;
 	isProdMode = false;
 	associationFiles = []
@@ -35,7 +40,9 @@ export class FileLoaderComponent implements OnInit {
 		private fileLoaderService: FileLoaderService,
 		private khiopsLibraryService: KhiopsLibraryService,
 		private snackBar: MatSnackBar,
-		public translate: TranslateService) {
+		public translate: TranslateService,
+		private configService: ConfigService,
+		private eventsService: EventsService) {
 
 		this.fileLoaderDatas = this.fileLoaderService.getDatas();
 		this.isProdMode = this.khiopsLibraryService.getAppConfig().production;
@@ -80,6 +87,10 @@ export class FileLoaderComponent implements OnInit {
 				});
 			}
 		);
+	}
+
+	onClickOpen(inputFile) {
+		!this.configService.config.customFileOpen ? inputFile.click() : this.eventsService.onClickOpenFile();
 	}
 
 	openFileDialog(e) {

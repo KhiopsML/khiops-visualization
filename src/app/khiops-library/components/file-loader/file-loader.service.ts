@@ -7,7 +7,7 @@ import {
 import {
 	KhiopsLibraryService
 } from '../../providers/khiops-library.service';
-
+// import clarinet from "clarinet"
 // import _ from 'lodash';
 // import {
 // 	ElectronService
@@ -170,6 +170,37 @@ export class FileLoaderService {
 		});
 	}
 
+	// public parseJson(source: string) {
+	// 	console.info("parse");
+	// 	const parser = clarinet.parser();
+
+	// 	return new Promise(resolve => {
+	// 		parser.onvalue = (v) => {
+	// 			console.log('value',v);
+	// 		}
+	// 		parser.onopenobject = (key: string) => {
+	// 			console.log('open object',key);
+	// 		}
+	// 		parser.onkey = (key: string) => {
+	// 			console.log('key',key);
+	// 		}
+	// 		parser.onopenarray = () => {
+	// 			console.log('open array');
+	// 		}
+	// 		parser.onclosearray = () => {
+	// 			console.log('close array');
+	// 		 };
+	// 		parser.oncloseobject = () => {
+	// 			console.log('close object');
+	// 		};
+	// 		parser.onend = function () {
+	// 			console.info('parse end')
+	// 			resolve({});
+	// 		};
+	// 		parser.write(source).close();
+	// 	});
+	// }
+
 	readFile(filename): any {
 
 		this.fileLoaderDatas.datas = undefined;
@@ -180,8 +211,9 @@ export class FileLoaderService {
 			let reader = new FileReader()
 
 			reader.addEventListener('loadend', async (e) => {
+				console.log(e.target.result.toString().length);
 				this.fileLoaderDatas.isLoadingDatas = false;
-				this.fileLoaderDatas.datas = JSON.parse(e.target.result.toString());
+				this.fileLoaderDatas.datas = await JSON.parse(e.target.result.toString());
 				this.fileLoaderDatas.datas.filename = filename;
 				resolve(this.fileLoaderDatas.datas);
 			});

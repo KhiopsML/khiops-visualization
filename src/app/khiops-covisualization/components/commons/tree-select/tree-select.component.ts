@@ -8,7 +8,9 @@ import {
 	OnChanges,
 	SimpleChanges,
 	AfterViewInit,
-	Input
+	Input,
+	ViewChild,
+	ElementRef
 } from '@angular/core';
 import _ from 'lodash';
 
@@ -52,6 +54,8 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 	@Input() detectChange: any;
 	@Input() position: number;
 	@Input() dimensionsTree: any;
+
+	@ViewChild('treeView') treeView: ElementRef<HTMLElement>;
 
 	treeSelectedNodeChangedSub: any;
 
@@ -134,8 +138,9 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 	}
 
 	initTree(selectedNode ? ) {
+		console.log(this.treeView);
 		// @ts-ignore
-		this.tree = new TreeView(this.dimensionsTree, 'tree_' + this.position);
+		this.tree = new TreeView(this.dimensionsTree, this.treeView.nativeElement);
 
 		this.tree.on('init', (e) => {
 			if (!selectedNode) {

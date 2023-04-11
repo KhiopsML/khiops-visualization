@@ -1,4 +1,4 @@
-<div fxLayout="column" id="tree-hyper-comp" id="tree-hyper-comp" fxFlex [ngClass]="{'fullscreen': isFullscreen}">
+<div fxLayout="column" id="tree-hyper-comp" id="tree-hyper-comp" fxFlex [ngClass]="{'fullscreen': isFullscreen}" #hyperTree>
 	<div id="graph-header-comp" fxLayoutAlign="start center" class="mat-elevation-z1">
 		<h1 fxFlex>{{ 'GLOBAL.HYPER_TREE' | translate }}</h1>
 		<app-select-toggle-button *ngIf="distributionDatas && distributionDatas.treeHyperDisplayedValues"

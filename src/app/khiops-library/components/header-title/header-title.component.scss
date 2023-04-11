@@ -16,14 +16,14 @@
 		font-size: 1rem;
 		margin-left: 0.4em;
 		font-weight: 300;
-		color: mat-color($primary);
+		color: map_get($md-khiopsmain, 500);
 		margin-top: 2px;
 
 		strong {
 			font-size: 1.1rem;
 			font-weight: 500;
 			text-transform: uppercase;
-			color: darken(mat-color($primary), 20%);
+			color: darken(map_get($md-khiopsmain, 500), 20%);
 		}
 	}
 

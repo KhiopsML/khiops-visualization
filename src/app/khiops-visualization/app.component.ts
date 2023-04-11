@@ -1,7 +1,13 @@
+import { ConfigModel } from './../khiops-library/model/config.model';
+import { EventsService } from '@khiops-library/providers/events.service';
 import {
 	Component,
 	OnInit,
 	OnDestroy,
+	Input,
+	Output,
+	EventEmitter,
+	ViewEncapsulation,
 } from '@angular/core';
 // import {
 // 	ElectronService
@@ -26,6 +32,7 @@ import {
 import {
 	AppService
 } from './providers/app.service';
+import { ConfigService } from '@khiops-library/providers/config.service';
 // import {
 // 	UtilsService
 // } from '@khiops-library/providers/utils.service';
@@ -42,9 +49,22 @@ import {
 
 @Component({
 	selector: 'app-root-visualization',
-	templateUrl: './app.component.html'
+	templateUrl: './app.component.html',
+	styleUrls: ['./app.component.scss'],
+	encapsulation: ViewEncapsulation.ShadowDom
 })
 export class AppComponent implements OnInit, OnDestroy {
+
+	@Input() appdatas: any;
+	@Input()
+	public get config(): ConfigModel {
+		return this.configService.config;
+	}
+	public set config(value: ConfigModel) {
+		this.configService.config = value;
+	}
+	@Output('onFileOpen') onFileOpen: EventEmitter<any> = new EventEmitter<any>();
+	@Output('onCustomEvent') customEvent: EventEmitter<string> = new EventEmitter();
 
 	constructor(
 		private dialogRef: MatDialog,
@@ -52,9 +72,14 @@ export class AppComponent implements OnInit, OnDestroy {
 		private appService: AppService,
 		private khiopsLibraryService: KhiopsLibraryService,
 		// private electronService: ElectronService,
-		private translate: TranslateService) {
+		private translate: TranslateService,
+		private configService: ConfigService,
+		private eventsService: EventsService) {
 		// console.log('AppConfig', AppConfig);
 		this.appService.initialize();
+
+		this.eventsService.clickOpenFile.subscribe(() => this.onFileOpen.emit());
+		this.eventsService.customEvent.subscribe((eventName) => this.customEvent.emit(eventName));
 
 		// TODO remove electron
 		// if (this.electronService.isElectron()) {

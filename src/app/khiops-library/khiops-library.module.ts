@@ -1,3 +1,5 @@
+import { EventsService } from './providers/events.service';
+import { ConfigService } from './providers/config.service';
 import {
 	NgModule,
 	APP_INITIALIZER
@@ -198,6 +200,7 @@ import {
 import {
 	BtnFullscreenComponent
 } from './components/btn-fullscreen/btn-fullscreen.component';
+import EnTransaltion from "../../i18n/en.json";
 
 @NgModule({
 	imports: [
@@ -237,7 +240,8 @@ import {
 		ResizableModule,
 		HotkeyModule.forRoot(),
 		TranslateModule.forRoot({
-			activeLang: 'en'
+			activeLang: 'en',
+			supportedLangs: ['en']
 		})
 	],
 	declarations: [
@@ -273,6 +277,8 @@ import {
 		ReleaseButtonComponent
 	],
 	providers: [
+		ConfigService,
+		EventsService,
 		TranslateService,
 	],
 	exports: [
@@ -335,4 +341,8 @@ import {
 		ReleaseButtonComponent
 	]
 })
-export class KhiopsLibraryModule {}
+export class KhiopsLibraryModule {
+	constructor(private translate: TranslateService) {
+		translate.use('en', EnTransaltion);
+	}
+}

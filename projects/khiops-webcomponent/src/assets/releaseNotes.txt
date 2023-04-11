@@ -1,0 +1,461 @@
+
+
+	RELEASE 9.15.3 :
+
+	
+
+	RELEASE 9.15.2 :
+
+	
+
+	RELEASE 9.15.1 :
+
+	
+
+	RELEASE 9.15.0 :
+
+	826507cc2 - 15-12-2020 11:11 : Add auto updater.
+ea5c79eca - 11-12-2020 10:38 : Add tree preparation view.
+9e83eddde - 11-12-2020 10:19 : Update extensions files to khvj.
+4f4ba0e01 - 11-12-2020 10:14 : Add short description information.
+f21bb041f - 11-12-2020 09:42 : Add new summary informations.
+
+
+	RELEASE 9.14.12 :
+
+	9f758f55e - 30-11-2020 13:13 : Improve table header options.
+a95ec3746 - 25-11-2020 11:37 : Display grid pagination dynamically.
+e88dc3176 - 25-11-2020 11:00 : Show grid pagination only if usefull.
+ff71665e4 - 25-11-2020 10:13 : Improve grids tools.
+
+
+	RELEASE 9.14.10 :
+
+	b0c98696d - 23-10-2020 16:07 : Chart scaling optimizations.
+
+
+	RELEASE 9.14.9 :
+
+	d252f32b6 - 21-10-2020 09:13 : Improve charts performances.
+
+
+	RELEASE 9.14.8 :
+
+	5dc871691 - 29-09-2020 10:08 : Fix Limit big tables datas.
+
+
+	RELEASE 9.14.7 :
+
+	840c82bef - 08-09-2020 14:33 : Fix close current dialog on menu action.
+
+
+	RELEASE 9.14.6 :
+
+	232133f50 - 25-08-2020 16:43 : Reinit list paginator when variable change.
+
+
+	RELEASE 9.14.5 :
+
+	dcf6951a4 - 25-08-2020 09:52 : Fix preparation view crash with lot of partition datas.
+d7b9aa56f - 24-08-2020 16:23 : Update to Angular 10.
+0ed31f729 - 28-07-2020 19:54 : Update to Electron 9.
+
+
+	RELEASE 9.14.4 :
+
+	31db64502 - 27-07-2020 09:45 : Fix empty target value on evaluation lift curve graph.
+
+
+	RELEASE 9.14.3 :
+
+	e67163a08 - 25-06-2020 14:20 : Fix graph axis label paddings.
+
+
+	RELEASE 9.14.2 :
+
+	89b2f0f8a - 08-06-2020 12:52 : Fix variable stats table cells with special chars resizing.
+
+
+	RELEASE 9.14.1 :
+
+	de7342053 - 03-06-2020 15:44 : Fix variable stats table cells resizing.
+6cc8c0225 - 15-04-2020 10:22 : Save last selected cell into json.
+53ace37fd - 15-04-2020 10:08 : Save last selected 2d variable into json.
+4f5898c03 - 15-04-2020 09:57 : Save last selected variable into json.
+446928e52 - 07-04-2020 08:54 : Update Angular to version 9.
+
+
+	RELEASE 9.14.0 :
+
+	33a79c4a7 - 10-03-2020 19:14 : Initial version of multi-module app.
+7653bf13e - 05-03-2020 13:59 : Fix title bar on Mac.
+a6e6e27d3 - 03-03-2020 15:47 : Optimize Electron packaging.
+5bf0713ef - 25-02-2020 14:00 : Add association files on Windows, Mac and Linux.
+8096ccbf8 - 19-02-2020 17:12 : Update to Electron 8.
+e3a8b53e3 - 07-02-2020 14:06 : Fix matrix contribution when target.
+5c577b728 - 07-02-2020 11:04 : Add toggle zero exceptions button for matrix probabilities.
+2fec59fe0 - 04-02-2020 09:52 : Add target variable informations component in regression case.
+9047eb8be - 16-01-2020 11:19 : Manage matrix navigation with keyboard.
+
+
+	RELEASE 9.13.0 :
+
+	9d2133eac - 11-12-2019 09:09 : Convert Graph Component from library.
+5dfe72303 - 11-12-2019 09:09 : Convert Matrix Component from library.
+76210d09d - 11-12-2019 09:07 : Manage only evaluation json case.
+c871771f4 - 19-11-2019 09:51 : Fix level distribution copy image.
+027415d46 - 07-11-2019 16:35 : Fix empty level distribution graph in some cases.
+075369dea - 06-11-2019 17:48 : Manage case of 0 preparation variable.
+bc91d4f3f - 06-11-2019 17:34 : Fix Keep brackets into interval table for numerical values.
+41fe97d2b - 06-11-2019 16:59 : Fix empty interal when value is 0.
+e438d0c49 - 06-11-2019 14:15 : Manage explanatory variable use case.
+5a06839d5 - 06-11-2019 10:46 : Enable Evaluation report alone case.
+69ced3ac1 - 06-11-2019 10:30 : Optimize legend component size.
+c1c512341 - 05-11-2019 15:54 : Update to Electron 7.
+9fbab7d72 - 04-11-2019 15:34 : Optimize level distribution graph rendering.
+
+
+	RELEASE 9.12.4, origin/9.12.4, origin/0.12.3, 9.12.4, 0.12.3 :
+
+	05ab3695a - 30-10-2019 17:07 : Hide missing number on categorical variables.
+
+
+	RELEASE 9.12.3, old-origin/0.12.3 :
+
+	d88a395b5 - 30-10-2019 16:26 : Add coverage mode into preparation table.
+58fe08886 - 30-10-2019 15:29 : Fix empty table value when 0.
+3dd3c354c - 30-10-2019 14:59 : Optimize distribution charts rendering.
+
+
+	RELEASE 9.12.2 :
+
+	59f5a884b - 29-10-2019 11:19 : Fix lift curve selection select box.
+18098d27a - 29-10-2019 09:57 : Fix Matrix informations inverted.
+82c33f765 - 28-10-2019 17:37 : Fix preparation grid column names selection.
+599deefac - 28-10-2019 17:04 : Fix modeling graph broken when no variable details.
+a397d4f05 - 28-10-2019 16:05 : Fix Allow user to decline update.
+567e3b477 - 04-10-2019 10:12 : FIX launch issue in web mode.
+
+
+	RELEASE 9.12.1 :
+
+	6806f5e80 - 02-10-2019 15:18 : Give a matrix interval of 5% if missing.
+
+
+	RELEASE 9.12.0 :
+
+	96b1b65ae - 02-10-2019 15:07 : Fix empty train or test evaluation report case.
+
+
+	RELEASE 9.11.3 :
+
+	ca29d8a56 - 25-09-2019 09:48 : Update to Electron 6.
+f090c2d26 - 31-07-2019 08:50 : Update to Electron 5 and Angular 8.
+0a0620dc8 - 05-06-2019 17:28 : Manage case of incompatible file.
+
+
+	RELEASE 9.11.2 :
+
+	ad3ac8264 - 05-06-2019 14:57 : Fix windows sizes at first init.
+fd1bd327b - 05-06-2019 14:35 : Fix windows sizes at first app launch.
+
+
+	RELEASE 9.11.1 :
+
+	0c2f6f551 - 04-06-2019 09:10 : Update app icons.
+1079b1ebc - 29-05-2019 15:02 : Fix default local storage values issue.
+
+
+	RELEASE 9.11.0 :
+
+	9a6053b3c - 23-05-2019 10:13 : Fix matrix and graph bindings with pagination.
+07faaface - 22-05-2019 10:14 : Fix interval datas update on pagination changed.
+eed0abdc7 - 21-05-2019 17:31 : Fix distribution graphs pagination.
+e078ad919 - 20-05-2019 11:04 : Fix build icon image cropped issue.
+
+
+	RELEASE 9.10.0 :
+
+	c6324ebe9 - 17-05-2019 16:49 : Fix evaluation target lift graph axis datas in regression case.
+bffc8db7c - 17-05-2019 11:49 : Refactor numbers precision display.
+7c47a564b - 16-05-2019 17:29 : Add reverse proba into matrix combobox.
+5c92dfcde - 16-05-2019 17:05 : Keep bar charts index in memory on option change.
+35cf7e201 - 16-05-2019 15:34 : Bind events from matrix cells to distribution graph.
+be4088dfc - 16-05-2019 11:48 : Add loader during bar charts rendering.
+c8b393bf2 - 16-05-2019 09:18 : Better managment of x axis labels bar charts.
+4fceb2cad - 15-05-2019 16:50 : Fix matrix cell datas when axis is inverted.
+9ac0a8d07 - 14-05-2019 16:19 : Bind events from distribution graph to matrix cells.
+
+
+	RELEASE 9.9.1 :
+
+	bdcf0a389 - 13-05-2019 16:46 : Fix matrix cell datas when axis is inverted.
+7da044f4e - 13-05-2019 10:58 : Manage bar charts padding in percent.
+
+
+	RELEASE 9.9.0 :
+
+	aa23c285c - 10-05-2019 16:57 : Fix global variables initialization.
+8c71f8b86 - 10-05-2019 14:47 : Fix current cell description for numerical intervals.
+81aca4415 - 10-05-2019 14:16 : Fix hide target distribution graph for bivar desc.
+f5bf6da10 - 10-05-2019 09:20 : Better managment of xaxis target lift graph.
+bd3945a50 - 09-05-2019 10:59 : Manage auto update releases.
+d59c438c9 - 09-05-2019 10:37 : Add app version into the home page.
+
+
+	RELEASE 9.8.2 :
+
+	6f6e091a4 - 26-04-2019 15:01 : Fix non common cases matrix in modeling and preparation2d view.
+dd326bb3d - 25-04-2019 13:30 : Fix matrix cell datas in regression mode.
+030b184dd - 24-04-2019 17:52 : Fix matrix target selection.
+f82122d0c - 24-04-2019 17:05 : Fix matrix cell informations issue.
+d18c5d5e5 - 23-04-2019 14:58 : Fix Get interval datas array values.
+
+
+	RELEASE 9.8.1 :
+
+	4a1007b85 - 10-04-2019 09:18 : Fix distribution graphs bar axis names.
+
+
+	RELEASE 9.8.0 :
+
+	4accc7283 - 03-04-2019 17:22 : Add Lift information for preparation 2d target distribution graph.
+11027f1d2 - 03-04-2019 11:26 : Set matrix default contrast into settings panel.
+3189f5dab - 03-04-2019 10:28 : Add distribution graph with matrix for regression use cases.
+a1fd7d029 - 02-04-2019 16:12 : Add regression matrix into preparation and modeling view.
+514cb1e84 - 02-04-2019 15:18 : Add cells matrix details for regression case.
+394fb60c7 - 22-03-2019 11:36 : Update evaluation view in regression mode.
+5eb51414c - 22-03-2019 10:52 : Fix probability matrix computing.
+
+
+	RELEASE 9.7.0 :
+
+	33abbc4e4 - 20-03-2019 10:34 : Keep max y graph value on pagination change.
+f9aad80f9 - 19-03-2019 18:03 : Add pagination into distribution graphs.
+b23e2cacf - 19-03-2019 15:33 : Fix compute graph values percents according to the global datas.
+26efb2886 - 19-03-2019 11:32 : Display Matrix P_Cell_Target.
+8775355b4 - 18-03-2019 15:28 : Refactor matrix select input and compute P_Target_Cell.
+6a7a34835 - 13-03-2019 11:41 : Fix remove target if cell interests is selected.
+81a6177ed - 12-03-2019 14:48 : Hide matrix mode button when cells are displayed.
+732b319d3 - 12-03-2019 10:55 : Add target distribution graph of matrix cell if target available.
+ae9b100fd - 11-03-2019 16:57 : Add target distribution graph details of one cell.
+5c37acae2 - 11-03-2019 14:43 : Add cell interest matrix informations.
+c944a8fb6 - 11-03-2019 10:54 : Change position of matrix toggle mode.
+2e0c3b2b4 - 06-03-2019 10:41 : Add current frequency into target matrix.
+5455862cd - 22-02-2019 11:26 : Add matrix target selection if available.
+50ad7a822 - 21-02-2019 14:39 : Refactor matrix contrast colorisation.
+ccde1e10f - 20-02-2019 15:48 : Update libs versions.
+
+
+	RELEASE 9.6.0 :
+
+	a6330f6a9 - 20-02-2019 10:36 : Show truncated information for bar charts.
+e2a562e0d - 20-02-2019 09:56 : Fix gain chart init after label selection and filter change.
+af1330b5f - 19-02-2019 17:40 : Add all trash group items informations into preparation table.
+af0a42ec5 - 19-02-2019 17:01 : Add 2 ways matrix probabilities.
+65f75a701 - 19-02-2019 11:24 : Always display population percent into lift curve tooltip.
+f2800d03c - 19-02-2019 11:01 : Fix confusion matrix table values on coverage mode.
+ec86a062c - 18-02-2019 17:33 : Fix frequency and coverage distribution graph values.
+b6042d72f - 18-02-2019 15:52 : Enable copy matrix datas.
+2f8ec5ac9 - 18-02-2019 15:20 : Enable copy matrix image.
+2f3797ad3 - 12-02-2019 11:28 : Add cells details list informations.
+ec8937800 - 06-02-2019 15:56 : Add current cell arrays informations.
+b28d7a90b - 05-02-2019 10:38 : Add matrix P and I informations.
+ae97397b9 - 01-02-2019 15:44 : Compute contributions matrix values.
+7a8fd33c7 - 01-02-2019 11:36 : Compute probabilities for each matrix cell.
+3164472ee - 01-02-2019 10:06 : Refactor matrix datas computings.
+
+
+	RELEASE 9.5.0 :
+
+	77909f50b - 24-01-2019 17:02 : Change select matrix type button to toggle button.
+19072951e - 24-01-2019 11:48 : Generate matrix in standard and frequency mode with reverse function.
+6c6fac7d4 - 21-01-2019 15:22 : Fix copy level distribution datas.
+c3ae85358 - 21-01-2019 11:21 : Fix add % into target lift label axis.
+51a177612 - 21-01-2019 11:20 : Fix add $ into confusion matrix for coverage values.
+08eabcba1 - 21-01-2019 10:51 : Fix update lift curve selection graph.
+072ee0128 - 21-01-2019 10:23 : Change smooth lift curve min value to 1.
+eef68df1b - 21-01-2019 10:17 : Search into lists from 1 char.
+1734cb5e1 - 17-01-2019 16:31 : Add invert matrix axis functionnality.
+1d4f6686c - 17-01-2019 15:16 : Add Coocurence matrix component.
+a2906cebb - 15-01-2019 18:47 : Add categorical and numerical matrix types.
+061ab18c7 - 15-01-2019 14:02 : Add preparation 2d variables list.
+d06d94ad4 - 15-01-2019 12:06 : Add preparation 2d tab view.
+073e7c6ec - 15-01-2019 10:46 : Manage descriptive analysis use case.
+a97525a23 - 14-01-2019 18:19 : Always display all legend items.
+e62329782 - 14-01-2019 16:50 : Improve screenshot generation.
+faef953b4 - 14-01-2019 10:45 : Put limit charts datas into settings panel.
+bed841e13 - 11-01-2019 22:07 : Adapt UI with font size user setting.
+
+
+	RELEASE 9.4.0 :
+
+	a5bd912c6 - 11-01-2019 17:05 : Add REC curves graph for regression datas.
+34920b38a - 11-01-2019 15:14 : Manage empty cases for regression input datas.
+178c40662 - 11-01-2019 14:50 : Manage input file case with only preparation datas.
+b8302b98e - 11-01-2019 11:54 : Add line charts copy datas to clipboard.
+249120791 - 11-01-2019 11:17 : Add bar charts copy datas to clipboard.
+2d3b9e198 - 11-01-2019 10:41 : Add table copy datas to clipboard.
+09be0a2d2 - 10-01-2019 15:44 : Fix Modeling graph hidden after trained predictor combo changed with no datas.
+e7a38e9a2 - 10-01-2019 15:33 : Fix init selected area on tab changed.
+83934a854 - 10-01-2019 14:49 : Add user settings panel.
+b54bbb4d0 - 09-01-2019 18:22 : Add settings navdrawer.
+05aca6959 - 09-01-2019 16:31 : Add legend and select toggle into lift curve chart.
+089f11d80 - 09-01-2019 16:27 : Fix select all toggle to update legend.
+aa1a39780 - 09-01-2019 15:16 : Show random lift evaluation datas.
+5f8cb38c6 - 09-01-2019 14:27 : Add Lift curve evaluation graph.
+7ec4f2dfd - 08-01-2019 18:19 : Add coverage datas into confusion matrix table.
+777ae2e3e - 08-01-2019 17:42 : Add optimal datas into confusion matrix.
+4d43cef0d - 08-01-2019 16:00 : Add confusion matrix table.
+53dec322f - 08-01-2019 15:03 : Add optimal information into predictor table.
+0472f3515 - 07-01-2019 10:40 : Manage selections of evaluation view lists.
+61dc21eef - 07-01-2019 10:02 : Keep graph scale value into memory.
+f23c9e4a9 - 24-12-2018 13:55 : Fix set selected list item when list is sorted.
+3271b33b9 - 24-12-2018 12:00 : Fix max limit slider value update on variable change.
+415d8f8d7 - 21-12-2018 16:15 : Update electrron to 4.0.0.
+69cc88821 - 21-12-2018 14:55 : Add predictor evaluations table into evaluation view.
+1b43711b8 - 21-12-2018 11:22 : Add tag into releaseNotes.
+38e6c6602 - 20-12-2018 18:48 : Add target distribution graph into evaluation view.
+0b00c8927 - 20-12-2018 18:30 : Add evaluation view type selection table.
+0d26d9257 - 20-12-2018 18:30 : Add variable list optional view settings.
+571c5acd9 - 20-12-2018 17:37 : Add simple table evaluation types summary.
+804b8ffcc - 20-12-2018 14:40 : Manage no predictors details cases.
+31d3be57b - 20-12-2018 14:33 : Hide bottom area if no derivation rules informations.
+4883dacf1 - 20-12-2018 13:41 : Add select/unselect all function to target distribution checkbox graph.
+
+
+	RELEASE 9.3.0 :
+
+	16cf8c65e - 19-12-2018 14:33 : Update legends to be scrollables.
+e1d8bb2df - 19-12-2018 13:49 : Update legend content according to the input.
+908fab5aa - 19-12-2018 11:59 : Add current interval table component into modeling view.
+490af6ddc - 19-12-2018 11:43 : Update x axis legend text length.
+9f46ee7bf - 19-12-2018 11:33 : Fix x axis distribution graph legend content.
+3455f3ea9 - 19-12-2018 11:17 : Update graph padding according to the count of series.
+a0b2271a4 - 19-12-2018 11:07 : Hide % on lift graph.
+ce86185ea - 19-12-2018 11:02 : Update graph length when source length changed.
+371924dc0 - 19-12-2018 10:20 : Manage to fixed decimal into configuration.
+64a63a8f8 - 18-12-2018 17:36 : Convert variable graphs into a common component.
+51709211b - 18-12-2018 15:49 : Add grouped legends component when lot of legends.
+b76ae0a8f - 18-12-2018 15:22 : Fix update graph when max limit as changed.
+9218442ce - 18-12-2018 15:03 : No data message when no predictor details.
+69780cb7c - 18-12-2018 14:39 : Initialize table row selection.
+e346359c4 - 18-12-2018 14:21 : Update row and paginator according to the selected variable.
+908cf8afa - 18-12-2018 11:40 : Initialize lists selection values.
+c659eeb0e - 18-12-2018 11:15 : Manage same selection variable of preparation and modeling lists.
+fee82be07 - 18-12-2018 10:06 : Compute list available columns to display.
+9160e1404 - 18-12-2018 09:51 : Add select trained predictor and update common list components.
+2d8655890 - 17-12-2018 17:29 : Remove modeling description split area.
+6b9fb7d79 - 17-12-2018 17:10 : Add selected predictor component.
+e3d77a7f8 - 17-12-2018 15:45 : Add modeling list and convert list into more generic component.
+6d254ab71 - 17-12-2018 14:56 : Manage selectable tab options from conf.
+fcf5a2589 - 17-12-2018 13:16 : Better managment of tabs.
+26b1ba7ad - 17-12-2018 10:44 : Keep selected preparation variable into memory.
+19953849b - 07-12-2018 18:06 : Update current interval component to work with Categorical datas.
+5b4000c6f - 07-12-2018 15:52 : Compute list columns into component.
+
+
+	RELEASE 9.2.0 :
+
+	eb04f4f71 - 05-12-2018 11:46 : Optimize charts bars paddings.
+d2ce89b4f - 05-12-2018 11:39 : Manage distribution graph limits according to the current data length.
+4aad5db5e - 05-12-2018 10:25 : Remove informations component into project view.
+9cfa6ac1f - 05-12-2018 10:25 : Manage empty datas cases.
+bb5cbf2fb - 04-12-2018 17:31 : Fix distribution value to get all dimensions.
+bec974cff - 04-12-2018 17:07 : Initialize all services on file change.
+d81385e11 - 04-12-2018 16:31 : Add modeling header components.
+4f0bf0dad - 04-12-2018 15:18 : Add loader during preparation view loading.
+c2c2985c1 - 04-12-2018 11:39 : Add legend component on each graph.
+9ee620dce - 04-12-2018 10:15 : Init target distribution graph selection on values change.
+913f97549 - 04-12-2018 10:01 : Hide target distribution bar chart if combo unselected.
+c1ee5bea1 - 03-12-2018 15:43 : Add level distribution graph.
+850be8c66 - 03-12-2018 09:55 : Unmock current interval value.
+c2e2aa11d - 30-11-2018 18:57 : Compute target distribution lift graph datas.
+c4b1fdb36 - 30-11-2018 16:31 : Dont redraw graph on limit initilialization.
+9423457e4 - 30-11-2018 15:41 : Add target distribution graph values combo selection.
+cb5cb9417 - 30-11-2018 11:28 : Update graph selection on target distrivution type change.
+1d20797f4 - 27-11-2018 17:15 : Limit graph datas length.
+a7c5f6f52 - 26-11-2018 18:08 : Change Detection Strategy.
+c4bbc8c3f - 26-11-2018 17:14 : Format graph tooltips.
+bd1ac3b83 - 26-11-2018 16:43 : Add target distribution type combo.
+7e7e53266 - 26-11-2018 16:34 : Translate graph title dynamically.
+44c4cd548 - 26-11-2018 16:18 : Scale charts according to the slider.
+aedbfa1fa - 26-11-2018 16:00 : Fix distribution x axis when data is missing.
+499fa18ae - 26-11-2018 10:33 : Compute target distribution dimension dynamically.
+ced74791b - 21-11-2018 19:14 : Synchronize 2 div scroll.
+497e1cb92 - 21-11-2018 17:37 : convert distribution graphs into common component.
+08689a5bb - 21-11-2018 17:10 : Manage distribution graph width scrolling.
+f451b3428 - 21-11-2018 14:58 : Update distribution variable tooltip informations.
+d5e91de4d - 21-11-2018 14:58 : Update target variable tooltip informations.
+71a811c9d - 21-11-2018 14:13 : Update distribution graph tooltip datas.
+278e48080 - 21-11-2018 09:34 : Synchronized selected bars on graphs.
+682c56be4 - 20-11-2018 11:57 : Add opened files history to menu.
+83be3201a - 19-11-2018 18:17 : Rename distribution graph and add type combobox.
+830bed56c - 19-11-2018 17:14 : Use no data global component.
+d07981934 - 19-11-2018 17:07 : Refactor services.
+67ab1a5e8 - 19-11-2018 16:37 : Add internal coverage graph.
+7be679789 - 19-11-2018 11:39 : Unmock target distribution graph.
+c7b0348c1 - 15-11-2018 17:37 : Disable electron on Browser.
+06cd2b2e7 - 15-11-2018 13:16 : Add header title component.
+479b8022b - 15-11-2018 09:05 : Fix release notes script.
+1e72d9bc6 - 14-11-2018 17:26 : Move common app datas service into lib.
+0efb5de1f - 14-11-2018 15:12 : Fix translate pipe and organize code.
+27650ea2d - 13-11-2018 19:17 : Move header tools to lib.
+186488095 - 13-11-2018 19:03 : Move release notes to lib.
+384dba2cb - 13-11-2018 18:32 : Add library version.
+000d89dae - 13-11-2018 18:24 : Manage common style into lib.
+cf225f08e - 13-11-2018 15:07 : Convert to ngstack translate lib.
+7a15bc664 - 12-11-2018 12:50 : Move i18n into lib.
+ad32c780b - 12-11-2018 11:21 : Load scss theme from common lib.
+0100e2a87 - 09-11-2018 22:33 : Fix windows exe build.
+ddcd793c3 - 09-11-2018 18:53 : Load selectable module from lib.
+6a94f5470 - 09-11-2018 14:29 : Break code into one app and library.
+9eb922c46 - 08-11-2018 14:14 : Update application icon.
+16e36633f - 07-11-2018 18:56 : Close a file.
+7732a28b5 - 07-11-2018 18:27 : Allow user to choose columns into table.
+d72982ef5 - 07-11-2018 17:59 : Add and remove columns into variable table.
+453d8f795 - 07-11-2018 15:59 : Add project view informations.
+1def28fdb - 07-11-2018 14:42 : Restart app function.
+5b0e0cb87 - 07-11-2018 11:27 : Add load file component.
+9d7104c4c - 06-11-2018 11:59 : Get colors from material theme.
+f4aa70f7d - 06-11-2018 11:59 : Update lib versions.
+5c5f7377a - 05-11-2018 15:41 : Add variblae charts header title and tools.
+442c4e238 - 05-11-2018 10:37 : Unmock current interval component.
+d6e3d511c - 31-10-2018 17:08 : Frequency and distributions graphs.
+92b7da506 - 31-10-2018 10:59 : Manage keyboard navigation on the list only when selected.
+f489e1b88 - 31-10-2018 10:47 : Copy datas from selection.
+4f93e5685 - 31-10-2018 10:05 : Repaint all graph on screenshot.
+9d42aba54 - 31-10-2018 09:52 : Screenshot areas.
+
+
+	RELEASE 9.1.0 :
+
+	8f1a23f15 - 31-10-2018 09:09 : Manage selectable area.
+e5f27dced - 25-10-2018 10:08 : Manage selected area in global.
+01612754a - 25-10-2018 10:07 : Add snack on screenshot copied to clipboard.
+7342e4195 - 25-10-2018 09:54 : Screenshot one div to clipboard.
+631c17b87 - 24-10-2018 13:45 : Translate menu.
+d52d4e666 - 24-10-2018 13:31 : Open debugger only in dev mode.
+ae6141a94 - 24-10-2018 13:30 : Update electron lib.
+edec6838b - 23-10-2018 16:44 : Sort variables table and go to first page on change.
+563bf6927 - 23-10-2018 16:41 : Sort variables table and go to first page on change.
+21ae3809d - 23-10-2018 16:03 : Update name and derivation rule according to the keyboard navigation.
+ecffda802 - 23-10-2018 15:37 : Add poppins font locally.
+704377824 - 12-10-2018 16:54 : Table keyboard selection.
+694294cb0 - 12-10-2018 16:16 : Add release notes informations.
+e38b00459 - 11-10-2018 17:27 : Get sizes from service.
+e5557112d - 11-10-2018 17:09 : Add target variable graph.
+1a58e741f - 11-10-2018 14:23 : Add generic informations component.
+c5e9d174d - 11-10-2018 11:36 : Add fx layout lib and preparation infos component.
+aa9a93e33 - 11-10-2018 10:12 : Splitsize into local storage.
+7d1bf5ef6 - 10-10-2018 16:49 : Tabs skeleton.
+7eaee8844 - 10-10-2018 14:15 : Navigation Style.
+7fef0d97b - 10-10-2018 11:50 : Optimize navigation.
+4f294c271 - 10-10-2018 11:28 : Add modeling view and optimize navigation.
+8f1d3a738 - 09-10-2018 16:02 : Try lazyload tabs.
+3e6cf6a67 - 09-10-2018 15:25 : Try to navigate into table with key.
+c61c06788 - 28-09-2018 17:19 : Fix release build.
+d1060939e - 28-09-2018 14:39 : Clean.
+6e07d423f - 28-09-2018 14:30 : Manage paginator and search into the list.
+3b06ca3b8 - 28-09-2018 14:30 : Add font json and icons into assets.
+

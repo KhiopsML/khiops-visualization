@@ -9,7 +9,9 @@ import {
 	Output,
 	SimpleChanges,
 	AfterViewInit,
-	Input
+	Input,
+	ViewChild,
+	ElementRef
 } from '@angular/core';
 import _ from 'lodash';
 import TreeView from '@khiops-library/libs/treeview/treeview';
@@ -46,6 +48,9 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 	@Input() dimensionTree: any;
 
 	@Output() selectTreeItemChanged: EventEmitter < any > = new EventEmitter();
+
+	@ViewChild('treeView') treeView: ElementRef<HTMLElement>;
+
 	treeSelectedNodeChangedSub: any;
 	componentType = 'kvtree'; // needed to copy datas
 	tree: any;
@@ -93,7 +98,7 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 	}
 
 	initialize() {
-
+		if (!this.treeView) return;
 		// At launch check if there are saved selected nodes into inpout
 		const savedSelectedNodes = this.appService.getSavedDatas('selectedNodes');
 		if (savedSelectedNodes) {
@@ -106,7 +111,7 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 	initTree(selectedNodes ? ) {
 
 		// @ts-ignore
-		this.tree = new TreeView(this.dimensionTree, 'tree_' + this.position, {
+		this.tree = new TreeView(this.dimensionTree, this.treeView.nativeElement, {
 			disableCollapse: true,
 			disableUpdateName: true
 		});

@@ -23,7 +23,13 @@
       "@khiops-library/*": ["./src/app/khiops-library/*"],
       "@khiops-hypertree/*": ["./libs/khiops-hypertree/dist/*"],
       "@khiops-visualization/*": ["./src/app/khiops-visualization/*"],
-      "@khiops-covisualization/*": ["./src/app/khiops-covisualization/*"],
+      "@khiops-covisualization/*": [
+        "./src/app/khiops-covisualization/*"
+      ],
+      "khiops-visualization-components": [
+        "dist/khiops-visualization-components/khiops-visualization-components",
+        "dist/khiops-visualization-components"
+      ],
 	  "stream": ["./node_modules/stream-browserify"],
     }
   },

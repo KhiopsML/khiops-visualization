@@ -23,20 +23,20 @@
 		transition: color 0.2s ease, background-color 0.2s ease, transform 0.3s ease;
 
 		mat-icon {
-			color: mat-color($warn, 500);
+			color: $redMain;
 		}
 	}
 
 	button.invert-axis.toggled-false {
-		background: mat-color($warn, 50);
+		background: #FFEBEE;
 
 		mat-icon {
-			color: mat-color($primary, 600) !important;
+			color: map_get($md-khiopsmain, 600) !important;
 		}
 	}
 
 	button.invert-axis.toggled-true {
-		background: mat-color($primary, 600) !important;
+		background: map_get($md-khiopsmain, 600) !important;
 		transform: rotate(-90deg);
 
 		mat-icon {
@@ -45,15 +45,15 @@
 	}
 
 	button.toggle-zero.toggled-false {
-		background: mat-color($warn, 50);
+		background: #FFEBEE;
 
 		mat-icon {
-			color: mat-color($primary, 600) !important;
+			color: map_get($md-khiopsmain, 600) !important;
 		}
 	}
 
 	button.toggle-zero.toggled-true {
-		background: mat-color($primary, 600) !important;
+		background: map_get($md-khiopsmain, 600) !important;
 		transform: rotate(-180deg);
 
 		mat-icon {

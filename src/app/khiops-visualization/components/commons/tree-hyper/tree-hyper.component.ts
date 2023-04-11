@@ -8,7 +8,9 @@ import {
 	EventEmitter,
 	SimpleChanges,
 	AfterViewInit,
-	Input
+	Input,
+	ViewChild,
+	ElementRef
 } from '@angular/core';
 import _ from 'lodash';
 import {
@@ -56,6 +58,9 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 	@Input() displayedValues: any;
 	@Output() selectTreeItemChanged: EventEmitter < any > = new EventEmitter();
 	@Output() treeHyperDisplayedValuesChanged: EventEmitter < any > = new EventEmitter();
+
+	@ViewChild('hyperTree') hyperTree: ElementRef<HTMLElement>;
+
 	buttonTitle: string;
 
 	componentType = 'hyptree'; // needed to copy datas
@@ -113,7 +118,7 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 	}
 
 	ngAfterViewInit() {
-
+		this.initHyperTree();
 		// @ts-ignore
 		// const args:hyt.HypertreeArgs =
 		// {
@@ -402,11 +407,11 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 			}
 		};
 
-		this.ngzone.run(() => {
+		//this.ngzone.run(() => {
 			this.ht = new hyt.Hypertree({
-				parent: document.querySelector('#hyperTree')
+				parent: this.hyperTree.nativeElement.querySelector('#hyperTree')
 			}, this.options);
-		});
+		//});
 
 		if (initView) {
 			// zoom out
@@ -438,14 +443,15 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 	ngOnChanges(changes: SimpleChanges) {
 		// console.log("🚀 ~ file: tree-hyper.component.ts ~ line 220 ~ TreeHyperComponent ~ ngOnChanges ~ changes", changes)
 		let userSelectedNode;
-		if (changes.dimensionTree && changes.dimensionTree.currentValue) {
+		if (changes.dimensionTree && changes.dimensionTree.currentValue && this.hyperTree) {
 			this.initHyperTree();
 		}
-		if (changes.displayedValues && changes.displayedValues.currentValue) {
+		if(!this.ht) return;
+		if (changes.displayedValues && changes.displayedValues.currentValue && this.ht) {
 			this.ht.api.updateNodesVisualization();
 
 		}
-		this.ngzone.run(() => {
+		//this.ngzone.run(() => {
 			if (changes.selectedNodes && changes.selectedNodes.previousValue) {
 
 				// remove previous paths
@@ -511,7 +517,7 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 
 			}
 
-		});
+		//});
 
 	}
 

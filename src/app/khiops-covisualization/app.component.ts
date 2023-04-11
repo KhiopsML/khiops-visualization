@@ -43,6 +43,7 @@ import {
 
 @Component({
 	selector: 'app-root-covisualization',
+	styleUrls: ['./app.component.scss'],
 	templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit, OnDestroy {

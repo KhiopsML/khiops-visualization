@@ -90,7 +90,7 @@
 			 * Renders the tree view in the DOM
 			 */
 			function render(self) {
-				var container = isDOMElement(self.node) ? self.node : document.getElementById(self.node);
+				var container = isDOMElement(self.node) ? self.node : null;
 				var clonedContainer;
 				if (container) {
 					clonedContainer = container.cloneNode(true);
@@ -340,8 +340,10 @@
 					forEach(clonedContainer.querySelectorAll('.tree-expando'), function (node) {
 						node.onclick = clickExpandIcon;
 					});
-				}
 
+					return clonedContainer;
+				}
+				return container;
 			}
 
 			/**
@@ -368,7 +370,7 @@
 				// 	this.hideExpando = true;
 				// }
 
-				render(this);
+				this.node = render(this);
 
 				var self = this;
 				setTimeout(function () {
@@ -414,7 +416,7 @@
 
 			TreeView.prototype.expandAllNodeChildren = function (nodeId) {
 				var self = this;
-				var el = document.getElementById('tree-leaf-' + nodeId);
+				var el = self.node.getElementById('tree-leaf-' + nodeId);
 				if (el) {
 					var nodes = el.querySelectorAll('.tree-expando');
 					forEach(nodes, function (node) {
@@ -430,7 +432,7 @@
 
 			TreeView.prototype.expandAll = function () {
 				var self = this;
-				var el = document.getElementById(self.node);
+				var el = self.node.getElementById(self.node);
 				if (el) {
 					var nodes = el.querySelectorAll('.tree-expando');
 					forEach(nodes, function (node) {
@@ -448,7 +450,7 @@
 				var self = this;
 				var elts = [];
 				var nodeId;
-				var domId = document.getElementById(id);
+				var domId = self.node.getElementById(id);
 				if (domId) {
 					Array.from(domId.getElementsByClassName('tree-leaf')).forEach(
 						function (element) {
@@ -474,14 +476,14 @@
 
 
 			TreeView.prototype.scrollToNode = function (nodeId) {
-				var el = document.getElementById('tree-leaf-' + nodeId);
+				var el = this.node.querySelector('#tree-leaf-' + nodeId);
 				// el.parentNode.scrollIntoView(nodeId);
 				scrollIntoView(el.parentNode);
 			};
 
 			TreeView.prototype.selectNode = function (nodeId, propagateEvent = true) {
 				var self = this;
-				var el = document.getElementById(self.node);
+				var el = self.node;
 				if (el) {
 
 					var nodes = el.querySelectorAll('.tree-leaf-text');
@@ -522,7 +524,7 @@
 				setTimeout(function () { // When we make multiple nodes,
 					// we must override simple select node selection with a timeout
 
-					var el = document.getElementById(self.node);
+					var el = self.node;
 					// console.log("🚀 ~ file: treeview.js ~ line 487 ~ el", el)
 					if (el && nodesToSelect) {
 
@@ -591,7 +593,7 @@
 			TreeView.prototype.toggleNode = function (nodeId, state, propagateEvent = true) {
 
 				var self = this;
-				var el = document.getElementById(self.node);
+				var el = self.node;
 				if (el) {
 					var nodes = el.querySelectorAll('.tree-expando');
 					if (nodes) {
@@ -640,7 +642,7 @@
 			 */
 			TreeView.prototype.collapseAll = function () {
 				var self = this;
-				var nodes = document.getElementById(self.node).querySelectorAll('.tree-expando');
+				var nodes = self.node.querySelectorAll('.tree-expando');
 				forEach(nodes, function (node) {
 					var parent = node.parentNode;
 					var leaves = parent.parentNode.querySelector('.tree-child-leaves');

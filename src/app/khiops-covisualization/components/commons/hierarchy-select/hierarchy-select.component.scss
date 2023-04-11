@@ -1,4 +1,3 @@
-// TODO move to variable
 @import "../../../../../theme.scss";
 
 #hierarchy-select-comp {
@@ -15,10 +14,7 @@
 	}
 
 	button.enabled {
-		color: mat-color($primary, 500);
-	}
-
-	#hierarchy-select-header{
+		color: map_get($md-khiopsmain, 500);
 	}
 
 	#hierarchy-select-content {
@@ -28,12 +24,12 @@
 
 		span {
 			font-weight: 400;
-			color: darken(mat-color($primary, 900), 20%);
+			color: darken(map_get($md-khiopsmain, 900), 20%);
 		}
 
 		strong {
 			font-weight: 500;
-			color: mat-color($primary, 500);
+			color: map_get($md-khiopsmain, 500);
 		}
 	}
 }

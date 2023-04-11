@@ -10,7 +10,7 @@
 	min-width: 340px;
 	color: white;
 	font: 13px sans-serif;
-	background: mat-color($primary, 900, 0.9);
+	background: rgba(map_get($md-khiopsmain, 900), .9);
 	box-shadow: 0 2px 6px 0px rgba(0, 0, 0, 0.2);
 
 	pointer-events: none;

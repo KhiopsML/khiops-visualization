@@ -45,7 +45,7 @@
 			margin: 0 !important;
 			margin-left: 0.6rem !important;
 			padding: 0 !important;
-			color: mat-color($primary, 500) !important;
+			color: map_get($md-khiopsmain, 500) !important;
 			font-weight: 400 !important;
 		}
 

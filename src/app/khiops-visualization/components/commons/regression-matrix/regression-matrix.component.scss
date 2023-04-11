@@ -1,4 +1,3 @@
-// TODO move to variable
 @import "../../../../../theme.scss";
 
 #regression-matrix-comp {
@@ -40,12 +39,8 @@
 			top: -2px !important;
 		}
 
-		.mat-button-toggle {
-			color: mat-color($secondary, 400) !important;
-		}
-
 		.mat-button-toggle-checked {
-			background-color: mat-color($primary, 500) !important;
+			background-color: map_get($md-khiopsmain, 500) !important;
 			color: white !important;
 		}
 

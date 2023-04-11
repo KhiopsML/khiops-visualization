@@ -6,7 +6,9 @@ import {
 	OnInit,
 	AfterViewInit,
 	OnChanges,
-	SimpleChanges
+	SimpleChanges,
+	ViewChild,
+	ElementRef
 } from '@angular/core';
 import * as ChartJs from 'chart.js';
 
@@ -45,6 +47,8 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 
 	@Output() selectBarIndex: EventEmitter < any > = new EventEmitter();
 
+	@ViewChild('chartJsElement') chartJsElement: ElementRef < HTMLCanvasElement > ;
+
 	ctx: any;
 	chart: any;
 
@@ -60,7 +64,9 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 
 	initChart() {
 
-		this.ctx = document.getElementById(this.canvasIdContainer);
+		this.ctx = this.chartJsElement ?
+			this.chartJsElement.nativeElement :
+			undefined;
 
 		if (this.ctx) {
 

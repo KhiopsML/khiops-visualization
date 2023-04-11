@@ -55,11 +55,11 @@
 		}
 
 		.mat-button-toggle {
-			color: mat-color($primary, 500) !important;
+			color: map_get($md-khiopsmain, 500) !important;
 		}
 
 		.mat-button-toggle-checked {
-			background-color: mat-color($primary, 500) !important;
+			background-color: map_get($md-khiopsmain, 500) !important;
 			color: white !important;
 		}
 

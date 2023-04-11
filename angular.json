@@ -1,7 +1,11 @@
 {
 	"$schema": "./node_modules/@angular/cli/lib/config/schema.json",
 	"version": 1,
-	"newProjectRoot": "projects",
+  "newProjectRoot": "projects",
+  "cli": {
+	"analytics": false,
+    "packageManager": "yarn"
+  },
 	"projects": {
 		"visualization-component": {
 			"projectType": "application",
@@ -37,9 +41,9 @@
 							"src/assets"
 						],
 						"styles": [
-							"src/styles.scss",
 							"src/app/khiops-library/libs/treeview/treeview.scss",
-							"./libs/khiops-hypertree/dist/d3-hypertree-light.css"
+							"./libs/khiops-hypertree/dist/d3-hypertree-light.css",
+							"src/styles.scss"
 						],
 						"scripts": []
 					},
@@ -104,6 +108,7 @@
 							"src/assets"
 						],
 						"styles": [
+
 							"src/styles.scss"
 						],
 						"scripts": []
@@ -128,6 +133,12 @@
 				"build": {
 					"builder": "@angular-devkit/build-angular:browser",
 					"options": {
+						"allowedCommonJsDependencies": [
+							"lodash",
+							"pan-zoom",
+							"clone-deep",
+							"@khiops-hypertree/js/d3-hypertree"
+						],
 						"outputPath": "dist/khiops-webcomponent",
 						"index": "projects/khiops-webcomponent/src/index.html",
 						"main": "projects/khiops-webcomponent/src/main.ts",
@@ -135,7 +146,6 @@
 						"tsConfig": "projects/khiops-webcomponent/tsconfig.app.json",
 						"inlineStyleLanguage": "scss",
 						"assets": [
-							"projects/khiops-webcomponent/src/favicon.ico",
 							"projects/khiops-webcomponent/src/assets"
 						],
 						"styles": [
@@ -146,21 +156,21 @@
 					"configurations": {
 						"production": {
 							"budgets": [{
-									"type": "initial",
-									"maximumWarning": "500kb",
-									"maximumError": "1mb"
-								},
-								{
-									"type": "anyComponentStyle",
-									"maximumWarning": "2kb",
-									"maximumError": "4kb"
-								}
+								"type": "initial",
+								"maximumWarning": "6mb",
+								"maximumError": "13mb"
+							},
+							{
+								"type": "anyComponentStyle",
+								"maximumWarning": "1mb",
+								"maximumError": "2mb"
+							}
 							],
 							"fileReplacements": [{
 								"replace": "projects/khiops-webcomponent/src/environments/environment.ts",
 								"with": "projects/khiops-webcomponent/src/environments/environment.prod.ts"
 							}],
-							"outputHashing": "all"
+							"outputHashing": "none"
 						},
 						"development": {
 							"buildOptimizer": false,

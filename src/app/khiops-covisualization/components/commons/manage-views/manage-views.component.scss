@@ -1,4 +1,3 @@
-// TODO move to variable
 @import "../../../../../theme.scss";
 
 #manage-views-comp {
@@ -21,7 +20,7 @@
 		.views-container {
 
 			// border: 2px solid $yellowMain;
-			border: 2px solid mat-color($accent, 400);
+			border: 2px solid #EC407A;
 			border-radius: 5px;
 			box-shadow: 0 2px 6px 0px rgba(0, 0, 0, 0.1);
 			padding: 3px;
@@ -34,7 +33,7 @@
 				height: 150px;
 
 				.child-box {
-					border: 1px mat-color($primary, 300);
+					border: 1px map_get($md-khiopsmain, 300);
 					margin: 10px;
 					border-style: solid;
 					height: 0 !important;
@@ -51,14 +50,14 @@
 			}
 
 			.box {
-				border: 1px mat-color($primary, 300);
+				border: 1px map_get($md-khiopsmain, 300);
 				border-style: solid;
 				margin: 10px;
 				cursor: pointer;
 				height: 140px;
 				text-align: center;
 				background: white;
-				color: mat-color($primary, 500);;
+				color: map_get($md-khiopsmain, 500);
 				font-size: 0.9em;
 				box-shadow: 0 2px 6px 0px rgba(0, 0, 0, 0.1);
 				border-radius: 3px;

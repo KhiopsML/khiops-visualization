@@ -1,9 +1,6 @@
 // TODO move to variable
 @import "../../../../theme.scss";
 
-@import "ag-grid-theme.scss";
-@import "ag-theme-material.scss";
-
 .ag-grid-comp {
 	background: white;
 	padding: 1px; // Important for selected border
@@ -31,7 +28,7 @@
 			}
 
 			.mat-flat-button:hover {
-				background: mat-color($secondary, 100) !important;
+				background: #CFD8DC !important;
 			}
 
 			.level-distribution-btn {
@@ -51,7 +48,7 @@
 			}
 
 			.search-input-btn {
-				border-color: mat-color($primary) !important;
+				border-color: map_get($md-khiopsmain, 500) !important;
 				border: 1px solid currentColor;
 				border-radius: 4px;
 				margin-right: 20px;
