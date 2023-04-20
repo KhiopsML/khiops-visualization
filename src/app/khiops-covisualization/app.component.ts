@@ -2,6 +2,7 @@ import {
 	Component,
 	OnInit,
 	OnDestroy,
+	ViewEncapsulation,
 } from '@angular/core';
 import {
 	ConfirmDialogComponent
@@ -44,7 +45,8 @@ import {
 @Component({
 	selector: 'app-root-covisualization',
 	styleUrls: ['./app.component.scss'],
-	templateUrl: './app.component.html'
+	templateUrl: './app.component.html',
+	encapsulation: ViewEncapsulation.ShadowDom
 })
 export class AppComponent implements OnInit, OnDestroy {
 

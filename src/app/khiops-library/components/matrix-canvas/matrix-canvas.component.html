@@ -1,6 +1,6 @@
-<div id="matrix-canvas-comp" fxFlexFill fxLayout="column">
+<div id="matrix-canvas-comp" fxFlexFill fxLayout="column" #matrixCanvasComp>
 	<kl-matrix-tooltip *ngIf="matrixDiv" [cell]="tooltipCell" [position]="tooltipPosition"
-		[matrixSize]="[matrixDiv.width, matrixDiv.height]"></kl-matrix-tooltip>
+		[matrixSize]="[matrixDiv.nativeElement.width, matrixDiv.nativeElement.height]"></kl-matrix-tooltip>
 	<div id="matrix-loading" fxLayout="column" fxFlexFill fxLayoutAlign="center center" [hidden]="!loadingMatrixSvg">
 		<mat-spinner diameter="40" color="accent" mode="indeterminate"></mat-spinner>
 	</div>
@@ -30,9 +30,9 @@
 				<mat-icon fxFlexFill fxLayoutAlign="center center" (click)="onClickOnInvertAxis()">transform</mat-icon>
 			</button>
 		</div>
-		<div fxFlex id="matrix-area">
-			<div fxFlex id="matrix-container">
-				<canvas id="matrix"></canvas>
+		<div fxFlex id="matrix-area" #matrixArea>
+			<div fxFlex id="matrix-container" #matrixContainerDiv>
+				<canvas id="matrix" #matrixDiv></canvas>
 			</div>
 		</div>
 		<div fxFlex fxLayout="column" id="matrix-comp-right">

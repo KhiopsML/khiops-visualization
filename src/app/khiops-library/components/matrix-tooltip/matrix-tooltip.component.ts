@@ -4,7 +4,9 @@ import {
 	OnChanges,
 	SimpleChanges,
 	ChangeDetectionStrategy,
-	OnInit
+	OnInit,
+	ViewChild,
+	ElementRef
 } from '@angular/core';
 
 @Component({
@@ -18,24 +20,24 @@ export class MatrixTooltipComponent implements OnInit, OnChanges {
 	@Input() cell: any;
 	@Input() matrixSize: any;
 	@Input() position: any;
-	matrixTooltipDiv: any;
+	@ViewChild('matrixTooltipDiv') matrixTooltipDiv: ElementRef<HTMLElement>;
 
 	constructor() {}
 
 	ngOnInit() {
-		this.matrixTooltipDiv = document.getElementById('matrix-tooltip-comp');
+		// this.matrixTooltipDiv = document.getElementById('matrix-tooltip-comp');
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
-		if (this.matrixTooltipDiv && changes.position && changes.position.currentValue) {
-			this.matrixTooltipDiv.style.top = this.position.y - 100 + 'px';
-			this.matrixTooltipDiv.style.left = this.position.x - 380 + 'px';
+		if (this.matrixTooltipDiv && this.matrixTooltipDiv.nativeElement && changes.position && changes.position.currentValue) {
+			this.matrixTooltipDiv.nativeElement.style.top = this.position.y - 100 + 'px';
+			this.matrixTooltipDiv.nativeElement.style.left = this.position.x - 380 + 'px';
 		}
-		if (this.matrixTooltipDiv && changes.cell) {
+		if (this.matrixTooltipDiv && this.matrixTooltipDiv.nativeElement && changes.cell) {
 			if (changes.cell.currentValue) {
-				this.matrixTooltipDiv.style.visibility = 'visible';
+				this.matrixTooltipDiv.nativeElement.style.visibility = 'visible';
 			} else {
-				this.matrixTooltipDiv.style.visibility = 'hidden';
+				this.matrixTooltipDiv.nativeElement.style.visibility = 'hidden';
 			}
 		}
 
