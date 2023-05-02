@@ -1,6 +1,5 @@
 import {
 	Component,
-	OnInit,
 	NgZone,
 	Input,
 	ChangeDetectionStrategy
@@ -19,7 +18,7 @@ import {
 	styleUrls: ['./informations-block.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class InformationsBlockComponent extends SelectableComponent implements OnInit {
+export class InformationsBlockComponent extends SelectableComponent {
 
 	@Input() inputDatas: [any];
 	@Input() title: string;
@@ -30,8 +29,8 @@ export class InformationsBlockComponent extends SelectableComponent implements O
 		super(selectableService, ngzone);
 	}
 
-	ngOnInit() {
-
+	show_value(value) {
+		if (value instanceof File) return value.name;
+		return value;
 	}
-
 }

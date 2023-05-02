@@ -3,6 +3,6 @@
 		<mat-icon>{{ icon }}</mat-icon>
 		{{ title }}
 	</h1>
-	<span *ngFor="let data of inputDatas"><strong>{{ data.title | translate }} : </strong> {{ data.value }}</span>
+	<span *ngFor="let data of inputDatas"><strong>{{ data.title | translate }} : </strong> {{ show_value(data.value) }}</span>
 </div>
 <kl-no-data fxFlexFill *ngIf="!inputDatas"></kl-no-data>
