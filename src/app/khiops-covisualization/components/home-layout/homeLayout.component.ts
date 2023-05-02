@@ -5,7 +5,8 @@ import {
 	ViewChild,
 	AfterViewInit,
 	OnDestroy,
-	ViewEncapsulation
+	ViewEncapsulation,
+	Input
 } from '@angular/core';
 import {
 	MatTabGroup,
@@ -86,7 +87,7 @@ import pjson from 'package.json';
 })
 export class HomeLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 	updateAvailableStatus: boolean;
-	appDatas: any;
+	@Input() appDatas: any;
 	activeTab = AppConfig.covisualizationCommon.HOME.ACTIVE_TAB_INDEX;
 	translations: any;
 	@ViewChild('fileLoader', {
@@ -157,7 +158,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 		const fontSize = AppConfig.covisualizationCommon.GLOBAL.FONT_SIZE;
 		document.body.classList.add('font-' + fontSize);
 
-		this.appDatas = this.appService.getDatas();
+		// this.appDatas = this.appService.getDatas();
 
 		this.importedDatasChangedSub = this.eventsService.importedDatasChanged.subscribe(dimName => {
 			if (dimName[0]) {

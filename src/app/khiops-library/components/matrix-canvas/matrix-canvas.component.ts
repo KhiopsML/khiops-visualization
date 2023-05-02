@@ -9,7 +9,8 @@ import {
 	Input,
 	NgZone,
 	ViewChild,
-	ElementRef
+	ElementRef,
+	AfterViewInit
 } from '@angular/core';
 import {
 	SelectableService
@@ -37,7 +38,7 @@ import {
 	templateUrl: './matrix-canvas.component.html',
 	styleUrls: ['./matrix-canvas.component.scss']
 })
-export class MatrixCanvasComponent extends SelectableComponent implements OnInit, OnChanges {
+export class MatrixCanvasComponent extends SelectableComponent implements OnChanges {
 
 	@Input() inputDatas: any;
 	@Input() minMaxValues: any;
@@ -80,14 +81,15 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnInit
 	loadingMatrixSvg = true;
 	isFirstResize = true;
 	// matrixDiv: any;
-	@ViewChild('matrixDiv') matrixDiv: ElementRef<HTMLCanvasElement>;
+	@ViewChild('matrixDiv', { static: false }) matrixDiv: ElementRef<HTMLCanvasElement>;
 	matrixCtx: any;
 	// matrixArea: HTMLElement;
-	@ViewChild('matrixArea') matrixArea: ElementRef<HTMLElement>;
+	@ViewChild('matrixArea', { static: false }) matrixArea: ElementRef<HTMLElement>;
 	// matrixCanvasComp: any;
-	@ViewChild('matrixCanvasComp') matrixCanvasComp: ElementRef<HTMLElement>;
+	@ViewChild('matrixCanvasComp', { static: false }) matrixCanvasComp: ElementRef<HTMLElement>;
 	// matrixContainerDiv: any;
-	@ViewChild('matrixContainerDiv') matrixContainerDiv: ElementRef<HTMLElement>;
+	@ViewChild('matrixContainerDiv', { static: false }) matrixContainerDiv: ElementRef<HTMLElement>;
+	@ViewChild('legendBar', { static: false }) legendBar: ElementRef<HTMLElement>;
 	numberPrecision: any;
 	zoom = 1;
 	unpanzoom: any;
@@ -131,8 +133,6 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnInit
 
 	}
 
-	ngOnInit() {}
-
 	@HostListener('window:resize', ['$event'])
 	sizeChange(event) {
 		if (!this.isFirstResize) {
@@ -170,7 +170,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnInit
 		}
 
 		// Draw matrix on change
-		if (this.matrixDiv.nativeElement) this.drawMatrix();
+		if (this.matrixDiv && this.matrixDiv.nativeElement) this.drawMatrix();
 	}
 
 	drawMatrix() {
@@ -322,7 +322,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnInit
 				}
 
 				if (!this.unpanzoom) {
-					this.unpanzoom = panzoom(this.matrixContainerDiv, e => {
+					this.unpanzoom = panzoom(this.matrixContainerDiv.nativeElement, e => {
 						if (e.dz) {
 							// this.zoomCanvas(e.dz);
 							if (e.dz > 0) {
@@ -492,8 +492,8 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnInit
 		// Clone to remove listeners
 		// const matrixDiv = document.getElementById('matrix');
 		if (this.matrixDiv) {
-			const matrixDiv = this.matrixDiv.nativeElement.cloneNode(true);
-			matrixDiv.parentNode.replaceChild(this.matrixDiv.nativeElement, matrixDiv);
+			// const matrixDiv = this.matrixDiv.nativeElement.cloneNode(true);
+			// matrixDiv.parentNode.replaceChild(this.matrixDiv.nativeElement, matrixDiv);
 
 			this.matrixCtx = this.matrixDiv.nativeElement.getContext('2d');
 
@@ -558,12 +558,13 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnInit
 	}
 
 	updateLegendBar() {
-		const dom = document.getElementById('legend-bar');
+		if (!this.legendBar.nativeElement) return;
+		// const dom = document.getElementById('legend-bar');
 		if (this.graphMode.mode === 'MUTUAL_INFO' || this.graphMode.mode === 'HELLINGER' ||
 			this.graphMode.mode === 'MUTUAL_INFO_TARGET_WITH_CELL') {
-			dom.style.background = MatrixCanvasService.getInterestColorsLegend();
+			this.legendBar.nativeElement.style.background = MatrixCanvasService.getInterestColorsLegend();
 		} else {
-			dom.style.background = MatrixCanvasService.getFrequencyColorsLegend();
+			this.legendBar.nativeElement.style.background = MatrixCanvasService.getFrequencyColorsLegend();
 		}
 	}
 

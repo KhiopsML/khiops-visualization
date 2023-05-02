@@ -1,4 +1,5 @@
 import {
+	CUSTOM_ELEMENTS_SCHEMA,
 	NgModule
 } from '@angular/core'
 import {
@@ -34,5 +35,6 @@ import {
 	],
 	providers: [],
 	bootstrap: [AppComponent],
+	schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class AppModule {}

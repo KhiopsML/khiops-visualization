@@ -1,6 +1,6 @@
 <div id="matrix-canvas-comp" fxFlexFill fxLayout="column" #matrixCanvasComp>
 	<kl-matrix-tooltip *ngIf="matrixDiv" [cell]="tooltipCell" [position]="tooltipPosition"
-		[matrixSize]="[matrixDiv.nativeElement.width, matrixDiv.nativeElement.height]"></kl-matrix-tooltip>
+		[matrixSize]="[matrixDiv.width, matrixDiv.height]"></kl-matrix-tooltip>
 	<div id="matrix-loading" fxLayout="column" fxFlexFill fxLayoutAlign="center center" [hidden]="!loadingMatrixSvg">
 		<mat-spinner diameter="40" color="accent" mode="indeterminate"></mat-spinner>
 	</div>
@@ -45,7 +45,7 @@
 			</div>
 			<div id="legend" fxFlex fxLayout="column" fxLayoutAlign="center center">
 				<span id="legend-max"  matTooltip="{{ legend.max  | toPrecision}}">{{ legend.max | toPrecision }}</span>
-				<div id="legend-bar" fxFlex></div>
+				<div id="legend-bar" fxFlex #legendBar></div>
 				<span id="legend-min"  matTooltip="{{ legend.min  | toPrecision}}">{{ legend.min | toPrecision }}</span>
 			</div>
 		</div>
