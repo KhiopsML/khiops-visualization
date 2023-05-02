@@ -3,3 +3,13 @@
 "fast-copy": "2.1.1", // TODO used one in khiops-covisualization/src/app/providers/app.service.ts:220
 "fast-equals": "2.0.0", // TODO remove it ?
 "angular-resizable-element": "3.3.5", // TODO NOT USED
+
+// TODO
+lors de l'import dans un projet externe, pb de chargement des logos
+
+
+// TODO
+pb sur la matrice :
+ERROR TypeError: Cannot read properties of undefined (reading 'addEventListener')
+    at n.drawMatrix (..\visualization-component\dist\khiops-webcomponent\main.js:1:3437668)
+    at n.ngOnChanges (..\visualization-component\dist\khiops-webcomponent\main.js:1:3433895)
