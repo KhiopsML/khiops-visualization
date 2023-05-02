@@ -138,7 +138,6 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 	}
 
 	initTree(selectedNode ? ) {
-		console.log(this.treeView);
 		// @ts-ignore
 		this.tree = new TreeView(this.dimensionsTree, this.treeView.nativeElement);
 

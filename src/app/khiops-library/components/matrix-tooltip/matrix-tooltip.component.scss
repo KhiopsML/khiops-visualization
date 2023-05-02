@@ -1,7 +1,7 @@
 // TODO move to variable
 @import "../../../../theme.scss";
 
-#matrix-tooltip-comp {
+.matrix-tooltip-comp {
 	visibility: hidden;
 	position: fixed;
 	text-align: center;
@@ -16,7 +16,7 @@
 	pointer-events: none;
 	border-radius: 5px;
 
-	#tooltip-title {
+	.matrix-tooltip-title {
 		background: rgba(255, 255, 255, 0.1);
 		box-shadow: 0 2px 6px 0px rgba(0, 0, 0, 0.2);
 		padding: 10px;
@@ -25,7 +25,7 @@
 		border-top-right-radius: 5px;
 	}
 
-	#tooltip-content {
+	.matrix-tooltip-content {
 		width: 100%;
 		padding: 10px;
 		color: #afb6c8;

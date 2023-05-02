@@ -2,7 +2,8 @@ import { CommonModule } from '@angular/common'
 import {
 	NgModule,
 	ModuleWithProviders,
-	APP_INITIALIZER
+	APP_INITIALIZER,
+	CUSTOM_ELEMENTS_SCHEMA
 } from '@angular/core';
 import {
 	FormsModule
@@ -186,6 +187,7 @@ const providers = [
 		ReleaseNotesComponent,
 		ConfirmDialogComponent,
 		LevelDistributionGraphCanvasComponent
-	]
+	],
+	schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class KhiopsVisualizationModule { }

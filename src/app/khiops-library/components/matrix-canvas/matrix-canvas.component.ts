@@ -7,7 +7,10 @@ import {
 	EventEmitter,
 	OnInit,
 	Input,
-	NgZone
+	NgZone,
+	ViewChild,
+	ElementRef,
+	AfterViewInit
 } from '@angular/core';
 import {
 	SelectableService
@@ -35,7 +38,7 @@ import {
 	templateUrl: './matrix-canvas.component.html',
 	styleUrls: ['./matrix-canvas.component.scss']
 })
-export class MatrixCanvasComponent extends SelectableComponent implements OnInit, OnChanges {
+export class MatrixCanvasComponent extends SelectableComponent implements OnChanges {
 
 	@Input() inputDatas: any;
 	@Input() minMaxValues: any;
@@ -77,12 +80,17 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnInit
 	matrixExpectedFreqsValues: any;
 	loadingMatrixSvg = true;
 	isFirstResize = true;
-	matrixDiv: any;
+	// matrixDiv: any;
+	@ViewChild('matrixDiv', { static: false }) matrixDiv: ElementRef<HTMLCanvasElement>;
 	matrixCtx: any;
-	matrixArea: HTMLElement;
-	matrixCanvasComp: any;
+	// matrixArea: HTMLElement;
+	@ViewChild('matrixArea', { static: false }) matrixArea: ElementRef<HTMLElement>;
+	// matrixCanvasComp: any;
+	@ViewChild('matrixCanvasComp', { static: false }) matrixCanvasComp: ElementRef<HTMLElement>;
+	// matrixContainerDiv: any;
+	@ViewChild('matrixContainerDiv', { static: false }) matrixContainerDiv: ElementRef<HTMLElement>;
+	@ViewChild('legendBar', { static: false }) legendBar: ElementRef<HTMLElement>;
 	numberPrecision: any;
-	matrixContainerDiv: any;
 	zoom = 1;
 	unpanzoom: any;
 	disableClick = false;
@@ -125,8 +133,6 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnInit
 
 	}
 
-	ngOnInit() {}
-
 	@HostListener('window:resize', ['$event'])
 	sizeChange(event) {
 		if (!this.isFirstResize) {
@@ -164,7 +170,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnInit
 		}
 
 		// Draw matrix on change
-		this.drawMatrix();
+		if (this.matrixDiv && this.matrixDiv.nativeElement) this.drawMatrix();
 	}
 
 	drawMatrix() {
@@ -316,7 +322,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnInit
 				}
 
 				if (!this.unpanzoom) {
-					this.unpanzoom = panzoom(this.matrixContainerDiv, e => {
+					this.unpanzoom = panzoom(this.matrixContainerDiv.nativeElement, e => {
 						if (e.dz) {
 							// this.zoomCanvas(e.dz);
 							if (e.dz > 0) {
@@ -326,12 +332,12 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnInit
 							}
 						} else {
 							if (e.dx !== 0 || e.dy !== 0) {
-								this.matrixArea.scrollLeft = this.matrixArea.scrollLeft - e.dx;
-								this.matrixArea.scrollTop = this.matrixArea.scrollTop - e.dy;
+								this.matrixArea.nativeElement.scrollLeft = this.matrixArea.nativeElement.scrollLeft - e.dx;
+								this.matrixArea.nativeElement.scrollTop = this.matrixArea.nativeElement.scrollTop - e.dy;
 
 								this.lastScrollPosition = {
-									scrollLeft: this.matrixArea.scrollLeft,
-									scrollTop: this.matrixArea.scrollTop
+									scrollLeft: this.matrixArea.nativeElement.scrollLeft,
+									scrollTop: this.matrixArea.nativeElement.scrollTop
 								};
 							}
 						}
@@ -354,7 +360,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnInit
 
 			}
 
-			this.matrixDiv.addEventListener('click', (event) => {
+			this.matrixDiv.nativeElement.addEventListener('click', (event) => {
 				if (!this.disableClick) {
 					// Do not alllow multiple click on matrix to avoid loops
 					this.disableClick = true;
@@ -367,27 +373,27 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnInit
 				passive: true
 			});
 
-			this.matrixDiv.addEventListener('mouseout', (event) => {
+			this.matrixDiv.nativeElement.addEventListener('mouseout', (event) => {
 				this.hideTooltip();
 			}, {
 				passive: true
 			});
 
-			this.matrixDiv.addEventListener('mousemove', (event) => {
+			this.matrixDiv.nativeElement.addEventListener('mousemove', (event) => {
 				this.currentEvent = event;
 				this.showTooltip(event);
 			}, {
 				passive: true
 			});
 
-			this.matrixDiv.addEventListener('wheel', (event) => {
+			this.matrixDiv.nativeElement.addEventListener('wheel', (event) => {
 				// Keep event in memory to manage zoom factor on scroll
 				this.currentEvent = event;
 			}, {
 				passive: true
 			});
 
-			this.matrixArea.addEventListener('scroll', (event: any) => {
+			this.matrixArea.nativeElement.addEventListener('scroll', (event: any) => {
 				this.lastScrollPosition = {
 					scrollLeft: event.target.scrollLeft,
 					scrollTop: event.target.scrollTop
@@ -479,20 +485,20 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnInit
 	 */
 	cleanDomContext() {
 
-		this.matrixArea = document.getElementById('matrix-area');
-		this.matrixContainerDiv = document.getElementById('matrix-container');
-		this.matrixCanvasComp = document.getElementById('matrix-canvas-comp');
+		// this.matrixArea = document.getElementById('matrix-area');
+		// this.matrixContainerDiv = document.getElementById('matrix-container');
+		// this.matrixCanvasComp = document.getElementById('matrix-canvas-comp');
 
 		// Clone to remove listeners
-		const matrixDiv = document.getElementById('matrix');
-		if (matrixDiv) {
-			this.matrixDiv = matrixDiv.cloneNode(true);
-			matrixDiv.parentNode.replaceChild(this.matrixDiv, matrixDiv);
+		// const matrixDiv = document.getElementById('matrix');
+		if (this.matrixDiv) {
+			// const matrixDiv = this.matrixDiv.nativeElement.cloneNode(true);
+			// matrixDiv.parentNode.replaceChild(this.matrixDiv.nativeElement, matrixDiv);
 
-			this.matrixCtx = this.matrixDiv.getContext('2d');
+			this.matrixCtx = this.matrixDiv.nativeElement.getContext('2d');
 
 			// clear the canvas for redrawing
-			this.matrixCtx.clearRect(0, 0, this.matrixDiv.width, this.matrixDiv.height);
+			this.matrixCtx.clearRect(0, 0, this.matrixDiv.nativeElement.width, this.matrixDiv.nativeElement.height);
 		}
 	}
 
@@ -517,7 +523,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnInit
 		if (previousZoom !== this.zoom) {
 			this.zoom = Number(this.zoom.toFixed(1));
 
-			const containerPosition = this.matrixArea.getBoundingClientRect();
+			const containerPosition = this.matrixArea.nativeElement.getBoundingClientRect();
 			this.currentMouseY = Math.round(this.currentEvent.y - containerPosition.top);
 			this.currentMouseX = Math.round(this.currentEvent.x - containerPosition.left);
 
@@ -536,8 +542,8 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnInit
 			deltaY = deltaY + 10;
 
 			if (!preventTranslate) {
-				this.matrixArea.scrollLeft = (this.currentMouseX * this.zoom) - this.currentMouseX - deltaX;
-				this.matrixArea.scrollTop = (this.currentMouseY * this.zoom) - this.currentMouseY - deltaY;
+				this.matrixArea.nativeElement.scrollLeft = (this.currentMouseX * this.zoom) - this.currentMouseX - deltaX;
+				this.matrixArea.nativeElement.scrollTop = (this.currentMouseY * this.zoom) - this.currentMouseY - deltaY;
 			}
 
 			this.lastScrollPosition = {
@@ -552,12 +558,13 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnInit
 	}
 
 	updateLegendBar() {
-		const dom = document.getElementById('legend-bar');
+		if (!this.legendBar.nativeElement) return;
+		// const dom = document.getElementById('legend-bar');
 		if (this.graphMode.mode === 'MUTUAL_INFO' || this.graphMode.mode === 'HELLINGER' ||
 			this.graphMode.mode === 'MUTUAL_INFO_TARGET_WITH_CELL') {
-			dom.style.background = MatrixCanvasService.getInterestColorsLegend();
+			this.legendBar.nativeElement.style.background = MatrixCanvasService.getInterestColorsLegend();
 		} else {
-			dom.style.background = MatrixCanvasService.getFrequencyColorsLegend();
+			this.legendBar.nativeElement.style.background = MatrixCanvasService.getFrequencyColorsLegend();
 		}
 	}
 
@@ -613,12 +620,12 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnInit
 	getZoomDimensions() {
 
 		if (this.zoom === 1) {
-			this.matrixArea.style.overflow = 'hidden';
+			this.matrixArea.nativeElement.style.overflow = 'hidden';
 		} else {
-			this.matrixArea.style.overflow = 'scroll';
+			this.matrixArea.nativeElement.style.overflow = 'scroll';
 		}
-		let width = this.matrixContainerDiv.clientWidth;
-		let height = this.matrixContainerDiv.clientHeight;
+		let width = this.matrixContainerDiv.nativeElement.clientWidth;
+		let height = this.matrixContainerDiv.nativeElement.clientHeight;
 
 		width = width * this.zoom;
 		height = height * this.zoom;
@@ -649,7 +656,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnInit
 	getCurrentCell(event) {
 
 		if (this.inputDatas) {
-			const canvasPosition = this.matrixDiv.getBoundingClientRect();
+			const canvasPosition = this.matrixDiv.nativeElement.getBoundingClientRect();
 			let x = event.pageX - canvasPosition.left;
 			let y = event.pageY - canvasPosition.top;
 

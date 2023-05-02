@@ -2,6 +2,10 @@ import {
 	Component,
 	OnInit,
 	OnDestroy,
+	ViewEncapsulation,
+	Input,
+	Output,
+	EventEmitter,
 } from '@angular/core';
 import {
 	ConfirmDialogComponent
@@ -26,6 +30,8 @@ import {
 import {
 	AppService
 } from './providers/app.service';
+import { ConfigModel } from '@khiops-library/model/config.model';
+import { ConfigService } from '@khiops-library/providers/config.service';
 // import {
 // 	UtilsService
 // } from '@khiops-library/providers/utils.service';
@@ -44,9 +50,21 @@ import {
 @Component({
 	selector: 'app-root-covisualization',
 	styleUrls: ['./app.component.scss'],
-	templateUrl: './app.component.html'
+	templateUrl: './app.component.html',
+	encapsulation: ViewEncapsulation.ShadowDom
 })
 export class AppComponent implements OnInit, OnDestroy {
+
+	@Input() appdatas: any;
+	@Input()
+	public get config(): ConfigModel {
+		return this.configService.config;
+	}
+	public set config(value: ConfigModel) {
+		this.configService.config = value;
+	}
+	@Output('onFileOpen') onFileOpen: EventEmitter<any> = new EventEmitter<any>();
+	@Output('onCustomEvent') customEvent: EventEmitter<string> = new EventEmitter();
 
 	constructor(
 		// private electronService: ElectronService,
@@ -54,6 +72,7 @@ export class AppComponent implements OnInit, OnDestroy {
 		private appService: AppService,
 		private dialog: MatDialog,
 		private khiopsLibraryService: KhiopsLibraryService,
+		private configService: ConfigService,
 		private translate: TranslateService) {
 
 		// console.log('AppConfig', AppConfig);
