@@ -1,3 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
-@import "./fonts/Poppins.scss";
-@import "./fonts/MaterialIcons.scss";
+@import './fonts/Poppins.scss';
+@import './fonts/MaterialIcons.scss';
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	min-width: 800px;
+	min-height: 600px;
+	overflow: hidden;
+}
+body {
+	font-size: 14px;
+}
