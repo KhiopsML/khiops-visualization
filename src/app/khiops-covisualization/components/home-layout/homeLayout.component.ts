@@ -87,7 +87,13 @@ import pjson from 'package.json';
 })
 export class HomeLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 	updateAvailableStatus: boolean;
-	@Input() appDatas: any;
+	get appDatas(): any {
+		return this.appService.getDatas();
+	}
+	@Input() set appDatas(value: any) {
+		this.appService.setFileDatas(value);
+		if (value && value.datas) this.initializeHome();
+	}
 	activeTab = AppConfig.covisualizationCommon.HOME.ACTIVE_TAB_INDEX;
 	translations: any;
 	@ViewChild('fileLoader', {

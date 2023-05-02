@@ -32,6 +32,7 @@ import {
 } from './providers/app.service';
 import { ConfigModel } from '@khiops-library/model/config.model';
 import { ConfigService } from '@khiops-library/providers/config.service';
+import { EventsService } from '@khiops-library/providers/events.service';
 // import {
 // 	UtilsService
 // } from '@khiops-library/providers/utils.service';
@@ -73,11 +74,15 @@ export class AppComponent implements OnInit, OnDestroy {
 		private dialog: MatDialog,
 		private khiopsLibraryService: KhiopsLibraryService,
 		private configService: ConfigService,
-		private translate: TranslateService) {
+		private translate: TranslateService,
+		private eventsService: EventsService) {
 
 		// console.log('AppConfig', AppConfig);
 
 		this.appService.initialize();
+
+		this.eventsService.clickOpenFile.subscribe(() => this.onFileOpen.emit());
+		this.eventsService.customEvent.subscribe((eventName) => this.customEvent.emit(eventName));
 
 		// TODO remove electron
 		// if (this.electronService.isElectron()) {

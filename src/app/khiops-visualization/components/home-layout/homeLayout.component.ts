@@ -98,7 +98,6 @@ export class HomeLayoutComponent implements OnInit /*, OnDestroy, AfterViewInit 
 		return this.appService.getDatas();
 	}
 	@Input() set appDatas(value: any) {
-		console.log(value);
 		this.appService.setFileDatas(value);
 		if (value && value.datas) this.initializeHome();
 	}
