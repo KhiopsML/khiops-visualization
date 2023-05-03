@@ -4,6 +4,7 @@ include:
     file: '/templates/gitlab-ci-node.yml'
 
 variables:
+  NODE_IMAGE: dockerproxy.repos.tech.orange/node:lts-alpine
   NODE_CONFIG_REGISTRY: https://repos.tech.orange/artifactory/api/npm/npmproxy/
   NODE_MANAGER: yarn
 
