@@ -9,3 +9,9 @@ variables:
   NODE_MANAGER: yarn
   NODE_TEST_ARGS: test
 
+node-build:
+  script:
+    # FIXME: try headless launch unit test and code coverage
+    #- $NODE_MANAGER $NODE_TEST_ARGS
+    - if [[ "$NODE_BUILD_DISABLED" != "true" ]]; then $NODE_MANAGER $NODE_BUILD_ARGS; fi
+
