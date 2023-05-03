@@ -1,0 +1,7 @@
+include:
+  - project: 'to-be-continuous/node'
+    ref: '3.5.3'
+    file: '/templates/gitlab-ci-node.yml'
+
+variables:
+  NODE_CONFIG_REGISTRY: https://repos.tech.orange/artifactory/api/npm/npmproxy/
