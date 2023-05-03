@@ -5,3 +5,5 @@ include:
 
 variables:
   NODE_CONFIG_REGISTRY: https://repos.tech.orange/artifactory/api/npm/npmproxy/
+  NODE_MANAGER: yarn
+
