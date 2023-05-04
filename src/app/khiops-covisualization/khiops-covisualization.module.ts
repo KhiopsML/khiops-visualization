@@ -87,7 +87,7 @@ export function setupTranslateFactory(service: TranslateService) {
 			deps: [TranslateService],
 			multi: true,
 		},
-		{ provide: OverlayContainer, useClass: InAppRootOverlayContainer }
+		//{ provide: OverlayContainer, useClass: InAppRootOverlayContainer }
 	],
 	exports: [AppComponent],
 	entryComponents: [

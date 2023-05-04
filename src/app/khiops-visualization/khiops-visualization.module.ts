@@ -136,7 +136,7 @@ const providers = [
 		deps: [TranslateService],
 		multi: true
 	},
-	{ provide: OverlayContainer, useClass: InAppRootOverlayContainer }
+	//{ provide: OverlayContainer, useClass: InAppRootOverlayContainer }
 ];
 
 @NgModule({
