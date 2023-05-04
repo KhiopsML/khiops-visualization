@@ -4,7 +4,9 @@ include:
     file: '/templates/gitlab-ci-node.yml'
 
 variables:
-  NODE_IMAGE: dockerproxy.repos.tech.orange/node:lts-alpine
+  # FIXME: should try fixing security issue rather than downgrade workaround
+  # see: https://stackoverflow.com/questions/69692842/error-message-error0308010cdigital-envelope-routinesunsupported
+  NODE_IMAGE: dockerproxy.repos.tech.orange/node:16-alpine
   NODE_CONFIG_REGISTRY: https://repos.tech.orange/artifactory/api/npm/npmproxy/
   NODE_MANAGER: yarn
   NODE_TEST_ARGS: test
