@@ -8,6 +8,7 @@ variables:
   NODE_CONFIG_REGISTRY: https://repos.tech.orange/artifactory/api/npm/npmproxy/
   NODE_MANAGER: yarn
   NODE_TEST_ARGS: test
+  NODE_BUILD_ARGS: run build:webcomponents
 
 node-build:
   script:
