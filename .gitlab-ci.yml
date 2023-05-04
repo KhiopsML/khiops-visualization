@@ -1,0 +1,72 @@
+include:
+  - project: 'to-be-continuous/node'
+    ref: '3.5.3'
+    file: '/templates/gitlab-ci-node.yml'
+
+variables:
+  # FIXME: should try fixing security issue rather than downgrade workaround
+  # see: https://stackoverflow.com/questions/69692842/error-message-error0308010cdigital-envelope-routinesunsupported
+  NODE_IMAGE: dockerproxy.repos.tech.orange/node:16-alpine
+  NODE_CONFIG_REGISTRY: https://repos.tech.orange/artifactory/api/npm/npmproxy/
+  NODE_MANAGER: yarn
+  NODE_TEST_ARGS: test
+  NODE_BUILD_ARGS: run build:webcomponents
+
+stages:
+  - build
+  - test
+  - publish
+
+node-build:
+  script:
+    # FIXME: try headless launch unit test and code coverage
+    #- $NODE_MANAGER $NODE_TEST_ARGS
+    - if [[ "$NODE_BUILD_DISABLED" != "true" ]]; then $NODE_MANAGER $NODE_BUILD_ARGS; fi
+
+.npm-base-publish:
+  image: dockerproxy.repos.tech.orange/node:19
+  stage: publish
+  script:
+    - cd gen/web/
+    - curl -s -u "${ARTIFACTORY_USERNAME}:${ARTIFACTORY_PASSWORD}" https://repos.tech.orange/artifactory/api/npm/auth > .npmrc
+    - echo "registry=${NPM_REPO}" >> .npmrc # Required for npm config fix to work
+    - npm config fix # Required because of changes in npm 9 login behavior https://jfrog.com/knowledge-base/artifactory-changes-to-the-login-behavior-in-npm-v9/
+    - sed -i "s/NPM_PUBLISH_VERSION/${NPM_PUBLISH_VERSION}/g" package.json
+    - npm publish --registry ${NPM_REPO}
+    - echo "published version ${NPM_PUBLISH_VERSION}"
+
+npm-snapshot:
+  extends: .npm-base-publish
+  before_script:
+    - LAST_TAG=$(git ls-remote -q | grep -e "refs/tags/[0-9].*[0-9]$" | awk '{print $2}' | cut -f3 -d"/" | sort -V | tail -1)
+    - NPM_PUBLISH_VERSION=${LAST_TAG}-SNAPSHOT.$(date +%s)
+  variables:
+    NPM_REPO: "${NPM_UNSTABLE_REPOSITORY}"
+  rules:
+    - if: $GRADLE_NO_PUBLISH
+      when: never
+    # exclude merge requests
+    - if: $CI_MERGE_REQUEST_ID
+      when: never
+    # on tags: never
+    - if: $CI_COMMIT_TAG
+      when: never
+    # any manual
+    - when: manual
+      allow_failure: true
+
+npm-release:
+  extends: .npm-base-publish
+  variables:
+    NPM_PUBLISH_VERSION: "${CI_COMMIT_REF_NAME}"
+    NPM_REPO: "${NPM_STABLE_REPOSITORY}"
+  rules:
+    - if: $GRADLE_NO_PUBLISH
+      when: never
+    # exclude merge requests
+    - if: $CI_MERGE_REQUEST_ID
+      when: never
+    # on tags
+    - if: $CI_COMMIT_TAG
+      when: manual
+      allow_failure: true
