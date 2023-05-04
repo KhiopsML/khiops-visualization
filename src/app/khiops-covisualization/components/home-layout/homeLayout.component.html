@@ -6,13 +6,51 @@
 		</mat-sidenav>
 		<mat-sidenav-content>
 			<div class="container" [hidden]="appDatas && appDatas.datas && isCompatibleJson" fxLayout="column">
-				<kl-header-title [title]="appTitle" [logo]="'./assets/logo.png'"></kl-header-title>
+				<kl-header-title [title]="appTitle">
+					<svg logo version="1.0" width="52" viewBox="0 0 560.912 305.509" xmlns="http://www.w3.org/2000/svg">
+						<path style="fill:#5f9ac7;stroke-width:.75" d="m-867.815-554.656 10.732 41.142-94.356 28.827z" transform="translate(1023.774 459.367) scale(.73361)"/>
+						<path style="fill:#2e5674;fill-opacity:1;stroke-width:.75" d="m-867.815-554.656 10.732 41.142 39.138 9.382z" transform="translate(1023.774 459.367) scale(.73361)"/>
+						<path style="fill:#91cb47;fill-opacity:1;stroke-width:.949579" d="m-851.038-490.341 12.806 49.09-165.849 29.05z" transform="translate(1023.774 459.367) scale(.73361)"/>
+						<path style="fill:#527823;fill-opacity:1;stroke-width:.949579" d="m-851.038-490.341 12.806 49.09 78.288 11.98z" transform="translate(1023.774 459.367) scale(.73361)"/>
+						<path style="fill:#ffb448;fill-opacity:1;stroke-width:.949579" d="m-831.717-416.278 13.514 51.806-246.25 33.15z" transform="translate(1023.774 459.367) scale(.73361)"/>
+						<path style="fill:#996823;fill-opacity:1;stroke-width:.949579" d="m-831.717-416.278 13.514 51.806 119.647 21.577z" transform="translate(1023.774 459.367) scale(.73361)"/>
+						<path style="fill:#ed614e;fill-opacity:1;stroke-width:.949579" d="m-811.17-337.516 15.414 59.091-331.49 28.495z" transform="translate(1023.774 459.367) scale(.73361)"/>
+						<path style="fill:#8e3327;fill-opacity:1;stroke-width:.949579" d="m-811.17-337.516 15.414 59.091 164.82 29.278z" transform="translate(1023.774 459.367) scale(.73361)"/>
+						<path style="fill:#5f9ac7;stroke-width:.75" d="m-867.815-554.656 10.732 41.142-94.356 28.827z" transform="translate(1127.245 554.656)"/>
+						<path style="fill:#2e5674;fill-opacity:1;stroke-width:.75" d="m-867.815-554.656 10.732 41.142 39.138 9.382z" transform="translate(1127.245 554.656)"/>
+						<path style="fill:#91cb47;fill-opacity:1;stroke-width:.949579" d="m-851.038-490.341 12.806 49.09-165.849 29.05z" transform="translate(1127.245 554.656)"/>
+						<path style="fill:#527823;fill-opacity:1;stroke-width:.949579" d="m-851.038-490.341 12.806 49.09 78.288 11.98z" transform="translate(1127.245 554.656)"/>
+						<path style="fill:#ffb448;fill-opacity:1;stroke-width:.949579" d="m-831.717-416.278 13.514 51.806-246.25 33.15z" transform="translate(1127.245 554.656)"/>
+						<path style="fill:#996823;fill-opacity:1;stroke-width:.949579" d="m-831.717-416.278 13.514 51.806 119.647 21.577z" transform="translate(1127.245 554.656)"/>
+						<path style="fill:#ed614e;fill-opacity:1;stroke-width:.949579" d="m-811.17-337.516 15.414 59.091-331.49 28.495z" transform="translate(1127.245 554.656)"/>
+						<path style="fill:#8e3327;fill-opacity:1;stroke-width:.949579" d="m-811.17-337.516 15.414 59.091 164.82 29.278z" transform="translate(1127.245 554.656)"/>
+					</svg>
+				</kl-header-title>
 				<!-- <kl-app-version id="version" [appVersion]="appVersion"></kl-app-version> -->
 				<kl-file-loader #fileLoader [onFileLoaderDataChanged]="onFileLoaderDataChangedCb"
 					[applicationName]="appName"></kl-file-loader>
 			</div>
 			<div *ngIf="appDatas && appDatas.datas && isCompatibleJson" class="container" fxLayout="column">
-				<kl-header-title [title]="appTitle" [logo]="'./assets/logo.png'"></kl-header-title>
+				<kl-header-title [title]="appTitle">
+					<svg logo version="1.0" width="52" viewBox="0 0 560.912 305.509" xmlns="http://www.w3.org/2000/svg">
+						<path style="fill:#5f9ac7;stroke-width:.75" d="m-867.815-554.656 10.732 41.142-94.356 28.827z" transform="translate(1023.774 459.367) scale(.73361)"/>
+						<path style="fill:#2e5674;fill-opacity:1;stroke-width:.75" d="m-867.815-554.656 10.732 41.142 39.138 9.382z" transform="translate(1023.774 459.367) scale(.73361)"/>
+						<path style="fill:#91cb47;fill-opacity:1;stroke-width:.949579" d="m-851.038-490.341 12.806 49.09-165.849 29.05z" transform="translate(1023.774 459.367) scale(.73361)"/>
+						<path style="fill:#527823;fill-opacity:1;stroke-width:.949579" d="m-851.038-490.341 12.806 49.09 78.288 11.98z" transform="translate(1023.774 459.367) scale(.73361)"/>
+						<path style="fill:#ffb448;fill-opacity:1;stroke-width:.949579" d="m-831.717-416.278 13.514 51.806-246.25 33.15z" transform="translate(1023.774 459.367) scale(.73361)"/>
+						<path style="fill:#996823;fill-opacity:1;stroke-width:.949579" d="m-831.717-416.278 13.514 51.806 119.647 21.577z" transform="translate(1023.774 459.367) scale(.73361)"/>
+						<path style="fill:#ed614e;fill-opacity:1;stroke-width:.949579" d="m-811.17-337.516 15.414 59.091-331.49 28.495z" transform="translate(1023.774 459.367) scale(.73361)"/>
+						<path style="fill:#8e3327;fill-opacity:1;stroke-width:.949579" d="m-811.17-337.516 15.414 59.091 164.82 29.278z" transform="translate(1023.774 459.367) scale(.73361)"/>
+						<path style="fill:#5f9ac7;stroke-width:.75" d="m-867.815-554.656 10.732 41.142-94.356 28.827z" transform="translate(1127.245 554.656)"/>
+						<path style="fill:#2e5674;fill-opacity:1;stroke-width:.75" d="m-867.815-554.656 10.732 41.142 39.138 9.382z" transform="translate(1127.245 554.656)"/>
+						<path style="fill:#91cb47;fill-opacity:1;stroke-width:.949579" d="m-851.038-490.341 12.806 49.09-165.849 29.05z" transform="translate(1127.245 554.656)"/>
+						<path style="fill:#527823;fill-opacity:1;stroke-width:.949579" d="m-851.038-490.341 12.806 49.09 78.288 11.98z" transform="translate(1127.245 554.656)"/>
+						<path style="fill:#ffb448;fill-opacity:1;stroke-width:.949579" d="m-831.717-416.278 13.514 51.806-246.25 33.15z" transform="translate(1127.245 554.656)"/>
+						<path style="fill:#996823;fill-opacity:1;stroke-width:.949579" d="m-831.717-416.278 13.514 51.806 119.647 21.577z" transform="translate(1127.245 554.656)"/>
+						<path style="fill:#ed614e;fill-opacity:1;stroke-width:.949579" d="m-811.17-337.516 15.414 59.091-331.49 28.495z" transform="translate(1127.245 554.656)"/>
+						<path style="fill:#8e3327;fill-opacity:1;stroke-width:.949579" d="m-811.17-337.516 15.414 59.091 164.82 29.278z" transform="translate(1127.245 554.656)"/>
+					</svg>
+				</kl-header-title>
 				<mat-tab-group #tabsMenu mat-align-tabs="center" color="primary" [@.disabled]="true"
 					[selectedIndex]="activeTab" (selectedTabChange)="onSelectedTabChanged($event)">
 					<mat-tab label="{{ 'TITLE.PROJECT' | translate }}">

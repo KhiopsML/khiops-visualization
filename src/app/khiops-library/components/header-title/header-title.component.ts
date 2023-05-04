@@ -14,7 +14,6 @@ import {
 export class HeaderTitleComponent implements OnInit {
 
 	@Input() title: string;
-	@Input() logo: string;
 	displayedTitle: string[];
 
 	constructor() {
