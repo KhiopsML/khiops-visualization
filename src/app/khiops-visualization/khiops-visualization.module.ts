@@ -120,6 +120,8 @@ import {
 import {
 	VarDetailsPreparation2dComponent
 } from './components/commons/var-details-preparation-2d/var-details-preparation-2d.component';
+import { OverlayContainer } from '@angular/cdk/overlay';
+import { InAppRootOverlayContainer } from '@khiops-library/components/in-app-root-overlay-container.ts/in-app-root-overlay-container';
 
 export function setupTranslateFactory(service: TranslateService) {
 	const serv = () => service.use('en');
@@ -133,7 +135,8 @@ const providers = [
 		useFactory: setupTranslateFactory,
 		deps: [TranslateService],
 		multi: true
-	}
+	},
+	{ provide: OverlayContainer, useClass: InAppRootOverlayContainer }
 ];
 
 @NgModule({

@@ -34,6 +34,8 @@ import { AgGridModule } from '@ag-grid-community/angular'
 import { UserSettingsComponent } from './components/commons/user-settings/user-settings.component'
 import { ExternalDatasComponent } from './components/commons/external-datas/external-datas.component'
 import { ConfirmDialogComponent } from '@khiops-library/components/confirm-dialog/confirm-dialog.component'
+import { InAppRootOverlayContainer } from '@khiops-library/components/in-app-root-overlay-container.ts/in-app-root-overlay-container'
+import { OverlayContainer } from '@angular/cdk/overlay'
 
 export function setupTranslateFactory(service: TranslateService) {
 	const serv = () => service.use('en')
@@ -85,6 +87,7 @@ export function setupTranslateFactory(service: TranslateService) {
 			deps: [TranslateService],
 			multi: true,
 		},
+		{ provide: OverlayContainer, useClass: InAppRootOverlayContainer }
 	],
 	exports: [AppComponent],
 	entryComponents: [
