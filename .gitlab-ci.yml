@@ -12,6 +12,13 @@ variables:
   NODE_TEST_ARGS: test
   NODE_BUILD_ARGS: run build:webcomponents
 
+  ARTIFACTORY_USERNAME: $DIODCENTRALREPO_USERNAME
+  ARTIFACTORY_PASSWORD: $DIODCENTRALREPO_PASSWORD
+
+  ## NPM
+  NPM_STABLE_REPOSITORY: https://repos.tech.orange/artifactory/api/npm/khiops-virt-npm-stable/
+  NPM_UNSTABLE_REPOSITORY: https://repos.tech.orange/artifactory/api/npm/khiops-virt-npm-unstable/
+
 stages:
   - build
   - test
