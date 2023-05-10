@@ -18,6 +18,7 @@ import {
 	SelectableService
 } from '../selectable/selectable.service';
 import _ from 'lodash';
+import { ConfigService } from '@khiops-library/providers/config.service';
 
 @Component({
 	template: '',
@@ -38,8 +39,9 @@ export class ScrollableGraphCanvasComponent extends SelectableComponent implemen
 	graphWrapper: any;
 
 	constructor(public selectableService: SelectableService,
-		public ngzone: NgZone) {
-		super(selectableService, ngzone);
+		public ngzone: NgZone,
+		public configService: ConfigService) {
+		super(selectableService, ngzone, configService);
 		this.onScroll = this.onScroll.bind(this);
 	}
 

@@ -6,6 +6,7 @@ import {
 	Output
 } from '@angular/core';
 import html2canvas from 'html2canvas';
+import { saveAs } from 'file-saver';
 // TODO remove electron
 // import {
 // 	nativeImage
@@ -33,6 +34,7 @@ import {
 import {
 	CopyDatasService
 } from '../../providers/copy-datas.service';
+import { ConfigService } from '@khiops-library/providers/config.service';
 // import {
 // 	KhiopsLibraryService
 // } from '../../providers/khiops-library.service';
@@ -55,7 +57,8 @@ export class HeaderToolsComponent implements OnInit {
 		private copyDatasService: CopyDatasService,
 		private translate: TranslateService,
 		private hotkeysService: HotkeysService,
-		private snackBar: MatSnackBar) {
+		private snackBar: MatSnackBar,
+		private configService: ConfigService) {
 
 		// define hotkeys
 		this.hotkeysService.add(new Hotkey('ctrl+c', (event: KeyboardEvent): boolean => {
@@ -102,18 +105,24 @@ export class HeaderToolsComponent implements OnInit {
 				try {
 
 					let currentDiv: any;
-					currentDiv = document.querySelector('#' + currentSelectedArea.id).firstChild;
+					currentDiv = this.configService.getRootElementDom().querySelector('#' + currentSelectedArea.id).firstChild;
 
 					this.rePaintGraph(currentDiv);
 
 					// convert div screenshot to canvas
 					html2canvas(currentDiv).then(canvas => {
 						canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height);
-						const base64data = canvas.toDataURL('image/jpeg');
+						// const base64data = canvas.toDataURL('image/jpeg');
+
+						canvas.toBlob((blob) => {
+							saveAs(blob, currentSelectedArea.id + ".png");
+						});
 
 						// TODO remove electron
 						// const natImage = nativeImage.createFromDataURL(base64data);
 						// clipboard.writeImage(natImage);
+
+
 
 						// Show useless header informations for screenshots when done
 						// TODO there is an option into the lib to do that

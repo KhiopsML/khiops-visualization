@@ -28,6 +28,7 @@ import {
 import {
 	ChartOptions
 } from 'chart.js';
+import { ConfigService } from '@khiops-library/providers/config.service';
 
 @Component({
 	selector: 'app-target-distribution-graph-canvas',
@@ -76,9 +77,10 @@ export class TargetDistributionGraphCanvasComponent extends ScrollableGraphCanva
 		public selectableService: SelectableService,
 		private translate: TranslateService, private toPrecision: ToPrecisionPipe,
 		private khiopsLibraryService: KhiopsLibraryService,
-		public ngzone: NgZone) {
+		public ngzone: NgZone,
+		public configService: ConfigService) {
 
-		super(selectableService, ngzone);
+		super(selectableService, ngzone, configService);
 		// Needed for scroll component
 		this.maxScale = this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_GRAPH_SCALE;
 		this.minScale = this.khiopsLibraryService.getAppConfig().common.GLOBAL.MIN_GRAPH_SCALE;

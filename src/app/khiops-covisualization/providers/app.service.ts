@@ -1,6 +1,7 @@
 import {
 	Injectable,
-	EventEmitter
+	EventEmitter,
+	ElementRef
 } from '@angular/core';
 import {
 	KhiopsLibraryService
@@ -35,6 +36,7 @@ export class AppService {
 	viewsLayout: ViewLayoutVO;
 	activeTabIndex = 0;
 	viewsLayoutChanged: EventEmitter < any > = new EventEmitter();
+	fontSize: EventEmitter <number> = new EventEmitter();
 
 	constructor(private khiopsLibraryService: KhiopsLibraryService) {
 		this.initialize();
@@ -248,6 +250,10 @@ export class AppService {
 		this.viewsLayout = viewsLayout;
 		localStorage.setItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'VIEWS_LAYOUT', JSON.stringify(this.viewsLayout));
 		this.viewsLayoutChanged.emit(this.viewsLayout);
+	}
+
+	setFontSize(fontSize) {
+		this.fontSize.emit(fontSize);
 	}
 
 	switchSplitSizes(oldPosition, newPosition) {

@@ -1,3 +1,4 @@
+import { ConfigService } from '@khiops-library/providers/config.service';
 import {
 	Component,
 	HostListener,
@@ -67,9 +68,10 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 		private treePreparationDatasService: TreePreparationDatasService,
 		public selectableService: SelectableService,
 		private snackBar: MatSnackBar,
-		public translate: TranslateService) {
+		public translate: TranslateService,
+		public configService: ConfigService) {
 
-		super(selectableService, ngzone);
+		super(selectableService, ngzone, configService);
 	}
 
 	ngOnInit() {}

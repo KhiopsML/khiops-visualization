@@ -21,6 +21,7 @@ import {
 import {
 	AnnotationService
 } from '@khiops-covisualization/providers/annotation.service';
+import { ConfigService } from '@khiops-library/providers/config.service';
 
 @Component({
 	selector: 'app-annotation',
@@ -40,8 +41,9 @@ export class AnnotationComponent extends SelectableComponent implements OnInit, 
 		private annotationService: AnnotationService,
 		private translate: TranslateService,
 		public selectableService: SelectableService,
-		public ngzone: NgZone) {
-			super(selectableService, ngzone);
+		public ngzone: NgZone,
+		public configService: ConfigService) {
+			super(selectableService, ngzone, configService);
 		}
 
 	ngOnInit() {

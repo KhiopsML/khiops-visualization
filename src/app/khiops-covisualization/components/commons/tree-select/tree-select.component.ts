@@ -40,6 +40,7 @@ import {
 import {
 	TranslateService
 } from '@ngstack/translate';
+import { ConfigService } from '@khiops-library/providers/config.service';
 
 @Component({
 	selector: 'app-tree-select',
@@ -75,9 +76,10 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 		private treenodesService: TreenodesService,
 		public selectableService: SelectableService,
 		private snackBar: MatSnackBar,
-		public translate: TranslateService) {
+		public translate: TranslateService,
+		public configService: ConfigService) {
 
-		super(selectableService, ngzone);
+		super(selectableService, ngzone, configService);
 
 		this.treeInitSub = this.eventsService.treeInit.subscribe(selectedNodes => {
 			// Listen for unfold hierarchy change to reinit tree and select nodes

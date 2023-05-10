@@ -8,6 +8,9 @@ import {
 	Output,
 	EventEmitter,
 	ViewEncapsulation,
+	ViewChild,
+	ElementRef,
+	AfterViewInit,
 } from '@angular/core';
 // import {
 // 	ElectronService
@@ -53,7 +56,7 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 	styleUrls: ['./app.component.scss'],
 	encapsulation: ViewEncapsulation.ShadowDom
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	@Input() appdatas: any;
 	@Input()
@@ -65,6 +68,8 @@ export class AppComponent implements OnInit, OnDestroy {
 	}
 	@Output('onFileOpen') onFileOpen: EventEmitter<any> = new EventEmitter<any>();
 	@Output('onCustomEvent') customEvent: EventEmitter<string> = new EventEmitter();
+
+	@ViewChild('appElement', { static: false }) appElement: ElementRef<HTMLElement>;
 
 	constructor(
 		private dialogRef: MatDialog,
@@ -91,6 +96,10 @@ export class AppComponent implements OnInit, OnDestroy {
 		// } else {
 		// 	// console.log('Mode web');
 		// }
+	}
+
+	ngAfterViewInit(): void {
+		this.configService.setRootElement(this.appElement);
 	}
 
 	ngOnInit() {

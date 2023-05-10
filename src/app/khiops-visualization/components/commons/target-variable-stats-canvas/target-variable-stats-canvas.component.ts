@@ -29,6 +29,7 @@ import {
 import {
 	ChartOptions
 } from 'chart.js';
+import { ConfigService } from '@khiops-library/providers/config.service';
 
 @Component({
 	selector: 'app-target-variable-stats-canvas',
@@ -53,9 +54,10 @@ export class TargetVariableStatsCanvasComponent extends SelectableComponent impl
 		private toPrecision: ToPrecisionPipe,
 		private translate: TranslateService,
 		private khiopsLibraryService: KhiopsLibraryService,
-		public ngzone: NgZone) {
+		public ngzone: NgZone,
+		public configService: ConfigService) {
 
-		super(selectableService, ngzone);
+		super(selectableService, ngzone, configService);
 		this.colorSet = this.khiopsLibraryService.getGraphColorSet()[1];
 		this.groupPadding = 20; // default
 		if (!this.title) {

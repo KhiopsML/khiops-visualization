@@ -32,6 +32,7 @@ import {
 import {
 	CellVO
 } from '../../model/cell-vo';
+import { ConfigService } from '@khiops-library/providers/config.service';
 
 @Component({
 	selector: 'kl-matrix-canvas',
@@ -116,9 +117,10 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 
 	constructor(public selectableService: SelectableService,
 		private khiopsLibraryService: KhiopsLibraryService,
-		public ngzone: NgZone
+		public ngzone: NgZone,
+		public configService: ConfigService
 	) {
-		super(selectableService, ngzone);
+		super(selectableService, ngzone, configService);
 
 		this.lastScrollPosition = {
 			scrollLeft: 0,

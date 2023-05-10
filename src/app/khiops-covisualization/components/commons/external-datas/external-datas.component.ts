@@ -12,6 +12,7 @@ import {
 import {
 	SelectableService
 } from '@khiops-library/components/selectable/selectable.service';
+import { ConfigService } from '@khiops-library/providers/config.service';
 
 @Component({
 	selector: 'app-external-datas',
@@ -29,8 +30,8 @@ export class ExternalDatasComponent extends SelectableComponent implements OnIni
 	componentType = 'external-datas'; // needed to copy datas
 
 	constructor(
-		public selectableService: SelectableService, public ngzone: NgZone) {
-		super(selectableService, ngzone);
+		public selectableService: SelectableService, public ngzone: NgZone, public configService: ConfigService) {
+		super(selectableService, ngzone, configService);
 	}
 
 	ngOnInit() {

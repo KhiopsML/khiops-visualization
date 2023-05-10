@@ -44,6 +44,7 @@ import {
 import {
 	KhiopsLibraryService
 } from '@khiops-library/providers/khiops-library.service';
+import { ConfigService } from '@khiops-library/providers/config.service';
 
 @Component({
 	selector: 'app-tree-hyper',
@@ -78,12 +79,12 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 	constructor(
 		public ngzone: NgZone,
 		private treePreparationDatasService: TreePreparationDatasService,
-		private khiopsLibraryService: KhiopsLibraryService,
 		private distributionDatasService: DistributionDatasService,
 		public selectableService: SelectableService,
-		public translate: TranslateService) {
+		public translate: TranslateService,
+		public configService: ConfigService) {
 
-		super(selectableService, ngzone);
+		super(selectableService, ngzone, configService);
 
 		this.buttonTitle = this.translate.get('GLOBAL.VALUES');
 

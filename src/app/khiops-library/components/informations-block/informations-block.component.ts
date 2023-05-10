@@ -11,6 +11,7 @@ import {
 import {
 	SelectableService
 } from '../../components/selectable/selectable.service';
+import { ConfigService } from '@khiops-library/providers/config.service';
 
 @Component({
 	selector: 'kl-informations-block',
@@ -25,8 +26,8 @@ export class InformationsBlockComponent extends SelectableComponent {
 	@Input() icon = 'subject';
 	componentType = 'informations'; // needed to copy datas
 
-	constructor(public selectableService: SelectableService, public ngzone: NgZone) {
-		super(selectableService, ngzone);
+	constructor(public selectableService: SelectableService, public ngzone: NgZone, public configService: ConfigService) {
+		super(selectableService, ngzone, configService);
 	}
 
 	show_value(value) {

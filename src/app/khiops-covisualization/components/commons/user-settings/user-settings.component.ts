@@ -13,6 +13,7 @@ import {
 	KhiopsLibraryService
 } from '@khiops-library/providers/khiops-library.service';
 import * as _ from 'lodash'; // Important to import lodash in karma
+import { AppService } from '@khiops-covisualization/providers/app.service';
 
 // TODO remove electron
 // let storage;
@@ -35,7 +36,7 @@ export class UserSettingsComponent implements OnChanges {
 	contrastValue: number;
 	initialAllowCookies: boolean;
 
-	constructor(private khiopsLibraryService: KhiopsLibraryService) {}
+	constructor(private khiopsLibraryService: KhiopsLibraryService, private appService: AppService) {}
 
 	ngOnChanges(changes: SimpleChanges) {
 		if (changes.opened && changes.opened.currentValue) {
@@ -71,6 +72,7 @@ export class UserSettingsComponent implements OnChanges {
 		});
 		localStorage.setItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'FONT_SIZE', previousFontSize);
 		AppConfig.covisualizationCommon.GLOBAL.FONT_SIZE = parseInt(previousFontSize, 10);
+		this.appService.setFontSize(AppConfig.covisualizationCommon.GLOBAL.FONT_SIZE );
 
 		this.toggleNavDrawerChanged.emit();
 	}
@@ -79,6 +81,7 @@ export class UserSettingsComponent implements OnChanges {
 		// Save all items
 		localStorage.setItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'FONT_SIZE', this.fontSize);
 		AppConfig.covisualizationCommon.GLOBAL.FONT_SIZE = this.fontSize;
+		this.appService.setFontSize(this.fontSize);
 
 		localStorage.setItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST', this.contrastValue.toString());
 		AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
@@ -104,9 +107,11 @@ export class UserSettingsComponent implements OnChanges {
 	}
 
 	onFontSizeChanged(event) {
+		// AppConfig.covisualizationCommon.GLOBAL.FONT_SIZE = event.value;
 		this.fontSize = event.value;
-		document.body.classList.remove('font-10', 'font-11', 'font-12', 'font-13', 'font-14', 'font-15', 'font-16', 'font-17', 'font-18');
-		document.body.classList.add('font-' + event.value);
+		this.appService.setFontSize(this.fontSize);
+		// document.body.classList.remove('font-10', 'font-11', 'font-12', 'font-13', 'font-14', 'font-15', 'font-16', 'font-17', 'font-18');
+		// document.body.classList.add('font-' + event.value);
 	}
 
 

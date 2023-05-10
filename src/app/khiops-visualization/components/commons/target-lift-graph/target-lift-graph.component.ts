@@ -28,6 +28,7 @@ import _ from 'lodash';
 import {
 	ChartColorsSetI
 } from '@khiops-library/interfaces/chart-colors-set';
+import { ConfigService } from '@khiops-library/providers/config.service';
 
 @Component({
 	selector: 'app-target-lift-graph',
@@ -57,9 +58,10 @@ export class TargetLiftGraphComponent extends SelectableComponent implements OnI
 		private evaluationDatasService: EvaluationDatasService,
 		private translate: TranslateService,
 		private khiopsLibraryService: KhiopsLibraryService,
-		public ngzone: NgZone
+		public ngzone: NgZone,
+		public configService: ConfigService
 	) {
-		super(selectableService, ngzone);
+		super(selectableService, ngzone, configService);
 		this.evaluationDatas = this.evaluationDatasService.getDatas();
 
 		this.legendColorSet = _.cloneDeep(this.khiopsLibraryService.getGraphColorSet()[1]);

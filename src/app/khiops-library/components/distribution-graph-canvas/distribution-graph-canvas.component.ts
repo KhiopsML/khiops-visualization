@@ -16,9 +16,6 @@ import {
 	KhiopsLibraryService
 } from '../../providers/khiops-library.service';
 import {
-	TranslateService
-} from '@ngstack/translate';
-import {
 	ToPrecisionPipe
 } from '../../pipes/toPrecision.pipe';
 import * as _ from 'lodash'; // Important to import lodash in karma
@@ -28,6 +25,7 @@ import {
 import {
 	ChartOptions
 } from 'chart.js';
+import { ConfigService } from '@khiops-library/providers/config.service';
 
 @Component({
 	selector: 'kl-distribution-graph-canvas',
@@ -63,12 +61,12 @@ export class DistributionGraphCanvasComponent extends ScrollableGraphCanvasCompo
 	minScale: number;
 
 	constructor(public selectableService: SelectableService,
-		private translate: TranslateService,
 		private toPrecision: ToPrecisionPipe,
 		private khiopsLibraryService: KhiopsLibraryService,
-		public ngzone: NgZone) {
+		public ngzone: NgZone,
+		public configService: ConfigService) {
 
-		super(selectableService, ngzone);
+		super(selectableService, ngzone, configService);
 
 		this.colorSet = this.khiopsLibraryService.getGraphColorSet()[2];
 		// if (this.graphOptions) {

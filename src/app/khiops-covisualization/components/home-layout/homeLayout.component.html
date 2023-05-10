@@ -1,4 +1,4 @@
-<div id="home-layout-comp" fxFlexFill role="main">
+<div id="home-layout-comp" fxFlexFill role="main" [className]="fontSizeClass">
 	<mat-sidenav-container fxFlexFill>
 		<mat-sidenav #sidenav mode="over" position="end" disableClose="true" [(opened)]="opened">
 			<app-user-settings (toggleNavDrawerChanged)="onToggleNavDrawerChanged($event)" [opened]="opened">

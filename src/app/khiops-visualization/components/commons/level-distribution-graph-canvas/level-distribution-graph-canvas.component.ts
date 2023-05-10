@@ -37,6 +37,7 @@ import {
 import {
 	ChartOptions
 } from 'chart.js';
+import { ConfigService } from '@khiops-library/providers/config.service';
 
 @Component({
 	selector: 'app-level-distribution-graph',
@@ -72,8 +73,9 @@ export class LevelDistributionGraphCanvasComponent extends ScrollableGraphCanvas
 		private translate: TranslateService,
 		private snackBar: MatSnackBar,
 		private khiopsLibraryService: KhiopsLibraryService,
-		public ngzone: NgZone) {
-		super(selectableService, ngzone);
+		public ngzone: NgZone,
+		public configService: ConfigService) {
+		super(selectableService, ngzone, configService);
 
 		this.colorSet = this.khiopsLibraryService.getGraphColorSet()[2];
 

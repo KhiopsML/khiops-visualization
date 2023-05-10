@@ -87,6 +87,7 @@ import pjson from 'package.json';
 })
 export class HomeLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 	updateAvailableStatus: boolean;
+	fontSizeClass: string;
 	get appDatas(): any {
 		return this.appService.getDatas();
 	}
@@ -161,8 +162,10 @@ export class HomeLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 		}
 
 		// set saved font size from ls
-		const fontSize = AppConfig.covisualizationCommon.GLOBAL.FONT_SIZE;
-		document.body.classList.add('font-' + fontSize);
+		const fontSize = localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'FONT_SIZE') || AppConfig.covisualizationCommon.GLOBAL.FONT_SIZE;
+		this.fontSizeClass = 'font-' + fontSize;
+
+		this.appService.fontSize.subscribe(fontSize => this.fontSizeClass = 'font-' + fontSize);
 
 		// this.appDatas = this.appService.getDatas();
 

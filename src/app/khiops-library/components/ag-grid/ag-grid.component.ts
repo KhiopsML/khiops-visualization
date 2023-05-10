@@ -37,6 +37,7 @@ import {
 	UtilsService
 } from '@khiops-library/providers/utils.service';
 import _ from 'lodash';
+import { ConfigService } from '@khiops-library/providers/config.service';
 
 @Component({
 	selector: 'kl-ag-grid',
@@ -130,9 +131,10 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 	constructor(public selectableService: SelectableService,
 		private khiopsLibraryService: KhiopsLibraryService,
 		private translate: TranslateService,
-		public ngzone: NgZone
+		public ngzone: NgZone,
+		public configService: ConfigService
 	) {
-		super(selectableService, ngzone);
+		super(selectableService, ngzone, configService);
 		this.dataOptions.selected = localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + 'AG_GRID_GRAPH_OPTION') || this.dataOptions.types[0];
 
 		this.title = this.translate.get('GLOBAL.VARIABLES') || this.title;

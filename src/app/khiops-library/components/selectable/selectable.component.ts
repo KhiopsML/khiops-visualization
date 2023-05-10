@@ -13,6 +13,7 @@ import {
 import {
 	SelectableService
 } from './selectable.service';
+import { ConfigService } from '@khiops-library/providers/config.service';
 
 @Component({
 	template: '',
@@ -24,14 +25,15 @@ export class SelectableComponent extends WatchResizeComponent implements OnDestr
 	@Input() type: [any];
 	selectedServiceChangeSub: any;
 
-	constructor(public selectableService: SelectableService, public ngzone: NgZone) {
+	constructor(public selectableService: SelectableService, public ngzone: NgZone, public configService: ConfigService) {
 
 		super(ngzone);
 
 		// watch for changes and update css
 		this.selectedServiceChangeSub = this.selectableService.selectedServiceChange.subscribe(value => {
+			console.log(value,this.configService.getRootElement());
 			if (this.id && value && value.id) {
-				const el = document.getElementById(this.id.toString());
+				const el = this.configService.getRootElementDom().querySelector("#" + this.id.toString());
 				if (el) {
 					if (value.id.toString() === this.id.toString()) {
 						if (this.id.includes('informations-block') || this.id.includes('description-block')) {
