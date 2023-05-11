@@ -148,7 +148,9 @@
             "tsConfig": "projects/khiops-webcomponent/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "projects/khiops-webcomponent/src/assets"
+              "projects/khiops-webcomponent/src/assets",
+			  "projects/khiops-webcomponent/src/package.json",
+			  "projects/khiops-webcomponent/src/README.md"
             ],
             "styles": [
               "projects/khiops-webcomponent/src/styles.scss"

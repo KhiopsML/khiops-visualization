@@ -20,7 +20,7 @@
   "scripts": {
     "build": "ng build",
     "build:stats": "ng build --stats-json --source-map --output-hashing none && npm run stats:webpack-bundle-analyzer & npm run stats:source-map-explorer",
-    "build:webcomponents": "cd libs/khiops-hypertree && mkdir -p dist && yarn install && yarn build && cd ../.. && ng build khiops-webcomponent --single-bundle && cd dist/khiops-webcomponent && cat polyfills.js styles.js main.js > khiops-webcomponents.bundle.js",
+    "build:webcomponents": "./build.sh",
     "stats:webpack-bundle-analyzer": "webpack-bundle-analyzer dist/visualization-component/stats.json",
     "stats:source-map-explorer": "source-map-explorer dist/visualization-component/main.js --no-border-checks",
     "compodoc:build": "compodoc -p tsconfig.doc.json",
