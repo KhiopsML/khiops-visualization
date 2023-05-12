@@ -58,7 +58,17 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 })
 export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
-	@Input() appdatas: any;
+	private _appdatas: any;
+
+	@Input()
+	public get appdatas(): any {
+		return this._appdatas;
+	}
+	public set appdatas(value: any) {
+		console.log(value);
+		this._appdatas = value;
+	}
+
 	@Input()
 	public get config(): ConfigModel {
 		return this.configService.config;
@@ -66,6 +76,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 	public set config(value: ConfigModel) {
 		this.configService.config = value;
 	}
+
 	@Output('onFileOpen') onFileOpen: EventEmitter<any> = new EventEmitter<any>();
 	@Output('onCustomEvent') customEvent: EventEmitter<string> = new EventEmitter();
 
