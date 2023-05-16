@@ -36,6 +36,7 @@ import {
 import { ConfigModel } from '@khiops-library/model/config.model';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { EventsService } from '@khiops-library/providers/events.service';
+import { SaveService } from './providers/save.service';
 // import {
 // 	UtilsService
 // } from '@khiops-library/providers/utils.service';
@@ -67,6 +68,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 	public set config(value: ConfigModel) {
 		this.configService.config = value;
 	}
+
 	@Output('onFileOpen') onFileOpen: EventEmitter<any> = new EventEmitter<any>();
 	@Output('onCustomEvent') customEvent: EventEmitter<string> = new EventEmitter();
 
@@ -80,7 +82,9 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 		private khiopsLibraryService: KhiopsLibraryService,
 		private configService: ConfigService,
 		private translate: TranslateService,
-		private eventsService: EventsService) {
+		private eventsService: EventsService,
+		private saveService: SaveService,
+		private element: ElementRef) {
 
 		// console.log('AppConfig', AppConfig);
 
@@ -88,6 +92,8 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
 		this.eventsService.clickOpenFile.subscribe(() => this.onFileOpen.emit());
 		this.eventsService.customEvent.subscribe((eventName) => this.customEvent.emit(eventName));
+
+		this.element.nativeElement.save = () => this.saveService.constructDatasToSave();
 
 		// TODO remove electron
 		// if (this.electronService.isElectron()) {
