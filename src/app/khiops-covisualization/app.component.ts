@@ -93,8 +93,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.eventsService.clickOpenFile.subscribe(() => this.onFileOpen.emit());
 		this.eventsService.customEvent.subscribe((eventName) => this.customEvent.emit(eventName));
 
-		this.element.nativeElement.save = () => this.saveService.constructDatasToSave();
-
 		// TODO remove electron
 		// if (this.electronService.isElectron()) {
 		// 	storage.setDataPath(os.tmpdir() + '/\\' + AppConfig.covisualizationCommon.GLOBAL.LS_ID);
@@ -109,6 +107,10 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	ngAfterViewInit(): void {
 		this.configService.setRootElement(this.appElement);
+		this.element.nativeElement.getDatas = () => this.saveService.constructDatasToSave();
+		this.element.nativeElement.setDatas = (datas) => {
+			this.appdatas = {...datas}
+		};
 	}
 
 	ngOnInit() {

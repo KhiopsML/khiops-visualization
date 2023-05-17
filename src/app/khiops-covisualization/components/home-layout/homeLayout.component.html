@@ -5,7 +5,7 @@
 			</app-user-settings>
 		</mat-sidenav>
 		<mat-sidenav-content>
-			<div class="container" [hidden]="appDatas && appDatas.datas && isCompatibleJson" fxLayout="column">
+			<div class="container" [hidden]="isCompatibleJson" fxLayout="column">
 				<kl-header-title [title]="appTitle">
 					<svg logo version="1.0" width="52" viewBox="0 0 560.912 305.509" xmlns="http://www.w3.org/2000/svg">
 						<path style="fill:#5f9ac7;stroke-width:.75" d="m-867.815-554.656 10.732 41.142-94.356 28.827z" transform="translate(1023.774 459.367) scale(.73361)"/>
@@ -30,7 +30,7 @@
 				<kl-file-loader #fileLoader [onFileLoaderDataChanged]="onFileLoaderDataChangedCb"
 					[applicationName]="appName"></kl-file-loader>
 			</div>
-			<div *ngIf="appDatas && appDatas.datas && isCompatibleJson" class="container" fxLayout="column">
+			<div *ngIf="isCompatibleJson" class="container" fxLayout="column">
 				<kl-header-title [title]="appTitle">
 					<svg logo version="1.0" width="52" viewBox="0 0 560.912 305.509" xmlns="http://www.w3.org/2000/svg">
 						<path style="fill:#5f9ac7;stroke-width:.75" d="m-867.815-554.656 10.732 41.142-94.356 28.827z" transform="translate(1023.774 459.367) scale(.73361)"/>
@@ -74,11 +74,10 @@
 				</app-axis-view>
 			</div>
 			<div id="header-right" layout="row" fxLayoutAlign="center center">
-				<app-header-manage-view *ngIf="activeTab !== 0 && appDatas && appDatas.datas && isCompatibleJson"></app-header-manage-view>
-				<kl-header-tools fxFlex [appVersion]="appVersion" *ngIf="appDatas && appDatas.datas && isCompatibleJson"
+				<app-header-manage-view *ngIf="activeTab !== 0 && isCompatibleJson"></app-header-manage-view>
+				<kl-header-tools fxFlex [appVersion]="appVersion" *ngIf="isCompatibleJson"
 					(toggleNavDrawerChanged)="onToggleNavDrawerChanged($event)">
 				</kl-header-tools>
-				<kl-release-button (isUpdateAvailable)="isUpdateAvailable($event)"></kl-release-button>
 			</div>
 		</mat-sidenav-content>
 	</mat-sidenav-container>

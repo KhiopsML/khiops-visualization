@@ -31,7 +31,6 @@ export class SelectableComponent extends WatchResizeComponent implements OnDestr
 
 		// watch for changes and update css
 		this.selectedServiceChangeSub = this.selectableService.selectedServiceChange.subscribe(value => {
-			console.log(value,this.configService.getRootElement());
 			if (this.id && value && value.id) {
 				const el = this.configService.getRootElementDom().querySelector("#" + this.id.toString());
 				if (el) {
@@ -53,7 +52,6 @@ export class SelectableComponent extends WatchResizeComponent implements OnDestr
 				}
 			}
 		});
-
 	}
 
 	ngAfterViewInit(): void {
