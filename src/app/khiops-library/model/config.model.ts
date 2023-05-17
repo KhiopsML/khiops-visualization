@@ -1,5 +1,7 @@
 export class ConfigModel {
 
-	customFileOpen: boolean = false;
+	onFileOpen: Function;
+	onCopyData: Function;
+	onCopyImage: Function;
 
 }

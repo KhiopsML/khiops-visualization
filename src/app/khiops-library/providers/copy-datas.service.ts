@@ -1,3 +1,4 @@
+import { ConfigService } from './config.service';
 import {
 	Injectable
 } from '@angular/core';
@@ -14,7 +15,7 @@ import {
 })
 export class CopyDatasService {
 
-	constructor(private translate: TranslateService) {}
+	constructor(private translate: TranslateService,private configService: ConfigService) {}
 
 	copyDatasToClipboard(selectedArea: any) {
 		// console.log('​CopyDatasService -> copyDatasToClipboard -> selectedArea', selectedArea);
@@ -58,17 +59,21 @@ export class CopyDatasService {
 		}
 
 		// Create temp textarea to make copy
-		const selBox = document.createElement('textarea');
-		selBox.style.position = 'fixed';
-		selBox.style.left = '0';
-		selBox.style.top = '0';
-		selBox.style.opacity = '0';
-		selBox.value = formattedDatas;
-		document.body.appendChild(selBox);
-		selBox.focus();
-		selBox.select();
-		document.execCommand('copy');
-		document.body.removeChild(selBox);
+		if (!this.configService.config.onCopyData) {
+			const selBox = document.createElement('textarea');
+			selBox.style.position = 'fixed';
+			selBox.style.left = '0';
+			selBox.style.top = '0';
+			selBox.style.opacity = '0';
+			selBox.value = formattedDatas;
+			document.body.appendChild(selBox);
+			selBox.focus();
+			selBox.select();
+			document.execCommand('copy');
+			document.body.removeChild(selBox);
+		} else {
+			this.configService.config.onCopyData(formattedDatas);
+		}
 	}
 
 	getMatrixDatas(selectedArea: any) {

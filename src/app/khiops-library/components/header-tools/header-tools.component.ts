@@ -112,21 +112,15 @@ export class HeaderToolsComponent implements OnInit {
 					// convert div screenshot to canvas
 					html2canvas(currentDiv).then(canvas => {
 						canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height);
-						// const base64data = canvas.toDataURL('image/jpeg');
 
-						canvas.toBlob((blob) => {
-							saveAs(blob, currentSelectedArea.id + ".png");
-						});
+						if (!this.configService.config.onCopyImage) {
+							canvas.toBlob((blob) => {
+								saveAs(blob, currentSelectedArea.id + ".png");
+							});
+						} else {
+							this.configService.config.onCopyImage(canvas.toDataURL('image/jpeg'))
+						}
 
-						// TODO remove electron
-						// const natImage = nativeImage.createFromDataURL(base64data);
-						// clipboard.writeImage(natImage);
-
-
-
-						// Show useless header informations for screenshots when done
-						// TODO there is an option into the lib to do that
-						// this.eltsToHide = elt.getElementsByClassName('screenshot-hide');
 						if (this.eltsToHide && this.eltsToHide[0]) {
 							for (let i = 0; i < this.eltsToHide.length; i++) {
 								this.eltsToHide[i].style.display = 'flex';
@@ -142,10 +136,6 @@ export class HeaderToolsComponent implements OnInit {
 						});
 
 						this.isCopyingImage = false;
-						// debug display img
-						// var img = document.createElement("img");
-						// img.src = base64data;
-						// document.body.appendChild(img);
 
 					}).catch((e) => {
 						console.error('​HeaderToolsComponent -> copyImage -> e', e);
