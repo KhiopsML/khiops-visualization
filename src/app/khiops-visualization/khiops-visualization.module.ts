@@ -122,6 +122,9 @@ import {
 } from './components/commons/var-details-preparation-2d/var-details-preparation-2d.component';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { InAppRootOverlayContainer } from '@khiops-visualization/providers/in-app-root-overlay/in-app-root-overlay-container';
+import { HistogramComponent } from './components/commons/histogram/histogram.component';
+import { AngularResizeEventModule } from 'angular-resize-event';
+import { BrowserModule } from '@angular/platform-browser';
 
 export function setupTranslateFactory(service: TranslateService) {
 	const serv = () => service.use('en');
@@ -141,6 +144,7 @@ const providers = [
 
 @NgModule({
 	declarations: [
+		HistogramComponent,
 		AppComponent,
 		HomeLayoutComponent,
 		PreparationViewComponent,
@@ -171,6 +175,7 @@ const providers = [
 	],
 	imports: [
 		CommonModule,
+		BrowserModule,
 		BrowserAnimationsModule,
 		NgxChartsModule,
 		KhiopsLibraryModule,
@@ -180,7 +185,7 @@ const providers = [
 		HttpClientModule,
 		AngularSplitModule,
 		TranslateModule.forChild(),
-		KhiopsLibraryModule
+		AngularResizeEventModule
 	],
 	exports: [
 		AppComponent

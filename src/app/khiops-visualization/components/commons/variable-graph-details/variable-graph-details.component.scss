@@ -1,9 +1,13 @@
 #variable-graph-details-comp {
-
 	height: 100%;
 	position: relative;
 
+	kl-graph-header {
+		z-index: 1;
+		position: relative;
+	}
 	.distribution-graph,
+	.app-histogram,
 	.target-distribution-graph {
 		position: relative;
 		width: 100%;

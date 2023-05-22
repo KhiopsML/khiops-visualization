@@ -1,0 +1,39 @@
+<div class="app-histogram" *ngIf="datas" fxFlexFill fxLayout="column">
+	<div fxLayout="row" fxLayoutAlign="end center" class="comp-header">
+		<div fxFlex fxLayout="row" fxLayoutAlign="start center">
+			<h2 title="{{ 'TOOLTIPS.DISTRIBUTION.TITLE' | translate }}">
+				{{ "GLOBAL.DISTRIBUTION" | translate }}
+			</h2>
+		</div>
+		<!-- <kl-legend [inputDatas]="inputDatas" [type]="'chart-1d'" [colorSet]="colorSet"></kl-legend> -->
+		<div class="comp-header-tools screenshot-hide" fxLayout="row">
+			<div>
+				<button
+					mat-stroked-button
+					color="primary"
+					[matMenuTriggerFor]="graphOptionsXTypes"
+				>
+					{{
+						distributionDatas.distributionGraphOptionsX.selected
+							| translate
+					}}
+					<em>&#9698;</em>
+				</button>
+				<mat-menu #graphOptionsXTypes>
+					<button
+						mat-menu-item
+						*ngFor="
+							let opt of distributionDatas
+								.distributionGraphOptionsX.types
+						"
+						(click)="changeGraphTypeX(opt)"
+					>
+						{{ opt | translate }}
+					</button>
+				</mat-menu>
+			</div>
+		</div>
+	</div>
+	<div (resized)="onResized($event)" #chart id="histogram-chart"></div>
+</div>
+<div #chartTooltip class="tooltip-container"></div>

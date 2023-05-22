@@ -105,7 +105,7 @@ export class DistributionDatasVO {
 
 		this.distributionGraphOptionsX = {
 			types: [
-				'xLin' //, 'xLog'
+				'xLin', 'xLog'
 			],
 			selected: undefined
 		};

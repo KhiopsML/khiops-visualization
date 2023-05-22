@@ -63,6 +63,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
 	isLoadingGraphDatas: boolean;
 	activeEntries = 0;
 	isFullscreen: boolean;
+	histogramDatas: any
 
 	constructor(
 		private preparationDatasService: PreparationDatasService,
@@ -89,6 +90,10 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
 				}
 				if (this.showDistributionGraph) {
 					this.distributionDatasService.getdistributionGraphDatas(this.selectedVariable);
+					this.histogramDatas =
+						this.distributionDatasService.getHistogramGraphDatas(
+							this.selectedVariable
+						);
 				}
 
 				if (this.preparationSource === 'treePreparationReport') {
