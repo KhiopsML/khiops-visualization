@@ -67,7 +67,11 @@ export class LegendComponent implements OnChanges {
 	updateLegend() {
 		if (this.inputDatas) {
 			this.legend = [];
-			if (this.type === 'chart-1d') {
+			if (this.type === 'histogram') {
+				if (this.inputDatas) {
+
+				}
+			} else if (this.type === 'chart-1d') {
 				if (this.inputDatas && this.inputDatas.datasets && this.inputDatas.datasets[0]) {
 					this.legend.push({
 						name: this.translate.get(this.inputDatas.datasets[0].label),
