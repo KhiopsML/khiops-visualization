@@ -2,7 +2,7 @@
 	<div fxLayout="column" fxFlexFill
 		*ngIf="distributionDatas.distributionGraphDatas || distributionDatas.targetDistributionGraphDatas || histogramDatas">
 		<kl-graph-header [selectedVariable]="selectedVariable" (scaleValueChanged)="onScaleValueChanged($event)"
-			(toggleFullscreen)="onToggleFullscreen($event)">
+			(toggleFullscreen)="onToggleFullscreen($event)" [hideScale]="histogramDatas">
 		</kl-graph-header>
 		<kl-distribution-graph-canvas #distributionGraph fxFlex="1 1 100%"
 			*ngIf="showDistributionGraph && distributionDatas.distributionGraphDatas && !histogramDatas"
@@ -17,7 +17,8 @@
 			(selectedItemChanged)="onSelectedDistributionGraphItemChanged($event)">
 		</kl-distribution-graph-canvas>
 
-		<app-histogram class="app-histogram" *ngIf="histogramDatas" fxFlex="1 1 100%" [datas]="histogramDatas">
+		<app-histogram class="app-histogram" *ngIf="histogramDatas" fxFlex="1 1 100%" [datas]="histogramDatas"
+			[fullScreen]="isFullscreen">
 		</app-histogram>
 
 		<app-target-distribution-graph-canvas #targetDistributionGraph fxFlex="1 1 100%"

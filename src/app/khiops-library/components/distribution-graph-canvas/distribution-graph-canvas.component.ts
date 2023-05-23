@@ -118,7 +118,7 @@ export class DistributionGraphCanvasComponent extends ScrollableGraphCanvasCompo
 				y: {
 					// beginAtZero: true,
 					ticks: {
-						maxTicksLimit: this.graphOptions && this.graphOptions.selected === 'GLOBAL.COVERAGE' ? 7 : 0,
+						// maxTicksLimit: this.graphOptions && this.graphOptions.selected === 'GLOBAL.COVERAGE' ? 7 : 1,
 						callback: (value) => {
 							if (!this.hideGraphOptions && this.graphOptions && this.graphOptions.selected === 'GLOBAL.FREQUENCY') {
 								// Frequency log mode

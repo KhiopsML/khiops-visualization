@@ -102,6 +102,7 @@ export class DistributionDatasVO {
 		} else {
 			this.distributionGraphOptions.selected = this.distributionGraphOptions.types[0]
 		}
+		this.distributionType = this.distributionGraphOptions.selected;
 
 		this.distributionGraphOptionsX = {
 			types: [
@@ -115,7 +116,6 @@ export class DistributionDatasVO {
 		} else {
 			this.distributionGraphOptionsX.selected = this.distributionGraphOptionsX.types[0]
 		}
-		this.distributionType = this.distributionGraphOptions.selected;
 		this.distributionTypeX = this.distributionGraphOptionsX.selected;
 
 	}

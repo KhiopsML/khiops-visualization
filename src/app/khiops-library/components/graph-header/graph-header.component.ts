@@ -31,6 +31,7 @@ export class GraphHeaderComponent implements OnInit {
 	@Input() selectedVariable: any;
 	@Input() title: string;
 	@Input() smallTitle = false;
+	@Input() hideScale = false;
 	iterateTo = 0;
 	barChartLimit: any;
 

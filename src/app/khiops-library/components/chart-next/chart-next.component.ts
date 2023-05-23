@@ -112,6 +112,11 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 				onClick: this.graphClickEvent.bind(this),
 				scales: {
 					y: {
+						grid: {
+							drawBorder: true,
+							borderColor: '#e5e5e5',
+							color: '#e5e5e5'
+						},
 						beginAtZero: true,
 						min: 0,
 						ticks: {
@@ -124,6 +129,11 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 						}
 					},
 					x: {
+						grid: {
+							drawBorder: true,
+							borderColor: '#e5e5e5',
+							color: '#e5e5e5'
+						},
 						min: 0,
 						ticks: {
 							autoSkip: true,
@@ -153,6 +163,7 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 
 			// Merge chart options
 			options = UtilsService.mergeDeep(options, this.chartOptions);
+			console.log('file: chart-next.component.ts:156 ~ ChartNextComponent ~ initChart ~ options:', options);
 			// @ts-ignore
 			ChartJs.Chart.register.apply(null, Object.values(ChartJs).filter((chartClass) => (chartClass.id)));
 

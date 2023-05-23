@@ -1,4 +1,5 @@
 import {
+	ChangeDetectionStrategy,
 	Component,
 	ElementRef,
 	Input,
@@ -21,6 +22,7 @@ import { KhiopsLibraryService } from "@khiops-library/providers/khiops-library.s
 	selector: "app-histogram",
 	templateUrl: "./histogram.component.html",
 	styleUrls: ["./histogram.component.scss"],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HistogramComponent {
 	@ViewChild("chart", { static: false })
@@ -35,8 +37,7 @@ export class HistogramComponent {
 
 	// Dynamic values
 	@Input() datas: any;
-	// @Input() xType: HistogramType | string = HistogramType.LIN;
-	yType = "yLog";
+	@Input() fullScreen: boolean = false;
 	h: number = 220;
 	w: number = 1000;
 	xPadding = 30;
@@ -60,11 +61,14 @@ export class HistogramComponent {
 	ratio: number = 0;
 	distributionDatas: DistributionDatasVO;
 
+	colorSet: string[];
+
 	constructor(
 		private distributionDatasService: DistributionDatasService,
 		private khiopsLibraryService: KhiopsLibraryService,
 		private histogramService: HistogramService
 	) {
+		this.colorSet = HistogramUIService.getColors();
 		d3.selection.prototype.moveToFront = function () {
 			return this.each(function () {
 				this.parentNode.appendChild(this);
@@ -83,19 +87,23 @@ export class HistogramComponent {
 				"DISTRIBUTION_GRAPH_OPTION_X",
 			type
 		);
-
 		this.distributionDatas.distributionGraphOptionsX.selected = type;
-		console.log(
-			"file: histogram.component.ts:91 ~ HistogramComponent ~ changeGraphTypeX ~ this.distributionDatas.distributionGraphOptionsX:",
-			this.distributionDatas.distributionGraphOptionsX
+		this.datas && this.init();
+	}
+
+	changeGraphType(type) {
+		// this.khiopsLibraryService.trackEvent('click', 'distribution_graph_type_x', this.graphOptions.selected);
+		localStorage.setItem(
+			this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
+				"DISTRIBUTION_GRAPH_OPTION",
+			type
 		);
+		this.distributionDatas.distributionGraphOptions.selected = type;
 		this.datas && this.init();
 	}
 
 	onResized(event: ResizedEvent) {
-		// this.w = event.newRect.width;
-
-		this.h = this.chart.nativeElement.offsetHeight - 60; // graph header = 60
+		this.h = this.chart.nativeElement.offsetHeight + 10 - 60; // graph header = 60, +10 to take more height
 		this.w = this.chart.nativeElement.offsetWidth;
 		this.datas && this.init();
 	}
@@ -123,7 +131,10 @@ export class HistogramComponent {
 		if (this.chart) {
 			this.chart.nativeElement.innerHTML = "";
 			if (this.datas) {
-				if (this.yType === "yLog") {
+				if (
+					this.distributionDatas.distributionGraphOptions.selected ===
+					"yLog"
+				) {
 					this.rangeYLog = this.histogramService.getLogRangeY(
 						this.datas
 					);
@@ -179,7 +190,9 @@ export class HistogramComponent {
 						if (this.rangeXLog.inf && !this.rangeXLog.negStart) {
 							shiftInf = 1;
 						}
-
+						if (this.rangeXLog.negValuesCount === 0) {
+							shiftInf = 0; // only positive values
+						}
 						shift +=
 							((this.w - 2 * this.xPadding) / this.ratio) *
 							Math.log10(this.rangeXLog.middlewidth) *
@@ -285,19 +298,28 @@ export class HistogramComponent {
 			barW = ((this.w - 2 * this.xPadding) / ratio) * bar.barWlog;
 		}
 
-		const onclickRect = function (e: any) {
+		const onclickRect = function (bar: HistogramBarVO) {
 			//@ts-ignore
 			d3.select(this.parentNode)
 				.selectAll("rect")
-				.style("stroke-width", "0");
+				.style("stroke", bar.color);
+
 			//@ts-ignore
-			d3.select(this).style("stroke-width", "2px");
+			d3.select(this).style("stroke", "black");
 			//@ts-ignore
 			d3.select(this).moveToFront();
 		};
-		const mouseover = (e: any) => {
+		const mouseover = function (e: any) {
 			//@ts-ignore
 			self.tooltip.style("display", "block").style("width", "140px");
+
+			//@ts-ignore
+			d3.select(this.parentNode)
+				.selectAll("rect")
+				.style("fill-opacity", "0.65");
+
+			//@ts-ignore
+			d3.select(this).style("fill-opacity", "0.9");
 		};
 		const mousemove = (e: any) => {
 			const tooltipText = HistogramUIService.generateTooltip(d);
@@ -305,8 +327,10 @@ export class HistogramComponent {
 			self.tooltip.html(tooltipText);
 
 			let left = e.offsetX - 70;
-
-			let top = e.offsetY - self.h / 2;
+			let top = e.offsetY + 40 - self.h / 2;
+			if (self.fullScreen) {
+				top = e.offsetY - 60;
+			}
 
 			if (left < 10) {
 				left = 10;
@@ -323,15 +347,22 @@ export class HistogramComponent {
 			//@ts-ignore
 			self.tooltip.style("margin-top", top + "px");
 		};
-		const mouseleave = (e: any) => {
+		const mouseleave = function (e: any) {
 			//@ts-ignore
 			self.tooltip
 				.style("display", "none")
 				.style("margin-left", "0px")
 				.style("margin-top", "0px");
+
+			//@ts-ignore
+			d3.select(this.parentNode)
+				.selectAll("rect")
+				.style("fill-opacity", "0.65");
 		};
 
-		if (this.yType === "yLin") {
+		if (
+			this.distributionDatas.distributionGraphOptions.selected === "yLin"
+		) {
 			barH = d.value * this.ratioY;
 		} else {
 			if (d.logValue !== 0) {
@@ -351,14 +382,15 @@ export class HistogramComponent {
 			.attr("id", "rect-" + i)
 			.attr("x", barX + this.xPadding + this.xPadding / 2)
 			.attr("y", this.h - barH)
-			.attr("stroke", "black")
-			.attr("stroke-width", "0")
+			.attr("stroke", bar.color)
+			.attr("stroke-width", "2px")
 			.on("click", onclickRect)
 			.on("mouseover", mouseover)
 			.on("mousemove", mousemove)
 			.on("mouseleave", mouseleave)
-			.attr("width", barW)
+			.attr("width", barW - 2) // -2 to remove stroke width (outer and cannot be inner)
 			.attr("height", barH)
+			.attr("fill-opacity", "0.65")
 			.attr("fill", bar.color);
 	}
 
@@ -426,9 +458,10 @@ export class HistogramComponent {
 						return "" + format(val);
 					} else {
 						if (domain.length === 1) {
-							return "(0) -Inf";
+							// return "-Inf (0)";
+							return "-Inf";
 						} else {
-							return this.formatTickDEBUG(val);
+							return this.formatTick(val);
 						}
 					}
 				});
@@ -464,28 +497,19 @@ export class HistogramComponent {
 		}
 	}
 
-	formatTickDEBUG(val: number) {
+	formatTick(val: number) {
 		const tick = Math.round(Math.log10(Math.abs(val)) * 100) / 100;
-
-		// const sign = HistogramUIService.getSign(val);
-
-		return format(val, this.formatOpts) + " (" + tick + ")";
-	}
-
-	formatTick(val: number, reverse: boolean) {
-		const tick = Math.round(Math.log10(val) * 100) / 100;
-		if (reverse) {
-			return tick !== 0 ? -val : val;
-		} else {
-			return val;
-		}
+		// return format(val, this.formatOpts) + " (" + tick + ")";
+		return format(val, this.formatOpts);
 	}
 
 	drawYAxis() {
 		let y;
 
 		// Create the scale
-		if (this.yType === "yLin") {
+		if (
+			this.distributionDatas.distributionGraphOptions.selected === "yLin"
+		) {
 			y = d3
 				.scaleLinear()
 				.domain([0, this.rangeYLin]) // This is what is written on the Axis: from 0 to 100
@@ -508,6 +532,7 @@ export class HistogramComponent {
 		const axis = d3
 			.axisLeft(y)
 			.tickSize(this.tickSize)
+			.tickPadding(10)
 			.ticks(this.yTicksCount);
 		this.svg
 			.append("g")

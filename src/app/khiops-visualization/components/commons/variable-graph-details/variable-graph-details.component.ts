@@ -62,7 +62,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
 
 	isLoadingGraphDatas: boolean;
 	activeEntries = 0;
-	isFullscreen: boolean;
+	isFullscreen: boolean = false;
 	histogramDatas: any
 
 	constructor(

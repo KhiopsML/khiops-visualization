@@ -5,7 +5,7 @@ export class HistogramBarVO {
 	barXlog: number = 0;
 	barWlin: number = 0;
 	barXlin: number = 0;
-	color: string = HistogramUIService.getColor(2);
+	color: string = HistogramUIService.getColor(1);
 	partition = [];
 
 	constructor(d: any, middlewidth: number, xType: string) {
@@ -25,7 +25,7 @@ export class HistogramBarVO {
 			let barWlog = 0;
 			if (d.partition[0] === 0 || d.partition[1] === 0) {
 				barWlog = Math.log10(middlewidth);
-				this.color = HistogramUIService.getColor(1);
+				this.color = HistogramUIService.getColor(0);
 			} else {
 				barWlog =
 					Math.log10(Math.abs(this.partition[0])) -

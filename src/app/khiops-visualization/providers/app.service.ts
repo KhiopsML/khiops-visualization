@@ -118,6 +118,7 @@ export class AppService {
 		localStorage.removeItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'TARGET_LIFT');
 		localStorage.removeItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SELECTED_TRAIN_PREDICTOR');
 		localStorage.removeItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'DISTRIBUTION_GRAPH_OPTION');
+		localStorage.removeItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'DISTRIBUTION_GRAPH_OPTION_X');
 		localStorage.removeItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'OPTIONS_AG_GRID_SEARCH_MODELING-VARIABLES-LIST');
 		localStorage.removeItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'OPTIONS_AG_GRID_SEARCH_PREPARATION-2D-VARIABLES-LIST');
 		localStorage.removeItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'OPTIONS_AG_GRID_SEARCH_PREPARATION-VARIABLES-LIST');

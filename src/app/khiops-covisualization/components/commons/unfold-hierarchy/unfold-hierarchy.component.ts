@@ -98,7 +98,7 @@ export class UnfoldHierarchyComponent implements OnInit {
 					text: ''
 				},
 				gridLines: {
-					display: false
+					// display: false
 				}
 			}
 		}

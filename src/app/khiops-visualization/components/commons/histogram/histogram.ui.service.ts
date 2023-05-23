@@ -4,11 +4,16 @@ import { Injectable } from "@angular/core";
 	providedIn: "root",
 })
 export class HistogramUIService {
+	static chartColors: string[] = ["#6e93d5", "#ffbe46"];
+
 	constructor() {}
 
 	static getColor(i: number): string {
-		const chartColors = ["#ffb703", "#fb8500", "#023047"];
-		return chartColors[i];
+		return this.chartColors[i];
+	}
+
+	static getColors(): string[] {
+		return this.chartColors;
 	}
 
 	static generateTooltip(d: any) {
