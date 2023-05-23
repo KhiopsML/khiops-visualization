@@ -58,11 +58,6 @@ export class HistogramService {
 		this.rangeXLin.min = datas[0].partition[0];
 		this.rangeXLin.max = datas[datas.length - 1].partition[1];
 
-		console.log(
-			"file: histogram.service.ts:84 ~ Histogram2Service ~ getRangeX ~ this.rangeXLin, this.rangeXLog:",
-			this.rangeXLin,
-			this.rangeXLog
-		);
 		return [this.rangeXLin, this.rangeXLog];
 	}
 

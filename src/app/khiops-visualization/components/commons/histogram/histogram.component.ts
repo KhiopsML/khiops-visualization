@@ -2,7 +2,9 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	ElementRef,
+	EventEmitter,
 	Input,
+	Output,
 	QueryList,
 	SimpleChanges,
 	ViewChild,
@@ -34,6 +36,9 @@ export class HistogramComponent {
 	svg: any;
 	tooltip!: any;
 	errorMessage = false;
+
+	// Outputs
+	@Output() selectedItemChanged: EventEmitter<any> = new EventEmitter();
 
 	// Dynamic values
 	@Input() datas: any;
@@ -298,18 +303,20 @@ export class HistogramComponent {
 			barW = ((this.w - 2 * this.xPadding) / ratio) * bar.barWlog;
 		}
 
-		const onclickRect = function (bar: HistogramBarVO) {
+		const onclickRect = function () {
 			//@ts-ignore
 			d3.select(this.parentNode)
 				.selectAll("rect")
-				.style("stroke", bar.color);
+				.style("stroke", undefined);
 
 			//@ts-ignore
 			d3.select(this).style("stroke", "black");
 			//@ts-ignore
 			d3.select(this).moveToFront();
+
+			self.selectedItemChanged.emit(i);
 		};
-		const mouseover = function (e: any) {
+		const mouseover = function () {
 			//@ts-ignore
 			self.tooltip.style("display", "block").style("width", "140px");
 
@@ -382,7 +389,7 @@ export class HistogramComponent {
 			.attr("id", "rect-" + i)
 			.attr("x", barX + this.xPadding + this.xPadding / 2)
 			.attr("y", this.h - barH)
-			.attr("stroke", bar.color)
+			.attr("stroke", i === 0 ? "black" : bar.color) // select first by default
 			.attr("stroke-width", "2px")
 			.on("click", onclickRect)
 			.on("mouseover", mouseover)
