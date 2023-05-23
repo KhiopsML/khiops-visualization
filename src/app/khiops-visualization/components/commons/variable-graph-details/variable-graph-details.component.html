@@ -17,8 +17,9 @@
 			(selectedItemChanged)="onSelectedDistributionGraphItemChanged($event)">
 		</kl-distribution-graph-canvas>
 
-		<app-histogram class="app-histogram" *ngIf="histogramDatas" fxFlex="1 1 100%" [datas]="histogramDatas"
-			[fullScreen]="isFullscreen" (selectedItemChanged)="onSelectedDistributionGraphItemChanged($event)">
+		<app-histogram id="app-histogram" class="app-histogram" *ngIf="histogramDatas" fxFlex="1 1 100%"
+			[datas]="histogramDatas" [fullScreen]="isFullscreen"
+			(selectedItemChanged)="onSelectedDistributionGraphItemChanged($event)">
 		</app-histogram>
 
 		<app-target-distribution-graph-canvas #targetDistributionGraph fxFlex="1 1 100%"

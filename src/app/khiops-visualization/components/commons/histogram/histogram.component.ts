@@ -4,6 +4,8 @@ import {
 	ElementRef,
 	EventEmitter,
 	Input,
+	NgZone,
+	OnInit,
 	Output,
 	QueryList,
 	SimpleChanges,
@@ -19,6 +21,9 @@ import { ResizedEvent } from "angular-resize-event";
 import { DistributionDatasVO } from "@khiops-visualization/model/distribution-datas-vo";
 import { DistributionDatasService } from "@khiops-visualization/providers/distribution-datas.service";
 import { KhiopsLibraryService } from "@khiops-library/providers/khiops-library.service";
+import { SelectableComponent } from "@khiops-library/components/selectable/selectable.component";
+import { ConfigService } from "@khiops-library/providers/config.service";
+import { SelectableService } from "@khiops-library/components/selectable/selectable.service";
 
 @Component({
 	selector: "app-histogram",
@@ -26,7 +31,7 @@ import { KhiopsLibraryService } from "@khiops-library/providers/khiops-library.s
 	styleUrls: ["./histogram.component.scss"],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HistogramComponent {
+export class HistogramComponent extends SelectableComponent implements OnInit {
 	@ViewChild("chart", { static: false })
 	chart!: ElementRef;
 	@ViewChild("chartTooltip", { static: false })
@@ -45,7 +50,7 @@ export class HistogramComponent {
 	@Input() fullScreen: boolean = false;
 	h: number = 220;
 	w: number = 1000;
-	xPadding = 30;
+	xPadding = 40;
 	yPadding = 50;
 
 	// Static config values
@@ -71,8 +76,13 @@ export class HistogramComponent {
 	constructor(
 		private distributionDatasService: DistributionDatasService,
 		private khiopsLibraryService: KhiopsLibraryService,
-		private histogramService: HistogramService
+		private histogramService: HistogramService,
+		public selectableService: SelectableService,
+		public ngzone: NgZone,
+		public configService: ConfigService
 	) {
+		super(selectableService, ngzone, configService);
+
 		this.colorSet = HistogramUIService.getColors();
 		d3.selection.prototype.moveToFront = function () {
 			return this.each(function () {

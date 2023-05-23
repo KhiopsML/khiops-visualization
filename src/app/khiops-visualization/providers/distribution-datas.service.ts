@@ -342,7 +342,6 @@ export class DistributionDatasService {
 		const appDatas = this.appService.getDatas().datas;
 		const varDatas =
 			appDatas.preparationReport.variablesDetailedStatistics[selectedVariable.rank] ?.dataGrid;
-		console.log('file: utils.service.ts:17 ~ UtilsService ~ getDistributionGraphDatas ~ varDatas:', varDatas);
 		let dataSet: any = undefined;
 		if (varDatas) {
 			  if (!varDatas.frequencies || varDatas.dimensions[0].partition[0].length === 1) {
