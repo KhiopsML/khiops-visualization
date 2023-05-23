@@ -316,11 +316,28 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			barW = ((this.w - 2 * this.xPadding) / ratio) * bar.barWlog;
 		}
 
+		const generateColor = function () {
+			//@ts-ignore
+			const elStrokeColor = this.getAttribute("fill");
+
+			//@ts-ignore
+			d3.select(this).style("stroke", elStrokeColor);
+
+			if (i === 0) {
+				d3.select(this).style("stroke", "black");
+			}
+		};
+
 		const onclickRect = function () {
 			//@ts-ignore
 			d3.select(this.parentNode)
 				.selectAll("rect")
-				.style("stroke", undefined);
+				//@ts-ignore
+				.style("stroke", function (e) {
+					//@ts-ignore
+					const elStrokeColor = this.getAttribute("fill");
+					return elStrokeColor;
+				});
 
 			//@ts-ignore
 			d3.select(this).style("stroke", "black");
@@ -402,8 +419,6 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			.attr("id", "rect-" + i)
 			.attr("x", barX + this.xPadding + this.xPadding / 2)
 			.attr("y", this.h - barH)
-			.attr("stroke", i === 0 ? "black" : bar.color) // select first by default
-			.attr("stroke-width", "2px")
 			.on("click", onclickRect)
 			.on("mouseover", mouseover)
 			.on("mousemove", mousemove)
@@ -411,7 +426,9 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			.attr("width", barW - 2) // -2 to remove stroke width (outer and cannot be inner)
 			.attr("height", barH)
 			.attr("fill-opacity", "0.65")
-			.attr("fill", bar.color);
+			.attr("fill", bar.color)
+			.attr("stroke", generateColor)
+			.attr("stroke-width", "2px");
 	}
 
 	drawHistogram(datasSet: any) {
