@@ -195,7 +195,10 @@ export class HistogramComponent {
 						if (this.rangeXLog.inf && !this.rangeXLog.negStart) {
 							shiftInf = 1;
 						}
-						if (this.rangeXLog.negValuesCount === 0) {
+						if (
+							!this.rangeXLog.inf &&
+							this.rangeXLog.negValuesCount === 0
+						) {
 							shiftInf = 0; // only positive values
 						}
 						shift +=
