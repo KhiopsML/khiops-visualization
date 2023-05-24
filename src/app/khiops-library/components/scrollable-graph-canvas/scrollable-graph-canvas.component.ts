@@ -61,7 +61,7 @@ export class ScrollableGraphCanvasComponent extends SelectableComponent implemen
 			// init scroll position to 0
 			this.scrollPosition = 0;
 
-			this.graphWrapper = document.getElementById(this.graphIdContainer);
+			this.graphWrapper = this.configService.getRootElementDom().querySelector('#' + this.graphIdContainer);
 			if (this.graphWrapper && this.graphWrapper.children[0]) {
 				const el: any = this.graphWrapper.children[0];
 				el.addEventListener('scroll', this.onScroll, {
@@ -77,7 +77,7 @@ export class ScrollableGraphCanvasComponent extends SelectableComponent implemen
 
 	ngOnDestroy() {
 
-		const graphWrapper: any = document.getElementById(this.graphIdContainer);
+		const graphWrapper: any = this.configService.getRootElementDom().querySelector('#' + this.graphIdContainer);
 		if (graphWrapper && graphWrapper.children[0]) {
 			const el: any = graphWrapper.children[0];
 			el.removeEventListener('scroll', this.onScroll, {
@@ -109,7 +109,7 @@ export class ScrollableGraphCanvasComponent extends SelectableComponent implemen
 
 		// change scroll position on change
 		if (changes.scrollPosition && changes.scrollPosition.currentValue && !changes.scrollPosition.firstChange) {
-			const graphWrapper: any = document.getElementById(this.graphIdContainer);
+			const graphWrapper: any = this.configService.getRootElementDom().querySelector('#' + this.graphIdContainer);
 			if (graphWrapper && graphWrapper.children[0]) {
 				const el: any = graphWrapper.children[0];
 				let srollLeft = changes.scrollPosition.currentValue;
@@ -135,7 +135,7 @@ export class ScrollableGraphCanvasComponent extends SelectableComponent implemen
 
 		if (this.inputDatas) {
 
-			const graphWrapper: any = document.getElementById(this.graphIdContainer);
+			const graphWrapper: any = this.configService.getRootElementDom().querySelector('#' + this.graphIdContainer);
 
 			if (graphWrapper && graphWrapper.children[0]) {
 
@@ -194,7 +194,7 @@ export class ScrollableGraphCanvasComponent extends SelectableComponent implemen
 	mouseWheelFunc(event: any) {
 
 		// const element = document.getElementById(this.graphIdContainer);
-		const graphWrapper: any = document.getElementById(this.graphIdContainer);
+		const graphWrapper: any = this.configService.getRootElementDom().querySelector('#' + this.graphIdContainer);
 		if (graphWrapper && graphWrapper.children[0]) {
 			const el: any = graphWrapper.children[0].children[0];
 
