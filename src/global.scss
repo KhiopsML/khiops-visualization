@@ -4,20 +4,20 @@
 @import "app/khiops-library/components/ag-grid/ag-theme-material.scss";
 @import "app/khiops-library/libs/treeview/treeview.scss";
 @import "../libs/khiops-hypertree/dist/d3-hypertree-light";
-@import '~@angular/material/theming';
+@import "~@angular/material/theming";
 
 @include mat-core();
 
 $primary: mat-palette($md-khiopsmain);
-$accent:  mat-palette($mat-pink);
-$secondary:    mat-palette($mat-blue-grey);
-$warn:    mat-palette($mat-blue-grey);
+$accent: mat-palette($mat-pink);
+$secondary: mat-palette($mat-blue-grey);
+$warn: mat-palette($mat-blue-grey);
 $theme: mat-light-theme($primary, $accent, $warn);
 
 @include angular-material-theme($theme);
 
 .material-icons {
-	font-family: 'Material Icons' !important;
+	font-family: "Material Icons" !important;
 	font-weight: normal;
 	font-style: normal;
 	font-size: 24px; /* Preferred icon size */
@@ -38,8 +38,8 @@ $theme: mat-light-theme($primary, $accent, $warn);
 	-moz-osx-font-smoothing: grayscale;
 
 	/* Support for IE. */
-	font-feature-settings: 'liga';
-  }
+	font-feature-settings: "liga";
+}
 
 * {
 	font-family: "Poppins", Verdana, Arial, sans-serif;
@@ -241,6 +241,10 @@ mat-tab-header {
 	}
 }
 
+em {
+	font-style: normal;
+}
+
 h1 {
 	margin: 1.2em 0em 0.8em 1em;
 	font-size: 1em;
@@ -295,7 +299,7 @@ h2 {
 		}
 	}
 
-	>div {
+	> div {
 		box-shadow: inset 0px 0px 0px 1px mat-color($primary, 200);
 		// border-left: 5px solid mat-color($primary, 200);
 	}
@@ -394,7 +398,6 @@ app-home-layout {
 }
 
 .bar {
-
 	&.active,
 	&:hover {
 		stroke-width: 2px;
@@ -566,8 +569,7 @@ kl-legend {
 	}
 }
 
-@media screen and (max-width: 1280px),
-screen and (max-height: 1024px) {
+@media screen and (max-width: 1280px), screen and (max-height: 1024px) {
 	h1 {
 		margin: 0.8em 0em 0.4em 1em;
 	}
@@ -613,10 +615,10 @@ mat-button-toggle-group {
 	background-color: #f6f6f6 !important;
 }
 
-.as-vertical:not(.as-disabled)>.as-split-gutter:hover,
-.as-vertical:not(.as-disabled)>.as-split-gutter:active,
-.as-horizontal:not(.as-disabled)>.as-split-gutter:hover,
-.as-horizontal:not(.as-disabled)>.as-split-gutter:active {
+.as-vertical:not(.as-disabled) > .as-split-gutter:hover,
+.as-vertical:not(.as-disabled) > .as-split-gutter:active,
+.as-horizontal:not(.as-disabled) > .as-split-gutter:hover,
+.as-horizontal:not(.as-disabled) > .as-split-gutter:active {
 	background-color: #eee !important;
 	transition: background-color 0.1s ease-in-out 0.1s;
 }
@@ -792,7 +794,7 @@ kl-matrix-canvas {
 	display: flex;
 	font-size: 16px;
 
-	>span:first-child {
+	> span:first-child {
 		text-transform: uppercase;
 		margin-bottom: -5px;
 	}
@@ -837,7 +839,7 @@ canvas:focus {
 	outline-style: none;
 }
 
-.more-menu+* .cdk-overlay-pane>div.mat-menu-panel>div.mat-menu-content {
+.more-menu + * .cdk-overlay-pane > div.mat-menu-panel > div.mat-menu-content {
 	padding: 0.9em 0 0 1em;
 }
 
@@ -857,7 +859,6 @@ canvas:focus {
 	right: -8px !important;
 }
 
-
 .cc-floating.cc-theme-classic {
 	background-color: mat-color($primary);
 	color: white;
@@ -867,14 +868,14 @@ canvas:focus {
 	font-size: 14px;
 }
 
-.cc-floating .cc-compliance>.cc-btn {
+.cc-floating .cc-compliance > .cc-btn {
 	background-color: #00000099;
 	color: white;
 	font-weight: 400;
 	border: transparent;
 }
 
-.cc-floating .cc-compliance>.cc-btn:hover {
+.cc-floating .cc-compliance > .cc-btn:hover {
 	background-color: #000000cc;
 }
 
