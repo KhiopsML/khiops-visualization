@@ -96,6 +96,7 @@
 		"ALLOW": "Ok"
 	},
 	"GLOBAL": {
+		"DENSITY": "Density",
 		"OPEN_FULLSCREEN": "Open in fullscreen",
 		"CLOSE_FULLSCREEN": "Close fullscreen",
 		"DEFAULT_GROUP_INDEX": "Default group index",
