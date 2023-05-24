@@ -37,8 +37,12 @@ import {
 import {
 	Distribution2dDatasService
 } from '@khiops-visualization/providers/distribution2d-datas.service';
-import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
-import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
+import {
+	GridColumnsI
+} from '@khiops-library/interfaces/grid-columns';
+import {
+	KhiopsLibraryService
+} from '@khiops-library/providers/khiops-library.service';
 
 @Component({
 	selector: 'app-preparation-2d-view',
@@ -75,6 +79,11 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
 		field: 'name2',
 		tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.NAME2')
 	}, {
+		headerName: 'Delta Level',
+		field: 'deltaLevel',
+		tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.DELTALEVEL'),
+		show: this.preparation2dDatasService.isSupervised()
+	}, {
 		headerName: 'Level',
 		field: 'level',
 		tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.LEVEL')
@@ -104,11 +113,6 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
 		headerName: 'Cells',
 		field: 'cells',
 		tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.CELLS')
-	}, {
-		headerName: 'Delta Level',
-		field: 'deltaLevel',
-		tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.DELTALEVEL'),
-		show: this.preparation2dDatasService.isSupervised()
 	}];
 
 	// managed by selectable-tab component
