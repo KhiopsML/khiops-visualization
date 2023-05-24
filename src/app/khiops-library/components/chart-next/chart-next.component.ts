@@ -163,7 +163,6 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 
 			// Merge chart options
 			options = UtilsService.mergeDeep(options, this.chartOptions);
-			console.log('file: chart-next.component.ts:156 ~ ChartNextComponent ~ initChart ~ options:', options);
 			// @ts-ignore
 			ChartJs.Chart.register.apply(null, Object.values(ChartJs).filter((chartClass) => (chartClass.id)));
 

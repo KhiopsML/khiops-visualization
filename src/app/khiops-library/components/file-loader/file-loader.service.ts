@@ -54,6 +54,13 @@ export class FileLoaderService {
 		// Visualization files
 		// ===================
 		//
+
+		// const urlKV = './assets/mocks/kv/NGrams10_AnalysisResults.json';
+		// const urlKV = './assets/mocks/kv/NGrams100_AnalysisResults.json';
+		// const urlKV = './assets/mocks/kv/000_000_10000words_AllReports.json';
+		// const urlKV = './assets/mocks/kv/Regression_AllReports_All.json';
+		const urlKV = './assets/mocks/kv/Regression_AllReports_PreparationOnly.json';
+		// const urlKV = './assets/mocks/kv/missing-zero.json';
 		// const urlKV = './assets/mocks/kv/C1000_AllReports.json';
 		// const urlKV = './assets/mocks/kv/C100_AllReports.json';
 		// const urlKV = './assets/mocks/kv/AdultRegressionAllReports.json';
@@ -64,7 +71,7 @@ export class FileLoaderService {
 		// const urlKV = './assets/mocks/kv/desc-bivar.json';
 		// const urlKV = './assets/mocks/kv/irisR.json';
 		// const urlKV = './assets/mocks/kv/bi2.json';
-		const urlKV = './assets/mocks/kv/bi3.json';
+		// const urlKV = './assets/mocks/kv/bi3.json';
 		// const urlKV = './assets/mocks/kv/C1_AllReports.json';
 		// const urlKV = './assets/mocks/kv/C0_AllReports.json';
 		// const urlKV = './assets/mocks/kv/analyse_supervisee_multiclasse.json';
