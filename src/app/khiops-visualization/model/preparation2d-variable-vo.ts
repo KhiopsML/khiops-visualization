@@ -44,9 +44,9 @@ export class Preparation2dVariableVO {
 		this.dataCost = object.dataCost || undefined;
 		this.parts1 = object.parts1 || undefined;
 		this.parts2 = object.parts2 || undefined;
-		this.level = object.level || undefined;
-		this.level1 = object.level1 || undefined;
-		this.level2 = object.level2 || undefined;
+		this.level = object.level !== undefined ? object.level : undefined;
+		this.level1 = object.level1 !== undefined ? object.level1 : undefined;
+		this.level2 = object.level2 !== undefined ? object.level2 : undefined;
 		this.preparationCost = object.preparationCost || undefined;
 		this.constructionCost = object.constructionCost || undefined;
 		this.variables = object.variables || undefined;
