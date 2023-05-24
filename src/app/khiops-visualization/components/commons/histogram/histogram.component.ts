@@ -7,10 +7,8 @@ import {
 	NgZone,
 	OnInit,
 	Output,
-	QueryList,
 	SimpleChanges,
 	ViewChild,
-	ViewChildren,
 } from "@angular/core";
 import * as d3 from "d3";
 import { HistogramService } from "./histogram.service";
@@ -24,6 +22,7 @@ import { KhiopsLibraryService } from "@khiops-library/providers/khiops-library.s
 import { SelectableComponent } from "@khiops-library/components/selectable/selectable.component";
 import { ConfigService } from "@khiops-library/providers/config.service";
 import { SelectableService } from "@khiops-library/components/selectable/selectable.service";
+import { HistogramType } from "./histogram.types";
 
 @Component({
 	selector: "app-histogram",
@@ -36,7 +35,6 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 	chart!: ElementRef;
 	@ViewChild("chartTooltip", { static: false })
 	chartTooltip!: ElementRef;
-	@ViewChildren("rects") private rects: QueryList<ElementRef>;
 
 	svg: any;
 	tooltip!: any;
@@ -148,7 +146,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			if (this.datas) {
 				if (
 					this.distributionDatas.distributionGraphOptions.selected ===
-					"yLog"
+					HistogramType.YLOG
 				) {
 					this.rangeYLog = this.histogramService.getLogRangeY(
 						this.datas
@@ -178,7 +176,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 
 				if (
 					this.distributionDatas.distributionGraphOptionsX
-						.selected === "xLin"
+						.selected === HistogramType.XLIN
 				) {
 					let shift = 0;
 					let width = this.w - 2 * this.xPadding;
@@ -297,7 +295,8 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 		let barX: any, barH, barW: any;
 
 		if (
-			this.distributionDatas.distributionGraphOptionsX.selected === "xLin"
+			this.distributionDatas.distributionGraphOptionsX.selected ===
+			HistogramType.XLIN
 		) {
 			barX = ((this.w - 2 * this.xPadding) / ratio) * bar.barXlin;
 			barW = ((this.w - 2 * this.xPadding) / ratio) * bar.barWlin;
@@ -323,7 +322,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			d3.select(this.parentNode)
 				.selectAll("rect")
 				//@ts-ignore
-				.style("stroke", function (e) {
+				.style("stroke", function () {
 					//@ts-ignore
 					const elStrokeColor = this.getAttribute("fill");
 					return elStrokeColor;
@@ -374,7 +373,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			//@ts-ignore
 			self.tooltip.style("margin-top", top + "px");
 		};
-		const mouseleave = function (e: any) {
+		const mouseleave = function () {
 			//@ts-ignore
 			self.tooltip
 				.style("display", "none")
@@ -388,7 +387,8 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 		};
 
 		if (
-			this.distributionDatas.distributionGraphOptions.selected === "yLin"
+			this.distributionDatas.distributionGraphOptions.selected ===
+			HistogramType.YLIN
 		) {
 			barH = d.value * this.ratioY;
 		} else {
@@ -429,7 +429,8 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			);
 		this.ratio = 0;
 		if (
-			this.distributionDatas.distributionGraphOptionsX.selected === "xLin"
+			this.distributionDatas.distributionGraphOptionsX.selected ===
+			HistogramType.XLIN
 		) {
 			this.ratio =
 				bars[bars.length - 1].barXlin + bars[bars.length - 1].barWlin;
@@ -448,7 +449,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			let tickCount = this.xTickCount;
 			if (
 				this.distributionDatas.distributionGraphOptionsX.selected ===
-					"xLog" &&
+					HistogramType.XLOG &&
 				domain.length !== 1
 			) {
 				tickCount = domain[1] / domain[0];
@@ -461,7 +462,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 
 			if (
 				this.distributionDatas.distributionGraphOptionsX.selected ===
-				"xLin"
+				HistogramType.XLIN
 			) {
 				xAxis = d3.scaleLinear().domain(domain).range([0, width]); // This is where the axis is placed: from 100px to 800px
 			} else {
@@ -480,7 +481,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 					let val: any = d;
 					if (
 						this.distributionDatas.distributionGraphOptionsX
-							.selected === "xLin"
+							.selected === HistogramType.XLIN
 					) {
 						return "" + format(val);
 					} else {
@@ -495,7 +496,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 
 			if (
 				this.distributionDatas.distributionGraphOptionsX.selected ===
-				"xLin"
+				HistogramType.XLIN
 			) {
 				// @ts-ignore
 				axis.ticks = tickCount;
@@ -525,7 +526,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 	}
 
 	formatTick(val: number) {
-		const tick = Math.round(Math.log10(Math.abs(val)) * 100) / 100;
+		// const tick = Math.round(Math.log10(Math.abs(val)) * 100) / 100;
 		// return format(val, this.formatOpts) + " (" + tick + ")";
 		return format(val, this.formatOpts);
 	}
@@ -535,7 +536,8 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 
 		// Create the scale
 		if (
-			this.distributionDatas.distributionGraphOptions.selected === "yLin"
+			this.distributionDatas.distributionGraphOptions.selected ===
+			HistogramType.YLIN
 		) {
 			y = d3
 				.scaleLinear()
@@ -544,11 +546,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 		} else {
 			y = d3
 				.scaleLinear()
-				// .base(10)
-				// .domain([this.rangeYLog.min, -1]) // This is what is written on the Axis: from 0 to 100
-				// .domain([this.rangeYLog.min, this.rangeYLog.max]) // This is what is written on the Axis: from 0 to 100
 				.domain([this.rangeYLog.max, this.rangeYLog.min]) // This is what is written on the Axis: from 0 to 100
-				// .domain([0, this.rangeYLog.min]) // This is what is written on the Axis: from 0 to 100
 				.range([0, this.h - this.yPadding / 2]); // Note it is reversed
 		}
 

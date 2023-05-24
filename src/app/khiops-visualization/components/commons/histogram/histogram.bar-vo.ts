@@ -1,4 +1,5 @@
 import { HistogramUIService } from "../histogram/histogram.ui.service";
+import { HistogramType } from "./histogram.types";
 
 export class HistogramBarVO {
 	barWlog: number = 0;
@@ -11,7 +12,7 @@ export class HistogramBarVO {
 	constructor(d: any, middlewidth: number, xType: string) {
 		this.partition = d.partition;
 
-		if (xType === "xLin") {
+		if (xType === HistogramType.XLIN) {
 			let barWlin = 0;
 			if (this.partition[0] < 0 && this.partition[1] > 0) {
 				barWlin =
