@@ -54,6 +54,7 @@ import {
 import {
 	KhiopsLibraryService
 } from '@khiops-library/providers/khiops-library.service';
+import { ConfigService } from '@khiops-library/providers/config.service';
 
 /**
  * Test it with iris2d file
@@ -83,6 +84,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
 	constructor(public selectableService: SelectableService,
 		private translate: TranslateService,
 		private khiopsLibraryService: KhiopsLibraryService,
+		private configService: ConfigService,
 		private appService: AppService,
 		private preparation2dDatasService: Preparation2dDatasService) {
 
@@ -204,7 +206,8 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
 	}
 
 	onSelectedMatrixTabChanged(e) {
-		const matrixOptionsToggle = document.getElementById('matrix-option-toggle');
+		const matrixOptionsToggle = this.configService.getRootElementDom().querySelector<HTMLElement>('#matrix-option-toggle')
+		// const matrixOptionsToggle = document.getElementById('matrix-option-toggle');
 		if (e.index === 1) {
 			// this.khiopsLibraryService.trackEvent('click', 'matrix_tab', 'cells');
 			matrixOptionsToggle.style.display = 'none';
