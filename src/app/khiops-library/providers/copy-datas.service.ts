@@ -1,4 +1,6 @@
-import { ConfigService } from './config.service';
+import {
+	ConfigService
+} from './config.service';
 import {
 	Injectable
 } from '@angular/core';
@@ -15,13 +17,16 @@ import {
 })
 export class CopyDatasService {
 
-	constructor(private translate: TranslateService,private configService: ConfigService) {}
+	constructor(private translate: TranslateService, private configService: ConfigService) {}
 
 	copyDatasToClipboard(selectedArea: any) {
 		// console.log('​CopyDatasService -> copyDatasToClipboard -> selectedArea', selectedArea);
 		let formattedDatas: string;
 
 		switch (selectedArea.componentType) {
+			case "histogram":
+				formattedDatas = this.getKvHistogramDatas(selectedArea);
+				break;
 			case 'hyptree':
 				formattedDatas = this.getKvTreeDatas(selectedArea);
 				break;
@@ -74,6 +79,29 @@ export class CopyDatasService {
 		} else {
 			this.configService.config.onCopyData(formattedDatas);
 		}
+	}
+
+	getKvHistogramDatas(selectedArea: any): string {
+		let formattedDatas = "";
+
+		// TITLE
+		formattedDatas += this.translate.get("GLOBAL.DISTRIBUTION") + "\n\n";
+
+		// HEADER
+		formattedDatas += this.translate.get("GLOBAL.PARTITION") + "\t";
+		formattedDatas += this.translate.get("GLOBAL.LOGVALUE") + "\t";
+		formattedDatas += this.translate.get("GLOBAL.VALUE") + "\t";
+		formattedDatas += "\n";
+
+		// CONTENT
+		for (let i = 0; i < selectedArea.datas.length; i++) {
+			formattedDatas += selectedArea.datas[i].partition + "\t";
+			formattedDatas += selectedArea.datas[i].logValue + "\t";
+			formattedDatas += selectedArea.datas[i].value + "\t";
+			formattedDatas += "\n";
+		}
+
+		return formattedDatas;
 	}
 
 	getMatrixDatas(selectedArea: any) {

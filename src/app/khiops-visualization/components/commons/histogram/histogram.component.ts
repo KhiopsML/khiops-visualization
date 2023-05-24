@@ -36,9 +36,9 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 	@ViewChild("chartTooltip", { static: false })
 	chartTooltip!: ElementRef;
 
+	componentType = "histogram"; // needed to copy datas
 	svg: any;
 	tooltip!: any;
-	errorMessage = false;
 
 	// Outputs
 	@Output() selectedItemChanged: EventEmitter<any> = new EventEmitter();
@@ -122,13 +122,6 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes?.["datas"]) {
-			if (!changes?.["datas"]?.currentValue) {
-				this.errorMessage = true;
-			} else {
-				this.errorMessage = false;
-			}
-		}
 		if (changes?.["datas"]) {
 			this.datas && this.init();
 		}
