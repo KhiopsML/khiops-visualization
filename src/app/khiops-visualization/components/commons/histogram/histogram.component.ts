@@ -238,7 +238,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 							domain = [1];
 							this.drawXAxis(
 								domain,
-								middleShift - 0.1,
+								middleShift - 1,
 								1,
 								domain
 							);
@@ -247,7 +247,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 							domain = [1];
 							this.drawXAxis(
 								domain,
-								middleShift - 0.1,
+								middleShift - 1,
 								1,
 								domain
 							); // 1 to make bigger line
