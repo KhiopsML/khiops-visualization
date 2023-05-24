@@ -21,7 +21,7 @@ export class AppModule {
     const visuElement = createCustomElement(visualizationComponent, {injector: this.injector});
 	const covisuElement = createCustomElement(covisualizationComponent, {injector: this.injector});
 
-	customElements.define('khiops-visualization', visuElement);
-	customElements.define('khiops-covisualization', covisuElement);
+	customElements.get('khiops-visualization') || customElements.define('khiops-visualization', visuElement);
+	customElements.get('khiops-covisualization') || customElements.define('khiops-covisualization', covisuElement);
   }
 }
