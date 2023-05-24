@@ -369,8 +369,12 @@ export class Preparation2dDatasService {
 			// normal case
 			const currentVar = appDatas.bivariatePreparationReport.variablesPairsDetailedStatistics[rank];
 			variableDetails = new VariableDetailsVO(currentVar, this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_TABLE_SIZE);
+		} else if (isRegressionOrExplanatoryAnalysis && appDatas.textPreparationReport && appDatas.textPreparationReport.variablesDetailedStatistics[rank]) {
+			// regression or explanatory case: textPreparationReport
+			const currentVar = appDatas.textPreparationReport.variablesDetailedStatistics[rank];
+			variableDetails = new VariableDetailsVO(currentVar, this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_TABLE_SIZE);
 		} else if (isRegressionOrExplanatoryAnalysis && appDatas.preparationReport && appDatas.preparationReport.variablesDetailedStatistics[rank]) {
-			// regression or explanatory case
+			// regression or explanatory case: preparationReport
 			const currentVar = appDatas.preparationReport.variablesDetailedStatistics[rank];
 			variableDetails = new VariableDetailsVO(currentVar, this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_TABLE_SIZE);
 		}
@@ -378,7 +382,6 @@ export class Preparation2dDatasService {
 	}
 
 	getMatrixCanvasDatas(selectedVariable): any {
-
 		this.preparation2dDatas.matrixDatas = undefined;
 		const variablesDetails: VariableDetailsVO = this.getVariableDetails(selectedVariable.rank);
 

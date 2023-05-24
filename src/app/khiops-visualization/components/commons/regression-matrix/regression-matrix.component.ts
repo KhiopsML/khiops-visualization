@@ -83,7 +83,6 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
 	ngOnInit() {}
 
 	ngAfterViewInit() {
-
 		this.minMaxValues = this.preparation2dDatasService.getGlobalMinAndMax2dValues(this.preparationDatasService.getVariablesDatas(this.preparationSource));
 		this.matrixOptions.selected = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_TYPE_OPTION') || this.matrixOptions.types[0];
 		this.preparation2dDatasService.getMatrixCanvasDatas(this.preparation2dDatas.selectedVariable);
