@@ -522,7 +522,9 @@ export class EvaluationDatasService {
 
 	isRegressionAnalysis(): any {
 		const appDatas = this.appService.getDatas().datas;
-		if (appDatas && appDatas.trainEvaluationReport && appDatas.trainEvaluationReport.recCurves) {
+		if (appDatas && appDatas.trainEvaluationReport && appDatas.trainEvaluationReport.summary && appDatas.trainEvaluationReport.summary.learningTask === 'Regression analysis') {
+			return true;
+		} else if (appDatas && appDatas.preparationReport && appDatas.preparationReport.summary && appDatas.preparationReport.summary.learningTask === 'Regression analysis') {
 			return true;
 		} else {
 			return false;
