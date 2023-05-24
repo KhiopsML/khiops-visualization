@@ -1,0 +1,193 @@
+{
+	"tool": "Khiops",
+	"version": "9.5.5i",
+	"shortDescription": "",
+	"preparationReport": {
+		"reportType": "Preparation",
+		"summary": {
+			"dictionary": "XOR",
+			"variables": {
+				"types": [
+					"Categorical",
+					"Numerical"
+				],
+				"numbers": [
+					1,
+					2
+				]
+			},
+			"database": ".\/xor.txt",
+			"samplePercentage": 100,
+			"samplingMode": "Include sample",
+			"selectionVariable": "",
+			"selectionValue": "",
+			"instances": 200,
+			"learningTask": "Classification analysis",
+			"targetVariable": "Class",
+			"mainTargetValue": "1",
+			"targetDescriptiveStats": {
+				"values": 2,
+				"mode": "1",
+				"modeFrequency": 107
+			},
+			"targetValues": {
+				"values": ["0","1"],
+				"frequencies": [93,107]
+			},
+			"evaluatedVariables": 2,
+			"informativeVariables": 0,
+			"featureEngineering": {
+				"maxNumberOfConstructedVariables": 0,
+				"maxNumberOfTrees": 0,
+				"maxNumberOfVariablePairs": 100
+			},
+			"discretization": "MODL",
+			"valueGrouping": "MODL",
+			"nullModel": {
+				"constructionCost": 0.693147,
+				"preparationCost": 5.3033,
+				"dataCost": 135.265
+			}
+		},
+		"variablesStatistics": [
+			{
+				"rank": "R1",
+				"name": "R2_UM",
+				"type": "Numerical",
+				"level": 0,
+				"parts": 1,
+				"values": 5,
+				"min": 1,
+				"max": 4,
+				"mean": 1.814569536,
+				"stdDev": 0.8944566112,
+				"missingNumber": 49,
+				"constructionCost": 0.693147,
+				"preparationCost": 5.3033,
+				"dataCost": 135.265
+			},
+			{
+				"rank": "R2",
+				"name": "Random1",
+				"type": "Numerical",
+				"level": 0,
+				"parts": 1,
+				"values": 4,
+				"min": 1,
+				"max": 4,
+				"mean": 2.515,
+				"stdDev": 1.099897723,
+				"missingNumber": 0,
+				"constructionCost": 0.693147,
+				"preparationCost": 5.3033,
+				"dataCost": 135.265
+			}
+		]
+	},
+	"bivariatePreparationReport": {
+		"reportType": "BivariatePreparation",
+		"summary": {
+			"dictionary": "XOR",
+			"variables": {
+				"types": [
+					"Categorical",
+					"Numerical"
+				],
+				"numbers": [
+					1,
+					2
+				]
+			},
+			"database": ".\/xor.txt",
+			"samplePercentage": 100,
+			"samplingMode": "Include sample",
+			"selectionVariable": "",
+			"selectionValue": "",
+			"instances": 200,
+			"learningTask": "Classification analysis",
+			"targetVariable": "Class",
+			"mainTargetValue": "1",
+			"targetDescriptiveStats": {
+				"values": 2,
+				"mode": "1",
+				"modeFrequency": 107
+			},
+			"targetValues": {
+				"values": ["0","1"],
+				"frequencies": [93,107]
+			},
+			"evaluatedVariablePairs": 1,
+			"informativeVariablePairs": 1
+		},
+		"variablesPairsStatistics": [
+			{
+				"rank": "R1",
+				"name1": "R2_UM",
+				"name2": "Random1",
+				"deltaLevel": 0.73427,
+				"level": 0.73427,
+				"level1": 0,
+				"level2": 0,
+				"variables": 2,
+				"parts1": 3,
+				"parts2": 2,
+				"cells": 6,
+				"constructionCost": 3.13205,
+				"preparationCost": 34.4054,
+				"dataCost": 0
+			}
+		],
+		"variablesPairsDetailedStatistics": {
+			"R1": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "R2_UM",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[],
+								[1,2.5],
+								[2.5,4]
+							]
+						},
+						{
+							"variable": "Random1",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[1,2.5],
+								[2.5,4]
+							]
+						},
+						{
+							"variable": "Target",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1"]
+						}
+					],
+					"cellIds": ["C1","C2","C3","C4","C5","C6"],
+					"cellPartIndexes": [
+						[0,0],
+						[1,0],
+						[2,0],
+						[0,1],
+						[1,1],
+						[2,1]
+					],
+					"cellTargetFrequencies": [
+						[0,27],
+						[53,0],
+						[0,17],
+						[22,0],
+						[0,63],
+						[18,0]
+					],
+					"cellInterests": [0.122255,0.293784,0.0769754,0.121948,0.285262,0.0997757]
+				}
+			}
+		}
+	}
+}

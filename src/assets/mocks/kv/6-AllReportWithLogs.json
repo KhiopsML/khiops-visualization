@@ -1,0 +1,4319 @@
+{
+	"tool": "Khiops",
+	"version": "9.7b",
+	"shortDescription": "",
+	"logs": [
+		{
+			"taskName": "Data preparation",
+			"messages": [
+				"warning : Decision Tree variable creation : No enough memory to build trees (needs extra 99.4 MB)",
+				"warning : Decision Tree variable creation : Cannot build trees with 27 variables"
+			]
+		},
+		{
+			"taskName": "Data preparation",
+			"messages": [
+				"warning : Decision Tree variable creation : No enough memory to build trees (needs extra 99.4 MB)",
+				"warning : Decision Tree variable creation : Cannot build trees with 27 variables"
+			]
+		},
+		{
+			"taskName": "Data preparation",
+			"messages": [
+				"warning : Decision Tree variable creation : No enough memory to build trees (needs extra 99.4 MB)",
+				"warning : Decision Tree variable creation : Cannot build trees with 27 variables"
+			]
+		}
+	],
+	"preparationReport": {
+		"reportType": "Preparation",
+		"summary": {
+			"dictionary": "CensusAge",
+			"variables": {
+				"types": [
+					"Categorical",
+					"Numerical"
+				],
+				"numbers": [
+					1,
+					100
+				]
+			},
+			"database": "..\/..\/..\/datasets\/Census\/Census.txt",
+			"samplePercentage": 100,
+			"samplingMode": "Include sample",
+			"selectionVariable": "Selection",
+			"selectionValue": "1",
+			"instances": 100000,
+			"learningTask": "Classification analysis",
+			"targetVariable": "Class",
+			"targetDescriptiveStats": {
+				"values": 8,
+				"mode": "1",
+				"modeFrequency": 17834
+			},
+			"targetValues": {
+				"values": ["0","1","2","3","4","5","6","7"],
+				"frequencies": [1301,17834,9984,14935,16421,12796,13489,13240]
+			},
+			"evaluatedVariables": 100,
+			"nativeVariables": 0,
+			"constructedVariables": 100,
+			"informativeVariables": 94,
+			"featureEngineering": {
+				"maxNumberOfConstructedVariables": 0,
+				"maxNumberOfTrees": 5,
+				"maxNumberOfVariablePairs": 0
+			},
+			"discretization": "MODL",
+			"valueGrouping": "MODL",
+			"nullModel": {
+				"constructionCost": 0.693147,
+				"preparationCost": 72.0656,
+				"dataCost": 197530
+			}
+		},
+		"variablesStatistics": [
+			{
+				"rank": "R001",
+				"name": "w14",
+				"type": "Numerical",
+				"level": 0.324886,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.65745,
+				"stdDev": 0.4745624274,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 134.45,
+				"dataCost": 133264,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R002",
+				"name": "w41",
+				"type": "Numerical",
+				"level": 0.324886,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.65745,
+				"stdDev": 0.4745624274,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 134.45,
+				"dataCost": 133264,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R003",
+				"name": "w13",
+				"type": "Numerical",
+				"level": 0.319734,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.67231,
+				"stdDev": 0.4693711366,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 134.296,
+				"dataCost": 134283,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R004",
+				"name": "w31",
+				"type": "Numerical",
+				"level": 0.319734,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.67231,
+				"stdDev": 0.4693711366,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 134.296,
+				"dataCost": 134283,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R005",
+				"name": "w34",
+				"type": "Numerical",
+				"level": 0.314365,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.68644,
+				"stdDev": 0.4639397875,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 134.133,
+				"dataCost": 135344,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R006",
+				"name": "w43",
+				"type": "Numerical",
+				"level": 0.314365,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.68644,
+				"stdDev": 0.4639397875,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 134.133,
+				"dataCost": 135344,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R007",
+				"name": "w16",
+				"type": "Numerical",
+				"level": 0.314234,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.68677,
+				"stdDev": 0.4638070365,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 134.129,
+				"dataCost": 135370,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R008",
+				"name": "w61",
+				"type": "Numerical",
+				"level": 0.314234,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.68677,
+				"stdDev": 0.4638070365,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 134.129,
+				"dataCost": 135370,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R009",
+				"name": "w17",
+				"type": "Numerical",
+				"level": 0.313238,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.68926,
+				"stdDev": 0.4627965562,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 134.099,
+				"dataCost": 135567,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R010",
+				"name": "w71",
+				"type": "Numerical",
+				"level": 0.313238,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.68926,
+				"stdDev": 0.4627965562,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 134.099,
+				"dataCost": 135567,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R011",
+				"name": "w15",
+				"type": "Numerical",
+				"level": 0.311425,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.6937,
+				"stdDev": 0.4609558656,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 134.043,
+				"dataCost": 135925,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R012",
+				"name": "w51",
+				"type": "Numerical",
+				"level": 0.311425,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.6937,
+				"stdDev": 0.4609558656,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 134.043,
+				"dataCost": 135925,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R013",
+				"name": "w46",
+				"type": "Numerical",
+				"level": 0.308385,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.7009,
+				"stdDev": 0.4578637243,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 133.949,
+				"dataCost": 136526,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R014",
+				"name": "w64",
+				"type": "Numerical",
+				"level": 0.308385,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.7009,
+				"stdDev": 0.4578637243,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 133.949,
+				"dataCost": 136526,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R015",
+				"name": "w47",
+				"type": "Numerical",
+				"level": 0.307304,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.70339,
+				"stdDev": 0.4567630763,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 133.915,
+				"dataCost": 136739,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R016",
+				"name": "w74",
+				"type": "Numerical",
+				"level": 0.307304,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.70339,
+				"stdDev": 0.4567630763,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 133.915,
+				"dataCost": 136739,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R017",
+				"name": "w45",
+				"type": "Numerical",
+				"level": 0.30534,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.70783,
+				"stdDev": 0.4547600368,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 133.853,
+				"dataCost": 137127,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R018",
+				"name": "w54",
+				"type": "Numerical",
+				"level": 0.30534,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.70783,
+				"stdDev": 0.4547600368,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 133.853,
+				"dataCost": 137127,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R019",
+				"name": "w36",
+				"type": "Numerical",
+				"level": 0.301713,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.71576,
+				"stdDev": 0.4510516848,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 133.739,
+				"dataCost": 137844,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R020",
+				"name": "w63",
+				"type": "Numerical",
+				"level": 0.301713,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.71576,
+				"stdDev": 0.4510516848,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 133.739,
+				"dataCost": 137844,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R021",
+				"name": "w37",
+				"type": "Numerical",
+				"level": 0.300541,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.71825,
+				"stdDev": 0.4498521285,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 133.701,
+				"dataCost": 138076,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R022",
+				"name": "w73",
+				"type": "Numerical",
+				"level": 0.300541,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.71825,
+				"stdDev": 0.4498521285,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 133.701,
+				"dataCost": 138076,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R023",
+				"name": "w12",
+				"type": "Numerical",
+				"level": 0.298835,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.72182,
+				"stdDev": 0.4481025414,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 133.647,
+				"dataCost": 138413,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R024",
+				"name": "w21",
+				"type": "Numerical",
+				"level": 0.298835,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.72182,
+				"stdDev": 0.4481025414,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 133.647,
+				"dataCost": 138413,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R025",
+				"name": "w35",
+				"type": "Numerical",
+				"level": 0.298414,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.72269,
+				"stdDev": 0.4476708209,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 133.633,
+				"dataCost": 138496,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R026",
+				"name": "w53",
+				"type": "Numerical",
+				"level": 0.298414,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.72269,
+				"stdDev": 0.4476708209,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 133.633,
+				"dataCost": 138496,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R027",
+				"name": "w67",
+				"type": "Numerical",
+				"level": 0.29343,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.73271,
+				"stdDev": 0.4425449761,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 133.472,
+				"dataCost": 139481,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R028",
+				"name": "w76",
+				"type": "Numerical",
+				"level": 0.29343,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.73271,
+				"stdDev": 0.4425449761,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 133.472,
+				"dataCost": 139481,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R029",
+				"name": "w24",
+				"type": "Numerical",
+				"level": 0.291764,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.73595,
+				"stdDev": 0.44082604,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 133.418,
+				"dataCost": 139811,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R030",
+				"name": "w42",
+				"type": "Numerical",
+				"level": 0.291764,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.73595,
+				"stdDev": 0.44082604,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 133.418,
+				"dataCost": 139811,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R031",
+				"name": "w56",
+				"type": "Numerical",
+				"level": 0.291139,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.73715,
+				"stdDev": 0.4401816415,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 133.397,
+				"dataCost": 139934,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R032",
+				"name": "w65",
+				"type": "Numerical",
+				"level": 0.291139,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.73715,
+				"stdDev": 0.4401816415,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 133.397,
+				"dataCost": 139934,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R033",
+				"name": "w57",
+				"type": "Numerical",
+				"level": 0.289832,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.73964,
+				"stdDev": 0.4388310272,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 133.354,
+				"dataCost": 140192,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R034",
+				"name": "w75",
+				"type": "Numerical",
+				"level": 0.289832,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.73964,
+				"stdDev": 0.4388310272,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 133.354,
+				"dataCost": 140192,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R035",
+				"name": "w23",
+				"type": "Numerical",
+				"level": 0.283766,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.75081,
+				"stdDev": 0.4325440369,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 133.152,
+				"dataCost": 141391,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R036",
+				"name": "w32",
+				"type": "Numerical",
+				"level": 0.283766,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.75081,
+				"stdDev": 0.4325440369,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 133.152,
+				"dataCost": 141391,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R037",
+				"name": "w26",
+				"type": "Numerical",
+				"level": 0.27541,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.76527,
+				"stdDev": 0.4238299507,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 132.867,
+				"dataCost": 143043,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R038",
+				"name": "w62",
+				"type": "Numerical",
+				"level": 0.27541,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.76527,
+				"stdDev": 0.4238299507,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 132.867,
+				"dataCost": 143043,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R039",
+				"name": "w27",
+				"type": "Numerical",
+				"level": 0.273912,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.76776,
+				"stdDev": 0.4222612727,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 132.815,
+				"dataCost": 143339,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R040",
+				"name": "w72",
+				"type": "Numerical",
+				"level": 0.273912,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.76776,
+				"stdDev": 0.4222612727,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 132.815,
+				"dataCost": 143339,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R041",
+				"name": "w25",
+				"type": "Numerical",
+				"level": 0.271198,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.7722,
+				"stdDev": 0.4194128753,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 132.721,
+				"dataCost": 143875,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R042",
+				"name": "w52",
+				"type": "Numerical",
+				"level": 0.271198,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.7722,
+				"stdDev": 0.4194128753,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 132.721,
+				"dataCost": 143875,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R043",
+				"name": "w10",
+				"type": "Numerical",
+				"level": 0.246694,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.80865,
+				"stdDev": 0.393363925,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 131.823,
+				"dataCost": 148718,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R044",
+				"name": "w100",
+				"type": "Numerical",
+				"level": 0.246694,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.80865,
+				"stdDev": 0.393363925,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 131.823,
+				"dataCost": 148718,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R045",
+				"name": "w1",
+				"type": "Numerical",
+				"level": 0.236925,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.82166,
+				"stdDev": 0.3827986996,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 131.442,
+				"dataCost": 150649,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R046",
+				"name": "w11",
+				"type": "Numerical",
+				"level": 0.236925,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.82166,
+				"stdDev": 0.3827986996,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 131.442,
+				"dataCost": 150649,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R047",
+				"name": "w18",
+				"type": "Numerical",
+				"level": 0.236925,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.82166,
+				"stdDev": 0.3827986996,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 131.442,
+				"dataCost": 150649,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R048",
+				"name": "w19",
+				"type": "Numerical",
+				"level": 0.236925,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.82166,
+				"stdDev": 0.3827986996,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 131.442,
+				"dataCost": 150649,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R049",
+				"name": "w81",
+				"type": "Numerical",
+				"level": 0.236925,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.82166,
+				"stdDev": 0.3827986996,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 131.442,
+				"dataCost": 150649,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R050",
+				"name": "w91",
+				"type": "Numerical",
+				"level": 0.236925,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.82166,
+				"stdDev": 0.3827986996,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 131.442,
+				"dataCost": 150649,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R051",
+				"name": "w40",
+				"type": "Numerical",
+				"level": 0.236057,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.82278,
+				"stdDev": 0.3818547782,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 131.408,
+				"dataCost": 150820,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R052",
+				"name": "w4",
+				"type": "Numerical",
+				"level": 0.225652,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.83579,
+				"stdDev": 0.3704660253,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 130.984,
+				"dataCost": 152877,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R053",
+				"name": "w44",
+				"type": "Numerical",
+				"level": 0.225652,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.83579,
+				"stdDev": 0.3704660253,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 130.984,
+				"dataCost": 152877,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R054",
+				"name": "w48",
+				"type": "Numerical",
+				"level": 0.225652,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.83579,
+				"stdDev": 0.3704660253,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 130.984,
+				"dataCost": 152877,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R055",
+				"name": "w49",
+				"type": "Numerical",
+				"level": 0.225652,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.83579,
+				"stdDev": 0.3704660253,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 130.984,
+				"dataCost": 152877,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R056",
+				"name": "w84",
+				"type": "Numerical",
+				"level": 0.225652,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.83579,
+				"stdDev": 0.3704660253,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 130.984,
+				"dataCost": 152877,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R057",
+				"name": "w94",
+				"type": "Numerical",
+				"level": 0.225652,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.83579,
+				"stdDev": 0.3704660253,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 130.984,
+				"dataCost": 152877,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R058",
+				"name": "w30",
+				"type": "Numerical",
+				"level": 0.224122,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.83764,
+				"stdDev": 0.3687807349,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 130.92,
+				"dataCost": 153179,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R059",
+				"name": "w3",
+				"type": "Numerical",
+				"level": 0.213,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.85065,
+				"stdDev": 0.3564331319,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 130.443,
+				"dataCost": 155377,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R060",
+				"name": "w33",
+				"type": "Numerical",
+				"level": 0.213,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.85065,
+				"stdDev": 0.3564331319,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 130.443,
+				"dataCost": 155377,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R061",
+				"name": "w38",
+				"type": "Numerical",
+				"level": 0.213,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.85065,
+				"stdDev": 0.3564331319,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 130.443,
+				"dataCost": 155377,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R062",
+				"name": "w39",
+				"type": "Numerical",
+				"level": 0.213,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.85065,
+				"stdDev": 0.3564331319,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 130.443,
+				"dataCost": 155377,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R063",
+				"name": "w83",
+				"type": "Numerical",
+				"level": 0.213,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.85065,
+				"stdDev": 0.3564331319,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 130.443,
+				"dataCost": 155377,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R064",
+				"name": "w93",
+				"type": "Numerical",
+				"level": 0.213,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.85065,
+				"stdDev": 0.3564331319,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 130.443,
+				"dataCost": 155377,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R065",
+				"name": "w60",
+				"type": "Numerical",
+				"level": 0.21172,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.8521,
+				"stdDev": 0.355000831,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 130.387,
+				"dataCost": 155631,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R066",
+				"name": "w70",
+				"type": "Numerical",
+				"level": 0.209501,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.85459,
+				"stdDev": 0.3525137329,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 130.289,
+				"dataCost": 156069,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R067",
+				"name": "w50",
+				"type": "Numerical",
+				"level": 0.205482,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.85903,
+				"stdDev": 0.347990602,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 130.108,
+				"dataCost": 156863,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R068",
+				"name": "w6",
+				"type": "Numerical",
+				"level": 0.199844,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.86511,
+				"stdDev": 0.341606042,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 129.849,
+				"dataCost": 157978,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R069",
+				"name": "w66",
+				"type": "Numerical",
+				"level": 0.199844,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.86511,
+				"stdDev": 0.341606042,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 129.849,
+				"dataCost": 157978,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R070",
+				"name": "w68",
+				"type": "Numerical",
+				"level": 0.199844,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.86511,
+				"stdDev": 0.341606042,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 129.849,
+				"dataCost": 157978,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R071",
+				"name": "w69",
+				"type": "Numerical",
+				"level": 0.199844,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.86511,
+				"stdDev": 0.341606042,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 129.849,
+				"dataCost": 157978,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R072",
+				"name": "w86",
+				"type": "Numerical",
+				"level": 0.199844,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.86511,
+				"stdDev": 0.341606042,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 129.849,
+				"dataCost": 157978,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R073",
+				"name": "w96",
+				"type": "Numerical",
+				"level": 0.199844,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.86511,
+				"stdDev": 0.341606042,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 129.849,
+				"dataCost": 157978,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R074",
+				"name": "w7",
+				"type": "Numerical",
+				"level": 0.19749,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.8676,
+				"stdDev": 0.3389251245,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 129.739,
+				"dataCost": 158443,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R075",
+				"name": "w77",
+				"type": "Numerical",
+				"level": 0.19749,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.8676,
+				"stdDev": 0.3389251245,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 129.739,
+				"dataCost": 158443,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R076",
+				"name": "w78",
+				"type": "Numerical",
+				"level": 0.19749,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.8676,
+				"stdDev": 0.3389251245,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 129.739,
+				"dataCost": 158443,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R077",
+				"name": "w79",
+				"type": "Numerical",
+				"level": 0.19749,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.8676,
+				"stdDev": 0.3389251245,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 129.739,
+				"dataCost": 158443,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R078",
+				"name": "w87",
+				"type": "Numerical",
+				"level": 0.19749,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.8676,
+				"stdDev": 0.3389251245,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 129.739,
+				"dataCost": 158443,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R079",
+				"name": "w97",
+				"type": "Numerical",
+				"level": 0.19749,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.8676,
+				"stdDev": 0.3389251245,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 129.739,
+				"dataCost": 158443,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R080",
+				"name": "w5",
+				"type": "Numerical",
+				"level": 0.193223,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.87204,
+				"stdDev": 0.334045264,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 129.536,
+				"dataCost": 159286,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R081",
+				"name": "w55",
+				"type": "Numerical",
+				"level": 0.193223,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.87204,
+				"stdDev": 0.334045264,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 129.536,
+				"dataCost": 159286,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R082",
+				"name": "w58",
+				"type": "Numerical",
+				"level": 0.193223,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.87204,
+				"stdDev": 0.334045264,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 129.536,
+				"dataCost": 159286,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R083",
+				"name": "w59",
+				"type": "Numerical",
+				"level": 0.193223,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.87204,
+				"stdDev": 0.334045264,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 129.536,
+				"dataCost": 159286,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R084",
+				"name": "w85",
+				"type": "Numerical",
+				"level": 0.193223,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.87204,
+				"stdDev": 0.334045264,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 129.536,
+				"dataCost": 159286,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R085",
+				"name": "w95",
+				"type": "Numerical",
+				"level": 0.193223,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.87204,
+				"stdDev": 0.334045264,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 129.536,
+				"dataCost": 159286,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R086",
+				"name": "w20",
+				"type": "Numerical",
+				"level": 0.178016,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.88715,
+				"stdDev": 0.3164093512,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 128.776,
+				"dataCost": 162292,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R087",
+				"name": "w2",
+				"type": "Numerical",
+				"level": 0.164001,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.90016,
+				"stdDev": 0.2997865481,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 128.021,
+				"dataCost": 165062,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R088",
+				"name": "w22",
+				"type": "Numerical",
+				"level": 0.164001,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.90016,
+				"stdDev": 0.2997865481,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 128.021,
+				"dataCost": 165062,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R089",
+				"name": "w28",
+				"type": "Numerical",
+				"level": 0.164001,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.90016,
+				"stdDev": 0.2997865481,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 128.021,
+				"dataCost": 165062,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R090",
+				"name": "w29",
+				"type": "Numerical",
+				"level": 0.164001,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.90016,
+				"stdDev": 0.2997865481,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 128.021,
+				"dataCost": 165062,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R091",
+				"name": "w82",
+				"type": "Numerical",
+				"level": 0.164001,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.90016,
+				"stdDev": 0.2997865481,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 128.021,
+				"dataCost": 165062,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R092",
+				"name": "w92",
+				"type": "Numerical",
+				"level": 0.164001,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.90016,
+				"stdDev": 0.2997865481,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 128.021,
+				"dataCost": 165062,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R093",
+				"name": "w80",
+				"type": "Numerical",
+				"level": 0.0348681,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.98699,
+				"stdDev": 0.1133169886,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 114.42,
+				"dataCost": 190593,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R094",
+				"name": "w90",
+				"type": "Numerical",
+				"level": 0.0348681,
+				"parts": 2,
+				"values": 2,
+				"min": 0,
+				"max": 1,
+				"mean": 0.98699,
+				"stdDev": 0.1133169886,
+				"missingNumber": 0,
+				"constructionCost": 5.30827,
+				"preparationCost": 114.42,
+				"dataCost": 190593,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R095",
+				"name": "w8",
+				"type": "Numerical",
+				"level": 0,
+				"parts": 1,
+				"values": 1,
+				"min": 1,
+				"max": 1,
+				"mean": 1,
+				"stdDev": 0,
+				"missingNumber": 0,
+				"constructionCost": 0.693147,
+				"preparationCost": 72.0656,
+				"dataCost": 197530,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R096",
+				"name": "w88",
+				"type": "Numerical",
+				"level": 0,
+				"parts": 1,
+				"values": 1,
+				"min": 1,
+				"max": 1,
+				"mean": 1,
+				"stdDev": 0,
+				"missingNumber": 0,
+				"constructionCost": 0.693147,
+				"preparationCost": 72.0656,
+				"dataCost": 197530,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R097",
+				"name": "w89",
+				"type": "Numerical",
+				"level": 0,
+				"parts": 1,
+				"values": 1,
+				"min": 1,
+				"max": 1,
+				"mean": 1,
+				"stdDev": 0,
+				"missingNumber": 0,
+				"constructionCost": 0.693147,
+				"preparationCost": 72.0656,
+				"dataCost": 197530,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R098",
+				"name": "w9",
+				"type": "Numerical",
+				"level": 0,
+				"parts": 1,
+				"values": 1,
+				"min": 1,
+				"max": 1,
+				"mean": 1,
+				"stdDev": 0,
+				"missingNumber": 0,
+				"constructionCost": 0.693147,
+				"preparationCost": 72.0656,
+				"dataCost": 197530,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R099",
+				"name": "w98",
+				"type": "Numerical",
+				"level": 0,
+				"parts": 1,
+				"values": 1,
+				"min": 1,
+				"max": 1,
+				"mean": 1,
+				"stdDev": 0,
+				"missingNumber": 0,
+				"constructionCost": 0.693147,
+				"preparationCost": 72.0656,
+				"dataCost": 197530,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			},
+			{
+				"rank": "R100",
+				"name": "w99",
+				"type": "Numerical",
+				"level": 0,
+				"parts": 1,
+				"values": 1,
+				"min": 1,
+				"max": 1,
+				"mean": 1,
+				"stdDev": 0,
+				"missingNumber": 0,
+				"constructionCost": 0.693147,
+				"preparationCost": 72.0656,
+				"dataCost": 197530,
+				"derivationRule": "TokenCounts(ReplaceAll(text, 1, Class, \"_\"))"
+			}
+		],
+		"variablesDetailedStatistics": {
+			"R001": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w14",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,17834,0,0,16421,0,0,0],
+						[1301,0,9984,14935,0,12796,13489,13240]
+					],
+					"partInterests": [0.570997,0.429003]
+				}
+			},
+			"R002": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w41",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,17834,0,0,16421,0,0,0],
+						[1301,0,9984,14935,0,12796,13489,13240]
+					],
+					"partInterests": [0.570997,0.429003]
+				}
+			},
+			"R003": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w13",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,17834,0,14935,0,0,0,0],
+						[1301,0,9984,0,16421,12796,13489,13240]
+					],
+					"partInterests": [0.577995,0.422005]
+				}
+			},
+			"R004": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w31",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,17834,0,14935,0,0,0,0],
+						[1301,0,9984,0,16421,12796,13489,13240]
+					],
+					"partInterests": [0.577995,0.422005]
+				}
+			},
+			"R005": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w34",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,14935,16421,0,0,0],
+						[1301,17834,9984,0,0,12796,13489,13240]
+					],
+					"partInterests": [0.584731,0.415269]
+				}
+			},
+			"R006": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w43",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,14935,16421,0,0,0],
+						[1301,17834,9984,0,0,12796,13489,13240]
+					],
+					"partInterests": [0.584731,0.415269]
+				}
+			},
+			"R007": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w16",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,17834,0,0,0,0,13489,0],
+						[1301,0,9984,14935,16421,12796,0,13240]
+					],
+					"partInterests": [0.58489,0.41511]
+				}
+			},
+			"R008": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w61",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,17834,0,0,0,0,13489,0],
+						[1301,0,9984,14935,16421,12796,0,13240]
+					],
+					"partInterests": [0.58489,0.41511]
+				}
+			},
+			"R009": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w17",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,17834,0,0,0,0,0,13240],
+						[1301,0,9984,14935,16421,12796,13489,0]
+					],
+					"partInterests": [0.586086,0.413914]
+				}
+			},
+			"R010": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w71",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,17834,0,0,0,0,0,13240],
+						[1301,0,9984,14935,16421,12796,13489,0]
+					],
+					"partInterests": [0.586086,0.413914]
+				}
+			},
+			"R011": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w15",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,17834,0,0,0,12796,0,0],
+						[1301,0,9984,14935,16421,0,13489,13240]
+					],
+					"partInterests": [0.588227,0.411773]
+				}
+			},
+			"R012": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w51",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,17834,0,0,0,12796,0,0],
+						[1301,0,9984,14935,16421,0,13489,13240]
+					],
+					"partInterests": [0.588227,0.411773]
+				}
+			},
+			"R013": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w46",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,16421,0,13489,0],
+						[1301,17834,9984,14935,0,12796,0,13240]
+					],
+					"partInterests": [0.591718,0.408282]
+				}
+			},
+			"R014": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w64",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,16421,0,13489,0],
+						[1301,17834,9984,14935,0,12796,0,13240]
+					],
+					"partInterests": [0.591718,0.408282]
+				}
+			},
+			"R015": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w47",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,16421,0,0,13240],
+						[1301,17834,9984,14935,0,12796,13489,0]
+					],
+					"partInterests": [0.592931,0.407069]
+				}
+			},
+			"R016": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w74",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,16421,0,0,13240],
+						[1301,17834,9984,14935,0,12796,13489,0]
+					],
+					"partInterests": [0.592931,0.407069]
+				}
+			},
+			"R017": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w45",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,16421,12796,0,0],
+						[1301,17834,9984,14935,0,0,13489,13240]
+					],
+					"partInterests": [0.595103,0.404897]
+				}
+			},
+			"R018": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w54",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,16421,12796,0,0],
+						[1301,17834,9984,14935,0,0,13489,13240]
+					],
+					"partInterests": [0.595103,0.404897]
+				}
+			},
+			"R019": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w36",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,14935,0,0,13489,0],
+						[1301,17834,9984,0,16421,12796,0,13240]
+					],
+					"partInterests": [0.599008,0.400992]
+				}
+			},
+			"R020": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w63",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,14935,0,0,13489,0],
+						[1301,17834,9984,0,16421,12796,0,13240]
+					],
+					"partInterests": [0.599008,0.400992]
+				}
+			},
+			"R021": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w37",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,14935,0,0,0,13240],
+						[1301,17834,9984,0,16421,12796,13489,0]
+					],
+					"partInterests": [0.600241,0.399759]
+				}
+			},
+			"R022": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w73",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,14935,0,0,0,13240],
+						[1301,17834,9984,0,16421,12796,13489,0]
+					],
+					"partInterests": [0.600241,0.399759]
+				}
+			},
+			"R023": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w12",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,17834,9984,0,0,0,0,0],
+						[1301,0,0,14935,16421,12796,13489,13240]
+					],
+					"partInterests": [0.602016,0.397984]
+				}
+			},
+			"R024": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w21",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,17834,9984,0,0,0,0,0],
+						[1301,0,0,14935,16421,12796,13489,13240]
+					],
+					"partInterests": [0.602016,0.397984]
+				}
+			},
+			"R025": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w35",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,14935,0,12796,0,0],
+						[1301,17834,9984,0,16421,0,13489,13240]
+					],
+					"partInterests": [0.60245,0.39755]
+				}
+			},
+			"R026": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w53",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,14935,0,12796,0,0],
+						[1301,17834,9984,0,16421,0,13489,13240]
+					],
+					"partInterests": [0.60245,0.39755]
+				}
+			},
+			"R027": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w67",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,0,0,13489,13240],
+						[1301,17834,9984,14935,16421,12796,0,0]
+					],
+					"partInterests": [0.607478,0.392522]
+				}
+			},
+			"R028": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w76",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,0,0,13489,13240],
+						[1301,17834,9984,14935,16421,12796,0,0]
+					],
+					"partInterests": [0.607478,0.392522]
+				}
+			},
+			"R029": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w24",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,9984,0,16421,0,0,0],
+						[1301,17834,0,14935,0,12796,13489,13240]
+					],
+					"partInterests": [0.609117,0.390883]
+				}
+			},
+			"R030": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w42",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,9984,0,16421,0,0,0],
+						[1301,17834,0,14935,0,12796,13489,13240]
+					],
+					"partInterests": [0.609117,0.390883]
+				}
+			},
+			"R031": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w56",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,0,12796,13489,0],
+						[1301,17834,9984,14935,16421,0,0,13240]
+					],
+					"partInterests": [0.609726,0.390274]
+				}
+			},
+			"R032": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w65",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,0,12796,13489,0],
+						[1301,17834,9984,14935,16421,0,0,13240]
+					],
+					"partInterests": [0.609726,0.390274]
+				}
+			},
+			"R033": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w57",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,0,12796,0,13240],
+						[1301,17834,9984,14935,16421,0,13489,0]
+					],
+					"partInterests": [0.610993,0.389007]
+				}
+			},
+			"R034": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w75",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,0,12796,0,13240],
+						[1301,17834,9984,14935,16421,0,13489,0]
+					],
+					"partInterests": [0.610993,0.389007]
+				}
+			},
+			"R035": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w23",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,9984,14935,0,0,0,0],
+						[1301,17834,0,0,16421,12796,13489,13240]
+					],
+					"partInterests": [0.616731,0.383269]
+				}
+			},
+			"R036": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w32",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,9984,14935,0,0,0,0],
+						[1301,17834,0,0,16421,12796,13489,13240]
+					],
+					"partInterests": [0.616731,0.383269]
+				}
+			},
+			"R037": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w26",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,9984,0,0,0,13489,0],
+						[1301,17834,0,14935,16421,12796,0,13240]
+					],
+					"partInterests": [0.624299,0.375701]
+				}
+			},
+			"R038": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w62",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,9984,0,0,0,13489,0],
+						[1301,17834,0,14935,16421,12796,0,13240]
+					],
+					"partInterests": [0.624299,0.375701]
+				}
+			},
+			"R039": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w27",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,9984,0,0,0,0,13240],
+						[1301,17834,0,14935,16421,12796,13489,0]
+					],
+					"partInterests": [0.62562,0.37438]
+				}
+			},
+			"R040": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w72",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,9984,0,0,0,0,13240],
+						[1301,17834,0,14935,16421,12796,13489,0]
+					],
+					"partInterests": [0.62562,0.37438]
+				}
+			},
+			"R041": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w25",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,9984,0,0,12796,0,0],
+						[1301,17834,0,14935,16421,0,13489,13240]
+					],
+					"partInterests": [0.627989,0.372011]
+				}
+			},
+			"R042": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w52",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,9984,0,0,12796,0,0],
+						[1301,17834,0,14935,16421,0,13489,13240]
+					],
+					"partInterests": [0.627989,0.372011]
+				}
+			},
+			"R043": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w10",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[1301,17834,0,0,0,0,0,0],
+						[0,0,9984,14935,16421,12796,13489,13240]
+					],
+					"partInterests": [0.648182,0.351818]
+				}
+			},
+			"R044": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w100",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[1301,17834,0,0,0,0,0,0],
+						[0,0,9984,14935,16421,12796,13489,13240]
+					],
+					"partInterests": [0.648182,0.351818]
+				}
+			},
+			"R045": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w1",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,17834,0,0,0,0,0,0],
+						[1301,0,9984,14935,16421,12796,13489,13240]
+					],
+					"partInterests": [0.655771,0.344229]
+				}
+			},
+			"R046": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w11",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,17834,0,0,0,0,0,0],
+						[1301,0,9984,14935,16421,12796,13489,13240]
+					],
+					"partInterests": [0.655771,0.344229]
+				}
+			},
+			"R047": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w18",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,17834,0,0,0,0,0,0],
+						[1301,0,9984,14935,16421,12796,13489,13240]
+					],
+					"partInterests": [0.655771,0.344229]
+				}
+			},
+			"R048": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w19",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,17834,0,0,0,0,0,0],
+						[1301,0,9984,14935,16421,12796,13489,13240]
+					],
+					"partInterests": [0.655771,0.344229]
+				}
+			},
+			"R049": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w81",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,17834,0,0,0,0,0,0],
+						[1301,0,9984,14935,16421,12796,13489,13240]
+					],
+					"partInterests": [0.655771,0.344229]
+				}
+			},
+			"R050": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w91",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,17834,0,0,0,0,0,0],
+						[1301,0,9984,14935,16421,12796,13489,13240]
+					],
+					"partInterests": [0.655771,0.344229]
+				}
+			},
+			"R051": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w40",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[1301,0,0,0,16421,0,0,0],
+						[0,17834,9984,14935,0,12796,13489,13240]
+					],
+					"partInterests": [0.656436,0.343564]
+				}
+			},
+			"R052": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w4",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,16421,0,0,0],
+						[1301,17834,9984,14935,0,12796,13489,13240]
+					],
+					"partInterests": [0.664292,0.335708]
+				}
+			},
+			"R053": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w44",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,16421,0,0,0],
+						[1301,17834,9984,14935,0,12796,13489,13240]
+					],
+					"partInterests": [0.664292,0.335708]
+				}
+			},
+			"R054": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w48",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,16421,0,0,0],
+						[1301,17834,9984,14935,0,12796,13489,13240]
+					],
+					"partInterests": [0.664292,0.335708]
+				}
+			},
+			"R055": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w49",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,16421,0,0,0],
+						[1301,17834,9984,14935,0,12796,13489,13240]
+					],
+					"partInterests": [0.664292,0.335708]
+				}
+			},
+			"R056": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w84",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,16421,0,0,0],
+						[1301,17834,9984,14935,0,12796,13489,13240]
+					],
+					"partInterests": [0.664292,0.335708]
+				}
+			},
+			"R057": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w94",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,16421,0,0,0],
+						[1301,17834,9984,14935,0,12796,13489,13240]
+					],
+					"partInterests": [0.664292,0.335708]
+				}
+			},
+			"R058": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w30",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[1301,0,0,14935,0,0,0,0],
+						[0,17834,9984,0,16421,12796,13489,13240]
+					],
+					"partInterests": [0.665432,0.334568]
+				}
+			},
+			"R059": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w3",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,14935,0,0,0,0],
+						[1301,17834,9984,0,16421,12796,13489,13240]
+					],
+					"partInterests": [0.673617,0.326383]
+				}
+			},
+			"R060": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w33",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,14935,0,0,0,0],
+						[1301,17834,9984,0,16421,12796,13489,13240]
+					],
+					"partInterests": [0.673617,0.326383]
+				}
+			},
+			"R061": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w38",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,14935,0,0,0,0],
+						[1301,17834,9984,0,16421,12796,13489,13240]
+					],
+					"partInterests": [0.673617,0.326383]
+				}
+			},
+			"R062": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w39",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,14935,0,0,0,0],
+						[1301,17834,9984,0,16421,12796,13489,13240]
+					],
+					"partInterests": [0.673617,0.326383]
+				}
+			},
+			"R063": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w83",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,14935,0,0,0,0],
+						[1301,17834,9984,0,16421,12796,13489,13240]
+					],
+					"partInterests": [0.673617,0.326383]
+				}
+			},
+			"R064": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w93",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,14935,0,0,0,0],
+						[1301,17834,9984,0,16421,12796,13489,13240]
+					],
+					"partInterests": [0.673617,0.326383]
+				}
+			},
+			"R065": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w60",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[1301,0,0,0,0,0,13489,0],
+						[0,17834,9984,14935,16421,12796,0,13240]
+					],
+					"partInterests": [0.674549,0.325451]
+				}
+			},
+			"R066": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w70",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[1301,0,0,0,0,0,0,13240],
+						[0,17834,9984,14935,16421,12796,13489,0]
+					],
+					"partInterests": [0.67616,0.32384]
+				}
+			},
+			"R067": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w50",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[1301,0,0,0,0,12796,0,0],
+						[0,17834,9984,14935,16421,0,13489,13240]
+					],
+					"partInterests": [0.679065,0.320935]
+				}
+			},
+			"R068": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w6",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,0,0,13489,0],
+						[1301,17834,9984,14935,16421,12796,0,13240]
+					],
+					"partInterests": [0.683114,0.316886]
+				}
+			},
+			"R069": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w66",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,0,0,13489,0],
+						[1301,17834,9984,14935,16421,12796,0,13240]
+					],
+					"partInterests": [0.683114,0.316886]
+				}
+			},
+			"R070": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w68",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,0,0,13489,0],
+						[1301,17834,9984,14935,16421,12796,0,13240]
+					],
+					"partInterests": [0.683114,0.316886]
+				}
+			},
+			"R071": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w69",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,0,0,13489,0],
+						[1301,17834,9984,14935,16421,12796,0,13240]
+					],
+					"partInterests": [0.683114,0.316886]
+				}
+			},
+			"R072": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w86",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,0,0,13489,0],
+						[1301,17834,9984,14935,16421,12796,0,13240]
+					],
+					"partInterests": [0.683114,0.316886]
+				}
+			},
+			"R073": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w96",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,0,0,13489,0],
+						[1301,17834,9984,14935,16421,12796,0,13240]
+					],
+					"partInterests": [0.683114,0.316886]
+				}
+			},
+			"R074": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w7",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,0,0,0,13240],
+						[1301,17834,9984,14935,16421,12796,13489,0]
+					],
+					"partInterests": [0.684797,0.315203]
+				}
+			},
+			"R075": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w77",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,0,0,0,13240],
+						[1301,17834,9984,14935,16421,12796,13489,0]
+					],
+					"partInterests": [0.684797,0.315203]
+				}
+			},
+			"R076": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w78",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,0,0,0,13240],
+						[1301,17834,9984,14935,16421,12796,13489,0]
+					],
+					"partInterests": [0.684797,0.315203]
+				}
+			},
+			"R077": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w79",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,0,0,0,13240],
+						[1301,17834,9984,14935,16421,12796,13489,0]
+					],
+					"partInterests": [0.684797,0.315203]
+				}
+			},
+			"R078": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w87",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,0,0,0,13240],
+						[1301,17834,9984,14935,16421,12796,13489,0]
+					],
+					"partInterests": [0.684797,0.315203]
+				}
+			},
+			"R079": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w97",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,0,0,0,13240],
+						[1301,17834,9984,14935,16421,12796,13489,0]
+					],
+					"partInterests": [0.684797,0.315203]
+				}
+			},
+			"R080": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w5",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,0,12796,0,0],
+						[1301,17834,9984,14935,16421,0,13489,13240]
+					],
+					"partInterests": [0.687836,0.312164]
+				}
+			},
+			"R081": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w55",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,0,12796,0,0],
+						[1301,17834,9984,14935,16421,0,13489,13240]
+					],
+					"partInterests": [0.687836,0.312164]
+				}
+			},
+			"R082": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w58",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,0,12796,0,0],
+						[1301,17834,9984,14935,16421,0,13489,13240]
+					],
+					"partInterests": [0.687836,0.312164]
+				}
+			},
+			"R083": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w59",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,0,12796,0,0],
+						[1301,17834,9984,14935,16421,0,13489,13240]
+					],
+					"partInterests": [0.687836,0.312164]
+				}
+			},
+			"R084": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w85",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,0,12796,0,0],
+						[1301,17834,9984,14935,16421,0,13489,13240]
+					],
+					"partInterests": [0.687836,0.312164]
+				}
+			},
+			"R085": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w95",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,0,0,0,12796,0,0],
+						[1301,17834,9984,14935,16421,0,13489,13240]
+					],
+					"partInterests": [0.687836,0.312164]
+				}
+			},
+			"R086": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w20",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[1301,0,9984,0,0,0,0,0],
+						[0,17834,0,14935,16421,12796,13489,13240]
+					],
+					"partInterests": [0.698585,0.301415]
+				}
+			},
+			"R087": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w2",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,9984,0,0,0,0,0],
+						[1301,17834,0,14935,16421,12796,13489,13240]
+					],
+					"partInterests": [0.708432,0.291568]
+				}
+			},
+			"R088": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w22",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,9984,0,0,0,0,0],
+						[1301,17834,0,14935,16421,12796,13489,13240]
+					],
+					"partInterests": [0.708432,0.291568]
+				}
+			},
+			"R089": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w28",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,9984,0,0,0,0,0],
+						[1301,17834,0,14935,16421,12796,13489,13240]
+					],
+					"partInterests": [0.708432,0.291568]
+				}
+			},
+			"R090": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w29",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,9984,0,0,0,0,0],
+						[1301,17834,0,14935,16421,12796,13489,13240]
+					],
+					"partInterests": [0.708432,0.291568]
+				}
+			},
+			"R091": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w82",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,9984,0,0,0,0,0],
+						[1301,17834,0,14935,16421,12796,13489,13240]
+					],
+					"partInterests": [0.708432,0.291568]
+				}
+			},
+			"R092": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w92",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[0,0,9984,0,0,0,0,0],
+						[1301,17834,0,14935,16421,12796,13489,13240]
+					],
+					"partInterests": [0.708432,0.291568]
+				}
+			},
+			"R093": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w80",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[1301,0,0,0,0,0,0,0],
+						[0,17834,9984,14935,16421,12796,13489,13240]
+					],
+					"partInterests": [0.813801,0.186199]
+				}
+			},
+			"R094": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "w90",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0,0.5],
+								[0.5,1]
+							]
+						},
+						{
+							"variable": "Class",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1","2","3","4","5","6","7"]
+						}
+					],
+					"partTargetFrequencies": [
+						[1301,0,0,0,0,0,0,0],
+						[0,17834,9984,14935,16421,12796,13489,13240]
+					],
+					"partInterests": [0.813801,0.186199]
+				}
+			}
+		}
+	}
+}
