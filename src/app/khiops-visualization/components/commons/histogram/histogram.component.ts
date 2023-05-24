@@ -236,21 +236,11 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 								((this.w - 2 * this.xPadding) / this.ratio) *
 									Math.log10(this.rangeXLog.middlewidth);
 							domain = [1];
-							this.drawXAxis(
-								domain,
-								middleShift - 1,
-								1,
-								domain
-							);
+							this.drawXAxis(domain, middleShift - 1, 1, domain);
 						} else {
 							let middleShift = this.w - 2 * this.xPadding;
 							domain = [1];
-							this.drawXAxis(
-								domain,
-								middleShift - 1,
-								1,
-								domain
-							); // 1 to make bigger line
+							this.drawXAxis(domain, middleShift - 1, 1, domain); // 1 to make bigger line
 						}
 					}
 
@@ -364,7 +354,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			self.tooltip.html(tooltipText);
 
 			let left = e.offsetX - 70;
-			let top = e.offsetY + 40 - self.h / 2;
+			let top = e.offsetY - 40;
 			if (self.fullScreen) {
 				top = e.offsetY - 60;
 			}
