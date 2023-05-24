@@ -45,7 +45,6 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 
 	// Dynamic values
 	@Input() datas: any;
-	@Input() fullScreen: boolean = false;
 	h: number = 220;
 	w: number = 1000;
 	xPadding = 40;
@@ -345,17 +344,14 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			//@ts-ignore
 			self.tooltip.html(tooltipText);
 
-			let left = e.offsetX - 70;
+			let left = e.offsetX + 20;
 			let top = e.offsetY - 40;
-			if (self.fullScreen) {
-				top = e.offsetY - 60;
-			}
 
 			if (left < 10) {
 				left = 10;
 			}
 			if (left > this.w - 170) {
-				left = this.w - 170;
+				left = e.offsetX - 170;
 			}
 			if (top < 10) {
 				top = 10;
