@@ -161,9 +161,11 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
 	}
 
 	getCurrentVariable() {
-		let selectedVariable = this.preparationDatasService.getSelectedVariable(this.preparationSource);
+		let selectedVariable
 		if (this.preparationSource === 'treePreparationReport') {
 			selectedVariable = this.treePreparationDatasService.getSelectedVariable();
+		} else {
+			selectedVariable = this.preparationDatasService.getSelectedVariable(this.preparationSource);
 		}
 		return selectedVariable;
 	}
