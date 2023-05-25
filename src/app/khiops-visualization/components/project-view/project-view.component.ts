@@ -79,7 +79,10 @@ export class ProjectViewComponent extends SelectableTabComponent implements OnIn
 		private preparation2dDatasService: Preparation2dDatasService) {
 
 		super();
+		this.initialize();
+	}
 
+	public initialize() {
 		this.appDatas = this.appService.getDatas();
 		if (pjson) {
 			this.appName = pjson.name;
@@ -113,6 +116,7 @@ export class ProjectViewComponent extends SelectableTabComponent implements OnIn
 			this.evaluationDatasService.initialize();
 			this.modelingDatasService.initialize();
 		}
+		this.initialize();
 
 	}
 
