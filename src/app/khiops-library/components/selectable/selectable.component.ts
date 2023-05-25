@@ -27,7 +27,7 @@ export class SelectableComponent extends WatchResizeComponent implements OnDestr
 
 	constructor(public selectableService: SelectableService, public ngzone: NgZone, public configService: ConfigService) {
 
-		super(ngzone);
+		super(ngzone, configService);
 
 		// watch for changes and update css
 		this.selectedServiceChangeSub = this.selectableService.selectedServiceChange.subscribe(value => {

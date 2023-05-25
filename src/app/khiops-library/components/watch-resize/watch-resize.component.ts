@@ -4,6 +4,7 @@ import {
 	AfterViewInit,
 	NgZone
 } from '@angular/core';
+import { ConfigService } from '@khiops-library/providers/config.service';
 
 @Component({
 	template: ''
@@ -16,7 +17,7 @@ export class WatchResizeComponent implements AfterViewInit {
 	@Input() watchResize = true;
 	el: Element;
 
-	constructor(public ngzone: NgZone) {
+	constructor(public ngzone: NgZone, public configService: ConfigService) {
 
 	}
 
@@ -40,7 +41,7 @@ export class WatchResizeComponent implements AfterViewInit {
 
 					});
 				});
-				this.el = document.getElementById(this.id);
+				this.el = this.configService.getRootElementDom().querySelector<HTMLElement>('#' + this.id);
 				if (this.el) {
 					observer.observe(this.el);
 				}
