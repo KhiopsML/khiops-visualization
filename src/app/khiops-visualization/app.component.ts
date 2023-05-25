@@ -1,9 +1,5 @@
-import { ConfigModel } from './../khiops-library/model/config.model';
-import { EventsService } from '@khiops-library/providers/events.service';
 import {
 	Component,
-	OnInit,
-	OnDestroy,
 	Input,
 	Output,
 	EventEmitter,
@@ -12,9 +8,6 @@ import {
 	ElementRef,
 	AfterViewInit,
 } from '@angular/core';
-// import {
-// 	ElectronService
-// } from '@khiops-library/providers/electron.service';
 import {
 	TranslateService
 } from '@ngstack/translate';
@@ -26,29 +19,15 @@ import {
 import {
 	ConfirmDialogComponent
 } from '@khiops-library/components/confirm-dialog/confirm-dialog.component';
-// import {
-// 	AppConfig
-// } from 'src/environments/environment';
 import {
 	KhiopsLibraryService
 } from '@khiops-library/providers/khiops-library.service';
 import {
 	AppService
 } from './providers/app.service';
+import { ConfigModel } from './../khiops-library/model/config.model';
 import { ConfigService } from '@khiops-library/providers/config.service';
-// import {
-// 	UtilsService
-// } from '@khiops-library/providers/utils.service';
-
-// TODO remove electron
-// let storage;
-// let os;
-// try {
-// 	storage = require('electron-json-storage');
-// 	os = require('os');
-// } catch (e) {
-// 	console.warn('Can not access storage', e);
-// }
+import { SaveService } from './providers/save.service';
 
 @Component({
 	selector: 'app-root-visualization',
@@ -56,29 +35,9 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 	styleUrls: ['./app.component.scss'],
 	encapsulation: ViewEncapsulation.ShadowDom
 })
-export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
+export class AppComponent implements AfterViewInit {
 
-	private _appdatas: any;
-
-	@Input()
-	public get appdatas(): any {
-		return this._appdatas;
-	}
-	public set appdatas(value: any) {
-		console.log(value);
-		this._appdatas = value;
-	}
-
-	@Input()
-	public get config(): ConfigModel {
-		return this.configService.config;
-	}
-	public set config(value: ConfigModel) {
-		this.configService.config = value;
-	}
-
-	@Output('onFileOpen') onFileOpen: EventEmitter<any> = new EventEmitter<any>();
-	@Output('onCustomEvent') customEvent: EventEmitter<string> = new EventEmitter();
+	appdatas: any;
 
 	@ViewChild('appElement', { static: false }) appElement: ElementRef<HTMLElement>;
 
@@ -87,43 +46,22 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 		private dialog: MatDialog,
 		private appService: AppService,
 		private khiopsLibraryService: KhiopsLibraryService,
-		// private electronService: ElectronService,
 		private translate: TranslateService,
 		private configService: ConfigService,
-		private eventsService: EventsService) {
-		// console.log('AppConfig', AppConfig);
+		private saveService: SaveService,
+		private element: ElementRef) {
 		this.appService.initialize();
-
-		this.eventsService.clickOpenFile.subscribe(() => this.onFileOpen.emit());
-		this.eventsService.customEvent.subscribe((eventName) => this.customEvent.emit(eventName));
-
-		// TODO remove electron
-		// if (this.electronService.isElectron()) {
-		// 	storage.setDataPath(os.tmpdir() + '/\\' + AppConfig.visualizationCommon.GLOBAL.LS_ID);
-		// 	console.log('user data path', storage.getDataPath());
-		// 	// console.log('Mode electron');
-		// 	// console.log('Electron ipcRenderer', this.electronService.ipcRenderer);
-		// 	// console.log('NodeJS childProcess', this.electronService.childProcess);
-		// } else {
-		// 	// console.log('Mode web');
-		// }
 	}
 
 	ngAfterViewInit(): void {
 		this.configService.setRootElement(this.appElement);
-	}
-
-	ngOnInit() {
-		// TODO remove electron
-		// if (this.electronService.isElectron()) {
-		// 	var consent = storage.getSync('COOKIE_CONSENT');
-		// 	if (UtilsService.isEmpty(consent)) {
-		// 		this.initCookieConsent();
-		// 	} else if (consent === 'true') {
-
-		// 		this.khiopsLibraryService.initMatomo();
-		// 	}
-		// }
+		this.element.nativeElement.getDatas = () => this.saveService.constructDatasToSave();
+		this.element.nativeElement.setDatas = (datas) => {
+			this.appdatas = {...datas}
+		};
+		this.element.nativeElement.setConfig = (config) => {
+			this.configService.setConfig(config);
+		};
 	}
 
 	initCookieConsent() {
@@ -160,6 +98,4 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 		});
 
 	}
-
-	ngOnDestroy() {}
 }

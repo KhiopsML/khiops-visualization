@@ -90,7 +90,7 @@ export class FileLoaderComponent implements OnInit {
 	}
 
 	onClickOpen(inputFile) {
-		!this.configService.config.onFileOpen ? inputFile.click() : this.configService.config.onFileOpen();
+		!this.configService.getConfig().onFileOpen ? inputFile.click() : this.configService.getConfig().onFileOpen();
 	}
 
 	openFileDialog(e) {
