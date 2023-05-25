@@ -5,7 +5,8 @@ import {
 	ViewChild,
 	OnDestroy,
 	ViewEncapsulation,
-	Input
+	Input,
+	ElementRef
 } from '@angular/core';
 import {
 	MatTabGroup,
@@ -62,6 +63,9 @@ import pjson from 'package.json';
 	encapsulation: ViewEncapsulation.None
 })
 export class HomeLayoutComponent implements OnInit, OnDestroy {
+
+	@ViewChild('appProjectView', { static: false }) appProjectView: ElementRef<HTMLElement>;
+
 	updateAvailableStatus: boolean;
 	fontSizeClass: string;
 	private _appDatas;
@@ -219,6 +223,9 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 				panelClass: 'success'
 			});
 		}
+
+		// @ts-ignore
+		this.appProjectView && this.appProjectView.initialize()
 
 		if (isCollidingJson) {
 			this.snackBar.open(this.translate.get('SNACKS.COLLIDING_FILE'), null, {

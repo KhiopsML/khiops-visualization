@@ -59,6 +59,7 @@ export class AppComponent implements AfterViewInit {
 		this.configService.setRootElement(this.appElement);
 		this.element.nativeElement.getDatas = () => this.saveService.constructDatasToSave();
 		this.element.nativeElement.setDatas = (datas) => {
+			// Set data into ngzone to detect change into another context (electron for instance)
 			this.ngzone.run(() => {
 				this.appdatas = { ...datas }
 			});

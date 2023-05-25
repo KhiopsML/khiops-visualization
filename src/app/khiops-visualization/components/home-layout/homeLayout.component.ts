@@ -7,7 +7,8 @@ import {
 	NgZone,
 	HostListener,
 	// AfterViewInit,
-	Input
+	Input,
+	ElementRef
 } from '@angular/core';
 
 import {
@@ -103,6 +104,8 @@ export class HomeLayoutComponent implements OnInit /*, OnDestroy, AfterViewInit 
 		this.appService.setFileDatas(value);
 		if (value && value.tool === "Khiops") this.initializeHome();
 	}
+
+	@ViewChild('appProjectView', { static: false }) appProjectView: ElementRef<HTMLElement>;
 
 	activeTab = AppConfig.visualizationCommon.HOME.ACTIVE_TAB_INDEX;
 	translations: any;
@@ -295,6 +298,10 @@ export class HomeLayoutComponent implements OnInit /*, OnDestroy, AfterViewInit 
 				panelClass: 'success'
 			});
 		}
+
+		// @ts-ignore
+		this.appProjectView && this.appProjectView.initialize()
+
 		this.preparationDatasService.initialize();
 		this.treePreparationDatasService.initialize();
 		this.preparation2dDatasService.initialize();

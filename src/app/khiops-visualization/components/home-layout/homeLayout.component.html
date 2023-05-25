@@ -29,7 +29,7 @@
 								<label title="{{ 'TOOLTIPS.TABS.PROJECT' | translate }}">{{ 'TITLE.PROJECT' | translate }}</label>
 							</ng-template>
 							<ng-template matTabContent>
-								<app-project-view [selectedTab]="selectedTab"></app-project-view>
+								<app-project-view #appProjectView [selectedTab]="selectedTab"></app-project-view>
 							</ng-template>
 						</mat-tab>
 						<mat-tab label="{{ 'TITLE.PREPARATION' | translate }}"

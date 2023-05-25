@@ -26,9 +26,12 @@ import {
 import {
 	AppService
 } from './providers/app.service';
-import { ConfigModel } from './../khiops-library/model/config.model';
-import { ConfigService } from '@khiops-library/providers/config.service';
-import { SaveService } from './providers/save.service';
+import {
+	ConfigService
+} from '@khiops-library/providers/config.service';
+import {
+	SaveService
+} from './providers/save.service';
 
 @Component({
 	selector: 'app-root-visualization',
@@ -40,7 +43,9 @@ export class AppComponent implements AfterViewInit {
 
 	appdatas: any;
 
-	@ViewChild('appElement', { static: false }) appElement: ElementRef<HTMLElement>;
+	@ViewChild('appElement', {
+		static: false
+	}) appElement: ElementRef < HTMLElement > ;
 
 	constructor(
 		private dialogRef: MatDialog,
@@ -59,8 +64,11 @@ export class AppComponent implements AfterViewInit {
 		this.configService.setRootElement(this.appElement);
 		this.element.nativeElement.getDatas = () => this.saveService.constructDatasToSave();
 		this.element.nativeElement.setDatas = (datas) => {
+			// Set data into ngzone to detect change into another context (electron for instance)
 			this.ngzone.run(() => {
-				this.appdatas = { ...datas }
+				this.appdatas = {
+					...datas
+				}
 			});
 		};
 		this.element.nativeElement.setConfig = (config) => {
