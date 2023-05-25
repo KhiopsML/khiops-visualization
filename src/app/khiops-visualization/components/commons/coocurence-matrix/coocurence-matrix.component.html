@@ -1,5 +1,4 @@
 <div id="coocurence-matrix-comp" fxFlexFill fxLayout="column">
-	<kl-no-data fxFlexFill [hidden]="preparation2dDatas.matrixDatas"></kl-no-data>
 	<mat-tab-group color="warn" fxFlexFill [@.disabled]="true" [selectedIndex]="0" fxLayout="column" color="primary"
 		(selectedTabChange)="onSelectedMatrixTabChanged($event)">
 		<mat-tab label="{{ 'GLOBAL.MATRIX' | translate }}">
@@ -61,4 +60,5 @@
 			</ng-template>
 		</mat-tab>
 	</mat-tab-group>
+	<kl-no-data fxFlexFill [hidden]="preparation2dDatas.matrixDatas"></kl-no-data>
 </div>
