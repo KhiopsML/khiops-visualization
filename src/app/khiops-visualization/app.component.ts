@@ -7,6 +7,7 @@ import {
 	ViewChild,
 	ElementRef,
 	AfterViewInit,
+	NgZone,
 } from '@angular/core';
 import {
 	TranslateService
@@ -43,6 +44,7 @@ export class AppComponent implements AfterViewInit {
 
 	constructor(
 		private dialogRef: MatDialog,
+		private ngzone: NgZone,
 		private dialog: MatDialog,
 		private appService: AppService,
 		private khiopsLibraryService: KhiopsLibraryService,
@@ -57,7 +59,9 @@ export class AppComponent implements AfterViewInit {
 		this.configService.setRootElement(this.appElement);
 		this.element.nativeElement.getDatas = () => this.saveService.constructDatasToSave();
 		this.element.nativeElement.setDatas = (datas) => {
-			this.appdatas = {...datas}
+			this.ngzone.run(() => {
+				this.appdatas = { ...datas }
+			});
 		};
 		this.element.nativeElement.setConfig = (config) => {
 			this.configService.setConfig(config);

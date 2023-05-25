@@ -7,6 +7,7 @@ import {
 	ViewChild,
 	ElementRef,
 	AfterViewInit,
+	NgZone,
 } from '@angular/core';
 import {
 	ConfirmDialogComponent
@@ -42,6 +43,7 @@ export class AppComponent implements AfterViewInit {
 	@ViewChild('appElement', { static: false }) appElement: ElementRef<HTMLElement>;
 
 	constructor(
+		private ngzone: NgZone,
 		private dialogRef: MatDialog,
 		private appService: AppService,
 		private dialog: MatDialog,
@@ -57,7 +59,9 @@ export class AppComponent implements AfterViewInit {
 		this.configService.setRootElement(this.appElement);
 		this.element.nativeElement.getDatas = () => this.saveService.constructDatasToSave();
 		this.element.nativeElement.setDatas = (datas) => {
-			this.appdatas = {...datas}
+			this.ngzone.run(() => {
+				this.appdatas = { ...datas }
+			});
 		};
 		this.element.nativeElement.setConfig = (config) => {
 			this.configService.setConfig(config);
