@@ -64,7 +64,7 @@ export class CopyDatasService {
 		}
 
 		// Create temp textarea to make copy
-		if (!this.configService.config.onCopyData) {
+		if (!this.configService.getConfig().onCopyData) {
 			const selBox = document.createElement('textarea');
 			selBox.style.position = 'fixed';
 			selBox.style.left = '0';
@@ -77,7 +77,7 @@ export class CopyDatasService {
 			document.execCommand('copy');
 			document.body.removeChild(selBox);
 		} else {
-			this.configService.config.onCopyData(formattedDatas);
+			this.configService.getConfig().onCopyData(formattedDatas);
 		}
 	}
 

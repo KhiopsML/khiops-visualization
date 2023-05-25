@@ -8,7 +8,7 @@ export class ConfigService {
 
 	private appRootElement: ElementRef<HTMLElement>;
 
-	config: ConfigModel = new ConfigModel();
+	private config: ConfigModel = new ConfigModel();
 
 	setRootElement(appRoot) {
 		this.appRootElement = appRoot;
@@ -22,4 +22,11 @@ export class ConfigService {
 		return this.appRootElement.nativeElement;
 	}
 
+	setConfig(config: ConfigModel) {
+		this.config = config;
+	}
+
+	getConfig(): ConfigModel {
+		return this.config;
+	}
 }

@@ -113,12 +113,12 @@ export class HeaderToolsComponent implements OnInit {
 					html2canvas(currentDiv).then(canvas => {
 						canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height);
 
-						if (!this.configService.config.onCopyImage) {
+						if (!this.configService.getConfig().onCopyImage) {
 							canvas.toBlob((blob) => {
 								saveAs(blob, currentSelectedArea.id + ".png");
 							});
 						} else {
-							this.configService.config.onCopyImage(canvas.toDataURL('image/jpeg'))
+							this.configService.getConfig().onCopyImage(canvas.toDataURL('image/jpeg'))
 						}
 
 						if (this.eltsToHide && this.eltsToHide[0]) {

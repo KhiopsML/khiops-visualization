@@ -1,7 +1,5 @@
 import {
 	Component,
-	OnInit,
-	OnDestroy,
 	ViewEncapsulation,
 	Input,
 	Output,
@@ -13,15 +11,9 @@ import {
 import {
 	ConfirmDialogComponent
 } from '@khiops-library/components/confirm-dialog/confirm-dialog.component';
-// import {
-// 	ElectronService
-// } from '@khiops-library/providers/electron.service';
 import {
 	TranslateService
 } from '@ngstack/translate';
-// import {
-// 	AppConfig
-// } from 'src/environments/environment';
 import {
 	MatDialogRef,
 	MatDialog,
@@ -35,22 +27,7 @@ import {
 } from './providers/app.service';
 import { ConfigModel } from '@khiops-library/model/config.model';
 import { ConfigService } from '@khiops-library/providers/config.service';
-import { EventsService } from '@khiops-library/providers/events.service';
 import { SaveService } from './providers/save.service';
-// import {
-// 	UtilsService
-// } from '@khiops-library/providers/utils.service';
-
-// TODO remove electron
-// let storage;
-// let os;
-// try {
-// 	storage = require('electron-json-storage');
-// 	os = require('os');
-// } catch (e) {
-// 	console.warn('Can not access storage', e);
-// }
-
 
 @Component({
 	selector: 'app-root-covisualization',
@@ -58,51 +35,22 @@ import { SaveService } from './providers/save.service';
 	templateUrl: './app.component.html',
 	encapsulation: ViewEncapsulation.ShadowDom
 })
-export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
+export class AppComponent implements AfterViewInit {
 
-	@Input() appdatas: any;
-	@Input()
-	public get config(): ConfigModel {
-		return this.configService.config;
-	}
-	public set config(value: ConfigModel) {
-		this.configService.config = value;
-	}
-
-	@Output('onFileOpen') onFileOpen: EventEmitter<any> = new EventEmitter<any>();
-	@Output('onCustomEvent') customEvent: EventEmitter<string> = new EventEmitter();
+	appdatas: any;
 
 	@ViewChild('appElement', { static: false }) appElement: ElementRef<HTMLElement>;
 
 	constructor(
-		// private electronService: ElectronService,
 		private dialogRef: MatDialog,
 		private appService: AppService,
 		private dialog: MatDialog,
 		private khiopsLibraryService: KhiopsLibraryService,
 		private configService: ConfigService,
 		private translate: TranslateService,
-		private eventsService: EventsService,
 		private saveService: SaveService,
 		private element: ElementRef) {
-
-		// console.log('AppConfig', AppConfig);
-
 		this.appService.initialize();
-
-		this.eventsService.clickOpenFile.subscribe(() => this.onFileOpen.emit());
-		this.eventsService.customEvent.subscribe((eventName) => this.customEvent.emit(eventName));
-
-		// TODO remove electron
-		// if (this.electronService.isElectron()) {
-		// 	storage.setDataPath(os.tmpdir() + '/\\' + AppConfig.covisualizationCommon.GLOBAL.LS_ID);
-		// 	console.log('user data path', storage.getDataPath());
-		// 	// console.log('Mode electron');
-		// 	// console.log('Electron ipcRenderer', this.electronService.ipcRenderer);
-		// 	// console.log('NodeJS childProcess', this.electronService.childProcess);
-		// } else {
-		// 	// console.log('Mode web');
-		// }
 	}
 
 	ngAfterViewInit(): void {
@@ -111,19 +59,9 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.element.nativeElement.setDatas = (datas) => {
 			this.appdatas = {...datas}
 		};
-	}
-
-	ngOnInit() {
-		// TODO remove electron
-		// if (this.electronService.isElectron()) {
-		// 	var consent = storage.getSync('COOKIE_CONSENT');
-		// 	if (UtilsService.isEmpty(consent)) {
-		// 		this.initCookieConsent();
-		// 	} else if (consent === 'true') {
-
-		// 		this.khiopsLibraryService.initMatomo();
-		// 	}
-		// }
+		this.element.nativeElement.setConfig = (config) => {
+			this.configService.setConfig(config);
+		};
 	}
 
 	initCookieConsent() {
@@ -159,6 +97,4 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 		});
 
 	}
-
-	ngOnDestroy() {}
 }
