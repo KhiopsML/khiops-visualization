@@ -38,7 +38,7 @@
 		<div fxFlex fxLayout="column" id="matrix-comp-right">
 			<div id="contrast" fxLayout="column" fxLayoutAlign="start center" class="screenshot-hide">
 				<span>Contrast</span>
-				<mat-slider attr.aria-label="{{ 'ARIA.MATRIX.UPDATE_MATRIX_CONTRAST' | translate }}" [max]="90"
+				<mat-slider color="accent" attr.aria-label="{{ 'ARIA.MATRIX.UPDATE_MATRIX_CONTRAST' | translate }}" [max]="90"
 					title="{{ 'TOOLTIPS.COMMONS.MATRIX_CONTRAST' | translate }}" [min]="0" [(ngModel)]="contrast"
 					(input)="onContrastChanged($event)" [step]="10" [vertical]="true">
 				</mat-slider>

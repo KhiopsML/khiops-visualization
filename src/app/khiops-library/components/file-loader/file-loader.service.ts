@@ -59,7 +59,7 @@ export class FileLoaderService {
 		// const urlKV = './assets/mocks/kv/NGrams100_AnalysisResults.json';
 		// const urlKV = './assets/mocks/kv/000_000_10000words_AllReports.json';
 		// const urlKV = './assets/mocks/kv/Regression_AllReports_All.json';
-		const urlKV = './assets/mocks/kv/Regression_AllReports_PreparationOnly.json';
+		// const urlKV = './assets/mocks/kv/Regression_AllReports_PreparationOnly.json';
 		// const urlKV = './assets/mocks/kv/missing-zero.json';
 		// const urlKV = './assets/mocks/kv/C1000_AllReports.json';
 		// const urlKV = './assets/mocks/kv/C100_AllReports.json';
@@ -79,7 +79,7 @@ export class FileLoaderService {
 		// const urlKV = './assets/mocks/kv/copydatas.json';
 		// const urlKV = './assets/mocks/kv/iris2d.json';
 		// const urlKV = './assets/mocks/kv/mainTargetValue.json';
-		// const urlKV = './assets/mocks/kv/new-hyper-tree.json';
+		const urlKV = './assets/mocks/kv/new-hyper-tree.json';
 		// const urlKV = './assets/mocks/kv/leafrules.khj';
 		// const urlKV = './assets/mocks/kv/defaultGroup.json';
 		// const urlKV = './assets/mocks/kv/bigTreeLeafs.json';

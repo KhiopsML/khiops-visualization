@@ -1,7 +1,6 @@
 @import "../../../../../theme.scss";
 
 #regression-matrix-comp {
-
 	.comp-header {
 		margin-top: 1.4em !important;
 		margin-bottom: 1em !important;
@@ -15,7 +14,6 @@
 	::ng-deep .mat-tab-labels {
 		justify-content: start !important;
 	}
-
 
 	::ng-deep .mat-tab-label-container {
 		width: 100% !important;
@@ -40,9 +38,8 @@
 		}
 
 		.mat-button-toggle-checked {
-			background-color: map_get($md-khiopsmain, 500) !important;
+			background-color: var(--primary) !important;
 			color: white !important;
 		}
-
 	}
 }

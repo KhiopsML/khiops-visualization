@@ -44,6 +44,7 @@ export class UserSettingsComponent implements OnChanges {
 	fontSize: any;
 	contrastValue: number;
 	allowCookies: boolean;
+	allowDarkTheme: boolean;
 	initialAllowCookies: boolean;
 
 	constructor(private translate: TranslateService,
@@ -88,6 +89,10 @@ export class UserSettingsComponent implements OnChanges {
 		// this.allowCookies = (storage.getSync('COOKIE_CONSENT') === 'true') || false;
 		this.initialAllowCookies = _.cloneDeep(this.allowCookies);
 
+		// theme
+		this.allowDarkTheme = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR') === 'dark' ? true : false;
+		localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR', this.allowDarkTheme ? 'dark' : 'light');
+
 	}
 
 	onClickOnCancel() {
@@ -116,6 +121,8 @@ export class UserSettingsComponent implements OnChanges {
 		localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST', this.contrastValue.toString());
 		AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
 
+		localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR', this.allowDarkTheme ? 'dark' : 'light');
+
 		// Close the nav drawer
 		this.toggleNavDrawerChanged.emit(true);
 
@@ -134,6 +141,8 @@ export class UserSettingsComponent implements OnChanges {
 				this.khiopsLibraryService.disableMatomo();
 			}
 		}
+
+		location.reload()
 
 	}
 

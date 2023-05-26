@@ -7,15 +7,17 @@
 	<div fxLayout="column" id="user-settings-content" fxLayoutAlign="start start">
 		<h2>{{ 'SETTINGS.FONT_SIZE' | translate }} :</h2>
 		<div fxLayout="row" fxLayoutAlign="start center">
-			<mat-slider attr.aria-label="{{ 'ARIA.SETTINGS.UPDATE_NUMBER_PRECISION' | translate }}" [min]="11"
-				[max]="18" [step]="1" [thumbLabel]="true" [(ngModel)]="fontSize" (input)="onFontSizeChanged($event)">
+			<mat-slider color="accent" attr.aria-label="{{ 'ARIA.SETTINGS.UPDATE_NUMBER_PRECISION' | translate }}"
+				[min]="11" [max]="18" [step]="1" [thumbLabel]="true" [(ngModel)]="fontSize"
+				(input)="onFontSizeChanged($event)">
 			</mat-slider>
 			<span>{{ fontSize }} px</span>
 		</div>
 		<h2>{{ 'GLOBAL.MATRIX_DEFAULT_CONTRAST' | translate }} :</h2>
 		<div fxLayout="row" fxLayoutAlign="start center">
-			<mat-slider attr.aria-label="{{ 'ARIA.SETTINGS.UPDATE_DEFAULT_MATRIX_CONTRAST' | translate }}" [max]="90"
-				[min]="0" [step]="10" [thumbLabel]="false" [(ngModel)]="contrastValue">
+			<mat-slider color="accent"
+				attr.aria-label="{{ 'ARIA.SETTINGS.UPDATE_DEFAULT_MATRIX_CONTRAST' | translate }}" [max]="90" [min]="0"
+				[step]="10" [thumbLabel]="false" [(ngModel)]="contrastValue">
 			</mat-slider>
 			<span>{{ contrastValue }} %</span>
 		</div>

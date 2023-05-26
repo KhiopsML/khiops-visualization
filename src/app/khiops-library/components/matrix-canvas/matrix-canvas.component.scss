@@ -5,7 +5,7 @@
 	padding-top: 0em;
 	position: relative;
 	overflow: hidden;
-	background: white;
+	background: transparent;
 	margin: 1px;
 
 	kl-matrix-tooltip {
@@ -14,13 +14,14 @@
 
 	#matrix-loading {
 		position: absolute;
-		background: white;
+		background: var(--bgColor);
 		z-index: 100;
 	}
 
 	button {
 		margin: 0.1em 0.5em;
-		transition: color 0.2s ease, background-color 0.2s ease, transform 0.3s ease;
+		transition: color 0.2s ease, background-color 0.2s ease,
+			transform 0.3s ease;
 
 		mat-icon {
 			color: $redMain;
@@ -28,15 +29,15 @@
 	}
 
 	button.invert-axis.toggled-false {
-		background: #FFEBEE;
+		background: #ffebee;
 
 		mat-icon {
-			color: map_get($md-khiopsmain, 600) !important;
+			color: var(--primary) !important;
 		}
 	}
 
 	button.invert-axis.toggled-true {
-		background: map_get($md-khiopsmain, 600) !important;
+		background: var(--primary) !important;
 		transform: rotate(-90deg);
 
 		mat-icon {
@@ -45,15 +46,15 @@
 	}
 
 	button.toggle-zero.toggled-false {
-		background: #FFEBEE;
+		background: #ffebee;
 
 		mat-icon {
-			color: map_get($md-khiopsmain, 600) !important;
+			color: var(--primary) !important;
 		}
 	}
 
 	button.toggle-zero.toggled-true {
-		background: map_get($md-khiopsmain, 600) !important;
+		background: var(--primary) !important;
 		transform: rotate(-180deg);
 
 		mat-icon {
@@ -66,7 +67,7 @@
 		width: 50px; // important everything but 100% (min width)
 		height: 100%;
 		overflow: auto;
-		border: 1px solid #eeeeee;
+		border: 1px solid var(--bgColor-10);
 
 		#matrix-container {
 			height: 100%;
@@ -78,7 +79,6 @@
 				top: 0;
 				left: 0;
 			}
-
 		}
 	}
 
@@ -107,7 +107,6 @@
 	}
 
 	#matrix-comp-right {
-
 		max-width: 60px;
 		width: 60px;
 
@@ -138,9 +137,7 @@
 		}
 	}
 
-	@media screen and (max-width: 1280px),
-	screen and (max-height: 1024px) {
-
+	@media screen and (max-width: 1280px), screen and (max-height: 1024px) {
 		button {
 			margin: 0em 0.5em;
 
@@ -149,7 +146,6 @@
 			}
 		}
 	}
-
 }
 
 ::ng-deep .selected-cell {

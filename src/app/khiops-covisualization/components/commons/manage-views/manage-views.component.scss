@@ -33,7 +33,7 @@
 				height: 150px;
 
 				.child-box {
-					border: 1px map_get($md-khiopsmain, 300);
+					border: 1px var(--primary);
 					margin: 10px;
 					border-style: solid;
 					height: 0 !important;
@@ -50,14 +50,14 @@
 			}
 
 			.box {
-				border: 1px map_get($md-khiopsmain, 300);
+				border: 1px var(--primary);
 				border-style: solid;
 				margin: 10px;
 				cursor: pointer;
 				height: 140px;
 				text-align: center;
 				background: white;
-				color: map_get($md-khiopsmain, 500);
+				color: var(--primary);
 				font-size: 0.9em;
 				box-shadow: 0 2px 6px 0px rgba(0, 0, 0, 0.1);
 				border-radius: 3px;

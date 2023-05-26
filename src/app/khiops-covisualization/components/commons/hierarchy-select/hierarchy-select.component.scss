@@ -1,20 +1,18 @@
 @import "../../../../../theme.scss";
 
 #hierarchy-select-comp {
-
-
 	padding: 0.6em;
 	margin: 0 !important;
 	position: relative;
 	position: sticky;
-    width: 100%;
+	width: 100%;
 
 	h1 {
 		margin: 0 1em 0 0.4em;
 	}
 
 	button.enabled {
-		color: map_get($md-khiopsmain, 500);
+		color: var(--primary);
 	}
 
 	#hierarchy-select-content {
@@ -24,12 +22,12 @@
 
 		span {
 			font-weight: 400;
-			color: darken(map_get($md-khiopsmain, 900), 20%);
+			color: var(--primary);
 		}
 
 		strong {
 			font-weight: 500;
-			color: map_get($md-khiopsmain, 500);
+			color: var(--primary);
 		}
 	}
 }

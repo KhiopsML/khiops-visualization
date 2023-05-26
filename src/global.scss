@@ -1,20 +1,9 @@
-@import "theme.scss";
 @import "app/khiops-library/components/ag-grid/ag-grid-theme.scss";
 @import "app/khiops-library/components/ag-grid/ag-theme-balham.scss";
 @import "app/khiops-library/components/ag-grid/ag-theme-material.scss";
 @import "app/khiops-library/libs/treeview/treeview.scss";
 @import "../libs/khiops-hypertree/dist/d3-hypertree-light";
-@import "~@angular/material/theming";
-
-@include mat-core();
-
-$primary: mat-palette($md-khiopsmain);
-$accent: mat-palette($mat-pink);
-$secondary: mat-palette($mat-blue-grey);
-$warn: mat-palette($mat-blue-grey);
-$theme: mat-light-theme($primary, $accent, $warn);
-
-@include angular-material-theme($theme);
+@import "theme.scss";
 
 .material-icons {
 	font-family: "Material Icons" !important;
@@ -175,6 +164,7 @@ split-gutter {
 }
 
 .mat-tab-header {
+	background-color: var(--bgColor) !important;
 	height: 58px !important;
 	width: 100% !important;
 	z-index: 100;
@@ -209,17 +199,12 @@ mat-tab-header {
 	opacity: 1 !important;
 }
 
-.mat-tab-label {
-	color: mat-color($warn);
-}
-
 .mat-tab-label:hover {
-	color: darken(mat-color($primary), 20%) !important;
-	background-color: rgba(mat-color($primary), 10%) !important;
+	background-color: var(--bgColor-10) !important;
 }
 
 .mat-tab-label.mat-tab-label-active {
-	color: mat-color($primary);
+	color: var(--primary) !important;
 }
 
 .mat-tab-label {
@@ -249,7 +234,6 @@ h1 {
 	margin: 1.2em 0em 0.8em 1em;
 	font-size: 1em;
 	font-weight: 400;
-	color: mat-color($accent, 900);
 
 	em {
 		font-weight: 300;
@@ -276,7 +260,7 @@ h2 {
 	margin: 0em 1em 0 2em;
 	font-size: 1em;
 	font-weight: 400;
-	color: mat-color($primary, 900);
+	color: var(--primary-10);
 }
 
 .clear-bottom-graph {
@@ -318,11 +302,11 @@ h2 {
 }
 
 .mat-snack-bar-container.success {
-	background: mat-color($primary, 900, 0.9);
+	background-color: var(--primary) !important;
 }
 
 .mat-snack-bar-container.warning {
-	background: $yellowMain;
+	background: $yellowMain !important;
 
 	span {
 		color: #374779;
@@ -342,7 +326,7 @@ app-home-layout {
 
 .comp-header {
 	// margin: 0em 0.4em 2.4em 1px;
-	background: white;
+	background: transparent !important;
 
 	.comp-header-tools {
 		button {
@@ -355,18 +339,6 @@ app-home-layout {
 			}
 		}
 	}
-}
-
-.mat-button.mat-primary,
-.mat-icon-button.mat-primary,
-.mat-stroked-button.mat-primary {
-	border-color: mat-color($primary) !important;
-}
-
-.mat-button.mat-accent,
-.mat-icon-button.mat-accent,
-.mat-stroked-button.mat-accent {
-	color: mat-color($accent, 800) !important;
 }
 
 .mat-menu-panel {
@@ -424,7 +396,7 @@ app-home-layout {
 
 .mat-tooltip {
 	font-size: 14px !important;
-	background: darken(mat-color($primary, 900, 0.8), 5%) !important;
+	background: var(--bgTooltip) !important;
 }
 
 .mat-ink-bar {
@@ -503,12 +475,6 @@ kl-legend {
 	}
 }
 
-.x.axis {
-	line {
-		stroke: white !important;
-	}
-}
-
 .mat-tab-group {
 	background: white;
 	z-index: 999;
@@ -547,9 +513,6 @@ kl-legend {
 }
 
 .button-accent {
-	border: 1px solid mat-color($accent, 500, 0.8) !important;
-	// text-transform: uppercase;
-
 	em {
 		margin-left: 1em;
 		font-style: normal;
@@ -596,12 +559,7 @@ mat-button-toggle-group {
 		line-height: 0px !important;
 	}
 
-	.mat-button-toggle {
-		color: mat-color($secondary, 400) !important;
-	}
-
 	.mat-button-toggle-checked {
-		background-color: mat-color($primary, 500) !important;
 		color: white !important;
 	}
 }
@@ -612,15 +570,6 @@ mat-button-toggle-group {
 
 .as-split-gutter {
 	position: relative;
-	background-color: #f6f6f6 !important;
-}
-
-.as-vertical:not(.as-disabled) > .as-split-gutter:hover,
-.as-vertical:not(.as-disabled) > .as-split-gutter:active,
-.as-horizontal:not(.as-disabled) > .as-split-gutter:hover,
-.as-horizontal:not(.as-disabled) > .as-split-gutter:active {
-	background-color: #eee !important;
-	transition: background-color 0.1s ease-in-out 0.1s;
 }
 
 // Override grid style
@@ -632,9 +581,9 @@ ag-grid-angular {
 }
 
 .ag-theme-balham .ag-row-selected {
-	background-color: mat-color($primary, 500) !important;
-	border-color: mat-color($primary, 500) !important;
-	color: white;
+	background-color: var(--primary) !important;
+	border-color: var(--primary) !important;
+	color: white !important;
 	// transition: background-color 0.3s !important;
 	transition: none !important;
 }
@@ -648,16 +597,8 @@ ag-grid-angular {
 	align-items: center;
 }
 
-.ag-theme-balham .ag-row-odd {
-	background-color: rgba(mat-color($primary, 50), 0.4);
-}
-
 .ag-theme-balham .ag-row {
 	border: none;
-}
-
-.ag-theme-balham .ag-row:hover {
-	background-color: rgba(mat-color($primary, 100), 1);
 }
 
 .ag-paging-panel {
@@ -697,17 +638,12 @@ ag-grid-angular {
 }
 
 .titlebar .window-title {
-	color: mat-color($primary);
+	color: var(--primary);
 }
 
 .mat-slider-thumb {
 	border-width: 3px !important;
 	transform: scale(0.7) !important;
-}
-
-.mat-slider-min-value:not(.mat-slider-thumb-label-showing) .mat-slider-thumb {
-	background-color: mat-color($accent) !important;
-	border-color: mat-color($accent) !important;
 }
 
 .mat-drawer-content {
@@ -725,52 +661,10 @@ kl-chart-next {
 }
 
 button.primary-btn {
-	background: mat-color($primary, 500) !important;
-
 	mat-icon {
 		color: white !important;
 		font-size: 20px !important;
 	}
-}
-
-button.primary-btn:hover {
-	background: mat-color($primary, 800) !important;
-}
-
-button.yellow-btn {
-	background: rgba($yellowMain, 0.8) !important;
-	color: white !important;
-
-	mat-icon {
-		color: mat-color($primary) !important;
-		font-size: 20px !important;
-	}
-
-	span {
-		color: mat-color($primary) !important;
-	}
-}
-
-button.yellow-btn:hover {
-	background: rgba($yellowMain, 1) !important;
-	color: white !important;
-}
-
-button.grey-btn {
-	background: mat-color($warn, 50, 0.5) !important;
-
-	mat-icon {
-		color: mat-color($primary, 600) !important;
-		font-size: 20px !important;
-	}
-}
-
-button.grey-btn:hover {
-	background: mat-color($warn, 100) !important;
-}
-
-button.mat-flat-button.mat-primary:hover {
-	background: mat-color($primary, 800) !important;
 }
 
 kl-matrix-canvas {
@@ -789,7 +683,7 @@ kl-matrix-canvas {
 
 #root-loading-text {
 	letter-spacing: 2px;
-	color: mat-color($primary);
+	color: var(--primary);
 	flex-direction: column;
 	display: flex;
 	font-size: 16px;
@@ -851,7 +745,6 @@ canvas:focus {
 
 .mat-badge-content {
 	border: 3px solid white !important;
-	color: mat-color($accent) !important;
 	width: 12px !important;
 	height: 12px !important;
 	line-height: 12px !important;
@@ -860,7 +753,7 @@ canvas:focus {
 }
 
 .cc-floating.cc-theme-classic {
-	background-color: mat-color($primary);
+	background-color: var(--primary);
 	color: white;
 }
 
@@ -893,4 +786,7 @@ canvas:focus {
 	background-color: white !important;
 	// box-shadow: 0px 0px 5px black;
 	border: 4px solid rgba(0, 0, 0, 0.2);
+}
+.mat-badge-small .mat-badge-content {
+	font-size: 0px !important;
 }

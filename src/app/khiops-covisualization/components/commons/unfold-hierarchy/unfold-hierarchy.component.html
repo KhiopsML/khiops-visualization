@@ -12,7 +12,7 @@
 			<div fxLayout="row" id="unfold-hierarchy-settings" fxLayoutAlign="start start">
 				<div fxLayout="column">
 					<span>{{ 'GLOBAL.NUMBER_OF_CLUSTERS' | translate }} : <b>{{ currentUnfoldHierarchy }}</b></span>
-					<mat-slider [max]="hierarchyDatas.totalClusters" [min]="hierarchyDatas.minClusters"
+					<mat-slider color="accent" [max]="hierarchyDatas.totalClusters" [min]="hierarchyDatas.minClusters"
 						[thumbLabel]="true" (input)="onHierarchyChanged($event)" [(ngModel)]="currentUnfoldHierarchy"
 						[step]="1">
 					</mat-slider>
@@ -38,7 +38,8 @@
 				</div>
 				<kl-chart-next title="{{ 'TOOLTIPS.AXIS.UNFOLD_HIERARCHY.INFO_RATE_CHART' | translate }}"
 					[canvasIdContainer]="'info-per-cluster-graph-canvas'" fxFlex [inputDatas]="infoPerCluster"
-					[enableSelection]="false" [colorSet]="colorSetInfoPerCluster" [chartOptions]="infoPerClusterChartOptions">
+					[enableSelection]="false" [colorSet]="colorSetInfoPerCluster"
+					[chartOptions]="infoPerClusterChartOptions">
 				</kl-chart-next>
 			</div>
 			<div fxFlex fxLayout="column">

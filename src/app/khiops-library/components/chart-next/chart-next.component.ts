@@ -27,6 +27,9 @@ import {
 import {
 	ChartOptions
 } from 'chart.js';
+import {
+	AppConfig
+} from 'src/environments/environment';
 
 @Component({
 	selector: 'kl-chart-next',
@@ -51,6 +54,7 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 
 	ctx: any;
 	chart: any;
+	color: string = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR') === 'dark' ? '#555555' : '#e5e5e5';
 
 	constructor(private khiopsLibraryService: KhiopsLibraryService, private toPrecision: ToPrecisionPipe, ) {
 		this.colorSet = this.khiopsLibraryService.getGraphColorSet()[0];
@@ -78,7 +82,7 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 
 			let options: any = {
 				grid: {
-					color: '#eeeeee'
+					color: this.color
 				},
 				plugins: {
 					tooltip: {
@@ -114,8 +118,8 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 					y: {
 						grid: {
 							drawBorder: true,
-							borderColor: '#e5e5e5',
-							color: '#e5e5e5'
+							borderColor: this.color,
+							color: this.color
 						},
 						beginAtZero: true,
 						min: 0,
@@ -131,8 +135,8 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 					x: {
 						grid: {
 							drawBorder: true,
-							borderColor: '#e5e5e5',
-							color: '#e5e5e5'
+							borderColor: this.color,
+							color: this.color
 						},
 						min: 0,
 						ticks: {

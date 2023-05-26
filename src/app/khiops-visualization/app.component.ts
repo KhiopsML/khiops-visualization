@@ -32,6 +32,9 @@ import {
 import {
 	SaveService
 } from './providers/save.service';
+import {
+	AppConfig
+} from 'src/environments/environment';
 
 @Component({
 	selector: 'app-root-visualization',
@@ -42,6 +45,7 @@ import {
 export class AppComponent implements AfterViewInit {
 
 	appdatas: any;
+	isDarkTheme: boolean = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR') === 'dark' ? true : false;
 
 	@ViewChild('appElement', {
 		static: false

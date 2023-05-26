@@ -13,7 +13,7 @@
 		</div> -->
 		<h2>{{ 'SETTINGS.NUMBER_PRECISION' | translate }} :</h2>
 		<div fxLayout="row" fxLayoutAlign="start center">
-			<mat-slider attr.aria-label="{{ 'ARIA.SETTINGS.UPDATE_NUMBER_PRECISION' | translate }}" [min]="1" [max]="8"
+			<mat-slider color="accent" attr.aria-label="{{ 'ARIA.SETTINGS.UPDATE_NUMBER_PRECISION' | translate }}" [min]="1" [max]="8"
 				[step]="1" [thumbLabel]="true" [(ngModel)]="numberPrecision">
 			</mat-slider>
 			<span>{{ numberPrecision }} {{'SETTINGS.NUMBER' | translate }}</span>
@@ -26,7 +26,7 @@
 		</div> -->
 		<h2>{{ 'GLOBAL.MATRIX_DEFAULT_CONTRAST' | translate }} :</h2>
 		<div fxLayout="row" fxLayoutAlign="start center">
-			<mat-slider attr.aria-label="{{ 'ARIA.SETTINGS.UPDATE_DEFAULT_MATRIX_CONTRAST' | translate }}" [max]="90"
+			<mat-slider color="accent" attr.aria-label="{{ 'ARIA.SETTINGS.UPDATE_DEFAULT_MATRIX_CONTRAST' | translate }}" [max]="90"
 				[min]="0" [step]="10" [thumbLabel]="false" [(ngModel)]="contrastValue">
 			</mat-slider>
 			<span>{{ contrastValue }} %</span>
@@ -35,6 +35,12 @@
 		<div fxLayout="row" fxLayoutAlign="start center">
 			<mat-slide-toggle [(ngModel)]="allowCookies">
 				{{ 'COOKIE_CONSENT.MESSAGE' | translate }}
+			</mat-slide-toggle>
+		</div>
+		<h2>{{ 'DARK_THEME.TITLE' | translate }} :</h2>
+		<div fxLayout="row" fxLayoutAlign="start center">
+			<mat-slide-toggle [(ngModel)]="allowDarkTheme">
+				{{ 'DARK_THEME.MESSAGE' | translate }}
 			</mat-slide-toggle>
 		</div>
 		<div id="user-settings-clear-datas" fxLayout="column" fxLayoutAlign="start start">

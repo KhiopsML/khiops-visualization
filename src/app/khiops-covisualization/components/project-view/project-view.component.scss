@@ -1,7 +1,7 @@
 #project-view-comp {
 
 	display: inline-table !important;
-	background: white;
+	background: var(--bgColor);
 
 	#project-view-comp-table {
 		margin: auto;

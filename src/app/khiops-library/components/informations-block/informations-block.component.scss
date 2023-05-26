@@ -2,7 +2,6 @@
 @import "../../../../theme.scss";
 
 .informations-block-comp {
-
 	h1 {
 		mat-icon {
 			margin-right: 0.2em;
@@ -16,7 +15,7 @@
 		strong {
 			font-size: 0.95em;
 			font-weight: 500;
-			color: darken(map_get($md-khiopsmain, 500), 20%);
+			color: var(--primary-contrast-10);
 		}
 	}
 }

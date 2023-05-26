@@ -8,7 +8,7 @@
 	</h1>
 	<div id="graph-header-tools" *ngIf="!hideScale" fxLayout="column" fxLayoutAlign="center center">
 		<h2>{{ 'GLOBAL.SCALE' | translate }}</h2>
-		<mat-slider attr.aria-label="{{ 'ARIA.CHARTS.UPDATE_GRAPH_SCALE' | translate }}" [max]="maxScale"
+		<mat-slider color="accent" attr.aria-label="{{ 'ARIA.CHARTS.UPDATE_GRAPH_SCALE' | translate }}" [max]="maxScale"
 			[min]="minScale" [step]="stepScale" [thumbLabel]="false" [(ngModel)]="scaleValue"
 			(input)="onScaleChanged($event)">
 		</mat-slider>

@@ -1,7 +1,5 @@
 #tree-leaf-details-comp {
 
-	>h1 {}
-
 	height: 100%;
 	position: relative;
 
@@ -15,6 +13,10 @@
 
 	::ng-deep .mat-tab-disabled {
 		opacity: 1 !important;
+	}
+
+	::ng-deep mat-tab-body {
+		background-color: var(--bgColor) !important;
 	}
 
 	::ng-deep .mat-tab-header {

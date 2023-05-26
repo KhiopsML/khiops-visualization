@@ -1,6 +1,6 @@
 #preparation-2d-view-comp {
 
-	background: white;
+	background: var(--bgColor);
 
 	::ng-deep .mat-tab-label {
 		// height: 48px !important;
@@ -25,6 +25,9 @@
 		padding: 0 1em;
 	}
 
+	::ng-deep mat-tab-body {
+		background-color: var(--bgColor) !important;
+	}
 	::ng-deep .mat-tab-body-content {
 		overflow: hidden !important;
 		height: calc(100% - 1px);

@@ -1,20 +1,39 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>VisualizationComponent</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <style>
-	html, body {
-		margin: 0;
-		padding: 0;
-		overflow: hidden;
-	}
-  </style>
-</head>
-<body>
-  <app-root></app-root>
-</body>
+	<head>
+		<meta charset="utf-8" />
+		<title>VisualizationComponent</title>
+		<base href="/" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link id="app-theme" rel="stylesheet" type="text/css" />
+		<link rel="icon" type="image/x-icon" href="favicon.ico" />
+
+		<style>
+			html,
+			body {
+				margin: 0;
+				padding: 0;
+				overflow: hidden;
+			}
+		</style>
+
+		<script>
+			// let _themeColor = 'dark'
+			// let _themeColor = 'light'
+			let _themeColor =
+				localStorage.getItem("KHIOPS_VISUALIZATION_THEME_COLOR") ||
+				"light";
+			let themeLink = document.getElementById("app-theme");
+			if (themeLink) {
+				document.documentElement.setAttribute(
+					"data-color-scheme",
+					_themeColor
+				);
+			}
+		</script>
+	</head>
+
+	<body>
+		<app-root></app-root>
+	</body>
 </html>

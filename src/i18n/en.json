@@ -95,6 +95,10 @@
 		"MESSAGE": "Allow this application to use cookies for usage statistics purposes only?",
 		"ALLOW": "Ok"
 	},
+	"DARK_THEME": {
+		"TITLE": "Dark mode",
+		"MESSAGE": "Enable Dark mode"
+	},
 	"GLOBAL": {
 		"DENSITY": "Density",
 		"OPEN_FULLSCREEN": "Open in fullscreen",

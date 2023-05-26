@@ -2,7 +2,7 @@
 @import "../../../../theme.scss";
 
 .ag-grid-comp {
-	background: white;
+	background: var(--bgColor);
 	padding: 1px; // Important for selected border
 
 	.comp-header {
@@ -27,9 +27,6 @@
 				}
 			}
 
-			.mat-flat-button:hover {
-				background: #CFD8DC !important;
-			}
 
 			.level-distribution-btn {
 				font-size: 0.9em !important;
@@ -48,7 +45,6 @@
 			}
 
 			.search-input-btn {
-				border-color: map_get($md-khiopsmain, 500) !important;
 				border: 1px solid currentColor;
 				border-radius: 4px;
 				margin-right: 20px;
@@ -85,9 +81,6 @@
 
 			}
 
-			.search-input-btn:hover {
-				background: #f8f9fb !important;
-			}
 		}
 	}
 }
