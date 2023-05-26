@@ -62,6 +62,15 @@ export class AppComponent implements AfterViewInit {
 		private saveService: SaveService,
 		private element: ElementRef) {
 		this.appService.initialize();
+
+		let _themeColor =
+			localStorage.getItem("KHIOPS_VISUALIZATION_THEME_COLOR") ||
+			"light";
+		document.documentElement.setAttribute(
+			"data-color-scheme",
+			_themeColor
+		);
+
 	}
 
 	ngAfterViewInit(): void {

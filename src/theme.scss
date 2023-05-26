@@ -154,6 +154,14 @@ $theme: mat-light-theme($primary, $accent, $warn);
 	--bgTooltip: #444;
 }
 
+::ng-deep .unitdisk-nav {
+	svg {
+		.background-circle {
+			fill: var(-bgColor-30) !important;
+		}
+	}
+}
+
 h1 {
 	color: var(--accent);
 }
