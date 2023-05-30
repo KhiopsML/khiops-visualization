@@ -24,6 +24,7 @@ import {
 import {
 	ClustersService
 } from '@khiops-covisualization/providers/clusters.service';
+import { AppConfig } from 'src/environments/environment';
 
 @Component({
 	selector: 'app-unfold-hierarchy',
@@ -52,6 +53,8 @@ export class UnfoldHierarchyComponent implements OnInit {
 	unfoldHierarchyTableTitle = '';
 
 	selectedLineChartItem = undefined;
+
+	borderColor = localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR') === 'dark' ? '#ffffff' : '#000000';
 
 	hierarchyDisplayedColumns = [{
 			headerName: 'Dimension',
@@ -165,8 +168,8 @@ export class UnfoldHierarchyComponent implements OnInit {
 			this.colorSetInfoPerCluster = _.cloneDeep(this.khiopsLibraryService.getGraphColorSet()[0]);
 
 			// set the current hierarchy selection to black
-			this.colorSetInfoPerCluster.domain[1] = '#000000';
-			this.colorSetClusterPerDim.domain[this.clustersPerDimDatas.datasets.length - 1] = '#000000';
+			this.colorSetInfoPerCluster.domain[1] = this.borderColor;
+			this.colorSetClusterPerDim.domain[this.clustersPerDimDatas.datasets.length - 1] = this.borderColor;
 
 			this.infoPerCluster = this.clustersService.getInfoPerCluster(this.currentUnfoldHierarchy);
 		}); // Do not freeze ui during graph render

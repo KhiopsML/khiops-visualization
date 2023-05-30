@@ -23,6 +23,7 @@ import { SelectableComponent } from "@khiops-library/components/selectable/selec
 import { ConfigService } from "@khiops-library/providers/config.service";
 import { SelectableService } from "@khiops-library/components/selectable/selectable.service";
 import { HistogramType } from "./histogram.types";
+import { AppConfig } from "src/environments/environment";
 
 @Component({
 	selector: "app-histogram",
@@ -55,6 +56,12 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 	yTicksCount = 10;
 	tickSize = 0;
 	minBarHeight = 4;
+	barColor: string =
+		localStorage.getItem(
+			AppConfig.visualizationCommon.GLOBAL.LS_ID + "THEME_COLOR"
+		) === "dark"
+			? "white"
+			: "black";
 
 	// Local variables
 	rangeXLog: any;
@@ -305,7 +312,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			d3.select(this).style("stroke", elStrokeColor);
 
 			if (i === 0) {
-				d3.select(this).style("stroke", "black");
+				d3.select(this).style("stroke", self.barColor);
 			}
 		};
 
@@ -321,7 +328,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 				});
 
 			//@ts-ignore
-			d3.select(this).style("stroke", "black");
+			d3.select(this).style("stroke", self.barColor);
 			//@ts-ignore
 			d3.select(this).moveToFront();
 

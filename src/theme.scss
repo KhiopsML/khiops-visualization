@@ -145,7 +145,8 @@ $theme: mat-light-theme($primary, $accent, $warn);
 
 	$yellowMain: #ff6600;
 	$redMain: #fb473a;
-	$primary: mat-palette($mat-deep-orange);
+	// $primary: mat-palette($mat-deep-orange);
+	$primary: mat-palette($mat-blue);
 	$accent: mat-palette($md-khiopsmain);
 	$warn: mat-palette($md-warn);
 	$theme: mat-dark-theme($primary, $accent, $warn);
@@ -162,13 +163,14 @@ $theme: mat-light-theme($primary, $accent, $warn);
 	--bgColor-30: #333;
 	--bgColor-40: #444;
 	--bgColor-50: #555;
-	--primary: #ff6600;
+	// --primary: #ff6600;
+	--primary: #2196f3;
 	--primary-10: #adadad;
 	--grey-text: #adadad;
 	--black-text: #000;
 	--primary-contrast: #ffffff;
 	--primary-contrast-10: #bbb;
-	--accent: #ff6600;
+	--accent: #2196f3;
 	--bgTooltip: #444;
 }
 
@@ -245,7 +247,7 @@ h1 {
 }
 
 .comp-header {
-	background: var(--bgColor);
+	background: var(--bgColor) !important;
 }
 .ag-grid-comp {
 	background: var(--bgColor) !important;

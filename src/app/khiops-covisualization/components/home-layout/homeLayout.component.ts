@@ -108,7 +108,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 	opened = false;
 	openContextView = false;
 	isElectron = false;
-	public selectedTab: Object;
+	public selectedTab: Object | undefined;
 	currentDatas: any;
 	isCompatibleJson: boolean;
 	currentChannel = localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'CHANNEL') || 'latest';
@@ -217,12 +217,12 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 		this.isContextDimensions = this.dimensionsService.isContextDimensions();
 
 		if (!this.isCompatibleJson) {
-			this.snackBar.open(this.translate.get('SNACKS.OPEN_FILE_ERROR'), null, {
+			this.snackBar.open(this.translate.get('SNACKS.OPEN_FILE_ERROR'), undefined, {
 				duration: 4000,
 				panelClass: 'error'
 			});
 		} else {
-			this.snackBar.open(this.translate.get('SNACKS.DATAS_LOADED'), null, {
+			this.snackBar.open(this.translate.get('SNACKS.DATAS_LOADED'), undefined, {
 				duration: 2000,
 				panelClass: 'success'
 			});
@@ -232,7 +232,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 		this.appProjectView && this.appProjectView.initialize()
 
 		if (isCollidingJson) {
-			this.snackBar.open(this.translate.get('SNACKS.COLLIDING_FILE'), null, {
+			this.snackBar.open(this.translate.get('SNACKS.COLLIDING_FILE'), undefined, {
 				duration: 10000,
 				panelClass: 'warning'
 			});

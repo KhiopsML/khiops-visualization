@@ -123,7 +123,7 @@ export class HomeLayoutComponent implements OnInit /*, OnDestroy, AfterViewInit 
 	isElectron = false;
 	isWebDebug = true; // Debug web mode
 	titleBar: any;
-	public selectedTab: Object;
+	public selectedTab: Object | undefined;
 	currentDatas: any;
 	isCompatibleJson: boolean;
 	currentChannel = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'CHANNEL') || 'latest';
@@ -291,12 +291,12 @@ export class HomeLayoutComponent implements OnInit /*, OnDestroy, AfterViewInit 
 		this.isCompatibleJson = this.appService.isCompatibleJson();
 
 		if (!this.isCompatibleJson) {
-			this.snackBar.open(this.translate.get('SNACKS.OPEN_FILE_ERROR'), null, {
-				duration: 4000,
+			this.snackBar.open(this.translate.get('SNACKS.OPEN_FILE_ERROR'), undefined, {
+				duration: 400000,
 				panelClass: 'error'
 			});
 		} else {
-			this.snackBar.open(this.translate.get('SNACKS.DATAS_LOADED'), null, {
+			this.snackBar.open(this.translate.get('SNACKS.DATAS_LOADED'), undefined, {
 				duration: 2000,
 				panelClass: 'success'
 			});

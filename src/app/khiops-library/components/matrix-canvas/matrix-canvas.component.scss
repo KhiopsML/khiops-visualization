@@ -14,7 +14,7 @@
 
 	#matrix-loading {
 		position: absolute;
-		background: var(--bgColor);
+		background: var(--bgColor) !important;
 		z-index: 100;
 	}
 

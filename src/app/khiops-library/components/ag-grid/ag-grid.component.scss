@@ -2,7 +2,7 @@
 @import "../../../../theme.scss";
 
 .ag-grid-comp {
-	background: var(--bgColor);
+	background: var(--bgColor) !important;
 	padding: 1px; // Important for selected border
 
 	.comp-header {

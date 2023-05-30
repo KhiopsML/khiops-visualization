@@ -15,7 +15,7 @@
 		flex-direction: column;
 		z-index: 9999;
 		position: absolute;
-		background: var(--bgColor);
+		background: var(--bgColor) !important;
 
 		mat-spinner {
 			max-width: 50%;
