@@ -54,7 +54,8 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 
 	ctx: any;
 	chart: any;
-	color: string = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR') === 'dark' ? '#555555' : '#e5e5e5';
+	color: string = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR') === 'dark' ? '#555' : '#e5e5e5';
+	fontColor: string = '#999';
 
 	constructor(private khiopsLibraryService: KhiopsLibraryService, private toPrecision: ToPrecisionPipe, ) {
 		this.colorSet = this.khiopsLibraryService.getGraphColorSet()[0];
@@ -124,6 +125,7 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 						beginAtZero: true,
 						min: 0,
 						ticks: {
+							color: this.fontColor,
 							maxTicksLimit: 7,
 							callback: function (value, index, values) {
 								// Fix axis labels display on responsive small size
@@ -140,6 +142,7 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 						},
 						min: 0,
 						ticks: {
+							color: this.fontColor,
 							autoSkip: true,
 							autoSkipPadding: 5,
 							maxRotation: 0,

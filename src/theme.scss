@@ -109,11 +109,45 @@ $theme: mat-light-theme($primary, $accent, $warn);
 		),
 	);
 
+	/* For use in src/lib/core/theming/_palette.scss */
+	$md-warn: (
+		50: #b8b8b8,
+		100: #919191,
+		200: #757575,
+		300: #525252,
+		400: #424242,
+		500: #333333,
+		600: #242424,
+		700: #141414,
+		800: #050505,
+		900: #000000,
+		A100: #c99c9c,
+		A200: #a65959,
+		A400: #584141,
+		A700: #433d3d,
+		contrast: (
+			50: #000000,
+			100: #000000,
+			200: #ffffff,
+			300: #ffffff,
+			400: #ffffff,
+			500: #ffffff,
+			600: #ffffff,
+			700: #ffffff,
+			800: #ffffff,
+			900: #ffffff,
+			A100: #000000,
+			A200: #ffffff,
+			A400: #ffffff,
+			A700: #ffffff,
+		),
+	);
+
 	$yellowMain: #ff6600;
 	$redMain: #fb473a;
 	$primary: mat-palette($mat-deep-orange);
 	$accent: mat-palette($md-khiopsmain);
-	$warn: mat-palette($mat-blue-grey);
+	$warn: mat-palette($md-warn);
 	$theme: mat-dark-theme($primary, $accent, $warn);
 	@include angular-material-theme($theme);
 }
@@ -129,7 +163,8 @@ $theme: mat-light-theme($primary, $accent, $warn);
 	--bgColor-40: #444;
 	--bgColor-50: #555;
 	--primary: #ff6600;
-	--primary-10: #9b4c17;
+	--primary-10: #adadad;
+	--grey-text: #adadad;
 	--primary-contrast: #ffffff;
 	--primary-contrast-10: #bbb;
 	--accent: #ff6600;
@@ -148,6 +183,7 @@ $theme: mat-light-theme($primary, $accent, $warn);
 	--bgColor-50: #aaa;
 	--primary: #374779;
 	--primary-10: #1e326d;
+	--grey-text: #adadad;
 	--primary-contrast: #374779;
 	--primary-contrast-10: #1e326d;
 	--accent: #880e4f;
