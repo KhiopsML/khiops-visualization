@@ -1,18 +1,27 @@
 #header-tools-comp {
+	overflow: hidden;
 
-		overflow: hidden;
-
-		button {
-			margin: 0 1em 0 0;
+	button {
+		box-shadow: none !important;
+		margin: 0 1em 0 0;
+		mat-icon {
+			font-size: 1.3rem !important;
+			line-height: 1.5rem !important;
 		}
-
-		#version {
-			margin-right: 1.8em;
-			background: #fbb33a;
-			line-height: 30px;
-			height: 30px;
-			color: white;
-			font-weight: 400;
+	}
+	button:first-child {
+		mat-icon {
+			font-size: 1.5rem !important;
+			line-height: 1.5rem !important;
 		}
+	}
 
+	#version {
+		margin-right: 1.8em;
+		background: #fbb33a;
+		line-height: 30px;
+		height: 30px;
+		color: white;
+		font-weight: 400;
+	}
 }
