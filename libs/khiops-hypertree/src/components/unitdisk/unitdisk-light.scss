@@ -10,232 +10,206 @@ $w: #fff;
 $nodeStroke: #90caf9;
 
 .hypertree-background {
-    background-color: white;
+	background-color: white;
 }
 
 .unitdisk-nav {
+	svg {
+		.cell {
+			stroke: rgba(#fff, 0);
+			fill: rgba(#fff, 0);
+			stroke-width: 0.0013;
+		}
 
-    svg {
-        //filter:drop-shadow(0px 1px 1.5px rgba(0,0,0,0.22));
+		.arc {
+			stroke: #999;
+			fill: none;
+		}
 
-        .cell {
-            /*stroke: rgba($leafcolor, .25);
-            fill: rgba($leafcolor, .2);
-            stroke-width: 0.0013;*/
+		.arc-focus {
+			stroke: rgba($hovercolor, 0.35);
+			fill: none;
+		}
 
-            stroke: rgba(#fff, 0);
-            fill: rgba(#fff, 0);
-            stroke-width: 0.0013;
-        }
+		.node {
+			stroke-width: 0;
+		}
 
-        .arc {
-            stroke: #999;
-            //stroke: #bf875f; // #b77d68; //#8d6e63;
-            fill: none;
-        }
+		.caption {
+			paint-order: stroke;
+			stroke: rgba(#fff, 0.7);
+			stroke-width: 0.005;
+			stroke-linecap: butt;
+			stroke-linejoin: miter;
+			font-weight: 300;
+			font-size: 0.0025rem;
+		}
 
-        .arc-focus {
-            stroke: rgba($hovercolor, .35);
-            fill: none;
-        }
+		.caption-background {
+			fill: rgba(#fff, 0.76);
+		}
 
-        .node {
-            // fill: #fff;
-            // stroke: #5eb561;
-            //stroke-width: .002;
-            stroke-width: 0;
-        }
+		.label-link {
+			stroke: rgb(25, 94, 4);
+			opacity: 0.6;
+			stroke-width: 0.001;
+			stroke-dasharray: 0.018, 0.015;
+		}
 
-        .caption {
-            paint-order: stroke;
-            stroke: rgba(#fff, .7);
-            stroke-width: .005;
-            stroke-linecap: butt;
-            stroke-linejoin: miter;
-            font-weight: 300;
-            font-size: 0.0025rem;
-        }
+		.root {
+			stroke: darken($rootcolor, 15%);
+			fill: lighten($rootcolor, 5%);
+		}
 
-        .caption-background {
-            /*
-            fill: #fff;
-            opacity: .76;
-            */
-            fill: rgba(#fff, .76);
-        }
+		.root.cell {
+			stroke: rgba(darken($rootcolor, 0%), 0.9);
+			fill: rgba(lighten($rootcolor, 0%), 0.05);
+		}
 
-        .label-link {
-            /*stroke: #2196F3;            */
-            stroke: rgb(25, 94, 4);
-            opacity: .6;
-            stroke-width: .001;
-            //stroke-dasharray: .015, .015;
-            stroke-dasharray: .018, .015;
-            //stroke-dasharray: .006, .0075;
+		.root.node {
+			stroke: #ef6c00;
+			stroke-width: 0.0015;
+		}
 
-        }
+		.lazy {
+			stroke: darken($lazycolor, 15%);
+			fill: lighten($lazycolor, 5%);
+		}
 
-        //.cell.leaf      { stroke: rgba($leafcolor, .25);             fill: rgba(lighten($leafcolor, 0%), .03);    }
+		.lazy.cell {
+			stroke: rgba(#ececec, 1);
+			stroke-width: 0.00075;
+			fill: none;
+		}
 
-        .root {
-            stroke: darken($rootcolor, 15%);
-            fill: lighten($rootcolor, 5%);
-        }
+		.lazy.node {
+			stroke: rgba(darken($lazycolor, 20%), 0.5);
+		}
 
-        .root.cell {
-            stroke: rgba(darken($rootcolor, 0%), .9);
-            fill: rgba(lighten($rootcolor, 0%), .05);
-        }
+		.exit {
+			stroke: darken($exitcolor, 15%);
+			fill: lighten($exitcolor, 5%);
+		}
 
-        .root.node {
-            stroke: #EF6C00;
-            stroke-width: .0015;
-        }
+		.exit.cell {
+			stroke: rgba(darken($exitcolor, 95%), 0.9);
+			fill: rgba(lighten($exitcolor, 0%), 0.05);
+		}
 
-        .lazy {
-            stroke: darken($lazycolor, 15%);
-            fill: lighten($lazycolor, 5%);
-        }
+		.exit.node {
+			stroke: rgba(darken($exitcolor, 50%), 0.5);
+		}
 
-        //.lazy.cell      { stroke: rgba(#fff, 1);                   fill: rgba(#2196f3, 0.08);            }
-        .lazy.cell {
-            stroke: rgba(#ececec, 1);
-            stroke-width: .00075;
-            //fill: rgba(#2196f3, 0.04);
-            fill: none;
-        }
+		.hovered.arc {
+			stroke: $hovercolor;
+		}
 
-        .lazy.node {
-            stroke: rgba(darken($lazycolor, 20%), .5);
-        }
+		.hovered-path.arc {
+			stroke: rgba($hovercolor, 0.8);
+		}
 
-        .exit {
-            stroke: darken($exitcolor, 15%);
-            fill: lighten($exitcolor, 5%);
-        }
+		.hovered-path-nav.arc {
+			stroke: rgba(red, 1);
+		}
 
-        .exit.cell {
-            stroke: rgba(darken($exitcolor, 95%), .9);
-            fill: rgba(lighten($exitcolor, 0%), .05);
-        }
+		.hovered.node {
+			stroke: darken($hovercolor, 10%);
+		}
 
-        .exit.node {
-            stroke: rgba(darken($exitcolor, 50%), .5);
-        }
+		.selected.arc {
+			stroke: $selectedcolor;
+			stroke-width: 0.01;
+		}
 
-        //.hovered        { stroke: $hovercolor;                       fill: lighten($hovercolor, 25%);             }
-        .hovered.arc {
-            stroke: $hovercolor;
-        }
+		.selected-path.arc {
+			stroke: rgba($selectedcolor, 0.2);
+		}
 
-        .hovered-path.arc {
-            stroke: rgba($hovercolor, .8);
-        }
+		.selected.cell {
+			stroke: rgba($selectedcolor, 0.2);
+			fill: rgba(lighten($selectedcolor, 0%), 0.1);
+		}
 
-        .hovered-path-nav.arc {
-            stroke: rgba(red, 1);
-        }
+		.selected.node {
+			stroke: darken($selectedcolor, 100%);
+			stroke-width: 0.025;
+		}
 
-        //.hovered.cell   { stroke: lighten($hovercolor, 27%);         fill: rgba(lighten($hovercolor, 0%), .15);   }
-        .hovered.node {
-            stroke: darken($hovercolor, 10%);
-        }
+		.center-node {
+			fill: rgba(#000, 0.25);
+			opacity: 0.5;
+		}
 
-        //.selected       { stroke: $selectedcolor;                    fill: lighten($selectedcolor, 25%);          }
-        .selected.arc {
-            stroke: $selectedcolor;
-        }
+		.background-circle {
+			fill-opacity: 0.2;
+		}
 
-        .selected-path.arc {
-            stroke: rgba($selectedcolor, .2);
-        }
+		.focus-circle {
+			fill: none;
+			stroke: darken($nodeStroke, 25%);
+			stroke-width: 0.0005;
+		}
 
-        //.selected-path-nav.arc { stroke: rgba($selectedcolor, 1);                                                       }
-        .selected.cell {
-            stroke: rgba($selectedcolor, .2);
-            fill: rgba(lighten($selectedcolor, 0%), .1);
-        }
+		.zerozero-circle {
+			fill: none;
+			stroke: #555;
+			stroke-width: 0.1;
+		}
 
-        .selected.node {
-            stroke: darken($selectedcolor, 100%);
-            stroke-width: .025;
-        }
+		.ripple-circle {
+			fill: rgba($hovercolor, 0.6);
+		}
 
-        .center-node {
-            fill: rgba(#000, .25);
-            opacity: .5;
-        }
+		.nav-parameter-disc {
+			.node {
+				fill: rgba(255, 255, 255, 1); //fill: #BBDEFB;
+				stroke-width: 0.015;
+				stroke: darken($leafcolor, 5%);
+			}
 
-        .background-circle {
-            fill-opacity: .20;
-        }
+			.node:first-child {
+				fill: rgba(255, 255, 255, 0.15);
+				stroke: darken($nodeStroke, 25%);
+				stroke-width: 0.003;
+			}
 
-        .focus-circle {
-            fill: none;
-            stroke: darken($nodeStroke, 25%);
-            stroke-width: .0005;
-        }
+			.cell {
+				stroke: #999;
+				fill: none;
+			}
 
-        .zerozero-circle {
-            fill: none;
-            stroke: #555;
-            stroke-width: .1;
-        }
+			.caption {
+				fill: #666;
+			}
 
-        .ripple-circle {
-            fill: rgba($hovercolor, .6);
-        }
+			.caption.P {
+				fill: #666;
+			}
 
-        .nav-parameter-disc {
-            .node {
-                fill: rgba(255, 255, 255, 1); //fill: #BBDEFB;
-                stroke-width: .015;
-                stroke: darken($leafcolor, 5%);
-            }
+			.caption-background {
+				visibility: hidden;
+			}
 
-            .node:first-child {
-                fill: rgba(255, 255, 255, .15);
-                stroke: darken($nodeStroke, 25%);
-                stroke-width: .003;
-            }
+			.background-circle {
+				fill: none;
+				stroke: none;
+			}
+		}
 
-            .cell {
-                stroke: #999;
-                fill: none;
-            }
+		.nav-background-disc {
+			.label-big {
+				stroke-width: 0.015;
+				font-weight: 100;
+				fill: rgba(#000, 1);
+			}
 
-            .caption {
-                fill: #666;
-            }
+			.hovered-path-nav.arc {
+				stroke: red;
+			}
 
-            .caption.P {
-                fill: #666;
-            }
-
-            .caption-background {
-                visibility: hidden;
-            }
-
-            .background-circle {
-                fill: none;
-                stroke: none;
-            }
-        }
-
-        .nav-background-disc {
-            .label-big {
-                stroke-width: .015;
-                font-weight: 100;
-                fill: rgba(#000, 1)
-            }
-
-            .hovered-path-nav.arc {
-                stroke: red;
-            }
-
-            .arc {
-                stroke: #aaa; // #b77d68; //#8d6e63;
-            }
-        }
-    }
+			.arc {
+				stroke: #aaa; // #b77d68; //#8d6e63;
+			}
+		}
+	}
 }
