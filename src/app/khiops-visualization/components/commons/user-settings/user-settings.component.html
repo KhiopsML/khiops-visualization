@@ -5,12 +5,6 @@
 		<button mat-flat-button (click)="onClickOnSave()" color="primary">{{ 'GLOBAL.SAVE' | translate }}</button>
 	</div>
 	<div fxLayout="column" id="user-settings-content" fxLayoutAlign="start start">
-		<!-- <h2>{{ 'SETTINGS.FONT_SIZE' | translate }} :</h2>
-		<div fxLayout="row" fxLayoutAlign="start center">
-			<mat-slider [min]="11" [max]="18" [step]="1" [thumbLabel]="true" [(ngModel)]="fontSize" (input)="onFontSizeChanged($event)">
-			</mat-slider>
-			<span>{{ fontSize }} px</span>
-		</div> -->
 		<h2>{{ 'SETTINGS.NUMBER_PRECISION' | translate }} :</h2>
 		<div fxLayout="row" fxLayoutAlign="start center">
 			<mat-slider color="accent" attr.aria-label="{{ 'ARIA.SETTINGS.UPDATE_NUMBER_PRECISION' | translate }}" [min]="1" [max]="8"
@@ -18,12 +12,6 @@
 			</mat-slider>
 			<span>{{ numberPrecision }} {{'SETTINGS.NUMBER' | translate }}</span>
 		</div>
-		<!-- <h2>{{ 'SETTINGS.LIFT_CURVE_SMOOTH' | translate }} :</h2>
-		<div fxLayout="row" fxLayoutAlign="start center">
-			<mat-slider [min]="1" [max]="20" [step]="1" [thumbLabel]="true" [(ngModel)]="liftCurveSmooth" (input)="onLiftCurveSmoothChanged($event)">
-			</mat-slider>
-			<span>{{ liftCurveSmoothExample }}</span>
-		</div> -->
 		<h2>{{ 'GLOBAL.MATRIX_DEFAULT_CONTRAST' | translate }} :</h2>
 		<div fxLayout="row" fxLayoutAlign="start center">
 			<mat-slider color="accent" attr.aria-label="{{ 'ARIA.SETTINGS.UPDATE_DEFAULT_MATRIX_CONTRAST' | translate }}" [max]="90"

@@ -1,9 +1,6 @@
 import {
 	Component,
 	ViewEncapsulation,
-	Input,
-	Output,
-	EventEmitter,
 	ViewChild,
 	ElementRef,
 	AfterViewInit,
@@ -26,7 +23,6 @@ import {
 import {
 	AppService
 } from './providers/app.service';
-import { ConfigModel } from '@khiops-library/model/config.model';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { SaveService } from './providers/save.service';
 
@@ -67,10 +63,17 @@ export class AppComponent implements AfterViewInit {
 		this.element.nativeElement.setConfig = (config) => {
 			this.configService.setConfig(config);
 		};
+		this.element.nativeElement.clean = () => this.appdatas = null;
 	}
 
 	initCookieConsent() {
-
+		const localAcceptCookies = localStorage.getItem('COOKIE_CONSENT_COVISU');
+		if (localAcceptCookies !== null) {
+			this.khiopsLibraryService.initMatomo();
+			this.khiopsLibraryService.trackEvent('cookie_consent', localAcceptCookies.toString());
+			this.khiopsLibraryService.enableMatomo();
+			return;
+		}
 		this.dialogRef.closeAll();
 		const config = new MatDialogConfig();
 		config.width = '400px';
@@ -89,8 +92,8 @@ export class AppComponent implements AfterViewInit {
 
 		dialogRef.afterClosed().toPromise().then((e) => {
 			const acceptCookies = e === 'confirm' ? 'true' : 'false';
-			// TODO remove electron
-			// storage.setSync('COOKIE_CONSENT', acceptCookies);
+
+			localStorage.setItem('COOKIE_CONSENT_COVISU', acceptCookies);
 
 			this.khiopsLibraryService.initMatomo();
 			this.khiopsLibraryService.trackEvent('cookie_consent', acceptCookies);
