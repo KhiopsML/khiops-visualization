@@ -55,6 +55,7 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 	ctx: any;
 	chart: any;
 	color: string = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR') === 'dark' ? '#555' : '#e5e5e5';
+	barColor: string = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR') === 'dark' ? 'rgba(255, 255, 255, 1)' : 'rgba(0, 0, 0, 1)';
 	fontColor: string = '#999';
 
 	constructor(private khiopsLibraryService: KhiopsLibraryService, private toPrecision: ToPrecisionPipe, ) {
@@ -246,7 +247,8 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 			this.colorize();
 			for (let i = 0; i < this.chart.data.datasets.length; i++) {
 				const dataset = this.chart.data.datasets[i];
-				dataset.borderColor[index] = 'rgba(0, 0, 0, 1)';
+				// dataset.borderColor[index] = 'rgba(0, 0, 0, 1)';
+				dataset.borderColor[index] = this.barColor;
 				dataset.borderSkipped = false;
 				// dataset.borderWidth = {
 				// 	top: 2,
