@@ -6,20 +6,19 @@
 	position: fixed;
 	text-align: center;
 	word-break: break-all;
-	max-width: 340px;
-	min-width: 340px;
+	max-width: 300px;
+	min-width: 300px;
 	color: white;
-	font: 13px sans-serif;
-	background: var(--bgColor-20);
+	font: 12px sans-serif;
+	background: #333;
 	box-shadow: 0 2px 6px 0px rgba(0, 0, 0, 0.2);
-
 	pointer-events: none;
 	border-radius: 5px;
 
 	.matrix-tooltip-title {
 		background: rgba(255, 255, 255, 0.1);
 		box-shadow: 0 2px 6px 0px rgba(0, 0, 0, 0.2);
-		padding: 10px;
+		padding: 10px 10px 0 10px;
 		width: 100%;
 		border-top-left-radius: 5px;
 		border-top-right-radius: 5px;
@@ -33,7 +32,7 @@
 
 	span {
 		text-align: left;
-		margin-bottom: 5px;
+		margin-bottom: 3px;
 	}
 
 	b {

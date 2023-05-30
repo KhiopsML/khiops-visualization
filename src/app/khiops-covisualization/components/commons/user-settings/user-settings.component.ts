@@ -35,6 +35,7 @@ export class UserSettingsComponent implements OnChanges {
 	fontSize: any;
 	contrastValue: number;
 	initialAllowCookies: boolean;
+	allowDarkTheme: boolean;
 
 	constructor(private khiopsLibraryService: KhiopsLibraryService, private appService: AppService) {}
 
@@ -62,6 +63,11 @@ export class UserSettingsComponent implements OnChanges {
 		// TODO remove electron
 		// this.allowCookies = (storage.getSync('COOKIE_CONSENT') === 'true') || false;
 		this.initialAllowCookies = _.cloneDeep(this.allowCookies);
+
+		// theme
+		this.allowDarkTheme = localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR') === 'dark' ? true : false;
+		localStorage.setItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR', this.allowDarkTheme ? 'dark' : 'light');
+
 	}
 
 	onClickOnCancel() {
@@ -98,6 +104,8 @@ export class UserSettingsComponent implements OnChanges {
 				this.khiopsLibraryService.disableMatomo();
 			}
 		}
+
+		localStorage.setItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR', this.allowDarkTheme ? 'dark' : 'light');
 
 		// Close the nav drawer
 		this.toggleNavDrawerChanged.emit(true);

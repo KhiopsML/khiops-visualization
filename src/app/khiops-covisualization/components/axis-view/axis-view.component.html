@@ -1,5 +1,5 @@
 <div id="axis-view-comp" fxFlexFill>
-	<div id="loading-axis" fxLayout="column" fxFlexFill fxLayoutAlign="center center" style="background: #fff;"
+	<div id="loading-axis" fxLayout="column" fxFlexFill fxLayoutAlign="center center"
 		*ngIf="loadingView || !(dimensionsDatas && dimensionsDatas.matrixDatas)">
 		<mat-spinner diameter="40" color="accent" mode="indeterminate"></mat-spinner>
 		<span *ngIf="isBigJsonFile">{{ 'GLOBAL.BIG_FILES_LOADING_WARNING' | translate }}</span>

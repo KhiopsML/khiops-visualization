@@ -22,14 +22,10 @@
 		margin: 0.1em 0.5em;
 		transition: color 0.2s ease, background-color 0.2s ease,
 			transform 0.3s ease;
-
-		mat-icon {
-			color: $redMain;
-		}
 	}
 
 	button.invert-axis.toggled-false {
-		background: #ffebee;
+		// background: #ffebee;
 
 		mat-icon {
 			color: var(--primary) !important;
@@ -46,19 +42,19 @@
 	}
 
 	button.toggle-zero.toggled-false {
-		background: #ffebee;
+		// background: #ffebee;
 
 		mat-icon {
-			color: var(--primary) !important;
+			// color: var(--primary) !important;
 		}
 	}
 
 	button.toggle-zero.toggled-true {
-		background: var(--primary) !important;
+		// background: var(--primary) !important;
 		transform: rotate(-180deg);
 
 		mat-icon {
-			color: white;
+			// color: white;
 		}
 	}
 

@@ -31,7 +31,7 @@
 	app-axis-view {
 		height: calc(100% - 74px);
 		width: calc(100% - 14px);
-		background: #f6f6f6;
+		background: var(--bgColor-20) !important;
 		padding: 8px 4px 6px 6px;
 	}
 }

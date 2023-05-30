@@ -21,6 +21,12 @@
 			margin-top: 2em;
 		}
 
+		#user-settings-dark-mode {
+			h2 {
+				margin-top: 3em;
+				margin-bottom: 1em;
+			}
+		}
 	}
 
 	::ng-deep mat-slide-toggle {

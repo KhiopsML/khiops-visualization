@@ -64,7 +64,9 @@ import pjson from 'package.json';
 })
 export class HomeLayoutComponent implements OnInit, OnDestroy {
 
-	@ViewChild('appProjectView', { static: false }) appProjectView: ElementRef<HTMLElement>;
+	@ViewChild('appProjectView', {
+		static: false
+	}) appProjectView: ElementRef < HTMLElement > ;
 
 	updateAvailableStatus: boolean;
 	fontSizeClass: string;
@@ -111,6 +113,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 	isCompatibleJson: boolean;
 	currentChannel = localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'CHANNEL') || 'latest';
 	showReleaseNotes = localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'SHOW_RELEASE_NOTES');
+
 	importedDatasChangedSub: any;
 
 	constructor(
@@ -126,6 +129,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 		private eventsService: EventsService,
 		private dialog: MatDialog
 	) {
+
 		if (pjson) {
 			this.appTitle = pjson.title.covisualization;
 			this.appName = pjson.name;

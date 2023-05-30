@@ -165,6 +165,7 @@ $theme: mat-light-theme($primary, $accent, $warn);
 	--primary: #ff6600;
 	--primary-10: #adadad;
 	--grey-text: #adadad;
+	--black-text: #000;
 	--primary-contrast: #ffffff;
 	--primary-contrast-10: #bbb;
 	--accent: #ff6600;
@@ -184,10 +185,15 @@ $theme: mat-light-theme($primary, $accent, $warn);
 	--primary: #374779;
 	--primary-10: #1e326d;
 	--grey-text: #adadad;
+	--black-text: #000;
 	--primary-contrast: #374779;
 	--primary-contrast-10: #1e326d;
 	--accent: #880e4f;
 	--bgTooltip: #444;
+}
+
+::ng-deep mat-dialog-container {
+	background-color: var(-bgColor) !important;
 }
 
 ::ng-deep .unitdisk-nav {

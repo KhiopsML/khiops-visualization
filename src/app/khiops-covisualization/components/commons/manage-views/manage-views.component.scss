@@ -1,6 +1,9 @@
 @import "../../../../../theme.scss";
 
 #manage-views-comp {
+	background-color: var(--bgColor) !important;
+	padding: 0 10px 10px 10px;
+
 	#manage-views-header {
 		height: 68px;
 
@@ -18,9 +21,8 @@
 		max-height: 70vh;
 
 		.views-container {
-
 			// border: 2px solid $yellowMain;
-			border: 2px solid #EC407A;
+			border: 2px solid var(--primary);
 			border-radius: 5px;
 			box-shadow: 0 2px 6px 0px rgba(0, 0, 0, 0.1);
 			padding: 3px;
@@ -29,11 +31,10 @@
 			overflow: auto;
 
 			.parent-box {
-
 				height: 150px;
 
 				.child-box {
-					border: 1px var(--primary);
+					border: 2px var(--primary);
 					margin: 10px;
 					border-style: solid;
 					height: 0 !important;
@@ -44,20 +45,19 @@
 				}
 
 				.child-box.disabled {
-					border-style: dashed;
+					border: 2px #333 dashed;
 				}
-
 			}
 
 			.box {
-				border: 1px var(--primary);
+				border: 2px var(--primary);
 				border-style: solid;
 				margin: 10px;
 				cursor: pointer;
 				height: 140px;
 				text-align: center;
 				background: white;
-				color: var(--primary);
+				color: var(--black-text);
 				font-size: 0.9em;
 				box-shadow: 0 2px 6px 0px rgba(0, 0, 0, 0.1);
 				border-radius: 3px;
@@ -66,15 +66,14 @@
 			}
 
 			.box:hover {
-				background: rgba(0, 0, 0, .03);
+				// background: rgba(0, 0, 0, .03);
 			}
 
 			.box.disabled {
 				background: #ddd;
 				color: #777;
 				box-shadow: none;
-				border-style: dashed;
-
+				border: 2px #333 dashed;
 			}
 
 			.box-dimension {
@@ -92,20 +91,24 @@
 		}
 
 		.views-container.disabled {
-			border-style: dashed;
 			background: #ddd;
 			color: #777;
-			border: 2px solid #999;
+			border: 2px #333 dashed;
 
-			.box {
-				background: #ddd;
-				color: #777;
+			.box,
+			.child-box {
+				background: #ddd !important;
+				color: #777 !important;
+				border: 2px #333 dashed !important;
+			}
+			.box-dimension {
+				border: 0px !important;
+				box-shadow: none;
 			}
 		}
 
 		#views-container-right {
 			margin-left: 20px;
 		}
-
 	}
 }

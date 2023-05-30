@@ -45,11 +45,12 @@ import {
 export class AppComponent implements AfterViewInit {
 
 	appdatas: any;
-	isDarkTheme: boolean = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR') === 'dark' ? true : false;
 
 	@ViewChild('appElement', {
 		static: false
 	}) appElement: ElementRef < HTMLElement > ;
+
+	isDarkTheme: boolean = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR') === 'dark' ? true : false;
 
 	constructor(
 		private dialogRef: MatDialog,
@@ -61,15 +62,16 @@ export class AppComponent implements AfterViewInit {
 		private configService: ConfigService,
 		private saveService: SaveService,
 		private element: ElementRef) {
-		this.appService.initialize();
 
 		let _themeColor =
-			localStorage.getItem("KHIOPS_VISUALIZATION_THEME_COLOR") ||
+			localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + "THEME_COLOR") ||
 			"light";
 		document.documentElement.setAttribute(
 			"data-color-scheme",
 			_themeColor
 		);
+
+		this.appService.initialize();
 
 	}
 

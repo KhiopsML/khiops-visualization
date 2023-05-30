@@ -105,7 +105,9 @@ export class HomeLayoutComponent implements OnInit /*, OnDestroy, AfterViewInit 
 		if (value && value.tool === "Khiops") this.initializeHome();
 	}
 
-	@ViewChild('appProjectView', { static: false }) appProjectView: ElementRef<HTMLElement>;
+	@ViewChild('appProjectView', {
+		static: false
+	}) appProjectView: ElementRef < HTMLElement > ;
 
 	activeTab = AppConfig.visualizationCommon.HOME.ACTIVE_TAB_INDEX;
 	translations: any;
@@ -126,6 +128,7 @@ export class HomeLayoutComponent implements OnInit /*, OnDestroy, AfterViewInit 
 	isCompatibleJson: boolean;
 	currentChannel = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'CHANNEL') || 'latest';
 	showReleaseNotes = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SHOW_RELEASE_NOTES');
+
 	updateAvailableStatus: boolean;
 	isLargeScreen: boolean;
 

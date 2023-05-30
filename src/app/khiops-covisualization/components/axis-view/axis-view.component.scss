@@ -1,5 +1,4 @@
 #axis-view-comp {
-
 	#axis-container {
 		position: relative;
 	}
@@ -10,12 +9,11 @@
 		right: 0;
 		height: 100%;
 		width: 100%;
-		background-color: #ffffff;
 		z-index: 10;
-
 	}
 
 	#loading-axis {
+		background-color: var(--bgColor) !important;
 		span {
 			margin-top: 1em;
 		}

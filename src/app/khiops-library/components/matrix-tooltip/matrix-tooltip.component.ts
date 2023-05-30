@@ -31,7 +31,7 @@ export class MatrixTooltipComponent implements OnInit, OnChanges {
 	ngOnChanges(changes: SimpleChanges) {
 		if (this.matrixTooltipDiv && this.matrixTooltipDiv.nativeElement && changes.position && changes.position.currentValue) {
 			this.matrixTooltipDiv.nativeElement.style.top = this.position.y - 100 + 'px';
-			this.matrixTooltipDiv.nativeElement.style.left = this.position.x - 380 + 'px';
+			this.matrixTooltipDiv.nativeElement.style.left = this.position.x - 340 + 'px';
 		}
 		if (this.matrixTooltipDiv && this.matrixTooltipDiv.nativeElement && changes.cell) {
 			if (changes.cell.currentValue) {

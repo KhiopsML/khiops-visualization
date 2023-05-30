@@ -26,9 +26,18 @@ import {
 import {
 	AppService
 } from './providers/app.service';
-import { ConfigModel } from '@khiops-library/model/config.model';
-import { ConfigService } from '@khiops-library/providers/config.service';
-import { SaveService } from './providers/save.service';
+import {
+	ConfigModel
+} from '@khiops-library/model/config.model';
+import {
+	ConfigService
+} from '@khiops-library/providers/config.service';
+import {
+	SaveService
+} from './providers/save.service';
+import {
+	AppConfig
+} from 'src/environments/environment';
 
 @Component({
 	selector: 'app-root-covisualization',
@@ -39,8 +48,11 @@ import { SaveService } from './providers/save.service';
 export class AppComponent implements AfterViewInit {
 
 	appdatas: any;
+	isDarkTheme: boolean = localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR') === 'dark' ? true : false;
 
-	@ViewChild('appElement', { static: false }) appElement: ElementRef<HTMLElement>;
+	@ViewChild('appElement', {
+		static: false
+	}) appElement: ElementRef < HTMLElement > ;
 
 	constructor(
 		private ngzone: NgZone,
@@ -52,6 +64,15 @@ export class AppComponent implements AfterViewInit {
 		private translate: TranslateService,
 		private saveService: SaveService,
 		private element: ElementRef) {
+
+		let _themeColor =
+			localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + "THEME_COLOR") ||
+			"light";
+		document.documentElement.setAttribute(
+			"data-color-scheme",
+			_themeColor
+		);
+
 		this.appService.initialize();
 	}
 
@@ -61,7 +82,9 @@ export class AppComponent implements AfterViewInit {
 		this.element.nativeElement.setDatas = (datas) => {
 			// Set data into ngzone to detect change into another context (electron for instance)
 			this.ngzone.run(() => {
-				this.appdatas = { ...datas }
+				this.appdatas = {
+					...datas
+				}
 			});
 		};
 		this.element.nativeElement.setConfig = (config) => {
