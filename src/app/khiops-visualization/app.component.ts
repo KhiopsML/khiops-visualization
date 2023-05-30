@@ -1,8 +1,5 @@
 import {
 	Component,
-	Input,
-	Output,
-	EventEmitter,
 	ViewEncapsulation,
 	ViewChild,
 	ElementRef,
@@ -89,10 +86,20 @@ export class AppComponent implements AfterViewInit {
 		this.element.nativeElement.setConfig = (config) => {
 			this.configService.setConfig(config);
 		};
+		this.element.nativeElement.clean = () => this.appdatas = null;
+		this.initCookieConsent();
 	}
 
 	initCookieConsent() {
+		const localAcceptCookies = localStorage.getItem('COOKIE_CONSENT_VISU');
+		if (localAcceptCookies !== null) {
+			this.khiopsLibraryService.initMatomo();
+			this.khiopsLibraryService.trackEvent('cookie_consent', localAcceptCookies.toString());
+			this.khiopsLibraryService.enableMatomo();
+			return;
+		}
 
+		console.log(localAcceptCookies);
 		this.dialogRef.closeAll();
 		const config = new MatDialogConfig();
 		config.width = '400px';
@@ -112,8 +119,7 @@ export class AppComponent implements AfterViewInit {
 		dialogRef.afterClosed().toPromise().then((e) => {
 			const acceptCookies = e === 'confirm' ? 'true' : 'false';
 
-			// TODO remove electron
-			// storage.setSync('COOKIE_CONSENT', acceptCookies);
+			localStorage.setItem('COOKIE_CONSENT_VISU', acceptCookies);
 
 			this.khiopsLibraryService.initMatomo();
 			this.khiopsLibraryService.trackEvent('cookie_consent', acceptCookies);

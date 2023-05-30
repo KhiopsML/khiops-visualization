@@ -60,8 +60,7 @@ export class UserSettingsComponent implements OnChanges {
 		AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
 
 		// Allow cookies
-		// TODO remove electron
-		// this.allowCookies = (storage.getSync('COOKIE_CONSENT') === 'true') || false;
+		this.allowCookies = (localStorage.getItem('COOKIE_CONSENT_VISU') === 'true') || false;
 		this.initialAllowCookies = _.cloneDeep(this.allowCookies);
 
 		// theme
@@ -93,7 +92,7 @@ export class UserSettingsComponent implements OnChanges {
 		AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
 
 		// TODO remove electron
-		// storage.setSync('COOKIE_CONSENT', this.allowCookies.toString());
+		localStorage.setItem('COOKIE_CONSENT_COVISU', this.allowCookies.toString());
 
 		if (this.initialAllowCookies !== this.allowCookies) {
 			if (this.allowCookies === true) {
