@@ -28,6 +28,12 @@
 		::ng-deep .unitdisk-nav {
 			svg {
 				position: absolute !important;
+
+				.caption {
+					stroke: transparent;
+					fill: var(--bgColorContrast)
+
+				}
 			}
 		}
 	}
