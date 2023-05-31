@@ -167,7 +167,7 @@ split-gutter {
 	background-color: var(--bgColor) !important;
 	height: 58px !important;
 	width: 100% !important;
-	z-index: 10000;
+	z-index: 1000;
 }
 
 .mat-tab-body-wrapper {
@@ -779,7 +779,7 @@ canvas:focus {
 
 .fullscreen {
 	position: fixed !important;
-	z-index: 1000 !important;
+	z-index: 10000 !important;
 	width: calc(100% - 10px) !important;
 	height: calc(100% - 70px) !important;
 	min-width: calc(100% - 10px) !important;
