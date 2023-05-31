@@ -24,4 +24,8 @@
 		color: white;
 		font-weight: 400;
 	}
+
+	::ng-deep .mat-progress-spinner.mat-accent circle, .mat-spinner.mat-accent circle {
+		stroke: #ffffff;
+	}
 }
