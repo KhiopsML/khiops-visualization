@@ -92,7 +92,7 @@ export class AppComponent implements AfterViewInit {
 				"data-color-scheme",
 				themeColor
 			);
-			this.configService.getConfig().onThemeChanged(themeColor)
+			this.configService.getConfig().onThemeChanged && this.configService.getConfig().onThemeChanged(themeColor)
 		});
 	}
 
