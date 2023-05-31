@@ -59,14 +59,6 @@ export class AppComponent implements AfterViewInit {
 		private saveService: SaveService,
 		private element: ElementRef) {
 
-		let _themeColor =
-			localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + "THEME_COLOR") ||
-			"light";
-		document.documentElement.setAttribute(
-			"data-color-scheme",
-			_themeColor
-		);
-
 		this.appService.initialize();
 	}
 
@@ -85,6 +77,21 @@ export class AppComponent implements AfterViewInit {
 			this.configService.setConfig(config);
 		};
 		this.element.nativeElement.clean = () => this.appdatas = null;
+		this.setTheme();
+
+	}
+
+	setTheme() {
+		setTimeout(() => {
+			let themeColor =
+				localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + "THEME_COLOR") ||
+				"light";
+			document.documentElement.setAttribute(
+				"data-color-scheme",
+				themeColor
+			);
+			this.configService.getConfig().onThemeChanged(themeColor)
+		});
 	}
 
 	initCookieConsent() {
