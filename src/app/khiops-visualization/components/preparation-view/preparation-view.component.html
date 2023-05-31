@@ -16,7 +16,7 @@
 					<kl-no-data fxFlexFill *ngIf="!targetVariableStatsDatas && !targetVariableStatsInformations"
 						[message]="'NO_DATAS.NO_VARIABLE_DETAILS'">
 					</kl-no-data>
-					<kl-informations-block id="preparation-informations-block-summary"
+					<kl-informations-block id="variable-stats-block-summary"
 						*ngIf="targetVariableStatsInformations && !targetVariableStatsDatas"
 						title="{{ 'GLOBAL.TARGET_VARIABLE_STATS' | translate }}"
 						[inputDatas]="targetVariableStatsInformations"></kl-informations-block>
