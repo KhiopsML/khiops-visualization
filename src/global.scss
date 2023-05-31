@@ -627,9 +627,6 @@ ag-grid-angular {
 	color: var(--grey-text) !important;
 }
 
-
-
-
 .ag-theme-balham .ag-root {
 	border: none !important;
 }
@@ -674,6 +671,7 @@ button.primary-btn {
 
 kl-matrix-canvas {
 	width: calc(100% - 2px); // for selectable service
+	padding-bottom: 1px; // important to avoid useless scrollbar
 }
 
 .mat-list mat-row {
