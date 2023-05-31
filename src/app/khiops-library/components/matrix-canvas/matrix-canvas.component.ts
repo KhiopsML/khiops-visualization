@@ -276,7 +276,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 					const cellsLength = this.inputDatas.matrixCellDatas.length;
 					for (let index = 0; index < cellsLength; index++) {
 
-						if (this.graphMode.mode === 'MUTUAL_INFO') {
+						if (this.graphMode.mode === 'MUTUAL_INFO' && this.isKhiopsCovisu) { // hide zero exeptions do not work anymore #110
 							this.matrixExtras[index] = totalMutInfo;
 						}
 
