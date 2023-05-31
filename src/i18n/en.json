@@ -10,12 +10,6 @@
 		"AXIS": "Axis",
 		"CONTEXT": "Context"
 	},
-	"UPDATE": {
-		"UPDATE_AVAILABLE": "Update available",
-		"DOWNLOAD_COMPLETE": "Downloaded",
-		"DOWNLOADING": "Downloading",
-		"WAITING_FOR_DOWNLOAD": "Waiting"
-	},
 	"MENU": {
 		"FILE": "File",
 		"EXIT": "Exit",

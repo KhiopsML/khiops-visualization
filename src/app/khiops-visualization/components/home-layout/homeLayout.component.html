@@ -98,25 +98,12 @@
 					</mat-tab-group>
 				</div>
 				<div id="header-right" fxLayoutAlign="start center" layout="row">
-					<kl-release-button (isUpdateAvailable)="isUpdateAvailable($event)"></kl-release-button>
-					<div fxLayoutAlign="center center" fxLayout="row" *ngIf="!updateAvailableStatus || isLargeScreen">
+					<div fxLayoutAlign="center center" fxLayout="row">
 						<kl-header-tools [appVersion]="appVersion"
 							*ngIf="appDatas && appDatas.datas && isCompatibleJson"
 							(toggleNavDrawerChanged)="onToggleNavDrawerChanged($event)">
 						</kl-header-tools>
 					</div>
-					<button id="more-btn" attr.aria-label="{{ 'ARIA.HEADER.DISPLAY_MORE_OPTIONS' | translate }}"
-					mat-icon-button [matMenuTriggerFor]="menu" class="yellow-btn" *ngIf="updateAvailableStatus && !isLargeScreen && appDatas && appDatas.datas">
-						<mat-icon>more_vert</mat-icon>
-					  </button>
-					<mat-menu backdropClass="more-menu" #menu="matMenu">
-						<div class="more-menu-wrapper" fxLayoutAlign="center center" fxLayout="row">
-							<kl-header-tools [appVersion]="appVersion"
-								*ngIf="appDatas && appDatas.datas && isCompatibleJson"
-								(toggleNavDrawerChanged)="onToggleNavDrawerChanged($event)">
-							</kl-header-tools>
-						</div>
-					</mat-menu>
 				</div>
 			</div>
 		</mat-sidenav-content>

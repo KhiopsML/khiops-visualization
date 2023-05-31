@@ -8640,13 +8640,6 @@ process-nextick-args@~2.0.0:
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-2.0.1.tgz#7820d9b16120cc55ca9ae7792680ae7dba6d7fe2"
   integrity sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==
 
-progress-button@1.1.19:
-  version "1.1.19"
-  resolved "https://registry.yarnpkg.com/progress-button/-/progress-button-1.1.19.tgz#5dbffdee9ed6aa342cb8491d3a8fa4cf3ea859fd"
-  integrity sha512-UHzokMhR/eiwrAy+/FZV0ghtr7ytbE9iDR0JxP/65EV5in2iPFAa9cIbjq/TmHWVxIeVdkBrY3EV5j8xYDtb1w==
-  dependencies:
-    tslib "^2.0.0"
-
 promise-inflight@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/promise-inflight/-/promise-inflight-1.0.1.tgz#98472870bf228132fcbdd868129bad12c3c029e3"

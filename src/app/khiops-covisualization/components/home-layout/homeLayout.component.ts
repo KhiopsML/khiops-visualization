@@ -68,7 +68,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 		static: false
 	}) appProjectView: ElementRef < HTMLElement > ;
 
-	updateAvailableStatus: boolean;
 	fontSizeClass: string;
 	private _appDatas;
 	public get appDatas() {

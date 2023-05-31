@@ -1,5 +1,9 @@
-import { EventsService } from './providers/events.service';
-import { ConfigService } from './providers/config.service';
+import {
+	EventsService
+} from './providers/events.service';
+import {
+	ConfigService
+} from './providers/config.service';
 import {
 	NgModule,
 	APP_INITIALIZER
@@ -34,9 +38,6 @@ import {
 import {
 	NgxChartsModule
 } from '@swimlane/ngx-charts';
-import {
-	ProgressButtonModule
-} from 'progress-button';
 import {
 	MatSlideToggleModule
 } from '@angular/material/slide-toggle';
@@ -189,9 +190,6 @@ import {
 	WatchResizeComponent
 } from './components/watch-resize/watch-resize.component';
 import {
-	ReleaseButtonComponent
-} from './components/release-button/release-button.component';
-import {
 	ConfirmDialogComponent
 } from './components/confirm-dialog/confirm-dialog.component';
 import {
@@ -201,13 +199,16 @@ import {
 	BtnFullscreenComponent
 } from './components/btn-fullscreen/btn-fullscreen.component';
 import EnTransaltion from "../../i18n/en.json";
-import { InAppRootOverlayContainer } from '../khiops-covisualization/providers/in-app-root-overlay/in-app-root-overlay-container';
-import { OverlayContainer } from '@angular/cdk/overlay';
+import {
+	InAppRootOverlayContainer
+} from '../khiops-covisualization/providers/in-app-root-overlay/in-app-root-overlay-container';
+import {
+	OverlayContainer
+} from '@angular/cdk/overlay';
 
 @NgModule({
 	imports: [
 		MarkdownModule.forRoot(),
-		ProgressButtonModule,
 		CommonModule,
 		HttpClientModule,
 		MatSlideToggleModule,
@@ -275,8 +276,7 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 		ScrollableGraphCanvasComponent,
 		ChartNextComponent,
 		RowIdentifierPipe,
-		ImportFileLoaderComponent,
-		ReleaseButtonComponent
+		ImportFileLoaderComponent
 	],
 	providers: [
 		ConfigService,
@@ -284,7 +284,6 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 		TranslateService,
 	],
 	exports: [
-		ProgressButtonModule,
 		CommonModule,
 		HttpClientModule,
 		MatTableModule,
@@ -339,8 +338,7 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 		IconCellComponent,
 		DistributionGraphCanvasComponent,
 		ChartNextComponent,
-		ImportFileLoaderComponent,
-		ReleaseButtonComponent
+		ImportFileLoaderComponent
 	]
 })
 export class KhiopsLibraryModule {

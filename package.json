@@ -68,7 +68,6 @@
     "material-design-icons": "3.0.1",
     "ngx-markdown": "11.1.2",
     "pan-zoom": "3.5.2",
-    "progress-button": "1.1.19",
     "rxjs": "~6.6.0",
     "stream-browserify": "^3.0.0",
     "tslib": "^2.3.0",
