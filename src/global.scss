@@ -275,7 +275,7 @@ h2 {
 
 .selected {
 	.mat-tab-group {
-		box-shadow: inset 0px 0px 0px 1px mat-color($primary, 200);
+		box-shadow: inset 0px 0px 0px 1px var(--selected);
 		padding: 1px;
 
 		::ng-deep .ag-grid-comp {
@@ -284,13 +284,12 @@ h2 {
 	}
 
 	> div {
-		box-shadow: inset 0px 0px 0px 1px mat-color($primary, 200);
-		// border-left: 5px solid mat-color($primary, 200);
+		box-shadow: inset 0px 0px 0px 1px var(--selected);
 	}
 }
 
 .parent-selected {
-	border: 1px solid mat-color($primary, 200);
+	border: 1px solid var(--selected);
 }
 
 .selected-area-inner-div {

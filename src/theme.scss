@@ -1,8 +1,10 @@
 @import "~@angular/material/theming";
 @include mat-core();
+$mat-theme-ignore-duplication-warnings: true;
 
 $yellowMain: #fbb33a;
 $redMain: #fb473a;
+
 $md-khiopsmain: (
 	50: #d0d6e9,
 	100: #9ba8d2,
@@ -72,11 +74,11 @@ $md-khiopsaccent: (
 $primary: mat-palette($md-khiopsmain);
 $accent: mat-palette($md-khiopsaccent);
 $warn: mat-palette($mat-blue-grey);
-$theme: mat-light-theme($primary, $accent, $warn);
-@include angular-material-theme($theme);
+$theme-light: mat-light-theme($primary, $accent, $warn);
+@include angular-material-color($theme-light);
 
 ::ng-deep .dark-theme {
-	$md-khiopsmain: (
+	$md-main-dark: (
 		50: #ffffff,
 		100: #ffffff,
 		200: #ffffff,
@@ -110,7 +112,7 @@ $theme: mat-light-theme($primary, $accent, $warn);
 	);
 
 	/* For use in src/lib/core/theming/_palette.scss */
-	$md-warn: (
+	$md-warn-dark: (
 		50: #b8b8b8,
 		100: #919191,
 		200: #757575,
@@ -143,14 +145,18 @@ $theme: mat-light-theme($primary, $accent, $warn);
 		),
 	);
 
-	$yellowMain: #ff6600;
-	$redMain: #fb473a;
-	// $primary: mat-palette($mat-deep-orange);
-	$primary: mat-palette($mat-blue);
-	$accent: mat-palette($md-khiopsmain);
-	$warn: mat-palette($md-warn);
-	$theme: mat-dark-theme($primary, $accent, $warn);
-	@include angular-material-theme($theme);
+	// $primary-dark: mat-palette($mat-deep-orange);
+	$primary-dark: mat-palette($mat-blue);
+	$accent-dark: mat-palette($md-main-dark);
+	$warn-dark: mat-palette($md-warn-dark);
+	$theme-dark: mat-dark-theme($primary-dark, $accent-dark, $warn-dark);
+	@include angular-material-color($theme-dark);
+}
+
+@media (prefers-color-scheme: light) {
+}
+
+@media (prefers-color-scheme: dark) {
 }
 
 [data-color-scheme="dark"] {
@@ -171,6 +177,7 @@ $theme: mat-light-theme($primary, $accent, $warn);
 	--primary-contrast: #ffffff;
 	--primary-contrast-10: #bbb;
 	--accent: #2196f3;
+	--selected: #7abdf3;
 	--bgTooltip: #444;
 }
 
@@ -191,6 +198,7 @@ $theme: mat-light-theme($primary, $accent, $warn);
 	--primary-contrast: #374779;
 	--primary-contrast-10: #1e326d;
 	--accent: #880e4f;
+	--selected: #7abdf3;
 	--bgTooltip: #444;
 }
 
