@@ -13,7 +13,6 @@
     "module": "es2020",
     "esModuleInterop": true,
     "experimentalDecorators": true,
-	"suppressExcessPropertyErrors": true,
     "baseUrl": "./",
     "target": "es5",
     "allowJs": true,
