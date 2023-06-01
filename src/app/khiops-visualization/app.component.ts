@@ -32,6 +32,9 @@ import {
 import {
 	AppConfig
 } from 'src/environments/environment';
+import {
+	ReleaseNotesComponent
+} from '@khiops-library/components/release-notes/release-notes.component';
 
 @Component({
 	selector: 'app-root-visualization',
@@ -75,12 +78,26 @@ export class AppComponent implements AfterViewInit {
 				}
 			});
 		};
+		this.element.nativeElement.openReleaseNotesDialog = (datas) => {
+			// Set data into ngzone to detect change into another context (electron for instance)
+			this.ngzone.run(() => {
+				this.openReleaseNotesDialog();
+			});
+		};
 		this.element.nativeElement.setConfig = (config) => {
 			this.configService.setConfig(config);
 		};
 		this.element.nativeElement.clean = () => this.appdatas = null;
 		this.initCookieConsent();
 		this.setTheme();
+	}
+
+	openReleaseNotesDialog(): void {
+		this.dialogRef.closeAll();
+		this.ngzone.run(() => {
+			const config = new MatDialogConfig();
+			const dialogRef: MatDialogRef < ReleaseNotesComponent > = this.dialog.open(ReleaseNotesComponent, config);
+		});
 	}
 
 	setTheme() {

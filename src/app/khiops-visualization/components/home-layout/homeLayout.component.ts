@@ -67,9 +67,7 @@ import {
 import {
 	TreePreparationDatasService
 } from '@khiops-visualization/providers/tree-preparation-datas.service';
-import {
-	ReleaseNotesComponent
-} from '@khiops-library/components/release-notes/release-notes.component';
+
 import {
 	KhiopsLibraryService
 } from '@khiops-library/providers/khiops-library.service';
@@ -264,16 +262,6 @@ export class HomeLayoutComponent implements OnInit /*, OnDestroy, AfterViewInit 
 				this.onFileLoaderDataChanged(currentDatas);
 			}); // do it after timeout to be launched
 		}, 250); // do it after nav drawer anim
-	}
-
-
-	openReleaseNotesDialog(): void {
-		this.dialogRef.closeAll();
-		this.ngzone.run(() => {
-			const config = new MatDialogConfig();
-			const dialogRef: MatDialogRef < ReleaseNotesComponent > = this.dialog.open(ReleaseNotesComponent, config);
-			dialogRef.componentInstance.appVersion = this.appVersion;
-		});
 	}
 
 	setChannel(channel) {

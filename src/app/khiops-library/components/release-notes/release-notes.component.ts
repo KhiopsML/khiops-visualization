@@ -19,7 +19,6 @@ import {
 })
 export class ReleaseNotesComponent implements OnInit {
 	releaseNotesDatas: any;
-	appVersion: string;
 	loadingNotes = true;
 	loadingNotesError = false;
 

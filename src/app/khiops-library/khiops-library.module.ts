@@ -151,9 +151,6 @@ import {
 	FormsModule
 } from '@angular/forms';
 import {
-	AppVersionComponent
-} from './components/app-version/app-version.component';
-import {
 	MatrixCanvasComponent
 } from './components/matrix-canvas/matrix-canvas.component';
 import {
@@ -265,7 +262,6 @@ import {
 		NoDataComponent,
 		LegendComponent,
 		SelectableTabComponent,
-		AppVersionComponent,
 		InformationsBlockComponent,
 		MatrixCanvasComponent,
 		AgGridComponent,
@@ -327,7 +323,6 @@ import {
 		SelectableTabComponent,
 		BtnFullscreenComponent,
 		GraphHeaderComponent,
-		AppVersionComponent,
 		ToPrecisionPipe,
 		TranslatePipe,
 		InformationsBlockComponent,
