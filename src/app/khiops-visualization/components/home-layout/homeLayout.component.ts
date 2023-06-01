@@ -242,16 +242,6 @@ export class HomeLayoutComponent implements OnInit /*, OnDestroy, AfterViewInit 
 		this.evaluationDatasService.initialize();
 		this.modelingDatasService.initialize();
 
-		/*
-				if (this.isElectron && this.showReleaseNotes === 'true') { // ls is a string
-					// If ls SHOW_RELEASE_NOTES is true, app has been updated
-					setTimeout(() => {
-						this.openReleaseNotesDialog();
-					}, 1000);
-					this.showReleaseNotes = 'false';
-					localStorage.setItem(AppConfig.common.GLOBAL.LS_ID + 'SHOW_RELEASE_NOTES', this.showReleaseNotes);
-				}
-		*/
 	}
 
 	reloadView() {

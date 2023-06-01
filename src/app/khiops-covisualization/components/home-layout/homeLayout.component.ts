@@ -262,15 +262,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 		}, 250); // do it after nav drawer anim
 	}
 
-	openReleaseNotesDialog(): void {
-		this.dialogRef.closeAll();
-		this.ngzone.run(() => {
-			const config = new MatDialogConfig();
-			const dialogRef: MatDialogRef < ReleaseNotesComponent > = this.dialog.open(ReleaseNotesComponent, config);
-			dialogRef.componentInstance.appVersion = this.appVersion;
-		});
-	}
-
 	closeFile() {
 		this.dialogRef.closeAll();
 		this.fileLoader.closeFile();
