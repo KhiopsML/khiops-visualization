@@ -78,10 +78,36 @@ export class AppComponent implements AfterViewInit {
 				}
 			});
 		};
-		this.element.nativeElement.openReleaseNotesDialog = (datas) => {
-			// Set data into ngzone to detect change into another context (electron for instance)
+		this.element.nativeElement.openReleaseNotesDialog = () => {
 			this.ngzone.run(() => {
-				this.openReleaseNotesDialog();
+				this.dialogRef.closeAll();
+				this.ngzone.run(() => {
+					const config = new MatDialogConfig();
+					const dialogRef: MatDialogRef < ReleaseNotesComponent > =
+						this.dialog.open(ReleaseNotesComponent, config);
+				});
+			});
+		};
+		this.element.nativeElement.openChannelDialog = (cb) => {
+			this.ngzone.run(() => {
+				this.dialogRef.closeAll();
+				this.ngzone.run(() => {
+					const config = new MatDialogConfig();
+					const dialogRef: MatDialogRef < ConfirmDialogComponent > =
+						this.dialog.open(ConfirmDialogComponent, config);
+					dialogRef.componentInstance.title = this.translate.get(
+						"GLOBAL.ENABLE_BETA_VERSIONS"
+					);
+					dialogRef.componentInstance.message = this.translate.get(
+						"GLOBAL.BETA_VERSIONS_WARNING"
+					);
+					dialogRef
+						.afterClosed()
+						.toPromise()
+						.then((e) => {
+							cb(e);
+						});
+				});
 			});
 		};
 		this.element.nativeElement.setConfig = (config) => {
@@ -90,14 +116,6 @@ export class AppComponent implements AfterViewInit {
 		this.element.nativeElement.clean = () => this.appdatas = null;
 		this.initCookieConsent();
 		this.setTheme();
-	}
-
-	openReleaseNotesDialog(): void {
-		this.dialogRef.closeAll();
-		this.ngzone.run(() => {
-			const config = new MatDialogConfig();
-			const dialogRef: MatDialogRef < ReleaseNotesComponent > = this.dialog.open(ReleaseNotesComponent, config);
-		});
 	}
 
 	setTheme() {
