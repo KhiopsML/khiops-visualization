@@ -132,7 +132,7 @@ export class AppComponent implements AfterViewInit {
 	}
 
 	initCookieConsent() {
-		const localAcceptCookies = localStorage.getItem('COOKIE_CONSENT_VISU');
+		const localAcceptCookies = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'COOKIE_CONSENT');
 		if (localAcceptCookies !== null) {
 			this.khiopsLibraryService.initMatomo();
 			this.khiopsLibraryService.trackEvent('cookie_consent', localAcceptCookies.toString());
@@ -160,7 +160,7 @@ export class AppComponent implements AfterViewInit {
 		dialogRef.afterClosed().toPromise().then((e) => {
 			const acceptCookies = e === 'confirm' ? 'true' : 'false';
 
-			localStorage.setItem('COOKIE_CONSENT_VISU', acceptCookies);
+			localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'COOKIE_CONSENT', acceptCookies);
 
 			this.khiopsLibraryService.initMatomo();
 			this.khiopsLibraryService.trackEvent('cookie_consent', acceptCookies);

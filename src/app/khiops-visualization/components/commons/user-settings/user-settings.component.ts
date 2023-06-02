@@ -63,7 +63,7 @@ export class UserSettingsComponent implements OnChanges {
 		AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
 
 		// Allow cookies
-		this.allowCookies = (localStorage.getItem('COOKIE_CONSENT_VISU') === 'true') || false;
+		this.allowCookies = (localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'COOKIE_CONSENT') === 'true') || false;
 		this.initialAllowCookies = _.cloneDeep(this.allowCookies);
 
 		// theme
@@ -95,7 +95,7 @@ export class UserSettingsComponent implements OnChanges {
 		// this.khiopsLibraryService.trackEvent('click', 'settings', 'significant_number', this.numberPrecision);
 		// this.khiopsLibraryService.trackEvent('click', 'settings', 'matrix_contrast', this.contrastValue);
 
-		localStorage.setItem('COOKIE_CONSENT_VISU', this.allowCookies.toString());
+		localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'COOKIE_CONSENT', this.allowCookies.toString());
 
 		if (this.initialAllowCookies !== this.allowCookies) {
 			if (this.allowCookies === true) {
