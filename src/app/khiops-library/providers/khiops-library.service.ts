@@ -4,11 +4,9 @@ import {
 import {
 	ChartColorsSetI
 } from '../interfaces/chart-colors-set';
-// TODO does not work on web browser | remove electron
-// import {
-// 	machineIdSync
-// } from 'node-machine-id';
-
+import {
+	ConfigService
+} from '@khiops-library/providers/config.service';
 declare const window: any;
 
 @Injectable({
@@ -36,7 +34,7 @@ export class KhiopsLibraryService {
 		// @ts-ignore
 		.flat();
 
-	constructor() {
+	constructor(private configService: ConfigService) {
 
 		this.graphColorSet = [{
 				domain: [
@@ -114,25 +112,17 @@ export class KhiopsLibraryService {
 				_paq.push(['trackPageView']);
 
 				(() => {
-					// TODO remove electron
-					// let id;
-					// try {
-					// 	id = machineIdSync();
-					// } catch (e) {
-					// 	console.error('failed to get matomo id');
-					// }
-
 					_paq.push(['setTrackerUrl', this.appConfig.common.TRACKER.TRACKER_URL + 'matomo.php']);
+					// To define source component (electron, kaas, ...)
+					_paq.push(['setAppSource', this.configService.getConfig().appSource]);
 					_paq.push(['setSiteId', this.appConfig.common.TRACKER.SITE_ID]);
-					// TODO remove electron
-					// id && _paq.push(['setUserId', id]);
 					var d = document,
 						g = d.createElement('script'),
 						s = d.getElementsByTagName('script')[0];
 					g.type = 'text/javascript';
 					g.async = true;
 					g.src = this.appConfig.common.TRACKER.TRACKER_URL + 'matomo.js';
-					s.parentNode.insertBefore(g, s);
+					s?.parentNode?.insertBefore(g, s);
 				})();
 			} else {
 				console.info('Matomo not initialized in dev mode');

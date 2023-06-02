@@ -112,9 +112,9 @@ export class AppComponent implements AfterViewInit {
 		};
 		this.element.nativeElement.setConfig = (config) => {
 			this.configService.setConfig(config);
+			this.initCookieConsent();
 		};
 		this.element.nativeElement.clean = () => this.appdatas = null;
-		this.initCookieConsent();
 		this.setTheme();
 	}
 
