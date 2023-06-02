@@ -601,6 +601,10 @@ ag-grid-angular {
 	border: none;
 }
 
+.ag-theme-balham .ag-row:hover:not(.ag-row-selected) {
+	background-color: var(--bgColor-40) !important;
+}
+
 .ag-paging-panel {
 	border-color: transparent !important;
 	color: var(--grey-text) !important;
