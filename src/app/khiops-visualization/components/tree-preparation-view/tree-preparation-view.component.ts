@@ -109,6 +109,11 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
 
 		super();
 
+	}
+
+	ngOnInit() {
+		this.khiopsLibraryService.trackEvent('page_view', 'treePreparation');
+
 		this.appDatas = this.appService.getDatas().datas;
 		this.treePreparationDatas = this.treePreparationDatasService.getDatas();
 		this.sizes = this.appService.getViewSplitSizes('treePreparationView');
@@ -119,12 +124,6 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
 		this.variablesDatas = this.treePreparationDatasService.getVariablesDatas();
 		this.treePreparationDatasService.getCurrentIntervalDatas();
 		this.distributionDatas = this.distributionDatasService.getDatas();
-
-		// this.onSelectedGraphItemChanged(0);
-	}
-
-	ngOnInit() {
-		this.khiopsLibraryService.trackEvent('page_view', 'treePreparation');
 	}
 
 	onSplitDragEnd(event: any, item: any) {
