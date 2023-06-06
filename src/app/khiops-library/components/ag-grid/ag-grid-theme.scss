@@ -229,7 +229,7 @@ ag-grid-aurelia {
 }
 
 .ag-center-cols-viewport {
-	width: 100%;
+	width: calc(100% - 1px);
 	overflow-x: auto;
 }
 
