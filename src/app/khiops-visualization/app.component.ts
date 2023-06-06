@@ -157,18 +157,20 @@ export class AppComponent implements AfterViewInit {
 		dialogRef.componentInstance.displayCancelBtn = false;
 		dialogRef.componentInstance.confirmTranslation = this.translate.get('COOKIE_CONSENT.ALLOW');
 
-		dialogRef.afterClosed().toPromise().then((e) => {
-			const acceptCookies = e === 'confirm' ? 'true' : 'false';
+		this.ngzone.run(() => {
+			dialogRef.afterClosed().toPromise().then((e) => {
+				const acceptCookies = e === 'confirm' ? 'true' : 'false';
 
-			localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'COOKIE_CONSENT', acceptCookies);
+				localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'COOKIE_CONSENT', acceptCookies);
 
-			this.khiopsLibraryService.initMatomo();
-			this.khiopsLibraryService.trackEvent('cookie_consent', acceptCookies);
-			if (acceptCookies === 'false') {
-				this.khiopsLibraryService.disableMatomo();
-			} else {
-				this.khiopsLibraryService.enableMatomo();
-			}
+				this.khiopsLibraryService.initMatomo();
+				this.khiopsLibraryService.trackEvent('cookie_consent', acceptCookies);
+				if (acceptCookies === 'false') {
+					this.khiopsLibraryService.disableMatomo();
+				} else {
+					this.khiopsLibraryService.enableMatomo();
+				}
+			});
 		});
 
 	}
