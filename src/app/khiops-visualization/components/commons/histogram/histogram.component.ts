@@ -341,7 +341,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			//@ts-ignore
 			d3.select(this.parentNode)
 				.selectAll("rect")
-				.style("fill-opacity", "0.65");
+				.style("fill-opacity", "0.8");
 
 			//@ts-ignore
 			d3.select(this).style("fill-opacity", "0.9");
@@ -379,7 +379,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			//@ts-ignore
 			d3.select(this.parentNode)
 				.selectAll("rect")
-				.style("fill-opacity", "0.65");
+				.style("fill-opacity", "0.8");
 		};
 
 		if (
@@ -411,7 +411,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			.on("mouseleave", mouseleave)
 			.attr("width", barW - 2) // -2 to remove stroke width (outer and cannot be inner)
 			.attr("height", barH)
-			.attr("fill-opacity", "0.65")
+			.attr("fill-opacity", "0.8")
 			.attr("fill", bar.color)
 			.attr("stroke", generateColor)
 			.attr("stroke-width", "2px");
