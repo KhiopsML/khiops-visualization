@@ -800,3 +800,9 @@ canvas:focus {
 ::ng-deep .ag-center-cols-viewport {
 	overflow-x: hidden !important;
 }
+.ag-theme-balham .ag-icon-asc:before {
+	content: "⏶" !important;
+}
+.ag-theme-balham .ag-icon-desc:before {
+	content: "⏷" !important;
+}
