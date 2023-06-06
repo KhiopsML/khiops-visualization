@@ -645,10 +645,9 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 		this.updateTable();
 
 		this.saveGridModes(this.gridMode);
-			setTimeout(() => {
-
-				this.agGrid.api.sizeColumnsToFit();
-			}, 0);
+		setTimeout(() => {
+			this.agGrid.api.sizeColumnsToFit();
+		});
 
 		this.restoreState();
 	}
