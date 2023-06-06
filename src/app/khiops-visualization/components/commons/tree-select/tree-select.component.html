@@ -5,7 +5,7 @@
 		</kl-btn-fullscreen>
 	</div>
 	<div *ngIf="dimensionTree" id="tree-select-comp-content" fxFlex>
-		<div #treeView></div>
+		<div id="{{'tree_' + position}}"></div>
 	</div>
 	<kl-no-data fxFlex *ngIf="!dimensionTree"></kl-no-data>
 </div>

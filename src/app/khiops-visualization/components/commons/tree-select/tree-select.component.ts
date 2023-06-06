@@ -1,4 +1,6 @@
-import { ConfigService } from '@khiops-library/providers/config.service';
+import {
+	ConfigService
+} from '@khiops-library/providers/config.service';
 import {
 	Component,
 	HostListener,
@@ -50,7 +52,7 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 
 	@Output() selectTreeItemChanged: EventEmitter < any > = new EventEmitter();
 
-	@ViewChild('treeView') treeView: ElementRef<HTMLElement>;
+	@ViewChild('treeView') treeView: ElementRef < HTMLElement > ;
 
 	treeSelectedNodeChangedSub: any;
 	componentType = 'kvtree'; // needed to copy datas
@@ -100,7 +102,6 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 	}
 
 	initialize() {
-		if (!this.treeView) return;
 		// At launch check if there are saved selected nodes into inpout
 		const savedSelectedNodes = this.appService.getSavedDatas('selectedNodes');
 		if (savedSelectedNodes) {
@@ -111,9 +112,8 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 	}
 
 	initTree(selectedNodes ? ) {
-
 		// @ts-ignore
-		this.tree = new TreeView(this.dimensionTree, this.treeView.nativeElement, {
+		this.tree = new TreeView(this.dimensionTree, this.configService.getRootElementDom(), 'tree_' + this.position, {
 			disableCollapse: true,
 			disableUpdateName: true
 		});
