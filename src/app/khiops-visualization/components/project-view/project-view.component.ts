@@ -84,15 +84,19 @@ export class ProjectViewComponent extends SelectableTabComponent implements OnIn
 
 	public initialize() {
 		this.appDatas = this.appService.getDatas();
-		if (pjson) {
-			this.appName = pjson.name;
-		}
-		this.sizes = this.appService.getViewSplitSizes('projectView');
 
-		this.logsTitle = this.translate.get('GLOBAL.LOGS');
-		this.projectSummaryDatas = this.appService.getProjectSummaryDatas();
-		this.projectLogsDatas = this.appService.getProjectLogsDatas();
-		this.projectInformationsDatas = this.appService.getProjectInformationsDatas();
+		if (this.appDatas.datas) {
+			if (pjson) {
+				this.appName = pjson.name;
+			}
+			this.sizes = this.appService.getViewSplitSizes('projectView');
+
+			this.logsTitle = this.translate.get('GLOBAL.LOGS');
+			this.projectSummaryDatas = this.appService.getProjectSummaryDatas();
+			this.projectLogsDatas = this.appService.getProjectLogsDatas();
+			this.projectInformationsDatas = this.appService.getProjectInformationsDatas();
+		}
+
 	}
 
 	ngOnInit() {
