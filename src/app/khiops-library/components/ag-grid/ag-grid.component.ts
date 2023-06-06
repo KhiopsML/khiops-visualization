@@ -159,7 +159,7 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 		if (this.agGrid && this.agGrid.api && this.gridMode === 'fitToSpace' /*&& width*/ ) {
 			// this.resizeColumnsToFit();
 			setTimeout(() => {
-				// this.agGrid.api.sizeColumnsToFit();
+				this.agGrid.api.sizeColumnsToFit();
 				// this.fitToSpace();
 			});
 		}
@@ -645,8 +645,10 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 		this.updateTable();
 
 		this.saveGridModes(this.gridMode);
+			setTimeout(() => {
 
-		this.agGrid.api.sizeColumnsToFit();
+				this.agGrid.api.sizeColumnsToFit();
+			}, 0);
 
 		this.restoreState();
 	}
