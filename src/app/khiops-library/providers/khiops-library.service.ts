@@ -114,7 +114,7 @@ export class KhiopsLibraryService {
 				(() => {
 					_paq.push(['setTrackerUrl', this.appConfig.common.TRACKER.TRACKER_URL + 'matomo.php']);
 					// To define source component (electron, kaas, ...)
-					_paq.push(['setAppSource', this.configService.getConfig().appSource]);
+					_paq.push(['setDocumentTitle', this.configService.getConfig().appSource]);
 					_paq.push(['setSiteId', this.appConfig.common.TRACKER.SITE_ID]);
 					var d = document,
 						g = d.createElement('script'),
