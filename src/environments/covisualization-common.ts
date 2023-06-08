@@ -16,7 +16,7 @@ export const covisualizationCommonEnvironment = {
     MAX_GRAPH_BAR_THICKNESS: 50,
   },
   HOME: {
-    ACTIVE_TAB_INDEX: 1,
+    ACTIVE_TAB_INDEX: 0,
     TAB_ANIMATION_DURATION: 150, // set > value than .mat-ink-bar transition animation to avoid freeze
   },
   UNFOLD_HIERARCHY: {

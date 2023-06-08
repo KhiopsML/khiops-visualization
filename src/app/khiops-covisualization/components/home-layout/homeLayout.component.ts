@@ -52,6 +52,9 @@ import {
 	KhiopsLibraryService
 } from '@khiops-library/providers/khiops-library.service';
 import pjson from 'package.json';
+import {
+	TreenodesService
+} from '@khiops-covisualization/providers/treenodes.service';
 
 @Component({
 	selector: 'app-home-layout',
@@ -66,17 +69,18 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 	}) appProjectView: ElementRef < HTMLElement > ;
 
 	fontSizeClass: string;
-	private _appDatas;
 	public get appDatas() {
-		return this._appDatas;
+		return this.appService.getDatas();
 	}
 	@Input()
 	public set appDatas(value) {
-		this._appDatas = value;
-		this.onFileLoaderDataChanged(value);
+		this.appService.setFileDatas(value);
+		if (value && value.tool === "Khiops Coclustering") {
+			this.initializeHome();
+			this.onFileLoaderDataChanged(value);
+		}
 	}
 	activeTab = AppConfig.covisualizationCommon.HOME.ACTIVE_TAB_INDEX;
-	translations: any;
 
 	@ViewChild('fileLoader', {
 		static: false
@@ -121,6 +125,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 		public selectableService: SelectableService,
 		private importExtDatasService: ImportExtDatasService,
 		private dimensionsService: DimensionsDatasService,
+		private treenodesService: TreenodesService,
 		private eventsService: EventsService,
 		private dialog: MatDialog
 	) {
@@ -209,7 +214,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 	initializeHome() {
 		this.isCompatibleJson = this.appService.isCompatibleJson();
 		const isCollidingJson = this.appService.isCollidingJson();
-		this.isContextDimensions = this.dimensionsService.isContextDimensions();
 
 		if (!this.isCompatibleJson) {
 			this.snackBar.open(this.translate.get('SNACKS.OPEN_FILE_ERROR'), undefined, {
@@ -226,6 +230,10 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 		// @ts-ignore
 		this.appProjectView && this.appProjectView.initialize()
 
+		this.dimensionsService.initialize();
+		this.treenodesService.initialize();
+		this.importExtDatasService.initExtDatasFiles();
+
 		if (isCollidingJson) {
 			this.snackBar.open(this.translate.get('SNACKS.COLLIDING_FILE'), undefined, {
 				duration: 10000,
@@ -235,6 +243,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 
 		this.importExtDatasService.initExtDatasFiles();
 		this.openLoadExternalDataDialog();
+		this.isContextDimensions = this.dimensionsService.isContextDimensions();
 	}
 
 	openLoadExternalDataDialog() {

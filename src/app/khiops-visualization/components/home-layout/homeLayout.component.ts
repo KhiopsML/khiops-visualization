@@ -83,7 +83,6 @@ export class HomeLayoutComponent implements OnInit {
 	}) appProjectView: ElementRef < HTMLElement > ;
 
 	activeTab = AppConfig.visualizationCommon.HOME.ACTIVE_TAB_INDEX;
-	translations: any;
 	@ViewChild('fileLoader', {
 		static: false
 	}) fileLoader: FileLoaderComponent;

@@ -88,7 +88,6 @@ export class ProjectViewComponent extends SelectableTabComponent implements OnIn
 			this.importExtDatasService.initExtDatasFiles();
 		}
 		this.initialize();
-		datas && this.onProjectFileChanged.emit(datas);
 
 	}
 }
