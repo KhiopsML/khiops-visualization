@@ -15,13 +15,6 @@ import {
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { AppService } from '@khiops-covisualization/providers/app.service';
 
-// TODO remove electron
-// let storage;
-// try {
-// 	storage = require('electron-json-storage');
-// } catch (e) {
-// 	console.warn('Can not access storage', e);
-// }
 @Component({
 	selector: 'app-user-settings',
 	templateUrl: './user-settings.component.html',
@@ -106,8 +99,7 @@ export class UserSettingsComponent implements OnChanges {
 
 		localStorage.setItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR', this.allowDarkTheme ? 'dark' : 'light');
 
-		// Close the nav drawer
-		this.toggleNavDrawerChanged.emit(true);
+		location.reload()
 
 		// this.khiopsLibraryService.trackEvent('click', 'settings', 'significant_number', this.numberPrecision);
 		// this.khiopsLibraryService.trackEvent('click', 'settings', 'matrix_contrast', this.contrastValue);

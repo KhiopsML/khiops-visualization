@@ -84,7 +84,7 @@ export class AppComponent implements AfterViewInit {
 	setTheme() {
 		setTimeout(() => {
 			let themeColor =
-				localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + "THEME_COLOR") ||
+				localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + "THEME_COLOR") ||
 				"light";
 			document.documentElement.setAttribute(
 				"data-color-scheme",
