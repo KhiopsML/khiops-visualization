@@ -40,9 +40,6 @@ import {
 	MatDialogConfig
 } from '@angular/material/dialog';
 import {
-	ReleaseNotesComponent
-} from '@khiops-library/components/release-notes/release-notes.component';
-import {
 	ImportExtDatasService
 } from '@khiops-covisualization/providers/import-ext-datas.service';
 import {
@@ -124,7 +121,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 		public selectableService: SelectableService,
 		private importExtDatasService: ImportExtDatasService,
 		private dimensionsService: DimensionsDatasService,
-		private ngzone: NgZone,
 		private eventsService: EventsService,
 		private dialog: MatDialog
 	) {
@@ -191,12 +187,9 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 
 	onFileLoaderDataChanged(datas) {
 		this.openContextView = false;
-
 		this.selectedTab = undefined;
 		this.activeTab = 0;
-
 		this.currentDatas = datas;
-
 		this.appService.setFileDatas(datas);
 		if (datas) {
 			this.initializeHome();
@@ -237,8 +230,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 			});
 		}
 
-		this.dimensionsService.initialize();
-
 		this.importExtDatasService.initExtDatasFiles();
 		this.openLoadExternalDataDialog();
 	}
@@ -275,7 +266,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 
 	openFile(filename) {
 		this.dialogRef.closeAll();
-
 		this.fileLoader.openFile(filename);
 	}
 

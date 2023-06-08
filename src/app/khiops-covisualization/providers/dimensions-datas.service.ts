@@ -169,7 +169,6 @@ export class DimensionsDatasService {
 	}
 
 	updateDimensions(): any {
-
 		this.getDimensions();
 
 		// keep initial dim in memory

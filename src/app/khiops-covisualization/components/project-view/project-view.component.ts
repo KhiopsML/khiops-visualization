@@ -1,6 +1,8 @@
 import {
 	Component,
-	OnInit
+	EventEmitter,
+	OnInit,
+	Output
 } from '@angular/core';
 import {
 	AppConfig
@@ -54,29 +56,39 @@ export class ProjectViewComponent extends SelectableTabComponent implements OnIn
 	) {
 
 		super();
+		this.initialize()
+
+	}
+	public initialize() {
 
 		this.appDatas = this.appService.getDatas();
-		if (pjson) {
-			this.appName = pjson.name;
+		if (this.appDatas.datas) {
+			if (pjson) {
+				this.appName = pjson.name;
+			}
+			this.projectSummaryDatas = this.appService.getProjectSummaryDatas();
 		}
 
-		this.projectSummaryDatas = this.appService.getProjectSummaryDatas();
 	}
 
 	ngOnInit() {
 		this.onFileLoaderDataChangedCb = obj => this.onFileLoaderDataChanged(obj);
-		this.dimensionsDatasService.initialize();
-		this.clustersService.initialize();
-		this.annotationService.initialize();
-		this.treenodesService.initialize();
 	}
+	@Output() emitOnFileLoaderDataChanged: EventEmitter < any > = new EventEmitter();
 
 	onFileLoaderDataChanged(datas) {
+
 		this.appService.setFileDatas(datas);
 
 		if (datas) {
 			this.dimensionsDatasService.initialize();
+			this.clustersService.initialize();
+			this.annotationService.initialize();
+			this.treenodesService.initialize();
 			this.importExtDatasService.initExtDatasFiles();
 		}
+		this.initialize();
+		this.emitOnFileLoaderDataChanged.emit();
+
 	}
 }
