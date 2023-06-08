@@ -184,6 +184,9 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 			this.reloadView();
 		}
 	}
+	onProjectFileChanged(datas) {
+		this.onFileLoaderDataChanged(datas);
+	}
 
 	onFileLoaderDataChanged(datas) {
 		this.openContextView = false;

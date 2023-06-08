@@ -219,8 +219,8 @@ export class FileLoaderService {
 			let reader = new FileReader()
 
 			reader.addEventListener('loadend', async (e) => {
-				console.log(e.target.result.toString().length);
 				this.fileLoaderDatas.isLoadingDatas = false;
+				// @ts-ignore
 				this.fileLoaderDatas.datas = await JSON.parse(e.target.result.toString());
 				this.fileLoaderDatas.datas.filename = filename;
 				resolve(this.fileLoaderDatas.datas);

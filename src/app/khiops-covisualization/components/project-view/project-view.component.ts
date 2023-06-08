@@ -36,6 +36,7 @@ import {
 	styleUrls: ['./project-view.component.scss']
 })
 export class ProjectViewComponent extends SelectableTabComponent implements OnInit {
+	@Output() onProjectFileChanged: EventEmitter < any > = new EventEmitter();
 
 	appDatas: any;
 	projectSummaryDatas: any[any];
@@ -74,7 +75,6 @@ export class ProjectViewComponent extends SelectableTabComponent implements OnIn
 	ngOnInit() {
 		this.onFileLoaderDataChangedCb = obj => this.onFileLoaderDataChanged(obj);
 	}
-	@Output() emitOnFileLoaderDataChanged: EventEmitter < any > = new EventEmitter();
 
 	onFileLoaderDataChanged(datas) {
 
@@ -88,7 +88,7 @@ export class ProjectViewComponent extends SelectableTabComponent implements OnIn
 			this.importExtDatasService.initExtDatasFiles();
 		}
 		this.initialize();
-		this.emitOnFileLoaderDataChanged.emit();
+		datas && this.onProjectFileChanged.emit(datas);
 
 	}
 }
