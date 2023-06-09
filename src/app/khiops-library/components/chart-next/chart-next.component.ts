@@ -55,8 +55,8 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 
 	ctx: any;
 	chart: any;
-	color: string = localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + + 'THEME_COLOR') === 'dark' ? '#555' : '#e5e5e5';
-	barColor: string = localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + + 'THEME_COLOR') === 'dark' ? 'rgba(255, 255, 255, 1)' : 'rgba(0, 0, 0, 1)';
+	color: string = localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + 'THEME_COLOR') === 'dark' ? '#555' : '#e5e5e5';
+	barColor: string = localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + 'THEME_COLOR') === 'dark' ? 'rgba(255, 255, 255, 1)' : 'rgba(0, 0, 0, 1)';
 	fontColor: string = '#999';
 
 	constructor(private khiopsLibraryService: KhiopsLibraryService, private toPrecision: ToPrecisionPipe, ) {
