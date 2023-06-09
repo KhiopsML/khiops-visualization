@@ -1,7 +1,6 @@
 import {
 	Component,
 	OnInit,
-	NgZone,
 	ViewChild,
 	OnDestroy,
 	ViewEncapsulation,
@@ -75,7 +74,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 	@Input()
 	public set appDatas(value) {
 		this.appService.setFileDatas(value);
-		if (value && value.tool === "Khiops Coclustering") {
+		if (value) {
 			this.initializeHome();
 			this.onFileLoaderDataChanged(value);
 		}
@@ -197,9 +196,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 			this.reloadView();
 		}
 	}
-	onProjectFileChanged(datas) {
-		this.onFileLoaderDataChanged(datas);
-	}
 
 	onFileLoaderDataChanged(datas) {
 		this.openContextView = false;
@@ -234,14 +230,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 				panelClass: 'success'
 			});
 		}
-
-		// @ts-ignore
-		this.appProjectView && this.appProjectView.initialize()
-
-		this.dimensionsService.initialize();
-		this.treenodesService.initialize();
-		this.importExtDatasService.initExtDatasFiles();
-
 		if (isCollidingJson) {
 			this.snackBar.open(this.translate.get('SNACKS.COLLIDING_FILE'), undefined, {
 				duration: 10000,
@@ -249,6 +237,11 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 			});
 		}
 
+		// @ts-ignore
+		this.appProjectView && this.appProjectView.initialize()
+
+		this.dimensionsService.initialize();
+		this.treenodesService.initialize();
 		this.importExtDatasService.initExtDatasFiles();
 		this.openLoadExternalDataDialog();
 		this.isContextDimensions = this.dimensionsService.isContextDimensions();

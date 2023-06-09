@@ -68,7 +68,7 @@
 						</ng-template>
 					</mat-tab>
 				</mat-tab-group>
-				<app-project-view #appProjectView *ngIf="activeTab === 0" [selectedTab]="selectedTab" (onProjectFileChanged)="onProjectFileChanged($event)" ></app-project-view>
+				<app-project-view #appProjectView *ngIf="activeTab === 0" [selectedTab]="selectedTab" (projectFileChanged)="onFileLoaderDataChanged($event)" ></app-project-view>
 				<app-axis-view *ngIf="activeTab !== 0" [selectedTab]="selectedTab" [openContextView]="openContextView">
 				</app-axis-view>
 			</div>

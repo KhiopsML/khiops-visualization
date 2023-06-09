@@ -29,7 +29,7 @@
 				</kl-header-title>
 				<kl-file-loader #fileLoader [hidden]="appDatas && appDatas.datas && isCompatibleJson"
 					[onFileLoaderDataChanged]="onFileLoaderDataChangedCb" [applicationName]="appName"></kl-file-loader>
-				<div fxFlexFill *ngIf="appDatas && appDatas.datas && isCompatibleJson">
+				<div fxFlexFill *ngIf="isCompatibleJson">
 					<mat-tab-group id="main-tab-group" color="primary" fxFlexFill [@.disabled]="true"
 						[ngClass]="{'mat-tab-group-center': isElectron}" [selectedIndex]="activeTab"
 						(selectedTabChange)="onSelectedTabChanged($event)">
@@ -38,11 +38,12 @@
 								<label title="{{ 'TOOLTIPS.TABS.PROJECT' | translate }}">{{ 'TITLE.PROJECT' | translate }}</label>
 							</ng-template>
 							<ng-template matTabContent>
-								<app-project-view #appProjectView [selectedTab]="selectedTab"></app-project-view>
+								<app-project-view #appProjectView [selectedTab]="selectedTab"
+									(projectFileChanged)="onFileLoaderDataChanged($event)"></app-project-view>
 							</ng-template>
 						</mat-tab>
 						<mat-tab label="{{ 'TITLE.PREPARATION' | translate }}"
-							*ngIf="appDatas.datas.preparationReport && appDatas.datas.preparationReport.variablesStatistics">
+							*ngIf="appDatas?.datas?.preparationReport?.variablesStatistics">
 							<ng-template matTabLabel>
 								<label title="{{ 'TOOLTIPS.TABS.PREPARATION' | translate }}" >{{ 'TITLE.PREPARATION' | translate }}</label>
 							</ng-template>
@@ -51,7 +52,7 @@
 							</ng-template>
 						</mat-tab>
 						<mat-tab label="{{ 'TITLE.TEXT_PREPARATION' | translate }}"
-							*ngIf="appDatas.datas.textPreparationReport && appDatas.datas.textPreparationReport.variablesStatistics">
+							*ngIf="appDatas?.datas?.textPreparationReport?.variablesStatistics">
 							<ng-template matTabLabel>
 								<label title="{{ 'TOOLTIPS.TABS.TEXT_PREPARATION' | translate }}" >{{ 'TITLE.TEXT_PREPARATION' | translate }}</label>
 							</ng-template>
@@ -61,7 +62,7 @@
 							</ng-template>
 						</mat-tab>
 						<mat-tab label="{{ 'TITLE.TREE_PREPARATION' | translate }}"
-							*ngIf="appDatas.datas.treePreparationReport && appDatas.datas.treePreparationReport.variablesStatistics">
+							*ngIf="appDatas?.datas?.treePreparationReport?.variablesStatistics">
 							<ng-template matTabLabel>
 								<label title="{{ 'TOOLTIPS.TABS.TREE_PREPARATION' | translate }}" >{{ 'TITLE.TREE_PREPARATION' | translate }}</label>
 							</ng-template>
@@ -70,7 +71,7 @@
 							</ng-template>
 						</mat-tab>
 						<mat-tab label="{{ 'TITLE.PREPARATION_2D' | translate }}"
-							*ngIf="appDatas.datas.bivariatePreparationReport">
+							*ngIf="appDatas?.datas?.bivariatePreparationReport">
 							<ng-template matTabLabel>
 								<label title="{{ 'TOOLTIPS.TABS.PREPARATION_2D' | translate }}" >{{ 'TITLE.PREPARATION_2D' | translate }}</label>
 							</ng-template>
@@ -78,7 +79,7 @@
 								<app-preparation-2d-view [selectedTab]="selectedTab"></app-preparation-2d-view>
 							</ng-template>
 						</mat-tab>
-						<mat-tab label="{{ 'TITLE.MODELING' | translate }}" *ngIf="appDatas.datas.modelingReport">
+						<mat-tab label="{{ 'TITLE.MODELING' | translate }}" *ngIf="appDatas?.datas?.modelingReport">
 							<ng-template matTabLabel>
 								<label title="{{ 'TOOLTIPS.TABS.MODELING' | translate }}" >{{ 'TITLE.MODELING' | translate }}</label>
 							</ng-template>
@@ -87,7 +88,7 @@
 							</ng-template>
 						</mat-tab>
 						<mat-tab label="{{ 'TITLE.EVALUATION' | translate }}"
-							*ngIf="appDatas.datas.trainEvaluationReport || appDatas.datas.evaluationReport || appDatas.datas.testEvaluationReport">
+							*ngIf="appDatas?.datas?.trainEvaluationReport || appDatas?.datas?.evaluationReport || appDatas?.datas?.testEvaluationReport">
 							<ng-template matTabLabel>
 								<label title="{{ 'TOOLTIPS.TABS.EVALUATION' | translate }}" >{{ 'TITLE.EVALUATION' | translate }}</label>
 							</ng-template>

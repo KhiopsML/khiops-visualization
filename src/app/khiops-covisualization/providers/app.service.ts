@@ -127,7 +127,7 @@ export class AppService {
 	}
 
 	isCompatibleJson(): boolean {
-		return this.appDatas && this.appDatas.datas && this.appDatas.datas.coclusteringReport;
+		return this.appDatas && this.appDatas.datas && this.appDatas.datas.tool === "Khiops Coclustering" && this.appDatas.datas.coclusteringReport;
 	}
 
 	isCollidingJson(): boolean {
