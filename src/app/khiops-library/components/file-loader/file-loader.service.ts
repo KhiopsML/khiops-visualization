@@ -115,7 +115,7 @@ export class FileLoaderService {
 		// Co visualization files
 		// ======================
 		//
-		const urlKC = './assets/mocks/kc/cc.json';
+		// const urlKC = './assets/mocks/kc/cc.json';
 		// const urlKC = './assets/mocks/kc/Coclustering.json';
 		// const urlKC = './assets/mocks/kc/Co-simple-2vars.json';
 		// const urlKC = './assets/mocks/kc/Coclustering-5.json';
@@ -126,7 +126,7 @@ export class FileLoaderService {
 		// const urlKC = './assets/mocks/kc/sample0.json';
 		// const urlKC = './assets/mocks/kc/WebSpamCoclustering18mb.json';
 		// const urlKC = './assets/mocks/kc/adultmissing.json';
-		// const urlKC = './assets/mocks/kc/mushroom.json';
+		const urlKC = './assets/mocks/kc/mushroom.json';
 		// const urlKC = './assets/mocks/kc/h-Coclustering.json';
 		// const urlKC = './assets/mocks/kc/irismissing.json';
 		// const urlKC = './assets/mocks/kc/zero-except.json';

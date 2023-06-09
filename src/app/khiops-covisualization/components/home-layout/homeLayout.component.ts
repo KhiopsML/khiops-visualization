@@ -182,6 +182,14 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 		this.khiopsLibraryService.trackEvent('page_view', 'visit', this.appVersion);
 	}
 
+	ngAfterViewInit() {
+		if (AppConfig.debugFile) {
+			setTimeout(() => {
+				this.fileLoader.loadDebugFile();
+			}, 100);
+		}
+	}
+
 	onToggleNavDrawerChanged(mustReload: boolean) {
 		this.opened = !this.opened;
 
