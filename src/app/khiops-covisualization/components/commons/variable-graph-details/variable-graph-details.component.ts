@@ -115,7 +115,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges, OnDestr
 	}
 
 	ngAfterViewInit() {
-
+		this.getFilteredDistribution(this.dimensionsTree);
 	}
 
 	updateGraphTitle() {
