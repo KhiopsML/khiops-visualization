@@ -242,8 +242,10 @@ export class AppService {
 
 	enableExtDatasView(dimension: string) {
 		const currentDim = this.viewsLayout.dimensionsViewsLayoutsVO.find(e => e.name === dimension)
-		currentDim.isExternalDataChecked = true;
-		this.saveViewsLayout(this.viewsLayout);
+		if (currentDim) {
+			currentDim.isExternalDataChecked = true;
+			this.saveViewsLayout(this.viewsLayout);
+		}
 	}
 
 	saveViewsLayout(viewsLayout: ViewLayoutVO) {

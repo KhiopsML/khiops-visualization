@@ -113,7 +113,7 @@ export class ImportExtDatasService {
 		return this.importExtDatas;
 	}
 
-	loadSavedExternalDatas(progressCallback?) {
+	loadSavedExternalDatas(progressCallback? ) {
 
 		const promises = [];
 		this.savedExternalDatas = {};
@@ -128,7 +128,6 @@ export class ImportExtDatasService {
 					const externalDatas: ExtDatasVO = this.importExtDatas[i];
 					const joinKey = externalDatas.joinKey;
 					const fieldName = externalDatas.field.name;
-					console.log(externalDatas);
 
 					this.importFileLoaderService.readFile(externalDatas.file).then((fileDatas: FileVO) => {
 
@@ -152,16 +151,17 @@ export class ImportExtDatasService {
 							}
 							const formatedDatasValuesLength = formatedDatas.values.length;
 							for (let j = 0; j < formatedDatasValuesLength; j++) {
+								const extKey = formatedDatas.values[j][keyIndex].replace(/[\n\r]+/g, '') // remove carriage return #53
 
-								if (!this.savedExternalDatas[externalDatas.dimension.toLowerCase()][formatedDatas.values[j][keyIndex]]) {
-									this.savedExternalDatas[externalDatas.dimension.toLowerCase()][formatedDatas.values[j][keyIndex]] = [];
+								if (!this.savedExternalDatas[externalDatas.dimension.toLowerCase()][extKey]) {
+									this.savedExternalDatas[externalDatas.dimension.toLowerCase()][extKey] = [];
 								}
-								if (!this.savedExternalDatas[externalDatas.dimension.toLowerCase()][formatedDatas.values[j][keyIndex]].find(e => e.key === formatedDatas.keys[fieldIndex])) {
+								if (!this.savedExternalDatas[externalDatas.dimension.toLowerCase()][extKey].find(e => e.key === formatedDatas.keys[fieldIndex])) {
 									const currentExtData = {
 										key: formatedDatas.keys[fieldIndex],
-										value: formatedDatas.values[j][fieldIndex]
+										value: extKey
 									};
-									this.savedExternalDatas[externalDatas.dimension.toLowerCase()][formatedDatas.values[j][keyIndex]].push(currentExtData);
+									this.savedExternalDatas[externalDatas.dimension.toLowerCase()][extKey].push(currentExtData);
 								}
 							}
 							resolve(formatedDatas.keys[0]);
