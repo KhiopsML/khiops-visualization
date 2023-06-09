@@ -64,7 +64,7 @@ export class ImportExtDatasService {
 			// Remove first and last dble quotes
 			if (lines[i][1].charAt(0) === '"' && lines[i][1].charAt(lines[i][1].length - 2) === '"') {
 				lines[i][1] = lines[i][1].slice(1, lines[i][1].length);
-				lines[i][1] = lines[i][1].slice(0, lines[i][1].length - 2);
+				lines[i][1] = lines[i][1].slice(0, lines[i][1].length - 1);
 			}
 			// Remove eol
 			lines[i][1] = lines[i][1].slice(0, -1);
@@ -161,9 +161,11 @@ export class ImportExtDatasService {
 										key: formatedDatas.keys[fieldIndex],
 										value: formatedDatas.values[j][fieldIndex]
 									};
+									console.log('file: import-ext-datas.service.ts:164 ~ ImportExtDatasService ~ setTimeout ~ currentExtData.formatedDatas.values[j][fieldIndex]:', formatedDatas.values[j][fieldIndex]);
 									this.savedExternalDatas[externalDatas.dimension.toLowerCase()][extKey].push(currentExtData);
 								}
 							}
+							console.log('file: import-ext-datas.service.ts:165 ~ ImportExtDatasService ~ setTimeout ~ this.savedExternalDatas:', this.savedExternalDatas);
 							resolve(formatedDatas.keys[0]);
 						});
 
