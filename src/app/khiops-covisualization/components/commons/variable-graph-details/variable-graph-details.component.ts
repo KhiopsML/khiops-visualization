@@ -72,6 +72,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges, OnDestr
 	title: string;
 	legend: any;
 	colorSet: ChartColorsSetI;
+	isFullscreen: boolean = false;
 
 	constructor(
 		private translate: TranslateService,
@@ -135,6 +136,14 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges, OnDestr
 			this.distributionGraph.resizeGraph();
 		}
 	}
+
+	onToggleFullscreen(isFullscreen: any) {
+		this.isFullscreen = isFullscreen;
+		setTimeout(() => {
+			this.resize();
+		});
+	}
+
 
 	ngOnDestroy() {
 		this.treeCollapseChangedSub.unsubscribe();
