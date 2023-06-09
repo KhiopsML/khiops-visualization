@@ -161,11 +161,9 @@ export class ImportExtDatasService {
 										key: formatedDatas.keys[fieldIndex],
 										value: formatedDatas.values[j][fieldIndex]
 									};
-									console.log('file: import-ext-datas.service.ts:164 ~ ImportExtDatasService ~ setTimeout ~ currentExtData.formatedDatas.values[j][fieldIndex]:', formatedDatas.values[j][fieldIndex]);
 									this.savedExternalDatas[externalDatas.dimension.toLowerCase()][extKey].push(currentExtData);
 								}
 							}
-							console.log('file: import-ext-datas.service.ts:165 ~ ImportExtDatasService ~ setTimeout ~ this.savedExternalDatas:', this.savedExternalDatas);
 							resolve(formatedDatas.keys[0]);
 						});
 
