@@ -52,9 +52,9 @@ export class TreeNodeVO {
 
 		this.cluster = object && object.cluster || '';
 		this.bounds = this.cluster;
-		this.bounds = this.bounds.replace(']-inf', '[' + dimension.min);
-		this.bounds = this.bounds.replace('+inf[', dimension.max + ']');
-		this.bounds = this.bounds.replace('*', 'Missing U ');
+		this.bounds = this.bounds.replace('/]-inf/g', '[' + dimension.min);
+		this.bounds = this.bounds.replace('/+inf[/g', dimension.max + ']');
+		this.bounds = this.bounds.replace('/*/g', 'Missing U ');
 
 		this.name = object && object.name || this.cluster;
 		this.shortDescription = object && object.shortDescription || this.bounds;
