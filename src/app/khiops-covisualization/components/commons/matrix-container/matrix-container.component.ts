@@ -62,7 +62,7 @@ export class MatrixContainerComponent implements OnInit, OnChanges, OnDestroy {
 	};
 
 	conditionalOnContext = true;
-
+	isFullscreen = false;
 	treeSelectedNodeChangedSub: any;
 	viewsLayoutChangedSub: any;
 	treeCollapseChangedSub: any;
@@ -128,6 +128,13 @@ export class MatrixContainerComponent implements OnInit, OnChanges, OnDestroy {
 
 	ngOnChanges(changes: SimpleChanges) {
 
+	}
+
+	onToggleFullscreen(isFullscreen: any) {
+		this.isFullscreen = isFullscreen;
+		setTimeout(() => {
+			this.matrixCanvas.drawMatrix();
+		});
 	}
 
 	constructModeSelectBox() {
