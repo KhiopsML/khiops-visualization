@@ -159,7 +159,7 @@ export class ImportExtDatasService {
 								if (!this.savedExternalDatas[externalDatas.dimension.toLowerCase()][extKey].find(e => e.key === formatedDatas.keys[fieldIndex])) {
 									const currentExtData = {
 										key: formatedDatas.keys[fieldIndex],
-										value: extKey
+										value: formatedDatas.values[j][fieldIndex]
 									};
 									this.savedExternalDatas[externalDatas.dimension.toLowerCase()][extKey].push(currentExtData);
 								}

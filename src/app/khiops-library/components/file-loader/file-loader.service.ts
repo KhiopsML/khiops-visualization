@@ -121,13 +121,13 @@ export class FileLoaderService {
 		// const urlKC = './assets/mocks/kc/Coclustering-5.json';
 		// const urlKC = './assets/mocks/kc/Coclustering-4.json';
 		// const urlKC = './assets/mocks/kc/co-IrisMissing.json';
-		// const urlKC = './assets/mocks/kc/adult2var.json';
+		const urlKC = './assets/mocks/kc/adult2var.json';
 		// const urlKC = './assets/mocks/kc/sample3.json';
 		// const urlKC = './assets/mocks/kc/sample0.json';
 		// const urlKC = './assets/mocks/kc/WebSpamCoclustering18mb.json';
 		// const urlKC = './assets/mocks/kc/adultmissing.json';
 		// const urlKC = './assets/mocks/kc/mushroom.json';
-		const urlKC = './assets/mocks/kc/SimplifiedCoclusteringIrisOldFormat_BugUndefined.json';
+		// const urlKC = './assets/mocks/kc/SimplifiedCoclusteringIrisOldFormat_BugUndefined.json';
 		// const urlKC = './assets/mocks/kc/h-Coclustering.json';
 		// const urlKC = './assets/mocks/kc/irismissing.json';
 		// const urlKC = './assets/mocks/kc/zero-except.json';
