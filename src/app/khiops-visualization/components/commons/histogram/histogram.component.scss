@@ -11,13 +11,11 @@
 
 		::ng-deep .axis-grid {
 			.domain {
-				stroke: #999;
-				opacity: 0.4;
+				stroke: var(--chart-border);
 			}
 			.tick {
 				line {
-					stroke: #999;
-					opacity: 0.4;
+					stroke: var(--chart-border);
 				}
 				text {
 					fill: #999;
