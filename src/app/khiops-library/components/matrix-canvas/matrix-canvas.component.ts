@@ -292,6 +292,9 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 							const totalMutInfo = this.graphMode.mode === 'MUTUAL_INFO' ? UtilsService.arraySum(this.matrixValues) : 0;
 
 							const cellsLength = this.inputDatas.matrixCellDatas.length;
+							this.matrixCtx.beginPath();
+							this.matrixCtx.strokeStyle = 'rgba(255,255,255,0.3)';
+							this.matrixCtx.lineWidth = 1;
 							for (let index = 0; index < cellsLength; index++) {
 
 								if (this.graphMode.mode === 'MUTUAL_INFO' && this.isKhiopsCovisu) { // hide zero exeptions do not work anymore #110
@@ -309,17 +312,12 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 									ef: this.matrixExpectedFreqsValues[index],
 									extra: this.matrixExtras && this.matrixExtras[index] || 0
 								};
-
 								cellDatas.displayedFreqValue = this.matrixFreqsValues[index];
-
 								const color = this.getColorForPercentage(currentVal, maxVal);
 
 								this.matrixCtx.fillStyle = color;
 								this.matrixCtx.fillRect(cellDatas.xCanvas, cellDatas.yCanvas, cellDatas.wCanvas, cellDatas.hCanvas);
-
-								this.matrixCtx.strokeStyle = 'rgba(255,255,255,0.3)';
-								this.matrixCtx.lineWidth = 1;
-								this.matrixCtx.strokeRect(cellDatas.xCanvas, cellDatas.yCanvas, cellDatas.wCanvas, cellDatas.hCanvas);
+								this.matrixCtx.rect(cellDatas.xCanvas, cellDatas.yCanvas, cellDatas.wCanvas, cellDatas.hCanvas);
 
 								// Manage selected cell (different for KV and KC)
 								if (this.selectedNodes && this.selectedNodes[0] && this.selectedNodes[1] &&
@@ -334,6 +332,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 								}
 
 							}
+							this.matrixCtx.stroke();
 							for (let i = 0; i < this.selectedCells.length; i++) {
 								// Draw selected cells after other to be above
 								this.drawSelectedCell(this.selectedCells[i]);
