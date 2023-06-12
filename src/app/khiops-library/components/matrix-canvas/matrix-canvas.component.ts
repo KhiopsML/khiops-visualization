@@ -317,7 +317,6 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 
 								this.matrixCtx.fillStyle = color;
 								this.matrixCtx.fillRect(cellDatas.xCanvas, cellDatas.yCanvas, cellDatas.wCanvas, cellDatas.hCanvas);
-								this.matrixCtx.rect(cellDatas.xCanvas, cellDatas.yCanvas, cellDatas.wCanvas, cellDatas.hCanvas);
 
 								// Manage selected cell (different for KV and KC)
 								if (this.selectedNodes && this.selectedNodes[0] && this.selectedNodes[1] &&
