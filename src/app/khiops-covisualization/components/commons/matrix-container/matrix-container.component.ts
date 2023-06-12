@@ -79,7 +79,7 @@ export class MatrixContainerComponent implements OnInit, OnChanges, OnDestroy {
 					this.treenodesService.collapseNodesSaved();
 					this.isFirstLoad = false;
 				} else {
-					if (!e.stopPropagation && this.initNodesEvents === this.dimensionsDatas.dimensions.length) {
+					if (!e.stopPropagation && this.initNodesEvents >= this.dimensionsDatas.dimensions.length) {
 						this.matrixCanvas.drawMatrix();
 					}
 				}
@@ -102,7 +102,7 @@ export class MatrixContainerComponent implements OnInit, OnChanges, OnDestroy {
 		this.dimensionsSelectionChangedSub =
 			this.eventsService.dimensionsSelectionChanged.subscribe(
 				(selectedDimensions) => {
-					if (this.initNodesEvents === this.dimensionsDatas.dimensions.length) {
+					if (this.initNodesEvents >= this.dimensionsDatas.dimensions.length) {
 						this.constructModeSelectBox();
 					}
 				}
