@@ -54,6 +54,12 @@ import pjson from 'package.json';
 import {
 	TreenodesService
 } from '@khiops-covisualization/providers/treenodes.service';
+import {
+	ClustersService
+} from '@khiops-covisualization/providers/clusters.service';
+import {
+	AnnotationService
+} from '@khiops-covisualization/providers/annotation.service';
 
 @Component({
 	selector: 'app-home-layout',
@@ -120,6 +126,8 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 		private dialogRef: MatDialog,
 		private translate: TranslateService,
 		private snackBar: MatSnackBar,
+		private clustersService: ClustersService,
+		private annotationService: AnnotationService,
 		private khiopsLibraryService: KhiopsLibraryService,
 		public selectableService: SelectableService,
 		private importExtDatasService: ImportExtDatasService,
@@ -241,6 +249,8 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 		this.appProjectView && this.appProjectView.initialize()
 
 		this.dimensionsService.initialize();
+		this.annotationService.initialize()
+		this.clustersService.initialize()
 		this.treenodesService.initialize();
 		this.importExtDatasService.initExtDatasFiles();
 		this.openLoadExternalDataDialog();
