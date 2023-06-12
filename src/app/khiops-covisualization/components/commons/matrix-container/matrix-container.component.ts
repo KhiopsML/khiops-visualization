@@ -51,7 +51,7 @@ export class MatrixContainerComponent implements OnInit, OnChanges, OnDestroy {
 	viewsLayoutChangedSub: any;
 	treeCollapseChangedSub: any;
 	dimensionsSelectionChangedSub: any;
-
+	initNodesEvents = 0; // improve draw matrix perf
 	isFirstLoad = true;
 
 	constructor(
@@ -73,12 +73,13 @@ export class MatrixContainerComponent implements OnInit, OnChanges, OnDestroy {
 
 		this.treeSelectedNodeChangedSub =
 			this.eventsService.treeSelectedNodeChanged.subscribe((e) => {
+				this.initNodesEvents++;
 				if (this.isFirstLoad) {
 					// At first launch collapse saved collapsed nodes
 					this.treenodesService.collapseNodesSaved();
 					this.isFirstLoad = false;
 				} else {
-					if (!e.stopPropagation) {
+					if (!e.stopPropagation && this.initNodesEvents === this.dimensionsDatas.dimensions.length) {
 						this.matrixCanvas.drawMatrix();
 					}
 				}
@@ -101,7 +102,9 @@ export class MatrixContainerComponent implements OnInit, OnChanges, OnDestroy {
 		this.dimensionsSelectionChangedSub =
 			this.eventsService.dimensionsSelectionChanged.subscribe(
 				(selectedDimensions) => {
-					this.constructModeSelectBox();
+					if (this.initNodesEvents === this.dimensionsDatas.dimensions.length) {
+						this.constructModeSelectBox();
+					}
 				}
 			);
 	}
@@ -113,7 +116,6 @@ export class MatrixContainerComponent implements OnInit, OnChanges, OnDestroy {
 	}
 
 	ngAfterViewInit() {
-		this.matrixCanvas?.drawMatrix();
 	}
 
 	ngOnDestroy() {
