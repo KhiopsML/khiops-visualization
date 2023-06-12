@@ -175,6 +175,9 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 		if (e.index !== 2) {
 			this.openContextView = false;
 		}
+		if (e.index === 0) {
+			this.initializeServices();
+		}
 
 		// init selected area to undefined
 		this.selectableService.initialize();
@@ -246,8 +249,13 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 		}
 
 		// @ts-ignore
-		this.appProjectView && this.appProjectView.initialize()
+		this.appProjectView && this.appProjectView.initialize();
 
+		this.initializeServices();
+
+	}
+
+	initializeServices() {
 		this.dimensionsService.initialize();
 		this.annotationService.initialize()
 		this.clustersService.initialize()
