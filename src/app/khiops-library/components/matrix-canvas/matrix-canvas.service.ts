@@ -235,7 +235,7 @@ export class MatrixCanvasService {
 			// Compute expected cell frequencies
 			matrixExpectedFreqsValues = inputDatas.matrixCellDatas.map(e => {
 				let ef =
-					UtilsService.computeExpectedFrequency(e.matrixTotal, e.freqColVals, e.freqLineVals);
+					UtilsService.computeExpectedFrequency(e.matrixTotal[0], e.freqColVals[0], e.freqLineVals[0]);
 				return ef;
 			});
 
