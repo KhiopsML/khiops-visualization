@@ -32,6 +32,9 @@ import {
 import {
 	AppConfig
 } from 'src/environments/environment';
+import {
+	MatSnackBar
+} from '@angular/material/snack-bar';
 
 @Component({
 	selector: 'app-root-covisualization',
@@ -53,6 +56,7 @@ export class AppComponent implements AfterViewInit {
 		private dialogRef: MatDialog,
 		private appService: AppService,
 		private dialog: MatDialog,
+		private snackBar: MatSnackBar,
 		private khiopsLibraryService: KhiopsLibraryService,
 		private configService: ConfigService,
 		private translate: TranslateService,
@@ -73,8 +77,22 @@ export class AppComponent implements AfterViewInit {
 				}
 			});
 		};
+		this.element.nativeElement.constructDatasToSave = () => {
+			return this.saveService.constructDatasToSave();
+		};
+		this.element.nativeElement.constructSavedHierarchyToSave = () => {
+			return this.saveService.constructSavedHierarchyToSave();
+		};
 		this.element.nativeElement.setConfig = (config) => {
 			this.configService.setConfig(config);
+		};
+		this.element.nativeElement.snack = (title, duration, panelClass) => {
+			this.ngzone.run(() => {
+				this.snackBar.open(title, null, {
+					duration: duration,
+					panelClass: panelClass
+				});
+			});
 		};
 		this.element.nativeElement.clean = () => this.appdatas = null;
 		this.setTheme();

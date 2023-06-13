@@ -69,6 +69,20 @@ export class SaveService {
 		return initialDatas;
 	}
 
+	constructSavedHierarchyToSave() {
+		let datasToSave = this.constructDatasToSave();
+
+		datasToSave = this.truncateJsonHierarchy(datasToSave);
+		datasToSave = this.updateSummariesParts(datasToSave);
+		datasToSave = this.truncateJsonPartition(datasToSave);
+		datasToSave = this.truncateJsonCells(datasToSave);
+		datasToSave = this.updateSummariesCells(datasToSave);
+		// Remove collapsed nodes and selected nodes because they have been reduced
+		delete datasToSave.savedDatas.collapsedNodes;
+		delete datasToSave.savedDatas.selectedNodes;
+		return datasToSave
+	}
+
 	truncateJsonHierarchy(datas) {
 		// console.log("SaveService -> truncateJsonHierarchy -> datas", datas)
 
