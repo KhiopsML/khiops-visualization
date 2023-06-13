@@ -41,6 +41,7 @@ export class DimensionsDatasService {
 			conditionalOnContext: true,
 			matrixDatas: undefined,
 			allMatrixDatas: undefined,
+			allMatrixCellDatas: undefined,
 			cellPartIndexes: [],
 			initialDimensions: [],
 			dimensions: [],
@@ -320,6 +321,7 @@ export class DimensionsDatasService {
 
 		this.dimensionsDatas.matrixDatas = {};
 		this.dimensionsDatas.allMatrixDatas = {};
+		this.dimensionsDatas.allMatrixCellDatas = {};
 
 		const xDimension = this.dimensionsDatas.selectedDimensions[0];
 		const yDimension = this.dimensionsDatas.selectedDimensions[1];
@@ -395,6 +397,7 @@ export class DimensionsDatasService {
 
 		this.dimensionsDatas.matrixDatas.matrixCellDatas = cellDatas;
 		this.dimensionsDatas.allMatrixDatas.matrixCellDatas = cellDatas;
+		this.dimensionsDatas.allMatrixCellDatas = cellDatas;
 
 		const t1 = performance.now();
 		console.log("getMatrixDatas " + (t1 - t0) + " milliseconds.");

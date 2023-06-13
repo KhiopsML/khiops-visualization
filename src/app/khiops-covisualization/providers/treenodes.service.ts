@@ -638,10 +638,7 @@ export class TreenodesService {
 		});
 
 		if (currentIndex === 0 || currentIndex === 1) { // more than 2 is context
-			// cellVO is now deep so we must clone it, not assign
-			const allMatrixCellDatas = _.cloneDeep(this.dimensionsDatas.allMatrixDatas.matrixCellDatas);
-
-			this.dimensionsDatas.matrixDatas.matrixCellDatas = allMatrixCellDatas;
+			this.dimensionsDatas.matrixDatas.matrixCellDatas = this.dimensionsDatas.allMatrixCellDatas;
 
 			// first collapse nodes of second tree
 			let otherIndex = 0;
