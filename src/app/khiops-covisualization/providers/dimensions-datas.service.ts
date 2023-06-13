@@ -178,8 +178,7 @@ export class DimensionsDatasService {
 		}
 
 		this.constructDimensionsTrees();
-
-		this.getMatrixDatas();
+		return this.getMatrixDatas();
 
 	}
 
@@ -402,7 +401,7 @@ export class DimensionsDatasService {
 		const t1 = performance.now();
 		console.log("getMatrixDatas " + (t1 - t0) + " milliseconds.");
 		// console.log("TCL: DimensionsDatasService -> getMatrixDatas -> this.dimensionsDatas.matrixDatas", JSON.stringify(this.dimensionsDatas.matrixDatas))
-		return this.dimensionsDatas.matrixDatas;
+		return (t1 - t0);
 	}
 
 }

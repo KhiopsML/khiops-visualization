@@ -352,17 +352,11 @@ export class TreenodesService {
 
 	initDefaultUnfoldRank() {
 		// for big files, first unfold to default rank to optimize perf
-		const hierarchyDatas = this.getHierarchyDatas();
-		const unfoldRank = AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.DEFAULT_UNFOLD;
-		if (hierarchyDatas.totalClusters > unfoldRank) {
-			this.setSelectedUnfoldHierarchy(unfoldRank);
-			this.unfoldHierarchy(0, unfoldRank, true);
-			// this.dimensionsDatas.allMatrixDatas = Object.assign({}, this.dimensionsDatas.matrixDatas);
-			// this.dimensionsDatas.allMatrixDatas = _.cloneDeep(this.dimensionsDatas.matrixDatas);
-			return true;
-		} else {
-			return false;
-		}
+		this.getHierarchyDatas();
+		let unfoldRank = AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.DEFAULT_UNFOLD;
+		this.setSelectedUnfoldHierarchy(unfoldRank);
+		this.unfoldHierarchy(0, unfoldRank, true);
+		this.dimensionsDatas.hierarchyDatas.totalClusters = unfoldRank
 	}
 
 	// getTreeNodesToCollapse(dimensionName, rank) {
