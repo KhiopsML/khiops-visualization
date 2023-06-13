@@ -25,7 +25,6 @@ export class MatrixTooltipComponent implements OnInit, OnChanges {
 	constructor() {}
 
 	ngOnInit() {
-		// this.matrixTooltipDiv = document.getElementById('matrix-tooltip-comp');
 	}
 
 	ngOnChanges(changes: SimpleChanges) {

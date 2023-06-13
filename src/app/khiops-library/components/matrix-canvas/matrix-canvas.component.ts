@@ -195,7 +195,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 			setTimeout(() => {
 
 				if (this.graphMode && this.inputDatas && this.inputDatas.variable && this.inputDatas.matrixCellDatas) {
-					const t2 = performance.now();
+					// const t2 = performance.now();
 
 					if (this.graphTargets && this.graphTarget) {
 						this.selectedTargetIndex = this.graphTargets.indexOf(this.graphTarget);
@@ -420,8 +420,8 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 						passive: true
 					});
 					this.isDrawing = false;
-					const t3 = performance.now();
-					console.log('Draw matrix performance' + (t3 - t2) + ' milliseconds.');
+					// const t3 = performance.now();
+					// console.log('Draw matrix performance' + (t3 - t2) + ' milliseconds.');
 				}
 			});
 
