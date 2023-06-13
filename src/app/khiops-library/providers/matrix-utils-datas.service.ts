@@ -120,7 +120,7 @@ export class MatrixUtilsDatasService {
 		cellFrequencies, cellInterests, cellTargetFrequencies,
 		xValues, yValues) {
 
-		// var t0 = performance.now();
+		var t0 = performance.now();
 		const cells = [];
 
 		const xLength = xDimension.parts;
@@ -135,6 +135,33 @@ export class MatrixUtilsDatasService {
 		} else {
 			currentLineVal = UtilsService.getColumnsTotals(xDimension.parts, yDimension.parts, cellFrequencies);
 			currentColVal = UtilsService.getLinesTotals(xDimension.parts, yDimension.parts, cellFrequencies);
+		}
+
+		const isContextMatrix = zDimension.length > 0;
+		let currentFrequencies;
+		let matrixTotal = 0;
+		let matrixTotalsByIndex
+		let matrixMultiDimTotal
+		let cellFreqHash
+		if (cellTargetFrequencies) {
+			currentFrequencies = cellTargetFrequencies;
+		} else {
+			currentFrequencies = cellFrequencies;
+		}
+		if (isContextMatrix || cellTargetFrequencies) {
+			matrixTotal = UtilsService.sumArrayOfArray(currentFrequencies);
+			matrixTotalsByIndex = UtilsService.sumArrayItemsByIndex(currentFrequencies);
+			matrixMultiDimTotal = UtilsService.sumArrayItems(currentFrequencies);
+		} else {
+			matrixTotal = UtilsService.arraySum(currentLineVal);
+		}
+		if (isContextMatrix) {
+			// Get dimensions parts
+			// zDimension may be an array
+			const dimensionParts = zDimension.map(e => e.parts);
+			const maxParts = UtilsService.generateMaxParts(dimensionParts);
+			const cellPartsCombinations = UtilsService.generateMatrixCombinations(maxParts.reverse());
+			cellFreqHash = UtilsService.generateHashFromArray(cellPartsCombinations);
 		}
 
 		for (let i = 0; i < xLength; i++) {
@@ -160,13 +187,8 @@ export class MatrixUtilsDatasService {
 				cell.setIndex(currentIndex);
 
 				// Compute freqs
-				if (zDimension.length > 0) {
-					// Get dimensions parts
-					// zDimension may be an array
-					const dimensionParts = zDimension.map(e => e.parts);
-					const maxParts = UtilsService.generateMaxParts(dimensionParts);
-					const cellPartsCombinations = UtilsService.generateMatrixCombinations(maxParts.reverse());
-					cell.cellFreqHash = UtilsService.generateHashFromArray(cellPartsCombinations);
+				if (isContextMatrix) {
+					cell.cellFreqHash = cellFreqHash
 				}
 
 				if (cellInterests && cellInterests[currentIndex]) {
@@ -184,14 +206,9 @@ export class MatrixUtilsDatasService {
 					}
 				}
 
-				let matrixTotal = 0;
-
-				let currentFrequencies;
 				if (cellTargetFrequencies) {
-					currentFrequencies = cellTargetFrequencies;
 					cell.cellFreqs = currentFrequencies[currentIndex] || new Array(cellTargetFrequencies[0].length).fill(0);
 				} else {
-					currentFrequencies = cellFrequencies;
 					if (Array.isArray(cellFrequencies[currentIndex])) {
 						cell.cellFreqs = currentFrequencies[currentIndex] || [0];
 					} else {
@@ -209,7 +226,6 @@ export class MatrixUtilsDatasService {
 				// Compute Frequencies
 				if (cellFreqsLength === 1) {
 					// KV or KC when no context
-					matrixTotal = UtilsService.arraySum(currentLineVal);
 					cell.matrixTotal.push(matrixTotal);
 
 					// Compute mutual information
@@ -236,10 +252,7 @@ export class MatrixUtilsDatasService {
 				} else {
 					// KC when context or KV with target case (iris2d for example)
 
-					matrixTotal = UtilsService.sumArrayOfArray(currentFrequencies);
-					const matrixTotalsByIndex = UtilsService.sumArrayItemsByIndex(currentFrequencies);
 					cell.matrixTotal = matrixTotalsByIndex;
-					const matrixMultiDimTotal = UtilsService.sumArrayItems(currentFrequencies);
 
 					// Compute coverage from total
 					cell.coverage = cell.cellFreq / matrixTotal;
@@ -290,7 +303,7 @@ export class MatrixUtilsDatasService {
 				cells.push(cell);
 			}
 		}
-		// var t1 = performance.now();
+		var t1 = performance.now();
 		// console.log("getCellDatas " + (t1 - t0) + " milliseconds.");
 		// console.log("TCL: MatrixUtilsDatasService -> constructor -> cells", cells)
 		return cells;
