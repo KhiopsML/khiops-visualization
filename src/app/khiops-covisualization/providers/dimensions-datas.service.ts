@@ -319,6 +319,7 @@ export class DimensionsDatasService {
 		const appDatas = this.appService.getDatas().datas;
 
 		this.dimensionsDatas.matrixDatas = {};
+		this.dimensionsDatas.allMatrixDatas = {};
 
 		const xDimension = this.dimensionsDatas.selectedDimensions[0];
 		const yDimension = this.dimensionsDatas.selectedDimensions[1];
@@ -371,6 +372,12 @@ export class DimensionsDatasService {
 			xParts: this.dimensionsDatas.selectedDimensions[0].parts,
 			yParts: this.dimensionsDatas.selectedDimensions[1].parts
 		};
+		this.dimensionsDatas.allMatrixDatas.variable = {
+			nameX: this.dimensionsDatas.selectedDimensions[0].name,
+			nameY: this.dimensionsDatas.selectedDimensions[1].name,
+			xParts: this.dimensionsDatas.selectedDimensions[0].parts,
+			yParts: this.dimensionsDatas.selectedDimensions[1].parts
+		};
 
 		const cellDatas = MatrixUtilsDatasService.getCellDatas(
 			xDimension,
@@ -387,22 +394,7 @@ export class DimensionsDatasService {
 			yValues);
 
 		this.dimensionsDatas.matrixDatas.matrixCellDatas = cellDatas;
-
-		const t2 = performance.now();
-
-		// Keep a copy of the global object
-		// We must clonedeep for proba values that are taken when user expand node
-		// So we can not optimize here with assign
-		// this.dimensionsDatas.allMatrixDatas = _.cloneDeep(this.dimensionsDatas.matrixDatas);
-		this.dimensionsDatas.allMatrixDatas = JSON.parse(JSON.stringify(this.dimensionsDatas.matrixDatas))
-
-		const t3 = performance.now();
-		console.log("cloneDeep " + (t3 - t2) + " milliseconds.");
-
-		// console.log('TCL: DimensionssDatasService -> getMatrixDatas -> this.dimensionsDatas.matrixDatas', this.dimensionsDatas);
-
-		// Not usefull !!
-		// this.eventsService.emitDimensionsDatasChanged();
+		this.dimensionsDatas.allMatrixDatas.matrixCellDatas = cellDatas;
 
 		const t1 = performance.now();
 		console.log("getMatrixDatas " + (t1 - t0) + " milliseconds.");
