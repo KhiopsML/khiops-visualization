@@ -123,11 +123,10 @@ export class UnfoldHierarchyComponent implements OnInit {
 		private treenodesService: TreenodesService,
 		private clustersService: ClustersService,
 		private khiopsLibraryService: KhiopsLibraryService,
-		private dialogRef: MatDialogRef < UnfoldHierarchyComponent > ) {
-
-		this.hierarchyDatas = this.treenodesService.getHierarchyDatas();
+		private dialogRef: MatDialogRef<UnfoldHierarchyComponent>) {
 
 		this.treenodesService.initSavedUnfoldRank();
+		this.hierarchyDatas = this.treenodesService.getHierarchyDatas();
 
 		this.unfoldHierarchyTableTitle = this.translate.get('GLOBAL.NB_OF_CLUSTERS_PER_DIM');
 		this.unfoldHierarchyLegend = this.translate.get('TOOLTIPS.AXIS.UNFOLD_HIERARCHY.LEGEND');

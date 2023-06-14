@@ -59,7 +59,7 @@ export class TreenodesService {
 	initSavedUnfoldRank() {
 		//Initialize unfold rank if set into json
 		const appDatas = this.appService.getDatas().datas;
-		const savedUnfoldRank = appDatas.savedDatas?.unfoldHierarchyState
+		const savedUnfoldRank = appDatas.savedDatas ?.unfoldHierarchyState
 		savedUnfoldRank && this.setSelectedUnfoldHierarchy(savedUnfoldRank);
 	}
 
@@ -319,29 +319,24 @@ export class TreenodesService {
 	getHierarchyDatas(): any {
 		const appDatas = this.appService.getDatas().datas;
 
-		if (!this.dimensionsDatas.hierarchyDatas) {
-
-			this.dimensionsDatas.hierarchyDatas = {
-				minClusters: 0,
-				totalClusters: 0,
-				totalCells: 0,
-				selectedUnfoldHierarchy: 0
-			};
-
-			if (appDatas.coclusteringReport && appDatas.coclusteringReport.dimensionSummaries) {
-				const l = appDatas.coclusteringReport.dimensionSummaries.length;
-				this.dimensionsDatas.hierarchyDatas.minClusters = l;
-				for (let i = 0; i < l; i++) {
-					// Concat all dimensions clusters
-					this.dimensionsDatas.hierarchyDatas.totalClusters += appDatas.coclusteringReport.dimensionSummaries[i].parts;
-				}
-				// Init with all clusters
+		this.dimensionsDatas.hierarchyDatas.minClusters = 0;
+		this.dimensionsDatas.hierarchyDatas.totalClusters = 0;
+		this.dimensionsDatas.hierarchyDatas.totalCells = 0;
+		if (appDatas.coclusteringReport && appDatas.coclusteringReport.dimensionSummaries) {
+			const l = appDatas.coclusteringReport.dimensionSummaries.length;
+			this.dimensionsDatas.hierarchyDatas.minClusters = l;
+			for (let i = 0; i < l; i++) {
+				// Concat all dimensions clusters
+				this.dimensionsDatas.hierarchyDatas.totalClusters += appDatas.coclusteringReport.dimensionSummaries[i].parts;
+			}
+			// Init with all clusters
+			if (this.dimensionsDatas.hierarchyDatas.selectedUnfoldHierarchy === 0) {
 				this.dimensionsDatas.hierarchyDatas.selectedUnfoldHierarchy = this.dimensionsDatas.hierarchyDatas.totalClusters;
 			}
-			if (appDatas.coclusteringReport && appDatas.coclusteringReport.summary) {
-				// Get the total cell
-				this.dimensionsDatas.hierarchyDatas.totalCells += appDatas.coclusteringReport.summary.cells;
-			}
+		}
+		if (appDatas.coclusteringReport && appDatas.coclusteringReport.summary) {
+			// Get the total cell
+			this.dimensionsDatas.hierarchyDatas.totalCells += appDatas.coclusteringReport.summary.cells;
 		}
 
 		return this.dimensionsDatas.hierarchyDatas;
@@ -354,7 +349,7 @@ export class TreenodesService {
 	}
 
 	getUnfoldHierarchy() {
-		return this.dimensionsDatas.hierarchyDatas?.selectedUnfoldHierarchy || 0;
+		return this.dimensionsDatas.hierarchyDatas ?.selectedUnfoldHierarchy || 0;
 	}
 
 	setSelectedUnfoldHierarchy(selectedUnfoldHierarchy) {

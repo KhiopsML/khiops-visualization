@@ -50,7 +50,13 @@ export class DimensionsDatasService {
 			selectedDimensions: undefined,
 			contextDimensionCount: 0,
 			pendingUpdates: [],
-			hierarchyDatas: undefined,
+			hierarchyDatas: {
+				minClusters: 0,
+				totalClusters: 0,
+				totalCells: 0,
+				selectedUnfoldHierarchy: 0,
+				unfoldHierarchyState: 0
+			},
 			dimensionsTrees: [],
 			selectedNodesSummary: [],
 			dimensionsClusters: []

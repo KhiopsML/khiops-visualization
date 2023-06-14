@@ -7,7 +7,7 @@ export class SavedDatasVO {
 	selectedDimensions: {};
 	collapsedNodes: {};
 	importedDatas: {};
-	unfoldHState: number;
+	unfoldHierarchyState: number;
 
 	constructor(
 		viewsLayout,
@@ -16,7 +16,7 @@ export class SavedDatasVO {
 		selectedDimensions,
 		collapsedNodes,
 		importedDatas,
-		unfoldHState?
+		unfoldHierarchyState?
 	) {
 		this.viewsLayout = viewsLayout;
 		this.splitSizes = splitSizes;
@@ -24,7 +24,7 @@ export class SavedDatasVO {
 		this.selectedDimensions = selectedDimensions;
 		this.collapsedNodes = collapsedNodes;
 		this.importedDatas = importedDatas;
-		this.unfoldHState = unfoldHState || 0;
+		this.unfoldHierarchyState = unfoldHierarchyState || 0;
 
 		this.selectedNodes = _.cloneDeep(currentSelectedNodes);
 		// remove useless informations from selectedNodes
