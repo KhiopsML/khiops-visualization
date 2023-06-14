@@ -354,7 +354,7 @@ export class TreenodesService {
 	}
 
 	getUnfoldHierarchy() {
-		return this.dimensionsDatas.hierarchyDatas.selectedUnfoldHierarchy;
+		return this.dimensionsDatas.hierarchyDatas?.selectedUnfoldHierarchy || 0;
 	}
 
 	setSelectedUnfoldHierarchy(selectedUnfoldHierarchy) {
