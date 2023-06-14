@@ -19,8 +19,9 @@ export const covisualizationCommonEnvironment = {
     ACTIVE_TAB_INDEX: 0,
     TAB_ANIMATION_DURATION: 150, // set > value than .mat-ink-bar transition animation to avoid freeze
   },
-  UNFOLD_HIERARCHY: {
-    DEFAULT_UNFOLD: 400,
+	UNFOLD_HIERARCHY: {
+	LIMIT_TIME: 1000,
+    DEFAULT_UNFOLD: 300,
     WIDTH: '85vw',
     HEIGHT: '85vh',
   },
