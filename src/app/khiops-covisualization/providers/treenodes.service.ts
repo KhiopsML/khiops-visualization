@@ -56,6 +56,13 @@ export class TreenodesService {
 		this.updateNodeNameIntoModel(hierarchyName, name, newName, isLeaf);
 	}
 
+	initSavedUnfoldRank() {
+		//Initialize unfold rank if set into json
+		const appDatas = this.appService.getDatas().datas;
+		const savedUnfoldRank = appDatas.savedDatas?.unfoldHierarchyState
+		savedUnfoldRank && this.setSelectedUnfoldHierarchy(savedUnfoldRank);
+	}
+
 	updateNodeNameIntoJson(hierarchyName, name, newName, isLeaf) {
 		const appDatas = this.appService.getDatas().datas;
 
@@ -344,6 +351,10 @@ export class TreenodesService {
 	toggleDimensionHierarchyFold(dimensionName: string, state: boolean) {
 		const dimension: DimensionVO = this.dimensionsDatas.dimensions.find(e => e.name === dimensionName);
 		dimension.setHierarchyFold(state);
+	}
+
+	getUnfoldHierarchy() {
+		return this.dimensionsDatas.hierarchyDatas.selectedUnfoldHierarchy;
 	}
 
 	setSelectedUnfoldHierarchy(selectedUnfoldHierarchy) {

@@ -50,6 +50,7 @@ export class SaveService {
 
 		// Check if user has changed something
 		if (selectedDimensions.length > 0) {
+			const unfoldHierarchyState = this.treenodesService.getUnfoldHierarchy();
 			const splitSizes = this.appService.getSplitSizes();
 			const viewsLayout = this.appService.getViewsLayout();
 			const selectedNodes = this.treenodesService.getSelectedNodes();
@@ -62,7 +63,8 @@ export class SaveService {
 				selectedNodes,
 				selectedDimensions,
 				collapsedNodes,
-				importedDatas
+				importedDatas,
+				unfoldHierarchyState
 			);
 		}
 
@@ -80,7 +82,7 @@ export class SaveService {
 		// Remove collapsed nodes and selected nodes because they have been reduced
 		delete datasToSave.savedDatas.collapsedNodes;
 		delete datasToSave.savedDatas.selectedNodes;
-		return datasToSave
+		return datasToSave;
 	}
 
 	truncateJsonHierarchy(datas) {

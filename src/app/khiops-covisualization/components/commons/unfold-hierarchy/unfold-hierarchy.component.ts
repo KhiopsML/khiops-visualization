@@ -127,6 +127,8 @@ export class UnfoldHierarchyComponent implements OnInit {
 
 		this.hierarchyDatas = this.treenodesService.getHierarchyDatas();
 
+		this.treenodesService.initSavedUnfoldRank();
+
 		this.unfoldHierarchyTableTitle = this.translate.get('GLOBAL.NB_OF_CLUSTERS_PER_DIM');
 		this.unfoldHierarchyLegend = this.translate.get('TOOLTIPS.AXIS.UNFOLD_HIERARCHY.LEGEND');
 

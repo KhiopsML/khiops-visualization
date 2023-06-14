@@ -1,28 +1,30 @@
-
-import _ from 'lodash';
+import _ from "lodash";
 
 export class SavedDatasVO {
-
 	viewsLayout: {};
 	splitSizes: {};
 	selectedNodes: {};
 	selectedDimensions: {};
 	collapsedNodes: {};
 	importedDatas: {};
+	unfoldHState: number;
 
-	constructor(viewsLayout,
+	constructor(
+		viewsLayout,
 		splitSizes,
 		currentSelectedNodes,
 		selectedDimensions,
 		collapsedNodes,
-		importedDatas) {
-
+		importedDatas,
+		unfoldHState?
+	) {
 		this.viewsLayout = viewsLayout;
 		this.splitSizes = splitSizes;
 
 		this.selectedDimensions = selectedDimensions;
 		this.collapsedNodes = collapsedNodes;
 		this.importedDatas = importedDatas;
+		this.unfoldHState = unfoldHState || 0;
 
 		this.selectedNodes = _.cloneDeep(currentSelectedNodes);
 		// remove useless informations from selectedNodes
@@ -33,7 +35,5 @@ export class SavedDatasVO {
 			delete this.selectedNodes[key]?.childrenNodesCollapsed;
 			delete this.selectedNodes[key]?.childrenLeafIndexes;
 		});
-
 	}
-
 }
