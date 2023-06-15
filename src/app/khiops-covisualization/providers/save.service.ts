@@ -117,8 +117,10 @@ export class SaveService {
 								dimHierarchy.clusters.splice(nodeIndex, 1);
 							}
 						} else {
-							// Set the isLeaf of the last collapsed node
-							dimHierarchy.clusters[nodeIndex].isLeaf = true;
+							if (nodeIndex !== -1) {
+								// Set the isLeaf of the last collapsed node
+								dimHierarchy.clusters[nodeIndex].isLeaf = true;
+							}
 						}
 
 					}
@@ -304,7 +306,6 @@ export class SaveService {
 					k
 				].valueGroups.map((e) => e.values);
 			}
-
 			// Loop the parts of the CI variable: for each part, we try to associate its index in the partition of the initial coclustering with its index in the partition of the final coclustering. We use the fact that the partitions are nested and that their order does not change: an "initial" part is either kept as it is in the current coclustering or included in a folded part in the current coclustering
 			let currentP = 0; // initialize the index of the part of the current variable
 			let currentPart = currentVariable[currentP]; // we initialize the current part
@@ -320,9 +321,9 @@ export class SaveService {
 					while (
 						!(
 							(initialPart[0] >=
-							currentVariable[currentP][0] &&
-							initialPart[1] <=
-							currentVariable[currentP][1]) || currentP < currentVariable.length
+								currentVariable[currentP][0] &&
+								initialPart[1] <=
+								currentVariable[currentP][1]) || currentP < currentVariable.length
 						)
 					) {
 						currentPart = currentVariable[currentP];
