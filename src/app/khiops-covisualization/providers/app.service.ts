@@ -241,7 +241,7 @@ export class AppService {
 	}
 
 	enableExtDatasView(dimension: string) {
-		const currentDim = this.viewsLayout.dimensionsViewsLayoutsVO.find(e => e.name === dimension)
+		const currentDim = this.viewsLayout?.dimensionsViewsLayoutsVO?.find(e => e.name === dimension)
 		if (currentDim) {
 			currentDim.isExternalDataChecked = true;
 			this.saveViewsLayout(this.viewsLayout);
