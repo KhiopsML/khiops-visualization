@@ -121,6 +121,11 @@ export class AppComponent implements AfterViewInit {
 		this.setTheme();
 	}
 
+	// testSaveHierarchy() {
+	// 	let tmp =  this.saveService.constructSavedHierarchyToSave();
+	// 	console.log('file: app.component.ts:126 ~ AppComponent ~ testSaveH ~ tmp:', tmp);
+	// }
+
 	setTheme() {
 		setTimeout(() => {
 			let themeColor =
