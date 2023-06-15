@@ -18,6 +18,9 @@ import {
 import {
 	TranslateService
 } from '@ngstack/translate';
+import {
+	ConfigService
+} from '@khiops-library/providers/config.service';
 
 @Injectable({
 	providedIn: 'root'
@@ -30,7 +33,7 @@ export class ImportExtDatasService {
 	constructor(
 		private translate: TranslateService,
 		private appService: AppService,
-		private importFileLoaderService: ImportFileLoaderService,
+		private configService: ConfigService
 
 	) {
 		this.importExtDatas = [];
@@ -44,44 +47,47 @@ export class ImportExtDatasService {
 			keys: [],
 			values: []
 		};
+		if (fileDatas.datas) {
 
-		const lines: any = fileDatas.datas.split(/\n/);
-		for (let i = 0; i < lines.length; i++) {
-			lines[i] = lines[i].replaceAll('\r', '\n')
-			lines[i] = lines[i].split(/\t/);
-		}
+			const lines: any = fileDatas.datas.split(/\n/);
+			for (let i = 0; i < lines.length; i++) {
+				lines[i] = lines[i].replaceAll('\r', '\n')
+				lines[i] = lines[i].split(/\t/);
+			}
 
-		// remove eof lines
-		for (let i = 0; i < lines.length; i++) {
-			if (lines[i].length === 1) {
-				lines[i - 1][1] = lines[i - 1][1] + lines[i][0];
-				lines.splice(i, 1);
-				i--;
+			// remove eof lines
+			for (let i = 0; i < lines.length; i++) {
+				if (lines[i].length === 1) {
+					lines[i - 1][1] = lines[i - 1][1] + lines[i][0];
+					lines.splice(i, 1);
+					i--;
+				}
+			}
+
+			for (let i = 0; i < lines.length; i++) {
+				// Remove first and last dble quotes
+				if (lines[i][1].charAt(0) === '"' && lines[i][1].charAt(lines[i][1].length - 2) === '"') {
+					lines[i][1] = lines[i][1].slice(1, lines[i][1].length);
+					lines[i][1] = lines[i][1].slice(0, lines[i][1].length - 1);
+				}
+				// Remove eol
+				lines[i][1] = lines[i][1].slice(0, -1);
+			}
+
+			// convert double double quotes to double quotes
+			for (let i = 0; i < lines.length; i++) {
+				lines[i][1] = lines[i][1].replaceAll('""', '"')
+			}
+
+			if (lines.length > 0) {
+				formatedDatas.keys = lines[0];
+
+				// Remove first line for values
+				lines.shift();
+				formatedDatas.values = lines;
 			}
 		}
 
-		for (let i = 0; i < lines.length; i++) {
-			// Remove first and last dble quotes
-			if (lines[i][1].charAt(0) === '"' && lines[i][1].charAt(lines[i][1].length - 2) === '"') {
-				lines[i][1] = lines[i][1].slice(1, lines[i][1].length);
-				lines[i][1] = lines[i][1].slice(0, lines[i][1].length - 1);
-			}
-			// Remove eol
-			lines[i][1] = lines[i][1].slice(0, -1);
-		}
-
-		// convert double double quotes to double quotes
-		for (let i = 0; i < lines.length; i++) {
-			lines[i][1] = lines[i][1].replaceAll('""', '"')
-		}
-
-		if (lines.length > 0) {
-			formatedDatas.keys = lines[0];
-
-			// Remove first line for values
-			lines.shift();
-			formatedDatas.values = lines;
-		}
 		return formatedDatas;
 	}
 
@@ -113,7 +119,7 @@ export class ImportExtDatasService {
 		return this.importExtDatas;
 	}
 
-	loadSavedExternalDatas(progressCallback? ) {
+	loadSavedExternalDatas(progressCallback ? ) {
 
 		const promises = [];
 		this.savedExternalDatas = {};
@@ -129,48 +135,51 @@ export class ImportExtDatasService {
 					const joinKey = externalDatas.joinKey;
 					const fieldName = externalDatas.field.name;
 
-					this.importFileLoaderService.readFile(externalDatas.file).then((fileDatas: FileVO) => {
+					// method called when ext data is saved
+					// read file from elelctron context
 
-						setTimeout(() => {
-							percentIndex++;
-							if (progressCallback) {
-								const msg = this.translate.get('GLOBAL.IMPORTING_EXT_DATA', {
-									fieldName: fieldName,
-									dimension: externalDatas.dimension
-								});
-								const percent = percentIndex / importExtDatasLength * 100;
-								progressCallback(msg, percent);
-							}
-							const formatedDatas = this.formatImportedDatas(fileDatas);
+					this.configService.getConfig().onReadFile &&
+						this.configService.getConfig().onReadFile(externalDatas.filename, (datas: any) => {
+							const fileDatas = new FileVO(datas, externalDatas.filename);
 
-							const keyIndex = formatedDatas.keys.indexOf(joinKey);
-							const fieldIndex = formatedDatas.keys.indexOf(fieldName);
-
-							if (!this.savedExternalDatas[externalDatas.dimension.toLowerCase()]) {
-								this.savedExternalDatas[externalDatas.dimension.toLowerCase()] = [];
-							}
-							const formatedDatasValuesLength = formatedDatas.values.length;
-							for (let j = 0; j < formatedDatasValuesLength; j++) {
-								const extKey = formatedDatas.values[j][keyIndex].replace(/[\n\r]+/g, '') // remove carriage return #53
-
-								if (!this.savedExternalDatas[externalDatas.dimension.toLowerCase()][extKey]) {
-									this.savedExternalDatas[externalDatas.dimension.toLowerCase()][extKey] = [];
+							setTimeout(() => {
+								percentIndex++;
+								if (progressCallback) {
+									const msg = this.translate.get('GLOBAL.IMPORTING_EXT_DATA', {
+										fieldName: fieldName,
+										dimension: externalDatas.dimension
+									});
+									const percent = percentIndex / importExtDatasLength * 100;
+									progressCallback(msg, percent);
 								}
-								if (!this.savedExternalDatas[externalDatas.dimension.toLowerCase()][extKey].find(e => e.key === formatedDatas.keys[fieldIndex])) {
-									const currentExtData = {
-										key: formatedDatas.keys[fieldIndex],
-										value: formatedDatas.values[j][fieldIndex]
-									};
-									this.savedExternalDatas[externalDatas.dimension.toLowerCase()][extKey].push(currentExtData);
+								const formatedDatas = this.formatImportedDatas(fileDatas);
+
+								const keyIndex = formatedDatas.keys.indexOf(joinKey);
+								const fieldIndex = formatedDatas.keys.indexOf(fieldName);
+
+								if (!this.savedExternalDatas[externalDatas.dimension.toLowerCase()]) {
+									this.savedExternalDatas[externalDatas.dimension.toLowerCase()] = [];
 								}
-							}
-							resolve(formatedDatas.keys[0]);
+								const formatedDatasValuesLength = formatedDatas.values.length;
+								for (let j = 0; j < formatedDatasValuesLength; j++) {
+									const extKey = formatedDatas.values[j][keyIndex].replace(/[\n\r]+/g, '') // remove carriage return #53
+
+									if (!this.savedExternalDatas[externalDatas.dimension.toLowerCase()][extKey]) {
+										this.savedExternalDatas[externalDatas.dimension.toLowerCase()][extKey] = [];
+									}
+									if (!this.savedExternalDatas[externalDatas.dimension.toLowerCase()][extKey].find(e => e.key === formatedDatas.keys[fieldIndex])) {
+										const currentExtData = {
+											key: formatedDatas.keys[fieldIndex],
+											value: formatedDatas.values[j][fieldIndex]
+										};
+										this.savedExternalDatas[externalDatas.dimension.toLowerCase()][extKey].push(currentExtData);
+									}
+								}
+								resolve(formatedDatas.keys[0]);
+							});
+
 						});
 
-					}).catch(error => {
-						console.warn(this.translate.get('SNACKS.OPEN_FILE_ERROR'), error);
-						reject();
-					});
 				});
 				promises.push(promise);
 			}
