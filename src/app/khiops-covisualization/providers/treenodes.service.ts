@@ -56,6 +56,13 @@ export class TreenodesService {
 		this.updateNodeNameIntoModel(hierarchyName, name, newName, isLeaf);
 	}
 
+	initSavedUnfoldRank() {
+		//Initialize unfold rank if set into json
+		const appDatas = this.appService.getDatas().datas;
+		const savedUnfoldRank = appDatas.savedDatas ?.unfoldHierarchyState
+		savedUnfoldRank && this.setSelectedUnfoldHierarchy(savedUnfoldRank);
+	}
+
 	updateNodeNameIntoJson(hierarchyName, name, newName, isLeaf) {
 		const appDatas = this.appService.getDatas().datas;
 
@@ -312,29 +319,24 @@ export class TreenodesService {
 	getHierarchyDatas(): any {
 		const appDatas = this.appService.getDatas().datas;
 
-		if (!this.dimensionsDatas.hierarchyDatas) {
-
-			this.dimensionsDatas.hierarchyDatas = {
-				minClusters: 0,
-				totalClusters: 0,
-				totalCells: 0,
-				selectedUnfoldHierarchy: 0
-			};
-
-			if (appDatas.coclusteringReport && appDatas.coclusteringReport.dimensionSummaries) {
-				const l = appDatas.coclusteringReport.dimensionSummaries.length;
-				this.dimensionsDatas.hierarchyDatas.minClusters = l;
-				for (let i = 0; i < l; i++) {
-					// Concat all dimensions clusters
-					this.dimensionsDatas.hierarchyDatas.totalClusters += appDatas.coclusteringReport.dimensionSummaries[i].parts;
-				}
-				// Init with all clusters
+		this.dimensionsDatas.hierarchyDatas.minClusters = 0;
+		this.dimensionsDatas.hierarchyDatas.totalClusters = 0;
+		this.dimensionsDatas.hierarchyDatas.totalCells = 0;
+		if (appDatas.coclusteringReport && appDatas.coclusteringReport.dimensionSummaries) {
+			const l = appDatas.coclusteringReport.dimensionSummaries.length;
+			this.dimensionsDatas.hierarchyDatas.minClusters = l;
+			for (let i = 0; i < l; i++) {
+				// Concat all dimensions clusters
+				this.dimensionsDatas.hierarchyDatas.totalClusters += appDatas.coclusteringReport.dimensionSummaries[i].parts;
+			}
+			// Init with all clusters
+			if (this.dimensionsDatas.hierarchyDatas.selectedUnfoldHierarchy === 0) {
 				this.dimensionsDatas.hierarchyDatas.selectedUnfoldHierarchy = this.dimensionsDatas.hierarchyDatas.totalClusters;
 			}
-			if (appDatas.coclusteringReport && appDatas.coclusteringReport.summary) {
-				// Get the total cell
-				this.dimensionsDatas.hierarchyDatas.totalCells += appDatas.coclusteringReport.summary.cells;
-			}
+		}
+		if (appDatas.coclusteringReport && appDatas.coclusteringReport.summary) {
+			// Get the total cell
+			this.dimensionsDatas.hierarchyDatas.totalCells += appDatas.coclusteringReport.summary.cells;
 		}
 
 		return this.dimensionsDatas.hierarchyDatas;
@@ -346,23 +348,21 @@ export class TreenodesService {
 		dimension.setHierarchyFold(state);
 	}
 
+	getUnfoldHierarchy() {
+		return this.dimensionsDatas.hierarchyDatas ?.selectedUnfoldHierarchy || 0;
+	}
+
 	setSelectedUnfoldHierarchy(selectedUnfoldHierarchy) {
 		this.dimensionsDatas.hierarchyDatas.selectedUnfoldHierarchy = selectedUnfoldHierarchy;
 	}
 
 	initDefaultUnfoldRank() {
 		// for big files, first unfold to default rank to optimize perf
-		const hierarchyDatas = this.getHierarchyDatas();
-		const unfoldRank = AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.DEFAULT_UNFOLD;
-		if (hierarchyDatas.totalClusters > unfoldRank) {
-			this.setSelectedUnfoldHierarchy(unfoldRank);
-			this.unfoldHierarchy(0, unfoldRank, true);
-			// this.dimensionsDatas.allMatrixDatas = Object.assign({}, this.dimensionsDatas.matrixDatas);
-			// this.dimensionsDatas.allMatrixDatas = _.cloneDeep(this.dimensionsDatas.matrixDatas);
-			return true;
-		} else {
-			return false;
-		}
+		this.getHierarchyDatas();
+		let unfoldRank = AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.DEFAULT_UNFOLD;
+		this.setSelectedUnfoldHierarchy(unfoldRank);
+		this.unfoldHierarchy(0, unfoldRank, true);
+		this.dimensionsDatas.hierarchyDatas.totalClusters = unfoldRank
 	}
 
 	// getTreeNodesToCollapse(dimensionName, rank) {
@@ -638,10 +638,7 @@ export class TreenodesService {
 		});
 
 		if (currentIndex === 0 || currentIndex === 1) { // more than 2 is context
-			// cellVO is now deep so we must clone it, not assign
-			const allMatrixCellDatas = _.cloneDeep(this.dimensionsDatas.allMatrixDatas.matrixCellDatas);
-
-			this.dimensionsDatas.matrixDatas.matrixCellDatas = allMatrixCellDatas;
+			this.dimensionsDatas.matrixDatas.matrixCellDatas = this.dimensionsDatas.allMatrixCellDatas;
 
 			// first collapse nodes of second tree
 			let otherIndex = 0;

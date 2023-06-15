@@ -8,6 +8,13 @@ import * as _ from 'lodash'; // Important to import lodash in karma
 })
 export class UtilsService {
 
+	static setWaitingCursor(time = 0) {
+		document.body.style.cursor = 'wait';
+		setTimeout(() => {
+			document.body.style.cursor = 'default';
+		}, time);
+	}
+
 	static isLocalStorageAvailable() {
 		const test = 'test';
 		try {

@@ -1,0 +1,8 @@
+education	An example of text
+Bachelors	This text is standard
+HS-grad	This one too (;*/\|,……)
+Masters	"By cons, it contains a             tab"
+Some-college	"Here there  are
+line
+breaks…"
+11th	"Here is more complicated, there are ""double quotes""."

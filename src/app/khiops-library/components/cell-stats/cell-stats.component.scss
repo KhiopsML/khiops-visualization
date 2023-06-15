@@ -1,7 +1,12 @@
 #cell-stats-comp {
 	padding: 0 1rem 1rem 1rem;
-
-	b{
+	max-height: 38px;
+	min-height: 38px !important;
+	overflow-x: auto;
+	overflow-y: hidden;
+	white-space: nowrap;
+	font-size: 0.8rem;
+	b {
 		font-weight: 500;
 	}
 	span {

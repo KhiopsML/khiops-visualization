@@ -50,6 +50,7 @@ export class SaveService {
 
 		// Check if user has changed something
 		if (selectedDimensions.length > 0) {
+			const unfoldHierarchyState = this.treenodesService.getUnfoldHierarchy();
 			const splitSizes = this.appService.getSplitSizes();
 			const viewsLayout = this.appService.getViewsLayout();
 			const selectedNodes = this.treenodesService.getSelectedNodes();
@@ -62,11 +63,26 @@ export class SaveService {
 				selectedNodes,
 				selectedDimensions,
 				collapsedNodes,
-				importedDatas
+				importedDatas,
+				unfoldHierarchyState
 			);
 		}
 
 		return initialDatas;
+	}
+
+	constructSavedHierarchyToSave() {
+		let datasToSave = this.constructDatasToSave();
+
+		datasToSave = this.truncateJsonHierarchy(datasToSave);
+		datasToSave = this.updateSummariesParts(datasToSave);
+		datasToSave = this.truncateJsonPartition(datasToSave);
+		datasToSave = this.truncateJsonCells(datasToSave);
+		datasToSave = this.updateSummariesCells(datasToSave);
+		// Remove collapsed nodes and selected nodes because they have been reduced
+		delete datasToSave.savedDatas.collapsedNodes;
+		delete datasToSave.savedDatas.selectedNodes;
+		return datasToSave;
 	}
 
 	truncateJsonHierarchy(datas) {
@@ -101,8 +117,10 @@ export class SaveService {
 								dimHierarchy.clusters.splice(nodeIndex, 1);
 							}
 						} else {
-							// Set the isLeaf of the last collapsed node
-							dimHierarchy.clusters[nodeIndex].isLeaf = true;
+							if (nodeIndex !== -1) {
+								// Set the isLeaf of the last collapsed node
+								dimHierarchy.clusters[nodeIndex].isLeaf = true;
+							}
 						}
 
 					}
@@ -288,7 +306,6 @@ export class SaveService {
 					k
 				].valueGroups.map((e) => e.values);
 			}
-
 			// Loop the parts of the CI variable: for each part, we try to associate its index in the partition of the initial coclustering with its index in the partition of the final coclustering. We use the fact that the partitions are nested and that their order does not change: an "initial" part is either kept as it is in the current coclustering or included in a folded part in the current coclustering
 			let currentP = 0; // initialize the index of the part of the current variable
 			let currentPart = currentVariable[currentP]; // we initialize the current part
@@ -303,8 +320,10 @@ export class SaveService {
 				if (CC.coclusteringReport.dimensionPartitions[k].type === 'Numerical') {
 					while (
 						!(
-							initialPart[0] >= currentVariable[currentP][0] &&
-							initialPart[1] <= currentVariable[currentP][1]
+							(initialPart[0] >=
+								currentVariable[currentP][0] &&
+								initialPart[1] <=
+								currentVariable[currentP][1]) || currentP < currentVariable.length
 						)
 					) {
 						currentPart = currentVariable[currentP];

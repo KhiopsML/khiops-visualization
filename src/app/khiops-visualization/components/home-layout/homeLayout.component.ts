@@ -1,12 +1,10 @@
 import {
 	Component,
 	OnInit,
-	// OnDestroy,
 	ViewEncapsulation,
 	ViewChild,
 	NgZone,
 	HostListener,
-	// AfterViewInit,
 	Input,
 	ElementRef
 } from '@angular/core';
@@ -20,9 +18,6 @@ import {
 import {
 	TranslateService
 } from '@ngstack/translate';
-// import {
-// 	ElectronService
-// } from '@khiops-library/providers/electron.service';
 import {
 	AppService
 } from '@khiops-visualization/providers/app.service';
@@ -38,9 +33,6 @@ import {
 import {
 	PreparationDatasService
 } from '@khiops-visualization/providers/preparation-datas.service';
-// import {
-// 	LibVersionService
-// } from '@khiops-library/components/lib-version/lib-version.service';
 import {
 	SelectableService
 } from '@khiops-library/components/selectable/selectable.service';
@@ -57,32 +49,16 @@ import {
 	SaveService
 } from '@khiops-visualization/providers/save.service';
 import {
-	MatDialogRef,
 	MatDialog,
-	MatDialogConfig
 } from '@angular/material/dialog';
-// import {
-// 	ConfirmDialogComponent
-// } from '@khiops-library/components/confirm-dialog/confirm-dialog.component';
 import {
 	TreePreparationDatasService
 } from '@khiops-visualization/providers/tree-preparation-datas.service';
-
 import {
 	KhiopsLibraryService
 } from '@khiops-library/providers/khiops-library.service';
 import pjson from 'package.json';
 
-// TODO remove electron
-// let ipcRenderer;
-// try {
-// 	ipcRenderer = require('electron').ipcRenderer;
-// } catch (e) {
-// 	console.warn('Can not access ipcRenderer', e);
-// }
-
-// let remote: any;
-// let shell: any;
 
 @Component({
 	selector: 'app-home-layout',
@@ -91,14 +67,13 @@ import pjson from 'package.json';
 	encapsulation: ViewEncapsulation.None
 
 })
-export class HomeLayoutComponent implements OnInit /*, OnDestroy, AfterViewInit */ {
+export class HomeLayoutComponent implements OnInit {
 
 	@Input()
 	get appDatas(): any {
 		return this.appService.getDatas();
 	}
 	set appDatas(value: any) {
-		console.log(value);
 		this.appService.setFileDatas(value);
 		if (value && value.tool === "Khiops") this.initializeHome();
 	}
@@ -108,7 +83,6 @@ export class HomeLayoutComponent implements OnInit /*, OnDestroy, AfterViewInit 
 	}) appProjectView: ElementRef < HTMLElement > ;
 
 	activeTab = AppConfig.visualizationCommon.HOME.ACTIVE_TAB_INDEX;
-	translations: any;
 	@ViewChild('fileLoader', {
 		static: false
 	}) fileLoader: FileLoaderComponent;
@@ -134,7 +108,6 @@ export class HomeLayoutComponent implements OnInit /*, OnDestroy, AfterViewInit 
 		private ngzone: NgZone,
 		private saveService: SaveService,
 		private dialogRef: MatDialog,
-		// private electronService: ElectronService,
 		private appService: AppService,
 		private snackBar: MatSnackBar,
 		private fileSaverService: FileSaverService,
@@ -148,13 +121,6 @@ export class HomeLayoutComponent implements OnInit /*, OnDestroy, AfterViewInit 
 		private preparation2dDatasService: Preparation2dDatasService,
 		private dialog: MatDialog) {
 
-		// TODO remove electron
-		// if (this.isElectron) {
-		// 	const electron = require('electron');
-		// 	remote = require('@electron/remote');
-		// 	shell = electron.shell;
-		// }
-
 		if (pjson) {
 			this.appTitle = pjson.title.visualization;
 			this.appName = pjson.name;
@@ -165,8 +131,6 @@ export class HomeLayoutComponent implements OnInit /*, OnDestroy, AfterViewInit 
 		const fontSize = AppConfig.visualizationCommon.GLOBAL.FONT_SIZE;
 		document.body.classList.add('font-' + fontSize);
 
-		// this.appDatas = this.appService.getDatas();
-
 	}
 
 	@HostListener('window:resize', ['$event'])
@@ -174,12 +138,7 @@ export class HomeLayoutComponent implements OnInit /*, OnDestroy, AfterViewInit 
 		this.isLargeScreen = window.innerWidth > 1400; // TODO put it into conf
 	}
 
-	// ngOnDestroy() {
-
-	// }
-
 	onSelectedTabChanged(e) {
-
 		// init selected area to undefined
 		this.selectableService.initialize();
 		this.selectedTab = e;
@@ -209,7 +168,6 @@ export class HomeLayoutComponent implements OnInit /*, OnDestroy, AfterViewInit 
 	onFileLoaderDataChanged(datas) {
 		this.selectedTab = undefined;
 		this.currentDatas = datas;
-
 		this.appService.setFileDatas(datas);
 		if (datas) {
 			this.initializeHome();

@@ -41,6 +41,7 @@ export class DimensionsDatasService {
 			conditionalOnContext: true,
 			matrixDatas: undefined,
 			allMatrixDatas: undefined,
+			allMatrixCellDatas: undefined,
 			cellPartIndexes: [],
 			initialDimensions: [],
 			dimensions: [],
@@ -49,7 +50,13 @@ export class DimensionsDatasService {
 			selectedDimensions: undefined,
 			contextDimensionCount: 0,
 			pendingUpdates: [],
-			hierarchyDatas: undefined,
+			hierarchyDatas: {
+				minClusters: 0,
+				totalClusters: 0,
+				totalCells: 0,
+				selectedUnfoldHierarchy: 0,
+				unfoldHierarchyState: 0
+			},
 			dimensionsTrees: [],
 			selectedNodesSummary: [],
 			dimensionsClusters: []
@@ -169,7 +176,6 @@ export class DimensionsDatasService {
 	}
 
 	updateDimensions(): any {
-
 		this.getDimensions();
 
 		// keep initial dim in memory
@@ -178,8 +184,7 @@ export class DimensionsDatasService {
 		}
 
 		this.constructDimensionsTrees();
-
-		this.getMatrixDatas();
+		return this.getMatrixDatas();
 
 	}
 
@@ -320,6 +325,8 @@ export class DimensionsDatasService {
 		const appDatas = this.appService.getDatas().datas;
 
 		this.dimensionsDatas.matrixDatas = {};
+		this.dimensionsDatas.allMatrixDatas = {};
+		this.dimensionsDatas.allMatrixCellDatas = {};
 
 		const xDimension = this.dimensionsDatas.selectedDimensions[0];
 		const yDimension = this.dimensionsDatas.selectedDimensions[1];
@@ -372,6 +379,12 @@ export class DimensionsDatasService {
 			xParts: this.dimensionsDatas.selectedDimensions[0].parts,
 			yParts: this.dimensionsDatas.selectedDimensions[1].parts
 		};
+		this.dimensionsDatas.allMatrixDatas.variable = {
+			nameX: this.dimensionsDatas.selectedDimensions[0].name,
+			nameY: this.dimensionsDatas.selectedDimensions[1].name,
+			xParts: this.dimensionsDatas.selectedDimensions[0].parts,
+			yParts: this.dimensionsDatas.selectedDimensions[1].parts
+		};
 
 		const cellDatas = MatrixUtilsDatasService.getCellDatas(
 			xDimension,
@@ -388,26 +401,13 @@ export class DimensionsDatasService {
 			yValues);
 
 		this.dimensionsDatas.matrixDatas.matrixCellDatas = cellDatas;
-
-		const t2 = performance.now();
-
-		// Keep a copy of the global object
-		// We must clonedeep for proba values that are taken when user expand node
-		// So we can not optimize here with assign
-		this.dimensionsDatas.allMatrixDatas = _.cloneDeep(this.dimensionsDatas.matrixDatas);
-
-		const t3 = performance.now();
-		// console.log("cloneDeep " + (t3 - t2) + " milliseconds.");
-
-		// console.log('TCL: DimensionssDatasService -> getMatrixDatas -> this.dimensionsDatas.matrixDatas', this.dimensionsDatas);
-
-		// Not usefull !!
-		// this.eventsService.emitDimensionsDatasChanged();
+		this.dimensionsDatas.allMatrixDatas.matrixCellDatas = cellDatas;
+		this.dimensionsDatas.allMatrixCellDatas = cellDatas;
 
 		const t1 = performance.now();
-		// console.log("getMatrixDatas " + (t1 - t0) + " milliseconds.");
+		console.log("getMatrixDatas " + (t1 - t0) + " milliseconds.");
 		// console.log("TCL: DimensionsDatasService -> getMatrixDatas -> this.dimensionsDatas.matrixDatas", JSON.stringify(this.dimensionsDatas.matrixDatas))
-		return this.dimensionsDatas.matrixDatas;
+		return (t1 - t0);
 	}
 
 }

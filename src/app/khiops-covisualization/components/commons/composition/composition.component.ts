@@ -37,7 +37,7 @@ export class CompositionComponent implements OnInit, OnDestroy {
 	@Input() position: number;
 	@Input() selectedDimension: DimensionVO;
 
-	@Output() selectedCompositionChanged: EventEmitter<any> = new EventEmitter();
+	@Output() selectedCompositionChanged: EventEmitter < any > = new EventEmitter();
 
 	compositionDisplayedColumns = [{
 		headerName: 'cluster',
@@ -137,8 +137,8 @@ export class CompositionComponent implements OnInit, OnDestroy {
 	}
 
 	onSelectRowChanged(item: any) {
-		// Just for highlight
-		this.selectedComposition = item;
+		// find composition in local to get external datas
+		this.selectedComposition = this.compositionValues.find(e => e.cluster === item.cluster);
 		this.selectedCompositionChanged.emit(this.selectedComposition);
 	}
 

@@ -230,7 +230,7 @@ ag-grid-aurelia {
 
 .ag-center-cols-viewport {
 	width: calc(100% - 1px);
-	overflow-x: auto;
+	overflow-x: hidden !important;
 }
 
 .ag-body-horizontal-scroll-viewport {

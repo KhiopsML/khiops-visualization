@@ -1,7 +1,6 @@
 import {
 	Component,
 	OnInit,
-	NgZone,
 	ViewChild,
 	OnDestroy,
 	ViewEncapsulation,
@@ -40,9 +39,6 @@ import {
 	MatDialogConfig
 } from '@angular/material/dialog';
 import {
-	ReleaseNotesComponent
-} from '@khiops-library/components/release-notes/release-notes.component';
-import {
 	ImportExtDatasService
 } from '@khiops-covisualization/providers/import-ext-datas.service';
 import {
@@ -55,6 +51,15 @@ import {
 	KhiopsLibraryService
 } from '@khiops-library/providers/khiops-library.service';
 import pjson from 'package.json';
+import {
+	TreenodesService
+} from '@khiops-covisualization/providers/treenodes.service';
+import {
+	ClustersService
+} from '@khiops-covisualization/providers/clusters.service';
+import {
+	AnnotationService
+} from '@khiops-covisualization/providers/annotation.service';
 
 @Component({
 	selector: 'app-home-layout',
@@ -69,17 +74,18 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 	}) appProjectView: ElementRef < HTMLElement > ;
 
 	fontSizeClass: string;
-	private _appDatas;
 	public get appDatas() {
-		return this._appDatas;
+		return this.appService.getDatas();
 	}
 	@Input()
 	public set appDatas(value) {
-		this._appDatas = value;
-		this.onFileLoaderDataChanged(value);
+		this.appService.setFileDatas(value);
+		if (value) {
+			this.initializeHome();
+			this.onFileLoaderDataChanged(value);
+		}
 	}
 	activeTab = AppConfig.covisualizationCommon.HOME.ACTIVE_TAB_INDEX;
-	translations: any;
 
 	@ViewChild('fileLoader', {
 		static: false
@@ -120,11 +126,13 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 		private dialogRef: MatDialog,
 		private translate: TranslateService,
 		private snackBar: MatSnackBar,
+		private clustersService: ClustersService,
+		private annotationService: AnnotationService,
 		private khiopsLibraryService: KhiopsLibraryService,
 		public selectableService: SelectableService,
 		private importExtDatasService: ImportExtDatasService,
 		private dimensionsService: DimensionsDatasService,
-		private ngzone: NgZone,
+		private treenodesService: TreenodesService,
 		private eventsService: EventsService,
 		private dialog: MatDialog
 	) {
@@ -167,6 +175,9 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 		if (e.index !== 2) {
 			this.openContextView = false;
 		}
+		if (e.index === 0) {
+			this.initializeServices();
+		}
 
 		// init selected area to undefined
 		this.selectableService.initialize();
@@ -181,6 +192,14 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 		this.khiopsLibraryService.trackEvent('page_view', 'visit', this.appVersion);
 	}
 
+	ngAfterViewInit() {
+		if (AppConfig.debugFile) {
+			setTimeout(() => {
+				this.fileLoader.loadDebugFile();
+			}, 100);
+		}
+	}
+
 	onToggleNavDrawerChanged(mustReload: boolean) {
 		this.opened = !this.opened;
 
@@ -191,12 +210,9 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 
 	onFileLoaderDataChanged(datas) {
 		this.openContextView = false;
-
 		this.selectedTab = undefined;
 		this.activeTab = 0;
-
 		this.currentDatas = datas;
-
 		this.appService.setFileDatas(datas);
 		if (datas) {
 			this.initializeHome();
@@ -213,7 +229,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 	initializeHome() {
 		this.isCompatibleJson = this.appService.isCompatibleJson();
 		const isCollidingJson = this.appService.isCollidingJson();
-		this.isContextDimensions = this.dimensionsService.isContextDimensions();
 
 		if (!this.isCompatibleJson) {
 			this.snackBar.open(this.translate.get('SNACKS.OPEN_FILE_ERROR'), undefined, {
@@ -226,10 +241,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 				panelClass: 'success'
 			});
 		}
-
-		// @ts-ignore
-		this.appProjectView && this.appProjectView.initialize()
-
 		if (isCollidingJson) {
 			this.snackBar.open(this.translate.get('SNACKS.COLLIDING_FILE'), undefined, {
 				duration: 10000,
@@ -237,10 +248,21 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 			});
 		}
 
-		this.dimensionsService.initialize();
+		// @ts-ignore
+		this.appProjectView && this.appProjectView.initialize();
 
+		this.initializeServices();
+
+	}
+
+	initializeServices() {
+		this.dimensionsService.initialize();
+		this.annotationService.initialize()
+		this.clustersService.initialize()
+		this.treenodesService.initialize();
 		this.importExtDatasService.initExtDatasFiles();
 		this.openLoadExternalDataDialog();
+		this.isContextDimensions = this.dimensionsService.isContextDimensions();
 	}
 
 	openLoadExternalDataDialog() {
@@ -275,7 +297,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 
 	openFile(filename) {
 		this.dialogRef.closeAll();
-
 		this.fileLoader.openFile(filename);
 	}
 

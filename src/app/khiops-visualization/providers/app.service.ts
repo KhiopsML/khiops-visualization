@@ -102,7 +102,9 @@ export class AppService {
 		// AppConfig.common.LIFT_CURVE.LIFT_CURVE_SMOOTH = parseInt(localStorage.getItem(AppConfig.common.GLOBAL.LS_ID + 'LIFT_CURVE_SMOOTH'), 10) || AppConfig.common.LIFT_CURVE.LIFT_CURVE_SMOOTH;
 		AppConfig.visualizationCommon.LIFT_CURVE.LIFT_CURVE_SMOOTH = AppConfig.visualizationCommon.LIFT_CURVE.LIFT_CURVE_SMOOTH;
 
-		AppConfig.common = { ...AppConfig.visualizationCommon };
+		AppConfig.common = {
+			...AppConfig.visualizationCommon
+		};
 
 		this.khiopsLibraryService.setAppConfig(AppConfig);
 	}
@@ -170,13 +172,15 @@ export class AppService {
 
 	isCompatibleJson(): boolean {
 		if (this.appDatas && this.appDatas.datas) {
-			if (this.appDatas.datas.preparationReport ||
-				this.appDatas.datas.textPreparationReport ||
-				this.appDatas.datas.treePreparationReport ||
-				this.appDatas.datas.bivariatePreparationReport ||
-				this.appDatas.datas.evaluationReport ||
-				this.appDatas.datas.trainEvaluationReport ||
-				this.appDatas.datas.testEvaluationReport) {
+
+			if (this.appDatas.datas.tool === "Khiops" &&
+				(this.appDatas.datas.preparationReport ||
+					this.appDatas.datas.textPreparationReport ||
+					this.appDatas.datas.treePreparationReport ||
+					this.appDatas.datas.bivariatePreparationReport ||
+					this.appDatas.datas.evaluationReport ||
+					this.appDatas.datas.trainEvaluationReport ||
+					this.appDatas.datas.testEvaluationReport)) {
 				return true;
 			} else {
 				return false;

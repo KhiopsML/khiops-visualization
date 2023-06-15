@@ -52,8 +52,6 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 
 	@Output() selectTreeItemChanged: EventEmitter < any > = new EventEmitter();
 
-	@ViewChild('treeView') treeView: ElementRef < HTMLElement > ;
-
 	treeSelectedNodeChangedSub: any;
 	componentType = 'kvtree'; // needed to copy datas
 	tree: any;

@@ -115,25 +115,27 @@ export class FileLoaderService {
 		// Co visualization files
 		// ======================
 		//
-		const urlKC = './assets/mocks/kc/cc.json';
+		// const urlKC = './assets/mocks/kc/cc.json';
 		// const urlKC = './assets/mocks/kc/Coclustering.json';
 		// const urlKC = './assets/mocks/kc/Co-simple-2vars.json';
-		// const urlKC = './assets/mocks/kc/Coclustering-5.json';
+		// const urlKC = './assets/mocks/kc/Coclustering-6.json';
 		// const urlKC = './assets/mocks/kc/Coclustering-4.json';
 		// const urlKC = './assets/mocks/kc/co-IrisMissing.json';
 		// const urlKC = './assets/mocks/kc/adult2var.json';
 		// const urlKC = './assets/mocks/kc/sample3.json';
+		// const urlKC = './assets/mocks/kc/DataNoisyCorrelatedN1000000_C1000_V10_L5Coclustering.json';
 		// const urlKC = './assets/mocks/kc/sample0.json';
 		// const urlKC = './assets/mocks/kc/WebSpamCoclustering18mb.json';
 		// const urlKC = './assets/mocks/kc/adultmissing.json';
 		// const urlKC = './assets/mocks/kc/mushroom.json';
+		// const urlKC = './assets/mocks/kc/SimplifiedCoclusteringIrisOldFormat_BugUndefined.json';
 		// const urlKC = './assets/mocks/kc/h-Coclustering.json';
 		// const urlKC = './assets/mocks/kc/irismissing.json';
 		// const urlKC = './assets/mocks/kc/zero-except.json';
 		// const urlKC = './assets/mocks/kc/AdultSmall.json';
 		// const urlKC = './assets/mocks/kc/VerbNounCoclustering27mo.json';
 		// const urlKC = './assets/mocks/kc/NovaCoclustering4mb.json';
-		// const urlKC = './assets/mocks/kc/Coclustering-100x100.json';
+		const urlKC = './assets/mocks/kc/Coclustering-100x100.json';
 		// const urlKC = './assets/mocks/kc/ext-datas_Coclustering.json';
 		// const urlKC = './assets/mocks/kc/ext-CC_Coclustering.json';
 		// const urlKC = './assets/mocks/kc/CC_3_Coclustering.json';
@@ -219,8 +221,8 @@ export class FileLoaderService {
 			let reader = new FileReader()
 
 			reader.addEventListener('loadend', async (e) => {
-				console.log(e.target.result.toString().length);
 				this.fileLoaderDatas.isLoadingDatas = false;
+				// @ts-ignore
 				this.fileLoaderDatas.datas = await JSON.parse(e.target.result.toString());
 				this.fileLoaderDatas.datas.filename = filename;
 				resolve(this.fileLoaderDatas.datas);

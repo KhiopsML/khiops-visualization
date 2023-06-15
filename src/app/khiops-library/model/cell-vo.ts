@@ -1,9 +1,6 @@
-import {
-	UtilsService
-} from '../providers/utils.service';
+import { UtilsService } from "../providers/utils.service";
 
 export class CellVO {
-
 	/*
 		WARNING
 		Do not make nested objects here
@@ -16,10 +13,10 @@ export class CellVO {
 	cellFreqHash: {};
 	displayedFreqValue: number;
 	displayedValue: {
-		type: string,
-		value: number,
-		extra : 0,
-		ef: number
+		type: string;
+		value: number;
+		extra: 0;
+		ef: number;
 	};
 	targetCellFreq: number;
 	index: number;
@@ -30,22 +27,21 @@ export class CellVO {
 	yCanvas: number;
 	wCanvas: number;
 	hCanvas: number;
-	matrixTotal: number[];
 	x: {
-		standard: number,
-		frequency: number
+		standard: number;
+		frequency: number;
 	};
 	y: {
-		standard: number,
-		frequency: number
+		standard: number;
+		frequency: number;
 	};
 	w: {
-		standard: number,
-		frequency: number
+		standard: number;
+		frequency: number;
 	};
 	h: {
-		standard: number,
-		frequency: number
+		standard: number;
+		frequency: number;
 	};
 	concatName: string[];
 	xaxisPart: string;
@@ -56,77 +52,82 @@ export class CellVO {
 	yDisplayaxisPart: string;
 	xnamePart: string;
 	ynamePart: string;
-	cellFreqs: any[];
-	infosMutValue: any[];
-	infosMutExtra: any[];
-	cellHellingerValue: any[];
-	cellHellingerAbsoluteValue: any[];
-	cellProbs: any[];
-	cellProbsRev: any[];
 	coverage;
-	freqColVals: any[];
-	freqLineVals: any[];
 
-	constructor(values ? ) {
-		this.xCanvas = values && values.xCanvas || 0;
-		this.yCanvas = values && values.yCanvas || 0;
-		this.wCanvas = values && values.wCanvas || 0;
-		this.hCanvas = values && values.hCanvas || 0;
-		this.cellFreq = values && values.cellFreq || 0;
-		this.displayedValue = values && values.displayedValue;
-		this.targetCellFreq = values && values.targetCellFreq || 0;
-		this.index = values && values.index || 0;
-		this.id = this.index;
-		this.matrixTotal = values && values.matrixTotal || [];
+	// Important to init those variables needed at construction
+	cellProbs: any[] = [];
+	cellProbsRev: any[] = [];
+	freqColVals: any[] = [];
+	freqLineVals: any[] = [];
+	cellFreqs: any[] = [];
+	infosMutValue: any[] = [];
+	infosMutExtra: any[] = [];
+	cellHellingerValue: any[] = [];
+	cellHellingerAbsoluteValue: any[] = [];
+	matrixTotal: number[] = [];
 
-		// Generate id for grid
-		this._id = this.index;
-
-		this.cellInterest = values && values.cellInterest || 0;
-		this.cellTargetProb = values && values.cellTargetProb || 0;
-
-		this.x = {
-			standard: values && values.x && values.x.standard || 0,
-			frequency: values && values.x && values.x.frequency || 0
-		};
-		this.y = {
-			standard: values && values.y && values.y.standard || 0,
-			frequency: values && values.y && values.y.frequency || 0
-		};
-		this.w = {
-			standard: values && values.w && values.w.standard || 0,
-			frequency: values && values.w && values.w.frequency || 0
-		};
-		this.h = {
-			standard: values && values.h && values.h.standard || 0,
-			frequency: values && values.h && values.h.frequency || 0
-		};
-
-		this.concatName = values && values.concatName || [];
-
-		this.cellFreqs = values && values.cellFreqs || [];
-		this.infosMutValue = values && values.infosMutValue || [];
-		this.infosMutExtra = values && values.infosMutExtra || [];
-		this.cellHellingerValue = values && values.cellHellingerValue || [];
-		this.cellHellingerAbsoluteValue = values && values.cellHellingerAbsoluteValue || [];
-		this.cellProbs = values && values.cellProbs || [];
-		this.cellProbsRev = values && values.cellProbsRev || [];
-		this.freqColVals = values && values.freqColVals || [];
-		this.freqLineVals = values && values.freqLineVals || [];
-
-		this.xnamePart = values && values.xnamePart || '';
-		this.ynamePart = values && values.ynamePart || '';
-
-		this.xaxisPart = values && values.xaxisPart || '';
-		this.yaxisPart = values && values.yaxisPart || '';
-		this.xaxisPartValues = values && values.xaxisPart || [];
-		this.yaxisPartValues = values && values.yaxisPart || [];
-		this.xDisplayaxisPart = values && values.xDisplayaxisPart || this.xaxisPart;
-		this.yDisplayaxisPart = values && values.yDisplayaxisPart || this.yaxisPart;
-
-		this.cellFreqHash = values && values.cellFreqHash || {};
-
+	constructor(values?) {
 		if (values) {
+			this.xCanvas = (values && values.xCanvas) || 0;
+			this.yCanvas = (values && values.yCanvas) || 0;
+			this.wCanvas = (values && values.wCanvas) || 0;
+			this.hCanvas = (values && values.hCanvas) || 0;
+			this.cellFreq = (values && values.cellFreq) || 0;
+			this.displayedValue = values && values.displayedValue;
+			this.targetCellFreq = (values && values.targetCellFreq) || 0;
+			this.index = (values && values.index) || 0;
+			this.id = this.index;
+			this.matrixTotal = (values && values.matrixTotal) || [];
+
+			// Generate id for grid
+			this._id = this.index;
+
+			this.cellInterest = (values && values.cellInterest) || 0;
+			this.cellTargetProb = (values && values.cellTargetProb) || 0;
+
+			this.x = {
+				standard: (values && values.x && values.x.standard) || 0,
+				frequency: (values && values.x && values.x.frequency) || 0,
+			};
+			this.y = {
+				standard: (values && values.y && values.y.standard) || 0,
+				frequency: (values && values.y && values.y.frequency) || 0,
+			};
+			this.w = {
+				standard: (values && values.w && values.w.standard) || 0,
+				frequency: (values && values.w && values.w.frequency) || 0,
+			};
+			this.h = {
+				standard: (values && values.h && values.h.standard) || 0,
+				frequency: (values && values.h && values.h.frequency) || 0,
+			};
+
+			this.concatName = (values && values.concatName) || [];
+			this.freqColVals = (values && values.freqColVals) || [];
+			this.freqLineVals = (values && values.freqLineVals) || [];
+
+			this.xnamePart = (values && values.xnamePart) || "";
+			this.ynamePart = (values && values.ynamePart) || "";
+
+			this.xaxisPart = (values && values.xaxisPart) || "";
+			this.yaxisPart = (values && values.yaxisPart) || "";
+			this.xaxisPartValues = (values && values.xaxisPart) || [];
+			this.yaxisPartValues = (values && values.yaxisPart) || [];
+			this.xDisplayaxisPart =
+				(values && values.xDisplayaxisPart) || this.xaxisPart;
+			this.yDisplayaxisPart =
+				(values && values.yDisplayaxisPart) || this.yaxisPart;
+
+			this.cellFreqHash = (values && values.cellFreqHash) || {};
+			this.cellFreqs = (values && values.cellFreqs) || [];
+			this.infosMutValue = (values && values.infosMutValue) || [];
+			this.infosMutExtra = (values && values.infosMutExtra) || [];
+			this.cellHellingerAbsoluteValue =
+				(values && values.cellHellingerAbsoluteValue) || [];
+			this.cellProbs = (values && values.cellProbs) || [];
+			this.cellProbsRev = (values && values.cellProbsRev) || [];
+			this.cellHellingerValue =
+				(values && values.cellHellingerValue) || [];
 			this.formatValues();
 		}
 	}
@@ -169,7 +170,6 @@ export class CellVO {
 	}
 
 	merge(obj, way, nodeVO) {
-
 		if (obj.x.standard < this.x.standard) {
 			this.x.standard = obj.x.standard;
 		}
@@ -183,13 +183,15 @@ export class CellVO {
 			this.y.frequency = obj.y.frequency;
 		}
 
-		if (way === 0) { // x node
+		if (way === 0) {
+			// x node
 			this.w.standard = this.w.standard + obj.w.standard;
 			this.w.frequency = this.w.frequency + obj.w.frequency;
 			this.xaxisPart = nodeVO.name;
 			this.xDisplayaxisPart = nodeVO.shortDescription;
 		}
-		if (way === 1) { // y node
+		if (way === 1) {
+			// y node
 			this.h.standard = this.h.standard + obj.h.standard;
 			this.h.frequency = this.h.frequency + obj.h.frequency;
 			this.yaxisPart = nodeVO.name;
@@ -197,17 +199,27 @@ export class CellVO {
 		}
 
 		this.cellFreq = this.cellFreq + obj.cellFreq;
-		this.cellFreqs = UtilsService.sumArrayItems([this.cellFreqs, obj.cellFreqs]);
+		this.cellFreqs = UtilsService.sumArrayItems([
+			this.cellFreqs,
+			obj.cellFreqs,
+		]);
 
-		if (way === 0) { // x node
-			this.freqColVals = UtilsService.sumArrayItems([this.freqColVals, obj.freqColVals]);
+		if (way === 0) {
+			// x node
+			this.freqColVals = UtilsService.sumArrayItems([
+				this.freqColVals,
+				obj.freqColVals,
+			]);
 		}
-		if (way === 1) { // y node
-			this.freqLineVals = UtilsService.sumArrayItems([this.freqLineVals, obj.freqLineVals]);
+		if (way === 1) {
+			// y node
+			this.freqLineVals = UtilsService.sumArrayItems([
+				this.freqLineVals,
+				obj.freqLineVals,
+			]);
 		}
 
 		// Reinit zero exceptions informations on merge
 		this.infosMutExtra = [];
 	}
-
 }

@@ -6,7 +6,7 @@
 		</as-split-area>
 		<as-split-area id="matrix-container-comp-matrix-wrapper" [size]="sizes[sizeId][1]" order="2"
 			[visible]="viewsLayout.isCoocurenceChecked">
-			<div fxFlexFill fxLayout="column" class="selected-area-inner-div">
+			<div fxFlexFill fxLayout="column" class="selected-area-inner-div" [ngClass]="{'fullscreen': isFullscreen}">
 				<div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
 					<div fxFlex fxLayout="row" fxLayoutAlign="start center">
 						<div fxFlex fxLayout="row" fxLayoutAlign="start center">
@@ -26,6 +26,8 @@
 								<span>{{ opt | translate }}</span>
 							</mat-button-toggle>
 						</mat-button-toggle-group>
+						<kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">
+						</kl-btn-fullscreen>
 					</div>
 				</div>
 				<kl-matrix-canvas #matrixCanvas fxFlex fxLayout="row" [id]="'matrix-container-comp-matrix-wrapper'"
