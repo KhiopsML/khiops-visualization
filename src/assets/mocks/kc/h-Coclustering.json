@@ -1,0 +1,232 @@
+{
+	"tool": "Khiops Coclustering",
+	"version": "9.0",
+	"coclusteringReport": {
+		"summary": {
+			"instances": 150,
+			"cells": 12,
+			"nullCost": 1210.733359,
+			"cost": 1210.376866,
+			"level": 0.0002944440032,
+			"initialDimensions": 2,
+			"frequencyVariable": "",
+			"dictionary": "Iris",
+			"database": "C:\\Program Files\\khiops\\samples\\Iris\\Iris.txt"
+		},
+		"dimensionSummaries": [
+			{
+				"name": "SepalLength",
+				"type": "Numerical",
+				"parts": 4,
+				"initialParts": 4,
+				"values": 150,
+				"interest": 1,
+				"description": "",
+				"min": 4.3,
+				"max": 7.9
+			},
+			{
+				"name": "SepalWidth",
+				"type": "Numerical",
+				"parts": 3,
+				"initialParts": 3,
+				"values": 150,
+				"interest": 1,
+				"description": "",
+				"min": 2,
+				"max": 4.4
+			}
+		],
+		"dimensionPartitions": [
+			{
+				"name": "SepalLength",
+				"type": "Numerical",
+				"intervals": [
+					{
+						"cluster": "]-inf;4.95]",
+						"bounds": [4.3,4.95]
+					},
+					{
+						"cluster": "]4.95;5.45]",
+						"bounds": [4.95,5.45]
+					},
+					{
+						"cluster": "]5.45;6.35]",
+						"bounds": [5.45,6.35]
+					},
+					{
+						"cluster": "]6.35;+inf[",
+						"bounds": [6.35,7.9]
+					}
+				]
+			},
+			{
+				"name": "SepalWidth",
+				"type": "Numerical",
+				"intervals": [
+					{
+						"cluster": "]-inf;2.95]",
+						"bounds": [2,2.95]
+					},
+					{
+						"cluster": "]2.95;3.25]",
+						"bounds": [2.95,3.25]
+					},
+					{
+						"cluster": "]3.25;+inf[",
+						"bounds": [3.25,4.4]
+					}
+				]
+			}
+		],
+		"dimensionHierarchies": [
+			{
+				"name": "SepalLength",
+				"type": "Numerical",
+				"clusters": [
+					{
+						"cluster": "]-inf;4.95]",
+						"parentCluster": "]-inf;5.45]",
+						"frequency": 22,
+						"interest": 0.404966,
+						"hierarchicalLevel": 1,
+						"rank": 1,
+						"hierarchicalRank": 7,
+						"isLeaf": true
+					},
+					{
+						"cluster": "]4.95;5.45]",
+						"parentCluster": "]-inf;5.45]",
+						"frequency": 30,
+						"interest": 0.977795,
+						"hierarchicalLevel": 1,
+						"rank": 3,
+						"hierarchicalRank": 7,
+						"isLeaf": true
+					},
+					{
+						"cluster": "]5.45;6.35]",
+						"parentCluster": "]5.45;+inf[",
+						"frequency": 56,
+						"interest": 1,
+						"hierarchicalLevel": 1,
+						"rank": 5,
+						"hierarchicalRank": 7,
+						"isLeaf": true
+					},
+					{
+						"cluster": "]6.35;+inf[",
+						"parentCluster": "]5.45;+inf[",
+						"frequency": 42,
+						"interest": 0.427171,
+						"hierarchicalLevel": 1,
+						"rank": 7,
+						"hierarchicalRank": 7,
+						"isLeaf": true
+					},
+					{
+						"cluster": "]-inf;5.45]",
+						"parentCluster": "]-inf;+inf[",
+						"frequency": 52,
+						"interest": 0.735444,
+						"hierarchicalLevel": -8.80164,
+						"rank": 2,
+						"hierarchicalRank": 6,
+						"isLeaf": false
+					},
+					{
+						"cluster": "]-inf;+inf[",
+						"parentCluster": "",
+						"frequency": 150,
+						"interest": 0.747895,
+						"hierarchicalLevel": 0,
+						"rank": 4,
+						"hierarchicalRank": 2,
+						"isLeaf": false
+					},
+					{
+						"cluster": "]5.45;+inf[",
+						"parentCluster": "]-inf;+inf[",
+						"frequency": 98,
+						"interest": 0.754502,
+						"hierarchicalLevel": -13.7311,
+						"rank": 6,
+						"hierarchicalRank": 4,
+						"isLeaf": false
+					}
+				]
+			},
+			{
+				"name": "SepalWidth",
+				"type": "Numerical",
+				"clusters": [
+					{
+						"cluster": "]-inf;2.95]",
+						"parentCluster": "]-inf;+inf[",
+						"frequency": 57,
+						"interest": 0.451361,
+						"hierarchicalLevel": 1,
+						"rank": 1,
+						"hierarchicalRank": 7,
+						"isLeaf": true
+					},
+					{
+						"cluster": "]2.95;3.25]",
+						"parentCluster": "]2.95;+inf[",
+						"frequency": 51,
+						"interest": 1,
+						"hierarchicalLevel": 1,
+						"rank": 3,
+						"hierarchicalRank": 7,
+						"isLeaf": true
+					},
+					{
+						"cluster": "]3.25;+inf[",
+						"parentCluster": "]2.95;+inf[",
+						"frequency": 42,
+						"interest": 0.548639,
+						"hierarchicalLevel": 1,
+						"rank": 5,
+						"hierarchicalRank": 7,
+						"isLeaf": true
+					},
+					{
+						"cluster": "]-inf;+inf[",
+						"parentCluster": "",
+						"frequency": 150,
+						"interest": 0.665136,
+						"hierarchicalLevel": -19.3022,
+						"rank": 2,
+						"hierarchicalRank": 3,
+						"isLeaf": false
+					},
+					{
+						"cluster": "]2.95;+inf[",
+						"parentCluster": "]-inf;+inf[",
+						"frequency": 93,
+						"interest": 0.796159,
+						"hierarchicalLevel": -11.4279,
+						"rank": 4,
+						"hierarchicalRank": 5,
+						"isLeaf": false
+					}
+				]
+			}
+		],
+		"cellPartIndexes": [
+			[2,0],
+			[3,1],
+			[1,2],
+			[0,1],
+			[3,0],
+			[2,2],
+			[2,1],
+			[3,2],
+			[0,0],
+			[0,2],
+			[1,0],
+			[1,1]
+		],
+		"cellFrequencies": [37,25,23,14,12,10,9,5,4,4,4,3]
+	}
+}

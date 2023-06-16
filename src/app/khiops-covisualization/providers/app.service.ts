@@ -127,7 +127,7 @@ export class AppService {
 	}
 
 	isCompatibleJson(): boolean {
-		return this.appDatas && this.appDatas.datas && this.appDatas.datas.coclusteringReport;
+		return this.appDatas && this.appDatas.datas && this.appDatas.datas.tool === "Khiops Coclustering" && this.appDatas.datas.coclusteringReport;
 	}
 
 	isCollidingJson(): boolean {
@@ -241,9 +241,11 @@ export class AppService {
 	}
 
 	enableExtDatasView(dimension: string) {
-		const currentDim = this.viewsLayout.dimensionsViewsLayoutsVO.find(e => e.name === dimension)
-		currentDim.isExternalDataChecked = true;
-		this.saveViewsLayout(this.viewsLayout);
+		const currentDim = this.viewsLayout?.dimensionsViewsLayoutsVO?.find(e => e.name === dimension)
+		if (currentDim) {
+			currentDim.isExternalDataChecked = true;
+			this.saveViewsLayout(this.viewsLayout);
+		}
 	}
 
 	saveViewsLayout(viewsLayout: ViewLayoutVO) {

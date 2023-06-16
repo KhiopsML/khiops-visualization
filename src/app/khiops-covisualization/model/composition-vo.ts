@@ -15,8 +15,10 @@ export class CompositionVO {
 		this.cluster = object.shortDescription || currentDimensionHierarchyCluster.shortDescription;
 		this.name = object.shortDescription;
 		this.value = object.values[index];
+		this.value = this.value.replace(/[\n\r]+/g, ''); // remove carriage return #53
 		this.typicality = object.valueTypicalities[index];
 		this.frequency = object.valueFrequencies[index];
+
 		this.externalData = externalData && externalData[this.value] || undefined;
 
 		// Get rank and name if it has been changed from dimensionHierarchies array

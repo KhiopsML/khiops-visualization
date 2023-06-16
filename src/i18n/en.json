@@ -32,6 +32,8 @@
 		"BETA": "Beta versions"
 	},
 	"SNACKS": {
+		"EXTERNAL_DATA_ADDED":"External datas added",
+		"EXTERNAL_DATA_ALREADY_ADDED":"External datas already added",
 		"OPEN_RELEASE_NOTES_ERROR": "Error retrieving release notes",
 		"SCREENSHOT_COPIED": "Screenshot copied to clipboard",
 		"COPY_ERROR": "Copy error",

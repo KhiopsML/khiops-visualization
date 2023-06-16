@@ -207,7 +207,6 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
 
 	onSelectedMatrixTabChanged(e) {
 		const matrixOptionsToggle = this.configService.getRootElementDom().querySelector<HTMLElement>('#matrix-option-toggle')
-		// const matrixOptionsToggle = document.getElementById('matrix-option-toggle');
 		if (e.index === 1) {
 			// this.khiopsLibraryService.trackEvent('click', 'matrix_tab', 'cells');
 			matrixOptionsToggle.style.display = 'none';

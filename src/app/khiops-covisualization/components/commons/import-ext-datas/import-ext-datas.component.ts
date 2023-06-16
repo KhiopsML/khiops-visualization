@@ -120,7 +120,9 @@ export class ImportExtDatasComponent implements OnInit {
 
 	onGridCheckboxChanged(event) {
 		const currentField = this.fieldsToImport.values.find(e => e.name === event.data.name);
-		currentField.import = event.state;
+		if (currentField) {
+			currentField.import = event.state;
+		}
 	}
 
 	constructFieldsToImportTable() {

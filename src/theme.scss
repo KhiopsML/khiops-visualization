@@ -179,6 +179,7 @@ $theme-light: mat-light-theme($primary, $accent, $warn);
 	--accent: #2196f3;
 	--selected: #7abdf3;
 	--bgTooltip: #444;
+	--chart-border: #555;
 }
 
 [data-color-scheme="light"] {
@@ -200,6 +201,7 @@ $theme-light: mat-light-theme($primary, $accent, $warn);
 	--accent: #880e4f;
 	--selected: #7abdf3;
 	--bgTooltip: #444;
+	--chart-border: #e5e5e5;
 }
 
 ::ng-deep mat-dialog-container {

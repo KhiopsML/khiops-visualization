@@ -18,13 +18,6 @@ import {
 	FileVO
 } from '../../model/file-vo';
 
-// TODO remove electron
-// import {
-// 	ElectronService
-// } from '../../providers/electron.service';
-
-let dialog: any;
-
 @Component({
 	selector: 'kl-import-file-loader',
 	templateUrl: './import-file-loader.component.html',
@@ -37,15 +30,10 @@ export class ImportFileLoaderComponent implements OnInit {
 	isLoadingDatas: boolean;
 
 	constructor(private ngzone: NgZone,
-		// private electronService: ElectronService,
 		private importFileLoaderService: ImportFileLoaderService,
 		private snackBar: MatSnackBar,
 		public translate: TranslateService) {
 
-		// TODO remove electron
-		// if (this.electronService.isElectron()) {
-		// 	dialog = require('@electron/remote').dialog;
-		// }
 	}
 
 	ngOnInit() {
@@ -53,32 +41,17 @@ export class ImportFileLoaderComponent implements OnInit {
 	}
 
 	openFileDialog(e) {
-		// TODO remove electron
-		// dialog.showOpenDialog({
-		// 	properties: ['openFile'],
-		// 	filters: [{
-		// 		name: 'TXT',
-		// 		extensions: ['txt']
-		// 	}]
-		// }).then(result => {
-		// 	if (result && !result.canceled && result.filePaths) {
-		// 		this.openFile(result.filePaths[0]);
-		// 		return;
-		// 	}
-		// }).catch(err => {
-		// 	console.log(err);
-		// });
 		if (e.target.files) this.openFile(e.target.files[0]);
 	}
 
-	openFile(filename) {
+	openFile(file) {
 
-		if (filename) {
+		if (file) {
 			this.isLoadingDatas = true;
 			setTimeout(() => {
 				this.ngzone.run(
 					() => {
-						this.importFileLoaderService.readFile(filename).then((fileDatas: FileVO) => {
+						this.importFileLoaderService.readFile(file).then((fileDatas: FileVO) => {
 							this.filename = fileDatas.filename;
 							this.datasLoaded.emit(fileDatas);
 							this.isLoadingDatas = false;

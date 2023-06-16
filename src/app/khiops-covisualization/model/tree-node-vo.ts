@@ -25,11 +25,11 @@ export class TreeNodeVO {
 	children: Array < TreeNodeVO > ;
 	description: string;
 
-	childrenList: any[];
-	childrenLeafIndexes: any[];
-	childrenNodesCollapsed: any[];
-	childrenLeafList: any[];
-	// directChildren: any[];
+	childrenList: any[] = [];
+	childrenLeafIndexes: any[]= [];
+	childrenNodesCollapsed: any[]= [];
+	childrenLeafList: any[]= [];
+
 	isCollapsed: boolean;
 	matrixIndex: any;
 	isParentCluster = false;
@@ -44,8 +44,6 @@ export class TreeNodeVO {
 
 		// Generate id for grid
 		this._id = object.cluster;
-
-		// this.id = object && (object.cluster + hierarchy + object.parentCluster) || undefined;
 		this.nbClusters = nbClusters || '';
 		this.leafPosition = leafPosition || -1;
 		this.hierarchy = dimension.name || '';
@@ -54,7 +52,7 @@ export class TreeNodeVO {
 		this.bounds = this.cluster;
 		this.bounds = this.bounds.replace(']-inf', '[' + dimension.min);
 		this.bounds = this.bounds.replace('+inf[', dimension.max + ']');
-		this.bounds = this.bounds.replace('*', 'Missing U ');
+		this.bounds = this.bounds.replace('/*/g', 'Missing U ');
 
 		this.name = object && object.name || this.cluster;
 		this.shortDescription = object && object.shortDescription || this.bounds;
@@ -69,11 +67,6 @@ export class TreeNodeVO {
 		this.rank = object && object.rank || undefined;
 		this.hierarchicalRank = object && object.hierarchicalRank || undefined;
 		this.isLeaf = object && object.isLeaf || false;
-		this.childrenList = [];
-		this.childrenLeafList = [];
-		this.childrenNodesCollapsed = [];
-		this.childrenLeafIndexes = [];
-		// this.directChildren = [];
 
 		if (this.parentCluster === '') {
 			this.isParentCluster = true;

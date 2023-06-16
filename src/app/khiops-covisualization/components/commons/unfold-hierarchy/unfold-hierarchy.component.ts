@@ -24,7 +24,12 @@ import {
 import {
 	ClustersService
 } from '@khiops-covisualization/providers/clusters.service';
-import { AppConfig } from 'src/environments/environment';
+import {
+	AppConfig
+} from 'src/environments/environment';
+import {
+	UtilsService
+} from '@khiops-library/providers/utils.service';
 
 @Component({
 	selector: 'app-unfold-hierarchy',
@@ -118,8 +123,9 @@ export class UnfoldHierarchyComponent implements OnInit {
 		private treenodesService: TreenodesService,
 		private clustersService: ClustersService,
 		private khiopsLibraryService: KhiopsLibraryService,
-		private dialogRef: MatDialogRef < UnfoldHierarchyComponent > ) {
+		private dialogRef: MatDialogRef<UnfoldHierarchyComponent>) {
 
+		this.treenodesService.initSavedUnfoldRank();
 		this.hierarchyDatas = this.treenodesService.getHierarchyDatas();
 
 		this.unfoldHierarchyTableTitle = this.translate.get('GLOBAL.NB_OF_CLUSTERS_PER_DIM');
@@ -180,6 +186,9 @@ export class UnfoldHierarchyComponent implements OnInit {
 		// this.khiopsLibraryService.trackEvent('click', 'unfold_hierarchy', 'nb_clusters', this.currentUnfoldHierarchy);
 
 		this.loadingHierarchy = true;
+
+		UtilsService.setWaitingCursor();
+
 		setTimeout(() => {
 			this.treenodesService.setSelectedUnfoldHierarchy(this.currentUnfoldHierarchy);
 			this.treenodesService.unfoldHierarchy(this.previousHierarchyRank, this.currentUnfoldHierarchy);

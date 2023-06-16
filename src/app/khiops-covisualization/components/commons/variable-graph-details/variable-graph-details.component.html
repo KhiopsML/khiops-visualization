@@ -1,6 +1,6 @@
-<div id="variable-graph-details-comp" fxLayout="column" fxFlexFill>
+<div id="variable-graph-details-comp" fxLayout="column" fxFlexFill [ngClass]="{'fullscreen': isFullscreen}">
 	<kl-graph-header [smallTitle]="true" [selectedVariable]="selectedNode" [title]="title"
-		(scaleValueChanged)="onScaleValueChanged($event)">
+		(toggleFullscreen)="onToggleFullscreen($event)" (scaleValueChanged)="onScaleValueChanged($event)">
 	</kl-graph-header>
 	<kl-distribution-graph-canvas #distributionGraph fxFlex fxLayout="column" [position]="position"
 		id="{{'cluster-distribution-'+position}}" [attr.id]="'cluster-distribution-'+position" [scaleValue]="scaleValue"
