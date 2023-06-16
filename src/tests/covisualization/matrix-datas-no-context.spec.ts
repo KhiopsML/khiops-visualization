@@ -39,7 +39,7 @@ describe('Matrix Datas : NO Context [Co-simple-2vars file]', () => {
 		dimensionsDatasService.initialize();
 		dimensionsDatasService.getDimensions();
 		dimensionsDatasService.constructDimensionsTrees();
-		const result = dimensionsDatasService.getMatrixDatas();
+		const [initTime, result]  = dimensionsDatasService.getMatrixDatas();
 		cells = result.matrixCellDatas;
 
 	});

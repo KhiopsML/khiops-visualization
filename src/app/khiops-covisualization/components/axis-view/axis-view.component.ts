@@ -64,7 +64,7 @@ export class AxisViewComponent
 		setTimeout(() => {
 			this.sizes = this.appService.getViewSplitSizes("axisView");
 			this.dimensionsDatas = this.dimensionsService.getDatas();
-			let initTime = this.dimensionsService.updateDimensions();
+			let [initTime, cellDatas] = this.dimensionsService.updateDimensions();
 
 			// OPTIM: Unfold auto if computer is too laggy
 			if (

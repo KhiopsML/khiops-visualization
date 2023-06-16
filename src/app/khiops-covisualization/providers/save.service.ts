@@ -320,10 +320,10 @@ export class SaveService {
 				if (CC.coclusteringReport.dimensionPartitions[k].type === 'Numerical') {
 					while (
 						!(
-							(initialPart[0] >=
+							initialPart[0] >=
 								currentVariable[currentP][0] &&
 								initialPart[1] <=
-								currentVariable[currentP][1]) || currentP < currentVariable.length
+								currentVariable[currentP][1]
 						)
 					) {
 						currentPart = currentVariable[currentP];

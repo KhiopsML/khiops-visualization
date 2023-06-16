@@ -40,7 +40,7 @@ describe('Matrix Datas : One Context [zero-except file]', () => {
 		dimensionsDatasService.initialize();
 		dimensionsDatasService.getDimensions();
 		dimensionsDatasService.constructDimensionsTrees();
-		const result = dimensionsDatasService.getMatrixDatas();
+		const [initTime, result]  = dimensionsDatasService.getMatrixDatas();
 		cells = result.matrixCellDatas;
 
 	});
