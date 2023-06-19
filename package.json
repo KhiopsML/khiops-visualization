@@ -50,9 +50,11 @@
     "@angular/router": "12.x.x",
     "@compodoc/compodoc": "^1.1.19",
     "@ngstack/translate": "5.0.0",
-    "@swimlane/ngx-charts": "19.1.0",
+    "@swimlane/ngx-charts": "^20.4.1",
+    "@types/d3": "^7.4.0",
     "@webcomponents/webcomponentsjs": "^2.8.0",
     "angular-resizable-element": "3.3.5",
+    "angular-resize-event": "3.1.1",
     "angular-split": "5.0.0",
     "angular2-hotkeys": "13.1.0",
     "chart.js": "3.9.1",
@@ -66,6 +68,7 @@
     "html2canvas": "1.4.1",
     "lodash": "4.17.21",
     "material-design-icons": "3.0.1",
+    "mathjs": "^11.7.0",
     "ngx-markdown": "11.1.2",
     "pan-zoom": "3.5.2",
     "rxjs": "~6.6.0",
@@ -73,10 +76,7 @@
     "tslib": "^2.3.0",
     "typeface-poppins": "1.1.13",
     "xml2js": "^0.4.17",
-    "zone.js": "~0.11.4",
-    "@types/d3": "^7.4.0",
-    "angular-resize-event": "3.1.1",
-	"mathjs": "^11.7.0"
+    "zone.js": "~0.11.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~12.2.18",
