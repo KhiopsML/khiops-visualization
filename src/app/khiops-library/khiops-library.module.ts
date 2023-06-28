@@ -36,9 +36,6 @@ import {
 	ResizableModule
 } from 'angular-resizable-element';
 import {
-	NgxChartsModule
-} from '@swimlane/ngx-charts';
-import {
 	MatSlideToggleModule
 } from '@angular/material/slide-toggle';
 import {
@@ -232,7 +229,6 @@ import {
 		MatPaginatorModule,
 		MatRippleModule,
 		MatSliderModule,
-		NgxChartsModule,
 		AgGridModule.withComponents([]),
 		FormsModule,
 		MatButtonToggleModule,

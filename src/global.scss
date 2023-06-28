@@ -364,10 +364,6 @@ app-home-layout {
 	display: none !important;
 }
 
-.ngx-charts .grid-panel.odd rect {
-	fill: rgba(0, 0, 0, 0) !important;
-}
-
 .bar {
 	&.active,
 	&:hover {
@@ -387,12 +383,6 @@ app-home-layout {
 	}
 }
 
-.ngx-charts-tooltip-content {
-	&.animate {
-		transition: opacity 0s, transform 0s !important;
-	}
-}
-
 .mat-tooltip {
 	font-size: 14px !important;
 	background: var(--bgTooltip) !important;
@@ -403,17 +393,6 @@ app-home-layout {
 	transition: 100ms cubic-bezier(0.35, 0, 0.25, 1) !important;
 	border-top-left-radius: 3px !important;
 	border-top-right-radius: 3px !important;
-}
-
-.ngx-charts .arc.active,
-.ngx-charts .arc:hover,
-.ngx-charts .bar.active,
-.ngx-charts .bar:hover,
-.ngx-charts .card.active,
-.ngx-charts .card:hover,
-.ngx-charts .cell.active,
-.ngx-charts .cell:hover {
-	transition: opacity 0s ease-in-out !important;
 }
 
 .variables-list-container {
@@ -440,12 +419,6 @@ app-home-layout {
 	text {
 		font-size: 11px !important;
 	}
-}
-
-.ngx-charts .arc,
-.ngx-charts .bar,
-.ngx-charts .circle {
-	opacity: 0.75 !important;
 }
 
 kl-legend {

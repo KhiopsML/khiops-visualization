@@ -50,7 +50,6 @@
     "@angular/router": "12.x.x",
     "@compodoc/compodoc": "1.1.19",
     "@ngstack/translate": "5.0.0",
-    "@swimlane/ngx-charts": "20.4.1",
     "@types/d3": "7.4.0",
     "@webcomponents/webcomponentsjs": "2.8.0",
     "angular-resizable-element": "3.3.5",
