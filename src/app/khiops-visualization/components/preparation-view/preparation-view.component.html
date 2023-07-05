@@ -47,17 +47,20 @@
 							<as-split direction="horizontal" disabled>
 								<as-split-area fxFlex="50%">
 									<app-description-block id="preparation-description-block-variable"
+										*ngIf="preparationDatas.selectedVariable"
 										title="{{ 'GLOBAL.NAME' | translate }}"
-										[value]="preparationDatas.selectedVariable.name"></app-description-block>
+										[value]="preparationDatas.selectedVariable?.name"></app-description-block>
+									<kl-no-data fxFlex *ngIf="!preparationDatas.selectedVariable"></kl-no-data>
 								</as-split-area>
 								<as-split-area fxFlex="50%">
 									<app-description-block id="preparation-description-block-derivation"
+										*ngIf="preparationDatas.selectedVariable"
 										title="{{ 'GLOBAL.DERIVATION_RULE' | translate }}"
-										[value]="preparationDatas.selectedVariable.derivationRule">
+										[value]="preparationDatas.selectedVariable?.derivationRule">
 									</app-description-block>
+									<kl-no-data fxFlex *ngIf="!preparationDatas.selectedVariable"></kl-no-data>
 								</as-split-area>
 							</as-split>
-
 						</as-split-area>
 					</as-split>
 				</as-split-area>

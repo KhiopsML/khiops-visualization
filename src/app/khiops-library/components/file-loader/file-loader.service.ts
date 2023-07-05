@@ -71,7 +71,7 @@ export class FileLoaderService {
 		// const urlKV = './assets/mocks/kv/desc-bivar.json';
 		// const urlKV = './assets/mocks/kv/irisR.json';
 		// const urlKV = './assets/mocks/kv/bi2.json';
-		const urlKV = './assets/mocks/kv/bi3.json';
+		// const urlKV = './assets/mocks/kv/bi3.json';
 		// const urlKV = './assets/mocks/kv/C1_AllReports.json';
 		// const urlKV = './assets/mocks/kv/C0_AllReports.json';
 		// const urlKV = './assets/mocks/kv/analyse_supervisee_multiclasse.json';
@@ -81,6 +81,7 @@ export class FileLoaderService {
 		// const urlKV = './assets/mocks/kv/mainTargetValue.json';
 		// const urlKV = './assets/mocks/kv/new-hyper-tree.json';
 		// const urlKV = './assets/mocks/kv/leafrules.khj';
+		const urlKV = './assets/mocks/kv/Filtered_Iris_AnalysisResults.khj';
 		// const urlKV = './assets/mocks/kv/defaultGroup.json';
 		// const urlKV = './assets/mocks/kv/bigTreeLeafs.json';
 		// const urlKV = './assets/mocks/kv/AdultAgeAllReports.json';

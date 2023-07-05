@@ -8,6 +8,7 @@
 					(selectedItemChanged)="onSelectedGraphItemChanged($event)" fxFlex="1 1 100%"
 					[showTargetDistributionGraph]="!isRegressionOrExplanatoryAnalysis">
 				</app-variable-graph-details>
+				<kl-no-data fxFlex *ngIf="!preparationDatas.selectedVariable"></kl-no-data>
 			</as-split-area>
 			<as-split-area *ngIf="isRegressionOrExplanatoryAnalysis" [size]="sizes.row1Col1Row0Col[1]">
 				<app-regression-matrix fxFlex="1 1 100%" id="preparation-matrix-comp-container"
@@ -26,6 +27,7 @@
 			[inputDatas]="preparationDatas.currentIntervalDatas.values"
 			[displayedColumns]="preparationDatas.currentIntervalDatas.displayedColumns">
 		</kl-ag-grid>
+		<kl-no-data fxFlex *ngIf="!preparationDatas.currentIntervalDatas.values"></kl-no-data>
 		<as-split direction="horizontal"
 			*ngIf="(!preparationDatas.currentIntervalDatas.values && preparation2dDatas.currentCellDatas) || isRegressionOrExplanatoryAnalysis">
 			<as-split-area class="variables-list-container">
@@ -34,6 +36,7 @@
 					[showColumnsSelection]="false" [inputDatas]="preparation2dDatas.currentCellDatas.values[0]"
 					[displayedColumns]="preparation2dDatas.currentCellDatas.displayedColumns[0]">
 				</kl-ag-grid>
+				<kl-no-data fxFlex *ngIf="!preparation2dDatas.currentCellDatas.values"></kl-no-data>
 			</as-split-area>
 			<as-split-area class="variables-list-container">
 				<kl-ag-grid id="preparation-2d-current-cell-y" class="variables-list" [showLevelDistribution]="false"
@@ -41,6 +44,7 @@
 					[showColumnsSelection]="false" [inputDatas]="preparation2dDatas.currentCellDatas.values[1]"
 					[displayedColumns]="preparation2dDatas.currentCellDatas.displayedColumns[1]">
 				</kl-ag-grid>
+				<kl-no-data fxFlex *ngIf="!preparation2dDatas.currentCellDatas.values"></kl-no-data>
 			</as-split-area>
 		</as-split>
 	</as-split-area>

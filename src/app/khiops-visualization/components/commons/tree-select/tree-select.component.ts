@@ -110,51 +110,53 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 	}
 
 	initTree(selectedNodes ? ) {
-		// @ts-ignore
-		this.tree = new TreeView(this.dimensionTree, this.configService.getRootElementDom(), 'tree_' + this.position, {
-			disableCollapse: true,
-			disableUpdateName: true
-		});
+		if (this.dimensionTree && this.dimensionTree[0]) {
+			// @ts-ignore
+			this.tree = new TreeView(this.dimensionTree, this.configService.getRootElementDom(), 'tree_' + this.position, {
+				disableCollapse: true,
+				disableUpdateName: true
+			});
 
-		this.tree.on('init', (e) => {
+			this.tree.on('init', (e) => {
 
-			if (!selectedNodes) {
-				// get the first
-				this.treePreparationDatasService.initSelectedNodes();
-			}
-
-			this.tree.selectNodes(this.selectedNodes);
-
-		});
-
-		this.tree.on('select', (e) => {
-			// Do ngzone to emit event
-			this.ngzone.run(() => {
-				const trustedNodeSelection = e.data.id;
-				// this.treePreparationDatasService.setSelectedNodes(e.data);
-				let [index, nodesToSelect] = this.treePreparationDatasService.getNodesLinkedToOneNode(trustedNodeSelection);
-				if (!nodesToSelect) {
-					// it's a folder selection
-					nodesToSelect = [trustedNodeSelection]
+				if (!selectedNodes) {
+					// get the first
+					this.treePreparationDatasService.initSelectedNodes();
 				}
-				this.treePreparationDatasService.setSelectedNodes(nodesToSelect, trustedNodeSelection);
 
-				// to update charts
-				this.selectTreeItemChanged.emit(e.data);
-			});
-		});
-		this.tree.on('expand', (e) => {});
-		this.tree.on('expandAll', (e) => {});
-		this.tree.on('collapse', (e) => {});
-		this.tree.on('collapseAll', (e) => {});
-		this.tree.on('updateNodeName', (e) => {});
-		this.tree.on('error', (e) => {
-			this.snackBar.open(this.translate.get(e.data), null, {
-				duration: 4000,
-				panelClass: 'error'
-			});
-		});
+				this.tree.selectNodes(this.selectedNodes);
 
+			});
+
+			this.tree.on('select', (e) => {
+				// Do ngzone to emit event
+				this.ngzone.run(() => {
+					const trustedNodeSelection = e.data.id;
+					// this.treePreparationDatasService.setSelectedNodes(e.data);
+					let [index, nodesToSelect] = this.treePreparationDatasService.getNodesLinkedToOneNode(trustedNodeSelection);
+					if (!nodesToSelect) {
+						// it's a folder selection
+						nodesToSelect = [trustedNodeSelection]
+					}
+					this.treePreparationDatasService.setSelectedNodes(nodesToSelect, trustedNodeSelection);
+
+					// to update charts
+					this.selectTreeItemChanged.emit(e.data);
+				});
+			});
+			this.tree.on('expand', (e) => {});
+			this.tree.on('expandAll', (e) => {});
+			this.tree.on('collapse', (e) => {});
+			this.tree.on('collapseAll', (e) => {});
+			this.tree.on('updateNodeName', (e) => {});
+			this.tree.on('error', (e) => {
+				this.snackBar.open(this.translate.get(e.data), null, {
+					duration: 4000,
+					panelClass: 'error'
+				});
+			});
+
+		}
 	}
 
 	@HostListener('window:keyup', ['$event'])

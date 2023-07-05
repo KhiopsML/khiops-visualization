@@ -43,5 +43,5 @@
 		</as-split>
 	</as-split-area>
 </as-split>
-<kl-no-data fxFlexFill *ngIf="preparation2dDatas.selectedVariable && preparation2dDatas.selectedVariable.noCorrelation">
+<kl-no-data fxFlexFill *ngIf="(preparation2dDatas.selectedVariable && preparation2dDatas.selectedVariable.noCorrelation) || !preparation2dDatas.selectedVariable">
 </kl-no-data>

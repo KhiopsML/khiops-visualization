@@ -37,7 +37,7 @@
 						[ngClass]="{'mat-tab-group-center': isElectron}" [selectedIndex]="activeTab"
 						(selectedTabChange)="onSelectedTabChanged($event)">
 						<mat-tab label="{{ 'TITLE.PREPARATION' | translate }}"
-							*ngIf="appDatas?.datas?.preparationReport?.variablesStatistics">
+							*ngIf="appDatas?.datas?.preparationReport">
 							<ng-template matTabLabel>
 								<label title="{{ 'TOOLTIPS.TABS.PREPARATION' | translate }}" >{{ 'TITLE.PREPARATION' | translate }}</label>
 							</ng-template>
@@ -46,7 +46,7 @@
 							</ng-template>
 						</mat-tab>
 						<mat-tab label="{{ 'TITLE.TEXT_PREPARATION' | translate }}"
-							*ngIf="appDatas?.datas?.textPreparationReport?.variablesStatistics">
+							*ngIf="appDatas?.datas?.textPreparationReport">
 							<ng-template matTabLabel>
 								<label title="{{ 'TOOLTIPS.TABS.TEXT_PREPARATION' | translate }}" >{{ 'TITLE.TEXT_PREPARATION' | translate }}</label>
 							</ng-template>
@@ -56,7 +56,7 @@
 							</ng-template>
 						</mat-tab>
 						<mat-tab label="{{ 'TITLE.TREE_PREPARATION' | translate }}"
-							*ngIf="appDatas?.datas?.treePreparationReport?.variablesStatistics">
+							*ngIf="appDatas?.datas?.treePreparationReport">
 							<ng-template matTabLabel>
 								<label title="{{ 'TOOLTIPS.TABS.TREE_PREPARATION' | translate }}" >{{ 'TITLE.TREE_PREPARATION' | translate }}</label>
 							</ng-template>
