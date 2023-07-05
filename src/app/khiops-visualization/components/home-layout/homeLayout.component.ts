@@ -75,7 +75,9 @@ export class HomeLayoutComponent implements OnInit {
 	}
 	set appDatas(value: any) {
 		this.appService.setFileDatas(value);
-		if (value && value.tool === "Khiops") this.initializeHome();
+		if (value) {
+			this.initializeHome();
+		}
 	}
 
 	@ViewChild('appProjectView', {
