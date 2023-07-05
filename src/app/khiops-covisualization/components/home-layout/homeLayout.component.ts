@@ -109,7 +109,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 
 	onFileLoaderDataChangedCb: Function;
 	appVersion: any;
-	appName: any;
+	appName = 'khiops-covisualization';
 	opened = false;
 	openContextView = false;
 	isElectron = false;
@@ -139,7 +139,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 
 		if (pjson) {
 			this.appTitle = pjson.title.covisualization;
-			this.appName = pjson.name;
 			this.appVersion = pjson.version;
 		}
 

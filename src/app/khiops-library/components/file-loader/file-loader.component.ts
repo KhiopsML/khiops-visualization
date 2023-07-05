@@ -46,6 +46,9 @@ export class FileLoaderComponent implements OnInit {
 
 		this.fileLoaderDatas = this.fileLoaderService.getDatas();
 		this.isProdMode = this.khiopsLibraryService.getAppConfig().production;
+	}
+
+	ngOnInit() {
 		const associationFiles = ['.json'];
 		if (this.applicationName === 'khiops-visualization') {
 			associationFiles.push('.khj');
@@ -53,10 +56,6 @@ export class FileLoaderComponent implements OnInit {
 			associationFiles.push('.khcj');
 		}
 		this.associationFiles = [...associationFiles];
-	}
-
-	ngOnInit() {
-
 	}
 
 	loadDebugFile() {

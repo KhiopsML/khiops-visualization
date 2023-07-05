@@ -6,8 +6,8 @@
 					<kl-informations-block title="{{ 'GLOBAL.SUMMARY' | translate }}"
 						[inputDatas]="projectSummaryDatas">
 					</kl-informations-block>
-					<!-- <kl-file-loader [onFileLoaderDataChanged]="onFileLoaderDataChangedCb" [applicationName]="appName">
-					</kl-file-loader> -->
+					<kl-file-loader *ngIf="debugFile" [onFileLoaderDataChanged]="onFileLoaderDataChangedCb" [applicationName]="appName">
+					</kl-file-loader>
 				</div>
 			</div>
 		</as-split-area>

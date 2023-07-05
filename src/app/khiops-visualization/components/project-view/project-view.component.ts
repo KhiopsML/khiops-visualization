@@ -1,11 +1,28 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
-import { AppConfig } from "src/environments/environment";
-import { AppService } from "@khiops-visualization/providers/app.service";
+import {
+	Component,
+	EventEmitter,
+	OnInit,
+	Output
+} from "@angular/core";
+import {
+	AppConfig
+} from "src/environments/environment";
+import {
+	AppService
+} from "@khiops-visualization/providers/app.service";
 import pjson from "package.json";
-import { SelectableTabComponent } from "@khiops-library/components/selectable-tab/selectable-tab.component";
-import { TranslateService } from "@ngstack/translate";
-import { GridColumnsI } from "@khiops-library/interfaces/grid-columns";
-import { KhiopsLibraryService } from "@khiops-library/providers/khiops-library.service";
+import {
+	SelectableTabComponent
+} from "@khiops-library/components/selectable-tab/selectable-tab.component";
+import {
+	TranslateService
+} from "@ngstack/translate";
+import {
+	GridColumnsI
+} from "@khiops-library/interfaces/grid-columns";
+import {
+	KhiopsLibraryService
+} from "@khiops-library/providers/khiops-library.service";
 
 @Component({
 	selector: "app-project-view",
@@ -13,17 +30,16 @@ import { KhiopsLibraryService } from "@khiops-library/providers/khiops-library.s
 	styleUrls: ["./project-view.component.scss"],
 })
 export class ProjectViewComponent
-	extends SelectableTabComponent
-	implements OnInit
-{
-	@Output() projectFileChanged: EventEmitter<any> = new EventEmitter<any>();
+extends SelectableTabComponent
+implements OnInit {
+	@Output() projectFileChanged: EventEmitter < any > = new EventEmitter < any > ();
 
 	appDatas: any;
 	projectSummaryDatas: any[any];
 	projectInformationsDatas: any[any];
 	projectLogsDatas: any[any];
 	onFileLoaderDataChangedCb: Function;
-	appName: any;
+	appName = 'khiops-visualization';
 	logsTitle: string;
 	sizes: any;
 
@@ -31,8 +47,9 @@ export class ProjectViewComponent
 	tabIndex = 0;
 	tabConfig = AppConfig.visualizationCommon.HOME;
 
-	logsDisplayedColumns: GridColumnsI[] = [
-		{
+	debugFile = AppConfig.debugFile;
+
+	logsDisplayedColumns: GridColumnsI[] = [{
 			headerName: "Task",
 			field: "task",
 		},
@@ -55,9 +72,6 @@ export class ProjectViewComponent
 		this.appDatas = this.appService.getDatas();
 
 		if (this.appDatas.datas) {
-			if (pjson) {
-				this.appName = pjson.name;
-			}
 			this.sizes = this.appService.getViewSplitSizes("projectView");
 
 			this.logsTitle = this.translate.get("GLOBAL.LOGS");
