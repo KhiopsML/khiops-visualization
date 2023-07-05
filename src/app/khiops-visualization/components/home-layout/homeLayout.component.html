@@ -27,21 +27,15 @@
 							d="m-811.17-337.516 15.414 59.091 164.82 29.278z" transform="translate(1127.245 554.656)" />
 					</svg>
 				</kl-header-title>
-				<kl-file-loader #fileLoader [hidden]="appDatas && appDatas.datas && isCompatibleJson"
+				<kl-file-loader #fileLoader [hidden]="true"
 					[onFileLoaderDataChanged]="onFileLoaderDataChangedCb" [applicationName]="appName"></kl-file-loader>
+				<kl-no-data fxFlexFill fxLayoutAlign="center center" *ngIf="!(appDatas && appDatas.datas && isCompatibleJson)"
+					[message]="'NO_DATAS.WELCOME'">
+				</kl-no-data>
 				<div fxFlexFill *ngIf="isCompatibleJson">
 					<mat-tab-group id="main-tab-group" color="primary" fxFlexFill [@.disabled]="true"
 						[ngClass]="{'mat-tab-group-center': isElectron}" [selectedIndex]="activeTab"
 						(selectedTabChange)="onSelectedTabChanged($event)">
-						<mat-tab label="{{ 'TITLE.PROJECT' | translate }}" *ngIf="isElectron || isWebDebug">
-							<ng-template matTabLabel>
-								<label title="{{ 'TOOLTIPS.TABS.PROJECT' | translate }}">{{ 'TITLE.PROJECT' | translate }}</label>
-							</ng-template>
-							<ng-template matTabContent>
-								<app-project-view #appProjectView [selectedTab]="selectedTab"
-									(projectFileChanged)="onFileLoaderDataChanged($event)"></app-project-view>
-							</ng-template>
-						</mat-tab>
 						<mat-tab label="{{ 'TITLE.PREPARATION' | translate }}"
 							*ngIf="appDatas?.datas?.preparationReport?.variablesStatistics">
 							<ng-template matTabLabel>
@@ -94,6 +88,15 @@
 							</ng-template>
 							<ng-template matTabContent>
 								<app-evaluation-view [selectedTab]="selectedTab"></app-evaluation-view>
+							</ng-template>
+						</mat-tab>
+						<mat-tab label="{{ 'TITLE.PROJECT' | translate }}" *ngIf="isElectron || isWebDebug">
+							<ng-template matTabLabel>
+								<label title="{{ 'TOOLTIPS.TABS.PROJECT' | translate }}">{{ 'TITLE.PROJECT' | translate }}</label>
+							</ng-template>
+							<ng-template matTabContent>
+								<app-project-view #appProjectView [selectedTab]="selectedTab"
+									(projectFileChanged)="onFileLoaderDataChanged($event)"></app-project-view>
 							</ng-template>
 						</mat-tab>
 					</mat-tab-group>

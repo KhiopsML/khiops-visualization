@@ -1,6 +1,6 @@
 {
 	"TITLE": {
-		"PROJECT": "Project",
+		"PROJECT": "Project infos",
 		"PREPARATION": "Preparation",
 		"TEXT_PREPARATION": "Text preparation",
 		"TREE_PREPARATION": "Tree preparation",
@@ -55,6 +55,7 @@
 		"UNFOLDED_DATAS_PERFORMANCE_WARNING": "Displayed datas have been automatically unfolded to {count} clusters for better performance"
 	},
 	"NO_DATAS": {
+		"WELCOME": "Open a file from the menu",
 		"DEFAULT": "No data",
 		"NO_PREDICTORS_DETAILS": "No predictors details.",
 		"NO_CORRELATION": "No Correlation.",
