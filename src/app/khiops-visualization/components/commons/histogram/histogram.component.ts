@@ -382,6 +382,10 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 				.style("fill-opacity", "0.8");
 		};
 
+		if (barW > 3) {
+			barW = barW - 2; // -2 to remove stroke width (outer and cannot be inner)
+		}
+
 		if (
 			this.distributionDatas.distributionGraphOptions.selected ===
 			HistogramType.YLIN
