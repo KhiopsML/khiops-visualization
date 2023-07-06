@@ -409,7 +409,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			.on("mouseover", mouseover)
 			.on("mousemove", mousemove)
 			.on("mouseleave", mouseleave)
-			.attr("width", barW - 2) // -2 to remove stroke width (outer and cannot be inner)
+			.attr("width", barW)
 			.attr("height", barH)
 			.attr("fill-opacity", "0.8")
 			.attr("fill", bar.color)
