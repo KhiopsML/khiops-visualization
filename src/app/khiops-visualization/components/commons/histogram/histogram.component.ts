@@ -24,6 +24,7 @@ import { ConfigService } from "@khiops-library/providers/config.service";
 import { SelectableService } from "@khiops-library/components/selectable/selectable.service";
 import { HistogramType } from "./histogram.types";
 import { AppConfig } from "src/environments/environment";
+import { TranslateService } from "@ngstack/translate";
 
 @Component({
 	selector: "app-histogram",
@@ -82,10 +83,12 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 		private khiopsLibraryService: KhiopsLibraryService,
 		private histogramService: HistogramService,
 		public selectableService: SelectableService,
+		private translate: TranslateService,
 		public ngzone: NgZone,
 		public configService: ConfigService
 	) {
 		super(selectableService, ngzone, configService);
+		HistogramUIService.setTranslationService(translate);
 
 		this.colorSet = HistogramUIService.getColors();
 		d3.selection.prototype.moveToFront = function () {
@@ -551,44 +554,10 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 				.domain([0, this.rangeYLin]) // This is what is written on the Axis: from 0 to 100
 				.range([this.h - this.yPadding / 2, 0]); // Note it is reversed
 		} else {
-			// y = d3
-			// 	.scaleLinear()
-			// 	.domain([this.rangeYLog.max, this.rangeYLog.min]) // This is what is written on the Axis: from 0 to 100
-			// 	.range([0, this.h - this.yPadding / 2]); // Note it is reversed
-
-			// let max = Math.ceil(Math.max(...this.datas.map(e=>e.realLogValue).filter(e => e !== 0)))
-			// let min = Math.floor(Math.min(...this.datas.map(e=>e.realLogValue).filter(e => e !== 0)))
-
-			// let max = -1.573997
-			// let min = -4.157315
 			y = d3
 				.scaleLinear()
 				.domain([this.rangeYLog.max, this.rangeYLog.min]) // This is what is written on the Axis: from 0 to 100
 				.range([0, this.h - this.yPadding / 2]); // Note it is reversed
-
-			// 		let max = Math.max(...this.datas.map(e=>e.realLogValue).filter(e => e !== 0))
-			// 		let min = Math.min(...this.datas.map(e=>e.realLogValue).filter(e => e !== 0))
-			// 		console.log('file: histogram.component.ts:551 ~ HistogramComponent ~ drawYAxis ~ max:', min, max);
-
-			// 		// if (min ===0) {
-			// 		// 	min = 0.00001
-			// 		// }
-
-			// 		min = 0.00006;
-			// 		max =0.027
-
-			// 		console.log('file: histogram.component.ts:566 ~ HistogramComponent ~ drawYAxis ~ this.rangeYLog:', this.rangeYLog);
-			// 		y = d3
-			// 			.scaleLog()
-			// 			.base(10)
-			// 			// .domain([ this.rangeYLin, 0.001]) // This is what is written on the Axis: from 0 to 100
-
-			// 						// .scaleLinear()
-			// 						// .domain([Math.pow(10, min), Math.pow(10, max)]) // This is what is written on the Axis: from 0 to 100
-			// 						.domain([ max,  min]) // This is what is written on the Axis: from 0 to 100
-			// 						// .domain([this.rangeYLog.min, this.rangeYLog.max]) // This is what is written on the Axis: from 0 to 100
-			// // .domain([this.rangeYLog.max, this.rangeYLog.min]) // This is what is written on the Axis: from 0 to 100
-			// .range([0, this.h - this.yPadding / 2]) // Note it is reversed
 		}
 
 		let shift = this.xPadding;
@@ -609,18 +578,8 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 				) {
 					return "" + format(val);
 				} else {
-					// return val;
-					// return "" + format(val);
 					const antiLog = Math.pow(10, val);
-					// return antiLog.toString().substring(0, 5)
 					return d3.format(".1e")(antiLog);
-					// return antiLog
-
-					// return "" + format(antiLog);
-					// .tickFormat(d3.format(".1e"))
-
-					// console.log('file: histogram.component.ts:586 ~ HistogramComponent ~ .tickFormat ~ antiLog:', antiLog);
-					// return ((Math.pow(10, val ) ) - 1).toString().substring(0,5)
 				}
 			})
 

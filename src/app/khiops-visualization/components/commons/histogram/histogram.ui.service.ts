@@ -1,12 +1,18 @@
 import { Injectable } from "@angular/core";
+import { TranslateService } from "@ngstack/translate";
 
 @Injectable({
 	providedIn: "root",
 })
 export class HistogramUIService {
 	static chartColors: string[] = ["#6e93d5", "#ffbe46"];
+	static translate: TranslateService;
 
 	constructor() {}
+
+	static setTranslationService(translate: TranslateService) {
+		this.translate = translate;
+	}
 
 	static getColor(i: number): string {
 		return this.chartColors[i];
@@ -32,17 +38,21 @@ export class HistogramUIService {
 			"]";
 
 		return (
-			"Value: " +
+			this.translate.get("GLOBAL.VALUE") +
+			": " +
 			d.value.toFixed(6) +
 			"<br>" +
 			// "log value: " +
 			// d.logValue.toFixed(6) +
 			// "<br>" +
-			"Range: " +
-			JSON.stringify(d.partition) +
-			"<br>" +
-			"Log: " +
-			logRange
+			this.translate.get("GLOBAL.PARTITION") +
+			": " +
+			JSON.stringify(d.partition)
+			// +
+			// "<br>" +
+			// this.translate.get("GLOBAL.LOG_RANGE") +
+			// ": " +
+			// logRange
 		);
 	}
 
