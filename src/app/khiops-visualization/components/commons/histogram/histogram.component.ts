@@ -25,6 +25,7 @@ import { SelectableService } from "@khiops-library/components/selectable/selecta
 import { HistogramType } from "./histogram.types";
 import { AppConfig } from "src/environments/environment";
 import { TranslateService } from "@ngstack/translate";
+import { UtilsService } from "../../../../khiops-library/providers/utils.service";
 
 @Component({
 	selector: "app-histogram",
@@ -579,7 +580,11 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 					return "" + format(val);
 				} else {
 					const antiLog = Math.pow(10, val);
-					return d3.format(".1e")(antiLog);
+					if (UtilsService.isPowerOfTen(antiLog)) {
+						return d3.format(".0e")(antiLog);
+					} else {
+						return '';
+					}
 				}
 			})
 

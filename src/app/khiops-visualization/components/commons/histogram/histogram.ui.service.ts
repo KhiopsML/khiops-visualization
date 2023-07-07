@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { TranslateService } from "@ngstack/translate";
+import * as d3 from "d3";
 
 @Injectable({
 	providedIn: "root",
@@ -40,7 +41,8 @@ export class HistogramUIService {
 		return (
 			this.translate.get("GLOBAL.VALUE") +
 			": " +
-			d.value.toFixed(6) +
+			// d.value.toFixed(6) +
+			d3.format(".3e")(d.value) +
 			"<br>" +
 			// "log value: " +
 			// d.logValue.toFixed(6) +

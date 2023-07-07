@@ -8,6 +8,10 @@ import * as _ from 'lodash'; // Important to import lodash in karma
 })
 export class UtilsService {
 
+	static isPowerOfTen(num) {
+		return Math.log10(num) % 1 === 0;
+	}
+
 	static setWaitingCursor(time = 0) {
 		document.body.style.cursor = 'wait';
 		setTimeout(() => {
