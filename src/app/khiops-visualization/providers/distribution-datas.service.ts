@@ -365,6 +365,7 @@ export class DistributionDatasService {
 					}
 
 					dataSet.push({
+						frequency: varDatas.frequencies[i],
 						partition: partition,
 						value: value,
 						logValue: logValue,

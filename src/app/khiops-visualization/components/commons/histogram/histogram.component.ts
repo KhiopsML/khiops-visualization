@@ -351,7 +351,10 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			d3.select(this).style("fill-opacity", "0.9");
 		};
 		const mousemove = (e: any) => {
-			const tooltipText = HistogramUIService.generateTooltip(d);
+			const tooltipText = HistogramUIService.generateTooltip(
+				d,
+				this.distributionDatas.distributionGraphOptionsX.selected
+			);
 			//@ts-ignore
 			self.tooltip.html(tooltipText);
 
@@ -501,10 +504,10 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 							return "-Inf";
 						} else {
 							// return this.formatTick(val);
-							if (UtilsService.isPowerOfTen(val)) {
+							if (UtilsService.isPowerOfTen(Math.abs(val))) {
 								return d3.format(".0e")(val);
 							} else {
-								return '';
+								return "";
 							}
 						}
 					}
@@ -588,7 +591,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 					if (UtilsService.isPowerOfTen(antiLog)) {
 						return d3.format(".0e")(antiLog);
 					} else {
-						return '';
+						return "";
 					}
 				}
 			})

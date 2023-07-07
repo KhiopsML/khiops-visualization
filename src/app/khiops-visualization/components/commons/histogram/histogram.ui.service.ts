@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { TranslateService } from "@ngstack/translate";
 import * as d3 from "d3";
+import { HistogramType } from "./histogram.types";
 
 @Injectable({
 	providedIn: "root",
@@ -23,38 +24,38 @@ export class HistogramUIService {
 		return this.chartColors;
 	}
 
-	static generateTooltip(d: any) {
-		let logRange =
-			"[" +
-			this.getSign(d.partition[0]) +
-			Math.abs(
-				Math.round(Math.log10(Math.abs(d.partition[0])) * 100) / 100
-			) +
-			", ";
-		logRange +=
-			this.getSign(d.partition[1]) +
-			Math.abs(
-				Math.round(Math.log10(Math.abs(d.partition[1])) * 100) / 100
-			) +
-			"]";
+	static generateTooltip(d: any, xType: string) {
+		let bounds = "";
+		if (xType === HistogramType.XLIN) {
+			bounds = JSON.stringify(d.partition);
+		} else {
+			bounds =
+				"[" +
+				this.getSign(d.partition[0]) +
+				Math.abs(
+					Math.round(Math.log10(Math.abs(d.partition[0])) * 100) / 100
+				) +
+				", ";
+			bounds +=
+				this.getSign(d.partition[1]) +
+				Math.abs(
+					Math.round(Math.log10(Math.abs(d.partition[1])) * 100) / 100
+				) +
+				"]";
+		}
 
 		return (
-			this.translate.get("GLOBAL.VALUE") +
+			this.translate.get("GLOBAL.DENSITY") +
 			": " +
-			// d.value.toFixed(6) +
 			d3.format(".3e")(d.value) +
 			"<br>" +
-			// "log value: " +
-			// d.logValue.toFixed(6) +
-			// "<br>" +
-			this.translate.get("GLOBAL.PARTITION") +
+			this.translate.get("GLOBAL.FREQUENCY") +
 			": " +
-			JSON.stringify(d.partition)
-			// +
-			// "<br>" +
-			// this.translate.get("GLOBAL.LOG_RANGE") +
-			// ": " +
-			// logRange
+			d.frequency +
+			"<br>" +
+			this.translate.get("GLOBAL.BOUNDS") +
+			": " +
+			bounds
 		);
 	}
 

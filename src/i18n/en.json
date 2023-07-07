@@ -97,6 +97,7 @@
 		"MESSAGE": "Enable Dark mode"
 	},
 	"GLOBAL": {
+		"BOUNDS": "Bounds",
 		"DENSITY": "Density",
 		"OPEN_FULLSCREEN": "Open in fullscreen",
 		"CLOSE_FULLSCREEN": "Close fullscreen",

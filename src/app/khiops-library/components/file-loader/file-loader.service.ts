@@ -108,7 +108,8 @@ export class FileLoaderService {
 		// const urlKV = './assets/mocks/kv/CoronaWords100000_AllReports.V11.json';
 		// const urlKV = './assets/mocks/kv/CrirteoAllReports.json';
 		// const urlKV = './assets/mocks/kv/Words100_AllReports.json';
-		const urlKV = './assets/mocks/kv/ylogAdultAllReports.json';
+		const urlKV = './assets/mocks/kv/UnivariateAnalysisResults.json';
+		// const urlKV = './assets/mocks/kv/ylogAdultAllReports.json';
 		// const urlKV = './assets/mocks/kv/synchro_ko_final_AllReports.json';
 		// const urlKV = './assets/mocks/kv/AdultAllReports.json';
 		// const urlKV = './assets/mocks/kv/20NewsgroupAllReports.json';
