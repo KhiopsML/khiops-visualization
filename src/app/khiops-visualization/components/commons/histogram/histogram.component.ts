@@ -500,7 +500,12 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 							// return "-Inf (0)";
 							return "-Inf";
 						} else {
-							return this.formatTick(val);
+							// return this.formatTick(val);
+							if (UtilsService.isPowerOfTen(val)) {
+								return d3.format(".0e")(val);
+							} else {
+								return '';
+							}
 						}
 					}
 				});
