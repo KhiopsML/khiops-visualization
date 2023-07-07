@@ -35,9 +35,9 @@ export class HistogramUIService {
 			"Value: " +
 			d.value.toFixed(6) +
 			"<br>" +
-			"log value: " +
-			d.logValue.toFixed(6) +
-			"<br>" +
+			// "log value: " +
+			// d.logValue.toFixed(6) +
+			// "<br>" +
 			"Range: " +
 			JSON.stringify(d.partition) +
 			"<br>" +

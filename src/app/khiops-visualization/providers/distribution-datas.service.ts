@@ -358,11 +358,12 @@ export class DistributionDatasService {
 					const delta = partition[1] - partition[0];
 					let value = varDatas.frequencies[i] / totalFreq / delta;
 					// let value = varDatas.frequencies[i] / totalFreq;
-					let logValue = Math.log10(value / totalFreq);
-					// let logValue = Math.log10(value);
+					// let logValue = Math.log10(value / totalFreq);
+					let logValue = Math.log10(value);
 					if (logValue === -Infinity) {
 						logValue = 0;
 					}
+
 					dataSet.push({
 						partition: partition,
 						value: value,
@@ -375,7 +376,7 @@ export class DistributionDatasService {
 		} else {
 			//   throw 'variable ' + variable + ' unfound';
 		}
-
+		// console.log('file: distribution-datas.service.ts:380 ~ DistributionDatasService ~ getHistogramGraphDatas ~ dataSet:', dataSet);
 		return dataSet;
 	}
 
