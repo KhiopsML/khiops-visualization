@@ -522,7 +522,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 				);
 
 				if (this.xTickCount === 5 && domain[1] < 0) {
-					// remove last x tick to prevent superposition
+					// remove last x tick to prevent superposition with positive axis
 					ticks.pop();
 				}
 

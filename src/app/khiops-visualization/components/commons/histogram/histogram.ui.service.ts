@@ -35,7 +35,7 @@ export class HistogramUIService {
 				bounds =
 					"[" +
 					this.getSign(d.partition[0]) +
-					d3.format(".0e")(Math.abs(d.partition[0])) +
+					d3.format(".2e")(Math.abs(d.partition[0])) +
 					", ";
 			}
 			if (d.partition[1] === 0) {
@@ -43,7 +43,7 @@ export class HistogramUIService {
 			} else {
 				bounds +=
 					this.getSign(d.partition[1]) +
-					d3.format(".0e")(Math.abs(d.partition[1])) +
+					d3.format(".2e")(Math.abs(d.partition[1])) +
 					"]";
 			}
 		}
@@ -51,7 +51,7 @@ export class HistogramUIService {
 		return (
 			this.translate.get("GLOBAL.DENSITY") +
 			": " +
-			d3.format(".3e")(d.value) +
+			d3.format(".2e")(d.value) +
 			"<br>" +
 			this.translate.get("GLOBAL.FREQUENCY") +
 			": " +
