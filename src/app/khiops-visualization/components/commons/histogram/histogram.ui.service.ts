@@ -29,19 +29,23 @@ export class HistogramUIService {
 		if (xType === HistogramType.XLIN) {
 			bounds = JSON.stringify(d.partition);
 		} else {
-			bounds =
-				"[" +
-				this.getSign(d.partition[0]) +
-				Math.abs(
-					Math.round(Math.log10(Math.abs(d.partition[0])) * 100) / 100
-				) +
-				", ";
-			bounds +=
-				this.getSign(d.partition[1]) +
-				Math.abs(
-					Math.round(Math.log10(Math.abs(d.partition[1])) * 100) / 100
-				) +
-				"]";
+			if (d.partition[0] === 0) {
+				bounds = "[-Inf, ";
+			} else {
+				bounds =
+					"[" +
+					this.getSign(d.partition[0]) +
+					d3.format(".0e")(Math.abs(d.partition[0])) +
+					", ";
+			}
+			if (d.partition[1] === 0) {
+				bounds += "-Inf]";
+			} else {
+				bounds +=
+					this.getSign(d.partition[1]) +
+					d3.format(".0e")(Math.abs(d.partition[1])) +
+					"]";
+			}
 		}
 
 		return (
