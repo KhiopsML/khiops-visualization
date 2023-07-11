@@ -500,7 +500,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 						if (domain.length === 1) {
 							return "-Inf";
 						} else {
-							return d3.format(".1e")(val);
+							return d3.format(".0e")(val);
 						}
 					}
 				});
@@ -512,21 +512,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 				// @ts-ignore
 				// axis.ticks(tickCount);
 			} else {
-				// @ts-ignore
-				axis.tickValues(tickValues);
-
-				const ticks = UtilsService.fillArrayWithLogarithmicSpacing(
-					tickValues[0],
-					tickValues[1],
-					this.xTickCount
-				);
-
-				if (this.xTickCount === 5 && domain[1] < 0) {
-					// remove last x tick to prevent superposition with positive axis
-					ticks.pop();
-				}
-
-				axis.tickValues(ticks);
+				axis.tickArguments([this.xTickCount, ".0e"]);
 			}
 
 			this.svg
@@ -593,7 +579,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 					return "" + format(val);
 				} else {
 					const antiLog = Math.pow(10, val);
-					return d3.format(".1e")(antiLog);
+					return d3.format(".0e")(antiLog);
 				}
 			})
 
