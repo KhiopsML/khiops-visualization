@@ -35,6 +35,7 @@ import {
 import {
 	ConfigService
 } from '@khiops-library/providers/config.service';
+import { AppConfig } from 'src/environments/environment';
 
 @Component({
 	selector: 'kl-matrix-canvas',
@@ -706,6 +707,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 	onContrastChanged(event) {
 		// this.khiopsLibraryService.trackEvent('click', 'matrix_contrast', event.value);
 		this.contrast = event.value;
+			localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST', this.contrast.toString());
 		this.drawMatrix();
 	}
 
