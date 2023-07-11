@@ -550,7 +550,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 				.style("text-anchor", "end")
 				.attr("dx", "-0.4em")
 				.attr("dy", "1em")
-				.attr("transform", "rotate(-55)");
+				.attr("transform", "rotate(-35)");
 		}
 	}
 
