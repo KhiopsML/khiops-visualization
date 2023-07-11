@@ -54,7 +54,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 	yPadding = 50;
 
 	// Static config values
-	xTickCount = 12;
+	xTickCount;
 	yTicksCount = 10;
 	tickSize = 0;
 	minBarHeight = 4;
@@ -144,6 +144,8 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 	}
 
 	init() {
+		this.xTickCount = 5; // We must reinit each times
+
 		if (this.chart) {
 			this.chart.nativeElement.innerHTML = "";
 			if (this.datas) {
@@ -173,6 +175,13 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 
 				[this.rangeXLin, this.rangeXLog] =
 					this.histogramService.getRangeX(this.datas);
+
+				if (
+					this.rangeXLog.negValuesCount === 0 ||
+					this.rangeXLog.posValuesCount === 0
+				) {
+					this.xTickCount = this.xTickCount * 2;
+				}
 
 				this.drawYAxis();
 				this.drawHistogram(this.datas);
@@ -500,15 +509,9 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 						return "" + format(val);
 					} else {
 						if (domain.length === 1) {
-							// return "-Inf (0)";
 							return "-Inf";
 						} else {
-							// return this.formatTick(val);
-							if (UtilsService.isPowerOfTen(Math.abs(val))) {
-								return d3.format(".0e")(val);
-							} else {
-								return "";
-							}
+							return d3.format(".0e")(val);
 						}
 					}
 				});
@@ -518,10 +521,17 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 				HistogramType.XLIN
 			) {
 				// @ts-ignore
-				axis.ticks = tickCount;
+				// axis.ticks(tickCount);
 			} else {
 				// @ts-ignore
-				axis.tickValues = tickValues;
+				axis.tickValues(tickValues);
+
+				const ticks = UtilsService.fillArrayWithLogarithmicSpacing(
+					tickValues[0],
+					tickValues[1],
+					this.xTickCount
+				);
+				axis.tickValues(ticks);
 			}
 
 			this.svg
@@ -540,7 +550,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 				.style("text-anchor", "end")
 				.attr("dx", "-0.4em")
 				.attr("dy", "1em")
-				.attr("transform", "rotate(-35)");
+				.attr("transform", "rotate(-55)");
 		}
 	}
 
@@ -588,11 +598,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 					return "" + format(val);
 				} else {
 					const antiLog = Math.pow(10, val);
-					if (UtilsService.isPowerOfTen(antiLog)) {
-						return d3.format(".0e")(antiLog);
-					} else {
-						return "";
-					}
+					return d3.format(".0e")(antiLog);
 				}
 			})
 
