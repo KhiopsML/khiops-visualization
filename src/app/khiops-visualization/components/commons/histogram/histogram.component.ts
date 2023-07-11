@@ -500,7 +500,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 						if (domain.length === 1) {
 							return "-Inf";
 						} else {
-							return d3.format(".0e")(val);
+							return d3.format(".1e")(val);
 						}
 					}
 				});
@@ -593,7 +593,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 					return "" + format(val);
 				} else {
 					const antiLog = Math.pow(10, val);
-					return d3.format(".0e")(antiLog);
+					return d3.format(".1e")(antiLog);
 				}
 			})
 
