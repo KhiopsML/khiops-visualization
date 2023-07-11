@@ -469,17 +469,6 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 	drawXAxis(domain: any, shift: number, width: number, tickValues: any) {
 		if (width !== 0) {
 			let xAxis;
-			let tickCount = this.xTickCount;
-			if (
-				this.distributionDatas.distributionGraphOptionsX.selected ===
-					HistogramType.XLOG &&
-				domain.length !== 1
-			) {
-				tickCount = domain[1] / domain[0];
-				if (tickCount > 10) {
-					tickCount = 10;
-				}
-			}
 
 			shift = shift + this.xPadding;
 
@@ -531,6 +520,12 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 					tickValues[1],
 					this.xTickCount
 				);
+
+				if (this.xTickCount === 5 && domain[1] < 0) {
+					// remove last x tick to prevent superposition
+					ticks.pop();
+				}
+
 				axis.tickValues(ticks);
 			}
 
