@@ -28,7 +28,12 @@ import _ from 'lodash';
 import {
 	ChartColorsSetI
 } from '@khiops-library/interfaces/chart-colors-set';
-import { ConfigService } from '@khiops-library/providers/config.service';
+import {
+	ConfigService
+} from '@khiops-library/providers/config.service';
+import {
+	ChartOptions
+} from 'chart.js';
 
 @Component({
 	selector: 'app-target-lift-graph',
@@ -42,6 +47,7 @@ export class TargetLiftGraphComponent extends SelectableComponent implements OnI
 	targetLift: any;
 	targetLiftGraph: any;
 	colorSet: ChartColorsSetI;
+	legendColorSet: ChartColorsSetI;
 	view: '';
 	xAxisLabel: string;
 	yAxisLabel: string;
@@ -53,6 +59,8 @@ export class TargetLiftGraphComponent extends SelectableComponent implements OnI
 	title: string;
 	targetLiftAllGraph: any;
 	titleWithoutDetails: string;
+
+	chartOptions: ChartOptions;
 
 	constructor(public selectableService: SelectableService,
 		private evaluationDatasService: EvaluationDatasService,
@@ -67,7 +75,25 @@ export class TargetLiftGraphComponent extends SelectableComponent implements OnI
 		this.legendColorSet = _.cloneDeep(this.khiopsLibraryService.getGraphColorSet()[1]);
 		this.colorSet = _.cloneDeep(this.khiopsLibraryService.getGraphColorSet()[1]);
 
-		// this.getDatas();
+		// Override tooltip infos
+		this.chartOptions = {
+			interaction: {
+				intersect: true,
+				mode: 'nearest'
+			},
+			datasets: {
+				line: {
+					pointRadius: 0 // disable for all `'line'` datasets
+				}
+			},
+			elements: {
+				point: {
+					radius: 0 // default to disabled in all datasets
+				}
+			},
+			normalized: true,
+			animation: false
+		};
 
 		if (this.evaluationDatasService.isRegressionAnalysis()) {
 			this.xAxisLabel = this.translate.get('GLOBAL.RANK_ERROR') + ' %';

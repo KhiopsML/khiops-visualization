@@ -40,6 +40,7 @@ export class Preparation2dDatasVO {
 	isValid(): boolean {
 		return this.appDatas &&
 			this.appDatas.bivariatePreparationReport &&
+			this.appDatas.bivariatePreparationReport.variablesPairsStatistics &&
 			this.appDatas.bivariatePreparationReport.variablesPairsStatistics[0];
 	}
 

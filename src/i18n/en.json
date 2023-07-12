@@ -1,6 +1,6 @@
 {
 	"TITLE": {
-		"PROJECT": "Project",
+		"PROJECT": "Project infos",
 		"PREPARATION": "Preparation",
 		"TEXT_PREPARATION": "Text preparation",
 		"TREE_PREPARATION": "Tree preparation",
@@ -55,6 +55,7 @@
 		"UNFOLDED_DATAS_PERFORMANCE_WARNING": "Displayed datas have been automatically unfolded to {count} clusters for better performance"
 	},
 	"NO_DATAS": {
+		"WELCOME": "Open a file from the menu",
 		"DEFAULT": "No data",
 		"NO_PREDICTORS_DETAILS": "No predictors details.",
 		"NO_CORRELATION": "No Correlation.",
@@ -96,6 +97,7 @@
 		"MESSAGE": "Enable Dark mode"
 	},
 	"GLOBAL": {
+		"BOUNDS": "Bounds",
 		"DENSITY": "Density",
 		"OPEN_FULLSCREEN": "Open in fullscreen",
 		"CLOSE_FULLSCREEN": "Close fullscreen",
@@ -164,6 +166,9 @@
 		"EVALUATED_VARIABLES": "Evaluated variables",
 		"CONSTRUCTED_VARIABLES": "Constructed variables",
 		"INFORMATIVE_VARIABLES": "Informative variables",
+		"INFORMATIVE_VARIABLES_PAIRS": "Informative variables pairs",
+		"SELECTED_VARIABLES": "Selected variables",
+		"SELECTED_VARIABLES_PAIRS": "Selected variables pairs",
 		"DISCRETIZATION": "Discretization",
 		"VALUE_GROUPING": "Value grouping",
 		"VARIABLES": "Variables",

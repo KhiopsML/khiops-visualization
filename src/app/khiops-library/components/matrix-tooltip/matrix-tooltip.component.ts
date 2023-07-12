@@ -20,17 +20,20 @@ export class MatrixTooltipComponent implements OnInit, OnChanges {
 	@Input() cell: any;
 	@Input() matrixSize: any;
 	@Input() position: any;
-	@ViewChild('matrixTooltipDiv') matrixTooltipDiv: ElementRef<HTMLElement>;
+	@ViewChild('matrixTooltipDiv') matrixTooltipDiv: ElementRef < HTMLElement > ;
 
 	constructor() {}
 
-	ngOnInit() {
-	}
+	ngOnInit() {}
 
 	ngOnChanges(changes: SimpleChanges) {
 		if (this.matrixTooltipDiv && this.matrixTooltipDiv.nativeElement && changes.position && changes.position.currentValue) {
+			if (this.position.x < 400) {
+				this.matrixTooltipDiv.nativeElement.style.left = this.position.x + 40 + 'px';
+			} else {
+				this.matrixTooltipDiv.nativeElement.style.left = this.position.x - 340 + 'px';
+			}
 			this.matrixTooltipDiv.nativeElement.style.top = this.position.y - 100 + 'px';
-			this.matrixTooltipDiv.nativeElement.style.left = this.position.x - 340 + 'px';
 		}
 		if (this.matrixTooltipDiv && this.matrixTooltipDiv.nativeElement && changes.cell) {
 			if (changes.cell.currentValue) {

@@ -331,6 +331,7 @@ export class EvaluationDatasService {
 		const trainDatas = this.generateLiftCurveValuesForEvaluation(xAxis, smoothParam, 'Train', target);
 		const testDatas = this.generateLiftCurveValuesForEvaluation(xAxis, smoothParam, 'Test', target);
 
+		let liftGraphDatas = []
 		if (trainDatas.length > 0 || testDatas.length > 0) {
 
 			let graphDatas = [];
@@ -366,14 +367,31 @@ export class EvaluationDatasService {
 					}
 				}
 			}
-			this.evaluationDatas.liftGraphDatas = []
 			const displayedMap = this.evaluationDatas.liftGraphDisplayedValues.filter(e => e.show);
 			for (let j = 0; j < displayedMap.length; j++) {
-				this.evaluationDatas.liftGraphDatas.push(graphDatas.find(e => e.name === displayedMap[j].name));
+				liftGraphDatas.push(graphDatas.find(e => e.name === displayedMap[j].name));
 			}
-			this.evaluationDatas.liftGraphDatas.filter((e) => {
+			liftGraphDatas.filter((e) => {
 				return this.evaluationDatas.liftGraphDisplayedValues.find(el => e.name === el.name && el.show);
 			});
+		}
+
+		// format datas for new chartjs lib
+		this.evaluationDatas.liftGraphDatas = {
+			labels: [],
+			datasets: []
+		};
+		this.evaluationDatas.liftGraphDatas.labels = xAxis
+
+		for (let i = 0; i < liftGraphDatas.length; i++) {
+			this.evaluationDatas.liftGraphDatas.datasets.push({
+				label: liftGraphDatas[i].name,
+				data: liftGraphDatas[i].series.map(e => e.value),
+				bezierCurve: false,
+				pointRadius: 0,
+				pointHitRadius: 20,
+				pointHoverRadius: 2,
+			})
 		}
 
 		return this.evaluationDatas.liftGraphDatas;

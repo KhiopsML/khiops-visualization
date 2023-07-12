@@ -8,6 +8,25 @@ import * as _ from 'lodash'; // Important to import lodash in karma
 })
 export class UtilsService {
 
+	static fillArrayWithLogarithmicSpacing(minValue, maxValue, numValues) {
+		var minLog = Math.log10(Math.abs(minValue));
+		var maxLog = Math.log10(Math.abs(maxValue));
+		var logDiff = (maxLog - minLog) / (numValues - 1);
+		var array = [];
+		for (var i = 0; i < numValues; i++) {
+			var value = Math.pow(10, minLog + logDiff * i);
+			if (minValue < 0) {
+				value *= -1; // If the minimum value is negative, make the values ​​negative as well
+			}
+			array.push(value);
+		}
+		return array;
+	}
+
+	static isPowerOfTen(num) {
+		return Math.log10(num) % 1 === 0;
+	}
+
 	static setWaitingCursor(time = 0) {
 		document.body.style.cursor = 'wait';
 		setTimeout(() => {

@@ -55,6 +55,7 @@
 								(selectedItemChanged)="onSelectedGraphItemChanged($event)" fxFlex="1 1 100%"
 								[showTargetDistributionGraph]="true">
 							</app-variable-graph-details>
+							<kl-no-data fxFlex *ngIf="!treePreparationDatas.selectedVariable"></kl-no-data>
 						</as-split-area>
 					</as-split>
 				</as-split-area>
@@ -80,6 +81,7 @@
 										[displayedValues]="distributionDatas.treeNodeTargetDistributionDisplayedValues"
 										[selectedNode]="treePreparationDatas.selectedNode">
 									</app-tree-leaf-details>
+									<kl-no-data fxFlex *ngIf="!treePreparationDatas.selectedVariable"></kl-no-data>
 								</as-split-area>
 							</as-split>
 						</as-split-area>

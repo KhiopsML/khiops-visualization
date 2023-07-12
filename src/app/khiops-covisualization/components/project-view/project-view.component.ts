@@ -18,7 +18,7 @@ export class ProjectViewComponent
 	appDatas: any;
 	projectSummaryDatas: any[any];
 	onFileLoaderDataChangedCb: Function;
-	appName: any;
+	appName = 'khiops-covisualization';
 
 	// managed by selectable-tab component
 	tabIndex = 0;
@@ -31,9 +31,6 @@ export class ProjectViewComponent
 	public initialize() {
 		this.appDatas = this.appService.getDatas();
 		if (this.appDatas.datas) {
-			if (pjson) {
-				this.appName = pjson.name;
-			}
 			this.projectSummaryDatas = this.appService.getProjectSummaryDatas();
 		}
 	}

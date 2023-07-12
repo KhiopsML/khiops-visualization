@@ -10,8 +10,6 @@ export class HistogramService {
 	rangeYLog = {
 		min: 0,
 		max: 0,
-		realMin: 0,
-		realMax: 0,
 	};
 	rangeXLog: any = {};
 	barWlogs: any[] = [];
@@ -69,17 +67,10 @@ export class HistogramService {
 
 	getLogRangeY(datas: any) {
 		const dataValues = datas
-			.filter((e: any) => {
-				return e.logValue !== 0;
-			})
-			.map((e: any) => {
-				return e.logValue;
-			});
-
-		this.rangeYLog.max = Math.ceil(Math.max(...dataValues));
-		this.rangeYLog.min = Math.floor(Math.min(...dataValues));
-		this.rangeYLog.realMax = Math.max(...dataValues);
-		this.rangeYLog.realMin = Math.min(...dataValues);
+			.map((e) => e.logValue)
+			.filter((e) => e !== 0);
+		this.rangeYLog.max = Math.max(...dataValues);
+		this.rangeYLog.min = Math.min(...dataValues);
 
 		return this.rangeYLog;
 	}

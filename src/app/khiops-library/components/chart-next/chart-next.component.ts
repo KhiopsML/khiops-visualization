@@ -278,7 +278,7 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 
 			dataset.backgroundColor =
 				new Array(this.inputDatas.labels.length).fill(UtilsService.hexToRGBa(this.colorSet.domain[i], 0.8));
-			const defaultGroupIndex = dataset.extra.findIndex(e => e.defaultGroupIndex);
+			const defaultGroupIndex = dataset.extra?.findIndex(e => e.defaultGroupIndex);
 			if (defaultGroupIndex !== -1) {
 				dataset.backgroundColor[defaultGroupIndex] = UtilsService.hexToRGBa(this.colorSet.domain[i], 0.15);
 			}

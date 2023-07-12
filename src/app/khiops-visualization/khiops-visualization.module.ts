@@ -33,9 +33,6 @@ import {
 	Preparation2dViewComponent
 } from './components/preparation-2d-view/preparation-2d-view.component';
 import {
-	NgxChartsModule
-} from '@swimlane/ngx-charts';
-import {
 	ModelingViewComponent
 } from './components/modeling-view/modeling-view.component';
 import {
@@ -177,7 +174,6 @@ const providers = [
 		CommonModule,
 		BrowserModule,
 		BrowserAnimationsModule,
-		NgxChartsModule,
 		KhiopsLibraryModule,
 		AgGridModule.withComponents([]),
 		FlexLayoutModule,

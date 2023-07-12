@@ -304,7 +304,7 @@ export class MatrixUtilsDatasService {
 			}
 		}
 		var t1 = performance.now();
-		console.log("getCellDatas " + (t1 - t0) + " milliseconds.");
+		// console.log("getCellDatas " + (t1 - t0) + " milliseconds.");
 		// console.log("TCL: MatrixUtilsDatasService -> constructor -> cells", cells)
 		return cells;
 	}

@@ -75,7 +75,9 @@ export class HomeLayoutComponent implements OnInit {
 	}
 	set appDatas(value: any) {
 		this.appService.setFileDatas(value);
-		if (value && value.tool === "Khiops") this.initializeHome();
+		if (value) {
+			this.initializeHome();
+		}
 	}
 
 	@ViewChild('appProjectView', {
@@ -90,10 +92,9 @@ export class HomeLayoutComponent implements OnInit {
 
 	onFileLoaderDataChangedCb: Function;
 	appVersion: any;
-	appName: any;
+	appName = 'khiops-visualization';
 	opened = false;
 	isElectron = false;
-	isWebDebug = true; // Debug web mode
 	titleBar: any;
 	public selectedTab: Object | undefined;
 	currentDatas: any;
@@ -123,7 +124,6 @@ export class HomeLayoutComponent implements OnInit {
 
 		if (pjson) {
 			this.appTitle = pjson.title.visualization;
-			this.appName = pjson.name;
 			this.appVersion = pjson.version;
 		}
 

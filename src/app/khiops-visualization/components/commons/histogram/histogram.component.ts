@@ -24,6 +24,8 @@ import { ConfigService } from "@khiops-library/providers/config.service";
 import { SelectableService } from "@khiops-library/components/selectable/selectable.service";
 import { HistogramType } from "./histogram.types";
 import { AppConfig } from "src/environments/environment";
+import { TranslateService } from "@ngstack/translate";
+import { UtilsService } from "../../../../khiops-library/providers/utils.service";
 
 @Component({
 	selector: "app-histogram",
@@ -52,7 +54,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 	yPadding = 50;
 
 	// Static config values
-	xTickCount = 12;
+	xTickCount;
 	yTicksCount = 10;
 	tickSize = 0;
 	minBarHeight = 4;
@@ -82,10 +84,12 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 		private khiopsLibraryService: KhiopsLibraryService,
 		private histogramService: HistogramService,
 		public selectableService: SelectableService,
+		private translate: TranslateService,
 		public ngzone: NgZone,
 		public configService: ConfigService
 	) {
 		super(selectableService, ngzone, configService);
+		HistogramUIService.setTranslationService(translate);
 
 		this.colorSet = HistogramUIService.getColors();
 		d3.selection.prototype.moveToFront = function () {
@@ -140,6 +144,8 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 	}
 
 	init() {
+		this.xTickCount = 5; // We must reinit each times
+
 		if (this.chart) {
 			this.chart.nativeElement.innerHTML = "";
 			if (this.datas) {
@@ -169,6 +175,13 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 
 				[this.rangeXLin, this.rangeXLog] =
 					this.histogramService.getRangeX(this.datas);
+
+				if (
+					this.rangeXLog.negValuesCount === 0 ||
+					this.rangeXLog.posValuesCount === 0
+				) {
+					this.xTickCount = this.xTickCount * 2;
+				}
 
 				this.drawYAxis();
 				this.drawHistogram(this.datas);
@@ -347,7 +360,10 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			d3.select(this).style("fill-opacity", "0.9");
 		};
 		const mousemove = (e: any) => {
-			const tooltipText = HistogramUIService.generateTooltip(d);
+			const tooltipText = HistogramUIService.generateTooltip(
+				d,
+				this.distributionDatas.distributionGraphOptionsX.selected
+			);
 			//@ts-ignore
 			self.tooltip.html(tooltipText);
 
@@ -382,6 +398,10 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 				.style("fill-opacity", "0.8");
 		};
 
+		if (barW > 3) {
+			barW = barW - 2; // -2 to remove stroke width (outer and cannot be inner)
+		}
+
 		if (
 			this.distributionDatas.distributionGraphOptions.selected ===
 			HistogramType.YLIN
@@ -399,6 +419,13 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 		if (barH !== 0 && barH < this.minBarHeight) {
 			barH = this.minBarHeight;
 		}
+		if (
+			this.distributionDatas.distributionGraphOptions.selected ===
+				HistogramType.YLOG &&
+			barH === 0
+		) {
+			barH = this.minBarHeight;
+		}
 
 		this.svg
 			.append("rect")
@@ -409,7 +436,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			.on("mouseover", mouseover)
 			.on("mousemove", mousemove)
 			.on("mouseleave", mouseleave)
-			.attr("width", barW - 2) // -2 to remove stroke width (outer and cannot be inner)
+			.attr("width", barW)
 			.attr("height", barH)
 			.attr("fill-opacity", "0.8")
 			.attr("fill", bar.color)
@@ -442,17 +469,6 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 	drawXAxis(domain: any, shift: number, width: number, tickValues: any) {
 		if (width !== 0) {
 			let xAxis;
-			let tickCount = this.xTickCount;
-			if (
-				this.distributionDatas.distributionGraphOptionsX.selected ===
-					HistogramType.XLOG &&
-				domain.length !== 1
-			) {
-				tickCount = domain[1] / domain[0];
-				if (tickCount > 10) {
-					tickCount = 10;
-				}
-			}
 
 			shift = shift + this.xPadding;
 
@@ -468,37 +484,37 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			//@ts-ignore
 			const axis: d3.Axis<d3.NumberValue> = d3
 				.axisBottom(xAxis)
-				// .tickValues(tickValues)
-				// .ticks(tickCount)
-				.tickSize(-this.h + this.yPadding / 2)
-				//@ts-ignore
-				.tickFormat((d, i) => {
-					//@ts-ignore
-					let val: any = d;
-					if (
-						this.distributionDatas.distributionGraphOptionsX
-							.selected === HistogramType.XLIN
-					) {
-						return "" + format(val);
-					} else {
-						if (domain.length === 1) {
-							// return "-Inf (0)";
-							return "-Inf";
-						} else {
-							return this.formatTick(val);
-						}
-					}
-				});
+				.ticks([this.xTickCount])
+				.tickArguments([this.xTickCount, ".0e"])
+				.tickSize(-this.h + this.yPadding / 2);
 
 			if (
 				this.distributionDatas.distributionGraphOptionsX.selected ===
 				HistogramType.XLIN
 			) {
-				// @ts-ignore
-				axis.ticks = tickCount;
+				axis.tickFormat((d, i) => {
+					let val: any = d;
+					return "" + format(val);
+				});
 			} else {
-				// @ts-ignore
-				axis.tickValues = tickValues;
+				// axis.ticks([this.xTickCount]);
+				// axis.tickArguments([this.xTickCount, ".0e"]);
+				// axis.tickFormat((d, i) => {
+				// 	//@ts-ignore
+				// 	let val: any = d;
+				// 	if (
+				// 		this.distributionDatas.distributionGraphOptionsX
+				// 			.selected === HistogramType.XLIN
+				// 	) {
+				// 		return "" + format(val);
+				// 	} else {
+				// 		if (domain.length === 1) {
+				// 			return "-Inf";
+				// 		} else {
+				// 			return d3.format(".0e")(val);
+				// 		}
+				// 	}
+				// });
 			}
 
 			this.svg
@@ -554,6 +570,21 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			.axisLeft(y)
 			.tickSize(this.tickSize)
 			.tickPadding(10)
+			//@ts-ignore
+			.tickFormat((d, i) => {
+				//@ts-ignore
+				let val: any = d;
+				if (
+					this.distributionDatas.distributionGraphOptions.selected ===
+					HistogramType.YLIN
+				) {
+					return "" + format(val);
+				} else {
+					const antiLog = Math.pow(10, val);
+					return d3.format(".0e")(antiLog);
+				}
+			})
+
 			.ticks(this.yTicksCount);
 		this.svg
 			.append("g")

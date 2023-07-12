@@ -20,10 +20,9 @@
 		</div>
 	</div>
 	<div fxFlex fxLayout="column" *ngIf="targetLiftGraph" class="graph-comp-chart-container">
-		<ngx-charts-line-chart [results]="targetLiftGraph" [xAxis]="true" [yAxis]="true" [scheme]="colorSet"
-			[showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisLabel]="xAxisLabel"
-			[xAxisTicks]="[0, 25, 50, 75, 100]" [yAxisTicks]="[0, 25, 50, 75, 100]" [yAxisLabel]="yAxisLabel">
-		</ngx-charts-line-chart>
+		<kl-chart-next id="level-distribution-graph-canvas" [canvasIdContainer]="'target-lift-chart-canvas'"
+			[type]="'line'" [chartOptions]="chartOptions" [colorSet]="colorSet" [inputDatas]="targetLiftGraph">
+		</kl-chart-next>
 	</div>
 	<div class="clear-bottom-graph"></div>
 	<kl-legend [inputDatas]="evaluationDatas.liftGraphDisplayedValues" [type]="'chart-nd-dynamic'"
