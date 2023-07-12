@@ -484,35 +484,37 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			//@ts-ignore
 			const axis: d3.Axis<d3.NumberValue> = d3
 				.axisBottom(xAxis)
-				// .tickValues(tickValues)
-				// .ticks(tickCount)
-				.tickSize(-this.h + this.yPadding / 2)
-				//@ts-ignore
-				.tickFormat((d, i) => {
-					//@ts-ignore
-					let val: any = d;
-					if (
-						this.distributionDatas.distributionGraphOptionsX
-							.selected === HistogramType.XLIN
-					) {
-						return "" + format(val);
-					} else {
-						if (domain.length === 1) {
-							return "-Inf";
-						} else {
-							return d3.format(".0e")(val);
-						}
-					}
-				});
+				.ticks([this.xTickCount])
+				.tickArguments([this.xTickCount, ".0e"])
+				.tickSize(-this.h + this.yPadding / 2);
 
 			if (
 				this.distributionDatas.distributionGraphOptionsX.selected ===
 				HistogramType.XLIN
 			) {
-				// @ts-ignore
-				// axis.ticks(tickCount);
+				axis.tickFormat((d, i) => {
+					let val: any = d;
+					return "" + format(val);
+				});
 			} else {
-				axis.tickArguments([this.xTickCount, ".0e"]);
+				// axis.ticks([this.xTickCount]);
+				// axis.tickArguments([this.xTickCount, ".0e"]);
+				// axis.tickFormat((d, i) => {
+				// 	//@ts-ignore
+				// 	let val: any = d;
+				// 	if (
+				// 		this.distributionDatas.distributionGraphOptionsX
+				// 			.selected === HistogramType.XLIN
+				// 	) {
+				// 		return "" + format(val);
+				// 	} else {
+				// 		if (domain.length === 1) {
+				// 			return "-Inf";
+				// 		} else {
+				// 			return d3.format(".0e")(val);
+				// 		}
+				// 	}
+				// });
 			}
 
 			this.svg
