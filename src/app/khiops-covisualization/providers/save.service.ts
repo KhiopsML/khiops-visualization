@@ -39,9 +39,42 @@ export class SaveService {
 		private dimensionsService: DimensionsDatasService
 	) {}
 
-	constructDatasToSave() {
+	// constructDatasToSave() {
+	// 	const appDatas = this.appService.getDatas().datas;
+	// 	const initialDatas = _.cloneDeep(this.appService.getInitialDatas().datas);
+
+	// 	// Copy dimensionHierarchies into initial datas to save nodes names and annotations
+	// 	initialDatas.coclusteringReport.dimensionHierarchies = appDatas.coclusteringReport.dimensionHierarchies;
+
+	// 	const selectedDimensions = this.dimensionsService.getDimensionsToSave();
+
+	// 	// Check if user has changed something
+	// 	if (selectedDimensions.length > 0) {
+	// 		const unfoldHierarchyState = this.treenodesService.getUnfoldHierarchy();
+	// 		const splitSizes = this.appService.getSplitSizes();
+	// 		const viewsLayout = this.appService.getViewsLayout();
+	// 		const selectedNodes = this.treenodesService.getSelectedNodes();
+	// 		const collapsedNodes = this.treenodesService.getCollapsedNodesToSave();
+	// 		const importedDatas = this.importExtDatasService.getImportedDatas();
+
+	// 		initialDatas.savedDatas = new SavedDatasVO(
+	// 			viewsLayout,
+	// 			splitSizes,
+	// 			selectedNodes,
+	// 			selectedDimensions,
+	// 			collapsedNodes,
+	// 			importedDatas,
+	// 			unfoldHierarchyState
+	// 		);
+	// 	}
+
+	// 	return initialDatas;
+	// }
+
+	constructDatasToSave(collapsedNodesInput ? ) {
 		const appDatas = this.appService.getDatas().datas;
-		const initialDatas = _.cloneDeep(this.appService.getInitialDatas().datas);
+		// const initialDatas = _.cloneDeep(this.appService.getInitialDatas().datas);
+		const initialDatas = JSON.parse(JSON.stringify(this.appService.getInitialDatas().datas));
 
 		// Copy dimensionHierarchies into initial datas to save nodes names and annotations
 		initialDatas.coclusteringReport.dimensionHierarchies = appDatas.coclusteringReport.dimensionHierarchies;
@@ -54,7 +87,12 @@ export class SaveService {
 			const splitSizes = this.appService.getSplitSizes();
 			const viewsLayout = this.appService.getViewsLayout();
 			const selectedNodes = this.treenodesService.getSelectedNodes();
-			const collapsedNodes = this.treenodesService.getCollapsedNodesToSave();
+			let collapsedNodes;
+			if (collapsedNodesInput) {
+				collapsedNodes = collapsedNodesInput
+			} else {
+				collapsedNodes = this.treenodesService.getCollapsedNodesToSave();
+			}
 			const importedDatas = this.importExtDatasService.getImportedDatas();
 
 			initialDatas.savedDatas = new SavedDatasVO(
@@ -71,19 +109,54 @@ export class SaveService {
 		return initialDatas;
 	}
 
-	constructSavedHierarchyToSave() {
-		let datasToSave = this.constructDatasToSave();
+	// constructSavedHierarchyToSave() {
+	// 	let datasToSave = this.constructDatasToSave();
 
+	// 	datasToSave = this.truncateJsonHierarchy(datasToSave);
+	// 	datasToSave = this.updateSummariesParts(datasToSave);
+	// 	datasToSave = this.truncateJsonPartition(datasToSave);
+	// 	datasToSave = this.truncateJsonCells(datasToSave);
+	// 	datasToSave = this.updateSummariesCells(datasToSave);
+	// 	// Remove collapsed nodes and selected nodes because they have been reduced
+	// 	delete datasToSave.savedDatas.collapsedNodes;
+	// 	delete datasToSave.savedDatas.selectedNodes;
+	// 	return datasToSave;
+	// }
+
+	constructSavedHierarchyToSave(collapsedNodesInput ? ) {
+		let datasToSave = this.constructDatasToSave(collapsedNodesInput);
+		let t0 = performance.now();
 		datasToSave = this.truncateJsonHierarchy(datasToSave);
+		let t1 = performance.now();
+		// console.log("truncateJsonHierarchy " + (t1 - t0) + " milliseconds.");
+
+		t0 = performance.now();
 		datasToSave = this.updateSummariesParts(datasToSave);
+		t1 = performance.now();
+		// console.log("updateSummariesParts " + (t1 - t0) + " milliseconds.");
+
+		t0 = performance.now();
 		datasToSave = this.truncateJsonPartition(datasToSave);
+		t1 = performance.now();
+		// console.log("truncateJsonPartition " + (t1 - t0) + " milliseconds.");
+
+		t0 = performance.now();
 		datasToSave = this.truncateJsonCells(datasToSave);
+		t1 = performance.now();
+		console.log("truncateJsonCells " + (t1 - t0) + " milliseconds.");
+
+		t0 = performance.now();
 		datasToSave = this.updateSummariesCells(datasToSave);
+		t1 = performance.now();
+		// console.log("updateSummariesCells " + (t1 - t0) + " milliseconds.");
+
 		// Remove collapsed nodes and selected nodes because they have been reduced
 		delete datasToSave.savedDatas.collapsedNodes;
 		delete datasToSave.savedDatas.selectedNodes;
+		console.log('file: save.service.ts:114 ~ constructSavedHierarchyToSave ~ datasToSave:', datasToSave);
 		return datasToSave;
 	}
+
 
 	truncateJsonHierarchy(datas) {
 		// console.log("SaveService -> truncateJsonHierarchy -> datas", datas)
@@ -321,9 +394,9 @@ export class SaveService {
 					while (
 						!(
 							initialPart[0] >=
-								currentVariable[currentP][0] &&
-								initialPart[1] <=
-								currentVariable[currentP][1]
+							currentVariable[currentP][0] &&
+							initialPart[1] <=
+							currentVariable[currentP][1]
 						)
 					) {
 						currentPart = currentVariable[currentP];
