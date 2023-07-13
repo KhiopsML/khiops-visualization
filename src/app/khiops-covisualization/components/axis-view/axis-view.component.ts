@@ -17,6 +17,7 @@ import { EventsService } from "@khiops-covisualization/providers/events.service"
 import { TreenodesService } from "@khiops-covisualization/providers/treenodes.service";
 import { TranslateService } from "@ngstack/translate";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { SaveService } from "@khiops-covisualization/providers/save.service";
 
 @Component({
 	selector: "app-axis-view",
@@ -53,6 +54,7 @@ export class AxisViewComponent
 		private appService: AppService,
 		private treenodesService: TreenodesService,
 		private translate: TranslateService,
+		private saveService: SaveService,
 		private snackBar: MatSnackBar,
 		private eventsService: EventsService,
 		private dimensionsService: DimensionsDatasService
@@ -64,27 +66,46 @@ export class AxisViewComponent
 		setTimeout(() => {
 			this.sizes = this.appService.getViewSplitSizes("axisView");
 			this.dimensionsDatas = this.dimensionsService.getDatas();
-			let [initTime, cellDatas] = this.dimensionsService.updateDimensions();
+			this.dimensionsService.updateDimensions(false);
 
 			// OPTIM: Unfold auto if computer is too laggy
-			if (
-				initTime >
-				AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.LIMIT_TIME
-			) {
-				this.treenodesService.initDefaultUnfoldRank();
+			if (this.dimensionsService.isLargeCocluster()) {
+				let unfoldState =
+					parseInt(
+						localStorage.getItem(
+							AppConfig.covisualizationCommon.GLOBAL.LS_ID +
+								"DEFAULT_LIMIT_HIERARCHY"
+						),
+						10
+					) ||
+					AppConfig.covisualizationCommon.UNFOLD_HIERARCHY
+						.DEFAULT_UNFOLD;
+
+				const collapsedNodes =
+					this.treenodesService.getLeafNodesForARank(unfoldState);
+				let datas =
+					this.saveService.constructSavedHierarchyToSave(
+						collapsedNodes
+					);
+
+				this.appService.setFileDatas(datas);
+
+				this.dimensionsDatas = this.dimensionsService.getDatas();
+				this.dimensionsService.updateDimensions();
+				this.dimensionsService.initSelectedDimensions();
+
 				this.snackBar.open(
 					this.translate.get(
 						"SNACKS.UNFOLDED_DATAS_PERFORMANCE_WARNING",
 						{
-							count: AppConfig.covisualizationCommon
-								.UNFOLD_HIERARCHY.DEFAULT_UNFOLD,
+							count: unfoldState,
 						}
 					),
 					this.translate.get("GLOBAL.OK"),
 					{
-						duration: 10000,
+						duration: 4000,
 						panelClass: "warning",
-						verticalPosition: "top",
+						verticalPosition: "bottom",
 					}
 				);
 			}

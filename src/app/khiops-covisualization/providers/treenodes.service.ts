@@ -51,6 +51,18 @@ export class TreenodesService {
 		this.collapsedNodesToSave = this.appService.getSavedDatas('collapsedNodes') || {};
 	}
 
+	getLeafNodesForARank(rank) {
+		const collapsedNodes = {}
+		for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
+			collapsedNodes[this.dimensionsDatas.dimensions[i].name] = [];
+
+			const nodesVO: any[] = UtilsService.fastFilter(this.dimensionsDatas.dimensionsClusters[i], e => {
+				return rank <= e.hierarchicalRank && !e.isLeaf;
+			});
+			collapsedNodes[this.dimensionsDatas.dimensions[i].name] = nodesVO.map(e=>e.cluster);
+		}
+		return collapsedNodes
+	}
 	updateSelectedNodeName(hierarchyName, name, newName, isLeaf) {
 		this.updateNodeNameIntoJson(hierarchyName, name, newName, isLeaf);
 		this.updateNodeNameIntoModel(hierarchyName, name, newName, isLeaf);

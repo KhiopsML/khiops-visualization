@@ -26,6 +26,7 @@ export class UserSettingsComponent implements OnChanges {
 
 	allowCookies: boolean;
 	fontSize: any;
+	defaultHierarchy: number;
 	contrastValue: number;
 	initialAllowCookies: boolean;
 	allowDarkTheme: boolean;
@@ -41,6 +42,11 @@ export class UserSettingsComponent implements OnChanges {
 	onNavDrawerOpen() {
 
 		this.khiopsLibraryService.trackEvent('page_view', 'settings');
+
+		// defaultHierarchy
+		this.defaultHierarchy = parseInt(localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'DEFAULT_LIMIT_HIERARCHY'), 10) || AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.DEFAULT_UNFOLD;
+		localStorage.setItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'DEFAULT_LIMIT_HIERARCHY', this.defaultHierarchy.toString());
+		AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.DEFAULT_UNFOLD = this.defaultHierarchy;
 
 		// Font size
 		this.fontSize = localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'FONT_SIZE') || AppConfig.covisualizationCommon.GLOBAL.FONT_SIZE;
@@ -111,6 +117,11 @@ export class UserSettingsComponent implements OnChanges {
 		this.appService.setFontSize(this.fontSize);
 		// document.body.classList.remove('font-10', 'font-11', 'font-12', 'font-13', 'font-14', 'font-15', 'font-16', 'font-17', 'font-18');
 		// document.body.classList.add('font-' + event.value);
+	}
+
+	onDefaultHierarchyChanged(event) {
+		this.defaultHierarchy = event.value;
+		localStorage.setItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'DEFAULT_LIMIT_HIERARCHY', this.defaultHierarchy.toString());
 	}
 
 

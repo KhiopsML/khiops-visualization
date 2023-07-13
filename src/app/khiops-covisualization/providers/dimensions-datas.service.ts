@@ -72,6 +72,11 @@ export class DimensionsDatasService {
 		return this.dimensionsDatas.dimensions.length;
 	}
 
+	isLargeCocluster() {
+		const currentSize = (this.dimensionsDatas.dimensions.map(e => e.parts).reduce((a, b) => a * b))
+		return this.dimensionsDatas.dimensions.length * 2 < currentSize;
+	}
+
 	isContextDimensions(): boolean {
 		const appDatas = this.appService.getDatas().datas;
 		return (appDatas && appDatas.coclusteringReport && appDatas.coclusteringReport.summary.initialDimensions > 2);
@@ -167,15 +172,15 @@ export class DimensionsDatasService {
 		}
 
 		// Initialize selected dimensions at first launch
-		if (!this.dimensionsDatas.selectedDimensions) {
+		// if (!this.dimensionsDatas.selectedDimensions) {
 			// this.getHierarchyDatas();
 			this.initSelectedDimensions();
-		}
+		// }
 
 		return this.dimensionsDatas.dimensions;
 	}
 
-	updateDimensions(): any {
+	updateDimensions(retrieveMatrixDatas = true): any {
 		this.getDimensions();
 
 		// keep initial dim in memory
@@ -184,7 +189,10 @@ export class DimensionsDatasService {
 		}
 
 		this.constructDimensionsTrees();
-		return this.getMatrixDatas();
+		if (retrieveMatrixDatas) {
+			this.getMatrixDatas();
+		}
+		return;
 
 	}
 

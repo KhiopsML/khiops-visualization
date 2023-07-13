@@ -33,5 +33,13 @@
 				{{ 'DARK_THEME.MESSAGE' | translate }}
 			</mat-slide-toggle>
 		</div>
+		<h2>DEFAULT HIERARCHY LIMIT (For big files):</h2>
+		<div fxLayout="row" fxLayoutAlign="start center">
+			<mat-slider color="primary"
+				[min]="0" [max]="2000" [step]="20" [thumbLabel]="true" [(ngModel)]="defaultHierarchy"
+				(input)="onDefaultHierarchyChanged($event)">
+			</mat-slider>
+			<span>{{ defaultHierarchy }}</span>
+		</div>
 	</div>
 </div>

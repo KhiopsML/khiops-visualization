@@ -21,7 +21,7 @@ export const covisualizationCommonEnvironment = {
   },
 	UNFOLD_HIERARCHY: {
 	LIMIT_TIME: 1000,
-    DEFAULT_UNFOLD: 300,
+    DEFAULT_UNFOLD: 20,
     WIDTH: '85vw',
     HEIGHT: '85vh',
   },
