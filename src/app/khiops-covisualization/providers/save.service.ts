@@ -408,9 +408,7 @@ export class SaveService {
 					if (
 
 						!(
-							initialPart.every((value, index) =>
-								currentPart.includes(value)
-							)
+							currentPart.includes(initialPart[0])
 						)
 					) {
 						currentP = currentP + 1;
