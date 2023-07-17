@@ -383,6 +383,10 @@ export class UtilsService {
 	// 	return flattenedArray;
 	// }
 
+	/**
+	 * ChatGPT optimization
+	 * #58 Matrix tooltip informations cut
+	 */
 	static getPrecisionNumber(input, numberPrecision?): string {
 		numberPrecision--;
 		if (typeof input === 'number' && isFinite(input)) {
