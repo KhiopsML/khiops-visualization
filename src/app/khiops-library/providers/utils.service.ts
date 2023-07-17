@@ -136,6 +136,16 @@ export class UtilsService {
 		}
 		return sum;
 	}
+	/**
+	 * ChatGPT optimization
+	 */
+	// static sumArrayOfArray(array) {
+	// 	let sum = 0;
+	// 	for (const subArray of array) {
+	// 		sum += subArray.reduce((acc, curr) => acc + curr, 0);
+	// 	}
+	// 	return sum;
+	// }
 
 	static sumArrayItems(arrays) {
 		const total = [];
