@@ -138,6 +138,7 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
 		this.appDatas = this.appService.getDatas().datas;
 		this.preparation2dDatas = this.preparation2dDatasService.getDatas();
 		this.sizes = this.appService.getViewSplitSizes('preparation2dView');
+		this.informationsDatas = this.preparation2dDatasService.getInformationsDatas();
 		this.summaryDatas = this.preparationDatasService.getSummaryDatas();
 		this.targetVariableStatsDatas = this.preparationDatasService.getTargetVariableStatsDatas();
 		this.variables2dDatas = this.preparation2dDatasService.getVariablesd2Datas();

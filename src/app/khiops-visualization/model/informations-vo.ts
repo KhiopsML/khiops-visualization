@@ -8,6 +8,7 @@ export class InformationsVO {
 	selectedVariablePairs: any;
 	discretization: string;
 	valueGrouping: string;
+	evaluatedVariablePairs: any;
 
 	constructor(object) {
 
@@ -19,6 +20,7 @@ export class InformationsVO {
 		this.selectedVariablePairs = object.selectedVariablePairs
 		this.discretization = object.discretization
 		this.valueGrouping = object.valueGrouping
+		this.evaluatedVariablePairs = object.evaluatedVariablePairs
 
 	}
 
@@ -29,6 +31,12 @@ export class InformationsVO {
 			informationsDatas.push({
 				title: 'GLOBAL.EVALUATED_VARIABLES',
 				value: this.evaluatedVariables
+			});
+		}
+		if (this.evaluatedVariablePairs !== undefined) {
+			informationsDatas.push({
+				title: 'GLOBAL.EVALUATED_VARIABLES_PAIRS',
+				value: this.evaluatedVariablePairs
 			});
 		}
 		if (this.constructedVariables !== undefined) {

@@ -32,8 +32,8 @@
 		"BETA": "Beta versions"
 	},
 	"SNACKS": {
-		"EXTERNAL_DATA_ADDED":"External datas added",
-		"EXTERNAL_DATA_ALREADY_ADDED":"External datas already added",
+		"EXTERNAL_DATA_ADDED": "External datas added",
+		"EXTERNAL_DATA_ALREADY_ADDED": "External datas already added",
 		"OPEN_RELEASE_NOTES_ERROR": "Error retrieving release notes",
 		"SCREENSHOT_COPIED": "Screenshot copied to clipboard",
 		"COPY_ERROR": "Copy error",
@@ -61,6 +61,7 @@
 		"NO_CORRELATION": "No Correlation.",
 		"NO_EXTERNAL_DATAS": "No external datas.",
 		"NO_VARIABLE_DETAILS": "No variable details.",
+		"NO_INFORMATIONS_DETAILS": "No informations details.",
 		"NO_COMPOSITION_FOR_NUMERICAL": "No composition datas for numerical dimensions"
 	},
 	"SETTINGS": {
@@ -167,6 +168,7 @@
 		"CONSTRUCTED_VARIABLES": "Constructed variables",
 		"INFORMATIVE_VARIABLES": "Informative variables",
 		"INFORMATIVE_VARIABLES_PAIRS": "Informative variables pairs",
+		"EVALUATED_VARIABLES_PAIRS": "Evaluated variables pairs",
 		"SELECTED_VARIABLES": "Selected variables",
 		"SELECTED_VARIABLES_PAIRS": "Selected variables pairs",
 		"DISCRETIZATION": "Discretization",
