@@ -11,63 +11,63 @@ export class InformationsVO {
 
 	constructor(object) {
 
-		this.evaluatedVariables = object.evaluatedVariables || '';
-		this.constructedVariables = object.constructedVariables || '';
-		this.informativeVariables = object.informativeVariables || '';
-		this.informativeVariablePairs = object.informativeVariablePairs || '';
-		this.selectedVariables = object.selectedVariables || '';
-		this.selectedVariablePairs = object.selectedVariablePairs || '';
-		this.discretization = object.discretization || '';
-		this.valueGrouping = object.valueGrouping || '';
+		this.evaluatedVariables = object.evaluatedVariables
+		this.constructedVariables = object.constructedVariables
+		this.informativeVariables = object.informativeVariables
+		this.informativeVariablePairs = object.informativeVariablePairs
+		this.selectedVariables = object.selectedVariables
+		this.selectedVariablePairs = object.selectedVariablePairs
+		this.discretization = object.discretization
+		this.valueGrouping = object.valueGrouping
 
 	}
 
 	formatDatas() {
 
 		const informationsDatas = [];
-		if (this.evaluatedVariables) {
+		if (this.evaluatedVariables !== undefined) {
 			informationsDatas.push({
 				title: 'GLOBAL.EVALUATED_VARIABLES',
 				value: this.evaluatedVariables
 			});
 		}
-		if (this.constructedVariables) {
+		if (this.constructedVariables !== undefined) {
 			informationsDatas.push({
 				title: 'GLOBAL.CONSTRUCTED_VARIABLES',
 				value: this.constructedVariables
 			});
 		}
-		if (this.informativeVariables) {
+		if (this.informativeVariables !== undefined) {
 			informationsDatas.push({
 				title: 'GLOBAL.INFORMATIVE_VARIABLES',
 				value: this.informativeVariables
 			});
 		}
-		if (this.informativeVariablePairs) {
+		if (this.informativeVariablePairs !== undefined) {
 			informationsDatas.push({
 				title: 'GLOBAL.INFORMATIVE_VARIABLES_PAIRS',
 				value: this.informativeVariablePairs
 			});
 		}
-		if (this.selectedVariables) {
+		if (this.selectedVariables !== undefined) {
 			informationsDatas.push({
 				title: 'GLOBAL.SELECTED_VARIABLES',
 				value: this.selectedVariables
 			});
 		}
-		if (this.selectedVariablePairs) {
+		if (this.selectedVariablePairs !== undefined) {
 			informationsDatas.push({
 				title: 'GLOBAL.SELECTED_VARIABLES_PAIRS',
 				value: this.selectedVariablePairs
 			});
 		}
-		if (this.discretization) {
+		if (this.discretization !== undefined) {
 			informationsDatas.push({
 				title: 'GLOBAL.DISCRETIZATION',
 				value: this.discretization
 			});
 		}
-		if (this.valueGrouping) {
+		if (this.valueGrouping !== undefined) {
 			informationsDatas.push({
 				title: 'GLOBAL.VALUE_GROUPING',
 				value: this.valueGrouping
