@@ -4,18 +4,40 @@
 .informations-block-comp {
 	h1 {
 		mat-icon {
-			margin-right: 0.2em;
+			margin-right: 0.4em;
+			margin-top: -2px;
 		}
 	}
 
-	span {
-		margin: 0em 2em;
+	table {
+		margin: 0.2em 2em;
 		word-break: break-all;
 
-		strong {
-			font-size: 0.95em;
-			font-weight: 500;
-			color: var(--primary-contrast-10);
+		tr {
+			th {
+				padding: 0;
+				text-align: left;
+				padding-right: 4px;
+			}
+			td {
+				padding: 0;
+			}
+
+			strong {
+				font-size: 0.95em;
+				font-weight: 500;
+				color: var(--primary-10);
+			}
+
+			em {
+				font-size: 0.95em;
+				font-weight: 500;
+				color: var(--primary-contrast);
+				background: var(--bgColor-20);
+				padding: 1px 5px;
+				border-radius: 4px;
+				margin: 4px 0;
+			}
 		}
 	}
 }

@@ -169,7 +169,7 @@ split-gutter {
 
 .mat-tab-header {
 	background-color: var(--bgColor) !important;
-	height: 58px !important;
+	height: 68px !important;
 	width: 100% !important;
 	z-index: 1000;
 }
@@ -192,7 +192,7 @@ mat-tab-header {
 }
 
 .mat-tab-label {
-	height: 58px !important;
+	height: 68px !important;
 	// text-transform: uppercase;
 	margin: 0 20px;
 	opacity: 0.7 !important;
@@ -236,7 +236,7 @@ em {
 
 h1 {
 	margin: 1.2em 0em 0.8em 1em;
-	font-size: 1em;
+	font-size: 1.05em;
 	font-weight: 400;
 
 	em {
@@ -412,10 +412,12 @@ app-home-layout {
 
 .legend {
 	.square {
-		height: 14px;
-		width: 14px;
+		height: 12px;
+		width: 12px;
 		margin-right: 5px;
 		border-radius: 3px;
+		box-shadow: 0px 0px 5px rgba(0,0,0,0.3);
+		border: 1px solid white;
 	}
 }
 
