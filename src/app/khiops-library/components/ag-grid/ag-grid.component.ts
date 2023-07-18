@@ -190,7 +190,7 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 
 	ngOnChanges(changes: SimpleChanges) {
 
-		if (changes.displayedColumns?.currentValue?.length > 0) {
+		if (changes.displayedColumns?.currentValue) {
 
 			if (this.showLineSelection !== false && this.displayedColumns.findIndex(e => e.field === '_id') === -1) {
 
@@ -213,7 +213,7 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 			}
 
 		}
-		if (changes.inputDatas?.currentValue?.length > 0) {
+		if (changes.inputDatas?.currentValue) {
 
 			// We must update table always, even if content do not changed, to update header informations
 			this.updateTable(changes?.selectedVariable?.currentValue);
