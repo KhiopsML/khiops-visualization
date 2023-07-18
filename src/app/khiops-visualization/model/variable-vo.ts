@@ -44,10 +44,12 @@ export class VariableVO {
 		this.max = object.max;
 		this.mean = object.mean;
 		this.stdDev = object.stdDev;
+		console.log('file: variable-vo.ts:47 ~ VariableVO ~ constructor ~ object:', object);
 		if (this.type === 'Numerical') {
 			this.missingNumber = object.missingNumber || 0;
 		} else {
-			this.missingNumber = undefined;
+			// Missing number can be 0 or undefined for categorical variables #140
+			this.missingNumber = object.missingNumber !== undefined ? object.missingNumber : undefined;
 		}
 		this.derivationRule = object.derivationRule || undefined;
 
