@@ -138,7 +138,6 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 		this.dataOptions.selected = localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + 'AG_GRID_GRAPH_OPTION') || this.dataOptions.types[0];
 
 		this.title = this.translate.get('GLOBAL.VARIABLES') || this.title;
-
 		this.keyboardNavigation = this.keyboardNavigation.bind(this);
 
 		try {
@@ -191,7 +190,7 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 
 	ngOnChanges(changes: SimpleChanges) {
 
-		if (changes.displayedColumns && changes.displayedColumns.currentValue) {
+		if (changes.displayedColumns?.currentValue) {
 
 			if (this.showLineSelection !== false && this.displayedColumns.findIndex(e => e.field === '_id') === -1) {
 
@@ -214,7 +213,7 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 			}
 
 		}
-		if (changes.inputDatas && changes.inputDatas.currentValue) {
+		if (changes.inputDatas?.currentValue) {
 
 			// We must update table always, even if content do not changed, to update header informations
 			this.updateTable(changes?.selectedVariable?.currentValue);
@@ -231,11 +230,8 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 			// }
 		}
 
-		if (changes.selectedVariable && changes.selectedVariable.currentValue) {
-			// Do not do deepequasl for dimension selection change
-			// if (!deepEqual(changes.selectedVariable.currentValue, changes.selectedVariable.previousValue)) {
+		if (changes.selectedVariable?.currentValue?.name !== changes.selectedVariable?.previousValue?.name) {
 			this.selectNode(changes.selectedVariable.currentValue);
-			// }
 		}
 
 		if (changes.updateValues && changes.updateValues.currentValue) {
@@ -381,8 +377,8 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 							node.setSelected(true);
 							// Get the page of selected node
 							if (this.gridOptions.api) {
-								let pageToSelect = node.rowIndex / this.gridOptions.api.paginationGetPageSize();
-								pageToSelect = Math.ceil(pageToSelect) - 1; // -1 to begin at 0
+								let pageToSelect = (node.rowIndex) / this.gridOptions.api.paginationGetPageSize();
+								pageToSelect = Math.floor(pageToSelect);
 								this.gridOptions.api.paginationGoToPage(pageToSelect);
 							}
 							this.agGrid.api.ensureIndexVisible(node.rowIndex);

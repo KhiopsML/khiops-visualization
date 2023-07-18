@@ -36,22 +36,22 @@
 				<button
 					mat-stroked-button
 					color="primary"
-					[matMenuTriggerFor]="graphOptionsTypes"
+					[matMenuTriggerFor]="graphOptionsYTypes"
 				>
 					{{
-						distributionDatas.distributionGraphOptions.selected
+						distributionDatas.distributionGraphOptionsY.selected
 							| translate
 					}}
 					<em>&#9698;</em>
 				</button>
-				<mat-menu #graphOptionsTypes>
+				<mat-menu #graphOptionsYTypes>
 					<button
 						mat-menu-item
 						*ngFor="
 							let opt of distributionDatas
-								.distributionGraphOptions.types
+								.distributionGraphOptionsY.types
 						"
-						(click)="changeGraphType(opt)"
+						(click)="changeGraphTypeY(opt)"
 					>
 						{{ opt | translate }}
 					</button>

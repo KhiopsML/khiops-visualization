@@ -50,6 +50,9 @@ import {
 import {
 	CoocurenceCellsVO,
 } from '../model/coocurence-cells-vo';
+import {
+	InformationsVO
+} from '@khiops-visualization/model/informations-vo';
 
 @Injectable({
 	providedIn: 'root'
@@ -88,6 +91,12 @@ export class Preparation2dDatasService {
 
 	getDatas(): Preparation2dDatasVO {
 		return this.preparation2dDatas;
+	}
+
+	getInformationsDatas(): any {
+		const appDatas = this.appService.getDatas().datas;
+		const informationsDatas = new InformationsVO(appDatas.bivariatePreparationReport.summary);
+		return informationsDatas.formatDatas();
 	}
 
 	toggleIsAxisInverted() {

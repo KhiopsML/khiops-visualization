@@ -6,6 +6,7 @@ export class DistributionDatasVO {
 
 	distributionType = 'GLOBAL.COVERAGE';
 	distributionTypeX = '';
+	distributionTypeY = '';
 
 	distributionGraphOptions: {
 		types: string[],
@@ -13,6 +14,11 @@ export class DistributionDatasVO {
 	} = undefined;
 
 	distributionGraphOptionsX: {
+		types: string[],
+		selected: string
+	} = undefined;
+
+	distributionGraphOptionsY: {
 		types: string[],
 		selected: string
 	} = undefined;
@@ -72,6 +78,7 @@ export class DistributionDatasVO {
 	}
 
 	setDefaultGraphOptions() {
+		this.distributionGraphOptionsY = undefined;
 		this.distributionGraphOptionsX = undefined;
 		this.distributionGraphOptions = {
 			types: [
@@ -87,22 +94,23 @@ export class DistributionDatasVO {
 		}
 		this.distributionType = this.distributionGraphOptions.selected;
 		this.distributionTypeX = '';
+		this.distributionTypeY = '';
 	}
 
 	setHistogramGraphOptions() {
-		this.distributionGraphOptions = {
+		this.distributionGraphOptionsY = {
 			types: [
 				'yLin', 'yLog'
 			],
 			selected: undefined
 		};
-		const savedOption = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'DISTRIBUTION_GRAPH_OPTION');
-		if (this.distributionGraphOptions.types.includes(savedOption)) {
-			this.distributionGraphOptions.selected = savedOption
+		const savedOption = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'DISTRIBUTION_GRAPH_OPTION_Y');
+		if (this.distributionGraphOptionsY.types.includes(savedOption)) {
+			this.distributionGraphOptionsY.selected = savedOption
 		} else {
-			this.distributionGraphOptions.selected = this.distributionGraphOptions.types[0]
+			this.distributionGraphOptionsY.selected = this.distributionGraphOptionsY.types[0]
 		}
-		this.distributionType = this.distributionGraphOptions.selected;
+		this.distributionTypeY = this.distributionGraphOptionsY.selected;
 
 		this.distributionGraphOptionsX = {
 			types: [

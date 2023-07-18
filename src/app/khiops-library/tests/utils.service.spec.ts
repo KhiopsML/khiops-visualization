@@ -1,6 +1,55 @@
 import { UtilsService } from "@khiops-library/providers/utils.service";
 
 describe("Library", () => {
+	describe("UtilsService.getPrecisionNumber", function () {
+		it("should return 1000000 for input 1000000 and numberPrecision 2", function () {
+			expect(UtilsService.getPrecisionNumber(1000000, 2)).toEqual(
+				"1000000"
+			);
+		});
+		it("should return 10000 for input 10000.12345 and numberPrecision 2", function () {
+			expect(UtilsService.getPrecisionNumber(10000.12345, 2)).toEqual(
+				"10000"
+			);
+		});
+		it("should return 1.32 for input 1.3212132 and numberPrecision 3", function () {
+			expect(UtilsService.getPrecisionNumber(1.3212132, 3)).toEqual(
+				"1.3"
+			);
+		});
+		it("should return 1.3212 for input 1.3212132 and numberPrecision 5", function () {
+			expect(UtilsService.getPrecisionNumber(1.3212132, 5)).toEqual(
+				"1.321"
+			);
+		});
+		it("should return 0.0000000003215 for input 0.00000000032156464 and numberPrecision 5", function () {
+			expect(
+				UtilsService.getPrecisionNumber(0.00000000032156464, 5)
+			).toEqual("3.2156e-10");
+		});
+		it("should return 0.000040946 for input 0.00000000032156464 and numberPrecision 4", function () {
+			expect(
+				UtilsService.getPrecisionNumber(0.000040946, 4)
+			).toEqual("0.00004095");
+		});
+		it("should return 14.7895 for input 14.78954 and numberPrecision 5", function () {
+			expect(UtilsService.getPrecisionNumber(14.78954, 5)).toEqual(
+				"14.79"
+			);
+		});
+		it("should return 0.79 for input 0.78954 and numberPrecision 3", function () {
+			expect(UtilsService.getPrecisionNumber(0.78954, 3)).toEqual("0.79");
+		});
+		it("should return 0.0000111 for input 0.000011111111111111111 and numberPrecision 5", function () {
+			expect(
+				UtilsService.getPrecisionNumber(0.000011111111111111111, 5)
+			).toEqual("0.000011111");
+		});
+		it("should return aaa for input aaa", function () {
+			expect(UtilsService.getPrecisionNumber("aaa")).toEqual("aaa");
+		});
+	});
+
 	describe("UtilsService.generateArrayPercentsFromArrayValues", function () {
 		it("should generate the correct percent array", function () {
 			const input = [1, 2, 3, 4];
@@ -197,7 +246,7 @@ describe("Library", () => {
 			freqColVal,
 			freqLineVals
 		);
-		expect(result[0]).toBeCloseTo(0.002101109894746098 , 10);
+		expect(result[0]).toBeCloseTo(0.002101109894746098, 10);
 		expect(result[1]).toBe(false);
 	});
 });

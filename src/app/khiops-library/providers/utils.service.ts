@@ -136,6 +136,16 @@ export class UtilsService {
 		}
 		return sum;
 	}
+	/**
+	 * ChatGPT optimization
+	 */
+	// static sumArrayOfArray(array) {
+	// 	let sum = 0;
+	// 	for (const subArray of array) {
+	// 		sum += subArray.reduce((acc, curr) => acc + curr, 0);
+	// 	}
+	// 	return sum;
+	// }
 
 	static sumArrayItems(arrays) {
 		const total = [];
@@ -373,14 +383,28 @@ export class UtilsService {
 	// 	return flattenedArray;
 	// }
 
-	static getPrecisionNumber(input, numberPrecision): string {
-		input = this.noExponents(input);
+	/**
+	 * ChatGPT optimization
+	 * #58 Matrix tooltip informations cut
+	 */
+	static getPrecisionNumber(input, numberPrecision?): string {
+		numberPrecision--;
 		if (typeof input === 'number' && isFinite(input)) {
-			const split = input.toString().split('.');
-			if (split[1]) {
-				return split[0] + '.' + split[1].substring(0, numberPrecision);
+			if (input === 0) {
+				return "0";
+			}
+			let absoluteValue = Math.abs(input);
+			let exponent = Math.floor(Math.log10(absoluteValue));
+			if (exponent >= numberPrecision || exponent < -2) {
+				return parseFloat(input.toExponential(numberPrecision)).toString();
+			} else if (exponent >= 0) {
+				let multiplier = Math.pow(10, numberPrecision - exponent - 1);
+				let roundedValue = Math.round(input * multiplier) / multiplier;
+				return roundedValue.toString();
 			} else {
-				return split[0];
+				let decimalPlaces = Math.max(0, numberPrecision - exponent);
+				let roundedValue = parseFloat(input.toFixed(decimalPlaces));
+				return roundedValue.toString();
 			}
 		} else {
 			return input;
@@ -783,15 +807,6 @@ export class UtilsService {
 		}
 
 		return this.mergeDeep(target, ...sources);
-	}
-
-	static noExponents = function (input) {
-		const data = String(input).split(/[eE]/);
-		if (data.length === 1) {
-			return input;
-		} else {
-			return String(input);
-		}
 	}
 
 }

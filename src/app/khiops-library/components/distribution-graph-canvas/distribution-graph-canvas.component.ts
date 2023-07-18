@@ -38,7 +38,6 @@ export class DistributionGraphCanvasComponent extends ScrollableGraphCanvasCompo
 	@Input() position = 0;
 	@Input() inputDatas: any;
 	@Input() graphOptions: any;
-	@Input() graphOptionsX: any;
 	@Input() activeEntries: any;
 	@Input() isLoadingDatas = false;
 	@Input() hideGraphOptions = false;
@@ -205,22 +204,6 @@ export class DistributionGraphCanvasComponent extends ScrollableGraphCanvasCompo
 		} else {
 			this.chartOptions.scales.y.min = minValue;
 		}
-		this.chartOptions = _.cloneDeep(this.chartOptions);
-
-	}
-
-
-	changeGraphTypeX(type) {
-		// this.khiopsLibraryService.trackEvent('click', 'distribution_graph_type_x', this.graphOptions.selected);
-		localStorage.setItem(this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID + 'DISTRIBUTION_GRAPH_OPTION_X', type);
-
-		this.graphOptionsX.selected = type;
-		// this.title = this.translate.get(this.graphOptionsX.selected);
-		this.graphTypeXChanged.emit(type);
-
-		// this.chartOptions.scales.y.ticks.maxTicksLimit = this.graphOptions.selected === 'GLOBAL.COVERAGE' ? 7 : 0;
-		// this.chartOptions.scales.y.beginAtZero = true;
-		// this.chartOptions.scales.y.min = 0;
 		this.chartOptions = _.cloneDeep(this.chartOptions);
 
 	}

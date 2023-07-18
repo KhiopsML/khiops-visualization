@@ -47,7 +47,8 @@ export class VariableVO {
 		if (this.type === 'Numerical') {
 			this.missingNumber = object.missingNumber || 0;
 		} else {
-			this.missingNumber = undefined;
+			// Missing number can be 0 or undefined for categorical variables #140
+			this.missingNumber = object.missingNumber !== undefined ? object.missingNumber : undefined;
 		}
 		this.derivationRule = object.derivationRule || undefined;
 
