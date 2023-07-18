@@ -10,12 +10,6 @@
 				<mat-menu #graphOptionsTypes>
 					<button mat-menu-item *ngFor="let opt of graphOptions.types" (click)="changeGraphType(opt)">{{ opt | translate }}</button>
 				</mat-menu>
-				<div *ngIf="graphOptionsX">
-					<button mat-stroked-button color="primary" [matMenuTriggerFor]="graphOptionsXTypes">{{ graphOptionsX.selected | translate }} <em>&#9698;</em></button>
-					<mat-menu #graphOptionsXTypes>
-						<button mat-menu-item *ngFor="let opt of graphOptionsX.types" (click)="changeGraphTypeX(opt)">{{ opt | translate }}</button>
-					</mat-menu>
-				</div>
 			</div>
 		</div>
 		<kl-chart-next id="{{'distribution-graph-canvas-comp-' + position}}" [chartOptions]="chartOptions"
