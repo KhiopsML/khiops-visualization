@@ -178,6 +178,7 @@ $theme-light: mat-light-theme($primary, $accent, $warn);
 	--primary-contrast-10: #bbb;
 	--accent: #2196f3;
 	--selected: #7abdf3;
+	--gutter-hover: #7abdf3;
 	--bgTooltip: #444;
 	--chart-border: #555;
 }
@@ -200,6 +201,7 @@ $theme-light: mat-light-theme($primary, $accent, $warn);
 	--primary-contrast-10: #1e326d;
 	--accent: #880e4f;
 	--selected: #7abdf3;
+	--gutter-hover: #ededed;
 	--bgTooltip: #444;
 	--chart-border: #e5e5e5;
 }
@@ -244,7 +246,7 @@ h1 {
 .as-vertical:not(.as-disabled) > .as-split-gutter:active,
 .as-horizontal:not(.as-disabled) > .as-split-gutter:hover,
 .as-horizontal:not(.as-disabled) > .as-split-gutter:active {
-	background-color: var(--bgColor-30) !important;
+	background-color: var(--gutter-hover) !important;
 	transition: background-color 0.1s ease-in-out 0.1s;
 }
 
