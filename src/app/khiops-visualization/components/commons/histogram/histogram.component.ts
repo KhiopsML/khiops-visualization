@@ -25,7 +25,6 @@ import { SelectableService } from "@khiops-library/components/selectable/selecta
 import { HistogramType } from "./histogram.types";
 import { AppConfig } from "src/environments/environment";
 import { TranslateService } from "@ngstack/translate";
-import { UtilsService } from "../../../../khiops-library/providers/utils.service";
 
 @Component({
 	selector: "app-histogram",
@@ -114,14 +113,14 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 		this.datas && this.init();
 	}
 
-	changeGraphType(type) {
+	changeGraphTypeY(type) {
 		// this.khiopsLibraryService.trackEvent('click', 'distribution_graph_type_x', this.graphOptions.selected);
 		localStorage.setItem(
 			this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
-				"DISTRIBUTION_GRAPH_OPTION",
+				"DISTRIBUTION_GRAPH_OPTION_Y",
 			type
 		);
-		this.distributionDatas.distributionGraphOptions.selected = type;
+		this.distributionDatas.distributionGraphOptionsY.selected = type;
 		this.datas && this.init();
 	}
 
@@ -150,7 +149,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			this.chart.nativeElement.innerHTML = "";
 			if (this.datas) {
 				if (
-					this.distributionDatas.distributionGraphOptions.selected ===
+					this.distributionDatas.distributionGraphOptionsY.selected ===
 					HistogramType.YLOG
 				) {
 					this.rangeYLog = this.histogramService.getLogRangeY(
@@ -403,7 +402,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 		}
 
 		if (
-			this.distributionDatas.distributionGraphOptions.selected ===
+			this.distributionDatas.distributionGraphOptionsY.selected ===
 			HistogramType.YLIN
 		) {
 			barH = d.value * this.ratioY;
@@ -420,7 +419,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			barH = this.minBarHeight;
 		}
 		if (
-			this.distributionDatas.distributionGraphOptions.selected ===
+			this.distributionDatas.distributionGraphOptionsY.selected ===
 				HistogramType.YLOG &&
 			barH === 0
 		) {
@@ -548,7 +547,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 
 		// Create the scale
 		if (
-			this.distributionDatas.distributionGraphOptions.selected ===
+			this.distributionDatas.distributionGraphOptionsY.selected ===
 			HistogramType.YLIN
 		) {
 			y = d3
@@ -575,7 +574,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 				//@ts-ignore
 				let val: any = d;
 				if (
-					this.distributionDatas.distributionGraphOptions.selected ===
+					this.distributionDatas.distributionGraphOptionsY.selected ===
 					HistogramType.YLIN
 				) {
 					return "" + format(val);
