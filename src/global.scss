@@ -169,6 +169,7 @@ split-gutter {
 
 .mat-tab-header {
 	background-color: var(--bgColor) !important;
+	border-bottom: 1px solid var(--bgColor-10) !important;
 	height: 68px !important;
 	width: 100% !important;
 	z-index: 1000;
@@ -581,7 +582,7 @@ ag-grid-angular {
 }
 
 .ag-theme-balham .ag-row:hover:not(.ag-row-selected) {
-	background-color: var(--bgColor-40) !important;
+	background-color: var(--bgColor-30) !important;
 }
 
 .ag-paging-panel {

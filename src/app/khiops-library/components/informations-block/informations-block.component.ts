@@ -23,7 +23,7 @@ export class InformationsBlockComponent extends SelectableComponent {
 
 	@Input() inputDatas: [any];
 	@Input() title: string;
-	@Input() icon = 'subject';
+	@Input() icon = 'tune';
 	componentType = 'informations'; // needed to copy datas
 
 	constructor(public selectableService: SelectableService, public ngzone: NgZone, public configService: ConfigService) {

@@ -18,7 +18,7 @@ export class KhiopsLibraryService {
 	appConfig: any;
 
 	graphColors: any = Array(10).fill([
-			'#10246e', '#6e93d5', '#d45087', '#3cb44b', '#ffe119', '#ff6600',
+			'#10246e', '#6e93d5', '#b54d79', '#3cb44b', '#ffe119', '#ff6600',
 			'#f032e6', '#a9a9a9', '#9A6324', '#fffac8', '#800000', '#aaffc3',
 			'#000075', '#a9a9a9', '#469990', '#10246e', '#6e93d5', '#d45087',
 			'#ff5722', '#d9d5c3', '#66BD6D', '#FAC51D', '#de1cea', '#29BB9C',
