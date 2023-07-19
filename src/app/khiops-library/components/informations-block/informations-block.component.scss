@@ -12,7 +12,6 @@
 	table {
 		margin: 0.2em 2em;
 		padding-bottom: 1em;
-		word-break: break-all;
 
 		tr {
 			th {
@@ -22,6 +21,7 @@
 			}
 			td {
 				padding: 0;
+				word-break: break-all;
 			}
 
 			strong {
