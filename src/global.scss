@@ -56,7 +56,7 @@
 // 	}
 // }
 
-button{
+button {
 	box-shadow: none !important;
 }
 
@@ -233,6 +233,17 @@ mat-tab-header {
 
 em {
 	font-style: normal;
+}
+
+.mat-menu-trigger {
+	span {
+		em {
+			transform: scaleX(2);
+			display: inline-block;
+			font-size: 0.8em;
+			font-family: verdana;
+		}
+	}
 }
 
 h1 {
@@ -417,7 +428,7 @@ app-home-layout {
 		width: 12px;
 		margin-right: 5px;
 		border-radius: 3px;
-		box-shadow: 0px 0px 5px rgba(0,0,0,0.3);
+		box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
 		border: 1px solid white;
 	}
 }
@@ -790,7 +801,7 @@ canvas:focus {
 	filter: opacity(0.5);
 }
 .ag-theme-balham .ag-paging-page-summary-panel span {
-    margin-top: -1px;
+	margin-top: -1px;
 }
 .ag-theme-balham .ag-icon-first:before {
 	// content: "\21E4";

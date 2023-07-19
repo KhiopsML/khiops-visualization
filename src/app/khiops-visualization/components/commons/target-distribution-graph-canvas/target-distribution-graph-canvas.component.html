@@ -10,7 +10,7 @@
 				<app-select-toggle-button *ngIf="displayedValues" [displayedValues]="displayedValues"
 					(selectToggleButtonChanged)="onSelectToggleButtonChanged($event)" [buttonTitle]="buttonTitle">
 				</app-select-toggle-button>
-				<button mat-stroked-button color="primary" [matMenuTriggerFor]="graphOptionsTypes">{{ graphOptions.selected | translate }} <em>&#9698;</em></button>
+				<button mat-stroked-button color="primary" [matMenuTriggerFor]="graphOptionsTypes">{{ graphOptions.selected | translate }} <em>v</em></button>
 				<mat-menu #graphOptionsTypes>
 					<button mat-menu-item *ngFor="let opt of graphOptions.types" (click)="changeGraphType(opt)">{{ opt | translate }}</button>
 				</mat-menu>
