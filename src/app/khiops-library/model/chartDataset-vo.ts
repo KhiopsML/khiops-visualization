@@ -1,5 +1,4 @@
 export class ChartDatasetVO {
-
 	label: string;
 	data = [];
 	extra = [];
@@ -7,15 +6,19 @@ export class ChartDatasetVO {
 	fill = false;
 	type: string; // By default
 	borderWidth: number;
+	// borderRadius = {
+	// 	topLeft: 3,
+	// 	topRight: 3,
+	// };
 	maxBarThickness: any;
 	barThickness: any;
 	setPercentage: number[] | undefined;
 	barPercentage: number;
 	categoryPercentage: number;
 
-	constructor(label ? , type ? ) {
-		this.label = label || '';
-		this.type = type || 'bar'; // By default
+	constructor(label?, type?) {
+		this.label = label || "";
+		this.type = type || "bar"; // By default
 		this.setPercentage = undefined;
 	}
 
@@ -28,5 +31,4 @@ export class ChartDatasetVO {
 		this.barPercentage = 1.0;
 		this.categoryPercentage = 1.0;
 	}
-
 }
