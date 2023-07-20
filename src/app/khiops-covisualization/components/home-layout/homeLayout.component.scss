@@ -1,5 +1,4 @@
 #home-layout-comp {
-
 	// ::selection {
 	// 	color: none;
 	// 	background: none;
@@ -25,13 +24,18 @@
 
 	mat-tab-group {
 		width: 100%;
+		top: 0;
+		position: absolute;
 	}
 
 	app-project-view,
 	app-axis-view {
-		height: calc(100% - 74px);
-		width: calc(100% - 14px);
+		width: calc(100% - 10px);
 		background: var(--bgColor-20) !important;
-		padding: 8px 4px 6px 6px;
+		padding: 5px;
+		margin-top: 69px;
+		top: 0;
+		position: absolute;
+		height: calc(100% - 80px);
 	}
 }
