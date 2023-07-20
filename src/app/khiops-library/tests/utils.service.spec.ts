@@ -45,8 +45,10 @@ describe("Library", () => {
 				"14.7895"
 			);
 		});
-		it("should return 0.79 for input 0.78954 and numberPrecision 3", function () {
-			expect(UtilsService.getPrecisionNumber(0.78954, 3)).toEqual("0.79");
+		it("should return 0.789 for input 0.78954 and numberPrecision 3", function () {
+			expect(UtilsService.getPrecisionNumber(0.78954, 3)).toEqual(
+				"0.79"
+			);
 		});
 		it("should return 0.0000111 for input 0.000011111111111111111 and numberPrecision 5", function () {
 			expect(
@@ -55,6 +57,26 @@ describe("Library", () => {
 		});
 		it("should return aaa for input aaa", function () {
 			expect(UtilsService.getPrecisionNumber("aaa")).toEqual("aaa");
+		});
+		it("should return -14.7895 for input -14.78954 and numberPrecision 4", function () {
+			expect(UtilsService.getPrecisionNumber(-14.78954, 4)).toEqual(
+				"-14.7895"
+			);
+		});
+		it("should return -0.0789 for input -0.078954 and numberPrecision 3", function () {
+			expect(UtilsService.getPrecisionNumber(-0.078954, 3)).toEqual(
+				"-0.0789"
+			);
+		});
+		it("should return -0.79 for input -0.78954 and numberPrecision 3", function () {
+			expect(UtilsService.getPrecisionNumber(-0.78954, 3)).toEqual(
+				"-0.79"
+			);
+		});
+		it("should return -0.0000111 for input -0.000011111111111111111 and numberPrecision 5", function () {
+			expect(
+				UtilsService.getPrecisionNumber(-0.000011111111111111111, 5)
+			).toEqual("-0.000011111");
 		});
 	});
 

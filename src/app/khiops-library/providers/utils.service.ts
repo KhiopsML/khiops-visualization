@@ -387,13 +387,15 @@ export class UtilsService {
 		if (typeof value === 'number' && isFinite(value)) {
 			var num = this.toPlainString(value).split(".");
 			let part1 = (num[1])
-			if (value < 0.1) {
-				var zeroAfterComma = -Math.floor(Math.log10(value) + 1);
+			if (value === 0) {
+				return value
+			} else if (Math.abs(value) < 0.1) {
+				var zeroAfterComma = -Math.floor(Math.log10(Math.abs(value)) + 1);
 				var usefullInfo = part1.slice(zeroAfterComma, zeroAfterComma + exp)
 				var res = '0.'
 				res += "0".repeat(zeroAfterComma)
 				res += usefullInfo
-				return res.toString();
+				return this.getSign(value) + res.toString();
 			} else {
 				let e = Number(value);
 				let entier = Math.floor(e);
@@ -407,6 +409,14 @@ export class UtilsService {
 		} else {
 			return value;
 		}
+	}
+
+	static getSign(input: number) {
+		return input >= 0 ? "" : "-";
+	}
+
+	static getLogSign(input: number) {
+		return Math.log10(input) > 0 ? "" : "-";
 	}
 
 	static toPlainString(num) {

@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { TranslateService } from "@ngstack/translate";
 import * as d3 from "d3";
 import { HistogramType } from "./histogram.types";
+import { UtilsService } from "@khiops-library/providers/utils.service";
 
 @Injectable({
 	providedIn: "root",
@@ -34,7 +35,7 @@ export class HistogramUIService {
 			} else {
 				bounds =
 					"[" +
-					this.getSign(d.partition[0]) +
+					UtilsService.getLogSign(d.partition[0]) +
 					d3.format(".2e")(Math.abs(d.partition[0])) +
 					", ";
 			}
@@ -42,7 +43,7 @@ export class HistogramUIService {
 				bounds += "-Inf]";
 			} else {
 				bounds +=
-					this.getSign(d.partition[1]) +
+				UtilsService.getLogSign(d.partition[1]) +
 					d3.format(".2e")(Math.abs(d.partition[1])) +
 					"]";
 			}
@@ -63,7 +64,4 @@ export class HistogramUIService {
 		);
 	}
 
-	static getSign(input: number) {
-		return Math.log10(input) > 0 ? "" : "-";
-	}
 }
