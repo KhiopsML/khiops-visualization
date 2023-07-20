@@ -83,10 +83,7 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 				this.chart.destroy();
 			} catch (e) {}
 
-			let options: any = {
-				grid: {
-					color: this.color
-				},
+			let options: ChartOptions = {
 				plugins: {
 					tooltip: {
 						callbacks: {
@@ -114,15 +111,12 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 				},
 				animation: false,
 				responsive: true,
-				spanGaps: true,
 				maintainAspectRatio: false,
 				onClick: this.graphClickEvent.bind(this),
 				scales: {
 					y: {
 						grid: {
-							drawBorder: true,
-							borderColor: this.color,
-							color: this.color
+							color: this.color,
 						},
 						beginAtZero: true,
 						min: 0,
@@ -138,8 +132,6 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 					},
 					x: {
 						grid: {
-							drawBorder: true,
-							borderColor: this.color,
 							color: this.color
 						},
 						min: 0,
@@ -149,11 +141,7 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 							autoSkipPadding: 5,
 							maxRotation: 0,
 							minRotation: 0,
-							fontSize: 11
 						},
-						gridLines: {
-							display: false
-						}
 					}
 				}
 			};
