@@ -74,7 +74,7 @@ export class DimensionsDatasService {
 
 	isLargeCocluster() {
 		const currentSize = (this.dimensionsDatas.dimensions.map(e => e.parts).reduce((a, b) => a * b))
-		return this.dimensionsDatas.dimensions.length * 2 < currentSize;
+		return 100000 < currentSize;
 	}
 
 	isContextDimensions(): boolean {
@@ -171,17 +171,10 @@ export class DimensionsDatasService {
 			}
 		}
 
-		// Initialize selected dimensions at first launch
-		// if (!this.dimensionsDatas.selectedDimensions) {
-			// this.getHierarchyDatas();
-			this.initSelectedDimensions();
-		// }
-
 		return this.dimensionsDatas.dimensions;
 	}
 
 	updateDimensions(retrieveMatrixDatas = true): any {
-		this.getDimensions();
 
 		// keep initial dim in memory
 		if (this.dimensionsDatas.initialDimensions.length === 0) {

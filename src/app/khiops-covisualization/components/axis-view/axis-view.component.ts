@@ -66,6 +66,9 @@ export class AxisViewComponent
 		setTimeout(() => {
 			this.sizes = this.appService.getViewSplitSizes("axisView");
 			this.dimensionsDatas = this.dimensionsService.getDatas();
+
+			this.dimensionsService.getDimensions();
+			this.dimensionsService.initSelectedDimensions();
 			this.dimensionsService.updateDimensions(false);
 
 			// OPTIM: Unfold auto if computer is too laggy
@@ -89,10 +92,7 @@ export class AxisViewComponent
 					);
 
 				this.appService.setFileDatas(datas);
-
 				this.dimensionsDatas = this.dimensionsService.getDatas();
-				this.dimensionsService.updateDimensions();
-				this.dimensionsService.initSelectedDimensions();
 
 				this.snackBar.open(
 					this.translate.get(
@@ -109,6 +109,9 @@ export class AxisViewComponent
 					}
 				);
 			}
+			this.dimensionsService.getDimensions();
+			this.dimensionsService.initSelectedDimensions();
+			this.dimensionsService.updateDimensions();
 
 			this.viewsLayout = this.appService.initViewsLayout(
 				this.dimensionsDatas.selectedDimensions
