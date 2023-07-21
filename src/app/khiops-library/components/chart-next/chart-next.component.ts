@@ -83,8 +83,34 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 				this.chart.destroy();
 			} catch (e) {}
 
-			let options: ChartOptions = {
+			const chartAreaBorder = {
+				id: 'chartAreaBorder',
+				beforeDraw(chart, args, options) {
+					const {
+						ctx,
+						chartArea: {
+							left,
+							top,
+							width,
+							height
+						}
+					} = chart;
+					ctx.save();
+					ctx.strokeStyle = options.borderColor;
+					ctx.lineWidth = options.borderWidth;
+					ctx.setLineDash(options.borderDash || []);
+					ctx.lineDashOffset = options.borderDashOffset;
+					ctx.strokeRect(left, top, width, height);
+					ctx.restore();
+				}
+			};
+
+			let options: ChartOptions | any = {
 				plugins: {
+					chartAreaBorder: {
+						borderColor: this.color,
+						borderWidth: 1,
+					},
 					tooltip: {
 						callbacks: {
 							title: (items) => {
@@ -167,7 +193,8 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 			this.chart = new ChartJs.Chart(this.ctx, {
 				type: this.type,
 				data: data,
-				options: options
+				options: options,
+				plugins: [chartAreaBorder]
 			});
 
 		}
