@@ -28,7 +28,12 @@ import {
 import {
 	ChartOptions
 } from 'chart.js';
-import { ConfigService } from '@khiops-library/providers/config.service';
+import {
+	ConfigService
+} from '@khiops-library/providers/config.service';
+import {
+	ResizedEvent
+} from 'angular-resize-event';
 
 @Component({
 	selector: 'app-target-distribution-graph-canvas',
@@ -72,6 +77,7 @@ export class TargetDistributionGraphCanvasComponent extends ScrollableGraphCanva
 	minScale: number;
 	selectedBarIndex: number;
 	isFullscreen = false;
+	isSmallDiv = false;
 
 	constructor(
 		public selectableService: SelectableService,
@@ -120,6 +126,11 @@ export class TargetDistributionGraphCanvasComponent extends ScrollableGraphCanva
 	ngOnInit() {
 		this.graphIdContainer = 'target-distribution-graph-canvas-comp-' + this.position;
 		this.title = this.title || this.translate.get('GLOBAL.TARGET_DISTRIBUTION');
+	}
+
+
+	onResized(event: ResizedEvent) {
+		this.isSmallDiv = event?.newRect?.width < 600;
 	}
 
 	onToggleFullscreen(isFullscreen: any) {
