@@ -187,7 +187,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 		}
 
 		// Draw matrix on change
-		if (this.matrixDiv && this.matrixDiv.nativeElement) {
+		if (this.matrixDiv && this.matrixDiv.nativeElement && changes.inputDatas) {
 			this.drawMatrix();
 		}
 	}
@@ -343,8 +343,8 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 
 							}
 							this.matrixCtx.stroke();
-							this.drawSelectedNodes();
 
+							this.drawSelectedNodes();
 						}
 
 						if (!this.unpanzoom) {
@@ -460,20 +460,27 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 
 	drawSelectedNodes() {
 		this.cleanSelectedDomContext();
-		this.selectedCells = []
-		const cellsLength = this.inputDatas.matrixCellDatas.length;
-		for (let index = 0; index < cellsLength; index++) {
-			const cellDatas = this.inputDatas.matrixCellDatas[index];
-			// Manage selected cell (different for KV and KC)
-			if (this.selectedNodes ?. [0] ?.childrenList.includes(cellDatas.xaxisPart) &&
-				this.selectedNodes ?. [1] ?.childrenList.includes(cellDatas.yaxisPart)) {
-				this.selectedCells.push(cellDatas);
-			}
-		}
 
-		for (const cell of this.selectedCells) {
-			// Draw selected cells after other to be above
-			this.drawSelectedCell(cell);
+		if (this.selectedCell) {
+			// KV
+			this.drawSelectedCell(this.selectedCell);
+		} else {
+			// KC
+			this.selectedCells = []
+			const cellsLength = this.inputDatas.matrixCellDatas.length;
+			for (let index = 0; index < cellsLength; index++) {
+				const cellDatas = this.inputDatas.matrixCellDatas[index];
+
+				// Manage selected cell (different for KV and KC)
+				if (this.selectedNodes ?. [0] ?.childrenList.includes(cellDatas.xaxisPart) &&
+					this.selectedNodes ?. [1] ?.childrenList.includes(cellDatas.yaxisPart)) {
+					this.selectedCells.push(cellDatas);
+				}
+			}
+			for (const cell of this.selectedCells) {
+				// Draw selected cells after other to be above
+				this.drawSelectedCell(cell);
+			}
 		}
 	}
 
