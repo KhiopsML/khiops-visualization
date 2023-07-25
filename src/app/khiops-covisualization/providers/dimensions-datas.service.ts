@@ -74,7 +74,7 @@ export class DimensionsDatasService {
 
 	isLargeCocluster() {
 		const currentSize = (this.dimensionsDatas.dimensions.map(e => e.parts).reduce((a, b) => a * b))
-		return 100000 < currentSize;
+		return 1000000 < currentSize;
 	}
 
 	isContextDimensions(): boolean {
