@@ -38,6 +38,7 @@ describe('Matrix Datas : NO Context [Co-simple-2vars file]', () => {
 
 		dimensionsDatasService.initialize();
 		dimensionsDatasService.getDimensions();
+		dimensionsDatasService.initSelectedDimensions();
 		dimensionsDatasService.constructDimensionsTrees();
 		const [initTime, result]  = dimensionsDatasService.getMatrixDatas();
 		cells = result.matrixCellDatas;
@@ -96,6 +97,7 @@ describe('Matrix Datas : NO Context [mushroom file] check proba values when fold
 
 		dimensionsDatasService.initialize();
 		dimensionsDatasService.getDimensions();
+		dimensionsDatasService.initSelectedDimensions();
 		dimensionsDatasService.constructDimensionsTrees();
 		dimensionsDatasService.getMatrixDatas();
 
@@ -137,6 +139,7 @@ describe('Matrix Datas : NO Context [mushroom file] check rev proba values when 
 
 		dimensionsDatasService.initialize();
 		dimensionsDatasService.getDimensions();
+		dimensionsDatasService.initSelectedDimensions();
 		dimensionsDatasService.constructDimensionsTrees();
 		dimensionsDatasService.getMatrixDatas();
 
