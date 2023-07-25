@@ -155,18 +155,17 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges, OnDestr
 	getFilteredDistribution(dimensionsTree) {
 		setTimeout(() => {
 			if (dimensionsTree && this.selectedNode) {
-
-				const [currentIndex, otherIndex] = this.invertDimensionsPositions();
-
 				// EVOL we want to interchange distribution graphs
 				// so we interchange otherIndex and currentIndex
-				this.graphDetails = this.clustersService.getDistributionDetailsFromNode(otherIndex, currentIndex);
-
+				const [currentIndex, otherIndex] = this.invertDimensionsPositions();
 				if (this.graphDetails && this.graphDetails.labels) {
 					this.activeEntries = this.graphDetails.labels.findIndex(e => e === this.selectedNode.shortDescription);
 					this.legend = this.graphDetails.datasets[0].label;
-					this.updateGraphTitle();
 				}
+				setTimeout(() => { // Distribution is not drawn at first launch #59
+					this.graphDetails = this.clustersService.getDistributionDetailsFromNode(otherIndex, currentIndex);
+					this.updateGraphTitle();
+				});
 
 			}
 		});
