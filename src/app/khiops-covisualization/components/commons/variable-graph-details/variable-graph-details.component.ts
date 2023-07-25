@@ -88,13 +88,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges, OnDestr
 			this.getFilteredDistribution(this.dimensionsTree);
 		});
 		this.treeSelectedNodeChangedSub = this.eventsService.treeSelectedNodeChanged.subscribe(e => {
-
-			// Do not do that for first launch
-			// if (e.selectedNode && this.selectedNode && e.selectedNode.cluster !== this.selectedNode.cluster) {
-			if (e.selectedNode && e.hierarchyName === this.selectedDimension.name) {
-				this.getFilteredDistribution(this.dimensionsTree);
-			}
-			// }
+			this.getFilteredDistribution(this.dimensionsTree);
 		});
 		this.treeNodeNameChangedSub = this.eventsService.treeNodeNameChanged.subscribe(e => {
 			this.getFilteredDistribution(this.dimensionsTree);
@@ -162,10 +156,8 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges, OnDestr
 					this.activeEntries = this.graphDetails.labels.findIndex(e => e === this.selectedNode.shortDescription);
 					this.legend = this.graphDetails.datasets[0].label;
 				}
-				setTimeout(() => { // Distribution is not drawn at first launch #59
-					this.graphDetails = this.clustersService.getDistributionDetailsFromNode(otherIndex, currentIndex);
-					this.updateGraphTitle();
-				});
+				this.graphDetails = this.clustersService.getDistributionDetailsFromNode(otherIndex, currentIndex);
+				this.updateGraphTitle();
 
 			}
 		});

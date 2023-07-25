@@ -7,8 +7,6 @@ import {
 	AfterViewInit,
 	OnChanges,
 	SimpleChanges,
-	ViewChild,
-	ElementRef
 } from '@angular/core';
 import * as ChartJs from 'chart.js';
 
@@ -28,8 +26,8 @@ import {
 	ChartOptions
 } from 'chart.js';
 import {
-	AppConfig
-} from 'src/environments/environment';
+	ConfigService
+} from '@khiops-library/providers/config.service';
 
 @Component({
 	selector: 'kl-chart-next',
@@ -50,7 +48,6 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 
 	@Output() selectBarIndex: EventEmitter < any > = new EventEmitter();
 
-	@ViewChild('chartJsElement') chartJsElement: ElementRef < HTMLCanvasElement > ;
 	AppConfig = this.khiopsLibraryService.getAppConfig().common;
 
 	ctx: any;
@@ -59,7 +56,8 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 	barColor: string = localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + 'THEME_COLOR') === 'dark' ? 'rgba(255, 255, 255, 1)' : 'rgba(0, 0, 0, 1)';
 	fontColor: string = '#999';
 
-	constructor(private khiopsLibraryService: KhiopsLibraryService, private toPrecision: ToPrecisionPipe, ) {
+	constructor(private configService: ConfigService,
+		private khiopsLibraryService: KhiopsLibraryService) {
 		this.colorSet = this.khiopsLibraryService.getGraphColorSet()[0];
 	}
 
@@ -71,9 +69,7 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 
 	initChart() {
 
-		this.ctx = this.chartJsElement ?
-			this.chartJsElement.nativeElement :
-			undefined;
+		this.ctx = this.configService.getRootElementDom().querySelector < HTMLElement > ('#' + this.canvasIdContainer)
 
 		if (this.ctx) {
 
@@ -227,7 +223,7 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 
 	updateGraph() {
 		setTimeout(() => {
-			if (this.inputDatas) {
+			if (this.inputDatas && this.chart) {
 				// Update datas
 				this.chart.data.datasets = this.inputDatas.datasets;
 				this.chart.data.labels = this.inputDatas.labels;
@@ -293,7 +289,7 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 
 			dataset.backgroundColor =
 				new Array(this.inputDatas.labels.length).fill(UtilsService.hexToRGBa(this.colorSet.domain[i], 0.8));
-			const defaultGroupIndex = dataset.extra?.findIndex(e => e.defaultGroupIndex);
+			const defaultGroupIndex = dataset.extra ?.findIndex(e => e.defaultGroupIndex);
 			if (defaultGroupIndex !== -1) {
 				dataset.backgroundColor[defaultGroupIndex] = UtilsService.hexToRGBa(this.colorSet.domain[i], 0.15);
 			}
