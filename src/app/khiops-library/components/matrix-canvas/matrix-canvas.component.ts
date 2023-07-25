@@ -187,7 +187,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 		}
 
 		// Draw matrix on change
-		if (this.matrixDiv && this.matrixDiv.nativeElement && changes.inputDatas) {
+		if (this.matrixDiv && this.matrixDiv.nativeElement && !changes.selectedNodes) {
 			this.drawMatrix();
 		}
 	}
@@ -198,7 +198,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 			this.isDrawing = true;
 			requestAnimationFrame(() => {
 
-				if (this.graphMode && this.inputDatas && this.inputDatas.variable && this.inputDatas.matrixCellDatas) {
+				if (this.graphMode && this.inputDatas && this.inputDatas.variable) {
 					const t2 = performance.now();
 
 					if (this.graphTargets && this.graphTarget) {
