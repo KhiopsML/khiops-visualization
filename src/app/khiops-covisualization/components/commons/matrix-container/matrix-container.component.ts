@@ -79,8 +79,10 @@ export class MatrixContainerComponent implements OnInit, OnChanges, OnDestroy {
 					this.treenodesService.collapseNodesSaved();
 					this.isFirstLoad = false;
 				} else {
-					if (!e.stopPropagation && this.initNodesEvents >= this.dimensionsDatas.dimensions.length) {
+					if (!e.stopPropagation && this.initNodesEvents === this.dimensionsDatas.dimensions.length) {
 						this.matrixCanvas.drawMatrix();
+					} else if (!e.stopPropagation && this.initNodesEvents > this.dimensionsDatas.dimensions.length) {
+						this.matrixCanvas.drawSelectedNodes();
 					}
 				}
 			});
@@ -192,7 +194,6 @@ export class MatrixContainerComponent implements OnInit, OnChanges, OnDestroy {
 			event.datas.yaxisPart,
 			true
 		);
-		this.matrixCanvas.drawMatrix();
 	}
 
 	onMatrixAxisInverted() {

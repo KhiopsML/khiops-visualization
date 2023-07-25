@@ -35,7 +35,9 @@ import {
 import {
 	ConfigService
 } from '@khiops-library/providers/config.service';
-import { AppConfig } from 'src/environments/environment';
+import {
+	AppConfig
+} from 'src/environments/environment';
 
 @Component({
 	selector: 'kl-matrix-canvas',
@@ -84,20 +86,20 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 	matrixExpectedFreqsValues: any;
 	loadingMatrixSvg = true;
 	isFirstResize = true;
-	// matrixDiv: any;
 	@ViewChild('matrixDiv', {
 		static: false
 	}) matrixDiv: ElementRef < HTMLCanvasElement > ;
 	matrixCtx: any;
-	// matrixArea: HTMLElement;
+	@ViewChild('matrixSelectedDiv', {
+		static: false
+	}) matrixSelectedDiv: ElementRef < HTMLCanvasElement > ;
+	matrixSelectedCtx: any;
 	@ViewChild('matrixArea', {
 		static: false
 	}) matrixArea: ElementRef < HTMLElement > ;
-	// matrixCanvasComp: any;
 	@ViewChild('matrixCanvasComp', {
 		static: false
 	}) matrixCanvasComp: ElementRef < HTMLElement > ;
-	// matrixContainerDiv: any;
 	@ViewChild('matrixContainerDiv', {
 		static: false
 	}) matrixContainerDiv: ElementRef < HTMLElement > ;
@@ -127,6 +129,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 	selectedCells: any;
 	matrixExtras: any;
 	canvasPattern: any;
+	isDrawing = false;
 
 	constructor(public selectableService: SelectableService,
 		private khiopsLibraryService: KhiopsLibraryService,
@@ -188,15 +191,15 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 			this.drawMatrix();
 		}
 	}
-	isDrawing = false;
+
 	drawMatrix() {
 
 		if (!this.isDrawing) {
 			this.isDrawing = true;
-			setTimeout(() => {
+			requestAnimationFrame(() => {
 
 				if (this.graphMode && this.inputDatas && this.inputDatas.variable && this.inputDatas.matrixCellDatas) {
-					// const t2 = performance.now();
+					const t2 = performance.now();
 
 					if (this.graphTargets && this.graphTarget) {
 						this.selectedTargetIndex = this.graphTargets.indexOf(this.graphTarget);
@@ -212,6 +215,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 
 					// Clean dom canvas
 					this.cleanDomContext();
+					this.cleanSelectedDomContext();
 
 					if (this.matrixDiv && this.matrixArea) {
 
@@ -224,6 +228,8 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 
 						this.matrixCtx.canvas.width = width;
 						this.matrixCtx.canvas.height = height;
+						this.matrixSelectedCtx.canvas.width = width;
+						this.matrixSelectedCtx.canvas.height = height;
 
 						if (this.isAxisInverted) {
 							[width, height] = [height, width];
@@ -275,6 +281,8 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 							} else {
 								this.matrixCtx.translate(0, height);
 								this.matrixCtx.scale(1, -1);
+								this.matrixSelectedCtx.translate(0, height);
+								this.matrixSelectedCtx.scale(1, -1);
 							}
 
 							this.updateLegendBar();
@@ -282,6 +290,9 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 								this.matrixCtx.translate(0, width);
 								this.matrixCtx.scale(-1, -1);
 								this.matrixCtx.rotate(Math.PI / 2);
+								this.matrixSelectedCtx.translate(0, width);
+								this.matrixSelectedCtx.scale(-1, -1);
+								this.matrixSelectedCtx.rotate(Math.PI / 2);
 							}
 
 							this.selectedCells = [];
@@ -317,26 +328,22 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 								const color = this.getColorForPercentage(currentVal, maxVal);
 
 								this.matrixCtx.fillStyle = color;
-								this.matrixCtx.fillRect(cellDatas.xCanvas, cellDatas.yCanvas, cellDatas.wCanvas, cellDatas.hCanvas);
-
-								// Manage selected cell (different for KV and KC)
-								if (this.selectedNodes && this.selectedNodes[0] && this.selectedNodes[1] &&
-									this.selectedNodes[0].childrenList.includes(cellDatas.xaxisPart) &&
-									this.selectedNodes[1].childrenList.includes(cellDatas.yaxisPart)) {
-									this.selectedCells.push(cellDatas);
-								}
+								const {
+									xCanvas,
+									yCanvas,
+									wCanvas,
+									hCanvas
+								} = cellDatas;
+								this.matrixCtx.fillRect(xCanvas, yCanvas, wCanvas, hCanvas);
 
 								// Draw pattern if 0 is an exception
-								if (this.matrixExtras && this.matrixExtras[index] && this.isZerosToggled) {
+								if (this.matrixExtras ?. [index] && this.isZerosToggled) {
 									this.drawProbExceptionCell(cellDatas);
 								}
 
 							}
 							this.matrixCtx.stroke();
-							for (let i = 0; i < this.selectedCells.length; i++) {
-								// Draw selected cells after other to be above
-								this.drawSelectedCell(this.selectedCells[i]);
-							}
+							this.drawSelectedNodes();
 
 						}
 
@@ -379,7 +386,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 
 					}
 
-					this.matrixDiv.nativeElement.addEventListener('click', (event) => {
+					this.matrixSelectedDiv.nativeElement.addEventListener('click', (event) => {
 						if (!this.disableClick) {
 							// Do not alllow multiple click on matrix to avoid loops
 							this.disableClick = true;
@@ -392,20 +399,20 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 						passive: true
 					});
 
-					this.matrixDiv.nativeElement.addEventListener('mouseout', (event) => {
+					this.matrixSelectedDiv.nativeElement.addEventListener('mouseout', (event) => {
 						this.hideTooltip();
 					}, {
 						passive: true
 					});
 
-					this.matrixDiv.nativeElement.addEventListener('mousemove', (event) => {
+					this.matrixSelectedDiv.nativeElement.addEventListener('mousemove', (event) => {
 						this.currentEvent = event;
 						this.showTooltip(event);
 					}, {
 						passive: true
 					});
 
-					this.matrixDiv.nativeElement.addEventListener('wheel', (event) => {
+					this.matrixSelectedDiv.nativeElement.addEventListener('wheel', (event) => {
 						// Keep event in memory to manage zoom factor on scroll
 						this.currentEvent = event;
 					}, {
@@ -421,8 +428,8 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 						passive: true
 					});
 					this.isDrawing = false;
-					// const t3 = performance.now();
-					// console.log('Draw matrix performance' + (t3 - t2) + ' milliseconds.');
+					const t3 = performance.now();
+					console.log('Draw matrix performance' + (t3 - t2) + ' milliseconds.');
 				}
 			});
 
@@ -436,6 +443,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 		// Hack to prevent event emit if user pan matrix
 		if (!this.isPaning || this.isPaning === undefined) {
 			this.isPaning = false;
+			this.cleanSelectedDomContext();
 
 			const clicked = this.getCurrentCell(event);
 			this.drawSelectedCell(clicked);
@@ -450,25 +458,37 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 		}
 	}
 
-	eraseSelectedCell(cell: CellVO) {
-		if (cell) {
-			this.matrixCtx.strokeStyle = 'rgba(255,255,255,1)';
-			this.matrixCtx.lineWidth = 4;
-			this.matrixCtx.strokeRect(cell.xCanvas, cell.yCanvas, cell.wCanvas, cell.hCanvas);
+	drawSelectedNodes() {
+		this.cleanSelectedDomContext();
+		this.selectedCells = []
+		const cellsLength = this.inputDatas.matrixCellDatas.length;
+		for (let index = 0; index < cellsLength; index++) {
+			const cellDatas = this.inputDatas.matrixCellDatas[index];
+			// Manage selected cell (different for KV and KC)
+			if (this.selectedNodes ?. [0] ?.childrenList.includes(cellDatas.xaxisPart) &&
+				this.selectedNodes ?. [1] ?.childrenList.includes(cellDatas.yaxisPart)) {
+				this.selectedCells.push(cellDatas);
+			}
+		}
+
+		for (const cell of this.selectedCells) {
+			// Draw selected cells after other to be above
+			this.drawSelectedCell(cell);
 		}
 	}
 
 	drawSelectedCell(cell: CellVO) {
-		if (cell) {
-			this.matrixCtx.strokeStyle = '#ffffff';
-			this.matrixCtx.lineWidth = 4;
-			this.matrixCtx.shadowBlur = 1;
-			this.matrixCtx.shadowColor = 'white';
-			this.matrixCtx.strokeRect(cell.xCanvas, cell.yCanvas, cell.wCanvas, cell.hCanvas);
 
-			this.matrixCtx.lineWidth = 2;
-			this.matrixCtx.strokeStyle = '#57689d';
-			this.matrixCtx.strokeRect(cell.xCanvas, cell.yCanvas, cell.wCanvas, cell.hCanvas);
+		if (cell) {
+			this.matrixSelectedCtx.strokeStyle = '#ffffff';
+			this.matrixSelectedCtx.lineWidth = 4;
+			this.matrixSelectedCtx.shadowBlur = 1;
+			this.matrixSelectedCtx.shadowColor = 'white';
+			this.matrixSelectedCtx.strokeRect(cell.xCanvas, cell.yCanvas, cell.wCanvas, cell.hCanvas);
+
+			this.matrixSelectedCtx.lineWidth = 2;
+			this.matrixSelectedCtx.strokeStyle = '#57689d';
+			this.matrixSelectedCtx.strokeRect(cell.xCanvas, cell.yCanvas, cell.wCanvas, cell.hCanvas);
 		}
 	}
 
@@ -523,6 +543,14 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 
 			// clear the canvas for redrawing
 			this.matrixCtx.clearRect(0, 0, this.matrixDiv.nativeElement.width, this.matrixDiv.nativeElement.height);
+		}
+	}
+
+	cleanSelectedDomContext() {
+		if (this.matrixSelectedDiv) {
+			this.matrixSelectedCtx = this.matrixSelectedDiv.nativeElement.getContext('2d');
+			// clear the canvas for redrawing
+			this.matrixSelectedCtx.clearRect(0, 0, this.matrixSelectedDiv.nativeElement.width, this.matrixSelectedDiv.nativeElement.height);
 		}
 	}
 
@@ -707,7 +735,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 	onContrastChanged(event) {
 		// this.khiopsLibraryService.trackEvent('click', 'matrix_contrast', event.value);
 		this.contrast = event.value;
-			localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST', this.contrast.toString());
+		localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST', this.contrast.toString());
 		this.drawMatrix();
 	}
 
