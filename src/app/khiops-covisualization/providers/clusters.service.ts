@@ -146,16 +146,19 @@ export class ClustersService {
 				let cell: CellVO;
 				if (!this.dimensionsDatas.selectedNodes[otherIndex].isLeaf && !this.dimensionsDatas.selectedNodes[otherIndex].isCollapsed) {
 					// if it is a node and it is collapsed, concat values of children leafs
-					const childrenLeafListLength = this.dimensionsDatas.selectedNodes[otherIndex].childrenLeafList.length;
-					for (let j = 0; j < childrenLeafListLength; j++) {
-						const currentChild = this.dimensionsDatas.selectedNodes[otherIndex].childrenLeafList[j];
-						if (currentIndex === 0) {
-							cell = this.dimensionsDatas.matrixDatas.matrixCellDatas.find(e => e.yaxisPart === currentChild && e.xaxisPart === currentXpart);
-						} else {
-							cell = this.dimensionsDatas.matrixDatas.matrixCellDatas.find(e => e.yaxisPart === currentXpart && e.xaxisPart === currentChild);
-						}
+					/**
+					 * ChatGPT optimization
+					 * Save more than 30 sec on top level nodes on big files
+					 */
+					const childrenLeafList = this.dimensionsDatas.selectedNodes[otherIndex].childrenLeafList;
+					const matrixCellMap: any = new Map(this.dimensionsDatas.matrixDatas.matrixCellDatas.map(cell => [`${cell.yaxisPart}-${cell.xaxisPart}`, cell]));
+					for (let j = 0; j < childrenLeafList.length; j++) {
+						const currentChild = childrenLeafList[j];
+						cell = currentIndex === 0 ?
+							matrixCellMap.get(`${currentChild}-${currentXpart}`) :
+							matrixCellMap.get(`${currentXpart}-${currentChild}`);
 						if (cell) {
-							currentDataValue = currentDataValue + cell.displayedFreqValue;
+							currentDataValue += cell.displayedFreqValue;
 						}
 					}
 				} else {
@@ -179,7 +182,7 @@ export class ClustersService {
 			distributionsGraphDetails = undefined;
 		}
 		const t1 = performance.now();
-		// console.info("getDistributionDetailsFromNode took " + (t1 - t0) + " milliseconds.");
+		console.info("getDistributionDetailsFromNode took " + (t1 - t0) + " milliseconds.");
 
 		return distributionsGraphDetails;
 	}
