@@ -29,11 +29,9 @@ import {
 	TreenodesService
 } from '@khiops-covisualization/providers/treenodes.service';
 import {
-	ClustersService
-} from '@khiops-covisualization/providers/clusters.service';
-import {
 	ChartColorsSetI
 } from '@khiops-library/interfaces/chart-colors-set';
+import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 
 @Component({
 	selector: 'app-variable-graph-details',
@@ -73,11 +71,12 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges, OnDestr
 	legend: any;
 	colorSet: ChartColorsSetI;
 	isFullscreen: boolean = false;
+	isLoadingDistribution: boolean;
 
 	constructor(
 		private translate: TranslateService,
+		private dimensionsDatasService: DimensionsDatasService,
 		private treenodesService: TreenodesService,
-		private clustersService: ClustersService,
 		private eventsService: EventsService,
 		private khiopsLibraryService: KhiopsLibraryService
 	) {
@@ -159,7 +158,24 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges, OnDestr
 					this.activeEntries = this.graphDetails.labels.findIndex(e => e === this.selectedNode.shortDescription);
 					this.legend = this.graphDetails.datasets[0].label;
 				}
-				this.graphDetails = this.clustersService.getDistributionDetailsFromNode(otherIndex, currentIndex);
+
+				this.isLoadingDistribution = true;
+				setTimeout(() => {
+					// Do not display computing message for small computings (> 100ms)
+					if (this.isLoadingDistribution) {
+						this.graphDetails = undefined;
+					}
+				}, 100);
+
+				const worker = new Worker(new URL('./variable-graph-details.worker.ts', import.meta.url));
+				worker.onmessage = ({ data }) => {
+					this.isLoadingDistribution = false
+					this.graphDetails = data
+				};
+				worker.postMessage({
+					dimensionsDatas: this.dimensionsDatasService.dimensionsDatas, otherIndex:otherIndex, currentIndex:currentIndex
+				});
+
 				this.updateGraphTitle();
 
 			}
