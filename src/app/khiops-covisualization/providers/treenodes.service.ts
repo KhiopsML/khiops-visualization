@@ -268,7 +268,7 @@ export class TreenodesService {
 	}
 
 	getFirstVisibleNode(nodes, nodeVO: TreeNodeVO, lastVisibleNode) {
-		const parentNode: TreeNodeVO = nodes.find(e => e.name === nodeVO.parentCluster);
+		const parentNode: TreeNodeVO = nodes.find(e => e.name === nodeVO?.parentCluster);
 		if (!nodeVO.isParentCluster) {
 			if (parentNode.isCollapsed) {
 				lastVisibleNode = parentNode;
