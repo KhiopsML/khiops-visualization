@@ -87,7 +87,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges, OnDestr
 			this.getFilteredDistribution(this.dimensionsTree);
 		});
 		this.treeSelectedNodeChangedSub = this.eventsService.treeSelectedNodeChanged.subscribe(e => {
-			if (e.selectedNode && e.hierarchyName !== this.selectedDimension.name || !this.graphDetails) {
+			if (e.selectedNode && e.hierarchyName === this.selectedDimension.name || !this.graphDetails) {
 				// Only compute distribution of the other node
 				this.getFilteredDistribution(this.dimensionsTree);
 			}
@@ -116,7 +116,8 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges, OnDestr
 	}
 
 	updateGraphTitle() {
-		const currentIndex = this.position;
+
+		const currentIndex = this.position === 0 ? 1 : 0;
 		let otherIndex = 0;
 		if (currentIndex === 0) {
 			otherIndex = 1;
@@ -154,10 +155,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges, OnDestr
 				// EVOL we want to interchange distribution graphs
 				// so we interchange otherIndex and currentIndex
 				const [currentIndex, otherIndex] = this.invertDimensionsPositions();
-				if (this.graphDetails && this.graphDetails.labels) {
-					this.activeEntries = this.graphDetails.labels.findIndex(e => e === this.selectedNode.shortDescription);
-					this.legend = this.graphDetails.datasets[0].label;
-				}
+
 
 				this.isLoadingDistribution = true;
 				setTimeout(() => {
@@ -170,7 +168,11 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges, OnDestr
 				const worker = new Worker(new URL('./variable-graph-details.worker.ts', import.meta.url));
 				worker.onmessage = ({ data }) => {
 					this.isLoadingDistribution = false
-					this.graphDetails = data
+					this.graphDetails = data;
+					if (this.graphDetails && this.graphDetails.labels) {
+						this.activeEntries = this.graphDetails.labels.findIndex(e => e === this.selectedNode.shortDescription);
+						this.legend = this.graphDetails.datasets[0].label;
+					}
 				};
 				worker.postMessage({
 					dimensionsDatas: this.dimensionsDatasService.dimensionsDatas, otherIndex:otherIndex, currentIndex:currentIndex

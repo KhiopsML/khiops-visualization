@@ -41,7 +41,7 @@
 		</as-split-area>
 		<as-split-area [size]="sizes[sizeId][column4Index]" order="5"
 			*ngIf="axisLayout.isDistributionChecked && (position === 0 || position === 1)">
-			<app-variable-graph-details #appVariableGraphDetails [position]="position"
+			<app-variable-graph-details #appVariableGraphDetails [position]="invertedPosition"
 				[selectedDimensions]="dimensionsDatas.selectedDimensions"
 				[selectedDimension]="dimensionsDatas.selectedDimensions[position]"
 				[dimensionsTree]="dimensionsDatas.dimensionsTrees[position]"
