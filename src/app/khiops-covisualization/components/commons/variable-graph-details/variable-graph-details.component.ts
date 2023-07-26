@@ -193,7 +193,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges, OnDestr
 
 		// Find node name from index
 		const currentNodeName = this.graphDetails.labels[index];
-		this.treenodesService.setSelectedNode(this.selectedDimensions[otherIndex].name, currentNodeName);
+		this.treenodesService.setSelectedNode(this.selectedDimensions[currentIndex].name, currentNodeName);
 	}
 
 	onScaleValueChanged(value: any) {
