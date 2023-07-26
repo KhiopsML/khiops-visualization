@@ -87,7 +87,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges, OnDestr
 			this.getFilteredDistribution(this.dimensionsTree);
 		});
 		this.treeSelectedNodeChangedSub = this.eventsService.treeSelectedNodeChanged.subscribe(e => {
-			if (e.selectedNode && e.hierarchyName !== this.selectedDimension.name) {
+			if (e.selectedNode && e.hierarchyName !== this.selectedDimension.name || !this.graphDetails) {
 				// Only compute distribution of the other node
 				this.getFilteredDistribution(this.dimensionsTree);
 			}
