@@ -96,7 +96,7 @@ export class DimensionsDatasService {
 
 	getDimensionPositionFromName(dimensionName): any {
 		// Find current dim position
-		return this.dimensionsDatas.selectedDimensions.findIndex(e => {
+		return this.dimensionsDatas?.selectedDimensions?.findIndex(e => {
 			return dimensionName === e.name;
 		});
 	}
