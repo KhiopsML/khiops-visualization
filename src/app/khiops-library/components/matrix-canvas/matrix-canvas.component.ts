@@ -334,7 +334,12 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 									wCanvas,
 									hCanvas
 								} = cellDatas;
-								this.matrixCtx.fillRect(xCanvas, yCanvas, wCanvas, hCanvas);
+								if (cellsLength > 1000) {
+									// round values to optimise perf
+									this.matrixCtx.fillRect(Math.round(xCanvas), Math.round(yCanvas), Math.round(wCanvas), Math.round(hCanvas));
+								} else {
+									this.matrixCtx.fillRect(xCanvas, yCanvas, wCanvas, hCanvas);
+								}
 
 								// Draw pattern if 0 is an exception
 								if (this.matrixExtras ?. [index] && this.isZerosToggled) {
