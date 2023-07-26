@@ -57,7 +57,7 @@
 	"NO_DATAS": {
 		"WELCOME": "Open a file from the menu",
 		"DEFAULT": "No data",
-		"COMPUTING": "Computing...",
+		"COMPUTING": "Loading...",
 		"NO_PREDICTORS_DETAILS": "No predictors details.",
 		"NO_CORRELATION": "No Correlation.",
 		"NO_EXTERNAL_DATAS": "No external datas.",
