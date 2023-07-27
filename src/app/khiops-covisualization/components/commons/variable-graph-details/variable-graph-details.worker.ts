@@ -7,33 +7,33 @@ import {
 addEventListener('message', ({
 	data
 }) => {
-	var res = getDistributionDetailsFromNode(data.dimensionsDatas, data.currentIndex, data.otherIndex);
+	var res = getDistributionDetailsFromNode(data.selectedNodes, data.dimensionsTree, data.matrixCellDatas, data.currentIndex, data.otherIndex);
 	postMessage(res);
 });
 
-function getDistributionDetailsFromNode(dimensionsDatas, currentIndex, otherIndex) {
+function getDistributionDetailsFromNode(selectedNodes, dimensionsTree, matrixCellDatas, currentIndex, otherIndex) {
 
 	let distributionsGraphDetails = {
 		datasets: [],
 		labels: []
 	};
 	const t0 = performance.now();
-	if (dimensionsDatas.selectedNodes.length >= 2) {
+	if (selectedNodes.length >= 2) {
 
-		let currentYpart = dimensionsDatas.selectedNodes[0].name;
-		let currentDisplayYpart = dimensionsDatas.selectedNodes[0].shortDescription;
+		let currentYpart = selectedNodes[0].name;
+		let currentDisplayYpart = selectedNodes[0].shortDescription;
 
 		if (currentIndex === 0) {
-			currentYpart = dimensionsDatas.selectedNodes[1].name;
-			currentDisplayYpart = dimensionsDatas.selectedNodes[1].shortDescription;
+			currentYpart = selectedNodes[1].name;
+			currentDisplayYpart = selectedNodes[1].shortDescription;
 		}
 
 		const currentDataSet = new ChartDatasetVO(currentDisplayYpart);
-		const filteredDimensionsClusters = getCurrentClusterDetailsFromNode(dimensionsDatas.dimensionsTrees[currentIndex]);
+		const filteredDimensionsClusters = getCurrentClusterDetailsFromNode(dimensionsTree);
 
 		// First filter the cells by Ypart to optimize computing
-		const filteredYAxisCurrentYpart = dimensionsDatas.matrixDatas.matrixCellDatas.filter(e => e.yaxisPart === currentYpart);
-		const filteredXAxisCurrentYpart = dimensionsDatas.matrixDatas.matrixCellDatas.filter(e => e.xaxisPart === currentYpart);
+		const filteredYAxisCurrentYpart = matrixCellDatas.filter(e => e.yaxisPart === currentYpart);
+		const filteredXAxisCurrentYpart = matrixCellDatas.filter(e => e.xaxisPart === currentYpart);
 
 		const filteredDimensionsClustersLength = filteredDimensionsClusters.length;
 		for (let i = 0; i < filteredDimensionsClustersLength; i++) {
@@ -44,14 +44,14 @@ function getDistributionDetailsFromNode(dimensionsDatas, currentIndex, otherInde
 			let currentDataValue = 0;
 
 			let cell: any;
-			if (!dimensionsDatas.selectedNodes[otherIndex].isLeaf && !dimensionsDatas.selectedNodes[otherIndex].isCollapsed) {
+			if (!selectedNodes[otherIndex].isLeaf && !selectedNodes[otherIndex].isCollapsed) {
 				// if it is a node and it is collapsed, concat values of children leafs
 				/**
 				 * ChatGPT optimization
 				 * Save more than 30 sec on top level nodes on big files
 				 */
-				const childrenLeafList = dimensionsDatas.selectedNodes[otherIndex].childrenLeafList;
-				const matrixCellMap: any = new Map(dimensionsDatas.matrixDatas.matrixCellDatas.map(cell => [`${cell.yaxisPart}-${cell.xaxisPart}`, cell]));
+				const childrenLeafList = selectedNodes[otherIndex].childrenLeafList;
+				const matrixCellMap: any = new Map(matrixCellDatas.map(cell => [`${cell.yaxisPart}-${cell.xaxisPart}`, cell]));
 				for (let j = 0; j < childrenLeafList.length; j++) {
 					const currentChild = childrenLeafList[j];
 					cell = currentIndex === 0 ?

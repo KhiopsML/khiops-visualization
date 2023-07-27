@@ -31,7 +31,9 @@ import {
 import {
 	ChartColorsSetI
 } from '@khiops-library/interfaces/chart-colors-set';
-import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
+import {
+	DimensionsDatasService
+} from '@khiops-covisualization/providers/dimensions-datas.service';
 
 @Component({
 	selector: 'app-variable-graph-details',
@@ -149,7 +151,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges, OnDestr
 	}
 
 
-	getFilteredDistribution(dimensionsTree) {
+	async getFilteredDistribution(dimensionsTree) {
 		setTimeout(() => {
 			if (dimensionsTree && this.selectedNode) {
 				// EVOL we want to interchange distribution graphs
@@ -165,8 +167,11 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges, OnDestr
 					}
 				}, 100);
 
-				const worker = new Worker(new URL('./variable-graph-details.worker.ts', import.meta.url));
-				worker.onmessage = ({ data }) => {
+				const worker = new Worker(new URL('./variable-graph-details.worker.ts',
+					import.meta.url));
+				worker.onmessage = ({
+					data
+				}) => {
 					this.isLoadingDistribution = false
 					this.graphDetails = data;
 					if (this.graphDetails && this.graphDetails.labels) {
@@ -174,9 +179,22 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges, OnDestr
 						this.legend = this.graphDetails.datasets[0].label;
 					}
 				};
-				worker.postMessage({
-					dimensionsDatas: this.dimensionsDatasService.dimensionsDatas, otherIndex:otherIndex, currentIndex:currentIndex
-				});
+
+				const data = {
+					selectedNodes: this.dimensionsDatasService.dimensionsDatas.selectedNodes,
+					dimensionsTree: this.dimensionsDatasService.dimensionsDatas.dimensionsTrees[currentIndex],
+					// Transfert only usefull informations so map it
+					matrixCellDatas: this.dimensionsDatasService.dimensionsDatas.matrixDatas.matrixCellDatas.map(e => {
+						return {
+							yaxisPart: e.yaxisPart,
+							xaxisPart: e.xaxisPart,
+							displayedFreqValue: e.displayedFreqValue
+						}
+					}),
+					otherIndex: otherIndex,
+					currentIndex: currentIndex
+				}
+				worker.postMessage(data);
 
 				this.updateGraphTitle();
 
