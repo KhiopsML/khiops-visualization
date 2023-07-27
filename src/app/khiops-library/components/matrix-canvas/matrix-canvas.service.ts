@@ -288,31 +288,35 @@ export class MatrixCanvasService {
 			)`;
 	}
 
-	static hexToRgb(hex): any {
-		const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-		return result ? {
-			r: parseInt(result[1], 16),
-			g: parseInt(result[2], 16),
-			b: parseInt(result[3], 16)
-		} : null;
+	/**
+	* ChatGPT optimization
+	*/
+	static hexToRgb(hex) {
+		const bigint = parseInt(hex.slice(1), 16);
+		const r = (bigint >> 16) & 255;
+		const g = (bigint >> 8) & 255;
+		const b = bigint & 255;
+		return { r, g, b };
 	}
 
+	/**
+	* ChatGPT optimization
+	*/
 	static getFrequencyColors(): any {
-
-		const map = [];
-		for (let i = 0; i < this.hot.length; i++) {
-			const rgb = this.hexToRgb(this.hot[i]);
-			map.push({
-				pct: i / 10,
-				color: {
-					r: parseInt(rgb.r, 10),
-					g: parseInt(rgb.g, 10),
-					b: parseInt(rgb.b, 10)
-				}
-			});
+		const hotLength = this.hot.length;
+		const map = new Array(hotLength);
+		for (let i = 0; i < hotLength; i++) {
+		  const rgb = this.hexToRgb(this.hot[i]);
+		  map[i] = {
+			pct: i / 10,
+			color: {
+			  r: rgb.r,
+			  g: rgb.g,
+			  b: rgb.b
+			}
+		  };
 		}
 		return map;
-
 	}
 
 	static getInterestColors(isPositiveValue): any {

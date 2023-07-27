@@ -435,9 +435,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 				}
 			});
 
-
 		}
-
 
 	}
 
@@ -537,19 +535,9 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 	 * Before draw canvas, clean dom and clone divs to remove listeners
 	 */
 	cleanDomContext() {
-
-		// this.matrixArea = document.getElementById('matrix-area');
-		// this.matrixContainerDiv = document.getElementById('matrix-container');
-		// this.matrixCanvasComp = document.getElementById('matrix-canvas-comp');
-
 		// Clone to remove listeners
-		// const matrixDiv = document.getElementById('matrix');
 		if (this.matrixDiv) {
-			// const matrixDiv = this.matrixDiv.nativeElement.cloneNode(true);
-			// matrixDiv.parentNode.replaceChild(this.matrixDiv.nativeElement, matrixDiv);
-
 			this.matrixCtx = this.matrixDiv.nativeElement.getContext('2d');
-
 			// clear the canvas for redrawing
 			this.matrixCtx.clearRect(0, 0, this.matrixDiv.nativeElement.width, this.matrixDiv.nativeElement.height);
 		}
@@ -674,6 +662,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 				b: Math.floor(lower.color.b * pctLower + upper.color.b * pctUpper)
 			};
 			const rgba = 'rgba(' + [color.r, color.g, color.b, 1].join(',') + ')';
+
 			return rgba;
 		}
 	}
