@@ -409,12 +409,12 @@ export class SaveService {
 
 		// Browse the cells of the initial coclustering json file ("cellPartIndexes" field)
 		for (let i = 0; i < CI.coclusteringReport.cellPartIndexes.length; i++) {
-			let index_initiaux = CI.coclusteringReport.cellPartIndexes[i];
+			let initial_indexes = CI.coclusteringReport.cellPartIndexes[i];
 			let currentIndexes = [];
 
 			for (let k = 0; k < CI.coclusteringReport.dimensionHierarchies.length; k++) {
 				// Calculation of indexes from the transition matrix calculated in step 1
-				currentIndexes.push(transitionMatrix[k][index_initiaux[k]]);
+				currentIndexes.push(transitionMatrix[k][initial_indexes[k]]);
 			}
 
 			let currentIndexesString = currentIndexes.join(',');
