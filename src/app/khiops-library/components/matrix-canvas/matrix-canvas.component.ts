@@ -315,9 +315,8 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 
 								const cellDatas = this.inputDatas.matrixCellDatas[index];
 
-								this.adaptCellDimensionsToZoom(cellDatas, width, height, this.graphType);
-
 								const currentVal = this.matrixValues[index];
+								this.adaptCellDimensionsToZoom(cellDatas, width, height, this.graphType);
 								cellDatas.displayedValue = {
 									type: this.graphMode.mode,
 									value: currentVal,
@@ -325,19 +324,17 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 									extra: this.matrixExtras && this.matrixExtras[index] || 0
 								};
 								cellDatas.displayedFreqValue = this.matrixFreqsValues[index];
-								const color = this.getColorForPercentage(currentVal, maxVal);
 
-								this.matrixCtx.fillStyle = color;
-								const {
-									xCanvas,
-									yCanvas,
-									wCanvas,
-									hCanvas
-								} = cellDatas;
-								if (cellsLength > 1000) {
-									// round values to optimise perf
-									this.matrixCtx.fillRect(Math.round(xCanvas), Math.round(yCanvas), Math.round(wCanvas), Math.round(hCanvas));
-								} else {
+								if (currentVal) {
+									// Do not draw empty cells
+									const color = this.getColorForPercentage(currentVal, maxVal);
+									this.matrixCtx.fillStyle = color;
+									const {
+										xCanvas,
+										yCanvas,
+										wCanvas,
+										hCanvas
+									} = cellDatas;
 									this.matrixCtx.fillRect(xCanvas, yCanvas, wCanvas, hCanvas);
 								}
 
@@ -701,19 +698,10 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 	}
 
 	adaptCellDimensionsToZoom(cellDatas, width, height, graphType) {
-
-		if (graphType === 'GLOBAL.STANDARD') {
-			cellDatas.xCanvas = cellDatas.x.standard * width / 100;
-			cellDatas.yCanvas = cellDatas.y.standard * height / 100;
-			cellDatas.wCanvas = cellDatas.w.standard * width / 100;
-			cellDatas.hCanvas = cellDatas.h.standard * height / 100;
-		} else {
-			cellDatas.xCanvas = cellDatas.x.frequency * width / 100;
-			cellDatas.yCanvas = cellDatas.y.frequency * height / 100;
-			cellDatas.wCanvas = cellDatas.w.frequency * width / 100;
-			cellDatas.hCanvas = cellDatas.h.frequency * height / 100;
-		}
-
+		cellDatas.xCanvas = graphType === 'GLOBAL.STANDARD' ? cellDatas.x.standard * width * 0.01 : cellDatas.x.frequency * width * 0.01;
+		cellDatas.yCanvas = graphType === 'GLOBAL.STANDARD' ? cellDatas.y.standard * height * 0.01 : cellDatas.y.frequency * height * 0.01;
+		cellDatas.wCanvas = graphType === 'GLOBAL.STANDARD' ? cellDatas.w.standard * width * 0.01 : cellDatas.w.frequency * width * 0.01;
+		cellDatas.hCanvas = graphType === 'GLOBAL.STANDARD' ? cellDatas.h.standard * height * 0.01 : cellDatas.h.frequency * height * 0.01;
 		return cellDatas;
 	}
 
