@@ -33,68 +33,58 @@ function getDistributionDetailsFromNode(selectedNodes, dimensionsTree, matrixCel
 
 		const isNodeAndCollapsed = !selectedNodes[otherIndex].isLeaf && !selectedNodes[otherIndex].isCollapsed;
 
-		let filteredYAxisCurrentYpart;
-		let filteredXAxisCurrentYpart;
 		if (!isNodeAndCollapsed) {
-			// First filter the cells by Ypart to optimize computing
-			filteredYAxisCurrentYpart = matrixCellDatas.filter(e => e.yaxisPart === currentYpart);
-			filteredXAxisCurrentYpart = matrixCellDatas.filter(e => e.xaxisPart === currentYpart);
-		}
-
-		for (let i = 0; i <  filteredDimensionsClusters.length; i++) {
-			const currentXpart = filteredDimensionsClusters[i].name;
-			const currentDisplayXpart = filteredDimensionsClusters[i].shortDescription;
-			distributionsGraphDetails.labels.push(currentDisplayXpart);
-
-			let currentDataValue = 0;
-
-			let cell: any;
-			if (isNodeAndCollapsed) {
-				// if it is a node and it is collapsed, concat values of children leafs
-				/**
-				 * ChatGPT optimization
-				 * Save more than 30 sec on top level nodes on big files
-				 * But only work on top level nodes with a lot of ranks file
-				 * because it depend of the order of leafs, so the find method sometimes works faster
-				 * TODO: maybe sort the datas before search into it ?
-				 * Or maybe do a filter instead of a loop of find ?
-				 */
-				// const childrenLeafList = selectedNodes[otherIndex].childrenLeafList;
-				// const matrixCellMap: any = new Map(matrixCellDatas.map(cell => [`${cell.yaxisPart}-${cell.xaxisPart}`, cell]));
-				// for (let j = 0; j < childrenLeafList.length; j++) {
-				// 	const currentChild = childrenLeafList[j];
-				// 	cell = currentIndex === 0 ?
-				// 		matrixCellMap.get(`${currentChild}-${currentXpart}`) :
-				// 		matrixCellMap.get(`${currentXpart}-${currentChild}`);
-				// 	if (cell) {
-				// 		currentDataValue += cell.displayedFreqValue;
-				// 	}
-				// }
-
-				// if it is a node and it is collapsed, concat values of children leafs
-				const childrenLeafList = selectedNodes[otherIndex].childrenLeafList;
-				for (let j = 0; j < childrenLeafList.length; j++) {
-					const currentChild = childrenLeafList[j];
-					cell = currentIndex === 0 ?
-						matrixCellDatas.find(e => e.yaxisPart === currentChild && e.xaxisPart === currentXpart) :
-						matrixCellDatas.find(e => e.yaxisPart === currentXpart && e.xaxisPart === currentChild);
-					if (cell) {
-						currentDataValue += cell.displayedFreqValue;
-					}
-				}
-			} else {
+			let filterDatas = matrixCellDatas.filter(e => e.yaxisPart === currentYpart || e.xaxisPart === currentYpart);
+			for (let i = 0; i < filteredDimensionsClusters.length; i++) {
+				const currentXpart = filteredDimensionsClusters[i].name;
+				const currentDisplayXpart = filteredDimensionsClusters[i].shortDescription;
+				distributionsGraphDetails.labels.push(currentDisplayXpart);
+				let currentDataValue = 0;
+				let cell: any;
 				// leaf
 				if (currentIndex === 0) {
-					cell = filteredYAxisCurrentYpart.find(e => e.xaxisPart === currentXpart);
+					cell = filterDatas.find(e => e.xaxisPart === currentXpart);
 				} else {
-					cell = filteredXAxisCurrentYpart.find(e => e.yaxisPart === currentXpart);
+					cell = filterDatas.find(e => e.yaxisPart === currentXpart);
 				}
 				if (cell) {
 					currentDataValue = cell.displayedFreqValue;
 				}
+				currentDataSet.data.push(currentDataValue);
 			}
-			currentDataSet.data.push(currentDataValue);
+		} else {
+			const currentDataSetData = [];
+			const distributionsGraphLabels = [];
+			const childrenLeafSet = new Set(selectedNodes[otherIndex].childrenLeafList);
+
+			const matrixCellDataMap = matrixCellDatas.reduce((map, data) => {
+				const key = `${data.yaxisPart}-${data.xaxisPart}`;
+				map[key] = data;
+				return map;
+			}, {});
+
+			for (const filteredDimensionCluster of filteredDimensionsClusters) {
+				const currentXpart = filteredDimensionCluster.name;
+				const currentDisplayXpart = filteredDimensionCluster.shortDescription;
+				distributionsGraphLabels.push(currentDisplayXpart);
+
+				let currentDataValue = 0;
+
+				for (const currentChild of childrenLeafSet) {
+					const key = currentIndex === 0 ? `${currentChild}-${currentXpart}` : `${currentXpart}-${currentChild}`;
+					const cell = matrixCellDataMap[key];
+					if (cell) {
+						currentDataValue += cell.displayedFreqValue;
+					}
+				}
+
+				currentDataSetData.push(currentDataValue);
+			}
+
+			distributionsGraphDetails.labels.push(...distributionsGraphLabels);
+			currentDataSet.data.push(...currentDataSetData);
 		}
+
 		distributionsGraphDetails.datasets.push(currentDataSet);
 
 	}
