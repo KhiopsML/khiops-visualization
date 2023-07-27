@@ -31,12 +31,17 @@ function getDistributionDetailsFromNode(selectedNodes, dimensionsTree, matrixCel
 		const currentDataSet = new ChartDatasetVO(currentDisplayYpart);
 		const filteredDimensionsClusters = getCurrentClusterDetailsFromNode(dimensionsTree);
 
-		// First filter the cells by Ypart to optimize computing
-		const filteredYAxisCurrentYpart = matrixCellDatas.filter(e => e.yaxisPart === currentYpart);
-		const filteredXAxisCurrentYpart = matrixCellDatas.filter(e => e.xaxisPart === currentYpart);
+		const isNodeAndCollapsed = !selectedNodes[otherIndex].isLeaf && !selectedNodes[otherIndex].isCollapsed;
 
-		const filteredDimensionsClustersLength = filteredDimensionsClusters.length;
-		for (let i = 0; i < filteredDimensionsClustersLength; i++) {
+		let filteredYAxisCurrentYpart;
+		let filteredXAxisCurrentYpart;
+		if (!isNodeAndCollapsed) {
+			// First filter the cells by Ypart to optimize computing
+			filteredYAxisCurrentYpart = matrixCellDatas.filter(e => e.yaxisPart === currentYpart);
+			filteredXAxisCurrentYpart = matrixCellDatas.filter(e => e.xaxisPart === currentYpart);
+		}
+
+		for (let i = 0; i <  filteredDimensionsClusters.length; i++) {
 			const currentXpart = filteredDimensionsClusters[i].name;
 			const currentDisplayXpart = filteredDimensionsClusters[i].shortDescription;
 			distributionsGraphDetails.labels.push(currentDisplayXpart);
@@ -44,24 +49,41 @@ function getDistributionDetailsFromNode(selectedNodes, dimensionsTree, matrixCel
 			let currentDataValue = 0;
 
 			let cell: any;
-			if (!selectedNodes[otherIndex].isLeaf && !selectedNodes[otherIndex].isCollapsed) {
+			if (isNodeAndCollapsed) {
 				// if it is a node and it is collapsed, concat values of children leafs
 				/**
 				 * ChatGPT optimization
 				 * Save more than 30 sec on top level nodes on big files
+				 * But only work on top level nodes with a lot of ranks file
+				 * because it depend of the order of leafs, so the find method sometimes works faster
+				 * TODO: maybe sort the datas before search into it ?
+				 * Or maybe do a filter instead of a loop of find ?
 				 */
+				// const childrenLeafList = selectedNodes[otherIndex].childrenLeafList;
+				// const matrixCellMap: any = new Map(matrixCellDatas.map(cell => [`${cell.yaxisPart}-${cell.xaxisPart}`, cell]));
+				// for (let j = 0; j < childrenLeafList.length; j++) {
+				// 	const currentChild = childrenLeafList[j];
+				// 	cell = currentIndex === 0 ?
+				// 		matrixCellMap.get(`${currentChild}-${currentXpart}`) :
+				// 		matrixCellMap.get(`${currentXpart}-${currentChild}`);
+				// 	if (cell) {
+				// 		currentDataValue += cell.displayedFreqValue;
+				// 	}
+				// }
+
+				// if it is a node and it is collapsed, concat values of children leafs
 				const childrenLeafList = selectedNodes[otherIndex].childrenLeafList;
-				const matrixCellMap: any = new Map(matrixCellDatas.map(cell => [`${cell.yaxisPart}-${cell.xaxisPart}`, cell]));
 				for (let j = 0; j < childrenLeafList.length; j++) {
 					const currentChild = childrenLeafList[j];
 					cell = currentIndex === 0 ?
-						matrixCellMap.get(`${currentChild}-${currentXpart}`) :
-						matrixCellMap.get(`${currentXpart}-${currentChild}`);
+						matrixCellDatas.find(e => e.yaxisPart === currentChild && e.xaxisPart === currentXpart) :
+						matrixCellDatas.find(e => e.yaxisPart === currentXpart && e.xaxisPart === currentChild);
 					if (cell) {
 						currentDataValue += cell.displayedFreqValue;
 					}
 				}
 			} else {
+				// leaf
 				if (currentIndex === 0) {
 					cell = filteredYAxisCurrentYpart.find(e => e.xaxisPart === currentXpart);
 				} else {
@@ -82,7 +104,7 @@ function getDistributionDetailsFromNode(selectedNodes, dimensionsTree, matrixCel
 		distributionsGraphDetails = undefined;
 	}
 	const t1 = performance.now();
-	// console.info("getDistributionDetailsFromNode took " + (t1 - t0) + " milliseconds.");
+	console.info("getDistributionDetailsFromNode took " + (t1 - t0) + " milliseconds.");
 
 	return distributionsGraphDetails;
 }
