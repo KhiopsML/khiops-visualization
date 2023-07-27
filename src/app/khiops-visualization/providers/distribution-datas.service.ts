@@ -231,10 +231,6 @@ export class DistributionDatasService {
 				targetDistributionGraphDatas.datasets.push(currentDataSet);
 
 				let l: number = currentXAxis.length;
-				if (l > AppConfig.visualizationCommon.GLOBAL.DISTRIBUTION_GRAPH_LENGTH) {
-					l = AppConfig.visualizationCommon.GLOBAL.DISTRIBUTION_GRAPH_LENGTH;
-				}
-
 				for (let i = 0; i < l; i++) {
 
 					const currentLabel = this.formatXAxis(currentXAxis[i], i).toString();
@@ -436,10 +432,6 @@ export class DistributionDatasService {
 			const [frequencyArray, coverageArray] = this.getAllFrequencyAndCoverageValues(currentDatas, dimensions, partition);
 
 			let l: number = currentDatas.length;
-			if (l > AppConfig.visualizationCommon.GLOBAL.DISTRIBUTION_GRAPH_LENGTH) {
-				l = AppConfig.visualizationCommon.GLOBAL.DISTRIBUTION_GRAPH_LENGTH;
-			}
-
 			for (let i = 0; i < l; i++) {
 
 				let currentValue = 0;

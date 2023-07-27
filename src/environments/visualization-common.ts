@@ -20,7 +20,6 @@ export const visualizationCommonEnvironment = {
     MAX_GRAPH_TOOLTIP_LABEL_LENGTH: 70,
     MAT_MENU_PAGINATION: 20,
     LIFT_CHART_COUNT: 6,
-    DISTRIBUTION_GRAPH_LENGTH: 200,
   },
   HOME: {
     ACTIVE_TAB_INDEX: 0,
