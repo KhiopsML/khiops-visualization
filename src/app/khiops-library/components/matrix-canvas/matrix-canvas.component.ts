@@ -477,10 +477,21 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 					this.selectedCells.push(cellDatas);
 				}
 			}
-			for (const cell of this.selectedCells) {
-				// Draw selected cells after other to be above
+
+			if (this.matrixFreqsValues.length !== this.selectedCells.length) {
+				for (const cell of this.selectedCells) {
+					// Draw selected cells after other to be above
+					this.drawSelectedCell(cell);
+				}
+			} else {
+				const cell: CellVO = new CellVO();
+				cell.xCanvas = 0;
+				cell.yCanvas = 0;
+				cell.wCanvas = this.matrixCtx.canvas.width;
+				cell.hCanvas = this.matrixCtx.canvas.height;
 				this.drawSelectedCell(cell);
 			}
+
 		}
 	}
 
