@@ -14,7 +14,6 @@ import { ViewLayoutVO } from "@khiops-covisualization/model/view-layout-vo";
 import { EventsService } from "@khiops-covisualization/providers/events.service";
 import { TreenodesService } from "@khiops-covisualization/providers/treenodes.service";
 import { AppConfig } from "src/environments/environment";
-import { KhiopsLibraryService } from "@khiops-library/providers/khiops-library.service";
 
 @Component({
 	selector: "app-matrix-container",
@@ -56,7 +55,6 @@ export class MatrixContainerComponent implements OnInit, OnChanges, OnDestroy {
 
 	constructor(
 		private appService: AppService,
-		private khiopsLibraryService: KhiopsLibraryService,
 		private treenodesService: TreenodesService,
 		private eventsService: EventsService,
 		private dimensionsService: DimensionsDatasService
@@ -79,7 +77,11 @@ export class MatrixContainerComponent implements OnInit, OnChanges, OnDestroy {
 					this.treenodesService.collapseNodesSaved();
 					this.isFirstLoad = false;
 				} else {
-					if (!e.stopPropagation && this.initNodesEvents === this.dimensionsDatas.dimensions.length) {
+
+					// check if it's a context selection to redraw matrix
+					const isContextDimension = this.dimensionsService.isContextDimension(e.hierarchyName)
+
+					if ((!e.stopPropagation && this.initNodesEvents === this.dimensionsDatas.dimensions.length) || isContextDimension) {
 						this.matrixCanvas.drawMatrix();
 					} else if (!e.stopPropagation && this.initNodesEvents > this.dimensionsDatas.dimensions.length) {
 						this.matrixCanvas.drawSelectedNodes();
