@@ -472,13 +472,14 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 				const cellDatas = this.inputDatas.matrixCellDatas[index];
 
 				// Manage selected cell (different for KV and KC)
-				if (this.selectedNodes ?. [0] ?.childrenList.includes(cellDatas.xaxisPart) &&
-					this.selectedNodes ?. [1] ?.childrenList.includes(cellDatas.yaxisPart)) {
+				if (this.selectedNodes?.[0]?.childrenList.includes(cellDatas.xaxisPart) &&
+					this.selectedNodes?.[1]?.childrenList.includes(cellDatas.yaxisPart)) {
 					this.selectedCells.push(cellDatas);
 				}
 			}
 
-			if (this.matrixFreqsValues.length !== this.selectedCells.length) {
+			// Do not draw top level selection matrix il nodes are not collapsed
+			if ((this.matrixFreqsValues.length !== this.selectedCells.length) && (this.selectedNodes?.[0].parentCluster || this.selectedNodes?.[1].parentCluster)) {
 				for (const cell of this.selectedCells) {
 					// Draw selected cells after other to be above
 					this.drawSelectedCell(cell);
