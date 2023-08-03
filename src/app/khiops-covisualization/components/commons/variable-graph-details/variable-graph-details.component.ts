@@ -195,10 +195,6 @@ export class VariableGraphDetailsComponent
 		selectedNode.getChildrenList();
 		otherselectedNode.getChildrenList();
 
-		console.log(
-			"file: variab+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++lusters:"
-		);
-
 		let distributionsGraphLabelsInit = [];
 		let distributionsGraphLabels = [];
 
@@ -245,38 +241,48 @@ export class VariableGraphDetailsComponent
 			filteredList.shift();
 		}
 
+		let axisPartName = "yaxisPart";
+		let otheraxisPartName = "xaxisPart";
+		if (this.position === 0) {
+			axisPartName = "xaxisPart";
+			otheraxisPartName = "yaxisPart";
+		}
+		let filteredotherList =
+			this.dimensionsDatasService.dimensionsDatas.matrixDatas.matrixCellDatas.map(
+				(e) => e[axisPartName]
+			);
+		filteredotherList = [...new Set(filteredotherList)]; // keep uniq
+
+		const matrixCellDataMap =
+			this.dimensionsDatasService.dimensionsDatas.matrixDatas.matrixCellDatas.reduce(
+				(map, data, index) => {
+					const key = `${data.yaxisPart}-${data.xaxisPart}`;
+					map[key] = index;
+					return map;
+				},
+				{}
+			);
+
 		for (let i = 0; i < otherselectedNode.childrenList.length; i++) {
 			const element = otherselectedNode.childrenList[i];
-			let axisPartName = "yaxisPart";
-			let otheraxisPartName = "xaxisPart";
-			if (this.position === 0) {
-				axisPartName = "xaxisPart";
-				otheraxisPartName = "yaxisPart";
-			}
-			let filteredotherList =
-				this.dimensionsDatasService.dimensionsDatas.matrixDatas.matrixCellDatas.map(
-					(e) => e[axisPartName]
-				);
-			filteredotherList = [...new Set(filteredotherList)]; // keep uniq
 
 			for (let j = 0; j < filteredotherList.length; j++) {
 				const otherelement = filteredotherList[j];
 				const labelIndex =
 					distributionsGraphLabelsInit.indexOf(otherelement);
 
-				const cellIndex =
-					this.dimensionsDatasService.dimensionsDatas.matrixDatas.matrixCellDatas.findIndex(
-						(e) =>
-							e[axisPartName] === otherelement &&
-							e[otheraxisPartName] === element
-					);
-				if (cellIndex !== -1) {
+				const key =
+					this.position === 1
+						? `${otherelement}-${element}`
+						: `${element}-${otherelement}`;
+
+				const cell = matrixCellDataMap[key];
+
+				if (cell !== undefined) {
 					if (!currentDataSetData[labelIndex]) {
-						currentDataSetData[labelIndex] =
-							matrixValues[cellIndex];
+						currentDataSetData[labelIndex] = matrixValues[cell];
 					} else {
-						currentDataSetData[labelIndex] +=
-							matrixValues[cellIndex];
+						currentDataSetData[labelIndex] += matrixValues[cell];
 					}
 				}
 			}
