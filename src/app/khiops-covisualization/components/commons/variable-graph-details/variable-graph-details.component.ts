@@ -19,6 +19,8 @@ import { TreenodesService } from "@khiops-covisualization/providers/treenodes.se
 import { ChartColorsSetI } from "@khiops-library/interfaces/chart-colors-set";
 import { DimensionsDatasService } from "@khiops-covisualization/providers/dimensions-datas.service";
 import { ChartDatasetVO } from "@khiops-library/model/chartDataset-vo";
+import { ClustersService } from "@khiops-covisualization/providers/clusters.service";
+import { MatrixCanvasService } from "@khiops-library/components/matrix-canvas/matrix-canvas.service";
 
 @Component({
 	selector: "app-variable-graph-details",
@@ -58,7 +60,9 @@ export class VariableGraphDetailsComponent
 	legend: any;
 	colorSet: ChartColorsSetI;
 	isFullscreen: boolean = false;
-	isLoadingDistribution: boolean;
+	// isLoadingDistribution: boolean;
+
+	prevSelectedNode;
 
 	constructor(
 		private translate: TranslateService,
@@ -71,22 +75,26 @@ export class VariableGraphDetailsComponent
 
 		this.treeCollapseChangedSub =
 			this.eventsService.treeCollapseChanged.subscribe((dimension) => {
-				this.getFilteredDistribution(this.dimensionsTree);
+				this.getFilteredDistribution(this.dimensionsTree, true);
 			});
 		this.treeSelectedNodeChangedSub =
 			this.eventsService.treeSelectedNodeChanged.subscribe((e) => {
 				if (
 					(e.selectedNode &&
 						e.hierarchyName === this.selectedDimension.name) ||
-					!this.graphDetails
+					!this.graphDetails ||
+					this.dimensionsDatasService.isContextDimension(
+						e.hierarchyName
+					)
 				) {
 					// Only compute distribution of the other node
 					this.getFilteredDistribution(this.dimensionsTree);
+					this.prevSelectedNode = e.selectedNode;
 				}
 			});
 		this.treeNodeNameChangedSub =
 			this.eventsService.treeNodeNameChanged.subscribe((e) => {
-				this.getFilteredDistribution(this.dimensionsTree);
+				this.getFilteredDistribution(this.dimensionsTree, true);
 			});
 	}
 
@@ -95,7 +103,7 @@ export class VariableGraphDetailsComponent
 			// get active entries index from name
 			if (this.graphDetails) {
 				this.activeEntries = this.graphDetails.labels.findIndex(
-					(e) => e === this.selectedNode.shortDescription
+					(e) => e === this.selectedNode.name
 				);
 			}
 		}
@@ -145,41 +153,12 @@ export class VariableGraphDetailsComponent
 		this.treeNodeNameChangedSub.unsubscribe();
 	}
 
-	async getFilteredDistribution(dimensionsTree) {
-		setTimeout(() => {
-			if (dimensionsTree && this.selectedNode) {
-				// EVOL we want to interchange distribution graphs
-				// so we interchange otherIndex and currentIndex
-				const [currentIndex, otherIndex] =
-					this.invertDimensionsPositions();
-
-				this.isLoadingDistribution = true;
-				setTimeout(() => {
-					// Do not display computing message for small computings (> 100ms)
-					if (this.isLoadingDistribution) {
-						this.graphDetails = undefined;
-					}
-				}, 100);
-
-				this.isLoadingDistribution = false;
-				const mapDatas =
-					this.dimensionsDatasService.dimensionsDatas.matrixDatas.matrixCellDatas.map(
-						({ yaxisPart, xaxisPart, displayedFreqValue }) => ({
-							yaxisPart,
-							xaxisPart,
-							displayedFreqValue,
-						})
-					);
-
-				this.graphDetails = this.getDistributionDetailsFromNode(
-					this.dimensionsDatasService.dimensionsDatas.selectedNodes,
-					this.dimensionsDatasService.dimensionsDatas.dimensionsTrees[
-						currentIndex
-					],
-					mapDatas,
-					currentIndex,
-					otherIndex
-				);
+	getFilteredDistribution(dimensionsTree, force = false) {
+		if (dimensionsTree && this.selectedNode) {
+			if (this.prevSelectedNode !== this.selectedNode || force) {
+				if (this.position === 0) {
+				}
+				this.graphDetails = this.v2();
 
 				if (this.graphDetails && this.graphDetails.labels) {
 					this.activeEntries = this.graphDetails.labels.findIndex(
@@ -189,111 +168,124 @@ export class VariableGraphDetailsComponent
 				}
 				this.updateGraphTitle();
 			}
-		});
+			this.prevSelectedNode = this.selectedNode;
+		}
 	}
 
-	getDistributionDetailsFromNode(
-		selectedNodes,
-		dimensionsTree,
-		matrixCellDatas,
-		currentIndex,
-		otherIndex
-	) {
+	v2() {
+		let filteredDimensionsClusters = this.getCurrentClusterDetailsFromNode(
+			this.dimensionsDatasService.dimensionsDatas.dimensionsTrees[0]
+		);
+		let selectedNode =
+			this.dimensionsDatasService.dimensionsDatas.selectedNodes[0];
+
+		let otherselectedNode =
+			this.dimensionsDatasService.dimensionsDatas.selectedNodes[1];
+
+		if (this.position === 1) {
+			filteredDimensionsClusters = this.getCurrentClusterDetailsFromNode(
+				this.dimensionsDatasService.dimensionsDatas.dimensionsTrees[1]
+			);
+			selectedNode =
+				this.dimensionsDatasService.dimensionsDatas.selectedNodes[1];
+			otherselectedNode =
+				this.dimensionsDatasService.dimensionsDatas.selectedNodes[0];
+		}
+
+		selectedNode.getChildrenList();
+		otherselectedNode.getChildrenList();
+
+		console.log(
+			"file: variab+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++lusters:"
+		);
+
+		let distributionsGraphLabelsInit = [];
+		let distributionsGraphLabels = [];
+
+		distributionsGraphLabelsInit = filteredDimensionsClusters.map(
+			(e) => e.name
+		);
+		distributionsGraphLabels = filteredDimensionsClusters.map(
+			(e) => e.shortDescription
+		);
+
+		let [
+			matrixFreqsValues,
+			matrixValues,
+			globalMatrixValues,
+			matrixExtras,
+			matrixExpectedFreqsValues,
+		] = MatrixCanvasService.computeMatrixValues(
+			{
+				mode: "FREQUENCY",
+			},
+			this.dimensionsDatasService.dimensionsDatas.matrixDatas,
+			this.dimensionsDatasService.dimensionsDatas.contextSelection,
+			-1
+		);
+
+		const currentDataSet = new ChartDatasetVO(
+			this.treenodesService.getSelectedNodes()[
+				this.position
+			].shortDescription
+		);
+
 		let distributionsGraphDetails = {
 			datasets: [],
 			labels: [],
 		};
-		const t0 = performance.now();
-		if (selectedNodes.length >= 2) {
-			let currentYpart = selectedNodes[0].name;
-			let currentDisplayYpart = selectedNodes[0].shortDescription;
+		const currentDataSetData = [];
 
-			if (currentIndex === 0) {
-				currentYpart = selectedNodes[1].name;
-				currentDisplayYpart = selectedNodes[1].shortDescription;
-			}
-
-			const currentDataSet = new ChartDatasetVO(currentDisplayYpart);
-			const filteredDimensionsClusters =
-				this.getCurrentClusterDetailsFromNode(dimensionsTree);
-
-			const isNodeAndCollapsed =
-				!selectedNodes[otherIndex].isLeaf &&
-				!selectedNodes[otherIndex].isCollapsed;
-
-			if (!isNodeAndCollapsed) {
-				let filterDatas = matrixCellDatas.filter(
-					(e) =>
-						e.yaxisPart === currentYpart ||
-						e.xaxisPart === currentYpart
-				);
-				for (let i = 0; i < filteredDimensionsClusters.length; i++) {
-					const currentXpart = filteredDimensionsClusters[i].name;
-					const currentDisplayXpart =
-						filteredDimensionsClusters[i].shortDescription;
-					distributionsGraphDetails.labels.push(currentDisplayXpart);
-					let currentDataValue = 0;
-					let cell: any;
-					// leaf
-					if (currentIndex === 0) {
-						cell = filterDatas.find(
-							(e) => e.xaxisPart === currentXpart
-						);
-					} else {
-						cell = filterDatas.find(
-							(e) => e.yaxisPart === currentXpart
-						);
-					}
-					if (cell) {
-						currentDataValue = cell.displayedFreqValue || 0;
-					}
-					currentDataSet.data.push(currentDataValue);
-				}
-			} else {
-				const currentDataSetData = [];
-				const distributionsGraphLabels = [];
-				const childrenLeafSet = new Set(
-					selectedNodes[otherIndex].childrenLeafList
-				);
-
-				const matrixCellDataMap = matrixCellDatas.reduce(
-					(map, data) => {
-						const key = `${data.yaxisPart}-${data.xaxisPart}`;
-						map[key] = data;
-						return map;
-					},
-					{}
-				);
-				for (const filteredDimensionCluster of filteredDimensionsClusters) {
-					const currentXpart = filteredDimensionCluster.name;
-					const currentDisplayXpart =
-						filteredDimensionCluster.shortDescription;
-					distributionsGraphLabels.push(currentDisplayXpart);
-
-					let currentDataValue = 0;
-
-					for (const currentChild of childrenLeafSet) {
-						const key =
-							currentIndex === 0
-								? `${currentChild}-${currentXpart}`
-								: `${currentXpart}-${currentChild}`;
-						const cell = matrixCellDataMap[key];
-						if (cell) {
-							currentDataValue += cell.displayedFreqValue || 0;
-						}
-					}
-
-					currentDataSetData.push(currentDataValue);
-				}
-
-				distributionsGraphDetails.labels.push(
-					...distributionsGraphLabels
-				);
-				currentDataSet.data.push(...currentDataSetData);
-			}
-
-			distributionsGraphDetails.datasets.push(currentDataSet);
+		let filteredList;
+		if (selectedNode.isLeaf || selectedNode.isCollapsed) {
+			filteredList = selectedNode.name;
+		} else {
+			// not collapsed node remove the node of children list
+			filteredList = selectedNode.childrenList;
+			filteredList.shift();
 		}
+
+		for (let i = 0; i < otherselectedNode.childrenList.length; i++) {
+			const element = otherselectedNode.childrenList[i];
+			let axisPartName = "yaxisPart";
+			let otheraxisPartName = "xaxisPart";
+			if (this.position === 0) {
+				axisPartName = "xaxisPart";
+				otheraxisPartName = "yaxisPart";
+			}
+			let filteredotherList =
+				this.dimensionsDatasService.dimensionsDatas.matrixDatas.matrixCellDatas.map(
+					(e) => e[axisPartName]
+				);
+			filteredotherList = [...new Set(filteredotherList)]; // keep uniq
+
+			for (let j = 0; j < filteredotherList.length; j++) {
+				const otherelement = filteredotherList[j];
+				const labelIndex =
+					distributionsGraphLabelsInit.indexOf(otherelement);
+
+				const cellIndex =
+					this.dimensionsDatasService.dimensionsDatas.matrixDatas.matrixCellDatas.findIndex(
+						(e) =>
+							e[axisPartName] === otherelement &&
+							e[otheraxisPartName] === element
+					);
+				if (cellIndex !== -1) {
+					if (!currentDataSetData[labelIndex]) {
+						currentDataSetData[labelIndex] =
+							matrixValues[cellIndex];
+					} else {
+						currentDataSetData[labelIndex] +=
+							matrixValues[cellIndex];
+					}
+				}
+			}
+		}
+
+		distributionsGraphDetails.labels.push(...distributionsGraphLabels);
+		currentDataSet.data.push(...currentDataSetData);
+
+		distributionsGraphDetails.datasets.push(currentDataSet);
 
 		// Init obj if error or no value
 		if (distributionsGraphDetails.labels.length === 0) {
