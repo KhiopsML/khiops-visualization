@@ -184,7 +184,7 @@ export class ClusterDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
 	getFilteredDimensionTree(dimensionsTree) {
 		if (dimensionsTree) {
-			// Do it ngzone because event comes from tree component lib outsid ethe zone
+			// Do it ngzone because event comes from tree component lib outside the zone
 			this.ngzone.run(() => {
 				this.filteredDimensionsClusters = [];
 				const filteredDimensionsClustersDatas = [].concat(this.clustersService.getCurrentClusterDetailsFromNode(dimensionsTree));

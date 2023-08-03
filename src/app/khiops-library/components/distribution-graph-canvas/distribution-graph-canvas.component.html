@@ -16,5 +16,5 @@
 			[canvasIdContainer]="'distribution-chart-canvas-' + position" (selectBarIndex)="onSelectBarChanged($event)"
 			[colorSet]="colorSet" [inputDatas]="inputDatas" [activeEntries]="activeEntries"></kl-chart-next>
 	</div>
-	<kl-no-data fxFlexFill *ngIf="!inputDatas" [message]="noDataMessage"></kl-no-data>
+	<kl-no-data fxFlexFill *ngIf="!inputDatas"></kl-no-data>
 </div>
