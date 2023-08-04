@@ -40,6 +40,7 @@ import {
 import {
 	FileVO
 } from '@khiops-library/model/file-vo';
+import { MatrixCanvasService } from '@khiops-library/components/matrix-canvas/matrix-canvas.service';
 @Injectable({
 	providedIn: 'root'
 })
@@ -103,89 +104,132 @@ export class ClustersService {
 		return currentClusterDetailsFromNode;
 	}
 
-	getDistributionDetailsFromNode(currentIndex, otherIndex) {
-		// if (currentIndex === 0) {
-		// 	currentIndex = 1;
-		// } else {
-		// 	currentIndex = 0;
-		// }
+	getDistributionDetailsFromNode(position) {
+		let filteredDimensionsClusters = this.getCurrentClusterDetailsFromNode(
+			this.dimensionsDatasService.dimensionsDatas.dimensionsTrees[0]
+		);
+		let selectedNode =
+			this.dimensionsDatasService.dimensionsDatas.selectedNodes[0];
+
+		let otherselectedNode =
+			this.dimensionsDatasService.dimensionsDatas.selectedNodes[1];
+
+		if (position === 1) {
+			filteredDimensionsClusters = this.getCurrentClusterDetailsFromNode(
+				this.dimensionsDatasService.dimensionsDatas.dimensionsTrees[1]
+			);
+			selectedNode =
+				this.dimensionsDatasService.dimensionsDatas.selectedNodes[1];
+			otherselectedNode =
+				this.dimensionsDatasService.dimensionsDatas.selectedNodes[0];
+		}
+
+		selectedNode.getChildrenList();
+		otherselectedNode.getChildrenList();
+
+		let distributionsGraphLabelsInit = [];
+		let distributionsGraphLabels = [];
+
+		distributionsGraphLabelsInit = filteredDimensionsClusters.map(
+			(e) => e.name
+		);
+		distributionsGraphLabels = filteredDimensionsClusters.map(
+			(e) => e.shortDescription
+		);
+
+		let [
+			matrixFreqsValues,
+			matrixValues,
+			globalMatrixValues,
+			matrixExtras,
+			matrixExpectedFreqsValues,
+		] = MatrixCanvasService.computeMatrixValues(
+			{
+				mode: "FREQUENCY",
+			},
+			this.dimensionsDatasService.dimensionsDatas.matrixDatas,
+			this.dimensionsDatasService.dimensionsDatas.contextSelection,
+			-1
+		);
+
+		const currentDataSet = new ChartDatasetVO(
+			this.dimensionsDatasService.dimensionsDatas.selectedNodes[
+				position
+			].shortDescription
+		);
 
 		let distributionsGraphDetails = {
 			datasets: [],
-			labels: []
+			labels: [],
 		};
-		const t0 = performance.now();
-		if (this.dimensionsDatas.selectedNodes.length >= 2) {
+		const currentDataSetData = [];
 
-			let currentYpart = this.dimensionsDatas.selectedNodes[0].name;
-			let currentDisplayYpart = this.dimensionsDatas.selectedNodes[0].shortDescription;
+		let filteredList;
+		if (selectedNode.isLeaf || selectedNode.isCollapsed) {
+			filteredList = selectedNode.name;
+		} else {
+			// not collapsed node remove the node of children list
+			filteredList = selectedNode.childrenList;
+			filteredList.shift();
+		}
 
-			// let otherIndex = 0;
-			if (currentIndex === 0) {
-				// otherIndex = 1;
-				currentYpart = this.dimensionsDatas.selectedNodes[1].name;
-				currentDisplayYpart = this.dimensionsDatas.selectedNodes[1].shortDescription;
-			}
+		let axisPartName = "yaxisPart";
+		if (position === 0) {
+			axisPartName = "xaxisPart";
+		}
+		let filteredotherList =
+			this.dimensionsDatasService.dimensionsDatas.matrixDatas.matrixCellDatas.map(
+				(e) => e[axisPartName]
+			);
+		filteredotherList = [...new Set(filteredotherList)]; // keep uniq
 
-			const currentDataSet = new ChartDatasetVO(currentDisplayYpart);
+		const matrixCellDataMap =
+			this.dimensionsDatasService.dimensionsDatas.matrixDatas.matrixCellDatas.reduce(
+				(map, data, index) => {
+					const key = `${data.yaxisPart}-${data.xaxisPart}`;
+					map[key] = index;
+					return map;
+				},
+				{}
+			);
 
-			const filteredDimensionsClusters = this.getCurrentClusterDetailsFromNode(this.dimensionsDatas.dimensionsTrees[currentIndex]);
+		for (let i = 0; i < otherselectedNode.childrenList.length; i++) {
+			const element = otherselectedNode.childrenList[i];
 
-			// First filter the cells by Ypart to optimize computing
-			const filteredYAxisCurrentYpart = this.dimensionsDatas.matrixDatas.matrixCellDatas.filter(e => e.yaxisPart === currentYpart);
-			const filteredXAxisCurrentYpart = this.dimensionsDatas.matrixDatas.matrixCellDatas.filter(e => e.xaxisPart === currentYpart);
+			for (let j = 0; j < filteredotherList.length; j++) {
+				const otherelement = filteredotherList[j];
+				const labelIndex =
+					distributionsGraphLabelsInit.indexOf(otherelement);
 
-			const filteredDimensionsClustersLength = filteredDimensionsClusters.length;
-			for (let i = 0; i < filteredDimensionsClustersLength; i++) {
-				const currentXpart = filteredDimensionsClusters[i].name;
-				const currentDisplayXpart = filteredDimensionsClusters[i].shortDescription;
-				distributionsGraphDetails.labels.push(currentDisplayXpart);
+				const key =
+					position === 1
+						? `${otherelement}-${element}`
+						: `${element}-${otherelement}`;
 
-				let currentDataValue = 0;
+				const cell = matrixCellDataMap[key];
 
-				let cell: CellVO;
-				if (!this.dimensionsDatas.selectedNodes[otherIndex].isLeaf && !this.dimensionsDatas.selectedNodes[otherIndex].isCollapsed) {
-					// if it is a node and it is collapsed, concat values of children leafs
-					/**
-					 * ChatGPT optimization
-					 * Save more than 30 sec on top level nodes on big files
-					 */
-					const childrenLeafList = this.dimensionsDatas.selectedNodes[otherIndex].childrenLeafList;
-					const matrixCellMap: any = new Map(this.dimensionsDatas.matrixDatas.matrixCellDatas.map(cell => [`${cell.yaxisPart}-${cell.xaxisPart}`, cell]));
-					for (let j = 0; j < childrenLeafList.length; j++) {
-						const currentChild = childrenLeafList[j];
-						cell = currentIndex === 0 ?
-							matrixCellMap.get(`${currentChild}-${currentXpart}`) :
-							matrixCellMap.get(`${currentXpart}-${currentChild}`);
-						if (cell) {
-							currentDataValue += cell.displayedFreqValue;
-						}
-					}
-				} else {
-					if (currentIndex === 0) {
-						cell = filteredYAxisCurrentYpart.find(e => e.xaxisPart === currentXpart);
+				if (cell !== undefined) {
+					if (!currentDataSetData[labelIndex]) {
+						currentDataSetData[labelIndex] = matrixValues[cell];
 					} else {
-						cell = filteredXAxisCurrentYpart.find(e => e.yaxisPart === currentXpart);
-					}
-					if (cell) {
-						currentDataValue = cell.displayedFreqValue;
+						currentDataSetData[labelIndex] += matrixValues[cell];
 					}
 				}
-				currentDataSet.data.push(currentDataValue);
 			}
-			distributionsGraphDetails.datasets.push(currentDataSet);
-
 		}
+
+		distributionsGraphDetails.labels.push(...distributionsGraphLabels);
+		currentDataSet.data.push(...currentDataSetData);
+
+		distributionsGraphDetails.datasets.push(currentDataSet);
 
 		// Init obj if error or no value
 		if (distributionsGraphDetails.labels.length === 0) {
 			distributionsGraphDetails = undefined;
 		}
-		const t1 = performance.now();
-		console.info("getDistributionDetailsFromNode took " + (t1 - t0) + " milliseconds.");
-
 		return distributionsGraphDetails;
 	}
+
 
 	getInfoPerCluster(rank: number): any {
 		const appDatas = this.appService.getDatas().datas;
