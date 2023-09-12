@@ -1,6 +1,6 @@
 <div id="project-view-comp" fxLayout="column" fxFlexFill fxLayoutAlign="start start">
 	<as-split direction="vertical" (dragEnd)="onSplitDragEnd($event, 'row')">
-		<as-split-area [size]="sizes.row[0]">
+		<as-split-area [size]="sizes?.row[0]">
 			<div fxLayout="column" fxFlexFill fxLayoutAlign="start start">
 				<div id="project-view-comp-table" fxFlexFill fxLayoutAlign="start start">
 					<kl-informations-block title="{{ 'GLOBAL.SUMMARY' | translate }}"
@@ -11,7 +11,7 @@
 				</div>
 			</div>
 		</as-split-area>
-		<as-split-area [size]="sizes.row[1]" *ngIf="projectLogsDatas">
+		<as-split-area [size]="sizes?.row[1]" *ngIf="projectLogsDatas">
 			<kl-ag-grid id="project-logs" class="variables-list" fxFlexFill [showLevelDistribution]="false"
 				[showSearch]="false" [displayCount]="false" [showLineSelection]="false" [title]="logsTitle"
 				[showColumnsSelection]="false" [inputDatas]="projectLogsDatas"
