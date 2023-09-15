@@ -84,7 +84,7 @@ export class TreeNodeVO {
 			this.matrixIndex = '';
 		}
 		if (dimension.type === 'Categorical') {
-			this.clusterCompositionSize = dimension.valueGroups[leafPosition].values.length;
+			// this.clusterCompositionSize = dimension.valueGroups[leafPosition].values.length;
 		}
 
 		// needed for each node for distribution graph

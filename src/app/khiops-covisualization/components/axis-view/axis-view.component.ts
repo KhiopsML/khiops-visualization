@@ -71,51 +71,62 @@ export class AxisViewComponent
 
 		setTimeout(() => {
 			this.sizes = this.appService.getViewSplitSizes("axisView");
+
 			this.dimensionsDatas = this.dimensionsService.getDatas();
 			this.dimensionsService.getDimensions();
-			this.dimensionsService.updateDimensions();
+			this.dimensionsService.initSelectedDimensions();
+			this.dimensionsService.saveInitialDimension();
+			this.dimensionsService.constructDimensionsTrees();
 
 			// OPTIM: Unfold auto if computer is too laggy
-			// if (this.dimensionsService.isLargeCocluster()) {
-			// 	let unfoldState =
-			// 		parseInt(
-			// 			localStorage.getItem(
-			// 				AppConfig.covisualizationCommon.GLOBAL.LS_ID +
-			// 					"DEFAULT_LIMIT_HIERARCHY"
-			// 			),
-			// 			10
-			// 		) ||
-			// 		AppConfig.covisualizationCommon.UNFOLD_HIERARCHY
-			// 			.DEFAULT_UNFOLD;
+			if (this.dimensionsService.isLargeCocluster()) {
+				let unfoldState =
+					parseInt(
+						localStorage.getItem(
+							AppConfig.covisualizationCommon.GLOBAL.LS_ID +
+								"DEFAULT_LIMIT_HIERARCHY"
+						),
+						10
+					) ||
+					AppConfig.covisualizationCommon.UNFOLD_HIERARCHY
+						.DEFAULT_UNFOLD;
 
-			// 	const collapsedNodes =
-			// 		this.treenodesService.getLeafNodesForARank(unfoldState);
-			// 	let datas =
-			// 		this.saveService.constructSavedHierarchyToSave(
-			// 			collapsedNodes
-			// 		);
+				const collapsedNodes =
+					this.treenodesService.getLeafNodesForARank(unfoldState);
+				this.treenodesService.setCollapsedNodesToSave(collapsedNodes);
+				console.log('file: axis-view.component.ts:97 ~ setTimeout ~ collapsedNodes:', collapsedNodes);
 
-			// 	this.appService.setFileDatas(datas);
+				let datas =
+					this.saveService.constructSavedHierarchyToSave(
+						collapsedNodes
+					);
 
-			// 	this.dimensionsDatas = this.dimensionsService.getDatas();
-			// 	this.dimensionsService.updateDimensions();
-			// 	this.dimensionsService.initSelectedDimensions();
+				this.appService.setCroppedFileDatas(datas);
 
-			// 	this.snackBar.open(
-			// 		this.translate.get(
-			// 			"SNACKS.UNFOLDED_DATAS_PERFORMANCE_WARNING",
-			// 			{
-			// 				count: unfoldState,
-			// 			}
-			// 		),
-			// 		this.translate.get("GLOBAL.OK"),
-			// 		{
-			// 			duration: 4000,
-			// 			panelClass: "warning",
-			// 			verticalPosition: "bottom",
-			// 		}
-			// 	);
-			// }
+				this.dimensionsDatas = this.dimensionsService.getDatas();
+				this.dimensionsService.getDimensions();
+				this.dimensionsService.initSelectedDimensions();
+				this.dimensionsService.saveInitialDimension();
+				this.dimensionsService.constructDimensionsTrees();
+				this.dimensionsService.getMatrixDatas();
+
+				this.snackBar.open(
+					this.translate.get(
+						"SNACKS.UNFOLDED_DATAS_PERFORMANCE_WARNING",
+						{
+							count: unfoldState,
+						}
+					),
+					this.translate.get("GLOBAL.OK"),
+					{
+						duration: 4000,
+						panelClass: "warning",
+						verticalPosition: "bottom",
+					}
+				);
+			} else {
+				this.dimensionsService.getMatrixDatas();
+			}
 			this.loadingView = false;
 
 			this.viewsLayout = this.appService.initViewsLayout(

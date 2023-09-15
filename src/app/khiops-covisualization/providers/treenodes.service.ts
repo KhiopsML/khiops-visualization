@@ -59,7 +59,7 @@ export class TreenodesService {
 			const nodesVO: any[] = UtilsService.fastFilter(this.dimensionsDatas.dimensionsClusters[i], e => {
 				return rank <= e.hierarchicalRank && !e.isLeaf;
 			});
-			collapsedNodes[this.dimensionsDatas.dimensions[i].name] = nodesVO.map(e=>e.cluster);
+			collapsedNodes[this.dimensionsDatas.dimensions[i].name] = nodesVO.map(e => e.cluster);
 		}
 		return collapsedNodes
 	}
@@ -71,7 +71,7 @@ export class TreenodesService {
 	initSavedUnfoldRank() {
 		//Initialize unfold rank if set into json
 		const appDatas = this.appService.getDatas().datas;
-		const savedUnfoldRank = appDatas.savedDatas ?.unfoldHierarchyState
+		const savedUnfoldRank = appDatas.savedDatas && appDatas.savedDatas.unfoldHierarchyState
 		savedUnfoldRank && this.setSelectedUnfoldHierarchy(savedUnfoldRank);
 	}
 
@@ -298,6 +298,10 @@ export class TreenodesService {
 		return nodeVO;
 	}
 
+	setCollapsedNodesToSave(collapsedNodesToSave) {
+		this.collapsedNodesToSave = collapsedNodesToSave
+	}
+
 	getSelectedNodesToSave() {
 		const selectedNodes = _.cloneDeep(this.getSelectedNodes());
 		const selectedNodesLength = selectedNodes.length;
@@ -361,7 +365,7 @@ export class TreenodesService {
 	}
 
 	getUnfoldHierarchy() {
-		return this.dimensionsDatas.hierarchyDatas ?.selectedUnfoldHierarchy || 0;
+		return this.dimensionsDatas.hierarchyDatas && this.dimensionsDatas.hierarchyDatas.selectedUnfoldHierarchy || 0;
 	}
 
 	setSelectedUnfoldHierarchy(selectedUnfoldHierarchy) {
@@ -537,94 +541,94 @@ export class TreenodesService {
 	collapseNode(dimensionName, nodeName, emitEvent = true, keepCurrentUnfolding = false) {
 		const t0 = performance.now();
 
-		// Find current dim position
-		const currentIndex: any = this.dimensionsDatas.selectedDimensions.findIndex(e => {
-			return dimensionName === e.name;
-		});
+		// // Find current dim position
+		// const currentIndex: any = this.dimensionsDatas.selectedDimensions.findIndex(e => {
+		// 	return dimensionName === e.name;
+		// });
 
-		if (currentIndex === 0 || currentIndex === 1) { // more than 2 is context
-			if (this.dimensionsDatas.selectedNodes[currentIndex] || keepCurrentUnfolding) {
+		// if (currentIndex === 0 || currentIndex === 1) { // more than 2 is context
+		// 	if (this.dimensionsDatas.selectedNodes[currentIndex] || keepCurrentUnfolding) {
 
-				let newMatrixCellDatas = this.dimensionsDatas.matrixDatas.matrixCellDatas;
+		// 		let newMatrixCellDatas = this.dimensionsDatas.matrixDatas.matrixCellDatas;
 
-				// get Node VO from name
-				const nodeVO: TreeNodeVO = this.dimensionsDatas.dimensionsClusters[currentIndex].find(e => {
-					return nodeName === e.name;
-				});
+		// 		// get Node VO from name
+		// 		const nodeVO: TreeNodeVO = this.dimensionsDatas.dimensionsClusters[currentIndex].find(e => {
+		// 			return nodeName === e.name;
+		// 		});
 
-				if (nodeVO) {
+		// 		if (nodeVO) {
 
-					// Set iscollapsed and update children lists
-					if (keepCurrentUnfolding) {
-						nodeVO.isUnfoldedByDefault = true;
-					}
+		// 			// Set iscollapsed and update children lists
+		// 			if (keepCurrentUnfolding) {
+		// 				nodeVO.isUnfoldedByDefault = true;
+		// 			}
 
-					nodeVO.isCollapsed = true;
-					nodeVO.getChildrenList();
+		// 			nodeVO.isCollapsed = true;
+		// 			nodeVO.getChildrenList();
 
-					// Pre filter the cells to optim perfs
-					const filteredCells = [];
-					const filteredOtherCells = [];
-					const newMatrixCellDatasLength = newMatrixCellDatas.length;
-					for (let i = 0; i < newMatrixCellDatasLength; i++) {
-						const e = newMatrixCellDatas[i];
-						if (currentIndex === 0) {
-							if (nodeVO.childrenList.includes(e.xaxisPart)) {
-								filteredCells.push(e);
-							} else {
-								filteredOtherCells.push(e);
-							}
-						} else {
-							if (nodeVO.childrenList.includes(e.yaxisPart)) {
-								filteredCells.push(e);
-							} else {
-								filteredOtherCells.push(e);
-							}
-						}
-					}
+		// 			// Pre filter the cells to optim perfs
+		// 			const filteredCells = [];
+		// 			const filteredOtherCells = [];
+		// 			const newMatrixCellDatasLength = newMatrixCellDatas.length;
+		// 			for (let i = 0; i < newMatrixCellDatasLength; i++) {
+		// 				const e = newMatrixCellDatas[i];
+		// 				if (currentIndex === 0) {
+		// 					if (nodeVO.childrenList.includes(e.xaxisPart)) {
+		// 						filteredCells.push(e);
+		// 					} else {
+		// 						filteredOtherCells.push(e);
+		// 					}
+		// 				} else {
+		// 					if (nodeVO.childrenList.includes(e.yaxisPart)) {
+		// 						filteredCells.push(e);
+		// 					} else {
+		// 						filteredOtherCells.push(e);
+		// 					}
+		// 				}
+		// 			}
 
-					let cellsToConcat: CellVO[] = [];
+		// 			let cellsToConcat: CellVO[] = [];
 
-					const childrenListLength = nodeVO.childrenList.length;
-					for (let i = 0; i < childrenListLength; i++) {
-						const child = nodeVO.childrenList[i];
-						const leafs: any[] = UtilsService.fastFilter(filteredCells, e => {
-							if (currentIndex === 0) {
-								return e.xaxisPart === child;
-							} else {
-								return e.yaxisPart === child;
-							}
-						});
-						// Get the cells to concat
-						cellsToConcat = this.concatCells(cellsToConcat, leafs, currentIndex, nodeVO);
-					}
+		// 			const childrenListLength = nodeVO.childrenList.length;
+		// 			for (let i = 0; i < childrenListLength; i++) {
+		// 				const child = nodeVO.childrenList[i];
+		// 				const leafs: any[] = UtilsService.fastFilter(filteredCells, e => {
+		// 					if (currentIndex === 0) {
+		// 						return e.xaxisPart === child;
+		// 					} else {
+		// 						return e.yaxisPart === child;
+		// 					}
+		// 				});
+		// 				// Get the cells to concat
+		// 				cellsToConcat = this.concatCells(cellsToConcat, leafs, currentIndex, nodeVO);
+		// 			}
 
-					// Merge new cells with filtered other cells array
-					newMatrixCellDatas = [];
-					newMatrixCellDatas = UtilsService.fastConcat(filteredOtherCells, cellsToConcat);
+		// 			// Merge new cells with filtered other cells array
+		// 			newMatrixCellDatas = [];
+		// 			newMatrixCellDatas = UtilsService.fastConcat(filteredOtherCells, cellsToConcat);
 
-					this.dimensionsDatas.matrixDatas.matrixCellDatas = newMatrixCellDatas;
-					if (emitEvent) {
-						this.eventsService.emitTreeCollapseChanged(dimensionName);
-					}
-				}
-			}
-		} else {
-			// context case : do not concat values
-			// get Node VO from name
-			const nodeVO: TreeNodeVO = this.dimensionsDatas.dimensionsClusters[currentIndex].find(e => {
-				return nodeName === e.name;
-			});
-			nodeVO.isCollapsed = true;
-			if (emitEvent) {
-				this.eventsService.emitTreeCollapseChanged(dimensionName);
-			}
+		// 			this.dimensionsDatas.matrixDatas.matrixCellDatas = newMatrixCellDatas;
+		// 			if (emitEvent) {
+		// 				this.eventsService.emitTreeCollapseChanged(dimensionName);
+		// 			}
+		// 		}
+		// 	}
+		// } else {
+		// 	// context case : do not concat values
+		// 	// get Node VO from name
+		// 	const nodeVO: TreeNodeVO = this.dimensionsDatas.dimensionsClusters[currentIndex].find(e => {
+		// 		return nodeName === e.name;
+		// 	});
+		// 	nodeVO.isCollapsed = true;
+		// 	if (emitEvent) {
+		// 		this.eventsService.emitTreeCollapseChanged(dimensionName);
+		// 	}
 
-			// Important to get children list for contexts when saving hierarchy as
-			nodeVO.getChildrenList();
-		}
-		const t1 = performance.now();
-		// console.info("collapseNode took " + (t1 - t0) + " milliseconds.");
+		// 	// Important to get children list for contexts when saving hierarchy as
+		// 	nodeVO.getChildrenList();
+		// }
+		// const t1 = performance.now();
+		// // console.info("collapseNode took " + (t1 - t0) + " milliseconds.");
 
 		this.updateCollapsedNodesToSave(dimensionName, nodeName, 1);
 	}

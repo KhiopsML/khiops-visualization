@@ -110,7 +110,9 @@ export class HierarchySelectComponent implements OnInit, OnChanges {
 			this.dimensionsService.updateSelectedDimension(dimension, this.position);
 
 			// Recompute datas
-			this.dimensionsService.updateDimensions();
+			this.dimensionsService.saveInitialDimension();
+			this.dimensionsService.constructDimensionsTrees();
+			this.dimensionsService.getMatrixDatas();
 
 			this.treenodesService.collapseNodesSaved();
 		});

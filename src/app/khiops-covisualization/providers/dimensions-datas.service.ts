@@ -73,8 +73,10 @@ export class DimensionsDatasService {
 	}
 
 	isLargeCocluster() {
-		const currentSize = (this.dimensionsDatas.dimensions.map(e => e.parts).reduce((a, b) => a * b))
-		return this.dimensionsDatas.dimensions.length * 2 < currentSize;
+		// const currentSize = (this.dimensionsDatas.dimensions.map(e => e.parts).reduce((a, b) => a * b))
+		// return this.dimensionsDatas.dimensions.length * 2 < currentSize;
+		const appDatas = this.appService.getDatas().datas;
+		return appDatas.coclusteringReport.summary.cells > 10000 // to debug
 	}
 
 	isContextDimensions(): boolean {
@@ -187,14 +189,6 @@ export class DimensionsDatasService {
 		}
 	}
 
-	updateDimensions(retrieveMatrixDatas = true): any {
-		this.saveInitialDimension();
-		this.constructDimensionsTrees();
-		if (retrieveMatrixDatas) {
-			this.getMatrixDatas();
-		}
-	}
-
 	initSelectedDimensions() {
 		this.dimensionsDatas.selectedDimensions = [];
 		this.dimensionsDatas.contextDimensions = [];
@@ -250,7 +244,8 @@ export class DimensionsDatasService {
 	constructDimensionsTrees() {
 
 		this.dimensionsDatas.dimensionsTrees = [];
-		const appDatas = this.appService.getDatas().datas;
+		const appDatas = this.appService.getInitialDatas().datas;
+		const appDatasCropped = this.appService.getDatas().datas;
 
 		// At launch check if there are collapsed nodes into input json file
 		const collapsedNodes = this.appService.getSavedDatas('collapsedNodes');
@@ -352,8 +347,11 @@ export class DimensionsDatasService {
 			zDimensionClusters.push(this.dimensionsDatas.dimensionsClusters[i]);
 		}
 
-		const xDimensionLeafs: any[] = UtilsService.fastFilter(this.dimensionsDatas.dimensionsClusters[0], item => item.isLeaf === true);
-		const yDimensionLeafs: any[] = UtilsService.fastFilter(this.dimensionsDatas.dimensionsClusters[1], item => item.isLeaf === true);
+		// const xDimensionLeafs: any[] = UtilsService.fastFilter(this.dimensionsDatas.dimensionsClusters[0], item => item.isLeaf === true);
+		// const yDimensionLeafs: any[] = UtilsService.fastFilter(this.dimensionsDatas.dimensionsClusters[1], item => item.isLeaf === true);
+
+		const xDimensionLeafs: any[] = this.dimensionsDatas.dimensions[0].valueGroups
+		const yDimensionLeafs: any[] =  this.dimensionsDatas.dimensions[1].valueGroups
 
 		// Get dimensions parts
 		const dimensionParts = this.dimensionsDatas.selectedDimensions.map(e => e.parts);
@@ -396,10 +394,14 @@ export class DimensionsDatasService {
 			xDimension,
 			yDimension,
 			zDimension,
-			xDimensionLeafs.map(e => e.name),
-			yDimensionLeafs.map(e => e.name),
-			xDimensionLeafs.map(e => e.shortDescription),
-			yDimensionLeafs.map(e => e.shortDescription),
+			// xDimensionLeafs.map(e => e.name),
+			// yDimensionLeafs.map(e => e.name),
+			// xDimensionLeafs.map(e => e.shortDescription),
+			// yDimensionLeafs.map(e => e.shortDescription),
+			xDimensionLeafs.map(e => e.cluster),
+			yDimensionLeafs.map(e => e.cluster),
+			xDimensionLeafs.map(e => e.cluster),
+			yDimensionLeafs.map(e => e.cluster),
 			cellFrequencies,
 			undefined, // cellInterests only for KV
 			undefined, // cellTargetFrequencies only for KV

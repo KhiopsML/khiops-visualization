@@ -150,8 +150,10 @@ export class SaveService {
 		t1 = performance.now();
 		// console.log("updateSummariesCells " + (t1 - t0) + " milliseconds.");
 
-		// Remove collapsed nodes and selected nodes because they have been reduced
-		delete datasToSave.savedDatas.collapsedNodes;
+		if (!collapsedNodesInput) {
+			// Remove collapsed nodes and selected nodes because they have been reduced
+			delete datasToSave.savedDatas.collapsedNodes;
+		}
 		delete datasToSave.savedDatas.selectedNodes;
 		console.log('file: save.service.ts:114 ~ constructSavedHierarchyToSave ~ datasToSave:', datasToSave);
 		return datasToSave;
@@ -354,6 +356,7 @@ export class SaveService {
 	}
 
 	truncateJsonCells(CC) {
+	console.log('file: save.service.ts:359 ~ truncateJsonCells ~ CC:', CC);
 
 		const CI = _.cloneDeep(this.appService.getInitialDatas().datas);
 
