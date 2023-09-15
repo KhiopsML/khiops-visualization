@@ -2,7 +2,10 @@
 	[ngClass]="{'fullscreen': isFullscreen}">
 	<div id="target-variable-stats-header" fxLayout="row" fxLayoutAlign="start center" class="comp-header">
 		<div fxLayout="row" fxLayoutAlign="start center">
-			<h1>{{ title }}</h1>
+			<h1 fxLayout="row" fxLayoutAlign="start center">
+				<mat-icon>show_chart</mat-icon>
+				{{ title }}
+			</h1>
 		</div>
 		<kl-legend fxFlex [inputDatas]="inputDatas" [type]="'chart-nd'" [colorSet]="colorSet"></kl-legend>
 		<kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">

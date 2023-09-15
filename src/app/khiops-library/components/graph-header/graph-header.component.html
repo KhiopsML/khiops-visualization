@@ -1,10 +1,6 @@
 <div id="graph-header-comp" fxFlexFill fxLayout="row" fxLayoutAlign="start center" class="mat-elevation-z1">
 	<h1 fxLayout="column" fxLayoutAlign="start start" fxFlex [ngClass]="{'small-title': smallTitle === true}">
 		<span>{{ title || selectedVariable && selectedVariable.name }}</span>
-		<span class="limit-warning" *ngIf="selectedVariable && selectedVariable.parts > barChartLimit" fxLayoutAlign="start center">
-			<mat-icon fxLayoutAlign="center center">warning</mat-icon>
-			{{ 'GLOBAL.TOO_MANY_VALUES' | translate }}
-		</span>
 	</h1>
 	<div id="graph-header-tools" *ngIf="!hideScale" fxLayout="column" fxLayoutAlign="center center">
 		<h2>{{ 'GLOBAL.SCALE' | translate }}</h2>

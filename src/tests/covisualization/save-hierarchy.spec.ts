@@ -42,6 +42,7 @@ describe("Save hierarchy : Categorical [sample3.json]", () => {
 
 		dimensionsDatasService.initialize();
 		dimensionsDatasService.getDimensions();
+		dimensionsDatasService.initSelectedDimensions();
 		dimensionsDatasService.constructDimensionsTrees();
 
 		treenodesService.initialize();
@@ -129,6 +130,7 @@ describe("Save hierarchy : Numerical [sample0.json]", () => {
 
 		dimensionsDatasService.initialize();
 		dimensionsDatasService.getDimensions();
+		dimensionsDatasService.initSelectedDimensions();
 		dimensionsDatasService.constructDimensionsTrees();
 
 		treenodesService.initialize();

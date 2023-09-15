@@ -2,43 +2,53 @@ import { UtilsService } from "@khiops-library/providers/utils.service";
 
 describe("Library", () => {
 	describe("UtilsService.getPrecisionNumber", function () {
-		it("should return 1000000 for input 1000000 and numberPrecision 2", function () {
+		it("1should return the number with the specified number of decimal places", () => {
+			const result = UtilsService.getPrecisionNumber(123.456, 2);
+			expect(result).toBe("123.46");
+		});
+		it("2should return the number with the specified number of decimal places", () => {
+			const result = UtilsService.getPrecisionNumber(123.456, 3);
+			expect(result).toBe("123.456");
+		});
+		it("3should return 1000000 for input 1000000 and numberPrecision 2", function () {
 			expect(UtilsService.getPrecisionNumber(1000000, 2)).toEqual(
 				"1000000"
 			);
 		});
 		it("should return 10000 for input 10000.12345 and numberPrecision 2", function () {
 			expect(UtilsService.getPrecisionNumber(10000.12345, 2)).toEqual(
-				"10000"
+				"10000.12"
 			);
 		});
 		it("should return 1.32 for input 1.3212132 and numberPrecision 3", function () {
 			expect(UtilsService.getPrecisionNumber(1.3212132, 3)).toEqual(
-				"1.3"
+				"1.321"
 			);
 		});
 		it("should return 1.3212 for input 1.3212132 and numberPrecision 5", function () {
 			expect(UtilsService.getPrecisionNumber(1.3212132, 5)).toEqual(
-				"1.321"
+				"1.32121"
 			);
 		});
 		it("should return 0.0000000003215 for input 0.00000000032156464 and numberPrecision 5", function () {
 			expect(
-				UtilsService.getPrecisionNumber(0.00000000032156464, 5)
-			).toEqual("3.2156e-10");
+				UtilsService.getPrecisionNumber(0.00000000032156464, 4)
+			).toEqual("0.0000000003215");
 		});
-		it("should return 0.000040946 for input 0.00000000032156464 and numberPrecision 4", function () {
-			expect(
-				UtilsService.getPrecisionNumber(0.000040946, 4)
-			).toEqual("0.00004095");
-		});
-		it("should return 14.7895 for input 14.78954 and numberPrecision 5", function () {
-			expect(UtilsService.getPrecisionNumber(14.78954, 5)).toEqual(
-				"14.79"
+		it("should return 0.000040946 for input 0.000040946 and numberPrecision 4", function () {
+			expect(UtilsService.getPrecisionNumber(0.000040946, 4)).toEqual(
+				"0.00004094"
 			);
 		});
-		it("should return 0.79 for input 0.78954 and numberPrecision 3", function () {
-			expect(UtilsService.getPrecisionNumber(0.78954, 3)).toEqual("0.79");
+		it("should return 14.7895 for input 14.78954 and numberPrecision 4", function () {
+			expect(UtilsService.getPrecisionNumber(14.78954, 4)).toEqual(
+				"14.7895"
+			);
+		});
+		it("should return 0.789 for input 0.78954 and numberPrecision 3", function () {
+			expect(UtilsService.getPrecisionNumber(0.78954, 3)).toEqual(
+				"0.79"
+			);
 		});
 		it("should return 0.0000111 for input 0.000011111111111111111 and numberPrecision 5", function () {
 			expect(
@@ -47,6 +57,26 @@ describe("Library", () => {
 		});
 		it("should return aaa for input aaa", function () {
 			expect(UtilsService.getPrecisionNumber("aaa")).toEqual("aaa");
+		});
+		it("should return -14.7895 for input -14.78954 and numberPrecision 4", function () {
+			expect(UtilsService.getPrecisionNumber(-14.78954, 4)).toEqual(
+				"-14.7895"
+			);
+		});
+		it("should return -0.0789 for input -0.078954 and numberPrecision 3", function () {
+			expect(UtilsService.getPrecisionNumber(-0.078954, 3)).toEqual(
+				"-0.0789"
+			);
+		});
+		it("should return -0.79 for input -0.78954 and numberPrecision 3", function () {
+			expect(UtilsService.getPrecisionNumber(-0.78954, 3)).toEqual(
+				"-0.79"
+			);
+		});
+		it("should return -0.0000111 for input -0.000011111111111111111 and numberPrecision 5", function () {
+			expect(
+				UtilsService.getPrecisionNumber(-0.000011111111111111111, 5)
+			).toEqual("-0.000011111");
 		});
 	});
 

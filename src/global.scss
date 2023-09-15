@@ -56,7 +56,7 @@
 // 	}
 // }
 
-button{
+button {
 	box-shadow: none !important;
 }
 
@@ -169,9 +169,11 @@ split-gutter {
 
 .mat-tab-header {
 	background-color: var(--bgColor) !important;
-	height: 58px !important;
+	border-bottom: 1px solid var(--bgColor-10) !important;
+	height: 68px !important;
 	width: 100% !important;
 	z-index: 1000;
+	box-shadow: none !important;
 }
 
 .mat-tab-body-wrapper {
@@ -192,7 +194,7 @@ mat-tab-header {
 }
 
 .mat-tab-label {
-	height: 58px !important;
+	height: 68px !important;
 	// text-transform: uppercase;
 	margin: 0 20px;
 	opacity: 0.7 !important;
@@ -234,9 +236,20 @@ em {
 	font-style: normal;
 }
 
+.mat-menu-trigger {
+	span {
+		em {
+			transform: scaleX(2);
+			display: inline-block;
+			font-size: 0.8em;
+			font-family: verdana;
+		}
+	}
+}
+
 h1 {
-	margin: 1.2em 0em 0.8em 1em;
-	font-size: 1em;
+	margin: 1em 0em 0.8em 1em;
+	font-size: 1.05em;
 	font-weight: 400;
 
 	em {
@@ -261,7 +274,7 @@ h1.small-title {
 }
 
 h2 {
-	margin: 0em 1em 0 2em;
+	margin: 0em 1em 0 1.1em;
 	font-size: 1em;
 	font-weight: 400;
 	color: var(--primary-10);
@@ -395,8 +408,8 @@ app-home-layout {
 .mat-ink-bar {
 	height: 3px !important;
 	transition: 100ms cubic-bezier(0.35, 0, 0.25, 1) !important;
-	border-top-left-radius: 3px !important;
-	border-top-right-radius: 3px !important;
+	// border-top-left-radius: 3px !important;
+	// border-top-right-radius: 3px !important;
 }
 
 .variables-list-container {
@@ -412,10 +425,12 @@ app-home-layout {
 
 .legend {
 	.square {
-		height: 14px;
-		width: 14px;
+		height: 12px;
+		width: 12px;
 		margin-right: 5px;
 		border-radius: 3px;
+		box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+		border: 1px solid white;
 	}
 }
 
@@ -542,7 +557,7 @@ mat-button-toggle-group {
 }
 
 .as-split-gutter {
-	flex-basis: 9px !important;
+	flex-basis: 7px !important;
 }
 
 .as-split-gutter {
@@ -579,7 +594,7 @@ ag-grid-angular {
 }
 
 .ag-theme-balham .ag-row:hover:not(.ag-row-selected) {
-	background-color: var(--bgColor-40) !important;
+	background-color: var(--bgColor-30) !important;
 }
 
 .ag-paging-panel {
@@ -759,10 +774,10 @@ canvas:focus {
 	position: fixed !important;
 	z-index: 10000 !important;
 	width: calc(100% - 10px) !important;
-	height: calc(100% - 70px) !important;
+	height: calc(100% - 80px) !important;
 	min-width: calc(100% - 10px) !important;
-	min-height: calc(100% - 70px) !important;
-	margin: 63px 5px 5px 5px;
+	min-height: calc(100% - 80px) !important;
+	margin: 74px 5px 5px 5px;
 	left: 0 !important;
 	top: 0 !important;
 	transition: all 0s linear !important;
@@ -786,25 +801,27 @@ canvas:focus {
 .ag-paging-page-summary-panel .ag-disabled {
 	filter: opacity(0.5);
 }
-
+.ag-theme-balham .ag-paging-page-summary-panel span {
+	margin-top: -1px;
+}
 .ag-theme-balham .ag-icon-first:before {
 	// content: "\21E4";
-	content: url("data:image/svg+xml, %3Csvg%20width%3D%2220px%22%20height%3D%2220px%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M15.785%206.36699L10.095%2010.667C9.72311%2010.9319%209.50229%2011.3604%209.50229%2011.817C9.50229%2012.2736%209.72311%2012.702%2010.095%2012.967L15.785%2017.667C16.2658%2018.0513%2016.9185%2018.1412%2017.4853%2017.9012C18.052%2017.6611%2018.4416%2017.1297%2018.5%2016.517V7.51699C18.4416%206.90427%2018.052%206.37286%2017.4853%206.1328C16.9185%205.89274%2016.2658%205.98265%2015.785%206.36699Z%22%20stroke%3D%22%23999999%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Cpath%20d%3D%22M6.5%206.01697L6.5%2018.017%22%20stroke%3D%22%23999999%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E");
+	content: url("data:image/svg+xml, %3Csvg%20width%3D%2218px%22%20height%3D%2218px%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M15.785%206.36699L10.095%2010.667C9.72311%2010.9319%209.50229%2011.3604%209.50229%2011.817C9.50229%2012.2736%209.72311%2012.702%2010.095%2012.967L15.785%2017.667C16.2658%2018.0513%2016.9185%2018.1412%2017.4853%2017.9012C18.052%2017.6611%2018.4416%2017.1297%2018.5%2016.517V7.51699C18.4416%206.90427%2018.052%206.37286%2017.4853%206.1328C16.9185%205.89274%2016.2658%205.98265%2015.785%206.36699Z%22%20stroke%3D%22%23999999%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Cpath%20d%3D%22M6.5%206.01697L6.5%2018.017%22%20stroke%3D%22%23999999%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E");
 }
 
 .ag-theme-balham .ag-icon-previous:before {
 	// content: "\2190";
-	content: url("data:image/svg+xml, %3Csvg%20width%3D%2224px%22%20height%3D%2224px%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M15%207L10%2012L15%2017%22%20stroke%3D%22%23999999%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E%0A");
+	content: url("data:image/svg+xml, %3Csvg%20width%3D%2222px%22%20height%3D%2222px%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M15%207L10%2012L15%2017%22%20stroke%3D%22%23999999%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E%0A");
 }
 
 .ag-theme-balham .ag-icon-next:before {
 	// content: "\2192";
-	content: url("data:image/svg+xml,%3Csvg%20width%3D%2224px%22%20height%3D%2224px%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M10%207L15%2012L10%2017%22%20stroke%3D%22%23999999%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E%0A");
+	content: url("data:image/svg+xml,%3Csvg%20width%3D%2222px%22%20height%3D%2222px%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M10%207L15%2012L10%2017%22%20stroke%3D%22%23999999%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E%0A");
 }
 
 .ag-theme-balham .ag-icon-last:before {
 	// content: "\21E5";
-	content: url("data:image/svg+xml, 	%3Csvg%20width%3D%2220px%22%20height%3D%2220px%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M8.715%206.36694L14.405%2010.6669C14.7769%2010.9319%2014.9977%2011.3603%2014.9977%2011.8169C14.9977%2012.2736%2014.7769%2012.702%2014.405%2012.9669L8.715%2017.6669C8.23425%2018.0513%207.58151%2018.1412%207.01475%2017.9011C6.44799%2017.6611%206.05842%2017.1297%206%2016.5169V7.51694C6.05842%206.90422%206.44799%206.37281%207.01475%206.13275C7.58151%205.89269%208.23425%205.9826%208.715%206.36694Z%22%20stroke%3D%22%23999999%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Cpath%20d%3D%22M18%206.01697V18.017%22%20stroke%3D%22%23999999%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E");
+	content: url("data:image/svg+xml, 	%3Csvg%20width%3D%2218px%22%20height%3D%2218px%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M8.715%206.36694L14.405%2010.6669C14.7769%2010.9319%2014.9977%2011.3603%2014.9977%2011.8169C14.9977%2012.2736%2014.7769%2012.702%2014.405%2012.9669L8.715%2017.6669C8.23425%2018.0513%207.58151%2018.1412%207.01475%2017.9011C6.44799%2017.6611%206.05842%2017.1297%206%2016.5169V7.51694C6.05842%206.90422%206.44799%206.37281%207.01475%206.13275C7.58151%205.89269%208.23425%205.9826%208.715%206.36694Z%22%20stroke%3D%22%23999999%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Cpath%20d%3D%22M18%206.01697V18.017%22%20stroke%3D%22%23999999%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E");
 }
 
 /**

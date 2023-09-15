@@ -355,36 +355,32 @@ export class SaveService {
 
 	}
 
+	/**
+	 * ChatGPT optimization
+	 */
 	truncateJsonCells(CC) {
-	console.log('file: save.service.ts:359 ~ truncateJsonCells ~ CC:', CC);
-
-		const CI = _.cloneDeep(this.appService.getInitialDatas().datas);
+		const CI = {
+			...this.appService.getInitialDatas().datas
+		};
 
 		const transitionMatrix = [];
 
 		// Step 1: we build the transition matrix which makes it possible to pass from the part indices of the CI to the part indices of the CC
 		for (let k = 0; k < CI.coclusteringReport.dimensionHierarchies.length; k++) {
-
 			let initialVariable;
 			let currentVariable;
 			if (CC.coclusteringReport.dimensionPartitions[k].type === 'Numerical') {
-				initialVariable = CI.coclusteringReport.dimensionPartitions[
-					k
-				].intervals.map((e) => e.bounds);
-				currentVariable = CC.coclusteringReport.dimensionPartitions[
-					k
-				].intervals.map((e) => e.bounds);
+				initialVariable = CI.coclusteringReport.dimensionPartitions[k].intervals.map((e) => e.bounds);
+				currentVariable = CC.coclusteringReport.dimensionPartitions[k].intervals.map((e) => e.bounds);
 			} else {
-				initialVariable = CI.coclusteringReport.dimensionPartitions[
-					k
-				].valueGroups.map((e) => e.values);
-				currentVariable = CC.coclusteringReport.dimensionPartitions[
-					k
-				].valueGroups.map((e) => e.values);
+				initialVariable = CI.coclusteringReport.dimensionPartitions[k].valueGroups.map((e) => e.values);
+				currentVariable = CC.coclusteringReport.dimensionPartitions[k].valueGroups.map((e) => e.values);
 			}
+
 			// Loop the parts of the CI variable: for each part, we try to associate its index in the partition of the initial coclustering with its index in the partition of the final coclustering. We use the fact that the partitions are nested and that their order does not change: an "initial" part is either kept as it is in the current coclustering or included in a folded part in the current coclustering
 			let currentP = 0; // initialize the index of the part of the current variable
 			let currentPart = currentVariable[currentP]; // we initialize the current part
+
 
 			// parcours des parties initiales
 			for (let initialP = 0; initialP < initialVariable.length; initialP++) {
@@ -394,88 +390,62 @@ export class SaveService {
 				}
 
 				if (CC.coclusteringReport.dimensionPartitions[k].type === 'Numerical') {
-					while (
-						!(
-							initialPart[0] >=
-							currentVariable[currentP][0] &&
-							initialPart[1] <=
-							currentVariable[currentP][1]
-						)
-					) {
-						currentPart = currentVariable[currentP];
-						currentP = currentP + 1;
+					while (!(initialPart[0] >= currentVariable[currentP][0] && initialPart[1] <= currentVariable[currentP][1])) {
+						currentPart = currentVariable[++currentP];
 					}
 				} else {
 					// The inclusion test consists of going through the modalities of the initial part
 					// and check that they are all in the list of modalities of the current part.
-					if (
-
-						!(
-							currentPart.includes(initialPart[0])
-						)
-					) {
-						currentP = currentP + 1;
-						currentPart = currentVariable[currentP];
+					if (!currentPart.includes(initialPart[0])) {
+						currentPart = currentVariable[++currentP];
 					}
 				}
 
 				transitionMatrix[k][initialP] = currentP;
 			}
 		}
-		// console.log('transitionMatrix', transitionMatrix);
 
 		// Step 2: build the list of cells in the current coclustering by calculating the indexes of these cells and their resGroup
-		let indexesCCList = [];
+		let indexesCCSet = new Set();
 		let resGroup = [];
 
 		// Browse the cells of the initial coclustering json file ("cellPartIndexes" field)
 		for (let i = 0; i < CI.coclusteringReport.cellPartIndexes.length; i++) {
-			let index_initiaux = CI.coclusteringReport.cellPartIndexes[i]; // Read indexes in the json file
+			let initial_indexes = CI.coclusteringReport.cellPartIndexes[i];
 			let currentIndexes = [];
-			for (
-				let k = 0; k < CI.coclusteringReport.dimensionHierarchies.length; k++
-			) {
+
+			for (let k = 0; k < CI.coclusteringReport.dimensionHierarchies.length; k++) {
 				// Calculation of indexes from the transition matrix calculated in step 1
-				currentIndexes.push(transitionMatrix[k][index_initiaux[k]]);
+				currentIndexes.push(transitionMatrix[k][initial_indexes[k]]);
 			}
-			if (
-				indexesCCList.indexOf(currentIndexes.toString()) !== -1
-			) {
-				const index = resGroup.findIndex(
-					(e) => e.key === currentIndexes.toString()
-				);
-				resGroup[index].value =
-					resGroup[index].value + CI.coclusteringReport.cellFrequencies[i];
+
+			let currentIndexesString = currentIndexes.join(',');
+			if (indexesCCSet.has(currentIndexesString)) {
+				const index = resGroup.findIndex((e) => e.key === currentIndexesString);
+				resGroup[index].value += CI.coclusteringReport.cellFrequencies[i];
 			} else {
 				resGroup.push({
-					key: currentIndexes.toString(),
+					key: currentIndexesString,
 					value: CI.coclusteringReport.cellFrequencies[i],
 				});
-				indexesCCList.push(currentIndexes.toString());
+				indexesCCSet.add(currentIndexesString);
 			}
 		}
 
 		resGroup.sort(function (a, b) {
 			if (a.value === b.value) {
-				return (
-					parseFloat(a.key.replaceAll(',', '')) -
-					parseFloat(b.key.replaceAll(',', ''))
-				);
+				return a.key.localeCompare(b.key, undefined, {
+					numeric: true
+				});
 			}
 			return b.value - a.value;
 		});
-		// console.table(resGroup);
+
 		CC.coclusteringReport.cellFrequencies = resGroup.map(e => e.value);
-		CC.coclusteringReport.cellPartIndexes = resGroup.map(e => e.key.split(','));
-
 		// Convert cellPartIndexes strings to integers
-		for (let k = 0; k < CC.coclusteringReport.cellPartIndexes.length; k++) {
-			CC.coclusteringReport.cellPartIndexes[k] = CC.coclusteringReport.cellPartIndexes[k].map(function (x) {
-				return parseInt(x, 10);
-			});
-		}
-		return CC;
+		CC.coclusteringReport.cellPartIndexes = resGroup.map(e => e.key.split(/\s*,\s*/).map(Number));
 
+		return CC;
 	}
 
 }

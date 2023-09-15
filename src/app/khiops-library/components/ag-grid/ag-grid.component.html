@@ -17,7 +17,7 @@
 				<span *ngIf="!isSmallDiv && !searchFormVisible">{{ levelDistributionTitle }}</span>
 				<mat-icon *ngIf="isSmallDiv || searchFormVisible" fxFlexFill fxLayoutAlign="center center" (click)="removeSearch()" matTooltipPosition="above"  matTooltip="{{ 'GLOBAL.LEVEL_DISTRIBUTION' | translate }}" >show_chart</mat-icon>
 			</button>
-			<button *ngIf="showDataTypeSelection" attr.aria-label="{{ 'ARIA.AG_GRID.CHANGE_DATAS_OPTION' | translate }}" mat-stroked-button color="primary" [matMenuTriggerFor]="dataOptionsTypes">{{ dataOptions.selected | translate }} <em>&#9698;</em></button>
+			<button *ngIf="showDataTypeSelection" attr.aria-label="{{ 'ARIA.AG_GRID.CHANGE_DATAS_OPTION' | translate }}" mat-stroked-button color="primary" [matMenuTriggerFor]="dataOptionsTypes">{{ dataOptions.selected | translate }} <em>v</em></button>
 			<mat-menu #dataOptionsTypes>
 				<button attr.aria-label="{{ 'ARIA.AG_GRID.CHANGE_TO' | translate:{type: opt | translate} }}"  mat-menu-item *ngFor="let opt of dataOptions.types" (click)="changeDataType(opt)">{{ opt | translate }}</button>
 			</mat-menu>

@@ -1,4 +1,4 @@
-<div class="target-distribution-graph-canvas-comp" fxFlexFill fxLayout="column"
+<div class="target-distribution-graph-canvas-comp" fxFlexFill fxLayout="column" (resized)="onResized($event)"
 	[ngClass]="{'fullscreen': isFullscreen}">
 	<div *ngIf="inputDatas" fxFlexFill fxLayout="column">
 		<div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
@@ -6,11 +6,11 @@
 				<h2 title="{{titleTooltip}}">{{ title }}</h2>
 			</div>
 			<kl-legend [inputDatas]="displayedValues" [type]="'chart-nd-dynamic'" [colorSet]="colorSet"></kl-legend>
-			<div class="comp-header-tools screenshot-hide" fxLayout="row">
+			<div class="comp-header-tools screenshot-hide" [fxLayout]="isSmallDiv? 'column':'row'">
 				<app-select-toggle-button *ngIf="displayedValues" [displayedValues]="displayedValues"
 					(selectToggleButtonChanged)="onSelectToggleButtonChanged($event)" [buttonTitle]="buttonTitle">
 				</app-select-toggle-button>
-				<button mat-stroked-button color="primary" [matMenuTriggerFor]="graphOptionsTypes">{{ graphOptions.selected | translate }} <em>&#9698;</em></button>
+				<button mat-stroked-button color="primary" [matMenuTriggerFor]="graphOptionsTypes">{{ graphOptions.selected | translate }} <em>v</em></button>
 				<mat-menu #graphOptionsTypes>
 					<button mat-menu-item *ngFor="let opt of graphOptions.types" (click)="changeGraphType(opt)">{{ opt | translate }}</button>
 				</mat-menu>

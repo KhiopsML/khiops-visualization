@@ -45,7 +45,7 @@
               "./libs/khiops-hypertree/dist/d3-hypertree-light.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
           },
           "configurations": {
             "production": {
@@ -113,7 +113,7 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
           }
         }
       }

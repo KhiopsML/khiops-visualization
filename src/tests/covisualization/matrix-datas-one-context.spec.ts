@@ -39,6 +39,7 @@ describe('Matrix Datas : One Context [zero-except file]', () => {
 
 		dimensionsDatasService.initialize();
 		dimensionsDatasService.getDimensions();
+		dimensionsDatasService.initSelectedDimensions();
 		dimensionsDatasService.constructDimensionsTrees();
 		const [initTime, result]  = dimensionsDatasService.getMatrixDatas();
 		cells = result.matrixCellDatas;
@@ -120,6 +121,7 @@ describe('Matrix Datas : one Context [zero-except file] check proba values witho
 
 		dimensionsDatasService.initialize();
 		dimensionsDatasService.getDimensions();
+		dimensionsDatasService.initSelectedDimensions();
 		dimensionsDatasService.constructDimensionsTrees();
 		dimensionsDatasService.getMatrixDatas();
 
@@ -158,6 +160,7 @@ describe('Matrix Datas : one Context [zero-except file] check proba values with 
 
 		dimensionsDatasService.initialize();
 		dimensionsDatasService.getDimensions();
+		dimensionsDatasService.initSelectedDimensions();
 		dimensionsDatasService.constructDimensionsTrees();
 		dimensionsDatasService.getMatrixDatas();
 
@@ -196,6 +199,7 @@ describe('Matrix Datas : one Context [adultmissing file] check rev proba values 
 
 		dimensionsDatasService.initialize();
 		dimensionsDatasService.getDimensions();
+		dimensionsDatasService.initSelectedDimensions();
 		dimensionsDatasService.constructDimensionsTrees();
 		dimensionsDatasService.getMatrixDatas();
 
@@ -234,6 +238,7 @@ describe('Matrix Datas : one Context [adultmissing file] 4 cells folding check H
 
 		dimensionsDatasService.initialize();
 		dimensionsDatasService.getDimensions();
+		dimensionsDatasService.initSelectedDimensions();
 		dimensionsDatasService.constructDimensionsTrees();
 		dimensionsDatasService.getMatrixDatas();
 
@@ -281,6 +286,7 @@ describe('Matrix Datas : one Context [adultmissing file] 4 cells folding check H
 
 		dimensionsDatasService.initialize();
 		dimensionsDatasService.getDimensions();
+		dimensionsDatasService.initSelectedDimensions();
 		dimensionsDatasService.constructDimensionsTrees();
 		dimensionsDatasService.getMatrixDatas();
 
@@ -327,6 +333,7 @@ describe('Matrix Datas : one Context [adultmissing file] 4 cells folding check M
 
 		dimensionsDatasService.initialize();
 		dimensionsDatasService.getDimensions();
+		dimensionsDatasService.initSelectedDimensions();
 		dimensionsDatasService.constructDimensionsTrees();
 		dimensionsDatasService.getMatrixDatas();
 

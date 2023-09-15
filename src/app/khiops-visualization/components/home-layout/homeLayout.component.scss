@@ -4,7 +4,7 @@
 		position: absolute;
 		top: 0;
 		right: 0;
-		height: 58px;
+		height: 68px;
 		z-index: 1000;
 
 		#more-btn {
@@ -15,8 +15,8 @@
 	#main-tab-group {
 		> .mat-tab-body-wrapper {
 			flex: 1;
-			height: calc(100% - 74px);
-			padding: 8px 6px 6px 6px;
+			height: calc(100% - 84px);
+			padding: 5px 6px 6px 6px;
 		}
 
 		> .mat-tab-header {

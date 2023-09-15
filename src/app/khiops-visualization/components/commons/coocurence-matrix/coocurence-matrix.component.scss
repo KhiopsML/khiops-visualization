@@ -2,7 +2,6 @@
 @import "../../../../../theme.scss";
 
 #coocurence-matrix-comp {
-
 	.comp-header {
 		margin-top: 1.4em !important;
 		margin-bottom: 1em !important;
@@ -11,6 +10,9 @@
 			white-space: pre-wrap;
 			text-transform: none;
 		}
+	}
+	kl-btn-fullscreen {
+		margin-left: 1em;
 	}
 
 	::ng-deep .mat-tab-disabled {
@@ -61,6 +63,5 @@
 		.mat-button-toggle-checked {
 			color: white !important;
 		}
-
 	}
 }

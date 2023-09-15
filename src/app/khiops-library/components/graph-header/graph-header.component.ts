@@ -33,7 +33,6 @@ export class GraphHeaderComponent implements OnInit {
 	@Input() smallTitle = false;
 	@Input() hideScale = false;
 	iterateTo = 0;
-	barChartLimit: any;
 
 	constructor(
 		private khiopsLibraryService: KhiopsLibraryService) {
@@ -42,8 +41,6 @@ export class GraphHeaderComponent implements OnInit {
 		this.minScale = this.khiopsLibraryService.getAppConfig().common.GLOBAL.MIN_GRAPH_SCALE;
 		this.stepScale = this.khiopsLibraryService.getAppConfig().common.GLOBAL.STEP_GRAPH_SCALE;
 		this.scaleValue = this.khiopsLibraryService.getAppConfig().common.GLOBAL.DEFAULT_GRAPH_SCALE;
-		this.barChartLimit = this.khiopsLibraryService.getAppConfig().common.GLOBAL.DISTRIBUTION_GRAPH_LENGTH;
-
 	}
 
 	ngOnInit() {

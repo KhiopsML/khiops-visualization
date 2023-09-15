@@ -12,7 +12,7 @@
 			<div class="import-ext-datas-row" fxLayout="row" fxLayoutAlign="start center">
 				<span>{{ 'GLOBAL.JOINT_KEY' | translate }}</span>
 				<div fxLayout="row" fxLayoutAlign="start center">
-					<button class="button-accent" mat-stroked-button color="accent" [matMenuTriggerFor]="joinKeyMenu">{{joinKeys.selected}}<em>&#9698;</em></button>
+					<button class="button-accent" mat-stroked-button color="accent" [matMenuTriggerFor]="joinKeyMenu">{{joinKeys.selected}}<em>v</em></button>
 					<mat-menu #joinKeyMenu>
 						<button mat-menu-item *ngFor="let key of joinKeys.keys"   (click)="changeJoinKey(key)">{{ key }}</button>
 					</mat-menu>
@@ -36,7 +36,7 @@
 			<div class="import-ext-datas-row" fxLayout="row" fxLayoutAlign="start center">
 				<span>{{ 'GLOBAL.DIMENSION' | translate }}</span>
 				<div fxFlex fxLayout="row" fxLayoutAlign="start center">
-					<button class="button-accent" mat-stroked-button color="accent" [matMenuTriggerFor]="dimensionMenu">{{selectedDimension.name}} <em>&#9698;</em></button>
+					<button class="button-accent" mat-stroked-button color="accent" [matMenuTriggerFor]="dimensionMenu">{{selectedDimension.name}} <em>v</em></button>
 					<mat-menu #dimensionMenu>
 						<button mat-menu-item *ngFor="let dimension of dimensionsDatas.dimensions"
 						 (click)="changeSelectedDimension(dimension)">{{ dimension.name  }}</button>

@@ -435,6 +435,8 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			.on("mouseover", mouseover)
 			.on("mousemove", mousemove)
 			.on("mouseleave", mouseleave)
+			// .attr('rx', 3)
+			// .attr('ry', 3)
 			.attr("width", barW)
 			.attr("height", barH)
 			.attr("fill-opacity", "0.8")

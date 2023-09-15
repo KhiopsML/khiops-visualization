@@ -98,7 +98,7 @@ export class DimensionsDatasService {
 
 	getDimensionPositionFromName(dimensionName): any {
 		// Find current dim position
-		return this.dimensionsDatas.selectedDimensions.findIndex(e => {
+		return this.dimensionsDatas?.selectedDimensions?.findIndex(e => {
 			return dimensionName === e.name;
 		});
 	}
@@ -172,12 +172,6 @@ export class DimensionsDatasService {
 				this.dimensionsDatas.dimensions.push(dimension);
 			}
 		}
-
-		// Initialize selected dimensions at first launch
-		// if (!this.dimensionsDatas.selectedDimensions) {
-			// this.getHierarchyDatas();
-			this.initSelectedDimensions();
-		// }
 
 		return this.dimensionsDatas.dimensions;
 	}

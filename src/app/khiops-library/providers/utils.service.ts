@@ -383,32 +383,51 @@ export class UtilsService {
 	// 	return flattenedArray;
 	// }
 
-	/**
-	 * ChatGPT optimization
-	 * #58 Matrix tooltip informations cut
-	 */
-	static getPrecisionNumber(input, numberPrecision?): string {
-		numberPrecision--;
-		if (typeof input === 'number' && isFinite(input)) {
-			if (input === 0) {
-				return "0";
-			}
-			let absoluteValue = Math.abs(input);
-			let exponent = Math.floor(Math.log10(absoluteValue));
-			if (exponent >= numberPrecision || exponent < -2) {
-				return parseFloat(input.toExponential(numberPrecision)).toString();
-			} else if (exponent >= 0) {
-				let multiplier = Math.pow(10, numberPrecision - exponent - 1);
-				let roundedValue = Math.round(input * multiplier) / multiplier;
-				return roundedValue.toString();
+	static getPrecisionNumber(value, exp ? ) {
+		if (typeof value === 'number' && isFinite(value)) {
+			var num = this.toPlainString(value).split(".");
+			let part1 = (num[1])
+			if (value === 0) {
+				return value
+			} else if (Math.abs(value) < 0.1) {
+				var zeroAfterComma = -Math.floor(Math.log10(Math.abs(value)) + 1);
+				var usefullInfo = part1.slice(zeroAfterComma, zeroAfterComma + exp)
+				var res = '0.'
+				res += "0".repeat(zeroAfterComma)
+				res += usefullInfo
+				return this.getSign(value) + res.toString();
 			} else {
-				let decimalPlaces = Math.max(0, numberPrecision - exponent);
-				let roundedValue = parseFloat(input.toFixed(decimalPlaces));
-				return roundedValue.toString();
+				let e = Number(value);
+				let entier = Math.floor(e);
+				let decimal = e - entier;
+				if (decimal < Math.pow(10, -exp)) {
+					decimal = 0;
+				}
+				let res = Math.round(e * Math.pow(10, exp)) / Math.pow(10, exp);
+				return res.toString()
 			}
 		} else {
-			return input;
+			return value;
 		}
+	}
+
+	static getSign(input: number) {
+		return input >= 0 ? "" : "-";
+	}
+
+	static getLogSign(input: number) {
+		return Math.log10(input) > 0 ? "" : "-";
+	}
+
+	static toPlainString(num) {
+		return ('' + +num).replace(/(-?)(\d*)\.?(\d*)e([+-]\d+)/,
+			function (a, b, c, d, e) {
+				return e < 0 ?
+					//@ts-ignore
+					b + '0.' + Array(1 - e - c.length).join(0) + c + d :
+					//@ts-ignore
+					b + c + d + Array(e - d.length + 1).join(0);
+			});
 	}
 
 	/**
