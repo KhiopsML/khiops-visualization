@@ -60,55 +60,63 @@ export class AxisViewComponent
 		private dimensionsService: DimensionsDatasService
 	) {
 		super();
+	}
+	ngOnInit() {
+		this.initialize();
+	}
+
+	public initialize() {
 		this.loadingView = true;
 		this.isBigJsonFile = this.appService.isBigJsonFile();
 
 		setTimeout(() => {
 			this.sizes = this.appService.getViewSplitSizes("axisView");
 			this.dimensionsDatas = this.dimensionsService.getDatas();
-			this.dimensionsService.updateDimensions(false);
+			this.dimensionsService.getDimensions();
+			this.dimensionsService.updateDimensions();
 
 			// OPTIM: Unfold auto if computer is too laggy
-			if (this.dimensionsService.isLargeCocluster()) {
-				let unfoldState =
-					parseInt(
-						localStorage.getItem(
-							AppConfig.covisualizationCommon.GLOBAL.LS_ID +
-								"DEFAULT_LIMIT_HIERARCHY"
-						),
-						10
-					) ||
-					AppConfig.covisualizationCommon.UNFOLD_HIERARCHY
-						.DEFAULT_UNFOLD;
+			// if (this.dimensionsService.isLargeCocluster()) {
+			// 	let unfoldState =
+			// 		parseInt(
+			// 			localStorage.getItem(
+			// 				AppConfig.covisualizationCommon.GLOBAL.LS_ID +
+			// 					"DEFAULT_LIMIT_HIERARCHY"
+			// 			),
+			// 			10
+			// 		) ||
+			// 		AppConfig.covisualizationCommon.UNFOLD_HIERARCHY
+			// 			.DEFAULT_UNFOLD;
 
-				const collapsedNodes =
-					this.treenodesService.getLeafNodesForARank(unfoldState);
-				let datas =
-					this.saveService.constructSavedHierarchyToSave(
-						collapsedNodes
-					);
+			// 	const collapsedNodes =
+			// 		this.treenodesService.getLeafNodesForARank(unfoldState);
+			// 	let datas =
+			// 		this.saveService.constructSavedHierarchyToSave(
+			// 			collapsedNodes
+			// 		);
 
-				this.appService.setFileDatas(datas);
+			// 	this.appService.setFileDatas(datas);
 
-				this.dimensionsDatas = this.dimensionsService.getDatas();
-				this.dimensionsService.updateDimensions();
-				this.dimensionsService.initSelectedDimensions();
+			// 	this.dimensionsDatas = this.dimensionsService.getDatas();
+			// 	this.dimensionsService.updateDimensions();
+			// 	this.dimensionsService.initSelectedDimensions();
 
-				this.snackBar.open(
-					this.translate.get(
-						"SNACKS.UNFOLDED_DATAS_PERFORMANCE_WARNING",
-						{
-							count: unfoldState,
-						}
-					),
-					this.translate.get("GLOBAL.OK"),
-					{
-						duration: 4000,
-						panelClass: "warning",
-						verticalPosition: "bottom",
-					}
-				);
-			}
+			// 	this.snackBar.open(
+			// 		this.translate.get(
+			// 			"SNACKS.UNFOLDED_DATAS_PERFORMANCE_WARNING",
+			// 			{
+			// 				count: unfoldState,
+			// 			}
+			// 		),
+			// 		this.translate.get("GLOBAL.OK"),
+			// 		{
+			// 			duration: 4000,
+			// 			panelClass: "warning",
+			// 			verticalPosition: "bottom",
+			// 		}
+			// 	);
+			// }
+			this.loadingView = false;
 
 			this.viewsLayout = this.appService.initViewsLayout(
 				this.dimensionsDatas.selectedDimensions
@@ -137,8 +145,6 @@ export class AxisViewComponent
 			// });
 		}, 500); // To show loader when big files
 	}
-
-	ngOnInit() {}
 
 	ngOnDestroy() {
 		this.viewsLayoutChangedSub?.unsubscribe();

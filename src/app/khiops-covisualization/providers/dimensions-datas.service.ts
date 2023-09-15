@@ -180,20 +180,19 @@ export class DimensionsDatasService {
 		return this.dimensionsDatas.dimensions;
 	}
 
-	updateDimensions(retrieveMatrixDatas = true): any {
-		this.getDimensions();
-
+	saveInitialDimension() {
 		// keep initial dim in memory
 		if (this.dimensionsDatas.initialDimensions.length === 0) {
 			this.dimensionsDatas.initialDimensions = Object.assign([], this.dimensionsDatas.selectedDimensions);
 		}
+	}
 
+	updateDimensions(retrieveMatrixDatas = true): any {
+		this.saveInitialDimension();
 		this.constructDimensionsTrees();
 		if (retrieveMatrixDatas) {
 			this.getMatrixDatas();
 		}
-		return;
-
 	}
 
 	initSelectedDimensions() {
@@ -219,7 +218,6 @@ export class DimensionsDatasService {
 	}
 
 	updateSelectedDimension(dimension, position) {
-
 		// Find current dim position
 		const currentIndex: any = this.dimensionsDatas.selectedDimensions.findIndex(e => {
 			return dimension.name === e.name;
