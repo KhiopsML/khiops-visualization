@@ -341,11 +341,11 @@ export class DimensionsDatasService {
 			zDimensionClusters.push(this.dimensionsDatas.dimensionsClusters[i]);
 		}
 
-		// const xDimensionLeafs: any[] = UtilsService.fastFilter(this.dimensionsDatas.dimensionsClusters[0], item => item.isLeaf === true);
-		// const yDimensionLeafs: any[] = UtilsService.fastFilter(this.dimensionsDatas.dimensionsClusters[1], item => item.isLeaf === true);
+		const xDimensionLeafs: any[] = UtilsService.fastFilter(this.dimensionsDatas.dimensionsClusters[0], item => item.isLeaf === true);
+		const yDimensionLeafs: any[] = UtilsService.fastFilter(this.dimensionsDatas.dimensionsClusters[1], item => item.isLeaf === true);
 
-		const xDimensionLeafs: any[] = this.dimensionsDatas.dimensions[0].valueGroups
-		const yDimensionLeafs: any[] =  this.dimensionsDatas.dimensions[1].valueGroups
+		// const xDimensionLeafs: any[] = this.dimensionsDatas.dimensions[0].valueGroups
+		// const yDimensionLeafs: any[] =  this.dimensionsDatas.dimensions[1].valueGroups
 
 		// Get dimensions parts
 		const dimensionParts = this.dimensionsDatas.selectedDimensions.map(e => e.parts);

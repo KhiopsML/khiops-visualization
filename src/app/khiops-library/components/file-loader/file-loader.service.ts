@@ -139,8 +139,9 @@ export class FileLoaderService {
 		// const urlKC = './assets/mocks/kc/VerbNounCoclustering27mo.json';
 		// const urlKC = './assets/mocks/kc/NovaCoclustering4mb.json';
 		// const urlKC = './assets/mocks/kc/Coclustering-100x100.json';
-		const urlKC = './assets/mocks/kc/donotworkk10.1.1_id_feat_nospace_Coclustering.json';
-
+		// const urlKC = './assets/mocks/kc/donotworkk10.1.1_id_feat_nospace_Coclustering.json';
+		// const urlKC = './assets/mocks/kc/co-3-num.json';
+		const urlKC = './assets/mocks/kc/ext-CC_Coclustering.json';
 		// const urlKC = './assets/mocks/kc/ext-datas_Coclustering.json';
 		// const urlKC = './assets/mocks/kc/ext-CC_Coclustering.json';
 		// const urlKC = './assets/mocks/kc/CC_3_Coclustering.json';
