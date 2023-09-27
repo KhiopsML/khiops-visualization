@@ -6,7 +6,7 @@
 	</div>
 	<as-split *ngIf="!loadingView && (dimensionsDatas && dimensionsDatas.matrixDatas)" direction="horizontal"
 		(dragEnd)="onSplitDragEnd($event, 'col')">
-		<!-- <as-split-area id="axis-container" [size]="sizes.col[0]">
+		<as-split-area id="axis-container" [size]="sizes.col[0]">
 			<as-split direction="vertical" (dragEnd)="onSplitDragEnd($event, 'col0Row')"
 				*ngIf="dimensionsDatas.dimensionsTrees && viewsLayout">
 				<as-split-area [size]="sizes && sizes.col0Row[0]" order="1"
@@ -37,6 +37,6 @@
 			<app-matrix-container [sizeId]="'col0Row1Col2Row'" [viewId]="'axisView'" [viewsLayout]="viewsLayout"
 				[dimensionsDatas]="dimensionsDatas">
 			</app-matrix-container>
-		</as-split-area> -->
+		</as-split-area>
 	</as-split>
 </div>
