@@ -22,7 +22,12 @@ import {
 	ClustersService
 } from '@khiops-covisualization/providers/clusters.service';
 import * as _ from 'lodash'; // Important to import lodash in karma
-import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
+import {
+	GridColumnsI
+} from '@khiops-library/interfaces/grid-columns';
+import {
+	Subscription
+} from 'rxjs';
 
 @Component({
 	selector: 'app-selected-clusters',
@@ -48,10 +53,10 @@ export class SelectedClustersComponent implements OnDestroy {
 	selectedNodesDimensions: TreeNodeVO[];
 	selectedClusters: SelectedClusterVO[] = undefined;
 	activeClusters: SelectedClusterVO[] = undefined;
-	treeCollapseChangedSub: any;
-	treeNodeNameChangedSub: any;
-	treeSelectedNodeChangedSub: any;
-	dimensionsSelectionChangedSub: any;
+	treeCollapseChangedSub: Subscription;
+	treeNodeNameChangedSub: Subscription;
+	treeSelectedNodeChangedSub: Subscription;
+	dimensionsSelectionChangedSub: Subscription;
 
 	id: any = 'selected-clusters-grid';
 	title: string;
@@ -66,19 +71,8 @@ export class SelectedClustersComponent implements OnDestroy {
 		this.title = this.translate.get('GLOBAL.SELECTED_CLUSTERS');
 
 		this.treeSelectedNodeChangedSub = this.eventsService.treeSelectedNodeChanged.subscribe(e => {
-			if (this.selectedClusters) {
-				// Update on node name change
-				this.updateClusterValues(e);
-			} else {
-				// At start update the entire table
-				this.updateClustersInformations();
-			}
-		});
-
-		this.treeCollapseChangedSub = this.eventsService.treeCollapseChanged.subscribe(dimensionName => {
-			this.updateValues = [];
-			const selectedCluster: SelectedClusterVO = this.updateDimensionIntervals(dimensionName);
-			this.updateValues.push(selectedCluster);
+			this.updateClustersInformations();
+			this.selectActiveClusters()
 		});
 
 		this.treeNodeNameChangedSub = this.eventsService.treeNodeNameChanged.subscribe(e => {
@@ -86,9 +80,6 @@ export class SelectedClustersComponent implements OnDestroy {
 			this.updateClusterValues(e);
 		});
 
-		this.dimensionsSelectionChangedSub = this.eventsService.dimensionsSelectionChanged.subscribe(selectedDimensions => {
-			this.updateClustersInformations();
-		});
 	}
 
 	updateClusterValues(e) {
@@ -130,15 +121,6 @@ export class SelectedClustersComponent implements OnDestroy {
 				this.selectedClusters.push(selectedCluster);
 			}
 			this.selectActiveClusters();
-
-			// } else {
-			// 	// Just update node name on change
-			// 	for (let i = 0; i < this.selectedNodes.length; i++) {
-			// 		const nodeVO: TreeNodeVO = this.selectedNodes[i];
-			// 		const selectedCluster: SelectedClusterVO = this.selectedClusters.find(e => e.hierarchy === nodeVO.hierarchy);
-			// 		selectedCluster.shortDescription = nodeVO.shortDescription;
-			// 	}
-			// }
 		}
 
 	}
