@@ -53,10 +53,8 @@ export class SelectedClustersComponent implements OnDestroy {
 	selectedNodesDimensions: TreeNodeVO[];
 	selectedClusters: SelectedClusterVO[] = undefined;
 	activeClusters: SelectedClusterVO[] = undefined;
-	treeCollapseChangedSub: Subscription;
 	treeNodeNameChangedSub: Subscription;
 	treeSelectedNodeChangedSub: Subscription;
-	dimensionsSelectionChangedSub: Subscription;
 
 	id: any = 'selected-clusters-grid';
 	title: string;
@@ -140,8 +138,6 @@ export class SelectedClustersComponent implements OnDestroy {
 	ngOnDestroy() {
 		this.treeSelectedNodeChangedSub.unsubscribe();
 		this.treeNodeNameChangedSub.unsubscribe();
-		this.treeCollapseChangedSub.unsubscribe();
-		this.dimensionsSelectionChangedSub.unsubscribe();
 	}
 
 }
