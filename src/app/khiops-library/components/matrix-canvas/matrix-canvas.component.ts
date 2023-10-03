@@ -109,8 +109,6 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 	numberPrecision: any;
 	zoom = 1;
 	unpanzoom: any;
-	disableClick = false;
-
 	isPaning = false;
 
 	tooltipCell: any;
@@ -388,14 +386,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 					}
 
 					this.matrixSelectedDiv.nativeElement.addEventListener('click', (event) => {
-						if (!this.disableClick) {
-							// Do not alllow multiple click on matrix to avoid loops
-							this.disableClick = true;
-							setTimeout(() => {
-								this.disableClick = false;
-							}, 500);
-							this.clickOnCell(event);
-						}
+						this.clickOnCell(event);
 					}, {
 						passive: true
 					});
@@ -461,38 +452,39 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 	drawSelectedNodes() {
 		this.cleanSelectedDomContext();
 
-		if (this.selectedCell) {
-			// KV
-			this.drawSelectedCell(this.selectedCell);
-		} else {
-			// KC
-			this.selectedCells = []
-			const cellsLength = this.inputDatas.matrixCellDatas.length;
-			for (let index = 0; index < cellsLength; index++) {
-				const cellDatas = this.inputDatas.matrixCellDatas[index];
+		if (this.inputDatas.matrixCellDatas) {
+			if (this.selectedCell) {
+				// KV
+				this.drawSelectedCell(this.selectedCell);
+			} else {
+				// KC
+				this.selectedCells = []
+				const cellsLength = this.inputDatas.matrixCellDatas.length;
+				for (let index = 0; index < cellsLength; index++) {
+					const cellDatas = this.inputDatas.matrixCellDatas[index];
 
-				// Manage selected cell (different for KV and KC)
-				if (this.selectedNodes?.[0]?.childrenList.includes(cellDatas.xaxisPart) &&
-					this.selectedNodes?.[1]?.childrenList.includes(cellDatas.yaxisPart)) {
-					this.selectedCells.push(cellDatas);
+					// Manage selected cell (different for KV and KC)
+					if (this.selectedNodes?.[0]?.childrenList.includes(cellDatas.xaxisPart) &&
+						this.selectedNodes?.[1]?.childrenList.includes(cellDatas.yaxisPart)) {
+						this.selectedCells.push(cellDatas);
+					}
 				}
-			}
 
-			// Do not draw top level selection matrix il nodes are not collapsed
-			if ((this.matrixFreqsValues.length !== this.selectedCells.length) && (this.selectedNodes?.[0].parentCluster || this.selectedNodes?.[1].parentCluster)) {
-				for (const cell of this.selectedCells) {
-					// Draw selected cells after other to be above
+				// Do not draw top level selection matrix il nodes are not collapsed
+				if ((this.matrixFreqsValues.length !== this.selectedCells.length) && (this.selectedNodes?.[0].parentCluster || this.selectedNodes?.[1].parentCluster)) {
+					for (const cell of this.selectedCells) {
+						// Draw selected cells after other to be above
+						this.drawSelectedCell(cell);
+					}
+				} else {
+					const cell: CellVO = new CellVO();
+					cell.xCanvas = 0;
+					cell.yCanvas = 0;
+					cell.wCanvas = this.matrixCtx.canvas.width;
+					cell.hCanvas = this.matrixCtx.canvas.height;
 					this.drawSelectedCell(cell);
 				}
-			} else {
-				const cell: CellVO = new CellVO();
-				cell.xCanvas = 0;
-				cell.yCanvas = 0;
-				cell.wCanvas = this.matrixCtx.canvas.width;
-				cell.hCanvas = this.matrixCtx.canvas.height;
-				this.drawSelectedCell(cell);
 			}
-
 		}
 	}
 
