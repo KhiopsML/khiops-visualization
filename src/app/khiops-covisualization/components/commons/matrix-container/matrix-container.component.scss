@@ -15,25 +15,31 @@
 				margin-left: 1rem;
 			}
 
+			mat-checkbox {
+				color: var(--primary-contrast);
+				background: var(--bgColor-20);
+				padding: 5px 5px 5px 8px;
+				border-radius: 4px;
+				margin: 4px 0;
+			}
+
 			#matrix-conditionalOnContext-checkbox {
 				margin: auto 1rem;
 
 				::ng-deep .mat-checkbox-label {
+					font-size: 0.8rem;
 					max-width: 100px !important;
-					line-height: 14px !important;
+					line-height: 13px !important;
 					white-space: pre-line !important;
 				}
 			}
 
 			::ng-deep mat-button-toggle-group {
-
 				::ng-deep .mat-button-toggle-label-content {
 					line-height: 34px !important;
 					top: -2px !important;
 				}
-
 			}
 		}
 	}
-
 }
