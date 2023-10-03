@@ -445,6 +445,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 			this.cleanSelectedDomContext();
 
 			const clicked = this.getCurrentCell(event);
+			this.selectedCells = [clicked];
 			this.drawSelectedCell(clicked);
 
 			setTimeout(() => {

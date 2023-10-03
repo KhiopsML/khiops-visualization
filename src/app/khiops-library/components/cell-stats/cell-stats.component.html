@@ -2,10 +2,9 @@
 	id="cell-stats-comp"
 	fxLayout="row"
 	fxFlexFill
-	*ngIf="datas"
 	fxLayoutAlign="center center"
 >
-	<div class="cell-stats-content">
+	<div *ngIf="datas" class="cell-stats-content">
 		<b>{{ "GLOBAL.CELL_STATS" | translate }}</b>
 		<span>F= {{ datas.F | toPrecision }}</span>
 		<span>EF= {{ datas.EF | toPrecision }}</span>
