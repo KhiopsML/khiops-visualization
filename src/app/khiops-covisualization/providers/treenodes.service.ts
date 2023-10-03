@@ -202,7 +202,7 @@ export class TreenodesService {
 
 				// get Node VO from name
 				nodeVO = this.dimensionsDatas.dimensionsClusters[currentIndex].find(e => {
-					return nodeName === e.name;
+					return nodeName === e.name || nodeName === e.shortDescription; // also check into shortDescription (for distribution graph for instance)
 				});
 
 				// Search into dimensionsTrees if node is into collapsed folder
