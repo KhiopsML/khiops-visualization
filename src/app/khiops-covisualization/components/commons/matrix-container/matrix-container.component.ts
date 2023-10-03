@@ -14,6 +14,7 @@ import { ViewLayoutVO } from "@khiops-covisualization/model/view-layout-vo";
 import { EventsService } from "@khiops-covisualization/providers/events.service";
 import { TreenodesService } from "@khiops-covisualization/providers/treenodes.service";
 import { AppConfig } from "src/environments/environment";
+import { Subscription } from "rxjs";
 
 @Component({
 	selector: "app-matrix-container",
@@ -46,10 +47,10 @@ export class MatrixContainerComponent implements OnInit, OnChanges, OnDestroy {
 
 	conditionalOnContext = true;
 	isFullscreen = false;
-	treeSelectedNodeChangedSub: any;
-	viewsLayoutChangedSub: any;
-	treeCollapseChangedSub: any;
-	dimensionsSelectionChangedSub: any;
+	treeSelectedNodeChangedSub: Subscription;
+	viewsLayoutChangedSub: Subscription;
+	treeCollapseChangedSub: Subscription;
+	dimensionsSelectionChangedSub: Subscription;
 	initNodesEvents = 0; // improve draw matrix perf
 	isFirstLoad = true;
 

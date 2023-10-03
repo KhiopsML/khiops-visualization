@@ -29,6 +29,7 @@ import {
 import {
 	GridColumnsI
 } from '@khiops-library/interfaces/grid-columns';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-cluster-details',
@@ -73,8 +74,8 @@ export class ClusterDetailsComponent implements OnInit, OnChanges, OnDestroy {
 	title: string;
 	filteredDimensionsClusters: ClusterDetailsVO[];
 	updateValues: ClusterDetailsVO[];
-	treeCollapseChangedSub: any;
-	treeNodeNameChangedSub: any;
+	treeCollapseChangedSub: Subscription;
+	treeNodeNameChangedSub: Subscription;
 	id: any;
 
 	constructor(
@@ -202,7 +203,6 @@ export class ClusterDetailsComponent implements OnInit, OnChanges, OnDestroy {
 		} else {
 			return node.children[0];
 		}
-
 		// return this.treenodesService.getNodeFromName(this.selectedDimension.name, node.childrenLeafList[0]);
 	}
 

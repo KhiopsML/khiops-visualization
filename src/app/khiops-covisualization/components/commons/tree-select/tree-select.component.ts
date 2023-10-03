@@ -86,7 +86,7 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 		});
 
 		this.treeSelectedNodeChangedSub = this.eventsService.treeSelectedNodeChanged.subscribe(e => {
-			if (e.selectedNode && e.hierarchyName === this.selectedDimension.name) {
+			if (this.tree && e.selectedNode && e.hierarchyName === this.selectedDimension.name) {
 				let propagateEvent = true;
 				if (e.stopPropagation) {
 					propagateEvent = false;

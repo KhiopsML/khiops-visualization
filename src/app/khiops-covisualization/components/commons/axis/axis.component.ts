@@ -4,7 +4,6 @@ import {
 	Input,
 	OnDestroy,
 	ViewChild,
-	AfterViewInit
 } from '@angular/core';
 import {
 	AppService
@@ -21,13 +20,16 @@ import {
 import {
 	EventsService
 } from '@khiops-covisualization/providers/events.service';
+import {
+	Subscription
+} from 'rxjs';
 
 @Component({
 	selector: 'app-axis',
 	templateUrl: './axis.component.html',
 	styleUrls: ['./axis.component.scss']
 })
-export class AxisComponent implements OnInit, AfterViewInit, OnDestroy {
+export class AxisComponent implements OnInit, OnDestroy {
 	@ViewChild('appVariableGraphDetails', {
 		static: false
 	}) appVariableGraphDetails: VariableGraphDetailsComponent;
@@ -52,7 +54,7 @@ export class AxisComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	viewLayout: DimensionViewLayoutVO;
 	invertedPosition: number;
-	dimensionsSelectionChangedSub: any;
+	dimensionsSelectionChangedSub: Subscription;
 	selectedComposition: any;
 
 	constructor(private appService: AppService,
@@ -70,10 +72,6 @@ export class AxisComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	ngOnDestroy() {
 		this.dimensionsSelectionChangedSub.unsubscribe();
-	}
-
-	ngAfterViewInit() {
-
 	}
 
 	initializeView() {
