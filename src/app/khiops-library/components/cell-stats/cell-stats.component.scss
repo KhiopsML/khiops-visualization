@@ -7,10 +7,19 @@
 	white-space: nowrap;
 	display: block !important;
 	font-size: 0.8rem;
-	b {
+	.cell-stats-content {
+		font-size: 0.95em;
 		font-weight: 500;
-	}
-	span {
-		margin-left: 1rem;
+		color: var(--primary-contrast);
+		background: var(--bgColor-20);
+		padding: 1px 5px;
+		border-radius: 4px;
+		margin: 4px 0;
+		b {
+			font-weight: 500;
+		}
+		span {
+			margin-left: 1rem;
+		}
 	}
 }
