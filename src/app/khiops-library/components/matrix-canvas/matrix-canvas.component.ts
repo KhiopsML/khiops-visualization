@@ -505,7 +505,8 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 			this.matrixSelectedCtx.strokeRect(cell.xCanvas, cell.yCanvas, cell.wCanvas, cell.hCanvas);
 
 			this.matrixSelectedCtx.lineWidth = 2;
-			this.matrixSelectedCtx.strokeStyle = '#57689d';
+			this.matrixSelectedCtx.strokeStyle = this.graphMode.mode === 'MUTUAL_INFO' || this.graphMode.mode === 'HELLINGER' ||
+				this.graphMode.mode === 'MUTUAL_INFO_TARGET_WITH_CELL' ? '#000000' : '#57689d';
 			this.matrixSelectedCtx.strokeRect(cell.xCanvas, cell.yCanvas, cell.wCanvas, cell.hCanvas);
 		}
 	}
