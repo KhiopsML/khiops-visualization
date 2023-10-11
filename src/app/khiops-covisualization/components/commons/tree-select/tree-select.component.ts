@@ -165,10 +165,6 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 		});
 		this.tree.on('expand', (e) => {
 			this.treenodesService.expandNode(this.selectedDimension.name, e.data.name);
-			// select current node on expand without propagation
-			// this.ngzone.run(() => {
-			// 	this.treenodesService.setSelectedNode(this.selectedDimension.name, e.data.name, true);
-			// });
 		});
 		this.tree.on('expandAll', (e) => {
 

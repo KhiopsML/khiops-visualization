@@ -37,7 +37,7 @@ export class TreeNodeVO {
 
 	clusterCompositionSize: number;
 
-	constructor(id, object, dimension, collapsedNodes, nbClusters, leafPosition, i, j) {
+	constructor(id, object, dimension, collapsedNodes, nbClusters, leafPosition, j, currentNodesNames ?) {
 
 		// Generate id for tree node plugin
 		this.id = id;
@@ -59,7 +59,13 @@ export class TreeNodeVO {
 		}
 
 		this.name = object && object.name || this.cluster;
-		this.shortDescription = object && object.shortDescription || this.bounds;
+
+		if (currentNodesNames && currentNodesNames[this.name]) {
+			this.shortDescription = currentNodesNames[this.name];
+		} else {
+			this.shortDescription = object && object.shortDescription || this.bounds;
+		}
+
 		this.parentCluster = object && object.parentCluster || '';
 		this.parentShortDescription = object && object.parentShortDescription || this.parentCluster;
 
@@ -75,7 +81,6 @@ export class TreeNodeVO {
 		if (this.parentCluster === '') {
 			this.isParentCluster = true;
 		}
-		// this.isCollapsed = object && object.isCollapsed || false;
 		this.isCollapsed = collapsedNodes.includes(this.name) || false;
 
 		if (this.isLeaf) {
@@ -84,13 +89,8 @@ export class TreeNodeVO {
 			this.matrixIndex = '';
 		}
 		if (dimension.type === 'Categorical') {
-			// this.clusterCompositionSize = dimension.valueGroups[leafPosition].values.length;
+			this.clusterCompositionSize = dimension.valueGroups[leafPosition]?.values?.length;
 		}
-
-		// needed for each node for distribution graph
-		// 31/03 realy ? no
-		// But needed for save hierarchy as
-		// this.getChildrenList();
 	}
 
 	updateAnnotation(description) {
@@ -102,15 +102,11 @@ export class TreeNodeVO {
 		this.childrenNodesCollapsed = [];
 		this.childrenLeafList = [];
 		this.childrenLeafIndexes = [];
-		// this.directChildren = [];
 		this.deepGetChildrenNames(this.children, this.name, this.matrixIndex);
-
-		// for (let i = 0; i < this.children.length; i++) {
-		// 	this.directChildren.push(this.children[i].name);
-		// }
 	}
 
 	deepGetChildrenNames(children, name, matrixIndex) {
+
 		this.childrenList.push(name);
 		if (children.length === 0) {
 			this.childrenLeafList.push(name);
@@ -119,8 +115,6 @@ export class TreeNodeVO {
 
 		for (let i = 0; i < children.length; i++) {
 			if (children[i].isCollapsed) {
-				// TODO OPTIMIZATION keep only higher level nodes
-				// if current has collapsed childs, remove from list)
 				this.childrenNodesCollapsed.push(children[i].name);
 			}
 			this.deepGetChildrenNames(children[i].children, children[i].name, children[i].matrixIndex);

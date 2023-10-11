@@ -19,7 +19,6 @@ export class ClusterDetailsVO {
 		this.hierarchicalRank = object.hierarchicalRank;
 		this.hierarchicalLevel = object.hierarchicalLevel;
 		this.rank = object.rank;
-
 		this._id = object.cluster;
 	}
 

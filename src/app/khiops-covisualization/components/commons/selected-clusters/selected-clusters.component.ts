@@ -53,7 +53,6 @@ export class SelectedClustersComponent implements OnDestroy {
 	selectedNodesDimensions: TreeNodeVO[];
 	selectedClusters: SelectedClusterVO[] = undefined;
 	activeClusters: SelectedClusterVO[] = undefined;
-	treeNodeNameChangedSub: Subscription;
 	treeSelectedNodeChangedSub: Subscription;
 
 	id: any = 'selected-clusters-grid';
@@ -73,11 +72,6 @@ export class SelectedClustersComponent implements OnDestroy {
 			if (this.selectedClusters) {
 				this.selectActiveClusters()
 			}
-		});
-
-		this.treeNodeNameChangedSub = this.eventsService.treeNodeNameChanged.subscribe(e => {
-			// Update on node name change
-			this.updateClusterValues(e);
 		});
 
 	}
@@ -126,20 +120,16 @@ export class SelectedClustersComponent implements OnDestroy {
 	}
 
 	selectActiveClusters() {
-		this.activeClusters = _.cloneDeep([]);
-
-		setTimeout(() => {
-			this.activeClusters = [];
-			const firstDimPos = this.dimensionsService.getDimensionPositionFromName(this.selectedClusters[0].hierarchy);
-			const secondDimPos = this.dimensionsService.getDimensionPositionFromName(this.selectedClusters[1].hierarchy);
-			this.activeClusters.push(this.selectedClusters[firstDimPos]);
-			this.activeClusters.push(this.selectedClusters[secondDimPos]);
-		});
+		const currentActiveClusters = [];
+		const firstDimPos = this.dimensionsService.getDimensionPositionFromName(this.selectedClusters[0].hierarchy);
+		const secondDimPos = this.dimensionsService.getDimensionPositionFromName(this.selectedClusters[1].hierarchy);
+		currentActiveClusters.push(this.selectedClusters[firstDimPos]);
+		currentActiveClusters.push(this.selectedClusters[secondDimPos]);
+		this.activeClusters = currentActiveClusters
 	}
 
 	ngOnDestroy() {
 		this.treeSelectedNodeChangedSub.unsubscribe();
-		this.treeNodeNameChangedSub.unsubscribe();
 	}
 
 }

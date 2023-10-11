@@ -1,7 +1,6 @@
 import {
 	Injectable
 } from '@angular/core';
-// import * as _ from 'lodash'; // Important to import lodash in karma
 import {
 	AppConfig
 } from 'src/environments/environment';
@@ -14,13 +13,6 @@ import {
 import {
 	ProjectSummaryVO
 } from '../model/project-summary-vo';
-// TODO remove electron
-// let ipcRenderer;
-// try {
-// 	ipcRenderer = require('electron').ipcRenderer;
-// } catch (e) {
-// 	console.warn('Can not access ipcRenderer', e);
-// }
 
 @Injectable({
 	providedIn: 'root'
@@ -137,20 +129,6 @@ export class AppService {
 		this.appDatas.datas = this.ignoreMissingPartitionForNumerical(this.appDatas.datas, 'preparationReport');
 		this.appDatas.datas = this.ignoreMissingPartitionForNumerical(this.appDatas.datas, 'textPreparationReport');
 		this.setSavedDatas(this.appDatas.datas);
-
-		// TODO remove electron
-		// Set the filename to the title bar
-		// if (datas) {
-		// 	(async () => {
-		// 		try {
-		// 			await ipcRenderer.invoke('set-title-bar-name', {
-		// 				title: 'Khiops Visualization ' + datas.filename
-		// 			});
-		// 		} catch (error) {
-		// 			console.log('error', error);
-		// 		}
-		// 	})();
-		// }
 	}
 
 	getSavedDatas(type): any {

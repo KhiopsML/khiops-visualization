@@ -45,6 +45,7 @@ export class DimensionsDatasService {
 			cellPartIndexes: [],
 			initialDimensions: [],
 			dimensions: [],
+			nodesNames: {},
 			selectedNodes: [],
 			contextSelection: [],
 			selectedDimensions: undefined,
@@ -183,7 +184,7 @@ export class DimensionsDatasService {
 		}
 	}
 
-	initSelectedDimensions() {
+	initSelectedDimensions(initContextSelection = true) {
 		this.dimensionsDatas.selectedDimensions = [];
 		this.dimensionsDatas.contextDimensions = [];
 		for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
@@ -193,7 +194,9 @@ export class DimensionsDatasService {
 				this.dimensionsDatas.contextDimensionCount = this.dimensionsDatas.contextDimensionCount + 1;
 			}
 		}
-		this.dimensionsDatas.contextSelection = new Array(this.dimensionsDatas.contextDimensions.length).fill([0]);
+		if (initContextSelection) {
+			this.dimensionsDatas.contextSelection = new Array(this.dimensionsDatas.contextDimensions.length).fill([0]);
+		}
 
 		const savedSelectedDimensions = this.appService.getSavedDatas('selectedDimensions');
 		if (savedSelectedDimensions) {
@@ -231,7 +234,6 @@ export class DimensionsDatasService {
 
 		}
 		this.dimensionsDatas.selectedDimensions[position] = dimension;
-		this.eventsService.emitDimensionsSelectionChanged(this.dimensionsDatas.selectedDimensions);
 		return this.dimensionsDatas.selectedDimensions;
 	}
 
@@ -239,7 +241,6 @@ export class DimensionsDatasService {
 
 		this.dimensionsDatas.dimensionsTrees = [];
 		const appDatas = this.appService.getInitialDatas().datas;
-		const appDatasCropped = this.appService.getDatas().datas;
 
 		// At launch check if there are collapsed nodes into input json file
 		const collapsedNodes = this.appService.getSavedDatas('collapsedNodes');
@@ -260,6 +261,8 @@ export class DimensionsDatasService {
 					const nbClusters = appDatas.coclusteringReport.dimensionSummaries[i].initialParts;
 					let index = 0;
 
+					const currentNodesNames = this.dimensionsDatas.nodesNames[currentDimensionHierarchy.name];
+
 					// First convert each child into a treenode value object
 					const clustersLength = currentDimensionHierarchy.clusters.length;
 					for (let j = 0; j < clustersLength; j++) {
@@ -275,8 +278,8 @@ export class DimensionsDatasService {
 							currentDimensionNodesToCollapse,
 							nbClusters,
 							leafPosition,
-							i,
-							j
+							j,
+							currentNodesNames
 						);
 						this.dimensionsDatas.dimensionsClusters[i].push(currentObj);
 
@@ -317,6 +320,7 @@ export class DimensionsDatasService {
 
 	getMatrixDatas() {
 		const t0 = performance.now();
+
 		const appDatas = this.appService.getDatas().datas;
 
 		this.dimensionsDatas.matrixDatas = {};
@@ -341,11 +345,28 @@ export class DimensionsDatasService {
 			zDimensionClusters.push(this.dimensionsDatas.dimensionsClusters[i]);
 		}
 
-		const xDimensionLeafs: any[] = UtilsService.fastFilter(this.dimensionsDatas.dimensionsClusters[0], item => item.isLeaf === true);
-		const yDimensionLeafs: any[] = UtilsService.fastFilter(this.dimensionsDatas.dimensionsClusters[1], item => item.isLeaf === true);
+		const xDimensionLeafs: any[] = this.dimensionsDatas.selectedDimensions[0].type === 'Numerical' ?
+			this.dimensionsDatas.selectedDimensions[0].intervals : this.dimensionsDatas.selectedDimensions[0].valueGroups
+		const yDimensionLeafs: any[] = this.dimensionsDatas.selectedDimensions[1].type === 'Numerical' ?
+			this.dimensionsDatas.selectedDimensions[1].intervals : this.dimensionsDatas.selectedDimensions[1].valueGroups
+			const xDimensionLeafsNames = xDimensionLeafs.map(e => e.cluster);
+		const yDimensionLeafsNames = yDimensionLeafs.map(e => e.cluster);
 
-		// const xDimensionLeafs: any[] = this.dimensionsDatas.dimensions[0].valueGroups
-		// const yDimensionLeafs: any[] =  this.dimensionsDatas.dimensions[1].valueGroups
+		// Get shortdescriptions if defined
+		const xDimensionLeafsShortDescription = [...xDimensionLeafsNames];
+		const yDimensionLeafsShortDescription = [...yDimensionLeafsNames];
+		if (this.dimensionsDatas.nodesNames[xDimension.name]) {
+			for (const [key, value] of Object.entries(this.dimensionsDatas.nodesNames[xDimension.name])) {
+				const index = xDimensionLeafsShortDescription.indexOf(key);
+				xDimensionLeafsShortDescription.splice(index, 1, value);
+		  	}
+		}
+		if (this.dimensionsDatas.nodesNames[yDimension.name]) {
+			for (const [key, value] of Object.entries(this.dimensionsDatas.nodesNames[yDimension.name])) {
+				const index = yDimensionLeafsShortDescription.indexOf(key);
+				yDimensionLeafsShortDescription.splice(index, 1, value);
+		  	}
+		}
 
 		// Get dimensions parts
 		const dimensionParts = this.dimensionsDatas.selectedDimensions.map(e => e.parts);
@@ -369,8 +390,7 @@ export class DimensionsDatasService {
 		[xValues.frequency, yValues.frequency] = MatrixUtilsDatasService.getFrequencyAxisValues(xDimension, yDimension, cellFrequencies);
 		[xValues.standard, yValues.standard] = MatrixUtilsDatasService.getStandardAxisValues(xDimension, yDimension);
 
-		// TO display axis names
-		// Maybe can be improved and be taken into cell datas ?
+		// To display axis names
 		this.dimensionsDatas.matrixDatas.variable = {
 			nameX: this.dimensionsDatas.selectedDimensions[0].name,
 			nameY: this.dimensionsDatas.selectedDimensions[1].name,
@@ -384,18 +404,15 @@ export class DimensionsDatasService {
 			yParts: this.dimensionsDatas.selectedDimensions[1].parts
 		};
 
+		// Compute cells
 		const cellDatas = MatrixUtilsDatasService.getCellDatas(
 			xDimension,
 			yDimension,
 			zDimension,
-			// xDimensionLeafs.map(e => e.name),
-			// yDimensionLeafs.map(e => e.name),
-			// xDimensionLeafs.map(e => e.shortDescription),
-			// yDimensionLeafs.map(e => e.shortDescription),
-			xDimensionLeafs.map(e => e.cluster),
-			yDimensionLeafs.map(e => e.cluster),
-			xDimensionLeafs.map(e => e.cluster),
-			yDimensionLeafs.map(e => e.cluster),
+			xDimensionLeafsNames,
+			yDimensionLeafsNames,
+			xDimensionLeafsShortDescription,
+			yDimensionLeafsShortDescription,
 			cellFrequencies,
 			undefined, // cellInterests only for KV
 			undefined, // cellTargetFrequencies only for KV

@@ -158,7 +158,7 @@ export class MatrixUtilsDatasService {
 		if (isContextMatrix) {
 			// Get dimensions parts
 			// zDimension may be an array
-			const dimensionParts = zDimension.map(e => e.parts);
+			const dimensionParts = zDimension.map(e => e.initialParts); // important to take initial parts in case of folded node
 			const maxParts = UtilsService.generateMaxParts(dimensionParts);
 			const cellPartsCombinations = UtilsService.generateMatrixCombinations(maxParts.reverse());
 			cellFreqHash = UtilsService.generateHashFromArray(cellPartsCombinations);

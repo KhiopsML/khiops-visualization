@@ -1,5 +1,6 @@
 import {
-	Injectable
+	Injectable,
+	Injector
 } from '@angular/core';
 import {
 	AppService
@@ -31,10 +32,10 @@ import {
 	providedIn: 'root'
 })
 export class SaveService {
-
+	private treenodesService;
 	constructor(
 		private appService: AppService,
-		private treenodesService: TreenodesService,
+		private injector: Injector,
 		private importExtDatasService: ImportExtDatasService,
 		private dimensionsService: DimensionsDatasService
 	) {}
@@ -72,12 +73,11 @@ export class SaveService {
 	// }
 
 	constructDatasToSave(collapsedNodesInput ? ) {
-		const appDatas = this.appService.getDatas().datas;
-		// const initialDatas = _.cloneDeep(this.appService.getInitialDatas().datas);
+		this.treenodesService = this.injector.get(TreenodesService);
 		const initialDatas = JSON.parse(JSON.stringify(this.appService.getInitialDatas().datas));
 
 		// Copy dimensionHierarchies into initial datas to save nodes names and annotations
-		initialDatas.coclusteringReport.dimensionHierarchies = appDatas.coclusteringReport.dimensionHierarchies;
+		// initialDatas.coclusteringReport.dimensionHierarchies = appDatas.coclusteringReport.dimensionHierarchies;
 
 		const selectedDimensions = this.dimensionsService.getDimensionsToSave();
 
@@ -86,6 +86,7 @@ export class SaveService {
 			const unfoldHierarchyState = this.treenodesService.getUnfoldHierarchy();
 			const splitSizes = this.appService.getSplitSizes();
 			const viewsLayout = this.appService.getViewsLayout();
+			const nodesNames = this.treenodesService.getNodesNames();
 			const selectedNodes = this.treenodesService.getSelectedNodes();
 			let collapsedNodes;
 			if (collapsedNodesInput) {
@@ -101,6 +102,7 @@ export class SaveService {
 				selectedNodes,
 				selectedDimensions,
 				collapsedNodes,
+				nodesNames,
 				importedDatas,
 				unfoldHierarchyState
 			);
@@ -128,17 +130,17 @@ export class SaveService {
 		let t0 = performance.now();
 		datasToSave = this.truncateJsonHierarchy(datasToSave);
 		let t1 = performance.now();
-		// console.log("truncateJsonHierarchy " + (t1 - t0) + " milliseconds.");
+		console.log("truncateJsonHierarchy " + (t1 - t0) + " milliseconds.");
 
 		t0 = performance.now();
 		datasToSave = this.updateSummariesParts(datasToSave);
 		t1 = performance.now();
-		// console.log("updateSummariesParts " + (t1 - t0) + " milliseconds.");
+		console.log("updateSummariesParts " + (t1 - t0) + " milliseconds.");
 
 		t0 = performance.now();
 		datasToSave = this.truncateJsonPartition(datasToSave);
 		t1 = performance.now();
-		// console.log("truncateJsonPartition " + (t1 - t0) + " milliseconds.");
+		console.log("truncateJsonPartition " + (t1 - t0) + " milliseconds.");
 
 		t0 = performance.now();
 		datasToSave = this.truncateJsonCells(datasToSave);
@@ -148,22 +150,21 @@ export class SaveService {
 		t0 = performance.now();
 		datasToSave = this.updateSummariesCells(datasToSave);
 		t1 = performance.now();
-		// console.log("updateSummariesCells " + (t1 - t0) + " milliseconds.");
+		console.log("updateSummariesCells " + (t1 - t0) + " milliseconds.");
 
 		if (!collapsedNodesInput) {
 			// Remove collapsed nodes and selected nodes because they have been reduced
 			delete datasToSave.savedDatas.collapsedNodes;
 		}
-		delete datasToSave.savedDatas.selectedNodes;
+		// delete datasToSave.savedDatas.selectedNodes; // do not do that to keep context selection
 		console.log('file: save.service.ts:114 ~ constructSavedHierarchyToSave ~ datasToSave:', datasToSave);
 		return datasToSave;
 	}
 
 
 	truncateJsonHierarchy(datas) {
-		// console.log("SaveService -> truncateJsonHierarchy -> datas", datas)
+		const truncatedHierarchy = [ ...datas.coclusteringReport.dimensionHierarchies ];
 
-		const truncatedHierarchy = _.cloneDeep(datas.coclusteringReport.dimensionHierarchies);
 
 		Object.keys(datas.savedDatas.collapsedNodes).forEach((dim) => {
 			const dimIndex = this.dimensionsService.dimensionsDatas.selectedDimensions.findIndex(e => e.name === dim);
@@ -176,10 +177,9 @@ export class SaveService {
 
 				const nodeName = nodes[i];
 				let nodeChildren = [];
-
 				const nodeDetails: TreeNodeVO = this.dimensionsService.dimensionsDatas.dimensionsClusters[dimIndex].find(e => e.cluster === nodeName);
 
-				// Get children list for tests purpose
+				// Get children list
 				nodeDetails.getChildrenList();
 
 				if (nodeDetails && nodeDetails.childrenList) {
@@ -216,8 +216,10 @@ export class SaveService {
 	}
 
 	truncateJsonPartition(datas) {
+		this.treenodesService = this.injector.get(TreenodesService);
 
 		const truncatedPartition = _.cloneDeep(datas.coclusteringReport.dimensionPartitions);
+		// const truncatedPartition = [ ...datas.coclusteringReport.dimensionPartitions ];
 
 		Object.keys(datas.savedDatas.collapsedNodes).forEach((dim, key) => {
 			const nodes = datas.savedDatas.collapsedNodes[dim];
@@ -239,13 +241,14 @@ export class SaveService {
 	}
 
 	computeCatPartition(nodes, dimIndex, currentTruncatedPartition) {
+		this.treenodesService = this.injector.get(TreenodesService);
 
 		const nodesLength = nodes.length;
 		for (let i = 0; i < nodesLength; i++) {
 
 			const nodeName = nodes[i];
 			let nodeChildren = [];
-			const currentDefaultGroup = currentTruncatedPartition.valueGroups[currentTruncatedPartition.defaultGroupIndex].values;
+			const currentDefaultGroup = currentTruncatedPartition.defaultGroupIndex && currentTruncatedPartition.valueGroups[currentTruncatedPartition.defaultGroupIndex].values;
 			const nodeDetails: TreeNodeVO = this.treenodesService.dimensionsDatas.dimensionsClusters[dimIndex].find(e => e.cluster === nodeName);
 			if (nodeDetails && nodeDetails.childrenList) {
 				nodeChildren = nodeDetails.childrenList;
@@ -278,13 +281,15 @@ export class SaveService {
 			}
 
 			// Now find currentDefaultGroup into new constructed currentTruncatedPartition.valueGroups to set defaultGroupIndex
-			currentTruncatedPartition.defaultGroupIndex = currentTruncatedPartition.valueGroups.findIndex(e => e.values.includes(currentDefaultGroup[0]));
-
+			if (currentDefaultGroup) {
+				currentTruncatedPartition.defaultGroupIndex = currentTruncatedPartition.valueGroups.findIndex(e => e.values.includes(currentDefaultGroup[0]));
+			}
 		}
 
 	}
 
 	computeNumPartition(nodes, dimIndex, currentTruncatedPartition) {
+		this.treenodesService = this.injector.get(TreenodesService);
 
 		const nodesLength = nodes.length;
 		for (let i = 0; i < nodesLength; i++) {
@@ -315,6 +320,7 @@ export class SaveService {
 				let currentNodeBound: any = nodeDetails.bounds;
 				currentNodeBound = currentNodeBound.replaceAll('[', '');
 				currentNodeBound = currentNodeBound.replaceAll(']', '');
+				currentNodeBound = currentNodeBound.replaceAll('Missing U ', ''); // #73
 				currentNodeBound = currentNodeBound.split(';');
 				// convert each array string to number
 				for (let j = 0; j < currentNodeBound.length; j++) {
@@ -355,6 +361,15 @@ export class SaveService {
 
 	}
 
+	// isRangeIncluded(range1, range2) {
+	// 	var min1 = Math.min(range1[0], range1[1]);
+	// 	var max1 = Math.max(range1[0], range1[1]);
+	// 	var min2 = Math.min(range2[0], range2[1]);
+	// 	var max2 = Math.max(range2[0], range2[1]);
+
+	// 	return min1 >= min2 && max1 <= max2;
+	// }
+
 	/**
 	 * ChatGPT optimization
 	 */
@@ -364,6 +379,8 @@ export class SaveService {
 		};
 
 		const transitionMatrix = [];
+
+		let t0 = performance.now();
 
 		// Step 1: we build the transition matrix which makes it possible to pass from the part indices of the CI to the part indices of the CC
 		for (let k = 0; k < CI.coclusteringReport.dimensionHierarchies.length; k++) {
@@ -390,9 +407,17 @@ export class SaveService {
 				}
 
 				if (CC.coclusteringReport.dimensionPartitions[k].type === 'Numerical') {
-					while (!(initialPart[0] >= currentVariable[currentP][0] && initialPart[1] <= currentVariable[currentP][1])) {
-						currentPart = currentVariable[++currentP];
+					if (initialPart.length !== 0) { // #73
+						try {
+							while (!(initialPart[0] >= currentVariable[currentP][0] && initialPart[1] <= currentVariable[currentP][1])) {
+								// while (!(this.isRangeIncluded(initialPart, currentVariable))) {
+								currentPart = currentVariable[++currentP];
+							}
+						} catch (e) {
+							console.log('file: save.service.ts:446 ~ truncateJsonCells ~ e:', e);
+						}
 					}
+
 				} else {
 					// The inclusion test consists of going through the modalities of the initial part
 					// and check that they are all in the list of modalities of the current part.
@@ -405,33 +430,81 @@ export class SaveService {
 			}
 		}
 
+		let t1 = performance.now();
+		console.log("STEP 1 " + (t1 - t0) + " milliseconds.");
+
+
+		t0 = performance.now();
+
 		// Step 2: build the list of cells in the current coclustering by calculating the indexes of these cells and their resGroup
-		let indexesCCSet = new Set();
+		// let indexesCCSet = new Set();
 		let resGroup = [];
 
 		// Browse the cells of the initial coclustering json file ("cellPartIndexes" field)
-		for (let i = 0; i < CI.coclusteringReport.cellPartIndexes.length; i++) {
-			let initial_indexes = CI.coclusteringReport.cellPartIndexes[i];
-			let currentIndexes = [];
+		// for (let i = 0; i < CI.coclusteringReport.cellPartIndexes.length; i++) {
+		// 	let initial_indexes = CI.coclusteringReport.cellPartIndexes[i];
+		// 	let currentIndexes = [];
 
-			for (let k = 0; k < CI.coclusteringReport.dimensionHierarchies.length; k++) {
+		// 	for (let k = 0; k < CI.coclusteringReport.dimensionHierarchies.length; k++) {
+		// 		// Calculation of indexes from the transition matrix calculated in step 1
+		// 		currentIndexes.push(transitionMatrix[k][initial_indexes[k]]);
+		// 	}
+
+		// 	let currentIndexesString = currentIndexes.join(',');
+		// 	if (indexesCCSet.has(currentIndexesString)) {
+		// 		const index = resGroup.findIndex((e) => e.key === currentIndexesString);
+		// 		resGroup[index].value += CI.coclusteringReport.cellFrequencies[i];
+		// 	} else {
+		// 		resGroup.push({
+		// 			key: currentIndexesString,
+		// 			value: CI.coclusteringReport.cellFrequencies[i],
+		// 		});
+		// 		indexesCCSet.add(currentIndexesString);
+		// 	}
+		// }
+
+		// chat GPT optimization
+		const {
+			cellPartIndexes,
+			dimensionHierarchies,
+			cellFrequencies
+		} = CI.coclusteringReport;
+		let resGroupMap = new Map();
+		// Browse the cells of the initial coclustering json file ("cellPartIndexes" field)
+		for (let i = 0; i < cellPartIndexes.length; i++) {
+			const initial_indexes = cellPartIndexes[i];
+			const currentIndexes = [];
+			for (let k = 0; k < dimensionHierarchies.length; k++) {
 				// Calculation of indexes from the transition matrix calculated in step 1
 				currentIndexes.push(transitionMatrix[k][initial_indexes[k]]);
 			}
+			const currentIndexesString = currentIndexes.join(',');
 
-			let currentIndexesString = currentIndexes.join(',');
-			if (indexesCCSet.has(currentIndexesString)) {
-				const index = resGroup.findIndex((e) => e.key === currentIndexesString);
-				resGroup[index].value += CI.coclusteringReport.cellFrequencies[i];
+			if (resGroupMap.has(currentIndexesString)) {
+				resGroupMap.set(
+					currentIndexesString,
+					resGroupMap.get(currentIndexesString) + cellFrequencies[i]
+				);
 			} else {
-				resGroup.push({
-					key: currentIndexesString,
-					value: CI.coclusteringReport.cellFrequencies[i],
-				});
-				indexesCCSet.add(currentIndexesString);
+				resGroupMap.set(currentIndexesString, cellFrequencies[i]);
 			}
 		}
+		// console.log('file: save.service.ts:540 ~ truncateJsonCells ~ resGroupMap:', resGroupMap);
+		 resGroupMap = new Map([...resGroupMap.entries()].sort());
 
+		// Convert the map back to an array of objects if needed
+		resGroup = Array.from(resGroupMap, ([key, value]) => ({
+			key,
+			value
+		}));
+
+
+		t1 = performance.now();
+		console.log("STEP 2 " + (t1 - t0) + " milliseconds.");
+
+		t0 = performance.now();
+		/// TRY TO OPTIM THAT
+		// TODO : sort array only when we save as. dont needed for current cluster CC ?
 		resGroup.sort(function (a, b) {
 			if (a.value === b.value) {
 				return a.key.localeCompare(b.key, undefined, {
@@ -440,11 +513,18 @@ export class SaveService {
 			}
 			return b.value - a.value;
 		});
+		/// END TRY TO OPTIM THAT
+		t1 = performance.now();
+		console.log("STEP 3 " + (t1 - t0) + " milliseconds.");
+
+
+
 
 		CC.coclusteringReport.cellFrequencies = resGroup.map(e => e.value);
 		// Convert cellPartIndexes strings to integers
 		CC.coclusteringReport.cellPartIndexes = resGroup.map(e => e.key.split(/\s*,\s*/).map(Number));
 
+		// console.log('file: save.service.ts:547 ~ truncateJsonCells ~ CC:', CC.coclusteringReport.cellFrequencies);
 		return CC;
 	}
 

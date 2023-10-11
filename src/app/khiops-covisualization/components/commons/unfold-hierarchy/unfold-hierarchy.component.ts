@@ -30,6 +30,8 @@ import {
 import {
 	UtilsService
 } from '@khiops-library/providers/utils.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { HierarchyService } from '@khiops-covisualization/providers/hierarchy.service';
 
 @Component({
 	selector: 'app-unfold-hierarchy',
@@ -60,7 +62,12 @@ export class UnfoldHierarchyComponent implements OnInit {
 	selectedLineChartItem = undefined;
 
 	borderColor = localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR') === 'dark' ? '#ffffff' : '#000000';
-
+	defaultMaxUnfoldHierarchy = parseInt(
+		localStorage.getItem(
+			AppConfig.covisualizationCommon.GLOBAL.LS_ID +
+			"DEFAULT_LIMIT_HIERARCHY"
+		),
+		10);
 	hierarchyDisplayedColumns = [{
 			headerName: 'Dimension',
 			field: 'name'
@@ -120,10 +127,12 @@ export class UnfoldHierarchyComponent implements OnInit {
 	constructor(
 		private translate: TranslateService,
 		private dimensionsService: DimensionsDatasService,
+		private hierarchyService: HierarchyService,
+		private snackBar: MatSnackBar,
 		private treenodesService: TreenodesService,
 		private clustersService: ClustersService,
 		private khiopsLibraryService: KhiopsLibraryService,
-		private dialogRef: MatDialogRef<UnfoldHierarchyComponent>) {
+		private dialogRef: MatDialogRef < UnfoldHierarchyComponent > ) {
 
 		this.treenodesService.initSavedUnfoldRank();
 		this.hierarchyDatas = this.treenodesService.getHierarchyDatas();
@@ -143,6 +152,8 @@ export class UnfoldHierarchyComponent implements OnInit {
 	}
 
 	ngOnInit() {
+
+		this.hierarchyService.initialize();
 
 		// this.previousHierarchyRank = copy(this.hierarchyDatas.selectedUnfoldHierarchy);
 		this.previousHierarchyRank = _.cloneDeep(this.hierarchyDatas.selectedUnfoldHierarchy);
@@ -182,6 +193,38 @@ export class UnfoldHierarchyComponent implements OnInit {
 
 	}
 
+	onHierarchyChanged(event) {
+		if (event.value > this.defaultMaxUnfoldHierarchy) {
+			setTimeout(() => {
+				this.currentUnfoldHierarchy = this.defaultMaxUnfoldHierarchy;
+				event.source.value = this.currentUnfoldHierarchy;
+				this.snackBar.open(
+					this.translate.get("SNACKS.UNFOLDED_DATAS_MAXIMUM_UNFOLD", {
+						count: this.currentUnfoldHierarchy,
+					}),
+					this.translate.get("GLOBAL.OK"),
+					{
+						duration: 4000,
+						panelClass: "error",
+						verticalPosition: "bottom",
+					}
+				);
+			});
+		} else {
+			this.currentUnfoldHierarchy = event.value;
+
+			this.clustersPerDimDatas = this.clustersService.getClustersPerDimDatas(this.currentUnfoldHierarchy);
+			this.infoPerCluster = this.clustersService.getInfoPerCluster(this.currentUnfoldHierarchy);
+			this.currentInformationPerCluster = this.infoPerCluster.datasets[0].data[this.currentUnfoldHierarchy - this.dimensions.length];
+			this.treenodesService.updateCurrentHierarchyClustersCount(this.currentUnfoldHierarchy);
+
+			// Dimension changed, clone to update array
+			this.dimensions = _.cloneDeep(this.dimensionsDatas.dimensions);
+
+			this.currentCellsPerCluster = this.clustersService.getCurrentCellsPerCluster();
+		}
+	}
+
 	onClickOnSave() {
 		// this.khiopsLibraryService.trackEvent('click', 'unfold_hierarchy', 'nb_clusters', this.currentUnfoldHierarchy);
 
@@ -191,7 +234,7 @@ export class UnfoldHierarchyComponent implements OnInit {
 
 		setTimeout(() => {
 			this.treenodesService.setSelectedUnfoldHierarchy(this.currentUnfoldHierarchy);
-			this.treenodesService.unfoldHierarchy(this.previousHierarchyRank, this.currentUnfoldHierarchy);
+			this.hierarchyService.unfoldHierarchy(this.currentUnfoldHierarchy);
 			this.loadingHierarchy = false;
 			this.dialogRef.close();
 		}); // do not freeze during computing
@@ -222,22 +265,8 @@ export class UnfoldHierarchyComponent implements OnInit {
 		}
 	}
 
-	onHierarchyChanged(event) {
-		this.currentUnfoldHierarchy = event.value;
-		this.clustersPerDimDatas = this.clustersService.getClustersPerDimDatas(this.currentUnfoldHierarchy);
-		this.infoPerCluster = this.clustersService.getInfoPerCluster(this.currentUnfoldHierarchy);
-		this.currentInformationPerCluster = this.infoPerCluster.datasets[0].data[this.currentUnfoldHierarchy - this.dimensions.length];
-		this.treenodesService.updateCurrentHierarchyClustersCount(this.currentUnfoldHierarchy);
-
-		// Dimension changed, clone to update array
-		this.dimensions = _.cloneDeep(this.dimensionsDatas.dimensions);
-
-		this.currentCellsPerCluster = this.clustersService.getCurrentCellsPerCluster();
-
-	}
-
 	onGridCheckboxChanged(event) {
-		this.treenodesService.toggleDimensionHierarchyFold(event.data.name, event.state);
+		this.hierarchyService.toggleDimensionHierarchyFold(event.data.name, event.state);
 	}
 
 }

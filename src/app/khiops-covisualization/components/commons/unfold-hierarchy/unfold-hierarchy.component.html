@@ -12,8 +12,8 @@
 			<div fxLayout="row" id="unfold-hierarchy-settings" fxLayoutAlign="start start">
 				<div fxLayout="column">
 					<span>{{ 'GLOBAL.NUMBER_OF_CLUSTERS' | translate }} : <b>{{ currentUnfoldHierarchy }}</b></span>
-					<mat-slider color="accent" [max]="hierarchyDatas.totalClusters" [min]="hierarchyDatas.minClusters"
-						[thumbLabel]="true" (input)="onHierarchyChanged($event)" [(ngModel)]="currentUnfoldHierarchy"
+					<mat-slider color="accent" [max]="hierarchyDatas.totalClusters" [min]="hierarchyDatas.minClusters" (change)="onHierarchyChanged($event)"
+						[thumbLabel]="true" [(ngModel)]="currentUnfoldHierarchy"
 						[step]="1">
 					</mat-slider>
 				</div>

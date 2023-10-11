@@ -20,14 +20,8 @@ import {
 	AppService
 } from './app.service';
 import {
-	CellVO
-} from '@khiops-library/model/cell-vo';
-import {
 	CompositionVO
 } from '../model/composition-vo';
-import {
-	UtilsService
-} from '@khiops-library/providers/utils.service';
 import {
 	ImportExtDatasService
 } from './import-ext-datas.service';
@@ -38,9 +32,14 @@ import {
 	ImportFileLoaderService
 } from '@khiops-library/components/import-file-loader/import-file-loader.service';
 import {
-	FileVO
-} from '@khiops-library/model/file-vo';
-import { MatrixCanvasService } from '@khiops-library/components/matrix-canvas/matrix-canvas.service';
+	MatrixCanvasService
+} from '@khiops-library/components/matrix-canvas/matrix-canvas.service';
+import {
+	ClusterDetailsVO
+} from '@khiops-covisualization/model/cluster-details-vo';
+import {
+	TreenodesService
+} from './treenodes.service';
 @Injectable({
 	providedIn: 'root'
 })
@@ -52,6 +51,7 @@ export class ClustersService {
 		private translate: TranslateService,
 		private appService: AppService,
 		private importExtDatasService: ImportExtDatasService,
+		private treenodesService: TreenodesService,
 		private importFileLoaderService: ImportFileLoaderService,
 		private dimensionsDatasService: DimensionsDatasService
 	) {
@@ -143,8 +143,7 @@ export class ClustersService {
 			globalMatrixValues,
 			matrixExtras,
 			matrixExpectedFreqsValues,
-		] = MatrixCanvasService.computeMatrixValues(
-			{
+		] = MatrixCanvasService.computeMatrixValues({
 				mode: "FREQUENCY",
 			},
 			this.dimensionsDatasService.dimensionsDatas.matrixDatas,
@@ -189,8 +188,7 @@ export class ClustersService {
 					const key = `${data.yaxisPart}-${data.xaxisPart}`;
 					map[key] = index;
 					return map;
-				},
-				{}
+				}, {}
 			);
 
 		for (let i = 0; i < otherselectedNode.childrenList.length; i++) {
@@ -202,9 +200,9 @@ export class ClustersService {
 					distributionsGraphLabelsInit.indexOf(otherelement);
 
 				const key =
-					position === 1
-						? `${otherelement}-${element}`
-						: `${element}-${otherelement}`;
+					position === 1 ?
+					`${otherelement}-${element}` :
+					`${element}-${otherelement}`;
 
 				const cell = matrixCellDataMap[key];
 
@@ -232,7 +230,8 @@ export class ClustersService {
 
 
 	getInfoPerCluster(rank: number): any {
-		const appDatas = this.appService.getDatas().datas;
+		const appinitialDatas = this.appService.getInitialDatas().datas;
+
 		const infoPerCluster = {
 			datasets: [],
 			labels: []
@@ -240,11 +239,10 @@ export class ClustersService {
 
 		let currentDataSet: ChartDatasetVO;
 		currentDataSet = new ChartDatasetVO('info', 'line');
-
 		for (let j = this.dimensionsDatas.dimensions.length - 1; j <= this.dimensionsDatas.hierarchyDatas.totalClusters; j++) {
 			let currentCluster;
 			for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
-				const currentDimensionHierarchy: any = appDatas.coclusteringReport.dimensionHierarchies[i];
+				const currentDimensionHierarchy: any = appinitialDatas.coclusteringReport.dimensionHierarchies[i];
 				currentCluster = currentDimensionHierarchy.clusters.find(e => e.hierarchicalRank === j + 1);
 				if (currentCluster) {
 					break;
@@ -325,61 +323,89 @@ export class ClustersService {
 	getCompositionClusters(hierarchyName: string, node: any) {
 
 		const appDatas = this.appService.getDatas().datas;
+		const appinitialDatas = this.appService.getInitialDatas().datas;
 		const compositionValues = [];
 
 		if (appDatas.coclusteringReport && appDatas.coclusteringReport.dimensionPartitions) {
 
-			const currentDimensionDetails: DimensionVO = this.dimensionsDatas.dimensions.find(e => e.name === hierarchyName);
+			const currentDimensionDetails: DimensionVO = this.dimensionsDatas.selectedDimensions.find(e => e.name === hierarchyName);
+			const currentIndex: any = this.dimensionsDatas.selectedDimensions.findIndex(e => {
+				return hierarchyName === e.name;
+			});
+			const currentInitialDimensionDetails: DimensionVO = new DimensionVO(appinitialDatas.coclusteringReport.dimensionSummaries[currentDimensionDetails.startPosition], currentIndex);
+			const dimensionPartition = appinitialDatas.coclusteringReport.dimensionPartitions[currentDimensionDetails.startPosition];
+
+			// Set  dimesnion partitions from intervals or valueGroup
+			currentInitialDimensionDetails.setPartition(dimensionPartition);
 
 			// Composition only available for numerical Dimensions
 			if (currentDimensionDetails && currentDimensionDetails.isCategorical) {
 
 				if (node.childrenLeafList) {
 
-					const currentIndex: any = this.dimensionsDatas.selectedDimensions.findIndex(e => {
-						return hierarchyName === e.name;
-					});
 					const currentDimensionClusters = Object.assign([], this.dimensionsDatas.dimensionsClusters[currentIndex]);
 
 					// Check if external data file is saved
 					const currentDimension = this.dimensionsDatas.selectedDimensions[currentIndex];
 					const externalDatas: ExtDatasVO = this.importExtDatasService.getImportedDatasFromDimension(currentDimension);
 
+
 					const childrenLeafListLength = node.childrenLeafList.length;
+
 					for (let i = 0; i < childrenLeafListLength; i++) {
 
 						const currentLeafName = node.childrenLeafList[i];
-
 						// Check if this name has been updated
-						const currentClusterDetails = currentDimensionDetails.valueGroups.find(e => e.cluster === currentLeafName);
-						const currentClusterDetailsLength = currentClusterDetails.values.length;
-						for (let j = 0; j < currentClusterDetailsLength; j++) {
-							const currentDimensionHierarchyCluster: any = currentDimensionClusters.find(e => e.cluster === currentLeafName);
-							const composition = new CompositionVO(currentClusterDetails, currentDimensionHierarchyCluster, j, externalDatas);
-							compositionValues.push(composition);
-						}
-					}
+						const currentClusterDetails = currentInitialDimensionDetails.valueGroups.find(e => e.cluster === currentLeafName);
+						if (currentClusterDetails) {
+							const currentClusterDetailsLength = currentClusterDetails.values.length;
+							for (let j = 0; j < currentClusterDetailsLength; j++) {
 
-					// Now for each collapsed nodes, change all children names to node name
-					// Find current dim position
-					const currentCollapsedNodes: TreeNodeVO[] = UtilsService.fastFilter(currentDimensionClusters, e => {
-						return e.isCollapsed;
-					});
-					const currentCollapsedNodesLength = currentCollapsedNodes.length;
-					for (let k = 0; k < currentCollapsedNodesLength; k++) {
-						const compositionValuesLength = compositionValues.length;
-						for (let l = 0; l < compositionValuesLength; l++) {
-							if (currentCollapsedNodes[k].childrenLeafList.includes(compositionValues[l]._id)) {
-								compositionValues[l].cluster = currentCollapsedNodes[k].shortDescription;
+								const currentDimensionHierarchyCluster: any = currentDimensionClusters.find(e => e.cluster === currentLeafName);
+								if (node.isCollapsed) {
+									currentDimensionHierarchyCluster.shortDescription = node.shortDescription
+								}
+								const composition = new CompositionVO(currentClusterDetails, currentDimensionHierarchyCluster, j, externalDatas);
+								compositionValues.push(composition);
 							}
 						}
 					}
+
 				}
 
 			}
 		}
 
 		return compositionValues;
+	}
+
+	getFilteredDimensionTree(dimensionsTree, selectedDimension: DimensionVO) {
+		let filteredDimensionsClusters = [];
+		if (dimensionsTree) {
+			const appinitialDatas = this.appService.getInitialDatas().datas;
+			const filteredDimensionsClustersDatas = [].concat(this.getCurrentClusterDetailsFromNode(dimensionsTree));
+			for (let i = 0; i < filteredDimensionsClustersDatas.length; i++) {
+				const clusterDetails: ClusterDetailsVO = new ClusterDetailsVO(filteredDimensionsClustersDatas[i]);
+
+				if (!clusterDetails.size) {
+					// get the size of collapsed nodes
+					const treeNode: TreeNodeVO = this.treenodesService.getNodeFromName(selectedDimension.name, clusterDetails.name);
+					treeNode.getChildrenList();
+
+					// now for each children leaf, get the size into dimensionPartitions.valueGroups
+					let size = 0;
+					for (let index = 0; index < treeNode.childrenLeafIndexes.length; index++) {
+						const elementIndex = treeNode.childrenLeafIndexes[index];
+						if (selectedDimension.isCategorical) {
+							size += appinitialDatas.coclusteringReport.dimensionPartitions[selectedDimension.startPosition].valueGroups[elementIndex].values.length
+						}
+					}
+					clusterDetails.size = size
+				}
+				filteredDimensionsClusters.push(clusterDetails);
+			}
+		}
+		return filteredDimensionsClusters;
 	}
 
 }

@@ -4,7 +4,8 @@ import {
 	OnDestroy,
 	EventEmitter,
 	Output,
-	OnInit
+	OnInit,
+	SimpleChanges
 } from '@angular/core';
 import {
 	TranslateService
@@ -24,6 +25,7 @@ import {
 import {
 	TreenodesService
 } from '@khiops-covisualization/providers/treenodes.service';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-composition',
@@ -71,9 +73,8 @@ export class CompositionComponent implements OnInit, OnDestroy {
 	selectedComposition: CompositionVO;
 	compositionValues: any[];
 	id: any;
-	treeSelectedNodeChangedSub: any;
-	treeNodeNameChangedSub: any;
-	importedDatasChangedSub: any;
+	treeSelectedNodeChangedSub: Subscription;
+	importedDatasChangedSub: Subscription;
 
 	constructor(
 		private translate: TranslateService,
@@ -83,12 +84,6 @@ export class CompositionComponent implements OnInit, OnDestroy {
 	) {
 
 		this.treeSelectedNodeChangedSub = this.eventsService.treeSelectedNodeChanged.subscribe(e => {
-			if (e.selectedNode && e.hierarchyName === this.selectedDimension.name) {
-				this.updateTable(e.selectedNode);
-			}
-		});
-
-		this.treeNodeNameChangedSub = this.eventsService.treeNodeNameChanged.subscribe(e => {
 			if (e.selectedNode && e.hierarchyName === this.selectedDimension.name) {
 				this.updateTable(e.selectedNode);
 			}
@@ -125,9 +120,16 @@ export class CompositionComponent implements OnInit, OnDestroy {
 		}
 	}
 
+
+	ngOnChanges(changes: SimpleChanges) {
+		// update when dimension change (with combo)
+		if (changes.selectedDimension?.currentValue?.name !== changes.selectedDimension?.previousValue?.name && changes.selectedNode) {
+			this.updateTable(this.selectedNode);
+		}
+	}
+
 	ngOnDestroy() {
 		this.treeSelectedNodeChangedSub.unsubscribe();
-		this.treeNodeNameChangedSub.unsubscribe();
 		this.importedDatasChangedSub.unsubscribe();
 	}
 

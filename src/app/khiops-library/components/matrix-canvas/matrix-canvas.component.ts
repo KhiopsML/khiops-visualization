@@ -172,6 +172,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 					datas: changeCell,
 					stopPropagation: true
 				});
+				this.drawSelectedNodes()
 			}
 		} else {
 			return;

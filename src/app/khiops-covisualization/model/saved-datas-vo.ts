@@ -6,6 +6,7 @@ export class SavedDatasVO {
 	selectedNodes: {};
 	selectedDimensions: {};
 	collapsedNodes: {};
+	nodesNames: {};
 	importedDatas: {};
 	unfoldHierarchyState: number;
 
@@ -15,6 +16,7 @@ export class SavedDatasVO {
 		currentSelectedNodes,
 		selectedDimensions,
 		collapsedNodes,
+		nodesNames,
 		importedDatas,
 		unfoldHierarchyState?
 	) {
@@ -23,6 +25,7 @@ export class SavedDatasVO {
 
 		this.selectedDimensions = selectedDimensions;
 		this.collapsedNodes = collapsedNodes;
+		this.nodesNames = nodesNames;
 		this.importedDatas = importedDatas;
 		this.unfoldHierarchyState = unfoldHierarchyState || 0;
 

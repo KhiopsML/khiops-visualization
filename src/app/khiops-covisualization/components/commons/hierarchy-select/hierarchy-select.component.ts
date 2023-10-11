@@ -1,6 +1,5 @@
 import {
 	Component,
-	OnInit,
 	SimpleChanges,
 	OnChanges,
 	Input
@@ -35,6 +34,9 @@ import {
 import {
 	TranslateService
 } from '@ngstack/translate';
+import {
+	Subscription
+} from 'rxjs';
 
 @Component({
 	selector: 'app-hierarchy-select',
@@ -57,13 +59,13 @@ import {
 		])
 	]
 })
-export class HierarchySelectComponent implements OnInit, OnChanges {
+export class HierarchySelectComponent implements OnChanges {
 
 	@Input() selectedDimension: DimensionVO;
 	@Input() selectedNode: TreeNodeVO;
 	@Input() position: number;
 	@Input() dimensions: DimensionVO[];
-	treeCollapseChangedSub: any;
+	treeCollapseChangedSub: Subscription;
 
 	showStats = false;
 	intervals = 0;
@@ -83,8 +85,6 @@ export class HierarchySelectComponent implements OnInit, OnChanges {
 		});
 	}
 
-	ngOnInit() {}
-
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes.selectedDimension && changes.selectedDimension.currentValue) {
 			this.intervals = this.dimensionsService.getDimensionIntervals(this.selectedDimension.name);
@@ -100,21 +100,20 @@ export class HierarchySelectComponent implements OnInit, OnChanges {
 			});
 		}
 
-		setTimeout(() => {
-			this.appService.switchSplitSizes(this.position, newPosition);
-
-			// Reverse selected nodes on selection changed
-			this.treenodesService.updateSelectedNodes(dimension, this.position);
-
-			// Reverse dimensions datas on selection changed
-			this.dimensionsService.updateSelectedDimension(dimension, this.position);
-
-			// Recompute datas
-			this.dimensionsService.saveInitialDimension();
-			this.dimensionsService.constructDimensionsTrees();
-			this.dimensionsService.getMatrixDatas();
-
-			this.treenodesService.collapseNodesSaved();
-		});
+		this.appService.switchSplitSizes(this.position, newPosition);
+		// Reverse selected nodes on selection changed
+		this.treenodesService.updateSelectedNodes(dimension, this.position);
+		// Reverse dimensions datas on selection changed
+		this.dimensionsService.updateSelectedDimension(dimension, this.position);
+		// Recompute datas
+		this.dimensionsService.saveInitialDimension();
+		this.dimensionsService.constructDimensionsTrees();
+		this.dimensionsService.getMatrixDatas();
+		this.treenodesService.collapseNodesSaved();
 	}
+
+	ngOnDestroy() {
+		this.treeCollapseChangedSub.unsubscribe();
+	}
+
 }

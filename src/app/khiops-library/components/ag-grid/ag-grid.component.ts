@@ -229,9 +229,12 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 			// 	this.updateTable(updateTable);
 			// }
 		}
-
-		if (changes.selectedVariable?.currentValue?.name !== changes.selectedVariable?.previousValue?.name) {
-			this.selectNode(changes.selectedVariable.currentValue);
+		if (changes.selectedVariable?.currentValue) {
+		// if ((changes.selectedVariable?.currentValue?.name !== changes.selectedVariable?.previousValue?.name) ||
+		// 	(changes.selectedVariable?.currentValue?.shortDescription !== changes.selectedVariable?.previousValue?.shortDescription)) {
+			// always do it in case of shortdesc change
+				this.selectNode(changes.selectedVariable.currentValue);
+		// }
 		}
 
 		if (changes.updateValues && changes.updateValues.currentValue) {

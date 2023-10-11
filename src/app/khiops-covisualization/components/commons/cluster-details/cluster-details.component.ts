@@ -29,7 +29,9 @@ import {
 import {
 	GridColumnsI
 } from '@khiops-library/interfaces/grid-columns';
-import { Subscription } from 'rxjs';
+import {
+	Subscription
+} from 'rxjs';
 
 @Component({
 	selector: 'app-cluster-details',
@@ -75,7 +77,6 @@ export class ClusterDetailsComponent implements OnInit, OnChanges, OnDestroy {
 	filteredDimensionsClusters: ClusterDetailsVO[];
 	updateValues: ClusterDetailsVO[];
 	treeCollapseChangedSub: Subscription;
-	treeNodeNameChangedSub: Subscription;
 	id: any;
 
 	constructor(
@@ -90,34 +91,9 @@ export class ClusterDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
 		this.treeCollapseChangedSub = this.eventsService.treeCollapseChanged.subscribe(dimensionName => {
 			if (dimensionName === this.selectedDimension.name) {
-				this.getFilteredDimensionTree(this.dimensionsTree);
+				this.filteredDimensionsClusters = this.clustersService.getFilteredDimensionTree(this.dimensionsTree, this.selectedDimension);
 			}
 			this.updateSelectedNode();
-		});
-
-		this.treeNodeNameChangedSub = this.eventsService.treeNodeNameChanged.subscribe(e => {
-			let selectedCluster: ClusterDetailsVO;
-			this.updateValues = [];
-
-			// Update the selected cluster and father
-			selectedCluster = this.filteredDimensionsClusters.find(cluster => cluster._id === e.selectedNode._id);
-			if (selectedCluster) {
-				selectedCluster.name = e.selectedNode.shortDescription;
-				selectedCluster.father = e.selectedNode.parentShortDescription;
-				this.updateValues.push(selectedCluster);
-			}
-
-			if (!e.selectedNode.isLeaf) {
-				// update father of all children if it's a node
-				for (let i = 0; i < e.selectedNode.children.length; i++) {
-					selectedCluster = this.filteredDimensionsClusters.find(cluster => cluster._id === e.selectedNode.children[i]._id);
-					if (selectedCluster) {
-						selectedCluster.father = e.selectedNode.shortDescription;
-						this.updateValues.push(selectedCluster);
-					}
-				}
-			}
-
 		});
 	}
 
@@ -133,18 +109,17 @@ export class ClusterDetailsComponent implements OnInit, OnChanges, OnDestroy {
 			});
 		}
 
-		this.getFilteredDimensionTree(this.dimensionsTree);
+		this.filteredDimensionsClusters = this.clustersService.getFilteredDimensionTree(this.dimensionsTree, this.selectedDimension);
 	}
 
 	ngOnDestroy() {
 		this.treeCollapseChangedSub.unsubscribe();
-		this.treeNodeNameChangedSub.unsubscribe();
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
 		// Keep change listen on dimension combo change
 		if (changes.dimensionsTree && changes.dimensionsTree.currentValue) {
-			this.getFilteredDimensionTree(this.dimensionsTree);
+			this.filteredDimensionsClusters = this.clustersService.getFilteredDimensionTree(this.dimensionsTree, this.selectedDimension);
 			this.updateSelectedNode();
 		}
 		if (changes.selectedNode && changes.selectedNode.currentValue) {
@@ -181,20 +156,6 @@ export class ClusterDetailsComponent implements OnInit, OnChanges, OnDestroy {
 				};
 			}
 		});
-	}
-
-	getFilteredDimensionTree(dimensionsTree) {
-		if (dimensionsTree) {
-			// Do it ngzone because event comes from tree component lib outside the zone
-			this.ngzone.run(() => {
-				this.filteredDimensionsClusters = [];
-				const filteredDimensionsClustersDatas = [].concat(this.clustersService.getCurrentClusterDetailsFromNode(dimensionsTree));
-				for (let i = 0; i < filteredDimensionsClustersDatas.length; i++) {
-					const clusterDetails: ClusterDetailsVO = new ClusterDetailsVO(filteredDimensionsClustersDatas[i]);
-					this.filteredDimensionsClusters.push(clusterDetails);
-				}
-			});
-		}
 	}
 
 	getFirstNodeLeaf(node): any {

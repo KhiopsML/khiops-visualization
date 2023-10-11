@@ -57,7 +57,7 @@ export class AxisViewComponent
 		private saveService: SaveService,
 		private snackBar: MatSnackBar,
 		private eventsService: EventsService,
-		private dimensionsService: DimensionsDatasService
+		private dimensionsDatasService: DimensionsDatasService
 	) {
 		super();
 	}
@@ -65,68 +65,27 @@ export class AxisViewComponent
 		this.initialize();
 	}
 
-	public initialize() {
+	initialize() {
 		this.loadingView = true;
 		this.isBigJsonFile = this.appService.isBigJsonFile();
 
 		setTimeout(() => {
 			this.sizes = this.appService.getViewSplitSizes("axisView");
 
-			this.dimensionsDatas = this.dimensionsService.getDatas();
-			this.dimensionsService.getDimensions();
-			this.dimensionsService.initSelectedDimensions();
-			this.dimensionsService.saveInitialDimension();
-			this.dimensionsService.constructDimensionsTrees();
+			this.dimensionsDatas = this.dimensionsDatasService.getDatas();
+			this.dimensionsDatasService.getDimensions();
+			this.dimensionsDatasService.initSelectedDimensions();
+			this.dimensionsDatasService.saveInitialDimension();
+			this.dimensionsDatasService.constructDimensionsTrees();
 
 			// OPTIM: Unfold auto if computer is too laggy
-			if (this.dimensionsService.isLargeCocluster()) {
-				let unfoldState =
-					parseInt(
-						localStorage.getItem(
-							AppConfig.covisualizationCommon.GLOBAL.LS_ID +
-								"DEFAULT_LIMIT_HIERARCHY"
-						),
-						10
-					) ||
-					AppConfig.covisualizationCommon.UNFOLD_HIERARCHY
-						.DEFAULT_UNFOLD;
-
-				const collapsedNodes =
-					this.treenodesService.getLeafNodesForARank(unfoldState);
-				this.treenodesService.setCollapsedNodesToSave(collapsedNodes);
-				console.log('file: axis-view.component.ts:97 ~ setTimeout ~ collapsedNodes:', collapsedNodes);
-
-				let datas =
-					this.saveService.constructSavedHierarchyToSave(
-						collapsedNodes
-					);
-
-				this.appService.setCroppedFileDatas(datas);
-
-				this.dimensionsDatas = this.dimensionsService.getDatas();
-				this.dimensionsService.getDimensions();
-				this.dimensionsService.initSelectedDimensions();
-				this.dimensionsService.saveInitialDimension();
-				this.dimensionsService.constructDimensionsTrees();
-				this.dimensionsService.getMatrixDatas();
-
-				this.snackBar.open(
-					this.translate.get(
-						"SNACKS.UNFOLDED_DATAS_PERFORMANCE_WARNING",
-						{
-							count: unfoldState,
-						}
-					),
-					this.translate.get("GLOBAL.OK"),
-					{
-						duration: 4000,
-						panelClass: "warning",
-						verticalPosition: "bottom",
-					}
-				);
-			} else {
-				this.dimensionsService.getMatrixDatas();
+			if (
+				this.dimensionsDatasService.isLargeCocluster()
+				// || true
+			) {
+				this.initializeLargeCoclustering();
 			}
+			this.dimensionsDatasService.getMatrixDatas();
 			this.loadingView = false;
 
 			this.viewsLayout = this.appService.initViewsLayout(
@@ -155,6 +114,39 @@ export class AxisViewComponent
 			// 	this.treenodesService.collapseNodesSaved();
 			// });
 		}, 500); // To show loader when big files
+	}
+
+	initializeLargeCoclustering() {
+		let unfoldState =
+			AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.ERGONOMIC_LIMIT;
+
+		this.treenodesService.setSelectedUnfoldHierarchy(unfoldState);
+		const collapsedNodes =
+			this.treenodesService.getLeafNodesForARank(unfoldState);
+		this.treenodesService.setCollapsedNodesToSave(collapsedNodes);
+
+		let datas =
+			this.saveService.constructSavedHierarchyToSave(collapsedNodes);
+
+		this.appService.setCroppedFileDatas(datas);
+
+		this.dimensionsDatas = this.dimensionsDatasService.getDatas();
+		this.dimensionsDatasService.getDimensions();
+		this.dimensionsDatasService.initSelectedDimensions();
+		this.dimensionsDatasService.saveInitialDimension();
+		this.dimensionsDatasService.constructDimensionsTrees();
+
+		this.snackBar.open(
+			this.translate.get("SNACKS.UNFOLDED_DATAS_PERFORMANCE_WARNING", {
+				count: unfoldState,
+			}),
+			this.translate.get("GLOBAL.OK"),
+			{
+				duration: 4000,
+				panelClass: "warning",
+				verticalPosition: "bottom",
+			}
+		);
 	}
 
 	ngOnDestroy() {
