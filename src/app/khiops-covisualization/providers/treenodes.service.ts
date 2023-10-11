@@ -100,45 +100,28 @@ export class TreenodesService {
 			});
 
 			if (currentIndex !== -1) {
-				// Do it only if selection changed
-				let init = true;
-				if (this.dimensionsDatas.selectedNodes[currentIndex]) {
-					init = false;
-				}
 
 				// get Node VO from name
-				nodeVO = this.dimensionsDatas.dimensionsClusters[currentIndex].find(e => {
-					return nodeName === e.name || nodeName === e.shortDescription; // also check into shortDescription (for distribution graph for instance)
+				nodeVO = this.dimensionsDatas.currentDimensionsClusters[currentIndex].find(e => {
+					return nodeName === e.name || nodeName === e.shortDescription; // TODO ? also check into shortDescription (for distribution graph for instance)
 				});
-
-				// Search into dimensionsTrees if node is into collapsed folder
-				// if it is the case, search the first node that not collapsed
-				nodeVO = this.getFirstVisibleNode(this.dimensionsDatas.dimensionsClusters[currentIndex], nodeVO, nodeVO);
-
-				if (nodeVO) {
-					nodeVO.getChildrenList();
+				if (!nodeVO) {
+					// if not found take the first (it's maybe an unfoldHierarchy)
+					nodeVO = this.dimensionsDatas.currentDimensionsClusters[currentIndex][0]
 				}
+				nodeVO.getChildrenList();
 
 				if (currentIndex !== 0 && currentIndex !== 1) {
 					if (this.dimensionsDatas.conditionalOnContext) {
-						// Important to get children list for contexts when saving hierarchy as
-						// const parentNodeVO: TreeNodeVO = this.dimensionsDatas.dimensionsClusters[currentIndex].find((e: TreeNodeVO) => e.isParentCluster);
-						// parentNodeVO.getChildrenList();
-						// it is context selection
-						if (nodeVO && nodeVO.isLeaf) {
-							this.dimensionsDatas.contextSelection[currentIndex - 2] = [nodeVO.id];
-						} else {
 							this.dimensionsDatas.contextSelection[currentIndex - 2] = nodeVO.childrenLeafIndexes;
-						}
 					} else {
 						// conditionalOnContext unset
 						// get the parent node
-						const parentNodeVO: TreeNodeVO = this.dimensionsDatas.dimensionsClusters[currentIndex].find((e: TreeNodeVO) => e.isParentCluster);
+						const parentNodeVO: TreeNodeVO = this.dimensionsDatas.currentDimensionsClusters[currentIndex].find((e: TreeNodeVO) => e.isParentCluster);
 						parentNodeVO.getChildrenList();
 						// and set their chidren leafs to context nodes
 						this.dimensionsDatas.contextSelection[currentIndex - 2] = parentNodeVO.childrenLeafIndexes;
 					}
-
 				}
 
 				this.dimensionsDatas.selectedNodes[currentIndex] = nodeVO;
@@ -146,9 +129,14 @@ export class TreenodesService {
 
 			// Do not send event changed if only one node selected and if nodes does not changed
 			if (!deepEqual(previousSelectedNodes, this.dimensionsDatas.selectedNodes)) {
+				// search in the complete datas the corresponding node
+				const realNodeVO = this.dimensionsDatas.dimensionsClusters[currentIndex].find(e => {
+					return nodeVO.name === e.name || nodeVO.shortDescription === e.shortDescription; // also check into shortDescription (for distribution graph for instance)
+				});
+				console.log('file: treenodes.service.ts:136 ~ TreenodesService ~ realNodeVO ~ realNodeVO:', realNodeVO);
 				this.eventsService.emitTreeSelectedNodeChanged({
 					hierarchyName: hierarchyName,
-					selectedNode: nodeVO,
+					selectedNode: realNodeVO,
 					stopPropagation: stopPropagation
 				});
 			}
@@ -194,7 +182,7 @@ export class TreenodesService {
 	}
 
 	getNodeFromName(dimensionName, nodeName) {
-		let nodeVO: TreeNodeVO;
+		let nodeVO: any;
 		const currentIndex: any = this.dimensionsDatas.selectedDimensions.findIndex(e => {
 			return dimensionName === e.name;
 		});
@@ -210,7 +198,7 @@ export class TreenodesService {
 				});
 			}
 		}
-		return nodeVO;
+		return _.cloneDeep(nodeVO); // important to clone datas to keep origin immmutable
 	}
 
 	setCollapsedNodesToSave(collapsedNodesToSave) {
@@ -317,23 +305,23 @@ export class TreenodesService {
 	}
 
 	collapseNode(dimensionName, nodeName, emitEvent = true, keepCurrentUnfolding = false) {
-		const currentIndex: any = this.dimensionsDatas.selectedDimensions.findIndex(e => {
-			return dimensionName === e.name;
-		});
-		if (currentIndex === 0 || currentIndex === 1) { // more than 2 is context
+		// const currentIndex: any = this.dimensionsDatas.selectedDimensions.findIndex(e => {
+		// 	return dimensionName === e.name;
+		// });
+		// if (currentIndex === 0 || currentIndex === 1) { // more than 2 is context
 			this.updateCollapsedNodesToSave(dimensionName, nodeName, 1);
 			this.update();
-		}
+		// }
 	}
 
 	expandNode(dimensionName, nodeName) {
-		const currentIndex: any = this.dimensionsDatas.selectedDimensions.findIndex(e => {
-			return dimensionName === e.name;
-		});
-		if (currentIndex === 0 || currentIndex === 1) { // more than 2 is context
+		// const currentIndex: any = this.dimensionsDatas.selectedDimensions.findIndex(e => {
+		// 	return dimensionName === e.name;
+		// });
+		// if (currentIndex === 0 || currentIndex === 1) { // more than 2 is context
 			this.updateCollapsedNodesToSave(dimensionName, nodeName, -1);
 			this.update();
-		}
+		// }
 	}
 
 	update() {

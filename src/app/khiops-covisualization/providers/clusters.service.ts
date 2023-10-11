@@ -340,6 +340,7 @@ export class ClustersService {
 
 			// Composition only available for numerical Dimensions
 			if (currentDimensionDetails && currentDimensionDetails.isCategorical) {
+				node.getChildrenList();
 
 				if (node.childrenLeafList) {
 
@@ -390,17 +391,19 @@ export class ClustersService {
 				if (!clusterDetails.size) {
 					// get the size of collapsed nodes
 					const treeNode: TreeNodeVO = this.treenodesService.getNodeFromName(selectedDimension.name, clusterDetails.name);
-					treeNode.getChildrenList();
+					if (treeNode) {
+						treeNode.getChildrenList();
 
-					// now for each children leaf, get the size into dimensionPartitions.valueGroups
-					let size = 0;
-					for (let index = 0; index < treeNode.childrenLeafIndexes.length; index++) {
-						const elementIndex = treeNode.childrenLeafIndexes[index];
-						if (selectedDimension.isCategorical) {
-							size += appinitialDatas.coclusteringReport.dimensionPartitions[selectedDimension.startPosition].valueGroups[elementIndex].values.length
+						// now for each children leaf, get the size into dimensionPartitions.valueGroups
+						let size = 0;
+						for (let index = 0; index < treeNode.childrenLeafIndexes.length; index++) {
+							const elementIndex = treeNode.childrenLeafIndexes[index];
+							if (selectedDimension.isCategorical) {
+								size += appinitialDatas.coclusteringReport.dimensionPartitions[selectedDimension.startPosition].valueGroups[elementIndex].values.length
+							}
 						}
+							clusterDetails.size = size
 					}
-					clusterDetails.size = size
 				}
 				filteredDimensionsClusters.push(clusterDetails);
 			}

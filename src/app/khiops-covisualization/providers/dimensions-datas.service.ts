@@ -16,9 +16,6 @@ import {
 import {
 	MatrixUtilsDatasService
 } from '@khiops-library/providers/matrix-utils-datas.service';
-import {
-	EventsService
-} from './events.service';
 import * as _ from 'lodash'; // Important to import lodash in karma
 
 @Injectable({
@@ -30,7 +27,6 @@ export class DimensionsDatasService {
 
 	constructor(
 		private appService: AppService,
-		private eventsService: EventsService
 	) {
 		this.initialize();
 	}
@@ -59,8 +55,10 @@ export class DimensionsDatasService {
 				unfoldHierarchyState: 0
 			},
 			dimensionsTrees: [],
+			currentDimensionsTrees: [],
 			selectedNodesSummary: [],
-			dimensionsClusters: []
+			dimensionsClusters: [],
+			currentDimensionsClusters: []
 		};
 		return this.dimensionsDatas;
 	}
@@ -240,25 +238,73 @@ export class DimensionsDatasService {
 	constructDimensionsTrees() {
 
 		this.dimensionsDatas.dimensionsTrees = [];
-		const appDatas = this.appService.getInitialDatas().datas;
+		this.dimensionsDatas.currentDimensionsTrees = [];
+		const appinitialDatas = this.appService.getInitialDatas().datas;
+		const appDatas = this.appService.getDatas().datas;
 
 		// At launch check if there are collapsed nodes into input json file
 		const collapsedNodes = this.appService.getSavedDatas('collapsedNodes');
 
-		if (appDatas && appDatas.coclusteringReport) {
+		if (appinitialDatas && appinitialDatas.coclusteringReport) {
 
 			const selectedDimensionsLength = this.dimensionsDatas.selectedDimensions.length;
 			for (let i = 0; i < selectedDimensionsLength; i++) {
 				let leafPosition = -1;
 
 				const dimension = this.dimensionsDatas.selectedDimensions[i];
-				const currentDimensionHierarchy: any = appDatas.coclusteringReport.dimensionHierarchies.find(e => e.name === dimension.name);
-				if (currentDimensionHierarchy) {
+				const dimensionHierarchy: any = appinitialDatas.coclusteringReport.dimensionHierarchies.find(e => e.name === dimension.name);
+				if (dimensionHierarchy) {
 
 					this.dimensionsDatas.dimensionsTrees[i] = [];
 					this.dimensionsDatas.dimensionsClusters[i] = [];
 
+					const nbClusters = appinitialDatas.coclusteringReport.dimensionSummaries[i].initialParts;
+					// const nbClusters = appinitialDatas.coclusteringReport.dimensionSummaries[i].parts;
+					let index = 0;
+
+					const currentNodesNames = this.dimensionsDatas.nodesNames[dimensionHierarchy.name];
+
+					// First convert each child into a treenode value object
+					const clustersLength = dimensionHierarchy.clusters.length;
+					for (let j = 0; j < clustersLength; j++) {
+
+						if (dimensionHierarchy.clusters[j].isLeaf) {
+							leafPosition++;
+						}
+						const currentDimensionNodesToCollapse = collapsedNodes && collapsedNodes[dimension.name] || [];
+						const currentObj: TreeNodeVO = new TreeNodeVO(
+							index,
+							dimensionHierarchy.clusters[j],
+							dimension,
+							currentDimensionNodesToCollapse,
+							nbClusters,
+							leafPosition,
+							j,
+							currentNodesNames
+						);
+						this.dimensionsDatas.dimensionsClusters[i].push(currentObj);
+
+						index++;
+					}
+
+					// Update parentShortDescription of childeren if user has changed the node name by the past
+					// this.updateAllParentShortDescription(dimensionHierarchy, i); // TODO ?
+
+					// sort dimensionsClusters by rank to order intervals
+					this.dimensionsDatas.dimensionsClusters[i] = _.orderBy(this.dimensionsDatas.dimensionsClusters[i], e => e.rank);
+
+					// unflat the tree and set childrens to dimensionsClusters
+					this.dimensionsDatas.dimensionsTrees[i] = UtilsService.unflatten(this.dimensionsDatas.dimensionsClusters[i]);
+				}
+
+				const currentDimensionHierarchy: any = appDatas.coclusteringReport.dimensionHierarchies.find(e => e.name === dimension.name);
+				if (currentDimensionHierarchy) {
+
+					this.dimensionsDatas.currentDimensionsTrees[i] = [];
+					this.dimensionsDatas.currentDimensionsClusters[i] = [];
+
 					const nbClusters = appDatas.coclusteringReport.dimensionSummaries[i].initialParts;
+					// const nbClusters = appinitialDatas.coclusteringReport.dimensionSummaries[i].parts;
 					let index = 0;
 
 					const currentNodesNames = this.dimensionsDatas.nodesNames[currentDimensionHierarchy.name];
@@ -281,24 +327,23 @@ export class DimensionsDatasService {
 							j,
 							currentNodesNames
 						);
-						this.dimensionsDatas.dimensionsClusters[i].push(currentObj);
+						this.dimensionsDatas.currentDimensionsClusters[i].push(currentObj);
 
 						index++;
 					}
 
 					// Update parentShortDescription of childeren if user has changed the node name by the past
-					this.updateAllParentShortDescription(currentDimensionHierarchy, i);
+					// this.updateAllParentShortDescription(currentDimensionHierarchy, i);
 
 					// sort dimensionsClusters by rank to order intervals
-					this.dimensionsDatas.dimensionsClusters[i] = _.orderBy(this.dimensionsDatas.dimensionsClusters[i], e => e.rank);
+					this.dimensionsDatas.currentDimensionsClusters[i] = _.orderBy(this.dimensionsDatas.currentDimensionsClusters[i], e => e.rank);
 
-					this.dimensionsDatas.dimensionsTrees[i] = UtilsService.unflatten(this.dimensionsDatas.dimensionsClusters[i]);
-
+					// unflat the tree and set childrens to currentDimensionsClusters
+					this.dimensionsDatas.currentDimensionsTrees[i] = UtilsService.unflatten(this.dimensionsDatas.currentDimensionsClusters[i]);
 				}
 
 			}
 		}
-		return this.dimensionsDatas.dimensionsTrees;
 	}
 
 	updateAllParentShortDescription(currentDimensionHierarchy, dimensionIndex) {

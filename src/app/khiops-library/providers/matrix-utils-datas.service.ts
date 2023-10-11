@@ -158,7 +158,7 @@ export class MatrixUtilsDatasService {
 		if (isContextMatrix) {
 			// Get dimensions parts
 			// zDimension may be an array
-			const dimensionParts = zDimension.map(e => e.initialParts); // important to take initial parts in case of folded node
+			const dimensionParts = zDimension.map(e => e.parts);
 			const maxParts = UtilsService.generateMaxParts(dimensionParts);
 			const cellPartsCombinations = UtilsService.generateMatrixCombinations(maxParts.reverse());
 			cellFreqHash = UtilsService.generateHashFromArray(cellPartsCombinations);
@@ -306,6 +306,7 @@ export class MatrixUtilsDatasService {
 		var t1 = performance.now();
 		// console.log("getCellDatas " + (t1 - t0) + " milliseconds.");
 		// console.log("TCL: MatrixUtilsDatasService -> constructor -> cells", cells)
+		console.log('file: matrix-utils-datas.service.ts:310 ~ MatrixUtilsDatasService ~ cells:', cells);
 		return cells;
 	}
 

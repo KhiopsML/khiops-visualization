@@ -26,6 +26,7 @@ import {
 	TreenodesService
 } from '@khiops-covisualization/providers/treenodes.service';
 import { Subscription } from 'rxjs';
+import _ from 'lodash';
 
 @Component({
 	selector: 'app-composition',
@@ -109,7 +110,7 @@ export class CompositionComponent implements OnInit, OnDestroy {
 	updateTable(selectedNode) {
 		if (selectedNode) {
 
-			this.compositionValues = Object.assign([], this.clustersService.getCompositionClusters(selectedNode.hierarchy, selectedNode));
+			this.compositionValues = Object.assign([], this.clustersService.getCompositionClusters(selectedNode.hierarchy, _.cloneDeep(selectedNode)));
 
 			// if composition values : categorical
 			if (this.compositionValues.length > 0) {
