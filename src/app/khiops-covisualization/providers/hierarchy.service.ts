@@ -46,25 +46,40 @@ export class HierarchyService {
 
 		const collapsedNodes =
 			this.treenodesService.getLeafNodesForARank(currentRank);
-		for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
+		// this.treenodesService.setCollapsedNodesToSave(collapsedNodes);
+
+
+
+const collapsedNodesToSave = {...collapsedNodes}
+
+
+
+			for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
 			// Remove dimension if unchecked
 			if (this.dimensionsDatas.dimensions[i].hierarchyFold === false) {
 				delete collapsedNodes[this.dimensionsDatas.dimensions[i].name];
 			}
+
+			// if (i > 1) {
+			// 	delete collapsedNodes[this.dimensionsDatas.dimensions[i].name];
+			// }
 		}
-		this.treenodesService.setCollapsedNodesToSave(collapsedNodes);
 
 		let datas =
 			this.saveService.constructSavedHierarchyToSave(collapsedNodes);
-
 		this.appService.setCroppedFileDatas(datas);
 
 		this.dimensionsDatas = this.dimensionsDatasService.getDatas();
 		this.dimensionsDatasService.getDimensions();
 		this.dimensionsDatasService.initSelectedDimensions();
 		this.dimensionsDatasService.saveInitialDimension();
+
+		// datas.savedDatas.collapsedNodes = collapsedNodesToSave
+
 		this.dimensionsDatasService.constructDimensionsTrees();
 
 		this.dimensionsDatasService.getMatrixDatas();
+
+
 	}
 }

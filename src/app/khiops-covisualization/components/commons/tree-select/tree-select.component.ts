@@ -164,20 +164,15 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 			});
 		});
 		this.tree.on('expand', (e) => {
+			// this.treenodesService.setSelectedNode(this.selectedDimension.name, e.data.name, false);
 			this.treenodesService.expandNode(this.selectedDimension.name, e.data.name);
 		});
 		this.tree.on('expandAll', (e) => {
 
 		});
 		this.tree.on('collapse', (e) => {
+			// this.treenodesService.setSelectedNode(this.selectedDimension.name, e.data.name, false);
 			this.treenodesService.collapseNode(this.selectedDimension.name, e.data.name);
-
-			// select current node after folding without propagation
-			// otherwise, nothing is selected into the tree
-			this.ngzone.run(() => {
-				this.treenodesService.setSelectedNode(this.selectedDimension.name, e.data.name, true);
-			});
-
 		});
 		this.tree.on('collapseAll', (e) => {
 

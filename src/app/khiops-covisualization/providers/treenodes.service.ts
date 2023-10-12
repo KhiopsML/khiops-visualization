@@ -62,10 +62,10 @@ export class TreenodesService {
 		return collapsedNodes;
 	}
 
-	updateSelectedNodeName(hierarchyName, name, newName, isLeaf) {
-		this.dimensionsDatas.nodesNames[hierarchyName] = this.dimensionsDatas.nodesNames[hierarchyName] || {};
-		this.dimensionsDatas.nodesNames[hierarchyName][name] = newName;
-		this.update();
+	updateSelectedNodeName(dimensionName, name, newName, isLeaf) {
+		this.dimensionsDatas.nodesNames[dimensionName] = this.dimensionsDatas.nodesNames[dimensionName] || {};
+		this.dimensionsDatas.nodesNames[dimensionName][name] = newName;
+		this.update(dimensionName);
 	}
 
 	initSavedUnfoldRank() {
@@ -89,6 +89,7 @@ export class TreenodesService {
 	}
 
 	setSelectedNode(hierarchyName, nodeName, stopPropagation = false) {
+		console.log('file: treenodes.service.ts:92 ~ TreenodesService ~ setSelectedNode ~ nodeName:', nodeName);
 
 		let nodeVO: TreeNodeVO;
 		if (this.dimensionsDatas.selectedDimensions) {
@@ -113,7 +114,14 @@ export class TreenodesService {
 
 				if (currentIndex !== 0 && currentIndex !== 1) {
 					if (this.dimensionsDatas.conditionalOnContext) {
-							this.dimensionsDatas.contextSelection[currentIndex - 2] = nodeVO.childrenLeafIndexes;
+
+						// this.dimensionsDatas.contextSelection[currentIndex - 2] = nodeVO.childrenLeafIndexes;
+						// for contexts, we must get the real node to get the childrenLeafIndexes
+						const realNodeVO = this.dimensionsDatas.dimensionsClusters[currentIndex].find(e => {
+							return nodeVO.name === e.name || nodeVO.shortDescription === e.shortDescription; // also check into shortDescription (for distribution graph for instance)
+						});
+						realNodeVO.getChildrenList();
+						this.dimensionsDatas.contextSelection[currentIndex - 2] = realNodeVO.childrenLeafIndexes;
 					} else {
 						// conditionalOnContext unset
 						// get the parent node
@@ -133,7 +141,6 @@ export class TreenodesService {
 				const realNodeVO = this.dimensionsDatas.dimensionsClusters[currentIndex].find(e => {
 					return nodeVO.name === e.name || nodeVO.shortDescription === e.shortDescription; // also check into shortDescription (for distribution graph for instance)
 				});
-				console.log('file: treenodes.service.ts:136 ~ TreenodesService ~ realNodeVO ~ realNodeVO:', realNodeVO);
 				this.eventsService.emitTreeSelectedNodeChanged({
 					hierarchyName: hierarchyName,
 					selectedNode: realNodeVO,
@@ -309,22 +316,20 @@ export class TreenodesService {
 		// 	return dimensionName === e.name;
 		// });
 		// if (currentIndex === 0 || currentIndex === 1) { // more than 2 is context
-			this.updateCollapsedNodesToSave(dimensionName, nodeName, 1);
-			this.update();
-		// }
+		// 	this.setSelectedNode(dimensionName, nodeName, true)
+		// 	}
+
+		this.updateCollapsedNodesToSave(dimensionName, nodeName, 1);
+		this.update(dimensionName, nodeName);
 	}
 
 	expandNode(dimensionName, nodeName) {
-		// const currentIndex: any = this.dimensionsDatas.selectedDimensions.findIndex(e => {
-		// 	return dimensionName === e.name;
-		// });
-		// if (currentIndex === 0 || currentIndex === 1) { // more than 2 is context
-			this.updateCollapsedNodesToSave(dimensionName, nodeName, -1);
-			this.update();
-		// }
+
+		this.updateCollapsedNodesToSave(dimensionName, nodeName, -1);
+		this.update(dimensionName, nodeName);
 	}
 
-	update() {
+	update(dimensionName, nodeName ? ) {
 		let collapsedNodes = this.getCollapsedNodesToSave();
 		let datas =
 			this.saveService.constructSavedHierarchyToSave( // 877
@@ -336,7 +341,13 @@ export class TreenodesService {
 		this.dimensionsDatasService.initSelectedDimensions(false); // do not to dont reinit selected context node
 		this.dimensionsDatasService.saveInitialDimension();
 		this.dimensionsDatasService.constructDimensionsTrees(); // 191
-		this.dimensionsDatasService.getMatrixDatas();
+		const currentIndex: any = this.dimensionsDatas.selectedDimensions.findIndex(e => {
+			return dimensionName === e.name;
+		});
+		if (currentIndex === 0 || currentIndex === 1) { // more than 2 is context
+			this.dimensionsDatasService.getMatrixDatas();
+		}
+
 	}
 
 }

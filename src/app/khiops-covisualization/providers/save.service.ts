@@ -154,7 +154,7 @@ export class SaveService {
 
 		if (!collapsedNodesInput) {
 			// Remove collapsed nodes and selected nodes because they have been reduced
-			delete datasToSave.savedDatas.collapsedNodes;
+			delete datasToSave.savedDatas.collapsedNodes; // TODO ?
 		}
 		// delete datasToSave.savedDatas.selectedNodes; // do not do that to keep context selection
 		console.log('file: save.service.ts:114 ~ constructSavedHierarchyToSave ~ datasToSave:', datasToSave);

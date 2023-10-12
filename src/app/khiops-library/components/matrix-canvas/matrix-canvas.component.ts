@@ -180,6 +180,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
+		console.log('file: matrix-canvas.component.ts:183 ~ MatrixCanvasComponent ~ ngOnChanges ~ changes:', changes);
 		// if graph mode change, reset isZerosToggled
 		if (changes.graphMode) {
 			this.isZerosToggled = false;
@@ -192,6 +193,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 	}
 
 	drawMatrix() {
+	console.log('file: matrix-canvas.component.ts:195 ~ MatrixCanvasComponent ~ drawMatrix ~ drawMatrix:');
 
 		if (!this.isDrawing) {
 			requestAnimationFrame(() => {
@@ -210,6 +212,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 						this.inputDatas,
 						this.contextSelection,
 						this.selectedTargetIndex);
+						console.log('file: matrix-canvas.component.ts:214 ~ MatrixCanvasComponent ~ requestAnimationFrame ~ this.contextSelection:', this.contextSelection);
 
 					// Clean dom canvas
 					this.cleanDomContext();

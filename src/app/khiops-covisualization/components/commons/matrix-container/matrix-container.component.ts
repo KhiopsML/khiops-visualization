@@ -91,7 +91,7 @@ export class MatrixContainerComponent implements OnInit, OnChanges, OnDestroy {
 			});
 		this.treeCollapseChangedSub =
 			this.eventsService.treeCollapseChanged.subscribe((e) => {
-				this.matrixCanvas.drawMatrix();
+				// this.matrixCanvas.drawMatrix();
 			});
 
 		this.viewsLayoutChangedSub =
