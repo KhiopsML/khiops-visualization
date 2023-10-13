@@ -26,17 +26,11 @@ import {
 	TreeNodeVO
 } from '@khiops-covisualization/model/tree-node-vo';
 import {
-	EventsService
-} from '@khiops-covisualization/providers/events.service';
-import {
 	MatSnackBar
 } from '@angular/material/snack-bar';
 import {
 	TranslateService
 } from '@ngstack/translate';
-import {
-	Subscription
-} from 'rxjs';
 
 @Component({
 	selector: 'app-hierarchy-select',
@@ -65,7 +59,6 @@ export class HierarchySelectComponent implements OnChanges {
 	@Input() selectedNode: TreeNodeVO;
 	@Input() position: number;
 	@Input() dimensions: DimensionVO[];
-	treeCollapseChangedSub: Subscription;
 
 	showStats = false;
 	intervals = 0;
@@ -75,14 +68,7 @@ export class HierarchySelectComponent implements OnChanges {
 		private snackBar: MatSnackBar,
 		private translate: TranslateService,
 		private appService: AppService,
-		private dimensionsService: DimensionsDatasService,
-		private eventsService: EventsService) {
-
-		this.treeCollapseChangedSub = this.eventsService.treeCollapseChanged.subscribe(dimensionName => {
-			if (dimensionName === this.selectedDimension.name) {
-				this.intervals = this.dimensionsService.getDimensionIntervals(this.selectedDimension.name);
-			}
-		});
+		private dimensionsService: DimensionsDatasService) {
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
@@ -113,7 +99,6 @@ export class HierarchySelectComponent implements OnChanges {
 	}
 
 	ngOnDestroy() {
-		this.treeCollapseChangedSub.unsubscribe();
 	}
 
 }

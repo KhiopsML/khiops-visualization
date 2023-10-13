@@ -56,7 +56,6 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 	// Keep a reference to the tree nodes so Angular can render them.
 	nodes: any;
 	dimensionsDatas: any;
-	treeInitSub: any;
 	isFullscreen = false;
 
 	constructor(

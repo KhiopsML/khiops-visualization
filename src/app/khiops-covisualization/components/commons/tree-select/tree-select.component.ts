@@ -41,6 +41,7 @@ import {
 	TranslateService
 } from '@ngstack/translate';
 import { ConfigService } from '@khiops-library/providers/config.service';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-tree-select',
@@ -56,8 +57,7 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 	@Input() position: number;
 	@Input() dimensionsTree: any;
 
-
-	treeSelectedNodeChangedSub: any;
+	treeSelectedNodeChangedSub: Subscription;
 
 	componentType = 'tree'; // needed to copy datas
 	id: any;
@@ -66,7 +66,6 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 	// Keep a reference to the tree nodes so Angular can render them.
 	nodes: any;
 	dimensionsDatas: any;
-	treeInitSub: any;
 
 	constructor(
 		public ngzone: NgZone,
@@ -79,11 +78,6 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 		public configService: ConfigService) {
 
 		super(selectableService, ngzone, configService);
-
-		this.treeInitSub = this.eventsService.treeInit.subscribe(selectedNodes => {
-			// Listen for unfold hierarchy change to reinit tree and select nodes
-			this.initTree(selectedNodes[this.position]);
-		});
 
 		this.treeSelectedNodeChangedSub = this.eventsService.treeSelectedNodeChanged.subscribe(e => {
 			if (this.tree && e.selectedNode && e.hierarchyName === this.selectedDimension.name) {
@@ -103,7 +97,6 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 	}
 
 	ngOnDestroy() {
-		this.treeInitSub.unsubscribe();
 		this.treeSelectedNodeChangedSub.unsubscribe();
 	}
 

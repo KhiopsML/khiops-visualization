@@ -15,9 +15,6 @@ import {
 	DimensionVO
 } from '@khiops-library/model/dimension-vo';
 import {
-	EventsService
-} from '@khiops-covisualization/providers/events.service';
-import {
 	ClustersService
 } from '@khiops-covisualization/providers/clusters.service';
 import {
@@ -29,9 +26,6 @@ import {
 import {
 	GridColumnsI
 } from '@khiops-library/interfaces/grid-columns';
-import {
-	Subscription
-} from 'rxjs';
 
 @Component({
 	selector: 'app-cluster-details',
@@ -76,7 +70,6 @@ export class ClusterDetailsComponent implements OnInit, OnChanges, OnDestroy {
 	title: string;
 	filteredDimensionsClusters: ClusterDetailsVO[];
 	updateValues: ClusterDetailsVO[];
-	treeCollapseChangedSub: Subscription;
 	id: any;
 
 	constructor(
@@ -84,17 +77,8 @@ export class ClusterDetailsComponent implements OnInit, OnChanges, OnDestroy {
 		public ngzone: NgZone,
 		private treenodesService: TreenodesService,
 		private clustersService: ClustersService,
-		private eventsService: EventsService
 	) {
-
 		this.title = this.translate.get('GLOBAL.CURRENT_CLUSTERS');
-
-		this.treeCollapseChangedSub = this.eventsService.treeCollapseChanged.subscribe(dimensionName => {
-			if (dimensionName === this.selectedDimension.name) {
-				this.filteredDimensionsClusters = this.clustersService.getFilteredDimensionTree(this.dimensionsTree, this.selectedDimension);
-			}
-			this.updateSelectedNode();
-		});
 	}
 
 	ngOnInit() {
@@ -113,7 +97,6 @@ export class ClusterDetailsComponent implements OnInit, OnChanges, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		this.treeCollapseChangedSub.unsubscribe();
 	}
 
 	ngOnChanges(changes: SimpleChanges) {

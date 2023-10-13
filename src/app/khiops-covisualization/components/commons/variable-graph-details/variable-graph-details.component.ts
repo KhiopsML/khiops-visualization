@@ -64,9 +64,7 @@ implements OnInit, OnChanges, OnDestroy, AfterViewInit {
 	@Input() selectedDimensions: DimensionVO[];
 
 	scrollPosition = 0;
-	treeCollapseChangedSub: Subscription;
 	treeSelectedNodeChangedSub: Subscription;
-	dimensionsDatasChangedSub: Subscription;
 
 	isLoadingGraphDatas: boolean;
 	scaleValue: any;
@@ -93,10 +91,6 @@ implements OnInit, OnChanges, OnDestroy, AfterViewInit {
 	) {
 		this.colorSet = this.khiopsLibraryService.getGraphColorSet()[2];
 
-		this.treeCollapseChangedSub =
-			this.eventsService.treeCollapseChanged.subscribe((dimension) => {
-				this.getFilteredDistribution(this.dimensionsTree, true);
-			});
 		this.treeSelectedNodeChangedSub =
 			this.eventsService.treeSelectedNodeChanged.subscribe((e) => {
 				setTimeout(() => {
@@ -160,7 +154,6 @@ implements OnInit, OnChanges, OnDestroy, AfterViewInit {
 	}
 
 	ngOnDestroy() {
-		this.treeCollapseChangedSub.unsubscribe();
 		this.treeSelectedNodeChangedSub.unsubscribe();
 	}
 

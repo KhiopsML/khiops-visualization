@@ -17,12 +17,6 @@ import {
 import {
 	DimensionVO
 } from '@khiops-library/model/dimension-vo';
-import {
-	EventsService
-} from '@khiops-covisualization/providers/events.service';
-import {
-	Subscription
-} from 'rxjs';
 
 @Component({
 	selector: 'app-axis',
@@ -54,16 +48,11 @@ export class AxisComponent implements OnInit, OnDestroy {
 
 	viewLayout: DimensionViewLayoutVO;
 	invertedPosition: number;
-	dimensionsSelectionChangedSub: Subscription;
 	selectedComposition: any;
 
 	constructor(private appService: AppService,
-		private eventsService: EventsService
 	) {
-		this.dimensionsSelectionChangedSub = this.eventsService.dimensionsSelectionChanged.subscribe(selectedDimensions => {
-			// Re init view when dimension change to update sizes
-			this.initializeView();
-		});
+
 	}
 
 	ngOnInit() {
@@ -71,7 +60,6 @@ export class AxisComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		this.dimensionsSelectionChangedSub.unsubscribe();
 	}
 
 	initializeView() {
