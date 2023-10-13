@@ -179,7 +179,6 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
-		console.log('file: matrix-canvas.component.ts:183 ~ MatrixCanvasComponent ~ ngOnChanges ~ changes:', changes);
 		// if graph mode change, reset isZerosToggled
 		if (changes.graphMode) {
 			this.isZerosToggled = false;
@@ -187,12 +186,16 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 
 		// Draw matrix on change
 		if (this.matrixDiv && this.matrixDiv.nativeElement && !changes.selectedNodes) {
-			this.drawMatrix();
+			if (this.inputDatas.matrixCellDatas && this.inputDatas.propagateChanges === false) {
+				this.inputDatas.propagateChanges = true; // hack to limit re-rendering and optimize perf
+			} else {
+				this.drawMatrix();
+			}
 		}
 	}
 
 	drawMatrix() {
-	console.log('file: matrix-canvas.component.ts:195 ~ MatrixCanvasComponent ~ drawMatrix ~ drawMatrix:');
+		console.log('file: matrix-canvas.component.ts:195 ~ MatrixCanvasComponent ~ drawMatrix ~ drawMatrix:');
 
 		if (!this.isDrawing) {
 			requestAnimationFrame(() => {

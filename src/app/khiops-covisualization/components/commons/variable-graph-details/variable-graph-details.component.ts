@@ -40,7 +40,9 @@ import {
 import {
 	TreeNodeVO
 } from "@khiops-covisualization/model/tree-node-vo";
-import { Subscription } from "rxjs";
+import {
+	Subscription
+} from "rxjs";
 
 @Component({
 	selector: "app-variable-graph-details",
@@ -97,14 +99,16 @@ implements OnInit, OnChanges, OnDestroy, AfterViewInit {
 			});
 		this.treeSelectedNodeChangedSub =
 			this.eventsService.treeSelectedNodeChanged.subscribe((e) => {
-				if (
-					e.selectedNode
-				) {
-					// Only compute distribution of the other node
-					this.getFilteredDistribution(this.dimensionsTree);
-					this.prevSelectedNode = e.selectedNode;
-				}
-				this.setLegendTitle(this.position);
+				setTimeout(() => {
+					if (
+						e.selectedNode
+					) {
+						// Only compute distribution of the other node
+						this.getFilteredDistribution(this.dimensionsTree);
+						this.prevSelectedNode = e.selectedNode;
+					}
+					this.setLegendTitle(this.position);
+				});
 			});
 	}
 

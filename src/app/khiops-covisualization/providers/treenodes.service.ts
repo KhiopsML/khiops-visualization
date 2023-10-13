@@ -311,25 +311,19 @@ export class TreenodesService {
 		// }
 	}
 
-	collapseNode(dimensionName, nodeName, emitEvent = true, keepCurrentUnfolding = false) {
-		// const currentIndex: any = this.dimensionsDatas.selectedDimensions.findIndex(e => {
-		// 	return dimensionName === e.name;
-		// });
-		// if (currentIndex === 0 || currentIndex === 1) { // more than 2 is context
-		// 	this.setSelectedNode(dimensionName, nodeName, true)
-		// 	}
-
+	collapseNode(dimensionName, nodeName) {
 		this.updateCollapsedNodesToSave(dimensionName, nodeName, 1);
-		this.update(dimensionName, nodeName);
+		this.setSelectedNode(dimensionName, nodeName, false);
+		this.update(dimensionName);
 	}
 
 	expandNode(dimensionName, nodeName) {
-
 		this.updateCollapsedNodesToSave(dimensionName, nodeName, -1);
-		this.update(dimensionName, nodeName);
+		this.setSelectedNode(dimensionName, nodeName, false);
+		this.update(dimensionName);
 	}
 
-	update(dimensionName, nodeName ? ) {
+	update(dimensionName) {
 		let collapsedNodes = this.getCollapsedNodesToSave();
 		let datas =
 			this.saveService.constructSavedHierarchyToSave( // 877
@@ -341,13 +335,12 @@ export class TreenodesService {
 		this.dimensionsDatasService.initSelectedDimensions(false); // do not to dont reinit selected context node
 		this.dimensionsDatasService.saveInitialDimension();
 		this.dimensionsDatasService.constructDimensionsTrees(); // 191
-		// const currentIndex: any = this.dimensionsDatas.selectedDimensions.findIndex(e => {
-		// 	return dimensionName === e.name;
-		// });
-		// if (currentIndex === 0 || currentIndex === 1) { // more than 2 is context
-			this.dimensionsDatasService.getMatrixDatas(); //we must do it each time to be sync with unfoldH method
-		// }
-
+		const currentIndex: any = this.dimensionsDatas.selectedDimensions.findIndex(e => {
+			return dimensionName === e.name;
+		});
+		const propagateChanges = currentIndex <= 1 ? true : false
+		// hack to limit re-rendering and optimize perf
+		this.dimensionsDatasService.getMatrixDatas(propagateChanges);
 	}
 
 }

@@ -363,7 +363,7 @@ export class DimensionsDatasService {
 		}
 	}
 
-	getMatrixDatas() {
+	getMatrixDatas(propagateChanges = true) {
 		const t0 = performance.now();
 
 		const appDatas = this.appService.getDatas().datas;
@@ -467,6 +467,9 @@ export class DimensionsDatasService {
 		this.dimensionsDatas.matrixDatas.matrixCellDatas = cellDatas;
 		this.dimensionsDatas.allMatrixDatas.matrixCellDatas = cellDatas;
 		this.dimensionsDatas.allMatrixCellDatas = cellDatas;
+
+		// hack to limit re-rendering and optimize perf
+		this.dimensionsDatas.matrixDatas.propagateChanges = propagateChanges;
 
 		const t1 = performance.now();
 		console.log("getMatrixDatas " + (t1 - t0) + " milliseconds.");

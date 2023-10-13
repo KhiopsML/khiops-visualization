@@ -18,39 +18,39 @@ export class EventsService {
 	constructor() {}
 
 	emitTreeCollapseChanged(event = {}) {
-		setTimeout(() => {
+		// setTimeout(() => {
 			this.treeCollapseChanged.emit(event);
-		});
+		// });
 	}
 
 	emitTreeNodeNameChanged(event = {}) {
-		setTimeout(() => {
+		// setTimeout(() => {
 			this.treeNodeNameChanged.emit(event);
-		});
+		// });
 	}
 
 	emitTreeSelectedNodeChanged(event = {}) {
-		setTimeout(() => {
+		// setTimeout(() => {
 			this.treeSelectedNodeChanged.emit(event);
-		});
+		// });
 	}
 
 	emitTreeInit(event = {}) {
-		setTimeout(() => {
+		// setTimeout(() => {
 			this.treeInit.emit(event);
-		});
+		// });
 	}
 
 	emitDimensionsSelectionChanged(event = {}) {
-		setTimeout(() => {
+		// setTimeout(() => {
 			this.dimensionsSelectionChanged.emit(event);
-		});
+		// });
 	}
 
 	emitImportedDatasChanged(event = {}) {
-		setTimeout(() => {
+		// setTimeout(() => {
 			this.importedDatasChanged.emit(event);
-		});
+		// });
 	}
 
 }
