@@ -18,7 +18,7 @@ let appService: AppService;
 let dimensionsDatasService: DimensionsDatasService;
 
 let cells;
-let matrixFreqsValues, matrixValues, globalMatrixValues, matrixExtras;
+let matrixFreqsValues, matrixValues, matrixExtras;
 
 describe('CoVisualization', () => {
 describe('Matrix Datas : One Context [zero-except file]', () => {
@@ -129,7 +129,7 @@ describe('Matrix Datas : one Context [zero-except file] check proba values witho
 		const graphMode = {
 			mode: "PROB_CELL"
 		};
-		[matrixFreqsValues, matrixValues, globalMatrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
+		[matrixFreqsValues, matrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
 			graphMode,
 			inputDatas,
 			[[0]],
@@ -168,7 +168,7 @@ describe('Matrix Datas : one Context [zero-except file] check proba values with 
 		const graphMode = {
 			mode: "PROB_CELL"
 		};
-		[matrixFreqsValues, matrixValues, globalMatrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
+		[matrixFreqsValues, matrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
 			graphMode,
 			inputDatas,
 			[[0, 1]],
@@ -207,7 +207,7 @@ describe('Matrix Datas : one Context [adultmissing file] check rev proba values 
 		const graphMode = {
 			mode: "PROB_CELL_REVERSE"
 		};
-		[matrixFreqsValues, matrixValues, globalMatrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
+		[matrixFreqsValues, matrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
 			graphMode,
 			inputDatas,
 			[[0, 1]],
@@ -246,7 +246,7 @@ describe('Matrix Datas : one Context [adultmissing file] 4 cells folding check H
 		const graphMode = {
 			mode: "HELLINGER"
 		};
-		[matrixFreqsValues, matrixValues, globalMatrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
+		[matrixFreqsValues, matrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
 			graphMode,
 			inputDatas,
 			[[0, 1]],
@@ -258,9 +258,6 @@ describe('Matrix Datas : one Context [adultmissing file] 4 cells folding check H
 	});
 	it('matrixValues should return valid datas', () => {
 		expect(matrixValues).toEqual([-0.15068927709358787, 0.15572268402859757, 0.08437840607554925, -0.16851740992756037] );
-	});
-	it('globalMatrixValues should return valid datas', () => {
-		expect(globalMatrixValues).toEqual( [0.017029718375782835, 0.1605548616821144, 0.016712306726380577, -0.1728410843529749]);
 	});
 	it('matrixExtras should return valid datas', () => {
 		expect(matrixExtras).toEqual([0.022707258230988105, 0.024249554321070437, 0.007119715411850287, 0.028398117448693423]);
@@ -294,7 +291,7 @@ describe('Matrix Datas : one Context [adultmissing file] 4 cells folding check H
 		const graphMode = {
 			mode: "HELLINGER"
 		};
-		[matrixFreqsValues, matrixValues, globalMatrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
+		[matrixFreqsValues, matrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
 			graphMode,
 			inputDatas,
 			[[0]],
@@ -306,9 +303,6 @@ describe('Matrix Datas : one Context [adultmissing file] 4 cells folding check H
 	});
 	it('matrixValues should return valid datas', () => {
 		expect(matrixValues).toEqual([-0.1531182749055528, 0.1421051792149562, 0.10116962045338274, -0.1733601625664079] );
-	});
-	it('globalMatrixValues should return valid datas', () => {
-		expect(globalMatrixValues).toEqual( [0.017029718375782835, 0.1605548616821144, 0.016712306726380577, -0.1728410843529749] );
 	});
 	it('matrixExtras should return valid datas', () => {
 		expect(matrixExtras).toEqual([0.02344520611005244, 0.02019388195971482, 0.010235292102681518, 0.030053745965051375]);
@@ -341,7 +335,7 @@ describe('Matrix Datas : one Context [adultmissing file] 4 cells folding check M
 		const graphMode = {
 			mode: 'MUTUAL_INFO'
 		};
-		[matrixFreqsValues, matrixValues, globalMatrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
+		[matrixFreqsValues, matrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
 			graphMode,
 			inputDatas,
 			[[0]],
@@ -353,9 +347,6 @@ describe('Matrix Datas : one Context [adultmissing file] 4 cells folding check M
 	});
 	it('matrixValues should return valid datas', () => {
 		expect(matrixValues).toEqual([-0.09068740099008493, 0.177321751139612, 0.15404200025499357, -0.0805863243561449] );
-	});
-	it('globalMatrixValues should return valid datas', () => {
-		expect(globalMatrixValues).toEqual([0.0028577224658399465, 0.12425141754237234, 0.007931939857210565, -0.014449208960262517]);
 	});
 	it('matrixExtras should return valid datas', () => {
 		expect(matrixExtras).toEqual([false, false, false, false]);

@@ -140,7 +140,6 @@ export class ClustersService {
 		let [
 			matrixFreqsValues,
 			matrixValues,
-			globalMatrixValues,
 			matrixExtras,
 			matrixExpectedFreqsValues,
 		] = MatrixCanvasService.computeMatrixValues({

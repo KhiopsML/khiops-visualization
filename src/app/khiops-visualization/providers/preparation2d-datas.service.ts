@@ -540,11 +540,11 @@ export class Preparation2dDatasService {
 			const inputDatas = this.getMatrixCanvasDatas(variablesDatas[i]);
 			if (inputDatas) {
 
-				let matrixFreqsValues, matrixValues, globalMatrixValues, matrixExtras;
+				let matrixFreqsValues, matrixValues, matrixExtras;
 				let graphMode = {
 					mode: 'MUTUAL_INFO_TARGET_WITH_CELL'
 				};
-				[matrixFreqsValues, matrixValues, globalMatrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
+				[matrixFreqsValues, matrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
 					graphMode,
 					inputDatas,
 					undefined,
@@ -554,7 +554,7 @@ export class Preparation2dDatasService {
 				graphMode = {
 					mode: 'CELL_INTEREST'
 				};
-				[matrixFreqsValues, matrixValues, globalMatrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
+				[matrixFreqsValues, matrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
 					graphMode,
 					inputDatas,
 					undefined,

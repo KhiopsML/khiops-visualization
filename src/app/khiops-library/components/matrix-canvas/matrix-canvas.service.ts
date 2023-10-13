@@ -33,7 +33,6 @@ export class MatrixCanvasService {
 
 	static computeMatrixValues(graphMode, inputDatas, contextSelection, selectedTargetIndex): any {
 
-		let globalMatrixValues;
 		let globalMatrixFreqsValues;
 		let matrixFreqsValues;
 		let matrixValues;
@@ -66,12 +65,9 @@ export class MatrixCanvasService {
 				}
 				return res;
 			});
-			globalMatrixFreqsValues = inputDatas.matrixCellDatas.map(e => e.cellFreqs);
-			globalMatrixFreqsValues = UtilsService.sumArrayItemsOfArray(globalMatrixFreqsValues);
 
 			if (graphMode.mode === 'FREQUENCY') {
 				matrixValues = matrixFreqsValues;
-				globalMatrixValues = globalMatrixFreqsValues;
 			} else {
 
 				// Map current matrix datas to freq values correpsonding to current part positions
@@ -92,7 +88,6 @@ export class MatrixCanvasService {
 							let [MIij, MIijExtra] = UtilsService.computeMutualInfo(cellFreqs, matrixTotal, freqColVals, freqLineVals);
 							return MIijExtra;
 						});
-						globalMatrixValues = inputDatas.matrixCellDatas.map(e => e.infosMutValue);
 						break;
 					case 'HELLINGER':
 						matrixValues = inputDatas.matrixCellDatas.map(e => {
@@ -108,21 +103,18 @@ export class MatrixCanvasService {
 							UtilsService.computeHellinger(cellFreqs, matrixTotal, freqColVals, freqLineVals);
 							return hellingerAbsoluteValue;
 						});
-						globalMatrixValues = inputDatas.matrixCellDatas.map(e => e.cellHellingerValue);
 						break;
 					case 'PROB_CELL':
 						matrixValues = inputDatas.matrixCellDatas.map(e => {
 							let [matrixTotal, cellFreqs, freqColVals, freqLineVals] = this.computeValsByContext(e, partPositions, partPositionsLength);
 							return isNaN(cellFreqs / freqColVals) ? 0 : cellFreqs / freqColVals;
 						});
-						globalMatrixValues = inputDatas.matrixCellDatas.map(e => e.cellProbs);
 						break;
 					case 'PROB_CELL_REVERSE':
 						matrixValues = inputDatas.matrixCellDatas.map(e => {
 							let [matrixTotal, cellFreqs, freqColVals, freqLineVals] = this.computeValsByContext(e, partPositions, partPositionsLength);
 							return isNaN(cellFreqs / freqLineVals) ? 0 : cellFreqs / freqLineVals;
 						});
-						globalMatrixValues = inputDatas.matrixCellDatas.map(e => e.cellProbsRev);
 						break;
 						// Only on KV
 					case 'CELL_INTEREST':
@@ -132,11 +124,8 @@ export class MatrixCanvasService {
 							}
 							return res || 0;
 						});
-						globalMatrixValues = inputDatas.matrixCellDatas.map(e => e.cellInterest);
 						break;
 				}
-
-				globalMatrixValues = UtilsService.sumArrayItemsOfArray(globalMatrixValues);
 
 			}
 
@@ -199,14 +188,12 @@ export class MatrixCanvasService {
 						matrixValues = inputDatas.matrixCellDatas.map(e => e.cellInterest);
 						break;
 					case 'MUTUAL_INFO_TARGET_WITH_CELL':
-						globalMatrixValues = [];
 						for (let i = 0; i < inputDatas.matrixCellDatas[0].cellFreqs.length; i++) {
 							const currentMatrixValues = inputDatas.matrixCellDatas.map(e => {
 								const [MIij, MIijExtra] = UtilsService.computeMutualInfo(e.cellFreqs[i], UtilsService.arraySum(e.matrixTotal),
 									e.freqColVals[i], e.freqLineVals[i]);
 								return MIij || 0;
 							});
-							globalMatrixValues.push(currentMatrixValues);
 							if (i === selectedTargetIndex) {
 								matrixValues = currentMatrixValues;
 							}
@@ -248,7 +235,7 @@ export class MatrixCanvasService {
 
 		}
 
-		return [matrixFreqsValues, matrixValues, globalMatrixValues, matrixExtras, matrixExpectedFreqsValues];
+		return [matrixFreqsValues, matrixValues, matrixExtras, matrixExpectedFreqsValues];
 
 	}
 

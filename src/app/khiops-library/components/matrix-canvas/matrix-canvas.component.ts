@@ -81,7 +81,6 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 	selectedTargetIndex = -1;
 	isZerosToggled = false;
 	matrixValues: any;
-	globalMatrixValues: any;
 	matrixFreqsValues: any;
 	matrixExpectedFreqsValues: any;
 	loadingMatrixSvg = true;
@@ -207,7 +206,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 						this.selectedTargetIndex = -1;
 					}
 
-					[this.matrixFreqsValues, this.matrixValues, this.globalMatrixValues, this.matrixExtras, this.matrixExpectedFreqsValues] = MatrixCanvasService.computeMatrixValues(
+					[this.matrixFreqsValues, this.matrixValues, this.matrixExtras, this.matrixExpectedFreqsValues] = MatrixCanvasService.computeMatrixValues(
 						this.graphMode,
 						this.inputDatas,
 						this.contextSelection,
