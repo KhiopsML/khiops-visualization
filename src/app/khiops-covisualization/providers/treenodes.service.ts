@@ -115,13 +115,13 @@ export class TreenodesService {
 				if (currentIndex !== 0 && currentIndex !== 1) {
 					if (this.dimensionsDatas.conditionalOnContext) {
 
-						// this.dimensionsDatas.contextSelection[currentIndex - 2] = nodeVO.childrenLeafIndexes;
+						this.dimensionsDatas.contextSelection[currentIndex - 2] = nodeVO.childrenLeafIndexes;
 						// for contexts, we must get the real node to get the childrenLeafIndexes
-						const realNodeVO = this.dimensionsDatas.dimensionsClusters[currentIndex].find(e => {
-							return nodeVO.name === e.name || nodeVO.shortDescription === e.shortDescription; // also check into shortDescription (for distribution graph for instance)
-						});
-						realNodeVO.getChildrenList();
-						this.dimensionsDatas.contextSelection[currentIndex - 2] = realNodeVO.childrenLeafIndexes;
+						// const realNodeVO = this.dimensionsDatas.dimensionsClusters[currentIndex].find(e => {
+						// 	return nodeVO.name === e.name || nodeVO.shortDescription === e.shortDescription; // also check into shortDescription (for distribution graph for instance)
+						// });
+						// realNodeVO.getChildrenList();
+						// this.dimensionsDatas.contextSelection[currentIndex - 2] = realNodeVO.childrenLeafIndexes;
 					} else {
 						// conditionalOnContext unset
 						// get the parent node
@@ -341,12 +341,12 @@ export class TreenodesService {
 		this.dimensionsDatasService.initSelectedDimensions(false); // do not to dont reinit selected context node
 		this.dimensionsDatasService.saveInitialDimension();
 		this.dimensionsDatasService.constructDimensionsTrees(); // 191
-		const currentIndex: any = this.dimensionsDatas.selectedDimensions.findIndex(e => {
-			return dimensionName === e.name;
-		});
-		if (currentIndex === 0 || currentIndex === 1) { // more than 2 is context
-			this.dimensionsDatasService.getMatrixDatas();
-		}
+		// const currentIndex: any = this.dimensionsDatas.selectedDimensions.findIndex(e => {
+		// 	return dimensionName === e.name;
+		// });
+		// if (currentIndex === 0 || currentIndex === 1) { // more than 2 is context
+			this.dimensionsDatasService.getMatrixDatas(); //we must do it each time to be sync with unfoldH method
+		// }
 
 	}
 

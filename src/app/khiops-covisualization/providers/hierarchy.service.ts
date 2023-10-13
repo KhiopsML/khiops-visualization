@@ -1,9 +1,21 @@
-import { Injectable } from "@angular/core";
-import { AppService } from "@khiops-covisualization/providers/app.service";
-import { DimensionsDatasService } from "@khiops-covisualization/providers/dimensions-datas.service";
-import { TreenodesService } from "./treenodes.service";
-import { SaveService } from "./save.service";
-import { DimensionVO } from "@khiops-library/model/dimension-vo";
+import {
+	Injectable
+} from "@angular/core";
+import {
+	AppService
+} from "@khiops-covisualization/providers/app.service";
+import {
+	DimensionsDatasService
+} from "@khiops-covisualization/providers/dimensions-datas.service";
+import {
+	TreenodesService
+} from "./treenodes.service";
+import {
+	SaveService
+} from "./save.service";
+import {
+	DimensionVO
+} from "@khiops-library/model/dimension-vo";
 
 @Injectable({
 	providedIn: "root",
@@ -46,15 +58,14 @@ export class HierarchyService {
 
 		const collapsedNodes =
 			this.treenodesService.getLeafNodesForARank(currentRank);
-		// this.treenodesService.setCollapsedNodesToSave(collapsedNodes);
 
 
 
-const collapsedNodesToSave = {...collapsedNodes}
+		// const collapsedNodesToSave = {...collapsedNodes}
 
 
 
-			for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
+		for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
 			// Remove dimension if unchecked
 			if (this.dimensionsDatas.dimensions[i].hierarchyFold === false) {
 				delete collapsedNodes[this.dimensionsDatas.dimensions[i].name];
@@ -64,6 +75,7 @@ const collapsedNodesToSave = {...collapsedNodes}
 			// 	delete collapsedNodes[this.dimensionsDatas.dimensions[i].name];
 			// }
 		}
+		this.treenodesService.setCollapsedNodesToSave(collapsedNodes);
 
 		let datas =
 			this.saveService.constructSavedHierarchyToSave(collapsedNodes);
