@@ -212,7 +212,6 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 						this.inputDatas,
 						this.contextSelection,
 						this.selectedTargetIndex);
-						console.log('file: matrix-canvas.component.ts:214 ~ MatrixCanvasComponent ~ requestAnimationFrame ~ this.contextSelection:', this.contextSelection);
 
 					// Clean dom canvas
 					this.cleanDomContext();
@@ -241,20 +240,14 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 							let minValH, maxValH;
 
 							if (!this.minMaxValues) {
-								// GLOBAL.GLOBAL For KC purpose
-								if (this.conditionalOnContext && this.graphMode.mode !== 'PROB_CELL' && this.graphMode.mode !== 'PROB_CELL_REVERSE') {
-									[minVal, maxVal] = UtilsService.getMinAndMaxFromArray(this.globalMatrixValues);
-								} else {
-									// Always local if no context
-									[minVal, maxVal] = UtilsService.getMinAndMaxFromArray(this.matrixValues);
-								}
+								[minVal, maxVal] = UtilsService.getMinAndMaxFromArray(this.matrixValues);
 
 								if (this.graphMode.mode === 'MUTUAL_INFO') {
 									[minVal, maxVal] = UtilsService.averageMinAndMaxValues(minVal, maxVal);
 								}
 								if (this.graphMode.mode === 'HELLINGER') {
 									// For KC purpose
-									[minValH, maxValH] = UtilsService.getMinAndMaxFromArray(this.matrixExtras);
+									[minValH, maxValH] = UtilsService.getMinAndMaxFromArray(this.matrixValues);
 									[minValH, maxValH] = UtilsService.averageMinAndMaxValues(minVal, maxVal);
 								}
 							} else {
