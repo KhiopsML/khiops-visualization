@@ -184,15 +184,15 @@ export class DimensionsDatasService {
 
 	initSelectedDimensions(initContextSelection = true) {
 		this.dimensionsDatas.selectedDimensions = [];
-		this.dimensionsDatas.contextDimensions = [];
 		for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
 			this.dimensionsDatas.selectedDimensions[i] = this.dimensionsDatas.dimensions[i];
-			if (i >= 2) {
+		}
+		if (initContextSelection) {
+			this.dimensionsDatas.contextDimensions = [];
+			for (let i = 2; i < this.dimensionsDatas.dimensions.length; i++) {
 				this.dimensionsDatas.contextDimensions.push(this.dimensionsDatas.selectedDimensions[i]);
 				this.dimensionsDatas.contextDimensionCount = this.dimensionsDatas.contextDimensionCount + 1;
 			}
-		}
-		if (initContextSelection) {
 			this.dimensionsDatas.contextSelection = new Array(this.dimensionsDatas.contextDimensions.length).fill([0]);
 		}
 
