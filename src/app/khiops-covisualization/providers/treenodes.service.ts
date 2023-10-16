@@ -51,13 +51,13 @@ export class TreenodesService {
 
 	getLeafNodesForARank(rank) {
 		const collapsedNodes = {}
-		for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
-			collapsedNodes[this.dimensionsDatas.dimensions[i].name] = [];
+		for (let i = 0; i < this.dimensionsDatas.selectedDimensions.length; i++) {
+			collapsedNodes[this.dimensionsDatas.selectedDimensions[i].name] = [];
 
 			const nodesVO: any[] = UtilsService.fastFilter(this.dimensionsDatas.dimensionsClusters[i], e => {
 				return rank <= e.hierarchicalRank && !e.isLeaf;
 			});
-			collapsedNodes[this.dimensionsDatas.dimensions[i].name] = nodesVO.map(e => e.cluster);
+			collapsedNodes[this.dimensionsDatas.selectedDimensions[i].name] = nodesVO.map(e => e.cluster);
 		}
 		return collapsedNodes;
 	}
