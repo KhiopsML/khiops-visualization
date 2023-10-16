@@ -1,4 +1,4 @@
-<div id="axis-comp" fxFlexFill *ngIf="axisLayout && dimensionsDatas">
+<div class="axis-comp" fxFlexFill *ngIf="axisLayout && dimensionsDatas">
 	<as-split direction="horizontal" (dragEnd)="onSplitDragEnd($event, sizeId)" fxFlexFill>
 		<as-split-area [size]="sizes[sizeId][column0Index]" order="1" [visible]="axisLayout.isHierarchyChecked">
 			<div fxFlexFill fxLayout="column" [attr.id]="'tree-comp-'+position">

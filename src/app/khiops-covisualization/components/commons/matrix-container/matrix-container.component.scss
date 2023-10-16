@@ -1,7 +1,7 @@
-#matrix-container-comp {
+.matrix-container-comp {
 	background: var(--bgColor) !important;
 
-	#matrix-container-comp-matrix-wrapper {
+	.matrix-container-comp-matrix-wrapper {
 		.comp-header {
 			padding: 1.2em 0.4em 1.2em 0 !important;
 			margin: 0;
@@ -23,7 +23,7 @@
 				margin: 4px 0;
 			}
 
-			#matrix-conditionalOnContext-checkbox {
+			.matrix-conditionalOnContext-checkbox {
 				margin: auto 0.5rem;
 
 				::ng-deep .mat-checkbox-label {

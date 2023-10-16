@@ -1,4 +1,4 @@
-<div id="header-manage-view-comp">
+<div class="header-manage-view-comp">
 	<button mat-flat-button color="warn" matTooltip="{{ 'MENU.IMPORT_EXTERNAL_DATA' | translate }}"  (click)="clickImportExternalData()" attr.aria-label="{{ 'MENU.IMPORT_EXTERNAL_DATA' | translate }}">
 		<span fxHide.lt-lg fxShow.gt-md>{{ 'MENU.EXTERNAL_DATA' | translate }}</span>
 		<mat-icon fxHide.gt-md fxShow.lt-md>file_upload</mat-icon>
@@ -7,7 +7,7 @@
 		<span fxHide.lt-lg fxShow.gt-md>{{ 'GLOBAL.UNFOLD_HIERARCHY' | translate }}</span>
 		<mat-icon fxHide.gt-md fxShow.lt-md>timeline</mat-icon>
 	</button>
-	<button id="button-manage-views" mat-flat-button color="warn" attr.aria-label="{{ 'GLOBAL.MANAGE_VIEWS_DESC' | translate }}" matTooltip="{{ 'GLOBAL.MANAGE_VIEWS_DESC' | translate }}" (click)="clickManageLayout()">
+	<button class="button-manage-views" mat-flat-button color="warn" attr.aria-label="{{ 'GLOBAL.MANAGE_VIEWS_DESC' | translate }}" matTooltip="{{ 'GLOBAL.MANAGE_VIEWS_DESC' | translate }}" (click)="clickManageLayout()">
 		<mat-icon>view_compact</mat-icon>
 	</button>
 </div>

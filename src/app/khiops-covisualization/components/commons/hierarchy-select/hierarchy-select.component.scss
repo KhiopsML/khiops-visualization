@@ -1,6 +1,6 @@
 @import "../../../../../theme.scss";
 
-#hierarchy-select-comp {
+.hierarchy-select-comp {
 	padding: 0.6em;
 	margin: 0 !important;
 	position: relative;
@@ -15,7 +15,7 @@
 		color: var(--primary);
 	}
 
-	#hierarchy-select-content {
+	.hierarchy-select-content {
 		width: 100%;
 		margin-top: 1em;
 		padding: 0.5em;

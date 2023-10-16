@@ -22,7 +22,7 @@
 				<span title="{{yAxisLabel}}">{{ yAxisLabel }}</span>
 			</div>
 			<button *ngIf="graphMode && graphMode.mode === 'MUTUAL_INFO'"
-			mat-icon-button matTooltip="{{ 'GLOBAL.TOGGLE_ZERO' | translate }}" [ngClass]="['toggle-zero', 'toggled-'+isZerosToggled]">
+			mat-icon-button matTooltip="{{ 'GLOBAL.TOGGLE_ZERO' | translate }}" [ngClass]="['toggle-zero', 'toggled-'+isZerosToggled]" attr.aria-label="{{ 'GLOBAL.TOGGLE_ZERO' | translate }}">
 				<mat-icon fxFlexFill fxLayoutAlign="center center" (click)="onClickOnToggleZeros()">{{isZerosToggled ? 'visibility' : 'visibility_off'}}</mat-icon>
 			</button>
 			<button mat-icon-button matTooltip="{{ 'GLOBAL.INVERT_AXIS' | translate }}" attr.aria-label="{{ 'GLOBAL.INVERT_AXIS' | translate }}"

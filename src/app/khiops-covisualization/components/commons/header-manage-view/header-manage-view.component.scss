@@ -1,4 +1,4 @@
-#header-manage-view-comp {
+.header-manage-view-comp {
 	margin-right: 1.8em;
 
 	button {
@@ -8,15 +8,11 @@
 		max-height: 38px;
 	}
 
-	#button-manage-views {
+	.button-manage-views {
 		padding: 0;
 		min-width: 40px;
 		line-height: 32px !important;
 		padding: 0 0.4em !important;
-	}
-
-	#button-context.is-toggled {
-		background: #af0e44;
 	}
 
 	span{

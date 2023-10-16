@@ -1,10 +1,10 @@
-<div id="matrix-container-comp" fxFlexFill>
+<div class="matrix-container-comp" fxFlexFill>
 	<as-split direction="vertical" (dragEnd)="onSplitDragEnd($event, sizeId)">
 		<as-split-area [size]="sizes[sizeId][0]" order="1" [visible]="viewsLayout.isDimensionsChecked">
 			<app-selected-clusters [selectedNodes]="dimensionsDatas.selectedNodes">
 			</app-selected-clusters>
 		</as-split-area>
-		<as-split-area id="matrix-container-comp-matrix-wrapper" [size]="sizes[sizeId][1]" order="2"
+		<as-split-area class="matrix-container-comp-matrix-wrapper" [size]="sizes[sizeId][1]" order="2"
 			[visible]="viewsLayout.isCoocurenceChecked">
 			<div fxFlexFill fxLayout="column" class="selected-area-inner-div" [ngClass]="{'fullscreen': isFullscreen}">
 				<div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
@@ -15,10 +15,10 @@
 								<button mat-menu-item *ngFor="let opt of matrixModes.types" (click)="changeMatrixMode(opt)">{{ opt.title | translate }}</button>
 							</mat-menu>
 						</div>
-						<mat-checkbox id="matrix-conditionalOnContext-checkbox" *ngIf="dimensionsDatas.contextDimensionCount"
+						<mat-checkbox class="matrix-conditionalOnContext-checkbox" *ngIf="dimensionsDatas.contextDimensionCount"
 							[checked]="conditionalOnContext" (change)="changeConditionalOnContext()">
 							{{ 'GLOBAL.CONDITIONAL_ON_CONTEXT' | translate }}</mat-checkbox>
-						<mat-button-toggle-group id="matrix-option-toggle" #group="matButtonToggleGroup"
+						<mat-button-toggle-group class="matrix-option-toggle" #group="matButtonToggleGroup"
 							[value]="matrixOptions.selected">
 							<mat-button-toggle *ngFor="let opt of matrixOptions.types" [value]="opt"
 								title="{{ 'TOOLTIPS.COMMONS.MATRIX_MODE' | translate }}"

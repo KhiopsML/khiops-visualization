@@ -1,4 +1,4 @@
-<div id="variable-graph-details-comp" fxLayout="column" fxFlexFill [ngClass]="{'fullscreen': isFullscreen}">
+<div class="variable-graph-details-comp" fxLayout="column" fxFlexFill [ngClass]="{'fullscreen': isFullscreen}">
 	<kl-graph-header [smallTitle]="true" [selectedVariable]="selectedNode" [title]="title"
 		(toggleFullscreen)="onToggleFullscreen($event)" (scaleValueChanged)="onScaleValueChanged($event)">
 	</kl-graph-header>
