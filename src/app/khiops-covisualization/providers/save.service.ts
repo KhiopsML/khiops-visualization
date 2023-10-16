@@ -165,7 +165,6 @@ export class SaveService {
 	truncateJsonHierarchy(datas) {
 		const truncatedHierarchy = [ ...datas.coclusteringReport.dimensionHierarchies ];
 
-
 		Object.keys(datas.savedDatas.collapsedNodes).forEach((dim) => {
 			const dimIndex = this.dimensionsService.dimensionsDatas.selectedDimensions.findIndex(e => e.name === dim);
 

@@ -26,7 +26,7 @@ export class TreeNodeVO {
 
 	childrenList: any[] = [];
 	childrenLeafIndexes: any[]= [];
-	childrenNodesCollapsed: any[]= [];
+	// childrenNodesCollapsed: any[]= [];
 	childrenLeafList: any[]= [];
 
 	isCollapsed: boolean;
@@ -97,24 +97,18 @@ export class TreeNodeVO {
 
 	getChildrenList() {
 		this.childrenList = [];
-		this.childrenNodesCollapsed = [];
 		this.childrenLeafList = [];
 		this.childrenLeafIndexes = [];
 		this.deepGetChildrenNames(this.children, this.name, this.matrixIndex);
 	}
 
 	deepGetChildrenNames(children, name, matrixIndex) {
-
 		this.childrenList.push(name);
 		if (children.length === 0) {
 			this.childrenLeafList.push(name);
 			this.childrenLeafIndexes.push(matrixIndex);
 		}
-
 		for (let i = 0; i < children.length; i++) {
-			if (children[i].isCollapsed) {
-				this.childrenNodesCollapsed.push(children[i].name);
-			}
 			this.deepGetChildrenNames(children[i].children, children[i].name, children[i].matrixIndex);
 		}
 	}

@@ -349,7 +349,6 @@ export class ClustersService {
 					const currentDimension = this.dimensionsDatas.selectedDimensions[currentIndex];
 					const externalDatas: ExtDatasVO = this.importExtDatasService.getImportedDatasFromDimension(currentDimension);
 
-
 					const childrenLeafListLength = node.childrenLeafList.length;
 
 					for (let i = 0; i < childrenLeafListLength; i++) {
@@ -360,7 +359,6 @@ export class ClustersService {
 						if (currentClusterDetails) {
 							const currentClusterDetailsLength = currentClusterDetails.values.length;
 							for (let j = 0; j < currentClusterDetailsLength; j++) {
-
 								const currentDimensionHierarchyCluster: any = currentDimensionClusters.find(e => e.cluster === currentLeafName);
 								if (node.isCollapsed) {
 									currentDimensionHierarchyCluster.shortDescription = node.shortDescription

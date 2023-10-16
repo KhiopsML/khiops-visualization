@@ -109,9 +109,7 @@ export class CompositionComponent implements OnInit, OnDestroy {
 
 	updateTable(selectedNode) {
 		if (selectedNode) {
-
 			this.compositionValues = Object.assign([], this.clustersService.getCompositionClusters(selectedNode.hierarchy, _.cloneDeep(selectedNode)));
-
 			// if composition values : categorical
 			if (this.compositionValues.length > 0) {
 				// Select first by default

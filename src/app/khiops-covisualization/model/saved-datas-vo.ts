@@ -35,7 +35,7 @@ export class SavedDatasVO {
 			delete this.selectedNodes[key]?.children;
 			delete this.selectedNodes[key]?.childrenLeafList;
 			delete this.selectedNodes[key]?.childrenList;
-			delete this.selectedNodes[key]?.childrenNodesCollapsed;
+			// delete this.selectedNodes[key]?.childrenNodesCollapsed;
 			delete this.selectedNodes[key]?.childrenLeafIndexes;
 		});
 	}
