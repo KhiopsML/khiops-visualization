@@ -14,7 +14,6 @@ export class TreeNodeVO {
 	shortDescription: string;
 
 	parentCluster: string;
-	parentShortDescription: string;
 
 	frequency: number;
 	interest: number;
@@ -67,7 +66,6 @@ export class TreeNodeVO {
 		}
 
 		this.parentCluster = object && object.parentCluster || '';
-		this.parentShortDescription = object && object.parentShortDescription || this.parentCluster;
 
 		this.description = object && object.description || '';
 		this.children = object && object.children || [];

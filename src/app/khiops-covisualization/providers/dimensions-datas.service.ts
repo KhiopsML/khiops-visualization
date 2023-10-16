@@ -287,9 +287,6 @@ export class DimensionsDatasService {
 						index++;
 					}
 
-					// Update parentShortDescription of childeren if user has changed the node name by the past
-					// this.updateAllParentShortDescription(dimensionHierarchy, i); // TODO ?
-
 					// sort dimensionsClusters by rank to order intervals
 					this.dimensionsDatas.dimensionsClusters[i] = _.orderBy(this.dimensionsDatas.dimensionsClusters[i], e => e.rank);
 
@@ -332,9 +329,6 @@ export class DimensionsDatasService {
 						index++;
 					}
 
-					// Update parentShortDescription of childeren if user has changed the node name by the past
-					// this.updateAllParentShortDescription(currentDimensionHierarchy, i);
-
 					// sort dimensionsClusters by rank to order intervals
 					this.dimensionsDatas.currentDimensionsClusters[i] = _.orderBy(this.dimensionsDatas.currentDimensionsClusters[i], e => e.rank);
 
@@ -342,23 +336,6 @@ export class DimensionsDatasService {
 					this.dimensionsDatas.currentDimensionsTrees[i] = UtilsService.unflatten(this.dimensionsDatas.currentDimensionsClusters[i]);
 				}
 
-			}
-		}
-	}
-
-	updateAllParentShortDescription(currentDimensionHierarchy, dimensionIndex) {
-		// Update parentShortDescription of childeren if user has changed the node name by the past
-		const clustersLength = currentDimensionHierarchy.clusters.length;
-		for (let j = 0; j < clustersLength; j++) {
-			const currentObj = this.dimensionsDatas.dimensionsClusters[dimensionIndex][j];
-			if (currentObj.shortDescription !== currentObj.cluster) {
-				const currentChildObjs = this.dimensionsDatas.dimensionsClusters[dimensionIndex].filter(e => e.parentCluster === currentObj.cluster);
-				if (currentChildObjs && currentChildObjs.length > 0) {
-					const currentChildObjsLength = currentChildObjs.length;
-					for (let k = 0; k < currentChildObjsLength; k++) {
-						currentChildObjs[k].parentShortDescription = currentObj.shortDescription;
-					}
-				}
 			}
 		}
 	}

@@ -385,7 +385,8 @@ export class ClustersService {
 			const appinitialDatas = this.appService.getInitialDatas().datas;
 			const filteredDimensionsClustersDatas = [].concat(this.getCurrentClusterDetailsFromNode(dimensionsTree));
 			for (let i = 0; i < filteredDimensionsClustersDatas.length; i++) {
-				const clusterDetails: ClusterDetailsVO = new ClusterDetailsVO(filteredDimensionsClustersDatas[i]);
+				const currentNodesNames = this.dimensionsDatas.nodesNames[selectedDimension.name];
+				const clusterDetails: ClusterDetailsVO = new ClusterDetailsVO(filteredDimensionsClustersDatas[i], currentNodesNames);
 
 				if (!clusterDetails.size) {
 					// get the size of collapsed nodes
