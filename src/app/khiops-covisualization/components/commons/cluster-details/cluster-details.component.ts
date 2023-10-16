@@ -93,11 +93,9 @@ export class ClusterDetailsComponent implements OnInit, OnChanges, OnDestroy {
 			});
 		}
 
-		this.filteredDimensionsClusters = this.clustersService.getFilteredDimensionTree(this.dimensionsTree, this.selectedDimension);
 	}
 
-	ngOnDestroy() {
-	}
+	ngOnDestroy() {}
 
 	ngOnChanges(changes: SimpleChanges) {
 		// Keep change listen on dimension combo change
@@ -111,34 +109,32 @@ export class ClusterDetailsComponent implements OnInit, OnChanges, OnDestroy {
 	}
 
 	updateSelectedNode() {
-		setTimeout(() => {
-			if (this.selectedNode) {
-				// Get nodes from input to update it
-				this.nodeToSelect = {
-					...this.selectedNode
-				};
-				const findNodeToSelect = this.filteredDimensionsClusters.find(e => e._id === this.nodeToSelect._id);
-				if (!findNodeToSelect) {
-					// get the parent
-					const parentNode: ClusterDetailsVO = this.filteredDimensionsClusters.find(e => e._id === this.nodeToSelect.parentCluster);
-					if (parentNode) {
-						this.nodeToSelect._id = parentNode._id;
-					} else if (this.nodeToSelect.children && this.nodeToSelect.children.length > 0) {
-						// get the first child
-						this.nodeToSelect = this.getFirstNodeLeaf(this.nodeToSelect);
-					}
-				} else {
-					if (this.nodeToSelect.isLeaf || this.nodeToSelect.isCollapsed) {
-						this.nodeToSelect = this.nodeToSelect;
-					} else {
-						this.nodeToSelect = this.getFirstNodeLeaf(this.nodeToSelect);
-					}
+		if (this.selectedNode) {
+			// Get nodes from input to update it
+			this.nodeToSelect = {
+				...this.selectedNode
+			};
+			const findNodeToSelect = this.filteredDimensionsClusters.find(e => e._id === this.nodeToSelect._id);
+			if (!findNodeToSelect) {
+				// get the parent
+				const parentNode: ClusterDetailsVO = this.filteredDimensionsClusters.find(e => e._id === this.nodeToSelect.parentCluster);
+				if (parentNode) {
+					this.nodeToSelect._id = parentNode._id;
+				} else if (this.nodeToSelect.children && this.nodeToSelect.children.length > 0) {
+					// get the first child
+					this.nodeToSelect = this.getFirstNodeLeaf(this.nodeToSelect);
 				}
-				this.nodeToSelect = {
-					...this.nodeToSelect
-				};
+			} else {
+				if (this.nodeToSelect.isLeaf || this.nodeToSelect.isCollapsed) {
+					this.nodeToSelect = this.nodeToSelect;
+				} else {
+					this.nodeToSelect = this.getFirstNodeLeaf(this.nodeToSelect);
+				}
 			}
-		});
+			this.nodeToSelect = {
+				...this.nodeToSelect
+			};
+		}
 	}
 
 	getFirstNodeLeaf(node): any {
@@ -150,7 +146,7 @@ export class ClusterDetailsComponent implements OnInit, OnChanges, OnDestroy {
 		// return this.treenodesService.getNodeFromName(this.selectedDimension.name, node.childrenLeafList[0]);
 	}
 
-	onSelectRowChanged(item: any) {
+	onSelectRowChanged(item: ClusterDetailsVO) {
 		this.treenodesService.setSelectedNode(this.selectedDimension.name, item._id, false);
 	}
 }
