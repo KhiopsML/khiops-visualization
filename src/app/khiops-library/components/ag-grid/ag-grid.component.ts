@@ -214,7 +214,7 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 		}
 		if (changes.inputDatas?.currentValue) {
 			// We must update table always, even if content do not changed, to update header informations
-			this.updateTable();
+			this.updateTable(changes?.selectedVariable?.currentValue);
 		}
 		if (changes.selectedVariable?.currentValue) {
 			// always do it in case of shortdesc change
@@ -367,56 +367,56 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 		this.gridCheckboxChanged.emit(e);
 	}
 
-	updateTable() {
+	updateTable(updateSelectedVariable?) {
 
 		if (this.displayedColumns && this.inputDatas) {
-				// Update columns at any changes to update sort a,d other ...
-				this.columnDefs = [];
-				// Reset column defs in case of show/hide colum to reorder
-				if (this.agGrid && this.agGrid.api) {
-					this.agGrid.api.setColumnDefs(this.columnDefs);
-				}
+			// Update columns at any changes to update sort a,d other ...
+			this.columnDefs = [];
+			// Reset column defs in case of show/hide colum to reorder
+			if (this.agGrid && this.agGrid.api) {
+				this.agGrid.api.setColumnDefs(this.columnDefs);
+			}
 
-				// Advanced tables (for instance unfold hierarchy)
-				for (let i = 0; i < this.displayedColumns.length; i++) {
+			// Advanced tables (for instance unfold hierarchy)
+			for (let i = 0; i < this.displayedColumns.length; i++) {
 
-					const col = this.displayedColumns[i];
+				const col = this.displayedColumns[i];
 
-					this.columnDefs.push({
-						headerName: col.headerName,
-						headerTooltip: col.tooltip ? col.headerName + ': ' + col.tooltip : col.headerName,
-						// tooltipShowDelay: 500,
-						colId: col.headerName,
-						field: col.field,
-						sortable: true,
-						suppressMovable: true,
-						resizable: true,
-						valueFormatter: this.enablePrecision ?
-							params => params.value && UtilsService.getPrecisionNumber(params.value, this.AppConfig.GLOBAL.TO_FIXED) : undefined,
-						hide: col.show === false, // ! if undefined : show it
-						width: this.cellsSizes[this.id] && this.cellsSizes[this.id][col.field],
-						cellRendererFramework: col.cellRendererFramework,
-						cellRendererParams: col.cellRendererParams,
-						comparator: function (a, b) {
-							const result = a - b;
-							if (isNaN(result)) {
-								if (!a || a === '' || a === 'undefined') {
-									a = '0';
-								}
-								if (!b || b === '' || b === 'undefined') {
-									b = '0';
-								}
-								return a.toString().trim().localeCompare(b.toString().trim(), undefined, {
-									numeric: true
-								});
-							} else {
-								return result;
+				this.columnDefs.push({
+					headerName: col.headerName,
+					headerTooltip: col.tooltip ? col.headerName + ': ' + col.tooltip : col.headerName,
+					// tooltipShowDelay: 500,
+					colId: col.headerName,
+					field: col.field,
+					sortable: true,
+					suppressMovable: true,
+					resizable: true,
+					valueFormatter: this.enablePrecision ?
+						params => params.value && UtilsService.getPrecisionNumber(params.value, this.AppConfig.GLOBAL.TO_FIXED) : undefined,
+					hide: col.show === false, // ! if undefined : show it
+					width: this.cellsSizes[this.id] && this.cellsSizes[this.id][col.field],
+					cellRendererFramework: col.cellRendererFramework,
+					cellRendererParams: col.cellRendererParams,
+					comparator: function (a, b) {
+						const result = a - b;
+						if (isNaN(result)) {
+							if (!a || a === '' || a === 'undefined') {
+								a = '0';
 							}
+							if (!b || b === '' || b === 'undefined') {
+								b = '0';
+							}
+							return a.toString().trim().localeCompare(b.toString().trim(), undefined, {
+								numeric: true
+							});
+						} else {
+							return result;
 						}
-					});
-				}
+					}
+				});
+			}
 
-			if (this.rowData.length === 0) {
+			if (this.rowData.length === 0 || this.inputDatas.length > 100) { // in case of big grid (>100), recreate all for performance improvements
 				// grid initialization
 				this.rowData = [];
 				for (let i = 0; i < this.inputDatas.length; i++) {
@@ -428,6 +428,11 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 						}
 						this.rowData.push(currentRow);
 					}
+				}
+				if (updateSelectedVariable) {
+					setTimeout(() => {
+						this.selectNode(this.selectedVariable);
+					});
 				}
 			} else {
 				// grid has changed
@@ -453,6 +458,7 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 				// Reset column defs in case of show/hide colum to reorder
 				this.agGrid.api.setColumnDefs(this.columnDefs);
 			}
+
 		}
 	}
 
@@ -483,7 +489,7 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 		this.updateColumnFilterBadge();
 
 		// Update the table
-		this.updateTable();
+		this.updateTable(true);
 	}
 
 	checkIsSmallDiv() {
