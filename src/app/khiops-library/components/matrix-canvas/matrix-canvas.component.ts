@@ -215,173 +215,176 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 						this.contextSelection,
 						this.selectedTargetIndex);
 
-					// Clean dom canvas
-					this.cleanDomContext();
-					this.cleanSelectedDomContext();
+					if (!isNaN(this.matrixFreqsValues[0])) { // check if we have a wrong context selection
 
-					if (this.matrixDiv && this.matrixArea) {
+						// Clean dom canvas
+						this.cleanDomContext();
+						this.cleanSelectedDomContext();
 
-						// call to remove panzoom handler from the target
-						// it doesn't seem to work ...
-						// if (this.unpanzoom) {
-						// 	this.unpanzoom();
-						// }
-						let [width, height] = this.getZoomDimensions();
+						if (this.matrixDiv && this.matrixArea) {
 
-						this.matrixCtx.canvas.width = width;
-						this.matrixCtx.canvas.height = height;
-						this.matrixSelectedCtx.canvas.width = width;
-						this.matrixSelectedCtx.canvas.height = height;
+							// call to remove panzoom handler from the target
+							// it doesn't seem to work ...
+							// if (this.unpanzoom) {
+							// 	this.unpanzoom();
+							// }
+							let [width, height] = this.getZoomDimensions();
 
-						if (this.isAxisInverted) {
-							[width, height] = [height, width];
-						}
-
-						if (this.inputDatas.matrixCellDatas) {
-							let minVal, maxVal;
-							let minValH, maxValH;
-
-							if (!this.minMaxValues) {
-								[minVal, maxVal] = UtilsService.getMinAndMaxFromArray(this.matrixValues);
-
-								if (this.graphMode.mode === 'MUTUAL_INFO') {
-									[minVal, maxVal] = UtilsService.averageMinAndMaxValues(minVal, maxVal);
-								}
-								if (this.graphMode.mode === 'HELLINGER') {
-									// For KC purpose
-									[minValH, maxValH] = UtilsService.getMinAndMaxFromArray(this.matrixValues);
-									[minValH, maxValH] = UtilsService.averageMinAndMaxValues(minVal, maxVal);
-								}
-							} else {
-								// For KV purpose
-								[minVal, maxVal] = this.minMaxValues[this.graphMode.mode];
-							}
-
-							if (this.graphMode.mode === 'HELLINGER') {
-								// For KC purpose
-								this.legend.min = minValH;
-								this.legend.max = maxValH;
-							} else {
-								this.legend.min = minVal;
-								this.legend.max = maxVal;
-							}
-							if (this.legend.min > 0) {
-								this.legend.min = 0;
-							}
-
-							this.xAxisLabel = this.inputDatas.variable.nameX;
-							this.yAxisLabel = this.inputDatas.variable.nameY;
+							this.matrixCtx.canvas.width = width;
+							this.matrixCtx.canvas.height = height;
+							this.matrixSelectedCtx.canvas.width = width;
+							this.matrixSelectedCtx.canvas.height = height;
 
 							if (this.isAxisInverted) {
-								[this.xAxisLabel, this.yAxisLabel] = [this.yAxisLabel, this.xAxisLabel];
-							} else {
-								this.matrixCtx.translate(0, height);
-								this.matrixCtx.scale(1, -1);
-								this.matrixSelectedCtx.translate(0, height);
-								this.matrixSelectedCtx.scale(1, -1);
+								[width, height] = [height, width];
 							}
 
-							this.updateLegendBar();
-							if (this.isAxisInverted) {
-								this.matrixCtx.translate(0, width);
-								this.matrixCtx.scale(-1, -1);
-								this.matrixCtx.rotate(Math.PI / 2);
-								this.matrixSelectedCtx.translate(0, width);
-								this.matrixSelectedCtx.scale(-1, -1);
-								this.matrixSelectedCtx.rotate(Math.PI / 2);
-							}
+							if (this.inputDatas.matrixCellDatas) {
+								let minVal, maxVal;
+								let minValH, maxValH;
 
-							this.selectedCells = [];
-							if (this.selectedCell) { // null for KC
-								this.selectedCells.push(this.selectedCell);
-							}
+								if (!this.minMaxValues) {
+									[minVal, maxVal] = UtilsService.getMinAndMaxFromArray(this.matrixValues);
 
-							// Compute totlal mutual info
-							const totalMutInfo = this.graphMode.mode === 'MUTUAL_INFO' ? UtilsService.arraySum(this.matrixValues) : 0;
-
-							const cellsLength = this.inputDatas.matrixCellDatas.length;
-							this.matrixCtx.beginPath();
-							this.matrixCtx.strokeStyle = 'rgba(255,255,255,0.3)';
-							this.matrixCtx.lineWidth = 1;
-							for (let index = 0; index < cellsLength; index++) {
-
-								if (this.graphMode.mode === 'MUTUAL_INFO' && this.isKhiopsCovisu) { // hide zero exeptions do not work anymore #110
-									this.matrixExtras[index] = totalMutInfo;
-								}
-
-								const cellDatas = this.inputDatas.matrixCellDatas[index];
-
-								const currentVal = this.matrixValues[index];
-								this.adaptCellDimensionsToZoom(cellDatas, width, height, this.graphType);
-								cellDatas.displayedValue = {
-									type: this.graphMode.mode,
-									value: currentVal,
-									ef: this.matrixExpectedFreqsValues[index],
-									extra: this.matrixExtras && this.matrixExtras[index] || 0
-								};
-								cellDatas.displayedFreqValue = this.matrixFreqsValues[index];
-
-								if (currentVal) {
-									// Do not draw empty cells
-									const color = this.getColorForPercentage(currentVal, maxVal);
-									this.matrixCtx.fillStyle = color;
-									const {
-										xCanvas,
-										yCanvas,
-										wCanvas,
-										hCanvas
-									} = cellDatas;
-									this.matrixCtx.fillRect(xCanvas, yCanvas, wCanvas, hCanvas);
-								}
-
-								// Draw pattern if 0 is an exception
-								if (this.matrixExtras ?. [index] && this.isZerosToggled) {
-									this.drawProbExceptionCell(cellDatas);
-								}
-
-							}
-							this.matrixCtx.stroke();
-
-							this.drawSelectedNodes();
-						}
-
-						if (!this.unpanzoom) {
-							this.unpanzoom = panzoom(this.matrixContainerDiv.nativeElement, e => {
-								if (e.dz) {
-									// this.zoomCanvas(e.dz);
-									if (e.dz > 0) {
-										this.onClickOnZoomOut();
-									} else {
-										this.onClickOnZoomIn();
+									if (this.graphMode.mode === 'MUTUAL_INFO') {
+										[minVal, maxVal] = UtilsService.averageMinAndMaxValues(minVal, maxVal);
+									}
+									if (this.graphMode.mode === 'HELLINGER') {
+										// For KC purpose
+										[minValH, maxValH] = UtilsService.getMinAndMaxFromArray(this.matrixValues);
+										[minValH, maxValH] = UtilsService.averageMinAndMaxValues(minVal, maxVal);
 									}
 								} else {
-									if (e.dx !== 0 || e.dy !== 0) {
-										this.matrixArea.nativeElement.scrollLeft = this.matrixArea.nativeElement.scrollLeft - e.dx;
-										this.matrixArea.nativeElement.scrollTop = this.matrixArea.nativeElement.scrollTop - e.dy;
+									// For KV purpose
+									[minVal, maxVal] = this.minMaxValues[this.graphMode.mode];
+								}
 
-										this.lastScrollPosition = {
-											scrollLeft: this.matrixArea.nativeElement.scrollLeft,
-											scrollTop: this.matrixArea.nativeElement.scrollTop
-										};
+								if (this.graphMode.mode === 'HELLINGER') {
+									// For KC purpose
+									this.legend.min = minValH;
+									this.legend.max = maxValH;
+								} else {
+									this.legend.min = minVal;
+									this.legend.max = maxVal;
+								}
+								if (this.legend.min > 0) {
+									this.legend.min = 0;
+								}
+
+								this.xAxisLabel = this.inputDatas.variable.nameX;
+								this.yAxisLabel = this.inputDatas.variable.nameY;
+
+								if (this.isAxisInverted) {
+									[this.xAxisLabel, this.yAxisLabel] = [this.yAxisLabel, this.xAxisLabel];
+								} else {
+									this.matrixCtx.translate(0, height);
+									this.matrixCtx.scale(1, -1);
+									this.matrixSelectedCtx.translate(0, height);
+									this.matrixSelectedCtx.scale(1, -1);
+								}
+
+								this.updateLegendBar();
+								if (this.isAxisInverted) {
+									this.matrixCtx.translate(0, width);
+									this.matrixCtx.scale(-1, -1);
+									this.matrixCtx.rotate(Math.PI / 2);
+									this.matrixSelectedCtx.translate(0, width);
+									this.matrixSelectedCtx.scale(-1, -1);
+									this.matrixSelectedCtx.rotate(Math.PI / 2);
+								}
+
+								this.selectedCells = [];
+								if (this.selectedCell) { // null for KC
+									this.selectedCells.push(this.selectedCell);
+								}
+
+								// Compute totlal mutual info
+								const totalMutInfo = this.graphMode.mode === 'MUTUAL_INFO' ? UtilsService.arraySum(this.matrixValues) : 0;
+
+								const cellsLength = this.inputDatas.matrixCellDatas.length;
+								this.matrixCtx.beginPath();
+								this.matrixCtx.strokeStyle = 'rgba(255,255,255,0.3)';
+								this.matrixCtx.lineWidth = 1;
+								for (let index = 0; index < cellsLength; index++) {
+
+									if (this.graphMode.mode === 'MUTUAL_INFO' && this.isKhiopsCovisu) { // hide zero exeptions do not work anymore #110
+										this.matrixExtras[index] = totalMutInfo;
 									}
-								}
-								if (this.zoom !== 1) {
-									this.isPaning = true;
-								}
 
-								// setTimeout(() => {
-								// 	this.isPaning = false;
-								// }, 100);
-							});
-						}
+									const cellDatas = this.inputDatas.matrixCellDatas[index];
 
-						setTimeout(() => {
-							this.loadingMatrixSvg = false;
-							if (this.isFirstResize) {
-								this.isFirstResize = false;
+									const currentVal = this.matrixValues[index];
+									this.adaptCellDimensionsToZoom(cellDatas, width, height, this.graphType);
+									cellDatas.displayedValue = {
+										type: this.graphMode.mode,
+										value: currentVal,
+										ef: this.matrixExpectedFreqsValues[index],
+										extra: this.matrixExtras && this.matrixExtras[index] || 0
+									};
+									cellDatas.displayedFreqValue = this.matrixFreqsValues[index];
+
+									if (currentVal) {
+										// Do not draw empty cells
+										const color = this.getColorForPercentage(currentVal, maxVal);
+										this.matrixCtx.fillStyle = color;
+										const {
+											xCanvas,
+											yCanvas,
+											wCanvas,
+											hCanvas
+										} = cellDatas;
+										this.matrixCtx.fillRect(xCanvas, yCanvas, wCanvas, hCanvas);
+									}
+
+									// Draw pattern if 0 is an exception
+									if (this.matrixExtras ?. [index] && this.isZerosToggled) {
+										this.drawProbExceptionCell(cellDatas);
+									}
+
+								}
+								this.matrixCtx.stroke();
+
+								this.drawSelectedNodes();
 							}
-						}, 100);
 
+							if (!this.unpanzoom) {
+								this.unpanzoom = panzoom(this.matrixContainerDiv.nativeElement, e => {
+									if (e.dz) {
+										// this.zoomCanvas(e.dz);
+										if (e.dz > 0) {
+											this.onClickOnZoomOut();
+										} else {
+											this.onClickOnZoomIn();
+										}
+									} else {
+										if (e.dx !== 0 || e.dy !== 0) {
+											this.matrixArea.nativeElement.scrollLeft = this.matrixArea.nativeElement.scrollLeft - e.dx;
+											this.matrixArea.nativeElement.scrollTop = this.matrixArea.nativeElement.scrollTop - e.dy;
+
+											this.lastScrollPosition = {
+												scrollLeft: this.matrixArea.nativeElement.scrollLeft,
+												scrollTop: this.matrixArea.nativeElement.scrollTop
+											};
+										}
+									}
+									if (this.zoom !== 1) {
+										this.isPaning = true;
+									}
+
+									// setTimeout(() => {
+									// 	this.isPaning = false;
+									// }, 100);
+								});
+							}
+
+							setTimeout(() => {
+								this.loadingMatrixSvg = false;
+								if (this.isFirstResize) {
+									this.isFirstResize = false;
+								}
+							}, 100);
+
+						}
 					}
 
 					this.matrixSelectedDiv.nativeElement.addEventListener('click', (event) => {
