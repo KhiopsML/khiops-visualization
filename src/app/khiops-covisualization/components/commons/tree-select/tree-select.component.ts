@@ -87,7 +87,10 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 				}
 				// Check if current id is in selection to avoid infinite loop and remove propagation if not in selection
 				propagateEvent = this.nodeInSelection === e.selectedNode.id;
-				this.tree.selectNode(e.selectedNode.id, propagateEvent);
+
+				// get corresponding node into tree
+				const treeNode = this.treenodesService.getNodeFromName(e.hierarchyName, e.selectedNode.name);
+				this.tree.selectNode(treeNode.id, propagateEvent);
 			}
 		});
 	}

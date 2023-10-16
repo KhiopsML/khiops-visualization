@@ -139,11 +139,15 @@ export class TreenodesService {
 			if (!deepEqual(previousSelectedNodes, this.dimensionsDatas.selectedNodes)) {
 				// search in the complete datas the corresponding node
 				const realNodeVO = this.dimensionsDatas.dimensionsClusters[currentIndex].find(e => {
-					return nodeVO.name === e.name || nodeVO.shortDescription === e.shortDescription; // also check into shortDescription (for distribution graph for instance)
+					return nodeVO.name === e.name /*|| nodeVO.shortDescription === e.shortDescription*/;
+					// also check into shortDescription (for distribution graph for instance)
+					// no !!! otherwise it return multiple nodes
 				});
+				realNodeVO.getChildrenList();
 				this.eventsService.emitTreeSelectedNodeChanged({
 					hierarchyName: hierarchyName,
-					selectedNode: realNodeVO,
+					selectedNode: nodeVO,
+					realNodeVO: realNodeVO,
 					stopPropagation: stopPropagation
 				});
 			}

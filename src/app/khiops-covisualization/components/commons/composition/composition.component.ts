@@ -85,8 +85,8 @@ export class CompositionComponent implements OnInit, OnDestroy {
 	) {
 
 		this.treeSelectedNodeChangedSub = this.eventsService.treeSelectedNodeChanged.subscribe(e => {
-			if (e.selectedNode && e.hierarchyName === this.selectedDimension.name) {
-				this.updateTable(e.selectedNode);
+			if (e.realNodeVO && e.hierarchyName === this.selectedDimension.name) {
+				this.updateTable(e.realNodeVO);
 			}
 		});
 
