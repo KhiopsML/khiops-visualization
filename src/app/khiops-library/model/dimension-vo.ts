@@ -32,8 +32,6 @@ export class DimensionVO {
 		this.parts = object && object.parts || undefined;
 		this.initialParts = object && object.initialParts || undefined;
 		this.values = object && object.values || undefined;
-		this.min = object && object.min;
-		this.max = object && object.max;
 		this.currentHierarchyClusterCount = this.parts;
 		this.hierarchyFold = true;
 
@@ -69,6 +67,8 @@ export class DimensionVO {
 	setPartition(dimensionPartition: any) {
 		if (this.isNumerical) {
 			this.intervals = dimensionPartition.intervals;
+			this.min = this.intervals[0].bounds[0];
+			this.max = this.intervals[this.intervals.length - 1].bounds[1];
 		} else {
 			this.valueGroups = dimensionPartition.valueGroups;
 		}
