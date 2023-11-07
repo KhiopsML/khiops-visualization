@@ -416,7 +416,7 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 				});
 			}
 
-			if (this.rowData.length === 0 || this.inputDatas.length > 100) { // in case of big grid (>100), recreate all for performance improvements
+			if (this.rowData.length === 0 || this.inputDatas.length > this.paginationSize) { // in case of big grid (>100), recreate all for performance improvements
 				// grid initialization
 				this.rowData = [];
 				for (let i = 0; i < this.inputDatas.length; i++) {
