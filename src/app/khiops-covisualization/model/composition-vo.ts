@@ -12,7 +12,9 @@ export class CompositionVO {
 
 	constructor(object, currentDimensionHierarchyCluster, index, externalData ? ) {
 
-		this.cluster = object.shortDescription || currentDimensionHierarchyCluster.shortDescription;
+		this.terminalCluster = object.cluster || currentDimensionHierarchyCluster.shortDescription;
+		this.cluster = currentDimensionHierarchyCluster.shortDescription;
+
 		this.name = object.shortDescription;
 		this.value = object.values[index];
 		this.value = this.value.replace(/[\n\r]+/g, ''); // remove carriage return #53
@@ -23,7 +25,6 @@ export class CompositionVO {
 
 		// Get rank and name if it has been changed from dimensionHierarchies array
 		this.rank = currentDimensionHierarchyCluster.rank;
-		this.terminalCluster = currentDimensionHierarchyCluster.shortDescription;
 
 		this._id = object.cluster + '_' + index;
 

@@ -14,6 +14,7 @@ import { ViewLayoutVO } from "@khiops-covisualization/model/view-layout-vo";
 import { EventsService } from "@khiops-covisualization/providers/events.service";
 import { TreenodesService } from "@khiops-covisualization/providers/treenodes.service";
 import { AppConfig } from "src/environments/environment";
+import { Subscription } from "rxjs";
 
 @Component({
 	selector: "app-matrix-container",
@@ -46,10 +47,8 @@ export class MatrixContainerComponent implements OnInit, OnChanges, OnDestroy {
 
 	conditionalOnContext = true;
 	isFullscreen = false;
-	treeSelectedNodeChangedSub: any;
-	viewsLayoutChangedSub: any;
-	treeCollapseChangedSub: any;
-	dimensionsSelectionChangedSub: any;
+	treeSelectedNodeChangedSub: Subscription;
+	viewsLayoutChangedSub: Subscription;
 	initNodesEvents = 0; // improve draw matrix perf
 	isFirstLoad = true;
 
@@ -74,7 +73,7 @@ export class MatrixContainerComponent implements OnInit, OnChanges, OnDestroy {
 				this.initNodesEvents++;
 				if (this.isFirstLoad) {
 					// At first launch collapse saved collapsed nodes
-					this.treenodesService.collapseNodesSaved();
+					this.treenodesService.collapseNodesSaved(); // TODO ?
 					this.isFirstLoad = false;
 				} else {
 
@@ -88,10 +87,6 @@ export class MatrixContainerComponent implements OnInit, OnChanges, OnDestroy {
 					}
 				}
 			});
-		this.treeCollapseChangedSub =
-			this.eventsService.treeCollapseChanged.subscribe((e) => {
-				this.matrixCanvas.drawMatrix();
-			});
 
 		this.viewsLayoutChangedSub =
 			this.appService.viewsLayoutChanged.subscribe((viewsLayout) => {
@@ -103,14 +98,6 @@ export class MatrixContainerComponent implements OnInit, OnChanges, OnDestroy {
 				});
 			});
 
-		this.dimensionsSelectionChangedSub =
-			this.eventsService.dimensionsSelectionChanged.subscribe(
-				(selectedDimensions) => {
-					if (this.initNodesEvents >= this.dimensionsDatas.dimensions.length) {
-						this.constructModeSelectBox();
-					}
-				}
-			);
 	}
 
 	ngOnInit() {
@@ -124,9 +111,7 @@ export class MatrixContainerComponent implements OnInit, OnChanges, OnDestroy {
 
 	ngOnDestroy() {
 		this.viewsLayoutChangedSub?.unsubscribe();
-		this.treeCollapseChangedSub?.unsubscribe();
 		this.treeSelectedNodeChangedSub?.unsubscribe();
-		this.dimensionsSelectionChangedSub?.unsubscribe();
 	}
 
 	ngOnChanges(changes: SimpleChanges) {}

@@ -71,7 +71,10 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 
 	@ViewChild('appProjectView', {
 		static: false
-	}) appProjectView: ElementRef < HTMLElement > ;
+	}) appProjectView: ElementRef<HTMLElement>;
+	@ViewChild('appAxisView', {
+		static: false
+	}) appAxisView: ElementRef<HTMLElement>;
 
 	fontSizeClass: string;
 	public get appDatas() {
@@ -159,11 +162,19 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 		this.importedDatasChangedSub.unsubscribe();
 	}
 
+	showAxisView() {
+		return this.activeTab === 0 || (this.activeTab === 1 && this.isContextDimensions)
+	}
+
+	showProjectView() {
+		return (this.activeTab === 1 && !this.isContextDimensions) || (this.activeTab === 2 && this.isContextDimensions)
+	}
+
 	interceptTabChange(tab: MatTab, tabHeader: MatTabHeader, index: number) {
-		if (index === 2) {
+		if (index === 1 && this.isContextDimensions) {
 			this.openContextView = true;
 			this.khiopsLibraryService.trackEvent('page_view', 'context');
-		} else if (index === 1) {
+		} else if (index === 0) {
 			this.khiopsLibraryService.trackEvent('page_view', 'axis');
 			this.openContextView = false;
 		}
@@ -171,11 +182,8 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 	}
 
 	onSelectedTabChanged(e) {
-		if (e.index !== 2) {
+		if (e.index === 0 || (e.index === 1 && !this.isContextDimensions)) {
 			this.openContextView = false;
-		}
-		if (e.index === 0) {
-			this.initializeServices();
 		}
 
 		// init selected area to undefined
@@ -208,21 +216,16 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 	}
 
 	onFileLoaderDataChanged(datas) {
-		this.openContextView = false;
-		this.selectedTab = undefined;
-		this.activeTab = 0;
 		this.currentDatas = datas;
 		this.appService.setFileDatas(datas);
+
 		if (datas) {
 			this.initializeHome();
+			this.openContextView = false;
+			this.selectedTab = undefined;
+			this.activeTab = 0;
 		}
 
-		// #32 Hide project view temporarily
-		setTimeout(() => {
-			this.onSelectedTabChanged({
-				index: AppConfig.covisualizationCommon.HOME.ACTIVE_TAB_INDEX
-			});
-		}, 0);
 	}
 
 	initializeHome() {
@@ -251,6 +254,9 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 		this.appProjectView && this.appProjectView.initialize();
 
 		this.initializeServices();
+
+		// @ts-ignore
+		this.appAxisView && this.appAxisView.initialize();
 
 	}
 

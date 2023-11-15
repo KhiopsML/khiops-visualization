@@ -10,15 +10,39 @@ import {
 	EventEmitter,
 	SimpleChanges,
 } from "@angular/core";
-import { DimensionVO } from "@khiops-library/model/dimension-vo";
-import { TranslateService } from "@ngstack/translate";
-import { KhiopsLibraryService } from "@khiops-library/providers/khiops-library.service";
-import { DistributionGraphCanvasComponent } from "@khiops-library/components/distribution-graph-canvas/distribution-graph-canvas.component";
-import { EventsService } from "@khiops-covisualization/providers/events.service";
-import { TreenodesService } from "@khiops-covisualization/providers/treenodes.service";
-import { ChartColorsSetI } from "@khiops-library/interfaces/chart-colors-set";
-import { DimensionsDatasService } from "@khiops-covisualization/providers/dimensions-datas.service";
-import { ClustersService } from "@khiops-covisualization/providers/clusters.service";
+import {
+	DimensionVO
+} from "@khiops-library/model/dimension-vo";
+import {
+	TranslateService
+} from "@ngstack/translate";
+import {
+	KhiopsLibraryService
+} from "@khiops-library/providers/khiops-library.service";
+import {
+	DistributionGraphCanvasComponent
+} from "@khiops-library/components/distribution-graph-canvas/distribution-graph-canvas.component";
+import {
+	EventsService
+} from "@khiops-covisualization/providers/events.service";
+import {
+	TreenodesService
+} from "@khiops-covisualization/providers/treenodes.service";
+import {
+	ChartColorsSetI
+} from "@khiops-library/interfaces/chart-colors-set";
+import {
+	DimensionsDatasService
+} from "@khiops-covisualization/providers/dimensions-datas.service";
+import {
+	ClustersService
+} from "@khiops-covisualization/providers/clusters.service";
+import {
+	TreeNodeVO
+} from "@khiops-covisualization/model/tree-node-vo";
+import {
+	Subscription
+} from "rxjs";
 
 @Component({
 	selector: "app-variable-graph-details",
@@ -26,25 +50,21 @@ import { ClustersService } from "@khiops-covisualization/providers/clusters.serv
 	styleUrls: ["./variable-graph-details.component.scss"],
 })
 export class VariableGraphDetailsComponent
-	implements OnInit, OnChanges, OnDestroy, AfterViewInit
-{
+implements OnInit, OnChanges, OnDestroy, AfterViewInit {
 	@ViewChild("distributionGraph", {
 		static: false,
 	})
 	distributionGraph: DistributionGraphCanvasComponent;
 
-	@Input() selectedNode;
-	@Output() selectedItemChanged: EventEmitter<any> = new EventEmitter();
+	@Input() selectedNode: TreeNodeVO;
+	@Output() selectedItemChanged: EventEmitter < any > = new EventEmitter();
 	@Input() position: number;
 	@Input() dimensionsTree: any;
 	@Input() selectedDimension: DimensionVO;
 	@Input() selectedDimensions: DimensionVO[];
 
 	scrollPosition = 0;
-	treeCollapseChangedSub: any;
-	treeSelectedNodeChangedSub: any;
-	treeNodeNameChangedSub: any;
-	dimensionsDatasChangedSub: any;
+	treeSelectedNodeChangedSub: Subscription;
 
 	isLoadingGraphDatas: boolean;
 	scaleValue: any;
@@ -71,29 +91,18 @@ export class VariableGraphDetailsComponent
 	) {
 		this.colorSet = this.khiopsLibraryService.getGraphColorSet()[2];
 
-		this.treeCollapseChangedSub =
-			this.eventsService.treeCollapseChanged.subscribe((dimension) => {
-				this.getFilteredDistribution(this.dimensionsTree, true);
-			});
 		this.treeSelectedNodeChangedSub =
 			this.eventsService.treeSelectedNodeChanged.subscribe((e) => {
-				if (
-					(e.selectedNode &&
-						e.hierarchyName === this.selectedDimension.name) ||
-					!this.graphDetails ||
-					this.dimensionsDatasService.isContextDimension(
-						e.hierarchyName
-					)
-				) {
-					// Only compute distribution of the other node
-					this.getFilteredDistribution(this.dimensionsTree);
-					this.prevSelectedNode = e.selectedNode;
-				}
-				this.setLegendTitle(this.position);
-			});
-		this.treeNodeNameChangedSub =
-			this.eventsService.treeNodeNameChanged.subscribe((e) => {
-				this.getFilteredDistribution(this.dimensionsTree, true);
+				setTimeout(() => {
+					if (
+						e.selectedNode
+					) {
+						// Only compute distribution of the other node
+						this.getFilteredDistribution(this.dimensionsTree);
+						this.prevSelectedNode = e.selectedNode;
+					}
+					this.setLegendTitle(this.position);
+				});
 			});
 	}
 
@@ -145,16 +154,13 @@ export class VariableGraphDetailsComponent
 	}
 
 	ngOnDestroy() {
-		this.treeCollapseChangedSub.unsubscribe();
 		this.treeSelectedNodeChangedSub.unsubscribe();
-		this.treeNodeNameChangedSub.unsubscribe();
 	}
 
 	getFilteredDistribution(dimensionsTree, force = false) {
 		if (dimensionsTree && this.selectedNode) {
 			if (this.prevSelectedNode !== this.selectedNode || force) {
-				if (this.position === 0) {
-				}
+				if (this.position === 0) {}
 				this.graphDetails =
 					this.clustersService.getDistributionDetailsFromNode(
 						this.position
@@ -177,7 +183,9 @@ export class VariableGraphDetailsComponent
 				position
 			].shortDescription;
 		// force legend update
-		this.graphDetails = { ...this.graphDetails };
+		this.graphDetails = {
+			...this.graphDetails
+		};
 	}
 
 	getCurrentClusterDetailsFromNode(

@@ -13,7 +13,7 @@ import {
 let appService: AppService;
 
 let cells;
-let matrixFreqsValues, matrixValues, globalMatrixValues, matrixExtras;
+let matrixFreqsValues, matrixValues, matrixExtras;
 
 describe('Visualization', () => {
 describe('Matrix Datas : [iris2d file] check matrix values', () => {
@@ -35,7 +35,7 @@ describe('Matrix Datas : [iris2d file] check matrix values', () => {
 		const graphMode = {
 			"mode": "FREQUENCY"
 		};
-		[matrixFreqsValues, matrixValues, globalMatrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
+		[matrixFreqsValues, matrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
 			graphMode,
 			inputDatas,
 			undefined,
@@ -49,7 +49,7 @@ describe('Matrix Datas : [iris2d file] check matrix values', () => {
 		const graphMode = {
 			"mode": "FREQUENCY"
 		};
-		[matrixFreqsValues, matrixValues, globalMatrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
+		[matrixFreqsValues, matrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
 			graphMode,
 			inputDatas,
 			undefined,
@@ -63,7 +63,7 @@ describe('Matrix Datas : [iris2d file] check matrix values', () => {
 		const graphMode = {
 			"mode": "FREQUENCY_CELL"
 		};
-		[matrixFreqsValues, matrixValues, globalMatrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
+		[matrixFreqsValues, matrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
 			graphMode,
 			inputDatas,
 			undefined,
@@ -77,7 +77,7 @@ describe('Matrix Datas : [iris2d file] check matrix values', () => {
 		const graphMode = {
 			"mode": "FREQUENCY_CELL"
 		};
-		[matrixFreqsValues, matrixValues, globalMatrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
+		[matrixFreqsValues, matrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
 			graphMode,
 			inputDatas,
 			undefined,
@@ -91,7 +91,7 @@ describe('Matrix Datas : [iris2d file] check matrix values', () => {
 		const graphMode = {
 			"mode": "FREQUENCY_CELL"
 		};
-		[matrixFreqsValues, matrixValues, globalMatrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
+		[matrixFreqsValues, matrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
 			graphMode,
 			inputDatas,
 			undefined,
@@ -105,7 +105,7 @@ describe('Matrix Datas : [iris2d file] check matrix values', () => {
 		const graphMode = {
 			"mode": "FREQUENCY_CELL"
 		};
-		[matrixFreqsValues, matrixValues, globalMatrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
+		[matrixFreqsValues, matrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
 			graphMode,
 			inputDatas,
 			undefined,
@@ -119,7 +119,7 @@ describe('Matrix Datas : [iris2d file] check matrix values', () => {
 		const graphMode = {
 			"mode": "PROB_TARGET_WITH_CELL"
 		};
-		[matrixFreqsValues, matrixValues, globalMatrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
+		[matrixFreqsValues, matrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
 			graphMode,
 			inputDatas,
 			undefined,
@@ -133,7 +133,7 @@ describe('Matrix Datas : [iris2d file] check matrix values', () => {
 		const graphMode = {
 			"mode": "PROB_TARGET_WITH_CELL"
 		};
-		[matrixFreqsValues, matrixValues, globalMatrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
+		[matrixFreqsValues, matrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
 			graphMode,
 			inputDatas,
 			undefined,
@@ -147,7 +147,7 @@ describe('Matrix Datas : [iris2d file] check matrix values', () => {
 		const graphMode = {
 			"mode": "PROB_CELL_WITH_TARGET"
 		};
-		[matrixFreqsValues, matrixValues, globalMatrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
+		[matrixFreqsValues, matrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
 			graphMode,
 			inputDatas,
 			undefined,
@@ -161,7 +161,7 @@ describe('Matrix Datas : [iris2d file] check matrix values', () => {
 		const graphMode = {
 			"mode": "CELL_INTEREST"
 		};
-		[matrixFreqsValues, matrixValues, globalMatrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
+		[matrixFreqsValues, matrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
 			graphMode,
 			inputDatas,
 			undefined,
@@ -175,7 +175,7 @@ describe('Matrix Datas : [iris2d file] check matrix values', () => {
 		const graphMode = {
 			"mode": "FREQUENCY"
 		};
-		[matrixFreqsValues, matrixValues, globalMatrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
+		[matrixFreqsValues, matrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
 			graphMode,
 			inputDatas,
 			undefined,
@@ -189,7 +189,7 @@ describe('Matrix Datas : [iris2d file] check matrix values', () => {
 		const graphMode = {
 			"mode": "FREQUENCY"
 		};
-		[matrixFreqsValues, matrixValues, globalMatrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
+		[matrixFreqsValues, matrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
 			graphMode,
 			inputDatas,
 			undefined,
@@ -203,7 +203,7 @@ describe('Matrix Datas : [iris2d file] check matrix values', () => {
 		const graphMode = {
 			"mode": "PROB_CELL"
 		};
-		[matrixFreqsValues, matrixValues, globalMatrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
+		[matrixFreqsValues, matrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
 			graphMode,
 			inputDatas,
 			undefined,
@@ -217,7 +217,7 @@ describe('Matrix Datas : [iris2d file] check matrix values', () => {
 		const graphMode = {
 			"mode": "PROB_CELL_REVERSE"
 		};
-		[matrixFreqsValues, matrixValues, globalMatrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
+		[matrixFreqsValues, matrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
 			graphMode,
 			inputDatas,
 			undefined,
@@ -231,7 +231,7 @@ describe('Matrix Datas : [iris2d file] check matrix values', () => {
 		const graphMode = {
 			"mode": "MUTUAL_INFO"
 		};
-		[matrixFreqsValues, matrixValues, globalMatrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
+		[matrixFreqsValues, matrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
 			graphMode,
 			inputDatas,
 			undefined,
@@ -245,7 +245,7 @@ describe('Matrix Datas : [iris2d file] check matrix values', () => {
 		const graphMode = {
 			"mode": "MUTUAL_INFO"
 		};
-		[matrixFreqsValues, matrixValues, globalMatrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
+		[matrixFreqsValues, matrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
 			graphMode,
 			inputDatas,
 			undefined,
@@ -259,7 +259,7 @@ describe('Matrix Datas : [iris2d file] check matrix values', () => {
 		const graphMode = {
 			"mode": "MUTUAL_INFO"
 		};
-		[matrixFreqsValues, matrixValues, globalMatrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
+		[matrixFreqsValues, matrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
 			graphMode,
 			inputDatas,
 			undefined,

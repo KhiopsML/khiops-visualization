@@ -52,11 +52,6 @@
 				</kl-header-title>
 				<mat-tab-group #tabsMenu mat-align-tabs="center" color="primary" [@.disabled]="true"
 					[selectedIndex]="activeTab" (selectedTabChange)="onSelectedTabChanged($event)">
-					<mat-tab label="{{ 'TITLE.PROJECT' | translate }}">
-						<ng-template matTabLabel>
-							<label title="{{ 'TOOLTIPS.TABS.PROJECT' | translate }}">{{ 'TITLE.PROJECT' | translate }}</label>
-						</ng-template>
-					</mat-tab>
 					<mat-tab label="{{ 'TITLE.AXIS' | translate }}">
 						<ng-template matTabLabel>
 							<label title="{{ 'TOOLTIPS.TABS.AXIS' | translate }}">{{ 'TITLE.AXIS' | translate }}</label>
@@ -67,13 +62,18 @@
 							<label title="{{ 'TOOLTIPS.TABS.CONTEXT' | translate }}">{{ 'TITLE.CONTEXT' | translate }}</label>
 						</ng-template>
 					</mat-tab>
+					<mat-tab label="{{ 'TITLE.PROJECT' | translate }}">
+						<ng-template matTabLabel>
+							<label title="{{ 'TOOLTIPS.TABS.PROJECT' | translate }}">{{ 'TITLE.PROJECT' | translate }}</label>
+						</ng-template>
+					</mat-tab>
 				</mat-tab-group>
-				<app-project-view #appProjectView *ngIf="activeTab === 0" [selectedTab]="selectedTab" (projectFileChanged)="onFileLoaderDataChanged($event)" ></app-project-view>
-				<app-axis-view *ngIf="activeTab !== 0" [selectedTab]="selectedTab" [openContextView]="openContextView">
+				<app-project-view #appProjectView [hidden]="!showProjectView()" [selectedTab]="selectedTab" (projectFileChanged)="onFileLoaderDataChanged($event)" ></app-project-view>
+				<app-axis-view  #appAxisView [hidden]="!showAxisView()" [selectedTab]="selectedTab" [openContextView]="openContextView">
 				</app-axis-view>
 			</div>
 			<div id="header-right" layout="row" fxLayoutAlign="center center">
-				<app-header-manage-view *ngIf="activeTab !== 0 && isCompatibleJson"></app-header-manage-view>
+				<app-header-manage-view *ngIf="showAxisView() && isCompatibleJson"></app-header-manage-view>
 				<kl-header-tools fxFlex [appVersion]="appVersion" *ngIf="isCompatibleJson"
 					(toggleNavDrawerChanged)="onToggleNavDrawerChanged($event)">
 				</kl-header-tools>

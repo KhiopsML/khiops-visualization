@@ -81,7 +81,6 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 	selectedTargetIndex = -1;
 	isZerosToggled = false;
 	matrixValues: any;
-	globalMatrixValues: any;
 	matrixFreqsValues: any;
 	matrixExpectedFreqsValues: any;
 	loadingMatrixSvg = true;
@@ -109,8 +108,6 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 	numberPrecision: any;
 	zoom = 1;
 	unpanzoom: any;
-	disableClick = false;
-
 	isPaning = false;
 
 	tooltipCell: any;
@@ -174,6 +171,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 					datas: changeCell,
 					stopPropagation: true
 				});
+				this.drawSelectedNodes()
 			}
 		} else {
 			return;
@@ -188,17 +186,21 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 
 		// Draw matrix on change
 		if (this.matrixDiv && this.matrixDiv.nativeElement && !changes.selectedNodes) {
-			this.drawMatrix();
+			if (this.inputDatas.matrixCellDatas && this.inputDatas.propagateChanges === false) {
+				this.inputDatas.propagateChanges = true; // hack to limit re-rendering and optimize perf
+			} else {
+				this.drawMatrix();
+			}
 		}
 	}
 
 	drawMatrix() {
+		console.log('file: matrix-canvas.component.ts:195 ~ MatrixCanvasComponent ~ drawMatrix ~ drawMatrix:');
 
 		if (!this.isDrawing) {
-			this.isDrawing = true;
 			requestAnimationFrame(() => {
-
 				if (this.graphMode && this.inputDatas && this.inputDatas.variable) {
+					this.isDrawing = true;
 					const t2 = performance.now();
 
 					if (this.graphTargets && this.graphTarget) {
@@ -207,196 +209,186 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 						this.selectedTargetIndex = -1;
 					}
 
-					[this.matrixFreqsValues, this.matrixValues, this.globalMatrixValues, this.matrixExtras, this.matrixExpectedFreqsValues] = MatrixCanvasService.computeMatrixValues(
+					[this.matrixFreqsValues, this.matrixValues, this.matrixExtras, this.matrixExpectedFreqsValues] = MatrixCanvasService.computeMatrixValues(
 						this.graphMode,
 						this.inputDatas,
 						this.contextSelection,
 						this.selectedTargetIndex);
 
-					// Clean dom canvas
-					this.cleanDomContext();
-					this.cleanSelectedDomContext();
+					if (!isNaN(this.matrixFreqsValues[0])) { // check if we have a wrong context selection
 
-					if (this.matrixDiv && this.matrixArea) {
+						// Clean dom canvas
+						this.cleanDomContext();
+						this.cleanSelectedDomContext();
 
-						// call to remove panzoom handler from the target
-						// it doesn't seem to work ...
-						// if (this.unpanzoom) {
-						// 	this.unpanzoom();
-						// }
-						let [width, height] = this.getZoomDimensions();
+						if (this.matrixDiv && this.matrixArea) {
 
-						this.matrixCtx.canvas.width = width;
-						this.matrixCtx.canvas.height = height;
-						this.matrixSelectedCtx.canvas.width = width;
-						this.matrixSelectedCtx.canvas.height = height;
+							// call to remove panzoom handler from the target
+							// it doesn't seem to work ...
+							// if (this.unpanzoom) {
+							// 	this.unpanzoom();
+							// }
+							let [width, height] = this.getZoomDimensions();
 
-						if (this.isAxisInverted) {
-							[width, height] = [height, width];
-						}
+							this.matrixCtx.canvas.width = width;
+							this.matrixCtx.canvas.height = height;
+							this.matrixSelectedCtx.canvas.width = width;
+							this.matrixSelectedCtx.canvas.height = height;
 
-						if (this.inputDatas.matrixCellDatas) {
-							let minVal, maxVal;
-							let minValH, maxValH;
+							if (this.isAxisInverted) {
+								[width, height] = [height, width];
+							}
 
-							if (!this.minMaxValues) {
-								// GLOBAL.GLOBAL For KC purpose
-								if (this.conditionalOnContext && this.graphMode.mode !== 'PROB_CELL' && this.graphMode.mode !== 'PROB_CELL_REVERSE') {
-									[minVal, maxVal] = UtilsService.getMinAndMaxFromArray(this.globalMatrixValues);
-								} else {
-									// Always local if no context
+							if (this.inputDatas.matrixCellDatas) {
+								let minVal, maxVal;
+								let minValH, maxValH;
+
+								if (!this.minMaxValues) {
 									[minVal, maxVal] = UtilsService.getMinAndMaxFromArray(this.matrixValues);
+
+									if (this.graphMode.mode === 'MUTUAL_INFO') {
+										[minVal, maxVal] = UtilsService.averageMinAndMaxValues(minVal, maxVal);
+									}
+									if (this.graphMode.mode === 'HELLINGER') {
+										// For KC purpose
+										[minValH, maxValH] = UtilsService.getMinAndMaxFromArray(this.matrixValues);
+										[minValH, maxValH] = UtilsService.averageMinAndMaxValues(minVal, maxVal);
+									}
+								} else {
+									// For KV purpose
+									[minVal, maxVal] = this.minMaxValues[this.graphMode.mode];
 								}
 
-								if (this.graphMode.mode === 'MUTUAL_INFO') {
-									[minVal, maxVal] = UtilsService.averageMinAndMaxValues(minVal, maxVal);
-								}
 								if (this.graphMode.mode === 'HELLINGER') {
 									// For KC purpose
-									[minValH, maxValH] = UtilsService.getMinAndMaxFromArray(this.matrixExtras);
-									[minValH, maxValH] = UtilsService.averageMinAndMaxValues(minVal, maxVal);
-								}
-							} else {
-								// For KV purpose
-								[minVal, maxVal] = this.minMaxValues[this.graphMode.mode];
-							}
-
-							if (this.graphMode.mode === 'HELLINGER') {
-								// For KC purpose
-								this.legend.min = minValH;
-								this.legend.max = maxValH;
-							} else {
-								this.legend.min = minVal;
-								this.legend.max = maxVal;
-							}
-							if (this.legend.min > 0) {
-								this.legend.min = 0;
-							}
-
-							this.xAxisLabel = this.inputDatas.variable.nameX;
-							this.yAxisLabel = this.inputDatas.variable.nameY;
-
-							if (this.isAxisInverted) {
-								[this.xAxisLabel, this.yAxisLabel] = [this.yAxisLabel, this.xAxisLabel];
-							} else {
-								this.matrixCtx.translate(0, height);
-								this.matrixCtx.scale(1, -1);
-								this.matrixSelectedCtx.translate(0, height);
-								this.matrixSelectedCtx.scale(1, -1);
-							}
-
-							this.updateLegendBar();
-							if (this.isAxisInverted) {
-								this.matrixCtx.translate(0, width);
-								this.matrixCtx.scale(-1, -1);
-								this.matrixCtx.rotate(Math.PI / 2);
-								this.matrixSelectedCtx.translate(0, width);
-								this.matrixSelectedCtx.scale(-1, -1);
-								this.matrixSelectedCtx.rotate(Math.PI / 2);
-							}
-
-							this.selectedCells = [];
-							if (this.selectedCell) { // null for KC
-								this.selectedCells.push(this.selectedCell);
-							}
-
-							// Compute totlal mutual info
-							const totalMutInfo = this.graphMode.mode === 'MUTUAL_INFO' ? UtilsService.arraySum(this.matrixValues) : 0;
-
-							const cellsLength = this.inputDatas.matrixCellDatas.length;
-							this.matrixCtx.beginPath();
-							this.matrixCtx.strokeStyle = 'rgba(255,255,255,0.3)';
-							this.matrixCtx.lineWidth = 1;
-							for (let index = 0; index < cellsLength; index++) {
-
-								if (this.graphMode.mode === 'MUTUAL_INFO' && this.isKhiopsCovisu) { // hide zero exeptions do not work anymore #110
-									this.matrixExtras[index] = totalMutInfo;
-								}
-
-								const cellDatas = this.inputDatas.matrixCellDatas[index];
-
-								const currentVal = this.matrixValues[index];
-								this.adaptCellDimensionsToZoom(cellDatas, width, height, this.graphType);
-								cellDatas.displayedValue = {
-									type: this.graphMode.mode,
-									value: currentVal,
-									ef: this.matrixExpectedFreqsValues[index],
-									extra: this.matrixExtras && this.matrixExtras[index] || 0
-								};
-								cellDatas.displayedFreqValue = this.matrixFreqsValues[index];
-
-								if (currentVal) {
-									// Do not draw empty cells
-									const color = this.getColorForPercentage(currentVal, maxVal);
-									this.matrixCtx.fillStyle = color;
-									const {
-										xCanvas,
-										yCanvas,
-										wCanvas,
-										hCanvas
-									} = cellDatas;
-									this.matrixCtx.fillRect(xCanvas, yCanvas, wCanvas, hCanvas);
-								}
-
-								// Draw pattern if 0 is an exception
-								if (this.matrixExtras ?. [index] && this.isZerosToggled) {
-									this.drawProbExceptionCell(cellDatas);
-								}
-
-							}
-							this.matrixCtx.stroke();
-
-							this.drawSelectedNodes();
-						}
-
-						if (!this.unpanzoom) {
-							this.unpanzoom = panzoom(this.matrixContainerDiv.nativeElement, e => {
-								if (e.dz) {
-									// this.zoomCanvas(e.dz);
-									if (e.dz > 0) {
-										this.onClickOnZoomOut();
-									} else {
-										this.onClickOnZoomIn();
-									}
+									this.legend.min = minValH;
+									this.legend.max = maxValH;
 								} else {
-									if (e.dx !== 0 || e.dy !== 0) {
-										this.matrixArea.nativeElement.scrollLeft = this.matrixArea.nativeElement.scrollLeft - e.dx;
-										this.matrixArea.nativeElement.scrollTop = this.matrixArea.nativeElement.scrollTop - e.dy;
+									this.legend.min = minVal;
+									this.legend.max = maxVal;
+								}
+								if (this.legend.min > 0) {
+									this.legend.min = 0;
+								}
 
-										this.lastScrollPosition = {
-											scrollLeft: this.matrixArea.nativeElement.scrollLeft,
-											scrollTop: this.matrixArea.nativeElement.scrollTop
-										};
+								this.xAxisLabel = this.inputDatas.variable.nameX;
+								this.yAxisLabel = this.inputDatas.variable.nameY;
+
+								if (this.isAxisInverted) {
+									[this.xAxisLabel, this.yAxisLabel] = [this.yAxisLabel, this.xAxisLabel];
+								} else {
+									this.matrixCtx.translate(0, height);
+									this.matrixCtx.scale(1, -1);
+									this.matrixSelectedCtx.translate(0, height);
+									this.matrixSelectedCtx.scale(1, -1);
+								}
+
+								this.updateLegendBar();
+								if (this.isAxisInverted) {
+									this.matrixCtx.translate(0, width);
+									this.matrixCtx.scale(-1, -1);
+									this.matrixCtx.rotate(Math.PI / 2);
+									this.matrixSelectedCtx.translate(0, width);
+									this.matrixSelectedCtx.scale(-1, -1);
+									this.matrixSelectedCtx.rotate(Math.PI / 2);
+								}
+
+								this.selectedCells = [];
+								if (this.selectedCell) { // null for KC
+									this.selectedCells.push(this.selectedCell);
+								}
+
+								// Compute totlal mutual info
+								const totalMutInfo = this.graphMode.mode === 'MUTUAL_INFO' ? UtilsService.arraySum(this.matrixValues) : 0;
+
+								const cellsLength = this.inputDatas.matrixCellDatas.length;
+								this.matrixCtx.beginPath();
+								this.matrixCtx.strokeStyle = 'rgba(255,255,255,0.3)';
+								this.matrixCtx.lineWidth = 1;
+								for (let index = 0; index < cellsLength; index++) {
+
+									if (this.graphMode.mode === 'MUTUAL_INFO' && this.isKhiopsCovisu) { // hide zero exeptions do not work anymore #110
+										this.matrixExtras[index] = totalMutInfo;
 									}
-								}
-								if (this.zoom !== 1) {
-									this.isPaning = true;
-								}
 
-								// setTimeout(() => {
-								// 	this.isPaning = false;
-								// }, 100);
-							});
-						}
+									const cellDatas = this.inputDatas.matrixCellDatas[index];
 
-						setTimeout(() => {
-							this.loadingMatrixSvg = false;
-							if (this.isFirstResize) {
-								this.isFirstResize = false;
+									const currentVal = this.matrixValues[index];
+									this.adaptCellDimensionsToZoom(cellDatas, width, height, this.graphType);
+									cellDatas.displayedValue = {
+										type: this.graphMode.mode,
+										value: currentVal,
+										ef: this.matrixExpectedFreqsValues[index],
+										extra: this.matrixExtras && this.matrixExtras[index] || 0
+									};
+									cellDatas.displayedFreqValue = this.matrixFreqsValues[index];
+
+									if (currentVal) {
+										// Do not draw empty cells
+										const color = this.getColorForPercentage(currentVal, maxVal);
+										this.matrixCtx.fillStyle = color;
+										const {
+											xCanvas,
+											yCanvas,
+											wCanvas,
+											hCanvas
+										} = cellDatas;
+										this.matrixCtx.fillRect(xCanvas, yCanvas, wCanvas, hCanvas);
+									}
+
+									// Draw pattern if 0 is an exception
+									if (this.matrixExtras ?. [index] && this.isZerosToggled) {
+										this.drawProbExceptionCell(cellDatas);
+									}
+
+								}
+								this.matrixCtx.stroke();
+
+								this.drawSelectedNodes();
 							}
-						}, 100);
 
+							if (!this.unpanzoom) {
+								this.unpanzoom = panzoom(this.matrixContainerDiv.nativeElement, e => {
+									if (e.dz) {
+										// this.zoomCanvas(e.dz);
+										if (e.dz > 0) {
+											this.onClickOnZoomOut();
+										} else {
+											this.onClickOnZoomIn();
+										}
+									} else {
+										if (e.dx !== 0 || e.dy !== 0) {
+											this.matrixArea.nativeElement.scrollLeft = this.matrixArea.nativeElement.scrollLeft - e.dx;
+											this.matrixArea.nativeElement.scrollTop = this.matrixArea.nativeElement.scrollTop - e.dy;
+
+											this.lastScrollPosition = {
+												scrollLeft: this.matrixArea.nativeElement.scrollLeft,
+												scrollTop: this.matrixArea.nativeElement.scrollTop
+											};
+										}
+									}
+									if (this.zoom !== 1) {
+										this.isPaning = true;
+									}
+
+									// setTimeout(() => {
+									// 	this.isPaning = false;
+									// }, 100);
+								});
+							}
+
+							setTimeout(() => {
+								this.loadingMatrixSvg = false;
+								if (this.isFirstResize) {
+									this.isFirstResize = false;
+								}
+							}, 100);
+
+						}
 					}
 
 					this.matrixSelectedDiv.nativeElement.addEventListener('click', (event) => {
-						if (!this.disableClick) {
-							// Do not alllow multiple click on matrix to avoid loops
-							this.disableClick = true;
-							setTimeout(() => {
-								this.disableClick = false;
-							}, 500);
-							this.clickOnCell(event);
-						}
+						this.clickOnCell(event);
 					}, {
 						passive: true
 					});
@@ -446,6 +438,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 			this.cleanSelectedDomContext();
 
 			const clicked = this.getCurrentCell(event);
+			this.selectedCells = [clicked];
 			this.drawSelectedCell(clicked);
 
 			setTimeout(() => {
@@ -461,38 +454,39 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 	drawSelectedNodes() {
 		this.cleanSelectedDomContext();
 
-		if (this.selectedCell) {
-			// KV
-			this.drawSelectedCell(this.selectedCell);
-		} else {
-			// KC
-			this.selectedCells = []
-			const cellsLength = this.inputDatas.matrixCellDatas.length;
-			for (let index = 0; index < cellsLength; index++) {
-				const cellDatas = this.inputDatas.matrixCellDatas[index];
+		if (this.inputDatas.matrixCellDatas) {
+			if (this.selectedCell) {
+				// KV
+				this.drawSelectedCell(this.selectedCell);
+			} else {
+				// KC
+				this.selectedCells = []
+				const cellsLength = this.inputDatas.matrixCellDatas.length;
+				for (let index = 0; index < cellsLength; index++) {
+					const cellDatas = this.inputDatas.matrixCellDatas[index];
 
-				// Manage selected cell (different for KV and KC)
-				if (this.selectedNodes?.[0]?.childrenList.includes(cellDatas.xaxisPart) &&
-					this.selectedNodes?.[1]?.childrenList.includes(cellDatas.yaxisPart)) {
-					this.selectedCells.push(cellDatas);
+					// Manage selected cell (different for KV and KC)
+					if (this.selectedNodes?.[0]?.childrenList.includes(cellDatas.xaxisPart) &&
+						this.selectedNodes?.[1]?.childrenList.includes(cellDatas.yaxisPart)) {
+						this.selectedCells.push(cellDatas);
+					}
 				}
-			}
 
-			// Do not draw top level selection matrix il nodes are not collapsed
-			if ((this.matrixFreqsValues.length !== this.selectedCells.length) && (this.selectedNodes?.[0].parentCluster || this.selectedNodes?.[1].parentCluster)) {
-				for (const cell of this.selectedCells) {
-					// Draw selected cells after other to be above
+				// Do not draw top level selection matrix il nodes are not collapsed
+				if ((this.matrixFreqsValues.length !== this.selectedCells.length) && (this.selectedNodes?.[0].parentCluster || this.selectedNodes?.[1].parentCluster)) {
+					for (const cell of this.selectedCells) {
+						// Draw selected cells after other to be above
+						this.drawSelectedCell(cell);
+					}
+				} else {
+					const cell: CellVO = new CellVO();
+					cell.xCanvas = 0;
+					cell.yCanvas = 0;
+					cell.wCanvas = this.matrixCtx.canvas.width;
+					cell.hCanvas = this.matrixCtx.canvas.height;
 					this.drawSelectedCell(cell);
 				}
-			} else {
-				const cell: CellVO = new CellVO();
-				cell.xCanvas = 0;
-				cell.yCanvas = 0;
-				cell.wCanvas = this.matrixCtx.canvas.width;
-				cell.hCanvas = this.matrixCtx.canvas.height;
-				this.drawSelectedCell(cell);
 			}
-
 		}
 	}
 
@@ -506,7 +500,8 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 			this.matrixSelectedCtx.strokeRect(cell.xCanvas, cell.yCanvas, cell.wCanvas, cell.hCanvas);
 
 			this.matrixSelectedCtx.lineWidth = 2;
-			this.matrixSelectedCtx.strokeStyle = '#57689d';
+			this.matrixSelectedCtx.strokeStyle = this.graphMode.mode === 'MUTUAL_INFO' || this.graphMode.mode === 'HELLINGER' ||
+				this.graphMode.mode === 'MUTUAL_INFO_TARGET_WITH_CELL' ? '#000000' : '#57689d';
 			this.matrixSelectedCtx.strokeRect(cell.xCanvas, cell.yCanvas, cell.wCanvas, cell.hCanvas);
 		}
 	}

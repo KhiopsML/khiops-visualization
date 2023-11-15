@@ -1,6 +1,6 @@
 @import "../../../../../theme.scss";
 
-#hierarchy-select-comp {
+.hierarchy-select-comp {
 	padding: 0.6em;
 	margin: 0 !important;
 	position: relative;
@@ -11,23 +11,26 @@
 		margin: 0 1em 0 0.4em;
 	}
 
+	button{
+		border-color: inherit !important;
+	}
+
 	button.enabled {
 		color: var(--primary);
 	}
 
-	#hierarchy-select-content {
+	.hierarchy-select-content {
 		width: 100%;
 		margin-top: 1em;
 		padding: 0.5em;
 
 		span {
 			font-weight: 400;
-			color: var(--primary);
+		    font-size: 0.8rem;
 		}
 
 		strong {
 			font-weight: 500;
-			color: var(--primary);
 		}
 	}
 }

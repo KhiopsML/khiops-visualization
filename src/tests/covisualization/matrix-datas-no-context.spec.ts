@@ -17,7 +17,7 @@ let appService: AppService;
 let dimensionsDatasService: DimensionsDatasService;
 
 let cells;
-let matrixFreqsValues, matrixValues, globalMatrixValues, matrixExtras;
+let matrixFreqsValues, matrixValues, matrixExtras;
 
 describe('CoVisualization', () => {
 describe('Matrix Datas : NO Context [Co-simple-2vars file]', () => {
@@ -105,7 +105,7 @@ describe('Matrix Datas : NO Context [mushroom file] check proba values when fold
 		const graphMode = {
 			"mode": "PROB_CELL"
 		};
-		[matrixFreqsValues, matrixValues, globalMatrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
+		[matrixFreqsValues, matrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
 			graphMode,
 			inputDatas,
 			[],
@@ -148,7 +148,7 @@ describe('Matrix Datas : NO Context [mushroom file] check rev proba values when 
 			"mode": "PROB_CELL_REVERSE",
 			"title": "P (GillSize | GillSpacing)"
 		};
-		[matrixFreqsValues, matrixValues, globalMatrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
+		[matrixFreqsValues, matrixValues, matrixExtras] = MatrixCanvasService.computeMatrixValues(
 			graphMode,
 			inputDatas,
 			[],

@@ -210,7 +210,7 @@ mat-tab-header {
 }
 
 .mat-tab-label.mat-tab-label-active {
-	color: var(--primary) !important;
+	// color: var(--primary) !important;
 }
 
 .mat-tab-label {
@@ -582,7 +582,7 @@ ag-grid-angular {
 
 .ag-theme-balham .ag-cell {
 	border: none !important;
-	font-size: 1.1em;
+	font-size: 0.85rem !important;
 	cursor: pointer;
 	height: 100%;
 	display: flex;
@@ -774,10 +774,10 @@ canvas:focus {
 	position: fixed !important;
 	z-index: 10000 !important;
 	width: calc(100% - 10px) !important;
-	height: calc(100% - 70px) !important;
+	height: calc(100% - 80px) !important;
 	min-width: calc(100% - 10px) !important;
-	min-height: calc(100% - 70px) !important;
-	margin: 63px 5px 5px 5px;
+	min-height: calc(100% - 80px) !important;
+	margin: 74px 5px 5px 5px;
 	left: 0 !important;
 	top: 0 !important;
 	transition: all 0s linear !important;

@@ -13,8 +13,6 @@ import {
 	SimpleChanges,
 	AfterViewInit,
 	Input,
-	ViewChild,
-	ElementRef
 } from '@angular/core';
 import _ from 'lodash';
 import TreeView from '@khiops-library/libs/treeview/treeview';
@@ -52,14 +50,12 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 
 	@Output() selectTreeItemChanged: EventEmitter < any > = new EventEmitter();
 
-	treeSelectedNodeChangedSub: any;
 	componentType = 'kvtree'; // needed to copy datas
 	tree: any;
 
 	// Keep a reference to the tree nodes so Angular can render them.
 	nodes: any;
 	dimensionsDatas: any;
-	treeInitSub: any;
 	isFullscreen = false;
 
 	constructor(

@@ -36,7 +36,7 @@ export class AppService {
 	viewsLayout: ViewLayoutVO;
 	activeTabIndex = 0;
 	viewsLayoutChanged: EventEmitter < any > = new EventEmitter();
-	fontSize: EventEmitter <number> = new EventEmitter();
+	fontSize: EventEmitter < number > = new EventEmitter();
 
 	constructor(private khiopsLibraryService: KhiopsLibraryService) {
 		this.initialize();
@@ -82,6 +82,11 @@ export class AppService {
 
 		// Set default split sizes if not into local storage
 		this.splitSizes = UtilsService.setDefaultLSValues(storedSplitValues, this.splitSizes);
+	}
+
+	setCroppedFileDatas(datas: any): any {
+		this.appDatas.datas = datas;
+		this.setSavedDatas(datas);
 	}
 
 	setFileDatas(datas: any): any {
@@ -167,7 +172,9 @@ export class AppService {
 	}
 
 	initGlobalConfigVariables(): any {
-		AppConfig.common = {...AppConfig.covisualizationCommon};
+		AppConfig.common = {
+			...AppConfig.covisualizationCommon
+		};
 		this.khiopsLibraryService.setAppConfig(AppConfig);
 	}
 
@@ -241,7 +248,7 @@ export class AppService {
 	}
 
 	enableExtDatasView(dimension: string) {
-		const currentDim = this.viewsLayout?.dimensionsViewsLayoutsVO?.find(e => e.name === dimension)
+		const currentDim = this.viewsLayout ?.dimensionsViewsLayoutsVO ?.find(e => e.name === dimension)
 		if (currentDim) {
 			currentDim.isExternalDataChecked = true;
 			this.saveViewsLayout(this.viewsLayout);

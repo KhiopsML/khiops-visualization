@@ -7,7 +7,6 @@
 			<h1 fxLayoutAlign="start center" fxLayout="row" *ngIf="!displayCount && !isSmallDiv && title"
 				fxLayoutAlign="start center" [ngClass]="{'small-title': smallTitle === true}" title="{{titleTooltip}}">
 				{{ title }}</h1>
-			<h1 [ngClass]="{'small-title': smallTitle === true}" *ngIf="isSmallDiv">&nbsp;</h1>
 		</div>
 		<div class="comp-header-tools screenshot-hide" fxLayoutAlign="end center" fxLayout="row">
 			<button [ngClass]="{'small-div': isSmallDiv || searchFormVisible}" *ngIf="showLevelDistribution"

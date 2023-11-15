@@ -16,9 +16,6 @@ import {
 import {
 	MatrixUtilsDatasService
 } from '@khiops-library/providers/matrix-utils-datas.service';
-import {
-	EventsService
-} from './events.service';
 import * as _ from 'lodash'; // Important to import lodash in karma
 
 @Injectable({
@@ -30,7 +27,6 @@ export class DimensionsDatasService {
 
 	constructor(
 		private appService: AppService,
-		private eventsService: EventsService
 	) {
 		this.initialize();
 	}
@@ -45,6 +41,7 @@ export class DimensionsDatasService {
 			cellPartIndexes: [],
 			initialDimensions: [],
 			dimensions: [],
+			nodesNames: {},
 			selectedNodes: [],
 			contextSelection: [],
 			selectedDimensions: undefined,
@@ -58,8 +55,10 @@ export class DimensionsDatasService {
 				unfoldHierarchyState: 0
 			},
 			dimensionsTrees: [],
+			currentDimensionsTrees: [],
 			selectedNodesSummary: [],
-			dimensionsClusters: []
+			dimensionsClusters: [],
+			currentDimensionsClusters: []
 		};
 		return this.dimensionsDatas;
 	}
@@ -73,8 +72,10 @@ export class DimensionsDatasService {
 	}
 
 	isLargeCocluster() {
-		const currentSize = (this.dimensionsDatas.dimensions.map(e => e.parts).reduce((a, b) => a * b))
-		return 1000000 < currentSize;
+		// const currentSize = (this.dimensionsDatas.dimensions.map(e => e.parts).reduce((a, b) => a * b))
+		// return this.dimensionsDatas.dimensions.length * 2 < currentSize;
+		const appDatas = this.appService.getDatas().datas;
+		return appDatas.coclusteringReport.summary.cells > 10000 // to debug
 	}
 
 	isContextDimensions(): boolean {
@@ -174,32 +175,26 @@ export class DimensionsDatasService {
 		return this.dimensionsDatas.dimensions;
 	}
 
-	updateDimensions(retrieveMatrixDatas = true): any {
-
+	saveInitialDimension() {
 		// keep initial dim in memory
 		if (this.dimensionsDatas.initialDimensions.length === 0) {
 			this.dimensionsDatas.initialDimensions = Object.assign([], this.dimensionsDatas.selectedDimensions);
 		}
-
-		this.constructDimensionsTrees();
-		if (retrieveMatrixDatas) {
-			this.getMatrixDatas();
-		}
-		return;
-
 	}
 
-	initSelectedDimensions() {
+	initSelectedDimensions(initContextSelection = true) {
 		this.dimensionsDatas.selectedDimensions = [];
-		this.dimensionsDatas.contextDimensions = [];
 		for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
 			this.dimensionsDatas.selectedDimensions[i] = this.dimensionsDatas.dimensions[i];
-			if (i >= 2) {
+		}
+		if (initContextSelection) {
+			this.dimensionsDatas.contextDimensions = [];
+			for (let i = 2; i < this.dimensionsDatas.dimensions.length; i++) {
 				this.dimensionsDatas.contextDimensions.push(this.dimensionsDatas.selectedDimensions[i]);
 				this.dimensionsDatas.contextDimensionCount = this.dimensionsDatas.contextDimensionCount + 1;
 			}
+			this.dimensionsDatas.contextSelection = new Array(this.dimensionsDatas.contextDimensions.length).fill([0]);
 		}
-		this.dimensionsDatas.contextSelection = new Array(this.dimensionsDatas.contextDimensions.length).fill([0]);
 
 		const savedSelectedDimensions = this.appService.getSavedDatas('selectedDimensions');
 		if (savedSelectedDimensions) {
@@ -212,7 +207,6 @@ export class DimensionsDatasService {
 	}
 
 	updateSelectedDimension(dimension, position) {
-
 		// Find current dim position
 		const currentIndex: any = this.dimensionsDatas.selectedDimensions.findIndex(e => {
 			return dimension.name === e.name;
@@ -238,33 +232,79 @@ export class DimensionsDatasService {
 
 		}
 		this.dimensionsDatas.selectedDimensions[position] = dimension;
-		this.eventsService.emitDimensionsSelectionChanged(this.dimensionsDatas.selectedDimensions);
 		return this.dimensionsDatas.selectedDimensions;
 	}
 
 	constructDimensionsTrees() {
 
 		this.dimensionsDatas.dimensionsTrees = [];
+		this.dimensionsDatas.currentDimensionsTrees = [];
+		const appinitialDatas = this.appService.getInitialDatas().datas;
 		const appDatas = this.appService.getDatas().datas;
 
 		// At launch check if there are collapsed nodes into input json file
 		const collapsedNodes = this.appService.getSavedDatas('collapsedNodes');
 
-		if (appDatas && appDatas.coclusteringReport) {
+		if (appinitialDatas && appinitialDatas.coclusteringReport) {
 
 			const selectedDimensionsLength = this.dimensionsDatas.selectedDimensions.length;
 			for (let i = 0; i < selectedDimensionsLength; i++) {
 				let leafPosition = -1;
 
 				const dimension = this.dimensionsDatas.selectedDimensions[i];
-				const currentDimensionHierarchy: any = appDatas.coclusteringReport.dimensionHierarchies.find(e => e.name === dimension.name);
-				if (currentDimensionHierarchy) {
+				const dimensionHierarchy: any = appinitialDatas.coclusteringReport.dimensionHierarchies.find(e => e.name === dimension.name);
+				if (dimensionHierarchy) {
 
 					this.dimensionsDatas.dimensionsTrees[i] = [];
 					this.dimensionsDatas.dimensionsClusters[i] = [];
 
-					const nbClusters = appDatas.coclusteringReport.dimensionSummaries[i].initialParts;
+					const nbClusters = appinitialDatas.coclusteringReport.dimensionSummaries[i].initialParts;
+					// const nbClusters = appinitialDatas.coclusteringReport.dimensionSummaries[i].parts;
 					let index = 0;
+
+					const currentNodesNames = this.dimensionsDatas.nodesNames[dimensionHierarchy.name];
+
+					// First convert each child into a treenode value object
+					const clustersLength = dimensionHierarchy.clusters.length;
+					for (let j = 0; j < clustersLength; j++) {
+
+						if (dimensionHierarchy.clusters[j].isLeaf) {
+							leafPosition++;
+						}
+						const currentDimensionNodesToCollapse = collapsedNodes && collapsedNodes[dimension.name] || [];
+						const currentObj: TreeNodeVO = new TreeNodeVO(
+							index,
+							dimensionHierarchy.clusters[j],
+							dimension,
+							currentDimensionNodesToCollapse,
+							nbClusters,
+							leafPosition,
+							j,
+							currentNodesNames
+						);
+						this.dimensionsDatas.dimensionsClusters[i].push(currentObj);
+
+						index++;
+					}
+
+					// sort dimensionsClusters by rank to order intervals
+					this.dimensionsDatas.dimensionsClusters[i] = _.orderBy(this.dimensionsDatas.dimensionsClusters[i], e => e.rank);
+
+					// unflat the tree and set childrens to dimensionsClusters
+					this.dimensionsDatas.dimensionsTrees[i] = UtilsService.unflatten(this.dimensionsDatas.dimensionsClusters[i]);
+				}
+
+				const currentDimensionHierarchy: any = appDatas.coclusteringReport.dimensionHierarchies.find(e => e.name === dimension.name);
+				if (currentDimensionHierarchy) {
+
+					this.dimensionsDatas.currentDimensionsTrees[i] = [];
+					this.dimensionsDatas.currentDimensionsClusters[i] = [];
+
+					const nbClusters = appDatas.coclusteringReport.dimensionSummaries[i].initialParts;
+					// const nbClusters = appinitialDatas.coclusteringReport.dimensionSummaries[i].parts;
+					let index = 0;
+
+					const currentNodesNames = this.dimensionsDatas.nodesNames[currentDimensionHierarchy.name];
 
 					// First convert each child into a treenode value object
 					const clustersLength = currentDimensionHierarchy.clusters.length;
@@ -281,48 +321,28 @@ export class DimensionsDatasService {
 							currentDimensionNodesToCollapse,
 							nbClusters,
 							leafPosition,
-							i,
-							j
+							j,
+							currentNodesNames
 						);
-						this.dimensionsDatas.dimensionsClusters[i].push(currentObj);
+						this.dimensionsDatas.currentDimensionsClusters[i].push(currentObj);
 
 						index++;
 					}
 
-					// Update parentShortDescription of childeren if user has changed the node name by the past
-					this.updateAllParentShortDescription(currentDimensionHierarchy, i);
-
 					// sort dimensionsClusters by rank to order intervals
-					this.dimensionsDatas.dimensionsClusters[i] = _.orderBy(this.dimensionsDatas.dimensionsClusters[i], e => e.rank);
+					this.dimensionsDatas.currentDimensionsClusters[i] = _.orderBy(this.dimensionsDatas.currentDimensionsClusters[i], e => e.rank);
 
-					this.dimensionsDatas.dimensionsTrees[i] = UtilsService.unflatten(this.dimensionsDatas.dimensionsClusters[i]);
-
+					// unflat the tree and set childrens to currentDimensionsClusters
+					this.dimensionsDatas.currentDimensionsTrees[i] = UtilsService.unflatten(this.dimensionsDatas.currentDimensionsClusters[i]);
 				}
 
 			}
 		}
-		return this.dimensionsDatas.dimensionsTrees;
 	}
 
-	updateAllParentShortDescription(currentDimensionHierarchy, dimensionIndex) {
-		// Update parentShortDescription of childeren if user has changed the node name by the past
-		const clustersLength = currentDimensionHierarchy.clusters.length;
-		for (let j = 0; j < clustersLength; j++) {
-			const currentObj = this.dimensionsDatas.dimensionsClusters[dimensionIndex][j];
-			if (currentObj.shortDescription !== currentObj.cluster) {
-				const currentChildObjs = this.dimensionsDatas.dimensionsClusters[dimensionIndex].filter(e => e.parentCluster === currentObj.cluster);
-				if (currentChildObjs && currentChildObjs.length > 0) {
-					const currentChildObjsLength = currentChildObjs.length;
-					for (let k = 0; k < currentChildObjsLength; k++) {
-						currentChildObjs[k].parentShortDescription = currentObj.shortDescription;
-					}
-				}
-			}
-		}
-	}
-
-	getMatrixDatas() {
+	getMatrixDatas(propagateChanges = true) {
 		const t0 = performance.now();
+
 		const appDatas = this.appService.getDatas().datas;
 
 		this.dimensionsDatas.matrixDatas = {};
@@ -347,8 +367,28 @@ export class DimensionsDatasService {
 			zDimensionClusters.push(this.dimensionsDatas.dimensionsClusters[i]);
 		}
 
-		const xDimensionLeafs: any[] = UtilsService.fastFilter(this.dimensionsDatas.dimensionsClusters[0], item => item.isLeaf === true);
-		const yDimensionLeafs: any[] = UtilsService.fastFilter(this.dimensionsDatas.dimensionsClusters[1], item => item.isLeaf === true);
+		const xDimensionLeafs: any[] = this.dimensionsDatas.selectedDimensions[0].type === 'Numerical' ?
+			this.dimensionsDatas.selectedDimensions[0].intervals : this.dimensionsDatas.selectedDimensions[0].valueGroups
+		const yDimensionLeafs: any[] = this.dimensionsDatas.selectedDimensions[1].type === 'Numerical' ?
+			this.dimensionsDatas.selectedDimensions[1].intervals : this.dimensionsDatas.selectedDimensions[1].valueGroups
+			const xDimensionLeafsNames = xDimensionLeafs.map(e => e.cluster);
+		const yDimensionLeafsNames = yDimensionLeafs.map(e => e.cluster);
+
+		// Get shortdescriptions if defined
+		const xDimensionLeafsShortDescription = [...xDimensionLeafsNames];
+		const yDimensionLeafsShortDescription = [...yDimensionLeafsNames];
+		if (this.dimensionsDatas.nodesNames[xDimension.name]) {
+			for (const [key, value] of Object.entries(this.dimensionsDatas.nodesNames[xDimension.name])) {
+				const index = xDimensionLeafsShortDescription.indexOf(key);
+				xDimensionLeafsShortDescription.splice(index, 1, value);
+		  	}
+		}
+		if (this.dimensionsDatas.nodesNames[yDimension.name]) {
+			for (const [key, value] of Object.entries(this.dimensionsDatas.nodesNames[yDimension.name])) {
+				const index = yDimensionLeafsShortDescription.indexOf(key);
+				yDimensionLeafsShortDescription.splice(index, 1, value);
+		  	}
+		}
 
 		// Get dimensions parts
 		const dimensionParts = this.dimensionsDatas.selectedDimensions.map(e => e.parts);
@@ -372,8 +412,7 @@ export class DimensionsDatasService {
 		[xValues.frequency, yValues.frequency] = MatrixUtilsDatasService.getFrequencyAxisValues(xDimension, yDimension, cellFrequencies);
 		[xValues.standard, yValues.standard] = MatrixUtilsDatasService.getStandardAxisValues(xDimension, yDimension);
 
-		// TO display axis names
-		// Maybe can be improved and be taken into cell datas ?
+		// To display axis names
 		this.dimensionsDatas.matrixDatas.variable = {
 			nameX: this.dimensionsDatas.selectedDimensions[0].name,
 			nameY: this.dimensionsDatas.selectedDimensions[1].name,
@@ -387,14 +426,15 @@ export class DimensionsDatasService {
 			yParts: this.dimensionsDatas.selectedDimensions[1].parts
 		};
 
+		// Compute cells
 		const cellDatas = MatrixUtilsDatasService.getCellDatas(
 			xDimension,
 			yDimension,
 			zDimension,
-			xDimensionLeafs.map(e => e.name),
-			yDimensionLeafs.map(e => e.name),
-			xDimensionLeafs.map(e => e.shortDescription),
-			yDimensionLeafs.map(e => e.shortDescription),
+			xDimensionLeafsNames,
+			yDimensionLeafsNames,
+			xDimensionLeafsShortDescription,
+			yDimensionLeafsShortDescription,
 			cellFrequencies,
 			undefined, // cellInterests only for KV
 			undefined, // cellTargetFrequencies only for KV
@@ -404,6 +444,9 @@ export class DimensionsDatasService {
 		this.dimensionsDatas.matrixDatas.matrixCellDatas = cellDatas;
 		this.dimensionsDatas.allMatrixDatas.matrixCellDatas = cellDatas;
 		this.dimensionsDatas.allMatrixCellDatas = cellDatas;
+
+		// hack to limit re-rendering and optimize perf
+		this.dimensionsDatas.matrixDatas.propagateChanges = propagateChanges;
 
 		const t1 = performance.now();
 		console.log("getMatrixDatas " + (t1 - t0) + " milliseconds.");

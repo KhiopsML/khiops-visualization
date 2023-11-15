@@ -52,6 +52,7 @@
 		"TOO_MANY_VARIABLES": "Too many variables. Only the 1000 high levels are displayed.",
 		"SAVE_FILE_ERROR": "Save file error",
 		"DATAS_DELETED": "Datas deleted",
+		"UNFOLDED_DATAS_MAXIMUM_UNFOLD": "Auto-unfold is limited to {count} for performance purpose",
 		"UNFOLDED_DATAS_PERFORMANCE_WARNING": "Displayed datas have been automatically unfolded to {count} clusters for better performance"
 	},
 	"NO_DATAS": {

@@ -1,5 +1,5 @@
-<div id="hierarchy-select-comp" class="mat-elevation-z1" fxLayout="column" fxLayoutAlign="end center">
-	<div id="hierarchy-select-header" class="comp-header-tools" fxFlexFill fxLayout="row" fxLayoutAlign="start center">
+<div class="hierarchy-select-comp mat-elevation-z1" fxLayout="column" fxLayoutAlign="end center">
+	<div class="comp-header-tools" fxFlexFill fxLayout="row" fxLayoutAlign="start center">
 		<h1 title="{{ 'TOOLTIPS.AXIS.DIMENSION.STATISTICS' | translate }}">{{ 'GLOBAL.HIERARCHY' | translate }}</h1>
 		<div fxFlex>
 			<button class="button-accent" title="{{ 'TOOLTIPS.AXIS.DIMENSION.SELECT' | translate }}" mat-stroked-button color="accent" [matMenuTriggerFor]="selectDimension">{{ selectedDimension.name }} <em>v</em></button>
@@ -11,7 +11,7 @@
 			<mat-icon>info</mat-icon>
 		</button>
 	</div>
-	<div id="hierarchy-select-content" *ngIf="showStats" [@slideInOut] fxLayoutAlign="start start" fxLayout="column">
+	<div class="hierarchy-select-content" *ngIf="showStats" [@slideInOut] fxLayoutAlign="start start" fxLayout="column">
 		<span>{{ 'GLOBAL.TYPE' | translate }} : <strong>{{ selectedDimension.type }}</strong></span>
 		<!-- <span>{{ 'GLOBAL.INTERVAL' | translate }} : <strong>{{ selectedNode.shortDescription }}</strong></span> -->
 		<span>{{ 'GLOBAL.INTERVAL' | translate }} : <strong>{{ selectedNode.name }}</strong></span>

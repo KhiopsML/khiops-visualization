@@ -38,14 +38,14 @@ export class ManageViewsComponent implements OnInit {
 		// this.viewsLayout = copy(this.appService.getViewsLayout());
 		this.viewsLayout = _.cloneDeep(this.appService.getViewsLayout());
 
-		this.isContextView = this.appService.getActiveTabIndex() === 2;
+		this.isContextView = this.appService.getActiveTabIndex() === 1;
 
 		this.isDimVisible = new Array(this.viewsLayout.dimensionsViewsLayoutsVO.length).fill(true);
 		for (let i = 0; i < this.viewsLayout.dimensionsViewsLayoutsVO.length; i++) {
-			if (this.appService.getActiveTabIndex() === 1 && i >= 2) {
+			if (this.appService.getActiveTabIndex() === 0 && i >= 2) {
 				// Hide views layouts of contexts
 				this.isDimVisible[i] = false;
-			} else if (this.appService.getActiveTabIndex() === 2 && i < 2) {
+			} else if (this.appService.getActiveTabIndex() === 1 && i < 2) {
 				// Hide views layouts of selected dimensions
 				this.isDimVisible[i] = false;
 			}

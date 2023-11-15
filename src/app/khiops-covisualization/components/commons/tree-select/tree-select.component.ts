@@ -41,6 +41,7 @@ import {
 	TranslateService
 } from '@ngstack/translate';
 import { ConfigService } from '@khiops-library/providers/config.service';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-tree-select',
@@ -56,8 +57,7 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 	@Input() position: number;
 	@Input() dimensionsTree: any;
 
-
-	treeSelectedNodeChangedSub: any;
+	treeSelectedNodeChangedSub: Subscription;
 
 	componentType = 'tree'; // needed to copy datas
 	id: any;
@@ -66,7 +66,6 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 	// Keep a reference to the tree nodes so Angular can render them.
 	nodes: any;
 	dimensionsDatas: any;
-	treeInitSub: any;
 
 	constructor(
 		public ngzone: NgZone,
@@ -80,20 +79,18 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 
 		super(selectableService, ngzone, configService);
 
-		this.treeInitSub = this.eventsService.treeInit.subscribe(selectedNodes => {
-			// Listen for unfold hierarchy change to reinit tree and select nodes
-			this.initTree(selectedNodes[this.position]);
-		});
-
 		this.treeSelectedNodeChangedSub = this.eventsService.treeSelectedNodeChanged.subscribe(e => {
-			if (e.selectedNode && e.hierarchyName === this.selectedDimension.name) {
+			if (this.tree && e.selectedNode && e.hierarchyName === this.selectedDimension.name) {
 				let propagateEvent = true;
 				if (e.stopPropagation) {
 					propagateEvent = false;
 				}
 				// Check if current id is in selection to avoid infinite loop and remove propagation if not in selection
 				propagateEvent = this.nodeInSelection === e.selectedNode.id;
-				this.tree.selectNode(e.selectedNode.id, propagateEvent);
+
+				// get corresponding node into tree
+				const treeNode = this.treenodesService.getNodeFromName(e.hierarchyName, e.selectedNode.name);
+				this.tree.selectNode(treeNode.id, propagateEvent);
 			}
 		});
 	}
@@ -103,7 +100,6 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 	}
 
 	ngOnDestroy() {
-		this.treeInitSub.unsubscribe();
 		this.treeSelectedNodeChangedSub.unsubscribe();
 	}
 
@@ -164,24 +160,15 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 			});
 		});
 		this.tree.on('expand', (e) => {
+			// this.treenodesService.setSelectedNode(this.selectedDimension.name, e.data.name, false);
 			this.treenodesService.expandNode(this.selectedDimension.name, e.data.name);
-			// select current node on expand without propagation
-			// this.ngzone.run(() => {
-			// 	this.treenodesService.setSelectedNode(this.selectedDimension.name, e.data.name, true);
-			// });
 		});
 		this.tree.on('expandAll', (e) => {
 
 		});
 		this.tree.on('collapse', (e) => {
+			// this.treenodesService.setSelectedNode(this.selectedDimension.name, e.data.name, false);
 			this.treenodesService.collapseNode(this.selectedDimension.name, e.data.name);
-
-			// select current node after folding without propagation
-			// otherwise, nothing is selected into the tree
-			this.ngzone.run(() => {
-				this.treenodesService.setSelectedNode(this.selectedDimension.name, e.data.name, true);
-			});
-
 		});
 		this.tree.on('collapseAll', (e) => {
 

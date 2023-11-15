@@ -22,7 +22,12 @@ import {
 	ClustersService
 } from '@khiops-covisualization/providers/clusters.service';
 import * as _ from 'lodash'; // Important to import lodash in karma
-import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
+import {
+	GridColumnsI
+} from '@khiops-library/interfaces/grid-columns';
+import {
+	Subscription
+} from 'rxjs';
 
 @Component({
 	selector: 'app-selected-clusters',
@@ -48,10 +53,7 @@ export class SelectedClustersComponent implements OnDestroy {
 	selectedNodesDimensions: TreeNodeVO[];
 	selectedClusters: SelectedClusterVO[] = undefined;
 	activeClusters: SelectedClusterVO[] = undefined;
-	treeCollapseChangedSub: any;
-	treeNodeNameChangedSub: any;
-	treeSelectedNodeChangedSub: any;
-	dimensionsSelectionChangedSub: any;
+	treeSelectedNodeChangedSub: Subscription;
 
 	id: any = 'selected-clusters-grid';
 	title: string;
@@ -66,29 +68,12 @@ export class SelectedClustersComponent implements OnDestroy {
 		this.title = this.translate.get('GLOBAL.SELECTED_CLUSTERS');
 
 		this.treeSelectedNodeChangedSub = this.eventsService.treeSelectedNodeChanged.subscribe(e => {
+			this.updateClustersInformations();
 			if (this.selectedClusters) {
-				// Update on node name change
-				this.updateClusterValues(e);
-			} else {
-				// At start update the entire table
-				this.updateClustersInformations();
+				this.selectActiveClusters()
 			}
 		});
 
-		this.treeCollapseChangedSub = this.eventsService.treeCollapseChanged.subscribe(dimensionName => {
-			this.updateValues = [];
-			const selectedCluster: SelectedClusterVO = this.updateDimensionIntervals(dimensionName);
-			this.updateValues.push(selectedCluster);
-		});
-
-		this.treeNodeNameChangedSub = this.eventsService.treeNodeNameChanged.subscribe(e => {
-			// Update on node name change
-			this.updateClusterValues(e);
-		});
-
-		this.dimensionsSelectionChangedSub = this.eventsService.dimensionsSelectionChanged.subscribe(selectedDimensions => {
-			this.updateClustersInformations();
-		});
 	}
 
 	updateClusterValues(e) {
@@ -130,36 +115,21 @@ export class SelectedClustersComponent implements OnDestroy {
 				this.selectedClusters.push(selectedCluster);
 			}
 			this.selectActiveClusters();
-
-			// } else {
-			// 	// Just update node name on change
-			// 	for (let i = 0; i < this.selectedNodes.length; i++) {
-			// 		const nodeVO: TreeNodeVO = this.selectedNodes[i];
-			// 		const selectedCluster: SelectedClusterVO = this.selectedClusters.find(e => e.hierarchy === nodeVO.hierarchy);
-			// 		selectedCluster.shortDescription = nodeVO.shortDescription;
-			// 	}
-			// }
 		}
 
 	}
 
 	selectActiveClusters() {
-		this.activeClusters = _.cloneDeep([]);
-
-		setTimeout(() => {
-			this.activeClusters = [];
-			const firstDimPos = this.dimensionsService.getDimensionPositionFromName(this.selectedClusters[0].hierarchy);
-			const secondDimPos = this.dimensionsService.getDimensionPositionFromName(this.selectedClusters[1].hierarchy);
-			this.activeClusters.push(this.selectedClusters[firstDimPos]);
-			this.activeClusters.push(this.selectedClusters[secondDimPos]);
-		});
+		const currentActiveClusters = [];
+		const firstDimPos = this.dimensionsService.getDimensionPositionFromName(this.selectedClusters[0].hierarchy);
+		const secondDimPos = this.dimensionsService.getDimensionPositionFromName(this.selectedClusters[1].hierarchy);
+		currentActiveClusters.push(this.selectedClusters[firstDimPos]);
+		currentActiveClusters.push(this.selectedClusters[secondDimPos]);
+		this.activeClusters = currentActiveClusters
 	}
 
 	ngOnDestroy() {
 		this.treeSelectedNodeChangedSub.unsubscribe();
-		this.treeNodeNameChangedSub.unsubscribe();
-		this.treeCollapseChangedSub.unsubscribe();
-		this.dimensionsSelectionChangedSub.unsubscribe();
 	}
 
 }

@@ -44,9 +44,9 @@ export class UserSettingsComponent implements OnChanges {
 		this.khiopsLibraryService.trackEvent('page_view', 'settings');
 
 		// defaultHierarchy
-		this.defaultHierarchy = parseInt(localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'DEFAULT_LIMIT_HIERARCHY'), 10) || AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.DEFAULT_UNFOLD;
+		this.defaultHierarchy = parseInt(localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'DEFAULT_LIMIT_HIERARCHY'), 10) || AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.TECHNICAL_LIMIT;
 		localStorage.setItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'DEFAULT_LIMIT_HIERARCHY', this.defaultHierarchy.toString());
-		AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.DEFAULT_UNFOLD = this.defaultHierarchy;
+		AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.TECHNICAL_LIMIT = this.defaultHierarchy;
 
 		// Font size
 		this.fontSize = localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'FONT_SIZE') || AppConfig.covisualizationCommon.GLOBAL.FONT_SIZE;

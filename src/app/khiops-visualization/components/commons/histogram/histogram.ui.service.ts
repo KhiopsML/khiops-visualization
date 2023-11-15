@@ -27,28 +27,7 @@ export class HistogramUIService {
 
 	static generateTooltip(d: any, xType: string) {
 		let bounds = "";
-		if (xType === HistogramType.XLIN) {
-			bounds = JSON.stringify(d.partition);
-		} else {
-			if (d.partition[0] === 0) {
-				bounds = "[-Inf, ";
-			} else {
-				bounds =
-					"[" +
-					UtilsService.getLogSign(d.partition[0]) +
-					d3.format(".2e")(Math.abs(d.partition[0])) +
-					", ";
-			}
-			if (d.partition[1] === 0) {
-				bounds += "-Inf]";
-			} else {
-				bounds +=
-				UtilsService.getLogSign(d.partition[1]) +
-					d3.format(".2e")(Math.abs(d.partition[1])) +
-					"]";
-			}
-		}
-
+		bounds = JSON.stringify(d.partition);
 		return (
 			this.translate.get("GLOBAL.DENSITY") +
 			": " +
@@ -63,5 +42,4 @@ export class HistogramUIService {
 			bounds
 		);
 	}
-
 }

@@ -2506,10 +2506,10 @@ angular-resize-event@3.1.1:
   dependencies:
     tslib "^2.3.0"
 
-angular-split@5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/angular-split/-/angular-split-5.0.0.tgz#75181d8ad27209041e398be360681e1eed2810db"
-  integrity sha512-V7m/mdp31189EGeVRw5j6MOfb8EiYoDqr8XTay4D7GcCpEm2+7oHD1n6eWbCvQMuRb8X3ZfP2pZNDmJs8bLaAg==
+angular-split@13.x:
+  version "13.2.0"
+  resolved "https://registry.yarnpkg.com/angular-split/-/angular-split-13.2.0.tgz#7f1fdd639f0aa5e7e8c8ac87ae84348c54eb92f0"
+  integrity sha512-WXVzgBnt6hPipE+z0D8zaCn08kwD0515zpv3siIjlJGgSFDpsIiklyWpTslk89lcUb14ik/dgqsm3F8GEnt8Xw==
   dependencies:
     tslib "^2.0.0"
 

@@ -1,6 +1,5 @@
 import {
 	Component,
-	OnInit,
 	SimpleChanges,
 	OnChanges,
 	Input
@@ -26,9 +25,6 @@ import {
 import {
 	TreeNodeVO
 } from '@khiops-covisualization/model/tree-node-vo';
-import {
-	EventsService
-} from '@khiops-covisualization/providers/events.service';
 import {
 	MatSnackBar
 } from '@angular/material/snack-bar';
@@ -57,13 +53,12 @@ import {
 		])
 	]
 })
-export class HierarchySelectComponent implements OnInit, OnChanges {
+export class HierarchySelectComponent implements OnChanges {
 
 	@Input() selectedDimension: DimensionVO;
 	@Input() selectedNode: TreeNodeVO;
 	@Input() position: number;
 	@Input() dimensions: DimensionVO[];
-	treeCollapseChangedSub: any;
 
 	showStats = false;
 	intervals = 0;
@@ -73,17 +68,8 @@ export class HierarchySelectComponent implements OnInit, OnChanges {
 		private snackBar: MatSnackBar,
 		private translate: TranslateService,
 		private appService: AppService,
-		private dimensionsService: DimensionsDatasService,
-		private eventsService: EventsService) {
-
-		this.treeCollapseChangedSub = this.eventsService.treeCollapseChanged.subscribe(dimensionName => {
-			if (dimensionName === this.selectedDimension.name) {
-				this.intervals = this.dimensionsService.getDimensionIntervals(this.selectedDimension.name);
-			}
-		});
+		private dimensionsService: DimensionsDatasService) {
 	}
-
-	ngOnInit() {}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes.selectedDimension && changes.selectedDimension.currentValue) {
@@ -100,19 +86,19 @@ export class HierarchySelectComponent implements OnInit, OnChanges {
 			});
 		}
 
-		setTimeout(() => {
-			this.appService.switchSplitSizes(this.position, newPosition);
-
-			// Reverse selected nodes on selection changed
-			this.treenodesService.updateSelectedNodes(dimension, this.position);
-
-			// Reverse dimensions datas on selection changed
-			this.dimensionsService.updateSelectedDimension(dimension, this.position);
-
-			// Recompute datas
-			this.dimensionsService.updateDimensions();
-
-			this.treenodesService.collapseNodesSaved();
-		});
+		this.appService.switchSplitSizes(this.position, newPosition);
+		// Reverse selected nodes on selection changed
+		this.treenodesService.updateSelectedNodes(dimension, this.position);
+		// Reverse dimensions datas on selection changed
+		this.dimensionsService.updateSelectedDimension(dimension, this.position);
+		// Recompute datas
+		this.dimensionsService.saveInitialDimension();
+		this.dimensionsService.constructDimensionsTrees();
+		this.dimensionsService.getMatrixDatas();
+		this.treenodesService.collapseNodesSaved();
 	}
+
+	ngOnDestroy() {
+	}
+
 }
