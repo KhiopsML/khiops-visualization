@@ -19,9 +19,10 @@
   <script>
 	document.onreadystatechange = () => {
 		if (document.readyState === "complete") {
-			const kv = document.querySelector('khiops-covisualization');
+			const kv = document.querySelector('khiops-visualization');
 			kv.setConfig({
 				appSource : 'WEB',
+				showProjectTab : true,
 				onFileOpen : function() {
 					console.log('fileOpen');
 				},

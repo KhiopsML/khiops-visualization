@@ -27,10 +27,10 @@
 							d="m-811.17-337.516 15.414 59.091 164.82 29.278z" transform="translate(1127.245 554.656)" />
 					</svg>
 				</kl-header-title>
-				<kl-file-loader #fileLoader [hidden]="true"
-					[onFileLoaderDataChanged]="onFileLoaderDataChangedCb" [applicationName]="appName"></kl-file-loader>
-				<kl-no-data fxFlexFill fxLayoutAlign="center center" *ngIf="!(appDatas && appDatas.datas && isCompatibleJson)"
-					[message]="'NO_DATAS.WELCOME'">
+				<kl-file-loader #fileLoader [hidden]="true" [onFileLoaderDataChanged]="onFileLoaderDataChangedCb"
+					[applicationName]="appName"></kl-file-loader>
+				<kl-no-data fxFlexFill fxLayoutAlign="center center"
+					*ngIf="!(appDatas && appDatas.datas && isCompatibleJson)" [message]="'NO_DATAS.WELCOME'">
 				</kl-no-data>
 				<div fxFlexFill *ngIf="isCompatibleJson">
 					<mat-tab-group id="main-tab-group" color="primary" fxFlexFill [@.disabled]="true"
@@ -90,7 +90,7 @@
 								<app-evaluation-view [selectedTab]="selectedTab"></app-evaluation-view>
 							</ng-template>
 						</mat-tab>
-						<mat-tab label="{{ 'TITLE.PROJECT' | translate }}">
+						<mat-tab label="{{ 'TITLE.PROJECT' | translate }}" *ngIf="showProjectTab">
 							<ng-template matTabLabel>
 								<label title="{{ 'TOOLTIPS.TABS.PROJECT' | translate }}">{{ 'TITLE.PROJECT' | translate }}</label>
 							</ng-template>
