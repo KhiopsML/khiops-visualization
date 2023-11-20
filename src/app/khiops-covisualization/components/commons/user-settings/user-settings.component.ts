@@ -25,7 +25,6 @@ export class UserSettingsComponent implements OnChanges {
 	@Input() opened: boolean;
 
 	allowCookies: boolean;
-	fontSize: any;
 	defaultHierarchy: number;
 	contrastValue: number;
 	initialAllowCookies: boolean;
@@ -48,11 +47,6 @@ export class UserSettingsComponent implements OnChanges {
 		localStorage.setItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'DEFAULT_LIMIT_HIERARCHY', this.defaultHierarchy.toString());
 		AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.TECHNICAL_LIMIT = this.defaultHierarchy;
 
-		// Font size
-		this.fontSize = localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'FONT_SIZE') || AppConfig.covisualizationCommon.GLOBAL.FONT_SIZE;
-		localStorage.setItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'FONT_SIZE', this.fontSize);
-		AppConfig.covisualizationCommon.GLOBAL.FONT_SIZE = this.fontSize;
-
 		// Matrix contrast
 		this.contrastValue = parseInt(localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST'), 10) || AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST;
 		localStorage.setItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST', this.contrastValue.toString());
@@ -69,24 +63,11 @@ export class UserSettingsComponent implements OnChanges {
 	}
 
 	onClickOnCancel() {
-		// reset font_size on cancel
-		const previousFontSize = localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'FONT_SIZE');
-		this.onFontSizeChanged({
-			value: previousFontSize
-		});
-		localStorage.setItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'FONT_SIZE', previousFontSize);
-		AppConfig.covisualizationCommon.GLOBAL.FONT_SIZE = parseInt(previousFontSize, 10);
-		this.appService.setFontSize(AppConfig.covisualizationCommon.GLOBAL.FONT_SIZE );
-
 		this.toggleNavDrawerChanged.emit();
 	}
 
 	onClickOnSave() {
 		// Save all items
-		localStorage.setItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'FONT_SIZE', this.fontSize);
-		AppConfig.covisualizationCommon.GLOBAL.FONT_SIZE = this.fontSize;
-		this.appService.setFontSize(this.fontSize);
-
 		localStorage.setItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST', this.contrastValue.toString());
 		AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
 
@@ -109,14 +90,6 @@ export class UserSettingsComponent implements OnChanges {
 
 		// this.khiopsLibraryService.trackEvent('click', 'settings', 'significant_number', this.numberPrecision);
 		// this.khiopsLibraryService.trackEvent('click', 'settings', 'matrix_contrast', this.contrastValue);
-	}
-
-	onFontSizeChanged(event) {
-		// AppConfig.covisualizationCommon.GLOBAL.FONT_SIZE = event.value;
-		this.fontSize = event.value;
-		this.appService.setFontSize(this.fontSize);
-		// document.body.classList.remove('font-10', 'font-11', 'font-12', 'font-13', 'font-14', 'font-15', 'font-16', 'font-17', 'font-18');
-		// document.body.classList.add('font-' + event.value);
 	}
 
 	onDefaultHierarchyChanged(event) {

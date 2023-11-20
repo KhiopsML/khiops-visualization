@@ -133,10 +133,6 @@ export class HomeLayoutComponent implements OnInit {
 			this.appVersion = pjson.version;
 		}
 
-		// set saved font size from ls
-		const fontSize = AppConfig.visualizationCommon.GLOBAL.FONT_SIZE;
-		document.body.classList.add('font-' + fontSize);
-
 	}
 
 	@HostListener('window:resize', ['$event'])

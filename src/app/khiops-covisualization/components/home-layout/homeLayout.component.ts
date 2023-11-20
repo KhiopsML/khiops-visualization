@@ -79,7 +79,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 		static: false
 	}) appAxisView: ElementRef<HTMLElement>;
 
-	fontSizeClass: string;
 	public get appDatas() {
 		return this.appService.getDatas();
 	}
@@ -148,12 +147,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 			this.appTitle = pjson.title.covisualization;
 			this.appVersion = pjson.version;
 		}
-
-		// set saved font size from ls
-		const fontSize = localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'FONT_SIZE') || AppConfig.covisualizationCommon.GLOBAL.FONT_SIZE;
-		this.fontSizeClass = 'font-' + fontSize;
-
-		this.appService.fontSize.subscribe(fontSize => this.fontSizeClass = 'font-' + fontSize);
 
 		this.importedDatasChangedSub = this.eventsService.importedDatasChanged.subscribe(dimName => {
 			if (dimName[0]) {
