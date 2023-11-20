@@ -2,9 +2,6 @@
 @include mat-core();
 $mat-theme-ignore-duplication-warnings: true;
 
-$yellowMain: #fbb33a;
-$redMain: #fb473a;
-
 $md-khiopsmain: (
 	50: #d0d6e9,
 	100: #9ba8d2,
@@ -181,6 +178,8 @@ $theme-light: mat-light-theme($primary, $accent, $warn);
 	--gutter-hover: #7abdf3;
 	--bgTooltip: #444;
 	--chart-border: #555;
+	--yellowMain: #fbb33a;
+	--redMain: #fb473a;
 }
 
 [data-color-scheme="light"] {
@@ -204,125 +203,6 @@ $theme-light: mat-light-theme($primary, $accent, $warn);
 	--gutter-hover: #ededed;
 	--bgTooltip: #444;
 	--chart-border: #e5e5e5;
-}
-
-::ng-deep mat-dialog-container {
-	background-color: var(-bgColor) !important;
-}
-
-::ng-deep .unitdisk-nav {
-	svg {
-		.background-circle {
-			fill: var(-bgColor-30) !important;
-		}
-	}
-}
-
-h1 {
-	color: var(--accent);
-}
-
-#header-title-comp {
-	background: transparent !important;
-}
-
-.mat-drawer-content,
-.mat-tab-group {
-	background: transparent !important;
-}
-#home-layout-comp #main-tab-group > .mat-tab-body-wrapper {
-	background: transparent !important;
-}
-
-#project-view-comp,
-#preparation-view-comp {
-	background: transparent !important;
-}
-.as-split-gutter {
-	background-color: var(--bgColor-20) !important;
-}
-
-.as-vertical:not(.as-disabled) > .as-split-gutter:hover,
-.as-vertical:not(.as-disabled) > .as-split-gutter:active,
-.as-horizontal:not(.as-disabled) > .as-split-gutter:hover,
-.as-horizontal:not(.as-disabled) > .as-split-gutter:active {
-	background-color: var(--gutter-hover) !important;
-	transition: background-color 0.1s ease-in-out 0.1s;
-}
-
-.comp-header {
-	background: var(--bgColor) !important;
-}
-.ag-grid-comp {
-	background: var(--bgColor) !important;
-}
-ag-grid-angular {
-	background: var(--bgColor) !important;
-}
-
-.mat-tab-body {
-	background: var(--bgColor-20) !important;
-}
-
-as-split-area {
-	background: var(--bgColor) !important;
-}
-
-::-webkit-scrollbar-thumb {
-	background: var(--bgColor-40) !important;
-	border: unset !important;
-}
-
-::-webkit-scrollbar-thumb:hover {
-	background: var(--bgColor-30) !important;
-}
-
-::-webkit-scrollbar-thumb:active {
-	background: var(--bgColor-30) !important;
-}
-
-::-webkit-scrollbar-track {
-	background: var(--bgColor) !important;
-}
-
-::-webkit-scrollbar-track:hover {
-	background: unset !important;
-}
-
-::-webkit-scrollbar-track:active {
-	background: unset !important;
-}
-
-::-webkit-scrollbar-corner {
-	background: transparent;
-}
-
-.ag-header {
-	background: transparent !important;
-}
-
-.ag-theme-balham .ag-row-even:not(.ag-row-selected) {
-	background: var(--bgColor) !important;
-}
-
-.ag-theme-balham .ag-row-odd:not(.ag-row-selected) {
-	background: var(--bgColor-20) !important;
-}
-
-.ag-row {
-	color: var(--bgColorContrast) !important;
-}
-
-.ag-grid-comp {
-	.comp-header {
-		.comp-header-tools {
-			.search-input-btn {
-				border: 1px solid var(--primary) !important;
-			}
-		}
-	}
-}
-
-::ng-deep .mat-badge-content {
-	border-color: var(--bgColor) !important;
+	--yellowMain: #fbb33a;
+	--redMain: #fb473a;
 }
