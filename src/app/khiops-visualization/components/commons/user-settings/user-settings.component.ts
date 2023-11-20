@@ -32,7 +32,6 @@ export class UserSettingsComponent implements OnChanges {
 	numberPrecisionExample;
 	numberPrecision;
 	liftCurveSmooth: number;
-	fontSize: any;
 	contrastValue: number;
 	allowCookies: boolean;
 	allowDarkTheme: boolean;
@@ -80,9 +79,6 @@ export class UserSettingsComponent implements OnChanges {
 		// Save all items
 		localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_NUMBER_PRECISION', this.numberPrecision);
 		AppConfig.visualizationCommon.GLOBAL.TO_FIXED = this.numberPrecision;
-
-		localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'FONT_SIZE', this.fontSize);
-		AppConfig.visualizationCommon.GLOBAL.FONT_SIZE = this.fontSize;
 
 		localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST', this.contrastValue.toString());
 		AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;

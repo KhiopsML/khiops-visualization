@@ -5,14 +5,6 @@
 		<button mat-flat-button (click)="onClickOnSave()" color="primary">{{ 'GLOBAL.SAVE' | translate }}</button>
 	</div>
 	<div fxLayout="column" id="user-settings-content" fxLayoutAlign="start start">
-		<h2>{{ 'SETTINGS.FONT_SIZE' | translate }} :</h2>
-		<div fxLayout="row" fxLayoutAlign="start center">
-			<mat-slider color="primary" attr.aria-label="{{ 'ARIA.SETTINGS.UPDATE_NUMBER_PRECISION' | translate }}"
-				[min]="11" [max]="18" [step]="1" [thumbLabel]="true" [(ngModel)]="fontSize"
-				(input)="onFontSizeChanged($event)">
-			</mat-slider>
-			<span>{{ fontSize }} px</span>
-		</div>
 		<h2>{{ 'GLOBAL.MATRIX_DEFAULT_CONTRAST' | translate }} :</h2>
 		<div fxLayout="row" fxLayoutAlign="start center">
 			<mat-slider color="primary"
