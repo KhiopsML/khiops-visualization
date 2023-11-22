@@ -185,7 +185,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 		}
 
 		// Draw matrix on change
-		if (this.matrixDiv && this.matrixDiv.nativeElement && !changes.selectedNodes) {
+		if (this.inputDatas && this.matrixDiv && this.matrixDiv.nativeElement && !changes.selectedNodes) {
 			if (this.inputDatas.matrixCellDatas && this.inputDatas.propagateChanges === false) {
 				this.inputDatas.propagateChanges = true; // hack to limit re-rendering and optimize perf
 			} else {
