@@ -117,7 +117,6 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
 			changes.selectedVariable.currentValue &&
 			!deepEqual(changes.selectedVariable.currentValue, changes.selectedVariable.previousValue)) {
 
-			// this.preparation2dDatasService.setSelectedVariable(changes.selectedVariable.currentValue);
 			this.constructTargetSelectBox();
 			this.constructModeSelectBox();
 			this.selectTargetSelectBox();

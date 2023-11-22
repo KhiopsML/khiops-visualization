@@ -42,9 +42,6 @@ import {
 import {
 	MatrixModeI
 } from '@khiops-library/interfaces/matrix-mode';
-import {
-	KhiopsLibraryService
-} from '@khiops-library/providers/khiops-library.service';
 
 /**
  * Test it with irisR file
@@ -75,7 +72,6 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
 	constructor(
 		private preparationDatasService: PreparationDatasService,
 		private appService: AppService,
-		private khiopsLibraryService: KhiopsLibraryService,
 		private preparation2dDatasService: Preparation2dDatasService) {
 		this.preparation2dDatas = this.preparation2dDatasService.getDatas();
 	}
@@ -110,10 +106,8 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
 			this.preparation2dDatasService.setSelectedRegressionVariable(currentVar);
 
 			this.constructModeSelectBox();
-
 			this.preparation2dDatasService.getMatrixCanvasDatas(this.preparation2dDatas.selectedVariable);
 			this.preparation2dDatasService.setSelectedCellIndex(0);
-
 			this.preparation2dDatasService.getCurrentCellDatas();
 
 		}
@@ -121,8 +115,6 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
 		if (changes.selectedCell && changes.selectedCell.currentValue >= 0) {
 			// Matrix regression case : on click on distribution graph bar
 			this.preparation2dDatasService.setSelectedCellIndex(changes.selectedCell.currentValue);
-			// Load corresponding cell datas values
-			// this.preparation2dDatasService.getCurrentCellDatas();
 		}
 	}
 

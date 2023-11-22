@@ -69,7 +69,6 @@
 	"SETTINGS": {
 		"NUMBER": "number",
 		"NUMBER_PRECISION": "Significant numbers precision",
-		"LIFT_CURVE_SMOOTH": "Line graph curve smooth",
 		"ONE_DATA_OUT_OF": "One data out of {count} displayed",
 		"N_VALUES_MAX": "{count} values maximum displayed",
 		"FONT_SIZE": "Interface font size",

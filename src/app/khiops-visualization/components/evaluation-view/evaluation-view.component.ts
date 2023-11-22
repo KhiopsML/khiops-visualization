@@ -39,10 +39,7 @@ export class EvaluationViewComponent extends SelectableTabComponent implements O
 		super();
 
 		this.sizes = this.appService.getViewSplitSizes('evaluationView');
-
-		// this.evaluationDatasService.initialize();
 		this.evaluationDatas = this.evaluationDatasService.getDatas();
-
 		this.evaluationDatasService.getEvaluationTypes();
 		this.evaluationDatasService.getEvaluationTypesSummary();
 		this.evaluationDatasService.getPredictorEvaluations();

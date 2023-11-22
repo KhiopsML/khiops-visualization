@@ -88,9 +88,6 @@ export class UserSettingsComponent implements OnChanges {
 		// Close the nav drawer
 		this.toggleNavDrawerChanged.emit(true);
 
-		// this.khiopsLibraryService.trackEvent('click', 'settings', 'significant_number', this.numberPrecision);
-		// this.khiopsLibraryService.trackEvent('click', 'settings', 'matrix_contrast', this.contrastValue);
-
 		localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'COOKIE_CONSENT', this.allowCookies.toString());
 
 		if (this.initialAllowCookies !== this.allowCookies) {

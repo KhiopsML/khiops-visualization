@@ -323,13 +323,8 @@ export class EvaluationDatasService {
 			xAxis[i] = (Number(xAxis[i - 1]) + 0.001).toFixed(3);
 		}
 
-		let smoothParam = AppConfig.visualizationCommon.LIFT_CURVE.LIFT_CURVE_SMOOTH;
-		if (mustGetAllDatas) {
-			smoothParam = 1;
-		}
-
-		const trainDatas = this.generateLiftCurveValuesForEvaluation(xAxis, smoothParam, 'Train', target);
-		const testDatas = this.generateLiftCurveValuesForEvaluation(xAxis, smoothParam, 'Test', target);
+		const trainDatas = this.generateLiftCurveValuesForEvaluation(xAxis, 'Train', target);
+		const testDatas = this.generateLiftCurveValuesForEvaluation(xAxis, 'Test', target);
 
 		let liftGraphDatas = []
 		if (trainDatas.length > 0 || testDatas.length > 0) {
@@ -337,13 +332,13 @@ export class EvaluationDatasService {
 			let graphDatas = [];
 			if (target) {
 				// add population information
-				graphDatas = graphDatas.concat(this.generateRandomLiftDatas(xAxis, smoothParam, 'GLOBAL.POPULATION'));
+				graphDatas = graphDatas.concat(this.generateRandomLiftDatas(xAxis, 'GLOBAL.POPULATION'));
 			}
 			graphDatas = graphDatas.concat(trainDatas);
 			graphDatas = graphDatas.concat(testDatas);
 			if (target) {
 				// Normal case
-				graphDatas = graphDatas.concat(this.generateRandomLiftDatas(xAxis, smoothParam, 'GLOBAL.RANDOM'));
+				graphDatas = graphDatas.concat(this.generateRandomLiftDatas(xAxis, 'GLOBAL.RANDOM'));
 			}
 
 			// define displayed values for select toggle
@@ -398,7 +393,7 @@ export class EvaluationDatasService {
 	}
 
 	// tslint:disable-next-line:typedef-whitespace
-	generateLiftCurveValuesForEvaluation(xAxis, smoothParam, type, target ? : string) {
+	generateLiftCurveValuesForEvaluation(xAxis, type, target ? : string) {
 
 		let currentReport: any;
 		// get the correct report : train or test
@@ -422,7 +417,7 @@ export class EvaluationDatasService {
 				if (currentReport && currentReport.recCurves) {
 					for (let j = 0; j < currentReport.recCurves.length; j++) {
 						const currentSerie = [];
-						for (let k = 0; k < xAxis.length; k = k + smoothParam) { // to smooth curve
+						for (let k = 0; k < xAxis.length; k = k + 1) { // to smooth curve
 							const currentCurveValue = currentReport.recCurves[j].values[k];
 							currentSerie.push({
 								name: Number(xAxis[k] * 100),
@@ -443,7 +438,7 @@ export class EvaluationDatasService {
 				if (currentLiftCurve && currentLiftCurve.curves) {
 					for (let j = 0; j < currentLiftCurve.curves.length; j++) {
 						const currentSerie = [];
-						for (let k = 0; k < xAxis.length; k = k + smoothParam) { // to smooth curve
+						for (let k = 0; k < xAxis.length; k = k + 1) { // to smooth curve
 							const currentCurveValue = currentLiftCurve.curves[j].values[k];
 							currentSerie.push({
 								name: Number(xAxis[k] * 100),
@@ -464,11 +459,11 @@ export class EvaluationDatasService {
 	}
 
 	// tslint:disable-next-line:typedef-whitespace
-	generateRandomLiftDatas(xAxis, smoothParam, title) {
+	generateRandomLiftDatas(xAxis, title) {
 		const graphDatas = [];
 
 		const currentSerie = [];
-		for (let k = 0; k < xAxis.length; k = k + smoothParam) { // to smooth curve
+		for (let k = 0; k < xAxis.length; k = k + 1) { // to smooth curve
 			currentSerie.push({
 				name: xAxis[k] * 100,
 				value: xAxis[k] * 100

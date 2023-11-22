@@ -373,7 +373,6 @@ export class DistributionDatasService {
 		} else {
 			//   throw 'variable ' + variable + ' unfound';
 		}
-		// console.log('file: distribution-datas.service.ts:380 ~ DistributionDatasService ~ getHistogramGraphDatas ~ dataSet:', dataSet);
 		return dataSet;
 	}
 

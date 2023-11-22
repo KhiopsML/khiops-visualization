@@ -114,21 +114,17 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 			});
 
 			this.tree.on('init', (e) => {
-
 				if (!selectedNodes) {
 					// get the first
 					this.treePreparationDatasService.initSelectedNodes();
 				}
-
 				this.tree.selectNodes(this.selectedNodes);
-
 			});
 
 			this.tree.on('select', (e) => {
 				// Do ngzone to emit event
 				this.ngzone.run(() => {
 					const trustedNodeSelection = e.data.id;
-					// this.treePreparationDatasService.setSelectedNodes(e.data);
 					let [index, nodesToSelect] = this.treePreparationDatasService.getNodesLinkedToOneNode(trustedNodeSelection);
 					if (!nodesToSelect) {
 						// it's a folder selection

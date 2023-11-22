@@ -122,20 +122,6 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 
 	ngAfterViewInit() {
 		this.initHyperTree();
-		// @ts-ignore
-		// const args:hyt.HypertreeArgs =
-		// {
-		// 	// dataloader: hyt.loaders.generators.nT1
-		// 	dataloader: ok => ok(this.dimensionTree),
-		// };
-
-		// const ht:any = new hyt.Hypertree(
-		// 	{ parent:  document.querySelector('#hyperTree') },
-		// 	args
-		// )
-
-		// @ts-ignore
-
 	}
 
 	initHyperTree(initView = true) {
@@ -158,7 +144,6 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 				},
 				geometry: {
 					nodeRadius: (ud, n) => {
-						// console.log("🚀 ~ file: tree-hyper.component.ts ~ line 106 ~ TreeHyperComponent ~ initHyperTree ~ n", n)
 						if (this.treePreparationDatas && n.data.isLeaf) {
 							if (this.visualization.population) {
 								let totalFreqsToShow = this.displayedValues ? 0 : n.data.totalFreqs;
@@ -311,7 +296,6 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 							},
 							fill: n => {
 								const node: TreeNodeVO = n.data;
-								// console.log("🚀 ~ file: tree-hyper.component.ts ~ line 135 ~ TreeHyperComponent ~ initHyperTree ~ n", n)
 								return node.color;
 							},
 							hideOnDrag: false,
@@ -319,12 +303,10 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 							strokeWidth: n => {
 								const node: TreeNodeVO = n.data;
 								// Selected Path stroke width
-								// console.log("🚀 ~ file: tree-hyper.component.ts ~ line 147 ~ TreeHyperComponent ~ initHyperTree ~ n", n)
 								return 0.01;
 							},
 							stroke: n => {
 								const node: TreeNodeVO = n.data;
-								// console.log("🚀 ~ file: tree-hyper.component.ts ~ line 138 ~ TreeHyperComponent ~ initHyperTree ~ n", n)
 								// if (n.hasOutChildren) return '#ff000010' // has filtered children
 								// if (!n.parent) return '#999' // root
 								// return '#a5d6a710' // default green (leafes)
@@ -336,7 +318,6 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 				interaction: {
 					mouseRadius: 5,
 					// onNodeSelect: (n) => {
-					// 	console.log("🚀 ~ ---------------------- ~ line 1461 ~ onNodeSelect, n", n)
 					// 	this.ht.api.goto({
 					// 		re: -n.layout.z.re,
 					// 		im: -n.layout.z.im
@@ -344,8 +325,6 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 					// 	//   .then(() => l.view.hypertree.drawDetailFrame())
 					// },
 					// onNodeClick: (hypertree, n) => {
-					//   console.log("🚀 ~ ---------------------- ~ line 1461 ~ onNodeClick, n", hypertree, n)
-
 					// },
 
 					onNodeHover: (n) => {
@@ -355,8 +334,6 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 					// the node click area is the voronoi cell in euclidean space.
 					// this way, wherever the user clicks, a node can be associated.
 					onNodeClick: (n, m, l) => {
-						// console.log(`#onNodeClick: Node=${n}, click coordinates=${m}, source layer=${l}`)
-
 						this.ngzone.run(() => {
 							const trustedNodeSelection = n.data.id;
 							let [index, nodesToSelect] = this.treePreparationDatasService.getNodesLinkedToOneNode(trustedNodeSelection);
@@ -448,7 +425,6 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 	ngOnDestroy() {}
 
 	ngOnChanges(changes: SimpleChanges) {
-		// console.log("🚀 ~ file: tree-hyper.component.ts ~ line 220 ~ TreeHyperComponent ~ ngOnChanges ~ changes", changes)
 		let userSelectedNode;
 		if (changes.dimensionTree && changes.dimensionTree.currentValue && this.hyperTree) {
 			this.initHyperTree();
@@ -458,7 +434,6 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 			this.ht.api.updateNodesVisualization();
 
 		}
-		//this.ngzone.run(() => {
 		if (changes.selectedNodes && changes.selectedNodes.previousValue) {
 
 			// remove previous paths
@@ -492,7 +467,6 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 			}
 
 			// var animationNode1 = this.ht.data.children[1]
-			// console.log("🚀 ~ file: tree-hyper.component.ts ~ line 212 ~ TreeHyperComponent ~ ngOnChanges ~ userSelectedNode", userSelectedNode)
 			// this.ht.api.addPath('SelectionPath', userSelectedNode);
 
 			if (userSelectedNode.data.isLeaf) {
@@ -517,14 +491,9 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 				// .then(()=> this.ht.api.gotoλ(0.15))
 				.then(() => this.ht.api.gotoNode(userSelectedNode));
 			// } else {
-			//
-			// console.log("🚀 ~ file: tree-hyper.component.ts ~ line 302 ~ TreeHyperComponent ~ this.ngzone.run ~ userSelectedNode", userSelectedNode)
-
 			// }
 
 		}
-
-		//});
 
 	}
 

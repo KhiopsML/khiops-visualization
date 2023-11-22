@@ -37,9 +37,6 @@ export const visualizationCommonEnvironment = {
   LEGEND: {
     MAX_BEFORE_GROUP: 40,
   },
-  LIFT_CURVE: {
-    LIFT_CURVE_SMOOTH: 1,
-  },
   HYPERTREE: {
     VISU_POPULATION: false,
     VISU_PURITY: false,

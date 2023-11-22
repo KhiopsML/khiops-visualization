@@ -156,7 +156,6 @@ export class ModelingViewComponent extends SelectableTabComponent {
 	}
 
 	onSelectListItemChanged(item: any) {
-		// setTimeout(() => { // is it usefull ? appears with tree hyper view
 
 		// Get var from name
 		if (item.name && item.name.includes('Tree_')) {
@@ -184,7 +183,6 @@ export class ModelingViewComponent extends SelectableTabComponent {
 
 		// do it async if previous var was not 2d and chart was not initialized
 		this.targetDistributionGraphDatas = this.distribution2dDatasService.getTargetDistributionGraphDatas(this.targetDistributionGraphType);
-		// });
 
 	}
 

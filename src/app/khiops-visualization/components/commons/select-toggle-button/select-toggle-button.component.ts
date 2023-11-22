@@ -71,7 +71,6 @@ export class SelectToggleButtonComponent implements OnInit, OnChanges {
 		// this.khiopsLibraryService.trackEvent('click', 'target_distribution_graph_value');
 
 		// clone obj to make change and emit changes
-		// const currentDisplayedValues = copy(this.displayedValues);
 		const currentDisplayedValues: ChartToggleValuesI[] = _.cloneDeep(this.displayedValues);
 		this.displayedValues = undefined;
 

@@ -527,19 +527,6 @@ export class TreePreparationDatasService {
 				}
 			];
 
-			// if (!isLeafSelection) {
-			// 	this.treeDetails.displayedColumns.push({
-			// 		headerName: 'Partition',
-			// 		field: 'partition'
-			// 	}, {
-			// 		headerName: 'Type',
-			// 		field: 'type'
-			// 	}, {
-			// 		headerName: 'Variable',
-			// 		field: 'variable'
-			// 	});
-			// }
-
 			for (let i = 0; i < this.treePreparationDatas.selectedNodes.length; i++) {
 				const currentNode = this.treePreparationDatas.selectedNodes[i];
 				if (currentNode && currentNode.isLeaf) {
@@ -550,13 +537,7 @@ export class TreePreparationDatasService {
 						values: JSON.stringify(currentNode.targetValues.values),
 						frequencies: JSON.stringify(currentNode.targetValues.frequencies),
 					};
-					// if (!isLeafSelection) {
-					// 	rowData.partition = JSON.stringify(currentNode.partition);
-					// 	rowData.type = currentNode.type;
-					// 	rowData.variable = currentNode.variable;
-					// }
 					treeDetails.values.push(rowData);
-
 				} else {
 					// it's a node
 				}

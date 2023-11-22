@@ -52,7 +52,6 @@ export class ModelingDatasService {
 		const preparationSelectedVar = this.preparationDatasService.getSelectedVariable(preparationSource);
 		// select the first item of the list by default
 		if (preparationSelectedVar) {
-			// this.setSelectedVariable(this.getVariableFromName(preparationSelectedVar.name));
 			this.setSelectedVariable(preparationSelectedVar);
 		} else {
 			// If json is incomplete, set the modeling variable to the first
