@@ -2006,10 +2006,10 @@
   resolved "https://registry.yarnpkg.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz#b2ac626d6cb9c8718ab459166d4bb405b8ffa78b"
   integrity sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==
 
-"@ngstack/translate@5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@ngstack/translate/-/translate-5.0.0.tgz#7cb6123b96706f18589b0090da79fc7ae816e706"
-  integrity sha512-MNpQDee0hy5N4Bx56CXUsTK/qTzhoufA+do0B74Bht9ed7Zb4i4IJ4rcBELyoB155MlCR5XCcR7+l98EEF8Tfw==
+"@ngstack/translate@8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@ngstack/translate/-/translate-8.0.0.tgz#0bab15c1e6bd43c4b422dbef16368e42cf416346"
+  integrity sha512-0IwxY+GYBAqIbzPaPKsO6ca+l3EddAvIlc35yTP+toZutfTo9WKuXRbnblLFBzfWAFldxKTJ/JNcTkrpYaYRMg==
   dependencies:
     tslib "^2.0.0"
 

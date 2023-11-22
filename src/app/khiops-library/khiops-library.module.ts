@@ -193,12 +193,6 @@ import {
 	BtnFullscreenComponent
 } from './components/btn-fullscreen/btn-fullscreen.component';
 import EnTransaltion from "../../i18n/en.json";
-import {
-	InAppRootOverlayContainer
-} from '../khiops-covisualization/providers/in-app-root-overlay/in-app-root-overlay-container';
-import {
-	OverlayContainer
-} from '@angular/cdk/overlay';
 
 @NgModule({
 	imports: [

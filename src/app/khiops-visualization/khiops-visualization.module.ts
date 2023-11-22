@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common'
 import {
 	NgModule,
-	ModuleWithProviders,
 	APP_INITIALIZER,
 	CUSTOM_ELEMENTS_SCHEMA
 } from '@angular/core';
