@@ -2,7 +2,6 @@ import { APP_INITIALIZER, NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms'
 import { HttpClientModule } from '@angular/common/http'
-import { ElectronService } from '@khiops-library/providers/electron.service'
 import { AppComponent } from './app.component'
 import { HomeLayoutComponent } from './components/home-layout/homeLayout.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -79,7 +78,6 @@ export function setupTranslateFactory(service: TranslateService) {
 		KhiopsLibraryModule
 	],
 	providers: [
-		ElectronService,
 		TranslateService,
 		{
 			provide: APP_INITIALIZER,

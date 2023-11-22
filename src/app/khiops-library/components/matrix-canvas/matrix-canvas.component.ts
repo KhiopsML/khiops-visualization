@@ -195,7 +195,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 	}
 
 	drawMatrix() {
-		console.log('file: matrix-canvas.component.ts:195 ~ MatrixCanvasComponent ~ drawMatrix ~ drawMatrix:');
+		// console.log('file: matrix-canvas.component.ts:195 ~ MatrixCanvasComponent ~ drawMatrix ~ drawMatrix:');
 
 		if (!this.isDrawing) {
 			requestAnimationFrame(() => {
@@ -423,7 +423,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 					});
 					this.isDrawing = false;
 					const t3 = performance.now();
-					console.log('Draw matrix performance' + (t3 - t2) + ' milliseconds.');
+					// console.log('Draw matrix performance' + (t3 - t2) + ' milliseconds.');
 				}
 			});
 

@@ -99,7 +99,6 @@ export class HomeLayoutComponent implements OnInit {
 	appVersion: any;
 	appName = 'khiops-visualization';
 	opened = false;
-	isElectron = false;
 	titleBar: any;
 	public selectedTab: Object | undefined;
 	currentDatas: any;

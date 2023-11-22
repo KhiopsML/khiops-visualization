@@ -11,9 +11,6 @@ import {
 	HttpClientModule
 } from '@angular/common/http';
 import {
-	ElectronService
-} from '@khiops-library/providers/electron.service';
-import {
 	AppComponent
 } from './app.component';
 import {
@@ -127,7 +124,6 @@ export function setupTranslateFactory(service: TranslateService) {
 	return serv;
 }
 const providers = [
-	ElectronService,
 	TranslateService,
 	{
 		provide: APP_INITIALIZER,

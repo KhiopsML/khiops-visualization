@@ -7,16 +7,6 @@ import {
 } from '@angular/core';
 import html2canvas from 'html2canvas';
 import { saveAs } from 'file-saver';
-// TODO remove electron
-// import {
-// 	nativeImage
-// } from 'electron';
-// let clipboard: any;
-// try {
-// 	clipboard = require('electron').clipboard;
-// } catch (e) {
-// 	console.warn('Can not access Electron clipboard on browser', e);
-// }
 import {
 	MatSnackBar
 } from '@angular/material/snack-bar';

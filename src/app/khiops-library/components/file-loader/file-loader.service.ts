@@ -7,14 +7,6 @@ import {
 import {
 	KhiopsLibraryService
 } from '../../providers/khiops-library.service';
-// import clarinet from "clarinet"
-// import _ from 'lodash';
-// import {
-// 	ElectronService
-// } from '../../providers/electron.service';
-
-// import * as es from 'event-stream';
-// import * as JSONStream from 'JSONStream';
 
 @Injectable({
 	providedIn: 'root'
@@ -30,7 +22,6 @@ export class FileLoaderService {
 	tmp = {};
 
 	constructor(
-		// private electronService: ElectronService,
 		private http: HttpClient,
 		private khiopsLibraryService: KhiopsLibraryService) {
 		this.initialize();
@@ -188,37 +179,6 @@ export class FileLoaderService {
 		});
 	}
 
-	// public parseJson(source: string) {
-	// 	console.info("parse");
-	// 	const parser = clarinet.parser();
-
-	// 	return new Promise(resolve => {
-	// 		parser.onvalue = (v) => {
-	// 			console.log('value',v);
-	// 		}
-	// 		parser.onopenobject = (key: string) => {
-	// 			console.log('open object',key);
-	// 		}
-	// 		parser.onkey = (key: string) => {
-	// 			console.log('key',key);
-	// 		}
-	// 		parser.onopenarray = () => {
-	// 			console.log('open array');
-	// 		}
-	// 		parser.onclosearray = () => {
-	// 			console.log('close array');
-	// 		 };
-	// 		parser.oncloseobject = () => {
-	// 			console.log('close object');
-	// 		};
-	// 		parser.onend = function () {
-	// 			console.info('parse end')
-	// 			resolve({});
-	// 		};
-	// 		parser.write(source).close();
-	// 	});
-	// }
-
 	readFile(filename): any {
 
 		this.fileLoaderDatas.datas = undefined;
@@ -241,56 +201,6 @@ export class FileLoaderService {
 			});
 			reader.readAsText(filename);
 		})
-
-		// TODO remove electron
-		//return new Promise((resolve, reject) => {
-		// 	this.electronService.fs.stat(filename, (err, stats) => {
-		// 		if (err) {
-		// 			reject();
-		// 		} else {
-
-		// 			this.electronService.fs.readFile(filename, 'utf-8', (errReadFile, datas) => {
-
-		// 				if (errReadFile) {
-		// 					if (errReadFile.toString().startsWith('Error: Cannot create a string longer')) {
-		// 						this.fileLoaderDatas.isBigJsonFile = true;
-		// 						this.fileLoaderDatas.loadingInfo = '';
-		// 						const currentDatas = {};
-		// 						const stream = this.electronService.fs.createReadStream(filename, {
-		// 							encoding: 'utf8'
-		// 						});
-		// 						const getStream = stream.pipe(JSONStream.parse([{
-		// 							emitKey: true
-		// 						}]));
-		// 						getStream
-		// 							.pipe(es.map((datas) => {
-		// 								this.fileLoaderDatas.loadingInfo = datas.key;
-		// 								currentDatas[datas.key] = datas.value;
-		// 							}));
-
-		// 						getStream.on('end', () => {
-		// 							this.fileLoaderDatas.datas = currentDatas;
-		// 							this.fileLoaderDatas.datas.filename = filename;
-		// 							resolve(this.fileLoaderDatas.datas);
-		// 						}).on('error', () => {
-		// 							reject();
-		// 						});
-		// 					} else {
-		// 						this.fileLoaderDatas.isLoadingDatas = false;
-		// 						reject(errReadFile);
-		// 					}
-		// 				} else {
-		// 					this.fileLoaderDatas.isLoadingDatas = false;
-		// 					this.fileLoaderDatas.datas = JSON.parse(datas);
-		// 					this.fileLoaderDatas.datas.filename = filename;
-		// 					resolve(this.fileLoaderDatas.datas);
-		// 				}
-		// 			});
-
-		// 		}
-		// 	});
-
-		// });
 
 	}
 

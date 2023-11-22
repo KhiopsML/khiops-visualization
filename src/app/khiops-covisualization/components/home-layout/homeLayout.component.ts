@@ -117,7 +117,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 	appName = 'khiops-covisualization';
 	opened = false;
 	openContextView = false;
-	isElectron = false;
 	public selectedTab: Object | undefined;
 	currentDatas: any;
 	isCompatibleJson: boolean;

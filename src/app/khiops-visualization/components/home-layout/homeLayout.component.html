@@ -34,7 +34,7 @@
 				</kl-no-data>
 				<div fxFlexFill *ngIf="isCompatibleJson">
 					<mat-tab-group id="main-tab-group" color="primary" fxFlexFill [@.disabled]="true"
-						[ngClass]="{'mat-tab-group-center': isElectron}" [selectedIndex]="activeTab"
+						[selectedIndex]="activeTab"
 						(selectedTabChange)="onSelectedTabChanged($event)">
 						<mat-tab label="{{ 'TITLE.PREPARATION' | translate }}"
 							*ngIf="appDatas?.datas?.preparationReport">

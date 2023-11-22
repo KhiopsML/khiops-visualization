@@ -33,7 +33,6 @@ import {
 	ClientSideRowModelModule,
 	RowNode
 } from '@ag-grid-community/all-modules';
-
 import {
 	UtilsService
 } from '@khiops-library/providers/utils.service';
