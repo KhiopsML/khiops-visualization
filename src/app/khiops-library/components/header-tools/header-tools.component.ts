@@ -25,9 +25,6 @@ import {
 	CopyDatasService
 } from '../../providers/copy-datas.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
-// import {
-// 	KhiopsLibraryService
-// } from '../../providers/khiops-library.service';
 
 @Component({
 	selector: 'kl-header-tools',
@@ -43,7 +40,6 @@ export class HeaderToolsComponent implements OnInit {
 	eltsToHide: any;
 
 	constructor(public selectableService: SelectableService,
-		// private khiopsLibraryService: KhiopsLibraryService,
 		private copyDatasService: CopyDatasService,
 		private translate: TranslateService,
 		private hotkeysService: HotkeysService,

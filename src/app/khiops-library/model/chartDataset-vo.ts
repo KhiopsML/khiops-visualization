@@ -6,10 +6,6 @@ export class ChartDatasetVO {
 	fill = false;
 	type: string; // By default
 	borderWidth: number;
-	// borderRadius = {
-	// 	topLeft: 3,
-	// 	topRight: 3,
-	// };
 	maxBarThickness: any;
 	barThickness: any;
 	setPercentage: number[] | undefined;

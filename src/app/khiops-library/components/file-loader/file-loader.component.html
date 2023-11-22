@@ -1,12 +1,5 @@
 <div class="file-loader-comp">
 	<div *ngIf="!fileLoaderDatas.isLoadingDatas" fxLayout="column" fxLayoutAlign="center center">
-		<!-- <div class="file-loader-img"></div> -->
-		<!-- <button *ngIf="!isProdMode" attr.aria-label="{{ translate.get('GLOBAL.LOAD_DEFAULT_FILE') }}"
-			(click)="loadDebugFile()" mat-stroked-button color="primary">{{ translate.get('GLOBAL.LOAD_DEFAULT_FILE')
-			}}</button>
-		<span *ngIf="!isProdMode">{{ translate.get('GLOBAL.OR') }}</span> -->
-		<!-- <button attr.aria-label="{{ translate.get('GLOBAL.OPEN_FILE') }}" (click)="openFileDialog()" mat-flat-button
-			color="primary">{{ translate.get('GLOBAL.OPEN_FILE') }}</button> -->
 		<button type="button" mat-flat-button color="primary" (click)="onClickOpen(fileInput)">{{
 			translate.get('GLOBAL.OPEN_FILE') }}</button>
 		<input hidden (change)="openFileDialog($event)" #fileInput type="file" id="file" [accept]="associationFiles">

@@ -60,44 +60,4 @@ export class ReleaseNotesService {
 		});
 	}
 
-	loadReleaseNotes(): any {
-
-		// let releaseNotes = [];
-
-		// return new Promise((resolve, reject) => {
-		// 	const url = './assets/releaseNotes.json';
-
-		// 	this.http.get(url, {
-		// 		responseType: 'json'
-		// 	}).subscribe((datas: any) => {
-		// 		if (datas) {
-		// 			let notes = [];
-		// 			for (let i = 0; i < datas.length; i++) {
-		// 				const noteVO = new NoteVO(datas[i]);
-		// 				if (noteVO.label) {
-		// 					notes.push(noteVO);
-		// 				}
-		// 			}
-		// 			notes = _.orderBy(notes, 'label', 'desc');
-		// 			for (let i = 0; i < notes.length; i++) {
-		// 				if (!releaseNotes[notes[i].label]) {
-		// 					releaseNotes[notes[i].label] = [];
-		// 				}
-		// 				releaseNotes[notes[i].label].push(notes[i]);
-		// 			}
-		// 			resolve(releaseNotes);
-		// 		} else {
-		// 			reject({
-		// 				'status': 500
-		// 			});
-		// 		}
-		// 	}, (error) => {
-		// 		reject({
-		// 			'status': 500
-		// 		});
-		// 	});
-
-		// });
-	}
-
 }

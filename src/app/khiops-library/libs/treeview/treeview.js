@@ -122,7 +122,6 @@
 							id: item.id
 						};
 						content.setAttribute('data-item', JSON.stringify(leafDatas));
-						// content.setAttribute('data-item', JSON.stringify(item));
 
 						text.setAttribute('class', 'tree-leaf-text');
 						text.setAttribute('id', item.id);
@@ -365,9 +364,6 @@
 				}
 
 				this.hideExpando = false;
-				// if (this.data[0].nbClusters > 200) {
-				// 	this.hideExpando = true;
-				// }
 
 				render(this);
 
@@ -388,7 +384,6 @@
 				var expando = node.querySelector('.tree-expando');
 				expando.textContent = '-';
 				var icon = node.querySelector('.tree-icon');
-				// icon.setAttribute('class', 'tree-icon mat-icon material-icons expanded');
 				icon.textContent = 'folder_open';
 				leaves.classList.remove('hidden');
 				if (skipEmit) {
@@ -401,16 +396,6 @@
 					leaves: leaves,
 					data: data
 				});
-
-				// if (node.children && node.children.length > 0) {
-				// 	for (var i = 0; i < node.children.length; i++) {
-
-				// 		var childParent = node.children[i];
-				// 		var childLeaves = parent.parentNode.querySelector('.tree-child-leaves');
-
-				// 		self.expand(childParent, childLeaves, false);
-				// 	}
-				// }
 			};
 
 			TreeView.prototype.expandAllNodeChildren = function (nodeId) {
@@ -523,7 +508,6 @@
 					// we must override simple select node selection with a timeout
 
 					var el = self.rootElementDom.querySelector('#'+self.node);
-					// console.log("🚀 ~ file: treeview.js ~ line 487 ~ el", el)
 					if (el && nodesToSelect) {
 
 						var nodes = el.querySelectorAll('.tree-leaf-text');
@@ -547,21 +531,9 @@
 								});
 								self.currentSelectedNodeId = currentNodeToSelect.nodeId;
 
-								// if (currentNode && propagateEvent) {
-								// 	// Click the node to select it and propagate event
-								// 	currentNode.click();
-								// } else {
 								// Select node without click propagation
-
 								if (currentNode && currentNode.parentNode) {
 									currentNode.parentNode.classList.add("selected");
-
-									// if (scrollTree) {
-									// 	currentNode.parentNode.scrollIntoViewIfNeeded({
-									// 		// block: 'center'
-									// 	});
-									// }
-
 									if (currentNodeToSelect.isTrusted) {
 										currentNode.parentNode.scrollIntoViewIfNeeded({
 											block: 'center'
@@ -616,11 +588,9 @@
 			 * @param {DOMElement} leaves The leaves wrapper element
 			 */
 			TreeView.prototype.collapse = function (node, leaves, skipEmit) {
-				// console.log("TCL: TreeView.prototype.collapse -> node, leaves", node, leaves)
 				var expando = node.querySelector('.tree-expando');
 				expando.textContent = '+';
 				var icon = node.querySelector('.tree-icon');
-				// icon.setAttribute('class', 'tree-icon mat-icon material-icons');
 				icon.textContent = 'folder';
 				leaves.classList.add('hidden');
 				if (skipEmit) {

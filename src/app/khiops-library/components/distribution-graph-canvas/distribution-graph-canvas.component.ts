@@ -68,10 +68,6 @@ export class DistributionGraphCanvasComponent extends ScrollableGraphCanvasCompo
 		super(selectableService, ngzone, configService);
 
 		this.colorSet = this.khiopsLibraryService.getGraphColorSet()[2];
-		// if (this.graphOptions) {
-		// 	this.graphOptions.selected = localStorage.getItem(this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID + 'DISTRIBUTION_GRAPH_OPTION') ||
-		// 	this.graphOptions.types[0];
-		// }
 
 		// Needed for scroll component
 		this.maxScale = this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_GRAPH_SCALE;
@@ -115,9 +111,7 @@ export class DistributionGraphCanvasComponent extends ScrollableGraphCanvasCompo
 			},
 			scales: {
 				y: {
-					// beginAtZero: true,
 					ticks: {
-						// maxTicksLimit: this.graphOptions && this.graphOptions.selected === 'GLOBAL.COVERAGE' ? 7 : 1,
 						callback: (value) => {
 							if (!this.hideGraphOptions && this.graphOptions && this.graphOptions.selected === 'GLOBAL.FREQUENCY') {
 								// Frequency log mode
@@ -174,7 +168,6 @@ export class DistributionGraphCanvasComponent extends ScrollableGraphCanvasCompo
 
 	ngOnInit() {
 		this.graphIdContainer = 'distribution-graph-canvas-comp-' + this.position;
-		// this.title = this.translate.get('GLOBAL.INTERNAL') + ' ' + this.translate.get(this.graphOptions.selected);
 		this.title = 'Distribution';
 	}
 
@@ -191,11 +184,7 @@ export class DistributionGraphCanvasComponent extends ScrollableGraphCanvasCompo
 		this.chartOptions.scales.y.min = undefined;
 
 		this.graphOptions.selected = type;
-		// this.title = this.translate.get('GLOBAL.INTERNAL') + ' ' + this.translate.get(this.graphOptions.selected);
-		// this.title = this.translate.get(this.graphOptions.selected);
 		this.graphTypeChanged.emit(type);
-
-		// this.chartOptions.scales.y.type = this.graphOptions.selected === 'GLOBAL.COVERAGE' || this.graphOptions.selected === 'yLin' ? 'linear' : 'logarithmic';
 		this.chartOptions.scales.y.type = this.graphOptions.selected === 'GLOBAL.FREQUENCY' ? 'logarithmic' : 'linear';
 
 		const minValue = Math.min(...this.inputDatas.datasets[0].data);

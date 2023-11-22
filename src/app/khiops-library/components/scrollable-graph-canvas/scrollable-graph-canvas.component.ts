@@ -121,18 +121,11 @@ export class ScrollableGraphCanvasComponent extends SelectableComponent implemen
 		}
 	}
 
-	// @HostListener('mousewheel', ['$event'])
-	// onMouseWheelChrome(event: any) {
-	// 	this.mouseWheelFunc(event);
-	// }
-
 	onScroll(event) {
 		this.scrollPositionChanged.emit(event.currentTarget.scrollLeft);
 	}
 
 	resizeGraph(firstRender = false) {
-		// setTimeout(() => {
-
 		if (this.inputDatas) {
 
 			const graphWrapper: any = this.configService.getRootElementDom().querySelector('#' + this.graphIdContainer);
@@ -188,12 +181,10 @@ export class ScrollableGraphCanvasComponent extends SelectableComponent implemen
 
 			}
 		}
-		// });
 	}
 
 	mouseWheelFunc(event: any) {
 
-		// const element = document.getElementById(this.graphIdContainer);
 		const graphWrapper: any = this.configService.getRootElementDom().querySelector('#' + this.graphIdContainer);
 		if (graphWrapper && graphWrapper.children[0]) {
 			const el: any = graphWrapper.children[0].children[0];
@@ -213,9 +204,6 @@ export class ScrollableGraphCanvasComponent extends SelectableComponent implemen
 			// emit the event to other graph
 			this.scrollPositionChanged.emit(this.scrollPosition);
 
-			// if (event.preventDefault) {
-			// event.preventDefault();
-			// }
 		}
 
 	}

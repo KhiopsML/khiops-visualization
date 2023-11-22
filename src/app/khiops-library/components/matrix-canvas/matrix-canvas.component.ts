@@ -5,12 +5,10 @@ import {
 	OnChanges,
 	Output,
 	EventEmitter,
-	OnInit,
 	Input,
 	NgZone,
 	ViewChild,
-	ElementRef,
-	AfterViewInit
+	ElementRef
 } from '@angular/core';
 import {
 	SelectableService
@@ -70,7 +68,6 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 
 	componentType = 'matrix'; // needed to copy datas
 
-	// panZoom: SvgPanZoom.Instance;
 	xAxisLabel: string;
 	yAxisLabel: string;
 	tooltipText: string;
@@ -195,7 +192,6 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 	}
 
 	drawMatrix() {
-		// console.log('file: matrix-canvas.component.ts:195 ~ MatrixCanvasComponent ~ drawMatrix ~ drawMatrix:');
 
 		if (!this.isDrawing) {
 			requestAnimationFrame(() => {
@@ -223,11 +219,6 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 
 						if (this.matrixDiv && this.matrixArea) {
 
-							// call to remove panzoom handler from the target
-							// it doesn't seem to work ...
-							// if (this.unpanzoom) {
-							// 	this.unpanzoom();
-							// }
 							let [width, height] = this.getZoomDimensions();
 
 							this.matrixCtx.canvas.width = width;
@@ -350,7 +341,6 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 							if (!this.unpanzoom) {
 								this.unpanzoom = panzoom(this.matrixContainerDiv.nativeElement, e => {
 									if (e.dz) {
-										// this.zoomCanvas(e.dz);
 										if (e.dz > 0) {
 											this.onClickOnZoomOut();
 										} else {
@@ -370,10 +360,6 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 									if (this.zoom !== 1) {
 										this.isPaning = true;
 									}
-
-									// setTimeout(() => {
-									// 	this.isPaning = false;
-									// }, 100);
 								});
 							}
 
@@ -423,7 +409,6 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 					});
 					this.isDrawing = false;
 					const t3 = performance.now();
-					// console.log('Draw matrix performance' + (t3 - t2) + ' milliseconds.');
 				}
 			});
 
@@ -563,10 +548,8 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 		const previousZoom = this.zoom;
 		if (delta < 0) {
 			this.zoom = this.zoom + this.zoomFactor;
-			// this.zoom = this.zoom + 2;
 		} else if (delta > 0) {
 			this.zoom = this.zoom - this.zoomFactor;
-			// this.zoom = this.zoom - 2;
 		} else if (delta === 0) {
 			this.zoom = 0;
 		}
@@ -615,7 +598,6 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 
 	updateLegendBar() {
 		if (!this.legendBar.nativeElement) return;
-		// const dom = document.getElementById('legend-bar');
 		if (this.graphMode.mode === 'MUTUAL_INFO' || this.graphMode.mode === 'HELLINGER' ||
 			this.graphMode.mode === 'MUTUAL_INFO_TARGET_WITH_CELL') {
 			this.legendBar.nativeElement.style.background = MatrixCanvasService.getInterestColorsLegend();

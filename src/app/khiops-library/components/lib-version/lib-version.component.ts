@@ -1,6 +1,5 @@
 import {
 	Component,
-	OnInit,
 	ViewEncapsulation
 } from '@angular/core';
 import {
@@ -16,13 +15,11 @@ import {
 `,
 	encapsulation: ViewEncapsulation.None
 })
-export class LibVersionComponent implements OnInit {
+export class LibVersionComponent {
 	libVersion: any;
 
 	constructor() {
 		this.libVersion = LibVersionService.getVersion();
 	}
-
-	ngOnInit() {}
 
 }

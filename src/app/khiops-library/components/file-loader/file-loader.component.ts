@@ -1,4 +1,3 @@
-import { EventsService } from '@khiops-library/providers/events.service';
 import {
 	Component,
 	OnInit,
@@ -41,8 +40,7 @@ export class FileLoaderComponent implements OnInit {
 		private khiopsLibraryService: KhiopsLibraryService,
 		private snackBar: MatSnackBar,
 		public translate: TranslateService,
-		private configService: ConfigService,
-		private eventsService: EventsService) {
+		private configService: ConfigService) {
 
 		this.fileLoaderDatas = this.fileLoaderService.getDatas();
 		this.isProdMode = this.khiopsLibraryService.getAppConfig().production;

@@ -168,18 +168,6 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 				}
 			};
 
-			// Chart.scaleService.updateScaleDefaults('category', {
-			// 	ticks: {
-			// 		callback: (tick) => {
-			// 			if (tick.length > this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_GRAPH_X_LABEL_LENGTH) {
-			// 				return tick.substring(0, this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_GRAPH_X_LABEL_LENGTH) + ' ...';
-			// 			} else {
-			// 				return tick;
-			// 			}
-			// 		}
-			// 	}
-			// });
-
 			// Merge chart options
 			options = UtilsService.mergeDeep(options, this.chartOptions);
 			// @ts-ignore
@@ -259,15 +247,8 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 			this.colorize();
 			for (let i = 0; i < this.chart.data.datasets.length; i++) {
 				const dataset = this.chart.data.datasets[i];
-				// dataset.borderColor[index] = 'rgba(0, 0, 0, 1)';
 				dataset.borderColor[index] = this.barColor;
 				dataset.borderSkipped = false;
-				// dataset.borderWidth = {
-				// 	top: 2,
-				// 	right: 2,
-				// 	bottom: 0,
-				// 	left: 2
-				// }
 				dataset.borderWidth = 2;
 			}
 		}
@@ -278,12 +259,6 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 			const dataset = this.chart.data.datasets[i];
 			if (!dataset.borderWidth) {
 				dataset.borderSkipped = false;
-				// dataset.borderWidth = {
-				// 	top: 2,
-				// 	right: 2,
-				// 	bottom: 0,
-				// 	left: 2
-				// };
 				dataset.borderWidth = 2;
 			}
 
@@ -293,8 +268,6 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 			if (defaultGroupIndex !== -1) {
 				dataset.backgroundColor[defaultGroupIndex] = UtilsService.hexToRGBa(this.colorSet.domain[i], 0.15);
 			}
-
-			// const chartLineOpacity = dataset.type === 'bar' ? 0.1 : 1; // 0.1 for bar to improve selection opacity
 
 			let borderOpacity = 1;
 			if (dataset.type === 'line') {
