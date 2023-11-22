@@ -128,32 +128,32 @@ export class AppComponent implements AfterViewInit {
 	}
 
 	initCookieConsent() {
-		const localAcceptCookies = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'COOKIE_CONSENT');
-		if (localAcceptCookies !== null) {
-			this.khiopsLibraryService.initMatomo();
-			this.khiopsLibraryService.trackEvent('cookie_consent', localAcceptCookies.toString());
-			this.khiopsLibraryService.enableMatomo();
-			return;
-		}
-
-		console.log(localAcceptCookies);
-		this.dialogRef.closeAll();
-		const config = new MatDialogConfig();
-		config.width = '400px';
-		config.hasBackdrop = false;
-		config.disableClose = false;
-
-		const dialogRef: MatDialogRef < ConfirmDialogComponent > = this.dialog.open(ConfirmDialogComponent, config);
-		dialogRef.updatePosition({
-			bottom: '50px',
-			right: '50px'
-		});
-		dialogRef.componentInstance.message = this.translate.get('COOKIE_CONSENT.MESSAGE');
-		dialogRef.componentInstance.displayRejectBtn = true;
-		dialogRef.componentInstance.displayCancelBtn = false;
-		dialogRef.componentInstance.confirmTranslation = this.translate.get('COOKIE_CONSENT.ALLOW');
-
 		this.ngzone.run(() => {
+			const localAcceptCookies = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'COOKIE_CONSENT');
+			if (localAcceptCookies !== null) {
+				this.khiopsLibraryService.initMatomo();
+				this.khiopsLibraryService.trackEvent('cookie_consent', localAcceptCookies.toString());
+				this.khiopsLibraryService.enableMatomo();
+				return;
+			}
+
+			console.log(localAcceptCookies);
+			this.dialogRef.closeAll();
+			const config = new MatDialogConfig();
+			config.width = '400px';
+			config.hasBackdrop = false;
+			config.disableClose = false;
+
+			const dialogRef: MatDialogRef < ConfirmDialogComponent > = this.dialog.open(ConfirmDialogComponent, config);
+			dialogRef.updatePosition({
+				bottom: '50px',
+				right: '50px'
+			});
+			dialogRef.componentInstance.message = this.translate.get('COOKIE_CONSENT.MESSAGE');
+			dialogRef.componentInstance.displayRejectBtn = true;
+			dialogRef.componentInstance.displayCancelBtn = false;
+			dialogRef.componentInstance.confirmTranslation = this.translate.get('COOKIE_CONSENT.ALLOW');
+
 			dialogRef.afterClosed().toPromise().then((e) => {
 				const acceptCookies = e === 'confirm' ? 'true' : 'false';
 
@@ -168,6 +168,5 @@ export class AppComponent implements AfterViewInit {
 				}
 			});
 		});
-
 	}
 }

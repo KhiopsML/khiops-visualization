@@ -1,4 +1,4 @@
-<div id="home-layout-comp" fxFlexFill role="main" [className]="fontSizeClass">
+<div id="home-layout-comp" fxFlexFill role="main">
 	<mat-sidenav-container fxFlexFill>
 		<mat-sidenav #sidenav mode="over" position="end" disableClose="true" [(opened)]="opened">
 			<app-user-settings (toggleNavDrawerChanged)="onToggleNavDrawerChanged($event)" [opened]="opened">
@@ -62,7 +62,7 @@
 							<label title="{{ 'TOOLTIPS.TABS.CONTEXT' | translate }}">{{ 'TITLE.CONTEXT' | translate }}</label>
 						</ng-template>
 					</mat-tab>
-					<mat-tab label="{{ 'TITLE.PROJECT' | translate }}">
+					<mat-tab label="{{ 'TITLE.PROJECT' | translate }}" *ngIf="showProjectTab">
 						<ng-template matTabLabel>
 							<label title="{{ 'TOOLTIPS.TABS.PROJECT' | translate }}">{{ 'TITLE.PROJECT' | translate }}</label>
 						</ng-template>

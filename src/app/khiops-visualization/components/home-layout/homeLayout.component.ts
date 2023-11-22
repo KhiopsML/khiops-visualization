@@ -58,6 +58,9 @@ import {
 	KhiopsLibraryService
 } from '@khiops-library/providers/khiops-library.service';
 import pjson from 'package.json';
+import {
+	ConfigService
+} from '@khiops-library/providers/config.service';
 
 
 @Component({
@@ -68,6 +71,8 @@ import pjson from 'package.json';
 
 })
 export class HomeLayoutComponent implements OnInit {
+
+	showProjectTab: boolean;
 
 	@Input()
 	get appDatas(): any {
@@ -105,6 +110,7 @@ export class HomeLayoutComponent implements OnInit {
 	isLargeScreen: boolean;
 
 	constructor(
+		private configService: ConfigService,
 		private translate: TranslateService,
 		private ngzone: NgZone,
 		private saveService: SaveService,
@@ -126,10 +132,6 @@ export class HomeLayoutComponent implements OnInit {
 			this.appTitle = pjson.title.visualization;
 			this.appVersion = pjson.version;
 		}
-
-		// set saved font size from ls
-		const fontSize = AppConfig.visualizationCommon.GLOBAL.FONT_SIZE;
-		document.body.classList.add('font-' + fontSize);
 
 	}
 
@@ -177,6 +179,10 @@ export class HomeLayoutComponent implements OnInit {
 
 	initializeHome() {
 		this.isCompatibleJson = this.appService.isCompatibleJson();
+		this.showProjectTab = this.configService.getConfig().showProjectTab;
+		if (this.showProjectTab === undefined) {
+			this.showProjectTab = true;
+		}
 
 		if (!this.isCompatibleJson) {
 			this.snackBar.open(this.translate.get('SNACKS.OPEN_FILE_ERROR'), undefined, {

@@ -60,6 +60,7 @@ import {
 import {
 	AnnotationService
 } from '@khiops-covisualization/providers/annotation.service';
+import { ConfigService } from '@khiops-library/providers/config.service';
 
 @Component({
 	selector: 'app-home-layout',
@@ -69,6 +70,8 @@ import {
 })
 export class HomeLayoutComponent implements OnInit, OnDestroy {
 
+	showProjectTab: boolean;
+
 	@ViewChild('appProjectView', {
 		static: false
 	}) appProjectView: ElementRef<HTMLElement>;
@@ -76,7 +79,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 		static: false
 	}) appAxisView: ElementRef<HTMLElement>;
 
-	fontSizeClass: string;
 	public get appDatas() {
 		return this.appService.getDatas();
 	}
@@ -125,6 +127,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 	importedDatasChangedSub: any;
 
 	constructor(
+		private configService: ConfigService,
 		private appService: AppService,
 		private dialogRef: MatDialog,
 		private translate: TranslateService,
@@ -144,12 +147,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 			this.appTitle = pjson.title.covisualization;
 			this.appVersion = pjson.version;
 		}
-
-		// set saved font size from ls
-		const fontSize = localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'FONT_SIZE') || AppConfig.covisualizationCommon.GLOBAL.FONT_SIZE;
-		this.fontSizeClass = 'font-' + fontSize;
-
-		this.appService.fontSize.subscribe(fontSize => this.fontSizeClass = 'font-' + fontSize);
 
 		this.importedDatasChangedSub = this.eventsService.importedDatasChanged.subscribe(dimName => {
 			if (dimName[0]) {
@@ -231,6 +228,11 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 	initializeHome() {
 		this.isCompatibleJson = this.appService.isCompatibleJson();
 		const isCollidingJson = this.appService.isCollidingJson();
+
+		this.showProjectTab = this.configService.getConfig().showProjectTab;
+		if (this.showProjectTab === undefined) {
+			this.showProjectTab = true;
+		}
 
 		if (!this.isCompatibleJson) {
 			this.snackBar.open(this.translate.get('SNACKS.OPEN_FILE_ERROR'), undefined, {

@@ -37,7 +37,7 @@
 .tree-leaf .tree-icon {
 	float: left;
 	margin-left: 0.4em;
-	color: $yellowMain;
+	color: var(--yellowMain);
 	user-select: none;
 	cursor: pointer;
 }
