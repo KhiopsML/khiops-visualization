@@ -25,7 +25,6 @@ export class UserSettingsComponent implements OnChanges {
 	@Input() opened: boolean;
 
 	allowCookies: boolean;
-	defaultHierarchy: number;
 	contrastValue: number;
 	initialAllowCookies: boolean;
 	allowDarkTheme: boolean;
@@ -41,11 +40,6 @@ export class UserSettingsComponent implements OnChanges {
 	onNavDrawerOpen() {
 
 		this.khiopsLibraryService.trackEvent('page_view', 'settings');
-
-		// defaultHierarchy
-		this.defaultHierarchy = parseInt(localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'DEFAULT_LIMIT_HIERARCHY'), 10) || AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.TECHNICAL_LIMIT;
-		localStorage.setItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'DEFAULT_LIMIT_HIERARCHY', this.defaultHierarchy.toString());
-		AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.TECHNICAL_LIMIT = this.defaultHierarchy;
 
 		// Matrix contrast
 		this.contrastValue = parseInt(localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST'), 10) || AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST;
@@ -90,11 +84,5 @@ export class UserSettingsComponent implements OnChanges {
 		// this.khiopsLibraryService.trackEvent('click', 'settings', 'significant_number', this.numberPrecision);
 		// this.khiopsLibraryService.trackEvent('click', 'settings', 'matrix_contrast', this.contrastValue);
 	}
-
-	onDefaultHierarchyChanged(event) {
-		this.defaultHierarchy = event.value;
-		localStorage.setItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'DEFAULT_LIMIT_HIERARCHY', this.defaultHierarchy.toString());
-	}
-
 
 }

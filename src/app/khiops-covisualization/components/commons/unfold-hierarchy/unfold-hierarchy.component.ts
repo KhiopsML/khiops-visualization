@@ -62,12 +62,7 @@ export class UnfoldHierarchyComponent implements OnInit {
 	selectedLineChartItem = undefined;
 
 	borderColor = localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR') === 'dark' ? '#ffffff' : '#000000';
-	defaultMaxUnfoldHierarchy = parseInt(
-		localStorage.getItem(
-			AppConfig.covisualizationCommon.GLOBAL.LS_ID +
-			"DEFAULT_LIMIT_HIERARCHY"
-		),
-		10);
+	defaultMaxUnfoldHierarchy = AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.TECHNICAL_LIMIT;
 	hierarchyDisplayedColumns = [{
 			headerName: 'Dimension',
 			field: 'name'
