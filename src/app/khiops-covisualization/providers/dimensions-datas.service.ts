@@ -261,7 +261,7 @@ export class DimensionsDatasService {
 					// const nbClusters = appinitialDatas.coclusteringReport.dimensionSummaries[i].parts;
 					let index = 0;
 
-					const currentNodesNames = this.dimensionsDatas.nodesNames[dimensionHierarchy.name];
+					const currentNodesNames = this.dimensionsDatas.nodesNames && this.dimensionsDatas.nodesNames[dimensionHierarchy.name];
 
 					// First convert each child into a treenode value object
 					const clustersLength = dimensionHierarchy.clusters.length;
@@ -303,7 +303,7 @@ export class DimensionsDatasService {
 					// const nbClusters = appinitialDatas.coclusteringReport.dimensionSummaries[i].parts;
 					let index = 0;
 
-					const currentNodesNames = this.dimensionsDatas.nodesNames[currentDimensionHierarchy.name];
+					const currentNodesNames = this.dimensionsDatas.nodesNames && this.dimensionsDatas.nodesNames[currentDimensionHierarchy.name];
 
 					// First convert each child into a treenode value object
 					const clustersLength = currentDimensionHierarchy.clusters.length;
@@ -376,13 +376,13 @@ export class DimensionsDatasService {
 		// Get shortdescriptions if defined
 		const xDimensionLeafsShortDescription = [...xDimensionLeafsNames];
 		const yDimensionLeafsShortDescription = [...yDimensionLeafsNames];
-		if (this.dimensionsDatas.nodesNames[xDimension.name]) {
+		if (this.dimensionsDatas.nodesNames && this.dimensionsDatas.nodesNames[xDimension.name]) {
 			for (const [key, value] of Object.entries(this.dimensionsDatas.nodesNames[xDimension.name])) {
 				const index = xDimensionLeafsShortDescription.indexOf(key);
 				xDimensionLeafsShortDescription.splice(index, 1, value);
 			}
 		}
-		if (this.dimensionsDatas.nodesNames[yDimension.name]) {
+		if (this.dimensionsDatas.nodesNames && this.dimensionsDatas.nodesNames[yDimension.name]) {
 			for (const [key, value] of Object.entries(this.dimensionsDatas.nodesNames[yDimension.name])) {
 				const index = yDimensionLeafsShortDescription.indexOf(key);
 				yDimensionLeafsShortDescription.splice(index, 1, value);

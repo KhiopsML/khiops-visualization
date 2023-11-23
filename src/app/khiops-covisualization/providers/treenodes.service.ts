@@ -187,6 +187,10 @@ export class TreenodesService {
 		return this.dimensionsDatas.selectedNodes;
 	}
 
+	setNodesNames() {
+		this.dimensionsDatas.nodesNames = this.appService.getSavedDatas('nodesNames');
+	}
+
 	getNodesNames() {
 		return this.dimensionsDatas.nodesNames;
 	}
@@ -337,7 +341,8 @@ export class TreenodesService {
 		this.dimensionsDatasService.getDimensions();
 		this.dimensionsDatasService.initSelectedDimensions(false); // do not to dont reinit selected context node
 		this.dimensionsDatasService.saveInitialDimension();
-		this.dimensionsDatasService.constructDimensionsTrees(); // 191
+		this.dimensionsDatasService.constructDimensionsTrees(); //
+
 		const currentIndex: any = this.dimensionsDatas.selectedDimensions.findIndex(e => {
 			return dimensionName === e.name;
 		});

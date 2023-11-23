@@ -71,6 +71,7 @@ export class AxisViewComponent
 
 			this.dimensionsDatas = this.dimensionsDatasService.getDatas();
 			this.dimensionsDatasService.getDimensions();
+			this.treenodesService.setNodesNames();
 			this.dimensionsDatasService.initSelectedDimensions();
 			this.dimensionsDatasService.saveInitialDimension();
 			this.dimensionsDatasService.constructDimensionsTrees();
@@ -119,6 +120,7 @@ export class AxisViewComponent
 
 		this.dimensionsDatas = this.dimensionsDatasService.getDatas();
 		this.dimensionsDatasService.getDimensions();
+		this.treenodesService.setNodesNames();
 		this.dimensionsDatasService.initSelectedDimensions();
 		this.dimensionsDatasService.saveInitialDimension();
 		this.dimensionsDatasService.constructDimensionsTrees();
