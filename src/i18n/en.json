@@ -53,7 +53,7 @@
 		"SAVE_FILE_ERROR": "Save file error",
 		"DATAS_DELETED": "Datas deleted",
 		"UNFOLDED_DATAS_MAXIMUM_UNFOLD": "Auto-unfold is limited to {count} for performance purpose",
-		"UNFOLDED_DATAS_PERFORMANCE_WARNING": "Displayed datas have been automatically unfolded to {count} clusters for better performance"
+		"UNFOLDED_DATAS_PERFORMANCE_WARNING": "Displayed datas have been automatically unfolded to {count} clusters"
 	},
 	"NO_DATAS": {
 		"WELCOME": "Open a file from the menu",
