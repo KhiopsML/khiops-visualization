@@ -179,22 +179,17 @@ export class AppService {
 	}
 
 	initViewsLayout(dimensions): ViewLayoutVO {
-		const savedViewsLayout = this.getSavedDatas('viewsLayout');
-		if (savedViewsLayout) {
-			this.viewsLayout = savedViewsLayout;
-		} else {
-			this.viewsLayout = new ViewLayoutVO();
-			for (let i = 0; i < dimensions.length; i++) {
-				const isContextView = i >= 2;
-				this.viewsLayout.addDimensionViewLayout(dimensions[i].name, isContextView);
-			}
+		this.viewsLayout = new ViewLayoutVO();
+		for (let i = 0; i < dimensions.length; i++) {
+			const isContextView = i >= 2;
+			this.viewsLayout.addDimensionViewLayout(dimensions[i].name, isContextView);
+		}
 
-			const lsStorage = localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'VIEWS_LAYOUT');
-			if (lsStorage && lsStorage !== 'undefined') {
-				const lsValues = JSON.parse(lsStorage);
-				// Merge current values with values from LS
-				this.viewsLayout.megeWithPreviousValues(lsValues);
-			}
+		const lsStorage = localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'VIEWS_LAYOUT');
+		if (lsStorage && lsStorage !== 'undefined') {
+			const lsValues = JSON.parse(lsStorage);
+			// Merge current values with values from LS
+			this.viewsLayout.megeWithPreviousValues(lsValues);
 		}
 
 		return this.viewsLayout;
