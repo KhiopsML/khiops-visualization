@@ -17,6 +17,7 @@ import { TreenodesService } from "@khiops-covisualization/providers/treenodes.se
 import { TranslateService } from "@ngstack/translate";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { SaveService } from "@khiops-covisualization/providers/save.service";
+import { UtilsService } from "@khiops-library/providers/utils.service";
 
 @Component({
 	selector: "app-axis-view",
@@ -97,8 +98,14 @@ export class AxisViewComponent
 	}
 
 	initializeLargeCoclustering() {
-		let unfoldState =
+		const currentSize = this.dimensionsDatas.dimensions.map((e) => e.parts);
+		const threshold =
+			this.dimensionsDatas.dimensions.length *
 			AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.ERGONOMIC_LIMIT;
+		let unfoldState = UtilsService.getErgonomicHierarchicalRank(
+			currentSize,
+			threshold
+		);
 
 		this.treenodesService.setSelectedUnfoldHierarchy(unfoldState);
 		const collapsedNodes =

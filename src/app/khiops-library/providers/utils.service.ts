@@ -8,6 +8,35 @@ import * as _ from 'lodash'; // Important to import lodash in karma
 })
 export class UtilsService {
 
+	/**
+	 *
+	 * @param threshold the threshold widh
+	 * @param parts original parts for a max threshold
+	 * @returns number corresponding to the wish threshold
+	 * For instance:
+	 * with initial parts of a=5, b=6, c=3
+	 * we get an nbParts = 5*6*3 = 90
+	 * If we need a threshold of 45 proportionnaly it's /2
+	 * this method return adjustedNumbers = 2.5 * 3 * 1.5 = 11
+	 */
+	static getErgonomicHierarchicalRank(parts, threshold) {
+		if (parts.length === 0) {
+			return [];
+		}
+
+		// Calculate the total product of the input array
+		const totalProduct = parts.reduce((acc, val) => acc * val, 1);
+
+		// Calculate the scaling factor to get closer to the threshold
+		const scalingFactor = Math.pow(threshold / totalProduct, 1 / parts.length);
+
+		// Apply the scaling factor to each element in the input array
+		const res = parts.map(part => Math.round(part * scalingFactor));
+		const sum = res.reduce((acc, val) => acc + val, 0);
+
+		return sum;
+	}
+
 	static fillArrayWithLogarithmicSpacing(minValue, maxValue, numValues) {
 		var minLog = Math.log10(Math.abs(minValue));
 		var maxLog = Math.log10(Math.abs(maxValue));

@@ -17,6 +17,7 @@ import {
 	MatrixUtilsDatasService
 } from '@khiops-library/providers/matrix-utils-datas.service';
 import * as _ from 'lodash'; // Important to import lodash in karma
+import { AppConfig } from 'src/environments/environment';
 
 @Injectable({
 	providedIn: 'root'
@@ -72,10 +73,8 @@ export class DimensionsDatasService {
 	}
 
 	isLargeCocluster() {
-		// const currentSize = (this.dimensionsDatas.dimensions.map(e => e.parts).reduce((a, b) => a * b))
-		// return this.dimensionsDatas.dimensions.length * 2 < currentSize;
-		const appDatas = this.appService.getDatas().datas;
-		return appDatas.coclusteringReport.summary.cells > 10000 // to debug
+		const currentSize = (this.dimensionsDatas.dimensions.map(e => e.parts).reduce((a, b) => a * b))
+		return this.dimensionsDatas.dimensions.length * AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.ERGONOMIC_LIMIT < currentSize;
 	}
 
 	isContextDimensions(): boolean {
@@ -97,7 +96,7 @@ export class DimensionsDatasService {
 
 	getDimensionPositionFromName(dimensionName): any {
 		// Find current dim position
-		return this.dimensionsDatas?.selectedDimensions?.findIndex(e => {
+		return this.dimensionsDatas ?.selectedDimensions ?.findIndex(e => {
 			return dimensionName === e.name;
 		});
 	}
@@ -371,7 +370,7 @@ export class DimensionsDatasService {
 			this.dimensionsDatas.selectedDimensions[0].intervals : this.dimensionsDatas.selectedDimensions[0].valueGroups
 		const yDimensionLeafs: any[] = this.dimensionsDatas.selectedDimensions[1].type === 'Numerical' ?
 			this.dimensionsDatas.selectedDimensions[1].intervals : this.dimensionsDatas.selectedDimensions[1].valueGroups
-			const xDimensionLeafsNames = xDimensionLeafs.map(e => e.cluster);
+		const xDimensionLeafsNames = xDimensionLeafs.map(e => e.cluster);
 		const yDimensionLeafsNames = yDimensionLeafs.map(e => e.cluster);
 
 		// Get shortdescriptions if defined
@@ -381,13 +380,13 @@ export class DimensionsDatasService {
 			for (const [key, value] of Object.entries(this.dimensionsDatas.nodesNames[xDimension.name])) {
 				const index = xDimensionLeafsShortDescription.indexOf(key);
 				xDimensionLeafsShortDescription.splice(index, 1, value);
-		  	}
+			}
 		}
 		if (this.dimensionsDatas.nodesNames[yDimension.name]) {
 			for (const [key, value] of Object.entries(this.dimensionsDatas.nodesNames[yDimension.name])) {
 				const index = yDimensionLeafsShortDescription.indexOf(key);
 				yDimensionLeafsShortDescription.splice(index, 1, value);
-		  	}
+			}
 		}
 
 		// Get dimensions parts

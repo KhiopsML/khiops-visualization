@@ -20,7 +20,7 @@ export const covisualizationCommonEnvironment = {
     TAB_ANIMATION_DURATION: 150, // set > value than .mat-ink-bar transition animation to avoid freeze
   },
 	UNFOLD_HIERARCHY: {
-    ERGONOMIC_LIMIT: 20,
+    ERGONOMIC_LIMIT: 15, // multiplied by nb dimensions
     TECHNICAL_LIMIT: 1000,
     WIDTH: '85vw',
     HEIGHT: '85vh',
