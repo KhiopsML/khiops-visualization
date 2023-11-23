@@ -9,13 +9,9 @@ import {
 	SimpleChanges,
 	AfterViewInit,
 	Input,
-	ViewChild,
-	ElementRef
 } from '@angular/core';
 import _ from 'lodash';
-
 import * as TreeView from '@khiops-library/libs/treeview/treeview';
-
 import {
 	DimensionVO
 } from '@khiops-library/model/dimension-vo';
@@ -105,16 +101,8 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 
 	ngOnChanges(changes: SimpleChanges) {
 		if (changes.selectedDimension && changes.selectedDimension.currentValue && !changes.selectedDimension.firstChange) {
-			// if hierarchy select change
-			// check if there are saved selected nodes into input
-			// const savedSelectedNodes = this.appService.getSavedDatas('selectedNodes');
 			this.initTree(this.selectedNode);
 		}
-		// if (changes.selectedNode && changes.selectedNode.currentValue && !changes.selectedNode.firstChange) {
-		// 	if (!deepEqual(changes.selectedNode.currentValue, changes.selectedNode.previousValue) && this.tree.getSelectedNodeId() !== this.selectedNode.id) {
-		// 		this.tree.selectNode(changes.selectedNode.currentValue.id, true);
-		// 	}
-		// }
 	}
 
 	ngAfterViewInit() {
@@ -160,14 +148,12 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 			});
 		});
 		this.tree.on('expand', (e) => {
-			// this.treenodesService.setSelectedNode(this.selectedDimension.name, e.data.name, false);
 			this.treenodesService.expandNode(this.selectedDimension.name, e.data.name);
 		});
 		this.tree.on('expandAll', (e) => {
 
 		});
 		this.tree.on('collapse', (e) => {
-			// this.treenodesService.setSelectedNode(this.selectedDimension.name, e.data.name, false);
 			this.treenodesService.collapseNode(this.selectedDimension.name, e.data.name);
 		});
 		this.tree.on('collapseAll', (e) => {

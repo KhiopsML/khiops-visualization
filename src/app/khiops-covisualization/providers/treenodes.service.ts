@@ -89,7 +89,6 @@ export class TreenodesService {
 	}
 
 	setSelectedNode(hierarchyName, nodeName, stopPropagation = false) {
-		console.log('file: treenodes.service.ts:92 ~ TreenodesService ~ setSelectedNode ~ nodeName:', nodeName);
 
 		let nodeVO: TreeNodeVO;
 		if (this.dimensionsDatas.selectedDimensions) {

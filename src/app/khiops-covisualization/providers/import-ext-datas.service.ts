@@ -10,9 +10,6 @@ import {
 	FileVO
 } from '@khiops-library/model/file-vo';
 import {
-	ImportFileLoaderService
-} from '@khiops-library/components/import-file-loader/import-file-loader.service';
-import {
 	AppService
 } from './app.service';
 import {
@@ -136,7 +133,7 @@ export class ImportExtDatasService {
 					const fieldName = externalDatas.field.name;
 
 					// method called when ext data is saved
-					// read file from elelctron context
+					// read file from electron context
 
 					this.configService.getConfig().onReadFile &&
 						this.configService.getConfig().onReadFile(externalDatas.filename, (datas: any) => {

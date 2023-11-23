@@ -7,7 +7,6 @@ import {
 	MatDialog,
 	MatDialogConfig
 } from '@angular/material/dialog';
-
 import * as _ from 'lodash'; // Important to import lodash in karma
 import {
 	ImportExtDatasService
@@ -27,9 +26,6 @@ import {
 import {
 	MatSnackBar
 } from '@angular/material/snack-bar';
-// import {
-// 	EventsService
-// } from '@khiops-covisualization/providers/events.service';
 import {
 	AppConfig
 } from 'src/environments/environment';

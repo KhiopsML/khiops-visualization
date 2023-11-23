@@ -143,7 +143,6 @@ export class ClusterDetailsComponent implements OnInit, OnChanges, OnDestroy {
 		} else {
 			return node.children[0];
 		}
-		// return this.treenodesService.getNodeFromName(this.selectedDimension.name, node.childrenLeafList[0]);
 	}
 
 	onSelectRowChanged(item: ClusterDetailsVO) {

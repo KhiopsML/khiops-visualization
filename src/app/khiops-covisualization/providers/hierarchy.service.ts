@@ -59,12 +59,6 @@ export class HierarchyService {
 		const collapsedNodes =
 			this.treenodesService.getLeafNodesForARank(currentRank);
 
-
-
-		// const collapsedNodesToSave = {...collapsedNodes}
-
-
-
 		for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
 			// Remove dimension if unchecked
 			if (this.dimensionsDatas.dimensions[i].hierarchyFold === false) {

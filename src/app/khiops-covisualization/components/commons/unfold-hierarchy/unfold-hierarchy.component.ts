@@ -111,9 +111,6 @@ export class UnfoldHierarchyComponent implements OnInit {
 				title: {
 					display: true,
 					text: ''
-				},
-				gridLines: {
-					// display: false
 				}
 			}
 		}
@@ -155,7 +152,6 @@ export class UnfoldHierarchyComponent implements OnInit {
 
 		this.hierarchyService.initialize();
 
-		// this.previousHierarchyRank = copy(this.hierarchyDatas.selectedUnfoldHierarchy);
 		this.previousHierarchyRank = _.cloneDeep(this.hierarchyDatas.selectedUnfoldHierarchy);
 		this.currentUnfoldHierarchy = this.previousHierarchyRank;
 

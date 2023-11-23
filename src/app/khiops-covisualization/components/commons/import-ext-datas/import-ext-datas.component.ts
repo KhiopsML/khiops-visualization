@@ -5,9 +5,6 @@ import {
 	EventEmitter,
 	OnInit
 } from '@angular/core';
-// import {
-// 	MatDialogRef
-// } from '@angular/material/dialog';
 import {
 	DimensionsDatasService
 } from '@khiops-covisualization/providers/dimensions-datas.service';
@@ -21,9 +18,6 @@ import {
 import {
 	FileVO
 } from '@khiops-library/model/file-vo';
-// import {
-// 	ExtDatasVO
-// } from '@khiops-covisualization/model/ext-datas-vo';
 import {
 	DimensionVO
 } from '@khiops-library/model/dimension-vo';
@@ -135,10 +129,6 @@ export class ImportExtDatasComponent implements OnInit {
 				headerName: 'name',
 				field: 'name'
 			},
-			// {
-			// 	headerName: 'type',
-			// 	field: 'type'
-			// },
 			{
 				headerName: 'import',
 				field: 'import',

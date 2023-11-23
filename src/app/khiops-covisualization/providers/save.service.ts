@@ -40,38 +40,6 @@ export class SaveService {
 		private dimensionsService: DimensionsDatasService
 	) {}
 
-	// constructDatasToSave() {
-	// 	const appDatas = this.appService.getDatas().datas;
-	// 	const initialDatas = _.cloneDeep(this.appService.getInitialDatas().datas);
-
-	// 	// Copy dimensionHierarchies into initial datas to save nodes names and annotations
-	// 	initialDatas.coclusteringReport.dimensionHierarchies = appDatas.coclusteringReport.dimensionHierarchies;
-
-	// 	const selectedDimensions = this.dimensionsService.getDimensionsToSave();
-
-	// 	// Check if user has changed something
-	// 	if (selectedDimensions.length > 0) {
-	// 		const unfoldHierarchyState = this.treenodesService.getUnfoldHierarchy();
-	// 		const splitSizes = this.appService.getSplitSizes();
-	// 		const viewsLayout = this.appService.getViewsLayout();
-	// 		const selectedNodes = this.treenodesService.getSelectedNodes();
-	// 		const collapsedNodes = this.treenodesService.getCollapsedNodesToSave();
-	// 		const importedDatas = this.importExtDatasService.getImportedDatas();
-
-	// 		initialDatas.savedDatas = new SavedDatasVO(
-	// 			viewsLayout,
-	// 			splitSizes,
-	// 			selectedNodes,
-	// 			selectedDimensions,
-	// 			collapsedNodes,
-	// 			importedDatas,
-	// 			unfoldHierarchyState
-	// 		);
-	// 	}
-
-	// 	return initialDatas;
-	// }
-
 	constructDatasToSave(collapsedNodesInput ? ) {
 		this.treenodesService = this.injector.get(TreenodesService);
 		const initialDatas = JSON.parse(JSON.stringify(this.appService.getInitialDatas().datas));
@@ -110,20 +78,6 @@ export class SaveService {
 
 		return initialDatas;
 	}
-
-	// constructSavedHierarchyToSave() {
-	// 	let datasToSave = this.constructDatasToSave();
-
-	// 	datasToSave = this.truncateJsonHierarchy(datasToSave);
-	// 	datasToSave = this.updateSummariesParts(datasToSave);
-	// 	datasToSave = this.truncateJsonPartition(datasToSave);
-	// 	datasToSave = this.truncateJsonCells(datasToSave);
-	// 	datasToSave = this.updateSummariesCells(datasToSave);
-	// 	// Remove collapsed nodes and selected nodes because they have been reduced
-	// 	delete datasToSave.savedDatas.collapsedNodes;
-	// 	delete datasToSave.savedDatas.selectedNodes;
-	// 	return datasToSave;
-	// }
 
 	constructSavedHierarchyToSave(collapsedNodesInput ? ) {
 		let datasToSave = this.constructDatasToSave(collapsedNodesInput);
@@ -254,13 +208,11 @@ export class SaveService {
 
 				let cancatValueGroup;
 				const nodeChildrenLength = nodeChildren.length;
-				// for (let j = nodeChildrenLength - 1; j >= 0; j--) {
 				for (let j = 0; j < nodeChildrenLength; j++) {
 					if (currentTruncatedPartition) {
 						if (currentTruncatedPartition.valueGroups) {
 							if (nodeChildren[j] !== nodeName) { // Do not remove current collapsed node
 								const nodeIndex = currentTruncatedPartition.valueGroups.findIndex(e => e.cluster === nodeChildren[j]);
-								// console.log("SaveService -> computeCatPartition -> nodeIndex", nodeChildren[j] , nodeIndex)
 								const node = currentTruncatedPartition.valueGroups[nodeIndex];
 								if (node) { // Because nodes are not present into partition values
 									if (!cancatValueGroup) {
@@ -359,15 +311,6 @@ export class SaveService {
 		return datas;
 
 	}
-
-	// isRangeIncluded(range1, range2) {
-	// 	var min1 = Math.min(range1[0], range1[1]);
-	// 	var max1 = Math.max(range1[0], range1[1]);
-	// 	var min2 = Math.min(range2[0], range2[1]);
-	// 	var max2 = Math.max(range2[0], range2[1]);
-
-	// 	return min1 >= min2 && max1 <= max2;
-	// }
 
 	/**
 	 * ChatGPT optimization

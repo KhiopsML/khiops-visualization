@@ -48,8 +48,6 @@ export class HeaderManageViewComponent implements OnInit {
 		config.width = AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.WIDTH;
 		config.height = AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.HEIGHT;
 		const dialogRef: MatDialogRef < UnfoldHierarchyComponent > = this.dialog.open(UnfoldHierarchyComponent, config);
-		// dialogRef.componentInstance.hierarchyDatas = copy(this.dimensionsDatas.hierarchyDatas);
-		// dialogRef.componentInstance.hierarchyDatas = _.cloneDeep(this.dimensionsDatas.hierarchyDatas);
 		dialogRef.afterClosed().toPromise().then(() => {});
 	}
 
@@ -58,12 +56,8 @@ export class HeaderManageViewComponent implements OnInit {
 		const config = new MatDialogConfig();
 		config.width = AppConfig.covisualizationCommon.MANAGE_VIEWS.WIDTH;
 		config.maxWidth = AppConfig.covisualizationCommon.MANAGE_VIEWS.MAX_WIDTH;
-		// config.height = AppConfig.common.MANAGE_VIEWS.HEIGHT;
 		const dialogRef: MatDialogRef < ManageViewsComponent > = this.dialog.open(ManageViewsComponent, config);
-		// dialogRef.componentInstance.hierarchyDatas = copy(this.dimensionsDatas.hierarchyDatas);
-		dialogRef.afterClosed().toPromise().then(() => {
-			// this.eventsService.emitDimensionsDatasChanged();
-		});
+		dialogRef.afterClosed().toPromise().then(() => {});
 	}
 
 	clickImportExternalData() {
@@ -71,7 +65,6 @@ export class HeaderManageViewComponent implements OnInit {
 		const config = new MatDialogConfig();
 		config.width = AppConfig.covisualizationCommon.MANAGE_VIEWS.WIDTH;
 		config.maxWidth = AppConfig.covisualizationCommon.MANAGE_VIEWS.MAX_WIDTH;
-		// const dialogRef: MatDialogRef < ImportExtDatasComponent > = this.dialog.open(ImportExtDatasComponent, config);
 		const dialogRef: MatDialogRef < ImportExtDatasListComponent > = this.dialog.open(ImportExtDatasListComponent, config);
 		dialogRef.disableClose = true;
 		dialogRef.afterClosed().toPromise().then(() => {});

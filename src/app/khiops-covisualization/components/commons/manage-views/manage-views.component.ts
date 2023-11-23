@@ -14,7 +14,6 @@ import {
 import {
 	ViewLayoutVO
 } from '@khiops-covisualization/model/view-layout-vo';
-import copy from 'fast-copy';
 import * as _ from 'lodash'; // Important to import lodash in karma
 
 @Component({
@@ -29,15 +28,11 @@ export class ManageViewsComponent implements OnInit {
 	isDimVisible: boolean[];
 	isContextView = true;
 
-	// matRippleColor = 'rgba(251, 179, 58, .4)';
 	matRippleColor = 'rgba(80, 124, 182, .4)';
 
 	constructor(private appService: AppService, private dimensionsService: DimensionsDatasService, private dialogRef: MatDialogRef < ManageViewsComponent > ) {
 		this.dimensionsDatas = this.dimensionsService.getDatas();
-
-		// this.viewsLayout = copy(this.appService.getViewsLayout());
 		this.viewsLayout = _.cloneDeep(this.appService.getViewsLayout());
-
 		this.isContextView = this.appService.getActiveTabIndex() === 1;
 
 		this.isDimVisible = new Array(this.viewsLayout.dimensionsViewsLayoutsVO.length).fill(true);

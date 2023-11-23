@@ -1,7 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { AppConfig } from "src/environments/environment";
 import { AppService } from "@khiops-covisualization/providers/app.service";
-import pjson from "package.json";
 import { SelectableTabComponent } from "@khiops-library/components/selectable-tab/selectable-tab.component";
 
 @Component({

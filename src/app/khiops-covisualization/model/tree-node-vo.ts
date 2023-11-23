@@ -26,7 +26,6 @@ export class TreeNodeVO {
 
 	childrenList: any[] = [];
 	childrenLeafIndexes: any[]= [];
-	// childrenNodesCollapsed: any[]= [];
 	childrenLeafList: any[]= [];
 
 	isCollapsed: boolean;
