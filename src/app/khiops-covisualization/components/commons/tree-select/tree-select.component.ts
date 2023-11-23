@@ -162,7 +162,7 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 		this.tree.on('updateNodeName', (e) => {
 			// Important when node name change
 			this.ngzone.run(() => {
-				this.treenodesService.updateSelectedNodeName(this.selectedDimension.name, e.name, e.newName, e.isLeaf);
+				this.treenodesService.updateSelectedNodeName(this.selectedDimension.name, e.name, e.newName);
 			});
 		});
 		this.tree.on('error', (e) => {

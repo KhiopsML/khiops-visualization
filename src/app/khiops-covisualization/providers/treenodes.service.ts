@@ -62,7 +62,10 @@ export class TreenodesService {
 		return collapsedNodes;
 	}
 
-	updateSelectedNodeName(dimensionName, name, newName, isLeaf) {
+	updateSelectedNodeName(dimensionName, name, newName) {
+		if (!this.dimensionsDatas.nodesNames) {
+			this.dimensionsDatas.nodesNames = {}
+		}
 		this.dimensionsDatas.nodesNames[dimensionName] = this.dimensionsDatas.nodesNames[dimensionName] || {};
 		this.dimensionsDatas.nodesNames[dimensionName][name] = newName;
 		this.update(dimensionName);
