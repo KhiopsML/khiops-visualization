@@ -73,7 +73,7 @@ export class DimensionsDatasService {
 	}
 
 	isLargeCocluster() {
-		const currentSize = (this.dimensionsDatas.dimensions.map(e => e.parts).reduce((a, b) => a * b))
+		const currentSize = (this.dimensionsDatas.dimensions.map(e => e.parts).reduce((a, b) => a + b))
 		return this.dimensionsDatas.dimensions.length * AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.ERGONOMIC_LIMIT < currentSize;
 	}
 

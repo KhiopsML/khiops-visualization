@@ -8568,11 +8568,7 @@
         "name": "hours_per_week"
       }
     ],
-    "collapsedNodes": {
-      "age": [
-        "]-inf;+inf["
-      ]
-    },
+  
     "importedDatas": [],
     "selectedNodes": [
       {
