@@ -33,7 +33,6 @@
     "watch": "ng build --watch --configuration development"
   },
   "dependencies": {
-    "@types/node": "^20.9.0",
     "@ag-grid-community/all-modules": "27.3.0",
     "@ag-grid-community/angular": "27.3.0",
     "@ag-grid-community/core": "27.3.0",
@@ -52,6 +51,7 @@
     "@compodoc/compodoc": "1.1.19",
     "@ngstack/translate": "8.0.0",
     "@types/d3": "7.4.0",
+    "@types/node": "^20.9.0",
     "@webcomponents/webcomponentsjs": "2.8.0",
     "angular-resizable-element": "3.3.5",
     "angular-resize-event": "3.1.1",
@@ -100,7 +100,7 @@
     "webpack-bundle-analyzer": "4.10.1"
   },
   "resolutions": {
-	"webpack": "5.76.1",
+    "webpack": "5.76.1",
     "@angular-devkit/build-angular": "^15.2.0",
     "@angular-devkit/core": "^15.2.0"
   },

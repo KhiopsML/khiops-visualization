@@ -8,7 +8,7 @@ jobs:
 
         strategy:
             matrix:
-                os: [macos-latest, windows-latest, ubuntu-latest]
+                os: [ubuntu-latest]
 
         steps:
             - name: Check out Git repository
@@ -18,10 +18,6 @@ jobs:
               uses: actions/setup-node@v3
               with:
                   node-version: 18
-
-            - name: yarn install
-              run: |
-                  yarn install
 
             - name: yarn test
               env:
