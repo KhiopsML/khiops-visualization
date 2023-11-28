@@ -33,7 +33,7 @@ export class AnnotationComponent extends SelectableComponent implements OnInit, 
 	@Input() selectedNode: TreeNodeVO;
 	@Input() position: number;
 	value: string;
-	id: any;
+	id: any = undefined;
 	componentType = 'descriptions'; // needed to copy datas
 	title: string;
 

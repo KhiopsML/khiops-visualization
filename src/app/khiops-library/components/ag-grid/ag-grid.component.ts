@@ -56,7 +56,7 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 	@Input() inputDatas: any;
 	@Input() updateValues: any;
 	@Input() displayedColumns: any;
-	@Input() id: any;
+	@Input() id: any = undefined;
 	@Input() title: string;
 	@Input() titleTooltip: string;
 	@Input() selectedVariable: any;

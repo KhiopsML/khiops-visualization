@@ -44,16 +44,16 @@ import {
 export class TargetDistributionGraphCanvasComponent extends ScrollableGraphCanvasComponent implements OnInit {
 
 	@Input() position = 0;
-	@Input() inputDatas: any;
+	@Input() inputDatas: any = undefined;
 	@Input() titleTooltip: string;
 	@Input() title: string;
 	@Input() activeEntries;
-	@Input() scrollPosition: any;
+	@Input() scrollPosition = 0;
 	@Input() displayedValues: any;
 	@Input() isLoadingDatas = false;
 	@Input() showFullscreenBtn = false;
 
-	view: any; // managed into ScrollableGraphComponent
+	view: any = undefined; // managed into ScrollableGraphComponent
 
 	@Output() graphTypeChanged: EventEmitter < any > = new EventEmitter();
 	@Output() targetDistributionGraphDisplayedValuesChanged: EventEmitter < any > = new EventEmitter();
@@ -73,8 +73,8 @@ export class TargetDistributionGraphCanvasComponent extends ScrollableGraphCanva
 	legend: any[];
 	buttonTitle: string;
 	chartOptions: ChartOptions;
-	maxScale: number;
-	minScale: number;
+	maxScale: number = 0;
+	minScale: number = 0;
 	selectedBarIndex: number;
 	isFullscreen = false;
 	isSmallDiv = false;

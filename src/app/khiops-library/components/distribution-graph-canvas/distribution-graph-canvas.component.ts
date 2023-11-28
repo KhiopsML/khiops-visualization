@@ -36,7 +36,7 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 export class DistributionGraphCanvasComponent extends ScrollableGraphCanvasComponent implements OnInit {
 
 	@Input() position = 0;
-	@Input() inputDatas: any;
+	@Input() inputDatas: any = undefined;
 	@Input() graphOptions: any;
 	@Input() activeEntries: any;
 	@Input() isLoadingDatas = false;
@@ -51,13 +51,13 @@ export class DistributionGraphCanvasComponent extends ScrollableGraphCanvasCompo
 	datas = [];
 	title: string;
 
-	graphIdContainer;
+	graphIdContainer = undefined;
 	colorSet: ChartColorsSetI;
 	legend: any;
 	chartOptions: ChartOptions;
 	scaleType: string;
-	maxScale: number;
-	minScale: number;
+	maxScale: number = 0;
+	minScale: number = 0;
 
 	constructor(public selectableService: SelectableService,
 		private toPrecision: ToPrecisionPipe,

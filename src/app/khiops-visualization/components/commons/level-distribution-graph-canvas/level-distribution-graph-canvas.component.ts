@@ -50,7 +50,7 @@ export class LevelDistributionGraphCanvasComponent extends ScrollableGraphCanvas
 	@Input() datas: string;
 	@Input() levelDistributionTitle: string;
 
-	inputDatas: ChartDatasI;
+	inputDatas: ChartDatasI = undefined;
 	colorSet: ChartColorsSetI;
 
 	@ViewChild('levelGraph', {

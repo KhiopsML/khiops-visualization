@@ -21,7 +21,7 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 })
 export class SelectableComponent extends WatchResizeComponent implements OnDestroy, AfterViewInit {
 
-	@Input() id: [any];
+	@Input() id: [any] = undefined;
 	@Input() type: [any];
 	selectedServiceChangeSub: any;
 

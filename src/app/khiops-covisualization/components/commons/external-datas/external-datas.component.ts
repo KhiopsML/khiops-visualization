@@ -25,7 +25,7 @@ export class ExternalDatasComponent extends SelectableComponent implements OnIni
 	@Input() inputValue: any;
 	@Input() position: number;
 	@Input() externalData: any;
-	id: any;
+	id: any = undefined;
 
 	componentType = 'external-datas'; // needed to copy datas
 

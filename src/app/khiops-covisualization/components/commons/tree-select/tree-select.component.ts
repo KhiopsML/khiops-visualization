@@ -56,7 +56,7 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 	treeSelectedNodeChangedSub: Subscription;
 
 	componentType = 'tree'; // needed to copy datas
-	id: any;
+	id: any = undefined;
 	tree: any;
 
 	// Keep a reference to the tree nodes so Angular can render them.
