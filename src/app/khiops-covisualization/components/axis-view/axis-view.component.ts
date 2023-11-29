@@ -111,7 +111,7 @@ export class AxisViewComponent
 		if (collapsedNodes) {
 			this.treenodesService.setSavedCollapsedNodes(collapsedNodes);
 			let datas =
-				this.saveService.constructSavedHierarchyToSave(collapsedNodes);
+				this.saveService.constructSavedJson(collapsedNodes);
 			this.appService.setCroppedFileDatas(datas);
 			this.initializeDatas();
 		}
@@ -128,7 +128,7 @@ export class AxisViewComponent
 		this.treenodesService.setSavedCollapsedNodes(collapsedNodes);
 
 		let datas =
-			this.saveService.constructSavedHierarchyToSave(collapsedNodes);
+			this.saveService.constructSavedJson(collapsedNodes);
 
 		this.appService.setCroppedFileDatas(datas);
 

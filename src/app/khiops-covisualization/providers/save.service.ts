@@ -87,7 +87,7 @@ export class SaveService {
 		return initialDatas;
 	}
 
-	constructSavedHierarchyToSave(collapsedNodesInput ? ) {
+	constructSavedJson(collapsedNodesInput ? ) {
 		let datasToSave = this.constructDatasToSave(collapsedNodesInput);
 		let t0 = performance.now();
 		datasToSave = this.truncateJsonHierarchy(datasToSave);
@@ -119,7 +119,7 @@ export class SaveService {
 			delete datasToSave.savedDatas.collapsedNodes; // TODO ?
 		}
 		// delete datasToSave.savedDatas.selectedNodes; // do not do that to keep context selection
-		console.log('file: save.service.ts:114 ~ constructSavedHierarchyToSave ~ datasToSave:', datasToSave);
+		console.log('file: save.service.ts:114 ~ constructSavedJson ~ datasToSave:', datasToSave);
 		return datasToSave;
 	}
 

@@ -118,8 +118,8 @@ export class AppComponent implements AfterViewInit {
 		this.element.nativeElement.constructDatasToSave = () => {
 			return this.saveService.constructDatasToSave();
 		};
-		this.element.nativeElement.constructSavedHierarchyToSave = () => {
-			return this.saveService.constructSavedHierarchyToSave();
+		this.element.nativeElement.constructSavedJson = () => {
+			return this.saveService.constructSavedJson();
 		};
 		this.element.nativeElement.setConfig = (config) => {
 			this.configService.setConfig(config);
@@ -137,7 +137,7 @@ export class AppComponent implements AfterViewInit {
 	}
 
 	// testSaveHierarchy() {
-	// 	let tmp =  this.saveService.constructSavedHierarchyToSave();
+	// 	let tmp =  this.saveService.constructSavedJson();
 	// 	console.log('file: app.component.ts:126 ~ AppComponent ~ testSaveH ~ tmp:', tmp);
 	// }
 

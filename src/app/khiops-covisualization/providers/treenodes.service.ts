@@ -342,7 +342,7 @@ export class TreenodesService {
 	update(dimensionName) {
 		let collapsedNodes = this.getSavedCollapsedNodes();
 		let datas =
-			this.saveService.constructSavedHierarchyToSave( // 877
+			this.saveService.constructSavedJson( // 877
 				collapsedNodes
 			);
 		this.appService.setCroppedFileDatas(datas);

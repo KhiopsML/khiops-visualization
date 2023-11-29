@@ -72,7 +72,7 @@ export class HierarchyService {
 		this.treenodesService.setSavedCollapsedNodes(collapsedNodes);
 
 		let datas =
-			this.saveService.constructSavedHierarchyToSave(collapsedNodes);
+			this.saveService.constructSavedJson(collapsedNodes);
 		this.appService.setCroppedFileDatas(datas);
 
 		this.dimensionsDatas = this.dimensionsDatasService.getDatas();
