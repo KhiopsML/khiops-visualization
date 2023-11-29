@@ -18,6 +18,7 @@ import {
 } from '@khiops-library/providers/matrix-utils-datas.service';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { AppConfig } from 'src/environments/environment';
+import { DimensionsDatasVO } from '../model/dimensions-data-vo';
 
 @Injectable({
 	providedIn: 'root'
@@ -33,34 +34,7 @@ export class DimensionsDatasService {
 	}
 
 	initialize(): any {
-		this.dimensionsDatas = {
-			isAxisInverted: false,
-			conditionalOnContext: true,
-			matrixContrast: 0,
-			matrixDatas: undefined,
-			allMatrixDatas: undefined,
-			allMatrixCellDatas: undefined,
-			cellPartIndexes: [],
-			initialDimensions: [],
-			dimensions: [],
-			nodesNames: {},
-			selectedNodes: [],
-			contextSelection: [],
-			selectedDimensions: undefined,
-			contextDimensionCount: 0,
-			hierarchyDatas: {
-				minClusters: 0,
-				totalClusters: 0,
-				totalCells: 0,
-				selectedUnfoldHierarchy: 0,
-				unfoldHierarchyState: 0
-			},
-			dimensionsTrees: [],
-			currentDimensionsTrees: [],
-			selectedNodesSummary: [],
-			dimensionsClusters: [],
-			currentDimensionsClusters: []
-		};
+		this.dimensionsDatas = new DimensionsDatasVO();
 		return this.dimensionsDatas;
 	}
 
