@@ -11,6 +11,8 @@ export class SavedDatasVO {
 	unfoldHierarchyState: number | undefined;
 	matrixContrast: number | undefined;
 	conditionalOnContext: boolean | undefined;
+	matrixOption: any | undefined;
+	matrixMode: any | undefined;
 
 	constructor(
 		viewsLayout,
@@ -22,7 +24,9 @@ export class SavedDatasVO {
 		importedDatas,
 		matrixContrast?,
 		unfoldHierarchyState?,
-		conditionalOnContext?
+		conditionalOnContext?,
+		matrixOption?,
+		matrixMode?
 	) {
 		this.viewsLayout = viewsLayout;
 		this.splitSizes = splitSizes;
@@ -34,5 +38,7 @@ export class SavedDatasVO {
 		this.matrixContrast = matrixContrast || undefined;
 		this.unfoldHierarchyState = unfoldHierarchyState || undefined;
 		this.conditionalOnContext = conditionalOnContext || undefined;
+		this.matrixOption = matrixOption || undefined;
+		this.matrixMode = matrixMode || undefined;
 	}
 }

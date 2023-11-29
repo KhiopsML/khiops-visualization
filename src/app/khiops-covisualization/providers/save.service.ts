@@ -67,6 +67,8 @@ export class SaveService {
 			const importedDatas = this.importExtDatasService.getImportedDatas();
 			const matrixContrast = this.dimensionsService.dimensionsDatas.matrixContrast;
 			const conditionalOnContext = this.dimensionsService.dimensionsDatas.conditionalOnContext;
+			const matrixOption = this.dimensionsService.dimensionsDatas.matrixOption;
+			const matrixMode = this.dimensionsService.dimensionsDatas.matrixMode;
 
 			initialDatas.savedDatas = new SavedDatasVO(
 				viewsLayout,
@@ -78,7 +80,9 @@ export class SaveService {
 				importedDatas,
 				matrixContrast,
 				unfoldHierarchyState,
-				conditionalOnContext
+				conditionalOnContext,
+				matrixOption,
+				matrixMode
 			);
 		}
 

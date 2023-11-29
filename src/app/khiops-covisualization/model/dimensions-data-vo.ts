@@ -1,15 +1,10 @@
 export class DimensionsDatasVO {
-	isAxisInverted: boolean = false;
-	conditionalOnContext: boolean = true;
-	matrixContrast: number | undefined = undefined;
 	matrixDatas: any = undefined;
 	allMatrixDatas: any = undefined;
 	allMatrixCellDatas: any = undefined;
 	cellPartIndexes: [] = [];
 	initialDimensions: [] = [];
 	dimensions: [] = [];
-	nodesNames: {} = {};
-	selectedNodes: [] = [];
 	contextSelection: [] = [];
 	selectedDimensions: any = undefined;
 	contextDimensionCount: number = 0;
@@ -25,6 +20,16 @@ export class DimensionsDatasVO {
 	selectedNodesSummary: [] = [];
 	dimensionsClusters: [] = [];
 	currentDimensionsClusters: [] = [];
+
+	// Saved datas
+	// Those variables will be saved into json
+	isAxisInverted: boolean = false;
+	conditionalOnContext: boolean = true;
+	matrixContrast: number | undefined = undefined;
+	matrixOption: string = undefined;
+	matrixMode: number = undefined;
+	nodesNames: {} = {};
+	selectedNodes: [] = [];
 
 	constructor() {}
 }

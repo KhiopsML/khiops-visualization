@@ -50,6 +50,14 @@ export class DimensionsDatasService {
 		if (savedMatrixContrast !== undefined) {
 			this.dimensionsDatas.matrixContrast = savedMatrixContrast;
 		}
+		const savedMatrixMode = this.appService.getSavedDatas("matrixMode");
+		if (savedMatrixMode !== undefined) {
+			this.dimensionsDatas.matrixMode = savedMatrixMode;
+		}
+		const savedMatrixOption = this.appService.getSavedDatas("matrixOption");
+		if (savedMatrixOption !== undefined) {
+			this.dimensionsDatas.matrixOption = savedMatrixOption;
+		}
 	}
 
 	getDatas(): any {
