@@ -27,10 +27,6 @@ export class MatrixCanvasService {
 		'#000000'
 	];
 
-	constructor() {
-
-	}
-
 	static computeMatrixValues(graphMode, inputDatas, contextSelection, selectedTargetIndex): any {
 
 		let globalMatrixFreqsValues;

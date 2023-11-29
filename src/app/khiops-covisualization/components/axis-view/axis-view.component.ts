@@ -17,7 +17,6 @@ import { TreenodesService } from "@khiops-covisualization/providers/treenodes.se
 import { TranslateService } from "@ngstack/translate";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { SaveService } from "@khiops-covisualization/providers/save.service";
-import { UtilsService } from "@khiops-library/providers/utils.service";
 import { Subscription } from "rxjs";
 
 @Component({
@@ -67,6 +66,7 @@ export class AxisViewComponent
 		this.dimensionsDatas = this.dimensionsDatasService.getDatas();
 		this.dimensionsDatasService.getDimensions();
 		this.treenodesService.setNodesNames();
+		this.appService.setMatrixContrast()
 		this.dimensionsDatasService.initSelectedDimensions();
 		this.dimensionsDatasService.saveInitialDimension();
 		this.dimensionsDatasService.constructDimensionsTrees();
@@ -83,11 +83,10 @@ export class AxisViewComponent
 
 			const collapsedNodes =
 				this.appService.getSavedDatas("collapsedNodes");
-			if (collapsedNodes) {
-				this.initializeSavedState(collapsedNodes);
-			} else if (
+			this.initializeSavedState(collapsedNodes);
+			if (
+				!collapsedNodes &&
 				this.dimensionsDatasService.isLargeCocluster()
-				// || true
 			) {
 				// OPTIM: Unfold auto if computer is too laggy
 				this.initializeLargeCoclustering();
@@ -108,9 +107,9 @@ export class AxisViewComponent
 	}
 
 	initializeSavedState(collapsedNodes) {
-		this.treenodesService.setCollapsedNodesToSave(collapsedNodes);
+		this.treenodesService.setSavedCollapsedNodes(collapsedNodes);
 		let datas =
-			this.saveService.constructSavedHierarchyToSave(collapsedNodes);
+		this.saveService.constructSavedHierarchyToSave(collapsedNodes);
 		this.appService.setCroppedFileDatas(datas);
 		this.initializeDatas();
 	}
@@ -123,7 +122,7 @@ export class AxisViewComponent
 		this.treenodesService.setSelectedUnfoldHierarchy(unfoldState);
 		const collapsedNodes =
 			this.treenodesService.getLeafNodesForARank(unfoldState);
-		this.treenodesService.setCollapsedNodesToSave(collapsedNodes);
+		this.treenodesService.setSavedCollapsedNodes(collapsedNodes);
 
 		let datas =
 			this.saveService.constructSavedHierarchyToSave(collapsedNodes);

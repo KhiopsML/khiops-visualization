@@ -40,6 +40,13 @@ export class AppService {
 		return this.activeTabIndex;
 	}
 
+	setMatrixContrast() {
+		const matrixContrast = this.getSavedDatas('matrixContrast');
+		if (matrixContrast) {
+			this.khiopsLibraryService.setSavedMatrixContrast(matrixContrast);
+		}
+	}
+
 	initialize(): any {
 		this.initGlobalConfigVariables();
 

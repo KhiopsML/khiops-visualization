@@ -218,7 +218,7 @@ export class TreenodesService {
 		return _.cloneDeep(nodeVO); // important to clone datas to keep origin immmutable
 	}
 
-	setCollapsedNodesToSave(collapsedNodesToSave) {
+	setSavedCollapsedNodes(collapsedNodesToSave) {
 		this.collapsedNodesToSave = collapsedNodesToSave
 	}
 
@@ -323,22 +323,8 @@ export class TreenodesService {
 		}
 	}
 
-	getCollapsedNodesToSave() {
+	getSavedCollapsedNodes() {
 		return this.collapsedNodesToSave;
-	}
-
-	collapseNodesSaved() {
-		// const nodesToCollapse = this.getCollapsedNodesToSave();
-		// if (nodesToCollapse) {
-		// 	for (const dimension in nodesToCollapse) {
-		// 		if (nodesToCollapse[dimension]) {
-		// 			const nodesToCollapseDimLength = nodesToCollapse[dimension].length;
-		// 			for (let i = 0; i < nodesToCollapseDimLength; i++) {
-		// 				this.collapseNode(dimension, nodesToCollapse[dimension][i]);
-		// 			}
-		// 		}
-		// 	}
-		// }
 	}
 
 	collapseNode(dimensionName, nodeName) {
@@ -354,7 +340,7 @@ export class TreenodesService {
 	}
 
 	update(dimensionName) {
-		let collapsedNodes = this.getCollapsedNodesToSave();
+		let collapsedNodes = this.getSavedCollapsedNodes();
 		let datas =
 			this.saveService.constructSavedHierarchyToSave( // 877
 				collapsedNodes

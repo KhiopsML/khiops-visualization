@@ -27,6 +27,7 @@ import {
 import {
 	ImportExtDatasService
 } from './import-ext-datas.service';
+import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 
 @Injectable({
 	providedIn: 'root'
@@ -37,15 +38,13 @@ export class SaveService {
 		private appService: AppService,
 		private injector: Injector,
 		private importExtDatasService: ImportExtDatasService,
+		private khiopsLibraryService: KhiopsLibraryService,
 		private dimensionsService: DimensionsDatasService
 	) {}
 
 	constructDatasToSave(collapsedNodesInput ? ) {
 		this.treenodesService = this.injector.get(TreenodesService);
 		const initialDatas = JSON.parse(JSON.stringify(this.appService.getInitialDatas().datas));
-
-		// Copy dimensionHierarchies into initial datas to save nodes names and annotations
-		// initialDatas.coclusteringReport.dimensionHierarchies = appDatas.coclusteringReport.dimensionHierarchies;
 
 		const selectedDimensions = this.dimensionsService.getDimensionsToSave();
 
@@ -55,14 +54,18 @@ export class SaveService {
 			const splitSizes = this.appService.getSplitSizes();
 			const viewsLayout = this.appService.getViewsLayout();
 			const nodesNames = this.treenodesService.getNodesNames();
-			const selectedNodes = this.treenodesService.getSelectedNodes();
+			let selectedNodes = this.treenodesService.getSelectedNodes();
+			if (selectedNodes) {
+				selectedNodes = selectedNodes.map(e => e.name);
+			}
 			let collapsedNodes;
 			if (collapsedNodesInput) {
 				collapsedNodes = collapsedNodesInput
 			} else {
-				collapsedNodes = this.treenodesService.getCollapsedNodesToSave();
+				collapsedNodes = this.treenodesService.getSavedCollapsedNodes();
 			}
 			const importedDatas = this.importExtDatasService.getImportedDatas();
+			const matrixContrast = this.khiopsLibraryService.getSavedMatrixContrast();
 
 			initialDatas.savedDatas = new SavedDatasVO(
 				viewsLayout,
@@ -72,6 +75,7 @@ export class SaveService {
 				collapsedNodes,
 				nodesNames,
 				importedDatas,
+				matrixContrast,
 				unfoldHierarchyState
 			);
 		}

@@ -69,7 +69,7 @@ export class HierarchyService {
 			// 	delete collapsedNodes[this.dimensionsDatas.dimensions[i].name];
 			// }
 		}
-		this.treenodesService.setCollapsedNodesToSave(collapsedNodes);
+		this.treenodesService.setSavedCollapsedNodes(collapsedNodes);
 
 		let datas =
 			this.saveService.constructSavedHierarchyToSave(collapsedNodes);

@@ -63,8 +63,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 
 	isKhiopsCovisu: boolean = this.khiopsLibraryService.isKhiopsCovisu();
 
-	contrast = parseInt(localStorage.getItem(this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST'), 10) ||
-		this.khiopsLibraryService.getAppConfig().common.GLOBAL.MATRIX_CONTRAST;
+	contrast = undefined;
 
 	componentType = 'matrix'; // needed to copy datas
 
@@ -131,6 +130,10 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 		public configService: ConfigService
 	) {
 		super(selectableService, ngzone, configService);
+
+		this.contrast = this.khiopsLibraryService.getSavedMatrixContrast() ||
+			parseInt(localStorage.getItem(this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST'), 10) ||
+			this.khiopsLibraryService.getAppConfig().common.GLOBAL.MATRIX_CONTRAST;
 
 		this.lastScrollPosition = {
 			scrollLeft: 0,
@@ -714,6 +717,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 		// this.khiopsLibraryService.trackEvent('click', 'matrix_contrast', event.value);
 		this.contrast = event.value;
 		localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST', this.contrast.toString());
+		this.contrast = this.khiopsLibraryService.setSavedMatrixContrast(this.contrast);
 		this.drawMatrix();
 	}
 

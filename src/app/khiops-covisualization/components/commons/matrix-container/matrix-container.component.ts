@@ -73,7 +73,6 @@ export class MatrixContainerComponent implements OnInit, OnChanges, OnDestroy {
 				this.initNodesEvents++;
 				if (this.isFirstLoad) {
 					// At first launch collapse saved collapsed nodes
-					this.treenodesService.collapseNodesSaved(); // TODO ?
 					this.isFirstLoad = false;
 				} else {
 

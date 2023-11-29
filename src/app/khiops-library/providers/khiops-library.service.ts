@@ -16,6 +16,7 @@ export class KhiopsLibraryService {
 
 	graphColorSet: ChartColorsSetI[];
 	appConfig: any;
+	matrixContrast: number | undefined;
 
 	graphColors: any = Array(10).fill([
 			'#10246e', '#6e93d5', '#b54d79', '#3cb44b', '#ffe119', '#ff6600',
@@ -67,6 +68,14 @@ export class KhiopsLibraryService {
 			}
 		];
 
+	}
+
+	setSavedMatrixContrast(contrast) {
+		this.matrixContrast = contrast;
+	}
+
+	getSavedMatrixContrast() {
+		return this.matrixContrast;
 	}
 
 	getGraphColorSet(): ChartColorsSetI[] {

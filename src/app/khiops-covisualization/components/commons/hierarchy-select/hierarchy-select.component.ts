@@ -95,7 +95,6 @@ export class HierarchySelectComponent implements OnChanges {
 		this.dimensionsService.saveInitialDimension();
 		this.dimensionsService.constructDimensionsTrees();
 		this.dimensionsService.getMatrixDatas();
-		this.treenodesService.collapseNodesSaved();
 	}
 
 	ngOnDestroy() {
