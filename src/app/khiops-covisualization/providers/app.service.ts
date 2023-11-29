@@ -40,13 +40,6 @@ export class AppService {
 		return this.activeTabIndex;
 	}
 
-	setMatrixContrast() {
-		const matrixContrast = this.getSavedDatas('matrixContrast');
-		if (matrixContrast) {
-			this.khiopsLibraryService.setSavedMatrixContrast(matrixContrast);
-		}
-	}
-
 	initialize(): any {
 		this.initGlobalConfigVariables();
 
@@ -93,7 +86,7 @@ export class AppService {
 	}
 
 	getSavedDatas(type): any {
-		if (this.appDatas && this.appDatas.datas && this.appDatas.datas.savedDatas && this.appDatas.datas.savedDatas[type]) {
+		if (this.appDatas && this.appDatas.datas && this.appDatas.datas.savedDatas && this.appDatas.datas.savedDatas[type] !== undefined) {
 			return this.appDatas.datas.savedDatas[type];
 		}
 	}

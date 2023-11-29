@@ -36,6 +36,7 @@ export class DimensionsDatasService {
 		this.dimensionsDatas = {
 			isAxisInverted: false,
 			conditionalOnContext: true,
+			matrixContrast: 0,
 			matrixDatas: undefined,
 			allMatrixDatas: undefined,
 			allMatrixCellDatas: undefined,
@@ -47,7 +48,6 @@ export class DimensionsDatasService {
 			contextSelection: [],
 			selectedDimensions: undefined,
 			contextDimensionCount: 0,
-			pendingUpdates: [],
 			hierarchyDatas: {
 				minClusters: 0,
 				totalClusters: 0,
@@ -62,6 +62,20 @@ export class DimensionsDatasService {
 			currentDimensionsClusters: []
 		};
 		return this.dimensionsDatas;
+	}
+
+	initSavedDatas() {
+		// Set it to false if no context
+		if (!this.isContextDimensions()) {
+			this.dimensionsDatas.conditionalOnContext = false;
+		} else {
+			const savedConditionalOnContext = this.appService.getSavedDatas("conditionalOnContext");
+			this.dimensionsDatas.conditionalOnContext = savedConditionalOnContext !== undefined ? savedConditionalOnContext : true;
+		}
+		const savedMatrixContrast = this.appService.getSavedDatas("matrixContrast");
+		if (savedMatrixContrast !== undefined) {
+			this.dimensionsDatas.matrixContrast = savedMatrixContrast;
+		}
 	}
 
 	getDatas(): any {

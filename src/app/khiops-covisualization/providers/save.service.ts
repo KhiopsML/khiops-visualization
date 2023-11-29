@@ -65,7 +65,8 @@ export class SaveService {
 				collapsedNodes = this.treenodesService.getSavedCollapsedNodes();
 			}
 			const importedDatas = this.importExtDatasService.getImportedDatas();
-			const matrixContrast = this.khiopsLibraryService.getSavedMatrixContrast();
+			const matrixContrast = this.dimensionsService.dimensionsDatas.matrixContrast;
+			const conditionalOnContext = this.dimensionsService.dimensionsDatas.conditionalOnContext;
 
 			initialDatas.savedDatas = new SavedDatasVO(
 				viewsLayout,
@@ -76,7 +77,8 @@ export class SaveService {
 				nodesNames,
 				importedDatas,
 				matrixContrast,
-				unfoldHierarchyState
+				unfoldHierarchyState,
+				conditionalOnContext
 			);
 		}
 

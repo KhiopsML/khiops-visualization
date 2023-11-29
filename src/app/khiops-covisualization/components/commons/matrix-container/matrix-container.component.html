@@ -16,7 +16,7 @@
 							</mat-menu>
 						</div>
 						<mat-checkbox class="matrix-conditionalOnContext-checkbox" *ngIf="dimensionsDatas.contextDimensionCount"
-							[checked]="conditionalOnContext" (change)="changeConditionalOnContext()">
+							[checked]="dimensionsDatas.conditionalOnContext" (change)="changeConditionalOnContext()">
 							{{ 'GLOBAL.CONDITIONAL_ON_CONTEXT' | translate }}</mat-checkbox>
 						<mat-button-toggle-group class="matrix-option-toggle" #group="matButtonToggleGroup"
 							[value]="matrixOptions.selected">
@@ -33,7 +33,8 @@
 				<kl-matrix-canvas #matrixCanvas fxFlex fxLayout="row" [id]="'matrix-container-comp-matrix-wrapper'"
 					(cellSelected)="onCellSelected($event)" [isAxisInverted]="dimensionsDatas.isAxisInverted"
 					(matrixAxisInverted)="onMatrixAxisInverted()" [contextSelection]="dimensionsDatas.contextSelection"
-					[graphMode]="matrixModes.selected" [conditionalOnContext]="conditionalOnContext"
+					[graphMode]="matrixModes.selected" [conditionalOnContext]="dimensionsDatas.conditionalOnContext"
+					[(contrast)]="dimensionsDatas.matrixContrast"
 					[selectedNodes]="dimensionsDatas.selectedNodes" [inputDatas]="dimensionsDatas.matrixDatas"
 					[graphType]="matrixOptions.selected">
 				</kl-matrix-canvas>

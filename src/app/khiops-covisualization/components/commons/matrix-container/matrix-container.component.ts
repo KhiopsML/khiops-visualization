@@ -2,9 +2,7 @@ import {
 	Component,
 	OnInit,
 	ViewChild,
-	SimpleChanges,
 	OnDestroy,
-	OnChanges,
 	Input,
 } from "@angular/core";
 import { AppService } from "@khiops-covisualization/providers/app.service";
@@ -21,7 +19,7 @@ import { Subscription } from "rxjs";
 	templateUrl: "./matrix-container.component.html",
 	styleUrls: ["./matrix-container.component.scss"],
 })
-export class MatrixContainerComponent implements OnInit, OnChanges, OnDestroy {
+export class MatrixContainerComponent implements OnInit, OnDestroy {
 	@ViewChild("matrixCanvas", {
 		static: false,
 	})
@@ -45,7 +43,6 @@ export class MatrixContainerComponent implements OnInit, OnChanges, OnDestroy {
 		selected: undefined,
 	};
 
-	conditionalOnContext = true;
 	isFullscreen = false;
 	treeSelectedNodeChangedSub: Subscription;
 	viewsLayoutChangedSub: Subscription;
@@ -64,10 +61,6 @@ export class MatrixContainerComponent implements OnInit, OnChanges, OnDestroy {
 					"MATRIX_TYPE_OPTION"
 			) || this.matrixOptions.types[0];
 
-		// Set it to false if no context
-		this.conditionalOnContext =
-			this.dimensionsService.isContextDimensions();
-
 		this.treeSelectedNodeChangedSub =
 			this.eventsService.treeSelectedNodeChanged.subscribe((e) => {
 				this.initNodesEvents++;
@@ -75,13 +68,24 @@ export class MatrixContainerComponent implements OnInit, OnChanges, OnDestroy {
 					// At first launch collapse saved collapsed nodes
 					this.isFirstLoad = false;
 				} else {
-
 					// check if it's a context selection to redraw matrix
-					const isContextDimension = this.dimensionsService.isContextDimension(e.hierarchyName)
+					const isContextDimension =
+						this.dimensionsService.isContextDimension(
+							e.hierarchyName
+						);
 
-					if ((!e.stopPropagation && this.initNodesEvents === this.dimensionsDatas.dimensions.length) || isContextDimension) {
+					if (
+						(!e.stopPropagation &&
+							this.initNodesEvents ===
+								this.dimensionsDatas.dimensions.length) ||
+						isContextDimension
+					) {
 						this.matrixCanvas.drawMatrix();
-					} else if (!e.stopPropagation && this.initNodesEvents > this.dimensionsDatas.dimensions.length) {
+					} else if (
+						!e.stopPropagation &&
+						this.initNodesEvents >
+							this.dimensionsDatas.dimensions.length
+					) {
 						this.matrixCanvas.drawSelectedNodes();
 					}
 				}
@@ -96,7 +100,6 @@ export class MatrixContainerComponent implements OnInit, OnChanges, OnDestroy {
 					window.dispatchEvent(new Event("resize"));
 				});
 			});
-
 	}
 
 	ngOnInit() {
@@ -105,15 +108,11 @@ export class MatrixContainerComponent implements OnInit, OnChanges, OnDestroy {
 		this.constructModeSelectBox();
 	}
 
-	ngAfterViewInit() {
-	}
-
 	ngOnDestroy() {
 		this.viewsLayoutChangedSub?.unsubscribe();
 		this.treeSelectedNodeChangedSub?.unsubscribe();
 	}
 
-	ngOnChanges(changes: SimpleChanges) {}
 
 	onToggleFullscreen(isFullscreen: any) {
 		this.isFullscreen = isFullscreen;
@@ -205,9 +204,7 @@ export class MatrixContainerComponent implements OnInit, OnChanges, OnDestroy {
 
 	changeConditionalOnContext() {
 		// this.khiopsLibraryService.trackEvent('click', 'matrix_conditionnal_on_context');
-
-		this.conditionalOnContext = !this.conditionalOnContext;
-		this.dimensionsDatas.conditionalOnContext = this.conditionalOnContext;
+		this.dimensionsDatas.conditionalOnContext = !this.dimensionsDatas.conditionalOnContext;
 		this.treenodesService.initConditionalOnContextNodes();
 	}
 }
