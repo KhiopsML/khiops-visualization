@@ -109,7 +109,7 @@ export class ClusterDetailsComponent implements OnInit, OnChanges, OnDestroy {
 	}
 
 	updateSelectedNode() {
-		if (this.selectedNode) {
+		if (this.selectedNode && this.filteredDimensionsClusters) {
 			// Get nodes from input to update it
 			this.nodeToSelect = {
 				...this.selectedNode
