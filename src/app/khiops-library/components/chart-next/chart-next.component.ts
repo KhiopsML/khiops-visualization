@@ -186,7 +186,7 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 
 	ngOnChanges(changes: SimpleChanges) {
 
-		if (changes.selectedLineChartItem && changes.selectedLineChartItem.currentValue !== undefined) { // can be ''
+		if (this.chart && changes.selectedLineChartItem && changes.selectedLineChartItem.currentValue !== undefined) { // can be ''
 			this.colorize();
 			this.chart.update();
 		}
