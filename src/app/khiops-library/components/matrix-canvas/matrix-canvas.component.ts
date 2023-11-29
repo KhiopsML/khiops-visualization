@@ -49,8 +49,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 	@Input() graphType: any;
 	@Input() graphMode: any;
 	@Input() conditionalOnContext: any;
-	@Input() contrast?: any = localStorage.getItem(this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST') ||
-		this.khiopsLibraryService.getAppConfig().common.GLOBAL.MATRIX_CONTRAST;
+	@Input() contrast?: any;
 	@Output() contrastChange: EventEmitter<string> = new EventEmitter();
 
 	@Input() graphTargets: any;
@@ -176,6 +175,12 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
+
+		if (this.contrast === undefined) {
+			this.contrast = localStorage.getItem(this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST') ||
+				this.khiopsLibraryService.getAppConfig().common.GLOBAL.MATRIX_CONTRAST;
+		}
+
 		// if graph mode change, reset isZerosToggled
 		if (changes.graphMode) {
 			this.isZerosToggled = false;

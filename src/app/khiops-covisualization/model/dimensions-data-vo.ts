@@ -1,7 +1,7 @@
 export class DimensionsDatasVO {
 	isAxisInverted: boolean = false;
 	conditionalOnContext: boolean = true;
-	matrixContrast: number = 0;
+	matrixContrast: number | undefined = undefined;
 	matrixDatas: any = undefined;
 	allMatrixDatas: any = undefined;
 	allMatrixCellDatas: any = undefined;
