@@ -30,8 +30,12 @@ import {
 import {
 	UtilsService
 } from '@khiops-library/providers/utils.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { HierarchyService } from '@khiops-covisualization/providers/hierarchy.service';
+import {
+	MatSnackBar
+} from '@angular/material/snack-bar';
+import {
+	HierarchyService
+} from '@khiops-covisualization/providers/hierarchy.service';
 
 @Component({
 	selector: 'app-unfold-hierarchy',
@@ -59,10 +63,10 @@ export class UnfoldHierarchyComponent implements OnInit {
 
 	unfoldHierarchyTableTitle = '';
 
-	selectedLineChartItem = undefined;
+	selectedLineChartItem = '';
 
 	borderColor = localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR') === 'dark' ? '#ffffff' : '#000000';
-	defaultMaxUnfoldHierarchy = AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.TECHNICAL_LIMIT;
+	defaultMaxUnfoldHierarchy = 0;
 	hierarchyDisplayedColumns = [{
 			headerName: 'Dimension',
 			field: 'name'
@@ -128,6 +132,7 @@ export class UnfoldHierarchyComponent implements OnInit {
 
 		this.treenodesService.initSavedUnfoldRank();
 		this.hierarchyDatas = this.treenodesService.getHierarchyDatas();
+		this.defaultMaxUnfoldHierarchy = this.hierarchyDatas.totalClusters;
 
 		this.unfoldHierarchyTableTitle = this.translate.get('GLOBAL.NB_OF_CLUSTERS_PER_DIM');
 		this.unfoldHierarchyLegend = this.translate.get('TOOLTIPS.AXIS.UNFOLD_HIERARCHY.LEGEND');
@@ -185,6 +190,26 @@ export class UnfoldHierarchyComponent implements OnInit {
 	}
 
 	onHierarchyChanged(event) {
+
+		this.currentUnfoldHierarchy = event.value;
+
+		this.clustersPerDimDatas = this.clustersService.getClustersPerDimDatas(this.currentUnfoldHierarchy);
+		this.infoPerCluster = this.clustersService.getInfoPerCluster(this.currentUnfoldHierarchy);
+		this.currentInformationPerCluster = this.infoPerCluster.datasets[0].data[this.currentUnfoldHierarchy - this.dimensions.length];
+		this.treenodesService.updateCurrentHierarchyClustersCount(this.currentUnfoldHierarchy);
+
+		// Dimension changed, clone to update array
+		this.dimensions = _.cloneDeep(this.dimensionsDatas.dimensions);
+
+		this.currentCellsPerCluster = this.clustersService.getCurrentCellsPerCluster();
+		if (this.currentCellsPerCluster > AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.TECHNICAL_LIMIT) {
+			this.currentUnfoldHierarchy = this.treenodesService.getHierarchyFromClustersCount(this.currentUnfoldHierarchy, AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.TECHNICAL_LIMIT);
+			this.treenodesService.updateCurrentHierarchyClustersCount(this.currentUnfoldHierarchy);
+			this.currentCellsPerCluster = this.clustersService.getCurrentCellsPerCluster();
+
+		}
+		this.defaultMaxUnfoldHierarchy = this.currentUnfoldHierarchy;
+
 		if (event.value > this.defaultMaxUnfoldHierarchy) {
 			setTimeout(() => {
 				this.currentUnfoldHierarchy = this.defaultMaxUnfoldHierarchy;
@@ -193,26 +218,13 @@ export class UnfoldHierarchyComponent implements OnInit {
 					this.translate.get("SNACKS.UNFOLDED_DATAS_MAXIMUM_UNFOLD", {
 						count: this.currentUnfoldHierarchy,
 					}),
-					this.translate.get("GLOBAL.OK"),
-					{
+					this.translate.get("GLOBAL.OK"), {
 						duration: 4000,
 						panelClass: "error",
 						verticalPosition: "bottom",
 					}
 				);
 			});
-		} else {
-			this.currentUnfoldHierarchy = event.value;
-
-			this.clustersPerDimDatas = this.clustersService.getClustersPerDimDatas(this.currentUnfoldHierarchy);
-			this.infoPerCluster = this.clustersService.getInfoPerCluster(this.currentUnfoldHierarchy);
-			this.currentInformationPerCluster = this.infoPerCluster.datasets[0].data[this.currentUnfoldHierarchy - this.dimensions.length];
-			this.treenodesService.updateCurrentHierarchyClustersCount(this.currentUnfoldHierarchy);
-
-			// Dimension changed, clone to update array
-			this.dimensions = _.cloneDeep(this.dimensionsDatas.dimensions);
-
-			this.currentCellsPerCluster = this.clustersService.getCurrentCellsPerCluster();
 		}
 	}
 

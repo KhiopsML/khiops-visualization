@@ -116,7 +116,7 @@ export class FileLoaderService {
 		// const urlKC = './assets/mocks/kc/Coclustering-4.json';
 		// const urlKC = './assets/mocks/kc/co-IrisMissing.json';
 		// const urlKC = './assets/mocks/kc/adult2var.json';
-		const urlKC = './assets/mocks/kc/sample3.json';
+		// const urlKC = './assets/mocks/kc/sample3.json';
 		// const urlKC = './assets/mocks/kc/DataNoisyCorrelatedN1000000_C1000_V10_L5Coclustering.json';
 		// const urlKC = './assets/mocks/kc/sample0.json';
 		// const urlKC = './assets/mocks/kc/WebSpamCoclustering18mb.json';
@@ -128,7 +128,7 @@ export class FileLoaderService {
 		// const urlKC = './assets/mocks/kc/irismissing.json';
 		// const urlKC = './assets/mocks/kc/zero-except.json';
 		// const urlKC = './assets/mocks/kc/AdultSmall.json';
-		// const urlKC = './assets/mocks/kc/VerbNounCoclustering27mo.json';
+		const urlKC = './assets/mocks/kc/VerbNounCoclustering27mo.json';
 		// const urlKC = './assets/mocks/kc/NovaCoclustering4mb.json';
 		// const urlKC = './assets/mocks/kc/Coclustering-100x100.json';
 		// const urlKC = './assets/mocks/kc/donotworkk10.1.1_id_feat_nospace_Coclustering.json';

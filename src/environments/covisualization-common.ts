@@ -21,7 +21,7 @@ export const covisualizationCommonEnvironment = {
   },
 	UNFOLD_HIERARCHY: {
     ERGONOMIC_LIMIT: 15, // multiplied by nb dimensions
-    TECHNICAL_LIMIT: 1000,
+    TECHNICAL_LIMIT: 100000,
     WIDTH: '85vw',
     HEIGHT: '85vh',
   },

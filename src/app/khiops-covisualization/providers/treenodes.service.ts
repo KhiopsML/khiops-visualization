@@ -141,7 +141,7 @@ export class TreenodesService {
 			if (!deepEqual(previousSelectedNodes, this.dimensionsDatas.selectedNodes)) {
 				// search in the complete datas the corresponding node
 				const realNodeVO = this.dimensionsDatas.dimensionsClusters[currentIndex].find(e => {
-					return nodeVO.name === e.name /*|| nodeVO.shortDescription === e.shortDescription*/;
+					return nodeVO.name === e.name /*|| nodeVO.shortDescription === e.shortDescription*/ ;
 					// also check into shortDescription (for distribution graph for instance)
 					// no !!! otherwise it return multiple nodes
 				});
@@ -250,6 +250,26 @@ export class TreenodesService {
 			const dimension: DimensionVO = this.dimensionsDatas.dimensions[i];
 			dimension.setCurrentHierarchyClusterCount(nodesVO.length + 1);
 		}
+	}
+
+	/**
+	 * Compute the number of clusters to manage to display a number of cells
+	 * @param maxRank the current number of clusters
+	 * @param nbCells the cells count wish
+	 */
+	getHierarchyFromClustersCount(maxRank, nbCells) {
+		let currentDimClustersCount = 1;
+		do {
+			maxRank = maxRank - 1
+			currentDimClustersCount = 1;
+			for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
+				const nodesVO: any[] = UtilsService.fastFilter(this.dimensionsDatas.dimensionsClusters[i], e => {
+					return !e.isLeaf && e.hierarchicalRank < maxRank;
+				});
+				currentDimClustersCount = currentDimClustersCount * nodesVO.length;
+			}
+		} while (currentDimClustersCount > nbCells);
+		return maxRank;
 	}
 
 	getHierarchyDatas(): any {

@@ -116,15 +116,9 @@ export class AxisViewComponent
 	}
 
 	initializeLargeCoclustering() {
-		// Compute threshold
-		const currentSize = this.dimensionsDatas.dimensions.map((e) => e.parts);
-		const threshold =
+		const unfoldState =
 			this.dimensionsDatas.dimensions.length *
 			AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.ERGONOMIC_LIMIT;
-		let unfoldState = UtilsService.getErgonomicHierarchicalRank(
-			currentSize,
-			threshold
-		);
 
 		this.treenodesService.setSelectedUnfoldHierarchy(unfoldState);
 		const collapsedNodes =
