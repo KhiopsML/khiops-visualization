@@ -27,7 +27,6 @@ import {
 import {
 	ImportExtDatasService
 } from './import-ext-datas.service';
-import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 
 @Injectable({
 	providedIn: 'root'
@@ -38,7 +37,6 @@ export class SaveService {
 		private appService: AppService,
 		private injector: Injector,
 		private importExtDatasService: ImportExtDatasService,
-		private khiopsLibraryService: KhiopsLibraryService,
 		private dimensionsService: DimensionsDatasService
 	) {}
 
@@ -94,27 +92,27 @@ export class SaveService {
 		let t0 = performance.now();
 		datasToSave = this.truncateJsonHierarchy(datasToSave);
 		let t1 = performance.now();
-		console.log("truncateJsonHierarchy " + (t1 - t0) + " milliseconds.");
+		// console.log("truncateJsonHierarchy " + (t1 - t0) + " milliseconds.");
 
 		t0 = performance.now();
 		datasToSave = this.updateSummariesParts(datasToSave);
 		t1 = performance.now();
-		console.log("updateSummariesParts " + (t1 - t0) + " milliseconds.");
+		// console.log("updateSummariesParts " + (t1 - t0) + " milliseconds.");
 
 		t0 = performance.now();
 		datasToSave = this.truncateJsonPartition(datasToSave);
 		t1 = performance.now();
-		console.log("truncateJsonPartition " + (t1 - t0) + " milliseconds.");
+		// console.log("truncateJsonPartition " + (t1 - t0) + " milliseconds.");
 
 		t0 = performance.now();
 		datasToSave = this.truncateJsonCells(datasToSave);
 		t1 = performance.now();
-		console.log("truncateJsonCells " + (t1 - t0) + " milliseconds.");
+		// console.log("truncateJsonCells " + (t1 - t0) + " milliseconds.");
 
 		t0 = performance.now();
 		datasToSave = this.updateSummariesCells(datasToSave);
 		t1 = performance.now();
-		console.log("updateSummariesCells " + (t1 - t0) + " milliseconds.");
+		// console.log("updateSummariesCells " + (t1 - t0) + " milliseconds.");
 
 		if (!collapsedNodesInput) {
 			// Remove collapsed nodes and selected nodes because they have been reduced
@@ -127,7 +125,7 @@ export class SaveService {
 
 
 	truncateJsonHierarchy(datas) {
-		const truncatedHierarchy = [ ...datas.coclusteringReport.dimensionHierarchies ];
+		const truncatedHierarchy = [...datas.coclusteringReport.dimensionHierarchies];
 
 		Object.keys(datas.savedDatas.collapsedNodes).forEach((dim) => {
 			const dimIndex = this.dimensionsService.dimensionsDatas.selectedDimensions.findIndex(e => e.name === dim);
@@ -139,7 +137,7 @@ export class SaveService {
 			for (let i = 0; i < nodesLength; i++) {
 
 				const nodeName = nodes[i];
-				let nodeChildren = [];
+				let nodeChildren: any[] = [];
 				const nodeDetails: TreeNodeVO = this.dimensionsService.dimensionsDatas.dimensionsClusters[dimIndex].find(e => e.cluster === nodeName);
 
 				// Get children list
@@ -210,7 +208,7 @@ export class SaveService {
 		for (let i = 0; i < nodesLength; i++) {
 
 			const nodeName = nodes[i];
-			let nodeChildren = [];
+			let nodeChildren: any[] = [];
 			const currentDefaultGroup = currentTruncatedPartition.defaultGroupIndex && currentTruncatedPartition.valueGroups[currentTruncatedPartition.defaultGroupIndex].values;
 			const nodeDetails: TreeNodeVO = this.treenodesService.dimensionsDatas.dimensionsClusters[dimIndex].find(e => e.cluster === nodeName);
 			if (nodeDetails && nodeDetails.childrenList) {
@@ -256,7 +254,7 @@ export class SaveService {
 		for (let i = 0; i < nodesLength; i++) {
 
 			const nodeName = nodes[i];
-			let nodeChildren = [];
+			let nodeChildren: any[] = [];
 
 			const nodeDetails: TreeNodeVO = this.treenodesService.dimensionsDatas.dimensionsClusters[dimIndex].find(e => e.cluster === nodeName);
 			if (nodeDetails && nodeDetails.childrenList) {
@@ -330,7 +328,7 @@ export class SaveService {
 			...this.appService.getInitialDatas().datas
 		};
 
-		const transitionMatrix = [];
+		const transitionMatrix: any[] = [];
 
 		let t0 = performance.now();
 
@@ -383,37 +381,14 @@ export class SaveService {
 		}
 
 		let t1 = performance.now();
-		console.log("STEP 1 " + (t1 - t0) + " milliseconds.");
+		// console.log("STEP 1 " + (t1 - t0) + " milliseconds.");
 
 
 		t0 = performance.now();
 
 		// Step 2: build the list of cells in the current coclustering by calculating the indexes of these cells and their resGroup
 		// let indexesCCSet = new Set();
-		let resGroup = [];
-
-		// Browse the cells of the initial coclustering json file ("cellPartIndexes" field)
-		// for (let i = 0; i < CI.coclusteringReport.cellPartIndexes.length; i++) {
-		// 	let initial_indexes = CI.coclusteringReport.cellPartIndexes[i];
-		// 	let currentIndexes = [];
-
-		// 	for (let k = 0; k < CI.coclusteringReport.dimensionHierarchies.length; k++) {
-		// 		// Calculation of indexes from the transition matrix calculated in step 1
-		// 		currentIndexes.push(transitionMatrix[k][initial_indexes[k]]);
-		// 	}
-
-		// 	let currentIndexesString = currentIndexes.join(',');
-		// 	if (indexesCCSet.has(currentIndexesString)) {
-		// 		const index = resGroup.findIndex((e) => e.key === currentIndexesString);
-		// 		resGroup[index].value += CI.coclusteringReport.cellFrequencies[i];
-		// 	} else {
-		// 		resGroup.push({
-		// 			key: currentIndexesString,
-		// 			value: CI.coclusteringReport.cellFrequencies[i],
-		// 		});
-		// 		indexesCCSet.add(currentIndexesString);
-		// 	}
-		// }
+		let resGroup: any[] = [];
 
 		// chat GPT optimization
 		const {
@@ -425,7 +400,7 @@ export class SaveService {
 		// Browse the cells of the initial coclustering json file ("cellPartIndexes" field)
 		for (let i = 0; i < cellPartIndexes.length; i++) {
 			const initial_indexes = cellPartIndexes[i];
-			const currentIndexes = [];
+			const currentIndexes: any[] = [];
 			for (let k = 0; k < dimensionHierarchies.length; k++) {
 				// Calculation of indexes from the transition matrix calculated in step 1
 				currentIndexes.push(transitionMatrix[k][initial_indexes[k]]);
@@ -442,7 +417,7 @@ export class SaveService {
 			}
 		}
 		// console.log('file: save.service.ts:540 ~ truncateJsonCells ~ resGroupMap:', resGroupMap);
-		 resGroupMap = new Map([...resGroupMap.entries()].sort());
+		resGroupMap = new Map([...resGroupMap.entries()].sort());
 
 		// Convert the map back to an array of objects if needed
 		resGroup = Array.from(resGroupMap, ([key, value]) => ({
@@ -452,12 +427,12 @@ export class SaveService {
 
 
 		t1 = performance.now();
-		console.log("STEP 2 " + (t1 - t0) + " milliseconds.");
+		// console.log("STEP 2 " + (t1 - t0) + " milliseconds.");
 
 		t0 = performance.now();
 		/// TRY TO OPTIM THAT
 		// TODO : sort array only when we save as. dont needed for current cluster CC ?
-		resGroup.sort(function (a, b) {
+		resGroup.sort(function (a: any, b: any) {
 			if (a.value === b.value) {
 				return a.key.localeCompare(b.key, undefined, {
 					numeric: true
@@ -467,9 +442,7 @@ export class SaveService {
 		});
 		/// END TRY TO OPTIM THAT
 		t1 = performance.now();
-		console.log("STEP 3 " + (t1 - t0) + " milliseconds.");
-
-
+		// console.log("STEP 3 " + (t1 - t0) + " milliseconds.");
 
 
 		CC.coclusteringReport.cellFrequencies = resGroup.map(e => e.value);
