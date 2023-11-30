@@ -46,43 +46,41 @@ export class SaveService {
 
 		const selectedDimensions = this.dimensionsService.getDimensionsToSave();
 
-		// Check if user has changed something
-		if (selectedDimensions.length > 0) {
-			const unfoldHierarchyState = this.treenodesService.getUnfoldHierarchy();
-			const splitSizes = this.appService.getSplitSizes();
-			const viewsLayout = this.appService.getViewsLayout();
-			const nodesNames = this.treenodesService.getNodesNames();
-			let selectedNodes = this.treenodesService.getSelectedNodes();
-			if (selectedNodes) {
-				selectedNodes = selectedNodes.map(e => e.name);
-			}
-			let collapsedNodes;
-			if (collapsedNodesInput) {
-				collapsedNodes = collapsedNodesInput
-			} else {
-				collapsedNodes = this.treenodesService.getSavedCollapsedNodes();
-			}
-			const importedDatas = this.importExtDatasService.getImportedDatas();
-			const matrixContrast = this.dimensionsService.dimensionsDatas.matrixContrast;
-			const conditionalOnContext = this.dimensionsService.dimensionsDatas.conditionalOnContext;
-			const matrixOption = this.dimensionsService.dimensionsDatas.matrixOption;
-			const matrixMode = this.dimensionsService.dimensionsDatas.matrixMode;
+		const unfoldHierarchyState = this.treenodesService.getUnfoldHierarchy();
+		const splitSizes = this.appService.getSplitSizes();
+		const viewsLayout = this.appService.getViewsLayout();
 
-			initialDatas.savedDatas = new SavedDatasVO(
-				viewsLayout,
-				splitSizes,
-				selectedNodes,
-				selectedDimensions,
-				collapsedNodes,
-				nodesNames,
-				importedDatas,
-				matrixContrast,
-				unfoldHierarchyState,
-				conditionalOnContext,
-				matrixOption,
-				matrixMode
-			);
+		const nodesNames = this.treenodesService.getNodesNames();
+		let selectedNodes = this.treenodesService.getSelectedNodes();
+		if (selectedNodes) {
+			selectedNodes = selectedNodes.map(e => e.name);
 		}
+		let collapsedNodes;
+		if (collapsedNodesInput) {
+			collapsedNodes = collapsedNodesInput
+		} else {
+			collapsedNodes = this.treenodesService.getSavedCollapsedNodes();
+		}
+		const importedDatas = this.importExtDatasService.getImportedDatas();
+		const matrixContrast = this.dimensionsService.dimensionsDatas.matrixContrast;
+		const conditionalOnContext = this.dimensionsService.dimensionsDatas.conditionalOnContext;
+		const matrixOption = this.dimensionsService.dimensionsDatas.matrixOption;
+		const matrixMode = this.dimensionsService.dimensionsDatas.matrixMode;
+
+		initialDatas.savedDatas = new SavedDatasVO(
+			viewsLayout,
+			splitSizes,
+			selectedNodes,
+			selectedDimensions,
+			collapsedNodes,
+			nodesNames,
+			importedDatas,
+			matrixContrast,
+			unfoldHierarchyState,
+			conditionalOnContext,
+			matrixOption,
+			matrixMode
+		);
 
 		return initialDatas;
 	}

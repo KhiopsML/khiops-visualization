@@ -78,10 +78,6 @@ export class TreenodesService {
 		savedUnfoldRank && this.setSelectedUnfoldHierarchy(savedUnfoldRank);
 	}
 
-	initSelectedNodes() {
-		this.dimensionsDatas.selectedNodes = [];
-	}
-
 	initConditionalOnContextNodes() {
 		for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
 			if (i >= 2) {
@@ -190,8 +186,9 @@ export class TreenodesService {
 		return this.dimensionsDatas.selectedNodes;
 	}
 
-	setNodesNames() {
-		this.dimensionsDatas.nodesNames = this.appService.getSavedDatas('nodesNames');
+	initSavedDatas() {
+		this.dimensionsDatas.nodesNames = this.appService.getSavedDatas('nodesNames') || {};
+		this.dimensionsDatas.selectedNodes = this.appService.getSavedDatas('selectedNodes') || [];
 	}
 
 	getNodesNames() {

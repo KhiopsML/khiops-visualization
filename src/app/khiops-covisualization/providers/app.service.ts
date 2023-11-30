@@ -72,6 +72,14 @@ export class AppService {
 
 		// Set default split sizes if not into local storage
 		this.splitSizes = UtilsService.setDefaultLSValues(storedSplitValues, this.splitSizes);
+
+	}
+
+	initSavedDatas() {
+		const viewsLayout = this.getSavedDatas("viewsLayout");
+		if (viewsLayout !== undefined) {
+			this.viewsLayout = viewsLayout;
+		}
 	}
 
 	setCroppedFileDatas(datas: any): any {
@@ -184,12 +192,19 @@ export class AppService {
 			const isContextView = i >= 2;
 			this.viewsLayout.addDimensionViewLayout(dimensions[i].name, isContextView);
 		}
-
+		// First get state from ls
 		const lsStorage = localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'VIEWS_LAYOUT');
 		if (lsStorage && lsStorage !== 'undefined') {
 			const lsValues = JSON.parse(lsStorage);
 			// Merge current values with values from LS
 			this.viewsLayout.megeWithPreviousValues(lsValues);
+		}
+
+		// Then get saved json state
+		const savedDatas = this.getSavedDatas('viewsLayout')
+		if (savedDatas) {
+			// Merge current values with values from LS
+			this.viewsLayout.megeWithPreviousValues(savedDatas);
 		}
 
 		return this.viewsLayout;
