@@ -25,7 +25,7 @@ import { DimensionsDatasVO } from '../model/dimensions-data-vo';
 })
 export class DimensionsDatasService {
 
-	dimensionsDatas: any;
+	dimensionsDatas: DimensionsDatasVO;
 
 	constructor(
 		private appService: AppService,
@@ -57,6 +57,10 @@ export class DimensionsDatasService {
 		const savedMatrixOption = this.appService.getSavedDatas("matrixOption");
 		if (savedMatrixOption !== undefined) {
 			this.dimensionsDatas.matrixOption = savedMatrixOption;
+		}
+		const savedIsAxisInverted = this.appService.getSavedDatas("isAxisInverted");
+		if (savedIsAxisInverted !== undefined) {
+			this.dimensionsDatas.isAxisInverted = savedIsAxisInverted;
 		}
 	}
 

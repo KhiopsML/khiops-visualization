@@ -66,6 +66,7 @@ export class SaveService {
 		const conditionalOnContext = this.dimensionsService.dimensionsDatas.conditionalOnContext;
 		const matrixOption = this.dimensionsService.dimensionsDatas.matrixOption;
 		const matrixMode = this.dimensionsService.dimensionsDatas.matrixMode;
+		const isAxisInverted = this.dimensionsService.dimensionsDatas.isAxisInverted;
 
 		initialDatas.savedDatas = new SavedDatasVO(
 			viewsLayout,
@@ -79,7 +80,8 @@ export class SaveService {
 			unfoldHierarchyState,
 			conditionalOnContext,
 			matrixOption,
-			matrixMode
+			matrixMode,
+			isAxisInverted
 		);
 
 		return initialDatas;
