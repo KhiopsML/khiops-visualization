@@ -189,8 +189,7 @@
 									"with": "src/environments/environment.prod.ts"
 								}
 							],
-							"outputHashing": "none",
-							"extractCss": false
+							"outputHashing": "none"
 						},
 						"development": {
 							"buildOptimizer": false,
