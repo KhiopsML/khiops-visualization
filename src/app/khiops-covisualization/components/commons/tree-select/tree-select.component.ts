@@ -36,8 +36,12 @@ import {
 import {
 	TranslateService
 } from '@ngstack/translate';
-import { ConfigService } from '@khiops-library/providers/config.service';
-import { Subscription } from 'rxjs';
+import {
+	ConfigService
+} from '@khiops-library/providers/config.service';
+import {
+	Subscription
+} from 'rxjs';
 
 @Component({
 	selector: 'app-tree-select',
@@ -62,6 +66,7 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 	// Keep a reference to the tree nodes so Angular can render them.
 	nodes: any;
 	dimensionsDatas: any;
+	nodeInSelection: any;
 
 	constructor(
 		public ngzone: NgZone,
@@ -112,13 +117,7 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 			// define the parent div to copy
 			this.id = 'tree-comp-' + this.position;
 
-			// At launch check if there are saved selected nodes into inpout
-			const savedSelectedNodes = this.appService.getSavedDatas('selectedNodes');
-			if (savedSelectedNodes) {
-				this.initTree(savedSelectedNodes[this.position]);
-			} else {
-				this.initTree();
-			}
+			this.initTree(this.selectedNode);
 		});
 	}
 
@@ -134,7 +133,7 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 				// Select previous nodes if unfold hierarchy changed or if hierarchy has been saved
 				// Find the node tree id into current tree
 				const nodeTree = this.treenodesService.getNodeFromName(this.selectedDimension.name, selectedNode._id);
-				const nodeTreeId = nodeTree?.id;
+				const nodeTreeId = nodeTree ?.id;
 				if (nodeTreeId !== undefined && nodeTreeId >= 0) {
 					this.tree.selectNode(nodeTreeId, true);
 				}

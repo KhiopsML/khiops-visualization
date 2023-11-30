@@ -68,8 +68,8 @@ export class AxisViewComponent
 
 		setTimeout(() => {
 			this.sizes = this.appService.getViewSplitSizes("axisView");
-			this.initializeSavedState();
 			this.initializeDatas();
+			this.initializeSavedState();
 
 			const collapsedNodes =
 				this.appService.getSavedDatas("collapsedNodes");

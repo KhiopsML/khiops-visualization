@@ -52,6 +52,8 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 
 	componentType = 'kvtree'; // needed to copy datas
 	tree: any;
+	id: any = undefined;
+	nodeInSelection: any;
 
 	// Keep a reference to the tree nodes so Angular can render them.
 	nodes: any;

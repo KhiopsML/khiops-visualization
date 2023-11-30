@@ -188,7 +188,14 @@ export class TreenodesService {
 
 	initSavedDatas() {
 		this.dimensionsDatas.nodesNames = this.appService.getSavedDatas('nodesNames') || {};
-		this.dimensionsDatas.selectedNodes = this.appService.getSavedDatas('selectedNodes') || [];
+		const savedNodes = this.appService.getSavedDatas('selectedNodes');
+		if (savedNodes) {
+			for (let index = 0; index < savedNodes.length; index++) {
+				const nodeName = savedNodes[index];
+				const node = this.getNodeFromName(this.dimensionsDatas.selectedDimensions[index].name, nodeName);
+				this.dimensionsDatas.selectedNodes.push(node)
+			}
+		}
 	}
 
 	getNodesNames() {
@@ -217,18 +224,6 @@ export class TreenodesService {
 
 	setSavedCollapsedNodes(collapsedNodesToSave) {
 		this.collapsedNodesToSave = collapsedNodesToSave
-	}
-
-	getSelectedNodesToSave() {
-		const selectedNodes = _.cloneDeep(this.getSelectedNodes());
-		const selectedNodesLength = selectedNodes.length;
-		for (let i = 0; i < selectedNodesLength; i++) {
-			selectedNodes.push({
-				id: selectedNodes[i].id,
-				dimensionName: selectedNodes[i].hierarchy
-			});
-		}
-		return selectedNodes;
 	}
 
 	getSelectedNodesSummary() {
