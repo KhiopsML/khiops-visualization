@@ -62,34 +62,23 @@ export class AxisViewComponent
 		this.initialize();
 	}
 
-	initializeDatas() {
-		this.dimensionsDatas = this.dimensionsDatasService.getDatas();
-		this.dimensionsDatasService.getDimensions();
-		this.treenodesService.setNodesNames();
-
-		this.dimensionsDatasService.initSelectedDimensions();
-		this.dimensionsDatasService.saveInitialDimension();
-		this.dimensionsDatasService.constructDimensionsTrees();
-		this.dimensionsDatasService.initSavedDatas();
-	}
-
 	initialize() {
 		this.loadingView = true;
 		this.isBigJsonFile = this.appService.isBigJsonFile();
 
 		setTimeout(() => {
 			this.sizes = this.appService.getViewSplitSizes("axisView");
-
+			this.initializeSavedState();
 			this.initializeDatas();
 
 			const collapsedNodes =
 				this.appService.getSavedDatas("collapsedNodes");
-			this.initializeSavedState(collapsedNodes);
+
 			if (
 				!collapsedNodes &&
 				this.dimensionsDatasService.isLargeCocluster()
 			) {
-				// Unfold auto if computer is too laggy
+				// OPTIM: Unfold auto if computer is too laggy
 				this.initializeLargeCoclustering();
 			}
 			this.dimensionsDatasService.getMatrixDatas();
@@ -98,20 +87,28 @@ export class AxisViewComponent
 			this.viewsLayout = this.appService.initViewsLayout(
 				this.dimensionsDatas.selectedDimensions
 			);
-
-			// Listen for view layout changes
-			this.viewsLayoutChangedSub =
-				this.appService.viewsLayoutChanged.subscribe((viewsLayout) => {
-					this.viewsLayout = viewsLayout;
-				});
 		}, 500); // To show loader when big files
+
+		// Listen for view layout changes
+		this.viewsLayoutChangedSub =
+			this.appService.viewsLayoutChanged.subscribe((viewsLayout) => {
+				this.viewsLayout = viewsLayout;
+			});
 	}
 
-	initializeSavedState(collapsedNodes) {
-		this.treenodesService.setSavedCollapsedNodes(collapsedNodes);
-		let datas = this.saveService.constructSavedJson(collapsedNodes);
-		this.appService.setCroppedFileDatas(datas);
-		this.initializeDatas();
+	initializeDatas() {
+		this.dimensionsDatas = this.dimensionsDatasService.getDatas();
+		this.dimensionsDatasService.getDimensions();
+		this.dimensionsDatasService.initSelectedDimensions();
+		this.dimensionsDatasService.saveInitialDimension();
+		this.dimensionsDatasService.constructDimensionsTrees();
+	}
+
+	initializeSavedState() {
+		// Init saved datas from Json savedDatas
+		this.treenodesService.initSavedDatas();
+		this.dimensionsDatasService.initSavedDatas();
+		this.appService.initSavedDatas();
 	}
 
 	initializeLargeCoclustering() {
@@ -125,7 +122,6 @@ export class AxisViewComponent
 		this.treenodesService.setSavedCollapsedNodes(collapsedNodes);
 
 		let datas = this.saveService.constructSavedJson(collapsedNodes);
-
 		this.appService.setCroppedFileDatas(datas);
 
 		this.initializeDatas();
