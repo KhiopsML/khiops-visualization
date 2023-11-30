@@ -64,10 +64,6 @@ export class HierarchyService {
 			if (this.dimensionsDatas.dimensions[i].hierarchyFold === false) {
 				delete collapsedNodes[this.dimensionsDatas.dimensions[i].name];
 			}
-
-			// if (i > 1) {
-			// 	delete collapsedNodes[this.dimensionsDatas.dimensions[i].name];
-			// }
 		}
 		this.treenodesService.setSavedCollapsedNodes(collapsedNodes);
 
@@ -80,12 +76,7 @@ export class HierarchyService {
 		this.dimensionsDatasService.initSelectedDimensions();
 		this.dimensionsDatasService.saveInitialDimension();
 
-		// datas.savedDatas.collapsedNodes = collapsedNodesToSave
-
 		this.dimensionsDatasService.constructDimensionsTrees();
-
 		this.dimensionsDatasService.getMatrixDatas();
-
-
 	}
 }

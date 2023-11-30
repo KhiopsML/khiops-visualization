@@ -88,39 +88,39 @@ export class SaveService {
 	}
 
 	constructSavedJson(collapsedNodesInput ? ) {
-		let datasToSave = this.constructDatasToSave(collapsedNodesInput);
+		let newJson = this.constructDatasToSave(collapsedNodesInput);
 		let t0 = performance.now();
-		datasToSave = this.truncateJsonHierarchy(datasToSave);
+		newJson = this.truncateJsonHierarchy(newJson);
 		let t1 = performance.now();
 		// console.log("truncateJsonHierarchy " + (t1 - t0) + " milliseconds.");
 
 		t0 = performance.now();
-		datasToSave = this.updateSummariesParts(datasToSave);
+		newJson = this.updateSummariesParts(newJson);
 		t1 = performance.now();
 		// console.log("updateSummariesParts " + (t1 - t0) + " milliseconds.");
 
 		t0 = performance.now();
-		datasToSave = this.truncateJsonPartition(datasToSave);
+		newJson = this.truncateJsonPartition(newJson);
 		t1 = performance.now();
 		// console.log("truncateJsonPartition " + (t1 - t0) + " milliseconds.");
 
 		t0 = performance.now();
-		datasToSave = this.truncateJsonCells(datasToSave);
+		newJson = this.truncateJsonCells(newJson);
 		t1 = performance.now();
 		// console.log("truncateJsonCells " + (t1 - t0) + " milliseconds.");
 
 		t0 = performance.now();
-		datasToSave = this.updateSummariesCells(datasToSave);
+		newJson = this.updateSummariesCells(newJson);
 		t1 = performance.now();
 		// console.log("updateSummariesCells " + (t1 - t0) + " milliseconds.");
 
 		if (!collapsedNodesInput) {
 			// Remove collapsed nodes and selected nodes because they have been reduced
-			delete datasToSave.savedDatas.collapsedNodes; // TODO ?
+			delete newJson.savedDatas.collapsedNodes;
 		}
 		// delete datasToSave.savedDatas.selectedNodes; // do not do that to keep context selection
-		console.log('file: save.service.ts:114 ~ constructSavedJson ~ datasToSave:', datasToSave);
-		return datasToSave;
+		console.log('file: save.service.ts:114 ~ constructSavedJson ~ datasToSave:', newJson);
+		return newJson;
 	}
 
 
@@ -425,13 +425,10 @@ export class SaveService {
 			value
 		}));
 
-
 		t1 = performance.now();
 		// console.log("STEP 2 " + (t1 - t0) + " milliseconds.");
 
 		t0 = performance.now();
-		/// TRY TO OPTIM THAT
-		// TODO : sort array only when we save as. dont needed for current cluster CC ?
 		resGroup.sort(function (a: any, b: any) {
 			if (a.value === b.value) {
 				return a.key.localeCompare(b.key, undefined, {
@@ -440,10 +437,8 @@ export class SaveService {
 			}
 			return b.value - a.value;
 		});
-		/// END TRY TO OPTIM THAT
 		t1 = performance.now();
 		// console.log("STEP 3 " + (t1 - t0) + " milliseconds.");
-
 
 		CC.coclusteringReport.cellFrequencies = resGroup.map(e => e.value);
 		// Convert cellPartIndexes strings to integers

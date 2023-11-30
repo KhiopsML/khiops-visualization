@@ -115,7 +115,6 @@ export class DimensionsDatasService {
 	}
 
 	getDimensionIntervals(dimensionName: string) {
-		const t0 = performance.now();
 
 		// Get nbclusters of current dimension based on collapsed nodes
 		let count = 0;
@@ -127,8 +126,6 @@ export class DimensionsDatasService {
 			const currentTreeNode: TreeNodeVO = this.dimensionsDatas.dimensionsTrees[currentIndex][0];
 			count = this.getNodeIntervalsCount(currentTreeNode);
 		}
-		const t1 = performance.now();
-		// console.log("getDimensionIntervals " + (t1 - t0) + " milliseconds.");
 		return count;
 	}
 

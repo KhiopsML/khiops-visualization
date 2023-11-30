@@ -29,9 +29,6 @@ import {
 	ExtDatasVO
 } from '../model/ext-datas-vo';
 import {
-	ImportFileLoaderService
-} from '@khiops-library/components/import-file-loader/import-file-loader.service';
-import {
 	MatrixCanvasService
 } from '@khiops-library/components/matrix-canvas/matrix-canvas.service';
 import {
@@ -52,7 +49,6 @@ export class ClustersService {
 		private appService: AppService,
 		private importExtDatasService: ImportExtDatasService,
 		private treenodesService: TreenodesService,
-		private importFileLoaderService: ImportFileLoaderService,
 		private dimensionsDatasService: DimensionsDatasService
 	) {
 		this.initialize();
