@@ -20,6 +20,7 @@ import { SaveService } from "./providers/save.service";
 import { AppConfig } from "src/environments/environment";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ReleaseNotesComponent } from "@khiops-library/components/release-notes/release-notes.component";
+import { TreenodesService } from "./providers/treenodes.service";
 
 @Component({
 	selector: "app-root-covisualization",
@@ -51,6 +52,7 @@ export class AppComponent implements AfterViewInit {
 		private configService: ConfigService,
 		private translate: TranslateService,
 		private saveService: SaveService,
+		private treenodesService: TreenodesService,
 		private element: ElementRef
 	) {
 		this.appService.initialize();
@@ -118,15 +120,17 @@ export class AppComponent implements AfterViewInit {
 		this.element.nativeElement.constructDatasToSave = () => {
 			return this.saveService.constructDatasToSave();
 		};
-		this.element.nativeElement.constructSavedJson = () => {
-			return this.saveService.constructSavedJson();
+		this.element.nativeElement.constructPrunedDatasToSave = () => {
+			const collapsedNodes =
+				this.treenodesService.getSavedCollapsedNodes();
+			return this.saveService.constructSavedJson(collapsedNodes);
 		};
 		this.element.nativeElement.setConfig = (config) => {
 			this.configService.setConfig(config);
 		};
 		this.element.nativeElement.snack = (title, duration, panelClass) => {
 			this.ngzone.run(() => {
-				this.snackBar.open(title, null, {
+				this.snackBar.open(title, undefined, {
 					duration: duration,
 					panelClass: panelClass,
 				});
@@ -135,11 +139,6 @@ export class AppComponent implements AfterViewInit {
 		this.element.nativeElement.clean = () => (this.appdatas = null);
 		this.setTheme();
 	}
-
-	// testSaveHierarchy() {
-	// 	let tmp =  this.saveService.constructSavedJson();
-	// 	console.log('file: app.component.ts:126 ~ AppComponent ~ testSaveH ~ tmp:', tmp);
-	// }
 
 	setTheme() {
 		setTimeout(() => {
