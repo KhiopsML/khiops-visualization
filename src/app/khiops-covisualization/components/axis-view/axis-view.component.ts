@@ -70,6 +70,7 @@ export class AxisViewComponent
 		this.dimensionsDatasService.initSelectedDimensions();
 		this.dimensionsDatasService.saveInitialDimension();
 		this.dimensionsDatasService.constructDimensionsTrees();
+		this.dimensionsDatasService.initSavedDatas();
 	}
 
 	initialize() {
@@ -80,7 +81,6 @@ export class AxisViewComponent
 			this.sizes = this.appService.getViewSplitSizes("axisView");
 
 			this.initializeDatas();
-			this.dimensionsDatasService.initSavedDatas();
 
 			const collapsedNodes =
 				this.appService.getSavedDatas("collapsedNodes");
@@ -89,7 +89,7 @@ export class AxisViewComponent
 				!collapsedNodes &&
 				this.dimensionsDatasService.isLargeCocluster()
 			) {
-				// OPTIM: Unfold auto if computer is too laggy
+				// Unfold auto if computer is too laggy
 				this.initializeLargeCoclustering();
 			}
 			this.dimensionsDatasService.getMatrixDatas();
@@ -108,13 +108,10 @@ export class AxisViewComponent
 	}
 
 	initializeSavedState(collapsedNodes) {
-		if (collapsedNodes) {
-			this.treenodesService.setSavedCollapsedNodes(collapsedNodes);
-			let datas =
-				this.saveService.constructSavedJson(collapsedNodes);
-			this.appService.setCroppedFileDatas(datas);
-			this.initializeDatas();
-		}
+		this.treenodesService.setSavedCollapsedNodes(collapsedNodes);
+		let datas = this.saveService.constructSavedJson(collapsedNodes);
+		this.appService.setCroppedFileDatas(datas);
+		this.initializeDatas();
 	}
 
 	initializeLargeCoclustering() {
@@ -127,8 +124,7 @@ export class AxisViewComponent
 			this.treenodesService.getLeafNodesForARank(unfoldState);
 		this.treenodesService.setSavedCollapsedNodes(collapsedNodes);
 
-		let datas =
-			this.saveService.constructSavedJson(collapsedNodes);
+		let datas = this.saveService.constructSavedJson(collapsedNodes);
 
 		this.appService.setCroppedFileDatas(datas);
 

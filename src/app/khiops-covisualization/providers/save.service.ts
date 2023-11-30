@@ -89,89 +89,94 @@ export class SaveService {
 
 	constructSavedJson(collapsedNodesInput ? ) {
 		let newJson = this.constructDatasToSave(collapsedNodesInput);
-		let t0 = performance.now();
-		newJson = this.truncateJsonHierarchy(newJson);
-		let t1 = performance.now();
-		// console.log("truncateJsonHierarchy " + (t1 - t0) + " milliseconds.");
+		if (collapsedNodesInput) {
+			// Transform json if collapsed nodes
+			let t0 = performance.now();
+			newJson = this.truncateJsonHierarchy(newJson);
+			let t1 = performance.now();
+			// console.log("truncateJsonHierarchy " + (t1 - t0) + " milliseconds.");
 
-		t0 = performance.now();
-		newJson = this.updateSummariesParts(newJson);
-		t1 = performance.now();
-		// console.log("updateSummariesParts " + (t1 - t0) + " milliseconds.");
+			t0 = performance.now();
+			newJson = this.updateSummariesParts(newJson);
+			t1 = performance.now();
+			// console.log("updateSummariesParts " + (t1 - t0) + " milliseconds.");
 
-		t0 = performance.now();
-		newJson = this.truncateJsonPartition(newJson);
-		t1 = performance.now();
-		// console.log("truncateJsonPartition " + (t1 - t0) + " milliseconds.");
+			t0 = performance.now();
+			newJson = this.truncateJsonPartition(newJson);
+			t1 = performance.now();
+			// console.log("truncateJsonPartition " + (t1 - t0) + " milliseconds.");
 
-		t0 = performance.now();
-		newJson = this.truncateJsonCells(newJson);
-		t1 = performance.now();
-		// console.log("truncateJsonCells " + (t1 - t0) + " milliseconds.");
+			t0 = performance.now();
+			newJson = this.truncateJsonCells(newJson);
+			t1 = performance.now();
+			// console.log("truncateJsonCells " + (t1 - t0) + " milliseconds.");
 
-		t0 = performance.now();
-		newJson = this.updateSummariesCells(newJson);
-		t1 = performance.now();
-		// console.log("updateSummariesCells " + (t1 - t0) + " milliseconds.");
+			t0 = performance.now();
+			newJson = this.updateSummariesCells(newJson);
+			t1 = performance.now();
+			// console.log("updateSummariesCells " + (t1 - t0) + " milliseconds.");
 
-		if (!collapsedNodesInput) {
-			// Remove collapsed nodes and selected nodes because they have been reduced
-			delete newJson.savedDatas.collapsedNodes;
+			if (!collapsedNodesInput) {
+				// Remove collapsed nodes and selected nodes because they have been reduced
+				delete newJson.savedDatas.collapsedNodes;
+			}
 		}
+
 		// delete datasToSave.savedDatas.selectedNodes; // do not do that to keep context selection
-		console.log('file: save.service.ts:114 ~ constructSavedJson ~ datasToSave:', newJson);
+		console.log('file: save.service.ts:114 ~ constructSavedJson ~ newJson:', newJson);
 		return newJson;
 	}
 
 
 	truncateJsonHierarchy(datas) {
-		const truncatedHierarchy = [...datas.coclusteringReport.dimensionHierarchies];
+		if (datas.savedDatas.collapsedNodes) {
+			const truncatedHierarchy = [...datas.coclusteringReport.dimensionHierarchies];
+			Object.keys(datas.savedDatas.collapsedNodes).forEach((dim) => {
+				const dimIndex = this.dimensionsService.dimensionsDatas.selectedDimensions.findIndex(e => e.name === dim);
 
-		Object.keys(datas.savedDatas.collapsedNodes).forEach((dim) => {
-			const dimIndex = this.dimensionsService.dimensionsDatas.selectedDimensions.findIndex(e => e.name === dim);
+				const nodes = datas.savedDatas.collapsedNodes[dim];
+				const dimHierarchy = truncatedHierarchy.find(e => e.name === dim);
 
-			const nodes = datas.savedDatas.collapsedNodes[dim];
-			const dimHierarchy = truncatedHierarchy.find(e => e.name === dim);
+				const nodesLength = nodes.length;
+				for (let i = 0; i < nodesLength; i++) {
 
-			const nodesLength = nodes.length;
-			for (let i = 0; i < nodesLength; i++) {
+					const nodeName = nodes[i];
+					let nodeChildren: any[] = [];
+					const nodeDetails: TreeNodeVO = this.dimensionsService.dimensionsDatas.dimensionsClusters[dimIndex].find(e => e.cluster === nodeName);
 
-				const nodeName = nodes[i];
-				let nodeChildren: any[] = [];
-				const nodeDetails: TreeNodeVO = this.dimensionsService.dimensionsDatas.dimensionsClusters[dimIndex].find(e => e.cluster === nodeName);
+					// Get children list
+					nodeDetails.getChildrenList();
 
-				// Get children list
-				nodeDetails.getChildrenList();
-
-				if (nodeDetails && nodeDetails.childrenList) {
-					nodeChildren = nodeDetails.childrenList;
-					const nodeChildrenLength = nodeChildren.length;
-					for (let j = nodeChildrenLength - 1; j >= 0; j--) {
-						const nodeIndex = dimHierarchy.clusters.findIndex(e => e.cluster === nodeChildren[j]);
-						if (nodeChildren[j] !== nodeName) { // Do not remove current collapsed node
-							if (nodeIndex !== -1) {
-								dimHierarchy.clusters.splice(nodeIndex, 1);
+					if (nodeDetails && nodeDetails.childrenList) {
+						nodeChildren = nodeDetails.childrenList;
+						const nodeChildrenLength = nodeChildren.length;
+						for (let j = nodeChildrenLength - 1; j >= 0; j--) {
+							const nodeIndex = dimHierarchy.clusters.findIndex(e => e.cluster === nodeChildren[j]);
+							if (nodeChildren[j] !== nodeName) { // Do not remove current collapsed node
+								if (nodeIndex !== -1) {
+									dimHierarchy.clusters.splice(nodeIndex, 1);
+								}
+							} else {
+								if (nodeIndex !== -1) {
+									// Set the isLeaf of the last collapsed node
+									dimHierarchy.clusters[nodeIndex].isLeaf = true;
+								}
 							}
-						} else {
-							if (nodeIndex !== -1) {
-								// Set the isLeaf of the last collapsed node
-								dimHierarchy.clusters[nodeIndex].isLeaf = true;
-							}
+
 						}
-
 					}
+
 				}
 
+			});
+
+			// Sort clusters by leaf and rank
+			for (let k = 0; k < truncatedHierarchy.length; k++) {
+				truncatedHierarchy[k].clusters = _.sortBy(truncatedHierarchy[k].clusters, [(e) => e.isLeaf === false, 'rank']);
 			}
 
-		});
-
-		// Sort clusters by leaf and rank
-		for (let k = 0; k < truncatedHierarchy.length; k++) {
-			truncatedHierarchy[k].clusters = _.sortBy(truncatedHierarchy[k].clusters, [(e) => e.isLeaf === false, 'rank']);
+			datas.coclusteringReport.dimensionHierarchies = truncatedHierarchy;
 		}
-
-		datas.coclusteringReport.dimensionHierarchies = truncatedHierarchy;
 		return datas;
 
 	}
