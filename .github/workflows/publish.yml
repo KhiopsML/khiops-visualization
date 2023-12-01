@@ -1,0 +1,36 @@
+name: Publish to npm
+
+on: workflow_dispatch
+
+jobs:
+    publish:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Get latest tag
+              id: get_tag
+              run: echo "::set-output name=tag::$(git describe --tags --abbrev=0)"
+
+            - name: Update package.json version
+              run: |
+                  echo "{\"version\": \"$(echo ${{ steps.get_tag.outputs.tag }} | sed 's/v//')\"}" > projects/khiops-webcomponent/src/package.json
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "18"
+
+            - name: Install dependencies
+              run: npm install
+
+            - name: Build
+              run: npm run build:webcomponents
+
+            - name: Publish to npm
+              run: npm publish
+              working-directory: dist/khiops-webcomponent
+              env:
+                  NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
