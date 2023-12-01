@@ -1,4 +1,4 @@
-![test workflow](https://github.com/KhiopsML/khiops-visualization/actions/workflows/test.yml/badge.svg)
+![test workflow](https://github.com/KhiopsML/khiops-visualization/actions/workflows/test.yml/badge.svg) [![Publish to NPM](https://github.com/KhiopsML/khiops-visualization/actions/workflows/publish.yml/badge.svg?branch=master)](https://github.com/KhiopsML/khiops-visualization/actions/workflows/publish.yml)
 
 
 # Introduction
