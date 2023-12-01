@@ -24,10 +24,10 @@ jobs:
                   node-version: "18"
 
             - name: Install dependencies
-              run: npm install
+              run: yarn install
 
             - name: Build
-              run: npm run build:webcomponents
+              run: yarn build:webcomponents
 
             - name: Publish to npm
               run: npm publish
