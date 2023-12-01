@@ -1,4 +1,4 @@
-![test workflow](https://github.com/KhiopsML/khiops-visualization/actions/workflows/test.yml/badge.svg) [![Publish to NPM](https://github.com/KhiopsML/khiops-visualization/actions/workflows/publish.yml/badge.svg?branch=master)](https://github.com/KhiopsML/khiops-visualization/actions/workflows/publish.yml)
+![test workflow](https://github.com/KhiopsML/khiops-visualization/actions/workflows/test.yml/badge.svg) [![Publish to NPM](https://github.com/KhiopsML/khiops-visualization/actions/workflows/publish.yml/badge.svg?branch=master)](https://github.com/KhiopsML/khiops-visualization/actions/workflows/publish.yml) [![npm version](https://badge.fury.io/js/khiops-visualization.svg)](https://www.npmjs.com/package/khiops-visualization)
 
 
 # Introduction
