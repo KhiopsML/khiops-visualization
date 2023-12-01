@@ -26,9 +26,9 @@ export class ReleaseNotesService {
 		return new Promise((resolve, reject) => {
 			let url;
 			if (this.khiopsLibraryService.getAppConfig().common.GLOBAL.DEBUG_SOFTWARE_LABEL === 'KV') {
-				url = 'https://api.github.com/repos/khiopsrelease/kv-release/releases';
+				url = 'https://api.github.com/repos/KhiopsML/kv-electron/releases';
 			} else {
-				url = 'https://api.github.com/repos/khiopsrelease/kc-release/releases';
+				url = 'https://api.github.com/repos/KhiopsML/kc-electron/releases';
 			}
 
 			this.http.get(url, {
