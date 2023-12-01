@@ -1,3 +1,6 @@
+![test workflow](https://github.com/KhiopsML/khiops-visualization/actions/workflows/test.yml/badge.svg)
+
+
 # Introduction
 
 Khiops Visualization component. Contains the code of Visualization and Covisualization tools
