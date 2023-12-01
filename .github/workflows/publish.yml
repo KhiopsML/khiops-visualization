@@ -12,11 +12,11 @@ jobs:
 
             - name: Get latest tag
               id: get_tag
-              run: echo "::set-output name=tag::$(git describe --tags --abbrev=0)"
+              run: echo "TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
 
             - name: Update package.json version
               run: |
-                  echo "{\"version\": \"$(echo ${{ steps.get_tag.outputs.tag }} | sed 's/v//')\"}" > projects/khiops-webcomponent/src/package.json
+                  echo "{\"version\": \"$(echo $TAG | sed 's/v//')\"}" > projects/khiops-webcomponent/src/package.json
 
             - name: Setup Node.js
               uses: actions/setup-node@v4
