@@ -10,6 +10,9 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v2
 
+            - name: Fetch complete history
+              run: git fetch --prune --unshallow
+
             - name: Get latest tag
               id: get_tag
               run: echo "TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
