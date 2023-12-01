@@ -14,6 +14,12 @@ import { TreenodesService } from "@khiops-covisualization/providers/treenodes.se
 import { AppConfig } from "src/environments/environment";
 import { Subscription } from "rxjs";
 import { DimensionsDatasVO } from "@khiops-covisualization/model/dimensions-data-vo";
+import {
+	MatrixModesI
+} from '@khiops-library/interfaces/matrix-modes';
+import {
+	MatrixOptionsI
+} from '@khiops-library/interfaces/matrix-options';
 
 @Component({
 	selector: "app-matrix-container",
@@ -33,16 +39,8 @@ export class MatrixContainerComponent implements OnInit, OnDestroy {
 
 	sizes: any;
 
-	matrixModes = {
-		types: [],
-		selected: undefined,
-		selectedIndex: undefined,
-	};
-
-	matrixOptions = {
-		types: ["GLOBAL.STANDARD", "GLOBAL.FREQUENCY"],
-		selected: undefined,
-	};
+	matrixModes: MatrixModesI = new MatrixModesI();
+	matrixOptions: MatrixOptionsI = new MatrixOptionsI();
 
 	isFullscreen = false;
 	treeSelectedNodeChangedSub: Subscription;
@@ -164,7 +162,7 @@ export class MatrixContainerComponent implements OnInit, OnDestroy {
 		}
 
 		// Check if saved into json
-		if (this.dimensionsDatas.matrixMode !== undefined) {
+		if (this.dimensionsDatas.matrixMode !== undefined && this.dimensionsDatas.matrixMode < this.matrixModes.types.length) {
 			this.matrixModes.selected = this.matrixModes.types[this.dimensionsDatas.matrixMode];
 			this.matrixModes.selectedIndex = this.dimensionsDatas.matrixMode;
 		}

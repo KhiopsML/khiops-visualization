@@ -145,7 +145,7 @@ export class SaveService {
 					const nodeDetails: TreeNodeVO = this.dimensionsService.dimensionsDatas.dimensionsClusters[dimIndex].find(e => e.cluster === nodeName);
 
 					// Get children list
-					nodeDetails.getChildrenList();
+					nodeDetails && nodeDetails.getChildrenList();
 
 					if (nodeDetails && nodeDetails.childrenList) {
 						nodeChildren = nodeDetails.childrenList;

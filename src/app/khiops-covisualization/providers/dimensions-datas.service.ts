@@ -195,7 +195,10 @@ export class DimensionsDatasService {
 		const savedSelectedDimensions = this.appService.getSavedDatas('selectedDimensions');
 		if (savedSelectedDimensions) {
 			for (let i = 0; i < savedSelectedDimensions.length; i++) {
-				this.updateSelectedDimension(this.dimensionsDatas.selectedDimensions.find(e => e.name === savedSelectedDimensions[i].name), i);
+				if (savedSelectedDimensions[i]) {
+					const dimension = this.dimensionsDatas.selectedDimensions.find(e => e.name === savedSelectedDimensions[i].name);
+					dimension && this.updateSelectedDimension(dimension, i);
+				}
 			}
 		}
 
@@ -205,7 +208,7 @@ export class DimensionsDatasService {
 	updateSelectedDimension(dimension, position) {
 		// Find current dim position
 		const currentIndex: any = this.dimensionsDatas.selectedDimensions.findIndex(e => {
-			return dimension.name === e.name;
+			return dimension && dimension.name === e.name;
 		});
 
 		if (currentIndex !== -1) {

@@ -192,8 +192,9 @@ export class TreenodesService {
 		if (savedNodes) {
 			for (let index = 0; index < savedNodes.length; index++) {
 				const nodeName = savedNodes[index];
-				const node = this.getNodeFromName(this.dimensionsDatas.selectedDimensions[index].name, nodeName);
-				this.dimensionsDatas.selectedNodes.push(node)
+				const dimension = this.dimensionsDatas.selectedDimensions[index];
+				const node = dimension && this.getNodeFromName(dimension.name, nodeName);
+				node && this.dimensionsDatas.selectedNodes.push(node)
 			}
 		}
 	}
