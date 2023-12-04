@@ -1,11 +1,11 @@
 <div id="variable-graph-details-comp" fxLayout="column" fxFlexFill [ngClass]="{'fullscreen': isFullscreen}">
 	<div fxLayout="column" fxFlexFill
-		*ngIf="distributionDatas.distributionGraphDatas || distributionDatas.targetDistributionGraphDatas || histogramDatas">
+		*ngIf="distributionDatas.distributionGraphDatas || distributionDatas.targetDistributionGraphDatas || distributionDatas.histogramDatas">
 		<kl-graph-header [selectedVariable]="selectedVariable" (scaleValueChanged)="onScaleValueChanged($event)"
-			(toggleFullscreen)="onToggleFullscreen($event)" [hideScale]="histogramDatas">
+			(toggleFullscreen)="onToggleFullscreen($event)" [hideScale]="distributionDatas.histogramDatas">
 		</kl-graph-header>
 		<kl-distribution-graph-canvas #distributionGraph fxFlex="1 1 100%"
-			*ngIf="showDistributionGraph && distributionDatas.distributionGraphDatas && !histogramDatas"
+			*ngIf="showDistributionGraph && distributionDatas.distributionGraphDatas && !distributionDatas.histogramDatas"
 			class="distribution-graph" id="{{'distribution-graph'+position}}" [attr.id]="'distribution-graph'+position"
 			[position]="position" [scrollPosition]="scrollPosition"
 			(scrollPositionChanged)="onScrollPositionChanged($event)" [isLoadingDatas]="isLoadingGraphDatas"
@@ -15,8 +15,9 @@
 			(selectedItemChanged)="onSelectedDistributionGraphItemChanged($event)">
 		</kl-distribution-graph-canvas>
 
-		<app-histogram id="app-histogram" class="app-histogram" *ngIf="histogramDatas" fxFlex="1 1 100%"
-			[datas]="histogramDatas" (selectedItemChanged)="onSelectedDistributionGraphItemChanged($event)">
+		<app-histogram id="app-histogram" class="app-histogram" *ngIf="distributionDatas.histogramDatas"
+			fxFlex="1 1 100%" [datas]="distributionDatas.histogramDatas"
+			(selectedItemChanged)="onSelectedDistributionGraphItemChanged($event)">
 		</app-histogram>
 
 		<app-target-distribution-graph-canvas #targetDistributionGraph fxFlex="1 1 100%"
@@ -33,6 +34,6 @@
 			[activeEntries]="activeEntries"></app-target-distribution-graph-canvas>
 	</div>
 	<kl-no-data fxFlexFill
-		*ngIf="!distributionDatas.distributionGraphDatas && !distributionDatas.targetDistributionGraphDatas && !histogramDatas">
+		*ngIf="!distributionDatas.distributionGraphDatas && !distributionDatas.targetDistributionGraphDatas && !distributionDatas.histogramDatas">
 	</kl-no-data>
 </div>

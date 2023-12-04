@@ -139,24 +139,8 @@ export class DistributionGraphCanvasComponent extends ScrollableGraphCanvasCompo
 				x: {
 					ticks: {
 						callback: function (value: number, index: number, e) {
-							if (!self.inputDatas.datasets[0].setPercentage) {
-								// Default chartjs
-								return this.getLabelForValue(value);
-							} else {
-								// Compute number according to the percentage
-								const max = self.inputDatas.intervals[self.inputDatas.intervals.length - 1][1];
-								const min = self.inputDatas.intervals[0][0];
-								const interval = max - min;
-								const barLength = self.inputDatas.intervals.length;
-
-								const currentValue = (interval / barLength * (index * 2 + 1) / 2) + min
-
-								if (interval > 10) {
-									return Math.floor(currentValue * 10) / 10;
-								} else {
-									return Math.floor(currentValue * 100) / 100;
-								}
-							}
+							// Default chartjs
+							return this.getLabelForValue(value);
 						},
 					}
 				}

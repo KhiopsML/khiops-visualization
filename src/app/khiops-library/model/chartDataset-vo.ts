@@ -8,14 +8,12 @@ export class ChartDatasetVO {
 	borderWidth: number;
 	maxBarThickness: any;
 	barThickness: any;
-	setPercentage: number[] | undefined;
 	barPercentage: number;
 	categoryPercentage: number;
 
 	constructor(label?, type?) {
 		this.label = label || "";
 		this.type = type || "bar"; // By default
-		this.setPercentage = undefined;
 	}
 
 	removeBar() {
@@ -23,7 +21,6 @@ export class ChartDatasetVO {
 	}
 
 	initHistogram() {
-		this.setPercentage = [];
 		this.barPercentage = 1.0;
 		this.categoryPercentage = 1.0;
 	}

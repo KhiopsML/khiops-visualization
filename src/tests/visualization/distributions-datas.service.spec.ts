@@ -99,7 +99,7 @@ describe('DistributionDatasService', () => {
 
 	});
 
-	it('getdistributionGraphDatas should return valid datas [defaultGroup, Numerical, R1, Missing informations]', () => {
+	it('getdistributionGraphDatas should return valid datas [defaultGroup, Numerical, R1, Missing informations Non supervised]', () => {
 
 		const fileDatas = require('../mocks/visualization/defaultGroup.json');
 		appService.setFileDatas(fileDatas);
@@ -110,12 +110,12 @@ describe('DistributionDatasService', () => {
 
 		preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[0], 'preparationReport');
 		const selectedVariable = preparationDatasService.getSelectedVariable('preparationReport');
-		const res = distributionDatasService.getdistributionGraphDatas(selectedVariable);
+		const res = distributionDatasService.getHistogramGraphDatas(selectedVariable);
 
-		// Check if missing information is removed
-		expect(res.datasets[0].data[0]).toEqual(0.0000068024114898816155);
-		expect(res.intervals[0]).toEqual([1000, 11550]);
-
+		expect(res[0].frequency).toEqual(1263);
+		expect(res[0].logValue).toEqual(-5.167337100368651);
+		expect(res[0].partition).toEqual([1000, 11550]);
+		expect(res[0].value).toEqual(0.0000068024114898816155);
 	});
 
 	it('getdistributionGraphDatas should return valid datas [C100_AllReports, Numerical, R15]', () => {
@@ -131,7 +131,6 @@ describe('DistributionDatasService', () => {
 		const selectedVariable = preparationDatasService.getSelectedVariable('preparationReport');
 		const res = distributionDatasService.getdistributionGraphDatas(selectedVariable);
 		expect(res.datasets[0].data[0]).toEqual(49.042657142857145);
-
 	});
 
 	it('getdistributionGraphDatas should return valid datas [irisU, Categorical, R1]', () => {
@@ -164,22 +163,6 @@ describe('DistributionDatasService', () => {
 		const res = distributionDatasService.getdistributionGraphDatas(selectedVariable);
 		expect(res.datasets[0].data[0]).toEqual(27.55896295429274);
 
-	});
-
-	it('getTreeNodeDistributionGraphDatas should return valid datas [new-hyper-tree, treePreparationReport, R1]', () => {
-
-		const fileDatas = require('../mocks/visualization/new-hyper-tree.json');
-		appService.setFileDatas(fileDatas);
-
-		treePreparationDatasService.initialize();
-		distributionDatasService.initialize();
-		distributionDatasService.setPreparationSource('treePreparationReport');
-
-		treePreparationDatasService.setSelectedVariable(fileDatas.treePreparationReport.variablesStatistics[0]);
-		treePreparationDatasService.initSelectedNodes();
-		const selectedNode = treePreparationDatasService.getSelectedNode();
-		const res = distributionDatasService.getTreeNodeDistributionGraphDatas(selectedNode)
-		expect(res.datasets[0].extra[0].extra.value).toEqual(5118);
 	});
 
 	it('getTreeNodeTargetDistributionGraphDatas should return valid datas [new-hyper-tree, treePreparationReport, R1]', () => {

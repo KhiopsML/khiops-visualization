@@ -38,6 +38,7 @@ import {
 import {
 	PreparationDatasService
 } from './preparation-datas.service';
+import { HistogramValuesI } from '@khiops-visualization/interfaces/histogram-values';
 
 @Injectable({
 	providedIn: 'root'
@@ -278,6 +279,7 @@ export class DistributionDatasService {
 
 	// tslint:disable-next-line:typedef-whitespace
 	getdistributionGraphDatas(selectedVariable, type ? : string, initActiveEntries ? : boolean): any {
+
 		let distributionsGraphDetails = {
 			datasets: [],
 			labels: []
@@ -294,6 +296,7 @@ export class DistributionDatasService {
 		if (this.distributionDatas.isValid()) {
 			const currentVar = appDatas[this.distributionDatas.preparationSource].variablesDetailedStatistics[selectedVariable.rank];
 			if (currentVar) {
+				this.distributionDatas.setDefaultGraphOptions();
 
 				const variableDetails: VariableDetailsVO = new VariableDetailsVO(currentVar, this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_TABLE_SIZE);
 				const dimensions: any[] = _.cloneDeep(variableDetails.dataGrid.dimensions);
@@ -310,7 +313,6 @@ export class DistributionDatasService {
 					currentDimension = dimensions[1];
 					currentDatas = variableDetails.dataGrid.partTargetFrequencies;
 				}
-				this.distributionDatas.setDefaultGraphOptions();
 				distributionsGraphDetails = this.computeDistributionGraph(currentDimension, currentDatas, dimensions, partition, currentXAxis);
 
 			}
@@ -326,15 +328,16 @@ export class DistributionDatasService {
 
 
 	getHistogramGraphDatas(selectedVariable) {
+
 		const appDatas = this.appService.getDatas().datas;
-		const varDatas =
-			appDatas.preparationReport.variablesDetailedStatistics[selectedVariable.rank] ?.dataGrid;
-		let dataSet: any = undefined;
+		const varDatas = appDatas.preparationReport.variablesDetailedStatistics[selectedVariable.rank] &&
+			appDatas.preparationReport.variablesDetailedStatistics[selectedVariable.rank].dataGrid;
+		let histogramGraphDetails: HistogramValuesI[] = undefined;
 
 		if (varDatas) {
 			this.distributionDatas.setHistogramGraphOptions();
 
-			dataSet = []
+			histogramGraphDetails = []
 			const totalFreq = varDatas.frequencies.reduce(
 				(partialSum: any, a: any) => partialSum + a,
 				0
@@ -344,56 +347,24 @@ export class DistributionDatasService {
 				if (partition.length !== 0) {
 					const delta = partition[1] - partition[0];
 					let value = varDatas.frequencies[i] / totalFreq / delta;
-					// let value = varDatas.frequencies[i] / totalFreq;
-					// let logValue = Math.log10(value / totalFreq);
 					let logValue = Math.log10(value);
 					if (logValue === -Infinity) {
 						logValue = 0;
 					}
-
-					dataSet.push({
+					const data: HistogramValuesI = {
 						frequency: varDatas.frequencies[i],
 						partition: partition,
 						value: value,
 						logValue: logValue,
-					});
+					}
+					histogramGraphDetails.push(data);
 				}
 			});
 		}
 
-		return dataSet;
-	}
+		this.distributionDatas.histogramDatas = histogramGraphDetails;
 
-	/**
-	 * Get distribution when only one var selected
-	 * For tree node leaf details
-	 */
-	getTreeNodeDistributionGraphDatas(selectedNode, type ? : string): any {
-		let distributionsGraphDetails = {
-			datasets: [],
-			labels: []
-		};
-
-		if (type) {
-			this.distributionDatas.distributionType = type;
-		}
-
-		if (selectedNode && selectedNode.isLeaf) {
-			const partition = 0;
-			const currentDatas = [selectedNode.targetValues.frequencies];
-			const currentDimension: any = selectedNode;
-			currentDimension.partition = selectedNode.targetValues.values;
-			const dimensions = currentDimension;
-			const currentXAxis = [selectedNode.nodeId];
-
-			distributionsGraphDetails = this.computeDistributionGraph(currentDimension, currentDatas, dimensions, partition, currentXAxis);
-		}
-		if (distributionsGraphDetails.datasets.length === 0) {
-			distributionsGraphDetails = undefined;
-		}
-		this.distributionDatas.treeNodedistributionGraphDatas = distributionsGraphDetails;
-
-		return distributionsGraphDetails;
+		return histogramGraphDetails;
 	}
 
 	computeDistributionGraph(currentDimension, currentDatas, dimensions, partition, currentXAxis): any {
@@ -411,14 +382,11 @@ export class DistributionDatasService {
 			}
 
 			partition = currentDimension.partition && currentDimension.partition.length;
-			let label = this.distributionDatas.distributionType;
-			if (this.distributionDatas.distributionTypeX) {
-				label += ' / ' + this.distributionDatas.distributionTypeX;
-			}
-			const currentDataSet = new ChartDatasetVO(label);
+			const currentDataSet = new ChartDatasetVO(this.distributionDatas.distributionType);
 			const [frequencyArray, coverageArray] = this.getAllFrequencyAndCoverageValues(currentDatas, dimensions, partition);
 
 			let l: number = currentDatas.length;
+
 			for (let i = 0; i < l; i++) {
 
 				let currentValue = 0;
@@ -441,64 +409,18 @@ export class DistributionDatasService {
 					graphItem.value = coverageValue;
 					total = UtilsService.arraySum(frequencyArray);
 				} else {
+					currentValue = coverageValue;
 					total = UtilsService.arraySum(coverageArray);
-					if (currentDimension.type === 'Numerical' && !this.preparationDatasService.isSupervised()) {
-						const delta = currentXAxis[i][1] - currentXAxis[i][0];
-						currentValue = coverageValue / total / delta;
-						graphItem.value = currentValue;
-					} else {
-						currentValue = coverageValue;
-						graphItem.value = currentValue * 100 / total;
-					}
-				}
-				if (this.distributionDatas.distributionType === 'yLog') {
-					graphItem.value = Math.log10(currentValue / total);
+					graphItem.value = currentValue * 100 / total;
 				}
 				graphItem.extra.frequencyValue = frequencyValue;
 				graphItem.extra.coverageValue = coverageValue;
-				if (currentDimension.type === 'Numerical' && !this.preparationDatasService.isSupervised()) {
-					if (this.distributionDatas.distributionType === 'yLog') {
-						graphItem.extra.value = graphItem.value;
-					} else {
-						graphItem.extra.value = currentValue;
-					}
-				} else {
-					graphItem.extra.value = coverageValue;
-					graphItem.extra.percent = currentValue * 100 / total;
-				}
+				graphItem.extra.value = coverageValue;
+				graphItem.extra.percent = currentValue * 100 / total;
 
-				if (graphItem.value === 0 || graphItem.value === Infinity || graphItem.value === -Infinity) {
-					// Remove the min height bar when hidden
-					graphItem.value = null;
-				}
 				currentDataSet.data.push(graphItem.value);
 				currentDataSet.extra.push(graphItem);
 
-			}
-
-			// Remove -Infinity values #92
-			for (let i = 0; i < l; i++) {
-				if (currentDataSet.extra[i].extra.value === -Infinity) {
-					// Remove the min height bar when hidden
-					currentDataSet.data[i] = Math.round(Math.min(...currentDataSet.data));
-				}
-			}
-
-			if (currentDimension.type === 'Numerical' && !this.preparationDatasService.isSupervised()) {
-				if (this.distributionDatas.distributionType === 'yLog') {
-					// Now revert the histogram for Ylog
-					this.reverseHistogramDatas(currentDataSet);
-				}
-
-				// Compute the percent x
-				const min = currentXAxis[0][0];
-				const max = currentXAxis[currentXAxis.length - 1][1];
-				currentDataSet.initHistogram();
-
-				for (let index = 0; index < currentXAxis.length; index++) {
-					const percentage = (currentXAxis[index][1] - currentXAxis[index][0]) * 100 / (max - min);
-					currentDataSet.setPercentage.push(percentage);
-				}
 			}
 			distributionsGraphDetails.datasets.push(currentDataSet);
 		}
@@ -506,21 +428,6 @@ export class DistributionDatasService {
 			distributionsGraphDetails = undefined;
 		}
 		return distributionsGraphDetails;
-	}
-
-	reverseHistogramDatas(currentDataSet) {
-		// When Ylog, we need to reverse values to make a miror of the graph
-		// get the min and max
-		const min = Math.min(...currentDataSet.data);
-		const max = Math.max(...currentDataSet.data);
-		const base = Math.floor(min)
-		currentDataSet.min = min;
-		currentDataSet.max = max;
-		currentDataSet.base = base;
-
-		for (let index = 0; index < currentDataSet.data.length; index++) {
-			currentDataSet.data[index] = -base + currentDataSet.data[index];
-		}
 	}
 
 	getAllFrequencyAndCoverageValues(currentDatas, dimensions, partition) {

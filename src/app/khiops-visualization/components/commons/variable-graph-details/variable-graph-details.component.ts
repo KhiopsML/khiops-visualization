@@ -69,7 +69,6 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
 	isLoadingGraphDatas: boolean;
 	activeEntries = 0;
 	isFullscreen: boolean = false;
-	histogramDatas: any
 
 	constructor(
 		private preparationDatasService: PreparationDatasService,
@@ -95,11 +94,15 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
 					this.distributionDatasService.getTargetDistributionGraphDatas(this.selectedVariable);
 				}
 				if (this.showDistributionGraph) {
+
+					// Reinit datas
+					this.distributionDatas.histogramDatas = undefined;
+					this.distributionDatas.distributionGraphDatas = undefined;
+
 					if (this.selectedVariable.isNumerical && !this.preparationDatasService.isSupervised()) {
-						this.histogramDatas =
-							this.distributionDatasService.getHistogramGraphDatas(
-								this.selectedVariable
-							);
+						this.distributionDatasService.getHistogramGraphDatas(
+							this.selectedVariable
+						);
 					} else {
 						this.distributionDatasService.getdistributionGraphDatas(this.selectedVariable);
 					}

@@ -1,4 +1,7 @@
 import {
+	HistogramValuesI
+} from "@khiops-visualization/interfaces/histogram-values";
+import {
 	AppConfig
 } from "src/environments/environment";
 
@@ -27,6 +30,8 @@ export class DistributionDatasVO {
 		datasets: any[],
 		labels: any[]
 	} = undefined;
+
+	histogramDatas: HistogramValuesI[] = undefined;
 
 	treeNodedistributionGraphDatas: {
 		datasets: any[],
