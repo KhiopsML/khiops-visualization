@@ -61,6 +61,7 @@ import pjson from 'package.json';
 import {
 	ConfigService
 } from '@khiops-library/providers/config.service';
+import { UtilsService } from '@khiops-library/providers/utils.service';
 
 
 @Component({
@@ -68,7 +69,6 @@ import {
 	templateUrl: './homeLayout.component.html',
 	styleUrls: ['./homeLayout.component.scss'],
 	encapsulation: ViewEncapsulation.None
-
 })
 export class HomeLayoutComponent implements OnInit {
 
@@ -78,10 +78,10 @@ export class HomeLayoutComponent implements OnInit {
 	get appDatas(): any {
 		return this.appService.getDatas();
 	}
-	set appDatas(value: any) {
-		this.appService.setFileDatas(value);
-		if (value) {
-			this.initializeHome();
+	set appDatas(datas: any) {
+		this.appService.setFileDatas(datas);
+		if (datas && !UtilsService.isEmpty(datas)) {
+			this.initializeHome(datas);
 		}
 	}
 
@@ -170,14 +170,14 @@ export class HomeLayoutComponent implements OnInit {
 		this.selectedTab = undefined;
 		this.currentDatas = datas;
 		this.appService.setFileDatas(datas);
-		if (datas) {
-			this.initializeHome();
+		if (datas && !UtilsService.isEmpty(datas)) {
+			this.initializeHome(datas);
 		}
 
 	}
 
-	initializeHome() {
-		this.isCompatibleJson = this.appService.isCompatibleJson();
+	initializeHome(datas) {
+		this.isCompatibleJson = this.appService.isCompatibleJson(datas);
 		this.showProjectTab = this.configService.getConfig().showProjectTab;
 		if (this.showProjectTab === undefined) {
 			this.showProjectTab = true;

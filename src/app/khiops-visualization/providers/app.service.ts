@@ -147,17 +147,16 @@ export class AppService {
 		return this.appDatas;
 	}
 
-	isCompatibleJson(): boolean {
-		if (this.appDatas && this.appDatas.datas) {
-
-			if (this.appDatas.datas.tool === "Khiops" &&
-				(this.appDatas.datas.preparationReport ||
-					this.appDatas.datas.textPreparationReport ||
-					this.appDatas.datas.treePreparationReport ||
-					this.appDatas.datas.bivariatePreparationReport ||
-					this.appDatas.datas.evaluationReport ||
-					this.appDatas.datas.trainEvaluationReport ||
-					this.appDatas.datas.testEvaluationReport)) {
+	isCompatibleJson(datas): boolean {
+		if (datas) {
+			if (datas.tool === "Khiops" &&
+				(datas.preparationReport ||
+					datas.textPreparationReport ||
+					datas.treePreparationReport ||
+					datas.bivariatePreparationReport ||
+					datas.evaluationReport ||
+					datas.trainEvaluationReport ||
+					datas.testEvaluationReport)) {
 				return true;
 			} else {
 				return false;

@@ -61,6 +61,7 @@ import {
 	AnnotationService
 } from '@khiops-covisualization/providers/annotation.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
+import { UtilsService } from '@khiops-library/providers/utils.service';
 
 @Component({
 	selector: 'app-home-layout',
@@ -83,11 +84,11 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 		return this.appService.getDatas();
 	}
 	@Input()
-	public set appDatas(value) {
-		this.appService.setFileDatas(value);
-		if (value) {
-			this.initializeHome();
-			this.onFileLoaderDataChanged(value);
+	public set appDatas(datas) {
+		this.appService.setFileDatas(datas);
+		if (datas && !UtilsService.isEmpty(datas)) {
+			this.initializeHome(datas);
+			this.onFileLoaderDataChanged(datas);
 		}
 	}
 	activeTab = AppConfig.covisualizationCommon.HOME.ACTIVE_TAB_INDEX;
@@ -215,8 +216,8 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 		this.currentDatas = datas;
 		this.appService.setFileDatas(datas);
 
-		if (datas) {
-			this.initializeHome();
+		if (datas && !UtilsService.isEmpty(datas)) {
+			this.initializeHome(datas);
 			this.openContextView = false;
 			this.selectedTab = undefined;
 			this.activeTab = 0;
@@ -224,9 +225,9 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 
 	}
 
-	initializeHome() {
-		this.isCompatibleJson = this.appService.isCompatibleJson();
-		const isCollidingJson = this.appService.isCollidingJson();
+	initializeHome(datas) {
+		this.isCompatibleJson = this.appService.isCompatibleJson(datas);
+		const isCollidingJson = this.appService.isCollidingJson(datas);
 
 		this.showProjectTab = this.configService.getConfig().showProjectTab;
 		if (this.showProjectTab === undefined) {

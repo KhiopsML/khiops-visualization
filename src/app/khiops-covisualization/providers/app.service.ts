@@ -115,12 +115,12 @@ export class AppService {
 		return this.initialDatas;
 	}
 
-	isCompatibleJson(): boolean {
-		return this.appDatas && this.appDatas.datas && this.appDatas.datas.tool === "Khiops Coclustering" && this.appDatas.datas.coclusteringReport;
+	isCompatibleJson(datas): boolean {
+		return datas && datas.tool === "Khiops Coclustering" && datas.coclusteringReport;
 	}
 
-	isCollidingJson(): boolean {
-		return this.appDatas && this.appDatas.datas && this.appDatas.datas.khiops_encoding === 'colliding_ansi_utf8';
+	isCollidingJson(datas): boolean {
+		return datas && datas.khiops_encoding === 'colliding_ansi_utf8';
 	}
 
 	isBigJsonFile(): boolean {
