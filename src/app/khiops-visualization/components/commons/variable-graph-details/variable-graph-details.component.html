@@ -11,8 +11,7 @@
 			(scrollPositionChanged)="onScrollPositionChanged($event)" [isLoadingDatas]="isLoadingGraphDatas"
 			[scaleValue]="scaleValue" [graphOptions]="distributionDatas.distributionGraphOptions"
 			[inputDatas]="distributionDatas.distributionGraphDatas"
-			(graphTypeChanged)="onDistributionGraphTypeChanged($event)"
-			(graphTypeXChanged)="onDistributionGraphTypeXChanged($event)" [activeEntries]="activeEntries"
+			(graphTypeChanged)="onDistributionGraphTypeChanged($event)" [activeEntries]="activeEntries"
 			(selectedItemChanged)="onSelectedDistributionGraphItemChanged($event)">
 		</kl-distribution-graph-canvas>
 

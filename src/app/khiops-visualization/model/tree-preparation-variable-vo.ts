@@ -15,6 +15,9 @@ export class TreePreparationVariableVO {
 	dataCost: number;
 	level: number;
 
+	isCategorical: boolean;
+	isNumerical: boolean;
+
 	constructor(object, id) {
 
 		// Generate id for grid
@@ -26,6 +29,10 @@ export class TreePreparationVariableVO {
 		this.name = object.name || undefined;
 		this.rank = object.rank || undefined;
 		this.type = object.type || undefined;
+
+		this.isNumerical = this.type === 'Numerical';
+		this.isCategorical = this.type === 'Categorical';
+
 		this.derivationRule = object.derivationRule || undefined;
 		this.values = object.values || undefined;
 		this.parts = object.parts || undefined;

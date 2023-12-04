@@ -26,6 +26,12 @@ import {
 import {
 	AppConfig
 } from 'src/environments/environment';
+import {
+	PreparationVariableVO
+} from '@khiops-visualization/model/preparation-variable-vo';
+import {
+	TreePreparationVariableVO
+} from '@khiops-visualization/model/tree-preparation-variable-vo';
 
 @Component({
 	selector: 'app-variable-graph-details',
@@ -44,7 +50,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
 
 	@Input() showTargetDistributionGraph = true;
 	@Input() showDistributionGraph = true;
-	@Input() selectedVariable;
+	@Input() selectedVariable: PreparationVariableVO | TreePreparationVariableVO;
 	@Input() selectedGraphItemIndex = 0;
 	@Input() preparationSource;
 	@Input() position = 0; // in case of multiple component in the same page
@@ -89,11 +95,14 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
 					this.distributionDatasService.getTargetDistributionGraphDatas(this.selectedVariable);
 				}
 				if (this.showDistributionGraph) {
-					this.distributionDatasService.getdistributionGraphDatas(this.selectedVariable);
-					this.histogramDatas =
-						this.distributionDatasService.getHistogramGraphDatas(
-							this.selectedVariable
-						);
+					if (this.selectedVariable.isNumerical && !this.preparationDatasService.isSupervised()) {
+						this.histogramDatas =
+							this.distributionDatasService.getHistogramGraphDatas(
+								this.selectedVariable
+							);
+					} else {
+						this.distributionDatasService.getdistributionGraphDatas(this.selectedVariable);
+					}
 				}
 
 				if (this.preparationSource === 'treePreparationReport') {
@@ -151,12 +160,6 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
 	onDistributionGraphTypeChanged(type: any) {
 		this.distributionGraphType = type;
 		this.distributionDatasService.getdistributionGraphDatas(this.getCurrentVariable(), this.distributionGraphType, false);
-		this.initActiveEntries(this.selectedGraphItemIndex);
-	}
-
-	onDistributionGraphTypeXChanged(typeX: any) {
-		this.distributionGraphTypeX = typeX;
-		this.distributionDatasService.getdistributionGraphDatas(this.getCurrentVariable(), this.distributionGraphType, false, this.distributionGraphTypeX);
 		this.initActiveEntries(this.selectedGraphItemIndex);
 	}
 

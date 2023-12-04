@@ -277,7 +277,7 @@ export class DistributionDatasService {
 
 
 	// tslint:disable-next-line:typedef-whitespace
-	getdistributionGraphDatas(selectedVariable, type ? : string, initActiveEntries ? : boolean, typeX ? : string): any {
+	getdistributionGraphDatas(selectedVariable, type ? : string, initActiveEntries ? : boolean): any {
 		let distributionsGraphDetails = {
 			datasets: [],
 			labels: []
@@ -289,11 +289,6 @@ export class DistributionDatasService {
 		}
 		if (type) {
 			this.distributionDatas.distributionType = type;
-		}
-		if (typeX) {
-			this.distributionDatas.distributionTypeX = typeX;
-		} else {
-			this.distributionDatas.distributionTypeX = '';
 		}
 
 		if (this.distributionDatas.isValid()) {
@@ -315,11 +310,7 @@ export class DistributionDatasService {
 					currentDimension = dimensions[1];
 					currentDatas = variableDetails.dataGrid.partTargetFrequencies;
 				}
-				if (currentDimension.type === 'Numerical' && !this.preparationDatasService.isSupervised()) {
-					this.distributionDatas.setHistogramGraphOptions();
-				} else {
-					this.distributionDatas.setDefaultGraphOptions();
-				}
+				this.distributionDatas.setDefaultGraphOptions();
 				distributionsGraphDetails = this.computeDistributionGraph(currentDimension, currentDatas, dimensions, partition, currentXAxis);
 
 			}
@@ -339,9 +330,9 @@ export class DistributionDatasService {
 		const varDatas =
 			appDatas.preparationReport.variablesDetailedStatistics[selectedVariable.rank] ?.dataGrid;
 		let dataSet: any = undefined;
+
 		if (varDatas) {
-			  if (!varDatas.frequencies || varDatas.dimensions[0].partition[0].length === 1) {
-			  } else {
+			this.distributionDatas.setHistogramGraphOptions();
 
 			dataSet = []
 			const totalFreq = varDatas.frequencies.reduce(
@@ -368,11 +359,8 @@ export class DistributionDatasService {
 					});
 				}
 			});
-			  }
-
-		} else {
-			//   throw 'variable ' + variable + ' unfound';
 		}
+
 		return dataSet;
 	}
 

@@ -17,6 +17,9 @@ export class PreparationVariableVO {
 	preparedName: string;
 	derivationRule: string;
 
+	isCategorical: boolean;
+	isNumerical: boolean;
+
 	weight: number;
 	values: number;
 	parts: number;
@@ -43,6 +46,10 @@ export class PreparationVariableVO {
 		this.nameY = object.nameY;
 		this.rank = object.rank;
 		this.type = object.type;
+
+		this.isNumerical = this.type === 'Numerical';
+		this.isCategorical = this.type === 'Categorical';
+
 		this.preparedName = object.preparedName;
 		this.derivationRule = object.derivationRule;
 

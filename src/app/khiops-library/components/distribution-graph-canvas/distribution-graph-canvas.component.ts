@@ -43,7 +43,6 @@ export class DistributionGraphCanvasComponent extends ScrollableGraphCanvasCompo
 	@Input() hideGraphOptions = false;
 
 	@Output() graphTypeChanged: EventEmitter < any > = new EventEmitter();
-	@Output() graphTypeXChanged: EventEmitter < any > = new EventEmitter();
 	@Output() selectedItemChanged: EventEmitter < any > = new EventEmitter();
 	componentType = '1dBarChart'; // needed to copy datas
 
