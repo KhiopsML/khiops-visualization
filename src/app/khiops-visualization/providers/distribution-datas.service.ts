@@ -245,7 +245,7 @@ export class DistributionDatasService {
 					const kObj: any = displayedValues.find(e => e.name === currentPartition);
 
 					if (kObj && kObj.show) {
-						if (type === 'GLOBAL.PROBABILITIES') {
+						if (type === TYPES.PROBABILITIES) {
 							currentValue = el[k] * 100 / currentTotal;
 						} else {
 							// get sum of current proba

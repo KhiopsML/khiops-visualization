@@ -19,6 +19,7 @@ import {
 	TreePreparationDatasService
 } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { REPORTS } from '@khiops-library/enum/reports';
+import { TYPES } from '@khiops-library/enum/types';
 
 let distributionDatasService: DistributionDatasService;
 let preparationDatasService: PreparationDatasService;
@@ -78,7 +79,7 @@ describe('Visualization', () => {
 
 			preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[40], REPORTS.PREPARATION_REPORT);
 			const selectedVariable = preparationDatasService.getSelectedVariable(REPORTS.PREPARATION_REPORT);
-			const res = distributionDatasService.getTargetDistributionGraphDatas(selectedVariable, 'GLOBAL.LIFT');
+			const res = distributionDatasService.getTargetDistributionGraphDatas(selectedVariable, TYPES.LIFT);
 
 			expect(res.datasets[0].data[0]).toEqual(1.0250084657655503);
 

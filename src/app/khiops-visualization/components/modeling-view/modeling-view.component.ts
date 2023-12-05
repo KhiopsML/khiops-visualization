@@ -48,6 +48,7 @@ import {
 	KhiopsLibraryService
 } from '@khiops-library/providers/khiops-library.service';
 import { REPORTS } from '@khiops-library/enum/reports';
+import { TYPES } from '@khiops-library/enum/types';
 
 @Component({
 	selector: 'app-modeling-view',

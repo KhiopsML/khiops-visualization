@@ -43,6 +43,7 @@ import {
 import {
 	KhiopsLibraryService
 } from '@khiops-library/providers/khiops-library.service';
+import { TYPES } from '@khiops-library/enum/types';
 
 @Component({
 	selector: 'app-preparation-2d-view',

@@ -8,7 +8,7 @@ import {
 
 export class DistributionDatasVO {
 
-	distributionType = 'GLOBAL.COVERAGE';
+	distributionType: string = TYPES.COVERAGE;
 	distributionTypeX = '';
 	distributionTypeY = '';
 
@@ -40,7 +40,7 @@ export class DistributionDatasVO {
 	} = undefined;
 
 	targetDistributionDisplayedValues: any;
-	targetDistributionType = 'GLOBAL.PROBABILITIES';
+	targetDistributionType: string = TYPES.PROBABILITIES;
 	targetDistributionGraphDatas: {
 		datasets: any[],
 		labels: any[]
@@ -48,7 +48,7 @@ export class DistributionDatasVO {
 
 	treeHyperDisplayedValues: any;
 	treeNodeTargetDistributionDisplayedValues: any;
-	treeNodeTargetDistributionType = 'GLOBAL.PROBABILITIES';
+	treeNodeTargetDistributionType: string = TYPES.PROBABILITIES;
 	treeNodeTargetDistributionGraphDatas: {
 		datasets: any[],
 		labels: any[]

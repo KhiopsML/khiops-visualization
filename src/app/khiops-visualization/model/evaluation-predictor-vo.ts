@@ -1,3 +1,5 @@
+import { PREDICTOR_TYPES } from "@khiops-library/enum/PREDICTORtYPES";
+
 export class EvaluationPredictorVO {
 	_id: string;
 	type: string;
@@ -83,7 +85,7 @@ export class EvaluationPredictorVO {
 	}
 
 	computeRobustness(train) {
-		if (this.currentEvaluationType === 'Test' && train && train.auc && this.auc) {
+		if (this.currentEvaluationType === PREDICTOR_TYPES.TEST && train && train.auc && this.auc) {
 			// find into data train the corresponding AUC train
 			this.robustness = Math.min(train.auc / this.auc, this.auc / train.auc) || ''; // empty if undefined
 		}

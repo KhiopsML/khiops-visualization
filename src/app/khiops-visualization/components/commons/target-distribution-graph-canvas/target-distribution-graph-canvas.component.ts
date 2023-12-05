@@ -34,6 +34,7 @@ import {
 import {
 	ResizedEvent
 } from 'angular-resize-event';
+import { TYPES } from '@khiops-library/enum/types';
 
 @Component({
 	selector: 'app-target-distribution-graph-canvas',
@@ -64,7 +65,7 @@ export class TargetDistributionGraphCanvasComponent extends ScrollableGraphCanva
 	colorSet: ChartColorsSetI;
 	graphOptions = {
 		types: [
-			'GLOBAL.PROBABILITIES', 'GLOBAL.LIFT'
+			TYPES.PROBABILITIES, TYPES.LIFT
 		],
 		selected: undefined
 	};
@@ -110,7 +111,7 @@ export class TargetDistributionGraphCanvasComponent extends ScrollableGraphCanva
 						afterLabel: (items: any) => {
 							if (items && items.dataset) {
 								let value = this.toPrecision.transform(items.dataset.data[items.dataIndex]);
-								if (this.graphOptions.selected === 'GLOBAL.PROBABILITIES') {
+								if (this.graphOptions.selected === TYPES.PROBABILITIES) {
 									value = value + '%';
 								}
 								return value;

@@ -29,6 +29,7 @@ import {
 import {
 	DistributionDatasVO
 } from '../model/distribution-datas-vo';
+import { TYPES } from '@khiops-library/enum/types';
 
 @Injectable({
 	providedIn: 'root'
@@ -56,7 +57,7 @@ export class Distribution2dDatasService {
 		return this.distributionDatas;
 	}
 
-	getTargetDistributionGraphDatas(type ? ): any {
+	getTargetDistributionGraphDatas(type ?: string): any {
 
 		this.distributionDatas.initTargetDistributionGraphDatas();
 		this.distributionDatas.setTargetDistributionType(type);
@@ -89,7 +90,7 @@ export class Distribution2dDatasService {
 					const graphItem: BarVO = new BarVO();
 					graphItem.name = targets[i];
 
-					if (type && type === 'GLOBAL.LIFT') {
+					if (type && type === TYPES.LIFT) {
 						// compute lift
 						graphItem.value = el / UtilsService.arraySum(currentDatas) / modalityCounts.totalProbability[i];
 					} else {

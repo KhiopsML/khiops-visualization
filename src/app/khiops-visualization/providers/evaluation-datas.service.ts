@@ -180,7 +180,7 @@ export class EvaluationDatasService {
 					}
 				}
 
-				if (this.evaluationDatas.confusionMatrixType === 'GLOBAL.COVERAGE') {
+				if (this.evaluationDatas.confusionMatrixType === TYPES.COVERAGE) {
 					for (let j = 0; j < this.evaluationDatas.confusionMatrix.displayedColumns.length; j++) {
 						if (this.evaluationDatas.confusionMatrix.displayedColumns[j].field !== 'target') {
 
@@ -200,7 +200,7 @@ export class EvaluationDatasService {
 						} else {
 							datas[i][this.evaluationDatas.confusionMatrix.displayedColumns[j].field] = currentPerformance.matrix[i][j - 1];
 
-							if (this.evaluationDatas.confusionMatrixType === 'GLOBAL.COVERAGE') {
+							if (this.evaluationDatas.confusionMatrixType === TYPES.COVERAGE) {
 								let percent = datas[i][this.evaluationDatas.confusionMatrix.displayedColumns[j].field] * 100 / UtilsService.arraySum(currentPerformance.matrix[i]);
 								if (isNaN(percent)) {
 									percent = 0;
@@ -402,7 +402,7 @@ export class EvaluationDatasService {
 		// get the correct report : train or test
 		if (type === PREDICTOR_TYPES.TRAIN) {
 			currentReport = this.appService.getDatas().datas.trainEvaluationReport;
-		} else if (type === 'Test') {
+		} else if (type === PREDICTOR_TYPES.TEST) {
 			currentReport = this.appService.getDatas().datas.testEvaluationReport;
 		}
 
