@@ -27,6 +27,7 @@ import {
 import {
 	ImportExtDatasService
 } from './import-ext-datas.service';
+import { TYPES } from '@khiops-library/enum/types';
 
 @Injectable({
 	providedIn: 'root'
@@ -341,7 +342,7 @@ export class SaveService {
 		for (let k = 0; k < CI.coclusteringReport.dimensionHierarchies.length; k++) {
 			let initialVariable;
 			let currentVariable;
-			if (CC.coclusteringReport.dimensionPartitions[k].type === 'Numerical') {
+			if (CC.coclusteringReport.dimensionPartitions[k].type === TYPES.NUMERICAL) {
 				initialVariable = CI.coclusteringReport.dimensionPartitions[k].intervals.map((e) => e.bounds);
 				currentVariable = CC.coclusteringReport.dimensionPartitions[k].intervals.map((e) => e.bounds);
 			} else {
@@ -361,7 +362,7 @@ export class SaveService {
 					transitionMatrix[k] = [];
 				}
 
-				if (CC.coclusteringReport.dimensionPartitions[k].type === 'Numerical') {
+				if (CC.coclusteringReport.dimensionPartitions[k].type === TYPES.NUMERICAL) {
 					if (initialPart.length !== 0) { // #73
 						try {
 							while (!(initialPart[0] >= currentVariable[currentP][0] && initialPart[1] <= currentVariable[currentP][1])) {

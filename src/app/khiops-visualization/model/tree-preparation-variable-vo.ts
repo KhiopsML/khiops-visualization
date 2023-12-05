@@ -1,3 +1,5 @@
+import { TYPES } from "@khiops-library/enum/types";
+
 export class TreePreparationVariableVO {
 
 	_id: string;
@@ -30,8 +32,8 @@ export class TreePreparationVariableVO {
 		this.rank = object.rank || undefined;
 		this.type = object.type || undefined;
 
-		this.isNumerical = this.type === 'Numerical';
-		this.isCategorical = this.type === 'Categorical';
+		this.isNumerical = this.type === TYPES.NUMERICAL;
+		this.isCategorical = this.type === TYPES.CATEGORICAL;
 
 		this.derivationRule = object.derivationRule || undefined;
 		this.values = object.values || undefined;

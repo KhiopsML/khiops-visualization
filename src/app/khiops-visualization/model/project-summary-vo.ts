@@ -1,3 +1,5 @@
+import { TYPES } from "@khiops-library/enum/types";
+
 export class ProjectSummaryVO {
 
 	filename: string;
@@ -25,8 +27,8 @@ export class ProjectSummaryVO {
 	computeVariablesCount(appDatas) {
 		const varDatas = appDatas.preparationReport.summary.variables || undefined;
 		if (varDatas) {
-			const categoricalVarsCount = varDatas.numbers[varDatas.types.findIndex(e => e === 'Categorical')];
-			const numericalVarsCount = varDatas.numbers[varDatas.types.findIndex(e => e === 'Numerical')];
+			const categoricalVarsCount = varDatas.numbers[varDatas.types.findIndex(e => e === TYPES.CATEGORICAL)];
+			const numericalVarsCount = varDatas.numbers[varDatas.types.findIndex(e => e === TYPES.NUMERICAL)];
 			this.variables = categoricalVarsCount + numericalVarsCount;
 			if (appDatas.preparationReport.summary.targetVariable && appDatas.preparationReport.summary.targetVariable !== '') {
 				this.variables = this.variables - 1;

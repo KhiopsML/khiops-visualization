@@ -44,6 +44,7 @@ import {
 import {
 	GridDatasI
 } from '@khiops-library/interfaces/grid-datas';
+import { TYPES } from '@khiops-library/enum/types';
 
 @Injectable({
 	providedIn: 'root'
@@ -254,7 +255,7 @@ export class TreePreparationDatasService {
 				if (variableDetails && variableDetails.dataGrid) {
 					const currentVariableType = variableDetails.dataGrid.dimensions[0].type;
 
-					if (currentVariableType === 'Numerical') {
+					if (currentVariableType === TYPES.NUMERICAL) {
 
 						displayedColumns.push({
 							headerName: this.translate.get('GLOBAL.INTERVAL_OF') + variableDetails.dataGrid.dimensions[0].variable,
@@ -271,7 +272,7 @@ export class TreePreparationDatasService {
 
 						title = this.translate.get('GLOBAL.CURRENT_INTERVAL');
 
-					} else if (currentVariableType === 'Categorical') {
+					} else if (currentVariableType === TYPES.CATEGORICAL) {
 
 						let dimensionLength = 0;
 						let startIter = 0;

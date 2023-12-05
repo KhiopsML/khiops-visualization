@@ -19,6 +19,7 @@ import {
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { AppConfig } from 'src/environments/environment';
 import { DimensionsDatasVO } from '../model/dimensions-data-vo';
+import { TYPES } from '@khiops-library/enum/types';
 
 @Injectable({
 	providedIn: 'root'
@@ -366,9 +367,9 @@ export class DimensionsDatasService {
 			zDimensionClusters.push(this.dimensionsDatas.dimensionsClusters[i]);
 		}
 
-		const xDimensionLeafs: any[] = this.dimensionsDatas.selectedDimensions[0].type === 'Numerical' ?
+		const xDimensionLeafs: any[] = this.dimensionsDatas.selectedDimensions[0].type === TYPES.NUMERICAL ?
 			this.dimensionsDatas.selectedDimensions[0].intervals : this.dimensionsDatas.selectedDimensions[0].valueGroups
-		const yDimensionLeafs: any[] = this.dimensionsDatas.selectedDimensions[1].type === 'Numerical' ?
+		const yDimensionLeafs: any[] = this.dimensionsDatas.selectedDimensions[1].type === TYPES.NUMERICAL ?
 			this.dimensionsDatas.selectedDimensions[1].intervals : this.dimensionsDatas.selectedDimensions[1].valueGroups
 		const xDimensionLeafsNames = xDimensionLeafs.map(e => e.cluster);
 		const yDimensionLeafsNames = yDimensionLeafs.map(e => e.cluster);

@@ -1,3 +1,4 @@
+import { TYPES } from '@khiops-library/enum/types';
 import {
 	UtilsService
 } from '@khiops-library/providers/utils.service';
@@ -35,7 +36,7 @@ export class VariableVO {
 		this.values = object.values || 0;
 		this.type = object.type || undefined;
 		this.mode = object.mode;
-		if (this.type === 'Categorical' && detailedDatas) {
+		if (this.type === TYPES.CATEGORICAL && detailedDatas) {
 			this.modeCoverage = this.computeModeCoverage(detailedDatas) || undefined;
 		} else {
 			this.modeCoverage = undefined;
@@ -44,7 +45,7 @@ export class VariableVO {
 		this.max = object.max;
 		this.mean = object.mean;
 		this.stdDev = object.stdDev;
-		if (this.type === 'Numerical') {
+		if (this.type === TYPES.NUMERICAL) {
 			this.missingNumber = object.missingNumber || 0;
 		} else {
 			// Missing number can be 0 or undefined for categorical variables #140

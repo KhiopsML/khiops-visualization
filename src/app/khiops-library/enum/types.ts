@@ -4,4 +4,6 @@ export enum TYPES {
 	LOGARITHMIC = "logarithmic",
 	LINEAR = "linear",
 	STANDARD = "GLOBAL.STANDARD",
+	NUMERICAL = 'Numerical',
+	CATEGORICAL = 'Categorical'
 }

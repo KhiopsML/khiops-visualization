@@ -53,6 +53,7 @@ import {
 import {
 	InformationsVO
 } from '@khiops-visualization/model/informations-vo';
+import { TYPES } from '@khiops-library/enum/types';
 
 @Injectable({
 	providedIn: 'root'
@@ -269,7 +270,7 @@ export class Preparation2dDatasService {
 				const yType = variableDetails.dataGrid.dimensions[1].type;
 
 				// Define column titles
-				if (xType === 'Numerical') {
+				if (xType === TYPES.NUMERICAL) {
 					displayedColumnsX.push({
 						headerName: this.translate.get('GLOBAL.INTERVAL_OF') + xName,
 						field: 'interval'
@@ -284,7 +285,7 @@ export class Preparation2dDatasService {
 						field: 'frequency'
 					});
 				}
-				if (yType === 'Numerical') {
+				if (yType === TYPES.NUMERICAL) {
 					displayedColumnsY.push({
 						headerName: this.translate.get('GLOBAL.INTERVAL_OF') + yName,
 						field: 'interval'
@@ -313,7 +314,7 @@ export class Preparation2dDatasService {
 
 		if (axisPartValues) {
 
-			if (type === 'Numerical') {
+			if (type === TYPES.NUMERICAL) {
 				axisPartValues = [displayaxisPart]; // join into one array for numerical values (bivar)
 			}
 

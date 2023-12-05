@@ -1,3 +1,5 @@
+import { TYPES } from "@khiops-library/enum/types";
+
 export class TreeNodeVO {
 
 	id: number;
@@ -49,7 +51,7 @@ export class TreeNodeVO {
 		this.cluster = object && object.cluster || '';
 		this.bounds = this.cluster;
 
-		if (dimension.type === 'Numerical') {
+		if (dimension.type === TYPES.NUMERICAL) {
 			// Reformat numerical values
 			this.bounds = this.bounds.replace(']-inf', '[' + dimension.min);
 			this.bounds = this.bounds.replace('+inf[', dimension.max + ']');
@@ -85,7 +87,7 @@ export class TreeNodeVO {
 		} else {
 			this.matrixIndex = '';
 		}
-		if (dimension.type === 'Categorical') {
+		if (dimension.type === TYPES.CATEGORICAL) {
 			this.clusterCompositionSize = dimension.valueGroups[leafPosition]?.values?.length;
 		}
 	}

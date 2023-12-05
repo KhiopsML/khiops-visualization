@@ -1,3 +1,4 @@
+import { TYPES } from '@khiops-library/enum/types';
 import _ from 'lodash';
 
 export class DimensionVO {
@@ -35,8 +36,8 @@ export class DimensionVO {
 		this.currentHierarchyClusterCount = this.parts;
 		this.hierarchyFold = true;
 
-		this.isNumerical = this.type === 'Numerical';
-		this.isCategorical = this.type === 'Categorical';
+		this.isNumerical = this.type === TYPES.NUMERICAL;
+		this.isCategorical = this.type === TYPES.CATEGORICAL;
 
 		// KV
 		if (object.partition) {

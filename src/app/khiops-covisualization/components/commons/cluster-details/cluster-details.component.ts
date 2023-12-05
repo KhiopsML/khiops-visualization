@@ -26,6 +26,7 @@ import {
 import {
 	GridColumnsI
 } from '@khiops-library/interfaces/grid-columns';
+import { TYPES } from '@khiops-library/enum/types';
 
 @Component({
 	selector: 'app-cluster-details',
@@ -86,7 +87,7 @@ export class ClusterDetailsComponent implements OnInit, OnChanges, OnDestroy {
 		this.id = 'cluster-details-grid-' + this.position;
 
 		// Insert size column if it is a categorical dimension
-		if (this.selectedDimension.type === 'Categorical') {
+		if (this.selectedDimension.type === TYPES.CATEGORICAL) {
 			this.clusterDisplayedColumns.splice(2, 0, {
 				headerName: 'Size',
 				field: 'size'

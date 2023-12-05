@@ -7,6 +7,7 @@ import {
 import {
 	CellVO
 } from '../model/cell-vo';
+import { TYPES } from '@khiops-library/enum/types';
 
 @Injectable({
 	providedIn: 'root'
@@ -19,7 +20,7 @@ export class MatrixUtilsDatasService {
 
 		let xValues: any[];
 		let yValues: any[];
-		if (xDimension.type === 'Categorical') {
+		if (xDimension.type === TYPES.CATEGORICAL) {
 			let currentXAxisFullPart;
 			if (xDimension.valueGroups) {
 				currentXAxisFullPart = xDimension.valueGroups.map(e => e.values); // KC use case
@@ -29,7 +30,7 @@ export class MatrixUtilsDatasService {
 			const axisPartTotal = UtilsService.getArrayOfArrayLength(currentXAxisFullPart);
 			xValues = UtilsService.generateArrayPercentsFromArrayLength(currentXAxisFullPart, axisPartTotal);
 
-		} else if (xDimension.type === 'Numerical') {
+		} else if (xDimension.type === TYPES.NUMERICAL) {
 			let currentXAxisFullPart;
 			if (xDimension.intervals) {
 				currentXAxisFullPart = xDimension.intervals.map(e => e.bounds); // KC use case
@@ -41,7 +42,7 @@ export class MatrixUtilsDatasService {
 			const axisPartTotal = UtilsService.getArrayMatrixInterval(currentXAxisFullPart);
 			xValues = UtilsService.generateArrayPercentsFromArrayIntervalsAndTotalCount(currentXAxisFullPart, axisPartTotal);
 		}
-		if (yDimension.type === 'Categorical') {
+		if (yDimension.type === TYPES.CATEGORICAL) {
 			let currentYAxisFullPart;
 			if (yDimension.valueGroups) {
 				currentYAxisFullPart = yDimension.valueGroups.map(e => e.values); // KC use case
@@ -50,7 +51,7 @@ export class MatrixUtilsDatasService {
 			}
 			const axisPartTotal = UtilsService.getArrayOfArrayLength(currentYAxisFullPart);
 			yValues = UtilsService.generateArrayPercentsFromArrayLength(currentYAxisFullPart, axisPartTotal);
-		} else if (yDimension.type === 'Numerical') {
+		} else if (yDimension.type === TYPES.NUMERICAL) {
 			let currentYAxisFullPart;
 			if (yDimension.intervals) {
 				currentYAxisFullPart = yDimension.intervals.map(e => e.bounds); // KC use case
@@ -72,17 +73,17 @@ export class MatrixUtilsDatasService {
 		let xValues: any[];
 		let yValues: any[];
 
-		if (xDimension.type === 'Categorical') {
+		if (xDimension.type === TYPES.CATEGORICAL) {
 			const currentLineVal = UtilsService.getLinesTotals(xDimension.parts, yDimension.parts, cellFrequencies);
 			xValues = UtilsService.generateArrayPercentsFromArrayValues(currentLineVal);
-		} else if (xDimension.type === 'Numerical') {
+		} else if (xDimension.type === TYPES.NUMERICAL) {
 			// Same behavior on KC and KV
 			xValues = UtilsService.generateArrayPercentsFromArrayIntervals(xDimension.parts);
 		}
-		if (yDimension.type === 'Categorical') {
+		if (yDimension.type === TYPES.CATEGORICAL) {
 			const currentColVal = UtilsService.getColumnsTotals(xDimension.parts, yDimension.parts, cellFrequencies);
 			yValues = UtilsService.generateArrayPercentsFromArrayValues(currentColVal);
-		} else if (yDimension.type === 'Numerical') {
+		} else if (yDimension.type === TYPES.NUMERICAL) {
 			// Same behavior on KC and KV
 			yValues = UtilsService.generateArrayPercentsFromArrayIntervals(yDimension.parts);
 		}
@@ -95,7 +96,7 @@ export class MatrixUtilsDatasService {
 		if (typeof axisPartShortDescription[iter] !== 'string') {
 			// In KV we get an unformated array
 			// We must format datas with opened or closed brackets
-			if (dimension.type === 'Numerical') {
+			if (dimension.type === TYPES.NUMERICAL) {
 				displayaxisPart = '[' + axisPartShortDescription[iter].toString() + ']';
 				// replace [ by ] for all indexes excepting 0
 				if (iter !== 0) {

@@ -1,3 +1,4 @@
+import { TYPES } from "@khiops-library/enum/types";
 
 export class PreparationVariableVO {
 
@@ -47,8 +48,8 @@ export class PreparationVariableVO {
 		this.rank = object.rank;
 		this.type = object.type;
 
-		this.isNumerical = this.type === 'Numerical';
-		this.isCategorical = this.type === 'Categorical';
+		this.isNumerical = this.type === TYPES.NUMERICAL;
+		this.isCategorical = this.type === TYPES.CATEGORICAL;
 
 		this.preparedName = object.preparedName;
 		this.derivationRule = object.derivationRule;
