@@ -36,6 +36,7 @@ import {
 	InformationsVO
 } from '../model/informations-vo';
 import { REPORTS } from '@khiops-library/enum/reports';
+import { TASKS } from '@khiops-library/enum/tasks';
 
 @Injectable({
 	providedIn: 'root'
@@ -385,7 +386,7 @@ export class PreparationDatasService {
 			// 	"Unsupervised analysis" : seul cas non supervisé (équivalent de isSupervised = False)
 			//   "Regression analysis" : cas supervisé (équivalent de isSupervised = True)
 			//   "Classification analysis" : (équivalent de isSupervised = True)
-			return appDatas[preparationSource].summary.learningTask === 'Regression analysis' || appDatas[preparationSource].summary.learningTask === 'Classification analysis';
+			return appDatas[preparationSource].summary.learningTask === TASKS.REGRESSION || appDatas[preparationSource].summary.learningTask === TASKS.CLASSIFICATION;
 		}
 		return false;
 	}

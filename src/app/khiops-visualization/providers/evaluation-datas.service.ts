@@ -21,6 +21,8 @@ import {
 	EvaluationPredictorVO
 } from '../model/evaluation-predictor-vo';
 import { TYPES } from '@khiops-library/enum/types';
+import { TASKS } from '@khiops-library/enum/tasks';
+import { PREDICTOR_TYPES } from '@khiops-library/enum/PREDICTORtYPES';
 
 @Injectable({
 	providedIn: 'root'
@@ -113,9 +115,9 @@ export class EvaluationDatasService {
 
 			let currentReport: any;
 			// get the correct report : train or test
-			if (this.evaluationDatas.selectedEvaluationTypeVariable.type === 'Train') {
+			if (this.evaluationDatas.selectedEvaluationTypeVariable.type === PREDICTOR_TYPES.TRAIN) {
 				currentReport = appDatas.trainEvaluationReport;
-			} else if (this.evaluationDatas.selectedEvaluationTypeVariable.type === 'Test') {
+			} else if (this.evaluationDatas.selectedEvaluationTypeVariable.type === PREDICTOR_TYPES.TEST) {
 				currentReport = appDatas.testEvaluationReport;
 			} else {
 				currentReport = appDatas.evaluationReport;
@@ -286,7 +288,7 @@ export class EvaluationDatasService {
 				// Now compute robustness for each object
 				for (let j = 0; j < datas.length; j++) {
 					const currentEl: EvaluationPredictorVO = datas[j];
-					const train: any = datas.find(e => e.currentEvaluationType === 'Train' && e.name === currentEl.name); // find into data train the corresponding AUC train
+					const train: any = datas.find(e => e.currentEvaluationType === PREDICTOR_TYPES.TRAIN && e.name === currentEl.name); // find into data train the corresponding AUC train
 					currentEl.computeRobustness(train);
 				}
 			}
@@ -324,8 +326,8 @@ export class EvaluationDatasService {
 			xAxis[i] = (Number(xAxis[i - 1]) + 0.001).toFixed(3);
 		}
 
-		const trainDatas = this.generateLiftCurveValuesForEvaluation(xAxis, 'Train', target);
-		const testDatas = this.generateLiftCurveValuesForEvaluation(xAxis, 'Test', target);
+		const trainDatas = this.generateLiftCurveValuesForEvaluation(xAxis, PREDICTOR_TYPES.TRAIN, target);
+		const testDatas = this.generateLiftCurveValuesForEvaluation(xAxis, PREDICTOR_TYPES.TEST, target);
 
 		let liftGraphDatas = []
 		if (trainDatas.length > 0 || testDatas.length > 0) {
@@ -398,7 +400,7 @@ export class EvaluationDatasService {
 
 		let currentReport: any;
 		// get the correct report : train or test
-		if (type === 'Train') {
+		if (type === PREDICTOR_TYPES.TRAIN) {
 			currentReport = this.appService.getDatas().datas.trainEvaluationReport;
 		} else if (type === 'Test') {
 			currentReport = this.appService.getDatas().datas.testEvaluationReport;
@@ -490,9 +492,9 @@ export class EvaluationDatasService {
 			currentEvalReport = appDatas.testEvaluationReport;
 		}
 		if (this.evaluationDatas.selectedPredictorEvaluationVariable) {
-			if (this.evaluationDatas.selectedPredictorEvaluationVariable.type === 'Train') {
+			if (this.evaluationDatas.selectedPredictorEvaluationVariable.type === PREDICTOR_TYPES.TRAIN) {
 				currentEvalReport = appDatas.trainEvaluationReport;
-			} else if (this.evaluationDatas.selectedPredictorEvaluationVariable.type === 'Test') {
+			} else if (this.evaluationDatas.selectedPredictorEvaluationVariable.type ===  PREDICTOR_TYPES.TEST) {
 				currentEvalReport = appDatas.testEvaluationReport;
 			}
 		}
@@ -536,9 +538,9 @@ export class EvaluationDatasService {
 
 	isRegressionAnalysis(): any {
 		const appDatas = this.appService.getDatas().datas;
-		if (appDatas && appDatas.trainEvaluationReport && appDatas.trainEvaluationReport.summary && appDatas.trainEvaluationReport.summary.learningTask === 'Regression analysis') {
+		if (appDatas && appDatas.trainEvaluationReport && appDatas.trainEvaluationReport.summary && appDatas.trainEvaluationReport.summary.learningTask === TASKS.REGRESSION) {
 			return true;
-		} else if (appDatas && appDatas.preparationReport && appDatas.preparationReport.summary && appDatas.preparationReport.summary.learningTask === 'Regression analysis') {
+		} else if (appDatas && appDatas.preparationReport && appDatas.preparationReport.summary && appDatas.preparationReport.summary.learningTask === TASKS.REGRESSION) {
 			return true;
 		} else {
 			return false;
