@@ -1,4 +1,4 @@
-import { PREDICTOR_TYPES } from "@khiops-library/enum/PREDICTORtYPES";
+import { PREDICTOR_TYPES } from "@khiops-library/enum/predictorTypes";
 
 export class EvaluationPredictorVO {
 	_id: string;

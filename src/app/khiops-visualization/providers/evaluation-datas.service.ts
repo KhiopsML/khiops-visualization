@@ -22,7 +22,7 @@ import {
 } from '../model/evaluation-predictor-vo';
 import { TYPES } from '@khiops-library/enum/types';
 import { TASKS } from '@khiops-library/enum/tasks';
-import { PREDICTOR_TYPES } from '@khiops-library/enum/PREDICTORtYPES';
+import { PREDICTOR_TYPES } from '@khiops-library/enum/predictorTypes';
 
 @Injectable({
 	providedIn: 'root'
