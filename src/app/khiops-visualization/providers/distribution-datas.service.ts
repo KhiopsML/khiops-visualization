@@ -35,9 +35,6 @@ import {
 import {
 	TreePreparationDatasService
 } from './tree-preparation-datas.service';
-import {
-	PreparationDatasService
-} from './preparation-datas.service';
 import { HistogramValuesI } from '@khiops-visualization/interfaces/histogram-values';
 
 @Injectable({
@@ -50,7 +47,6 @@ export class DistributionDatasService {
 	constructor(
 		private translate: TranslateService,
 		private treePreparationDatasService: TreePreparationDatasService,
-		private preparationDatasService: PreparationDatasService,
 		private khiopsLibraryService: KhiopsLibraryService,
 		private appService: AppService
 	) {

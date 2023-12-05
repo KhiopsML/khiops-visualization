@@ -23,6 +23,10 @@ import {
 import {
 	KhiopsLibraryService
 } from "@khiops-library/providers/khiops-library.service";
+import {
+	ProjectLogVO
+} from "@khiops-visualization/model/project-log-vo";
+import { ProjectSummaryVO } from "@khiops-visualization/model/project-summary-vo";
 
 @Component({
 	selector: "app-project-view",
@@ -35,9 +39,8 @@ implements OnInit {
 	@Output() projectFileChanged: EventEmitter < any > = new EventEmitter < any > ();
 
 	appDatas: any;
-	projectSummaryDatas: any[any];
-	projectInformationsDatas: any[any];
-	projectLogsDatas: any[any];
+	projectSummaryDatas: ProjectSummaryVO;
+	projectLogsDatas: ProjectLogVO[];
 	onFileLoaderDataChangedCb: Function;
 	appName = 'khiops-visualization';
 	logsTitle: string;
@@ -77,8 +80,6 @@ implements OnInit {
 			this.logsTitle = this.translate.get("GLOBAL.LOGS");
 			this.projectSummaryDatas = this.appService.getProjectSummaryDatas();
 			this.projectLogsDatas = this.appService.getProjectLogsDatas();
-			this.projectInformationsDatas =
-				this.appService.getProjectInformationsDatas();
 		}
 	}
 

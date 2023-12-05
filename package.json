@@ -30,7 +30,7 @@
     "start": "ng serve",
     "start:webcomponent": "ng serve khiops-webcomponent",
     "test": "ng test --watch=false",
-	"test:watch": "ng test --watch=true",
+    "test:watch": "ng test --watch=true",
     "watch": "ng build --watch --configuration development"
   },
   "dependencies": {

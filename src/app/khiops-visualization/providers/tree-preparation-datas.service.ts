@@ -510,9 +510,6 @@ export class TreePreparationDatasService {
 		};
 
 		if (this.treePreparationDatas.selectedNodes[0]) {
-
-			const isLeafSelection = this.treePreparationDatas.selectedNodes[0].isLeaf;
-
 			treeDetails.displayedColumns = [{
 					headerName: 'Node Id',
 					field: 'nodeId'

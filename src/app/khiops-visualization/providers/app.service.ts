@@ -13,6 +13,9 @@ import {
 import {
 	ProjectSummaryVO
 } from '../model/project-summary-vo';
+import {
+	ProjectLogVO
+} from '@khiops-visualization/model/project-log-vo';
 
 @Injectable({
 	providedIn: 'root'
@@ -248,7 +251,7 @@ export class AppService {
 		}
 	}
 
-	getProjectLogsDatas(): any {
+	getProjectLogsDatas(): ProjectLogVO[] {
 		const appDatas = this.appDatas.datas;
 		let logs;
 
@@ -256,57 +259,13 @@ export class AppService {
 			logs = [];
 			for (let i = 0; i < appDatas.logs.length; i++) {
 				for (let j = 0; j < appDatas.logs[i].messages.length; j++) {
-					logs.push({
-						task: appDatas.logs[i].taskName,
-						message: appDatas.logs[i].messages[j]
-					});
+					const log = new ProjectLogVO(appDatas.logs[i], appDatas.logs[i].messages[j]);
+					logs.push(log);
 				}
 			}
 		}
 
 		return logs;
-	}
-
-	getProjectInformationsDatas(): any {
-		const appDatas = this.appDatas.datas;
-		const informationsDatas = [];
-		if (appDatas.preparationReport) {
-			informationsDatas.push({
-				title: appDatas.preparationReport.reportType,
-				value: appDatas.preparationReport.summary.learningTask + ' ' + appDatas.preparationReport.summary.targetVariable
-			});
-		}
-		if (appDatas.textPreparationReport) {
-			informationsDatas.push({
-				title: appDatas.textPreparationReport.reportType,
-				value: appDatas.textPreparationReport.summary.learningTask + ' ' + appDatas.textPreparationReport.summary.targetVariable
-			});
-		}
-		if (appDatas.modelingReport) {
-			informationsDatas.push({
-				title: appDatas.modelingReport.reportType,
-				value: appDatas.modelingReport.summary.learningTask + ' ' + appDatas.modelingReport.summary.targetVariable
-			});
-		}
-		if (appDatas.trainEvaluationReport) {
-			informationsDatas.push({
-				title: appDatas.trainEvaluationReport.reportType + ' ' + appDatas.trainEvaluationReport.evaluationType,
-				value: appDatas.trainEvaluationReport.summary.learningTask + ' ' + appDatas.trainEvaluationReport.summary.targetVariable
-			});
-		}
-		if (appDatas.testEvaluationReport) {
-			informationsDatas.push({
-				title: appDatas.testEvaluationReport.reportType + ' ' + appDatas.testEvaluationReport.evaluationType,
-				value: appDatas.testEvaluationReport.summary.learningTask + ' ' + appDatas.testEvaluationReport.summary.targetVariable
-			});
-		}
-		if (appDatas.evaluationReport) {
-			informationsDatas.push({
-				title: appDatas.evaluationReport.reportType + ' ' + appDatas.evaluationReport.evaluationType,
-				value: appDatas.evaluationReport.summary.learningTask + ' ' + appDatas.evaluationReport.summary.targetVariable
-			});
-		}
-		return informationsDatas;
 	}
 
 }
