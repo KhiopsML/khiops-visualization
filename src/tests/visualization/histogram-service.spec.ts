@@ -16,6 +16,7 @@ import {
 import {
 	PreparationDatasService
 } from "@khiops-visualization/providers/preparation-datas.service";
+import { REPORTS } from "@khiops-library/enum/reports";
 
 let appService: AppService;
 let histogramService: HistogramService;
@@ -26,9 +27,9 @@ function getHistogramGraphDatas(fileDatas, variable) {
 	appService.setFileDatas(fileDatas);
 	preparationDatasService.initialize();
 	distributionDatasService.initialize();
-	distributionDatasService.setPreparationSource('preparationReport');
-	preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[variable], 'preparationReport');
-	const selectedVariable = preparationDatasService.getSelectedVariable('preparationReport');
+	distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
+	preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[variable], REPORTS.PREPARATION_REPORT);
+	const selectedVariable = preparationDatasService.getSelectedVariable(REPORTS.PREPARATION_REPORT);
 	return distributionDatasService.getHistogramGraphDatas(selectedVariable);
 }
 

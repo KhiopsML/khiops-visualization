@@ -16,6 +16,7 @@ import {
 import {
 	ProjectLogVO
 } from '@khiops-visualization/model/project-log-vo';
+import { REPORTS } from '@khiops-library/enum/reports';
 
 @Injectable({
 	providedIn: 'root'
@@ -127,8 +128,8 @@ export class AppService {
 		this.appDatas.datas = this.enrichJsonDatas(this.appDatas.datas);
 
 		// #86 Remove missing informations for numerical variables
-		this.appDatas.datas = this.ignoreMissingPartitionForNumerical(this.appDatas.datas, 'preparationReport');
-		this.appDatas.datas = this.ignoreMissingPartitionForNumerical(this.appDatas.datas, 'textPreparationReport');
+		this.appDatas.datas = this.ignoreMissingPartitionForNumerical(this.appDatas.datas, REPORTS.PREPARATION_REPORT);
+		this.appDatas.datas = this.ignoreMissingPartitionForNumerical(this.appDatas.datas, REPORTS.TEXT_PREPARATION_REPORT);
 		this.setSavedDatas(this.appDatas.datas);
 	}
 

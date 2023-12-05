@@ -33,6 +33,7 @@ import {
 	TreePreparationVariableVO
 } from '@khiops-visualization/model/tree-preparation-variable-vo';
 import { DistributionDatasVO } from '@khiops-visualization/model/distribution-datas-vo';
+import { REPORTS } from '@khiops-library/enum/reports';
 
 @Component({
 	selector: 'app-variable-graph-details',
@@ -106,7 +107,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
 					}
 				}
 
-				if (this.preparationSource === 'treePreparationReport') {
+				if (this.preparationSource === REPORTS.TREE_PREPARATION_REPORT) {
 					this.treePreparationDatasService.getCurrentIntervalDatas();
 				} else {
 					this.preparationDatasService.getCurrentIntervalDatas(this.preparationSource);
@@ -166,7 +167,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
 
 	getCurrentVariable() {
 		let selectedVariable
-		if (this.preparationSource === 'treePreparationReport') {
+		if (this.preparationSource === REPORTS.TREE_PREPARATION_REPORT) {
 			selectedVariable = this.treePreparationDatasService.getSelectedVariable();
 		} else {
 			selectedVariable = this.preparationDatasService.getSelectedVariable(this.preparationSource);

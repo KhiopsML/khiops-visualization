@@ -35,6 +35,7 @@ import {
 import {
 	InformationsVO
 } from '../model/informations-vo';
+import { REPORTS } from '@khiops-library/enum/reports';
 
 @Injectable({
 	providedIn: 'root'
@@ -79,10 +80,10 @@ export class PreparationDatasService {
 			// Check if there is a saved selected variable into json
 			const savedSelectedRank = this.appService.getSavedDatas('selectedRank');
 			if (savedSelectedRank) {
-				defaultVariable = this.getVariableFromRank(savedSelectedRank, 'preparationReport');
+				defaultVariable = this.getVariableFromRank(savedSelectedRank, REPORTS.PREPARATION_REPORT);
 			}
 
-			this.setSelectedVariable(defaultVariable, 'preparationReport');
+			this.setSelectedVariable(defaultVariable, REPORTS.PREPARATION_REPORT);
 		}
 		// select the first item of the list by default
 		if (appDatas && appDatas.textPreparationReport && appDatas.textPreparationReport.variablesStatistics && appDatas.textPreparationReport.variablesStatistics[0]) {
@@ -91,10 +92,10 @@ export class PreparationDatasService {
 			// Check if there is a saved selected variable into json
 			const savedSelectedRank = this.appService.getSavedDatas('selectedRank');
 			if (savedSelectedRank) {
-				defaultVariable = this.getVariableFromRank(savedSelectedRank, 'textPreparationReport');
+				defaultVariable = this.getVariableFromRank(savedSelectedRank, REPORTS.TEXT_PREPARATION_REPORT);
 			}
 
-			this.setSelectedVariable(defaultVariable, 'textPreparationReport');
+			this.setSelectedVariable(defaultVariable, REPORTS.TEXT_PREPARATION_REPORT);
 		}
 
 	}
@@ -391,9 +392,9 @@ export class PreparationDatasService {
 
 	getAvailablePreparationReport(): string {
 		const appDatas = this.appService.getDatas().datas;
-		let preparationSource = 'preparationReport';
+		let preparationSource = REPORTS.PREPARATION_REPORT;
 		if (!appDatas[preparationSource] || !appDatas[preparationSource].variablesStatistics) {
-			preparationSource = 'textPreparationReport';
+			preparationSource =  REPORTS.TEXT_PREPARATION_REPORT;
 		}
 		return preparationSource;
 	}
@@ -404,9 +405,9 @@ export class PreparationDatasService {
 		if (appDatas.preparationReport && appDatas.preparationReport.variablesStatistics) {
 			const isPreparationReport = appDatas.preparationReport.variablesStatistics.find(e => e.name === variable.name);
 			if (isPreparationReport) {
-				return 'preparationReport';
+				return REPORTS.PREPARATION_REPORT;
 			} else {
-				return 'textPreparationReport';
+				return REPORTS.TEXT_PREPARATION_REPORT;
 			}
 		} else {
 			return this.getAvailablePreparationReport();

@@ -12,6 +12,7 @@ import {
 	AppService
 } from '@khiops-visualization/providers/app.service';
 import * as _ from 'lodash'; // Important to import lodash in karma
+import { REPORTS } from '@khiops-library/enum/reports';
 
 let preparationDatasService: PreparationDatasService;
 let appService: AppService;
@@ -56,7 +57,7 @@ describe('PreparationDatasService', () => {
 		preparationDatasService.initialize();
 
 		preparationDatasService.getSummaryDatas();
-		preparationDatasService.getInformationsDatas('preparationReport');
+		preparationDatasService.getInformationsDatas(REPORTS.PREPARATION_REPORT);
 		const intervalDatas = JSON.stringify(preparationDatasService.getTargetVariableStatsDatas());
 
 		const expectedRes = {
@@ -103,7 +104,7 @@ describe('PreparationDatasService', () => {
 		preparationDatasService.initialize();
 
 		preparationDatasService.getSummaryDatas();
-		preparationDatasService.getInformationsDatas('preparationReport');
+		preparationDatasService.getInformationsDatas(REPORTS.PREPARATION_REPORT);
 		const intervalDatas = JSON.stringify(preparationDatasService.getTargetVariableStatsDatas());
 
 		const expectedRes = {
@@ -149,8 +150,8 @@ describe('PreparationDatasService', () => {
 		appService.setFileDatas(fileDatas);
 		preparationDatasService.initialize();
 
-		preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[0], 'preparationReport');
-		const intervalDatas = preparationDatasService.getCurrentIntervalDatas('preparationReport');
+		preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[0], REPORTS.PREPARATION_REPORT);
+		const intervalDatas = preparationDatasService.getCurrentIntervalDatas(REPORTS.PREPARATION_REPORT);
 
 		const expectedRes = {
 			'title': 'GLOBAL.CURRENT_INTERVAL',
@@ -172,8 +173,8 @@ describe('PreparationDatasService', () => {
 		appService.setFileDatas(fileDatas);
 		preparationDatasService.initialize();
 
-		preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[1], 'preparationReport');
-		const intervalDatas = preparationDatasService.getCurrentIntervalDatas('preparationReport', 15);
+		preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[1], REPORTS.PREPARATION_REPORT);
+		const intervalDatas = preparationDatasService.getCurrentIntervalDatas(REPORTS.PREPARATION_REPORT, 15);
 
 		const expectedRes = {
 			'title': 'GLOBAL.CURRENT_INTERVAL',
@@ -195,8 +196,8 @@ describe('PreparationDatasService', () => {
 		appService.setFileDatas(fileDatas);
 		preparationDatasService.initialize();
 
-		preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[0], 'preparationReport');
-		const intervalDatas = preparationDatasService.getCurrentIntervalDatas('preparationReport');
+		preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[0], REPORTS.PREPARATION_REPORT);
+		const intervalDatas = preparationDatasService.getCurrentIntervalDatas(REPORTS.PREPARATION_REPORT);
 
 		const expectedRes = {
 			'title': 'GLOBAL.CURRENT_GROUP',
@@ -225,8 +226,8 @@ describe('PreparationDatasService', () => {
 		appService.setFileDatas(fileDatas);
 		preparationDatasService.initialize();
 
-		preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[0], 'preparationReport');
-		const intervalDatas = preparationDatasService.getCurrentIntervalDatas('preparationReport', 1);
+		preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[0], REPORTS.PREPARATION_REPORT);
+		const intervalDatas = preparationDatasService.getCurrentIntervalDatas(REPORTS.PREPARATION_REPORT, 1);
 
 		const expectedRes = {
 			'title': 'GLOBAL.CURRENT_GROUP',
@@ -252,8 +253,8 @@ describe('PreparationDatasService', () => {
 		appService.setFileDatas(fileDatas);
 		preparationDatasService.initialize();
 
-		preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[1], 'preparationReport');
-		const intervalDatas = preparationDatasService.getCurrentIntervalDatas('preparationReport', 1);
+		preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[1], REPORTS.PREPARATION_REPORT);
+		const intervalDatas = preparationDatasService.getCurrentIntervalDatas(REPORTS.PREPARATION_REPORT, 1);
 
 		const expectedRes = {
 			'title': 'GLOBAL.CURRENT_INTERVAL',
@@ -275,8 +276,8 @@ describe('PreparationDatasService', () => {
 		appService.setFileDatas(fileDatas);
 		preparationDatasService.initialize();
 
-		preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[5], 'preparationReport');
-		const intervalDatas = preparationDatasService.getCurrentIntervalDatas('preparationReport', 3);
+		preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[5], REPORTS.PREPARATION_REPORT);
+		const intervalDatas = preparationDatasService.getCurrentIntervalDatas(REPORTS.PREPARATION_REPORT, 3);
 
 		const expectedRes = {
 			'title': 'GLOBAL.CURRENT_GROUP',
@@ -320,8 +321,8 @@ describe('PreparationDatasService', () => {
 		appService.setFileDatas(fileDatas);
 		preparationDatasService.initialize();
 
-		preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[56], 'preparationReport');
-		const intervalDatas = preparationDatasService.getCurrentIntervalDatas('preparationReport', 0);
+		preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[56], REPORTS.PREPARATION_REPORT);
+		const intervalDatas = preparationDatasService.getCurrentIntervalDatas(REPORTS.PREPARATION_REPORT, 0);
 
 		const expectedRes = {
 			'title': 'GLOBAL.CURRENT_GROUP',

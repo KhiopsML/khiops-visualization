@@ -44,6 +44,7 @@ import {
 import {
 	KhiopsLibraryService
 } from '@khiops-library/providers/khiops-library.service';
+import { REPORTS } from '@khiops-library/enum/reports';
 
 @Component({
 	selector: 'app-preparation-view',
@@ -56,7 +57,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
 		static: false
 	}) appVariableGraphDetails: VariableGraphDetailsComponent;
 
-	@Input() preparationSource = 'preparationReport'; // By default
+	@Input() preparationSource = REPORTS.PREPARATION_REPORT; // By default
 
 	preparationDatas: any;
 	appDatas: any;
@@ -157,7 +158,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
 	}
 
 	ngOnInit() {
-		const trackView = this.preparationSource === 'preparationReport' ? 'preparation' : 'textPreparation'
+		const trackView = this.preparationSource === REPORTS.PREPARATION_REPORT ? 'preparation' : 'textPreparation'
 		this.khiopsLibraryService.trackEvent('page_view', trackView);
 
 		this.appDatas = this.appService.getDatas().datas;

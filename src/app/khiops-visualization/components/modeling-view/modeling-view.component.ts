@@ -47,6 +47,7 @@ import {
 import {
 	KhiopsLibraryService
 } from '@khiops-library/providers/khiops-library.service';
+import { REPORTS } from '@khiops-library/enum/reports';
 
 @Component({
 	selector: 'app-modeling-view',
@@ -159,7 +160,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
 
 		// Get var from name
 		if (item.name && item.name.includes('Tree_')) {
-			this.preparationSource = 'treePreparationReport';
+			this.preparationSource = REPORTS.TREE_PREPARATION_REPORT;
 			this.preparationVariable = this.treePreparationDatasService.setSelectedVariable(item);
 			this.currentIntervalDatas = this.treePreparationDatasService.getCurrentIntervalDatas(this.distributionSelectedBarIndex);
 		} else {

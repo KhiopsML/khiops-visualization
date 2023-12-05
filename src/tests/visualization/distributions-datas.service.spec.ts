@@ -18,6 +18,7 @@ import {
 import {
 	TreePreparationDatasService
 } from '@khiops-visualization/providers/tree-preparation-datas.service';
+import { REPORTS } from '@khiops-library/enum/reports';
 
 let distributionDatasService: DistributionDatasService;
 let preparationDatasService: PreparationDatasService;
@@ -37,7 +38,7 @@ describe('Visualization', () => {
 			distributionDatasService = TestBed.inject(DistributionDatasService);
 			preparationDatasService = TestBed.inject(PreparationDatasService);
 			treePreparationDatasService = TestBed.inject(TreePreparationDatasService);
-			distributionDatasService.setPreparationSource('preparationReport');
+			distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
 			appService = TestBed.inject(AppService);
 		});
 
@@ -56,10 +57,10 @@ describe('Visualization', () => {
 
 			preparationDatasService.initialize();
 			distributionDatasService.initialize();
-			distributionDatasService.setPreparationSource('preparationReport');
+			distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
 
-			preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[0], 'preparationReport');
-			const selectedVariable = preparationDatasService.getSelectedVariable('preparationReport');
+			preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[0], REPORTS.PREPARATION_REPORT);
+			const selectedVariable = preparationDatasService.getSelectedVariable(REPORTS.PREPARATION_REPORT);
 			const res = distributionDatasService.getTargetDistributionGraphDatas(selectedVariable);
 
 			expect(res.datasets[0].data[0]).toEqual(45.101424849088026);
@@ -73,10 +74,10 @@ describe('Visualization', () => {
 
 			preparationDatasService.initialize();
 			distributionDatasService.initialize();
-			distributionDatasService.setPreparationSource('preparationReport');
+			distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
 
-			preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[40], 'preparationReport');
-			const selectedVariable = preparationDatasService.getSelectedVariable('preparationReport');
+			preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[40], REPORTS.PREPARATION_REPORT);
+			const selectedVariable = preparationDatasService.getSelectedVariable(REPORTS.PREPARATION_REPORT);
 			const res = distributionDatasService.getTargetDistributionGraphDatas(selectedVariable, 'GLOBAL.LIFT');
 
 			expect(res.datasets[0].data[0]).toEqual(1.0250084657655503);
@@ -90,10 +91,10 @@ describe('Visualization', () => {
 
 			preparationDatasService.initialize();
 			distributionDatasService.initialize();
-			distributionDatasService.setPreparationSource('preparationReport');
+			distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
 
-			preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[1], 'preparationReport');
-			const selectedVariable = preparationDatasService.getSelectedVariable('preparationReport');
+			preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[1], REPORTS.PREPARATION_REPORT);
+			const selectedVariable = preparationDatasService.getSelectedVariable(REPORTS.PREPARATION_REPORT);
 			const res = distributionDatasService.getdistributionGraphDatas(selectedVariable);
 			expect(res.datasets[0].data[0]).toEqual(50.012209523809524);
 
@@ -106,10 +107,10 @@ describe('Visualization', () => {
 
 			preparationDatasService.initialize();
 			distributionDatasService.initialize();
-			distributionDatasService.setPreparationSource('preparationReport');
+			distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
 
-			preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[0], 'preparationReport');
-			const selectedVariable = preparationDatasService.getSelectedVariable('preparationReport');
+			preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[0], REPORTS.PREPARATION_REPORT);
+			const selectedVariable = preparationDatasService.getSelectedVariable(REPORTS.PREPARATION_REPORT);
 			const res = distributionDatasService.getHistogramGraphDatas(selectedVariable);
 
 			expect(res[0].frequency).toEqual(1263);
@@ -125,10 +126,10 @@ describe('Visualization', () => {
 
 			preparationDatasService.initialize();
 			distributionDatasService.initialize();
-			distributionDatasService.setPreparationSource('preparationReport');
+			distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
 
-			preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[14], 'preparationReport');
-			const selectedVariable = preparationDatasService.getSelectedVariable('preparationReport');
+			preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[14], REPORTS.PREPARATION_REPORT);
+			const selectedVariable = preparationDatasService.getSelectedVariable(REPORTS.PREPARATION_REPORT);
 			const res = distributionDatasService.getdistributionGraphDatas(selectedVariable);
 			expect(res.datasets[0].data[0]).toEqual(49.042657142857145);
 		});
@@ -140,10 +141,10 @@ describe('Visualization', () => {
 
 			preparationDatasService.initialize();
 			distributionDatasService.initialize();
-			distributionDatasService.setPreparationSource('preparationReport');
+			distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
 
-			preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[0], 'preparationReport');
-			const selectedVariable = preparationDatasService.getSelectedVariable('preparationReport');
+			preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[0], REPORTS.PREPARATION_REPORT);
+			const selectedVariable = preparationDatasService.getSelectedVariable(REPORTS.PREPARATION_REPORT);
 			const res = distributionDatasService.getdistributionGraphDatas(selectedVariable);
 			expect(res.datasets[0].data[0]).toEqual(37.37373737373738);
 
@@ -156,10 +157,10 @@ describe('Visualization', () => {
 
 			preparationDatasService.initialize();
 			distributionDatasService.initialize();
-			distributionDatasService.setPreparationSource('treePreparationReport');
+			distributionDatasService.setPreparationSource(REPORTS.TREE_PREPARATION_REPORT);
 
-			preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[0], 'preparationReport');
-			const selectedVariable = preparationDatasService.getSelectedVariable('preparationReport');
+			preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[0], REPORTS.PREPARATION_REPORT);
+			const selectedVariable = preparationDatasService.getSelectedVariable(REPORTS.PREPARATION_REPORT);
 			const res = distributionDatasService.getdistributionGraphDatas(selectedVariable);
 			expect(res.datasets[0].data[0]).toEqual(27.55896295429274);
 
@@ -172,7 +173,7 @@ describe('Visualization', () => {
 
 			treePreparationDatasService.initialize();
 			distributionDatasService.initialize();
-			distributionDatasService.setPreparationSource('treePreparationReport');
+			distributionDatasService.setPreparationSource(REPORTS.TREE_PREPARATION_REPORT);
 
 			treePreparationDatasService.setSelectedVariable(fileDatas.treePreparationReport.variablesStatistics[0]);
 			treePreparationDatasService.initSelectedNodes();
@@ -189,7 +190,7 @@ describe('Visualization', () => {
 
 			treePreparationDatasService.initialize();
 			distributionDatasService.initialize();
-			distributionDatasService.setPreparationSource('treePreparationReport');
+			distributionDatasService.setPreparationSource(REPORTS.TREE_PREPARATION_REPORT);
 
 			treePreparationDatasService.setSelectedVariable(fileDatas.treePreparationReport.variablesStatistics[0]);
 			treePreparationDatasService.initSelectedNodes();
@@ -210,10 +211,10 @@ describe('Visualization', () => {
 
 			preparationDatasService.initialize();
 			distributionDatasService.initialize();
-			distributionDatasService.setPreparationSource('preparationReport');
+			distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
 
-			preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[0], 'preparationReport');
-			const selectedVariable = preparationDatasService.getSelectedVariable('preparationReport');
+			preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[0], REPORTS.PREPARATION_REPORT);
+			const selectedVariable = preparationDatasService.getSelectedVariable(REPORTS.PREPARATION_REPORT);
 			const res = distributionDatasService.getHistogramGraphDatas(selectedVariable);
 
 			expect(res[0].frequency).toEqual(595);
@@ -231,10 +232,10 @@ describe('Visualization', () => {
 
 			preparationDatasService.initialize();
 			distributionDatasService.initialize();
-			distributionDatasService.setPreparationSource('preparationReport');
+			distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
 
-			preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[2], 'preparationReport');
-			const selectedVariable = preparationDatasService.getSelectedVariable('preparationReport');
+			preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[2], REPORTS.PREPARATION_REPORT);
+			const selectedVariable = preparationDatasService.getSelectedVariable(REPORTS.PREPARATION_REPORT);
 			const res = distributionDatasService.getHistogramGraphDatas(selectedVariable);
 
 			expect(res[0].frequency).toEqual(46560);

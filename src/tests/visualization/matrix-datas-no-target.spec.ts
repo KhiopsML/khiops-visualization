@@ -13,6 +13,7 @@ import {
 import {
 	PreparationDatasService
 } from '@khiops-visualization/providers/preparation-datas.service';
+import { REPORTS } from '@khiops-library/enum/reports';
 
 let appService: AppService;
 let preparation2dDatasService: Preparation2dDatasService;
@@ -41,9 +42,9 @@ describe('Matrix Datas : empty first partition regression case (MISSING) [OI_All
 		preparationDatasService.initialize();
 		preparation2dDatasService.initialize();
 		let currentVar = fileDatas.preparationReport.variablesStatistics[0];
-		preparationDatasService.setSelectedVariable(currentVar, 'preparationReport');
+		preparationDatasService.setSelectedVariable(currentVar, REPORTS.PREPARATION_REPORT);
 		currentVar.name1 = currentVar.name;
-		currentVar.name2 = preparationDatasService.getTargetVariable('preparationReport');
+		currentVar.name2 = preparationDatasService.getTargetVariable(REPORTS.PREPARATION_REPORT);
 		// Set the variable
 		preparation2dDatasService.setSelectedRegressionVariable(currentVar);
 

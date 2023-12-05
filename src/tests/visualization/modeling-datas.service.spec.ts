@@ -15,6 +15,7 @@ import * as _ from 'lodash'; // Important to import lodash in karma
 import {
 	PreparationDatasService
 } from '@khiops-visualization/providers/preparation-datas.service';
+import { REPORTS } from '@khiops-library/enum/reports';
 
 let modelingDatasService: ModelingDatasService;
 let preparationDatasService: PreparationDatasService;
@@ -51,7 +52,7 @@ describe('ModelingDatasService', () => {
 		preparationDatasService.initialize();
 		modelingDatasService.initialize();
 
-		preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[5], 'preparationReport');
+		preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[5], REPORTS.PREPARATION_REPORT);
 		const res = JSON.stringify(modelingDatasService.getVariableFromName('Mean(LLFields.jet 1 pt) where jet 2 b-tag <= 0.5'));
 
 		const expectedRes = {
