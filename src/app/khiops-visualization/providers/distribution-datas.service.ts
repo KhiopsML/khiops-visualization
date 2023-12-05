@@ -36,6 +36,7 @@ import {
 	TreePreparationDatasService
 } from './tree-preparation-datas.service';
 import { HistogramValuesI } from '@khiops-visualization/interfaces/histogram-values';
+import { TYPES } from '@khiops-library/enum/types';
 
 @Injectable({
 	providedIn: 'root'
@@ -399,7 +400,7 @@ export class DistributionDatasService {
 				graphItem.extra.index = i;
 
 				let total = 0;
-				if (this.distributionDatas.distributionType === 'GLOBAL.FREQUENCY') {
+				if (this.distributionDatas.distributionType === TYPES.FREQUENCY) {
 					currentValue = frequencyValue;
 					graphItem.value = coverageValue;
 					total = UtilsService.arraySum(frequencyArray);

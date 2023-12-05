@@ -1,3 +1,4 @@
+import { TYPES } from "@khiops-library/enum/types";
 import {
 	HistogramValuesI
 } from "@khiops-visualization/interfaces/histogram-values";
@@ -87,7 +88,7 @@ export class DistributionDatasVO {
 		this.distributionGraphOptionsX = undefined;
 		this.distributionGraphOptions = {
 			types: [
-				'GLOBAL.COVERAGE', 'GLOBAL.FREQUENCY'
+				TYPES.COVERAGE, TYPES.FREQUENCY
 			],
 			selected: undefined
 		};

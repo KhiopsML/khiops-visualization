@@ -38,6 +38,7 @@ import {
 } from '@khiops-library/providers/utils.service';
 import _ from 'lodash';
 import { ConfigService } from '@khiops-library/providers/config.service';
+import { TYPES } from '@khiops-library/enum/types';
 
 @Component({
 	selector: 'kl-ag-grid',
@@ -114,7 +115,7 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 	// For evaluation view
 	dataOptions = {
 		types: [
-			'GLOBAL.FREQUENCY', 'GLOBAL.COVERAGE'
+			TYPES.FREQUENCY, TYPES.COVERAGE
 		],
 		selected: undefined
 	};

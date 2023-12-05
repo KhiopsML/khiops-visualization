@@ -1,0 +1,7 @@
+export enum TYPES {
+	FREQUENCY = "GLOBAL.FREQUENCY",
+	COVERAGE = "GLOBAL.COVERAGE",
+	LOGARITHMIC = "logarithmic",
+	LINEAR = "linear",
+	STANDARD = "GLOBAL.STANDARD",
+}

@@ -26,6 +26,7 @@ import {
 	ChartOptions
 } from 'chart.js';
 import { ConfigService } from '@khiops-library/providers/config.service';
+import { TYPES } from '@khiops-library/enum/types';
 
 @Component({
 	selector: 'kl-distribution-graph-canvas',
@@ -83,9 +84,9 @@ export class DistributionGraphCanvasComponent extends ScrollableGraphCanvasCompo
 					callbacks: {
 						label: (items: any): string => {
 							if (items && items.dataset) {
-								if (!this.hideGraphOptions && this.graphOptions && this.graphOptions.selected === 'GLOBAL.COVERAGE') {
+								if (!this.hideGraphOptions && this.graphOptions && this.graphOptions.selected === TYPES.COVERAGE) {
 									return this.toPrecision.transform(items.dataset.extra[items.dataIndex].extra.coverageValue);
-								} else if (!this.hideGraphOptions && this.graphOptions.selected === 'GLOBAL.FREQUENCY') {
+								} else if (!this.hideGraphOptions && this.graphOptions.selected === TYPES.FREQUENCY) {
 									return this.toPrecision.transform(items.dataset.extra[items.dataIndex].extra.value);
 								} else if (this.graphOptions.selected === 'yLog') {
 									return this.toPrecision.transform(items.dataset.extra[items.dataIndex].extra.value);
@@ -96,7 +97,7 @@ export class DistributionGraphCanvasComponent extends ScrollableGraphCanvasCompo
 						},
 						afterLabel: (items: any): string => {
 							if (items && items.dataset) {
-								if (!this.hideGraphOptions && this.graphOptions && this.graphOptions.selected === 'GLOBAL.COVERAGE') {
+								if (!this.hideGraphOptions && this.graphOptions && this.graphOptions.selected === TYPES.COVERAGE) {
 									if (items.dataset.extra[items.dataIndex].extra.percent) {
 										return this.toPrecision.transform(items.dataset.extra[items.dataIndex].extra.percent) + '%';
 									} else {
@@ -112,7 +113,7 @@ export class DistributionGraphCanvasComponent extends ScrollableGraphCanvasCompo
 				y: {
 					ticks: {
 						callback: (value) => {
-							if (!this.hideGraphOptions && this.graphOptions && this.graphOptions.selected === 'GLOBAL.FREQUENCY') {
+							if (!this.hideGraphOptions && this.graphOptions && this.graphOptions.selected === TYPES.FREQUENCY) {
 								// Frequency log mode
 								if (value.toString().charAt(0) === '0' || value.toString().charAt(0) === '1') {
 									return value.toLocaleString();
@@ -168,7 +169,7 @@ export class DistributionGraphCanvasComponent extends ScrollableGraphCanvasCompo
 
 		this.graphOptions.selected = type;
 		this.graphTypeChanged.emit(type);
-		this.chartOptions.scales.y.type = this.graphOptions.selected === 'GLOBAL.FREQUENCY' ? 'logarithmic' : 'linear';
+		this.chartOptions.scales.y.type = this.graphOptions.selected === TYPES.FREQUENCY ? TYPES.LOGARITHMIC : TYPES.LINEAR;
 
 		const minValue = Math.min(...this.inputDatas.datasets[0].data);
 		if (minValue > 0 || this.graphOptions.selected === 'yLog') {

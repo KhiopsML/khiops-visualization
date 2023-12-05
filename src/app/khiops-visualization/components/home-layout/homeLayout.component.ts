@@ -3,7 +3,6 @@ import {
 	OnInit,
 	ViewEncapsulation,
 	ViewChild,
-	NgZone,
 	HostListener,
 	Input,
 	ElementRef
@@ -61,7 +60,9 @@ import pjson from 'package.json';
 import {
 	ConfigService
 } from '@khiops-library/providers/config.service';
-import { UtilsService } from '@khiops-library/providers/utils.service';
+import {
+	UtilsService
+} from '@khiops-library/providers/utils.service';
 
 
 @Component({
@@ -111,7 +112,6 @@ export class HomeLayoutComponent implements OnInit {
 	constructor(
 		private configService: ConfigService,
 		private translate: TranslateService,
-		private ngzone: NgZone,
 		private saveService: SaveService,
 		private dialogRef: MatDialog,
 		private appService: AppService,
@@ -124,8 +124,7 @@ export class HomeLayoutComponent implements OnInit {
 		private evaluationDatasService: EvaluationDatasService,
 		private preparationDatasService: PreparationDatasService,
 		private treePreparationDatasService: TreePreparationDatasService,
-		private preparation2dDatasService: Preparation2dDatasService,
-		private dialog: MatDialog) {
+		private preparation2dDatasService: Preparation2dDatasService) {
 
 		if (pjson) {
 			this.appTitle = pjson.title.visualization;

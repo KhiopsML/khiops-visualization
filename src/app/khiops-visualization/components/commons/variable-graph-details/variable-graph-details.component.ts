@@ -32,6 +32,7 @@ import {
 import {
 	TreePreparationVariableVO
 } from '@khiops-visualization/model/tree-preparation-variable-vo';
+import { DistributionDatasVO } from '@khiops-visualization/model/distribution-datas-vo';
 
 @Component({
 	selector: 'app-variable-graph-details',
@@ -57,13 +58,10 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
 
 	@Output() selectedItemChanged: EventEmitter < any > = new EventEmitter();
 
-	preparationDatas: any;
-	distributionDatas: any;
-	distributionGraphScrollPosition: any;
+	distributionDatas: DistributionDatasVO;
 	scrollPosition = 0;
 	scaleValue: any;
 	distributionGraphType: any;
-	distributionGraphTypeX: any;
 	targetDistributionGraphType: any;
 
 	isLoadingGraphDatas: boolean;
@@ -137,7 +135,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
 		this.scrollPosition = position;
 	}
 
-	onToggleFullscreen(isFullscreen: any) {
+	onToggleFullscreen(isFullscreen: boolean) {
 		this.isFullscreen = isFullscreen;
 		setTimeout(() => {
 			this.resize();

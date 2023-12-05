@@ -20,6 +20,7 @@ import {
 import {
 	EvaluationPredictorVO
 } from '../model/evaluation-predictor-vo';
+import { TYPES } from '@khiops-library/enum/types';
 
 @Injectable({
 	providedIn: 'root'
@@ -41,7 +42,7 @@ export class EvaluationDatasService {
 			liftGraphDatas: undefined,
 			liftGraphDisplayedValues: undefined,
 			confusionMatrix: undefined,
-			confusionMatrixType: 'GLOBAL.FREQUENCY'
+			confusionMatrixType: TYPES.FREQUENCY
 		};
 	}
 

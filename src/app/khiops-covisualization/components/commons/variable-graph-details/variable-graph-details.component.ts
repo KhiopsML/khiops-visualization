@@ -43,6 +43,9 @@ import {
 import {
 	Subscription
 } from "rxjs";
+import {
+	TYPES
+} from "@khiops-library/enum/types";
 
 @Component({
 	selector: "app-variable-graph-details",
@@ -70,7 +73,7 @@ implements OnInit, OnChanges, OnDestroy, AfterViewInit {
 	scaleValue: any;
 	graphDetails: any;
 	graphOptions = {
-		types: ["GLOBAL.COVERAGE", "GLOBAL.FREQUENCY"],
+		types: [TYPES.COVERAGE, TYPES.FREQUENCY],
 		selected: undefined,
 	};
 	activeEntries: string;
