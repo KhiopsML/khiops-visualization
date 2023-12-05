@@ -1,11 +1,4 @@
-import {
-	Component,
-	NgZone,
-	SimpleChanges,
-	OnChanges,
-	Input,
-	OnInit,
-} from "@angular/core";
+import { Component, SimpleChanges, OnChanges, Input } from "@angular/core";
 import { UtilsService } from "../../providers/utils.service";
 
 @Component({
@@ -13,7 +6,7 @@ import { UtilsService } from "../../providers/utils.service";
 	templateUrl: "./cell-stats.component.html",
 	styleUrls: ["./cell-stats.component.scss"],
 })
-export class CellStatsComponent implements OnInit, OnChanges {
+export class CellStatsComponent implements OnChanges {
 	@Input() selectedCells;
 	datas: {
 		F: number;
@@ -22,9 +15,7 @@ export class CellStatsComponent implements OnInit, OnChanges {
 		Total: number;
 	};
 
-	constructor(public ngzone: NgZone) {}
-
-	ngOnInit() {}
+	constructor() {}
 
 	ngOnChanges(changes: SimpleChanges) {
 		if (changes?.selectedCells?.currentValue) {

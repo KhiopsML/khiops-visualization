@@ -17,6 +17,7 @@ import {
 	PreparationDatasService
 } from "@khiops-visualization/providers/preparation-datas.service";
 import { REPORTS } from "@khiops-library/enum/reports";
+import { HistogramType } from "@khiops-visualization/components/commons/histogram/histogram.types";
 
 let appService: AppService;
 let histogramService: HistogramService;
@@ -146,7 +147,7 @@ describe("Visualization", () => {
 		it('computeXbarDimensions should return valid datas [ylogAdultAllReports, R1]', () => {
 			const fileDatas = require('../../assets/mocks/kv/ylogAdultAllReports.json');
 			const histogramDatas = getHistogramGraphDatas(fileDatas, 0)
-			const res = histogramService.computeXbarDimensions(histogramDatas, 'xLin')
+			const res = histogramService.computeXbarDimensions(histogramDatas, HistogramType.XLIN)
 			expect(JSON.stringify(res[0])).toEqual(JSON.stringify({
 				"barWlog": 0,
 				"barXlog": 0,
@@ -160,7 +161,7 @@ describe("Visualization", () => {
 		it('computeXbarDimensions should return valid datas [ylogAdultAllReports, R2]', () => {
 			const fileDatas = require('../../assets/mocks/kv/ylogAdultAllReports.json');
 			const histogramDatas = getHistogramGraphDatas(fileDatas, 1)
-			const res = histogramService.computeXbarDimensions(histogramDatas, 'xLin')
+			const res = histogramService.computeXbarDimensions(histogramDatas, HistogramType.XLIN)
 			expect(JSON.stringify(res[0])).toEqual(JSON.stringify({
 				"barWlog": 0,
 				"barXlog": 0,
@@ -174,7 +175,7 @@ describe("Visualization", () => {
 		it('computeXbarDimensions should return valid datas [ylogAdultAllReports, R1]', () => {
 			const fileDatas = require('../../assets/mocks/kv/ylogAdultAllReports.json');
 			const histogramDatas = getHistogramGraphDatas(fileDatas, 0)
-			const res = histogramService.computeXbarDimensions(histogramDatas, 'xLog')
+			const res = histogramService.computeXbarDimensions(histogramDatas, HistogramType.XLOG)
 			expect(JSON.stringify(res[0])).toEqual(JSON.stringify({
 				"barWlog": 0.02555410447238815,
 				"barXlog": 0,
@@ -189,7 +190,7 @@ describe("Visualization", () => {
 			const fileDatas = require('../../assets/mocks/kv/ylogAdultAllReports.json');
 			const histogramDatas = getHistogramGraphDatas(fileDatas, 2)
 			histogramService.getRangeX(histogramDatas)
-			const res = histogramService.computeXbarDimensions(histogramDatas, 'xLog')
+			const res = histogramService.computeXbarDimensions(histogramDatas, HistogramType.XLOG)
 			expect(JSON.stringify(res[0])).toEqual(JSON.stringify({
 				"barWlog": 0.15836249209524964,
 				"barXlog": 0,
@@ -227,7 +228,7 @@ describe("Visualization", () => {
 		it('complex computeXbarDimensions should return valid datas [ylogAdultAllReports, R1, xLog]', () => {
 			const fileDatas = require('../../assets/mocks/kv/ylogAdultAllReports.json');
 			const histogramDatas = getHistogramGraphDatas(fileDatas, 0)
-			const res = histogramService.computeXbarDimensions(histogramDatas, 'xLog')
+			const res = histogramService.computeXbarDimensions(histogramDatas, HistogramType.XLOG)
 			const expectedRes = require('../mocks/visualization/histogram-datas/ylogAdultAllReports-histogram-xlog-r1.json');
 			expect(JSON.stringify(res)).toEqual(JSON.stringify(expectedRes));
 		});
@@ -235,7 +236,7 @@ describe("Visualization", () => {
 		it('complex computeXbarDimensions should return valid datas [ylogAdultAllReports, R3, xLin]', () => {
 			const fileDatas = require('../../assets/mocks/kv/ylogAdultAllReports.json');
 			const histogramDatas = getHistogramGraphDatas(fileDatas, 2)
-			const res = histogramService.computeXbarDimensions(histogramDatas, 'xLin')
+			const res = histogramService.computeXbarDimensions(histogramDatas, HistogramType.XLIN)
 			const expectedRes = require('../mocks/visualization/histogram-datas/ylogAdultAllReports-histogram-xlin-r3.json');
 			expect(JSON.stringify(res)).toEqual(JSON.stringify(expectedRes));
 		});

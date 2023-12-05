@@ -1,4 +1,5 @@
 import { TYPES } from "@khiops-library/enum/types";
+import { HistogramType } from "@khiops-visualization/components/commons/histogram/histogram.types";
 import {
 	HistogramValuesI
 } from "@khiops-visualization/interfaces/histogram-values";
@@ -106,7 +107,7 @@ export class DistributionDatasVO {
 	setHistogramGraphOptions() {
 		this.distributionGraphOptionsY = {
 			types: [
-				'yLin', 'yLog'
+				HistogramType.YLIN, HistogramType.YLOG
 			],
 			selected: undefined
 		};
@@ -120,7 +121,7 @@ export class DistributionDatasVO {
 
 		this.distributionGraphOptionsX = {
 			types: [
-				'xLin', 'xLog'
+				HistogramType.XLIN, HistogramType.XLOG
 			],
 			selected: undefined
 		};

@@ -27,6 +27,7 @@ import {
 } from 'chart.js';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { TYPES } from '@khiops-library/enum/types';
+import { HistogramType } from '@khiops-visualization/components/commons/histogram/histogram.types';
 
 @Component({
 	selector: 'kl-distribution-graph-canvas',
@@ -88,7 +89,7 @@ export class DistributionGraphCanvasComponent extends ScrollableGraphCanvasCompo
 									return this.toPrecision.transform(items.dataset.extra[items.dataIndex].extra.coverageValue);
 								} else if (!this.hideGraphOptions && this.graphOptions.selected === TYPES.FREQUENCY) {
 									return this.toPrecision.transform(items.dataset.extra[items.dataIndex].extra.value);
-								} else if (this.graphOptions.selected === 'yLog') {
+								} else if (this.graphOptions.selected === HistogramType.YLOG) {
 									return this.toPrecision.transform(items.dataset.extra[items.dataIndex].extra.value);
 								} else {
 									return this.toPrecision.transform(items.dataset.data[items.dataIndex]);
@@ -121,7 +122,7 @@ export class DistributionGraphCanvasComponent extends ScrollableGraphCanvasCompo
 									return '';
 								}
 							} else {
-								if (this.graphOptions.selected === 'yLog') {
+								if (this.graphOptions.selected === HistogramType.YLOG) {
 									if (typeof value === 'number') {
 										const datas = this.inputDatas.datasets[0];
 										return -(-datas.base - value);
@@ -172,7 +173,7 @@ export class DistributionGraphCanvasComponent extends ScrollableGraphCanvasCompo
 		this.chartOptions.scales.y.type = this.graphOptions.selected === TYPES.FREQUENCY ? TYPES.LOGARITHMIC : TYPES.LINEAR;
 
 		const minValue = Math.min(...this.inputDatas.datasets[0].data);
-		if (minValue > 0 || this.graphOptions.selected === 'yLog') {
+		if (minValue > 0 || this.graphOptions.selected === HistogramType.YLOG) {
 			this.chartOptions.scales.y.min = 0;
 		} else {
 			this.chartOptions.scales.y.min = minValue;
