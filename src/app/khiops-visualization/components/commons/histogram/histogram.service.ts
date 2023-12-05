@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HistogramBarVO } from "./histogram.bar-vo";
+import { HistogramType } from "./histogram.types";
 
 @Injectable({
 	providedIn: "root",
@@ -66,9 +67,7 @@ export class HistogramService {
 	}
 
 	getLogRangeY(datas: any) {
-		const dataValues = datas
-			.map((e) => e.logValue)
-			.filter((e) => e !== 0);
+		const dataValues = datas.map((e) => e.logValue).filter((e) => e !== 0);
 		this.rangeYLog.max = Math.max(...dataValues);
 		this.rangeYLog.min = Math.min(...dataValues);
 
@@ -96,10 +95,13 @@ export class HistogramService {
 				this.rangeXLog.middlewidth,
 				xType
 			);
-			histogramBar.computeX(bars);
+			if (xType === HistogramType.XLIN) {
+				histogramBar.computeXLin(bars);
+			} else {
+				histogramBar.computeXLog(bars);
+			}
 			bars.push(histogramBar);
 		});
-
 		return bars;
 	}
 }

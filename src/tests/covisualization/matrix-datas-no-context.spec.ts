@@ -33,7 +33,7 @@ describe('Matrix Datas : NO Context [Co-simple-2vars file]', () => {
 		dimensionsDatasService = TestBed.inject(DimensionsDatasService);
 		appService = TestBed.inject(AppService);
 
-		const fileDatas = require('../mocks/covisualization/Co-simple-2vars.json');
+		const fileDatas = require('../../assets/mocks/kc/Co-simple-2vars.json');
 		appService.setFileDatas(fileDatas);
 
 		dimensionsDatasService.initialize();
@@ -92,7 +92,7 @@ describe('Matrix Datas : NO Context [mushroom file] check proba values when fold
 		dimensionsDatasService = TestBed.inject(DimensionsDatasService);
 		appService = TestBed.inject(AppService);
 
-		const fileDatas = require('../mocks/covisualization/mushroom.json');
+		const fileDatas = require('../../assets/mocks/kc/mushroom.json');
 		appService.setFileDatas(fileDatas);
 
 		dimensionsDatasService.initialize();
@@ -134,7 +134,7 @@ describe('Matrix Datas : NO Context [mushroom file] check rev proba values when 
 		dimensionsDatasService = TestBed.inject(DimensionsDatasService);
 		appService = TestBed.inject(AppService);
 
-		const fileDatas = require('../mocks/covisualization/mushroom.json');
+		const fileDatas = require('../../assets/mocks/kc/mushroom.json');
 		appService.setFileDatas(fileDatas);
 
 		dimensionsDatasService.initialize();

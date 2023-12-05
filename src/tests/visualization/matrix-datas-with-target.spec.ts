@@ -30,7 +30,7 @@ describe('Matrix Datas : WITH target [adult-bivar file]', () => {
 		preparation2dDatasService = TestBed.inject(Preparation2dDatasService);
 		appService = TestBed.inject(AppService);
 
-		const fileDatas = require('../mocks/visualization/adult-bivar.json');
+		const fileDatas = require('../../assets/mocks/kv/adult-bivar.json');
 		appService.setFileDatas(fileDatas);
 
 		preparation2dDatasService.initialize();

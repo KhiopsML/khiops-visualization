@@ -363,7 +363,6 @@ export class DistributionDatasService {
 		}
 
 		this.distributionDatas.histogramDatas = histogramGraphDetails;
-
 		return histogramGraphDetails;
 	}
 

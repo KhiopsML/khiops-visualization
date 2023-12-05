@@ -40,7 +40,7 @@ describe('EvaluationDatasService', () => {
 
 	it('getEvaluationTypesSummary should return valid datas [adult-bivar]', () => {
 
-		const fileDatas = require('../mocks/visualization/adult-bivar.json');
+		const fileDatas = require('../../assets/mocks/kv/adult-bivar.json');
 		appService.setFileDatas(fileDatas);
 
 		evaluationDatasService.initialize();
@@ -54,7 +54,7 @@ describe('EvaluationDatasService', () => {
 
 	it('getPredictorEvaluations should return valid datas [adult-bivar]', () => {
 
-		const fileDatas = require('../mocks/visualization/adult-bivar.json');
+		const fileDatas = require('../../assets/mocks/kv/adult-bivar.json');
 		appService.setFileDatas(fileDatas);
 
 		evaluationDatasService.initialize();
@@ -69,7 +69,7 @@ describe('EvaluationDatasService', () => {
 
 	it('getConfusionMatrix should return valid datas [adult-bivar]', () => {
 
-		const fileDatas = require('../mocks/visualization/adult-bivar.json');
+		const fileDatas = require('../../assets/mocks/kv/adult-bivar.json');
 		appService.setFileDatas(fileDatas);
 
 		evaluationDatasService.initialize();

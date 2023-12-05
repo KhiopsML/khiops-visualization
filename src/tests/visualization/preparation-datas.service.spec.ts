@@ -40,7 +40,7 @@ describe('PreparationDatasService', () => {
 
 	it('getTargetVariableStatsDatas should return valid datas [bi2, Categorical]', () => {
 
-		const fileDatas = require('../mocks/visualization/bi2.json');
+		const fileDatas = require('../../assets/mocks/kv/bi2.json');
 		appService.setFileDatas(fileDatas);
 		preparationDatasService.initialize();
 
@@ -51,7 +51,7 @@ describe('PreparationDatasService', () => {
 
 	it('getTargetVariableStatsDatas should return valid datas [C100_AllReports, Numerical]', () => {
 
-		const fileDatas = require('../mocks/visualization/C100_AllReports.json');
+		const fileDatas = require('../../assets/mocks/kv/C100_AllReports.json');
 		appService.setFileDatas(fileDatas);
 		preparationDatasService.initialize();
 
@@ -98,7 +98,7 @@ describe('PreparationDatasService', () => {
 
 	it('getTargetVariableStatsDatas should return valid datas [adult-bivar, Numerical]', () => {
 
-		const fileDatas = require('../mocks/visualization/adult-bivar.json');
+		const fileDatas = require('../../assets/mocks/kv/adult-bivar.json');
 		appService.setFileDatas(fileDatas);
 		preparationDatasService.initialize();
 
@@ -145,7 +145,7 @@ describe('PreparationDatasService', () => {
 
 	it('getCurrentIntervalDatas should return valid datas [C100_AllReports, Numerical, var = R1, index = undefined]', () => {
 
-		const fileDatas = require('../mocks/visualization/C100_AllReports.json');
+		const fileDatas = require('../../assets/mocks/kv/C100_AllReports.json');
 		appService.setFileDatas(fileDatas);
 		preparationDatasService.initialize();
 
@@ -168,7 +168,7 @@ describe('PreparationDatasService', () => {
 
 	it('getCurrentIntervalDatas should return valid datas [C100_AllReports, Numerical, var = R2, index = 15]', () => {
 
-		const fileDatas = require('../mocks/visualization/C100_AllReports.json');
+		const fileDatas = require('../../assets/mocks/kv/C100_AllReports.json');
 		appService.setFileDatas(fileDatas);
 		preparationDatasService.initialize();
 
@@ -191,7 +191,7 @@ describe('PreparationDatasService', () => {
 
 	it('getCurrentIntervalDatas should return valid datas [adult-bivar, Categorical, var = R1, index = undefined]', () => {
 
-		const fileDatas = require('../mocks/visualization/adult-bivar.json');
+		const fileDatas = require('../../assets/mocks/kv/adult-bivar.json');
 		appService.setFileDatas(fileDatas);
 		preparationDatasService.initialize();
 
@@ -221,7 +221,7 @@ describe('PreparationDatasService', () => {
 
 	it('getCurrentIntervalDatas should return valid datas [adult-bivar, Categorical, var = R1, index = 1]', () => {
 
-		const fileDatas = require('../mocks/visualization/adult-bivar.json');
+		const fileDatas = require('../../assets/mocks/kv/adult-bivar.json');
 		appService.setFileDatas(fileDatas);
 		preparationDatasService.initialize();
 
@@ -248,7 +248,7 @@ describe('PreparationDatasService', () => {
 
 	it('getCurrentIntervalDatas should return valid datas [bi2, Numerical, var = R2, index = 1]', () => {
 
-		const fileDatas = require('../mocks/visualization/bi2.json');
+		const fileDatas = require('../../assets/mocks/kv/bi2.json');
 		appService.setFileDatas(fileDatas);
 		preparationDatasService.initialize();
 
@@ -271,7 +271,7 @@ describe('PreparationDatasService', () => {
 
 	it('getCurrentIntervalDatas should return valid datas [bi2, Categorical, var = R6, index = 3]', () => {
 
-		const fileDatas = require('../mocks/visualization/bi2.json');
+		const fileDatas = require('../../assets/mocks/kv/bi2.json');
 		appService.setFileDatas(fileDatas);
 		preparationDatasService.initialize();
 
@@ -316,7 +316,7 @@ describe('PreparationDatasService', () => {
 
 	it('getCurrentIntervalDatas should return valid datas [Essai_1_AllReports, Categorical, var = R055, index = 0]', () => {
 
-		const fileDatas = require('../mocks/visualization/Essai_1_AllReports.json');
+		const fileDatas = require('../../assets/mocks/kv/Essai_1_AllReports.json');
 		appService.setFileDatas(fileDatas);
 		preparationDatasService.initialize();
 

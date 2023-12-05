@@ -127,7 +127,9 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 	onResized(event: ResizedEvent) {
 		this.h = this.chart.nativeElement.offsetHeight + 10 - 60; // graph header = 60, +10 to take more height
 		this.w = this.chart.nativeElement.offsetWidth;
-		this.datas && this.init();
+		if (!event.isFirst) {
+			this.datas && this.init();
+		}
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
@@ -136,10 +138,8 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 		}
 	}
 
-	ngAfterViewInit(): void {}
-
-	initSpecs(datas: any) {
-		this.datas = datas;
+	ngAfterViewInit(): void {
+		this.datas && this.init();
 	}
 
 	init() {
@@ -149,8 +149,8 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			this.chart.nativeElement.innerHTML = "";
 			if (this.datas) {
 				if (
-					this.distributionDatas.distributionGraphOptionsY.selected ===
-					HistogramType.YLOG
+					this.distributionDatas.distributionGraphOptionsY
+						.selected === HistogramType.YLOG
 				) {
 					this.rangeYLog = this.histogramService.getLogRangeY(
 						this.datas
@@ -435,7 +435,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			.on("mouseover", mouseover)
 			.on("mousemove", mousemove)
 			.on("mouseleave", mouseleave)
-			// .attr('rx', 3)
+			// .attr('rx', 3)F
 			// .attr('ry', 3)
 			.attr("width", barW)
 			.attr("height", barH)
@@ -446,6 +446,8 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 	}
 
 	drawHistogram(datasSet: any) {
+		// TODO compare performance here
+		const t0 = performance.now();
 		let bars: HistogramBarVO[] =
 			this.histogramService.computeXbarDimensions(
 				datasSet,
@@ -462,6 +464,9 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			this.ratio =
 				bars[bars.length - 1].barXlog + bars[bars.length - 1].barWlog;
 		}
+		const t1 = performance.now();
+		console.log("drawHistogram " + (t1 - t0) + " milliseconds.");
+
 		datasSet.forEach((d: any, i: number) => {
 			this.drawRect(d, i, bars[i], this.ratio);
 		});
@@ -576,8 +581,8 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 				//@ts-ignore
 				let val: any = d;
 				if (
-					this.distributionDatas.distributionGraphOptionsY.selected ===
-					HistogramType.YLIN
+					this.distributionDatas.distributionGraphOptionsY
+						.selected === HistogramType.YLIN
 				) {
 					return "" + format(val);
 				} else {

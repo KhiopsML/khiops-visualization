@@ -34,7 +34,7 @@ describe('Matrix Datas : One Context [zero-except file]', () => {
 		dimensionsDatasService = TestBed.inject(DimensionsDatasService);
 		appService = TestBed.inject(AppService);
 
-		const fileDatas = require('../mocks/covisualization/zero-except.json');
+		const fileDatas = require('../../assets/mocks/kc/zero-except.json');
 		appService.setFileDatas(fileDatas);
 
 		dimensionsDatasService.initialize();
@@ -116,7 +116,7 @@ describe('Matrix Datas : one Context [zero-except file] check proba values witho
 		dimensionsDatasService = TestBed.inject(DimensionsDatasService);
 		appService = TestBed.inject(AppService);
 
-		const fileDatas = require('../mocks/covisualization/zero-except.json');
+		const fileDatas = require('../../assets/mocks/kc/zero-except.json');
 		appService.setFileDatas(fileDatas);
 
 		dimensionsDatasService.initialize();
@@ -155,7 +155,7 @@ describe('Matrix Datas : one Context [zero-except file] check proba values with 
 		dimensionsDatasService = TestBed.inject(DimensionsDatasService);
 		appService = TestBed.inject(AppService);
 
-		const fileDatas = require('../mocks/covisualization/zero-except.json');
+		const fileDatas = require('../../assets/mocks/kc/zero-except.json');
 		appService.setFileDatas(fileDatas);
 
 		dimensionsDatasService.initialize();
@@ -194,7 +194,7 @@ describe('Matrix Datas : one Context [adultmissing file] check rev proba values 
 		dimensionsDatasService = TestBed.inject(DimensionsDatasService);
 		appService = TestBed.inject(AppService);
 
-		const fileDatas = require('../mocks/covisualization/adultmissing.json');
+		const fileDatas = require('../../assets/mocks/kc/adultmissing.json');
 		appService.setFileDatas(fileDatas);
 
 		dimensionsDatasService.initialize();
@@ -233,7 +233,7 @@ describe('Matrix Datas : one Context [adultmissing file] 4 cells folding check H
 		dimensionsDatasService = TestBed.inject(DimensionsDatasService);
 		appService = TestBed.inject(AppService);
 
-		const fileDatas = require('../mocks/covisualization/adultmissing.json');
+		const fileDatas = require('../../assets/mocks/kc/adultmissing.json');
 		appService.setFileDatas(fileDatas);
 
 		dimensionsDatasService.initialize();
@@ -278,7 +278,7 @@ describe('Matrix Datas : one Context [adultmissing file] 4 cells folding check H
 		dimensionsDatasService = TestBed.inject(DimensionsDatasService);
 		appService = TestBed.inject(AppService);
 
-		const fileDatas = require('../mocks/covisualization/adultmissing.json');
+		const fileDatas = require('../../assets/mocks/kc/adultmissing.json');
 		appService.setFileDatas(fileDatas);
 
 		dimensionsDatasService.initialize();
@@ -322,7 +322,7 @@ describe('Matrix Datas : one Context [adultmissing file] 4 cells folding check M
 		dimensionsDatasService = TestBed.inject(DimensionsDatasService);
 		appService = TestBed.inject(AppService);
 
-		const fileDatas = require('../mocks/covisualization/adultmissing.json');
+		const fileDatas = require('../../assets/mocks/kc/adultmissing.json');
 		appService.setFileDatas(fileDatas);
 
 		dimensionsDatasService.initialize();

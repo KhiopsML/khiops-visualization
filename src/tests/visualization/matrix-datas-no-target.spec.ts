@@ -35,7 +35,7 @@ describe('Matrix Datas : empty first partition regression case (MISSING) [OI_All
 		preparationDatasService = TestBed.inject(PreparationDatasService);
 		appService = TestBed.inject(AppService);
 
-		const fileDatas = require('../mocks/visualization/OI_AllReports.json');
+		const fileDatas = require('../../assets/mocks/kv/OI_AllReports.json');
 		appService.setFileDatas(fileDatas);
 
 		preparationDatasService.initialize();
@@ -75,7 +75,7 @@ describe('Matrix Datas : NO target [bi2 file]', () => {
 		preparation2dDatasService = TestBed.inject(Preparation2dDatasService);
 		appService = TestBed.inject(AppService);
 
-		const fileDatas = require('../mocks/visualization/bi2.json');
+		const fileDatas = require('../../assets/mocks/kv/bi2.json');
 		appService.setFileDatas(fileDatas);
 
 		preparation2dDatasService.initialize();

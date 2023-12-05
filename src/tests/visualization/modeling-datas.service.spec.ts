@@ -45,7 +45,7 @@ describe('ModelingDatasService', () => {
 
 	it('getVariableFromName should return valid datas [C100_AllReports, Numerical, Mean(LLFields.jet 1 pt) where jet 2 b-tag <= 0.5, R6]', () => {
 
-		const fileDatas = require('../mocks/visualization/C100_AllReports.json');
+		const fileDatas = require('../../assets/mocks/kv/C100_AllReports.json');
 		appService.setFileDatas(fileDatas);
 
 		preparationDatasService.initialize();
@@ -65,7 +65,7 @@ describe('ModelingDatasService', () => {
 
 	it('setSelectedPredictor and getTrainedPredictorDisplayedColumns should return valid datas [C100_AllReports, R2]', () => {
 
-		const fileDatas = require('../mocks/visualization/C100_AllReports.json');
+		const fileDatas = require('../../assets/mocks/kv/C100_AllReports.json');
 		appService.setFileDatas(fileDatas);
 
 		preparationDatasService.initialize();

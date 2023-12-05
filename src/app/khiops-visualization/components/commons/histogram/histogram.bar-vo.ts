@@ -11,7 +11,6 @@ export class HistogramBarVO {
 
 	constructor(d: any, middlewidth: number, xType: string) {
 		this.partition = d.partition;
-
 		if (xType === HistogramType.XLIN) {
 			let barWlin = 0;
 			if (this.partition[0] < 0 && this.partition[1] > 0) {
@@ -41,20 +40,21 @@ export class HistogramBarVO {
 		}
 	}
 
-	computeX(bars: HistogramBarVO[]) {
-		let sum = bars
-			.map((e) => e.barWlog)
-			.reduce(
-				(partialSum: any, a: any) => Math.abs(partialSum) + Math.abs(a),
-				0
-			);
+	computeXLog(bars: HistogramBarVO[]) {
+		let sum = bars.reduce(
+			(partialSum: any, a: any) =>
+				Math.abs(partialSum) + Math.abs(a.barWlog),
+			0
+		);
 		this.barXlog = sum || 0;
-		sum = bars
-			.map((e) => e.barWlin)
-			.reduce(
-				(partialSum: any, a: any) => Math.abs(partialSum) + Math.abs(a),
-				0
-			);
+	}
+
+	computeXLin(bars: HistogramBarVO[]) {
+		let sum = bars.reduce(
+			(partialSum: any, a: any) =>
+				Math.abs(partialSum) + Math.abs(a.barWlin),
+			0
+		);
 		this.barXlin = sum || 0;
 	}
 }
