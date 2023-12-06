@@ -40,7 +40,7 @@ import {
 import {
 	KhiopsLibraryService
 } from '@khiops-library/providers/khiops-library.service';
-import { ChartDatasI } from '@khiops-library/interfaces/chart-datas';
+import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
 
 @Component({
 	selector: 'app-tree-preparation-view',
@@ -63,7 +63,7 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
 	sizes: any;
 	summaryDatas: any[any];
 	informationsDatas: any[any];
-	targetVariableStatsDatas: ChartDatasI;
+	targetVariableStatsDatas: ChartDatasVO;
 	currentIntervalDatas: any;
 	matrixRegSelectedCell = 0;
 	selectedBarIndex = 0;

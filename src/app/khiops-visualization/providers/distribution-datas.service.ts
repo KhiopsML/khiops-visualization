@@ -30,8 +30,8 @@ import {
 	DistributionDatasVO
 } from '../model/distribution-datas-vo';
 import {
-	ChartDatasI
-} from '@khiops-library/interfaces/chart-datas';
+	ChartDatasVO
+} from '@khiops-library/model/chart-datas-vo';
 import {
 	TreePreparationDatasService
 } from './tree-preparation-datas.service';
@@ -118,7 +118,7 @@ export class DistributionDatasService {
 	}
 
 	// tslint:disable-next-line:typedef-whitespace
-	getTargetDistributionGraphDatas(selectedVariable, type ? : string, initActiveEntries ? : boolean): ChartDatasI {
+	getTargetDistributionGraphDatas(selectedVariable, type ? : string, initActiveEntries ? : boolean): ChartDatasVO {
 
 		if (initActiveEntries === undefined) {
 			initActiveEntries = initActiveEntries || true;
@@ -156,7 +156,7 @@ export class DistributionDatasService {
 
 	}
 
-	getTreeNodeTargetDistributionGraphDatas(selectedNode, type ? : string): ChartDatasI {
+	getTreeNodeTargetDistributionGraphDatas(selectedNode, type ? : string): ChartDatasVO {
 
 		this.distributionDatas.initTreeNodeTargetDistributionGraphDatas();
 		this.distributionDatas.setTreeNodeTargetDistributionType(type);
@@ -275,9 +275,9 @@ export class DistributionDatasService {
 
 
 	// tslint:disable-next-line:typedef-whitespace
-	getdistributionGraphDatas(selectedVariable, type ? : string, initActiveEntries ? : boolean): ChartDatasI {
+	getdistributionGraphDatas(selectedVariable, type ? : string, initActiveEntries ? : boolean): ChartDatasVO {
 
-		let distributionsGraphDetails = new ChartDatasI();
+		let distributionsGraphDetails = new ChartDatasVO();
 		const appDatas = this.appService.getDatas().datas;
 
 		if (initActiveEntries === undefined) {
@@ -454,9 +454,9 @@ export class DistributionDatasService {
 		return coverageValue;
 	}
 
-	getLeveldistributionGraphDatas(inputDatas: any, limit = 0): ChartDatasI {
+	getLeveldistributionGraphDatas(inputDatas: any, limit = 0): ChartDatasVO {
 
-		const levelDistributionGraphDatas: ChartDatasI = new ChartDatasI();
+		const levelDistributionGraphDatas: ChartDatasVO = new ChartDatasVO();
 
 		const currentDataSet = new ChartDatasetVO('level');
 		levelDistributionGraphDatas.datasets.push(currentDataSet);

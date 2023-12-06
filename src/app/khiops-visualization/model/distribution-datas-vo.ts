@@ -2,8 +2,8 @@ import {
 	TYPES
 } from "@khiops-library/enum/types";
 import {
-	ChartDatasI
-} from "@khiops-library/interfaces/chart-datas";
+	ChartDatasVO
+} from "@khiops-library/model/chart-datas-vo";
 import {
 	DistributionOptionsI
 } from "@khiops-library/interfaces/distribution-options";
@@ -29,25 +29,25 @@ export class DistributionDatasVO {
 	distributionGraphOptions: DistributionOptionsI = undefined;
 	distributionGraphOptionsX: DistributionOptionsI = undefined;
 	distributionGraphOptionsY: DistributionOptionsI = undefined;
-	distributionGraphDatas: ChartDatasI = undefined;
+	distributionGraphDatas: ChartDatasVO = undefined;
 
 	histogramDatas: HistogramValuesI[] = undefined;
 
-	treeNodedistributionGraphDatas: ChartDatasI = undefined;
+	treeNodedistributionGraphDatas: ChartDatasVO = undefined;
 
 	targetDistributionDisplayedValues: ChartToggleValuesI[];
 	targetDistributionType: string = TYPES.PROBABILITIES;
-	targetDistributionGraphDatas: ChartDatasI = undefined;
+	targetDistributionGraphDatas: ChartDatasVO = undefined;
 
 	treeHyperDisplayedValues: ChartToggleValuesI[];
 	treeNodeTargetDistributionDisplayedValues: ChartToggleValuesI[];
 	treeNodeTargetDistributionType: string = TYPES.PROBABILITIES;
-	treeNodeTargetDistributionGraphDatas: ChartDatasI = undefined;
+	treeNodeTargetDistributionGraphDatas: ChartDatasVO = undefined;
 
 	preparationSource: string = '';
 
 	appDatas: any = undefined;
-	treeHyperGraphDatas: ChartDatasI = undefined;
+	treeHyperGraphDatas: ChartDatasVO = undefined;
 
 	constructor(appDatas) {
 		this.appDatas = appDatas;
@@ -63,7 +63,7 @@ export class DistributionDatasVO {
 	}
 
 	initTreeNodeTargetDistributionGraphDatas() {
-		this.treeNodeTargetDistributionGraphDatas = new ChartDatasI();
+		this.treeNodeTargetDistributionGraphDatas = new ChartDatasVO();
 		// this.treeNodeTargetDistributionDisplayedValues = undefined; // No !!! otherwise the select box do not work
 	}
 
@@ -119,7 +119,7 @@ export class DistributionDatasVO {
 	}
 
 	initTreeHyperGraphDatas() {
-		this.treeHyperGraphDatas = new ChartDatasI();
+		this.treeHyperGraphDatas = new ChartDatasVO();
 		// this.treeNodeTargetDistributionDisplayedValues = undefined; // No !!! otherwise the select box do not work
 	}
 
@@ -136,7 +136,7 @@ export class DistributionDatasVO {
 	}
 
 	initTargetDistributionGraphDatas() {
-		this.targetDistributionGraphDatas = new ChartDatasI();
+		this.targetDistributionGraphDatas = new ChartDatasVO();
 		// this.targetDistributionDisplayedValues = undefined; // No !!! otherwise the select box do not work
 	}
 

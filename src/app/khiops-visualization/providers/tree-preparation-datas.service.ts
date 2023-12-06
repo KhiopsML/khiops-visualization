@@ -48,8 +48,8 @@ import {
 	TYPES
 } from '@khiops-library/enum/types';
 import {
-	ChartDatasI
-} from '@khiops-library/interfaces/chart-datas';
+	ChartDatasVO
+} from '@khiops-library/model/chart-datas-vo';
 
 @Injectable({
 	providedIn: 'root'
@@ -372,12 +372,12 @@ export class TreePreparationDatasService {
 		return variableDatas;
 	}
 
-	getTargetVariableStatsDatas(): ChartDatasI {
-		let variableStatsDatas = new ChartDatasI();
+	getTargetVariableStatsDatas(): ChartDatasVO {
+		let variableStatsDatas = new ChartDatasVO();
 
 		const appDatas = this.appService.getDatas().datas;
 		if (appDatas.treePreparationReport && appDatas.treePreparationReport.summary) {
-			variableStatsDatas = new ChartDatasI();
+			variableStatsDatas = new ChartDatasVO();
 			variableStatsDatas.emptyLabels();
 			const currentDatas = appDatas.treePreparationReport.summary.targetValues;
 

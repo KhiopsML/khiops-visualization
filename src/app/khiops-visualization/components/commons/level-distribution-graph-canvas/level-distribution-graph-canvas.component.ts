@@ -32,8 +32,8 @@ import {
 	ChartColorsSetI
 } from '@khiops-library/interfaces/chart-colors-set';
 import {
-	ChartDatasI
-} from '@khiops-library/interfaces/chart-datas';
+	ChartDatasVO
+} from '@khiops-library/model/chart-datas-vo';
 import {
 	ChartOptions
 } from 'chart.js';
@@ -50,7 +50,7 @@ export class LevelDistributionGraphCanvasComponent extends ScrollableGraphCanvas
 	@Input() datas: string;
 	@Input() levelDistributionTitle: string;
 
-	inputDatas: ChartDatasI = undefined;
+	inputDatas: ChartDatasVO = undefined;
 	colorSet: ChartColorsSetI;
 
 	@ViewChild('levelGraph', {

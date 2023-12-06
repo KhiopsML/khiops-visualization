@@ -1,6 +1,6 @@
-import { ChartDatasetVO } from "../model/chartDataset-vo";
+import { ChartDatasetVO } from "./chartDataset-vo";
 
-export class ChartDatasI {
+export class ChartDatasVO {
 	datasets: ChartDatasetVO[] = [];
 	labels: string[] = [];
 

@@ -53,7 +53,7 @@ import {
 import {
 	GridColumnsI
 } from '@khiops-library/interfaces/grid-columns';
-import { ChartDatasI } from '@khiops-library/interfaces/chart-datas';
+import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
 
 @Component({
 	selector: 'app-modeling-view',
@@ -75,7 +75,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
 	appDatas: any;
 	sizes: any;
 	summaryDatas: any;
-	targetVariableStatsDatas: ChartDatasI;
+	targetVariableStatsDatas: ChartDatasVO;
 	trainedPredictorsSummaryDatas: any;
 	trainedPredictorsListDatas: any;
 	modelingDatas: any;

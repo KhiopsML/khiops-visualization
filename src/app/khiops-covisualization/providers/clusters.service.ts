@@ -38,8 +38,8 @@ import {
 	TreenodesService
 } from './treenodes.service';
 import {
-	ChartDatasI
-} from '@khiops-library/interfaces/chart-datas';
+	ChartDatasVO
+} from '@khiops-library/model/chart-datas-vo';
 @Injectable({
 	providedIn: 'root'
 })
@@ -155,7 +155,7 @@ export class ClustersService {
 			].shortDescription
 		);
 
-		let distributionsGraphDetails = new ChartDatasI()
+		let distributionsGraphDetails = new ChartDatasVO()
 		const currentDataSetData = [];
 
 		let filteredList;
@@ -224,10 +224,10 @@ export class ClustersService {
 	}
 
 
-	getInfoPerCluster(rank: number): ChartDatasI {
+	getInfoPerCluster(rank: number): ChartDatasVO {
 		const appinitialDatas = this.appService.getInitialDatas().datas;
 
-		const infoPerCluster = new ChartDatasI();
+		const infoPerCluster = new ChartDatasVO();
 
 		let currentDataSet: ChartDatasetVO;
 		currentDataSet = new ChartDatasetVO('info', 'line');

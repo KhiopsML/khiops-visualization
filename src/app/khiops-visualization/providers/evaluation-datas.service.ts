@@ -35,7 +35,7 @@ import {
 import {
 	ChartDatasetVO
 } from '@khiops-library/model/chartDataset-vo';
-import { ChartDatasI } from '@khiops-library/interfaces/chart-datas';
+import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
 
 @Injectable({
 	providedIn: 'root'
@@ -317,7 +317,7 @@ export class EvaluationDatasService {
 	}
 
 	// tslint:disable-next-line:typedef-whitespace
-	getLiftGraphDatas(target ? : string, mustGetAllDatas ? : boolean): ChartDatasI {
+	getLiftGraphDatas(target ? : string, mustGetAllDatas ? : boolean): ChartDatasVO {
 
 		// Generate X axis values
 		const xAxis = new Array(1001);
@@ -375,7 +375,7 @@ export class EvaluationDatasService {
 		}
 
 		// format datas for new chartjs lib
-		this.evaluationDatas.liftGraphDatas = new ChartDatasI();
+		this.evaluationDatas.liftGraphDatas = new ChartDatasVO();
 		this.evaluationDatas.liftGraphDatas.labels = xAxis
 
 		for (let i = 0; i < liftGraphDatas.length; i++) {
