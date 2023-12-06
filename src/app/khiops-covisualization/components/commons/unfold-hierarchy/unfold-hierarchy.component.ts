@@ -36,6 +36,8 @@ import {
 import {
 	HierarchyService
 } from '@khiops-covisualization/providers/hierarchy.service';
+import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
+import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 
 @Component({
 	selector: 'app-unfold-hierarchy',
@@ -48,8 +50,8 @@ export class UnfoldHierarchyComponent implements OnInit {
 	currentUnfoldHierarchy = 0;
 	hierarchyDatas: any;
 	loadingHierarchy = false;
-	clustersPerDimDatas: any;
-	infoPerCluster: any;
+	clustersPerDimDatas: ChartDatasVO;
+	infoPerCluster: ChartDatasVO;
 	lineChartSeries = [];
 	barChartSeries = [];
 	colorSetClusterPerDim: any;
@@ -67,7 +69,7 @@ export class UnfoldHierarchyComponent implements OnInit {
 
 	borderColor = localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR') === 'dark' ? '#ffffff' : '#000000';
 	defaultMaxUnfoldHierarchy = 0;
-	hierarchyDisplayedColumns = [{
+	hierarchyDisplayedColumns: GridColumnsI[] = [{
 			headerName: 'Dimension',
 			field: 'name'
 		},

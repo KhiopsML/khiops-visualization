@@ -4,10 +4,12 @@ import {
 	OnChanges,
 	SimpleChanges,
 	ChangeDetectionStrategy,
-	OnInit,
 	ViewChild,
 	ElementRef
 } from '@angular/core';
+import {
+	CellVO
+} from '@khiops-library/model/cell-vo';
 
 @Component({
 	selector: 'kl-matrix-tooltip',
@@ -15,16 +17,17 @@ import {
 	styleUrls: ['./matrix-tooltip.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MatrixTooltipComponent implements OnInit, OnChanges {
+export class MatrixTooltipComponent implements OnChanges {
 
-	@Input() cell: any;
-	@Input() matrixSize: any;
-	@Input() position: any;
+	@Input() cell: CellVO;
+	@Input() matrixSize: number[];
+	@Input() position: {
+		x: number,
+		y: number
+	};
 	@ViewChild('matrixTooltipDiv') matrixTooltipDiv: ElementRef < HTMLElement > ;
 
 	constructor() {}
-
-	ngOnInit() {}
 
 	ngOnChanges(changes: SimpleChanges) {
 		if (this.matrixTooltipDiv && this.matrixTooltipDiv.nativeElement && changes.position && changes.position.currentValue) {

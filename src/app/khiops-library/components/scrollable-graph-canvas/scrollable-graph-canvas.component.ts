@@ -28,7 +28,7 @@ export class ScrollableGraphCanvasComponent extends SelectableComponent implemen
 	@Input() maxScale: number;
 	@Input() minScale: number;
 	@Input() inputDatas: any;
-	@Input() scrollPosition: any;
+	@Input() scrollPosition: number;
 	@Input() scaleValue = 0;
 	@Input() view: any;
 	@Input() graphIdContainer: any;

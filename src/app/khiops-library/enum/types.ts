@@ -7,7 +7,6 @@ export enum TYPES {
 	PROBABILITIES = "GLOBAL.PROBABILITIES",
 	LIFT = "GLOBAL.LIFT",
 
-	LOGARITHMIC = "logarithmic",
 	LINEAR = "linear",
 	NUMERICAL = "Numerical",
 	CATEGORICAL = "Categorical",

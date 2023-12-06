@@ -39,6 +39,7 @@ import {
 import _ from 'lodash';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { TYPES } from '@khiops-library/enum/types';
+import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 
 @Component({
 	selector: 'kl-ag-grid',
@@ -54,13 +55,13 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 	AppConfig = this.khiopsLibraryService.getAppConfig().common;
 
 	@Input() suppressRowClickSelection = false;
-	@Input() inputDatas: any;
+	@Input() inputDatas: any[]; // Can be any types of datas
 	@Input() updateValues: any;
-	@Input() displayedColumns: any;
+	@Input() displayedColumns: GridColumnsI[];
 	@Input() id: any = undefined;
 	@Input() title: string;
 	@Input() titleTooltip: string;
-	@Input() selectedVariable: any;
+	@Input() selectedVariable: any; // Can be any types of data
 	@Input() showLevelDistribution = true;
 	@Input() levelDistributionTitle: string;
 	@Input() showColumnsSelection = true;
@@ -188,6 +189,7 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
+	console.log('file: ag-grid.component.ts:192 ~ AgGridComponent ~ ngOnChanges ~ changes:', changes);
 
 		if (changes.displayedColumns?.currentValue) {
 

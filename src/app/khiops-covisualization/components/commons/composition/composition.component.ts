@@ -27,6 +27,7 @@ import {
 } from '@khiops-covisualization/providers/treenodes.service';
 import { Subscription } from 'rxjs';
 import _ from 'lodash';
+import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 
 @Component({
 	selector: 'app-composition',
@@ -42,7 +43,7 @@ export class CompositionComponent implements OnInit, OnDestroy {
 
 	@Output() selectedCompositionChanged: EventEmitter < any > = new EventEmitter();
 
-	compositionDisplayedColumns = [{
+	compositionDisplayedColumns: GridColumnsI[]  = [{
 		headerName: 'cluster',
 		field: 'cluster',
 		tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.CLUSTER')

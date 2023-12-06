@@ -1,5 +1,6 @@
 import { Component, SimpleChanges, OnChanges, Input } from "@angular/core";
 import { UtilsService } from "../../providers/utils.service";
+import { CellVO } from "@khiops-library/model/cell-vo";
 
 @Component({
 	selector: "kl-cell-stats",
@@ -7,7 +8,7 @@ import { UtilsService } from "../../providers/utils.service";
 	styleUrls: ["./cell-stats.component.scss"],
 })
 export class CellStatsComponent implements OnChanges {
-	@Input() selectedCells;
+	@Input() selectedCells :CellVO[];
 	datas: {
 		F: number;
 		EF: number;

@@ -28,6 +28,7 @@ import {
 import {
 	ConfigService
 } from '@khiops-library/providers/config.service';
+import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
 
 @Component({
 	selector: 'kl-chart-next',
@@ -38,7 +39,7 @@ import {
 export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 
 	@Input() canvasIdContainer = 'kl-chart-canvas'; // May be updated if multiple graph
-	@Input() inputDatas: any;
+	@Input() inputDatas: ChartDatasVO;
 	@Input() activeEntries: number;
 	@Input() type: any = 'bar';
 	@Input() chartOptions: ChartOptions;

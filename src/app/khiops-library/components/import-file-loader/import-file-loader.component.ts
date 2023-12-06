@@ -26,7 +26,7 @@ import {
 export class ImportFileLoaderComponent implements OnInit {
 
 	@Output() datasLoaded: EventEmitter < any > = new EventEmitter();
-	filename: any;
+	filename: string;
 	isLoadingDatas: boolean;
 
 	constructor(private ngzone: NgZone,

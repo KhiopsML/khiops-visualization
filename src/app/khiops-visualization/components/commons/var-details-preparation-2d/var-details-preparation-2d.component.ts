@@ -75,7 +75,7 @@ export class VarDetailsPreparation2dComponent {
 		}); // do it after view dom complete
 	}
 
-	onTargetDistributionGraphTypeChanged(type: any) {
+	onTargetDistributionGraphTypeChanged(type: string) {
 		this.targetDistributionGraphType = type;
 		this.distribution2dDatasService.getTargetDistributionGraphDatas(this.targetDistributionGraphType);
 	}

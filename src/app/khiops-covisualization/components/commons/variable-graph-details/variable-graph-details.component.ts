@@ -46,6 +46,7 @@ import {
 import {
 	TYPES
 } from "@khiops-library/enum/types";
+import { DistributionOptionsI } from "@khiops-library/interfaces/distribution-options";
 
 @Component({
 	selector: "app-variable-graph-details",
@@ -72,7 +73,7 @@ implements OnInit, OnChanges, OnDestroy, AfterViewInit {
 	isLoadingGraphDatas: boolean;
 	scaleValue: any;
 	graphDetails: any;
-	graphOptions = {
+	graphOptions: DistributionOptionsI = {
 		types: [TYPES.COVERAGE, TYPES.FREQUENCY],
 		selected: undefined,
 	};

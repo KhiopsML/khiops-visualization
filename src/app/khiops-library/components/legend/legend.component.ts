@@ -23,8 +23,8 @@ import {
 })
 export class LegendComponent implements OnChanges {
 
-	@Input() inputDatas: any;
-	@Input() type: any;
+	@Input() inputDatas: any; // change according to the chart type
+	@Input() type: string;
 	@Input() tooltip: string;
 	@Input() colorSet: ChartColorsSetI;
 	@Input() position = 'top';

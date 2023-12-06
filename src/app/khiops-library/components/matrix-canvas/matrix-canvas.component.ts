@@ -36,6 +36,8 @@ import {
 import {
 	AppConfig
 } from 'src/environments/environment';
+import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
+import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 
 @Component({
 	selector: 'kl-matrix-canvas',
@@ -45,20 +47,20 @@ import {
 export class MatrixCanvasComponent extends SelectableComponent implements OnChanges {
 
 	@Input() inputDatas: any;
-	@Input() minMaxValues: any;
-	@Input() graphType: any;
-	@Input() graphMode: any;
-	@Input() conditionalOnContext: any;
-	@Input() contrast?: any;
-	@Output() contrastChange: EventEmitter<string> = new EventEmitter();
+	@Input() minMaxValues: any; // dynamic and complex value object
 
-	@Input() graphTargets: any;
-	@Input() graphTarget: any;
-	@Input() selectedNodes: any; // KC use case
-	@Input() selectedCell: any; // KV use case
-	@Input() contextSelection: any;
+	@Input() graphType: string;
+	@Input() graphMode: MatrixModeI;
+	@Input() conditionalOnContext: boolean;
+	@Input() contrast?: number | undefined;
+	@Output() contrastChange: EventEmitter<number> = new EventEmitter();
+
+	@Input() graphTargets: string[];
+	@Input() graphTarget: string;
+	@Input() selectedNodes: TreeNodeVO[]; // KC use case
+	@Input() selectedCell: CellVO; // KV use case
+	@Input() contextSelection: number[];
 	@Input() isAxisInverted: boolean;
-	@Input() variable: any;
 
 	@Output() matrixAxisInverted: EventEmitter < any > = new EventEmitter();
 	@Output() cellSelected: EventEmitter < any > = new EventEmitter();
@@ -66,6 +68,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 
 	isKhiopsCovisu: boolean = this.khiopsLibraryService.isKhiopsCovisu();
 	componentType = 'matrix'; // needed to copy datas
+	selectedCells: CellVO[];
 
 	xAxisLabel: string;
 	yAxisLabel: string;
@@ -76,11 +79,15 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 	};
 	selectedTargetIndex = -1;
 	isZerosToggled = false;
-	matrixValues: any;
-	matrixFreqsValues: any;
-	matrixExpectedFreqsValues: any;
+
+	matrixValues: number[];
+	matrixFreqsValues: number[];
+	matrixExpectedFreqsValues: number[];
+	matrixExtras: number[];
+
 	loadingMatrixSvg = true;
 	isFirstResize = true;
+
 	@ViewChild('matrixDiv', {
 		static: false
 	}) matrixDiv: ElementRef < HTMLCanvasElement > ;
@@ -100,18 +107,19 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 	}) matrixContainerDiv: ElementRef < HTMLElement > ;
 	@ViewChild('legendBar', {
 		static: false
-	}) legendBar: ElementRef < HTMLElement > ;
-	numberPrecision: any;
+	}) legendBar: ElementRef<HTMLElement>;
+
+	numberPrecision: number;
 	zoom = 1;
 	unpanzoom: any;
 	isPaning = false;
 
-	tooltipCell: any;
+	tooltipCell: CellVO;
 	tooltipPosition: {
 		x: number,
 		y: number;
 	};
-	currentEvent: any;
+	currentEvent: MouseEvent;
 	zoomFactor = 0.5;
 	lastScrollPosition: {
 		scrollLeft: number,
@@ -119,9 +127,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 	};
 	currentMouseX: number;
 	currentMouseY: number;
-	selectedCells: any;
-	matrixExtras: any;
-	canvasPattern: any;
+	canvasPattern: HTMLCanvasElement;
 	isDrawing = false;
 
 	constructor(public selectableService: SelectableService,
@@ -175,6 +181,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
+	console.log('file: matrix-canvas.component.ts:178 ~ MatrixCanvasComponent ~ ngOnChanges ~ changes:', changes);
 
 		if (this.contrast === undefined) {
 			this.contrast = localStorage.getItem(this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST') ||

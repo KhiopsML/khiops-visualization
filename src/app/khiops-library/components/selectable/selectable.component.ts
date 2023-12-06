@@ -14,6 +14,7 @@ import {
 	SelectableService
 } from './selectable.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
+import { Subscription } from 'rxjs';
 
 @Component({
 	template: '',
@@ -23,7 +24,7 @@ export class SelectableComponent extends WatchResizeComponent implements OnDestr
 
 	@Input() id: [any] = undefined;
 	@Input() type: [any];
-	selectedServiceChangeSub: any;
+	selectedServiceChangeSub: Subscription;
 
 	constructor(public selectableService: SelectableService, public ngzone: NgZone, public configService: ConfigService) {
 

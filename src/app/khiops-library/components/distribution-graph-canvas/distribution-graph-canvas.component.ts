@@ -25,9 +25,19 @@ import {
 import {
 	ChartOptions
 } from 'chart.js';
-import { ConfigService } from '@khiops-library/providers/config.service';
-import { TYPES } from '@khiops-library/enum/types';
-import { HistogramType } from '@khiops-visualization/components/commons/histogram/histogram.types';
+import {
+	ConfigService
+} from '@khiops-library/providers/config.service';
+import {
+	TYPES
+} from '@khiops-library/enum/types';
+import {
+	HistogramType
+} from '@khiops-visualization/components/commons/histogram/histogram.types';
+import {
+	ChartDatasVO
+} from '@khiops-library/model/chart-datas-vo';
+import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options';
 
 @Component({
 	selector: 'kl-distribution-graph-canvas',
@@ -38,8 +48,8 @@ import { HistogramType } from '@khiops-visualization/components/commons/histogra
 export class DistributionGraphCanvasComponent extends ScrollableGraphCanvasComponent implements OnInit {
 
 	@Input() position = 0;
-	@Input() inputDatas: any = undefined;
-	@Input() graphOptions: any;
+	@Input() inputDatas: any = ChartDatasVO;
+	@Input() graphOptions: DistributionOptionsI;
 	@Input() activeEntries: number;
 	@Input() isLoadingDatas = false;
 	@Input() hideGraphOptions = false;
@@ -54,7 +64,6 @@ export class DistributionGraphCanvasComponent extends ScrollableGraphCanvasCompo
 
 	graphIdContainer = undefined;
 	colorSet: ChartColorsSetI;
-	legend: any;
 	chartOptions: ChartOptions;
 	scaleType: string;
 	maxScale: number = 0;
@@ -122,17 +131,10 @@ export class DistributionGraphCanvasComponent extends ScrollableGraphCanvasCompo
 									return '';
 								}
 							} else {
-								if (this.graphOptions.selected === HistogramType.YLOG) {
-									if (typeof value === 'number') {
-										const datas = this.inputDatas.datasets[0];
-										return -(-datas.base - value);
-									}
+								if (typeof value === 'number') {
+									return Math.round(value * 100) / 100;
 								} else {
-									if (typeof value === 'number') {
-										return Math.round(value * 100) / 100;
-									} else {
-										return value;
-									}
+									return value;
 								}
 							}
 						}
@@ -170,14 +172,10 @@ export class DistributionGraphCanvasComponent extends ScrollableGraphCanvasCompo
 
 		this.graphOptions.selected = type;
 		this.graphTypeChanged.emit(type);
-		this.chartOptions.scales.y.type = this.graphOptions.selected === TYPES.FREQUENCY ? TYPES.LOGARITHMIC : TYPES.LINEAR;
+		this.chartOptions.scales.y.type = TYPES.LINEAR;
 
 		const minValue = Math.min(...this.inputDatas.datasets[0].data);
-		if (minValue > 0 || this.graphOptions.selected === HistogramType.YLOG) {
-			this.chartOptions.scales.y.min = 0;
-		} else {
-			this.chartOptions.scales.y.min = minValue;
-		}
+		this.chartOptions.scales.y.min = minValue;
 		this.chartOptions = _.cloneDeep(this.chartOptions);
 
 	}

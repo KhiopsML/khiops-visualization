@@ -11,6 +11,7 @@ import {
 import {
 	TranslateService
 } from '@ngstack/translate';
+import { NoteVO } from './note-vo';
 
 @Component({
 	selector: 'kl-release-notes',
@@ -18,7 +19,8 @@ import {
 	styleUrls: ['./release-notes.component.scss']
 })
 export class ReleaseNotesComponent implements OnInit {
-	releaseNotesDatas: any;
+	
+	releaseNotesDatas: NoteVO[];
 	loadingNotes = true;
 	loadingNotesError = false;
 
