@@ -277,10 +277,7 @@ export class DistributionDatasService {
 	// tslint:disable-next-line:typedef-whitespace
 	getdistributionGraphDatas(selectedVariable, type ? : string, initActiveEntries ? : boolean): ChartDatasI {
 
-		let distributionsGraphDetails = {
-			datasets: [],
-			labels: []
-		};
+		let distributionsGraphDetails = new ChartDatasI();
 		const appDatas = this.appService.getDatas().datas;
 
 		if (initActiveEntries === undefined) {

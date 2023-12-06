@@ -44,7 +44,12 @@ import {
 import {
 	GridDatasI
 } from '@khiops-library/interfaces/grid-datas';
-import { TYPES } from '@khiops-library/enum/types';
+import {
+	TYPES
+} from '@khiops-library/enum/types';
+import {
+	ChartDatasI
+} from '@khiops-library/interfaces/chart-datas';
 
 @Injectable({
 	providedIn: 'root'
@@ -229,7 +234,7 @@ export class TreePreparationDatasService {
 		return this.treePreparationDatas.selectedVariable;
 	}
 
-	getCurrentIntervalDatas(index ? ): any {
+	getCurrentIntervalDatas(index ? ): GridDatasI {
 
 		index = index || 0;
 
@@ -351,7 +356,7 @@ export class TreePreparationDatasService {
 		return this.treePreparationDatas.currentIntervalDatas;
 	}
 
-	getVariablesDatas(): any {
+	getVariablesDatas(): VariableVO[] {
 		const appDatas = this.appService.getDatas().datas;
 		const currentDatas = appDatas.treePreparationReport.variablesStatistics;
 		const currentDetailedDatas = appDatas.treePreparationReport.variablesDetailedStatistics;
@@ -367,15 +372,13 @@ export class TreePreparationDatasService {
 		return variableDatas;
 	}
 
-	getTargetVariableStatsDatas(): any {
-		let variableStatsDatas;
+	getTargetVariableStatsDatas(): ChartDatasI {
+		let variableStatsDatas = new ChartDatasI();
 
 		const appDatas = this.appService.getDatas().datas;
 		if (appDatas.treePreparationReport && appDatas.treePreparationReport.summary) {
-			variableStatsDatas = {
-				datasets: [],
-				labels: ['']
-			};
+			variableStatsDatas = new ChartDatasI();
+			variableStatsDatas.emptyLabels();
 			const currentDatas = appDatas.treePreparationReport.summary.targetValues;
 
 			if (currentDatas) {

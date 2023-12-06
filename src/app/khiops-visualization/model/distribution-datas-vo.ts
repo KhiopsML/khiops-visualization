@@ -63,10 +63,7 @@ export class DistributionDatasVO {
 	}
 
 	initTreeNodeTargetDistributionGraphDatas() {
-		this.treeNodeTargetDistributionGraphDatas = {
-			datasets: [],
-			labels: []
-		};
+		this.treeNodeTargetDistributionGraphDatas = new ChartDatasI();
 		// this.treeNodeTargetDistributionDisplayedValues = undefined; // No !!! otherwise the select box do not work
 	}
 
@@ -122,10 +119,7 @@ export class DistributionDatasVO {
 	}
 
 	initTreeHyperGraphDatas() {
-		this.treeHyperGraphDatas = {
-			datasets: [],
-			labels: []
-		};
+		this.treeHyperGraphDatas = new ChartDatasI();
 		// this.treeNodeTargetDistributionDisplayedValues = undefined; // No !!! otherwise the select box do not work
 	}
 
@@ -142,10 +136,7 @@ export class DistributionDatasVO {
 	}
 
 	initTargetDistributionGraphDatas() {
-		this.targetDistributionGraphDatas = {
-			datasets: [],
-			labels: []
-		};
+		this.targetDistributionGraphDatas = new ChartDatasI();
 		// this.targetDistributionDisplayedValues = undefined; // No !!! otherwise the select box do not work
 	}
 

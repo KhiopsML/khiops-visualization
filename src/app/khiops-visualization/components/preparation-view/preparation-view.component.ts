@@ -45,6 +45,7 @@ import {
 	KhiopsLibraryService
 } from '@khiops-library/providers/khiops-library.service';
 import { REPORTS } from '@khiops-library/enum/reports';
+import { ChartDatasI } from '@khiops-library/interfaces/chart-datas';
 
 @Component({
 	selector: 'app-preparation-view',
@@ -64,7 +65,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
 	sizes: any;
 	summaryDatas: any[any];
 	informationsDatas: any[any];
-	targetVariableStatsDatas: any[];
+	targetVariableStatsDatas: ChartDatasI;
 	currentIntervalDatas: any;
 	matrixRegSelectedCell = 0;
 	distributionSelectedBarIndex = 0;

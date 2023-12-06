@@ -37,6 +37,9 @@ import {
 import {
 	TreenodesService
 } from './treenodes.service';
+import {
+	ChartDatasI
+} from '@khiops-library/interfaces/chart-datas';
 @Injectable({
 	providedIn: 'root'
 })
@@ -152,10 +155,7 @@ export class ClustersService {
 			].shortDescription
 		);
 
-		let distributionsGraphDetails = {
-			datasets: [],
-			labels: [],
-		};
+		let distributionsGraphDetails = new ChartDatasI()
 		const currentDataSetData = [];
 
 		let filteredList;
@@ -224,13 +224,10 @@ export class ClustersService {
 	}
 
 
-	getInfoPerCluster(rank: number): any {
+	getInfoPerCluster(rank: number): ChartDatasI {
 		const appinitialDatas = this.appService.getInitialDatas().datas;
 
-		const infoPerCluster = {
-			datasets: [],
-			labels: []
-		};
+		const infoPerCluster = new ChartDatasI();
 
 		let currentDataSet: ChartDatasetVO;
 		currentDataSet = new ChartDatasetVO('info', 'line');
@@ -256,7 +253,7 @@ export class ClustersService {
 		currentDataSet.barThickness = 5;
 
 		for (let j = this.dimensionsDatas.dimensions.length - 1; j < this.dimensionsDatas.hierarchyDatas.totalClusters; j++) {
-			infoPerCluster.labels.push(j + 1);
+			infoPerCluster.labels.push(j + 1 + '');
 			let currentValue = 0;
 			if (j + 1 === rank) {
 				currentValue = infoPerCluster.datasets[0].data[rank - this.dimensionsDatas.dimensions.length];
@@ -396,7 +393,7 @@ export class ClustersService {
 								size += appinitialDatas.coclusteringReport.dimensionPartitions[selectedDimension.startPosition].valueGroups[elementIndex].values.length
 							}
 						}
-							clusterDetails.size = size
+						clusterDetails.size = size
 					}
 				}
 				filteredDimensionsClusters.push(clusterDetails);

@@ -30,6 +30,7 @@ import {
 	DistributionDatasVO
 } from '../model/distribution-datas-vo';
 import { TYPES } from '@khiops-library/enum/types';
+import { ChartDatasI } from '@khiops-library/interfaces/chart-datas';
 
 @Injectable({
 	providedIn: 'root'
@@ -57,7 +58,7 @@ export class Distribution2dDatasService {
 		return this.distributionDatas;
 	}
 
-	getTargetDistributionGraphDatas(type ?: string): any {
+	getTargetDistributionGraphDatas(type ?: string): ChartDatasI {
 
 		this.distributionDatas.initTargetDistributionGraphDatas();
 		this.distributionDatas.setTargetDistributionType(type);
