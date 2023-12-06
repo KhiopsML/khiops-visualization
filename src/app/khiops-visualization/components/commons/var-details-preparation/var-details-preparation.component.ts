@@ -24,6 +24,7 @@ import {
 	VariableGraphDetailsComponent
 } from '../variable-graph-details/variable-graph-details.component';
 import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
+import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 
 @Component({
 	selector: 'app-var-details-preparation',
@@ -45,7 +46,7 @@ export class VarDetailsPreparationComponent implements OnInit, AfterViewInit, On
 	summaryDatas: any[any];
 	informationsDatas: any[any];
 	targetVariableStatsDatas: ChartDatasVO;
-	currentIntervalDatas: any;
+	currentIntervalDatas: GridDatasI;
 	matrixRegSelectedCell = 0;
 	distributionSelectedBarIndex = 0;
 	preparation2dDatas: any;

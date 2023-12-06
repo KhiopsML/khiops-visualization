@@ -44,8 +44,22 @@ import {
 import {
 	KhiopsLibraryService
 } from '@khiops-library/providers/khiops-library.service';
-import { REPORTS } from '@khiops-library/enum/reports';
-import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
+import {
+	REPORTS
+} from '@khiops-library/enum/reports';
+import {
+	ChartDatasVO
+} from '@khiops-library/model/chart-datas-vo';
+import {
+	GridDatasI
+} from '@khiops-library/interfaces/grid-datas';
+import {
+	InformationsVO
+} from '@khiops-visualization/model/informations-vo';
+import {
+	SummaryVO
+} from '@khiops-visualization/model/summary-vo';
+import { PreparationVariableVO } from '@khiops-visualization/model/preparation-variable-vo';
 
 @Component({
 	selector: 'app-preparation-view',
@@ -60,13 +74,16 @@ export class PreparationViewComponent extends SelectableTabComponent {
 
 	@Input() preparationSource = REPORTS.PREPARATION_REPORT; // By default
 
-	preparationDatas: any;
+	preparationDatas: {
+		selectedVariable: PreparationVariableVO,
+		currentIntervalDatas: GridDatasI,
+	};
 	appDatas: any;
 	sizes: any;
-	summaryDatas: any[any];
-	informationsDatas: any[any];
+	summaryDatas: SummaryVO;
+	informationsDatas: InformationsVO;
 	targetVariableStatsDatas: ChartDatasVO;
-	currentIntervalDatas: any;
+	currentIntervalDatas: GridDatasI;
 	matrixRegSelectedCell = 0;
 	distributionSelectedBarIndex = 0;
 

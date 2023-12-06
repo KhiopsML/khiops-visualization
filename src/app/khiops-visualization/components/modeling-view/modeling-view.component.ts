@@ -54,6 +54,7 @@ import {
 	GridColumnsI
 } from '@khiops-library/interfaces/grid-columns';
 import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
+import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 
 @Component({
 	selector: 'app-modeling-view',
@@ -99,7 +100,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
 	targetDistribution2dGraphDatas: any;
 	treePreparationDatas: any;
 	preparationVariable: any;
-	currentIntervalDatas: any;
+	currentIntervalDatas: GridDatasI;
 	targetVariableStatsInformations: any;
 
 	constructor(private modelingDatasService: ModelingDatasService,

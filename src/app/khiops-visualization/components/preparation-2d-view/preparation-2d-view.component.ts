@@ -44,6 +44,7 @@ import {
 	KhiopsLibraryService
 } from '@khiops-library/providers/khiops-library.service';
 import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
+import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 
 @Component({
 	selector: 'app-preparation-2d-view',
@@ -62,7 +63,7 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
 	summaryDatas: any[any];
 	informationsDatas: any[any];
 	targetVariableStatsDatas: ChartDatasVO;
-	currentIntervalDatas: any;
+	currentIntervalDatas: GridDatasI;
 	targetDistributionGraphDisplayedValues: [];
 	targetDistributionGraphType: string;
 	targetDistributionGraphTitle: string;
