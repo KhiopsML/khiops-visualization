@@ -1,7 +1,6 @@
 import { TYPES } from "@khiops-library/enum/types";
 
 export class TreeNodeVO {
-
 	id: number;
 	_id: number;
 	hierarchy: string;
@@ -21,12 +20,12 @@ export class TreeNodeVO {
 	rank: number;
 	hierarchicalRank: number;
 	isLeaf: boolean;
-	children: Array < TreeNodeVO > ;
+	children: TreeNodeVO[];
 	description: string;
 
 	childrenList: string[] = [];
-	childrenLeafIndexes: number[]= [];
-	childrenLeafList: string[]= [];
+	childrenLeafIndexes: number[] = [];
+	childrenLeafList: string[] = [];
 
 	isCollapsed: boolean;
 	matrixIndex: number | string;
@@ -35,47 +34,58 @@ export class TreeNodeVO {
 
 	clusterCompositionSize: number;
 
-	constructor(id, object, dimension, collapsedNodes, nbClusters, leafPosition, j, currentNodesNames ?) {
-
+	constructor(
+		id,
+		object,
+		dimension,
+		collapsedNodes,
+		nbClusters,
+		leafPosition,
+		j,
+		currentNodesNames?
+	) {
 		// Generate id for tree node plugin
 		this.id = id;
 
 		// Generate id for grid
 		this._id = object.cluster;
-		this.nbClusters = nbClusters || '';
+		this.nbClusters = nbClusters || "";
 		this.leafPosition = leafPosition || -1;
-		this.hierarchy = dimension.name || '';
+		this.hierarchy = dimension.name || "";
 
-		this.cluster = object && object.cluster || '';
+		this.cluster = (object && object.cluster) || "";
 		this.bounds = this.cluster;
 
 		if (dimension.type === TYPES.NUMERICAL) {
 			// Reformat numerical values
-			this.bounds = this.bounds.replace(']-inf', '[' + dimension.min);
-			this.bounds = this.bounds.replace('+inf[', dimension.max + ']');
-			this.bounds = this.bounds.replace('*', 'Missing U ');
+			this.bounds = this.bounds.replace("]-inf", "[" + dimension.min);
+			this.bounds = this.bounds.replace("+inf[", dimension.max + "]");
+			this.bounds = this.bounds.replace("*", "Missing U ");
 		}
 
-		this.name = object && object.name || this.cluster;
+		this.name = (object && object.name) || this.cluster;
 
 		if (currentNodesNames && currentNodesNames[this.name]) {
 			this.shortDescription = currentNodesNames[this.name];
 		} else {
-			this.shortDescription = object && object.shortDescription || this.bounds;
+			this.shortDescription =
+				(object && object.shortDescription) || this.bounds;
 		}
 
-		this.parentCluster = object && object.parentCluster || '';
+		this.parentCluster = (object && object.parentCluster) || "";
 
-		this.description = object && object.description || '';
-		this.children = object && object.children || [];
-		this.frequency = object && object.frequency || undefined;
-		this.interest = object && object.interest || undefined;
-		this.hierarchicalLevel = object && object.hierarchicalLevel || undefined;
-		this.rank = object && object.rank || undefined;
-		this.hierarchicalRank = object && object.hierarchicalRank || undefined;
-		this.isLeaf = object && object.isLeaf || false;
+		this.description = (object && object.description) || "";
+		this.children = (object && object.children) || [];
+		this.frequency = (object && object.frequency) || undefined;
+		this.interest = (object && object.interest) || undefined;
+		this.hierarchicalLevel =
+			(object && object.hierarchicalLevel) || undefined;
+		this.rank = (object && object.rank) || undefined;
+		this.hierarchicalRank =
+			(object && object.hierarchicalRank) || undefined;
+		this.isLeaf = (object && object.isLeaf) || false;
 
-		if (this.parentCluster === '') {
+		if (this.parentCluster === "") {
 			this.isParentCluster = true;
 		}
 		this.isCollapsed = collapsedNodes.includes(this.name) || false;
@@ -83,10 +93,11 @@ export class TreeNodeVO {
 		if (this.isLeaf) {
 			this.matrixIndex = j;
 		} else {
-			this.matrixIndex = '';
+			this.matrixIndex = "";
 		}
 		if (dimension.type === TYPES.CATEGORICAL) {
-			this.clusterCompositionSize = dimension.valueGroups[leafPosition]?.values?.length;
+			this.clusterCompositionSize =
+				dimension.valueGroups[leafPosition]?.values?.length;
 		}
 	}
 
@@ -108,9 +119,11 @@ export class TreeNodeVO {
 			this.childrenLeafIndexes.push(matrixIndex);
 		}
 		for (let i = 0; i < children.length; i++) {
-			this.deepGetChildrenNames(children[i].children, children[i].name, children[i].matrixIndex);
+			this.deepGetChildrenNames(
+				children[i].children,
+				children[i].name,
+				children[i].matrixIndex
+			);
 		}
-
 	}
-
 }
