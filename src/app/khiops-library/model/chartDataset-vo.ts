@@ -1,15 +1,18 @@
 export class ChartDatasetVO {
 	label: string;
-	data = [];
+	data: any = [];
 	extra = [];
-	minBarLength = 3;
-	fill = false;
+	minBarLength: number = 3;
+	fill: boolean = false;
 	type: string; // By default
 	borderWidth: number;
 	maxBarThickness: any;
 	barThickness: any;
 	barPercentage: number;
 	categoryPercentage: number;
+	pointRadius?: number;
+	pointHitRadius?: number;
+	pointHoverRadius?: number;
 
 	constructor(label?, type?) {
 		this.label = label || "";

@@ -20,32 +20,35 @@ import {
 import {
 	EvaluationPredictorVO
 } from '../model/evaluation-predictor-vo';
-import { TYPES } from '@khiops-library/enum/types';
-import { TASKS } from '@khiops-library/enum/tasks';
-import { PREDICTOR_TYPES } from '@khiops-library/enum/predictorTypes';
+import {
+	TYPES
+} from '@khiops-library/enum/types';
+import {
+	TASKS
+} from '@khiops-library/enum/tasks';
+import {
+	PREDICTOR_TYPES
+} from '@khiops-library/enum/predictorTypes';
+import {
+	EvaluationDatasVO
+} from '@khiops-visualization/model/evaluation-datas-vo';
+import {
+	ChartDatasetVO
+} from '@khiops-library/model/chartDataset-vo';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class EvaluationDatasService {
 
-	evaluationDatas: any;
+	evaluationDatas: EvaluationDatasVO;
 
 	constructor(private translate: TranslateService, private appService: AppService) {
 
 	}
 
 	initialize(): any {
-		this.evaluationDatas = {
-			selectedEvaluationTypeVariable: undefined,
-			selectedPredictorEvaluationVariable: undefined,
-			evaluationTypes: undefined,
-			evaluationTypesSummary: undefined,
-			liftGraphDatas: undefined,
-			liftGraphDisplayedValues: undefined,
-			confusionMatrix: undefined,
-			confusionMatrixType: TYPES.FREQUENCY
-		};
+		this.evaluationDatas = new EvaluationDatasVO();
 	}
 
 	getDatas(): any {
@@ -59,20 +62,16 @@ export class EvaluationDatasService {
 	getLiftGraphDisplayedValues(): any {
 		return this.evaluationDatas.liftGraphDisplayedValues;
 	}
-	setSelectedEvaluationTypeVariable(object: any): void {
+	setSelectedEvaluationTypeVariable(object: EvaluationTypeVO): void {
 		this.evaluationDatas.selectedEvaluationTypeVariable = object;
 	}
 
-	getSelectedEvaluationTypeVariable(): any {
+	getSelectedEvaluationTypeVariable(): EvaluationTypeVO {
 		return this.evaluationDatas.selectedEvaluationTypeVariable;
 	}
 
-	setSelectedPredictorEvaluationVariable(object: any): void {
+	setSelectedPredictorEvaluationVariable(object: EvaluationPredictorVO): void {
 		this.evaluationDatas.selectedPredictorEvaluationVariable = object;
-	}
-
-	getSelectedPredictorEvaluationVariable(): any {
-		return this.evaluationDatas.selectedPredictorEvaluationVariable;
 	}
 
 	getPredictorEvaluationVariableFromEvaluationType(type: string): any {
@@ -382,14 +381,12 @@ export class EvaluationDatasService {
 		this.evaluationDatas.liftGraphDatas.labels = xAxis
 
 		for (let i = 0; i < liftGraphDatas.length; i++) {
-			this.evaluationDatas.liftGraphDatas.datasets.push({
-				label: liftGraphDatas[i].name,
-				data: liftGraphDatas[i].series.map(e => e.value),
-				bezierCurve: false,
-				pointRadius: 0,
-				pointHitRadius: 20,
-				pointHoverRadius: 2,
-			})
+			const currentData: ChartDatasetVO = new ChartDatasetVO(liftGraphDatas[i].name, 'line');
+			currentData.data = liftGraphDatas[i].series.map(e => e.value);
+			currentData.pointRadius = 0;
+			currentData.pointHitRadius = 20;
+			currentData.pointHoverRadius = 2;
+			this.evaluationDatas.liftGraphDatas.datasets.push(currentData)
 		}
 
 		return this.evaluationDatas.liftGraphDatas;
@@ -494,7 +491,7 @@ export class EvaluationDatasService {
 		if (this.evaluationDatas.selectedPredictorEvaluationVariable) {
 			if (this.evaluationDatas.selectedPredictorEvaluationVariable.type === PREDICTOR_TYPES.TRAIN) {
 				currentEvalReport = appDatas.trainEvaluationReport;
-			} else if (this.evaluationDatas.selectedPredictorEvaluationVariable.type ===  PREDICTOR_TYPES.TEST) {
+			} else if (this.evaluationDatas.selectedPredictorEvaluationVariable.type === PREDICTOR_TYPES.TEST) {
 				currentEvalReport = appDatas.testEvaluationReport;
 			}
 		}
