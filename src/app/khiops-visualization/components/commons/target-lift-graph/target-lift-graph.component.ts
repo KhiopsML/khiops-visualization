@@ -3,8 +3,7 @@ import {
 	OnChanges,
 	Input,
 	NgZone,
-	SimpleChanges,
-	OnInit
+	SimpleChanges
 } from '@angular/core';
 import {
 	EvaluationDatasService
@@ -34,30 +33,32 @@ import {
 import {
 	ChartOptions
 } from 'chart.js';
+import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
+import { EvaluationDatasVO } from '@khiops-visualization/model/evaluation-datas-vo';
 
 @Component({
 	selector: 'app-target-lift-graph',
 	templateUrl: './target-lift-graph.component.html',
 	styleUrls: ['./target-lift-graph.component.scss']
 })
-export class TargetLiftGraphComponent extends SelectableComponent implements OnInit, OnChanges {
+export class TargetLiftGraphComponent extends SelectableComponent implements OnChanges {
 
 	@Input() selectedVariable;
 
 	targetLift: any;
-	targetLiftGraph: any;
+	targetLiftGraph: ChartDatasVO;
 	colorSet: ChartColorsSetI;
 	legendColorSet: ChartColorsSetI;
 	view: '';
 	xAxisLabel: string;
 	yAxisLabel: string;
-	evaluationDatas: any;
+	evaluationDatas: EvaluationDatasVO;
 	buttonTitle: string;
 	isFullscreen = false;
 
 	componentType = 'ndLineChart'; // needed to copy datas
 	title: string;
-	targetLiftAllGraph: any;
+	targetLiftAllGraph: ChartDatasVO;
 	titleWithoutDetails: string;
 
 	chartOptions: ChartOptions;
@@ -105,8 +106,6 @@ export class TargetLiftGraphComponent extends SelectableComponent implements OnI
 
 		this.buttonTitle = this.translate.get('GLOBAL.FILTER_CURVES');
 	}
-
-	ngOnInit() {}
 
 	ngOnChanges(changes: SimpleChanges) {
 		if (changes.selectedVariable && changes.selectedVariable.currentValue) {

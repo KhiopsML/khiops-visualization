@@ -1,11 +1,8 @@
 import {
 	Component,
-	OnInit,
 	NgZone,
-	OnDestroy,
 	OnChanges,
 	SimpleChanges,
-	AfterViewInit,
 	Input,
 } from "@angular/core";
 import _ from "lodash";
@@ -13,6 +10,7 @@ import { SelectableService } from "@khiops-library/components/selectable/selecta
 import { GridDatasI } from "@khiops-library/interfaces/grid-datas";
 import { TranslateService } from "@ngstack/translate";
 import { TreePreparationDatasService } from "@khiops-visualization/providers/tree-preparation-datas.service";
+import { TreeNodeVO } from "@khiops-visualization/model/tree-node-vo";
 
 @Component({
 	selector: "app-tree-details",
@@ -20,10 +18,10 @@ import { TreePreparationDatasService } from "@khiops-visualization/providers/tre
 	styleUrls: ["./tree-details.component.scss"],
 })
 export class TreeDetailsComponent
-	implements OnInit, AfterViewInit, OnChanges, OnDestroy
+	implements OnChanges
 {
-	@Input() selectedNodes: any;
-	@Input() selectedNode: any;
+	@Input() selectedNodes: TreeNodeVO[];
+	@Input() selectedNode: TreeNodeVO;
 
 	treeDetails: GridDatasI;
 
@@ -33,12 +31,6 @@ export class TreeDetailsComponent
 		private treePreparationDatasService: TreePreparationDatasService,
 		public translate: TranslateService
 	) {}
-
-	ngOnInit() {}
-
-	ngAfterViewInit() {}
-
-	ngOnDestroy() {}
 
 	ngOnChanges(changes: SimpleChanges) {
 		if (changes.selectedNodes && changes.selectedNodes.currentValue) {

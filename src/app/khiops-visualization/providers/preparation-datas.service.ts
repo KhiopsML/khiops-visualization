@@ -40,6 +40,7 @@ import { TASKS } from '@khiops-library/enum/tasks';
 import { TYPES } from '@khiops-library/enum/types';
 import { PreparationDatasVO } from '@khiops-visualization/model/preparation-datas-vo';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
+import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
 
 @Injectable({
 	providedIn: 'root'
@@ -280,16 +281,13 @@ export class PreparationDatasService {
 		return variableDatas;
 	}
 
-	getTargetVariableStatsDatas(): any {
-		let variableStatsDatas;
+	getTargetVariableStatsDatas(): ChartDatasVO {
+		let variableStatsDatas = new ChartDatasVO();
 		const preparationSource = this.getAvailablePreparationReport();
 
 		const appDatas = this.appService.getDatas().datas;
 		if (appDatas[preparationSource] && appDatas[preparationSource].summary) {
-			variableStatsDatas = {
-				datasets: [],
-				labels: ['']
-			};
+			variableStatsDatas.emptyLabels();
 			const currentDatas = appDatas[preparationSource].summary.targetValues;
 
 			if (currentDatas) {

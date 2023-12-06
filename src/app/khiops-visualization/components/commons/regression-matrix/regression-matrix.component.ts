@@ -60,7 +60,7 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
 	@Output() selectedCellChanged: EventEmitter < number > = new EventEmitter();
 	@Input() selectedVariable: PreparationVariableVO;
 	@Input() selectedCell: number;
-	@Input() preparationSource;
+	@Input() preparationSource: string;
 	preparation2dDatas: Preparation2dDatasVO;
 	isFullscreen = false;
 
@@ -76,8 +76,6 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
 		this.preparation2dDatas = this.preparation2dDatasService.getDatas();
 	}
 
-	ngOnInit() {}
-
 	ngAfterViewInit() {
 		this.minMaxValues = this.preparation2dDatasService.getGlobalMinAndMax2dValues(this.preparationDatasService.getVariablesDatas(this.preparationSource));
 		this.matrixOptions.selected = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_TYPE_OPTION') || this.matrixOptions.types[0];
@@ -88,7 +86,6 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
 		this.preparation2dDatasService.setSelectedCellIndex(defaultCellIndex);
 
 		this.preparation2dDatasService.getCurrentCellDatas();
-
 	}
 
 	ngOnChanges(changes: SimpleChanges) {

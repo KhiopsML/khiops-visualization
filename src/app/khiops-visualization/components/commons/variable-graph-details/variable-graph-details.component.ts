@@ -54,7 +54,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
 	@Input() showDistributionGraph = true;
 	@Input() selectedVariable: PreparationVariableVO | TreePreparationVariableVO;
 	@Input() selectedGraphItemIndex = 0;
-	@Input() preparationSource;
+	@Input() preparationSource: string;
 	@Input() position = 0; // in case of multiple component in the same page
 
 	@Output() selectedItemChanged: EventEmitter < any > = new EventEmitter();

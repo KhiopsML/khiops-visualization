@@ -1,11 +1,6 @@
 import {
 	Component,
-	OnInit,
-	OnDestroy,
 	ViewChild,
-	OnChanges,
-	SimpleChanges,
-	AfterViewInit
 } from '@angular/core';
 import {
 	AppService
@@ -22,25 +17,28 @@ import {
 import {
 	Distribution2dDatasService
 } from '@khiops-visualization/providers/distribution2d-datas.service';
+import { Preparation2dDatasVO } from '@khiops-visualization/model/preparation2d-datas-vo';
+import { DistributionDatasVO } from '@khiops-visualization/model/distribution-datas-vo';
 
 @Component({
 	selector: 'app-var-details-preparation-2d',
 	templateUrl: './var-details-preparation-2d.component.html',
 	styleUrls: ['./var-details-preparation-2d.component.scss']
 })
-export class VarDetailsPreparation2dComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
+export class VarDetailsPreparation2dComponent {
 
 	@ViewChild('targetDistributionGraphCanvas', {
 		static: false
 	}) targetDistributionGraphCanvas: TargetDistributionGraphCanvasComponent;
 
-	preparation2dDatas: any;
 	appDatas: any;
 	sizes: any;
+
+	preparation2dDatas: Preparation2dDatasVO;
+	distribution2dDatas: DistributionDatasVO;
 	scaleValue = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SCALE_VALUE') || AppConfig.visualizationCommon.GLOBAL.DEFAULT_GRAPH_SCALE;
-	currentCellIndex: any;
+	currentCellIndex: number;
 	targetDistributionGraphType: string
-	distribution2dDatas: any;
 
 	constructor(
 		private distribution2dDatasService: Distribution2dDatasService,
@@ -57,26 +55,12 @@ export class VarDetailsPreparation2dComponent implements OnInit, AfterViewInit, 
 		this.distribution2dDatasService.getTargetDistributionGraphDatas(this.targetDistributionGraphType);
 	}
 
-	ngOnInit() {
-
-	}
-
-	ngAfterViewInit() {
-
-	}
-
-	ngOnDestroy() {}
-
-	ngOnChanges(changes: SimpleChanges) {
-
-	}
-
 	onSplitDragEnd(event: any, item: any) {
 		this.appService.resizeAndSetSplitSizes(item, this.sizes, event.sizes, 'preparation2dView');
 		this.resizeTargetDistributionGraph();
 	}
 
-	onSelectCellRowChanged(index: any) {
+	onSelectCellRowChanged(index: number) {
 		this.currentCellIndex = index;
 		this.distribution2dDatasService.getTargetDistributionGraphDatas(this.targetDistributionGraphType);
 		this.resizeTargetDistributionGraph();

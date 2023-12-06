@@ -76,7 +76,7 @@ implements OnInit, OnChanges, OnDestroy, AfterViewInit {
 		types: [TYPES.COVERAGE, TYPES.FREQUENCY],
 		selected: undefined,
 	};
-	activeEntries: string;
+	activeEntries: number;
 	title: string;
 	legend: any;
 	colorSet: ChartColorsSetI;

@@ -2,10 +2,8 @@ import {
 	Component,
 	OnInit,
 	NgZone,
-	OnDestroy,
 	OnChanges,
 	SimpleChanges,
-	AfterViewInit,
 	Input,
 } from '@angular/core';
 import _ from 'lodash';
@@ -33,6 +31,8 @@ import {
 import {
 	UtilsService
 } from '@khiops-library/providers/utils.service';
+import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
+import { TreeNodeVO } from '@khiops-visualization/model/tree-node-vo';
 
 @Component({
 	selector: 'app-tree-leaf-details',
@@ -40,11 +40,12 @@ import {
 	styleUrls: ['./tree-leaf-details.component.scss'],
 })
 export class TreeLeafDetailsComponent
-implements OnInit, AfterViewInit, OnChanges, OnDestroy {
-	@Input() selectedNode: any;
-	@Input() displayedValues: any;
+	implements OnInit, OnChanges {
+	
+	@Input() selectedNode: TreeNodeVO;
+	@Input() displayedValues: ChartToggleValuesI[];
 
-	populationCount = 10;
+	populationCount: number = 10;
 
 	treePreparationDatas: TreePreparationDatasVO;
 	distributionDatas: DistributionDatasVO;
@@ -66,10 +67,6 @@ implements OnInit, AfterViewInit, OnChanges, OnDestroy {
 		this.treePreparationDatas = this.treePreparationDatasService.getDatas();
 		this.distributionDatas = this.distributionDatasService.getDatas();
 	}
-
-	ngAfterViewInit() {}
-
-	ngOnDestroy() {}
 
 	updateComponentDatas() {
 		setTimeout(() => {
@@ -97,7 +94,7 @@ implements OnInit, AfterViewInit, OnChanges, OnDestroy {
 
 	onSelectedTreeLeafDetailsTabChanged(e) {}
 
-	onTreeNodeTargetDistributionGraphTypeChanged(type: any) {
+	onTreeNodeTargetDistributionGraphTypeChanged(type: string) {
 		this.treeNodeTargetDistributionGraphType = type;
 		this.distributionDatasService.getTreeNodeTargetDistributionGraphDatas(
 			this.selectedNode,

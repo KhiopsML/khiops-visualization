@@ -39,7 +39,7 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 
 	@Input() canvasIdContainer = 'kl-chart-canvas'; // May be updated if multiple graph
 	@Input() inputDatas: any;
-	@Input() activeEntries: any;
+	@Input() activeEntries: number;
 	@Input() type: any = 'bar';
 	@Input() chartOptions: ChartOptions;
 	@Input() colorSet: ChartColorsSetI;

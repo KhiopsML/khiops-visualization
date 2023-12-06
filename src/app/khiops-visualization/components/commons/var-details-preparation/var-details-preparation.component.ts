@@ -1,12 +1,10 @@
 import {
 	Component,
 	OnInit,
-	OnDestroy,
 	ViewChild,
 	Input,
 	OnChanges,
 	SimpleChanges,
-	AfterViewInit
 } from '@angular/core';
 import {
 	AppService
@@ -26,31 +24,33 @@ import {
 import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
+import { Preparation2dDatasVO } from '@khiops-visualization/model/preparation2d-datas-vo';
 
 @Component({
 	selector: 'app-var-details-preparation',
 	templateUrl: './var-details-preparation.component.html',
 	styleUrls: ['./var-details-preparation.component.scss']
 })
-export class VarDetailsPreparationComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
+export class VarDetailsPreparationComponent implements OnInit, OnChanges {
 
 	@ViewChild('appVariableGraphDetails', {
 		static: false
 	}) appVariableGraphDetails: VariableGraphDetailsComponent;
 
-	@Input() preparationSource;
+	@Input() preparationSource: string;
 
 	isRegressionOrExplanatoryAnalysis: boolean;
 	preparationDatas: any;
 	appDatas: any;
 	sizes: any;
+	
 	summaryDatas: InfosDatasI[];
 	informationsDatas: InfosDatasI[];
 	targetVariableStatsDatas: ChartDatasVO;
 	currentIntervalDatas: GridDatasI;
 	matrixRegSelectedCell = 0;
 	distributionSelectedBarIndex = 0;
-	preparation2dDatas: any;
+	preparation2dDatas: Preparation2dDatasVO;
 
 	constructor(
 		private preparationDatasService: PreparationDatasService,
@@ -64,12 +64,6 @@ export class VarDetailsPreparationComponent implements OnInit, AfterViewInit, On
 		this.isRegressionOrExplanatoryAnalysis = this.preparationDatasService.isExplanatoryAnalysis() || this.evaluationDatasService.isRegressionAnalysis();
 		this.preparation2dDatas = this.preparation2dDatasService.getDatas();
 	}
-
-	ngAfterViewInit() {
-
-	}
-
-	ngOnDestroy() {}
 
 	ngOnChanges(changes: SimpleChanges) {
 		this.preparationDatas = this.preparationDatasService.getDatas(this.preparationSource);

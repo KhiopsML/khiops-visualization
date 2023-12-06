@@ -1,6 +1,5 @@
 import {
 	Component,
-	OnInit,
 	SimpleChanges,
 	OnChanges,
 	Input,
@@ -30,6 +29,7 @@ import {
 	ChartOptions
 } from 'chart.js';
 import { ConfigService } from '@khiops-library/providers/config.service';
+import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
 
 @Component({
 	selector: 'app-target-variable-stats-canvas',
@@ -38,10 +38,9 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	providers: [ToPrecisionPipe]
 })
-export class TargetVariableStatsCanvasComponent extends SelectableComponent implements OnInit, OnChanges {
+export class TargetVariableStatsCanvasComponent extends SelectableComponent implements OnChanges {
 
-	datas: Array < any > ;
-	@Input() inputDatas: any;
+	@Input() inputDatas: ChartDatasVO;
 	groupPadding: number;
 
 	colorSet: ChartColorsSetI;
@@ -97,10 +96,6 @@ export class TargetVariableStatsCanvasComponent extends SelectableComponent impl
 			}
 
 		};
-	}
-
-	ngOnInit() {
-
 	}
 
 	onToggleFullscreen(isFullscreen: any) {

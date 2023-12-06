@@ -35,6 +35,7 @@ import {
 import {
 	TreePreparationDatasService
 } from '@khiops-visualization/providers/tree-preparation-datas.service';
+import { TreeNodeVO } from '@khiops-visualization/model/tree-node-vo';
 
 @Component({
 	selector: 'app-tree-select',
@@ -43,10 +44,9 @@ import {
 })
 export class TreeSelectComponent extends SelectableComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
 
-	@Input() selectedNodes: any;
-	@Input() selectedNode: any;
-	@Input() detectChange: any;
-	@Input() dimensionTree: any;
+	@Input() selectedNodes: TreeNodeVO[];
+	@Input() selectedNode: TreeNodeVO;
+	@Input() dimensionTree: [TreeNodeVO];
 
 	@Output() selectTreeItemChanged: EventEmitter < any > = new EventEmitter();
 
@@ -55,10 +55,7 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 	id: any = undefined;
 	nodeInSelection: any;
 
-	// Keep a reference to the tree nodes so Angular can render them.
-	nodes: any;
-	dimensionsDatas: any;
-	isFullscreen = false;
+	isFullscreen: boolean = false;
 
 	constructor(
 		public ngzone: NgZone,
@@ -93,7 +90,7 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 		this.initialize();
 	}
 
-	onToggleFullscreen(isFullscreen: any) {
+	onToggleFullscreen(isFullscreen: boolean) {
 		this.isFullscreen = isFullscreen;
 	}
 

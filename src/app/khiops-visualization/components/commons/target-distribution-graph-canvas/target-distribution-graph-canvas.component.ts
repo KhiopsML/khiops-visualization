@@ -35,6 +35,8 @@ import {
 	ResizedEvent
 } from 'angular-resize-event';
 import { TYPES } from '@khiops-library/enum/types';
+import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
+import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 
 @Component({
 	selector: 'app-target-distribution-graph-canvas',
@@ -45,12 +47,12 @@ import { TYPES } from '@khiops-library/enum/types';
 export class TargetDistributionGraphCanvasComponent extends ScrollableGraphCanvasComponent implements OnInit {
 
 	@Input() position = 0;
-	@Input() inputDatas: any = undefined;
+	@Input() inputDatas: ChartDatasVO = undefined;
 	@Input() titleTooltip: string;
 	@Input() title: string;
-	@Input() activeEntries;
+	@Input() activeEntries: number;
 	@Input() scrollPosition = 0;
-	@Input() displayedValues: any;
+	@Input() displayedValues: ChartToggleValuesI[];
 	@Input() isLoadingDatas = false;
 	@Input() showFullscreenBtn = false;
 

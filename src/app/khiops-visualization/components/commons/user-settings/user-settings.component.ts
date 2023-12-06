@@ -26,12 +26,11 @@ import {
 	styleUrls: ['./user-settings.component.scss']
 })
 export class UserSettingsComponent implements OnChanges {
+
 	@Output() toggleNavDrawerChanged: EventEmitter < any > = new EventEmitter();
 	@Input() opened: boolean;
 
-	numberPrecisionExample;
 	numberPrecision;
-	liftCurveSmooth: number;
 	contrastValue: number;
 	allowCookies: boolean;
 	allowDarkTheme: boolean;

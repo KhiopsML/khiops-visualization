@@ -42,6 +42,7 @@ import {
 import {
 	Subscription
 } from 'rxjs';
+import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
 
 @Component({
 	selector: 'app-tree-select',
@@ -52,8 +53,7 @@ import {
 export class TreeSelectComponent extends SelectableComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
 
 	@Input() selectedDimension: DimensionVO;
-	@Input() selectedNode: any;
-	@Input() detectChange: any;
+	@Input() selectedNode: TreeNodeVO;
 	@Input() position: number;
 	@Input() dimensionsTree: any;
 

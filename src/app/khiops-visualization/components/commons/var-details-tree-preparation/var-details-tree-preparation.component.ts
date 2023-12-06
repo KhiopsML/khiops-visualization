@@ -1,11 +1,6 @@
 import {
 	Component,
-	OnInit,
-	OnDestroy,
 	ViewChild,
-	OnChanges,
-	SimpleChanges,
-	AfterViewInit
 } from '@angular/core';
 import {
 	AppService
@@ -16,20 +11,21 @@ import {
 import {
 	VariableGraphDetailsComponent
 } from '../variable-graph-details/variable-graph-details.component';
+import { TreePreparationDatasVO } from '@khiops-visualization/model/tree-preparation-datas-vo';
 
 @Component({
 	selector: 'app-var-details-tree-preparation',
 	templateUrl: './var-details-tree-preparation.component.html',
 	styleUrls: ['./var-details-tree-preparation.component.scss']
 })
-export class VarDetailsTreePreparationComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
+export class VarDetailsTreePreparationComponent {
 
 	@ViewChild('appVariableGraphDetails', {
 		static: false
 	}) appVariableGraphDetails: VariableGraphDetailsComponent;
 
-	treePreparationDatas: any;
-	preparationDatas: any;
+	treePreparationDatas: TreePreparationDatasVO;
+
 	appDatas: any;
 	sizes: any;
 	selectedBarIndex = 0;
@@ -43,20 +39,6 @@ export class VarDetailsTreePreparationComponent implements OnInit, AfterViewInit
 		this.sizes = this.appService.getViewSplitSizes('treePreparationView');
 
 		this.onSelectedGraphItemChanged(0);
-	}
-
-	ngOnInit() {
-
-	}
-
-	ngAfterViewInit() {
-
-	}
-
-	ngOnDestroy() {}
-
-	ngOnChanges(changes: SimpleChanges) {
-
 	}
 
 	onSplitDragEnd(event: any, item: any) {

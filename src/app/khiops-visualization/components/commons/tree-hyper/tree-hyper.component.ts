@@ -42,11 +42,9 @@ import {
 	TreeNodeVO
 } from '@khiops-visualization/model/tree-node-vo';
 import {
-	KhiopsLibraryService
-} from '@khiops-library/providers/khiops-library.service';
-import {
 	ConfigService
 } from '@khiops-library/providers/config.service';
+import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 
 @Component({
 	selector: 'app-tree-hyper',
@@ -55,10 +53,10 @@ import {
 })
 export class TreeHyperComponent extends SelectableComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
 
-	@Input() selectedNodes: any;
-	@Input() selectedNode: any;
-	@Input() dimensionTree: any;
-	@Input() displayedValues: any;
+	@Input() selectedNodes: TreeNodeVO[];
+	@Input() selectedNode: TreeNodeVO;
+	@Input() dimensionTree: [TreeNodeVO];
+	@Input() displayedValues: ChartToggleValuesI[];
 	@Output() selectTreeItemChanged: EventEmitter < any > = new EventEmitter();
 	@Output() treeHyperDisplayedValuesChanged: EventEmitter < any > = new EventEmitter();
 

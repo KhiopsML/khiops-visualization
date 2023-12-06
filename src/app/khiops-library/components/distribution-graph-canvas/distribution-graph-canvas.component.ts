@@ -40,7 +40,7 @@ export class DistributionGraphCanvasComponent extends ScrollableGraphCanvasCompo
 	@Input() position = 0;
 	@Input() inputDatas: any = undefined;
 	@Input() graphOptions: any;
-	@Input() activeEntries: any;
+	@Input() activeEntries: number;
 	@Input() isLoadingDatas = false;
 	@Input() hideGraphOptions = false;
 

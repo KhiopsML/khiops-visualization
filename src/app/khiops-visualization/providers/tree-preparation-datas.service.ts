@@ -378,7 +378,6 @@ export class TreePreparationDatasService {
 
 		const appDatas = this.appService.getDatas().datas;
 		if (appDatas.treePreparationReport && appDatas.treePreparationReport.summary) {
-			variableStatsDatas = new ChartDatasVO();
 			variableStatsDatas.emptyLabels();
 			const currentDatas = appDatas.treePreparationReport.summary.targetValues;
 
