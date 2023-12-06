@@ -51,7 +51,7 @@ export class TreenodesService {
 		this.collapsedNodesToSave = this.appService.getSavedDatas('collapsedNodes') || {};
 	}
 
-	getLeafNodesForARank(rank) {
+	getLeafNodesForARank(rank: number) {
 		const collapsedNodes = {}
 		for (let i = 0; i < this.dimensionsDatas.selectedDimensions.length; i++) {
 			collapsedNodes[this.dimensionsDatas.selectedDimensions[i].name] = [];
@@ -262,25 +262,22 @@ export class TreenodesService {
 	getHierarchyDatas(): HierarchyDatasVO {
 		const appDatas = this.appService.getInitialDatas().datas;
 
-		const hierarchyDatas = new HierarchyDatasVO();
-
 		if (appDatas.coclusteringReport && appDatas.coclusteringReport.dimensionSummaries) {
 			const l = appDatas.coclusteringReport.dimensionSummaries.length;
-			hierarchyDatas.minClusters = l;
+			this.dimensionsDatas.hierarchyDatas.minClusters = l;
 			for (let i = 0; i < l; i++) {
 				// Concat all dimensions clusters
-				hierarchyDatas.totalClusters += appDatas.coclusteringReport.dimensionSummaries[i].parts;
+				this.dimensionsDatas.hierarchyDatas.totalClusters += appDatas.coclusteringReport.dimensionSummaries[i].parts;
 			}
 			// Init with all clusters
-			if (hierarchyDatas.selectedUnfoldHierarchy === 0) {
-				hierarchyDatas.selectedUnfoldHierarchy = hierarchyDatas.totalClusters;
+			if (this.dimensionsDatas.hierarchyDatas.selectedUnfoldHierarchy === 0) {
+				this.dimensionsDatas.hierarchyDatas.selectedUnfoldHierarchy = this.dimensionsDatas.hierarchyDatas.totalClusters;
 			}
 		}
 		if (appDatas.coclusteringReport && appDatas.coclusteringReport.summary) {
 			// Get the total cell
-			hierarchyDatas.totalCells += appDatas.coclusteringReport.summary.cells;
+			this.dimensionsDatas.hierarchyDatas.totalCells += appDatas.coclusteringReport.summary.cells;
 		}
-		this.dimensionsDatas.hierarchyDatas = hierarchyDatas;
 		return this.dimensionsDatas.hierarchyDatas;
 	}
 
