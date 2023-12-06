@@ -26,7 +26,12 @@ import {
 import {
 	ModelingDatasVO
 } from '../model/modeling-datas-vo';
-
+import {
+	GridColumnsI
+} from '@khiops-library/interfaces/grid-columns';
+import {
+	TrainedPredictorVO
+} from '@khiops-visualization/model/trained-predictor-vo copy';
 @Injectable({
 	providedIn: 'root'
 })
@@ -108,8 +113,8 @@ export class ModelingDatasService {
 		return variable;
 	}
 
-	getTrainedPredictorDisplayedColumns(): string[] {
-		const displayedColumns = [];
+	getTrainedPredictorDisplayedColumns(): GridColumnsI[] {
+		const displayedColumns: GridColumnsI[] = [];
 		if (this.modelingDatas.trainedPredictorsListDatas) {
 			const typicalData = this.modelingDatas.trainedPredictorsListDatas[0];
 			Object.keys(typicalData).forEach((key) => {
@@ -185,7 +190,7 @@ export class ModelingDatasService {
 				if (!currentVarDetails) {
 					currentVarDetails = this.preparation2dDatasService.getVariableFromNames(currentVar.name.split('`')[0], currentVar.name.split('`')[1]);
 				}
-				const varItem: ModelingPredictorVO = new ModelingPredictorVO(currentVar, availableKeys);
+				const varItem: TrainedPredictorVO = new TrainedPredictorVO(currentVar, availableKeys);
 				this.modelingDatas.trainedPredictorsListDatas.push(varItem);
 			}
 		} else {

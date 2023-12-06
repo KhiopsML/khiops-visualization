@@ -1,7 +1,14 @@
+import { ModelingPredictorVO } from "./modeling-predictor-vo";
+import { PreparationVariableVO } from "./preparation-variable-vo";
+import { Preparation2dVariableVO } from "./preparation2d-variable-vo";
+import { TrainedPredictorVO } from "./trained-predictor-vo copy";
+import { TreePreparationVariableVO } from "./tree-preparation-variable-vo";
+
 export class ModelingDatasVO {
-
-	selectedVariable = undefined;
-	selectedPredictor = undefined;
-	trainedPredictorsListDatas = undefined;
-
+	selectedVariable:
+		| Preparation2dVariableVO
+		| PreparationVariableVO
+		| TreePreparationVariableVO = undefined;
+	selectedPredictor = ModelingPredictorVO;
+	trainedPredictorsListDatas: TrainedPredictorVO[] = undefined;
 }

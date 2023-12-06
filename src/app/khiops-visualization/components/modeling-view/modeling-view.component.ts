@@ -47,8 +47,12 @@ import {
 import {
 	KhiopsLibraryService
 } from '@khiops-library/providers/khiops-library.service';
-import { REPORTS } from '@khiops-library/enum/reports';
-import { TYPES } from '@khiops-library/enum/types';
+import {
+	REPORTS
+} from '@khiops-library/enum/reports';
+import {
+	GridColumnsI
+} from '@khiops-library/interfaces/grid-columns';
 
 @Component({
 	selector: 'app-modeling-view',
@@ -76,7 +80,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
 	modelingDatas: any;
 	matrixRegSelectedCell = 0;
 	distributionSelectedBarIndex = 0;
-	trainedPredictorsDisplayedColumns: string[];
+	trainedPredictorsDisplayedColumns: GridColumnsI[];
 
 	// managed by selectable-tab component
 	tabIndex = 3;
