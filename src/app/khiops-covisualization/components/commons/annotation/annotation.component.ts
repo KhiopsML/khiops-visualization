@@ -59,7 +59,7 @@ export class AnnotationComponent extends SelectableComponent implements OnInit, 
 		}
 	}
 
-	onAnnotationChanged(annotation) {
+	onAnnotationChanged(annotation: string) {
 		this.value = annotation;
 		this.selectedNode.updateAnnotation(annotation);
 		this.annotationService.setNodeAnnotation(this.selectedNode, annotation);

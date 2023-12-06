@@ -1,6 +1,6 @@
 export class ClusterDetailsVO {
 	name: string;
-	_id: string;
+	_id: number;
 	father: string;
 	frequency: number;
 	interest: number;

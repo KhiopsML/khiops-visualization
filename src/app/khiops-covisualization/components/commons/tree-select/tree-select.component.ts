@@ -1,7 +1,6 @@
 import {
 	Component,
 	HostListener,
-	OnInit,
 	NgZone,
 	OnDestroy,
 	ChangeDetectionStrategy,
@@ -43,6 +42,7 @@ import {
 	Subscription
 } from 'rxjs';
 import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
+import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
 
 @Component({
 	selector: 'app-tree-select',
@@ -50,12 +50,12 @@ import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
 	styleUrls: ['./tree-select.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TreeSelectComponent extends SelectableComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
+export class TreeSelectComponent extends SelectableComponent implements AfterViewInit, OnChanges, OnDestroy {
 
 	@Input() selectedDimension: DimensionVO;
 	@Input() selectedNode: TreeNodeVO;
 	@Input() position: number;
-	@Input() dimensionsTree: any;
+	@Input() dimensionsTree: TreeNodeVO[];
 
 	treeSelectedNodeChangedSub: Subscription;
 
@@ -63,9 +63,7 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 	id: any = undefined;
 	tree: any;
 
-	// Keep a reference to the tree nodes so Angular can render them.
-	nodes: any;
-	dimensionsDatas: any;
+	dimensionsDatas: DimensionsDatasVO;
 	nodeInSelection: any;
 
 	constructor(
@@ -96,10 +94,6 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 		});
 	}
 
-	ngOnInit() {
-
-	}
-
 	ngOnDestroy() {
 		this.treeSelectedNodeChangedSub.unsubscribe();
 	}
@@ -121,7 +115,7 @@ export class TreeSelectComponent extends SelectableComponent implements OnInit, 
 		});
 	}
 
-	initTree(selectedNode ? ) {
+	initTree(selectedNode?: TreeNodeVO ) {
 		// @ts-ignore
 		this.tree = new TreeView(this.dimensionsTree, this.configService.getRootElementDom(), 'tree_' + this.position);
 

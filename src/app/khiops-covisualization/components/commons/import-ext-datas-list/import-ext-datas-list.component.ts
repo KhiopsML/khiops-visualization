@@ -1,6 +1,5 @@
 import {
 	Component,
-	OnInit
 } from '@angular/core';
 import {
 	MatDialogRef,
@@ -32,16 +31,19 @@ import {
 import {
 	LoadExtDatasComponent
 } from '../load-ext-datas/load-ext-datas.component';
+import {
+	GridDatasI
+} from '@khiops-library/interfaces/grid-datas';
 
 @Component({
 	selector: 'app-import-ext-datas-list',
 	templateUrl: './import-ext-datas-list.component.html',
 	styleUrls: ['./import-ext-datas-list.component.scss']
 })
-export class ImportExtDatasListComponent implements OnInit {
+export class ImportExtDatasListComponent {
 
 	importExtDatas: FileVO;
-	importedDatas: any;
+	importedDatas: GridDatasI;
 	isLoadingDatas = false;
 
 	constructor(
@@ -98,8 +100,6 @@ export class ImportExtDatasListComponent implements OnInit {
 			}
 		}
 	}
-
-	ngOnInit() {}
 
 	removeExtDatasFromList(e) {
 		const importedDatas = this.importExtDatasService.removeImportedDatas(e.data.filename, e.data.dimension, e.data.joinKey, e.data.separator, e.data.field);

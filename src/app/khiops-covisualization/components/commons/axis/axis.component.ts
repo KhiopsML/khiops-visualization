@@ -2,7 +2,6 @@ import {
 	Component,
 	OnInit,
 	Input,
-	OnDestroy,
 	ViewChild,
 } from '@angular/core';
 import {
@@ -17,14 +16,20 @@ import {
 import {
 	DimensionVO
 } from '@khiops-library/model/dimension-vo';
-import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
+import {
+	TreeNodeVO
+} from '@khiops-covisualization/model/tree-node-vo';
+import {
+	CompositionVO
+} from '@khiops-covisualization/model/composition-vo';
+import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
 
 @Component({
 	selector: 'app-axis',
 	templateUrl: './axis.component.html',
 	styleUrls: ['./axis.component.scss']
 })
-export class AxisComponent implements OnInit, OnDestroy {
+export class AxisComponent implements OnInit {
 	@ViewChild('appVariableGraphDetails', {
 		static: false
 	}) appVariableGraphDetails: VariableGraphDetailsComponent;
@@ -32,13 +37,13 @@ export class AxisComponent implements OnInit, OnDestroy {
 	@Input() viewId: string;
 	@Input() sizeId: string;
 	@Input() position: number;
-	@Input() dimensionsDatas: any;
-	@Input() axisLayout: any;
+	@Input() dimensionsDatas: DimensionsDatasVO;
+	@Input() axisLayout: DimensionViewLayoutVO;
 	sizes: any;
 
 	selectedDimension: DimensionVO;
 	selectedNode: DimensionVO;
-	dimensionsTree: [];
+	dimensionsTree: TreeNodeVO[];
 	dimensionsClusters: TreeNodeVO[][];
 
 	column0Index = 0;
@@ -49,18 +54,13 @@ export class AxisComponent implements OnInit, OnDestroy {
 
 	viewLayout: DimensionViewLayoutVO;
 	invertedPosition: number;
-	selectedComposition: any;
+	selectedComposition: CompositionVO;
 
-	constructor(private appService: AppService,
-	) {
-
+	constructor(private appService: AppService) {
 	}
 
 	ngOnInit() {
 		this.initializeView();
-	}
-
-	ngOnDestroy() {
 	}
 
 	initializeView() {
@@ -113,7 +113,7 @@ export class AxisComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	selectedCompositionChanged(composition) {
+	selectedCompositionChanged(composition: CompositionVO) {
 		this.selectedComposition = composition;
 	}
 }

@@ -39,6 +39,9 @@ import {
 import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { HierarchyDatasVO } from '@khiops-covisualization/model/hierarchy-datas-vo';
+import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
+import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
+import { DimensionVO } from '@khiops-library/model/dimension-vo';
 
 @Component({
 	selector: 'app-unfold-hierarchy',
@@ -47,25 +50,19 @@ import { HierarchyDatasVO } from '@khiops-covisualization/model/hierarchy-datas-
 })
 export class UnfoldHierarchyComponent implements OnInit {
 
-	dimensionsDatas: any;
-	currentUnfoldHierarchy = 0;
+	dimensionsDatas: DimensionsDatasVO;
+	currentUnfoldHierarchy: number = 0;
 	hierarchyDatas: HierarchyDatasVO;
-	loadingHierarchy = false;
+	loadingHierarchy: boolean = false;
 	clustersPerDimDatas: ChartDatasVO;
 	infoPerCluster: ChartDatasVO;
-	lineChartSeries = [];
-	barChartSeries = [];
-	colorSetClusterPerDim: any;
-	colorSetInfoPerCluster: any;
-	previousHierarchyRank: any;
-	nbClusterPerDimLegend: any[];
+	colorSetClusterPerDim: ChartColorsSetI;
+	colorSetInfoPerCluster: ChartColorsSetI;
+	previousHierarchyRank: number;
 	currentInformationPerCluster = 100;
 
-	dimensions: any[];
-	unfoldSelection: any[];
-
+	dimensions: DimensionVO[];
 	unfoldHierarchyTableTitle = '';
-
 	selectedLineChartItem = '';
 
 	borderColor = localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR') === 'dark' ? '#ffffff' : '#000000';
@@ -249,10 +246,6 @@ export class UnfoldHierarchyComponent implements OnInit {
 	onClickOnCancel() {
 		this.treenodesService.updateCurrentHierarchyClustersCount(this.previousHierarchyRank);
 		this.dialogRef.close();
-	}
-
-	yLeftTickFormat() {
-		return '';
 	}
 
 	increaseUnfoldHierarchy() {

@@ -2,7 +2,6 @@ import {
 	Component,
 	Output,
 	EventEmitter,
-	OnInit
 } from '@angular/core';
 import {
 	DimensionsDatasService
@@ -25,22 +24,24 @@ import * as _ from 'lodash'; // Important to import lodash in karma
 import {
 	ImportExtDatasListComponent
 } from '../import-ext-datas-list/import-ext-datas-list.component';
+import {
+	DimensionsDatasVO
+} from '@khiops-covisualization/model/dimensions-data-vo';
 
 @Component({
 	selector: 'app-header-manage-view',
 	templateUrl: './header-manage-view.component.html',
 	styleUrls: ['./header-manage-view.component.scss']
 })
-export class HeaderManageViewComponent implements OnInit {
+export class HeaderManageViewComponent {
 
 	@Output() toggleContext: EventEmitter < any > = new EventEmitter();
 	@Output() toggleUnfoldHierarchy: EventEmitter < any > = new EventEmitter();
-	dimensionsDatas: any;
+	dimensionsDatas: DimensionsDatasVO;
 
 	constructor(private dialog: MatDialog,
 		private dimensionsService: DimensionsDatasService) {}
 
-	ngOnInit() {}
 
 	clickUnfodHierarchy() {
 		this.dimensionsDatas = this.dimensionsService.getDatas();

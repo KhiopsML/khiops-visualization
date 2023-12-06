@@ -25,10 +25,16 @@ import {
 import {
 	TreenodesService
 } from '@khiops-covisualization/providers/treenodes.service';
-import { Subscription } from 'rxjs';
+import {
+	Subscription
+} from 'rxjs';
 import _ from 'lodash';
-import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
-import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
+import {
+	GridColumnsI
+} from '@khiops-library/interfaces/grid-columns';
+import {
+	TreeNodeVO
+} from '@khiops-covisualization/model/tree-node-vo';
 
 @Component({
 	selector: 'app-composition',
@@ -37,15 +43,21 @@ import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
 })
 export class CompositionComponent implements OnInit, OnDestroy {
 
-	@Input() selectedNode: any;
+	@Input() selectedNode: TreeNodeVO;
 	@Input() dimensionsClusters: TreeNodeVO[][];
-
 	@Input() position: number;
 	@Input() selectedDimension: DimensionVO;
 
 	@Output() selectedCompositionChanged: EventEmitter < any > = new EventEmitter();
 
-	compositionDisplayedColumns: GridColumnsI[]  = [{
+	title: string;
+	selectedComposition: CompositionVO;
+	compositionValues: CompositionVO[];
+	id: any;
+	treeSelectedNodeChangedSub: Subscription;
+	importedDatasChangedSub: Subscription;
+
+	compositionDisplayedColumns: GridColumnsI[] = [{
 		headerName: 'cluster',
 		field: 'cluster',
 		tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.CLUSTER')
@@ -72,13 +84,6 @@ export class CompositionComponent implements OnInit, OnDestroy {
 		field: 'frequency',
 		tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.FREQUENCY')
 	}];
-
-	title: string;
-	selectedComposition: CompositionVO;
-	compositionValues: CompositionVO[];
-	id: any;
-	treeSelectedNodeChangedSub: Subscription;
-	importedDatasChangedSub: Subscription;
 
 	constructor(
 		private translate: TranslateService,
@@ -110,7 +115,7 @@ export class CompositionComponent implements OnInit, OnDestroy {
 		this.updateTable(this.selectedNode);
 	}
 
-	updateTable(selectedNode) {
+	updateTable(selectedNode: TreeNodeVO) {
 		if (selectedNode) {
 			this.compositionValues = Object.assign([], this.clustersService.getCompositionClusters(selectedNode.hierarchy, _.cloneDeep(selectedNode)));
 			// if composition values : categorical
@@ -125,7 +130,7 @@ export class CompositionComponent implements OnInit, OnDestroy {
 
 	ngOnChanges(changes: SimpleChanges) {
 		// update when dimension change (with combo)
-		if (changes.selectedDimension?.currentValue?.name !== changes.selectedDimension?.previousValue?.name && changes.selectedNode) {
+		if (changes.selectedDimension ?.currentValue ?.name !== changes.selectedDimension ?.previousValue ?.name && changes.selectedNode) {
 			this.updateTable(this.selectedNode);
 		}
 	}
@@ -135,12 +140,12 @@ export class CompositionComponent implements OnInit, OnDestroy {
 		this.importedDatasChangedSub.unsubscribe();
 	}
 
-	onDoubleClickListItem(item: any) {
+	onDoubleClickListItem(item: TreeNodeVO) {
 		this.treenodesService.setSelectedNode(this.selectedDimension.name, item.cluster, false);
 
 	}
 
-	onSelectRowChanged(item: any) {
+	onSelectRowChanged(item: TreeNodeVO) {
 		// find composition in local to get external datas
 		this.selectedComposition = this.compositionValues.find(e => e.cluster === item.cluster);
 		this.selectedCompositionChanged.emit(this.selectedComposition);

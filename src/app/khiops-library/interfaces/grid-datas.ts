@@ -2,7 +2,7 @@ import { GridColumnsI } from "./grid-columns";
 
 export interface GridDatasI {
 
-	title: string;
+	title?: string;
 	values: any[];
 	displayedColumns: GridColumnsI[];
 

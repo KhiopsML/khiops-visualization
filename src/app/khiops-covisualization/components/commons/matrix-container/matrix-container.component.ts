@@ -20,6 +20,7 @@ import {
 import {
 	MatrixOptionsI
 } from '@khiops-library/interfaces/matrix-options';
+import { MatrixModeI } from "@khiops-library/interfaces/matrix-mode";
 
 @Component({
 	selector: "app-matrix-container",
@@ -195,7 +196,7 @@ export class MatrixContainerComponent implements OnInit, OnDestroy {
 		this.dimensionsService.toggleIsAxisInverted();
 	}
 
-	changeMatrixType(type: any) {
+	changeMatrixType(type: string) {
 		// this.khiopsLibraryService.trackEvent('click', 'matrix_type', type);
 		localStorage.setItem(
 			AppConfig.covisualizationCommon.GLOBAL.LS_ID + "MATRIX_TYPE_OPTION",
@@ -205,7 +206,7 @@ export class MatrixContainerComponent implements OnInit, OnDestroy {
 		this.matrixOptions.selected = type;
 	}
 
-	changeMatrixMode(mode: any) {
+	changeMatrixMode(mode: MatrixModeI) {
 		// this.khiopsLibraryService.trackEvent('click', 'matrix_mode', mode.mode);
 		this.matrixModes.selected = mode;
 		this.matrixModes.selectedIndex = this.matrixModes.types.findIndex(

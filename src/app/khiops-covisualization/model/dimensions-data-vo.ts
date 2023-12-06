@@ -14,7 +14,7 @@ export class DimensionsDatasVO {
 	contextDimensions: DimensionVO[] = [];
 	selectedDimensions: DimensionVO[] = undefined;
 	contextDimensionCount: number = 0;
-	hierarchyDatas: HierarchyDatasVO = undefined;
+	hierarchyDatas: HierarchyDatasVO = new HierarchyDatasVO();
 	dimensionsTrees: TreeNodeVO[][] = [];
 	currentDimensionsTrees: TreeNodeVO[][] = [];
 	dimensionsClusters: TreeNodeVO[][] = [[]];

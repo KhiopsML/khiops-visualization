@@ -4,7 +4,6 @@ import {
 	OnInit,
 	OnChanges,
 	NgZone,
-	OnDestroy,
 	SimpleChanges
 } from '@angular/core';
 import _ from 'lodash';
@@ -26,19 +25,25 @@ import {
 import {
 	GridColumnsI
 } from '@khiops-library/interfaces/grid-columns';
-import { TYPES } from '@khiops-library/enum/types';
+import {
+	TYPES
+} from '@khiops-library/enum/types';
+import {
+	TreeNodeVO
+} from '@khiops-covisualization/model/tree-node-vo';
 
 @Component({
 	selector: 'app-cluster-details',
 	templateUrl: './cluster-details.component.html',
 	styleUrls: ['./cluster-details.component.scss']
 })
-export class ClusterDetailsComponent implements OnInit, OnChanges, OnDestroy {
+export class ClusterDetailsComponent implements OnInit, OnChanges {
+
 	@Input() position: number;
-	@Input() dimensionsTree: any;
+	@Input() dimensionsTree: TreeNodeVO[];
 	@Input() selectedDimension: DimensionVO;
-	@Input() selectedNode: any;
-	nodeToSelect: any;
+	@Input() selectedNode: TreeNodeVO;
+	nodeToSelect: TreeNodeVO;
 	clusterDisplayedColumns: GridColumnsI[] = [{
 		headerName: 'Name',
 		field: 'name',
@@ -96,8 +101,6 @@ export class ClusterDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
 	}
 
-	ngOnDestroy() {}
-
 	ngOnChanges(changes: SimpleChanges) {
 		// Keep change listen on dimension combo change
 		if (changes.dimensionsTree && changes.dimensionsTree.currentValue) {
@@ -112,13 +115,11 @@ export class ClusterDetailsComponent implements OnInit, OnChanges, OnDestroy {
 	updateSelectedNode() {
 		if (this.selectedNode && this.filteredDimensionsClusters) {
 			// Get nodes from input to update it
-			this.nodeToSelect = {
-				...this.selectedNode
-			};
-			const findNodeToSelect = this.filteredDimensionsClusters.find(e => e._id === this.nodeToSelect._id);
+			this.nodeToSelect = _.cloneDeep(this.selectedNode);
+			const findNodeToSelect = this.filteredDimensionsClusters.find(e => e._id.toString() === this.nodeToSelect._id.toString());
 			if (!findNodeToSelect) {
 				// get the parent
-				const parentNode: ClusterDetailsVO = this.filteredDimensionsClusters.find(e => e._id === this.nodeToSelect.parentCluster);
+				const parentNode: ClusterDetailsVO = this.filteredDimensionsClusters.find(e => e._id.toString() === this.nodeToSelect.parentCluster.toString());
 				if (parentNode) {
 					this.nodeToSelect._id = parentNode._id;
 				} else if (this.nodeToSelect.children && this.nodeToSelect.children.length > 0) {
@@ -132,13 +133,11 @@ export class ClusterDetailsComponent implements OnInit, OnChanges, OnDestroy {
 					this.nodeToSelect = this.getFirstNodeLeaf(this.nodeToSelect);
 				}
 			}
-			this.nodeToSelect = {
-				...this.nodeToSelect
-			};
+			this.nodeToSelect = _.cloneDeep(this.selectedNode);
 		}
 	}
 
-	getFirstNodeLeaf(node): any {
+	getFirstNodeLeaf(node: TreeNodeVO): TreeNodeVO {
 		if (node.children.length > 0 && node.children[0].isLeaf === false) {
 			return this.getFirstNodeLeaf(node.children[0]);
 		} else {

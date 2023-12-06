@@ -40,7 +40,9 @@ import {
 import {
 	ChartDatasVO
 } from '@khiops-library/model/chart-datas-vo';
-import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
+import {
+	DimensionsDatasVO
+} from '@khiops-covisualization/model/dimensions-data-vo';
 @Injectable({
 	providedIn: 'root'
 })
@@ -79,7 +81,7 @@ export class ClustersService {
 		return currentCellsPerCluster;
 	}
 
-	getCurrentClusterDetailsFromNode(nodes, currentClusterDetailsFromNode = []): TreeNodeVO[] {
+	getCurrentClusterDetailsFromNode(nodes: TreeNodeVO[], currentClusterDetailsFromNode: TreeNodeVO[] = []): TreeNodeVO[] {
 		const nodesLength = nodes.length;
 		for (let i = 0; i < nodesLength; i++) {
 			const currentNode: TreeNodeVO = nodes[i];

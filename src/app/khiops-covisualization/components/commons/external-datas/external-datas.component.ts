@@ -22,7 +22,7 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 })
 export class ExternalDatasComponent extends SelectableComponent implements OnInit {
 
-	@Input() inputValue: any;
+	@Input() inputValue: string;
 	@Input() position: number;
 	@Input() externalData: any;
 	id: any = undefined;

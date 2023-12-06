@@ -27,6 +27,7 @@ import {
 import {
 	MatSnackBar
 } from '@angular/material/snack-bar';
+import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
 
 @Component({
 	selector: 'app-import-ext-datas',
@@ -35,7 +36,7 @@ import {
 })
 export class ImportExtDatasComponent implements OnInit {
 
-	dimensionsDatas: any;
+	dimensionsDatas: DimensionsDatasVO;
 	separatorInput: string;
 	formatedDatas: any;
 	joinKeys = {

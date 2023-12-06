@@ -77,7 +77,7 @@ export class HierarchySelectComponent implements OnChanges {
 		}
 	}
 
-	changeSelectedDimension(dimension, newPosition) {
+	changeSelectedDimension(dimension: DimensionVO, newPosition: number) {
 		const isBigJsonFile = this.appService.isBigJsonFile();
 		if (isBigJsonFile) {
 			this.snackBar.open(this.translate.get('GLOBAL.BIG_FILES_LOADING_WARNING'), null, {
@@ -95,9 +95,6 @@ export class HierarchySelectComponent implements OnChanges {
 		this.dimensionsService.saveInitialDimension();
 		this.dimensionsService.constructDimensionsTrees();
 		this.dimensionsService.getMatrixDatas();
-	}
-
-	ngOnDestroy() {
 	}
 
 }

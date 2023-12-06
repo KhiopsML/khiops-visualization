@@ -63,7 +63,7 @@ implements OnInit, OnChanges, OnDestroy, AfterViewInit {
 	@Input() selectedNode: TreeNodeVO;
 	@Output() selectedItemChanged: EventEmitter < any > = new EventEmitter();
 	@Input() position: number;
-	@Input() dimensionsTree: any;
+	@Input() dimensionsTree: TreeNodeVO[];
 	@Input() selectedDimension: DimensionVO;
 	@Input() selectedDimensions: DimensionVO[];
 
@@ -83,7 +83,7 @@ implements OnInit, OnChanges, OnDestroy, AfterViewInit {
 	colorSet: ChartColorsSetI;
 	isFullscreen: boolean = false;
 
-	prevSelectedNode;
+	prevSelectedNode: TreeNodeVO;
 
 	constructor(
 		private translate: TranslateService,
@@ -192,30 +192,7 @@ implements OnInit, OnChanges, OnDestroy, AfterViewInit {
 		};
 	}
 
-	getCurrentClusterDetailsFromNode(
-		nodes,
-		currentClusterDetailsFromNode = []
-	): any {
-		const nodesLength = nodes.length;
-		for (let i = 0; i < nodesLength; i++) {
-			const currentNode: any = nodes[i];
-			if (currentNode.isLeaf) {
-				currentClusterDetailsFromNode.push(currentNode);
-			} else {
-				if (currentNode.isCollapsed) {
-					currentClusterDetailsFromNode.push(currentNode);
-				} else {
-					this.getCurrentClusterDetailsFromNode(
-						currentNode.children,
-						currentClusterDetailsFromNode
-					);
-				}
-			}
-		}
-		return currentClusterDetailsFromNode;
-	}
-
-	onSelectBarChanged(index: any) {
+	onSelectBarChanged(index: number) {
 		this.activeEntries = index;
 
 		const [currentIndex, otherIndex] = this.invertDimensionsPositions();
@@ -228,7 +205,7 @@ implements OnInit, OnChanges, OnDestroy, AfterViewInit {
 		);
 	}
 
-	onScaleValueChanged(value: any) {
+	onScaleValueChanged(value: number) {
 		this.scaleValue = value;
 	}
 

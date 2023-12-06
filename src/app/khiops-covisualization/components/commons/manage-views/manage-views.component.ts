@@ -15,6 +15,9 @@ import {
 	ViewLayoutVO
 } from '@khiops-covisualization/model/view-layout-vo';
 import * as _ from 'lodash'; // Important to import lodash in karma
+import {
+	DimensionsDatasVO
+} from '@khiops-covisualization/model/dimensions-data-vo';
 
 @Component({
 	selector: 'app-manage-views',
@@ -24,7 +27,7 @@ import * as _ from 'lodash'; // Important to import lodash in karma
 export class ManageViewsComponent implements OnInit {
 
 	viewsLayout: ViewLayoutVO;
-	dimensionsDatas: any;
+	dimensionsDatas: DimensionsDatasVO;
 	isDimVisible: boolean[];
 	isContextView = true;
 
@@ -58,7 +61,7 @@ export class ManageViewsComponent implements OnInit {
 		this.dialogRef.close();
 	}
 
-	toggleDimension(dimensionLayout) {
+	toggleDimension(dimensionLayout): boolean {
 		dimensionLayout.isChecked = !dimensionLayout.isChecked;
 		return false;
 	}
