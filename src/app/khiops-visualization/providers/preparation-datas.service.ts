@@ -38,13 +38,14 @@ import {
 import { REPORTS } from '@khiops-library/enum/reports';
 import { TASKS } from '@khiops-library/enum/tasks';
 import { TYPES } from '@khiops-library/enum/types';
+import { PreparationDatasVO } from '@khiops-visualization/model/preparation-datas-vo';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class PreparationDatasService {
 
-	preparationDatas: any;
+	preparationDatas: PreparationDatasVO;
 
 	constructor(
 		private translate: TranslateService,
@@ -54,24 +55,8 @@ export class PreparationDatasService {
 	}
 
 	initialize(): any {
-		this.preparationDatas = {
-			preparationReport: {
-				selectedVariable: undefined,
-				currentIntervalDatas: {
-					title: undefined,
-					values: undefined,
-					displayedColumns: undefined,
-				}
-			},
-			textPreparationReport: {
-				selectedVariable: undefined,
-				currentIntervalDatas: {
-					title: undefined,
-					values: undefined,
-					displayedColumns: undefined,
-				}
-			}
-		};
+
+		this.preparationDatas = new PreparationDatasVO();
 
 		const appDatas = this.appService.getDatas().datas;
 
@@ -120,7 +105,7 @@ export class PreparationDatasService {
 		return this.preparationDatas[preparationSource].selectedVariable;
 	}
 
-	getSelectedVariableRank(): any {
+	getSelectedVariableRank(): string {
 		return this.preparationDatas.preparationReport.selectedVariable.rank;
 	}
 
