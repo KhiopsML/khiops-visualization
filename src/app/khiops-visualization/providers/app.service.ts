@@ -92,7 +92,6 @@ export class AppService {
 	}
 
 	initGlobalConfigVariables(): any {
-		AppConfig.visualizationCommon.GLOBAL.FONT_SIZE = parseInt(localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'FONT_SIZE'), 10) || AppConfig.visualizationCommon.GLOBAL.FONT_SIZE;
 		AppConfig.visualizationCommon.GLOBAL.TO_FIXED = parseInt(localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_NUMBER_PRECISION'), 10) || AppConfig.visualizationCommon.GLOBAL.TO_FIXED;
 		AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST = parseInt(localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST'), 10) || AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST;
 

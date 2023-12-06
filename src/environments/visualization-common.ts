@@ -1,54 +1,43 @@
 export const visualizationCommonEnvironment = {
-  GLOBAL: {
-    TO_FIXED: 4,
-    LS_ID: 'KHIOPS_VISUALIZATION_',
-    DEBUG_SOFTWARE_LABEL: 'KV',
-    MATRIX_CONTRAST: 0,
-    PAGINATION_SIZE: 500,
-    MAX_GRAPH_X_AXIS_STRING_LENGTH: 12,
-    MAX_GRAPH_X_AXIS_NUMBER_LENGTH: 6,
-    FONT_SIZE: 14,
-    DEFAULT_GRAPH_SCALE: 100,
-    MAX_GRAPH_SCALE: 400,
-    MIN_GRAPH_SCALE: 100,
-    STEP_GRAPH_SCALE: 10,
-    DEFAULT_GRAPH_LENGTH: 10,
-    MAX_GRAPH_LENGTH: 40,
-    MAX_GRAPH_X_LABEL_LENGTH: 18,
-    MAX_GRAPH_BAR_THICKNESS: 200,
-    MAX_TABLE_SIZE: 10000,
-    MAX_GRAPH_TOOLTIP_LABEL_LENGTH: 70,
-    MAT_MENU_PAGINATION: 20,
-    LIFT_CHART_COUNT: 6,
-  },
-  HOME: {
-    ACTIVE_TAB_INDEX: 0,
-    TAB_ANIMATION_DURATION: 150, // set > value than .mat-ink-bar transition animation to avoid freeze
-  },
-  LEVEL_DISTRIBUTION_GRAPH: {
-    MAX_VARIABLES: 1000,
-    DEFAULT_LENGTH: 50,
-    MAX_LENGTH: 500,
-    MIN_LENGTH: 1,
-    STEP: 10,
-    WIDTH: '85vw',
-    HEIGHT: '65vh',
-  },
-  LEGEND: {
-    MAX_BEFORE_GROUP: 40,
-  },
-  HYPERTREE: {
-    VISU_POPULATION: false,
-    VISU_PURITY: false,
-  },
-  FILE_SAVE: {
-    FORMAT: 'json',
-    ENCODING: 'utf-8',
-    EXT_NAME: '',
-  },
-  TRACKER: {
-    ENABLE: true,
-    SITE_ID: '2211',
-    TRACKER_URL: 'https://matomo.apps.tech.orange/',
-  },
-}
+	GLOBAL: {
+		TO_FIXED: 4,
+		LS_ID: "KHIOPS_VISUALIZATION_",
+		DEBUG_SOFTWARE_LABEL: "KV",
+		MATRIX_CONTRAST: 0,
+		PAGINATION_SIZE: 500,
+		DEFAULT_GRAPH_SCALE: 100,
+		MAX_GRAPH_SCALE: 400,
+		MIN_GRAPH_SCALE: 100,
+		STEP_GRAPH_SCALE: 10,
+		MAX_TABLE_SIZE: 10000,
+		MAX_GRAPH_TOOLTIP_LABEL_LENGTH: 70,
+		MAT_MENU_PAGINATION: 20,
+		LIFT_CHART_COUNT: 6,
+	},
+	HOME: {
+		ACTIVE_TAB_INDEX: 0,
+		TAB_ANIMATION_DURATION: 150, // set > value than .mat-ink-bar transition animation to avoid freeze
+	},
+	LEVEL_DISTRIBUTION_GRAPH: {
+		MAX_VARIABLES: 1000,
+		MAX_LENGTH: 500,
+		MIN_LENGTH: 1,
+		STEP: 10,
+		WIDTH: "85vw",
+		HEIGHT: "65vh",
+	},
+	HYPERTREE: {
+		VISU_POPULATION: false,
+		VISU_PURITY: false,
+	},
+	FILE_SAVE: {
+		FORMAT: "json",
+		ENCODING: "utf-8",
+		EXT_NAME: "",
+	},
+	TRACKER: {
+		ENABLE: true,
+		SITE_ID: "2211",
+		TRACKER_URL: "https://matomo.apps.tech.orange/",
+	},
+};

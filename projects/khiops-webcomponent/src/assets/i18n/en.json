@@ -71,7 +71,6 @@
 		"NUMBER_PRECISION": "Significant numbers precision",
 		"ONE_DATA_OUT_OF": "One data out of {count} displayed",
 		"N_VALUES_MAX": "{count} values maximum displayed",
-		"FONT_SIZE": "Interface font size",
 		"EXAMPLE": "Example",
 		"LOCAL_DATAS": "Local datas",
 		"CLEAR_DATA_INSTRUCTIONS": "Delete local cache in case of minor problem",
