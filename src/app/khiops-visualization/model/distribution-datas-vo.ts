@@ -1,5 +1,18 @@
-import { TYPES } from "@khiops-library/enum/types";
-import { HistogramType } from "@khiops-visualization/components/commons/histogram/histogram.types";
+import {
+	TYPES
+} from "@khiops-library/enum/types";
+import {
+	ChartDatasI
+} from "@khiops-library/interfaces/chart-datas";
+import {
+	DistributionOptionsI
+} from "@khiops-library/interfaces/distribution-options";
+import {
+	HistogramType
+} from "@khiops-visualization/components/commons/histogram/histogram.types";
+import {
+	ChartToggleValuesI
+} from "@khiops-visualization/interfaces/chart-toggle-values";
 import {
 	HistogramValuesI
 } from "@khiops-visualization/interfaces/histogram-values";
@@ -13,55 +26,28 @@ export class DistributionDatasVO {
 	distributionTypeX = '';
 	distributionTypeY = '';
 
-	distributionGraphOptions: {
-		types: string[],
-		selected: string
-	} = undefined;
-
-	distributionGraphOptionsX: {
-		types: string[],
-		selected: string
-	} = undefined;
-
-	distributionGraphOptionsY: {
-		types: string[],
-		selected: string
-	} = undefined;
-
-	distributionGraphDatas: {
-		datasets: any[],
-		labels: any[]
-	} = undefined;
+	distributionGraphOptions: DistributionOptionsI = undefined;
+	distributionGraphOptionsX: DistributionOptionsI = undefined;
+	distributionGraphOptionsY: DistributionOptionsI = undefined;
+	distributionGraphDatas: ChartDatasI = undefined;
 
 	histogramDatas: HistogramValuesI[] = undefined;
 
-	treeNodedistributionGraphDatas: {
-		datasets: any[],
-		labels: any[]
-	} = undefined;
+	treeNodedistributionGraphDatas: ChartDatasI = undefined;
 
-	targetDistributionDisplayedValues: any;
+	targetDistributionDisplayedValues: ChartToggleValuesI[];
 	targetDistributionType: string = TYPES.PROBABILITIES;
-	targetDistributionGraphDatas: {
-		datasets: any[],
-		labels: any[]
-	} = undefined;
+	targetDistributionGraphDatas: ChartDatasI = undefined;
 
-	treeHyperDisplayedValues: any;
-	treeNodeTargetDistributionDisplayedValues: any;
+	treeHyperDisplayedValues: ChartToggleValuesI[];
+	treeNodeTargetDistributionDisplayedValues: ChartToggleValuesI[];
 	treeNodeTargetDistributionType: string = TYPES.PROBABILITIES;
-	treeNodeTargetDistributionGraphDatas: {
-		datasets: any[],
-		labels: any[]
-	} = undefined;
+	treeNodeTargetDistributionGraphDatas: ChartDatasI = undefined;
 
-	preparationSource = '';
+	preparationSource: string = '';
 
 	appDatas: any = undefined;
-	treeHyperGraphDatas: {
-		datasets: any[],
-		labels: any[]
-	} = undefined;
+	treeHyperGraphDatas: ChartDatasI = undefined;
 
 	constructor(appDatas) {
 		this.appDatas = appDatas;

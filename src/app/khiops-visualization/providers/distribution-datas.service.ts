@@ -35,8 +35,15 @@ import {
 import {
 	TreePreparationDatasService
 } from './tree-preparation-datas.service';
-import { HistogramValuesI } from '@khiops-visualization/interfaces/histogram-values';
-import { TYPES } from '@khiops-library/enum/types';
+import {
+	HistogramValuesI
+} from '@khiops-visualization/interfaces/histogram-values';
+import {
+	TYPES
+} from '@khiops-library/enum/types';
+import {
+	ChartToggleValuesI
+} from '@khiops-visualization/interfaces/chart-toggle-values';
 
 @Injectable({
 	providedIn: 'root'
@@ -54,43 +61,36 @@ export class DistributionDatasService {
 		this.initialize();
 	}
 
-	initialize(): any {
-
+	initialize() {
 		const appDatas = this.appService.getDatas().datas;
 		this.distributionDatas = new DistributionDatasVO(appDatas);
-
-		return this.distributionDatas;
 	}
 
 	getDatas(): DistributionDatasVO {
 		return this.distributionDatas;
 	}
 
-	setPreparationSource(preparationSource): any {
+	setPreparationSource(preparationSource: string) {
 		this.distributionDatas.preparationSource = preparationSource;
 	}
 
-	setTargetDistributionDisplayedValues(values) {
+	setTargetDistributionDisplayedValues(values: ChartToggleValuesI[]) {
 		this.distributionDatas.targetDistributionDisplayedValues = values;
 	}
 
-	getTargetDistributionDisplayedValues(): number {
-		return this.distributionDatas.targetDistributionDisplayedValues;
-	}
-
-	setTreeNodeTargetDistributionDisplayedValues(values) {
+	setTreeNodeTargetDistributionDisplayedValues(values: ChartToggleValuesI[]) {
 		this.distributionDatas.treeNodeTargetDistributionDisplayedValues = values;
 	}
 
-	getTreeNodeTargetDistributionDisplayedValues(): number {
+	getTreeNodeTargetDistributionDisplayedValues(): ChartToggleValuesI[] {
 		return this.distributionDatas.treeNodeTargetDistributionDisplayedValues;
 	}
 
-	setTreeHyperDisplayedValues(values) {
+	setTreeHyperDisplayedValues(values: ChartToggleValuesI[]) {
 		this.distributionDatas.treeHyperDisplayedValues = values;
 	}
 
-	getTreeHyperDisplayedValues(): number {
+	getTreeHyperDisplayedValues(): ChartToggleValuesI[] {
 		return this.distributionDatas.treeHyperDisplayedValues;
 	}
 
@@ -118,7 +118,7 @@ export class DistributionDatasService {
 	}
 
 	// tslint:disable-next-line:typedef-whitespace
-	getTargetDistributionGraphDatas(selectedVariable, type ? : string, initActiveEntries ? : boolean): any {
+	getTargetDistributionGraphDatas(selectedVariable, type ? : string, initActiveEntries ? : boolean): ChartDatasI {
 
 		if (initActiveEntries === undefined) {
 			initActiveEntries = initActiveEntries || true;
@@ -156,7 +156,7 @@ export class DistributionDatasService {
 
 	}
 
-	getTreeNodeTargetDistributionGraphDatas(selectedNode, type ? : string): any {
+	getTreeNodeTargetDistributionGraphDatas(selectedNode, type ? : string): ChartDatasI {
 
 		this.distributionDatas.initTreeNodeTargetDistributionGraphDatas();
 		this.distributionDatas.setTreeNodeTargetDistributionType(type);
@@ -275,7 +275,7 @@ export class DistributionDatasService {
 
 
 	// tslint:disable-next-line:typedef-whitespace
-	getdistributionGraphDatas(selectedVariable, type ? : string, initActiveEntries ? : boolean): any {
+	getdistributionGraphDatas(selectedVariable, type ? : string, initActiveEntries ? : boolean): ChartDatasI {
 
 		let distributionsGraphDetails = {
 			datasets: [],
@@ -324,7 +324,7 @@ export class DistributionDatasService {
 	}
 
 
-	getHistogramGraphDatas(selectedVariable) {
+	getHistogramGraphDatas(selectedVariable): HistogramValuesI[] {
 
 		const appDatas = this.appService.getDatas().datas;
 		const varDatas = appDatas.preparationReport.variablesDetailedStatistics[selectedVariable.rank] &&
@@ -457,7 +457,7 @@ export class DistributionDatasService {
 		return coverageValue;
 	}
 
-	getLeveldistributionGraphDatas(inputDatas: any, limit = 0): any {
+	getLeveldistributionGraphDatas(inputDatas: any, limit = 0): ChartDatasI {
 
 		const levelDistributionGraphDatas: ChartDatasI = new ChartDatasI();
 
