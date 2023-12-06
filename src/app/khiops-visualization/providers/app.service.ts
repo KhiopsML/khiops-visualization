@@ -11,12 +11,10 @@ import {
 	UtilsService
 } from '@khiops-library/providers/utils.service';
 import {
-	ProjectSummaryVO
-} from '../model/project-summary-vo';
-import {
 	ProjectLogVO
-} from '@khiops-visualization/model/project-log-vo';
+} from '@khiops-library/model/project-log-vo';
 import { REPORTS } from '@khiops-library/enum/reports';
+import { ProjectSummaryVO } from '@khiops-library/model/project-summary-vo';
 
 @Injectable({
 	providedIn: 'root'
@@ -241,7 +239,7 @@ export class AppService {
 		const appDatas = this.appDatas.datas;
 		if (appDatas.preparationReport) {
 			const projectSummaryDatas = new ProjectSummaryVO(appDatas);
-			return projectSummaryDatas.formatDatas();
+			return projectSummaryDatas.displayDatas;
 		} else {
 			return undefined;
 		}

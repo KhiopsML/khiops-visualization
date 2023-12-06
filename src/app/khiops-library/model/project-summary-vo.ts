@@ -1,4 +1,9 @@
-import { TYPES } from "@khiops-library/enum/types";
+import {
+	TYPES
+} from "@khiops-library/enum/types";
+import {
+	InfosDatasI
+} from "@khiops-library/interfaces/infos-datas";
 
 export class ProjectSummaryVO {
 
@@ -9,6 +14,8 @@ export class ProjectSummaryVO {
 	targetVariable: string;
 	instances: string;
 	variables: number;
+
+	displayDatas: InfosDatasI[];
 
 	constructor(appDatas) {
 
@@ -22,6 +29,7 @@ export class ProjectSummaryVO {
 		this.variables = undefined;
 		this.computeVariablesCount(appDatas);
 
+		this.formatDatas();
 	}
 
 	computeVariablesCount(appDatas) {
@@ -38,51 +46,50 @@ export class ProjectSummaryVO {
 
 	formatDatas() {
 
-		const projectSummaryDatas = [];
+		this.displayDatas = [];
 		if (this.filename) {
-			projectSummaryDatas.push({
+			this.displayDatas.push({
 				title: 'GLOBAL.PROJECT_FILE',
 				value: this.filename
 			});
 		}
 		if (this.database) {
-			projectSummaryDatas.push({
+			this.displayDatas.push({
 				title: 'GLOBAL.DATABASE',
 				value: this.database
 			});
 		}
 		if (this.shortDescription) {
-			projectSummaryDatas.push({
+			this.displayDatas.push({
 				title: 'GLOBAL.SHORT_DESCRIPTION',
 				value: this.shortDescription
 			});
 		}
 		if (this.learningTask) {
-			projectSummaryDatas.push({
+			this.displayDatas.push({
 				title: 'GLOBAL.LEARNING_TASK',
 				value: this.learningTask
 			});
 		}
 		if (this.targetVariable) {
-			projectSummaryDatas.push({
+			this.displayDatas.push({
 				title: 'GLOBAL.TARGET_VARIABLE',
 				value: this.targetVariable
 			});
 		}
 		if (this.instances) {
-			projectSummaryDatas.push({
+			this.displayDatas.push({
 				title: 'GLOBAL.INSTANCES',
 				value: this.instances
 			});
 		}
 		if (this.variables) {
-			projectSummaryDatas.push({
+			this.displayDatas.push({
 				title: 'GLOBAL.VARIABLES',
 				value: this.variables
 			});
 		}
 
-		return projectSummaryDatas;
 	}
 
 }

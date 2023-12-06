@@ -1,3 +1,7 @@
+import {
+	InfosDatasI
+} from "@khiops-library/interfaces/infos-datas";
+
 export class InformationsVO {
 
 	evaluatedVariables: number;
@@ -9,6 +13,8 @@ export class InformationsVO {
 	discretization: string;
 	valueGrouping: string;
 	evaluatedVariablePairs: any;
+
+	displayDatas: InfosDatasI[];
 
 	constructor(object) {
 
@@ -22,67 +28,68 @@ export class InformationsVO {
 		this.valueGrouping = object.valueGrouping
 		this.evaluatedVariablePairs = object.evaluatedVariablePairs
 
+		this.formatDatas();
+
 	}
 
 	formatDatas() {
 
-		const informationsDatas = [];
+		this.displayDatas = [];
 		if (this.evaluatedVariables !== undefined) {
-			informationsDatas.push({
+			this.displayDatas.push({
 				title: 'GLOBAL.EVALUATED_VARIABLES',
 				value: this.evaluatedVariables
 			});
 		}
 		if (this.evaluatedVariablePairs !== undefined) {
-			informationsDatas.push({
+			this.displayDatas.push({
 				title: 'GLOBAL.EVALUATED_VARIABLES_PAIRS',
 				value: this.evaluatedVariablePairs
 			});
 		}
 		if (this.constructedVariables !== undefined) {
-			informationsDatas.push({
+			this.displayDatas.push({
 				title: 'GLOBAL.CONSTRUCTED_VARIABLES',
 				value: this.constructedVariables
 			});
 		}
 		if (this.informativeVariables !== undefined) {
-			informationsDatas.push({
+			this.displayDatas.push({
 				title: 'GLOBAL.INFORMATIVE_VARIABLES',
 				value: this.informativeVariables
 			});
 		}
 		if (this.informativeVariablePairs !== undefined) {
-			informationsDatas.push({
+			this.displayDatas.push({
 				title: 'GLOBAL.INFORMATIVE_VARIABLES_PAIRS',
 				value: this.informativeVariablePairs
 			});
 		}
 		if (this.selectedVariables !== undefined) {
-			informationsDatas.push({
+			this.displayDatas.push({
 				title: 'GLOBAL.SELECTED_VARIABLES',
 				value: this.selectedVariables
 			});
 		}
 		if (this.selectedVariablePairs !== undefined) {
-			informationsDatas.push({
+			this.displayDatas.push({
 				title: 'GLOBAL.SELECTED_VARIABLES_PAIRS',
 				value: this.selectedVariablePairs
 			});
 		}
 		if (this.discretization !== undefined) {
-			informationsDatas.push({
+			this.displayDatas.push({
 				title: 'GLOBAL.DISCRETIZATION',
 				value: this.discretization
 			});
 		}
 		if (this.valueGrouping !== undefined) {
-			informationsDatas.push({
+			this.displayDatas.push({
 				title: 'GLOBAL.VALUE_GROUPING',
 				value: this.valueGrouping
 			});
 		}
 
-		return informationsDatas;
 	}
 
 }

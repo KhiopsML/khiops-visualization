@@ -54,6 +54,7 @@ import {
 	InformationsVO
 } from '@khiops-visualization/model/informations-vo';
 import { TYPES } from '@khiops-library/enum/types';
+import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 
 @Injectable({
 	providedIn: 'root'
@@ -94,10 +95,10 @@ export class Preparation2dDatasService {
 		return this.preparation2dDatas;
 	}
 
-	getInformationsDatas(): any {
+	getInformationsDatas(): InfosDatasI[] {
 		const appDatas = this.appService.getDatas().datas;
 		const informationsDatas = new InformationsVO(appDatas.bivariatePreparationReport.summary);
-		return informationsDatas.formatDatas();
+		return informationsDatas.displayDatas;
 	}
 
 	toggleIsAxisInverted() {

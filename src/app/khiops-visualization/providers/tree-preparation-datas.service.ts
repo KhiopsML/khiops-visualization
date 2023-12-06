@@ -50,6 +50,7 @@ import {
 import {
 	ChartDatasVO
 } from '@khiops-library/model/chart-datas-vo';
+import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 
 @Injectable({
 	providedIn: 'root'
@@ -218,16 +219,16 @@ export class TreePreparationDatasService {
 		return variable;
 	}
 
-	getSummaryDatas(): any {
+	getSummaryDatas(): InfosDatasI[] {
 		const appDatas = this.appService.getDatas().datas;
 		const summaryVO = new SummaryVO(appDatas.treePreparationReport.summary);
-		return summaryVO.formatDatas();
+		return summaryVO.displayDatas;
 	}
 
-	getInformationsDatas(): any {
+	getInformationsDatas(): InfosDatasI[] {
 		const appDatas = this.appService.getDatas().datas;
 		const informationsDatas = new InformationsVO(appDatas.treePreparationReport.summary);
-		return informationsDatas.formatDatas();
+		return informationsDatas.displayDatas;
 	}
 
 	getLeafRules(): any {

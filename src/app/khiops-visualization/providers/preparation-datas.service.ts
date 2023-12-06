@@ -39,6 +39,7 @@ import { REPORTS } from '@khiops-library/enum/reports';
 import { TASKS } from '@khiops-library/enum/tasks';
 import { TYPES } from '@khiops-library/enum/types';
 import { PreparationDatasVO } from '@khiops-visualization/model/preparation-datas-vo';
+import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 
 @Injectable({
 	providedIn: 'root'
@@ -126,17 +127,17 @@ export class PreparationDatasService {
 		return variable;
 	}
 
-	getSummaryDatas(): any {
+	getSummaryDatas(): InfosDatasI[]  {
 		const appDatas = this.appService.getDatas().datas;
 		const preparationSource = this.getAvailablePreparationReport();
 		const summaryVO = new SummaryVO(appDatas[preparationSource].summary);
-		return summaryVO.formatDatas();
+		return summaryVO.displayDatas;
 	}
 
-	getInformationsDatas(preparationSource: string): any {
+	getInformationsDatas(preparationSource: string): InfosDatasI[]  {
 		const appDatas = this.appService.getDatas().datas;
 		const informationsDatas = new InformationsVO(appDatas[preparationSource].summary);
-		return informationsDatas.formatDatas();
+		return informationsDatas.displayDatas;
 	}
 
 	getCurrentIntervalDatas(preparationSource: string, index ? ): any {

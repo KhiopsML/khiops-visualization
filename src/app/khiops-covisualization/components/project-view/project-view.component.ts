@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { AppConfig } from "src/environments/environment";
 import { AppService } from "@khiops-covisualization/providers/app.service";
 import { SelectableTabComponent } from "@khiops-library/components/selectable-tab/selectable-tab.component";
+import { InfosDatasI } from "@khiops-library/interfaces/infos-datas";
 
 @Component({
 	selector: "app-project-view",
@@ -15,7 +16,7 @@ export class ProjectViewComponent
 	@Output() projectFileChanged: EventEmitter<any> = new EventEmitter();
 
 	appDatas: any;
-	projectSummaryDatas: any[any];
+	projectSummaryDatas: InfosDatasI[];
 	onFileLoaderDataChangedCb: Function;
 	appName = 'khiops-covisualization';
 

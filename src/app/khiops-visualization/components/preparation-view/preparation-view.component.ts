@@ -53,13 +53,8 @@ import {
 import {
 	GridDatasI
 } from '@khiops-library/interfaces/grid-datas';
-import {
-	InformationsVO
-} from '@khiops-visualization/model/informations-vo';
-import {
-	SummaryVO
-} from '@khiops-visualization/model/summary-vo';
 import { PreparationVariableVO } from '@khiops-visualization/model/preparation-variable-vo';
+import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 
 @Component({
 	selector: 'app-preparation-view',
@@ -80,8 +75,8 @@ export class PreparationViewComponent extends SelectableTabComponent {
 	};
 	appDatas: any;
 	sizes: any;
-	summaryDatas: SummaryVO;
-	informationsDatas: InformationsVO;
+	summaryDatas: InfosDatasI[];
+	informationsDatas: InfosDatasI[];
 	targetVariableStatsDatas: ChartDatasVO;
 	currentIntervalDatas: GridDatasI;
 	matrixRegSelectedCell = 0;

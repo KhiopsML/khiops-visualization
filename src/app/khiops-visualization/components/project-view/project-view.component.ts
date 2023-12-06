@@ -25,8 +25,8 @@ import {
 } from "@khiops-library/providers/khiops-library.service";
 import {
 	ProjectLogVO
-} from "@khiops-visualization/model/project-log-vo";
-import { ProjectSummaryVO } from "@khiops-visualization/model/project-summary-vo";
+} from "@khiops-library/model/project-log-vo";
+import { InfosDatasI } from "@khiops-library/interfaces/infos-datas";
 
 @Component({
 	selector: "app-project-view",
@@ -39,7 +39,7 @@ implements OnInit {
 	@Output() projectFileChanged: EventEmitter < any > = new EventEmitter < any > ();
 
 	appDatas: any;
-	projectSummaryDatas: ProjectSummaryVO;
+	projectSummaryDatas: InfosDatasI[];
 	projectLogsDatas: ProjectLogVO[];
 	onFileLoaderDataChangedCb: Function;
 	appName = 'khiops-visualization';

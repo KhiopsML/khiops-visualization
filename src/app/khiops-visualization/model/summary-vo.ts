@@ -1,3 +1,7 @@
+import {
+	InfosDatasI
+} from "@khiops-library/interfaces/infos-datas";
+
 export class SummaryVO {
 
 	dictionary: string;
@@ -11,6 +15,8 @@ export class SummaryVO {
 	selectionValue: string;
 	evaluatedVariables: string;
 
+	displayDatas: InfosDatasI[];
+
 	constructor(object) {
 
 		this.dictionary = object.dictionary || '';
@@ -23,73 +29,75 @@ export class SummaryVO {
 		this.selectionVariable = object.selectionVariable || '';
 		this.selectionValue = object.selectionValue || '';
 		this.evaluatedVariables = object.evaluatedVariables || '';
+
+		this.formatDatas();
+
 	}
 
 	formatDatas() {
 
-		const summaryDatas = [];
+		this.displayDatas = [];
 		if (this.dictionary) {
-			summaryDatas.push({
+			this.displayDatas.push({
 				title: 'GLOBAL.DICTIONARY',
 				value: this.dictionary
 			});
 		}
 		if (this.database) {
-			summaryDatas.push({
+			this.displayDatas.push({
 				title: 'GLOBAL.DATABASE',
 				value: this.database
 			});
 		}
 		if (this.targetVariable) {
-			summaryDatas.push({
+			this.displayDatas.push({
 				title: 'GLOBAL.TARGET_VARIABLE',
 				value: this.targetVariable
 			});
 		}
 		if (this.instances) {
-			summaryDatas.push({
+			this.displayDatas.push({
 				title: 'GLOBAL.INSTANCES',
 				value: this.instances
 			});
 		}
 		if (this.learningTask) {
-			summaryDatas.push({
+			this.displayDatas.push({
 				title: 'GLOBAL.LEARNING_TASK',
 				value: this.learningTask
 			});
 		}
 		if (this.samplePercentage) {
-			summaryDatas.push({
+			this.displayDatas.push({
 				title: 'GLOBAL.SAMPLE_PERCENTAGE',
 				value: this.samplePercentage
 			});
 		}
 		if (this.samplingMode) {
-			summaryDatas.push({
+			this.displayDatas.push({
 				title: 'GLOBAL.SAMPLING_MODE',
 				value: this.samplingMode
 			});
 		}
 		if (this.selectionVariable) {
-			summaryDatas.push({
+			this.displayDatas.push({
 				title: 'GLOBAL.SELECTION_VARIABLE',
 				value: this.selectionVariable
 			});
 		}
 		if (this.selectionValue) {
-			summaryDatas.push({
+			this.displayDatas.push({
 				title: 'GLOBAL.SELECTION_VALUE',
 				value: this.selectionValue
 			});
 		}
 		if (this.evaluatedVariables) {
-			summaryDatas.push({
+			this.displayDatas.push({
 				title: 'GLOBAL.EVALUATED_VARIABLES',
 				value: this.evaluatedVariables
 			});
 		}
 
-		return summaryDatas;
 	}
 
 }

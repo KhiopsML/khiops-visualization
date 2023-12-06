@@ -32,6 +32,7 @@ import {
 import {
 	TrainedPredictorVO
 } from '@khiops-visualization/model/trained-predictor-vo copy';
+import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 @Injectable({
 	providedIn: 'root'
 })
@@ -132,15 +133,16 @@ export class ModelingDatasService {
 		return displayedColumns;
 	}
 
-	getSummaryDatas(): any {
+	getSummaryDatas(): InfosDatasI[] {
 		let summaryDatas;
 		const appDatas = this.appService.getDatas().datas;
 		const preparationSource = this.preparationDatasService.getAvailablePreparationReport();
 		if (appDatas[preparationSource] && appDatas[preparationSource].summary) {
-			const summaryVO = new SummaryVO(appDatas[preparationSource].summary);
-			summaryDatas = summaryVO.formatDatas();
+			summaryDatas = new SummaryVO(appDatas[preparationSource].summary);
+			return summaryDatas.displayDatas;
+		}else {
+			return undefined;
 		}
-		return summaryDatas;
 	}
 
 	getTrainedPredictorsSummaryDatas() {
