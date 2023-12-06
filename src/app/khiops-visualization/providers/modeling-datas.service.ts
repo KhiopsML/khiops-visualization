@@ -84,7 +84,7 @@ export class ModelingDatasService {
 		return this.modelingDatas.selectedVariable;
 	}
 
-	initSelectedVariable(): any {
+	initSelectedVariable() {
 		const appDatas = this.appService.getDatas().datas;
 		if (appDatas && appDatas.modelingReport && appDatas.modelingReport.trainedPredictorsDetails) {
 			const variables = appDatas.modelingReport.trainedPredictorsDetails;
@@ -143,7 +143,7 @@ export class ModelingDatasService {
 		return summaryDatas;
 	}
 
-	getTrainedPredictorsSummaryDatas(): any {
+	getTrainedPredictorsSummaryDatas() {
 		const appDatas = this.appService.getDatas().datas;
 		const trainedPredictorsSummaryDatas = [];
 
@@ -153,19 +153,18 @@ export class ModelingDatasService {
 				value: appDatas.modelingReport.trainedPredictors[i].variables + ' ' + this.translate.get('GLOBAL.VARIABLES')
 			});
 		}
-
 		return trainedPredictorsSummaryDatas;
 	}
 
 	setSelectedPredictor(predictor) {
-		this.modelingDatas.selectedPredictor = predictor;
+		this.modelingDatas.selectedPredictor = new ModelingPredictorVO(predictor);
 	}
 
-	getSelectedPredictor(): any {
+	getSelectedPredictor(): ModelingPredictorVO {
 		return this.modelingDatas.selectedPredictor;
 	}
 
-	getTrainedPredictorListDatas(): any {
+	getTrainedPredictorListDatas(): TrainedPredictorVO[] {
 		const appDatas = this.appService.getDatas().datas;
 		const selectedPredictor = this.getSelectedPredictor();
 		if (selectedPredictor &&
