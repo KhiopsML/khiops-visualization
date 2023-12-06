@@ -26,13 +26,15 @@ import {
 import {
 	SaveService
 } from './save.service';
+import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
+import { HierarchyDatasVO } from '@khiops-covisualization/model/hierarchy-datas-vo';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class TreenodesService {
 
-	dimensionsDatas: any;
+	dimensionsDatas: DimensionsDatasVO;
 	collapsedNodesToSave: {} = {};
 
 	constructor(
@@ -87,14 +89,14 @@ export class TreenodesService {
 		}
 	}
 
-	setSelectedNode(hierarchyName, nodeName, stopPropagation = false) {
+	setSelectedNode(hierarchyName, nodeName, stopPropagation = false): TreeNodeVO {
 
 		let nodeVO: TreeNodeVO;
 		if (this.dimensionsDatas.selectedDimensions) {
 			const previousSelectedNodes = Object.assign([], this.dimensionsDatas.selectedNodes);
 
 			// Find current dim position
-			const currentIndex: any = this.dimensionsDatas.selectedDimensions.findIndex(e => {
+			const currentIndex: number = this.dimensionsDatas.selectedDimensions.findIndex(e => {
 				return hierarchyName === e.name;
 			});
 
@@ -154,9 +156,9 @@ export class TreenodesService {
 
 	}
 
-	updateSelectedNodes(dimension: any, position: number) {
+	updateSelectedNodes(dimension: DimensionVO, position: number) {
 		// Find current dim position
-		const currentIndex: any = this.dimensionsDatas.selectedDimensions.findIndex(e => {
+		const currentIndex: number = this.dimensionsDatas.selectedDimensions.findIndex(e => {
 			return dimension.name === e.name;
 		});
 
@@ -203,9 +205,9 @@ export class TreenodesService {
 		return this.dimensionsDatas.nodesNames;
 	}
 
-	getNodeFromName(dimensionName, nodeName) {
-		let nodeVO: any;
-		const currentIndex: any = this.dimensionsDatas.selectedDimensions.findIndex(e => {
+	getNodeFromName(dimensionName, nodeName): TreeNodeVO {
+		let nodeVO: TreeNodeVO;
+		const currentIndex: number = this.dimensionsDatas.selectedDimensions.findIndex(e => {
 			return dimensionName === e.name;
 		});
 
@@ -227,15 +229,7 @@ export class TreenodesService {
 		this.collapsedNodesToSave = collapsedNodesToSave
 	}
 
-	getSelectedNodesSummary() {
-		this.dimensionsDatas.selectedNodesSummary = [];
-		const l = this.dimensionsDatas.selectedNodes.length;
-		for (let i = 0; i < l; i++) {
-			this.dimensionsDatas.selectedNodesSummary.push(this.dimensionsDatas.selectedNodes[i]);
-		}
-	}
-
-	updateCurrentHierarchyClustersCount(rank) {
+	updateCurrentHierarchyClustersCount(rank: number) {
 		for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
 			const nodesVO: any[] = UtilsService.fastFilter(this.dimensionsDatas.dimensionsClusters[i], e => {
 				return !e.isLeaf && e.hierarchicalRank < rank;
@@ -250,7 +244,7 @@ export class TreenodesService {
 	 * @param maxRank the current number of clusters
 	 * @param nbCells the cells count wish
 	 */
-	getHierarchyFromClustersCount(maxRank, nbCells) {
+	getHierarchyFromClustersCount(maxRank: number, nbCells: number) {
 		let currentDimClustersCount = 1;
 		do {
 			maxRank = maxRank - 1
@@ -265,41 +259,40 @@ export class TreenodesService {
 		return maxRank;
 	}
 
-	getHierarchyDatas(): any {
+	getHierarchyDatas(): HierarchyDatasVO {
 		const appDatas = this.appService.getInitialDatas().datas;
 
-		this.dimensionsDatas.hierarchyDatas.minClusters = 0;
-		this.dimensionsDatas.hierarchyDatas.totalClusters = 0;
-		this.dimensionsDatas.hierarchyDatas.totalCells = 0;
+		const hierarchyDatas = new HierarchyDatasVO();
+
 		if (appDatas.coclusteringReport && appDatas.coclusteringReport.dimensionSummaries) {
 			const l = appDatas.coclusteringReport.dimensionSummaries.length;
-			this.dimensionsDatas.hierarchyDatas.minClusters = l;
+			hierarchyDatas.minClusters = l;
 			for (let i = 0; i < l; i++) {
 				// Concat all dimensions clusters
-				this.dimensionsDatas.hierarchyDatas.totalClusters += appDatas.coclusteringReport.dimensionSummaries[i].parts;
+				hierarchyDatas.totalClusters += appDatas.coclusteringReport.dimensionSummaries[i].parts;
 			}
 			// Init with all clusters
-			if (this.dimensionsDatas.hierarchyDatas.selectedUnfoldHierarchy === 0) {
-				this.dimensionsDatas.hierarchyDatas.selectedUnfoldHierarchy = this.dimensionsDatas.hierarchyDatas.totalClusters;
+			if (hierarchyDatas.selectedUnfoldHierarchy === 0) {
+				hierarchyDatas.selectedUnfoldHierarchy = hierarchyDatas.totalClusters;
 			}
 		}
 		if (appDatas.coclusteringReport && appDatas.coclusteringReport.summary) {
 			// Get the total cell
-			this.dimensionsDatas.hierarchyDatas.totalCells += appDatas.coclusteringReport.summary.cells;
+			hierarchyDatas.totalCells += appDatas.coclusteringReport.summary.cells;
 		}
-
+		this.dimensionsDatas.hierarchyDatas = hierarchyDatas;
 		return this.dimensionsDatas.hierarchyDatas;
 	}
 
-	getUnfoldHierarchy() {
+	getUnfoldHierarchy(): number{
 		return this.dimensionsDatas.hierarchyDatas && this.dimensionsDatas.hierarchyDatas.selectedUnfoldHierarchy || 0;
 	}
 
-	setSelectedUnfoldHierarchy(selectedUnfoldHierarchy) {
+	setSelectedUnfoldHierarchy(selectedUnfoldHierarchy: number) {
 		this.dimensionsDatas.hierarchyDatas.selectedUnfoldHierarchy = selectedUnfoldHierarchy;
 	}
 
-	updateCollapsedNodesToSave(dimensionName, nodeName, way) {
+	updateCollapsedNodesToSave(dimensionName: string, nodeName: string, way) {
 		// Add or remove collapsed nodes to save them into json file
 		if (!this.collapsedNodesToSave[dimensionName]) {
 			this.collapsedNodesToSave[dimensionName] = [];
@@ -320,19 +313,19 @@ export class TreenodesService {
 		return this.collapsedNodesToSave;
 	}
 
-	collapseNode(dimensionName, nodeName) {
+	collapseNode(dimensionName: string, nodeName: string) {
 		this.updateCollapsedNodesToSave(dimensionName, nodeName, 1);
 		this.setSelectedNode(dimensionName, nodeName, false);
 		this.update(dimensionName);
 	}
 
-	expandNode(dimensionName, nodeName) {
+	expandNode(dimensionName: string, nodeName: string) {
 		this.updateCollapsedNodesToSave(dimensionName, nodeName, -1);
 		this.setSelectedNode(dimensionName, nodeName, false);
 		this.update(dimensionName);
 	}
 
-	update(dimensionName) {
+	update(dimensionName: string) {
 		let collapsedNodes = this.getSavedCollapsedNodes();
 		let datas =
 			this.saveService.constructSavedJson( // 877
@@ -345,7 +338,7 @@ export class TreenodesService {
 		this.dimensionsDatasService.saveInitialDimension();
 		this.dimensionsDatasService.constructDimensionsTrees(); //
 
-		const currentIndex: any = this.dimensionsDatas.selectedDimensions.findIndex(e => {
+		const currentIndex: number = this.dimensionsDatas.selectedDimensions.findIndex(e => {
 			return dimensionName === e.name;
 		});
 		const propagateChanges = currentIndex <= 1 ? true : false

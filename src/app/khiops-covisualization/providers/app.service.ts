@@ -16,6 +16,7 @@ import {
 } from '../model/view-layout-vo';
 import copy from 'fast-copy';
 import * as _ from 'lodash'; // Important to import lodash in karma
+import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 
 @Injectable({
 	providedIn: 'root'
@@ -36,11 +37,11 @@ export class AppService {
 		this.activeTabIndex = activeTab;
 	}
 
-	getActiveTabIndex() {
+	getActiveTabIndex(): number {
 		return this.activeTabIndex;
 	}
 
-	initialize(): any {
+	initialize() {
 		this.initGlobalConfigVariables();
 
 		this.appDatas = {
@@ -99,7 +100,7 @@ export class AppService {
 		}
 	}
 
-	setSavedDatas(datas: any): any {
+	setSavedDatas(datas: any) {
 		if (datas && datas.savedDatas) {
 			if (datas.savedDatas.splitSizes) {
 				this.setSplitSizes(datas.savedDatas.splitSizes);
@@ -127,11 +128,11 @@ export class AppService {
 		return this.appDatas && this.appDatas.datas && this.appDatas.datas.coclusteringReport && this.appDatas.datas.coclusteringReport.summary.cells > 10000;
 	}
 
-	getViewSplitSizes(view): any {
+	getViewSplitSizes(view) {
 		return this.splitSizes[view];
 	}
 
-	getSplitSizes(): any {
+	getSplitSizes() {
 		return this.splitSizes;
 	}
 
@@ -171,7 +172,7 @@ export class AppService {
 		}
 	}
 
-	getProjectSummaryDatas(): any {
+	getProjectSummaryDatas(): InfosDatasI[] {
 		const appDatas = this.appDatas.datas;
 		if (appDatas.coclusteringReport) {
 			return [{
@@ -229,7 +230,7 @@ export class AppService {
 		return this.viewsLayout;
 	}
 
-	getViewsLayout() {
+	getViewsLayout(): ViewLayoutVO {
 		return this.viewsLayout;
 	}
 

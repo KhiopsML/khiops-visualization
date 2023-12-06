@@ -14,9 +14,7 @@ export class TreeNodeVO {
 	bounds: string;
 
 	shortDescription: string;
-
 	parentCluster: string;
-
 	frequency: number;
 	interest: number;
 	hierarchicalLevel: number;
@@ -26,12 +24,12 @@ export class TreeNodeVO {
 	children: Array < TreeNodeVO > ;
 	description: string;
 
-	childrenList: any[] = [];
-	childrenLeafIndexes: any[]= [];
-	childrenLeafList: any[]= [];
+	childrenList: string[] = [];
+	childrenLeafIndexes: number[]= [];
+	childrenLeafList: string[]= [];
 
 	isCollapsed: boolean;
-	matrixIndex: any;
+	matrixIndex: number | string;
 	isParentCluster = false;
 	isUnfoldedByDefault = false;
 
@@ -112,6 +110,7 @@ export class TreeNodeVO {
 		for (let i = 0; i < children.length; i++) {
 			this.deepGetChildrenNames(children[i].children, children[i].name, children[i].matrixIndex);
 		}
+
 	}
 
 }

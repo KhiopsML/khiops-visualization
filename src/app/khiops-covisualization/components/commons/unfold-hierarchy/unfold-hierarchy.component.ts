@@ -38,6 +38,7 @@ import {
 } from '@khiops-covisualization/providers/hierarchy.service';
 import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
+import { HierarchyDatasVO } from '@khiops-covisualization/model/hierarchy-datas-vo';
 
 @Component({
 	selector: 'app-unfold-hierarchy',
@@ -48,7 +49,7 @@ export class UnfoldHierarchyComponent implements OnInit {
 
 	dimensionsDatas: any;
 	currentUnfoldHierarchy = 0;
-	hierarchyDatas: any;
+	hierarchyDatas: HierarchyDatasVO;
 	loadingHierarchy = false;
 	clustersPerDimDatas: ChartDatasVO;
 	infoPerCluster: ChartDatasVO;

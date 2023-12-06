@@ -28,6 +28,7 @@ import {
 import { Subscription } from 'rxjs';
 import _ from 'lodash';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
+import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
 
 @Component({
 	selector: 'app-composition',
@@ -37,7 +38,8 @@ import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 export class CompositionComponent implements OnInit, OnDestroy {
 
 	@Input() selectedNode: any;
-	@Input() dimensionsClusters: any;
+	@Input() dimensionsClusters: TreeNodeVO[][];
+
 	@Input() position: number;
 	@Input() selectedDimension: DimensionVO;
 
@@ -73,7 +75,7 @@ export class CompositionComponent implements OnInit, OnDestroy {
 
 	title: string;
 	selectedComposition: CompositionVO;
-	compositionValues: any[];
+	compositionValues: CompositionVO[];
 	id: any;
 	treeSelectedNodeChangedSub: Subscription;
 	importedDatasChangedSub: Subscription;

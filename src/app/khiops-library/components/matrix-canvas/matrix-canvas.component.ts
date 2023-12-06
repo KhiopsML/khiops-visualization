@@ -59,7 +59,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 	@Input() graphTarget: string;
 	@Input() selectedNodes: TreeNodeVO[]; // KC use case
 	@Input() selectedCell: CellVO; // KV use case
-	@Input() contextSelection: number[];
+	@Input() contextSelection: number[] = [];
 	@Input() isAxisInverted: boolean;
 
 	@Output() matrixAxisInverted: EventEmitter < any > = new EventEmitter();
@@ -181,7 +181,6 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
-	console.log('file: matrix-canvas.component.ts:178 ~ MatrixCanvasComponent ~ ngOnChanges ~ changes:', changes);
 
 		if (this.contrast === undefined) {
 			this.contrast = localStorage.getItem(this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST') ||

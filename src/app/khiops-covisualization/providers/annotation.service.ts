@@ -10,13 +10,14 @@ import {
 import {
 	DimensionsDatasService
 } from '@khiops-covisualization/providers/dimensions-datas.service';
+import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class AnnotationService {
 
-	dimensionsDatas: any;
+	dimensionsDatas: DimensionsDatasVO;
 	annotationsToSave: any = {};
 
 	constructor(private appService: AppService, private dimensionsDatasService: DimensionsDatasService) {
@@ -27,7 +28,7 @@ export class AnnotationService {
 		this.dimensionsDatas = this.dimensionsDatasService.getDatas();
 	}
 
-	setNodeAnnotation(node: TreeNodeVO, annotation) {
+	setNodeAnnotation(node: TreeNodeVO, annotation: string) {
 
 		const appDatas = this.appService.getDatas().datas;
 

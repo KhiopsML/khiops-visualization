@@ -1,29 +1,24 @@
 import { DimensionVO } from "@khiops-library/model/dimension-vo";
 import { TreeNodeVO } from "./tree-node-vo";
+import { HierarchyDatasVO } from "./hierarchy-datas-vo";
 
 export class DimensionsDatasVO {
 	matrixDatas: any = undefined;
 	allMatrixDatas: any = undefined;
 	allMatrixCellDatas: any = undefined;
-	cellPartIndexes: any[] = [];
+
+	cellPartIndexes: number[][] = [[]];
 	initialDimensions: DimensionVO[] = [];
 	dimensions: DimensionVO[] = [];
-	contextSelection: any[] = [];
+	contextSelection: number[][] = [[]];
 	contextDimensions: DimensionVO[] = [];
-	selectedDimensions: any = undefined;
+	selectedDimensions: DimensionVO[] = undefined;
 	contextDimensionCount: number = 0;
-	hierarchyDatas = {
-		minClusters: 0,
-		totalClusters: 0,
-		totalCells: 0,
-		selectedUnfoldHierarchy: 0,
-		unfoldHierarchyState: 0,
-	};
-	dimensionsTrees: any[] = [];
-	currentDimensionsTrees: any[] = [];
-	selectedNodesSummary: any[] = [];
-	dimensionsClusters: any[] = [];
-	currentDimensionsClusters: any[] = [];
+	hierarchyDatas: HierarchyDatasVO = undefined;
+	dimensionsTrees: TreeNodeVO[][] = [];
+	currentDimensionsTrees: TreeNodeVO[][] = [];
+	dimensionsClusters: TreeNodeVO[][] = [[]];
+	currentDimensionsClusters: TreeNodeVO[][] = [[]];
 
 	// Saved datas
 	// Those variables will be saved into json

@@ -46,7 +46,6 @@ export class SaveService {
 		const initialDatas = JSON.parse(JSON.stringify(this.appService.getInitialDatas().datas));
 
 		const selectedDimensions = this.dimensionsService.getDimensionsToSave();
-
 		const unfoldHierarchyState = this.treenodesService.getUnfoldHierarchy();
 		const splitSizes = this.appService.getSplitSizes();
 		const viewsLayout = this.appService.getViewsLayout();
@@ -124,10 +123,9 @@ export class SaveService {
 		}
 
 		// delete datasToSave.savedDatas.selectedNodes; // do not do that to keep context selection
-		console.log('file: save.service.ts:114 ~ constructSavedJson ~ newJson:', newJson);
+		// console.log('file: save.service.ts:114 ~ constructSavedJson ~ newJson:', newJson);
 		return newJson;
 	}
-
 
 	truncateJsonHierarchy(datas) {
 		if (datas.savedDatas.collapsedNodes) {

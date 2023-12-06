@@ -16,12 +16,13 @@ import {
 import {
 	DimensionVO
 } from "@khiops-library/model/dimension-vo";
+import { DimensionsDatasVO } from "@khiops-covisualization/model/dimensions-data-vo";
 
 @Injectable({
 	providedIn: "root",
 })
 export class HierarchyService {
-	dimensionsDatas: any;
+	dimensionsDatas: DimensionsDatasVO;
 	hierarchyFold: any = {};
 
 	constructor(

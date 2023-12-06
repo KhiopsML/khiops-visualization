@@ -40,12 +40,13 @@ import {
 import {
 	ChartDatasVO
 } from '@khiops-library/model/chart-datas-vo';
+import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
 @Injectable({
 	providedIn: 'root'
 })
 export class ClustersService {
 
-	dimensionsDatas: any;
+	dimensionsDatas: DimensionsDatasVO;
 
 	constructor(
 		private translate: TranslateService,
@@ -61,15 +62,7 @@ export class ClustersService {
 		this.dimensionsDatas = this.dimensionsDatasService.getDatas();
 	}
 
-	getClusterDatas(dimensionIndex, clusterName) {
-		let clusterDatas;
-		if (this.dimensionsDatas.dimensionsClusters[dimensionIndex]) {
-			clusterDatas = this.dimensionsDatas.dimensionsClusters[dimensionIndex].find(e => e.cluster === clusterName);
-		}
-		return clusterDatas;
-	}
-
-	getSelectedClustersDetails() {
+	getSelectedClustersDetails(): TreeNodeVO[][] {
 		const details = [];
 		for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
 			details.push(this.getCurrentClusterDetailsFromNode(this.dimensionsDatas.dimensionsTrees[i]));
@@ -78,7 +71,7 @@ export class ClustersService {
 		return details;
 	}
 
-	getCurrentCellsPerCluster() {
+	getCurrentCellsPerCluster(): number {
 		let currentCellsPerCluster = 1;
 		for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
 			currentCellsPerCluster = currentCellsPerCluster * this.dimensionsDatas.dimensions[i].currentHierarchyClusterCount;
@@ -86,7 +79,7 @@ export class ClustersService {
 		return currentCellsPerCluster;
 	}
 
-	getCurrentClusterDetailsFromNode(nodes, currentClusterDetailsFromNode = []): any {
+	getCurrentClusterDetailsFromNode(nodes, currentClusterDetailsFromNode = []): TreeNodeVO[] {
 		const nodesLength = nodes.length;
 		for (let i = 0; i < nodesLength; i++) {
 			const currentNode: TreeNodeVO = nodes[i];
@@ -103,7 +96,7 @@ export class ClustersService {
 		return currentClusterDetailsFromNode;
 	}
 
-	getDistributionDetailsFromNode(position) {
+	getDistributionDetailsFromNode(position): ChartDatasVO {
 		let filteredDimensionsClusters = this.getCurrentClusterDetailsFromNode(
 			this.dimensionsDatasService.dimensionsDatas.dimensionsTrees[0]
 		);
@@ -265,11 +258,8 @@ export class ClustersService {
 		return infoPerCluster;
 	}
 
-	getClustersPerDimDatas(rank): any {
-		const clustersPerDimDatas = {
-			datasets: [],
-			labels: []
-		};
+	getClustersPerDimDatas(rank): ChartDatasVO {
+		const clustersPerDimDatas = new ChartDatasVO();
 		let maxGraphValue = 0;
 
 		let currentDataSet: ChartDatasetVO;
@@ -300,7 +290,7 @@ export class ClustersService {
 		currentDataSet.barThickness = 5;
 
 		for (let j = this.dimensionsDatas.dimensions.length - 1; j < this.dimensionsDatas.hierarchyDatas.totalClusters; j++) {
-			clustersPerDimDatas.labels.push(j + 1);
+			clustersPerDimDatas.labels.push(j + 1 + '');
 			let currentValue = 0;
 			if (j + 1 === rank) {
 				currentValue = maxGraphValue;
@@ -312,7 +302,7 @@ export class ClustersService {
 		return clustersPerDimDatas;
 	}
 
-	getCompositionClusters(hierarchyName: string, node: any) {
+	getCompositionClusters(hierarchyName: string, node: any): CompositionVO[] {
 
 		const appDatas = this.appService.getDatas().datas;
 		const appinitialDatas = this.appService.getInitialDatas().datas;
@@ -321,7 +311,7 @@ export class ClustersService {
 		if (appDatas.coclusteringReport && appDatas.coclusteringReport.dimensionPartitions) {
 
 			const currentDimensionDetails: DimensionVO = this.dimensionsDatas.selectedDimensions.find(e => e.name === hierarchyName);
-			const currentIndex: any = this.dimensionsDatas.selectedDimensions.findIndex(e => {
+			const currentIndex: number = this.dimensionsDatas.selectedDimensions.findIndex(e => {
 				return hierarchyName === e.name;
 			});
 			const currentInitialDimensionDetails: DimensionVO = new DimensionVO(appinitialDatas.coclusteringReport.dimensionSummaries[currentDimensionDetails.startPosition], currentIndex);
@@ -370,7 +360,7 @@ export class ClustersService {
 		return compositionValues;
 	}
 
-	getFilteredDimensionTree(dimensionsTree, selectedDimension: DimensionVO) {
+	getFilteredDimensionTree(dimensionsTree, selectedDimension: DimensionVO): ClusterDetailsVO[] {
 		let filteredDimensionsClusters = [];
 		if (dimensionsTree) {
 			const appinitialDatas = this.appService.getInitialDatas().datas;

@@ -189,7 +189,6 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
-	console.log('file: ag-grid.component.ts:192 ~ AgGridComponent ~ ngOnChanges ~ changes:', changes);
 
 		if (changes.displayedColumns?.currentValue) {
 

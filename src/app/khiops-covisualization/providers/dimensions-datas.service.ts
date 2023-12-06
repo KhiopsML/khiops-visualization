@@ -65,15 +65,15 @@ export class DimensionsDatasService {
 		}
 	}
 
-	getDatas(): any {
+	getDatas(): DimensionsDatasVO {
 		return this.dimensionsDatas;
 	}
 
-	getDimensionCount() {
+	getDimensionCount(): number {
 		return this.dimensionsDatas.dimensions.length;
 	}
 
-	isLargeCocluster() {
+	isLargeCocluster(): boolean {
 		const currentSize = (this.dimensionsDatas.dimensions.map(e => e.parts).reduce((a, b) => a + b))
 		return this.dimensionsDatas.dimensions.length * AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.ERGONOMIC_LIMIT < currentSize;
 	}
@@ -85,7 +85,7 @@ export class DimensionsDatasService {
 
 	isContextDimension(dimensionName): boolean {
 		// Find current dim position
-		const currentIndex: any = this.dimensionsDatas.selectedDimensions.findIndex(e => {
+		const currentIndex: number = this.dimensionsDatas.selectedDimensions.findIndex(e => {
 			return dimensionName === e.name;
 		});
 		return currentIndex > 1;
@@ -95,7 +95,7 @@ export class DimensionsDatasService {
 		this.dimensionsDatas.isAxisInverted = !this.dimensionsDatas.isAxisInverted;
 	}
 
-	getDimensionPositionFromName(dimensionName): any {
+	getDimensionPositionFromName(dimensionName): number {
 		// Find current dim position
 		return this.dimensionsDatas ?.selectedDimensions ?.findIndex(e => {
 			return dimensionName === e.name;
@@ -115,16 +115,16 @@ export class DimensionsDatasService {
 		return selectedDimensions;
 	}
 
-	getSelectedDimensions(): any {
+	getSelectedDimensions(): DimensionVO[] {
 		return this.dimensionsDatas.selectedDimensions;
 	}
 
-	getDimensionIntervals(dimensionName: string) {
+	getDimensionIntervals(dimensionName: string): number {
 
 		// Get nbclusters of current dimension based on collapsed nodes
 		let count = 0;
 		// Find current dim position
-		const currentIndex: any = this.dimensionsDatas.selectedDimensions.findIndex(e => {
+		const currentIndex: number = this.dimensionsDatas.selectedDimensions.findIndex(e => {
 			return dimensionName === e.name;
 		});
 		if (this.dimensionsDatas.dimensionsTrees[currentIndex] && this.dimensionsDatas.dimensionsTrees[currentIndex][0]) {
@@ -134,7 +134,7 @@ export class DimensionsDatasService {
 		return count;
 	}
 
-	getNodeIntervalsCount(treeNode: TreeNodeVO, count = 0) {
+	getNodeIntervalsCount(treeNode: TreeNodeVO, count = 0): number {
 		if (treeNode.isLeaf) {
 			count++;
 		}
@@ -150,7 +150,7 @@ export class DimensionsDatasService {
 		return count;
 	}
 
-	getDimensions(): any {
+	getDimensions(): DimensionVO[] {
 
 		const appDatas = this.appService.getDatas().datas;
 		this.dimensionsDatas.dimensions = [];
@@ -208,7 +208,7 @@ export class DimensionsDatasService {
 
 	updateSelectedDimension(dimension, position) {
 		// Find current dim position
-		const currentIndex: any = this.dimensionsDatas.selectedDimensions.findIndex(e => {
+		const currentIndex: number = this.dimensionsDatas.selectedDimensions.findIndex(e => {
 			return dimension && dimension.name === e.name;
 		});
 

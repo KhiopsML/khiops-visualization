@@ -17,6 +17,7 @@ import {
 import {
 	DimensionVO
 } from '@khiops-library/model/dimension-vo';
+import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
 
 @Component({
 	selector: 'app-axis',
@@ -38,7 +39,7 @@ export class AxisComponent implements OnInit, OnDestroy {
 	selectedDimension: DimensionVO;
 	selectedNode: DimensionVO;
 	dimensionsTree: [];
-	dimensionsClusters: [];
+	dimensionsClusters: TreeNodeVO[][];
 
 	column0Index = 0;
 	column1Index = 1;
