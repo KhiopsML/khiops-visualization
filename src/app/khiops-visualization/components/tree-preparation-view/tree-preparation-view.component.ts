@@ -43,6 +43,11 @@ import {
 import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
+import { VariableVO } from '@khiops-visualization/model/variable-vo';
+import { Preparation2dDatasVO } from '@khiops-visualization/model/preparation2d-datas-vo';
+import { DistributionDatasVO } from '@khiops-visualization/model/distribution-datas-vo';
+import { PreparationDatasVO } from '@khiops-visualization/model/preparation-datas-vo';
+import { TreePreparationDatasVO } from '@khiops-visualization/model/tree-preparation-datas-vo';
 
 @Component({
 	selector: 'app-tree-preparation-view',
@@ -59,16 +64,25 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
 		static: false
 	}) appTreeLeafDetails: TreeLeafDetailsComponent;
 
-	treePreparationDatas: any;
-	preparationDatas: any;
 	appDatas: any;
 	sizes: any;
+	
 	summaryDatas: InfosDatasI[];
 	informationsDatas: InfosDatasI[];
 	targetVariableStatsDatas: ChartDatasVO;
 	currentIntervalDatas: GridDatasI;
 	matrixRegSelectedCell = 0;
 	selectedBarIndex = 0;
+	tabConfig = AppConfig.visualizationCommon.HOME;
+	variablesDatas: VariableVO[];
+	targetVariableStatsInformations: InfosDatasI[];
+	preparation2dDatas: Preparation2dDatasVO;
+	treePreparationDatas: TreePreparationDatasVO;
+	preparationDatas: PreparationDatasVO;
+	distributionDatas: DistributionDatasVO;
+	
+	// managed by selectable-tab component
+	tabIndex = 5;
 
 	variablesDisplayedColumns: GridColumnsI[] = [{
 		headerName: 'Rank',
@@ -93,14 +107,6 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
 		field: 'mode',
 		show: false
 	}];
-
-	// managed by selectable-tab component
-	tabIndex = 5;
-	tabConfig = AppConfig.visualizationCommon.HOME;
-	preparation2dDatas: any;
-	variablesDatas: any;
-	targetVariableStatsInformations: any;
-	distributionDatas: any;
 
 	constructor(
 		private treePreparationDatasService: TreePreparationDatasService,

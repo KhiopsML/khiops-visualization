@@ -46,6 +46,8 @@ import {
 import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
+import { Variable2dVO } from '@khiops-visualization/model/variable2d-vo';
+import { Preparation2dDatasVO } from '@khiops-visualization/model/preparation2d-datas-vo';
 
 @Component({
 	selector: 'app-preparation-2d-view',
@@ -58,17 +60,22 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
 		static: false
 	}) targetDistributionGraphCanvas: TargetDistributionGraphCanvasComponent;
 
-	preparation2dDatas: any;
 	appDatas: any;
 	sizes: any;
+
+	preparation2dDatas: Preparation2dDatasVO;
 	summaryDatas: InfosDatasI[];
 	informationsDatas: InfosDatasI[];
 	targetVariableStatsDatas: ChartDatasVO;
 	currentIntervalDatas: GridDatasI;
-	targetDistributionGraphDisplayedValues: [];
-	targetDistributionGraphType: string;
-	targetDistributionGraphTitle: string;
-
+	tabConfig = AppConfig.visualizationCommon.HOME;
+	variables2dDatas: Variable2dVO[];
+	targetDistributionGraphDatas: ChartDatasVO;
+	levelDistributionTitle: string;
+	
+	// managed by selectable-tab component
+	tabIndex = 2;
+	
 	variablesDisplayedColumns: GridColumnsI[] = [{
 		headerName: 'Rank',
 		field: 'rank',
@@ -118,14 +125,6 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
 		tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.CELLS')
 	}];
 
-	// managed by selectable-tab component
-	tabIndex = 2;
-	tabConfig = AppConfig.visualizationCommon.HOME;
-	currentCellIndex: any;
-	variables2dDatas: any;
-	targetDistributionGraphDatas: any;
-	levelDistributionTitle: string;
-
 	constructor(
 		private preparationDatasService: PreparationDatasService,
 		private khiopsLibraryService: KhiopsLibraryService,
@@ -161,7 +160,7 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
 		this.preparation2dDatasService.setSelectedVariable(item);
 		const modelingVariable = this.preparation2dDatasService.getVariableFromNames(item.name1, item.name2);
 		this.modelingDatasService.setSelectedVariable(modelingVariable);
-		this.targetDistributionGraphDatas = this.distribution2dDatasService.getTargetDistributionGraphDatas(this.targetDistributionGraphType);
+		this.targetDistributionGraphDatas = this.distribution2dDatasService.getTargetDistributionGraphDatas();
 	}
 
 	onShowLevelDistributionGraph(datas: any) {

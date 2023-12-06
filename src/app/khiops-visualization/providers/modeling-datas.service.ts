@@ -145,9 +145,9 @@ export class ModelingDatasService {
 		}
 	}
 
-	getTrainedPredictorsSummaryDatas() {
+	getTrainedPredictorsSummaryDatas(): InfosDatasI[] {
 		const appDatas = this.appService.getDatas().datas;
-		const trainedPredictorsSummaryDatas = [];
+		const trainedPredictorsSummaryDatas: InfosDatasI[]  = [];
 
 		for (let i = 0; i < appDatas.modelingReport.trainedPredictors.length; i++) {
 			trainedPredictorsSummaryDatas.push({

@@ -52,7 +52,7 @@ export class EvaluationDatasService {
 		this.evaluationDatas = new EvaluationDatasVO();
 	}
 
-	getDatas(): any {
+	getDatas(): EvaluationDatasVO {
 		return this.evaluationDatas;
 	}
 

@@ -55,6 +55,8 @@ import {
 } from '@khiops-library/interfaces/grid-datas';
 import { PreparationVariableVO } from '@khiops-visualization/model/preparation-variable-vo';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
+import { VariableVO } from '@khiops-visualization/model/variable-vo';
+import { Preparation2dDatasVO } from '@khiops-visualization/model/preparation2d-datas-vo';
 
 @Component({
 	selector: 'app-preparation-view',
@@ -69,18 +71,27 @@ export class PreparationViewComponent extends SelectableTabComponent {
 
 	@Input() preparationSource = REPORTS.PREPARATION_REPORT; // By default
 
+	appDatas: any;
+	sizes: any;
+
 	preparationDatas: {
 		selectedVariable: PreparationVariableVO,
 		currentIntervalDatas: GridDatasI,
 	};
-	appDatas: any;
-	sizes: any;
 	summaryDatas: InfosDatasI[];
 	informationsDatas: InfosDatasI[];
 	targetVariableStatsDatas: ChartDatasVO;
 	currentIntervalDatas: GridDatasI;
 	matrixRegSelectedCell = 0;
 	distributionSelectedBarIndex = 0;
+	tabConfig = AppConfig.visualizationCommon.HOME;
+	preparation2dDatas: Preparation2dDatasVO;
+	variablesDatas: VariableVO[];
+	isRegressionOrExplanatoryAnalysis: boolean;
+	targetVariableStatsInformations: InfosDatasI[];
+
+	// managed by selectable-tab component
+	tabIndex = 1;
 
 	variablesDisplayedColumns: GridColumnsI[] = [{
 		headerName: 'Rank',
@@ -147,14 +158,6 @@ export class PreparationViewComponent extends SelectableTabComponent {
 		show: false,
 		tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.DERIVATION_RULE')
 	}];
-
-	// managed by selectable-tab component
-	tabIndex = 1;
-	tabConfig = AppConfig.visualizationCommon.HOME;
-	preparation2dDatas: any;
-	variablesDatas: any;
-	isRegressionOrExplanatoryAnalysis: boolean;
-	targetVariableStatsInformations: any;
 
 	constructor(
 		private preparationDatasService: PreparationDatasService,

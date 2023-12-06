@@ -407,9 +407,9 @@ export class TreePreparationDatasService {
 		return variableStatsDatas;
 	}
 
-	getTargetVariableStatsInformations(): any {
+	getTargetVariableStatsInformations(): InfosDatasI[] {
 		const appDatas = this.appService.getDatas().datas;
-		let informationsDatas;
+		let informationsDatas: InfosDatasI[];
 		if (appDatas.treePreparationReport.summary.targetDescriptiveStats) {
 			informationsDatas = [];
 			for (const item in appDatas.treePreparationReport.summary.targetDescriptiveStats) {

@@ -17,6 +17,8 @@ import {
 import {
 	KhiopsLibraryService
 } from '@khiops-library/providers/khiops-library.service';
+import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
+import { EvaluationDatasVO } from '@khiops-visualization/model/evaluation-datas-vo';
 
 @Component({
 	selector: 'app-evaluation-view',
@@ -26,12 +28,12 @@ import {
 export class EvaluationViewComponent extends SelectableTabComponent implements OnInit {
 
 	sizes: any;
-	summaryDatas: any;
-
+	
 	// managed by selectable-tab component
 	tabIndex = 4;
+	summaryDatas: InfosDatasI[];
 	tabConfig = AppConfig.visualizationCommon.HOME;
-	evaluationDatas: any;
+	evaluationDatas: EvaluationDatasVO;
 
 	constructor(private khiopsLibraryService: KhiopsLibraryService,
 		private appService: AppService,

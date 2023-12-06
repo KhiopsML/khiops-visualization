@@ -264,11 +264,11 @@ export class PreparationDatasService {
 		return this.preparationDatas[preparationSource].currentIntervalDatas;
 	}
 
-	getVariablesDatas(preparationSource: string): any {
+	getVariablesDatas(preparationSource: string): VariableVO[] {
 		const appDatas = this.appService.getDatas().datas;
 		const currentDatas = appDatas[preparationSource].variablesStatistics;
 		const currentDetailedDatas = appDatas[preparationSource].variablesDetailedStatistics;
-		const variableDatas = [];
+		const variableDatas: VariableVO[] = [];
 
 		if (currentDatas) {
 
@@ -317,11 +317,11 @@ export class PreparationDatasService {
 		return variableStatsDatas;
 	}
 
-	getTargetVariableStatsInformations(): any {
+	getTargetVariableStatsInformations(): InfosDatasI[] {
 		const appDatas = this.appService.getDatas().datas;
 		const preparationSource = this.getAvailablePreparationReport();
 
-		let informationsDatas;
+		let informationsDatas: InfosDatasI[];
 		if (appDatas[preparationSource].summary.targetDescriptiveStats) {
 			informationsDatas = [];
 			for (const item in appDatas[preparationSource].summary.targetDescriptiveStats) {

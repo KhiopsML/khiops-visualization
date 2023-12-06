@@ -55,6 +55,10 @@ import {
 } from '@khiops-library/interfaces/grid-columns';
 import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
+import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
+import { ModelingDatasVO } from '@khiops-visualization/model/modeling-datas-vo';
+import { Preparation2dDatasVO } from '@khiops-visualization/model/preparation2d-datas-vo';
+import { TreePreparationDatasVO } from '@khiops-visualization/model/tree-preparation-datas-vo';
 
 @Component({
 	selector: 'app-modeling-view',
@@ -75,33 +79,27 @@ export class ModelingViewComponent extends SelectableTabComponent {
 
 	appDatas: any;
 	sizes: any;
-	summaryDatas: any;
+
+	preparationVariable: any; // Complexe, can be multiple types according to the preparationSource
+
+	summaryDatas: InfosDatasI[];
 	targetVariableStatsDatas: ChartDatasVO;
-	trainedPredictorsSummaryDatas: any;
-	trainedPredictorsListDatas: any;
-	modelingDatas: any;
+	trainedPredictorsSummaryDatas: InfosDatasI[];
+	modelingDatas: ModelingDatasVO;
+	preparation2dDatas: Preparation2dDatasVO;
+	treePreparationDatas: TreePreparationDatasVO;
 	matrixRegSelectedCell = 0;
 	distributionSelectedBarIndex = 0;
 	trainedPredictorsDisplayedColumns: GridColumnsI[];
+	tabConfig = AppConfig.visualizationCommon.HOME;
+	isRegressionOrExplanatoryAnalysis: boolean;
+	scaleValue = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SCALE_VALUE') || AppConfig.visualizationCommon.GLOBAL.DEFAULT_GRAPH_SCALE;
+	targetDistributionGraphDatas: ChartDatasVO;
+	currentIntervalDatas: GridDatasI;
+	targetVariableStatsInformations: InfosDatasI[];
 
 	// managed by selectable-tab component
 	tabIndex = 3;
-	tabConfig = AppConfig.visualizationCommon.HOME;
-	isRegressionOrExplanatoryAnalysis: boolean;
-	preparation2dDatas: any;
-
-	currentCellIndex: any;
-	targetDistributionGraphDisplayedValues: [];
-	targetDistributionGraphType: string;
-	targetDistributionGraphTitle: string;
-
-	scaleValue = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SCALE_VALUE') || AppConfig.visualizationCommon.GLOBAL.DEFAULT_GRAPH_SCALE;
-	targetDistributionGraphDatas: any;
-	targetDistribution2dGraphDatas: any;
-	treePreparationDatas: any;
-	preparationVariable: any;
-	currentIntervalDatas: GridDatasI;
-	targetVariableStatsInformations: any;
 
 	constructor(private modelingDatasService: ModelingDatasService,
 		private evaluationDatasService: EvaluationDatasService,
@@ -190,7 +188,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
 			this.evaluationDatasService.isRegressionAnalysis();
 
 		// do it async if previous var was not 2d and chart was not initialized
-		this.targetDistributionGraphDatas = this.distribution2dDatasService.getTargetDistributionGraphDatas(this.targetDistributionGraphType);
+		this.targetDistributionGraphDatas = this.distribution2dDatasService.getTargetDistributionGraphDatas();
 
 	}
 

@@ -172,7 +172,7 @@ export class Preparation2dDatasService {
 		return this.preparation2dDatas.isSupervisedVariable();
 	}
 
-	getVariablesd2Datas(): any {
+	getVariablesd2Datas(): Variable2dVO[] {
 
 		const appDatas = this.appService.getDatas().datas;
 		const variableDatas = [];
