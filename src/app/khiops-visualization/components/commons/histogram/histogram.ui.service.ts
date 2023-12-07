@@ -1,8 +1,7 @@
 import { Injectable } from "@angular/core";
 import { TranslateService } from "@ngstack/translate";
 import * as d3 from "d3";
-import { HistogramType } from "./histogram.types";
-import { UtilsService } from "@khiops-library/providers/utils.service";
+import { HistogramValuesI } from "./histogram.interfaces";
 
 @Injectable({
 	providedIn: "root",
@@ -25,7 +24,7 @@ export class HistogramUIService {
 		return this.chartColors;
 	}
 
-	static generateTooltip(d: any, xType: string) {
+	static generateTooltip(d: HistogramValuesI): string {
 		let bounds = "";
 		bounds = JSON.stringify(d.partition);
 		return (

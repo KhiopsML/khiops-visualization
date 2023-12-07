@@ -129,22 +129,19 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 	onResized(event: ResizedEvent) {
 		this.h = this.chart.nativeElement.offsetHeight + 10 - 60; // graph header = 60, +10 to take more height
 		this.w = this.chart.nativeElement.offsetWidth;
-		if (!event.isFirst) {
-			this.datas && this.init();
-		}
+		// if (!event.isFirst) {
+		// Do it every timesto be sure that chart height has been computed
+		this.datas && this.init();
+		// }
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes?.["datas"]) {
-			this.datas && this.init();
-		}
+		this.datas && this.init();
 	}
 
 	ngAfterViewInit(): void {
-		setTimeout(() => {
-			// Need to delay init to be sure that chart height has been computed
-			this.datas && this.init();
-		});
+		// Need to delay init to be sure that chart height has been computed
+		this.datas && this.init();
 	}
 
 	init() {
@@ -201,7 +198,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 					tickValues.push(
 						this.datas[this.datas.length - 1].partition[1]
 					);
-					this.drawXAxis(domain, shift, width, tickValues);
+					this.drawXAxis(domain, shift, width);
 				} else {
 					// Draw positive axis
 					let shift = 0;
@@ -239,7 +236,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 								Math.log10(Math.abs(this.rangeXLog.negStart));
 						}
 						width = this.w - 2 * this.xPadding - shift;
-						this.drawXAxis(domain, shift, width, domain);
+						this.drawXAxis(domain, shift, width);
 					}
 
 					// Draw -Inf axis
@@ -250,11 +247,11 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 								((this.w - 2 * this.xPadding) / this.ratio) *
 									Math.log10(this.rangeXLog.middlewidth);
 							domain = [1];
-							this.drawXAxis(domain, middleShift - 1, 1, domain);
+							this.drawXAxis(domain, middleShift - 1, 1);
 						} else {
 							let middleShift = this.w - 2 * this.xPadding;
 							domain = [1];
-							this.drawXAxis(domain, middleShift - 1, 1, domain); // 1 to make bigger line
+							this.drawXAxis(domain, middleShift - 1, 1); // 1 to make bigger line
 						}
 					}
 
@@ -283,7 +280,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 										Math.log10(this.rangeXLog.middlewidth);
 							}
 						}
-						this.drawXAxis(domain, 0, width, domain);
+						this.drawXAxis(domain, 0, width);
 					}
 				}
 			}
@@ -365,10 +362,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			d3.select(this).style("fill-opacity", "0.9");
 		};
 		const mousemove = (e: any) => {
-			const tooltipText = HistogramUIService.generateTooltip(
-				d,
-				this.distributionDatas.distributionGraphOptionsX.selected
-			);
+			const tooltipText = HistogramUIService.generateTooltip(d);
 			//@ts-ignore
 			self.tooltip.html(tooltipText);
 
@@ -478,7 +472,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 		});
 	}
 
-	drawXAxis(domain: any, shift: number, width: number, tickValues: any) {
+	drawXAxis(domain: any, shift: number, width: number) {
 		if (width !== 0) {
 			let xAxis;
 
