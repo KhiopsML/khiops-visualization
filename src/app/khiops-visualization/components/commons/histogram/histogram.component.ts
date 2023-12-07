@@ -141,7 +141,10 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 	}
 
 	ngAfterViewInit(): void {
-		this.datas && this.init();
+		setTimeout(() => {
+			// Need to delay init to be sure that chart height has been computed
+			this.datas && this.init();
+		});
 	}
 
 	init() {
