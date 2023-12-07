@@ -1,23 +1,28 @@
 import { Injectable } from "@angular/core";
 import { HistogramBarVO } from "./histogram.bar-vo";
 import { HistogramType } from "./histogram.types";
+import {
+	HistogramValuesI,
+	RangeXLinI,
+	RangeXLogI,
+	RangeYLogI,
+} from "./histogram.interfaces";
 
 @Injectable({
 	providedIn: "root",
 })
 export class HistogramService {
-	rangeXLin: any = {};
+	rangeXLin: RangeXLinI = {};
 	rangeYLin: number = 0;
-	rangeYLog = {
+	rangeYLog: RangeYLogI = {
 		min: 0,
 		max: 0,
 	};
-	rangeXLog: any = {};
-	barWlogs: any[] = [];
+	rangeXLog: RangeXLogI = {};
 
 	constructor() {}
 
-	getRangeX(datas: any) {
+	getRangeX(datas: HistogramValuesI[]): [RangeXLinI, RangeXLogI] {
 		this.rangeXLog.inf = datas.find(function (d: any) {
 			return d.partition[0] === 0 || d.partition[1] === 0;
 		});
@@ -32,6 +37,7 @@ export class HistogramService {
 		if (this.rangeXLog.inf) {
 			// 0 exist
 			this.rangeXLog.negStart =
+				// @ts-ignore update it with es2023
 				datas.findLast(function (d: any) {
 					return d.partition[0] < 0 && d.partition[1] <= 0;
 				})?.partition[0] || undefined;
@@ -41,6 +47,7 @@ export class HistogramService {
 				})?.partition[0] || undefined;
 		} else {
 			this.rangeXLog.negStart =
+				// @ts-ignore update it with es2023
 				datas.findLast(function (d: any) {
 					return d.partition[0] < 0 && d.partition[1] <= 0;
 				})?.partition[1] || undefined;
@@ -60,13 +67,13 @@ export class HistogramService {
 		return [this.rangeXLin, this.rangeXLog];
 	}
 
-	getLinRangeY(datas: any) {
+	getLinRangeY(datas: HistogramValuesI[]): number {
 		const dataValues = datas.map((e: any) => e.value);
 		this.rangeYLin = Math.max(...dataValues);
 		return this.rangeYLin;
 	}
 
-	getLogRangeY(datas: any) {
+	getLogRangeY(datas: HistogramValuesI[]): RangeXLinI {
 		const dataValues = datas.map((e) => e.logValue).filter((e) => e !== 0);
 		this.rangeYLog.max = Math.max(...dataValues);
 		this.rangeYLog.min = Math.min(...dataValues);
@@ -74,19 +81,22 @@ export class HistogramService {
 		return this.rangeYLog;
 	}
 
-	getLinRatioY(h: number, padding: number) {
+	getLinRatioY(h: number, padding: number): number {
 		let ratioY = (h - padding / 2) / this.rangeYLin;
 		return ratioY;
 	}
 
-	getLogRatioY(h: number, padding: number) {
+	getLogRatioY(h: number, padding: number): number {
 		let ratioY;
 		let shift = Math.abs(this.rangeYLog.min) - Math.abs(this.rangeYLog.max);
 		ratioY = (h - padding / 2) / shift;
 		return ratioY;
 	}
 
-	computeXbarDimensions(datas: any, xType: string) {
+	computeXbarDimensions(
+		datas: HistogramValuesI[],
+		xType: string
+	): HistogramBarVO[] {
 		let bars: HistogramBarVO[] = [];
 
 		datas.forEach((d: any, i: number) => {

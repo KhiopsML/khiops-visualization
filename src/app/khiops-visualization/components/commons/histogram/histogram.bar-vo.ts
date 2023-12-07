@@ -1,5 +1,5 @@
-import { HistogramValuesI } from "@khiops-visualization/interfaces/histogram-values";
 import { HistogramUIService } from "../histogram/histogram.ui.service";
+import { HistogramValuesI } from "./histogram.interfaces";
 import { HistogramType } from "./histogram.types";
 
 export class HistogramBarVO {
@@ -11,7 +11,6 @@ export class HistogramBarVO {
 	partition = [];
 
 	constructor(d: HistogramValuesI, middlewidth: number, xType: string) {
-
 		this.partition = d.partition;
 		if (xType === HistogramType.XLIN) {
 			let barWlin = 0;

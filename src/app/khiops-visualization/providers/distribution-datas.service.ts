@@ -36,9 +36,6 @@ import {
 	TreePreparationDatasService
 } from './tree-preparation-datas.service';
 import {
-	HistogramValuesI
-} from '@khiops-visualization/interfaces/histogram-values';
-import {
 	TYPES
 } from '@khiops-library/enum/types';
 import {
@@ -47,6 +44,7 @@ import {
 import {
 	ModalityCountsVO
 } from '@khiops-visualization/model/modality-counts-vo';
+import { HistogramValuesI } from '@khiops-visualization/components/commons/histogram/histogram.interfaces';
 
 @Injectable({
 	providedIn: 'root'

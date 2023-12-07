@@ -25,6 +25,7 @@ import { SelectableService } from "@khiops-library/components/selectable/selecta
 import { HistogramType } from "./histogram.types";
 import { AppConfig } from "src/environments/environment";
 import { TranslateService } from "@ngstack/translate";
+import { HistogramValuesI } from "./histogram.interfaces";
 
 @Component({
 	selector: "app-histogram",
@@ -50,8 +51,8 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 
 	h: number = 220;
 	w: number = 1000;
-	xPadding: number  = 40;
-	yPadding: number  = 50;
+	xPadding: number = 40;
+	yPadding: number = 50;
 
 	// Static config values
 	xTickCount: number;
@@ -103,7 +104,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 		this.distributionDatas = this.distributionDatasService.getDatas();
 	}
 
-	changeGraphTypeX(type) {
+	changeGraphTypeX(type: string) {
 		// this.khiopsLibraryService.trackEvent('click', 'distribution_graph_type_x', this.graphOptions.selected);
 		localStorage.setItem(
 			this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
@@ -114,7 +115,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 		this.datas && this.init();
 	}
 
-	changeGraphTypeY(type) {
+	changeGraphTypeY(type: string) {
 		// this.khiopsLibraryService.trackEvent('click', 'distribution_graph_type_x', this.graphOptions.selected);
 		localStorage.setItem(
 			this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
@@ -327,7 +328,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			if (i === 0) {
 				d3.select(this).style("stroke", self.barColor);
 			}
-			return self.barColor
+			return self.barColor;
 		};
 
 		const onclickRect = function () {
@@ -447,7 +448,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			.attr("stroke-width", "2px");
 	}
 
-	drawHistogram(datasSet: any) {
+	drawHistogram(datasSet: HistogramValuesI[]) {
 		// TODO compare performance here
 		const t0 = performance.now();
 		let bars: HistogramBarVO[] =

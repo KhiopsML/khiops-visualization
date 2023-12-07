@@ -14,11 +14,9 @@ import {
 	ChartToggleValuesI
 } from "@khiops-visualization/interfaces/chart-toggle-values";
 import {
-	HistogramValuesI
-} from "@khiops-visualization/interfaces/histogram-values";
-import {
 	AppConfig
 } from "src/environments/environment";
+import { HistogramValuesI } from "@khiops-visualization/components/commons/histogram/histogram.interfaces";
 
 export class DistributionDatasVO {
 
