@@ -61,7 +61,7 @@ export class UtilsService {
 		return changes(object, base);
 	}
 
-	static computeHellinger(cellFreq, totalFreqs, freqColVal, freqLineVals) {
+	static computeHellinger(cellFreq, totalFreqs, freqColVal, freqLineVals): [number, number]  {
 		const HIij = Math.sqrt(cellFreq / totalFreqs) -
 			Math.sqrt(freqColVal / totalFreqs * freqLineVals / totalFreqs);
 		const hellingerValue = HIij || 0;
@@ -69,7 +69,7 @@ export class UtilsService {
 		return [hellingerValue, hellingerAbsoluteValue];
 	}
 
-	static computeMutualInfo(cellFreq, totalFreqs, freqColVal, freqLineVals) {
+	static computeMutualInfo(cellFreq, totalFreqs, freqColVal, freqLineVals): [number, boolean] {
 		let MIij = (cellFreq / totalFreqs) * Math.log((totalFreqs * cellFreq) / (freqColVal * freqLineVals));
 		const MIijExtra = isNaN(MIij) || cellFreq === 0;
 		if (!isFinite(MIij)) {
@@ -78,7 +78,7 @@ export class UtilsService {
 		return [MIij, MIijExtra];
 	}
 
-	static computeExpectedFrequency(totalFreqs, freqColVal, freqLineVals) {
+	static computeExpectedFrequency(totalFreqs, freqColVal, freqLineVals): number {
 		return freqLineVals * freqColVal / totalFreqs;
 	}
 

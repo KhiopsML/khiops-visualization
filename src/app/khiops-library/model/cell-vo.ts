@@ -8,7 +8,7 @@ export class CellVO {
 		and optimize performances
 	*/
 
-	_id: any;
+	_id: string | number;
 	cellFreq: number;
 	cellFreqHash: {};
 	displayedFreqValue: number;
@@ -55,15 +55,15 @@ export class CellVO {
 	coverage;
 
 	// Important to init those variables needed at construction
-	cellProbs: any[] = [];
-	cellProbsRev: any[] = [];
-	freqColVals: any[] = [];
-	freqLineVals: any[] = [];
-	cellFreqs: any[] = [];
-	infosMutValue: any[] = [];
+	cellProbs: number[] = [];
+	cellProbsRev: number[] = [];
+	freqColVals: number[] = [];
+	freqLineVals: number[] = [];
+	cellFreqs: number[] = [];
+	infosMutValue: number[] = [];
 	infosMutExtra: any[] = [];
-	cellHellingerValue: any[] = [];
-	cellHellingerAbsoluteValue: any[] = [];
+	cellHellingerValue: number[] = [];
+	cellHellingerAbsoluteValue: number[] = [];
 	matrixTotal: number[] = [];
 
 	constructor() {}
@@ -80,13 +80,18 @@ export class CellVO {
 		this.targetCellFreq = UtilsService.initNumberIfNan(this.targetCellFreq);
 	}
 
-	addConcatName(name: string) {
-		if (!this.concatName.includes(name)) {
-			this.concatName.push(name);
+	setCoordValues(
+		i,
+		j,
+		xValues: {
+			standard: number;
+			frequency: number;
+		},
+		yValues: {
+			standard: number;
+			frequency: number;
 		}
-	}
-
-	setCoordValues(i, j, xValues: any, yValues: any) {
+	) {
 		this.x = {
 			standard: xValues.standard[i],
 			frequency: xValues.frequency[i],
@@ -105,57 +110,4 @@ export class CellVO {
 		};
 	}
 
-	merge(obj, way, nodeVO) {
-		if (obj.x.standard < this.x.standard) {
-			this.x.standard = obj.x.standard;
-		}
-		if (obj.x.frequency < this.x.frequency) {
-			this.x.frequency = obj.x.frequency;
-		}
-		if (obj.y.standard < this.y.standard) {
-			this.y.standard = obj.y.standard;
-		}
-		if (obj.y.frequency < this.y.frequency) {
-			this.y.frequency = obj.y.frequency;
-		}
-
-		if (way === 0) {
-			// x node
-			this.w.standard = this.w.standard + obj.w.standard;
-			this.w.frequency = this.w.frequency + obj.w.frequency;
-			this.xaxisPart = nodeVO.name;
-			this.xDisplayaxisPart = nodeVO.shortDescription;
-		}
-		if (way === 1) {
-			// y node
-			this.h.standard = this.h.standard + obj.h.standard;
-			this.h.frequency = this.h.frequency + obj.h.frequency;
-			this.yaxisPart = nodeVO.name;
-			this.yDisplayaxisPart = nodeVO.shortDescription;
-		}
-
-		this.cellFreq = this.cellFreq + obj.cellFreq;
-		this.cellFreqs = UtilsService.sumArrayItems([
-			this.cellFreqs,
-			obj.cellFreqs,
-		]);
-
-		if (way === 0) {
-			// x node
-			this.freqColVals = UtilsService.sumArrayItems([
-				this.freqColVals,
-				obj.freqColVals,
-			]);
-		}
-		if (way === 1) {
-			// y node
-			this.freqLineVals = UtilsService.sumArrayItems([
-				this.freqLineVals,
-				obj.freqLineVals,
-			]);
-		}
-
-		// Reinit zero exceptions informations on merge
-		this.infosMutExtra = [];
-	}
 }
