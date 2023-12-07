@@ -23,7 +23,7 @@ import {
 export class SelectTrainedPredictorComponent implements OnInit {
 
 	@Input() inputDatas: any;
-	selectedPredictor: any;
+	selectedPredictor: string;
 
 	@Output() selectedPredictorChanged: EventEmitter < any > = new EventEmitter();
 

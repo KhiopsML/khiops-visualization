@@ -143,7 +143,7 @@ export class TargetDistributionGraphCanvasComponent extends ScrollableGraphCanva
 		});
 	}
 
-	onSelectBarChanged(e) {
+	onSelectBarChanged(e: number) {
 		// Debounce each events
 		// Each bar of grouped chart launch same event
 		if (this.selectedBarIndex !== e) {
@@ -153,7 +153,7 @@ export class TargetDistributionGraphCanvasComponent extends ScrollableGraphCanva
 		this.selectedBarIndex = e;
 	}
 
-	changeGraphType(type: any) {
+	changeGraphType(type: string) {
 		// this.khiopsLibraryService.trackEvent('click', 'target_distribution_graph_type', type);
 		localStorage.setItem(this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID + 'TARGET_DISTRIBUTION_GRAPH_OPTION', type);
 
@@ -161,7 +161,7 @@ export class TargetDistributionGraphCanvasComponent extends ScrollableGraphCanva
 		this.graphTypeChanged.emit(type);
 	}
 
-	onSelectToggleButtonChanged(displayedValues: any) {
+	onSelectToggleButtonChanged(displayedValues: ChartToggleValuesI) {
 		this.targetDistributionGraphDisplayedValuesChanged.emit(displayedValues);
 	}
 

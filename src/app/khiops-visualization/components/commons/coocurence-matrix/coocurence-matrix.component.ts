@@ -55,6 +55,7 @@ import {
 	KhiopsLibraryService
 } from '@khiops-library/providers/khiops-library.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
+import { MatrixRangeValuesI } from '@khiops-visualization/interfaces/matrix-range-values';
 
 /**
  * Test it with iris2d file
@@ -78,7 +79,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
 	matrixModes: MatrixModesI = new MatrixModesI();
 	matrixTargets: MatrixTargetsI = new MatrixTargetsI();
 	matrixCells: CoocurenceCellsVO;
-	minMaxValues: any; // dynamic and complex value object
+	minMaxValues: MatrixRangeValuesI;
 	isFullscreen = false;
 
 	constructor(public selectableService: SelectableService,

@@ -142,14 +142,14 @@ export class TargetLiftGraphComponent extends SelectableComponent implements OnC
 			this.title = this.translate.get('GLOBAL.CUMULATIVE_GAIN_CHART_OF') + ' ' + this.targetLift.selected; // for copy graph datas
 			this.targetLiftGraph = this.evaluationDatasService.getLiftGraphDatas(this.targetLift.selected);
 			// get all datas to copy
-			this.targetLiftAllGraph = this.evaluationDatasService.getLiftGraphDatas(this.targetLift.selected, true);
+			this.targetLiftAllGraph = this.evaluationDatasService.getLiftGraphDatas(this.targetLift.selected);
 		} else {
 			// it is a regression
 			this.titleWithoutDetails = this.translate.get('GLOBAL.REC_CURVES');
 			this.title = this.translate.get('GLOBAL.REC_CURVES'); // for copy graph datas
 			this.targetLiftGraph = this.evaluationDatasService.getLiftGraphDatas();
 			// get all datas to copy
-			this.targetLiftAllGraph = this.evaluationDatasService.getLiftGraphDatas(null, true);
+			this.targetLiftAllGraph = this.evaluationDatasService.getLiftGraphDatas(null);
 		}
 	}
 

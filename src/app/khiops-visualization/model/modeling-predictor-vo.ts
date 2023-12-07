@@ -6,10 +6,10 @@ export class ModelingPredictorVO {
 	variables: number;
 
 	constructor(object) {
-		this.rank = object.rank || "";
-		this.type = object.type || "";
-		this.family = object.family || "";
-		this.name = object.name || "";
-		this.variables = object.variables || undefined;
+		this.rank = object?.rank || "";
+		this.type = object?.type || "";
+		this.family = object?.family || "";
+		this.name = object?.name || "";
+		this.variables = object?.variables || undefined;
 	}
 }

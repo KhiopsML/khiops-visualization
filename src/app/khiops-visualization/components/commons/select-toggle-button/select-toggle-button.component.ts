@@ -23,6 +23,9 @@ import {
 import {
 	AppConfig
 } from 'src/environments/environment';
+import {
+	MatCheckboxChange
+} from '@angular/material/checkbox';
 
 @Component({
 	selector: 'app-select-toggle-button',
@@ -67,7 +70,7 @@ export class SelectToggleButtonComponent implements OnInit, OnChanges {
 			$event.pageIndex * $event.pageSize + $event.pageSize);
 	}
 
-	toggleGraphOptionValue($event: any, opt: ChartToggleValuesI) {
+	toggleGraphOptionValue($event: MatCheckboxChange, opt: ChartToggleValuesI) {
 		// this.khiopsLibraryService.trackEvent('click', 'target_distribution_graph_value');
 
 		// clone obj to make change and emit changes

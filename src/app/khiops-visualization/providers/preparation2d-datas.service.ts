@@ -55,6 +55,7 @@ import {
 } from '@khiops-visualization/model/informations-vo';
 import { TYPES } from '@khiops-library/enum/types';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
+import { MatrixRangeValuesI } from '@khiops-visualization/interfaces/matrix-range-values';
 
 @Injectable({
 	providedIn: 'root'
@@ -529,9 +530,14 @@ export class Preparation2dDatasService {
 		}
 	}
 
-	getGlobalMinAndMax2dValues(variablesDatas): any {
+	/**
+	 * Compute min and max values for each available mode
+	 * @param variablesDatas
+	 * @returns
+	 */
+	getGlobalMinAndMax2dValues(variablesDatas): MatrixRangeValuesI {
 
-		const currentRes: any = {
+		const currentRes: MatrixRangeValuesI = {
 			'CELL_INTEREST': [],
 			'FREQUENCY': [],
 			'FREQUENCY_CELL': [],

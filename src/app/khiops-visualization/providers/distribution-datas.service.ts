@@ -197,7 +197,7 @@ export class DistributionDatasService {
 
 	}
 
-	computeTargetDistributionGraph(partition, currentDatas, allDatas, currentXAxis, displayedValues, type): any {
+	computeTargetDistributionGraph(partition, currentDatas, allDatas, currentXAxis, displayedValues: ChartToggleValuesI[], type): any {
 		const targetDistributionGraphDatas = {
 			datasets: [],
 			labels: []

@@ -42,6 +42,12 @@ import {
 import {
 	MatrixModeI
 } from '@khiops-library/interfaces/matrix-mode';
+import {
+	MatrixRangeValuesI
+} from '@khiops-visualization/interfaces/matrix-range-values';
+import {
+	CellVO
+} from '@khiops-library/model/cell-vo';
 
 /**
  * Test it with irisR file
@@ -67,7 +73,7 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
 	matrixOptions: MatrixOptionsI = new MatrixOptionsI();
 	matrixModes: MatrixModesI = new MatrixModesI();
 
-	minMaxValues: any; // dynamic and complex value object
+	minMaxValues: MatrixRangeValuesI;
 
 	constructor(
 		private preparationDatasService: PreparationDatasService,
@@ -180,7 +186,9 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
 		this.constructModeSelectBox();
 	}
 
-	onCellSelected(event: any) {
+	onCellSelected(event: {
+		datas: CellVO
+	}) {
 		if (event.datas) {
 			const currentIndex = event.datas.index;
 			this.preparation2dDatasService.setSelectedCell(event.datas);

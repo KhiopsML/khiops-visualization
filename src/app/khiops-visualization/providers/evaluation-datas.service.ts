@@ -35,7 +35,18 @@ import {
 import {
 	ChartDatasetVO
 } from '@khiops-library/model/chartDataset-vo';
-import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
+import {
+	ChartDatasVO
+} from '@khiops-library/model/chart-datas-vo';
+import {
+	TargetLiftValuesI
+} from '@khiops-visualization/interfaces/target-lift-values';
+import {
+	LiftCurveValuesI
+} from '@khiops-visualization/interfaces/lift-curve-values';
+import {
+	GridDatasI
+} from '@khiops-library/interfaces/grid-datas';
 
 @Injectable({
 	providedIn: 'root'
@@ -217,7 +228,7 @@ export class EvaluationDatasService {
 		return this.evaluationDatas.confusionMatrix;
 	}
 
-	getEvaluationTypesSummary(): any {
+	getEvaluationTypesSummary(): GridDatasI {
 
 		// init the object
 		this.evaluationDatas.evaluationTypesSummary = {
@@ -260,7 +271,7 @@ export class EvaluationDatasService {
 		return this.evaluationDatas.evaluationTypesSummary;
 	}
 
-	getPredictorEvaluations(): any {
+	getPredictorEvaluations(): GridDatasI {
 		this.evaluationDatas.predictorEvaluations = {
 			title: this.translate.get('GLOBAL.PREDICTOR_EVALUATIONS'),
 			values: undefined,
@@ -317,7 +328,7 @@ export class EvaluationDatasService {
 	}
 
 	// tslint:disable-next-line:typedef-whitespace
-	getLiftGraphDatas(target ? : string, mustGetAllDatas ? : boolean): ChartDatasVO {
+	getLiftGraphDatas(target ? : string): ChartDatasVO {
 
 		// Generate X axis values
 		const xAxis = new Array(1001);
@@ -326,8 +337,8 @@ export class EvaluationDatasService {
 			xAxis[i] = (Number(xAxis[i - 1]) + 0.001).toFixed(3);
 		}
 
-		const trainDatas = this.generateLiftCurveValuesForEvaluation(xAxis, PREDICTOR_TYPES.TRAIN, target);
-		const testDatas = this.generateLiftCurveValuesForEvaluation(xAxis, PREDICTOR_TYPES.TEST, target);
+		const trainDatas: LiftCurveValuesI[] = this.generateLiftCurveValuesForEvaluation(xAxis, PREDICTOR_TYPES.TRAIN, target);
+		const testDatas: LiftCurveValuesI[] = this.generateLiftCurveValuesForEvaluation(xAxis, PREDICTOR_TYPES.TEST, target);
 
 		let liftGraphDatas = []
 		if (trainDatas.length > 0 || testDatas.length > 0) {
@@ -391,7 +402,7 @@ export class EvaluationDatasService {
 	}
 
 	// tslint:disable-next-line:typedef-whitespace
-	generateLiftCurveValuesForEvaluation(xAxis, type, target ? : string) {
+	generateLiftCurveValuesForEvaluation(xAxis, type, target ? : string): LiftCurveValuesI[] {
 
 		let currentReport: any;
 		// get the correct report : train or test
@@ -406,7 +417,7 @@ export class EvaluationDatasService {
 			currentReport = this.appService.getDatas().datas.evaluationReport;
 		}
 
-		const graphDatas = [];
+		const graphDatas: LiftCurveValuesI[] = [];
 
 		if (currentReport) {
 
@@ -475,9 +486,9 @@ export class EvaluationDatasService {
 		return graphDatas;
 	}
 
-	getLiftTargets(currentTarget ? ): any {
+	getLiftTargets(currentTarget ? ): TargetLiftValuesI {
 		const appDatas = this.appService.getDatas().datas;
-		let targetLift;
+		let targetLift: TargetLiftValuesI;
 
 		let currentEvalReport = appDatas.trainEvaluationReport;
 		if (!currentEvalReport) {
@@ -531,7 +542,7 @@ export class EvaluationDatasService {
 		return targetLift;
 	}
 
-	isRegressionAnalysis(): any {
+	isRegressionAnalysis(): boolean {
 		const appDatas = this.appService.getDatas().datas;
 		if (appDatas && appDatas.trainEvaluationReport && appDatas.trainEvaluationReport.summary && appDatas.trainEvaluationReport.summary.learningTask === TASKS.REGRESSION) {
 			return true;
