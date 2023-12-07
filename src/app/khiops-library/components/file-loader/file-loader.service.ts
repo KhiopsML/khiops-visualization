@@ -14,7 +14,7 @@ import {
 export class FileLoaderService {
 
 	fileLoaderDatas: {
-		isLoadingDatas: any,
+		isLoadingDatas: boolean,
 		datas: any,
 		isBigJsonFile: boolean,
 		loadingInfo: string
@@ -180,7 +180,7 @@ export class FileLoaderService {
 		});
 	}
 
-	readFile(filename): any {
+	readFile(filename) {
 
 		this.fileLoaderDatas.datas = undefined;
 		this.fileLoaderDatas.isLoadingDatas = true;

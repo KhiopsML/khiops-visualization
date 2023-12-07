@@ -21,7 +21,7 @@ export class ReleaseNotesService {
 
 	}
 
-	loadGithubReleaseNotes(): any {
+	loadGithubReleaseNotes(): Promise<NoteVO[]> {
 
 		return new Promise((resolve, reject) => {
 			let url;
@@ -38,7 +38,7 @@ export class ReleaseNotesService {
                 headers: new HttpHeaders({
                     timeout: `${60000}`
                 })
-			}).subscribe((datas: any) => {
+			}).subscribe((datas: []) => {
 				if (datas) {
 					const notes = [];
 					for (let i = 0; i < datas.length; i++) {

@@ -11,7 +11,7 @@ import {
 export class SelectableService {
 
 	selectableDatas: {
-		selectedArea: any;
+		selectedArea: any; // can be every component of Khiops
 	};
 
 	selectedServiceChange: Subject < any > = new Subject < any > ();
@@ -31,7 +31,7 @@ export class SelectableService {
 		this.selectedServiceChange.next(this.selectableDatas.selectedArea);
 	}
 
-	getSelectedArea(): any {
+	getSelectedArea() {
 		return this.selectableDatas.selectedArea;
 	}
 

@@ -27,7 +27,7 @@ export class MatrixCanvasService {
 		'#000000'
 	];
 
-	static computeMatrixValues(graphMode, inputDatas, contextSelection, selectedTargetIndex): any {
+	static computeMatrixValues(graphMode, inputDatas, contextSelection, selectedTargetIndex) {
 
 		let globalMatrixFreqsValues;
 		let matrixFreqsValues;
@@ -235,7 +235,7 @@ export class MatrixCanvasService {
 
 	}
 
-	static computeValsByContext(e, partPositions, partPositionsLength): any {
+	static computeValsByContext(e, partPositions, partPositionsLength): number[] {
 		let matrixTotal = 0;
 		let cellFreqs = 0;
 		let freqColVals = 0;
@@ -249,7 +249,7 @@ export class MatrixCanvasService {
 		return [matrixTotal, cellFreqs, freqColVals, freqLineVals];
 	}
 
-	static getFrequencyColorsLegend(): any {
+	static getFrequencyColorsLegend(): string {
 		let strHex = `linear-gradient(
 			to top,`;
 		for (let i = 0; i < this.hot.length; i++) {
@@ -262,7 +262,7 @@ export class MatrixCanvasService {
 		return strHex;
 	}
 
-	static getInterestColorsLegend(): any {
+	static getInterestColorsLegend(): string {
 		return `linear-gradient(
 			to bottom,
 			#ff0000 0%,
@@ -285,7 +285,7 @@ export class MatrixCanvasService {
 	/**
 	* ChatGPT optimization
 	*/
-	static getFrequencyColors(): any {
+	static getFrequencyColors() {
 		const hotLength = this.hot.length;
 		const map = new Array(hotLength);
 		for (let i = 0; i < hotLength; i++) {
@@ -302,7 +302,7 @@ export class MatrixCanvasService {
 		return map;
 	}
 
-	static getInterestColors(isPositiveValue): any {
+	static getInterestColors(isPositiveValue) {
 
 		if (isPositiveValue) {
 			return [{
@@ -347,8 +347,8 @@ export class MatrixCanvasService {
 
 	}
 
-	static getNavigationCell(keyCode, matrixCellDatas, isAxisInverted, currentCellIndex, currentVariable): any {
-		let changeCell;
+	static getNavigationCell(keyCode, matrixCellDatas, isAxisInverted, currentCellIndex): CellVO {
+		let changeCell: CellVO;
 
 		let selectedCellIndex;
 
@@ -404,7 +404,6 @@ export class MatrixCanvasService {
 			}
 		}
 		changeCell = matrixCellDatas[selectedCellIndex];
-
 		return changeCell;
 	}
 

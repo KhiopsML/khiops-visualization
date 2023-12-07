@@ -33,7 +33,7 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 })
 export class HeaderToolsComponent implements OnInit {
 
-	@Input() appVersion: any;
+	@Input() appVersion: string;
 	@Input() showMenu = true;
 	isCopyingImage = false;
 	@Output() toggleNavDrawerChanged: EventEmitter < any > = new EventEmitter();
@@ -90,9 +90,7 @@ export class HeaderToolsComponent implements OnInit {
 			setTimeout(() => {
 				try {
 
-					let currentDiv: any;
-					currentDiv = this.configService.getRootElementDom().querySelector('#' + currentSelectedArea.id).firstChild;
-
+					let currentDiv: any= this.configService.getRootElementDom().querySelector('#' + currentSelectedArea.id).firstChild;
 					this.rePaintGraph(currentDiv);
 
 					// convert div screenshot to canvas

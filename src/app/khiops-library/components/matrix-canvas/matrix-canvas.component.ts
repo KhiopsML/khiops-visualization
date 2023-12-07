@@ -165,8 +165,7 @@ export class MatrixCanvasComponent extends SelectableComponent implements OnChan
 				event.keyCode,
 				this.inputDatas.matrixCellDatas,
 				this.isAxisInverted,
-				this.selectedCells[0].index,
-				this.inputDatas.variable
+				this.selectedCells[0].index
 			);
 			if (changeCell) {
 				this.cellSelected.emit({

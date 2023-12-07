@@ -5,6 +5,7 @@ import {
 	ChangeDetectionStrategy,
 	SimpleChanges
 } from '@angular/core';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 @Component({
 	template: '',
@@ -12,7 +13,7 @@ import {
 })
 export class SelectableTabComponent implements OnChanges {
 
-	@Input() selectedTab: any;
+	@Input() selectedTab: MatTabChangeEvent;
 	tabConfig: any;
 	tabIndex: number;
 	loadingView = true;

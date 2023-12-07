@@ -16,7 +16,7 @@ import {
 	encapsulation: ViewEncapsulation.None
 })
 export class LibVersionComponent {
-	libVersion: any;
+	libVersion: string;
 
 	constructor() {
 		this.libVersion = LibVersionService.getVersion();

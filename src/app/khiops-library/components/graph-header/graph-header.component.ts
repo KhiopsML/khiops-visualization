@@ -28,7 +28,7 @@ export class GraphHeaderComponent implements OnInit {
 
 	@Output() scaleValueChanged: EventEmitter < any > = new EventEmitter();
 	@Output() toggleFullscreen ? : EventEmitter < boolean >= new EventEmitter();
-	@Input() selectedVariable: any;
+	@Input() selectedVariable: any; // Type depends of the context
 	@Input() title: string;
 	@Input() smallTitle = false;
 	@Input() hideScale = false;
@@ -51,7 +51,7 @@ export class GraphHeaderComponent implements OnInit {
 		this.toggleFullscreen.emit($event);
 	}
 
-	onScaleChanged(event: any) {
+	onScaleChanged(event) {
 		// Save current scale value into ls
 		localStorage.setItem(this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID + 'SCALE_VALUE', event.value);
 		this.scaleValueChanged.emit(event.value);

@@ -48,7 +48,7 @@ import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-op
 export class DistributionGraphCanvasComponent extends ScrollableGraphCanvasComponent implements OnInit {
 
 	@Input() position = 0;
-	@Input() inputDatas: any = ChartDatasVO;
+	@Input() inputDatas: ChartDatasVO = undefined;
 	@Input() graphOptions: DistributionOptionsI;
 	@Input() activeEntries: number;
 	@Input() isLoadingDatas = false;
