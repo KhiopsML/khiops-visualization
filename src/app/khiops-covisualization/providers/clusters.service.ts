@@ -230,6 +230,7 @@ export class ClustersService {
 			let currentCluster;
 			for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
 				const currentDimensionHierarchy: any = appinitialDatas.coclusteringReport.dimensionHierarchies[i];
+				console.log('file: clusters.service.ts:233 ~ ClustersService ~ getInfoPerCluster ~ currentDimensionHierarchy:', currentDimensionHierarchy);
 				currentCluster = currentDimensionHierarchy.clusters.find(e => e.hierarchicalRank === j + 1);
 				if (currentCluster) {
 					break;

@@ -62,6 +62,8 @@ import {
 } from '@khiops-covisualization/providers/annotation.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { UtilsService } from '@khiops-library/providers/utils.service';
+import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-home-layout',
@@ -101,9 +103,8 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 
 	// Hack to override click on tab
 	private tabsMenu: MatTabGroup;
-	dimensionsDatas: any;
+	dimensionsDatas: DimensionsDatasVO;
 	isContextDimensions = false;
-	titleBar: any;
 	@ViewChild('tabsMenu', {
 		static: false
 	}) set content(content: MatTabGroup) {
@@ -114,17 +115,17 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 	}
 
 	onFileLoaderDataChangedCb: Function;
-	appVersion: any;
+	appVersion: string;
 	appName = 'khiops-covisualization';
 	opened = false;
 	openContextView = false;
 	public selectedTab: Object | undefined;
-	currentDatas: any;
+	currentDatas: any; // same type as global appDatas
 	isCompatibleJson: boolean;
 	currentChannel = localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'CHANNEL') || 'latest';
 	showReleaseNotes = localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'SHOW_RELEASE_NOTES');
 
-	importedDatasChangedSub: any;
+	importedDatasChangedSub: Subscription;
 
 	constructor(
 		private configService: ConfigService,

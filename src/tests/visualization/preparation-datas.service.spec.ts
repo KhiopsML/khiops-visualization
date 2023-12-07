@@ -74,6 +74,7 @@ describe('PreparationDatasService', () => {
 				}],
 				'minBarLength': 3,
 				'fill': false,
+				'borderSkipped': false,
 				'label': '0',
 				'type': 'bar'
 			}, {
@@ -89,6 +90,7 @@ describe('PreparationDatasService', () => {
 				}],
 				'minBarLength': 3,
 				'fill': false,
+				'borderSkipped': false,
 				'label': '1',
 				'type': 'bar'
 			}],
@@ -121,6 +123,7 @@ describe('PreparationDatasService', () => {
 				}],
 				'minBarLength': 3,
 				'fill': false,
+				'borderSkipped': false,
 				'label': 'less',
 				'type': 'bar'
 			}, {
@@ -136,6 +139,7 @@ describe('PreparationDatasService', () => {
 				}],
 				'minBarLength': 3,
 				'fill': false,
+				'borderSkipped': false,
 				'label': 'more',
 				'type': 'bar'
 			}],

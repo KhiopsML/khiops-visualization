@@ -136,7 +136,7 @@ export class TargetDistributionGraphCanvasComponent extends ScrollableGraphCanva
 		this.isSmallDiv = event?.newRect?.width < 600;
 	}
 
-	onToggleFullscreen(isFullscreen: any) {
+	onToggleFullscreen(isFullscreen: boolean) {
 		this.isFullscreen = isFullscreen;
 		setTimeout(() => {
 			this.resizeGraph();

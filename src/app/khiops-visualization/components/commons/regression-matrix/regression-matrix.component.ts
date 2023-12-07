@@ -161,7 +161,7 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
 		this.matrixOptions.selected = type;
 	}
 
-	onToggleFullscreen(isFullscreen: any) {
+	onToggleFullscreen(isFullscreen: boolean) {
 		this.isFullscreen = isFullscreen;
 		setTimeout(() => {
 			this.matrixCanvas.drawMatrix();

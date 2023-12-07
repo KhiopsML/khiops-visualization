@@ -31,6 +31,7 @@ import {
 } from '../model/distribution-datas-vo';
 import { TYPES } from '@khiops-library/enum/types';
 import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
+import { ModalityCountsVO } from '@khiops-visualization/model/modality-counts-vo';
 
 @Injectable({
 	providedIn: 'root'
@@ -82,7 +83,7 @@ export class Distribution2dDatasService {
 			const targets = this.preparation2dDatasService.getTargetsIfAvailable();
 			if (currentDatas && targets) {
 
-				const modalityCounts = this.distributionDatasService.computeModalityCounts(computedCellTargetFreqs);
+				const modalityCounts: ModalityCountsVO = this.distributionDatasService.computeModalityCounts(computedCellTargetFreqs);
 
 				for (let i = 0; i < currentDatas.length; i++) {
 

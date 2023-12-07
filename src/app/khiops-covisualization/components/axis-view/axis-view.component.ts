@@ -18,6 +18,7 @@ import { TranslateService } from "@ngstack/translate";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { SaveService } from "@khiops-covisualization/providers/save.service";
 import { Subscription } from "rxjs";
+import { DimensionsDatasVO } from "@khiops-covisualization/model/dimensions-data-vo";
 
 @Component({
 	selector: "app-axis-view",
@@ -40,7 +41,7 @@ export class AxisViewComponent
 
 	tabConfig = AppConfig.covisualizationCommon.HOME;
 	sizes: any;
-	dimensionsDatas: any;
+	dimensionsDatas: DimensionsDatasVO;
 	@Output() toggleContext: EventEmitter<any> = new EventEmitter();
 	@Input() openContextView = false;
 	viewsLayout: ViewLayoutVO;

@@ -55,8 +55,7 @@ export class TreenodesService {
 		const collapsedNodes = {}
 		for (let i = 0; i < this.dimensionsDatas.selectedDimensions.length; i++) {
 			collapsedNodes[this.dimensionsDatas.selectedDimensions[i].name] = [];
-
-			const nodesVO: any[] = UtilsService.fastFilter(this.dimensionsDatas.dimensionsClusters[i], e => {
+			const nodesVO: TreeNodeVO[] = UtilsService.fastFilter(this.dimensionsDatas.dimensionsClusters[i], e => {
 				return rank <= e.hierarchicalRank && !e.isLeaf;
 			});
 			collapsedNodes[this.dimensionsDatas.selectedDimensions[i].name] = nodesVO.map(e => e.cluster);
@@ -231,7 +230,7 @@ export class TreenodesService {
 
 	updateCurrentHierarchyClustersCount(rank: number) {
 		for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
-			const nodesVO: any[] = UtilsService.fastFilter(this.dimensionsDatas.dimensionsClusters[i], e => {
+			const nodesVO: TreeNodeVO[] = UtilsService.fastFilter(this.dimensionsDatas.dimensionsClusters[i], e => {
 				return !e.isLeaf && e.hierarchicalRank < rank;
 			});
 			const dimension: DimensionVO = this.dimensionsDatas.dimensions[i];
@@ -250,7 +249,7 @@ export class TreenodesService {
 			maxRank = maxRank - 1
 			currentDimClustersCount = 1;
 			for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
-				const nodesVO: any[] = UtilsService.fastFilter(this.dimensionsDatas.dimensionsClusters[i], e => {
+				const nodesVO: TreeNodeVO[] = UtilsService.fastFilter(this.dimensionsDatas.dimensionsClusters[i], e => {
 					return !e.isLeaf && e.hierarchicalRank < maxRank;
 				});
 				currentDimClustersCount = currentDimClustersCount * nodesVO.length;

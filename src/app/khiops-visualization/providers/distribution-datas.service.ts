@@ -44,6 +44,9 @@ import {
 import {
 	ChartToggleValuesI
 } from '@khiops-visualization/interfaces/chart-toggle-values';
+import {
+	ModalityCountsVO
+} from '@khiops-visualization/model/modality-counts-vo';
 
 @Injectable({
 	providedIn: 'root'
@@ -94,15 +97,11 @@ export class DistributionDatasService {
 		return this.distributionDatas.treeHyperDisplayedValues;
 	}
 
-	computeModalityCounts(modality): any {
-		const counts = {
-			total: 0,
-			series: [],
-			totalProbability: []
-		};
-		const dimension = modality[0].length;
+	computeModalityCounts(modality): ModalityCountsVO {
+		const counts = new ModalityCountsVO();
+		const dimensionLength = modality[0].length;
 		for (let i = 0; i < modality.length; i++) {
-			for (let j = 0; j < dimension; j++) {
+			for (let j = 0; j < dimensionLength; j++) {
 				if (!counts.series[j]) {
 					counts.series[j] = 0;
 				}
@@ -110,7 +109,7 @@ export class DistributionDatasService {
 				counts.total = counts.total + modality[i][j];
 			}
 		}
-		for (let k = 0; k < dimension; k++) {
+		for (let k = 0; k < dimensionLength; k++) {
 			counts.totalProbability[k] = counts.series[k] / counts.series.reduce((a, b) => a + b, 0);
 		}
 
@@ -221,7 +220,7 @@ export class DistributionDatasService {
 					});
 				}
 			}
-			const modalityCounts = this.computeModalityCounts(currentDatas);
+			const modalityCounts: ModalityCountsVO = this.computeModalityCounts(currentDatas);
 
 			for (let k = 0; k < dimensionLength; k++) {
 				const currentPartition = partition[k];

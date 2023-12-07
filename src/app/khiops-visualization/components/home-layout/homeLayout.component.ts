@@ -100,7 +100,6 @@ export class HomeLayoutComponent implements OnInit {
 	appVersion: any;
 	appName = 'khiops-visualization';
 	opened = false;
-	titleBar: any;
 	public selectedTab: Object | undefined;
 	currentDatas: any;
 	isCompatibleJson: boolean;

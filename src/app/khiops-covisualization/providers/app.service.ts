@@ -156,20 +156,11 @@ export class AppService {
 		}
 	}
 
-	initGlobalConfigVariables(): any {
+	initGlobalConfigVariables() {
 		AppConfig.common = {
 			...AppConfig.covisualizationCommon
 		};
 		this.khiopsLibraryService.setAppConfig(AppConfig);
-	}
-
-	isMultiDimensions(): any {
-		const appDatas = this.appDatas.datas;
-		if (appDatas.coclusteringReport) {
-			return appDatas.coclusteringReport.summary.initialDimensions > 2;
-		} else {
-			return undefined;
-		}
 	}
 
 	getProjectSummaryDatas(): InfosDatasI[] {

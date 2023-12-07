@@ -29,6 +29,7 @@ import {
 	ConfigService
 } from '@khiops-library/providers/config.service';
 import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
+import { ChartDatasetVO } from '@khiops-library/model/chartDataset-vo';
 
 @Component({
 	selector: 'kl-chart-next',
@@ -41,18 +42,18 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 	@Input() canvasIdContainer = 'kl-chart-canvas'; // May be updated if multiple graph
 	@Input() inputDatas: ChartDatasVO;
 	@Input() activeEntries: number;
-	@Input() type: any = 'bar';
+	@Input() type: ChartJs.ChartType = 'bar';
 	@Input() chartOptions: ChartOptions;
 	@Input() colorSet: ChartColorsSetI;
 	@Input() enableSelection = true;
 	@Input() selectedLineChartItem: string = undefined;
 
-	@Output() selectBarIndex: EventEmitter < any > = new EventEmitter();
+	@Output() selectBarIndex: EventEmitter < number > = new EventEmitter();
 
 	AppConfig = this.khiopsLibraryService.getAppConfig().common;
 
-	ctx: any;
-	chart: any;
+	ctx: ChartJs.ChartItem;
+	chart: ChartJs.Chart;
 	color: string = localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + 'THEME_COLOR') === 'dark' ? '#555' : '#e5e5e5';
 	barColor: string = localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + 'THEME_COLOR') === 'dark' ? 'rgba(255, 255, 255, 1)' : 'rgba(0, 0, 0, 1)';
 	fontColor: string = '#999';
@@ -70,7 +71,7 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 
 	initChart() {
 
-		this.ctx = this.configService.getRootElementDom().querySelector < HTMLElement > ('#' + this.canvasIdContainer)
+		this.ctx = <ChartJs.ChartItem>this.configService.getRootElementDom().querySelector < HTMLElement > ('#' + this.canvasIdContainer)
 
 		if (this.ctx) {
 
@@ -174,13 +175,14 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 			// @ts-ignore
 			ChartJs.Chart.register.apply(null, Object.values(ChartJs).filter((chartClass) => (chartClass.id)));
 
-			const data: any = {};
-			this.chart = new ChartJs.Chart(this.ctx, {
+			const data: ChartJs.ChartData = undefined;
+			const config : ChartJs.ChartConfiguration = {
 				type: this.type,
 				data: data,
 				options: options,
 				plugins: [chartAreaBorder]
-			});
+			}
+			this.chart = new ChartJs.Chart(this.ctx, config);
 
 		}
 	}
@@ -214,6 +216,7 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 		setTimeout(() => {
 			if (this.inputDatas && this.chart) {
 				// Update datas
+				// @ts-ignore force khiops VO into Chart dataset
 				this.chart.data.datasets = this.inputDatas.datasets;
 				this.chart.data.labels = this.inputDatas.labels;
 
@@ -247,7 +250,7 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 		if (this.chart && this.enableSelection) {
 			this.colorize();
 			for (let i = 0; i < this.chart.data.datasets.length; i++) {
-				const dataset = this.chart.data.datasets[i];
+				const dataset = <ChartDatasetVO>this.chart.data.datasets[i];
 				dataset.borderColor[index] = this.barColor;
 				dataset.borderSkipped = false;
 				dataset.borderWidth = 2;
@@ -257,7 +260,7 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 
 	colorize() {
 		for (let i = 0; i < this.chart.data.datasets.length; i++) {
-			const dataset = this.chart.data.datasets[i];
+			const dataset: ChartDatasetVO = <ChartDatasetVO>this.chart.data.datasets[i];
 			if (!dataset.borderWidth) {
 				dataset.borderSkipped = false;
 				dataset.borderWidth = 2;

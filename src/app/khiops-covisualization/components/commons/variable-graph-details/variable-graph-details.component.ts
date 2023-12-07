@@ -47,6 +47,8 @@ import {
 	TYPES
 } from "@khiops-library/enum/types";
 import { DistributionOptionsI } from "@khiops-library/interfaces/distribution-options";
+import { ChartDatasVO } from "@khiops-library/model/chart-datas-vo";
+import * as _ from 'lodash';
 
 @Component({
 	selector: "app-variable-graph-details",
@@ -71,8 +73,8 @@ implements OnInit, OnChanges, OnDestroy, AfterViewInit {
 	treeSelectedNodeChangedSub: Subscription;
 
 	isLoadingGraphDatas: boolean;
-	scaleValue: any;
-	graphDetails: any;
+	scaleValue: number;
+	graphDetails: ChartDatasVO;
 	graphOptions: DistributionOptionsI = {
 		types: [TYPES.COVERAGE, TYPES.FREQUENCY],
 		selected: undefined,
@@ -150,7 +152,7 @@ implements OnInit, OnChanges, OnDestroy, AfterViewInit {
 		}
 	}
 
-	onToggleFullscreen(isFullscreen: any) {
+	onToggleFullscreen(isFullscreen: boolean) {
 		this.isFullscreen = isFullscreen;
 		setTimeout(() => {
 			this.resize();
@@ -187,9 +189,7 @@ implements OnInit, OnChanges, OnDestroy, AfterViewInit {
 				position
 			].shortDescription;
 		// force legend update
-		this.graphDetails = {
-			...this.graphDetails
-		};
+		this.graphDetails = _.cloneDeep(this.graphDetails);
 	}
 
 	onSelectBarChanged(index: number) {

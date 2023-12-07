@@ -197,7 +197,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
 		}
 	}
 
-	onToggleFullscreen(isFullscreen: any) {
+	onToggleFullscreen(isFullscreen: boolean) {
 		this.isFullscreen = isFullscreen;
 		setTimeout(() => {
 			this.matrixCanvas.drawMatrix();

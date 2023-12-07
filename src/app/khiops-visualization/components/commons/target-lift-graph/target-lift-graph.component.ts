@@ -113,7 +113,7 @@ export class TargetLiftGraphComponent extends SelectableComponent implements OnC
 		}
 	}
 
-	onToggleFullscreen(isFullscreen: any) {
+	onToggleFullscreen(isFullscreen: boolean) {
 		this.isFullscreen = isFullscreen;
 		setTimeout(() => {
 			this.getDatas();

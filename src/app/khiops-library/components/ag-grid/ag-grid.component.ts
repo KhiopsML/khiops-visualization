@@ -31,7 +31,10 @@ import {
 	Module,
 	GridOptions,
 	ClientSideRowModelModule,
-	RowNode
+	RowNode,
+	ColDef,
+	ColumnResizedEvent,
+	Column
 } from '@ag-grid-community/all-modules';
 import {
 	UtilsService
@@ -40,6 +43,7 @@ import _ from 'lodash';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { TYPES } from '@khiops-library/enum/types';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
 	selector: 'kl-ag-grid',
@@ -96,21 +100,21 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 	gridModes = {}; // 'fitToSpace' or 'fitToContent'
 
 	componentType = 'grid'; // needed to copy datas
-	columnDefs = [];
+	columnDefs: ColDef[] = [];
 	searchInput = '';
 	rowData = [];
-	context: any = {
-		componentParent: this
+	context: {
+		componentParent: AgGridComponent
+	} = {
+		componentParent: this // used by CheckboxCellComponent
 	};
-	availableColumns: any = [];
-	datas: any;
 
 	@Output() selectListItem: EventEmitter < any > = new EventEmitter();
 	@Output() doubleClickListItem: EventEmitter < any > = new EventEmitter();
 	@Output() dataTypeChanged: EventEmitter < any > = new EventEmitter();
 	@Output() gridCheckboxChanged: EventEmitter < any > = new EventEmitter();
 	@Output() showLevelDistributionGraph: EventEmitter < any > = new EventEmitter();
-	isSmallDiv: any;
+	isSmallDiv: boolean = false;
 	divWidth: number;
 
 	// For evaluation view
@@ -181,7 +185,7 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 		this.restoreState();
 	}
 
-	changeDataType(type: any) {
+	changeDataType(type: string) {
 		localStorage.setItem(this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID + 'AG_GRID_GRAPH_OPTION', type);
 
 		this.dataOptions.selected = type;
@@ -298,7 +302,7 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 		this.selectListItem.emit(e.data);
 	}
 
-	onToggleFullscreen(isFullscreen: any) {
+	onToggleFullscreen(isFullscreen: boolean) {
 		this.isFullscreen = isFullscreen;
 	}
 
@@ -382,8 +386,7 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 			for (let i = 0; i < this.displayedColumns.length; i++) {
 
 				const col = this.displayedColumns[i];
-
-				this.columnDefs.push({
+				const gridCol: ColDef = {
 					headerName: col.headerName,
 					headerTooltip: col.tooltip ? col.headerName + ': ' + col.tooltip : col.headerName,
 					// tooltipShowDelay: 500,
@@ -414,7 +417,9 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 							return result;
 						}
 					}
-				});
+				};
+
+				this.columnDefs.push(gridCol);
 			}
 
 			if (this.rowData.length === 0 || this.inputDatas.length > this.paginationSize) { // in case of big grid (>100), recreate all for performance improvements
@@ -477,7 +482,7 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 		return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 	}
 
-	toggleTableColumn(event: any, opt: any) {
+	toggleTableColumn(event: MatCheckboxChange, opt: GridColumnsI) {
 
 		// Update current displayed column state
 		const currentColumn = this.displayedColumns.find(e => {
@@ -571,14 +576,15 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 
 	}
 
-	onColumnResized(e) {
+	onColumnResized(e: ColumnResizedEvent) {
 		// Do not check uiColumnDragged to init column sizes at start
 		if (e /*&& e.source === 'uiColumnDragged' */ && e.finished) {
-			if (e.column && e.column.colDef) {
-				this.saveColumnSize(e.column.colDef.field, e.column.actualWidth);
+			const column: Column | any = e.column;
+			if (column && column.colDef) {
+				this.saveColumnSize(column.colDef.field, column.actualWidth);
 			}
 			if (e.columns && e.finished) {
-				e.columns.forEach((column: any) => {
+				e.columns.forEach((column: Column | any) => {
 					this.saveColumnSize(column.colDef.field, column.actualWidth);
 				});
 			}

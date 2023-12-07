@@ -100,7 +100,7 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 		this.distributionDatas = this.distributionDatasService.getDatas();
 	}
 
-	onToggleFullscreen(isFullscreen: any) {
+	onToggleFullscreen(isFullscreen: boolean) {
 		this.isFullscreen = isFullscreen;
 	}
 

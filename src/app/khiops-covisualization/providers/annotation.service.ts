@@ -34,14 +34,14 @@ export class AnnotationService {
 
 		// update the model directly
 		// Find current dim position
-		const currentIndex: any = this.dimensionsDatas.selectedDimensions.find(e => {
+		const currentIndex: number = this.dimensionsDatas.selectedDimensions.find(e => {
 			return node.hierarchy === e.name;
 		}).startPosition;
 
 		let currentCluster;
 
 		// update dimensionHierarchies json datas
-		const currentDimensionHierarchy: any = appDatas.coclusteringReport.dimensionHierarchies[currentIndex];
+		const currentDimensionHierarchy = appDatas.coclusteringReport.dimensionHierarchies[currentIndex];
 		currentCluster = currentDimensionHierarchy.clusters.find(e => {
 			return node.name === e.cluster;
 		});

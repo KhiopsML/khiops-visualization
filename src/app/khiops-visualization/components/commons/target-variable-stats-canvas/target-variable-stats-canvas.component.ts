@@ -98,7 +98,7 @@ export class TargetVariableStatsCanvasComponent extends SelectableComponent impl
 		};
 	}
 
-	onToggleFullscreen(isFullscreen: any) {
+	onToggleFullscreen(isFullscreen: boolean) {
 		this.isFullscreen = isFullscreen;
 	}
 
