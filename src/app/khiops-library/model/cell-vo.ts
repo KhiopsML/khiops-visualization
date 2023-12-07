@@ -66,71 +66,7 @@ export class CellVO {
 	cellHellingerAbsoluteValue: any[] = [];
 	matrixTotal: number[] = [];
 
-	constructor(values?) {
-		if (values) {
-			this.xCanvas = (values && values.xCanvas) || 0;
-			this.yCanvas = (values && values.yCanvas) || 0;
-			this.wCanvas = (values && values.wCanvas) || 0;
-			this.hCanvas = (values && values.hCanvas) || 0;
-			this.cellFreq = (values && values.cellFreq) || 0;
-			this.displayedValue = values && values.displayedValue;
-			this.targetCellFreq = (values && values.targetCellFreq) || 0;
-			this.index = (values && values.index) || 0;
-			this.id = this.index;
-			this.matrixTotal = (values && values.matrixTotal) || [];
-
-			// Generate id for grid
-			this._id = this.index;
-
-			this.cellInterest = (values && values.cellInterest) || 0;
-			this.cellTargetProb = (values && values.cellTargetProb) || 0;
-
-			this.x = {
-				standard: (values && values.x && values.x.standard) || 0,
-				frequency: (values && values.x && values.x.frequency) || 0,
-			};
-			this.y = {
-				standard: (values && values.y && values.y.standard) || 0,
-				frequency: (values && values.y && values.y.frequency) || 0,
-			};
-			this.w = {
-				standard: (values && values.w && values.w.standard) || 0,
-				frequency: (values && values.w && values.w.frequency) || 0,
-			};
-			this.h = {
-				standard: (values && values.h && values.h.standard) || 0,
-				frequency: (values && values.h && values.h.frequency) || 0,
-			};
-
-			this.concatName = (values && values.concatName) || [];
-			this.freqColVals = (values && values.freqColVals) || [];
-			this.freqLineVals = (values && values.freqLineVals) || [];
-
-			this.xnamePart = (values && values.xnamePart) || "";
-			this.ynamePart = (values && values.ynamePart) || "";
-
-			this.xaxisPart = (values && values.xaxisPart) || "";
-			this.yaxisPart = (values && values.yaxisPart) || "";
-			this.xaxisPartValues = (values && values.xaxisPart) || [];
-			this.yaxisPartValues = (values && values.yaxisPart) || [];
-			this.xDisplayaxisPart =
-				(values && values.xDisplayaxisPart) || this.xaxisPart;
-			this.yDisplayaxisPart =
-				(values && values.yDisplayaxisPart) || this.yaxisPart;
-
-			this.cellFreqHash = (values && values.cellFreqHash) || {};
-			this.cellFreqs = (values && values.cellFreqs) || [];
-			this.infosMutValue = (values && values.infosMutValue) || [];
-			this.infosMutExtra = (values && values.infosMutExtra) || [];
-			this.cellHellingerAbsoluteValue =
-				(values && values.cellHellingerAbsoluteValue) || [];
-			this.cellProbs = (values && values.cellProbs) || [];
-			this.cellProbsRev = (values && values.cellProbsRev) || [];
-			this.cellHellingerValue =
-				(values && values.cellHellingerValue) || [];
-			this.formatValues();
-		}
-	}
+	constructor() {}
 
 	setIndex(currentIndex: number) {
 		this.index = currentIndex;
