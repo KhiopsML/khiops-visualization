@@ -293,7 +293,7 @@ export class UtilsService {
 	 * Generate array of percent from array of interval of numbers
 	 * @param array interval of numbers
 	 */
-	static generateArrayPercentsFromArrayIntervals(length) {
+	static generateArrayPercentsFromArrayIntervals(length): number[] {
 		const countArray = [];
 		for (let i = 0; i <= length; i++) {
 			countArray.push(i * 100 / length);
@@ -305,7 +305,7 @@ export class UtilsService {
 	 * Generate array of percent from array of values numbers
 	 * @param array of numbers
 	 */
-	static generateArrayPercentsFromArrayValues(array) {
+	static generateArrayPercentsFromArrayValues(array): number[] {
 		const percentArray = [];
 		percentArray.push(0);
 		const arrayLength = array.length;
@@ -337,7 +337,7 @@ export class UtilsService {
 	 * @param array of numbers
 	 * @param arrayTotal of numbers
 	 */
-	static generateArrayPercentsFromArrayLength(array, arrayTotal) {
+	static generateArrayPercentsFromArrayLength(array, arrayTotal): number[] {
 		const percentArray = [];
 		percentArray.push(0);
 		const arrayLength = array.length;
@@ -352,7 +352,7 @@ export class UtilsService {
 	 * @param array of intervals
 	 * @param arrayTotal number
 	 */
-	static generateArrayPercentsFromArrayIntervalsAndTotalCount(array, arrayTotal) {
+	static generateArrayPercentsFromArrayIntervalsAndTotalCount(array, arrayTotal): number[] {
 		const percentArray = [];
 		percentArray.push(0);
 		const arrayLength = array.length;

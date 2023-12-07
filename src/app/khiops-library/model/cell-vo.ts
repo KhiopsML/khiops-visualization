@@ -61,7 +61,7 @@ export class CellVO {
 	freqLineVals: number[] = [];
 	cellFreqs: number[] = [];
 	infosMutValue: number[] = [];
-	infosMutExtra: any[] = [];
+	infosMutExtra: any[] = []; // can be complex
 	cellHellingerValue: number[] = [];
 	cellHellingerAbsoluteValue: number[] = [];
 	matrixTotal: number[] = [];

@@ -19,13 +19,14 @@ export class DimensionVO {
 	currentHierarchyClusterCount: number;
 	intervals: any[];
 	valueGroups: any[];
-	partition: any[]; // KV
-	partitionInputs: any[]; // KV
-	partitionType: any[]; // KV
+	partition: number[][] | string[]; // KV
+	partitionInputs: number[][] | string[]; // KV
+	partitionType: string[]; // KV
 	variable: string; // KV
 	defaultGroupIndex: number; // KV
 
 	constructor(object, startPosition = 0) {
+
 		this.startPosition = startPosition;
 		this.name = object && object.name || '';
 		this.type = object && object.type || '';

@@ -276,7 +276,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
 		this.selectCellRowChanged.emit(0);
 	}
 
-	onCellSelected(event: any) {
+	onCellSelected(event: any) { // event type can change
 		if (event.datas) {
 			const currentIndex = event.datas.index;
 			this.preparation2dDatasService.setSelectedCellIndex(currentIndex);
@@ -286,7 +286,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
 
 	}
 
-	onSelectCellRowChanged(rowItem: any) {
+	onSelectCellRowChanged(rowItem: any) { // event type can change
 		const currentIndex = rowItem.id;
 		this.preparation2dDatasService.setSelectedCellIndex(currentIndex);
 		this.preparation2dDatasService.getCurrentCellDatas();

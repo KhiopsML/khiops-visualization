@@ -39,7 +39,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 	chartTooltip!: ElementRef;
 
 	componentType = "histogram"; // needed to copy datas
-	svg: any;
+	svg: d3.Selection<SVGElement, unknown, HTMLElement, any>;
 	tooltip!: any;
 
 	// Outputs
@@ -47,13 +47,14 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 
 	// Dynamic values
 	@Input() datas: any;
+
 	h: number = 220;
 	w: number = 1000;
-	xPadding = 40;
-	yPadding = 50;
+	xPadding: number  = 40;
+	yPadding: number  = 50;
 
 	// Static config values
-	xTickCount;
+	xTickCount: number;
 	yTicksCount = 10;
 	tickSize = 0;
 	minBarHeight = 4;
@@ -326,6 +327,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			if (i === 0) {
 				d3.select(this).style("stroke", self.barColor);
 			}
+			return self.barColor
 		};
 
 		const onclickRect = function () {

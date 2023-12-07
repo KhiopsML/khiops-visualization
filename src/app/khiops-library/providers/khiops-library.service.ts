@@ -17,7 +17,7 @@ export class KhiopsLibraryService {
 	graphColorSet: ChartColorsSetI[];
 	appConfig: any;
 
-	graphColors: any = Array(10).fill([
+	graphColors: string[] = Array(10).fill([
 			'#10246e', '#6e93d5', '#b54d79', '#3cb44b', '#ffe119', '#ff6600',
 			'#f032e6', '#a9a9a9', '#9A6324', '#fffac8', '#800000', '#aaffc3',
 			'#000075', '#a9a9a9', '#469990', '#10246e', '#6e93d5', '#d45087',

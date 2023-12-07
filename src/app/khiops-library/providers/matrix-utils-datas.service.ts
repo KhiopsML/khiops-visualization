@@ -18,8 +18,8 @@ export class MatrixUtilsDatasService {
 
 	static getStandardAxisValues(xDimension, yDimension) {
 
-		let xValues: any[];
-		let yValues: any[];
+		let xValues: number[];
+		let yValues: number[];
 		if (xDimension.type === TYPES.CATEGORICAL) {
 			let currentXAxisFullPart;
 			if (xDimension.valueGroups) {
@@ -70,8 +70,8 @@ export class MatrixUtilsDatasService {
 
 	static getFrequencyAxisValues(xDimension, yDimension, cellFrequencies) {
 
-		let xValues: any[];
-		let yValues: any[];
+		let xValues: number[];
+		let yValues: number[];
 
 		if (xDimension.type === TYPES.CATEGORICAL) {
 			const currentLineVal = UtilsService.getLinesTotals(xDimension.parts, yDimension.parts, cellFrequencies);

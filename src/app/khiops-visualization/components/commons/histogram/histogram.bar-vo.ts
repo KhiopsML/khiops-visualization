@@ -1,3 +1,4 @@
+import { HistogramValuesI } from "@khiops-visualization/interfaces/histogram-values";
 import { HistogramUIService } from "../histogram/histogram.ui.service";
 import { HistogramType } from "./histogram.types";
 
@@ -9,7 +10,8 @@ export class HistogramBarVO {
 	color: string = HistogramUIService.getColor(1);
 	partition = [];
 
-	constructor(d: any, middlewidth: number, xType: string) {
+	constructor(d: HistogramValuesI, middlewidth: number, xType: string) {
+
 		this.partition = d.partition;
 		if (xType === HistogramType.XLIN) {
 			let barWlin = 0;
@@ -42,7 +44,7 @@ export class HistogramBarVO {
 
 	computeXLog(bars: HistogramBarVO[]) {
 		let sum = bars.reduce(
-			(partialSum: any, a: any) =>
+			(partialSum: number, a: HistogramBarVO) =>
 				Math.abs(partialSum) + Math.abs(a.barWlog),
 			0
 		);
@@ -51,7 +53,7 @@ export class HistogramBarVO {
 
 	computeXLin(bars: HistogramBarVO[]) {
 		let sum = bars.reduce(
-			(partialSum: any, a: any) =>
+			(partialSum: number, a: HistogramBarVO) =>
 				Math.abs(partialSum) + Math.abs(a.barWlin),
 			0
 		);

@@ -332,7 +332,7 @@ export class DistributionDatasService {
 
 			histogramGraphDetails = []
 			const totalFreq = varDatas.frequencies.reduce(
-				(partialSum: any, a: any) => partialSum + a,
+				(partialSum: number, a: number) => partialSum + a,
 				0
 			);
 
