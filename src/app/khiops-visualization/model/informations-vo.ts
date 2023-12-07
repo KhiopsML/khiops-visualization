@@ -7,12 +7,12 @@ export class InformationsVO {
 	evaluatedVariables: number;
 	constructedVariables: number;
 	informativeVariables: number;
-	informativeVariablePairs: any;
+	informativeVariablePairs: number;
 	selectedVariables: number;
-	selectedVariablePairs: any;
+	selectedVariablePairs: number;
 	discretization: string;
 	valueGrouping: string;
-	evaluatedVariablePairs: any;
+	evaluatedVariablePairs: number;
 
 	displayDatas: InfosDatasI[];
 

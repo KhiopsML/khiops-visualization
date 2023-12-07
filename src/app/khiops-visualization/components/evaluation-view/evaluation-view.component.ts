@@ -19,6 +19,8 @@ import {
 } from '@khiops-library/providers/khiops-library.service';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { EvaluationDatasVO } from '@khiops-visualization/model/evaluation-datas-vo';
+import { EvaluationPredictorVO } from '@khiops-visualization/model/evaluation-predictor-vo';
+import { EvaluationTypeVO } from '@khiops-visualization/model/evaluation-type-vo';
 
 @Component({
 	selector: 'app-evaluation-view',
@@ -56,21 +58,21 @@ export class EvaluationViewComponent extends SelectableTabComponent implements O
 		this.khiopsLibraryService.trackEvent('page_view', 'evaluation');
 	}
 
-	onSelectEvaluationTypeChanged(item: any) {
+	onSelectEvaluationTypeChanged(item: EvaluationTypeVO) {
 		this.evaluationDatasService.setSelectedEvaluationTypeVariable(item);
 		const predictorEvaluationVariable = this.evaluationDatasService.getPredictorEvaluationVariableFromEvaluationType(item.type);
 		this.evaluationDatasService.setSelectedPredictorEvaluationVariable(predictorEvaluationVariable);
 		this.evaluationDatasService.getConfusionMatrix();
 	}
 
-	onSelectPredictorEvaluationChanged(item: any) {
+	onSelectPredictorEvaluationChanged(item: EvaluationPredictorVO) {
 		this.evaluationDatasService.setSelectedPredictorEvaluationVariable(item);
 		const evaluationVariable = this.evaluationDatasService.getEvaluationVariableFromPredictorEvaluationType(item.type);
 		this.evaluationDatasService.setSelectedEvaluationTypeVariable(evaluationVariable);
 		this.evaluationDatasService.getConfusionMatrix();
 	}
 
-	onDataTypeChanged(type: any) {
+	onDataTypeChanged(type: string) {
 		this.evaluationDatasService.getConfusionMatrix(type);
 	}
 }

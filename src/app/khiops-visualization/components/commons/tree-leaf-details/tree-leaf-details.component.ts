@@ -112,7 +112,7 @@ export class TreeLeafDetailsComponent
 		);
 	}
 
-	onTreeHyperValuesChanged(displayedValues) {
+	onTreeHyperValuesChanged(displayedValues: ChartToggleValuesI[]) {
 		this.distributionDatasService.setTreeHyperDisplayedValues(
 			displayedValues
 		);

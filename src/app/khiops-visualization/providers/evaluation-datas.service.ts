@@ -112,7 +112,7 @@ export class EvaluationDatasService {
 	}
 
 	// tslint:disable-next-line:typedef-whitespace
-	getConfusionMatrix(type ? : string): any {
+	getConfusionMatrix(type ? : string): GridDatasI {
 
 		const appDatas = this.appService.getDatas().datas;
 

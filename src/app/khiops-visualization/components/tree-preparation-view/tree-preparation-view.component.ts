@@ -48,6 +48,8 @@ import { Preparation2dDatasVO } from '@khiops-visualization/model/preparation2d-
 import { DistributionDatasVO } from '@khiops-visualization/model/distribution-datas-vo';
 import { PreparationDatasVO } from '@khiops-visualization/model/preparation-datas-vo';
 import { TreePreparationDatasVO } from '@khiops-visualization/model/tree-preparation-datas-vo';
+import { TreePreparationVariableVO } from '@khiops-visualization/model/tree-preparation-variable-vo';
+import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 
 @Component({
 	selector: 'app-tree-preparation-view',
@@ -147,7 +149,7 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
 		this.selectedBarIndex = 0;
 	}
 
-	onSelectListItemChanged(item: any) {
+	onSelectListItemChanged(item: TreePreparationVariableVO) {
 		const modelingVariable = this.treePreparationDatasService.setSelectedVariable(item);
 		this.modelingDatasService.setSelectedVariable(modelingVariable);
 		this.treePreparationDatasService.getCurrentIntervalDatas(this.selectedBarIndex);
@@ -176,13 +178,13 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
 		this.treePreparationDatasService.setSelectedNodes(currentValues, currentValues[0]);
 	}
 
-	onTreeNodeTargetDistributionGraphDisplayedValuesChanged(displayedValues) {
+	onTreeNodeTargetDistributionGraphDisplayedValuesChanged(displayedValues: ChartToggleValuesI[]) {
 		if (this.appTreeLeafDetails) {
 			this.appTreeLeafDetails.onTreeNodeTargetDistributionGraphDisplayedValuesChanged(displayedValues);
 		}
 	}
 
-	onTreeHyperDisplayedValuesChanged(displayedValues) {
+	onTreeHyperDisplayedValuesChanged(displayedValues: ChartToggleValuesI[]) {
 		if (this.appTreeLeafDetails) {
 			this.appTreeLeafDetails.onTreeHyperValuesChanged(displayedValues);
 		}

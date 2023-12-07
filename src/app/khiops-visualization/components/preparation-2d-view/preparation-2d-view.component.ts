@@ -48,6 +48,7 @@ import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { Variable2dVO } from '@khiops-visualization/model/variable2d-vo';
 import { Preparation2dDatasVO } from '@khiops-visualization/model/preparation2d-datas-vo';
+import { Preparation2dVariableVO } from '@khiops-visualization/model/preparation2d-variable-vo';
 
 @Component({
 	selector: 'app-preparation-2d-view',
@@ -155,7 +156,7 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
 		this.resizeTargetDistributionGraph();
 	}
 
-	onSelectListItemChanged(item: any) {
+	onSelectListItemChanged(item: Preparation2dVariableVO) {
 		this.preparation2dDatasService.setSelectedVariable(item);
 		const modelingVariable = this.preparation2dDatasService.getVariableFromNames(item.name1, item.name2);
 		this.modelingDatasService.setSelectedVariable(modelingVariable);

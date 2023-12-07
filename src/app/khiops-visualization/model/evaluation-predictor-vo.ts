@@ -10,9 +10,9 @@ export class EvaluationPredictorVO {
 	name: string;
 	accuracy: string;
 	compression: string;
-	auc: any;
-	robustness: any;
-	gini: any;
+	auc: number;
+	robustness: number | string;
+	gini: number | string;
 	rmse: string;
 	mae: string;
 	nlpd: string;
