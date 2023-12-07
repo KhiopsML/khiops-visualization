@@ -203,7 +203,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
 
 	}
 
-	onSplitDragEnd(event: any, item: any) {
+	onSplitDragEnd(event: any, item: string) {
 		this.appService.resizeAndSetSplitSizes(item, this.sizes, event.sizes, 'preparationView');
 
 		// Resize to update graphs dimensions

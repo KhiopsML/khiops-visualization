@@ -41,7 +41,7 @@ import { TreeNodeVO } from '@khiops-visualization/model/tree-node-vo';
 })
 export class TreeLeafDetailsComponent
 	implements OnInit, OnChanges {
-	
+
 	@Input() selectedNode: TreeNodeVO;
 	@Input() displayedValues: ChartToggleValuesI[];
 
@@ -101,10 +101,6 @@ export class TreeLeafDetailsComponent
 			this.treeNodeTargetDistributionGraphType
 		);
 	}
-
-	onSelectedTreeNodeDistributionGraphItemChanged(index: any) {}
-
-	onSelectedTreeNodeTargetDistributionGraphItemChanged(index: any) {}
 
 	onTreeNodeTargetDistributionGraphDisplayedValuesChanged(displayedValues) {
 		this.distributionDatasService.setTreeNodeTargetDistributionDisplayedValues(

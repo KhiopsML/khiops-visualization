@@ -134,7 +134,7 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
 		this.distributionDatas = this.distributionDatasService.getDatas();
 	}
 
-	onSplitDragEnd(event: any, item: any) {
+	onSplitDragEnd(event: any, item: string) {
 		this.appService.resizeAndSetSplitSizes(item, this.sizes, event.sizes, 'treePreparationView');
 
 		// Resize to update graphs dimensions

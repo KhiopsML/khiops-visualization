@@ -35,6 +35,7 @@ import {
 } from 'chart.js';
 import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
 import { EvaluationDatasVO } from '@khiops-visualization/model/evaluation-datas-vo';
+import { TargetLiftValuesI } from '@khiops-visualization/interfaces/target-lift-values';
 
 @Component({
 	selector: 'app-target-lift-graph',
@@ -45,7 +46,7 @@ export class TargetLiftGraphComponent extends SelectableComponent implements OnC
 
 	@Input() selectedVariable;
 
-	targetLift: any;
+	targetLift: TargetLiftValuesI;
 	targetLiftGraph: ChartDatasVO;
 	colorSet: ChartColorsSetI;
 	legendColorSet: ChartColorsSetI;

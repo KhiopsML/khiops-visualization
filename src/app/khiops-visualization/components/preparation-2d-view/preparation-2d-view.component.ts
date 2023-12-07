@@ -150,7 +150,7 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
 		this.khiopsLibraryService.trackEvent('page_view', 'preparation2d');
 	}
 
-	onSplitDragEnd(event: any, item: any) {
+	onSplitDragEnd(event: any, item: string) {
 		this.appService.resizeAndSetSplitSizes(item, this.sizes, event.sizes, 'preparation2dView');
 		this.resizeTargetDistributionGraph();
 	}

@@ -35,12 +35,27 @@ import {
 import {
 	InformationsVO
 } from '../model/informations-vo';
-import { REPORTS } from '@khiops-library/enum/reports';
-import { TASKS } from '@khiops-library/enum/tasks';
-import { TYPES } from '@khiops-library/enum/types';
-import { PreparationDatasVO } from '@khiops-visualization/model/preparation-datas-vo';
-import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
-import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
+import {
+	REPORTS
+} from '@khiops-library/enum/reports';
+import {
+	TASKS
+} from '@khiops-library/enum/tasks';
+import {
+	TYPES
+} from '@khiops-library/enum/types';
+import {
+	PreparationDatasVO
+} from '@khiops-visualization/model/preparation-datas-vo';
+import {
+	InfosDatasI
+} from '@khiops-library/interfaces/infos-datas';
+import {
+	ChartDatasVO
+} from '@khiops-library/model/chart-datas-vo';
+import {
+	GridDatasI
+} from '@khiops-library/interfaces/grid-datas';
 
 @Injectable({
 	providedIn: 'root'
@@ -89,11 +104,14 @@ export class PreparationDatasService {
 
 	}
 
-	getDatas(preparationSource: string): any {
+	getDatas(preparationSource: string): {
+		selectedVariable: PreparationVariableVO;
+		currentIntervalDatas: GridDatasI;
+	} {
 		return this.preparationDatas[preparationSource];
 	}
 
-	setSelectedVariable(object: any, preparationSource: string): void {
+	setSelectedVariable(object: any, preparationSource: string): PreparationVariableVO {
 		if (object) {
 			const variable = this.getVariableFromName(object.name, preparationSource);
 			if (variable) {
@@ -103,7 +121,7 @@ export class PreparationDatasService {
 		}
 	}
 
-	getSelectedVariable(preparationSource: string): any {
+	getSelectedVariable(preparationSource: string): PreparationVariableVO {
 		return this.preparationDatas[preparationSource].selectedVariable;
 	}
 
@@ -128,20 +146,20 @@ export class PreparationDatasService {
 		return variable;
 	}
 
-	getSummaryDatas(): InfosDatasI[]  {
+	getSummaryDatas(): InfosDatasI[] {
 		const appDatas = this.appService.getDatas().datas;
 		const preparationSource = this.getAvailablePreparationReport();
 		const summaryVO = new SummaryVO(appDatas[preparationSource].summary);
 		return summaryVO.displayDatas;
 	}
 
-	getInformationsDatas(preparationSource: string): InfosDatasI[]  {
+	getInformationsDatas(preparationSource: string): InfosDatasI[] {
 		const appDatas = this.appService.getDatas().datas;
 		const informationsDatas = new InformationsVO(appDatas[preparationSource].summary);
 		return informationsDatas.displayDatas;
 	}
 
-	getCurrentIntervalDatas(preparationSource: string, index ? ): any {
+	getCurrentIntervalDatas(preparationSource: string, index ? ): GridDatasI {
 		index = index || 0;
 
 		const datas = [];
@@ -334,12 +352,12 @@ export class PreparationDatasService {
 		return informationsDatas;
 	}
 
-	getTargetVariable(preparationSource: string): any {
+	getTargetVariable(preparationSource: string): string {
 		const appDatas = this.appService.getDatas().datas;
 		return appDatas[preparationSource].summary.targetVariable;
 	}
 
-	isExplanatoryAnalysis(): any {
+	isExplanatoryAnalysis(): boolean {
 		const preparationSource = this.getAvailablePreparationReport();
 		const appDatas = this.appService.getDatas().datas;
 		if (appDatas && appDatas[preparationSource] && appDatas[preparationSource].variablesDetailedStatistics && !appDatas.bivariatePreparationReport) {
@@ -354,12 +372,12 @@ export class PreparationDatasService {
 		return false;
 	}
 
-	includesTargetParts(variableDatas): any {
+	includesTargetParts(variableDatas): boolean {
 		const targetParts = variableDatas.map(e => e.targetParts)
 		return targetParts.every(e => e === undefined) ? false : true;
 	}
 
-	isSupervised(): any {
+	isSupervised(): boolean {
 		const preparationSource = this.getAvailablePreparationReport();
 		const appDatas = this.appService.getDatas().datas;
 		if (appDatas && appDatas[preparationSource] && appDatas[preparationSource].variablesDetailedStatistics) {
@@ -380,12 +398,12 @@ export class PreparationDatasService {
 		const appDatas = this.appService.getDatas().datas;
 		let preparationSource = REPORTS.PREPARATION_REPORT;
 		if (!appDatas[preparationSource] || !appDatas[preparationSource].variablesStatistics) {
-			preparationSource =  REPORTS.TEXT_PREPARATION_REPORT;
+			preparationSource = REPORTS.TEXT_PREPARATION_REPORT;
 		}
 		return preparationSource;
 	}
 
-	getPreparationSourceFromVariable(variable) {
+	getPreparationSourceFromVariable(variable): string {
 		const appDatas = this.appService.getDatas().datas;
 		// Find the current variable into preparationReport or textPreparationReport
 		if (appDatas.preparationReport && appDatas.preparationReport.variablesStatistics) {

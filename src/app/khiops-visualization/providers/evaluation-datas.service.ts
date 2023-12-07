@@ -528,7 +528,7 @@ export class EvaluationDatasService {
 				targetLift.selected = currentTarget;
 			} else {
 				// Check if mainTargetValue is set and is consistent
-				const mainTargetValue = currentEvalReport.summary && currentEvalReport.summary.mainTargetValue;
+				const mainTargetValue: string = currentEvalReport.summary && currentEvalReport.summary.mainTargetValue;
 				const isConsistentTarget = mainTargetValue && targetLift.targets.indexOf(mainTargetValue) > -1;
 				if (isConsistentTarget) {
 					targetLift.selected = mainTargetValue;

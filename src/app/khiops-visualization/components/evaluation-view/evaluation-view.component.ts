@@ -47,7 +47,7 @@ export class EvaluationViewComponent extends SelectableTabComponent implements O
 		this.evaluationDatasService.getConfusionMatrix();
 	}
 
-	onSplitDragEnd(event: any, item: any) {
+	onSplitDragEnd(event: any, item: string) {
 		this.appService.resizeAndSetSplitSizes(item, this.sizes, event.sizes, 'evaluationView');
 	}
 

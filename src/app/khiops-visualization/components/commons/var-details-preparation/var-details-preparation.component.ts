@@ -21,10 +21,19 @@ import {
 import {
 	VariableGraphDetailsComponent
 } from '../variable-graph-details/variable-graph-details.component';
-import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
-import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
-import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
-import { Preparation2dDatasVO } from '@khiops-visualization/model/preparation2d-datas-vo';
+import {
+	ChartDatasVO
+} from '@khiops-library/model/chart-datas-vo';
+import {
+	GridDatasI
+} from '@khiops-library/interfaces/grid-datas';
+import {
+	InfosDatasI
+} from '@khiops-library/interfaces/infos-datas';
+import {
+	Preparation2dDatasVO
+} from '@khiops-visualization/model/preparation2d-datas-vo';
+import { PreparationVariableVO } from '@khiops-visualization/model/preparation-variable-vo';
 
 @Component({
 	selector: 'app-var-details-preparation',
@@ -40,10 +49,13 @@ export class VarDetailsPreparationComponent implements OnInit, OnChanges {
 	@Input() preparationSource: string;
 
 	isRegressionOrExplanatoryAnalysis: boolean;
-	preparationDatas: any;
+	preparationDatas: {
+		selectedVariable: PreparationVariableVO;
+		currentIntervalDatas: GridDatasI;
+	}
 	appDatas: any;
 	sizes: any;
-	
+
 	summaryDatas: InfosDatasI[];
 	informationsDatas: InfosDatasI[];
 	targetVariableStatsDatas: ChartDatasVO;
@@ -69,7 +81,7 @@ export class VarDetailsPreparationComponent implements OnInit, OnChanges {
 		this.preparationDatas = this.preparationDatasService.getDatas(this.preparationSource);
 	}
 
-	onSplitDragEnd(event: any, item: any) {
+	onSplitDragEnd(event: any, item: string) {
 		this.appService.resizeAndSetSplitSizes(item, this.sizes, event.sizes, 'preparationView');
 
 		// Resize to update graphs dimensions

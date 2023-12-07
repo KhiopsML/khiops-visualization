@@ -61,9 +61,9 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
 
 	distributionDatas: DistributionDatasVO;
 	scrollPosition = 0;
-	scaleValue: any;
-	distributionGraphType: any;
-	targetDistributionGraphType: any;
+	scaleValue: number;
+	distributionGraphType: string;
+	targetDistributionGraphType: string;
 
 	isLoadingGraphDatas: boolean;
 	activeEntries = 0;
@@ -143,7 +143,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
 		});
 	}
 
-	onScaleValueChanged(value: any) {
+	onScaleValueChanged(value: number) {
 		this.scaleValue = value;
 	}
 
@@ -153,13 +153,13 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
 		this.initActiveEntries();
 	}
 
-	onTargetDistributionGraphTypeChanged(type: any) {
+	onTargetDistributionGraphTypeChanged(type: string) {
 		this.targetDistributionGraphType = type;
 		this.distributionDatasService.getTargetDistributionGraphDatas(this.getCurrentVariable(), this.targetDistributionGraphType, false);
 		this.initActiveEntries(this.selectedGraphItemIndex);
 	}
 
-	onDistributionGraphTypeChanged(type: any) {
+	onDistributionGraphTypeChanged(type: string) {
 		this.distributionGraphType = type;
 		this.distributionDatasService.getdistributionGraphDatas(this.getCurrentVariable(), this.distributionGraphType, false);
 		this.initActiveEntries(this.selectedGraphItemIndex);
@@ -179,14 +179,14 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
 		this.activeEntries = index;
 	}
 
-	onSelectedDistributionGraphItemChanged(index: any) {
+	onSelectedDistributionGraphItemChanged(index: number) {
 		this.activeEntries = index;
 
 		// launch event to parent to manage interval table datas or matrix selection
 		this.selectedItemChanged.emit(index);
 	}
 
-	onSelectedTargetDistributionGraphItemChanged(index: any) {
+	onSelectedTargetDistributionGraphItemChanged(index: number) {
 		this.activeEntries = index;
 
 		// launch event to parent to manage interval table datas or matrix selection

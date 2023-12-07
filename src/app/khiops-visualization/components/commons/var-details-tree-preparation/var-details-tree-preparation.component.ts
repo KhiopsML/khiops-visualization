@@ -41,7 +41,7 @@ export class VarDetailsTreePreparationComponent {
 		this.onSelectedGraphItemChanged(0);
 	}
 
-	onSplitDragEnd(event: any, item: any) {
+	onSplitDragEnd(event: any, item: string) {
 		this.appService.resizeAndSetSplitSizes(item, this.sizes, event.sizes, 'treePreparationView');
 
 		// Resize to update graphs dimensions

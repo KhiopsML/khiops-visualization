@@ -88,7 +88,7 @@ implements OnInit {
 			this.projectFileChanged.emit(obj);
 	}
 
-	onSplitDragEnd(event: any, item: any) {
+	onSplitDragEnd(event: any, item: string) {
 		this.appService.resizeAndSetSplitSizes(
 			item,
 			this.sizes,

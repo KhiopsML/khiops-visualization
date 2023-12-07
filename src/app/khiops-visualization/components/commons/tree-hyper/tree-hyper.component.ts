@@ -495,7 +495,7 @@ export class TreeHyperComponent extends SelectableComponent implements OnInit, A
 
 	}
 
-	onSelectToggleButtonChanged(displayedValues: any) {
+	onSelectToggleButtonChanged(displayedValues: ChartToggleValuesI[]) {
 		this.treeHyperDisplayedValuesChanged.emit(displayedValues);
 	}
 

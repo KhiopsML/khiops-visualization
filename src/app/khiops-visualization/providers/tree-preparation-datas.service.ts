@@ -119,7 +119,7 @@ export class TreePreparationDatasService {
 		return [dimDatasIndex, dimDatas[dimDatasIndex]];
 	}
 
-	setSelectedVariable(object: any): any {
+	setSelectedVariable(object: TreePreparationVariableVO): TreePreparationVariableVO {
 		if (object) {
 			const variable = this.getVariableFromName(object.name);
 			if (variable) {
@@ -138,7 +138,7 @@ export class TreePreparationDatasService {
 		}
 	}
 
-	setSelectedFlattenTree(rank): void {
+	setSelectedFlattenTree(rank) {
 		const appDatas = this.appService.getDatas().datas;
 		const treeDatas = appDatas && appDatas.treePreparationReport &&
 			appDatas.treePreparationReport.treeDetails;
@@ -187,11 +187,11 @@ export class TreePreparationDatasService {
 		return item;
 	}
 
-	getSelectedVariable(): any {
+	getSelectedVariable(): TreePreparationVariableVO {
 		return this.treePreparationDatas.selectedVariable;
 	}
 
-	getSelectedVariableRank(): any {
+	getSelectedVariableRank(): string {
 		return this.treePreparationDatas.selectedVariable.rank;
 	}
 

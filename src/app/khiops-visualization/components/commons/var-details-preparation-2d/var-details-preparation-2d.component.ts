@@ -55,7 +55,7 @@ export class VarDetailsPreparation2dComponent {
 		this.distribution2dDatasService.getTargetDistributionGraphDatas(this.targetDistributionGraphType);
 	}
 
-	onSplitDragEnd(event: any, item: any) {
+	onSplitDragEnd(event: any, item: string) {
 		this.appService.resizeAndSetSplitSizes(item, this.sizes, event.sizes, 'preparation2dView');
 		this.resizeTargetDistributionGraph();
 	}

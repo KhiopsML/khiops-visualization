@@ -15,7 +15,7 @@ export class TreePreparationDatasVO {
 	selectedNode: TreeNodeVO = undefined;
 	treeColorsMap: {} = undefined;
 	dimensionTree: [TreeNodeVO] = undefined;
-	selectedFlattenTree: any[] = undefined;
+	selectedFlattenTree: TreeNodeVO[] = undefined;
 	currentIntervalDatas: GridDatasI;
 
 	appDatas: any = undefined;
