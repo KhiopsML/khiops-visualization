@@ -23,36 +23,36 @@ export class HistogramService {
 	constructor() {}
 
 	getRangeX(datas: HistogramValuesI[]): [RangeXLinI, RangeXLogI] {
-		this.rangeXLog.inf = datas.find(function (d: any) {
+		this.rangeXLog.inf = datas.find(function (d: HistogramValuesI) {
 			return d.partition[0] === 0 || d.partition[1] === 0;
 		});
 
 		this.rangeXLog.min = datas[0].partition[0];
-		this.rangeXLog.negValuesCount = datas.filter(function (d: any) {
+		this.rangeXLog.negValuesCount = datas.filter(function (d: HistogramValuesI) {
 			return d.partition[1] < 0;
 		})?.length;
-		this.rangeXLog.posValuesCount = datas.filter(function (d: any) {
+		this.rangeXLog.posValuesCount = datas.filter(function (d: HistogramValuesI) {
 			return d.partition[1] > 0;
 		})?.length;
 		if (this.rangeXLog.inf) {
 			// 0 exist
 			this.rangeXLog.negStart =
 				// @ts-ignore update it with es2023
-				datas.findLast(function (d: any) {
+				datas.findLast(function (d: HistogramValuesI) {
 					return d.partition[0] < 0 && d.partition[1] <= 0;
 				})?.partition[0] || undefined;
 			this.rangeXLog.posStart =
-				datas.find(function (d: any) {
+				datas.find(function (d: HistogramValuesI) {
 					return d.partition[0] > 0 && d.partition[1] > 0;
 				})?.partition[0] || undefined;
 		} else {
 			this.rangeXLog.negStart =
 				// @ts-ignore update it with es2023
-				datas.findLast(function (d: any) {
+				datas.findLast(function (d: HistogramValuesI) {
 					return d.partition[0] < 0 && d.partition[1] <= 0;
 				})?.partition[1] || undefined;
 			this.rangeXLog.posStart =
-				datas.find(function (d: any) {
+				datas.find(function (d: HistogramValuesI) {
 					return d.partition[0] > 0 && d.partition[1] > 0;
 				})?.partition[0] || undefined;
 		}
@@ -68,7 +68,7 @@ export class HistogramService {
 	}
 
 	getLinRangeY(datas: HistogramValuesI[]): number {
-		const dataValues = datas.map((e: any) => e.value);
+		const dataValues = datas.map((d: HistogramValuesI) => d.value);
 		this.rangeYLin = Math.max(...dataValues);
 		return this.rangeYLin;
 	}
@@ -99,7 +99,7 @@ export class HistogramService {
 	): HistogramBarVO[] {
 		let bars: HistogramBarVO[] = [];
 
-		datas.forEach((d: any, i: number) => {
+		datas.forEach((d: HistogramValuesI, i: number) => {
 			let histogramBar = new HistogramBarVO(
 				d,
 				this.rangeXLog.middlewidth,

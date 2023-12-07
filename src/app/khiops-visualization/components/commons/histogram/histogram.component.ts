@@ -25,7 +25,12 @@ import { SelectableService } from "@khiops-library/components/selectable/selecta
 import { HistogramType } from "./histogram.types";
 import { AppConfig } from "src/environments/environment";
 import { TranslateService } from "@ngstack/translate";
-import { HistogramValuesI } from "./histogram.interfaces";
+import {
+	HistogramValuesI,
+	RangeXLinI,
+	RangeXLogI,
+	RangeYLogI,
+} from "./histogram.interfaces";
 
 @Component({
 	selector: "app-histogram",
@@ -47,7 +52,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 	@Output() selectedItemChanged: EventEmitter<any> = new EventEmitter();
 
 	// Dynamic values
-	@Input() datas: any;
+	@Input() datas: HistogramValuesI[];
 
 	h: number = 220;
 	w: number = 1000;
@@ -67,10 +72,10 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			: "black";
 
 	// Local variables
-	rangeXLog: any;
-	rangeXLin: any;
-	rangeYLin: any;
-	rangeYLog: any;
+	rangeXLog: RangeXLogI;
+	rangeXLin: RangeXLinI;
+	rangeYLin: number;
+	rangeYLog: RangeYLogI;
 
 	ratioY = 0;
 
@@ -194,7 +199,9 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 					let shift = 0;
 					let width = this.w - 2 * this.xPadding;
 					let domain = [this.rangeXLin.min, this.rangeXLin.max];
-					let tickValues = this.datas.map((e: any) => e.partition[0]);
+					let tickValues = this.datas.map(
+						(e: HistogramValuesI) => e.partition[0]
+					);
 					tickValues.push(
 						this.datas[this.datas.length - 1].partition[1]
 					);
@@ -203,7 +210,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 					// Draw positive axis
 					let shift = 0;
 					let width = 0;
-					let domain: any = [];
+					let domain: number[] = [];
 
 					if (
 						this.rangeXLog.posStart !== this.rangeXLog.max &&
@@ -303,9 +310,9 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			.attr("class", "tooltip");
 	}
 
-	drawRect(d: any, i: number, bar: HistogramBarVO, ratio = 0) {
+	drawRect(d: HistogramValuesI, i: number, bar: HistogramBarVO, ratio = 0) {
 		var self = this;
-		let barX: any, barH, barW: any;
+		let barX: number, barH: number, barW: number;
 
 		if (
 			this.distributionDatas.distributionGraphOptionsX.selected ===
@@ -319,12 +326,8 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 		}
 
 		const generateColor = function () {
-			//@ts-ignore
 			const elStrokeColor = this.getAttribute("fill");
-
-			//@ts-ignore
 			d3.select(this).style("stroke", elStrokeColor);
-
 			if (i === 0) {
 				d3.select(this).style("stroke", self.barColor);
 			}
@@ -332,38 +335,28 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 		};
 
 		const onclickRect = function () {
-			//@ts-ignore
 			d3.select(this.parentNode)
 				.selectAll("rect")
-				//@ts-ignore
 				.style("stroke", function () {
 					//@ts-ignore
 					const elStrokeColor = this.getAttribute("fill");
 					return elStrokeColor;
 				});
 
-			//@ts-ignore
 			d3.select(this).style("stroke", self.barColor);
 			//@ts-ignore
 			d3.select(this).moveToFront();
-
 			self.selectedItemChanged.emit(i);
 		};
 		const mouseover = function () {
-			//@ts-ignore
 			self.tooltip.style("display", "block").style("width", "140px");
-
-			//@ts-ignore
 			d3.select(this.parentNode)
 				.selectAll("rect")
 				.style("fill-opacity", "0.8");
-
-			//@ts-ignore
 			d3.select(this).style("fill-opacity", "0.9");
 		};
-		const mousemove = (e: any) => {
+		const mousemove = (e: MouseEvent) => {
 			const tooltipText = HistogramUIService.generateTooltip(d);
-			//@ts-ignore
 			self.tooltip.html(tooltipText);
 
 			let left = e.offsetX + 20;
@@ -378,20 +371,15 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			if (top < 10) {
 				top = 10;
 			}
-
-			//@ts-ignore
 			self.tooltip.style("margin-left", left + "px");
-			//@ts-ignore
 			self.tooltip.style("margin-top", top + "px");
 		};
 		const mouseleave = function () {
-			//@ts-ignore
 			self.tooltip
 				.style("display", "none")
 				.style("margin-left", "0px")
 				.style("margin-top", "0px");
 
-			//@ts-ignore
 			d3.select(this.parentNode)
 				.selectAll("rect")
 				.style("fill-opacity", "0.8");
@@ -467,12 +455,12 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 		const t1 = performance.now();
 		console.log("drawHistogram " + (t1 - t0) + " milliseconds.");
 
-		datasSet.forEach((d: any, i: number) => {
+		datasSet.forEach((d: HistogramValuesI, i: number) => {
 			this.drawRect(d, i, bars[i], this.ratio);
 		});
 	}
 
-	drawXAxis(domain: any, shift: number, width: number) {
+	drawXAxis(domain: number[], shift: number, width: number) {
 		if (width !== 0) {
 			let xAxis;
 
@@ -498,7 +486,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 				this.distributionDatas.distributionGraphOptionsX.selected ===
 				HistogramType.XLIN
 			) {
-				axis.tickFormat((d, i) => {
+				axis.tickFormat((d: number) => {
 					let val: any = d;
 					return "" + format(val);
 				});
@@ -576,10 +564,8 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			.axisLeft(y)
 			.tickSize(this.tickSize)
 			.tickPadding(10)
-			//@ts-ignore
-			.tickFormat((d, i) => {
-				//@ts-ignore
-				let val: any = d;
+			.tickFormat((d: number) => {
+				let val: number = d;
 				if (
 					this.distributionDatas.distributionGraphOptionsY
 						.selected === HistogramType.YLIN
