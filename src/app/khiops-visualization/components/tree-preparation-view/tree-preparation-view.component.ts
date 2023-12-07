@@ -66,21 +66,20 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
 
 	appDatas: any;
 	sizes: any;
-	
+
 	summaryDatas: InfosDatasI[];
 	informationsDatas: InfosDatasI[];
 	targetVariableStatsDatas: ChartDatasVO;
 	currentIntervalDatas: GridDatasI;
 	matrixRegSelectedCell = 0;
 	selectedBarIndex = 0;
-	tabConfig = AppConfig.visualizationCommon.HOME;
 	variablesDatas: VariableVO[];
 	targetVariableStatsInformations: InfosDatasI[];
 	preparation2dDatas: Preparation2dDatasVO;
 	treePreparationDatas: TreePreparationDatasVO;
 	preparationDatas: PreparationDatasVO;
 	distributionDatas: DistributionDatasVO;
-	
+
 	// managed by selectable-tab component
 	tabIndex = 5;
 

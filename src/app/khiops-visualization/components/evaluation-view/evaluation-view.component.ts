@@ -28,11 +28,10 @@ import { EvaluationDatasVO } from '@khiops-visualization/model/evaluation-datas-
 export class EvaluationViewComponent extends SelectableTabComponent implements OnInit {
 
 	sizes: any;
-	
+
 	// managed by selectable-tab component
 	tabIndex = 4;
 	summaryDatas: InfosDatasI[];
-	tabConfig = AppConfig.visualizationCommon.HOME;
 	evaluationDatas: EvaluationDatasVO;
 
 	constructor(private khiopsLibraryService: KhiopsLibraryService,

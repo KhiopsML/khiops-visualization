@@ -84,7 +84,6 @@ export class PreparationViewComponent extends SelectableTabComponent {
 	currentIntervalDatas: GridDatasI;
 	matrixRegSelectedCell = 0;
 	distributionSelectedBarIndex = 0;
-	tabConfig = AppConfig.visualizationCommon.HOME;
 	preparation2dDatas: Preparation2dDatasVO;
 	variablesDatas: VariableVO[];
 	isRegressionOrExplanatoryAnalysis: boolean;

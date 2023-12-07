@@ -91,7 +91,6 @@ export class ModelingViewComponent extends SelectableTabComponent {
 	matrixRegSelectedCell = 0;
 	distributionSelectedBarIndex = 0;
 	trainedPredictorsDisplayedColumns: GridColumnsI[];
-	tabConfig = AppConfig.visualizationCommon.HOME;
 	isRegressionOrExplanatoryAnalysis: boolean;
 	scaleValue = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SCALE_VALUE') || AppConfig.visualizationCommon.GLOBAL.DEFAULT_GRAPH_SCALE;
 	targetDistributionGraphDatas: ChartDatasVO;

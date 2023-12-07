@@ -16,7 +16,6 @@ export const visualizationCommonEnvironment = {
 	},
 	HOME: {
 		ACTIVE_TAB_INDEX: 0,
-		TAB_ANIMATION_DURATION: 150, // set > value than .mat-ink-bar transition animation to avoid freeze
 	},
 	LEVEL_DISTRIBUTION_GRAPH: {
 		MAX_VARIABLES: 1000,

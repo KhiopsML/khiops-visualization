@@ -39,7 +39,6 @@ export class AxisViewComponent
 	})
 	axisAppPos1: AxisComponent;
 
-	tabConfig = AppConfig.covisualizationCommon.HOME;
 	sizes: any;
 	dimensionsDatas: DimensionsDatasVO;
 	@Output() toggleContext: EventEmitter<any> = new EventEmitter();

@@ -22,7 +22,6 @@ export class ProjectViewComponent
 
 	// managed by selectable-tab component
 	tabIndex = 0;
-	tabConfig = AppConfig.covisualizationCommon.HOME;
 
 	constructor(private appService: AppService) {
 		super();

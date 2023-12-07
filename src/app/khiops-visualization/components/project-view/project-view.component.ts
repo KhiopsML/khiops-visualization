@@ -48,7 +48,6 @@ implements OnInit {
 
 	// managed by selectable-tab component
 	tabIndex = 0;
-	tabConfig = AppConfig.visualizationCommon.HOME;
 
 	debugFile = AppConfig.debugFile;
 

@@ -14,7 +14,6 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 export class SelectableTabComponent implements OnChanges {
 
 	@Input() selectedTab: MatTabChangeEvent;
-	tabConfig: any;
 	tabIndex: number;
 	loadingView = true;
 
@@ -34,7 +33,7 @@ export class SelectableTabComponent implements OnChanges {
 		setTimeout(() => {
 			this.loadingView = false;
 			this.loadView();
-		}, this.tabConfig.TAB_ANIMATION_DURATION); // do it async to dont freeze interface during compute
+		}, 150); // set > value than .mat-ink-bar transition animation to avoid freeze
 	}
 
 	loadView() {

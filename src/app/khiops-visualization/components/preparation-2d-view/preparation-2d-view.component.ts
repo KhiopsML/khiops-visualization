@@ -68,14 +68,13 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
 	informationsDatas: InfosDatasI[];
 	targetVariableStatsDatas: ChartDatasVO;
 	currentIntervalDatas: GridDatasI;
-	tabConfig = AppConfig.visualizationCommon.HOME;
 	variables2dDatas: Variable2dVO[];
 	targetDistributionGraphDatas: ChartDatasVO;
 	levelDistributionTitle: string;
-	
+
 	// managed by selectable-tab component
 	tabIndex = 2;
-	
+
 	variablesDisplayedColumns: GridColumnsI[] = [{
 		headerName: 'Rank',
 		field: 'rank',
