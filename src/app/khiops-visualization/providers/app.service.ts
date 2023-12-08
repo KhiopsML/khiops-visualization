@@ -15,6 +15,7 @@ import {
 } from '@khiops-library/model/project-log-vo';
 import { REPORTS } from '@khiops-library/enum/reports';
 import { ProjectSummaryVO } from '@khiops-library/model/project-summary-vo';
+import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 
 @Injectable({
 	providedIn: 'root'
@@ -28,7 +29,7 @@ export class AppService {
 		this.initialize();
 	}
 
-	initialize(): any {
+	initialize() {
 
 		this.initGlobalConfigVariables();
 		this.initSessionVariables();
@@ -89,7 +90,7 @@ export class AppService {
 
 	}
 
-	initGlobalConfigVariables(): any {
+	initGlobalConfigVariables() {
 		AppConfig.visualizationCommon.GLOBAL.TO_FIXED = parseInt(localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_NUMBER_PRECISION'), 10) || AppConfig.visualizationCommon.GLOBAL.TO_FIXED;
 		AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST = parseInt(localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST'), 10) || AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST;
 
@@ -100,7 +101,7 @@ export class AppService {
 		this.khiopsLibraryService.setAppConfig(AppConfig);
 	}
 
-	initSessionVariables(): any {
+	initSessionVariables() {
 		localStorage.removeItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_MODE_OPTION_INDEX');
 		localStorage.removeItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_TYPE_OPTION');
 		localStorage.removeItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'TARGET_DISTRIBUTION_GRAPH_OPTION');
@@ -115,7 +116,7 @@ export class AppService {
 		localStorage.removeItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'DISTRIBUTION_GRAPH_OPTION_Y');
 	}
 
-	setFileDatas(datas: any): any {
+	setFileDatas(datas: any) {
 		this.initSessionVariables();
 		this.appDatas.datas = datas;
 		this.appDatas.datas = this.enrichJsonDatas(this.appDatas.datas);
@@ -132,7 +133,7 @@ export class AppService {
 		}
 	}
 
-	setSavedDatas(datas: any): any {
+	setSavedDatas(datas: any) {
 		if (datas && datas.savedDatas) {
 			if (datas.savedDatas.splitSizes) {
 				this.setSplitSizes(datas.savedDatas.splitSizes);
@@ -222,7 +223,7 @@ export class AppService {
 	/**
 	 * #86 Remove missing informations for numerical variables
 	 */
-	ignoreMissingPartitionForNumerical(datas: any, preparationSource): any {
+	ignoreMissingPartitionForNumerical(datas: any, preparationSource: string): any {
 		if (datas && datas[preparationSource]) {
 			for (const rank in datas[preparationSource].variablesDetailedStatistics) {
 				const variable = datas[preparationSource].variablesDetailedStatistics[rank];
@@ -235,7 +236,7 @@ export class AppService {
 		return datas;
 	}
 
-	getProjectSummaryDatas(): any {
+	getProjectSummaryDatas(): InfosDatasI[] {
 		const appDatas = this.appDatas.datas;
 		if (appDatas.preparationReport) {
 			const projectSummaryDatas = new ProjectSummaryVO(appDatas);

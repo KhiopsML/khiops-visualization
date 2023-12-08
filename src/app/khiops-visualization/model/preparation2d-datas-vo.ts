@@ -4,12 +4,13 @@ import {
 import {
 	Preparation2dVariableVO
 } from './preparation2d-variable-vo';
+import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 
 export class Preparation2dDatasVO {
 
 	isAxisInverted = false;
 	selectedVariable: Preparation2dVariableVO = undefined;
-	selectedCellIndex = 0;
+	selectedCellIndex: number = 0;
 	selectedCell: CellVO = undefined;
 	matrixDatas: {
 		variable: {
@@ -22,8 +23,8 @@ export class Preparation2dDatasVO {
 	};
 	isTargetAvailable = false;
 	currentCellDatas: {
-		values: any[][],
-		displayedColumns: any[][],
+		values: any[][], // Dynamic values according to the input datas
+		displayedColumns: GridColumnsI[][],
 	};
 
 	appDatas: any = undefined;

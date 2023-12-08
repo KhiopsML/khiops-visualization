@@ -44,7 +44,10 @@ import {
 import {
 	ModalityCountsVO
 } from '@khiops-visualization/model/modality-counts-vo';
-import { HistogramValuesI } from '@khiops-visualization/components/commons/histogram/histogram.interfaces';
+import {
+	HistogramValuesI
+} from '@khiops-visualization/components/commons/histogram/histogram.interfaces';
+import { TreeNodeVO } from '@khiops-visualization/model/tree-node-vo';
 
 @Injectable({
 	providedIn: 'root'
@@ -153,7 +156,7 @@ export class DistributionDatasService {
 
 	}
 
-	getTreeNodeTargetDistributionGraphDatas(selectedNode, type ? : string): ChartDatasVO {
+	getTreeNodeTargetDistributionGraphDatas(selectedNode: TreeNodeVO, type ? : string): ChartDatasVO {
 
 		this.distributionDatas.initTreeNodeTargetDistributionGraphDatas();
 		this.distributionDatas.setTreeNodeTargetDistributionType(type);
@@ -197,11 +200,8 @@ export class DistributionDatasService {
 
 	}
 
-	computeTargetDistributionGraph(partition, currentDatas, allDatas, currentXAxis, displayedValues: ChartToggleValuesI[], type): any {
-		const targetDistributionGraphDatas = {
-			datasets: [],
-			labels: []
-		};
+	computeTargetDistributionGraph(partition, currentDatas, allDatas, currentXAxis, displayedValues: ChartToggleValuesI[], type): [ChartDatasVO, ChartToggleValuesI[]] {
+		const targetDistributionGraphDatas = new ChartDatasVO()
 
 		let dimensionLength = 0;
 		if (partition) {
@@ -239,7 +239,7 @@ export class DistributionDatasService {
 					const currentTotal = UtilsService.arraySum(el);
 
 					// if currentPartition must be displayed (graph options)
-					const kObj: any = displayedValues.find(e => e.name === currentPartition);
+					const kObj: ChartToggleValuesI = displayedValues.find(e => e.name === currentPartition);
 
 					if (kObj && kObj.show) {
 						if (type === TYPES.PROBABILITIES) {
@@ -334,7 +334,7 @@ export class DistributionDatasService {
 				0
 			);
 
-			varDatas.dimensions[0].partition.forEach((partition: any, i: number) => {
+			varDatas.dimensions[0].partition.forEach((partition: number[], i: number) => {
 				if (partition.length !== 0) {
 					const delta = partition[1] - partition[0];
 					let value = varDatas.frequencies[i] / totalFreq / delta;

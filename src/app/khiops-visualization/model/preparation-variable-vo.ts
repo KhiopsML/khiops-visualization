@@ -10,8 +10,6 @@ export class PreparationVariableVO {
 	nameX: string;
 	nameY: string;
 
-	tooltips: any;
-
 	rank: string;
 	variableType: string;
 	type: string;

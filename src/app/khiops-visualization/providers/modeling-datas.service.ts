@@ -32,7 +32,18 @@ import {
 import {
 	TrainedPredictorVO
 } from '@khiops-visualization/model/trained-predictor-vo copy';
-import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
+import {
+	InfosDatasI
+} from '@khiops-library/interfaces/infos-datas';
+import {
+	PreparationVariableVO
+} from '@khiops-visualization/model/preparation-variable-vo';
+import {
+	Preparation2dVariableVO
+} from '@khiops-visualization/model/preparation2d-variable-vo';
+import {
+	TreePreparationVariableVO
+} from '@khiops-visualization/model/tree-preparation-variable-vo';
 @Injectable({
 	providedIn: 'root'
 })
@@ -49,7 +60,7 @@ export class ModelingDatasService {
 
 	}
 
-	initialize(): any {
+	initialize() {
 		this.modelingDatas = new ModelingDatasVO();
 
 		// at init select the corresponding var
@@ -69,7 +80,9 @@ export class ModelingDatasService {
 		return this.modelingDatas;
 	}
 
-	setSelectedVariable(object: any): void {
+	setSelectedVariable(object: Preparation2dVariableVO |
+		PreparationVariableVO |
+		TreePreparationVariableVO) {
 		if (this.modelingDatas && object) {
 			this.modelingDatas.selectedVariable = object;
 		} else {
@@ -77,13 +90,15 @@ export class ModelingDatasService {
 		}
 	}
 
-	removeSelectedVariable(): void {
+	removeSelectedVariable() {
 		this.modelingDatas.selectedVariable = undefined;
 	}
 
-	getSelectedVariable(): any {
-		return this.modelingDatas.selectedVariable;
-	}
+	getSelectedVariable(): Preparation2dVariableVO |
+		PreparationVariableVO |
+		TreePreparationVariableVO {
+			return this.modelingDatas.selectedVariable;
+		}
 
 	initSelectedVariable() {
 		const appDatas = this.appService.getDatas().datas;
@@ -140,14 +155,14 @@ export class ModelingDatasService {
 		if (appDatas[preparationSource] && appDatas[preparationSource].summary) {
 			summaryDatas = new SummaryVO(appDatas[preparationSource].summary);
 			return summaryDatas.displayDatas;
-		}else {
+		} else {
 			return undefined;
 		}
 	}
 
 	getTrainedPredictorsSummaryDatas(): InfosDatasI[] {
 		const appDatas = this.appService.getDatas().datas;
-		const trainedPredictorsSummaryDatas: InfosDatasI[]  = [];
+		const trainedPredictorsSummaryDatas: InfosDatasI[] = [];
 
 		for (let i = 0; i < appDatas.modelingReport.trainedPredictors.length; i++) {
 			trainedPredictorsSummaryDatas.push({

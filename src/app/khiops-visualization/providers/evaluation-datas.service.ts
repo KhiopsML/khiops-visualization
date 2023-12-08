@@ -47,6 +47,9 @@ import {
 import {
 	GridDatasI
 } from '@khiops-library/interfaces/grid-datas';
+import {
+	ChartToggleValuesI
+} from '@khiops-visualization/interfaces/chart-toggle-values';
 
 @Injectable({
 	providedIn: 'root'
@@ -59,7 +62,7 @@ export class EvaluationDatasService {
 
 	}
 
-	initialize(): any {
+	initialize() {
 		this.evaluationDatas = new EvaluationDatasVO();
 	}
 
@@ -67,14 +70,14 @@ export class EvaluationDatasService {
 		return this.evaluationDatas;
 	}
 
-	setLiftGraphDisplayedValues(object: any): void {
+	setLiftGraphDisplayedValues(object: ChartToggleValuesI[]) {
 		this.evaluationDatas.liftGraphDisplayedValues = object;
 	}
 
-	getLiftGraphDisplayedValues(): any {
+	getLiftGraphDisplayedValues(): ChartToggleValuesI[] {
 		return this.evaluationDatas.liftGraphDisplayedValues;
 	}
-	setSelectedEvaluationTypeVariable(object: EvaluationTypeVO): void {
+	setSelectedEvaluationTypeVariable(object: EvaluationTypeVO) {
 		this.evaluationDatas.selectedEvaluationTypeVariable = object;
 	}
 
@@ -82,20 +85,16 @@ export class EvaluationDatasService {
 		return this.evaluationDatas.selectedEvaluationTypeVariable;
 	}
 
-	setSelectedPredictorEvaluationVariable(object: EvaluationPredictorVO): void {
+	setSelectedPredictorEvaluationVariable(object: EvaluationPredictorVO) {
 		this.evaluationDatas.selectedPredictorEvaluationVariable = object;
 	}
 
-	getPredictorEvaluationVariableFromEvaluationType(type: string): any {
-		let variable: any;
-		variable = this.evaluationDatas.predictorEvaluations.values.find(e => e.type === type && e.rank === this.evaluationDatas.selectedPredictorEvaluationVariable.rank);
-		return variable;
+	getPredictorEvaluationVariableFromEvaluationType(type: string): EvaluationPredictorVO {
+		return this.evaluationDatas.predictorEvaluations.values.find(e => e.type === type && e.rank === this.evaluationDatas.selectedPredictorEvaluationVariable.rank);
 	}
 
-	getEvaluationVariableFromPredictorEvaluationType(type: string): any {
-		let variable: any;
-		variable = this.evaluationDatas.evaluationTypesSummary.values.find(e => e.type === type);
-		return variable;
+	getEvaluationVariableFromPredictorEvaluationType(type: string): EvaluationTypeVO {
+		return this.evaluationDatas.evaluationTypesSummary.values.find(e => e.type === type);
 	}
 
 	getEvaluationTypes(): any {
@@ -299,7 +298,7 @@ export class EvaluationDatasService {
 				// Now compute robustness for each object
 				for (let j = 0; j < datas.length; j++) {
 					const currentEl: EvaluationPredictorVO = datas[j];
-					const train: any = datas.find(e => e.currentEvaluationType === PREDICTOR_TYPES.TRAIN && e.name === currentEl.name); // find into data train the corresponding AUC train
+					const train: EvaluationPredictorVO = datas.find(e => e.currentEvaluationType === PREDICTOR_TYPES.TRAIN && e.name === currentEl.name); // find into data train the corresponding AUC train
 					currentEl.computeRobustness(train);
 				}
 			}

@@ -71,7 +71,7 @@ export class PreparationDatasService {
 
 	}
 
-	initialize(): any {
+	initialize() {
 
 		this.preparationDatas = new PreparationDatasVO();
 
@@ -210,7 +210,7 @@ export class PreparationDatasService {
 					let dimensionLength = 0;
 					let startIter = 0;
 
-					const currentVal: any = variableDetails.dataGrid.dimensions[0].partition[index][0];
+					const currentVal: string | number = variableDetails.dataGrid.dimensions[0].partition[index][0];
 
 					displayedColumns.push({
 						headerName: this.translate.get('GLOBAL.VALUES_OF') + variableDetails.dataGrid.dimensions[0].variable,
@@ -228,7 +228,7 @@ export class PreparationDatasService {
 
 					// If multi dimension array, trash cat is managed at the end of treatment
 					if (!isMultiDimPartition) {
-						startIter = variableDetails.inputValues.values.indexOf(currentVal);
+						startIter = variableDetails.inputValues.values.indexOf(currentVal.toString());
 						if (index === defaultGroupIndex) {
 							dimensionLength = variableDetails.inputValues.values.length;
 						} else {
