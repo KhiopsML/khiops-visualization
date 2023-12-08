@@ -424,7 +424,7 @@ export class TreePreparationDatasService {
 		return appDatas.treePreparationReport.summary.targetVariable;
 	}
 
-	setSelectedNodes(nodes: string[], trustedNodeSelection ? ) {
+	setSelectedNodes(nodes: string[], trustedNodeSelection ?: string ) {
 		const selectedNodes = [];
 		for (let i = 0; i < nodes.length; i++) {
 			const nodeDatas = this.getNodeFromName(nodes[i]);
