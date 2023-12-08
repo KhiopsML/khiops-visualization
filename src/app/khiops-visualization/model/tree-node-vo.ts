@@ -14,8 +14,11 @@ export class TreeNodeVO {
 	type: string;
 	childNodes: [];
 	partition: [];
-	targetValues: any;
-	children: any;
+	targetValues: {
+		frequencies: number[],
+		values: string[]
+	};
+	children: TreeNodeVO[];
 	color: string;
 	isTrusted: boolean;
 	defaultGroupIndex: number;
@@ -23,7 +26,6 @@ export class TreeNodeVO {
 	purity: number;
 	totalFreqs: number;
 	isCollapsed: boolean;
-	childrenList: any[];
 
 	constructor(object, classesCount, color ? , isTrusted ? ) {
 
@@ -76,7 +78,7 @@ export class TreeNodeVO {
 					for (let j = 0; j < childNodes[i].targetValues.frequencies.length; j++) {
 						const isExistingIndex = this.targetValues.values.length > 0 &&
 							this.targetValues.values.indexOf(childNodes[i].targetValues.values[j]);
-						if (isExistingIndex === false || isExistingIndex === -1) {
+						if (!isExistingIndex || isExistingIndex === -1) {
 							this.targetValues.values.push(childNodes[i].targetValues.values[j]);
 							this.targetValues.frequencies.push(childNodes[i].targetValues.frequencies[j]);
 						} else {
