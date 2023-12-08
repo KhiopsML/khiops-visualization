@@ -40,16 +40,36 @@ import {
 import {
 	KhiopsLibraryService
 } from '@khiops-library/providers/khiops-library.service';
-import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
-import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
-import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
-import { VariableVO } from '@khiops-visualization/model/variable-vo';
-import { Preparation2dDatasVO } from '@khiops-visualization/model/preparation2d-datas-vo';
-import { DistributionDatasVO } from '@khiops-visualization/model/distribution-datas-vo';
-import { PreparationDatasVO } from '@khiops-visualization/model/preparation-datas-vo';
-import { TreePreparationDatasVO } from '@khiops-visualization/model/tree-preparation-datas-vo';
-import { TreePreparationVariableVO } from '@khiops-visualization/model/tree-preparation-variable-vo';
-import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
+import {
+	ChartDatasVO
+} from '@khiops-library/model/chart-datas-vo';
+import {
+	GridDatasI
+} from '@khiops-library/interfaces/grid-datas';
+import {
+	InfosDatasI
+} from '@khiops-library/interfaces/infos-datas';
+import {
+	VariableVO
+} from '@khiops-visualization/model/variable-vo';
+import {
+	Preparation2dDatasVO
+} from '@khiops-visualization/model/preparation2d-datas-vo';
+import {
+	DistributionDatasVO
+} from '@khiops-visualization/model/distribution-datas-vo';
+import {
+	PreparationDatasVO
+} from '@khiops-visualization/model/preparation-datas-vo';
+import {
+	TreePreparationDatasVO
+} from '@khiops-visualization/model/tree-preparation-datas-vo';
+import {
+	TreePreparationVariableVO
+} from '@khiops-visualization/model/tree-preparation-variable-vo';
+import {
+	ChartToggleValuesI
+} from '@khiops-visualization/interfaces/chart-toggle-values';
 
 @Component({
 	selector: 'app-tree-preparation-view',
@@ -164,7 +184,10 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
 	}
 
 
-	onSelectTreeItemChanged(item: any) {
+	onSelectTreeItemChanged(item: {
+		id: string,
+		isLeaf: boolean
+	}) {
 		const [index, nodesToSelect] = this.treePreparationDatasService.getNodesLinkedToOneNode(item.id);
 		this.selectedBarIndex = index;
 		this.treePreparationDatasService.getCurrentIntervalDatas(this.selectedBarIndex);

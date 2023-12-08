@@ -44,7 +44,7 @@ export class Preparation2dDatasVO {
 			this.appDatas.bivariatePreparationReport.variablesPairsStatistics[0];
 	}
 
-	isSupervisedVariable(): any {
+	isSupervisedVariable(): boolean {
 		return this.appDatas && this.appDatas.bivariatePreparationReport &&
 			this.appDatas.bivariatePreparationReport.variablesPairsDetailedStatistics &&
 			this.appDatas.bivariatePreparationReport.variablesPairsDetailedStatistics[Object.keys(this.appDatas.bivariatePreparationReport.variablesPairsDetailedStatistics)[0]] &&

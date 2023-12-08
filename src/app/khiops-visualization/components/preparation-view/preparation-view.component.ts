@@ -212,7 +212,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
 		}
 	}
 
-	onSelectListItemChanged(item: any) {
+	onSelectListItemChanged(item: VariableVO) {
 		const modelingVariable = this.preparationDatasService.setSelectedVariable(item, this.preparationSource);
 		this.modelingDatasService.setSelectedVariable(modelingVariable);
 

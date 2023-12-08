@@ -80,7 +80,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
 	appDatas: any;
 	sizes: any;
 
-	preparationVariable: any; // Complexe, can be multiple types according to the preparationSource
+	preparationVariable: any; // Complex, can be multiple types according to the preparationSource
 
 	summaryDatas: InfosDatasI[];
 	targetVariableStatsDatas: ChartDatasVO;
