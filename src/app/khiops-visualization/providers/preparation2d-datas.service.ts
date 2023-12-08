@@ -73,7 +73,7 @@ export class Preparation2dDatasService {
 
 	}
 
-	initialize(): any {
+	initialize() {
 
 		const appDatas = this.appService.getDatas().datas;
 		this.preparation2dDatas = new Preparation2dDatasVO(appDatas)
@@ -110,7 +110,7 @@ export class Preparation2dDatasService {
 		return this.preparation2dDatas.isAxisInverted;
 	}
 
-	setSelectedCellIndex(index): void {
+	setSelectedCellIndex(index) {
 		this.preparation2dDatas.selectedCellIndex = index;
 		if (this.preparation2dDatas.matrixDatas && this.preparation2dDatas.matrixDatas.matrixCellDatas) {
 			const currentCell = this.preparation2dDatas.matrixDatas.matrixCellDatas.find(e => e.index === index);
@@ -120,7 +120,7 @@ export class Preparation2dDatasService {
 		}
 	}
 
-	setSelectedCell(cell: CellVO): void {
+	setSelectedCell(cell: CellVO) {
 		if (cell) {
 			this.preparation2dDatas.selectedCellIndex = cell.index;
 			this.preparation2dDatas.selectedCell = cell;
@@ -131,11 +131,11 @@ export class Preparation2dDatasService {
 		return this.preparation2dDatas.selectedCellIndex;
 	}
 
-	getSelectedCell(): any {
+	getSelectedCell(): CellVO {
 		return this.preparation2dDatas.selectedCell;
 	}
 
-	computeDistributionIndexFromMatrixCellIndex(index) {
+	computeDistributionIndexFromMatrixCellIndex(index: number) {
 		// get distribution bar chart index from selected matrix cell index
 		if (this.preparation2dDatas.matrixDatas) {
 			let moduloOfCellIndex = 0;
@@ -156,8 +156,10 @@ export class Preparation2dDatasService {
 		}
 	}
 
-	setSelectedRegressionVariable(currentVar: any) {
-		// Do not convert it into 2d var, it's a preparation var
+	/**
+	 * Case of regression data into modeling view
+	 */
+	setSelectedRegressionVariable(currentVar: Preparation2dVariableVO) {
 		this.preparation2dDatas.selectedVariable = currentVar;
 	}
 
@@ -165,11 +167,11 @@ export class Preparation2dDatasService {
 		return this.preparation2dDatas.selectedVariable;
 	}
 
-	getSelectedVariableRank(): any {
+	getSelectedVariableRank(): string {
 		return this.preparation2dDatas.selectedVariable.rank;
 	}
 
-	isSupervised(): any {
+	isSupervised(): boolean {
 		return this.preparation2dDatas.isSupervisedVariable();
 	}
 
@@ -190,7 +192,7 @@ export class Preparation2dDatasService {
 		return variableDatas;
 	}
 
-	getVariableFromNames(name1: string, name2: string): any {
+	getVariableFromNames(name1: string, name2: string): Preparation2dVariableVO {
 		let preparation2dVariable: any;
 		const appDatas = this.appService.getDatas().datas;
 		if (appDatas.bivariatePreparationReport && appDatas.bivariatePreparationReport.variablesPairsStatistics) {
@@ -206,7 +208,6 @@ export class Preparation2dDatasService {
 		let variable: any;
 		const appDatas = this.appService.getDatas().datas;
 		variable = appDatas.bivariatePreparationReport.variablesPairsStatistics.find(e => e.rank === rank);
-
 		return variable;
 	}
 
@@ -214,7 +215,7 @@ export class Preparation2dDatasService {
 	 * Format matrix datas to be displayed into table
 	 * @param fullFrequencies
 	 */
-	getMatrixCoocurenceCellsDatas(): any {
+	getMatrixCoocurenceCellsDatas(): CoocurenceCellsVO {
 		let matrixCells: CoocurenceCellsVO;
 
 		if (this.preparation2dDatas.matrixDatas && this.preparation2dDatas.matrixDatas.matrixCellDatas) {
@@ -480,7 +481,7 @@ export class Preparation2dDatasService {
 		return this.preparation2dDatas.matrixDatas;
 	}
 
-	getRegressionCellIds(xLength: any, yLength: any, datas: any): any {
+	getRegressionCellIds(xLength: any, yLength: any, datas: any) {
 		if (!datas.cellIds) {
 			datas.cellIds = [];
 			let k = 0;
@@ -494,7 +495,7 @@ export class Preparation2dDatasService {
 		}
 	}
 
-	getRegressionCellFrequencies(xLength: any, yLength: any, datas: any): any {
+	getRegressionCellFrequencies(xLength: any, yLength: any, datas: any) {
 		if (!datas.cellFrequencies) {
 			datas.cellFrequencies = [];
 			// transform array if regression

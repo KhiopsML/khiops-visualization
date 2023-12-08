@@ -48,6 +48,7 @@ import {
 import {
 	CellVO
 } from '@khiops-library/model/cell-vo';
+import { Preparation2dVariableVO } from '@khiops-visualization/model/preparation2d-variable-vo';
 
 /**
  * Test it with irisR file
@@ -101,7 +102,7 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
 			!deepEqual(changes.selectedVariable.currentValue, changes.selectedVariable.previousValue)) {
 
 			// For regression matrix, Define names based on current name and target variable
-			const currentVar: PreparationVariableVO = changes.selectedVariable.currentValue;
+			const currentVar: Preparation2dVariableVO = changes.selectedVariable.currentValue;
 			currentVar.name1 = currentVar.nameX = currentVar.name;
 			currentVar.name2 = currentVar.nameY = this.preparationDatasService.getTargetVariable(this.preparationSource);
 
