@@ -8,7 +8,7 @@ import { EvaluationTypeVO } from "./evaluation-type-vo";
 export class EvaluationDatasVO {
 	selectedEvaluationTypeVariable: EvaluationTypeVO = undefined;
 	selectedPredictorEvaluationVariable: EvaluationPredictorVO = undefined;
-	evaluationTypes = undefined;
+	evaluationTypes: any[] = undefined; // complex values
 	evaluationTypesSummary: GridDatasI = undefined;
 	liftGraphDatas: ChartDatasVO = undefined;
 	liftGraphDisplayedValues: ChartToggleValuesI[] = undefined;

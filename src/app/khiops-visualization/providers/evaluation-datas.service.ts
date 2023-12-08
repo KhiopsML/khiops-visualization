@@ -97,7 +97,7 @@ export class EvaluationDatasService {
 		return this.evaluationDatas.evaluationTypesSummary.values.find(e => e.type === type);
 	}
 
-	getEvaluationTypes(): any {
+	getEvaluationTypes(): any[] {
 		const appDatas = this.appService.getDatas().datas;
 
 		this.evaluationDatas.evaluationTypes = [];

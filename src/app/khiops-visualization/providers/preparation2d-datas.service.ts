@@ -53,9 +53,21 @@ import {
 import {
 	InformationsVO
 } from '@khiops-visualization/model/informations-vo';
-import { TYPES } from '@khiops-library/enum/types';
-import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
-import { MatrixRangeValuesI } from '@khiops-visualization/interfaces/matrix-range-values';
+import {
+	TYPES
+} from '@khiops-library/enum/types';
+import {
+	InfosDatasI
+} from '@khiops-library/interfaces/infos-datas';
+import {
+	MatrixRangeValuesI
+} from '@khiops-visualization/interfaces/matrix-range-values';
+import {
+	VariableVO
+} from '@khiops-visualization/model/variable-vo';
+import {
+	GridColumnsI
+} from '@khiops-library/interfaces/grid-columns';
 
 @Injectable({
 	providedIn: 'root'
@@ -193,7 +205,7 @@ export class Preparation2dDatasService {
 	}
 
 	getVariableFromNames(name1: string, name2: string): Preparation2dVariableVO {
-		let preparation2dVariable: any;
+		let preparation2dVariable: Preparation2dVariableVO;
 		const appDatas = this.appService.getDatas().datas;
 		if (appDatas.bivariatePreparationReport && appDatas.bivariatePreparationReport.variablesPairsStatistics) {
 			preparation2dVariable = appDatas.bivariatePreparationReport.variablesPairsStatistics.find(e => e.name1 === name1 && e.name2 === name2);
@@ -246,7 +258,10 @@ export class Preparation2dDatasService {
 	/**
 	 * Format cell datas details to be displayed into bottom table
 	 */
-	getCurrentCellDatas(): any {
+	getCurrentCellDatas(): {
+		values: any[][], // Dynamic values according to the input datas
+		displayedColumns: GridColumnsI[][],
+	} {
 
 		const selectedVariable = this.getSelectedVariable();
 
@@ -481,7 +496,7 @@ export class Preparation2dDatasService {
 		return this.preparation2dDatas.matrixDatas;
 	}
 
-	getRegressionCellIds(xLength: any, yLength: any, datas: any) {
+	getRegressionCellIds(xLength: number, yLength: number, datas: any) {
 		if (!datas.cellIds) {
 			datas.cellIds = [];
 			let k = 0;
@@ -495,7 +510,7 @@ export class Preparation2dDatasService {
 		}
 	}
 
-	getRegressionCellFrequencies(xLength: any, yLength: any, datas: any) {
+	getRegressionCellFrequencies(xLength: number, yLength: number, datas: any) {
 		if (!datas.cellFrequencies) {
 			datas.cellFrequencies = [];
 			// transform array if regression
@@ -514,7 +529,7 @@ export class Preparation2dDatasService {
 		}
 	}
 
-	getRegressionCellsPartIndexes(xLength: any, yLength: any, datas: any): any {
+	getRegressionCellsPartIndexes(xLength: number, yLength: number, datas: any) {
 
 		if (!datas.cellPartIndexes) {
 			datas.cellPartIndexes = [];
@@ -536,7 +551,7 @@ export class Preparation2dDatasService {
 	 * @param variablesDatas
 	 * @returns
 	 */
-	getGlobalMinAndMax2dValues(variablesDatas): MatrixRangeValuesI {
+	getGlobalMinAndMax2dValues(variablesDatas: Variable2dVO[] | VariableVO[]): MatrixRangeValuesI {
 
 		const currentRes: MatrixRangeValuesI = {
 			'CELL_INTEREST': [],

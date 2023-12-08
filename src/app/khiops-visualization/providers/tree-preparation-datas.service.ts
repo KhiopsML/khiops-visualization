@@ -66,7 +66,7 @@ export class TreePreparationDatasService {
 
 	}
 
-	initialize(): any {
+	initialize() {
 
 		const appDatas = this.appService.getDatas().datas;
 		this.treePreparationDatas = new TreePreparationDatasVO(appDatas);
@@ -99,7 +99,7 @@ export class TreePreparationDatasService {
 		this.setSelectedNodes(firstpartition, firstpartition[0]);
 	}
 
-	getFirstNodeLeaf(node): any {
+	getFirstNodeLeaf(node: TreeNodeVO): TreeNodeVO {
 		if (node.children.length > 0 && node.children[0].isLeaf === false) {
 			return this.getFirstNodeLeaf(node.children[0]);
 		} else {
@@ -107,7 +107,7 @@ export class TreePreparationDatasService {
 		}
 	}
 
-	getNodesLinkedToOneNode(id: any) {
+	getNodesLinkedToOneNode(id: string) {
 		const appDatas = this.appService.getDatas().datas;
 		const variablesDetailedStatistics = appDatas && appDatas.treePreparationReport &&
 			appDatas.treePreparationReport.variablesDetailedStatistics;
@@ -204,8 +204,8 @@ export class TreePreparationDatasService {
 		return variable;
 	}
 
-	getNodeFromName(name: string): any {
-		let node: any;
+	getNodeFromName(name: string): TreeNodeVO {
+		let node: TreeNodeVO;
 		if (this.treePreparationDatas.selectedFlattenTree) {
 			node = this.treePreparationDatas.selectedFlattenTree.find(e => e.nodeId === name);
 		}
@@ -231,11 +231,7 @@ export class TreePreparationDatasService {
 		return informationsDatas.displayDatas;
 	}
 
-	getLeafRules(): any {
-		return this.treePreparationDatas.selectedVariable;
-	}
-
-	getCurrentIntervalDatas(index ? ): GridDatasI {
+	getCurrentIntervalDatas(index ?: number ): GridDatasI {
 
 		index = index || 0;
 
@@ -428,7 +424,7 @@ export class TreePreparationDatasService {
 		return appDatas.treePreparationReport.summary.targetVariable;
 	}
 
-	setSelectedNodes(nodes: any, trustedNodeSelection ? ) {
+	setSelectedNodes(nodes: string[], trustedNodeSelection ? ) {
 		const selectedNodes = [];
 		for (let i = 0; i < nodes.length; i++) {
 			const nodeDatas = this.getNodeFromName(nodes[i]);
