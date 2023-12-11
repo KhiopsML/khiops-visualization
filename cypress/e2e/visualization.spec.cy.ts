@@ -2,13 +2,13 @@ import "../support/commands";
 
 describe("Test Khiops Visualization sample files", () => {
 	const files = [
-		// "new-hyper-tree.json",
-		// "irisR.json",
-		// "NGrams10_AnalysisResults.json",
-		// "NGrams100_AnalysisResults.json",
-		// "000_000_10000words_AllReports.json",
-		// "Regression_AllReports_All.json",
-		// "Regression_AllReports_PreparationOnly.json",
+		"new-hyper-tree.json",
+		"irisR.json",
+		"NGrams10_AnalysisResults.json",
+		"NGrams100_AnalysisResults.json",
+		"000_000_10000words_AllReports.json",
+		"Regression_AllReports_All.json",
+		"Regression_AllReports_PreparationOnly.json",
 		"missing-zero.json",
 		"C1000_AllReports.json",
 		"C100_AllReports.json",
