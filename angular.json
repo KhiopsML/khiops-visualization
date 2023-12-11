@@ -4,7 +4,11 @@
 	"newProjectRoot": "projects",
 	"cli": {
 		"analytics": false,
-		"packageManager": "yarn"
+		"packageManager": "yarn",
+		"schematicCollections": [
+			"@cypress/schematic",
+			"@schematics/angular"
+		]
 	},
 	"projects": {
 		"visualization-component": {
@@ -44,7 +48,10 @@
 						"polyfills": "src/polyfills.ts",
 						"tsConfig": "tsconfig.app.json",
 						"inlineStyleLanguage": "scss",
-						"assets": ["src/favicon.ico", "src/assets"],
+						"assets": [
+							"src/favicon.ico",
+							"src/assets"
+						],
 						"styles": [
 							"src/app/khiops-library/libs/treeview/treeview.scss",
 							"./libs/khiops-hypertree/dist/d3-hypertree-light.css",
@@ -54,8 +61,7 @@
 					},
 					"configurations": {
 						"production": {
-							"budgets": [
-								{
+							"budgets": [{
 									"type": "initial",
 									"maximumWarning": "6mb",
 									"maximumError": "13mb"
@@ -66,12 +72,10 @@
 									"maximumError": "2mb"
 								}
 							],
-							"fileReplacements": [
-								{
-									"replace": "src/environments/environment.ts",
-									"with": "src/environments/environment.prod.ts"
-								}
-							],
+							"fileReplacements": [{
+								"replace": "src/environments/environment.ts",
+								"with": "src/environments/environment.prod.ts"
+							}],
 							"outputHashing": "all"
 						},
 						"development": {
@@ -111,9 +115,59 @@
 						"tsConfig": "tsconfig.spec.json",
 						"karmaConfig": "karma.conf.js",
 						"inlineStyleLanguage": "scss",
-						"assets": ["src/favicon.ico", "src/assets"],
-						"styles": ["src/styles.scss"],
+						"assets": [
+							"src/favicon.ico",
+							"src/assets"
+						],
+						"styles": [
+							"src/styles.scss"
+						],
 						"scripts": []
+					}
+				},
+				"cypress-run": {
+					"builder": "@cypress/schematic:cypress",
+					"options": {
+						"devServerTarget": "visualization-component:serve"
+					},
+					"configurations": {
+						"production": {
+							"devServerTarget": "visualization-component:serve:production"
+						}
+					}
+				},
+				"cypress-open": {
+					"builder": "@cypress/schematic:cypress",
+					"options": {
+						"watch": true,
+						"headless": false
+					}
+				},
+				"ct": {
+					"builder": "@cypress/schematic:cypress",
+					"options": {
+						"devServerTarget": "visualization-component:serve",
+						"watch": true,
+						"headless": false,
+						"testingType": "component"
+					},
+					"configurations": {
+						"development": {
+							"devServerTarget": "visualization-component:serve:development"
+						}
+					}
+				},
+				"e2e": {
+					"builder": "@cypress/schematic:cypress",
+					"options": {
+						"devServerTarget": "visualization-component:serve",
+						"watch": true,
+						"headless": false
+					},
+					"configurations": {
+						"production": {
+							"devServerTarget": "visualization-component:serve:production"
+						}
 					}
 				}
 			}
@@ -167,8 +221,7 @@
 					},
 					"configurations": {
 						"production": {
-							"budgets": [
-								{
+							"budgets": [{
 									"type": "initial",
 									"maximumWarning": "6mb",
 									"maximumError": "13mb"
@@ -179,8 +232,7 @@
 									"maximumError": "2mb"
 								}
 							],
-							"fileReplacements": [
-								{
+							"fileReplacements": [{
 									"replace": "projects/khiops-webcomponent/src/environments/environment.ts",
 									"with": "projects/khiops-webcomponent/src/environments/environment.prod.ts"
 								},
@@ -219,6 +271,53 @@
 					"options": {
 						"browserTarget": "khiops-webcomponent:build"
 					}
+				},
+				"cypress-run": {
+					"builder": "@cypress/schematic:cypress",
+					"options": {
+						"devServerTarget": "khiops-webcomponent:serve",
+						"configFile": "projects/khiops-webcomponent/cypress.config.js"
+					},
+					"configurations": {
+						"production": {
+							"devServerTarget": "khiops-webcomponent:serve:production"
+						}
+					}
+				},
+				"cypress-open": {
+					"builder": "@cypress/schematic:cypress",
+					"options": {
+						"watch": true,
+						"headless": false,
+						"configFile": "projects/khiops-webcomponent/cypress.config.js"
+					}
+				},
+				"ct": {
+					"builder": "@cypress/schematic:cypress",
+					"options": {
+						"devServerTarget": "khiops-webcomponent:serve",
+						"watch": true,
+						"headless": false,
+						"testingType": "component"
+					},
+					"configurations": {
+						"development": {
+							"devServerTarget": "khiops-webcomponent:serve:development"
+						}
+					}
+				},
+				"e2e": {
+					"builder": "@cypress/schematic:cypress",
+					"options": {
+						"devServerTarget": "khiops-webcomponent:serve",
+						"watch": true,
+						"headless": false
+					},
+					"configurations": {
+						"production": {
+							"devServerTarget": "khiops-webcomponent:serve:production"
+						}
+					}
 				}
 			}
 		},
@@ -249,13 +348,14 @@
 							"projects/khiops-pwa/src/favicon.ico",
 							"projects/khiops-pwa/src/assets"
 						],
-						"styles": ["projects/khiops-pwa/src/styles.scss"],
+						"styles": [
+							"projects/khiops-pwa/src/styles.scss"
+						],
 						"scripts": []
 					},
 					"configurations": {
 						"production": {
-							"budgets": [
-								{
+							"budgets": [{
 									"type": "initial",
 									"maximumWarning": "500kb",
 									"maximumError": "1mb"
@@ -266,12 +366,10 @@
 									"maximumError": "4kb"
 								}
 							],
-							"fileReplacements": [
-								{
-									"replace": "projects/khiops-pwa/src/environments/environment.ts",
-									"with": "projects/khiops-pwa/src/environments/environment.prod.ts"
-								}
-							],
+							"fileReplacements": [{
+								"replace": "projects/khiops-pwa/src/environments/environment.ts",
+								"with": "projects/khiops-pwa/src/environments/environment.prod.ts"
+							}],
 							"outputHashing": "all"
 						},
 						"development": {
@@ -301,6 +399,53 @@
 					"builder": "@angular-devkit/build-angular:extract-i18n",
 					"options": {
 						"browserTarget": "khiops-pwa:build"
+					}
+				},
+				"cypress-run": {
+					"builder": "@cypress/schematic:cypress",
+					"options": {
+						"devServerTarget": "khiops-pwa:serve",
+						"configFile": "projects/khiops-pwa/cypress.config.js"
+					},
+					"configurations": {
+						"production": {
+							"devServerTarget": "khiops-pwa:serve:production"
+						}
+					}
+				},
+				"cypress-open": {
+					"builder": "@cypress/schematic:cypress",
+					"options": {
+						"watch": true,
+						"headless": false,
+						"configFile": "projects/khiops-pwa/cypress.config.js"
+					}
+				},
+				"ct": {
+					"builder": "@cypress/schematic:cypress",
+					"options": {
+						"devServerTarget": "khiops-pwa:serve",
+						"watch": true,
+						"headless": false,
+						"testingType": "component"
+					},
+					"configurations": {
+						"development": {
+							"devServerTarget": "khiops-pwa:serve:development"
+						}
+					}
+				},
+				"e2e": {
+					"builder": "@cypress/schematic:cypress",
+					"options": {
+						"devServerTarget": "khiops-pwa:serve",
+						"watch": true,
+						"headless": false
+					},
+					"configurations": {
+						"production": {
+							"devServerTarget": "khiops-pwa:serve:production"
+						}
 					}
 				}
 			}

@@ -3,11 +3,19 @@
 		<button type="button" mat-flat-button color="primary" (click)="onClickOpen(fileInput)">{{
 			translate.get('GLOBAL.OPEN_FILE') }}</button>
 		<input hidden (change)="openFileDialog($event)" #fileInput type="file" id="file" [accept]="associationFiles">
+
 	</div>
-	<div id="loading-indicator" *ngIf="fileLoaderDatas.isLoadingDatas && !fileLoaderDatas.datas">
-		<mat-spinner diameter="40" color="accent" mode="indeterminate"></mat-spinner>
-		<span *ngIf="!fileLoaderDatas.isBigJsonFile" attr.aria-label="{{ translate.get('GLOBAL.LOADING_FILE') }}">{{ translate.get('GLOBAL.LOADING_FILE') }} ...</span>
-		<span *ngIf="fileLoaderDatas.isBigJsonFile" attr.aria-label="{{ translate.get('GLOBAL.LOADING_FILE') }}">{{ translate.get('GLOBAL.BIG_FILES_LOADING_WARNING') }}</span>
-		<span *ngIf="fileLoaderDatas.isBigJsonFile">{{translate.get('GLOBAL.LOADING')}} {{fileLoaderDatas.loadingInfo}}</span>
+		<div id="loading-indicator" *ngIf="fileLoaderDatas.isLoadingDatas && !fileLoaderDatas.datas">
+			<mat-spinner diameter="40" color="accent" mode="indeterminate"></mat-spinner>
+			<span *ngIf="!fileLoaderDatas.isBigJsonFile" attr.aria-label="{{ translate.get('GLOBAL.LOADING_FILE') }}">{{ translate.get('GLOBAL.LOADING_FILE') }} ...</span>
+			<span *ngIf="fileLoaderDatas.isBigJsonFile" attr.aria-label="{{ translate.get('GLOBAL.LOADING_FILE') }}">{{ translate.get('GLOBAL.BIG_FILES_LOADING_WARNING') }}</span>
+			<span *ngIf="fileLoaderDatas.isBigJsonFile">{{translate.get('GLOBAL.LOADING')}} {{fileLoaderDatas.loadingInfo}}</span>
+		</div>
+		<!-- DO NOT REMOVE - used by cypress to load files -->
+		<div style="display:none">
+			<button id="open-file-button" type="button" mat-flat-button color="primary" (click)="loadDebugFile(cyInputText)">{{
+			translate.get('GLOBAL.OPEN_FILE') }}</button>
+			<input [(ngModel)]="cyInputText"  #fileInput type="text" id="open-file-input">
+		</div>
+		<!-- END DO NOT REMOVE -->
 	</div>
-</div>

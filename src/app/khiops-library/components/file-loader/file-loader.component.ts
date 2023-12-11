@@ -34,6 +34,7 @@ export class FileLoaderComponent implements OnInit {
 	fileLoaderDatas: any;
 	isProdMode = false;
 	associationFiles = []
+	cyInputText: string; // cypress input field, used to load files in cypress
 
 	constructor(private ngzone: NgZone,
 		private fileLoaderService: FileLoaderService,
@@ -56,13 +57,13 @@ export class FileLoaderComponent implements OnInit {
 		this.associationFiles = [...associationFiles];
 	}
 
-	loadDebugFile() {
+	loadDebugFile(fileName?: string) {
 
 		this.onFileLoaderDataChanged(undefined);
 
 		this.ngzone.run(
 			() => {
-				this.fileLoaderService.debugReadDatas().then(datas => {
+				this.fileLoaderService.debugReadDatas(fileName).then(datas => {
 					this.onFileLoaderDataChanged(datas);
 				}).catch(error => {
 					console.warn(this.translate.get('SNACKS.OPEN_FILE_ERROR'), error);

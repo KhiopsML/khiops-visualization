@@ -1,6 +1,6 @@
 export const covisualizationCommonEnvironment = {
 	GLOBAL: {
-		TO_FIXED: 4,
+		TO_FIXED: 8,
 		LS_ID: "KHIOPS_COVISUALIZATION_",
 		DEBUG_SOFTWARE_LABEL: "KC",
 		MATRIX_CONTRAST: 0,
