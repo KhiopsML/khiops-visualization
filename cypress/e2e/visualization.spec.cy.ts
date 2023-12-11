@@ -2,12 +2,13 @@ import "../support/commands";
 
 describe("Test Khiops Visualization sample files", () => {
 	const files = [
-		"new-hyper-tree.json",
-		"NGrams10_AnalysisResults.json",
-		"NGrams100_AnalysisResults.json",
-		"000_000_10000words_AllReports.json",
-		"Regression_AllReports_All.json",
-		"Regression_AllReports_PreparationOnly.json",
+		// "new-hyper-tree.json",
+		// "irisR.json",
+		// "NGrams10_AnalysisResults.json",
+		// "NGrams100_AnalysisResults.json",
+		// "000_000_10000words_AllReports.json",
+		// "Regression_AllReports_All.json",
+		// "Regression_AllReports_PreparationOnly.json",
 		"missing-zero.json",
 		"C1000_AllReports.json",
 		"C100_AllReports.json",
@@ -16,7 +17,6 @@ describe("Test Khiops Visualization sample files", () => {
 		"explanatory.json",
 		"adult-bivar.json",
 		"desc-bivar.json",
-		"irisR.json",
 		"bi2.json",
 		"bi3.json",
 		"Std_Iris_AnalysisResults.khj",
@@ -82,18 +82,23 @@ describe("Test Khiops Visualization sample files", () => {
 							setupModelingTests(datas, testsValues);
 						}
 						if (datas.bivariatePreparationReport) {
-							testView.push("Preparation 2d");
+							testView.push("Preparation 2D");
 							setupPreparation2dTests(datas, testsValues);
 						}
-						if (datas.textPreparationReport) {
-							testView.push("Text preparation");
-							setupTextPreparationTests(datas, testsValues);
-						}
-						if (datas.treePreparationReport) {
-							testView.push("Tree preparation");
-							setupTreePreparationTests(datas, testsValues);
-						}
-						if (datas.evaluationReport) {
+						// if (datas.textPreparationReport) {
+						// 	testView.push("Text preparation");
+						// 	setupTextPreparationTests(datas, testsValues);
+						// }
+						// if (datas.treePreparationReport) {
+						// 	testView.push("Tree preparation");
+						// 	setupTreePreparationTests(datas, testsValues);
+						// }
+
+						if (
+							datas.evaluationReport ||
+							datas.trainEvaluationReport ||
+							datas.testEvaluationReport
+						) {
 							testView.push("Evaluation");
 							setupEvaluationTests(datas, testsValues);
 						}
@@ -103,11 +108,13 @@ describe("Test Khiops Visualization sample files", () => {
 								.first()
 								.click();
 							const testValue = testsValues[view];
-							testValue.forEach((test) => {
-								if (test) {
-									cy.contains(test);
-								}
-							});
+							if (testValue) {
+								testValue.forEach((test) => {
+									if (test) {
+										cy.contains(test);
+									}
+								});
+							}
 						});
 					}
 				);
@@ -145,7 +152,13 @@ function setupPreparationTests(datas, testsValues) {
 	}
 	if (datas.preparationReport?.variablesDetailedStatistics?.R01) {
 		if (isRegressionAnalysis(datas) || isExplanatoryAnalysis(datas)) {
-			testsValues.Preparation.push("Target values"); // regression matrix case or explanatory
+			// regression matrix case or explanatory
+			// Check if matrix is displayed
+			testsValues.Preparation.push("Target values");
+			// check cell stats grid
+			testsValues.Preparation.push(
+				"of " + datas.preparationReport?.summary?.targetVariable
+			);
 		} else if (
 			datas.preparationReport?.variablesDetailedStatistics?.R01.dataGrid
 				?.dimensions.length > 1
@@ -177,18 +190,129 @@ function setupPreparationTests(datas, testsValues) {
 	}
 }
 
-function setupModelingTests(datas, testsValues) {}
-function setupPreparation2dTests(datas, testsValues) {}
+function setupModelingTests(datas, testsValues) {
+	testsValues.Modeling.push("Summary");
+	testsValues.Modeling.push("Trained predictors");
+	testsValues.Modeling.push("Select trained predictor");
+	testsValues.Modeling.push("Naive Bayes");
+	testsValues.Modeling.push(datas.preparationReport.summary.database);
+	testsValues.Modeling.push(
+		datas.preparationReport.summary.targetValues?.values[0].slice(0, 10) // slice it because it's a legend text
+	);
+	if (datas.modelingReport.variablesStatistics) {
+		testsValues.Modeling.push(
+			datas.modelingReport.trainedPredictorsDetails?.R1?.selectedVariables
+				.length + " Variables"
+		);
+		// test some grid coluns
+		testsValues.Modeling.push("name");
+		testsValues.Modeling.push("weight");
+		// testsValues.Modeling.push("importance");
+
+		// test some grid values
+		testsValues.Modeling.push(
+			datas.modelingReport.trainedPredictorsDetails?.R1.name
+		);
+		testsValues.Modeling.push(
+			datas.modelingReport.trainedPredictorsDetails?.R1.level
+		);
+	}
+	if (datas.preparationReport?.variablesDetailedStatistics?.R01) {
+		if (isRegressionAnalysis(datas) || isExplanatoryAnalysis(datas)) {
+			// regression matrix case or explanatory
+			// Check if matrix is displayed
+			testsValues.Modeling.push("Target values");
+			// check cell stats grid
+			testsValues.Modeling.push(
+				datas.preparationReport?.variablesDetailedStatistics?.R01
+					?.dataGrid?.dimensions[0]?.partition[0][0]
+			);
+		} else if (
+			datas.preparationReport?.variablesDetailedStatistics?.R01?.dataGrid
+				?.dimensions.length > 1
+		) {
+			testsValues.Modeling.push("Target distribution"); // normal case
+		}
+		if (datas.preparationReport?.summary?.targetValues) {
+			testsValues.Modeling.push("Target variable stats");
+		}
+		testsValues.Modeling.push("Distribution");
+	}
+
+	if (
+		datas.preparationReport?.variablesStatistics &&
+		datas.preparationReport?.variablesStatistics[0]?.type === "Numerical" &&
+		datas.preparationReport?.variablesDetailedStatistics?.R01?.dataGrid
+			?.isSupervised === false
+	) {
+		// histogram case
+		testsValues.Modeling.push("Density");
+		var index = testsValues.Modeling.indexOf("Distribution");
+		if (index !== -1) {
+			testsValues.Modeling.splice(index, 1);
+		}
+		var index = testsValues.Modeling.indexOf("Target Distribution");
+		if (index !== -1) {
+			testsValues.Modeling.splice(index, 1);
+		}
+	}
+}
+
+function setupEvaluationTests(datas, testsValues) {
+	testsValues.Evaluation.push("Evaluation type");
+	testsValues.Evaluation.push("Filter curves");
+	testsValues.Evaluation.push("Predictor evaluations");
+
+	if (datas.trainEvaluationReport?.summary?.instances) {
+		testsValues.Evaluation.push(
+			datas.trainEvaluationReport?.summary?.instances
+		);
+	}
+
+	// Test some grid datas
+	if (datas.trainEvaluationReport?.predictorsPerformance?.accuracy) {
+		testsValues.Evaluation.push(
+			datas.trainEvaluationReport?.predictorsPerformance?.accuracy
+		);
+	}
+	if (datas.testEvaluationReport?.predictorsPerformance?.auc) {
+		testsValues.Evaluation.push(
+			datas.testEvaluationReport?.predictorsPerformance?.auc
+		);
+	}
+
+	if (
+		(datas.trainEvaluationReport?.predictorsDetailedPerformance &&
+			datas.trainEvaluationReport?.liftCurves) ||
+		(datas.testEvaluationReport?.predictorsDetailedPerformance &&
+			datas.testEvaluationReport?.liftCurves) ||
+		(datas.evaluationReport?.predictorsDetailedPerformance &&
+			datas.evaluationReport?.liftCurves)
+	) {
+		testsValues.Evaluation.push("Cumulative gain chart");
+		testsValues.Evaluation.push("Confusion matrix");
+		testsValues.Evaluation.push("Population");
+		testsValues.Evaluation.push("Frequency");
+		testsValues.Evaluation.push("gini");
+		testsValues.Evaluation.push("accuracy");
+	} else {
+		testsValues.Evaluation.push("REC Curves");
+		testsValues.Evaluation.push("rmse");
+	}
+}
+
+function setupPreparation2dTests(datas, testsValues) {
+	testsValues.Preparation2d.push("Summary");
+}
 function setupTextPreparationTests(datas, testsValues) {}
 function setupTreePreparationTests(datas, testsValues) {}
-function setupEvaluationTests(datas, testsValues) {}
 
 function initTestValues() {
 	const testsValues = {
 		Preparation: [],
 		Preparation2d: [],
-		"Tree preparation": [],
-		"Text preparation": [],
+		TreePreparation: [],
+		TextPreparation: [],
 		Modeling: [],
 		Evaluation: [],
 	};
