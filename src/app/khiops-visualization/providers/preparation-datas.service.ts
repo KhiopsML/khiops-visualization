@@ -397,7 +397,7 @@ export class PreparationDatasService {
 	getAvailablePreparationReport(): string {
 		const appDatas = this.appService.getDatas().datas;
 		let preparationSource = REPORTS.PREPARATION_REPORT;
-		if (!appDatas[preparationSource] || !appDatas[preparationSource].variablesStatistics) {
+		if ((!appDatas[preparationSource] || !appDatas[preparationSource].variablesStatistics && appDatas[REPORTS.TEXT_PREPARATION_REPORT])) {
 			preparationSource = REPORTS.TEXT_PREPARATION_REPORT;
 		}
 		return preparationSource;
