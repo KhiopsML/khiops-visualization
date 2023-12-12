@@ -64,7 +64,6 @@ import {
 	UtilsService
 } from '@khiops-library/providers/utils.service';
 
-
 @Component({
 	selector: 'app-home-layout',
 	templateUrl: './homeLayout.component.html',

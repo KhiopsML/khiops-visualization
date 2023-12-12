@@ -6,9 +6,6 @@ import {
 	AppService
 } from '../../providers/app.service';
 import {
-	AppConfig
-} from 'src/environments/environment';
-import {
 	SelectableTabComponent
 } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import {
