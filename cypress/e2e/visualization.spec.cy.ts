@@ -1,7 +1,20 @@
 import "../support/commands";
+import "../utils/utils";
+import { setupPreparationTests } from "../setups/preparation-tests";
+import { isExplanatoryAnalysis, isRegressionAnalysis } from "../utils/utils";
+import { setupPreparation2dTests } from "cypress/setups/preparation-2d-tests";
+import { setupModelingTests } from "cypress/setups/modeling-tests";
+import { setupEvaluationTests } from "cypress/setups/evaluation-tests";
+import { setupTextPreparationTests } from "cypress/setups/text-preparation-tests.";
+import { setupTreePreparationTests } from "cypress/setups/tree-preparation-tests";
 
 describe("Test Khiops Visualization sample files", () => {
 	const files = [
+		"000_000_10000words_AllReports.json",
+		"CoronaWords100000_AllReports.V11.json",
+		"NGrams10_AnalysisResults.json",
+		"NGrams100_AnalysisResults.json",
+		"Words100_AllReports.json",
 		"Natives-Arbres_Paires_AllReports.json",
 		"tree-AllReports.json", // old version
 		"tree.json", // old version
@@ -17,9 +30,6 @@ describe("Test Khiops Visualization sample files", () => {
 		"tree-education_AllReports.json",
 		"leafrules.khj",
 		"irisR.json",
-		"NGrams10_AnalysisResults.json",
-		"NGrams100_AnalysisResults.json",
-		"000_000_10000words_AllReports.json",
 		"Regression_AllReports_All.json",
 		"Regression_AllReports_PreparationOnly.json",
 		"C1000_AllReports.json",
@@ -51,9 +61,7 @@ describe("Test Khiops Visualization sample files", () => {
 		"Essai_1_AllReports.json",
 		"typeBotnet_AllReports.json",
 		"irisU.json",
-		"CoronaWords100000_AllReports.V11.json",
 		"CrirteoAllReports.json",
-		"Words100_AllReports.json",
 		"UnivariateAnalysisResults.json",
 		"ylogAdultAllReports.json",
 		"AdultAllReports.json",
@@ -137,289 +145,6 @@ describe("Test Khiops Visualization sample files", () => {
 	});
 });
 
-function setupPreparationTests(datas, testsValues) {
-	testsValues.Preparation.push("Summary");
-	testsValues.Preparation.push("Informations");
-	testsValues.Preparation.push(datas.preparationReport.summary.database);
-	testsValues.Preparation.push(
-		datas.preparationReport.summary.discretization
-	);
-	testsValues.Preparation.push(
-		datas.preparationReport.summary.targetValues?.values[0].slice(0, 10) // slice it because it's a legend text
-	);
-	testsValues.Preparation.push(
-		datas.preparationReport.summary.evaluatedVariables
-	);
-	if (datas.preparationReport.variablesStatistics) {
-		testsValues.Preparation.push(
-			datas.preparationReport.variablesStatistics.length + " Variables"
-		);
-		testsValues.Preparation.push("Name");
-		testsValues.Preparation.push("Derivation rule");
-
-		testsValues.Preparation.push(
-			datas.preparationReport.variablesStatistics[0].rank
-		);
-		testsValues.Preparation.push(
-			datas.preparationReport.variablesStatistics[0].level
-		);
-	}
-	if (
-		datas.preparationReport?.variablesDetailedStatistics?.R01 ||
-		datas.preparationReport?.variablesDetailedStatistics?.R001
-	) {
-		if (isRegressionAnalysis(datas) || isExplanatoryAnalysis(datas)) {
-			// regression matrix case or explanatory
-			// Check if matrix is displayed
-			testsValues.Preparation.push("Target values");
-			// check cell stats grid
-			testsValues.Preparation.push(
-				"of " + datas.preparationReport?.summary?.targetVariable
-			);
-		} else if (
-			datas.preparationReport?.variablesDetailedStatistics?.R01?.dataGrid
-				?.dimensions.length > 1 ||
-			datas.preparationReport?.variablesDetailedStatistics?.R001?.dataGrid
-				?.dimensions.length > 1
-		) {
-			testsValues.Preparation.push("Target distribution"); // normal case
-		}
-		if (datas.preparationReport?.summary?.targetValues) {
-			testsValues.Preparation.push("Target variable stats");
-		}
-		testsValues.Preparation.push("Distribution");
-	}
-
-	if (
-		datas.preparationReport?.variablesStatistics &&
-		datas.preparationReport?.variablesStatistics[0]?.type === "Numerical" &&
-		(datas.preparationReport?.variablesDetailedStatistics?.R01?.dataGrid
-			?.isSupervised === false ||
-			datas.preparationReport?.variablesDetailedStatistics?.R001?.dataGrid
-				?.isSupervised === false)
-	) {
-		// histogram case
-		testsValues.Preparation.push("Density");
-		var index = testsValues.Preparation.indexOf("Distribution");
-		if (index !== -1) {
-			testsValues.Preparation.splice(index, 1);
-		}
-		var index = testsValues.Preparation.indexOf("Target Distribution");
-		if (index !== -1) {
-			testsValues.Preparation.splice(index, 1);
-		}
-	}
-}
-
-function setupModelingTests(datas, testsValues) {
-	testsValues.Modeling.push("Summary");
-	testsValues.Modeling.push("Trained predictors");
-	testsValues.Modeling.push("Select trained predictor");
-	testsValues.Modeling.push("Naive Bayes");
-	testsValues.Modeling.push(datas.preparationReport.summary.database);
-	testsValues.Modeling.push(
-		datas.preparationReport.summary.targetValues?.values[0].slice(0, 10) // slice it because it's a legend text
-	);
-	if (datas.modelingReport.variablesStatistics) {
-		testsValues.Modeling.push(
-			datas.modelingReport.trainedPredictorsDetails?.R1?.selectedVariables
-				.length + " Variables"
-		);
-		// test some grid coluns
-		testsValues.Modeling.push("name");
-		testsValues.Modeling.push("weight");
-		// testsValues.Modeling.push("importance");
-
-		// test some grid values
-		testsValues.Modeling.push(
-			datas.modelingReport.trainedPredictorsDetails?.R1.name
-		);
-		testsValues.Modeling.push(
-			datas.modelingReport.trainedPredictorsDetails?.R1.level
-		);
-	}
-	if (
-		datas.preparationReport?.variablesDetailedStatistics?.R01 ||
-		datas.preparationReport?.variablesDetailedStatistics?.R001
-	) {
-		if (isRegressionAnalysis(datas) || isExplanatoryAnalysis(datas)) {
-			// regression matrix case or explanatory
-			// Check if matrix is displayed
-			testsValues.Modeling.push("Target values");
-			// check cell stats grid
-			if (datas.preparationReport?.variablesDetailedStatistics?.R01) {
-				testsValues.Modeling.push(
-					datas.preparationReport?.variablesDetailedStatistics?.R01
-						?.dataGrid?.dimensions[0]?.partition[0][0]
-				);
-			}
-			if (datas.preparationReport?.variablesDetailedStatistics?.R001) {
-				testsValues.Modeling.push(
-					datas.preparationReport?.variablesDetailedStatistics?.R001
-						?.dataGrid?.dimensions[0]?.partition[0][0]
-				);
-			}
-		} else if (
-			datas.preparationReport?.variablesDetailedStatistics?.R01?.dataGrid
-				?.dimensions.length > 1 ||
-			datas.preparationReport?.variablesDetailedStatistics?.R001?.dataGrid
-				?.dimensions.length > 1
-		) {
-			testsValues.Modeling.push("Target distribution"); // normal case
-		}
-		if (datas.preparationReport?.summary?.targetValues) {
-			testsValues.Modeling.push("Target variable stats");
-		}
-		testsValues.Modeling.push("Distribution");
-	}
-
-	if (
-		datas.preparationReport?.variablesStatistics &&
-		datas.preparationReport?.variablesStatistics[0]?.type === "Numerical" &&
-		(datas.preparationReport?.variablesDetailedStatistics?.R01?.dataGrid
-			?.isSupervised === false ||
-			datas.preparationReport?.variablesDetailedStatistics?.R001?.dataGrid
-				?.isSupervised === false)
-	) {
-		// histogram case
-		testsValues.Modeling.push("Density");
-		var index = testsValues.Modeling.indexOf("Distribution");
-		if (index !== -1) {
-			testsValues.Modeling.splice(index, 1);
-		}
-		var index = testsValues.Modeling.indexOf("Target Distribution");
-		if (index !== -1) {
-			testsValues.Modeling.splice(index, 1);
-		}
-	}
-}
-
-function setupEvaluationTests(datas, testsValues) {
-	testsValues.Evaluation.push("Evaluation type");
-	testsValues.Evaluation.push("Filter curves");
-	testsValues.Evaluation.push("Predictor evaluations");
-
-	if (datas.trainEvaluationReport?.summary?.instances) {
-		testsValues.Evaluation.push(
-			datas.trainEvaluationReport?.summary?.instances
-		);
-	}
-
-	// Test some grid datas
-	if (datas.trainEvaluationReport?.predictorsPerformance?.accuracy) {
-		testsValues.Evaluation.push(
-			datas.trainEvaluationReport?.predictorsPerformance?.accuracy
-		);
-	}
-	if (datas.testEvaluationReport?.predictorsPerformance?.auc) {
-		testsValues.Evaluation.push(
-			datas.testEvaluationReport?.predictorsPerformance?.auc
-		);
-	}
-
-	if (
-		(datas.trainEvaluationReport?.predictorsDetailedPerformance &&
-			datas.trainEvaluationReport?.liftCurves) ||
-		(datas.testEvaluationReport?.predictorsDetailedPerformance &&
-			datas.testEvaluationReport?.liftCurves) ||
-		(datas.evaluationReport?.predictorsDetailedPerformance &&
-			datas.evaluationReport?.liftCurves)
-	) {
-		testsValues.Evaluation.push("Cumulative gain chart");
-		testsValues.Evaluation.push("Confusion matrix");
-		testsValues.Evaluation.push("Population");
-		testsValues.Evaluation.push("Frequency");
-		testsValues.Evaluation.push("gini");
-		testsValues.Evaluation.push("accuracy");
-	} else {
-		testsValues.Evaluation.push("REC Curves");
-		testsValues.Evaluation.push("rmse");
-	}
-}
-
-function setupPreparation2dTests(datas, testsValues) {
-	testsValues.Preparation2d.push("Summary");
-	testsValues.Preparation2d.push(
-		datas.bivariatePreparationReport?.summary?.database
-	);
-	testsValues.Preparation2d.push(
-		datas.bivariatePreparationReport?.summary?.instances
-	);
-	testsValues.Preparation2d.push(
-		datas.bivariatePreparationReport?.summary?.learningTask
-	);
-
-	testsValues.Preparation2d.push(
-		Object.keys(datas.bivariatePreparationReport?.variablesPairsStatistics)
-			.length + " Pair variables"
-	);
-
-	testsValues.Preparation2d.push(
-		datas.bivariatePreparationReport?.variablesPairsStatistics[0]?.label
-	);
-	if (
-		datas.bivariatePreparationReport?.variablesPairsDetailedStatistics?.R01
-	) {
-		testsValues.Preparation2d.push("I ("); // check if matrix component is displayed
-		testsValues.Preparation2d.push(
-			datas.bivariatePreparationReport?.variablesPairsDetailedStatistics?.R01?.dataGrid?.dimensions[0]?.partition[0][0].toString()
-		);
-	}
-	if (
-		datas.bivariatePreparationReport?.variablesPairsDetailedStatistics?.R001
-	) {
-		testsValues.Preparation2d.push("I ("); // check if matrix component is displayed
-		testsValues.Preparation2d.push(
-			datas.bivariatePreparationReport?.variablesPairsDetailedStatistics?.R001?.dataGrid?.dimensions[0]?.partition[0][0].toString()
-		);
-	}
-}
-function setupTextPreparationTests(datas, testsValues) {}
-function setupTreePreparationTests(datas, testsValues) {
-	testsValues.TreePreparation.push("Summary");
-	testsValues.TreePreparation.push(
-		datas.treePreparationReport?.summary?.database
-	);
-	testsValues.TreePreparation.push(
-		datas.treePreparationReport?.summary?.instances
-	);
-	testsValues.TreePreparation.push("Evaluated variables");
-	if (datas.treePreparationReport?.dimensionTree) {
-		testsValues.TreePreparation.push("Hyper tree visualization");
-
-		testsValues.TreePreparation.push(
-			datas.treePreparationReport?.variablesStatistics.length +
-				" Variables"
-		);
-		testsValues.TreePreparation.push(
-			datas.treePreparationReport?.variablesStatistics[0]?.level
-		);
-		testsValues.TreePreparation.push(
-			datas.treePreparationReport?.variablesStatistics[0]?.name
-		);
-		testsValues.TreePreparation.push("Decision tree");
-
-		testsValues.TreePreparation.push(
-			datas.treePreparationReport?.treeDetails?.R01?.treeNodes?.nodeId
-		);
-		testsValues.TreePreparation.push(
-			datas.treePreparationReport?.treeDetails?.R01?.treeNodes?.variable
-		);
-		testsValues.TreePreparation.push(
-			datas.treePreparationReport?.treeDetails?.R001?.treeNodes?.nodeId
-		);
-		testsValues.TreePreparation.push(
-			datas.treePreparationReport?.treeDetails?.R001?.treeNodes?.variable
-		);
-		testsValues.TreePreparation.push("Selection details");
-		testsValues.TreePreparation.push("Leaf infos");
-		testsValues.TreePreparation.push("Leaf rules");
-		testsValues.TreePreparation.push("Target distribution");
-	}
-
-	// testsValues.TreePreparation.push("Purity");
-}
-
 function initTestValues() {
 	const testsValues = {
 		Preparation: [],
@@ -430,43 +155,4 @@ function initTestValues() {
 		Evaluation: [],
 	};
 	return testsValues;
-}
-
-function isExplanatoryAnalysis(appDatas): boolean {
-	if (
-		appDatas?.preparationReport?.variablesDetailedStatistics &&
-		!appDatas?.bivariatePreparationReport
-	) {
-		const detailedVar =
-			appDatas.preparationReport?.variablesDetailedStatistics?.R01;
-		if (detailedVar && detailedVar.dataGrid) {
-			const detailedVarTypes = detailedVar.dataGrid.dimensions.map(
-				(e) => e.partitionType
-			);
-			if (
-				detailedVar.dataGrid.dimensions.length > 1 &&
-				detailedVarTypes.includes("Value groups") &&
-				!detailedVarTypes.includes("Values")
-			) {
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
-function isRegressionAnalysis(appDatas): boolean {
-	if (
-		appDatas?.trainEvaluationReport?.summary?.learningTask ===
-		"Regression analysis"
-	) {
-		return true;
-	} else if (
-		appDatas?.preparationReport?.summary?.learningTask ===
-		"Regression analysis"
-	) {
-		return true;
-	} else {
-		return false;
-	}
 }
