@@ -119,7 +119,7 @@ export class ClusterDetailsComponent implements OnInit, OnChanges {
 			const findNodeToSelect = this.filteredDimensionsClusters.find(e => e._id.toString() === this.nodeToSelect._id.toString());
 			if (!findNodeToSelect) {
 				// get the parent
-				const parentNode: ClusterDetailsVO = this.filteredDimensionsClusters.find(e => e._id.toString() === this.nodeToSelect.parentCluster.toString());
+				const parentNode: ClusterDetailsVO = this.filteredDimensionsClusters.find(e => e._id.toString() === this.nodeToSelect?.parentCluster.toString());
 				if (parentNode) {
 					this.nodeToSelect._id = parentNode._id;
 				} else if (this.nodeToSelect.children && this.nodeToSelect.children.length > 0) {
