@@ -2,22 +2,31 @@ import "../support/commands";
 
 describe("Test Khiops Visualization sample files", () => {
 	const files = [
+		"Natives-Arbres_Paires_AllReports.json",
+		"tree-AllReports.json", // old version
+		"tree.json", // old version
+		"bi2.json",
+		"co-oc.json",
+		"missing-zero.json",
+		"adult-bivar.json",
+		"desc-bivar.json",
 		"new-hyper-tree.json",
+		"bigTreeLeafs.json",
+		"lift-issue.khj",
+		"missing-level-parts.json",
+		"tree-education_AllReports.json",
+		"leafrules.khj",
 		"irisR.json",
 		"NGrams10_AnalysisResults.json",
 		"NGrams100_AnalysisResults.json",
 		"000_000_10000words_AllReports.json",
 		"Regression_AllReports_All.json",
 		"Regression_AllReports_PreparationOnly.json",
-		"missing-zero.json",
 		"C1000_AllReports.json",
 		"C100_AllReports.json",
 		"AdultRegressionAllReports.json",
 		"onlyEvaluationReport.json",
 		"explanatory.json",
-		"adult-bivar.json",
-		"desc-bivar.json",
-		"bi2.json",
 		"bi3.json",
 		"Std_Iris_AnalysisResults.khj",
 		"C1_AllReports.json",
@@ -27,26 +36,17 @@ describe("Test Khiops Visualization sample files", () => {
 		"copydatas.json",
 		"iris2d.json",
 		"mainTargetValue.json",
-		"leafrules.khj",
 		"Filtered_Iris_AnalysisResults.khj",
 		"defaultGroup.json",
-		"bigTreeLeafs.json",
 		"AdultAgeAllReports.json",
-		"missing-level-parts.json",
-		"lift-issue.khj",
-		"tree-education_AllReports.json",
 		"incomplete-detailed-stats.json",
 		"OI_AllReports.json",
-		"tree.json",
 		"2d-cells-AllReports.json",
 		"level.json",
 		"xor.json",
-		"Natives-Arbres_Paires_AllReports.json",
-		"co-oc.json",
 		"MSE_AllReports.json",
 		"marc.json",
 		"marc2.json",
-		"tree-AllReports.json",
 		"test_long_XDSL_Delc_AllReports.json",
 		"Essai_1_AllReports.json",
 		"typeBotnet_AllReports.json",
@@ -57,6 +57,8 @@ describe("Test Khiops Visualization sample files", () => {
 		"UnivariateAnalysisResults.json",
 		"ylogAdultAllReports.json",
 		"AdultAllReports.json",
+		//
+		//
 		// "20NewsgroupAllReports.json", //  // Do not load it, too big and too long
 		// "Natives_AllReports.json", // Do not load it, encoding issue
 	];
@@ -85,14 +87,14 @@ describe("Test Khiops Visualization sample files", () => {
 							testView.push("Preparation 2D");
 							setupPreparation2dTests(datas, testsValues);
 						}
-						// if (datas.textPreparationReport) {
-						// 	testView.push("Text preparation");
-						// 	setupTextPreparationTests(datas, testsValues);
-						// }
-						// if (datas.treePreparationReport) {
-						// 	testView.push("Tree preparation");
-						// 	setupTreePreparationTests(datas, testsValues);
-						// }
+						if (datas.textPreparationReport) {
+							testView.push("Text preparation");
+							setupTextPreparationTests(datas, testsValues);
+						}
+						if (datas.treePreparationReport) {
+							testView.push("Tree preparation");
+							setupTreePreparationTests(datas, testsValues);
+						}
 
 						if (
 							datas.evaluationReport ||
@@ -107,7 +109,19 @@ describe("Test Khiops Visualization sample files", () => {
 							cy.get('.mat-tab-label:contains("' + view + '")')
 								.first()
 								.click();
-							const testValue = testsValues[view];
+							let testValue = testsValues[view];
+							if (view === "Preparation 2D") {
+								testValue = testsValues.Preparation2d;
+							}
+
+							if (view === "Text preparation") {
+								testValue = testsValues.TextPreparation;
+							}
+
+							if (view === "Tree preparation") {
+								testValue = testsValues.TreePreparation;
+							}
+
 							if (testValue) {
 								testValue.forEach((test) => {
 									if (test) {
@@ -150,7 +164,10 @@ function setupPreparationTests(datas, testsValues) {
 			datas.preparationReport.variablesStatistics[0].level
 		);
 	}
-	if (datas.preparationReport?.variablesDetailedStatistics?.R01) {
+	if (
+		datas.preparationReport?.variablesDetailedStatistics?.R01 ||
+		datas.preparationReport?.variablesDetailedStatistics?.R001
+	) {
 		if (isRegressionAnalysis(datas) || isExplanatoryAnalysis(datas)) {
 			// regression matrix case or explanatory
 			// Check if matrix is displayed
@@ -160,7 +177,9 @@ function setupPreparationTests(datas, testsValues) {
 				"of " + datas.preparationReport?.summary?.targetVariable
 			);
 		} else if (
-			datas.preparationReport?.variablesDetailedStatistics?.R01.dataGrid
+			datas.preparationReport?.variablesDetailedStatistics?.R01?.dataGrid
+				?.dimensions.length > 1 ||
+			datas.preparationReport?.variablesDetailedStatistics?.R001?.dataGrid
 				?.dimensions.length > 1
 		) {
 			testsValues.Preparation.push("Target distribution"); // normal case
@@ -174,8 +193,10 @@ function setupPreparationTests(datas, testsValues) {
 	if (
 		datas.preparationReport?.variablesStatistics &&
 		datas.preparationReport?.variablesStatistics[0]?.type === "Numerical" &&
-		datas.preparationReport?.variablesDetailedStatistics?.R01?.dataGrid
-			?.isSupervised === false
+		(datas.preparationReport?.variablesDetailedStatistics?.R01?.dataGrid
+			?.isSupervised === false ||
+			datas.preparationReport?.variablesDetailedStatistics?.R001?.dataGrid
+				?.isSupervised === false)
 	) {
 		// histogram case
 		testsValues.Preparation.push("Density");
@@ -217,18 +238,31 @@ function setupModelingTests(datas, testsValues) {
 			datas.modelingReport.trainedPredictorsDetails?.R1.level
 		);
 	}
-	if (datas.preparationReport?.variablesDetailedStatistics?.R01) {
+	if (
+		datas.preparationReport?.variablesDetailedStatistics?.R01 ||
+		datas.preparationReport?.variablesDetailedStatistics?.R001
+	) {
 		if (isRegressionAnalysis(datas) || isExplanatoryAnalysis(datas)) {
 			// regression matrix case or explanatory
 			// Check if matrix is displayed
 			testsValues.Modeling.push("Target values");
 			// check cell stats grid
-			testsValues.Modeling.push(
-				datas.preparationReport?.variablesDetailedStatistics?.R01
-					?.dataGrid?.dimensions[0]?.partition[0][0]
-			);
+			if (datas.preparationReport?.variablesDetailedStatistics?.R01) {
+				testsValues.Modeling.push(
+					datas.preparationReport?.variablesDetailedStatistics?.R01
+						?.dataGrid?.dimensions[0]?.partition[0][0]
+				);
+			}
+			if (datas.preparationReport?.variablesDetailedStatistics?.R001) {
+				testsValues.Modeling.push(
+					datas.preparationReport?.variablesDetailedStatistics?.R001
+						?.dataGrid?.dimensions[0]?.partition[0][0]
+				);
+			}
 		} else if (
 			datas.preparationReport?.variablesDetailedStatistics?.R01?.dataGrid
+				?.dimensions.length > 1 ||
+			datas.preparationReport?.variablesDetailedStatistics?.R001?.dataGrid
 				?.dimensions.length > 1
 		) {
 			testsValues.Modeling.push("Target distribution"); // normal case
@@ -242,8 +276,10 @@ function setupModelingTests(datas, testsValues) {
 	if (
 		datas.preparationReport?.variablesStatistics &&
 		datas.preparationReport?.variablesStatistics[0]?.type === "Numerical" &&
-		datas.preparationReport?.variablesDetailedStatistics?.R01?.dataGrid
-			?.isSupervised === false
+		(datas.preparationReport?.variablesDetailedStatistics?.R01?.dataGrid
+			?.isSupervised === false ||
+			datas.preparationReport?.variablesDetailedStatistics?.R001?.dataGrid
+				?.isSupervised === false)
 	) {
 		// histogram case
 		testsValues.Modeling.push("Density");
@@ -303,9 +339,86 @@ function setupEvaluationTests(datas, testsValues) {
 
 function setupPreparation2dTests(datas, testsValues) {
 	testsValues.Preparation2d.push("Summary");
+	testsValues.Preparation2d.push(
+		datas.bivariatePreparationReport?.summary?.database
+	);
+	testsValues.Preparation2d.push(
+		datas.bivariatePreparationReport?.summary?.instances
+	);
+	testsValues.Preparation2d.push(
+		datas.bivariatePreparationReport?.summary?.learningTask
+	);
+
+	testsValues.Preparation2d.push(
+		Object.keys(datas.bivariatePreparationReport?.variablesPairsStatistics)
+			.length + " Pair variables"
+	);
+
+	testsValues.Preparation2d.push(
+		datas.bivariatePreparationReport?.variablesPairsStatistics[0]?.label
+	);
+	if (
+		datas.bivariatePreparationReport?.variablesPairsDetailedStatistics?.R01
+	) {
+		testsValues.Preparation2d.push("I ("); // check if matrix component is displayed
+		testsValues.Preparation2d.push(
+			datas.bivariatePreparationReport?.variablesPairsDetailedStatistics?.R01?.dataGrid?.dimensions[0]?.partition[0][0].toString()
+		);
+	}
+	if (
+		datas.bivariatePreparationReport?.variablesPairsDetailedStatistics?.R001
+	) {
+		testsValues.Preparation2d.push("I ("); // check if matrix component is displayed
+		testsValues.Preparation2d.push(
+			datas.bivariatePreparationReport?.variablesPairsDetailedStatistics?.R001?.dataGrid?.dimensions[0]?.partition[0][0].toString()
+		);
+	}
 }
 function setupTextPreparationTests(datas, testsValues) {}
-function setupTreePreparationTests(datas, testsValues) {}
+function setupTreePreparationTests(datas, testsValues) {
+	testsValues.TreePreparation.push("Summary");
+	testsValues.TreePreparation.push(
+		datas.treePreparationReport?.summary?.database
+	);
+	testsValues.TreePreparation.push(
+		datas.treePreparationReport?.summary?.instances
+	);
+	testsValues.TreePreparation.push("Evaluated variables");
+	if (datas.treePreparationReport?.dimensionTree) {
+		testsValues.TreePreparation.push("Hyper tree visualization");
+
+		testsValues.TreePreparation.push(
+			datas.treePreparationReport?.variablesStatistics.length +
+				" Variables"
+		);
+		testsValues.TreePreparation.push(
+			datas.treePreparationReport?.variablesStatistics[0]?.level
+		);
+		testsValues.TreePreparation.push(
+			datas.treePreparationReport?.variablesStatistics[0]?.name
+		);
+		testsValues.TreePreparation.push("Decision tree");
+
+		testsValues.TreePreparation.push(
+			datas.treePreparationReport?.treeDetails?.R01?.treeNodes?.nodeId
+		);
+		testsValues.TreePreparation.push(
+			datas.treePreparationReport?.treeDetails?.R01?.treeNodes?.variable
+		);
+		testsValues.TreePreparation.push(
+			datas.treePreparationReport?.treeDetails?.R001?.treeNodes?.nodeId
+		);
+		testsValues.TreePreparation.push(
+			datas.treePreparationReport?.treeDetails?.R001?.treeNodes?.variable
+		);
+		testsValues.TreePreparation.push("Selection details");
+		testsValues.TreePreparation.push("Leaf infos");
+		testsValues.TreePreparation.push("Leaf rules");
+		testsValues.TreePreparation.push("Target distribution");
+	}
+
+	// testsValues.TreePreparation.push("Purity");
+}
 
 function initTestValues() {
 	const testsValues = {
@@ -325,7 +438,7 @@ function isExplanatoryAnalysis(appDatas): boolean {
 		!appDatas?.bivariatePreparationReport
 	) {
 		const detailedVar =
-			appDatas.preparationReport?.variablesDetailedStatistics["R01"];
+			appDatas.preparationReport?.variablesDetailedStatistics?.R01;
 		if (detailedVar && detailedVar.dataGrid) {
 			const detailedVarTypes = detailedVar.dataGrid.dimensions.map(
 				(e) => e.partitionType
