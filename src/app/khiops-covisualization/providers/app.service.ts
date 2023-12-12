@@ -191,8 +191,6 @@ export class AppService {
 			// Merge current values with values from LS
 			this.viewsLayout.megeWithPreviousValues(lsValues);
 		}
-		console.log('file: app.service.ts:193 ~ AppService ~ initViewsLayout ~ this.viewsLayout:', this.viewsLayout);
-		console.log('file: app.service.ts:217 ~ AppService ~ updateViewsLayout ~ lsValues:', lsStorage);
 
 		// Then get saved json state
 		const savedDatas = this.getSavedDatas('viewsLayout')
