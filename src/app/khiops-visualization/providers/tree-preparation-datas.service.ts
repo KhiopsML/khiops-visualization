@@ -279,7 +279,7 @@ export class TreePreparationDatasService {
 						let dimensionLength = 0;
 						let startIter = 0;
 
-						const currentVal: string | number = variableDetails.dataGrid.dimensions[0].partition[index][0];
+						const currentVal: any = variableDetails.dataGrid.dimensions[0].partition[index][0];
 
 						displayedColumns.push({
 							headerName: this.translate.get('GLOBAL.VALUES_OF') + variableDetails.dataGrid.dimensions[0].variable,
