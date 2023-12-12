@@ -77,7 +77,7 @@ describe("Test Khiops Visualization sample files", () => {
 			{ defaultCommandTimeout: 10000 },
 			() => {
 				//@ts-ignore
-				cy.loadFile(fileName);
+				cy.loadFile("visualization", fileName);
 
 				cy.readFile("./src/assets/mocks/kv/" + fileName).then(
 					(datas) => {

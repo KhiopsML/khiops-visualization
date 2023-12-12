@@ -43,7 +43,7 @@ export class ViewLayoutVO {
 		this.isDimensionsChecked = lsValues.isDimensionsChecked;
 		this.isCoocurenceChecked = lsValues.isCoocurenceChecked;
 		for (let i = 0; i < this.dimensionsViewsLayoutsVO.length; i++) {
-			const prevValue = lsValues.dimensionsViewsLayoutsVO.find(e => e.name === this.dimensionsViewsLayoutsVO[i].name);
+			const prevValue = lsValues.dimensionsViewsLayoutsVO[i]
 			this.dimensionsViewsLayoutsVO[i] = Object.assign(this.dimensionsViewsLayoutsVO[i],  prevValue);
 		}
 	}

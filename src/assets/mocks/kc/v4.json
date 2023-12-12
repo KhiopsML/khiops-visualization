@@ -1084,11 +1084,11 @@
         {
           "isChecked": true,
           "isHierarchyChecked": true,
-          "isClustersChecked": false,
+          "isClustersChecked": true,
           "isAnnotationChecked": false,
           "isCompositionChecked": false,
           "isExternalDataChecked": false,
-          "isDistributionChecked": false,
+          "isDistributionChecked": true,
           "name": "education"
         }
       ]

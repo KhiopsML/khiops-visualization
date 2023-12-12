@@ -8,8 +8,8 @@ export default defineConfig({
 	includeShadowDom: true,
 	chromeWebSecurity: false,
 	watchForFileChanges: true,
-	viewportWidth: 1920, // important to have big screen to prevent hidden texts
-	viewportHeight: 1000,
+	viewportWidth: 3000, // important to have big screen to prevent hidden texts
+	viewportHeight: 1500,
 	component: {
 		devServer: {
 			framework: "angular",
