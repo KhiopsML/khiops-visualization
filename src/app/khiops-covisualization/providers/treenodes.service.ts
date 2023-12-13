@@ -195,7 +195,9 @@ export class TreenodesService {
 				const nodeName = savedNodes[index];
 				const dimension = this.dimensionsDatas.selectedDimensions[index];
 				const node = dimension && this.getNodeFromName(dimension.name, nodeName);
-				node && this.dimensionsDatas.selectedNodes.push(node)
+				if (node) {
+					this.dimensionsDatas.selectedNodes[index] = node;
+				}
 			}
 		}
 	}
