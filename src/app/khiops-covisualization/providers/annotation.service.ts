@@ -1,26 +1,19 @@
-import {
-	Injectable
-} from '@angular/core';
-import {
-	TreeNodeVO
-} from '../model/tree-node-vo';
-import {
-	AppService
-} from '@khiops-covisualization/providers/app.service';
-import {
-	DimensionsDatasService
-} from '@khiops-covisualization/providers/dimensions-datas.service';
-import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
+import { Injectable } from "@angular/core";
+
+import { DimensionsDatasService } from "@khiops-covisualization/providers/dimensions-datas.service";
+import { DimensionsDatasVO } from "@khiops-covisualization/model/dimensions-data-vo";
+import { AppService } from "./app.service";
 
 @Injectable({
-	providedIn: 'root'
+	providedIn: "root",
 })
 export class AnnotationService {
-
 	dimensionsDatas: DimensionsDatasVO;
-	annotationsToSave: any = {};
 
-	constructor(private appService: AppService, private dimensionsDatasService: DimensionsDatasService) {
+	constructor(
+		private appService: AppService,
+		private dimensionsDatasService: DimensionsDatasService
+	) {
 		this.initialize();
 	}
 
@@ -28,25 +21,25 @@ export class AnnotationService {
 		this.dimensionsDatas = this.dimensionsDatasService.getDatas();
 	}
 
-	setNodeAnnotation(node: TreeNodeVO, annotation: string) {
-
-		const appDatas = this.appService.getDatas().datas;
-
-		// update the model directly
-		// Find current dim position
-		const currentIndex: number = this.dimensionsDatas.selectedDimensions.find(e => {
-			return node.hierarchy === e.name;
-		}).startPosition;
-
-		let currentCluster;
-
-		// update dimensionHierarchies json datas
-		const currentDimensionHierarchy = appDatas.coclusteringReport.dimensionHierarchies[currentIndex];
-		currentCluster = currentDimensionHierarchy.clusters.find(e => {
-			return node.name === e.cluster;
-		});
-		currentCluster.description = annotation;
-
+	getAnnotations() {
+		return this.dimensionsDatas.annotations;
 	}
 
+	initSavedDatas() {
+		this.dimensionsDatas.annotations =
+			this.appService.getSavedDatas("annotations") || {};
+	}
+
+	setNodeAnnotation(
+		dimensionName: string,
+		nodeName: string,
+		annotation: string
+	) {
+		if (!this.dimensionsDatas.annotations) {
+			this.dimensionsDatas.annotations = {};
+		}
+		this.dimensionsDatas.annotations[dimensionName] =
+			this.dimensionsDatas.annotations[dimensionName] || {};
+		this.dimensionsDatas.annotations[dimensionName][nodeName] = annotation;
+	}
 }

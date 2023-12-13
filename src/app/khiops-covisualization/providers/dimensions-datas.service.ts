@@ -263,6 +263,7 @@ export class DimensionsDatasService {
 					let index = 0;
 
 					const currentNodesNames = this.dimensionsDatas.nodesNames && this.dimensionsDatas.nodesNames[dimensionHierarchy.name];
+					const currentAnnotations = this.dimensionsDatas.annotations && this.dimensionsDatas.annotations[dimensionHierarchy.name];
 
 					// First convert each child into a treenode value object
 					const clustersLength = dimensionHierarchy.clusters.length;
@@ -280,7 +281,8 @@ export class DimensionsDatasService {
 							nbClusters,
 							leafPosition,
 							j,
-							currentNodesNames
+							currentNodesNames,
+							currentAnnotations
 						);
 						this.dimensionsDatas.dimensionsClusters[i].push(currentObj);
 
@@ -305,6 +307,7 @@ export class DimensionsDatasService {
 					let index = 0;
 
 					const currentNodesNames = this.dimensionsDatas.nodesNames && this.dimensionsDatas.nodesNames[currentDimensionHierarchy.name];
+					const currentAnnotations = this.dimensionsDatas.annotations && this.dimensionsDatas.annotations[currentDimensionHierarchy.name];
 
 					// First convert each child into a treenode value object
 					const clustersLength = currentDimensionHierarchy.clusters.length;
@@ -322,7 +325,8 @@ export class DimensionsDatasService {
 							nbClusters,
 							leafPosition,
 							j,
-							currentNodesNames
+							currentNodesNames,
+							currentAnnotations
 						);
 						this.dimensionsDatas.currentDimensionsClusters[i].push(currentObj);
 

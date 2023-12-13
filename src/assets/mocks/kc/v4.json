@@ -1065,7 +1065,7 @@
       7
     ]
   },
-  "filename": "C:\\Users\\jcdf8453\\Desktop\\v1.khcj",
+  "filename": "C:\\Users\\jcdf8453\\WORK\\workspace\\khiops\\visualization-component\\src\\assets\\mocks\\kc\\v4.json",
   "savedDatas": {
     "viewsLayout": {
       "isDimensionsChecked": true,
@@ -1075,7 +1075,7 @@
           "isChecked": true,
           "isHierarchyChecked": true,
           "isClustersChecked": false,
-          "isAnnotationChecked": false,
+          "isAnnotationChecked": true,
           "isCompositionChecked": true,
           "isExternalDataChecked": false,
           "isDistributionChecked": false,
@@ -1085,7 +1085,7 @@
           "isChecked": true,
           "isHierarchyChecked": true,
           "isClustersChecked": true,
-          "isAnnotationChecked": false,
+          "isAnnotationChecked": true,
           "isCompositionChecked": false,
           "isExternalDataChecked": false,
           "isDistributionChecked": true,
@@ -1118,8 +1118,8 @@
         ],
         "col0Row1Col": [
           18.060243459612266,
-          31.93975654038773,
-          25,
+          32.1341908580448,
+          24.805565682342934,
           25
         ],
         "col0Row1Col2Row": [
@@ -1145,8 +1145,8 @@
       }
     },
     "selectedNodes": [
-      "{Prof-specialty}",
-      "B16"
+      "A3",
+      "{Prof-school, Doctorate}"
     ],
     "selectedDimensions": [
       {
@@ -1164,12 +1164,25 @@
       ],
       "education": [
         "B14",
-        "B16"
+        "B16",
+        "B4"
       ]
     },
-    "nodesNames": {},
-    "importedDatas": [],
-    "matrixOption": "GLOBAL.FREQUENCY",
-    "matrixMode": 3
+    "nodesNames": {
+      "education": {
+        "{Masters}": "AAAA"
+      }
+    },
+    "annotations": {
+      "occupation": {
+        "A7": "AAAA"
+      },
+      "education": {
+        "": "ghjghjghjhgjhgjghj",
+        "{Masters}": "111111111111111111",
+        "{Prof-school, Doctorate}": "2222222222222"
+      }
+    },
+    "importedDatas": []
   }
 }

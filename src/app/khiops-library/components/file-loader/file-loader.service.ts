@@ -107,7 +107,7 @@ export class FileLoaderService {
 		// Co visualization files
 		// ======================
 		//
-		let urlKC = './assets/mocks/kc/Coclustering-100x100.json';
+		// let urlKC = './assets/mocks/kc/Coclustering-100x100.json';
 		// let urlKC = './assets/mocks/kc/cc.json';
 		// let urlKC = './assets/mocks/kc/Coclustering.json';
 		// let urlKC = './assets/mocks/kc/Co-simple-2vars.json';
@@ -128,7 +128,7 @@ export class FileLoaderService {
 		// let urlKC = './assets/mocks/kc/zero-except.json';
 		// let urlKC = './assets/mocks/kc/AdultSmall.json';
 		// let urlKC = './assets/mocks/kc/VerbNounCoclustering27mo.json';
-		// let urlKC = './assets/mocks/kc/v4.json';
+		let urlKC = './assets/mocks/kc/v4.json';
 		// let urlKC = './assets/mocks/kc/NovaCoclustering4mb.json';
 		// let urlKC = './assets/mocks/kc/donotworkk10.1.1_id_feat_nospace_Coclustering.json';
 		// let urlKC = './assets/mocks/kc/co-3-num.json';

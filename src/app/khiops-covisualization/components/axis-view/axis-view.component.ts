@@ -19,6 +19,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { SaveService } from "@khiops-covisualization/providers/save.service";
 import { Subscription } from "rxjs";
 import { DimensionsDatasVO } from "@khiops-covisualization/model/dimensions-data-vo";
+import { AnnotationService } from "@khiops-covisualization/providers/annotation.service";
 
 @Component({
 	selector: "app-axis-view",
@@ -51,6 +52,7 @@ export class AxisViewComponent
 	constructor(
 		private appService: AppService,
 		private treenodesService: TreenodesService,
+		private annotationService: AnnotationService,
 		private translate: TranslateService,
 		private saveService: SaveService,
 		private snackBar: MatSnackBar,
@@ -110,6 +112,7 @@ export class AxisViewComponent
 	 */
 	initializeSavedState() {
 		this.treenodesService.initSavedDatas();
+		this.annotationService.initSavedDatas();
 		this.dimensionsDatasService.initSavedDatas();
 		this.appService.initSavedDatas();
 	}

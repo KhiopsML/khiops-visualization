@@ -8,6 +8,7 @@ export class SavedDatasVO {
 	selectedDimensions: [];
 	collapsedNodes: {};
 	nodesNames: {};
+	annotations: {};
 	importedDatas: {};
 	unfoldHierarchyState: number | undefined;
 	matrixContrast: number | undefined;
@@ -23,6 +24,7 @@ export class SavedDatasVO {
 		selectedDimensions,
 		collapsedNodes,
 		nodesNames,
+		annotations,
 		importedDatas,
 		matrixContrast?,
 		unfoldHierarchyState?,
@@ -37,6 +39,7 @@ export class SavedDatasVO {
 		this.selectedDimensions = selectedDimensions;
 		this.collapsedNodes = collapsedNodes;
 		this.nodesNames = nodesNames;
+		this.annotations = annotations;
 		this.importedDatas = importedDatas;
 		this.matrixContrast = matrixContrast || undefined;
 		this.unfoldHierarchyState = unfoldHierarchyState || undefined;

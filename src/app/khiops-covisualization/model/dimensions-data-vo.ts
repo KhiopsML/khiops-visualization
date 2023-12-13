@@ -28,6 +28,7 @@ export class DimensionsDatasVO {
 	matrixOption: string = undefined;
 	matrixMode: number = undefined;
 	nodesNames: {} = {};
+	annotations: {} = {};
 	selectedNodes: TreeNodeVO[] = [];
 
 	constructor() {

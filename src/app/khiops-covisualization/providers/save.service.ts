@@ -28,6 +28,7 @@ import {
 	ImportExtDatasService
 } from './import-ext-datas.service';
 import { TYPES } from '@khiops-library/enum/types';
+import { AnnotationService } from './annotation.service';
 
 @Injectable({
 	providedIn: 'root'
@@ -38,6 +39,7 @@ export class SaveService {
 		private appService: AppService,
 		private injector: Injector,
 		private importExtDatasService: ImportExtDatasService,
+		private annotationService: AnnotationService,
 		private dimensionsService: DimensionsDatasService
 	) {}
 
@@ -51,6 +53,8 @@ export class SaveService {
 		const viewsLayout = this.appService.getViewsLayout();
 
 		const nodesNames = this.treenodesService.getNodesNames();
+		const annotations = this.annotationService.getAnnotations();
+
 		let selectedNodes = this.treenodesService.getSelectedNodes();
 		if (selectedNodes) {
 			selectedNodes = selectedNodes.map(e => e.name);
@@ -75,6 +79,7 @@ export class SaveService {
 			selectedDimensions,
 			collapsedNodes,
 			nodesNames,
+			annotations,
 			importedDatas,
 			matrixContrast,
 			unfoldHierarchyState,
