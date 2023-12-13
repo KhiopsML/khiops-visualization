@@ -1,8 +1,10 @@
 .annotation-comp {
 	::ng-deep textarea {
 		margin: 5px;
+		padding: 5px;
 		height: 100%;
-		border-color: #ddd;
+		border-color: var(--bgColor-40) !important;
+		background-color: var(--bgColor) !important;
 		resize: none;
 	}
 }
