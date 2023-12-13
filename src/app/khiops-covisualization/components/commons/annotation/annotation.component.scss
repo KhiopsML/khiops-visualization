@@ -1,11 +1,8 @@
-.annotation-comp{
-	h2{
-		margin: 0.6em !important;
-	}
-	textarea{
+.annotation-comp {
+	::ng-deep textarea {
 		margin: 5px;
 		height: 100%;
-		resize: none;
 		border-color: #ddd;
+		resize: none;
 	}
 }

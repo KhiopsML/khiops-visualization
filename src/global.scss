@@ -59,6 +59,10 @@ h1 {
 	transition: background-color 0.1s ease-in-out 0.1s;
 }
 
+::-webkit-input-placeholder {
+	font-style: italic;
+}
+
 .comp-header {
 	background: var(--bgColor) !important;
 }
