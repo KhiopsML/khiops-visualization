@@ -4,7 +4,7 @@
 			<app-selected-clusters [selectedNodes]="dimensionsDatas.selectedNodes">
 			</app-selected-clusters>
 		</as-split-area>
-		<as-split-area class="matrix-container-comp-matrix-wrapper" [size]="sizes[sizeId][1]" order="2"
+		<as-split-area class="matrix-container-comp-wrapper" [size]="sizes[sizeId][1]" order="2"
 			[visible]="viewsLayout.isCoocurenceChecked">
 			<div fxFlexFill fxLayout="column" class="selected-area-inner-div" [ngClass]="{'fullscreen': isFullscreen}">
 				<div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
@@ -15,7 +15,8 @@
 								<button mat-menu-item *ngFor="let opt of matrixModes.types" (click)="changeMatrixMode(opt)">{{ opt.title | translate }}</button>
 							</mat-menu>
 						</div>
-						<mat-checkbox class="matrix-conditionalOnContext-checkbox" *ngIf="dimensionsDatas.contextDimensionCount"
+						<mat-checkbox class="matrix-conditionalOnContext-checkbox"
+							*ngIf="dimensionsDatas.contextDimensionCount"
 							[checked]="dimensionsDatas.conditionalOnContext" (change)="changeConditionalOnContext()">
 							{{ 'GLOBAL.CONDITIONAL_ON_CONTEXT' | translate }}</mat-checkbox>
 						<mat-button-toggle-group class="matrix-option-toggle" #group="matButtonToggleGroup"
@@ -30,13 +31,13 @@
 						</kl-btn-fullscreen>
 					</div>
 				</div>
-				<kl-matrix-canvas #matrixCanvas fxFlex fxLayout="row" [id]="'matrix-container-comp-matrix-wrapper'"
-					(cellSelected)="onCellSelected($event)" [isAxisInverted]="dimensionsDatas.isAxisInverted"
-					(matrixAxisInverted)="onMatrixAxisInverted()" [contextSelection]="dimensionsDatas.contextSelection"
-					[graphMode]="matrixModes.selected" [conditionalOnContext]="dimensionsDatas.conditionalOnContext"
-					[(contrast)]="dimensionsDatas.matrixContrast"
-					[selectedNodes]="dimensionsDatas.selectedNodes" [inputDatas]="dimensionsDatas.matrixDatas"
-					[graphType]="matrixOptions.selected">
+				<kl-matrix-canvas #matrixCanvas fxFlex fxLayout="row" [id]="'matrix-container-comp-wrapper'"
+					[attr.id]="'matrix-container-comp-wrapper'" (cellSelected)="onCellSelected($event)"
+					[isAxisInverted]="dimensionsDatas.isAxisInverted" (matrixAxisInverted)="onMatrixAxisInverted()"
+					[contextSelection]="dimensionsDatas.contextSelection" [graphMode]="matrixModes.selected"
+					[conditionalOnContext]="dimensionsDatas.conditionalOnContext"
+					[(contrast)]="dimensionsDatas.matrixContrast" [selectedNodes]="dimensionsDatas.selectedNodes"
+					[inputDatas]="dimensionsDatas.matrixDatas" [graphType]="matrixOptions.selected">
 				</kl-matrix-canvas>
 			</div>
 		</as-split-area>
