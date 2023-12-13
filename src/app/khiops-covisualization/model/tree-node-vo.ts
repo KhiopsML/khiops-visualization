@@ -22,6 +22,7 @@ export class TreeNodeVO {
 	isLeaf: boolean;
 	children: TreeNodeVO[];
 	description: string;
+	annotation: string;
 
 	childrenList: string[] = [];
 	childrenLeafIndexes: number[] = [];
@@ -42,7 +43,8 @@ export class TreeNodeVO {
 		nbClusters,
 		leafPosition,
 		j,
-		currentNodesNames?
+		currentNodesNames?,
+		currentAnnotations?
 	) {
 		// Generate id for tree node plugin
 		this.id = id;
@@ -71,10 +73,14 @@ export class TreeNodeVO {
 			this.shortDescription =
 				(object && object.shortDescription) || this.bounds;
 		}
+		if (currentAnnotations && currentAnnotations[this.name]) {
+			this.annotation = currentAnnotations[this.name];
+		} else {
+			this.annotation = (object && object.annotation) || "";
+		}
 
 		this.parentCluster = (object && object.parentCluster) || "";
 
-		this.description = (object && object.description) || "";
 		this.children = (object && object.children) || [];
 		this.frequency = (object && object.frequency) || undefined;
 		this.interest = (object && object.interest) || undefined;
@@ -101,8 +107,8 @@ export class TreeNodeVO {
 		}
 	}
 
-	updateAnnotation(description) {
-		this.description = description;
+	updateAnnotation(annotation: string) {
+		this.annotation = annotation;
 	}
 
 	getChildrenList() {

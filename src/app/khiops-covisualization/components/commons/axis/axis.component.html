@@ -23,6 +23,7 @@
 			<as-split direction="vertical" fxFlexFill>
 				<as-split-area [size]="30" order="1" *ngIf="axisLayout.isAnnotationChecked">
 					<app-annotation [attr.id]="'cluster-annotation-'+position" [position]="position"
+						[selectedDimension]="dimensionsDatas.selectedDimensions[position]"
 						[selectedNode]="dimensionsDatas.selectedNodes[position]"></app-annotation>
 				</as-split-area>
 				<as-split-area [size]="70" order="1" *ngIf="axisLayout.isCompositionChecked">

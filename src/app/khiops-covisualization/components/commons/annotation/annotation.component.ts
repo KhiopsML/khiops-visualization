@@ -22,6 +22,7 @@ import {
 	AnnotationService
 } from '@khiops-covisualization/providers/annotation.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
+import { DimensionVO } from '@khiops-library/model/dimension-vo';
 
 @Component({
 	selector: 'app-annotation',
@@ -30,11 +31,12 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 })
 export class AnnotationComponent extends SelectableComponent implements OnInit, OnChanges {
 
+	@Input() selectedDimension: DimensionVO;
 	@Input() selectedNode: TreeNodeVO;
 	@Input() position: number;
 	value: string;
 	id: any = undefined;
-	componentType = 'descriptions'; // needed to copy datas
+	componentType = 'annotations'; // needed to copy datas
 	title: string;
 
 	constructor(
@@ -52,7 +54,7 @@ export class AnnotationComponent extends SelectableComponent implements OnInit, 
 
 	ngOnChanges(changes: SimpleChanges) {
 		if (changes.selectedNode && changes.selectedNode.currentValue) {
-			this.value = changes.selectedNode.currentValue.description;
+			this.value = changes.selectedNode.currentValue.annotation;
 			this.title = this.translate.get('GLOBAL.ANNOTATION_OF', {
 				name: changes.selectedNode.currentValue.name
 			});
@@ -62,6 +64,6 @@ export class AnnotationComponent extends SelectableComponent implements OnInit, 
 	onAnnotationChanged(annotation: string) {
 		this.value = annotation;
 		this.selectedNode.updateAnnotation(annotation);
-		this.annotationService.setNodeAnnotation(this.selectedNode, annotation);
+		this.annotationService.setNodeAnnotation(this.selectedDimension.name, this.selectedNode.name, annotation);
 	}
 }

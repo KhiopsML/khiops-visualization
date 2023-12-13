@@ -5,7 +5,6 @@ export class DimensionVO {
 
 	name: string;
 	type: string;
-	description: string;
 	parts: number;
 	initialParts: number;
 	startPosition: number;
@@ -30,7 +29,6 @@ export class DimensionVO {
 		this.startPosition = startPosition;
 		this.name = object && object.name || '';
 		this.type = object && object.type || '';
-		this.description = object && object.description || '';
 		this.parts = object && object.parts || undefined;
 		this.initialParts = object && object.initialParts || undefined;
 		this.values = object && object.values || undefined;
