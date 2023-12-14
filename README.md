@@ -14,3 +14,7 @@ Run `yarn start` for a dev server. Navigate to `http://localhost:4200/`. The app
 ## Running unit tests
 
 Run `yarn test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+## Running e2e tests
+
+Run `yarn e2e` to execute the unit tests via [Cypress](https://www.cypress.io/).
