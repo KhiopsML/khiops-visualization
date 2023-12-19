@@ -7,6 +7,7 @@ import { setupHierarchyTests } from "cypress/setups/hierarchy-tests";
 describe("Test Khiops Covisualization sample files", () => {
 	const files = [
 		"co-IrisMissing.json",
+		"mushroom.json",
 		"irismissing.json",
 		"v4.json",
 		"AdultSmall.json",
@@ -20,7 +21,6 @@ describe("Test Khiops Covisualization sample files", () => {
 		"DataNoisyCorrelatedN1000000_C1000_V10_L5Coclustering.json",
 		"sample0.json",
 		"adultmissing.json",
-		"mushroom.json",
 		"SimplifiedCoclusteringIrisOldFormat_BugUndefined.json",
 		"h-Coclustering.json",
 		"zero-except.json",
@@ -92,7 +92,7 @@ describe("Test Khiops Covisualization sample files", () => {
 							}
 						});
 
-						cy.get('.mat-flat-button:contains("Unfold")')
+						cy.get('.mat-flat-button:contains("timeline")')
 							.first()
 							.click();
 
