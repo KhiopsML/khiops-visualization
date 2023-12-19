@@ -5,6 +5,7 @@
 /tmp
 /out-tsc
 .angular/
+/documentation
 # Only exists if Bazel was run
 /bazel-out
 
