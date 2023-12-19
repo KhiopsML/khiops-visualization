@@ -2,11 +2,11 @@
 	<div fxLayout="column" fxFlexFill fxLayoutAlign="center center" *ngIf="loadingView">
 		<mat-spinner diameter="40" color="accent" mode="indeterminate"></mat-spinner>
 	</div>
-	<as-split *ngIf="!loadingView && sizes" direction="horizontal" (dragEnd)="onSplitDragEnd($event, 'col')">
+	<as-split [gutterSize]="7" *ngIf="!loadingView && sizes" direction="horizontal" (dragEnd)="onSplitDragEnd($event, 'col')">
 		<as-split-area [size]="sizes.col[0]">
-			<as-split direction="vertical" (dragEnd)="onSplitDragEnd($event, 'col0Row')">
+			<as-split [gutterSize]="7" direction="vertical" (dragEnd)="onSplitDragEnd($event, 'col0Row')">
 				<as-split-area [size]="sizes.col0Row[0]">
-					<as-split direction="horizontal" (dragEnd)="onSplitDragEnd($event, 'col0Row0Col')">
+					<as-split [gutterSize]="7" direction="horizontal" (dragEnd)="onSplitDragEnd($event, 'col0Row0Col')">
 						<as-split-area [size]="sizes.col0Row0Col[0]">
 							<kl-informations-block id="tree-preparation-informations-block-summary"
 								title="{{ 'GLOBAL.SUMMARY' | translate }}" [inputDatas]="summaryDatas">
@@ -34,7 +34,7 @@
 					</as-split>
 				</as-split-area>
 				<as-split-area class="variables-list-container" [size]="sizes.col0Row[1]">
-					<as-split direction="horizontal" (dragEnd)="onSplitDragEnd($event, 'col0Row1Col')">
+					<as-split [gutterSize]="7" direction="horizontal" (dragEnd)="onSplitDragEnd($event, 'col0Row1Col')">
 						<as-split-area [size]="sizes.col0Row1Col[0]">
 							<kl-ag-grid id="tree-preparation-variables-list" class="variables-list" fxFlexFill
 								[showLevelDistribution]="true" [showSearch]="true" [watchResize]="true"
@@ -60,7 +60,7 @@
 					</as-split>
 				</as-split-area>
 				<as-split-area [size]="sizes.col0Row[2]">
-					<as-split direction="horizontal" (dragEnd)="onSplitDragEnd($event, 'col0Row2Col')">
+					<as-split [gutterSize]="7" direction="horizontal" (dragEnd)="onSplitDragEnd($event, 'col0Row2Col')">
 						<as-split-area class="variables-list-container" [size]="sizes.col0Row2Col[0]">
 							<app-tree-select id="tree-preparation-select"
 							[selectedNodes]="treePreparationDatas.selectedNodes"
@@ -69,7 +69,7 @@
 								[dimensionTree]="treePreparationDatas.dimensionTree"></app-tree-select>
 						</as-split-area>
 						<as-split-area class="variables-list-container" [size]="sizes.col0Row2Col[1]">
-							<as-split direction="horizontal" (dragEnd)="onSplitDragEnd($event, 'col0Row2Col1Row')">
+							<as-split [gutterSize]="7" direction="horizontal" (dragEnd)="onSplitDragEnd($event, 'col0Row2Col1Row')">
 								<as-split-area class="variables-list-container" [size]="sizes.col0Row2Col1Row[0]">
 									<app-tree-details [selectedNodes]="treePreparationDatas.selectedNodes"
 										[selectedNode]="treePreparationDatas.selectedNode">

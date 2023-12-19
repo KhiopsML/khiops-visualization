@@ -1,8 +1,8 @@
-<as-split id="app-var-details-preparation-2d-comp"
+<as-split [gutterSize]="7" id="app-var-details-preparation-2d-comp"
 	*ngIf="preparation2dDatas.selectedVariable && !preparation2dDatas.selectedVariable.noCorrelation"
 	direction="vertical" (dragEnd)="onSplitDragEnd($event, 'row1Col1Row')">
 	<as-split-area [size]="sizes.row1Col1Row[0]" fxLayout="column">
-		<as-split direction="vertical" (dragEnd)="onSplitDragEnd($event, 'row1Col1Row0Col')">
+		<as-split [gutterSize]="7" direction="vertical" (dragEnd)="onSplitDragEnd($event, 'row1Col1Row0Col')">
 			<as-split-area class="variables-list-container" [size]="sizes.row1Col1Row0Col[0]">
 				<app-coocurence-matrix fxFlexFill id="coocurence-matrix-comp-container" fxFlex="1 1 100%"
 					(selectCellRowChanged)="onSelectCellRowChanged($event)"
@@ -25,7 +25,7 @@
 		</as-split>
 	</as-split-area>
 	<as-split-area class="variables-list-container" [size]="sizes.row1Col1Row[1]" fxLayout="row">
-		<as-split direction="horizontal">
+		<as-split [gutterSize]="7" direction="horizontal">
 			<as-split-area class="variables-list-container">
 				<kl-ag-grid id="preparation-2d-current-cell-x" class="variables-list" [showLevelDistribution]="false"
 					[title]="''" [showSearch]="false" [displayCount]="false" [showLineSelection]="false"

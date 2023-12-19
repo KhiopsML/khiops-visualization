@@ -1,5 +1,5 @@
 <div class="matrix-container-comp" fxFlexFill>
-	<as-split direction="vertical" (dragEnd)="onSplitDragEnd($event, sizeId)">
+	<as-split [gutterSize]="7" direction="vertical" (dragEnd)="onSplitDragEnd($event, sizeId)">
 		<as-split-area [size]="sizes[sizeId][0]" order="1" [visible]="viewsLayout.isDimensionsChecked">
 			<app-selected-clusters [selectedNodes]="dimensionsDatas.selectedNodes">
 			</app-selected-clusters>

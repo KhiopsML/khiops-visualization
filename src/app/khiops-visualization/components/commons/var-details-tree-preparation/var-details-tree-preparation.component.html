@@ -1,7 +1,7 @@
-<as-split id="app-var-details-tree-preparation-comp" direction="vertical"
+<as-split [gutterSize]="7" id="app-var-details-tree-preparation-comp" direction="vertical"
 	(dragEnd)="onSplitDragEnd($event, 'row1Col1Row')">
 	<as-split-area [size]="sizes.row1Col1Row[0]" fxLayout="column">
-		<as-split direction="vertical" (dragEnd)="onSplitDragEnd($event, 'row1Col1Row0Col')">
+		<as-split [gutterSize]="7" direction="vertical" (dragEnd)="onSplitDragEnd($event, 'row1Col1Row0Col')">
 			<as-split-area [size]="sizes.row1Col1Row0Col[0]">
 				<app-variable-graph-details #appVariableGraphDetails *ngIf="treePreparationDatas.selectedVariable"
 					[preparationSource]="'treePreparationReport'"

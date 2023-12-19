@@ -2,9 +2,9 @@
 	<div fxLayout="column" fxFlexFill fxLayoutAlign="center center" *ngIf="loadingView">
 		<mat-spinner diameter="40" color="accent" mode="indeterminate"></mat-spinner>
 	</div>
-	<as-split *ngIf="!loadingView && sizes" direction="vertical" (dragEnd)="onSplitDragEnd($event, 'row')">
+	<as-split [gutterSize]="7" *ngIf="!loadingView && sizes" direction="vertical" (dragEnd)="onSplitDragEnd($event, 'row')">
 		<as-split-area [size]="sizes.row[0]">
-			<as-split direction="horizontal" (dragEnd)="onSplitDragEnd($event, 'row0Col')">
+			<as-split [gutterSize]="7" direction="horizontal" (dragEnd)="onSplitDragEnd($event, 'row0Col')">
 				<as-split-area [size]="sizes.row0Col[0]">
 					<kl-informations-block id="preparation-informations-block-summary"
 						title="{{ 'GLOBAL.SUMMARY' | translate }}" [inputDatas]="summaryDatas"></kl-informations-block>
@@ -29,9 +29,9 @@
 			</as-split>
 		</as-split-area>
 		<as-split-area [size]="sizes.row[1]">
-			<as-split direction="horizontal" (dragEnd)="onSplitDragEnd($event, 'row1Col')">
+			<as-split [gutterSize]="7" direction="horizontal" (dragEnd)="onSplitDragEnd($event, 'row1Col')">
 				<as-split-area [size]="sizes.row1Col[0]">
-					<as-split direction="vertical" (dragEnd)="onSplitDragEnd($event, 'row1Col0Row')">
+					<as-split [gutterSize]="7" direction="vertical" (dragEnd)="onSplitDragEnd($event, 'row1Col0Row')">
 						<as-split-area class="variables-list-container" [size]="sizes.row1Col0Row[0]">
 							<kl-ag-grid id="preparation-variables-list" class="variables-list" fxFlexFill
 								[showLevelDistribution]="true" [showSearch]="true" [watchResize]="true"
@@ -44,7 +44,7 @@
 							</kl-ag-grid>
 						</as-split-area>
 						<as-split-area [size]="sizes.row1Col0Row[1]" fxLayout="row">
-							<as-split direction="horizontal" disabled>
+							<as-split [gutterSize]="7" direction="horizontal" disabled>
 								<as-split-area fxFlex="50%">
 									<app-description-block id="preparation-description-block-variable"
 										*ngIf="preparationDatas.selectedVariable"

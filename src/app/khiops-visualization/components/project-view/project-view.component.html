@@ -1,5 +1,5 @@
 <div id="project-view-comp" fxLayout="column" fxFlexFill fxLayoutAlign="start start">
-	<as-split direction="vertical" (dragEnd)="onSplitDragEnd($event, 'row')">
+	<as-split [gutterSize]="7" direction="vertical" (dragEnd)="onSplitDragEnd($event, 'row')">
 		<as-split-area [size]="sizes?.row[0]">
 			<div fxLayout="column" fxFlexFill fxLayoutAlign="start start">
 				<div id="project-view-comp-table" fxFlexFill fxLayoutAlign="start start"  fxLayout="row">

@@ -4,10 +4,10 @@
 		<mat-spinner diameter="40" color="accent" mode="indeterminate"></mat-spinner>
 		<span *ngIf="isBigJsonFile">{{ 'GLOBAL.BIG_FILES_LOADING_WARNING' | translate }}</span>
 	</div>
-	<as-split *ngIf="!loadingView && (dimensionsDatas && dimensionsDatas.matrixDatas)" direction="horizontal"
+	<as-split [gutterSize]="7" *ngIf="!loadingView && (dimensionsDatas && dimensionsDatas.matrixDatas)" direction="horizontal"
 		(dragEnd)="onSplitDragEnd($event, 'col')">
 		<as-split-area id="axis-container" [size]="sizes.col[0]">
-			<as-split direction="vertical" (dragEnd)="onSplitDragEnd($event, 'col0Row')"
+			<as-split [gutterSize]="7" direction="vertical" (dragEnd)="onSplitDragEnd($event, 'col0Row')"
 				*ngIf="dimensionsDatas.dimensionsTrees && viewsLayout">
 				<as-split-area [size]="sizes && sizes.col0Row[0]" order="1"
 					[visible]="viewsLayout.dimensionsViewsLayoutsVO[0].isChecked">
@@ -22,7 +22,7 @@
 					</app-axis>
 				</as-split-area>
 			</as-split>
-			<as-split direction="vertical" class="app-axis-context-container" [hidden]="!openContextView"
+			<as-split [gutterSize]="7" direction="vertical" class="app-axis-context-container" [hidden]="!openContextView"
 				(dragEnd)="onSplitDragEnd($event, 'col0Row')">
 				<as-split-area *ngFor="let item of dimensionsDatas.contextDimensions; let i = index" order="i+2"
 					[visible]="viewsLayout.dimensionsViewsLayoutsVO[i+2] && viewsLayout.dimensionsViewsLayoutsVO[i+2].isChecked">

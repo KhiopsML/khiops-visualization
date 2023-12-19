@@ -1,6 +1,6 @@
-<as-split id="app-var-details-preparation-comp" direction="vertical" (dragEnd)="onSplitDragEnd($event, 'row1Col1Row')">
+<as-split [gutterSize]="7" id="app-var-details-preparation-comp" direction="vertical" (dragEnd)="onSplitDragEnd($event, 'row1Col1Row')">
 	<as-split-area [size]="sizes.row1Col1Row[0]" fxLayout="column">
-		<as-split direction="vertical" (dragEnd)="onSplitDragEnd($event, 'row1Col1Row0Col')">
+		<as-split [gutterSize]="7" direction="vertical" (dragEnd)="onSplitDragEnd($event, 'row1Col1Row0Col')">
 			<as-split-area [size]="sizes.row1Col1Row0Col[0]">
 				<app-variable-graph-details #appVariableGraphDetails *ngIf="preparationDatas.selectedVariable"
 					[preparationSource]="preparationSource" [selectedVariable]="preparationDatas.selectedVariable"
@@ -28,7 +28,7 @@
 			[displayedColumns]="preparationDatas.currentIntervalDatas.displayedColumns">
 		</kl-ag-grid>
 		<kl-no-data fxFlex *ngIf="!preparationDatas.currentIntervalDatas.values"></kl-no-data>
-		<as-split direction="horizontal"
+		<as-split [gutterSize]="7" direction="horizontal"
 			*ngIf="(!preparationDatas.currentIntervalDatas.values && preparation2dDatas.currentCellDatas) || isRegressionOrExplanatoryAnalysis">
 			<as-split-area class="variables-list-container">
 				<kl-ag-grid id="preparation-2d-current-cell-x" class="variables-list" [showLevelDistribution]="false"

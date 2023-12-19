@@ -2,9 +2,9 @@
 	<div fxLayout="column" fxFlexFill fxLayoutAlign="center center" *ngIf="loadingView">
 		<mat-spinner diameter="40" color="accent" mode="indeterminate"></mat-spinner>
 	</div>
-	<as-split *ngIf="!loadingView" direction="vertical" (dragEnd)="onSplitDragEnd($event, 'row')">
+	<as-split [gutterSize]="7" *ngIf="!loadingView" direction="vertical" (dragEnd)="onSplitDragEnd($event, 'row')">
 		<as-split-area [size]="sizes.row[0]">
-			<as-split direction="horizontal" (dragEnd)="onSplitDragEnd($event, 'row0Col')">
+			<as-split [gutterSize]="7" direction="horizontal" (dragEnd)="onSplitDragEnd($event, 'row0Col')">
 				<as-split-area [size]="sizes.row0Col[0]">
 					<kl-informations-block id="modeling-informations-block-summary"
 						title="{{ 'GLOBAL.SUMMARY' | translate }}" [inputDatas]="summaryDatas"></kl-informations-block>
@@ -29,12 +29,12 @@
 			</as-split>
 		</as-split-area>
 		<as-split-area [size]="sizes.row[1] ">
-			<as-split direction="vertical">
+			<as-split [gutterSize]="7" direction="vertical">
 				<app-select-trained-predictor [inputDatas]="appDatas.datas.modelingReport.trainedPredictors"
 					(selectedPredictorChanged)="onSelectedPredictorChanged($event)"></app-select-trained-predictor>
-				<as-split direction="horizontal" (dragEnd)="onSplitDragEnd($event, 'row1Col')">
+				<as-split [gutterSize]="7" direction="horizontal" (dragEnd)="onSplitDragEnd($event, 'row1Col')">
 					<as-split-area [size]="sizes.row1Col[0]">
-						<as-split *ngIf="modelingDatas.trainedPredictorsListDatas" direction="vertical"
+						<as-split [gutterSize]="7" *ngIf="modelingDatas.trainedPredictorsListDatas" direction="vertical"
 							(dragEnd)="onSplitDragEnd($event, 'row1Col0Row')">
 							<as-split-area class="variables-list-container">
 								<kl-ag-grid id="modeling-variables-list" class="variables-list" fxFlexFill

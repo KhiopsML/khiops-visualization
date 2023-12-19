@@ -1,5 +1,5 @@
 <div class="axis-comp" fxFlexFill *ngIf="axisLayout && dimensionsDatas">
-	<as-split direction="horizontal" (dragEnd)="onSplitDragEnd($event, sizeId)" fxFlexFill>
+	<as-split [gutterSize]="7" direction="horizontal" (dragEnd)="onSplitDragEnd($event, sizeId)" fxFlexFill>
 		<as-split-area [size]="sizes[sizeId][column0Index]" order="1" [visible]="axisLayout.isHierarchyChecked">
 			<div fxFlexFill fxLayout="column" [attr.id]="'tree-comp-'+position">
 				<div fxFlexFill fxLayout="column" class="selected-area-inner-div">
@@ -20,7 +20,7 @@
 		</as-split-area>
 		<as-split-area [size]="sizes[sizeId][column2Index]" order="3"
 			*ngIf="axisLayout.isAnnotationChecked || axisLayout.isCompositionChecked">
-			<as-split direction="vertical" fxFlexFill>
+			<as-split [gutterSize]="7" direction="vertical" fxFlexFill>
 				<as-split-area [size]="30" order="1" *ngIf="axisLayout.isAnnotationChecked">
 					<app-annotation [attr.id]="'cluster-annotation-'+position" [position]="position"
 						[selectedDimension]="dimensionsDatas.selectedDimensions[position]"
