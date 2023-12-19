@@ -45,6 +45,7 @@ import {
 export class AppComponent implements AfterViewInit {
 
 	appdatas: any;
+	show = true;
 
 	@ViewChild('appElement', {
 		static: false
@@ -73,6 +74,7 @@ export class AppComponent implements AfterViewInit {
 		this.element.nativeElement.setDatas = (datas) => {
 			// Set data into ngzone to detect change into another context (electron for instance)
 			this.ngzone.run(() => {
+				this.clean();
 				this.appdatas = {
 					...datas
 				}
@@ -110,8 +112,19 @@ export class AppComponent implements AfterViewInit {
 			this.configService.setConfig(config);
 			this.initCookieConsent();
 		};
-		this.element.nativeElement.clean = () => this.appdatas = null;
+		this.element.nativeElement.clean = () => {
+			this.ngzone.run(() => {
+				this.clean();
+			});
+		}
 		this.setTheme();
+	}
+
+	clean() {
+		this.show = false;
+		this.appdatas = undefined;
+		this.appService.initialize();
+		this.show = true;
 	}
 
 	setTheme() {

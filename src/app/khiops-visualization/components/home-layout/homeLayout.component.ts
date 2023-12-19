@@ -79,10 +79,7 @@ export class HomeLayoutComponent implements OnInit {
 		return this.appService.getDatas();
 	}
 	set appDatas(datas: any) {
-		this.appService.setFileDatas(datas);
-		if (datas && !UtilsService.isEmpty(datas)) {
-			this.initializeHome(datas);
-		}
+		this.onFileLoaderDataChanged(datas);
 	}
 
 	@ViewChild('appProjectView', {
@@ -128,7 +125,6 @@ export class HomeLayoutComponent implements OnInit {
 			this.appTitle = pjson.title.visualization;
 			this.appVersion = pjson.version;
 		}
-
 	}
 
 	@HostListener('window:resize', ['$event'])
@@ -169,6 +165,7 @@ export class HomeLayoutComponent implements OnInit {
 		this.appService.setFileDatas(datas);
 		if (datas && !UtilsService.isEmpty(datas)) {
 			this.initializeHome(datas);
+			this.activeTab = 0
 		}
 
 	}
@@ -177,7 +174,7 @@ export class HomeLayoutComponent implements OnInit {
 		this.isCompatibleJson = this.appService.isCompatibleJson(datas);
 		this.showProjectTab = this.configService.getConfig().showProjectTab;
 		if (this.showProjectTab === undefined) {
-			this.showProjectTab = true;
+			this.showProjectTab = false;
 		}
 
 		if (!this.isCompatibleJson) {
@@ -192,15 +189,15 @@ export class HomeLayoutComponent implements OnInit {
 			});
 		}
 
-		// @ts-ignore
-		this.appProjectView && this.appProjectView.initialize()
-
 		this.preparationDatasService.initialize();
 		this.treePreparationDatasService.initialize();
 		this.preparation2dDatasService.initialize();
 		this.distributionDatasService.initialize();
 		this.evaluationDatasService.initialize();
 		this.modelingDatasService.initialize();
+
+		// @ts-ignore
+		this.appProjectView && this.appProjectView.initialize()
 
 	}
 
@@ -215,7 +212,6 @@ export class HomeLayoutComponent implements OnInit {
 	}
 
 	setChannel(channel) {
-
 		localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'CHANNEL', channel);
 		this.currentChannel = channel;
 	}
