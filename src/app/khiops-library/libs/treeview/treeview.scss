@@ -18,7 +18,7 @@
 }
 
 .tree-leaf .tree-expando {
-	background: rgba(200,200,200, 0.4);
+	background: rgba(200, 200, 200, 0.4);
 	border-radius: 3px;
 	cursor: pointer;
 	float: left;
@@ -55,14 +55,17 @@
 }
 
 .tree-leaf .tree-expando:hover {
-	background: rgba(200,200,200, 0.4);
+	background: rgba(200, 200, 200, 0.4);
 }
 
 .tree-leaf .tree-leaf-text {
 	cursor: pointer;
 	float: left;
 	padding-left: 5px;
+	font-size: 0.85rem;
 	width: 100%;
+	line-height: 1.2rem;
+	margin: 2px 0 -2px 0;
 }
 
 .tree-leaf .tree-leaf-content:not(.selected):hover {
