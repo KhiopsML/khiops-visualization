@@ -7,7 +7,9 @@
 	#graph-header-comp {
 		flex-wrap: wrap;
 		padding: 5px 0;
-
+		kl-btn-fullscreen {
+			margin-right: 0.3rem;
+		}
 		#graph-header-tools {
 			mat-checkbox {
 				margin: 0 0 0 1rem;

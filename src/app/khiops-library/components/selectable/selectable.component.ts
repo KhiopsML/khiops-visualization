@@ -13,8 +13,12 @@ import {
 import {
 	SelectableService
 } from './selectable.service';
-import { ConfigService } from '@khiops-library/providers/config.service';
-import { Subscription } from 'rxjs';
+import {
+	ConfigService
+} from '@khiops-library/providers/config.service';
+import {
+	Subscription
+} from 'rxjs';
 
 @Component({
 	template: '',
@@ -36,18 +40,10 @@ export class SelectableComponent extends WatchResizeComponent implements OnDestr
 				const el = this.configService.getRootElementDom().querySelector("#" + this.id.toString());
 				if (el) {
 					if (value.id.toString() === this.id.toString()) {
-						if (this.id.includes('informations-block') || this.id.includes('description-block')) {
-							el.parentElement.classList.add('parent-selected');
-						} else {
-							el.classList.add('selected');
-						}
+						el.classList.add('selected');
 					} else {
 						if (el && el.classList) {
-							if (this.id.includes('informations-block') || this.id.includes('description-block')) {
-								el.parentElement.classList.remove('parent-selected');
-							} else {
-								el.classList.remove('selected');
-							}
+							el.classList.remove('selected');
 						}
 					}
 				}
