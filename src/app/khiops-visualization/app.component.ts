@@ -51,7 +51,7 @@ export class AppComponent implements AfterViewInit {
 		static: false
 	}) appElement: ElementRef < HTMLElement > ;
 
-	isDarkTheme: boolean = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR') === 'dark' ? true : false;
+	theme: string = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR') || 'light';
 
 	constructor(
 		private dialogRef: MatDialog,

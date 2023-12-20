@@ -13,7 +13,12 @@ import {
 	KhiopsLibraryService
 } from '@khiops-library/providers/khiops-library.service';
 import * as _ from 'lodash'; // Important to import lodash in karma
-import { AppService } from '@khiops-covisualization/providers/app.service';
+import {
+	AppService
+} from '@khiops-covisualization/providers/app.service';
+import {
+	MatButtonToggleChange
+} from '@angular/material/button-toggle';
 
 @Component({
 	selector: 'app-user-settings',
@@ -27,7 +32,10 @@ export class UserSettingsComponent implements OnChanges {
 	allowCookies: boolean;
 	contrastValue: number;
 	initialAllowCookies: boolean;
-	allowDarkTheme: boolean;
+	currentTheme: string =
+		localStorage.getItem(
+			AppConfig.covisualizationCommon.GLOBAL.LS_ID + "THEME_COLOR"
+		) || 'light'
 
 	constructor(private khiopsLibraryService: KhiopsLibraryService, private appService: AppService) {}
 
@@ -49,10 +57,6 @@ export class UserSettingsComponent implements OnChanges {
 		// Allow cookies
 		this.allowCookies = (localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'COOKIE_CONSENT') === 'true') || false;
 		this.initialAllowCookies = _.cloneDeep(this.allowCookies);
-
-		// theme
-		this.allowDarkTheme = localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR') === 'dark' ? true : false;
-		localStorage.setItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR', this.allowDarkTheme ? 'dark' : 'light');
 
 	}
 
@@ -77,12 +81,22 @@ export class UserSettingsComponent implements OnChanges {
 			}
 		}
 
-		localStorage.setItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR', this.allowDarkTheme ? 'dark' : 'light');
-
+		// theme
+		localStorage.setItem(
+			AppConfig.covisualizationCommon.GLOBAL.LS_ID + "THEME_COLOR", this.currentTheme
+		)
 		location.reload()
 
 		// this.khiopsLibraryService.trackEvent('click', 'settings', 'significant_number', this.numberPrecision);
 		// this.khiopsLibraryService.trackEvent('click', 'settings', 'matrix_contrast', this.contrastValue);
+	}
+
+	isThemeChecked(theme: string): boolean {
+		return theme === this.currentTheme;
+	}
+
+	onThemeChange($event: MatButtonToggleChange) {
+		this.currentTheme = $event.value;
 	}
 
 }

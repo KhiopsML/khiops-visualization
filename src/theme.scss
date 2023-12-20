@@ -2,7 +2,7 @@
 @include mat-core();
 $mat-theme-ignore-duplication-warnings: true;
 
-$md-khiopsmain: (
+$md-main: (
 	50: #d0d6e9,
 	100: #9ba8d2,
 	200: #7587c0,
@@ -35,7 +35,7 @@ $md-khiopsmain: (
 	),
 );
 
-$md-khiopsaccent: (
+$md-accent: (
 	50: #f6a9d2,
 	100: #ef64ae,
 	200: #ea3193,
@@ -68,14 +68,14 @@ $md-khiopsaccent: (
 	),
 );
 
-$primary: mat-palette($md-khiopsmain);
-$accent: mat-palette($md-khiopsaccent);
+$primary: mat-palette($md-main);
+$accent: mat-palette($md-accent);
 $warn: mat-palette($mat-blue-grey);
-$theme-light: mat-light-theme($primary, $accent, $warn);
-@include angular-material-color($theme-light);
+$theme: mat-light-theme($primary, $accent, $warn);
+@include angular-material-color($theme);
 
 ::ng-deep .dark-theme {
-	$md-main-dark: (
+	$md-main: (
 		50: #ffffff,
 		100: #ffffff,
 		200: #ffffff,
@@ -109,7 +109,7 @@ $theme-light: mat-light-theme($primary, $accent, $warn);
 	);
 
 	/* For use in src/lib/core/theming/_palette.scss */
-	$md-warn-dark: (
+	$md-warn: (
 		50: #b8b8b8,
 		100: #919191,
 		200: #757575,
@@ -142,12 +142,70 @@ $theme-light: mat-light-theme($primary, $accent, $warn);
 		),
 	);
 
-	// $primary-dark: mat-palette($mat-deep-orange);
-	$primary-dark: mat-palette($mat-blue-grey);
-	$accent-dark: mat-palette($md-main-dark);
-	$warn-dark: mat-palette($md-warn-dark);
-	$theme-dark: mat-dark-theme($primary-dark, $accent-dark, $warn-dark);
-	@include angular-material-color($theme-dark);
+	$primary: mat-palette($mat-blue-grey);
+	$accent: mat-palette($md-main);
+	$warn: mat-palette($md-warn);
+	$theme: mat-dark-theme($primary, $accent, $warn);
+	@include angular-material-color($theme);
+}
+
+::ng-deep .orange-theme {
+	$md-main: (
+		50: #000000,
+		100: #000000,
+		200: #000000,
+		300: #000000,
+		400: #000000,
+		500: #000000,
+		600: #000000,
+		700: #000000,
+		800: #000000,
+		900: #000000,
+		A100: #000000,
+		A200: #000000,
+		A400: #000000,
+		A700: #000000,
+		contrast: (
+			50: #ffffff,
+			100: #ffffff,
+			200: #ffffff,
+			300: #ffffff,
+			400: #ffffff,
+			500: #ffffff,
+			600: #ffffff,
+			700: #ffffff,
+			800: #ffffff,
+			900: #ffffff,
+			A100: #ffffff,
+			A200: #ffffff,
+			A400: #ffffff,
+			A700: #ffffff,
+		),
+	);
+
+	$primary: mat-palette($md-main);
+	$accent: mat-palette($mat-gray);
+	$warn: mat-palette($mat-gray);
+	$theme: mat-light-theme($primary, $accent, $warn);
+	@include angular-material-color($theme);
+}
+
+::ng-deep .orange-theme {
+	mat-button-toggle-group,
+	button,
+	.search-input-btn {
+		border-width: 2px !important;
+		border-color: black !important;
+		border-radius: 0 !important;
+	}
+
+	button.mat-accent {
+		color: black !important;
+	}
+
+	.mat-ink-bar {
+		background-color: #ff6600 !important;
+	}
 }
 
 @media (prefers-color-scheme: light) {
@@ -201,6 +259,32 @@ $theme-light: mat-light-theme($primary, $accent, $warn);
 	--primary-contrast-10: #1e326d;
 	--accent: #880e4f;
 	--selected: #7abdf3;
+	--gutter-hover: #ededed;
+	--bgTooltip: #444;
+	--chart-border: #e5e5e5;
+	--yellowMain: #fbb33a;
+	--redMain: #fb473a;
+	--gripOpacity: 1;
+}
+
+[data-color-scheme="orange"] {
+	color-scheme: orange;
+	--bgColorContrast: #000;
+	--grid: #ddd;
+	--bgColor: #fff;
+	--bgColor-10: #eee;
+	--bgColor-20: #f7f7f7;
+	--bgColor-30: #ccc;
+	--bgColor-40: #bbb;
+	--bgColor-50: #aaa;
+	--primary: #000;
+	--primary-10: #222222;
+	--grey-text: #757575;
+	--black-text: #000;
+	--primary-contrast: #444;
+	--primary-contrast-10: #222;
+	--accent: #cd3c14;
+	--selected: #ff6600;
 	--gutter-hover: #ededed;
 	--bgTooltip: #444;
 	--chart-border: #e5e5e5;

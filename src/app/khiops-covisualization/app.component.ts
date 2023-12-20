@@ -36,6 +36,10 @@ export class AppComponent implements AfterViewInit {
 		) === "dark"
 			? true
 			: false;
+	theme: string =
+		localStorage.getItem(
+			AppConfig.covisualizationCommon.GLOBAL.LS_ID + "THEME_COLOR"
+		) || "light";
 
 	@ViewChild("appElement", {
 		static: false,

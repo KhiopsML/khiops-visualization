@@ -19,6 +19,9 @@ import {
 import {
 	TranslateService
 } from '@ngstack/translate';
+import {
+	MatButtonToggleChange
+} from '@angular/material/button-toggle';
 
 @Component({
 	selector: 'app-user-settings',
@@ -33,7 +36,10 @@ export class UserSettingsComponent implements OnChanges {
 	numberPrecision;
 	contrastValue: number;
 	allowCookies: boolean;
-	allowDarkTheme: boolean;
+	currentTheme: string =
+		localStorage.getItem(
+			AppConfig.visualizationCommon.GLOBAL.LS_ID + "THEME_COLOR"
+		) || 'light'
 	initialAllowCookies: boolean;
 
 	constructor(private translate: TranslateService,
@@ -64,10 +70,6 @@ export class UserSettingsComponent implements OnChanges {
 		this.allowCookies = (localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'COOKIE_CONSENT') === 'true') || false;
 		this.initialAllowCookies = _.cloneDeep(this.allowCookies);
 
-		// theme
-		this.allowDarkTheme = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR') === 'dark' ? true : false;
-		localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR', this.allowDarkTheme ? 'dark' : 'light');
-
 	}
 
 	onClickOnCancel() {
@@ -82,7 +84,10 @@ export class UserSettingsComponent implements OnChanges {
 		localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST', this.contrastValue.toString());
 		AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
 
-		localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR', this.allowDarkTheme ? 'dark' : 'light');
+		// theme
+		localStorage.setItem(
+			AppConfig.visualizationCommon.GLOBAL.LS_ID + "THEME_COLOR", this.currentTheme
+		)
 
 		// Close the nav drawer
 		this.toggleNavDrawerChanged.emit(true);
@@ -110,4 +115,13 @@ export class UserSettingsComponent implements OnChanges {
 			panelClass: 'success'
 		});
 	}
+
+	isThemeChecked(theme: string): boolean {
+		return theme === this.currentTheme;
+	}
+
+	onThemeChange($event: MatButtonToggleChange) {
+		this.currentTheme = $event.value;
+	}
+
 }
