@@ -6,7 +6,6 @@ export function setupContextTests(datas, testsValues, fileName) {
 		index < datas.coclusteringReport?.dimensionSummaries.length;
 		index++
 	) {
-		console.log('file: context-tests.ts:9 ~ setupContextTests ~ index:', index);
 		testsValues.Context.push(
 			datas.coclusteringReport?.dimensionSummaries[index]?.name
 		);
