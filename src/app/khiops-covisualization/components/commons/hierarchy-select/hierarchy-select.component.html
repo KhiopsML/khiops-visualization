@@ -7,7 +7,7 @@
 				<button mat-menu-item *ngFor="let dimension of dimensions; let i = index"  (click)="changeSelectedDimension(dimension, i)">{{ dimension.name  }}</button>
 			</mat-menu>
 		</div>
-		<button mat-icon-button color="accent" attr.aria-label="{{ 'TOOLTIPS.AXIS.DIMENSION.STATISTICS' | translate }}" matTooltip="{{ 'GLOBAL.STATISTICS' | translate }}" (click)="showStats = !showStats"  [ngClass]="{'enabled': showStats}">
+		<button mat-icon-button color="accent" attr.aria-label="{{ 'TOOLTIPS.AXIS.DIMENSION.STATISTICS' | translate }}" matTooltip="{{ 'GLOBAL.STATISTICS' | translate }}" (click)="onClickOnShowStats()"  [ngClass]="{'enabled': showStats}">
 			<mat-icon>info</mat-icon>
 		</button>
 	</div>

@@ -2,7 +2,8 @@ import {
 	Component,
 	SimpleChanges,
 	OnChanges,
-	Input
+	Input,
+	AfterViewInit
 } from '@angular/core';
 import {
 	trigger,
@@ -31,6 +32,9 @@ import {
 import {
 	TranslateService
 } from '@ngstack/translate';
+import {
+	AppConfig
+} from 'src/environments/environment';
 
 @Component({
 	selector: 'app-hierarchy-select',
@@ -53,14 +57,14 @@ import {
 		])
 	]
 })
-export class HierarchySelectComponent implements OnChanges {
+export class HierarchySelectComponent implements OnChanges, AfterViewInit {
 
 	@Input() selectedDimension: DimensionVO;
 	@Input() selectedNode: TreeNodeVO;
 	@Input() position: number;
 	@Input() dimensions: DimensionVO[];
 
-	showStats = false;
+	showStats = false
 	intervals = 0;
 
 	constructor(
@@ -68,13 +72,23 @@ export class HierarchySelectComponent implements OnChanges {
 		private snackBar: MatSnackBar,
 		private translate: TranslateService,
 		private appService: AppService,
-		private dimensionsService: DimensionsDatasService) {
-	}
+		private dimensionsService: DimensionsDatasService) {}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes.selectedDimension && changes.selectedDimension.currentValue) {
 			this.intervals = this.dimensionsService.getDimensionIntervals(this.selectedDimension.name);
 		}
+	}
+
+	ngAfterViewInit() {
+		this.showStats = localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'SHOW_DIMNSION_STATS_' + this.position) === 'true'
+	}
+
+	onClickOnShowStats() {
+		this.showStats = !this.showStats;
+		localStorage.setItem(
+			AppConfig.covisualizationCommon.GLOBAL.LS_ID + "SHOW_DIMNSION_STATS_" + this.position, this.showStats.toString()
+		);
 	}
 
 	changeSelectedDimension(dimension: DimensionVO, newPosition: number) {
