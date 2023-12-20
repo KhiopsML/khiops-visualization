@@ -15,7 +15,6 @@
 		}
 
 		.comp-header-tools {
-
 			.mat-flat-button {
 				height: 33px !important;
 				min-width: 38px !important;
@@ -43,15 +42,17 @@
 				}
 			}
 
-			.search-input-btn {
+			::ng-deep .search-input-btn {
 				border-radius: 4px;
 				margin-right: 20px;
 				transition: width 2s;
 				margin-left: 10px;
+				border: 1px solid var(--primary);
+				min-height: 35px;
 
 				button {
-					height: 31px;
-					line-height: 31px;
+					height: 29px;
+					line-height: 30px;
 					margin-right: 0;
 					width: 38px;
 
@@ -76,9 +77,7 @@
 					height: 25px;
 					margin-top: 2px;
 				}
-
 			}
-
 		}
 	}
 }

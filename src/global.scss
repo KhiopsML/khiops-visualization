@@ -125,16 +125,6 @@ as-split-area {
 	color: var(--bgColorContrast) !important;
 }
 
-.ag-grid-comp {
-	.comp-header {
-		.comp-header-tools {
-			.search-input-btn {
-				border: 1px solid var(--primary) !important;
-			}
-		}
-	}
-}
-
 ::ng-deep .mat-badge-content {
 	border-color: var(--bgColor) !important;
 }
@@ -376,7 +366,7 @@ em {
 }
 
 .mat-elevation-z4 {
-	box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.12);
+	box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.12) !important;
 }
 
 h1 {
@@ -849,6 +839,7 @@ kl-matrix-canvas {
 button {
 	span {
 		font-weight: 400 !important;
+		font-size: 0.8rem !important;
 	}
 }
 
@@ -884,11 +875,11 @@ canvas:focus {
 
 .mat-badge-content {
 	border: 3px solid white !important;
-	width: 12px !important;
-	height: 12px !important;
+	width: 10px !important;
+	height: 10px !important;
 	line-height: 12px !important;
 	top: -8px !important;
-	right: -8px !important;
+	right: -6px !important;
 }
 
 .cc-floating.cc-theme-classic {
