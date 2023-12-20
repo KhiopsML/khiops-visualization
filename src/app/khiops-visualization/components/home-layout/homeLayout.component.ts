@@ -174,7 +174,7 @@ export class HomeLayoutComponent implements OnInit {
 		this.isCompatibleJson = this.appService.isCompatibleJson(datas);
 		this.showProjectTab = this.configService.getConfig().showProjectTab;
 		if (this.showProjectTab === undefined) {
-			this.showProjectTab = false;
+			this.showProjectTab = true;
 		}
 
 		if (!this.isCompatibleJson) {
