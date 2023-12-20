@@ -180,6 +180,7 @@ $theme-light: mat-light-theme($primary, $accent, $warn);
 	--chart-border: #555;
 	--yellowMain: #fbb33a;
 	--redMain: #fb473a;
+	--gripOpacity: 0.3;
 }
 
 [data-color-scheme="light"] {
@@ -205,4 +206,5 @@ $theme-light: mat-light-theme($primary, $accent, $warn);
 	--chart-border: #e5e5e5;
 	--yellowMain: #fbb33a;
 	--redMain: #fb473a;
+	--gripOpacity: 1;
 }

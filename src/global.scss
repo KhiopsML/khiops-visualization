@@ -81,16 +81,16 @@ as-split-area {
 }
 
 ::-webkit-scrollbar-thumb {
-	background: var(--bgColor-40) !important;
+	background: var(--bgColor-30) !important;
 	border: unset !important;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-	background: var(--bgColor-30) !important;
+	background: var(--bgColor-20) !important;
 }
 
 ::-webkit-scrollbar-thumb:active {
-	background: var(--bgColor-30) !important;
+	background: var(--bgColor-20) !important;
 }
 
 ::-webkit-scrollbar-track {
@@ -373,6 +373,10 @@ em {
 			font-family: verdana;
 		}
 	}
+}
+
+.mat-elevation-z4 {
+	box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.12);
 }
 
 h1 {
@@ -691,7 +695,9 @@ mat-button-toggle-group {
 .as-horizontal > .as-split-gutter .as-split-gutter-icon {
 	background-size: 4px !important;
 }
-
+.as-split-gutter-icon {
+	opacity: var(--gripOpacity);
+}
 .as-split-gutter {
 	position: relative;
 }
