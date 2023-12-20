@@ -106,8 +106,8 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 			let options: ChartOptions | any = {
 				plugins: {
 					chartAreaBorder: {
-						borderColor: this.color,
-						borderWidth: 1,
+						borderColor: 'transparent',
+						borderWidth: 0,
 					},
 					tooltip: {
 						callbacks: {
@@ -138,9 +138,15 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 				maintainAspectRatio: false,
 				onClick: this.graphClickEvent.bind(this),
 				scales: {
+
 					y: {
+						border: {
+							dash: [5, 5],
+							display: false
+						},
 						grid: {
 							color: this.color,
+							drawTick: false
 						},
 						beginAtZero: true,
 						min: 0,
@@ -155,8 +161,14 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 						}
 					},
 					x: {
+						border: {
+							dash: [5, 5],
+							display: false
+						},
 						grid: {
-							color: this.color
+							color: this.color,
+							drawTick: false,
+							display: false
 						},
 						min: 0,
 						ticks: {

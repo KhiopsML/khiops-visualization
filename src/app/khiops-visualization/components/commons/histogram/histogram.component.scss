@@ -11,10 +11,12 @@
 
 		::ng-deep .axis-grid {
 			.domain {
-				stroke: var(--chart-border);
+				// stroke: var(--chart-border);
+				stroke: none;
 			}
 			.tick {
 				line {
+					stroke-dasharray: 5;
 					stroke: var(--chart-border);
 				}
 				text {
