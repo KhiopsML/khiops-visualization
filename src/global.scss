@@ -25,7 +25,9 @@ body {
 		}
 	}
 }
-
+.ag-theme-balham .ag-header-cell-resize {
+	width: 14px !important;
+}
 h1 {
 	color: var(--accent);
 }
