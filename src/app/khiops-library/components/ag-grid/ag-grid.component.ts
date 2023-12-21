@@ -305,6 +305,7 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 
 	onToggleFullscreen(isFullscreen: boolean) {
 		this.isFullscreen = isFullscreen;
+		this.fitToSpace();
 	}
 
 	onCellDoubleClicked(e) {
