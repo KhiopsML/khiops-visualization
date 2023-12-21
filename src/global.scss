@@ -62,8 +62,11 @@ h1 {
 	font-style: italic;
 }
 
-.mat-checkbox-checkmark{
-	background-color: var(--accent) !important;
+.mat-checkbox-background {
+	border: 2px solid var(--bgColor-30) !important;
+}
+.mat-checkbox-checked.mat-accent .mat-checkbox-background {
+	border: 0px !important;
 }
 
 .comp-header {
