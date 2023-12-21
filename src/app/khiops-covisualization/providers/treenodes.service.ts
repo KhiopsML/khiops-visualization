@@ -264,6 +264,7 @@ export class TreenodesService {
 		const appDatas = this.appService.getInitialDatas().datas;
 
 		if (appDatas.coclusteringReport && appDatas.coclusteringReport.dimensionSummaries) {
+			this.dimensionsDatas.hierarchyDatas.totalClusters = 0;
 			const l = appDatas.coclusteringReport.dimensionSummaries.length;
 			this.dimensionsDatas.hierarchyDatas.minClusters = l;
 			for (let i = 0; i < l; i++) {
