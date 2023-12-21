@@ -36,7 +36,6 @@ import {
 	selector: "app-histogram",
 	templateUrl: "./histogram.component.html",
 	styleUrls: ["./histogram.component.scss"],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HistogramComponent extends SelectableComponent implements OnInit {
 	@ViewChild("chart", { static: false })
@@ -82,6 +81,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 	formatOpts = { lowerExp: -2, upperExp: 2 };
 	ratio: number = 0;
 	distributionDatas: DistributionDatasVO;
+	isLoading: boolean = false;
 
 	colorSet: string[];
 
@@ -155,141 +155,182 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 		if (this.chart) {
 			this.chart.nativeElement.innerHTML = "";
 			if (this.datas) {
-				if (
-					this.distributionDatas.distributionGraphOptionsY
-						.selected === HistogramType.YLOG
-				) {
-					this.rangeYLog = this.histogramService.getLogRangeY(
-						this.datas
-					);
-					this.ratioY = this.histogramService.getLogRatioY(
-						this.h,
-						this.yPadding
-					);
-				} else {
-					this.rangeYLin = this.histogramService.getLinRangeY(
-						this.datas
-					);
-					this.ratioY = this.histogramService.getLinRatioY(
-						this.h,
-						this.yPadding
-					);
+				if (this.datas.length > 500) {
+					// display loading
+					this.isLoading = true;
 				}
 
-				this.drawChart(this.w);
-				this.addTooltip();
-
-				[this.rangeXLin, this.rangeXLog] =
-					this.histogramService.getRangeX(this.datas);
-
-				if (
-					this.rangeXLog.negValuesCount === 0 ||
-					this.rangeXLog.posValuesCount === 0
-				) {
-					this.xTickCount = this.xTickCount * 2;
-				}
-
-				this.drawYAxis();
-				this.drawHistogram(this.datas);
-
-				if (
-					this.distributionDatas.distributionGraphOptionsX
-						.selected === HistogramType.XLIN
-				) {
-					let shift = 0;
-					let width = this.w - 2 * this.xPadding;
-					let domain = [this.rangeXLin.min, this.rangeXLin.max];
-					let tickValues = this.datas.map(
-						(e: HistogramValuesI) => e.partition[0]
-					);
-					tickValues.push(
-						this.datas[this.datas.length - 1].partition[1]
-					);
-					this.drawXAxis(domain, shift, width);
-				} else {
-					// Draw positive axis
-					let shift = 0;
-					let width = 0;
-					let domain: number[] = [];
-
-					if (
-						this.rangeXLog.posStart !== this.rangeXLog.max &&
-						this.rangeXLog.posValuesCount
-					) {
-						width = this.w - 2 * this.xPadding;
-						domain = [this.rangeXLog.posStart, this.rangeXLog.max];
-
-						let shiftInf = 2;
-						if (this.rangeXLog.inf && !this.rangeXLog.negStart) {
-							shiftInf = 1;
-						}
+				setTimeout(
+					() => {
 						if (
-							!this.rangeXLog.inf &&
-							this.rangeXLog.negValuesCount === 0
+							this.distributionDatas.distributionGraphOptionsY
+								.selected === HistogramType.YLOG
 						) {
-							shiftInf = 0; // only positive values
-						}
-						shift +=
-							((this.w - 2 * this.xPadding) / this.ratio) *
-							Math.log10(this.rangeXLog.middlewidth) *
-							shiftInf;
-
-						if (this.rangeXLog.negValuesCount !== 0) {
-							shift +=
-								((this.w - 2 * this.xPadding) / this.ratio) *
-								Math.log10(Math.abs(this.rangeXLog.min));
-							shift -=
-								((this.w - 2 * this.xPadding) / this.ratio) *
-								Math.log10(Math.abs(this.rangeXLog.negStart));
-						}
-						width = this.w - 2 * this.xPadding - shift;
-						this.drawXAxis(domain, shift, width);
-					}
-
-					// Draw -Inf axis
-					if (this.rangeXLog.inf) {
-						if (this.rangeXLog.posValuesCount) {
-							let middleShift =
-								shift -
-								((this.w - 2 * this.xPadding) / this.ratio) *
-									Math.log10(this.rangeXLog.middlewidth);
-							domain = [1];
-							this.drawXAxis(domain, middleShift - 1, 1);
+							this.rangeYLog = this.histogramService.getLogRangeY(
+								this.datas
+							);
+							this.ratioY = this.histogramService.getLogRatioY(
+								this.h,
+								this.yPadding
+							);
 						} else {
-							let middleShift = this.w - 2 * this.xPadding;
-							domain = [1];
-							this.drawXAxis(domain, middleShift - 1, 1); // 1 to make bigger line
+							this.rangeYLin = this.histogramService.getLinRangeY(
+								this.datas
+							);
+							this.ratioY = this.histogramService.getLinRatioY(
+								this.h,
+								this.yPadding
+							);
 						}
-					}
 
-					// Draw negative axis
-					if (
-						// this.rangeXLog.inf ||
-						this.rangeXLog.negStart !== this.rangeXLog.min &&
-						this.rangeXLog.negValuesCount
-					) {
-						width = this.w - 2 * this.xPadding - width;
-						domain = [this.rangeXLog.min, this.rangeXLog.negStart];
+						this.drawChart(this.w);
+						this.addTooltip();
 
-						if (this.rangeXLog.posValuesCount) {
-							// If there is pos and neg values
-							width =
-								width -
-								((this.w - 2 * this.xPadding) / this.ratio) *
-									Math.log10(this.rangeXLog.middlewidth) *
-									2;
+						[this.rangeXLin, this.rangeXLog] =
+							this.histogramService.getRangeX(this.datas);
+
+						if (
+							this.rangeXLog.negValuesCount === 0 ||
+							this.rangeXLog.posValuesCount === 0
+						) {
+							this.xTickCount = this.xTickCount * 2;
+						}
+
+						this.drawYAxis();
+						this.drawHistogram(this.datas);
+
+						if (
+							this.distributionDatas.distributionGraphOptionsX
+								.selected === HistogramType.XLIN
+						) {
+							let shift = 0;
+							let width = this.w - 2 * this.xPadding;
+							let domain = [
+								this.rangeXLin.min,
+								this.rangeXLin.max,
+							];
+							let tickValues = this.datas.map(
+								(e: HistogramValuesI) => e.partition[0]
+							);
+							tickValues.push(
+								this.datas[this.datas.length - 1].partition[1]
+							);
+							this.drawXAxis(domain, shift, width);
 						} else {
-							if (this.rangeXLog.inf) {
-								width =
-									width -
+							// Draw positive axis
+							let shift = 0;
+							let width = 0;
+							let domain: number[] = [];
+
+							if (
+								this.rangeXLog.posStart !==
+									this.rangeXLog.max &&
+								this.rangeXLog.posValuesCount
+							) {
+								width = this.w - 2 * this.xPadding;
+								domain = [
+									this.rangeXLog.posStart,
+									this.rangeXLog.max,
+								];
+
+								let shiftInf = 2;
+								if (
+									this.rangeXLog.inf &&
+									!this.rangeXLog.negStart
+								) {
+									shiftInf = 1;
+								}
+								if (
+									!this.rangeXLog.inf &&
+									this.rangeXLog.negValuesCount === 0
+								) {
+									shiftInf = 0; // only positive values
+								}
+								shift +=
 									((this.w - 2 * this.xPadding) /
 										this.ratio) *
-										Math.log10(this.rangeXLog.middlewidth);
+									Math.log10(this.rangeXLog.middlewidth) *
+									shiftInf;
+
+								if (this.rangeXLog.negValuesCount !== 0) {
+									shift +=
+										((this.w - 2 * this.xPadding) /
+											this.ratio) *
+										Math.log10(
+											Math.abs(this.rangeXLog.min)
+										);
+									shift -=
+										((this.w - 2 * this.xPadding) /
+											this.ratio) *
+										Math.log10(
+											Math.abs(this.rangeXLog.negStart)
+										);
+								}
+								width = this.w - 2 * this.xPadding - shift;
+								this.drawXAxis(domain, shift, width);
+							}
+
+							// Draw -Inf axis
+							if (this.rangeXLog.inf) {
+								if (this.rangeXLog.posValuesCount) {
+									let middleShift =
+										shift -
+										((this.w - 2 * this.xPadding) /
+											this.ratio) *
+											Math.log10(
+												this.rangeXLog.middlewidth
+											);
+									domain = [1];
+									this.drawXAxis(domain, middleShift - 1, 1);
+								} else {
+									let middleShift =
+										this.w - 2 * this.xPadding;
+									domain = [1];
+									this.drawXAxis(domain, middleShift - 1, 1); // 1 to make bigger line
+								}
+							}
+
+							// Draw negative axis
+							if (
+								// this.rangeXLog.inf ||
+								this.rangeXLog.negStart !==
+									this.rangeXLog.min &&
+								this.rangeXLog.negValuesCount
+							) {
+								width = this.w - 2 * this.xPadding - width;
+								domain = [
+									this.rangeXLog.min,
+									this.rangeXLog.negStart,
+								];
+
+								if (this.rangeXLog.posValuesCount) {
+									// If there is pos and neg values
+									width =
+										width -
+										((this.w - 2 * this.xPadding) /
+											this.ratio) *
+											Math.log10(
+												this.rangeXLog.middlewidth
+											) *
+											2;
+								} else {
+									if (this.rangeXLog.inf) {
+										width =
+											width -
+											((this.w - 2 * this.xPadding) /
+												this.ratio) *
+												Math.log10(
+													this.rangeXLog.middlewidth
+												);
+									}
+								}
+								this.drawXAxis(domain, 0, width);
 							}
 						}
-						this.drawXAxis(domain, 0, width);
-					}
-				}
+						this.isLoading = false;
+					},
+					this.isLoading ? 100 : 0
+				);
 			}
 		}
 	}

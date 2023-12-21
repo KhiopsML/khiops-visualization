@@ -1,4 +1,10 @@
 .app-histogram {
+	.histogram-loading-indicator {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background-color: var(--bgColor);
+	}
 	.comp-header {
 		padding-top: 1rem;
 		margin-top: 1px !important;
