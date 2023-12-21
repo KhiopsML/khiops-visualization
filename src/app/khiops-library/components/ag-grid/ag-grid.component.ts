@@ -128,6 +128,7 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 	gridOptions = < GridOptions > {
 		suppressAnimationFrame: true,
 		enableBrowserTooltips: true,
+		suppressColumnMoveAnimation: true,
 		animateRows: false
 	};
 
