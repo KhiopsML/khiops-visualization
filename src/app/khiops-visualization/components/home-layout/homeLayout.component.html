@@ -29,7 +29,7 @@
 				</kl-header-title>
 				<kl-file-loader #fileLoader [hidden]="true" [onFileLoaderDataChanged]="onFileLoaderDataChangedCb"
 					[applicationName]="appName"></kl-file-loader>
-				<kl-no-data fxFlexFill fxLayoutAlign="center center"
+				<kl-no-data id="welcome-message" fxFlexFill fxLayoutAlign="center center"
 					*ngIf="!(appDatas && appDatas.datas && isCompatibleJson)" [message]="'NO_DATAS.WELCOME'">
 				</kl-no-data>
 				<div fxFlexFill *ngIf="isCompatibleJson">
