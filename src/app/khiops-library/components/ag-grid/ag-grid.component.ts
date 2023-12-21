@@ -183,6 +183,7 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 
 	onGridReady(params) {
 		this.restoreState();
+		this.fitToSpace();
 	}
 
 	changeDataType(type: string) {
