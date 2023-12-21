@@ -437,11 +437,7 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 						this.rowData.push(currentRow);
 					}
 				}
-				if (updateSelectedVariable) {
-					setTimeout(() => {
-						this.selectNode(this.selectedVariable);
-					});
-				}
+
 			} else {
 				// grid has changed
 				// remove current lines
@@ -461,7 +457,11 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 					}
 				}
 			}
-
+			if (updateSelectedVariable) {
+				setTimeout(() => {
+					this.selectNode(this.selectedVariable);
+				});
+			}
 			if (this.agGrid && (this.columnDefs.length === 0)) {
 				// Reset column defs in case of show/hide colum to reorder
 				this.agGrid.api.setColumnDefs(this.columnDefs);
