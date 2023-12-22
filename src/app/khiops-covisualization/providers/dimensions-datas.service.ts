@@ -20,6 +20,8 @@ import * as _ from 'lodash'; // Important to import lodash in karma
 import { AppConfig } from 'src/environments/environment';
 import { DimensionsDatasVO } from '../model/dimensions-data-vo';
 import { TYPES } from '@khiops-library/enum/types';
+import { ExtDatasVO } from '@khiops-covisualization/model/ext-datas-vo';
+import { ImportExtDatasService } from './import-ext-datas.service';
 
 @Injectable({
 	providedIn: 'root'
@@ -29,6 +31,7 @@ export class DimensionsDatasService {
 	dimensionsDatas: DimensionsDatasVO;
 
 	constructor(
+		private importExtDatasService: ImportExtDatasService,
 		private appService: AppService,
 	) {
 		this.initialize();
@@ -264,6 +267,7 @@ export class DimensionsDatasService {
 
 					const currentNodesNames = this.dimensionsDatas.nodesNames && this.dimensionsDatas.nodesNames[dimensionHierarchy.name];
 					const currentAnnotations = this.dimensionsDatas.annotations && this.dimensionsDatas.annotations[dimensionHierarchy.name];
+					const externalDatas: ExtDatasVO = this.importExtDatasService.getImportedDatasFromDimension(dimension);
 
 					// First convert each child into a treenode value object
 					const clustersLength = dimensionHierarchy.clusters.length;
@@ -282,7 +286,8 @@ export class DimensionsDatasService {
 							leafPosition,
 							j,
 							currentNodesNames,
-							currentAnnotations
+							currentAnnotations,
+							externalDatas
 						);
 						this.dimensionsDatas.dimensionsClusters[i].push(currentObj);
 
@@ -308,6 +313,7 @@ export class DimensionsDatasService {
 
 					const currentNodesNames = this.dimensionsDatas.nodesNames && this.dimensionsDatas.nodesNames[currentDimensionHierarchy.name];
 					const currentAnnotations = this.dimensionsDatas.annotations && this.dimensionsDatas.annotations[currentDimensionHierarchy.name];
+					const externalDatas: ExtDatasVO = this.importExtDatasService.getImportedDatasFromDimension(dimension);
 
 					// First convert each child into a treenode value object
 					const clustersLength = currentDimensionHierarchy.clusters.length;
@@ -326,7 +332,8 @@ export class DimensionsDatasService {
 							leafPosition,
 							j,
 							currentNodesNames,
-							currentAnnotations
+							currentAnnotations,
+							externalDatas
 						);
 						this.dimensionsDatas.currentDimensionsClusters[i].push(currentObj);
 

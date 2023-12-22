@@ -23,12 +23,6 @@ import {
 	CompositionVO
 } from '../model/composition-vo';
 import {
-	ImportExtDatasService
-} from './import-ext-datas.service';
-import {
-	ExtDatasVO
-} from '../model/ext-datas-vo';
-import {
 	MatrixCanvasService
 } from '@khiops-library/components/matrix-canvas/matrix-canvas.service';
 import {
@@ -53,7 +47,6 @@ export class ClustersService {
 	constructor(
 		private translate: TranslateService,
 		private appService: AppService,
-		private importExtDatasService: ImportExtDatasService,
 		private treenodesService: TreenodesService,
 		private dimensionsDatasService: DimensionsDatasService
 	) {
@@ -329,11 +322,6 @@ export class ClustersService {
 				if (node.childrenLeafList) {
 
 					const currentDimensionClusters = Object.assign([], this.dimensionsDatas.dimensionsClusters[currentIndex]);
-
-					// Check if external data file is saved
-					const currentDimension = this.dimensionsDatas.selectedDimensions[currentIndex];
-					const externalDatas: ExtDatasVO = this.importExtDatasService.getImportedDatasFromDimension(currentDimension);
-
 					const childrenLeafListLength = node.childrenLeafList.length;
 
 					for (let i = 0; i < childrenLeafListLength; i++) {
@@ -348,7 +336,7 @@ export class ClustersService {
 								if (node.isCollapsed) {
 									currentDimensionHierarchyCluster.shortDescription = node.shortDescription
 								}
-								const composition = new CompositionVO(currentClusterDetails, currentDimensionHierarchyCluster, j, externalDatas);
+								const composition = new CompositionVO(currentClusterDetails, currentDimensionHierarchyCluster, j);
 								compositionValues.push(composition);
 							}
 						}

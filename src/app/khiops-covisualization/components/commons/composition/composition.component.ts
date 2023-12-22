@@ -127,7 +127,6 @@ export class CompositionComponent implements OnInit, OnDestroy {
 		}
 	}
 
-
 	ngOnChanges(changes: SimpleChanges) {
 		// update when dimension change (with combo)
 		if (changes.selectedDimension ?.currentValue ?.name !== changes.selectedDimension ?.previousValue ?.name && changes.selectedNode) {

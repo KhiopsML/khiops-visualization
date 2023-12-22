@@ -60,10 +60,18 @@ import {
 import {
 	AnnotationService
 } from '@khiops-covisualization/providers/annotation.service';
-import { ConfigService } from '@khiops-library/providers/config.service';
-import { UtilsService } from '@khiops-library/providers/utils.service';
-import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
-import { Subscription } from 'rxjs';
+import {
+	ConfigService
+} from '@khiops-library/providers/config.service';
+import {
+	UtilsService
+} from '@khiops-library/providers/utils.service';
+import {
+	DimensionsDatasVO
+} from '@khiops-covisualization/model/dimensions-data-vo';
+import {
+	Subscription
+} from 'rxjs';
 
 @Component({
 	selector: 'app-home-layout',
@@ -77,10 +85,10 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 
 	@ViewChild('appProjectView', {
 		static: false
-	}) appProjectView: ElementRef<HTMLElement>;
+	}) appProjectView: ElementRef < HTMLElement > ;
 	@ViewChild('appAxisView', {
 		static: false
-	}) appAxisView: ElementRef<HTMLElement>;
+	}) appAxisView: ElementRef < HTMLElement > ;
 
 	public get appDatas() {
 		return this.appService.getDatas();
@@ -150,7 +158,16 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 		}
 
 		this.importedDatasChangedSub = this.eventsService.importedDatasChanged.subscribe(dimName => {
-			if (dimName[0]) {
+			if (dimName && dimName[0]) {
+				this.dimensionsService.constructDimensionsTrees();
+				const dimIndex = this.dimensionsService.getDimensionPositionFromName(dimName[0]);
+				// Update selected nodes ext datas
+				this.treenodesService.setSelectedNode(
+					this.dimensionsService.dimensionsDatas.selectedDimensions[dimIndex].name,
+					this.treenodesService.dimensionsDatas.selectedNodes[dimIndex]._id,
+					false
+				);
+				// Enable ext datas view if not displayed
 				this.appService.enableExtDatasView(dimName[0]);
 			}
 		});

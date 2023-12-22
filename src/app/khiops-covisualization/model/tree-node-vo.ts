@@ -33,6 +33,8 @@ export class TreeNodeVO {
 	isParentCluster = false;
 	isUnfoldedByDefault = false;
 
+	externalData: string;
+
 	clusterCompositionSize: number;
 
 	constructor(
@@ -44,7 +46,8 @@ export class TreeNodeVO {
 		leafPosition,
 		j,
 		currentNodesNames?,
-		currentAnnotations?
+		currentAnnotations?,
+		extData?
 	) {
 		// Generate id for tree node plugin
 		this.id = id;
@@ -79,6 +82,7 @@ export class TreeNodeVO {
 			this.annotation = (object && object.annotation) || "";
 		}
 
+		this.externalData = extData && extData[this.name.slice(1, -1)] || undefined;
 		this.parentCluster = (object && object.parentCluster) || "";
 
 		this.children = (object && object.children) || [];
@@ -103,7 +107,7 @@ export class TreeNodeVO {
 		}
 		if (dimension.type === TYPES.CATEGORICAL) {
 			this.clusterCompositionSize =
-				dimension.valueGroups[leafPosition]?.values?.length;
+			dimension.valueGroups[leafPosition]?.values?.length;
 		}
 	}
 

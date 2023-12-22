@@ -18,6 +18,9 @@ import {
 import {
 	ConfigService
 } from '@khiops-library/providers/config.service';
+import {
+	ImportFileLoaderService
+} from '@khiops-library/components/import-file-loader/import-file-loader.service';
 
 @Injectable({
 	providedIn: 'root'
@@ -29,6 +32,7 @@ export class ImportExtDatasService {
 
 	constructor(
 		private translate: TranslateService,
+		private importFileLoaderService: ImportFileLoaderService,
 		private appService: AppService,
 		private configService: ConfigService
 
@@ -116,9 +120,49 @@ export class ImportExtDatasService {
 		return this.importExtDatas;
 	}
 
+	onFileRead(datas: any, externalDatas: ExtDatasVO, percentIndex: number, progressCallback, fieldName: string, joinKey: string, importExtDatasLength: number, resolve) {
+		const fileDatas = new FileVO(datas, externalDatas.filename);
+
+		setTimeout(() => {
+			percentIndex++;
+			if (progressCallback) {
+				const msg = this.translate.get('GLOBAL.IMPORTING_EXT_DATA', {
+					fieldName: fieldName,
+					dimension: externalDatas.dimension
+				});
+				const percent = percentIndex / importExtDatasLength * 100;
+				progressCallback(msg, percent);
+			}
+			const formatedDatas = this.formatImportedDatas(fileDatas);
+
+			const keyIndex = formatedDatas.keys.indexOf(joinKey);
+			const fieldIndex = formatedDatas.keys.indexOf(fieldName);
+
+			if (!this.savedExternalDatas[externalDatas.dimension.toLowerCase()]) {
+				this.savedExternalDatas[externalDatas.dimension.toLowerCase()] = [];
+			}
+			const formatedDatasValuesLength = formatedDatas.values.length;
+			for (let j = 0; j < formatedDatasValuesLength; j++) {
+				const extKey = formatedDatas.values[j][keyIndex].replace(/[\n\r]+/g, '') // remove carriage return #53
+
+				if (!this.savedExternalDatas[externalDatas.dimension.toLowerCase()][extKey]) {
+					this.savedExternalDatas[externalDatas.dimension.toLowerCase()][extKey] = [];
+				}
+				if (!this.savedExternalDatas[externalDatas.dimension.toLowerCase()][extKey].find(e => e.key === formatedDatas.keys[fieldIndex])) {
+					const currentExtData = {
+						key: formatedDatas.keys[fieldIndex],
+						value: formatedDatas.values[j][fieldIndex]
+					};
+					this.savedExternalDatas[externalDatas.dimension.toLowerCase()][extKey].push(currentExtData);
+				}
+			}
+			resolve(externalDatas.dimension);
+		});
+	}
+
 	loadSavedExternalDatas(progressCallback ? ) {
 
-		const promises = [];
+		const promises: Promise < any > [] = [];
 		this.savedExternalDatas = {};
 		if (this.importExtDatas.length > 0) {
 			let percentIndex = 0;
@@ -131,51 +175,13 @@ export class ImportExtDatasService {
 					const externalDatas: ExtDatasVO = this.importExtDatas[i];
 					const joinKey = externalDatas.joinKey;
 					const fieldName = externalDatas.field.name;
-
 					// method called when ext data is saved
 					// read file from electron context
-
-					this.configService.getConfig().onReadFile &&
-						this.configService.getConfig().onReadFile(externalDatas.filename, (datas: any) => {
-							const fileDatas = new FileVO(datas, externalDatas.filename);
-
-							setTimeout(() => {
-								percentIndex++;
-								if (progressCallback) {
-									const msg = this.translate.get('GLOBAL.IMPORTING_EXT_DATA', {
-										fieldName: fieldName,
-										dimension: externalDatas.dimension
-									});
-									const percent = percentIndex / importExtDatasLength * 100;
-									progressCallback(msg, percent);
-								}
-								const formatedDatas = this.formatImportedDatas(fileDatas);
-
-								const keyIndex = formatedDatas.keys.indexOf(joinKey);
-								const fieldIndex = formatedDatas.keys.indexOf(fieldName);
-
-								if (!this.savedExternalDatas[externalDatas.dimension.toLowerCase()]) {
-									this.savedExternalDatas[externalDatas.dimension.toLowerCase()] = [];
-								}
-								const formatedDatasValuesLength = formatedDatas.values.length;
-								for (let j = 0; j < formatedDatasValuesLength; j++) {
-									const extKey = formatedDatas.values[j][keyIndex].replace(/[\n\r]+/g, '') // remove carriage return #53
-
-									if (!this.savedExternalDatas[externalDatas.dimension.toLowerCase()][extKey]) {
-										this.savedExternalDatas[externalDatas.dimension.toLowerCase()][extKey] = [];
-									}
-									if (!this.savedExternalDatas[externalDatas.dimension.toLowerCase()][extKey].find(e => e.key === formatedDatas.keys[fieldIndex])) {
-										const currentExtData = {
-											key: formatedDatas.keys[fieldIndex],
-											value: formatedDatas.values[j][fieldIndex]
-										};
-										this.savedExternalDatas[externalDatas.dimension.toLowerCase()][extKey].push(currentExtData);
-									}
-								}
-								resolve(formatedDatas.keys[0]);
-							});
-
-						});
+					if (this.configService.getConfig().onReadFile) {
+						this.configService.getConfig().onReadFile(externalDatas.filename, (datas: any) => this.onFileRead(datas, externalDatas, percentIndex, progressCallback, fieldName, joinKey, importExtDatasLength, resolve));
+					} else {
+						this.importFileLoaderService.readFile(externalDatas.file).then((res: any) => this.onFileRead(res.datas, externalDatas, percentIndex, progressCallback, fieldName, joinKey, importExtDatasLength, resolve));
+					}
 
 				});
 				promises.push(promise);
