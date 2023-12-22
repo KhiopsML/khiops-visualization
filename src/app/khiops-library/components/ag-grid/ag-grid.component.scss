@@ -48,14 +48,14 @@
 				transition: width 2s;
 				margin-left: 10px;
 				border: 1px solid var(--primary);
-				min-height: 35px;
+				min-height: 34px;
 
 				button {
-					height: 29px;
+					height: 30px;
 					line-height: 30px;
 					margin-right: 0;
-					width: 38px;
-
+					width: 30px;
+					margin: 0 3px;
 					mat-icon {
 						font-size: 21px;
 					}

@@ -25,7 +25,7 @@
                     <mat-icon>search</mat-icon>
                 </button>
 				<input #searchInputEl *ngIf="showSearch && this.searchFormVisible" name="searchInput"  (keyup)="search()" placeholder="{{ 'GLOBAL.SEARCH' | translate }}" [(ngModel)]="searchInput">
-				<button attr.aria-label="{{ 'ARIA.AG_GRID.CLOSE_SEARCH_INPUT' | translate }}" mat-icon-button color="primary"   *ngIf="this.searchFormVisible">
+				<button attr.aria-label="{{ 'ARIA.AG_GRID.CLOSE_SEARCH_INPUT' | translate }}" mat-icon-button color="primary" *ngIf="this.searchFormVisible">
 					<mat-icon fxFlexFill fxLayoutAlign="center center" (click)="removeSearch()">close</mat-icon>
 				</button>
 			</form>
