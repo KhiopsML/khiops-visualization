@@ -12,9 +12,9 @@
 		</button>
 	</div>
 	<div class="hierarchy-select-content" *ngIf="showStats" [@slideInOut] fxLayoutAlign="start start" fxLayout="column">
-		<span>{{ 'GLOBAL.TYPE' | translate }} : <strong>{{ selectedDimension.type }}</strong></span>
-		<span>{{ 'GLOBAL.INTERVAL' | translate }} : <strong>{{ selectedNode.name }}</strong></span>
-		<span>{{ 'GLOBAL.FREQUENCY' | translate }} : <strong>{{ selectedNode.frequency }}</strong></span>
+		<span>{{ 'GLOBAL.TYPE' | translate }} : <strong>{{ selectedDimension?.type }}</strong></span>
+		<span>{{ 'GLOBAL.INTERVAL' | translate }} : <strong>{{ selectedNode?.name }}</strong></span>
+		<span>{{ 'GLOBAL.FREQUENCY' | translate }} : <strong>{{ selectedNode?.frequency }}</strong></span>
 		<span>{{ 'GLOBAL.INTERVALS' | translate }} : <strong>{{ intervals }}</strong></span>
 	</div>
 </div>
