@@ -21,6 +21,7 @@
     "build": "ng build",
     "build:stats": "ng build --stats-json --source-map --output-hashing none && npm run stats:webpack-bundle-analyzer & npm run stats:source-map-explorer",
     "build:webcomponents": "./build.sh",
+    "quickbuild:webcomponents": "./quickbuild.sh",
     "stats:webpack-bundle-analyzer": "webpack-bundle-analyzer dist/visualization-component/stats.json",
     "stats:source-map-explorer": "source-map-explorer dist/visualization-component/main.js --no-border-checks",
     "compodoc:build": "compodoc -p tsconfig.doc.json",
