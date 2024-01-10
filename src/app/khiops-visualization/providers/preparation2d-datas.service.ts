@@ -397,11 +397,11 @@ export class Preparation2dDatasService {
 			// normal case
 			const currentVar = appDatas.bivariatePreparationReport.variablesPairsDetailedStatistics[rank];
 			variableDetails = new VariableDetailsVO(currentVar, this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_TABLE_SIZE);
-		} else if (isRegressionOrExplanatoryAnalysis && appDatas.textPreparationReport && appDatas.textPreparationReport.variablesDetailedStatistics[rank]) {
+		} else if (isRegressionOrExplanatoryAnalysis && appDatas.textPreparationReport && appDatas.textPreparationReport.variablesDetailedStatistics && appDatas.textPreparationReport.variablesDetailedStatistics[rank]) {
 			// regression or explanatory case: textPreparationReport
 			const currentVar = appDatas.textPreparationReport.variablesDetailedStatistics[rank];
 			variableDetails = new VariableDetailsVO(currentVar, this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_TABLE_SIZE);
-		} else if (isRegressionOrExplanatoryAnalysis && appDatas.preparationReport && appDatas.preparationReport.variablesDetailedStatistics[rank]) {
+		} else if (isRegressionOrExplanatoryAnalysis && appDatas.preparationReport && appDatas.preparationReport.variablesDetailedStatistics && appDatas.preparationReport.variablesDetailedStatistics[rank]) {
 			// regression or explanatory case: preparationReport
 			const currentVar = appDatas.preparationReport.variablesDetailedStatistics[rank];
 			variableDetails = new VariableDetailsVO(currentVar, this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_TABLE_SIZE);
