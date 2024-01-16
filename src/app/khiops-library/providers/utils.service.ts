@@ -61,7 +61,7 @@ export class UtilsService {
 		return changes(object, base);
 	}
 
-	static computeHellinger(cellFreq, totalFreqs, freqColVal, freqLineVals): [number, number]  {
+	static computeHellinger(cellFreq, totalFreqs, freqColVal, freqLineVals): [number, number] {
 		const HIij = Math.sqrt(cellFreq / totalFreqs) -
 			Math.sqrt(freqColVal / totalFreqs * freqLineVals / totalFreqs);
 		const hellingerValue = HIij || 0;
@@ -400,7 +400,7 @@ export class UtilsService {
 				res += "0".repeat(zeroAfterComma)
 				res += usefullInfo
 				return this.getSign(value) + res.toString();
-			} else {
+			} else if (part1) {
 				let e = Number(value);
 				let entier = Math.floor(e);
 				let decimal = e - entier;
@@ -409,6 +409,8 @@ export class UtilsService {
 				}
 				let res = Math.round(e * Math.pow(10, exp)) / Math.pow(10, exp);
 				return res.toString()
+			} else {
+				return value.toString();
 			}
 		} else {
 			return value;

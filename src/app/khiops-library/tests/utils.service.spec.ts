@@ -25,6 +25,11 @@ describe("Library", () => {
 				"1.321"
 			);
 		});
+		it("should return 165465432 for input 165465432 and numberPrecision 3", function () {
+			expect(UtilsService.getPrecisionNumber(165465432, 3)).toEqual(
+				"165465432"
+			);
+		});
 		it("should return 1.3212 for input 1.3212132 and numberPrecision 5", function () {
 			expect(UtilsService.getPrecisionNumber(1.3212132, 5)).toEqual(
 				"1.32121"
