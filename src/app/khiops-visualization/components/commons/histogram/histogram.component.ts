@@ -361,7 +361,6 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 		const bar = bars[i];
 
 		const isFirstInterval = i === 0;
-		const isLastInterval = i === bars.length - 1;
 
 		let barX: number, barH: number, barW: number;
 
@@ -409,8 +408,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 		const mousemove = (e: MouseEvent) => {
 			const tooltipText = HistogramUIService.generateTooltip(
 				d,
-				isFirstInterval,
-				isLastInterval
+				isFirstInterval
 			);
 			self.tooltip.html(tooltipText);
 

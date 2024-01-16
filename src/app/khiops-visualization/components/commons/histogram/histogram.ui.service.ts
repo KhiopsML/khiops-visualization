@@ -26,8 +26,7 @@ export class HistogramUIService {
 
 	static generateTooltip(
 		d: HistogramValuesI,
-		isFirstInterval: boolean,
-		isLastInterval: boolean
+		isFirstInterval: boolean
 	): string {
 		let bounds = "";
 		if (isFirstInterval) {
@@ -35,12 +34,7 @@ export class HistogramUIService {
 		} else {
 			bounds += "]";
 		}
-		bounds += d.partition[0] + ", " + d.partition[1];
-		if (isLastInterval) {
-			bounds += "]";
-		} else {
-			bounds += "[";
-		}
+		bounds += d.partition[0] + ", " + d.partition[1] + "]";
 
 		return (
 			this.translate.get("GLOBAL.DENSITY") +
