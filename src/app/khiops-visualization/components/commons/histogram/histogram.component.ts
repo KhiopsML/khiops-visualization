@@ -351,8 +351,18 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			.attr("class", "tooltip");
 	}
 
-	drawRect(d: HistogramValuesI, i: number, bar: HistogramBarVO, ratio = 0) {
+	drawRect(
+		d: HistogramValuesI,
+		i: number,
+		bars: HistogramBarVO[],
+		ratio = 0
+	) {
 		var self = this;
+		const bar = bars[i];
+
+		const isFirstInterval = i === 0;
+		const isLastInterval = i === bars.length - 1;
+
 		let barX: number, barH: number, barW: number;
 
 		if (
@@ -397,7 +407,11 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 			d3.select(this).style("fill-opacity", "0.9");
 		};
 		const mousemove = (e: MouseEvent) => {
-			const tooltipText = HistogramUIService.generateTooltip(d);
+			const tooltipText = HistogramUIService.generateTooltip(
+				d,
+				isFirstInterval,
+				isLastInterval
+			);
 			self.tooltip.html(tooltipText);
 
 			let left = e.offsetX + 20;
@@ -497,7 +511,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 		console.log("drawHistogram " + (t1 - t0) + " milliseconds.");
 
 		datasSet.forEach((d: HistogramValuesI, i: number) => {
-			this.drawRect(d, i, bars[i], this.ratio);
+			this.drawRect(d, i, bars, this.ratio);
 		});
 	}
 

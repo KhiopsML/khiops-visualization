@@ -24,9 +24,24 @@ export class HistogramUIService {
 		return this.chartColors;
 	}
 
-	static generateTooltip(d: HistogramValuesI): string {
+	static generateTooltip(
+		d: HistogramValuesI,
+		isFirstInterval: boolean,
+		isLastInterval: boolean
+	): string {
 		let bounds = "";
-		bounds = JSON.stringify(d.partition);
+		if (isFirstInterval) {
+			bounds += "[";
+		} else {
+			bounds += "]";
+		}
+		bounds += d.partition[0] + ", " + d.partition[1];
+		if (isLastInterval) {
+			bounds += "]";
+		} else {
+			bounds += "[";
+		}
+
 		return (
 			this.translate.get("GLOBAL.DENSITY") +
 			": " +
@@ -36,7 +51,7 @@ export class HistogramUIService {
 			": " +
 			d.frequency +
 			"<br>" +
-			this.translate.get("GLOBAL.BOUNDS") +
+			this.translate.get("GLOBAL.INTERVAL") +
 			": " +
 			bounds
 		);
