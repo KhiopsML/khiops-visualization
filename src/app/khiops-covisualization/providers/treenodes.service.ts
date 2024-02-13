@@ -1,52 +1,23 @@
-import {
-	Injectable
-} from '@angular/core';
-import {
-	DimensionsDatasService
-} from './dimensions-datas.service';
-import {
-	EventsService
-} from './events.service';
-import {
-	AppService
-} from './app.service';
-import {
-	UtilsService
-} from '@khiops-library/providers/utils.service';
-import {
-	TreeNodeVO
-} from '../model/tree-node-vo';
-import {
-	deepEqual
-} from 'fast-equals';
-import _ from 'lodash';
-import {
-	DimensionVO
-} from '@khiops-library/model/dimension-vo';
-import {
-	DimensionsDatasVO
-} from '@khiops-covisualization/model/dimensions-data-vo';
-import {
-	HierarchyDatasVO
-} from '@khiops-covisualization/model/hierarchy-datas-vo';
-import {
-	TYPES
-} from '@khiops-library/enum/types';
-import {
-	SavedDatasVO
-} from '@khiops-covisualization/model/saved-datas-vo';
-import {
-	AnnotationService
-} from './annotation.service';
-import {
-	ImportExtDatasService
-} from './import-ext-datas.service';
+import { Injectable } from "@angular/core";
+import { DimensionsDatasService } from "./dimensions-datas.service";
+import { EventsService } from "./events.service";
+import { AppService } from "./app.service";
+import { UtilsService } from "@khiops-library/providers/utils.service";
+import { TreeNodeVO } from "../model/tree-node-vo";
+import { deepEqual } from "fast-equals";
+import _ from "lodash";
+import { DimensionVO } from "@khiops-library/model/dimension-vo";
+import { DimensionsDatasVO } from "@khiops-covisualization/model/dimensions-data-vo";
+import { HierarchyDatasVO } from "@khiops-covisualization/model/hierarchy-datas-vo";
+import { TYPES } from "@khiops-library/enum/types";
+import { SavedDatasVO } from "@khiops-covisualization/model/saved-datas-vo";
+import { AnnotationService } from "./annotation.service";
+import { ImportExtDatasService } from "./import-ext-datas.service";
 
 @Injectable({
-	providedIn: 'root'
+	providedIn: "root",
 })
 export class TreenodesService {
-
 	dimensionsDatas: DimensionsDatasVO;
 	collapsedNodesToSave: {} = {};
 
@@ -55,33 +26,44 @@ export class TreenodesService {
 		private appService: AppService,
 		private importExtDatasService: ImportExtDatasService,
 		private dimensionsDatasService: DimensionsDatasService,
-		private eventsService: EventsService
+		private eventsService: EventsService,
 	) {
 		this.initialize();
 	}
 
 	initialize() {
 		this.dimensionsDatas = this.dimensionsDatasService.getDatas();
-		this.collapsedNodesToSave = this.appService.getSavedDatas('collapsedNodes') || {};
+		this.collapsedNodesToSave =
+			this.appService.getSavedDatas("collapsedNodes") || {};
 	}
 
 	getLeafNodesForARank(rank: number) {
-		const collapsedNodes = {}
-		for (let i = 0; i < this.dimensionsDatas.selectedDimensions.length; i++) {
-			collapsedNodes[this.dimensionsDatas.selectedDimensions[i].name] = [];
-			const nodesVO: TreeNodeVO[] = UtilsService.fastFilter(this.dimensionsDatas.dimensionsClusters[i], e => {
-				return rank <= e.hierarchicalRank && !e.isLeaf;
-			});
-			collapsedNodes[this.dimensionsDatas.selectedDimensions[i].name] = nodesVO.map(e => e.cluster);
+		const collapsedNodes = {};
+		for (
+			let i = 0;
+			i < this.dimensionsDatas.selectedDimensions.length;
+			i++
+		) {
+			collapsedNodes[this.dimensionsDatas.selectedDimensions[i].name] =
+				[];
+			const nodesVO: TreeNodeVO[] = UtilsService.fastFilter(
+				this.dimensionsDatas.dimensionsClusters[i],
+				(e) => {
+					return rank <= e.hierarchicalRank && !e.isLeaf;
+				},
+			);
+			collapsedNodes[this.dimensionsDatas.selectedDimensions[i].name] =
+				nodesVO.map((e) => e.cluster);
 		}
 		return collapsedNodes;
 	}
 
 	updateSelectedNodeName(dimensionName, name, newName) {
 		if (!this.dimensionsDatas.nodesNames) {
-			this.dimensionsDatas.nodesNames = {}
+			this.dimensionsDatas.nodesNames = {};
 		}
-		this.dimensionsDatas.nodesNames[dimensionName] = this.dimensionsDatas.nodesNames[dimensionName] || {};
+		this.dimensionsDatas.nodesNames[dimensionName] =
+			this.dimensionsDatas.nodesNames[dimensionName] || {};
 		this.dimensionsDatas.nodesNames[dimensionName][name] = newName;
 		this.update(dimensionName);
 	}
@@ -89,7 +71,8 @@ export class TreenodesService {
 	initSavedUnfoldRank() {
 		//Initialize unfold rank if set into json
 		const appDatas = this.appService.getDatas().datas;
-		const savedUnfoldRank = appDatas.savedDatas && appDatas.savedDatas.unfoldHierarchyState
+		const savedUnfoldRank =
+			appDatas.savedDatas && appDatas.savedDatas.unfoldHierarchyState;
 		savedUnfoldRank && this.setSelectedUnfoldHierarchy(savedUnfoldRank);
 	}
 
@@ -97,38 +80,56 @@ export class TreenodesService {
 		for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
 			if (i >= 2) {
 				// re init context nodes with conditionalOnContext to false
-				this.setSelectedNode(this.dimensionsDatas.dimensions[i].name, this.dimensionsDatas.selectedNodes[i]._id, false);
+				this.setSelectedNode(
+					this.dimensionsDatas.dimensions[i].name,
+					this.dimensionsDatas.selectedNodes[i]._id,
+					false,
+				);
 			}
 		}
 	}
 
-	setSelectedNode(hierarchyName, nodeName, stopPropagation = false): TreeNodeVO {
-
+	setSelectedNode(
+		hierarchyName,
+		nodeName,
+		stopPropagation = false,
+	): TreeNodeVO {
 		let nodeVO: TreeNodeVO;
 		if (this.dimensionsDatas.selectedDimensions) {
-			const previousSelectedNodes = Object.assign([], this.dimensionsDatas.selectedNodes);
+			const previousSelectedNodes = Object.assign(
+				[],
+				this.dimensionsDatas.selectedNodes,
+			);
 
 			// Find current dim position
-			const currentIndex: number = this.dimensionsDatas.selectedDimensions.findIndex(e => {
-				return hierarchyName === e.name;
-			});
+			const currentIndex: number =
+				this.dimensionsDatas.selectedDimensions.findIndex((e) => {
+					return hierarchyName === e.name;
+				});
 
 			if (currentIndex !== -1) {
-
 				// get Node VO from name
-				nodeVO = this.dimensionsDatas.currentDimensionsClusters[currentIndex].find(e => {
-					return nodeName === e.name || nodeName === e.shortDescription; // TODO ? also check into shortDescription (for distribution graph for instance)
+				nodeVO = this.dimensionsDatas.currentDimensionsClusters[
+					currentIndex
+				].find((e) => {
+					return (
+						nodeName === e.name || nodeName === e.shortDescription
+					); // TODO ? also check into shortDescription (for distribution graph for instance)
 				});
 				if (!nodeVO) {
 					// if not found take the first (it's maybe an unfoldHierarchy)
-					nodeVO = this.dimensionsDatas.currentDimensionsClusters[currentIndex][0]
+					nodeVO =
+						this.dimensionsDatas.currentDimensionsClusters[
+							currentIndex
+						][0];
 				}
 				nodeVO.getChildrenList();
 
 				if (currentIndex !== 0 && currentIndex !== 1) {
 					if (this.dimensionsDatas.conditionalOnContext) {
-
-						this.dimensionsDatas.contextSelection[currentIndex - 2] = nodeVO.childrenLeafIndexes;
+						this.dimensionsDatas.contextSelection[
+							currentIndex - 2
+						] = nodeVO.childrenLeafIndexes;
 						// for contexts, we must get the real node to get the childrenLeafIndexes
 						// const realNodeVO = this.dimensionsDatas.dimensionsClusters[currentIndex].find(e => {
 						// 	return nodeVO.name === e.name || nodeVO.shortDescription === e.shortDescription; // also check into shortDescription (for distribution graph for instance)
@@ -138,10 +139,15 @@ export class TreenodesService {
 					} else {
 						// conditionalOnContext unset
 						// get the parent node
-						const parentNodeVO: TreeNodeVO = this.dimensionsDatas.currentDimensionsClusters[currentIndex].find((e: TreeNodeVO) => e.isParentCluster);
+						const parentNodeVO: TreeNodeVO =
+							this.dimensionsDatas.currentDimensionsClusters[
+								currentIndex
+							].find((e: TreeNodeVO) => e.isParentCluster);
 						parentNodeVO.getChildrenList();
 						// and set their chidren leafs to context nodes
-						this.dimensionsDatas.contextSelection[currentIndex - 2] = parentNodeVO.childrenLeafIndexes;
+						this.dimensionsDatas.contextSelection[
+							currentIndex - 2
+						] = parentNodeVO.childrenLeafIndexes;
 					}
 				}
 
@@ -149,10 +155,20 @@ export class TreenodesService {
 			}
 
 			// Do not send event changed if only one node selected and if nodes does not changed
-			if (!deepEqual(previousSelectedNodes, this.dimensionsDatas.selectedNodes)) {
+			if (
+				!deepEqual(
+					previousSelectedNodes,
+					this.dimensionsDatas.selectedNodes,
+				)
+			) {
 				// search in the complete datas the corresponding node
-				const realNodeVO = this.dimensionsDatas.dimensionsClusters[currentIndex].find(e => {
-					return nodeVO.name === e.name /*|| nodeVO.shortDescription === e.shortDescription*/ ;
+				const realNodeVO = this.dimensionsDatas.dimensionsClusters[
+					currentIndex
+				].find((e) => {
+					return (
+						nodeVO.name ===
+						e.name /*|| nodeVO.shortDescription === e.shortDescription*/
+					);
 					// also check into shortDescription (for distribution graph for instance)
 					// no !!! otherwise it return multiple nodes
 				});
@@ -161,32 +177,36 @@ export class TreenodesService {
 					hierarchyName: hierarchyName,
 					selectedNode: nodeVO,
 					realNodeVO: realNodeVO,
-					stopPropagation: stopPropagation
+					stopPropagation: stopPropagation,
 				});
 			}
 		}
 		return nodeVO;
-
 	}
 
 	updateSelectedNodes(dimension: DimensionVO, position: number) {
 		// Find current dim position
-		const currentIndex: number = this.dimensionsDatas.selectedDimensions.findIndex(e => {
-			return dimension.name === e.name;
-		});
+		const currentIndex: number =
+			this.dimensionsDatas.selectedDimensions.findIndex((e) => {
+				return dimension.name === e.name;
+			});
 
 		if (currentIndex !== -1) {
 			// Invert values if already selected
-			[this.dimensionsDatas.selectedNodes[currentIndex],
-				this.dimensionsDatas.selectedNodes[position]
-			] = [this.dimensionsDatas.selectedNodes[position],
-				this.dimensionsDatas.selectedNodes[currentIndex]
+			[
+				this.dimensionsDatas.selectedNodes[currentIndex],
+				this.dimensionsDatas.selectedNodes[position],
+			] = [
+				this.dimensionsDatas.selectedNodes[position],
+				this.dimensionsDatas.selectedNodes[currentIndex],
 			];
 		}
 	}
 
 	getFirstVisibleNode(nodes, nodeVO: TreeNodeVO, lastVisibleNode) {
-		const parentNode: TreeNodeVO = nodes.find(e => e.name === nodeVO ?.parentCluster);
+		const parentNode: TreeNodeVO = nodes.find(
+			(e) => e.name === nodeVO?.parentCluster,
+		);
 		if (!nodeVO.isParentCluster) {
 			if (parentNode.isCollapsed) {
 				lastVisibleNode = parentNode;
@@ -202,13 +222,16 @@ export class TreenodesService {
 	}
 
 	initSavedDatas() {
-		this.dimensionsDatas.nodesNames = this.appService.getSavedDatas('nodesNames') || {};
-		const savedNodes = this.appService.getSavedDatas('selectedNodes');
+		this.dimensionsDatas.nodesNames =
+			this.appService.getSavedDatas("nodesNames") || {};
+		const savedNodes = this.appService.getSavedDatas("selectedNodes");
 		if (savedNodes) {
 			for (let index = 0; index < savedNodes.length; index++) {
 				const nodeName = savedNodes[index];
-				const dimension = this.dimensionsDatas.selectedDimensions[index];
-				const node = dimension && this.getNodeFromName(dimension.name, nodeName);
+				const dimension =
+					this.dimensionsDatas.selectedDimensions[index];
+				const node =
+					dimension && this.getNodeFromName(dimension.name, nodeName);
 				if (node) {
 					this.dimensionsDatas.selectedNodes[index] = node;
 				}
@@ -222,17 +245,22 @@ export class TreenodesService {
 
 	getNodeFromName(dimensionName, nodeName): TreeNodeVO {
 		let nodeVO: TreeNodeVO;
-		const currentIndex: number = this.dimensionsDatas.selectedDimensions.findIndex(e => {
-			return dimensionName === e.name;
-		});
+		const currentIndex: number =
+			this.dimensionsDatas.selectedDimensions.findIndex((e) => {
+				return dimensionName === e.name;
+			});
 
 		if (currentIndex !== -1) {
 			// get Node VO from name
-			nodeVO = this.dimensionsDatas.dimensionsClusters[currentIndex].find(e => {
-				return nodeName === e.name;
-			});
+			nodeVO = this.dimensionsDatas.dimensionsClusters[currentIndex].find(
+				(e) => {
+					return nodeName === e.name;
+				},
+			);
 			if (!nodeVO) {
-				nodeVO = this.dimensionsDatas.dimensionsClusters[currentIndex].find(e => {
+				nodeVO = this.dimensionsDatas.dimensionsClusters[
+					currentIndex
+				].find((e) => {
 					return nodeName === e.bounds;
 				});
 			}
@@ -241,14 +269,17 @@ export class TreenodesService {
 	}
 
 	setSavedCollapsedNodes(collapsedNodesToSave) {
-		this.collapsedNodesToSave = collapsedNodesToSave
+		this.collapsedNodesToSave = collapsedNodesToSave;
 	}
 
 	updateCurrentHierarchyClustersCount(rank: number) {
 		for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
-			const nodesVO: TreeNodeVO[] = UtilsService.fastFilter(this.dimensionsDatas.dimensionsClusters[i], e => {
-				return !e.isLeaf && e.hierarchicalRank < rank;
-			});
+			const nodesVO: TreeNodeVO[] = UtilsService.fastFilter(
+				this.dimensionsDatas.dimensionsClusters[i],
+				(e) => {
+					return !e.isLeaf && e.hierarchicalRank < rank;
+				},
+			);
 			const dimension: DimensionVO = this.dimensionsDatas.dimensions[i];
 			dimension.setCurrentHierarchyClusterCount(nodesVO.length + 1);
 		}
@@ -262,13 +293,17 @@ export class TreenodesService {
 	getHierarchyFromClustersCount(maxRank: number, nbCells: number) {
 		let currentDimClustersCount = 1;
 		do {
-			maxRank = maxRank - 1
+			maxRank = maxRank - 1;
 			currentDimClustersCount = 1;
 			for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
-				const nodesVO: TreeNodeVO[] = UtilsService.fastFilter(this.dimensionsDatas.dimensionsClusters[i], e => {
-					return !e.isLeaf && e.hierarchicalRank < maxRank;
-				});
-				currentDimClustersCount = currentDimClustersCount * nodesVO.length;
+				const nodesVO: TreeNodeVO[] = UtilsService.fastFilter(
+					this.dimensionsDatas.dimensionsClusters[i],
+					(e) => {
+						return !e.isLeaf && e.hierarchicalRank < maxRank;
+					},
+				);
+				currentDimClustersCount =
+					currentDimClustersCount * nodesVO.length;
 			}
 		} while (currentDimClustersCount > nbCells);
 		return maxRank;
@@ -277,32 +312,49 @@ export class TreenodesService {
 	getHierarchyDatas(): HierarchyDatasVO {
 		const appDatas = this.appService.getInitialDatas().datas;
 
-		if (appDatas.coclusteringReport && appDatas.coclusteringReport.dimensionSummaries) {
+		if (
+			appDatas.coclusteringReport &&
+			appDatas.coclusteringReport.dimensionSummaries
+		) {
 			this.dimensionsDatas.hierarchyDatas.totalClusters = 0;
 			const l = appDatas.coclusteringReport.dimensionSummaries.length;
 			this.dimensionsDatas.hierarchyDatas.minClusters = l;
 			for (let i = 0; i < l; i++) {
 				// Concat all dimensions clusters
-				this.dimensionsDatas.hierarchyDatas.totalClusters += appDatas.coclusteringReport.dimensionSummaries[i].parts;
+				this.dimensionsDatas.hierarchyDatas.totalClusters +=
+					appDatas.coclusteringReport.dimensionSummaries[i].parts;
 			}
 			// Init with all clusters
-			if (this.dimensionsDatas.hierarchyDatas.selectedUnfoldHierarchy === 0) {
-				this.dimensionsDatas.hierarchyDatas.selectedUnfoldHierarchy = this.dimensionsDatas.hierarchyDatas.totalClusters;
+			if (
+				this.dimensionsDatas.hierarchyDatas.selectedUnfoldHierarchy ===
+				0
+			) {
+				this.dimensionsDatas.hierarchyDatas.selectedUnfoldHierarchy =
+					this.dimensionsDatas.hierarchyDatas.totalClusters;
 			}
 		}
-		if (appDatas.coclusteringReport && appDatas.coclusteringReport.summary) {
+		if (
+			appDatas.coclusteringReport &&
+			appDatas.coclusteringReport.summary
+		) {
 			// Get the total cell
-			this.dimensionsDatas.hierarchyDatas.totalCells += appDatas.coclusteringReport.summary.cells;
+			this.dimensionsDatas.hierarchyDatas.totalCells +=
+				appDatas.coclusteringReport.summary.cells;
 		}
 		return this.dimensionsDatas.hierarchyDatas;
 	}
 
 	getUnfoldHierarchy(): number {
-		return this.dimensionsDatas.hierarchyDatas && this.dimensionsDatas.hierarchyDatas.selectedUnfoldHierarchy || 0;
+		return (
+			(this.dimensionsDatas.hierarchyDatas &&
+				this.dimensionsDatas.hierarchyDatas.selectedUnfoldHierarchy) ||
+			0
+		);
 	}
 
 	setSelectedUnfoldHierarchy(selectedUnfoldHierarchy: number) {
-		this.dimensionsDatas.hierarchyDatas.selectedUnfoldHierarchy = selectedUnfoldHierarchy;
+		this.dimensionsDatas.hierarchyDatas.selectedUnfoldHierarchy =
+			selectedUnfoldHierarchy;
 	}
 
 	updateCollapsedNodesToSave(dimensionName: string, nodeName: string, way) {
@@ -310,7 +362,8 @@ export class TreenodesService {
 		if (!this.collapsedNodesToSave[dimensionName]) {
 			this.collapsedNodesToSave[dimensionName] = [];
 		}
-		const index = this.collapsedNodesToSave[dimensionName].indexOf(nodeName);
+		const index =
+			this.collapsedNodesToSave[dimensionName].indexOf(nodeName);
 		if (way === -1) {
 			if (index !== -1) {
 				this.collapsedNodesToSave[dimensionName].splice(index, 1);
@@ -340,10 +393,10 @@ export class TreenodesService {
 
 	update(dimensionName: string) {
 		let collapsedNodes = this.getSavedCollapsedNodes();
-		let datas =
-			this.constructSavedJson( // 877
-				collapsedNodes
-			);
+		let datas = this.constructSavedJson(
+			// 877
+			collapsedNodes,
+		);
 		this.appService.setCroppedFileDatas(datas);
 		this.dimensionsDatas = this.dimensionsDatasService.getDatas();
 		this.dimensionsDatasService.getDimensions();
@@ -351,24 +404,22 @@ export class TreenodesService {
 		this.dimensionsDatasService.saveInitialDimension();
 		this.dimensionsDatasService.constructDimensionsTrees(); //
 
-		const currentIndex: number = this.dimensionsDatas.selectedDimensions.findIndex(e => {
-			return dimensionName === e.name;
-		});
-		const propagateChanges = currentIndex <= 1 ? true : false
+		const currentIndex: number =
+			this.dimensionsDatas.selectedDimensions.findIndex((e) => {
+				return dimensionName === e.name;
+			});
+		const propagateChanges = currentIndex <= 1 ? true : false;
 		// hack to limit re-rendering and optimize perf
 		this.dimensionsDatasService.getMatrixDatas(propagateChanges);
 	}
 
-
-
-
-
-	constructDatasToSave(collapsedNodesInput ? ) {
+	constructDatasToSave(collapsedNodesInput?) {
 		const initialDatas = JSON.parse(
-			JSON.stringify(this.appService.getInitialDatas().datas)
+			JSON.stringify(this.appService.getInitialDatas().datas),
 		);
 
-		const selectedDimensions = this.dimensionsDatasService.getDimensionsToSave();
+		const selectedDimensions =
+			this.dimensionsDatasService.getDimensionsToSave();
 		const unfoldHierarchyState = this.getUnfoldHierarchy();
 		const splitSizes = this.appService.getSplitSizes();
 		const viewsLayout = this.appService.getViewsLayout();
@@ -408,13 +459,13 @@ export class TreenodesService {
 			conditionalOnContext,
 			matrixOption,
 			matrixMode,
-			isAxisInverted
+			isAxisInverted,
 		);
 
 		return initialDatas;
 	}
 
-	constructSavedJson(collapsedNodesInput ? ) {
+	constructSavedJson(collapsedNodesInput?) {
 		let newJson = this.constructDatasToSave(collapsedNodesInput);
 		if (collapsedNodesInput) {
 			// Transform json if collapsed nodes
@@ -462,12 +513,12 @@ export class TreenodesService {
 			Object.keys(datas.savedDatas.collapsedNodes).forEach((dim) => {
 				const dimIndex =
 					this.dimensionsDatas.selectedDimensions.findIndex(
-						(e) => e.name === dim
+						(e) => e.name === dim,
 					);
 
 				const nodes = datas.savedDatas.collapsedNodes[dim];
 				const dimHierarchy = truncatedHierarchy.find(
-					(e) => e.name === dim
+					(e) => e.name === dim,
 				);
 
 				const nodesLength = nodes.length;
@@ -476,7 +527,7 @@ export class TreenodesService {
 					let nodeChildren: any[] = [];
 					const nodeDetails: TreeNodeVO =
 						this.dimensionsDatas.dimensionsClusters[dimIndex].find(
-							(e) => e.cluster === nodeName
+							(e) => e.cluster === nodeName,
 						);
 
 					// Get children list
@@ -487,7 +538,7 @@ export class TreenodesService {
 						const nodeChildrenLength = nodeChildren.length;
 						for (let j = nodeChildrenLength - 1; j >= 0; j--) {
 							const nodeIndex = dimHierarchy.clusters.findIndex(
-								(e) => e.cluster === nodeChildren[j]
+								(e) => e.cluster === nodeChildren[j],
 							);
 							if (nodeChildren[j] !== nodeName) {
 								// Do not remove current collapsed node
@@ -510,7 +561,7 @@ export class TreenodesService {
 			for (let k = 0; k < truncatedHierarchy.length; k++) {
 				truncatedHierarchy[k].clusters = _.sortBy(
 					truncatedHierarchy[k].clusters,
-					[(e) => e.isLeaf === false, "rank"]
+					[(e) => e.isLeaf === false, "rank"],
 				);
 			}
 
@@ -521,37 +572,35 @@ export class TreenodesService {
 
 	truncateJsonPartition(datas) {
 		const truncatedPartition = _.cloneDeep(
-			datas.coclusteringReport.dimensionPartitions
+			datas.coclusteringReport.dimensionPartitions,
 		);
 		// const truncatedPartition = [ ...datas.coclusteringReport.dimensionPartitions ];
 
 		Object.keys(datas.savedDatas.collapsedNodes).forEach((dim, key) => {
 			const nodes = datas.savedDatas.collapsedNodes[dim];
 
-			const dimIndex =
-				this.dimensionsDatas.selectedDimensions.findIndex(
-					(e) => e.name === dim
-				);
+			const dimIndex = this.dimensionsDatas.selectedDimensions.findIndex(
+				(e) => e.name === dim,
+			);
 			const dimVO: DimensionVO =
 				this.dimensionsDatas.selectedDimensions.find(
-					(e) => e.name === dim
+					(e) => e.name === dim,
 				);
-			const dimIndexInitial =
-				this.dimensionsDatas.dimensions.findIndex(
-					(e) => e.name === dim
-				);
+			const dimIndexInitial = this.dimensionsDatas.dimensions.findIndex(
+				(e) => e.name === dim,
+			);
 
 			if (dimVO.isCategorical) {
 				this.computeCatPartition(
 					nodes,
 					dimIndex,
-					truncatedPartition[dimIndexInitial]
+					truncatedPartition[dimIndexInitial],
 				);
 			} else {
 				this.computeNumPartition(
 					nodes,
 					dimIndex,
-					truncatedPartition[dimIndexInitial]
+					truncatedPartition[dimIndexInitial],
 				);
 			}
 		});
@@ -571,9 +620,9 @@ export class TreenodesService {
 					currentTruncatedPartition.defaultGroupIndex
 				].values;
 			const nodeDetails: TreeNodeVO =
-				this.dimensionsDatas.dimensionsClusters[
-					dimIndex
-				].find((e) => e.cluster === nodeName);
+				this.dimensionsDatas.dimensionsClusters[dimIndex].find(
+					(e) => e.cluster === nodeName,
+				);
 			if (nodeDetails && nodeDetails.childrenList) {
 				nodeChildren = nodeDetails.childrenList;
 
@@ -586,7 +635,7 @@ export class TreenodesService {
 								// Do not remove current collapsed node
 								const nodeIndex =
 									currentTruncatedPartition.valueGroups.findIndex(
-										(e) => e.cluster === nodeChildren[j]
+										(e) => e.cluster === nodeChildren[j],
 									);
 								const node =
 									currentTruncatedPartition.valueGroups[
@@ -600,12 +649,12 @@ export class TreenodesService {
 										cancatValueGroup =
 											UtilsService.concat2ObjectsValues(
 												cancatValueGroup,
-												node
+												node,
 											);
 										// Remove it from initial values
 										currentTruncatedPartition.valueGroups.splice(
 											nodeIndex,
-											1
+											1,
 										);
 									}
 									cancatValueGroup.cluster = nodeName;
@@ -620,7 +669,7 @@ export class TreenodesService {
 			if (currentDefaultGroup) {
 				currentTruncatedPartition.defaultGroupIndex =
 					currentTruncatedPartition.valueGroups.findIndex((e) =>
-						e.values.includes(currentDefaultGroup[0])
+						e.values.includes(currentDefaultGroup[0]),
 					);
 			}
 		}
@@ -633,9 +682,9 @@ export class TreenodesService {
 			let nodeChildren: any[] = [];
 
 			const nodeDetails: TreeNodeVO =
-				this.dimensionsDatas.dimensionsClusters[
-					dimIndex
-				].find((e) => e.cluster === nodeName);
+				this.dimensionsDatas.dimensionsClusters[dimIndex].find(
+					(e) => e.cluster === nodeName,
+				);
 			if (nodeDetails && nodeDetails.childrenList) {
 				nodeChildren = nodeDetails.childrenList;
 				const nodeChildrenLength = nodeChildren.length;
@@ -646,7 +695,7 @@ export class TreenodesService {
 								// Do not remove current collapsed node
 								const intervalIndex =
 									currentTruncatedPartition.intervals.findIndex(
-										(e) => e.cluster === nodeChildren[j]
+										(e) => e.cluster === nodeChildren[j],
 									);
 								const currentInterval =
 									currentTruncatedPartition.intervals[
@@ -657,7 +706,7 @@ export class TreenodesService {
 
 									currentTruncatedPartition.intervals.splice(
 										intervalIndex,
-										1
+										1,
 									);
 								}
 							}
@@ -670,7 +719,7 @@ export class TreenodesService {
 				currentNodeBound = currentNodeBound.replaceAll("]", "");
 				currentNodeBound = currentNodeBound.replaceAll(
 					"Missing U ",
-					""
+					"",
 				); // #73
 				currentNodeBound = currentNodeBound.split(";");
 				// convert each array string to number
@@ -692,12 +741,14 @@ export class TreenodesService {
 
 	updateSummariesParts(datas) {
 		for (
-			let i = 0; i < datas.coclusteringReport.dimensionSummaries.length; i++
+			let i = 0;
+			i < datas.coclusteringReport.dimensionSummaries.length;
+			i++
 		) {
 			const dimIndex = this.dimensionsDatas.selectedDimensions.findIndex(
 				(e) =>
-				e.name ===
-				datas.coclusteringReport.dimensionSummaries[i].name
+					e.name ===
+					datas.coclusteringReport.dimensionSummaries[i].name,
 			);
 			datas.coclusteringReport.dimensionSummaries[dimIndex].parts =
 				datas.coclusteringReport.dimensionHierarchies[
@@ -730,7 +781,9 @@ export class TreenodesService {
 
 		// Step 1: we build the transition matrix which makes it possible to pass from the part indices of the CI to the part indices of the CC
 		for (
-			let k = 0; k < CI.coclusteringReport.dimensionHierarchies.length; k++
+			let k = 0;
+			k < CI.coclusteringReport.dimensionHierarchies.length;
+			k++
 		) {
 			let initialVariable;
 			let currentVariable;
@@ -759,7 +812,9 @@ export class TreenodesService {
 
 			// parcours des parties initiales
 			for (
-				let initialP = 0; initialP < initialVariable.length; initialP++
+				let initialP = 0;
+				initialP < initialVariable.length;
+				initialP++
 			) {
 				let initialPart = initialVariable[initialP];
 				if (!transitionMatrix[k]) {
@@ -776,9 +831,9 @@ export class TreenodesService {
 							while (
 								!(
 									initialPart[0] >=
-									currentVariable[currentP][0] &&
+										currentVariable[currentP][0] &&
 									initialPart[1] <=
-									currentVariable[currentP][1]
+										currentVariable[currentP][1]
 								)
 							) {
 								// while (!(this.isRangeIncluded(initialPart, currentVariable))) {
@@ -787,7 +842,7 @@ export class TreenodesService {
 						} catch (e) {
 							console.log(
 								"file: save.service.ts:446 ~ truncateJsonCells ~ e:",
-								e
+								e,
 							);
 						}
 					}
@@ -813,12 +868,8 @@ export class TreenodesService {
 		let resGroup: any[] = [];
 
 		// chat GPT optimization
-		const {
-			cellPartIndexes,
-			dimensionHierarchies,
-			cellFrequencies
-		} =
-		CI.coclusteringReport;
+		const { cellPartIndexes, dimensionHierarchies, cellFrequencies } =
+			CI.coclusteringReport;
 		let resGroupMap = new Map();
 		// Browse the cells of the initial coclustering json file ("cellPartIndexes" field)
 		for (let i = 0; i < cellPartIndexes.length; i++) {
@@ -833,7 +884,7 @@ export class TreenodesService {
 			if (resGroupMap.has(currentIndexesString)) {
 				resGroupMap.set(
 					currentIndexesString,
-					resGroupMap.get(currentIndexesString) + cellFrequencies[i]
+					resGroupMap.get(currentIndexesString) + cellFrequencies[i],
 				);
 			} else {
 				resGroupMap.set(currentIndexesString, cellFrequencies[i]);
@@ -866,11 +917,10 @@ export class TreenodesService {
 		CC.coclusteringReport.cellFrequencies = resGroup.map((e) => e.value);
 		// Convert cellPartIndexes strings to integers
 		CC.coclusteringReport.cellPartIndexes = resGroup.map((e) =>
-			e.key.split(/\s*,\s*/).map(Number)
+			e.key.split(/\s*,\s*/).map(Number),
 		);
 
 		// console.log('file: save.service.ts:547 ~ truncateJsonCells ~ CC:', CC.coclusteringReport.cellFrequencies);
 		return CC;
 	}
-
 }

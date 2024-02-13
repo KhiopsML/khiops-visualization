@@ -4,20 +4,17 @@ import {
 	Input,
 	Output,
 	EventEmitter,
-	ChangeDetectionStrategy
-} from '@angular/core';
-import {
-	KhiopsLibraryService
-} from '../../providers/khiops-library.service';
+	ChangeDetectionStrategy,
+} from "@angular/core";
+import { KhiopsLibraryService } from "../../providers/khiops-library.service";
 
 @Component({
-	selector: 'kl-graph-header',
-	templateUrl: './graph-header.component.html',
-	styleUrls: ['./graph-header.component.scss'],
-	changeDetection: ChangeDetectionStrategy.OnPush
+	selector: "kl-graph-header",
+	templateUrl: "./graph-header.component.html",
+	styleUrls: ["./graph-header.component.scss"],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GraphHeaderComponent implements OnInit {
-
 	maxScale: number;
 	minScale: number;
 	stepScale: number;
@@ -26,21 +23,23 @@ export class GraphHeaderComponent implements OnInit {
 	scaleValue: any;
 	truncatedTitle;
 
-	@Output() scaleValueChanged: EventEmitter < any > = new EventEmitter();
-	@Output() toggleFullscreen ? : EventEmitter < boolean >= new EventEmitter();
+	@Output() scaleValueChanged: EventEmitter<any> = new EventEmitter();
+	@Output() toggleFullscreen?: EventEmitter<boolean> = new EventEmitter();
 	@Input() selectedVariable: any; // Type depends of the context
 	@Input() title: string;
 	@Input() smallTitle = false;
 	@Input() hideScale = false;
 	iterateTo = 0;
 
-	constructor(
-		private khiopsLibraryService: KhiopsLibraryService) {
-
-		this.maxScale = this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_GRAPH_SCALE;
-		this.minScale = this.khiopsLibraryService.getAppConfig().common.GLOBAL.MIN_GRAPH_SCALE;
-		this.stepScale = this.khiopsLibraryService.getAppConfig().common.GLOBAL.STEP_GRAPH_SCALE;
-		this.scaleValue = this.khiopsLibraryService.getAppConfig().common.GLOBAL.DEFAULT_GRAPH_SCALE;
+	constructor(private khiopsLibraryService: KhiopsLibraryService) {
+		this.maxScale =
+			this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_GRAPH_SCALE;
+		this.minScale =
+			this.khiopsLibraryService.getAppConfig().common.GLOBAL.MIN_GRAPH_SCALE;
+		this.stepScale =
+			this.khiopsLibraryService.getAppConfig().common.GLOBAL.STEP_GRAPH_SCALE;
+		this.scaleValue =
+			this.khiopsLibraryService.getAppConfig().common.GLOBAL.DEFAULT_GRAPH_SCALE;
 	}
 
 	ngOnInit() {
@@ -53,8 +52,11 @@ export class GraphHeaderComponent implements OnInit {
 
 	onScaleChanged(event) {
 		// Save current scale value into ls
-		localStorage.setItem(this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID + 'SCALE_VALUE', event.value);
+		localStorage.setItem(
+			this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
+				"SCALE_VALUE",
+			event.value,
+		);
 		this.scaleValueChanged.emit(event.value);
 	}
-
 }

@@ -90,7 +90,7 @@ export class CellVO {
 		yValues: {
 			standard: number;
 			frequency: number;
-		}
+		},
 	) {
 		this.x = {
 			standard: xValues.standard[i],
@@ -109,5 +109,4 @@ export class CellVO {
 			frequency: yValues.frequency[j + 1] - this.y.frequency,
 		};
 	}
-
 }

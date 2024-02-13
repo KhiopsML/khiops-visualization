@@ -1,30 +1,67 @@
 <div id="release-notes-comp">
-	<div id="dialog-title" fxLayout="row" fxFlexFill fxLayoutAlign="start center">
+	<div
+		id="dialog-title"
+		fxLayout="row"
+		fxFlexFill
+		fxLayoutAlign="start center"
+	>
 		<!-- <h1 fxFlex>{{ 'GLOBAL.RELEASE_NOTES' | translate }} {{ appVersion }}</h1> -->
-		<h1 fxFlex>{{ 'GLOBAL.RELEASE_NOTES' | translate }}</h1>
+		<h1 fxFlex>{{ "GLOBAL.RELEASE_NOTES" | translate }}</h1>
 		<!-- <h1>
 			<kl-lib-version></kl-lib-version>
 		</h1> -->
-		<button color="primary" matDialogClose  mat-icon-button  fxLayoutAlign="center center">
+		<button
+			color="primary"
+			matDialogClose
+			mat-icon-button
+			fxLayoutAlign="center center"
+		>
 			<mat-icon fxFlexFill fxLayoutAlign="center center">close</mat-icon>
 		</button>
 	</div>
 	<mat-dialog-content *ngIf="!loadingNotes">
-		<fieldset class="release-notes-container" fxLayout="column" *ngFor="let note of releaseNotesDatas">
+		<fieldset
+			class="release-notes-container"
+			fxLayout="column"
+			*ngFor="let note of releaseNotesDatas"
+		>
 			<legend>
-				<div class="note-title" fxLayoutAlign="start center" fxLayout="row">
-					<h1 fxFlex>{{ 'GLOBAL.VERSION' | translate }} {{ note.name }}</h1>
-					<h1 *ngIf="note.prerelease">({{ 'GLOBAL.BETA' | translate }})</h1>
-					<h2>{{ note.published_at | date:'short' }}</h2>
+				<div
+					class="note-title"
+					fxLayoutAlign="start center"
+					fxLayout="row"
+				>
+					<h1 fxFlex>
+						{{ "GLOBAL.VERSION" | translate }} {{ note.name }}
+					</h1>
+					<h1 *ngIf="note.prerelease">
+						({{ "GLOBAL.BETA" | translate }})
+					</h1>
+					<h2>{{ note.published_at | date: "short" }}</h2>
 				</div>
 			</legend>
 			<markdown [data]="note.body"></markdown>
 		</fieldset>
 	</mat-dialog-content>
-	<div id="release-notes-spinner" fxLayout="column" fxFlexFill fxLayoutAlign="center center" *ngIf="loadingNotes">
-		<mat-spinner diameter="40" color="accent" mode="indeterminate"></mat-spinner>
+	<div
+		id="release-notes-spinner"
+		fxLayout="column"
+		fxFlexFill
+		fxLayoutAlign="center center"
+		*ngIf="loadingNotes"
+	>
+		<mat-spinner
+			diameter="40"
+			color="accent"
+			mode="indeterminate"
+		></mat-spinner>
 	</div>
-	<kl-no-data id="release-notes-spinner" fxFlexFill fxLayoutAlign="center center" *ngIf="loadingNotesError"
-		[message]="'SNACKS.OPEN_RELEASE_NOTES_ERROR'">
+	<kl-no-data
+		id="release-notes-spinner"
+		fxFlexFill
+		fxLayoutAlign="center center"
+		*ngIf="loadingNotesError"
+		[message]="'SNACKS.OPEN_RELEASE_NOTES_ERROR'"
+	>
 	</kl-no-data>
 </div>

@@ -65,7 +65,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 	minBarHeight = 4;
 	barColor: string =
 		localStorage.getItem(
-			AppConfig.visualizationCommon.GLOBAL.LS_ID + "THEME_COLOR"
+			AppConfig.visualizationCommon.GLOBAL.LS_ID + "THEME_COLOR",
 		) === "dark"
 			? "white"
 			: "black";
@@ -92,7 +92,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 		public selectableService: SelectableService,
 		private translate: TranslateService,
 		public ngzone: NgZone,
-		public configService: ConfigService
+		public configService: ConfigService,
 	) {
 		super(selectableService, ngzone, configService);
 		HistogramUIService.setTranslationService(translate);
@@ -114,7 +114,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 		localStorage.setItem(
 			this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
 				"DISTRIBUTION_GRAPH_OPTION_X",
-			type
+			type,
 		);
 		this.distributionDatas.distributionGraphOptionsX.selected = type;
 		this.datas && this.init();
@@ -125,7 +125,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 		localStorage.setItem(
 			this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
 				"DISTRIBUTION_GRAPH_OPTION_Y",
-			type
+			type,
 		);
 		this.distributionDatas.distributionGraphOptionsY.selected = type;
 		this.datas && this.init();
@@ -167,19 +167,19 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 								.selected === HistogramType.YLOG
 						) {
 							this.rangeYLog = this.histogramService.getLogRangeY(
-								this.datas
+								this.datas,
 							);
 							this.ratioY = this.histogramService.getLogRatioY(
 								this.h,
-								this.yPadding
+								this.yPadding,
 							);
 						} else {
 							this.rangeYLin = this.histogramService.getLinRangeY(
-								this.datas
+								this.datas,
 							);
 							this.ratioY = this.histogramService.getLinRatioY(
 								this.h,
-								this.yPadding
+								this.yPadding,
 							);
 						}
 
@@ -210,10 +210,10 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 								this.rangeXLin.max,
 							];
 							let tickValues = this.datas.map(
-								(e: HistogramValuesI) => e.partition[0]
+								(e: HistogramValuesI) => e.partition[0],
 							);
 							tickValues.push(
-								this.datas[this.datas.length - 1].partition[1]
+								this.datas[this.datas.length - 1].partition[1],
 							);
 							this.drawXAxis(domain, shift, width);
 						} else {
@@ -257,13 +257,13 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 										((this.w - 2 * this.xPadding) /
 											this.ratio) *
 										Math.log10(
-											Math.abs(this.rangeXLog.min)
+											Math.abs(this.rangeXLog.min),
 										);
 									shift -=
 										((this.w - 2 * this.xPadding) /
 											this.ratio) *
 										Math.log10(
-											Math.abs(this.rangeXLog.negStart)
+											Math.abs(this.rangeXLog.negStart),
 										);
 								}
 								width = this.w - 2 * this.xPadding - shift;
@@ -278,7 +278,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 										((this.w - 2 * this.xPadding) /
 											this.ratio) *
 											Math.log10(
-												this.rangeXLog.middlewidth
+												this.rangeXLog.middlewidth,
 											);
 									domain = [1];
 									this.drawXAxis(domain, middleShift - 1, 1);
@@ -310,7 +310,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 										((this.w - 2 * this.xPadding) /
 											this.ratio) *
 											Math.log10(
-												this.rangeXLog.middlewidth
+												this.rangeXLog.middlewidth,
 											) *
 											2;
 								} else {
@@ -320,7 +320,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 											((this.w - 2 * this.xPadding) /
 												this.ratio) *
 												Math.log10(
-													this.rangeXLog.middlewidth
+													this.rangeXLog.middlewidth,
 												);
 									}
 								}
@@ -329,7 +329,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 						}
 						this.isLoading = false;
 					},
-					this.isLoading ? 100 : 0
+					this.isLoading ? 100 : 0,
 				);
 			}
 		}
@@ -355,7 +355,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 		d: HistogramValuesI,
 		i: number,
 		bars: HistogramBarVO[],
-		ratio = 0
+		ratio = 0,
 	) {
 		var self = this;
 		const bar = bars[i];
@@ -408,7 +408,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 		const mousemove = (e: MouseEvent) => {
 			const tooltipText = HistogramUIService.generateTooltip(
 				d,
-				isFirstInterval
+				isFirstInterval,
 			);
 			self.tooltip.html(tooltipText);
 
@@ -492,7 +492,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 		let bars: HistogramBarVO[] =
 			this.histogramService.computeXbarDimensions(
 				datasSet,
-				this.distributionDatas.distributionGraphOptionsX.selected
+				this.distributionDatas.distributionGraphOptionsX.selected,
 			);
 		this.ratio = 0;
 		if (
@@ -573,7 +573,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 						(shift + this.xPadding / 2) +
 						"," +
 						this.h +
-						") "
+						") ",
 				) // This controls the vertical position of the Axis
 				.call(axis)
 				.selectAll("text")
@@ -640,7 +640,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 					(shift + this.xPadding / 2) +
 					"," +
 					this.yPadding / 2 +
-					")"
+					")",
 			) // This controls the vertical position of the Axis
 			.call(axis);
 	}

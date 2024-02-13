@@ -45,7 +45,7 @@ export class HistogramBarVO {
 		let sum = bars.reduce(
 			(partialSum: number, a: HistogramBarVO) =>
 				Math.abs(partialSum) + Math.abs(a.barWlog),
-			0
+			0,
 		);
 		this.barXlog = sum || 0;
 	}
@@ -54,7 +54,7 @@ export class HistogramBarVO {
 		let sum = bars.reduce(
 			(partialSum: number, a: HistogramBarVO) =>
 				Math.abs(partialSum) + Math.abs(a.barWlin),
-			0
+			0,
 		);
 		this.barXlin = sum || 0;
 	}

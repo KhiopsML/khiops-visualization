@@ -1,11 +1,10 @@
-import { ConfigModel } from './../model/config.model';
-import { ElementRef, Injectable } from '@angular/core';
+import { ConfigModel } from "./../model/config.model";
+import { ElementRef, Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: "root",
 })
 export class ConfigService {
-
 	private appRootElement: ElementRef<HTMLElement>;
 
 	private config: ConfigModel = new ConfigModel();

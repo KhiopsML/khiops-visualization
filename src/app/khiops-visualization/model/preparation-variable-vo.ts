@@ -1,7 +1,6 @@
 import { TYPES } from "@khiops-library/enum/types";
 
 export class PreparationVariableVO {
-
 	_id: string;
 	mode: string;
 	name: string;
@@ -31,11 +30,10 @@ export class PreparationVariableVO {
 	is2dVariable = false;
 
 	constructor(object, id) {
-
 		// Generate id for grid
 		this._id = id;
 
-		this.variableType = 'preparation';
+		this.variableType = "preparation";
 
 		this.mode = object.mode;
 		this.name = object.name;
@@ -63,7 +61,7 @@ export class PreparationVariableVO {
 
 		if (object.name1 && object.name2) {
 			this.is2dVariable = true;
-			this.variableType = 'preparation-2d';
+			this.variableType = "preparation-2d";
 		}
 
 		// for regression matrix
@@ -74,8 +72,7 @@ export class PreparationVariableVO {
 			this.nameY = this.name2;
 		}
 		if (!this.name && this.name1 && this.name2) {
-			this.name = this.name1 + '`' + this.name2;
+			this.name = this.name1 + "`" + this.name2;
 		}
 	}
-
 }

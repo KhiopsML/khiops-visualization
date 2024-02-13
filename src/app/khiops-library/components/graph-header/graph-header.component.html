@@ -1,14 +1,40 @@
-<div id="graph-header-comp" fxFlexFill fxLayout="row" fxLayoutAlign="start center" class="mat-elevation-z1">
-	<h1 fxLayout="column" fxLayoutAlign="start start" fxFlex [ngClass]="{'small-title': smallTitle === true}">
-		<span>{{ title || selectedVariable && selectedVariable.name }}</span>
+<div
+	id="graph-header-comp"
+	fxFlexFill
+	fxLayout="row"
+	fxLayoutAlign="start center"
+	class="mat-elevation-z1"
+>
+	<h1
+		fxLayout="column"
+		fxLayoutAlign="start start"
+		fxFlex
+		[ngClass]="{ 'small-title': smallTitle === true }"
+	>
+		<span>{{ title || (selectedVariable && selectedVariable.name) }}</span>
 	</h1>
-	<div id="graph-header-tools" *ngIf="!hideScale" fxLayout="column" fxLayoutAlign="center center">
-		<h2>{{ 'GLOBAL.SCALE' | translate }}</h2>
-		<mat-slider color="accent" attr.aria-label="{{ 'ARIA.CHARTS.UPDATE_GRAPH_SCALE' | translate }}" [max]="maxScale"
-			[min]="minScale" [step]="stepScale" [thumbLabel]="false" [(ngModel)]="scaleValue"
-			(input)="onScaleChanged($event)">
+	<div
+		id="graph-header-tools"
+		*ngIf="!hideScale"
+		fxLayout="column"
+		fxLayoutAlign="center center"
+	>
+		<h2>{{ "GLOBAL.SCALE" | translate }}</h2>
+		<mat-slider
+			color="accent"
+			attr.aria-label="{{ 'ARIA.CHARTS.UPDATE_GRAPH_SCALE' | translate }}"
+			[max]="maxScale"
+			[min]="minScale"
+			[step]="stepScale"
+			[thumbLabel]="false"
+			[(ngModel)]="scaleValue"
+			(input)="onScaleChanged($event)"
+		>
 		</mat-slider>
 	</div>
-	<kl-btn-fullscreen *ngIf="toggleFullscreen.observers.length > 0" (toggleFullscreen)="onToggleFullscreen($event)">
+	<kl-btn-fullscreen
+		*ngIf="toggleFullscreen.observers.length > 0"
+		(toggleFullscreen)="onToggleFullscreen($event)"
+	>
 	</kl-btn-fullscreen>
 </div>

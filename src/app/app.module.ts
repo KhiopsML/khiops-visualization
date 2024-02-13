@@ -1,28 +1,11 @@
-import {
-	CUSTOM_ELEMENTS_SCHEMA,
-	NgModule
-} from '@angular/core'
-import {
-	BrowserModule
-} from '@angular/platform-browser'
-import {
-	KhiopsVisualizationModule
-} from './khiops-visualization/khiops-visualization.module'
-import {
-	KhiopsCovisualizationModule
-} from './khiops-covisualization/khiops-covisualization.module'
-import {
-	AppComponent
-} from './app.component';
-import {
-	AppRoutingModule
-} from './app-routing.module';
-import {
-	MenuComponent
-} from './menu.component';
-import {
-	MatButtonModule
-} from '@angular/material/button';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { KhiopsVisualizationModule } from "./khiops-visualization/khiops-visualization.module";
+import { KhiopsCovisualizationModule } from "./khiops-covisualization/khiops-covisualization.module";
+import { AppComponent } from "./app.component";
+import { AppRoutingModule } from "./app-routing.module";
+import { MenuComponent } from "./menu.component";
+import { MatButtonModule } from "@angular/material/button";
 
 @NgModule({
 	declarations: [AppComponent, MenuComponent],
@@ -31,10 +14,10 @@ import {
 		KhiopsVisualizationModule,
 		KhiopsCovisualizationModule,
 		AppRoutingModule,
-		MatButtonModule
+		MatButtonModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent],
-	schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+	schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}

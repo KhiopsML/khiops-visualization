@@ -6,26 +6,26 @@ export function setupPreparationTests(datas, testsValues) {
 	testsValues.Preparation.push("Informations");
 	testsValues.Preparation.push(datas.preparationReport.summary.database);
 	testsValues.Preparation.push(
-		datas.preparationReport.summary.discretization
+		datas.preparationReport.summary.discretization,
 	);
 	testsValues.Preparation.push(
-		datas.preparationReport.summary.targetValues?.values[0].slice(0, 10) // slice it because it's a legend text
+		datas.preparationReport.summary.targetValues?.values[0].slice(0, 10), // slice it because it's a legend text
 	);
 	testsValues.Preparation.push(
-		datas.preparationReport.summary.evaluatedVariables
+		datas.preparationReport.summary.evaluatedVariables,
 	);
 	if (datas.preparationReport.variablesStatistics) {
 		testsValues.Preparation.push(
-			datas.preparationReport.variablesStatistics.length + " Variables"
+			datas.preparationReport.variablesStatistics.length + " Variables",
 		);
 		testsValues.Preparation.push("Name");
 		testsValues.Preparation.push("Derivation rule");
 
 		testsValues.Preparation.push(
-			datas.preparationReport.variablesStatistics[0].rank
+			datas.preparationReport.variablesStatistics[0].rank,
 		);
 		testsValues.Preparation.push(
-			datas.preparationReport.variablesStatistics[0].level
+			datas.preparationReport.variablesStatistics[0].level,
 		);
 	}
 	if (
@@ -38,7 +38,7 @@ export function setupPreparationTests(datas, testsValues) {
 			testsValues.Preparation.push("Target values");
 			// check cell stats grid
 			testsValues.Preparation.push(
-				"of " + datas.preparationReport?.summary?.targetVariable
+				"of " + datas.preparationReport?.summary?.targetVariable,
 			);
 		} else if (
 			datas.preparationReport?.variablesDetailedStatistics?.R01?.dataGrid

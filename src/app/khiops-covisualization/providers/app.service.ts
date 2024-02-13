@@ -1,25 +1,14 @@
-import {
-	Injectable,
-	EventEmitter,
-} from '@angular/core';
-import {
-	KhiopsLibraryService
-} from '@khiops-library/providers/khiops-library.service';
-import {
-	AppConfig
-} from 'src/environments/environment';
-import {
-	UtilsService
-} from '@khiops-library/providers/utils.service';
-import {
-	ViewLayoutVO
-} from '../model/view-layout-vo';
-import copy from 'fast-copy';
-import * as _ from 'lodash'; // Important to import lodash in karma
-import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
+import { Injectable, EventEmitter } from "@angular/core";
+import { KhiopsLibraryService } from "@khiops-library/providers/khiops-library.service";
+import { AppConfig } from "src/environments/environment";
+import { UtilsService } from "@khiops-library/providers/utils.service";
+import { ViewLayoutVO } from "../model/view-layout-vo";
+import copy from "fast-copy";
+import * as _ from "lodash"; // Important to import lodash in karma
+import { InfosDatasI } from "@khiops-library/interfaces/infos-datas";
 
 @Injectable({
-	providedIn: 'root'
+	providedIn: "root",
 })
 export class AppService {
 	splitSizes: any;
@@ -27,7 +16,7 @@ export class AppService {
 	initialDatas: any;
 	viewsLayout: ViewLayoutVO;
 	activeTabIndex = 0;
-	viewsLayoutChanged: EventEmitter < any > = new EventEmitter();
+	viewsLayoutChanged: EventEmitter<any> = new EventEmitter();
 
 	constructor(private khiopsLibraryService: KhiopsLibraryService) {
 		this.initialize();
@@ -45,11 +34,11 @@ export class AppService {
 		this.initGlobalConfigVariables();
 
 		this.appDatas = {
-			datas: undefined
+			datas: undefined,
 		};
 
 		this.initialDatas = {
-			datas: undefined
+			datas: undefined,
 		};
 
 		this.splitSizes = {
@@ -65,15 +54,19 @@ export class AppService {
 			contextView: {
 				col: [70, 30],
 				col0Row0Col: [25, 25, 25, 25],
-				col0Row0Col2Row: [30, 70]
-			}
+				col0Row0Col2Row: [30, 70],
+			},
 		};
 
-		const storedSplitValues = localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'SPLIT_SIZES');
+		const storedSplitValues = localStorage.getItem(
+			AppConfig.covisualizationCommon.GLOBAL.LS_ID + "SPLIT_SIZES",
+		);
 
 		// Set default split sizes if not into local storage
-		this.splitSizes = UtilsService.setDefaultLSValues(storedSplitValues, this.splitSizes);
-
+		this.splitSizes = UtilsService.setDefaultLSValues(
+			storedSplitValues,
+			this.splitSizes,
+		);
 	}
 
 	initSavedDatas() {
@@ -95,7 +88,12 @@ export class AppService {
 	}
 
 	getSavedDatas(type): any {
-		if (this.appDatas && this.appDatas.datas && this.appDatas.datas.savedDatas && this.appDatas.datas.savedDatas[type] !== undefined) {
+		if (
+			this.appDatas &&
+			this.appDatas.datas &&
+			this.appDatas.datas.savedDatas &&
+			this.appDatas.datas.savedDatas[type] !== undefined
+		) {
 			return this.appDatas.datas.savedDatas[type];
 		}
 	}
@@ -117,15 +115,24 @@ export class AppService {
 	}
 
 	isCompatibleJson(datas): boolean {
-		return datas && datas.tool === "Khiops Coclustering" && datas.coclusteringReport;
+		return (
+			datas &&
+			datas.tool === "Khiops Coclustering" &&
+			datas.coclusteringReport
+		);
 	}
 
 	isCollidingJson(datas): boolean {
-		return datas && datas.khiops_encoding === 'colliding_ansi_utf8';
+		return datas && datas.khiops_encoding === "colliding_ansi_utf8";
 	}
 
 	isBigJsonFile(): boolean {
-		return this.appDatas && this.appDatas.datas && this.appDatas.datas.coclusteringReport && this.appDatas.datas.coclusteringReport.summary.cells > 10000;
+		return (
+			this.appDatas &&
+			this.appDatas.datas &&
+			this.appDatas.datas.coclusteringReport &&
+			this.appDatas.datas.coclusteringReport.summary.cells > 10000
+		);
 	}
 
 	getViewSplitSizes(view) {
@@ -143,12 +150,15 @@ export class AppService {
 
 	setSplitSizes(splitSizes) {
 		this.splitSizes = splitSizes;
-		localStorage.setItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'SPLIT_SIZES', JSON.stringify(this.splitSizes));
+		localStorage.setItem(
+			AppConfig.covisualizationCommon.GLOBAL.LS_ID + "SPLIT_SIZES",
+			JSON.stringify(this.splitSizes),
+		);
 	}
 
-	resizeAndSetSplitSizes(item, sizes, itemSize, view, dispatchEvent ? ) {
+	resizeAndSetSplitSizes(item, sizes, itemSize, view, dispatchEvent?) {
 		if (dispatchEvent !== false) {
-			window.dispatchEvent(new Event('resize'));
+			window.dispatchEvent(new Event("resize"));
 		}
 		if (item) {
 			sizes[item] = itemSize;
@@ -158,7 +168,7 @@ export class AppService {
 
 	initGlobalConfigVariables() {
 		AppConfig.common = {
-			...AppConfig.covisualizationCommon
+			...AppConfig.covisualizationCommon,
 		};
 		this.khiopsLibraryService.setAppConfig(AppConfig);
 	}
@@ -166,13 +176,16 @@ export class AppService {
 	getProjectSummaryDatas(): InfosDatasI[] {
 		const appDatas = this.appDatas.datas;
 		if (appDatas.coclusteringReport) {
-			return [{
-				title: 'GLOBAL.PROJECT_FILE',
-				value: appDatas.filename
-			}, {
-				title: 'GLOBAL.DATABASE',
-				value: appDatas.coclusteringReport.summary.database
-			}];
+			return [
+				{
+					title: "GLOBAL.PROJECT_FILE",
+					value: appDatas.filename,
+				},
+				{
+					title: "GLOBAL.DATABASE",
+					value: appDatas.coclusteringReport.summary.database,
+				},
+			];
 		} else {
 			return undefined;
 		}
@@ -182,18 +195,23 @@ export class AppService {
 		this.viewsLayout = new ViewLayoutVO();
 		for (let i = 0; i < dimensions.length; i++) {
 			const isContextView = i >= 2;
-			this.viewsLayout.addDimensionViewLayout(dimensions[i].name, isContextView);
+			this.viewsLayout.addDimensionViewLayout(
+				dimensions[i].name,
+				isContextView,
+			);
 		}
 		// First get state from ls
-		const lsStorage = localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'VIEWS_LAYOUT');
-		if (lsStorage && lsStorage !== 'undefined') {
+		const lsStorage = localStorage.getItem(
+			AppConfig.covisualizationCommon.GLOBAL.LS_ID + "VIEWS_LAYOUT",
+		);
+		if (lsStorage && lsStorage !== "undefined") {
 			const lsValues = JSON.parse(lsStorage);
 			// Merge current values with values from LS
 			this.viewsLayout.megeWithPreviousValues(lsValues);
 		}
 
 		// Then get saved json state
-		const savedDatas = this.getSavedDatas('viewsLayout')
+		const savedDatas = this.getSavedDatas("viewsLayout");
 		if (savedDatas) {
 			// Merge current values with values from LS
 			this.viewsLayout.megeWithPreviousValues(savedDatas);
@@ -207,12 +225,21 @@ export class AppService {
 		if (previousValues) {
 			this.viewsLayout = new ViewLayoutVO();
 			for (let i = 0; i < dimensions.length; i++) {
-				const previousLayout = previousValues.dimensionsViewsLayoutsVO.find(e => e.name === dimensions[i].name);
+				const previousLayout =
+					previousValues.dimensionsViewsLayoutsVO.find(
+						(e) => e.name === dimensions[i].name,
+					);
 				const isContextView = i >= 2;
-				this.viewsLayout.addDimensionViewLayout(dimensions[i].name, isContextView, previousLayout);
+				this.viewsLayout.addDimensionViewLayout(
+					dimensions[i].name,
+					isContextView,
+					previousLayout,
+				);
 			}
-			const lsStorage = localStorage.getItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'VIEWS_LAYOUT');
-			if (lsStorage && lsStorage !== 'undefined') {
+			const lsStorage = localStorage.getItem(
+				AppConfig.covisualizationCommon.GLOBAL.LS_ID + "VIEWS_LAYOUT",
+			);
+			if (lsStorage && lsStorage !== "undefined") {
 				const lsValues = JSON.parse(lsStorage);
 				// Merge current values with values from LS
 				this.viewsLayout.megeWithPreviousValues(lsValues);
@@ -226,7 +253,9 @@ export class AppService {
 	}
 
 	enableExtDatasView(dimension: string) {
-		const currentDim = this.viewsLayout ?.dimensionsViewsLayoutsVO ?.find(e => e.name === dimension)
+		const currentDim = this.viewsLayout?.dimensionsViewsLayoutsVO?.find(
+			(e) => e.name === dimension,
+		);
 		if (currentDim) {
 			currentDim.isExternalDataChecked = true;
 			this.saveViewsLayout(this.viewsLayout);
@@ -235,16 +264,21 @@ export class AppService {
 
 	saveViewsLayout(viewsLayout: ViewLayoutVO) {
 		this.viewsLayout = viewsLayout;
-		localStorage.setItem(AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'VIEWS_LAYOUT', JSON.stringify(this.viewsLayout));
+		localStorage.setItem(
+			AppConfig.covisualizationCommon.GLOBAL.LS_ID + "VIEWS_LAYOUT",
+			JSON.stringify(this.viewsLayout),
+		);
 		this.viewsLayoutChanged.emit(this.viewsLayout);
 	}
 
 	switchSplitSizes(oldPosition, newPosition) {
-		const oldView = (oldPosition === 0 || oldPosition === 1) ? 'axisView' : 'contextView';
-		const newView = (newPosition === 0 || newPosition === 1) ? 'axisView' : 'contextView';
+		const oldView =
+			oldPosition === 0 || oldPosition === 1 ? "axisView" : "contextView";
+		const newView =
+			newPosition === 0 || newPosition === 1 ? "axisView" : "contextView";
 
 		// All contexts have same layout
-		if (newView === 'contextView') {
+		if (newView === "contextView") {
 			newPosition = 0;
 		}
 		if (oldPosition > 1) {
@@ -252,7 +286,19 @@ export class AppService {
 		}
 
 		// Maybe split view sizes managment needs a deep refactoring
-		[this.splitSizes[oldView]['col0Row' + oldPosition + 'Col'], this.splitSizes[newView]['col0Row' + newPosition + 'Col']] = [this.splitSizes[newView]['col0Row' + newPosition + 'Col'], this.splitSizes[oldView]['col0Row' + oldPosition + 'Col']];
-		[this.splitSizes[oldView]['col0Row' + oldPosition + 'Col2Row'], this.splitSizes[newView]['col0Row' + newPosition + 'Col2Row']] = [this.splitSizes[newView]['col0Row' + newPosition + 'Col2Row'], this.splitSizes[oldView]['col0Row' + oldPosition + 'Col2Row']];
+		[
+			this.splitSizes[oldView]["col0Row" + oldPosition + "Col"],
+			this.splitSizes[newView]["col0Row" + newPosition + "Col"],
+		] = [
+			this.splitSizes[newView]["col0Row" + newPosition + "Col"],
+			this.splitSizes[oldView]["col0Row" + oldPosition + "Col"],
+		];
+		[
+			this.splitSizes[oldView]["col0Row" + oldPosition + "Col2Row"],
+			this.splitSizes[newView]["col0Row" + newPosition + "Col2Row"],
+		] = [
+			this.splitSizes[newView]["col0Row" + newPosition + "Col2Row"],
+			this.splitSizes[oldView]["col0Row" + oldPosition + "Col2Row"],
+		];
 	}
 }

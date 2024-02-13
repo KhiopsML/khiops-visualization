@@ -1,39 +1,102 @@
-<div id="variable-graph-details-comp" fxLayout="column" fxFlexFill [ngClass]="{'fullscreen': isFullscreen}">
-	<div fxLayout="column" fxFlexFill
-		*ngIf="distributionDatas.distributionGraphDatas || distributionDatas.targetDistributionGraphDatas || distributionDatas.histogramDatas">
-		<kl-graph-header [selectedVariable]="selectedVariable" (scaleValueChanged)="onScaleValueChanged($event)"
-			(toggleFullscreen)="onToggleFullscreen($event)" [hideScale]="distributionDatas.histogramDatas">
+<div
+	id="variable-graph-details-comp"
+	fxLayout="column"
+	fxFlexFill
+	[ngClass]="{ fullscreen: isFullscreen }"
+>
+	<div
+		fxLayout="column"
+		fxFlexFill
+		*ngIf="
+			distributionDatas.distributionGraphDatas ||
+			distributionDatas.targetDistributionGraphDatas ||
+			distributionDatas.histogramDatas
+		"
+	>
+		<kl-graph-header
+			[selectedVariable]="selectedVariable"
+			(scaleValueChanged)="onScaleValueChanged($event)"
+			(toggleFullscreen)="onToggleFullscreen($event)"
+			[hideScale]="distributionDatas.histogramDatas"
+		>
 		</kl-graph-header>
-		<kl-distribution-graph-canvas #distributionGraph fxFlex="1 1 100%"
-			*ngIf="showDistributionGraph && distributionDatas.distributionGraphDatas && !distributionDatas.histogramDatas"
-			class="distribution-graph" id="{{'distribution-graph'+position}}" [attr.id]="'distribution-graph'+position"
-			[position]="position" [scrollPosition]="scrollPosition"
-			(scrollPositionChanged)="onScrollPositionChanged($event)" [isLoadingDatas]="isLoadingGraphDatas"
-			[scaleValue]="scaleValue" [graphOptions]="distributionDatas.distributionGraphOptions"
+		<kl-distribution-graph-canvas
+			#distributionGraph
+			fxFlex="1 1 100%"
+			*ngIf="
+				showDistributionGraph &&
+				distributionDatas.distributionGraphDatas &&
+				!distributionDatas.histogramDatas
+			"
+			class="distribution-graph"
+			id="{{ 'distribution-graph' + position }}"
+			[attr.id]="'distribution-graph' + position"
+			[position]="position"
+			[scrollPosition]="scrollPosition"
+			(scrollPositionChanged)="onScrollPositionChanged($event)"
+			[isLoadingDatas]="isLoadingGraphDatas"
+			[scaleValue]="scaleValue"
+			[graphOptions]="distributionDatas.distributionGraphOptions"
 			[inputDatas]="distributionDatas.distributionGraphDatas"
-			(graphTypeChanged)="onDistributionGraphTypeChanged($event)" [activeEntries]="activeEntries"
-			(selectedItemChanged)="onSelectedDistributionGraphItemChanged($event)">
+			(graphTypeChanged)="onDistributionGraphTypeChanged($event)"
+			[activeEntries]="activeEntries"
+			(selectedItemChanged)="
+				onSelectedDistributionGraphItemChanged($event)
+			"
+		>
 		</kl-distribution-graph-canvas>
 
-		<app-histogram id="app-histogram" class="app-histogram" *ngIf="distributionDatas.histogramDatas"
-			fxFlex="1 1 100%" [datas]="distributionDatas.histogramDatas"
-			(selectedItemChanged)="onSelectedDistributionGraphItemChanged($event)">
+		<app-histogram
+			id="app-histogram"
+			class="app-histogram"
+			*ngIf="distributionDatas.histogramDatas"
+			fxFlex="1 1 100%"
+			[datas]="distributionDatas.histogramDatas"
+			(selectedItemChanged)="
+				onSelectedDistributionGraphItemChanged($event)
+			"
+		>
 		</app-histogram>
 
-		<app-target-distribution-graph-canvas #targetDistributionGraph fxFlex="1 1 100%"
-			titleTooltip="{{ 'TOOLTIPS.PREPARATION.TARGET_DISTRIBUTION.TITLE' | translate }}" [position]="position"
-			*ngIf="showTargetDistributionGraph && distributionDatas.targetDistributionGraphDatas"
-			class="target-distribution-graph" id="{{'target-distribution-graph'+position}}"
-			[attr.id]="'target-distribution-graph'+position" [isLoadingDatas]="isLoadingGraphDatas"
-			[displayedValues]="distributionDatas.targetDistributionDisplayedValues"
-			(scrollPositionChanged)="onScrollPositionChanged($event)" [scrollPosition]="scrollPosition"
-			(selectedItemChanged)="onSelectedTargetDistributionGraphItemChanged($event)"
+		<app-target-distribution-graph-canvas
+			#targetDistributionGraph
+			fxFlex="1 1 100%"
+			titleTooltip="{{
+				'TOOLTIPS.PREPARATION.TARGET_DISTRIBUTION.TITLE' | translate
+			}}"
+			[position]="position"
+			*ngIf="
+				showTargetDistributionGraph &&
+				distributionDatas.targetDistributionGraphDatas
+			"
+			class="target-distribution-graph"
+			id="{{ 'target-distribution-graph' + position }}"
+			[attr.id]="'target-distribution-graph' + position"
+			[isLoadingDatas]="isLoadingGraphDatas"
+			[displayedValues]="
+				distributionDatas.targetDistributionDisplayedValues
+			"
+			(scrollPositionChanged)="onScrollPositionChanged($event)"
+			[scrollPosition]="scrollPosition"
+			(selectedItemChanged)="
+				onSelectedTargetDistributionGraphItemChanged($event)
+			"
 			[inputDatas]="distributionDatas.targetDistributionGraphDatas"
-			(graphTypeChanged)="onTargetDistributionGraphTypeChanged($event)" [scaleValue]="scaleValue"
-			(targetDistributionGraphDisplayedValuesChanged)="onTargetDistributionGraphDisplayedValuesChanged($event)"
-			[activeEntries]="activeEntries"></app-target-distribution-graph-canvas>
+			(graphTypeChanged)="onTargetDistributionGraphTypeChanged($event)"
+			[scaleValue]="scaleValue"
+			(targetDistributionGraphDisplayedValuesChanged)="
+				onTargetDistributionGraphDisplayedValuesChanged($event)
+			"
+			[activeEntries]="activeEntries"
+		></app-target-distribution-graph-canvas>
 	</div>
-	<kl-no-data fxFlexFill
-		*ngIf="!distributionDatas.distributionGraphDatas && !distributionDatas.targetDistributionGraphDatas && !distributionDatas.histogramDatas">
+	<kl-no-data
+		fxFlexFill
+		*ngIf="
+			!distributionDatas.distributionGraphDatas &&
+			!distributionDatas.targetDistributionGraphDatas &&
+			!distributionDatas.histogramDatas
+		"
+	>
 	</kl-no-data>
 </div>

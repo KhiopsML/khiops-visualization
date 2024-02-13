@@ -3,10 +3,10 @@ import "../utils/utils";
 export function setupTreePreparationTests(datas, testsValues) {
 	testsValues.TreePreparation.push("Summary");
 	testsValues.TreePreparation.push(
-		datas.treePreparationReport?.summary?.database
+		datas.treePreparationReport?.summary?.database,
 	);
 	testsValues.TreePreparation.push(
-		datas.treePreparationReport?.summary?.instances
+		datas.treePreparationReport?.summary?.instances,
 	);
 	testsValues.TreePreparation.push("Evaluated variables");
 	if (datas.treePreparationReport?.dimensionTree) {
@@ -14,27 +14,27 @@ export function setupTreePreparationTests(datas, testsValues) {
 
 		testsValues.TreePreparation.push(
 			datas.treePreparationReport?.variablesStatistics.length +
-				" Variables"
+				" Variables",
 		);
 		testsValues.TreePreparation.push(
-			datas.treePreparationReport?.variablesStatistics[0]?.level
+			datas.treePreparationReport?.variablesStatistics[0]?.level,
 		);
 		testsValues.TreePreparation.push(
-			datas.treePreparationReport?.variablesStatistics[0]?.name
+			datas.treePreparationReport?.variablesStatistics[0]?.name,
 		);
 		testsValues.TreePreparation.push("Decision tree");
 
 		testsValues.TreePreparation.push(
-			datas.treePreparationReport?.treeDetails?.R01?.treeNodes?.nodeId
+			datas.treePreparationReport?.treeDetails?.R01?.treeNodes?.nodeId,
 		);
 		testsValues.TreePreparation.push(
-			datas.treePreparationReport?.treeDetails?.R01?.treeNodes?.variable
+			datas.treePreparationReport?.treeDetails?.R01?.treeNodes?.variable,
 		);
 		testsValues.TreePreparation.push(
-			datas.treePreparationReport?.treeDetails?.R001?.treeNodes?.nodeId
+			datas.treePreparationReport?.treeDetails?.R001?.treeNodes?.nodeId,
 		);
 		testsValues.TreePreparation.push(
-			datas.treePreparationReport?.treeDetails?.R001?.treeNodes?.variable
+			datas.treePreparationReport?.treeDetails?.R001?.treeNodes?.variable,
 		);
 		testsValues.TreePreparation.push("Selection details");
 		testsValues.TreePreparation.push("Leaf infos");

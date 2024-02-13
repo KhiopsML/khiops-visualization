@@ -1,4 +1,10 @@
 <div #appElement class="mat-app-background">
-	<app-home-layout *ngIf="show" [ngClass]="{'dark-theme': theme === 'dark', 'orange-theme': theme === 'orange'}"
-		[appDatas]="appdatas"></app-home-layout>
+	<app-home-layout
+		*ngIf="show"
+		[ngClass]="{
+			'dark-theme': theme === 'dark',
+			'orange-theme': theme === 'orange'
+		}"
+		[appDatas]="appdatas"
+	></app-home-layout>
 </div>

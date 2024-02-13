@@ -1,32 +1,32 @@
 export function setupAxisTests(datas, testsValues, fileName) {
 	testsValues.Axis.push("Hierarchy");
 	testsValues.Axis.push(
-		datas.coclusteringReport?.dimensionSummaries[0]?.name
+		datas.coclusteringReport?.dimensionSummaries[0]?.name,
 	);
 	testsValues.Axis.push(
-		datas.coclusteringReport?.dimensionSummaries[1]?.name
+		datas.coclusteringReport?.dimensionSummaries[1]?.name,
 	);
 	if (datas.coclusteringReport?.dimensionPartitions[0]?.intervals) {
 		testsValues.Axis.push(
-			datas.coclusteringReport?.dimensionPartitions[0]?.intervals[0]?.bounds[0]?.toString()
+			datas.coclusteringReport?.dimensionPartitions[0]?.intervals[0]?.bounds[0]?.toString(),
 		);
 	}
 
 	if (datas.coclusteringReport?.dimensionPartitions[1]?.intervals) {
 		testsValues.Axis.push(
-			datas.coclusteringReport?.dimensionPartitions[1]?.intervals[0]?.bounds[0]?.toString()
+			datas.coclusteringReport?.dimensionPartitions[1]?.intervals[0]?.bounds[0]?.toString(),
 		);
 	}
 
 	if (datas.coclusteringReport?.dimensionPartitions[0]?.valueGroups) {
 		testsValues.Axis.push(
-			datas.coclusteringReport?.dimensionPartitions[0]?.valueGroups[0]?.cluster[0].toString()
+			datas.coclusteringReport?.dimensionPartitions[0]?.valueGroups[0]?.cluster[0].toString(),
 		);
 	}
 
 	if (datas.coclusteringReport?.dimensionPartitions[1]?.valueGroups) {
 		testsValues.Axis.push(
-			datas.coclusteringReport?.dimensionPartitions[1]?.valueGroups[0]?.cluster[0].toString()
+			datas.coclusteringReport?.dimensionPartitions[1]?.valueGroups[0]?.cluster[0].toString(),
 		);
 	}
 

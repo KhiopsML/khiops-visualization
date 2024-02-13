@@ -1,6 +1,6 @@
-import { C } from '../transformation/hyperbolic-math'
+import { C } from "../transformation/hyperbolic-math";
 
-export interface Trace {        
-    id:        string,
-    points:    C[]
+export interface Trace {
+	id: string;
+	points: C[];
 }

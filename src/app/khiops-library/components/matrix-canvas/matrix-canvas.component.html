@@ -1,33 +1,101 @@
 <div id="matrix-canvas-comp" fxFlexFill fxLayout="column" #matrixCanvasComp>
-	<kl-matrix-tooltip *ngIf="matrixDiv" [cell]="tooltipCell" [position]="tooltipPosition"
-		[matrixSize]="[matrixDiv.width, matrixDiv.height]"></kl-matrix-tooltip>
-	<div id="matrix-loading" fxLayout="column" fxFlexFill fxLayoutAlign="center center" [hidden]="!loadingMatrixSvg">
-		<mat-spinner diameter="40" color="accent" mode="indeterminate"></mat-spinner>
+	<kl-matrix-tooltip
+		*ngIf="matrixDiv"
+		[cell]="tooltipCell"
+		[position]="tooltipPosition"
+		[matrixSize]="[matrixDiv.width, matrixDiv.height]"
+	></kl-matrix-tooltip>
+	<div
+		id="matrix-loading"
+		fxLayout="column"
+		fxFlexFill
+		fxLayoutAlign="center center"
+		[hidden]="!loadingMatrixSvg"
+	>
+		<mat-spinner
+			diameter="40"
+			color="accent"
+			mode="indeterminate"
+		></mat-spinner>
 	</div>
-	<kl-cell-stats *ngIf="isKhiopsCovisu" [selectedCells]="selectedCells"></kl-cell-stats>
+	<kl-cell-stats
+		*ngIf="isKhiopsCovisu"
+		[selectedCells]="selectedCells"
+	></kl-cell-stats>
 	<div fxLayout="row" fxFlex>
 		<div fxLayout="column">
 			<div class="screenshot-hide" fxLayout="column">
-				<button mat-icon-button color="accent" matTooltip="{{ 'GLOBAL.ZOOM_IN' | translate }}" attr.aria-label="{{ 'GLOBAL.ZOOM_IN' | translate }}" >
-					<mat-icon fxFlexFill fxLayoutAlign="center center" (click)="onClickOnZoomIn()">zoom_in</mat-icon>
+				<button
+					mat-icon-button
+					color="accent"
+					matTooltip="{{ 'GLOBAL.ZOOM_IN' | translate }}"
+					attr.aria-label="{{ 'GLOBAL.ZOOM_IN' | translate }}"
+				>
+					<mat-icon
+						fxFlexFill
+						fxLayoutAlign="center center"
+						(click)="onClickOnZoomIn()"
+						>zoom_in</mat-icon
+					>
 				</button>
-				<button mat-icon-button color="accent" matTooltip="{{ 'GLOBAL.RESET_ZOOM' | translate }}" attr.aria-label="{{ 'GLOBAL.RESET_ZOOM' | translate }}" >
-					<mat-icon fxFlexFill fxLayoutAlign="center center" (click)="onClickOnResetZoom()">zoom_out_map</mat-icon>
+				<button
+					mat-icon-button
+					color="accent"
+					matTooltip="{{ 'GLOBAL.RESET_ZOOM' | translate }}"
+					attr.aria-label="{{ 'GLOBAL.RESET_ZOOM' | translate }}"
+				>
+					<mat-icon
+						fxFlexFill
+						fxLayoutAlign="center center"
+						(click)="onClickOnResetZoom()"
+						>zoom_out_map</mat-icon
+					>
 				</button>
-				<button mat-icon-button color="accent" matTooltip="{{ 'GLOBAL.ZOOM_OUT' | translate }}" attr.aria-label="{{ 'GLOBAL.ZOOM_OUT' | translate }}" >
-					<mat-icon fxFlexFill fxLayoutAlign="center center" (click)="onClickOnZoomOut()">zoom_out</mat-icon>
+				<button
+					mat-icon-button
+					color="accent"
+					matTooltip="{{ 'GLOBAL.ZOOM_OUT' | translate }}"
+					attr.aria-label="{{ 'GLOBAL.ZOOM_OUT' | translate }}"
+				>
+					<mat-icon
+						fxFlexFill
+						fxLayoutAlign="center center"
+						(click)="onClickOnZoomOut()"
+						>zoom_out</mat-icon
+					>
 				</button>
 			</div>
 			<div fxFlex id="y-axis" fxLayoutAlign="center center">
-				<span title="{{yAxisLabel}}">{{ yAxisLabel }}</span>
+				<span title="{{ yAxisLabel }}">{{ yAxisLabel }}</span>
 			</div>
-			<button *ngIf="graphMode && graphMode.mode === 'MUTUAL_INFO'"
-			mat-icon-button matTooltip="{{ 'GLOBAL.TOGGLE_ZERO' | translate }}" [ngClass]="['toggle-zero', 'toggled-'+isZerosToggled]" attr.aria-label="{{ 'GLOBAL.TOGGLE_ZERO' | translate }}">
-				<mat-icon fxFlexFill fxLayoutAlign="center center" (click)="onClickOnToggleZeros()">{{isZerosToggled ? 'visibility' : 'visibility_off'}}</mat-icon>
+			<button
+				*ngIf="graphMode && graphMode.mode === 'MUTUAL_INFO'"
+				mat-icon-button
+				matTooltip="{{ 'GLOBAL.TOGGLE_ZERO' | translate }}"
+				[ngClass]="['toggle-zero', 'toggled-' + isZerosToggled]"
+				attr.aria-label="{{ 'GLOBAL.TOGGLE_ZERO' | translate }}"
+			>
+				<mat-icon
+					fxFlexFill
+					fxLayoutAlign="center center"
+					(click)="onClickOnToggleZeros()"
+					>{{
+						isZerosToggled ? "visibility" : "visibility_off"
+					}}</mat-icon
+				>
 			</button>
-			<button mat-icon-button matTooltip="{{ 'GLOBAL.INVERT_AXIS' | translate }}" attr.aria-label="{{ 'GLOBAL.INVERT_AXIS' | translate }}"
-			[ngClass]="['invert-axis', 'toggled-'+isAxisInverted]">
-				<mat-icon fxFlexFill fxLayoutAlign="center center" (click)="onClickOnInvertAxis()">transform</mat-icon>
+			<button
+				mat-icon-button
+				matTooltip="{{ 'GLOBAL.INVERT_AXIS' | translate }}"
+				attr.aria-label="{{ 'GLOBAL.INVERT_AXIS' | translate }}"
+				[ngClass]="['invert-axis', 'toggled-' + isAxisInverted]"
+			>
+				<mat-icon
+					fxFlexFill
+					fxLayoutAlign="center center"
+					(click)="onClickOnInvertAxis()"
+					>transform</mat-icon
+				>
 			</button>
 		</div>
 		<div fxFlex id="matrix-area" #matrixArea>
@@ -37,21 +105,49 @@
 			</div>
 		</div>
 		<div fxFlex fxLayout="column" id="matrix-comp-right">
-			<div id="contrast" fxLayout="column" fxLayoutAlign="start center" class="screenshot-hide">
+			<div
+				id="contrast"
+				fxLayout="column"
+				fxLayoutAlign="start center"
+				class="screenshot-hide"
+			>
 				<span>Contrast</span>
-				<mat-slider color="accent" attr.aria-label="{{ 'ARIA.MATRIX.UPDATE_MATRIX_CONTRAST' | translate }}" [max]="90"
-					title="{{ 'TOOLTIPS.COMMONS.MATRIX_CONTRAST' | translate }}" [min]="0" [(ngModel)]="contrast"
-					(input)="onContrastChanged($event)" [step]="10" [vertical]="true">
+				<mat-slider
+					color="accent"
+					attr.aria-label="{{
+						'ARIA.MATRIX.UPDATE_MATRIX_CONTRAST' | translate
+					}}"
+					[max]="90"
+					title="{{ 'TOOLTIPS.COMMONS.MATRIX_CONTRAST' | translate }}"
+					[min]="0"
+					[(ngModel)]="contrast"
+					(input)="onContrastChanged($event)"
+					[step]="10"
+					[vertical]="true"
+				>
 				</mat-slider>
 			</div>
-			<div id="legend" fxFlex fxLayout="column" fxLayoutAlign="center center">
-				<span id="legend-max"  matTooltip="{{ legend.max  | toPrecision}}">{{ legend.max | toPrecision }}</span>
+			<div
+				id="legend"
+				fxFlex
+				fxLayout="column"
+				fxLayoutAlign="center center"
+			>
+				<span
+					id="legend-max"
+					matTooltip="{{ legend.max | toPrecision }}"
+					>{{ legend.max | toPrecision }}</span
+				>
 				<div id="legend-bar" fxFlex #legendBar></div>
-				<span id="legend-min"  matTooltip="{{ legend.min  | toPrecision}}">{{ legend.min | toPrecision }}</span>
+				<span
+					id="legend-min"
+					matTooltip="{{ legend.min | toPrecision }}"
+					>{{ legend.min | toPrecision }}</span
+				>
 			</div>
 		</div>
 	</div>
 	<div fxLayout="row" id="x-axis" fxLayoutAlign="center center">
-		<span title="{{xAxisLabel}}">{{ xAxisLabel }}</span>
+		<span title="{{ xAxisLabel }}">{{ xAxisLabel }}</span>
 	</div>
 </div>

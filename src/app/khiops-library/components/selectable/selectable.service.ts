@@ -1,24 +1,19 @@
-import {
-	Injectable
-} from '@angular/core';
-import {
-	Subject
-} from 'rxjs';
+import { Injectable } from "@angular/core";
+import { Subject } from "rxjs";
 
 @Injectable({
-	providedIn: 'root'
+	providedIn: "root",
 })
 export class SelectableService {
-
 	selectableDatas: {
 		selectedArea: any; // can be every component of Khiops
 	};
 
-	selectedServiceChange: Subject < any > = new Subject < any > ();
+	selectedServiceChange: Subject<any> = new Subject<any>();
 
 	constructor() {
 		this.selectableDatas = {
-			selectedArea: undefined
+			selectedArea: undefined,
 		};
 	}
 
@@ -34,5 +29,4 @@ export class SelectableService {
 	getSelectedArea() {
 		return this.selectableDatas.selectedArea;
 	}
-
 }

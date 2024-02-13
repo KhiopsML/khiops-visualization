@@ -1,10 +1,18 @@
 <div class="matrix-tooltip-comp" #matrixTooltipDiv>
 	<div *ngIf="cell" fxLayout="column" fxFlex fxLayoutAlign="start start">
-		<div class="matrix-tooltip-title" fxLayout="column" fxLayoutAlign="start start">
+		<div
+			class="matrix-tooltip-title"
+			fxLayout="column"
+			fxLayoutAlign="start start"
+		>
 			<span>{{ cell.xnamePart }} : {{ cell.xDisplayaxisPart }}</span>
 			<span>{{ cell.ynamePart }} : {{ cell.yDisplayaxisPart }}</span>
 		</div>
-		<div class="matrix-tooltip-content" fxLayout="column" fxLayoutAlign="start start">
+		<div
+			class="matrix-tooltip-content"
+			fxLayout="column"
+			fxLayoutAlign="start start"
+		>
 			<span *ngIf="cell.displayedValue.type !== 'HELLINGER'"
 				>{{ "MATRIX_MODES." + cell.displayedValue.type | translate }} =
 				{{ cell.displayedValue.value | toPrecision }}</span

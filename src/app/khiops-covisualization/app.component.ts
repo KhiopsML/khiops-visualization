@@ -31,13 +31,13 @@ export class AppComponent implements AfterViewInit {
 	appdatas: any;
 	isDarkTheme: boolean =
 		localStorage.getItem(
-			AppConfig.covisualizationCommon.GLOBAL.LS_ID + "THEME_COLOR"
+			AppConfig.covisualizationCommon.GLOBAL.LS_ID + "THEME_COLOR",
 		) === "dark"
 			? true
 			: false;
 	theme: string =
 		localStorage.getItem(
-			AppConfig.covisualizationCommon.GLOBAL.LS_ID + "THEME_COLOR"
+			AppConfig.covisualizationCommon.GLOBAL.LS_ID + "THEME_COLOR",
 		) || "light";
 
 	@ViewChild("appElement", {
@@ -55,7 +55,7 @@ export class AppComponent implements AfterViewInit {
 		private configService: ConfigService,
 		private translate: TranslateService,
 		private treenodesService: TreenodesService,
-		private element: ElementRef
+		private element: ElementRef,
 	) {
 		this.appService.initialize();
 	}
@@ -87,7 +87,7 @@ export class AppComponent implements AfterViewInit {
 				const dialogRef: MatDialogRef<ConfirmDialogComponent> =
 					this.dialog.open(ConfirmDialogComponent, config);
 				dialogRef.componentInstance.message = this.translate.get(
-					"GLOBAL.SAVE_BEFORE_QUIT"
+					"GLOBAL.SAVE_BEFORE_QUIT",
 				);
 				dialogRef.componentInstance.displayRejectBtn = true;
 
@@ -106,10 +106,10 @@ export class AppComponent implements AfterViewInit {
 				const dialogRef: MatDialogRef<ConfirmDialogComponent> =
 					this.dialog.open(ConfirmDialogComponent, config);
 				dialogRef.componentInstance.title = this.translate.get(
-					"GLOBAL.ENABLE_BETA_VERSIONS"
+					"GLOBAL.ENABLE_BETA_VERSIONS",
 				);
 				dialogRef.componentInstance.message = this.translate.get(
-					"GLOBAL.BETA_VERSIONS_WARNING"
+					"GLOBAL.BETA_VERSIONS_WARNING",
 				);
 				dialogRef
 					.afterClosed()
@@ -146,11 +146,12 @@ export class AppComponent implements AfterViewInit {
 		setTimeout(() => {
 			let themeColor =
 				localStorage.getItem(
-					AppConfig.covisualizationCommon.GLOBAL.LS_ID + "THEME_COLOR"
+					AppConfig.covisualizationCommon.GLOBAL.LS_ID +
+						"THEME_COLOR",
 				) || "light";
 			document.documentElement.setAttribute(
 				"data-color-scheme",
-				themeColor
+				themeColor,
 			);
 			this.configService.getConfig().onThemeChanged &&
 				this.configService.getConfig().onThemeChanged(themeColor);
@@ -159,13 +160,13 @@ export class AppComponent implements AfterViewInit {
 
 	initCookieConsent() {
 		const localAcceptCookies = localStorage.getItem(
-			AppConfig.covisualizationCommon.GLOBAL.LS_ID + "COOKIE_CONSENT"
+			AppConfig.covisualizationCommon.GLOBAL.LS_ID + "COOKIE_CONSENT",
 		);
 		if (localAcceptCookies !== null) {
 			this.khiopsLibraryService.initMatomo();
 			this.khiopsLibraryService.trackEvent(
 				"cookie_consent",
-				localAcceptCookies.toString()
+				localAcceptCookies.toString(),
 			);
 			this.khiopsLibraryService.enableMatomo();
 			return;
@@ -183,12 +184,12 @@ export class AppComponent implements AfterViewInit {
 			right: "50px",
 		});
 		dialogRef.componentInstance.message = this.translate.get(
-			"COOKIE_CONSENT.MESSAGE"
+			"COOKIE_CONSENT.MESSAGE",
 		);
 		dialogRef.componentInstance.displayRejectBtn = true;
 		dialogRef.componentInstance.displayCancelBtn = false;
 		dialogRef.componentInstance.confirmTranslation = this.translate.get(
-			"COOKIE_CONSENT.ALLOW"
+			"COOKIE_CONSENT.ALLOW",
 		);
 
 		this.ngzone.run(() => {
@@ -201,13 +202,13 @@ export class AppComponent implements AfterViewInit {
 					localStorage.setItem(
 						AppConfig.covisualizationCommon.GLOBAL.LS_ID +
 							"COOKIE_CONSENT",
-						acceptCookies
+						acceptCookies,
 					);
 
 					this.khiopsLibraryService.initMatomo();
 					this.khiopsLibraryService.trackEvent(
 						"cookie_consent",
-						acceptCookies
+						acceptCookies,
 					);
 					if (acceptCookies === "false") {
 						this.khiopsLibraryService.disableMatomo();

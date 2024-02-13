@@ -138,9 +138,9 @@ describe("Test Khiops Visualization sample files", () => {
 								});
 							}
 						});
-					}
+					},
 				);
-			}
+			},
 		);
 	});
 });

@@ -1,20 +1,53 @@
 <div id="distribution-graph-canvas-comp" fxLayout="column" fxFlexFill>
 	<div *ngIf="inputDatas" fxFlexFill fxLayout="column">
 		<div fxLayout="row" fxLayoutAlign="end center" class="comp-header">
-			<div fxFlex fxLayout="row" fxLayoutAlign="start center" *ngIf="!hideGraphOptions">
-				<h2 title="{{ 'TOOLTIPS.DISTRIBUTION.TITLE' | translate }}">{{ title }}</h2>
+			<div
+				fxFlex
+				fxLayout="row"
+				fxLayoutAlign="start center"
+				*ngIf="!hideGraphOptions"
+			>
+				<h2 title="{{ 'TOOLTIPS.DISTRIBUTION.TITLE' | translate }}">
+					{{ title }}
+				</h2>
 			</div>
-			<kl-legend [inputDatas]="inputDatas" [type]="'chart-1d'" [colorSet]="colorSet"></kl-legend>
-			<div class="comp-header-tools screenshot-hide" fxLayout="row" *ngIf="!hideGraphOptions">
-				<button mat-stroked-button color="primary" [matMenuTriggerFor]="graphOptionsTypes">{{ graphOptions.selected | translate }} <em>v</em></button>
+			<kl-legend
+				[inputDatas]="inputDatas"
+				[type]="'chart-1d'"
+				[colorSet]="colorSet"
+			></kl-legend>
+			<div
+				class="comp-header-tools screenshot-hide"
+				fxLayout="row"
+				*ngIf="!hideGraphOptions"
+			>
+				<button
+					mat-stroked-button
+					color="primary"
+					[matMenuTriggerFor]="graphOptionsTypes"
+				>
+					{{ graphOptions.selected | translate }} <em>v</em>
+				</button>
 				<mat-menu #graphOptionsTypes>
-					<button mat-menu-item *ngFor="let opt of graphOptions.types" (click)="changeGraphType(opt)">{{ opt | translate }}</button>
+					<button
+						mat-menu-item
+						*ngFor="let opt of graphOptions.types"
+						(click)="changeGraphType(opt)"
+					>
+						{{ opt | translate }}
+					</button>
 				</mat-menu>
 			</div>
 		</div>
-		<kl-chart-next id="{{'distribution-graph-canvas-comp-' + position}}" [chartOptions]="chartOptions"
-			[canvasIdContainer]="'distribution-chart-canvas-' + position" (selectBarIndex)="onSelectBarChanged($event)"
-			[colorSet]="colorSet" [inputDatas]="inputDatas" [activeEntries]="activeEntries"></kl-chart-next>
+		<kl-chart-next
+			id="{{ 'distribution-graph-canvas-comp-' + position }}"
+			[chartOptions]="chartOptions"
+			[canvasIdContainer]="'distribution-chart-canvas-' + position"
+			(selectBarIndex)="onSelectBarChanged($event)"
+			[colorSet]="colorSet"
+			[inputDatas]="inputDatas"
+			[activeEntries]="activeEntries"
+		></kl-chart-next>
 	</div>
 	<kl-no-data fxFlexFill *ngIf="!inputDatas"></kl-no-data>
 </div>

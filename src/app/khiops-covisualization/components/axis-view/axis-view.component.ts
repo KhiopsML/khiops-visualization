@@ -54,7 +54,7 @@ export class AxisViewComponent
 		private dimensionsDatasService: DimensionsDatasService,
 		private annotationService: AnnotationService,
 		private translate: TranslateService,
-		private snackBar: MatSnackBar
+		private snackBar: MatSnackBar,
 	) {
 		super();
 	}
@@ -86,7 +86,7 @@ export class AxisViewComponent
 			this.loadingView = false;
 
 			this.viewsLayout = this.appService.initViewsLayout(
-				this.dimensionsDatas.selectedDimensions
+				this.dimensionsDatas.selectedDimensions,
 			);
 		}, 500); // To show loader when big files
 
@@ -153,7 +153,7 @@ export class AxisViewComponent
 				duration: 4000,
 				panelClass: "warning",
 				verticalPosition: "bottom",
-			}
+			},
 		);
 	}
 
@@ -166,7 +166,7 @@ export class AxisViewComponent
 			item,
 			this.sizes,
 			event.sizes,
-			"axisView"
+			"axisView",
 		);
 
 		// Resize graph when area is resized

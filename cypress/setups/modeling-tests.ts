@@ -8,12 +8,12 @@ export function setupModelingTests(datas, testsValues) {
 	testsValues.Modeling.push("Naive Bayes");
 	testsValues.Modeling.push(datas.preparationReport.summary.database);
 	testsValues.Modeling.push(
-		datas.preparationReport.summary.targetValues?.values[0].slice(0, 10) // slice it because it's a legend text
+		datas.preparationReport.summary.targetValues?.values[0].slice(0, 10), // slice it because it's a legend text
 	);
 	if (datas.modelingReport.variablesStatistics) {
 		testsValues.Modeling.push(
 			datas.modelingReport.trainedPredictorsDetails?.R1?.selectedVariables
-				.length + " Variables"
+				.length + " Variables",
 		);
 		// test some grid coluns
 		testsValues.Modeling.push("name");
@@ -22,10 +22,10 @@ export function setupModelingTests(datas, testsValues) {
 
 		// test some grid values
 		testsValues.Modeling.push(
-			datas.modelingReport.trainedPredictorsDetails?.R1.name
+			datas.modelingReport.trainedPredictorsDetails?.R1.name,
 		);
 		testsValues.Modeling.push(
-			datas.modelingReport.trainedPredictorsDetails?.R1.level
+			datas.modelingReport.trainedPredictorsDetails?.R1.level,
 		);
 	}
 	if (
@@ -40,13 +40,13 @@ export function setupModelingTests(datas, testsValues) {
 			if (datas.preparationReport?.variablesDetailedStatistics?.R01) {
 				testsValues.Modeling.push(
 					datas.preparationReport?.variablesDetailedStatistics?.R01
-						?.dataGrid?.dimensions[0]?.partition[0][0]
+						?.dataGrid?.dimensions[0]?.partition[0][0],
 				);
 			}
 			if (datas.preparationReport?.variablesDetailedStatistics?.R001) {
 				testsValues.Modeling.push(
 					datas.preparationReport?.variablesDetailedStatistics?.R001
-						?.dataGrid?.dimensions[0]?.partition[0][0]
+						?.dataGrid?.dimensions[0]?.partition[0][0],
 				);
 			}
 		} else if (

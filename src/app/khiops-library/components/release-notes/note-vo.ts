@@ -1,5 +1,4 @@
 export class NoteVO {
-
 	id: number;
 	name: string;
 	body: string;
@@ -13,5 +12,4 @@ export class NoteVO {
 		this.prerelease = data.prerelease;
 		this.published_at = data.published_at;
 	}
-
 }

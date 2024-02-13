@@ -1,36 +1,111 @@
 <div id="coocurence-matrix-comp" fxFlexFill fxLayout="column">
-	<mat-tab-group color="warn" fxFlexFill [@.disabled]="true" [selectedIndex]="0" fxLayout="column" color="primary"
-		[hidden]="!preparation2dDatas.matrixDatas" (selectedTabChange)="onSelectedMatrixTabChanged($event)">
+	<mat-tab-group
+		color="warn"
+		fxFlexFill
+		[@.disabled]="true"
+		[selectedIndex]="0"
+		fxLayout="column"
+		color="primary"
+		[hidden]="!preparation2dDatas.matrixDatas"
+		(selectedTabChange)="onSelectedMatrixTabChanged($event)"
+	>
 		<mat-tab label="{{ 'GLOBAL.MATRIX' | translate }}">
 			<ng-template matTabContent>
-				<div fxFlexFill fxLayout="column" [ngClass]="{'fullscreen': isFullscreen}">
-					<div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
+				<div
+					fxFlexFill
+					fxLayout="column"
+					[ngClass]="{ fullscreen: isFullscreen }"
+				>
+					<div
+						fxLayout="row"
+						fxLayoutAlign="start center"
+						class="comp-header"
+					>
 						<div fxFlex fxLayout="row" fxLayoutAlign="start center">
-							<div fxFlex fxLayout="row" fxLayoutAlign="start center">
-								<h2 title="{{ 'TOOLTIPS.PREPARATION_2D.COOCURENCE_MATRIX.TITLE' | translate }}">
-									{{ 'GLOBAL.COOCURENCE' | translate }} </h2>
-								<button class="button-accent" mat-stroked-button color="accent" [matMenuTriggerFor]="matrixModesTypes">{{ matrixModes.selected && matrixModes.selected.title | translate }} <em>v</em></button>
+							<div
+								fxFlex
+								fxLayout="row"
+								fxLayoutAlign="start center"
+							>
+								<h2
+									title="{{
+										'TOOLTIPS.PREPARATION_2D.COOCURENCE_MATRIX.TITLE'
+											| translate
+									}}"
+								>
+									{{ "GLOBAL.COOCURENCE" | translate }}
+								</h2>
+								<button
+									class="button-accent"
+									mat-stroked-button
+									color="accent"
+									[matMenuTriggerFor]="matrixModesTypes"
+								>
+									{{
+										matrixModes.selected &&
+											matrixModes.selected.title
+											| translate
+									}}
+									<em>v</em>
+								</button>
 								<mat-menu #matrixModesTypes>
-									<button mat-menu-item *ngFor="let opt of matrixModes.types" (click)="changeMatrixMode(opt)">{{ opt.title | translate }}</button>
+									<button
+										mat-menu-item
+										*ngFor="let opt of matrixModes.types"
+										(click)="changeMatrixMode(opt)"
+									>
+										{{ opt.title | translate }}
+									</button>
 								</mat-menu>
 							</div>
-							<div fxLayout="row" fxLayoutAlign="start center" *ngIf="matrixTargets.selected">
-								<h2>{{ 'GLOBAL.TARGET' | translate }} </h2>
-								<button class="button-accent" mat-stroked-button color="accent" [matMenuTriggerFor]="matrixSelectTargets">{{ matrixTargets.selected }} <em>v</em></button>
+							<div
+								fxLayout="row"
+								fxLayoutAlign="start center"
+								*ngIf="matrixTargets.selected"
+							>
+								<h2>{{ "GLOBAL.TARGET" | translate }}</h2>
+								<button
+									class="button-accent"
+									mat-stroked-button
+									color="accent"
+									[matMenuTriggerFor]="matrixSelectTargets"
+								>
+									{{ matrixTargets.selected }} <em>v</em>
+								</button>
 								<mat-menu #matrixSelectTargets>
-									<button mat-menu-item *ngFor="let target of matrixTargets.targets" (click)="changeMatrixTarget(target)">{{ target }}</button>
+									<button
+										mat-menu-item
+										*ngFor="
+											let target of matrixTargets.targets
+										"
+										(click)="changeMatrixTarget(target)"
+									>
+										{{ target }}
+									</button>
 								</mat-menu>
 							</div>
-							<kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">
+							<kl-btn-fullscreen
+								(toggleFullscreen)="onToggleFullscreen($event)"
+							>
 							</kl-btn-fullscreen>
 						</div>
 					</div>
-					<kl-matrix-canvas #matrixCanvas fxFlex fxLayout="row" (cellSelected)="onCellSelected($event)"
-						[id]="'coocurence-matrix-comp'" [selectedCell]="preparation2dDatas.selectedCell"
-						[isAxisInverted]="preparation2dDatas.isAxisInverted" [minMaxValues]="minMaxValues"
-						(matrixAxisInverted)="onMatrixAxisInverted()" [inputDatas]="preparation2dDatas.matrixDatas"
-						[graphTargets]="matrixTargets.targets" [graphType]="matrixOptions.selected"
-						[graphMode]="matrixModes.selected" [graphTarget]="matrixTargets.selected">
+					<kl-matrix-canvas
+						#matrixCanvas
+						fxFlex
+						fxLayout="row"
+						(cellSelected)="onCellSelected($event)"
+						[id]="'coocurence-matrix-comp'"
+						[selectedCell]="preparation2dDatas.selectedCell"
+						[isAxisInverted]="preparation2dDatas.isAxisInverted"
+						[minMaxValues]="minMaxValues"
+						(matrixAxisInverted)="onMatrixAxisInverted()"
+						[inputDatas]="preparation2dDatas.matrixDatas"
+						[graphTargets]="matrixTargets.targets"
+						[graphType]="matrixOptions.selected"
+						[graphMode]="matrixModes.selected"
+						[graphTarget]="matrixTargets.selected"
+					>
 					</kl-matrix-canvas>
 				</div>
 			</ng-template>
@@ -38,27 +113,47 @@
 		<mat-tab label="{{ 'GLOBAL.CELLS' | translate }}">
 			<ng-template matTabContent>
 				<div class="variables-list-container" fxFlexFill>
-					<kl-ag-grid id="coocurence-matrix-cells-container" class="variables-list"
-						[showLevelDistribution]="false" [showSearch]="false" [displayCount]="false"
-						[selectedVariable]="preparation2dDatas.selectedCell" [smallTitle]="true"
-						(selectListItem)="onSelectCellRowChanged($event)" [showLineSelection]="true"
-						[showColumnsSelection]="false" [rowHeight]="30" [inputDatas]="matrixCells.values"
-						[title]="matrixCells.title" [displayedColumns]="matrixCells.displayedColumns">
+					<kl-ag-grid
+						id="coocurence-matrix-cells-container"
+						class="variables-list"
+						[showLevelDistribution]="false"
+						[showSearch]="false"
+						[displayCount]="false"
+						[selectedVariable]="preparation2dDatas.selectedCell"
+						[smallTitle]="true"
+						(selectListItem)="onSelectCellRowChanged($event)"
+						[showLineSelection]="true"
+						[showColumnsSelection]="false"
+						[rowHeight]="30"
+						[inputDatas]="matrixCells.values"
+						[title]="matrixCells.title"
+						[displayedColumns]="matrixCells.displayedColumns"
+					>
 					</kl-ag-grid>
 				</div>
 			</ng-template>
 		</mat-tab>
 		<mat-tab disabled>
 			<ng-template mat-tab-label>
-				<mat-button-toggle-group id="matrix-option-toggle" #group="matButtonToggleGroup"
-					[value]="matrixOptions.selected">
-					<mat-button-toggle *ngFor="let opt of matrixOptions.types" [value]="opt"
-						title="{{ 'TOOLTIPS.COMMONS.MATRIX_MODE' | translate }}" (click)="changeMatrixType(opt)">
+				<mat-button-toggle-group
+					id="matrix-option-toggle"
+					#group="matButtonToggleGroup"
+					[value]="matrixOptions.selected"
+				>
+					<mat-button-toggle
+						*ngFor="let opt of matrixOptions.types"
+						[value]="opt"
+						title="{{ 'TOOLTIPS.COMMONS.MATRIX_MODE' | translate }}"
+						(click)="changeMatrixType(opt)"
+					>
 						<span>{{ opt | translate }}</span>
 					</mat-button-toggle>
 				</mat-button-toggle-group>
 			</ng-template>
 		</mat-tab>
 	</mat-tab-group>
-	<kl-no-data fxFlexFill [hidden]="preparation2dDatas.matrixDatas"></kl-no-data>
+	<kl-no-data
+		fxFlexFill
+		[hidden]="preparation2dDatas.matrixDatas"
+	></kl-no-data>
 </div>

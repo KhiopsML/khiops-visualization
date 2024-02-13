@@ -1,43 +1,108 @@
 <div class="matrix-container-comp" fxFlexFill>
-	<as-split [gutterSize]="7" direction="vertical" (dragEnd)="onSplitDragEnd($event, sizeId)">
-		<as-split-area [size]="sizes[sizeId][0]" order="1" [visible]="viewsLayout.isDimensionsChecked">
-			<app-selected-clusters [selectedNodes]="dimensionsDatas.selectedNodes">
+	<as-split
+		[gutterSize]="7"
+		direction="vertical"
+		(dragEnd)="onSplitDragEnd($event, sizeId)"
+	>
+		<as-split-area
+			[size]="sizes[sizeId][0]"
+			order="1"
+			[visible]="viewsLayout.isDimensionsChecked"
+		>
+			<app-selected-clusters
+				[selectedNodes]="dimensionsDatas.selectedNodes"
+			>
 			</app-selected-clusters>
 		</as-split-area>
-		<as-split-area class="matrix-container-comp-wrapper" [size]="sizes[sizeId][1]" order="2"
-			[visible]="viewsLayout.isCoocurenceChecked">
-			<div fxFlexFill fxLayout="column" class="selected-area-inner-div" [ngClass]="{'fullscreen': isFullscreen}">
-				<div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
+		<as-split-area
+			class="matrix-container-comp-wrapper"
+			[size]="sizes[sizeId][1]"
+			order="2"
+			[visible]="viewsLayout.isCoocurenceChecked"
+		>
+			<div
+				fxFlexFill
+				fxLayout="column"
+				class="selected-area-inner-div"
+				[ngClass]="{ fullscreen: isFullscreen }"
+			>
+				<div
+					fxLayout="row"
+					fxLayoutAlign="start center"
+					class="comp-header"
+				>
 					<div fxFlex fxLayout="row" fxLayoutAlign="start center">
 						<div fxFlex fxLayout="row" fxLayoutAlign="start center">
-							<button class="button-accent" mat-stroked-button color="accent" [matMenuTriggerFor]="matrixModesTypes">{{ matrixModes.selected.title | translate }} <em>v</em></button>
+							<button
+								class="button-accent"
+								mat-stroked-button
+								color="accent"
+								[matMenuTriggerFor]="matrixModesTypes"
+							>
+								{{ matrixModes.selected.title | translate }}
+								<em>v</em>
+							</button>
 							<mat-menu #matrixModesTypes>
-								<button mat-menu-item *ngFor="let opt of matrixModes.types" (click)="changeMatrixMode(opt)">{{ opt.title | translate }}</button>
+								<button
+									mat-menu-item
+									*ngFor="let opt of matrixModes.types"
+									(click)="changeMatrixMode(opt)"
+								>
+									{{ opt.title | translate }}
+								</button>
 							</mat-menu>
 						</div>
-						<mat-checkbox class="matrix-conditionalOnContext-checkbox"
+						<mat-checkbox
+							class="matrix-conditionalOnContext-checkbox"
 							*ngIf="dimensionsDatas.contextDimensionCount"
-							[checked]="dimensionsDatas.conditionalOnContext" (change)="changeConditionalOnContext()">
-							{{ 'GLOBAL.CONDITIONAL_ON_CONTEXT' | translate }}</mat-checkbox>
-						<mat-button-toggle-group class="matrix-option-toggle" #group="matButtonToggleGroup"
-							[value]="matrixOptions.selected">
-							<mat-button-toggle *ngFor="let opt of matrixOptions.types" [value]="opt"
-								title="{{ 'TOOLTIPS.COMMONS.MATRIX_MODE' | translate }}"
-								(click)="changeMatrixType(opt)">
+							[checked]="dimensionsDatas.conditionalOnContext"
+							(change)="changeConditionalOnContext()"
+						>
+							{{
+								"GLOBAL.CONDITIONAL_ON_CONTEXT" | translate
+							}}</mat-checkbox
+						>
+						<mat-button-toggle-group
+							class="matrix-option-toggle"
+							#group="matButtonToggleGroup"
+							[value]="matrixOptions.selected"
+						>
+							<mat-button-toggle
+								*ngFor="let opt of matrixOptions.types"
+								[value]="opt"
+								title="{{
+									'TOOLTIPS.COMMONS.MATRIX_MODE' | translate
+								}}"
+								(click)="changeMatrixType(opt)"
+							>
 								<span>{{ opt | translate }}</span>
 							</mat-button-toggle>
 						</mat-button-toggle-group>
-						<kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">
+						<kl-btn-fullscreen
+							(toggleFullscreen)="onToggleFullscreen($event)"
+						>
 						</kl-btn-fullscreen>
 					</div>
 				</div>
-				<kl-matrix-canvas #matrixCanvas fxFlex fxLayout="row" [id]="'matrix-container-comp-wrapper'"
-					[attr.id]="'matrix-container-comp-wrapper'" (cellSelected)="onCellSelected($event)"
-					[isAxisInverted]="dimensionsDatas.isAxisInverted" (matrixAxisInverted)="onMatrixAxisInverted()"
-					[contextSelection]="dimensionsDatas.contextSelection" [graphMode]="matrixModes.selected"
-					[conditionalOnContext]="dimensionsDatas.conditionalOnContext"
-					[(contrast)]="dimensionsDatas.matrixContrast" [selectedNodes]="dimensionsDatas.selectedNodes"
-					[inputDatas]="dimensionsDatas.matrixDatas" [graphType]="matrixOptions.selected">
+				<kl-matrix-canvas
+					#matrixCanvas
+					fxFlex
+					fxLayout="row"
+					[id]="'matrix-container-comp-wrapper'"
+					[attr.id]="'matrix-container-comp-wrapper'"
+					(cellSelected)="onCellSelected($event)"
+					[isAxisInverted]="dimensionsDatas.isAxisInverted"
+					(matrixAxisInverted)="onMatrixAxisInverted()"
+					[contextSelection]="dimensionsDatas.contextSelection"
+					[graphMode]="matrixModes.selected"
+					[conditionalOnContext]="
+						dimensionsDatas.conditionalOnContext
+					"
+					[(contrast)]="dimensionsDatas.matrixContrast"
+					[selectedNodes]="dimensionsDatas.selectedNodes"
+					[inputDatas]="dimensionsDatas.matrixDatas"
+					[graphType]="matrixOptions.selected"
+				>
 				</kl-matrix-canvas>
 			</div>
 		</as-split-area>

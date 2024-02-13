@@ -7,7 +7,7 @@ export function isExplanatoryAnalysis(appDatas): boolean {
 			appDatas.preparationReport?.variablesDetailedStatistics?.R01;
 		if (detailedVar && detailedVar.dataGrid) {
 			const detailedVarTypes = detailedVar.dataGrid.dimensions.map(
-				(e) => e.partitionType
+				(e) => e.partitionType,
 			);
 			if (
 				detailedVar.dataGrid.dimensions.length > 1 &&

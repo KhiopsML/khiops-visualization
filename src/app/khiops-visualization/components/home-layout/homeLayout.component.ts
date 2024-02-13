@@ -5,73 +5,36 @@ import {
 	ViewChild,
 	HostListener,
 	Input,
-	ElementRef
-} from '@angular/core';
+	ElementRef,
+} from "@angular/core";
 
-import {
-	FileLoaderComponent
-} from '@khiops-library/components/file-loader/file-loader.component';
-import {
-	AppConfig
-} from 'src/environments/environment';
-import {
-	TranslateService
-} from '@ngstack/translate';
-import {
-	AppService
-} from '@khiops-visualization/providers/app.service';
-import {
-	DistributionDatasService
-} from '@khiops-visualization/providers/distribution-datas.service';
-import {
-	ModelingDatasService
-} from '@khiops-visualization/providers/modeling-datas.service';
-import {
-	EvaluationDatasService
-} from '@khiops-visualization/providers/evaluation-datas.service';
-import {
-	PreparationDatasService
-} from '@khiops-visualization/providers/preparation-datas.service';
-import {
-	SelectableService
-} from '@khiops-library/components/selectable/selectable.service';
-import {
-	Preparation2dDatasService
-} from '@khiops-visualization/providers/preparation2d-datas.service';
-import {
-	MatSnackBar
-} from '@angular/material/snack-bar';
-import {
-	FileSaverService
-} from '@khiops-library/providers/file-saver.service';
-import {
-	SaveService
-} from '@khiops-visualization/providers/save.service';
-import {
-	MatDialog,
-} from '@angular/material/dialog';
-import {
-	TreePreparationDatasService
-} from '@khiops-visualization/providers/tree-preparation-datas.service';
-import {
-	KhiopsLibraryService
-} from '@khiops-library/providers/khiops-library.service';
-import pjson from 'package.json';
-import {
-	ConfigService
-} from '@khiops-library/providers/config.service';
-import {
-	UtilsService
-} from '@khiops-library/providers/utils.service';
+import { FileLoaderComponent } from "@khiops-library/components/file-loader/file-loader.component";
+import { AppConfig } from "src/environments/environment";
+import { TranslateService } from "@ngstack/translate";
+import { AppService } from "@khiops-visualization/providers/app.service";
+import { DistributionDatasService } from "@khiops-visualization/providers/distribution-datas.service";
+import { ModelingDatasService } from "@khiops-visualization/providers/modeling-datas.service";
+import { EvaluationDatasService } from "@khiops-visualization/providers/evaluation-datas.service";
+import { PreparationDatasService } from "@khiops-visualization/providers/preparation-datas.service";
+import { SelectableService } from "@khiops-library/components/selectable/selectable.service";
+import { Preparation2dDatasService } from "@khiops-visualization/providers/preparation2d-datas.service";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { FileSaverService } from "@khiops-library/providers/file-saver.service";
+import { SaveService } from "@khiops-visualization/providers/save.service";
+import { MatDialog } from "@angular/material/dialog";
+import { TreePreparationDatasService } from "@khiops-visualization/providers/tree-preparation-datas.service";
+import { KhiopsLibraryService } from "@khiops-library/providers/khiops-library.service";
+import pjson from "package.json";
+import { ConfigService } from "@khiops-library/providers/config.service";
+import { UtilsService } from "@khiops-library/providers/utils.service";
 
 @Component({
-	selector: 'app-home-layout',
-	templateUrl: './homeLayout.component.html',
-	styleUrls: ['./homeLayout.component.scss'],
-	encapsulation: ViewEncapsulation.None
+	selector: "app-home-layout",
+	templateUrl: "./homeLayout.component.html",
+	styleUrls: ["./homeLayout.component.scss"],
+	encapsulation: ViewEncapsulation.None,
 })
 export class HomeLayoutComponent implements OnInit {
-
 	showProjectTab: boolean;
 
 	@Input()
@@ -82,25 +45,32 @@ export class HomeLayoutComponent implements OnInit {
 		this.onFileLoaderDataChanged(datas);
 	}
 
-	@ViewChild('appProjectView', {
-		static: false
-	}) appProjectView: ElementRef < HTMLElement > ;
+	@ViewChild("appProjectView", {
+		static: false,
+	})
+	appProjectView: ElementRef<HTMLElement>;
 
 	activeTab = AppConfig.visualizationCommon.HOME.ACTIVE_TAB_INDEX;
-	@ViewChild('fileLoader', {
-		static: false
-	}) fileLoader: FileLoaderComponent;
+	@ViewChild("fileLoader", {
+		static: false,
+	})
+	fileLoader: FileLoaderComponent;
 	appTitle: string;
 
 	onFileLoaderDataChangedCb: Function;
 	appVersion: string;
-	appName = 'khiops-visualization';
+	appName = "khiops-visualization";
 	opened = false;
 	public selectedTab: Object | undefined;
 	currentDatas: any;
 	isCompatibleJson: boolean;
-	currentChannel = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'CHANNEL') || 'latest';
-	showReleaseNotes = localStorage.getItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SHOW_RELEASE_NOTES');
+	currentChannel =
+		localStorage.getItem(
+			AppConfig.visualizationCommon.GLOBAL.LS_ID + "CHANNEL",
+		) || "latest";
+	showReleaseNotes = localStorage.getItem(
+		AppConfig.visualizationCommon.GLOBAL.LS_ID + "SHOW_RELEASE_NOTES",
+	);
 
 	isLargeScreen: boolean;
 
@@ -119,15 +89,15 @@ export class HomeLayoutComponent implements OnInit {
 		private evaluationDatasService: EvaluationDatasService,
 		private preparationDatasService: PreparationDatasService,
 		private treePreparationDatasService: TreePreparationDatasService,
-		private preparation2dDatasService: Preparation2dDatasService) {
-
+		private preparation2dDatasService: Preparation2dDatasService,
+	) {
 		if (pjson) {
 			this.appTitle = pjson.title.visualization;
 			this.appVersion = pjson.version;
 		}
 	}
 
-	@HostListener('window:resize', ['$event'])
+	@HostListener("window:resize", ["$event"])
 	sizeChange() {
 		this.isLargeScreen = window.innerWidth > 1400; // TODO put it into conf
 	}
@@ -139,8 +109,13 @@ export class HomeLayoutComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.onFileLoaderDataChangedCb = obj => this.onFileLoaderDataChanged(obj);
-		this.khiopsLibraryService.trackEvent('page_view', 'visit', this.appVersion);
+		this.onFileLoaderDataChangedCb = (obj) =>
+			this.onFileLoaderDataChanged(obj);
+		this.khiopsLibraryService.trackEvent(
+			"page_view",
+			"visit",
+			this.appVersion,
+		);
 	}
 
 	ngAfterViewInit() {
@@ -165,9 +140,8 @@ export class HomeLayoutComponent implements OnInit {
 		this.appService.setFileDatas(datas);
 		if (datas && !UtilsService.isEmpty(datas)) {
 			this.initializeHome(datas);
-			this.activeTab = 0
+			this.activeTab = 0;
 		}
-
 	}
 
 	initializeHome(datas) {
@@ -178,15 +152,23 @@ export class HomeLayoutComponent implements OnInit {
 		}
 
 		if (!this.isCompatibleJson) {
-			this.snackBar.open(this.translate.get('SNACKS.OPEN_FILE_ERROR'), undefined, {
-				duration: 400000,
-				panelClass: 'error'
-			});
+			this.snackBar.open(
+				this.translate.get("SNACKS.OPEN_FILE_ERROR"),
+				undefined,
+				{
+					duration: 400000,
+					panelClass: "error",
+				},
+			);
 		} else {
-			this.snackBar.open(this.translate.get('SNACKS.DATAS_LOADED'), undefined, {
-				duration: 2000,
-				panelClass: 'success'
-			});
+			this.snackBar.open(
+				this.translate.get("SNACKS.DATAS_LOADED"),
+				undefined,
+				{
+					duration: 2000,
+					panelClass: "success",
+				},
+			);
 		}
 
 		this.preparationDatasService.initialize();
@@ -197,8 +179,7 @@ export class HomeLayoutComponent implements OnInit {
 		this.modelingDatasService.initialize();
 
 		// @ts-ignore
-		this.appProjectView && this.appProjectView.initialize()
-
+		this.appProjectView && this.appProjectView.initialize();
 	}
 
 	reloadView() {
@@ -212,7 +193,10 @@ export class HomeLayoutComponent implements OnInit {
 	}
 
 	setChannel(channel) {
-		localStorage.setItem(AppConfig.visualizationCommon.GLOBAL.LS_ID + 'CHANNEL', channel);
+		localStorage.setItem(
+			AppConfig.visualizationCommon.GLOBAL.LS_ID + "CHANNEL",
+			channel,
+		);
 		this.currentChannel = channel;
 	}
 
@@ -233,12 +217,14 @@ export class HomeLayoutComponent implements OnInit {
 
 	save() {
 		this.dialogRef.closeAll();
-		this.fileSaverService.save(this.appName, this.saveService.constructDatasToSave());
+		this.fileSaverService.save(
+			this.appName,
+			this.saveService.constructDatasToSave(),
+		);
 	}
 
 	saveAs() {
 		this.dialogRef.closeAll();
 		this.fileSaverService.saveAs(this.saveService.constructDatasToSave());
 	}
-
 }

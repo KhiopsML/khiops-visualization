@@ -1,10 +1,7 @@
-import { TYPES } from '@khiops-library/enum/types';
-import {
-	UtilsService
-} from '@khiops-library/providers/utils.service';
+import { TYPES } from "@khiops-library/enum/types";
+import { UtilsService } from "@khiops-library/providers/utils.service";
 
 export class VariableVO {
-
 	_id: string;
 	rank: string;
 	name: string;
@@ -23,7 +20,6 @@ export class VariableVO {
 	targetParts: number;
 
 	constructor(object, detailedDatas) {
-
 		// Generate id for grid
 		this._id = object.name;
 
@@ -37,7 +33,8 @@ export class VariableVO {
 		this.type = object.type || undefined;
 		this.mode = object.mode;
 		if (this.type === TYPES.CATEGORICAL && detailedDatas) {
-			this.modeCoverage = this.computeModeCoverage(detailedDatas) || undefined;
+			this.modeCoverage =
+				this.computeModeCoverage(detailedDatas) || undefined;
 		} else {
 			this.modeCoverage = undefined;
 		}
@@ -49,16 +46,19 @@ export class VariableVO {
 			this.missingNumber = object.missingNumber || 0;
 		} else {
 			// Missing number can be 0 or undefined for categorical variables #140
-			this.missingNumber = object.missingNumber !== undefined ? object.missingNumber : undefined;
+			this.missingNumber =
+				object.missingNumber !== undefined
+					? object.missingNumber
+					: undefined;
 		}
 		this.derivationRule = object.derivationRule || undefined;
-
 	}
 
 	computeModeCoverage(detailedDatas) {
 		const modeIndex = detailedDatas.inputValues.values.indexOf(this.mode);
-		const modeCoverage = detailedDatas.inputValues.frequencies[modeIndex] / UtilsService.arraySum(detailedDatas.inputValues.frequencies);
+		const modeCoverage =
+			detailedDatas.inputValues.frequencies[modeIndex] /
+			UtilsService.arraySum(detailedDatas.inputValues.frequencies);
 		return modeCoverage;
 	}
-
 }

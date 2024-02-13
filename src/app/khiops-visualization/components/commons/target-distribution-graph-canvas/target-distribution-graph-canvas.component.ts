@@ -4,48 +4,32 @@ import {
 	OnInit,
 	EventEmitter,
 	NgZone,
-	Output
-} from '@angular/core';
-import {
-	SelectableService
-} from '@khiops-library/components/selectable/selectable.service';
-import {
-	KhiopsLibraryService
-} from '@khiops-library/providers/khiops-library.service';
-import {
-	ScrollableGraphCanvasComponent
-} from '@khiops-library/components/scrollable-graph-canvas/scrollable-graph-canvas.component';
-import _ from 'lodash';
-import {
-	TranslateService
-} from '@ngstack/translate';
-import {
-	ToPrecisionPipe
-} from '@khiops-library/pipes/toPrecision.pipe';
-import {
-	ChartColorsSetI
-} from '@khiops-library/interfaces/chart-colors-set';
-import {
-	ChartOptions
-} from 'chart.js';
-import {
-	ConfigService
-} from '@khiops-library/providers/config.service';
-import {
-	ResizedEvent
-} from 'angular-resize-event';
-import { TYPES } from '@khiops-library/enum/types';
-import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
-import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
+	Output,
+} from "@angular/core";
+import { SelectableService } from "@khiops-library/components/selectable/selectable.service";
+import { KhiopsLibraryService } from "@khiops-library/providers/khiops-library.service";
+import { ScrollableGraphCanvasComponent } from "@khiops-library/components/scrollable-graph-canvas/scrollable-graph-canvas.component";
+import _ from "lodash";
+import { TranslateService } from "@ngstack/translate";
+import { ToPrecisionPipe } from "@khiops-library/pipes/toPrecision.pipe";
+import { ChartColorsSetI } from "@khiops-library/interfaces/chart-colors-set";
+import { ChartOptions } from "chart.js";
+import { ConfigService } from "@khiops-library/providers/config.service";
+import { ResizedEvent } from "angular-resize-event";
+import { TYPES } from "@khiops-library/enum/types";
+import { ChartDatasVO } from "@khiops-library/model/chart-datas-vo";
+import { ChartToggleValuesI } from "@khiops-visualization/interfaces/chart-toggle-values";
 
 @Component({
-	selector: 'app-target-distribution-graph-canvas',
-	templateUrl: './target-distribution-graph-canvas.component.html',
-	styleUrls: ['./target-distribution-graph-canvas.component.scss'],
-	providers: [ToPrecisionPipe]
+	selector: "app-target-distribution-graph-canvas",
+	templateUrl: "./target-distribution-graph-canvas.component.html",
+	styleUrls: ["./target-distribution-graph-canvas.component.scss"],
+	providers: [ToPrecisionPipe],
 })
-export class TargetDistributionGraphCanvasComponent extends ScrollableGraphCanvasComponent implements OnInit {
-
+export class TargetDistributionGraphCanvasComponent
+	extends ScrollableGraphCanvasComponent
+	implements OnInit
+{
 	@Input() position = 0;
 	@Input() inputDatas: ChartDatasVO = undefined;
 	@Input() titleTooltip: string;
@@ -58,18 +42,17 @@ export class TargetDistributionGraphCanvasComponent extends ScrollableGraphCanva
 
 	view: any = undefined; // managed into ScrollableGraphComponent
 
-	@Output() graphTypeChanged: EventEmitter < any > = new EventEmitter();
-	@Output() targetDistributionGraphDisplayedValuesChanged: EventEmitter < any > = new EventEmitter();
-	@Output() selectedItemChanged: EventEmitter < any > = new EventEmitter();
+	@Output() graphTypeChanged: EventEmitter<any> = new EventEmitter();
+	@Output() targetDistributionGraphDisplayedValuesChanged: EventEmitter<any> =
+		new EventEmitter();
+	@Output() selectedItemChanged: EventEmitter<any> = new EventEmitter();
 
-	componentType = 'ndBarChart'; // needed to copy datas
+	componentType = "ndBarChart"; // needed to copy datas
 
 	colorSet: ChartColorsSetI;
 	graphOptions = {
-		types: [
-			TYPES.PROBABILITIES, TYPES.LIFT
-		],
-		selected: undefined
+		types: [TYPES.PROBABILITIES, TYPES.LIFT],
+		selected: undefined,
 	};
 	hideGraph: boolean;
 	initialViewCheck = false;
@@ -84,21 +67,28 @@ export class TargetDistributionGraphCanvasComponent extends ScrollableGraphCanva
 
 	constructor(
 		public selectableService: SelectableService,
-		private translate: TranslateService, private toPrecision: ToPrecisionPipe,
+		private translate: TranslateService,
+		private toPrecision: ToPrecisionPipe,
 		private khiopsLibraryService: KhiopsLibraryService,
 		public ngzone: NgZone,
-		public configService: ConfigService) {
-
+		public configService: ConfigService,
+	) {
 		super(selectableService, ngzone, configService);
 		// Needed for scroll component
-		this.maxScale = this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_GRAPH_SCALE;
-		this.minScale = this.khiopsLibraryService.getAppConfig().common.GLOBAL.MIN_GRAPH_SCALE;
+		this.maxScale =
+			this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_GRAPH_SCALE;
+		this.minScale =
+			this.khiopsLibraryService.getAppConfig().common.GLOBAL.MIN_GRAPH_SCALE;
 
-		this.graphOptions.selected = localStorage.getItem(this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID + 'TARGET_DISTRIBUTION_GRAPH_OPTION') || this.graphOptions.types[0];
+		this.graphOptions.selected =
+			localStorage.getItem(
+				this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
+					"TARGET_DISTRIBUTION_GRAPH_OPTION",
+			) || this.graphOptions.types[0];
 
 		this.colorSet = this.khiopsLibraryService.getGraphColorSet()[1];
 		this.hideGraph = true;
-		this.buttonTitle = this.translate.get('GLOBAL.VALUES');
+		this.buttonTitle = this.translate.get("GLOBAL.VALUES");
 
 		// Override tooltip infos
 		this.chartOptions = {
@@ -107,30 +97,38 @@ export class TargetDistributionGraphCanvasComponent extends ScrollableGraphCanva
 					callbacks: {
 						beforeLabel: (items: any) => {
 							if (items && items.dataset) {
-								return this.toPrecision.transform(items.dataset.extra[items.dataIndex].extra.value);
+								return this.toPrecision.transform(
+									items.dataset.extra[items.dataIndex].extra
+										.value,
+								);
 							}
 						},
 						afterLabel: (items: any) => {
 							if (items && items.dataset) {
-								let value = this.toPrecision.transform(items.dataset.data[items.dataIndex]);
-								if (this.graphOptions.selected === TYPES.PROBABILITIES) {
-									value = value + '%';
+								let value = this.toPrecision.transform(
+									items.dataset.data[items.dataIndex],
+								);
+								if (
+									this.graphOptions.selected ===
+									TYPES.PROBABILITIES
+								) {
+									value = value + "%";
 								}
 								return value;
 							}
-						}
-					}
-				}
-			}
+						},
+					},
+				},
+			},
 		};
-
 	}
 
 	ngOnInit() {
-		this.graphIdContainer = 'target-distribution-graph-canvas-comp-' + this.position;
-		this.title = this.title || this.translate.get('GLOBAL.TARGET_DISTRIBUTION');
+		this.graphIdContainer =
+			"target-distribution-graph-canvas-comp-" + this.position;
+		this.title =
+			this.title || this.translate.get("GLOBAL.TARGET_DISTRIBUTION");
 	}
-
 
 	onResized(event: ResizedEvent) {
 		this.isSmallDiv = event?.newRect?.width < 600;
@@ -155,14 +153,19 @@ export class TargetDistributionGraphCanvasComponent extends ScrollableGraphCanva
 
 	changeGraphType(type: string) {
 		// this.khiopsLibraryService.trackEvent('click', 'target_distribution_graph_type', type);
-		localStorage.setItem(this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID + 'TARGET_DISTRIBUTION_GRAPH_OPTION', type);
+		localStorage.setItem(
+			this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
+				"TARGET_DISTRIBUTION_GRAPH_OPTION",
+			type,
+		);
 
 		this.graphOptions.selected = type;
 		this.graphTypeChanged.emit(type);
 	}
 
 	onSelectToggleButtonChanged(displayedValues: ChartToggleValuesI) {
-		this.targetDistributionGraphDisplayedValuesChanged.emit(displayedValues);
+		this.targetDistributionGraphDisplayedValuesChanged.emit(
+			displayedValues,
+		);
 	}
-
 }

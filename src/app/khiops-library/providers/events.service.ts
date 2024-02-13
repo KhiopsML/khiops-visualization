@@ -1,12 +1,11 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: "root",
 })
 export class EventsService {
-
 	clickOpenFile: EventEmitter<any> = new EventEmitter<any>();
-	customEvent: EventEmitter<string> = new EventEmitter<string>()
+	customEvent: EventEmitter<string> = new EventEmitter<string>();
 
 	onClickOpenFile() {
 		this.clickOpenFile.emit();
@@ -15,5 +14,4 @@ export class EventsService {
 	onCustomEvent(eventName) {
 		this.customEvent.emit(eventName);
 	}
-
 }

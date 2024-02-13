@@ -35,6 +35,6 @@ Cypress.Commands.add("initViews", () => {
 
 	window.localStorage.setItem(
 		"KHIOPS_COVISUALIZATION_VIEWS_LAYOUT",
-		JSON.stringify(viewsLayout)
+		JSON.stringify(viewsLayout),
 	);
 });

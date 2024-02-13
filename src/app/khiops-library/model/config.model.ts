@@ -1,5 +1,4 @@
 export class ConfigModel {
-
 	showProjectTab?: boolean;
 	appSource: string;
 	onFileOpen: Function;
@@ -7,5 +6,4 @@ export class ConfigModel {
 	onCopyImage: Function;
 	onThemeChanged: Function;
 	onReadFile: Function;
-
 }

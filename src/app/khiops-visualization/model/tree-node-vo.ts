@@ -1,9 +1,6 @@
-import {
-	UtilsService
-} from '@khiops-library/providers/utils.service';
+import { UtilsService } from "@khiops-library/providers/utils.service";
 
 export class TreeNodeVO {
-
 	id: string;
 	nodeId: string;
 	_id: string;
@@ -15,8 +12,8 @@ export class TreeNodeVO {
 	childNodes: [];
 	partition: [];
 	targetValues: {
-		frequencies: number[],
-		values: string[]
+		frequencies: number[];
+		values: string[];
 	};
 	children: TreeNodeVO[];
 	color: string;
@@ -27,23 +24,22 @@ export class TreeNodeVO {
 	totalFreqs: number;
 	isCollapsed: boolean;
 
-	constructor(object, classesCount, color ? , isTrusted ? ) {
-
+	constructor(object, classesCount, color?, isTrusted?) {
 		this.id = object.nodeId || undefined;
 		this.nodeId = object.nodeId || undefined;
 		this._id = this.id;
 		this.childNodes = object.childNodes;
 		this.isLeaf = object.childNodes ? false : true;
 		this.variable = object.variable || undefined;
-		this.color = color || '#999'; // for folders : grey
+		this.color = color || "#999"; // for folders : grey
 
 		this.isTrusted = isTrusted || false;
-		this.shortDescription = object.nodeId + ' ';
-		this.shortDescription += this.variable ? this.variable : '';
+		this.shortDescription = object.nodeId + " ";
+		this.shortDescription += this.variable ? this.variable : "";
 
 		this.targetValues = object.targetValues || {
 			frequencies: [],
-			values: []
+			values: [],
 		};
 		this.type = object.type || undefined;
 		this.partitionType = object.partitionType || undefined;
@@ -51,46 +47,60 @@ export class TreeNodeVO {
 		this.children = object.childNodes || [];
 		this.defaultGroupIndex = object.defaultGroupIndex || undefined;
 		if (this.isLeaf) {
-			this.totalFreqs = UtilsService.arraySum(this.targetValues && this.targetValues.frequencies);
+			this.totalFreqs = UtilsService.arraySum(
+				this.targetValues && this.targetValues.frequencies,
+			);
 		} else {
 			this.deepGetChildrenModalityTargetValues(this.childNodes);
 		}
 		this.isCollapsed = object.isCollapsed || false;
 
 		this.purity = this.getPurity(classesCount);
-
 	}
 
 	computeValuesProbs() {
 		this.valuesProbs = [];
 		for (let i = 0; i < this.targetValues.frequencies.length; i++) {
-			this.valuesProbs.push(this.targetValues.frequencies[i] / this.totalFreqs);
+			this.valuesProbs.push(
+				this.targetValues.frequencies[i] / this.totalFreqs,
+			);
 		}
 		return this.valuesProbs;
 	}
 
 	deepGetChildrenModalityTargetValues(childNodes) {
-
 		if (childNodes) {
-
 			for (let i = 0; i < childNodes.length; i++) {
 				if (childNodes[i].targetValues) {
-					for (let j = 0; j < childNodes[i].targetValues.frequencies.length; j++) {
-						const isExistingIndex = this.targetValues.values.length > 0 &&
-							this.targetValues.values.indexOf(childNodes[i].targetValues.values[j]);
+					for (
+						let j = 0;
+						j < childNodes[i].targetValues.frequencies.length;
+						j++
+					) {
+						const isExistingIndex =
+							this.targetValues.values.length > 0 &&
+							this.targetValues.values.indexOf(
+								childNodes[i].targetValues.values[j],
+							);
 						if (!isExistingIndex || isExistingIndex === -1) {
-							this.targetValues.values.push(childNodes[i].targetValues.values[j]);
-							this.targetValues.frequencies.push(childNodes[i].targetValues.frequencies[j]);
+							this.targetValues.values.push(
+								childNodes[i].targetValues.values[j],
+							);
+							this.targetValues.frequencies.push(
+								childNodes[i].targetValues.frequencies[j],
+							);
 						} else {
-							this.targetValues.frequencies[isExistingIndex] = this.targetValues.frequencies[isExistingIndex] + childNodes[i].targetValues.frequencies[j];
+							this.targetValues.frequencies[isExistingIndex] =
+								this.targetValues.frequencies[isExistingIndex] +
+								childNodes[i].targetValues.frequencies[j];
 						}
-
 					}
 				}
-				this.deepGetChildrenModalityTargetValues(childNodes[i].childNodes);
+				this.deepGetChildrenModalityTargetValues(
+					childNodes[i].childNodes,
+				);
 			}
 		}
-
 	}
 
 	/**
@@ -106,13 +116,12 @@ export class TreeNodeVO {
 
 			let pClassLog2 = 0;
 			for (let i = 0; i < this.targetValues.frequencies.length; i++) {
-				pClassLog2 += this.valuesProbs[i] * Math.log2(this.valuesProbs[i]);
+				pClassLog2 +=
+					this.valuesProbs[i] * Math.log2(this.valuesProbs[i]);
 			}
 			this.purity = 1 + pClassLog2 / Math.log2(M);
 
 			return this.purity;
 		}
-
 	}
-
 }

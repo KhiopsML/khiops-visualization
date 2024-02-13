@@ -56,7 +56,7 @@ describe("Test Khiops Covisualization sample files", () => {
 					(datas) => {
 						console.log(
 							"file: covisualization.spec.cy.ts:48 ~ files.forEach ~ datas:",
-							datas
+							datas,
 						);
 
 						const testsValues = {
@@ -103,9 +103,9 @@ describe("Test Khiops Covisualization sample files", () => {
 								cy.contains(test);
 							}
 						});
-					}
+					},
 				);
-			}
+			},
 		);
 	});
 });

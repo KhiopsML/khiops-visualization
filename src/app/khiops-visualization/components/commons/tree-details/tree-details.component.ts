@@ -17,9 +17,7 @@ import { TreeNodeVO } from "@khiops-visualization/model/tree-node-vo";
 	templateUrl: "./tree-details.component.html",
 	styleUrls: ["./tree-details.component.scss"],
 })
-export class TreeDetailsComponent
-	implements OnChanges
-{
+export class TreeDetailsComponent implements OnChanges {
 	@Input() selectedNodes: TreeNodeVO[];
 	@Input() selectedNode: TreeNodeVO;
 
@@ -29,7 +27,7 @@ export class TreeDetailsComponent
 		public ngzone: NgZone,
 		public selectableService: SelectableService,
 		private treePreparationDatasService: TreePreparationDatasService,
-		public translate: TranslateService
+		public translate: TranslateService,
 	) {}
 
 	ngOnChanges(changes: SimpleChanges) {

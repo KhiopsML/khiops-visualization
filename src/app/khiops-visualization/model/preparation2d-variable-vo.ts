@@ -1,5 +1,4 @@
 export class Preparation2dVariableVO {
-
 	_id: string;
 
 	noCorrelation: boolean;
@@ -26,8 +25,7 @@ export class Preparation2dVariableVO {
 	variables: number;
 
 	constructor(object) {
-
-		this.variableType = 'preparation-2d';
+		this.variableType = "preparation-2d";
 
 		this.noCorrelation = object.noCorrelation || undefined;
 
@@ -62,12 +60,10 @@ export class Preparation2dVariableVO {
 		if (this.name1 && this.name2) {
 			this.nameX = this.name1;
 			this.nameY = this.name2;
-			this.name = this.name1 + '`' + this.name2;
+			this.name = this.name1 + "`" + this.name2;
 		}
 
 		// Generate id for grid
 		this._id = object.name;
-
 	}
-
 }

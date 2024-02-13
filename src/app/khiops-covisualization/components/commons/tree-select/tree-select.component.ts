@@ -8,50 +8,32 @@ import {
 	SimpleChanges,
 	AfterViewInit,
 	Input,
-} from '@angular/core';
-import _ from 'lodash';
-import * as TreeView from '@khiops-library/libs/treeview/treeview';
-import {
-	DimensionVO
-} from '@khiops-library/model/dimension-vo';
-import {
-	SelectableComponent
-} from '@khiops-library/components/selectable/selectable.component';
-import {
-	SelectableService
-} from '@khiops-library/components/selectable/selectable.service';
-import {
-	EventsService
-} from '@khiops-covisualization/providers/events.service';
-import {
-	TreenodesService
-} from '@khiops-covisualization/providers/treenodes.service';
-import {
-	AppService
-} from '@khiops-covisualization/providers/app.service';
-import {
-	MatSnackBar
-} from '@angular/material/snack-bar';
-import {
-	TranslateService
-} from '@ngstack/translate';
-import {
-	ConfigService
-} from '@khiops-library/providers/config.service';
-import {
-	Subscription
-} from 'rxjs';
-import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
-import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
+} from "@angular/core";
+import _ from "lodash";
+import * as TreeView from "@khiops-library/libs/treeview/treeview";
+import { DimensionVO } from "@khiops-library/model/dimension-vo";
+import { SelectableComponent } from "@khiops-library/components/selectable/selectable.component";
+import { SelectableService } from "@khiops-library/components/selectable/selectable.service";
+import { EventsService } from "@khiops-covisualization/providers/events.service";
+import { TreenodesService } from "@khiops-covisualization/providers/treenodes.service";
+import { AppService } from "@khiops-covisualization/providers/app.service";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { TranslateService } from "@ngstack/translate";
+import { ConfigService } from "@khiops-library/providers/config.service";
+import { Subscription } from "rxjs";
+import { TreeNodeVO } from "@khiops-covisualization/model/tree-node-vo";
+import { DimensionsDatasVO } from "@khiops-covisualization/model/dimensions-data-vo";
 
 @Component({
-	selector: 'app-tree-select',
-	templateUrl: './tree-select.component.html',
-	styleUrls: ['./tree-select.component.scss'],
-	changeDetection: ChangeDetectionStrategy.OnPush
+	selector: "app-tree-select",
+	templateUrl: "./tree-select.component.html",
+	styleUrls: ["./tree-select.component.scss"],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TreeSelectComponent extends SelectableComponent implements AfterViewInit, OnChanges, OnDestroy {
-
+export class TreeSelectComponent
+	extends SelectableComponent
+	implements AfterViewInit, OnChanges, OnDestroy
+{
 	@Input() selectedDimension: DimensionVO;
 	@Input() selectedNode: TreeNodeVO;
 	@Input() position: number;
@@ -59,7 +41,7 @@ export class TreeSelectComponent extends SelectableComponent implements AfterVie
 
 	treeSelectedNodeChangedSub: Subscription;
 
-	componentType = 'tree'; // needed to copy datas
+	componentType = "tree"; // needed to copy datas
 	id: any = undefined;
 	tree: any;
 
@@ -74,24 +56,32 @@ export class TreeSelectComponent extends SelectableComponent implements AfterVie
 		public selectableService: SelectableService,
 		private snackBar: MatSnackBar,
 		public translate: TranslateService,
-		public configService: ConfigService) {
-
+		public configService: ConfigService,
+	) {
 		super(selectableService, ngzone, configService);
 
-		this.treeSelectedNodeChangedSub = this.eventsService.treeSelectedNodeChanged.subscribe(e => {
-			if (this.tree && e.selectedNode && e.hierarchyName === this.selectedDimension.name) {
-				let propagateEvent = true;
-				if (e.stopPropagation) {
-					propagateEvent = false;
-				}
-				// Check if current id is in selection to avoid infinite loop and remove propagation if not in selection
-				propagateEvent = this.nodeInSelection === e.selectedNode.id;
+		this.treeSelectedNodeChangedSub =
+			this.eventsService.treeSelectedNodeChanged.subscribe((e) => {
+				if (
+					this.tree &&
+					e.selectedNode &&
+					e.hierarchyName === this.selectedDimension.name
+				) {
+					let propagateEvent = true;
+					if (e.stopPropagation) {
+						propagateEvent = false;
+					}
+					// Check if current id is in selection to avoid infinite loop and remove propagation if not in selection
+					propagateEvent = this.nodeInSelection === e.selectedNode.id;
 
-				// get corresponding node into tree
-				const treeNode = this.treenodesService.getNodeFromName(e.hierarchyName, e.selectedNode.name);
-				this.tree.selectNode(treeNode.id, propagateEvent);
-			}
-		});
+					// get corresponding node into tree
+					const treeNode = this.treenodesService.getNodeFromName(
+						e.hierarchyName,
+						e.selectedNode.name,
+					);
+					this.tree.selectNode(treeNode.id, propagateEvent);
+				}
+			});
 	}
 
 	ngOnDestroy() {
@@ -99,74 +89,96 @@ export class TreeSelectComponent extends SelectableComponent implements AfterVie
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
-		if (changes.selectedDimension && changes.selectedDimension.currentValue && !changes.selectedDimension.firstChange) {
+		if (
+			changes.selectedDimension &&
+			changes.selectedDimension.currentValue &&
+			!changes.selectedDimension.firstChange
+		) {
 			this.initTree(this.selectedNode);
 		}
 	}
 
 	ngAfterViewInit() {
-		setTimeout(() => { // Avoid ExpressionChangedAfterItHasBeenCheckedError
+		setTimeout(() => {
+			// Avoid ExpressionChangedAfterItHasBeenCheckedError
 
 			// define an id to be copied into clipboard
 			// define the parent div to copy
-			this.id = 'tree-comp-' + this.position;
+			this.id = "tree-comp-" + this.position;
 
 			this.initTree(this.selectedNode);
 		});
 	}
 
-	initTree(selectedNode?: TreeNodeVO ) {
+	initTree(selectedNode?: TreeNodeVO) {
 		// @ts-ignore
-		this.tree = new TreeView(this.dimensionsTree, this.configService.getRootElementDom(), 'tree_' + this.position);
+		this.tree = new TreeView(
+			this.dimensionsTree,
+			this.configService.getRootElementDom(),
+			"tree_" + this.position,
+		);
 
-		this.tree.on('init', (e) => {
+		this.tree.on("init", (e) => {
 			if (!selectedNode) {
 				//  init selected node 0 and propagate event
 				this.tree.selectNode(0, true);
 			} else {
 				// Select previous nodes if unfold hierarchy changed or if hierarchy has been saved
 				// Find the node tree id into current tree
-				const nodeTree = this.treenodesService.getNodeFromName(this.selectedDimension.name, selectedNode._id);
-				const nodeTreeId = nodeTree ?.id;
+				const nodeTree = this.treenodesService.getNodeFromName(
+					this.selectedDimension.name,
+					selectedNode._id,
+				);
+				const nodeTreeId = nodeTree?.id;
 				if (nodeTreeId !== undefined && nodeTreeId >= 0) {
 					this.tree.selectNode(nodeTreeId, true);
 				}
 			}
 		});
 
-		this.tree.on('select', (e) => {
+		this.tree.on("select", (e) => {
 			// Do ngzone to emit event
 			this.ngzone.run(() => {
-				this.treenodesService.setSelectedNode(this.selectedDimension.name, e.data.name, false);
+				this.treenodesService.setSelectedNode(
+					this.selectedDimension.name,
+					e.data.name,
+					false,
+				);
 			});
 		});
-		this.tree.on('expand', (e) => {
-			this.treenodesService.expandNode(this.selectedDimension.name, e.data.name);
+		this.tree.on("expand", (e) => {
+			this.treenodesService.expandNode(
+				this.selectedDimension.name,
+				e.data.name,
+			);
 		});
-		this.tree.on('expandAll', (e) => {
-
+		this.tree.on("expandAll", (e) => {});
+		this.tree.on("collapse", (e) => {
+			this.treenodesService.collapseNode(
+				this.selectedDimension.name,
+				e.data.name,
+			);
 		});
-		this.tree.on('collapse', (e) => {
-			this.treenodesService.collapseNode(this.selectedDimension.name, e.data.name);
-		});
-		this.tree.on('collapseAll', (e) => {
-
-		});
-		this.tree.on('updateNodeName', (e) => {
+		this.tree.on("collapseAll", (e) => {});
+		this.tree.on("updateNodeName", (e) => {
 			// Important when node name change
 			this.ngzone.run(() => {
-				this.treenodesService.updateSelectedNodeName(this.selectedDimension.name, e.name, e.newName);
+				this.treenodesService.updateSelectedNodeName(
+					this.selectedDimension.name,
+					e.name,
+					e.newName,
+				);
 			});
 		});
-		this.tree.on('error', (e) => {
+		this.tree.on("error", (e) => {
 			this.snackBar.open(this.translate.get(e.data), null, {
 				duration: 4000,
-				panelClass: 'error'
+				panelClass: "error",
 			});
 		});
 	}
 
-	@HostListener('window:keyup', ['$event'])
+	@HostListener("window:keyup", ["$event"])
 	keyEvent(event) {
 		const currentSelectedArea = this.selectableService.getSelectedArea();
 		if (currentSelectedArea && currentSelectedArea.id === this.id) {

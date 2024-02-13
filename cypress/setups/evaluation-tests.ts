@@ -7,19 +7,19 @@ export function setupEvaluationTests(datas, testsValues) {
 
 	if (datas.trainEvaluationReport?.summary?.instances) {
 		testsValues.Evaluation.push(
-			datas.trainEvaluationReport?.summary?.instances
+			datas.trainEvaluationReport?.summary?.instances,
 		);
 	}
 
 	// Test some grid datas
 	if (datas.trainEvaluationReport?.predictorsPerformance?.accuracy) {
 		testsValues.Evaluation.push(
-			datas.trainEvaluationReport?.predictorsPerformance?.accuracy
+			datas.trainEvaluationReport?.predictorsPerformance?.accuracy,
 		);
 	}
 	if (datas.testEvaluationReport?.predictorsPerformance?.auc) {
 		testsValues.Evaluation.push(
-			datas.testEvaluationReport?.predictorsPerformance?.auc
+			datas.testEvaluationReport?.predictorsPerformance?.auc,
 		);
 	}
 

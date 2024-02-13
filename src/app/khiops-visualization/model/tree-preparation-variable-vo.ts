@@ -1,7 +1,6 @@
 import { TYPES } from "@khiops-library/enum/types";
 
 export class TreePreparationVariableVO {
-
 	_id: string;
 	mode: string;
 	name: string;
@@ -21,11 +20,10 @@ export class TreePreparationVariableVO {
 	isNumerical: boolean;
 
 	constructor(object, id) {
-
 		// Generate id for grid
 		this._id = id;
 
-		this.variableType = 'preparation-tree';
+		this.variableType = "preparation-tree";
 
 		this.mode = object.mode || undefined;
 		this.name = object.name || undefined;
@@ -43,7 +41,5 @@ export class TreePreparationVariableVO {
 		this.preparationCost = object.preparationCost || undefined;
 		this.dataCost = object.dataCost || undefined;
 		this.level = object.level || undefined;
-
 	}
-
 }

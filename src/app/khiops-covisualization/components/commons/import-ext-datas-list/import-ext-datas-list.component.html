@@ -1,26 +1,64 @@
 <div id="import-ext-datas-list-comp" fxFlexFill #manageViews fxLayout="column">
 	<div *ngIf="!importExtDatas" fxFlexFill>
-		<div fxLayout="row" id="import-ext-datas-header" fxLayoutAlign="center center">
-			<h2 fxFlex>{{ 'GLOBAL.EXTERNAL_DATA' | translate | uppercase }}</h2>
-			<button class="grey-btn" mat-icon-button matTooltip="{{ 'GLOBAL.CLOSE' | translate }}" (click)="onClickOnClose()">
-				<mat-icon fxFlexFill fxLayoutAlign="center center">close</mat-icon>
-			 </button>
+		<div
+			fxLayout="row"
+			id="import-ext-datas-header"
+			fxLayoutAlign="center center"
+		>
+			<h2 fxFlex>{{ "GLOBAL.EXTERNAL_DATA" | translate | uppercase }}</h2>
+			<button
+				class="grey-btn"
+				mat-icon-button
+				matTooltip="{{ 'GLOBAL.CLOSE' | translate }}"
+				(click)="onClickOnClose()"
+			>
+				<mat-icon fxFlexFill fxLayoutAlign="center center"
+					>close</mat-icon
+				>
+			</button>
 		</div>
-		<div *ngIf="!isLoadingDatas" id="import-ext-datas-content" fxLayout="column" fxFlexFill
-			fxLayoutAlign="start center">
-			<div *ngIf="importedDatas && importedDatas.values" id="import-ext-datas-list-table" fxFlexFill
-				fxLayout="column" fxLayoutAlign="start center">
-				<h1 fxFlexFill class="small-title">{{ 'GLOBAL.IMPORTED_EXTERNAL_DATA' | translate }}</h1>
-				<kl-ag-grid fxFlexFill [showLevelDistribution]="false"  [showSearch]="false"
-					[showLineSelection]="false" [showColumnsSelection]="false" [rowHeight]="40"
-					[inputDatas]="importedDatas.values" [title]="''" [smallTitle]="true" [sizeColumnsToFit]="true"
-					[displayedColumns]="importedDatas.displayedColumns">
+		<div
+			*ngIf="!isLoadingDatas"
+			id="import-ext-datas-content"
+			fxLayout="column"
+			fxFlexFill
+			fxLayoutAlign="start center"
+		>
+			<div
+				*ngIf="importedDatas && importedDatas.values"
+				id="import-ext-datas-list-table"
+				fxFlexFill
+				fxLayout="column"
+				fxLayoutAlign="start center"
+			>
+				<h1 fxFlexFill class="small-title">
+					{{ "GLOBAL.IMPORTED_EXTERNAL_DATA" | translate }}
+				</h1>
+				<kl-ag-grid
+					fxFlexFill
+					[showLevelDistribution]="false"
+					[showSearch]="false"
+					[showLineSelection]="false"
+					[showColumnsSelection]="false"
+					[rowHeight]="40"
+					[inputDatas]="importedDatas.values"
+					[title]="''"
+					[smallTitle]="true"
+					[sizeColumnsToFit]="true"
+					[displayedColumns]="importedDatas.displayedColumns"
+				>
 				</kl-ag-grid>
 			</div>
-			<kl-import-file-loader fxFlexFill (datasLoaded)="datasLoaded($event)"></kl-import-file-loader>
+			<kl-import-file-loader
+				fxFlexFill
+				(datasLoaded)="datasLoaded($event)"
+			></kl-import-file-loader>
 		</div>
 	</div>
-	<app-import-ext-datas *ngIf="importExtDatas && !isLoadingDatas" [importExtDatas]="importExtDatas"
-		(closeImport)="closeImport()">
+	<app-import-ext-datas
+		*ngIf="importExtDatas && !isLoadingDatas"
+		[importExtDatas]="importExtDatas"
+		(closeImport)="closeImport()"
+	>
 	</app-import-ext-datas>
 </div>

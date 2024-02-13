@@ -1,5 +1,4 @@
 export class DimensionViewLayoutVO {
-
 	name: string;
 	isChecked = true;
 	isHierarchyChecked = true;
@@ -10,17 +9,15 @@ export class DimensionViewLayoutVO {
 	isDistributionChecked = false;
 
 	constructor(name, isContextView) {
-		this.name = name || '';
+		this.name = name || "";
 
 		if (isContextView) {
 			this.isDistributionChecked = false;
 		}
 	}
-
 }
 
 export class ViewLayoutVO {
-
 	isDimensionsChecked = true;
 	isCoocurenceChecked = true;
 
@@ -30,11 +27,21 @@ export class ViewLayoutVO {
 		this.dimensionsViewsLayoutsVO = [];
 	}
 
-	addDimensionViewLayout(dimensionName, isContextView, previousLayout ?: DimensionViewLayoutVO) {
-		let viewLayoutDimension = new DimensionViewLayoutVO(dimensionName, isContextView);
+	addDimensionViewLayout(
+		dimensionName,
+		isContextView,
+		previousLayout?: DimensionViewLayoutVO,
+	) {
+		let viewLayoutDimension = new DimensionViewLayoutVO(
+			dimensionName,
+			isContextView,
+		);
 		if (previousLayout) {
 			// assign previous values
-			viewLayoutDimension = Object.assign(viewLayoutDimension, previousLayout);
+			viewLayoutDimension = Object.assign(
+				viewLayoutDimension,
+				previousLayout,
+			);
 		}
 		this.dimensionsViewsLayoutsVO.push(viewLayoutDimension);
 	}
@@ -43,9 +50,11 @@ export class ViewLayoutVO {
 		this.isDimensionsChecked = lsValues.isDimensionsChecked;
 		this.isCoocurenceChecked = lsValues.isCoocurenceChecked;
 		for (let i = 0; i < this.dimensionsViewsLayoutsVO.length; i++) {
-			const prevValue = lsValues.dimensionsViewsLayoutsVO[i]
-			this.dimensionsViewsLayoutsVO[i] = Object.assign(this.dimensionsViewsLayoutsVO[i],  prevValue);
+			const prevValue = lsValues.dimensionsViewsLayoutsVO[i];
+			this.dimensionsViewsLayoutsVO[i] = Object.assign(
+				this.dimensionsViewsLayoutsVO[i],
+				prevValue,
+			);
 		}
 	}
-
 }

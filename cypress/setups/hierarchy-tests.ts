@@ -15,7 +15,7 @@ export function setupHierarchyTests(datas) {
 		index++
 	) {
 		testsValues.push(
-			datas.coclusteringReport?.dimensionSummaries[index]?.name
+			datas.coclusteringReport?.dimensionSummaries[index]?.name,
 		);
 	}
 

@@ -1,70 +1,170 @@
 <div id="modeling-view-comp" fxFlexFill>
-	<div fxLayout="column" fxFlexFill fxLayoutAlign="center center" *ngIf="loadingView">
-		<mat-spinner diameter="40" color="accent" mode="indeterminate"></mat-spinner>
+	<div
+		fxLayout="column"
+		fxFlexFill
+		fxLayoutAlign="center center"
+		*ngIf="loadingView"
+	>
+		<mat-spinner
+			diameter="40"
+			color="accent"
+			mode="indeterminate"
+		></mat-spinner>
 	</div>
-	<as-split [gutterSize]="7" *ngIf="!loadingView" direction="vertical" (dragEnd)="onSplitDragEnd($event, 'row')">
+	<as-split
+		[gutterSize]="7"
+		*ngIf="!loadingView"
+		direction="vertical"
+		(dragEnd)="onSplitDragEnd($event, 'row')"
+	>
 		<as-split-area [size]="sizes.row[0]">
-			<as-split [gutterSize]="7" direction="horizontal" (dragEnd)="onSplitDragEnd($event, 'row0Col')">
+			<as-split
+				[gutterSize]="7"
+				direction="horizontal"
+				(dragEnd)="onSplitDragEnd($event, 'row0Col')"
+			>
 				<as-split-area [size]="sizes.row0Col[0]">
-					<kl-informations-block id="modeling-informations-block-summary"
-						title="{{ 'GLOBAL.SUMMARY' | translate }}" [inputDatas]="summaryDatas"></kl-informations-block>
+					<kl-informations-block
+						id="modeling-informations-block-summary"
+						title="{{ 'GLOBAL.SUMMARY' | translate }}"
+						[inputDatas]="summaryDatas"
+					></kl-informations-block>
 				</as-split-area>
 				<as-split-area [size]="sizes.row0Col[1]">
-					<app-target-variable-stats-canvas *ngIf="targetVariableStatsDatas"
-						id="modeling-target-variable-stats" fxFlexFill [inputDatas]="targetVariableStatsDatas">
+					<app-target-variable-stats-canvas
+						*ngIf="targetVariableStatsDatas"
+						id="modeling-target-variable-stats"
+						fxFlexFill
+						[inputDatas]="targetVariableStatsDatas"
+					>
 					</app-target-variable-stats-canvas>
-					<kl-no-data fxFlexFill *ngIf="!targetVariableStatsDatas && !targetVariableStatsInformations"
-						[message]="'NO_DATAS.NO_VARIABLE_DETAILS'">
+					<kl-no-data
+						fxFlexFill
+						*ngIf="
+							!targetVariableStatsDatas &&
+							!targetVariableStatsInformations
+						"
+						[message]="'NO_DATAS.NO_VARIABLE_DETAILS'"
+					>
 					</kl-no-data>
-					<kl-informations-block id="preparation-informations-block-summary"
-						*ngIf="targetVariableStatsInformations && !targetVariableStatsDatas"
+					<kl-informations-block
+						id="preparation-informations-block-summary"
+						*ngIf="
+							targetVariableStatsInformations &&
+							!targetVariableStatsDatas
+						"
 						title="{{ 'GLOBAL.TARGET_VARIABLE_STATS' | translate }}"
-						[inputDatas]="targetVariableStatsInformations"></kl-informations-block>
+						[inputDatas]="targetVariableStatsInformations"
+					></kl-informations-block>
 				</as-split-area>
 				<as-split-area [size]="sizes.row0Col[2]">
-					<kl-informations-block id="modeling-informations-block-informations"
-						title="{{ 'GLOBAL.TRAINED_PREDICTORS' | translate }}" icon="subject"
-						[inputDatas]="trainedPredictorsSummaryDatas"></kl-informations-block>
+					<kl-informations-block
+						id="modeling-informations-block-informations"
+						title="{{ 'GLOBAL.TRAINED_PREDICTORS' | translate }}"
+						icon="subject"
+						[inputDatas]="trainedPredictorsSummaryDatas"
+					></kl-informations-block>
 				</as-split-area>
 			</as-split>
 		</as-split-area>
-		<as-split-area [size]="sizes.row[1] ">
+		<as-split-area [size]="sizes.row[1]">
 			<as-split [gutterSize]="7" direction="vertical">
-				<app-select-trained-predictor [inputDatas]="appDatas.datas.modelingReport.trainedPredictors"
-					(selectedPredictorChanged)="onSelectedPredictorChanged($event)"></app-select-trained-predictor>
-				<as-split [gutterSize]="7" direction="horizontal" (dragEnd)="onSplitDragEnd($event, 'row1Col')">
+				<app-select-trained-predictor
+					[inputDatas]="
+						appDatas.datas.modelingReport.trainedPredictors
+					"
+					(selectedPredictorChanged)="
+						onSelectedPredictorChanged($event)
+					"
+				></app-select-trained-predictor>
+				<as-split
+					[gutterSize]="7"
+					direction="horizontal"
+					(dragEnd)="onSplitDragEnd($event, 'row1Col')"
+				>
 					<as-split-area [size]="sizes.row1Col[0]">
-						<as-split [gutterSize]="7" *ngIf="modelingDatas.trainedPredictorsListDatas" direction="vertical"
-							(dragEnd)="onSplitDragEnd($event, 'row1Col0Row')">
+						<as-split
+							[gutterSize]="7"
+							*ngIf="modelingDatas.trainedPredictorsListDatas"
+							direction="vertical"
+							(dragEnd)="onSplitDragEnd($event, 'row1Col0Row')"
+						>
 							<as-split-area class="variables-list-container">
-								<kl-ag-grid id="modeling-variables-list" class="variables-list" fxFlexFill
-									titleTooltip="{{ 'TOOLTIPS.MODELING.VARIABLES.TITLE' | translate }}"
-									[showLevelDistribution]="true" [showSearch]="true" [watchResize]="true"
-									[displayCount]="true" [selectedVariable]="modelingDatas.selectedVariable"
-									(selectListItem)="onSelectListItemChanged($event)" [showLineSelection]="true"
-									[showColumnsSelection]="true" [rowHeight]="30"
-									[inputDatas]="modelingDatas.trainedPredictorsListDatas" [smallTitle]="true"
-									(showLevelDistributionGraph)="onShowLevelDistributionGraph($event)"
-									[displayedColumns]="trainedPredictorsDisplayedColumns">
+								<kl-ag-grid
+									id="modeling-variables-list"
+									class="variables-list"
+									fxFlexFill
+									titleTooltip="{{
+										'TOOLTIPS.MODELING.VARIABLES.TITLE'
+											| translate
+									}}"
+									[showLevelDistribution]="true"
+									[showSearch]="true"
+									[watchResize]="true"
+									[displayCount]="true"
+									[selectedVariable]="
+										modelingDatas.selectedVariable
+									"
+									(selectListItem)="
+										onSelectListItemChanged($event)
+									"
+									[showLineSelection]="true"
+									[showColumnsSelection]="true"
+									[rowHeight]="30"
+									[inputDatas]="
+										modelingDatas.trainedPredictorsListDatas
+									"
+									[smallTitle]="true"
+									(showLevelDistributionGraph)="
+										onShowLevelDistributionGraph($event)
+									"
+									[displayedColumns]="
+										trainedPredictorsDisplayedColumns
+									"
+								>
 								</kl-ag-grid>
 							</as-split-area>
 						</as-split>
-						<kl-no-data fxFlexFill *ngIf="!modelingDatas.trainedPredictorsListDatas"
-							[message]="'NO_DATAS.NO_PREDICTORS_DETAILS'"></kl-no-data>
+						<kl-no-data
+							fxFlexFill
+							*ngIf="!modelingDatas.trainedPredictorsListDatas"
+							[message]="'NO_DATAS.NO_PREDICTORS_DETAILS'"
+						></kl-no-data>
 					</as-split-area>
 					<as-split-area [size]="sizes.row1Col[1]">
-						<app-var-details-preparation [preparationSource]="preparationSource"
-							*ngIf="modelingDatas.selectedVariable && modelingDatas.selectedVariable.variableType ==='preparation'">
+						<app-var-details-preparation
+							[preparationSource]="preparationSource"
+							*ngIf="
+								modelingDatas.selectedVariable &&
+								modelingDatas.selectedVariable.variableType ===
+									'preparation'
+							"
+						>
 						</app-var-details-preparation>
 						<app-var-details-preparation-2d
-							*ngIf="modelingDatas.selectedVariable && modelingDatas.selectedVariable.variableType ==='preparation-2d'">
+							*ngIf="
+								modelingDatas.selectedVariable &&
+								modelingDatas.selectedVariable.variableType ===
+									'preparation-2d'
+							"
+						>
 						</app-var-details-preparation-2d>
 						<app-var-details-tree-preparation
-							*ngIf="modelingDatas.selectedVariable && modelingDatas.selectedVariable.variableType ==='preparation-tree'">
+							*ngIf="
+								modelingDatas.selectedVariable &&
+								modelingDatas.selectedVariable.variableType ===
+									'preparation-tree'
+							"
+						>
 						</app-var-details-tree-preparation>
-						<kl-no-data fxFlexFill
-							*ngIf="!modelingDatas.trainedPredictorsListDatas || !modelingDatas.selectedVariable"
-							[message]="'NO_DATAS.NO_PREDICTORS_DETAILS'"></kl-no-data>
+						<kl-no-data
+							fxFlexFill
+							*ngIf="
+								!modelingDatas.trainedPredictorsListDatas ||
+								!modelingDatas.selectedVariable
+							"
+							[message]="'NO_DATAS.NO_PREDICTORS_DETAILS'"
+						></kl-no-data>
 					</as-split-area>
 				</as-split>
 			</as-split>

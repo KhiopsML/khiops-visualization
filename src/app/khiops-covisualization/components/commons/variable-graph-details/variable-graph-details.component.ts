@@ -10,45 +10,21 @@ import {
 	EventEmitter,
 	SimpleChanges,
 } from "@angular/core";
-import {
-	DimensionVO
-} from "@khiops-library/model/dimension-vo";
-import {
-	TranslateService
-} from "@ngstack/translate";
-import {
-	KhiopsLibraryService
-} from "@khiops-library/providers/khiops-library.service";
-import {
-	DistributionGraphCanvasComponent
-} from "@khiops-library/components/distribution-graph-canvas/distribution-graph-canvas.component";
-import {
-	EventsService
-} from "@khiops-covisualization/providers/events.service";
-import {
-	TreenodesService
-} from "@khiops-covisualization/providers/treenodes.service";
-import {
-	ChartColorsSetI
-} from "@khiops-library/interfaces/chart-colors-set";
-import {
-	DimensionsDatasService
-} from "@khiops-covisualization/providers/dimensions-datas.service";
-import {
-	ClustersService
-} from "@khiops-covisualization/providers/clusters.service";
-import {
-	TreeNodeVO
-} from "@khiops-covisualization/model/tree-node-vo";
-import {
-	Subscription
-} from "rxjs";
-import {
-	TYPES
-} from "@khiops-library/enum/types";
+import { DimensionVO } from "@khiops-library/model/dimension-vo";
+import { TranslateService } from "@ngstack/translate";
+import { KhiopsLibraryService } from "@khiops-library/providers/khiops-library.service";
+import { DistributionGraphCanvasComponent } from "@khiops-library/components/distribution-graph-canvas/distribution-graph-canvas.component";
+import { EventsService } from "@khiops-covisualization/providers/events.service";
+import { TreenodesService } from "@khiops-covisualization/providers/treenodes.service";
+import { ChartColorsSetI } from "@khiops-library/interfaces/chart-colors-set";
+import { DimensionsDatasService } from "@khiops-covisualization/providers/dimensions-datas.service";
+import { ClustersService } from "@khiops-covisualization/providers/clusters.service";
+import { TreeNodeVO } from "@khiops-covisualization/model/tree-node-vo";
+import { Subscription } from "rxjs";
+import { TYPES } from "@khiops-library/enum/types";
 import { DistributionOptionsI } from "@khiops-library/interfaces/distribution-options";
 import { ChartDatasVO } from "@khiops-library/model/chart-datas-vo";
-import * as _ from 'lodash';
+import * as _ from "lodash";
 
 @Component({
 	selector: "app-variable-graph-details",
@@ -56,14 +32,15 @@ import * as _ from 'lodash';
 	styleUrls: ["./variable-graph-details.component.scss"],
 })
 export class VariableGraphDetailsComponent
-implements OnInit, OnChanges, OnDestroy, AfterViewInit {
+	implements OnInit, OnChanges, OnDestroy, AfterViewInit
+{
 	@ViewChild("distributionGraph", {
 		static: false,
 	})
 	distributionGraph: DistributionGraphCanvasComponent;
 
 	@Input() selectedNode: TreeNodeVO;
-	@Output() selectedItemChanged: EventEmitter < any > = new EventEmitter();
+	@Output() selectedItemChanged: EventEmitter<any> = new EventEmitter();
 	@Input() position: number;
 	@Input() dimensionsTree: TreeNodeVO[];
 	@Input() selectedDimension: DimensionVO;
@@ -93,16 +70,14 @@ implements OnInit, OnChanges, OnDestroy, AfterViewInit {
 		private treenodesService: TreenodesService,
 		private clustersService: ClustersService,
 		private eventsService: EventsService,
-		private khiopsLibraryService: KhiopsLibraryService
+		private khiopsLibraryService: KhiopsLibraryService,
 	) {
 		this.colorSet = this.khiopsLibraryService.getGraphColorSet()[2];
 
 		this.treeSelectedNodeChangedSub =
 			this.eventsService.treeSelectedNodeChanged.subscribe((e) => {
 				setTimeout(() => {
-					if (
-						e.selectedNode
-					) {
+					if (e.selectedNode) {
 						// Only compute distribution of the other node
 						this.getFilteredDistribution(this.dimensionsTree);
 						this.prevSelectedNode = e.selectedNode;
@@ -117,7 +92,7 @@ implements OnInit, OnChanges, OnDestroy, AfterViewInit {
 			// get active entries index from name
 			if (this.graphDetails) {
 				this.activeEntries = this.graphDetails.labels.findIndex(
-					(e) => e === this.selectedNode.shortDescription
+					(e) => e === this.selectedNode.shortDescription,
 				);
 				this.setLegendTitle(this.position);
 			}
@@ -166,15 +141,16 @@ implements OnInit, OnChanges, OnDestroy, AfterViewInit {
 	getFilteredDistribution(dimensionsTree, force = false) {
 		if (dimensionsTree && this.selectedNode) {
 			if (this.prevSelectedNode !== this.selectedNode || force) {
-				if (this.position === 0) {}
+				if (this.position === 0) {
+				}
 				this.graphDetails =
 					this.clustersService.getDistributionDetailsFromNode(
-						this.position
+						this.position,
 					);
 
 				if (this.graphDetails && this.graphDetails.labels) {
 					this.activeEntries = this.graphDetails.labels.findIndex(
-						(e) => e === this.selectedNode.shortDescription
+						(e) => e === this.selectedNode.shortDescription,
 					);
 				}
 				this.updateGraphTitle();
@@ -201,7 +177,7 @@ implements OnInit, OnChanges, OnDestroy, AfterViewInit {
 		const currentNodeName = this.graphDetails.labels[index];
 		this.treenodesService.setSelectedNode(
 			this.selectedDimensions[currentIndex].name,
-			currentNodeName
+			currentNodeName,
 		);
 	}
 

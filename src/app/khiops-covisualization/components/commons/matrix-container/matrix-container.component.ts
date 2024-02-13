@@ -1,49 +1,17 @@
-import {
-	Component,
-	OnInit,
-	ViewChild,
-	OnDestroy,
-	Input,
-} from "@angular/core";
-import {
-	AppService
-} from "@khiops-covisualization/providers/app.service";
-import {
-	DimensionsDatasService
-} from "@khiops-covisualization/providers/dimensions-datas.service";
-import {
-	MatrixCanvasComponent
-} from "@khiops-library/components/matrix-canvas/matrix-canvas.component";
-import {
-	ViewLayoutVO
-} from "@khiops-covisualization/model/view-layout-vo";
-import {
-	EventsService
-} from "@khiops-covisualization/providers/events.service";
-import {
-	TreenodesService
-} from "@khiops-covisualization/providers/treenodes.service";
-import {
-	AppConfig
-} from "src/environments/environment";
-import {
-	Subscription
-} from "rxjs";
-import {
-	DimensionsDatasVO
-} from "@khiops-covisualization/model/dimensions-data-vo";
-import {
-	MatrixModesI
-} from '@khiops-library/interfaces/matrix-modes';
-import {
-	MatrixOptionsI
-} from '@khiops-library/interfaces/matrix-options';
-import {
-	MatrixModeI
-} from "@khiops-library/interfaces/matrix-mode";
-import {
-	CellVO
-} from "@khiops-library/model/cell-vo";
+import { Component, OnInit, ViewChild, OnDestroy, Input } from "@angular/core";
+import { AppService } from "@khiops-covisualization/providers/app.service";
+import { DimensionsDatasService } from "@khiops-covisualization/providers/dimensions-datas.service";
+import { MatrixCanvasComponent } from "@khiops-library/components/matrix-canvas/matrix-canvas.component";
+import { ViewLayoutVO } from "@khiops-covisualization/model/view-layout-vo";
+import { EventsService } from "@khiops-covisualization/providers/events.service";
+import { TreenodesService } from "@khiops-covisualization/providers/treenodes.service";
+import { AppConfig } from "src/environments/environment";
+import { Subscription } from "rxjs";
+import { DimensionsDatasVO } from "@khiops-covisualization/model/dimensions-data-vo";
+import { MatrixModesI } from "@khiops-library/interfaces/matrix-modes";
+import { MatrixOptionsI } from "@khiops-library/interfaces/matrix-options";
+import { MatrixModeI } from "@khiops-library/interfaces/matrix-mode";
+import { CellVO } from "@khiops-library/model/cell-vo";
 
 @Component({
 	selector: "app-matrix-container",
@@ -76,7 +44,7 @@ export class MatrixContainerComponent implements OnInit, OnDestroy {
 		private appService: AppService,
 		private treenodesService: TreenodesService,
 		private eventsService: EventsService,
-		private dimensionsService: DimensionsDatasService
+		private dimensionsService: DimensionsDatasService,
 	) {
 		this.treeSelectedNodeChangedSub =
 			this.eventsService.treeSelectedNodeChanged.subscribe((e) => {
@@ -88,20 +56,20 @@ export class MatrixContainerComponent implements OnInit, OnDestroy {
 					// check if it's a context selection to redraw matrix
 					const isContextDimension =
 						this.dimensionsService.isContextDimension(
-							e.hierarchyName
+							e.hierarchyName,
 						);
 
 					if (
 						(!e.stopPropagation &&
 							this.initNodesEvents ===
-							this.dimensionsDatas.dimensions.length) ||
+								this.dimensionsDatas.dimensions.length) ||
 						isContextDimension
 					) {
 						this.matrixCanvas.drawMatrix();
 					} else if (
 						!e.stopPropagation &&
 						this.initNodesEvents >
-						this.dimensionsDatas.dimensions.length
+							this.dimensionsDatas.dimensions.length
 					) {
 						this.matrixCanvas.drawSelectedNodes();
 					}
@@ -127,8 +95,8 @@ export class MatrixContainerComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		this.viewsLayoutChangedSub ?.unsubscribe();
-		this.treeSelectedNodeChangedSub ?.unsubscribe();
+		this.viewsLayoutChangedSub?.unsubscribe();
+		this.treeSelectedNodeChangedSub?.unsubscribe();
 	}
 
 	onToggleFullscreen(isFullscreen: boolean) {
@@ -143,7 +111,7 @@ export class MatrixContainerComponent implements OnInit, OnDestroy {
 			this.dimensionsDatas.matrixOption ||
 			localStorage.getItem(
 				AppConfig.covisualizationCommon.GLOBAL.LS_ID +
-				"MATRIX_TYPE_OPTION"
+					"MATRIX_TYPE_OPTION",
 			) ||
 			this.matrixOptions.types[0];
 	}
@@ -152,7 +120,8 @@ export class MatrixContainerComponent implements OnInit, OnDestroy {
 		const varName1 = this.dimensionsDatas.matrixDatas.variable.nameX;
 		const varName2 = this.dimensionsDatas.matrixDatas.variable.nameY;
 
-		this.matrixModes.types = [{
+		this.matrixModes.types = [
+			{
 				mode: "MUTUAL_INFO",
 				title: "I (" + varName1 + " , " + varName2 + ")",
 			},
@@ -185,11 +154,14 @@ export class MatrixContainerComponent implements OnInit, OnDestroy {
 		}
 
 		// Check if saved into json
-		if (this.dimensionsDatas.matrixMode !== undefined && this.dimensionsDatas.matrixMode < this.matrixModes.types.length) {
-			this.matrixModes.selected = this.matrixModes.types[this.dimensionsDatas.matrixMode];
+		if (
+			this.dimensionsDatas.matrixMode !== undefined &&
+			this.dimensionsDatas.matrixMode < this.matrixModes.types.length
+		) {
+			this.matrixModes.selected =
+				this.matrixModes.types[this.dimensionsDatas.matrixMode];
 			this.matrixModes.selectedIndex = this.dimensionsDatas.matrixMode;
 		}
-
 	}
 
 	onSplitDragEnd(event, item) {
@@ -197,22 +169,20 @@ export class MatrixContainerComponent implements OnInit, OnDestroy {
 			item,
 			this.sizes,
 			event.sizes,
-			this.viewId
+			this.viewId,
 		);
 	}
 
-	onCellSelected(event: {
-		datas: CellVO
-	}) {
+	onCellSelected(event: { datas: CellVO }) {
 		this.treenodesService.setSelectedNode(
 			event.datas.xnamePart,
 			event.datas.xaxisPart,
-			true
+			true,
 		);
 		this.treenodesService.setSelectedNode(
 			event.datas.ynamePart,
 			event.datas.yaxisPart,
-			true
+			true,
 		);
 	}
 
@@ -224,7 +194,7 @@ export class MatrixContainerComponent implements OnInit, OnDestroy {
 		// this.khiopsLibraryService.trackEvent('click', 'matrix_type', type);
 		localStorage.setItem(
 			AppConfig.covisualizationCommon.GLOBAL.LS_ID + "MATRIX_TYPE_OPTION",
-			type
+			type,
 		);
 		this.dimensionsDatas.matrixOption = type; // Save it into the global model to keep it into saved datas
 		this.matrixOptions.selected = type;
@@ -234,14 +204,15 @@ export class MatrixContainerComponent implements OnInit, OnDestroy {
 		// this.khiopsLibraryService.trackEvent('click', 'matrix_mode', mode.mode);
 		this.matrixModes.selected = mode;
 		this.matrixModes.selectedIndex = this.matrixModes.types.findIndex(
-			(e) => e.mode === mode.mode
+			(e) => e.mode === mode.mode,
 		);
 		this.dimensionsDatas.matrixMode = this.matrixModes.selectedIndex; // Save it into the global model to keep it into saved datas
 	}
 
 	changeConditionalOnContext() {
 		// this.khiopsLibraryService.trackEvent('click', 'matrix_conditionnal_on_context');
-		this.dimensionsDatas.conditionalOnContext = !this.dimensionsDatas.conditionalOnContext;
+		this.dimensionsDatas.conditionalOnContext =
+			!this.dimensionsDatas.conditionalOnContext;
 		this.treenodesService.initConditionalOnContextNodes();
 	}
 }

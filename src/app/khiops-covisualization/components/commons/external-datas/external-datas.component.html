@@ -1,9 +1,20 @@
-<div class="external-datas-comp" fxFlexFill fxLayoutAlign="start start" fxLayout="column">
+<div
+	class="external-datas-comp"
+	fxFlexFill
+	fxLayoutAlign="start start"
+	fxLayout="column"
+>
 	<h1 *ngIf="inputValue && externalData" class="small-title">
 		{{ "GLOBAL.EXTERNAL_DATA_OF" | translate: { value: inputValue } }}
 	</h1>
 	<div *ngIf="externalData" fxFlex fxLayout="column">
-		<pre class="external-datas-text" *ngFor="let data of externalData">{{ data.key }} : {{ data.value }}</pre>
+		<pre class="external-datas-text" *ngFor="let data of externalData"
+			>{{ data.key }} : {{ data.value }}</pre
+		>
 	</div>
-	<kl-no-data fxFlexFill *ngIf="!externalData" [message]="'NO_DATAS.NO_EXTERNAL_DATAS'"></kl-no-data>
+	<kl-no-data
+		fxFlexFill
+		*ngIf="!externalData"
+		[message]="'NO_DATAS.NO_EXTERNAL_DATAS'"
+	></kl-no-data>
 </div>

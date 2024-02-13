@@ -8,7 +8,7 @@ import { CellVO } from "@khiops-library/model/cell-vo";
 	styleUrls: ["./cell-stats.component.scss"],
 })
 export class CellStatsComponent implements OnChanges {
-	@Input() selectedCells :CellVO[];
+	@Input() selectedCells: CellVO[];
 	datas: {
 		F: number;
 		EF: number;
@@ -24,28 +24,28 @@ export class CellStatsComponent implements OnChanges {
 				// Multiple selection
 				this.datas = {
 					F: UtilsService.arraySum(
-						this.selectedCells.map((e) => e.displayedFreqValue)
+						this.selectedCells.map((e) => e.displayedFreqValue),
 					),
 					EF: UtilsService.arraySum(
-						this.selectedCells.map((e) => e.displayedValue.ef)
+						this.selectedCells.map((e) => e.displayedValue.ef),
 					),
 					I:
 						this.selectedCells[0].displayedValue.type ===
 						"MUTUAL_INFO"
 							? UtilsService.arraySum(
 									this.selectedCells.map(
-										(e) => e.displayedValue.value
-									)
-							  )
+										(e) => e.displayedValue.value,
+									),
+								)
 							: undefined,
 					Total:
 						this.selectedCells[0].displayedValue.type ===
 						"MUTUAL_INFO"
 							? UtilsService.arraySum(
 									this.selectedCells.map(
-										(e) => e.displayedValue.extra
-									)
-							  )
+										(e) => e.displayedValue.extra,
+									),
+								)
 							: undefined,
 				};
 			} else if (changes?.selectedCells?.currentValue.length === 1) {

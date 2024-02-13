@@ -1,8 +1,7 @@
-import { TYPES } from '@khiops-library/enum/types';
-import _ from 'lodash';
+import { TYPES } from "@khiops-library/enum/types";
+import _ from "lodash";
 
 export class DimensionVO {
-
 	name: string;
 	type: string;
 	parts: number;
@@ -25,13 +24,12 @@ export class DimensionVO {
 	defaultGroupIndex: number; // KV
 
 	constructor(object, startPosition = 0) {
-
 		this.startPosition = startPosition;
-		this.name = object && object.name || '';
-		this.type = object && object.type || '';
-		this.parts = object && object.parts || undefined;
-		this.initialParts = object && object.initialParts || undefined;
-		this.values = object && object.values || undefined;
+		this.name = (object && object.name) || "";
+		this.type = (object && object.type) || "";
+		this.parts = (object && object.parts) || undefined;
+		this.initialParts = (object && object.initialParts) || undefined;
+		this.values = (object && object.values) || undefined;
 		this.currentHierarchyClusterCount = this.parts;
 		this.hierarchyFold = true;
 
@@ -50,10 +48,9 @@ export class DimensionVO {
 		if (object.variable) {
 			this.name = object.variable;
 		}
-		this.partitionType = object && object.partitionType || undefined;
-		this.variable = object && object.variable || '';
-		this.defaultGroupIndex = object && object.defaultGroupIndex || 0;
-
+		this.partitionType = (object && object.partitionType) || undefined;
+		this.variable = (object && object.variable) || "";
+		this.defaultGroupIndex = (object && object.defaultGroupIndex) || 0;
 	}
 
 	setHierarchyFold(state: boolean) {
@@ -76,8 +73,7 @@ export class DimensionVO {
 
 	setMissingPartition() {
 		if (this.partitionInputs[0] && this.partitionInputs[0].length === 0) {
-			this.partitionInputs[0] = 'Missing';
+			this.partitionInputs[0] = "Missing";
 		}
 	}
-
 }

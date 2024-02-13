@@ -1,41 +1,112 @@
 <div class="axis-view-comp" fxFlexFill>
-	<div class="loading-axis" fxLayout="column" fxFlexFill fxLayoutAlign="center center"
-		*ngIf="loadingView || !(dimensionsDatas && dimensionsDatas.matrixDatas)">
-		<mat-spinner diameter="40" color="accent" mode="indeterminate"></mat-spinner>
-		<span *ngIf="isBigJsonFile">{{ 'GLOBAL.BIG_FILES_LOADING_WARNING' | translate }}</span>
+	<div
+		class="loading-axis"
+		fxLayout="column"
+		fxFlexFill
+		fxLayoutAlign="center center"
+		*ngIf="loadingView || !(dimensionsDatas && dimensionsDatas.matrixDatas)"
+	>
+		<mat-spinner
+			diameter="40"
+			color="accent"
+			mode="indeterminate"
+		></mat-spinner>
+		<span *ngIf="isBigJsonFile">{{
+			"GLOBAL.BIG_FILES_LOADING_WARNING" | translate
+		}}</span>
 	</div>
-	<as-split [gutterSize]="7" *ngIf="!loadingView && (dimensionsDatas && dimensionsDatas.matrixDatas)" direction="horizontal"
-		(dragEnd)="onSplitDragEnd($event, 'col')">
+	<as-split
+		[gutterSize]="7"
+		*ngIf="!loadingView && dimensionsDatas && dimensionsDatas.matrixDatas"
+		direction="horizontal"
+		(dragEnd)="onSplitDragEnd($event, 'col')"
+	>
 		<as-split-area id="axis-container" [size]="sizes.col[0]">
-			<as-split [gutterSize]="7" direction="vertical" (dragEnd)="onSplitDragEnd($event, 'col0Row')"
-				*ngIf="dimensionsDatas.dimensionsTrees && viewsLayout">
-				<as-split-area [size]="sizes && sizes.col0Row[0]" order="1"
-					[visible]="viewsLayout.dimensionsViewsLayoutsVO[0].isChecked">
-					<app-axis #axisAppPos0 [sizeId]="'col0Row0Col'" [viewId]="'axisView'" [position]="0"
-						[axisLayout]="viewsLayout.dimensionsViewsLayoutsVO[0]" [dimensionsDatas]="dimensionsDatas">
+			<as-split
+				[gutterSize]="7"
+				direction="vertical"
+				(dragEnd)="onSplitDragEnd($event, 'col0Row')"
+				*ngIf="dimensionsDatas.dimensionsTrees && viewsLayout"
+			>
+				<as-split-area
+					[size]="sizes && sizes.col0Row[0]"
+					order="1"
+					[visible]="
+						viewsLayout.dimensionsViewsLayoutsVO[0].isChecked
+					"
+				>
+					<app-axis
+						#axisAppPos0
+						[sizeId]="'col0Row0Col'"
+						[viewId]="'axisView'"
+						[position]="0"
+						[axisLayout]="viewsLayout.dimensionsViewsLayoutsVO[0]"
+						[dimensionsDatas]="dimensionsDatas"
+					>
 					</app-axis>
 				</as-split-area>
-				<as-split-area [size]="sizes.col0Row[1]" order="2"
-					[visible]="viewsLayout.dimensionsViewsLayoutsVO[1].isChecked">
-					<app-axis #axisAppPos1 [sizeId]="'col0Row1Col'" [viewId]="'axisView'" [position]="1"
-						[axisLayout]="viewsLayout.dimensionsViewsLayoutsVO[1]" [dimensionsDatas]="dimensionsDatas">
+				<as-split-area
+					[size]="sizes.col0Row[1]"
+					order="2"
+					[visible]="
+						viewsLayout.dimensionsViewsLayoutsVO[1].isChecked
+					"
+				>
+					<app-axis
+						#axisAppPos1
+						[sizeId]="'col0Row1Col'"
+						[viewId]="'axisView'"
+						[position]="1"
+						[axisLayout]="viewsLayout.dimensionsViewsLayoutsVO[1]"
+						[dimensionsDatas]="dimensionsDatas"
+					>
 					</app-axis>
 				</as-split-area>
 			</as-split>
-			<as-split [gutterSize]="7" direction="vertical" class="app-axis-context-container" [hidden]="!openContextView"
-				(dragEnd)="onSplitDragEnd($event, 'col0Row')">
-				<as-split-area *ngFor="let item of dimensionsDatas.contextDimensions; let i = index" order="i+2"
-					[visible]="viewsLayout.dimensionsViewsLayoutsVO[i+2] && viewsLayout.dimensionsViewsLayoutsVO[i+2].isChecked">
-					<app-axis [sizeId]="'col0Row0Col'" [viewId]="'contextView'" [position]="i+2"
-						[axisLayout]="viewsLayout.dimensionsViewsLayoutsVO[i+2]" [dimensionsDatas]="dimensionsDatas">
+			<as-split
+				[gutterSize]="7"
+				direction="vertical"
+				class="app-axis-context-container"
+				[hidden]="!openContextView"
+				(dragEnd)="onSplitDragEnd($event, 'col0Row')"
+			>
+				<as-split-area
+					*ngFor="
+						let item of dimensionsDatas.contextDimensions;
+						let i = index
+					"
+					order="i+2"
+					[visible]="
+						viewsLayout.dimensionsViewsLayoutsVO[i + 2] &&
+						viewsLayout.dimensionsViewsLayoutsVO[i + 2].isChecked
+					"
+				>
+					<app-axis
+						[sizeId]="'col0Row0Col'"
+						[viewId]="'contextView'"
+						[position]="i + 2"
+						[axisLayout]="
+							viewsLayout.dimensionsViewsLayoutsVO[i + 2]
+						"
+						[dimensionsDatas]="dimensionsDatas"
+					>
 					</app-axis>
 				</as-split-area>
 			</as-split>
 		</as-split-area>
-		<as-split-area [size]="sizes.col[1]"
-			[visible]="viewsLayout.isDimensionsChecked || viewsLayout.isCoocurenceChecked">
-			<app-matrix-container [sizeId]="'col0Row1Col2Row'" [viewId]="'axisView'" [viewsLayout]="viewsLayout"
-				[dimensionsDatas]="dimensionsDatas">
+		<as-split-area
+			[size]="sizes.col[1]"
+			[visible]="
+				viewsLayout.isDimensionsChecked ||
+				viewsLayout.isCoocurenceChecked
+			"
+		>
+			<app-matrix-container
+				[sizeId]="'col0Row1Col2Row'"
+				[viewId]="'axisView'"
+				[viewsLayout]="viewsLayout"
+				[dimensionsDatas]="dimensionsDatas"
+			>
 			</app-matrix-container>
 		</as-split-area>
 	</as-split>

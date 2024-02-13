@@ -52,19 +52,19 @@ describe("CoVisualization", () => {
 			expect(dimensionsDatas.cellPartIndexes.length).toEqual(45057);
 			expect(dimensionsDatas.cellPartIndexes[0]).toEqual([1201, 624]);
 			expect(dimensionsDatas.currentDimensionsClusters[0].length).toEqual(
-				5071
+				5071,
 			);
 			expect(
-				dimensionsDatas.currentDimensionsClusters[0][0].bounds
+				dimensionsDatas.currentDimensionsClusters[0][0].bounds,
 			).toEqual("{1040, 1719, 1720}");
 			expect(dimensionsDatas.currentDimensionsClusters[1].length).toEqual(
-				1253
+				1253,
 			);
 			expect(
-				dimensionsDatas.currentDimensionsClusters[1][0].bounds
+				dimensionsDatas.currentDimensionsClusters[1][0].bounds,
 			).toEqual("{feat_1209}");
 			expect(dimensionsDatas.currentDimensionsTrees[0][0].id).toEqual(
-				2955
+				2955,
 			);
 			expect(dimensionsDatas.dimensions[0].initialParts).toEqual(2536);
 		});

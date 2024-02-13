@@ -1,29 +1,23 @@
-import {
-	Injectable
-} from '@angular/core';
-import {
-	HttpClient
-} from '@angular/common/http';
-import {
-	KhiopsLibraryService
-} from '../../providers/khiops-library.service';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { KhiopsLibraryService } from "../../providers/khiops-library.service";
 
 @Injectable({
-	providedIn: 'root'
+	providedIn: "root",
 })
 export class FileLoaderService {
-
 	fileLoaderDatas: {
-		isLoadingDatas: boolean,
-		datas: any,
-		isBigJsonFile: boolean,
-		loadingInfo: string
+		isLoadingDatas: boolean;
+		datas: any;
+		isBigJsonFile: boolean;
+		loadingInfo: string;
 	};
 	tmp = {};
 
 	constructor(
 		private http: HttpClient,
-		private khiopsLibraryService: KhiopsLibraryService) {
+		private khiopsLibraryService: KhiopsLibraryService,
+	) {
 		this.initialize();
 	}
 
@@ -32,7 +26,7 @@ export class FileLoaderService {
 			isLoadingDatas: false,
 			datas: undefined,
 			isBigJsonFile: false,
-			loadingInfo: ''
+			loadingInfo: "",
 		};
 	}
 
@@ -41,7 +35,6 @@ export class FileLoaderService {
 	}
 
 	debugReadDatas(fileName?: string): any {
-
 		// Visualization files
 		// ===================
 		//
@@ -65,7 +58,7 @@ export class FileLoaderService {
 		// let urlKV = './assets/mocks/kv/bi3.json';
 		// let urlKV = './assets/mocks/kv/Std_Iris_AnalysisResults.khj';
 		// let urlKV = './assets/mocks/kv/C1_AllReports.json';
-		let urlKV = './assets/mocks/kv/C0_AllReports.json';
+		let urlKV = "./assets/mocks/kv/C0_AllReports.json";
 		// let urlKV = './assets/mocks/kv/analyse_supervisee_multiclasse.json';
 		// let urlKV = './assets/mocks/kv/reg.json';
 		// let urlKV = './assets/mocks/kv/copydatas.json';
@@ -130,7 +123,8 @@ export class FileLoaderService {
 		// let urlKC = './assets/mocks/kc/VerbNounCoclustering27mo.json';
 		// let urlKC = './assets/mocks/kc/v4.json';
 		// let urlKC = './assets/mocks/kc/NovaCoclustering4mb.json';
-		let urlKC = './assets/mocks/kc/donotworkk10.1.1_id_feat_nospace_Coclustering.json';
+		let urlKC =
+			"./assets/mocks/kc/donotworkk10.1.1_id_feat_nospace_Coclustering.json";
 		// let urlKC = './assets/mocks/kc/co-3-num.json';
 		// let urlKC = './assets/mocks/kc/h-Coclustering-2-2.json';
 		// let urlKC = './assets/mocks/kc/ext-CC_Coclustering.json';
@@ -139,8 +133,8 @@ export class FileLoaderService {
 		// let urlKC = './assets/mocks/kc/CC_3_Coclustering.json';
 
 		if (fileName) {
-			 urlKV = './assets/mocks/kv/' + fileName;
-			urlKC  = './assets/mocks/kc/' + fileName;
+			urlKV = "./assets/mocks/kv/" + fileName;
+			urlKC = "./assets/mocks/kc/" + fileName;
 		}
 
 		let url;
@@ -153,65 +147,67 @@ export class FileLoaderService {
 	}
 
 	readWebFile(url: string): any {
-
 		this.fileLoaderDatas.datas = undefined;
 		this.fileLoaderDatas.isLoadingDatas = true;
 
 		return new Promise((resolve, reject) => {
+			this.http.get(url).subscribe(
+				(datas: any) => {
+					this.fileLoaderDatas.datas = datas;
 
-			this.http.get(url).subscribe((datas: any) => {
-				this.fileLoaderDatas.datas = datas;
+					this.fileLoaderDatas.datas.filename = url;
+					this.fileLoaderDatas.isLoadingDatas = false;
 
-				this.fileLoaderDatas.datas.filename = url;
-				this.fileLoaderDatas.isLoadingDatas = false;
+					if (datas) {
+						resolve(this.fileLoaderDatas.datas);
+					} else {
+						reject({
+							status: 500,
+						});
+					}
+				},
+				(error) => {
+					this.fileLoaderDatas.isLoadingDatas = false;
 
-				if (datas) {
-					resolve(this.fileLoaderDatas.datas);
-				} else {
 					reject({
-						'status': 500
+						status: 500,
 					});
-				}
-			}, (error) => {
-				this.fileLoaderDatas.isLoadingDatas = false;
-
-				reject({
-					'status': 500
-				});
-			});
-
+				},
+			);
 		});
 	}
 
 	readFile(filename) {
-
 		this.fileLoaderDatas.datas = undefined;
 		this.fileLoaderDatas.isLoadingDatas = true;
 		this.fileLoaderDatas.isBigJsonFile = false;
 
 		return new Promise((resolve, reject) => {
-			let reader = new FileReader()
+			let reader = new FileReader();
 
-			reader.addEventListener('loadend', async (e) => {
+			reader.addEventListener("loadend", async (e) => {
 				this.fileLoaderDatas.isLoadingDatas = false;
 				// @ts-ignore
-				this.fileLoaderDatas.datas = await JSON.parse(e.target.result.toString());
+				this.fileLoaderDatas.datas = await JSON.parse(
+					e.target.result.toString(),
+				);
 				this.fileLoaderDatas.datas.filename = filename;
 				resolve(this.fileLoaderDatas.datas);
 			});
-			reader.addEventListener('error', () => {
+			reader.addEventListener("error", () => {
 				reader.abort();
-				reject(new Error('failed to process file'))
+				reject(new Error("failed to process file"));
 			});
 			reader.readAsText(filename);
-		})
-
+		});
 	}
 
 	setFileHistory(application, filename) {
-		const currentLs = localStorage.getItem(this.getLSVariableName(application) + '_OPEN_FILE');
+		const currentLs = localStorage.getItem(
+			this.getLSVariableName(application) + "_OPEN_FILE",
+		);
 		let parsedLs = {
-			files: []
+			files: [],
 		};
 		if (currentLs) {
 			parsedLs = JSON.parse(currentLs);
@@ -230,22 +226,28 @@ export class FileLoaderService {
 		// add to the top of the list
 		parsedLs.files.unshift(filename);
 
-		localStorage.setItem(this.getLSVariableName(application) + '_OPEN_FILE', JSON.stringify(parsedLs));
+		localStorage.setItem(
+			this.getLSVariableName(application) + "_OPEN_FILE",
+			JSON.stringify(parsedLs),
+		);
 	}
 
 	getFileHistory(application: string) {
-		const currentLs = localStorage.getItem(this.getLSVariableName(application) + '_OPEN_FILE');
+		const currentLs = localStorage.getItem(
+			this.getLSVariableName(application) + "_OPEN_FILE",
+		);
 		if (currentLs) {
 			return JSON.parse(currentLs);
 		} else {
 			return {
-				files: []
+				files: [],
 			};
 		}
 	}
 
 	getLSVariableName(application: string): string {
-		return application === 'khiops-visualization' ? 'KHIOPS_VISUALIZATION' : 'KHIOPS_COVISUALIZATION';
+		return application === "khiops-visualization"
+			? "KHIOPS_VISUALIZATION"
+			: "KHIOPS_COVISUALIZATION";
 	}
-
 }

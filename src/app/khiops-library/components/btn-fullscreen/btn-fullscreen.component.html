@@ -1,6 +1,18 @@
-<button class="btn-fullscreen-comp" mat-stroked-button color="primary"
-	[attr.aria-label]="isFullscreen ? translate.get('ARIA.HEADER.CLOSE_FULLSCREEN') : translate.get('ARIA.HEADER.OPEN_FULLSCREEN')"
-	[matTooltip]="isFullscreen ? translate.get('GLOBAL.CLOSE_FULLSCREEN') : translate.get('GLOBAL.OPEN_FULLSCREEN')"
-		(click)="clickFullscreen()">
-		<mat-icon>{{ isFullscreen ? 'fullscreen_exit' : 'fullscreen'}}</mat-icon>
-	</button>
+<button
+	class="btn-fullscreen-comp"
+	mat-stroked-button
+	color="primary"
+	[attr.aria-label]="
+		isFullscreen
+			? translate.get('ARIA.HEADER.CLOSE_FULLSCREEN')
+			: translate.get('ARIA.HEADER.OPEN_FULLSCREEN')
+	"
+	[matTooltip]="
+		isFullscreen
+			? translate.get('GLOBAL.CLOSE_FULLSCREEN')
+			: translate.get('GLOBAL.OPEN_FULLSCREEN')
+	"
+	(click)="clickFullscreen()"
+>
+	<mat-icon>{{ isFullscreen ? "fullscreen_exit" : "fullscreen" }}</mat-icon>
+</button>

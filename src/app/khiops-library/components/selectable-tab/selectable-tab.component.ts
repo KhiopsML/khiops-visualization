@@ -3,16 +3,15 @@ import {
 	Input,
 	OnChanges,
 	ChangeDetectionStrategy,
-	SimpleChanges
-} from '@angular/core';
-import { MatTabChangeEvent } from '@angular/material/tabs';
+	SimpleChanges,
+} from "@angular/core";
+import { MatTabChangeEvent } from "@angular/material/tabs";
 
 @Component({
-	template: '',
-	changeDetection: ChangeDetectionStrategy.OnPush
+	template: "",
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectableTabComponent implements OnChanges {
-
 	@Input() selectedTab: MatTabChangeEvent;
 	tabIndex: number;
 	loadingView = true;
@@ -20,9 +19,11 @@ export class SelectableTabComponent implements OnChanges {
 	constructor() {}
 
 	ngOnChanges(changes: SimpleChanges) {
-
-		if (changes.selectedTab && changes.selectedTab.firstChange /* important to do not load when tab change to context (covisu)*/ ) {
-
+		if (
+			changes.selectedTab &&
+			changes.selectedTab
+				.firstChange /* important to do not load when tab change to context (covisu)*/
+		) {
 			this.loadingView = true;
 
 			this.loaded();
@@ -39,8 +40,7 @@ export class SelectableTabComponent implements OnChanges {
 	loadView() {
 		// on loaded, dispatch resize to refreshed graph
 		setTimeout(() => {
-			window.dispatchEvent(new Event('resize'));
+			window.dispatchEvent(new Event("resize"));
 		});
 	}
-
 }

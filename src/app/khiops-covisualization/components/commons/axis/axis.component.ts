@@ -1,38 +1,22 @@
-import {
-	Component,
-	OnInit,
-	Input,
-	ViewChild,
-} from '@angular/core';
-import {
-	AppService
-} from '@khiops-covisualization/providers/app.service';
-import {
-	DimensionViewLayoutVO
-} from '@khiops-covisualization/model/view-layout-vo';
-import {
-	VariableGraphDetailsComponent
-} from '../variable-graph-details/variable-graph-details.component';
-import {
-	DimensionVO
-} from '@khiops-library/model/dimension-vo';
-import {
-	TreeNodeVO
-} from '@khiops-covisualization/model/tree-node-vo';
-import {
-	CompositionVO
-} from '@khiops-covisualization/model/composition-vo';
-import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
+import { Component, OnInit, Input, ViewChild } from "@angular/core";
+import { AppService } from "@khiops-covisualization/providers/app.service";
+import { DimensionViewLayoutVO } from "@khiops-covisualization/model/view-layout-vo";
+import { VariableGraphDetailsComponent } from "../variable-graph-details/variable-graph-details.component";
+import { DimensionVO } from "@khiops-library/model/dimension-vo";
+import { TreeNodeVO } from "@khiops-covisualization/model/tree-node-vo";
+import { CompositionVO } from "@khiops-covisualization/model/composition-vo";
+import { DimensionsDatasVO } from "@khiops-covisualization/model/dimensions-data-vo";
 
 @Component({
-	selector: 'app-axis',
-	templateUrl: './axis.component.html',
-	styleUrls: ['./axis.component.scss']
+	selector: "app-axis",
+	templateUrl: "./axis.component.html",
+	styleUrls: ["./axis.component.scss"],
 })
 export class AxisComponent implements OnInit {
-	@ViewChild('appVariableGraphDetails', {
-		static: false
-	}) appVariableGraphDetails: VariableGraphDetailsComponent;
+	@ViewChild("appVariableGraphDetails", {
+		static: false,
+	})
+	appVariableGraphDetails: VariableGraphDetailsComponent;
 
 	@Input() viewId: string;
 	@Input() sizeId: string;
@@ -56,8 +40,7 @@ export class AxisComponent implements OnInit {
 	invertedPosition: number;
 	selectedComposition: CompositionVO;
 
-	constructor(private appService: AppService) {
-	}
+	constructor(private appService: AppService) {}
 
 	ngOnInit() {
 		this.initializeView();
@@ -71,7 +54,13 @@ export class AxisComponent implements OnInit {
 
 	onSplitDragEnd(event, item) {
 		if (event && item) {
-			this.appService.resizeAndSetSplitSizes(item, this.sizes, event.sizes, this.viewId, true);
+			this.appService.resizeAndSetSplitSizes(
+				item,
+				this.sizes,
+				event.sizes,
+				this.viewId,
+				true,
+			);
 			this.computeComponentsSizes();
 		}
 
@@ -87,7 +76,10 @@ export class AxisComponent implements OnInit {
 	 * because sizes[sizeId] is an array of visible components length
 	 */
 	computeComponentsSizes() {
-		this.viewLayout = this.appService.getViewsLayout().dimensionsViewsLayoutsVO[this.position];
+		this.viewLayout =
+			this.appService.getViewsLayout().dimensionsViewsLayoutsVO[
+				this.position
+			];
 		if (this.viewLayout) {
 			let i = 0;
 			if (this.viewLayout.isHierarchyChecked) {
@@ -98,7 +90,10 @@ export class AxisComponent implements OnInit {
 				this.column1Index = i;
 				i++;
 			}
-			if (this.viewLayout.isAnnotationChecked || this.viewLayout.isCompositionChecked) {
+			if (
+				this.viewLayout.isAnnotationChecked ||
+				this.viewLayout.isCompositionChecked
+			) {
 				this.column2Index = i;
 				i++;
 			}

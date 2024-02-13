@@ -1,33 +1,77 @@
 <div id="regression-matrix-comp" fxFlexFill fxLayout="column">
-	<div fxFlexFill fxLayout="column" *ngIf="preparation2dDatas.matrixDatas" [ngClass]="{'fullscreen': isFullscreen}">
+	<div
+		fxFlexFill
+		fxLayout="column"
+		*ngIf="preparation2dDatas.matrixDatas"
+		[ngClass]="{ fullscreen: isFullscreen }"
+	>
 		<div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
 			<div fxFlex fxLayout="row" fxLayoutAlign="start center">
 				<div fxFlex fxLayout="row" fxLayoutAlign="start center">
-					<h2 title="{{ 'TOOLTIPS.PREPARATION.REG_MATRIX.TITLE' | translate }}">
-						{{ 'GLOBAL.TARGET_VALUES' | translate }} </h2>
-					<button class="button-accent" mat-stroked-button color="accent" [matMenuTriggerFor]="matrixModesTypes">{{ matrixModes.selected.title | translate }} <em>v</em></button>
+					<h2
+						title="{{
+							'TOOLTIPS.PREPARATION.REG_MATRIX.TITLE' | translate
+						}}"
+					>
+						{{ "GLOBAL.TARGET_VALUES" | translate }}
+					</h2>
+					<button
+						class="button-accent"
+						mat-stroked-button
+						color="accent"
+						[matMenuTriggerFor]="matrixModesTypes"
+					>
+						{{ matrixModes.selected.title | translate }} <em>v</em>
+					</button>
 					<mat-menu #matrixModesTypes>
-						<button mat-menu-item *ngFor="let opt of matrixModes.types" (click)="changeMatrixMode(opt)">{{ opt.title | translate }}</button>
+						<button
+							mat-menu-item
+							*ngFor="let opt of matrixModes.types"
+							(click)="changeMatrixMode(opt)"
+						>
+							{{ opt.title | translate }}
+						</button>
 					</mat-menu>
 				</div>
 				<div fxLayout="row" fxLayoutAlign="end center">
-					<mat-button-toggle-group id="matrix-option-toggle" #group="matButtonToggleGroup"
-						[value]="matrixOptions.selected">
-						<mat-button-toggle *ngFor="let opt of matrixOptions.types" [value]="opt"
-							title="{{ 'TOOLTIPS.COMMONS.MATRIX_MODE' | translate }}" (click)="changeMatrixType(opt)">
+					<mat-button-toggle-group
+						id="matrix-option-toggle"
+						#group="matButtonToggleGroup"
+						[value]="matrixOptions.selected"
+					>
+						<mat-button-toggle
+							*ngFor="let opt of matrixOptions.types"
+							[value]="opt"
+							title="{{
+								'TOOLTIPS.COMMONS.MATRIX_MODE' | translate
+							}}"
+							(click)="changeMatrixType(opt)"
+						>
 							<span>{{ opt | translate }}</span>
 						</mat-button-toggle>
 					</mat-button-toggle-group>
 				</div>
-				<kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">
+				<kl-btn-fullscreen
+					(toggleFullscreen)="onToggleFullscreen($event)"
+				>
 				</kl-btn-fullscreen>
 			</div>
 		</div>
-		<kl-matrix-canvas #matrixCanvas fxFlex fxLayout="row" [id]="'regression-matrix-comp'"
-			(cellSelected)="onCellSelected($event)" [isAxisInverted]="preparation2dDatas.isAxisInverted"
-			(matrixAxisInverted)="onMatrixAxisInverted()" [selectedCell]="preparation2dDatas.selectedCell"
-			[inputDatas]="preparation2dDatas.matrixDatas" [graphType]="matrixOptions.selected"
-			[minMaxValues]="minMaxValues" [graphMode]="matrixModes.selected"> </kl-matrix-canvas>
+		<kl-matrix-canvas
+			#matrixCanvas
+			fxFlex
+			fxLayout="row"
+			[id]="'regression-matrix-comp'"
+			(cellSelected)="onCellSelected($event)"
+			[isAxisInverted]="preparation2dDatas.isAxisInverted"
+			(matrixAxisInverted)="onMatrixAxisInverted()"
+			[selectedCell]="preparation2dDatas.selectedCell"
+			[inputDatas]="preparation2dDatas.matrixDatas"
+			[graphType]="matrixOptions.selected"
+			[minMaxValues]="minMaxValues"
+			[graphMode]="matrixModes.selected"
+		>
+		</kl-matrix-canvas>
 	</div>
 	<kl-no-data fxFlex *ngIf="!preparation2dDatas.matrixDatas"></kl-no-data>
 </div>

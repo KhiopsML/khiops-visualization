@@ -7,14 +7,14 @@ export function setupContextTests(datas, testsValues, fileName) {
 		index++
 	) {
 		testsValues.Context.push(
-			datas.coclusteringReport?.dimensionSummaries[index]?.name
+			datas.coclusteringReport?.dimensionSummaries[index]?.name,
 		);
 
 		if (datas.coclusteringReport?.dimensionPartitions[index]?.intervals) {
 			testsValues.Context.push(
 				datas.coclusteringReport?.dimensionPartitions[
 					index
-				]?.intervals[0]?.bounds[0]?.toString()
+				]?.intervals[0]?.bounds[0]?.toString(),
 			);
 		}
 
@@ -22,7 +22,7 @@ export function setupContextTests(datas, testsValues, fileName) {
 			testsValues.Context.push(
 				datas.coclusteringReport?.dimensionPartitions[
 					index
-				]?.valueGroups[0]?.cluster[0].toString()
+				]?.valueGroups[0]?.cluster[0].toString(),
 			);
 		}
 

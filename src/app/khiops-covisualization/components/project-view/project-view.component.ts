@@ -18,7 +18,7 @@ export class ProjectViewComponent
 	appDatas: any;
 	projectSummaryDatas: InfosDatasI[];
 	onFileLoaderDataChangedCb: Function;
-	appName = 'khiops-covisualization';
+	appName = "khiops-covisualization";
 
 	// managed by selectable-tab component
 	tabIndex = 0;
@@ -37,7 +37,5 @@ export class ProjectViewComponent
 	ngOnInit() {
 		this.onFileLoaderDataChangedCb = (obj) =>
 			this.projectFileChanged.emit(obj);
-
 	}
-
 }

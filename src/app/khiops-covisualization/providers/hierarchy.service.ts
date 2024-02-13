@@ -1,21 +1,9 @@
-import {
-	Injectable
-} from "@angular/core";
-import {
-	AppService
-} from "@khiops-covisualization/providers/app.service";
-import {
-	DimensionsDatasService
-} from "@khiops-covisualization/providers/dimensions-datas.service";
-import {
-	TreenodesService
-} from "./treenodes.service";
-import {
-	DimensionVO
-} from "@khiops-library/model/dimension-vo";
-import {
-	DimensionsDatasVO
-} from "@khiops-covisualization/model/dimensions-data-vo";
+import { Injectable } from "@angular/core";
+import { AppService } from "@khiops-covisualization/providers/app.service";
+import { DimensionsDatasService } from "@khiops-covisualization/providers/dimensions-datas.service";
+import { TreenodesService } from "./treenodes.service";
+import { DimensionVO } from "@khiops-library/model/dimension-vo";
+import { DimensionsDatasVO } from "@khiops-covisualization/model/dimensions-data-vo";
 
 @Injectable({
 	providedIn: "root",
@@ -27,7 +15,7 @@ export class HierarchyService {
 	constructor(
 		private appService: AppService,
 		private dimensionsDatasService: DimensionsDatasService,
-		private treenodesService: TreenodesService
+		private treenodesService: TreenodesService,
 	) {}
 
 	initialize() {
@@ -38,7 +26,7 @@ export class HierarchyService {
 				undefined
 			) {
 				this.dimensionsDatas.dimensions[i].setHierarchyFold(
-					this.hierarchyFold[this.dimensionsDatas.dimensions[i].name]
+					this.hierarchyFold[this.dimensionsDatas.dimensions[i].name],
 				);
 			}
 		}
@@ -48,13 +36,12 @@ export class HierarchyService {
 		this.hierarchyFold[dimensionName] = state;
 
 		const dimension: DimensionVO = this.dimensionsDatas.dimensions.find(
-			(e) => e.name === dimensionName
+			(e) => e.name === dimensionName,
 		);
 		dimension.setHierarchyFold(state);
 	}
 
 	unfoldHierarchy(currentRank) {
-
 		const collapsedNodes =
 			this.treenodesService.getLeafNodesForARank(currentRank);
 
@@ -66,8 +53,7 @@ export class HierarchyService {
 		}
 		this.treenodesService.setSavedCollapsedNodes(collapsedNodes);
 
-		let datas =
-			this.treenodesService.constructSavedJson(collapsedNodes);
+		let datas = this.treenodesService.constructSavedJson(collapsedNodes);
 		this.appService.setCroppedFileDatas(datas);
 
 		this.dimensionsDatas = this.dimensionsDatasService.getDatas();

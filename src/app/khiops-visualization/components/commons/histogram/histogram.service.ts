@@ -28,10 +28,14 @@ export class HistogramService {
 		});
 
 		this.rangeXLog.min = datas[0].partition[0];
-		this.rangeXLog.negValuesCount = datas.filter(function (d: HistogramValuesI) {
+		this.rangeXLog.negValuesCount = datas.filter(function (
+			d: HistogramValuesI,
+		) {
 			return d.partition[1] < 0;
 		})?.length;
-		this.rangeXLog.posValuesCount = datas.filter(function (d: HistogramValuesI) {
+		this.rangeXLog.posValuesCount = datas.filter(function (
+			d: HistogramValuesI,
+		) {
 			return d.partition[1] > 0;
 		})?.length;
 		if (this.rangeXLog.inf) {
@@ -95,7 +99,7 @@ export class HistogramService {
 
 	computeXbarDimensions(
 		datas: HistogramValuesI[],
-		xType: string
+		xType: string,
 	): HistogramBarVO[] {
 		let bars: HistogramBarVO[] = [];
 
@@ -103,7 +107,7 @@ export class HistogramService {
 			let histogramBar = new HistogramBarVO(
 				d,
 				this.rangeXLog.middlewidth,
-				xType
+				xType,
 			);
 			if (xType === HistogramType.XLIN) {
 				histogramBar.computeXLin(bars);

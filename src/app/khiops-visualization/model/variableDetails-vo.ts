@@ -1,24 +1,22 @@
-import {
-	DimensionVO
-} from '@khiops-library/model/dimension-vo';
-import * as _ from 'lodash'; // Important to import lodash in karma
+import { DimensionVO } from "@khiops-library/model/dimension-vo";
+import * as _ from "lodash"; // Important to import lodash in karma
 
 export class VariableDetailsVO {
-
 	dataGrid: {
-		dimensions: DimensionVO[],
-		partTargetFrequencies: [], // regression or explanatory case
-		partInterests: [], // regression or explanatory case
-		cellTargetFrequencies: [], // bivariate case
-		cellInterests: [] // bivariate case
-		cellIds: [], // normal 2d case
-		cellPartIndexes: [], // normal 2d case
-		cellFrequencies: [], // normal 2d case
-		frequencies: [] // normal case
+		dimensions: DimensionVO[];
+		partTargetFrequencies: []; // regression or explanatory case
+		partInterests: []; // regression or explanatory case
+		cellTargetFrequencies: []; // bivariate case
+		cellInterests: []; // bivariate case
+		cellIds: []; // normal 2d case
+		cellPartIndexes: []; // normal 2d case
+		cellFrequencies: []; // normal 2d case
+		frequencies: []; // normal case
 	};
-	inputValues: { // regression or explanatory case
-		values: string[],
-		frequencies: string[]
+	inputValues: {
+		// regression or explanatory case
+		values: string[];
+		frequencies: string[];
 	};
 	isLimitedDatas = true;
 
@@ -26,11 +24,15 @@ export class VariableDetailsVO {
 		this.isLimitedDatas = false;
 		if (object) {
 			const clone = _.cloneDeep(object);
-			this.dataGrid = clone && clone.dataGrid || undefined;
-			this.inputValues = clone && clone.inputValues || undefined;
+			this.dataGrid = (clone && clone.dataGrid) || undefined;
+			this.inputValues = (clone && clone.inputValues) || undefined;
 
 			// Limit datas to 10000
-			if (maxDatasSize && this.inputValues && this.inputValues.values.length > maxDatasSize) {
+			if (
+				maxDatasSize &&
+				this.inputValues &&
+				this.inputValues.values.length > maxDatasSize
+			) {
 				this.inputValues.values.length = maxDatasSize;
 				this.isLimitedDatas = true;
 			}
@@ -44,5 +46,4 @@ export class VariableDetailsVO {
 	setTargetCellFrequencies(cellTargetFrequencies) {
 		this.dataGrid.cellTargetFrequencies = cellTargetFrequencies;
 	}
-
 }

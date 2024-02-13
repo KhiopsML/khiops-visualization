@@ -12,7 +12,7 @@ export class AnnotationService {
 
 	constructor(
 		private appService: AppService,
-		private dimensionsDatasService: DimensionsDatasService
+		private dimensionsDatasService: DimensionsDatasService,
 	) {
 		this.initialize();
 	}
@@ -33,7 +33,7 @@ export class AnnotationService {
 	setNodeAnnotation(
 		dimensionName: string,
 		nodeName: string,
-		annotation: string
+		annotation: string,
 	) {
 		if (!this.dimensionsDatas.annotations) {
 			this.dimensionsDatas.annotations = {};

@@ -1,14 +1,14 @@
-import {
-	Injectable
-} from '@angular/core';
-import * as _ from 'lodash'; // Important to import lodash in karma
+import { Injectable } from "@angular/core";
+import * as _ from "lodash"; // Important to import lodash in karma
 
 @Injectable({
-	providedIn: 'root'
+	providedIn: "root",
 })
 export class UtilsService {
-
-	static computeTechnicalThreshold(maxThreshold: number, dimCount: number): number {
+	static computeTechnicalThreshold(
+		maxThreshold: number,
+		dimCount: number,
+	): number {
 		return Math.ceil(Math.pow(maxThreshold, 1 / dimCount));
 	}
 
@@ -32,14 +32,14 @@ export class UtilsService {
 	}
 
 	static setWaitingCursor(time = 0) {
-		document.body.style.cursor = 'wait';
+		document.body.style.cursor = "wait";
 		setTimeout(() => {
-			document.body.style.cursor = 'default';
+			document.body.style.cursor = "default";
 		}, time);
 	}
 
 	static isLocalStorageAvailable() {
-		const test = 'test';
+		const test = "test";
 		try {
 			localStorage.setItem(test, test);
 			localStorage.removeItem(test);
@@ -54,23 +54,39 @@ export class UtilsService {
 		function changes(object, base) {
 			return _.transform(object, function (result, value, key) {
 				if (!_.isEqual(value, base[key])) {
-					result[key] = (_.isObject(value) && _.isObject(base[key])) ? changes(value, base[key]) : value;
+					result[key] =
+						_.isObject(value) && _.isObject(base[key])
+							? changes(value, base[key])
+							: value;
 				}
 			});
 		}
 		return changes(object, base);
 	}
 
-	static computeHellinger(cellFreq, totalFreqs, freqColVal, freqLineVals): [number, number] {
-		const HIij = Math.sqrt(cellFreq / totalFreqs) -
-			Math.sqrt(freqColVal / totalFreqs * freqLineVals / totalFreqs);
+	static computeHellinger(
+		cellFreq,
+		totalFreqs,
+		freqColVal,
+		freqLineVals,
+	): [number, number] {
+		const HIij =
+			Math.sqrt(cellFreq / totalFreqs) -
+			Math.sqrt(((freqColVal / totalFreqs) * freqLineVals) / totalFreqs);
 		const hellingerValue = HIij || 0;
 		const hellingerAbsoluteValue = Math.pow(HIij, 2) || 0;
 		return [hellingerValue, hellingerAbsoluteValue];
 	}
 
-	static computeMutualInfo(cellFreq, totalFreqs, freqColVal, freqLineVals): [number, boolean] {
-		let MIij = (cellFreq / totalFreqs) * Math.log((totalFreqs * cellFreq) / (freqColVal * freqLineVals));
+	static computeMutualInfo(
+		cellFreq,
+		totalFreqs,
+		freqColVal,
+		freqLineVals,
+	): [number, boolean] {
+		let MIij =
+			(cellFreq / totalFreqs) *
+			Math.log((totalFreqs * cellFreq) / (freqColVal * freqLineVals));
 		const MIijExtra = isNaN(MIij) || cellFreq === 0;
 		if (!isFinite(MIij)) {
 			MIij = 0;
@@ -78,13 +94,17 @@ export class UtilsService {
 		return [MIij, MIijExtra];
 	}
 
-	static computeExpectedFrequency(totalFreqs, freqColVal, freqLineVals): number {
-		return freqLineVals * freqColVal / totalFreqs;
+	static computeExpectedFrequency(
+		totalFreqs,
+		freqColVal,
+		freqLineVals,
+	): number {
+		return (freqLineVals * freqColVal) / totalFreqs;
 	}
 
 	static getFileNameFromPath(path) {
 		let filename;
-		filename = path.substring(path.lastIndexOf('/') + 1);
+		filename = path.substring(path.lastIndexOf("/") + 1);
 		if (!filename) {
 			filename = path.substring(path.lastIndexOf(/\\/) + 1);
 		}
@@ -98,7 +118,7 @@ export class UtilsService {
 	 */
 	static ellipsis(text: string, length: number): string {
 		if (text.length > length) {
-			return text.substring(0, length) + '...';
+			return text.substring(0, length) + "...";
 		} else {
 			return text;
 		}
@@ -183,7 +203,6 @@ export class UtilsService {
 		return sumArray;
 	}
 
-
 	/**
 	 * @param values can be a number or an array of numbers
 	 */
@@ -192,10 +211,15 @@ export class UtilsService {
 		for (let i = 0; i < arrayBLength; i++) {
 			currentColVal[i] = 0;
 			// compute the total of one line values
-			for (let j = i * arrayALength; j < i * arrayALength + arrayALength; j++) {
+			for (
+				let j = i * arrayALength;
+				j < i * arrayALength + arrayALength;
+				j++
+			) {
 				if (Array.isArray(values[j])) {
 					// sum all values if it is an array to compute cell frequency sizes
-					currentColVal[i] = currentColVal[i] + this.arraySum(values[j]);
+					currentColVal[i] =
+						currentColVal[i] + this.arraySum(values[j]);
 				} else {
 					currentColVal[i] = currentColVal[i] + values[j];
 				}
@@ -209,7 +233,11 @@ export class UtilsService {
 		for (let i = 0; i < arrayBLength; i++) {
 			currentColVal[i] = new Array(values[0].length).fill(0);
 			// compute the total of one line values
-			for (let j = i * arrayALength; j < i * arrayALength + arrayALength; j++) {
+			for (
+				let j = i * arrayALength;
+				j < i * arrayALength + arrayALength;
+				j++
+			) {
 				const valLength = values[j].length;
 				for (let k = 0; k < valLength; k++) {
 					currentColVal[i][k] = currentColVal[i][k] + values[j][k];
@@ -232,9 +260,12 @@ export class UtilsService {
 				}
 				if (Array.isArray(values[i * arrayALength + j])) {
 					// sum all values if it is an array to compute cell frequency sizes
-					currentColVal[j] = currentColVal[j] + this.arraySum(values[i * arrayALength + j]);
+					currentColVal[j] =
+						currentColVal[j] +
+						this.arraySum(values[i * arrayALength + j]);
 				} else {
-					currentColVal[j] = currentColVal[j] + values[i * arrayALength + j];
+					currentColVal[j] =
+						currentColVal[j] + values[i * arrayALength + j];
 				}
 			}
 		}
@@ -251,7 +282,8 @@ export class UtilsService {
 				}
 				const valueILength = values[i].length;
 				for (let k = 0; k < valueILength; k++) {
-					currentColVal[j][k] = currentColVal[j][k] + values[i * arrayALength + j][k];
+					currentColVal[j][k] =
+						currentColVal[j][k] + values[i * arrayALength + j][k];
 				}
 			}
 		}
@@ -282,7 +314,8 @@ export class UtilsService {
 	static generateMissingInterval(partition) {
 		// Give an interval of 5% if missing
 		if (partition[0].length === 0) {
-			const percent = (partition[partition.length - 1][1] - partition[1][0]) * 0.05;
+			const percent =
+				(partition[partition.length - 1][1] - partition[1][0]) * 0.05;
 			return [partition[1][0] - percent, partition[1][0]];
 		} else {
 			return partition[0];
@@ -296,7 +329,7 @@ export class UtilsService {
 	static generateArrayPercentsFromArrayIntervals(length): number[] {
 		const countArray = [];
 		for (let i = 0; i <= length; i++) {
-			countArray.push(i * 100 / length);
+			countArray.push((i * 100) / length);
 		}
 		return countArray;
 	}
@@ -310,7 +343,9 @@ export class UtilsService {
 		percentArray.push(0);
 		const arrayLength = array.length;
 		for (let i = 0; i < arrayLength; i++) {
-			percentArray.push((array[i] * 100 / this.arraySum(array)) + percentArray[i]);
+			percentArray.push(
+				(array[i] * 100) / this.arraySum(array) + percentArray[i],
+			);
 		}
 		return percentArray;
 	}
@@ -342,7 +377,9 @@ export class UtilsService {
 		percentArray.push(0);
 		const arrayLength = array.length;
 		for (let i = 0; i < arrayLength; i++) {
-			percentArray.push((array[i].length * 100 / arrayTotal) + percentArray[i]);
+			percentArray.push(
+				(array[i].length * 100) / arrayTotal + percentArray[i],
+			);
 		}
 		return percentArray;
 	}
@@ -352,12 +389,18 @@ export class UtilsService {
 	 * @param array of intervals
 	 * @param arrayTotal number
 	 */
-	static generateArrayPercentsFromArrayIntervalsAndTotalCount(array, arrayTotal): number[] {
+	static generateArrayPercentsFromArrayIntervalsAndTotalCount(
+		array,
+		arrayTotal,
+	): number[] {
 		const percentArray = [];
 		percentArray.push(0);
 		const arrayLength = array.length;
 		for (let i = 0; i < arrayLength; i++) {
-			percentArray.push(((array[i][1] - array[i][0]) * 100 / arrayTotal) + percentArray[i]);
+			percentArray.push(
+				((array[i][1] - array[i][0]) * 100) / arrayTotal +
+					percentArray[i],
+			);
 		}
 		return percentArray;
 	}
@@ -387,18 +430,23 @@ export class UtilsService {
 	// 	return flattenedArray;
 	// }
 
-	static getPrecisionNumber(value, exp ? ) {
-		if (typeof value === 'number' && isFinite(value)) {
+	static getPrecisionNumber(value, exp?) {
+		if (typeof value === "number" && isFinite(value)) {
 			var num = this.toPlainString(value).split(".");
-			let part1 = (num[1])
+			let part1 = num[1];
 			if (value === 0) {
-				return value
+				return value;
 			} else if (Math.abs(value) < 0.1) {
-				var zeroAfterComma = -Math.floor(Math.log10(Math.abs(value)) + 1);
-				var usefullInfo = part1.slice(zeroAfterComma, zeroAfterComma + exp)
-				var res = '0.'
-				res += "0".repeat(zeroAfterComma)
-				res += usefullInfo
+				var zeroAfterComma = -Math.floor(
+					Math.log10(Math.abs(value)) + 1,
+				);
+				var usefullInfo = part1.slice(
+					zeroAfterComma,
+					zeroAfterComma + exp,
+				);
+				var res = "0.";
+				res += "0".repeat(zeroAfterComma);
+				res += usefullInfo;
 				return this.getSign(value) + res.toString();
 			} else if (part1) {
 				let e = Number(value);
@@ -408,7 +456,7 @@ export class UtilsService {
 					decimal = 0;
 				}
 				let res = Math.round(e * Math.pow(10, exp)) / Math.pow(10, exp);
-				return res.toString()
+				return res.toString();
 			} else {
 				return value.toString();
 			}
@@ -426,14 +474,16 @@ export class UtilsService {
 	}
 
 	static toPlainString(num) {
-		return ('' + +num).replace(/(-?)(\d*)\.?(\d*)e([+-]\d+)/,
+		return ("" + +num).replace(
+			/(-?)(\d*)\.?(\d*)e([+-]\d+)/,
 			function (a, b, c, d, e) {
-				return e < 0 ?
-					//@ts-ignore
-					b + '0.' + Array(1 - e - c.length).join(0) + c + d :
-					//@ts-ignore
-					b + c + d + Array(e - d.length + 1).join(0);
-			});
+				return e < 0
+					? //@ts-ignore
+						b + "0." + Array(1 - e - c.length).join(0) + c + d
+					: //@ts-ignore
+						b + c + d + Array(e - d.length + 1).join(0);
+			},
+		);
 	}
 
 	/**
@@ -442,20 +492,25 @@ export class UtilsService {
 	 * @param parent Optional parent array
 	 * @param tree Optional result
 	 */
-	static unflatten(array, parent ? , tree ? ) {
+	static unflatten(array, parent?, tree?) {
+		tree = typeof tree !== "undefined" ? tree : [];
+		parent =
+			typeof parent !== "undefined"
+				? parent
+				: {
+						cluster: "",
+					};
 
-		tree = typeof tree !== 'undefined' ? tree : [];
-		parent = typeof parent !== 'undefined' ? parent : {
-			cluster: ''
-		};
-
-		const children = this.fastFilter(array, child => child.parentCluster === parent.cluster);
+		const children = this.fastFilter(
+			array,
+			(child) => child.parentCluster === parent.cluster,
+		);
 
 		if (!this.isEmpty(children)) {
-			if (parent.cluster === '') {
+			if (parent.cluster === "") {
 				tree = children;
 			} else {
-				parent['children'] = children;
+				parent["children"] = children;
 			}
 			const childrenLength = children.length;
 			for (let i = 0; i < childrenLength; i++) {
@@ -490,11 +545,14 @@ export class UtilsService {
 		return output;
 	}
 
-	static fastFilter(array, fn, thisArg ? ) {
+	static fastFilter(array, fn, thisArg?) {
 		const result = [],
-			test = (thisArg === undefined ? fn : function (a, b, c) {
-				return fn.call(thisArg, a, b, c);
-			});
+			test =
+				thisArg === undefined
+					? fn
+					: function (a, b, c) {
+							return fn.call(thisArg, a, b, c);
+						};
 		let i, len;
 		const arrayLength = array.length;
 		for (i = 0, len = arrayLength; i < len; i++) {
@@ -509,7 +567,6 @@ export class UtilsService {
 	 * Set default split sizes if not into local storage
 	 */
 	static setDefaultLSValues(storedSplitValues, splitSizes) {
-
 		if (storedSplitValues) {
 			const parsedSplitSizes = JSON.parse(storedSplitValues);
 			Object.keys(splitSizes).forEach((value) => {
@@ -526,7 +583,6 @@ export class UtilsService {
 		} else {
 			return splitSizes;
 		}
-
 	}
 
 	static arraySum(array) {
@@ -592,7 +648,6 @@ export class UtilsService {
 		}
 		return maxParts;
 	}
-
 
 	static findArrayIntoHash(v, h) {
 		return h.hasOwnProperty(v) ? h[v] : -1;
@@ -712,14 +767,11 @@ export class UtilsService {
 	 * }]
 	 */
 	static returnHierarchy(array, id) {
-		const s = (r, {
-			children,
-			...object
-		}) => {
+		const s = (r, { children, ...object }) => {
 			if (object.id.includes(id)) {
 				r.push({
 					...object,
-					children: []
+					children: [],
 				});
 				return r;
 			}
@@ -727,7 +779,7 @@ export class UtilsService {
 			if (children.length) {
 				r.push({
 					...object,
-					children
+					children,
 				});
 			}
 			return r;
@@ -757,9 +809,9 @@ export class UtilsService {
 				b = parseInt(hex.slice(5, 7), 16);
 
 			if (alpha) {
-				return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + alpha + ')';
+				return "rgba(" + r + ", " + g + ", " + b + ", " + alpha + ")";
 			} else {
-				return 'rgb(' + r + ', ' + g + ', ' + b + ')';
+				return "rgb(" + r + ", " + g + ", " + b + ")";
 			}
 		} else {
 			return;
@@ -795,12 +847,11 @@ export class UtilsService {
 		return indexes;
 	}
 
-
 	/**
 	 * Simple object check.
 	 */
 	static isObject(item) {
-		return (item && typeof item === 'object' && !Array.isArray(item));
+		return item && typeof item === "object" && !Array.isArray(item);
 	}
 
 	/**
@@ -819,13 +870,13 @@ export class UtilsService {
 				if (this.isObject(source[key])) {
 					if (!target[key]) {
 						Object.assign(target, {
-							[key]: {}
+							[key]: {},
 						});
 					}
 					this.mergeDeep(target[key], source[key]);
 				} else {
 					Object.assign(target, {
-						[key]: source[key]
+						[key]: source[key],
 					});
 				}
 			}
@@ -833,5 +884,4 @@ export class UtilsService {
 
 		return this.mergeDeep(target, ...sources);
 	}
-
 }

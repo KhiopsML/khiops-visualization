@@ -1,5 +1,4 @@
 export class CoocurenceCellVO {
-
 	id: string;
 	_id: string;
 	frequency: number;
@@ -11,5 +10,4 @@ export class CoocurenceCellVO {
 		this.frequency = undefined;
 		this.coverage = undefined;
 	}
-
 }

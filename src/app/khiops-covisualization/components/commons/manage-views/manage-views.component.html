@@ -1,61 +1,178 @@
 <div id="manage-views-comp" fxFlexFill #manageViews fxLayout="column">
 	<div fxLayout="row" id="manage-views-header" fxLayoutAlign="center center">
-		<h2 fxFlex>{{ 'GLOBAL.VIEWS_MANAGER' | translate | uppercase }}</h2>
-		<button mat-stroked-button (click)="onClickOnCancel()">{{ 'GLOBAL.CANCEL' | translate }}</button>
-		<button mat-flat-button (click)="onClickOnSave()" color="primary">{{ 'GLOBAL.SAVE' | translate }}</button>
+		<h2 fxFlex>{{ "GLOBAL.VIEWS_MANAGER" | translate | uppercase }}</h2>
+		<button mat-stroked-button (click)="onClickOnCancel()">
+			{{ "GLOBAL.CANCEL" | translate }}
+		</button>
+		<button mat-flat-button (click)="onClickOnSave()" color="primary">
+			{{ "GLOBAL.SAVE" | translate }}
+		</button>
 	</div>
 	<div id="manage-views-content" fxLayout="row">
 		<div fxLayout="column" fxFlex="80">
-			<div *ngFor="let dimensionLayout of viewsLayout.dimensionsViewsLayoutsVO; let dimIndex = index">
-				<div *ngIf="isDimVisible[dimIndex]" class="views-container"
-					[ngClass]="{'disabled': !dimensionLayout.isChecked}">
-					<div class="box box-dimension" fxFlex="20" fxLayoutAlign="center center"
-						[ngClass]="{'disabled': !dimensionLayout.isChecked}" (click)="toggleDimension(dimensionLayout)">
-						<mat-checkbox [checked]="dimensionLayout.isChecked">{{dimensionLayout.name}}
+			<div
+				*ngFor="
+					let dimensionLayout of viewsLayout.dimensionsViewsLayoutsVO;
+					let dimIndex = index
+				"
+			>
+				<div
+					*ngIf="isDimVisible[dimIndex]"
+					class="views-container"
+					[ngClass]="{ disabled: !dimensionLayout.isChecked }"
+				>
+					<div
+						class="box box-dimension"
+						fxFlex="20"
+						fxLayoutAlign="center center"
+						[ngClass]="{ disabled: !dimensionLayout.isChecked }"
+						(click)="toggleDimension(dimensionLayout)"
+					>
+						<mat-checkbox [checked]="dimensionLayout.isChecked"
+							>{{ dimensionLayout.name }}
 						</mat-checkbox>
 					</div>
-					<div class="box" matRipple [matRippleColor]="matRippleColor" fxLayoutAlign="center center"
-						fxFlex="15" (click)="dimensionLayout.isHierarchyChecked = !dimensionLayout.isHierarchyChecked"
-						[ngClass]="{'disabled': !dimensionLayout.isHierarchyChecked}">
-						{{ 'GLOBAL.HIERARCHY' | translate }}</div>
-					<div class="box" matRipple [matRippleColor]="matRippleColor" fxLayoutAlign="center center"
-						fxFlex="15" (click)="dimensionLayout.isClustersChecked = !dimensionLayout.isClustersChecked"
-						[ngClass]="{'disabled': !dimensionLayout.isClustersChecked}">
-						{{ 'GLOBAL.CURRENT_CLUSTERS' | translate }}</div>
-					<div fxFlex="20" fxLayout="column" class="parent-box">
-						<div class="box child-box" matRipple [matRippleColor]="matRippleColor"
-							fxLayoutAlign="center center" fxFlex
-							[ngClass]="{'disabled': !dimensionLayout.isAnnotationChecked}"
-							(click)="dimensionLayout.isAnnotationChecked = !dimensionLayout.isAnnotationChecked">
-							{{ 'GLOBAL.ANNOTATION' | translate }}</div>
-						<div class="box child-box" matRipple [matRippleColor]="matRippleColor"
-							fxLayoutAlign="center center" fxFlex
-							[ngClass]="{'disabled': !dimensionLayout.isCompositionChecked}"
-							(click)="dimensionLayout.isCompositionChecked = !dimensionLayout.isCompositionChecked">
-							{{ 'GLOBAL.COMPOSITION' | translate }}</div>
-					</div>
-					<div class="box" matRipple [matRippleColor]="matRippleColor" fxLayoutAlign="center center"
+					<div
+						class="box"
+						matRipple
+						[matRippleColor]="matRippleColor"
+						fxLayoutAlign="center center"
 						fxFlex="15"
-						(click)="dimensionLayout.isExternalDataChecked = !dimensionLayout.isExternalDataChecked"
-						[ngClass]="{'disabled': !dimensionLayout.isExternalDataChecked}">
-						{{ 'GLOBAL.EXTERNAL_DATA' | translate }}</div>
-					<div class="box" matRipple [matRippleColor]="matRippleColor" fxLayoutAlign="center center" *ngIf="!isContextView"
-						fxFlex="15" [ngClass]="{'disabled': !dimensionLayout.isDistributionChecked}"
-						(click)="dimensionLayout.isDistributionChecked = !dimensionLayout.isDistributionChecked">
-						{{ 'GLOBAL.DISTRIBUTION' | translate }}</div>
+						(click)="
+							dimensionLayout.isHierarchyChecked =
+								!dimensionLayout.isHierarchyChecked
+						"
+						[ngClass]="{
+							disabled: !dimensionLayout.isHierarchyChecked
+						}"
+					>
+						{{ "GLOBAL.HIERARCHY" | translate }}
+					</div>
+					<div
+						class="box"
+						matRipple
+						[matRippleColor]="matRippleColor"
+						fxLayoutAlign="center center"
+						fxFlex="15"
+						(click)="
+							dimensionLayout.isClustersChecked =
+								!dimensionLayout.isClustersChecked
+						"
+						[ngClass]="{
+							disabled: !dimensionLayout.isClustersChecked
+						}"
+					>
+						{{ "GLOBAL.CURRENT_CLUSTERS" | translate }}
+					</div>
+					<div fxFlex="20" fxLayout="column" class="parent-box">
+						<div
+							class="box child-box"
+							matRipple
+							[matRippleColor]="matRippleColor"
+							fxLayoutAlign="center center"
+							fxFlex
+							[ngClass]="{
+								disabled: !dimensionLayout.isAnnotationChecked
+							}"
+							(click)="
+								dimensionLayout.isAnnotationChecked =
+									!dimensionLayout.isAnnotationChecked
+							"
+						>
+							{{ "GLOBAL.ANNOTATION" | translate }}
+						</div>
+						<div
+							class="box child-box"
+							matRipple
+							[matRippleColor]="matRippleColor"
+							fxLayoutAlign="center center"
+							fxFlex
+							[ngClass]="{
+								disabled: !dimensionLayout.isCompositionChecked
+							}"
+							(click)="
+								dimensionLayout.isCompositionChecked =
+									!dimensionLayout.isCompositionChecked
+							"
+						>
+							{{ "GLOBAL.COMPOSITION" | translate }}
+						</div>
+					</div>
+					<div
+						class="box"
+						matRipple
+						[matRippleColor]="matRippleColor"
+						fxLayoutAlign="center center"
+						fxFlex="15"
+						(click)="
+							dimensionLayout.isExternalDataChecked =
+								!dimensionLayout.isExternalDataChecked
+						"
+						[ngClass]="{
+							disabled: !dimensionLayout.isExternalDataChecked
+						}"
+					>
+						{{ "GLOBAL.EXTERNAL_DATA" | translate }}
+					</div>
+					<div
+						class="box"
+						matRipple
+						[matRippleColor]="matRippleColor"
+						fxLayoutAlign="center center"
+						*ngIf="!isContextView"
+						fxFlex="15"
+						[ngClass]="{
+							disabled: !dimensionLayout.isDistributionChecked
+						}"
+						(click)="
+							dimensionLayout.isDistributionChecked =
+								!dimensionLayout.isDistributionChecked
+						"
+					>
+						{{ "GLOBAL.DISTRIBUTION" | translate }}
+					</div>
 				</div>
 			</div>
 		</div>
-		<div fxLayout="column" class="views-container" id="views-container-right" fxFlex="20"
-			[ngClass]="{'disabled': !viewsLayout.isDimensionsChecked && !viewsLayout.isCoocurenceChecked }">
-			<div class="box" matRipple [matRippleColor]="matRippleColor" fxLayoutAlign="center center" fxFlex="30"
-				(click)="viewsLayout.isDimensionsChecked = !viewsLayout.isDimensionsChecked"
-				[ngClass]="{'disabled': !viewsLayout.isDimensionsChecked}">
-				{{ 'GLOBAL.DIMENSIONS' | translate }}</div>
-			<div class="box" matRipple [matRippleColor]="matRippleColor" fxLayoutAlign="center center" fxFlex="70"
-				(click)="viewsLayout.isCoocurenceChecked = !viewsLayout.isCoocurenceChecked"
-				[ngClass]="{'disabled': !viewsLayout.isCoocurenceChecked}">
-				{{ 'GLOBAL.COOCURENCE' | translate }}</div>
+		<div
+			fxLayout="column"
+			class="views-container"
+			id="views-container-right"
+			fxFlex="20"
+			[ngClass]="{
+				disabled:
+					!viewsLayout.isDimensionsChecked &&
+					!viewsLayout.isCoocurenceChecked
+			}"
+		>
+			<div
+				class="box"
+				matRipple
+				[matRippleColor]="matRippleColor"
+				fxLayoutAlign="center center"
+				fxFlex="30"
+				(click)="
+					viewsLayout.isDimensionsChecked =
+						!viewsLayout.isDimensionsChecked
+				"
+				[ngClass]="{ disabled: !viewsLayout.isDimensionsChecked }"
+			>
+				{{ "GLOBAL.DIMENSIONS" | translate }}
+			</div>
+			<div
+				class="box"
+				matRipple
+				[matRippleColor]="matRippleColor"
+				fxLayoutAlign="center center"
+				fxFlex="70"
+				(click)="
+					viewsLayout.isCoocurenceChecked =
+						!viewsLayout.isCoocurenceChecked
+				"
+				[ngClass]="{ disabled: !viewsLayout.isCoocurenceChecked }"
+			>
+				{{ "GLOBAL.COOCURENCE" | translate }}
+			</div>
 		</div>
 	</div>
 </div>

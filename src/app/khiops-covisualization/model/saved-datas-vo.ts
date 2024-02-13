@@ -31,7 +31,7 @@ export class SavedDatasVO {
 		conditionalOnContext?,
 		matrixOption?,
 		matrixMode?,
-		isAxisInverted?
+		isAxisInverted?,
 	) {
 		this.viewsLayout = viewsLayout;
 		this.splitSizes = splitSizes;

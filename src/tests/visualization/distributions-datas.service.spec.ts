@@ -1,118 +1,146 @@
-import {
-	TestBed
-} from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 
-import {
-	DistributionDatasService
-} from '@khiops-visualization/providers/distribution-datas.service';
-import {
-	HttpClientModule
-} from '@angular/common/http';
-import {
-	AppService
-} from '@khiops-visualization/providers/app.service';
-import * as _ from 'lodash'; // Important to import lodash in karma
-import {
-	PreparationDatasService
-} from '@khiops-visualization/providers/preparation-datas.service';
-import {
-	TreePreparationDatasService
-} from '@khiops-visualization/providers/tree-preparation-datas.service';
-import { REPORTS } from '@khiops-library/enum/reports';
-import { TYPES } from '@khiops-library/enum/types';
+import { DistributionDatasService } from "@khiops-visualization/providers/distribution-datas.service";
+import { HttpClientModule } from "@angular/common/http";
+import { AppService } from "@khiops-visualization/providers/app.service";
+import * as _ from "lodash"; // Important to import lodash in karma
+import { PreparationDatasService } from "@khiops-visualization/providers/preparation-datas.service";
+import { TreePreparationDatasService } from "@khiops-visualization/providers/tree-preparation-datas.service";
+import { REPORTS } from "@khiops-library/enum/reports";
+import { TYPES } from "@khiops-library/enum/types";
 
 let distributionDatasService: DistributionDatasService;
 let preparationDatasService: PreparationDatasService;
 let treePreparationDatasService: TreePreparationDatasService;
 let appService: AppService;
 
-describe('Visualization', () => {
-	describe('DistributionDatasService', () => {
+describe("Visualization", () => {
+	describe("DistributionDatasService", () => {
 		beforeEach(() => {
 			TestBed.configureTestingModule({
-				imports: [
-					HttpClientModule,
-				]
+				imports: [HttpClientModule],
 			});
 
 			// Inject services
 			distributionDatasService = TestBed.inject(DistributionDatasService);
 			preparationDatasService = TestBed.inject(PreparationDatasService);
-			treePreparationDatasService = TestBed.inject(TreePreparationDatasService);
-			distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
+			treePreparationDatasService = TestBed.inject(
+				TreePreparationDatasService,
+			);
+			distributionDatasService.setPreparationSource(
+				REPORTS.PREPARATION_REPORT,
+			);
 			appService = TestBed.inject(AppService);
 		});
 
-		it('should be created', () => {
+		it("should be created", () => {
 			expect(distributionDatasService).toBeTruthy();
 		});
 
-		it('appService should be created', () => {
+		it("appService should be created", () => {
 			expect(appService).toBeTruthy();
 		});
 
-		it('getTargetDistributionGraphDatas should return valid datas [C100_AllReports, Numerical, R1]', () => {
-
-			const fileDatas = require('../../assets/mocks/kv/C100_AllReports.json');
+		it("getTargetDistributionGraphDatas should return valid datas [C100_AllReports, Numerical, R1]", () => {
+			const fileDatas = require("../../assets/mocks/kv/C100_AllReports.json");
 			appService.setFileDatas(fileDatas);
 
 			preparationDatasService.initialize();
 			distributionDatasService.initialize();
-			distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
+			distributionDatasService.setPreparationSource(
+				REPORTS.PREPARATION_REPORT,
+			);
 
-			preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[0], REPORTS.PREPARATION_REPORT);
-			const selectedVariable = preparationDatasService.getSelectedVariable(REPORTS.PREPARATION_REPORT);
-			const res = distributionDatasService.getTargetDistributionGraphDatas(selectedVariable);
+			preparationDatasService.setSelectedVariable(
+				fileDatas.preparationReport.variablesStatistics[0],
+				REPORTS.PREPARATION_REPORT,
+			);
+			const selectedVariable =
+				preparationDatasService.getSelectedVariable(
+					REPORTS.PREPARATION_REPORT,
+				);
+			const res =
+				distributionDatasService.getTargetDistributionGraphDatas(
+					selectedVariable,
+				);
 
 			expect(res.datasets[0].data[0]).toEqual(45.101424849088026);
-
 		});
 
-		it('getTargetDistributionGraphDatas should return valid datas [C100_AllReports, Numerical, R41]', () => {
-
-			const fileDatas = require('../../assets/mocks/kv/C100_AllReports.json');
+		it("getTargetDistributionGraphDatas should return valid datas [C100_AllReports, Numerical, R41]", () => {
+			const fileDatas = require("../../assets/mocks/kv/C100_AllReports.json");
 			appService.setFileDatas(fileDatas);
 
 			preparationDatasService.initialize();
 			distributionDatasService.initialize();
-			distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
+			distributionDatasService.setPreparationSource(
+				REPORTS.PREPARATION_REPORT,
+			);
 
-			preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[40], REPORTS.PREPARATION_REPORT);
-			const selectedVariable = preparationDatasService.getSelectedVariable(REPORTS.PREPARATION_REPORT);
-			const res = distributionDatasService.getTargetDistributionGraphDatas(selectedVariable, TYPES.LIFT);
+			preparationDatasService.setSelectedVariable(
+				fileDatas.preparationReport.variablesStatistics[40],
+				REPORTS.PREPARATION_REPORT,
+			);
+			const selectedVariable =
+				preparationDatasService.getSelectedVariable(
+					REPORTS.PREPARATION_REPORT,
+				);
+			const res =
+				distributionDatasService.getTargetDistributionGraphDatas(
+					selectedVariable,
+					TYPES.LIFT,
+				);
 
 			expect(res.datasets[0].data[0]).toEqual(1.0250084657655503);
-
 		});
 
-		it('getdistributionGraphDatas should return valid datas [C100_AllReports, Numerical, R2]', () => {
-
-			const fileDatas = require('../../assets/mocks/kv/C100_AllReports.json');
+		it("getdistributionGraphDatas should return valid datas [C100_AllReports, Numerical, R2]", () => {
+			const fileDatas = require("../../assets/mocks/kv/C100_AllReports.json");
 			appService.setFileDatas(fileDatas);
 
 			preparationDatasService.initialize();
 			distributionDatasService.initialize();
-			distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
+			distributionDatasService.setPreparationSource(
+				REPORTS.PREPARATION_REPORT,
+			);
 
-			preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[1], REPORTS.PREPARATION_REPORT);
-			const selectedVariable = preparationDatasService.getSelectedVariable(REPORTS.PREPARATION_REPORT);
-			const res = distributionDatasService.getdistributionGraphDatas(selectedVariable);
+			preparationDatasService.setSelectedVariable(
+				fileDatas.preparationReport.variablesStatistics[1],
+				REPORTS.PREPARATION_REPORT,
+			);
+			const selectedVariable =
+				preparationDatasService.getSelectedVariable(
+					REPORTS.PREPARATION_REPORT,
+				);
+			const res =
+				distributionDatasService.getdistributionGraphDatas(
+					selectedVariable,
+				);
 			expect(res.datasets[0].data[0]).toEqual(50.012209523809524);
-
 		});
 
-		it('getdistributionGraphDatas should return valid datas [defaultGroup, Numerical, R1, Missing informations Non supervised]', () => {
-
-			const fileDatas = require('../../assets/mocks/kv/defaultGroup.json');
+		it("getdistributionGraphDatas should return valid datas [defaultGroup, Numerical, R1, Missing informations Non supervised]", () => {
+			const fileDatas = require("../../assets/mocks/kv/defaultGroup.json");
 			appService.setFileDatas(fileDatas);
 
 			preparationDatasService.initialize();
 			distributionDatasService.initialize();
-			distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
+			distributionDatasService.setPreparationSource(
+				REPORTS.PREPARATION_REPORT,
+			);
 
-			preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[0], REPORTS.PREPARATION_REPORT);
-			const selectedVariable = preparationDatasService.getSelectedVariable(REPORTS.PREPARATION_REPORT);
-			const res = distributionDatasService.getHistogramGraphDatas(selectedVariable);
+			preparationDatasService.setSelectedVariable(
+				fileDatas.preparationReport.variablesStatistics[0],
+				REPORTS.PREPARATION_REPORT,
+			);
+			const selectedVariable =
+				preparationDatasService.getSelectedVariable(
+					REPORTS.PREPARATION_REPORT,
+				);
+			const res =
+				distributionDatasService.getHistogramGraphDatas(
+					selectedVariable,
+				);
 
 			expect(res[0].frequency).toEqual(1263);
 			expect(res[0].logValue).toEqual(-5.167337100368651);
@@ -120,133 +148,186 @@ describe('Visualization', () => {
 			expect(res[0].value).toEqual(0.0000068024114898816155);
 		});
 
-		it('getdistributionGraphDatas should return valid datas [C100_AllReports, Numerical, R15]', () => {
-
-			const fileDatas = require('../../assets/mocks/kv/C100_AllReports.json');
+		it("getdistributionGraphDatas should return valid datas [C100_AllReports, Numerical, R15]", () => {
+			const fileDatas = require("../../assets/mocks/kv/C100_AllReports.json");
 			appService.setFileDatas(fileDatas);
 
 			preparationDatasService.initialize();
 			distributionDatasService.initialize();
-			distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
+			distributionDatasService.setPreparationSource(
+				REPORTS.PREPARATION_REPORT,
+			);
 
-			preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[14], REPORTS.PREPARATION_REPORT);
-			const selectedVariable = preparationDatasService.getSelectedVariable(REPORTS.PREPARATION_REPORT);
-			const res = distributionDatasService.getdistributionGraphDatas(selectedVariable);
+			preparationDatasService.setSelectedVariable(
+				fileDatas.preparationReport.variablesStatistics[14],
+				REPORTS.PREPARATION_REPORT,
+			);
+			const selectedVariable =
+				preparationDatasService.getSelectedVariable(
+					REPORTS.PREPARATION_REPORT,
+				);
+			const res =
+				distributionDatasService.getdistributionGraphDatas(
+					selectedVariable,
+				);
 			expect(res.datasets[0].data[0]).toEqual(49.042657142857145);
 		});
 
-		it('getdistributionGraphDatas should return valid datas [irisU, Categorical, R1]', () => {
-
-			const fileDatas = require('../../assets/mocks/kv/irisU.json');
+		it("getdistributionGraphDatas should return valid datas [irisU, Categorical, R1]", () => {
+			const fileDatas = require("../../assets/mocks/kv/irisU.json");
 			appService.setFileDatas(fileDatas);
 
 			preparationDatasService.initialize();
 			distributionDatasService.initialize();
-			distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
+			distributionDatasService.setPreparationSource(
+				REPORTS.PREPARATION_REPORT,
+			);
 
-			preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[0], REPORTS.PREPARATION_REPORT);
-			const selectedVariable = preparationDatasService.getSelectedVariable(REPORTS.PREPARATION_REPORT);
-			const res = distributionDatasService.getdistributionGraphDatas(selectedVariable);
+			preparationDatasService.setSelectedVariable(
+				fileDatas.preparationReport.variablesStatistics[0],
+				REPORTS.PREPARATION_REPORT,
+			);
+			const selectedVariable =
+				preparationDatasService.getSelectedVariable(
+					REPORTS.PREPARATION_REPORT,
+				);
+			const res =
+				distributionDatasService.getdistributionGraphDatas(
+					selectedVariable,
+				);
 			expect(res.datasets[0].data[0]).toEqual(37.37373737373738);
-
 		});
 
-		it('getdistributionGraphDatas should return valid datas [new-hyper-tree, treePreparationReport, R1]', () => {
-
-			const fileDatas = require('../../assets/mocks/kv/new-hyper-tree.json');
+		it("getdistributionGraphDatas should return valid datas [new-hyper-tree, treePreparationReport, R1]", () => {
+			const fileDatas = require("../../assets/mocks/kv/new-hyper-tree.json");
 			appService.setFileDatas(fileDatas);
 
 			preparationDatasService.initialize();
 			distributionDatasService.initialize();
-			distributionDatasService.setPreparationSource(REPORTS.TREE_PREPARATION_REPORT);
+			distributionDatasService.setPreparationSource(
+				REPORTS.TREE_PREPARATION_REPORT,
+			);
 
-			preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[0], REPORTS.PREPARATION_REPORT);
-			const selectedVariable = preparationDatasService.getSelectedVariable(REPORTS.PREPARATION_REPORT);
-			const res = distributionDatasService.getdistributionGraphDatas(selectedVariable);
+			preparationDatasService.setSelectedVariable(
+				fileDatas.preparationReport.variablesStatistics[0],
+				REPORTS.PREPARATION_REPORT,
+			);
+			const selectedVariable =
+				preparationDatasService.getSelectedVariable(
+					REPORTS.PREPARATION_REPORT,
+				);
+			const res =
+				distributionDatasService.getdistributionGraphDatas(
+					selectedVariable,
+				);
 			expect(res.datasets[0].data[0]).toEqual(27.55896295429274);
-
 		});
 
-		it('getTreeNodeTargetDistributionGraphDatas should return valid datas [new-hyper-tree, treePreparationReport, R1]', () => {
-
-			const fileDatas = require('../../assets/mocks/kv/new-hyper-tree.json');
+		it("getTreeNodeTargetDistributionGraphDatas should return valid datas [new-hyper-tree, treePreparationReport, R1]", () => {
+			const fileDatas = require("../../assets/mocks/kv/new-hyper-tree.json");
 			appService.setFileDatas(fileDatas);
 
 			treePreparationDatasService.initialize();
 			distributionDatasService.initialize();
-			distributionDatasService.setPreparationSource(REPORTS.TREE_PREPARATION_REPORT);
+			distributionDatasService.setPreparationSource(
+				REPORTS.TREE_PREPARATION_REPORT,
+			);
 
-			treePreparationDatasService.setSelectedVariable(fileDatas.treePreparationReport.variablesStatistics[0]);
+			treePreparationDatasService.setSelectedVariable(
+				fileDatas.treePreparationReport.variablesStatistics[0],
+			);
 			treePreparationDatasService.initSelectedNodes();
 			const selectedNode = treePreparationDatasService.getSelectedNode();
-			const res = distributionDatasService.getTreeNodeTargetDistributionGraphDatas(selectedNode);
+			const res =
+				distributionDatasService.getTreeNodeTargetDistributionGraphDatas(
+					selectedNode,
+				);
 			expect(res.datasets[0].extra[0].extra.value).toEqual(5074);
 		});
 
-
-		it('getTreeNodeTargetDistributionGraphDatas should return valid datas [tree-education_AllReports, R1, L16]', () => {
-
-			const fileDatas = require('../../assets/mocks/kv/tree-education_AllReports.json');
+		it("getTreeNodeTargetDistributionGraphDatas should return valid datas [tree-education_AllReports, R1, L16]", () => {
+			const fileDatas = require("../../assets/mocks/kv/tree-education_AllReports.json");
 			appService.setFileDatas(fileDatas);
 
 			treePreparationDatasService.initialize();
 			distributionDatasService.initialize();
-			distributionDatasService.setPreparationSource(REPORTS.TREE_PREPARATION_REPORT);
+			distributionDatasService.setPreparationSource(
+				REPORTS.TREE_PREPARATION_REPORT,
+			);
 
-			treePreparationDatasService.setSelectedVariable(fileDatas.treePreparationReport.variablesStatistics[0]);
+			treePreparationDatasService.setSelectedVariable(
+				fileDatas.treePreparationReport.variablesStatistics[0],
+			);
 			treePreparationDatasService.initSelectedNodes();
-			const nodeToSelect = treePreparationDatasService.getNodeFromName('L16');
+			const nodeToSelect =
+				treePreparationDatasService.getNodeFromName("L16");
 			treePreparationDatasService.setSelectedNode(nodeToSelect, true);
 			const selectedNode = treePreparationDatasService.getSelectedNode();
-			const res = distributionDatasService.getTreeNodeTargetDistributionGraphDatas(selectedNode);
+			const res =
+				distributionDatasService.getTreeNodeTargetDistributionGraphDatas(
+					selectedNode,
+				);
 			// First value (9th) must be at index 6
 			// https://github.com/khiopsrelease/kv-release/issues/46
 			expect(res.datasets[6].extra[0].extra.value).toEqual(1);
-
 		});
 
-		it('getHistogramGraphDatas should return valid datas [ylogAdultAllReports, R1]', () => {
-
-			const fileDatas = require('../../assets/mocks/kv/ylogAdultAllReports.json');
+		it("getHistogramGraphDatas should return valid datas [ylogAdultAllReports, R1]", () => {
+			const fileDatas = require("../../assets/mocks/kv/ylogAdultAllReports.json");
 			appService.setFileDatas(fileDatas);
 
 			preparationDatasService.initialize();
 			distributionDatasService.initialize();
-			distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
+			distributionDatasService.setPreparationSource(
+				REPORTS.PREPARATION_REPORT,
+			);
 
-			preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[0], REPORTS.PREPARATION_REPORT);
-			const selectedVariable = preparationDatasService.getSelectedVariable(REPORTS.PREPARATION_REPORT);
-			const res = distributionDatasService.getHistogramGraphDatas(selectedVariable);
+			preparationDatasService.setSelectedVariable(
+				fileDatas.preparationReport.variablesStatistics[0],
+				REPORTS.PREPARATION_REPORT,
+			);
+			const selectedVariable =
+				preparationDatasService.getSelectedVariable(
+					REPORTS.PREPARATION_REPORT,
+				);
+			const res =
+				distributionDatasService.getHistogramGraphDatas(
+					selectedVariable,
+				);
 
 			expect(res[0].frequency).toEqual(595);
-			expect(res[0].logValue).toEqual(
-				-1.9142764735569882);
+			expect(res[0].logValue).toEqual(-1.9142764735569882);
 			expect(res[0].partition).toEqual([16.5, 17.5]);
 			expect(res[0].value).toEqual(0.012182138323573974);
-
 		});
 
-		it('getHistogramGraphDatas should return valid datas [ylogAdultAllReports, R3]', () => {
-
-			const fileDatas = require('../../assets/mocks/kv/ylogAdultAllReports.json');
+		it("getHistogramGraphDatas should return valid datas [ylogAdultAllReports, R3]", () => {
+			const fileDatas = require("../../assets/mocks/kv/ylogAdultAllReports.json");
 			appService.setFileDatas(fileDatas);
 
 			preparationDatasService.initialize();
 			distributionDatasService.initialize();
-			distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
+			distributionDatasService.setPreparationSource(
+				REPORTS.PREPARATION_REPORT,
+			);
 
-			preparationDatasService.setSelectedVariable(fileDatas.preparationReport.variablesStatistics[2], REPORTS.PREPARATION_REPORT);
-			const selectedVariable = preparationDatasService.getSelectedVariable(REPORTS.PREPARATION_REPORT);
-			const res = distributionDatasService.getHistogramGraphDatas(selectedVariable);
+			preparationDatasService.setSelectedVariable(
+				fileDatas.preparationReport.variablesStatistics[2],
+				REPORTS.PREPARATION_REPORT,
+			);
+			const selectedVariable =
+				preparationDatasService.getSelectedVariable(
+					REPORTS.PREPARATION_REPORT,
+				);
+			const res =
+				distributionDatasService.getHistogramGraphDatas(
+					selectedVariable,
+				);
 
 			expect(res[0].frequency).toEqual(46560);
-			expect(res[0].logValue).toEqual(
-				-0.020780467643705575);
+			expect(res[0].logValue).toEqual(-0.020780467643705575);
 			expect(res[0].partition).toEqual([-0.5, 0.5]);
 			expect(res[0].value).toEqual(0.9532779165472339);
-
 		});
-
 	});
-
 });

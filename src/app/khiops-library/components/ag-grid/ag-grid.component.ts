@@ -10,23 +10,13 @@ import {
 	OnChanges,
 	OnInit,
 	ElementRef,
-	NgZone
-} from '@angular/core';
-import {
-	AgGridAngular
-} from '@ag-grid-community/angular';
-import {
-	SelectableComponent
-} from '@khiops-library/components/selectable/selectable.component';
-import {
-	SelectableService
-} from '@khiops-library/components/selectable/selectable.service';
-import {
-	TranslateService
-} from '@ngstack/translate';
-import {
-	KhiopsLibraryService
-} from '@khiops-library/providers/khiops-library.service';
+	NgZone,
+} from "@angular/core";
+import { AgGridAngular } from "@ag-grid-community/angular";
+import { SelectableComponent } from "@khiops-library/components/selectable/selectable.component";
+import { SelectableService } from "@khiops-library/components/selectable/selectable.service";
+import { TranslateService } from "@ngstack/translate";
+import { KhiopsLibraryService } from "@khiops-library/providers/khiops-library.service";
 import {
 	Module,
 	GridOptions,
@@ -34,27 +24,28 @@ import {
 	RowNode,
 	ColDef,
 	ColumnResizedEvent,
-	Column
-} from '@ag-grid-community/all-modules';
-import {
-	UtilsService
-} from '@khiops-library/providers/utils.service';
-import _ from 'lodash';
-import { ConfigService } from '@khiops-library/providers/config.service';
-import { TYPES } from '@khiops-library/enum/types';
-import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
-import { MatCheckboxChange } from '@angular/material/checkbox';
+	Column,
+} from "@ag-grid-community/all-modules";
+import { UtilsService } from "@khiops-library/providers/utils.service";
+import _ from "lodash";
+import { ConfigService } from "@khiops-library/providers/config.service";
+import { TYPES } from "@khiops-library/enum/types";
+import { GridColumnsI } from "@khiops-library/interfaces/grid-columns";
+import { MatCheckboxChange } from "@angular/material/checkbox";
 
 @Component({
-	selector: 'kl-ag-grid',
-	templateUrl: './ag-grid.component.html',
-	styleUrls: ['./ag-grid.component.scss']
+	selector: "kl-ag-grid",
+	templateUrl: "./ag-grid.component.html",
+	styleUrls: ["./ag-grid.component.scss"],
 })
-export class AgGridComponent extends SelectableComponent implements OnChanges, AfterViewInit, DoCheck, OnInit {
-
-	@ViewChild('agGrid', {
-		static: false
-	}) agGrid: AgGridAngular;
+export class AgGridComponent
+	extends SelectableComponent
+	implements OnChanges, AfterViewInit, DoCheck, OnInit
+{
+	@ViewChild("agGrid", {
+		static: false,
+	})
+	agGrid: AgGridAngular;
 
 	AppConfig = this.khiopsLibraryService.getAppConfig().common;
 
@@ -74,7 +65,7 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 	@Input() showSearch = true;
 	@Input() displayCount = false;
 	@Input() smallTitle = false;
-	@Input() rowSelection = 'single';
+	@Input() rowSelection = "single";
 	@Input() sizeColumnsToFit = false;
 	@Input() rowHeight = 28;
 	@Input() watchResize = true;
@@ -85,12 +76,12 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 	hideFilterBadge = true;
 	isFullscreen = false;
 
-	@ViewChild('searchInputEl', {
-		static: false
-	}) searchInputEl: ElementRef;
+	@ViewChild("searchInputEl", {
+		static: false,
+	})
+	searchInputEl: ElementRef;
 
-
-	rowIdentifiers = ['_id'];
+	rowIdentifiers = ["_id"];
 	searchFormVisible = false;
 
 	modules: Module[] = [ClientSideRowModelModule];
@@ -99,62 +90,80 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 	visibleColumns = {};
 	gridModes = {}; // 'fitToSpace' or 'fitToContent'
 
-	componentType = 'grid'; // needed to copy datas
+	componentType = "grid"; // needed to copy datas
 	columnDefs: ColDef[] = [];
-	searchInput = '';
+	searchInput = "";
 	rowData = [];
 	context: {
-		componentParent: AgGridComponent
+		componentParent: AgGridComponent;
 	} = {
-		componentParent: this // used by CheckboxCellComponent
+		componentParent: this, // used by CheckboxCellComponent
 	};
 
-	@Output() selectListItem: EventEmitter < any > = new EventEmitter();
-	@Output() doubleClickListItem: EventEmitter < any > = new EventEmitter();
-	@Output() dataTypeChanged: EventEmitter < any > = new EventEmitter();
-	@Output() gridCheckboxChanged: EventEmitter < any > = new EventEmitter();
-	@Output() showLevelDistributionGraph: EventEmitter < any > = new EventEmitter();
+	@Output() selectListItem: EventEmitter<any> = new EventEmitter();
+	@Output() doubleClickListItem: EventEmitter<any> = new EventEmitter();
+	@Output() dataTypeChanged: EventEmitter<any> = new EventEmitter();
+	@Output() gridCheckboxChanged: EventEmitter<any> = new EventEmitter();
+	@Output() showLevelDistributionGraph: EventEmitter<any> =
+		new EventEmitter();
 	isSmallDiv: boolean = false;
 	divWidth: number;
 
 	// For evaluation view
 	dataOptions = {
-		types: [
-			TYPES.FREQUENCY, TYPES.COVERAGE
-		],
-		selected: undefined
+		types: [TYPES.FREQUENCY, TYPES.COVERAGE],
+		selected: undefined,
 	};
 
-	gridOptions = < GridOptions > {
+	gridOptions = <GridOptions>{
 		suppressAnimationFrame: true,
 		enableBrowserTooltips: true,
 		suppressColumnMoveAnimation: true,
-		animateRows: false
+		animateRows: false,
 	};
 
-	KEY_UP = 'ArrowUp';
-	KEY_DOWN = 'ArrowDown';
+	KEY_UP = "ArrowUp";
+	KEY_DOWN = "ArrowDown";
 
-	constructor(public selectableService: SelectableService,
+	constructor(
+		public selectableService: SelectableService,
 		private khiopsLibraryService: KhiopsLibraryService,
 		private translate: TranslateService,
 		public ngzone: NgZone,
-		public configService: ConfigService
+		public configService: ConfigService,
 	) {
 		super(selectableService, ngzone, configService);
-		this.dataOptions.selected = localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + 'AG_GRID_GRAPH_OPTION') || this.dataOptions.types[0];
+		this.dataOptions.selected =
+			localStorage.getItem(
+				this.AppConfig.GLOBAL.LS_ID + "AG_GRID_GRAPH_OPTION",
+			) || this.dataOptions.types[0];
 
-		this.title = this.translate.get('GLOBAL.VARIABLES') || this.title;
+		this.title = this.translate.get("GLOBAL.VARIABLES") || this.title;
 		this.keyboardNavigation = this.keyboardNavigation.bind(this);
 
 		try {
-			this.cellsSizes = JSON.parse(localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + 'CELL_AG_GRID')) || {};
+			this.cellsSizes =
+				JSON.parse(
+					localStorage.getItem(
+						this.AppConfig.GLOBAL.LS_ID + "CELL_AG_GRID",
+					),
+				) || {};
 		} catch (e) {}
 		try {
-			this.visibleColumns = JSON.parse(localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + 'COLUMNS_AG_GRID')) || {};
+			this.visibleColumns =
+				JSON.parse(
+					localStorage.getItem(
+						this.AppConfig.GLOBAL.LS_ID + "COLUMNS_AG_GRID",
+					),
+				) || {};
 		} catch (e) {}
 		try {
-			this.gridModes = JSON.parse(localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + 'MODES_AG_GRID')) || {}; // 'fitToSpace' or 'fitToContent'
+			this.gridModes =
+				JSON.parse(
+					localStorage.getItem(
+						this.AppConfig.GLOBAL.LS_ID + "MODES_AG_GRID",
+					),
+				) || {}; // 'fitToSpace' or 'fitToContent'
 		} catch (e) {}
 	}
 
@@ -162,16 +171,18 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 		this.divWidth = width;
 		this.checkIsSmallDiv();
 
-		if (this.agGrid && this.agGrid.api && this.gridMode === 'fitToSpace' /*&& width*/ ) {
+		if (
+			this.agGrid &&
+			this.agGrid.api &&
+			this.gridMode === "fitToSpace" /*&& width*/
+		) {
 			setTimeout(() => {
 				this.agGrid.api.sizeColumnsToFit();
 			});
 		}
 	}
 
-	ngDoCheck() {
-
-	}
+	ngDoCheck() {}
 
 	destroyGrid() {
 		// Callback sent by inherited SelectableComponent
@@ -188,36 +199,42 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 	}
 
 	changeDataType(type: string) {
-		localStorage.setItem(this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID + 'AG_GRID_GRAPH_OPTION', type);
+		localStorage.setItem(
+			this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
+				"AG_GRID_GRAPH_OPTION",
+			type,
+		);
 
 		this.dataOptions.selected = type;
 		this.dataTypeChanged.emit(type);
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
-
 		if (changes.displayedColumns?.currentValue) {
-
-			if (this.showLineSelection !== false && this.displayedColumns.findIndex(e => e.field === '_id') === -1) {
-
+			if (
+				this.showLineSelection !== false &&
+				this.displayedColumns.findIndex((e) => e.field === "_id") === -1
+			) {
 				// Add the hidden id key if it does not exists
 				this.displayedColumns.push({
-					headerName: '_id',
-					field: '_id',
-					show: false
+					headerName: "_id",
+					field: "_id",
+					show: false,
 				});
 
 				// Recompute displayed columns based on user local storage save
 				for (let i = 0; i < this.displayedColumns.length; i++) {
 					const col = this.displayedColumns[i];
-					if (this.visibleColumns[this.id] && this.visibleColumns[this.id][col.field] !== undefined) {
+					if (
+						this.visibleColumns[this.id] &&
+						this.visibleColumns[this.id][col.field] !== undefined
+					) {
 						col.show = this.visibleColumns[this.id][col.field];
 					}
 				}
 
 				this.updateColumnFilterBadge();
 			}
-
 		}
 		if (changes.inputDatas?.currentValue) {
 			// We must update table always, even if content do not changed, to update header informations
@@ -230,11 +247,12 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 		if (changes.updateValues && changes.updateValues.currentValue) {
 			this.updateGridValues(changes.updateValues.currentValue);
 		}
-
 	}
 
 	updateColumnFilterBadge() {
-		const hiddenColumns = this.displayedColumns.filter(e => e.show === false);
+		const hiddenColumns = this.displayedColumns.filter(
+			(e) => e.show === false,
+		);
 		// _id is always hidden
 		this.hideFilterBadge = hiddenColumns.length <= 1;
 	}
@@ -245,37 +263,49 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 			for (let i = 0; i < updateValues.length; i++) {
 				const currentUpdateValue = updateValues[i];
 				this.agGrid.api.forEachNode((node) => {
-					if (currentUpdateValue._id && currentUpdateValue._id === node.data['_id']) {
-						for (const [key, value] of Object.entries(currentUpdateValue)) {
-							if (key !== '_id') {
-								const current = this.displayedColumns.find(e => e.field === key);
+					if (
+						currentUpdateValue._id &&
+						currentUpdateValue._id === node.data["_id"]
+					) {
+						for (const [key, value] of Object.entries(
+							currentUpdateValue,
+						)) {
+							if (key !== "_id") {
+								const current = this.displayedColumns.find(
+									(e) => e.field === key,
+								);
 								if (current) {
-									node.setDataValue(current.headerName, value);
+									node.setDataValue(
+										current.headerName,
+										value,
+									);
 								}
 							}
 						}
 					}
 				});
 			}
-
 		}
-
 	}
 
-	ngOnInit() {
-	}
+	ngOnInit() {}
 
 	ngAfterViewInit() {
-
 		// Call ngAfterViewInit of extend component
 		super.ngAfterViewInit();
 
-		setTimeout(() => { // Avoid ExpressionChangedAfterItHasBeenCheckedError
+		setTimeout(() => {
+			// Avoid ExpressionChangedAfterItHasBeenCheckedError
 
 			this.showHeader = true;
 
-			if (this.levelDistributionTitle === '' || this.levelDistributionTitle === undefined) {
-				this.levelDistributionTitle = this.translate.get('GLOBAL.LEVEL_DISTRIBUTION');
+			if (
+				this.levelDistributionTitle === "" ||
+				this.levelDistributionTitle === undefined
+			) {
+				this.levelDistributionTitle = this.translate.get(
+					"GLOBAL.LEVEL_DISTRIBUTION",
+				);
 			}
 
 			// Change default height of rows if defined
@@ -285,7 +315,11 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 			}
 
 			// Do not show level distribution graph if no level into datas.
-			if (this.inputDatas && this.inputDatas[0] && !this.inputDatas[0].level) {
+			if (
+				this.inputDatas &&
+				this.inputDatas[0] &&
+				!this.inputDatas[0].level
+			) {
 				this.showLevelDistribution = false;
 			}
 
@@ -297,7 +331,6 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 				}
 			}
 		});
-
 	}
 
 	onCellClicked(e) {
@@ -354,14 +387,18 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 		if (nodeId !== undefined && this.showLineSelection) {
 			if (this.agGrid && this.agGrid.api) {
 				this.agGrid.api.forEachNode((node) => {
-					if (nodeId === node.data['_id']) {
+					if (nodeId === node.data["_id"]) {
 						if (!node.isSelected()) {
 							node.setSelected(true);
 							// Get the page of selected node
 							if (this.gridOptions.api) {
-								let pageToSelect = (node.rowIndex) / this.gridOptions.api.paginationGetPageSize();
+								let pageToSelect =
+									node.rowIndex /
+									this.gridOptions.api.paginationGetPageSize();
 								pageToSelect = Math.floor(pageToSelect);
-								this.gridOptions.api.paginationGoToPage(pageToSelect);
+								this.gridOptions.api.paginationGoToPage(
+									pageToSelect,
+								);
 							}
 							this.agGrid.api.ensureIndexVisible(node.rowIndex);
 						}
@@ -376,7 +413,6 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 	}
 
 	updateTable(updateSelectedVariable?) {
-
 		if (this.displayedColumns && this.inputDatas) {
 			// Update columns at any changes to update sort a,d other ...
 			this.columnDefs = [];
@@ -387,45 +423,61 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 
 			// Advanced tables (for instance unfold hierarchy)
 			for (let i = 0; i < this.displayedColumns.length; i++) {
-
 				const col = this.displayedColumns[i];
 				const gridCol: ColDef = {
 					headerName: col.headerName,
-					headerTooltip: col.tooltip ? col.headerName + ': ' + col.tooltip : col.headerName,
+					headerTooltip: col.tooltip
+						? col.headerName + ": " + col.tooltip
+						: col.headerName,
 					// tooltipShowDelay: 500,
 					colId: col.headerName,
 					field: col.field,
 					sortable: true,
 					suppressMovable: true,
 					resizable: true,
-					valueFormatter: this.enablePrecision ?
-						params => params.value && UtilsService.getPrecisionNumber(params.value, this.AppConfig.GLOBAL.TO_FIXED) : undefined,
+					valueFormatter: this.enablePrecision
+						? (params) =>
+								params.value &&
+								UtilsService.getPrecisionNumber(
+									params.value,
+									this.AppConfig.GLOBAL.TO_FIXED,
+								)
+						: undefined,
 					hide: col.show === false, // ! if undefined : show it
-					width: this.cellsSizes[this.id] && this.cellsSizes[this.id][col.field],
+					width:
+						this.cellsSizes[this.id] &&
+						this.cellsSizes[this.id][col.field],
 					cellRendererFramework: col.cellRendererFramework,
 					cellRendererParams: col.cellRendererParams,
 					comparator: function (a, b) {
 						const result = a - b;
 						if (isNaN(result)) {
-							if (!a || a === '' || a === 'undefined') {
-								a = '0';
+							if (!a || a === "" || a === "undefined") {
+								a = "0";
 							}
-							if (!b || b === '' || b === 'undefined') {
-								b = '0';
+							if (!b || b === "" || b === "undefined") {
+								b = "0";
 							}
-							return a.toString().trim().localeCompare(b.toString().trim(), undefined, {
-								numeric: true
-							});
+							return a
+								.toString()
+								.trim()
+								.localeCompare(b.toString().trim(), undefined, {
+									numeric: true,
+								});
 						} else {
 							return result;
 						}
-					}
+					},
 				};
 
 				this.columnDefs.push(gridCol);
 			}
 
-			if (this.rowData.length === 0 || this.inputDatas.length > this.paginationSize) { // in case of big grid (>100), recreate all for performance improvements
+			if (
+				this.rowData.length === 0 ||
+				this.inputDatas.length > this.paginationSize
+			) {
+				// in case of big grid (>100), recreate all for performance improvements
 				// grid initialization
 				this.rowData = [];
 				for (let i = 0; i < this.inputDatas.length; i++) {
@@ -433,17 +485,19 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 					if (currentData) {
 						const currentRow = {};
 						for (let j = 0; j < this.displayedColumns.length; j++) {
-							currentRow[this.displayedColumns[j].field] = currentData[this.displayedColumns[j].field];
+							currentRow[this.displayedColumns[j].field] =
+								currentData[this.displayedColumns[j].field];
 						}
 						this.rowData.push(currentRow);
 					}
 				}
-
 			} else {
 				// grid has changed
 				// remove current lines
 				this.agGrid.api.forEachNode((node: RowNode) => {
-					this.gridOptions.api.applyTransaction({ remove: [node.data] });
+					this.gridOptions.api.applyTransaction({
+						remove: [node.data],
+					});
 				});
 				// add updates
 				// we do not rerender each time to prevent blink selections
@@ -452,9 +506,12 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 					if (currentData) {
 						const currentRow = {};
 						for (let j = 0; j < this.displayedColumns.length; j++) {
-							currentRow[this.displayedColumns[j].field] = currentData[this.displayedColumns[j].field];
+							currentRow[this.displayedColumns[j].field] =
+								currentData[this.displayedColumns[j].field];
 						}
-						this.gridOptions.api.applyTransaction({ add: [ currentRow] });
+						this.gridOptions.api.applyTransaction({
+							add: [currentRow],
+						});
 					}
 				}
 			}
@@ -463,11 +520,10 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 					this.selectNode(this.selectedVariable);
 				});
 			}
-			if (this.agGrid && (this.columnDefs.length === 0)) {
+			if (this.agGrid && this.columnDefs.length === 0) {
 				// Reset column defs in case of show/hide colum to reorder
 				this.agGrid.api.setColumnDefs(this.columnDefs);
 			}
-
 		}
 	}
 
@@ -486,9 +542,8 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 	}
 
 	toggleTableColumn(event: MatCheckboxChange, opt: GridColumnsI) {
-
 		// Update current displayed column state
-		const currentColumn = this.displayedColumns.find(e => {
+		const currentColumn = this.displayedColumns.find((e) => {
 			return e.field === opt.field;
 		});
 		currentColumn.show = event.checked;
@@ -502,7 +557,6 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 	}
 
 	checkIsSmallDiv() {
-
 		if (this.showSearch) {
 			if (this.showLevelDistribution) {
 				this.isSmallDiv = this.divWidth <= 500;
@@ -528,14 +582,14 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 
 		setTimeout(() => {
 			if (this.searchInputEl) {
-				this.searchInputEl.nativeElement.style.width = '100px'; // For animation
+				this.searchInputEl.nativeElement.style.width = "100px"; // For animation
 				this.searchInputEl.nativeElement.focus();
 			}
 		});
 	}
 
 	removeSearch() {
-		this.searchInput = '';
+		this.searchInput = "";
 		this.search();
 		this.searchFormVisible = false;
 	}
@@ -545,11 +599,17 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 		this.agGrid.api.setQuickFilter(this.searchInput);
 		if (this.searchInput) {
 			localStorage.setItem(
-				this.AppConfig.GLOBAL.LS_ID + 'OPTIONS_AG_GRID_SEARCH_' + this.id.toUpperCase(),
-				this.searchInput
+				this.AppConfig.GLOBAL.LS_ID +
+					"OPTIONS_AG_GRID_SEARCH_" +
+					this.id.toUpperCase(),
+				this.searchInput,
 			);
 		} else {
-			localStorage.removeItem(this.AppConfig.GLOBAL.LS_ID + 'OPTIONS_AG_GRID_SEARCH_' + this.id.toUpperCase());
+			localStorage.removeItem(
+				this.AppConfig.GLOBAL.LS_ID +
+					"OPTIONS_AG_GRID_SEARCH_" +
+					this.id.toUpperCase(),
+			);
 		}
 	}
 
@@ -570,13 +630,17 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 			// Block keyboard navigation at table ends
 			const pageSize = this.gridOptions.api.paginationGetPageSize();
 			const currentPage = this.gridOptions.api.paginationGetCurrentPage();
-			if (currentPage * pageSize <= nextRowIndex && nextRowIndex < (currentPage + 1) * pageSize) {
+			if (
+				currentPage * pageSize <= nextRowIndex &&
+				nextRowIndex < (currentPage + 1) * pageSize
+			) {
 				this.selectNodeFromIndex(nextRowIndex);
 				// this.selectListItem.emit(this.agGrid.api.getSelectedNodes()[0].data);
-				this.selectListItem.emit(this.agGrid.api.getDisplayedRowAtIndex(nextRowIndex).data);
+				this.selectListItem.emit(
+					this.agGrid.api.getDisplayedRowAtIndex(nextRowIndex).data,
+				);
 			}
 		}
-
 	}
 
 	onColumnResized(e: ColumnResizedEvent) {
@@ -588,12 +652,15 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 			}
 			if (e.columns && e.finished) {
 				e.columns.forEach((column: Column | any) => {
-					this.saveColumnSize(column.colDef.field, column.actualWidth);
+					this.saveColumnSize(
+						column.colDef.field,
+						column.actualWidth,
+					);
 				});
 			}
 		}
-		if (e && e.source === 'uiColumnDragged') {
-			this.gridMode = '';
+		if (e && e.source === "uiColumnDragged") {
+			this.gridMode = "";
 		}
 	}
 
@@ -603,8 +670,8 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 		}
 		this.cellsSizes[this.id][field] = width;
 		localStorage.setItem(
-			this.AppConfig.GLOBAL.LS_ID + 'CELL_AG_GRID',
-			JSON.stringify(this.cellsSizes)
+			this.AppConfig.GLOBAL.LS_ID + "CELL_AG_GRID",
+			JSON.stringify(this.cellsSizes),
 		);
 	}
 
@@ -614,21 +681,20 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 		}
 		this.visibleColumns[this.id][column] = isVisible;
 		localStorage.setItem(
-			this.AppConfig.GLOBAL.LS_ID + 'COLUMNS_AG_GRID',
-			JSON.stringify(this.visibleColumns)
+			this.AppConfig.GLOBAL.LS_ID + "COLUMNS_AG_GRID",
+			JSON.stringify(this.visibleColumns),
 		);
 	}
 
 	fitToSpace() {
-
-		this.gridMode = 'fitToSpace';
+		this.gridMode = "fitToSpace";
 
 		// Reinit current saved columns sizes when user fit grid to space
 		delete this.cellsSizes[this.id];
 		localStorage.setItem(
-			this.AppConfig.GLOBAL.LS_ID + 'CELL_AG_GRID',
-			JSON.stringify(this.cellsSizes)
-			);
+			this.AppConfig.GLOBAL.LS_ID + "CELL_AG_GRID",
+			JSON.stringify(this.cellsSizes),
+		);
 
 		// FIX : if table is fitted to available space at start,
 		// then user fitToContent and fitToSpace, header col width are broken
@@ -644,7 +710,7 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 	}
 
 	fitToContent() {
-		this.gridMode = 'fitToContent';
+		this.gridMode = "fitToContent";
 		this.gridOptions.columnApi.autoSizeAllColumns(true);
 		this.saveGridModes(this.gridMode);
 
@@ -654,10 +720,8 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 	saveGridModes(gridMode) {
 		this.gridModes[this.id] = gridMode;
 		localStorage.setItem(
-			this.AppConfig.GLOBAL.LS_ID + 'MODES_AG_GRID',
-			JSON.stringify(
-				this.gridModes
-			)
+			this.AppConfig.GLOBAL.LS_ID + "MODES_AG_GRID",
+			JSON.stringify(this.gridModes),
 		);
 	}
 
@@ -677,7 +741,6 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 					this.agGrid.api.sizeColumnsToFit();
 				}
 			});
-
 		}
 	}
 
@@ -686,22 +749,31 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 			// colState: this.agGrid.columnApi && this.agGrid.columnApi.getColumnState(),
 			// groupState: this.agGrid.columnApi && this.agGrid.columnApi.getColumnGroupState(),
 			// sortState: this.agGrid.api && this.agGrid.api.getSortModel()
-			sortState: this.gridOptions.columnApi && this.gridOptions.columnApi.getColumnState()
+			sortState:
+				this.gridOptions.columnApi &&
+				this.gridOptions.columnApi.getColumnState(),
 			/*,
 						filterState: this.searchInput*/
 		};
 		localStorage.setItem(
-			this.AppConfig.GLOBAL.LS_ID + 'OPTIONS_AG_GRID_' + this.id.toUpperCase(),
-			JSON.stringify(
-				state
-			)
+			this.AppConfig.GLOBAL.LS_ID +
+				"OPTIONS_AG_GRID_" +
+				this.id.toUpperCase(),
+			JSON.stringify(state),
 		);
 	}
 
 	restoreState() {
 		setTimeout(() => {
 			if (this.id) {
-				const state = JSON.parse(localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + 'OPTIONS_AG_GRID_' + this.id.toUpperCase())) || {};
+				const state =
+					JSON.parse(
+						localStorage.getItem(
+							this.AppConfig.GLOBAL.LS_ID +
+								"OPTIONS_AG_GRID_" +
+								this.id.toUpperCase(),
+						),
+					) || {};
 
 				// if (state.colState && this.gridOptions.columnApi) {
 				// 	for (let i = 0; i < state.colState.length; i++) {
@@ -716,11 +788,13 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 				// 	this.gridOptions.columnApi.setColumnGroupState(state.groupState);
 				// }
 				if (state.sortState && this.gridOptions.columnApi) {
-
 					// First reorder state according to displayed columns order
 					const sortedState = [];
 					for (let i = 0; i < this.displayedColumns.length; i++) {
-						const currentState = state.sortState.find(e => e.colId === this.displayedColumns[i].headerName);
+						const currentState = state.sortState.find(
+							(e) =>
+								e.colId === this.displayedColumns[i].headerName,
+						);
 						if (currentState) {
 							sortedState.push(currentState);
 						}
@@ -750,7 +824,11 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 				// }
 
 				// Restore search
-				this.searchInput = localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + 'OPTIONS_AG_GRID_SEARCH_' + this.id.toUpperCase());
+				this.searchInput = localStorage.getItem(
+					this.AppConfig.GLOBAL.LS_ID +
+						"OPTIONS_AG_GRID_SEARCH_" +
+						this.id.toUpperCase(),
+				);
 				if (this.searchInput) {
 					this.showSearchForm();
 					this.search();
@@ -759,6 +837,5 @@ export class AgGridComponent extends SelectableComponent implements OnChanges, A
 
 			this.selectNode(this.selectedVariable);
 		});
-
 	}
 }

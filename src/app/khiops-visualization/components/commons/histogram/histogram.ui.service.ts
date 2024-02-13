@@ -26,7 +26,7 @@ export class HistogramUIService {
 
 	static generateTooltip(
 		d: HistogramValuesI,
-		isFirstInterval: boolean
+		isFirstInterval: boolean,
 	): string {
 		let bounds = "";
 		if (isFirstInterval) {

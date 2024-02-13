@@ -21,5 +21,4 @@ export class ChartDatasetVO {
 		this.label = label || "";
 		this.type = type || "bar"; // By default
 	}
-
 }

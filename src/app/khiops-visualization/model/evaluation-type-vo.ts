@@ -5,11 +5,9 @@ export class EvaluationTypeVO {
 	instances: string;
 
 	constructor() {
-
 		this._id = undefined;
 		this.type = undefined;
 		this.dictionary = undefined;
 		this.instances = undefined;
 	}
-
 }

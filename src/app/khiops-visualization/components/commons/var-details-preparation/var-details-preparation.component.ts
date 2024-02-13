@@ -5,46 +5,28 @@ import {
 	Input,
 	OnChanges,
 	SimpleChanges,
-} from '@angular/core';
-import {
-	AppService
-} from '@khiops-visualization/providers/app.service';
-import {
-	EvaluationDatasService
-} from '@khiops-visualization/providers/evaluation-datas.service';
-import {
-	PreparationDatasService
-} from '@khiops-visualization/providers/preparation-datas.service';
-import {
-	Preparation2dDatasService
-} from '@khiops-visualization/providers/preparation2d-datas.service';
-import {
-	VariableGraphDetailsComponent
-} from '../variable-graph-details/variable-graph-details.component';
-import {
-	ChartDatasVO
-} from '@khiops-library/model/chart-datas-vo';
-import {
-	GridDatasI
-} from '@khiops-library/interfaces/grid-datas';
-import {
-	InfosDatasI
-} from '@khiops-library/interfaces/infos-datas';
-import {
-	Preparation2dDatasVO
-} from '@khiops-visualization/model/preparation2d-datas-vo';
-import { PreparationVariableVO } from '@khiops-visualization/model/preparation-variable-vo';
+} from "@angular/core";
+import { AppService } from "@khiops-visualization/providers/app.service";
+import { EvaluationDatasService } from "@khiops-visualization/providers/evaluation-datas.service";
+import { PreparationDatasService } from "@khiops-visualization/providers/preparation-datas.service";
+import { Preparation2dDatasService } from "@khiops-visualization/providers/preparation2d-datas.service";
+import { VariableGraphDetailsComponent } from "../variable-graph-details/variable-graph-details.component";
+import { ChartDatasVO } from "@khiops-library/model/chart-datas-vo";
+import { GridDatasI } from "@khiops-library/interfaces/grid-datas";
+import { InfosDatasI } from "@khiops-library/interfaces/infos-datas";
+import { Preparation2dDatasVO } from "@khiops-visualization/model/preparation2d-datas-vo";
+import { PreparationVariableVO } from "@khiops-visualization/model/preparation-variable-vo";
 
 @Component({
-	selector: 'app-var-details-preparation',
-	templateUrl: './var-details-preparation.component.html',
-	styleUrls: ['./var-details-preparation.component.scss']
+	selector: "app-var-details-preparation",
+	templateUrl: "./var-details-preparation.component.html",
+	styleUrls: ["./var-details-preparation.component.scss"],
 })
 export class VarDetailsPreparationComponent implements OnInit, OnChanges {
-
-	@ViewChild('appVariableGraphDetails', {
-		static: false
-	}) appVariableGraphDetails: VariableGraphDetailsComponent;
+	@ViewChild("appVariableGraphDetails", {
+		static: false,
+	})
+	appVariableGraphDetails: VariableGraphDetailsComponent;
 
 	@Input() preparationSource: string;
 
@@ -52,7 +34,7 @@ export class VarDetailsPreparationComponent implements OnInit, OnChanges {
 	preparationDatas: {
 		selectedVariable: PreparationVariableVO;
 		currentIntervalDatas: GridDatasI;
-	}
+	};
 	appDatas: any;
 	sizes: any;
 
@@ -68,21 +50,31 @@ export class VarDetailsPreparationComponent implements OnInit, OnChanges {
 		private preparationDatasService: PreparationDatasService,
 		private evaluationDatasService: EvaluationDatasService,
 		private preparation2dDatasService: Preparation2dDatasService,
-		private appService: AppService) {}
+		private appService: AppService,
+	) {}
 
 	ngOnInit() {
 		this.appDatas = this.appService.getDatas().datas;
-		this.sizes = this.appService.getViewSplitSizes('preparationView');
-		this.isRegressionOrExplanatoryAnalysis = this.preparationDatasService.isExplanatoryAnalysis() || this.evaluationDatasService.isRegressionAnalysis();
+		this.sizes = this.appService.getViewSplitSizes("preparationView");
+		this.isRegressionOrExplanatoryAnalysis =
+			this.preparationDatasService.isExplanatoryAnalysis() ||
+			this.evaluationDatasService.isRegressionAnalysis();
 		this.preparation2dDatas = this.preparation2dDatasService.getDatas();
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
-		this.preparationDatas = this.preparationDatasService.getDatas(this.preparationSource);
+		this.preparationDatas = this.preparationDatasService.getDatas(
+			this.preparationSource,
+		);
 	}
 
 	onSplitDragEnd(event: any, item: string) {
-		this.appService.resizeAndSetSplitSizes(item, this.sizes, event.sizes, 'preparationView');
+		this.appService.resizeAndSetSplitSizes(
+			item,
+			this.sizes,
+			event.sizes,
+			"preparationView",
+		);
 
 		// Resize to update graphs dimensions
 		if (this.appVariableGraphDetails) {
@@ -94,11 +86,13 @@ export class VarDetailsPreparationComponent implements OnInit, OnChanges {
 		this.matrixRegSelectedCell = index;
 
 		// Callback when user click on matrix cell to select corresponding bar distribution
-		this.distributionSelectedBarIndex = this.preparation2dDatasService.computeDistributionIndexFromMatrixCellIndex(index);
+		this.distributionSelectedBarIndex =
+			this.preparation2dDatasService.computeDistributionIndexFromMatrixCellIndex(
+				index,
+			);
 	}
 
 	onSelectedGraphItemChanged(index: number) {
-
 		// Keep in memory to keep bar charts index on type change
 		this.distributionSelectedBarIndex = index;
 
@@ -107,8 +101,10 @@ export class VarDetailsPreparationComponent implements OnInit, OnChanges {
 			this.matrixRegSelectedCell = index;
 		} else {
 			// get interval data if no matrix
-			this.preparationDatasService.getCurrentIntervalDatas(this.preparationSource, index);
+			this.preparationDatasService.getCurrentIntervalDatas(
+				this.preparationSource,
+				index,
+			);
 		}
-
 	}
 }

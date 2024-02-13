@@ -1,16 +1,36 @@
-<div class="target-variable-stats-canvas-comp" fxFlexFill fxLayout="column" tabindex="0"
-	[ngClass]="{'fullscreen': isFullscreen}">
-	<div id="target-variable-stats-header" fxLayout="row" fxLayoutAlign="start center" class="comp-header">
+<div
+	class="target-variable-stats-canvas-comp"
+	fxFlexFill
+	fxLayout="column"
+	tabindex="0"
+	[ngClass]="{ fullscreen: isFullscreen }"
+>
+	<div
+		id="target-variable-stats-header"
+		fxLayout="row"
+		fxLayoutAlign="start center"
+		class="comp-header"
+	>
 		<div fxLayout="row" fxLayoutAlign="start center">
 			<h1 fxLayout="row" fxLayoutAlign="start center">
 				<mat-icon>show_chart</mat-icon>
 				{{ title }}
 			</h1>
 		</div>
-		<kl-legend fxFlex [inputDatas]="inputDatas" [type]="'chart-nd'" [colorSet]="colorSet"></kl-legend>
+		<kl-legend
+			fxFlex
+			[inputDatas]="inputDatas"
+			[type]="'chart-nd'"
+			[colorSet]="colorSet"
+		></kl-legend>
 		<kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">
 		</kl-btn-fullscreen>
 	</div>
-	<kl-chart-next id="target-variable-stats-canvas" [canvasIdContainer]="'target-variable-chart-canvas'"
-		[colorSet]="colorSet" [inputDatas]="inputDatas" [chartOptions]="chartOptions"></kl-chart-next>
+	<kl-chart-next
+		id="target-variable-stats-canvas"
+		[canvasIdContainer]="'target-variable-chart-canvas'"
+		[colorSet]="colorSet"
+		[inputDatas]="inputDatas"
+		[chartOptions]="chartOptions"
+	></kl-chart-next>
 </div>

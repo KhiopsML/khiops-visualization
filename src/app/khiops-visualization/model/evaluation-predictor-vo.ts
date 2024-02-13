@@ -21,7 +21,6 @@ export class EvaluationPredictorVO {
 	rankNlpd: string;
 
 	constructor(type, currentEvaluationType, obj) {
-
 		// Common values
 		this.type = type;
 		this.evaluationType = obj.evaluationType;
@@ -34,8 +33,8 @@ export class EvaluationPredictorVO {
 		this.accuracy = obj.accuracy;
 		this.compression = obj.compression;
 		this.auc = obj.auc;
-		this.robustness = '';
-		this.gini = ((2 * this.auc) - 1) || ''; // empty if undefined
+		this.robustness = "";
+		this.gini = 2 * this.auc - 1 || ""; // empty if undefined
 
 		// Regression values
 		this.rmse = obj.rmse;
@@ -49,11 +48,9 @@ export class EvaluationPredictorVO {
 
 		// Define an id for grids
 		this._id = this.type + this.name;
-
 	}
 
 	removeUnexistingValues() {
-
 		// Remove non existings values if it's a normal type
 		if (!this.rmse) {
 			delete this.rmse;
@@ -85,10 +82,15 @@ export class EvaluationPredictorVO {
 	}
 
 	computeRobustness(train) {
-		if (this.currentEvaluationType === PREDICTOR_TYPES.TEST && train && train.auc && this.auc) {
+		if (
+			this.currentEvaluationType === PREDICTOR_TYPES.TEST &&
+			train &&
+			train.auc &&
+			this.auc
+		) {
 			// find into data train the corresponding AUC train
-			this.robustness = Math.min(train.auc / this.auc, this.auc / train.auc) || ''; // empty if undefined
+			this.robustness =
+				Math.min(train.auc / this.auc, this.auc / train.auc) || ""; // empty if undefined
 		}
 	}
-
 }
