@@ -58,7 +58,7 @@ export class ClustersService {
 	}
 
 	getSelectedClustersDetails(): TreeNodeVO[][] {
-		const details = [];
+		const details: TreeNodeVO[][] = [];
 		for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
 			details.push(this.getCurrentClusterDetailsFromNode(this.dimensionsDatas.dimensionsTrees[i]));
 
@@ -301,7 +301,7 @@ export class ClustersService {
 
 		const appDatas = this.appService.getDatas().datas;
 		const appinitialDatas = this.appService.getInitialDatas().datas;
-		const compositionValues = [];
+		const compositionValues: CompositionVO[] = [];
 
 		if (appDatas.coclusteringReport && appDatas.coclusteringReport.dimensionPartitions) {
 
@@ -351,7 +351,7 @@ export class ClustersService {
 	}
 
 	getFilteredDimensionTree(dimensionsTree, selectedDimension: DimensionVO): ClusterDetailsVO[] {
-		let filteredDimensionsClusters = [];
+		let filteredDimensionsClusters: ClusterDetailsVO[] = [];
 		if (dimensionsTree) {
 			const appinitialDatas = this.appService.getInitialDatas().datas;
 			const filteredDimensionsClustersDatas = [].concat(this.getCurrentClusterDetailsFromNode(dimensionsTree));
