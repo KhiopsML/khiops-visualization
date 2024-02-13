@@ -16,7 +16,6 @@ import { AxisComponent } from "../commons/axis/axis.component";
 import { TreenodesService } from "@khiops-covisualization/providers/treenodes.service";
 import { TranslateService } from "@ngstack/translate";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { SaveService } from "@khiops-covisualization/providers/save.service";
 import { Subscription } from "rxjs";
 import { DimensionsDatasVO } from "@khiops-covisualization/model/dimensions-data-vo";
 import { AnnotationService } from "@khiops-covisualization/providers/annotation.service";
@@ -52,11 +51,10 @@ export class AxisViewComponent
 	constructor(
 		private appService: AppService,
 		private treenodesService: TreenodesService,
+		private dimensionsDatasService: DimensionsDatasService,
 		private annotationService: AnnotationService,
 		private translate: TranslateService,
-		private saveService: SaveService,
-		private snackBar: MatSnackBar,
-		private dimensionsDatasService: DimensionsDatasService
+		private snackBar: MatSnackBar
 	) {
 		super();
 	}
@@ -73,7 +71,8 @@ export class AxisViewComponent
 			this.initializeDatas();
 			this.initializeSavedState();
 
-			const isLargeCocluster = this.dimensionsDatasService.isLargeCocluster();
+			const isLargeCocluster =
+				this.dimensionsDatasService.isLargeCocluster();
 			const collapsedNodes =
 				this.appService.getSavedDatas("collapsedNodes");
 
@@ -122,7 +121,7 @@ export class AxisViewComponent
 	 * @param collapsedNodes
 	 */
 	computeSavedState(collapsedNodes) {
-		let datas = this.saveService.constructSavedJson(collapsedNodes);
+		let datas = this.treenodesService.constructSavedJson(collapsedNodes);
 		this.appService.setCroppedFileDatas(datas);
 		this.initializeDatas();
 	}
@@ -140,7 +139,7 @@ export class AxisViewComponent
 			this.treenodesService.getLeafNodesForARank(unfoldState);
 		this.treenodesService.setSavedCollapsedNodes(collapsedNodes);
 
-		let datas = this.saveService.constructSavedJson(collapsedNodes);
+		let datas = this.treenodesService.constructSavedJson(collapsedNodes);
 		this.appService.setCroppedFileDatas(datas);
 
 		this.initializeDatas();

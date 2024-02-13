@@ -2,17 +2,12 @@ import { TestBed } from "@angular/core/testing";
 import { AppService } from "@khiops-covisualization/providers/app.service";
 import { DimensionsDatasService } from "@khiops-covisualization/providers/dimensions-datas.service";
 import { HttpClientModule } from "@angular/common/http";
-import { SaveService } from "@khiops-covisualization/providers/save.service";
 import { TreenodesService } from "@khiops-covisualization/providers/treenodes.service";
-import { DimensionVO } from "@khiops-library/model/dimension-vo";
 import { DimensionsDatasVO } from "@khiops-covisualization/model/dimensions-data-vo";
 import { AppConfig } from "src/environments/environment";
-// import { AnnotationService } from "@khiops-covisualization/providers/annotation.service";
 let appService: AppService;
 let treenodesService: TreenodesService;
 let dimensionsDatasService: DimensionsDatasService;
-// let annotationService: AnnotationService;
-let saveService: SaveService;
 
 let result;
 
@@ -93,7 +88,7 @@ describe("CoVisualization", () => {
 		// 		treenodesService.getLeafNodesForARank(unfoldState);
 		// 	treenodesService.setSavedCollapsedNodes(collapsedNodes);
 
-		// 	let datas = saveService.constructSavedJson(collapsedNodes);
+		// 	let datas = treenodesService.constructSavedJson(collapsedNodes);
 		// 	appService.setCroppedFileDatas(datas);
 
 		// 	// const dimensionsDatas: DimensionsDatasVO =

@@ -16,7 +16,6 @@ import {
 import { KhiopsLibraryService } from "@khiops-library/providers/khiops-library.service";
 import { AppService } from "./providers/app.service";
 import { ConfigService } from "@khiops-library/providers/config.service";
-import { SaveService } from "./providers/save.service";
 import { AppConfig } from "src/environments/environment";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ReleaseNotesComponent } from "@khiops-library/components/release-notes/release-notes.component";
@@ -55,7 +54,6 @@ export class AppComponent implements AfterViewInit {
 		private khiopsLibraryService: KhiopsLibraryService,
 		private configService: ConfigService,
 		private translate: TranslateService,
-		private saveService: SaveService,
 		private treenodesService: TreenodesService,
 		private element: ElementRef
 	) {
@@ -65,7 +63,7 @@ export class AppComponent implements AfterViewInit {
 	ngAfterViewInit(): void {
 		this.configService.setRootElement(this.appElement);
 		this.element.nativeElement.getDatas = () =>
-			this.saveService.constructDatasToSave();
+			this.treenodesService.constructDatasToSave();
 		this.element.nativeElement.setDatas = (datas) => {
 			// Set data into ngzone to detect change into another context (electron for instance)
 			this.ngzone.run(() => {
@@ -122,12 +120,12 @@ export class AppComponent implements AfterViewInit {
 			});
 		};
 		this.element.nativeElement.constructDatasToSave = () => {
-			return this.saveService.constructDatasToSave();
+			return this.treenodesService.constructDatasToSave();
 		};
 		this.element.nativeElement.constructPrunedDatasToSave = () => {
 			const collapsedNodes =
 				this.treenodesService.getSavedCollapsedNodes();
-			return this.saveService.constructSavedJson(collapsedNodes);
+			return this.treenodesService.constructSavedJson(collapsedNodes);
 		};
 		this.element.nativeElement.setConfig = (config) => {
 			this.configService.setConfig(config);
