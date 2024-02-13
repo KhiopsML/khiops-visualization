@@ -1,4 +1,4 @@
 export interface ChartToggleValuesI {
-	name: string;
-	show: boolean;
+  name: string;
+  show: boolean;
 }

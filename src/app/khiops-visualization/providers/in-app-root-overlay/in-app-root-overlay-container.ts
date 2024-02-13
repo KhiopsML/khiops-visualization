@@ -1,43 +1,43 @@
-import { Inject, Injectable, OnDestroy, InjectionToken } from "@angular/core";
-import { DOCUMENT } from "@angular/common";
-import { OverlayContainer } from "@angular/cdk/overlay";
-import { Platform } from "@angular/cdk/platform";
+import { Inject, Injectable, OnDestroy, InjectionToken } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { OverlayContainer } from '@angular/cdk/overlay';
+import { Platform } from '@angular/cdk/platform';
 
 export const OVERLAY_PARENT_HTML = new InjectionToken<string>(
-	"OVERLAY_PARENT_HTML",
+  'OVERLAY_PARENT_HTML',
 );
 
-@Injectable({ providedIn: "root" })
+@Injectable({ providedIn: 'root' })
 export class InAppRootOverlayContainer
-	extends OverlayContainer
-	implements OnDestroy
+  extends OverlayContainer
+  implements OnDestroy
 {
-	constructor(@Inject(DOCUMENT) _document: any, platform: Platform) {
-		super(_document, platform);
-	}
+  constructor(@Inject(DOCUMENT) _document: any, platform: Platform) {
+    super(_document, platform);
+  }
 
-	ngOnDestroy() {
-		super.ngOnDestroy();
-	}
+  ngOnDestroy() {
+    super.ngOnDestroy();
+  }
 
-	getRootElement(): Element {
-		return this._document
-			.querySelector("khiops-visualization")
-			.shadowRoot.querySelector("app-home-layout");
-	}
+  getRootElement(): Element {
+    return this._document
+      .querySelector('khiops-visualization')
+      .shadowRoot.querySelector('app-home-layout');
+  }
 
-	protected _createContainer(): void {
-		super._createContainer();
-		this._appendToRootComponent();
-	}
+  protected _createContainer(): void {
+    super._createContainer();
+    this._appendToRootComponent();
+  }
 
-	private _appendToRootComponent(): void {
-		if (!this._containerElement) {
-			return;
-		}
+  private _appendToRootComponent(): void {
+    if (!this._containerElement) {
+      return;
+    }
 
-		const rootElement = this.getRootElement();
-		const parent = rootElement || this._document.body;
-		parent.appendChild(this._containerElement);
-	}
+    const rootElement = this.getRootElement();
+    const parent = rootElement || this._document.body;
+    parent.appendChild(this._containerElement);
+  }
 }

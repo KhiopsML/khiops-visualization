@@ -1,6 +1,6 @@
-import { TYPES } from "@khiops-library/enum/types";
+import { TYPES } from '@khiops-library/enum/types';
 
 export class MatrixOptionsI {
-	types: string[] = [TYPES.STANDARD, TYPES.FREQUENCY];
-	selected: string = undefined;
+  types: string[] = [TYPES.STANDARD, TYPES.FREQUENCY];
+  selected: string = undefined;
 }

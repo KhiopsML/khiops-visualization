@@ -1,4 +1,4 @@
 export enum TASKS {
-	REGRESSION = "Regression analysis",
-	CLASSIFICATION = "Classification analysis",
+  REGRESSION = 'Regression analysis',
+  CLASSIFICATION = 'Classification analysis',
 }

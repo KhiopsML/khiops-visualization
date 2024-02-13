@@ -1,49 +1,49 @@
-import { DimensionVO } from "@khiops-library/model/dimension-vo";
-import * as _ from "lodash"; // Important to import lodash in karma
+import { DimensionVO } from '@khiops-library/model/dimension-vo';
+import * as _ from 'lodash'; // Important to import lodash in karma
 
 export class VariableDetailsVO {
-	dataGrid: {
-		dimensions: DimensionVO[];
-		partTargetFrequencies: []; // regression or explanatory case
-		partInterests: []; // regression or explanatory case
-		cellTargetFrequencies: []; // bivariate case
-		cellInterests: []; // bivariate case
-		cellIds: []; // normal 2d case
-		cellPartIndexes: []; // normal 2d case
-		cellFrequencies: []; // normal 2d case
-		frequencies: []; // normal case
-	};
-	inputValues: {
-		// regression or explanatory case
-		values: string[];
-		frequencies: string[];
-	};
-	isLimitedDatas = true;
+  dataGrid: {
+    dimensions: DimensionVO[];
+    partTargetFrequencies: []; // regression or explanatory case
+    partInterests: []; // regression or explanatory case
+    cellTargetFrequencies: []; // bivariate case
+    cellInterests: []; // bivariate case
+    cellIds: []; // normal 2d case
+    cellPartIndexes: []; // normal 2d case
+    cellFrequencies: []; // normal 2d case
+    frequencies: []; // normal case
+  };
+  inputValues: {
+    // regression or explanatory case
+    values: string[];
+    frequencies: string[];
+  };
+  isLimitedDatas = true;
 
-	constructor(object, maxDatasSize) {
-		this.isLimitedDatas = false;
-		if (object) {
-			const clone = _.cloneDeep(object);
-			this.dataGrid = (clone && clone.dataGrid) || undefined;
-			this.inputValues = (clone && clone.inputValues) || undefined;
+  constructor(object, maxDatasSize) {
+    this.isLimitedDatas = false;
+    if (object) {
+      const clone = _.cloneDeep(object);
+      this.dataGrid = (clone && clone.dataGrid) || undefined;
+      this.inputValues = (clone && clone.inputValues) || undefined;
 
-			// Limit datas to 10000
-			if (
-				maxDatasSize &&
-				this.inputValues &&
-				this.inputValues.values.length > maxDatasSize
-			) {
-				this.inputValues.values.length = maxDatasSize;
-				this.isLimitedDatas = true;
-			}
-		}
-	}
+      // Limit datas to 10000
+      if (
+        maxDatasSize &&
+        this.inputValues &&
+        this.inputValues.values.length > maxDatasSize
+      ) {
+        this.inputValues.values.length = maxDatasSize;
+        this.isLimitedDatas = true;
+      }
+    }
+  }
 
-	setCellFrequencies(cellFrequencies) {
-		this.dataGrid.cellFrequencies = cellFrequencies;
-	}
+  setCellFrequencies(cellFrequencies) {
+    this.dataGrid.cellFrequencies = cellFrequencies;
+  }
 
-	setTargetCellFrequencies(cellTargetFrequencies) {
-		this.dataGrid.cellTargetFrequencies = cellTargetFrequencies;
-	}
+  setTargetCellFrequencies(cellTargetFrequencies) {
+    this.dataGrid.cellTargetFrequencies = cellTargetFrequencies;
+  }
 }

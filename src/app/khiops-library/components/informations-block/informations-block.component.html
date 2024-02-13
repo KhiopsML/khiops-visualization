@@ -1,24 +1,24 @@
 <div
-	class="informations-block-comp"
-	fxFlexFill
-	fxLayoutAlign="start start"
-	fxLayout="column"
-	*ngIf="inputDatas"
-	tabindex="0"
+  class="informations-block-comp"
+  fxFlexFill
+  fxLayoutAlign="start start"
+  fxLayout="column"
+  *ngIf="inputDatas"
+  tabindex="0"
 >
-	<h1 fxLayout="row" fxLayoutAlign="start center">
-		<mat-icon>{{ icon }}</mat-icon>
-		{{ title }}
-	</h1>
-	<table>
-		<tr *ngFor="let data of inputDatas" ceil>
-			<th>
-				<strong>{{ data.title | translate }}</strong>
-			</th>
-			<td scope="col">
-				<em>{{ show_value(data.value) }}</em>
-			</td>
-		</tr>
-	</table>
+  <h1 fxLayout="row" fxLayoutAlign="start center">
+    <mat-icon>{{ icon }}</mat-icon>
+    {{ title }}
+  </h1>
+  <table>
+    <tr *ngFor="let data of inputDatas" ceil>
+      <th>
+        <strong>{{ data.title | translate }}</strong>
+      </th>
+      <td scope="col">
+        <em>{{ show_value(data.value) }}</em>
+      </td>
+    </tr>
+  </table>
 </div>
 <kl-no-data fxFlexFill *ngIf="!inputDatas"></kl-no-data>

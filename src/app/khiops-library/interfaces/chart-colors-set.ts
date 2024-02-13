@@ -1,3 +1,3 @@
 export interface ChartColorsSetI {
-	domain: string[];
+  domain: string[];
 }

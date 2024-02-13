@@ -1,21 +1,21 @@
 <div class="cluster-details-comp" fxLayout="column" fxFlexFill>
-	<kl-ag-grid
-		*ngIf="filteredDimensionsClusters"
-		[watchResize]="true"
-		fxFlexFill
-		[showLevelDistribution]="false"
-		[paginationSize]="50"
-		[attr.id]="'cluster-details-grid-' + position"
-		[id]="'cluster-details-grid-' + position"
-		[showSearch]="false"
-		titleTooltip="{{ 'TOOLTIPS.AXIS.CURRENT_CLUSTERS.TITLE' | translate }}"
-		[enablePrecision]="false"
-		[inputDatas]="filteredDimensionsClusters"
-		[title]="title"
-		[smallTitle]="true"
-		[updateValues]="updateValues"
-		(selectListItem)="onSelectRowChanged($event)"
-		[selectedVariable]="nodeToSelect"
-		[displayedColumns]="clusterDisplayedColumns"
-	></kl-ag-grid>
+  <kl-ag-grid
+    *ngIf="filteredDimensionsClusters"
+    [watchResize]="true"
+    fxFlexFill
+    [showLevelDistribution]="false"
+    [paginationSize]="50"
+    [attr.id]="'cluster-details-grid-' + position"
+    [id]="'cluster-details-grid-' + position"
+    [showSearch]="false"
+    titleTooltip="{{ 'TOOLTIPS.AXIS.CURRENT_CLUSTERS.TITLE' | translate }}"
+    [enablePrecision]="false"
+    [inputDatas]="filteredDimensionsClusters"
+    [title]="title"
+    [smallTitle]="true"
+    [updateValues]="updateValues"
+    (selectListItem)="onSelectRowChanged($event)"
+    [selectedVariable]="nodeToSelect"
+    [displayedColumns]="clusterDisplayedColumns"
+  ></kl-ag-grid>
 </div>

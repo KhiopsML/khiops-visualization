@@ -1,87 +1,87 @@
-import { InfosDatasI } from "@khiops-library/interfaces/infos-datas";
+import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 
 export class InformationsVO {
-	evaluatedVariables: number;
-	constructedVariables: number;
-	informativeVariables: number;
-	informativeVariablePairs: number;
-	selectedVariables: number;
-	selectedVariablePairs: number;
-	discretization: string;
-	valueGrouping: string;
-	evaluatedVariablePairs: number;
+  evaluatedVariables: number;
+  constructedVariables: number;
+  informativeVariables: number;
+  informativeVariablePairs: number;
+  selectedVariables: number;
+  selectedVariablePairs: number;
+  discretization: string;
+  valueGrouping: string;
+  evaluatedVariablePairs: number;
 
-	displayDatas: InfosDatasI[];
+  displayDatas: InfosDatasI[];
 
-	constructor(object) {
-		this.evaluatedVariables = object.evaluatedVariables;
-		this.constructedVariables = object.constructedVariables;
-		this.informativeVariables = object.informativeVariables;
-		this.informativeVariablePairs = object.informativeVariablePairs;
-		this.selectedVariables = object.selectedVariables;
-		this.selectedVariablePairs = object.selectedVariablePairs;
-		this.discretization = object.discretization;
-		this.valueGrouping = object.valueGrouping;
-		this.evaluatedVariablePairs = object.evaluatedVariablePairs;
+  constructor(object) {
+    this.evaluatedVariables = object.evaluatedVariables;
+    this.constructedVariables = object.constructedVariables;
+    this.informativeVariables = object.informativeVariables;
+    this.informativeVariablePairs = object.informativeVariablePairs;
+    this.selectedVariables = object.selectedVariables;
+    this.selectedVariablePairs = object.selectedVariablePairs;
+    this.discretization = object.discretization;
+    this.valueGrouping = object.valueGrouping;
+    this.evaluatedVariablePairs = object.evaluatedVariablePairs;
 
-		this.formatDatas();
-	}
+    this.formatDatas();
+  }
 
-	formatDatas() {
-		this.displayDatas = [];
-		if (this.evaluatedVariables !== undefined) {
-			this.displayDatas.push({
-				title: "GLOBAL.EVALUATED_VARIABLES",
-				value: this.evaluatedVariables,
-			});
-		}
-		if (this.evaluatedVariablePairs !== undefined) {
-			this.displayDatas.push({
-				title: "GLOBAL.EVALUATED_VARIABLES_PAIRS",
-				value: this.evaluatedVariablePairs,
-			});
-		}
-		if (this.constructedVariables !== undefined) {
-			this.displayDatas.push({
-				title: "GLOBAL.CONSTRUCTED_VARIABLES",
-				value: this.constructedVariables,
-			});
-		}
-		if (this.informativeVariables !== undefined) {
-			this.displayDatas.push({
-				title: "GLOBAL.INFORMATIVE_VARIABLES",
-				value: this.informativeVariables,
-			});
-		}
-		if (this.informativeVariablePairs !== undefined) {
-			this.displayDatas.push({
-				title: "GLOBAL.INFORMATIVE_VARIABLES_PAIRS",
-				value: this.informativeVariablePairs,
-			});
-		}
-		if (this.selectedVariables !== undefined) {
-			this.displayDatas.push({
-				title: "GLOBAL.SELECTED_VARIABLES",
-				value: this.selectedVariables,
-			});
-		}
-		if (this.selectedVariablePairs !== undefined) {
-			this.displayDatas.push({
-				title: "GLOBAL.SELECTED_VARIABLES_PAIRS",
-				value: this.selectedVariablePairs,
-			});
-		}
-		if (this.discretization !== undefined) {
-			this.displayDatas.push({
-				title: "GLOBAL.DISCRETIZATION",
-				value: this.discretization,
-			});
-		}
-		if (this.valueGrouping !== undefined) {
-			this.displayDatas.push({
-				title: "GLOBAL.VALUE_GROUPING",
-				value: this.valueGrouping,
-			});
-		}
-	}
+  formatDatas() {
+    this.displayDatas = [];
+    if (this.evaluatedVariables !== undefined) {
+      this.displayDatas.push({
+        title: 'GLOBAL.EVALUATED_VARIABLES',
+        value: this.evaluatedVariables,
+      });
+    }
+    if (this.evaluatedVariablePairs !== undefined) {
+      this.displayDatas.push({
+        title: 'GLOBAL.EVALUATED_VARIABLES_PAIRS',
+        value: this.evaluatedVariablePairs,
+      });
+    }
+    if (this.constructedVariables !== undefined) {
+      this.displayDatas.push({
+        title: 'GLOBAL.CONSTRUCTED_VARIABLES',
+        value: this.constructedVariables,
+      });
+    }
+    if (this.informativeVariables !== undefined) {
+      this.displayDatas.push({
+        title: 'GLOBAL.INFORMATIVE_VARIABLES',
+        value: this.informativeVariables,
+      });
+    }
+    if (this.informativeVariablePairs !== undefined) {
+      this.displayDatas.push({
+        title: 'GLOBAL.INFORMATIVE_VARIABLES_PAIRS',
+        value: this.informativeVariablePairs,
+      });
+    }
+    if (this.selectedVariables !== undefined) {
+      this.displayDatas.push({
+        title: 'GLOBAL.SELECTED_VARIABLES',
+        value: this.selectedVariables,
+      });
+    }
+    if (this.selectedVariablePairs !== undefined) {
+      this.displayDatas.push({
+        title: 'GLOBAL.SELECTED_VARIABLES_PAIRS',
+        value: this.selectedVariablePairs,
+      });
+    }
+    if (this.discretization !== undefined) {
+      this.displayDatas.push({
+        title: 'GLOBAL.DISCRETIZATION',
+        value: this.discretization,
+      });
+    }
+    if (this.valueGrouping !== undefined) {
+      this.displayDatas.push({
+        title: 'GLOBAL.VALUE_GROUPING',
+        value: this.valueGrouping,
+      });
+    }
+  }
 }

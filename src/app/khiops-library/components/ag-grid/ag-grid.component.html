@@ -1,231 +1,210 @@
 <div
-	class="ag-grid-comp mat-list"
-	fxFlexFill
-	fxLayout="column"
-	tabindex="0"
-	[ngClass]="{ fullscreen: isFullscreen }"
+  class="ag-grid-comp mat-list"
+  fxFlexFill
+  fxLayout="column"
+  tabindex="0"
+  [ngClass]="{ fullscreen: isFullscreen }"
 >
-	<div
-		fxLayout="row"
-		class="comp-header"
-		#headerContainer
-		*ngIf="showHeader && rowData.length !== 0"
-	>
-		<div fxFlex fxLayoutAlign="start center" fxLayout="row">
-			<h1
-				fxLayoutAlign="start center"
-				fxLayout="row"
-				*ngIf="displayCount && !isSmallDiv"
-				fxLayoutAlign="start center"
-				[ngClass]="{ 'small-title': smallTitle === true }"
-				title="{{ titleTooltip }}"
-			>
-				{{ inputDatas.length }} {{ title }}
-			</h1>
-			<h1
-				fxLayoutAlign="start center"
-				fxLayout="row"
-				*ngIf="!displayCount && !isSmallDiv && title"
-				fxLayoutAlign="start center"
-				[ngClass]="{ 'small-title': smallTitle === true }"
-				title="{{ titleTooltip }}"
-			>
-				{{ title }}
-			</h1>
-		</div>
-		<div
-			class="comp-header-tools screenshot-hide"
-			fxLayoutAlign="end center"
-			fxLayout="row"
-		>
-			<button
-				[ngClass]="{ 'small-div': isSmallDiv || searchFormVisible }"
-				*ngIf="showLevelDistribution"
-				attr.aria-label="{{
-					'ARIA.AG_GRID.OPEN_LEVEL_DISTRIBUTION' | translate
-				}}"
-				title="{{ levelDistributionTitle }}"
-				class="level-distribution-btn"
-				mat-stroked-button
-				color="primary"
-				(click)="openLevelDistributionDialog()"
-			>
-				<span *ngIf="!isSmallDiv && !searchFormVisible">{{
-					levelDistributionTitle
-				}}</span>
-				<mat-icon
-					*ngIf="isSmallDiv || searchFormVisible"
-					fxFlexFill
-					fxLayoutAlign="center center"
-					(click)="removeSearch()"
-					matTooltipPosition="above"
-					matTooltip="{{ 'GLOBAL.LEVEL_DISTRIBUTION' | translate }}"
-					>show_chart</mat-icon
-				>
-			</button>
-			<button
-				*ngIf="showDataTypeSelection"
-				attr.aria-label="{{
-					'ARIA.AG_GRID.CHANGE_DATAS_OPTION' | translate
-				}}"
-				mat-stroked-button
-				color="primary"
-				[matMenuTriggerFor]="dataOptionsTypes"
-			>
-				{{ dataOptions.selected | translate }} <em>v</em>
-			</button>
-			<mat-menu #dataOptionsTypes>
-				<button
-					attr.aria-label="{{
-						'ARIA.AG_GRID.CHANGE_TO'
-							| translate: { type: opt | translate }
-					}}"
-					mat-menu-item
-					*ngFor="let opt of dataOptions.types"
-					(click)="changeDataType(opt)"
-				>
-					{{ opt | translate }}
-				</button>
-			</mat-menu>
-			<form
-				*ngIf="showSearch"
-				fxLayoutAlign="start center"
-				class="search-input-btn"
-			>
-				<button
-					attr.aria-label="{{
-						'ARIA.AG_GRID.OPEN_SEARCH_INPUT' | translate
-					}}"
-					mat-icon-button
-					color="primary"
-					[disabled]="this.searchFormVisible"
-					(click)="showSearchForm()"
-				>
-					<mat-icon>search</mat-icon>
-				</button>
-				<input
-					#searchInputEl
-					*ngIf="showSearch && this.searchFormVisible"
-					name="searchInput"
-					(keyup)="search()"
-					placeholder="{{ 'GLOBAL.SEARCH' | translate }}"
-					[(ngModel)]="searchInput"
-				/>
-				<button
-					attr.aria-label="{{
-						'ARIA.AG_GRID.CLOSE_SEARCH_INPUT' | translate
-					}}"
-					mat-icon-button
-					color="primary"
-					*ngIf="this.searchFormVisible"
-				>
-					<mat-icon
-						fxFlexFill
-						fxLayoutAlign="center center"
-						(click)="removeSearch()"
-						>close</mat-icon
-					>
-				</button>
-			</form>
-			<button
-				mat-flat-button
-				color="warn"
-				attr.aria-label="{{
-					'GLOBAL.FIT_COLUMNS_TO_SPACE' | translate
-				}}"
-				matTooltip="{{ 'GLOBAL.FIT_COLUMNS_TO_SPACE' | translate }}"
-				matTooltipPosition="above"
-				(click)="fitToSpace()"
-			>
-				<mat-icon
-					class="rotate-90"
-					fxFlexFill
-					fxLayoutAlign="center center"
-					>unfold_more</mat-icon
-				>
-			</button>
-			<button
-				mat-flat-button
-				color="warn"
-				attr.aria-label="{{
-					'GLOBAL.FIT_COLUMNS_TO_CONTENT' | translate
-				}}"
-				matTooltip="{{ 'GLOBAL.FIT_COLUMNS_TO_CONTENT' | translate }}"
-				matTooltipPosition="above"
-				(click)="fitToContent()"
-			>
-				<mat-icon
-					class="rotate-90"
-					fxFlexFill
-					fxLayoutAlign="center center"
-					>vertical_align_center</mat-icon
-				>
-			</button>
-			<button
-				color="warn"
-				matBadge="-"
-				matBadgeSize="small"
-				[matBadgeHidden]="hideFilterBadge"
-				attr.aria-label="{{
-					'ARIA.AG_GRID.FILTER_DATAS_GRID' | translate
-				}}"
-				matBadgeColor="accent"
-				mat-flat-button
-				matTooltip="{{ 'GLOBAL.FILTER_COLUMS' | translate }}"
-				matTooltipPosition="above"
-				*ngIf="showColumnsSelection"
-				[matMenuTriggerFor]="tableColumns"
-			>
-				<mat-icon fxFlexFill fxLayoutAlign="center center"
-					>filter_list</mat-icon
-				>
-			</button>
-			<mat-menu #tableColumns>
-				<button
-					mat-menu-item
-					*ngFor="
-						let opt of displayedColumns
-							| rowIdentifierPipe: 'rowIdentifiers'
-					"
-					(click)="$event.stopPropagation()"
-				>
-					<mat-checkbox
-						*ngIf="opt.headerName !== '_id'"
-						attr.aria-label="{{
-							'ARIA.AG_GRID.FILTER_DATA'
-								| translate: { data: opt.headerName }
-						}}"
-						[checked]="opt.show !== false"
-						(change)="toggleTableColumn($event, opt)"
-						>{{ opt.headerName }}</mat-checkbox
-					>
-				</button>
-			</mat-menu>
-			<kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">
-			</kl-btn-fullscreen>
-		</div>
-	</div>
-	<ag-grid-angular
-		fxFlex
-		*ngIf="rowData.length !== 0"
-		[context]="context"
-		#agGrid
-		class="ag-theme-balham"
-		[navigateToNextCell]="keyboardNavigation"
-		(gridReady)="onGridReady($event)"
-		[rowData]="rowData"
-		[suppressRowClickSelection]="suppressRowClickSelection"
-		[paginationPageSize]="paginationSize"
-		[gridOptions]="gridOptions"
-		(columnResized)="onColumnResized($event)"
-		(sortChanged)="onSortChanged($event)"
-		(cellClicked)="onCellClicked($event)"
-		(cellDoubleClicked)="onCellDoubleClicked($event)"
-		[rowSelection]="rowSelection"
-		[pagination]="inputDatas && inputDatas.length > paginationSize"
-		[columnDefs]="columnDefs"
-		[modules]="modules"
-	>
-	</ag-grid-angular>
-	<kl-no-data fxFlex *ngIf="rowData.length === 0"></kl-no-data>
+  <div
+    fxLayout="row"
+    class="comp-header"
+    #headerContainer
+    *ngIf="showHeader && rowData.length !== 0"
+  >
+    <div fxFlex fxLayoutAlign="start center" fxLayout="row">
+      <h1
+        fxLayoutAlign="start center"
+        fxLayout="row"
+        *ngIf="displayCount && !isSmallDiv"
+        fxLayoutAlign="start center"
+        [ngClass]="{ 'small-title': smallTitle === true }"
+        title="{{ titleTooltip }}"
+      >
+        {{ inputDatas.length }} {{ title }}
+      </h1>
+      <h1
+        fxLayoutAlign="start center"
+        fxLayout="row"
+        *ngIf="!displayCount && !isSmallDiv && title"
+        fxLayoutAlign="start center"
+        [ngClass]="{ 'small-title': smallTitle === true }"
+        title="{{ titleTooltip }}"
+      >
+        {{ title }}
+      </h1>
+    </div>
+    <div
+      class="comp-header-tools screenshot-hide"
+      fxLayoutAlign="end center"
+      fxLayout="row"
+    >
+      <button
+        [ngClass]="{ 'small-div': isSmallDiv || searchFormVisible }"
+        *ngIf="showLevelDistribution"
+        attr.aria-label="{{
+          'ARIA.AG_GRID.OPEN_LEVEL_DISTRIBUTION' | translate
+        }}"
+        title="{{ levelDistributionTitle }}"
+        class="level-distribution-btn"
+        mat-stroked-button
+        color="primary"
+        (click)="openLevelDistributionDialog()"
+      >
+        <span *ngIf="!isSmallDiv && !searchFormVisible">{{
+          levelDistributionTitle
+        }}</span>
+        <mat-icon
+          *ngIf="isSmallDiv || searchFormVisible"
+          fxFlexFill
+          fxLayoutAlign="center center"
+          (click)="removeSearch()"
+          matTooltipPosition="above"
+          matTooltip="{{ 'GLOBAL.LEVEL_DISTRIBUTION' | translate }}"
+          >show_chart</mat-icon
+        >
+      </button>
+      <button
+        *ngIf="showDataTypeSelection"
+        attr.aria-label="{{ 'ARIA.AG_GRID.CHANGE_DATAS_OPTION' | translate }}"
+        mat-stroked-button
+        color="primary"
+        [matMenuTriggerFor]="dataOptionsTypes"
+      >
+        {{ dataOptions.selected | translate }} <em>v</em>
+      </button>
+      <mat-menu #dataOptionsTypes>
+        <button
+          attr.aria-label="{{
+            'ARIA.AG_GRID.CHANGE_TO' | translate: { type: opt | translate }
+          }}"
+          mat-menu-item
+          *ngFor="let opt of dataOptions.types"
+          (click)="changeDataType(opt)"
+        >
+          {{ opt | translate }}
+        </button>
+      </mat-menu>
+      <form
+        *ngIf="showSearch"
+        fxLayoutAlign="start center"
+        class="search-input-btn"
+      >
+        <button
+          attr.aria-label="{{ 'ARIA.AG_GRID.OPEN_SEARCH_INPUT' | translate }}"
+          mat-icon-button
+          color="primary"
+          [disabled]="this.searchFormVisible"
+          (click)="showSearchForm()"
+        >
+          <mat-icon>search</mat-icon>
+        </button>
+        <input
+          #searchInputEl
+          *ngIf="showSearch && this.searchFormVisible"
+          name="searchInput"
+          (keyup)="search()"
+          placeholder="{{ 'GLOBAL.SEARCH' | translate }}"
+          [(ngModel)]="searchInput"
+        />
+        <button
+          attr.aria-label="{{ 'ARIA.AG_GRID.CLOSE_SEARCH_INPUT' | translate }}"
+          mat-icon-button
+          color="primary"
+          *ngIf="this.searchFormVisible"
+        >
+          <mat-icon
+            fxFlexFill
+            fxLayoutAlign="center center"
+            (click)="removeSearch()"
+            >close</mat-icon
+          >
+        </button>
+      </form>
+      <button
+        mat-flat-button
+        color="warn"
+        attr.aria-label="{{ 'GLOBAL.FIT_COLUMNS_TO_SPACE' | translate }}"
+        matTooltip="{{ 'GLOBAL.FIT_COLUMNS_TO_SPACE' | translate }}"
+        matTooltipPosition="above"
+        (click)="fitToSpace()"
+      >
+        <mat-icon class="rotate-90" fxFlexFill fxLayoutAlign="center center"
+          >unfold_more</mat-icon
+        >
+      </button>
+      <button
+        mat-flat-button
+        color="warn"
+        attr.aria-label="{{ 'GLOBAL.FIT_COLUMNS_TO_CONTENT' | translate }}"
+        matTooltip="{{ 'GLOBAL.FIT_COLUMNS_TO_CONTENT' | translate }}"
+        matTooltipPosition="above"
+        (click)="fitToContent()"
+      >
+        <mat-icon class="rotate-90" fxFlexFill fxLayoutAlign="center center"
+          >vertical_align_center</mat-icon
+        >
+      </button>
+      <button
+        color="warn"
+        matBadge="-"
+        matBadgeSize="small"
+        [matBadgeHidden]="hideFilterBadge"
+        attr.aria-label="{{ 'ARIA.AG_GRID.FILTER_DATAS_GRID' | translate }}"
+        matBadgeColor="accent"
+        mat-flat-button
+        matTooltip="{{ 'GLOBAL.FILTER_COLUMS' | translate }}"
+        matTooltipPosition="above"
+        *ngIf="showColumnsSelection"
+        [matMenuTriggerFor]="tableColumns"
+      >
+        <mat-icon fxFlexFill fxLayoutAlign="center center"
+          >filter_list</mat-icon
+        >
+      </button>
+      <mat-menu #tableColumns>
+        <button
+          mat-menu-item
+          *ngFor="
+            let opt of displayedColumns | rowIdentifierPipe: 'rowIdentifiers'
+          "
+          (click)="$event.stopPropagation()"
+        >
+          <mat-checkbox
+            *ngIf="opt.headerName !== '_id'"
+            attr.aria-label="{{
+              'ARIA.AG_GRID.FILTER_DATA' | translate: { data: opt.headerName }
+            }}"
+            [checked]="opt.show !== false"
+            (change)="toggleTableColumn($event, opt)"
+            >{{ opt.headerName }}</mat-checkbox
+          >
+        </button>
+      </mat-menu>
+      <kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">
+      </kl-btn-fullscreen>
+    </div>
+  </div>
+  <ag-grid-angular
+    fxFlex
+    *ngIf="rowData.length !== 0"
+    [context]="context"
+    #agGrid
+    class="ag-theme-balham"
+    [navigateToNextCell]="keyboardNavigation"
+    (gridReady)="onGridReady($event)"
+    [rowData]="rowData"
+    [suppressRowClickSelection]="suppressRowClickSelection"
+    [paginationPageSize]="paginationSize"
+    [gridOptions]="gridOptions"
+    (columnResized)="onColumnResized($event)"
+    (sortChanged)="onSortChanged($event)"
+    (cellClicked)="onCellClicked($event)"
+    (cellDoubleClicked)="onCellDoubleClicked($event)"
+    [rowSelection]="rowSelection"
+    [pagination]="inputDatas && inputDatas.length > paginationSize"
+    [columnDefs]="columnDefs"
+    [modules]="modules"
+  >
+  </ag-grid-angular>
+  <kl-no-data fxFlex *ngIf="rowData.length === 0"></kl-no-data>
 </div>

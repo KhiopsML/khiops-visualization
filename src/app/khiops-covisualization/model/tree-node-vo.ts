@@ -1,140 +1,138 @@
-import { TYPES } from "@khiops-library/enum/types";
+import { TYPES } from '@khiops-library/enum/types';
 
 export class TreeNodeVO {
-	id: number;
-	_id: number;
-	hierarchy: string;
-	nbClusters: number;
-	leafPosition: number;
+  id: number;
+  _id: number;
+  hierarchy: string;
+  nbClusters: number;
+  leafPosition: number;
 
-	// name and cluster have always same value
-	name: string;
-	cluster: string;
-	bounds: string;
+  // name and cluster have always same value
+  name: string;
+  cluster: string;
+  bounds: string;
 
-	shortDescription: string;
-	parentCluster: string;
-	frequency: number;
-	interest: number;
-	hierarchicalLevel: number;
-	rank: number;
-	hierarchicalRank: number;
-	isLeaf: boolean;
-	children: TreeNodeVO[];
-	description: string;
-	annotation: string;
+  shortDescription: string;
+  parentCluster: string;
+  frequency: number;
+  interest: number;
+  hierarchicalLevel: number;
+  rank: number;
+  hierarchicalRank: number;
+  isLeaf: boolean;
+  children: TreeNodeVO[];
+  description: string;
+  annotation: string;
 
-	childrenList: string[] = [];
-	childrenLeafIndexes: number[] = [];
-	childrenLeafList: string[] = [];
+  childrenList: string[] = [];
+  childrenLeafIndexes: number[] = [];
+  childrenLeafList: string[] = [];
 
-	isCollapsed: boolean;
-	matrixIndex: number | string;
-	isParentCluster = false;
-	isUnfoldedByDefault = false;
+  isCollapsed: boolean;
+  matrixIndex: number | string;
+  isParentCluster = false;
+  isUnfoldedByDefault = false;
 
-	externalData: string;
+  externalData: string;
 
-	clusterCompositionSize: number;
+  clusterCompositionSize: number;
 
-	constructor(
-		id,
-		object,
-		dimension,
-		collapsedNodes,
-		nbClusters,
-		leafPosition,
-		j,
-		currentNodesNames?,
-		currentAnnotations?,
-		extData?,
-	) {
-		// Generate id for tree node plugin
-		this.id = id;
+  constructor(
+    id,
+    object,
+    dimension,
+    collapsedNodes,
+    nbClusters,
+    leafPosition,
+    j,
+    currentNodesNames?,
+    currentAnnotations?,
+    extData?,
+  ) {
+    // Generate id for tree node plugin
+    this.id = id;
 
-		// Generate id for grid
-		this._id = object.cluster;
-		this.nbClusters = nbClusters || "";
-		this.leafPosition = leafPosition || -1;
-		this.hierarchy = dimension.name || "";
+    // Generate id for grid
+    this._id = object.cluster;
+    this.nbClusters = nbClusters || '';
+    this.leafPosition = leafPosition || -1;
+    this.hierarchy = dimension.name || '';
 
-		this.cluster = (object && object.cluster) || "";
-		this.bounds = this.cluster;
+    this.cluster = (object && object.cluster) || '';
+    this.bounds = this.cluster;
 
-		if (dimension.type === TYPES.NUMERICAL) {
-			// Reformat numerical values
-			this.bounds = this.bounds.replace("]-inf", "[" + dimension.min);
-			this.bounds = this.bounds.replace("+inf[", dimension.max + "]");
-			this.bounds = this.bounds.replace("*", "Missing U ");
-		}
+    if (dimension.type === TYPES.NUMERICAL) {
+      // Reformat numerical values
+      this.bounds = this.bounds.replace(']-inf', '[' + dimension.min);
+      this.bounds = this.bounds.replace('+inf[', dimension.max + ']');
+      this.bounds = this.bounds.replace('*', 'Missing U ');
+    }
 
-		this.name = (object && object.name) || this.cluster;
+    this.name = (object && object.name) || this.cluster;
 
-		if (currentNodesNames && currentNodesNames[this.name]) {
-			this.shortDescription = currentNodesNames[this.name];
-		} else {
-			this.shortDescription =
-				(object && object.shortDescription) || this.bounds;
-		}
-		if (currentAnnotations && currentAnnotations[this.name]) {
-			this.annotation = currentAnnotations[this.name];
-		} else {
-			this.annotation = (object && object.annotation) || "";
-		}
+    if (currentNodesNames && currentNodesNames[this.name]) {
+      this.shortDescription = currentNodesNames[this.name];
+    } else {
+      this.shortDescription =
+        (object && object.shortDescription) || this.bounds;
+    }
+    if (currentAnnotations && currentAnnotations[this.name]) {
+      this.annotation = currentAnnotations[this.name];
+    } else {
+      this.annotation = (object && object.annotation) || '';
+    }
 
-		this.externalData =
-			(extData && extData[this.name.slice(1, -1)]) || undefined;
-		this.parentCluster = (object && object.parentCluster) || "";
+    this.externalData =
+      (extData && extData[this.name.slice(1, -1)]) || undefined;
+    this.parentCluster = (object && object.parentCluster) || '';
 
-		this.children = (object && object.children) || [];
-		this.frequency = (object && object.frequency) || undefined;
-		this.interest = (object && object.interest) || undefined;
-		this.hierarchicalLevel =
-			(object && object.hierarchicalLevel) || undefined;
-		this.rank = (object && object.rank) || undefined;
-		this.hierarchicalRank =
-			(object && object.hierarchicalRank) || undefined;
-		this.isLeaf = (object && object.isLeaf) || false;
+    this.children = (object && object.children) || [];
+    this.frequency = (object && object.frequency) || undefined;
+    this.interest = (object && object.interest) || undefined;
+    this.hierarchicalLevel = (object && object.hierarchicalLevel) || undefined;
+    this.rank = (object && object.rank) || undefined;
+    this.hierarchicalRank = (object && object.hierarchicalRank) || undefined;
+    this.isLeaf = (object && object.isLeaf) || false;
 
-		if (this.parentCluster === "") {
-			this.isParentCluster = true;
-		}
-		this.isCollapsed = collapsedNodes.includes(this.name) || false;
+    if (this.parentCluster === '') {
+      this.isParentCluster = true;
+    }
+    this.isCollapsed = collapsedNodes.includes(this.name) || false;
 
-		if (this.isLeaf) {
-			this.matrixIndex = j;
-		} else {
-			this.matrixIndex = "";
-		}
-		if (dimension.type === TYPES.CATEGORICAL) {
-			this.clusterCompositionSize =
-				dimension.valueGroups[leafPosition]?.values?.length;
-		}
-	}
+    if (this.isLeaf) {
+      this.matrixIndex = j;
+    } else {
+      this.matrixIndex = '';
+    }
+    if (dimension.type === TYPES.CATEGORICAL) {
+      this.clusterCompositionSize =
+        dimension.valueGroups[leafPosition]?.values?.length;
+    }
+  }
 
-	updateAnnotation(annotation: string) {
-		this.annotation = annotation;
-	}
+  updateAnnotation(annotation: string) {
+    this.annotation = annotation;
+  }
 
-	getChildrenList() {
-		this.childrenList = [];
-		this.childrenLeafList = [];
-		this.childrenLeafIndexes = [];
-		this.deepGetChildrenNames(this.children, this.name, this.matrixIndex);
-	}
+  getChildrenList() {
+    this.childrenList = [];
+    this.childrenLeafList = [];
+    this.childrenLeafIndexes = [];
+    this.deepGetChildrenNames(this.children, this.name, this.matrixIndex);
+  }
 
-	deepGetChildrenNames(children, name, matrixIndex) {
-		this.childrenList.push(name);
-		if (children.length === 0) {
-			this.childrenLeafList.push(name);
-			this.childrenLeafIndexes.push(matrixIndex);
-		}
-		for (let i = 0; i < children.length; i++) {
-			this.deepGetChildrenNames(
-				children[i].children,
-				children[i].name,
-				children[i].matrixIndex,
-			);
-		}
-	}
+  deepGetChildrenNames(children, name, matrixIndex) {
+    this.childrenList.push(name);
+    if (children.length === 0) {
+      this.childrenLeafList.push(name);
+      this.childrenLeafIndexes.push(matrixIndex);
+    }
+    for (let i = 0; i < children.length; i++) {
+      this.deepGetChildrenNames(
+        children[i].children,
+        children[i].name,
+        children[i].matrixIndex,
+      );
+    }
+  }
 }

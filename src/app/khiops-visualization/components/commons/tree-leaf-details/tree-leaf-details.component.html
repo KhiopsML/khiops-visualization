@@ -1,98 +1,92 @@
 <div id="tree-leaf-details-comp" fxFlexFill fxLayout="column">
-	<mat-tab-group
-		color="warn"
-		fxFlexFill
-		[@.disabled]="true"
-		[selectedIndex]="0"
-		fxLayout="column"
-		color="primary"
-		(selectedTabChange)="onSelectedTreeLeafDetailsTabChanged($event)"
-	>
-		<mat-tab label="{{ 'GLOBAL.LEAF_INFOS' | translate }}">
-			<ng-template matTabContent>
-				<div fxFlexFill fxLayout="column">
-					<div fxLayout="column" fxFlexFill>
-						<app-target-distribution-graph-canvas
-							#targetDistributionGraph
-							fxFlex="1 1 100%"
-							class="target-distribution-graph"
-							[showFullscreenBtn]="true"
-							titleTooltip="{{
-								'TOOLTIPS.PREPARATION.TARGET_DISTRIBUTION.TITLE'
-									| translate
-							}}"
-							[position]="position"
-							id="{{ 'target-distribution-graph' + position }}"
-							[attr.id]="'target-distribution-graph' + position"
-							class="target-distribution-graph"
-							[displayedValues]="displayedValues"
-							[inputDatas]="
-								distributionDatas.treeNodeTargetDistributionGraphDatas
-							"
-							(graphTypeChanged)="
-								onTreeNodeTargetDistributionGraphTypeChanged(
-									$event
-								)
-							"
-							(targetDistributionGraphDisplayedValuesChanged)="
-								onTreeNodeTargetDistributionGraphDisplayedValuesChanged(
-									$event
-								)
-							"
-						>
-						</app-target-distribution-graph-canvas>
+  <mat-tab-group
+    color="warn"
+    fxFlexFill
+    [@.disabled]="true"
+    [selectedIndex]="0"
+    fxLayout="column"
+    color="primary"
+    (selectedTabChange)="onSelectedTreeLeafDetailsTabChanged($event)"
+  >
+    <mat-tab label="{{ 'GLOBAL.LEAF_INFOS' | translate }}">
+      <ng-template matTabContent>
+        <div fxFlexFill fxLayout="column">
+          <div fxLayout="column" fxFlexFill>
+            <app-target-distribution-graph-canvas
+              #targetDistributionGraph
+              fxFlex="1 1 100%"
+              class="target-distribution-graph"
+              [showFullscreenBtn]="true"
+              titleTooltip="{{
+                'TOOLTIPS.PREPARATION.TARGET_DISTRIBUTION.TITLE' | translate
+              }}"
+              [position]="position"
+              id="{{ 'target-distribution-graph' + position }}"
+              [attr.id]="'target-distribution-graph' + position"
+              class="target-distribution-graph"
+              [displayedValues]="displayedValues"
+              [inputDatas]="
+                distributionDatas.treeNodeTargetDistributionGraphDatas
+              "
+              (graphTypeChanged)="
+                onTreeNodeTargetDistributionGraphTypeChanged($event)
+              "
+              (targetDistributionGraphDisplayedValuesChanged)="
+                onTreeNodeTargetDistributionGraphDisplayedValuesChanged($event)
+              "
+            >
+            </app-target-distribution-graph-canvas>
 
-						<div
-							id="tree-node-infos"
-							fxLayout="row"
-							fxLayoutAlign="start center"
-							class="comp-header"
-							*ngIf="
-								treePreparationDatas.selectedNode &&
-								treePreparationDatas.selectedNode.isLeaf
-							"
-						>
-							<div fxLayout="row" fxLayoutAlign="start center">
-								<h2>
-									{{ "GLOBAL.POPULATION" | translate }} :
-									{{ populationCount }}
-								</h2>
-							</div>
-							<div fxLayout="row" fxLayoutAlign="start center">
-								<h2
-									title="{{
-										'TOOLTIPS.TREE_PREPARATION.PURITY.TITLE'
-											| translate
-									}}"
-								>
-									{{ "GLOBAL.PURITY" | translate }} :
-									{{ selectedNode.purity | toPrecision }}
-								</h2>
-							</div>
-						</div>
-					</div>
-				</div>
-			</ng-template>
-		</mat-tab>
-		<mat-tab label="{{ 'GLOBAL.LEAF_RULES' | translate }}">
-			<ng-template matTabContent>
-				<kl-ag-grid
-					*ngIf="treeLeafRules && treeLeafRules.values"
-					id="tree-leaf-rules-comp"
-					class="variables-list"
-					fxFlexFill
-					[showLevelDistribution]="false"
-					[showSearch]="false"
-					[displayCount]="false"
-					[showLineSelection]="true"
-					[title]="treeLeafRules.title"
-					[showColumnsSelection]="true"
-					[selectedVariable]="selectedNode"
-					[inputDatas]="treeLeafRules.values"
-					[displayedColumns]="treeLeafRules.displayedColumns"
-				>
-				</kl-ag-grid>
-			</ng-template>
-		</mat-tab>
-	</mat-tab-group>
+            <div
+              id="tree-node-infos"
+              fxLayout="row"
+              fxLayoutAlign="start center"
+              class="comp-header"
+              *ngIf="
+                treePreparationDatas.selectedNode &&
+                treePreparationDatas.selectedNode.isLeaf
+              "
+            >
+              <div fxLayout="row" fxLayoutAlign="start center">
+                <h2>
+                  {{ "GLOBAL.POPULATION" | translate }} :
+                  {{ populationCount }}
+                </h2>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="start center">
+                <h2
+                  title="{{
+                    'TOOLTIPS.TREE_PREPARATION.PURITY.TITLE' | translate
+                  }}"
+                >
+                  {{ "GLOBAL.PURITY" | translate }} :
+                  {{ selectedNode.purity | toPrecision }}
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="{{ 'GLOBAL.LEAF_RULES' | translate }}">
+      <ng-template matTabContent>
+        <kl-ag-grid
+          *ngIf="treeLeafRules && treeLeafRules.values"
+          id="tree-leaf-rules-comp"
+          class="variables-list"
+          fxFlexFill
+          [showLevelDistribution]="false"
+          [showSearch]="false"
+          [displayCount]="false"
+          [showLineSelection]="true"
+          [title]="treeLeafRules.title"
+          [showColumnsSelection]="true"
+          [selectedVariable]="selectedNode"
+          [inputDatas]="treeLeafRules.values"
+          [displayedColumns]="treeLeafRules.displayedColumns"
+        >
+        </kl-ag-grid>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
 </div>

@@ -1,215 +1,210 @@
 import {
-	Component,
-	SimpleChanges,
-	Input,
-	ViewChild,
-	EventEmitter,
-	Output,
-	OnChanges,
-	OnInit,
-} from "@angular/core";
-import { PreparationDatasService } from "@khiops-visualization/providers/preparation-datas.service";
-import { DistributionDatasService } from "@khiops-visualization/providers/distribution-datas.service";
-import { DistributionGraphCanvasComponent } from "@khiops-library/components/distribution-graph-canvas/distribution-graph-canvas.component";
-import { TargetDistributionGraphCanvasComponent } from "@khiops-visualization/components/commons/target-distribution-graph-canvas/target-distribution-graph-canvas.component";
-import { TreePreparationDatasService } from "@khiops-visualization/providers/tree-preparation-datas.service";
-import { AppConfig } from "src/environments/environment";
-import { PreparationVariableVO } from "@khiops-visualization/model/preparation-variable-vo";
-import { TreePreparationVariableVO } from "@khiops-visualization/model/tree-preparation-variable-vo";
-import { DistributionDatasVO } from "@khiops-visualization/model/distribution-datas-vo";
-import { REPORTS } from "@khiops-library/enum/reports";
+  Component,
+  SimpleChanges,
+  Input,
+  ViewChild,
+  EventEmitter,
+  Output,
+  OnChanges,
+  OnInit,
+} from '@angular/core';
+import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
+import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
+import { DistributionGraphCanvasComponent } from '@khiops-library/components/distribution-graph-canvas/distribution-graph-canvas.component';
+import { TargetDistributionGraphCanvasComponent } from '@khiops-visualization/components/commons/target-distribution-graph-canvas/target-distribution-graph-canvas.component';
+import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
+import { AppConfig } from 'src/environments/environment';
+import { PreparationVariableVO } from '@khiops-visualization/model/preparation-variable-vo';
+import { TreePreparationVariableVO } from '@khiops-visualization/model/tree-preparation-variable-vo';
+import { DistributionDatasVO } from '@khiops-visualization/model/distribution-datas-vo';
+import { REPORTS } from '@khiops-library/enum/reports';
 
 @Component({
-	selector: "app-variable-graph-details",
-	templateUrl: "./variable-graph-details.component.html",
-	styleUrls: ["./variable-graph-details.component.scss"],
+  selector: 'app-variable-graph-details',
+  templateUrl: './variable-graph-details.component.html',
+  styleUrls: ['./variable-graph-details.component.scss'],
 })
 export class VariableGraphDetailsComponent implements OnInit, OnChanges {
-	@ViewChild("distributionGraph", {
-		static: false,
-	})
-	distributionGraph: DistributionGraphCanvasComponent;
+  @ViewChild('distributionGraph', {
+    static: false,
+  })
+  distributionGraph: DistributionGraphCanvasComponent;
 
-	@ViewChild("targetDistributionGraph", {
-		static: false,
-	})
-	targetDistributionGraph: TargetDistributionGraphCanvasComponent;
+  @ViewChild('targetDistributionGraph', {
+    static: false,
+  })
+  targetDistributionGraph: TargetDistributionGraphCanvasComponent;
 
-	@Input() showTargetDistributionGraph = true;
-	@Input() showDistributionGraph = true;
-	@Input() selectedVariable:
-		| PreparationVariableVO
-		| TreePreparationVariableVO;
-	@Input() selectedGraphItemIndex = 0;
-	@Input() preparationSource: string;
-	@Input() position = 0; // in case of multiple component in the same page
+  @Input() showTargetDistributionGraph = true;
+  @Input() showDistributionGraph = true;
+  @Input() selectedVariable: PreparationVariableVO | TreePreparationVariableVO;
+  @Input() selectedGraphItemIndex = 0;
+  @Input() preparationSource: string;
+  @Input() position = 0; // in case of multiple component in the same page
 
-	@Output() selectedItemChanged: EventEmitter<any> = new EventEmitter();
+  @Output() selectedItemChanged: EventEmitter<any> = new EventEmitter();
 
-	distributionDatas: DistributionDatasVO;
-	scrollPosition = 0;
-	scaleValue: number;
-	distributionGraphType: string;
-	targetDistributionGraphType: string;
+  distributionDatas: DistributionDatasVO;
+  scrollPosition = 0;
+  scaleValue: number;
+  distributionGraphType: string;
+  targetDistributionGraphType: string;
 
-	isLoadingGraphDatas: boolean;
-	activeEntries = 0;
-	isFullscreen: boolean = false;
+  isLoadingGraphDatas: boolean;
+  activeEntries = 0;
+  isFullscreen: boolean = false;
 
-	constructor(
-		private preparationDatasService: PreparationDatasService,
-		private treePreparationDatasService: TreePreparationDatasService,
-		private distributionDatasService: DistributionDatasService,
-	) {
-		this.targetDistributionGraphType = localStorage.getItem(
-			AppConfig.visualizationCommon.GLOBAL.LS_ID +
-				"TARGET_DISTRIBUTION_GRAPH_OPTION",
-		);
-	}
+  constructor(
+    private preparationDatasService: PreparationDatasService,
+    private treePreparationDatasService: TreePreparationDatasService,
+    private distributionDatasService: DistributionDatasService,
+  ) {
+    this.targetDistributionGraphType = localStorage.getItem(
+      AppConfig.visualizationCommon.GLOBAL.LS_ID +
+        'TARGET_DISTRIBUTION_GRAPH_OPTION',
+    );
+  }
 
-	ngOnInit() {
-		this.distributionDatas = this.distributionDatasService.getDatas();
-	}
+  ngOnInit() {
+    this.distributionDatas = this.distributionDatasService.getDatas();
+  }
 
-	ngOnChanges(changes: SimpleChanges) {
-		if (changes.selectedVariable && changes.selectedVariable.currentValue) {
-			this.isLoadingGraphDatas = true;
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.selectedVariable && changes.selectedVariable.currentValue) {
+      this.isLoadingGraphDatas = true;
 
-			this.selectedGraphItemIndex = 0;
-			this.initActiveEntries(this.selectedGraphItemIndex);
+      this.selectedGraphItemIndex = 0;
+      this.initActiveEntries(this.selectedGraphItemIndex);
 
-			setTimeout(() => {
-				this.distributionDatasService.setPreparationSource(
-					this.preparationSource,
-				);
-				if (this.showTargetDistributionGraph) {
-					this.distributionDatasService.getTargetDistributionGraphDatas(
-						this.selectedVariable,
-					);
-				}
-				if (this.showDistributionGraph) {
-					// Reinit datas
-					this.distributionDatas.histogramDatas = undefined;
-					this.distributionDatas.distributionGraphDatas = undefined;
+      setTimeout(() => {
+        this.distributionDatasService.setPreparationSource(
+          this.preparationSource,
+        );
+        if (this.showTargetDistributionGraph) {
+          this.distributionDatasService.getTargetDistributionGraphDatas(
+            this.selectedVariable,
+          );
+        }
+        if (this.showDistributionGraph) {
+          // Reinit datas
+          this.distributionDatas.histogramDatas = undefined;
+          this.distributionDatas.distributionGraphDatas = undefined;
 
-					if (
-						this.selectedVariable.isNumerical &&
-						!this.preparationDatasService.isSupervised()
-					) {
-						this.distributionDatasService.getHistogramGraphDatas(
-							this.selectedVariable,
-						);
-					} else {
-						this.distributionDatasService.getdistributionGraphDatas(
-							this.selectedVariable,
-						);
-					}
-				}
+          if (
+            this.selectedVariable.isNumerical &&
+            !this.preparationDatasService.isSupervised()
+          ) {
+            this.distributionDatasService.getHistogramGraphDatas(
+              this.selectedVariable,
+            );
+          } else {
+            this.distributionDatasService.getdistributionGraphDatas(
+              this.selectedVariable,
+            );
+          }
+        }
 
-				if (
-					this.preparationSource === REPORTS.TREE_PREPARATION_REPORT
-				) {
-					this.treePreparationDatasService.getCurrentIntervalDatas();
-				} else {
-					this.preparationDatasService.getCurrentIntervalDatas(
-						this.preparationSource,
-					);
-				}
+        if (this.preparationSource === REPORTS.TREE_PREPARATION_REPORT) {
+          this.treePreparationDatasService.getCurrentIntervalDatas();
+        } else {
+          this.preparationDatasService.getCurrentIntervalDatas(
+            this.preparationSource,
+          );
+        }
 
-				this.isLoadingGraphDatas = false;
-			}); // do it async to dont freeze during graph rendering
-		}
-		if (
-			changes.selectedGraphItemIndex &&
-			changes.selectedGraphItemIndex.currentValue !== undefined
-		) {
-			this.initActiveEntries(this.selectedGraphItemIndex);
-		}
-	}
+        this.isLoadingGraphDatas = false;
+      }); // do it async to dont freeze during graph rendering
+    }
+    if (
+      changes.selectedGraphItemIndex &&
+      changes.selectedGraphItemIndex.currentValue !== undefined
+    ) {
+      this.initActiveEntries(this.selectedGraphItemIndex);
+    }
+  }
 
-	resize() {
-		if (this.distributionGraph) {
-			this.distributionGraph.resizeGraph();
-		}
-		if (this.targetDistributionGraph) {
-			this.targetDistributionGraph.resizeGraph();
-		}
-	}
+  resize() {
+    if (this.distributionGraph) {
+      this.distributionGraph.resizeGraph();
+    }
+    if (this.targetDistributionGraph) {
+      this.targetDistributionGraph.resizeGraph();
+    }
+  }
 
-	onScrollPositionChanged(position: number) {
-		this.scrollPosition = position;
-	}
+  onScrollPositionChanged(position: number) {
+    this.scrollPosition = position;
+  }
 
-	onToggleFullscreen(isFullscreen: boolean) {
-		this.isFullscreen = isFullscreen;
-		setTimeout(() => {
-			this.resize();
-		});
-	}
+  onToggleFullscreen(isFullscreen: boolean) {
+    this.isFullscreen = isFullscreen;
+    setTimeout(() => {
+      this.resize();
+    });
+  }
 
-	onScaleValueChanged(value: number) {
-		this.scaleValue = value;
-	}
+  onScaleValueChanged(value: number) {
+    this.scaleValue = value;
+  }
 
-	onTargetDistributionGraphDisplayedValuesChanged(displayedValues) {
-		this.distributionDatasService.setTargetDistributionDisplayedValues(
-			displayedValues,
-		);
-		this.distributionDatasService.getTargetDistributionGraphDatas(
-			this.getCurrentVariable(),
-			this.targetDistributionGraphType,
-		);
-		this.initActiveEntries();
-	}
+  onTargetDistributionGraphDisplayedValuesChanged(displayedValues) {
+    this.distributionDatasService.setTargetDistributionDisplayedValues(
+      displayedValues,
+    );
+    this.distributionDatasService.getTargetDistributionGraphDatas(
+      this.getCurrentVariable(),
+      this.targetDistributionGraphType,
+    );
+    this.initActiveEntries();
+  }
 
-	onTargetDistributionGraphTypeChanged(type: string) {
-		this.targetDistributionGraphType = type;
-		this.distributionDatasService.getTargetDistributionGraphDatas(
-			this.getCurrentVariable(),
-			this.targetDistributionGraphType,
-			false,
-		);
-		this.initActiveEntries(this.selectedGraphItemIndex);
-	}
+  onTargetDistributionGraphTypeChanged(type: string) {
+    this.targetDistributionGraphType = type;
+    this.distributionDatasService.getTargetDistributionGraphDatas(
+      this.getCurrentVariable(),
+      this.targetDistributionGraphType,
+      false,
+    );
+    this.initActiveEntries(this.selectedGraphItemIndex);
+  }
 
-	onDistributionGraphTypeChanged(type: string) {
-		this.distributionGraphType = type;
-		this.distributionDatasService.getdistributionGraphDatas(
-			this.getCurrentVariable(),
-			this.distributionGraphType,
-			false,
-		);
-		this.initActiveEntries(this.selectedGraphItemIndex);
-	}
+  onDistributionGraphTypeChanged(type: string) {
+    this.distributionGraphType = type;
+    this.distributionDatasService.getdistributionGraphDatas(
+      this.getCurrentVariable(),
+      this.distributionGraphType,
+      false,
+    );
+    this.initActiveEntries(this.selectedGraphItemIndex);
+  }
 
-	getCurrentVariable() {
-		let selectedVariable;
-		if (this.preparationSource === REPORTS.TREE_PREPARATION_REPORT) {
-			selectedVariable =
-				this.treePreparationDatasService.getSelectedVariable();
-		} else {
-			selectedVariable = this.preparationDatasService.getSelectedVariable(
-				this.preparationSource,
-			);
-		}
-		return selectedVariable;
-	}
+  getCurrentVariable() {
+    let selectedVariable;
+    if (this.preparationSource === REPORTS.TREE_PREPARATION_REPORT) {
+      selectedVariable = this.treePreparationDatasService.getSelectedVariable();
+    } else {
+      selectedVariable = this.preparationDatasService.getSelectedVariable(
+        this.preparationSource,
+      );
+    }
+    return selectedVariable;
+  }
 
-	initActiveEntries(index = 0) {
-		this.activeEntries = index;
-	}
+  initActiveEntries(index = 0) {
+    this.activeEntries = index;
+  }
 
-	onSelectedDistributionGraphItemChanged(index: number) {
-		this.activeEntries = index;
+  onSelectedDistributionGraphItemChanged(index: number) {
+    this.activeEntries = index;
 
-		// launch event to parent to manage interval table datas or matrix selection
-		this.selectedItemChanged.emit(index);
-	}
+    // launch event to parent to manage interval table datas or matrix selection
+    this.selectedItemChanged.emit(index);
+  }
 
-	onSelectedTargetDistributionGraphItemChanged(index: number) {
-		this.activeEntries = index;
+  onSelectedTargetDistributionGraphItemChanged(index: number) {
+    this.activeEntries = index;
 
-		// launch event to parent to manage interval table datas or matrix selection
-		this.selectedItemChanged.emit(index);
-	}
+    // launch event to parent to manage interval table datas or matrix selection
+    this.selectedItemChanged.emit(index);
+  }
 }

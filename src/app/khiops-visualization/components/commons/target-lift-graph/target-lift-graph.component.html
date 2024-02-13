@@ -1,75 +1,67 @@
 <div
-	id="target-lift-graph-comp"
-	fxFlexFill
-	fxLayout="column"
-	[ngClass]="{ fullscreen: isFullscreen }"
+  id="target-lift-graph-comp"
+  fxFlexFill
+  fxLayout="column"
+  [ngClass]="{ fullscreen: isFullscreen }"
 >
-	<div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
-		<div fxFlex fxLayout="row" fxLayoutAlign="start center">
-			<div fxFlex fxLayout="row" fxLayoutAlign="start center">
-				<h1>{{ titleWithoutDetails }}</h1>
-				<div
-					fxLayout="row"
-					fxLayoutAlign="start center"
-					*ngIf="targetLift"
-				>
-					<button
-						mat-stroked-button
-						title="{{
-							'TOOLTIPS.EVALUATION.GAIN_CHART.SELECT' | translate
-						}}"
-						class="button-accent"
-						color="accent"
-						[matMenuTriggerFor]="targetLiftSelect"
-					>
-						{{ targetLift.selected }} <em>v</em>
-					</button>
-					<mat-menu #targetLiftSelect>
-						<button
-							mat-menu-item
-							*ngFor="let target of targetLift.targets"
-							(click)="changeTargetLift(target)"
-						>
-							{{ target }}
-						</button>
-					</mat-menu>
-				</div>
-			</div>
-			<div class="comp-header-tools screenshot-hide" fxLayout="row">
-				<app-select-toggle-button
-					[displayedValues]="evaluationDatas.liftGraphDisplayedValues"
-					(selectToggleButtonChanged)="
-						onSelectToggleButtonChanged($event)
-					"
-					[buttonTitle]="buttonTitle"
-				>
-				</app-select-toggle-button>
-			</div>
-			<kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">
-			</kl-btn-fullscreen>
-		</div>
-	</div>
-	<div
-		fxFlex
-		fxLayout="column"
-		*ngIf="targetLiftGraph"
-		class="graph-comp-chart-container"
-	>
-		<kl-chart-next
-			id="level-distribution-graph-canvas"
-			[canvasIdContainer]="'target-lift-chart-canvas'"
-			[type]="'line'"
-			[chartOptions]="chartOptions"
-			[colorSet]="colorSet"
-			[inputDatas]="targetLiftGraph"
-		>
-		</kl-chart-next>
-	</div>
-	<div class="clear-bottom-graph"></div>
-	<kl-legend
-		[inputDatas]="evaluationDatas.liftGraphDisplayedValues"
-		[type]="'chart-nd-dynamic'"
-		[colorSet]="legendColorSet"
-		[position]="'bottom'"
-	></kl-legend>
+  <div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
+    <div fxFlex fxLayout="row" fxLayoutAlign="start center">
+      <div fxFlex fxLayout="row" fxLayoutAlign="start center">
+        <h1>{{ titleWithoutDetails }}</h1>
+        <div fxLayout="row" fxLayoutAlign="start center" *ngIf="targetLift">
+          <button
+            mat-stroked-button
+            title="{{ 'TOOLTIPS.EVALUATION.GAIN_CHART.SELECT' | translate }}"
+            class="button-accent"
+            color="accent"
+            [matMenuTriggerFor]="targetLiftSelect"
+          >
+            {{ targetLift.selected }} <em>v</em>
+          </button>
+          <mat-menu #targetLiftSelect>
+            <button
+              mat-menu-item
+              *ngFor="let target of targetLift.targets"
+              (click)="changeTargetLift(target)"
+            >
+              {{ target }}
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+      <div class="comp-header-tools screenshot-hide" fxLayout="row">
+        <app-select-toggle-button
+          [displayedValues]="evaluationDatas.liftGraphDisplayedValues"
+          (selectToggleButtonChanged)="onSelectToggleButtonChanged($event)"
+          [buttonTitle]="buttonTitle"
+        >
+        </app-select-toggle-button>
+      </div>
+      <kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">
+      </kl-btn-fullscreen>
+    </div>
+  </div>
+  <div
+    fxFlex
+    fxLayout="column"
+    *ngIf="targetLiftGraph"
+    class="graph-comp-chart-container"
+  >
+    <kl-chart-next
+      id="level-distribution-graph-canvas"
+      [canvasIdContainer]="'target-lift-chart-canvas'"
+      [type]="'line'"
+      [chartOptions]="chartOptions"
+      [colorSet]="colorSet"
+      [inputDatas]="targetLiftGraph"
+    >
+    </kl-chart-next>
+  </div>
+  <div class="clear-bottom-graph"></div>
+  <kl-legend
+    [inputDatas]="evaluationDatas.liftGraphDisplayedValues"
+    [type]="'chart-nd-dynamic'"
+    [colorSet]="legendColorSet"
+    [position]="'bottom'"
+  ></kl-legend>
 </div>

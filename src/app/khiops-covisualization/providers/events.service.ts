@@ -1,24 +1,24 @@
-import { Injectable, EventEmitter } from "@angular/core";
+import { Injectable, EventEmitter } from '@angular/core';
 
 @Injectable({
-	providedIn: "root",
+  providedIn: 'root',
 })
 export class EventsService {
-	treeSelectedNodeChanged: EventEmitter<any> = new EventEmitter();
-	importedDatasChanged: EventEmitter<any> = new EventEmitter();
-	treeNodeNameChanged: EventEmitter<any> = new EventEmitter();
+  treeSelectedNodeChanged: EventEmitter<any> = new EventEmitter();
+  importedDatasChanged: EventEmitter<any> = new EventEmitter();
+  treeNodeNameChanged: EventEmitter<any> = new EventEmitter();
 
-	constructor() {}
+  constructor() {}
 
-	emitTreeNodeNameChanged(event = {}) {
-		this.treeNodeNameChanged.emit(event);
-	}
+  emitTreeNodeNameChanged(event = {}) {
+    this.treeNodeNameChanged.emit(event);
+  }
 
-	emitTreeSelectedNodeChanged(event = {}) {
-		this.treeSelectedNodeChanged.emit(event);
-	}
+  emitTreeSelectedNodeChanged(event = {}) {
+    this.treeSelectedNodeChanged.emit(event);
+  }
 
-	emitImportedDatasChanged(event = {}) {
-		this.importedDatasChanged.emit(event);
-	}
+  emitImportedDatasChanged(event = {}) {
+    this.importedDatasChanged.emit(event);
+  }
 }

@@ -1,290 +1,221 @@
 <div id="home-layout-comp" fxFlexFill role="main">
-	<mat-sidenav-container fxFlexFill>
-		<mat-sidenav
-			#sidenav
-			mode="over"
-			position="end"
-			disableClose="true"
-			[(opened)]="opened"
-		>
-			<app-user-settings
-				(toggleNavDrawerChanged)="onToggleNavDrawerChanged($event)"
-				[opened]="opened"
-			>
-			</app-user-settings>
-		</mat-sidenav>
-		<mat-sidenav-content>
-			<div class="container">
-				<kl-header-title [title]="appTitle">
-					<svg
-						logo
-						version="1.0"
-						width="52"
-						viewBox="0 0 496.31 305.509"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<path
-							style="fill: #5f9ac7; stroke-width: 0.75"
-							d="m-867.815-554.656 10.732 41.142-94.356 28.827z"
-							transform="translate(1127.245 554.656)"
-						/>
-						<path
-							style="
-								fill: #2e5674;
-								fill-opacity: 1;
-								stroke-width: 0.75;
-							"
-							d="m-867.815-554.656 10.732 41.142 39.138 9.382z"
-							transform="translate(1127.245 554.656)"
-						/>
-						<path
-							style="
-								fill: #91cb47;
-								fill-opacity: 1;
-								stroke-width: 0.949579;
-							"
-							d="m-851.038-490.341 12.806 49.09-165.849 29.05z"
-							transform="translate(1127.245 554.656)"
-						/>
-						<path
-							style="
-								fill: #527823;
-								fill-opacity: 1;
-								stroke-width: 0.949579;
-							"
-							d="m-851.038-490.341 12.806 49.09 78.288 11.98z"
-							transform="translate(1127.245 554.656)"
-						/>
-						<path
-							style="
-								fill: #ffb448;
-								fill-opacity: 1;
-								stroke-width: 0.949579;
-							"
-							d="m-831.717-416.278 13.514 51.806-246.25 33.15z"
-							transform="translate(1127.245 554.656)"
-						/>
-						<path
-							style="
-								fill: #996823;
-								fill-opacity: 1;
-								stroke-width: 0.949579;
-							"
-							d="m-831.717-416.278 13.514 51.806 119.647 21.577z"
-							transform="translate(1127.245 554.656)"
-						/>
-						<path
-							style="
-								fill: #ed614e;
-								fill-opacity: 1;
-								stroke-width: 0.949579;
-							"
-							d="m-811.17-337.516 15.414 59.091-331.49 28.495z"
-							transform="translate(1127.245 554.656)"
-						/>
-						<path
-							style="
-								fill: #8e3327;
-								fill-opacity: 1;
-								stroke-width: 0.949579;
-							"
-							d="m-811.17-337.516 15.414 59.091 164.82 29.278z"
-							transform="translate(1127.245 554.656)"
-						/>
-					</svg>
-				</kl-header-title>
-				<kl-file-loader
-					#fileLoader
-					[hidden]="true"
-					[onFileLoaderDataChanged]="onFileLoaderDataChangedCb"
-					[applicationName]="appName"
-				></kl-file-loader>
-				<kl-no-data
-					id="welcome-message"
-					fxFlexFill
-					fxLayoutAlign="center center"
-					*ngIf="!(appDatas && appDatas.datas && isCompatibleJson)"
-					[message]="'NO_DATAS.WELCOME'"
-				>
-				</kl-no-data>
-				<div fxFlexFill *ngIf="isCompatibleJson">
-					<mat-tab-group
-						id="main-tab-group"
-						color="primary"
-						fxFlexFill
-						[@.disabled]="true"
-						[selectedIndex]="activeTab"
-						(selectedTabChange)="onSelectedTabChanged($event)"
-					>
-						<mat-tab
-							label="{{ 'TITLE.PREPARATION' | translate }}"
-							*ngIf="appDatas?.datas?.preparationReport"
-						>
-							<ng-template matTabLabel>
-								<label
-									title="{{
-										'TOOLTIPS.TABS.PREPARATION' | translate
-									}}"
-									>{{
-										"TITLE.PREPARATION" | translate
-									}}</label
-								>
-							</ng-template>
-							<ng-template matTabContent>
-								<app-preparation-view
-									[selectedTab]="selectedTab"
-								></app-preparation-view>
-							</ng-template>
-						</mat-tab>
-						<mat-tab
-							label="{{ 'TITLE.TEXT_PREPARATION' | translate }}"
-							*ngIf="appDatas?.datas?.textPreparationReport"
-						>
-							<ng-template matTabLabel>
-								<label
-									title="{{
-										'TOOLTIPS.TABS.TEXT_PREPARATION'
-											| translate
-									}}"
-									>{{
-										"TITLE.TEXT_PREPARATION" | translate
-									}}</label
-								>
-							</ng-template>
-							<ng-template matTabContent>
-								<app-preparation-view
-									[selectedTab]="selectedTab"
-									[preparationSource]="
-										'textPreparationReport'
-									"
-								></app-preparation-view>
-							</ng-template>
-						</mat-tab>
-						<mat-tab
-							label="{{ 'TITLE.TREE_PREPARATION' | translate }}"
-							*ngIf="appDatas?.datas?.treePreparationReport"
-						>
-							<ng-template matTabLabel>
-								<label
-									title="{{
-										'TOOLTIPS.TABS.TREE_PREPARATION'
-											| translate
-									}}"
-									>{{
-										"TITLE.TREE_PREPARATION" | translate
-									}}</label
-								>
-							</ng-template>
-							<ng-template matTabContent>
-								<app-tree-preparation-view
-									[selectedTab]="selectedTab"
-								></app-tree-preparation-view>
-							</ng-template>
-						</mat-tab>
-						<mat-tab
-							label="{{ 'TITLE.PREPARATION_2D' | translate }}"
-							*ngIf="appDatas?.datas?.bivariatePreparationReport"
-						>
-							<ng-template matTabLabel>
-								<label
-									title="{{
-										'TOOLTIPS.TABS.PREPARATION_2D'
-											| translate
-									}}"
-									>{{
-										"TITLE.PREPARATION_2D" | translate
-									}}</label
-								>
-							</ng-template>
-							<ng-template matTabContent>
-								<app-preparation-2d-view
-									[selectedTab]="selectedTab"
-								></app-preparation-2d-view>
-							</ng-template>
-						</mat-tab>
-						<mat-tab
-							label="{{ 'TITLE.MODELING' | translate }}"
-							*ngIf="appDatas?.datas?.modelingReport"
-						>
-							<ng-template matTabLabel>
-								<label
-									title="{{
-										'TOOLTIPS.TABS.MODELING' | translate
-									}}"
-									>{{ "TITLE.MODELING" | translate }}</label
-								>
-							</ng-template>
-							<ng-template matTabContent>
-								<app-modeling-view
-									[selectedTab]="selectedTab"
-								></app-modeling-view>
-							</ng-template>
-						</mat-tab>
-						<mat-tab
-							label="{{ 'TITLE.EVALUATION' | translate }}"
-							*ngIf="
-								appDatas?.datas?.trainEvaluationReport ||
-								appDatas?.datas?.evaluationReport ||
-								appDatas?.datas?.testEvaluationReport
-							"
-						>
-							<ng-template matTabLabel>
-								<label
-									title="{{
-										'TOOLTIPS.TABS.EVALUATION' | translate
-									}}"
-									>{{ "TITLE.EVALUATION" | translate }}</label
-								>
-							</ng-template>
-							<ng-template matTabContent>
-								<app-evaluation-view
-									[selectedTab]="selectedTab"
-								></app-evaluation-view>
-							</ng-template>
-						</mat-tab>
-						<mat-tab
-							label="{{ 'TITLE.PROJECT' | translate }}"
-							*ngIf="showProjectTab"
-						>
-							<ng-template matTabLabel>
-								<label
-									title="{{
-										'TOOLTIPS.TABS.PROJECT' | translate
-									}}"
-									>{{ "TITLE.PROJECT" | translate }}</label
-								>
-							</ng-template>
-							<ng-template matTabContent>
-								<app-project-view
-									#appProjectView
-									[selectedTab]="selectedTab"
-									(projectFileChanged)="
-										onFileLoaderDataChanged($event)
-									"
-								></app-project-view>
-							</ng-template>
-						</mat-tab>
-					</mat-tab-group>
-				</div>
-				<div
-					id="header-right"
-					fxLayoutAlign="start center"
-					layout="row"
-				>
-					<div fxLayoutAlign="center center" fxLayout="row">
-						<kl-header-tools
-							[appVersion]="appVersion"
-							*ngIf="
-								appDatas && appDatas.datas && isCompatibleJson
-							"
-							(toggleNavDrawerChanged)="
-								onToggleNavDrawerChanged($event)
-							"
-						>
-						</kl-header-tools>
-					</div>
-				</div>
-			</div>
-		</mat-sidenav-content>
-	</mat-sidenav-container>
+  <mat-sidenav-container fxFlexFill>
+    <mat-sidenav
+      #sidenav
+      mode="over"
+      position="end"
+      disableClose="true"
+      [(opened)]="opened"
+    >
+      <app-user-settings
+        (toggleNavDrawerChanged)="onToggleNavDrawerChanged($event)"
+        [opened]="opened"
+      >
+      </app-user-settings>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div class="container">
+        <kl-header-title [title]="appTitle">
+          <svg
+            logo
+            version="1.0"
+            width="52"
+            viewBox="0 0 496.31 305.509"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              style="fill: #5f9ac7; stroke-width: 0.75"
+              d="m-867.815-554.656 10.732 41.142-94.356 28.827z"
+              transform="translate(1127.245 554.656)"
+            />
+            <path
+              style="fill: #2e5674; fill-opacity: 1; stroke-width: 0.75"
+              d="m-867.815-554.656 10.732 41.142 39.138 9.382z"
+              transform="translate(1127.245 554.656)"
+            />
+            <path
+              style="fill: #91cb47; fill-opacity: 1; stroke-width: 0.949579"
+              d="m-851.038-490.341 12.806 49.09-165.849 29.05z"
+              transform="translate(1127.245 554.656)"
+            />
+            <path
+              style="fill: #527823; fill-opacity: 1; stroke-width: 0.949579"
+              d="m-851.038-490.341 12.806 49.09 78.288 11.98z"
+              transform="translate(1127.245 554.656)"
+            />
+            <path
+              style="fill: #ffb448; fill-opacity: 1; stroke-width: 0.949579"
+              d="m-831.717-416.278 13.514 51.806-246.25 33.15z"
+              transform="translate(1127.245 554.656)"
+            />
+            <path
+              style="fill: #996823; fill-opacity: 1; stroke-width: 0.949579"
+              d="m-831.717-416.278 13.514 51.806 119.647 21.577z"
+              transform="translate(1127.245 554.656)"
+            />
+            <path
+              style="fill: #ed614e; fill-opacity: 1; stroke-width: 0.949579"
+              d="m-811.17-337.516 15.414 59.091-331.49 28.495z"
+              transform="translate(1127.245 554.656)"
+            />
+            <path
+              style="fill: #8e3327; fill-opacity: 1; stroke-width: 0.949579"
+              d="m-811.17-337.516 15.414 59.091 164.82 29.278z"
+              transform="translate(1127.245 554.656)"
+            />
+          </svg>
+        </kl-header-title>
+        <kl-file-loader
+          #fileLoader
+          [hidden]="true"
+          [onFileLoaderDataChanged]="onFileLoaderDataChangedCb"
+          [applicationName]="appName"
+        ></kl-file-loader>
+        <kl-no-data
+          id="welcome-message"
+          fxFlexFill
+          fxLayoutAlign="center center"
+          *ngIf="!(appDatas && appDatas.datas && isCompatibleJson)"
+          [message]="'NO_DATAS.WELCOME'"
+        >
+        </kl-no-data>
+        <div fxFlexFill *ngIf="isCompatibleJson">
+          <mat-tab-group
+            id="main-tab-group"
+            color="primary"
+            fxFlexFill
+            [@.disabled]="true"
+            [selectedIndex]="activeTab"
+            (selectedTabChange)="onSelectedTabChanged($event)"
+          >
+            <mat-tab
+              label="{{ 'TITLE.PREPARATION' | translate }}"
+              *ngIf="appDatas?.datas?.preparationReport"
+            >
+              <ng-template matTabLabel>
+                <label title="{{ 'TOOLTIPS.TABS.PREPARATION' | translate }}">{{
+                  "TITLE.PREPARATION" | translate
+                }}</label>
+              </ng-template>
+              <ng-template matTabContent>
+                <app-preparation-view
+                  [selectedTab]="selectedTab"
+                ></app-preparation-view>
+              </ng-template>
+            </mat-tab>
+            <mat-tab
+              label="{{ 'TITLE.TEXT_PREPARATION' | translate }}"
+              *ngIf="appDatas?.datas?.textPreparationReport"
+            >
+              <ng-template matTabLabel>
+                <label
+                  title="{{ 'TOOLTIPS.TABS.TEXT_PREPARATION' | translate }}"
+                  >{{ "TITLE.TEXT_PREPARATION" | translate }}</label
+                >
+              </ng-template>
+              <ng-template matTabContent>
+                <app-preparation-view
+                  [selectedTab]="selectedTab"
+                  [preparationSource]="'textPreparationReport'"
+                ></app-preparation-view>
+              </ng-template>
+            </mat-tab>
+            <mat-tab
+              label="{{ 'TITLE.TREE_PREPARATION' | translate }}"
+              *ngIf="appDatas?.datas?.treePreparationReport"
+            >
+              <ng-template matTabLabel>
+                <label
+                  title="{{ 'TOOLTIPS.TABS.TREE_PREPARATION' | translate }}"
+                  >{{ "TITLE.TREE_PREPARATION" | translate }}</label
+                >
+              </ng-template>
+              <ng-template matTabContent>
+                <app-tree-preparation-view
+                  [selectedTab]="selectedTab"
+                ></app-tree-preparation-view>
+              </ng-template>
+            </mat-tab>
+            <mat-tab
+              label="{{ 'TITLE.PREPARATION_2D' | translate }}"
+              *ngIf="appDatas?.datas?.bivariatePreparationReport"
+            >
+              <ng-template matTabLabel>
+                <label
+                  title="{{ 'TOOLTIPS.TABS.PREPARATION_2D' | translate }}"
+                  >{{ "TITLE.PREPARATION_2D" | translate }}</label
+                >
+              </ng-template>
+              <ng-template matTabContent>
+                <app-preparation-2d-view
+                  [selectedTab]="selectedTab"
+                ></app-preparation-2d-view>
+              </ng-template>
+            </mat-tab>
+            <mat-tab
+              label="{{ 'TITLE.MODELING' | translate }}"
+              *ngIf="appDatas?.datas?.modelingReport"
+            >
+              <ng-template matTabLabel>
+                <label title="{{ 'TOOLTIPS.TABS.MODELING' | translate }}">{{
+                  "TITLE.MODELING" | translate
+                }}</label>
+              </ng-template>
+              <ng-template matTabContent>
+                <app-modeling-view
+                  [selectedTab]="selectedTab"
+                ></app-modeling-view>
+              </ng-template>
+            </mat-tab>
+            <mat-tab
+              label="{{ 'TITLE.EVALUATION' | translate }}"
+              *ngIf="
+                appDatas?.datas?.trainEvaluationReport ||
+                appDatas?.datas?.evaluationReport ||
+                appDatas?.datas?.testEvaluationReport
+              "
+            >
+              <ng-template matTabLabel>
+                <label title="{{ 'TOOLTIPS.TABS.EVALUATION' | translate }}">{{
+                  "TITLE.EVALUATION" | translate
+                }}</label>
+              </ng-template>
+              <ng-template matTabContent>
+                <app-evaluation-view
+                  [selectedTab]="selectedTab"
+                ></app-evaluation-view>
+              </ng-template>
+            </mat-tab>
+            <mat-tab
+              label="{{ 'TITLE.PROJECT' | translate }}"
+              *ngIf="showProjectTab"
+            >
+              <ng-template matTabLabel>
+                <label title="{{ 'TOOLTIPS.TABS.PROJECT' | translate }}">{{
+                  "TITLE.PROJECT" | translate
+                }}</label>
+              </ng-template>
+              <ng-template matTabContent>
+                <app-project-view
+                  #appProjectView
+                  [selectedTab]="selectedTab"
+                  (projectFileChanged)="onFileLoaderDataChanged($event)"
+                ></app-project-view>
+              </ng-template>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+        <div id="header-right" fxLayoutAlign="start center" layout="row">
+          <div fxLayoutAlign="center center" fxLayout="row">
+            <kl-header-tools
+              [appVersion]="appVersion"
+              *ngIf="appDatas && appDatas.datas && isCompatibleJson"
+              (toggleNavDrawerChanged)="onToggleNavDrawerChanged($event)"
+            >
+            </kl-header-tools>
+          </div>
+        </div>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>

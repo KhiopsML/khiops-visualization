@@ -1,16 +1,16 @@
 <div class="legend-comp" [ngClass]="position">
-	<div class="legend" *ngIf="legend && legend.length !== 0" tabindex="0">
-		<div
-			*ngFor="let data of legend"
-			class="legend-item"
-			fxLayout="row"
-			fxLayoutAlign="start center"
-			(click)="selectLegendItem(data.name)"
-			[ngClass]="{ 'legend-selected': selectedItem === data.name }"
-			title="{{ tooltip || data.name }}"
-		>
-			<div class="square" [style.background-color]="data.color"></div>
-			<span>{{ data.shortname }}</span>
-		</div>
-	</div>
+  <div class="legend" *ngIf="legend && legend.length !== 0" tabindex="0">
+    <div
+      *ngFor="let data of legend"
+      class="legend-item"
+      fxLayout="row"
+      fxLayoutAlign="start center"
+      (click)="selectLegendItem(data.name)"
+      [ngClass]="{ 'legend-selected': selectedItem === data.name }"
+      title="{{ tooltip || data.name }}"
+    >
+      <div class="square" [style.background-color]="data.color"></div>
+      <span>{{ data.shortname }}</span>
+    </div>
+  </div>
 </div>

@@ -1,49 +1,45 @@
 <div id="level-distribution-graph-canvas-comp" fxFlexFill #levelGraph>
-	<div fxFlexFill fxLayout="column">
-		<div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
-			<div fxFlex fxLayout="row" fxLayoutAlign="start center">
-				<h1>{{ levelDistributionTitle }}</h1>
-			</div>
-			<kl-legend
-				[inputDatas]="'GLOBAL.LEVEL'"
-				[type]="'chart-1d'"
-				[colorSet]="colorSet"
-			></kl-legend>
-			<div class="comp-header-tools screenshot-hide" fxLayout="row">
-				<h2>{{ "GLOBAL.SCALE" | translate }} :</h2>
-				<mat-slider
-					color="accent"
-					[max]="maxScale"
-					[min]="minScale"
-					[step]="stepScale"
-					[thumbLabel]="false"
-					attr.aria-label="{{
-						'ARIA.CHARTS.UPDATE_GRAPH_SCALE' | translate
-					}}"
-					[(ngModel)]="scaleValue"
-					(change)="onScaleChanged($event)"
-				>
-				</mat-slider>
-				<kl-header-tools [showMenu]="false"></kl-header-tools>
-			</div>
-			<button
-				color="primary"
-				class="screenshot-hide"
-				matDialogClose
-				mat-icon-button
-				fxLayoutAlign="center center"
-			>
-				<mat-icon fxFlexFill fxLayoutAlign="center center"
-					>close</mat-icon
-				>
-			</button>
-		</div>
-		<kl-chart-next
-			id="level-distribution-graph-canvas"
-			[canvasIdContainer]="'level-distribution-chart-canvas'"
-			[chartOptions]="chartOptions"
-			[colorSet]="colorSet"
-			[inputDatas]="inputDatas"
-		></kl-chart-next>
-	</div>
+  <div fxFlexFill fxLayout="column">
+    <div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
+      <div fxFlex fxLayout="row" fxLayoutAlign="start center">
+        <h1>{{ levelDistributionTitle }}</h1>
+      </div>
+      <kl-legend
+        [inputDatas]="'GLOBAL.LEVEL'"
+        [type]="'chart-1d'"
+        [colorSet]="colorSet"
+      ></kl-legend>
+      <div class="comp-header-tools screenshot-hide" fxLayout="row">
+        <h2>{{ "GLOBAL.SCALE" | translate }} :</h2>
+        <mat-slider
+          color="accent"
+          [max]="maxScale"
+          [min]="minScale"
+          [step]="stepScale"
+          [thumbLabel]="false"
+          attr.aria-label="{{ 'ARIA.CHARTS.UPDATE_GRAPH_SCALE' | translate }}"
+          [(ngModel)]="scaleValue"
+          (change)="onScaleChanged($event)"
+        >
+        </mat-slider>
+        <kl-header-tools [showMenu]="false"></kl-header-tools>
+      </div>
+      <button
+        color="primary"
+        class="screenshot-hide"
+        matDialogClose
+        mat-icon-button
+        fxLayoutAlign="center center"
+      >
+        <mat-icon fxFlexFill fxLayoutAlign="center center">close</mat-icon>
+      </button>
+    </div>
+    <kl-chart-next
+      id="level-distribution-graph-canvas"
+      [canvasIdContainer]="'level-distribution-chart-canvas'"
+      [chartOptions]="chartOptions"
+      [colorSet]="colorSet"
+      [inputDatas]="inputDatas"
+    ></kl-chart-next>
+  </div>
 </div>

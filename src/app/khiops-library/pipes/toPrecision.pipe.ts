@@ -1,22 +1,22 @@
-import { Pipe, PipeTransform } from "@angular/core";
-import _ from "lodash";
-import { KhiopsLibraryService } from "../providers/khiops-library.service";
-import { UtilsService } from "../providers/utils.service";
+import { Pipe, PipeTransform } from '@angular/core';
+import _ from 'lodash';
+import { KhiopsLibraryService } from '../providers/khiops-library.service';
+import { UtilsService } from '../providers/utils.service';
 
 @Pipe({
-	name: "toPrecision",
-	pure: false,
+  name: 'toPrecision',
+  pure: false,
 })
 export class ToPrecisionPipe implements PipeTransform {
-	numberPrecision: number;
+  numberPrecision: number;
 
-	constructor(private khiopsLibraryService: KhiopsLibraryService) {
-		this.numberPrecision =
-			this.khiopsLibraryService.getAppConfig().common.GLOBAL.TO_FIXED;
-	}
+  constructor(private khiopsLibraryService: KhiopsLibraryService) {
+    this.numberPrecision =
+      this.khiopsLibraryService.getAppConfig().common.GLOBAL.TO_FIXED;
+  }
 
-	transform(input: any, count?: number): string {
-		const precision = count || this.numberPrecision;
-		return UtilsService.getPrecisionNumber(input, precision);
-	}
+  transform(input: any, count?: number): string {
+    const precision = count || this.numberPrecision;
+    return UtilsService.getPrecisionNumber(input, precision);
+  }
 }

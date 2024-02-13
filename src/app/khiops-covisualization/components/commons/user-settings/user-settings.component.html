@@ -1,70 +1,60 @@
 <div id="user-settings-comp" fxFlexFill fxLayout="column">
-	<div
-		fxLayout="row"
-		id="user-settings-header"
-		class="mat-elevation-z1"
-		fxLayoutAlign="center center"
-	>
-		<button mat-stroked-button (click)="onClickOnCancel()">
-			{{ "GLOBAL.CANCEL" | translate }}
-		</button>
-		<h2 fxFlex>{{ "GLOBAL.SETTINGS" | translate }}</h2>
-		<button mat-flat-button (click)="onClickOnSave()" color="primary">
-			{{ "GLOBAL.SAVE" | translate }}
-		</button>
-	</div>
-	<div
-		fxLayout="column"
-		id="user-settings-content"
-		fxLayoutAlign="start start"
-	>
-		<h2>{{ "GLOBAL.MATRIX_DEFAULT_CONTRAST" | translate }}</h2>
-		<div fxLayout="row" fxLayoutAlign="start center">
-			<mat-slider
-				color="primary"
-				attr.aria-label="{{
-					'ARIA.SETTINGS.UPDATE_DEFAULT_MATRIX_CONTRAST' | translate
-				}}"
-				[max]="90"
-				[min]="0"
-				[step]="10"
-				[thumbLabel]="false"
-				[(ngModel)]="contrastValue"
-			>
-			</mat-slider>
-			<span>{{ contrastValue }} %</span>
-		</div>
-		<h2>{{ "COOKIE_CONSENT.TITLE" | translate }}</h2>
-		<div fxLayout="row" fxLayoutAlign="start center">
-			<mat-slide-toggle color="primary" [(ngModel)]="allowCookies">
-				{{ "COOKIE_CONSENT.MESSAGE" | translate }}
-			</mat-slide-toggle>
-		</div>
-		<h2 id="user-settings-dark-mode">
-			{{ "DARK_THEME.TITLE" | translate }}
-		</h2>
-		<div fxLayout="row" fxLayoutAlign="start center">
-			<mat-button-toggle-group
-				name="theme"
-				attr.aria-label="{{ 'DARK_THEME.TITLE' | translate }}"
-				(change)="onThemeChange($event)"
-			>
-				<mat-button-toggle
-					[checked]="isThemeChecked('light')"
-					value="light"
-					>Light</mat-button-toggle
-				>
-				<mat-button-toggle
-					[checked]="isThemeChecked('dark')"
-					value="dark"
-					>Dark</mat-button-toggle
-				>
-				<mat-button-toggle
-					[checked]="isThemeChecked('orange')"
-					value="orange"
-					>Orange</mat-button-toggle
-				>
-			</mat-button-toggle-group>
-		</div>
-	</div>
+  <div
+    fxLayout="row"
+    id="user-settings-header"
+    class="mat-elevation-z1"
+    fxLayoutAlign="center center"
+  >
+    <button mat-stroked-button (click)="onClickOnCancel()">
+      {{ "GLOBAL.CANCEL" | translate }}
+    </button>
+    <h2 fxFlex>{{ "GLOBAL.SETTINGS" | translate }}</h2>
+    <button mat-flat-button (click)="onClickOnSave()" color="primary">
+      {{ "GLOBAL.SAVE" | translate }}
+    </button>
+  </div>
+  <div fxLayout="column" id="user-settings-content" fxLayoutAlign="start start">
+    <h2>{{ "GLOBAL.MATRIX_DEFAULT_CONTRAST" | translate }}</h2>
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <mat-slider
+        color="primary"
+        attr.aria-label="{{
+          'ARIA.SETTINGS.UPDATE_DEFAULT_MATRIX_CONTRAST' | translate
+        }}"
+        [max]="90"
+        [min]="0"
+        [step]="10"
+        [thumbLabel]="false"
+        [(ngModel)]="contrastValue"
+      >
+      </mat-slider>
+      <span>{{ contrastValue }} %</span>
+    </div>
+    <h2>{{ "COOKIE_CONSENT.TITLE" | translate }}</h2>
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <mat-slide-toggle color="primary" [(ngModel)]="allowCookies">
+        {{ "COOKIE_CONSENT.MESSAGE" | translate }}
+      </mat-slide-toggle>
+    </div>
+    <h2 id="user-settings-dark-mode">
+      {{ "DARK_THEME.TITLE" | translate }}
+    </h2>
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <mat-button-toggle-group
+        name="theme"
+        attr.aria-label="{{ 'DARK_THEME.TITLE' | translate }}"
+        (change)="onThemeChange($event)"
+      >
+        <mat-button-toggle [checked]="isThemeChecked('light')" value="light"
+          >Light</mat-button-toggle
+        >
+        <mat-button-toggle [checked]="isThemeChecked('dark')" value="dark"
+          >Dark</mat-button-toggle
+        >
+        <mat-button-toggle [checked]="isThemeChecked('orange')" value="orange"
+          >Orange</mat-button-toggle
+        >
+      </mat-button-toggle-group>
+    </div>
+  </div>
 </div>

@@ -1,9 +1,9 @@
 export class ProjectLogVO {
-	task: string;
-	message: string;
+  task: string;
+  message: string;
 
-	constructor(log, message) {
-		this.task = log.taskName;
-		this.message = message;
-	}
+  constructor(log, message) {
+    this.task = log.taskName;
+    this.message = message;
+  }
 }

@@ -1,60 +1,57 @@
 export class DimensionViewLayoutVO {
-	name: string;
-	isChecked = true;
-	isHierarchyChecked = true;
-	isClustersChecked = false;
-	isAnnotationChecked = false;
-	isCompositionChecked = true;
-	isExternalDataChecked = false;
-	isDistributionChecked = false;
+  name: string;
+  isChecked = true;
+  isHierarchyChecked = true;
+  isClustersChecked = false;
+  isAnnotationChecked = false;
+  isCompositionChecked = true;
+  isExternalDataChecked = false;
+  isDistributionChecked = false;
 
-	constructor(name, isContextView) {
-		this.name = name || "";
+  constructor(name, isContextView) {
+    this.name = name || '';
 
-		if (isContextView) {
-			this.isDistributionChecked = false;
-		}
-	}
+    if (isContextView) {
+      this.isDistributionChecked = false;
+    }
+  }
 }
 
 export class ViewLayoutVO {
-	isDimensionsChecked = true;
-	isCoocurenceChecked = true;
+  isDimensionsChecked = true;
+  isCoocurenceChecked = true;
 
-	dimensionsViewsLayoutsVO: DimensionViewLayoutVO[];
+  dimensionsViewsLayoutsVO: DimensionViewLayoutVO[];
 
-	constructor() {
-		this.dimensionsViewsLayoutsVO = [];
-	}
+  constructor() {
+    this.dimensionsViewsLayoutsVO = [];
+  }
 
-	addDimensionViewLayout(
-		dimensionName,
-		isContextView,
-		previousLayout?: DimensionViewLayoutVO,
-	) {
-		let viewLayoutDimension = new DimensionViewLayoutVO(
-			dimensionName,
-			isContextView,
-		);
-		if (previousLayout) {
-			// assign previous values
-			viewLayoutDimension = Object.assign(
-				viewLayoutDimension,
-				previousLayout,
-			);
-		}
-		this.dimensionsViewsLayoutsVO.push(viewLayoutDimension);
-	}
+  addDimensionViewLayout(
+    dimensionName,
+    isContextView,
+    previousLayout?: DimensionViewLayoutVO,
+  ) {
+    let viewLayoutDimension = new DimensionViewLayoutVO(
+      dimensionName,
+      isContextView,
+    );
+    if (previousLayout) {
+      // assign previous values
+      viewLayoutDimension = Object.assign(viewLayoutDimension, previousLayout);
+    }
+    this.dimensionsViewsLayoutsVO.push(viewLayoutDimension);
+  }
 
-	megeWithPreviousValues(lsValues) {
-		this.isDimensionsChecked = lsValues.isDimensionsChecked;
-		this.isCoocurenceChecked = lsValues.isCoocurenceChecked;
-		for (let i = 0; i < this.dimensionsViewsLayoutsVO.length; i++) {
-			const prevValue = lsValues.dimensionsViewsLayoutsVO[i];
-			this.dimensionsViewsLayoutsVO[i] = Object.assign(
-				this.dimensionsViewsLayoutsVO[i],
-				prevValue,
-			);
-		}
-	}
+  megeWithPreviousValues(lsValues) {
+    this.isDimensionsChecked = lsValues.isDimensionsChecked;
+    this.isCoocurenceChecked = lsValues.isCoocurenceChecked;
+    for (let i = 0; i < this.dimensionsViewsLayoutsVO.length; i++) {
+      const prevValue = lsValues.dimensionsViewsLayoutsVO[i];
+      this.dimensionsViewsLayoutsVO[i] = Object.assign(
+        this.dimensionsViewsLayoutsVO[i],
+        prevValue,
+      );
+    }
+  }
 }

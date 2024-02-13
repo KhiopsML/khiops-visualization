@@ -1,81 +1,73 @@
 <div class="app-histogram" *ngIf="datas" fxFlexFill fxLayout="column">
-	<div
-		fxLayout="column"
-		class="histogram-loading-indicator"
-		fxLayoutAlign="center center"
-		*ngIf="isLoading"
-	>
-		<mat-spinner
-			diameter="40"
-			color="accent"
-			mode="indeterminate"
-		></mat-spinner>
-		<span>{{ "GLOBAL.BIG_FILES_LOADING_WARNING" | translate }}</span>
-	</div>
-	<div fxLayout="row" fxLayoutAlign="end center" class="comp-header">
-		<div fxFlex fxLayout="row" fxLayoutAlign="start center">
-			<h2 title="{{ 'TOOLTIPS.DISTRIBUTION.TITLE' | translate }}">
-				{{ "GLOBAL.DENSITY" | translate }}
-			</h2>
-		</div>
-		<kl-legend
-			[inputDatas]="datas"
-			[type]="'histogram'"
-			[colorSet]="colorSet"
-		></kl-legend>
-		<div class="comp-header-tools screenshot-hide" fxLayout="row">
-			<div>
-				<button
-					mat-stroked-button
-					color="primary"
-					[matMenuTriggerFor]="graphOptionsXTypes"
-				>
-					{{
-						distributionDatas.distributionGraphOptionsX.selected
-							| translate
-					}}
-					<em>v</em>
-				</button>
-				<mat-menu #graphOptionsXTypes>
-					<button
-						mat-menu-item
-						*ngFor="
-							let opt of distributionDatas
-								.distributionGraphOptionsX.types
-						"
-						(click)="changeGraphTypeX(opt)"
-					>
-						{{ opt | translate }}
-					</button>
-				</mat-menu>
-			</div>
-			<div>
-				<button
-					mat-stroked-button
-					color="primary"
-					[matMenuTriggerFor]="graphOptionsYTypes"
-				>
-					{{
-						distributionDatas.distributionGraphOptionsY.selected
-							| translate
-					}}
-					<em>v</em>
-				</button>
-				<mat-menu #graphOptionsYTypes>
-					<button
-						mat-menu-item
-						*ngFor="
-							let opt of distributionDatas
-								.distributionGraphOptionsY.types
-						"
-						(click)="changeGraphTypeY(opt)"
-					>
-						{{ opt | translate }}
-					</button>
-				</mat-menu>
-			</div>
-		</div>
-	</div>
-	<div (resized)="onResized($event)" #chart id="histogram-chart"></div>
+  <div
+    fxLayout="column"
+    class="histogram-loading-indicator"
+    fxLayoutAlign="center center"
+    *ngIf="isLoading"
+  >
+    <mat-spinner
+      diameter="40"
+      color="accent"
+      mode="indeterminate"
+    ></mat-spinner>
+    <span>{{ "GLOBAL.BIG_FILES_LOADING_WARNING" | translate }}</span>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="end center" class="comp-header">
+    <div fxFlex fxLayout="row" fxLayoutAlign="start center">
+      <h2 title="{{ 'TOOLTIPS.DISTRIBUTION.TITLE' | translate }}">
+        {{ "GLOBAL.DENSITY" | translate }}
+      </h2>
+    </div>
+    <kl-legend
+      [inputDatas]="datas"
+      [type]="'histogram'"
+      [colorSet]="colorSet"
+    ></kl-legend>
+    <div class="comp-header-tools screenshot-hide" fxLayout="row">
+      <div>
+        <button
+          mat-stroked-button
+          color="primary"
+          [matMenuTriggerFor]="graphOptionsXTypes"
+        >
+          {{ distributionDatas.distributionGraphOptionsX.selected | translate }}
+          <em>v</em>
+        </button>
+        <mat-menu #graphOptionsXTypes>
+          <button
+            mat-menu-item
+            *ngFor="
+              let opt of distributionDatas.distributionGraphOptionsX.types
+            "
+            (click)="changeGraphTypeX(opt)"
+          >
+            {{ opt | translate }}
+          </button>
+        </mat-menu>
+      </div>
+      <div>
+        <button
+          mat-stroked-button
+          color="primary"
+          [matMenuTriggerFor]="graphOptionsYTypes"
+        >
+          {{ distributionDatas.distributionGraphOptionsY.selected | translate }}
+          <em>v</em>
+        </button>
+        <mat-menu #graphOptionsYTypes>
+          <button
+            mat-menu-item
+            *ngFor="
+              let opt of distributionDatas.distributionGraphOptionsY.types
+            "
+            (click)="changeGraphTypeY(opt)"
+          >
+            {{ opt | translate }}
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+  </div>
+  <div (resized)="onResized($event)" #chart id="histogram-chart"></div>
 </div>
 <div #chartTooltip class="tooltip-container"></div>

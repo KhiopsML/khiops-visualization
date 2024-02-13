@@ -1,37 +1,37 @@
 import {
-	Component,
-	NgZone,
-	Input,
-	ChangeDetectionStrategy,
-} from "@angular/core";
+  Component,
+  NgZone,
+  Input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 
-import { SelectableComponent } from "../../components/selectable/selectable.component";
-import { SelectableService } from "../../components/selectable/selectable.service";
-import { ConfigService } from "@khiops-library/providers/config.service";
-import { InfosDatasI } from "@khiops-library/interfaces/infos-datas";
+import { SelectableComponent } from '../../components/selectable/selectable.component';
+import { SelectableService } from '../../components/selectable/selectable.service';
+import { ConfigService } from '@khiops-library/providers/config.service';
+import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 
 @Component({
-	selector: "kl-informations-block",
-	templateUrl: "./informations-block.component.html",
-	styleUrls: ["./informations-block.component.scss"],
-	changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'kl-informations-block',
+  templateUrl: './informations-block.component.html',
+  styleUrls: ['./informations-block.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InformationsBlockComponent extends SelectableComponent {
-	@Input() inputDatas: InfosDatasI[];
-	@Input() title: string;
-	@Input() icon = "tune";
-	componentType = "informations"; // needed to copy datas
+  @Input() inputDatas: InfosDatasI[];
+  @Input() title: string;
+  @Input() icon = 'tune';
+  componentType = 'informations'; // needed to copy datas
 
-	constructor(
-		public selectableService: SelectableService,
-		public ngzone: NgZone,
-		public configService: ConfigService,
-	) {
-		super(selectableService, ngzone, configService);
-	}
+  constructor(
+    public selectableService: SelectableService,
+    public ngzone: NgZone,
+    public configService: ConfigService,
+  ) {
+    super(selectableService, ngzone, configService);
+  }
 
-	show_value(value) {
-		if (value instanceof File) return value.name;
-		return value;
-	}
+  show_value(value) {
+    if (value instanceof File) return value.name;
+    return value;
+  }
 }

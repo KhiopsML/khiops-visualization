@@ -1,31 +1,31 @@
-import { ConfigModel } from "./../model/config.model";
-import { ElementRef, Injectable } from "@angular/core";
+import { ConfigModel } from './../model/config.model';
+import { ElementRef, Injectable } from '@angular/core';
 
 @Injectable({
-	providedIn: "root",
+  providedIn: 'root',
 })
 export class ConfigService {
-	private appRootElement: ElementRef<HTMLElement>;
+  private appRootElement: ElementRef<HTMLElement>;
 
-	private config: ConfigModel = new ConfigModel();
+  private config: ConfigModel = new ConfigModel();
 
-	setRootElement(appRoot) {
-		this.appRootElement = appRoot;
-	}
+  setRootElement(appRoot) {
+    this.appRootElement = appRoot;
+  }
 
-	getRootElement() {
-		return this.appRootElement;
-	}
+  getRootElement() {
+    return this.appRootElement;
+  }
 
-	getRootElementDom() {
-		return this.appRootElement.nativeElement;
-	}
+  getRootElementDom() {
+    return this.appRootElement.nativeElement;
+  }
 
-	setConfig(config: ConfigModel) {
-		this.config = config;
-	}
+  setConfig(config: ConfigModel) {
+    this.config = config;
+  }
 
-	getConfig(): ConfigModel {
-		return this.config;
-	}
+  getConfig(): ConfigModel {
+    return this.config;
+  }
 }

@@ -1,13 +1,13 @@
-import { Injectable } from "@angular/core";
-import pjson from "package.json";
+import { Injectable } from '@angular/core';
+import pjson from 'package.json';
 
 @Injectable({
-	providedIn: "root",
+  providedIn: 'root',
 })
 export class LibVersionService {
-	constructor() {}
+  constructor() {}
 
-	static getVersion() {
-		return (pjson && pjson.version) || undefined;
-	}
+  static getVersion() {
+    return (pjson && pjson.version) || undefined;
+  }
 }

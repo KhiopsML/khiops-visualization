@@ -1,41 +1,40 @@
-import { GridColumnsI } from "@khiops-library/interfaces/grid-columns";
-import { CoocurenceCellVO } from "./coocurence-cell-vo";
+import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
+import { CoocurenceCellVO } from './coocurence-cell-vo';
 
 export class CoocurenceCellsVO {
-	title: string;
-	values: CoocurenceCellVO[];
+  title: string;
+  values: CoocurenceCellVO[];
 
-	// coocurenceCell has dynamic fields
-	displayedColumns: GridColumnsI[] = [];
+  // coocurenceCell has dynamic fields
+  displayedColumns: GridColumnsI[] = [];
 
-	constructor(translate, nameX, nameY) {
-		this.title =
-			translate.get("GLOBAL.CELLS_OF") + " " + nameX + " x " + nameY;
+  constructor(translate, nameX, nameY) {
+    this.title = translate.get('GLOBAL.CELLS_OF') + ' ' + nameX + ' x ' + nameY;
 
-		this.displayedColumns.push({
-			headerName: "Cell id",
-			field: "id",
-			tooltip: translate.get("TOOLTIPS.PREPARATION_2D.CELLS.ID"),
-		});
-		this.displayedColumns.push({
-			headerName: nameX,
-			field: nameX,
-			tooltip: translate.get("TOOLTIPS.PREPARATION_2D.CELLS.NAMEX"),
-		});
-		this.displayedColumns.push({
-			headerName: nameY,
-			field: nameY,
-			tooltip: translate.get("TOOLTIPS.PREPARATION_2D.CELLS.NAMEY"),
-		});
-		this.displayedColumns.push({
-			headerName: translate.get("GLOBAL.FREQUENCY"),
-			field: "frequency",
-			tooltip: translate.get("TOOLTIPS.PREPARATION_2D.CELLS.FREQUENCY"),
-		});
-		this.displayedColumns.push({
-			headerName: translate.get("GLOBAL.COVERAGE"),
-			field: "coverage",
-			tooltip: translate.get("TOOLTIPS.PREPARATION_2D.CELLS.COVERAGE"),
-		});
-	}
+    this.displayedColumns.push({
+      headerName: 'Cell id',
+      field: 'id',
+      tooltip: translate.get('TOOLTIPS.PREPARATION_2D.CELLS.ID'),
+    });
+    this.displayedColumns.push({
+      headerName: nameX,
+      field: nameX,
+      tooltip: translate.get('TOOLTIPS.PREPARATION_2D.CELLS.NAMEX'),
+    });
+    this.displayedColumns.push({
+      headerName: nameY,
+      field: nameY,
+      tooltip: translate.get('TOOLTIPS.PREPARATION_2D.CELLS.NAMEY'),
+    });
+    this.displayedColumns.push({
+      headerName: translate.get('GLOBAL.FREQUENCY'),
+      field: 'frequency',
+      tooltip: translate.get('TOOLTIPS.PREPARATION_2D.CELLS.FREQUENCY'),
+    });
+    this.displayedColumns.push({
+      headerName: translate.get('GLOBAL.COVERAGE'),
+      field: 'coverage',
+      tooltip: translate.get('TOOLTIPS.PREPARATION_2D.CELLS.COVERAGE'),
+    });
+  }
 }

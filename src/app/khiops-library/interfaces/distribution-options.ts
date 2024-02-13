@@ -1,4 +1,4 @@
 export interface DistributionOptionsI {
-	types: string[];
-	selected: string;
+  types: string[];
+  selected: string;
 }

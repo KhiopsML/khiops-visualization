@@ -1,238 +1,204 @@
 <div id="tree-preparation-view-comp" fxFlexFill>
-	<div
-		fxLayout="column"
-		fxFlexFill
-		fxLayoutAlign="center center"
-		*ngIf="loadingView"
-	>
-		<mat-spinner
-			diameter="40"
-			color="accent"
-			mode="indeterminate"
-		></mat-spinner>
-	</div>
-	<as-split
-		[gutterSize]="7"
-		*ngIf="!loadingView && sizes"
-		direction="horizontal"
-		(dragEnd)="onSplitDragEnd($event, 'col')"
-	>
-		<as-split-area [size]="sizes.col[0]">
-			<as-split
-				[gutterSize]="7"
-				direction="vertical"
-				(dragEnd)="onSplitDragEnd($event, 'col0Row')"
-			>
-				<as-split-area [size]="sizes.col0Row[0]">
-					<as-split
-						[gutterSize]="7"
-						direction="horizontal"
-						(dragEnd)="onSplitDragEnd($event, 'col0Row0Col')"
-					>
-						<as-split-area [size]="sizes.col0Row0Col[0]">
-							<kl-informations-block
-								id="tree-preparation-informations-block-summary"
-								title="{{ 'GLOBAL.SUMMARY' | translate }}"
-								[inputDatas]="summaryDatas"
-							>
-							</kl-informations-block>
-						</as-split-area>
-						<as-split-area [size]="sizes.col0Row0Col[1]">
-							<app-target-variable-stats-canvas
-								*ngIf="targetVariableStatsDatas"
-								id="tree-preparation-target-variable-stats"
-								fxFlexFill
-								[inputDatas]="targetVariableStatsDatas"
-							>
-							</app-target-variable-stats-canvas>
-							<kl-no-data
-								fxFlexFill
-								*ngIf="
-									!targetVariableStatsDatas &&
-									!targetVariableStatsInformations
-								"
-								[message]="'NO_DATAS.NO_VARIABLE_DETAILS'"
-							>
-							</kl-no-data>
-							<kl-informations-block
-								id="tree-preparation-informations-block-summary"
-								*ngIf="
-									targetVariableStatsInformations &&
-									!targetVariableStatsDatas
-								"
-								title="{{
-									'GLOBAL.TARGET_VARIABLE_STATS' | translate
-								}}"
-								[inputDatas]="targetVariableStatsInformations"
-							></kl-informations-block>
-						</as-split-area>
-						<as-split-area [size]="sizes.col0Row0Col[2]">
-							<kl-informations-block
-								id="tree-preparation-informations-block-informations"
-								icon="subject"
-								title="{{ 'GLOBAL.INFORMATIONS' | translate }}"
-								[inputDatas]="informationsDatas"
-							>
-							</kl-informations-block>
-						</as-split-area>
-					</as-split>
-				</as-split-area>
-				<as-split-area
-					class="variables-list-container"
-					[size]="sizes.col0Row[1]"
-				>
-					<as-split
-						[gutterSize]="7"
-						direction="horizontal"
-						(dragEnd)="onSplitDragEnd($event, 'col0Row1Col')"
-					>
-						<as-split-area [size]="sizes.col0Row1Col[0]">
-							<kl-ag-grid
-								id="tree-preparation-variables-list"
-								class="variables-list"
-								fxFlexFill
-								[showLevelDistribution]="true"
-								[showSearch]="true"
-								[watchResize]="true"
-								[displayCount]="true"
-								(selectListItem)="
-									onSelectListItemChanged($event)
-								"
-								[showLineSelection]="true"
-								[showColumnsSelection]="true"
-								[rowHeight]="30"
-								[inputDatas]="variablesDatas"
-								[displayedColumns]="variablesDisplayedColumns"
-								[selectedVariable]="
-									treePreparationDatas.selectedVariable
-								"
-								(selectListItem)="
-									onSelectedVariableChanged($event)
-								"
-								(showLevelDistributionGraph)="
-									onShowLevelDistributionGraph($event)
-								"
-							>
-							</kl-ag-grid>
-						</as-split-area>
-						<as-split-area [size]="sizes.col0Row1Col[1]">
-							<app-variable-graph-details
-								#appVariableGraphDetails
-								*ngIf="treePreparationDatas.selectedVariable"
-								[preparationSource]="'treePreparationReport'"
-								[selectedVariable]="
-									treePreparationDatas.selectedVariable
-								"
-								[selectedGraphItemIndex]="selectedBarIndex"
-								(selectedItemChanged)="
-									onSelectedGraphItemChanged($event)
-								"
-								fxFlex="1 1 100%"
-								[showTargetDistributionGraph]="true"
-							>
-							</app-variable-graph-details>
-							<kl-no-data
-								fxFlex
-								*ngIf="!treePreparationDatas.selectedVariable"
-							></kl-no-data>
-						</as-split-area>
-					</as-split>
-				</as-split-area>
-				<as-split-area [size]="sizes.col0Row[2]">
-					<as-split
-						[gutterSize]="7"
-						direction="horizontal"
-						(dragEnd)="onSplitDragEnd($event, 'col0Row2Col')"
-					>
-						<as-split-area
-							class="variables-list-container"
-							[size]="sizes.col0Row2Col[0]"
-						>
-							<app-tree-select
-								id="tree-preparation-select"
-								[selectedNodes]="
-									treePreparationDatas.selectedNodes
-								"
-								[selectedNode]="
-									treePreparationDatas.selectedNode
-								"
-								(selectTreeItemChanged)="
-									onSelectTreeItemChanged($event)
-								"
-								[dimensionTree]="
-									treePreparationDatas.dimensionTree
-								"
-							></app-tree-select>
-						</as-split-area>
-						<as-split-area
-							class="variables-list-container"
-							[size]="sizes.col0Row2Col[1]"
-						>
-							<as-split
-								[gutterSize]="7"
-								direction="horizontal"
-								(dragEnd)="
-									onSplitDragEnd($event, 'col0Row2Col1Row')
-								"
-							>
-								<as-split-area
-									class="variables-list-container"
-									[size]="sizes.col0Row2Col1Row[0]"
-								>
-									<app-tree-details
-										[selectedNodes]="
-											treePreparationDatas.selectedNodes
-										"
-										[selectedNode]="
-											treePreparationDatas.selectedNode
-										"
-									>
-									</app-tree-details>
-								</as-split-area>
-								<as-split-area
-									class="variables-list-container"
-									[size]="sizes.col0Row2Col1Row[1]"
-								>
-									<app-tree-leaf-details
-										#appTreeLeafDetails
-										fxFlexFill
-										*ngIf="
-											treePreparationDatas.selectedVariable
-										"
-										[displayedValues]="
-											distributionDatas.treeNodeTargetDistributionDisplayedValues
-										"
-										[selectedNode]="
-											treePreparationDatas.selectedNode
-										"
-									>
-									</app-tree-leaf-details>
-									<kl-no-data
-										fxFlex
-										*ngIf="
-											!treePreparationDatas.selectedVariable
-										"
-									></kl-no-data>
-								</as-split-area>
-							</as-split>
-						</as-split-area>
-					</as-split>
-				</as-split-area>
-			</as-split>
-		</as-split-area>
-		<as-split-area [size]="sizes.col[1]">
-			<app-tree-hyper
-				id="tree-preparation-hyper"
-				[selectedNodes]="treePreparationDatas.selectedNodes"
-				[selectedNode]="treePreparationDatas.selectedNode"
-				[displayedValues]="distributionDatas.treeHyperDisplayedValues"
-				(treeHyperDisplayedValuesChanged)="
-					onTreeHyperDisplayedValuesChanged($event)
-				"
-				(selectTreeItemChanged)="onSelectTreeItemChanged($event)"
-				[dimensionTree]="treePreparationDatas.dimensionTree"
-			>
-			</app-tree-hyper>
-		</as-split-area>
-	</as-split>
+  <div
+    fxLayout="column"
+    fxFlexFill
+    fxLayoutAlign="center center"
+    *ngIf="loadingView"
+  >
+    <mat-spinner
+      diameter="40"
+      color="accent"
+      mode="indeterminate"
+    ></mat-spinner>
+  </div>
+  <as-split
+    [gutterSize]="7"
+    *ngIf="!loadingView && sizes"
+    direction="horizontal"
+    (dragEnd)="onSplitDragEnd($event, 'col')"
+  >
+    <as-split-area [size]="sizes.col[0]">
+      <as-split
+        [gutterSize]="7"
+        direction="vertical"
+        (dragEnd)="onSplitDragEnd($event, 'col0Row')"
+      >
+        <as-split-area [size]="sizes.col0Row[0]">
+          <as-split
+            [gutterSize]="7"
+            direction="horizontal"
+            (dragEnd)="onSplitDragEnd($event, 'col0Row0Col')"
+          >
+            <as-split-area [size]="sizes.col0Row0Col[0]">
+              <kl-informations-block
+                id="tree-preparation-informations-block-summary"
+                title="{{ 'GLOBAL.SUMMARY' | translate }}"
+                [inputDatas]="summaryDatas"
+              >
+              </kl-informations-block>
+            </as-split-area>
+            <as-split-area [size]="sizes.col0Row0Col[1]">
+              <app-target-variable-stats-canvas
+                *ngIf="targetVariableStatsDatas"
+                id="tree-preparation-target-variable-stats"
+                fxFlexFill
+                [inputDatas]="targetVariableStatsDatas"
+              >
+              </app-target-variable-stats-canvas>
+              <kl-no-data
+                fxFlexFill
+                *ngIf="
+                  !targetVariableStatsDatas && !targetVariableStatsInformations
+                "
+                [message]="'NO_DATAS.NO_VARIABLE_DETAILS'"
+              >
+              </kl-no-data>
+              <kl-informations-block
+                id="tree-preparation-informations-block-summary"
+                *ngIf="
+                  targetVariableStatsInformations && !targetVariableStatsDatas
+                "
+                title="{{ 'GLOBAL.TARGET_VARIABLE_STATS' | translate }}"
+                [inputDatas]="targetVariableStatsInformations"
+              ></kl-informations-block>
+            </as-split-area>
+            <as-split-area [size]="sizes.col0Row0Col[2]">
+              <kl-informations-block
+                id="tree-preparation-informations-block-informations"
+                icon="subject"
+                title="{{ 'GLOBAL.INFORMATIONS' | translate }}"
+                [inputDatas]="informationsDatas"
+              >
+              </kl-informations-block>
+            </as-split-area>
+          </as-split>
+        </as-split-area>
+        <as-split-area
+          class="variables-list-container"
+          [size]="sizes.col0Row[1]"
+        >
+          <as-split
+            [gutterSize]="7"
+            direction="horizontal"
+            (dragEnd)="onSplitDragEnd($event, 'col0Row1Col')"
+          >
+            <as-split-area [size]="sizes.col0Row1Col[0]">
+              <kl-ag-grid
+                id="tree-preparation-variables-list"
+                class="variables-list"
+                fxFlexFill
+                [showLevelDistribution]="true"
+                [showSearch]="true"
+                [watchResize]="true"
+                [displayCount]="true"
+                (selectListItem)="onSelectListItemChanged($event)"
+                [showLineSelection]="true"
+                [showColumnsSelection]="true"
+                [rowHeight]="30"
+                [inputDatas]="variablesDatas"
+                [displayedColumns]="variablesDisplayedColumns"
+                [selectedVariable]="treePreparationDatas.selectedVariable"
+                (selectListItem)="onSelectedVariableChanged($event)"
+                (showLevelDistributionGraph)="
+                  onShowLevelDistributionGraph($event)
+                "
+              >
+              </kl-ag-grid>
+            </as-split-area>
+            <as-split-area [size]="sizes.col0Row1Col[1]">
+              <app-variable-graph-details
+                #appVariableGraphDetails
+                *ngIf="treePreparationDatas.selectedVariable"
+                [preparationSource]="'treePreparationReport'"
+                [selectedVariable]="treePreparationDatas.selectedVariable"
+                [selectedGraphItemIndex]="selectedBarIndex"
+                (selectedItemChanged)="onSelectedGraphItemChanged($event)"
+                fxFlex="1 1 100%"
+                [showTargetDistributionGraph]="true"
+              >
+              </app-variable-graph-details>
+              <kl-no-data
+                fxFlex
+                *ngIf="!treePreparationDatas.selectedVariable"
+              ></kl-no-data>
+            </as-split-area>
+          </as-split>
+        </as-split-area>
+        <as-split-area [size]="sizes.col0Row[2]">
+          <as-split
+            [gutterSize]="7"
+            direction="horizontal"
+            (dragEnd)="onSplitDragEnd($event, 'col0Row2Col')"
+          >
+            <as-split-area
+              class="variables-list-container"
+              [size]="sizes.col0Row2Col[0]"
+            >
+              <app-tree-select
+                id="tree-preparation-select"
+                [selectedNodes]="treePreparationDatas.selectedNodes"
+                [selectedNode]="treePreparationDatas.selectedNode"
+                (selectTreeItemChanged)="onSelectTreeItemChanged($event)"
+                [dimensionTree]="treePreparationDatas.dimensionTree"
+              ></app-tree-select>
+            </as-split-area>
+            <as-split-area
+              class="variables-list-container"
+              [size]="sizes.col0Row2Col[1]"
+            >
+              <as-split
+                [gutterSize]="7"
+                direction="horizontal"
+                (dragEnd)="onSplitDragEnd($event, 'col0Row2Col1Row')"
+              >
+                <as-split-area
+                  class="variables-list-container"
+                  [size]="sizes.col0Row2Col1Row[0]"
+                >
+                  <app-tree-details
+                    [selectedNodes]="treePreparationDatas.selectedNodes"
+                    [selectedNode]="treePreparationDatas.selectedNode"
+                  >
+                  </app-tree-details>
+                </as-split-area>
+                <as-split-area
+                  class="variables-list-container"
+                  [size]="sizes.col0Row2Col1Row[1]"
+                >
+                  <app-tree-leaf-details
+                    #appTreeLeafDetails
+                    fxFlexFill
+                    *ngIf="treePreparationDatas.selectedVariable"
+                    [displayedValues]="
+                      distributionDatas.treeNodeTargetDistributionDisplayedValues
+                    "
+                    [selectedNode]="treePreparationDatas.selectedNode"
+                  >
+                  </app-tree-leaf-details>
+                  <kl-no-data
+                    fxFlex
+                    *ngIf="!treePreparationDatas.selectedVariable"
+                  ></kl-no-data>
+                </as-split-area>
+              </as-split>
+            </as-split-area>
+          </as-split>
+        </as-split-area>
+      </as-split>
+    </as-split-area>
+    <as-split-area [size]="sizes.col[1]">
+      <app-tree-hyper
+        id="tree-preparation-hyper"
+        [selectedNodes]="treePreparationDatas.selectedNodes"
+        [selectedNode]="treePreparationDatas.selectedNode"
+        [displayedValues]="distributionDatas.treeHyperDisplayedValues"
+        (treeHyperDisplayedValuesChanged)="
+          onTreeHyperDisplayedValuesChanged($event)
+        "
+        (selectTreeItemChanged)="onSelectTreeItemChanged($event)"
+        [dimensionTree]="treePreparationDatas.dimensionTree"
+      >
+      </app-tree-hyper>
+    </as-split-area>
+  </as-split>
 </div>
