@@ -26,7 +26,6 @@ export class MatrixCanvasService {
     contextSelection,
     selectedTargetIndex,
   ) {
-    let globalMatrixFreqsValues;
     let matrixFreqsValues;
     let matrixValues;
     let matrixExtras;

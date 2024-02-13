@@ -16,7 +16,6 @@ import { SelectableComponent } from '@khiops-library/components/selectable/selec
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
-import { AppService } from '@khiops-covisualization/providers/app.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngstack/translate';
 import { ConfigService } from '@khiops-library/providers/config.service';
@@ -50,7 +49,6 @@ export class TreeSelectComponent
 
   constructor(
     public ngzone: NgZone,
-    private appService: AppService,
     private eventsService: EventsService,
     private treenodesService: TreenodesService,
     public selectableService: SelectableService,

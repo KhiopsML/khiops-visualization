@@ -214,7 +214,7 @@ export class MatrixCanvasComponent
       requestAnimationFrame(() => {
         if (this.graphMode && this.inputDatas && this.inputDatas.variable) {
           this.isDrawing = true;
-          const t2 = performance.now();
+          // const t2 = performance.now();
 
           if (this.graphTargets && this.graphTarget) {
             this.selectedTargetIndex = this.graphTargets.indexOf(
@@ -479,7 +479,7 @@ export class MatrixCanvasComponent
             },
           );
           this.isDrawing = false;
-          const t3 = performance.now();
+          // const t3 = performance.now();
         }
       });
     }

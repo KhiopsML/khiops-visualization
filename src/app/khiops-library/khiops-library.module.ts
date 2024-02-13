@@ -1,6 +1,6 @@
 import { EventsService } from './providers/events.service';
 import { ConfigService } from './providers/config.service';
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { LibVersionComponent } from './components/lib-version/lib-version.component';
 import { SelectableComponent } from './components/selectable/selectable.component';
 import { FileLoaderComponent } from './components/file-loader/file-loader.component';
@@ -193,7 +193,7 @@ import EnTransaltion from '../../i18n/en.json';
   ],
 })
 export class KhiopsLibraryModule {
-  constructor(private translate: TranslateService) {
+  constructor(public translate: TranslateService) {
     translate.use('en', EnTransaltion);
   }
 }

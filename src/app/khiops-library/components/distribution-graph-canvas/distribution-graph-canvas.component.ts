@@ -69,15 +69,15 @@ export class DistributionGraphCanvasComponent
       this.khiopsLibraryService.getAppConfig().common.GLOBAL.MIN_GRAPH_SCALE;
 
     // Keep this into ref to access it into tick callback
-    // We can not use arrox function to access native getLabelForValue function
-    let self = this;
+    // We can not use arrow function to access native getLabelForValue function
+    // let self = this;
 
     // Override tooltip infos
     this.chartOptions = {
       plugins: {
         tooltip: {
           callbacks: {
-            label: (items: any): string => {
+            label: (items: any) => {
               if (items && items.dataset) {
                 if (
                   !this.hideGraphOptions &&
@@ -105,7 +105,7 @@ export class DistributionGraphCanvasComponent
                 }
               }
             },
-            afterLabel: (items: any): string => {
+            afterLabel: (items: any) => {
               if (items && items.dataset) {
                 if (
                   !this.hideGraphOptions &&

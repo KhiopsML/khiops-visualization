@@ -7,7 +7,6 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { TranslateService } from '@ngstack/translate';
 import _ from 'lodash';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
@@ -32,10 +31,7 @@ export class SelectToggleButtonComponent implements OnInit, OnChanges {
 
   pageSize: number = AppConfig.visualizationCommon.GLOBAL.MAT_MENU_PAGINATION;
 
-  constructor(
-    private khiopsLibraryService: KhiopsLibraryService,
-    private translate: TranslateService,
-  ) {}
+  constructor(private translate: TranslateService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.displayedValues && changes.displayedValues.currentValue) {

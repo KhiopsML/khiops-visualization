@@ -154,7 +154,7 @@ export class MatrixUtilsDatasService {
     xValues,
     yValues,
   ) {
-    var t0 = performance.now();
+    // var t0 = performance.now();
     const cells = [];
 
     const xLength = xDimension.parts;
@@ -387,7 +387,7 @@ export class MatrixUtilsDatasService {
         cells.push(cell);
       }
     }
-    var t1 = performance.now();
+    // var t1 = performance.now();
     // console.log("getCellDatas " + (t1 - t0) + " milliseconds.");
     // console.log("TCL: MatrixUtilsDatasService -> constructor -> cells", cells)
     // console.log('file: matrix-utils-datas.service.ts:310 ~ MatrixUtilsDatasService ~ cells:', cells);

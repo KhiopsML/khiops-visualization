@@ -1,5 +1,4 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { AppConfig } from 'src/environments/environment';
 import { AppService } from '@khiops-covisualization/providers/app.service';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';

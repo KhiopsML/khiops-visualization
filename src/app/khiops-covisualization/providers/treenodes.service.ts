@@ -446,29 +446,29 @@ export class TreenodesService {
     let newJson = this.constructDatasToSave(collapsedNodesInput);
     if (collapsedNodesInput) {
       // Transform json if collapsed nodes
-      let t0 = performance.now();
+      // let t0 = performance.now();
       newJson = this.truncateJsonHierarchy(newJson);
-      let t1 = performance.now();
+      // let t1 = performance.now();
       // console.log("truncateJsonHierarchy " + (t1 - t0) + " milliseconds.");
 
-      t0 = performance.now();
+      // t0 = performance.now();
       newJson = this.updateSummariesParts(newJson);
-      t1 = performance.now();
+      // t1 = performance.now();
       // console.log("updateSummariesParts " + (t1 - t0) + " milliseconds.");
 
-      t0 = performance.now();
+      // t0 = performance.now();
       newJson = this.truncateJsonPartition(newJson);
-      t1 = performance.now();
+      // t1 = performance.now();
       // console.log("truncateJsonPartition " + (t1 - t0) + " milliseconds.");
 
-      t0 = performance.now();
+      // t0 = performance.now();
       newJson = this.truncateJsonCells(newJson);
-      t1 = performance.now();
+      // t1 = performance.now();
       // console.log("truncateJsonCells " + (t1 - t0) + " milliseconds.");
 
-      t0 = performance.now();
+      // t0 = performance.now();
       newJson = this.updateSummariesCells(newJson);
-      t1 = performance.now();
+      // t1 = performance.now();
       // console.log("updateSummariesCells " + (t1 - t0) + " milliseconds.");
 
       if (!collapsedNodesInput) {
@@ -803,7 +803,7 @@ export class TreenodesService {
       }
     }
 
-    let t1 = performance.now();
+    // let t1 = performance.now();
     // console.log("STEP 1 " + (t1 - t0) + " milliseconds.");
 
     t0 = performance.now();
@@ -844,7 +844,7 @@ export class TreenodesService {
       value,
     }));
 
-    t1 = performance.now();
+    // t1 = performance.now();
     // console.log("STEP 2 " + (t1 - t0) + " milliseconds.");
 
     t0 = performance.now();
@@ -856,7 +856,7 @@ export class TreenodesService {
       }
       return b.value - a.value;
     });
-    t1 = performance.now();
+    // t1 = performance.now();
     // console.log("STEP 3 " + (t1 - t0) + " milliseconds.");
 
     CC.coclusteringReport.cellFrequencies = resGroup.map((e) => e.value);

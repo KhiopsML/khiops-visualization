@@ -314,7 +314,7 @@ export class TreeHyperComponent
               hideOnDrag: false,
               // strokeWidth: n => n.parent ? .1 : .001,
               strokeWidth: (n) => {
-                const node: TreeNodeVO = n.data;
+                // const node: TreeNodeVO = n.data;
                 // Selected Path stroke width
                 return 0.01;
               },

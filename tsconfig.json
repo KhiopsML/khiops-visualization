@@ -14,7 +14,6 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "baseUrl": "./",
-    "noUnusedParameters": true,
     "target": "es2017",
     "allowJs": true,
     "typeRoots": ["node_modules/@types"],

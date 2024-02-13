@@ -9,7 +9,6 @@ import {
 import { AppConfig } from 'src/environments/environment';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import * as _ from 'lodash'; // Important to import lodash in karma
-import { AppService } from '@khiops-covisualization/providers/app.service';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
 
 @Component({
@@ -29,10 +28,7 @@ export class UserSettingsComponent implements OnChanges {
       AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR',
     ) || 'light';
 
-  constructor(
-    private khiopsLibraryService: KhiopsLibraryService,
-    private appService: AppService,
-  ) {}
+  constructor(private khiopsLibraryService: KhiopsLibraryService) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.opened && changes.opened.currentValue) {
