@@ -123,6 +123,7 @@ export class DistributionDatasService {
             currentXAxis,
             this.distributionDatas.targetDistributionDisplayedValues,
             this.distributionDatas.targetDistributionType,
+            selectedVariable,
           );
         }
       }
@@ -186,6 +187,7 @@ export class DistributionDatasService {
         [currentXAxis],
         this.distributionDatas.treeNodeTargetDistributionDisplayedValues,
         this.distributionDatas.treeNodeTargetDistributionType,
+        selectedVariable,
       );
     }
     this.distributionDatas.checkTreeNodeTargetDistributionGraphDatas();
@@ -199,6 +201,7 @@ export class DistributionDatasService {
     currentXAxis,
     displayedValues: ChartToggleValuesI[],
     type,
+    selectedVariable,
   ): [ChartDatasVO, ChartToggleValuesI[]] {
     const targetDistributionGraphDatas = new ChartDatasVO();
 
@@ -227,7 +230,11 @@ export class DistributionDatasService {
 
         let l: number = currentXAxis.length;
         for (let i = 0; i < l; i++) {
-          const currentLabel = this.formatXAxis(currentXAxis[i], i).toString();
+          const currentLabel = this.formatXAxis(
+            currentXAxis[i],
+            i,
+            selectedVariable.type,
+          ).toString();
           if (!targetDistributionGraphDatas.labels.includes(currentLabel)) {
             targetDistributionGraphDatas.labels.push(currentLabel);
           }
@@ -319,6 +326,7 @@ export class DistributionDatasService {
           dimensions,
           partition,
           currentXAxis,
+          selectedVariable,
         );
       }
     }
@@ -381,6 +389,7 @@ export class DistributionDatasService {
     dimensions,
     partition,
     currentXAxis,
+    selectedVariable,
   ): any {
     let distributionsGraphDetails = {
       datasets: [],
@@ -415,7 +424,11 @@ export class DistributionDatasService {
         const frequencyValue = frequencyArray[i];
 
         // format x axis legend text
-        const currentName = this.formatXAxis(currentXAxis[i], i);
+        const currentName = this.formatXAxis(
+          currentXAxis[i],
+          i,
+          selectedVariable.type,
+        );
 
         distributionsGraphDetails.labels.push(currentName);
         distributionsGraphDetails.intervals.push(currentXAxis[i]);
@@ -515,29 +528,50 @@ export class DistributionDatasService {
     return levelDistributionGraphDatas;
   }
 
-  formatXAxis(currentXAxis: any, index: number): string {
+  formatXAxis(currentXAxis: any, index: number, partitionType: string): string {
     let currentName: string;
-    if (currentXAxis.length > 1) {
-      // define x axis
-      currentName = index === 0 ? '[' : ']';
+
+    if (partitionType === 'Numerical') {
+      if (currentXAxis.length > 1) {
+        // define x axis NUMERICAL
+        currentName = index === 0 ? '[' : ']';
+        currentName += currentXAxis.toString();
+        if (
+          currentName.length >
+          AppConfig.visualizationCommon.GLOBAL.MAX_GRAPH_TOOLTIP_LABEL_LENGTH
+        ) {
+          currentName =
+            currentName.substring(
+              0,
+              AppConfig.visualizationCommon.GLOBAL
+                .MAX_GRAPH_TOOLTIP_LABEL_LENGTH,
+            ) + ' ... ]';
+        } else {
+          currentName += ']';
+        }
+      } else {
+        currentName = currentXAxis;
+      }
+      if (currentName.length === 0) {
+        currentName = this.translate.get('GLOBAL.MISSING');
+      }
+    } else {
+      // define x axis CATEGORICAL
+      currentName = '{';
       currentName += currentXAxis.toString();
       if (
         currentName.length >
         AppConfig.visualizationCommon.GLOBAL.MAX_GRAPH_TOOLTIP_LABEL_LENGTH
       ) {
-        currentName =
-          currentName.substring(
-            0,
-            AppConfig.visualizationCommon.GLOBAL.MAX_GRAPH_TOOLTIP_LABEL_LENGTH,
-          ) + ' ... ]';
+        currentName = currentName.substring(
+          0,
+          AppConfig.visualizationCommon.GLOBAL.MAX_GRAPH_TOOLTIP_LABEL_LENGTH,
+        );
+
+        currentName += '... }';
       } else {
-        currentName += ']';
+        currentName += '}';
       }
-    } else {
-      currentName = currentXAxis;
-    }
-    if (currentName.length === 0) {
-      currentName = this.translate.get('GLOBAL.MISSING');
     }
 
     return currentName;
