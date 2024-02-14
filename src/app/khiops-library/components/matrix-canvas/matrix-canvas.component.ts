@@ -177,36 +177,40 @@ export class MatrixCanvasComponent
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (this.contrast === undefined) {
-      this.contrast =
-        localStorage.getItem(
-          this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
-            'SETTING_MATRIX_CONTRAST',
-        ) ||
-        this.khiopsLibraryService.getAppConfig().common.GLOBAL.MATRIX_CONTRAST;
-    }
-
-    // if graph mode change, reset isZerosToggled
-    if (changes.graphMode) {
-      this.isZerosToggled = false;
-    }
-
-    // Draw matrix on change
-    if (
-      this.inputDatas &&
-      this.matrixDiv &&
-      this.matrixDiv.nativeElement &&
-      !changes.selectedNodes
-    ) {
-      if (
-        this.inputDatas.matrixCellDatas &&
-        this.inputDatas.propagateChanges === false
-      ) {
-        this.inputDatas.propagateChanges = true; // hack to limit re-rendering and optimize perf
-      } else {
-        this.drawMatrix();
+    setTimeout(() => {
+      // #165 on variable change matrixDiv has been reset and so is undefined
+      if (this.contrast === undefined) {
+        this.contrast =
+          localStorage.getItem(
+            this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
+              'SETTING_MATRIX_CONTRAST',
+          ) ||
+          this.khiopsLibraryService.getAppConfig().common.GLOBAL
+            .MATRIX_CONTRAST;
       }
-    }
+
+      // if graph mode change, reset isZerosToggled
+      if (changes.graphMode) {
+        this.isZerosToggled = false;
+      }
+
+      // Draw matrix on change
+      if (
+        this.inputDatas &&
+        this.matrixDiv &&
+        this.matrixDiv.nativeElement &&
+        !changes.selectedNodes
+      ) {
+        if (
+          this.inputDatas.matrixCellDatas &&
+          this.inputDatas.propagateChanges === false
+        ) {
+          this.inputDatas.propagateChanges = true; // hack to limit re-rendering and optimize perf
+        } else {
+          this.drawMatrix();
+        }
+      }
+    });
   }
 
   drawMatrix() {
