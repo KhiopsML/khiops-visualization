@@ -16,6 +16,8 @@ import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggl
 import { ModalityCountsVO } from '@khiops-visualization/model/modality-counts-vo';
 import { HistogramValuesI } from '@khiops-visualization/components/commons/histogram/histogram.interfaces';
 import { TreeNodeVO } from '@khiops-visualization/model/tree-node-vo';
+import { PreparationVariableVO } from '@khiops-visualization/model/preparation-variable-vo';
+import { TreePreparationVariableVO } from '@khiops-visualization/model/tree-preparation-variable-vo';
 
 @Injectable({
   providedIn: 'root',
@@ -87,7 +89,7 @@ export class DistributionDatasService {
 
   // tslint:disable-next-line:typedef-whitespace
   getTargetDistributionGraphDatas(
-    selectedVariable,
+    selectedVariable: PreparationVariableVO | TreePreparationVariableVO,
     type?: string,
     initActiveEntries?: boolean,
   ): ChartDatasVO {
@@ -112,7 +114,6 @@ export class DistributionDatasService {
           const currentDatas = variableDetails.dataGrid.partTargetFrequencies;
           const currentXAxis = variableDetails.dataGrid.dimensions[0].partition;
           const partition = variableDetails.dataGrid.dimensions[1].partition;
-
           [
             this.distributionDatas.targetDistributionGraphDatas,
             this.distributionDatas.targetDistributionDisplayedValues,
@@ -123,7 +124,7 @@ export class DistributionDatasService {
             currentXAxis,
             this.distributionDatas.targetDistributionDisplayedValues,
             this.distributionDatas.targetDistributionType,
-            selectedVariable,
+            selectedVariable.type,
           );
         }
       }
@@ -150,7 +151,7 @@ export class DistributionDatasService {
       selectedNode &&
       selectedNode.isLeaf
     ) {
-      const allTargetValues =
+      const allTargetValues: string[] =
         appDatas.treePreparationReport.summary.targetValues.values;
       const fullTarget = [];
       // Update currentDatas and fill empty values with 0
@@ -187,7 +188,7 @@ export class DistributionDatasService {
         [currentXAxis],
         this.distributionDatas.treeNodeTargetDistributionDisplayedValues,
         this.distributionDatas.treeNodeTargetDistributionType,
-        selectedVariable,
+        selectedVariable.type,
       );
     }
     this.distributionDatas.checkTreeNodeTargetDistributionGraphDatas();
@@ -195,13 +196,13 @@ export class DistributionDatasService {
   }
 
   computeTargetDistributionGraph(
-    partition,
-    currentDatas,
-    allDatas,
-    currentXAxis,
+    partition: string[] | number[][],
+    currentDatas: number[][],
+    allDatas: number[][],
+    currentXAxis: string[] | number[] | string[][] | number[][],
     displayedValues: ChartToggleValuesI[],
-    type,
-    selectedVariable,
+    type: string,
+    selectedVariableType: string,
   ): [ChartDatasVO, ChartToggleValuesI[]] {
     const targetDistributionGraphDatas = new ChartDatasVO();
 
@@ -215,7 +216,7 @@ export class DistributionDatasService {
         displayedValues = [];
         for (let l = 0; l < partition.length; l++) {
           displayedValues.push({
-            name: partition[l],
+            name: partition[l].toString(),
             show: true,
           });
         }
@@ -233,7 +234,7 @@ export class DistributionDatasService {
           const currentLabel = this.formatXAxis(
             currentXAxis[i],
             i,
-            selectedVariable.type,
+            selectedVariableType,
           ).toString();
           if (!targetDistributionGraphDatas.labels.includes(currentLabel)) {
             targetDistributionGraphDatas.labels.push(currentLabel);
