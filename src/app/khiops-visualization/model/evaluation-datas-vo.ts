@@ -6,12 +6,13 @@ import { EvaluationPredictorVO } from './evaluation-predictor-vo';
 import { EvaluationTypeVO } from './evaluation-type-vo';
 
 export class EvaluationDatasVO {
-  selectedEvaluationTypeVariable: EvaluationTypeVO = undefined;
-  selectedPredictorEvaluationVariable: EvaluationPredictorVO = undefined;
-  evaluationTypes: any[] = undefined; // complex values
+  selectedEvaluationTypeVariable: EvaluationTypeVO | undefined = undefined;
+  selectedPredictorEvaluationVariable: EvaluationPredictorVO | undefined =
+    undefined;
+  evaluationTypes: any[] | undefined = undefined; // complex values
   evaluationTypesSummary: GridDatasI = undefined;
   liftGraphDatas: ChartDatasVO = undefined;
-  liftGraphDisplayedValues: ChartToggleValuesI[] = undefined;
+  liftGraphDisplayedValues: ChartToggleValuesI[] | undefined = undefined;
   confusionMatrix: GridDatasI = undefined;
   predictorEvaluations: GridDatasI = undefined;
   confusionMatrixType: string = TYPES.FREQUENCY;

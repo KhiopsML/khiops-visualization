@@ -106,7 +106,7 @@ export class TreeNodeVO {
    * Example for [30, 20, 50]
    * 1 + (0.3*log2(0.3) + 0.2*log2(0.2) + 0.5*log2(0.5)) / log2(3)
    */
-  getPurity(M: number): number {
+  getPurity(M: number): number | undefined {
     if (this.isLeaf) {
       this.computeValuesProbs();
 

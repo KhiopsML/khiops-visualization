@@ -16,7 +16,7 @@ export class DistributionDatasVO {
   distributionGraphOptionsY: DistributionOptionsI = undefined;
   distributionGraphDatas: ChartDatasVO = undefined;
 
-  histogramDatas: HistogramValuesI[] = undefined;
+  histogramDatas: HistogramValuesI[] | undefined = undefined;
 
   treeNodedistributionGraphDatas: ChartDatasVO = undefined;
 

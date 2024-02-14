@@ -1,15 +1,15 @@
 export class BarVO {
-  name: string;
-  value: number;
+  name: string | undefined;
+  value: number | undefined;
   defaultGroupIndex: boolean = false;
 
   extra: {
-    value: number;
-    percent: number;
-    name: string;
-    index: number;
-    frequencyValue: number;
-    coverageValue: number;
+    value: number | undefined;
+    percent: number | undefined;
+    name: string | undefined;
+    index: number | undefined;
+    frequencyValue: number | undefined;
+    coverageValue: number | undefined;
   };
 
   constructor() {

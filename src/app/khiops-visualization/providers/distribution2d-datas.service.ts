@@ -42,7 +42,6 @@ export class Distribution2dDatasService {
     this.distributionDatas.initTargetDistributionGraphDatas();
     this.distributionDatas.setTargetDistributionType(type);
 
-    // const datas: any = {};
     const selectedVariable =
       this.preparation2dDatasService.getSelectedVariable();
     const preparation2dDatas = this.preparation2dDatasService.getDatas();

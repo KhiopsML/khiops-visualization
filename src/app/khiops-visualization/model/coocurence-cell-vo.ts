@@ -1,8 +1,8 @@
 export class CoocurenceCellVO {
   id: string;
   _id: string;
-  frequency: number;
-  coverage: number;
+  frequency: number | undefined;
+  coverage: number | undefined;
 
   constructor(index) {
     this.id = index;

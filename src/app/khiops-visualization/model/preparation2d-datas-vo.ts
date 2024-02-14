@@ -4,7 +4,7 @@ import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 
 export class Preparation2dDatasVO {
   isAxisInverted = false;
-  selectedVariable: Preparation2dVariableVO = undefined;
+  selectedVariable?: Preparation2dVariableVO = undefined;
   selectedCellIndex: number = 0;
   selectedCell: CellVO = undefined;
   matrixDatas: {

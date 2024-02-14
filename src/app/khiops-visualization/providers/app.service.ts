@@ -88,7 +88,7 @@ export class AppService {
         localStorage.getItem(
           AppConfig.visualizationCommon.GLOBAL.LS_ID +
             'SETTING_NUMBER_PRECISION',
-        ),
+        ) || '',
         10,
       ) || AppConfig.visualizationCommon.GLOBAL.TO_FIXED;
     AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST =
@@ -96,7 +96,7 @@ export class AppService {
         localStorage.getItem(
           AppConfig.visualizationCommon.GLOBAL.LS_ID +
             'SETTING_MATRIX_CONTRAST',
-        ),
+        ) || '',
         10,
       ) || AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST;
 

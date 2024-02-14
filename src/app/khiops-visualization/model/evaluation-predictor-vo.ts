@@ -8,17 +8,17 @@ export class EvaluationPredictorVO {
   evaluationType: string;
   currentEvaluationType: string;
   name: string;
-  accuracy: string;
-  compression: string;
-  auc: number;
-  robustness: number | string;
-  gini: number | string;
-  rmse: string;
-  mae: string;
-  nlpd: string;
-  rankRmse: string;
-  rankMae: string;
-  rankNlpd: string;
+  accuracy?: string;
+  compression?: string;
+  auc?: number;
+  robustness?: number | string;
+  gini?: number | string;
+  rmse?: string;
+  mae?: string;
+  nlpd?: string;
+  rankRmse?: string;
+  rankMae?: string;
+  rankNlpd?: string;
 
   constructor(type, currentEvaluationType, obj) {
     // Common values
@@ -34,7 +34,9 @@ export class EvaluationPredictorVO {
     this.compression = obj.compression;
     this.auc = obj.auc;
     this.robustness = '';
-    this.gini = 2 * this.auc - 1 || ''; // empty if undefined
+    if (this.auc) {
+      this.gini = 2 * this.auc - 1 || ''; // empty if undefined
+    }
 
     // Regression values
     this.rmse = obj.rmse;

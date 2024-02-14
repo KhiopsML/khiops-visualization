@@ -3,7 +3,7 @@ import { PreparationVariableVO } from './preparation-variable-vo';
 
 export class PreparationDatasVO {
   preparationReport: {
-    selectedVariable: PreparationVariableVO;
+    selectedVariable?: PreparationVariableVO;
     currentIntervalDatas: GridDatasI;
   } = {
     selectedVariable: undefined,
@@ -14,7 +14,7 @@ export class PreparationDatasVO {
     },
   };
   textPreparationReport: {
-    selectedVariable: PreparationVariableVO;
+    selectedVariable?: PreparationVariableVO;
     currentIntervalDatas: GridDatasI;
   } = {
     selectedVariable: undefined,

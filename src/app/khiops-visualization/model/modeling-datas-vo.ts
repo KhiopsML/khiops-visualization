@@ -8,7 +8,8 @@ export class ModelingDatasVO {
   selectedVariable:
     | Preparation2dVariableVO
     | PreparationVariableVO
-    | TreePreparationVariableVO = undefined;
-  selectedPredictor: ModelingPredictorVO = undefined;
-  trainedPredictorsListDatas: TrainedPredictorVO[] = undefined;
+    | TreePreparationVariableVO
+    | undefined = undefined;
+  selectedPredictor: ModelingPredictorVO | undefined = undefined;
+  trainedPredictorsListDatas: TrainedPredictorVO[] | undefined = undefined;
 }
