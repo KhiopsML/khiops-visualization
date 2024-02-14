@@ -16,6 +16,8 @@ import { TargetLiftValuesI } from '@khiops-visualization/interfaces/target-lift-
 import { LiftCurveValuesI } from '@khiops-visualization/interfaces/lift-curve-values';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
+import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
+import { LiftCurveSerieI } from '../interfaces/lift-curve-serie';
 
 @Injectable({
   providedIn: 'root',
@@ -99,7 +101,7 @@ export class EvaluationDatasService {
     }
 
     if (this.evaluationDatas.selectedPredictorEvaluationVariable) {
-      const datas = [];
+      const datas: any = [];
 
       let currentReport: any;
       // get the correct report : train or test
@@ -137,7 +139,7 @@ export class EvaluationDatasService {
           ],
         };
 
-        const targetsLift = [];
+        const targetsLift: GridColumnsI[] = [];
         let currentConfMat = currentReport.liftCurves.map((e) => e.targetValue); // For optimal
         if (
           currentReport.predictorsDetailedPerformance[
@@ -295,7 +297,7 @@ export class EvaluationDatasService {
       ],
     };
 
-    const datas = [];
+    const datas: EvaluationTypeVO[] = [];
     if (this.evaluationDatas.evaluationTypes.length > 0) {
       for (let i = 0; i < this.evaluationDatas.evaluationTypes.length; i++) {
         const currentEvaluation = this.evaluationDatas.evaluationTypes[i];
@@ -325,7 +327,7 @@ export class EvaluationDatasService {
       displayedColumns: undefined,
     };
     const datas: EvaluationPredictorVO[] = [];
-    const displayedColumns = [];
+    const displayedColumns: GridColumnsI[] = [];
 
     if (this.evaluationDatas.evaluationTypesSummary.values) {
       // cant make VO because it is not always the same column names
@@ -358,7 +360,7 @@ export class EvaluationDatasService {
         // Now compute robustness for each object
         for (let j = 0; j < datas.length; j++) {
           const currentEl: EvaluationPredictorVO = datas[j];
-          const train: EvaluationPredictorVO = datas.find(
+          const train: EvaluationPredictorVO | undefined = datas.find(
             (e) =>
               e.currentEvaluationType === PREDICTOR_TYPES.TRAIN &&
               e.name === currentEl.name,
@@ -419,9 +421,9 @@ export class EvaluationDatasService {
         target,
       );
 
-    let liftGraphDatas = [];
+    let liftGraphDatas: LiftCurveValuesI[] = [];
     if (trainDatas.length > 0 || testDatas.length > 0) {
-      let graphDatas = [];
+      let graphDatas: LiftCurveValuesI[] = [];
       if (target) {
         // add population information
         graphDatas = graphDatas.concat(
@@ -526,7 +528,7 @@ export class EvaluationDatasService {
         // Regression case
         if (currentReport && currentReport.recCurves) {
           for (let j = 0; j < currentReport.recCurves.length; j++) {
-            const currentSerie = [];
+            const currentSerie: LiftCurveSerieI[] = [];
             for (let k = 0; k < xAxis.length; k = k + 1) {
               // to smooth curve
               const currentCurveValue = currentReport.recCurves[j].values[k];
@@ -549,7 +551,7 @@ export class EvaluationDatasService {
 
         if (currentLiftCurve && currentLiftCurve.curves) {
           for (let j = 0; j < currentLiftCurve.curves.length; j++) {
-            const currentSerie = [];
+            const currentSerie: LiftCurveSerieI[] = [];
             for (let k = 0; k < xAxis.length; k = k + 1) {
               // to smooth curve
               const currentCurveValue = currentLiftCurve.curves[j].values[k];
@@ -572,9 +574,9 @@ export class EvaluationDatasService {
 
   // tslint:disable-next-line:typedef-whitespace
   generateRandomLiftDatas(xAxis, title) {
-    const graphDatas = [];
+    const graphDatas: LiftCurveValuesI[] = [];
 
-    const currentSerie = [];
+    const currentSerie: LiftCurveSerieI[] = [];
     for (let k = 0; k < xAxis.length; k = k + 1) {
       // to smooth curve
       currentSerie.push({
@@ -625,7 +627,7 @@ export class EvaluationDatasService {
         targets: undefined,
       };
 
-      let targetsLiftList = [];
+      let targetsLiftList: string[] = [];
       if (
         currentEvalReport.predictorsDetailedPerformance[
           this.evaluationDatas.selectedPredictorEvaluationVariable.rank

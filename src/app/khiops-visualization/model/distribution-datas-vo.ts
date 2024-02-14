@@ -146,13 +146,13 @@ export class DistributionDatasVO {
     }
   }
 
-  setTargetDistributionType(type: string) {
+  setTargetDistributionType(type: string | undefined) {
     if (type) {
       this.targetDistributionType = type;
     }
   }
 
-  setTreeNodeTargetDistributionType(type: string) {
+  setTreeNodeTargetDistributionType(type: string | undefined) {
     if (type) {
       this.treeNodeTargetDistributionType = type;
     }
