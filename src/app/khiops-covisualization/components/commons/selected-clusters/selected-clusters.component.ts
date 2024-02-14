@@ -75,7 +75,7 @@ export class SelectedClustersComponent implements OnDestroy {
     }
   }
 
-  updateDimensionIntervals(dimName) {
+  updateDimensionIntervals(dimName): SelectedClusterVO | undefined {
     if (this.selectedClusters) {
       // Update intervals of current node
       const nbClusters = this.dimensionsService.getDimensionIntervals(dimName);
@@ -88,6 +88,8 @@ export class SelectedClustersComponent implements OnDestroy {
         selectedCluster.nbClusters = nbClusters;
       }
       return selectedCluster;
+    } else {
+      return undefined;
     }
   }
 
