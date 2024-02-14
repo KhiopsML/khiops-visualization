@@ -60,6 +60,52 @@ describe('Visualization', () => {
       expect(res.datasets[0].data[0]).toEqual(45.101424849088026);
     });
 
+    it('getTargetDistributionGraphDatas should return valid labels [C100_AllReports, Numerical, R1]', () => {
+      const fileDatas = require('../../assets/mocks/kv/C100_AllReports.json');
+      appService.setFileDatas(fileDatas);
+
+      preparationDatasService.initialize();
+      distributionDatasService.initialize();
+      distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
+
+      preparationDatasService.setSelectedVariable(
+        fileDatas.preparationReport.variablesStatistics[0],
+        REPORTS.PREPARATION_REPORT,
+      );
+      const selectedVariable = preparationDatasService.getSelectedVariable(
+        REPORTS.PREPARATION_REPORT,
+      );
+      const res =
+        distributionDatasService.getTargetDistributionGraphDatas(
+          selectedVariable,
+        );
+
+      expect(res.labels[0]).toEqual('[0.0002370088478,0.3074067]');
+    });
+
+    it('getTargetDistributionGraphDatas should return valid labels [AdultAllReports, Categorical, R1]', () => {
+      const fileDatas = require('../../assets/mocks/kv/AdultAllReports.json');
+      appService.setFileDatas(fileDatas);
+
+      preparationDatasService.initialize();
+      distributionDatasService.initialize();
+      distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
+
+      preparationDatasService.setSelectedVariable(
+        fileDatas.preparationReport.variablesStatistics[0],
+        REPORTS.PREPARATION_REPORT,
+      );
+      const selectedVariable = preparationDatasService.getSelectedVariable(
+        REPORTS.PREPARATION_REPORT,
+      );
+      const res =
+        distributionDatasService.getTargetDistributionGraphDatas(
+          selectedVariable,
+        );
+
+      expect(res.labels[0]).toEqual('{Husband,Wife}');
+    });
+
     it('getTargetDistributionGraphDatas should return valid datas [C100_AllReports, Numerical, R41]', () => {
       const fileDatas = require('../../assets/mocks/kv/C100_AllReports.json');
       appService.setFileDatas(fileDatas);
@@ -147,6 +193,26 @@ describe('Visualization', () => {
       expect(res.datasets[0].data[0]).toEqual(49.042657142857145);
     });
 
+    it('getdistributionGraphDatas should return valid lables [C100_AllReports, Numerical, R15]', () => {
+      const fileDatas = require('../../assets/mocks/kv/C100_AllReports.json');
+      appService.setFileDatas(fileDatas);
+
+      preparationDatasService.initialize();
+      distributionDatasService.initialize();
+      distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
+
+      preparationDatasService.setSelectedVariable(
+        fileDatas.preparationReport.variablesStatistics[14],
+        REPORTS.PREPARATION_REPORT,
+      );
+      const selectedVariable = preparationDatasService.getSelectedVariable(
+        REPORTS.PREPARATION_REPORT,
+      );
+      const res =
+        distributionDatasService.getdistributionGraphDatas(selectedVariable);
+      expect(res.labels[1]).toEqual(']0,0.5]');
+    });
+
     it('getdistributionGraphDatas should return valid datas [irisU, Categorical, R1]', () => {
       const fileDatas = require('../../assets/mocks/kv/irisU.json');
       appService.setFileDatas(fileDatas);
@@ -165,6 +231,26 @@ describe('Visualization', () => {
       const res =
         distributionDatasService.getdistributionGraphDatas(selectedVariable);
       expect(res.datasets[0].data[0]).toEqual(37.37373737373738);
+    });
+
+    it('getdistributionGraphDatas should return valid labels [irisU, Categorical, R1]', () => {
+      const fileDatas = require('../../assets/mocks/kv/irisU.json');
+      appService.setFileDatas(fileDatas);
+
+      preparationDatasService.initialize();
+      distributionDatasService.initialize();
+      distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
+
+      preparationDatasService.setSelectedVariable(
+        fileDatas.preparationReport.variablesStatistics[0],
+        REPORTS.PREPARATION_REPORT,
+      );
+      const selectedVariable = preparationDatasService.getSelectedVariable(
+        REPORTS.PREPARATION_REPORT,
+      );
+      const res =
+        distributionDatasService.getdistributionGraphDatas(selectedVariable);
+      expect(res.labels[0]).toEqual('{Iris-versicolor}');
     });
 
     it('getdistributionGraphDatas should return valid datas [new-hyper-tree, treePreparationReport, R1]', () => {
