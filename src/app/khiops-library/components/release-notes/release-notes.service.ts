@@ -15,7 +15,7 @@ export class ReleaseNotesService {
 
   loadGithubReleaseNotes(): Promise<NoteVO[]> {
     return new Promise((resolve, reject) => {
-      let url;
+      let url: string = '';
       if (
         this.khiopsLibraryService.getAppConfig().common.GLOBAL
           .DEBUG_SOFTWARE_LABEL === 'KV'

@@ -89,7 +89,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     private khiopsLibraryService: KhiopsLibraryService,
     private histogramService: HistogramService,
     public selectableService: SelectableService,
-    private translate: TranslateService,
+    public translate: TranslateService,
     public ngzone: NgZone,
     public configService: ConfigService,
   ) {

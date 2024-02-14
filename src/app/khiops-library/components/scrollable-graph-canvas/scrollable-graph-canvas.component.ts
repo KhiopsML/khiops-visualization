@@ -47,7 +47,7 @@ export class ScrollableGraphCanvasComponent
   }
 
   @HostListener('window:resize', ['$event'])
-  keyEvent(event) {
+  keyEvent() {
     this.resizeGraph();
   }
 

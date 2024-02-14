@@ -23,7 +23,6 @@ import { MatrixModesI } from '@khiops-library/interfaces/matrix-modes';
 import { MatrixTargetsI } from '@khiops-library/interfaces/matrix-targets';
 import { MatrixOptionsI } from '@khiops-library/interfaces/matrix-options';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
-import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { MatrixRangeValuesI } from '@khiops-visualization/interfaces/matrix-range-values';
 
@@ -55,7 +54,6 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
   constructor(
     public selectableService: SelectableService,
     private translate: TranslateService,
-    private khiopsLibraryService: KhiopsLibraryService,
     private configService: ConfigService,
     private appService: AppService,
     private preparation2dDatasService: Preparation2dDatasService,

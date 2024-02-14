@@ -46,6 +46,7 @@ export class TargetDistributionGraphCanvasComponent
   @Output() targetDistributionGraphDisplayedValuesChanged: EventEmitter<any> =
     new EventEmitter();
   @Output() selectedItemChanged: EventEmitter<any> = new EventEmitter();
+  graphIdContainer: string | undefined = undefined;
 
   componentType = 'ndBarChart'; // needed to copy datas
 

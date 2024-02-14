@@ -44,7 +44,7 @@ export class DistributionGraphCanvasComponent
   datas = [];
   title: string;
 
-  graphIdContainer = undefined;
+  graphIdContainer: string | undefined = undefined;
   colorSet: ChartColorsSetI;
   chartOptions: ChartOptions;
   scaleType: string;
@@ -159,6 +159,7 @@ export class DistributionGraphCanvasComponent
         },
         x: {
           ticks: {
+            // @ts-ignore
             callback: function (value: number, index: number, e) {
               // Default chartjs
               return this.getLabelForValue(value);
@@ -187,15 +188,15 @@ export class DistributionGraphCanvasComponent
         'DISTRIBUTION_GRAPH_OPTION',
       type,
     );
-    this.chartOptions.scales.y.max = undefined;
-    this.chartOptions.scales.y.min = undefined;
+    this.chartOptions.scales!.y!.max = undefined;
+    this.chartOptions.scales!.y!.min = undefined;
 
     this.graphOptions.selected = type;
     this.graphTypeChanged.emit(type);
-    this.chartOptions.scales.y.type = TYPES.LINEAR;
+    this.chartOptions.scales!.y!.type = TYPES.LINEAR;
 
     const minValue = Math.min(...this.inputDatas.datasets[0].data);
-    this.chartOptions.scales.y.min = minValue;
+    this.chartOptions.scales!.y!.min = minValue;
     this.chartOptions = _.cloneDeep(this.chartOptions);
   }
 }
