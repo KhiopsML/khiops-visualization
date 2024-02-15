@@ -12,7 +12,7 @@ export class Variable2dVO {
   parts1: number;
   parts2: number;
 
-  constructor(object) {
+  constructor(object: any) {
     this._id = object.name1 + '`' + object.name2;
 
     this.rank = object.rank || undefined;

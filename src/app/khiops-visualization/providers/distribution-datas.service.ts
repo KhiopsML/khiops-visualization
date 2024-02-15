@@ -18,6 +18,7 @@ import { HistogramValuesI } from '@khiops-visualization/components/commons/histo
 import { TreeNodeVO } from '@khiops-visualization/model/tree-node-vo';
 import { PreparationVariableVO } from '@khiops-visualization/model/preparation-variable-vo';
 import { TreePreparationVariableVO } from '@khiops-visualization/model/tree-preparation-variable-vo';
+import { DistributionChartDatasVO } from '@khiops-visualization/interfaces/distribution-chart-datas-vo';
 
 @Injectable({
   providedIn: 'root',
@@ -392,7 +393,8 @@ export class DistributionDatasService {
     currentXAxis,
     selectedVariable,
   ): any {
-    let distributionsGraphDetails: ChartDatasVO = new ChartDatasVO();
+    let distributionsGraphDetails: DistributionChartDatasVO =
+      new ChartDatasVO();
 
     if (currentDimension) {
       // Add trash info to the defaultGroupIndex
@@ -426,7 +428,7 @@ export class DistributionDatasService {
           i,
           selectedVariable.type,
         );
-
+        distributionsGraphDetails.intervals = [];
         distributionsGraphDetails.labels.push(currentName);
         distributionsGraphDetails.intervals.push(currentXAxis[i]);
         const graphItem: BarVO = new BarVO();

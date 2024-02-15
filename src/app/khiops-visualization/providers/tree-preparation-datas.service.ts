@@ -614,7 +614,7 @@ export class TreePreparationDatasService {
             values: JSON.stringify(currentNode.targetValues.values),
             frequencies: JSON.stringify(currentNode.targetValues.frequencies),
           };
-          treeDetails.values.push(rowData);
+          treeDetails.values?.push(rowData);
         } else {
           // it's a node
         }
@@ -651,13 +651,13 @@ export class TreePreparationDatasService {
       ];
 
       // get a hierarchy branch with all recursive parents
-      const nodeHierarchy: TreeNodeVO = UtilsService.returnHierarchy(
+      const nodeHierarchy: TreeNodeVO[] = UtilsService.returnHierarchy(
         _.cloneDeep(this.treePreparationDatas!.dimensionTree),
         this.treePreparationDatas!.selectedNode!.id,
       );
 
       // get obj rules into one array
-      let rules: TreeNodeVO[] = [];
+      let rules: TreeNodeVO[] | undefined = [];
       if (nodeHierarchy) {
         rules = this.getRecursiveNodeDatasRules(nodeHierarchy[0], rules);
       }
@@ -694,8 +694,11 @@ export class TreePreparationDatasService {
     return treeLeafRules;
   }
 
-  getRecursiveNodeDatasRules(node: TreeNodeVO, rules) {
-    if (node.children && node.children.length > 0) {
+  getRecursiveNodeDatasRules(
+    node: TreeNodeVO | undefined,
+    rules: TreeNodeVO[],
+  ): TreeNodeVO[] | undefined {
+    if (node?.children && node.children.length > 0) {
       rules.push(node);
       return this.getRecursiveNodeDatasRules(node.children[0], rules);
     } else {

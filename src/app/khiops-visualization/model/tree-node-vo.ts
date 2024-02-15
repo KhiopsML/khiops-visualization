@@ -19,7 +19,7 @@ export class TreeNodeVO {
   color: string;
   isTrusted: boolean;
   defaultGroupIndex: number;
-  valuesProbs: number[];
+  valuesProbs: number[] = [];
   purity: number;
   totalFreqs: number;
   isCollapsed: boolean;

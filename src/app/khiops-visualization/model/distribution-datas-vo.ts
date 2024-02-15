@@ -11,28 +11,28 @@ export class DistributionDatasVO {
   distributionTypeX = '';
   distributionTypeY = '';
 
-  distributionGraphOptions: DistributionOptionsI = undefined;
-  distributionGraphOptionsX: DistributionOptionsI = undefined;
-  distributionGraphOptionsY: DistributionOptionsI = undefined;
-  distributionGraphDatas: ChartDatasVO = undefined;
+  distributionGraphOptions: DistributionOptionsI | undefined = undefined;
+  distributionGraphOptionsX: DistributionOptionsI | undefined = undefined;
+  distributionGraphOptionsY: DistributionOptionsI | undefined = undefined;
+  distributionGraphDatas: ChartDatasVO | undefined = undefined;
 
   histogramDatas: HistogramValuesI[] | undefined = undefined;
 
-  treeNodedistributionGraphDatas: ChartDatasVO = undefined;
+  treeNodedistributionGraphDatas: ChartDatasVO | undefined = undefined;
 
-  targetDistributionDisplayedValues: ChartToggleValuesI[];
+  targetDistributionDisplayedValues: ChartToggleValuesI[] | undefined;
   targetDistributionType: string = TYPES.PROBABILITIES;
-  targetDistributionGraphDatas: ChartDatasVO = undefined;
+  targetDistributionGraphDatas: ChartDatasVO | undefined = undefined;
 
-  treeHyperDisplayedValues: ChartToggleValuesI[];
-  treeNodeTargetDistributionDisplayedValues: ChartToggleValuesI[];
+  treeHyperDisplayedValues: ChartToggleValuesI[] | undefined;
+  treeNodeTargetDistributionDisplayedValues: ChartToggleValuesI[] | undefined;
   treeNodeTargetDistributionType: string = TYPES.PROBABILITIES;
-  treeNodeTargetDistributionGraphDatas: ChartDatasVO = undefined;
+  treeNodeTargetDistributionGraphDatas: ChartDatasVO | undefined = undefined;
 
   preparationSource: string = '';
 
   appDatas: any = undefined;
-  treeHyperGraphDatas: ChartDatasVO = undefined;
+  treeHyperGraphDatas: ChartDatasVO | undefined = undefined;
 
   constructor(appDatas) {
     this.appDatas = appDatas;

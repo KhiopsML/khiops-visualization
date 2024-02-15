@@ -19,7 +19,7 @@ export class TreePreparationVariableVO {
   isCategorical: boolean;
   isNumerical: boolean;
 
-  constructor(object, id) {
+  constructor(object: any, id: any) {
     // Generate id for grid
     this._id = id;
 

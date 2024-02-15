@@ -21,7 +21,7 @@ export class TreeNodeVO {
   hierarchicalRank: number;
   isLeaf: boolean;
   children: TreeNodeVO[];
-  description: string;
+  description: string | undefined;
   annotation: string;
 
   childrenList: string[] = [];
@@ -35,7 +35,7 @@ export class TreeNodeVO {
 
   externalData: string;
 
-  clusterCompositionSize: number;
+  clusterCompositionSize: number | undefined;
 
   constructor(
     id,

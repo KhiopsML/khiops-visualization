@@ -9,11 +9,10 @@ export class TreePreparationDatasVO {
   treeColorsMap?: {} = undefined;
   dimensionTree?: [TreeNodeVO] = undefined;
   selectedFlattenTree?: TreeNodeVO[] = undefined;
-  currentIntervalDatas: GridDatasI;
-
+  currentIntervalDatas!: GridDatasI;
   appDatas: any = undefined;
-  maxFrequencies: number;
-  minFrequencies: number;
+  maxFrequencies!: number;
+  minFrequencies!: number;
 
   classesCount: number;
 
@@ -49,7 +48,7 @@ export class TreePreparationDatasVO {
         variablesDetailedStatistics[this.selectedVariable.rank].dataGrid
           .dimensions;
       const dimIndex = dimensions.findIndex(
-        (e) => e.variable === this.selectedVariable.name,
+        (e) => e.variable === this.selectedVariable?.name,
       );
       const dimDatas = dimensions[dimIndex].partition;
       const colors = [

@@ -12,9 +12,9 @@ export class DimensionsDatasVO {
   dimensions: DimensionVO[] = [];
   contextSelection: number[][] = [[]];
   contextDimensions: DimensionVO[] = [];
-  selectedDimensions: DimensionVO[] = undefined;
+  selectedDimensions: DimensionVO[] | undefined = undefined;
   contextDimensionCount: number = 0;
-  hierarchyDatas: HierarchyDatasVO = undefined;
+  hierarchyDatas: HierarchyDatasVO | undefined = undefined;
   dimensionsTrees: TreeNodeVO[][] = [];
   currentDimensionsTrees: TreeNodeVO[][] = [];
   dimensionsClusters: TreeNodeVO[][] = [[]];
@@ -25,8 +25,8 @@ export class DimensionsDatasVO {
   isAxisInverted: boolean = false;
   conditionalOnContext: boolean = true;
   matrixContrast: number | undefined = undefined;
-  matrixOption: string = undefined;
-  matrixMode: number = undefined;
+  matrixOption: string | undefined = undefined;
+  matrixMode: number | undefined = undefined;
   nodesNames: {} = {};
   annotations: {} = {};
   selectedNodes: TreeNodeVO[] = [];
