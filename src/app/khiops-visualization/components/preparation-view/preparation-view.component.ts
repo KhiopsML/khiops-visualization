@@ -58,92 +58,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
   // managed by selectable-tab component
   override tabIndex = 1;
 
-  variablesDisplayedColumns: GridColumnsI[] = [
-    {
-      headerName: 'Rank',
-      field: 'rank',
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.RANK'),
-    },
-    {
-      headerName: 'Name',
-      field: 'name',
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.NAME'),
-    },
-    {
-      headerName: 'Level',
-      field: 'level',
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.LEVEL'),
-    },
-    {
-      headerName: 'Parts',
-      field: 'parts',
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.PARTS'),
-    },
-    {
-      headerName: 'Values',
-      field: 'values',
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.VALUES'),
-    },
-    {
-      headerName: 'Type',
-      field: 'type',
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.TYPE'),
-    },
-    {
-      headerName: 'Mode',
-      field: 'mode',
-      show: false,
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.MODE'),
-    },
-    {
-      headerName: 'Mode coverage',
-      field: 'modeCoverage',
-      show: false,
-      tooltip: this.translate.get(
-        'TOOLTIPS.PREPARATION.VARIABLES.MODE_COVERAGE',
-      ),
-    },
-    {
-      headerName: 'Min',
-      field: 'min',
-      show: false,
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.MIN'),
-    },
-    {
-      headerName: 'Max',
-      field: 'max',
-      show: false,
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.MAX'),
-    },
-    {
-      headerName: 'Mean',
-      field: 'mean',
-      show: false,
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.MEAN'),
-    },
-    {
-      headerName: 'Std dev',
-      field: 'stdDev',
-      show: false,
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.STD_DEV'),
-    },
-    {
-      headerName: 'Missing number',
-      field: 'missingNumber',
-      show: false,
-      tooltip: this.translate.get(
-        'TOOLTIPS.PREPARATION.VARIABLES.MISSING_NUMBER',
-      ),
-    },
-    {
-      headerName: 'Derivation rule',
-      field: 'derivationRule',
-      show: false,
-      tooltip: this.translate.get(
-        'TOOLTIPS.PREPARATION.VARIABLES.DERIVATION_RULE',
-      ),
-    },
-  ];
+  variablesDisplayedColumns: GridColumnsI[] = [];
 
   constructor(
     private preparationDatasService: PreparationDatasService,
@@ -156,6 +71,93 @@ export class PreparationViewComponent extends SelectableTabComponent {
     private modelingDatasService: ModelingDatasService,
   ) {
     super();
+
+    this.variablesDisplayedColumns = [
+      {
+        headerName: 'Rank',
+        field: 'rank',
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.RANK'),
+      },
+      {
+        headerName: 'Name',
+        field: 'name',
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.NAME'),
+      },
+      {
+        headerName: 'Level',
+        field: 'level',
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.LEVEL'),
+      },
+      {
+        headerName: 'Parts',
+        field: 'parts',
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.PARTS'),
+      },
+      {
+        headerName: 'Values',
+        field: 'values',
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.VALUES'),
+      },
+      {
+        headerName: 'Type',
+        field: 'type',
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.TYPE'),
+      },
+      {
+        headerName: 'Mode',
+        field: 'mode',
+        show: false,
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.MODE'),
+      },
+      {
+        headerName: 'Mode coverage',
+        field: 'modeCoverage',
+        show: false,
+        tooltip: this.translate.get(
+          'TOOLTIPS.PREPARATION.VARIABLES.MODE_COVERAGE',
+        ),
+      },
+      {
+        headerName: 'Min',
+        field: 'min',
+        show: false,
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.MIN'),
+      },
+      {
+        headerName: 'Max',
+        field: 'max',
+        show: false,
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.MAX'),
+      },
+      {
+        headerName: 'Mean',
+        field: 'mean',
+        show: false,
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.MEAN'),
+      },
+      {
+        headerName: 'Std dev',
+        field: 'stdDev',
+        show: false,
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.STD_DEV'),
+      },
+      {
+        headerName: 'Missing number',
+        field: 'missingNumber',
+        show: false,
+        tooltip: this.translate.get(
+          'TOOLTIPS.PREPARATION.VARIABLES.MISSING_NUMBER',
+        ),
+      },
+      {
+        headerName: 'Derivation rule',
+        field: 'derivationRule',
+        show: false,
+        tooltip: this.translate.get(
+          'TOOLTIPS.PREPARATION.VARIABLES.DERIVATION_RULE',
+        ),
+      },
+    ];
   }
 
   ngOnInit() {

@@ -32,7 +32,9 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
   @ViewChild('targetDistributionGraphCanvas', {
     static: false,
   })
-  targetDistributionGraphCanvas: TargetDistributionGraphCanvasComponent;
+  targetDistributionGraphCanvas:
+    | TargetDistributionGraphCanvasComponent
+    | undefined;
 
   appDatas: any;
   sizes: any;
@@ -41,78 +43,15 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
   summaryDatas: InfosDatasI[];
   informationsDatas: InfosDatasI[];
   targetVariableStatsDatas: ChartDatasVO;
-  currentIntervalDatas: GridDatasI;
+  currentIntervalDatas: GridDatasI | undefined;
   variables2dDatas: Variable2dVO[];
-  targetDistributionGraphDatas: ChartDatasVO;
-  levelDistributionTitle: string;
+  targetDistributionGraphDatas: ChartDatasVO | undefined;
+  levelDistributionTitle: string = '';
 
   // managed by selectable-tab component
   override tabIndex = 2;
 
-  variablesDisplayedColumns: GridColumnsI[] = [
-    {
-      headerName: 'Rank',
-      field: 'rank',
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.RANK'),
-    },
-    {
-      headerName: 'Name 1',
-      field: 'name1',
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.NAME1'),
-    },
-    {
-      headerName: 'Name 2',
-      field: 'name2',
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.NAME2'),
-    },
-    {
-      headerName: 'Delta Level',
-      field: 'deltaLevel',
-      tooltip: this.translate.get(
-        'TOOLTIPS.PREPARATION_2D.VARIABLES.DELTALEVEL',
-      ),
-      show: this.preparation2dDatasService.isSupervised(),
-    },
-    {
-      headerName: 'Level',
-      field: 'level',
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.LEVEL'),
-    },
-    {
-      headerName: 'Level1',
-      field: 'level1',
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.LEVEL1'),
-      show: this.preparation2dDatasService.isSupervised(),
-    },
-    {
-      headerName: 'Level2',
-      field: 'level2',
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.LEVEL2'),
-      show: this.preparation2dDatasService.isSupervised(),
-    },
-    {
-      headerName: 'Variables',
-      field: 'variables',
-      tooltip: this.translate.get(
-        'TOOLTIPS.PREPARATION_2D.VARIABLES.VARIABLES',
-      ),
-    },
-    {
-      headerName: 'Parts1',
-      field: 'parts1',
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.PARTS1'),
-    },
-    {
-      headerName: 'Parts2',
-      field: 'parts2',
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.PARTS2'),
-    },
-    {
-      headerName: 'Cells',
-      field: 'cells',
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.CELLS'),
-    },
-  ];
+  variablesDisplayedColumns: GridColumnsI[] = [];
 
   constructor(
     private preparationDatasService: PreparationDatasService,
@@ -126,6 +65,71 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
   ) {
     super();
 
+    this.variablesDisplayedColumns = [
+      {
+        headerName: 'Rank',
+        field: 'rank',
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.RANK'),
+      },
+      {
+        headerName: 'Name 1',
+        field: 'name1',
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.NAME1'),
+      },
+      {
+        headerName: 'Name 2',
+        field: 'name2',
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.NAME2'),
+      },
+      {
+        headerName: 'Delta Level',
+        field: 'deltaLevel',
+        tooltip: this.translate.get(
+          'TOOLTIPS.PREPARATION_2D.VARIABLES.DELTALEVEL',
+        ),
+        show: this.preparation2dDatasService.isSupervised(),
+      },
+      {
+        headerName: 'Level',
+        field: 'level',
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.LEVEL'),
+      },
+      {
+        headerName: 'Level1',
+        field: 'level1',
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.LEVEL1'),
+        show: this.preparation2dDatasService.isSupervised(),
+      },
+      {
+        headerName: 'Level2',
+        field: 'level2',
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.LEVEL2'),
+        show: this.preparation2dDatasService.isSupervised(),
+      },
+      {
+        headerName: 'Variables',
+        field: 'variables',
+        tooltip: this.translate.get(
+          'TOOLTIPS.PREPARATION_2D.VARIABLES.VARIABLES',
+        ),
+      },
+      {
+        headerName: 'Parts1',
+        field: 'parts1',
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.PARTS1'),
+      },
+      {
+        headerName: 'Parts2',
+        field: 'parts2',
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.PARTS2'),
+      },
+      {
+        headerName: 'Cells',
+        field: 'cells',
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.CELLS'),
+      },
+    ];
+
     this.appDatas = this.appService.getDatas().datas;
     this.preparation2dDatas = this.preparation2dDatasService.getDatas();
     this.sizes = this.appService.getViewSplitSizes('preparation2dView');
@@ -138,7 +142,7 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
       this.preparation2dDatasService.getVariablesd2Datas();
     this.levelDistributionTitle = this.preparation2dDatasService.isSupervised()
       ? this.translate.get('GLOBAL.DELTA_LEVEL_DISTRIBUTION')
-      : undefined;
+      : '';
   }
 
   ngOnInit() {

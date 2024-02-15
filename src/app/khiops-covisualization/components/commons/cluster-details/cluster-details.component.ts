@@ -27,41 +27,7 @@ export class ClusterDetailsComponent implements OnInit, OnChanges {
   @Input() selectedDimension: DimensionVO;
   @Input() selectedNode: TreeNodeVO;
   nodeToSelect: TreeNodeVO;
-  clusterDisplayedColumns: GridColumnsI[] = [
-    {
-      headerName: 'Name',
-      field: 'name',
-      tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.NAME'),
-    },
-    {
-      headerName: 'Father',
-      field: 'father',
-      show: false,
-      tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.FATHER'),
-    },
-    {
-      headerName: 'Frequency',
-      field: 'frequency',
-      tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.FREQUENCY'),
-    },
-    {
-      headerName: 'Interest',
-      field: 'interest',
-      tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.INTEREST'),
-    },
-    {
-      headerName: 'Hierarchical Level',
-      field: 'hierarchicalLevel',
-      show: false,
-      tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.LEVEL'),
-    },
-    {
-      headerName: 'Rank',
-      field: 'rank',
-      show: false,
-      tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.RANK'),
-    },
-  ];
+  clusterDisplayedColumns: GridColumnsI[] = [];
 
   title: string;
   filteredDimensionsClusters: ClusterDetailsVO[];
@@ -75,6 +41,41 @@ export class ClusterDetailsComponent implements OnInit, OnChanges {
     private clustersService: ClustersService,
   ) {
     this.title = this.translate.get('GLOBAL.CURRENT_CLUSTERS');
+    this.clusterDisplayedColumns = [
+      {
+        headerName: 'Name',
+        field: 'name',
+        tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.NAME'),
+      },
+      {
+        headerName: 'Father',
+        field: 'father',
+        show: false,
+        tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.FATHER'),
+      },
+      {
+        headerName: 'Frequency',
+        field: 'frequency',
+        tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.FREQUENCY'),
+      },
+      {
+        headerName: 'Interest',
+        field: 'interest',
+        tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.INTEREST'),
+      },
+      {
+        headerName: 'Hierarchical Level',
+        field: 'hierarchicalLevel',
+        show: false,
+        tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.LEVEL'),
+      },
+      {
+        headerName: 'Rank',
+        field: 'rank',
+        show: false,
+        tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.RANK'),
+      },
+    ];
   }
 
   ngOnInit() {
