@@ -1,211 +1,235 @@
-@import "@angular/material/theming";
-@include mat-core();
-$mat-theme-ignore-duplication-warnings: true;
+@use '@angular/material' as mat;
+@include mat.core();
+mat.$theme-ignore-duplication-warnings: true;
 
 $md-main: (
-	50: #d0d6e9,
-	100: #9ba8d2,
-	200: #7587c0,
-	300: #4a60a3,
-	400: #41538e,
-	500: #374779,
-	600: #2d3b64,
-	700: #242e4f,
-	800: #1a223a,
-	900: #111625,
-	A100: #bdcaf2,
-	A200: #6785e2,
-	A400: #3653ad,
-	A700: #3a4f90,
-	contrast: (
-		50: #000000,
-		100: #000000,
-		200: #000000,
-		300: #ffffff,
-		400: #ffffff,
-		500: #ffffff,
-		600: #ffffff,
-		700: #ffffff,
-		800: #ffffff,
-		900: #ffffff,
-		A100: #000000,
-		A200: #000000,
-		A400: #ffffff,
-		A700: #ffffff,
-	),
+  50: #d0d6e9,
+  100: #9ba8d2,
+  200: #7587c0,
+  300: #4a60a3,
+  400: #41538e,
+  500: #374779,
+  600: #2d3b64,
+  700: #242e4f,
+  800: #1a223a,
+  900: #111625,
+  A100: #bdcaf2,
+  A200: #6785e2,
+  A400: #3653ad,
+  A700: #3a4f90,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #ffffff,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #ffffff,
+    A700: #ffffff,
+  ),
 );
 
 $md-accent: (
-	50: #f6a9d2,
-	100: #ef64ae,
-	200: #ea3193,
-	300: #bf146f,
-	400: #a4115f,
-	500: #880e4f,
-	600: #6c0b3f,
-	700: #51082f,
-	800: #35051f,
-	900: #19030f,
-	A100: #ff96ce,
-	A200: #ff309e,
-	A400: #c5046b,
-	A700: #a30c5d,
-	contrast: (
-		50: #000000,
-		100: #000000,
-		200: #ffffff,
-		300: #ffffff,
-		400: #ffffff,
-		500: #ffffff,
-		600: #ffffff,
-		700: #ffffff,
-		800: #ffffff,
-		900: #ffffff,
-		A100: #000000,
-		A200: #ffffff,
-		A400: #ffffff,
-		A700: #ffffff,
-	),
+  50: #f6a9d2,
+  100: #ef64ae,
+  200: #ea3193,
+  300: #bf146f,
+  400: #a4115f,
+  500: #880e4f,
+  600: #6c0b3f,
+  700: #51082f,
+  800: #35051f,
+  900: #19030f,
+  A100: #ff96ce,
+  A200: #ff309e,
+  A400: #c5046b,
+  A700: #a30c5d,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #ffffff,
+    300: #ffffff,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #ffffff,
+    A400: #ffffff,
+    A700: #ffffff,
+  ),
 );
 
-$primary: mat-palette($md-main);
-$accent: mat-palette($md-accent);
-$warn: mat-palette($mat-blue-grey);
-$theme: mat-light-theme($primary, $accent, $warn);
-@include angular-material-color($theme);
+$primary: mat.define-palette($md-main);
+$accent: mat.define-palette($md-accent);
+$warn: mat.define-palette(mat.$blue-grey-palette);
+$theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $primary,
+      accent: $accent,
+      warn: $warn,
+    ),
+  )
+);
+@include mat.all-component-themes($theme);
 
 ::ng-deep .dark-theme {
-	$md-main: (
-		50: #ffffff,
-		100: #ffffff,
-		200: #ffffff,
-		300: #ffffff,
-		400: #ffffff,
-		500: #ffffff,
-		600: #f0f0f0,
-		700: #e0e0e0,
-		800: #d1d1d1,
-		900: #c2c2c2,
-		A100: #ffffff,
-		A200: #ffffff,
-		A400: #ffffff,
-		A700: #ffffff,
-		contrast: (
-			50: #000000,
-			100: #000000,
-			200: #000000,
-			300: #000000,
-			400: #000000,
-			500: #000000,
-			600: #000000,
-			700: #000000,
-			800: #000000,
-			900: #000000,
-			A100: #000000,
-			A200: #000000,
-			A400: #000000,
-			A700: #000000,
-		),
-	);
+  $md-main: (
+    50: #ffffff,
+    100: #ffffff,
+    200: #ffffff,
+    300: #ffffff,
+    400: #ffffff,
+    500: #ffffff,
+    600: #f0f0f0,
+    700: #e0e0e0,
+    800: #d1d1d1,
+    900: #c2c2c2,
+    A100: #ffffff,
+    A200: #ffffff,
+    A400: #ffffff,
+    A700: #ffffff,
+    contrast: (
+      50: #000000,
+      100: #000000,
+      200: #000000,
+      300: #000000,
+      400: #000000,
+      500: #000000,
+      600: #000000,
+      700: #000000,
+      800: #000000,
+      900: #000000,
+      A100: #000000,
+      A200: #000000,
+      A400: #000000,
+      A700: #000000,
+    ),
+  );
 
-	/* For use in src/lib/core/theming/_palette.scss */
-	$md-warn: (
-		50: #b8b8b8,
-		100: #919191,
-		200: #757575,
-		300: #525252,
-		400: #424242,
-		500: #333333,
-		600: #242424,
-		700: #141414,
-		800: #050505,
-		900: #000000,
-		A100: #c99c9c,
-		A200: #a65959,
-		A400: #584141,
-		A700: #433d3d,
-		contrast: (
-			50: #000000,
-			100: #000000,
-			200: #ffffff,
-			300: #ffffff,
-			400: #ffffff,
-			500: #ffffff,
-			600: #ffffff,
-			700: #ffffff,
-			800: #ffffff,
-			900: #ffffff,
-			A100: #000000,
-			A200: #ffffff,
-			A400: #ffffff,
-			A700: #ffffff,
-		),
-	);
+  /* For use in src/lib/core/theming/_palette.scss */
+  $md-warn: (
+    50: #b8b8b8,
+    100: #919191,
+    200: #757575,
+    300: #525252,
+    400: #424242,
+    500: #333333,
+    600: #242424,
+    700: #141414,
+    800: #050505,
+    900: #000000,
+    A100: #c99c9c,
+    A200: #a65959,
+    A400: #584141,
+    A700: #433d3d,
+    contrast: (
+      50: #000000,
+      100: #000000,
+      200: #ffffff,
+      300: #ffffff,
+      400: #ffffff,
+      500: #ffffff,
+      600: #ffffff,
+      700: #ffffff,
+      800: #ffffff,
+      900: #ffffff,
+      A100: #000000,
+      A200: #ffffff,
+      A400: #ffffff,
+      A700: #ffffff,
+    ),
+  );
 
-	$primary: mat-palette($mat-blue-grey);
-	$accent: mat-palette($md-main);
-	$warn: mat-palette($md-warn);
-	$theme: mat-dark-theme($primary, $accent, $warn);
-	@include angular-material-color($theme);
+  $primary: mat.define-palette(mat.$blue-grey-palette);
+  $accent: mat.define-palette($md-main);
+  $warn: mat.define-palette($md-warn);
+  $theme: mat.define-dark-theme(
+    (
+      color: (
+        primary: $primary,
+        accent: $accent,
+        warn: $warn,
+      ),
+    )
+  );
+  @include mat.all-component-themes($theme);
 }
 
 ::ng-deep .orange-theme {
-	$md-main: (
-		50: #000000,
-		100: #000000,
-		200: #000000,
-		300: #000000,
-		400: #000000,
-		500: #000000,
-		600: #000000,
-		700: #000000,
-		800: #000000,
-		900: #000000,
-		A100: #000000,
-		A200: #000000,
-		A400: #000000,
-		A700: #000000,
-		contrast: (
-			50: #ffffff,
-			100: #ffffff,
-			200: #ffffff,
-			300: #ffffff,
-			400: #ffffff,
-			500: #ffffff,
-			600: #ffffff,
-			700: #ffffff,
-			800: #ffffff,
-			900: #ffffff,
-			A100: #ffffff,
-			A200: #ffffff,
-			A400: #ffffff,
-			A700: #ffffff,
-		),
-	);
+  $md-main: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #000000,
+    600: #000000,
+    700: #000000,
+    800: #000000,
+    900: #000000,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+    contrast: (
+      50: #ffffff,
+      100: #ffffff,
+      200: #ffffff,
+      300: #ffffff,
+      400: #ffffff,
+      500: #ffffff,
+      600: #ffffff,
+      700: #ffffff,
+      800: #ffffff,
+      900: #ffffff,
+      A100: #ffffff,
+      A200: #ffffff,
+      A400: #ffffff,
+      A700: #ffffff,
+    ),
+  );
 
-	$primary: mat-palette($md-main);
-	$accent: mat-palette($mat-gray);
-	$warn: mat-palette($mat-gray);
-	$theme: mat-light-theme($primary, $accent, $warn);
-	@include angular-material-color($theme);
+  $primary: mat.define-palette($md-main);
+  $accent: mat.define-palette(mat.$grey-palette);
+  $warn: mat.define-palette(mat.$grey-palette);
+  $theme: mat.define-light-theme(
+    (
+      color: (
+        primary: $primary,
+        accent: $accent,
+        warn: $warn,
+      ),
+    )
+  );
+  @include mat.all-component-themes($theme);
 }
 
 ::ng-deep .orange-theme {
-	mat-button-toggle-group,
-	button,
-	.search-input-btn {
-		border-width: 2px !important;
-		border-color: black !important;
-		border-radius: 0 !important;
-	}
+  mat-button-toggle-group,
+  button,
+  .search-input-btn {
+    border-width: 2px !important;
+    border-color: black !important;
+    border-radius: 0 !important;
+  }
 
-	button.mat-accent {
-		color: black !important;
-	}
+  button.mat-accent {
+    color: black !important;
+  }
 
-	.mat-ink-bar {
-		background-color: #ff6600 !important;
-	}
+  .mat-ink-bar {
+    background-color: #ff6600 !important;
+  }
 }
 
 @media (prefers-color-scheme: light) {
@@ -214,81 +238,81 @@ $theme: mat-light-theme($primary, $accent, $warn);
 @media (prefers-color-scheme: dark) {
 }
 
-[data-color-scheme="dark"] {
-	color-scheme: dark;
-	--bgColorContrast: #fff;
-	--grid: #555;
-	--bgColor: #000;
-	--bgColor-10: #111;
-	--bgColor-20: #222;
-	--bgColor-30: #333;
-	--bgColor-40: #444;
-	--bgColor-50: #555;
-	// --primary: #ff6600;
-	--primary: #22659b;
-	--primary-10: #adadad;
-	--grey-text: #adadad;
-	--black-text: #000;
-	--primary-contrast: #ffffff;
-	--primary-contrast-10: #bbb;
-	--accent: #03a9f4;
-	--selected: #7abdf3;
-	--gutter-hover: #7abdf3;
-	--bgTooltip: #444;
-	--chart-border: #555;
-	--yellowMain: #fbb33a;
-	--redMain: #fb473a;
-	--gripOpacity: 0.3;
+[data-color-scheme='dark'] {
+  color-scheme: dark;
+  --bgColorContrast: #fff;
+  --grid: #555;
+  --bgColor: #000;
+  --bgColor-10: #111;
+  --bgColor-20: #222;
+  --bgColor-30: #333;
+  --bgColor-40: #444;
+  --bgColor-50: #555;
+  // --primary: #ff6600;
+  --primary: #22659b;
+  --primary-10: #adadad;
+  --grey-text: #adadad;
+  --black-text: #000;
+  --primary-contrast: #ffffff;
+  --primary-contrast-10: #bbb;
+  --accent: #03a9f4;
+  --selected: #7abdf3;
+  --gutter-hover: #7abdf3;
+  --bgTooltip: #444;
+  --chart-border: #555;
+  --yellowMain: #fbb33a;
+  --redMain: #fb473a;
+  --gripOpacity: 0.3;
 }
 
-[data-color-scheme="light"] {
-	color-scheme: light;
-	--bgColorContrast: #000;
-	--grid: #ddd;
-	--bgColor: #fff;
-	--bgColor-10: #eee;
-	--bgColor-20: #f6f8fb;
-	--bgColor-30: #ccc;
-	--bgColor-40: #bbb;
-	--bgColor-50: #aaa;
-	--primary: #374779;
-	--primary-10: #1e326d;
-	--grey-text: #757575;
-	--black-text: #000;
-	--primary-contrast: #374779;
-	--primary-contrast-10: #1e326d;
-	--accent: #880e4f;
-	--selected: #7abdf3;
-	--gutter-hover: #ededed;
-	--bgTooltip: #444;
-	--chart-border: #e5e5e5;
-	--yellowMain: #fbb33a;
-	--redMain: #fb473a;
-	--gripOpacity: 1;
+[data-color-scheme='light'] {
+  color-scheme: light;
+  --bgColorContrast: #000;
+  --grid: #ddd;
+  --bgColor: #fff;
+  --bgColor-10: #eee;
+  --bgColor-20: #f6f8fb;
+  --bgColor-30: #ccc;
+  --bgColor-40: #bbb;
+  --bgColor-50: #aaa;
+  --primary: #374779;
+  --primary-10: #1e326d;
+  --grey-text: #757575;
+  --black-text: #000;
+  --primary-contrast: #374779;
+  --primary-contrast-10: #1e326d;
+  --accent: #880e4f;
+  --selected: #7abdf3;
+  --gutter-hover: #ededed;
+  --bgTooltip: #444;
+  --chart-border: #e5e5e5;
+  --yellowMain: #fbb33a;
+  --redMain: #fb473a;
+  --gripOpacity: 1;
 }
 
-[data-color-scheme="orange"] {
-	color-scheme: orange;
-	--bgColorContrast: #000;
-	--grid: #ddd;
-	--bgColor: #fff;
-	--bgColor-10: #eee;
-	--bgColor-20: #f7f7f7;
-	--bgColor-30: #ccc;
-	--bgColor-40: #bbb;
-	--bgColor-50: #aaa;
-	--primary: #000;
-	--primary-10: #222222;
-	--grey-text: #757575;
-	--black-text: #000;
-	--primary-contrast: #444;
-	--primary-contrast-10: #222;
-	--accent: #cd3c14;
-	--selected: #ff6600;
-	--gutter-hover: #ededed;
-	--bgTooltip: #444;
-	--chart-border: #e5e5e5;
-	--yellowMain: #fbb33a;
-	--redMain: #fb473a;
-	--gripOpacity: 1;
+[data-color-scheme='orange'] {
+  color-scheme: orange;
+  --bgColorContrast: #000;
+  --grid: #ddd;
+  --bgColor: #fff;
+  --bgColor-10: #eee;
+  --bgColor-20: #f7f7f7;
+  --bgColor-30: #ccc;
+  --bgColor-40: #bbb;
+  --bgColor-50: #aaa;
+  --primary: #000;
+  --primary-10: #222222;
+  --grey-text: #757575;
+  --black-text: #000;
+  --primary-contrast: #444;
+  --primary-contrast-10: #222;
+  --accent: #cd3c14;
+  --selected: #ff6600;
+  --gutter-hover: #ededed;
+  --bgTooltip: #444;
+  --chart-border: #e5e5e5;
+  --yellowMain: #fbb33a;
+  --redMain: #fb473a;
+  --gripOpacity: 1;
 }

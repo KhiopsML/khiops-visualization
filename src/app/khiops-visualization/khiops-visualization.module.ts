@@ -4,7 +4,7 @@ import {
   APP_INITIALIZER,
   CUSTOM_ELEMENTS_SCHEMA,
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { HomeLayoutComponent } from './components/home-layout/homeLayout.component';
@@ -50,19 +50,12 @@ export function setupTranslateFactory(service: TranslateService) {
   const serv = () => service.use('en');
   return serv;
 }
-const providers = [
-  TranslateService,
-  {
-    provide: APP_INITIALIZER,
-    useFactory: setupTranslateFactory,
-    deps: [TranslateService],
-    multi: true,
-  },
-  { provide: OverlayContainer, useClass: InAppRootOverlayContainer },
-];
 
 @NgModule({
   declarations: [
+    // ReleaseNotesComponent,
+    // ConfirmDialogComponent,
+    // LevelDistributionGraphCanvasComponent,
     HistogramComponent,
     AppComponent,
     HomeLayoutComponent,
@@ -97,21 +90,26 @@ const providers = [
     BrowserModule,
     BrowserAnimationsModule,
     KhiopsLibraryModule,
-    AgGridModule.withComponents([]),
+    AgGridModule,
     FlexLayoutModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     AngularSplitModule,
     TranslateModule.forChild(),
     AngularResizeEventModule,
   ],
-  exports: [AppComponent],
-  providers: providers,
-  entryComponents: [
-    ReleaseNotesComponent,
-    ConfirmDialogComponent,
-    LevelDistributionGraphCanvasComponent,
+  providers: [
+    TranslateService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: setupTranslateFactory,
+      deps: [TranslateService],
+      multi: true,
+    },
+    { provide: OverlayContainer, useClass: InAppRootOverlayContainer },
   ],
+  exports: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class KhiopsVisualizationModule {}

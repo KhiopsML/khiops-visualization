@@ -38,40 +38,7 @@ export class CompositionComponent implements OnInit, OnDestroy {
   treeSelectedNodeChangedSub: Subscription;
   importedDatasChangedSub: Subscription;
 
-  compositionDisplayedColumns: GridColumnsI[] = [
-    {
-      headerName: 'cluster',
-      field: 'cluster',
-      tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.CLUSTER'),
-    },
-    {
-      headerName: 'terminalCluster',
-      show: false,
-      field: 'terminalCluster',
-      tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.TERMINAL_CLUSTER'),
-    },
-    {
-      headerName: 'rank',
-      show: false,
-      field: 'rank',
-      tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.RANK'),
-    },
-    {
-      headerName: 'typicality',
-      field: 'typicality',
-      tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.TYPICALITY'),
-    },
-    {
-      headerName: 'value',
-      field: 'value',
-      tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.VALUE'),
-    },
-    {
-      headerName: 'frequency',
-      field: 'frequency',
-      tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.FREQUENCY'),
-    },
-  ];
+  compositionDisplayedColumns: GridColumnsI[] = [];
 
   constructor(
     private translate: TranslateService,
@@ -79,6 +46,42 @@ export class CompositionComponent implements OnInit, OnDestroy {
     private clustersService: ClustersService,
     private eventsService: EventsService,
   ) {
+    this.compositionDisplayedColumns = [
+      {
+        headerName: 'cluster',
+        field: 'cluster',
+        tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.CLUSTER'),
+      },
+      {
+        headerName: 'terminalCluster',
+        show: false,
+        field: 'terminalCluster',
+        tooltip: this.translate.get(
+          'TOOLTIPS.AXIS.COMPOSITION.TERMINAL_CLUSTER',
+        ),
+      },
+      {
+        headerName: 'rank',
+        show: false,
+        field: 'rank',
+        tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.RANK'),
+      },
+      {
+        headerName: 'typicality',
+        field: 'typicality',
+        tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.TYPICALITY'),
+      },
+      {
+        headerName: 'value',
+        field: 'value',
+        tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.VALUE'),
+      },
+      {
+        headerName: 'frequency',
+        field: 'frequency',
+        tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.FREQUENCY'),
+      },
+    ];
     this.treeSelectedNodeChangedSub =
       this.eventsService.treeSelectedNodeChanged.subscribe((e) => {
         if (e.realNodeVO && e.hierarchyName === this.selectedDimension.name) {

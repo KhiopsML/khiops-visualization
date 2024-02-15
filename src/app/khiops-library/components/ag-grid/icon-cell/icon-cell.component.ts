@@ -9,16 +9,16 @@ import { AgRendererComponent } from '@ag-grid-community/angular';
   selector: 'kl-icon-cell',
   templateUrl: './icon-cell.component.html',
 })
-export class IconCellComponent implements AgRendererComponent {
+export class IconCellComponent /*implements AgRendererComponent */{
   public params: any;
 
   constructor() {}
 
-  agInit(params: ICellRendererParams): void {
-    this.params = params;
-  }
+  // agInit(params: ICellRendererParams): void {
+  //   this.params = params;
+  // }
 
-  afterGuiAttached(params?: IAfterGuiAttachedParams): void {}
+  // afterGuiAttached(params?: IAfterGuiAttachedParams): void {}
 
   onClick(): void {
     this.params.action(this.params);

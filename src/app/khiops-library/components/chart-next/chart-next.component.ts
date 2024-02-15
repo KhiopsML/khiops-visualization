@@ -37,24 +37,30 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 
   @Output() selectBarIndex: EventEmitter<number> = new EventEmitter();
 
-  AppConfig = this.khiopsLibraryService.getAppConfig().common;
-
+  AppConfig: any;
   ctx: ChartJs.ChartItem;
   chart: ChartJs.Chart;
-  color: string =
-    localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + 'THEME_COLOR') === 'dark'
-      ? '#555'
-      : '#e5e5e5';
-  barColor: string =
-    localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + 'THEME_COLOR') === 'dark'
-      ? 'rgba(255, 255, 255, 1)'
-      : 'rgba(0, 0, 0, 1)';
+  color: string;
+  barColor: string;
   fontColor: string = '#999';
 
   constructor(
     private configService: ConfigService,
     private khiopsLibraryService: KhiopsLibraryService,
   ) {
+    this.AppConfig = this.khiopsLibraryService.getAppConfig().common;
+
+    this.color =
+      localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + 'THEME_COLOR') ===
+      'dark'
+        ? '#555'
+        : '#e5e5e5';
+    this.barColor =
+      localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + 'THEME_COLOR') ===
+      'dark'
+        ? 'rgba(255, 255, 255, 1)'
+        : 'rgba(0, 0, 0, 1)';
+
     this.colorSet = this.khiopsLibraryService.getGraphColorSet()[0];
   }
 

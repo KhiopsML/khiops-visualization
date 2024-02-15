@@ -47,8 +47,7 @@ export class AgGridComponent
   })
   agGrid: AgGridAngular;
 
-  AppConfig = this.khiopsLibraryService.getAppConfig().common;
-
+  AppConfig: any;
   @Input() suppressRowClickSelection = false;
   @Input() inputDatas: any[]; // Can be any types of datas
   @Input() updateValues: any;
@@ -70,7 +69,7 @@ export class AgGridComponent
   @Input() rowHeight = 28;
   @Input() watchResize = true;
   @Input() enablePrecision = true;
-  @Input() paginationSize = this.AppConfig.GLOBAL.PAGINATION_SIZE;
+  @Input() paginationSize;
 
   showHeader = false;
   hideFilterBadge = true;
@@ -132,6 +131,9 @@ export class AgGridComponent
     public configService: ConfigService,
   ) {
     super(selectableService, ngzone, configService);
+    this.AppConfig = this.khiopsLibraryService.getAppConfig().common;
+    this.paginationSize = this.AppConfig.GLOBAL.PAGINATION_SIZE;
+
     this.dataOptions.selected =
       localStorage.getItem(
         this.AppConfig.GLOBAL.LS_ID + 'AG_GRID_GRAPH_OPTION',
@@ -397,7 +399,8 @@ export class AgGridComponent
       this.columnDefs = [];
       // Reset column defs in case of show/hide colum to reorder
       if (this.agGrid && this.agGrid.api) {
-        this.agGrid.api.setColumnDefs(this.columnDefs);
+        // @ts-ignore
+        this.agGrid.api.setgrid(this.columnDefs);
       }
 
       // Advanced tables (for instance unfold hierarchy)
@@ -472,6 +475,7 @@ export class AgGridComponent
       } else {
         // grid has changed
         // remove current lines
+        // @ts-ignore
         this.agGrid.api.forEachNode((node: RowNode) => {
           this.gridOptions.api.applyTransaction({
             remove: [node.data],
@@ -500,6 +504,7 @@ export class AgGridComponent
       }
       if (this.agGrid && this.columnDefs.length === 0) {
         // Reset column defs in case of show/hide colum to reorder
+        // @ts-ignore
         this.agGrid.api.setColumnDefs(this.columnDefs);
       }
     }

@@ -52,7 +52,7 @@ export class MatrixCanvasComponent
   @Output() cellSelected: EventEmitter<any> = new EventEmitter();
   @Output() cellSelectedByEvent: EventEmitter<any> = new EventEmitter();
 
-  isKhiopsCovisu: boolean = this.khiopsLibraryService.isKhiopsCovisu();
+  isKhiopsCovisu: boolean;
   componentType = 'matrix'; // needed to copy datas
   selectedCells: CellVO[];
 
@@ -129,6 +129,8 @@ export class MatrixCanvasComponent
     public configService: ConfigService,
   ) {
     super(selectableService, ngzone, configService);
+
+    this.isKhiopsCovisu = this.khiopsLibraryService.isKhiopsCovisu();
 
     this.lastScrollPosition = {
       scrollLeft: 0,

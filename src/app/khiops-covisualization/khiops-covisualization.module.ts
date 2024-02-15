@@ -1,6 +1,10 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import {
+  APP_INITIALIZER,
+  CUSTOM_ELEMENTS_SCHEMA,
+  NgModule,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { HomeLayoutComponent } from './components/home-layout/homeLayout.component';
@@ -43,6 +47,12 @@ export function setupTranslateFactory(service: TranslateService) {
 
 @NgModule({
   declarations: [
+    // ReleaseNotesComponent,
+    // UnfoldHierarchyComponent,
+    // CheckboxCellComponent,
+    // IconCellComponent,
+    // ConfirmDialogComponent,
+    // ManageViewsComponent,
     AppComponent,
     HomeLayoutComponent,
     ProjectViewComponent,
@@ -71,7 +81,8 @@ export function setupTranslateFactory(service: TranslateService) {
     KhiopsLibraryModule,
     FlexLayoutModule,
     FormsModule,
-    AgGridModule.withComponents([]),
+    ReactiveFormsModule,
+    AgGridModule,
     HttpClientModule,
     AngularSplitModule,
     TranslateModule.forChild(),
@@ -88,13 +99,6 @@ export function setupTranslateFactory(service: TranslateService) {
     { provide: OverlayContainer, useClass: InAppRootOverlayContainer },
   ],
   exports: [AppComponent],
-  entryComponents: [
-    ReleaseNotesComponent,
-    UnfoldHierarchyComponent,
-    CheckboxCellComponent,
-    IconCellComponent,
-    ConfirmDialogComponent,
-    ManageViewsComponent,
-  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class KhiopsCovisualizationModule {}

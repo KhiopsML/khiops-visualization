@@ -46,7 +46,7 @@ import { LegendComponent } from './components/legend/legend.component';
 import { SelectableTabComponent } from './components/selectable-tab/selectable-tab.component';
 import { CellStatsComponent } from './components/cell-stats/cell-stats.component';
 import { GraphHeaderComponent } from './components/graph-header/graph-header.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatrixCanvasComponent } from './components/matrix-canvas/matrix-canvas.component';
 import { AgGridComponent } from './components/ag-grid/ag-grid.component';
 import { MatrixTooltipComponent } from './components/matrix-tooltip/matrix-tooltip.component';
@@ -93,8 +93,9 @@ import EnTransaltion from '../../i18n/en.json';
     MatPaginatorModule,
     MatRippleModule,
     MatSliderModule,
-    AgGridModule.withComponents([]),
+    AgGridModule,
     FormsModule,
+    ReactiveFormsModule,
     MatButtonToggleModule,
     MatDialogModule,
     ResizableModule,

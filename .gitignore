@@ -38,6 +38,7 @@ chrome-profiler-events*.json
 /coverage
 /libpeerconnection.log
 npm-debug.log
+yarn-start.log
 yarn-error.log
 testem.log
 /typings

@@ -43,8 +43,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
   })
   targetDistributionGraphCanvas: TargetDistributionGraphCanvasComponent;
 
-  preparationSource =
-    this.preparationDatasService.getAvailablePreparationReport();
+  preparationSource: string;
 
   appDatas: any;
   sizes: any;
@@ -88,6 +87,9 @@ export class ModelingViewComponent extends SelectableTabComponent {
 
   ngOnInit() {
     this.khiopsLibraryService.trackEvent('page_view', 'modeling');
+
+    this.preparationSource =
+      this.preparationDatasService.getAvailablePreparationReport();
 
     this.appDatas = this.appService.getDatas();
     this.modelingDatas = this.modelingDatasService.getDatas();

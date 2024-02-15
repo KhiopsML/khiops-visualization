@@ -12,9 +12,11 @@ export class ConfirmDialogComponent implements OnInit {
   displayCancelBtn: boolean = true;
   confirmTranslation: string;
 
-  confirmButtonText: string = this.translate.get('GLOBAL.YES');
+  confirmButtonText: string;
 
-  constructor(private translate: TranslateService) {}
+  constructor(private translate: TranslateService) {
+    this.confirmButtonText = this.translate.get('GLOBAL.YES');
+  }
 
   ngOnInit() {
     if (this.confirmTranslation) {

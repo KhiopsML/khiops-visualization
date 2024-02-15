@@ -49,70 +49,7 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
   // managed by selectable-tab component
   tabIndex = 2;
 
-  variablesDisplayedColumns: GridColumnsI[] = [
-    {
-      headerName: 'Rank',
-      field: 'rank',
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.RANK'),
-    },
-    {
-      headerName: 'Name 1',
-      field: 'name1',
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.NAME1'),
-    },
-    {
-      headerName: 'Name 2',
-      field: 'name2',
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.NAME2'),
-    },
-    {
-      headerName: 'Delta Level',
-      field: 'deltaLevel',
-      tooltip: this.translate.get(
-        'TOOLTIPS.PREPARATION_2D.VARIABLES.DELTALEVEL',
-      ),
-      show: this.preparation2dDatasService.isSupervised(),
-    },
-    {
-      headerName: 'Level',
-      field: 'level',
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.LEVEL'),
-    },
-    {
-      headerName: 'Level1',
-      field: 'level1',
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.LEVEL1'),
-      show: this.preparation2dDatasService.isSupervised(),
-    },
-    {
-      headerName: 'Level2',
-      field: 'level2',
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.LEVEL2'),
-      show: this.preparation2dDatasService.isSupervised(),
-    },
-    {
-      headerName: 'Variables',
-      field: 'variables',
-      tooltip: this.translate.get(
-        'TOOLTIPS.PREPARATION_2D.VARIABLES.VARIABLES',
-      ),
-    },
-    {
-      headerName: 'Parts1',
-      field: 'parts1',
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.PARTS1'),
-    },
-    {
-      headerName: 'Parts2',
-      field: 'parts2',
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.PARTS2'),
-    },
-    {
-      headerName: 'Cells',
-      field: 'cells',
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.CELLS'),
-    },
-  ];
+  variablesDisplayedColumns: GridColumnsI[] = [];
 
   constructor(
     private preparationDatasService: PreparationDatasService,
@@ -143,6 +80,71 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
 
   ngOnInit() {
     this.khiopsLibraryService.trackEvent('page_view', 'preparation2d');
+
+    this.variablesDisplayedColumns = [
+      {
+        headerName: 'Rank',
+        field: 'rank',
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.RANK'),
+      },
+      {
+        headerName: 'Name 1',
+        field: 'name1',
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.NAME1'),
+      },
+      {
+        headerName: 'Name 2',
+        field: 'name2',
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.NAME2'),
+      },
+      {
+        headerName: 'Delta Level',
+        field: 'deltaLevel',
+        tooltip: this.translate.get(
+          'TOOLTIPS.PREPARATION_2D.VARIABLES.DELTALEVEL',
+        ),
+        show: this.preparation2dDatasService.isSupervised(),
+      },
+      {
+        headerName: 'Level',
+        field: 'level',
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.LEVEL'),
+      },
+      {
+        headerName: 'Level1',
+        field: 'level1',
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.LEVEL1'),
+        show: this.preparation2dDatasService.isSupervised(),
+      },
+      {
+        headerName: 'Level2',
+        field: 'level2',
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.LEVEL2'),
+        show: this.preparation2dDatasService.isSupervised(),
+      },
+      {
+        headerName: 'Variables',
+        field: 'variables',
+        tooltip: this.translate.get(
+          'TOOLTIPS.PREPARATION_2D.VARIABLES.VARIABLES',
+        ),
+      },
+      {
+        headerName: 'Parts1',
+        field: 'parts1',
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.PARTS1'),
+      },
+      {
+        headerName: 'Parts2',
+        field: 'parts2',
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.PARTS2'),
+      },
+      {
+        headerName: 'Cells',
+        field: 'cells',
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.CELLS'),
+      },
+    ];
   }
 
   onSplitDragEnd(event: any, item: string) {
