@@ -38,12 +38,12 @@ export class TargetVariableStatsCanvasComponent
   isFullscreen = false;
 
   constructor(
-    public selectableService: SelectableService,
+    public override selectableService: SelectableService,
     private toPrecision: ToPrecisionPipe,
     private translate: TranslateService,
     private khiopsLibraryService: KhiopsLibraryService,
-    public ngzone: NgZone,
-    public configService: ConfigService,
+    public override ngzone: NgZone,
+    public override configService: ConfigService,
   ) {
     super(selectableService, ngzone, configService);
     this.colorSet = this.khiopsLibraryService.getGraphColorSet()[1];

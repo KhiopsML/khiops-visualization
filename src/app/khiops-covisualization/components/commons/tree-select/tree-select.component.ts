@@ -41,20 +41,20 @@ export class TreeSelectComponent
   treeSelectedNodeChangedSub: Subscription;
 
   componentType = 'tree'; // needed to copy datas
-  id: any = undefined;
+  override id: any = undefined;
   tree: any;
 
   dimensionsDatas: DimensionsDatasVO;
   nodeInSelection: any;
 
   constructor(
-    public ngzone: NgZone,
+    public override selectableService: SelectableService,
+    public override ngzone: NgZone,
+    public override configService: ConfigService,
     private eventsService: EventsService,
     private treenodesService: TreenodesService,
-    public selectableService: SelectableService,
     private snackBar: MatSnackBar,
     public translate: TranslateService,
-    public configService: ConfigService,
   ) {
     super(selectableService, ngzone, configService);
 
@@ -82,7 +82,7 @@ export class TreeSelectComponent
       });
   }
 
-  ngOnDestroy() {
+  override ngOnDestroy() {
     this.treeSelectedNodeChangedSub.unsubscribe();
   }
 
@@ -96,7 +96,7 @@ export class TreeSelectComponent
     }
   }
 
-  ngAfterViewInit() {
+  override ngAfterViewInit() {
     setTimeout(() => {
       // Avoid ExpressionChangedAfterItHasBeenCheckedError
 
@@ -169,7 +169,7 @@ export class TreeSelectComponent
       });
     });
     this.tree.on('error', (e) => {
-      this.snackBar.open(this.translate.get(e.data), null, {
+      this.snackBar.open(this.translate.get(e.data), undefined, {
         duration: 4000,
         panelClass: 'error',
       });

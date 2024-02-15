@@ -53,7 +53,7 @@ export class AgGridComponent
   @Input() inputDatas: any[]; // Can be any types of datas
   @Input() updateValues: any;
   @Input() displayedColumns: GridColumnsI[];
-  @Input() id: any = undefined;
+  @Input() override id: any = undefined;
   @Input() title: string;
   @Input() titleTooltip: string;
   @Input() selectedVariable: any; // Can be any types of data
@@ -68,7 +68,7 @@ export class AgGridComponent
   @Input() rowSelection = 'single';
   @Input() sizeColumnsToFit = false;
   @Input() rowHeight = 28;
-  @Input() watchResize = true;
+  @Input() override watchResize = true;
   @Input() enablePrecision = true;
   @Input() paginationSize = this.AppConfig.GLOBAL.PAGINATION_SIZE;
 
@@ -125,11 +125,11 @@ export class AgGridComponent
   KEY_DOWN = 'ArrowDown';
 
   constructor(
-    public selectableService: SelectableService,
+    public override selectableService: SelectableService,
+    public override ngzone: NgZone,
+    public override configService: ConfigService,
     private khiopsLibraryService: KhiopsLibraryService,
     private translate: TranslateService,
-    public ngzone: NgZone,
-    public configService: ConfigService,
   ) {
     super(selectableService, ngzone, configService);
     this.dataOptions.selected =
@@ -276,7 +276,7 @@ export class AgGridComponent
 
   ngOnInit() {}
 
-  ngAfterViewInit() {
+  override ngAfterViewInit() {
     // Call ngAfterViewInit of extend component
     super.ngAfterViewInit();
 

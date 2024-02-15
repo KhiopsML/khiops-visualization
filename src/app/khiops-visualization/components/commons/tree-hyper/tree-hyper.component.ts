@@ -60,12 +60,12 @@ export class TreeHyperComponent
   ht: Hypertree;
 
   constructor(
-    public ngzone: NgZone,
+    public override ngzone: NgZone,
     private treePreparationDatasService: TreePreparationDatasService,
     private distributionDatasService: DistributionDatasService,
-    public selectableService: SelectableService,
+    public override selectableService: SelectableService,
     public translate: TranslateService,
-    public configService: ConfigService,
+    public override configService: ConfigService,
   ) {
     super(selectableService, ngzone, configService);
 
@@ -125,7 +125,7 @@ export class TreeHyperComponent
     );
   }
 
-  ngAfterViewInit() {
+  override ngAfterViewInit() {
     this.initHyperTree();
   }
 
@@ -446,7 +446,7 @@ export class TreeHyperComponent
     return isVisible;
   }
 
-  ngOnDestroy() {}
+  override ngOnDestroy() {}
 
   ngOnChanges(changes: SimpleChanges) {
     let userSelectedNode;

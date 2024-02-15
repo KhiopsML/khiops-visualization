@@ -88,10 +88,10 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     private distributionDatasService: DistributionDatasService,
     private khiopsLibraryService: KhiopsLibraryService,
     private histogramService: HistogramService,
-    public selectableService: SelectableService,
+    public override selectableService: SelectableService,
     public translate: TranslateService,
-    public ngzone: NgZone,
-    public configService: ConfigService,
+    public override ngzone: NgZone,
+    public override configService: ConfigService,
   ) {
     super(selectableService, ngzone, configService);
     HistogramUIService.setTranslationService(translate);
@@ -143,7 +143,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     this.datas && this.init();
   }
 
-  ngAfterViewInit(): void {
+  override ngAfterViewInit(): void {
     // Need to delay init to be sure that chart height has been computed
     this.datas && this.init();
   }

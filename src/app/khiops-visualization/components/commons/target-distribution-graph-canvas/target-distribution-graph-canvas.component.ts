@@ -31,22 +31,22 @@ export class TargetDistributionGraphCanvasComponent
   implements OnInit
 {
   @Input() position = 0;
-  @Input() inputDatas: ChartDatasVO = undefined;
+  @Input() override inputDatas: ChartDatasVO = undefined;
   @Input() titleTooltip: string;
   @Input() title: string;
   @Input() activeEntries: number;
-  @Input() scrollPosition = 0;
+  @Input() override scrollPosition = 0;
   @Input() displayedValues: ChartToggleValuesI[];
   @Input() isLoadingDatas = false;
   @Input() showFullscreenBtn = false;
 
-  view: any = undefined; // managed into ScrollableGraphComponent
+  override view: any = undefined; // managed into ScrollableGraphComponent
 
   @Output() graphTypeChanged: EventEmitter<any> = new EventEmitter();
   @Output() targetDistributionGraphDisplayedValuesChanged: EventEmitter<any> =
     new EventEmitter();
   @Output() selectedItemChanged: EventEmitter<any> = new EventEmitter();
-  graphIdContainer: string | undefined = undefined;
+  override graphIdContainer: string | undefined = undefined;
 
   componentType = 'ndBarChart'; // needed to copy datas
 
@@ -60,19 +60,20 @@ export class TargetDistributionGraphCanvasComponent
   legend: any[];
   buttonTitle: string;
   chartOptions: ChartOptions;
-  maxScale: number = 0;
-  minScale: number = 0;
+  override maxScale: number = 0;
+  override minScale: number = 0;
   selectedBarIndex: number;
   isFullscreen = false;
   isSmallDiv = false;
 
   constructor(
-    public selectableService: SelectableService,
+    public override selectableService: SelectableService,
+    public override ngzone: NgZone,
+    public override configService: ConfigService,
     private translate: TranslateService,
     private toPrecision: ToPrecisionPipe,
     private khiopsLibraryService: KhiopsLibraryService,
-    public ngzone: NgZone,
-    public configService: ConfigService,
+
   ) {
     super(selectableService, ngzone, configService);
     // Needed for scroll component

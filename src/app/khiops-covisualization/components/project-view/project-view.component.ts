@@ -20,7 +20,7 @@ export class ProjectViewComponent
   appName = 'khiops-covisualization';
 
   // managed by selectable-tab component
-  tabIndex = 0;
+  override tabIndex = 0;
 
   constructor(private appService: AppService) {
     super();

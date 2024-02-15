@@ -70,7 +70,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
   targetVariableStatsInformations: InfosDatasI[];
 
   // managed by selectable-tab component
-  tabIndex = 3;
+  override tabIndex = 3;
 
   constructor(
     private modelingDatasService: ModelingDatasService,

@@ -56,7 +56,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
   targetVariableStatsInformations: InfosDatasI[];
 
   // managed by selectable-tab component
-  tabIndex = 1;
+  override tabIndex = 1;
 
   variablesDisplayedColumns: GridColumnsI[] = [
     {

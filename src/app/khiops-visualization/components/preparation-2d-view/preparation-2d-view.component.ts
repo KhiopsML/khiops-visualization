@@ -47,7 +47,7 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
   levelDistributionTitle: string;
 
   // managed by selectable-tab component
-  tabIndex = 2;
+  override tabIndex = 2;
 
   variablesDisplayedColumns: GridColumnsI[] = [
     {

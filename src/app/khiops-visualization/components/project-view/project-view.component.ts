@@ -28,7 +28,7 @@ export class ProjectViewComponent
   sizes: any;
 
   // managed by selectable-tab component
-  tabIndex = 0;
+  override tabIndex = 0;
 
   debugFile = AppConfig.debugFile;
 

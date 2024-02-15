@@ -46,7 +46,7 @@ export class AxisViewComponent
   viewsLayout: ViewLayoutVO;
   viewsLayoutChangedSub: Subscription;
   isBigJsonFile = false;
-  loadingView = false;
+  override loadingView = false;
 
   constructor(
     private appService: AppService,

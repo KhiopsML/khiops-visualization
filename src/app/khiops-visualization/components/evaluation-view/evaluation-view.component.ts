@@ -20,7 +20,7 @@ export class EvaluationViewComponent
   sizes: any;
 
   // managed by selectable-tab component
-  tabIndex = 4;
+  override tabIndex = 4;
   summaryDatas: InfosDatasI[];
   evaluationDatas: EvaluationDatasVO;
 

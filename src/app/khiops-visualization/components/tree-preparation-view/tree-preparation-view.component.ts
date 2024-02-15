@@ -59,7 +59,7 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
   distributionDatas: DistributionDatasVO;
 
   // managed by selectable-tab component
-  tabIndex = 5;
+  override tabIndex = 5;
 
   variablesDisplayedColumns: GridColumnsI[] = [
     {

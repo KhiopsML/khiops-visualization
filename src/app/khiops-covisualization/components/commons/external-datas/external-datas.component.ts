@@ -23,14 +23,14 @@ export class ExternalDatasComponent
   @Input() inputValue: string;
   @Input() position: number;
   @Input() externalData: any;
-  id: any = undefined;
+  override id: any = undefined;
 
   componentType = 'external-datas'; // needed to copy datas
 
   constructor(
-    public selectableService: SelectableService,
-    public ngzone: NgZone,
-    public configService: ConfigService,
+    public override selectableService: SelectableService,
+    public override ngzone: NgZone,
+    public override configService: ConfigService,
   ) {
     super(selectableService, ngzone, configService);
   }

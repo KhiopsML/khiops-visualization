@@ -123,10 +123,10 @@ export class MatrixCanvasComponent
   isDrawing = false;
 
   constructor(
-    public selectableService: SelectableService,
+    public override selectableService: SelectableService,
+    public override ngzone: NgZone,
+    public override configService: ConfigService,
     private khiopsLibraryService: KhiopsLibraryService,
-    public ngzone: NgZone,
-    public configService: ConfigService,
   ) {
     super(selectableService, ngzone, configService);
 

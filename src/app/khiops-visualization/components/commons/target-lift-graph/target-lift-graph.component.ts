@@ -49,12 +49,12 @@ export class TargetLiftGraphComponent
   chartOptions: ChartOptions;
 
   constructor(
-    public selectableService: SelectableService,
+    public override selectableService: SelectableService,
     private evaluationDatasService: EvaluationDatasService,
     private translate: TranslateService,
     private khiopsLibraryService: KhiopsLibraryService,
-    public ngzone: NgZone,
-    public configService: ConfigService,
+    public override ngzone: NgZone,
+    public override configService: ConfigService,
   ) {
     super(selectableService, ngzone, configService);
     this.evaluationDatas = this.evaluationDatasService.getDatas();

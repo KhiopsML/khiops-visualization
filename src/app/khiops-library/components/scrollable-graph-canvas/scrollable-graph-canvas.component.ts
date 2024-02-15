@@ -38,9 +38,9 @@ export class ScrollableGraphCanvasComponent
   graphWrapper: any;
 
   constructor(
-    public selectableService: SelectableService,
-    public ngzone: NgZone,
-    public configService: ConfigService,
+    public override selectableService: SelectableService,
+    public override ngzone: NgZone,
+    public override configService: ConfigService,
   ) {
     super(selectableService, ngzone, configService);
     this.onScroll = this.onScroll.bind(this);
@@ -51,7 +51,7 @@ export class ScrollableGraphCanvasComponent
     this.resizeGraph();
   }
 
-  ngAfterViewInit() {
+  override ngAfterViewInit() {
     // Resize at init to take saved scale value
     this.resizeGraph(true);
   }
@@ -80,7 +80,7 @@ export class ScrollableGraphCanvasComponent
     });
   }
 
-  ngOnDestroy() {
+  override ngOnDestroy() {
     const graphWrapper: any = this.configService
       .getRootElementDom()
       .querySelector('#' + this.graphIdContainer);

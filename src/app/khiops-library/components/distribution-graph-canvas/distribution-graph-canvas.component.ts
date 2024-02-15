@@ -30,7 +30,7 @@ export class DistributionGraphCanvasComponent
   implements OnInit
 {
   @Input() position = 0;
-  @Input() inputDatas: ChartDatasVO = undefined;
+  @Input() override inputDatas: ChartDatasVO = undefined;
   @Input() graphOptions: DistributionOptionsI;
   @Input() activeEntries: number;
   @Input() isLoadingDatas = false;
@@ -44,19 +44,19 @@ export class DistributionGraphCanvasComponent
   datas = [];
   title: string;
 
-  graphIdContainer: string | undefined = undefined;
+  override graphIdContainer: string | undefined = undefined;
   colorSet: ChartColorsSetI;
   chartOptions: ChartOptions;
   scaleType: string;
-  maxScale: number = 0;
-  minScale: number = 0;
+  override maxScale: number = 0;
+  override minScale: number = 0;
 
   constructor(
-    public selectableService: SelectableService,
+    public override selectableService: SelectableService,
+    public override ngzone: NgZone,
+    public override configService: ConfigService,
     private toPrecision: ToPrecisionPipe,
     private khiopsLibraryService: KhiopsLibraryService,
-    public ngzone: NgZone,
-    public configService: ConfigService,
   ) {
     super(selectableService, ngzone, configService);
 

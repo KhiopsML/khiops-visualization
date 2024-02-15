@@ -40,26 +40,26 @@ export class TreeSelectComponent
 
   componentType = 'kvtree'; // needed to copy datas
   tree: any;
-  id: any = undefined;
+  override id: any = undefined;
   nodeInSelection: any;
 
   isFullscreen: boolean = false;
 
   constructor(
-    public ngzone: NgZone,
+    public override ngzone: NgZone,
     private appService: AppService,
     private treePreparationDatasService: TreePreparationDatasService,
-    public selectableService: SelectableService,
+    public override selectableService: SelectableService,
     private snackBar: MatSnackBar,
     public translate: TranslateService,
-    public configService: ConfigService,
+    public override configService: ConfigService,
   ) {
     super(selectableService, ngzone, configService);
   }
 
   ngOnInit() {}
 
-  ngOnDestroy() {}
+  override ngOnDestroy() {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.dimensionTree && changes.dimensionTree.currentValue) {
@@ -81,7 +81,7 @@ export class TreeSelectComponent
     }
   }
 
-  ngAfterViewInit() {
+  override ngAfterViewInit() {
     // Init at first time
     this.initialize();
   }

@@ -20,14 +20,14 @@ export class SelectableComponent
   extends WatchResizeComponent
   implements OnDestroy, AfterViewInit
 {
-  @Input() id: [any] = undefined;
+  @Input() override id: [any] = undefined;
   @Input() type: [any];
   selectedServiceChangeSub: Subscription;
 
   constructor(
     public selectableService: SelectableService,
-    public ngzone: NgZone,
-    public configService: ConfigService,
+    public override ngzone: NgZone,
+    public override configService: ConfigService,
   ) {
     super(ngzone, configService);
 
@@ -51,7 +51,7 @@ export class SelectableComponent
       });
   }
 
-  ngAfterViewInit(): void {
+  override ngAfterViewInit(): void {
     // Call ngAfterViewInit of extend component
     super.ngAfterViewInit();
   }
