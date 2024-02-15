@@ -1,11 +1,11 @@
 <div id="manage-views-comp" fxFlexFill #manageViews fxLayout="column">
   <div fxLayout="row" id="manage-views-header" fxLayoutAlign="center center">
-    <h2 fxFlex>{{ "GLOBAL.VIEWS_MANAGER" | translate | uppercase }}</h2>
+    <h2 fxFlex>{{ 'GLOBAL.VIEWS_MANAGER' | translate | uppercase }}</h2>
     <button mat-stroked-button (click)="onClickOnCancel()">
-      {{ "GLOBAL.CANCEL" | translate }}
+      {{ 'GLOBAL.CANCEL' | translate }}
     </button>
     <button mat-flat-button (click)="onClickOnSave()" color="primary">
-      {{ "GLOBAL.SAVE" | translate }}
+      {{ 'GLOBAL.SAVE' | translate }}
     </button>
   </div>
   <div id="manage-views-content" fxLayout="row">
@@ -46,7 +46,7 @@
               disabled: !dimensionLayout.isHierarchyChecked
             }"
           >
-            {{ "GLOBAL.HIERARCHY" | translate }}
+            {{ 'GLOBAL.HIERARCHY' | translate }}
           </div>
           <div
             class="box"
@@ -62,7 +62,7 @@
               disabled: !dimensionLayout.isClustersChecked
             }"
           >
-            {{ "GLOBAL.CURRENT_CLUSTERS" | translate }}
+            {{ 'GLOBAL.CURRENT_CLUSTERS' | translate }}
           </div>
           <div fxFlex="20" fxLayout="column" class="parent-box">
             <div
@@ -79,7 +79,7 @@
                   !dimensionLayout.isAnnotationChecked
               "
             >
-              {{ "GLOBAL.ANNOTATION" | translate }}
+              {{ 'GLOBAL.ANNOTATION' | translate }}
             </div>
             <div
               class="box child-box"
@@ -95,7 +95,7 @@
                   !dimensionLayout.isCompositionChecked
               "
             >
-              {{ "GLOBAL.COMPOSITION" | translate }}
+              {{ 'GLOBAL.COMPOSITION' | translate }}
             </div>
           </div>
           <div
@@ -112,7 +112,7 @@
               disabled: !dimensionLayout.isExternalDataChecked
             }"
           >
-            {{ "GLOBAL.EXTERNAL_DATA" | translate }}
+            {{ 'GLOBAL.EXTERNAL_DATA' | translate }}
           </div>
           <div
             class="box"
@@ -129,7 +129,7 @@
                 !dimensionLayout.isDistributionChecked
             "
           >
-            {{ "GLOBAL.DISTRIBUTION" | translate }}
+            {{ 'GLOBAL.DISTRIBUTION' | translate }}
           </div>
         </div>
       </div>
@@ -155,7 +155,7 @@
         "
         [ngClass]="{ disabled: !viewsLayout.isDimensionsChecked }"
       >
-        {{ "GLOBAL.DIMENSIONS" | translate }}
+        {{ 'GLOBAL.DIMENSIONS' | translate }}
       </div>
       <div
         class="box"
@@ -168,7 +168,7 @@
         "
         [ngClass]="{ disabled: !viewsLayout.isCoocurenceChecked }"
       >
-        {{ "GLOBAL.COOCURENCE" | translate }}
+        {{ 'GLOBAL.COOCURENCE' | translate }}
       </div>
     </div>
   </div>

@@ -6,15 +6,15 @@
     fxLayoutAlign="center center"
   >
     <button mat-stroked-button (click)="onClickOnCancel()">
-      {{ "GLOBAL.CANCEL" | translate }}
+      {{ 'GLOBAL.CANCEL' | translate }}
     </button>
-    <h2 fxFlex>{{ "GLOBAL.SETTINGS" | translate }}</h2>
+    <h2 fxFlex>{{ 'GLOBAL.SETTINGS' | translate }}</h2>
     <button mat-flat-button (click)="onClickOnSave()" color="primary">
-      {{ "GLOBAL.SAVE" | translate }}
+      {{ 'GLOBAL.SAVE' | translate }}
     </button>
   </div>
   <div fxLayout="column" id="user-settings-content" fxLayoutAlign="start start">
-    <h2>{{ "GLOBAL.MATRIX_DEFAULT_CONTRAST" | translate }}</h2>
+    <h2>{{ 'GLOBAL.MATRIX_DEFAULT_CONTRAST' | translate }}</h2>
     <div fxLayout="row" fxLayoutAlign="start center">
       <mat-slider
         color="primary"
@@ -30,14 +30,14 @@
       </mat-slider>
       <span>{{ contrastValue }} %</span>
     </div>
-    <h2>{{ "COOKIE_CONSENT.TITLE" | translate }}</h2>
+    <h2>{{ 'COOKIE_CONSENT.TITLE' | translate }}</h2>
     <div fxLayout="row" fxLayoutAlign="start center">
       <mat-slide-toggle color="primary" [(ngModel)]="allowCookies">
-        {{ "COOKIE_CONSENT.MESSAGE" | translate }}
+        {{ 'COOKIE_CONSENT.MESSAGE' | translate }}
       </mat-slide-toggle>
     </div>
     <h2 id="user-settings-dark-mode">
-      {{ "DARK_THEME.TITLE" | translate }}
+      {{ 'DARK_THEME.TITLE' | translate }}
     </h2>
     <div fxLayout="row" fxLayoutAlign="start center">
       <mat-button-toggle-group

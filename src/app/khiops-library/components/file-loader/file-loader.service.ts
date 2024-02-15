@@ -50,7 +50,7 @@ export class FileLoaderService {
     // let urlKV = './assets/mocks/kv/C100_AllReports.json';
     // let urlKV = './assets/mocks/kv/AdultRegressionAllReports.json';
     // let urlKV = './assets/mocks/kv/onlyEvaluationReport.json';
-    // let urlKV = './assets/mocks/kv/explanatory.json';
+    let urlKV = './assets/mocks/kv/explanatory.json';
     // let urlKV = './assets/mocks/kv/adult-bivar.json';
     // let urlKV = './assets/mocks/kv/desc-bivar.json';
     // let urlKV = './assets/mocks/kv/irisR.json';
@@ -58,7 +58,7 @@ export class FileLoaderService {
     // let urlKV = './assets/mocks/kv/bi3.json';
     // let urlKV = './assets/mocks/kv/Std_Iris_AnalysisResults.khj';
     // let urlKV = './assets/mocks/kv/C1_AllReports.json';
-    let urlKV = './assets/mocks/kv/C0_AllReports.json';
+    // let urlKV = './assets/mocks/kv/C0_AllReports.json';
     // let urlKV = './assets/mocks/kv/analyse_supervisee_multiclasse.json';
     // let urlKV = './assets/mocks/kv/reg.json';
     // let urlKV = './assets/mocks/kv/copydatas.json';
@@ -105,7 +105,7 @@ export class FileLoaderService {
     // let urlKC = './assets/mocks/kc/Coclustering.json';
     // let urlKC = './assets/mocks/kc/Co-simple-2vars.json';
     // let urlKC = './assets/mocks/kc/Coclustering-6.json';
-    // let urlKC = './assets/mocks/kc/Coclustering-4.json';
+    let urlKC = './assets/mocks/kc/Coclustering-4.json';
     // let urlKC = './assets/mocks/kc/co-IrisMissing.json';
     // let urlKC = './assets/mocks/kc/adult2var.json';
     // let urlKC = './assets/mocks/kc/sample3.json';
@@ -123,8 +123,8 @@ export class FileLoaderService {
     // let urlKC = './assets/mocks/kc/VerbNounCoclustering27mo.json';
     // let urlKC = './assets/mocks/kc/v4.json';
     // let urlKC = './assets/mocks/kc/NovaCoclustering4mb.json';
-    let urlKC =
-      './assets/mocks/kc/donotworkk10.1.1_id_feat_nospace_Coclustering.json';
+    // let urlKC =
+    //   './assets/mocks/kc/donotworkk10.1.1_id_feat_nospace_Coclustering.json';
     // let urlKC = './assets/mocks/kc/co-3-num.json';
     // let urlKC = './assets/mocks/kc/h-Coclustering-2-2.json';
     // let urlKC = './assets/mocks/kc/ext-CC_Coclustering.json';

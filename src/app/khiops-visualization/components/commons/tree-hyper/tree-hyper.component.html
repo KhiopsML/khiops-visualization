@@ -12,7 +12,7 @@
     fxLayoutAlign="start center"
     class="mat-elevation-z1"
   >
-    <h1 fxFlex>{{ "GLOBAL.HYPER_TREE" | translate }}</h1>
+    <h1 fxFlex>{{ 'GLOBAL.HYPER_TREE' | translate }}</h1>
     <app-select-toggle-button
       *ngIf="distributionDatas && distributionDatas.treeHyperDisplayedValues"
       [displayedValues]="distributionDatas.treeHyperDisplayedValues"
@@ -25,7 +25,7 @@
         [checked]="visualization.purity"
         (change)="togglePurityVisualization($event.checked)"
       >
-        {{ "GLOBAL.DISPLAY_PURITY_BY_OPACITY" | translate }}
+        {{ 'GLOBAL.DISPLAY_PURITY_BY_OPACITY' | translate }}
       </mat-checkbox>
     </div>
     <div id="graph-header-tools" fxLayout="column" fxLayoutAlign="end center">
@@ -33,7 +33,7 @@
         [checked]="visualization.population"
         (change)="togglePopulationVisualization($event.checked)"
       >
-        {{ "GLOBAL.DISPLAY_LEAF_SIZES_BY_POPULATION" | translate }}
+        {{ 'GLOBAL.DISPLAY_LEAF_SIZES_BY_POPULATION' | translate }}
       </mat-checkbox>
     </div>
     <kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">

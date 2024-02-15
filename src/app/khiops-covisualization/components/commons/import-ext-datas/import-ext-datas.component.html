@@ -5,7 +5,7 @@
     fxLayoutAlign="center center"
   >
     <h2 fxFlex>
-      {{ "GLOBAL.IMPORT_NEW_EXTERNAL_DATA" | translate | uppercase }}
+      {{ 'GLOBAL.IMPORT_NEW_EXTERNAL_DATA' | translate | uppercase }}
     </h2>
   </div>
   <div id="import-ext-datas-content" fxLayout="column">
@@ -15,7 +15,7 @@
         fxLayout="row"
         fxLayoutAlign="start center"
       >
-        <span>{{ translate.get("GLOBAL.EXTERNAL_DATA_FILE") }}</span>
+        <span>{{ translate.get('GLOBAL.EXTERNAL_DATA_FILE') }}</span>
         <span>{{ importExtDatas.filename }}</span>
       </div>
 
@@ -24,7 +24,7 @@
         fxLayout="row"
         fxLayoutAlign="start center"
       >
-        <span>{{ "GLOBAL.JOINT_KEY" | translate }}</span>
+        <span>{{ 'GLOBAL.JOINT_KEY' | translate }}</span>
         <div fxLayout="row" fxLayoutAlign="start center">
           <button
             class="button-accent"
@@ -54,7 +54,7 @@
         fxLayout="row"
         fxLayoutAlign="start center"
       >
-        <span>{{ "GLOBAL.FIELDS_TO_IMPORT" | translate }}</span>
+        <span>{{ 'GLOBAL.FIELDS_TO_IMPORT' | translate }}</span>
         <div fxFlex id="importext-datas-table" fxLayout="column">
           <kl-ag-grid
             fxFlex
@@ -78,7 +78,7 @@
         fxLayout="row"
         fxLayoutAlign="start center"
       >
-        <span>{{ "GLOBAL.DIMENSION" | translate }}</span>
+        <span>{{ 'GLOBAL.DIMENSION' | translate }}</span>
         <div fxFlex fxLayout="row" fxLayoutAlign="start center">
           <button
             class="button-accent"
@@ -108,10 +108,10 @@
   >
     <h2 fxFlex></h2>
     <button mat-stroked-button (click)="onClickOnCancel()">
-      {{ "GLOBAL.CANCEL" | translate }}
+      {{ 'GLOBAL.CANCEL' | translate }}
     </button>
     <button mat-flat-button (click)="onClickOnSave()" color="primary">
-      {{ "GLOBAL.LOAD_DATAS" | translate }}
+      {{ 'GLOBAL.LOAD_DATAS' | translate }}
     </button>
   </div>
 </div>

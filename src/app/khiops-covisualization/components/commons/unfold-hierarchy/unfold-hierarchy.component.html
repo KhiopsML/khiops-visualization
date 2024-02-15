@@ -22,13 +22,13 @@
       fxLayoutAlign="center center"
     >
       <h2 fxFlex>
-        {{ "GLOBAL.UNFOLD_HIERARCHY" | translate | uppercase }}
+        {{ 'GLOBAL.UNFOLD_HIERARCHY' | translate | uppercase }}
       </h2>
       <button mat-stroked-button (click)="onClickOnCancel()">
-        {{ "GLOBAL.CANCEL" | translate }}
+        {{ 'GLOBAL.CANCEL' | translate }}
       </button>
       <button mat-flat-button (click)="onClickOnSave()" color="primary">
-        {{ "GLOBAL.OK" | translate }}
+        {{ 'GLOBAL.OK' | translate }}
       </button>
     </div>
     <div id="unfold-hierarchy-content" fxLayout="column">
@@ -39,7 +39,7 @@
       >
         <div fxLayout="column">
           <span
-            >{{ "GLOBAL.NUMBER_OF_CLUSTERS" | translate }} :
+            >{{ 'GLOBAL.NUMBER_OF_CLUSTERS' | translate }} :
             <b>{{ currentUnfoldHierarchy }}</b></span
           >
           <mat-slider
@@ -63,11 +63,11 @@
         </div>
         <div fxLayout="column" fxFlex fxLayoutAlign="center end">
           <span
-            >{{ "GLOBAL.CELLS" | translate }}:
+            >{{ 'GLOBAL.CELLS' | translate }}:
             {{ currentCellsPerCluster }}</span
           >
           <span
-            >{{ "GLOBAL.INFORMATION_RATE" | translate }}:
+            >{{ 'GLOBAL.INFORMATION_RATE' | translate }}:
             {{ currentInformationPerCluster | toPrecision: 1 }}%</span
           >
           <span
@@ -75,7 +75,7 @@
             *ngIf="currentInformationPerCluster === 0"
             fxLayoutAlign="start center"
           >
-            {{ "GLOBAL.NON_INFORMATIVE_COCLUSTERING" | translate }}
+            {{ 'GLOBAL.NON_INFORMATIVE_COCLUSTERING' | translate }}
             <mat-icon fxLayoutAlign="center center">warning</mat-icon>
           </span>
         </div>
@@ -83,7 +83,7 @@
       <div fxFlex fxLayout="column">
         <div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
           <div fxFlex fxLayout="row" fxLayoutAlign="start center">
-            <h1>{{ "GLOBAL.INFORMATION_RATE" | translate }}</h1>
+            <h1>{{ 'GLOBAL.INFORMATION_RATE' | translate }}</h1>
           </div>
         </div>
         <kl-chart-next
@@ -103,7 +103,7 @@
         <div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
           <div fxFlex fxLayout="row" fxLayoutAlign="start center">
             <h1>
-              {{ "GLOBAL.NB_OF_CLUSTERS_PER_DIM" | translate }}
+              {{ 'GLOBAL.NB_OF_CLUSTERS_PER_DIM' | translate }}
             </h1>
           </div>
           <kl-legend

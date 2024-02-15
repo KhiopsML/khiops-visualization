@@ -10,7 +10,7 @@
       color="primary"
       (click)="onClickOpen(fileInput)"
     >
-      {{ translate.get("GLOBAL.OPEN_FILE") }}
+      {{ translate.get('GLOBAL.OPEN_FILE') }}
     </button>
     <input
       hidden
@@ -33,15 +33,15 @@
     <span
       *ngIf="!fileLoaderDatas.isBigJsonFile"
       attr.aria-label="{{ translate.get('GLOBAL.LOADING_FILE') }}"
-      >{{ translate.get("GLOBAL.LOADING_FILE") }} ...</span
+      >{{ translate.get('GLOBAL.LOADING_FILE') }} ...</span
     >
     <span
       *ngIf="fileLoaderDatas.isBigJsonFile"
       attr.aria-label="{{ translate.get('GLOBAL.LOADING_FILE') }}"
-      >{{ translate.get("GLOBAL.BIG_FILES_LOADING_WARNING") }}</span
+      >{{ translate.get('GLOBAL.BIG_FILES_LOADING_WARNING') }}</span
     >
     <span *ngIf="fileLoaderDatas.isBigJsonFile"
-      >{{ translate.get("GLOBAL.LOADING") }}
+      >{{ translate.get('GLOBAL.LOADING') }}
       {{ fileLoaderDatas.loadingInfo }}</span
     >
   </div>
@@ -54,7 +54,7 @@
       color="primary"
       (click)="loadDebugFile(cyInputText)"
     >
-      {{ translate.get("GLOBAL.OPEN_FILE") }}
+      {{ translate.get('GLOBAL.OPEN_FILE') }}
     </button>
     <input
       [(ngModel)]="cyInputText"

@@ -19,13 +19,13 @@
     <!-- <khiops-covisualization></khiops-covisualization> -->
     <script>
       document.onreadystatechange = () => {
-        if (document.readyState === "complete") {
-          const kv = document.querySelector("khiops-visualization");
+        if (document.readyState === 'complete') {
+          const kv = document.querySelector('khiops-visualization');
           kv.setConfig({
-            appSource: "WEB",
+            appSource: 'WEB',
             showProjectTab: true,
             onFileOpen: function () {
-              console.log("fileOpen");
+              console.log('fileOpen');
             },
             onCopyData: function (data) {
               console.log(data);

@@ -5,7 +5,7 @@
   fxLayout="column"
 >
   <h1 *ngIf="inputValue && externalData" class="small-title">
-    {{ "GLOBAL.EXTERNAL_DATA_OF" | translate: { value: inputValue } }}
+    {{ 'GLOBAL.EXTERNAL_DATA_OF' | translate: { value: inputValue } }}
   </h1>
   <div *ngIf="externalData" fxFlex fxLayout="column">
     <pre class="external-datas-text" *ngFor="let data of externalData"
