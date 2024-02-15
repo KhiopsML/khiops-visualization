@@ -39,7 +39,7 @@ export class FileLoaderService {
     // ===================
     //
 
-    // let urlKV = './assets/mocks/kv/new-hyper-tree.json';
+    let urlKV = './assets/mocks/kv/new-hyper-tree.json';
     // let urlKV = './assets/mocks/kv/NGrams10_AnalysisResults.json';
     // let urlKV = './assets/mocks/kv/NGrams100_AnalysisResults.json';
     // let urlKV = './assets/mocks/kv/000_000_10000words_AllReports.json';
@@ -50,7 +50,7 @@ export class FileLoaderService {
     // let urlKV = './assets/mocks/kv/C100_AllReports.json';
     // let urlKV = './assets/mocks/kv/AdultRegressionAllReports.json';
     // let urlKV = './assets/mocks/kv/onlyEvaluationReport.json';
-    let urlKV = './assets/mocks/kv/explanatory.json';
+    // let urlKV = './assets/mocks/kv/explanatory.json';
     // let urlKV = './assets/mocks/kv/adult-bivar.json';
     // let urlKV = './assets/mocks/kv/desc-bivar.json';
     // let urlKV = './assets/mocks/kv/irisR.json';

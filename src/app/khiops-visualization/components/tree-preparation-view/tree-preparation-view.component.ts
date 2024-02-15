@@ -49,8 +49,8 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
   informationsDatas: InfosDatasI[];
   targetVariableStatsDatas: ChartDatasVO;
   currentIntervalDatas: GridDatasI;
-  matrixRegSelectedCell = 0;
-  selectedBarIndex = 0;
+  matrixRegSelectedCell: number = 0;
+  selectedBarIndex: number = 0;
   variablesDatas: VariableVO[];
   targetVariableStatsInformations: InfosDatasI[];
   preparation2dDatas: Preparation2dDatasVO;
@@ -134,10 +134,6 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
     if (this.appVariableGraphDetails) {
       this.appVariableGraphDetails.resize();
     }
-  }
-
-  onSelectedVariableChanged(variable: any) {
-    this.selectedBarIndex = 0;
   }
 
   onSelectListItemChanged(item: TreePreparationVariableVO) {
