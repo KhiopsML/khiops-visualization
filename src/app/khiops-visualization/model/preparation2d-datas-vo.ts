@@ -7,15 +7,17 @@ export class Preparation2dDatasVO {
   selectedVariable?: Preparation2dVariableVO = undefined;
   selectedCellIndex: number = 0;
   selectedCell: CellVO = undefined;
-  matrixDatas: {
-    variable: {
-      nameX: string;
-      nameY: string;
-      xParts: number;
-      yParts: number;
-    };
-    matrixCellDatas: any[];
-  };
+  matrixDatas:
+    | {
+        variable: {
+          nameX: string;
+          nameY: string;
+          xParts: number;
+          yParts: number;
+        };
+        matrixCellDatas: any[];
+      }
+    | undefined;
   isTargetAvailable = false;
   currentCellDatas: {
     values: any[][]; // Dynamic values according to the input datas

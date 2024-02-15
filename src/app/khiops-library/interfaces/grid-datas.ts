@@ -2,6 +2,6 @@ import { GridColumnsI } from './grid-columns';
 
 export interface GridDatasI {
   title?: string;
-  values: any[];
+  values: any[] | undefined;
   displayedColumns: GridColumnsI[];
 }

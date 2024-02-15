@@ -339,7 +339,7 @@ export class DistributionDatasService {
     return distributionsGraphDetails;
   }
 
-  getHistogramGraphDatas(selectedVariable): HistogramValuesI[] {
+  getHistogramGraphDatas(selectedVariable): HistogramValuesI[] | undefined {
     const appDatas = this.appService.getDatas().datas;
     const varDatas =
       appDatas.preparationReport.variablesDetailedStatistics[
@@ -348,7 +348,7 @@ export class DistributionDatasService {
       appDatas.preparationReport.variablesDetailedStatistics[
         selectedVariable.rank
       ].dataGrid;
-    let histogramGraphDetails: HistogramValuesI[] = undefined;
+    let histogramGraphDetails: HistogramValuesI[] | undefined = undefined;
 
     if (varDatas) {
       this.distributionDatas.setHistogramGraphOptions();
@@ -374,7 +374,7 @@ export class DistributionDatasService {
               value: value,
               logValue: logValue,
             };
-            histogramGraphDetails.push(data);
+            histogramGraphDetails?.push(data);
           }
         },
       );
@@ -392,11 +392,7 @@ export class DistributionDatasService {
     currentXAxis,
     selectedVariable,
   ): any {
-    let distributionsGraphDetails = {
-      datasets: [],
-      labels: [],
-      intervals: [],
-    };
+    let distributionsGraphDetails: ChartDatasVO = new ChartDatasVO();
 
     if (currentDimension) {
       // Add trash info to the defaultGroupIndex
@@ -425,7 +421,7 @@ export class DistributionDatasService {
         const frequencyValue = frequencyArray[i];
 
         // format x axis legend text
-        const currentName = this.formatXAxis(
+        const currentName: string = this.formatXAxis(
           currentXAxis[i],
           i,
           selectedVariable.type,
@@ -465,8 +461,8 @@ export class DistributionDatasService {
   }
 
   getAllFrequencyAndCoverageValues(currentDatas, dimensions, partition) {
-    const frequencyArray = [];
-    const coverageArray = [];
+    const frequencyArray: number[] = [];
+    const coverageArray: number[] = [];
     for (let i = 0; i < currentDatas.length; i++) {
       const coverageValue = this.getCoverageValueFromDimensionAndPartition(
         dimensions,
@@ -523,7 +519,7 @@ export class DistributionDatasService {
       }
       graphItem.value = el.level || 0; // Do not add tofixed here because datas are < 0.00
       currentDataSet.data.push(graphItem.value);
-      levelDistributionGraphDatas.labels.push(graphItem.name);
+      levelDistributionGraphDatas.labels.push(graphItem.name || '');
     }
 
     return levelDistributionGraphDatas;

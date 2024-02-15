@@ -18,6 +18,7 @@ import { PreparationDatasVO } from '@khiops-visualization/model/preparation-data
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
+import { GridColumnsI } from '../../khiops-library/interfaces/grid-columns';
 
 @Injectable({
   providedIn: 'root',
@@ -92,7 +93,7 @@ export class PreparationDatasService {
   setSelectedVariable(
     object: any,
     preparationSource: string,
-  ): PreparationVariableVO {
+  ): PreparationVariableVO | undefined {
     if (object) {
       const variable = this.getVariableFromName(object.name, preparationSource);
       if (variable) {
@@ -153,9 +154,9 @@ export class PreparationDatasService {
   getCurrentIntervalDatas(preparationSource: string, index?): GridDatasI {
     index = index || 0;
 
-    const datas = [];
+    const datas: any[] = [];
     let title = '';
-    const displayedColumns = [];
+    const displayedColumns: GridColumnsI[] = [];
 
     // init the object
     this.preparationDatas[preparationSource].currentIntervalDatas = {
@@ -359,11 +360,11 @@ export class PreparationDatasService {
     return variableStatsDatas;
   }
 
-  getTargetVariableStatsInformations(): InfosDatasI[] {
+  getTargetVariableStatsInformations(): InfosDatasI[] | undefined {
     const appDatas = this.appService.getDatas().datas;
     const preparationSource = this.getAvailablePreparationReport();
 
-    let informationsDatas: InfosDatasI[];
+    let informationsDatas: InfosDatasI[] | undefined;
     if (appDatas[preparationSource].summary.targetDescriptiveStats) {
       informationsDatas = [];
       for (const item in appDatas[preparationSource].summary

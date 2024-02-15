@@ -140,7 +140,7 @@ export class ModelingDatasService {
     return displayedColumns;
   }
 
-  getSummaryDatas(): InfosDatasI[] {
+  getSummaryDatas(): InfosDatasI[] | undefined {
     let summaryDatas;
     const appDatas = this.appService.getDatas().datas;
     const preparationSource =
@@ -173,11 +173,11 @@ export class ModelingDatasService {
     this.modelingDatas.selectedPredictor = new ModelingPredictorVO(predictor);
   }
 
-  getSelectedPredictor(): ModelingPredictorVO {
-    return this.modelingDatas.selectedPredictor;
+  getSelectedPredictor(): ModelingPredictorVO | undefined {
+    return this.modelingDatas!.selectedPredictor;
   }
 
-  getTrainedPredictorListDatas(): TrainedPredictorVO[] {
+  getTrainedPredictorListDatas(): TrainedPredictorVO[] | undefined {
     const appDatas = this.appService.getDatas().datas;
     const selectedPredictor = this.getSelectedPredictor();
     if (

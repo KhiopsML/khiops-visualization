@@ -42,14 +42,14 @@ export class EvaluationDatasService {
     this.evaluationDatas.liftGraphDisplayedValues = object;
   }
 
-  getLiftGraphDisplayedValues(): ChartToggleValuesI[] {
+  getLiftGraphDisplayedValues(): ChartToggleValuesI[] | undefined {
     return this.evaluationDatas.liftGraphDisplayedValues;
   }
   setSelectedEvaluationTypeVariable(object: EvaluationTypeVO) {
     this.evaluationDatas.selectedEvaluationTypeVariable = object;
   }
 
-  getSelectedEvaluationTypeVariable(): EvaluationTypeVO {
+  getSelectedEvaluationTypeVariable(): EvaluationTypeVO | undefined {
     return this.evaluationDatas.selectedEvaluationTypeVariable;
   }
 
@@ -60,18 +60,18 @@ export class EvaluationDatasService {
   getPredictorEvaluationVariableFromEvaluationType(
     type: string,
   ): EvaluationPredictorVO {
-    return this.evaluationDatas.predictorEvaluations.values.find(
+    return this.evaluationDatas.predictorEvaluations.values?.find(
       (e) =>
         e.type === type &&
         e.rank ===
-          this.evaluationDatas.selectedPredictorEvaluationVariable.rank,
+          this.evaluationDatas?.selectedPredictorEvaluationVariable?.rank,
     );
   }
 
   getEvaluationVariableFromPredictorEvaluationType(
     type: string,
   ): EvaluationTypeVO {
-    return this.evaluationDatas.evaluationTypesSummary.values.find(
+    return this.evaluationDatas.evaluationTypesSummary.values?.find(
       (e) => e.type === type,
     );
   }
@@ -86,7 +86,7 @@ export class EvaluationDatasService {
         appDatas[value].reportType &&
         appDatas[value].reportType === 'Evaluation'
       ) {
-        this.evaluationDatas.evaluationTypes.push(appDatas[value]);
+        this.evaluationDatas?.evaluationTypes?.push(appDatas[value]);
       }
     });
     return this.evaluationDatas.evaluationTypes;
@@ -106,12 +106,12 @@ export class EvaluationDatasService {
       let currentReport: any;
       // get the correct report : train or test
       if (
-        this.evaluationDatas.selectedEvaluationTypeVariable.type ===
+        this.evaluationDatas?.selectedEvaluationTypeVariable?.type ===
         PREDICTOR_TYPES.TRAIN
       ) {
         currentReport = appDatas.trainEvaluationReport;
       } else if (
-        this.evaluationDatas.selectedEvaluationTypeVariable.type ===
+        this.evaluationDatas?.selectedEvaluationTypeVariable?.type ===
         PREDICTOR_TYPES.TEST
       ) {
         currentReport = appDatas.testEvaluationReport;

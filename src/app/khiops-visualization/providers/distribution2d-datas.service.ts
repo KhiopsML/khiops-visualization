@@ -45,7 +45,7 @@ export class Distribution2dDatasService {
     const selectedVariable =
       this.preparation2dDatasService.getSelectedVariable();
     const preparation2dDatas = this.preparation2dDatasService.getDatas();
-    const variablesDetails: VariableDetailsVO =
+    const variablesDetails: VariableDetailsVO | undefined =
       this.preparation2dDatasService.getVariableDetails(
         preparation2dDatas.selectedVariable &&
           preparation2dDatas.selectedVariable.rank,
@@ -56,7 +56,7 @@ export class Distribution2dDatasService {
     if (variablesDetails && variablesDetails.dataGrid.cellTargetFrequencies) {
       const computedCellTargetFreqs =
         MatrixUtilsDatasService.getCellFrequencies(
-          [selectedVariable.parts1, selectedVariable.parts2],
+          [selectedVariable?.parts1, selectedVariable?.parts2],
           variablesDetails.dataGrid.cellPartIndexes,
           variablesDetails.dataGrid.cellTargetFrequencies,
         );
