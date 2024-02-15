@@ -36,7 +36,8 @@
     "e2e": "ng e2e",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "pretty": "prettier --write \"./**/*.{ts,html, scss}\""
+    "pretty": "prettier --write \"./**/*.{ts,html, scss}\"",
+    "start:logs": "yarn run start > yarn-start.log 2>&1"
   },
   "prettier": {
     "trailingComma": "all",
