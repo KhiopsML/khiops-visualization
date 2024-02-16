@@ -599,7 +599,7 @@ export class UtilsService {
       }
       return [lowest, highest];
     } else {
-      return;
+      return undefined;
     }
   }
 
@@ -795,7 +795,7 @@ export class UtilsService {
         return 'rgb(' + r + ', ' + g + ', ' + b + ')';
       }
     } else {
-      return;
+      return undefined;
     }
   }
 

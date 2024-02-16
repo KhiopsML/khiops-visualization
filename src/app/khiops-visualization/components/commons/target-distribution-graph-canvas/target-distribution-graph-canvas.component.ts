@@ -73,7 +73,6 @@ export class TargetDistributionGraphCanvasComponent
     private translate: TranslateService,
     private toPrecision: ToPrecisionPipe,
     private khiopsLibraryService: KhiopsLibraryService,
-
   ) {
     super(selectableService, ngzone, configService);
     // Needed for scroll component
@@ -103,6 +102,7 @@ export class TargetDistributionGraphCanvasComponent
                   items.dataset.extra[items.dataIndex].extra.value,
                 );
               }
+              return undefined;
             },
             afterLabel: (items: any) => {
               if (items && items.dataset) {
@@ -114,6 +114,7 @@ export class TargetDistributionGraphCanvasComponent
                 }
                 return value;
               }
+              return undefined;
             },
           },
         },

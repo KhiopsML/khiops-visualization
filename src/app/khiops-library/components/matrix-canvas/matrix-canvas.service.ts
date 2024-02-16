@@ -507,7 +507,7 @@ export class MatrixCanvasService {
         // RIGHT
         selectedCellIndex = selectedCellIndex + xPartsLength;
       } else {
-        return;
+        return undefined;
       }
     } else {
       if (keyCode === 40) {
@@ -533,7 +533,7 @@ export class MatrixCanvasService {
           selectedCellIndex = selectedCellIndex + 1;
         }
       } else {
-        return;
+        return undefined;
       }
     }
     changeCell = matrixCellDatas[selectedCellIndex];

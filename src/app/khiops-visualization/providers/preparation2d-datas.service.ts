@@ -109,7 +109,7 @@ export class Preparation2dDatasService {
     return this.preparation2dDatas.selectedCell;
   }
 
-  computeDistributionIndexFromMatrixCellIndex(index: number) {
+  computeDistributionIndexFromMatrixCellIndex(index: number): number {
     // get distribution bar chart index from selected matrix cell index
     if (this.preparation2dDatas.matrixDatas) {
       let moduloOfCellIndex = 0;
@@ -119,6 +119,7 @@ export class Preparation2dDatasService {
       moduloOfCellIndex = Math.round(moduloOfCellIndex);
       return moduloOfCellIndex;
     }
+    return 0;
   }
 
   setSelectedVariable(object: any): Preparation2dVariableVO | undefined {
@@ -132,6 +133,7 @@ export class Preparation2dDatasService {
         return this.preparation2dDatas.selectedVariable;
       }
     }
+    return undefined;
   }
 
   /**

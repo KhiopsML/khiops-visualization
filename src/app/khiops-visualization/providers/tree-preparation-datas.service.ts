@@ -114,6 +114,7 @@ export class TreePreparationDatasService {
         return this.treePreparationDatas!.selectedVariable;
       }
     }
+    return undefined;
   }
 
   setSelectedFlattenTree(rank: string) {

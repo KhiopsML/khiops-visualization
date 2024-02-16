@@ -104,6 +104,7 @@ export class DistributionGraphCanvasComponent
                   );
                 }
               }
+              return undefined;
             },
             afterLabel: (items: any) => {
               if (items && items.dataset) {
@@ -125,6 +126,7 @@ export class DistributionGraphCanvasComponent
                   }
                 }
               }
+              return undefined;
             },
           },
         },

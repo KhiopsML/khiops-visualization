@@ -76,6 +76,7 @@ export class LevelDistributionGraphCanvasComponent
               if (items && items.dataset) {
                 return items.formattedValue;
               }
+              return undefined;
             },
           },
         },

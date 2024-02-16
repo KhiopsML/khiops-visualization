@@ -101,5 +101,6 @@ export class TreePreparationDatasVO {
       }
       return this.treeColorsMap;
     }
+    return undefined;
   }
 }

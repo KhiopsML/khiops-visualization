@@ -60,6 +60,7 @@ export class TargetVariableStatsCanvasComponent
               if (items && items.dataset) {
                 return items.dataset.label;
               }
+              return undefined;
             },
             beforeLabel: (items: any) => {
               if (items && items.dataset) {
@@ -69,6 +70,7 @@ export class TargetVariableStatsCanvasComponent
                   ) + '%'
                 );
               }
+              return undefined;
             },
             afterLabel: (items: any) => {
               if (items && items.dataset) {
@@ -76,6 +78,7 @@ export class TargetVariableStatsCanvasComponent
                   items.dataset.extra[0].extra.value,
                 );
               }
+              return undefined;
             },
           },
         },

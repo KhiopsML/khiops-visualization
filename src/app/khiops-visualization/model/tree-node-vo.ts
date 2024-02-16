@@ -107,6 +107,7 @@ export class TreeNodeVO {
    * 1 + (0.3*log2(0.3) + 0.2*log2(0.2) + 0.5*log2(0.5)) / log2(3)
    */
   getPurity(M: number): number | undefined {
+    let purity = undefined;
     if (this.isLeaf) {
       this.computeValuesProbs();
 
@@ -114,9 +115,8 @@ export class TreeNodeVO {
       for (let i = 0; i < this.targetValues.frequencies.length; i++) {
         pClassLog2 += this.valuesProbs[i] * Math.log2(this.valuesProbs[i]);
       }
-      this.purity = 1 + pClassLog2 / Math.log2(M);
-
-      return this.purity;
+      purity = 1 + pClassLog2 / Math.log2(M);
     }
+    return purity;
   }
 }

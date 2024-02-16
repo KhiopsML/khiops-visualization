@@ -102,6 +102,7 @@ export class PreparationDatasService {
         return this.preparationDatas[preparationSource].selectedVariable;
       }
     }
+    return undefined;
   }
 
   getSelectedVariable(preparationSource: string): PreparationVariableVO {
