@@ -40,8 +40,7 @@ ModuleRegistry.registerModules([ClientSideRowModelModule]);
   templateUrl: './ag-grid.component.html',
   styleUrls: ['./ag-grid.component.scss'],
 })
-export class AgGridComponent
-  extends SelectableComponent
+export class AgGridComponent extends SelectableComponent
   implements OnChanges, AfterViewInit, DoCheck, OnInit
 {
   @ViewChild('agGrid', {
@@ -95,7 +94,7 @@ export class AgGridComponent
 
   componentType = 'grid'; // needed to copy datas
   columnDefs: ColDef[] = [];
-  searchInput = '';
+  searchInput: string | null = '';
   rowData: any = [];
   context: {
     componentParent: AgGridComponent;
@@ -147,26 +146,25 @@ export class AgGridComponent
     this.keyboardNavigation = this.keyboardNavigation.bind(this);
 
     try {
+      const PREV_CELL_AG_GRID = localStorage.getItem(
+        this.AppConfig.GLOBAL.LS_ID + 'CELL_AG_GRID',
+      );
       this.cellsSizes =
-        JSON.parse(
-          localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + 'CELL_AG_GRID') ||
-            '',
-        ) || {};
+        (PREV_CELL_AG_GRID && JSON.parse(PREV_CELL_AG_GRID)) || {};
     } catch (e) {}
     try {
+      const PREV_COLUMNS_AG_GRID = localStorage.getItem(
+        this.AppConfig.GLOBAL.LS_ID + 'COLUMNS_AG_GRID',
+      );
       this.visibleColumns =
-        JSON.parse(
-          localStorage.getItem(
-            this.AppConfig.GLOBAL.LS_ID + 'COLUMNS_AG_GRID',
-          ) || '',
-        ) || {};
+        (PREV_COLUMNS_AG_GRID && JSON.parse(PREV_COLUMNS_AG_GRID)) || {};
     } catch (e) {}
     try {
+      const PREV_MODES_AG_GRID = localStorage.getItem(
+        this.AppConfig.GLOBAL.LS_ID + 'MODES_AG_GRID',
+      );
       this.gridModes =
-        JSON.parse(
-          localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + 'MODES_AG_GRID') ||
-            '',
-        ) || {}; // 'fitToSpace' or 'fitToContent'
+        (PREV_MODES_AG_GRID && JSON.parse(PREV_MODES_AG_GRID)) || {}; // 'fitToSpace' or 'fitToContent'
     } catch (e) {}
   }
 
@@ -585,7 +583,7 @@ export class AgGridComponent
 
   search() {
     // this.khiopsLibraryService.trackEvent('click', 'search');
-    this.agGrid.api.setQuickFilter(this.searchInput);
+    this.agGrid.api.setQuickFilter(this.searchInput || '');
     if (this.searchInput) {
       localStorage.setItem(
         this.AppConfig.GLOBAL.LS_ID +
@@ -754,14 +752,12 @@ export class AgGridComponent
   restoreState() {
     setTimeout(() => {
       if (this.id) {
-        const state =
-          JSON.parse(
-            localStorage.getItem(
-              this.AppConfig.GLOBAL.LS_ID +
-                'OPTIONS_AG_GRID_' +
-                this.id.toUpperCase(),
-            ) || '',
-          ) || {};
+        const PREV_STATE = localStorage.getItem(
+          this.AppConfig.GLOBAL.LS_ID +
+            'OPTIONS_AG_GRID_' +
+            this.id.toUpperCase(),
+        );
+        const state = (PREV_STATE && JSON.parse(PREV_STATE)) || {};
 
         // if (state.colState && this.gridOptions.columnApi) {
         // 	for (let i = 0; i < state.colState.length; i++) {
