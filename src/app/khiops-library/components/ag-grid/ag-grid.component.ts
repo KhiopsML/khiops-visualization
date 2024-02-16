@@ -47,7 +47,7 @@ export class AgGridComponent
   })
   agGrid: AgGridAngular;
 
-  AppConfig = this.khiopsLibraryService.getAppConfig().common;
+  AppConfig: any;
 
   @Input() suppressRowClickSelection = false;
   @Input() inputDatas: any[]; // Can be any types of datas
@@ -70,7 +70,7 @@ export class AgGridComponent
   @Input() rowHeight = 28;
   @Input() override watchResize = true;
   @Input() enablePrecision = true;
-  @Input() paginationSize = this.AppConfig.GLOBAL.PAGINATION_SIZE;
+  @Input() paginationSize: number | undefined;
 
   showHeader = false;
   hideFilterBadge = true;
@@ -132,6 +132,9 @@ export class AgGridComponent
     private translate: TranslateService,
   ) {
     super(selectableService, ngzone, configService);
+    this.AppConfig = this.khiopsLibraryService.getAppConfig().common;
+    this.paginationSize = this.AppConfig.GLOBAL.PAGINATION_SIZE;
+
     this.dataOptions.selected =
       localStorage.getItem(
         this.AppConfig.GLOBAL.LS_ID + 'AG_GRID_GRAPH_OPTION',

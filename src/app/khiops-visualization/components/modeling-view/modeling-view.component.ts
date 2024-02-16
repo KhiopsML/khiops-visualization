@@ -37,20 +37,14 @@ export class ModelingViewComponent extends SelectableTabComponent {
     static: false,
   })
   appVariableGraphDetails: VariableGraphDetailsComponent;
-
   @ViewChild('targetDistributionGraphCanvas', {
     static: false,
   })
   targetDistributionGraphCanvas: TargetDistributionGraphCanvasComponent;
-
-  preparationSource =
-    this.preparationDatasService.getAvailablePreparationReport();
-
+  preparationSource: string;
   appDatas: any;
   sizes: any;
-
   preparationVariable: any; // Complex, can be multiple types according to the preparationSource
-
   summaryDatas: InfosDatasI[];
   targetVariableStatsDatas: ChartDatasVO;
   trainedPredictorsSummaryDatas: InfosDatasI[];
@@ -84,6 +78,8 @@ export class ModelingViewComponent extends SelectableTabComponent {
     private treePreparationDatasService: TreePreparationDatasService,
   ) {
     super();
+    this.preparationSource =
+      this.preparationDatasService.getAvailablePreparationReport();
   }
 
   ngOnInit() {
