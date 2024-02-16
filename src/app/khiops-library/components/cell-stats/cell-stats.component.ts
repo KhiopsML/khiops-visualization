@@ -30,13 +30,13 @@ export class CellStatsComponent implements OnChanges {
             this.selectedCells.map((e) => e.displayedValue?.ef),
           ),
           I:
-            this.selectedCells[0].displayedValue.type === 'MUTUAL_INFO'
+            this.selectedCells[0].displayedValue?.type === 'MUTUAL_INFO'
               ? UtilsService.arraySum(
                   this.selectedCells.map((e) => e.displayedValue.value),
                 )
               : undefined,
           Total:
-            this.selectedCells[0].displayedValue.type === 'MUTUAL_INFO'
+            this.selectedCells[0].displayedValue?.type === 'MUTUAL_INFO'
               ? UtilsService.arraySum(
                   this.selectedCells.map((e) => e.displayedValue.extra),
                 )
