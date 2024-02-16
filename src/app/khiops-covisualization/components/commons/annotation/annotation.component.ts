@@ -49,7 +49,7 @@ export class AnnotationComponent
     if (changes.selectedNode && changes.selectedNode.currentValue) {
       this.value = changes.selectedNode.currentValue.annotation;
       this.title = this.translate.get('GLOBAL.ANNOTATION_OF', {
-        name: changes.selectedNode.currentValue.name,
+        name: changes.selectedNode.currentValue.shortDescription,
       });
     }
   }
