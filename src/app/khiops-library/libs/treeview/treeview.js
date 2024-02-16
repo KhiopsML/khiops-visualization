@@ -201,7 +201,7 @@
 						input.setAttribute('placeholder', node.innerHTML);
 
 						var iconAccept = document.createElement('mat-icon');
-						iconAccept.setAttribute('class', 'edit-icons mat-icon material-icons');
+						iconAccept.setAttribute('class', 'edit-icons valid-rename mat-icon material-icons');
 
 						iconAccept.textContent = 'check_circle_outline';
 						iconAccept.onclick = function (e) {
