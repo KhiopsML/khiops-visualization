@@ -7,24 +7,24 @@
   resolved "https://registry.yarnpkg.com/@aduh95/viz.js/-/viz.js-3.7.0.tgz#a20d86c5fc8f6abebdc39b96a4326e10375d77c0"
   integrity sha512-20Pk2Z98fbPLkECcrZSJszKos/OgtvJJR3NcbVfgCJ6EQjDNzW2P1BKqImOz3tJ952dvO2DWEhcLhQ1Wz1e9ng==
 
-"@ag-grid-community/angular@28.2.1":
-  version "28.2.1"
-  resolved "https://registry.yarnpkg.com/@ag-grid-community/angular/-/angular-28.2.1.tgz#4b8f085d38d13110a352874d0da99c138d0c0c11"
-  integrity sha512-IHS8HVZT0Z+2kQBRG7LIioa0fa3pH/f58dXmPqUjkBhAlbvmlMzsB0cZB09KKKKDkBHFfSk/r7JPEY510TeNmg==
+"@ag-grid-community/angular@29.3.5":
+  version "29.3.5"
+  resolved "https://registry.yarnpkg.com/@ag-grid-community/angular/-/angular-29.3.5.tgz#75c6f507baaf083a663303c220a842a238eb7fbd"
+  integrity sha512-XFUg21KxkPhfj4HwGBe6ZzTbpsT9IW7GxwibjW9xo0/244vHGP1S/qglex8GPbXRp5tDtRxSqyS13DnKiCI7dw==
   dependencies:
     tslib "^2.3.0"
 
-"@ag-grid-community/client-side-row-model@28.2.1":
-  version "28.2.1"
-  resolved "https://registry.yarnpkg.com/@ag-grid-community/client-side-row-model/-/client-side-row-model-28.2.1.tgz#faa74e225f2f27f38e6473c5e0d47514db4aac58"
-  integrity sha512-JLLNVNAtSbVjg/h0+JqNxbRGzHR9xl3YHO4kVt8Bu0UO1XQLfGLT8wkzqQTcEOiq0pEfFTee7/BGT3oHOQfUQg==
+"@ag-grid-community/client-side-row-model@29.3.5":
+  version "29.3.5"
+  resolved "https://registry.yarnpkg.com/@ag-grid-community/client-side-row-model/-/client-side-row-model-29.3.5.tgz#3895a778195bca17f86d0e7f90f80b207a283d8e"
+  integrity sha512-+uA28LTAummyYdZbEDys+cTECPn1Po1f6vX9QZOK9gpZdNzSpGjd3Vc1SKR/2brR6XMGlPeSRsX+FPZmG9uvHQ==
   dependencies:
-    "@ag-grid-community/core" "~28.2.1"
+    "@ag-grid-community/core" "~29.3.5"
 
-"@ag-grid-community/core@28.2.1", "@ag-grid-community/core@~28.2.1":
-  version "28.2.1"
-  resolved "https://registry.yarnpkg.com/@ag-grid-community/core/-/core-28.2.1.tgz#a74f5b724c89c0f69ef4af72964a274a25b93089"
-  integrity sha512-qGhqZhY8KbPlr3cJBVkNjGKu+cOyFc8IGvPcvlm0pjNC9cdxO/ct9Sa1Dg+k3ACCEroMEt1apBvnoOgurpvewQ==
+"@ag-grid-community/core@29.3.5", "@ag-grid-community/core@~29.3.5":
+  version "29.3.5"
+  resolved "https://registry.yarnpkg.com/@ag-grid-community/core/-/core-29.3.5.tgz#f6fd10f5a612290c4dfbc8a78adc2af587008c99"
+  integrity sha512-r86bOCscnKVtaYyKqlN2UCtfbjf4UcmxHfVuXzJ94iN8Jy3iiQVrbQnbNArnjR589Bt/1VR/m+SdAMsOLcdpag==
 
 "@ampproject/remapping@2.2.0", "@ampproject/remapping@^2.2.0":
   version "2.2.0"
