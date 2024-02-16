@@ -71,7 +71,7 @@ export function setupTranslateFactory(service: TranslateService) {
     KhiopsLibraryModule,
     FlexLayoutModule,
     FormsModule,
-    AgGridModule.withComponents([]),
+    AgGridModule,
     HttpClientModule,
     AngularSplitModule,
     TranslateModule.forChild(),

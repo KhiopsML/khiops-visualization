@@ -17,21 +17,23 @@ import { SelectableComponent } from '@khiops-library/components/selectable/selec
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { TranslateService } from '@ngstack/translate';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
-import {
-  Module,
-  GridOptions,
-  ClientSideRowModelModule,
-  RowNode,
-  ColDef,
-  ColumnResizedEvent,
-  Column,
-} from '@ag-grid-community/all-modules';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import _ from 'lodash';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { TYPES } from '@khiops-library/enum/types';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import {
+  Module,
+  ColDef,
+  GridOptions,
+  RowNode,
+  ColumnResizedEvent,
+  Column,
+} from '@ag-grid-community/core';
+import { ModuleRegistry } from '@ag-grid-community/core';
+import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
+ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
 @Component({
   selector: 'kl-ag-grid',
@@ -310,7 +312,7 @@ export class AgGridComponent
 
       if (this.agGrid) {
         if (!this.showHeader) {
-          this.agGrid.api.sizeColumnsToFit();
+          this.agGrid?.api?.sizeColumnsToFit();
         } else {
           this.resizeColumnsToFit();
         }
@@ -716,7 +718,7 @@ export class AgGridComponent
        */
       setTimeout(() => {
         if (!this.cellsSizes[this.id]) {
-          this.agGrid.api.sizeColumnsToFit();
+          this.agGrid?.api?.sizeColumnsToFit();
         }
       });
     }

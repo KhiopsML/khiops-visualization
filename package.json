@@ -46,9 +46,9 @@
     "singleQuote": true
   },
   "dependencies": {
-    "@ag-grid-community/all-modules": "27.3.0",
-    "@ag-grid-community/angular": "27.3.0",
-    "@ag-grid-community/core": "27.3.0",
+    "@ag-grid-community/angular": "28.2.1",
+    "@ag-grid-community/core": "28.2.1",
+    "@ag-grid-community/client-side-row-model": "28.2.1",
     "@angular/animations": "15.2.0",
     "@angular/cdk": "15.2.0",
     "@angular/common": "15.2.0",

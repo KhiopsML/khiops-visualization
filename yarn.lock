@@ -7,48 +7,24 @@
   resolved "https://registry.yarnpkg.com/@aduh95/viz.js/-/viz.js-3.7.0.tgz#a20d86c5fc8f6abebdc39b96a4326e10375d77c0"
   integrity sha512-20Pk2Z98fbPLkECcrZSJszKos/OgtvJJR3NcbVfgCJ6EQjDNzW2P1BKqImOz3tJ952dvO2DWEhcLhQ1Wz1e9ng==
 
-"@ag-grid-community/all-modules@27.3.0":
-  version "27.3.0"
-  resolved "https://registry.yarnpkg.com/@ag-grid-community/all-modules/-/all-modules-27.3.0.tgz#5f3883c7316112e2b7145b2b5987bc581980d900"
-  integrity sha512-yH5jH+sJ6niUR5N4MiyOYDUnldcjCRwpDeL82JyGh7/rsxACH026KcxEO+7Gk22CnSeMwUZidGorU2Dj/Na8rg==
+"@ag-grid-community/angular@28.2.1":
+  version "28.2.1"
+  resolved "https://registry.yarnpkg.com/@ag-grid-community/angular/-/angular-28.2.1.tgz#4b8f085d38d13110a352874d0da99c138d0c0c11"
+  integrity sha512-IHS8HVZT0Z+2kQBRG7LIioa0fa3pH/f58dXmPqUjkBhAlbvmlMzsB0cZB09KKKKDkBHFfSk/r7JPEY510TeNmg==
   dependencies:
-    "@ag-grid-community/client-side-row-model" "~27.3.0"
-    "@ag-grid-community/core" "~27.3.0"
-    "@ag-grid-community/csv-export" "~27.3.0"
-    "@ag-grid-community/infinite-row-model" "~27.3.0"
+    tslib "^2.3.0"
 
-"@ag-grid-community/angular@27.3.0":
-  version "27.3.0"
-  resolved "https://registry.yarnpkg.com/@ag-grid-community/angular/-/angular-27.3.0.tgz#a8e8003bda7cfe461b364e5310d96f773d355d34"
-  integrity sha512-ICXcWCVyiTlFQvO4qj3LQPGdElba7Y4Fvzlv9KQZUOW/qwD7LTu6hprBCXOCGOyediEv3HZvU+TgXBMswVxmaA==
+"@ag-grid-community/client-side-row-model@28.2.1":
+  version "28.2.1"
+  resolved "https://registry.yarnpkg.com/@ag-grid-community/client-side-row-model/-/client-side-row-model-28.2.1.tgz#faa74e225f2f27f38e6473c5e0d47514db4aac58"
+  integrity sha512-JLLNVNAtSbVjg/h0+JqNxbRGzHR9xl3YHO4kVt8Bu0UO1XQLfGLT8wkzqQTcEOiq0pEfFTee7/BGT3oHOQfUQg==
   dependencies:
-    tslib "^1.10.0"
+    "@ag-grid-community/core" "~28.2.1"
 
-"@ag-grid-community/client-side-row-model@~27.3.0":
-  version "27.3.0"
-  resolved "https://registry.yarnpkg.com/@ag-grid-community/client-side-row-model/-/client-side-row-model-27.3.0.tgz#5dec1f59d85e9682c46a3b695d31ecd7a4df5cbd"
-  integrity sha512-t6ggg/SvESsGEC75z62rD/zFeo2DZCKFxw5e0qKweHR106CjBUNMlnfXIIG81qOSXUWGnbbWlrijBbKbyt8aTA==
-  dependencies:
-    "@ag-grid-community/core" "~27.3.0"
-
-"@ag-grid-community/core@27.3.0", "@ag-grid-community/core@~27.3.0":
-  version "27.3.0"
-  resolved "https://registry.yarnpkg.com/@ag-grid-community/core/-/core-27.3.0.tgz#04599cff5c35d26b970153ec3db66b945f053e57"
-  integrity sha512-77/bE2KdFlFI/ywEP46aSspXtgBteY/OPQyzU/lWqYrG2wC6cLfPSUB60t9e0FiqElwM/Vdcjz0TAjRwhZOPkw==
-
-"@ag-grid-community/csv-export@~27.3.0":
-  version "27.3.0"
-  resolved "https://registry.yarnpkg.com/@ag-grid-community/csv-export/-/csv-export-27.3.0.tgz#6b2fc9090180aa00696b8f1aaf1f0b31f43088b0"
-  integrity sha512-7pR05jEqTdUPAoqEMHxXGh6j0KViGmqLa4uwKmriKzfZOvwlq6umjDmXvPFCRCWfswb9KOqS1iZlGhcWufKApQ==
-  dependencies:
-    "@ag-grid-community/core" "~27.3.0"
-
-"@ag-grid-community/infinite-row-model@~27.3.0":
-  version "27.3.0"
-  resolved "https://registry.yarnpkg.com/@ag-grid-community/infinite-row-model/-/infinite-row-model-27.3.0.tgz#055539af2ecfa999885e52c8fe089ae6da0ba1b3"
-  integrity sha512-hUWQ6YdRrNCDAvSn1bbxvnklIqPx8QGXMjmLVfR47+Gp1aoA1i9OxtA39SlzsZnRqDxZE5eKgwb5uy2+C4vKhA==
-  dependencies:
-    "@ag-grid-community/core" "~27.3.0"
+"@ag-grid-community/core@28.2.1", "@ag-grid-community/core@~28.2.1":
+  version "28.2.1"
+  resolved "https://registry.yarnpkg.com/@ag-grid-community/core/-/core-28.2.1.tgz#a74f5b724c89c0f69ef4af72964a274a25b93089"
+  integrity sha512-qGhqZhY8KbPlr3cJBVkNjGKu+cOyFc8IGvPcvlm0pjNC9cdxO/ct9Sa1Dg+k3ACCEroMEt1apBvnoOgurpvewQ==
 
 "@ampproject/remapping@2.2.0", "@ampproject/remapping@^2.2.0":
   version "2.2.0"
@@ -9329,7 +9305,7 @@ tslib@2.6.2:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.6.2.tgz#703ac29425e7b37cd6fd456e92404d46d1f3e4ae"
   integrity sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==
 
-tslib@^1.10.0, tslib@^1.9.0:
+tslib@^1.9.0:
   version "1.14.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==

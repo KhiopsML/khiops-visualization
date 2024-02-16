@@ -93,7 +93,7 @@ import EnTransaltion from '../../i18n/en.json';
     MatPaginatorModule,
     MatRippleModule,
     MatSliderModule,
-    AgGridModule.withComponents([]),
+    AgGridModule,
     FormsModule,
     MatButtonToggleModule,
     MatDialogModule,

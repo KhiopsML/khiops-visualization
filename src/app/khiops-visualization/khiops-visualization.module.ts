@@ -97,7 +97,7 @@ const providers = [
     BrowserModule,
     BrowserAnimationsModule,
     KhiopsLibraryModule,
-    AgGridModule.withComponents([]),
+    AgGridModule,
     FlexLayoutModule,
     FormsModule,
     HttpClientModule,
