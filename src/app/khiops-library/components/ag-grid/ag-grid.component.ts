@@ -27,9 +27,9 @@ import {
   Module,
   ColDef,
   GridOptions,
-  RowNode,
   ColumnResizedEvent,
   Column,
+  IRowNode,
 } from '@ag-grid-community/core';
 import { ModuleRegistry } from '@ag-grid-community/core';
 import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
@@ -90,12 +90,13 @@ export class AgGridComponent
 
   cellsSizes = {};
   visibleColumns = {};
+  gridMode: string = '';
   gridModes = {}; // 'fitToSpace' or 'fitToContent'
 
   componentType = 'grid'; // needed to copy datas
   columnDefs: ColDef[] = [];
   searchInput = '';
-  rowData = [];
+  rowData: any = [];
   context: {
     componentParent: AgGridComponent;
   } = {
@@ -111,7 +112,7 @@ export class AgGridComponent
   divWidth: number;
 
   // For evaluation view
-  dataOptions = {
+  dataOptions: any = {
     types: [TYPES.FREQUENCY, TYPES.COVERAGE],
     selected: undefined,
   };
@@ -148,19 +149,23 @@ export class AgGridComponent
     try {
       this.cellsSizes =
         JSON.parse(
-          localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + 'CELL_AG_GRID'),
+          localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + 'CELL_AG_GRID') ||
+            '',
         ) || {};
     } catch (e) {}
     try {
       this.visibleColumns =
         JSON.parse(
-          localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + 'COLUMNS_AG_GRID'),
+          localStorage.getItem(
+            this.AppConfig.GLOBAL.LS_ID + 'COLUMNS_AG_GRID',
+          ) || '',
         ) || {};
     } catch (e) {}
     try {
       this.gridModes =
         JSON.parse(
-          localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + 'MODES_AG_GRID'),
+          localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + 'MODES_AG_GRID') ||
+            '',
         ) || {}; // 'fitToSpace' or 'fitToContent'
     } catch (e) {}
   }
@@ -175,7 +180,7 @@ export class AgGridComponent
       this.gridMode === 'fitToSpace' /*&& width*/
     ) {
       setTimeout(() => {
-        this.agGrid.api.sizeColumnsToFit();
+        this.agGrid?.api?.sizeColumnsToFit();
       });
     }
   }
@@ -363,7 +368,7 @@ export class AgGridComponent
             // let pageToSelect = node.rowIndex / this.gridOptions.api.paginationGetPageSize();
             // pageToSelect = Math.ceil(pageToSelect) - 1; // -1 to begin at 0
             // this.gridOptions.api.paginationGoToPage(pageToSelect);
-            this.agGrid.api.ensureIndexVisible(node.rowIndex);
+            this.agGrid.api.ensureIndexVisible(node.rowIndex || 0);
           }
         });
       }
@@ -375,7 +380,7 @@ export class AgGridComponent
       if (this.agGrid && this.agGrid.api) {
         this.agGrid.api.forEachNode((node) => {
           if (nodeId === node.data['_id']) {
-            if (!node.isSelected()) {
+            if (!node.isSelected() && node.rowIndex) {
               node.setSelected(true);
               // Get the page of selected node
               if (this.gridOptions.api) {
@@ -457,8 +462,9 @@ export class AgGridComponent
       }
 
       if (
-        this.rowData.length === 0 ||
-        this.inputDatas.length > this.paginationSize
+        this.paginationSize &&
+        (this.rowData.length === 0 ||
+          this.inputDatas.length > this.paginationSize)
       ) {
         // in case of big grid (>100), recreate all for performance improvements
         // grid initialization
@@ -477,8 +483,8 @@ export class AgGridComponent
       } else {
         // grid has changed
         // remove current lines
-        this.agGrid.api.forEachNode((node: RowNode) => {
-          this.gridOptions.api.applyTransaction({
+        this.agGrid.api.forEachNode((node: IRowNode) => {
+          this.gridOptions?.api?.applyTransaction({
             remove: [node.data],
           });
         });
@@ -492,7 +498,7 @@ export class AgGridComponent
               currentRow[this.displayedColumns[j].field] =
                 currentData[this.displayedColumns[j].field];
             }
-            this.gridOptions.api.applyTransaction({
+            this.gridOptions?.api?.applyTransaction({
               add: [currentRow],
             });
           }
@@ -601,26 +607,30 @@ export class AgGridComponent
     if (selectedNodes && selectedNodes[0]) {
       const previousRowIndex = selectedNodes[0].rowIndex;
       let nextRowIndex;
-      switch (params.key) {
-        case this.KEY_DOWN:
-          nextRowIndex = previousRowIndex + 1;
-          break;
-        case this.KEY_UP:
-          nextRowIndex = previousRowIndex - 1;
-          break;
+      if (previousRowIndex) {
+        switch (params.key) {
+          case this.KEY_DOWN:
+            nextRowIndex = previousRowIndex + 1;
+            break;
+          case this.KEY_UP:
+            nextRowIndex = previousRowIndex - 1;
+            break;
+        }
       }
 
       // Block keyboard navigation at table ends
-      const pageSize = this.gridOptions.api.paginationGetPageSize();
-      const currentPage = this.gridOptions.api.paginationGetCurrentPage();
+      const pageSize = this.gridOptions?.api?.paginationGetPageSize();
+      const currentPage = this.gridOptions?.api?.paginationGetCurrentPage();
       if (
+        currentPage &&
+        pageSize &&
         currentPage * pageSize <= nextRowIndex &&
         nextRowIndex < (currentPage + 1) * pageSize
       ) {
         this.selectNodeFromIndex(nextRowIndex);
         // this.selectListItem.emit(this.agGrid.api.getSelectedNodes()[0].data);
         this.selectListItem.emit(
-          this.agGrid.api.getDisplayedRowAtIndex(nextRowIndex).data,
+          this.agGrid.api.getDisplayedRowAtIndex(nextRowIndex)?.data,
         );
       }
     }
@@ -683,7 +693,7 @@ export class AgGridComponent
 
     this.saveGridModes(this.gridMode);
     setTimeout(() => {
-      this.agGrid.api.sizeColumnsToFit();
+      this.agGrid?.api?.sizeColumnsToFit();
     });
 
     this.restoreState();
@@ -691,7 +701,7 @@ export class AgGridComponent
 
   fitToContent() {
     this.gridMode = 'fitToContent';
-    this.gridOptions.columnApi.autoSizeAllColumns(true);
+    this.gridOptions.columnApi?.autoSizeAllColumns(true);
     this.saveGridModes(this.gridMode);
 
     this.restoreState();
@@ -750,7 +760,7 @@ export class AgGridComponent
               this.AppConfig.GLOBAL.LS_ID +
                 'OPTIONS_AG_GRID_' +
                 this.id.toUpperCase(),
-            ),
+            ) || '',
           ) || {};
 
         // if (state.colState && this.gridOptions.columnApi) {
@@ -767,7 +777,7 @@ export class AgGridComponent
         // }
         if (state.sortState && this.gridOptions.columnApi) {
           // First reorder state according to displayed columns order
-          const sortedState = [];
+          const sortedState: any = [];
           for (let i = 0; i < this.displayedColumns.length; i++) {
             const currentState = state.sortState.find(
               (e) => e.colId === this.displayedColumns[i].headerName,
@@ -801,11 +811,12 @@ export class AgGridComponent
         // }
 
         // Restore search
-        this.searchInput = localStorage.getItem(
-          this.AppConfig.GLOBAL.LS_ID +
-            'OPTIONS_AG_GRID_SEARCH_' +
-            this.id.toUpperCase(),
-        );
+        this.searchInput =
+          localStorage.getItem(
+            this.AppConfig.GLOBAL.LS_ID +
+              'OPTIONS_AG_GRID_SEARCH_' +
+              this.id.toUpperCase(),
+          ) || '';
         if (this.searchInput) {
           this.showSearchForm();
           this.search();
