@@ -56,7 +56,7 @@ describe('Test Plan for Khiops Covisualization', () => {
           .type('renamed');
         cy.get('#tree_0').find('.valid-rename').dblclick();
 
-        // Check renamed name into all omponents
+        // Check renamed name into all components
         cy.get('#cluster-details-grid-0').contains('renamed');
         cy.get('#cluster-composition-0').contains('renamed');
         cy.get('#cluster-distribution-0').contains('renamed');
