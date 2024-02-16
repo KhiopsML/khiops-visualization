@@ -22,14 +22,17 @@ export class CheckboxCellComponent implements AgRendererComponent {
   afterGuiAttached(params?: IAfterGuiAttachedParams): void {}
 
   refresh(params: any): boolean {
-    params.data[this.params.colDef.field] = params.value;
-    this.params.context.componentParent.toggleGridCheckbox({
-      data: this.params.node.data,
-      field: this.params.colDef.field,
-      state: params.value,
-    });
+    if (this.params.colDef?.field) {
+      params.data[this.params.colDef.field] = params.value;
+      this.params.context.componentParent.toggleGridCheckbox({
+        data: this.params.node.data,
+        field: this.params.colDef.field,
+        state: params.value,
+      });
 
-    params.api.refreshCells(params);
+      params.api.refreshCells(params);
+    }
+
     return false;
   }
 }

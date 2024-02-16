@@ -46,25 +46,7 @@ export class UnfoldHierarchyComponent implements OnInit {
       ? '#ffffff'
       : '#000000';
   defaultMaxUnfoldHierarchy = 0;
-  hierarchyDisplayedColumns: GridColumnsI[] = [
-    {
-      headerName: 'Dimension',
-      field: 'name',
-    },
-    {
-      headerName: 'Number of Cluster',
-      field: 'currentHierarchyClusterCount',
-    },
-    {
-      headerName: 'Max Number of Cluster',
-      field: 'initialParts',
-    },
-    {
-      headerName: 'FoldUnfold',
-      field: 'hierarchyFold',
-      cellRendererFramework: CheckboxCellComponent,
-    },
-  ];
+  hierarchyDisplayedColumns: GridColumnsI[] = [];
   chartOptions = {
     elements: {
       point: {
@@ -110,6 +92,26 @@ export class UnfoldHierarchyComponent implements OnInit {
     private khiopsLibraryService: KhiopsLibraryService,
     private dialogRef: MatDialogRef<UnfoldHierarchyComponent>,
   ) {
+    this.hierarchyDisplayedColumns = [
+      {
+        headerName: 'Dimension',
+        field: 'name',
+      },
+      {
+        headerName: 'Number of Cluster',
+        field: 'currentHierarchyClusterCount',
+      },
+      {
+        headerName: 'Max Number of Cluster',
+        field: 'initialParts',
+      },
+      {
+        headerName: 'FoldUnfold',
+        field: 'hierarchyFold',
+        cellRendererFramework: CheckboxCellComponent,
+      },
+    ];
+
     this.treenodesService.initSavedUnfoldRank();
     this.hierarchyDatas = this.treenodesService.getHierarchyDatas();
     this.defaultMaxUnfoldHierarchy = this.hierarchyDatas.totalClusters;

@@ -45,11 +45,13 @@ export class ImportExtDatasService {
 
       // remove eof lines
       for (let i = 0; i < lines.length; i++) {
-        if (lines[i].length === 1) {
-          lines[i - 1][1] = lines[i - 1][1] + lines[i][0];
-          lines.splice(i, 1);
-          i--;
-        }
+        try {
+          if (lines[i].length === 1) {
+            lines[i - 1][1] = lines[i - 1][1] + lines[i][0];
+            lines.splice(i, 1);
+            i--;
+          }
+        } catch (e) {}
       }
 
       for (let i = 0; i < lines.length; i++) {
