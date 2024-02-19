@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { UtilsService } from '../../providers/utils.service';
 import { CellVO } from '../../model/cell-vo';
+import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 
 @Injectable({
   providedIn: 'root',
@@ -21,10 +22,10 @@ export class MatrixCanvasService {
   ];
 
   static computeMatrixValues(
-    graphMode,
-    inputDatas,
-    contextSelection,
-    selectedTargetIndex,
+    graphMode: MatrixModeI,
+    inputDatas: any,
+    contextSelection: any,
+    selectedTargetIndex: number,
   ) {
     let matrixFreqsValues;
     let matrixValues;

@@ -22,6 +22,7 @@ import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { MatrixRangeValuesI } from '@khiops-visualization/interfaces/matrix-range-values';
 import { VariableVO } from '@khiops-visualization/model/variable-vo';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
+import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 
 @Injectable({
   providedIn: 'root',
@@ -646,7 +647,7 @@ export class Preparation2dDatasService {
       const inputDatas = this.getMatrixCanvasDatas(variablesDatas[i]);
       if (inputDatas) {
         let matrixFreqsValues, matrixValues, matrixExtras;
-        let graphMode = {
+        let graphMode: MatrixModeI = {
           mode: 'MUTUAL_INFO_TARGET_WITH_CELL',
         };
         [matrixFreqsValues, matrixValues, matrixExtras] =

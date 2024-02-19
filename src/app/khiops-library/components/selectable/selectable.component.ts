@@ -20,7 +20,7 @@ export class SelectableComponent
   extends WatchResizeComponent
   implements OnDestroy, AfterViewInit
 {
-  @Input() override id: [any] = undefined;
+  @Input() override id: [any] | undefined = undefined;
   @Input() type: [any];
   selectedServiceChangeSub: Subscription;
 
