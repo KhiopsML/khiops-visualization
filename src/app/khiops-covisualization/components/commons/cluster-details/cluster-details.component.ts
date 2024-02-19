@@ -136,7 +136,7 @@ export class ClusterDetailsComponent implements OnInit, OnChanges {
           this.nodeToSelect = this.getFirstNodeLeaf(this.nodeToSelect);
         }
       }
-      this.nodeToSelect = _.cloneDeep(this.selectedNode);
+      this.selectedNode = _.cloneDeep(this.nodeToSelect);
     }
   }
 
