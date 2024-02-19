@@ -30,7 +30,7 @@ export function setupContextTests(datas, testsValues, fileName) {
       datas.coclusteringReport?.dimensionSummaries[index].type === 'Categorical'
     ) {
       testsValues.Context.push('Composition');
-      testsValues.Context.push('typicality');
+      testsValues.Context.push('Typicality');
       testsValues.Context.push('Size');
     }
   }

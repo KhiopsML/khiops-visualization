@@ -31,7 +31,7 @@ export function setupAxisTests(datas, testsValues, fileName) {
     datas.coclusteringReport?.dimensionSummaries[1].type === 'Categorical'
   ) {
     testsValues.Axis.push('Composition');
-    testsValues.Axis.push('typicality');
+    testsValues.Axis.push('Typicality');
     testsValues.Axis.push('Size');
   }
 
