@@ -14,6 +14,7 @@ import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { PreparationVariableVO } from '@khiops-visualization/model/preparation-variable-vo';
 import { Preparation2dVariableVO } from '@khiops-visualization/model/preparation2d-variable-vo';
 import { TreePreparationVariableVO } from '@khiops-visualization/model/tree-preparation-variable-vo';
+import { UtilsService } from '@khiops-library/providers/utils.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -127,7 +128,7 @@ export class ModelingDatasService {
         // Add columns of available objects (defined into ModelingPredictorVO)
         if (key !== '_id' && typicalData[key] !== undefined) {
           displayedColumns.push({
-            headerName: key,
+            headerName: UtilsService.capitalizeFirstLetter(key),
             field: key,
             tooltip: this.translate.get(
               'TOOLTIPS.MODELING.VARIABLES.' + key.toUpperCase(),

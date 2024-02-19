@@ -102,6 +102,10 @@ export class UtilsService {
     return (freqLineVals * freqColVal) / totalFreqs;
   }
 
+  static capitalizeFirstLetter(string: string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   static getFileNameFromPath(path) {
     let filename;
     filename = path.substring(path.lastIndexOf('/') + 1);
