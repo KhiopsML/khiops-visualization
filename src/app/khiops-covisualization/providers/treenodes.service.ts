@@ -203,6 +203,10 @@ export class TreenodesService {
     }
   }
 
+  initSelectedNodes() {
+    this.dimensionsDatas.selectedNodes = [];
+  }
+
   getSelectedNodes() {
     return this.dimensionsDatas.selectedNodes;
   }

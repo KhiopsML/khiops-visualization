@@ -262,6 +262,8 @@ export class UnfoldHierarchyComponent implements OnInit {
     UtilsService.setWaitingCursor();
 
     setTimeout(() => {
+      // init selected nodes to force refresh view #101
+      this.treenodesService.initSelectedNodes();
       this.treenodesService.setSelectedUnfoldHierarchy(
         this.currentUnfoldHierarchy,
       );
