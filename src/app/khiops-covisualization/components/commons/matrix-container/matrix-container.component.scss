@@ -1,46 +1,47 @@
 .matrix-container-comp {
-	background: var(--bgColor) !important;
+  background: var(--bgColor) !important;
 
-	.matrix-container-comp-wrapper {
-		.comp-header {
-			padding: 1.2em 0.4em 1.2em 0 !important;
-			margin: 0;
-			overflow: hidden;
+  .matrix-container-comp-wrapper {
+    .comp-header {
+      padding: 1.2em 0.4em 1.2em 0 !important;
+      margin: 0;
+      overflow: hidden;
+      overflow-x: auto;
 
-			button {
-				text-transform: none;
-			}
+      button {
+        text-transform: none;
+      }
 
-			button:first-child {
-				margin-left: 1rem;
-				margin-right: 0.5rem;
-			}
+      button:first-child {
+        margin-left: 1rem;
+        margin-right: 0.5rem;
+      }
 
-			mat-checkbox {
-				color: var(--primary-contrast);
-				background: var(--bgColor-20);
-				padding: 5px 5px 5px 8px;
-				border-radius: 4px;
-				margin: 4px 0;
-			}
+      mat-checkbox {
+        color: var(--primary-contrast);
+        background: var(--bgColor-20);
+        padding: 5px 5px 5px 8px;
+        border-radius: 4px;
+        margin: 4px 0;
+      }
 
-			.matrix-conditionalOnContext-checkbox {
-				margin: auto 0.5rem;
+      .matrix-conditionalOnContext-checkbox {
+        margin: auto 0.5rem;
 
-				::ng-deep .mat-checkbox-label {
-					font-size: 0.8rem;
-					max-width: 100px !important;
-					line-height: 13px !important;
-					white-space: pre-line !important;
-				}
-			}
+        ::ng-deep .mat-checkbox-label {
+          font-size: 0.8rem;
+          max-width: 100px !important;
+          line-height: 13px !important;
+          white-space: pre-line !important;
+        }
+      }
 
-			::ng-deep mat-button-toggle-group {
-				::ng-deep .mat-button-toggle-label-content {
-					line-height: 34px !important;
-					top: -2px !important;
-				}
-			}
-		}
-	}
+      ::ng-deep mat-button-toggle-group {
+        ::ng-deep .mat-button-toggle-label-content {
+          line-height: 34px !important;
+          top: -2px !important;
+        }
+      }
+    }
+  }
 }
