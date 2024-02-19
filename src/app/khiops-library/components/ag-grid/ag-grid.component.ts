@@ -40,7 +40,8 @@ ModuleRegistry.registerModules([ClientSideRowModelModule]);
   templateUrl: './ag-grid.component.html',
   styleUrls: ['./ag-grid.component.scss'],
 })
-export class AgGridComponent extends SelectableComponent
+export class AgGridComponent
+  extends SelectableComponent
   implements OnChanges, AfterViewInit, DoCheck, OnInit
 {
   @ViewChild('agGrid', {
@@ -378,7 +379,7 @@ export class AgGridComponent extends SelectableComponent
       if (this.agGrid && this.agGrid.api) {
         this.agGrid.api.forEachNode((node) => {
           if (nodeId === node.data['_id']) {
-            if (!node.isSelected() && node.rowIndex) {
+            if (!node.isSelected()) {
               node.setSelected(true);
               // Get the page of selected node
               if (this.gridOptions.api) {
