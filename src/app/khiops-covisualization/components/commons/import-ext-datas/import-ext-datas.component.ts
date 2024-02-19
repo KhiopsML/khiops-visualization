@@ -118,11 +118,11 @@ export class ImportExtDatasComponent implements OnInit {
 
     this.fieldsToImport.displayedColumns = [
       {
-        headerName: 'name',
+        headerName: 'Name',
         field: 'name',
       },
       {
-        headerName: 'import',
+        headerName: 'Import',
         field: 'import',
         cellRendererFramework: CheckboxCellComponent,
       },

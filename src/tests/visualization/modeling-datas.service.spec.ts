@@ -79,22 +79,22 @@ describe('Visualization', () => {
 
       const expectedRes = [
         {
-          headerName: 'name',
+          headerName: 'Name',
           field: 'name',
           tooltip: 'TOOLTIPS.MODELING.VARIABLES.NAME',
         },
         {
-          headerName: 'level',
+          headerName: 'Level',
           field: 'level',
           tooltip: 'TOOLTIPS.MODELING.VARIABLES.LEVEL',
         },
         {
-          headerName: 'weight',
+          headerName: 'Weight',
           field: 'weight',
           tooltip: 'TOOLTIPS.MODELING.VARIABLES.WEIGHT',
         },
         {
-          headerName: 'map',
+          headerName: 'Map',
           field: 'map',
           tooltip: 'TOOLTIPS.MODELING.VARIABLES.MAP',
         },

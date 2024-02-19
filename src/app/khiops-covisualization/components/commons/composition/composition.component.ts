@@ -48,12 +48,12 @@ export class CompositionComponent implements OnInit, OnDestroy {
   ) {
     this.compositionDisplayedColumns = [
       {
-        headerName: 'cluster',
+        headerName: 'Cluster',
         field: 'cluster',
         tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.CLUSTER'),
       },
       {
-        headerName: 'terminalCluster',
+        headerName: 'Terminal Cluster',
         show: false,
         field: 'terminalCluster',
         tooltip: this.translate.get(
@@ -61,23 +61,23 @@ export class CompositionComponent implements OnInit, OnDestroy {
         ),
       },
       {
-        headerName: 'rank',
+        headerName: 'Rank',
         show: false,
         field: 'rank',
         tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.RANK'),
       },
       {
-        headerName: 'typicality',
+        headerName: 'Typicality',
         field: 'typicality',
         tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.TYPICALITY'),
       },
       {
-        headerName: 'value',
+        headerName: 'Value',
         field: 'value',
         tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.VALUE'),
       },
       {
-        headerName: 'frequency',
+        headerName: 'Frequency',
         field: 'frequency',
         tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.FREQUENCY'),
       },

@@ -39,19 +39,19 @@ export class ImportExtDatasListComponent {
     this.importedDatas = {
       displayedColumns: [
         {
-          headerName: 'file name',
+          headerName: 'File name',
           field: 'filename',
         },
         {
-          headerName: 'join key',
+          headerName: 'Join key',
           field: 'joinKey',
         },
         {
-          headerName: 'field',
+          headerName: 'Field',
           field: 'field',
         },
         {
-          headerName: 'dimension',
+          headerName: 'Dimension',
           field: 'dimension',
         },
         {
