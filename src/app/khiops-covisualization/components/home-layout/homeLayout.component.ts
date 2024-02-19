@@ -57,9 +57,11 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
   @Input()
   public set appDatas(datas) {
     this.appService.setFileDatas(datas);
-    if (datas && !UtilsService.isEmpty(datas)) {
+    if (datas) {
       this.initializeHome(datas);
-      this.onFileLoaderDataChanged(datas);
+      if (!UtilsService.isEmpty(datas)) {
+        this.onFileLoaderDataChanged(datas);
+      }
     }
   }
   activeTab = AppConfig.covisualizationCommon.HOME.ACTIVE_TAB_INDEX;
@@ -226,31 +228,36 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     if (this.showProjectTab === undefined) {
       this.showProjectTab = true;
     }
-
-    if (!this.isCompatibleJson) {
-      this.snackBar.open(
-        this.translate.get('SNACKS.OPEN_FILE_ERROR'),
-        undefined,
-        {
-          duration: 4000,
-          panelClass: 'error',
-        },
-      );
-    } else {
-      this.snackBar.open(this.translate.get('SNACKS.DATAS_LOADED'), undefined, {
-        duration: 2000,
-        panelClass: 'success',
-      });
-    }
-    if (isCollidingJson) {
-      this.snackBar.open(
-        this.translate.get('SNACKS.COLLIDING_FILE'),
-        undefined,
-        {
-          duration: 10000,
-          panelClass: 'warning',
-        },
-      );
+    if (!UtilsService.isEmpty(datas)) {
+      if (!this.isCompatibleJson) {
+        this.snackBar.open(
+          this.translate.get('SNACKS.OPEN_FILE_ERROR'),
+          undefined,
+          {
+            duration: 4000,
+            panelClass: 'error',
+          },
+        );
+      } else {
+        this.snackBar.open(
+          this.translate.get('SNACKS.DATAS_LOADED'),
+          undefined,
+          {
+            duration: 2000,
+            panelClass: 'success',
+          },
+        );
+      }
+      if (isCollidingJson) {
+        this.snackBar.open(
+          this.translate.get('SNACKS.COLLIDING_FILE'),
+          undefined,
+          {
+            duration: 10000,
+            panelClass: 'warning',
+          },
+        );
+      }
     }
 
     // @ts-ignore

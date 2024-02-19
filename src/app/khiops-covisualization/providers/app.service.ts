@@ -12,8 +12,8 @@ import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 })
 export class AppService {
   splitSizes: any;
-  appDatas: any;
-  initialDatas: any;
+  appDatas: any = undefined;
+  initialDatas: any = undefined;
   viewsLayout: ViewLayoutVO;
   activeTabIndex = 0;
   viewsLayoutChanged: EventEmitter<any> = new EventEmitter();

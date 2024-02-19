@@ -164,25 +164,27 @@ export class DimensionsDatasService {
     const appDatas = this.appService.getDatas().datas;
     this.dimensionsDatas.dimensions = [];
 
-    this.dimensionsDatas.cellPartIndexes =
-      appDatas.coclusteringReport.cellPartIndexes;
+    if (appDatas) {
+      this.dimensionsDatas.cellPartIndexes =
+        appDatas?.coclusteringReport?.cellPartIndexes;
 
-    // Get dimension summaries
-    if (
-      appDatas.coclusteringReport &&
-      appDatas.coclusteringReport.dimensionSummaries
-    ) {
-      const l = appDatas.coclusteringReport.dimensionSummaries.length;
-      for (let i = 0; i < l; i++) {
-        const dimension = new DimensionVO(
-          appDatas.coclusteringReport.dimensionSummaries[i],
-          i,
-        );
-        const dimensionPartition =
-          appDatas.coclusteringReport.dimensionPartitions[i];
-        // Set  dimesnion partitions from intervals or valueGroup
-        dimension.setPartition(dimensionPartition);
-        this.dimensionsDatas.dimensions.push(dimension);
+      // Get dimension summaries
+      if (
+        appDatas.coclusteringReport &&
+        appDatas.coclusteringReport.dimensionSummaries
+      ) {
+        const l = appDatas.coclusteringReport.dimensionSummaries.length;
+        for (let i = 0; i < l; i++) {
+          const dimension = new DimensionVO(
+            appDatas.coclusteringReport.dimensionSummaries[i],
+            i,
+          );
+          const dimensionPartition =
+            appDatas.coclusteringReport.dimensionPartitions[i];
+          // Set  dimesnion partitions from intervals or valueGroup
+          dimension.setPartition(dimensionPartition);
+          this.dimensionsDatas.dimensions.push(dimension);
+        }
       }
     }
 
@@ -253,7 +255,8 @@ export class DimensionsDatasService {
       ];
 
       // Reverse indexes of cellPartIndexes when selection change to update matrix combinations
-      const cellPartIndexesLength = this.dimensionsDatas.cellPartIndexes.length;
+      const cellPartIndexesLength =
+        this.dimensionsDatas?.cellPartIndexes?.length;
       for (let i = 0; i < cellPartIndexesLength; i++) {
         [
           this.dimensionsDatas.cellPartIndexes[i][currentIndex],
