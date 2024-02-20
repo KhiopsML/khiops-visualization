@@ -29,7 +29,6 @@ import {
   GridOptions,
   ColumnResizedEvent,
   Column,
-  IRowNode,
 } from '@ag-grid-community/core';
 import { ModuleRegistry } from '@ag-grid-community/core';
 import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
@@ -484,7 +483,7 @@ export class AgGridComponent
       } else {
         // grid has changed
         // remove current lines
-        this.agGrid.api.forEachNode((node: IRowNode) => {
+        this.agGrid.api.forEachNode((node) => {
           this.gridOptions?.api?.applyTransaction({
             remove: [node.data],
           });
