@@ -1,5 +1,6 @@
 import '../support/commands';
 import '../utils/utils';
+import { initLS } from 'cypress/setups/init-ls';
 
 describe('Test Plan for Khiops Covisualization', () => {
   const files = ['1-Adult2varsEducationOccupation.khcj'];
@@ -19,6 +20,9 @@ describe('Test Plan for Khiops Covisualization', () => {
         defaultCommandTimeout: 10000,
       },
       () => {
+        // Initialize ls with all views enabled
+        initLS();
+
         //@ts-ignore
         cy.initViews();
 

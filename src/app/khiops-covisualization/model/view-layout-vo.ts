@@ -48,7 +48,10 @@ export class ViewLayoutVO {
     this.isCoocurenceChecked = lsValues.isCoocurenceChecked;
     for (let i = 0; i < this.dimensionsViewsLayoutsVO.length; i++) {
       const prevValue = lsValues.dimensionsViewsLayoutsVO[i];
-      if (prevValue?.name === this.dimensionsViewsLayoutsVO[i].name) {
+      if (
+        !prevValue.name || // Alow init for cypress tests
+        prevValue?.name === this.dimensionsViewsLayoutsVO[i].name
+      ) {
         this.dimensionsViewsLayoutsVO[i] = Object.assign(
           this.dimensionsViewsLayoutsVO[i],
           prevValue,
