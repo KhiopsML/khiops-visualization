@@ -1,47 +1,50 @@
 #graph-header-comp {
-	max-height: 60px;
-	margin-bottom: 1em !important;
-	overflow: hidden;
-	padding-right: 0.3rem;
-	h1 {
-		margin-top: auto !important;
-		margin-bottom: auto !important;
+  max-height: 60px;
+  margin-bottom: 1em !important;
+  overflow-y: hidden;
+  overflow-x: auto;
+  padding-right: 0.3rem;
 
-		span {
-			line-height: 1em;
-		}
+  h1 {
+    margin-top: auto !important;
+    margin-bottom: auto !important;
 
-		em {
-			font-size: 0.8em;
-		}
-	}
+    span {
+      line-height: 0.95em;
+      min-width: 100px;
+    }
 
-	.limit-warning {
-		color: #fb473a;
-		font-size: 0.9em;
-		padding-top: 6px;
+    em {
+      font-size: 0.8em;
+    }
+  }
 
-		mat-icon {
-			font-size: 1.6em;
-		}
-	}
+  .limit-warning {
+    color: #fb473a;
+    font-size: 0.9em;
+    padding-top: 6px;
 
-	#graph-header-tools {
-		margin-right: 4px;
-		height: 100%;
-		padding: 3px 8px;
-		border-radius: 5px;
+    mat-icon {
+      font-size: 1.6em;
+    }
+  }
 
-		h2 {
-			font-size: 0.8em;
-			margin: 0;
-		}
+  #graph-header-tools {
+    margin-right: 4px;
+    height: 100%;
+    padding: 3px 8px;
+    border-radius: 5px;
 
-		.mat-slider-horizontal {
-			min-width: 88px !important;
-			height: 28px !important;
-			padding: 0 !important;
-			margin-top: -17px;
-		}
-	}
+    h2 {
+      font-size: 0.8em;
+      margin: 0;
+    }
+
+    .mat-slider-horizontal {
+      min-width: 88px !important;
+      height: 28px !important;
+      padding: 0 !important;
+      margin-top: -17px;
+    }
+  }
 }
