@@ -143,7 +143,6 @@ export class AgGridComponent
       ) || this.dataOptions.types[0];
 
     this.title = this.translate.get('GLOBAL.VARIABLES') || this.title;
-    this.keyboardNavigation = this.keyboardNavigation.bind(this);
 
     try {
       const PREV_CELL_AG_GRID = localStorage.getItem(
@@ -602,7 +601,7 @@ export class AgGridComponent
     }
   }
 
-  keyboardNavigation(params) {
+  keyboardNavigation = (params) => {
     const selectedNodes = this.agGrid.api.getSelectedNodes();
     if (selectedNodes && selectedNodes[0]) {
       const previousRowIndex = selectedNodes[0].rowIndex;
@@ -619,11 +618,11 @@ export class AgGridComponent
       }
 
       // Block keyboard navigation at table ends
-      const pageSize = this.gridOptions?.api?.paginationGetPageSize();
-      const currentPage = this.gridOptions?.api?.paginationGetCurrentPage();
+      const pageSize: number =
+        this.gridOptions?.api?.paginationGetPageSize() || 0;
+      const currentPage: number =
+        this.gridOptions?.api?.paginationGetCurrentPage() || 0;
       if (
-        currentPage &&
-        pageSize &&
         currentPage * pageSize <= nextRowIndex &&
         nextRowIndex < (currentPage + 1) * pageSize
       ) {
@@ -634,7 +633,7 @@ export class AgGridComponent
         );
       }
     }
-  }
+  };
 
   onColumnResized(e: ColumnResizedEvent) {
     // Do not check uiColumnDragged to init column sizes at start
