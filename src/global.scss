@@ -882,7 +882,7 @@ canvas:focus {
 }
 
 .mat-badge-content {
-	border: 3px solid white !important;
+	border: 3px solid var(--bgColor) !important;
 	width: 10px !important;
 	height: 10px !important;
 	line-height: 12px !important;
