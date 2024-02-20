@@ -139,6 +139,8 @@ export class CompositionComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.treeSelectedNodeChangedSub.unsubscribe();
     this.importedDatasChangedSub.unsubscribe();
+    this.selectedComposition = undefined;
+    this.selectedCompositionChanged.emit(this.selectedComposition);
   }
 
   onDoubleClickListItem(item: TreeNodeVO) {
@@ -149,10 +151,10 @@ export class CompositionComponent implements OnInit, OnDestroy {
     );
   }
 
-  onSelectRowChanged(item: TreeNodeVO) {
+  onSelectRowChanged(item: CompositionVO) {
     // find composition in local to get external datas
     this.selectedComposition = this.compositionValues.find(
-      (e) => e.cluster === item.cluster,
+      (e) => e.value === item.value,
     );
     this.selectedCompositionChanged.emit(this.selectedComposition);
   }

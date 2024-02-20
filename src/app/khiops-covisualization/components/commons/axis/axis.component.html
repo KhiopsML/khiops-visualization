@@ -79,16 +79,10 @@
       *ngIf="axisLayout.isExternalDataChecked"
     >
       <app-external-datas
-        [inputValue]="
-          dimensionsDatas.selectedNodes[position] &&
-          dimensionsDatas.selectedNodes[position].name
-        "
         [attr.id]="'external-datas-' + position"
         [position]="position"
-        [externalData]="
-          dimensionsDatas.selectedNodes[position] &&
-          dimensionsDatas.selectedNodes[position].externalData
-        "
+        [selectedComposition]="selectedComposition"
+        [externalData]="dimensionsDatas.selectedNodes[position]?.externalData"
       >
       </app-external-datas>
     </as-split-area>

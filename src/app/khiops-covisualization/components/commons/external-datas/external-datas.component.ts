@@ -1,10 +1,5 @@
-import {
-  Component,
-  OnInit,
-  NgZone,
-  Input,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, OnInit, NgZone, Input } from '@angular/core';
+import { CompositionVO } from '@khiops-covisualization/model/composition-vo';
 
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
@@ -14,16 +9,19 @@ import { ConfigService } from '@khiops-library/providers/config.service';
   selector: 'app-external-datas',
   templateUrl: './external-datas.component.html',
   styleUrls: ['./external-datas.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExternalDatasComponent
   extends SelectableComponent
   implements OnInit
 {
-  @Input() inputValue: string;
   @Input() position: number;
-  @Input() externalData: any;
+  @Input() externalData: any[];
+  @Input() selectedComposition: CompositionVO;
+
   override id: any = undefined;
+
+  currentExternalDatasTitle: string = '';
+  currentExternalDatas: any[] = [];
 
   componentType = 'external-datas'; // needed to copy datas
 
@@ -37,5 +35,23 @@ export class ExternalDatasComponent
 
   ngOnInit() {
     this.id = 'external-datas-' + this.position;
+  }
+
+  ngOnChanges() {
+    this.currentExternalDatas = [];
+    if (this.externalData) {
+      if (this.selectedComposition) {
+        if (this.externalData[this.selectedComposition.value]) {
+          this.currentExternalDatas.push(
+            this.externalData[this.selectedComposition.value],
+          );
+          this.currentExternalDatasTitle = this.selectedComposition.value;
+        }
+      } else {
+        // get first item if no composition selected
+        this.currentExternalDatas = [Object.values(this.externalData)[0]];
+        this.currentExternalDatasTitle = Object.keys(this.externalData)[0];
+      }
+    }
   }
 }

@@ -11,6 +11,7 @@ export class TreeNodeVO {
   name: string;
   cluster: string;
   bounds: string;
+  valueGroup: string[] | undefined = []; // in case of categorical
 
   shortDescription: string;
   parentCluster: string;
@@ -33,7 +34,7 @@ export class TreeNodeVO {
   isParentCluster = false;
   isUnfoldedByDefault = false;
 
-  externalData: string;
+  externalData: any = undefined;
 
   clusterCompositionSize: number | undefined;
 
@@ -48,6 +49,7 @@ export class TreeNodeVO {
     currentNodesNames?,
     currentAnnotations?,
     extData?,
+    valueGroup?: string[] | undefined,
   ) {
     // Generate id for tree node plugin
     this.id = id;
@@ -82,8 +84,18 @@ export class TreeNodeVO {
       this.annotation = (object && object.annotation) || '';
     }
 
-    this.externalData =
-      (extData && extData[this.name.slice(1, -1)]) || undefined;
+    this.valueGroup = valueGroup;
+    if (this.valueGroup && extData) {
+      for (let index = 0; index < this.valueGroup?.values.length; index++) {
+        const element = this.valueGroup.values[index];
+        if (extData[element]) {
+          if (!this.externalData) {
+            this.externalData = {};
+          }
+          this.externalData[element] = extData[element];
+        }
+      }
+    }
     this.parentCluster = (object && object.parentCluster) || '';
 
     this.children = (object && object.children) || [];

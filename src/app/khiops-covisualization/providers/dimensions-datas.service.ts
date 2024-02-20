@@ -318,6 +318,7 @@ export class DimensionsDatasService {
             }
             const currentDimensionNodesToCollapse =
               (collapsedNodes && collapsedNodes[dimension.name]) || [];
+
             const currentObj: TreeNodeVO = new TreeNodeVO(
               index,
               dimensionHierarchy.clusters[j],
@@ -329,6 +330,9 @@ export class DimensionsDatasService {
               currentNodesNames,
               currentAnnotations,
               externalDatas,
+              dimension.valueGroups?.find(
+                (e) => e.cluster === dimensionHierarchy.clusters[j].cluster,
+              ),
             );
             this.dimensionsDatas.dimensionsClusters[i].push(currentObj);
 
@@ -388,6 +392,9 @@ export class DimensionsDatasService {
               currentNodesNames,
               currentAnnotations,
               externalDatas,
+              dimension.valueGroups?.find(
+                (e) => e.cluster === dimensionHierarchy.clusters[j].cluster,
+              ),
             );
             this.dimensionsDatas.currentDimensionsClusters[i].push(currentObj);
 
