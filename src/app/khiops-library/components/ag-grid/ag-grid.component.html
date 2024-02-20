@@ -15,9 +15,8 @@
       <h1
         fxLayoutAlign="start center"
         fxLayout="row"
-        *ngIf="displayCount && !isSmallDiv"
+        *ngIf="displayCount"
         fxLayoutAlign="start center"
-        [ngClass]="{ 'small-title': smallTitle === true }"
         title="{{ titleTooltip }}"
       >
         {{ inputDatas.length }} {{ title }}
@@ -25,9 +24,8 @@
       <h1
         fxLayoutAlign="start center"
         fxLayout="row"
-        *ngIf="!displayCount && !isSmallDiv && title"
+        *ngIf="!displayCount"
         fxLayoutAlign="start center"
-        [ngClass]="{ 'small-title': smallTitle === true }"
         title="{{ titleTooltip }}"
       >
         {{ title }}
