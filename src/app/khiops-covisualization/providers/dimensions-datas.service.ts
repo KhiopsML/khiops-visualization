@@ -109,7 +109,7 @@ export class DimensionsDatasService {
   }
 
   getDimensionsToSave(): any {
-    const selectedDimensions = [];
+    const selectedDimensions: { name: string }[] = [];
     const dimensions = this.getSelectedDimensions();
     if (dimensions) {
       for (let i = 0; i < dimensions.length; i++) {
@@ -426,20 +426,20 @@ export class DimensionsDatasService {
     this.dimensionsDatas.allMatrixDatas = {};
     this.dimensionsDatas.allMatrixCellDatas = {};
 
-    const xDimension = this.dimensionsDatas.selectedDimensions[0];
-    const yDimension = this.dimensionsDatas.selectedDimensions[1];
-    const zDimension = [];
+    const xDimension: DimensionVO = this.dimensionsDatas.selectedDimensions[0];
+    const yDimension: DimensionVO = this.dimensionsDatas.selectedDimensions[1];
+    const zDimension: DimensionVO[] = [];
     for (let i = 2; i < this.dimensionsDatas.selectedDimensions.length; i++) {
       zDimension.push(this.dimensionsDatas.selectedDimensions[i]);
     }
 
-    const zType = [];
+    const zType: string[] = [];
     for (let i = 2; i < this.dimensionsDatas.selectedDimensions.length; i++) {
       zType.push(this.dimensionsDatas.selectedDimensions[i].type);
     }
 
     // context is an array of array (may have multiple contexts)
-    const zDimensionClusters = [];
+    const zDimensionClusters: TreeNodeVO[][] = [];
     for (let i = 2; i < this.dimensionsDatas.dimensionsClusters.length; i++) {
       zDimensionClusters.push(this.dimensionsDatas.dimensionsClusters[i]);
     }

@@ -12,7 +12,7 @@ export class DimensionsDatasVO {
   dimensions: DimensionVO[] = [];
   contextSelection: number[][] = [[]];
   contextDimensions: DimensionVO[] = [];
-  selectedDimensions: DimensionVO[] | undefined = undefined;
+  selectedDimensions: DimensionVO[] = [];
   contextDimensionCount: number = 0;
   hierarchyDatas: HierarchyDatasVO | undefined = undefined;
   dimensionsTrees: TreeNodeVO[][] = [];
