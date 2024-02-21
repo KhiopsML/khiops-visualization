@@ -144,7 +144,7 @@ export class PreparationDatasService {
     return summaryVO.displayDatas;
   }
 
-  getInformationsDatas(preparationSource: string): InfosDatasI[] {
+  getInformationsDatas(preparationSource: string): InfosDatasI[] | undefined {
     const appDatas = this.appService.getDatas().datas;
     const informationsDatas = new InformationsVO(
       appDatas[preparationSource].summary,

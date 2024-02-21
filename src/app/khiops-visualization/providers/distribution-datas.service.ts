@@ -56,7 +56,9 @@ export class DistributionDatasService {
     this.distributionDatas.treeNodeTargetDistributionDisplayedValues = values;
   }
 
-  getTreeNodeTargetDistributionDisplayedValues(): ChartToggleValuesI[] {
+  getTreeNodeTargetDistributionDisplayedValues():
+    | ChartToggleValuesI[]
+    | undefined {
     return this.distributionDatas.treeNodeTargetDistributionDisplayedValues;
   }
 
@@ -64,7 +66,7 @@ export class DistributionDatasService {
     this.distributionDatas.treeHyperDisplayedValues = values;
   }
 
-  getTreeHyperDisplayedValues(): ChartToggleValuesI[] {
+  getTreeHyperDisplayedValues(): ChartToggleValuesI[] | undefined {
     return this.distributionDatas.treeHyperDisplayedValues;
   }
 
@@ -154,7 +156,7 @@ export class DistributionDatasService {
     ) {
       const allTargetValues: string[] =
         appDatas.treePreparationReport.summary.targetValues.values;
-      const fullTarget = [];
+      const fullTarget: any[] = [];
       // Update currentDatas and fill empty values with 0
       for (let i = 0; i < allTargetValues.length; i++) {
         const currentTargetIndex = selectedNode.targetValues.values.indexOf(
@@ -201,10 +203,10 @@ export class DistributionDatasService {
     currentDatas: number[][],
     allDatas: number[][],
     currentXAxis: string[] | number[] | string[][] | number[][],
-    displayedValues: ChartToggleValuesI[],
+    displayedValues: ChartToggleValuesI[] | undefined,
     type: string,
     selectedVariableType: string,
-  ): [ChartDatasVO, ChartToggleValuesI[]] {
+  ): [ChartDatasVO, ChartToggleValuesI[] | undefined] {
     const targetDistributionGraphDatas = new ChartDatasVO();
 
     let dimensionLength = 0;
