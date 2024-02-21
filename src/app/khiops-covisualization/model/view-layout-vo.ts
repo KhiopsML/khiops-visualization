@@ -49,8 +49,9 @@ export class ViewLayoutVO {
     for (let i = 0; i < this.dimensionsViewsLayoutsVO.length; i++) {
       const prevValue = lsValues.dimensionsViewsLayoutsVO[i];
       if (
-        !prevValue.name || // Alow init for cypress tests
-        prevValue?.name === this.dimensionsViewsLayoutsVO[i].name
+        prevValue &&
+        (!prevValue.name || // Alow init for cypress tests
+          prevValue?.name === this.dimensionsViewsLayoutsVO[i].name)
       ) {
         this.dimensionsViewsLayoutsVO[i] = Object.assign(
           this.dimensionsViewsLayoutsVO[i],
