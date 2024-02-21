@@ -119,7 +119,10 @@ export class TreeSelectComponent
     this.tree.on('init', (e) => {
       if (!selectedNode) {
         //  init selected node 0 and propagate event
-        this.tree.selectNode(0, true);
+        // Here get the first available visible node (if tree is collapsed)
+        const lastVisibleNode: TreeNodeVO =
+          this.treenodesService.getLastVisibleNode(this.dimensionsTree);
+        this.tree.selectNode(lastVisibleNode.id || 0, true);
       } else {
         // Select previous nodes if unfold hierarchy changed or if hierarchy has been saved
         // Find the node tree id into current tree

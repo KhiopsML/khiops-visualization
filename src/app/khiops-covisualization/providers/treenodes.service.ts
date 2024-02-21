@@ -189,7 +189,17 @@ export class TreenodesService {
     }
   }
 
-  getFirstVisibleNode(nodes, nodeVO: TreeNodeVO, lastVisibleNode) {
+  getLastVisibleNode(nodes: TreeNodeVO[]) {
+    if (nodes[0].isLeaf) {
+      return nodes[0];
+    } else if (!nodes[0].isCollapsed) {
+      return this.getLastVisibleNode(nodes[0].children);
+    } else {
+      return nodes[0];
+    }
+  }
+
+  getFirstVisibleNode(nodes, nodeVO: TreeNodeVO, lastVisibleNode?) {
     const parentNode: TreeNodeVO = nodes.find(
       (e) => e.name === nodeVO?.parentCluster,
     );
