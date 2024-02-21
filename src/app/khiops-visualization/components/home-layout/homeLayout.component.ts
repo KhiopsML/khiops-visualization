@@ -99,7 +99,9 @@ export class HomeLayoutComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   sizeChange() {
-    this.isLargeScreen = window.innerWidth > 1400; // TODO put it into conf
+    this.isLargeScreen =
+      window.innerWidth >
+      AppConfig.visualizationCommon.GLOBAL.SMALL_SCREEN_LIMIT;
   }
 
   onSelectedTabChanged(e) {
