@@ -5,7 +5,7 @@ export class ModelingPredictorVO {
   name: string;
   variables: number;
 
-  constructor(object) {
+  constructor(object: any) {
     this.rank = object?.rank || '';
     this.type = object?.type || '';
     this.family = object?.family || '';

@@ -226,7 +226,7 @@ export class TreePreparationDatasService {
     return summaryVO.displayDatas;
   }
 
-  getInformationsDatas(): InfosDatasI[] {
+  getInformationsDatas(): InfosDatasI[] | undefined {
     const appDatas = this.appService.getDatas().datas;
     const informationsDatas = new InformationsVO(
       appDatas.treePreparationReport.summary,
@@ -663,32 +663,34 @@ export class TreePreparationDatasService {
         rules = this.getRecursiveNodeDatasRules(nodeHierarchy[0], rules);
       }
 
-      // construct the grid
-      for (let i = 0; i < rules.length; i++) {
-        // Find index of the current node to get correct partition info
-        let currentChildrenId = rules[i].children[0].nodeId;
-        let partitionIndex = rules[i].childNodes.findIndex(
-          (e: TreeNodeVO) => e.nodeId === currentChildrenId,
-        );
-        let partition: any[] = rules[i].partition[partitionIndex];
+      if (rules) {
+        // construct the grid
+        for (let i = 0; i < rules.length; i++) {
+          // Find index of the current node to get correct partition info
+          let currentChildrenId = rules[i].children[0].nodeId;
+          let partitionIndex = rules[i].childNodes.findIndex(
+            (e: TreeNodeVO) => e.nodeId === currentChildrenId,
+          );
+          let partition: any[] = rules[i].partition[partitionIndex];
 
-        // Limit partition to 10 first elements
-        let displayedPartition: string;
-        if (partition.length > 10) {
-          displayedPartition = partition.slice(0, 10).join(', ') + ' ...';
-        } else {
-          displayedPartition = partition.join(', ');
+          // Limit partition to 10 first elements
+          let displayedPartition: string;
+          if (partition.length > 10) {
+            displayedPartition = partition.slice(0, 10).join(', ') + ' ...';
+          } else {
+            displayedPartition = partition.join(', ');
+          }
+
+          // Add data row
+          const rowData: any = {
+            _id: rules[i].nodeId,
+            variable: rules[i].variable,
+            type: rules[i].type,
+            partition: '[' + displayedPartition + ']',
+          };
+
+          treeLeafRules.values.push(rowData);
         }
-
-        // Add data row
-        const rowData: any = {
-          _id: rules[i].nodeId,
-          variable: rules[i].variable,
-          type: rules[i].type,
-          partition: '[' + displayedPartition + ']',
-        };
-
-        treeLeafRules.values.push(rowData);
       }
     }
 

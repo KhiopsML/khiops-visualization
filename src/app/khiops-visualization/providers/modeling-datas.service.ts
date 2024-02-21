@@ -71,7 +71,8 @@ export class ModelingDatasService {
   getSelectedVariable():
     | Preparation2dVariableVO
     | PreparationVariableVO
-    | TreePreparationVariableVO {
+    | TreePreparationVariableVO
+    | undefined {
     return this.modelingDatas.selectedVariable;
   }
 
@@ -83,17 +84,19 @@ export class ModelingDatasService {
       appDatas.modelingReport.trainedPredictorsDetails
     ) {
       const variables = appDatas.modelingReport.trainedPredictorsDetails;
-      const variable =
-        variables[Object.keys(variables)[0]].selectedVariables[0];
-      this.setSelectedVariable(this.getVariableFromName(variable.name));
+      const key = Object.keys(variables)[0];
+      if (key) {
+        const variable = variables[key].selectedVariables[0];
+        this.setSelectedVariable(this.getVariableFromName(variable.name));
 
-      // Also set the preparation selected variable if json is incomplete
-      const preparationSource =
-        this.preparationDatasService.getAvailablePreparationReport();
-      this.preparationDatasService.setSelectedVariable(
-        variable,
-        preparationSource,
-      );
+        // Also set the preparation selected variable if json is incomplete
+        const preparationSource =
+          this.preparationDatasService.getAvailablePreparationReport();
+        this.preparationDatasService.setSelectedVariable(
+          variable,
+          preparationSource,
+        );
+      }
     }
   }
 
@@ -110,7 +113,7 @@ export class ModelingDatasService {
         function (key) {
           variable = appDatas.modelingReport.trainedPredictorsDetails[
             key
-          ].selectedVariables.find((e) => e.name === name);
+          ].selectedVariables.find((e: any) => e.name === name);
           if (variable) {
             return variable;
           }
@@ -123,7 +126,7 @@ export class ModelingDatasService {
   getTrainedPredictorDisplayedColumns(): GridColumnsI[] {
     const displayedColumns: GridColumnsI[] = [];
     if (this.modelingDatas.trainedPredictorsListDatas) {
-      const typicalData = this.modelingDatas.trainedPredictorsListDatas[0];
+      const typicalData: any = this.modelingDatas.trainedPredictorsListDatas[0];
       Object.keys(typicalData).forEach((key) => {
         // Add columns of available objects (defined into ModelingPredictorVO)
         if (key !== '_id' && typicalData[key] !== undefined) {
@@ -170,7 +173,7 @@ export class ModelingDatasService {
     return trainedPredictorsSummaryDatas;
   }
 
-  setSelectedPredictor(predictor) {
+  setSelectedPredictor(predictor: any) {
     this.modelingDatas.selectedPredictor = new ModelingPredictorVO(predictor);
   }
 
