@@ -1,3 +1,5 @@
+import { ExtDatasVO } from './ext-datas-vo';
+
 export class CompositionVO {
   _id: string;
   name: string;
@@ -7,8 +9,14 @@ export class CompositionVO {
   value: string;
   frequency: number;
   rank: number;
+  externalData: string | undefined;
 
-  constructor(object, currentDimensionHierarchyCluster, index) {
+  constructor(
+    object,
+    currentDimensionHierarchyCluster,
+    index: number,
+    externalData: ExtDatasVO,
+  ) {
     this.terminalCluster =
       object.cluster || currentDimensionHierarchyCluster.shortDescription;
     this.cluster = currentDimensionHierarchyCluster.shortDescription;
@@ -18,6 +26,8 @@ export class CompositionVO {
     this.value = this.value.replace(/[\n\r]+/g, ''); // remove carriage return #53
     this.typicality = object.valueTypicalities[index];
     this.frequency = object.valueFrequencies[index];
+
+    this.externalData = (externalData && externalData[this.value]) || undefined;
 
     // Get rank and name if it has been changed from dimensionHierarchies array
     this.rank = currentDimensionHierarchyCluster.rank;

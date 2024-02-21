@@ -39,19 +39,14 @@ export class ExternalDatasComponent
 
   ngOnChanges() {
     this.currentExternalDatas = [];
-    if (this.externalData) {
-      if (this.selectedComposition) {
-        if (this.externalData[this.selectedComposition.value]) {
-          this.currentExternalDatas.push(
-            this.externalData[this.selectedComposition.value],
-          );
-          this.currentExternalDatasTitle = this.selectedComposition.value;
-        }
-      } else {
-        // get first item if no composition selected
-        this.currentExternalDatas = [Object.values(this.externalData)[0]];
-        this.currentExternalDatasTitle = Object.keys(this.externalData)[0];
-      }
+    if (this.selectedComposition) {
+      // If composition is available, load datas from it (faster)
+      this.currentExternalDatas.push(this.selectedComposition.externalData);
+      this.currentExternalDatasTitle = this.selectedComposition.value;
+    } else if (this.externalData) {
+      // get first item if no composition selected
+      this.currentExternalDatas = [Object.values(this.externalData)[0]];
+      this.currentExternalDatasTitle = Object.keys(this.externalData)[0];
     }
   }
 }
