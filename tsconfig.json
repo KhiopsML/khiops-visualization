@@ -12,6 +12,7 @@
     "importHelpers": true,
     "module": "es2020",
     "esModuleInterop": true,
+    "strictPropertyInitialization": false,
     "experimentalDecorators": true,
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
