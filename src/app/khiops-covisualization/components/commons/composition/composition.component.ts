@@ -18,6 +18,8 @@ import { Subscription } from 'rxjs';
 import _ from 'lodash';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
+import { ExtDatasVO } from '@khiops-covisualization/model/ext-datas-vo';
+import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
 
 @Component({
   selector: 'app-composition',
@@ -43,6 +45,7 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(
     private translate: TranslateService,
+    private importExtDatasService: ImportExtDatasService,
     private treenodesService: TreenodesService,
     private clustersService: ClustersService,
     private eventsService: EventsService,
@@ -94,7 +97,20 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
     this.importedDatasChangedSub =
       this.eventsService.importedDatasChanged.subscribe((e) => {
         if (this.selectedNode) {
-          this.updateTable(this.selectedNode);
+          const externalDatas: ExtDatasVO =
+            this.importExtDatasService.getImportedDatasFromDimension(
+              this.selectedDimension,
+            );
+
+          this.compositionValues.forEach((composition: CompositionVO) => {
+            if (externalDatas && externalDatas[composition?.value]) {
+              composition.externalData = externalDatas[composition.value];
+            }
+          });
+
+          // Force selection change to update external dats component #113
+          this.selectedComposition = { ...this.selectedComposition };
+          this.selectedCompositionChanged.emit(this.selectedComposition);
         }
       });
   }

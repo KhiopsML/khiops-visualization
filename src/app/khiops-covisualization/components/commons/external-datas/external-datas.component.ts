@@ -1,6 +1,5 @@
 import { Component, OnInit, NgZone, Input } from '@angular/core';
 import { CompositionVO } from '@khiops-covisualization/model/composition-vo';
-
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
@@ -19,10 +18,8 @@ export class ExternalDatasComponent
   @Input() selectedComposition: CompositionVO;
 
   override id: any = undefined;
-
   currentExternalDatasTitle: string = '';
   currentExternalDatas: any[] = [];
-
   componentType = 'external-datas'; // needed to copy datas
 
   constructor(
@@ -38,6 +35,10 @@ export class ExternalDatasComponent
   }
 
   ngOnChanges() {
+    this.updateExternalDatas();
+  }
+
+  updateExternalDatas() {
     this.currentExternalDatas = [];
     if (this.selectedComposition?.externalData) {
       // If composition is available, load datas from it (faster)
