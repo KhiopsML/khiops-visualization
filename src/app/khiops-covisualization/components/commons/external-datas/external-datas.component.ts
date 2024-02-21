@@ -39,7 +39,7 @@ export class ExternalDatasComponent
 
   ngOnChanges() {
     this.currentExternalDatas = [];
-    if (this.selectedComposition) {
+    if (this.selectedComposition?.externalData) {
       // If composition is available, load datas from it (faster)
       this.currentExternalDatas.push(this.selectedComposition.externalData);
       this.currentExternalDatasTitle = this.selectedComposition.value;
