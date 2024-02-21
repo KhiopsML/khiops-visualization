@@ -6,6 +6,7 @@ import {
   Output,
   OnInit,
   SimpleChanges,
+  AfterViewInit,
 } from '@angular/core';
 import { TranslateService } from '@ngstack/translate';
 import { CompositionVO } from '@khiops-covisualization/model/composition-vo';
@@ -23,7 +24,7 @@ import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
   templateUrl: './composition.component.html',
   styleUrls: ['./composition.component.scss'],
 })
-export class CompositionComponent implements OnInit, OnDestroy {
+export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() selectedNode: TreeNodeVO;
   @Input() dimensionsClusters: TreeNodeVO[][];
   @Input() position: number;
@@ -101,9 +102,12 @@ export class CompositionComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.id = 'cluster-composition-' + this.position;
     this.title = this.translate.get('GLOBAL.COMPOSITION');
+  }
 
+  ngAfterViewInit() {
     // #40 loss of display after resizing the coclustering
     // We need to update table at init if component was hidden
+    // Also linked to #111
     this.updateTable(this.selectedNode);
   }
 
