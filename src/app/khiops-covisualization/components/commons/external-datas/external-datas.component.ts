@@ -44,7 +44,10 @@ export class ExternalDatasComponent
       // If composition is available, load datas from it (faster)
       this.currentExternalDatas.push(this.selectedComposition.externalData);
       this.currentExternalDatasTitle = this.selectedComposition.value;
-    } else if (this.externalData) {
+    } else if (
+      this.externalData &&
+      Object.keys(this.externalData)[0] === this.selectedComposition?.value
+    ) {
       // get first item if no composition selected
       this.currentExternalDatas = [Object.values(this.externalData)[0]];
       this.currentExternalDatasTitle = Object.keys(this.externalData)[0];
