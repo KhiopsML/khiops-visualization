@@ -5,7 +5,7 @@ export class NoteVO {
   prerelease: boolean;
   published_at: string;
 
-  constructor(data) {
+  constructor(data: any) {
     this.id = data.id;
     this.name = data.name;
     this.body = data.body;

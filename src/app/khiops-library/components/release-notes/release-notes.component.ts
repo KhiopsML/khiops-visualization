@@ -32,7 +32,7 @@ export class ReleaseNotesComponent implements OnInit {
         this.loadingNotesError = true;
         this.snackBar.open(
           this.translate.get('SNACKS.OPEN_RELEASE_NOTES_ERROR'),
-          null,
+          undefined,
           {
             duration: 4000,
             panelClass: 'error',

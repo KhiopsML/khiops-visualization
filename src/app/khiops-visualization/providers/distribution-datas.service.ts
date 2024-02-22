@@ -229,7 +229,7 @@ export class DistributionDatasService {
 
       for (let k = 0; k < dimensionLength; k++) {
         const currentPartition = partition[k];
-        const currentDataSet = new ChartDatasetVO(currentPartition);
+        const currentDataSet = new ChartDatasetVO(currentPartition.toString());
         targetDistributionGraphDatas.datasets.push(currentDataSet);
 
         let l: number = currentXAxis.length;

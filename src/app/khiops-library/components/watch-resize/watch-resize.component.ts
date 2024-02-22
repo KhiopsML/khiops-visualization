@@ -9,7 +9,7 @@ export class WatchResizeComponent implements AfterViewInit {
 
   @Input() id: any;
   @Input() watchResize = true;
-  el: Element;
+  el: HTMLElement | null;
 
   constructor(
     public ngzone: NgZone,
@@ -30,8 +30,8 @@ export class WatchResizeComponent implements AfterViewInit {
           });
         });
         this.el = this.configService
-          .getRootElementDom()
-          .querySelector<HTMLElement>('#' + this.id);
+        .getRootElementDom()
+        .querySelector<HTMLElement>('#' + this.id);
         if (this.el) {
           observer.observe(this.el);
         }

@@ -374,7 +374,7 @@ export class MatrixCanvasComponent
                   };
                   cellDatas.displayedFreqValue = this.matrixFreqsValues[index];
 
-                  if (currentVal) {
+                  if (currentVal && maxVal) {
                     // Do not draw empty cells
                     const color = this.getColorForPercentage(
                       currentVal,

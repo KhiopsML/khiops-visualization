@@ -8,11 +8,11 @@ export class ProjectSummaryVO {
   learningTask: string;
   targetVariable: string;
   instances: string;
-  variables: number;
+  variables: number | undefined;
 
   displayDatas: InfosDatasI[];
 
-  constructor(appDatas) {
+  constructor(appDatas: any) {
     this.filename = appDatas.filename || '';
     this.database = appDatas.preparationReport.summary.database || '';
     this.shortDescription = appDatas.shortDescription || '';
@@ -27,19 +27,20 @@ export class ProjectSummaryVO {
     this.formatDatas();
   }
 
-  computeVariablesCount(appDatas) {
+  computeVariablesCount(appDatas: any) {
     const varDatas = appDatas.preparationReport.summary.variables || undefined;
     if (varDatas) {
       const categoricalVarsCount =
         varDatas.numbers[
-          varDatas.types.findIndex((e) => e === TYPES.CATEGORICAL)
+          varDatas.types.findIndex((e: string) => e === TYPES.CATEGORICAL)
         ];
       const numericalVarsCount =
         varDatas.numbers[
-          varDatas.types.findIndex((e) => e === TYPES.NUMERICAL)
+          varDatas.types.findIndex((e: string) => e === TYPES.NUMERICAL)
         ];
       this.variables = categoricalVarsCount + numericalVarsCount;
       if (
+        this.variables &&
         appDatas.preparationReport.summary.targetVariable &&
         appDatas.preparationReport.summary.targetVariable !== ''
       ) {

@@ -17,7 +17,7 @@ export class ChartDatasetVO {
   backgroundColor?: string[];
   borderColor?: string[];
 
-  constructor(label?, type?) {
+  constructor(label?: string, type?: string) {
     this.label = label || '';
     this.type = type || 'bar'; // By default
   }
