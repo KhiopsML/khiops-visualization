@@ -22,7 +22,7 @@ export class UserSettingsComponent implements OnChanges {
   @Output() toggleNavDrawerChanged: EventEmitter<any> = new EventEmitter();
   @Input() opened: boolean;
 
-  numberPrecision;
+  numberPrecision: any;
   contrastValue: number;
   allowCookies: boolean;
   currentTheme: string =
@@ -127,7 +127,7 @@ export class UserSettingsComponent implements OnChanges {
 
   onClickOnClearDatas() {
     localStorage.clear();
-    this.snackBar.open(this.translate.get('SNACKS.DATAS_DELETED'), null, {
+    this.snackBar.open(this.translate.get('SNACKS.DATAS_DELETED'), undefined, {
       duration: 2000,
       panelClass: 'success',
     });

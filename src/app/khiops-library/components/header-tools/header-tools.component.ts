@@ -54,12 +54,12 @@ export class HeaderToolsComponent implements OnInit {
     if (currentSelectedArea) {
       this.copyDatasService.copyDatasToClipboard(currentSelectedArea);
 
-      this.snackBar.open(this.translate.get('SNACKS.DATAS_COPIED'), null, {
+      this.snackBar.open(this.translate.get('SNACKS.DATAS_COPIED'), undefined, {
         duration: 2000,
         panelClass: 'success',
       });
     } else {
-      this.snackBar.open(this.translate.get('SNACKS.NO_AREA_SELECTED'), null, {
+      this.snackBar.open(this.translate.get('SNACKS.NO_AREA_SELECTED'), undefined, {
         duration: 2000,
         panelClass: 'warning',
       });
@@ -77,7 +77,7 @@ export class HeaderToolsComponent implements OnInit {
         try {
           let currentDiv: any = this.configService
             .getRootElementDom()
-            .querySelector('#' + currentSelectedArea.id).firstChild;
+            .querySelector('#' + currentSelectedArea.id)?.firstChild;
           this.rePaintGraph(currentDiv);
 
           // convert div screenshot to canvas
@@ -125,7 +125,7 @@ export class HeaderToolsComponent implements OnInit {
               console.error('​HeaderToolsComponent -> copyImage -> e', e);
               this.snackBar.open(
                 this.translate.get('SNACKS.COPY_ERROR') + e,
-                null,
+                undefined,
                 {
                   duration: 4000,
                   panelClass: 'error',
@@ -136,7 +136,7 @@ export class HeaderToolsComponent implements OnInit {
               this.isCopyingImage = false;
             });
         } catch (e) {
-          this.snackBar.open(this.translate.get('SNACKS.COPY_ERROR'), null, {
+          this.snackBar.open(this.translate.get('SNACKS.COPY_ERROR'), undefined, {
             duration: 4000,
             panelClass: 'error',
           });
@@ -144,7 +144,7 @@ export class HeaderToolsComponent implements OnInit {
         }
       }, 100);
     } else {
-      this.snackBar.open(this.translate.get('SNACKS.NO_AREA_SELECTED'), null, {
+      this.snackBar.open(this.translate.get('SNACKS.NO_AREA_SELECTED'), undefined, {
         duration: 2000,
         panelClass: 'warning',
       });
