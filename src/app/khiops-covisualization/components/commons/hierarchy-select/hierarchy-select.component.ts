@@ -87,7 +87,7 @@ export class HierarchySelectComponent implements OnChanges, AfterViewInit {
     if (isBigJsonFile) {
       this.snackBar.open(
         this.translate.get('GLOBAL.BIG_FILES_LOADING_WARNING'),
-        null,
+        undefined,
         {
           duration: 2000,
           panelClass: 'success',

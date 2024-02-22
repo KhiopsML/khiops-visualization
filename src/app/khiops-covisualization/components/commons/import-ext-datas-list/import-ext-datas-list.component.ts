@@ -91,7 +91,7 @@ export class ImportExtDatasListComponent {
     );
     this.snackBar.open(
       this.translate.get('SNACKS.EXTERNAL_DATA_DELETED'),
-      null,
+      undefined,
       {
         duration: 2000,
         panelClass: 'success',
@@ -100,7 +100,7 @@ export class ImportExtDatasListComponent {
     if (importedDatas) {
       this.snackBar.open(
         this.translate.get('SNACKS.EXTERNAL_DATA_DELETED'),
-        null,
+        undefined,
         {
           duration: 2000,
           panelClass: 'success',
@@ -109,7 +109,7 @@ export class ImportExtDatasListComponent {
     } else {
       this.snackBar.open(
         this.translate.get('SNACKS.EXTERNAL_DATA_DELETE_ERROR'),
-        null,
+        undefined,
         {
           duration: 2000,
           panelClass: 'error',

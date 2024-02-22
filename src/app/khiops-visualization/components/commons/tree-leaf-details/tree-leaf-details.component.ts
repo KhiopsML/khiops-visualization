@@ -29,7 +29,7 @@ export class TreeLeafDetailsComponent implements OnInit, OnChanges {
 
   populationCount: number = 10;
 
-  treePreparationDatas: TreePreparationDatasVO;
+  treePreparationDatas: TreePreparationDatasVO | undefined;
   distributionDatas: DistributionDatasVO;
   position = 1; // to change graph id
 

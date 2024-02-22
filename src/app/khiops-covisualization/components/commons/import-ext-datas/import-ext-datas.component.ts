@@ -67,7 +67,7 @@ export class ImportExtDatasComponent implements OnInit {
         if (importedData) {
           this.snackBar.open(
             this.translate.get('SNACKS.EXTERNAL_DATA_ADDED'),
-            null,
+            undefined,
             {
               duration: 2000,
               panelClass: 'success',
@@ -76,7 +76,7 @@ export class ImportExtDatasComponent implements OnInit {
         } else {
           this.snackBar.open(
             this.translate.get('SNACKS.EXTERNAL_DATA_ALREADY_ADDED'),
-            null,
+            undefined,
             {
               duration: 2000,
               panelClass: 'error',

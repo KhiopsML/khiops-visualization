@@ -103,7 +103,7 @@ export class LevelDistributionGraphCanvasComponent
     ) {
       this.snackBar.open(
         this.translate.get('SNACKS.TOO_MANY_VARIABLES'),
-        null,
+        undefined,
         {
           duration: 5000,
           panelClass: 'warning',

@@ -112,7 +112,7 @@ export class HeaderToolsComponent implements OnInit {
               // Show snack
               this.snackBar.open(
                 this.translate.get('SNACKS.SCREENSHOT_COPIED'),
-                null,
+                undefined,
                 {
                   duration: 2000,
                   panelClass: 'success',
