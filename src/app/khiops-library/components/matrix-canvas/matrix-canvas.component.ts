@@ -743,14 +743,12 @@ export class MatrixCanvasComponent
     const A = this.contrast;
     const cste = 0.1;
     const P = Math.exp(Math.log(cste) / 100);
-    const c = A && Math.pow(P, A);
+    const c = Math.pow(P, A);
 
-    if (c) {
-      if (currentColorVal >= 0) {
-        colorValue = Math.pow(currentColorVal / maxVal, c);
-      } else {
-        colorValue = -Math.pow(-currentColorVal / maxVal, c);
-      }
+    if (currentColorVal >= 0) {
+      colorValue = Math.pow(currentColorVal / maxVal, c);
+    } else {
+      colorValue = -Math.pow(-currentColorVal / maxVal, c);
     }
 
     if (currentColorVal === 0) {
