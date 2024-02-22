@@ -133,15 +133,20 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
           const dimIndex = this.dimensionsService.getDimensionPositionFromName(
             dimName[0],
           );
-          // Update selected nodes ext datas
-          this.treenodesService.setSelectedNode(
+          if (
             this.dimensionsService.dimensionsDatas.selectedDimensions[dimIndex]
-              .name,
-            this.treenodesService.dimensionsDatas.selectedNodes[dimIndex]._id,
-            false,
-          );
-          // Enable ext datas view if not displayed
-          this.appService.enableExtDatasView(dimName[0]);
+          ) {
+            // Update selected nodes ext datas
+            this.treenodesService.setSelectedNode(
+              this.dimensionsService.dimensionsDatas.selectedDimensions[
+                dimIndex
+              ].name,
+              this.treenodesService.dimensionsDatas.selectedNodes[dimIndex]._id,
+              false,
+            );
+            // Enable ext datas view if not displayed
+            this.appService.enableExtDatasView(dimName[0]);
+          }
         }
       });
   }

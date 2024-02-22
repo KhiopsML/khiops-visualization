@@ -96,7 +96,7 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.importedDatasChangedSub =
       this.eventsService.importedDatasChanged.subscribe((e) => {
-        if (this.selectedNode) {
+        if (this.selectedNode && this.selectedDimension) {
           const externalDatas: ExtDatasVO =
             this.importExtDatasService.getImportedDatasFromDimension(
               this.selectedDimension,
