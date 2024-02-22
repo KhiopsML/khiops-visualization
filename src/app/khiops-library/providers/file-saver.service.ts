@@ -28,7 +28,7 @@ export class FileSaverService {
       this.saveFile(lastFilePath, datas);
     } else {
       this.ngzone.run(() => {
-        this.snackBar.open(this.translate.get('SNACKS.SAVE_FILE_ERROR'), null, {
+        this.snackBar.open(this.translate.get('SNACKS.SAVE_FILE_ERROR'), undefined, {
           duration: 4000,
           panelClass: 'error',
         });

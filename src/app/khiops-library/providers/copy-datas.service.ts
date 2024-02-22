@@ -15,7 +15,7 @@ export class CopyDatasService {
 
   copyDatasToClipboard(selectedArea: any) {
     // console.log('​CopyDatasService -> copyDatasToClipboard -> selectedArea', selectedArea);
-    let formattedDatas: string;
+    let formattedDatas: string = '';
 
     switch (selectedArea.componentType) {
       case 'histogram':

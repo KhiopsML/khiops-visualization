@@ -9,9 +9,9 @@ import { TYPES } from '@khiops-library/enum/types';
 export class MatrixUtilsDatasService {
   constructor() {}
 
-  static getStandardAxisValues(xDimension, yDimension) {
-    let xValues: number[];
-    let yValues: number[];
+  static getStandardAxisValues(xDimension, yDimension): [number[], number[]] {
+    let xValues: number[] = [];
+    let yValues: number[] = [];
     if (xDimension.type === TYPES.CATEGORICAL) {
       let currentXAxisFullPart;
       if (xDimension.valueGroups) {
@@ -79,9 +79,13 @@ export class MatrixUtilsDatasService {
     return [xValues, yValues];
   }
 
-  static getFrequencyAxisValues(xDimension, yDimension, cellFrequencies) {
-    let xValues: number[];
-    let yValues: number[];
+  static getFrequencyAxisValues(
+    xDimension,
+    yDimension,
+    cellFrequencies,
+  ): [number[], number[]] {
+    let xValues: number[] = [];
+    let yValues: number[] = [];
 
     if (xDimension.type === TYPES.CATEGORICAL) {
       const currentLineVal = UtilsService.getLinesTotals(
@@ -155,7 +159,7 @@ export class MatrixUtilsDatasService {
     yValues,
   ) {
     // var t0 = performance.now();
-    const cells = [];
+    const cells: CellVO[] = [];
 
     const xLength = xDimension.parts;
     const yLength = yDimension.parts;
@@ -402,7 +406,7 @@ export class MatrixUtilsDatasService {
     dimensionsParts,
     cellPartIndexes,
     inputCellFrequencies,
-    zDimension = [],
+    zDimension: any[] = [],
   ) {
     // var t0 = performance.now();
     let res;
