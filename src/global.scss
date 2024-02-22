@@ -881,6 +881,11 @@ canvas:focus {
 	}
 }
 
+.mat-drawer-container{
+  background-color: var(--bgColor) !important;
+  color: var(--bgColorContrast) !important;
+}
+
 .mat-badge-content {
 	border: 3px solid var(--bgColor) !important;
 	width: 10px !important;
