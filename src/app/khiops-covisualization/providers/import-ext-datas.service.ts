@@ -292,7 +292,10 @@ export class ImportExtDatasService {
                   importExtDatasLength,
                   resolve,
                 ),
-              );
+              )
+              .catch(() => {
+                resolve(undefined);
+              });
           }
         });
         promises.push(promise);
