@@ -14,6 +14,7 @@ import { SelectableService } from '../selectable/selectable.service';
 import { SelectableComponent } from '../selectable/selectable.component';
 import _ from 'lodash';
 import { KhiopsLibraryService } from '../../providers/khiops-library.service';
+// @ts-ignore
 import * as panzoom from 'pan-zoom';
 import { UtilsService } from '../../providers/utils.service';
 import { MatrixCanvasService } from './matrix-canvas.service';
@@ -22,6 +23,7 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 import { AppConfig } from 'src/environments/environment';
 import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
+import { MatrixCoordI } from '@khiops-library/interfaces/matrix-coord';
 
 @Component({
   selector: 'kl-matrix-canvas',
@@ -60,8 +62,8 @@ export class MatrixCanvasComponent
   yAxisLabel: string;
   tooltipText: string;
   legend: {
-    min: number;
-    max: number;
+    min: number | undefined;
+    max: number | undefined;
   };
   selectedTargetIndex = -1;
   isZerosToggled = false;
@@ -106,7 +108,7 @@ export class MatrixCanvasComponent
   unpanzoom: any;
   isPaning = false;
 
-  tooltipCell: CellVO;
+  tooltipCell: CellVO | undefined;
   tooltipPosition: {
     x: number;
     y: number;
@@ -146,14 +148,14 @@ export class MatrixCanvasComponent
   }
 
   @HostListener('window:resize', ['$event'])
-  sizeChange(event) {
+  sizeChange() {
     if (!this.isFirstResize) {
       this.drawMatrix();
     }
   }
 
   @HostListener('window:keyup', ['$event'])
-  keyEvent(event) {
+  keyEvent(event: { keyCode: any }) {
     const currentSelectedArea = this.selectableService.getSelectedArea();
     if (
       currentSelectedArea &&
@@ -164,7 +166,7 @@ export class MatrixCanvasComponent
         event.keyCode,
         this.inputDatas.matrixCellDatas,
         this.isAxisInverted,
-        this.selectedCells[0].index,
+        this.selectedCells[0]?.index,
       );
       if (changeCell) {
         this.cellSelected.emit({
@@ -242,7 +244,7 @@ export class MatrixCanvasComponent
             this.selectedTargetIndex,
           );
 
-          if (!isNaN(this.matrixFreqsValues[0])) {
+          if (this.matrixFreqsValues[0] && !isNaN(this.matrixFreqsValues[0])) {
             // check if we have a wrong context selection
 
             // Clean dom canvas
@@ -262,8 +264,10 @@ export class MatrixCanvasComponent
               }
 
               if (this.inputDatas.matrixCellDatas) {
-                let minVal, maxVal;
-                let minValH, maxValH;
+                let minVal: number | undefined;
+                let maxVal: number | undefined;
+                let minValH: number | undefined;
+                let maxValH: number | undefined;
 
                 if (!this.minMaxValues) {
                   [minVal, maxVal] = UtilsService.getMinAndMaxFromArray(
@@ -299,7 +303,7 @@ export class MatrixCanvasComponent
                   this.legend.min = minVal;
                   this.legend.max = maxVal;
                 }
-                if (this.legend.min > 0) {
+                if (this.legend.min! > 0) {
                   this.legend.min = 0;
                 }
 
@@ -394,7 +398,7 @@ export class MatrixCanvasComponent
               if (!this.unpanzoom) {
                 this.unpanzoom = panzoom(
                   this.matrixContainerDiv.nativeElement,
-                  (e) => {
+                  (e: { dz: number; dx: number; dy: number }) => {
                     if (e.dz) {
                       if (e.dz > 0) {
                         this.onClickOnZoomOut();
@@ -491,7 +495,7 @@ export class MatrixCanvasComponent
     }
   }
 
-  clickOnCell(event) {
+  clickOnCell(event: MouseEvent) {
     // Hack to prevent event emit if user pan matrix
     if (!this.isPaning || this.isPaning === undefined) {
       this.isPaning = false;
@@ -607,7 +611,7 @@ export class MatrixCanvasComponent
     this.canvasPattern = document.createElement('canvas');
     this.canvasPattern.width = 16;
     this.canvasPattern.height = 16;
-    const pctx = this.canvasPattern.getContext('2d');
+    const pctx: any = this.canvasPattern.getContext('2d');
 
     const x0 = 32;
     const x1 = -1;
@@ -658,7 +662,7 @@ export class MatrixCanvasComponent
     }
   }
 
-  zoomCanvas(delta, preventTranslate = false) {
+  zoomCanvas(delta: number, preventTranslate = false) {
     const previousZoom = this.zoom;
     if (delta < 0) {
       this.zoom = this.zoom + this.zoomFactor;
@@ -734,17 +738,19 @@ export class MatrixCanvasComponent
     }
   }
 
-  getColorForPercentage(currentColorVal, maxVal) {
+  getColorForPercentage(currentColorVal: number, maxVal: number) {
     let colorValue = 0;
     const A = this.contrast;
     const cste = 0.1;
     const P = Math.exp(Math.log(cste) / 100);
-    const c = Math.pow(P, A);
+    const c = A && Math.pow(P, A);
 
-    if (currentColorVal >= 0) {
-      colorValue = Math.pow(currentColorVal / maxVal, c);
-    } else {
-      colorValue = -Math.pow(-currentColorVal / maxVal, c);
+    if (c) {
+      if (currentColorVal >= 0) {
+        colorValue = Math.pow(currentColorVal / maxVal, c);
+      } else {
+        colorValue = -Math.pow(-currentColorVal / maxVal, c);
+      }
     }
 
     if (currentColorVal === 0) {
@@ -804,27 +810,44 @@ export class MatrixCanvasComponent
     return [width, height];
   }
 
-  adaptCellDimensionsToZoom(cellDatas, width, height, graphType) {
-    cellDatas.xCanvas =
-      graphType === 'GLOBAL.STANDARD'
-        ? cellDatas.x.standard * width * 0.01
-        : cellDatas.x.frequency * width * 0.01;
-    cellDatas.yCanvas =
-      graphType === 'GLOBAL.STANDARD'
-        ? cellDatas.y.standard * height * 0.01
-        : cellDatas.y.frequency * height * 0.01;
-    cellDatas.wCanvas =
-      graphType === 'GLOBAL.STANDARD'
-        ? cellDatas.w.standard * width * 0.01
-        : cellDatas.w.frequency * width * 0.01;
-    cellDatas.hCanvas =
-      graphType === 'GLOBAL.STANDARD'
-        ? cellDatas.h.standard * height * 0.01
-        : cellDatas.h.frequency * height * 0.01;
+  adaptCellDimensionsToZoom(
+    cellDatas: {
+      xCanvas: number;
+      x: MatrixCoordI;
+      yCanvas: number;
+      y: MatrixCoordI;
+      wCanvas: number;
+      w: MatrixCoordI;
+      hCanvas: number;
+      h: MatrixCoordI;
+    },
+    width: number | undefined,
+    height: number | undefined,
+    graphType: string,
+  ) {
+    if (width && height) {
+      cellDatas.xCanvas =
+        graphType === 'GLOBAL.STANDARD'
+          ? cellDatas.x.standard * width * 0.01
+          : cellDatas.x.frequency * width * 0.01;
+      cellDatas.yCanvas =
+        graphType === 'GLOBAL.STANDARD'
+          ? cellDatas.y.standard * height * 0.01
+          : cellDatas.y.frequency * height * 0.01;
+      cellDatas.wCanvas =
+        graphType === 'GLOBAL.STANDARD'
+          ? cellDatas.w.standard * width * 0.01
+          : cellDatas.w.frequency * width * 0.01;
+      cellDatas.hCanvas =
+        graphType === 'GLOBAL.STANDARD'
+          ? cellDatas.h.standard * height * 0.01
+          : cellDatas.h.frequency * height * 0.01;
+    }
+
     return cellDatas;
   }
 
-  getCurrentCell(event) {
+  getCurrentCell(event: MouseEvent) {
     if (this.inputDatas) {
       const canvasPosition =
         this.matrixDiv.nativeElement.getBoundingClientRect();
@@ -856,14 +879,15 @@ export class MatrixCanvasComponent
     }
   }
 
-  onContrastChanged(event) {
+  onContrastChanged(event: { value: number | undefined }) {
     // this.khiopsLibraryService.trackEvent('click', 'matrix_contrast', event.value);
     this.contrast = event.value;
     this.contrastChange.emit(this.contrast);
-    localStorage.setItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST',
-      this.contrast.toString(),
-    );
+    this.contrast &&
+      localStorage.setItem(
+        AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST',
+        this.contrast.toString(),
+      );
     this.drawMatrix();
   }
 
@@ -880,7 +904,7 @@ export class MatrixCanvasComponent
     this.drawMatrix();
   }
 
-  showTooltip(event) {
+  showTooltip(event: MouseEvent) {
     this.tooltipCell = this.getCurrentCell(event);
     const x = event.pageX;
     const y = event.pageY;
