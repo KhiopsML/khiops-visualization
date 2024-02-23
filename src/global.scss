@@ -861,6 +861,10 @@ button {
 	height: 32px !important;
 }
 
+.mat-button-toggle {
+  color: var(--primary) !important;
+}
+
 .rotate-90 {
 	transform: rotate(90deg);
 }
