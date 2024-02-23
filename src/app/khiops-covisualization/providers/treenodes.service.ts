@@ -236,6 +236,9 @@ export class TreenodesService {
         }
       }
     }
+    const savedHierarchy =
+      this.appService.getSavedDatas('unfoldHierarchyState') || 0;
+    this.setSelectedUnfoldHierarchy(savedHierarchy);
   }
 
   getNodesNames() {
