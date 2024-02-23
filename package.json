@@ -1,7 +1,6 @@
 {
   "name": "visualization-component",
-  "version": "11.0.8",
-  "private": true,
+  "version": "11.0.9",
   "author": {
     "name": "Orange",
     "email": "khiops@orange.com"
