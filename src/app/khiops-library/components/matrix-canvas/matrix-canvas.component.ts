@@ -198,12 +198,24 @@ export class MatrixCanvasComponent
         this.isZerosToggled = false;
       }
 
+      // Check if nodes have changed to updat ui #117
+      let diff = {};
+      if (
+        changes.selectedNodes?.currentValue &&
+        changes.selectedNodes?.previousValue
+      ) {
+        diff = UtilsService.deepDiff(
+          changes.selectedNodes.currentValue,
+          changes.selectedNodes.previousValue,
+        );
+      }
+
       // Draw matrix on change
       if (
         this.inputDatas &&
         this.matrixDiv &&
         this.matrixDiv.nativeElement &&
-        !changes.selectedNodes
+        (!changes.selectedNodes || !_.isEmpty(diff))
       ) {
         if (
           this.inputDatas.matrixCellDatas &&
