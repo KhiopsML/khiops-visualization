@@ -69,7 +69,7 @@
         <span title="{{ yAxisLabel }}">{{ yAxisLabel }}</span>
       </div>
       <button
-        *ngIf="graphMode && graphMode.mode === 'MUTUAL_INFO'"
+        *ngIf="graphMode && graphMode.mode === 'MUTUAL_INFO' && !isKhiopsCovisu"
         mat-icon-button
         matTooltip="{{ 'GLOBAL.TOGGLE_ZERO' | translate }}"
         [ngClass]="['toggle-zero', 'toggled-' + isZerosToggled]"
