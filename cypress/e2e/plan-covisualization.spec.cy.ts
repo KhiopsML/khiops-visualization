@@ -7,6 +7,7 @@ describe('Test Plan for Khiops Covisualization', () => {
 
   const expectedResults = [
     {
+      matrixTooltip: [1608, 5097, 3596], // default, after folding first 2 nodes, after unfoldHierarchy
       node0: 'A7',
       node1: 'B5',
       matrixValues: [5097, 2404],
@@ -30,9 +31,31 @@ describe('Test Plan for Khiops Covisualization', () => {
         cy.loadFile('covisualization', fileName);
 
         cy.readFile('./src/assets/mocks/kc/' + fileName).then((datas) => {
+          // Move to the first matrix cell
+          //@ts-ignore
+          cy.get('#matrix-selected').trigger('mousemove', {
+            position: 'bottomLeft',
+          });
+
+          // Check Matrix tooltip
+          cy.get('.matrix-tooltip-comp').contains(
+            expectedResults[fileIndex].matrixTooltip[0],
+          );
+
           // Fold some nodes nodes
           cy.get('#tree_0').find('.tree-expando:eq(1)').click();
           cy.get('#tree_1').find('.tree-expando:eq(1)').click();
+
+          // Move to the first matrix cell
+          //@ts-ignore
+          cy.get('#matrix-selected').trigger('mousemove', {
+            position: 'bottomLeft',
+          });
+
+          // Check MAtrix tooltip
+          cy.get('.matrix-tooltip-comp').contains(
+            expectedResults[fileIndex].matrixTooltip[1],
+          );
 
           // Check Clusters table
           cy.get('#cluster-details-grid-0').contains(
@@ -93,6 +116,30 @@ describe('Test Plan for Khiops Covisualization', () => {
           cy.get('#cluster-distribution-0').contains('renamed');
           cy.get('#selected-clusters-grid').contains('renamed');
           cy.get('#cluster-annotation-0').contains('renamed');
+
+          // Open unfold Hierarchy view
+          cy.get('.button-unfold-hierarchy').click();
+
+          // Reduce hierarchy
+          cy.get('.button-reduce-hierarchy').then(() => {
+            // Loop 10 times, clicking the element in each iteration
+            for (let i = 0; i < 10; i++) {
+              cy.get('.button-reduce-hierarchy').click();
+            }
+          });
+
+          cy.get('.button-confirm-hierarchy').click();
+
+          // Move to the last matrix cell
+          //@ts-ignore
+          cy.get('#matrix-selected').trigger('mousemove', {
+            position: 'topRight',
+          });
+
+          // Check Matrix tooltip
+          cy.get('.matrix-tooltip-comp').contains(
+            expectedResults[fileIndex].matrixTooltip[2],
+          );
         });
       },
     );
