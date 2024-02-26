@@ -1,33 +1,33 @@
 #header-tools-comp {
-	overflow: hidden;
-	padding-right: 0.8rem;
+  overflow: hidden;
+  padding-right: 0.8rem;
 
-	button {
-		box-shadow: none !important;
-		margin: 0 0 0 .5rem;
-		mat-icon {
-			font-size: 1rem !important;
-			line-height: 1.3rem !important;
-		}
-	}
-	button:first-child {
-		mat-icon {
-			font-size: 1.2rem !important;
-			line-height: 1.4rem !important;
-		}
-	}
+  button {
+    box-shadow: none !important;
+    margin: 0 0 0 0.5rem;
+    mat-icon {
+      font-size: 1rem !important;
+      line-height: 1.3rem !important;
+    }
+  }
+  button:first-child {
+    mat-icon {
+      font-size: 1.2rem !important;
+      line-height: 1.4rem !important;
+    }
+  }
 
-	#version {
-		margin-right: 1.5em;
-		background: #fbb33a;
-		line-height: 30px;
-		height: 30px;
-		color: white;
-		font-weight: 400;
-	}
+  #version {
+    margin-right: 1.5em;
+    background: #fbb33a;
+    line-height: 30px;
+    height: 30px;
+    color: white;
+    font-weight: 400;
+  }
 
-	::ng-deep .mat-progress-spinner.mat-accent circle,
-	.mat-spinner.mat-accent circle {
-		stroke: #ffffff;
-	}
+  ::ng-deep .mat-progress-spinner.mat-accent circle,
+  .mat-spinner.mat-accent circle {
+    stroke: #ffffff;
+  }
 }

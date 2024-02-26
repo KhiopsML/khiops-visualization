@@ -1,109 +1,109 @@
-@import "../../../../../theme.scss";
+@import '../../../../../theme.scss';
 
 #manage-views-comp {
-	background-color: var(--bgColor) !important;
-	padding: 0 10px 10px 10px;
+  background-color: var(--bgColor) !important;
+  padding: 0 10px 10px 10px;
 
-	#manage-views-header {
-		height: 68px;
+  #manage-views-header {
+    height: 68px;
 
-		h2 {
-			margin-left: 1em;
-		}
+    h2 {
+      margin-left: 1em;
+    }
 
-		button {
-			margin-left: 1em;
-		}
-	}
+    button {
+      margin-left: 1em;
+    }
+  }
 
-	#manage-views-content {
-		overflow: auto;
-		max-height: 70vh;
+  #manage-views-content {
+    overflow: auto;
+    max-height: 70vh;
 
-		.views-container {
-			border: 2px solid var(--primary);
-			border-radius: 5px;
-			box-shadow: 0 2px 6px 0px rgba(0, 0, 0, 0.1);
-			padding: 3px;
-			margin-top: 20px;
-			display: flex;
-			overflow: auto;
+    .views-container {
+      border: 2px solid var(--primary);
+      border-radius: 5px;
+      box-shadow: 0 2px 6px 0px rgba(0, 0, 0, 0.1);
+      padding: 3px;
+      margin-top: 20px;
+      display: flex;
+      overflow: auto;
 
-			.parent-box {
-				height: 150px;
+      .parent-box {
+        height: 150px;
 
-				.child-box {
-					border: 2px var(--primary);
-					margin: 10px;
-					border-style: solid;
-					height: 0 !important;
-				}
+        .child-box {
+          border: 2px var(--primary);
+          margin: 10px;
+          border-style: solid;
+          height: 0 !important;
+        }
 
-				.child-box:last-child {
-					margin-bottom: 0;
-				}
+        .child-box:last-child {
+          margin-bottom: 0;
+        }
 
-				.child-box.disabled {
-					border: 2px #333 dashed;
-				}
-			}
+        .child-box.disabled {
+          border: 2px #333 dashed;
+        }
+      }
 
-			.box {
-				border: 2px var(--primary);
-				border-style: solid;
-				margin: 10px;
-				cursor: pointer;
-				height: 140px;
-				text-align: center;
-				background: white;
-				color: var(--black-text);
-				font-size: 0.9em;
-				box-shadow: 0 2px 6px 0px rgba(0, 0, 0, 0.1);
-				border-radius: 3px;
-				min-width: 90px;
-				padding: 5px;
-			}
+      .box {
+        border: 2px var(--primary);
+        border-style: solid;
+        margin: 10px;
+        cursor: pointer;
+        height: 140px;
+        text-align: center;
+        background: white;
+        color: var(--black-text);
+        font-size: 0.9em;
+        box-shadow: 0 2px 6px 0px rgba(0, 0, 0, 0.1);
+        border-radius: 3px;
+        min-width: 90px;
+        padding: 5px;
+      }
 
-			.box.disabled {
-				background: #ddd;
-				color: #777;
-				box-shadow: none;
-				border: 2px #333 dashed;
-			}
+      .box.disabled {
+        background: #ddd;
+        color: #777;
+        box-shadow: none;
+        border: 2px #333 dashed;
+      }
 
-			.box-dimension {
-				border: 0px !important;
-				box-shadow: none;
-			}
+      .box-dimension {
+        border: 0px !important;
+        box-shadow: none;
+      }
 
-			.box-dimension:hover {
-				background: white;
-			}
+      .box-dimension:hover {
+        background: white;
+      }
 
-			.box-dimension.disabled:hover {
-				background: #ddd;
-			}
-		}
+      .box-dimension.disabled:hover {
+        background: #ddd;
+      }
+    }
 
-		.views-container.disabled {
-			background: #ddd;
-			color: #777;
-			border: 2px #333 dashed;
+    .views-container.disabled {
+      background: #ddd;
+      color: #777;
+      border: 2px #333 dashed;
 
-			.box,
-			.child-box {
-				background: #ddd !important;
-				color: #777 !important;
-				border: 2px #333 dashed !important;
-			}
-			.box-dimension {
-				border: 0px !important;
-				box-shadow: none;
-			}
-		}
+      .box,
+      .child-box {
+        background: #ddd !important;
+        color: #777 !important;
+        border: 2px #333 dashed !important;
+      }
+      .box-dimension {
+        border: 0px !important;
+        box-shadow: none;
+      }
+    }
 
-		#views-container-right {
-			margin-left: 1rem;
-		}
-	}
+    #views-container-right {
+      margin-left: 1rem;
+    }
+  }
 }

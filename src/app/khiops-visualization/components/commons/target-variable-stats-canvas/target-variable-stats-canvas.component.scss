@@ -1,30 +1,30 @@
 .target-variable-stats-canvas-comp {
-	position: relative;
-	padding-top: 1px;
-	padding-bottom: 1px;
-	background-color: var(--bgColor) !important; // for copy image
-	border-color: transparent !important;
+  position: relative;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  background-color: var(--bgColor) !important; // for copy image
+  border-color: transparent !important;
 
-	#target-variable-stats-header{
-		margin: 0.2em 0.4em -0.2em 1px;
-	}
+  #target-variable-stats-header {
+    margin: 0.2em 0.4em -0.2em 1px;
+  }
 
-	h1 {
-		mat-icon {
-			margin-right: 0.4em;
-			margin-top: -2px;
-		}
-	}
+  h1 {
+    mat-icon {
+      margin-right: 0.4em;
+      margin-top: -2px;
+    }
+  }
 
-	#target-variable-stats-graph-wrapper {
-		position: relative;
-	}
+  #target-variable-stats-graph-wrapper {
+    position: relative;
+  }
 
-	::ng-deep .kl-chart-next-canvas-comp {
-		min-width: 200px !important;
+  ::ng-deep .kl-chart-next-canvas-comp {
+    min-width: 200px !important;
 
-		canvas {
-			min-width: 200px !important;
-		}
-	}
+    canvas {
+      min-width: 200px !important;
+    }
+  }
 }

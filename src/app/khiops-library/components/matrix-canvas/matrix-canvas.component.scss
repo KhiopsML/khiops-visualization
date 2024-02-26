@@ -1,161 +1,162 @@
-
 #matrix-canvas-comp {
-	padding-top: 0em;
-	position: relative;
-	overflow: hidden;
-	background: transparent;
-	margin: 1px;
+  padding-top: 0em;
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  margin: 1px;
 
-	kl-matrix-tooltip {
-		z-index: 99999;
-	}
+  kl-matrix-tooltip {
+    z-index: 99999;
+  }
 
-	kl-cell-stats {
-		width: calc(100% - 2px) !important; // for selectable border
-	}
+  kl-cell-stats {
+    width: calc(100% - 2px) !important; // for selectable border
+  }
 
-	#matrix-loading {
-		position: absolute;
-		background: var(--bgColor) !important;
-		z-index: 100;
-	}
+  #matrix-loading {
+    position: absolute;
+    background: var(--bgColor) !important;
+    z-index: 100;
+  }
 
-	button {
-		margin: 0.1em 0.5em;
-		transition: color 0.2s ease, background-color 0.2s ease,
-			transform 0.3s ease;
-	}
+  button {
+    margin: 0.1em 0.5em;
+    transition:
+      color 0.2s ease,
+      background-color 0.2s ease,
+      transform 0.3s ease;
+  }
 
-	button.invert-axis.toggled-false {
-		mat-icon {
-			color: var(--primary) !important;
-		}
-	}
+  button.invert-axis.toggled-false {
+    mat-icon {
+      color: var(--primary) !important;
+    }
+  }
 
-	button.invert-axis.toggled-true {
-		background: var(--primary) !important;
-		transform: rotate(-90deg);
+  button.invert-axis.toggled-true {
+    background: var(--primary) !important;
+    transform: rotate(-90deg);
 
-		mat-icon {
-			color: white;
-		}
-	}
+    mat-icon {
+      color: white;
+    }
+  }
 
-	button.toggle-zero.toggled-true {
-		transform: rotate(-180deg);
-	}
+  button.toggle-zero.toggled-true {
+    transform: rotate(-180deg);
+  }
 
-	#matrix-area {
-		width: 50px; // important everything but 100% (min width)
-		height: 100%;
-		overflow: auto;
-		border: 1px solid var(--bgColor-10);
+  #matrix-area {
+    width: 50px; // important everything but 100% (min width)
+    height: 100%;
+    overflow: auto;
+    border: 1px solid var(--bgColor-10);
 
-		#matrix-container {
-			height: 100%;
-			width: 100%;
-			position: relative;
-			background-color: white;
+    #matrix-container {
+      height: 100%;
+      width: 100%;
+      position: relative;
+      background-color: white;
 
-			#matrix {
-				position: absolute;
-				top: 0;
-				left: 0;
-			}
+      #matrix {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
 
-			#matrix-selected {
-				position: absolute;
-				top: 0;
-				left: 0;
-			}
-		}
-	}
+      #matrix-selected {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    }
+  }
 
-	#y-axis {
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		min-height: 0;
-		position: relative;
-		display: flex;
-		margin: 2px 0;
+  #y-axis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 0;
+    position: relative;
+    display: flex;
+    margin: 2px 0;
 
-		span {
-			transform: rotate(-90deg);
-			position: absolute;
-		}
-	}
+    span {
+      transform: rotate(-90deg);
+      position: absolute;
+    }
+  }
 
-	#x-axis {
-		max-height: 32px;
-		min-height: 32px;
+  #x-axis {
+    max-height: 32px;
+    min-height: 32px;
 
-		span {
-			margin: 0.4em;
-		}
-	}
+    span {
+      margin: 0.4em;
+    }
+  }
 
-	#matrix-comp-right {
-		max-width: 60px;
-		width: 60px;
+  #matrix-comp-right {
+    max-width: 60px;
+    width: 60px;
 
-		#contrast {
-			margin-bottom: 1em;
+    #contrast {
+      margin-bottom: 1em;
 
-			span {
-				font-size: 10px;
-			}
-		}
+      span {
+        font-size: 10px;
+      }
+    }
 
-		#legend {
-			font-size: 0.9em;
+    #legend {
+      font-size: 0.9em;
 
-			#legend-bar {
-				border: 1px solid #999;
-				width: 14px;
-			}
+      #legend-bar {
+        border: 1px solid #999;
+        width: 14px;
+      }
 
-			#legend-max, #legend-min {
-				text-overflow: ellipsis;
-				overflow: hidden;
-				width: 50px;
-				height: 1.5em;
-				white-space: nowrap;
-				text-align: center;
-			}
-		}
-	}
+      #legend-max,
+      #legend-min {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        width: 50px;
+        height: 1.5em;
+        white-space: nowrap;
+        text-align: center;
+      }
+    }
+  }
 
-	@media screen and (max-width: 1280px),
-	screen and (max-height: 1024px) {
-		button {
-			margin: 0em 0.5em;
+  @media screen and (max-width: 1280px), screen and (max-height: 1024px) {
+    button {
+      margin: 0em 0.5em;
 
-			mat-icon {
-				font-size: 1.8em;
-			}
-		}
-	}
+      mat-icon {
+        font-size: 1.8em;
+      }
+    }
+  }
 }
 
 ::ng-deep .selected-cell {
-	stroke-opacity: 1;
-	stroke: black;
-	outline: 0.1em solid white;
+  stroke-opacity: 1;
+  stroke: black;
+  outline: 0.1em solid white;
 }
 
 ::ng-deep .selected-cell-bold {
-	stroke-width: 2;
+  stroke-width: 2;
 }
 
 ::ng-deep .selected-cell-thin {
-	stroke-width: 0.5;
+  stroke-width: 0.5;
 }
 
 ::ng-deep .selected-cell.frequency {
-	stroke: #6a90c1;
+  stroke: #6a90c1;
 }
 
 ::ng-deep #matrix-tooltip {
-	text-align: left;
+  text-align: left;
 }

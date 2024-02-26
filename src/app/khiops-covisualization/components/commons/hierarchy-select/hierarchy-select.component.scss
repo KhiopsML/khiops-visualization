@@ -1,37 +1,37 @@
-@import "../../../../../theme.scss";
+@import '../../../../../theme.scss';
 
 .hierarchy-select-comp {
-	padding: 0.6em;
-	margin: 0 !important;
-	position: relative;
-	position: sticky;
-	width: 100%;
+  padding: 0.6em;
+  margin: 0 !important;
+  position: relative;
+  position: sticky;
+  width: 100%;
   overflow-x: auto;
 
-	h1 {
-		margin: 0 1em 0 0.4em;
-	}
+  h1 {
+    margin: 0 1em 0 0.4em;
+  }
 
-	button{
-		border-color: inherit !important;
-	}
+  button {
+    border-color: inherit !important;
+  }
 
-	button.enabled {
-		color: var(--primary);
-	}
+  button.enabled {
+    color: var(--primary);
+  }
 
-	.hierarchy-select-content {
-		width: 100%;
-		margin-top: 1em;
-		padding: 0.5em;
+  .hierarchy-select-content {
+    width: 100%;
+    margin-top: 1em;
+    padding: 0.5em;
 
-		span {
-			font-weight: 400;
-		    font-size: 0.8rem;
-		}
+    span {
+      font-weight: 400;
+      font-size: 0.8rem;
+    }
 
-		strong {
-			font-weight: 500;
-		}
-	}
+    strong {
+      font-weight: 500;
+    }
+  }
 }

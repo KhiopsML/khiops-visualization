@@ -1,44 +1,44 @@
-@import "../../../../../theme.scss";
+@import '../../../../../theme.scss';
 
 #regression-matrix-comp {
-	.comp-header {
-		margin-top: 1.4em !important;
-		margin-bottom: 1em !important;
+  .comp-header {
+    margin-top: 1.4em !important;
+    margin-bottom: 1em !important;
 
-		button {
-			text-transform: none;
-			white-space: pre-wrap;
-		}
-	}
+    button {
+      text-transform: none;
+      white-space: pre-wrap;
+    }
+  }
 
-	::ng-deep .mat-tab-labels {
-		justify-content: start !important;
-	}
+  ::ng-deep .mat-tab-labels {
+    justify-content: start !important;
+  }
 
-	::ng-deep .mat-tab-label-container {
-		width: 100% !important;
-	}
+  ::ng-deep .mat-tab-label-container {
+    width: 100% !important;
+  }
 
-	::ng-deep .mat-tab-label.mat-tab-disabled {
-		position: absolute !important;
-		right: 0 !important;
-		padding-right: 0 !important;
-	}
+  ::ng-deep .mat-tab-label.mat-tab-disabled {
+    position: absolute !important;
+    right: 0 !important;
+    padding-right: 0 !important;
+  }
 
-	::ng-deep .mat-tab-label.mat-tab-disabled:hover {
-		background-color: transparent !important;
-	}
+  ::ng-deep .mat-tab-label.mat-tab-disabled:hover {
+    background-color: transparent !important;
+  }
 
-	::ng-deep mat-button-toggle-group {
-		margin-right: 0.8em;
+  ::ng-deep mat-button-toggle-group {
+    margin-right: 0.8em;
 
-		::ng-deep .mat-button-toggle-label-content {
-			line-height: 34px !important;
-			top: -2px !important;
-		}
+    ::ng-deep .mat-button-toggle-label-content {
+      line-height: 34px !important;
+      top: -2px !important;
+    }
 
-		.mat-button-toggle-checked {
-			color: white !important;
-		}
-	}
+    .mat-button-toggle-checked {
+      color: white !important;
+    }
+  }
 }

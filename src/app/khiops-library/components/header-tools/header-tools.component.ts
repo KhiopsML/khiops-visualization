@@ -59,10 +59,14 @@ export class HeaderToolsComponent implements OnInit {
         panelClass: 'success',
       });
     } else {
-      this.snackBar.open(this.translate.get('SNACKS.NO_AREA_SELECTED'), undefined, {
-        duration: 2000,
-        panelClass: 'warning',
-      });
+      this.snackBar.open(
+        this.translate.get('SNACKS.NO_AREA_SELECTED'),
+        undefined,
+        {
+          duration: 2000,
+          panelClass: 'warning',
+        },
+      );
     }
   }
 
@@ -136,18 +140,26 @@ export class HeaderToolsComponent implements OnInit {
               this.isCopyingImage = false;
             });
         } catch (e) {
-          this.snackBar.open(this.translate.get('SNACKS.COPY_ERROR'), undefined, {
-            duration: 4000,
-            panelClass: 'error',
-          });
+          this.snackBar.open(
+            this.translate.get('SNACKS.COPY_ERROR'),
+            undefined,
+            {
+              duration: 4000,
+              panelClass: 'error',
+            },
+          );
           this.isCopyingImage = false;
         }
       }, 100);
     } else {
-      this.snackBar.open(this.translate.get('SNACKS.NO_AREA_SELECTED'), undefined, {
-        duration: 2000,
-        panelClass: 'warning',
-      });
+      this.snackBar.open(
+        this.translate.get('SNACKS.NO_AREA_SELECTED'),
+        undefined,
+        {
+          duration: 2000,
+          panelClass: 'warning',
+        },
+      );
     }
   }
 

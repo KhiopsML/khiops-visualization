@@ -1,81 +1,79 @@
 #unfold-hierarchy-comp {
-	background-color: var(--bgColor) !important; // for copy image
+  background-color: var(--bgColor) !important; // for copy image
 
-	#unfold-hierarchy-header {
-		padding: 0 0 1em 0;
-		height: 68px;
+  #unfold-hierarchy-header {
+    padding: 0 0 1em 0;
+    height: 68px;
 
-		h2 {
-			margin-left: 1em;
-		}
+    h2 {
+      margin-left: 1em;
+    }
 
-		button {
-			margin-right: 1em;
-		}
-	}
+    button {
+      margin-right: 1em;
+    }
+  }
 
-	#unfold-hierarchy-content {
-		flex: 1;
-		overflow-y: auto;
-		overflow-x: hidden;
+  #unfold-hierarchy-content {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
 
-		kl-chart-next {
-			min-height: 135px;
-		}
+    kl-chart-next {
+      min-height: 135px;
+    }
 
-		#unfold-hierarchy-settings {
+    #unfold-hierarchy-settings {
+      background: rgba(0, 0, 0, 0.03);
+      margin-bottom: 3em;
+      border-radius: 5px;
+      padding: 1em;
 
-			background: rgba(0, 0, 0, .03);
-			margin-bottom: 3em;
-			border-radius: 5px;
-			padding: 1em;
+      .mat-slider-horizontal {
+        min-width: 300px;
+      }
 
-			.mat-slider-horizontal {
-				min-width: 300px;
-			}
+      .increment {
+        margin-left: 2em;
 
-			.increment {
-				margin-left: 2em;
+        button {
+          padding: 0;
+          min-width: 30px;
+          margin: 1px;
+          max-height: 30px;
+          line-height: 30px;
+        }
+      }
 
-				button {
-					padding: 0;
-					min-width: 30px;
-					margin: 1px;
-					max-height: 30px;
-					line-height: 30px;
-				}
-			}
+      .non-info-warning {
+        color: #374779;
+        margin-top: 5px;
 
-			.non-info-warning {
-				color: #374779;
-				margin-top: 5px;
+        mat-icon {
+          margin-left: 7px;
+        }
+      }
+    }
 
-				mat-icon {
-					margin-left: 7px;
-				}
-			}
-		}
+    #unfold-hierarchy-table {
+      margin-top: 3em;
 
-		#unfold-hierarchy-table {
-			margin-top: 3em;
+      kl-ag-grid {
+        min-height: 242px;
+        max-height: 242px;
 
-			kl-ag-grid {
-				min-height: 242px;
-				max-height: 242px;
+        ::ng-deep .ag-center-cols-viewport {
+          overflow-x: hidden;
+        }
+      }
+    }
+  }
 
-				::ng-deep .ag-center-cols-viewport {
-					overflow-x: hidden;
-				}
-			}
-		}
+  ::ng-deep .chart-legend li:last-child {
+    display: none !important;
+  }
 
-	}
-
-	::ng-deep .chart-legend li:last-child {
-		display: none !important;
-	}
-
-	::ng-deep .chart-legend .legend-wrap {
-		width: calc(100% - 40px) !important;
-	}
+  ::ng-deep .chart-legend .legend-wrap {
+    width: calc(100% - 40px) !important;
+  }
 }

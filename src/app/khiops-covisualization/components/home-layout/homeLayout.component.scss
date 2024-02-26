@@ -1,37 +1,36 @@
 #home-layout-comp {
+  .mat-tab-label-container {
+    margin-right: 15em;
+  }
 
-	.mat-tab-label-container {
-		margin-right: 15em;
-	}
+  #header-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 68px;
+    z-index: 1000;
+  }
 
-	#header-right {
-		position: absolute;
-		top: 0;
-		right: 0;
-		height: 68px;
-		z-index: 1000;
-	}
+  #version {
+    position: absolute;
+    right: 0;
+    top: 1.8em;
+  }
 
-	#version {
-		position: absolute;
-		right: 0;
-		top: 1.8em;
-	}
+  mat-tab-group {
+    width: 100%;
+    top: 0;
+    position: absolute;
+  }
 
-	mat-tab-group {
-		width: 100%;
-		top: 0;
-		position: absolute;
-	}
-
-	app-project-view,
-	app-axis-view {
-		width: calc(100% - 10px);
-		background: var(--bgColor-20) !important;
-		padding: 5px;
-		margin-top: 69px;
-		top: 0;
-		position: absolute;
-		height: calc(100% - 80px);
-	}
+  app-project-view,
+  app-axis-view {
+    width: calc(100% - 10px);
+    background: var(--bgColor-20) !important;
+    padding: 5px;
+    margin-top: 69px;
+    top: 0;
+    position: absolute;
+    height: calc(100% - 80px);
+  }
 }

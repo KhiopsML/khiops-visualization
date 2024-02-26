@@ -1,19 +1,16 @@
-
 #target-lift-graph-comp {
-	padding: 1px;
-	background-color: var(--bgColor) !important;
+  padding: 1px;
+  background-color: var(--bgColor) !important;
 
-	.comp-header {
-		margin: 10px 1px;
+  .comp-header {
+    margin: 10px 1px;
 
-		h1 {
-			margin-right: 1em !important;
-		}
+    h1 {
+      margin-right: 1em !important;
+    }
 
-		button {
-			white-space: pre-wrap !important;
-		}
-
-	}
-
+    button {
+      white-space: pre-wrap !important;
+    }
+  }
 }

@@ -1,23 +1,20 @@
 #level-distribution-graph-canvas-comp {
-	background-color: var(--bgColor) !important; // for copy image
+  background-color: var(--bgColor) !important; // for copy image
 
-	kl-chart-next {
-		padding-top: 30px;
-		height: 90% !important;
-	}
+  kl-chart-next {
+    padding-top: 30px;
+    height: 90% !important;
+  }
 
-	.comp-header-tools {
-		h2 {
-			margin: 0.8em 1em 0em 2em;
-		}
-
-
-	}
-
+  .comp-header-tools {
+    h2 {
+      margin: 0.8em 1em 0em 2em;
+    }
+  }
 }
 
 #level-distribution-graph-canvas-comp.selected {
-	>div {
-		box-shadow: none !important;
-	}
+  > div {
+    box-shadow: none !important;
+  }
 }

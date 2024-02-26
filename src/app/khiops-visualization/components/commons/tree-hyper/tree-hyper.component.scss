@@ -1,42 +1,41 @@
 #tree-hyper-comp {
-	height: 100%;
-	padding: 0;
+  height: 100%;
+  padding: 0;
 
-	background-color: var(--bgColor) !important;
+  background-color: var(--bgColor) !important;
 
-	#graph-header-comp {
-		flex-wrap: wrap;
-		padding: 5px 0;
-		kl-btn-fullscreen {
-			margin-right: 0.3rem;
-		}
-		#graph-header-tools {
-			mat-checkbox {
-				margin: 0 0 0 1rem;
-			}
+  #graph-header-comp {
+    flex-wrap: wrap;
+    padding: 5px 0;
+    kl-btn-fullscreen {
+      margin-right: 0.3rem;
+    }
+    #graph-header-tools {
+      mat-checkbox {
+        margin: 0 0 0 1rem;
+      }
 
-			::ng-deep .mat-checkbox-layout .mat-checkbox-label {
-				width: 130px !important;
-				white-space: normal !important;
-				line-height: inherit !important;
-			}
-		}
-	}
+      ::ng-deep .mat-checkbox-layout .mat-checkbox-label {
+        width: 130px !important;
+        white-space: normal !important;
+        line-height: inherit !important;
+      }
+    }
+  }
 
-	#hyperTree {
-		position: relative;
-		height: 100%;
+  #hyperTree {
+    position: relative;
+    height: 100%;
 
-		::ng-deep .unitdisk-nav {
-			svg {
-				position: absolute !important;
+    ::ng-deep .unitdisk-nav {
+      svg {
+        position: absolute !important;
 
-				.caption {
-					stroke: transparent;
-					fill: var(--bgColorContrast)
-
-				}
-			}
-		}
-	}
+        .caption {
+          stroke: transparent;
+          fill: var(--bgColorContrast);
+        }
+      }
+    }
+  }
 }
