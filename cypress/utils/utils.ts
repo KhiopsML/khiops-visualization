@@ -35,3 +35,17 @@ export function isRegressionAnalysis(appDatas): boolean {
     return false;
   }
 }
+
+export function isNumericalDimension(appDatas, dimensionIndex): boolean {
+  if (typeof appDatas === 'string') {
+    appDatas = JSON.parse(appDatas);
+  }
+  if (
+    appDatas?.coclusteringReport?.dimensionSummaries[dimensionIndex].type ===
+    'Numerical'
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+}

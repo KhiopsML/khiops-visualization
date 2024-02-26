@@ -1,7 +1,6 @@
 import '../support/commands';
 import '../utils/utils';
 import { setupPreparationTests } from '../setups/preparation-tests';
-import { isExplanatoryAnalysis, isRegressionAnalysis } from '../utils/utils';
 import { setupPreparation2dTests } from 'cypress/setups/preparation-2d-tests';
 import { setupModelingTests } from 'cypress/setups/modeling-tests';
 import { setupEvaluationTests } from 'cypress/setups/evaluation-tests';

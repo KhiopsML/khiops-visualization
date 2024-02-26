@@ -34,6 +34,7 @@ export class UnfoldHierarchyComponent implements OnInit {
   colorSetInfoPerCluster: ChartColorsSetI;
   previousHierarchyRank: number;
   currentInformationPerCluster = 100;
+  cyInput: number; // cypress input value to automatise unfold hierarchy
 
   dimensions: DimensionVO[];
   unfoldHierarchyTableTitle = '';
@@ -138,6 +139,10 @@ export class UnfoldHierarchyComponent implements OnInit {
 
   highlightChartLine(name: string) {
     this.selectedLineChartItem = name;
+  }
+
+  setCypressInput(cyInput) {
+    this.currentUnfoldHierarchy = cyInput;
   }
 
   ngOnInit() {
