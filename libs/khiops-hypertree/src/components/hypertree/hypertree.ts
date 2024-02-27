@@ -18,27 +18,9 @@ import { IUnitDisk } from '../unitdisk/unitdisk';
 import { presets } from '../../models/hypertree/preset-base';
 import { mergeDeep } from '../../ducd/';
 let globelhtid = 0;
-const htmlpreloader = `
-    <div class="spinner">
-        <div class="double-bounce1"></div>
-        <div class="double-bounce2"></div>
-    </div>`;
-
-const grad = [255, 96, 36, 0];
-const bubbleSvgDef = `<defs>
-        <radialGradient id="exampleGradient">
-            <stop offset="58%"  stop-color="rgb(${grad[0]},${grad[0]},${grad[0]})" stop-opacity=".15"/>
-            <stop offset="92%"  stop-color="rgb(${grad[1]},${grad[1]},${grad[1]})" stop-opacity=".15"/>
-            <stop offset="98%"  stop-color="rgb(${grad[2]},${grad[2]},${grad[2]})" stop-opacity=".15"/>
-            <stop offset="100%" stop-color="rgb(${grad[3]},${grad[3]},${grad[3]})" stop-opacity=".15"/>
-        </radialGradient>
-    </defs>`;
-
 const hypertreehtml = `<div class="unitdisk-nav">
         <svg width="100%" height="100%" preserveAspectRatio="xMidYMid meet" viewBox="-0 0 1000 1000">
-            ${bubbleSvgDef}
         </svg>
-        <div class="preloader"></div>
     </div>`;
 
 export class Hypertree {
@@ -314,9 +296,8 @@ export class Hypertree {
   }
 
   protected updateUnitdiskView() {
-    console.log("_updateUnitdiskView")
+    console.log('_updateUnitdiskView');
     var udparent = this.view_.html.querySelector('.unitdisk-nav > svg');
-    udparent.innerHTML = bubbleSvgDef;
     this.unitdisk = new this.args.geometry.decorator(
       {
         parent: udparent,
@@ -355,8 +336,7 @@ export class Hypertree {
   //########################################################################################################
 
   protected resetData() {
-    console.log("_resetData")
-    this.view_.html.querySelector('.preloader').innerHTML = htmlpreloader;
+    console.log('_resetData');
     this.unitdisk.args.data = undefined;
     this.data = undefined;
     this.langMap = undefined;
@@ -419,7 +399,6 @@ export class Hypertree {
     };
     this.updateLang_();
     this.findInitλ_();
-    this.view_.html.querySelector('.preloader').innerHTML = '';
   }
 
   protected updateWeights_(): void {

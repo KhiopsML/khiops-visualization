@@ -10,7 +10,7 @@ export interface HypertreeArgs {
   langmap?: {} | null;
   dataloader?: LoaderFunction;
   langloader?: (lang) => (ok) => void;
-  langInitBFS: (ht: Hypertree, n: N) => void; // text, wiki, clickable, cell, :  auto--> textlen
+  langInitBFS: (ht: Hypertree, n: N) => void; // text, clickable, cell, :  auto--> textlen
   objects: {
     pathes: Path[];
     selections: N[];
