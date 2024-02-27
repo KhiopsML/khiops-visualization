@@ -12,7 +12,6 @@ import { LabelForceLayer } from '../../components/layers/label-force-layer';
 import { InteractionLayer } from '../../components/layers/interaction-layer';
 import { InteractionLayer2 } from '../../components/layers/interaction-layer-2';
 import { TraceLayer } from '../../components/layers/trace-layer';
-import { ImageLayer } from '../../components/layers/image-layer';
 import { FocusLayer } from '../../components/layers/focus-layer';
 import { bboxCenter, bboxOval } from '../../d3-hypertree';
 
@@ -254,24 +253,7 @@ export const layerSrc = [
       data: () => ud.cache.spezialNodes,
       transform: (d) => d.transformStrCache + ` scale(${d.dampedDistScale})`,
     }),
-  (v, ud: UnitDisk) =>
-    new ImageLayer(v, {
-      name: 'images',
-      data: () => ud.cache.images,
-      width: 0.05,
-      height: 0.05,
-      imagehref: (d) => d.precalc.imageHref,
-      delta: (d) =>
-        CmulR(
-          {
-            re: -0.05,
-            im: -0.05,
-          },
-          d.distScale,
-        ),
-      transform: (d, delta) =>
-        ` translate(${d.cache.re} ${d.cache.im})` + ` scale(${d.distScale})`,
-    }),
+
   (v, ud: UnitDisk) =>
     new LabelLayer(v, {
       //invisible:  true,
