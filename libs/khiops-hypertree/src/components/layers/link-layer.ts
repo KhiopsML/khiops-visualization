@@ -11,14 +11,16 @@ export type ArcCurvature = '+' | '0' | '-' | 'l';
 export interface ArcLayerArgs extends ILayerArgs {
   data: () => any;
   name: string;
+  invisible?: boolean;
+  hideOnDrag?: boolean;
   className: string;
   curvature: ArcCurvature;
   nodePos: (n: N) => C;
   nodePosStr: (n: N) => string;
   classed: (s, w, stroke) => void;
-  width;
-  strokeWidth: any;
-  stroke: any;
+  width?;
+  strokeWidth?: any;
+  stroke?: any;
   clip?: string;
 }
 

@@ -9,9 +9,9 @@ export interface LabelLayerArgs extends ILayerArgs {
   invisible?: boolean;
   hideOnDrag?: boolean;
   data: () => any;
-  isVisible: (d) => any;
-  background;
-  color;
+  isVisible?: (d) => any;
+  background?;
+  color?;
   delta;
   transform;
   text;
@@ -124,10 +124,10 @@ export var bboxOval = (d, cacheId = 'labelslen', θn = undefined) => {
   // console.assert(w)
   const θ = θn ? θn.θ : d.cachep.θ;
   /*
-        return CsubC(        
-            { 
-                re:(w/2+paddingLeftRight/2)*Math.cos(θ), 
-                im:(h/2+paddingTopBottom/2)*Math.sin(θ) 
+        return CsubC(
+            {
+                re:(w/2+paddingLeftRight/2)*Math.cos(θ),
+                im:(h/2+paddingTopBottom/2)*Math.sin(θ)
             },
             { re:w/2, im:h/2}
         )

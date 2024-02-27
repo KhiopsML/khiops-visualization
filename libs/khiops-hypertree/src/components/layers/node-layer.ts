@@ -9,9 +9,10 @@ export interface NodeLayerArgs extends ILayerArgs {
   data: () => any;
   r: (d) => any;
   transform;
-  strokeWidth;
-  fill;
-  opacity;
+  strokeWidth?;
+  fill?;
+  opacity?;
+  stroke?;
   clip?: string;
 }
 
