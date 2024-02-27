@@ -196,9 +196,13 @@ export class DistributionGraphCanvasComponent
     this.graphOptions.selected = type;
     this.graphTypeChanged.emit(type);
     this.chartOptions.scales!.y!.type = TYPES.LINEAR;
-
     const minValue = Math.min(...this.inputDatas.datasets[0].data);
-    this.chartOptions.scales!.y!.min = minValue;
+
+    if (minValue > 0) {
+      this.chartOptions.scales.y.min = 0;
+    } else {
+      this.chartOptions.scales.y.min = minValue;
+    }
     this.chartOptions = _.cloneDeep(this.chartOptions);
   }
 }
