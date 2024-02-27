@@ -6,7 +6,6 @@ import { CtoStr } from '../../models/transformation/hyperbolic-math';
 import { bboxCenter } from '../layerstack/d3updatePattern';
 import { CellLayer } from '../layers/cell-layer';
 import { BackgroundLayer } from '../layers/background-layer';
-import { SymbolLayer } from '../layers/symbol-layer';
 import { ArcLayer } from '../layers/link-layer';
 import { LabelLayer } from '../layers/label-layer';
 import { UnitDisk } from './unitdisk';
@@ -98,14 +97,5 @@ export const navBackgroundLayers = [
       delta: labelDelta(ud),
       transform: (d: N, delta: C) =>
         ` translate(${CtoStr(CaddC((d.layoutReference || d.layout).z, delta))})`,
-    }),
-  (v, ud: UnitDisk) =>
-    new SymbolLayer(v, {
-      name: 'symbols',
-      data: () => ud.cache.spezialNodes,
-      r: (d: N) => 0.03,
-      transform: (d: N) =>
-        ` translate(${(d.layoutReference || d.layout).zStrCache})` +
-        ` scale(${d.dampedDistScale})`,
     }),
 ];

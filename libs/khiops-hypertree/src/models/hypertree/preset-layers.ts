@@ -1,11 +1,10 @@
 import { N } from '../n/n';
 import { C, CptoCk } from '../transformation/hyperbolic-math';
-import { CaddC, CmulR } from '../transformation/hyperbolic-math';
+import { CaddC } from '../transformation/hyperbolic-math';
 import { UnitDisk } from '../../components/unitdisk/unitdisk';
 import { NodeLayer } from '../../components/layers/node-layer';
 import { CellLayer } from '../../components/layers/cell-layer';
 import { BackgroundLayer } from '../../components/layers/background-layer';
-import { SymbolLayer } from '../../components/layers/symbol-layer';
 import { ArcLayer } from '../../components/layers/link-layer';
 import { LabelLayer } from '../../components/layers/label-layer';
 import { LabelForceLayer } from '../../components/layers/label-force-layer';
@@ -241,17 +240,6 @@ export const layerSrc = [
       strokeWidth: (n) => undefined,
       r: (d) => ud.args.nodeRadius(ud, d),
       transform: (d) => d.transformStrCache + ` scale(${ud.args.nodeScale(d)})`,
-    }),
-
-  // IMAGE LABLE SYMBOL EMOJI
-
-  (v, ud: UnitDisk) =>
-    new SymbolLayer(v, {
-      invisible: false,
-      hideOnDrag: false,
-      name: 'symbols',
-      data: () => ud.cache.spezialNodes,
-      transform: (d) => d.transformStrCache + ` scale(${d.dampedDistScale})`,
     }),
 
   (v, ud: UnitDisk) =>
