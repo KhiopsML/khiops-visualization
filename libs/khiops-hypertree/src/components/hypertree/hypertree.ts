@@ -30,15 +30,15 @@ const htmlpreloader = `
 
 const grad = [255, 96, 36, 0];
 const bubbleSvgDef = `<defs>
-        <radialGradient id="exampleGradient">            
-            <stop offset="58%"  stop-color="rgb(${grad[0]},${grad[0]},${grad[0]})" stop-opacity=".15"/>            
+        <radialGradient id="exampleGradient">
+            <stop offset="58%"  stop-color="rgb(${grad[0]},${grad[0]},${grad[0]})" stop-opacity=".15"/>
             <stop offset="92%"  stop-color="rgb(${grad[1]},${grad[1]},${grad[1]})" stop-opacity=".15"/>
             <stop offset="98%"  stop-color="rgb(${grad[2]},${grad[2]},${grad[2]})" stop-opacity=".15"/>
             <stop offset="100%" stop-color="rgb(${grad[3]},${grad[3]},${grad[3]})" stop-opacity=".15"/>
         </radialGradient>
     </defs>`;
 
-const hypertreehtml = `<div class="unitdisk-nav">        
+const hypertreehtml = `<div class="unitdisk-nav">
         <svg width="100%" height="100%" preserveAspectRatio="xMidYMid meet" viewBox="-0 0 1000 1000">
             ${bubbleSvgDef}
         </svg>
@@ -265,21 +265,23 @@ export class Hypertree {
         ),
       ),
     gotoNode: (n: N, duration: number) =>
-      new Promise((ok, err) =>
-        this.animateTo(
-          ok,
-          err,
-          CmulR(
-            {
-              re: n.layout.z.re,
-              im: n.layout.z.im,
-            },
-            -1,
-          ),
-          null,
-          duration,
-        ),
-      ),
+      new Promise((ok, err) => {
+        if (n?.layout?.z?.re) {
+          this.animateTo(
+            ok,
+            err,
+            CmulR(
+              {
+                re: n.layout.z.re,
+                im: n.layout.z.im,
+              },
+              -1,
+            ),
+            null,
+            duration,
+          );
+        }
+      }),
     goto: (p, l) => new Promise((ok, err) => this.animateTo(ok, err, p, l)),
     gotoλ: (l) => new Promise((ok, err) => this.animateToλ(ok, err, l)),
   };
@@ -794,7 +796,7 @@ class TransitionModel {
     public type : 'animation' | 'interaction' | 'script'
     public frames : Frame[] = []
     public lowdetail = true
-    public currentframe : Frame    
+    public currentframe : Frame
     public beginTime
     public endTime
 }*/

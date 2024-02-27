@@ -18,6 +18,7 @@
   },
   "scripts": {
     "build": "ng build",
+    "buildTree": "./buildTree.sh",
     "build:stats": "ng build --stats-json --source-map --output-hashing none && npm run stats:webpack-bundle-analyzer & npm run stats:source-map-explorer",
     "build:webcomponents": "./build.sh",
     "quickbuild:webcomponents": "./quickbuild.sh",
