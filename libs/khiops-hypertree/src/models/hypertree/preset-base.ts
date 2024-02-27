@@ -22,12 +22,6 @@ var arcWidth = (d) => 0.025 * d.distScale * d.precalc.weightScale;
 
 const modelBase: () => HypertreeArgs = () => ({
   langloader: (ok) => ok(),
-  dataInitBFS: (ht: Hypertree, n: N) => {
-    n.precalc.imageHref = undefined;
-    n.precalc.icon = undefined;
-    n.precalc.clickable = true;
-    n.precalc.cell = true;
-  },
   langInitBFS: (ht: Hypertree, n: N) => {
     n.precalc.label = undefined;
     n.precalc.wiki = undefined;

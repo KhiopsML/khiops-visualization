@@ -10,7 +10,6 @@ export interface HypertreeArgs {
   langmap?: {} | null;
   dataloader?: LoaderFunction;
   langloader?: (lang) => (ok) => void;
-  dataInitBFS: (ht: Hypertree, n: N) => void; // emoji, imghref
   langInitBFS: (ht: Hypertree, n: N) => void; // text, wiki, clickable, cell, :  auto--> textlen
   objects: {
     pathes: Path[];
