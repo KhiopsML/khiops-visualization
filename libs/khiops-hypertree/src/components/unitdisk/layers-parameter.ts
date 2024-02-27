@@ -22,8 +22,6 @@ var Pscale = (ud: UnitDisk) => (d: any) =>
   lengthDilledation(d.cache) * (1 - ud.args.transformation.state.λ);
 
 export const navParameterLayers = [
-  // @ts-ignore
-
   (v, ud: UnitDisk) =>
     new CellLayer(v, {
       invisible: true,
@@ -31,8 +29,6 @@ export const navParameterLayers = [
       clip: '#circle-clip' + ud.args.clipRadius,
       data: () => ud.cache.cells,
     }),
-  // @ts-ignore
-
   (v, ud: UnitDisk) =>
     new NodeLayer(v, {
       invisible: true,
@@ -43,8 +39,6 @@ export const navParameterLayers = [
       r: (d: N) => (d.name === 'P' ? Pscale(ud)(d) : ud.args.nodeRadius(ud, d)),
       transform: (d: N) => d.transformStrCache,
     }),
-  // @ts-ignore
-
   (v, ud: UnitDisk) =>
     new LabelLayer(v, {
       invisible: true,

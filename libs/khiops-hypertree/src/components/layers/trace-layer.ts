@@ -1,4 +1,3 @@
-import * as d3 from 'd3';
 import { ILayer } from '../layerstack/layer';
 import { ILayerView } from '../layerstack/layer';
 import { ILayerArgs } from '../layerstack/layer';

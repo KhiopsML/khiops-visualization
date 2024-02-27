@@ -7,15 +7,12 @@ import { UnitDiskArgs } from '../unitdisk/unitdisk-model';
 import { Hypertree } from '../../components/hypertree/hypertree';
 
 export interface HypertreeArgs {
-  //datasource: {
   langmap?: {} | null;
   dataloader?: LoaderFunction;
   langloader?: (lang) => (ok) => void;
   dataInitBFS: (ht: Hypertree, n: N) => void; // emoji, imghref
   langInitBFS: (ht: Hypertree, n: N) => void; // text, wiki, clickable, cell, :  auto--> textlen
-  // }
   objects: {
-    //roots:              N[]
     pathes: Path[];
     selections: N[];
     traces: Trace[];
@@ -43,19 +40,9 @@ export interface HypertreeArgs {
     maxFocusRadius: number;
     wikiRadius: number;
     maxlabels: number;
-    /*labelFilter: {
-            type:               string
-            cullingRadius:      number
-            magic:              number                           // auto by init up
-            weight:             (n)=> number
-            rangeCullingWeight: { min:number, max:number }
-            rangeNodes:         { min:number, max:number }
-            alpha:              number                
-        }*/
   };
   geometry: UnitDiskArgs; // layer -+
   interaction: {
-    //type:               'clickonly' | 'selction' | 'multiselection' | 'centernodeselectable'
     mouseRadius: number;
     onNodeClick: (n, m, l) => void;
     onNodeSelect: (n: N) => void;

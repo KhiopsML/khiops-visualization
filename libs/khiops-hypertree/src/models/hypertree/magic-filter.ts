@@ -1,68 +1,26 @@
 import { N } from '../n/n';
 import { IUnitDisk } from '../../components/unitdisk/unitdisk';
-import { dfs2, dfsFlat2, dfsFlat } from '../transformation/hyperbolic-math';
+import { dfs2 } from '../transformation/hyperbolic-math';
 import { TransformationCache } from '../transformation/hyperbolic-transformation';
-import { C, CptoCk, CktoCp, πify } from '../transformation/hyperbolic-math';
+import { CktoCp } from '../transformation/hyperbolic-math';
 import { CassignC } from '../transformation/hyperbolic-math';
-
 import { doVoronoiStuff } from './preset-process';
 import { doLabelStuff } from './preset-process';
 import { doImageStuff } from './preset-process';
 
-/*
-class Culler {
-    rangeNodes = { min:120, max:420 }
-    rangeMagic = { min:2,   max:500 }
-    alpha      = 1.05
-
-    public adjustMagic(ud:IUnitDisk, cache:TransformationCache) {
-        const rangeNodes = { min:120, max:420 }
-        const rangeMagic = { min:2,   max:500 }
-        const alpha      = 1.05
-        //stopUp
-        //stopDown
-        if (cache.unculledNodes) {
-            if (cache.unculledNodes.length > rangeNodes.max) {
-                if (ud.view.hypertree.args.magic > rangeMagic.min) { // ???
-                    ud.view.hypertree.args.magic /= alpha                
-                }
-            }
-            if (cache.unculledNodes.length < rangeNodes.min) {
-                if (ud.view.hypertree.args.magic < rangeMagic.max) { // ???
-                    ud.view.hypertree.args.magic *= alpha
-                }
-            }
-        }
-    }
-
-    public abortfilter(n, idx, highway) { // return false to abort
-        n.minWeight = highway[0].precalc.cullingWeight / ud.view.hypertree.args.magic * mf
-        peocessNodeTransformation(ud, cache, n)
-        peocessNode(ud, cache, n, focusR, n.minWeight)        
-        return !n.isOut
-    }
-}
-*/
 function adjustMagic(ud: IUnitDisk, cache: TransformationCache) {
   const filter = ud.view.hypertree.args.filter.weightFilter;
-  //if (filter === null)
-  //    return
-
   const rangeNodes = filter.rangeNodes; //{ min:300, max:700 }
   const rangeMagic = filter.rangeCullingWeight; //{ min:4,   max:500 }
   const alpha = filter.alpha;
-  //stopUp
-  //stopDown
   if (cache.unculledNodes) {
     if (cache.unculledNodes.length > rangeNodes.max) {
       if (filter.magic > rangeMagic.min) {
-        // ???
         filter.magic /= alpha;
       }
     }
     if (cache.unculledNodes.length < rangeNodes.min) {
       if (filter.magic < rangeMagic.max) {
-        // ???
         filter.magic *= alpha;
       }
     }
@@ -79,19 +37,16 @@ function collectNodesByWeight(
     normλ * ud.view.hypertree.args.filter.focusExtension,
     ud.view.hypertree.args.filter.maxFocusRadius,
   );
-
-  // console.assert(cache.focusR < 1 && cache.focusR > 0)
   adjustMagic(ud, cache);
 
   // select visible nodes
-
   const startNode = path[0];
   cache.unculledNodes = [];
   cache.spezialNodes = [ud.args.data, startNode].filter((e) => e);
   cache.emojis = [];
   cache.cells = [];
 
-  const mf = ud.view.hypertree.isAnimationRunning() ? 1 : 1; // todo: make configurable
+  const mf = ud.view.hypertree.isAnimationRunning() ? 1 : 1;
 
   function abortfilter(n, idx, highway) {
     // return false to abort
@@ -179,7 +134,7 @@ export function cacheUpdate(ud: IUnitDisk, cache: TransformationCache) {
     voro wrid gebraucht:
     - mouse up: um click voro zu berechnen
     - celllayer still enabled
-    - cellayer anitmation enabled        
+    - cellayer anitmation enabled
     */
   if (
     !ud.view.hypertree.isAnimationRunning() ||

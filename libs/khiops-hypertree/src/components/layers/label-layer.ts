@@ -76,7 +76,6 @@ export class LabelLayer implements ILayer {
       }
 
       // console.warn(this.args.isVisible(d))
-
       this.d3updatePattern = new D3UpdatePattern({
         parent: this.view.parent,
         layer: this,

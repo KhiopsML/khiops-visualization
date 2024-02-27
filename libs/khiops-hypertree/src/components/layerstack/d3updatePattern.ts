@@ -1,6 +1,5 @@
 import { N } from '../../models/n/n';
 import { ILayer } from './layer';
-import { CaddC, CsubC } from '../../models/transformation/hyperbolic-math';
 
 export interface D3UpdatePatternArgs {
   parent: any;
@@ -57,13 +56,7 @@ export class D3UpdatePattern {
     }
 
     this.elements = this.elements.data(this.data, (d) => d && d.mergeId);
-    const removedElements = this.elements
-      .exit()
-      /*.transition()
-                .duration(1000)
-                .attr("fill-opacity", 0)
-                .attr("stroke-opacity", 0)*/
-      .remove();
+    const removedElements = this.elements.exit().remove();
 
     const newElements = this.elements
       .enter()
@@ -73,7 +66,6 @@ export class D3UpdatePattern {
 
     this.elements = this.elements
       .merge(newElements)
-      //.call(this.all)
       .call(this.args.updateTransform)
       .call(this.args.updateColor);
   }

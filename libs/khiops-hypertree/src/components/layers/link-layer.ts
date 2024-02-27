@@ -72,8 +72,6 @@ export class ArcLayer implements ILayer {
           s.attr('d', (d) => this.arcOptions[c(d)](d))
             .attr('stroke-width', (d) => this.args.strokeWidth(d))
             .attr('stroke-linecap', (d) => 'round');
-
-        //this.args.classed(s, this.args.width)
       },
     });
   }
@@ -94,8 +92,6 @@ export class ArcLayer implements ILayer {
             re: arcP1.re,
             im: 1,
           };
-      // console.assert(arcP1)
-      // console.assert(arcP2)
       var arcC = arcCenter(arcP1, arcP2);
 
       var r = CktoCp(CsubC(arcP2, arcC.c)).r;

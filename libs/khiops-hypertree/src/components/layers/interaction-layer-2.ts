@@ -2,14 +2,9 @@ import * as d3 from 'd3';
 import { ILayer } from '../layerstack/layer';
 import { ILayerView } from '../layerstack/layer';
 import { ILayerArgs } from '../layerstack/layer';
-import { LayerStack } from '../layerstack/layerstack';
 import { N } from '../../models/n/n';
-import { C, Cp, maxR } from '../../models/transformation/hyperbolic-math';
-import {
-  CptoCk,
-  CktoCp,
-  ArrtoC,
-} from '../../models/transformation/hyperbolic-math';
+import { C, maxR } from '../../models/transformation/hyperbolic-math';
+import { CktoCp, ArrtoC } from '../../models/transformation/hyperbolic-math';
 import {
   CaddC,
   CsubC,
@@ -221,7 +216,7 @@ export class InteractionLayer2 implements ILayer {
   //-----------------------------------------------------------------------------------------
 
   /*
-    interface DragState: {    
+    interface DragState: {
         onPointerStart: (pid:number, m:C)=> void,
         onPointerMove:  (pid:number, m:C)=> void,
         onPointerEnd:  (pid:number, m:C)=> void,
@@ -485,8 +480,8 @@ class MouseDownState implements DragState {
 }
 
 /*
-class PanState implements DragState {    
-    private panStart:C    
+class PanState implements DragState {
+    private panStart:C
     constructor() {
 
     }
@@ -514,7 +509,7 @@ class PanState implements DragState {
     }
 }
 
-class PinchState implements DragState {    
+class PinchState implements DragState {
     pinchInitDist:       number
     pinchInitλp:         number
     pinchcenter:         C
@@ -527,7 +522,7 @@ class PinchState implements DragState {
         const t0e = t0.points[t0.points.length-1]
         this.pinchcenter = CmulR(CaddC(t0e, m), .5)
         this.view.unitdisk.pinchcenter = this.pinchcenter
-        this.pinchPreservingNode = this.findUnculledNodeByCell(this.pinchcenter)            
+        this.pinchPreservingNode = this.findUnculledNodeByCell(this.pinchcenter)
         this.pinchInitDist = this.dist(t0e, m)
         this.pinchInitλp = this.view.unitdisk.args.transformation.state.λ
         this.nopinch = false
@@ -541,12 +536,12 @@ class PinchState implements DragState {
         const dist = this.dist(t0e, t1e)
         const f = dist / this.pinchInitDist
         const newλp = this.pinchInitλp * f
-        
+
         if (newλp > this.view.hypertree.args.interaction.λbounds[0] &&
-            newλp < this.view.hypertree.args.interaction.λbounds[1] ) 
+            newλp < this.view.hypertree.args.interaction.λbounds[1] )
         {
             const pinchcenter2 = maxR(CmulR(CaddC(t0e, t1e), .5), this.args.mouseRadius)
-            
+
             const t = this.view.unitdisk.args.transformation
             t.onDragλ(newλp)
             this.view.hypertree.updateLayoutPath_(this.pinchPreservingNode) // only path to center
@@ -554,7 +549,7 @@ class PinchState implements DragState {
             t.state.P = compose(t.state, shift(t.state, this.pinchcenter, pinchcenter2)).P
 
             this.pinchcenter = CmulR(CaddC(this.pinchcenter, pinchcenter2), .5)
-            this.view.unitdisk.pinchcenter = this.pinchcenter                
+            this.view.unitdisk.pinchcenter = this.pinchcenter
         }
     }
     public onPointerEnd(pid:number, m:C) {
@@ -564,7 +559,7 @@ class PinchState implements DragState {
 
         this.dST = clone(this.view.unitdisk.args.transformation.state)
         this.view.unitdisk.args.transformation.dST = this.dST
-        //console.log(still » pan || pinch » pan)            
+        //console.log(still » pan || pinch » pan)
         this.nopinch = true
     }
 }

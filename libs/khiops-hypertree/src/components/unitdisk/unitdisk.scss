@@ -1,6 +1,6 @@
 .unitdisk-nav {
   svg {
-    cursor: crosshair;
+    cursor: default;
 
     .cell {
       pointer-events: none;
@@ -10,7 +10,6 @@
     }
     .node {
       pointer-events: none;
-      //animation: nodefadein 1250ms ease-in-out;// infinite;
     }
     @keyframes nodefadein {
       0% {
@@ -22,23 +21,12 @@
     }
 
     .caption {
-      //font-family: 'NotoColorEmoji';
-      //text-transform: uppercase;
-      //font-size: .025pt;
       font-size: 0.002em;
       font-weight: 300;
-      //dominant-baseline: middle;
-      //text-anchor: middle;
       user-select: none;
-      //letter-spacing: 0.05em;
       pointer-events: none;
-
       text-rendering: optimizeSpeed;
-      //animation: fade-in 750ms ease-in-out;
     }
-    // .caption:lang(zh) {
-    //     font-size: .0025em;
-    // }
 
     @keyframes fade-in {
       from {
@@ -48,35 +36,15 @@
         opacity: 1;
       }
     }
-    .caption-label {
-      /*
-            //transition-property: transform;
-            //transition-duration: 250ms;
-            transition-duration: 0ms;
-            transition-timing-function: ease-in-out;
-            transition-delay: 150ms;
-            */
-      //animation: fade-in 750ms ease-in-out;
-    }
-
-    .caption-icon {
-      font-family: 'NotoColorEmoji', Roboto;
-      font-size: 0.8;
-
-      transition-property: none;
-      transition-duration: 0ms;
-    }
 
     .caption-background {
       pointer-events: none;
-      //animation: fade-in 750ms ease-in-out;
     }
 
     .label-link {
       stroke-width: 0.02;
       stroke-dasharray: 0.001;
       stroke-linecap: round;
-      //animation: fade-in 750ms ease-in-out;
     }
 
     .background-circle {
@@ -85,21 +53,20 @@
     .mouse-circle {
       pointer-events: visibleFill;
       fill: none;
-      //cursor: crosshair;
     }
     .mouse-circle-cursor {
       pointer-events: visibleFill;
       fill: none;
-      cursor: crosshair;
+      cursor: default;
     }
 
     .ripple-world {
       pointer-events: none;
-      cursor: crosshair;
+      cursor: default;
     }
     .ripple-circle {
       pointer-events: none;
-      cursor: crosshair;
+      cursor: default;
       opacity: 0;
       animation: ripple 500ms ease-out;
     }
@@ -162,8 +129,6 @@
       }
       80%,
       100% {
-        //transform: scale(.6);
-        //transform: rotate(0);
       }
     }
 
@@ -182,7 +147,7 @@
       }
       .mouse-circle {
         pointer-events: visibleFill;
-        cursor: crosshair;
+        cursor: default;
       }
     }
 

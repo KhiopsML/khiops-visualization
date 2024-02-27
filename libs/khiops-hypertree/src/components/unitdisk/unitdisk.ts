@@ -2,27 +2,19 @@ import * as d3 from 'd3';
 import { N } from '../../models/n/n';
 import { navdata } from '../../models/n/n-loaders';
 import { C, CktoCp, CptoCk } from '../../models/transformation/hyperbolic-math';
-import {
-  CmulR,
-  CsubC,
-  CaddC,
-} from '../../models/transformation/hyperbolic-math';
+import { CmulR } from '../../models/transformation/hyperbolic-math';
 import { dfsFlat } from '../../models/transformation/hyperbolic-math';
 import { PanTransformation } from '../../models/transformation/hyperbolic-transformation';
 import { NegTransformation } from '../../models/transformation/hyperbolic-transformation';
 import { TransformationCache } from '../../models/transformation/hyperbolic-transformation';
 import { LayerStack } from '../layerstack/layerstack';
-// import { HypertreeMeta }           from '../meta/hypertree-meta/hypertree-meta'
-// import { HypertreeMetaNav }        from '../meta/hypertree-meta/hypertree-meta'
 import { UnitDiskArgs } from '../../models/unitdisk/unitdisk-model';
 import { UnitDiskView } from '../../models/unitdisk/unitdisk-model';
-
 import { navBackgroundLayers } from './layers-background';
 import { navBgNodeR } from './layers-background';
 import { navParameterLayers } from './layers-parameter';
 
 //----------------------------------------------------------------------------------------
-
 export interface IUnitDisk {
   view: UnitDiskView;
   args: UnitDiskArgs;
@@ -30,7 +22,6 @@ export interface IUnitDisk {
   cache;
   voronoiLayout: d3.VoronoiLayout<N>;
   layerStack: LayerStack;
-  // HypertreeMetaType
   navParameter?: UnitDisk;
   isDraging?: boolean;
 

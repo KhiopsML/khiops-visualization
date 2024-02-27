@@ -1,6 +1,6 @@
 import { N } from '../n/n';
-import { C, CptoCk, CktoCp, πify } from '../transformation/hyperbolic-math';
-import { CaddC, CsubC, CmulR } from '../transformation/hyperbolic-math';
+import { C, CptoCk } from '../transformation/hyperbolic-math';
+import { CaddC, CmulR } from '../transformation/hyperbolic-math';
 import { UnitDisk } from '../../components/unitdisk/unitdisk';
 import { NodeLayer } from '../../components/layers/node-layer';
 import { CellLayer } from '../../components/layers/cell-layer';
@@ -14,7 +14,6 @@ import { InteractionLayer2 } from '../../components/layers/interaction-layer-2';
 import { TraceLayer } from '../../components/layers/trace-layer';
 import { ImageLayer } from '../../components/layers/image-layer';
 import { FocusLayer } from '../../components/layers/focus-layer';
-import { StemLayer } from '../../components/layers/stem-layer';
 import { bboxCenter, bboxOval } from '../../d3-hypertree';
 
 export const labeloffsets = {
@@ -114,7 +113,7 @@ export const layerSrc = [
             className:  'weigths',
             data:       ()=> ud.cache.weights,
             r:          d=> ud.args.nodeRadius(ud, d),
-            transform:  d=> d.transformStrCache 
+            transform:  d=> d.transformStrCache
                             + ` scale(${ud.args.nodeScale(d)})`,
         }),
         (v, ud:UnitDisk)=> new NodeLayer(v, {
@@ -124,7 +123,7 @@ export const layerSrc = [
             className:  'wedges',
             data:       ()=> ud.cache.weights,
             r:          d=> ud.args.nodeRadius(ud, d),
-            transform:  d=> d.transformStrCache 
+            transform:  d=> d.transformStrCache
                             + ` scale(${ud.args.nodeScale(d)})`,
         }),
 
