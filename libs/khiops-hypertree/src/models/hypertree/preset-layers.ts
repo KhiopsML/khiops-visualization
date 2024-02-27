@@ -10,7 +10,6 @@ import { LabelLayer } from '../../components/layers/label-layer';
 import { LabelForceLayer } from '../../components/layers/label-force-layer';
 import { InteractionLayer } from '../../components/layers/interaction-layer';
 import { InteractionLayer2 } from '../../components/layers/interaction-layer-2';
-import { TraceLayer } from '../../components/layers/trace-layer';
 import { FocusLayer } from '../../components/layers/focus-layer';
 import { bboxCenter, bboxOval } from '../../d3-hypertree';
 
@@ -324,12 +323,5 @@ export const layerSrc = [
         ud.view.hypertree.api.toggleSelection(s); // toggle selection
         ud.view.hypertree.args.interaction.onNodeSelect(s); // focus splitter
       },
-    }),
-  (v, ud: UnitDisk) =>
-    new TraceLayer(v, {
-      invisible: true,
-      hideOnDrag: true,
-      name: 'traces',
-      data: () => ud.view.hypertree.args.objects.traces,
     }),
 ];
