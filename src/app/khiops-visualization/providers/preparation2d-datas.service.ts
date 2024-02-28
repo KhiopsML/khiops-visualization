@@ -62,7 +62,7 @@ export class Preparation2dDatasService {
     return this.preparation2dDatas;
   }
 
-  getInformationsDatas(): InfosDatasI[] {
+  getInformationsDatas(): InfosDatasI[] | undefined {
     const appDatas = this.appService.getDatas().datas;
     const informationsDatas = new InformationsVO(
       appDatas.bivariatePreparationReport.summary,
@@ -79,7 +79,7 @@ export class Preparation2dDatasService {
     return this.preparation2dDatas.isAxisInverted;
   }
 
-  setSelectedCellIndex(index) {
+  setSelectedCellIndex(index: number) {
     this.preparation2dDatas.selectedCellIndex = index;
     if (
       this.preparation2dDatas.matrixDatas &&
@@ -264,8 +264,8 @@ export class Preparation2dDatasService {
   } {
     const selectedVariable = this.getSelectedVariable();
 
-    const datasX = [],
-      datasY = [],
+    const datasX: any = [],
+      datasY: any = [],
       displayedColumnsX: GridColumnsI[] = [],
       displayedColumnsY: GridColumnsI[] = [];
 
@@ -339,12 +339,12 @@ export class Preparation2dDatasService {
   }
 
   getCellDatasByAxis(
-    type,
-    axisPartValues,
-    displayaxisPart,
-    datasAxis,
-    displayedColumns,
-    variableName,
+    type: string,
+    axisPartValues: string[],
+    displayaxisPart: string,
+    datasAxis: any,
+    displayedColumns: GridColumnsI[],
+    variableName: string,
   ) {
     if (axisPartValues) {
       if (type === TYPES.NUMERICAL) {
@@ -368,7 +368,7 @@ export class Preparation2dDatasService {
     }
   }
 
-  getModalityFrequency(source, variable, partition) {
+  getModalityFrequency(source: any, variable: string, partition: string) {
     let currentVar;
     Object.keys(source).forEach((key) => {
       if (source[key].dataGrid.dimensions[0].variable === variable) {
@@ -408,7 +408,7 @@ export class Preparation2dDatasService {
     }
   }
 
-  getVariableDetails(rank): VariableDetailsVO | undefined {
+  getVariableDetails(rank: string): VariableDetailsVO | undefined {
     const appDatas = this.appService.getDatas().datas;
     let variableDetails: VariableDetailsVO | undefined;
     const isRegressionOrExplanatoryAnalysis =
@@ -460,7 +460,7 @@ export class Preparation2dDatasService {
     return variableDetails;
   }
 
-  getMatrixCanvasDatas(selectedVariable): any {
+  getMatrixCanvasDatas(selectedVariable: Preparation2dVariableVO): any {
     this.preparation2dDatas.matrixDatas = undefined;
     const variablesDetails: VariableDetailsVO | undefined =
       this.getVariableDetails(selectedVariable.rank);
