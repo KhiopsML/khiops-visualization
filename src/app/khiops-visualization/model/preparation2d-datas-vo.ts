@@ -10,8 +10,8 @@ export class Preparation2dDatasVO {
   matrixDatas:
     | {
         variable: {
-          nameX: string;
-          nameY: string;
+          nameX: string | undefined;
+          nameY: string | undefined;
           xParts: number;
           yParts: number;
         };

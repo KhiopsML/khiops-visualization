@@ -460,7 +460,9 @@ export class Preparation2dDatasService {
     return variableDetails;
   }
 
-  getMatrixCanvasDatas(selectedVariable: Preparation2dVariableVO): any {
+  getMatrixCanvasDatas(
+    selectedVariable: Variable2dVO | Preparation2dVariableVO | VariableVO,
+  ): any {
     this.preparation2dDatas.matrixDatas = undefined;
     const variablesDetails: VariableDetailsVO | undefined =
       this.getVariableDetails(selectedVariable.rank);
@@ -566,8 +568,10 @@ export class Preparation2dDatasService {
           // Maybe can be improved and be taken into cell datas ?
           this.preparation2dDatas.matrixDatas = {
             variable: {
-              nameX: selectedVariable.name1,
-              nameY: selectedVariable.name2,
+              // @ts-ignore
+              nameX: selectedVariable.name1, // can be undefined in case of regression
+              // @ts-ignore
+              nameY: selectedVariable.name2, // can be undefined in case of regression
               xParts: xDimension.parts,
               yParts: yDimension.parts,
             },
@@ -634,7 +638,7 @@ export class Preparation2dDatasService {
    * @returns
    */
   getGlobalMinAndMax2dValues(
-    variablesDatas: Variable2dVO[] | VariableVO[],
+    variablesDatas: Variable2dVO[] | Preparation2dVariableVO[] | VariableVO[], // for regression,
   ): MatrixRangeValuesI {
     const currentRes: MatrixRangeValuesI = {
       CELL_INTEREST: [],
