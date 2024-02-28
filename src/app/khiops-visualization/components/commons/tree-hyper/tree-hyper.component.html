@@ -13,8 +13,10 @@
   >
     <h1 fxFlex>{{ 'GLOBAL.HYPER_TREE' | translate }}</h1>
     <app-select-toggle-button
-      *ngIf="distributionDatas && distributionDatas.treeHyperDisplayedValues"
-      [displayedValues]="distributionDatas.treeHyperDisplayedValues"
+      *ngIf="
+        distributionDatas && distributionDatas.targetDistributionDisplayedValues
+      "
+      [displayedValues]="distributionDatas.targetDistributionDisplayedValues"
       (selectToggleButtonChanged)="onSelectToggleButtonChanged($event)"
       [buttonTitle]="buttonTitle"
     >

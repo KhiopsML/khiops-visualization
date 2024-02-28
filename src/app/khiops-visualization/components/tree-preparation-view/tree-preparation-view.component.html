@@ -109,6 +109,9 @@
                 #appVariableGraphDetails
                 *ngIf="treePreparationDatas.selectedVariable"
                 [preparationSource]="'treePreparationReport'"
+                [displayedValues]="
+                  distributionDatas.targetDistributionDisplayedValues
+                "
                 [selectedVariable]="treePreparationDatas.selectedVariable"
                 [selectedGraphItemIndex]="selectedBarIndex"
                 (selectedItemChanged)="onSelectedGraphItemChanged($event)"
@@ -165,11 +168,10 @@
                   [size]="sizes.col0Row2Col1Row[1]"
                 >
                   <app-tree-leaf-details
-                    #appTreeLeafDetails
                     fxFlexFill
                     *ngIf="treePreparationDatas.selectedVariable"
                     [displayedValues]="
-                      distributionDatas.treeNodeTargetDistributionDisplayedValues
+                      distributionDatas.targetDistributionDisplayedValues
                     "
                     [selectedNode]="treePreparationDatas.selectedNode"
                   >
@@ -190,10 +192,7 @@
         id="tree-preparation-hyper"
         [selectedNodes]="treePreparationDatas.selectedNodes"
         [selectedNode]="treePreparationDatas.selectedNode"
-        [displayedValues]="distributionDatas.treeHyperDisplayedValues"
-        (treeHyperDisplayedValuesChanged)="
-          onTreeHyperDisplayedValuesChanged($event)
-        "
+        [displayedValues]="distributionDatas.targetDistributionDisplayedValues"
         (selectTreeItemChanged)="onSelectTreeItemChanged($event)"
         [dimensionTree]="treePreparationDatas.dimensionTree"
       >

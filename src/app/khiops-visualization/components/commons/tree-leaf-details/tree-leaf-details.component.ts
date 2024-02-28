@@ -51,24 +51,20 @@ export class TreeLeafDetailsComponent implements OnInit, OnChanges {
   }
 
   updateComponentDatas() {
-    setTimeout(() => {
-      this.distributionDatasService.getTreeNodeTargetDistributionGraphDatas(
-        this.selectedNode,
-      );
-      //Set the same as other components at init
-      this.distributionDatasService.setTreeHyperDisplayedValues(
-        this.distributionDatas.treeNodeTargetDistributionDisplayedValues,
-      );
-      this.treeLeafRules = this.treePreparationDatasService.getTreeLeafRules();
-
-      this.populationCount = UtilsService.arraySum(
-        this.selectedNode.targetValues.frequencies,
-      );
-    });
+    this.distributionDatasService.getTreeNodeTargetDistributionGraphDatas(
+      this.selectedNode,
+    );
+    this.treeLeafRules = this.treePreparationDatasService.getTreeLeafRules();
+    this.populationCount = UtilsService.arraySum(
+      this.selectedNode.targetValues.frequencies,
+    );
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.selectedNode && changes.selectedNode.currentValue) {
+      this.updateComponentDatas();
+    }
+    if (changes.displayedValues && changes.displayedValues.currentValue) {
       this.updateComponentDatas();
     }
   }
@@ -83,17 +79,11 @@ export class TreeLeafDetailsComponent implements OnInit, OnChanges {
     );
   }
 
-  onTreeNodeTargetDistributionGraphDisplayedValuesChanged(displayedValues) {
-    this.distributionDatasService.setTreeNodeTargetDistributionDisplayedValues(
+  onTreeNodeTargetDistributionGraphDisplayedValuesChanged(
+    displayedValues: ChartToggleValuesI[],
+  ) {
+    this.distributionDatasService.setTargetDistributionDisplayedValues(
       displayedValues,
     );
-    this.distributionDatasService.getTreeNodeTargetDistributionGraphDatas(
-      this.selectedNode,
-      this.treeNodeTargetDistributionGraphType,
-    );
-  }
-
-  onTreeHyperValuesChanged(displayedValues: ChartToggleValuesI[]) {
-    this.distributionDatasService.setTreeHyperDisplayedValues(displayedValues);
   }
 }

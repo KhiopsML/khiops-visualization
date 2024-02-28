@@ -630,7 +630,7 @@ export class TreePreparationDatasService {
       title:
         this.translate.get('GLOBAL.LEAF_RULES') +
         ' : ' +
-        this.treePreparationDatas!.selectedNode!.nodeId,
+        this.treePreparationDatas?.selectedNode?.nodeId,
       values: [],
       displayedColumns: [],
     };

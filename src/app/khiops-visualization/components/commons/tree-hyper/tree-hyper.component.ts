@@ -40,23 +40,17 @@ export class TreeHyperComponent
   @Input() dimensionTree: [TreeNodeVO];
   @Input() displayedValues: ChartToggleValuesI[];
   @Output() selectTreeItemChanged: EventEmitter<any> = new EventEmitter();
-  @Output() treeHyperDisplayedValuesChanged: EventEmitter<any> =
-    new EventEmitter();
 
   @ViewChild('hyperTree') hyperTree: ElementRef<HTMLElement>;
 
   buttonTitle: string;
-
   componentType = 'hyptree'; // needed to copy datas
   isFullscreen = false;
-
   visualization: any = {
     population: false,
     purity: false,
   };
-
   options: any;
-
   ht: Hypertree;
 
   constructor(
@@ -528,6 +522,8 @@ export class TreeHyperComponent
   }
 
   onSelectToggleButtonChanged(displayedValues: ChartToggleValuesI[]) {
-    this.treeHyperDisplayedValuesChanged.emit(displayedValues);
+    this.distributionDatasService.setTargetDistributionDisplayedValues(
+      displayedValues,
+    );
   }
 }

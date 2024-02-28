@@ -18,6 +18,7 @@ import { PreparationVariableVO } from '@khiops-visualization/model/preparation-v
 import { TreePreparationVariableVO } from '@khiops-visualization/model/tree-preparation-variable-vo';
 import { DistributionDatasVO } from '@khiops-visualization/model/distribution-datas-vo';
 import { REPORTS } from '@khiops-library/enum/reports';
+import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 
 @Component({
   selector: 'app-variable-graph-details',
@@ -40,6 +41,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
   @Input() selectedVariable: PreparationVariableVO | TreePreparationVariableVO;
   @Input() selectedGraphItemIndex = 0;
   @Input() preparationSource: string;
+  @Input() displayedValues?: ChartToggleValuesI[]; // optional input to update chart on value changes (for instance when another component of tree preparation viuew changed)
   @Input() position = 0; // in case of multiple component in the same page
 
   @Output() selectedItemChanged: EventEmitter<any> = new EventEmitter();
@@ -48,7 +50,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
   scrollPosition = 0;
   scaleValue: number;
   distributionGraphType: string;
-  targetDistributionGraphType: string;
+  targetDistributionGraphType: string | null;
 
   isLoadingGraphDatas: boolean;
   activeEntries = 0;
@@ -70,7 +72,10 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.selectedVariable && changes.selectedVariable.currentValue) {
+    if (
+      (changes.selectedVariable && changes.selectedVariable.currentValue) ||
+      (changes.displayedValues && changes.displayedValues.currentValue)
+    ) {
       this.isLoadingGraphDatas = true;
 
       this.selectedGraphItemIndex = 0;

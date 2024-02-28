@@ -36,12 +36,6 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
     static: false,
   })
   appVariableGraphDetails: VariableGraphDetailsComponent;
-
-  @ViewChild('appTreeLeafDetails', {
-    static: false,
-  })
-  appTreeLeafDetails: TreeLeafDetailsComponent;
-
   appDatas: any;
   sizes: any;
 
@@ -176,21 +170,5 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
       currentValues,
       currentValues[0],
     );
-  }
-
-  onTreeNodeTargetDistributionGraphDisplayedValuesChanged(
-    displayedValues: ChartToggleValuesI[],
-  ) {
-    if (this.appTreeLeafDetails) {
-      this.appTreeLeafDetails.onTreeNodeTargetDistributionGraphDisplayedValuesChanged(
-        displayedValues,
-      );
-    }
-  }
-
-  onTreeHyperDisplayedValuesChanged(displayedValues: ChartToggleValuesI[]) {
-    if (this.appTreeLeafDetails) {
-      this.appTreeLeafDetails.onTreeHyperValuesChanged(displayedValues);
-    }
   }
 }

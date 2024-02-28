@@ -52,24 +52,6 @@ export class DistributionDatasService {
     this.distributionDatas.targetDistributionDisplayedValues = values;
   }
 
-  setTreeNodeTargetDistributionDisplayedValues(values: ChartToggleValuesI[]) {
-    this.distributionDatas.treeNodeTargetDistributionDisplayedValues = values;
-  }
-
-  getTreeNodeTargetDistributionDisplayedValues():
-    | ChartToggleValuesI[]
-    | undefined {
-    return this.distributionDatas.treeNodeTargetDistributionDisplayedValues;
-  }
-
-  setTreeHyperDisplayedValues(values: ChartToggleValuesI[]) {
-    this.distributionDatas.treeHyperDisplayedValues = values;
-  }
-
-  getTreeHyperDisplayedValues(): ChartToggleValuesI[] | undefined {
-    return this.distributionDatas.treeHyperDisplayedValues;
-  }
-
   computeModalityCounts(modality): ModalityCountsVO {
     const counts = new ModalityCountsVO();
     const dimensionLength = modality[0].length;
@@ -183,13 +165,13 @@ export class DistributionDatasService {
       const currentXAxis = [selectedNode.nodeId];
       [
         this.distributionDatas.treeNodeTargetDistributionGraphDatas,
-        this.distributionDatas.treeNodeTargetDistributionDisplayedValues,
+        this.distributionDatas.targetDistributionDisplayedValues,
       ] = this.computeTargetDistributionGraph(
         allTargetValues,
         currentDatas,
         [fullTarget],
         [currentXAxis],
-        this.distributionDatas.treeNodeTargetDistributionDisplayedValues,
+        this.distributionDatas.targetDistributionDisplayedValues,
         this.distributionDatas.treeNodeTargetDistributionType,
         selectedVariable.type,
       );

@@ -24,8 +24,6 @@ export class DistributionDatasVO {
   targetDistributionType: string = TYPES.PROBABILITIES;
   targetDistributionGraphDatas: ChartDatasVO | undefined = undefined;
 
-  treeHyperDisplayedValues: ChartToggleValuesI[] | undefined;
-  treeNodeTargetDistributionDisplayedValues: ChartToggleValuesI[] | undefined;
   treeNodeTargetDistributionType: string = TYPES.PROBABILITIES;
   treeNodeTargetDistributionGraphDatas: ChartDatasVO | undefined = undefined;
 
@@ -111,7 +109,6 @@ export class DistributionDatasVO {
 
   initTreeHyperGraphDatas() {
     this.treeHyperGraphDatas = new ChartDatasVO();
-    // this.treeNodeTargetDistributionDisplayedValues = undefined; // No !!! otherwise the select box do not work
   }
 
   checkTreeNodeTargetDistributionGraphDatas() {
@@ -134,7 +131,6 @@ export class DistributionDatasVO {
 
   initTargetDistributionGraphDatas() {
     this.targetDistributionGraphDatas = new ChartDatasVO();
-    // this.targetDistributionDisplayedValues = undefined; // No !!! otherwise the select box do not work
   }
 
   checkTargetDistributionGraphDatas() {
