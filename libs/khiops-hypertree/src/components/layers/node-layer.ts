@@ -79,11 +79,15 @@ export class NodeLayer implements ILayer {
           .style('fill-opacity', (d) => this.args.opacity(d) || 1),
       //updateColor:       s=> s.classed("hovered",   d=> d.isPartOfAnyHoverPath && d.parent)
       //                        .classed("selected",  d=> d.isPartOfAnySelectionPath && d.parent),
-      updateTransform: (s) =>
-        s
-          .attr('transform', (d) => this.args.transform(d))
+      updateTransform: (s) => {
+        s.attr('transform', (d) => this.args.transform(d))
           .style('stroke', (d) => d.pathes && d.pathes.labelcolor)
-          .attr('r', (d) => this.args.r(d)),
+          .attr('r', (d) => {
+            if (this.args.r(d) > 0) {
+              return this.args.r(d);
+            }
+          });
+      },
     });
   }
 }
