@@ -578,14 +578,14 @@ export class TreePreparationDatasService {
       title:
         this.translate.get('GLOBAL.NODES_SELECTION_DETAILS') +
         ' : ' +
-        this.treePreparationDatas!.selectedNodes!.map((e) => e.nodeId).join(
-          ', ',
-        ),
+        this.treePreparationDatas?.selectedNodes
+          ?.map((e) => e.nodeId)
+          .join(', '),
       values: [],
       displayedColumns: [],
     };
 
-    if (this.treePreparationDatas!.selectedNodes![0]) {
+    if (this.treePreparationDatas?.selectedNodes[0]) {
       treeDetails.displayedColumns = [
         {
           headerName: 'Node Id',
@@ -603,10 +603,10 @@ export class TreePreparationDatasService {
 
       for (
         let i = 0;
-        i < this.treePreparationDatas!.selectedNodes!.length;
+        i < this.treePreparationDatas?.selectedNodes?.length;
         i++
       ) {
-        const currentNode = this.treePreparationDatas!.selectedNodes![i];
+        const currentNode = this.treePreparationDatas?.selectedNodes[i];
         if (currentNode && currentNode.isLeaf) {
           // it's a leaf
           const rowData: any = {
@@ -635,7 +635,10 @@ export class TreePreparationDatasService {
       displayedColumns: [],
     };
 
-    if (this.treePreparationDatas!.selectedNodes![0]) {
+    if (
+      this.treePreparationDatas?.selectedNodes &&
+      this.treePreparationDatas?.selectedNodes[0]
+    ) {
       treeLeafRules.displayedColumns = [
         {
           headerName: 'Variable',

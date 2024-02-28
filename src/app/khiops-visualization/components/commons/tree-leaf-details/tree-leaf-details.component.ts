@@ -51,13 +51,15 @@ export class TreeLeafDetailsComponent implements OnInit, OnChanges {
   }
 
   updateComponentDatas() {
-    this.distributionDatasService.getTreeNodeTargetDistributionGraphDatas(
-      this.selectedNode,
-    );
-    this.treeLeafRules = this.treePreparationDatasService.getTreeLeafRules();
-    this.populationCount = UtilsService.arraySum(
-      this.selectedNode.targetValues.frequencies,
-    );
+    if (this.selectedNode) {
+      this.distributionDatasService.getTreeNodeTargetDistributionGraphDatas(
+        this.selectedNode,
+      );
+      this.treeLeafRules = this.treePreparationDatasService.getTreeLeafRules();
+      this.populationCount = UtilsService.arraySum(
+        this.selectedNode.targetValues.frequencies,
+      );
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
