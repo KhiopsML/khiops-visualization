@@ -302,7 +302,10 @@ export class AppService {
   getProjectSummaryDatas(): InfosDatasI[] {
     const appDatas = this.appDatas.datas;
     if (appDatas.preparationReport) {
-      const projectSummaryDatas = new ProjectSummaryVO(appDatas);
+      const projectSummaryDatas = new ProjectSummaryVO(
+        appDatas,
+        'preparationReport',
+      );
       return projectSummaryDatas.displayDatas;
     } else {
       return undefined;

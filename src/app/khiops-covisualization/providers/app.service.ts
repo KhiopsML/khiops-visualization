@@ -6,6 +6,7 @@ import { ViewLayoutVO } from '../model/view-layout-vo';
 import copy from 'fast-copy';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
+import { ProjectSummaryVO } from '@khiops-library/model/project-summary-vo';
 
 @Injectable({
   providedIn: 'root',
@@ -174,16 +175,11 @@ export class AppService {
   getProjectSummaryDatas(): InfosDatasI[] {
     const appDatas = this.appDatas.datas;
     if (appDatas.coclusteringReport) {
-      return [
-        {
-          title: 'GLOBAL.PROJECT_FILE',
-          value: appDatas.filename,
-        },
-        {
-          title: 'GLOBAL.DATABASE',
-          value: appDatas.coclusteringReport.summary.database,
-        },
-      ];
+      const projectSummaryDatas = new ProjectSummaryVO(
+        appDatas,
+        'coclusteringReport',
+      );
+      return projectSummaryDatas.displayDatas;
     } else {
       return undefined;
     }
