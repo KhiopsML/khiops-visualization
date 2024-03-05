@@ -27,6 +27,7 @@ import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.s
 import pjson from 'package.json';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { UtilsService } from '@khiops-library/providers/utils.service';
+import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 
 @Component({
   selector: 'app-home-layout',
@@ -86,6 +87,7 @@ export class HomeLayoutComponent implements OnInit {
     public selectableService: SelectableService,
     private distributionDatasService: DistributionDatasService,
     private modelingDatasService: ModelingDatasService,
+    private trackerService: TrackerService,
     private evaluationDatasService: EvaluationDatasService,
     private preparationDatasService: PreparationDatasService,
     private treePreparationDatasService: TreePreparationDatasService,
@@ -112,7 +114,7 @@ export class HomeLayoutComponent implements OnInit {
 
   ngOnInit() {
     this.onFileLoaderDataChangedCb = (obj) => this.onFileLoaderDataChanged(obj);
-    this.khiopsLibraryService.trackEvent('page_view', 'visit', this.appVersion);
+    this.trackerService.trackEvent('page_view', 'visit', this.appVersion);
   }
 
   ngAfterViewInit() {

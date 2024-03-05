@@ -1,6 +1,6 @@
 {
   "name": "visualization-component",
-  "version": "11.0.9",
+  "version": "11.0.12",
   "author": {
     "name": "Orange",
     "email": "khiops@orange.com"
@@ -47,8 +47,8 @@
   },
   "dependencies": {
     "@ag-grid-community/angular": "28.2.1",
-    "@ag-grid-community/core": "28.2.1",
     "@ag-grid-community/client-side-row-model": "28.2.1",
+    "@ag-grid-community/core": "28.2.1",
     "@angular/animations": "15.2.0",
     "@angular/cdk": "15.2.0",
     "@angular/common": "15.2.0",
@@ -64,7 +64,7 @@
     "@compodoc/compodoc": "1.1.19",
     "@ngstack/translate": "8.0.0",
     "@types/d3": "7.4.0",
-    "@types/node": "^20.9.0",
+    "@types/node": "^20.11.24",
     "@webcomponents/webcomponentsjs": "2.8.0",
     "angular-resizable-element": "3.3.5",
     "angular-resize-event": "3.1.1",

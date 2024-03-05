@@ -189,7 +189,7 @@ export class MatrixContainerComponent implements OnInit, OnDestroy {
   }
 
   changeMatrixType(type: string) {
-    // this.khiopsLibraryService.trackEvent('click', 'matrix_type', type);
+    // this.trackerService.trackEvent('click', 'matrix_type', type);
     localStorage.setItem(
       AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'MATRIX_TYPE_OPTION',
       type,
@@ -199,7 +199,7 @@ export class MatrixContainerComponent implements OnInit, OnDestroy {
   }
 
   changeMatrixMode(mode: MatrixModeI) {
-    // this.khiopsLibraryService.trackEvent('click', 'matrix_mode', mode.mode);
+    // this.trackerService.trackEvent('click', 'matrix_mode', mode.mode);
     this.matrixModes.selected = mode;
     this.matrixModes.selectedIndex = this.matrixModes.types.findIndex(
       (e) => e.mode === mode.mode,
@@ -208,7 +208,7 @@ export class MatrixContainerComponent implements OnInit, OnDestroy {
   }
 
   changeConditionalOnContext() {
-    // this.khiopsLibraryService.trackEvent('click', 'matrix_conditionnal_on_context');
+    // this.trackerService.trackEvent('click', 'matrix_conditionnal_on_context');
     this.dimensionsDatas.conditionalOnContext =
       !this.dimensionsDatas.conditionalOnContext;
     this.treenodesService.initConditionalOnContextNodes();

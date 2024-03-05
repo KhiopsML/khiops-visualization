@@ -23,7 +23,6 @@ import {
 import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
 import { LoadExtDatasComponent } from '../commons/load-ext-datas/load-ext-datas.component';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
-import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import pjson from 'package.json';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
 import { ClustersService } from '@khiops-covisualization/providers/clusters.service';
@@ -32,6 +31,7 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
 import { Subscription } from 'rxjs';
+import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 
 @Component({
   selector: 'app-home-layout',
@@ -113,7 +113,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     private snackBar: MatSnackBar,
     private clustersService: ClustersService,
     private annotationService: AnnotationService,
-    private khiopsLibraryService: KhiopsLibraryService,
+    private trackerService: TrackerService,
     public selectableService: SelectableService,
     private importExtDatasService: ImportExtDatasService,
     private dimensionsService: DimensionsDatasService,
@@ -171,9 +171,9 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
   interceptTabChange(tab: MatTab, tabHeader: MatTabHeader, index: number) {
     if (index === 1 && this.isContextDimensions) {
       this.openContextView = true;
-      this.khiopsLibraryService.trackEvent('page_view', 'context');
+      this.trackerService.trackEvent('page_view', 'context');
     } else if (index === 0) {
-      this.khiopsLibraryService.trackEvent('page_view', 'axis');
+      this.trackerService.trackEvent('page_view', 'axis');
       this.openContextView = false;
     }
     return MatTabGroup.prototype._handleClick.apply(this.tabsMenu, arguments);
@@ -192,9 +192,9 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.khiopsLibraryService.trackEvent('page_view', 'axis');
+    this.trackerService.trackEvent('page_view', 'axis');
     this.onFileLoaderDataChangedCb = (obj) => this.onFileLoaderDataChanged(obj);
-    this.khiopsLibraryService.trackEvent('page_view', 'visit', this.appVersion);
+    this.trackerService.trackEvent('page_view', 'visit', this.appVersion);
   }
 
   ngAfterViewInit() {

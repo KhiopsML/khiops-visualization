@@ -15,7 +15,6 @@ import { LevelDistributionGraphCanvasComponent } from '../commons/level-distribu
 import { VariableGraphDetailsComponent } from '../commons/variable-graph-details/variable-graph-details.component';
 import { TranslateService } from '@ngstack/translate';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
-import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { REPORTS } from '@khiops-library/enum/reports';
 import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
@@ -23,6 +22,7 @@ import { PreparationVariableVO } from '@khiops-visualization/model/preparation-v
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { VariableVO } from '@khiops-visualization/model/variable-vo';
 import { Preparation2dDatasVO } from '@khiops-visualization/model/preparation2d-datas-vo';
+import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 
 @Component({
   selector: 'app-preparation-view',
@@ -63,7 +63,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
   constructor(
     private preparationDatasService: PreparationDatasService,
     private translate: TranslateService,
-    private khiopsLibraryService: KhiopsLibraryService,
+    private trackerService: TrackerService,
     private evaluationDatasService: EvaluationDatasService,
     private dialog: MatDialog,
     private preparation2dDatasService: Preparation2dDatasService,
@@ -165,7 +165,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
       this.preparationSource === REPORTS.PREPARATION_REPORT
         ? 'preparation'
         : 'textPreparation';
-    this.khiopsLibraryService.trackEvent('page_view', trackView);
+    this.trackerService.trackEvent('page_view', trackView);
 
     this.appDatas = this.appService.getDatas().datas;
     this.preparationDatas = this.preparationDatasService.getDatas(

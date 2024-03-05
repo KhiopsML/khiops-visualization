@@ -57,7 +57,7 @@ export class SelectTrainedPredictorComponent implements OnInit {
   }
 
   changeTrainedPredictorsType(opt) {
-    // this.khiopsLibraryService.trackEvent('click', 'select_trained_predictor');
+    // this.trackerService.trackEvent('click', 'select_trained_predictor');
     localStorage.setItem(
       this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
         'SELECTED_TRAIN_PREDICTOR',

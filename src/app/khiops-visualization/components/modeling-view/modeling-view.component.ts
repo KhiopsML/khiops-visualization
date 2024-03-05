@@ -17,7 +17,6 @@ import { VariableGraphDetailsComponent } from '@khiops-visualization/components/
 import { TargetDistributionGraphCanvasComponent } from '@khiops-visualization/components/commons/target-distribution-graph-canvas/target-distribution-graph-canvas.component';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { Distribution2dDatasService } from '@khiops-visualization/providers/distribution2d-datas.service';
-import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { REPORTS } from '@khiops-library/enum/reports';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
@@ -26,6 +25,7 @@ import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { ModelingDatasVO } from '@khiops-visualization/model/modeling-datas-vo';
 import { Preparation2dDatasVO } from '@khiops-visualization/model/preparation2d-datas-vo';
 import { TreePreparationDatasVO } from '@khiops-visualization/model/tree-preparation-datas-vo';
+import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 
 @Component({
   selector: 'app-modeling-view',
@@ -69,7 +69,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
   constructor(
     private modelingDatasService: ModelingDatasService,
     private evaluationDatasService: EvaluationDatasService,
-    private khiopsLibraryService: KhiopsLibraryService,
+    private trackerService: TrackerService,
     private preparation2dDatasService: Preparation2dDatasService,
     private appService: AppService,
     private dialog: MatDialog,
@@ -83,7 +83,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
   }
 
   ngOnInit() {
-    this.khiopsLibraryService.trackEvent('page_view', 'modeling');
+    this.trackerService.trackEvent('page_view', 'modeling');
 
     this.appDatas = this.appService.getDatas();
     this.modelingDatas = this.modelingDatasService.getDatas();

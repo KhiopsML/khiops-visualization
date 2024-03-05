@@ -186,7 +186,7 @@ export class TreeHyperComponent
   }
 
   togglePurityVisualization(state) {
-    // this.khiopsLibraryService.trackEvent('click', 'toggle_purity_tree', state);
+    // this.trackerService.trackEvent('click', 'toggle_purity_tree', state);
     this.visualization.purity = state;
     this.ht.api.updateNodesVisualization();
     localStorage.setItem(
@@ -197,7 +197,7 @@ export class TreeHyperComponent
   }
 
   togglePopulationVisualization(state) {
-    // this.khiopsLibraryService.trackEvent('click', 'toggle_population_tree', state);
+    // this.trackerService.trackEvent('click', 'toggle_population_tree', state);
     this.visualization.population = state;
     this.ht.api.updateNodesVisualization();
     localStorage.setItem(

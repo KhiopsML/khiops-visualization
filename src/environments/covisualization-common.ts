@@ -32,8 +32,6 @@ export const covisualizationCommonEnvironment = {
     EXT_NAME: '',
   },
   TRACKER: {
-    ENABLE: true,
-    SITE_ID: '2212',
-    TRACKER_URL: 'https://matomo.apps.tech.orange/',
+    TRACKER_URL: 'https://www.googletagmanager.com/gtag/js',
   },
 };

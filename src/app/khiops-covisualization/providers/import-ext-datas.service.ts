@@ -261,42 +261,23 @@ export class ImportExtDatasService {
           const externalDatas: ExtDatasVO = this.importExtDatas[i];
           const joinKey = externalDatas.joinKey;
           const fieldName = externalDatas.field.name;
-          // method called when ext data is saved
-          // read file from electron context
-          if (this.configService.getConfig().onReadFile) {
-            this.configService
-              .getConfig()
-              .onReadFile(externalDatas.filename, (datas: any) =>
-                this.onFileRead(
-                  datas,
-                  externalDatas,
-                  percentIndex,
-                  progressCallback,
-                  fieldName,
-                  joinKey,
-                  importExtDatasLength,
-                  resolve,
-                ),
-              );
-          } else {
-            this.importFileLoaderService
-              .readFile(externalDatas.file)
-              .then((res: any) =>
-                this.onFileRead(
-                  res.datas,
-                  externalDatas,
-                  percentIndex,
-                  progressCallback,
-                  fieldName,
-                  joinKey,
-                  importExtDatasLength,
-                  resolve,
-                ),
-              )
-              .catch(() => {
-                resolve(undefined);
-              });
-          }
+          this.importFileLoaderService
+            .readFile(externalDatas.file)
+            .then((res: any) =>
+              this.onFileRead(
+                res.datas,
+                externalDatas,
+                percentIndex,
+                progressCallback,
+                fieldName,
+                joinKey,
+                importExtDatasLength,
+                resolve,
+              ),
+            )
+            .catch(() => {
+              resolve(undefined);
+            });
         });
         promises.push(promise);
       }

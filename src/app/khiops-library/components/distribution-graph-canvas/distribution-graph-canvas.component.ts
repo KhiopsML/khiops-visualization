@@ -183,7 +183,7 @@ export class DistributionGraphCanvasComponent
   }
 
   changeGraphType(type) {
-    // this.khiopsLibraryService.trackEvent('click', 'distribution_graph_type', this.graphOptions.selected);
+    // this.trackerService.trackEvent('click', 'distribution_graph_type', this.graphOptions.selected);
 
     localStorage.setItem(
       this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +

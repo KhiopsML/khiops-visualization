@@ -522,7 +522,7 @@ export class AgGridComponent
     });
     this.showLevelDistributionGraph.emit(this.inputDatas);
 
-    // this.khiopsLibraryService.trackEvent('click', 'show_level_distribution');
+    // this.trackerService.trackEvent('click', 'show_level_distribution');
   }
 
   compare(a: number | string, b: number | string, isAsc: boolean) {
@@ -583,7 +583,7 @@ export class AgGridComponent
   }
 
   search() {
-    // this.khiopsLibraryService.trackEvent('click', 'search');
+    // this.trackerService.trackEvent('click', 'search');
     this.agGrid.api.setQuickFilter(this.searchInput || '');
     if (this.searchInput) {
       localStorage.setItem(

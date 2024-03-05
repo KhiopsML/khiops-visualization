@@ -109,7 +109,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   }
 
   changeGraphTypeX(type: string) {
-    // this.khiopsLibraryService.trackEvent('click', 'distribution_graph_type_x', this.graphOptions.selected);
+    // this.trackerService.trackEvent('click', 'distribution_graph_type_x', this.graphOptions.selected);
     localStorage.setItem(
       this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
         'DISTRIBUTION_GRAPH_OPTION_X',
@@ -120,7 +120,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   }
 
   changeGraphTypeY(type: string) {
-    // this.khiopsLibraryService.trackEvent('click', 'distribution_graph_type_x', this.graphOptions.selected);
+    // this.trackerService.trackEvent('click', 'distribution_graph_type_x', this.graphOptions.selected);
     localStorage.setItem(
       this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
         'DISTRIBUTION_GRAPH_OPTION_Y',

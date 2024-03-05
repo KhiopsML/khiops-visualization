@@ -47,7 +47,7 @@ export class HeaderToolsComponent implements OnInit {
   ngOnInit() {}
 
   copyDatas() {
-    // this.khiopsLibraryService.trackEvent('click', 'copy_datas', 'text');
+    // this.trackerService.trackEvent('click', 'copy_datas', 'text');
 
     const currentSelectedArea = this.selectableService.getSelectedArea();
 
@@ -71,7 +71,7 @@ export class HeaderToolsComponent implements OnInit {
   }
 
   copyImage() {
-    // this.khiopsLibraryService.trackEvent('click', 'copy_datas', 'image');
+    // this.trackerService.trackEvent('click', 'copy_datas', 'image');
 
     const currentSelectedArea = this.selectableService.getSelectedArea();
 

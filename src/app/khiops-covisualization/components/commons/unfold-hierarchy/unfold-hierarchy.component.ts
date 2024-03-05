@@ -260,7 +260,7 @@ export class UnfoldHierarchyComponent implements OnInit {
   }
 
   onClickOnSave() {
-    // this.khiopsLibraryService.trackEvent('click', 'unfold_hierarchy', 'nb_clusters', this.currentUnfoldHierarchy);
+    // this.trackerService.trackEvent('click', 'unfold_hierarchy', 'nb_clusters', this.currentUnfoldHierarchy);
 
     this.loadingHierarchy = true;
 

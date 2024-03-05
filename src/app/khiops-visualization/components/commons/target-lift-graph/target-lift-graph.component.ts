@@ -162,7 +162,7 @@ export class TargetLiftGraphComponent
   }
 
   onSelectToggleButtonChanged(displayedValues) {
-    // this.khiopsLibraryService.trackEvent('click', 'toggle_target_lift_values');
+    // this.trackerService.trackEvent('click', 'toggle_target_lift_values');
     localStorage.setItem(
       this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
         'TARGET_LIFT_VALUES',
@@ -185,7 +185,7 @@ export class TargetLiftGraphComponent
   }
 
   changeTargetLift(target) {
-    // this.khiopsLibraryService.trackEvent('click', 'change_target_lift');
+    // this.trackerService.trackEvent('click', 'change_target_lift');
     this.title =
       this.translate.get('GLOBAL.CUMULATIVE_GAIN_CHART_OF') +
       ' ' +

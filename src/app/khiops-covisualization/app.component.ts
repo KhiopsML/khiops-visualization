@@ -13,13 +13,13 @@ import {
   MatDialog,
   MatDialogConfig,
 } from '@angular/material/dialog';
-import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { AppService } from './providers/app.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { AppConfig } from 'src/environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ReleaseNotesComponent } from '@khiops-library/components/release-notes/release-notes.component';
 import { TreenodesService } from './providers/treenodes.service';
+import { TrackerService } from '../khiops-library/providers/tracker.service';
 
 @Component({
   selector: 'app-root-covisualization',
@@ -51,7 +51,7 @@ export class AppComponent implements AfterViewInit {
     private appService: AppService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private khiopsLibraryService: KhiopsLibraryService,
+    private trackerService: TrackerService,
     private configService: ConfigService,
     private translate: TranslateService,
     private treenodesService: TreenodesService,
@@ -127,6 +127,15 @@ export class AppComponent implements AfterViewInit {
     };
     this.element.nativeElement.setConfig = (config) => {
       this.configService.setConfig(config);
+
+      const trackerId = this.configService.getConfig().trackerId;
+      if (trackerId) {
+        this.trackerService.initTracker(
+          AppConfig.covisualizationCommon,
+          trackerId,
+        );
+      }
+      this.setTheme();
     };
     this.element.nativeElement.snack = (title, duration, panelClass) => {
       this.ngzone.run(() => {
@@ -137,7 +146,6 @@ export class AppComponent implements AfterViewInit {
       });
     };
     this.element.nativeElement.clean = () => (this.appdatas = null);
-    this.setTheme();
   }
 
   setTheme() {
@@ -149,65 +157,6 @@ export class AppComponent implements AfterViewInit {
       document.documentElement.setAttribute('data-color-scheme', themeColor);
       this.configService.getConfig().onThemeChanged &&
         this.configService.getConfig().onThemeChanged(themeColor);
-    });
-  }
-
-  initCookieConsent() {
-    const localAcceptCookies = localStorage.getItem(
-      AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'COOKIE_CONSENT',
-    );
-    if (localAcceptCookies !== null) {
-      this.khiopsLibraryService.initMatomo();
-      this.khiopsLibraryService.trackEvent(
-        'cookie_consent',
-        localAcceptCookies.toString(),
-      );
-      this.khiopsLibraryService.enableMatomo();
-      return;
-    }
-    this.dialogRef.closeAll();
-    const config = new MatDialogConfig();
-    config.width = '400px';
-    config.hasBackdrop = false;
-    config.disableClose = false;
-
-    const dialogRef: MatDialogRef<ConfirmDialogComponent> = this.dialog.open(
-      ConfirmDialogComponent,
-      config,
-    );
-    dialogRef.updatePosition({
-      bottom: '50px',
-      right: '50px',
-    });
-    dialogRef.componentInstance.message = this.translate.get(
-      'COOKIE_CONSENT.MESSAGE',
-    );
-    dialogRef.componentInstance.displayRejectBtn = true;
-    dialogRef.componentInstance.displayCancelBtn = false;
-    dialogRef.componentInstance.confirmTranslation = this.translate.get(
-      'COOKIE_CONSENT.ALLOW',
-    );
-
-    this.ngzone.run(() => {
-      dialogRef
-        .afterClosed()
-        .toPromise()
-        .then((e) => {
-          const acceptCookies = e === 'confirm' ? 'true' : 'false';
-
-          localStorage.setItem(
-            AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'COOKIE_CONSENT',
-            acceptCookies,
-          );
-
-          this.khiopsLibraryService.initMatomo();
-          this.khiopsLibraryService.trackEvent('cookie_consent', acceptCookies);
-          if (acceptCookies === 'false') {
-            this.khiopsLibraryService.disableMatomo();
-          } else {
-            this.khiopsLibraryService.enableMatomo();
-          }
-        });
     });
   }
 }

@@ -12,9 +12,7 @@ import { LevelDistributionGraphCanvasComponent } from '../commons/level-distribu
 import { VariableGraphDetailsComponent } from '../commons/variable-graph-details/variable-graph-details.component';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
-import { TreeLeafDetailsComponent } from '../commons/tree-leaf-details/tree-leaf-details.component';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
-import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
@@ -24,7 +22,7 @@ import { DistributionDatasVO } from '@khiops-visualization/model/distribution-da
 import { PreparationDatasVO } from '@khiops-visualization/model/preparation-datas-vo';
 import { TreePreparationDatasVO } from '@khiops-visualization/model/tree-preparation-datas-vo';
 import { TreePreparationVariableVO } from '@khiops-visualization/model/tree-preparation-variable-vo';
-import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
+import { TrackerService } from '@khiops-library/providers/tracker.service';
 
 @Component({
   selector: 'app-tree-preparation-view',
@@ -90,7 +88,7 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
   constructor(
     private treePreparationDatasService: TreePreparationDatasService,
     private dialog: MatDialog,
-    private khiopsLibraryService: KhiopsLibraryService,
+    private trackerService: TrackerService,
     private distributionDatasService: DistributionDatasService,
     private appService: AppService,
     private modelingDatasService: ModelingDatasService,
@@ -99,7 +97,7 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
   }
 
   ngOnInit() {
-    this.khiopsLibraryService.trackEvent('page_view', 'treePreparation');
+    this.trackerService.trackEvent('page_view', 'treePreparation');
 
     this.appDatas = this.appService.getDatas().datas;
     this.treePreparationDatas = this.treePreparationDatasService.getDatas();

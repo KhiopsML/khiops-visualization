@@ -58,7 +58,7 @@ export class SelectToggleButtonComponent implements OnInit, OnChanges {
   }
 
   toggleGraphOptionValue($event: MatCheckboxChange, opt: ChartToggleValuesI) {
-    // this.khiopsLibraryService.trackEvent('click', 'target_distribution_graph_value');
+    // this.trackerService.trackEvent('click', 'target_distribution_graph_value');
 
     // clone obj to make change and emit changes
     const currentDisplayedValues: ChartToggleValuesI[] = _.cloneDeep(

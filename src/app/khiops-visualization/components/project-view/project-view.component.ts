@@ -4,9 +4,9 @@ import { AppService } from '@khiops-visualization/providers/app.service';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { TranslateService } from '@ngstack/translate';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
-import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { ProjectLogVO } from '@khiops-library/model/project-log-vo';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
+import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 
 @Component({
   selector: 'app-project-view',
@@ -46,7 +46,7 @@ export class ProjectViewComponent
   constructor(
     private appService: AppService,
     private translate: TranslateService,
-    private khiopsLibraryService: KhiopsLibraryService,
+    private trackerService: TrackerService,
   ) {
     super();
     this.initialize();
@@ -65,7 +65,7 @@ export class ProjectViewComponent
   }
 
   ngOnInit() {
-    this.khiopsLibraryService.trackEvent('page_view', 'project');
+    this.trackerService.trackEvent('page_view', 'project');
     this.onFileLoaderDataChangedCb = (obj) => this.projectFileChanged.emit(obj);
   }
 

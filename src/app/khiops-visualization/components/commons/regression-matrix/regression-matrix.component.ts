@@ -160,7 +160,7 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
   }
 
   changeMatrixType(type: string) {
-    // this.khiopsLibraryService.trackEvent('click', 'matrix_type', type);
+    // this.trackerService.trackEvent('click', 'matrix_type', type);
     localStorage.setItem(
       AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_TYPE_OPTION',
       type,
@@ -176,7 +176,7 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
   }
 
   changeMatrixMode(mode: MatrixModeI) {
-    // this.khiopsLibraryService.trackEvent('click', 'matrix_mode', mode.mode);
+    // this.trackerService.trackEvent('click', 'matrix_mode', mode.mode);
     this.matrixModes.selected = mode;
     this.matrixModes.selectedIndex = this.matrixModes.types.findIndex(
       (e) => e.mode === mode.mode,

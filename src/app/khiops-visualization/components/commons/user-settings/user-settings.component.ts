@@ -7,11 +7,11 @@ import {
   Output,
 } from '@angular/core';
 import { AppConfig } from 'src/environments/environment';
-import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngstack/translate';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
+import { TrackerService } from '../../../../khiops-library/providers/tracker.service';
 
 @Component({
   selector: 'app-user-settings',
@@ -34,7 +34,7 @@ export class UserSettingsComponent implements OnChanges {
   constructor(
     private translate: TranslateService,
     private snackBar: MatSnackBar,
-    private khiopsLibraryService: KhiopsLibraryService,
+    private trackerService: TrackerService,
   ) {}
 
   ngOnChanges(changes: SimpleChanges) {
@@ -44,7 +44,7 @@ export class UserSettingsComponent implements OnChanges {
   }
 
   onNavDrawerOpen() {
-    this.khiopsLibraryService.trackEvent('page_view', 'settings');
+    this.trackerService.trackEvent('page_view', 'settings');
 
     // Global number precision
     this.numberPrecision =
@@ -111,16 +111,6 @@ export class UserSettingsComponent implements OnChanges {
       AppConfig.visualizationCommon.GLOBAL.LS_ID + 'COOKIE_CONSENT',
       this.allowCookies.toString(),
     );
-
-    if (this.initialAllowCookies !== this.allowCookies) {
-      if (this.allowCookies === true) {
-        // init matomo
-        this.khiopsLibraryService.initMatomo();
-        this.khiopsLibraryService.enableMatomo();
-      } else {
-        this.khiopsLibraryService.disableMatomo();
-      }
-    }
 
     location.reload();
   }

@@ -235,10 +235,10 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
       .getRootElementDom()
       .querySelector<HTMLElement>('#matrix-option-toggle');
     if (e.index === 1) {
-      // this.khiopsLibraryService.trackEvent('click', 'matrix_tab', 'cells');
+      // this.trackerService.trackEvent('click', 'matrix_tab', 'cells');
       matrixOptionsToggle.style.display = 'none';
     } else {
-      // this.khiopsLibraryService.trackEvent('click', 'matrix_tab', 'matrix');
+      // this.trackerService.trackEvent('click', 'matrix_tab', 'matrix');
 
       matrixOptionsToggle.style.display = 'flex';
 
@@ -286,7 +286,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
   }
 
   changeMatrixType(type: string) {
-    // this.khiopsLibraryService.trackEvent('click', 'matrix_type', type);
+    // this.trackerService.trackEvent('click', 'matrix_type', type);
     localStorage.setItem(
       AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_TYPE_OPTION',
       type,
@@ -295,7 +295,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
   }
 
   changeMatrixMode(mode: MatrixModeI) {
-    // this.khiopsLibraryService.trackEvent('click', 'matrix_mode', mode.mode);
+    // this.trackerService.trackEvent('click', 'matrix_mode', mode.mode);
     this.matrixModes.selected = mode;
     this.matrixModes.selectedIndex = this.matrixModes.types.findIndex(
       (e) => e.mode === mode.mode,
@@ -309,7 +309,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
   }
 
   changeMatrixTarget(target: string) {
-    // this.khiopsLibraryService.trackEvent('click', 'matrix_target');
+    // this.trackerService.trackEvent('click', 'matrix_target');
     this.matrixTargets.selected = target;
     localStorage.setItem(
       AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_TARGET_OPTION',

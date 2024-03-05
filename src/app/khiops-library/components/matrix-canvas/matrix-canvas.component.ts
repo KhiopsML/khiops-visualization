@@ -891,7 +891,7 @@ export class MatrixCanvasComponent
   }
 
   onContrastChanged(event: { value: number | undefined }) {
-    // this.khiopsLibraryService.trackEvent('click', 'matrix_contrast', event.value);
+    // this.trackerService.trackEvent('click', 'matrix_contrast', event.value);
     this.contrast = event.value;
     this.contrastChange.emit(this.contrast);
     this.contrast &&
@@ -903,14 +903,14 @@ export class MatrixCanvasComponent
   }
 
   onClickOnInvertAxis() {
-    // this.khiopsLibraryService.trackEvent('click', 'matrix_inverted');
+    // this.trackerService.trackEvent('click', 'matrix_inverted');
     this.isAxisInverted = !this.isAxisInverted;
     this.drawMatrix();
     this.matrixAxisInverted.emit();
   }
 
   onClickOnToggleZeros() {
-    // this.khiopsLibraryService.trackEvent('click', 'matrix_toggle_zeros');
+    // this.trackerService.trackEvent('click', 'matrix_toggle_zeros');
     this.isZerosToggled = !this.isZerosToggled;
     this.drawMatrix();
   }
@@ -930,14 +930,14 @@ export class MatrixCanvasComponent
   }
 
   onClickOnZoomIn() {
-    // this.khiopsLibraryService.trackEvent('click', 'matrix_zoom', 'in');
+    // this.trackerService.trackEvent('click', 'matrix_zoom', 'in');
     this.currentMouseY = 0;
     this.currentMouseX = 0;
     this.zoomCanvas(-1, true);
   }
 
   onClickOnZoomOut() {
-    // this.khiopsLibraryService.trackEvent('click', 'matrix_zoom', 'out');
+    // this.trackerService.trackEvent('click', 'matrix_zoom', 'out');
     this.currentMouseY = 0;
     this.currentMouseX = 0;
     this.zoomCanvas(1, true);
@@ -945,7 +945,7 @@ export class MatrixCanvasComponent
 
   onClickOnResetZoom() {
     this.currentMouseY = 0;
-    // this.khiopsLibraryService.trackEvent('click', 'matrix_zoom', 'reset');
+    // this.trackerService.trackEvent('click', 'matrix_zoom', 'reset');
     this.currentMouseX = 0;
     this.zoomCanvas(0);
   }

@@ -15,13 +15,13 @@ import { ModelingDatasService } from '@khiops-visualization/providers/modeling-d
 import { TranslateService } from '@ngstack/translate';
 import { Distribution2dDatasService } from '@khiops-visualization/providers/distribution2d-datas.service';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
-import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { Variable2dVO } from '@khiops-visualization/model/variable2d-vo';
 import { Preparation2dDatasVO } from '@khiops-visualization/model/preparation2d-datas-vo';
 import { Preparation2dVariableVO } from '@khiops-visualization/model/preparation2d-variable-vo';
+import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 
 @Component({
   selector: 'app-preparation-2d-view',
@@ -55,7 +55,7 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
 
   constructor(
     private preparationDatasService: PreparationDatasService,
-    private khiopsLibraryService: KhiopsLibraryService,
+    private trackerService: TrackerService,
     private translate: TranslateService,
     private dialog: MatDialog,
     private modelingDatasService: ModelingDatasService,
@@ -146,7 +146,7 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
   }
 
   ngOnInit() {
-    this.khiopsLibraryService.trackEvent('page_view', 'preparation2d');
+    this.trackerService.trackEvent('page_view', 'preparation2d');
   }
 
   onSplitDragEnd(event: any, item: string) {
