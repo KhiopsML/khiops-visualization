@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ChartColorsSetI } from '../interfaces/chart-colors-set';
 import { ConfigService } from '@khiops-library/providers/config.service';
-declare const window: any;
 
 @Injectable({
   providedIn: 'root',

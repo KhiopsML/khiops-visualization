@@ -36,6 +36,6 @@ export const visualizationCommonEnvironment = {
     EXT_NAME: '',
   },
   TRACKER: {
-    TRACKER_URL: 'https://www.googletagmanager.com/gtag/js',
+    TRACKER_URL: 'https://matomo.apps.tech.orange/',
   },
 };

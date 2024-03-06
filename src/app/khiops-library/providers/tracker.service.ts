@@ -1,4 +1,4 @@
-import { ElementRef, EventEmitter, Injectable, NgZone } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import {
   MatDialog,
   MatDialogConfig,
@@ -6,6 +6,7 @@ import {
 } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '@khiops-library/components/confirm-dialog/confirm-dialog.component';
 import { TranslateService } from '@ngstack/translate';
+declare const window: any;
 
 @Injectable({
   providedIn: 'root',
@@ -51,18 +52,39 @@ export class TrackerService {
   }
 
   addTrackerScript(config, trackerId: string) {
-    this.trackerScriptElement = document.createElement('script');
-    this.trackerScriptElement.src =
-      config.TRACKER.TRACKER_URL + '?id=' + trackerId;
-    this.trackerScriptElement.async = true;
-    this.trackerScriptElement.onload = function () {
-      // @ts-ignore
-      gtag('js', new Date());
-      // @ts-ignore
-      gtag('config', trackerId);
-    };
+    console.log('TrackerService ~ addTrackerScript ~ trackerId:', trackerId);
+    // this.trackerScriptElement = document.createElement('script');
+    // this.trackerScriptElement.src =
+    //   config.TRACKER.TRACKER_URL + '?id=' + trackerId;
+    // this.trackerScriptElement.async = true;
+    // this.trackerScriptElement.onload = function () {
+    //   // @ts-ignore
+    //   gtag('js', new Date());
+    //   // @ts-ignore
+    //   gtag('config', trackerId);
+    // };
 
-    document.body.appendChild(this.trackerScriptElement);
+    // document.body.appendChild(this.trackerScriptElement);
+
+    let _paq = (window._paq = window._paq || []);
+    _paq.push(['enableDebug']);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+
+    (function () {
+      var u = config.TRACKER.TRACKER_URL;
+      _paq.push(['setTrackerUrl', u + 'matomo.php']);
+      _paq.push(['setSiteId', trackerId]);
+      var d = document,
+        g = d.createElement('script'),
+        s = d.getElementsByTagName('script')[0];
+      g.type = 'text/javascript';
+      g.async = true;
+      g.defer = true;
+      g.src = u + 'matomo.js';
+      s.parentNode.insertBefore(g, s);
+    })();
+    console.log('TrackerService ~ addTrackerScript ~ _paq:', _paq);
   }
 
   showCookieConsentDialog(config) {
@@ -108,16 +130,29 @@ export class TrackerService {
   }
 
   trackEvent(category: string, action: string, name?: string, value?: any) {
+    console.log(
+      'TrackerService ~ trackEvent ~ category:',
+      window._paq,
+      category,
+    );
     try {
       // @ts-ignore
-      gtag('event', action, {
-        category: category || undefined,
-        action: action || undefined,
-        name: name || undefined,
-        value: value || undefined,
-      });
+      // gtag('event', action, {
+      //   category: category || undefined,
+      //   action: action || undefined,
+      //   name: name || undefined,
+      //   value: value || undefined,
+      // });
+
+      window._paq?.push([
+        'trackEvent',
+        category,
+        action,
+        name || undefined,
+        value || undefined,
+      ]);
     } catch (e) {
-      console.info('gtag not configured');
+      console.info('tracker not configured');
     }
   }
 }
