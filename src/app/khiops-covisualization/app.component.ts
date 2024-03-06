@@ -19,7 +19,7 @@ import { AppConfig } from 'src/environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ReleaseNotesComponent } from '@khiops-library/components/release-notes/release-notes.component';
 import { TreenodesService } from './providers/treenodes.service';
-import { TrackerService } from '../khiops-library/providers/tracker.service';
+import { TrackerService } from '@khiops-library/providers/tracker.service';
 
 @Component({
   selector: 'app-root-covisualization',
@@ -135,7 +135,6 @@ export class AppComponent implements AfterViewInit {
           trackerId,
         );
       }
-      this.setTheme();
     };
     this.element.nativeElement.snack = (title, duration, panelClass) => {
       this.ngzone.run(() => {
@@ -146,6 +145,7 @@ export class AppComponent implements AfterViewInit {
       });
     };
     this.element.nativeElement.clean = () => (this.appdatas = null);
+    this.setTheme();
   }
 
   setTheme() {
