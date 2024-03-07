@@ -7,12 +7,15 @@ import {
 import { ConfirmDialogComponent } from '@khiops-library/components/confirm-dialog/confirm-dialog.component';
 import { TranslateService } from '@ngstack/translate';
 declare const window: any;
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TrackerService {
   trackerScriptElement: HTMLScriptElement;
+  appSource: string;
+
   constructor(
     private dialogRef: MatDialog,
     private ngzone: NgZone,
@@ -20,13 +23,13 @@ export class TrackerService {
     private translate: TranslateService,
   ) {}
 
-  initTracker(config, trackerId: string) {
+  initTracker(config, trackerId: string, appSource: string) {
+    this.appSource = appSource;
     const cookieStatus = this.getCookieStatus(config);
 
     if (cookieStatus === undefined) {
       // user have never set the setting
-      this.addTrackerScript(config, trackerId);
-      this.showCookieConsentDialog(config);
+      this.showCookieConsentDialog(config, trackerId);
       // show dialog
     } else if (cookieStatus === false) {
       // user has refused, do nothing
@@ -48,33 +51,34 @@ export class TrackerService {
   }
 
   removeTrackerScript() {
-    document.body.removeChild(this.trackerScriptElement);
+    this.trackerScriptElement.parentNode.removeChild(this.trackerScriptElement);
+    window._paq = undefined;
   }
 
-  addTrackerScript(config, trackerId: string) {
-    console.log('TrackerService ~ addTrackerScript ~ trackerId:', trackerId);
-    // this.trackerScriptElement = document.createElement('script');
-    // this.trackerScriptElement.src =
-    //   config.TRACKER.TRACKER_URL + '?id=' + trackerId;
-    // this.trackerScriptElement.async = true;
-    // this.trackerScriptElement.onload = function () {
-    //   // @ts-ignore
-    //   gtag('js', new Date());
-    //   // @ts-ignore
-    //   gtag('config', trackerId);
-    // };
+  getVisitorId(config) {
+    let uuid = localStorage.getItem(config.GLOBAL.LS_ID + 'UUID') || undefined;
+    if (!uuid) {
+      uuid = uuidv4().replace(/-/g, '') || '';
+      localStorage.setItem(config.GLOBAL.LS_ID + 'UUID', uuid);
+    }
+    return uuid;
+  }
 
-    // document.body.appendChild(this.trackerScriptElement);
+  addTrackerScript(config, trackerId: string, cb?: any) {
+    window._paq = window._paq || [];
 
-    let _paq = (window._paq = window._paq || []);
-    _paq.push(['enableDebug']);
-    _paq.push(['trackPageView']);
-    _paq.push(['enableLinkTracking']);
-
-    (function () {
+    (() => {
       var u = config.TRACKER.TRACKER_URL;
-      _paq.push(['setTrackerUrl', u + 'matomo.php']);
-      _paq.push(['setSiteId', trackerId]);
+      window._paq.push(['setTrackerUrl', u + 'matomo.php']);
+      window._paq.push(['setSiteId', trackerId]);
+      window._paq.push(['trackPageView']);
+      window._paq.push(['disableCookies']); // remove cookies : do not work on electron local file
+
+      const visitorId = this.getVisitorId(config);
+      if (visitorId) {
+        // genereate and keep in local storage unique visitor id to filter visitors analytics
+        window._paq.push(['setVisitorId', visitorId]);
+      }
       var d = document,
         g = d.createElement('script'),
         s = d.getElementsByTagName('script')[0];
@@ -83,11 +87,14 @@ export class TrackerService {
       g.defer = true;
       g.src = u + 'matomo.js';
       s.parentNode.insertBefore(g, s);
+      this.trackerScriptElement = g;
+      this.trackerScriptElement.onload = () => {
+        cb && cb();
+      };
     })();
-    console.log('TrackerService ~ addTrackerScript ~ _paq:', _paq);
   }
 
-  showCookieConsentDialog(config) {
+  showCookieConsentDialog(config, trackerId) {
     this.ngzone.run(() => {
       this.dialogRef.closeAll();
       const configDialog = new MatDialogConfig();
@@ -121,35 +128,25 @@ export class TrackerService {
             config.GLOBAL.LS_ID + 'COOKIE_CONSENT',
             acceptCookies,
           );
-          this.trackEvent('cookie_consent', acceptCookies);
-          if (acceptCookies === 'false') {
-            this.removeTrackerScript();
-          }
+          this.addTrackerScript(config, trackerId, () => {
+            this.trackEvent('cookie_consent', acceptCookies);
+            if (acceptCookies === 'false') {
+              this.removeTrackerScript();
+            }
+          });
         });
     });
   }
 
   trackEvent(category: string, action: string, name?: string, value?: any) {
-    console.log(
-      'TrackerService ~ trackEvent ~ category:',
-      window._paq,
-      category,
-    );
     try {
-      // @ts-ignore
-      // gtag('event', action, {
-      //   category: category || undefined,
-      //   action: action || undefined,
-      //   name: name || undefined,
-      //   value: value || undefined,
-      // });
-
       window._paq?.push([
         'trackEvent',
         category,
         action,
         name || undefined,
         value || undefined,
+        this.appSource,
       ]);
     } catch (e) {
       console.info('tracker not configured');

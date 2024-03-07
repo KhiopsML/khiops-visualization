@@ -1,6 +1,6 @@
 {
   "name": "visualization-component",
-  "version": "11.0.12",
+  "version": "11.1.0",
   "author": {
     "name": "Orange",
     "email": "khiops@orange.com"
@@ -88,6 +88,7 @@
     "stream-browserify": "3.0.0",
     "tslib": "2.6.2",
     "typeface-poppins": "1.1.13",
+    "uuidv4": "^6.2.13",
     "xml2js": "0.4.17",
     "zone.js": "0.11.4"
   },

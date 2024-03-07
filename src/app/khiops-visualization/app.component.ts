@@ -101,10 +101,13 @@ export class AppComponent implements AfterViewInit {
       this.configService.setConfig(config);
 
       const trackerId = this.configService.getConfig().trackerId;
+      const appSource = this.configService.getConfig().appSource;
+
       if (trackerId) {
         this.trackerService.initTracker(
-          AppConfig.visualizationCommon,
+          AppConfig.covisualizationCommon,
           trackerId,
+          appSource,
         );
       }
     };

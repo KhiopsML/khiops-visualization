@@ -129,10 +129,13 @@ export class AppComponent implements AfterViewInit {
       this.configService.setConfig(config);
 
       const trackerId = this.configService.getConfig().trackerId;
+      const appSource = this.configService.getConfig().appSource;
+
       if (trackerId) {
         this.trackerService.initTracker(
           AppConfig.covisualizationCommon,
           trackerId,
+          appSource,
         );
       }
     };
@@ -146,6 +149,12 @@ export class AppComponent implements AfterViewInit {
     };
     this.element.nativeElement.clean = () => (this.appdatas = null);
     this.setTheme();
+
+    // Test analytics in local
+    // this.trackerService.initTracker(
+    //   AppConfig.covisualizationCommon,
+    //   '<tracker_id>',
+    // );
   }
 
   setTheme() {
