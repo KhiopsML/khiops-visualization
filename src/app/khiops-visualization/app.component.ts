@@ -22,13 +22,12 @@ import { ReleaseNotesComponent } from '@khiops-library/components/release-notes/
 
 @Component({
   selector: 'app-root-visualization',
-  templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  templateUrl: './app.component.html',
   encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class AppComponent implements AfterViewInit {
   appdatas: any;
-  show = true;
 
   @ViewChild('appElement', {
     static: false,
@@ -120,10 +119,8 @@ export class AppComponent implements AfterViewInit {
   }
 
   clean() {
-    this.show = false;
     this.appdatas = undefined;
     this.appService.initialize();
-    this.show = true;
   }
 
   setTheme() {

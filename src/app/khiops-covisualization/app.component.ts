@@ -29,21 +29,16 @@ import { TrackerService } from '@khiops-library/providers/tracker.service';
 })
 export class AppComponent implements AfterViewInit {
   appdatas: any;
-  isDarkTheme: boolean =
-    localStorage.getItem(
-      AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR',
-    ) === 'dark'
-      ? true
-      : false;
-  theme: string =
-    localStorage.getItem(
-      AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR',
-    ) || 'light';
 
   @ViewChild('appElement', {
     static: false,
   })
   appElement: ElementRef<HTMLElement>;
+
+  theme: string =
+    localStorage.getItem(
+      AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR',
+    ) || 'light';
 
   constructor(
     private ngzone: NgZone,

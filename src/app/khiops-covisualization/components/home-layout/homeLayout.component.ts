@@ -104,7 +104,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
   );
 
   importedDatasChangedSub: Subscription;
-
   constructor(
     private configService: ConfigService,
     private appService: AppService,

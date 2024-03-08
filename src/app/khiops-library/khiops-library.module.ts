@@ -61,6 +61,7 @@ import { ImportFileLoaderComponent } from './components/import-file-loader/impor
 import { WatchResizeComponent } from './components/watch-resize/watch-resize.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { MarkdownModule } from 'ngx-markdown';
+import { LibraryComponent } from './library.component';
 import { BtnFullscreenComponent } from './components/btn-fullscreen/btn-fullscreen.component';
 import EnTransaltion from '../../i18n/en.json';
 
@@ -105,6 +106,7 @@ import EnTransaltion from '../../i18n/en.json';
     }),
   ],
   declarations: [
+    LibraryComponent,
     CellStatsComponent,
     WatchResizeComponent,
     SelectableComponent,
@@ -136,6 +138,7 @@ import EnTransaltion from '../../i18n/en.json';
   ],
   providers: [ConfigService, EventsService, TranslateService],
   exports: [
+    LibraryComponent,
     CommonModule,
     HttpClientModule,
     MatTableModule,
