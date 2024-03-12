@@ -1,9 +1,9 @@
 ![test workflow](https://github.com/KhiopsML/khiops-visualization/actions/workflows/test.yml/badge.svg) [![Publish to NPM](https://github.com/KhiopsML/khiops-visualization/actions/workflows/publish.yml/badge.svg?branch=master)](https://github.com/KhiopsML/khiops-visualization/actions/workflows/publish.yml) [![npm version](https://badge.fury.io/js/khiops-visualization.svg)](https://www.npmjs.com/package/khiops-visualization) [![End-to-end tests](https://github.com/KhiopsML/khiops-visualization/actions/workflows/e2e.yml/badge.svg)](https://github.com/KhiopsML/khiops-visualization/actions/workflows/e2e.yml)
 
 
-# Introduction
+# Khiops Visualization component
 
-Khiops Visualization component. Contains the code of Visualization and Covisualization tools
+Contains the code of Visualization and Covisualization tools
 
 ![khiops-demo](https://github.com/KhiopsML/khiops-visualization/assets/13203455/53a90746-64da-4d44-adaf-f18c6f854622)
 
