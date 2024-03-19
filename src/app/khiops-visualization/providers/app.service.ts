@@ -247,6 +247,8 @@ export class AppService {
       Object.keys(datas).forEach((value) => {
         // do not add optimal if not liftcurve (regression)
         if (
+          datas &&
+          datas[value] &&
           datas[value].reportType &&
           datas[value].reportType === 'Evaluation' &&
           datas[value].liftCurves
