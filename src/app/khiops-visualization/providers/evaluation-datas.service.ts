@@ -83,6 +83,8 @@ export class EvaluationDatasService {
 
     Object.keys(appDatas).forEach((value) => {
       if (
+        appDatas &&
+        appDatas[value] &&
         appDatas[value].reportType &&
         appDatas[value].reportType === 'Evaluation'
       ) {
