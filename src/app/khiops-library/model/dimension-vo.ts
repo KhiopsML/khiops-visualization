@@ -65,6 +65,17 @@ export class DimensionVO {
     if (this.isNumerical) {
       this.intervals = dimensionPartition.intervals;
       this.min = this.intervals[0].bounds[0];
+
+      if (!this.min) {
+        // bounds are missing for first interval, take the second #123
+        /**
+          {
+            bounds: []
+            cluster: "Missing"
+          }
+         */
+        this.min = this.intervals[1].bounds[0];
+      }
       this.max = this.intervals[this.intervals.length - 1].bounds[1];
     } else {
       this.valueGroups = dimensionPartition.valueGroups;
