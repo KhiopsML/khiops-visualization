@@ -2,6 +2,7 @@ import { Component, OnInit, NgZone, Input } from '@angular/core';
 import { CompositionVO } from '@khiops-covisualization/model/composition-vo';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
+import { DimensionVO } from '@khiops-library/model/dimension-vo';
 import { ConfigService } from '@khiops-library/providers/config.service';
 
 @Component({
@@ -16,6 +17,7 @@ export class ExternalDatasComponent
   @Input() position: number;
   @Input() externalData: any[];
   @Input() selectedComposition: CompositionVO;
+  @Input() selectedDimension: DimensionVO;
 
   override id: any = undefined;
   currentExternalDatasTitle: string = '';
@@ -36,6 +38,18 @@ export class ExternalDatasComponent
 
   ngOnChanges() {
     this.updateExternalDatas();
+  }
+
+  getNoDatasMessage() {
+    if (this.selectedDimension.isNumerical) {
+      return 'NO_DATAS.NO_EXTERNAL_DATAS_FOR_NUMERICAL';
+    } else {
+      if (this.selectedComposition) {
+        return 'NO_DATAS.NO_EXTERNAL_DATAS';
+      } else {
+        return 'NO_DATAS.OPEN_COMPOSITION_VIEW_TO_DISPLAY_EXTERNAL_DATAS';
+      }
+    }
   }
 
   updateExternalDatas() {

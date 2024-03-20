@@ -23,6 +23,6 @@
   <kl-no-data
     fxFlexFill
     *ngIf="currentExternalDatas.length === 0"
-    [message]="'NO_DATAS.NO_EXTERNAL_DATAS'"
+    [message]="getNoDatasMessage()"
   ></kl-no-data>
 </div>

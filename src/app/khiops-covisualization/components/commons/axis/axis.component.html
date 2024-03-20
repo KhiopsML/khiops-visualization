@@ -81,6 +81,7 @@
       <app-external-datas
         [attr.id]="'external-datas-' + position"
         [position]="position"
+        [selectedDimension]="dimensionsDatas.selectedDimensions[position]"
         [selectedComposition]="selectedComposition"
         [externalData]="dimensionsDatas.selectedNodes[position]?.externalData"
       >
