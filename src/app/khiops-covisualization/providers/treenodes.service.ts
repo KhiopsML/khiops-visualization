@@ -276,8 +276,12 @@ export class TreenodesService {
 
   updateCurrentHierarchyClustersCount(rank: number) {
     for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
+      const currentIndex: number =
+        this.dimensionsDatas.selectedDimensions.findIndex((e) => {
+          return this.dimensionsDatas.dimensions[i].name === e.name;
+        });
       const nodesVO: TreeNodeVO[] = UtilsService.fastFilter(
-        this.dimensionsDatas.dimensionsClusters[i],
+        this.dimensionsDatas.dimensionsClusters[currentIndex],
         (e) => {
           return !e.isLeaf && e.hierarchicalRank < rank;
         },
