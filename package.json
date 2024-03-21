@@ -1,6 +1,7 @@
 {
   "name": "visualization-component",
   "version": "11.1.2",
+  "license": "BSD-3-Clause-Clear",
   "author": {
     "name": "Orange",
     "email": "khiops@orange.com"
