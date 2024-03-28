@@ -460,49 +460,19 @@ export class AgGridComponent
         this.columnDefs.push(gridCol);
       }
 
-      if (
-        this.paginationSize &&
-        (this.rowData.length === 0 ||
-          this.inputDatas.length > this.paginationSize)
-      ) {
-        // in case of big grid (>100), recreate all for performance improvements
-        // grid initialization
-        this.rowData = [];
-        for (let i = 0; i < this.inputDatas.length; i++) {
-          const currentData = this.inputDatas[i];
-          if (currentData) {
-            const currentRow = {};
-            for (let j = 0; j < this.displayedColumns.length; j++) {
-              currentRow[this.displayedColumns[j].field] =
-                currentData[this.displayedColumns[j].field];
-            }
-            this.rowData.push(currentRow);
+      this.rowData = [];
+      for (let i = 0; i < this.inputDatas.length; i++) {
+        const currentData = this.inputDatas[i];
+        if (currentData) {
+          const currentRow = {};
+          for (let j = 0; j < this.displayedColumns.length; j++) {
+            currentRow[this.displayedColumns[j].field] =
+              currentData[this.displayedColumns[j].field];
           }
-        }
-      } else {
-        // grid has changed
-        // remove current lines
-        this.agGrid.api.forEachNode((node) => {
-          this.gridOptions?.api?.applyTransaction({
-            remove: [node.data],
-          });
-        });
-        // add updates
-        // we do not rerender each time to prevent blink selections
-        for (let i = 0; i < this.inputDatas.length; i++) {
-          const currentData = this.inputDatas[i];
-          if (currentData) {
-            const currentRow = {};
-            for (let j = 0; j < this.displayedColumns.length; j++) {
-              currentRow[this.displayedColumns[j].field] =
-                currentData[this.displayedColumns[j].field];
-            }
-            this.gridOptions?.api?.applyTransaction({
-              add: [currentRow],
-            });
-          }
+          this.rowData.push(currentRow);
         }
       }
+
       if (updateSelectedVariable) {
         setTimeout(() => {
           this.selectNode(this.selectedVariable);
