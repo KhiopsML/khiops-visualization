@@ -12,7 +12,6 @@ import * as ChartJs from 'chart.js';
 
 import { UtilsService } from '../../providers/utils.service';
 import { KhiopsLibraryService } from '../../providers/khiops-library.service';
-import { ToPrecisionPipe } from '../../pipes/toPrecision.pipe';
 import { ChartColorsSetI } from '../../interfaces/chart-colors-set';
 import { ChartOptions } from 'chart.js';
 import { ConfigService } from '@khiops-library/providers/config.service';
@@ -23,7 +22,6 @@ import { ChartDatasetVO } from '@khiops-library/model/chartDataset-vo';
   selector: 'kl-chart-next',
   templateUrl: './chart-next.component.html',
   styleUrls: ['./chart-next.component.scss'],
-  providers: [ToPrecisionPipe],
 })
 export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() canvasIdContainer = 'kl-chart-canvas'; // May be updated if multiple graph

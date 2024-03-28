@@ -18,6 +18,7 @@ import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
 import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
 import { ChartOptions } from 'chart.js';
 import { ConfigService } from '@khiops-library/providers/config.service';
+import { VariableVO } from '@khiops-visualization/model/variable-vo';
 
 @Component({
   selector: 'app-level-distribution-graph',
@@ -29,7 +30,7 @@ export class LevelDistributionGraphCanvasComponent
   extends ScrollableGraphCanvasComponent
   implements OnInit
 {
-  @Input() datas: string;
+  @Input() datas: VariableVO[];
   @Input() levelDistributionTitle: string;
 
   override inputDatas: ChartDatasVO = undefined;
