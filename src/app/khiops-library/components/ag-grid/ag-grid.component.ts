@@ -576,7 +576,7 @@ export class AgGridComponent
     if (selectedNodes && selectedNodes[0]) {
       const previousRowIndex = selectedNodes[0].rowIndex;
       let nextRowIndex;
-      if (previousRowIndex) {
+      if (previousRowIndex !== undefined) {
         switch (params.key) {
           case this.KEY_DOWN:
             nextRowIndex = previousRowIndex + 1;
