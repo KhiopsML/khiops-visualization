@@ -136,6 +136,7 @@
     "BIG_FILES_LOADING_WARNING": "Loading very large reports may take more than a minute ...",
     "OK": "Ok",
     "OVER": "over",
+    "GIVEN": "given",
     "TOGGLE_ZERO": "Show / Hide zeros exceptions",
     "TYPE_ANNOTATION": "Type an annotation",
     "STATISTICS": "Statistics",

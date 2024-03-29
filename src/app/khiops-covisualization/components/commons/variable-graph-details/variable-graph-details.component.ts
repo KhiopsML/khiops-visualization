@@ -116,7 +116,7 @@ export class VariableGraphDetailsComponent
       ' ' +
       this.selectedDimensions[currentIndex].name +
       ' ' +
-      this.translate.get('GLOBAL.OVER') +
+      this.translate.get('GLOBAL.GIVEN') +
       ' ' +
       this.selectedDimensions[otherIndex].name;
   }
@@ -159,9 +159,10 @@ export class VariableGraphDetailsComponent
   }
 
   setLegendTitle(position: number) {
+    const otherIndex = this.position === 0 ? 1 : 0;
     this.graphDetails.datasets[0].label =
       this.dimensionsDatasService.dimensionsDatas.selectedNodes[
-        position
+        otherIndex
       ].shortDescription;
     // force legend update
     this.graphDetails = _.cloneDeep(this.graphDetails);
