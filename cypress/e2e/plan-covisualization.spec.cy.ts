@@ -90,10 +90,10 @@ describe('Test Plan for Khiops Covisualization', () => {
 
           // Check distribution update legend (canvas values does not work)
           cy.get('#cluster-distribution-0').contains(
-            res.nodesName[0].substring(0, 15), // legend is cropped
+            res.nodesName[1].substring(0, 15), // legend is cropped
           );
           cy.get('#cluster-distribution-1').contains(
-            res.nodesName[1].substring(0, 15), // legend is cropped
+            res.nodesName[0].substring(0, 15), // legend is cropped
           );
 
           // Check selected Clusters table
@@ -113,7 +113,7 @@ describe('Test Plan for Khiops Covisualization', () => {
           if (!isNumericalDimension(datas, 0)) {
             cy.get('#cluster-composition-0').contains('renamed');
           }
-          cy.get('#cluster-distribution-0').contains('renamed');
+          cy.get('#cluster-distribution-1').contains('renamed');
           cy.get('#selected-clusters-grid').contains('renamed');
           cy.get('#cluster-annotation-0').contains('renamed');
 
