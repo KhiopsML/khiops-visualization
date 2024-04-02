@@ -24,6 +24,8 @@ import { AppConfig } from 'src/environments/environment';
 import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 import { MatrixCoordI } from '@khiops-library/interfaces/matrix-coord';
+import { Subscription } from 'rxjs';
+import { EventsService } from '@khiops-covisualization/providers/events.service';
 
 @Component({
   selector: 'kl-matrix-canvas',
@@ -39,7 +41,6 @@ export class MatrixCanvasComponent
 
   @Input() graphType: string;
   @Input() graphMode: MatrixModeI;
-  @Input() conditionalOnContext: boolean;
   @Input() contrast?: number | undefined;
   @Output() contrastChange: EventEmitter<number> = new EventEmitter();
 
@@ -53,6 +54,8 @@ export class MatrixCanvasComponent
   @Output() matrixAxisInverted: EventEmitter<any> = new EventEmitter();
   @Output() cellSelected: EventEmitter<any> = new EventEmitter();
   @Output() cellSelectedByEvent: EventEmitter<any> = new EventEmitter();
+
+  conditionalOnContextChangedSub: Subscription;
 
   isKhiopsCovisu: boolean;
   componentType = 'matrix'; // needed to copy datas
@@ -126,6 +129,7 @@ export class MatrixCanvasComponent
 
   constructor(
     public override selectableService: SelectableService,
+    private eventsService: EventsService,
     public override ngzone: NgZone,
     public override configService: ConfigService,
     private khiopsLibraryService: KhiopsLibraryService,
@@ -145,6 +149,11 @@ export class MatrixCanvasComponent
       min: 0,
       max: 0,
     };
+
+    this.conditionalOnContextChangedSub =
+      this.eventsService.conditionalOnContextChanged.subscribe(() => {
+        this.drawMatrix();
+      });
   }
 
   @HostListener('window:resize', ['$event'])
@@ -152,6 +161,10 @@ export class MatrixCanvasComponent
     if (!this.isFirstResize) {
       this.drawMatrix();
     }
+  }
+
+  override ngOnDestroy() {
+    this.conditionalOnContextChangedSub.unsubscribe();
   }
 
   @HostListener('window:keyup', ['$event'])

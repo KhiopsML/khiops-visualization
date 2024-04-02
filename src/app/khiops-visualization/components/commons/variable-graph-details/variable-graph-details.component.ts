@@ -41,7 +41,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
   @Input() selectedVariable: PreparationVariableVO | TreePreparationVariableVO;
   @Input() selectedGraphItemIndex = 0;
   @Input() preparationSource: string;
-  @Input() displayedValues?: ChartToggleValuesI[]; // optional input to update chart on value changes (for instance when another component of tree preparation viuew changed)
+  @Input() displayedValues?: ChartToggleValuesI[]; // optional input to update chart on value changes (for instance when another component of tree preparation view changed)
   @Input() position = 0; // in case of multiple component in the same page
 
   @Output() selectedItemChanged: EventEmitter<any> = new EventEmitter();

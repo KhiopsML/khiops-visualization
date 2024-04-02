@@ -212,5 +212,6 @@ export class MatrixContainerComponent implements OnInit, OnDestroy {
     this.dimensionsDatas.conditionalOnContext =
       !this.dimensionsDatas.conditionalOnContext;
     this.treenodesService.initConditionalOnContextNodes();
+    this.eventsService.emitConditionalOnContextChanged();
   }
 }
