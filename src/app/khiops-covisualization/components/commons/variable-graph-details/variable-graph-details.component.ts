@@ -48,6 +48,7 @@ export class VariableGraphDetailsComponent
 
   scrollPosition = 0;
   treeSelectedNodeChangedSub: Subscription;
+  conditionalOnContextChangedSub: Subscription;
 
   isLoadingGraphDatas: boolean;
   scaleValue: number;
@@ -84,6 +85,10 @@ export class VariableGraphDetailsComponent
           }
           this.setLegendTitle(this.position);
         });
+      });
+    this.conditionalOnContextChangedSub =
+      this.eventsService.conditionalOnContextChanged.subscribe(() => {
+        this.getFilteredDistribution(this.dimensionsTree, true);
       });
   }
 
@@ -136,6 +141,7 @@ export class VariableGraphDetailsComponent
 
   ngOnDestroy() {
     this.treeSelectedNodeChangedSub.unsubscribe();
+    this.conditionalOnContextChangedSub.unsubscribe();
   }
 
   getFilteredDistribution(dimensionsTree, force = false) {
