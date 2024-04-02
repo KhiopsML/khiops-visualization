@@ -44,7 +44,7 @@ export class MatrixContainerComponent implements OnInit, OnDestroy {
     private appService: AppService,
     private treenodesService: TreenodesService,
     private eventsService: EventsService,
-    private dimensionsService: DimensionsDatasService,
+    private dimensionsDatasService: DimensionsDatasService,
   ) {
     this.treeSelectedNodeChangedSub =
       this.eventsService.treeSelectedNodeChanged.subscribe((e) => {
@@ -54,7 +54,7 @@ export class MatrixContainerComponent implements OnInit, OnDestroy {
           this.isFirstLoad = false;
         } else {
           // check if it's a context selection to redraw matrix
-          const isContextDimension = this.dimensionsService.isContextDimension(
+          const isContextDimension = this.dimensionsDatasService.isContextDimension(
             e.hierarchyName,
           );
 
@@ -88,7 +88,7 @@ export class MatrixContainerComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.sizes = this.appService.getViewSplitSizes(this.viewId);
-    this.dimensionsDatas = this.dimensionsService.getDatas();
+    this.dimensionsDatas = this.dimensionsDatasService.getDatas();
     this.constructModeSelectBox();
     this.constructOptionsSelectBox();
   }
@@ -185,7 +185,7 @@ export class MatrixContainerComponent implements OnInit, OnDestroy {
   }
 
   onMatrixAxisInverted() {
-    this.dimensionsService.toggleIsAxisInverted();
+    this.dimensionsDatasService.toggleIsAxisInverted();
   }
 
   changeMatrixType(type: string) {

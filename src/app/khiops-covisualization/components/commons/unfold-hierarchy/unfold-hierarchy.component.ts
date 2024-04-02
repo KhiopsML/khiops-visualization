@@ -85,7 +85,7 @@ export class UnfoldHierarchyComponent implements OnInit {
 
   constructor(
     private translate: TranslateService,
-    private dimensionsService: DimensionsDatasService,
+    private dimensionsDatasService: DimensionsDatasService,
     private hierarchyService: HierarchyService,
     private snackBar: MatSnackBar,
     private treenodesService: TreenodesService,
@@ -154,7 +154,7 @@ export class UnfoldHierarchyComponent implements OnInit {
     this.currentUnfoldHierarchy = this.previousHierarchyRank;
 
     setTimeout(() => {
-      this.dimensionsDatas = this.dimensionsService.getDatas();
+      this.dimensionsDatas = this.dimensionsDatasService.getDatas();
       this.dimensions = _.cloneDeep(this.dimensionsDatas.dimensions);
 
       // Reset current herarchy cluster count if modal has been dismissed

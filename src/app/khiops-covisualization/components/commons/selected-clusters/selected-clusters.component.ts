@@ -30,7 +30,7 @@ export class SelectedClustersComponent implements OnDestroy {
     private translate: TranslateService,
     private clustersService: ClustersService,
     private eventsService: EventsService,
-    private dimensionsService: DimensionsDatasService,
+    private dimensionsDatasService: DimensionsDatasService,
   ) {
     this.clustersDisplayedColumns = [
       {
@@ -79,7 +79,7 @@ export class SelectedClustersComponent implements OnDestroy {
   updateDimensionIntervals(dimName): SelectedClusterVO | undefined {
     if (this.selectedClusters) {
       // Update intervals of current node
-      const nbClusters = this.dimensionsService.getDimensionIntervals(dimName);
+      const nbClusters = this.dimensionsDatasService.getDimensionIntervals(dimName);
 
       // Just update intervals on change
       const selectedCluster: SelectedClusterVO = this.selectedClusters.find(
@@ -98,7 +98,7 @@ export class SelectedClustersComponent implements OnDestroy {
     // Check if all nodes are selected to update to optimize
     if (
       this.selectedNodes &&
-      this.selectedNodes.length === this.dimensionsService.getDimensionCount()
+      this.selectedNodes.length === this.dimensionsDatasService.getDimensionCount()
     ) {
       const details = this.clustersService.getSelectedClustersDetails();
       this.selectedClusters = [];
@@ -119,10 +119,10 @@ export class SelectedClustersComponent implements OnDestroy {
 
   selectActiveClusters() {
     const currentActiveClusters = [];
-    const firstDimPos = this.dimensionsService.getDimensionPositionFromName(
+    const firstDimPos = this.dimensionsDatasService.getDimensionPositionFromName(
       this.selectedClusters[0].hierarchy,
     );
-    const secondDimPos = this.dimensionsService.getDimensionPositionFromName(
+    const secondDimPos = this.dimensionsDatasService.getDimensionPositionFromName(
       this.selectedClusters[1].hierarchy,
     );
     currentActiveClusters.push(this.selectedClusters[firstDimPos]);

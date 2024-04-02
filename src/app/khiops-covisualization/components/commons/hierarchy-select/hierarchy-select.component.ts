@@ -52,12 +52,12 @@ export class HierarchySelectComponent implements OnChanges, AfterViewInit {
     private snackBar: MatSnackBar,
     private translate: TranslateService,
     private appService: AppService,
-    private dimensionsService: DimensionsDatasService,
+    private dimensionsDatasService: DimensionsDatasService,
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.selectedDimension && changes.selectedDimension.currentValue) {
-      this.intervals = this.dimensionsService.getDimensionIntervals(
+      this.intervals = this.dimensionsDatasService.getDimensionIntervals(
         this.selectedDimension.name,
       );
     }
@@ -99,11 +99,11 @@ export class HierarchySelectComponent implements OnChanges, AfterViewInit {
     // Reverse selected nodes on selection changed
     this.treenodesService.updateSelectedNodes(dimension, this.position);
     // Reverse dimensions datas on selection changed
-    this.dimensionsService.updateSelectedDimension(dimension, this.position);
+    this.dimensionsDatasService.updateSelectedDimension(dimension, this.position);
     // Recompute datas
-    this.dimensionsService.saveInitialDimension();
-    this.dimensionsService.constructDimensionsTrees();
-    this.dimensionsService.getMatrixDatas();
-    this.dimensionsService.computeMatrixDataFreqMap();
+    this.dimensionsDatasService.saveInitialDimension();
+    this.dimensionsDatasService.constructDimensionsTrees();
+    this.dimensionsDatasService.getMatrixDatas();
+    this.dimensionsDatasService.computeMatrixDataFreqMap();
   }
 }

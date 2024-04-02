@@ -24,11 +24,11 @@ export class HeaderManageViewComponent {
 
   constructor(
     private dialog: MatDialog,
-    private dimensionsService: DimensionsDatasService,
+    private dimensionsDatasService: DimensionsDatasService,
   ) {}
 
   clickUnfodHierarchy() {
-    this.dimensionsDatas = this.dimensionsService.getDatas();
+    this.dimensionsDatas = this.dimensionsDatasService.getDatas();
     const config = new MatDialogConfig();
     config.width = AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.WIDTH;
     config.height = AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.HEIGHT;
@@ -43,7 +43,7 @@ export class HeaderManageViewComponent {
   }
 
   clickManageLayout() {
-    this.dimensionsDatas = this.dimensionsService.getDatas();
+    this.dimensionsDatas = this.dimensionsDatasService.getDatas();
     const config = new MatDialogConfig();
     config.width = AppConfig.covisualizationCommon.MANAGE_VIEWS.WIDTH;
     config.maxWidth = AppConfig.covisualizationCommon.MANAGE_VIEWS.MAX_WIDTH;
@@ -58,7 +58,7 @@ export class HeaderManageViewComponent {
   }
 
   clickImportExternalData() {
-    this.dimensionsDatas = this.dimensionsService.getDatas();
+    this.dimensionsDatas = this.dimensionsDatasService.getDatas();
     const config = new MatDialogConfig();
     config.width = AppConfig.covisualizationCommon.MANAGE_VIEWS.WIDTH;
     config.maxWidth = AppConfig.covisualizationCommon.MANAGE_VIEWS.MAX_WIDTH;

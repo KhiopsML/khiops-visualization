@@ -21,10 +21,10 @@ export class ManageViewsComponent implements OnInit {
 
   constructor(
     private appService: AppService,
-    private dimensionsService: DimensionsDatasService,
+    private dimensionsDatasService: DimensionsDatasService,
     private dialogRef: MatDialogRef<ManageViewsComponent>,
   ) {
-    this.dimensionsDatas = this.dimensionsService.getDatas();
+    this.dimensionsDatas = this.dimensionsDatasService.getDatas();
     this.viewsLayout = _.cloneDeep(this.appService.getViewsLayout());
     this.isContextView = this.appService.getActiveTabIndex() === 1;
 

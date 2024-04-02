@@ -115,7 +115,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     private trackerService: TrackerService,
     public selectableService: SelectableService,
     private importExtDatasService: ImportExtDatasService,
-    private dimensionsService: DimensionsDatasService,
+    private dimensionsDatasService: DimensionsDatasService,
     private treenodesService: TreenodesService,
     private eventsService: EventsService,
     private dialog: MatDialog,
@@ -128,16 +128,16 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     this.importedDatasChangedSub =
       this.eventsService.importedDatasChanged.subscribe((dimName) => {
         if (dimName && dimName[0]) {
-          this.dimensionsService.constructDimensionsTrees();
-          const dimIndex = this.dimensionsService.getDimensionPositionFromName(
+          this.dimensionsDatasService.constructDimensionsTrees();
+          const dimIndex = this.dimensionsDatasService.getDimensionPositionFromName(
             dimName[0],
           );
           if (
-            this.dimensionsService.dimensionsDatas.selectedDimensions[dimIndex]
+            this.dimensionsDatasService.dimensionsDatas.selectedDimensions[dimIndex]
           ) {
             // Update selected nodes ext datas
             this.treenodesService.setSelectedNode(
-              this.dimensionsService.dimensionsDatas.selectedDimensions[
+              this.dimensionsDatasService.dimensionsDatas.selectedDimensions[
                 dimIndex
               ].name,
               this.treenodesService.dimensionsDatas.selectedNodes[dimIndex]._id,
@@ -274,13 +274,13 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
   }
 
   initializeServices() {
-    this.dimensionsService.initialize();
+    this.dimensionsDatasService.initialize();
     this.annotationService.initialize();
     this.clustersService.initialize();
     this.treenodesService.initialize();
     this.importExtDatasService.initExtDatasFiles();
     this.openLoadExternalDataDialog();
-    this.isContextDimensions = this.dimensionsService.isContextDimensions();
+    this.isContextDimensions = this.dimensionsDatasService.isContextDimensions();
   }
 
   openLoadExternalDataDialog() {

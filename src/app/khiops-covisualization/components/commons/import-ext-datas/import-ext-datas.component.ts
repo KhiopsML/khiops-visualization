@@ -32,12 +32,12 @@ export class ImportExtDatasComponent implements OnInit {
   @Output() closeImport: EventEmitter<any> = new EventEmitter();
 
   constructor(
-    private dimensionsService: DimensionsDatasService,
+    private dimensionsDatasService: DimensionsDatasService,
     private importExtDatasService: ImportExtDatasService,
     public translate: TranslateService,
     private snackBar: MatSnackBar,
   ) {
-    this.dimensionsDatas = this.dimensionsService.getDatas();
+    this.dimensionsDatas = this.dimensionsDatasService.getDatas();
     this.selectedDimension = this.dimensionsDatas.dimensions[0];
   }
 
