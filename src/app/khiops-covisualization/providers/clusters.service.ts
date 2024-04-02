@@ -154,14 +154,7 @@ export class ClustersService {
     filteredotherList = [...new Set(filteredotherList)]; // keep uniq
 
     const matrixCellDataMap =
-      this.dimensionsDatasService.dimensionsDatas.matrixDatas.matrixCellDatas.reduce(
-        (map, data, index) => {
-          const key = `${data.yaxisPart}-${data.xaxisPart}`;
-          map[key] = index;
-          return map;
-        },
-        {},
-      );
+      this.dimensionsDatasService.dimensionsDatas.matrixCellFreDataMap;
 
     for (let i = 0; i < otherselectedNode.childrenList.length; i++) {
       const element = otherselectedNode.childrenList[i];

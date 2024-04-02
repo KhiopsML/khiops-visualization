@@ -104,5 +104,6 @@ export class HierarchySelectComponent implements OnChanges, AfterViewInit {
     this.dimensionsService.saveInitialDimension();
     this.dimensionsService.constructDimensionsTrees();
     this.dimensionsService.getMatrixDatas();
+    this.dimensionsService.computeMatrixDataFreqMap();
   }
 }

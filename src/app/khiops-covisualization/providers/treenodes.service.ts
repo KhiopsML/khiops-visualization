@@ -409,6 +409,7 @@ export class TreenodesService {
     const propagateChanges = currentIndex <= 1 ? true : false;
     // hack to limit re-rendering and optimize perf
     this.dimensionsDatasService.getMatrixDatas(propagateChanges);
+    this.dimensionsDatasService.computeMatrixDataFreqMap();
   }
 
   constructDatasToSave(collapsedNodesInput?) {

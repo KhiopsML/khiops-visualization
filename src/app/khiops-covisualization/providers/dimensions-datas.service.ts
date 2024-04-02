@@ -555,4 +555,27 @@ export class DimensionsDatasService {
     // console.log("TCL: DimensionsDatasService -> getMatrixDatas -> this.dimensionsDatas.matrixDatas", JSON.stringify(this.dimensionsDatas.matrixDatas))
     return [generationDuration, this.dimensionsDatas.matrixDatas];
   }
+
+  /**
+   * Generate a map of frequencies based on each potential dimensions map
+   * for instance:
+   *
+    {11th, 10th, 9th, ...}-{Local-gov}: 21
+    {11th, 10th, 9th, ...}-{Private, Never-worked}: 3
+    {11th, 10th, 9th, ...}-{Self-emp-inc}: 15
+    {11th, 10th, 9th, ...}-{Self-emp-not-inc, Without-pay}: 9
+    {11th, 10th, 9th, ...}-{State-gov, Federal-gov}: 27
+    ...
+   */
+  computeMatrixDataFreqMap() {
+    this.dimensionsDatas.matrixCellFreDataMap =
+      this.dimensionsDatas.matrixDatas.matrixCellDatas.reduce(
+        (map, data, index) => {
+          const key = `${data.yaxisPart}-${data.xaxisPart}`;
+          map[key] = index;
+          return map;
+        },
+        {},
+      );
+  }
 }

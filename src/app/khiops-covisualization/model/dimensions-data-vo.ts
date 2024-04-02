@@ -6,6 +6,7 @@ export class DimensionsDatasVO {
   matrixDatas: any = undefined;
   allMatrixDatas: any = undefined;
   allMatrixCellDatas: any = undefined;
+  matrixCellFreDataMap: any = undefined;
 
   cellPartIndexes: number[][] = [[]];
   initialDimensions: DimensionVO[] = [];

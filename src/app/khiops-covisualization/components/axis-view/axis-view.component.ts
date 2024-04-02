@@ -83,6 +83,7 @@ export class AxisViewComponent
         }
 
         this.dimensionsDatasService.getMatrixDatas();
+        this.dimensionsDatasService.computeMatrixDataFreqMap();
         this.loadingView = false;
 
         this.viewsLayout = this.appService.initViewsLayout(
