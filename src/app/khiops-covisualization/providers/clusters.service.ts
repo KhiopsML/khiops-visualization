@@ -153,8 +153,8 @@ export class ClustersService {
       );
     filteredotherList = [...new Set(filteredotherList)]; // keep uniq
 
-    const matrixCellDataMap =
-      this.dimensionsDatasService.dimensionsDatas.matrixCellFreDataMap;
+    const matrixCellFreqDataMap =
+      this.dimensionsDatasService.dimensionsDatas.matrixCellFreqDataMap;
 
     for (let i = 0; i < otherselectedNode.childrenList.length; i++) {
       const element = otherselectedNode.childrenList[i];
@@ -168,7 +168,7 @@ export class ClustersService {
             ? `${otherelement}-${element}`
             : `${element}-${otherelement}`;
 
-        const cell = matrixCellDataMap[key];
+        const cell = matrixCellFreqDataMap[key];
 
         if (cell !== undefined) {
           if (!currentDataSetData[labelIndex]) {

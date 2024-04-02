@@ -568,7 +568,7 @@ export class DimensionsDatasService {
     ...
    */
   computeMatrixDataFreqMap() {
-    this.dimensionsDatas.matrixCellFreDataMap =
+    this.dimensionsDatas.matrixCellFreqDataMap =
       this.dimensionsDatas.matrixDatas.matrixCellDatas.reduce(
         (map, data, index) => {
           const key = `${data.yaxisPart}-${data.xaxisPart}`;
