@@ -218,9 +218,6 @@ export class UnfoldHierarchyComponent implements OnInit {
       this.currentUnfoldHierarchy,
     );
 
-    // Dimension changed, clone to update array
-    this.dimensions = _.cloneDeep(this.dimensionsDatas.dimensions);
-
     this.currentCellsPerCluster =
       this.clustersService.getCurrentCellsPerCluster();
     if (
@@ -257,6 +254,8 @@ export class UnfoldHierarchyComponent implements OnInit {
         );
       });
     }
+    // Dimension changed, clone to update array
+    this.dimensions = _.cloneDeep(this.dimensionsDatas.dimensions);
   }
 
   onClickOnSave() {
