@@ -464,6 +464,10 @@ export class TreenodesService {
     return initialDatas;
   }
 
+  isSaveChanged(savedDatas, testedSavedDatas) {
+    return !_.isEqual(savedDatas, testedSavedDatas);
+  }
+
   constructSavedJson(collapsedNodesInput?) {
     let newJson = this.constructDatasToSave(collapsedNodesInput);
     if (collapsedNodesInput) {

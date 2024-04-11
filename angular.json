@@ -216,7 +216,9 @@
             "assets": [
               "projects/khiops-webcomponent/src/assets",
               "projects/khiops-webcomponent/src/package.json",
-              "projects/khiops-webcomponent/src/README.md"
+              "projects/khiops-webcomponent/src/README.md",
+              "projects/khiops-webcomponent/src/frame.html",
+              "projects/khiops-webcomponent/src/iframe.html"
             ],
             "styles": ["projects/khiops-webcomponent/src/styles.scss"],
             "scripts": []

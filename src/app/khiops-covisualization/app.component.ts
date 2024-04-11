@@ -35,6 +35,8 @@ export class AppComponent implements AfterViewInit {
   })
   appElement: ElementRef<HTMLElement>;
 
+  private _valueChangeEvent = "valueChanged"
+
   theme: string =
     localStorage.getItem(
       AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR',
@@ -55,6 +57,17 @@ export class AppComponent implements AfterViewInit {
     this.appService.initialize();
   }
 
+  updateElementValue() {
+    setInterval(() => {
+      if (this.treenodesService.isSaveChanged(this.element.nativeElement.value, this.treenodesService.constructDatasToSave())) {
+        this.element.nativeElement.value = this.treenodesService.constructDatasToSave();
+        this.element.nativeElement.dispatchEvent(new CustomEvent(this._valueChangeEvent, {
+          detail: this.element.nativeElement.value
+        }),);
+      }
+    },500);
+  }
+
   ngAfterViewInit(): void {
     this.configService.setRootElement(this.appElement);
     this.element.nativeElement.getDatas = () =>
@@ -65,6 +78,7 @@ export class AppComponent implements AfterViewInit {
         this.appdatas = {
           ...datas,
         };
+        this.element.nativeElement.value = datas;
       });
     };
     this.element.nativeElement.openReleaseNotesDialog = () => {
@@ -126,6 +140,10 @@ export class AppComponent implements AfterViewInit {
       const trackerId = this.configService.getConfig().trackerId;
       const appSource = this.configService.getConfig().appSource;
 
+      if (this.configService.getConfig().changeDetector) {
+        this.updateElementValue();
+      }
+
       if (trackerId) {
         this.trackerService.initTracker(
           AppConfig.covisualizationCommon,
@@ -133,6 +151,8 @@ export class AppComponent implements AfterViewInit {
           appSource,
         );
       }
+
+
     };
     this.element.nativeElement.snack = (title, duration, panelClass) => {
       this.ngzone.run(() => {
