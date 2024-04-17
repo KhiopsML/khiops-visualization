@@ -1,7 +1,4 @@
-import { Tree } from './n-tree';
 import { N } from './n';
-import { stratify } from 'd3-hierarchy';
-import { request, json, csv } from 'd3-request';
 
 // todo loader MUSS ein generic sein
 export type LoaderFunction = (
@@ -35,44 +32,6 @@ function star(ok, max) {
     ok(d);
   });
 }
-function loadFromLangFile(ok, file) {
-  //json(file, (error, langData) =>
-  //    ok(langData))
-  var t0, dl;
-  request(file)
-    .mimeType('application/json')
-    .response((xhr) => {
-      t0 = performance.now();
-      dl = xhr.responseText.length;
-      return JSON.parse(xhr.responseText);
-    })
-    .get((error, langData) => ok(langData, t0, dl));
-}
-
-function loadFromFile(ok, file) {
-  if (file.endsWith('.xml') || file.endsWith('.json') || file.endsWith('.rdf'))
-    if (file.endsWith('.d3.json') || file == 'data/upload/user-uploaded.xml') {
-      var t0, dl;
-      request(file)
-        .mimeType('application/json')
-        .response((xhr) => {
-          t0 = performance.now();
-          dl = xhr.responseText.length;
-          return JSON.parse(xhr.responseText);
-        })
-        .get((error, treeData) => ok(treeData, t0, dl));
-    } else new Tree(ok, file);
-  else
-    csv(file, function (error, data) {
-      if (error) throw error;
-      ok(
-        stratify().parentId((d: N) => d.id.substring(0, d.id.lastIndexOf('.')))(
-          data,
-        ),
-      );
-    });
-}
-
 function loadFromData(ok, data) {
   const t0 = performance.now();
   const dl = 0;
@@ -81,9 +40,7 @@ function loadFromData(ok, data) {
 
 export var path_ = (len) => (ok) => path(ok, len);
 export var star_ = (degree) => (ok) => star(ok, degree);
-export var fromFile = (f) => (ok) => loadFromFile(ok, f);
 export var fromData = (f) => (ok) => loadFromData(ok, f);
-export var fromLangFile = (f) => (ok) => loadFromLangFile(ok, f);
 
 export function nTreeAtFirst(ok, max = 75, deg = 6) {
   oneNode((d) => {
