@@ -11,8 +11,7 @@
   "dependencies": {
     "d3": "^4.13.0",
     "d3-force-gravity": "^1.0.2",
-    "timers": "^0.1.1",
-    "xml2js": "^0.4.17"
+    "timers": "^0.1.1"
   },
   "devDependencies": {
     "@types/d3": "^4.13.2",

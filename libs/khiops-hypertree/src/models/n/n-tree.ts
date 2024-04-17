@@ -3,7 +3,7 @@
  *
  */
 
-import { parseString } from 'xml2js';
+// import { parseString } from 'xml2js';
 
 declare type WeightFunction = (node: TreeNode) => void;
 
@@ -129,29 +129,29 @@ class InputJSON {
 
 //===================================================
 class InputTreeML {
-  static treemlToTree(data: string, callback, originalTreeObject: Tree) {
-    parseString(data, (err, result) => {
-      if (err != null) {
-        // console.log("Invalid data file");
-        return null;
-      }
+  // static treemlToTree(data: string, callback, originalTreeObject: Tree) {
+  //   parseString(data, (err, result) => {
+  //     if (err != null) {
+  //       // console.log("Invalid data file");
+  //       return null;
+  //     }
 
-      try {
-        let rootNode = result;
-        if (rootNode.hasOwnProperty('tree')) rootNode = rootNode['tree'];
-        if (rootNode.hasOwnProperty('branch')) rootNode = rootNode['branch'];
-        if (rootNode.hasOwnProperty('0')) rootNode = rootNode['0'];
-        let json: Object[] = [];
-        json.push(this.toJSON(rootNode));
-        let tree: TreeNode = InputJSON.createNodes(json)[0];
-        originalTreeObject.setTree(tree);
-        callback(tree);
-      } catch (e) {
-        // console.log(e);
-        // console.log(e.stack);
-      }
-    });
-  }
+  //     try {
+  //       let rootNode = result;
+  //       if (rootNode.hasOwnProperty('tree')) rootNode = rootNode['tree'];
+  //       if (rootNode.hasOwnProperty('branch')) rootNode = rootNode['branch'];
+  //       if (rootNode.hasOwnProperty('0')) rootNode = rootNode['0'];
+  //       let json: Object[] = [];
+  //       json.push(this.toJSON(rootNode));
+  //       let tree: TreeNode = InputJSON.createNodes(json)[0];
+  //       originalTreeObject.setTree(tree);
+  //       callback(tree);
+  //     } catch (e) {
+  //       // console.log(e);
+  //       // console.log(e.stack);
+  //     }
+  //   });
+  // }
 
   private static toJSON(inputNode: Object): Object {
     let resultNode = {
@@ -206,44 +206,42 @@ class InputTreeML {
 //===================================================
 class InputSkos {
   static skosToTree(data: string, callback, originalTreeObject: Tree) {
-    parseString(data, (err, result) => {
-      if (err != null) {
-        // console.log("Invalid data file", err);
-        return null;
-      }
-      try {
-        let rdf = result;
-        if (rdf.hasOwnProperty('rdf:RDF')) rdf = rdf['rdf:RDF'];
-        let rootNode = new TreeNode();
-        if (rdf.hasOwnProperty('skos:ConceptScheme')) {
-          let conceptScheme = rdf['skos:ConceptScheme'][0];
-          rootNode.id = RDFHelper.getIdFromScheme(conceptScheme);
-          rootNode.name = RDFHelper.getNameFromScheme(conceptScheme);
-          if (rootNode.id == null) rootNode.id = rootNode.name;
-
-          if (conceptScheme.hasOwnProperty('skos:hasTopConcept'))
-            rootNode.children = this.addChildIds(
-              conceptScheme['skos:hasTopConcept'],
-            );
-          if (rdf.hasOwnProperty('skos:Concept')) rdf = rdf['skos:Concept'];
-          rootNode = this.addOtherNodes(rootNode, rdf);
-        } else if (rdf.hasOwnProperty('rdf:Description')) {
-          rootNode.id = null;
-          rdf = rdf['rdf:Description'];
-          let nodeMap: {
-            [id: string]: TreeNode;
-          } = this.createAllNodes(rdf);
-          rootNode = this.connectNodesFromMap(nodeMap);
-          if (rootNode == null) throw new InvalidFileError();
-        }
-
-        originalTreeObject.setTree(rootNode);
-        callback(rootNode);
-      } catch (e) {
-        // console.log(e);
-        // console.log(e.stack);
-      }
-    });
+    // parseString(data, (err, result) => {
+    //   if (err != null) {
+    //     // console.log("Invalid data file", err);
+    //     return null;
+    //   }
+    //   try {
+    //     let rdf = result;
+    //     if (rdf.hasOwnProperty('rdf:RDF')) rdf = rdf['rdf:RDF'];
+    //     let rootNode = new TreeNode();
+    //     if (rdf.hasOwnProperty('skos:ConceptScheme')) {
+    //       let conceptScheme = rdf['skos:ConceptScheme'][0];
+    //       rootNode.id = RDFHelper.getIdFromScheme(conceptScheme);
+    //       rootNode.name = RDFHelper.getNameFromScheme(conceptScheme);
+    //       if (rootNode.id == null) rootNode.id = rootNode.name;
+    //       if (conceptScheme.hasOwnProperty('skos:hasTopConcept'))
+    //         rootNode.children = this.addChildIds(
+    //           conceptScheme['skos:hasTopConcept'],
+    //         );
+    //       if (rdf.hasOwnProperty('skos:Concept')) rdf = rdf['skos:Concept'];
+    //       rootNode = this.addOtherNodes(rootNode, rdf);
+    //     } else if (rdf.hasOwnProperty('rdf:Description')) {
+    //       rootNode.id = null;
+    //       rdf = rdf['rdf:Description'];
+    //       let nodeMap: {
+    //         [id: string]: TreeNode;
+    //       } = this.createAllNodes(rdf);
+    //       rootNode = this.connectNodesFromMap(nodeMap);
+    //       if (rootNode == null) throw new InvalidFileError();
+    //     }
+    //     originalTreeObject.setTree(rootNode);
+    //     callback(rootNode);
+    //   } catch (e) {
+    //     // console.log(e);
+    //     // console.log(e.stack);
+    //   }
+    // });
   }
 
   private static addChildIds(conceptList: Object[]): TreeNode[] {
@@ -491,7 +489,7 @@ export class Tree {
             // console.log(e.stack);
           }
         } else if (fileType == InputFile.treeML) {
-          InputTreeML.treemlToTree(content, ok, this);
+          // InputTreeML.treemlToTree(content, ok, this);
         }
       }
     };
