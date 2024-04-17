@@ -18,7 +18,7 @@
         document.addEventListener("DOMContentLoaded", () => {
             const visu = document.getElementById('visu-frame');
 
-            const file = "./assets/mock/AdultSmall.json"
+            const file = "./assets/mock/AdultAllReports.json"
             visu.onload = () => {
                 fetch(file).then((response) => {
                     response.json().then((data) => {

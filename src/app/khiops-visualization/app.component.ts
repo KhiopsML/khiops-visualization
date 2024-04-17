@@ -55,7 +55,6 @@ export class AppComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.configService.setRootElement(this.appElement);
-    this.element.nativeElement.value = this.saveService.constructDatasToSave();
     this.element.nativeElement.getDatas = () =>
       this.saveService.constructDatasToSave();
     this.element.nativeElement.setDatas = (datas) => {
@@ -65,6 +64,7 @@ export class AppComponent implements AfterViewInit {
         this.appdatas = {
           ...datas,
         };
+        this.element.nativeElement.value = datas;
       });
     };
     this.element.nativeElement.openReleaseNotesDialog = () => {
