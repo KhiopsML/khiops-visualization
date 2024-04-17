@@ -3,7 +3,6 @@ import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.s
 import { AppConfig } from 'src/environments/environment';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { ViewLayoutVO } from '../model/view-layout-vo';
-import copy from 'fast-copy';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { ProjectSummaryVO } from '@khiops-library/model/project-summary-vo';
@@ -215,7 +214,7 @@ export class AppService {
   }
 
   updateViewsLayout(dimensions): ViewLayoutVO {
-    const previousValues = copy(this.viewsLayout);
+    const previousValues = _.cloneDeep(this.viewsLayout);
     if (previousValues) {
       this.viewsLayout = new ViewLayoutVO();
       for (let i = 0; i < dimensions.length; i++) {
