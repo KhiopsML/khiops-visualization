@@ -52,8 +52,8 @@
     "TOO_MANY_VARIABLES": "Too many variables. Only the 1000 high levels are displayed.",
     "SAVE_FILE_ERROR": "Save file error",
     "DATAS_DELETED": "Datas deleted",
-    "UNFOLDED_DATAS_MAXIMUM_UNFOLD": "Auto-unfold is limited to {count} for performance purpose",
-    "UNFOLDED_DATAS_PERFORMANCE_WARNING": "Displayed datas have been automatically unfolded to {count} clusters"
+    "UNFOLDED_DATAS_MAXIMUM_UNFOLD": "Auto-unfold is limited to {{count}} for performance purpose",
+    "UNFOLDED_DATAS_PERFORMANCE_WARNING": "Displayed datas have been automatically unfolded to {{count}} clusters"
   },
   "NO_DATAS": {
     "WELCOME": "Open a file from the menu",
@@ -71,8 +71,8 @@
   "SETTINGS": {
     "NUMBER": "number",
     "NUMBER_PRECISION": "Significant numbers precision",
-    "ONE_DATA_OUT_OF": "One data out of {count} displayed",
-    "N_VALUES_MAX": "{count} values maximum displayed",
+    "ONE_DATA_OUT_OF": "One data out of {{count}} displayed",
+    "N_VALUES_MAX": "{{count}} values maximum displayed",
     "EXAMPLE": "Example",
     "LOCAL_DATAS": "Local datas",
     "CLEAR_DATA_INSTRUCTIONS": "Delete local cache in case of minor problem",
@@ -148,8 +148,8 @@
     "VIEWS_MANAGER": "Views manager",
     "COMPOSITION": "Composition",
     "COMPOSITION_OF": "Composition of",
-    "ANNOTATION_OF": "Annotation of {name}",
-    "EXTERNAL_DATA_OF": "External data of {value}",
+    "ANNOTATION_OF": "Annotation of {{name}}",
+    "EXTERNAL_DATA_OF": "External data of {{value}}",
     "CURRENT_CLUSTERS": "Current clusters",
     "HIERARCHY": "Hierarchy",
     "MATRIX_DEFAULT_CONTRAST": "Matrix default contrast",
@@ -214,8 +214,8 @@
     "INTERVAL_OF": "Interval of ",
     "SELECT_ALL": "Select all",
     "UNSELECT_ALL": "Unselect all",
-    "CONFUSION_MATRIX_OF": "Confusion matrix of {type}",
-    "TRUNCATED_DATAS": "({count} datas displayed in {total})",
+    "CONFUSION_MATRIX_OF": "Confusion matrix of {{type}}",
+    "TRUNCATED_DATAS": "({{count}} datas displayed in {{total}})",
     "CUMULATIVE_GAIN_CHART_OF": "Cumulative gain chart of ",
     "TYPE": "Type",
     "EVALUATION_TYPE": "Evaluation type",
@@ -262,7 +262,7 @@
     "FIELDS": "Fields",
     "GLOBAL": "Global",
     "LOCAL": "Local",
-    "IMPORTING_EXT_DATA": "Importing external data {fieldName} into {dimension} dimension ...",
+    "IMPORTING_EXT_DATA": "Importing external data {{fieldName}} into {{dimension}} dimension ...",
     "PAIR_VARIABLES": "Pair variables",
     "ZOOM_IN": "Zoom in",
     "RESET_ZOOM": "Reset zoom",
@@ -281,9 +281,9 @@
       "CLOSE_SEARCH_INPUT": "Close search input",
       "OPEN_LEVEL_DISTRIBUTION": "Open level distribution graph",
       "FILTER_DATAS_GRID": "Filter datas in the grid",
-      "FILTER_DATA": "Filter data: {data}",
+      "FILTER_DATA": "Filter data: {{data}}",
       "CHANGE_DATAS_OPTION": "Changes datas option",
-      "CHANGE_TO": "Changes to {type}"
+      "CHANGE_TO": "Changes to {{type}}"
     },
     "HEADER": {
       "DISPLAY_MORE_OPTIONS": "Display more options",
