@@ -1734,13 +1734,6 @@
   resolved "https://registry.yarnpkg.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.5.tgz#4fc56c15c580b9adb7dc3c333a134e540b44bfb1"
   integrity sha512-Vo+PSpZG2/fmgmiNzYK9qWRh8h/CHrwD0mo1h1DzL4yzHNSfWYujGTYsWGreD000gcgmZ7K4Ys6Tx9TxtsKdDw==
 
-"@ngstack/translate@8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@ngstack/translate/-/translate-8.0.0.tgz#0bab15c1e6bd43c4b422dbef16368e42cf416346"
-  integrity sha512-0IwxY+GYBAqIbzPaPKsO6ca+l3EddAvIlc35yTP+toZutfTo9WKuXRbnblLFBzfWAFldxKTJ/JNcTkrpYaYRMg==
-  dependencies:
-    tslib "^2.0.0"
-
 "@ngtools/webpack@15.2.0":
   version "15.2.0"
   resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-15.2.0.tgz#86df4d03f4acc30bc3cf1571664ddb2935a92d45"
@@ -1750,6 +1743,20 @@
   version "15.2.11"
   resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-15.2.11.tgz#c30f7af978bc512b874624ce0f7be5d22ae39e6d"
   integrity sha512-yqp+FziuJ+wIVij4eTqfhuiTPNaG1PU8ukeGOdqkVH4nQMlmzs9UldXy1iYC/6swzn6XO/pkqisU3m/jxemMzA==
+
+"@ngx-translate/core@14.0.0":
+  version "14.0.0"
+  resolved "https://registry.yarnpkg.com/@ngx-translate/core/-/core-14.0.0.tgz#af421d0e1a28376843f0fed375cd2fae7630a5ff"
+  integrity sha512-UevdwNCXMRCdJv//0kC8h2eSfmi02r29xeE8E9gJ1Al4D4jEJ7eiLPdjslTMc21oJNGguqqWeEVjf64SFtvw2w==
+  dependencies:
+    tslib "^2.3.0"
+
+"@ngx-translate/http-loader@7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@ngx-translate/http-loader/-/http-loader-7.0.0.tgz#905f38d8d13342621516635bf480ff9a4f73e9fc"
+  integrity sha512-j+NpXXlcGVdyUNyY/qsJrqqeAdJdizCd+GKh3usXExSqy1aE9866jlAIL+xrfDU4w+LiMoma5pgE4emvFebZmA==
+  dependencies:
+    tslib "^2.3.0"
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -6029,10 +6036,6 @@ make-fetch-happen@^11.0.0, make-fetch-happen@^11.0.1, make-fetch-happen@^11.1.1:
     socks-proxy-agent "^7.0.0"
     ssri "^10.0.0"
 
-marked@^2.0.0:
-  version "2.1.3"
-  resolved "https://registry.yarnpkg.com/marked/-/marked-2.1.3.tgz#bd017cef6431724fd4b27e0657f5ceb14bff3753"
-  integrity sha512-/Q+7MGzaETqifOMWYEA7HVMaZb4XbcRfaOzcSsHZEith83KGlvaSG33u0SKu89Mj5h+T8V2hM+8O45Qc5XTgwA==
 marked@^12.0.0:
   version "12.0.1"
   resolved "https://registry.yarnpkg.com/marked/-/marked-12.0.1.tgz#8ab1eb15560c7cbe3b011074845d7ca6c4d392b0"
@@ -6418,21 +6421,13 @@ ngx-markdown@15.1.2:
   resolved "https://registry.yarnpkg.com/ngx-markdown/-/ngx-markdown-15.1.2.tgz#e78ffc5f96a79e4775b9cdf09f10d5b1401b5317"
   integrity sha512-mAUORpUnHCV4tnxEHV4oS5YEdIaolUclulCblUrvAEU3AEND8MMTxlwHujqVC2M398/aKH0SBSrjLzDbMUJCoQ==
   dependencies:
-    "@angular-devkit/build-angular" "^17.0.0"
-    "@schematics/angular" "^17.0.0"
-    webpack-merge "^5.0.0"
-
-ngx-markdown@11.1.2:
-  version "11.1.2"
-  resolved "https://registry.yarnpkg.com/ngx-markdown/-/ngx-markdown-11.1.2.tgz#9d5659e9d5eb89a41aa487cee4f5a74b9c33c14b"
-  integrity sha512-T+FA8K2iN7VADx7hO4ytYhRnMJjyVNPHJizrtmVFpjhRcsOTCwCmM4e1qpx1XjxSEliN9Z3mux3a+IPM4jH6+Q==
-  dependencies:
-    "@types/marked" "^2.0.0"
-    emoji-toolkit "^6.0.1"
-    katex "^0.13.0"
-    marked "^2.0.0"
-    prismjs "^1.23.0"
-    tslib "^2.0.0"
+    tslib "^2.3.0"
+  optionalDependencies:
+    clipboard "^2.0.11"
+    emoji-toolkit "^7.0.0"
+    katex "^0.16.0"
+    mermaid "^9.1.2"
+    prismjs "^1.28.0"
 
 nice-napi@^1.0.2:
   version "1.0.2"

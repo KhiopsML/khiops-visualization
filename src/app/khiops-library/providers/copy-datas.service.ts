@@ -1,6 +1,6 @@
 import { ConfigService } from './config.service';
 import { Injectable } from '@angular/core';
-import { TranslateService } from '@ngstack/translate';
+import { TranslateService } from '@ngx-translate/core';
 import _ from 'lodash';
 import { UtilsService } from './utils.service';
 
@@ -79,12 +79,12 @@ export class CopyDatasService {
     let formattedDatas = '';
 
     // TITLE
-    formattedDatas += this.translate.get('GLOBAL.DISTRIBUTION') + '\n\n';
+    formattedDatas += this.translate.instant('GLOBAL.DISTRIBUTION') + '\n\n';
 
     // HEADER
-    formattedDatas += this.translate.get('GLOBAL.PARTITION') + '\t';
-    formattedDatas += this.translate.get('GLOBAL.LOGVALUE') + '\t';
-    formattedDatas += this.translate.get('GLOBAL.VALUE') + '\t';
+    formattedDatas += this.translate.instant('GLOBAL.PARTITION') + '\t';
+    formattedDatas += this.translate.instant('GLOBAL.LOGVALUE') + '\t';
+    formattedDatas += this.translate.instant('GLOBAL.VALUE') + '\t';
     formattedDatas += '\n';
 
     // CONTENT
@@ -192,7 +192,7 @@ export class CopyDatasService {
     // HEADER
     if (selectedArea.graphOptions) {
       formattedDatas +=
-        this.translate.get(selectedArea.graphOptions.selected) + '\t';
+        this.translate.instant(selectedArea.graphOptions.selected) + '\t';
     }
     if (selectedArea.displayedValues) {
       for (let i = 0; i < selectedArea.displayedValues.length; i++) {
@@ -230,7 +230,7 @@ export class CopyDatasService {
     // CONTENT
     for (let i = 0; i < selectedArea.inputDatas.length; i++) {
       formattedDatas +=
-        this.translate.get(selectedArea.inputDatas[i].title) + '\t';
+        this.translate.instant(selectedArea.inputDatas[i].title) + '\t';
       formattedDatas += selectedArea.inputDatas[i].value + '\t';
       formattedDatas += '\n';
     }
@@ -251,7 +251,7 @@ export class CopyDatasService {
     let formattedDatas = '';
 
     formattedDatas +=
-      this.translate.get('GLOBAL.EXTERNAL_DATA_OF', {
+      this.translate.instant('GLOBAL.EXTERNAL_DATA_OF', {
         value: selectedArea.inputValue,
       }) + '\n';
     formattedDatas += selectedArea.externalData + '\n';
@@ -267,7 +267,7 @@ export class CopyDatasService {
         .selectedFlattenTree;
 
     // TITLE
-    formattedDatas += this.translate.get('GLOBAL.DECISION_TREE') + '\n';
+    formattedDatas += this.translate.instant('GLOBAL.DECISION_TREE') + '\n';
 
     // HEADER
     formattedDatas += 'node' + '\t';
@@ -301,7 +301,7 @@ export class CopyDatasService {
 
     // TITLE
     formattedDatas +=
-      this.translate.get('GLOBAL.HIERARCHY') +
+      this.translate.instant('GLOBAL.HIERARCHY') +
       '\t' +
       flattenDatas[0].hierarchy +
       '\n';

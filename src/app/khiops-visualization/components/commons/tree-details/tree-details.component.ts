@@ -8,7 +8,7 @@ import {
 import _ from 'lodash';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
-import { TranslateService } from '@ngstack/translate';
+import { TranslateService } from '@ngx-translate/core';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { TreeNodeVO } from '@khiops-visualization/model/tree-node-vo';
 

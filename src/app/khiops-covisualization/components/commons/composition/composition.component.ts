@@ -8,7 +8,7 @@ import {
   SimpleChanges,
   AfterViewInit,
 } from '@angular/core';
-import { TranslateService } from '@ngstack/translate';
+import { TranslateService } from '@ngx-translate/core';
 import { CompositionVO } from '@khiops-covisualization/model/composition-vo';
 import { DimensionVO } from '@khiops-library/model/dimension-vo';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
@@ -54,13 +54,13 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
       {
         headerName: 'Cluster',
         field: 'cluster',
-        tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.CLUSTER'),
+        tooltip: this.translate.instant('TOOLTIPS.AXIS.COMPOSITION.CLUSTER'),
       },
       {
         headerName: 'Terminal Cluster',
         show: false,
         field: 'terminalCluster',
-        tooltip: this.translate.get(
+        tooltip: this.translate.instant(
           'TOOLTIPS.AXIS.COMPOSITION.TERMINAL_CLUSTER',
         ),
       },
@@ -68,22 +68,22 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
         headerName: 'Rank',
         show: false,
         field: 'rank',
-        tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.RANK'),
+        tooltip: this.translate.instant('TOOLTIPS.AXIS.COMPOSITION.RANK'),
       },
       {
         headerName: 'Typicality',
         field: 'typicality',
-        tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.TYPICALITY'),
+        tooltip: this.translate.instant('TOOLTIPS.AXIS.COMPOSITION.TYPICALITY'),
       },
       {
         headerName: 'Value',
         field: 'value',
-        tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.VALUE'),
+        tooltip: this.translate.instant('TOOLTIPS.AXIS.COMPOSITION.VALUE'),
       },
       {
         headerName: 'Frequency',
         field: 'frequency',
-        tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.FREQUENCY'),
+        tooltip: this.translate.instant('TOOLTIPS.AXIS.COMPOSITION.FREQUENCY'),
       },
     ];
 
@@ -117,7 +117,7 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     this.id = 'cluster-composition-' + this.position;
-    this.title = this.translate.get('GLOBAL.COMPOSITION');
+    this.title = this.translate.instant('GLOBAL.COMPOSITION');
   }
 
   ngAfterViewInit() {

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { DimensionsDatasService } from './dimensions-datas.service';
 import { TreeNodeVO } from '../model/tree-node-vo';
 import { ChartDatasetVO } from '@khiops-library/model/chartDataset-vo';
-import { TranslateService } from '@ngstack/translate';
+import { TranslateService } from '@ngx-translate/core';
 import { DimensionVO } from '@khiops-library/model/dimension-vo';
 import { AppService } from './app.service';
 import { CompositionVO } from '../model/composition-vo';
@@ -225,7 +225,7 @@ export class ClustersService {
     infoPerCluster.datasets.push(currentDataSet);
 
     currentDataSet = new ChartDatasetVO(
-      this.translate.get('GLOBAL.NUMBER_OF_CLUSTERS'),
+      this.translate.instant('GLOBAL.NUMBER_OF_CLUSTERS'),
     );
     currentDataSet.maxBarThickness = 5;
     currentDataSet.barThickness = 5;
@@ -293,7 +293,7 @@ export class ClustersService {
     }
 
     currentDataSet = new ChartDatasetVO(
-      this.translate.get('GLOBAL.NUMBER_OF_CLUSTERS'),
+      this.translate.instant('GLOBAL.NUMBER_OF_CLUSTERS'),
     );
     currentDataSet.maxBarThickness = 5;
     currentDataSet.barThickness = 5;

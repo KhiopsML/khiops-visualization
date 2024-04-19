@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AppService } from './app.service';
-import { TranslateService } from '@ngstack/translate';
+import { TranslateService } from '@ngx-translate/core';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { PreparationDatasService } from './preparation-datas.service';
 import { ModelingPredictorVO } from '../model/modeling-predictor-vo';
@@ -133,7 +133,7 @@ export class ModelingDatasService {
           displayedColumns.push({
             headerName: UtilsService.capitalizeFirstLetter(key),
             field: key,
-            tooltip: this.translate.get(
+            tooltip: this.translate.instant(
               'TOOLTIPS.MODELING.VARIABLES.' + key.toUpperCase(),
             ),
           });
@@ -167,7 +167,7 @@ export class ModelingDatasService {
         value:
           appDatas.modelingReport.trainedPredictors[i].variables +
           ' ' +
-          this.translate.get('GLOBAL.VARIABLES'),
+          this.translate.instant('GLOBAL.VARIABLES'),
       });
     }
     return trainedPredictorsSummaryDatas;

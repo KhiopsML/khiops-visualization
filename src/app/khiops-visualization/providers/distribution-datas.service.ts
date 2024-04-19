@@ -5,7 +5,7 @@ import { AppConfig } from 'src/environments/environment';
 import { BarVO } from '../model/bar-vo';
 import { ChartDatasetVO } from '@khiops-library/model/chartDataset-vo';
 import { UtilsService } from '@khiops-library/providers/utils.service';
-import { TranslateService } from '@ngstack/translate';
+import { TranslateService } from '@ngx-translate/core';
 import { VariableDetailsVO } from '../model/variableDetails-vo';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { DistributionDatasVO } from '../model/distribution-datas-vo';
@@ -536,7 +536,7 @@ export class DistributionDatasService {
         currentName = currentXAxis;
       }
       if (currentName.length === 0) {
-        currentName = this.translate.get('GLOBAL.MISSING');
+        currentName = this.translate.instant('GLOBAL.MISSING');
       }
     } else {
       // define x axis CATEGORICAL

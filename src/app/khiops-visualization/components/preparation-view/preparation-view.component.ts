@@ -13,7 +13,7 @@ import { EvaluationDatasService } from '@khiops-visualization/providers/evaluati
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
 import { LevelDistributionGraphCanvasComponent } from '../commons/level-distribution-graph-canvas/level-distribution-graph-canvas.component';
 import { VariableGraphDetailsComponent } from '../commons/variable-graph-details/variable-graph-details.component';
-import { TranslateService } from '@ngstack/translate';
+import { TranslateService } from '@ngx-translate/core';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { REPORTS } from '@khiops-library/enum/reports';
 import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
@@ -76,44 +76,44 @@ export class PreparationViewComponent extends SelectableTabComponent {
       {
         headerName: 'Rank',
         field: 'rank',
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.RANK'),
+        tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.RANK'),
       },
       {
         headerName: 'Name',
         field: 'name',
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.NAME'),
+        tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.NAME'),
       },
       {
         headerName: 'Level',
         field: 'level',
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.LEVEL'),
+        tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.LEVEL'),
       },
       {
         headerName: 'Parts',
         field: 'parts',
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.PARTS'),
+        tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.PARTS'),
       },
       {
         headerName: 'Values',
         field: 'values',
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.VALUES'),
+        tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.VALUES'),
       },
       {
         headerName: 'Type',
         field: 'type',
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.TYPE'),
+        tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.TYPE'),
       },
       {
         headerName: 'Mode',
         field: 'mode',
         show: false,
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.MODE'),
+        tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.MODE'),
       },
       {
         headerName: 'Mode coverage',
         field: 'modeCoverage',
         show: false,
-        tooltip: this.translate.get(
+        tooltip: this.translate.instant(
           'TOOLTIPS.PREPARATION.VARIABLES.MODE_COVERAGE',
         ),
       },
@@ -121,31 +121,31 @@ export class PreparationViewComponent extends SelectableTabComponent {
         headerName: 'Min',
         field: 'min',
         show: false,
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.MIN'),
+        tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.MIN'),
       },
       {
         headerName: 'Max',
         field: 'max',
         show: false,
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.MAX'),
+        tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.MAX'),
       },
       {
         headerName: 'Mean',
         field: 'mean',
         show: false,
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.MEAN'),
+        tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.MEAN'),
       },
       {
         headerName: 'Std dev',
         field: 'stdDev',
         show: false,
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.STD_DEV'),
+        tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.STD_DEV'),
       },
       {
         headerName: 'Missing number',
         field: 'missingNumber',
         show: false,
-        tooltip: this.translate.get(
+        tooltip: this.translate.instant(
           'TOOLTIPS.PREPARATION.VARIABLES.MISSING_NUMBER',
         ),
       },
@@ -153,7 +153,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
         headerName: 'Derivation rule',
         field: 'derivationRule',
         show: false,
-        tooltip: this.translate.get(
+        tooltip: this.translate.instant(
           'TOOLTIPS.PREPARATION.VARIABLES.DERIVATION_RULE',
         ),
       },
@@ -197,7 +197,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
       this.variablesDisplayedColumns.splice(3, 0, {
         headerName: 'Target parts',
         field: 'targetParts',
-        tooltip: this.translate.get(
+        tooltip: this.translate.instant(
           'TOOLTIPS.PREPARATION.VARIABLES.TARGET_PARTS',
         ),
       });

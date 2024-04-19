@@ -17,7 +17,7 @@ import { SelectableService } from '@khiops-library/components/selectable/selecta
 import { EventsService } from '@khiops-covisualization/providers/events.service';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { TranslateService } from '@ngstack/translate';
+import { TranslateService } from '@ngx-translate/core';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { Subscription } from 'rxjs';
 import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
@@ -172,7 +172,7 @@ export class TreeSelectComponent
       });
     });
     this.tree.on('error', (e) => {
-      this.snackBar.open(this.translate.get(e.data), undefined, {
+      this.snackBar.open(this.translate.instant(e.data), undefined, {
         duration: 4000,
         panelClass: 'error',
       });

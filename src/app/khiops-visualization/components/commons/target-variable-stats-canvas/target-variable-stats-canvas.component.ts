@@ -10,7 +10,7 @@ import {
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
-import { TranslateService } from '@ngstack/translate';
+import { TranslateService } from '@ngx-translate/core';
 import { ToPrecisionPipe } from '@khiops-library/pipes/toPrecision.pipe';
 import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
 import { ChartOptions } from 'chart.js';
@@ -49,7 +49,7 @@ export class TargetVariableStatsCanvasComponent
     this.colorSet = this.khiopsLibraryService.getGraphColorSet()[1];
     this.groupPadding = 20; // default
     if (!this.title) {
-      this.title = this.translate.get('GLOBAL.TARGET_VARIABLE_STATS');
+      this.title = this.translate.instant('GLOBAL.TARGET_VARIABLE_STATS');
     }
     // Override tooltip infos
     this.chartOptions = {

@@ -10,7 +10,7 @@ import {
 
 import { FileLoaderComponent } from '@khiops-library/components/file-loader/file-loader.component';
 import { AppConfig } from 'src/environments/environment';
-import { TranslateService } from '@ngstack/translate';
+import { TranslateService } from '@ngx-translate/core';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
 import { ModelingDatasService } from '@khiops-visualization/providers/modeling-datas.service';
@@ -152,7 +152,7 @@ export class HomeLayoutComponent implements OnInit {
 
     if (!this.isCompatibleJson) {
       this.snackBar.open(
-        this.translate.get('SNACKS.OPEN_FILE_ERROR'),
+        this.translate.instant('SNACKS.OPEN_FILE_ERROR'),
         undefined,
         {
           duration: 400000,
@@ -160,10 +160,14 @@ export class HomeLayoutComponent implements OnInit {
         },
       );
     } else {
-      this.snackBar.open(this.translate.get('SNACKS.DATAS_LOADED'), undefined, {
-        duration: 2000,
-        panelClass: 'success',
-      });
+      this.snackBar.open(
+        this.translate.instant('SNACKS.DATAS_LOADED'),
+        undefined,
+        {
+          duration: 2000,
+          panelClass: 'success',
+        },
+      );
     }
 
     this.preparationDatasService.initialize();

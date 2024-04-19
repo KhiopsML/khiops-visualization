@@ -7,7 +7,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import _ from 'lodash';
-import { TranslateService } from '@ngstack/translate';
+import { TranslateService } from '@ngx-translate/core';
 import { DimensionVO } from '@khiops-library/model/dimension-vo';
 import { ClustersService } from '@khiops-covisualization/providers/clusters.service';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
@@ -40,40 +40,40 @@ export class ClusterDetailsComponent implements OnInit, OnChanges {
     private treenodesService: TreenodesService,
     private clustersService: ClustersService,
   ) {
-    this.title = this.translate.get('GLOBAL.CURRENT_CLUSTERS');
+    this.title = this.translate.instant('GLOBAL.CURRENT_CLUSTERS');
     this.clusterDisplayedColumns = [
       {
         headerName: 'Name',
         field: 'name',
-        tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.NAME'),
+        tooltip: this.translate.instant('TOOLTIPS.AXIS.CURRENT_CLUSTERS.NAME'),
       },
       {
         headerName: 'Father',
         field: 'father',
         show: false,
-        tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.FATHER'),
+        tooltip: this.translate.instant('TOOLTIPS.AXIS.CURRENT_CLUSTERS.FATHER'),
       },
       {
         headerName: 'Frequency',
         field: 'frequency',
-        tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.FREQUENCY'),
+        tooltip: this.translate.instant('TOOLTIPS.AXIS.CURRENT_CLUSTERS.FREQUENCY'),
       },
       {
         headerName: 'Interest',
         field: 'interest',
-        tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.INTEREST'),
+        tooltip: this.translate.instant('TOOLTIPS.AXIS.CURRENT_CLUSTERS.INTEREST'),
       },
       {
         headerName: 'Hierarchical Level',
         field: 'hierarchicalLevel',
         show: false,
-        tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.LEVEL'),
+        tooltip: this.translate.instant('TOOLTIPS.AXIS.CURRENT_CLUSTERS.LEVEL'),
       },
       {
         headerName: 'Rank',
         field: 'rank',
         show: false,
-        tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.RANK'),
+        tooltip: this.translate.instant('TOOLTIPS.AXIS.CURRENT_CLUSTERS.RANK'),
       },
     ];
   }

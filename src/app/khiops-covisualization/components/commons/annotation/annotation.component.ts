@@ -9,7 +9,7 @@ import {
 import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
-import { TranslateService } from '@ngstack/translate';
+import { TranslateService } from '@ngx-translate/core';
 import { AnnotationService } from '@khiops-covisualization/providers/annotation.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { DimensionVO } from '@khiops-library/model/dimension-vo';
@@ -48,7 +48,7 @@ export class AnnotationComponent
   ngOnChanges(changes: SimpleChanges) {
     if (changes.selectedNode && changes.selectedNode.currentValue) {
       this.value = changes.selectedNode.currentValue.annotation;
-      this.title = this.translate.get('GLOBAL.ANNOTATION_OF', {
+      this.title = this.translate.instant('GLOBAL.ANNOTATION_OF', {
         name: changes.selectedNode.currentValue.shortDescription,
       });
     }

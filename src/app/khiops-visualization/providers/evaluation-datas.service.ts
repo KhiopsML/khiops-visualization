@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AppService } from './app.service';
-import { TranslateService } from '@ngstack/translate';
+import { TranslateService } from '@ngx-translate/core';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { AppConfig } from 'src/environments/environment';
 import { EvaluationTypeVO } from '../model/evaluation-type-vo';
@@ -126,7 +126,7 @@ export class EvaluationDatasService {
       ) {
         // init the object
         this.evaluationDatas.confusionMatrix = {
-          title: this.translate.get('GLOBAL.CONFUSION_MATRIX_OF', {
+          title: this.translate.instant('GLOBAL.CONFUSION_MATRIX_OF', {
             type: this.evaluationDatas.selectedPredictorEvaluationVariable.name,
           }),
           values: undefined,
@@ -134,7 +134,7 @@ export class EvaluationDatasService {
             {
               headerName: 'Target',
               field: 'target',
-              tooltip: this.translate.get(
+              tooltip: this.translate.instant(
                 'TOOLTIPS.EVALUATION.CONFUSION_MATRIX.TARGET',
               ),
             },
@@ -278,23 +278,23 @@ export class EvaluationDatasService {
   getEvaluationTypesSummary(): GridDatasI {
     // init the object
     this.evaluationDatas.evaluationTypesSummary = {
-      title: this.translate.get('GLOBAL.EVALUATION_TYPE'),
+      title: this.translate.instant('GLOBAL.EVALUATION_TYPE'),
       values: undefined,
       displayedColumns: [
         {
           headerName: 'Type',
           field: 'type',
-          tooltip: this.translate.get('TOOLTIPS.EVALUATION.TYPES.TYPE'),
+          tooltip: this.translate.instant('TOOLTIPS.EVALUATION.TYPES.TYPE'),
         },
         {
           headerName: 'Dictionary',
           field: 'dictionary',
-          tooltip: this.translate.get('TOOLTIPS.EVALUATION.TYPES.NAME'),
+          tooltip: this.translate.instant('TOOLTIPS.EVALUATION.TYPES.NAME'),
         },
         {
           headerName: 'Instances',
           field: 'instances',
-          tooltip: this.translate.get('TOOLTIPS.EVALUATION.TYPES.INSTANCES'),
+          tooltip: this.translate.instant('TOOLTIPS.EVALUATION.TYPES.INSTANCES'),
         },
       ],
     };
@@ -324,7 +324,7 @@ export class EvaluationDatasService {
 
   getPredictorEvaluations(): GridDatasI {
     this.evaluationDatas.predictorEvaluations = {
-      title: this.translate.get('GLOBAL.PREDICTOR_EVALUATIONS'),
+      title: this.translate.instant('GLOBAL.PREDICTOR_EVALUATIONS'),
       values: undefined,
       displayedColumns: undefined,
     };
@@ -382,7 +382,7 @@ export class EvaluationDatasService {
             value !== 'family' &&
             value !== 'currentEvaluationType' &&
             value !== 'evaluationType',
-          tooltip: this.translate.get(
+          tooltip: this.translate.instant(
             'TOOLTIPS.EVALUATION.EVALUATIONS.' + value.toUpperCase(),
           ),
         });
@@ -587,7 +587,7 @@ export class EvaluationDatasService {
       });
     }
     graphDatas.push({
-      name: this.translate.get(title),
+      name: this.translate.instant(title),
       series: currentSerie,
     });
 

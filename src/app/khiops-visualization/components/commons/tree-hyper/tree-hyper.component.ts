@@ -14,7 +14,7 @@ import {
 import _ from 'lodash';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
-import { TranslateService } from '@ngstack/translate';
+import { TranslateService } from '@ngx-translate/core';
 import * as hyt from '@khiops-hypertree/js/d3-hypertree';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
@@ -62,7 +62,7 @@ export class TreeHyperComponent
   ) {
     super(selectableService, ngzone, configService);
 
-    this.buttonTitle = this.translate.get('GLOBAL.VALUES');
+    this.buttonTitle = this.translate.instant('GLOBAL.VALUES');
 
     const previousVisualizationPopulationState = JSON.parse(
       localStorage.getItem(

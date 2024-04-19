@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TranslateService } from '@ngstack/translate';
+import { TranslateService } from '@ngx-translate/core';
 import * as d3 from 'd3';
 import { HistogramValuesI } from './histogram.interfaces';
 
@@ -37,15 +37,15 @@ export class HistogramUIService {
     bounds += d.partition[0] + ', ' + d.partition[1] + ']';
 
     return (
-      this.translate.get('GLOBAL.DENSITY') +
+      this.translate.instant('GLOBAL.DENSITY') +
       ': ' +
       d3.format('.2e')(d.value) +
       '<br>' +
-      this.translate.get('GLOBAL.FREQUENCY') +
+      this.translate.instant('GLOBAL.FREQUENCY') +
       ': ' +
       d.frequency +
       '<br>' +
-      this.translate.get('GLOBAL.INTERVAL') +
+      this.translate.instant('GLOBAL.INTERVAL') +
       ': ' +
       bounds
     );

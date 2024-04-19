@@ -10,7 +10,7 @@ import { SelectableService } from '@khiops-library/components/selectable/selecta
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { ScrollableGraphCanvasComponent } from '@khiops-library/components/scrollable-graph-canvas/scrollable-graph-canvas.component';
 import _ from 'lodash';
-import { TranslateService } from '@ngstack/translate';
+import { TranslateService } from '@ngx-translate/core';
 import { ToPrecisionPipe } from '@khiops-library/pipes/toPrecision.pipe';
 import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
 import { ChartOptions } from 'chart.js';
@@ -89,7 +89,7 @@ export class TargetDistributionGraphCanvasComponent
 
     this.colorSet = this.khiopsLibraryService.getGraphColorSet()[1];
     this.hideGraph = true;
-    this.buttonTitle = this.translate.get('GLOBAL.VALUES');
+    this.buttonTitle = this.translate.instant('GLOBAL.VALUES');
 
     // Override tooltip infos
     this.chartOptions = {
@@ -125,7 +125,7 @@ export class TargetDistributionGraphCanvasComponent
   ngOnInit() {
     this.graphIdContainer =
       'target-distribution-graph-canvas-comp-' + this.position;
-    this.title = this.title || this.translate.get('GLOBAL.TARGET_DISTRIBUTION');
+    this.title = this.title || this.translate.instant('GLOBAL.TARGET_DISTRIBUTION');
   }
 
   onResized(event: ResizedEvent) {

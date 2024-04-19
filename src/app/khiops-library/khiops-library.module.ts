@@ -36,9 +36,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CommonModule } from '@angular/common';
-import { TranslateModule, TranslateService } from '@ngstack/translate';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ReleaseNotesComponent } from './components/release-notes/release-notes.component';
-import { TranslatePipe } from './pipes/translate.pipe';
 import { ToPrecisionPipe } from './pipes/toPrecision.pipe';
 import { HeaderTitleComponent } from './components/header-title/header-title.component';
 import { NoDataComponent } from './components/no-data/no-data.component';
@@ -63,7 +62,6 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
 import { MarkdownModule } from 'ngx-markdown';
 import { LibraryComponent } from './library.component';
 import { BtnFullscreenComponent } from './components/btn-fullscreen/btn-fullscreen.component';
-import EnTransaltion from '../../i18n/en.json';
 
 @NgModule({
   imports: [
@@ -100,10 +98,7 @@ import EnTransaltion from '../../i18n/en.json';
     MatDialogModule,
     ResizableModule,
     HotkeyModule.forRoot(),
-    TranslateModule.forRoot({
-      activeLang: 'en',
-      supportedLangs: ['en'],
-    }),
+    TranslateModule.forChild(),
   ],
   declarations: [
     LibraryComponent,
@@ -116,7 +111,6 @@ import EnTransaltion from '../../i18n/en.json';
     HeaderToolsComponent,
     BtnFullscreenComponent,
     GraphHeaderComponent,
-    TranslatePipe,
     RowIdentifierPipe,
     ToPrecisionPipe,
     LibVersionComponent,
@@ -183,7 +177,6 @@ import EnTransaltion from '../../i18n/en.json';
     BtnFullscreenComponent,
     GraphHeaderComponent,
     ToPrecisionPipe,
-    TranslatePipe,
     InformationsBlockComponent,
     MatrixCanvasComponent,
     AgGridComponent,
@@ -195,8 +188,4 @@ import EnTransaltion from '../../i18n/en.json';
     ImportFileLoaderComponent,
   ],
 })
-export class KhiopsLibraryModule {
-  constructor(public translate: TranslateService) {
-    translate.use('en', EnTransaltion);
-  }
-}
+export class KhiopsLibraryModule {}

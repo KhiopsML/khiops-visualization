@@ -12,7 +12,7 @@ import { TreenodesService } from '@khiops-covisualization/providers/treenodes.se
 import { AppService } from '@khiops-covisualization/providers/app.service';
 import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { TranslateService } from '@ngstack/translate';
+import { TranslateService } from '@ngx-translate/core';
 import { AppConfig } from 'src/environments/environment';
 
 @Component({
@@ -86,7 +86,7 @@ export class HierarchySelectComponent implements OnChanges, AfterViewInit {
     const isBigJsonFile = this.appService.isBigJsonFile();
     if (isBigJsonFile) {
       this.snackBar.open(
-        this.translate.get('GLOBAL.BIG_FILES_LOADING_WARNING'),
+        this.translate.instant('GLOBAL.BIG_FILES_LOADING_WARNING'),
         undefined,
         {
           duration: 2000,

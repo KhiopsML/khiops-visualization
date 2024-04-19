@@ -6,7 +6,7 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 
-import { TranslateService } from '@ngstack/translate';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'kl-btn-fullscreen',

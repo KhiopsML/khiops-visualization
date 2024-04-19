@@ -6,7 +6,7 @@ import {
   AfterViewInit,
   NgZone,
 } from '@angular/core';
-import { TranslateService } from '@ngstack/translate';
+import { TranslateService } from '@ngx-translate/core';
 import {
   MatDialogRef,
   MatDialog,
@@ -83,10 +83,10 @@ export class AppComponent implements AfterViewInit {
         const config = new MatDialogConfig();
         const dialogRef: MatDialogRef<ConfirmDialogComponent> =
           this.dialog.open(ConfirmDialogComponent, config);
-        dialogRef.componentInstance.title = this.translate.get(
+        dialogRef.componentInstance.title = this.translate.instant(
           'GLOBAL.ENABLE_BETA_VERSIONS',
         );
-        dialogRef.componentInstance.message = this.translate.get(
+        dialogRef.componentInstance.message = this.translate.instant(
           'GLOBAL.BETA_VERSIONS_WARNING',
         );
         dialogRef

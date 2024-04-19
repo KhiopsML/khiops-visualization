@@ -4,7 +4,7 @@ import { saveAs } from 'file-saver';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { SelectableService } from '../selectable/selectable.service';
-import { TranslateService } from '@ngstack/translate';
+import { TranslateService } from '@ngx-translate/core';
 import { HotkeysService, Hotkey } from 'angular2-hotkeys';
 import { CopyDatasService } from '../../providers/copy-datas.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
@@ -54,13 +54,13 @@ export class HeaderToolsComponent implements OnInit {
     if (currentSelectedArea) {
       this.copyDatasService.copyDatasToClipboard(currentSelectedArea);
 
-      this.snackBar.open(this.translate.get('SNACKS.DATAS_COPIED'), undefined, {
+      this.snackBar.open(this.translate.instant('SNACKS.DATAS_COPIED'), undefined, {
         duration: 2000,
         panelClass: 'success',
       });
     } else {
       this.snackBar.open(
-        this.translate.get('SNACKS.NO_AREA_SELECTED'),
+        this.translate.instant('SNACKS.NO_AREA_SELECTED'),
         undefined,
         {
           duration: 2000,
@@ -115,7 +115,7 @@ export class HeaderToolsComponent implements OnInit {
 
               // Show snack
               this.snackBar.open(
-                this.translate.get('SNACKS.SCREENSHOT_COPIED'),
+                this.translate.instant('SNACKS.SCREENSHOT_COPIED'),
                 undefined,
                 {
                   duration: 2000,
@@ -128,7 +128,7 @@ export class HeaderToolsComponent implements OnInit {
             .catch((e) => {
               console.error('​HeaderToolsComponent -> copyImage -> e', e);
               this.snackBar.open(
-                this.translate.get('SNACKS.COPY_ERROR') + e,
+                this.translate.instant('SNACKS.COPY_ERROR') + e,
                 undefined,
                 {
                   duration: 4000,
@@ -141,7 +141,7 @@ export class HeaderToolsComponent implements OnInit {
             });
         } catch (e) {
           this.snackBar.open(
-            this.translate.get('SNACKS.COPY_ERROR'),
+            this.translate.instant('SNACKS.COPY_ERROR'),
             undefined,
             {
               duration: 4000,
@@ -153,7 +153,7 @@ export class HeaderToolsComponent implements OnInit {
       }, 100);
     } else {
       this.snackBar.open(
-        this.translate.get('SNACKS.NO_AREA_SELECTED'),
+        this.translate.instant('SNACKS.NO_AREA_SELECTED'),
         undefined,
         {
           duration: 2000,

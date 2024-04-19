@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, NgZone, EventEmitter } from '@angular/core';
 import { ImportFileLoaderService } from './import-file-loader.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { TranslateService } from '@ngstack/translate';
+import { TranslateService } from '@ngx-translate/core';
 import { FileVO } from '../../model/file-vo';
 
 @Component({
@@ -42,9 +42,9 @@ export class ImportFileLoaderComponent implements OnInit {
               this.isLoadingDatas = false;
             })
             .catch((error) => {
-              console.warn(this.translate.get('SNACKS.OPEN_FILE_ERROR'), error);
+              console.warn(this.translate.instant('SNACKS.OPEN_FILE_ERROR'), error);
               this.snackBar.open(
-                this.translate.get('SNACKS.OPEN_FILE_ERROR'),
+                this.translate.instant('SNACKS.OPEN_FILE_ERROR'),
                 undefined,
                 {
                   duration: 4000,

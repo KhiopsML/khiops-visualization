@@ -15,7 +15,7 @@ import {
 import { AgGridAngular } from '@ag-grid-community/angular';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
-import { TranslateService } from '@ngstack/translate';
+import { TranslateService } from '@ngx-translate/core';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import _ from 'lodash';
@@ -142,7 +142,7 @@ export class AgGridComponent
         this.AppConfig.GLOBAL.LS_ID + 'AG_GRID_GRAPH_OPTION',
       ) || this.dataOptions.types[0];
 
-    this.title = this.translate.get('GLOBAL.VARIABLES') || this.title;
+    this.title = this.translate.instant('GLOBAL.VARIABLES') || this.title;
 
     try {
       const PREV_CELL_AG_GRID = localStorage.getItem(
@@ -296,7 +296,7 @@ export class AgGridComponent
         this.levelDistributionTitle === '' ||
         this.levelDistributionTitle === undefined
       ) {
-        this.levelDistributionTitle = this.translate.get(
+        this.levelDistributionTitle = this.translate.instant(
           'GLOBAL.LEVEL_DISTRIBUTION',
         );
       }

@@ -1,9 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  NgModule,
-  APP_INITIALIZER,
-  CUSTOM_ELEMENTS_SCHEMA,
-} from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
@@ -20,7 +16,7 @@ import { TargetVariableStatsCanvasComponent } from './components/commons/target-
 import { DescriptionBlockComponent } from './components/commons/description-block/description-block.component';
 import { KhiopsLibraryModule } from '@khiops-library/khiops-library.module';
 import { ReleaseNotesComponent } from '@khiops-library/components/release-notes/release-notes.component';
-import { TranslateModule, TranslateService } from '@ngstack/translate';
+import { TranslateService } from '@ngx-translate/core';
 import { LevelDistributionGraphCanvasComponent } from './components/commons/level-distribution-graph-canvas/level-distribution-graph-canvas.component';
 import { SelectTrainedPredictorComponent } from './components/commons/select-trained-predictor/select-trained-predictor.component';
 import { VariableGraphDetailsComponent } from './components/commons/variable-graph-details/variable-graph-details.component';
@@ -46,18 +42,8 @@ import { HistogramComponent } from './components/commons/histogram/histogram.com
 import { AngularResizeEventModule } from 'angular-resize-event';
 import { BrowserModule } from '@angular/platform-browser';
 
-export function setupTranslateFactory(service: TranslateService) {
-  const serv = () => service.use('en');
-  return serv;
-}
 const providers = [
   TranslateService,
-  {
-    provide: APP_INITIALIZER,
-    useFactory: setupTranslateFactory,
-    deps: [TranslateService],
-    multi: true,
-  },
   { provide: OverlayContainer, useClass: InAppRootOverlayContainer },
 ];
 
@@ -102,7 +88,7 @@ const providers = [
     FormsModule,
     HttpClientModule,
     AngularSplitModule,
-    TranslateModule.forChild(),
+
     AngularResizeEventModule,
   ],
   exports: [AppComponent],

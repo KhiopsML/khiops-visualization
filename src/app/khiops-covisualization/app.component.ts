@@ -7,7 +7,7 @@ import {
   NgZone,
 } from '@angular/core';
 import { ConfirmDialogComponent } from '@khiops-library/components/confirm-dialog/confirm-dialog.component';
-import { TranslateService } from '@ngstack/translate';
+import { TranslateService } from '@ngx-translate/core';
 import {
   MatDialogRef,
   MatDialog,
@@ -35,7 +35,7 @@ export class AppComponent implements AfterViewInit {
   })
   appElement: ElementRef<HTMLElement>;
 
-  private _valueChangeEvent = "valueChanged"
+  private _valueChangeEvent = 'valueChanged';
 
   theme: string =
     localStorage.getItem(
@@ -59,13 +59,21 @@ export class AppComponent implements AfterViewInit {
 
   updateElementValue() {
     setInterval(() => {
-      if (this.treenodesService.isSaveChanged(this.element.nativeElement.value, this.treenodesService.constructDatasToSave())) {
-        this.element.nativeElement.value = this.treenodesService.constructDatasToSave();
-        this.element.nativeElement.dispatchEvent(new CustomEvent(this._valueChangeEvent, {
-          detail: this.element.nativeElement.value
-        }),);
+      if (
+        this.treenodesService.isSaveChanged(
+          this.element.nativeElement.value,
+          this.treenodesService.constructDatasToSave(),
+        )
+      ) {
+        this.element.nativeElement.value =
+          this.treenodesService.constructDatasToSave();
+        this.element.nativeElement.dispatchEvent(
+          new CustomEvent(this._valueChangeEvent, {
+            detail: this.element.nativeElement.value,
+          }),
+        );
       }
-    },500);
+    }, 500);
   }
 
   ngAfterViewInit(): void {
@@ -94,7 +102,7 @@ export class AppComponent implements AfterViewInit {
         const config = new MatDialogConfig();
         const dialogRef: MatDialogRef<ConfirmDialogComponent> =
           this.dialog.open(ConfirmDialogComponent, config);
-        dialogRef.componentInstance.message = this.translate.get(
+        dialogRef.componentInstance.message = this.translate.instant(
           'GLOBAL.SAVE_BEFORE_QUIT',
         );
         dialogRef.componentInstance.displayRejectBtn = true;
@@ -113,10 +121,10 @@ export class AppComponent implements AfterViewInit {
         const config = new MatDialogConfig();
         const dialogRef: MatDialogRef<ConfirmDialogComponent> =
           this.dialog.open(ConfirmDialogComponent, config);
-        dialogRef.componentInstance.title = this.translate.get(
+        dialogRef.componentInstance.title = this.translate.instant(
           'GLOBAL.ENABLE_BETA_VERSIONS',
         );
-        dialogRef.componentInstance.message = this.translate.get(
+        dialogRef.componentInstance.message = this.translate.instant(
           'GLOBAL.BETA_VERSIONS_WARNING',
         );
         dialogRef
@@ -151,8 +159,6 @@ export class AppComponent implements AfterViewInit {
           appSource,
         );
       }
-
-
     };
     this.element.nativeElement.snack = (title, duration, panelClass) => {
       this.ngzone.run(() => {

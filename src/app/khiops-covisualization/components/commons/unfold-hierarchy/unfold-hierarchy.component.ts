@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
-import { TranslateService } from '@ngstack/translate';
+import { TranslateService } from '@ngx-translate/core';
 import { CheckboxCellComponent } from '@khiops-library/components/ag-grid/checkbox-cell/checkbox-cell.component';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
@@ -117,22 +117,22 @@ export class UnfoldHierarchyComponent implements OnInit {
     this.hierarchyDatas = this.treenodesService.getHierarchyDatas();
     this.defaultMaxUnfoldHierarchy = this.hierarchyDatas.totalClusters;
 
-    this.unfoldHierarchyTableTitle = this.translate.get(
+    this.unfoldHierarchyTableTitle = this.translate.instant(
       'GLOBAL.NB_OF_CLUSTERS_PER_DIM',
     );
-    this.unfoldHierarchyLegend = this.translate.get(
+    this.unfoldHierarchyLegend = this.translate.instant(
       'TOOLTIPS.AXIS.UNFOLD_HIERARCHY.LEGEND',
     );
 
     this.clustersPerDimDatasChartOptions.scales.x.title.text =
-      this.translate.get('GLOBAL.TOTAL_NUMBER_OF_CLUSTERS');
+      this.translate.instant('GLOBAL.TOTAL_NUMBER_OF_CLUSTERS');
     this.clustersPerDimDatasChartOptions.scales.y.title.text =
-      this.translate.get('GLOBAL.NB_OF_CLUSTERS_PER_DIM');
+      this.translate.instant('GLOBAL.NB_OF_CLUSTERS_PER_DIM');
 
-    this.infoPerClusterChartOptions.scales.x.title.text = this.translate.get(
+    this.infoPerClusterChartOptions.scales.x.title.text = this.translate.instant(
       'GLOBAL.TOTAL_NUMBER_OF_CLUSTERS',
     );
-    this.infoPerClusterChartOptions.scales.y.title.text = this.translate.get(
+    this.infoPerClusterChartOptions.scales.y.title.text = this.translate.instant(
       'GLOBAL.INFORMATION_RATE',
     );
   }
@@ -242,10 +242,10 @@ export class UnfoldHierarchyComponent implements OnInit {
         this.currentUnfoldHierarchy = this.defaultMaxUnfoldHierarchy;
         event.source.value = this.currentUnfoldHierarchy;
         this.snackBar.open(
-          this.translate.get('SNACKS.UNFOLDED_DATAS_MAXIMUM_UNFOLD', {
+          this.translate.instant('SNACKS.UNFOLDED_DATAS_MAXIMUM_UNFOLD', {
             count: this.currentUnfoldHierarchy,
           }),
-          this.translate.get('GLOBAL.OK'),
+          this.translate.instant('GLOBAL.OK'),
           {
             duration: 4000,
             panelClass: 'error',

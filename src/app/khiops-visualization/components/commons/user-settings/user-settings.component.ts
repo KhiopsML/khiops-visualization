@@ -9,7 +9,7 @@ import {
 import { AppConfig } from 'src/environments/environment';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { TranslateService } from '@ngstack/translate';
+import { TranslateService } from '@ngx-translate/core';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { TrackerService } from '../../../../khiops-library/providers/tracker.service';
 
@@ -117,7 +117,7 @@ export class UserSettingsComponent implements OnChanges {
 
   onClickOnClearDatas() {
     localStorage.clear();
-    this.snackBar.open(this.translate.get('SNACKS.DATAS_DELETED'), undefined, {
+    this.snackBar.open(this.translate.instant('SNACKS.DATAS_DELETED'), undefined, {
       duration: 2000,
       panelClass: 'success',
     });

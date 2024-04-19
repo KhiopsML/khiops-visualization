@@ -3,7 +3,7 @@ import { SelectedClusterVO } from '@khiops-covisualization/model/selected-cluste
 import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
-import { TranslateService } from '@ngstack/translate';
+import { TranslateService } from '@ngx-translate/core';
 import { ClustersService } from '@khiops-covisualization/providers/clusters.service';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
@@ -36,24 +36,24 @@ export class SelectedClustersComponent implements OnDestroy {
       {
         headerName: 'Name',
         field: 'hierarchy',
-        tooltip: this.translate.get('TOOLTIPS.AXIS.SELECTED_CLUSTERS.NAME'),
+        tooltip: this.translate.instant('TOOLTIPS.AXIS.SELECTED_CLUSTERS.NAME'),
       },
       {
         headerName: 'Current Cluster',
         field: 'shortDescription',
-        tooltip: this.translate.get(
+        tooltip: this.translate.instant(
           'TOOLTIPS.AXIS.SELECTED_CLUSTERS.CURRENT_CLUSTERS',
         ),
       },
       {
         headerName: 'Nb Clusters',
         field: 'nbClusters',
-        tooltip: this.translate.get(
+        tooltip: this.translate.instant(
           'TOOLTIPS.AXIS.SELECTED_CLUSTERS.NB_CLUSTERS',
         ),
       },
     ];
-    this.title = this.translate.get('GLOBAL.SELECTED_CLUSTERS');
+    this.title = this.translate.instant('GLOBAL.SELECTED_CLUSTERS');
 
     this.treeSelectedNodeChangedSub =
       this.eventsService.treeSelectedNodeChanged.subscribe((e) => {

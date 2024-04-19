@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslateService } from '@ngstack/translate';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'kl-confirm-dialog',
@@ -12,7 +12,7 @@ export class ConfirmDialogComponent implements OnInit {
   displayCancelBtn: boolean = true;
   confirmTranslation: string;
 
-  confirmButtonText: string = this.translate.get('GLOBAL.YES');
+  confirmButtonText: string = this.translate.instant('GLOBAL.YES');
 
   constructor(private translate: TranslateService) {}
 

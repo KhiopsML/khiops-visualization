@@ -2,7 +2,7 @@ import { Injectable, NgZone } from '@angular/core';
 import { FileLoaderService } from '../components/file-loader/file-loader.service';
 import { UtilsService } from './utils.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { TranslateService } from '@ngstack/translate';
+import { TranslateService } from '@ngx-translate/core';
 import { KhiopsLibraryService } from './khiops-library.service';
 let dialog: any;
 
@@ -29,7 +29,7 @@ export class FileSaverService {
     } else {
       this.ngzone.run(() => {
         this.snackBar.open(
-          this.translate.get('SNACKS.SAVE_FILE_ERROR'),
+          this.translate.instant('SNACKS.SAVE_FILE_ERROR'),
           undefined,
           {
             duration: 4000,

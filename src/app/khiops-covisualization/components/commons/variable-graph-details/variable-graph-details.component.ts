@@ -11,7 +11,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { DimensionVO } from '@khiops-library/model/dimension-vo';
-import { TranslateService } from '@ngstack/translate';
+import { TranslateService } from '@ngx-translate/core';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { DistributionGraphCanvasComponent } from '@khiops-library/components/distribution-graph-canvas/distribution-graph-canvas.component';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
@@ -115,13 +115,13 @@ export class VariableGraphDetailsComponent
     const otherIndex = this.position === 0 ? 1 : 0;
 
     this.title =
-      this.translate.get('GLOBAL.DISTRIBUTION') +
+      this.translate.instant('GLOBAL.DISTRIBUTION') +
       ' ' +
-      this.translate.get('GLOBAL.OF') +
+      this.translate.instant('GLOBAL.OF') +
       ' ' +
       this.selectedDimensions[currentIndex].name +
       ' ' +
-      this.translate.get('GLOBAL.GIVEN') +
+      this.translate.instant('GLOBAL.GIVEN') +
       ' ' +
       this.selectedDimensions[otherIndex].name;
   }

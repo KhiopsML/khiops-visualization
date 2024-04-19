@@ -6,7 +6,7 @@ import {
 } from '@angular/material/dialog';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
-import { TranslateService } from '@ngstack/translate';
+import { TranslateService } from '@ngx-translate/core';
 import { FileVO } from '@khiops-library/model/file-vo';
 import { ExtDatasVO } from '@khiops-covisualization/model/ext-datas-vo';
 import { IconCellComponent } from '@khiops-library/components/ag-grid/icon-cell/icon-cell.component';
@@ -90,7 +90,7 @@ export class ImportExtDatasListComponent {
       e.data.field,
     );
     this.snackBar.open(
-      this.translate.get('SNACKS.EXTERNAL_DATA_DELETED'),
+      this.translate.instant('SNACKS.EXTERNAL_DATA_DELETED'),
       undefined,
       {
         duration: 2000,
@@ -99,7 +99,7 @@ export class ImportExtDatasListComponent {
     );
     if (importedDatas) {
       this.snackBar.open(
-        this.translate.get('SNACKS.EXTERNAL_DATA_DELETED'),
+        this.translate.instant('SNACKS.EXTERNAL_DATA_DELETED'),
         undefined,
         {
           duration: 2000,
@@ -108,7 +108,7 @@ export class ImportExtDatasListComponent {
       );
     } else {
       this.snackBar.open(
-        this.translate.get('SNACKS.EXTERNAL_DATA_DELETE_ERROR'),
+        this.translate.instant('SNACKS.EXTERNAL_DATA_DELETE_ERROR'),
         undefined,
         {
           duration: 2000,

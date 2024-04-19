@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ReleaseNotesService } from './release-notes.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { TranslateService } from '@ngstack/translate';
+import { TranslateService } from '@ngx-translate/core';
 import { NoteVO } from './note-vo';
 
 @Component({
@@ -31,7 +31,7 @@ export class ReleaseNotesComponent implements OnInit {
         this.loadingNotes = false;
         this.loadingNotesError = true;
         this.snackBar.open(
-          this.translate.get('SNACKS.OPEN_RELEASE_NOTES_ERROR'),
+          this.translate.instant('SNACKS.OPEN_RELEASE_NOTES_ERROR'),
           undefined,
           {
             duration: 4000,
