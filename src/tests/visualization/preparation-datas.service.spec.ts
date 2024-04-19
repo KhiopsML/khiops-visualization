@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { REPORTS } from '@khiops-library/enum/reports';
+import { TranslateModule } from '@ngx-translate/core';
 
 let preparationDatasService: PreparationDatasService;
 let appService: AppService;
@@ -13,7 +14,7 @@ describe('Visualization', () => {
   describe('PreparationDatasService', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule],
+        imports: [HttpClientModule, TranslateModule.forRoot()],
       });
 
       // Inject services

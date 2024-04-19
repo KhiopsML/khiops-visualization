@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { HttpClientModule } from '@angular/common/http';
 import { MatrixCanvasService } from '@khiops-library/components/matrix-canvas/matrix-canvas.service';
+import { TranslateModule } from '@ngx-translate/core';
 let appService: AppService;
 
 let cells;
@@ -11,7 +12,7 @@ describe('Visualization', () => {
   describe('Matrix Datas : [iris2d file] check matrix values', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule],
+        imports: [HttpClientModule, TranslateModule.forRoot()],
       });
 
       // Inject services

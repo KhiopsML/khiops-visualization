@@ -3,6 +3,7 @@ import { AppService } from '@khiops-covisualization/providers/app.service';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { HttpClientModule } from '@angular/common/http';
 import { MatrixCanvasService } from '@khiops-library/components/matrix-canvas/matrix-canvas.service';
+import { TranslateModule } from '@ngx-translate/core';
 let appService: AppService;
 let dimensionsDatasService: DimensionsDatasService;
 
@@ -13,7 +14,7 @@ describe('CoVisualization', () => {
   describe('Matrix Datas : NO Context [Co-simple-2vars file]', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule],
+        imports: [HttpClientModule, TranslateModule.forRoot()],
       });
 
       // Inject services
@@ -68,7 +69,7 @@ describe('CoVisualization', () => {
   describe('Matrix Datas : NO Context [mushroom file] check proba values when folding', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule],
+        imports: [HttpClientModule, TranslateModule.forRoot()],
       });
 
       // Inject services
@@ -103,7 +104,7 @@ describe('CoVisualization', () => {
   describe('Matrix Datas : NO Context [mushroom file] check rev proba values when folding', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule],
+        imports: [HttpClientModule, TranslateModule.forRoot()],
       });
 
       // Inject services

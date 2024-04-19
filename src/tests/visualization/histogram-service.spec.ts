@@ -6,6 +6,7 @@ import { DistributionDatasService } from '@khiops-visualization/providers/distri
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { REPORTS } from '@khiops-library/enum/reports';
 import { HistogramType } from '@khiops-visualization/components/commons/histogram/histogram.types';
+import { TranslateModule } from '@ngx-translate/core';
 
 let appService: AppService;
 let histogramService: HistogramService;
@@ -31,7 +32,7 @@ describe('Visualization', () => {
   describe('Histogram datas', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule],
+        imports: [HttpClientModule, TranslateModule.forRoot()],
       });
 
       // Inject services
