@@ -4,13 +4,13 @@
   color="primary"
   [attr.aria-label]="
     isFullscreen
-      ? translate.get('ARIA.HEADER.CLOSE_FULLSCREEN')
-      : translate.get('ARIA.HEADER.OPEN_FULLSCREEN')
+      ? translate.instant('ARIA.HEADER.CLOSE_FULLSCREEN')
+      : translate.instant('ARIA.HEADER.OPEN_FULLSCREEN')
   "
   [matTooltip]="
     isFullscreen
-      ? translate.get('GLOBAL.CLOSE_FULLSCREEN')
-      : translate.get('GLOBAL.OPEN_FULLSCREEN')
+      ? translate.instant('GLOBAL.CLOSE_FULLSCREEN')
+      : translate.instant('GLOBAL.OPEN_FULLSCREEN')
   "
   (click)="clickFullscreen()"
 >

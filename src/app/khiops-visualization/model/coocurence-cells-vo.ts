@@ -9,32 +9,32 @@ export class CoocurenceCellsVO {
   displayedColumns: GridColumnsI[] = [];
 
   constructor(translate, nameX, nameY) {
-    this.title = translate.get('GLOBAL.CELLS_OF') + ' ' + nameX + ' x ' + nameY;
+    this.title = translate.instant('GLOBAL.CELLS_OF') + ' ' + nameX + ' x ' + nameY;
 
     this.displayedColumns.push({
       headerName: 'Cell id',
       field: 'id',
-      tooltip: translate.get('TOOLTIPS.PREPARATION_2D.CELLS.ID'),
+      tooltip: translate.instant('TOOLTIPS.PREPARATION_2D.CELLS.ID'),
     });
     this.displayedColumns.push({
       headerName: nameX,
       field: nameX,
-      tooltip: translate.get('TOOLTIPS.PREPARATION_2D.CELLS.NAMEX'),
+      tooltip: translate.instant('TOOLTIPS.PREPARATION_2D.CELLS.NAMEX'),
     });
     this.displayedColumns.push({
       headerName: nameY,
       field: nameY,
-      tooltip: translate.get('TOOLTIPS.PREPARATION_2D.CELLS.NAMEY'),
+      tooltip: translate.instant('TOOLTIPS.PREPARATION_2D.CELLS.NAMEY'),
     });
     this.displayedColumns.push({
-      headerName: translate.get('GLOBAL.FREQUENCY'),
+      headerName: translate.instant('GLOBAL.FREQUENCY'),
       field: 'frequency',
-      tooltip: translate.get('TOOLTIPS.PREPARATION_2D.CELLS.FREQUENCY'),
+      tooltip: translate.instant('TOOLTIPS.PREPARATION_2D.CELLS.FREQUENCY'),
     });
     this.displayedColumns.push({
-      headerName: translate.get('GLOBAL.COVERAGE'),
+      headerName: translate.instant('GLOBAL.COVERAGE'),
       field: 'coverage',
-      tooltip: translate.get('TOOLTIPS.PREPARATION_2D.CELLS.COVERAGE'),
+      tooltip: translate.instant('TOOLTIPS.PREPARATION_2D.CELLS.COVERAGE'),
     });
   }
 }
