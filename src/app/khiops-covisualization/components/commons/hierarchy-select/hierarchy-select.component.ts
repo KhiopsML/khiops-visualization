@@ -14,6 +14,7 @@ import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { AppConfig } from 'src/environments/environment';
+import { SelectedTreeClusterVO } from '@khiops-covisualization/model/selected-tree-cluster';
 
 @Component({
   selector: 'app-hierarchy-select',
@@ -45,8 +46,7 @@ export class HierarchySelectComponent implements OnChanges, AfterViewInit {
   @Input() dimensions: DimensionVO[];
 
   showStats = false;
-  intervals = 0;
-  clusterCount = 0;
+  selectedTreeCluster: SelectedTreeClusterVO;
 
   constructor(
     private treenodesService: TreenodesService,
@@ -58,12 +58,16 @@ export class HierarchySelectComponent implements OnChanges, AfterViewInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.selectedDimension && changes.selectedDimension.currentValue) {
-      this.intervals = this.dimensionsDatasService.getDimensionIntervals(
+      const intervals = this.dimensionsDatasService.getDimensionIntervals(
         this.selectedDimension.name,
+      );
+      this.selectedTreeCluster = new SelectedTreeClusterVO(
+        this.selectedDimension,
+        intervals,
       );
     }
     if (changes.selectedNode && changes.selectedNode.currentValue) {
-      this.clusterCount = this.selectedNode.valueGroup?.values?.length;
+      this.selectedTreeCluster.setCurrentNodeInformations(this.selectedNode);
     }
   }
 

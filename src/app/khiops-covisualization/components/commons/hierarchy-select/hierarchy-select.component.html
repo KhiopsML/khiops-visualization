@@ -52,36 +52,36 @@
   >
     <span
       >{{ 'GLOBAL.TYPE' | translate }} :
-      <strong>{{ selectedDimension?.type }}</strong></span
+      <strong>{{ selectedTreeCluster?.dimensionType }}</strong></span
     >
     <span *ngIf="selectedDimension.isNumerical"
       >{{ 'GLOBAL.INTERVAL' | translate }} :
-      <strong>{{ selectedNode?.name }}</strong></span
+      <strong>{{ selectedTreeCluster?.interval }}</strong></span
     >
     <span *ngIf="selectedDimension.isCategorical"
       >{{ 'GLOBAL.CLUSTER' | translate }} :
-      <strong>{{ selectedNode?.name }}</strong></span
+      <strong>{{ selectedTreeCluster?.interval }}</strong></span
     >
     <span
       *ngIf="
-        selectedDimension.isCategorical &&
+        selectedTreeCluster?.isCategorical &&
         selectedNode?.isLeaf &&
         !selectedNode?.isCollapsed
       "
       >{{ 'GLOBAL.CLUSTER_LENGTH' | translate }} :
-      <strong>{{ clusterCount }}</strong></span
+      <strong>{{ selectedTreeCluster?.nbClusters }}</strong></span
     >
     <span
       >{{ 'GLOBAL.FREQUENCY' | translate }} :
-      <strong>{{ selectedNode?.frequency }}</strong></span
+      <strong>{{ selectedTreeCluster?.frequency }}</strong></span
     >
-    <span *ngIf="selectedDimension.isNumerical"
+    <span *ngIf="selectedTreeCluster?.isNumerical"
       >{{ 'GLOBAL.INTERVALS' | translate }} :
-      <strong>{{ intervals }}</strong></span
+      <strong>{{ selectedTreeCluster?.intervals }}</strong></span
     >
-    <span *ngIf="selectedDimension.isCategorical"
+    <span *ngIf="selectedTreeCluster?.isCategorical"
       >{{ 'GLOBAL.CLUSTERS' | translate }} :
-      <strong>{{ intervals }}</strong></span
+      <strong>{{ selectedTreeCluster?.intervals }}</strong></span
     >
   </div>
 </div>
