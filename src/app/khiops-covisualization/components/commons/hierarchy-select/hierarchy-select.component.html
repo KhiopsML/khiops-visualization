@@ -62,7 +62,12 @@
       >{{ 'GLOBAL.CLUSTER' | translate }} :
       <strong>{{ selectedNode?.name }}</strong></span
     >
-    <span *ngIf="selectedDimension.isCategorical && selectedNode?.isLeaf"
+    <span
+      *ngIf="
+        selectedDimension.isCategorical &&
+        selectedNode?.isLeaf &&
+        !selectedNode?.isCollapsed
+      "
       >{{ 'GLOBAL.CLUSTER_LENGTH' | translate }} :
       <strong>{{ clusterCount }}</strong></span
     >
