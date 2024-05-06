@@ -49,10 +49,8 @@ export class HierarchyDetailsComponent extends SelectableComponent {
   @HostListener('window:keyup', ['$event'])
   keyEvent(event) {
     const currentSelectedArea = this.selectableService.getSelectedArea();
-    console.log('keyEvent ~ event:', this.id, currentSelectedArea.id);
     if (currentSelectedArea && currentSelectedArea.id === this.id) {
       // Keep id into node selection
-      // this.nodeInSelection = this.id;
       this.treeSelect.selectNextNode(event.keyCode);
     } else {
       return;
