@@ -10,22 +10,13 @@
       order="1"
       [visible]="axisLayout.isHierarchyChecked"
     >
-      <div fxFlexFill fxLayout="column" [attr.id]="'tree-comp-' + position">
-        <div fxFlexFill fxLayout="column" class="selected-area-inner-div">
-          <app-hierarchy-select
-            [position]="position"
-            [selectedNode]="dimensionsDatas.selectedNodes[position]"
-            [selectedDimension]="dimensionsDatas.selectedDimensions[position]"
-            [dimensions]="dimensionsDatas.selectedDimensions"
-          ></app-hierarchy-select>
-          <app-tree-select
-            [selectedNode]="dimensionsDatas.selectedNodes[position]"
-            [position]="position"
-            [dimensionsTree]="dimensionsDatas.dimensionsTrees[position]"
-            [selectedDimension]="dimensionsDatas.selectedDimensions[position]"
-          ></app-tree-select>
-        </div>
-      </div>
+      <app-hierarchy-details
+        [position]="position"
+        [selectedNode]="dimensionsDatas.selectedNodes[position]"
+        [selectedDimension]="dimensionsDatas.selectedDimensions[position]"
+        [dimensionsTree]="dimensionsDatas.dimensionsTrees[position]"
+        [dimensions]="dimensionsDatas.selectedDimensions"
+      ></app-hierarchy-details>
     </as-split-area>
     <as-split-area
       [size]="sizes[sizeId][column1Index]"

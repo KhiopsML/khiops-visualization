@@ -1,0 +1,22 @@
+<div
+  class="hierarchy-details-comp"
+  fxFlexFill
+  fxLayout="column"
+  [attr.id]="'hierarchy-details-comp-' + position"
+>
+  <div fxFlexFill fxLayout="column" class="selected-area-inner-div">
+    <app-hierarchy-select
+      [position]="position"
+      [selectedNode]="selectedNode"
+      [selectedDimension]="selectedDimension"
+      [dimensions]="dimensions"
+    ></app-hierarchy-select>
+    <app-tree-select
+      [attr.id]="'tree-comp-' + position"
+      [selectedNode]="selectedNode"
+      [position]="position"
+      [dimensionsTree]="dimensionsTree"
+      [selectedDimension]="selectedDimension"
+    ></app-tree-select>
+  </div>
+</div>

@@ -34,6 +34,7 @@ import { ExternalDatasComponent } from './components/commons/external-datas/exte
 import { ConfirmDialogComponent } from '@khiops-library/components/confirm-dialog/confirm-dialog.component';
 import { InAppRootOverlayContainer } from '@khiops-covisualization/providers/in-app-root-overlay/in-app-root-overlay-container';
 import { OverlayContainer } from '@angular/cdk/overlay';
+import { HierarchyDetailsComponent } from './components/commons/hierarchy-details/hierarchy-details.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { OverlayContainer } from '@angular/cdk/overlay';
     TreeSelectComponent,
     UserSettingsComponent,
     HierarchySelectComponent,
+    HierarchyDetailsComponent,
     ClusterDetailsComponent,
     AnnotationComponent,
     CompositionComponent,

@@ -1,6 +1,5 @@
 import {
   Component,
-  HostListener,
   NgZone,
   OnDestroy,
   ChangeDetectionStrategy,
@@ -12,8 +11,6 @@ import {
 import _ from 'lodash';
 import * as TreeView from '@khiops-library/libs/treeview/treeview';
 import { DimensionVO } from '@khiops-library/model/dimension-vo';
-import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
-import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -30,7 +27,6 @@ import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TreeSelectComponent
-  extends SelectableComponent
   implements AfterViewInit, OnChanges, OnDestroy
 {
   @Input() selectedDimension: DimensionVO;
@@ -40,24 +36,20 @@ export class TreeSelectComponent
 
   treeSelectedNodeChangedSub: Subscription;
 
-  componentType = 'tree'; // needed to copy datas
-  override id: any = undefined;
+  id: any = undefined;
   tree: any;
 
   dimensionsDatas: DimensionsDatasVO;
   nodeInSelection: any;
 
   constructor(
-    public override selectableService: SelectableService,
-    public override ngzone: NgZone,
-    public override configService: ConfigService,
+    private ngzone: NgZone,
+    private configService: ConfigService,
     private eventsService: EventsService,
     private treenodesService: TreenodesService,
     private snackBar: MatSnackBar,
     public translate: TranslateService,
   ) {
-    super(selectableService, ngzone, configService);
-
     this.treeSelectedNodeChangedSub =
       this.eventsService.treeSelectedNodeChanged.subscribe((e) => {
         if (
@@ -82,7 +74,15 @@ export class TreeSelectComponent
       });
   }
 
-  override ngOnDestroy() {
+  selectNextNode(keyCode) {
+    // Keep id into node selection
+    this.nodeInSelection = this.id;
+
+    // propagate event
+    this.tree.selectNextNode('tree-comp-' + this.position, keyCode);
+  }
+
+  ngOnDestroy() {
     this.treeSelectedNodeChangedSub.unsubscribe();
   }
 
@@ -96,7 +96,7 @@ export class TreeSelectComponent
     }
   }
 
-  override ngAfterViewInit() {
+  ngAfterViewInit() {
     setTimeout(() => {
       // Avoid ExpressionChangedAfterItHasBeenCheckedError
 
@@ -178,46 +178,4 @@ export class TreeSelectComponent
       });
     });
   }
-
-  @HostListener('window:keyup', ['$event'])
-  keyEvent(event) {
-    const currentSelectedArea = this.selectableService.getSelectedArea();
-    if (currentSelectedArea && currentSelectedArea.id === this.id) {
-      // Keep id into node selection
-      this.nodeInSelection = this.id;
-      this.tree.selectNextNode(this.id, event.keyCode);
-    } else {
-      return;
-    }
-  }
-
-  // @HostListener('window:keyup', ['$event'])
-  // keyEvent(event) {
-  // 	const currentSelectedArea = this.selectableService.getSelectedArea();
-  // 	if (currentSelectedArea && currentSelectedArea.id === this.id) {
-  // 		let elts = [];
-  // 		let node;
-  // 		Array.from(document.getElementById(this.id).getElementsByClassName('tree-leaf')).forEach(
-  // 			function (element: HTMLElement) {
-  // 				if (element.offsetParent !== null) {
-  // 					// @ts-ignore
-  // 					elts.push(JSON.parse(element.children[0].dataset.item));
-  // 				}
-  // 			}
-  // 		);
-  // 		const currentDomIndex = elts.findIndex(e => e.id === this.tree.getSelectedNodeId());;
-  // 		if (event.keyCode === 40) {
-  // 			// DOWN
-  // 			node = elts[currentDomIndex + 1];
-  // 		} else if (event.keyCode === 38) {
-  // 			// UP
-  // 			node = elts[currentDomIndex - 1];
-  // 		}
-  // 		if (node) {
-  // 			this.treenodesService.setSelectedNode(this.selectedDimension.name, node._id, false);
-  // 		}
-  // 	} else {
-  // 		return;
-  // 	}
-  // }
 }
