@@ -54,10 +54,14 @@ export class HeaderToolsComponent implements OnInit {
     if (currentSelectedArea) {
       this.copyDatasService.copyDatasToClipboard(currentSelectedArea);
 
-      this.snackBar.open(this.translate.instant('SNACKS.DATAS_COPIED'), undefined, {
-        duration: 2000,
-        panelClass: 'success',
-      });
+      this.snackBar.open(
+        this.translate.instant('SNACKS.DATAS_COPIED'),
+        undefined,
+        {
+          duration: 2000,
+          panelClass: 'success',
+        },
+      );
     } else {
       this.snackBar.open(
         this.translate.instant('SNACKS.NO_AREA_SELECTED'),
