@@ -1,9 +1,6 @@
-
 .hierarchy-select-comp {
   padding: 0.6em;
   margin: 0 !important;
-  position: relative;
-  position: sticky;
   width: 100%;
   overflow-x: auto;
 
@@ -19,7 +16,13 @@
     color: var(--primary);
   }
 
+  .comp-header-tools {
+    position: relative;
+    width: 100%;
+  }
+
   .hierarchy-select-content {
+    position: relative;
     width: 100%;
     margin-top: 1em;
     padding: 0.55em;
