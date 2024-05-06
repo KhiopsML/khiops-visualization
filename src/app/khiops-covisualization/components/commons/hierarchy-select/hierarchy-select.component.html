@@ -54,16 +54,24 @@
       >{{ 'GLOBAL.TYPE' | translate }} :
       <strong>{{ selectedDimension?.type }}</strong></span
     >
-    <span
+    <span *ngIf="selectedDimension.isNumerical"
       >{{ 'GLOBAL.INTERVAL' | translate }} :
+      <strong>{{ selectedNode?.name }}</strong></span
+    >
+    <span *ngIf="selectedDimension.isCategorical"
+      >{{ 'GLOBAL.CLUSTER' | translate }} :
       <strong>{{ selectedNode?.name }}</strong></span
     >
     <span
       >{{ 'GLOBAL.FREQUENCY' | translate }} :
       <strong>{{ selectedNode?.frequency }}</strong></span
     >
-    <span
+    <span *ngIf="selectedDimension.isNumerical"
       >{{ 'GLOBAL.INTERVALS' | translate }} :
+      <strong>{{ intervals }}</strong></span
+    >
+    <span *ngIf="selectedDimension.isCategorical"
+      >{{ 'GLOBAL.CLUSTERS' | translate }} :
       <strong>{{ intervals }}</strong></span
     >
   </div>

@@ -142,6 +142,8 @@
     "STATISTICS": "Statistics",
     "INTERVAL": "Interval",
     "INTERVALS": "Intervals",
+    "CLUSTER": "Cluster",
+    "CLUSTERS": "Clusters",
     "DIMENSIONS": "Dimensions",
     "ANNOTATION": "Annotation",
     "DISTRIBUTION": "Distribution",
