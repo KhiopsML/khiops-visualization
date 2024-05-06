@@ -62,6 +62,10 @@
       >{{ 'GLOBAL.CLUSTER' | translate }} :
       <strong>{{ selectedNode?.name }}</strong></span
     >
+    <span *ngIf="selectedDimension.isCategorical && selectedNode?.isLeaf"
+      >{{ 'GLOBAL.CLUSTER_LENGTH' | translate }} :
+      <strong>{{ clusterCount }}</strong></span
+    >
     <span
       >{{ 'GLOBAL.FREQUENCY' | translate }} :
       <strong>{{ selectedNode?.frequency }}</strong></span

@@ -275,7 +275,8 @@
     "PARTITION": "Partition",
     "LOGVALUE": "LOG value",
     "VALUE": "Value",
-    "SAVE_BEFORE_QUIT": "Do you want to save the changes you made?"
+    "SAVE_BEFORE_QUIT": "Do you want to save the changes you made?",
+    "CLUSTER_LENGTH": "Values"
   },
   "ARIA": {
     "AG_GRID": {

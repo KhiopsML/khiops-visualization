@@ -46,6 +46,7 @@ export class HierarchySelectComponent implements OnChanges, AfterViewInit {
 
   showStats = false;
   intervals = 0;
+  clusterCount = 0;
 
   constructor(
     private treenodesService: TreenodesService,
@@ -60,6 +61,9 @@ export class HierarchySelectComponent implements OnChanges, AfterViewInit {
       this.intervals = this.dimensionsDatasService.getDimensionIntervals(
         this.selectedDimension.name,
       );
+    }
+    if (changes.selectedNode && changes.selectedNode.currentValue) {
+      this.clusterCount = this.selectedNode.valueGroup?.values?.length;
     }
   }
 
@@ -99,7 +103,10 @@ export class HierarchySelectComponent implements OnChanges, AfterViewInit {
     // Reverse selected nodes on selection changed
     this.treenodesService.updateSelectedNodes(dimension, this.position);
     // Reverse dimensions datas on selection changed
-    this.dimensionsDatasService.updateSelectedDimension(dimension, this.position);
+    this.dimensionsDatasService.updateSelectedDimension(
+      dimension,
+      this.position,
+    );
     // Recompute datas
     this.dimensionsDatasService.saveInitialDimension();
     this.dimensionsDatasService.constructDimensionsTrees();
