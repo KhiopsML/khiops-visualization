@@ -88,6 +88,11 @@ export class MatrixContainerComponent implements OnInit, OnDestroy {
     this.sizes = this.appService.getViewSplitSizes(this.viewId);
     this.dimensionsDatas = this.dimensionsDatasService.getDatas();
     this.constructModeSelectBox();
+
+    // Check if saved into json
+    if (this.dimensionsDatas.matrixOption !== undefined) {
+      this.matrixOptions.selected = this.dimensionsDatas.matrixOption;
+    }
   }
 
   ngOnDestroy() {

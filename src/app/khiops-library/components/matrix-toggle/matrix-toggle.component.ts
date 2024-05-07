@@ -28,10 +28,13 @@ export class MatrixToggleComponent implements OnChanges {
   ngAfterViewInit() {}
 
   ngOnChanges() {
-    this.matrixOptions.selected =
-      localStorage.getItem(
-        this.AppConfig.GLOBAL.LS_ID + 'MATRIX_TYPE_OPTION',
-      ) || this.matrixOptions.types[0];
+    // may has been set by saved datas
+    if (!this.matrixOptions.selected) {
+      this.matrixOptions.selected =
+        localStorage.getItem(
+          this.AppConfig.GLOBAL.LS_ID + 'MATRIX_TYPE_OPTION',
+        ) || this.matrixOptions.types[0];
+    }
   }
 
   changeMatrixType(type: string) {
