@@ -13,12 +13,12 @@ export class UtilsService {
   }
 
   static fillArrayWithLogarithmicSpacing(minValue, maxValue, numValues) {
-    var minLog = Math.log10(Math.abs(minValue));
-    var maxLog = Math.log10(Math.abs(maxValue));
-    var logDiff = (maxLog - minLog) / (numValues - 1);
-    var array = [];
-    for (var i = 0; i < numValues; i++) {
-      var value = Math.pow(10, minLog + logDiff * i);
+    const minLog = Math.log10(Math.abs(minValue));
+    const maxLog = Math.log10(Math.abs(maxValue));
+    const logDiff = (maxLog - minLog) / (numValues - 1);
+    const array = [];
+    for (let i = 0; i < numValues; i++) {
+      let value = Math.pow(10, minLog + logDiff * i);
       if (minValue < 0) {
         value *= -1; // If the minimum value is negative, make the values ​​negative as well
       }
@@ -422,14 +422,14 @@ export class UtilsService {
 
   static getPrecisionNumber(value, exp?) {
     if (typeof value === 'number' && isFinite(value)) {
-      var num = this.toPlainString(value).split('.');
+      let num = this.toPlainString(value).split('.');
       let part1 = num[1];
       if (value === 0) {
         return value;
       } else if (Math.abs(value) < 0.1) {
-        var zeroAfterComma = -Math.floor(Math.log10(Math.abs(value)) + 1);
-        var usefullInfo = part1.slice(zeroAfterComma, zeroAfterComma + exp);
-        var res = '0.';
+        let zeroAfterComma = -Math.floor(Math.log10(Math.abs(value)) + 1);
+        let usefullInfo = part1.slice(zeroAfterComma, zeroAfterComma + exp);
+        let res = '0.';
         res += '0'.repeat(zeroAfterComma);
         res += usefullInfo;
         return this.getSign(value) + res.toString();
@@ -668,11 +668,10 @@ export class UtilsService {
   }
 
   static chunkArray(myArray, chunk_size) {
-    let index = 0;
     const arrayLength = myArray.length;
     const tempArray = [];
 
-    for (index = 0; index < arrayLength; index += chunk_size) {
+    for (let index = 0; index < arrayLength; index += chunk_size) {
       const chunk = myArray.slice(index, index + chunk_size);
       tempArray.push(chunk);
     }

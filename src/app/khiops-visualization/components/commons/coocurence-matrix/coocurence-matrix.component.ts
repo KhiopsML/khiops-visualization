@@ -12,7 +12,6 @@ import { Preparation2dDatasService } from '@khiops-visualization/providers/prepa
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AppConfig } from 'src/environments/environment';
-import _ from 'lodash';
 import { deepEqual } from 'fast-equals';
 import { MatrixCanvasComponent } from '@khiops-library/components/matrix-canvas/matrix-canvas.component';
 import { AppService } from '@khiops-visualization/providers/app.service';
@@ -83,8 +82,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
 
   ngOnChanges(changes: SimpleChanges) {
     if (
-      changes.selectedVariable &&
-      changes.selectedVariable.currentValue &&
+      changes.selectedVariable?.currentValue &&
       !deepEqual(
         changes.selectedVariable.currentValue,
         changes.selectedVariable.previousValue,
@@ -195,7 +193,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
         },
       ];
     }
-    this.matrixModes = {...this.matrixModes}
+    this.matrixModes = { ...this.matrixModes };
   }
 
   onToggleFullscreen(isFullscreen: boolean) {
