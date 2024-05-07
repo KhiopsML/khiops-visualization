@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
-import { AppConfig } from 'src/environments/environment';
 import _ from 'lodash';
 import { deepEqual } from 'fast-equals';
 import { MatrixCanvasComponent } from '@khiops-library/components/matrix-canvas/matrix-canvas.component';
@@ -19,7 +18,6 @@ import { PreparationVariableVO } from '@khiops-visualization/model/preparation-v
 import { Preparation2dDatasVO } from '@khiops-visualization/model/preparation2d-datas-vo';
 import { MatrixOptionsI } from '@khiops-library/interfaces/matrix-options';
 import { MatrixModesI } from '@khiops-library/interfaces/matrix-modes';
-import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 import { MatrixRangeValuesI } from '@khiops-visualization/interfaces/matrix-range-values';
 import { CellVO } from '@khiops-library/model/cell-vo';
 import { Preparation2dVariableVO } from '@khiops-visualization/model/preparation2d-variable-vo';
@@ -133,26 +131,7 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
         title: 'P (' + varName1 + ' | ' + varName2 + ')',
       },
     ];
-    if (!this.matrixModes.selected) {
-      // Get previous selected target if compatible
-      const previousSelectedModeIndex = localStorage.getItem(
-        AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_MODE_OPTION_INDEX',
-      );
-      if (previousSelectedModeIndex) {
-        this.matrixModes.selected =
-          this.matrixModes.types[previousSelectedModeIndex];
-        this.matrixModes.selectedIndex = previousSelectedModeIndex;
-      } else {
-        // Select first by default
-        this.matrixModes.selected = this.matrixModes.types[0];
-        this.matrixModes.selectedIndex = 0;
-      }
-    } else {
-      // In case of variable selection change
-      // We must update the combobox
-      this.matrixModes.selected =
-        this.matrixModes.types[this.matrixModes.selectedIndex];
-    }
+    this.matrixModes = { ...this.matrixModes };
   }
 
   onToggleFullscreen(isFullscreen: boolean) {
@@ -160,18 +139,6 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
     setTimeout(() => {
       this.matrixCanvas.drawMatrix();
     });
-  }
-
-  changeMatrixMode(mode: MatrixModeI) {
-    // this.trackerService.trackEvent('click', 'matrix_mode', mode.mode);
-    this.matrixModes.selected = mode;
-    this.matrixModes.selectedIndex = this.matrixModes.types.findIndex(
-      (e) => e.mode === mode.mode,
-    );
-    localStorage.setItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_MODE_OPTION_INDEX',
-      this.matrixModes.selectedIndex.toString(),
-    );
   }
 
   onMatrixAxisInverted() {

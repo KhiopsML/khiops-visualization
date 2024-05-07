@@ -128,16 +128,7 @@ export class MatrixContainerComponent implements OnInit, OnDestroy {
         title: 'H (' + varName1 + ' , ' + varName2 + ')',
       },
     ];
-    if (!this.matrixModes.selectedIndex) {
-      // Select MUTUAL_INFO by default
-      this.matrixModes.selected = this.matrixModes.types[0];
-      this.matrixModes.selectedIndex = 0;
-    } else {
-      // In case of dimension selection change
-      // We must update the combobox
-      this.matrixModes.selected =
-        this.matrixModes.types[this.matrixModes.selectedIndex];
-    }
+    this.matrixModes = { ...this.matrixModes };
 
     // Check if saved into json
     if (
@@ -181,11 +172,6 @@ export class MatrixContainerComponent implements OnInit, OnDestroy {
   }
 
   changeMatrixMode(mode: MatrixModeI) {
-    // this.trackerService.trackEvent('click', 'matrix_mode', mode.mode);
-    this.matrixModes.selected = mode;
-    this.matrixModes.selectedIndex = this.matrixModes.types.findIndex(
-      (e) => e.mode === mode.mode,
-    );
     this.dimensionsDatas.matrixMode = this.matrixModes.selectedIndex; // Save it into the global model to keep it into saved datas
   }
 

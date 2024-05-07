@@ -195,26 +195,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
         },
       ];
     }
-    if (!this.matrixModes.selected) {
-      // Get previous selected target if compatible
-      const previousSelectedModeIndex = localStorage.getItem(
-        AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_MODE_OPTION_INDEX',
-      );
-      if (previousSelectedModeIndex) {
-        this.matrixModes.selected =
-          this.matrixModes.types[previousSelectedModeIndex];
-        this.matrixModes.selectedIndex = previousSelectedModeIndex;
-      } else {
-        // Select first by default
-        this.matrixModes.selected = this.matrixModes.types[0];
-        this.matrixModes.selectedIndex = 0;
-      }
-    } else {
-      // In case of variable selection change
-      // We must update the combobox
-      this.matrixModes.selected =
-        this.matrixModes.types[this.matrixModes.selectedIndex];
-    }
+    this.matrixModes = {...this.matrixModes}
   }
 
   onToggleFullscreen(isFullscreen: boolean) {
@@ -256,10 +237,10 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
     // Add optional targets if available
     if (
       this.preparation2dDatasService.getTargetsIfAvailable() &&
-      (this.matrixModes.selected.mode === 'FREQUENCY_CELL' ||
-        this.matrixModes.selected.mode === 'PROB_TARGET_WITH_CELL' ||
-        this.matrixModes.selected.mode === 'MUTUAL_INFO_TARGET_WITH_CELL' ||
-        this.matrixModes.selected.mode === 'PROB_CELL_WITH_TARGET')
+      (this.matrixModes.selected?.mode === 'FREQUENCY_CELL' ||
+        this.matrixModes.selected?.mode === 'PROB_TARGET_WITH_CELL' ||
+        this.matrixModes.selected?.mode === 'MUTUAL_INFO_TARGET_WITH_CELL' ||
+        this.matrixModes.selected?.mode === 'PROB_CELL_WITH_TARGET')
     ) {
       // Get previous selected target if compatible
       const previousSelectedTarget = localStorage.getItem(
@@ -281,14 +262,6 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
 
   changeMatrixMode(mode: MatrixModeI) {
     // this.trackerService.trackEvent('click', 'matrix_mode', mode.mode);
-    this.matrixModes.selected = mode;
-    this.matrixModes.selectedIndex = this.matrixModes.types.findIndex(
-      (e) => e.mode === mode.mode,
-    );
-    localStorage.setItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_MODE_OPTION_INDEX',
-      this.matrixModes.selectedIndex.toString(),
-    );
     this.constructTargetSelectBox();
     this.selectTargetSelectBox(this.matrixTargets.selected);
   }

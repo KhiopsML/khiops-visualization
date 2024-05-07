@@ -11,23 +11,7 @@
           <h2 title="{{ 'TOOLTIPS.PREPARATION.REG_MATRIX.TITLE' | translate }}">
             {{ 'GLOBAL.TARGET_VALUES' | translate }}
           </h2>
-          <button
-            class="button-accent"
-            mat-stroked-button
-            color="accent"
-            [matMenuTriggerFor]="matrixModesTypes"
-          >
-            {{ matrixModes.selected.title | translate }} <em>v</em>
-          </button>
-          <mat-menu #matrixModesTypes>
-            <button
-              mat-menu-item
-              *ngFor="let opt of matrixModes.types"
-              (click)="changeMatrixMode(opt)"
-            >
-              {{ opt.title | translate }}
-            </button>
-          </mat-menu>
+          <kl-matrix-mode [matrixModes]="matrixModes"> </kl-matrix-mode>
         </div>
         <div fxLayout="row" fxLayoutAlign="end center">
           <kl-matrix-toggle [matrixOptions]="matrixOptions"></kl-matrix-toggle>

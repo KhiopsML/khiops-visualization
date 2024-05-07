@@ -25,42 +25,26 @@
         [ngClass]="{ fullscreen: isFullscreen }"
       >
         <div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
-          <div fxFlex fxLayout="row" fxLayoutAlign="start center">
-            <div fxFlex fxLayout="row" fxLayoutAlign="start center">
-              <button
-                class="button-accent"
-                mat-stroked-button
-                color="accent"
-                [matMenuTriggerFor]="matrixModesTypes"
-              >
-                {{ matrixModes.selected.title | translate }}
-                <em>v</em>
-              </button>
-              <mat-menu #matrixModesTypes>
-                <button
-                  mat-menu-item
-                  *ngFor="let opt of matrixModes.types"
-                  (click)="changeMatrixMode(opt)"
-                >
-                  {{ opt.title | translate }}
-                </button>
-              </mat-menu>
-            </div>
-            <mat-checkbox
-              class="matrix-conditionalOnContext-checkbox"
-              *ngIf="dimensionsDatas.contextDimensionCount"
-              [checked]="dimensionsDatas.conditionalOnContext"
-              (change)="changeConditionalOnContext()"
-            >
-              {{ 'GLOBAL.CONDITIONAL_ON_CONTEXT' | translate }}</mat-checkbox
-            >
-            <kl-matrix-toggle
-              [matrixOptions]="matrixOptions"
-              (matrixOptionChange)="changeMatrixType($event)"
-            ></kl-matrix-toggle>
-            <kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">
-            </kl-btn-fullscreen>
-          </div>
+          <kl-matrix-mode
+            fxFlex
+            [matrixModes]="matrixModes"
+            (matrixModeChange)="changeMatrixMode($event)"
+          >
+          </kl-matrix-mode>
+          <mat-checkbox
+            class="matrix-conditionalOnContext-checkbox"
+            *ngIf="dimensionsDatas.contextDimensionCount"
+            [checked]="dimensionsDatas.conditionalOnContext"
+            (change)="changeConditionalOnContext()"
+          >
+            {{ 'GLOBAL.CONDITIONAL_ON_CONTEXT' | translate }}</mat-checkbox
+          >
+          <kl-matrix-toggle
+            [matrixOptions]="matrixOptions"
+            (matrixOptionChange)="changeMatrixType($event)"
+          ></kl-matrix-toggle>
+          <kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">
+          </kl-btn-fullscreen>
         </div>
         <kl-matrix-canvas
           #matrixCanvas

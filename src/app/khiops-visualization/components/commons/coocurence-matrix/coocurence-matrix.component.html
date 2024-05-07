@@ -27,27 +27,11 @@
                 >
                   {{ 'GLOBAL.COOCURENCE' | translate }}
                 </h2>
-                <button
-                  class="button-accent"
-                  mat-stroked-button
-                  color="accent"
-                  [matMenuTriggerFor]="matrixModesTypes"
+                <kl-matrix-mode
+                  [matrixModes]="matrixModes"
+                  (matrixModeChange)="changeMatrixMode($event)"
                 >
-                  {{
-                    matrixModes.selected && matrixModes.selected.title
-                      | translate
-                  }}
-                  <em>v</em>
-                </button>
-                <mat-menu #matrixModesTypes>
-                  <button
-                    mat-menu-item
-                    *ngFor="let opt of matrixModes.types"
-                    (click)="changeMatrixMode(opt)"
-                  >
-                    {{ opt.title | translate }}
-                  </button>
-                </mat-menu>
+                </kl-matrix-mode>
               </div>
               <div
                 fxLayout="row"

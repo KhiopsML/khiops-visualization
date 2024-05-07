@@ -64,6 +64,7 @@ import { LibraryComponent } from './library.component';
 import { BtnFullscreenComponent } from './components/btn-fullscreen/btn-fullscreen.component';
 import { MarkedOptionsFactory } from './factory/markdown.factory';
 import { MatrixToggleComponent } from './components/matrix-toggle/matrix-toggle.component';
+import { MatrixModeComponent } from './components/matrix-mode/matrix-mode.component';
 
 @NgModule({
   imports: [
@@ -130,6 +131,7 @@ import { MatrixToggleComponent } from './components/matrix-toggle/matrix-toggle.
     AgGridComponent,
     MatrixTooltipComponent,
     MatrixToggleComponent,
+    MatrixModeComponent,
     CheckboxCellComponent,
     IconCellComponent,
     DistributionGraphCanvasComponent,
@@ -190,6 +192,7 @@ import { MatrixToggleComponent } from './components/matrix-toggle/matrix-toggle.
     AgGridComponent,
     MatrixTooltipComponent,
     MatrixToggleComponent,
+    MatrixModeComponent,
     CheckboxCellComponent,
     IconCellComponent,
     DistributionGraphCanvasComponent,
