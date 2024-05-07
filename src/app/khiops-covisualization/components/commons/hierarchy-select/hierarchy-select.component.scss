@@ -29,11 +29,17 @@
 
     span {
       font-weight: 400;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
     }
 
     strong {
       font-weight: 500;
+    }
+
+    br {
+      display: block;
+      content: '';
+      margin-top: 10px;
     }
   }
 }

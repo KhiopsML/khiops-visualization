@@ -57,16 +57,16 @@ export class HierarchySelectComponent implements OnChanges, AfterViewInit {
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.selectedDimension && changes.selectedDimension.currentValue) {
-      const intervals = this.dimensionsDatasService.getDimensionIntervals(
-        this.selectedDimension.name,
-      );
+    if (changes.selectedDimension?.currentValue) {
       this.selectedTreeCluster = new SelectedTreeClusterVO(
         this.selectedDimension,
-        intervals,
       );
+      this.selectedTreeCluster.intervals =
+        this.dimensionsDatasService.getDimensionIntervals(
+          this.selectedDimension.name,
+        );
     }
-    if (changes.selectedNode && changes.selectedNode.currentValue) {
+    if (changes.selectedNode?.currentValue) {
       this.selectedTreeCluster.setCurrentNodeInformations(this.selectedNode);
     }
   }

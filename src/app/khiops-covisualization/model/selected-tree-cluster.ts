@@ -14,11 +14,10 @@ export class SelectedTreeClusterVO {
   interval: string;
   frequency: number;
 
-  constructor(dimension: DimensionVO, intervals: number) {
+  constructor(dimension: DimensionVO) {
     this.isCategorical = dimension?.isCategorical;
     this.isNumerical = dimension?.isNumerical;
     this.dimensionType = dimension?.type;
-    this.intervals = intervals;
   }
 
   setCurrentNodeInformations(selectedNode: TreeNodeVO) {

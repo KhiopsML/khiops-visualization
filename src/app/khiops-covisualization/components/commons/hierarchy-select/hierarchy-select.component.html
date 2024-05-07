@@ -54,6 +54,15 @@
       >{{ 'GLOBAL.TYPE' | translate }} :
       <strong>{{ selectedTreeCluster?.dimensionType }}</strong></span
     >
+    <span *ngIf="selectedTreeCluster?.isNumerical"
+      >{{ 'GLOBAL.INTERVALS' | translate }} :
+      <strong>{{ selectedTreeCluster?.intervals }}</strong></span
+    >
+    <span *ngIf="selectedTreeCluster?.isCategorical"
+      >{{ 'GLOBAL.CLUSTERS' | translate }} :
+      <strong>{{ selectedTreeCluster?.intervals }}</strong></span
+    >
+    <br />
     <span *ngIf="selectedDimension.isNumerical"
       >{{ 'GLOBAL.INTERVAL' | translate }} :
       <strong>{{ selectedTreeCluster?.interval }}</strong></span
@@ -74,14 +83,6 @@
     <span
       >{{ 'GLOBAL.FREQUENCY' | translate }} :
       <strong>{{ selectedTreeCluster?.frequency }}</strong></span
-    >
-    <span *ngIf="selectedTreeCluster?.isNumerical"
-      >{{ 'GLOBAL.INTERVALS' | translate }} :
-      <strong>{{ selectedTreeCluster?.intervals }}</strong></span
-    >
-    <span *ngIf="selectedTreeCluster?.isCategorical"
-      >{{ 'GLOBAL.CLUSTERS' | translate }} :
-      <strong>{{ selectedTreeCluster?.intervals }}</strong></span
     >
   </div>
 </div>
