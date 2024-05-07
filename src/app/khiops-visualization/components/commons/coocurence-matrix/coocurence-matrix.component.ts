@@ -68,12 +68,6 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
   ngAfterViewInit() {
     setTimeout(() => {
       // Avoid ExpressionChangedAfterItHasBeenCheckedError
-
-      this.matrixOptions.selected =
-        localStorage.getItem(
-          AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_TYPE_OPTION',
-        ) || this.matrixOptions.types[0];
-
       this.preparation2dDatasService.getMatrixCanvasDatas(
         this.preparation2dDatas.selectedVariable,
       );
@@ -283,15 +277,6 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
     } else {
       this.matrixTargets.selected = undefined;
     }
-  }
-
-  changeMatrixType(type: string) {
-    // this.trackerService.trackEvent('click', 'matrix_type', type);
-    localStorage.setItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_TYPE_OPTION',
-      type,
-    );
-    this.matrixOptions.selected = type;
   }
 
   changeMatrixMode(mode: MatrixModeI) {

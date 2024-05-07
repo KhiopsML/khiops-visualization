@@ -1,0 +1,15 @@
+.matrix-toggle-comp {
+  margin-right: 0.8em;
+
+  ::ng-deep .mat-button-toggle-label-content {
+    line-height: 34px !important;
+    top: -2px !important;
+    span {
+      font-size: 0.7rem !important;
+    }
+  }
+
+  .mat-button-toggle-checked {
+    color: white !important;
+  }
+}

@@ -64,10 +64,6 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
     );
     this.minMaxValues =
       this.preparation2dDatasService.getGlobalMinAndMax2dValues(variable);
-    this.matrixOptions.selected =
-      localStorage.getItem(
-        AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_TYPE_OPTION',
-      ) || this.matrixOptions.types[0];
     this.preparation2dDatasService.getMatrixCanvasDatas(
       this.preparation2dDatas.selectedVariable,
     );
@@ -157,15 +153,6 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
       this.matrixModes.selected =
         this.matrixModes.types[this.matrixModes.selectedIndex];
     }
-  }
-
-  changeMatrixType(type: string) {
-    // this.trackerService.trackEvent('click', 'matrix_type', type);
-    localStorage.setItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_TYPE_OPTION',
-      type,
-    );
-    this.matrixOptions.selected = type;
   }
 
   onToggleFullscreen(isFullscreen: boolean) {

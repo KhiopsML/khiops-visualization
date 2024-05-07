@@ -5,7 +5,6 @@ import { MatrixCanvasComponent } from '@khiops-library/components/matrix-canvas/
 import { ViewLayoutVO } from '@khiops-covisualization/model/view-layout-vo';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
-import { AppConfig } from 'src/environments/environment';
 import { Subscription } from 'rxjs';
 import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
 import { MatrixModesI } from '@khiops-library/interfaces/matrix-modes';
@@ -54,9 +53,8 @@ export class MatrixContainerComponent implements OnInit, OnDestroy {
           this.isFirstLoad = false;
         } else {
           // check if it's a context selection to redraw matrix
-          const isContextDimension = this.dimensionsDatasService.isContextDimension(
-            e.hierarchyName,
-          );
+          const isContextDimension =
+            this.dimensionsDatasService.isContextDimension(e.hierarchyName);
 
           if (
             (!e.stopPropagation &&
@@ -90,7 +88,6 @@ export class MatrixContainerComponent implements OnInit, OnDestroy {
     this.sizes = this.appService.getViewSplitSizes(this.viewId);
     this.dimensionsDatas = this.dimensionsDatasService.getDatas();
     this.constructModeSelectBox();
-    this.constructOptionsSelectBox();
   }
 
   ngOnDestroy() {
@@ -103,15 +100,6 @@ export class MatrixContainerComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.matrixCanvas.drawMatrix();
     });
-  }
-
-  constructOptionsSelectBox() {
-    this.matrixOptions.selected =
-      this.dimensionsDatas.matrixOption ||
-      localStorage.getItem(
-        AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'MATRIX_TYPE_OPTION',
-      ) ||
-      this.matrixOptions.types[0];
   }
 
   constructModeSelectBox() {
@@ -189,13 +177,7 @@ export class MatrixContainerComponent implements OnInit, OnDestroy {
   }
 
   changeMatrixType(type: string) {
-    // this.trackerService.trackEvent('click', 'matrix_type', type);
-    localStorage.setItem(
-      AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'MATRIX_TYPE_OPTION',
-      type,
-    );
     this.dimensionsDatas.matrixOption = type; // Save it into the global model to keep it into saved datas
-    this.matrixOptions.selected = type;
   }
 
   changeMatrixMode(mode: MatrixModeI) {

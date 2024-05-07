@@ -35,16 +35,6 @@
           white-space: pre-line !important;
         }
       }
-
-      ::ng-deep mat-button-toggle-group {
-        ::ng-deep .mat-button-toggle-label-content {
-          line-height: 34px !important;
-          top: -2px !important;
-          span {
-            font-size: 0.7rem !important;
-          }
-        }
-      }
     }
   }
 }

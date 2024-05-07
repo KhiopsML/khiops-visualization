@@ -63,6 +63,7 @@ import { MarkdownModule, MarkedOptions, MarkedRenderer } from 'ngx-markdown';
 import { LibraryComponent } from './library.component';
 import { BtnFullscreenComponent } from './components/btn-fullscreen/btn-fullscreen.component';
 import { MarkedOptionsFactory } from './factory/markdown.factory';
+import { MatrixToggleComponent } from './components/matrix-toggle/matrix-toggle.component';
 
 @NgModule({
   imports: [
@@ -128,6 +129,7 @@ import { MarkedOptionsFactory } from './factory/markdown.factory';
     MatrixCanvasComponent,
     AgGridComponent,
     MatrixTooltipComponent,
+    MatrixToggleComponent,
     CheckboxCellComponent,
     IconCellComponent,
     DistributionGraphCanvasComponent,
@@ -187,6 +189,7 @@ import { MarkedOptionsFactory } from './factory/markdown.factory';
     MatrixCanvasComponent,
     AgGridComponent,
     MatrixTooltipComponent,
+    MatrixToggleComponent,
     CheckboxCellComponent,
     IconCellComponent,
     DistributionGraphCanvasComponent,

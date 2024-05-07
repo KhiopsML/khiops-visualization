@@ -30,20 +30,7 @@
           </mat-menu>
         </div>
         <div fxLayout="row" fxLayoutAlign="end center">
-          <mat-button-toggle-group
-            id="matrix-option-toggle"
-            #group="matButtonToggleGroup"
-            [value]="matrixOptions.selected"
-          >
-            <mat-button-toggle
-              *ngFor="let opt of matrixOptions.types"
-              [value]="opt"
-              title="{{ 'TOOLTIPS.COMMONS.MATRIX_MODE' | translate }}"
-              (click)="changeMatrixType(opt)"
-            >
-              <span>{{ opt | translate }}</span>
-            </mat-button-toggle>
-          </mat-button-toggle-group>
+          <kl-matrix-toggle [matrixOptions]="matrixOptions"></kl-matrix-toggle>
         </div>
         <kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">
         </kl-btn-fullscreen>
