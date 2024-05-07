@@ -20,9 +20,8 @@ export class SelectableTabComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (
-      changes.selectedTab &&
       changes.selectedTab
-        .firstChange /* important to do not load when tab change to context (covisu)*/
+        ?.firstChange /* important to do not load when tab change to context (covisu)*/
     ) {
       this.loadingView = true;
 

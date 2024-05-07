@@ -25,8 +25,6 @@ export class MatrixToggleComponent implements OnChanges {
     this.AppConfig = this.khiopsLibraryService.getAppConfig().common;
   }
 
-  ngAfterViewInit() {}
-
   ngOnChanges() {
     // may has been set by saved datas
     if (!this.matrixOptions.selected) {

@@ -25,11 +25,11 @@ export class DimensionVO {
 
   constructor(object, startPosition = 0) {
     this.startPosition = startPosition;
-    this.name = (object && object.name) || '';
-    this.type = (object && object.type) || '';
-    this.parts = (object && object.parts) || undefined;
-    this.initialParts = (object && object.initialParts) || undefined;
-    this.values = (object && object.values) || undefined;
+    this.name = object?.name || '';
+    this.type = object?.type || '';
+    this.parts = object?.parts || undefined;
+    this.initialParts = object?.initialParts || undefined;
+    this.values = object?.values || undefined;
     this.currentHierarchyClusterCount = this.parts;
     this.hierarchyFold = true;
 
@@ -48,9 +48,9 @@ export class DimensionVO {
     if (object.variable) {
       this.name = object.variable;
     }
-    this.partitionType = (object && object.partitionType) || undefined;
-    this.variable = (object && object.variable) || '';
-    this.defaultGroupIndex = (object && object.defaultGroupIndex) || 0;
+    this.partitionType = object?.partitionType || undefined;
+    this.variable = object?.variable || '';
+    this.defaultGroupIndex = object?.defaultGroupIndex || 0;
   }
 
   setHierarchyFold(state: boolean) {

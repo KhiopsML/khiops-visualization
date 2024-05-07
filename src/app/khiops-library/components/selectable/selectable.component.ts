@@ -34,7 +34,7 @@ export class SelectableComponent
     // watch for changes and update css
     this.selectedServiceChangeSub =
       this.selectableService.selectedServiceChange.subscribe((value) => {
-        if (this.id && value && value.id) {
+        if (this.id && value?.id) {
           const el = this.configService
             .getRootElementDom()
             .querySelector('#' + this.id.toString());
@@ -42,7 +42,7 @@ export class SelectableComponent
             if (value.id.toString() === this.id.toString()) {
               el.classList.add('selected');
             } else {
-              if (el && el.classList) {
+              if (el?.classList) {
                 el.classList.remove('selected');
               }
             }

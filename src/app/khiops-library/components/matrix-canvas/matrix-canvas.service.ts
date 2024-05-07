@@ -7,7 +7,7 @@ import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
   providedIn: 'root',
 })
 export class MatrixCanvasService {
-  static hot: string[] = [
+  static readonly hot: string[] = [
     '#FFFFFF',
     '#FF8000',
     '#FF5200',

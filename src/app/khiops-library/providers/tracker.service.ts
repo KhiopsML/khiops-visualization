@@ -68,7 +68,7 @@ export class TrackerService {
     window._paq = window._paq || [];
 
     (() => {
-      var u = config.TRACKER.TRACKER_URL;
+      let u = config.TRACKER.TRACKER_URL;
       window._paq.push(['setTrackerUrl', u + 'matomo.php']);
       window._paq.push(['setSiteId', trackerId]);
       window._paq.push(['trackPageView']);
@@ -79,7 +79,7 @@ export class TrackerService {
         // genereate and keep in local storage unique visitor id to filter visitors analytics
         window._paq.push(['setVisitorId', visitorId]);
       }
-      var d = document,
+      let d = document,
         g = d.createElement('script'),
         s = d.getElementsByTagName('script')[0];
       g.type = 'text/javascript';

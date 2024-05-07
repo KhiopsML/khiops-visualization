@@ -24,7 +24,6 @@ export class MatrixModeComponent implements OnChanges {
   constructor(private khiopsLibraryService: KhiopsLibraryService) {
     this.AppConfig = this.khiopsLibraryService.getAppConfig().common;
   }
-  ngAfterViewInit() {}
 
   ngOnChanges() {
     if (!this.matrixModes.selected) {

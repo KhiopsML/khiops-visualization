@@ -255,10 +255,10 @@ export class MatrixUtilsDatasService {
           cell.cellFreqHash = cellFreqHash;
         }
 
-        if (cellInterests && cellInterests[currentIndex]) {
+        if (cellInterests?.[currentIndex]) {
           cell.cellInterest = cellInterests[currentIndex];
         }
-        if (cellTargetFrequencies && cellTargetFrequencies[currentIndex]) {
+        if (cellTargetFrequencies?.[currentIndex]) {
           // If target freq, cellFreq already computed into cellFrequencies
           cell.cellFreq = cellFrequencies[currentIndex];
         } else {

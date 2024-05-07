@@ -28,10 +28,8 @@ export class MatrixTooltipComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (
-      this.matrixTooltipDiv &&
-      this.matrixTooltipDiv.nativeElement &&
-      changes.position &&
-      changes.position.currentValue
+      this.matrixTooltipDiv?.nativeElement &&
+      changes.position?.currentValue
     ) {
       if (this.position.x < 400) {
         this.matrixTooltipDiv.nativeElement.style.left =
@@ -43,11 +41,7 @@ export class MatrixTooltipComponent implements OnChanges {
       this.matrixTooltipDiv.nativeElement.style.top =
         this.position.y - 100 + 'px';
     }
-    if (
-      this.matrixTooltipDiv &&
-      this.matrixTooltipDiv.nativeElement &&
-      changes.cell
-    ) {
+    if (this.matrixTooltipDiv?.nativeElement && changes.cell) {
       if (changes.cell.currentValue) {
         this.matrixTooltipDiv.nativeElement.style.visibility = 'visible';
       } else {

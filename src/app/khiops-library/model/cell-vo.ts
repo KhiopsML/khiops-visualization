@@ -55,8 +55,6 @@ export class CellVO {
   cellHellingerAbsoluteValue: number[] = [];
   matrixTotal: number[] = [];
 
-  constructor() {}
-
   setIndex(currentIndex: number) {
     this.index = currentIndex;
     this.id = currentIndex + 1; // cells begin from 0 and rows from 1 ...

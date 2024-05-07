@@ -1,5 +1,4 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import _ from 'lodash';
 import { KhiopsLibraryService } from '../providers/khiops-library.service';
 import { UtilsService } from '../providers/utils.service';
 

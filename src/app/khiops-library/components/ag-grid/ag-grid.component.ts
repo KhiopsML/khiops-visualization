@@ -418,7 +418,7 @@ export class AgGridComponent
                 )
             : undefined,
           hide: col.show === false, // ! if undefined : show it
-          width: this.cellsSizes?.[this.id][col.field],
+          width: this.cellsSizes?.[this.id]?.[col.field],
           cellRendererFramework: col.cellRendererFramework,
           cellRendererParams: col.cellRendererParams,
           comparator: function (a, b) {

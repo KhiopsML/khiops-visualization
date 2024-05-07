@@ -12,7 +12,7 @@
   })(window, function () {
     return (function () {
       /** List of events supported by the tree view */
-      var events = [
+      let events = [
         'expand',
         'init',
         'updateNodeName',
@@ -40,26 +40,6 @@
       }
 
       /**
-       * A utilite function to check to see if something is a DOM object
-       * @param {object} Object to test
-       * @returns {boolean} If the object is a DOM object
-       */
-      function isDOMElement(obj) {
-        try {
-          return obj instanceof HTMLElement;
-        } catch (e) {
-          // Some browsers don't support using the HTMLElement so some extra
-          // checks are needed.
-          return (
-            typeof obj === 'object' &&
-            obj.nodeType === 1 &&
-            typeof obj.style === 'object' &&
-            typeof obj.ownerDocument === 'object'
-          );
-        }
-      }
-
-      /**
        * A forEach that will work with a NodeList and generic Arrays
        * @param {array|NodeList} arr The array to iterate over
        * @param {function} callback Function that executes for each element. First parameter is element, second is index
@@ -67,7 +47,7 @@
        */
       function forEach(arr, callback, scope) {
         if (arr) {
-          var i,
+          let i,
             len = arr.length;
           for (i = 0; i < len; i += 1) {
             callback.call(scope, arr[i], i);
@@ -80,7 +60,7 @@
        * @param {string} name The name of the event to emit
        */
       function emit(instance, name) {
-        var args = [].slice.call(arguments, 2);
+        let args = [].slice.call(arguments, 2);
         if (events.indexOf(name) > -1) {
           if (
             instance.handlers[name] &&
@@ -101,32 +81,32 @@
        * Renders the tree view in the DOM
        */
       function render(self) {
-        var container = self.rootElementDom.querySelector('#' + self.node);
+        let container = self.rootElementDom.querySelector('#' + self.node);
 
-        var clonedContainer;
+        let clonedContainer;
         if (container) {
           clonedContainer = container.cloneNode(true);
           container.parentNode.replaceChild(clonedContainer, container);
-          var leaves = [],
+          let leaves = [],
             clickExpandIcon,
             dblclick,
             removeAllEditInputs,
             click;
 
-          var renderLeaf = function (item) {
-            var leaf = document.createElement('div');
-            var content = document.createElement('div');
-            var icon = document.createElement('mat-icon');
+          let renderLeaf = function (item) {
+            let leaf = document.createElement('div');
+            let content = document.createElement('div');
+            let icon = document.createElement('mat-icon');
 
-            var text = document.createElement('div');
-            var expando = document.createElement('div');
+            let text = document.createElement('div');
+            let expando = document.createElement('div');
 
             leaf.setAttribute('class', 'tree-leaf');
             leaf.setAttribute('id', 'tree-leaf-' + item.id);
             content.setAttribute('class', 'tree-leaf-content');
             icon.setAttribute('class', 'tree-icon mat-icon material-icons');
 
-            var leafDatas = {
+            let leafDatas = {
               name: item.name,
               isLeaf: item.isLeaf,
               id: item.id,
@@ -176,10 +156,10 @@
               expando.classList.add('hidden');
             }
             if (item.children && item.children.length > 0) {
-              var children = document.createElement('div');
+              let children = document.createElement('div');
               children.setAttribute('class', 'tree-child-leaves');
-              for (var i = 0; i < item.children.length; i++) {
-                var childLeaf = renderLeaf(item.children[i]);
+              for (let i = 0; i < item.children.length; i++) {
+                let childLeaf = renderLeaf(item.children[i]);
                 children.appendChild(childLeaf);
               }
               if (item.isCollapsed) {
@@ -192,7 +172,7 @@
             return leaf;
           };
 
-          for (var i = 0; i < self.data.length; i++) {
+          for (let i = 0; i < self.data.length; i++) {
             leaves.push(renderLeaf.call(self, self.data[i]));
           }
           clonedContainer.innerHTML = leaves
@@ -202,18 +182,18 @@
             .join('');
 
           dblclick = function (e) {
-            var parent = (e.target || e.currentTarget).parentNode;
+            let parent = (e.target || e.currentTarget).parentNode;
 
-            var node = e.target;
+            let node = e.target;
             node.style.display = 'none';
 
-            var inputForm = document.createElement('div');
+            let inputForm = document.createElement('div');
             inputForm.setAttribute('class', 'tree-leaf-text-input');
 
-            var input = document.createElement('input');
+            let input = document.createElement('input');
             input.setAttribute('placeholder', node.innerHTML);
 
-            var iconAccept = document.createElement('mat-icon');
+            let iconAccept = document.createElement('mat-icon');
             iconAccept.setAttribute(
               'class',
               'edit-icons valid-rename mat-icon material-icons',
@@ -221,7 +201,7 @@
 
             iconAccept.textContent = 'check_circle_outline';
             iconAccept.onclick = function (e) {
-              var newName = input.value;
+              let newName = input.value;
               newName = newName.replace(/\./g, ''); // dots are replaced by "-" in css
               newName = newName.replace(/\ /g, ''); // spaces are replaced by "-" in css
               newName = newName.replace(/[^\w\s]/gi, '-'); // replace all special chars
@@ -232,7 +212,7 @@
                 node.innerText = newName;
 
                 // change data-item object
-                var data = JSON.parse(parent.getAttribute('data-item'));
+                let data = JSON.parse(parent.getAttribute('data-item'));
                 data.shortDescription = newName;
                 parent.setAttribute('data-item', JSON.stringify(data));
 
@@ -263,7 +243,7 @@
               }
             });
 
-            var iconCancel = document.createElement('mat-icon');
+            let iconCancel = document.createElement('mat-icon');
             iconCancel.setAttribute(
               'class',
               'edit-icons mat-icon material-icons',
@@ -298,14 +278,14 @@
           };
 
           click = function (e) {
-            var currentNode = e.target || e.currentTarget;
-            var parent = currentNode.parentNode;
+            let currentNode = e.target || e.currentTarget;
+            let parent = currentNode.parentNode;
             removeAllEditInputs();
 
             // if (e.isTrusted) {
             // Emit if it is a user click
             // Do not if it is a callback
-            var data = JSON.parse(parent.getAttribute('data-item'));
+            let data = JSON.parse(parent.getAttribute('data-item'));
             emit(self, 'select', {
               target: e,
               data: data,
@@ -315,7 +295,7 @@
             forEach(
               clonedContainer.querySelectorAll('.tree-leaf-text'),
               function (node) {
-                var parent = node.parentNode;
+                let parent = node.parentNode;
                 parent.classList.remove('selected');
               },
             );
@@ -329,9 +309,9 @@
           };
 
           clickExpandIcon = function (e) {
-            var parent = (e.target || e.currentTarget).parentNode;
-            var data = JSON.parse(parent.getAttribute('data-item'));
-            var leaves = parent.parentNode.querySelector('.tree-child-leaves');
+            let parent = (e.target || e.currentTarget).parentNode;
+            let data = JSON.parse(parent.getAttribute('data-item'));
+            let leaves = parent.parentNode.querySelector('.tree-child-leaves');
             if (leaves) {
               if (leaves.classList.contains('hidden')) {
                 self.expand(parent, leaves);
@@ -402,7 +382,7 @@
 
         render(this);
 
-        var self = this;
+        let self = this;
         setTimeout(function () {
           emit(self, 'init', {});
         });
@@ -414,16 +394,15 @@
        * @param {DOMElement} leaves The leaves wrapper element
        */
       TreeView.prototype.expand = function (node, leaves, skipEmit) {
-        var self = this;
-        var expando = node.querySelector('.tree-expando');
+        let expando = node.querySelector('.tree-expando');
         expando.textContent = '-';
-        var icon = node.querySelector('.tree-icon');
+        let icon = node.querySelector('.tree-icon');
         icon.textContent = 'folder_open';
         leaves.classList.remove('hidden');
         if (skipEmit) {
           return;
         }
-        var data = JSON.parse(node.getAttribute('data-item'));
+        let data = JSON.parse(node.getAttribute('data-item'));
 
         emit(this, 'expand', {
           target: node,
@@ -433,13 +412,13 @@
       };
 
       TreeView.prototype.expandAllNodeChildren = function (nodeId) {
-        var self = this;
-        var el = self.rootElementDom.querySelector('#tree-leaf-' + nodeId);
+        let self = this;
+        let el = self.rootElementDom.querySelector('#tree-leaf-' + nodeId);
         if (el) {
-          var nodes = el.querySelectorAll('.tree-expando');
+          let nodes = el.querySelectorAll('.tree-expando');
           forEach(nodes, function (node) {
-            var parent = node.parentNode;
-            var leaves = parent.parentNode.querySelector('.tree-child-leaves');
+            let parent = node.parentNode;
+            let leaves = parent.parentNode.querySelector('.tree-child-leaves');
             if (parent && leaves && parent.hasAttribute('data-item')) {
               self.expand(parent, leaves, true);
             }
@@ -449,13 +428,13 @@
       };
 
       TreeView.prototype.expandAll = function () {
-        var self = this;
-        var el = self.rootElementDom.querySelector('#' + self.node);
+        let self = this;
+        let el = self.rootElementDom.querySelector('#' + self.node);
         if (el) {
-          var nodes = el.querySelectorAll('.tree-expando');
+          let nodes = el.querySelectorAll('.tree-expando');
           forEach(nodes, function (node) {
-            var parent = node.parentNode;
-            var leaves = parent.parentNode.querySelector('.tree-child-leaves');
+            let parent = node.parentNode;
+            let leaves = parent.parentNode.querySelector('.tree-child-leaves');
             if (parent && leaves && parent.hasAttribute('data-item')) {
               self.expand(parent, leaves, true);
             }
@@ -465,10 +444,10 @@
       };
 
       TreeView.prototype.selectNextNode = function (id, keyCode) {
-        var self = this;
-        var elts = [];
-        var nodeId;
-        var domId = self.rootElementDom.querySelector('#' + id);
+        let self = this;
+        let elts = [];
+        let nodeId;
+        let domId = self.rootElementDom.querySelector('#' + id);
         if (domId) {
           Array.from(domId.getElementsByClassName('tree-leaf')).forEach(
             function (element) {
@@ -477,7 +456,7 @@
               }
             },
           );
-          var currentDomIndex = elts.indexOf(
+          let currentDomIndex = elts.indexOf(
             'tree-leaf-' + self.getSelectedNodeId(),
           );
           if (keyCode === 40) {
@@ -495,18 +474,18 @@
       };
 
       TreeView.prototype.scrollToNode = function (nodeId) {
-        var self = this;
-        var el = self.rootElementDom.querySelector('#tree-leaf-' + nodeId);
+        let self = this;
+        let el = self.rootElementDom.querySelector('#tree-leaf-' + nodeId);
         scrollIntoView(el.parentNode);
       };
 
       TreeView.prototype.selectNode = function (nodeId, propagateEvent = true) {
-        var self = this;
-        var el = self.rootElementDom.querySelector('#' + self.node);
+        let self = this;
+        let el = self.rootElementDom.querySelector('#' + self.node);
         if (el) {
-          var nodes = el.querySelectorAll('.tree-leaf-text');
+          let nodes = el.querySelectorAll('.tree-leaf-text');
           if (nodes) {
-            var currentNode;
+            let currentNode;
             forEach(nodes, function (node) {
               if (node.id === nodeId.toString()) {
                 currentNode = node;
@@ -520,7 +499,7 @@
             } else {
               // Select node without click propagation
               forEach(nodes, function (node) {
-                var parent = node.parentNode;
+                let parent = node.parentNode;
                 parent.classList.remove('selected');
               });
               if (currentNode && currentNode.parentNode) {
@@ -536,25 +515,25 @@
       };
 
       TreeView.prototype.selectNodes = function (nodesToSelect) {
-        var self = this;
+        let self = this;
 
         setTimeout(function () {
           // When we make multiple nodes,
           // we must override simple select node selection with a timeout
 
-          var el = self.rootElementDom.querySelector('#' + self.node);
+          let el = self.rootElementDom.querySelector('#' + self.node);
           if (el && nodesToSelect) {
-            var nodes = el.querySelectorAll('.tree-leaf-text');
+            let nodes = el.querySelectorAll('.tree-leaf-text');
             if (nodes) {
               forEach(nodes, function (node) {
-                var parent = node.parentNode;
+                let parent = node.parentNode;
                 parent.classList.remove('selected');
               });
 
-              for (var i = 0; i < nodesToSelect.length; i++) {
-                var currentNodeToSelect = nodesToSelect[i];
+              for (let i = 0; i < nodesToSelect.length; i++) {
+                let currentNodeToSelect = nodesToSelect[i];
 
-                var currentNode;
+                let currentNode;
                 forEach(nodes, function (node) {
                   if (
                     node.id === currentNodeToSelect.nodeId &&
@@ -581,12 +560,12 @@
       };
 
       TreeView.prototype.getSelectedNodeId = function () {
-        var self = this;
+        let self = this;
         return self.currentSelectedNodeId;
       };
 
       TreeView.prototype.getSelectedNodeName = function () {
-        var self = this;
+        let self = this;
         return self.currentSelectedNodeId;
       };
 
@@ -595,12 +574,12 @@
         state,
         propagateEvent = true,
       ) {
-        var self = this;
-        var el = self.rootElementDom.querySelector('#' + self.node);
+        let self = this;
+        let el = self.rootElementDom.querySelector('#' + self.node);
         if (el) {
-          var nodes = el.querySelectorAll('.tree-expando');
+          let nodes = el.querySelectorAll('.tree-expando');
           if (nodes) {
-            var currentNode;
+            let currentNode;
             forEach(nodes, function (node) {
               if (node.id === 'tree-expando-' + nodeId.toString()) {
                 currentNode = node;
@@ -624,15 +603,15 @@
        * @param {DOMElement} leaves The leaves wrapper element
        */
       TreeView.prototype.collapse = function (node, leaves, skipEmit) {
-        var expando = node.querySelector('.tree-expando');
+        let expando = node.querySelector('.tree-expando');
         expando.textContent = '+';
-        var icon = node.querySelector('.tree-icon');
+        let icon = node.querySelector('.tree-icon');
         icon.textContent = 'folder';
         leaves.classList.add('hidden');
         if (skipEmit) {
           return;
         }
-        var data = JSON.parse(node.getAttribute('data-item'));
+        let data = JSON.parse(node.getAttribute('data-item'));
 
         emit(this, 'collapse', {
           target: node,
@@ -644,13 +623,13 @@
       /**
        */
       TreeView.prototype.collapseAll = function () {
-        var self = this;
-        var nodes = self.rootElementDom
+        let self = this;
+        let nodes = self.rootElementDom
           .querySelector('#' + self.node)
           .querySelectorAll('.tree-expando');
         forEach(nodes, function (node) {
-          var parent = node.parentNode;
-          var leaves = parent.parentNode.querySelector('.tree-child-leaves');
+          let parent = node.parentNode;
+          let leaves = parent.parentNode.querySelector('.tree-child-leaves');
           if (parent && leaves && parent.hasAttribute('data-item')) {
             self.collapse(parent, leaves, true);
           }
@@ -684,7 +663,7 @@
        * @param {function} callback The function to deattach
        */
       TreeView.prototype.off = function (name, callback) {
-        var index,
+        let index,
           found = false;
         if (this.handlers[name] instanceof Array) {
           this.handlers[name].forEach(function (handle, i) {

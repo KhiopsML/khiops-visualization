@@ -1,7 +1,6 @@
 import { ConfigService } from './config.service';
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import _ from 'lodash';
 import { UtilsService } from './utils.service';
 
 @Injectable({
