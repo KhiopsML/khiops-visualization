@@ -1,6 +1,5 @@
 import {
   Component,
-  OnInit,
   Output,
   EventEmitter,
   ChangeDetectionStrategy,
@@ -14,13 +13,11 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./btn-fullscreen.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BtnFullscreenComponent implements OnInit {
+export class BtnFullscreenComponent {
   isFullscreen: boolean;
   @Output() toggleFullscreen: EventEmitter<boolean> = new EventEmitter();
 
   constructor(public translate: TranslateService) {}
-
-  ngOnInit() {}
 
   clickFullscreen() {
     this.isFullscreen = !this.isFullscreen;

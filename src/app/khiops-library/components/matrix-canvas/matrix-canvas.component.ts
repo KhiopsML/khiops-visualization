@@ -12,7 +12,6 @@ import {
 } from '@angular/core';
 import { SelectableService } from '../selectable/selectable.service';
 import { SelectableComponent } from '../selectable/selectable.component';
-import _ from 'lodash';
 import { KhiopsLibraryService } from '../../providers/khiops-library.service';
 // @ts-ignore
 import * as panzoom from 'pan-zoom';
@@ -41,7 +40,7 @@ export class MatrixCanvasComponent
 
   @Input() graphType: string;
   @Input() graphMode: MatrixModeI;
-  @Input() contrast?: number | undefined;
+  @Input() contrast: number | undefined;
   @Output() contrastChange: EventEmitter<number> = new EventEmitter();
 
   @Input() graphTargets: string[];
@@ -226,8 +225,7 @@ export class MatrixCanvasComponent
       // Draw matrix on change
       if (
         this.inputDatas &&
-        this.matrixDiv &&
-        this.matrixDiv.nativeElement
+        this.matrixDiv?.nativeElement
         // &&
         // (!changes.selectedNodes || !_.isEmpty(diff))
       ) {
@@ -246,7 +244,7 @@ export class MatrixCanvasComponent
   drawMatrix() {
     if (!this.isDrawing) {
       requestAnimationFrame(() => {
-        if (this.graphMode && this.inputDatas && this.inputDatas.variable) {
+        if (this.graphMode && this.inputDatas?.variable) {
           this.isDrawing = true;
           // const t2 = performance.now();
 
@@ -308,9 +306,6 @@ export class MatrixCanvasComponent
                   }
                   if (this.graphMode.mode === 'HELLINGER') {
                     // For KC purpose
-                    [minValH, maxValH] = UtilsService.getMinAndMaxFromArray(
-                      this.matrixValues,
-                    );
                     [minValH, maxValH] = UtilsService.averageMinAndMaxValues(
                       minVal,
                       maxVal,
@@ -329,7 +324,7 @@ export class MatrixCanvasComponent
                   this.legend.min = minVal;
                   this.legend.max = maxVal;
                 }
-                if (this.legend.min! > 0) {
+                if (this.legend.min > 0) {
                   this.legend.min = 0;
                 }
 
@@ -396,7 +391,7 @@ export class MatrixCanvasComponent
                     type: this.graphMode.mode,
                     value: currentVal,
                     ef: this.matrixExpectedFreqsValues[index],
-                    extra: (this.matrixExtras && this.matrixExtras[index]) || 0,
+                    extra: this.matrixExtras?.[index] || 0,
                   };
                   cellDatas.displayedFreqValue = this.matrixFreqsValues[index];
 
@@ -726,7 +721,6 @@ export class MatrixCanvasComponent
         deltaY =
           (this.currentMouseY - this.lastScrollPosition.scrollTop) /
           previousZoom;
-      } else {
       }
 
       deltaX = deltaX + 10; // 10 for scrollbars

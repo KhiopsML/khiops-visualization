@@ -3,7 +3,6 @@ import {
   Input,
   EventEmitter,
   Output,
-  OnInit,
   AfterViewInit,
   OnChanges,
   SimpleChanges,
@@ -23,7 +22,7 @@ import { ChartDatasetVO } from '@khiops-library/model/chartDataset-vo';
   templateUrl: './chart-next.component.html',
   styleUrls: ['./chart-next.component.scss'],
 })
-export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
+export class ChartNextComponent implements AfterViewInit, OnChanges {
   @Input() canvasIdContainer = 'kl-chart-canvas'; // May be updated if multiple graph
   @Input() inputDatas: ChartDatasVO;
   @Input() activeEntries: number;
@@ -60,8 +59,6 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
         : 'rgba(0, 0, 0, 1)';
     this.colorSet = this.khiopsLibraryService.getGraphColorSet()[0];
   }
-
-  ngOnInit() {}
 
   ngAfterViewInit(): void {
     this.initChart();
@@ -107,14 +104,14 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
           tooltip: {
             callbacks: {
               title: (items: any) => {
-                if (items && items[0]) {
+                if (items?.[0]) {
                   return items[0].label;
                 }
               },
               label: (items: any) => {
-                if (items && items[0]) {
+                if (items?.[0]) {
                   return items[0].dataset.label;
-                } else if (items && items.dataset) {
+                } else if (items?.dataset) {
                   return items.dataset.label;
                 }
               },
@@ -206,11 +203,11 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
       this.chart.update();
     }
 
-    if (changes.inputDatas && changes.inputDatas.currentValue) {
+    if (changes.inputDatas?.currentValue) {
       this.updateGraph();
     }
 
-    if (changes.chartOptions && changes.chartOptions.currentValue) {
+    if (changes.chartOptions?.currentValue) {
       // We must reconstruct the chart if the scale change
       this.initChart();
     }
@@ -223,11 +220,7 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
       this.updateGraph();
     }
 
-    if (
-      changes.scaleValue &&
-      changes.scaleValue.currentValue &&
-      !changes.scaleValue.firstChange
-    ) {
+    if (changes.scaleValue?.currentValue && !changes.scaleValue.firstChange) {
       this.updateGraph();
     }
   }

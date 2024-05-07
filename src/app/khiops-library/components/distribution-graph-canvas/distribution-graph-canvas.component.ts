@@ -78,7 +78,7 @@ export class DistributionGraphCanvasComponent
         tooltip: {
           callbacks: {
             label: (items: any) => {
-              if (items && items.dataset) {
+              if (items?.dataset) {
                 if (
                   !this.hideGraphOptions &&
                   this.graphOptions &&
@@ -88,13 +88,10 @@ export class DistributionGraphCanvasComponent
                     items.dataset.extra[items.dataIndex].extra.coverageValue,
                   );
                 } else if (
-                  !this.hideGraphOptions &&
-                  this.graphOptions.selected === TYPES.FREQUENCY
+                  (!this.hideGraphOptions &&
+                    this.graphOptions.selected === TYPES.FREQUENCY) ||
+                  this.graphOptions.selected === HistogramType.YLOG
                 ) {
-                  return this.toPrecision.transform(
-                    items.dataset.extra[items.dataIndex].extra.value,
-                  );
-                } else if (this.graphOptions.selected === HistogramType.YLOG) {
                   return this.toPrecision.transform(
                     items.dataset.extra[items.dataIndex].extra.value,
                   );
@@ -107,7 +104,7 @@ export class DistributionGraphCanvasComponent
               return undefined;
             },
             afterLabel: (items: any) => {
-              if (items && items.dataset) {
+              if (items?.dataset) {
                 if (
                   !this.hideGraphOptions &&
                   this.graphOptions &&
@@ -142,8 +139,8 @@ export class DistributionGraphCanvasComponent
               ) {
                 // Frequency log mode
                 if (
-                  value.toString().charAt(0) === '0' ||
-                  value.toString().charAt(0) === '1'
+                  value.toString().startsWith('0') ||
+                  value.toString().startsWith('1')
                 ) {
                   return value.toLocaleString();
                 } else {
@@ -190,12 +187,12 @@ export class DistributionGraphCanvasComponent
         'DISTRIBUTION_GRAPH_OPTION',
       type,
     );
-    this.chartOptions.scales!.y!.max = undefined;
-    this.chartOptions.scales!.y!.min = undefined;
+    this.chartOptions.scales.y.max = undefined;
+    this.chartOptions.scales.y.min = undefined;
 
     this.graphOptions.selected = type;
     this.graphTypeChanged.emit(type);
-    this.chartOptions.scales!.y!.type = TYPES.LINEAR;
+    this.chartOptions.scales.y.type = TYPES.LINEAR;
     const minValue = Math.min(...this.inputDatas.datasets[0].data);
 
     if (minValue > 0) {

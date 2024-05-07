@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 import html2canvas from 'html2canvas';
 import { saveAs } from 'file-saver';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -14,7 +14,7 @@ import { ConfigService } from '@khiops-library/providers/config.service';
   templateUrl: './header-tools.component.html',
   styleUrls: ['./header-tools.component.scss'],
 })
-export class HeaderToolsComponent implements OnInit {
+export class HeaderToolsComponent {
   @Input() appVersion: string;
   @Input() showMenu = true;
   isCopyingImage = false;
@@ -43,8 +43,6 @@ export class HeaderToolsComponent implements OnInit {
       }),
     );
   }
-
-  ngOnInit() {}
 
   copyDatas() {
     // this.trackerService.trackEvent('click', 'copy_datas', 'text');
@@ -105,7 +103,7 @@ export class HeaderToolsComponent implements OnInit {
                   .onCopyImage(canvas.toDataURL('image/jpeg'));
               }
 
-              if (this.eltsToHide && this.eltsToHide[0]) {
+              if (this.eltsToHide?.[0]) {
                 for (let i = 0; i < this.eltsToHide.length; i++) {
                   this.eltsToHide[i].style.display = 'flex';
                 }
@@ -179,7 +177,7 @@ export class HeaderToolsComponent implements OnInit {
 
     // Hide useless header informations for screenshots
     this.eltsToHide = elt.getElementsByClassName('screenshot-hide');
-    if (this.eltsToHide && this.eltsToHide[0]) {
+    if (this.eltsToHide?.[0]) {
       for (let i = 0; i < this.eltsToHide.length; i++) {
         this.eltsToHide[i].style.display = 'none';
       }
