@@ -73,7 +73,9 @@ export class ClusterDetailsComponent implements OnInit, OnChanges {
         headerName: this.translate.instant('GLOBAL.HIERARCHICAL_LEVEL'),
         field: 'hierarchicalLevel',
         show: false,
-        tooltip: this.translate.instant('TOOLTIPS.AXIS.CURRENT_CLUSTERS.LEVEL'),
+        tooltip: this.translate.instant(
+          'TOOLTIPS.AXIS.CURRENT_CLUSTERS.HIERARCHICAL_LEVEL',
+        ),
       },
       {
         headerName: this.translate.instant('GLOBAL.RANK'),

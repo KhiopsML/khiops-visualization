@@ -432,7 +432,6 @@
 				"FATHER": "Father cluster of the current cluster",
 				"FREQUENCY": "Number of items belonging to the current cluster",
 				"INTEREST": "The “Interest” of a cluster is a value between 0 and 1: clusters with a interest close to 1 are the most informative",
-				"HIERARCHICAL_RANK": "",
 				"LEVEL": "",
 				"RANK": "The column “Rank” provides the ordering of the clusters in the hierarchy view."
 			},
