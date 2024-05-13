@@ -24,6 +24,7 @@ import { TreePreparationDatasVO } from '@khiops-visualization/model/tree-prepara
 import { TreePreparationVariableVO } from '@khiops-visualization/model/tree-preparation-variable-vo';
 import { TrackerService } from '@khiops-library/providers/tracker.service';
 import { TranslateService } from '@ngx-translate/core';
+import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 
 @Component({
   selector: 'app-tree-preparation-view',
@@ -37,7 +38,7 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
   appVariableGraphDetails: VariableGraphDetailsComponent;
   appDatas: any;
   sizes: any;
-
+  preparationSource: string = 'treePreparationReport';
   summaryDatas: InfosDatasI[];
   informationsDatas: InfosDatasI[];
   targetVariableStatsDatas: ChartDatasVO;
@@ -94,6 +95,7 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
   ];
 
   constructor(
+    private preparationDatasService: PreparationDatasService,
     private treePreparationDatasService: TreePreparationDatasService,
     private dialog: MatDialog,
     private translate: TranslateService,
@@ -111,14 +113,23 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
     this.appDatas = this.appService.getDatas().datas;
     this.treePreparationDatas = this.treePreparationDatasService.getDatas();
     this.sizes = this.appService.getViewSplitSizes('treePreparationView');
-    this.summaryDatas = this.treePreparationDatasService.getSummaryDatas();
-    this.informationsDatas =
-      this.treePreparationDatasService.getInformationsDatas();
+    this.summaryDatas = this.preparationDatasService.getSummaryDatas(
+      this.preparationSource,
+    );
+    this.informationsDatas = this.preparationDatasService.getInformationsDatas(
+      this.preparationSource,
+    );
     this.targetVariableStatsDatas =
-      this.treePreparationDatasService.getTargetVariableStatsDatas();
+      this.preparationDatasService.getTargetVariableStatsDatas(
+        this.preparationSource,
+      );
     this.targetVariableStatsInformations =
-      this.treePreparationDatasService.getTargetVariableStatsInformations();
-    this.variablesDatas = this.treePreparationDatasService.getVariablesDatas();
+      this.preparationDatasService.getTargetVariableStatsInformations(
+        this.preparationSource,
+      );
+    this.variablesDatas = this.preparationDatasService.getVariablesDatas(
+      this.preparationSource,
+    );
     this.treePreparationDatasService.getCurrentIntervalDatas();
     this.distributionDatas = this.distributionDatasService.getDatas();
   }

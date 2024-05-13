@@ -202,10 +202,10 @@ export class ModelingDatasService {
             preparationSource,
           );
         if (!currentVarDetails) {
-          currentVarDetails =
-            this.treePreparationDatasService.getVariableFromName(
-              currentVar.name,
-            );
+          currentVarDetails = this.preparationDatasService.getVariableFromName(
+            currentVar.name,
+            'treePreparationReport',
+          );
         }
         if (!currentVarDetails) {
           currentVarDetails =

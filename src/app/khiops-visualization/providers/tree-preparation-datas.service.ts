@@ -2,21 +2,15 @@ import { Injectable } from '@angular/core';
 import _ from 'lodash'; // Important to import lodash in karma
 import { AppService } from './app.service';
 import { TranslateService } from '@ngx-translate/core';
-import { BarVO } from '../model/bar-vo';
 import { UtilsService } from '@khiops-library/providers/utils.service';
-import { VariableVO } from '../model/variable-vo';
 import { VariableDetailsVO } from '../model/variableDetails-vo';
-import { ChartDatasetVO } from '@khiops-library/model/chartDataset-vo';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
-import { SummaryVO } from '../model/summary-vo';
-import { InformationsVO } from '../model/informations-vo';
 import { TreePreparationVariableVO } from '../model/tree-preparation-variable-vo';
 import { TreeNodeVO } from '../model/tree-node-vo';
 import { TreePreparationDatasVO } from '../model/tree-preparation-datas-vo';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { TYPES } from '@khiops-library/enum/types';
-import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
-import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
+import { PreparationDatasService } from './preparation-datas.service';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +19,7 @@ export class TreePreparationDatasService {
   treePreparationDatas: TreePreparationDatasVO | undefined;
 
   constructor(
+    private preparationDatasService: PreparationDatasService,
     private translate: TranslateService,
     private khiopsLibraryService: KhiopsLibraryService,
     private appService: AppService,
@@ -42,7 +37,10 @@ export class TreePreparationDatasService {
       // Check if there is a saved selected variable into json
       const savedSelectedRank = this.appService.getSavedDatas('selectedRank');
       if (savedSelectedRank) {
-        defaultVariable = this.getVariableFromRank(savedSelectedRank);
+        defaultVariable = this.preparationDatasService.getVariableFromRank(
+          savedSelectedRank,
+          'treePreparationReport',
+        );
       }
 
       this.setSelectedVariable(defaultVariable);
@@ -97,7 +95,10 @@ export class TreePreparationDatasService {
     object: TreePreparationVariableVO,
   ): TreePreparationVariableVO | undefined {
     if (this.treePreparationDatas && object) {
-      const variable = this.getVariableFromName(object.name);
+      const variable = this.preparationDatasService.getVariableFromName(
+        object.name,
+        'treePreparationReport',
+      );
       if (variable) {
         // Init datas
         this.treePreparationDatas.selectedNodes = undefined;
@@ -178,17 +179,6 @@ export class TreePreparationDatasService {
     return this.treePreparationDatas.selectedVariable.rank;
   }
 
-  getVariableFromName(name: string): any {
-    let variable: any;
-    const appDatas = this.appService.getDatas().datas;
-    if (appDatas?.treePreparationReport?.variablesStatistics) {
-      variable = appDatas.treePreparationReport.variablesStatistics.find(
-        (e) => e.name === name,
-      );
-    }
-    return variable;
-  }
-
   getNodeFromName(name: string): TreeNodeVO | undefined {
     let node: TreeNodeVO | undefined;
     if (this.treePreparationDatas?.selectedFlattenTree) {
@@ -197,29 +187,6 @@ export class TreePreparationDatasService {
       );
     }
     return node;
-  }
-
-  getVariableFromRank(rank: string): any {
-    let variable: any;
-    const appDatas = this.appService.getDatas().datas;
-    variable = appDatas.treePreparationReport.variablesStatistics.find(
-      (e) => e.rank === rank,
-    );
-    return variable;
-  }
-
-  getSummaryDatas(): InfosDatasI[] {
-    const appDatas = this.appService.getDatas().datas;
-    const summaryVO = new SummaryVO(appDatas.treePreparationReport.summary);
-    return summaryVO.displayDatas;
-  }
-
-  getInformationsDatas(): InfosDatasI[] | undefined {
-    const appDatas = this.appService.getDatas().datas;
-    const informationsDatas = new InformationsVO(
-      appDatas.treePreparationReport.summary,
-    );
-    return informationsDatas.displayDatas;
   }
 
   getCurrentIntervalDatas(index?: number): GridDatasI {
@@ -372,87 +339,6 @@ export class TreePreparationDatasService {
     }
 
     return this.treePreparationDatas.currentIntervalDatas;
-  }
-
-  getVariablesDatas(): VariableVO[] {
-    const appDatas = this.appService.getDatas().datas;
-    const currentDatas = appDatas.treePreparationReport.variablesStatistics;
-    const currentDetailedDatas =
-      appDatas.treePreparationReport.variablesDetailedStatistics;
-    const variableDatas: VariableVO[] = [];
-
-    if (currentDatas && currentDetailedDatas) {
-      for (let i = 0; i < currentDatas.length; i++) {
-        const varItem: VariableVO = new VariableVO(
-          currentDatas[i],
-          currentDetailedDatas[currentDatas[i].rank],
-        );
-        variableDatas.push(varItem);
-      }
-    }
-    return variableDatas;
-  }
-
-  getTargetVariableStatsDatas(): ChartDatasVO | undefined {
-    let variableStatsDatas: ChartDatasVO | undefined = new ChartDatasVO();
-
-    const appDatas = this.appService.getDatas().datas;
-    if (appDatas?.treePreparationReport?.summary) {
-      variableStatsDatas.emptyLabels();
-      const currentDatas = appDatas.treePreparationReport.summary.targetValues;
-
-      if (currentDatas) {
-        for (let i = 0; i < currentDatas.values.length; i++) {
-          const currentDataSet = new ChartDatasetVO();
-
-          const graphItem: BarVO = new BarVO();
-          graphItem.name = currentDatas.values[i];
-          graphItem.value =
-            (currentDatas.frequencies[i] * 100) /
-            UtilsService.arraySum(currentDatas.frequencies) /
-            100;
-          graphItem.extra.value = currentDatas.frequencies[i];
-          graphItem.extra.percent =
-            (currentDatas.frequencies[i] * 100) /
-            UtilsService.arraySum(currentDatas.frequencies);
-
-          currentDataSet.label = graphItem.name;
-          currentDataSet.data.push(graphItem.value);
-          currentDataSet.extra.push(graphItem);
-          variableStatsDatas.datasets.push(currentDataSet);
-        }
-      }
-      if (variableStatsDatas.datasets.length === 0) {
-        variableStatsDatas = undefined;
-      }
-    }
-    return variableStatsDatas;
-  }
-
-  getTargetVariableStatsInformations(): InfosDatasI[] | undefined {
-    const appDatas = this.appService.getDatas().datas;
-    let informationsDatas: InfosDatasI[] | undefined;
-    if (appDatas.treePreparationReport.summary.targetDescriptiveStats) {
-      informationsDatas = [];
-      for (const item in appDatas.treePreparationReport.summary
-        .targetDescriptiveStats) {
-        if (item) {
-          informationsDatas.push({
-            title: item,
-            value:
-              appDatas.treePreparationReport.summary.targetDescriptiveStats[
-                item
-              ],
-          });
-        }
-      }
-    }
-    return informationsDatas;
-  }
-
-  getTargetVariable(): string {
-    const appDatas = this.appService.getDatas().datas;
-    return appDatas.treePreparationReport.summary.targetVariable;
   }
 
   setSelectedNodes(nodes: string[], trustedNodeSelection?: string) {

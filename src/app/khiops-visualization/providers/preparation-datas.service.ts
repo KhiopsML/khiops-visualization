@@ -123,9 +123,11 @@ export class PreparationDatasService {
     return variable;
   }
 
-  getSummaryDatas(): InfosDatasI[] {
+  getSummaryDatas(preparationSource?: string): InfosDatasI[] {
     const appDatas = this.appService.getDatas().datas;
-    const preparationSource = this.getAvailablePreparationReport();
+    if (!preparationSource) {
+      preparationSource = this.getAvailablePreparationReport();
+    }
     const summaryVO = new SummaryVO(appDatas[preparationSource].summary);
     return summaryVO.displayDatas;
   }
@@ -307,9 +309,11 @@ export class PreparationDatasService {
     return variableDatas;
   }
 
-  getTargetVariableStatsDatas(): ChartDatasVO {
+  getTargetVariableStatsDatas(preparationSource?: string): ChartDatasVO {
     let variableStatsDatas = new ChartDatasVO();
-    const preparationSource = this.getAvailablePreparationReport();
+    if (!preparationSource) {
+      preparationSource = this.getAvailablePreparationReport();
+    }
 
     const appDatas = this.appService.getDatas().datas;
     if (appDatas?.[preparationSource]?.summary) {
@@ -344,9 +348,13 @@ export class PreparationDatasService {
     return variableStatsDatas;
   }
 
-  getTargetVariableStatsInformations(): InfosDatasI[] | undefined {
+  getTargetVariableStatsInformations(
+    preparationSource?: string,
+  ): InfosDatasI[] | undefined {
     const appDatas = this.appService.getDatas().datas;
-    const preparationSource = this.getAvailablePreparationReport();
+    if (!preparationSource) {
+      preparationSource = this.getAvailablePreparationReport();
+    }
 
     let informationsDatas: InfosDatasI[] | undefined;
     if (appDatas[preparationSource].summary.targetDescriptiveStats) {
