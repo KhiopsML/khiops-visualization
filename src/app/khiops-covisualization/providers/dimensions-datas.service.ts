@@ -495,18 +495,13 @@ export class DimensionsDatasService {
       MatrixUtilsDatasService.getStandardAxisValues(xDimension, yDimension);
 
     // To display axis names
-    this.dimensionsDatas.matrixDatas.variable = {
-      nameX: this.dimensionsDatas.selectedDimensions[0].name,
-      nameY: this.dimensionsDatas.selectedDimensions[1].name,
-      xParts: this.dimensionsDatas.selectedDimensions[0].parts,
-      yParts: this.dimensionsDatas.selectedDimensions[1].parts,
-    };
-    this.dimensionsDatas.allMatrixDatas.variable = {
-      nameX: this.dimensionsDatas.selectedDimensions[0].name,
-      nameY: this.dimensionsDatas.selectedDimensions[1].name,
-      xParts: this.dimensionsDatas.selectedDimensions[0].parts,
-      yParts: this.dimensionsDatas.selectedDimensions[1].parts,
-    };
+    this.dimensionsDatas.allMatrixDatas.variable =
+      this.dimensionsDatas.matrixDatas.variable = {
+        nameX: this.dimensionsDatas.selectedDimensions[0].name,
+        nameY: this.dimensionsDatas.selectedDimensions[1].name,
+        xParts: this.dimensionsDatas.selectedDimensions[0].parts,
+        yParts: this.dimensionsDatas.selectedDimensions[1].parts,
+      };
 
     // Compute cells
     const cellDatas = MatrixUtilsDatasService.getCellDatas(

@@ -411,22 +411,6 @@
         });
       };
 
-      TreeView.prototype.expandAllNodeChildren = function (nodeId) {
-        let self = this;
-        let el = self.rootElementDom.querySelector('#tree-leaf-' + nodeId);
-        if (el) {
-          let nodes = el.querySelectorAll('.tree-expando');
-          forEach(nodes, function (node) {
-            let parent = node.parentNode;
-            let leaves = parent.parentNode.querySelector('.tree-child-leaves');
-            if (parent && leaves && parent.hasAttribute('data-item')) {
-              self.expand(parent, leaves, true);
-            }
-          });
-          emit(this, 'expandAllNodeChildren', {});
-        }
-      };
-
       TreeView.prototype.expandAll = function () {
         let self = this;
         let el = self.rootElementDom.querySelector('#' + self.node);
