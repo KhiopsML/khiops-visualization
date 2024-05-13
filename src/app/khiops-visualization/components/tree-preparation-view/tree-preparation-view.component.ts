@@ -58,31 +58,38 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
     {
       headerName: this.translate.instant('GLOBAL.RANK'),
       field: 'rank',
+      tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.RANK'),
     },
     {
       headerName: this.translate.instant('GLOBAL.NAME'),
       field: 'name',
+      tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.NAME'),
     },
     {
       headerName: this.translate.instant('GLOBAL.LEVEL'),
       field: 'level',
+      tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.LEVEL'),
     },
     {
       headerName: this.translate.instant('GLOBAL.PARTS'),
       field: 'parts',
+      tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.PARTS'),
     },
     {
       headerName: this.translate.instant('GLOBAL.VALUES'),
       field: 'values',
+      tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.VALUES'),
     },
     {
       headerName: this.translate.instant('GLOBAL.TYPE'),
       field: 'type',
+      tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.TYPE'),
     },
     {
       headerName: this.translate.instant('GLOBAL.MODE'),
       field: 'mode',
       show: false,
+      tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.MODE'),
     },
   ];
 
