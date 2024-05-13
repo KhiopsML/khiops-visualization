@@ -65,6 +65,7 @@ import { BtnFullscreenComponent } from './components/btn-fullscreen/btn-fullscre
 import { MarkedOptionsFactory } from './factory/markdown.factory';
 import { MatrixToggleComponent } from './components/matrix-toggle/matrix-toggle.component';
 import { MatrixModeComponent } from './components/matrix-mode/matrix-mode.component';
+import { GraphOptionsMenuComponent } from './components/graph-options-menu/graph-options-menu.component';
 
 @NgModule({
   imports: [
@@ -113,6 +114,7 @@ import { MatrixModeComponent } from './components/matrix-mode/matrix-mode.compon
     CellStatsComponent,
     WatchResizeComponent,
     SelectableComponent,
+    GraphOptionsMenuComponent,
     FileLoaderComponent,
     ReleaseNotesComponent,
     ConfirmDialogComponent,
@@ -192,6 +194,7 @@ import { MatrixModeComponent } from './components/matrix-mode/matrix-mode.compon
     AgGridComponent,
     MatrixTooltipComponent,
     MatrixToggleComponent,
+    GraphOptionsMenuComponent,
     MatrixModeComponent,
     CheckboxCellComponent,
     IconCellComponent,

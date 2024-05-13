@@ -157,7 +157,6 @@ export class TargetDistributionGraphCanvasComponent
       type,
     );
 
-    this.graphOptions.selected = type;
     this.graphTypeChanged.emit(type);
   }
 

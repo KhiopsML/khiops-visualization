@@ -21,22 +21,10 @@
         fxLayout="row"
         *ngIf="!hideGraphOptions"
       >
-        <button
-          mat-stroked-button
-          color="primary"
-          [matMenuTriggerFor]="graphOptionsTypes"
-        >
-          {{ graphOptions.selected | translate }} <em>v</em>
-        </button>
-        <mat-menu #graphOptionsTypes>
-          <button
-            mat-menu-item
-            *ngFor="let opt of graphOptions.types"
-            (click)="changeGraphType(opt)"
-          >
-            {{ opt | translate }}
-          </button>
-        </mat-menu>
+        <kl-graph-options-menu
+          [graphOptions]="graphOptions"
+          (graphOptionsChange)="changeGraphType($event)"
+        ></kl-graph-options-menu>
       </div>
     </div>
     <kl-chart-next

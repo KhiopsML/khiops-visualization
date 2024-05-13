@@ -187,11 +187,10 @@ export class DistributionGraphCanvasComponent
         'DISTRIBUTION_GRAPH_OPTION',
       type,
     );
+    this.graphTypeChanged.emit(type);
+
     this.chartOptions.scales.y.max = undefined;
     this.chartOptions.scales.y.min = undefined;
-
-    this.graphOptions.selected = type;
-    this.graphTypeChanged.emit(type);
     this.chartOptions.scales.y.type = TYPES.LINEAR;
     const minValue = Math.min(...this.inputDatas.datasets[0].data);
 
