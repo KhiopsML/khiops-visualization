@@ -4,6 +4,4 @@ export class HierarchyDatasVO {
   totalCells: number = 0;
   selectedUnfoldHierarchy: number = 0;
   unfoldHierarchyState: number = 0;
-
-  constructor() {}
 }

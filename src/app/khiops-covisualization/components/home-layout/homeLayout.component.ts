@@ -127,13 +127,16 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 
     this.importedDatasChangedSub =
       this.eventsService.importedDatasChanged.subscribe((dimName) => {
-        if (dimName && dimName[0]) {
+        if (dimName?.[0]) {
           this.dimensionsDatasService.constructDimensionsTrees();
-          const dimIndex = this.dimensionsDatasService.getDimensionPositionFromName(
-            dimName[0],
-          );
+          const dimIndex =
+            this.dimensionsDatasService.getDimensionPositionFromName(
+              dimName[0],
+            );
           if (
-            this.dimensionsDatasService.dimensionsDatas.selectedDimensions[dimIndex]
+            this.dimensionsDatasService.dimensionsDatas.selectedDimensions[
+              dimIndex
+            ]
           ) {
             // Update selected nodes ext datas
             this.treenodesService.setSelectedNode(
@@ -265,12 +268,12 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     }
 
     // @ts-ignore
-    this.appProjectView && this.appProjectView.initialize();
+    this.appProjectView?.initialize();
 
     this.initializeServices();
 
     // @ts-ignore
-    this.appAxisView && this.appAxisView.initialize();
+    this.appAxisView?.initialize();
   }
 
   initializeServices() {
@@ -280,7 +283,8 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     this.treenodesService.initialize();
     this.importExtDatasService.initExtDatasFiles();
     this.openLoadExternalDataDialog();
-    this.isContextDimensions = this.dimensionsDatasService.isContextDimensions();
+    this.isContextDimensions =
+      this.dimensionsDatasService.isContextDimensions();
   }
 
   openLoadExternalDataDialog() {

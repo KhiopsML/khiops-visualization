@@ -4,7 +4,6 @@ import {
   MatDialog,
   MatDialogConfig,
 } from '@angular/material/dialog';
-import * as _ from 'lodash'; // Important to import lodash in karma
 import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
 import { TranslateService } from '@ngx-translate/core';
 import { FileVO } from '@khiops-library/model/file-vo';

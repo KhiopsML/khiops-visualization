@@ -93,7 +93,7 @@ export class VariableGraphDetailsComponent
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.selectedNode && changes.selectedNode.currentValue) {
+    if (changes?.selectedNode?.currentValue) {
       // get active entries index from name
       if (this.graphDetails) {
         this.activeEntries = this.graphDetails.labels.findIndex(
@@ -147,13 +147,11 @@ export class VariableGraphDetailsComponent
   getFilteredDistribution(dimensionsTree, force = false) {
     if (dimensionsTree && this.selectedNode) {
       if (this.prevSelectedNode !== this.selectedNode || force) {
-        if (this.position === 0) {
-        }
         this.graphDetails = this.clustersService.getDistributionDetailsFromNode(
           this.position,
         );
 
-        if (this.graphDetails && this.graphDetails.labels) {
+        if (this.graphDetails?.labels) {
           this.activeEntries = this.graphDetails.labels.findIndex(
             (e) => e === this.selectedNode.shortDescription,
           );

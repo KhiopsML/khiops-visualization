@@ -46,7 +46,7 @@ export class AnnotationComponent
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.selectedNode && changes.selectedNode.currentValue) {
+    if (changes?.selectedNode?.currentValue) {
       this.value = changes.selectedNode.currentValue.annotation;
       this.title = this.translate.instant('GLOBAL.ANNOTATION_OF', {
         name: changes.selectedNode.currentValue.shortDescription,

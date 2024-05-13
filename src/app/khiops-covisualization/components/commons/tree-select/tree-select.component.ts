@@ -8,7 +8,6 @@ import {
   AfterViewInit,
   Input,
 } from '@angular/core';
-import _ from 'lodash';
 import * as TreeView from '@khiops-library/libs/treeview/treeview';
 import { DimensionVO } from '@khiops-library/model/dimension-vo';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
@@ -88,8 +87,7 @@ export class TreeSelectComponent
 
   ngOnChanges(changes: SimpleChanges) {
     if (
-      changes.selectedDimension &&
-      changes.selectedDimension.currentValue &&
+      changes?.selectedDimension?.currentValue &&
       !changes.selectedDimension.firstChange
     ) {
       this.initTree(this.selectedNode);

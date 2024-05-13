@@ -71,10 +71,7 @@ export class AppComponent implements AfterViewInit {
       this.dialogRef.closeAll();
       this.ngzone.run(() => {
         const config = new MatDialogConfig();
-        const dialogRef: MatDialogRef<ReleaseNotesComponent> = this.dialog.open(
-          ReleaseNotesComponent,
-          config,
-        );
+        this.dialog.open(ReleaseNotesComponent, config);
       });
     };
     this.element.nativeElement.openChannelDialog = (cb) => {
@@ -131,8 +128,7 @@ export class AppComponent implements AfterViewInit {
           AppConfig.visualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR',
         ) || 'light';
       document.documentElement.setAttribute('data-color-scheme', themeColor);
-      this.configService.getConfig().onThemeChanged &&
-        this.configService.getConfig().onThemeChanged(themeColor);
+      this.configService?.getConfig()?.onThemeChanged?.(themeColor);
     });
   }
 }

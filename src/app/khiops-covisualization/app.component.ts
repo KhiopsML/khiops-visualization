@@ -185,8 +185,7 @@ export class AppComponent implements AfterViewInit {
           AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR',
         ) || 'light';
       document.documentElement.setAttribute('data-color-scheme', themeColor);
-      this.configService.getConfig().onThemeChanged &&
-        this.configService.getConfig().onThemeChanged(themeColor);
+      this.configService?.getConfig()?.onThemeChanged?.(themeColor);
     });
   }
 }

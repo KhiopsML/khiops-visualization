@@ -51,17 +51,23 @@ export class ClusterDetailsComponent implements OnInit, OnChanges {
         headerName: 'Father',
         field: 'father',
         show: false,
-        tooltip: this.translate.instant('TOOLTIPS.AXIS.CURRENT_CLUSTERS.FATHER'),
+        tooltip: this.translate.instant(
+          'TOOLTIPS.AXIS.CURRENT_CLUSTERS.FATHER',
+        ),
       },
       {
         headerName: 'Frequency',
         field: 'frequency',
-        tooltip: this.translate.instant('TOOLTIPS.AXIS.CURRENT_CLUSTERS.FREQUENCY'),
+        tooltip: this.translate.instant(
+          'TOOLTIPS.AXIS.CURRENT_CLUSTERS.FREQUENCY',
+        ),
       },
       {
         headerName: 'Interest',
         field: 'interest',
-        tooltip: this.translate.instant('TOOLTIPS.AXIS.CURRENT_CLUSTERS.INTEREST'),
+        tooltip: this.translate.instant(
+          'TOOLTIPS.AXIS.CURRENT_CLUSTERS.INTEREST',
+        ),
       },
       {
         headerName: 'Hierarchical Level',
@@ -93,7 +99,7 @@ export class ClusterDetailsComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     // Keep change listen on dimension combo change
-    if (changes.dimensionsTree && changes.dimensionsTree.currentValue) {
+    if (changes?.dimensionsTree?.currentValue) {
       this.filteredDimensionsClusters =
         this.clustersService.getFilteredDimensionTree(
           this.dimensionsTree,
@@ -101,7 +107,7 @@ export class ClusterDetailsComponent implements OnInit, OnChanges {
         );
       this.updateSelectedNode();
     }
-    if (changes.selectedNode && changes.selectedNode.currentValue) {
+    if (changes?.selectedNode?.currentValue) {
       this.updateSelectedNode();
     }
   }

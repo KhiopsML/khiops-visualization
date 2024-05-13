@@ -41,12 +41,12 @@ export class Preparation2dDatasVO {
   }
 
   isSupervisedVariable(): boolean {
-    const firstVar = Object.keys(
-      this.appDatas?.bivariatePreparationReport
-        ?.variablesPairsDetailedStatistics,
-    )?.[0];
-
-    return this.appDatas.bivariatePreparationReport
-      ?.variablesPairsDetailedStatistics?.[firstVar]?.dataGrid?.isSupervised;
+    return this.appDatas?.bivariatePreparationReport
+      ?.variablesPairsDetailedStatistics?.[
+      Object.keys(
+        this.appDatas?.bivariatePreparationReport
+          ?.variablesPairsDetailedStatistics,
+      )?.[0]
+    ]?.dataGrid?.isSupervised;
   }
 }

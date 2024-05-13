@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AppService } from '@khiops-covisualization/providers/app.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { ViewLayoutVO } from '@khiops-covisualization/model/view-layout-vo';
-import * as _ from 'lodash'; // Important to import lodash in karma
 import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
 
 @Component({
@@ -11,7 +10,7 @@ import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data
   templateUrl: './manage-views.component.html',
   styleUrls: ['./manage-views.component.scss'],
 })
-export class ManageViewsComponent implements OnInit {
+export class ManageViewsComponent {
   viewsLayout: ViewLayoutVO;
   dimensionsDatas: DimensionsDatasVO;
   isDimVisible: boolean[];
@@ -41,8 +40,6 @@ export class ManageViewsComponent implements OnInit {
       }
     }
   }
-
-  ngOnInit() {}
 
   onClickOnSave() {
     this.appService.saveViewsLayout(this.viewsLayout);

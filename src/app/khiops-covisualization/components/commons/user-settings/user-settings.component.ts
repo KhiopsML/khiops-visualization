@@ -31,7 +31,7 @@ export class UserSettingsComponent implements OnChanges {
   constructor(private trackerService: TrackerService) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.opened && changes.opened.currentValue) {
+    if (changes?.opened?.currentValue) {
       this.onNavDrawerOpen();
     }
   }

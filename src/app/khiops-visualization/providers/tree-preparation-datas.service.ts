@@ -143,12 +143,9 @@ export class TreePreparationDatasService {
   }
 
   computeNodesFreqsComparedToOthers() {
-    let treeLeafs: any =
-      this.treePreparationDatas &&
-      this.treePreparationDatas.selectedFlattenTree &&
-      this.treePreparationDatas.selectedFlattenTree.map(
-        (e) => e.targetValues && e.targetValues.frequencies,
-      );
+    let treeLeafs: any = this.treePreparationDatas?.selectedFlattenTree?.map(
+      (e) => e?.targetValues?.frequencies,
+    );
     if (treeLeafs) {
       treeLeafs = treeLeafs.filter(function (e) {
         return e !== undefined;
@@ -156,16 +153,16 @@ export class TreePreparationDatasService {
       treeLeafs = UtilsService.sumArrayItemsOfArray(treeLeafs);
       const [minVal, maxVal]: any =
         UtilsService.getMinAndMaxFromArray(treeLeafs);
-      this.treePreparationDatas!.maxFrequencies = maxVal;
-      this.treePreparationDatas!.minFrequencies = minVal;
+      this.treePreparationDatas.maxFrequencies = maxVal;
+      this.treePreparationDatas.minFrequencies = minVal;
     }
   }
 
   formatTreeNodesDatas(item: TreeNodeVO) {
     const color = this.treePreparationDatas?.treeColorsMap[item.nodeId];
-    item = new TreeNodeVO(item, this.treePreparationDatas!.classesCount, color);
+    item = new TreeNodeVO(item, this.treePreparationDatas?.classesCount, color);
 
-    if (item && item.children) {
+    if (item?.children) {
       for (let i = 0; i < item.children.length; i++) {
         item.children[i] = this.formatTreeNodesDatas(item.children[i]);
       }
@@ -174,7 +171,7 @@ export class TreePreparationDatasService {
   }
 
   getSelectedVariable(): TreePreparationVariableVO | undefined {
-    return this.treePreparationDatas!.selectedVariable;
+    return this.treePreparationDatas.selectedVariable;
   }
 
   getSelectedVariableRank(): string {
@@ -184,10 +181,7 @@ export class TreePreparationDatasService {
   getVariableFromName(name: string): any {
     let variable: any;
     const appDatas = this.appService.getDatas().datas;
-    if (
-      appDatas.treePreparationReport &&
-      appDatas.treePreparationReport.variablesStatistics
-    ) {
+    if (appDatas?.treePreparationReport?.variablesStatistics) {
       variable = appDatas.treePreparationReport.variablesStatistics.find(
         (e) => e.name === name,
       );
@@ -197,8 +191,8 @@ export class TreePreparationDatasService {
 
   getNodeFromName(name: string): TreeNodeVO | undefined {
     let node: TreeNodeVO | undefined;
-    if (this.treePreparationDatas!.selectedFlattenTree) {
-      node = this.treePreparationDatas!.selectedFlattenTree.find(
+    if (this.treePreparationDatas?.selectedFlattenTree) {
+      node = this.treePreparationDatas.selectedFlattenTree.find(
         (e) => e.nodeId === name,
       );
     }
@@ -236,7 +230,7 @@ export class TreePreparationDatasService {
     const displayedColumns: any[] = [];
 
     // init the object
-    this.treePreparationDatas!.currentIntervalDatas = {
+    this.treePreparationDatas.currentIntervalDatas = {
       title: title,
       values: datas,
       displayedColumns: displayedColumns,
@@ -246,10 +240,7 @@ export class TreePreparationDatasService {
       // otherwise it's a node selection
 
       const appDatas = this.appService.getDatas().datas;
-      if (
-        appDatas.treePreparationReport &&
-        appDatas.treePreparationReport.variablesDetailedStatistics
-      ) {
+      if (appDatas?.treePreparationReport?.variablesDetailedStatistics) {
         const currentVar =
           appDatas.treePreparationReport.variablesDetailedStatistics[
             this.treePreparationDatas.selectedVariable.rank
@@ -259,7 +250,7 @@ export class TreePreparationDatasService {
           this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_TABLE_SIZE,
         );
 
-        if (variableDetails && variableDetails.dataGrid) {
+        if (variableDetails?.dataGrid) {
           const currentVariableType =
             variableDetails.dataGrid.dimensions[0].type;
 
@@ -376,11 +367,11 @@ export class TreePreparationDatasService {
               ')';
           }
         }
-        this.treePreparationDatas!.currentIntervalDatas.title = title;
+        this.treePreparationDatas.currentIntervalDatas.title = title;
       }
     }
 
-    return this.treePreparationDatas!.currentIntervalDatas;
+    return this.treePreparationDatas.currentIntervalDatas;
   }
 
   getVariablesDatas(): VariableVO[] {
@@ -406,10 +397,7 @@ export class TreePreparationDatasService {
     let variableStatsDatas: ChartDatasVO | undefined = new ChartDatasVO();
 
     const appDatas = this.appService.getDatas().datas;
-    if (
-      appDatas.treePreparationReport &&
-      appDatas.treePreparationReport.summary
-    ) {
+    if (appDatas?.treePreparationReport?.summary) {
       variableStatsDatas.emptyLabels();
       const currentDatas = appDatas.treePreparationReport.summary.targetValues;
 
@@ -477,7 +465,7 @@ export class TreePreparationDatasService {
         // Define the trusted node selection to go to clicked node into hyper tree
         const treeNodeVo = new TreeNodeVO(
           nodeDatas,
-          this.treePreparationDatas!.classesCount,
+          this.treePreparationDatas.classesCount,
           color,
           nodeDatas.nodeId === trustedNodeSelection,
         );
@@ -491,21 +479,21 @@ export class TreePreparationDatasService {
     }
 
     const diff = UtilsService.deepDiff(
-      this.treePreparationDatas!.selectedNodes,
+      this.treePreparationDatas?.selectedNodes,
       selectedNodes,
     );
-    if (!this.treePreparationDatas!.selectedNodes || !_.isEmpty(diff)) {
+    if (!this.treePreparationDatas.selectedNodes || !_.isEmpty(diff)) {
       // clone it to emit onchange
-      this.treePreparationDatas!.selectedNodes = _.cloneDeep(selectedNodes);
+      this.treePreparationDatas.selectedNodes = _.cloneDeep(selectedNodes);
     }
   }
 
   getSelectedNodes(): TreeNodeVO[] | undefined {
-    return this.treePreparationDatas!.selectedNodes;
+    return this.treePreparationDatas?.selectedNodes;
   }
 
   getSelectedNode(): TreeNodeVO | undefined {
-    return this.treePreparationDatas!.selectedNode;
+    return this.treePreparationDatas?.selectedNode;
   }
 
   setSelectedNode(node: TreeNodeVO, trustedNodeSelection: string | boolean) {
@@ -543,10 +531,7 @@ export class TreePreparationDatasService {
       displayedColumns: [],
     };
 
-    if (
-      this.treePreparationDatas?.selectedNodes &&
-      this.treePreparationDatas.selectedNodes[0]
-    ) {
+    if (this.treePreparationDatas?.selectedNodes?.[0]) {
       treeDetails.displayedColumns = [
         {
           headerName: 'Node Id',
@@ -568,7 +553,7 @@ export class TreePreparationDatasService {
         i++
       ) {
         const currentNode = this.treePreparationDatas?.selectedNodes[i];
-        if (currentNode && currentNode.isLeaf) {
+        if (currentNode?.isLeaf) {
           // it's a leaf
           const rowData: any = {
             _id: currentNode.nodeId,
@@ -596,10 +581,7 @@ export class TreePreparationDatasService {
       displayedColumns: [],
     };
 
-    if (
-      this.treePreparationDatas?.selectedNodes &&
-      this.treePreparationDatas?.selectedNodes[0]
-    ) {
+    if (this.treePreparationDatas?.selectedNodes?.[0]) {
       treeLeafRules.displayedColumns = [
         {
           headerName: 'Variable',
@@ -633,7 +615,7 @@ export class TreePreparationDatasService {
           let rule = rules[i];
           if (rule) {
             // Find index of the current node to get correct partition info
-            let currentChildrenId = rule.children[0] && rule.children[0].nodeId;
+            let currentChildrenId = rule?.children?.[0]?.nodeId;
             let partitionIndex = rule.childNodes.findIndex(
               (e: TreeNodeVO) => e.nodeId === currentChildrenId,
             );
@@ -655,7 +637,7 @@ export class TreePreparationDatasService {
               partition: '[' + displayedPartition + ']',
             };
 
-            treeLeafRules.values && treeLeafRules.values.push(rowData);
+            treeLeafRules?.values?.push(rowData);
           }
         }
       }

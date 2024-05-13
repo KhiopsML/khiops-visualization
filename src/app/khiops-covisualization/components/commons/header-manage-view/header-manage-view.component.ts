@@ -8,7 +8,6 @@ import {
 import { AppConfig } from 'src/environments/environment';
 import { UnfoldHierarchyComponent } from '../unfold-hierarchy/unfold-hierarchy.component';
 import { ManageViewsComponent } from '../manage-views/manage-views.component';
-import * as _ from 'lodash'; // Important to import lodash in karma
 import { ImportExtDatasListComponent } from '../import-ext-datas-list/import-ext-datas-list.component';
 import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
 

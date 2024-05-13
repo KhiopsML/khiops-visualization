@@ -320,10 +320,7 @@ export class ClustersService {
     const appinitialDatas = this.appService.getInitialDatas().datas;
     const compositionValues: CompositionVO[] = [];
 
-    if (
-      appDatas.coclusteringReport &&
-      appDatas.coclusteringReport.dimensionPartitions
-    ) {
+    if (appDatas?.coclusteringReport?.dimensionPartitions) {
       const currentDimensionDetails: DimensionVO =
         this.dimensionsDatas.selectedDimensions.find(
           (e) => e.name === hierarchyName,
@@ -347,7 +344,7 @@ export class ClustersService {
       currentInitialDimensionDetails.setPartition(dimensionPartition);
 
       // Composition only available for numerical Dimensions
-      if (currentDimensionDetails && currentDimensionDetails.isCategorical) {
+      if (currentDimensionDetails?.isCategorical) {
         node.getChildrenList();
 
         if (node.childrenLeafList) {

@@ -27,8 +27,7 @@ export class CompositionVO {
     this.typicality = object.valueTypicalities[index];
     this.frequency = object.valueFrequencies[index];
 
-    this.externalData =
-      (externalDatas && externalDatas[this.value]) || undefined;
+    this.externalData = externalDatas?.[this.value] || undefined;
 
     // Get rank and name if it has been changed from dimensionHierarchies array
     this.rank = currentDimensionHierarchyCluster.rank;

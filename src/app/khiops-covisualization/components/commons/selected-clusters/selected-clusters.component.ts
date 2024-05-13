@@ -5,7 +5,6 @@ import { DimensionsDatasService } from '@khiops-covisualization/providers/dimens
 import { EventsService } from '@khiops-covisualization/providers/events.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ClustersService } from '@khiops-covisualization/providers/clusters.service';
-import * as _ from 'lodash'; // Important to import lodash in karma
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { Subscription } from 'rxjs';
 

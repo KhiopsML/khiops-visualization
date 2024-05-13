@@ -88,18 +88,13 @@ export class AppService {
   }
 
   getSavedDatas(type): any {
-    if (
-      this.appDatas &&
-      this.appDatas.datas &&
-      this.appDatas.datas.savedDatas &&
-      this.appDatas.datas.savedDatas[type] !== undefined
-    ) {
+    if (this.appDatas?.datas?.savedDatas?.[type] !== undefined) {
       return this.appDatas.datas.savedDatas[type];
     }
   }
 
   setSavedDatas(datas: any) {
-    if (datas && datas.savedDatas) {
+    if (datas?.savedDatas) {
       if (datas.savedDatas.splitSizes) {
         this.setSplitSizes(datas.savedDatas.splitSizes);
       }
@@ -125,12 +120,7 @@ export class AppService {
   }
 
   isBigJsonFile(): boolean {
-    return (
-      this.appDatas &&
-      this.appDatas.datas &&
-      this.appDatas.datas.coclusteringReport &&
-      this.appDatas.datas.coclusteringReport.summary.cells > 10000
-    );
+    return this.appDatas?.datas?.coclusteringReport?.summary?.cells > 10000;
   }
 
   getViewSplitSizes(view) {

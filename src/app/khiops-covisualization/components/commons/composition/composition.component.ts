@@ -103,7 +103,7 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
             );
 
           this.compositionValues.forEach((composition: CompositionVO) => {
-            if (externalDatas && externalDatas[composition?.value]) {
+            if (externalDatas?.[composition?.value]) {
               composition.externalData = externalDatas[composition.value];
             }
           });

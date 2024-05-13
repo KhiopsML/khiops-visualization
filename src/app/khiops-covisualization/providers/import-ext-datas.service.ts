@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
-
-import _ from 'lodash';
 import { ExtDatasVO } from '@khiops-covisualization/model/ext-datas-vo';
 import { FileVO } from '@khiops-library/model/file-vo';
 import { AppService } from './app.service';
 import { TranslateService } from '@ngx-translate/core';
-import { ConfigService } from '@khiops-library/providers/config.service';
 import { ImportFileLoaderService } from '@khiops-library/components/import-file-loader/import-file-loader.service';
 
 @Injectable({
@@ -19,7 +16,6 @@ export class ImportExtDatasService {
     private translate: TranslateService,
     private importFileLoaderService: ImportFileLoaderService,
     private appService: AppService,
-    private configService: ConfigService,
   ) {
     this.importExtDatas = [];
     this.savedExternalDatas = {};
@@ -173,10 +169,7 @@ export class ImportExtDatasService {
   }
 
   getImportedDatasFromDimension(dimension) {
-    return (
-      this.savedExternalDatas &&
-      this.savedExternalDatas[dimension.name.toLowerCase()]
-    );
+    return this.savedExternalDatas?.[dimension?.name?.toLowerCase()];
   }
 
   getImportedDatas() {

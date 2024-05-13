@@ -66,8 +66,7 @@ export class TreenodesService {
   initSavedUnfoldRank() {
     //Initialize unfold rank if set into json
     const appDatas = this.appService.getDatas().datas;
-    const savedUnfoldRank =
-      appDatas.savedDatas && appDatas.savedDatas.unfoldHierarchyState;
+    const savedUnfoldRank = appDatas?.savedDatas?.unfoldHierarchyState;
     savedUnfoldRank && this.setSelectedUnfoldHierarchy(savedUnfoldRank);
   }
 
@@ -317,10 +316,7 @@ export class TreenodesService {
   getHierarchyDatas(): HierarchyDatasVO {
     const appDatas = this.appService.getInitialDatas().datas;
 
-    if (
-      appDatas.coclusteringReport &&
-      appDatas.coclusteringReport.dimensionSummaries
-    ) {
+    if (appDatas?.coclusteringReport?.dimensionSummaries) {
       this.dimensionsDatas.hierarchyDatas.totalClusters = 0;
       const l = appDatas.coclusteringReport.dimensionSummaries.length;
       this.dimensionsDatas.hierarchyDatas.minClusters = l;
@@ -335,7 +331,7 @@ export class TreenodesService {
           this.dimensionsDatas.hierarchyDatas.totalClusters;
       }
     }
-    if (appDatas.coclusteringReport && appDatas.coclusteringReport.summary) {
+    if (appDatas?.coclusteringReport?.summary) {
       // Get the total cell
       this.dimensionsDatas.hierarchyDatas.totalCells +=
         appDatas.coclusteringReport.summary.cells;
@@ -344,11 +340,7 @@ export class TreenodesService {
   }
 
   getUnfoldHierarchy(): number {
-    return (
-      (this.dimensionsDatas.hierarchyDatas &&
-        this.dimensionsDatas.hierarchyDatas.selectedUnfoldHierarchy) ||
-      0
-    );
+    return this.dimensionsDatas?.hierarchyDatas?.selectedUnfoldHierarchy || 0;
   }
 
   setSelectedUnfoldHierarchy(selectedUnfoldHierarchy: number) {
@@ -533,7 +525,7 @@ export class TreenodesService {
           // Get children list
           nodeDetails && nodeDetails.getChildrenList();
 
-          if (nodeDetails && nodeDetails.childrenList) {
+          if (nodeDetails?.childrenList) {
             nodeChildren = nodeDetails.childrenList;
             const nodeChildrenLength = nodeChildren.length;
             for (let j = nodeChildrenLength - 1; j >= 0; j--) {
@@ -620,7 +612,7 @@ export class TreenodesService {
       const nodeDetails: TreeNodeVO = this.dimensionsDatas.dimensionsClusters[
         dimIndex
       ].find((e) => e.cluster === nodeName);
-      if (nodeDetails && nodeDetails.childrenList) {
+      if (nodeDetails?.childrenList) {
         nodeChildren = nodeDetails.childrenList;
 
         let cancatValueGroup;
@@ -674,7 +666,7 @@ export class TreenodesService {
       const nodeDetails: TreeNodeVO = this.dimensionsDatas.dimensionsClusters[
         dimIndex
       ].find((e) => e.cluster === nodeName);
-      if (nodeDetails && nodeDetails.childrenList) {
+      if (nodeDetails?.childrenList) {
         nodeChildren = nodeDetails.childrenList;
         const nodeChildrenLength = nodeChildren.length;
         for (let j = 0; j < nodeChildrenLength; j++) {

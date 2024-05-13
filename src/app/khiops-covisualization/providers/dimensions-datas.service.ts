@@ -81,11 +81,7 @@ export class DimensionsDatasService {
 
   isContextDimensions(): boolean {
     const appDatas = this.appService.getDatas().datas;
-    return (
-      appDatas &&
-      appDatas.coclusteringReport &&
-      appDatas.coclusteringReport.summary.initialDimensions > 2
-    );
+    return appDatas?.coclusteringReport?.summary?.initialDimensions > 2;
   }
 
   isContextDimension(dimensionName): boolean {
@@ -133,10 +129,7 @@ export class DimensionsDatasService {
       this.dimensionsDatas.selectedDimensions.findIndex((e) => {
         return dimensionName === e.name;
       });
-    if (
-      this.dimensionsDatas.dimensionsTrees[currentIndex] &&
-      this.dimensionsDatas.dimensionsTrees[currentIndex][0]
-    ) {
+    if (this.dimensionsDatas?.dimensionsTrees?.[currentIndex]?.[0]) {
       const currentTreeNode: TreeNodeVO =
         this.dimensionsDatas.dimensionsTrees[currentIndex][0];
       count = this.getNodeIntervalsCount(currentTreeNode);
@@ -169,10 +162,7 @@ export class DimensionsDatasService {
         appDatas?.coclusteringReport?.cellPartIndexes;
 
       // Get dimension summaries
-      if (
-        appDatas.coclusteringReport &&
-        appDatas.coclusteringReport.dimensionSummaries
-      ) {
+      if (appDatas?.coclusteringReport?.dimensionSummaries) {
         const l = appDatas.coclusteringReport.dimensionSummaries.length;
         for (let i = 0; i < l; i++) {
           const dimension = new DimensionVO(
@@ -280,7 +270,7 @@ export class DimensionsDatasService {
     // At launch check if there are collapsed nodes into input json file
     const collapsedNodes = this.appService.getSavedDatas('collapsedNodes');
 
-    if (appinitialDatas && appinitialDatas.coclusteringReport) {
+    if (appinitialDatas?.coclusteringReport) {
       const selectedDimensionsLength =
         this.dimensionsDatas.selectedDimensions.length;
       for (let i = 0; i < selectedDimensionsLength; i++) {
@@ -302,11 +292,9 @@ export class DimensionsDatasService {
           let index = 0;
 
           const currentNodesNames =
-            this.dimensionsDatas.nodesNames &&
-            this.dimensionsDatas.nodesNames[dimensionHierarchy.name];
+            this.dimensionsDatas?.nodesNames?.[dimensionHierarchy?.name];
           const currentAnnotations =
-            this.dimensionsDatas.annotations &&
-            this.dimensionsDatas.annotations[dimensionHierarchy.name];
+            this.dimensionsDatas?.annotations?.[dimensionHierarchy?.name];
           const externalDatas: ExtDatasVO =
             this.importExtDatasService.getImportedDatasFromDimension(dimension);
 
@@ -317,7 +305,7 @@ export class DimensionsDatasService {
               leafPosition++;
             }
             const currentDimensionNodesToCollapse =
-              (collapsedNodes && collapsedNodes[dimension.name]) || [];
+              collapsedNodes?.[dimension?.name] || [];
 
             const currentObj: TreeNodeVO = new TreeNodeVO(
               index,
@@ -365,11 +353,11 @@ export class DimensionsDatasService {
           let index = 0;
 
           const currentNodesNames =
-            this.dimensionsDatas.nodesNames &&
-            this.dimensionsDatas.nodesNames[currentDimensionHierarchy.name];
+            this.dimensionsDatas?.nodesNames?.[currentDimensionHierarchy?.name];
           const currentAnnotations =
-            this.dimensionsDatas.annotations &&
-            this.dimensionsDatas.annotations[currentDimensionHierarchy.name];
+            this.dimensionsDatas?.annotations?.[
+              currentDimensionHierarchy?.name
+            ];
           const externalDatas: ExtDatasVO =
             this.importExtDatasService.getImportedDatasFromDimension(dimension);
 
@@ -458,10 +446,7 @@ export class DimensionsDatasService {
     // Get shortdescriptions if defined
     const xDimensionLeafsShortDescription = [...xDimensionLeafsNames];
     const yDimensionLeafsShortDescription = [...yDimensionLeafsNames];
-    if (
-      this.dimensionsDatas.nodesNames &&
-      this.dimensionsDatas.nodesNames[xDimension.name]
-    ) {
+    if (this.dimensionsDatas?.nodesNames?.[xDimension?.name]) {
       for (const [key, value] of Object.entries(
         this.dimensionsDatas.nodesNames[xDimension.name],
       )) {
@@ -469,10 +454,7 @@ export class DimensionsDatasService {
         xDimensionLeafsShortDescription.splice(index, 1, value);
       }
     }
-    if (
-      this.dimensionsDatas.nodesNames &&
-      this.dimensionsDatas.nodesNames[yDimension.name]
-    ) {
+    if (this.dimensionsDatas?.nodesNames?.[yDimension?.name]) {
       for (const [key, value] of Object.entries(
         this.dimensionsDatas.nodesNames[yDimension.name],
       )) {
