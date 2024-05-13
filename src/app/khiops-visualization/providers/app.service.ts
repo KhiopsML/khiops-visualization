@@ -167,18 +167,13 @@ export class AppService {
   }
 
   getSavedDatas(type): any {
-    if (
-      this.appDatas &&
-      this.appDatas.datas &&
-      this.appDatas.datas.savedDatas &&
-      this.appDatas.datas.savedDatas[type]
-    ) {
+    if (this.appDatas?.datas?.savedDatas?.[type]) {
       return this.appDatas.datas.savedDatas[type];
     }
   }
 
   setSavedDatas(datas: any) {
-    if (datas && datas.savedDatas) {
+    if (datas?.savedDatas) {
       if (datas.savedDatas.splitSizes) {
         this.setSplitSizes(datas.savedDatas.splitSizes);
       }
@@ -247,10 +242,7 @@ export class AppService {
       Object.keys(datas).forEach((value) => {
         // do not add optimal if not liftcurve (regression)
         if (
-          datas &&
-          datas[value] &&
-          datas[value].reportType &&
-          datas[value].reportType === 'Evaluation' &&
+          datas?.[value]?.reportType === 'Evaluation' &&
           datas[value].liftCurves
         ) {
           const isOptimalAdded: any = datas[value].predictorsPerformance.find(
@@ -285,7 +277,7 @@ export class AppService {
     datas: any,
     preparationSource: string,
   ): any {
-    if (datas && datas[preparationSource]) {
+    if (datas?.[preparationSource]) {
       for (const rank in datas[preparationSource].variablesDetailedStatistics) {
         const variable =
           datas[preparationSource].variablesDetailedStatistics[rank];

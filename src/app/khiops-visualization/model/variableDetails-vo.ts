@@ -24,8 +24,8 @@ export class VariableDetailsVO {
     this.isLimitedDatas = false;
     if (object) {
       const clone = _.cloneDeep(object);
-      this.dataGrid = (clone && clone.dataGrid) || undefined;
-      this.inputValues = (clone && clone.inputValues) || undefined;
+      this.dataGrid = clone?.dataGrid || undefined;
+      this.inputValues = clone?.inputValues || undefined;
 
       // Limit datas to 10000
       if (

@@ -56,13 +56,8 @@ export class TreePreparationDatasService {
   initSelectedNodes() {
     const appDatas = this.appService.getDatas().datas;
     const variablesDetailedStatistics =
-      appDatas &&
-      appDatas.treePreparationReport &&
-      appDatas.treePreparationReport.variablesDetailedStatistics;
-    if (
-      this.treePreparationDatas &&
-      this.treePreparationDatas.selectedVariable
-    ) {
+      appDatas?.treePreparationReport?.variablesDetailedStatistics;
+    if (this.treePreparationDatas?.selectedVariable) {
       const dimensions =
         variablesDetailedStatistics[
           this.treePreparationDatas.selectedVariable.rank
@@ -73,8 +68,8 @@ export class TreePreparationDatasService {
   }
 
   getFirstNodeLeaf(node: TreeNodeVO): TreeNodeVO | undefined {
-    if (node.children.length > 0 && node!.children[0]!.isLeaf === false) {
-      return this.getFirstNodeLeaf(node!.children[0]!);
+    if (node.children.length > 0 && node?.children?.[0]?.isLeaf === false) {
+      return this.getFirstNodeLeaf(node?.children?.[0]);
     } else {
       return node.children[0];
     }
@@ -83,9 +78,7 @@ export class TreePreparationDatasService {
   getNodesLinkedToOneNode(id: string) {
     const appDatas = this.appService.getDatas().datas;
     const variablesDetailedStatistics =
-      appDatas &&
-      appDatas.treePreparationReport &&
-      appDatas.treePreparationReport.variablesDetailedStatistics;
+      appDatas?.treePreparationReport?.variablesDetailedStatistics;
 
     const dimensions =
       variablesDetailedStatistics[
@@ -125,27 +118,21 @@ export class TreePreparationDatasService {
 
   setSelectedFlattenTree(rank: string) {
     const appDatas = this.appService.getDatas().datas;
-    const treeDatas =
-      appDatas &&
-      appDatas.treePreparationReport &&
-      appDatas.treePreparationReport.treeDetails;
-    if (treeDatas && treeDatas[rank] && treeDatas[rank].treeNodes) {
+    const treeDatas = appDatas?.treePreparationReport?.treeDetails;
+    if (treeDatas?.[rank]?.treeNodes) {
       const flattenTree = UtilsService.flattenTree(
         [],
         _.cloneDeep(treeDatas[rank].treeNodes),
       );
-      this.treePreparationDatas!.selectedFlattenTree = flattenTree;
+      this.treePreparationDatas.selectedFlattenTree = flattenTree;
     }
   }
 
   constructDimensionTree() {
     const appDatas = this.appService.getDatas().datas;
-    const treeDatas =
-      appDatas &&
-      appDatas.treePreparationReport &&
-      appDatas.treePreparationReport.treeDetails;
+    const treeDatas = appDatas?.treePreparationReport?.treeDetails;
     const currentRank = this.getSelectedVariableRank();
-    if (currentRank && treeDatas && treeDatas[currentRank]) {
+    if (currentRank && treeDatas?.[currentRank]) {
       this.treePreparationDatas.dimensionTree = _.cloneDeep([
         treeDatas[currentRank].treeNodes,
       ]);

@@ -36,38 +36,17 @@ export class Preparation2dDatasVO {
    * Check if current datas are valid
    */
   isValid(): boolean {
-    return (
-      this.appDatas &&
-      this.appDatas.bivariatePreparationReport &&
-      this.appDatas.bivariatePreparationReport.variablesPairsStatistics &&
-      this.appDatas.bivariatePreparationReport.variablesPairsStatistics[0]
-    );
+    return this.appDatas?.bivariatePreparationReport
+      ?.variablesPairsStatistics[0];
   }
 
   isSupervisedVariable(): boolean {
-    return (
-      this.appDatas &&
-      this.appDatas.bivariatePreparationReport &&
-      this.appDatas.bivariatePreparationReport
-        .variablesPairsDetailedStatistics &&
-      this.appDatas.bivariatePreparationReport.variablesPairsDetailedStatistics[
-        Object.keys(
-          this.appDatas.bivariatePreparationReport
-            .variablesPairsDetailedStatistics,
-        )[0]
-      ] &&
-      this.appDatas.bivariatePreparationReport.variablesPairsDetailedStatistics[
-        Object.keys(
-          this.appDatas.bivariatePreparationReport
-            .variablesPairsDetailedStatistics,
-        )[0]
-      ].dataGrid &&
-      this.appDatas.bivariatePreparationReport.variablesPairsDetailedStatistics[
-        Object.keys(
-          this.appDatas.bivariatePreparationReport
-            .variablesPairsDetailedStatistics,
-        )[0]
-      ].dataGrid.isSupervised
-    );
+    const firstVar = Object.keys(
+      this.appDatas?.bivariatePreparationReport
+        ?.variablesPairsDetailedStatistics,
+    )?.[0];
+
+    return this.appDatas.bivariatePreparationReport
+      ?.variablesPairsDetailedStatistics?.[firstVar]?.dataGrid?.isSupervised;
   }
 }

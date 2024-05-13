@@ -16,6 +16,4 @@ export class EvaluationDatasVO {
   confusionMatrix: GridDatasI | undefined = undefined;
   predictorEvaluations: GridDatasI | undefined = undefined;
   confusionMatrixType: string = TYPES.FREQUENCY;
-
-  constructor() {}
 }

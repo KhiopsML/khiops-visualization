@@ -26,12 +26,7 @@ export class TreePreparationDatasVO {
    * Check if current datas are valid
    */
   isValid(): boolean {
-    return (
-      this.appDatas &&
-      this.appDatas.treePreparationReport &&
-      this.appDatas.treePreparationReport.variablesStatistics &&
-      this.appDatas.treePreparationReport.variablesStatistics[0]
-    );
+    return this.appDatas?.treePreparationReport?.variablesStatistics?.[0];
   }
 
   /**

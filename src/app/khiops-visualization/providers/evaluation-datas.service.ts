@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AppService } from './app.service';
 import { TranslateService } from '@ngx-translate/core';
-import * as _ from 'lodash'; // Important to import lodash in karma
 import { AppConfig } from 'src/environments/environment';
 import { EvaluationTypeVO } from '../model/evaluation-type-vo';
 import { UtilsService } from '@khiops-library/providers/utils.service';
@@ -82,12 +81,7 @@ export class EvaluationDatasService {
     this.evaluationDatas.evaluationTypes = [];
 
     Object.keys(appDatas).forEach((value) => {
-      if (
-        appDatas &&
-        appDatas[value] &&
-        appDatas[value].reportType &&
-        appDatas[value].reportType === 'Evaluation'
-      ) {
+      if (appDatas?.[value]?.reportType === 'Evaluation') {
         this.evaluationDatas?.evaluationTypes?.push(appDatas[value]);
       }
     });
@@ -294,7 +288,9 @@ export class EvaluationDatasService {
         {
           headerName: 'Instances',
           field: 'instances',
-          tooltip: this.translate.instant('TOOLTIPS.EVALUATION.TYPES.INSTANCES'),
+          tooltip: this.translate.instant(
+            'TOOLTIPS.EVALUATION.TYPES.INSTANCES',
+          ),
         },
       ],
     };
@@ -551,7 +547,7 @@ export class EvaluationDatasService {
           (e) => e.targetValue === target,
         );
 
-        if (currentLiftCurve && currentLiftCurve.curves) {
+        if (currentLiftCurve?.curves) {
           for (let j = 0; j < currentLiftCurve.curves.length; j++) {
             const currentSerie: LiftCurveSerieI[] = [];
             for (let k = 0; k < xAxis.length; k = k + 1) {
@@ -620,8 +616,7 @@ export class EvaluationDatasService {
     }
 
     if (
-      currentEvalReport &&
-      currentEvalReport.predictorsDetailedPerformance &&
+      currentEvalReport?.predictorsDetailedPerformance &&
       currentEvalReport.liftCurves
     ) {
       targetLift = {
@@ -653,8 +648,7 @@ export class EvaluationDatasService {
       } else {
         // Check if mainTargetValue is set and is consistent
         const mainTargetValue: string =
-          currentEvalReport.summary &&
-          currentEvalReport.summary.mainTargetValue;
+          currentEvalReport?.summary?.mainTargetValue;
         const isConsistentTarget =
           mainTargetValue && targetLift.targets.indexOf(mainTargetValue) > -1;
         if (isConsistentTarget) {
@@ -672,17 +666,12 @@ export class EvaluationDatasService {
   isRegressionAnalysis(): boolean {
     const appDatas = this.appService.getDatas().datas;
     if (
-      appDatas &&
-      appDatas.trainEvaluationReport &&
-      appDatas.trainEvaluationReport.summary &&
-      appDatas.trainEvaluationReport.summary.learningTask === TASKS.REGRESSION
+      appDatas?.trainEvaluationReport?.summary?.learningTask ===
+      TASKS.REGRESSION
     ) {
       return true;
     } else if (
-      appDatas &&
-      appDatas.preparationReport &&
-      appDatas.preparationReport.summary &&
-      appDatas.preparationReport.summary.learningTask === TASKS.REGRESSION
+      appDatas?.preparationReport?.summary?.learningTask === TASKS.REGRESSION
     ) {
       return true;
     } else {

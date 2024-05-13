@@ -40,11 +40,7 @@ export class DistributionDatasVO {
    * Check if current datas are valid
    */
   isValid(): boolean {
-    return (
-      this.appDatas &&
-      this.appDatas[this.preparationSource] &&
-      this.appDatas[this.preparationSource].variablesDetailedStatistics
-    );
+    return this.appDatas?.[this.preparationSource]?.variablesDetailedStatistics;
   }
 
   initTreeNodeTargetDistributionGraphDatas() {

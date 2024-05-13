@@ -47,9 +47,7 @@ export class TreeNodeVO {
     this.children = object.childNodes || [];
     this.defaultGroupIndex = object.defaultGroupIndex || undefined;
     if (this.isLeaf) {
-      this.totalFreqs = UtilsService.arraySum(
-        this.targetValues && this.targetValues.frequencies,
-      );
+      this.totalFreqs = UtilsService.arraySum(this.targetValues?.frequencies);
     } else {
       this.deepGetChildrenModalityTargetValues(this.childNodes);
     }

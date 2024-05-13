@@ -47,13 +47,12 @@ export class Distribution2dDatasService {
     const preparation2dDatas = this.preparation2dDatasService.getDatas();
     const variablesDetails: VariableDetailsVO | undefined =
       this.preparation2dDatasService.getVariableDetails(
-        preparation2dDatas.selectedVariable &&
-          preparation2dDatas.selectedVariable.rank,
+        preparation2dDatas?.selectedVariable?.rank,
       );
 
     this.distributionDatas.targetDistributionGraphDatas.labels = [''];
 
-    if (variablesDetails && variablesDetails.dataGrid.cellTargetFrequencies) {
+    if (variablesDetails?.dataGrid?.cellTargetFrequencies) {
       const computedCellTargetFreqs =
         MatrixUtilsDatasService.getCellFrequencies(
           [selectedVariable?.parts1, selectedVariable?.parts2],

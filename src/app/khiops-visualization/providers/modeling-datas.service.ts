@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AppService } from './app.service';
 import { TranslateService } from '@ngx-translate/core';
-import * as _ from 'lodash'; // Important to import lodash in karma
 import { PreparationDatasService } from './preparation-datas.service';
 import { ModelingPredictorVO } from '../model/modeling-predictor-vo';
 import { SummaryVO } from '../model/summary-vo';
@@ -78,11 +77,7 @@ export class ModelingDatasService {
 
   initSelectedVariable() {
     const appDatas = this.appService.getDatas().datas;
-    if (
-      appDatas &&
-      appDatas.modelingReport &&
-      appDatas.modelingReport.trainedPredictorsDetails
-    ) {
+    if (appDatas?.modelingReport?.trainedPredictorsDetails) {
       const variables = appDatas.modelingReport.trainedPredictorsDetails;
       const key = Object.keys(variables)[0];
       if (key) {
@@ -104,11 +99,7 @@ export class ModelingDatasService {
     let variable: any;
     const appDatas = this.appService.getDatas().datas;
 
-    if (
-      appDatas &&
-      appDatas.modelingReport &&
-      appDatas.modelingReport.trainedPredictorsDetails
-    ) {
+    if (appDatas?.modelingReport?.trainedPredictorsDetails) {
       Object.keys(appDatas.modelingReport.trainedPredictorsDetails).forEach(
         function (key) {
           variable = appDatas.modelingReport.trainedPredictorsDetails[
@@ -149,7 +140,7 @@ export class ModelingDatasService {
     const appDatas = this.appService.getDatas().datas;
     const preparationSource =
       this.preparationDatasService.getAvailablePreparationReport();
-    if (appDatas[preparationSource] && appDatas[preparationSource].summary) {
+    if (appDatas?.[preparationSource]?.summary) {
       summaryDatas = new SummaryVO(appDatas[preparationSource].summary);
       return summaryDatas.displayDatas;
     } else {
@@ -178,17 +169,16 @@ export class ModelingDatasService {
   }
 
   getSelectedPredictor(): ModelingPredictorVO | undefined {
-    return this.modelingDatas!.selectedPredictor;
+    return this.modelingDatas?.selectedPredictor;
   }
 
   getTrainedPredictorListDatas(): TrainedPredictorVO[] | undefined {
     const appDatas = this.appService.getDatas().datas;
     const selectedPredictor = this.getSelectedPredictor();
     if (
-      selectedPredictor &&
-      selectedPredictor.rank &&
-      appDatas.modelingReport.trainedPredictorsDetails &&
-      appDatas.modelingReport.trainedPredictorsDetails[selectedPredictor.rank]
+      appDatas?.modelingReport?.trainedPredictorsDetails?.[
+        selectedPredictor?.rank
+      ]
     ) {
       const currentDatas =
         appDatas.modelingReport.trainedPredictorsDetails[selectedPredictor.rank]

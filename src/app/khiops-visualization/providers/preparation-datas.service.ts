@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import * as _ from 'lodash'; // Important to import lodash in karma
 import { AppService } from './app.service';
 import { TranslateService } from '@ngx-translate/core';
 import { BarVO } from '../model/bar-vo';
@@ -38,12 +37,7 @@ export class PreparationDatasService {
     const appDatas = this.appService.getDatas().datas;
 
     // select the first item of the list by default
-    if (
-      appDatas &&
-      appDatas.preparationReport &&
-      appDatas.preparationReport.variablesStatistics &&
-      appDatas.preparationReport.variablesStatistics[0]
-    ) {
+    if (appDatas?.preparationReport?.variablesStatistics?.[0]) {
       let defaultVariable = appDatas.preparationReport.variablesStatistics[0];
 
       // Check if there is a saved selected variable into json
@@ -58,12 +52,7 @@ export class PreparationDatasService {
       this.setSelectedVariable(defaultVariable, REPORTS.PREPARATION_REPORT);
     }
     // select the first item of the list by default
-    if (
-      appDatas &&
-      appDatas.textPreparationReport &&
-      appDatas.textPreparationReport.variablesStatistics &&
-      appDatas.textPreparationReport.variablesStatistics[0]
-    ) {
+    if (appDatas?.textPreparationReport?.variablesStatistics?.[0]) {
       let defaultVariable =
         appDatas.textPreparationReport.variablesStatistics[0];
 
@@ -116,10 +105,7 @@ export class PreparationDatasService {
   getVariableFromName(name: string, preparationSource: string): any {
     let variable: any;
     const appDatas = this.appService.getDatas().datas;
-    if (
-      appDatas[preparationSource] &&
-      appDatas[preparationSource].variablesStatistics
-    ) {
+    if (appDatas?.[preparationSource]?.variablesStatistics) {
       variable = appDatas[preparationSource].variablesStatistics.find(
         (e) => e.name === name,
       );
@@ -167,10 +153,7 @@ export class PreparationDatasService {
     };
 
     const appDatas = this.appService.getDatas().datas;
-    if (
-      appDatas[preparationSource] &&
-      appDatas[preparationSource].variablesDetailedStatistics
-    ) {
+    if (appDatas?.[preparationSource]?.variablesDetailedStatistics) {
       const currentVar =
         appDatas[preparationSource].variablesDetailedStatistics[
           this.preparationDatas[preparationSource].selectedVariable.rank
@@ -180,7 +163,7 @@ export class PreparationDatasService {
         this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_TABLE_SIZE,
       );
 
-      if (variableDetails && variableDetails.dataGrid) {
+      if (variableDetails?.dataGrid) {
         const currentVariableType = variableDetails.dataGrid.dimensions[0].type;
 
         if (currentVariableType === TYPES.NUMERICAL) {
@@ -316,7 +299,7 @@ export class PreparationDatasService {
       for (let i = 0; i < currentDatas.length; i++) {
         const varItem: VariableVO = new VariableVO(
           currentDatas[i],
-          currentDetailedDatas && currentDetailedDatas[currentDatas[i].rank],
+          currentDetailedDatas?.[currentDatas?.[i]?.rank],
         );
         variableDatas.push(varItem);
       }
@@ -329,7 +312,7 @@ export class PreparationDatasService {
     const preparationSource = this.getAvailablePreparationReport();
 
     const appDatas = this.appService.getDatas().datas;
-    if (appDatas[preparationSource] && appDatas[preparationSource].summary) {
+    if (appDatas?.[preparationSource]?.summary) {
       variableStatsDatas.emptyLabels();
       const currentDatas = appDatas[preparationSource].summary.targetValues;
 
@@ -391,16 +374,14 @@ export class PreparationDatasService {
     const preparationSource = this.getAvailablePreparationReport();
     const appDatas = this.appService.getDatas().datas;
     if (
-      appDatas &&
-      appDatas[preparationSource] &&
-      appDatas[preparationSource].variablesDetailedStatistics &&
+      appDatas?.[preparationSource]?.variablesDetailedStatistics &&
       !appDatas.bivariatePreparationReport
     ) {
       const detailedVar =
         appDatas[preparationSource].variablesDetailedStatistics[
           this.preparationDatas[preparationSource].selectedVariable.rank
         ];
-      if (detailedVar && detailedVar.dataGrid) {
+      if (detailedVar?.dataGrid) {
         const detailedVarTypes = detailedVar.dataGrid.dimensions.map(
           (e) => e.partitionType,
         );
@@ -424,24 +405,15 @@ export class PreparationDatasService {
   isSupervised(): boolean {
     const preparationSource = this.getAvailablePreparationReport();
     const appDatas = this.appService.getDatas().datas;
-    if (
-      appDatas &&
-      appDatas[preparationSource] &&
-      appDatas[preparationSource].variablesDetailedStatistics
-    ) {
+    if (appDatas?.[preparationSource]?.variablesDetailedStatistics) {
       const detailedVar =
         appDatas[preparationSource].variablesDetailedStatistics[
           this.preparationDatas[preparationSource].selectedVariable.rank
         ];
-      if (detailedVar && detailedVar.dataGrid) {
+      if (detailedVar?.dataGrid) {
         return detailedVar.dataGrid.isSupervised;
       }
-    } else if (
-      appDatas &&
-      appDatas[preparationSource] &&
-      appDatas[preparationSource].summary &&
-      appDatas[preparationSource].summary.learningTask
-    ) {
+    } else if (appDatas?.[preparationSource]?.summary?.learningTask) {
       // 	"Unsupervised analysis" : seul cas non supervisé (équivalent de isSupervised = False)
       //   "Regression analysis" : cas supervisé (équivalent de isSupervised = True)
       //   "Classification analysis" : (équivalent de isSupervised = True)
@@ -470,10 +442,7 @@ export class PreparationDatasService {
   getPreparationSourceFromVariable(variable): string {
     const appDatas = this.appService.getDatas().datas;
     // Find the current variable into preparationReport or textPreparationReport
-    if (
-      appDatas.preparationReport &&
-      appDatas.preparationReport.variablesStatistics
-    ) {
+    if (appDatas?.preparationReport?.variablesStatistics) {
       const isPreparationReport =
         appDatas.preparationReport.variablesStatistics.find(
           (e) => e.name === variable.name,

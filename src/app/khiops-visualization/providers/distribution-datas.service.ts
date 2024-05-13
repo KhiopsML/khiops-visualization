@@ -133,8 +133,7 @@ export class DistributionDatasService {
     if (
       this.distributionDatas.preparationSource &&
       selectedVariable &&
-      selectedNode &&
-      selectedNode.isLeaf
+      selectedNode?.isLeaf
     ) {
       const allTargetValues: string[] =
         appDatas.treePreparationReport.summary.targetValues.values;
@@ -235,7 +234,7 @@ export class DistributionDatasService {
             (e) => e.name === currentPartition,
           );
 
-          if (kObj && kObj.show) {
+          if (kObj?.show) {
             if (type === TYPES.PROBABILITIES) {
               currentValue = (el[k] * 100) / currentTotal;
             } else {
@@ -327,12 +326,9 @@ export class DistributionDatasService {
   getHistogramGraphDatas(selectedVariable): HistogramValuesI[] | undefined {
     const appDatas = this.appService.getDatas().datas;
     const varDatas =
-      appDatas.preparationReport.variablesDetailedStatistics[
-        selectedVariable.rank
-      ] &&
-      appDatas.preparationReport.variablesDetailedStatistics[
-        selectedVariable.rank
-      ].dataGrid;
+      appDatas?.preparationReport?.variablesDetailedStatistics?.[
+        selectedVariable?.rank
+      ]?.dataGrid;
     let histogramGraphDetails: HistogramValuesI[] | undefined = undefined;
 
     if (varDatas) {
@@ -387,8 +383,7 @@ export class DistributionDatasService {
           ', *';
       }
 
-      partition =
-        currentDimension.partition && currentDimension.partition.length;
+      partition = currentDimension?.partition?.length;
       const currentDataSet = new ChartDatasetVO(
         this.distributionDatas.distributionType,
       );
