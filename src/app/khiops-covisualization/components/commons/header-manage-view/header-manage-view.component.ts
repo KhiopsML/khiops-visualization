@@ -31,14 +31,7 @@ export class HeaderManageViewComponent {
     const config = new MatDialogConfig();
     config.width = AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.WIDTH;
     config.height = AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.HEIGHT;
-    const dialogRef: MatDialogRef<UnfoldHierarchyComponent> = this.dialog.open(
-      UnfoldHierarchyComponent,
-      config,
-    );
-    dialogRef
-      .afterClosed()
-      .toPromise()
-      .then(() => {});
+    this.dialog.open(UnfoldHierarchyComponent, config);
   }
 
   clickManageLayout() {
@@ -46,14 +39,7 @@ export class HeaderManageViewComponent {
     const config = new MatDialogConfig();
     config.width = AppConfig.covisualizationCommon.MANAGE_VIEWS.WIDTH;
     config.maxWidth = AppConfig.covisualizationCommon.MANAGE_VIEWS.MAX_WIDTH;
-    const dialogRef: MatDialogRef<ManageViewsComponent> = this.dialog.open(
-      ManageViewsComponent,
-      config,
-    );
-    dialogRef
-      .afterClosed()
-      .toPromise()
-      .then(() => {});
+    this.dialog.open(ManageViewsComponent, config);
   }
 
   clickImportExternalData() {
@@ -64,9 +50,5 @@ export class HeaderManageViewComponent {
     const dialogRef: MatDialogRef<ImportExtDatasListComponent> =
       this.dialog.open(ImportExtDatasListComponent, config);
     dialogRef.disableClose = true;
-    dialogRef
-      .afterClosed()
-      .toPromise()
-      .then(() => {});
   }
 }
