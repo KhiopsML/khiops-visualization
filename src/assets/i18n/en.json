@@ -350,13 +350,13 @@
     "TABS": {
       "PROJECT": "Project: list of output analysis files",
       "PREPARATION": "Preparation:  univariate data analysis on the train database",
-      "PREPARATION_2D": "Preparation 2d",
       "MODELING": "Modeling: description of SNB model",
       "EVALUATION": "Evaluation: evaluation of the predictors on databases (train, test and others)",
-      "TEXT_PREPARATION": "Text Preparation",
-      "TREE_PREPARATION": "Tree Preparation",
-      "AXIS": "Axis",
-      "CONTEXT": "Context"
+      "TEXT_PREPARATION": "",
+      "PREPARATION_2D": "",
+      "TREE_PREPARATION": "",
+      "AXIS": "",
+      "CONTEXT": ""
     },
     "COMMONS": {
       "LEVEL_DISTRIBUTION": "display the level distribution of the variables",
