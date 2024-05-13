@@ -1,5 +1,4 @@
 import { ViewChild, Component } from '@angular/core';
-import _ from 'lodash';
 import {
   MatDialog,
   MatDialogRef,
@@ -147,7 +146,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
 
   onSelectListItemChanged(item: any) {
     // Get var from name
-    if (item.name && item.name.includes('Tree_')) {
+    if (item.name?.includes('Tree_')) {
       this.preparationSource = REPORTS.TREE_PREPARATION_REPORT;
       this.preparationVariable =
         this.treePreparationDatasService.setSelectedVariable(item);
@@ -158,7 +157,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
     } else {
       this.preparationSource =
         this.preparationDatasService.getPreparationSourceFromVariable(item);
-      if (item.name && item.name.includes('`')) {
+      if (item.name?.includes('`')) {
         // Check the case of 2d variable : names are separated by `
         item.name1 = item.name.split('`')[0];
         item.name2 = item.name.split('`')[1];

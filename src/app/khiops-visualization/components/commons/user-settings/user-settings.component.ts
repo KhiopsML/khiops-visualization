@@ -38,7 +38,7 @@ export class UserSettingsComponent implements OnChanges {
   ) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.opened && changes.opened.currentValue) {
+    if (changes.opened?.currentValue) {
       this.onNavDrawerOpen();
     }
   }
@@ -117,10 +117,14 @@ export class UserSettingsComponent implements OnChanges {
 
   onClickOnClearDatas() {
     localStorage.clear();
-    this.snackBar.open(this.translate.instant('SNACKS.DATAS_DELETED'), undefined, {
-      duration: 2000,
-      panelClass: 'success',
-    });
+    this.snackBar.open(
+      this.translate.instant('SNACKS.DATAS_DELETED'),
+      undefined,
+      {
+        duration: 2000,
+        panelClass: 'success',
+      },
+    );
   }
 
   isThemeChecked(theme: string): boolean {

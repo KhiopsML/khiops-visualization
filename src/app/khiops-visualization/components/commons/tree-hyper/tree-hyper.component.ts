@@ -11,7 +11,6 @@ import {
   ViewChild,
   ElementRef,
 } from '@angular/core';
-import _ from 'lodash';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -98,22 +97,14 @@ export class TreeHyperComponent
 
   ngOnChanges(changes: SimpleChanges) {
     let userSelectedNode;
-    if (
-      changes.dimensionTree &&
-      changes.dimensionTree.currentValue &&
-      this.hyperTree
-    ) {
+    if (changes.dimensionTree?.currentValue && this.hyperTree) {
       this.initHyperTree();
     }
     if (!this.ht) return;
-    if (
-      changes.displayedValues &&
-      changes.displayedValues.currentValue &&
-      this.ht
-    ) {
+    if (changes.displayedValues?.currentValue && this.ht) {
       this.ht.api.updateNodesVisualization();
     }
-    if (changes.selectedNodes && changes.selectedNodes.previousValue) {
+    if (changes.selectedNodes?.previousValue) {
       // remove previous paths
       for (let i = 0; i < changes.selectedNodes.previousValue.length; i++) {
         const node = changes.selectedNodes.previousValue[i];
@@ -124,7 +115,7 @@ export class TreeHyperComponent
       }
     }
 
-    if (changes.selectedNodes && changes.selectedNodes.currentValue) {
+    if (changes.selectedNodes?.currentValue) {
       // draw new selection paths
       for (let i = 0; i < changes.selectedNodes.currentValue.length; i++) {
         const node = changes.selectedNodes.currentValue[i];
@@ -159,7 +150,7 @@ export class TreeHyperComponent
         //
       }
     }
-    if (changes.selectedNode && changes.selectedNode.currentValue) {
+    if (changes.selectedNode?.currentValue) {
       userSelectedNode = UtilsService.deepFind(
         this.ht.data,
         this.selectedNode.id,
@@ -208,7 +199,7 @@ export class TreeHyperComponent
   }
 
   initHyperTree(initView = true) {
-    if (this.dimensionTree && this.dimensionTree[0]) {
+    if (this.dimensionTree?.[0]) {
       this.options = {
         dataloader: (ok) => ok(this.dimensionTree[0]),
         langInitBFS: (ht, n) => (n.precalc.label = n.data.id),
@@ -321,7 +312,6 @@ export class TreeHyperComponent
       if (!nodesToSelect) {
         // it's a folder selection
         nodesToSelect = [trustedNodeSelection];
-      } else {
       }
       this.treePreparationDatasService.setSelectedNodes(
         nodesToSelect,

@@ -98,7 +98,7 @@ export class TargetLiftGraphComponent
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.selectedVariable && changes.selectedVariable.currentValue) {
+    if (changes?.selectedVariable?.currentValue) {
       this.getDatas();
     }
   }
@@ -111,8 +111,7 @@ export class TargetLiftGraphComponent
   }
 
   getDatas() {
-    const currentTarget =
-      (this.targetLift && this.targetLift.selected) || undefined;
+    const currentTarget = this.targetLift?.selected || undefined;
     this.targetLift = this.evaluationDatasService.getLiftTargets(currentTarget);
 
     const filteredValues = localStorage.getItem(

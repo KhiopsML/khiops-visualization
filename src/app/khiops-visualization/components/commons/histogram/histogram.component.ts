@@ -309,13 +309,13 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   addTooltip() {
     this.chartTooltip!.nativeElement.innerHTML = '';
     this.tooltip = d3
-      .select(this.chartTooltip!.nativeElement)
+      .select(this.chartTooltip?.nativeElement)
       .append('div')
       .attr('class', 'tooltip');
   }
 
   drawRect(d: HistogramValuesI, i: number, bars: HistogramBarVO[], ratio = 0) {
-    var self = this;
+    let self = this;
     const bar = bars[i];
 
     const isFirstInterval = i === 0;

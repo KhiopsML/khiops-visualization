@@ -89,7 +89,7 @@ export class TrackerService {
       s.parentNode.insertBefore(g, s);
       this.trackerScriptElement = g;
       this.trackerScriptElement.onload = () => {
-        cb && cb();
+        cb?.();
       };
     })();
   }

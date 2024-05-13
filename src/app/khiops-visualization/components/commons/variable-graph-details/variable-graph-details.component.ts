@@ -73,8 +73,8 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (
-      (changes.selectedVariable && changes.selectedVariable.currentValue) ||
-      (changes.displayedValues && changes.displayedValues.currentValue)
+      changes.selectedVariable?.currentValue ||
+      changes.displayedValues?.currentValue
     ) {
       this.isLoadingGraphDatas = true;
 

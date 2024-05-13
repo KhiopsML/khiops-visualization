@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
-import _ from 'lodash';
 import { deepEqual } from 'fast-equals';
 import { MatrixCanvasComponent } from '@khiops-library/components/matrix-canvas/matrix-canvas.component';
 import { AppService } from '@khiops-visualization/providers/app.service';
@@ -76,8 +75,7 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (
-      changes.selectedVariable &&
-      changes.selectedVariable.currentValue &&
+      changes?.selectedVariable?.currentValue &&
       !deepEqual(
         changes.selectedVariable.currentValue,
         changes.selectedVariable.previousValue,

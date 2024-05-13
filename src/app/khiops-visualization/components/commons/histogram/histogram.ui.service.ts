@@ -7,7 +7,7 @@ import { HistogramValuesI } from './histogram.interfaces';
   providedIn: 'root',
 })
 export class HistogramUIService {
-  static chartColors: string[] = ['#6e93d5', '#ffbe46'];
+  static readonly chartColors: string[] = ['#6e93d5', '#ffbe46'];
   static translate: TranslateService;
 
   constructor() {}

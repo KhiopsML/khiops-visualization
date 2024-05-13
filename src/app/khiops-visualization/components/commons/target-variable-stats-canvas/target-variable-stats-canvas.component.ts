@@ -57,13 +57,13 @@ export class TargetVariableStatsCanvasComponent
         tooltip: {
           callbacks: {
             label: (items: any) => {
-              if (items && items.dataset) {
+              if (items?.dataset) {
                 return items.dataset.label;
               }
               return undefined;
             },
             beforeLabel: (items: any) => {
-              if (items && items.dataset) {
+              if (items?.dataset) {
                 return (
                   this.toPrecision.transform(
                     items.dataset.extra[0].extra.percent,
@@ -73,7 +73,7 @@ export class TargetVariableStatsCanvasComponent
               return undefined;
             },
             afterLabel: (items: any) => {
-              if (items && items.dataset) {
+              if (items?.dataset) {
                 return this.toPrecision.transform(
                   items.dataset.extra[0].extra.value,
                 );
@@ -100,7 +100,7 @@ export class TargetVariableStatsCanvasComponent
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.inputDatas && changes.inputDatas.currentValue) {
+    if (changes?.inputDatas?.currentValue) {
       // Keep labels into displayedvalues to copy datas into clipboard
       this.displayedValues = [];
       Object.keys(this.inputDatas.datasets).map((key, i) => {

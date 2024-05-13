@@ -6,7 +6,6 @@ import {
   EventEmitter,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import _ from 'lodash';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { AppConfig } from 'src/environments/environment';
 

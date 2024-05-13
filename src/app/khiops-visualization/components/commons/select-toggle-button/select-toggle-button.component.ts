@@ -34,7 +34,7 @@ export class SelectToggleButtonComponent implements OnInit, OnChanges {
   constructor(private translate: TranslateService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.displayedValues && changes.displayedValues.currentValue) {
+    if (changes?.displayedValues?.currentValue) {
       // simulate page change if only one page
       this.onPageChange({
         pageIndex: 0,
@@ -90,7 +90,9 @@ export class SelectToggleButtonComponent implements OnInit, OnChanges {
     if (valuesShown === this.displayedValues.length) {
       this.isSelectAllChecked = true;
       this.isSelectAllIndeterminate = false;
-      this.selectAllCheckboxText = this.translate.instant('GLOBAL.UNSELECT_ALL');
+      this.selectAllCheckboxText = this.translate.instant(
+        'GLOBAL.UNSELECT_ALL',
+      );
     } else if (valuesHidden === this.displayedValues.length) {
       this.isSelectAllChecked = false;
       this.isSelectAllIndeterminate = false;
@@ -112,7 +114,9 @@ export class SelectToggleButtonComponent implements OnInit, OnChanges {
       this.toggleGraphOptionValue($event, opt);
     }
     if ($event.checked) {
-      this.selectAllCheckboxText = this.translate.instant('GLOBAL.UNSELECT_ALL');
+      this.selectAllCheckboxText = this.translate.instant(
+        'GLOBAL.UNSELECT_ALL',
+      );
     } else {
       this.selectAllCheckboxText = this.translate.instant('GLOBAL.SELECT_ALL');
     }

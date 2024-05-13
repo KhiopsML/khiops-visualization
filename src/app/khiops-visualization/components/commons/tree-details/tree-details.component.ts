@@ -5,7 +5,6 @@ import {
   SimpleChanges,
   Input,
 } from '@angular/core';
-import _ from 'lodash';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { TranslateService } from '@ngx-translate/core';
@@ -31,7 +30,7 @@ export class TreeDetailsComponent implements OnChanges {
   ) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.selectedNodes && changes.selectedNodes.currentValue) {
+    if (changes?.selectedNodes?.currentValue) {
       this.treeDetails = this.treePreparationDatasService.getTreeDetails();
     }
   }

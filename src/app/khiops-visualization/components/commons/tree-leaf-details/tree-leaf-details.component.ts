@@ -6,7 +6,6 @@ import {
   SimpleChanges,
   Input,
 } from '@angular/core';
-import _ from 'lodash';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -63,10 +62,10 @@ export class TreeLeafDetailsComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.selectedNode && changes.selectedNode.currentValue) {
+    if (changes.selectedNode?.currentValue) {
       this.updateComponentDatas();
     }
-    if (changes.displayedValues && changes.displayedValues.currentValue) {
+    if (changes.displayedValues?.currentValue) {
       this.updateComponentDatas();
     }
   }

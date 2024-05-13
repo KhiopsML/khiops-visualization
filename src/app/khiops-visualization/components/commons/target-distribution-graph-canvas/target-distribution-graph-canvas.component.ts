@@ -9,7 +9,6 @@ import {
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { ScrollableGraphCanvasComponent } from '@khiops-library/components/scrollable-graph-canvas/scrollable-graph-canvas.component';
-import _ from 'lodash';
 import { TranslateService } from '@ngx-translate/core';
 import { ToPrecisionPipe } from '@khiops-library/pipes/toPrecision.pipe';
 import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
@@ -97,7 +96,7 @@ export class TargetDistributionGraphCanvasComponent
         tooltip: {
           callbacks: {
             beforeLabel: (items: any) => {
-              if (items && items.dataset) {
+              if (items?.dataset) {
                 return this.toPrecision.transform(
                   items.dataset.extra[items.dataIndex].extra.value,
                 );
@@ -105,7 +104,7 @@ export class TargetDistributionGraphCanvasComponent
               return undefined;
             },
             afterLabel: (items: any) => {
-              if (items && items.dataset) {
+              if (items?.dataset) {
                 let value = this.toPrecision.transform(
                   items.dataset.data[items.dataIndex],
                 );
@@ -125,7 +124,8 @@ export class TargetDistributionGraphCanvasComponent
   ngOnInit() {
     this.graphIdContainer =
       'target-distribution-graph-canvas-comp-' + this.position;
-    this.title = this.title || this.translate.instant('GLOBAL.TARGET_DISTRIBUTION');
+    this.title =
+      this.title || this.translate.instant('GLOBAL.TARGET_DISTRIBUTION');
   }
 
   onResized(event: ResizedEvent) {
