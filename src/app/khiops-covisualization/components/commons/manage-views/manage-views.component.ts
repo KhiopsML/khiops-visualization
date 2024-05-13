@@ -3,6 +3,7 @@ import { AppService } from '@khiops-covisualization/providers/app.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { ViewLayoutVO } from '@khiops-covisualization/model/view-layout-vo';
+import * as _ from 'lodash'; // Important to import lodash in karma
 import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
 
 @Component({
