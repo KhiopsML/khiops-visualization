@@ -217,7 +217,7 @@
     "COPY_IMAGE": "Copy image (ctrl + C)",
     "CLIENT_VERSION": "Client application version",
     "VERSION": "Version",
-    "SELECTED_CLUSTERS": "Selected Clusters",
+    "SELECTED_CLUSTERS": "Selected clusters",
     "NAME": "Name",
     "SIZE": "Size",
     "FATHER": "Father",
