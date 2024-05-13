@@ -54,19 +54,21 @@ export class DistributionDatasService {
 
   computeModalityCounts(modality): ModalityCountsVO {
     const counts = new ModalityCountsVO();
-    const dimensionLength = modality[0].length;
-    for (let i = 0; i < modality.length; i++) {
-      for (let j = 0; j < dimensionLength; j++) {
-        if (!counts.series[j]) {
-          counts.series[j] = 0;
+    if (modality) {
+      const dimensionLength = modality[0].length;
+      for (let i = 0; i < modality.length; i++) {
+        for (let j = 0; j < dimensionLength; j++) {
+          if (!counts.series[j]) {
+            counts.series[j] = 0;
+          }
+          counts.series[j] = counts.series[j] + modality[i][j];
+          counts.total = counts.total + modality[i][j];
         }
-        counts.series[j] = counts.series[j] + modality[i][j];
-        counts.total = counts.total + modality[i][j];
       }
-    }
-    for (let k = 0; k < dimensionLength; k++) {
-      counts.totalProbability[k] =
-        counts.series[k] / counts.series.reduce((a, b) => a + b, 0);
+      for (let k = 0; k < dimensionLength; k++) {
+        counts.totalProbability[k] =
+          counts.series[k] / counts.series.reduce((a, b) => a + b, 0);
+      }
     }
 
     return counts;
@@ -158,7 +160,7 @@ export class DistributionDatasService {
         currentVar,
         this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_TABLE_SIZE,
       );
-      const currentDatas = variableDetails.dataGrid.partTargetFrequencies;
+      const currentDatas = variableDetails?.dataGrid?.partTargetFrequencies;
 
       //get selectednode index
       const currentXAxis = [selectedNode.nodeId];
