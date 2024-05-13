@@ -11,7 +11,15 @@ export class NoDataComponent {
 
   constructor(private translate: TranslateService) {}
 
+  ngOnInit() {
+    this.updateText();
+  }
+
   ngOnChanges(): void {
+    this.updateText();
+  }
+
+  updateText() {
     if (!this.message) {
       this.text = this.translate.instant('NO_DATAS.DEFAULT');
     } else {
