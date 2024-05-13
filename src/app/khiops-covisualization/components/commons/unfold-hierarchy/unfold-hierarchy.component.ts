@@ -95,19 +95,19 @@ export class UnfoldHierarchyComponent implements OnInit {
   ) {
     this.hierarchyDisplayedColumns = [
       {
-        headerName: 'Dimension',
+        headerName: this.translate.instant('GLOBAL.DIMENSION'),
         field: 'name',
       },
       {
-        headerName: 'Number of Cluster',
+        headerName: this.translate.instant('GLOBAL.NB_OF_CLUSTER'),
         field: 'currentHierarchyClusterCount',
       },
       {
-        headerName: 'Max Number of Cluster',
+        headerName: this.translate.instant('GLOBAL.MAX_NB_OF_CLUSTER'),
         field: 'initialParts',
       },
       {
-        headerName: 'FoldUnfold',
+        headerName: this.translate.instant('GLOBAL.FOLD_UNFOLD'),
         field: 'hierarchyFold',
         cellRendererFramework: CheckboxCellComponent,
       },
@@ -129,12 +129,10 @@ export class UnfoldHierarchyComponent implements OnInit {
     this.clustersPerDimDatasChartOptions.scales.y.title.text =
       this.translate.instant('GLOBAL.NB_OF_CLUSTERS_PER_DIM');
 
-    this.infoPerClusterChartOptions.scales.x.title.text = this.translate.instant(
-      'GLOBAL.TOTAL_NUMBER_OF_CLUSTERS',
-    );
-    this.infoPerClusterChartOptions.scales.y.title.text = this.translate.instant(
-      'GLOBAL.INFORMATION_RATE',
-    );
+    this.infoPerClusterChartOptions.scales.x.title.text =
+      this.translate.instant('GLOBAL.TOTAL_NUMBER_OF_CLUSTERS');
+    this.infoPerClusterChartOptions.scales.y.title.text =
+      this.translate.instant('GLOBAL.INFORMATION_RATE');
   }
 
   highlightChartLine(name: string) {

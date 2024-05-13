@@ -23,6 +23,7 @@ import { PreparationDatasVO } from '@khiops-visualization/model/preparation-data
 import { TreePreparationDatasVO } from '@khiops-visualization/model/tree-preparation-datas-vo';
 import { TreePreparationVariableVO } from '@khiops-visualization/model/tree-preparation-variable-vo';
 import { TrackerService } from '@khiops-library/providers/tracker.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-tree-preparation-view',
@@ -55,31 +56,31 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
 
   variablesDisplayedColumns: GridColumnsI[] = [
     {
-      headerName: 'Rank',
+      headerName: this.translate.instant('GLOBAL.RANK'),
       field: 'rank',
     },
     {
-      headerName: 'Name',
+      headerName: this.translate.instant('GLOBAL.NAME'),
       field: 'name',
     },
     {
-      headerName: 'Level',
+      headerName: this.translate.instant('GLOBAL.LEVEL'),
       field: 'level',
     },
     {
-      headerName: 'Parts',
+      headerName: this.translate.instant('GLOBAL.PARTS'),
       field: 'parts',
     },
     {
-      headerName: 'Values',
+      headerName: this.translate.instant('GLOBAL.VALUES'),
       field: 'values',
     },
     {
-      headerName: 'Type',
+      headerName: this.translate.instant('GLOBAL.TYPE'),
       field: 'type',
     },
     {
-      headerName: 'Mode',
+      headerName: this.translate.instant('GLOBAL.MODE'),
       field: 'mode',
       show: false,
     },
@@ -88,6 +89,7 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
   constructor(
     private treePreparationDatasService: TreePreparationDatasService,
     private dialog: MatDialog,
+    private translate: TranslateService,
     private trackerService: TrackerService,
     private distributionDatasService: DistributionDatasService,
     private appService: AppService,

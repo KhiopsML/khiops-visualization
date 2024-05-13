@@ -74,43 +74,45 @@ export class PreparationViewComponent extends SelectableTabComponent {
 
     this.variablesDisplayedColumns = [
       {
-        headerName: 'Rank',
+        headerName: this.translate.instant('GLOBAL.RANK'),
         field: 'rank',
         tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.RANK'),
       },
       {
-        headerName: 'Name',
+        headerName: this.translate.instant('GLOBAL.NAME'),
         field: 'name',
         tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.NAME'),
       },
       {
-        headerName: 'Level',
+        headerName: this.translate.instant('GLOBAL.LEVEL'),
         field: 'level',
         tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.LEVEL'),
       },
       {
-        headerName: 'Parts',
+        headerName: this.translate.instant('GLOBAL.PARTS'),
         field: 'parts',
         tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.PARTS'),
       },
       {
-        headerName: 'Values',
+        headerName: this.translate.instant('GLOBAL.VALUES'),
         field: 'values',
-        tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.VALUES'),
+        tooltip: this.translate.instant(
+          'TOOLTIPS.PREPARATION.VARIABLES.VALUES',
+        ),
       },
       {
-        headerName: 'Type',
+        headerName: this.translate.instant('GLOBAL.TYPE'),
         field: 'type',
         tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.TYPE'),
       },
       {
-        headerName: 'Mode',
+        headerName: this.translate.instant('GLOBAL.MODE'),
         field: 'mode',
         show: false,
         tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.MODE'),
       },
       {
-        headerName: 'Mode coverage',
+        headerName: this.translate.instant('GLOBAL.MODE_COVERAGE'),
         field: 'modeCoverage',
         show: false,
         tooltip: this.translate.instant(
@@ -118,31 +120,33 @@ export class PreparationViewComponent extends SelectableTabComponent {
         ),
       },
       {
-        headerName: 'Min',
+        headerName: this.translate.instant('GLOBAL.MIN'),
         field: 'min',
         show: false,
         tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.MIN'),
       },
       {
-        headerName: 'Max',
+        headerName: this.translate.instant('GLOBAL.MAX'),
         field: 'max',
         show: false,
         tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.MAX'),
       },
       {
-        headerName: 'Mean',
+        headerName: this.translate.instant('GLOBAL.MEAN'),
         field: 'mean',
         show: false,
         tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.MEAN'),
       },
       {
-        headerName: 'Std dev',
+        headerName: this.translate.instant('GLOBAL.STD_DEV'),
         field: 'stdDev',
         show: false,
-        tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.STD_DEV'),
+        tooltip: this.translate.instant(
+          'TOOLTIPS.PREPARATION.VARIABLES.STD_DEV',
+        ),
       },
       {
-        headerName: 'Missing number',
+        headerName: this.translate.instant('GLOBAL.MISSING_NUMBER'),
         field: 'missingNumber',
         show: false,
         tooltip: this.translate.instant(
@@ -150,7 +154,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
         ),
       },
       {
-        headerName: 'Derivation rule',
+        headerName: this.translate.instant('GLOBAL.DERIVATION_RULE'),
         field: 'derivationRule',
         show: false,
         tooltip: this.translate.instant(
@@ -195,7 +199,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
       this.preparationDatasService.includesTargetParts(this.variablesDatas);
     if (includesTargetParts) {
       this.variablesDisplayedColumns.splice(3, 0, {
-        headerName: 'Target parts',
+        headerName: this.translate.instant('GLOBAL.TARGET_PARTS'),
         field: 'targetParts',
         tooltip: this.translate.instant(
           'TOOLTIPS.PREPARATION.VARIABLES.TARGET_PARTS',

@@ -126,7 +126,7 @@ export class EvaluationDatasService {
           values: undefined,
           displayedColumns: [
             {
-              headerName: 'Target',
+              headerName: this.translate.instant('GLOBAL.TARGET'),
               field: 'target',
               tooltip: this.translate.instant(
                 'TOOLTIPS.EVALUATION.CONFUSION_MATRIX.TARGET',
@@ -276,17 +276,17 @@ export class EvaluationDatasService {
       values: undefined,
       displayedColumns: [
         {
-          headerName: 'Type',
+          headerName: this.translate.instant('GLOBAL.TYPE'),
           field: 'type',
           tooltip: this.translate.instant('TOOLTIPS.EVALUATION.TYPES.TYPE'),
         },
         {
-          headerName: 'Dictionary',
+          headerName: this.translate.instant('GLOBAL.DICTIONARY'),
           field: 'dictionary',
           tooltip: this.translate.instant('TOOLTIPS.EVALUATION.TYPES.NAME'),
         },
         {
-          headerName: 'Instances',
+          headerName: this.translate.instant('GLOBAL.INSTANCES'),
           field: 'instances',
           tooltip: this.translate.instant(
             'TOOLTIPS.EVALUATION.TYPES.INSTANCES',

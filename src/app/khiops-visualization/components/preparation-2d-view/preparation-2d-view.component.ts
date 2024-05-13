@@ -67,22 +67,28 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
 
     this.variablesDisplayedColumns = [
       {
-        headerName: 'Rank',
+        headerName: this.translate.instant('GLOBAL.RANK'),
         field: 'rank',
-        tooltip: this.translate.instant('TOOLTIPS.PREPARATION_2D.VARIABLES.RANK'),
+        tooltip: this.translate.instant(
+          'TOOLTIPS.PREPARATION_2D.VARIABLES.RANK',
+        ),
       },
       {
-        headerName: 'Name 1',
+        headerName: this.translate.instant('GLOBAL.NAME_1'),
         field: 'name1',
-        tooltip: this.translate.instant('TOOLTIPS.PREPARATION_2D.VARIABLES.NAME1'),
+        tooltip: this.translate.instant(
+          'TOOLTIPS.PREPARATION_2D.VARIABLES.NAME1',
+        ),
       },
       {
-        headerName: 'Name 2',
+        headerName: this.translate.instant('GLOBAL.NAME_2'),
         field: 'name2',
-        tooltip: this.translate.instant('TOOLTIPS.PREPARATION_2D.VARIABLES.NAME2'),
+        tooltip: this.translate.instant(
+          'TOOLTIPS.PREPARATION_2D.VARIABLES.NAME2',
+        ),
       },
       {
-        headerName: 'Delta Level',
+        headerName: this.translate.instant('GLOBAL.DELTA_LEVEL'),
         field: 'deltaLevel',
         tooltip: this.translate.instant(
           'TOOLTIPS.PREPARATION_2D.VARIABLES.DELTALEVEL',
@@ -90,43 +96,55 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
         show: this.preparation2dDatasService.isSupervised(),
       },
       {
-        headerName: 'Level',
+        headerName: this.translate.instant('GLOBAL.LEVEL'),
         field: 'level',
-        tooltip: this.translate.instant('TOOLTIPS.PREPARATION_2D.VARIABLES.LEVEL'),
+        tooltip: this.translate.instant(
+          'TOOLTIPS.PREPARATION_2D.VARIABLES.LEVEL',
+        ),
       },
       {
-        headerName: 'Level1',
+        headerName: this.translate.instant('GLOBAL.LEVEL_1'),
         field: 'level1',
-        tooltip: this.translate.instant('TOOLTIPS.PREPARATION_2D.VARIABLES.LEVEL1'),
+        tooltip: this.translate.instant(
+          'TOOLTIPS.PREPARATION_2D.VARIABLES.LEVEL1',
+        ),
         show: this.preparation2dDatasService.isSupervised(),
       },
       {
-        headerName: 'Level2',
+        headerName: this.translate.instant('GLOBAL.LEVEL_2'),
         field: 'level2',
-        tooltip: this.translate.instant('TOOLTIPS.PREPARATION_2D.VARIABLES.LEVEL2'),
+        tooltip: this.translate.instant(
+          'TOOLTIPS.PREPARATION_2D.VARIABLES.LEVEL2',
+        ),
         show: this.preparation2dDatasService.isSupervised(),
       },
       {
-        headerName: 'Variables',
+        headerName: this.translate.instant('GLOBAL.VARIABLES'),
         field: 'variables',
         tooltip: this.translate.instant(
           'TOOLTIPS.PREPARATION_2D.VARIABLES.VARIABLES',
         ),
       },
       {
-        headerName: 'Parts1',
+        headerName: this.translate.instant('GLOBAL.PARTS_1'),
         field: 'parts1',
-        tooltip: this.translate.instant('TOOLTIPS.PREPARATION_2D.VARIABLES.PARTS1'),
+        tooltip: this.translate.instant(
+          'TOOLTIPS.PREPARATION_2D.VARIABLES.PARTS1',
+        ),
       },
       {
-        headerName: 'Parts2',
+        headerName: this.translate.instant('GLOBAL.PARTS_2'),
         field: 'parts2',
-        tooltip: this.translate.instant('TOOLTIPS.PREPARATION_2D.VARIABLES.PARTS2'),
+        tooltip: this.translate.instant(
+          'TOOLTIPS.PREPARATION_2D.VARIABLES.PARTS2',
+        ),
       },
       {
-        headerName: 'Cells',
+        headerName: this.translate.instant('GLOBAL.CELLS'),
         field: 'cells',
-        tooltip: this.translate.instant('TOOLTIPS.PREPARATION_2D.VARIABLES.CELLS'),
+        tooltip: this.translate.instant(
+          'TOOLTIPS.PREPARATION_2D.VARIABLES.CELLS',
+        ),
       },
     ];
 

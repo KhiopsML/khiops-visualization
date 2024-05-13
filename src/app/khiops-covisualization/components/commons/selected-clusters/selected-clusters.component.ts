@@ -33,19 +33,19 @@ export class SelectedClustersComponent implements OnDestroy {
   ) {
     this.clustersDisplayedColumns = [
       {
-        headerName: 'Name',
+        headerName: this.translate.instant('GLOBAL.NAME'),
         field: 'hierarchy',
         tooltip: this.translate.instant('TOOLTIPS.AXIS.SELECTED_CLUSTERS.NAME'),
       },
       {
-        headerName: 'Current Cluster',
+        headerName: this.translate.instant('GLOBAL.CURRENT_CLUSTER'),
         field: 'shortDescription',
         tooltip: this.translate.instant(
           'TOOLTIPS.AXIS.SELECTED_CLUSTERS.CURRENT_CLUSTERS',
         ),
       },
       {
-        headerName: 'Nb Clusters',
+        headerName: this.translate.instant('GLOBAL.NB_CLUSTERS'),
         field: 'nbClusters',
         tooltip: this.translate.instant(
           'TOOLTIPS.AXIS.SELECTED_CLUSTERS.NB_CLUSTERS',
@@ -78,7 +78,8 @@ export class SelectedClustersComponent implements OnDestroy {
   updateDimensionIntervals(dimName): SelectedClusterVO | undefined {
     if (this.selectedClusters) {
       // Update intervals of current node
-      const nbClusters = this.dimensionsDatasService.getDimensionIntervals(dimName);
+      const nbClusters =
+        this.dimensionsDatasService.getDimensionIntervals(dimName);
 
       // Just update intervals on change
       const selectedCluster: SelectedClusterVO = this.selectedClusters.find(
@@ -97,7 +98,8 @@ export class SelectedClustersComponent implements OnDestroy {
     // Check if all nodes are selected to update to optimize
     if (
       this.selectedNodes &&
-      this.selectedNodes.length === this.dimensionsDatasService.getDimensionCount()
+      this.selectedNodes.length ===
+        this.dimensionsDatasService.getDimensionCount()
     ) {
       const details = this.clustersService.getSelectedClustersDetails();
       this.selectedClusters = [];
@@ -118,12 +120,14 @@ export class SelectedClustersComponent implements OnDestroy {
 
   selectActiveClusters() {
     const currentActiveClusters = [];
-    const firstDimPos = this.dimensionsDatasService.getDimensionPositionFromName(
-      this.selectedClusters[0].hierarchy,
-    );
-    const secondDimPos = this.dimensionsDatasService.getDimensionPositionFromName(
-      this.selectedClusters[1].hierarchy,
-    );
+    const firstDimPos =
+      this.dimensionsDatasService.getDimensionPositionFromName(
+        this.selectedClusters[0].hierarchy,
+      );
+    const secondDimPos =
+      this.dimensionsDatasService.getDimensionPositionFromName(
+        this.selectedClusters[1].hierarchy,
+      );
     currentActiveClusters.push(this.selectedClusters[firstDimPos]);
     currentActiveClusters.push(this.selectedClusters[secondDimPos]);
     this.activeClusters = currentActiveClusters;

@@ -43,12 +43,12 @@ export class ClusterDetailsComponent implements OnInit, OnChanges {
     this.title = this.translate.instant('GLOBAL.CURRENT_CLUSTERS');
     this.clusterDisplayedColumns = [
       {
-        headerName: 'Name',
+        headerName: this.translate.instant('GLOBAL.NAME'),
         field: 'name',
         tooltip: this.translate.instant('TOOLTIPS.AXIS.CURRENT_CLUSTERS.NAME'),
       },
       {
-        headerName: 'Father',
+        headerName: this.translate.instant('GLOBAL.FATHER'),
         field: 'father',
         show: false,
         tooltip: this.translate.instant(
@@ -56,27 +56,27 @@ export class ClusterDetailsComponent implements OnInit, OnChanges {
         ),
       },
       {
-        headerName: 'Frequency',
+        headerName: this.translate.instant('GLOBAL.FREQUENCY'),
         field: 'frequency',
         tooltip: this.translate.instant(
           'TOOLTIPS.AXIS.CURRENT_CLUSTERS.FREQUENCY',
         ),
       },
       {
-        headerName: 'Interest',
+        headerName: this.translate.instant('GLOBAL.INTEREST'),
         field: 'interest',
         tooltip: this.translate.instant(
           'TOOLTIPS.AXIS.CURRENT_CLUSTERS.INTEREST',
         ),
       },
       {
-        headerName: 'Hierarchical Level',
+        headerName: this.translate.instant('GLOBAL.HIERARCHICAL_LEVEL'),
         field: 'hierarchicalLevel',
         show: false,
         tooltip: this.translate.instant('TOOLTIPS.AXIS.CURRENT_CLUSTERS.LEVEL'),
       },
       {
-        headerName: 'Rank',
+        headerName: this.translate.instant('GLOBAL.RANK'),
         field: 'rank',
         show: false,
         tooltip: this.translate.instant('TOOLTIPS.AXIS.CURRENT_CLUSTERS.RANK'),
@@ -91,8 +91,9 @@ export class ClusterDetailsComponent implements OnInit, OnChanges {
     // Insert size column if it is a categorical dimension
     if (this.selectedDimension.type === TYPES.CATEGORICAL) {
       this.clusterDisplayedColumns.splice(2, 0, {
-        headerName: 'Size',
+        headerName: this.translate.instant('GLOBAL.SIZE'),
         field: 'size',
+        tooltip: this.translate.instant('TOOLTIPS.AXIS.CURRENT_CLUSTERS.SIZE'),
       });
     }
   }

@@ -52,12 +52,12 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {
     this.compositionDisplayedColumns = [
       {
-        headerName: 'Cluster',
+        headerName: this.translate.instant('GLOBAL.CLUSTER'),
         field: 'cluster',
         tooltip: this.translate.instant('TOOLTIPS.AXIS.COMPOSITION.CLUSTER'),
       },
       {
-        headerName: 'Terminal Cluster',
+        headerName: this.translate.instant('GLOBAL.TERMINAL_CLUSTER'),
         show: false,
         field: 'terminalCluster',
         tooltip: this.translate.instant(
@@ -65,23 +65,23 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
         ),
       },
       {
-        headerName: 'Rank',
+        headerName: this.translate.instant('GLOBAL.RANK'),
         show: false,
         field: 'rank',
         tooltip: this.translate.instant('TOOLTIPS.AXIS.COMPOSITION.RANK'),
       },
       {
-        headerName: 'Typicality',
+        headerName: this.translate.instant('GLOBAL.TYPICALITY'),
         field: 'typicality',
         tooltip: this.translate.instant('TOOLTIPS.AXIS.COMPOSITION.TYPICALITY'),
       },
       {
-        headerName: 'Value',
+        headerName: this.translate.instant('GLOBAL.VALUE'),
         field: 'value',
         tooltip: this.translate.instant('TOOLTIPS.AXIS.COMPOSITION.VALUE'),
       },
       {
-        headerName: 'Frequency',
+        headerName: this.translate.instant('GLOBAL.FREQUENCY'),
         field: 'frequency',
         tooltip: this.translate.instant('TOOLTIPS.AXIS.COMPOSITION.FREQUENCY'),
       },

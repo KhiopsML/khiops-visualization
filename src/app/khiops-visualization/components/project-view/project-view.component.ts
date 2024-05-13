@@ -34,11 +34,11 @@ export class ProjectViewComponent
 
   logsDisplayedColumns: GridColumnsI[] = [
     {
-      headerName: 'Task',
+      headerName: this.translate.instant('GLOBAL.TASK'),
       field: 'task',
     },
     {
-      headerName: 'Message',
+      headerName: this.translate.instant('GLOBAL.MESSAGE'),
       field: 'message',
     },
   ];

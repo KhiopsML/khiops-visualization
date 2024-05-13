@@ -534,15 +534,15 @@ export class TreePreparationDatasService {
     if (this.treePreparationDatas?.selectedNodes?.[0]) {
       treeDetails.displayedColumns = [
         {
-          headerName: 'Node Id',
+          headerName: this.translate.instant('GLOBAL.NODE_ID'),
           field: 'nodeId',
         },
         {
-          headerName: 'Values',
+          headerName: this.translate.instant('GLOBAL.VALUES'),
           field: 'values',
         },
         {
-          headerName: 'Frequencies',
+          headerName: this.translate.instant('GLOBAL.FREQUENCIES'),
           field: 'frequencies',
         },
       ];
@@ -584,15 +584,15 @@ export class TreePreparationDatasService {
     if (this.treePreparationDatas?.selectedNodes?.[0]) {
       treeLeafRules.displayedColumns = [
         {
-          headerName: 'Variable',
+          headerName: this.translate.instant('GLOBAL.VARIABLE'),
           field: 'variable',
         },
         {
-          headerName: 'Type',
+          headerName: this.translate.instant('GLOBAL.TYPE'),
           field: 'type',
         },
         {
-          headerName: 'Partition',
+          headerName: this.translate.instant('GLOBAL.PARTITION'),
           field: 'partition',
         },
       ];

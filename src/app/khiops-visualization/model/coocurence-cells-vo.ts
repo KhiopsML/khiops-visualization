@@ -9,10 +9,11 @@ export class CoocurenceCellsVO {
   displayedColumns: GridColumnsI[] = [];
 
   constructor(translate, nameX, nameY) {
-    this.title = translate.instant('GLOBAL.CELLS_OF') + ' ' + nameX + ' x ' + nameY;
+    this.title =
+      translate.instant('GLOBAL.CELLS_OF') + ' ' + nameX + ' x ' + nameY;
 
     this.displayedColumns.push({
-      headerName: 'Cell id',
+      headerName: translate.instant('GLOBAL.CELL_ID'),
       field: 'id',
       tooltip: translate.instant('TOOLTIPS.PREPARATION_2D.CELLS.ID'),
     });

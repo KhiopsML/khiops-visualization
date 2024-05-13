@@ -38,19 +38,19 @@ export class ImportExtDatasListComponent {
     this.importedDatas = {
       displayedColumns: [
         {
-          headerName: 'File name',
+          headerName: this.translate.instant('GLOBAL.FILE_NAME'),
           field: 'filename',
         },
         {
-          headerName: 'Join key',
+          headerName: this.translate.instant('GLOBAL.JOIN_KEY'),
           field: 'joinKey',
         },
         {
-          headerName: 'Field',
+          headerName: this.translate.instant('GLOBAL.FIELD'),
           field: 'field',
         },
         {
-          headerName: 'Dimension',
+          headerName: this.translate.instant('GLOBAL.DIMENSION'),
           field: 'dimension',
         },
         {
