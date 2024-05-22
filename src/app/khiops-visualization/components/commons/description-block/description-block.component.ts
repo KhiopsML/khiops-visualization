@@ -1,9 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 
@@ -13,13 +8,8 @@ import { SelectableComponent } from '@khiops-library/components/selectable/selec
   styleUrls: ['./description-block.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DescriptionBlockComponent
-  extends SelectableComponent
-  implements OnInit
-{
+export class DescriptionBlockComponent extends SelectableComponent {
   @Input() title: string;
   @Input() value: string;
   componentType: string = 'descriptions'; // needed to copy datas
-
-  ngOnInit() {}
 }

@@ -319,7 +319,8 @@
     "CLUSTER_LENGTH": "Values",
     "NODE": "Node",
     "PARENT_CLUSTER": "Parent cluster",
-    "HIERARCHICAL_RANK": "Hierarchical rank"
+    "HIERARCHICAL_RANK": "Hierarchical rank",
+    "CELLS_INTERESTS": "Cells Interests"
   },
   "ARIA": {
     "AG_GRID": {

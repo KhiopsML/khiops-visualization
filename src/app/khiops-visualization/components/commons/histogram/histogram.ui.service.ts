@@ -10,8 +10,6 @@ export class HistogramUIService {
   static readonly chartColors: string[] = ['#6e93d5', '#ffbe46'];
   static translate: TranslateService;
 
-  constructor() {}
-
   static setTranslationService(translate: TranslateService) {
     this.translate = translate;
   }

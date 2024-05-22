@@ -441,8 +441,6 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   }
 
   drawHistogram(datasSet: HistogramValuesI[]) {
-    // TODO compare performance here
-    const t0 = performance.now();
     let bars: HistogramBarVO[] = this.histogramService.computeXbarDimensions(
       datasSet,
       this.distributionDatas.distributionGraphOptionsX.selected,
@@ -458,8 +456,6 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
       this.ratio =
         bars[bars.length - 1].barXlog + bars[bars.length - 1].barWlog;
     }
-    const t1 = performance.now();
-    console.log('drawHistogram ' + (t1 - t0) + ' milliseconds.');
 
     datasSet.forEach((d: HistogramValuesI, i: number) => {
       this.drawRect(d, i, bars, this.ratio);
@@ -469,7 +465,6 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   drawXAxis(domain: number[], shift: number, width: number) {
     if (width !== 0) {
       let xAxis;
-
       shift = shift + this.xPadding;
 
       if (

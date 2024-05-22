@@ -133,12 +133,13 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
         },
         {
           mode: 'FREQUENCY',
-          title: 'Frequency',
+          title: this.translate.instant('GLOBAL.FREQUENCY'),
         },
         {
           mode: 'FREQUENCY_CELL',
           title:
-            'Frequency (' +
+            this.translate.instant('GLOBAL.FREQUENCY') +
+            ' (' +
             this.translate.instant('GLOBAL.TARGET') +
             ' | ' +
             varName2 +
@@ -170,7 +171,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
         },
         {
           mode: 'CELL_INTEREST',
-          title: 'Cells Interests',
+          title: this.translate.instant('GLOBAL.CELLS_INTERESTS'),
         },
       ];
     } else {
@@ -181,7 +182,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
         },
         {
           mode: 'FREQUENCY',
-          title: 'Frequency',
+          title: this.translate.instant('GLOBAL.FREQUENCY'),
         },
         {
           mode: 'PROB_CELL',
