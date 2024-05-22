@@ -71,6 +71,7 @@
     >
       <app-external-datas
         [attr.id]="'external-datas-' + position"
+        title="{{ 'TOOLTIPS.AXIS.EXTERNAL_DATAS.TITLE' | translate }}"
         [position]="position"
         [selectedDimension]="dimensionsDatas.selectedDimensions[position]"
         [selectedComposition]="selectedComposition"
@@ -87,6 +88,7 @@
     >
       <app-variable-graph-details
         #appVariableGraphDetails
+        title="{{ 'TOOLTIPS.AXIS.DISTRIBUTION.TITLE' | translate }}"
         [position]="invertedPosition"
         [selectedDimensions]="dimensionsDatas.selectedDimensions"
         [selectedDimension]="dimensionsDatas.selectedDimensions[position]"

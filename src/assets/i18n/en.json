@@ -355,8 +355,8 @@
       "TEXT_PREPARATION": "",
       "PREPARATION_2D": "",
       "TREE_PREPARATION": "",
-      "AXIS": "",
-      "CONTEXT": ""
+      "AXIS": "Presents the coclustering",
+      "CONTEXT": "cCntextual dimensions of the coclustering (if more than 2 dimensions)"
     },
     "COMMONS": {
       "LEVEL_DISTRIBUTION": "display the level distribution of the variables",
@@ -481,6 +481,14 @@
       }
     },
     "AXIS": {
+      "MATRIX": {
+        "CELL_STATS_FREQUENCY": "Frequency : number of occurences in the selected co-cluster",
+        "CELL_STATS_EXPECTED_FREQUENCY": "Expected frequency in case of independence of the two dimensions",
+        "F": "Number of occurences",
+        "I": "Mutual information",
+        "P": "Conditional probability",
+        "H": "Hellinger distance"
+      },
       "DIMENSION": {
         "SELECT": "Select the dimension to display here",
         "STATISTICS": "This view shows the cluster hierarchy. It allows to navigate and to modify the hierarchy of clusters. The hierarchy is presented like a file manager, each directory being a cluster. By opening or closing a cluster, you can choose the appropriate hierarchy."
@@ -491,8 +499,8 @@
         "FATHER": "Father cluster of the current cluster",
         "FREQUENCY": "Number of items belonging to the current cluster",
         "INTEREST": "The “Interest” of a cluster is a value between 0 and 1: clusters with a interest close to 1 are the most informative",
-        "HIERARCHICAL_LEVEL": "",
-        "SIZE": "",
+        "HIERARCHICAL_LEVEL": "Normalized measure between 0 (all is folded) and 1 (all is unfolded); it represents the information kept for the current unfolding of the hierarchy and can be interpreted as a distance to the root cluster",
+        "SIZE": "The number of different items that belong to this cluster",
         "RANK": "The column “Rank” provides the ordering of the clusters in the hierarchy view."
       },
       "COMPOSITION": {
@@ -500,18 +508,21 @@
         "CLUSTER": "The column “Cluster” contains the cluster visible in the hierarchy that contains the item.",
         "TERMINAL_CLUSTER": "Contain the terminal cluster that owns this item",
         "RANK": "The column “Rank” provides the  ordering of the items in the hierarchy view.",
-        "TYPICALITY": "",
+        "TYPICALITY": "Interest measure of the value within its cluster, between 0 (least representative) and 1 (most representative)",
         "VALUE": "Value of the item",
         "FREQUENCY": "The “Frequency” of an item is its number of occurrences in the cluster"
       },
+      "EXTERNAL_DATAS": {
+        "TITLE": "Integrate external data associated to each cluster element. The selection of an item in the composition view display the corresponding data in this view. There are 3 types of data fields: textual, numerical and categorical. The display is optimized according to the data type. Several fields can be associated for each item."
+      },
       "ANNOTATION": {
-        "TITLE": ""
+        "TITLE": "Simple text box that allows annotating each cluster"
       },
       "DISTRIBUTION": {
-        "TITLE": "Distribution of the dimension on the selected cluster of the other dimension"
+        "TITLE": "Histogram of the distribution of a dimension on the selected cluster of the other dimension"
       },
       "SELECTED_CLUSTERS": {
-        "TITLE": "",
+        "TITLE": "Global view of the state of the coclustering at the current level of unfolding",
         "NAME": "Dimensions of the coclustering",
         "CURRENT_CLUSTERS": "Selected cluster in each dimension",
         "NB_CLUSTERS": "Number of clusters on each dimension for the current unfolding"

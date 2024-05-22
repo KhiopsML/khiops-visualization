@@ -6,8 +6,15 @@
 >
   <div *ngIf="datas" class="cell-stats-content">
     <b>{{ 'GLOBAL.CELL_STATS' | translate }}</b>
-    <span>F= {{ datas.F | toPrecision }}</span>
-    <span>EF= {{ datas.EF | toPrecision }}</span>
+    <span title="{{ 'TOOLTIPS.AXIS.MATRIX.CELL_STATS_FREQUENCY' | translate }}"
+      >F= {{ datas.F | toPrecision }}</span
+    >
+    <span
+      title="{{
+        'TOOLTIPS.AXIS.MATRIX.CELL_STATS_EXPECTED_FREQUENCY' | translate
+      }}"
+      >EF= {{ datas.EF | toPrecision }}</span
+    >
     <span *ngIf="datas.I">I= {{ datas.I | toPrecision }}</span>
     <span *ngIf="datas.Total">Total= {{ datas.Total | toPrecision }} </span>
   </div>

@@ -8,6 +8,7 @@
     class="button-accent"
     mat-stroked-button
     color="accent"
+    [title]="matrixModes.selected.tooltip || ''"
     [matMenuTriggerFor]="matrixModesTypes"
   >
     {{ matrixModes.selected.title | translate }} <em>v</em>
@@ -18,7 +19,9 @@
       *ngFor="let opt of matrixModes.types"
       (click)="changeMatrixMode(opt)"
     >
-      {{ opt.title | translate }}
+      <span [title]="opt.tooltip || ''">
+        {{ opt.title | translate }}
+      </span>
     </button>
   </mat-menu>
 </div>

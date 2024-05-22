@@ -38,7 +38,8 @@
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "pretty": "prettier --write \"./**/*.{ts,html,scss}\"",
-    "start:logs": "yarn run start > yarn-start.log 2>&1"
+    "start:logs": "yarn run start > yarn-start.log 2>&1",
+    "duplicateCode": "npx jscpd -r html --pattern '/src/app/**/*.ts' ."
   },
   "prettier": {
     "trailingComma": "all",
@@ -79,10 +80,10 @@
     "file-saver": "2.0.5",
     "html2canvas": "1.4.1",
     "lodash": "4.17.21",
+    "marked": "^12.0.0",
     "material-design-icons": "3.0.1",
     "mathjs": "12.4.1",
     "ngx-markdown": "15.1.2",
-    "marked": "^12.0.0",
     "pan-zoom": "3.5.2",
     "rxjs": "7.8.1",
     "stream-browserify": "3.0.0",
@@ -92,7 +93,6 @@
     "zone.js": "0.11.4"
   },
   "devDependencies": {
-    "ngx-build-plus": "17.0.0",
     "@angular-devkit/build-angular": "15.2.0",
     "@angular/cli": "15.2.0",
     "@angular/compiler-cli": "15.2.0",
@@ -110,6 +110,7 @@
     "karma-jasmine": "5.1.0",
     "karma-jasmine-html-reporter": "2.1.0",
     "ng-packagr": "15.2.2",
+    "ngx-build-plus": "17.0.0",
     "prettier": "3.2.5",
     "source-map-explorer": "2.5.3",
     "typescript": "4.9.5",
