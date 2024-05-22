@@ -269,10 +269,10 @@ export class CopyDatasService {
     formattedDatas += this.translate.instant('GLOBAL.DECISION_TREE') + '\n';
 
     // HEADER
-    formattedDatas += 'node' + '\t';
-    formattedDatas += 'type' + '\t';
-    formattedDatas += 'variable' + '\n';
-    // formattedDatas += 'partition' + '\n';
+    formattedDatas += this.translate.instant('GLOBAL.NODE') + '\t';
+    formattedDatas += this.translate.instant('GLOBAL.TYPE') + '\t';
+    formattedDatas += this.translate.instant('GLOBAL.VARIABLE') + '\n';
+    // formattedDatas += this.translate.instant('GLOBAL.PARTITION') + '\n';
 
     // CONTENT
     for (let i = 0; i < currentDatas.length; i++) {
@@ -306,13 +306,14 @@ export class CopyDatasService {
       '\n';
 
     // HEADER
-    formattedDatas += 'name' + '\t';
-    formattedDatas += 'parentCluster' + '\t';
-    formattedDatas += 'frequency' + '\t';
-    formattedDatas += 'interest' + '\t';
-    formattedDatas += 'hierarchicalLevel' + '\t';
-    formattedDatas += 'rank' + '\t';
-    formattedDatas += 'hierarchicalRank' + '\n';
+    formattedDatas += this.translate.instant('GLOBAL.NAME') + '\t';
+    formattedDatas += this.translate.instant('GLOBAL.PARENT_CLUSTER') + '\t';
+    formattedDatas += this.translate.instant('GLOBAL.FREQUENCY') + '\t';
+    formattedDatas += this.translate.instant('GLOBAL.INTEREST') + '\t';
+    formattedDatas +=
+      this.translate.instant('GLOBAL.HIERARCHICAL_LEVEL') + '\t';
+    formattedDatas += this.translate.instant('GLOBAL.RANK') + '\t';
+    formattedDatas += this.translate.instant('GLOBAL.HIERARCHICAL_RANK') + '\n';
 
     // CONTENT
     for (let i = 0; i < flattenDatas.length; i++) {
