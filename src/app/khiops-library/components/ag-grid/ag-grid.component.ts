@@ -175,11 +175,6 @@ export class AgGridComponent
     }
   }
 
-  destroyGrid() {
-    // Callback sent by inherited SelectableComponent
-    // this.saveState();
-  }
-
   onSortChanged(grid) {
     this.saveState(grid);
   }

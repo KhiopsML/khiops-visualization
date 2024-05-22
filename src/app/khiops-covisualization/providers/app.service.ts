@@ -283,4 +283,23 @@ export class AppService {
       this.splitSizes[oldView]['col0Row' + oldPosition + 'Col2Row'],
     ];
   }
+
+  /**
+   * #127 Reset grid search on file change
+   */
+  resetSearch() {
+    for (let i = 0; i < localStorage.length; i++) {
+      let key = localStorage.key(i);
+      if (
+        key.startsWith(
+          AppConfig.covisualizationCommon.GLOBAL.LS_ID +
+            'OPTIONS_AG_GRID_SEARCH_',
+        )
+      ) {
+        localStorage.removeItem(key);
+        // Decrement i to avoid skipping a key because the length of localStorage has decreased.
+        i--;
+      }
+    }
+  }
 }

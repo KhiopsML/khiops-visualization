@@ -58,9 +58,6 @@ export class SelectableComponent
 
   ngOnDestroy() {
     this.selectedServiceChangeSub.unsubscribe();
-    if (this.agGrid) {
-      this.destroyGrid();
-    }
   }
 
   @HostListener('click', ['$event'])
