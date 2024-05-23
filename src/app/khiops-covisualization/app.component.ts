@@ -107,12 +107,9 @@ export class AppComponent implements AfterViewInit {
         );
         dialogRef.componentInstance.displayRejectBtn = true;
 
-        dialogRef
-          .afterClosed()
-          .toPromise()
-          .then((e) => {
-            cb(e);
-          });
+        dialogRef.afterClosed().subscribe((e) => {
+          cb(e);
+        });
       });
     };
     this.element.nativeElement.openChannelDialog = (cb) => {
@@ -129,8 +126,7 @@ export class AppComponent implements AfterViewInit {
         );
         dialogRef
           .afterClosed()
-          .toPromise()
-          .then((e) => {
+          .subscribe((e) => {
             cb(e);
           });
       });
@@ -172,10 +168,11 @@ export class AppComponent implements AfterViewInit {
     this.setTheme();
 
     // Test analytics in local
-    // this.trackerService.initTracker(
-    //   AppConfig.covisualizationCommon,
-    //   '<tracker_id>',
-    // );
+    this.trackerService.initTracker(
+      AppConfig.covisualizationCommon,
+      '<tracker_id>',
+      '<appSource>'
+    );
   }
 
   setTheme() {

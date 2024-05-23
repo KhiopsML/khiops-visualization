@@ -86,12 +86,9 @@ export class AppComponent implements AfterViewInit {
         dialogRef.componentInstance.message = this.translate.instant(
           'GLOBAL.BETA_VERSIONS_WARNING',
         );
-        dialogRef
-          .afterClosed()
-          .toPromise()
-          .then((e) => {
-            cb(e);
-          });
+        dialogRef.afterClosed().subscribe((e) => {
+          cb(e);
+        });
       });
     };
     this.element.nativeElement.setConfig = (config) => {

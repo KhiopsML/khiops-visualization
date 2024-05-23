@@ -133,10 +133,6 @@ export class ImportExtDatasListComponent {
       config,
     );
     dialogRef.disableClose = true;
-    dialogRef
-      .afterClosed()
-      .toPromise()
-      .then(() => {});
   }
 
   closeImport() {

@@ -119,22 +119,19 @@ export class TrackerService {
         'COOKIE_CONSENT.ALLOW',
       );
 
-      dialogRef
-        .afterClosed()
-        .toPromise()
-        .then((e) => {
-          const acceptCookies = e === 'confirm' ? 'true' : 'false';
-          localStorage.setItem(
-            config.GLOBAL.LS_ID + 'COOKIE_CONSENT',
-            acceptCookies,
-          );
-          this.addTrackerScript(config, trackerId, () => {
-            this.trackEvent('cookie_consent', acceptCookies);
-            if (acceptCookies === 'false') {
-              this.removeTrackerScript();
-            }
-          });
+      dialogRef.afterClosed().subscribe((e) => {
+        const acceptCookies = e === 'confirm' ? 'true' : 'false';
+        localStorage.setItem(
+          config.GLOBAL.LS_ID + 'COOKIE_CONSENT',
+          acceptCookies,
+        );
+        this.addTrackerScript(config, trackerId, () => {
+          this.trackEvent('cookie_consent', acceptCookies);
+          if (acceptCookies === 'false') {
+            this.removeTrackerScript();
+          }
         });
+      });
     });
   }
 

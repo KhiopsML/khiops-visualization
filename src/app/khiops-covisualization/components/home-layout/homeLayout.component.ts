@@ -297,10 +297,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
       config,
     );
     dialogRef.disableClose = true;
-    dialogRef
-      .afterClosed()
-      .toPromise()
-      .then(() => {});
   }
 
   reloadView() {
