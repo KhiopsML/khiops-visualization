@@ -565,7 +565,6 @@ export class TreenodesService {
     const truncatedPartition = _.cloneDeep(
       datas.coclusteringReport.dimensionPartitions,
     );
-    // const truncatedPartition = [ ...datas.coclusteringReport.dimensionPartitions ];
 
     Object.keys(datas.savedDatas.collapsedNodes).forEach((dim, key) => {
       const nodes = datas.savedDatas.collapsedNodes[dim];
@@ -707,7 +706,6 @@ export class TreenodesService {
         currentTruncatedPartition.intervals.sort(function (a, b) {
           return a.bounds[0] - b.bounds[0];
         });
-        // console.table(currentTruncatedPartition.intervals);
       }
     }
   }
@@ -731,7 +729,9 @@ export class TreenodesService {
   }
 
   updateSummariesCells(datas) {
-    // the "cells" field in "summary" must contain the number of non-empty cells, which can be less than the theoretical number of cells. It is obtained by counting the number of elements in the list "cellPartIndexes" or in "cellFrequencies"
+    // the "cells" field in "summary" must contain the number of non-empty cells,
+    // which can be less than the theoretical number of cells.
+    // It is obtained by counting the number of elements in the list "cellPartIndexes" or in "cellFrequencies"
     datas.coclusteringReport.summary.cells =
       datas.coclusteringReport.cellFrequencies.length;
 
@@ -745,12 +745,10 @@ export class TreenodesService {
     const CI = {
       ...this.appService.getInitialDatas().datas,
     };
-
     const transitionMatrix: any[] = [];
 
-    let t0 = performance.now();
-
-    // Step 1: we build the transition matrix which makes it possible to pass from the part indices of the CI to the part indices of the CC
+    // Step 1: we build the transition matrix which makes it possible to pass from the part
+    // indices of the CI to the part indices of the CC
     for (
       let k = 0;
       k < CI.coclusteringReport.dimensionHierarchies.length;
@@ -776,7 +774,11 @@ export class TreenodesService {
         ].valueGroups.map((e) => e.values);
       }
 
-      // Loop the parts of the CI variable: for each part, we try to associate its index in the partition of the initial coclustering with its index in the partition of the final coclustering. We use the fact that the partitions are nested and that their order does not change: an "initial" part is either kept as it is in the current coclustering or included in a folded part in the current coclustering
+      // Loop the parts of the CI variable: for each part, we try to associate its index in
+      // the partition of the initial coclustering with its index in the partition of the final coclustering.
+      // We use the fact that the partitions are nested and that their order does not change:
+      // an "initial" part is either kept as it is in the current coclustering or included in
+      // a folded part in the current coclustering
       let currentP = 0; // initialize the index of the part of the current variable
       let currentPart = currentVariable[currentP]; // we initialize the current part
 
@@ -799,14 +801,10 @@ export class TreenodesService {
                   initialPart[1] <= currentVariable[currentP][1]
                 )
               ) {
-                // while (!(this.isRangeIncluded(initialPart, currentVariable))) {
                 currentPart = currentVariable[++currentP];
               }
             } catch (e) {
-              console.log(
-                'file: save.service.ts:446 ~ truncateJsonCells ~ e:',
-                e,
-              );
+              console.log('truncateJsonCells ~ e:', e);
             }
           }
         } else {
@@ -821,13 +819,8 @@ export class TreenodesService {
       }
     }
 
-    // let t1 = performance.now();
-    // console.log("STEP 1 " + (t1 - t0) + " milliseconds.");
-
-    t0 = performance.now();
-
-    // Step 2: build the list of cells in the current coclustering by calculating the indexes of these cells and their resGroup
-    // let indexesCCSet = new Set();
+    // Step 2: build the list of cells in the current coclustering by calculating the indexes
+    // of these cells and their resGroup
     let resGroup: any[] = [];
 
     // chat GPT optimization
@@ -853,7 +846,6 @@ export class TreenodesService {
         resGroupMap.set(currentIndexesString, cellFrequencies[i]);
       }
     }
-    // console.log('file: save.service.ts:540 ~ truncateJsonCells ~ resGroupMap:', resGroupMap);
     resGroupMap = new Map([...resGroupMap.entries()].sort());
 
     // Convert the map back to an array of objects if needed
@@ -862,10 +854,6 @@ export class TreenodesService {
       value,
     }));
 
-    // t1 = performance.now();
-    // console.log("STEP 2 " + (t1 - t0) + " milliseconds.");
-
-    t0 = performance.now();
     resGroup.sort(function (a: any, b: any) {
       if (a.value === b.value) {
         return a.key.localeCompare(b.key, undefined, {
@@ -874,8 +862,6 @@ export class TreenodesService {
       }
       return b.value - a.value;
     });
-    // t1 = performance.now();
-    // console.log("STEP 3 " + (t1 - t0) + " milliseconds.");
 
     CC.coclusteringReport.cellFrequencies = resGroup.map((e) => e.value);
     // Convert cellPartIndexes strings to integers
@@ -883,7 +869,6 @@ export class TreenodesService {
       e.key.split(/\s*,\s*/).map(Number),
     );
 
-    // console.log('file: save.service.ts:547 ~ truncateJsonCells ~ CC:', CC.coclusteringReport.cellFrequencies);
     return CC;
   }
 }

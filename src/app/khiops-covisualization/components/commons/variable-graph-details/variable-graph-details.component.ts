@@ -1,6 +1,5 @@
 import {
   Component,
-  OnInit,
   OnChanges,
   OnDestroy,
   ViewChild,
@@ -32,7 +31,7 @@ import * as _ from 'lodash';
   styleUrls: ['./variable-graph-details.component.scss'],
 })
 export class VariableGraphDetailsComponent
-  implements OnInit, OnChanges, OnDestroy, AfterViewInit
+  implements OnChanges, OnDestroy, AfterViewInit
 {
   @ViewChild('distributionGraph', {
     static: false,
@@ -103,8 +102,6 @@ export class VariableGraphDetailsComponent
       }
     }
   }
-
-  ngOnInit() {}
 
   ngAfterViewInit() {
     this.getFilteredDistribution(this.dimensionsTree);

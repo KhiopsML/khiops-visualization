@@ -104,7 +104,6 @@ export class SelectedClustersComponent implements OnDestroy {
       const details = this.clustersService.getSelectedClustersDetails();
       this.selectedClusters = [];
 
-      // if (this.selectedClusters.length === 0) {
       for (let i = 0; i < this.selectedNodes.length; i++) {
         const nodeVO: TreeNodeVO = this.selectedNodes[i];
         const selectedCluster: SelectedClusterVO = new SelectedClusterVO(
