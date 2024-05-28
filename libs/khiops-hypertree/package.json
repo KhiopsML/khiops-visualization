@@ -9,7 +9,7 @@
     "start": "gulp build && gulp watch"
   },
   "dependencies": {
-    "d3": "5.16.0",
+    "d3": "7.9.0",
     "d3-force-gravity": "^1.0.2",
     "timers": "^0.1.1"
   },
