@@ -7,7 +7,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import _ from 'lodash';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngstack/translate';
 import { DimensionVO } from '@khiops-library/model/dimension-vo';
 import { ClustersService } from '@khiops-covisualization/providers/clusters.service';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
@@ -40,48 +40,48 @@ export class ClusterDetailsComponent implements OnInit, OnChanges {
     private treenodesService: TreenodesService,
     private clustersService: ClustersService,
   ) {
-    this.title = this.translate.instant('GLOBAL.CURRENT_CLUSTERS');
+    this.title = this.translate.get('GLOBAL.CURRENT_CLUSTERS');
     this.clusterDisplayedColumns = [
       {
-        headerName: this.translate.instant('GLOBAL.NAME'),
+        headerName: this.translate.get('GLOBAL.NAME'),
         field: 'name',
-        tooltip: this.translate.instant('TOOLTIPS.AXIS.CURRENT_CLUSTERS.NAME'),
+        tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.NAME'),
       },
       {
-        headerName: this.translate.instant('GLOBAL.FATHER'),
+        headerName: this.translate.get('GLOBAL.FATHER'),
         field: 'father',
         show: false,
-        tooltip: this.translate.instant(
+        tooltip: this.translate.get(
           'TOOLTIPS.AXIS.CURRENT_CLUSTERS.FATHER',
         ),
       },
       {
-        headerName: this.translate.instant('GLOBAL.FREQUENCY'),
+        headerName: this.translate.get('GLOBAL.FREQUENCY'),
         field: 'frequency',
-        tooltip: this.translate.instant(
+        tooltip: this.translate.get(
           'TOOLTIPS.AXIS.CURRENT_CLUSTERS.FREQUENCY',
         ),
       },
       {
-        headerName: this.translate.instant('GLOBAL.INTEREST'),
+        headerName: this.translate.get('GLOBAL.INTEREST'),
         field: 'interest',
-        tooltip: this.translate.instant(
+        tooltip: this.translate.get(
           'TOOLTIPS.AXIS.CURRENT_CLUSTERS.INTEREST',
         ),
       },
       {
-        headerName: this.translate.instant('GLOBAL.HIERARCHICAL_LEVEL'),
+        headerName: this.translate.get('GLOBAL.HIERARCHICAL_LEVEL'),
         field: 'hierarchicalLevel',
         show: false,
-        tooltip: this.translate.instant(
+        tooltip: this.translate.get(
           'TOOLTIPS.AXIS.CURRENT_CLUSTERS.HIERARCHICAL_LEVEL',
         ),
       },
       {
-        headerName: this.translate.instant('GLOBAL.RANK'),
+        headerName: this.translate.get('GLOBAL.RANK'),
         field: 'rank',
         show: false,
-        tooltip: this.translate.instant('TOOLTIPS.AXIS.CURRENT_CLUSTERS.RANK'),
+        tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.RANK'),
       },
     ];
   }
@@ -93,9 +93,9 @@ export class ClusterDetailsComponent implements OnInit, OnChanges {
     // Insert size column if it is a categorical dimension
     if (this.selectedDimension.type === TYPES.CATEGORICAL) {
       this.clusterDisplayedColumns.splice(2, 0, {
-        headerName: this.translate.instant('GLOBAL.SIZE'),
+        headerName: this.translate.get('GLOBAL.SIZE'),
         field: 'size',
-        tooltip: this.translate.instant('TOOLTIPS.AXIS.CURRENT_CLUSTERS.SIZE'),
+        tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.SIZE'),
       });
     }
   }

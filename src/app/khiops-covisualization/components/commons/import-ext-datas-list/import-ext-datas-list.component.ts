@@ -5,7 +5,7 @@ import {
   MatDialogConfig,
 } from '@angular/material/dialog';
 import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngstack/translate';
 import { FileVO } from '@khiops-library/model/file-vo';
 import { ExtDatasVO } from '@khiops-covisualization/model/ext-datas-vo';
 import { IconCellComponent } from '@khiops-library/components/ag-grid/icon-cell/icon-cell.component';
@@ -38,19 +38,19 @@ export class ImportExtDatasListComponent {
     this.importedDatas = {
       displayedColumns: [
         {
-          headerName: this.translate.instant('GLOBAL.FILE_NAME'),
+          headerName: this.translate.get('GLOBAL.FILE_NAME'),
           field: 'filename',
         },
         {
-          headerName: this.translate.instant('GLOBAL.JOIN_KEY'),
+          headerName: this.translate.get('GLOBAL.JOIN_KEY'),
           field: 'joinKey',
         },
         {
-          headerName: this.translate.instant('GLOBAL.FIELD'),
+          headerName: this.translate.get('GLOBAL.FIELD'),
           field: 'field',
         },
         {
-          headerName: this.translate.instant('GLOBAL.DIMENSION'),
+          headerName: this.translate.get('GLOBAL.DIMENSION'),
           field: 'dimension',
         },
         {
@@ -89,7 +89,7 @@ export class ImportExtDatasListComponent {
       e.data.field,
     );
     this.snackBar.open(
-      this.translate.instant('SNACKS.EXTERNAL_DATA_DELETED'),
+      this.translate.get('SNACKS.EXTERNAL_DATA_DELETED'),
       undefined,
       {
         duration: 2000,
@@ -98,7 +98,7 @@ export class ImportExtDatasListComponent {
     );
     if (importedDatas) {
       this.snackBar.open(
-        this.translate.instant('SNACKS.EXTERNAL_DATA_DELETED'),
+        this.translate.get('SNACKS.EXTERNAL_DATA_DELETED'),
         undefined,
         {
           duration: 2000,
@@ -107,7 +107,7 @@ export class ImportExtDatasListComponent {
       );
     } else {
       this.snackBar.open(
-        this.translate.instant('SNACKS.EXTERNAL_DATA_DELETE_ERROR'),
+        this.translate.get('SNACKS.EXTERNAL_DATA_DELETE_ERROR'),
         undefined,
         {
           duration: 2000,

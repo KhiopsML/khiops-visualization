@@ -23,7 +23,7 @@ import { PreparationDatasVO } from '@khiops-visualization/model/preparation-data
 import { TreePreparationDatasVO } from '@khiops-visualization/model/tree-preparation-datas-vo';
 import { TreePreparationVariableVO } from '@khiops-visualization/model/tree-preparation-variable-vo';
 import { TrackerService } from '@khiops-library/providers/tracker.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngstack/translate';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 
 @Component({
@@ -57,40 +57,40 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
 
   variablesDisplayedColumns: GridColumnsI[] = [
     {
-      headerName: this.translate.instant('GLOBAL.RANK'),
+      headerName: this.translate.get('GLOBAL.RANK'),
       field: 'rank',
-      tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.RANK'),
+      tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.RANK'),
     },
     {
-      headerName: this.translate.instant('GLOBAL.NAME'),
+      headerName: this.translate.get('GLOBAL.NAME'),
       field: 'name',
-      tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.NAME'),
+      tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.NAME'),
     },
     {
-      headerName: this.translate.instant('GLOBAL.LEVEL'),
+      headerName: this.translate.get('GLOBAL.LEVEL'),
       field: 'level',
-      tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.LEVEL'),
+      tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.LEVEL'),
     },
     {
-      headerName: this.translate.instant('GLOBAL.PARTS'),
+      headerName: this.translate.get('GLOBAL.PARTS'),
       field: 'parts',
-      tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.PARTS'),
+      tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.PARTS'),
     },
     {
-      headerName: this.translate.instant('GLOBAL.VALUES'),
+      headerName: this.translate.get('GLOBAL.VALUES'),
       field: 'values',
-      tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.VALUES'),
+      tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.VALUES'),
     },
     {
-      headerName: this.translate.instant('GLOBAL.TYPE'),
+      headerName: this.translate.get('GLOBAL.TYPE'),
       field: 'type',
-      tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.TYPE'),
+      tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.TYPE'),
     },
     {
-      headerName: this.translate.instant('GLOBAL.MODE'),
+      headerName: this.translate.get('GLOBAL.MODE'),
       field: 'mode',
       show: false,
-      tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.MODE'),
+      tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.MODE'),
     },
   ];
 

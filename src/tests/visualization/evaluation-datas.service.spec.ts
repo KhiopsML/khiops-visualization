@@ -4,7 +4,7 @@ import { EvaluationDatasService } from '@khiops-visualization/providers/evaluati
 import { HttpClientModule } from '@angular/common/http';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import * as _ from 'lodash'; // Important to import lodash in karma
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@ngstack/translate';
 
 let evaluationDatasService: EvaluationDatasService;
 let appService: AppService;

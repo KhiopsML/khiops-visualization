@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { HttpClientModule } from '@angular/common/http';
 import { MatrixCanvasService } from '@khiops-library/components/matrix-canvas/matrix-canvas.service';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@ngstack/translate';
 let appService: AppService;
 
 let cells;

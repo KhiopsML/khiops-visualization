@@ -1,6 +1,6 @@
 import { ConfigService } from './config.service';
 import { Injectable } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngstack/translate';
 import { UtilsService } from './utils.service';
 
 @Injectable({
@@ -78,12 +78,12 @@ export class CopyDatasService {
     let formattedDatas = '';
 
     // TITLE
-    formattedDatas += this.translate.instant('GLOBAL.DISTRIBUTION') + '\n\n';
+    formattedDatas += this.translate.get('GLOBAL.DISTRIBUTION') + '\n\n';
 
     // HEADER
-    formattedDatas += this.translate.instant('GLOBAL.PARTITION') + '\t';
-    formattedDatas += this.translate.instant('GLOBAL.LOGVALUE') + '\t';
-    formattedDatas += this.translate.instant('GLOBAL.VALUE') + '\t';
+    formattedDatas += this.translate.get('GLOBAL.PARTITION') + '\t';
+    formattedDatas += this.translate.get('GLOBAL.LOGVALUE') + '\t';
+    formattedDatas += this.translate.get('GLOBAL.VALUE') + '\t';
     formattedDatas += '\n';
 
     // CONTENT
@@ -191,7 +191,7 @@ export class CopyDatasService {
     // HEADER
     if (selectedArea.graphOptions) {
       formattedDatas +=
-        this.translate.instant(selectedArea.graphOptions.selected) + '\t';
+        this.translate.get(selectedArea.graphOptions.selected) + '\t';
     }
     if (selectedArea.displayedValues) {
       for (let i = 0; i < selectedArea.displayedValues.length; i++) {
@@ -229,7 +229,7 @@ export class CopyDatasService {
     // CONTENT
     for (let i = 0; i < selectedArea.inputDatas.length; i++) {
       formattedDatas +=
-        this.translate.instant(selectedArea.inputDatas[i].title) + '\t';
+        this.translate.get(selectedArea.inputDatas[i].title) + '\t';
       formattedDatas += selectedArea.inputDatas[i].value + '\t';
       formattedDatas += '\n';
     }
@@ -250,7 +250,7 @@ export class CopyDatasService {
     let formattedDatas = '';
 
     formattedDatas +=
-      this.translate.instant('GLOBAL.EXTERNAL_DATA_OF', {
+      this.translate.get('GLOBAL.EXTERNAL_DATA_OF', {
         value: selectedArea.inputValue,
       }) + '\n';
     formattedDatas += selectedArea.externalData + '\n';
@@ -266,13 +266,13 @@ export class CopyDatasService {
         .selectedFlattenTree;
 
     // TITLE
-    formattedDatas += this.translate.instant('GLOBAL.DECISION_TREE') + '\n';
+    formattedDatas += this.translate.get('GLOBAL.DECISION_TREE') + '\n';
 
     // HEADER
-    formattedDatas += this.translate.instant('GLOBAL.NODE') + '\t';
-    formattedDatas += this.translate.instant('GLOBAL.TYPE') + '\t';
-    formattedDatas += this.translate.instant('GLOBAL.VARIABLE') + '\n';
-    // formattedDatas += this.translate.instant('GLOBAL.PARTITION') + '\n';
+    formattedDatas += this.translate.get('GLOBAL.NODE') + '\t';
+    formattedDatas += this.translate.get('GLOBAL.TYPE') + '\t';
+    formattedDatas += this.translate.get('GLOBAL.VARIABLE') + '\n';
+    // formattedDatas += this.translate.get('GLOBAL.PARTITION') + '\n';
 
     // CONTENT
     for (let i = 0; i < currentDatas.length; i++) {
@@ -300,20 +300,20 @@ export class CopyDatasService {
 
     // TITLE
     formattedDatas +=
-      this.translate.instant('GLOBAL.HIERARCHY') +
+      this.translate.get('GLOBAL.HIERARCHY') +
       '\t' +
       flattenDatas[0].hierarchy +
       '\n';
 
     // HEADER
-    formattedDatas += this.translate.instant('GLOBAL.NAME') + '\t';
-    formattedDatas += this.translate.instant('GLOBAL.PARENT_CLUSTER') + '\t';
-    formattedDatas += this.translate.instant('GLOBAL.FREQUENCY') + '\t';
-    formattedDatas += this.translate.instant('GLOBAL.INTEREST') + '\t';
+    formattedDatas += this.translate.get('GLOBAL.NAME') + '\t';
+    formattedDatas += this.translate.get('GLOBAL.PARENT_CLUSTER') + '\t';
+    formattedDatas += this.translate.get('GLOBAL.FREQUENCY') + '\t';
+    formattedDatas += this.translate.get('GLOBAL.INTEREST') + '\t';
     formattedDatas +=
-      this.translate.instant('GLOBAL.HIERARCHICAL_LEVEL') + '\t';
-    formattedDatas += this.translate.instant('GLOBAL.RANK') + '\t';
-    formattedDatas += this.translate.instant('GLOBAL.HIERARCHICAL_RANK') + '\n';
+      this.translate.get('GLOBAL.HIERARCHICAL_LEVEL') + '\t';
+    formattedDatas += this.translate.get('GLOBAL.RANK') + '\t';
+    formattedDatas += this.translate.get('GLOBAL.HIERARCHICAL_RANK') + '\n';
 
     // CONTENT
     for (let i = 0; i < flattenDatas.length; i++) {

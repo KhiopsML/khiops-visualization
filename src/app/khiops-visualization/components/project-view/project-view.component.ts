@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AppConfig } from 'src/environments/environment';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngstack/translate';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { ProjectLogVO } from '@khiops-library/model/project-log-vo';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
@@ -34,11 +34,11 @@ export class ProjectViewComponent
 
   logsDisplayedColumns: GridColumnsI[] = [
     {
-      headerName: this.translate.instant('GLOBAL.TASK'),
+      headerName: this.translate.get('GLOBAL.TASK'),
       field: 'task',
     },
     {
-      headerName: this.translate.instant('GLOBAL.MESSAGE'),
+      headerName: this.translate.get('GLOBAL.MESSAGE'),
       field: 'message',
     },
   ];
@@ -58,7 +58,7 @@ export class ProjectViewComponent
     if (this.appDatas.datas) {
       this.sizes = this.appService.getViewSplitSizes('projectView');
 
-      this.logsTitle = this.translate.instant('GLOBAL.LOGS');
+      this.logsTitle = this.translate.get('GLOBAL.LOGS');
       this.projectSummaryDatas = this.appService.getProjectSummaryDatas();
       this.projectLogsDatas = this.appService.getProjectLogsDatas();
     }

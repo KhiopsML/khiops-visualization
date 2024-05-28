@@ -7,7 +7,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngstack/translate';
 import _ from 'lodash';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 import { PageChangeEventI } from '@khiops-visualization/interfaces/page-change-event';
@@ -47,7 +47,7 @@ export class SelectToggleButtonComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.selectAllCheckboxText = this.translate.instant('GLOBAL.UNSELECT_ALL');
+    this.selectAllCheckboxText = this.translate.get('GLOBAL.UNSELECT_ALL');
   }
 
   onPageChange($event: PageChangeEventI) {
@@ -90,7 +90,7 @@ export class SelectToggleButtonComponent implements OnInit, OnChanges {
     if (valuesShown === this.displayedValues.length) {
       this.isSelectAllChecked = true;
       this.isSelectAllIndeterminate = false;
-      this.selectAllCheckboxText = this.translate.instant(
+      this.selectAllCheckboxText = this.translate.get(
         'GLOBAL.UNSELECT_ALL',
       );
     } else if (valuesHidden === this.displayedValues.length) {
@@ -99,7 +99,7 @@ export class SelectToggleButtonComponent implements OnInit, OnChanges {
     } else {
       this.isSelectAllChecked = false;
       this.isSelectAllIndeterminate = true;
-      this.selectAllCheckboxText = this.translate.instant('GLOBAL.SELECT_ALL');
+      this.selectAllCheckboxText = this.translate.get('GLOBAL.SELECT_ALL');
     }
   }
 
@@ -114,11 +114,11 @@ export class SelectToggleButtonComponent implements OnInit, OnChanges {
       this.toggleGraphOptionValue($event, opt);
     }
     if ($event.checked) {
-      this.selectAllCheckboxText = this.translate.instant(
+      this.selectAllCheckboxText = this.translate.get(
         'GLOBAL.UNSELECT_ALL',
       );
     } else {
-      this.selectAllCheckboxText = this.translate.instant('GLOBAL.SELECT_ALL');
+      this.selectAllCheckboxText = this.translate.get('GLOBAL.SELECT_ALL');
     }
 
     // emit to update graph

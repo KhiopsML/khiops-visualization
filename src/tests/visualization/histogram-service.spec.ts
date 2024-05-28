@@ -6,7 +6,7 @@ import { DistributionDatasService } from '@khiops-visualization/providers/distri
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { REPORTS } from '@khiops-library/enum/reports';
 import { HistogramType } from '@khiops-visualization/components/commons/histogram/histogram.types';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@ngstack/translate';
 
 let appService: AppService;
 let histogramService: HistogramService;

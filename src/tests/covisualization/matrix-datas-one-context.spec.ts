@@ -3,7 +3,7 @@ import { AppService } from '@khiops-covisualization/providers/app.service';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { HttpClientModule } from '@angular/common/http';
 import { MatrixCanvasService } from '@khiops-library/components/matrix-canvas/matrix-canvas.service';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@ngstack/translate';
 
 let appService: AppService;
 let dimensionsDatasService: DimensionsDatasService;

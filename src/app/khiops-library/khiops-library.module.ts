@@ -36,7 +36,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CommonModule } from '@angular/common';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngstack/translate';
 import { ReleaseNotesComponent } from './components/release-notes/release-notes.component';
 import { ToPrecisionPipe } from './pipes/toPrecision.pipe';
 import { HeaderTitleComponent } from './components/header-title/header-title.component';
@@ -66,6 +66,7 @@ import { MarkedOptionsFactory } from './factory/markdown.factory';
 import { MatrixToggleComponent } from './components/matrix-toggle/matrix-toggle.component';
 import { MatrixModeComponent } from './components/matrix-mode/matrix-mode.component';
 import { GraphOptionsMenuComponent } from './components/graph-options-menu/graph-options-menu.component';
+import EnTransaltion from '../../assets/i18n/en.json';
 
 @NgModule({
   imports: [
@@ -107,7 +108,10 @@ import { GraphOptionsMenuComponent } from './components/graph-options-menu/graph
     MatDialogModule,
     ResizableModule,
     HotkeyModule.forRoot(),
-    TranslateModule.forChild(),
+    TranslateModule.forRoot({
+      activeLang: 'en',
+      supportedLangs: ['en'],
+    }),
   ],
   declarations: [
     LibraryComponent,
@@ -203,4 +207,8 @@ import { GraphOptionsMenuComponent } from './components/graph-options-menu/graph
     ImportFileLoaderComponent,
   ],
 })
-export class KhiopsLibraryModule {}
+export class KhiopsLibraryModule {
+  constructor(public translate: TranslateService) {
+    translate.use('en', EnTransaltion);
+  }
+}

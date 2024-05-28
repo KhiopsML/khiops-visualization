@@ -16,7 +16,7 @@ import { TargetVariableStatsCanvasComponent } from './components/commons/target-
 import { DescriptionBlockComponent } from './components/commons/description-block/description-block.component';
 import { KhiopsLibraryModule } from '@khiops-library/khiops-library.module';
 import { ReleaseNotesComponent } from '@khiops-library/components/release-notes/release-notes.component';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngstack/translate';
 import { LevelDistributionGraphCanvasComponent } from './components/commons/level-distribution-graph-canvas/level-distribution-graph-canvas.component';
 import { SelectTrainedPredictorComponent } from './components/commons/select-trained-predictor/select-trained-predictor.component';
 import { VariableGraphDetailsComponent } from './components/commons/variable-graph-details/variable-graph-details.component';

@@ -7,7 +7,7 @@ import {
   NgZone,
 } from '@angular/core';
 import { ConfirmDialogComponent } from '@khiops-library/components/confirm-dialog/confirm-dialog.component';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngstack/translate';
 import {
   MatDialogRef,
   MatDialog,
@@ -102,7 +102,7 @@ export class AppComponent implements AfterViewInit {
         const config = new MatDialogConfig();
         const dialogRef: MatDialogRef<ConfirmDialogComponent> =
           this.dialog.open(ConfirmDialogComponent, config);
-        dialogRef.componentInstance.message = this.translate.instant(
+        dialogRef.componentInstance.message = this.translate.get(
           'GLOBAL.SAVE_BEFORE_QUIT',
         );
         dialogRef.componentInstance.displayRejectBtn = true;
@@ -118,10 +118,10 @@ export class AppComponent implements AfterViewInit {
         const config = new MatDialogConfig();
         const dialogRef: MatDialogRef<ConfirmDialogComponent> =
           this.dialog.open(ConfirmDialogComponent, config);
-        dialogRef.componentInstance.title = this.translate.instant(
+        dialogRef.componentInstance.title = this.translate.get(
           'GLOBAL.ENABLE_BETA_VERSIONS',
         );
-        dialogRef.componentInstance.message = this.translate.instant(
+        dialogRef.componentInstance.message = this.translate.get(
           'GLOBAL.BETA_VERSIONS_WARNING',
         );
         dialogRef

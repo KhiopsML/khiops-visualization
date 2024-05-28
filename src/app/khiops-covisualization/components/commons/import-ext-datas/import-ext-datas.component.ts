@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngstack/translate';
 import { FileVO } from '@khiops-library/model/file-vo';
 import { DimensionVO } from '@khiops-library/model/dimension-vo';
 import { CheckboxCellComponent } from '@khiops-library/components/ag-grid/checkbox-cell/checkbox-cell.component';
@@ -65,7 +65,7 @@ export class ImportExtDatasComponent implements OnInit {
         );
         if (importedData) {
           this.snackBar.open(
-            this.translate.instant('SNACKS.EXTERNAL_DATA_ADDED'),
+            this.translate.get('SNACKS.EXTERNAL_DATA_ADDED'),
             undefined,
             {
               duration: 2000,
@@ -74,7 +74,7 @@ export class ImportExtDatasComponent implements OnInit {
           );
         } else {
           this.snackBar.open(
-            this.translate.instant('SNACKS.EXTERNAL_DATA_ALREADY_ADDED'),
+            this.translate.get('SNACKS.EXTERNAL_DATA_ALREADY_ADDED'),
             undefined,
             {
               duration: 2000,
@@ -117,11 +117,11 @@ export class ImportExtDatasComponent implements OnInit {
 
     this.fieldsToImport.displayedColumns = [
       {
-        headerName: this.translate.instant('GLOBAL.NAME'),
+        headerName: this.translate.get('GLOBAL.NAME'),
         field: 'name',
       },
       {
-        headerName: this.translate.instant('GLOBAL.IMPORT'),
+        headerName: this.translate.get('GLOBAL.IMPORT'),
         field: 'import',
         cellRendererFramework: CheckboxCellComponent,
       },

@@ -6,7 +6,7 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngstack/translate';
 import { ChartColorsSetI } from '../../interfaces/chart-colors-set';
 import { UtilsService } from '../../providers/utils.service';
 
@@ -49,7 +49,7 @@ export class LegendComponent implements OnChanges {
       const defaultIndex = input.extra.findIndex((e) => e.defaultGroupIndex);
       if (defaultIndex !== -1) {
         this.legend.push({
-          name: this.translate.instant('GLOBAL.DEFAULT_GROUP_INDEX'),
+          name: this.translate.get('GLOBAL.DEFAULT_GROUP_INDEX'),
           color: UtilsService.hexToRGBa(this.colorSet.domain[0], 0.3),
         });
       }
@@ -62,13 +62,13 @@ export class LegendComponent implements OnChanges {
       if (this.type === 'chart-1d') {
         if (this.inputDatas?.datasets?.[0]) {
           this.legend.push({
-            name: this.translate.instant(this.inputDatas.datasets[0].label),
+            name: this.translate.get(this.inputDatas.datasets[0].label),
             color: this.colorSet.domain[0],
           });
           this.checkForDefaultGroupIndex(this.inputDatas.datasets[0]);
         } else {
           this.legend.push({
-            name: this.translate.instant(this.inputDatas),
+            name: this.translate.get(this.inputDatas),
             color: this.colorSet.domain[0],
           });
         }

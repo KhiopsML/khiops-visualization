@@ -8,7 +8,7 @@ import {
   SimpleChanges,
   AfterViewInit,
 } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngstack/translate';
 import { CompositionVO } from '@khiops-covisualization/model/composition-vo';
 import { DimensionVO } from '@khiops-library/model/dimension-vo';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
@@ -52,38 +52,38 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {
     this.compositionDisplayedColumns = [
       {
-        headerName: this.translate.instant('GLOBAL.CLUSTER'),
+        headerName: this.translate.get('GLOBAL.CLUSTER'),
         field: 'cluster',
-        tooltip: this.translate.instant('TOOLTIPS.AXIS.COMPOSITION.CLUSTER'),
+        tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.CLUSTER'),
       },
       {
-        headerName: this.translate.instant('GLOBAL.TERMINAL_CLUSTER'),
+        headerName: this.translate.get('GLOBAL.TERMINAL_CLUSTER'),
         show: false,
         field: 'terminalCluster',
-        tooltip: this.translate.instant(
+        tooltip: this.translate.get(
           'TOOLTIPS.AXIS.COMPOSITION.TERMINAL_CLUSTER',
         ),
       },
       {
-        headerName: this.translate.instant('GLOBAL.RANK'),
+        headerName: this.translate.get('GLOBAL.RANK'),
         show: false,
         field: 'rank',
-        tooltip: this.translate.instant('TOOLTIPS.AXIS.COMPOSITION.RANK'),
+        tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.RANK'),
       },
       {
-        headerName: this.translate.instant('GLOBAL.TYPICALITY'),
+        headerName: this.translate.get('GLOBAL.TYPICALITY'),
         field: 'typicality',
-        tooltip: this.translate.instant('TOOLTIPS.AXIS.COMPOSITION.TYPICALITY'),
+        tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.TYPICALITY'),
       },
       {
-        headerName: this.translate.instant('GLOBAL.VALUE'),
+        headerName: this.translate.get('GLOBAL.VALUE'),
         field: 'value',
-        tooltip: this.translate.instant('TOOLTIPS.AXIS.COMPOSITION.VALUE'),
+        tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.VALUE'),
       },
       {
-        headerName: this.translate.instant('GLOBAL.FREQUENCY'),
+        headerName: this.translate.get('GLOBAL.FREQUENCY'),
         field: 'frequency',
-        tooltip: this.translate.instant('TOOLTIPS.AXIS.COMPOSITION.FREQUENCY'),
+        tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.FREQUENCY'),
       },
     ];
 
@@ -117,7 +117,7 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     this.id = 'cluster-composition-' + this.position;
-    this.title = this.translate.instant('GLOBAL.COMPOSITION');
+    this.title = this.translate.get('GLOBAL.COMPOSITION');
   }
 
   ngAfterViewInit() {

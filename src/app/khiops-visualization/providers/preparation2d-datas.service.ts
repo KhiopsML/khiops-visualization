@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { AppService } from './app.service';
 import { DimensionVO } from '@khiops-library/model/dimension-vo';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngstack/translate';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { EvaluationDatasService } from './evaluation-datas.service';
 import { Preparation2dVariableVO } from '../model/preparation2d-variable-vo';
@@ -275,31 +275,31 @@ export class Preparation2dDatasService {
         // Define column titles
         if (xType === TYPES.NUMERICAL) {
           displayedColumnsX.push({
-            headerName: this.translate.instant('GLOBAL.INTERVAL_OF') + xName,
+            headerName: this.translate.get('GLOBAL.INTERVAL_OF') + xName,
             field: 'interval',
           });
         } else {
           displayedColumnsX.push({
-            headerName: this.translate.instant('GLOBAL.VALUES_OF') + xName,
+            headerName: this.translate.get('GLOBAL.VALUES_OF') + xName,
             field: 'values',
           });
           displayedColumnsX.push({
-            headerName: this.translate.instant('GLOBAL.FREQUENCY'),
+            headerName: this.translate.get('GLOBAL.FREQUENCY'),
             field: 'frequency',
           });
         }
         if (yType === TYPES.NUMERICAL) {
           displayedColumnsY.push({
-            headerName: this.translate.instant('GLOBAL.INTERVAL_OF') + yName,
+            headerName: this.translate.get('GLOBAL.INTERVAL_OF') + yName,
             field: 'interval',
           });
         } else {
           displayedColumnsY.push({
-            headerName: this.translate.instant('GLOBAL.VALUES_OF') + yName,
+            headerName: this.translate.get('GLOBAL.VALUES_OF') + yName,
             field: 'values',
           });
           displayedColumnsY.push({
-            headerName: this.translate.instant('GLOBAL.FREQUENCY'),
+            headerName: this.translate.get('GLOBAL.FREQUENCY'),
             field: 'frequency',
           });
         }

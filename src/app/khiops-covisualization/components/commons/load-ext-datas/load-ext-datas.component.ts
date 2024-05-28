@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngstack/translate';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
 
 @Component({

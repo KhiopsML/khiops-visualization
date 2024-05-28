@@ -6,7 +6,7 @@ import { AppService } from '@khiops-visualization/providers/app.service';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { REPORTS } from '@khiops-library/enum/reports';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@ngstack/translate';
 
 let modelingDatasService: ModelingDatasService;
 let preparationDatasService: PreparationDatasService;

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AppService } from './app.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngstack/translate';
 import { BarVO } from '../model/bar-vo';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { PreparationVariableVO } from '../model/preparation-variable-vo';
@@ -171,7 +171,7 @@ export class PreparationDatasService {
         if (currentVariableType === TYPES.NUMERICAL) {
           displayedColumns.push({
             headerName:
-              this.translate.instant('GLOBAL.INTERVAL_OF') +
+              this.translate.get('GLOBAL.INTERVAL_OF') +
               variableDetails.dataGrid.dimensions[0].variable,
             field: 'interval',
           });
@@ -190,10 +190,10 @@ export class PreparationDatasService {
             }
             datas[0]['interval'] = currentPartition;
           } else {
-            datas[0]['interval'] = this.translate.instant('GLOBAL.MISSING');
+            datas[0]['interval'] = this.translate.get('GLOBAL.MISSING');
           }
 
-          title = this.translate.instant('GLOBAL.CURRENT_INTERVAL');
+          title = this.translate.get('GLOBAL.CURRENT_INTERVAL');
         } else if (currentVariableType === TYPES.CATEGORICAL) {
           let dimensionLength = 0;
           let startIter = 0;
@@ -203,12 +203,12 @@ export class PreparationDatasService {
 
           displayedColumns.push({
             headerName:
-              this.translate.instant('GLOBAL.VALUES_OF') +
+              this.translate.get('GLOBAL.VALUES_OF') +
               variableDetails.dataGrid.dimensions[0].variable,
             field: 'values',
           });
           displayedColumns.push({
-            headerName: this.translate.instant('GLOBAL.FREQUENCY'),
+            headerName: this.translate.get('GLOBAL.FREQUENCY'),
             field: 'frequency',
           });
 
@@ -273,13 +273,13 @@ export class PreparationDatasService {
             }
           }
 
-          title = this.translate.instant('GLOBAL.CURRENT_GROUP');
+          title = this.translate.get('GLOBAL.CURRENT_GROUP');
         }
 
         if (variableDetails.isLimitedDatas) {
           title +=
             ' ( * ' +
-            this.translate.instant('GLOBAL.LIMIT_GRAPH_DATAS_WARNING') +
+            this.translate.get('GLOBAL.LIMIT_GRAPH_DATAS_WARNING') +
             ')';
         }
       }

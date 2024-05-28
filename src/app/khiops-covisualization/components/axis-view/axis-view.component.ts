@@ -14,7 +14,7 @@ import { DimensionsDatasService } from '@khiops-covisualization/providers/dimens
 import { ViewLayoutVO } from '@khiops-covisualization/model/view-layout-vo';
 import { AxisComponent } from '../commons/axis/axis.component';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngstack/translate';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
@@ -148,10 +148,10 @@ export class AxisViewComponent
     this.initializeDatas();
 
     this.snackBar.open(
-      this.translate.instant('SNACKS.UNFOLDED_DATAS_PERFORMANCE_WARNING', {
+      this.translate.get('SNACKS.UNFOLDED_DATAS_PERFORMANCE_WARNING', {
         count: unfoldState,
       }),
-      this.translate.instant('GLOBAL.OK'),
+      this.translate.get('GLOBAL.OK'),
       {
         duration: 4000,
         panelClass: 'warning',

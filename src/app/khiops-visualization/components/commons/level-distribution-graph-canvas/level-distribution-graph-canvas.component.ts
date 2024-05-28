@@ -11,7 +11,7 @@ import { DistributionDatasService } from '@khiops-visualization/providers/distri
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { AppConfig } from 'src/environments/environment';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngstack/translate';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ScrollableGraphCanvasComponent } from '@khiops-library/components/scrollable-graph-canvas/scrollable-graph-canvas.component';
 import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
@@ -103,7 +103,7 @@ export class LevelDistributionGraphCanvasComponent
       AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.MAX_VARIABLES
     ) {
       this.snackBar.open(
-        this.translate.instant('SNACKS.TOO_MANY_VARIABLES'),
+        this.translate.get('SNACKS.TOO_MANY_VARIABLES'),
         undefined,
         {
           duration: 5000,
@@ -116,7 +116,7 @@ export class LevelDistributionGraphCanvasComponent
       this.levelDistributionTitle === '' ||
       this.levelDistributionTitle === undefined
     ) {
-      this.levelDistributionTitle = this.translate.instant(
+      this.levelDistributionTitle = this.translate.get(
         'GLOBAL.LEVEL_DISTRIBUTION',
       );
     }

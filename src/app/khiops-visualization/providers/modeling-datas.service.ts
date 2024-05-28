@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AppService } from './app.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngstack/translate';
 import { PreparationDatasService } from './preparation-datas.service';
 import { ModelingPredictorVO } from '../model/modeling-predictor-vo';
 import { SummaryVO } from '../model/summary-vo';
@@ -124,7 +124,7 @@ export class ModelingDatasService {
           displayedColumns.push({
             headerName: UtilsService.capitalizeFirstLetter(key),
             field: key,
-            tooltip: this.translate.instant(
+            tooltip: this.translate.get(
               'TOOLTIPS.MODELING.VARIABLES.' + key.toUpperCase(),
             ),
           });
@@ -158,7 +158,7 @@ export class ModelingDatasService {
         value:
           appDatas.modelingReport.trainedPredictors[i].variables +
           ' ' +
-          this.translate.instant('GLOBAL.VARIABLES'),
+          this.translate.get('GLOBAL.VARIABLES'),
       });
     }
     return trainedPredictorsSummaryDatas;

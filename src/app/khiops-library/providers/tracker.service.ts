@@ -5,7 +5,7 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '@khiops-library/components/confirm-dialog/confirm-dialog.component';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngstack/translate';
 declare const window: any;
 import { v4 as uuidv4 } from 'uuid';
 
@@ -110,12 +110,12 @@ export class TrackerService {
         bottom: '50px',
         right: '50px',
       });
-      dialogRef.componentInstance.message = this.translate.instant(
+      dialogRef.componentInstance.message = this.translate.get(
         'COOKIE_CONSENT.MESSAGE',
       );
       dialogRef.componentInstance.displayRejectBtn = true;
       dialogRef.componentInstance.displayCancelBtn = false;
-      dialogRef.componentInstance.confirmTranslation = this.translate.instant(
+      dialogRef.componentInstance.confirmTranslation = this.translate.get(
         'COOKIE_CONSENT.ALLOW',
       );
 

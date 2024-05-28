@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import _ from 'lodash'; // Important to import lodash in karma
 import { AppService } from './app.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngstack/translate';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { VariableDetailsVO } from '../model/variableDetails-vo';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
@@ -224,7 +224,7 @@ export class TreePreparationDatasService {
           if (currentVariableType === TYPES.NUMERICAL) {
             displayedColumns.push({
               headerName:
-                this.translate.instant('GLOBAL.INTERVAL_OF') +
+                this.translate.get('GLOBAL.INTERVAL_OF') +
                 variableDetails.dataGrid.dimensions[0].variable,
               field: 'interval',
             });
@@ -238,10 +238,10 @@ export class TreePreparationDatasService {
                 variableDetails.dataGrid.dimensions[0].partition[index],
               );
             } else {
-              datas[0]['interval'] = this.translate.instant('GLOBAL.MISSING');
+              datas[0]['interval'] = this.translate.get('GLOBAL.MISSING');
             }
 
-            title = this.translate.instant('GLOBAL.CURRENT_INTERVAL');
+            title = this.translate.get('GLOBAL.CURRENT_INTERVAL');
           } else if (currentVariableType === TYPES.CATEGORICAL) {
             let dimensionLength = 0;
             let startIter = 0;
@@ -251,12 +251,12 @@ export class TreePreparationDatasService {
 
             displayedColumns.push({
               headerName:
-                this.translate.instant('GLOBAL.VALUES_OF') +
+                this.translate.get('GLOBAL.VALUES_OF') +
                 variableDetails.dataGrid.dimensions[0].variable,
               field: 'values',
             });
             displayedColumns.push({
-              headerName: this.translate.instant('GLOBAL.FREQUENCY'),
+              headerName: this.translate.get('GLOBAL.FREQUENCY'),
               field: 'frequency',
             });
 
@@ -324,13 +324,13 @@ export class TreePreparationDatasService {
               }
             }
 
-            title = this.translate.instant('GLOBAL.CURRENT_GROUP');
+            title = this.translate.get('GLOBAL.CURRENT_GROUP');
           }
 
           if (variableDetails.isLimitedDatas) {
             title +=
               ' ( * ' +
-              this.translate.instant('GLOBAL.LIMIT_GRAPH_DATAS_WARNING') +
+              this.translate.get('GLOBAL.LIMIT_GRAPH_DATAS_WARNING') +
               ')';
           }
         }
@@ -408,7 +408,7 @@ export class TreePreparationDatasService {
   getTreeDetails(): GridDatasI {
     const treeDetails: GridDatasI = {
       title:
-        this.translate.instant('GLOBAL.NODES_SELECTION_DETAILS') +
+        this.translate.get('GLOBAL.NODES_SELECTION_DETAILS') +
         ' : ' +
         this.treePreparationDatas?.selectedNodes
           ?.map((e) => e.nodeId)
@@ -420,15 +420,15 @@ export class TreePreparationDatasService {
     if (this.treePreparationDatas?.selectedNodes?.[0]) {
       treeDetails.displayedColumns = [
         {
-          headerName: this.translate.instant('GLOBAL.NODE_ID'),
+          headerName: this.translate.get('GLOBAL.NODE_ID'),
           field: 'nodeId',
         },
         {
-          headerName: this.translate.instant('GLOBAL.VALUES'),
+          headerName: this.translate.get('GLOBAL.VALUES'),
           field: 'values',
         },
         {
-          headerName: this.translate.instant('GLOBAL.FREQUENCIES'),
+          headerName: this.translate.get('GLOBAL.FREQUENCIES'),
           field: 'frequencies',
         },
       ];
@@ -460,7 +460,7 @@ export class TreePreparationDatasService {
   getTreeLeafRules(): GridDatasI {
     const treeLeafRules: GridDatasI = {
       title:
-        this.translate.instant('GLOBAL.LEAF_RULES') +
+        this.translate.get('GLOBAL.LEAF_RULES') +
         ' : ' +
         this.treePreparationDatas?.selectedNode?.nodeId,
       values: [],
@@ -470,15 +470,15 @@ export class TreePreparationDatasService {
     if (this.treePreparationDatas?.selectedNodes?.[0]) {
       treeLeafRules.displayedColumns = [
         {
-          headerName: this.translate.instant('GLOBAL.VARIABLE'),
+          headerName: this.translate.get('GLOBAL.VARIABLE'),
           field: 'variable',
         },
         {
-          headerName: this.translate.instant('GLOBAL.TYPE'),
+          headerName: this.translate.get('GLOBAL.TYPE'),
           field: 'type',
         },
         {
-          headerName: this.translate.instant('GLOBAL.PARTITION'),
+          headerName: this.translate.get('GLOBAL.PARTITION'),
           field: 'partition',
         },
       ];

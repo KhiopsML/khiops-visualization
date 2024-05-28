@@ -3,7 +3,7 @@ import { SelectedClusterVO } from '@khiops-covisualization/model/selected-cluste
 import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngstack/translate';
 import { ClustersService } from '@khiops-covisualization/providers/clusters.service';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { Subscription } from 'rxjs';
@@ -33,26 +33,26 @@ export class SelectedClustersComponent implements OnDestroy {
   ) {
     this.clustersDisplayedColumns = [
       {
-        headerName: this.translate.instant('GLOBAL.NAME'),
+        headerName: this.translate.get('GLOBAL.NAME'),
         field: 'hierarchy',
-        tooltip: this.translate.instant('TOOLTIPS.AXIS.SELECTED_CLUSTERS.NAME'),
+        tooltip: this.translate.get('TOOLTIPS.AXIS.SELECTED_CLUSTERS.NAME'),
       },
       {
-        headerName: this.translate.instant('GLOBAL.CURRENT_CLUSTER'),
+        headerName: this.translate.get('GLOBAL.CURRENT_CLUSTER'),
         field: 'shortDescription',
-        tooltip: this.translate.instant(
+        tooltip: this.translate.get(
           'TOOLTIPS.AXIS.SELECTED_CLUSTERS.CURRENT_CLUSTERS',
         ),
       },
       {
-        headerName: this.translate.instant('GLOBAL.NB_CLUSTERS'),
+        headerName: this.translate.get('GLOBAL.NB_CLUSTERS'),
         field: 'nbClusters',
-        tooltip: this.translate.instant(
+        tooltip: this.translate.get(
           'TOOLTIPS.AXIS.SELECTED_CLUSTERS.NB_CLUSTERS',
         ),
       },
     ];
-    this.title = this.translate.instant('GLOBAL.SELECTED_CLUSTERS');
+    this.title = this.translate.get('GLOBAL.SELECTED_CLUSTERS');
 
     this.treeSelectedNodeChangedSub =
       this.eventsService.treeSelectedNodeChanged.subscribe((e) => {

@@ -12,7 +12,7 @@ import { PreparationDatasService } from '@khiops-visualization/providers/prepara
 import { LevelDistributionGraphCanvasComponent } from '@khiops-visualization/components/commons/level-distribution-graph-canvas/level-distribution-graph-canvas.component';
 import { TargetDistributionGraphCanvasComponent } from '@khiops-visualization/components/commons/target-distribution-graph-canvas/target-distribution-graph-canvas.component';
 import { ModelingDatasService } from '@khiops-visualization/providers/modeling-datas.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngstack/translate';
 import { Distribution2dDatasService } from '@khiops-visualization/providers/distribution2d-datas.service';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
@@ -67,82 +67,82 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
 
     this.variablesDisplayedColumns = [
       {
-        headerName: this.translate.instant('GLOBAL.RANK'),
+        headerName: this.translate.get('GLOBAL.RANK'),
         field: 'rank',
-        tooltip: this.translate.instant(
+        tooltip: this.translate.get(
           'TOOLTIPS.PREPARATION_2D.VARIABLES.RANK',
         ),
       },
       {
-        headerName: this.translate.instant('GLOBAL.NAME_1'),
+        headerName: this.translate.get('GLOBAL.NAME_1'),
         field: 'name1',
-        tooltip: this.translate.instant(
+        tooltip: this.translate.get(
           'TOOLTIPS.PREPARATION_2D.VARIABLES.NAME1',
         ),
       },
       {
-        headerName: this.translate.instant('GLOBAL.NAME_2'),
+        headerName: this.translate.get('GLOBAL.NAME_2'),
         field: 'name2',
-        tooltip: this.translate.instant(
+        tooltip: this.translate.get(
           'TOOLTIPS.PREPARATION_2D.VARIABLES.NAME2',
         ),
       },
       {
-        headerName: this.translate.instant('GLOBAL.DELTA_LEVEL'),
+        headerName: this.translate.get('GLOBAL.DELTA_LEVEL'),
         field: 'deltaLevel',
-        tooltip: this.translate.instant(
+        tooltip: this.translate.get(
           'TOOLTIPS.PREPARATION_2D.VARIABLES.DELTALEVEL',
         ),
         show: this.preparation2dDatasService.isSupervised(),
       },
       {
-        headerName: this.translate.instant('GLOBAL.LEVEL'),
+        headerName: this.translate.get('GLOBAL.LEVEL'),
         field: 'level',
-        tooltip: this.translate.instant(
+        tooltip: this.translate.get(
           'TOOLTIPS.PREPARATION_2D.VARIABLES.LEVEL',
         ),
       },
       {
-        headerName: this.translate.instant('GLOBAL.LEVEL_1'),
+        headerName: this.translate.get('GLOBAL.LEVEL_1'),
         field: 'level1',
-        tooltip: this.translate.instant(
+        tooltip: this.translate.get(
           'TOOLTIPS.PREPARATION_2D.VARIABLES.LEVEL1',
         ),
         show: this.preparation2dDatasService.isSupervised(),
       },
       {
-        headerName: this.translate.instant('GLOBAL.LEVEL_2'),
+        headerName: this.translate.get('GLOBAL.LEVEL_2'),
         field: 'level2',
-        tooltip: this.translate.instant(
+        tooltip: this.translate.get(
           'TOOLTIPS.PREPARATION_2D.VARIABLES.LEVEL2',
         ),
         show: this.preparation2dDatasService.isSupervised(),
       },
       {
-        headerName: this.translate.instant('GLOBAL.VARIABLES'),
+        headerName: this.translate.get('GLOBAL.VARIABLES'),
         field: 'variables',
-        tooltip: this.translate.instant(
+        tooltip: this.translate.get(
           'TOOLTIPS.PREPARATION_2D.VARIABLES.VARIABLES',
         ),
       },
       {
-        headerName: this.translate.instant('GLOBAL.PARTS_1'),
+        headerName: this.translate.get('GLOBAL.PARTS_1'),
         field: 'parts1',
-        tooltip: this.translate.instant(
+        tooltip: this.translate.get(
           'TOOLTIPS.PREPARATION_2D.VARIABLES.PARTS1',
         ),
       },
       {
-        headerName: this.translate.instant('GLOBAL.PARTS_2'),
+        headerName: this.translate.get('GLOBAL.PARTS_2'),
         field: 'parts2',
-        tooltip: this.translate.instant(
+        tooltip: this.translate.get(
           'TOOLTIPS.PREPARATION_2D.VARIABLES.PARTS2',
         ),
       },
       {
-        headerName: this.translate.instant('GLOBAL.CELLS'),
+        headerName: this.translate.get('GLOBAL.CELLS'),
         field: 'cells',
-        tooltip: this.translate.instant(
+        tooltip: this.translate.get(
           'TOOLTIPS.PREPARATION_2D.VARIABLES.CELLS',
         ),
       },
@@ -159,7 +159,7 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
     this.variables2dDatas =
       this.preparation2dDatasService.getVariablesd2Datas();
     this.levelDistributionTitle = this.preparation2dDatasService.isSupervised()
-      ? this.translate.instant('GLOBAL.DELTA_LEVEL_DISTRIBUTION')
+      ? this.translate.get('GLOBAL.DELTA_LEVEL_DISTRIBUTION')
       : '';
   }
 

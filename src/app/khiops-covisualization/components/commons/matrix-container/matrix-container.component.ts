@@ -11,7 +11,7 @@ import { MatrixModesI } from '@khiops-library/interfaces/matrix-modes';
 import { MatrixOptionsI } from '@khiops-library/interfaces/matrix-options';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 import { CellVO } from '@khiops-library/model/cell-vo';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngstack/translate';
 
 @Component({
   selector: 'app-matrix-container',
@@ -117,27 +117,27 @@ export class MatrixContainerComponent implements OnInit, OnDestroy {
       {
         mode: 'MUTUAL_INFO',
         title: 'I (' + varName1 + ' , ' + varName2 + ')',
-        tooltip: this.translate.instant('TOOLTIPS.AXIS.MATRIX.I'),
+        tooltip: this.translate.get('TOOLTIPS.AXIS.MATRIX.I'),
       },
       {
         mode: 'FREQUENCY',
         title: 'Frequency',
-        tooltip: this.translate.instant('TOOLTIPS.AXIS.MATRIX.F'),
+        tooltip: this.translate.get('TOOLTIPS.AXIS.MATRIX.F'),
       },
       {
         mode: 'PROB_CELL',
         title: 'P (' + varName2 + ' | ' + varName1 + ')',
-        tooltip: this.translate.instant('TOOLTIPS.AXIS.MATRIX.P'),
+        tooltip: this.translate.get('TOOLTIPS.AXIS.MATRIX.P'),
       },
       {
         mode: 'PROB_CELL_REVERSE',
         title: 'P (' + varName1 + ' | ' + varName2 + ')',
-        tooltip: this.translate.instant('TOOLTIPS.AXIS.MATRIX.P'),
+        tooltip: this.translate.get('TOOLTIPS.AXIS.MATRIX.P'),
       },
       {
         mode: 'HELLINGER',
         title: 'H (' + varName1 + ' , ' + varName2 + ')',
-        tooltip: this.translate.instant('TOOLTIPS.AXIS.MATRIX.H'),
+        tooltip: this.translate.get('TOOLTIPS.AXIS.MATRIX.H'),
       },
     ];
     this.matrixModes = { ...this.matrixModes };

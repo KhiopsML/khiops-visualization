@@ -13,7 +13,7 @@ import { EvaluationDatasService } from '@khiops-visualization/providers/evaluati
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
 import { LevelDistributionGraphCanvasComponent } from '../commons/level-distribution-graph-canvas/level-distribution-graph-canvas.component';
 import { VariableGraphDetailsComponent } from '../commons/variable-graph-details/variable-graph-details.component';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngstack/translate';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { REPORTS } from '@khiops-library/enum/reports';
 import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
@@ -74,90 +74,90 @@ export class PreparationViewComponent extends SelectableTabComponent {
 
     this.variablesDisplayedColumns = [
       {
-        headerName: this.translate.instant('GLOBAL.RANK'),
+        headerName: this.translate.get('GLOBAL.RANK'),
         field: 'rank',
-        tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.RANK'),
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.RANK'),
       },
       {
-        headerName: this.translate.instant('GLOBAL.NAME'),
+        headerName: this.translate.get('GLOBAL.NAME'),
         field: 'name',
-        tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.NAME'),
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.NAME'),
       },
       {
-        headerName: this.translate.instant('GLOBAL.LEVEL'),
+        headerName: this.translate.get('GLOBAL.LEVEL'),
         field: 'level',
-        tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.LEVEL'),
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.LEVEL'),
       },
       {
-        headerName: this.translate.instant('GLOBAL.PARTS'),
+        headerName: this.translate.get('GLOBAL.PARTS'),
         field: 'parts',
-        tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.PARTS'),
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.PARTS'),
       },
       {
-        headerName: this.translate.instant('GLOBAL.VALUES'),
+        headerName: this.translate.get('GLOBAL.VALUES'),
         field: 'values',
-        tooltip: this.translate.instant(
+        tooltip: this.translate.get(
           'TOOLTIPS.PREPARATION.VARIABLES.VALUES',
         ),
       },
       {
-        headerName: this.translate.instant('GLOBAL.TYPE'),
+        headerName: this.translate.get('GLOBAL.TYPE'),
         field: 'type',
-        tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.TYPE'),
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.TYPE'),
       },
       {
-        headerName: this.translate.instant('GLOBAL.MODE'),
+        headerName: this.translate.get('GLOBAL.MODE'),
         field: 'mode',
         show: false,
-        tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.MODE'),
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.MODE'),
       },
       {
-        headerName: this.translate.instant('GLOBAL.MODE_COVERAGE'),
+        headerName: this.translate.get('GLOBAL.MODE_COVERAGE'),
         field: 'modeCoverage',
         show: false,
-        tooltip: this.translate.instant(
+        tooltip: this.translate.get(
           'TOOLTIPS.PREPARATION.VARIABLES.MODE_COVERAGE',
         ),
       },
       {
-        headerName: this.translate.instant('GLOBAL.MIN'),
+        headerName: this.translate.get('GLOBAL.MIN'),
         field: 'min',
         show: false,
-        tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.MIN'),
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.MIN'),
       },
       {
-        headerName: this.translate.instant('GLOBAL.MAX'),
+        headerName: this.translate.get('GLOBAL.MAX'),
         field: 'max',
         show: false,
-        tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.MAX'),
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.MAX'),
       },
       {
-        headerName: this.translate.instant('GLOBAL.MEAN'),
+        headerName: this.translate.get('GLOBAL.MEAN'),
         field: 'mean',
         show: false,
-        tooltip: this.translate.instant('TOOLTIPS.PREPARATION.VARIABLES.MEAN'),
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.MEAN'),
       },
       {
-        headerName: this.translate.instant('GLOBAL.STD_DEV'),
+        headerName: this.translate.get('GLOBAL.STD_DEV'),
         field: 'stdDev',
         show: false,
-        tooltip: this.translate.instant(
+        tooltip: this.translate.get(
           'TOOLTIPS.PREPARATION.VARIABLES.STD_DEV',
         ),
       },
       {
-        headerName: this.translate.instant('GLOBAL.MISSING_NUMBER'),
+        headerName: this.translate.get('GLOBAL.MISSING_NUMBER'),
         field: 'missingNumber',
         show: false,
-        tooltip: this.translate.instant(
+        tooltip: this.translate.get(
           'TOOLTIPS.PREPARATION.VARIABLES.MISSING_NUMBER',
         ),
       },
       {
-        headerName: this.translate.instant('GLOBAL.DERIVATION_RULE'),
+        headerName: this.translate.get('GLOBAL.DERIVATION_RULE'),
         field: 'derivationRule',
         show: false,
-        tooltip: this.translate.instant(
+        tooltip: this.translate.get(
           'TOOLTIPS.PREPARATION.VARIABLES.DERIVATION_RULE',
         ),
       },
@@ -199,9 +199,9 @@ export class PreparationViewComponent extends SelectableTabComponent {
       this.preparationDatasService.includesTargetParts(this.variablesDatas);
     if (includesTargetParts) {
       this.variablesDisplayedColumns.splice(3, 0, {
-        headerName: this.translate.instant('GLOBAL.TARGET_PARTS'),
+        headerName: this.translate.get('GLOBAL.TARGET_PARTS'),
         field: 'targetParts',
-        tooltip: this.translate.instant(
+        tooltip: this.translate.get(
           'TOOLTIPS.PREPARATION.VARIABLES.TARGET_PARTS',
         ),
       });

@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { EvaluationDatasService } from '@khiops-visualization/providers/evaluation-datas.service';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngstack/translate';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { AppConfig } from 'src/environments/environment';
@@ -87,14 +87,14 @@ export class TargetLiftGraphComponent
     };
 
     if (this.evaluationDatasService.isRegressionAnalysis()) {
-      this.xAxisLabel = this.translate.instant('GLOBAL.RANK_ERROR') + ' %';
-      this.yAxisLabel = this.translate.instant('GLOBAL.POPULATION') + ' %';
+      this.xAxisLabel = this.translate.get('GLOBAL.RANK_ERROR') + ' %';
+      this.yAxisLabel = this.translate.get('GLOBAL.POPULATION') + ' %';
     } else {
-      this.xAxisLabel = this.translate.instant('GLOBAL.POPULATION') + ' %';
-      this.yAxisLabel = this.translate.instant('GLOBAL.TARGET_MODALITY') + ' %';
+      this.xAxisLabel = this.translate.get('GLOBAL.POPULATION') + ' %';
+      this.yAxisLabel = this.translate.get('GLOBAL.TARGET_MODALITY') + ' %';
     }
 
-    this.buttonTitle = this.translate.instant('GLOBAL.FILTER_CURVES');
+    this.buttonTitle = this.translate.get('GLOBAL.FILTER_CURVES');
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -135,11 +135,11 @@ export class TargetLiftGraphComponent
         this.targetLift.selected = previousSelectedTarget;
       }
 
-      this.titleWithoutDetails = this.translate.instant(
+      this.titleWithoutDetails = this.translate.get(
         'GLOBAL.CUMULATIVE_GAIN_CHART_OF',
       );
       this.title =
-        this.translate.instant('GLOBAL.CUMULATIVE_GAIN_CHART_OF') +
+        this.translate.get('GLOBAL.CUMULATIVE_GAIN_CHART_OF') +
         ' ' +
         this.targetLift.selected; // for copy graph datas
       this.targetLiftGraph = this.evaluationDatasService.getLiftGraphDatas(
@@ -151,8 +151,8 @@ export class TargetLiftGraphComponent
       );
     } else {
       // it is a regression
-      this.titleWithoutDetails = this.translate.instant('GLOBAL.REC_CURVES');
-      this.title = this.translate.instant('GLOBAL.REC_CURVES'); // for copy graph datas
+      this.titleWithoutDetails = this.translate.get('GLOBAL.REC_CURVES');
+      this.title = this.translate.get('GLOBAL.REC_CURVES'); // for copy graph datas
       this.targetLiftGraph = this.evaluationDatasService.getLiftGraphDatas();
       // get all datas to copy
       this.targetLiftAllGraph =
@@ -186,7 +186,7 @@ export class TargetLiftGraphComponent
   changeTargetLift(target) {
     // this.trackerService.trackEvent('click', 'change_target_lift');
     this.title =
-      this.translate.instant('GLOBAL.CUMULATIVE_GAIN_CHART_OF') +
+      this.translate.get('GLOBAL.CUMULATIVE_GAIN_CHART_OF') +
       ' ' +
       this.targetLift.selected;
     localStorage.setItem(

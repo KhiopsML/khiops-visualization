@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngstack/translate';
 import { AppConfig } from 'src/environments/environment';
 import { deepEqual } from 'fast-equals';
 import { MatrixCanvasComponent } from '@khiops-library/components/matrix-canvas/matrix-canvas.component';
@@ -124,7 +124,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
           mode: 'MUTUAL_INFO_TARGET_WITH_CELL',
           title:
             'I (' +
-            this.translate.instant('GLOBAL.TARGET') +
+            this.translate.get('GLOBAL.TARGET') +
             ' | ' +
             varName2 +
             ' , ' +
@@ -133,14 +133,14 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
         },
         {
           mode: 'FREQUENCY',
-          title: this.translate.instant('GLOBAL.FREQUENCY'),
+          title: this.translate.get('GLOBAL.FREQUENCY'),
         },
         {
           mode: 'FREQUENCY_CELL',
           title:
-            this.translate.instant('GLOBAL.FREQUENCY') +
+            this.translate.get('GLOBAL.FREQUENCY') +
             ' (' +
-            this.translate.instant('GLOBAL.TARGET') +
+            this.translate.get('GLOBAL.TARGET') +
             ' | ' +
             varName2 +
             ' , ' +
@@ -151,7 +151,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
           mode: 'PROB_TARGET_WITH_CELL',
           title:
             'P (' +
-            this.translate.instant('GLOBAL.TARGET') +
+            this.translate.get('GLOBAL.TARGET') +
             ' | ' +
             varName2 +
             ' , ' +
@@ -166,12 +166,12 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
             ' , ' +
             varName1 +
             ' | ' +
-            this.translate.instant('GLOBAL.TARGET') +
+            this.translate.get('GLOBAL.TARGET') +
             ')',
         },
         {
           mode: 'CELL_INTEREST',
-          title: this.translate.instant('GLOBAL.CELLS_INTERESTS'),
+          title: this.translate.get('GLOBAL.CELLS_INTERESTS'),
         },
       ];
     } else {
@@ -182,7 +182,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
         },
         {
           mode: 'FREQUENCY',
-          title: this.translate.instant('GLOBAL.FREQUENCY'),
+          title: this.translate.get('GLOBAL.FREQUENCY'),
         },
         {
           mode: 'PROB_CELL',

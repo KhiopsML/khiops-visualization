@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
 import { HttpClientModule } from '@angular/common/http';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@ngstack/translate';
 
 let appService: AppService;
 let preparation2dDatasService: Preparation2dDatasService;

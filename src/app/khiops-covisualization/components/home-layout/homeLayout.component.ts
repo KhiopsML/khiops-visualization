@@ -11,7 +11,7 @@ import { MatTabGroup, MatTabHeader, MatTab } from '@angular/material/tabs';
 import { AppConfig } from 'src/environments/environment';
 import { FileLoaderComponent } from '@khiops-library/components/file-loader/file-loader.component';
 import { AppService } from '@khiops-covisualization/providers/app.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngstack/translate';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
@@ -239,7 +239,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     if (!UtilsService.isEmpty(datas)) {
       if (!this.isCompatibleJson) {
         this.snackBar.open(
-          this.translate.instant('SNACKS.OPEN_FILE_ERROR'),
+          this.translate.get('SNACKS.OPEN_FILE_ERROR'),
           undefined,
           {
             duration: 4000,
@@ -248,7 +248,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
         );
       } else {
         this.snackBar.open(
-          this.translate.instant('SNACKS.DATAS_LOADED'),
+          this.translate.get('SNACKS.DATAS_LOADED'),
           undefined,
           {
             duration: 2000,
@@ -258,7 +258,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
       }
       if (isCollidingJson) {
         this.snackBar.open(
-          this.translate.instant('SNACKS.COLLIDING_FILE'),
+          this.translate.get('SNACKS.COLLIDING_FILE'),
           undefined,
           {
             duration: 10000,

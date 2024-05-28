@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
 import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
 import { AppConfig } from 'src/environments/environment';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@ngstack/translate';
 let appService: AppService;
 let treenodesService: TreenodesService;
 let dimensionsDatasService: DimensionsDatasService;

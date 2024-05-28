@@ -23,7 +23,7 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { HistogramType } from './histogram.types';
 import { AppConfig } from 'src/environments/environment';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngstack/translate';
 import {
   HistogramValuesI,
   RangeXLinI,

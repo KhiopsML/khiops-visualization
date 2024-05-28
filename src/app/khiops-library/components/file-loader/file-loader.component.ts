@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { FileLoaderService } from './file-loader.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngstack/translate';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
 
@@ -58,7 +58,7 @@ export class FileLoaderComponent implements OnInit {
           this.onFileLoaderDataChanged(datas);
         })
         .catch((error) => {
-          console.warn(this.translate.instant('SNACKS.OPEN_FILE_ERROR'), error);
+          console.warn(this.translate.get('SNACKS.OPEN_FILE_ERROR'), error);
         });
     });
   }
@@ -74,7 +74,7 @@ export class FileLoaderComponent implements OnInit {
             this.onFileLoaderDataChanged(datas);
           })
           .catch((error) => {
-            console.warn(this.translate.instant('SNACKS.OPEN_FILE_ERROR'), error);
+            console.warn(this.translate.get('SNACKS.OPEN_FILE_ERROR'), error);
           });
       }
     });
@@ -105,9 +105,9 @@ export class FileLoaderComponent implements OnInit {
             this.onFileLoaderDataChanged(datas);
           })
           .catch((error) => {
-            console.warn(this.translate.instant('SNACKS.OPEN_FILE_ERROR'), error);
+            console.warn(this.translate.get('SNACKS.OPEN_FILE_ERROR'), error);
             this.snackBar.open(
-              this.translate.instant('SNACKS.OPEN_FILE_ERROR'),
+              this.translate.get('SNACKS.OPEN_FILE_ERROR'),
               undefined,
               {
                 duration: 4000,

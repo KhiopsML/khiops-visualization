@@ -16,7 +16,7 @@ import { SelectableService } from '@khiops-library/components/selectable/selecta
 
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngstack/translate';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { TreeNodeVO } from '@khiops-visualization/model/tree-node-vo';
 
@@ -139,7 +139,7 @@ export class TreeSelectComponent
       this.tree.on('collapseAll', (e) => {});
       this.tree.on('updateNodeName', (e) => {});
       this.tree.on('error', (e) => {
-        this.snackBar.open(this.translate.instant(e.data), null, {
+        this.snackBar.open(this.translate.get(e.data), null, {
           duration: 4000,
           panelClass: 'error',
         });

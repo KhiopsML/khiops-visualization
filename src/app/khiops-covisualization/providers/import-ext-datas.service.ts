@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ExtDatasVO } from '@khiops-covisualization/model/ext-datas-vo';
 import { FileVO } from '@khiops-library/model/file-vo';
 import { AppService } from './app.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngstack/translate';
 import { ImportFileLoaderService } from '@khiops-library/components/import-file-loader/import-file-loader.service';
 
 @Injectable({
@@ -132,7 +132,7 @@ export class ImportExtDatasService {
     setTimeout(() => {
       percentIndex++;
       if (progressCallback) {
-        const msg = this.translate.instant('GLOBAL.IMPORTING_EXT_DATA', {
+        const msg = this.translate.get('GLOBAL.IMPORTING_EXT_DATA', {
           fieldName: fieldName,
           dimension: externalDatas.dimension,
         });
