@@ -129,7 +129,9 @@ export class MatrixUtilsDatasService {
         // replace [ by ] for all indexes excepting 0
         if (iter !== 0) {
           // Closed bracket for the non 0 iters
-          displayaxisPart = displayaxisPart.replace('[', ']');
+          // displayaxisPart = displayaxisPart.replace('[', ']');
+          // Code scanning alerts #2
+          displayaxisPart = displayaxisPart.replace(/\[/g, ']');
         }
       } else {
         displayaxisPart = Array.isArray(axisPartShortDescription[iter])

@@ -67,7 +67,9 @@ export class TreeNodeVO {
       // Reformat numerical values
       this.bounds = this.bounds.replace(']-inf', '[' + dimension.min);
       this.bounds = this.bounds.replace('+inf[', dimension.max + ']');
-      this.bounds = this.bounds.replace('*', 'Missing U ');
+      // this.bounds = this.bounds.replace('*', 'Missing U ');
+      // Code scanning alerts #4
+      this.bounds = this.bounds.replace(/\*/g, 'Missing U ');
     }
 
     this.name = object?.name || this.cluster;
