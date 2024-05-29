@@ -75,13 +75,5 @@ import { HierarchyDetailsComponent } from './components/commons/hierarchy-detail
     { provide: OverlayContainer, useClass: InAppRootOverlayContainer },
   ],
   exports: [AppComponent],
-  entryComponents: [
-    ReleaseNotesComponent,
-    UnfoldHierarchyComponent,
-    CheckboxCellComponent,
-    IconCellComponent,
-    ConfirmDialogComponent,
-    ManageViewsComponent,
-  ],
 })
 export class KhiopsCovisualizationModule {}

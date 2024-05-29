@@ -93,11 +93,6 @@ const providers = [
   ],
   exports: [AppComponent],
   providers: providers,
-  entryComponents: [
-    ReleaseNotesComponent,
-    ConfirmDialogComponent,
-    LevelDistributionGraphCanvasComponent,
-  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class KhiopsVisualizationModule {}

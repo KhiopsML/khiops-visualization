@@ -95,10 +95,10 @@
           "builder": "ngx-build-plus:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "visualization-component:build:production"
+              "buildTarget": "visualization-component:build:production"
             },
             "development": {
-              "browserTarget": "visualization-component:build:development"
+              "buildTarget": "visualization-component:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -106,7 +106,7 @@
         "extract-i18n": {
           "builder": "ngx-build-plus:extract-i18n",
           "options": {
-            "browserTarget": "visualization-component:build"
+            "buildTarget": "visualization-component:build"
           }
         },
         "test": {
@@ -262,10 +262,10 @@
           "builder": "ngx-build-plus:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "khiops-webcomponent:build:production"
+              "buildTarget": "khiops-webcomponent:build:production"
             },
             "development": {
-              "browserTarget": "khiops-webcomponent:build:development"
+              "buildTarget": "khiops-webcomponent:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -273,7 +273,7 @@
         "extract-i18n": {
           "builder": "ngx-build-plus:extract-i18n",
           "options": {
-            "browserTarget": "khiops-webcomponent:build"
+            "buildTarget": "khiops-webcomponent:build"
           }
         },
         "cypress-run": {
