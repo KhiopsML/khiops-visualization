@@ -88,7 +88,7 @@
     "tslib": "2.6.2",
     "typeface-poppins": "1.1.13",
     "uuidv4": "6.2.13",
-    "zone.js": "0.14.6"
+    "zone.js": "0.13.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "16.2.14",
