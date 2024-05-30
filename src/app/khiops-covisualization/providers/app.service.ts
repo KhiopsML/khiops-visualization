@@ -186,14 +186,17 @@ export class AppService {
 
     // View manager behavior #129
     // Do not restore LS values because we have a save functionnality
-    // const lsStorage = localStorage.getItem(
-    //   AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'VIEWS_LAYOUT',
-    // );
-    // if (lsStorage && lsStorage !== 'undefined') {
-    //   const lsValues = JSON.parse(lsStorage);
-    //   // Merge current values with values from LS
-    //   this.viewsLayout.megeWithPreviousValues(lsValues);
-    // }
+    if (AppConfig.cypress) {
+      // Do it only for cypress tests
+      const lsStorage = localStorage.getItem(
+        AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'VIEWS_LAYOUT',
+      );
+      if (lsStorage && lsStorage !== 'undefined') {
+        const lsValues = JSON.parse(lsStorage);
+        // Merge current values with values from LS
+        this.viewsLayout.megeWithPreviousValues(lsValues);
+      }
+    }
 
     // Then get saved json state
     const savedDatas = this.getSavedDatas('viewsLayout');
