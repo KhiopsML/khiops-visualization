@@ -10,6 +10,8 @@ import { AppConfig } from 'src/environments/environment';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { TrackerService } from '../../../../khiops-library/providers/tracker.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateService } from '@ngstack/translate';
 
 @Component({
   selector: 'app-user-settings',
@@ -28,7 +30,11 @@ export class UserSettingsComponent implements OnChanges {
       AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR',
     ) || 'light';
 
-  constructor(private trackerService: TrackerService) {}
+  constructor(
+    private translate: TranslateService,
+    private trackerService: TrackerService,
+    private snackBar: MatSnackBar,
+  ) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes?.opened?.currentValue) {
@@ -88,6 +94,14 @@ export class UserSettingsComponent implements OnChanges {
 
     // this.trackerService.trackEvent('click', 'settings', 'significant_number', this.numberPrecision);
     // this.trackerService.trackEvent('click', 'settings', 'matrix_contrast', this.contrastValue);
+  }
+
+  onClickOnClearDatas() {
+    localStorage.clear();
+    this.snackBar.open(this.translate.get('SNACKS.DATAS_DELETED'), undefined, {
+      duration: 2000,
+      panelClass: 'success',
+    });
   }
 
   isThemeChecked(theme: string): boolean {
