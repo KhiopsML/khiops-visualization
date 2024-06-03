@@ -919,6 +919,10 @@ canvas:focus {
   background-color: #000000cc;
 }
 
+.mat-checkbox-layout .mat-checkbox-label {
+  font-size: 0.8rem !important;
+}
+
 .fullscreen {
   position: fixed !important;
   z-index: 10000 !important;
