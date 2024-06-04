@@ -23,7 +23,7 @@
       [type]="'histogram'"
       [colorSet]="colorSet"
     ></kl-legend>
-    <div class="comp-header-tools screenshot-hide" fxLayout="row">
+    <div class="comp-header-tools" fxLayout="row">
       <div>
         <button
           mat-stroked-button
@@ -68,6 +68,9 @@
       </div>
     </div>
   </div>
-  <div (resized)="onResized($event)" #chart id="histogram-chart"></div>
+  <div>
+    <canvas id="histogram-canvas" fxFlexFill> </canvas>
+    <div (resized)="onResized($event)" #chart id="histogram-chart"></div>
+  </div>
 </div>
 <div #chartTooltip class="tooltip-container"></div>

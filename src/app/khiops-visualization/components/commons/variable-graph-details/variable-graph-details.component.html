@@ -50,6 +50,7 @@
       *ngIf="distributionDatas.histogramDatas"
       fxFlex="1 1 100%"
       [datas]="distributionDatas.histogramDatas"
+      [selectedItem]="activeEntries"
       (selectedItemChanged)="onSelectedDistributionGraphItemChanged($event)"
     >
     </app-histogram>

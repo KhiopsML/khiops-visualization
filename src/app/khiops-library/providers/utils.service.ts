@@ -868,4 +868,20 @@ export class UtilsService {
 
     return this.mergeDeep(target, ...sources);
   }
+
+  static hexToRgba(hex, alpha) {
+    if (!/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
+      throw new Error('Format hexadécimal invalide');
+    }
+    let c;
+    if (hex.length === 4) {
+      c = '#' + [hex[1], hex[1], hex[2], hex[2], hex[3], hex[3]].join('');
+    } else {
+      c = hex;
+    }
+    const r = parseInt(c.slice(1, 3), 16);
+    const g = parseInt(c.slice(3, 5), 16);
+    const b = parseInt(c.slice(5, 7), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  }
 }

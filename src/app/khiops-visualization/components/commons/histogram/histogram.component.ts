@@ -30,6 +30,7 @@ import {
   RangeXLogI,
   RangeYLogI,
 } from './histogram.interfaces';
+import { UtilsService } from '@khiops-library/providers/utils.service';
 
 @Component({
   selector: 'app-histogram',
@@ -51,9 +52,10 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 
   // Dynamic values
   @Input() datas: HistogramValuesI[];
+  @Input() selectedItem: number = 0;
 
-  h: number = 220;
-  w: number = 1000;
+  h: number = 0;
+  w: number = 0;
   xPadding: number = 40;
   yPadding: number = 50;
 
@@ -84,6 +86,9 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 
   colorSet: string[];
 
+  ctx: CanvasRenderingContext2D;
+  histogramCanvas: HTMLCanvasElement;
+
   constructor(
     private distributionDatasService: DistributionDatasService,
     private khiopsLibraryService: KhiopsLibraryService,
@@ -104,12 +109,29 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     };
   }
 
+  override ngAfterViewInit(): void {
+    this.histogramCanvas = this.configService
+      .getRootElementDom()
+      .querySelector('#histogram-canvas');
+
+    this.histogramCanvas.addEventListener(
+      'click',
+      this.handleCanvasClick.bind(this),
+    );
+  }
+
   ngOnInit(): void {
     this.distributionDatas = this.distributionDatasService.getDatas();
   }
 
+  override ngOnDestroy() {
+    this.histogramCanvas.removeEventListener(
+      'click',
+      this.handleCanvasClick.bind(this),
+    );
+  }
+
   changeGraphTypeX(type: string) {
-    // this.trackerService.trackEvent('click', 'distribution_graph_type_x', this.graphOptions.selected);
     localStorage.setItem(
       this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
         'DISTRIBUTION_GRAPH_OPTION_X',
@@ -120,7 +142,6 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   }
 
   changeGraphTypeY(type: string) {
-    // this.trackerService.trackEvent('click', 'distribution_graph_type_x', this.graphOptions.selected);
     localStorage.setItem(
       this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
         'DISTRIBUTION_GRAPH_OPTION_Y',
@@ -143,162 +164,199 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     this.datas && this.init();
   }
 
-  override ngAfterViewInit(): void {
-    // Need to delay init to be sure that chart height has been computed
-    this.datas && this.init();
+  handleCanvasClick(event) {
+    const canvasPosition = this.histogramCanvas.getBoundingClientRect();
+    const barPosition = HistogramUIService.getCurrentBarPosition(
+      this.datas,
+      this.yPadding,
+      canvasPosition,
+      event,
+    );
+    if (barPosition !== undefined) {
+      this.selectedItem = barPosition;
+      this.datas && this.init();
+    } else {
+      // no bar selected
+    }
   }
 
   init() {
-    this.xTickCount = 5; // We must reinit each times
+    if (this.histogramCanvas) {
+      this.cleanDomContext();
+      // Get the 'context'
+      this.ctx = this.histogramCanvas.getContext('2d');
+      this.ctx.imageSmoothingEnabled = true;
 
-    if (this.chart) {
-      this.chart.nativeElement.innerHTML = '';
-      if (this.datas) {
-        if (this.datas.length > 500) {
-          // display loading
-          this.isLoading = true;
-        }
+      this.histogramCanvas.width = this.w;
+      this.histogramCanvas.height = this.h;
 
-        setTimeout(
-          () => {
-            if (
-              this.distributionDatas.distributionGraphOptionsY.selected ===
-              HistogramType.YLOG
-            ) {
-              this.rangeYLog = this.histogramService.getLogRangeY(this.datas);
-              this.ratioY = this.histogramService.getLogRatioY(
-                this.h,
-                this.yPadding,
-              );
-            } else {
-              this.rangeYLin = this.histogramService.getLinRangeY(this.datas);
-              this.ratioY = this.histogramService.getLinRatioY(
-                this.h,
-                this.yPadding,
-              );
-            }
+      this.xTickCount = 5; // We must reinit each times
 
-            this.drawChart(this.w);
-            this.addTooltip();
+      if (this.chart) {
+        this.chart.nativeElement.innerHTML = '';
+        if (this.datas) {
+          if (this.datas.length > 500) {
+            // display loading
+            this.isLoading = true;
+          }
 
-            [this.rangeXLin, this.rangeXLog] = this.histogramService.getRangeX(
-              this.datas,
-            );
+          setTimeout(
+            () => {
+              if (
+                this.distributionDatas.distributionGraphOptionsY.selected ===
+                HistogramType.YLOG
+              ) {
+                this.rangeYLog = this.histogramService.getLogRangeY(this.datas);
+                this.ratioY = this.histogramService.getLogRatioY(
+                  this.h,
+                  this.yPadding,
+                );
+              } else {
+                this.rangeYLin = this.histogramService.getLinRangeY(this.datas);
+                this.ratioY = this.histogramService.getLinRatioY(
+                  this.h,
+                  this.yPadding,
+                );
+              }
 
-            if (
-              this.rangeXLog.negValuesCount === 0 ||
-              this.rangeXLog.posValuesCount === 0
-            ) {
-              this.xTickCount = this.xTickCount * 2;
-            }
+              this.drawChart(this.w);
+              this.addTooltip();
 
-            this.drawYAxis();
-            this.drawHistogram(this.datas);
-
-            if (
-              this.distributionDatas.distributionGraphOptionsX.selected ===
-              HistogramType.XLIN
-            ) {
-              let shift = 0;
-              let width = this.w - 2 * this.xPadding;
-              let domain = [this.rangeXLin.min, this.rangeXLin.max];
-              let tickValues = this.datas.map(
-                (e: HistogramValuesI) => e.partition[0],
-              );
-              tickValues.push(this.datas[this.datas.length - 1].partition[1]);
-              this.drawXAxis(domain, shift, width);
-            } else {
-              // Draw positive axis
-              let shift = 0;
-              let width = 0;
-              let domain: number[] = [];
+              [this.rangeXLin, this.rangeXLog] =
+                this.histogramService.getRangeX(this.datas);
 
               if (
-                this.rangeXLog.posStart !== this.rangeXLog.max &&
-                this.rangeXLog.posValuesCount
+                this.rangeXLog.negValuesCount === 0 ||
+                this.rangeXLog.posValuesCount === 0
               ) {
-                width = this.w - 2 * this.xPadding;
-                domain = [this.rangeXLog.posStart, this.rangeXLog.max];
+                this.xTickCount = this.xTickCount * 2;
+              }
 
-                let shiftInf = 2;
-                if (this.rangeXLog.inf && !this.rangeXLog.negStart) {
-                  shiftInf = 1;
-                }
+              this.drawYAxis();
+              this.drawHistogram(this.datas);
+
+              if (
+                this.distributionDatas.distributionGraphOptionsX.selected ===
+                HistogramType.XLIN
+              ) {
+                let shift = 0;
+                let width = this.w - 2 * this.xPadding;
+                let domain = [this.rangeXLin.min, this.rangeXLin.max];
+                let tickValues = this.datas.map(
+                  (e: HistogramValuesI) => e.partition[0],
+                );
+                tickValues.push(this.datas[this.datas.length - 1].partition[1]);
+                this.drawXAxis(domain, shift, width);
+              } else {
+                // Draw positive axis
+                let shift = 0;
+                let width = 0;
+                let domain: number[] = [];
+
                 if (
-                  !this.rangeXLog.inf &&
-                  this.rangeXLog.negValuesCount === 0
+                  this.rangeXLog.posStart !== this.rangeXLog.max &&
+                  this.rangeXLog.posValuesCount
                 ) {
-                  shiftInf = 0; // only positive values
-                }
-                shift +=
-                  ((this.w - 2 * this.xPadding) / this.ratio) *
-                  Math.log10(this.rangeXLog.middlewidth) *
-                  shiftInf;
+                  width = this.w - 2 * this.xPadding;
+                  domain = [this.rangeXLog.posStart, this.rangeXLog.max];
 
-                if (this.rangeXLog.negValuesCount !== 0) {
+                  let shiftInf = 2;
+                  if (this.rangeXLog.inf && !this.rangeXLog.negStart) {
+                    shiftInf = 1;
+                  }
+                  if (
+                    !this.rangeXLog.inf &&
+                    this.rangeXLog.negValuesCount === 0
+                  ) {
+                    shiftInf = 0; // only positive values
+                  }
                   shift +=
                     ((this.w - 2 * this.xPadding) / this.ratio) *
-                    Math.log10(Math.abs(this.rangeXLog.min));
-                  shift -=
-                    ((this.w - 2 * this.xPadding) / this.ratio) *
-                    Math.log10(Math.abs(this.rangeXLog.negStart));
+                    Math.log10(this.rangeXLog.middlewidth) *
+                    shiftInf;
+
+                  if (this.rangeXLog.negValuesCount !== 0) {
+                    shift +=
+                      ((this.w - 2 * this.xPadding) / this.ratio) *
+                      Math.log10(Math.abs(this.rangeXLog.min));
+                    shift -=
+                      ((this.w - 2 * this.xPadding) / this.ratio) *
+                      Math.log10(Math.abs(this.rangeXLog.negStart));
+                  }
+                  width = this.w - 2 * this.xPadding - shift;
+                  this.drawXAxis(domain, shift, width);
                 }
-                width = this.w - 2 * this.xPadding - shift;
-                this.drawXAxis(domain, shift, width);
-              }
 
-              // Draw -Inf axis
-              if (this.rangeXLog.inf) {
-                if (this.rangeXLog.posValuesCount) {
-                  let middleShift =
-                    shift -
-                    ((this.w - 2 * this.xPadding) / this.ratio) *
-                      Math.log10(this.rangeXLog.middlewidth);
-                  domain = [1];
-                  this.drawXAxis(domain, middleShift - 1, 1);
-                } else {
-                  let middleShift = this.w - 2 * this.xPadding;
-                  domain = [1];
-                  this.drawXAxis(domain, middleShift - 1, 1); // 1 to make bigger line
+                // Draw -Inf axis
+                if (this.rangeXLog.inf) {
+                  if (this.rangeXLog.posValuesCount) {
+                    let middleShift =
+                      shift -
+                      ((this.w - 2 * this.xPadding) / this.ratio) *
+                        Math.log10(this.rangeXLog.middlewidth);
+                    domain = [1];
+                    this.drawXAxis(domain, middleShift - 1, 1);
+                  } else {
+                    let middleShift = this.w - 2 * this.xPadding;
+                    domain = [1];
+                    this.drawXAxis(domain, middleShift - 1, 1); // 1 to make bigger line
+                  }
                 }
-              }
 
-              // Draw negative axis
-              if (
-                // this.rangeXLog.inf ||
-                this.rangeXLog.negStart !== this.rangeXLog.min &&
-                this.rangeXLog.negValuesCount
-              ) {
-                width = this.w - 2 * this.xPadding - width;
-                domain = [this.rangeXLog.min, this.rangeXLog.negStart];
+                // Draw negative axis
+                if (
+                  // this.rangeXLog.inf ||
+                  this.rangeXLog.negStart !== this.rangeXLog.min &&
+                  this.rangeXLog.negValuesCount
+                ) {
+                  width = this.w - 2 * this.xPadding - width;
+                  domain = [this.rangeXLog.min, this.rangeXLog.negStart];
 
-                if (this.rangeXLog.posValuesCount) {
-                  // If there is pos and neg values
-                  width =
-                    width -
-                    ((this.w - 2 * this.xPadding) / this.ratio) *
-                      Math.log10(this.rangeXLog.middlewidth) *
-                      2;
-                } else {
-                  if (this.rangeXLog.inf) {
+                  if (this.rangeXLog.posValuesCount) {
+                    // If there is pos and neg values
                     width =
                       width -
                       ((this.w - 2 * this.xPadding) / this.ratio) *
-                        Math.log10(this.rangeXLog.middlewidth);
+                        Math.log10(this.rangeXLog.middlewidth) *
+                        2;
+                  } else {
+                    if (this.rangeXLog.inf) {
+                      width =
+                        width -
+                        ((this.w - 2 * this.xPadding) / this.ratio) *
+                          Math.log10(this.rangeXLog.middlewidth);
+                    }
                   }
+                  this.drawXAxis(domain, 0, width);
                 }
-                this.drawXAxis(domain, 0, width);
               }
-            }
-            this.isLoading = false;
-          },
-          this.isLoading ? 100 : 0,
-        );
+
+              this.isLoading = false;
+            },
+            this.isLoading ? 100 : 0,
+          );
+        }
       }
     }
   }
 
+  /**
+   * Before draw canvas, clean dom
+   */
+  cleanDomContext() {
+    this.ctx = this.histogramCanvas.getContext('2d');
+    this.ctx.clearRect(
+      0,
+      0,
+      this.histogramCanvas.width,
+      this.histogramCanvas.height,
+    );
+  }
+
   drawChart(chartW: number) {
+    // Remove previous svg if exists
+    // d3.select(this.chart.nativeElement).selectAll('*').remove();
+
     this.svg = d3
       .select(this.chart.nativeElement)
       .append('svg')
@@ -314,7 +372,13 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
       .attr('class', 'tooltip');
   }
 
-  drawRect(d: HistogramValuesI, i: number, bars: HistogramBarVO[], ratio = 0) {
+  drawRect(
+    d: HistogramValuesI,
+    i: number,
+    bars: HistogramBarVO[],
+    ratio: number = 0,
+    selectedItem: number = 0,
+  ) {
     let self = this;
     const bar = bars[i];
 
@@ -421,23 +485,41 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
       barH = this.minBarHeight;
     }
 
-    this.svg
-      .append('rect')
-      .attr('id', 'rect-' + i)
-      .attr('x', barX + this.xPadding + this.xPadding / 2)
-      .attr('y', this.h - barH)
-      .on('click', onclickRect)
-      .on('mouseover', mouseover)
-      .on('mousemove', mousemove)
-      .on('mouseleave', mouseleave)
-      // .attr('rx', 3)F
-      // .attr('ry', 3)
-      .attr('width', barW)
-      .attr('height', barH)
-      .attr('fill-opacity', '0.8')
-      .attr('fill', bar.color)
-      .attr('stroke', generateColor)
-      .attr('stroke-width', '2px');
+    const x = barX + this.xPadding + this.xPadding / 2;
+    const y = this.h - barH;
+
+    // keep current coords to bind clicks and tooltip
+    d.coords = {
+      x: x,
+      y: y,
+      barW: barW,
+      barH: barH,
+    };
+
+    this.ctx.fillStyle = UtilsService.hexToRgba(bar.color, 0.8);
+    this.ctx.lineWidth = 0;
+    this.ctx.fillRect(x, y, barW, barH);
+    this.ctx.strokeStyle = selectedItem === i ? 'black' : bar.color;
+    this.ctx.lineWidth = selectedItem === i ? 2 : 1;
+
+    // Draw edges
+    this.ctx.strokeRect(x - 0.5, y - 0.5, barW + 1, barH);
+
+    // this.svg
+    //   .append('rect')
+    //   .attr('id', 'rect-' + i)
+    //   .attr('x', x)
+    //   .attr('y', y)
+    //   .on('click', onclickRect)
+    //   .on('mouseover', mouseover)
+    //   .on('mousemove', mousemove)
+    //   .on('mouseleave', mouseleave)
+    //   .attr('width', barW)
+    //   .attr('height', barH)
+    //   .attr('fill-opacity', '0.8')
+    //   .attr('fill', bar.color)
+    //   .attr('stroke', generateColor)
+    //   .attr('stroke-width', '2px');
   }
 
   drawHistogram(datasSet: HistogramValuesI[]) {
@@ -458,8 +540,16 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     }
 
     datasSet.forEach((d: HistogramValuesI, i: number) => {
-      this.drawRect(d, i, bars, this.ratio);
+      this.drawRect(d, i, bars, this.ratio, this.selectedItem);
     });
+    // reDraw selected item in front of others
+    this.drawRect(
+      datasSet[this.selectedItem],
+      this.selectedItem,
+      bars,
+      this.ratio,
+      this.selectedItem,
+    );
   }
 
   drawXAxis(domain: number[], shift: number, width: number) {
@@ -491,25 +581,6 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
           let val: any = d;
           return '' + format(val);
         });
-      } else {
-        // axis.ticks([this.xTickCount]);
-        // axis.tickArguments([this.xTickCount, ".0e"]);
-        // axis.tickFormat((d, i) => {
-        // 	//@ts-ignore
-        // 	let val: any = d;
-        // 	if (
-        // 		this.distributionDatas.distributionGraphOptionsX
-        // 			.selected === HistogramType.XLIN
-        // 	) {
-        // 		return "" + format(val);
-        // 	} else {
-        // 		if (domain.length === 1) {
-        // 			return "-Inf";
-        // 		} else {
-        // 			return d3.format(".0e")(val);
-        // 		}
-        // 	}
-        // });
       }
 
       this.svg
@@ -529,8 +600,6 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   }
 
   formatTick(val: number) {
-    // const tick = Math.round(Math.log10(Math.abs(val)) * 100) / 100;
-    // return format(val, this.formatOpts) + " (" + tick + ")";
     return format(val, this.formatOpts);
   }
 

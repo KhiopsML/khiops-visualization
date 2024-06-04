@@ -92,13 +92,14 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "16.2.14",
+    "@angular-devkit/core": "16.2.14",
     "@angular/cli": "16.2.14",
     "@angular/compiler-cli": "16.2.12",
     "@cypress/schematic": "2.5.1",
+    "@types/d3": "7.4.3",
     "@types/hammerjs": "2.0.45",
     "@types/jasmine": "5.1.4",
     "@types/lodash": "4.17.4",
-    "@types/d3": "7.4.3",
     "@types/mousetrap": "1.6.15",
     "@types/node": "20.12.12",
     "cypress": "latest",
@@ -109,7 +110,6 @@
     "karma-jasmine": "5.1.0",
     "karma-jasmine-html-reporter": "2.1.0",
     "ng-packagr": "16.2.3",
-    "@angular-devkit/core": "16.2.14",
     "ngx-build-plus": "17.0.0",
     "prettier": "3.2.5",
     "source-map-explorer": "2.5.3",
@@ -117,7 +117,7 @@
     "webpack-bundle-analyzer": "4.10.2"
   },
   "resolutions": {
-    "webpack": "5.88.2"
+    "webpack": "5.90.3"
   },
   "appdescription": {
     "visualization": "khiops Visualization",

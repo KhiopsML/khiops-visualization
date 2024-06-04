@@ -22,6 +22,30 @@ export class HistogramUIService {
     return this.chartColors;
   }
 
+  // @ts-ignore
+  static getCurrentBarPosition(
+    datas: HistogramValuesI[],
+    yPadding: number,
+    canvasPosition: DOMRect,
+    event: MouseEvent,
+  ) {
+    if (datas) {
+      let x = event.pageX - canvasPosition.left;
+      let y = event.pageY - canvasPosition.top;
+
+      for (let i = 0; i < datas.length; i++) {
+        if (
+          y > datas[i].coords.y &&
+          y < datas[i].coords.y + datas[i].coords.barH + yPadding / 2 &&
+          x > datas[i].coords.x &&
+          x < datas[i].coords.x + datas[i].coords.barW
+        ) {
+          return i;
+        }
+      }
+    }
+  }
+
   static generateTooltip(
     d: HistogramValuesI,
     isFirstInterval: boolean,
