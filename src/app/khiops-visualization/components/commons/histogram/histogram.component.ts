@@ -15,8 +15,6 @@ import { format } from 'mathjs';
 import { HistogramUIService } from './histogram.ui.service';
 import { HistogramBarVO } from './histogram.bar-vo';
 import { ResizedEvent } from 'angular-resize-event';
-import { DistributionDatasVO } from '@khiops-visualization/model/distribution-datas-vo';
-import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { ConfigService } from '@khiops-library/providers/config.service';
@@ -31,6 +29,7 @@ import {
   RangeYLogI,
 } from './histogram.interfaces';
 import { UtilsService } from '@khiops-library/providers/utils.service';
+import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options';
 
 @Component({
   selector: 'app-histogram',
@@ -40,12 +39,9 @@ import { UtilsService } from '@khiops-library/providers/utils.service';
 export class HistogramComponent extends SelectableComponent implements OnInit {
   @ViewChild('chart', { static: false })
   chart!: ElementRef;
-  @ViewChild('chartTooltip', { static: false })
-  chartTooltip!: ElementRef;
 
   componentType = 'histogram'; // needed to copy datas
   svg: d3.Selection<SVGElement, unknown, HTMLElement, any>;
-  tooltip!: any;
 
   // Outputs
   @Output() selectedItemChanged: EventEmitter<any> = new EventEmitter();
@@ -53,6 +49,8 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   // Dynamic values
   @Input() datas: HistogramValuesI[];
   @Input() selectedItem: number = 0;
+  @Input() graphOptionsX: DistributionOptionsI | undefined = undefined;
+  @Input() graphOptionsY: DistributionOptionsI | undefined = undefined;
 
   h: number = 0;
   w: number = 0;
@@ -64,7 +62,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   yTicksCount = 10;
   tickSize = 0;
   minBarHeight = 4;
-  barColor: string =
+  defaultBarColor: string =
     localStorage.getItem(
       AppConfig.visualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR',
     ) === 'dark'
@@ -78,23 +76,29 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   rangeYLog: RangeYLogI;
 
   ratioY = 0;
-
-  formatOpts = { lowerExp: -2, upperExp: 2 };
   ratio: number = 0;
-  distributionDatas: DistributionDatasVO;
   isLoading: boolean = false;
 
   colorSet: string[];
 
   ctx: CanvasRenderingContext2D;
+  ctxSelected: CanvasRenderingContext2D;
+  ctxHover: CanvasRenderingContext2D;
+
   histogramCanvas: HTMLCanvasElement;
+  histogramHoverCanvas: HTMLCanvasElement;
+  histogramSelectedCanvas: HTMLCanvasElement;
+
+  tooltipText: string = '';
+  tooltipPosX: number = 0;
+  tooltipPosY: number = 0;
+  tooltipDisplay: boolean = false;
 
   constructor(
-    private distributionDatasService: DistributionDatasService,
     private khiopsLibraryService: KhiopsLibraryService,
     private histogramService: HistogramService,
-    public override selectableService: SelectableService,
     public translate: TranslateService,
+    public override selectableService: SelectableService,
     public override ngzone: NgZone,
     public override configService: ConfigService,
   ) {
@@ -102,11 +106,6 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     HistogramUIService.setTranslationService(translate);
 
     this.colorSet = HistogramUIService.getColors();
-    d3.selection.prototype.moveToFront = function () {
-      return this.each(function () {
-        this.parentNode.appendChild(this);
-      });
-    };
   }
 
   override ngAfterViewInit(): void {
@@ -114,20 +113,47 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
       .getRootElementDom()
       .querySelector('#histogram-canvas');
 
-    this.histogramCanvas.addEventListener(
+    this.histogramSelectedCanvas = this.configService
+      .getRootElementDom()
+      .querySelector('#histogram-canvas-selected');
+
+    this.histogramHoverCanvas = this.configService
+      .getRootElementDom()
+      .querySelector('#histogram-canvas-hover');
+
+    this.histogramSelectedCanvas.addEventListener(
       'click',
       this.handleCanvasClick.bind(this),
+    );
+
+    this.histogramSelectedCanvas.addEventListener(
+      'mousemove',
+      this.handleCanvasMove.bind(this),
+    );
+
+    this.histogramSelectedCanvas.addEventListener(
+      'mouseout',
+      this.handleCanvasOut.bind(this),
     );
   }
 
   ngOnInit(): void {
-    this.distributionDatas = this.distributionDatasService.getDatas();
+    // this.distributionDatas = this.distributionDatasService.getDatas();
+    this.datas && this.init();
   }
 
   override ngOnDestroy() {
-    this.histogramCanvas.removeEventListener(
+    this.histogramSelectedCanvas.removeEventListener(
       'click',
       this.handleCanvasClick.bind(this),
+    );
+    this.histogramSelectedCanvas.removeEventListener(
+      'mousemove',
+      this.handleCanvasMove.bind(this),
+    );
+    this.histogramSelectedCanvas.removeEventListener(
+      'mouseout',
+      this.handleCanvasOut.bind(this),
     );
   }
 
@@ -137,7 +163,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
         'DISTRIBUTION_GRAPH_OPTION_X',
       type,
     );
-    this.distributionDatas.distributionGraphOptionsX.selected = type;
+    this.graphOptionsX.selected = type;
     this.datas && this.init();
   }
 
@@ -147,7 +173,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
         'DISTRIBUTION_GRAPH_OPTION_Y',
       type,
     );
-    this.distributionDatas.distributionGraphOptionsY.selected = type;
+    this.graphOptionsY.selected = type;
     this.datas && this.init();
   }
 
@@ -161,7 +187,13 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.datas && this.init();
+    console.log('HistogramComponent ~ ngOnChanges ~ changes:', changes);
+    if (changes.datas) {
+      this.datas && this.init();
+    }
+    if (changes.selectedItem) {
+      this.drawSelectedItem();
+    }
   }
 
   handleCanvasClick(event) {
@@ -174,21 +206,121 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     );
     if (barPosition !== undefined) {
       this.selectedItem = barPosition;
-      this.datas && this.init();
+
+      this.selectedItemChanged.emit(this.selectedItem);
     } else {
       // no bar selected
     }
   }
 
+  drawSelectedItem() {
+    let bars: HistogramBarVO[] = this.histogramService.computeXbarDimensions(
+      this.datas,
+      this.graphOptionsX.selected,
+    );
+
+    HistogramUIService.cleanDomContext(
+      this.ctxSelected,
+      this.histogramSelectedCanvas,
+    );
+    // reDraw selected item in front of others
+    this.drawRect(
+      this.ctxSelected,
+      this.datas[this.selectedItem],
+      this.selectedItem,
+      bars[this.selectedItem],
+      this.ratio,
+      this.selectedItem,
+    );
+  }
+
+  handleCanvasOut(event) {
+    this.hideTooltip();
+    HistogramUIService.cleanDomContext(
+      this.ctxHover,
+      this.histogramHoverCanvas,
+    );
+  }
+
+  handleCanvasMove(event) {
+    const canvasPosition = this.histogramCanvas.getBoundingClientRect();
+    const barPosition = HistogramUIService.getCurrentBarPosition(
+      this.datas,
+      this.yPadding,
+      canvasPosition,
+      event,
+    );
+    const bar = this.datas[barPosition];
+
+    if (barPosition !== undefined) {
+      const tooltipText = HistogramUIService.generateTooltip(
+        bar,
+        barPosition === 0,
+      );
+      this.showTooltip(event, tooltipText);
+
+      //
+
+      let bars: HistogramBarVO[] = this.histogramService.computeXbarDimensions(
+        this.datas,
+        this.graphOptionsX.selected,
+      );
+
+      HistogramUIService.cleanDomContext(
+        this.ctxHover,
+        this.histogramHoverCanvas,
+      );
+      // reDraw selected item in front of others
+      this.drawRect(
+        this.ctxHover,
+        this.datas[barPosition],
+        this.barPosition,
+        bars[barPosition],
+        this.ratio,
+        barPosition,
+      );
+    } else {
+      this.hideTooltip();
+    }
+  }
+
+  showTooltip(event: MouseEvent, text: string) {
+    this.tooltipPosX = event.offsetX + 20;
+    this.tooltipPosY = event.offsetY - 40;
+    this.tooltipText = text;
+    this.tooltipDisplay = true;
+  }
+
+  hideTooltip() {
+    this.tooltipDisplay = false;
+  }
+
   init() {
     if (this.histogramCanvas) {
-      this.cleanDomContext();
-      // Get the 'context'
-      this.ctx = this.histogramCanvas.getContext('2d');
-      this.ctx.imageSmoothingEnabled = true;
-
-      this.histogramCanvas.width = this.w;
-      this.histogramCanvas.height = this.h;
+      HistogramUIService.cleanDomContext(this.ctx, this.histogramCanvas);
+      HistogramUIService.cleanDomContext(
+        this.ctxHover,
+        this.histogramHoverCanvas,
+      );
+      HistogramUIService.cleanDomContext(
+        this.ctxSelected,
+        this.histogramSelectedCanvas,
+      );
+      this.ctx = HistogramUIService.initCanvasContext(
+        this.histogramCanvas,
+        this.w,
+        this.h,
+      );
+      this.ctxHover = HistogramUIService.initCanvasContext(
+        this.histogramHoverCanvas,
+        this.w,
+        this.h,
+      );
+      this.ctxSelected = HistogramUIService.initCanvasContext(
+        this.histogramSelectedCanvas,
+        this.w,
+        this.h,
+      );
 
       this.xTickCount = 5; // We must reinit each times
 
@@ -202,10 +334,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 
           setTimeout(
             () => {
-              if (
-                this.distributionDatas.distributionGraphOptionsY.selected ===
-                HistogramType.YLOG
-              ) {
+              if (this.graphOptionsY.selected === HistogramType.YLOG) {
                 this.rangeYLog = this.histogramService.getLogRangeY(this.datas);
                 this.ratioY = this.histogramService.getLogRatioY(
                   this.h,
@@ -220,7 +349,6 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
               }
 
               this.drawChart(this.w);
-              this.addTooltip();
 
               [this.rangeXLin, this.rangeXLog] =
                 this.histogramService.getRangeX(this.datas);
@@ -235,10 +363,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
               this.drawYAxis();
               this.drawHistogram(this.datas);
 
-              if (
-                this.distributionDatas.distributionGraphOptionsX.selected ===
-                HistogramType.XLIN
-              ) {
+              if (this.graphOptionsX.selected === HistogramType.XLIN) {
                 let shift = 0;
                 let width = this.w - 2 * this.xPadding;
                 let domain = [this.rangeXLin.min, this.rangeXLin.max];
@@ -330,6 +455,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
                   this.drawXAxis(domain, 0, width);
                 }
               }
+              this.drawSelectedItem();
 
               this.isLoading = false;
             },
@@ -340,23 +466,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     }
   }
 
-  /**
-   * Before draw canvas, clean dom
-   */
-  cleanDomContext() {
-    this.ctx = this.histogramCanvas.getContext('2d');
-    this.ctx.clearRect(
-      0,
-      0,
-      this.histogramCanvas.width,
-      this.histogramCanvas.height,
-    );
-  }
-
   drawChart(chartW: number) {
-    // Remove previous svg if exists
-    // d3.select(this.chart.nativeElement).selectAll('*').remove();
-
     this.svg = d3
       .select(this.chart.nativeElement)
       .append('svg')
@@ -364,174 +474,153 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
       .attr('height', this.h + this.yPadding);
   }
 
-  addTooltip() {
-    this.chartTooltip!.nativeElement.innerHTML = '';
-    this.tooltip = d3
-      .select(this.chartTooltip?.nativeElement)
-      .append('div')
-      .attr('class', 'tooltip');
-  }
+  // addTooltip() {
+  //   this.chartTooltip!.nativeElement.innerHTML = '';
+  //   this.tooltip = d3
+  //     .select(this.chartTooltip?.nativeElement)
+  //     .append('div')
+  //     .attr('class', 'tooltip');
+  // }
 
   drawRect(
+    ctx: CanvasRenderingContext2D,
     d: HistogramValuesI,
     i: number,
-    bars: HistogramBarVO[],
+    bar: HistogramBarVO,
     ratio: number = 0,
-    selectedItem: number = 0,
+    selectedItem: number = -1,
   ) {
-    let self = this;
-    const bar = bars[i];
+    if (ctx) {
+      let barX: number, barH: number, barW: number;
 
-    const isFirstInterval = i === 0;
-
-    let barX: number, barH: number, barW: number;
-
-    if (
-      this.distributionDatas.distributionGraphOptionsX.selected ===
-      HistogramType.XLIN
-    ) {
-      barX = ((this.w - 2 * this.xPadding) / ratio) * bar.barXlin;
-      barW = ((this.w - 2 * this.xPadding) / ratio) * bar.barWlin;
-    } else {
-      barX = ((this.w - 2 * this.xPadding) / ratio) * bar.barXlog;
-      barW = ((this.w - 2 * this.xPadding) / ratio) * bar.barWlog;
-    }
-
-    const generateColor = function () {
-      const elStrokeColor = this.getAttribute('fill');
-      d3.select(this).style('stroke', elStrokeColor);
-      if (i === 0) {
-        d3.select(this).style('stroke', self.barColor);
-      }
-      return self.barColor;
-    };
-
-    const onclickRect = function () {
-      d3.select(this.parentNode)
-        .selectAll('rect')
-        .style('stroke', function () {
-          //@ts-ignore
-          const elStrokeColor = this.getAttribute('fill');
-          return elStrokeColor;
-        });
-
-      d3.select(this).style('stroke', self.barColor);
-      //@ts-ignore
-      d3.select(this).moveToFront();
-      self.selectedItemChanged.emit(i);
-    };
-    const mouseover = function () {
-      self.tooltip.style('display', 'block').style('width', '140px');
-      d3.select(this.parentNode).selectAll('rect').style('fill-opacity', '0.8');
-      d3.select(this).style('fill-opacity', '0.9');
-    };
-    const mousemove = (e: MouseEvent) => {
-      const tooltipText = HistogramUIService.generateTooltip(
-        d,
-        isFirstInterval,
-      );
-      self.tooltip.html(tooltipText);
-
-      let left = e.offsetX + 20;
-      let top = e.offsetY - 40;
-
-      if (left < 10) {
-        left = 10;
-      }
-      if (left > this.w - 170) {
-        left = e.offsetX - 170;
-      }
-      if (top < 10) {
-        top = 10;
-      }
-      self.tooltip.style('margin-left', left + 'px');
-      self.tooltip.style('margin-top', top + 'px');
-    };
-    const mouseleave = function () {
-      self.tooltip
-        .style('display', 'none')
-        .style('margin-left', '0px')
-        .style('margin-top', '0px');
-
-      d3.select(this.parentNode).selectAll('rect').style('fill-opacity', '0.8');
-    };
-
-    if (barW > 3) {
-      barW = barW - 2; // -2 to remove stroke width (outer and cannot be inner)
-    }
-
-    if (
-      this.distributionDatas.distributionGraphOptionsY.selected ===
-      HistogramType.YLIN
-    ) {
-      barH = d.value * this.ratioY;
-    } else {
-      if (d.logValue !== 0) {
-        let shift = Math.abs(this.rangeYLog.max);
-        barH = Math.abs(d.logValue) * this.ratioY - shift * this.ratioY;
-        barH = this.h - this.yPadding / 2 - barH;
+      if (this.graphOptionsX.selected === HistogramType.XLIN) {
+        barX = ((this.w - 2 * this.xPadding) / ratio) * bar.barXlin;
+        barW = ((this.w - 2 * this.xPadding) / ratio) * bar.barWlin;
       } else {
-        barH = 0;
+        barX = ((this.w - 2 * this.xPadding) / ratio) * bar.barXlog;
+        barW = ((this.w - 2 * this.xPadding) / ratio) * bar.barWlog;
       }
+
+      // const generateColor = function () {
+      //   const elStrokeColor = this.getAttribute('fill');
+      //   d3.select(this).style('stroke', elStrokeColor);
+      //   if (i === 0) {
+      //     d3.select(this).style('stroke', self.barColor);
+      //   }
+      //   return self.barColor;
+      // };
+
+      // const onclickRect = function () {
+      //   d3.select(this.parentNode)
+      //     .selectAll('rect')
+      //     .style('stroke', function () {
+      //       //@ts-ignore
+      //       const elStrokeColor = this.getAttribute('fill');
+      //       return elStrokeColor;
+      //     });
+
+      //   d3.select(this).style('stroke', self.barColor);
+      //   //@ts-ignore
+      //   d3.select(this).moveToFront();
+      //   self.selectedItemChanged.emit(i);
+      // };
+      // const mouseover = function () {
+      //   self.tooltip.style('display', 'block').style('width', '140px');
+      //   d3.select(this.parentNode).selectAll('rect').style('fill-opacity', '0.8');
+      //   d3.select(this).style('fill-opacity', '0.9');
+      // };
+      // const mousemove = (e: MouseEvent) => {
+      //   const tooltipText = HistogramUIService.generateTooltip(
+      //     d,
+      //     isFirstInterval,
+      //   );
+      //   self.tooltip.html(tooltipText);
+
+      //   let left = e.offsetX + 20;
+      //   let top = e.offsetY - 40;
+
+      //   if (left < 10) {
+      //     left = 10;
+      //   }
+      //   if (left > this.w - 170) {
+      //     left = e.offsetX - 170;
+      //   }
+      //   if (top < 10) {
+      //     top = 10;
+      //   }
+      //   self.tooltip.style('margin-left', left + 'px');
+      //   self.tooltip.style('margin-top', top + 'px');
+      // };
+      // const mouseleave = function () {
+      //   self.tooltip
+      //     .style('display', 'none')
+      //     .style('margin-left', '0px')
+      //     .style('margin-top', '0px');
+
+      //   d3.select(this.parentNode).selectAll('rect').style('fill-opacity', '0.8');
+      // };
+
+      if (this.graphOptionsY.selected === HistogramType.YLIN) {
+        barH = d.value * this.ratioY;
+      } else {
+        if (d.logValue !== 0) {
+          let shift = Math.abs(this.rangeYLog.max);
+          barH = Math.abs(d.logValue) * this.ratioY - shift * this.ratioY;
+          barH = this.h - this.yPadding / 2 - barH;
+        } else {
+          barH = 0;
+        }
+      }
+      if (barH !== 0 && barH < this.minBarHeight) {
+        barH = this.minBarHeight;
+      }
+      if (this.graphOptionsY.selected === HistogramType.YLOG && barH === 0) {
+        barH = this.minBarHeight;
+      }
+
+      const x = barX + this.xPadding + this.xPadding / 2;
+      const y = this.h - barH;
+
+      // keep current coords to bind clicks and tooltip
+      d.coords = {
+        x: x,
+        y: y,
+        barW: barW,
+        barH: barH,
+      };
+
+      ctx.fillStyle = UtilsService.hexToRgba(bar.color, 0.8);
+      ctx.lineWidth = 0;
+      ctx.fillRect(x, y, barW, barH);
+      ctx.strokeStyle = selectedItem === i ? this.defaultBarColor : bar.color;
+      ctx.lineWidth = selectedItem === i ? 2 : 1;
+      ctx.strokeRect(x, y, barW, barH);
+
+      // this.svg
+      //   .append('rect')
+      //   .attr('id', 'rect-' + i)
+      //   .attr('x', x)
+      //   .attr('y', y)
+      //   .on('click', onclickRect)
+      //   .on('mouseover', mouseover)
+      //   .on('mousemove', mousemove)
+      //   .on('mouseleave', mouseleave)
+      //   .attr('width', barW)
+      //   .attr('height', barH)
+      //   .attr('fill-opacity', '0.8')
+      //   .attr('fill', bar.color)
+      //   .attr('stroke', generateColor)
+      //   .attr('stroke-width', '2px');
     }
-    if (barH !== 0 && barH < this.minBarHeight) {
-      barH = this.minBarHeight;
-    }
-    if (
-      this.distributionDatas.distributionGraphOptionsY.selected ===
-        HistogramType.YLOG &&
-      barH === 0
-    ) {
-      barH = this.minBarHeight;
-    }
-
-    const x = barX + this.xPadding + this.xPadding / 2;
-    const y = this.h - barH;
-
-    // keep current coords to bind clicks and tooltip
-    d.coords = {
-      x: x,
-      y: y,
-      barW: barW,
-      barH: barH,
-    };
-
-    this.ctx.fillStyle = UtilsService.hexToRgba(bar.color, 0.8);
-    this.ctx.lineWidth = 0;
-    this.ctx.fillRect(x, y, barW, barH);
-    this.ctx.strokeStyle = selectedItem === i ? 'black' : bar.color;
-    this.ctx.lineWidth = selectedItem === i ? 2 : 1;
-
-    // Draw edges
-    this.ctx.strokeRect(x - 0.5, y - 0.5, barW + 1, barH);
-
-    // this.svg
-    //   .append('rect')
-    //   .attr('id', 'rect-' + i)
-    //   .attr('x', x)
-    //   .attr('y', y)
-    //   .on('click', onclickRect)
-    //   .on('mouseover', mouseover)
-    //   .on('mousemove', mousemove)
-    //   .on('mouseleave', mouseleave)
-    //   .attr('width', barW)
-    //   .attr('height', barH)
-    //   .attr('fill-opacity', '0.8')
-    //   .attr('fill', bar.color)
-    //   .attr('stroke', generateColor)
-    //   .attr('stroke-width', '2px');
   }
 
   drawHistogram(datasSet: HistogramValuesI[]) {
     let bars: HistogramBarVO[] = this.histogramService.computeXbarDimensions(
       datasSet,
-      this.distributionDatas.distributionGraphOptionsX.selected,
+      this.graphOptionsX.selected,
     );
     this.ratio = 0;
-    if (
-      this.distributionDatas.distributionGraphOptionsX.selected ===
-      HistogramType.XLIN
-    ) {
+    if (this.graphOptionsX.selected === HistogramType.XLIN) {
       this.ratio =
         bars[bars.length - 1].barXlin + bars[bars.length - 1].barWlin;
     } else {
@@ -540,16 +629,11 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     }
 
     datasSet.forEach((d: HistogramValuesI, i: number) => {
-      this.drawRect(d, i, bars, this.ratio, this.selectedItem);
+      // selected item is drawn into a second canvas layer
+      if (i !== this.selectedItem) {
+        this.drawRect(this.ctx, d, i, bars[i], this.ratio);
+      }
     });
-    // reDraw selected item in front of others
-    this.drawRect(
-      datasSet[this.selectedItem],
-      this.selectedItem,
-      bars,
-      this.ratio,
-      this.selectedItem,
-    );
   }
 
   drawXAxis(domain: number[], shift: number, width: number) {
@@ -557,10 +641,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
       let xAxis;
       shift = shift + this.xPadding;
 
-      if (
-        this.distributionDatas.distributionGraphOptionsX.selected ===
-        HistogramType.XLIN
-      ) {
+      if (this.graphOptionsX.selected === HistogramType.XLIN) {
         xAxis = d3.scaleLinear().domain(domain).range([0, width]); // This is where the axis is placed: from 100px to 800px
       } else {
         xAxis = d3.scaleLog().base(10).domain(domain).range([0, width]);
@@ -573,10 +654,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
         .tickArguments([this.xTickCount, '.0e'])
         .tickSize(-this.h + this.yPadding / 2);
 
-      if (
-        this.distributionDatas.distributionGraphOptionsX.selected ===
-        HistogramType.XLIN
-      ) {
+      if (this.graphOptionsX.selected === HistogramType.XLIN) {
         axis.tickFormat((d: number) => {
           let val: any = d;
           return '' + format(val);
@@ -599,18 +677,11 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     }
   }
 
-  formatTick(val: number) {
-    return format(val, this.formatOpts);
-  }
-
   drawYAxis() {
     let y;
 
     // Create the scale
-    if (
-      this.distributionDatas.distributionGraphOptionsY.selected ===
-      HistogramType.YLIN
-    ) {
+    if (this.graphOptionsY.selected === HistogramType.YLIN) {
       y = d3
         .scaleLinear()
         .domain([0, this.rangeYLin]) // This is what is written on the Axis: from 0 to 100
@@ -632,10 +703,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
       .tickPadding(10)
       .tickFormat((d: number) => {
         let val: number = d;
-        if (
-          this.distributionDatas.distributionGraphOptionsY.selected ===
-          HistogramType.YLIN
-        ) {
+        if (this.graphOptionsY.selected === HistogramType.YLIN) {
           return '' + format(val);
         } else {
           const antiLog = Math.pow(10, val);

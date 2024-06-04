@@ -72,4 +72,25 @@ export class HistogramUIService {
       bounds
     );
   }
+
+  static initCanvasContext(canvas: HTMLCanvasElement, w: number, h: number) {
+    const ctx = canvas.getContext('2d');
+    ctx.imageSmoothingEnabled = true;
+    canvas.width = w;
+    canvas.height = h;
+    return ctx;
+  }
+
+  /**
+   * Before draw canvas, clean dom
+   */
+  static cleanDomContext(
+    ctx: CanvasRenderingContext2D,
+    canvas: HTMLCanvasElement,
+  ) {
+    if (canvas) {
+      ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  }
 }
