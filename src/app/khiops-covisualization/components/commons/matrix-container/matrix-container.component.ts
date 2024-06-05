@@ -35,12 +35,12 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input() viewId: string;
   @Input() sizeId: string;
-  @Input() dimensionsDatas: DimensionsDatasVO;
   @Input() selectedDimensions: DimensionVO[];
   @Input() viewsLayout: ViewLayoutVO;
 
   sizes: any;
 
+  dimensionsDatas: DimensionsDatasVO;
   matrixModes: MatrixModesI = new MatrixModesI();
   matrixOptions: MatrixOptionsI = new MatrixOptionsI();
 
@@ -57,6 +57,8 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
     private eventsService: EventsService,
     private dimensionsDatasService: DimensionsDatasService,
   ) {
+    this.dimensionsDatas = this.dimensionsDatasService.getDatas();
+
     this.treeSelectedNodeChangedSub =
       this.eventsService.treeSelectedNodeChanged.subscribe((e) => {
         this.initNodesEvents++;
