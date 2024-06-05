@@ -64,11 +64,11 @@
       </div>
     </div>
   </div>
-  <div>
+  <div (resized)="onResized($event)">
     <canvas id="histogram-canvas" fxFlex> </canvas>
     <canvas id="histogram-canvas-hover" fxFlex> </canvas>
     <canvas id="histogram-canvas-selected" fxFlex> </canvas>
-    <div (resized)="onResized($event)" #chart id="histogram-chart"></div>
+    <div #chart id="histogram-chart"></div>
     <app-histogram-tooltip
       [text]="tooltipText"
       [canvasW]="w"

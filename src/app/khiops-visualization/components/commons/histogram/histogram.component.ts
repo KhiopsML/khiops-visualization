@@ -228,7 +228,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     );
   }
 
-  handleCanvasOut(event) {
+  handleCanvasOut() {
     this.hideTooltip();
     HistogramUIService.cleanDomContext(
       this.ctxHover,
