@@ -128,8 +128,8 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   constructModeSelectBox() {
-    const varName1 = this.dimensionsDatas.matrixDatas.variable.nameX;
-    const varName2 = this.dimensionsDatas.matrixDatas.variable.nameY;
+    const varName1 = this.dimensionsDatas.selectedDimensions[0].name;
+    const varName2 = this.dimensionsDatas.selectedDimensions[1].name;
 
     this.matrixModes.types = [
       {
