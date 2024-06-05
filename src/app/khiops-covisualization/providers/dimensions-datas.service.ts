@@ -258,6 +258,10 @@ export class DimensionsDatasService {
       }
     }
     this.dimensionsDatas.selectedDimensions[position] = dimension;
+    // #141 Update combobox on selection change
+    this.dimensionsDatas.selectedDimensions = [
+      ...this.dimensionsDatas.selectedDimensions,
+    ];
     return this.dimensionsDatas.selectedDimensions;
   }
 

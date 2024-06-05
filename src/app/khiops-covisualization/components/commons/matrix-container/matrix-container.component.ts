@@ -1,4 +1,12 @@
-import { Component, OnInit, ViewChild, OnDestroy, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  OnDestroy,
+  Input,
+  SimpleChanges,
+  OnChanges,
+} from '@angular/core';
 import { AppService } from '@khiops-covisualization/providers/app.service';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { MatrixCanvasComponent } from '@khiops-library/components/matrix-canvas/matrix-canvas.component';
@@ -12,13 +20,14 @@ import { MatrixOptionsI } from '@khiops-library/interfaces/matrix-options';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 import { CellVO } from '@khiops-library/model/cell-vo';
 import { TranslateService } from '@ngstack/translate';
+import { DimensionVO } from '@khiops-library/model/dimension-vo';
 
 @Component({
   selector: 'app-matrix-container',
   templateUrl: './matrix-container.component.html',
   styleUrls: ['./matrix-container.component.scss'],
 })
-export class MatrixContainerComponent implements OnInit, OnDestroy {
+export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild('matrixCanvas', {
     static: false,
   })
@@ -27,6 +36,7 @@ export class MatrixContainerComponent implements OnInit, OnDestroy {
   @Input() viewId: string;
   @Input() sizeId: string;
   @Input() dimensionsDatas: DimensionsDatasVO;
+  @Input() selectedDimensions: DimensionVO[];
   @Input() viewsLayout: ViewLayoutVO;
 
   sizes: any;
@@ -88,12 +98,18 @@ export class MatrixContainerComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.sizes = this.appService.getViewSplitSizes(this.viewId);
-    this.dimensionsDatas = this.dimensionsDatasService.getDatas();
     this.constructModeSelectBox();
 
     // Check if saved into json
     if (this.dimensionsDatas.matrixOption !== undefined) {
       this.matrixOptions.selected = this.dimensionsDatas.matrixOption;
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    // #141 Update combobox on selection change
+    if (changes.selectedDimensions) {
+      this.constructModeSelectBox();
     }
   }
 
