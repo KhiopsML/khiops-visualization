@@ -35,15 +35,17 @@ export class HistogramUIService {
 
       for (let i = 0; i < datas.length; i++) {
         if (
-          y > datas[i].coords.y &&
-          y < datas[i].coords.y + datas[i].coords.barH + yPadding / 2 &&
-          x > datas[i].coords.x &&
-          x < datas[i].coords.x + datas[i].coords.barW
+          y > datas?.[i].coords.y &&
+          y < datas?.[i].coords.y + datas?.[i].coords.barH + yPadding / 2 &&
+          x > datas?.[i].coords.x &&
+          x < datas?.[i].coords.x + datas?.[i].coords.barW
         ) {
           return i;
         }
       }
     }
+
+    return undefined;
   }
 
   static generateTooltip(
