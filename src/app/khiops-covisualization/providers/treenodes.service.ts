@@ -688,20 +688,30 @@ export class TreenodesService {
             }
           }
         }
-        // Add the current parent node after children deletion
-        let currentNodeBound: any = nodeDetails.bounds;
-        currentNodeBound = currentNodeBound.replaceAll('[', '');
-        currentNodeBound = currentNodeBound.replaceAll(']', '');
-        currentNodeBound = currentNodeBound.replaceAll('Missing U ', ''); // #73
-        currentNodeBound = currentNodeBound.split(';');
-        // convert each array string to number
-        for (let j = 0; j < currentNodeBound.length; j++) {
-          currentNodeBound[j] = 1 * currentNodeBound[j];
+
+        if (
+          currentTruncatedPartition.intervals
+            .map((e) => e.cluster)
+            .includes(nodeDetails.parentCluster)
+        ) {
+          // #142 Error in the description of dimensionPartitions during numerical variable folding
+          // Do not add current interval if it's parent is already added
+        } else {
+          // Add the current parent node after children deletion
+          let currentNodeBound: any = nodeDetails.bounds;
+          currentNodeBound = currentNodeBound.replaceAll('[', '');
+          currentNodeBound = currentNodeBound.replaceAll(']', '');
+          currentNodeBound = currentNodeBound.replaceAll('Missing U ', ''); // #73
+          currentNodeBound = currentNodeBound.split(';');
+          // convert each array string to number
+          for (let j = 0; j < currentNodeBound.length; j++) {
+            currentNodeBound[j] = 1 * currentNodeBound[j];
+          }
+          currentTruncatedPartition.intervals.push({
+            cluster: nodeDetails.cluster,
+            bounds: currentNodeBound,
+          });
         }
-        currentTruncatedPartition.intervals.push({
-          cluster: nodeDetails.cluster,
-          bounds: currentNodeBound,
-        });
         // Sort intervals
         currentTruncatedPartition.intervals.sort(function (a, b) {
           return a.bounds[0] - b.bounds[0];
