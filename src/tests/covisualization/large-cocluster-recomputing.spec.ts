@@ -11,16 +11,18 @@ let treenodesService: TreenodesService;
 let dimensionsDatasService: DimensionsDatasService;
 
 describe('CoVisualization', () => {
-  describe('Loading large coclustering [donotworkk10.1.1_id_feat_nospace_Coclustering.json]', () => {
+  describe('Loading large coclustering [10.1.1_id_feat_nospace_Coclustering.json]', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [HttpClientModule, TranslateModule.forRoot()],
       });
 
+      // Inject services
+      dimensionsDatasService = TestBed.inject(DimensionsDatasService);
       treenodesService = TestBed.inject(TreenodesService);
       appService = TestBed.inject(AppService);
-      dimensionsDatasService = TestBed.inject(DimensionsDatasService);
-      const fileDatas = require('../../assets/mocks/kc/donotworkk10.1.1_id_feat_nospace_Coclustering.json');
+
+      const fileDatas = require('../../assets/mocks/kc/10.1.1_id_feat_nospace_Coclustering.json');
       appService.setFileDatas(fileDatas);
     });
 

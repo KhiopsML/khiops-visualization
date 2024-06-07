@@ -654,6 +654,7 @@ export class TreenodesService {
           );
       }
     }
+    return currentTruncatedPartition;
   }
 
   computeNumPartition(nodes, dimIndex, currentTruncatedPartition) {
@@ -681,7 +682,6 @@ export class TreenodesService {
                   currentTruncatedPartition.intervals[intervalIndex];
                 if (currentInterval) {
                   // Because nodes are not present into partition values
-
                   currentTruncatedPartition.intervals.splice(intervalIndex, 1);
                 }
               }
@@ -718,6 +718,7 @@ export class TreenodesService {
         });
       }
     }
+    return currentTruncatedPartition;
   }
 
   updateSummariesParts(datas) {

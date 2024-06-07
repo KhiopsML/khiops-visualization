@@ -107,6 +107,7 @@ export class FileLoaderService {
     // let urlKC = './assets/mocks/kc/Coclustering-6.json';
     // let urlKC = './assets/mocks/kc/Coclustering-4.json';
     // let urlKC = './assets/mocks/kc/1-Adult2varsEducationOccupation.khcj';
+    let urlKC = './assets/mocks/kc/142/8-TS4624User_Coclustering.khcj';
     // let urlKC = './assets/mocks/kc/2-Iris3vars-Coclustering.khcj';
     // let urlKC = './assets/mocks/kc/co-IrisMissing.json';
     // let urlKC = './assets/mocks/kc/adult2var.json';
@@ -123,10 +124,10 @@ export class FileLoaderService {
     // let urlKC = './assets/mocks/kc/zero-except.json';
     // let urlKC = './assets/mocks/kc/AdultSmall.json';
     // let urlKC = './assets/mocks/kc/VerbNounCoclustering27mo.json';
-    let urlKC = './assets/mocks/kc/v4.json';
+    // let urlKC = './assets/mocks/kc/v4.json';
     // let urlKC = './assets/mocks/kc/NovaCoclustering4mb.json';
     // let urlKC =
-    //   './assets/mocks/kc/donotworkk10.1.1_id_feat_nospace_Coclustering.json';
+    //   './assets/mocks/kc/10.1.1_id_feat_nospace_Coclustering.json';
     // let urlKC = './assets/mocks/kc/co-3-num.json';
     // let urlKC = './assets/mocks/kc/h-Coclustering-2-2.json';
     // let urlKC = './assets/mocks/kc/ext-CC_Coclustering.json';
