@@ -23,22 +23,20 @@
       [type]="'histogram'"
       [colorSet]="colorSet"
     ></kl-legend>
-    <div class="comp-header-tools screenshot-hide" fxLayout="row">
+    <div class="comp-header-tools" fxLayout="row">
       <div>
         <button
           mat-stroked-button
           color="primary"
           [matMenuTriggerFor]="graphOptionsXTypes"
         >
-          {{ distributionDatas.distributionGraphOptionsX.selected | translate }}
+          {{ graphOptionsX.selected | translate }}
           <em>v</em>
         </button>
         <mat-menu #graphOptionsXTypes>
           <button
             mat-menu-item
-            *ngFor="
-              let opt of distributionDatas.distributionGraphOptionsX.types
-            "
+            *ngFor="let opt of graphOptionsX.types"
             (click)="changeGraphTypeX(opt)"
           >
             {{ opt | translate }}
@@ -51,15 +49,13 @@
           color="primary"
           [matMenuTriggerFor]="graphOptionsYTypes"
         >
-          {{ distributionDatas.distributionGraphOptionsY.selected | translate }}
+          {{ graphOptionsY.selected | translate }}
           <em>v</em>
         </button>
         <mat-menu #graphOptionsYTypes>
           <button
             mat-menu-item
-            *ngFor="
-              let opt of distributionDatas.distributionGraphOptionsY.types
-            "
+            *ngFor="let opt of graphOptionsY.types"
             (click)="changeGraphTypeY(opt)"
           >
             {{ opt | translate }}
@@ -68,6 +64,18 @@
       </div>
     </div>
   </div>
-  <div (resized)="onResized($event)" #chart id="histogram-chart"></div>
+  <div fxFlexFill (resized)="onResized($event)">
+    <canvas id="histogram-canvas" fxFlex> </canvas>
+    <canvas id="histogram-canvas-hover" fxFlex> </canvas>
+    <canvas id="histogram-canvas-selected" fxFlex> </canvas>
+    <div #chart id="histogram-chart"></div>
+    <app-histogram-tooltip
+      [text]="tooltipText"
+      [canvasW]="w"
+      [posX]="tooltipPosX"
+      [posY]="tooltipPosY"
+      [display]="tooltipDisplay"
+    >
+    </app-histogram-tooltip>
+  </div>
 </div>
-<div #chartTooltip class="tooltip-container"></div>

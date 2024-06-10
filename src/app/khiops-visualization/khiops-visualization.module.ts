@@ -15,7 +15,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TargetVariableStatsCanvasComponent } from './components/commons/target-variable-stats-canvas/target-variable-stats-canvas.component';
 import { DescriptionBlockComponent } from './components/commons/description-block/description-block.component';
 import { KhiopsLibraryModule } from '@khiops-library/khiops-library.module';
-import { ReleaseNotesComponent } from '@khiops-library/components/release-notes/release-notes.component';
 import { TranslateService } from '@ngstack/translate';
 import { LevelDistributionGraphCanvasComponent } from './components/commons/level-distribution-graph-canvas/level-distribution-graph-canvas.component';
 import { SelectTrainedPredictorComponent } from './components/commons/select-trained-predictor/select-trained-predictor.component';
@@ -28,7 +27,6 @@ import { RegressionMatrixComponent } from './components/commons/regression-matri
 import { AgGridModule } from '@ag-grid-community/angular';
 import { TargetDistributionGraphCanvasComponent } from './components/commons/target-distribution-graph-canvas/target-distribution-graph-canvas.component';
 import { TreePreparationViewComponent } from './components/tree-preparation-view/tree-preparation-view.component';
-import { ConfirmDialogComponent } from '@khiops-library/components/confirm-dialog/confirm-dialog.component';
 import { TreeDetailsComponent } from './components/commons/tree-details/tree-details.component';
 import { TreeLeafDetailsComponent } from './components/commons/tree-leaf-details/tree-leaf-details.component';
 import { TreeHyperComponent } from './components/commons/tree-hyper/tree-hyper.component';
@@ -41,6 +39,7 @@ import { InAppRootOverlayContainer } from '@khiops-visualization/providers/in-ap
 import { HistogramComponent } from './components/commons/histogram/histogram.component';
 import { AngularResizeEventModule } from 'angular-resize-event';
 import { BrowserModule } from '@angular/platform-browser';
+import { HistogramTooltipComponent } from './components/commons/histogram/histogram.tooltip.component';
 
 const providers = [
   TranslateService,
@@ -50,6 +49,7 @@ const providers = [
 @NgModule({
   declarations: [
     HistogramComponent,
+    HistogramTooltipComponent,
     AppComponent,
     HomeLayoutComponent,
     PreparationViewComponent,

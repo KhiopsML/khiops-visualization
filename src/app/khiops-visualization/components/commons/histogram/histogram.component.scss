@@ -1,4 +1,13 @@
 .app-histogram {
+  position: absolute;
+  top: 0;
+
+  #histogram-canvas,
+  #histogram-canvas-hover,
+  #histogram-canvas-selected {
+    z-index: 2;
+    position: absolute;
+  }
   .histogram-loading-indicator {
     position: absolute;
     width: 100%;
@@ -10,6 +19,8 @@
     margin-top: 1px !important;
   }
   #histogram-chart {
+    top: 50px;
+    position: absolute;
     width: 100%;
     height: calc(
       100% - 50px

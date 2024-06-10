@@ -95,7 +95,7 @@ export class HistogramService {
     return ratioY;
   }
 
-  computeXbarDimensions(
+  computeXbarsDimensions(
     datas: HistogramValuesI[],
     xType: string,
   ): HistogramBarVO[] {

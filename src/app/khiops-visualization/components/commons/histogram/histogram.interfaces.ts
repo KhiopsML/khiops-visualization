@@ -24,4 +24,10 @@ export interface HistogramValuesI {
   logValue: number;
   partition: number[];
   value: number;
+  coords?: {
+    x: number;
+    y: number;
+    barW: number;
+    barH: number;
+  };
 }

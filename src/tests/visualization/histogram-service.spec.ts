@@ -145,10 +145,10 @@ describe('Visualization', () => {
       );
     });
 
-    it('computeXbarDimensions should return valid datas [ylogAdultAllReports, R1]', () => {
+    it('computeXbarsDimensions should return valid datas [ylogAdultAllReports, R1]', () => {
       const fileDatas = require('../../assets/mocks/kv/ylogAdultAllReports.json');
       const histogramDatas = getHistogramGraphDatas(fileDatas, 0);
-      const res = histogramService.computeXbarDimensions(
+      const res = histogramService.computeXbarsDimensions(
         histogramDatas,
         HistogramType.XLIN,
       );
@@ -164,10 +164,10 @@ describe('Visualization', () => {
       );
     });
 
-    it('computeXbarDimensions should return valid datas [ylogAdultAllReports, R2]', () => {
+    it('computeXbarsDimensions should return valid datas [ylogAdultAllReports, R2]', () => {
       const fileDatas = require('../../assets/mocks/kv/ylogAdultAllReports.json');
       const histogramDatas = getHistogramGraphDatas(fileDatas, 1);
-      const res = histogramService.computeXbarDimensions(
+      const res = histogramService.computeXbarsDimensions(
         histogramDatas,
         HistogramType.XLIN,
       );
@@ -183,10 +183,10 @@ describe('Visualization', () => {
       );
     });
 
-    it('computeXbarDimensions should return valid datas [ylogAdultAllReports, R1]', () => {
+    it('computeXbarsDimensions should return valid datas [ylogAdultAllReports, R1]', () => {
       const fileDatas = require('../../assets/mocks/kv/ylogAdultAllReports.json');
       const histogramDatas = getHistogramGraphDatas(fileDatas, 0);
-      const res = histogramService.computeXbarDimensions(
+      const res = histogramService.computeXbarsDimensions(
         histogramDatas,
         HistogramType.XLOG,
       );
@@ -202,11 +202,11 @@ describe('Visualization', () => {
       );
     });
 
-    it('computeXbarDimensions should return valid datas [ylogAdultAllReports, R3]', () => {
+    it('computeXbarsDimensions should return valid datas [ylogAdultAllReports, R3]', () => {
       const fileDatas = require('../../assets/mocks/kv/ylogAdultAllReports.json');
       const histogramDatas = getHistogramGraphDatas(fileDatas, 2);
       histogramService.getRangeX(histogramDatas);
-      const res = histogramService.computeXbarDimensions(
+      const res = histogramService.computeXbarsDimensions(
         histogramDatas,
         HistogramType.XLOG,
       );
@@ -246,10 +246,10 @@ describe('Visualization', () => {
       expect(res).toEqual(12936.48468821974);
     });
 
-    it('complex computeXbarDimensions should return valid datas [ylogAdultAllReports, R1, xLog]', () => {
+    it('complex computeXbarsDimensions should return valid datas [ylogAdultAllReports, R1, xLog]', () => {
       const fileDatas = require('../../assets/mocks/kv/ylogAdultAllReports.json');
       const histogramDatas = getHistogramGraphDatas(fileDatas, 0);
-      const res = histogramService.computeXbarDimensions(
+      const res = histogramService.computeXbarsDimensions(
         histogramDatas,
         HistogramType.XLOG,
       );
@@ -257,10 +257,10 @@ describe('Visualization', () => {
       expect(JSON.stringify(res)).toEqual(JSON.stringify(expectedRes));
     });
 
-    it('complex computeXbarDimensions should return valid datas [ylogAdultAllReports, R3, xLin]', () => {
+    it('complex computeXbarsDimensions should return valid datas [ylogAdultAllReports, R3, xLin]', () => {
       const fileDatas = require('../../assets/mocks/kv/ylogAdultAllReports.json');
       const histogramDatas = getHistogramGraphDatas(fileDatas, 2);
-      const res = histogramService.computeXbarDimensions(
+      const res = histogramService.computeXbarsDimensions(
         histogramDatas,
         HistogramType.XLIN,
       );
