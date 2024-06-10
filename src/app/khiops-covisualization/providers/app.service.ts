@@ -100,13 +100,18 @@ export class AppService {
           this.appDatas.datas.coclusteringReport.dimensionHierarchies.findIndex(
             (e) => e.name === key,
           );
-        for (let k = collapsedNodes[key].length - 1; k >= 0; k--) {
+        if (dimIndex === -1) {
+          // broken saved data
+          delete collapsedNodes[key];
+        }
+        for (let k = collapsedNodes?.[key]?.length - 1; k >= 0; k--) {
           const node = value[k];
           const nodeDetails =
-            this.appDatas.datas.coclusteringReport.dimensionHierarchies[
+            this.appDatas.datas.coclusteringReport.dimensionHierarchies?.[
               dimIndex
-            ].clusters.find((e) => e.cluster === node);
-          if (nodeDetails.isLeaf) {
+            ]?.clusters?.find((e) => e.cluster === node);
+          if (!nodeDetails || nodeDetails?.isLeaf) {
+            // it's a leaf or it's a broken leaf name
             collapsedNodes[key].splice(collapsedNodes[key][k], 1);
           }
         }
