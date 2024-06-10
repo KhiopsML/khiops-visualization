@@ -349,11 +349,14 @@ export class TreenodesService {
   }
 
   updateCollapsedNodesToSave(dimensionName: string, nodeName: string, way) {
+    if (!this.collapsedNodesToSave) {
+      this.collapsedNodesToSave = {};
+    }
     // Add or remove collapsed nodes to save them into json file
-    if (!this.collapsedNodesToSave[dimensionName]) {
+    if (!this.collapsedNodesToSave?.[dimensionName]) {
       this.collapsedNodesToSave[dimensionName] = [];
     }
-    const index = this.collapsedNodesToSave[dimensionName].indexOf(nodeName);
+    const index = this.collapsedNodesToSave?.[dimensionName].indexOf(nodeName);
     if (way === -1) {
       if (index !== -1) {
         this.collapsedNodesToSave[dimensionName].splice(index, 1);

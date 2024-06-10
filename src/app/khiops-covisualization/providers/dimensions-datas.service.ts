@@ -171,7 +171,7 @@ export class DimensionsDatasService {
           );
           const dimensionPartition =
             appDatas.coclusteringReport.dimensionPartitions[i];
-          // Set  dimesnion partitions from intervals or valueGroup
+          // Set  dimension partitions from intervals or valueGroup
           dimension.setPartition(dimensionPartition);
           this.dimensionsDatas.dimensions.push(dimension);
         }
