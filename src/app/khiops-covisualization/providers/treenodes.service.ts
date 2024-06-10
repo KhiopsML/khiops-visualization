@@ -460,7 +460,7 @@ export class TreenodesService {
     return !_.isEqual(savedDatas, testedSavedDatas);
   }
 
-  constructSavedJson(collapsedNodesInput?) {
+  constructSavedJson(collapsedNodesInput?, isReduced = false) {
     let newJson = this.constructDatasToSave(collapsedNodesInput);
     if (collapsedNodesInput) {
       // Transform json if collapsed nodes
@@ -489,7 +489,7 @@ export class TreenodesService {
       // t1 = performance.now();
       // console.log("updateSummariesCells " + (t1 - t0) + " milliseconds.");
 
-      if (!collapsedNodesInput) {
+      if (!collapsedNodesInput || isReduced) {
         // Remove collapsed nodes and selected nodes because they have been reduced
         delete newJson.savedDatas.collapsedNodes;
       }
@@ -718,7 +718,37 @@ export class TreenodesService {
         });
       }
     }
+
+    const includedIntervals = this.findIncludedIntervals(
+      currentTruncatedPartition.intervals.map((e) => e.bounds),
+    );
+    if (includedIntervals.length > 0) {
+      for (let k = includedIntervals.length - 1; k >= 0; k--) {
+        currentTruncatedPartition.intervals.splice(includedIntervals[k], 1);
+      }
+    }
+
     return currentTruncatedPartition;
+  }
+
+  findIncludedIntervals(intervals) {
+    let includedIndices = [];
+
+    for (let i = 0; i < intervals.length; i++) {
+      for (let j = 0; j < intervals.length; j++) {
+        if (i !== j && this.isIncluded(intervals[i], intervals[j])) {
+          includedIndices.push(i);
+          break;
+        }
+      }
+    }
+
+    return includedIndices;
+  }
+
+  // Fonction pour vérifier si l'intervalle a est inclus dans l'intervalle b
+  isIncluded(a, b) {
+    return a[0] >= b[0] && a[1] <= b[1];
   }
 
   updateSummariesParts(datas) {

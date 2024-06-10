@@ -24,7 +24,7 @@ describe('coVisualization', () => {
       appService.setFileDatas(fileDatas);
     });
 
-    it('computeNumPartition should return valid datas [auto folded datas]', () => {
+    it('1 - computeNumPartition should return valid datas [auto folded datas]', () => {
       dimensionsDatasService.getDimensions();
       dimensionsDatasService.initSelectedDimensions();
       dimensionsDatasService.saveInitialDimension();
@@ -88,13 +88,15 @@ describe('coVisualization', () => {
         partition,
       );
 
-      expect(computedPartition.intervals[5].cluster).toEqual(']9.5;14.5]');
-      expect(computedPartition.intervals[5].bounds).toEqual([9.5, 14.5]);
-      expect(computedPartition.intervals[6].cluster).toEqual(']9.5;19.5]');
-      expect(computedPartition.intervals[6].bounds).toEqual([9.5, 19.5]);
+      expect(computedPartition.intervals[4].cluster).toEqual(']5.5;9.5]');
+      expect(computedPartition.intervals[4].bounds).toEqual([5.5, 9.5]);
+      expect(computedPartition.intervals[5].cluster).toEqual(']9.5;19.5]');
+      expect(computedPartition.intervals[5].bounds).toEqual([9.5, 19.5]);
+      expect(computedPartition.intervals[6].cluster).toEqual(']19.5;24.5]');
+      expect(computedPartition.intervals[6].bounds).toEqual([19.5, 24.5]);
     });
 
-    it('computeNumPartition should return valid datas [auto folded datas]', () => {
+    it('2 - computeNumPartition should return valid datas [auto folded datas]', () => {
       dimensionsDatasService.getDimensions();
       dimensionsDatasService.initSelectedDimensions();
       dimensionsDatasService.saveInitialDimension();

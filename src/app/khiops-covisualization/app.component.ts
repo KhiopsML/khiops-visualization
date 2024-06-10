@@ -124,11 +124,9 @@ export class AppComponent implements AfterViewInit {
         dialogRef.componentInstance.message = this.translate.get(
           'GLOBAL.BETA_VERSIONS_WARNING',
         );
-        dialogRef
-          .afterClosed()
-          .subscribe((e) => {
-            cb(e);
-          });
+        dialogRef.afterClosed().subscribe((e) => {
+          cb(e);
+        });
       });
     };
     this.element.nativeElement.constructDatasToSave = () => {
@@ -136,7 +134,8 @@ export class AppComponent implements AfterViewInit {
     };
     this.element.nativeElement.constructPrunedDatasToSave = () => {
       const collapsedNodes = this.treenodesService.getSavedCollapsedNodes();
-      return this.treenodesService.constructSavedJson(collapsedNodes);
+      // #142 Remove collapsed nodes because datas are truncated
+      return this.treenodesService.constructSavedJson(collapsedNodes, true);
     };
     this.element.nativeElement.setConfig = (config) => {
       this.configService.setConfig(config);
@@ -171,7 +170,7 @@ export class AppComponent implements AfterViewInit {
     this.trackerService.initTracker(
       AppConfig.covisualizationCommon,
       '<tracker_id>',
-      '<appSource>'
+      '<appSource>',
     );
   }
 
