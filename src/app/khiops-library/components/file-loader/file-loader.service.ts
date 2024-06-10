@@ -108,7 +108,6 @@ export class FileLoaderService {
     // let urlKC = './assets/mocks/kc/Coclustering-6.json';
     // let urlKC = './assets/mocks/kc/Coclustering-4.json';
     // let urlKC = './assets/mocks/kc/1-Adult2varsEducationOccupation.khcj';
-    let urlKC = './assets/mocks/kc/142/8-TS4624User_Coclustering.khcj';
     // let urlKC = './assets/mocks/kc/2-Iris3vars-Coclustering.khcj';
     // let urlKC = './assets/mocks/kc/co-IrisMissing.json';
     // let urlKC = './assets/mocks/kc/adult2var.json';
@@ -134,7 +133,7 @@ export class FileLoaderService {
     // let urlKC = './assets/mocks/kc/ext-CC_Coclustering.json';
     // let urlKC = './assets/mocks/kc/ext-datas_Coclustering.json';
     // let urlKC = './assets/mocks/kc/ext-CC_Coclustering.json';
-    // let urlKC = './assets/mocks/kc/CC_3_Coclustering.json';
+    let urlKC = './assets/mocks/kc/CC_3_Coclustering.json';
 
     if (fileName) {
       urlKV = './assets/mocks/kv/' + fileName;

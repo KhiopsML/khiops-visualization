@@ -126,7 +126,7 @@
     "webpack-bundle-analyzer": "4.10.2"
   },
   "resolutions": {
-    "webpack": "5.90.3"
+    "webpack": "5.88.2"
   },
   "appdescription": {
     "visualization": "khiops Visualization",
