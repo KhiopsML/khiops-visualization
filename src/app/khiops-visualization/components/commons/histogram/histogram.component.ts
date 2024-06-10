@@ -30,6 +30,7 @@ import {
 } from './histogram.interfaces';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options';
+import { debounceTime, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-histogram',
@@ -42,6 +43,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 
   componentType = 'histogram'; // needed to copy datas
   svg: d3.Selection<SVGElement, unknown, HTMLElement, any>;
+  private resizeSubject = new Subject<ResizedEvent>();
 
   // Outputs
   @Output() selectedItemChanged: EventEmitter<any> = new EventEmitter();
@@ -107,6 +109,10 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     HistogramUIService.setTranslationService(translate);
 
     this.colorSet = HistogramUIService.getColors();
+
+    this.resizeSubject.pipe(debounceTime(100)).subscribe((event) => {
+      this.handleResized(event);
+    });
   }
 
   override ngAfterViewInit(): void {
@@ -178,6 +184,10 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   }
 
   onResized(event: ResizedEvent) {
+    this.resizeSubject.next(event);
+  }
+
+  handleResized(event: ResizedEvent) {
     this.h = this.chart.nativeElement.offsetHeight + 10 - 60; // graph header = 60, +10 to take more height
     this.w = this.chart.nativeElement.offsetWidth;
     // if (!event.isFirst) {
