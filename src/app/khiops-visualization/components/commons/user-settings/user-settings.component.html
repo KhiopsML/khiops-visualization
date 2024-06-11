@@ -15,7 +15,7 @@
   </div>
   <div fxLayout="column" id="user-settings-content" fxLayoutAlign="start start">
     <h2>{{ 'SETTINGS.NUMBER_PRECISION' | translate }}</h2>
-    <div fxLayout="row" fxLayoutAlign="start center">
+    <!-- <div fxLayout="row" fxLayoutAlign="start center">
       <mat-slider
         color="primary"
         attr.aria-label="{{
@@ -45,7 +45,7 @@
       >
       </mat-slider>
       <span>{{ contrastValue }} %</span>
-    </div>
+    </div> -->
     <h2>{{ 'COOKIE_CONSENT.TITLE' | translate }}</h2>
     <div fxLayout="row" fxLayoutAlign="start center">
       <mat-slide-toggle color="primary" [(ngModel)]="allowCookies">
