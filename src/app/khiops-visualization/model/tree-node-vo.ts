@@ -19,7 +19,7 @@ export class TreeNodeVO {
   color: string;
   isTrusted: boolean;
   defaultGroupIndex: number;
-  valuesProbs: number[];
+  valuesProbs: number[] = [];
   purity: number;
   totalFreqs: number;
   isCollapsed: boolean;
@@ -47,9 +47,7 @@ export class TreeNodeVO {
     this.children = object.childNodes || [];
     this.defaultGroupIndex = object.defaultGroupIndex || undefined;
     if (this.isLeaf) {
-      this.totalFreqs = UtilsService.arraySum(
-        this.targetValues && this.targetValues.frequencies,
-      );
+      this.totalFreqs = UtilsService.arraySum(this.targetValues?.frequencies);
     } else {
       this.deepGetChildrenModalityTargetValues(this.childNodes);
     }
@@ -107,6 +105,7 @@ export class TreeNodeVO {
    * 1 + (0.3*log2(0.3) + 0.2*log2(0.2) + 0.5*log2(0.5)) / log2(3)
    */
   getPurity(M: number): number | undefined {
+    let purity = undefined;
     if (this.isLeaf) {
       this.computeValuesProbs();
 
@@ -114,9 +113,8 @@ export class TreeNodeVO {
       for (let i = 0; i < this.targetValues.frequencies.length; i++) {
         pClassLog2 += this.valuesProbs[i] * Math.log2(this.valuesProbs[i]);
       }
-      this.purity = 1 + pClassLog2 / Math.log2(M);
-
-      return this.purity;
+      purity = 1 + pClassLog2 / Math.log2(M);
     }
+    return purity;
   }
 }

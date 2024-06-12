@@ -23,9 +23,9 @@ export class InformationsBlockComponent extends SelectableComponent {
   componentType = 'informations'; // needed to copy datas
 
   constructor(
-    public selectableService: SelectableService,
-    public ngzone: NgZone,
-    public configService: ConfigService,
+    public override selectableService: SelectableService,
+    public override ngzone: NgZone,
+    public override configService: ConfigService,
   ) {
     super(selectableService, ngzone, configService);
   }

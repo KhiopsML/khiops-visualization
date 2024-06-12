@@ -15,7 +15,6 @@ import { LevelDistributionGraphCanvasComponent } from '../commons/level-distribu
 import { VariableGraphDetailsComponent } from '../commons/variable-graph-details/variable-graph-details.component';
 import { TranslateService } from '@ngstack/translate';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
-import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { REPORTS } from '@khiops-library/enum/reports';
 import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
@@ -23,6 +22,7 @@ import { PreparationVariableVO } from '@khiops-visualization/model/preparation-v
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { VariableVO } from '@khiops-visualization/model/variable-vo';
 import { Preparation2dDatasVO } from '@khiops-visualization/model/preparation2d-datas-vo';
+import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 
 @Component({
   selector: 'app-preparation-view',
@@ -56,14 +56,14 @@ export class PreparationViewComponent extends SelectableTabComponent {
   targetVariableStatsInformations: InfosDatasI[];
 
   // managed by selectable-tab component
-  tabIndex = 1;
+  override tabIndex = 1;
 
   variablesDisplayedColumns: GridColumnsI[] = [];
 
   constructor(
     private preparationDatasService: PreparationDatasService,
     private translate: TranslateService,
-    private khiopsLibraryService: KhiopsLibraryService,
+    private trackerService: TrackerService,
     private evaluationDatasService: EvaluationDatasService,
     private dialog: MatDialog,
     private preparation2dDatasService: Preparation2dDatasService,
@@ -71,6 +71,97 @@ export class PreparationViewComponent extends SelectableTabComponent {
     private modelingDatasService: ModelingDatasService,
   ) {
     super();
+
+    this.variablesDisplayedColumns = [
+      {
+        headerName: this.translate.get('GLOBAL.RANK'),
+        field: 'rank',
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.RANK'),
+      },
+      {
+        headerName: this.translate.get('GLOBAL.NAME'),
+        field: 'name',
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.NAME'),
+      },
+      {
+        headerName: this.translate.get('GLOBAL.LEVEL'),
+        field: 'level',
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.LEVEL'),
+      },
+      {
+        headerName: this.translate.get('GLOBAL.PARTS'),
+        field: 'parts',
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.PARTS'),
+      },
+      {
+        headerName: this.translate.get('GLOBAL.VALUES'),
+        field: 'values',
+        tooltip: this.translate.get(
+          'TOOLTIPS.PREPARATION.VARIABLES.VALUES',
+        ),
+      },
+      {
+        headerName: this.translate.get('GLOBAL.TYPE'),
+        field: 'type',
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.TYPE'),
+      },
+      {
+        headerName: this.translate.get('GLOBAL.MODE'),
+        field: 'mode',
+        show: false,
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.MODE'),
+      },
+      {
+        headerName: this.translate.get('GLOBAL.MODE_COVERAGE'),
+        field: 'modeCoverage',
+        show: false,
+        tooltip: this.translate.get(
+          'TOOLTIPS.PREPARATION.VARIABLES.MODE_COVERAGE',
+        ),
+      },
+      {
+        headerName: this.translate.get('GLOBAL.MIN'),
+        field: 'min',
+        show: false,
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.MIN'),
+      },
+      {
+        headerName: this.translate.get('GLOBAL.MAX'),
+        field: 'max',
+        show: false,
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.MAX'),
+      },
+      {
+        headerName: this.translate.get('GLOBAL.MEAN'),
+        field: 'mean',
+        show: false,
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.MEAN'),
+      },
+      {
+        headerName: this.translate.get('GLOBAL.STD_DEV'),
+        field: 'stdDev',
+        show: false,
+        tooltip: this.translate.get(
+          'TOOLTIPS.PREPARATION.VARIABLES.STD_DEV',
+        ),
+      },
+      {
+        headerName: this.translate.get('GLOBAL.MISSING_NUMBER'),
+        field: 'missingNumber',
+        show: false,
+        tooltip: this.translate.get(
+          'TOOLTIPS.PREPARATION.VARIABLES.MISSING_NUMBER',
+        ),
+      },
+      {
+        headerName: this.translate.get('GLOBAL.DERIVATION_RULE'),
+        field: 'derivationRule',
+        show: false,
+        tooltip: this.translate.get(
+          'TOOLTIPS.PREPARATION.VARIABLES.DERIVATION_RULE',
+        ),
+      },
+    ];
   }
 
   ngOnInit() {
@@ -78,7 +169,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
       this.preparationSource === REPORTS.PREPARATION_REPORT
         ? 'preparation'
         : 'textPreparation';
-    this.khiopsLibraryService.trackEvent('page_view', trackView);
+    this.trackerService.trackEvent('page_view', trackView);
 
     this.variablesDisplayedColumns = [
       {
@@ -195,7 +286,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
       this.preparationDatasService.includesTargetParts(this.variablesDatas);
     if (includesTargetParts) {
       this.variablesDisplayedColumns.splice(3, 0, {
-        headerName: 'Target parts',
+        headerName: this.translate.get('GLOBAL.TARGET_PARTS'),
         field: 'targetParts',
         tooltip: this.translate.get(
           'TOOLTIPS.PREPARATION.VARIABLES.TARGET_PARTS',

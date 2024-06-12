@@ -8,40 +8,40 @@ export class ProjectSummaryVO {
   learningTask: string;
   targetVariable: string;
   instances: string;
-  variables: number;
+  variables: number | undefined;
 
   displayDatas: InfosDatasI[];
 
-  constructor(appDatas) {
+  constructor(appDatas: any, source: string) {
     this.filename = appDatas.filename || '';
-    this.database = appDatas.preparationReport.summary.database || '';
+    this.database = appDatas[source]?.summary?.database || '';
     this.shortDescription = appDatas.shortDescription || '';
-    this.learningTask = appDatas.preparationReport.summary.learningTask || '';
-    this.targetVariable =
-      appDatas.preparationReport.summary.targetVariable || '';
-    this.instances = appDatas.preparationReport.summary.instances || '';
+    this.learningTask = appDatas[source]?.summary?.learningTask || '';
+    this.targetVariable = appDatas[source]?.summary?.targetVariable || '';
+    this.instances = appDatas[source]?.summary?.instances || '';
 
     this.variables = undefined;
-    this.computeVariablesCount(appDatas);
+    this.computeVariablesCount(appDatas, source);
 
     this.formatDatas();
   }
 
-  computeVariablesCount(appDatas) {
-    const varDatas = appDatas.preparationReport.summary.variables || undefined;
+  computeVariablesCount(appDatas: any, source: string) {
+    const varDatas = appDatas[source]?.summary?.variables || undefined;
     if (varDatas) {
       const categoricalVarsCount =
         varDatas.numbers[
-          varDatas.types.findIndex((e) => e === TYPES.CATEGORICAL)
+          varDatas.types.findIndex((e: string) => e === TYPES.CATEGORICAL)
         ];
       const numericalVarsCount =
         varDatas.numbers[
-          varDatas.types.findIndex((e) => e === TYPES.NUMERICAL)
+          varDatas.types.findIndex((e: string) => e === TYPES.NUMERICAL)
         ];
       this.variables = categoricalVarsCount + numericalVarsCount;
       if (
-        appDatas.preparationReport.summary.targetVariable &&
-        appDatas.preparationReport.summary.targetVariable !== ''
+        this.variables &&
+        appDatas[source].summary.targetVariable &&
+        appDatas[source].summary.targetVariable !== ''
       ) {
         this.variables = this.variables - 1;
       }

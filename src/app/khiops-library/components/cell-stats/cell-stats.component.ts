@@ -27,16 +27,16 @@ export class CellStatsComponent implements OnChanges {
             this.selectedCells.map((e) => e.displayedFreqValue),
           ),
           EF: UtilsService.arraySum(
-            this.selectedCells.map((e) => e.displayedValue.ef),
+            this.selectedCells.map((e) => e.displayedValue?.ef),
           ),
           I:
-            this.selectedCells[0].displayedValue.type === 'MUTUAL_INFO'
+            this.selectedCells[0].displayedValue?.type === 'MUTUAL_INFO'
               ? UtilsService.arraySum(
                   this.selectedCells.map((e) => e.displayedValue.value),
                 )
               : undefined,
           Total:
-            this.selectedCells[0].displayedValue.type === 'MUTUAL_INFO'
+            this.selectedCells[0].displayedValue?.type === 'MUTUAL_INFO'
               ? UtilsService.arraySum(
                   this.selectedCells.map((e) => e.displayedValue.extra),
                 )
@@ -46,14 +46,14 @@ export class CellStatsComponent implements OnChanges {
         // Simple selection
         this.datas = {
           F: this.selectedCells[0].displayedFreqValue,
-          EF: this.selectedCells[0].displayedValue.ef,
+          EF: this.selectedCells[0].displayedValue?.ef,
           I:
-            this.selectedCells[0].displayedValue.type === 'MUTUAL_INFO'
-              ? this.selectedCells[0].displayedValue.value
+            this.selectedCells[0].displayedValue?.type === 'MUTUAL_INFO'
+              ? this.selectedCells[0].displayedValue?.value
               : undefined,
           Total:
-            this.selectedCells[0].displayedValue.type === 'MUTUAL_INFO'
-              ? this.selectedCells[0].displayedValue.extra
+            this.selectedCells[0].displayedValue?.type === 'MUTUAL_INFO'
+              ? this.selectedCells[0].displayedValue?.extra
               : undefined,
         };
       }

@@ -9,7 +9,7 @@ export class WatchResizeComponent implements AfterViewInit {
 
   @Input() id: any;
   @Input() watchResize = true;
-  el: Element;
+  el: HTMLElement | null;
 
   constructor(
     public ngzone: NgZone,

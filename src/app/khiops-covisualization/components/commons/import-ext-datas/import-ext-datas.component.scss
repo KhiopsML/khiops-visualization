@@ -1,64 +1,61 @@
 #import-ext-datas-comp {
+  #import-ext-datas-header {
+    height: 68px;
 
-	#import-ext-datas-header {
-		height: 68px;
+    h2 {
+      margin-left: 1em;
+    }
 
-		h2 {
-			margin-left: 1em;
-		}
+    button {
+      margin-left: 1em;
+    }
+  }
 
-		button {
-			margin-left: 1em;
-		}
-	}
+  #import-ext-datas-content {
+    overflow: auto;
+    max-height: 70vh;
+  }
 
-	#import-ext-datas-content {
-		overflow: auto;
-		max-height: 70vh;
-	}
+  #import-ext-datas-content-empty {
+    margin: 3em;
 
-	#import-ext-datas-content-empty {
-		margin: 3em;
+    span {
+      text-align: center;
+    }
+  }
 
-		span {
-			text-align: center;
-		}
-	}
+  .import-ext-datas-row {
+    margin: 1.6em 0 0 0;
 
-	.import-ext-datas-row {
-		margin: 1.6em 0 0 0;
+    span:first-child {
+      min-width: 180px;
+    }
 
-		span:first-child {
-			min-width: 180px;
-		}
+    > * {
+      margin-left: 20px;
+    }
 
-		>* {
-			margin-left: 20px;
-		}
+    input {
+      width: 30px;
+    }
+  }
 
-		input {
-			width: 30px;
-		}
-	}
+  kl-ag-grid {
+    border: 1px solid #eee;
+    min-height: 212px;
+    max-height: 212px;
+    height: 212px !important;
 
-	kl-ag-grid {
-		border: 1px solid #eee;
-		min-height: 212px;
-		max-height: 212px;
-		height: 212px !important;
+    ::ng-deep .ag-center-cols-viewport {
+      overflow-x: hidden;
+    }
+  }
 
-		::ng-deep .ag-center-cols-viewport {
-			overflow-x: hidden;
-		}
+  #import-ext-datas-footer {
+    margin-top: 1em;
 
-	}
-
-	#import-ext-datas-footer {
-		margin-top: 1em;
-
-		button {
-			margin-left: 1em;
-		}
-	}
-
+    button {
+      margin-left: 1em;
+    }
+  }
 }

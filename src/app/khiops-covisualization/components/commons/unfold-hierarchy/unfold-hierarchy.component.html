@@ -27,7 +27,12 @@
       <button mat-stroked-button (click)="onClickOnCancel()">
         {{ 'GLOBAL.CANCEL' | translate }}
       </button>
-      <button mat-flat-button (click)="onClickOnSave()" color="primary">
+      <button
+        class="button-confirm-hierarchy"
+        mat-flat-button
+        (click)="onClickOnSave()"
+        color="primary"
+      >
         {{ 'GLOBAL.OK' | translate }}
       </button>
     </div>
@@ -54,13 +59,32 @@
           </mat-slider>
         </div>
         <div fxLayout="column" class="increment">
-          <button mat-stroked-button (click)="increaseUnfoldHierarchy()">
+          <button
+            class="button-increase-hierarchy"
+            mat-stroked-button
+            (click)="increaseUnfoldHierarchy()"
+          >
             +
           </button>
-          <button mat-stroked-button (click)="decreaseUnfoldHierarchy()">
+          <button
+            class="button-reduce-hierarchy"
+            mat-stroked-button
+            (click)="decreaseUnfoldHierarchy()"
+          >
             -
           </button>
         </div>
+        <!-- DO NOT REMOVE - used by cypress to load files -->
+        <div style="visibility: hidden">
+          <input [(ngModel)]="cyInput" type="text" id="cy-unfold-value-input" />
+          <button
+            id="cy-unfold-value-button"
+            (click)="setCypressInput(cyInput)"
+          >
+            cyoress set
+          </button>
+        </div>
+        <!-- END DO NOT REMOVE -->
         <div fxLayout="column" fxFlex fxLayoutAlign="center end">
           <span
             >{{ 'GLOBAL.CELLS' | translate }}:

@@ -7,11 +7,11 @@ import {
   Output,
 } from '@angular/core';
 import { AppConfig } from 'src/environments/environment';
-import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngstack/translate';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
+import { TrackerService } from '../../../../khiops-library/providers/tracker.service';
 
 @Component({
   selector: 'app-user-settings',
@@ -22,7 +22,7 @@ export class UserSettingsComponent implements OnChanges {
   @Output() toggleNavDrawerChanged: EventEmitter<any> = new EventEmitter();
   @Input() opened: boolean;
 
-  numberPrecision;
+  numberPrecision: any;
   contrastValue: number;
   allowCookies: boolean;
   currentTheme: string =
@@ -34,17 +34,17 @@ export class UserSettingsComponent implements OnChanges {
   constructor(
     private translate: TranslateService,
     private snackBar: MatSnackBar,
-    private khiopsLibraryService: KhiopsLibraryService,
+    private trackerService: TrackerService,
   ) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.opened && changes.opened.currentValue) {
+    if (changes.opened?.currentValue) {
       this.onNavDrawerOpen();
     }
   }
 
   onNavDrawerOpen() {
-    this.khiopsLibraryService.trackEvent('page_view', 'settings');
+    this.trackerService.trackEvent('page_view', 'settings');
 
     // Global number precision
     this.numberPrecision =
@@ -112,25 +112,19 @@ export class UserSettingsComponent implements OnChanges {
       this.allowCookies.toString(),
     );
 
-    if (this.initialAllowCookies !== this.allowCookies) {
-      if (this.allowCookies === true) {
-        // init matomo
-        this.khiopsLibraryService.initMatomo();
-        this.khiopsLibraryService.enableMatomo();
-      } else {
-        this.khiopsLibraryService.disableMatomo();
-      }
-    }
-
     location.reload();
   }
 
   onClickOnClearDatas() {
     localStorage.clear();
-    this.snackBar.open(this.translate.get('SNACKS.DATAS_DELETED'), null, {
-      duration: 2000,
-      panelClass: 'success',
-    });
+    this.snackBar.open(
+      this.translate.get('SNACKS.DATAS_DELETED'),
+      undefined,
+      {
+        duration: 2000,
+        panelClass: 'success',
+      },
+    );
   }
 
   isThemeChecked(theme: string): boolean {

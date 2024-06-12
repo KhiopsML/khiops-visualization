@@ -41,37 +41,44 @@ export class ClusterDetailsComponent implements OnInit, OnChanges {
     private clustersService: ClustersService,
   ) {
     this.title = this.translate.get('GLOBAL.CURRENT_CLUSTERS');
-
     this.clusterDisplayedColumns = [
       {
-        headerName: 'Name',
+        headerName: this.translate.get('GLOBAL.NAME'),
         field: 'name',
         tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.NAME'),
       },
       {
-        headerName: 'Father',
+        headerName: this.translate.get('GLOBAL.FATHER'),
         field: 'father',
         show: false,
-        tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.FATHER'),
+        tooltip: this.translate.get(
+          'TOOLTIPS.AXIS.CURRENT_CLUSTERS.FATHER',
+        ),
       },
       {
-        headerName: 'Frequency',
+        headerName: this.translate.get('GLOBAL.FREQUENCY'),
         field: 'frequency',
-        tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.FREQUENCY'),
+        tooltip: this.translate.get(
+          'TOOLTIPS.AXIS.CURRENT_CLUSTERS.FREQUENCY',
+        ),
       },
       {
-        headerName: 'Interest',
+        headerName: this.translate.get('GLOBAL.INTEREST'),
         field: 'interest',
-        tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.INTEREST'),
+        tooltip: this.translate.get(
+          'TOOLTIPS.AXIS.CURRENT_CLUSTERS.INTEREST',
+        ),
       },
       {
-        headerName: 'Hierarchical Level',
+        headerName: this.translate.get('GLOBAL.HIERARCHICAL_LEVEL'),
         field: 'hierarchicalLevel',
         show: false,
-        tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.LEVEL'),
+        tooltip: this.translate.get(
+          'TOOLTIPS.AXIS.CURRENT_CLUSTERS.HIERARCHICAL_LEVEL',
+        ),
       },
       {
-        headerName: 'Rank',
+        headerName: this.translate.get('GLOBAL.RANK'),
         field: 'rank',
         show: false,
         tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.RANK'),
@@ -86,15 +93,16 @@ export class ClusterDetailsComponent implements OnInit, OnChanges {
     // Insert size column if it is a categorical dimension
     if (this.selectedDimension.type === TYPES.CATEGORICAL) {
       this.clusterDisplayedColumns.splice(2, 0, {
-        headerName: 'Size',
+        headerName: this.translate.get('GLOBAL.SIZE'),
         field: 'size',
+        tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.SIZE'),
       });
     }
   }
 
   ngOnChanges(changes: SimpleChanges) {
     // Keep change listen on dimension combo change
-    if (changes.dimensionsTree && changes.dimensionsTree.currentValue) {
+    if (changes?.dimensionsTree?.currentValue) {
       this.filteredDimensionsClusters =
         this.clustersService.getFilteredDimensionTree(
           this.dimensionsTree,
@@ -102,7 +110,7 @@ export class ClusterDetailsComponent implements OnInit, OnChanges {
         );
       this.updateSelectedNode();
     }
-    if (changes.selectedNode && changes.selectedNode.currentValue) {
+    if (changes?.selectedNode?.currentValue) {
       this.updateSelectedNode();
     }
   }
@@ -137,7 +145,7 @@ export class ClusterDetailsComponent implements OnInit, OnChanges {
           this.nodeToSelect = this.getFirstNodeLeaf(this.nodeToSelect);
         }
       }
-      this.nodeToSelect = _.cloneDeep(this.selectedNode);
+      this.selectedNode = _.cloneDeep(this.nodeToSelect);
     }
   }
 

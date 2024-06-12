@@ -5,7 +5,6 @@ import { DimensionsDatasService } from '@khiops-covisualization/providers/dimens
 import { EventsService } from '@khiops-covisualization/providers/events.service';
 import { TranslateService } from '@ngstack/translate';
 import { ClustersService } from '@khiops-covisualization/providers/clusters.service';
-import * as _ from 'lodash'; // Important to import lodash in karma
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { Subscription } from 'rxjs';
 
@@ -30,8 +29,29 @@ export class SelectedClustersComponent implements OnDestroy {
     private translate: TranslateService,
     private clustersService: ClustersService,
     private eventsService: EventsService,
-    private dimensionsService: DimensionsDatasService,
+    private dimensionsDatasService: DimensionsDatasService,
   ) {
+    this.clustersDisplayedColumns = [
+      {
+        headerName: this.translate.get('GLOBAL.NAME'),
+        field: 'hierarchy',
+        tooltip: this.translate.get('TOOLTIPS.AXIS.SELECTED_CLUSTERS.NAME'),
+      },
+      {
+        headerName: this.translate.get('GLOBAL.CURRENT_CLUSTER'),
+        field: 'shortDescription',
+        tooltip: this.translate.get(
+          'TOOLTIPS.AXIS.SELECTED_CLUSTERS.CURRENT_CLUSTERS',
+        ),
+      },
+      {
+        headerName: this.translate.get('GLOBAL.NB_CLUSTERS'),
+        field: 'nbClusters',
+        tooltip: this.translate.get(
+          'TOOLTIPS.AXIS.SELECTED_CLUSTERS.NB_CLUSTERS',
+        ),
+      },
+    ];
     this.title = this.translate.get('GLOBAL.SELECTED_CLUSTERS');
     this.clustersDisplayedColumns = [
       {
@@ -79,7 +99,8 @@ export class SelectedClustersComponent implements OnDestroy {
   updateDimensionIntervals(dimName): SelectedClusterVO | undefined {
     if (this.selectedClusters) {
       // Update intervals of current node
-      const nbClusters = this.dimensionsService.getDimensionIntervals(dimName);
+      const nbClusters =
+        this.dimensionsDatasService.getDimensionIntervals(dimName);
 
       // Just update intervals on change
       const selectedCluster: SelectedClusterVO = this.selectedClusters.find(
@@ -98,12 +119,12 @@ export class SelectedClustersComponent implements OnDestroy {
     // Check if all nodes are selected to update to optimize
     if (
       this.selectedNodes &&
-      this.selectedNodes.length === this.dimensionsService.getDimensionCount()
+      this.selectedNodes.length ===
+        this.dimensionsDatasService.getDimensionCount()
     ) {
       const details = this.clustersService.getSelectedClustersDetails();
       this.selectedClusters = [];
 
-      // if (this.selectedClusters.length === 0) {
       for (let i = 0; i < this.selectedNodes.length; i++) {
         const nodeVO: TreeNodeVO = this.selectedNodes[i];
         const selectedCluster: SelectedClusterVO = new SelectedClusterVO(
@@ -119,12 +140,14 @@ export class SelectedClustersComponent implements OnDestroy {
 
   selectActiveClusters() {
     const currentActiveClusters = [];
-    const firstDimPos = this.dimensionsService.getDimensionPositionFromName(
-      this.selectedClusters[0].hierarchy,
-    );
-    const secondDimPos = this.dimensionsService.getDimensionPositionFromName(
-      this.selectedClusters[1].hierarchy,
-    );
+    const firstDimPos =
+      this.dimensionsDatasService.getDimensionPositionFromName(
+        this.selectedClusters[0].hierarchy,
+      );
+    const secondDimPos =
+      this.dimensionsDatasService.getDimensionPositionFromName(
+        this.selectedClusters[1].hierarchy,
+      );
     currentActiveClusters.push(this.selectedClusters[firstDimPos]);
     currentActiveClusters.push(this.selectedClusters[secondDimPos]);
     this.activeClusters = currentActiveClusters;

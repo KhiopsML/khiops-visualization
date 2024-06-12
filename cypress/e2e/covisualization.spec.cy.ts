@@ -1,4 +1,5 @@
 import { setupAxisTests } from 'cypress/setups/axis-tests';
+import { initLS } from 'cypress/setups/init-ls';
 import '../support/commands';
 import '../utils/utils';
 import { setupContextTests } from 'cypress/setups/context-tests';
@@ -24,7 +25,7 @@ describe('Test Khiops Covisualization sample files', () => {
     'SimplifiedCoclusteringIrisOldFormat_BugUndefined.json',
     'h-Coclustering.json',
     'zero-except.json',
-    'donotworkk10.1.1_id_feat_nospace_Coclustering.json',
+    '10.1.1_id_feat_nospace_Coclustering.json',
     'co-3-num.json',
     'h-Coclustering-2-2.json',
     'ext-CC_Coclustering.json',
@@ -43,6 +44,9 @@ describe('Test Khiops Covisualization sample files', () => {
 
   files.forEach((fileName, fileIndex) => {
     it(`Check values for ${fileName}`, { defaultCommandTimeout: 10000 }, () => {
+      // Initialize ls with all views enabled
+      initLS();
+
       //@ts-ignore
       cy.initViews();
 
@@ -50,11 +54,6 @@ describe('Test Khiops Covisualization sample files', () => {
       cy.loadFile('covisualization', fileName);
 
       cy.readFile('./src/assets/mocks/kc/' + fileName).then((datas) => {
-        console.log(
-          'file: covisualization.spec.cy.ts:48 ~ files.forEach ~ datas:',
-          datas,
-        );
-
         const testsValues = {
           Axis: [],
           Context: [],

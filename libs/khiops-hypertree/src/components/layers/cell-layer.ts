@@ -6,9 +6,10 @@ import { D3UpdatePattern } from '../layerstack/d3updatePattern';
 export interface CellLayerArgs extends ILayerArgs {
   clip?: string;
   data: () => any;
-  stroke: any;
-  fill: any;
-  strokeWidth: any;
+  stroke?: any;
+  fill?: any;
+  color?: any;
+  strokeWidth?: any;
 }
 
 export class CellLayer implements ILayer {
@@ -56,7 +57,7 @@ export class CellLayer implements ILayer {
           ),
 
       /*
-                                    .classed("lazy",      d=> d.data.hasOutChildren)                                 
+                                    .classed("lazy",      d=> d.data.hasOutChildren)
                                     .classed("leaf",      d=> !d.data.children),*/
       updateColor: (
         s, //s.classed("lazy",      d=> d.data.hasOutChildren),

@@ -12,8 +12,8 @@ import {
 } from '@angular/core';
 import { SelectableService } from '../selectable/selectable.service';
 import { SelectableComponent } from '../selectable/selectable.component';
-import _ from 'lodash';
 import { KhiopsLibraryService } from '../../providers/khiops-library.service';
+// @ts-ignore
 import * as panzoom from 'pan-zoom';
 import { UtilsService } from '../../providers/utils.service';
 import { MatrixCanvasService } from './matrix-canvas.service';
@@ -22,6 +22,9 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 import { AppConfig } from 'src/environments/environment';
 import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
+import { MatrixCoordI } from '@khiops-library/interfaces/matrix-coord';
+import { Subscription } from 'rxjs';
+import { EventsService } from '@khiops-covisualization/providers/events.service';
 
 @Component({
   selector: 'kl-matrix-canvas',
@@ -37,8 +40,7 @@ export class MatrixCanvasComponent
 
   @Input() graphType: string;
   @Input() graphMode: MatrixModeI;
-  @Input() conditionalOnContext: boolean;
-  @Input() contrast?: number | undefined;
+  @Input() contrast: number | undefined;
   @Output() contrastChange: EventEmitter<number> = new EventEmitter();
 
   @Input() graphTargets: string[];
@@ -52,6 +54,8 @@ export class MatrixCanvasComponent
   @Output() cellSelected: EventEmitter<any> = new EventEmitter();
   @Output() cellSelectedByEvent: EventEmitter<any> = new EventEmitter();
 
+  conditionalOnContextChangedSub: Subscription;
+
   isKhiopsCovisu: boolean;
   componentType = 'matrix'; // needed to copy datas
   selectedCells: CellVO[];
@@ -60,8 +64,8 @@ export class MatrixCanvasComponent
   yAxisLabel: string;
   tooltipText: string;
   legend: {
-    min: number;
-    max: number;
+    min: number | undefined;
+    max: number | undefined;
   };
   selectedTargetIndex = -1;
   isZerosToggled = false;
@@ -106,7 +110,7 @@ export class MatrixCanvasComponent
   unpanzoom: any;
   isPaning = false;
 
-  tooltipCell: CellVO;
+  tooltipCell: CellVO | undefined;
   tooltipPosition: {
     x: number;
     y: number;
@@ -123,10 +127,11 @@ export class MatrixCanvasComponent
   isDrawing = false;
 
   constructor(
-    public selectableService: SelectableService,
+    public override selectableService: SelectableService,
+    private eventsService: EventsService,
+    public override ngzone: NgZone,
+    public override configService: ConfigService,
     private khiopsLibraryService: KhiopsLibraryService,
-    public ngzone: NgZone,
-    public configService: ConfigService,
   ) {
     super(selectableService, ngzone, configService);
 
@@ -143,17 +148,26 @@ export class MatrixCanvasComponent
       min: 0,
       max: 0,
     };
+
+    this.conditionalOnContextChangedSub =
+      this.eventsService.conditionalOnContextChanged.subscribe(() => {
+        this.drawMatrix();
+      });
   }
 
   @HostListener('window:resize', ['$event'])
-  sizeChange(event) {
+  sizeChange() {
     if (!this.isFirstResize) {
       this.drawMatrix();
     }
   }
 
+  override ngOnDestroy() {
+    this.conditionalOnContextChangedSub.unsubscribe();
+  }
+
   @HostListener('window:keyup', ['$event'])
-  keyEvent(event) {
+  keyEvent(event: { keyCode: any }) {
     const currentSelectedArea = this.selectableService.getSelectedArea();
     if (
       currentSelectedArea &&
@@ -164,7 +178,7 @@ export class MatrixCanvasComponent
         event.keyCode,
         this.inputDatas.matrixCellDatas,
         this.isAxisInverted,
-        this.selectedCells[0].index,
+        this.selectedCells[0]?.index,
       );
       if (changeCell) {
         this.cellSelected.emit({
@@ -196,12 +210,24 @@ export class MatrixCanvasComponent
         this.isZerosToggled = false;
       }
 
+      // Check if nodes have changed to updat ui #117
+      // let diff = {};
+      // if (
+      //   changes.selectedNodes?.currentValue &&
+      //   changes.selectedNodes?.previousValue
+      // ) {
+      //   diff = UtilsService.deepDiff(
+      //     changes.selectedNodes.currentValue,
+      //     changes.selectedNodes.previousValue,
+      //   );
+      // }
+
       // Draw matrix on change
       if (
         this.inputDatas &&
-        this.matrixDiv &&
-        this.matrixDiv.nativeElement &&
-        !changes.selectedNodes
+        this.matrixDiv?.nativeElement
+        // &&
+        // (!changes.selectedNodes || !_.isEmpty(diff))
       ) {
         if (
           this.inputDatas.matrixCellDatas &&
@@ -218,7 +244,7 @@ export class MatrixCanvasComponent
   drawMatrix() {
     if (!this.isDrawing) {
       requestAnimationFrame(() => {
-        if (this.graphMode && this.inputDatas && this.inputDatas.variable) {
+        if (this.graphMode && this.inputDatas?.variable) {
           this.isDrawing = true;
           // const t2 = performance.now();
 
@@ -242,7 +268,7 @@ export class MatrixCanvasComponent
             this.selectedTargetIndex,
           );
 
-          if (!isNaN(this.matrixFreqsValues[0])) {
+          if (this.matrixFreqsValues && !isNaN(this.matrixFreqsValues[0])) {
             // check if we have a wrong context selection
 
             // Clean dom canvas
@@ -262,8 +288,10 @@ export class MatrixCanvasComponent
               }
 
               if (this.inputDatas.matrixCellDatas) {
-                let minVal, maxVal;
-                let minValH, maxValH;
+                let minVal: number | undefined;
+                let maxVal: number | undefined;
+                let minValH: number | undefined;
+                let maxValH: number | undefined;
 
                 if (!this.minMaxValues) {
                   [minVal, maxVal] = UtilsService.getMinAndMaxFromArray(
@@ -278,9 +306,6 @@ export class MatrixCanvasComponent
                   }
                   if (this.graphMode.mode === 'HELLINGER') {
                     // For KC purpose
-                    [minValH, maxValH] = UtilsService.getMinAndMaxFromArray(
-                      this.matrixValues,
-                    );
                     [minValH, maxValH] = UtilsService.averageMinAndMaxValues(
                       minVal,
                       maxVal,
@@ -366,11 +391,11 @@ export class MatrixCanvasComponent
                     type: this.graphMode.mode,
                     value: currentVal,
                     ef: this.matrixExpectedFreqsValues[index],
-                    extra: (this.matrixExtras && this.matrixExtras[index]) || 0,
+                    extra: this.matrixExtras?.[index] || 0,
                   };
                   cellDatas.displayedFreqValue = this.matrixFreqsValues[index];
 
-                  if (currentVal) {
+                  if (currentVal && maxVal) {
                     // Do not draw empty cells
                     const color = this.getColorForPercentage(
                       currentVal,
@@ -394,7 +419,7 @@ export class MatrixCanvasComponent
               if (!this.unpanzoom) {
                 this.unpanzoom = panzoom(
                   this.matrixContainerDiv.nativeElement,
-                  (e) => {
+                  (e: { dz: number; dx: number; dy: number }) => {
                     if (e.dz) {
                       if (e.dz > 0) {
                         this.onClickOnZoomOut();
@@ -491,7 +516,7 @@ export class MatrixCanvasComponent
     }
   }
 
-  clickOnCell(event) {
+  clickOnCell(event: MouseEvent) {
     // Hack to prevent event emit if user pan matrix
     if (!this.isPaning || this.isPaning === undefined) {
       this.isPaning = false;
@@ -607,7 +632,7 @@ export class MatrixCanvasComponent
     this.canvasPattern = document.createElement('canvas');
     this.canvasPattern.width = 16;
     this.canvasPattern.height = 16;
-    const pctx = this.canvasPattern.getContext('2d');
+    const pctx: any = this.canvasPattern.getContext('2d');
 
     const x0 = 32;
     const x1 = -1;
@@ -658,7 +683,7 @@ export class MatrixCanvasComponent
     }
   }
 
-  zoomCanvas(delta, preventTranslate = false) {
+  zoomCanvas(delta: number, preventTranslate = false) {
     const previousZoom = this.zoom;
     if (delta < 0) {
       this.zoom = this.zoom + this.zoomFactor;
@@ -696,7 +721,6 @@ export class MatrixCanvasComponent
         deltaY =
           (this.currentMouseY - this.lastScrollPosition.scrollTop) /
           previousZoom;
-      } else {
       }
 
       deltaX = deltaX + 10; // 10 for scrollbars
@@ -734,7 +758,7 @@ export class MatrixCanvasComponent
     }
   }
 
-  getColorForPercentage(currentColorVal, maxVal) {
+  getColorForPercentage(currentColorVal: number, maxVal: number) {
     let colorValue = 0;
     const A = this.contrast;
     const cste = 0.1;
@@ -804,27 +828,44 @@ export class MatrixCanvasComponent
     return [width, height];
   }
 
-  adaptCellDimensionsToZoom(cellDatas, width, height, graphType) {
-    cellDatas.xCanvas =
-      graphType === 'GLOBAL.STANDARD'
-        ? cellDatas.x.standard * width * 0.01
-        : cellDatas.x.frequency * width * 0.01;
-    cellDatas.yCanvas =
-      graphType === 'GLOBAL.STANDARD'
-        ? cellDatas.y.standard * height * 0.01
-        : cellDatas.y.frequency * height * 0.01;
-    cellDatas.wCanvas =
-      graphType === 'GLOBAL.STANDARD'
-        ? cellDatas.w.standard * width * 0.01
-        : cellDatas.w.frequency * width * 0.01;
-    cellDatas.hCanvas =
-      graphType === 'GLOBAL.STANDARD'
-        ? cellDatas.h.standard * height * 0.01
-        : cellDatas.h.frequency * height * 0.01;
+  adaptCellDimensionsToZoom(
+    cellDatas: {
+      xCanvas: number;
+      x: MatrixCoordI;
+      yCanvas: number;
+      y: MatrixCoordI;
+      wCanvas: number;
+      w: MatrixCoordI;
+      hCanvas: number;
+      h: MatrixCoordI;
+    },
+    width: number | undefined,
+    height: number | undefined,
+    graphType: string,
+  ) {
+    if (width && height) {
+      cellDatas.xCanvas =
+        graphType === 'GLOBAL.STANDARD'
+          ? cellDatas.x.standard * width * 0.01
+          : cellDatas.x.frequency * width * 0.01;
+      cellDatas.yCanvas =
+        graphType === 'GLOBAL.STANDARD'
+          ? cellDatas.y.standard * height * 0.01
+          : cellDatas.y.frequency * height * 0.01;
+      cellDatas.wCanvas =
+        graphType === 'GLOBAL.STANDARD'
+          ? cellDatas.w.standard * width * 0.01
+          : cellDatas.w.frequency * width * 0.01;
+      cellDatas.hCanvas =
+        graphType === 'GLOBAL.STANDARD'
+          ? cellDatas.h.standard * height * 0.01
+          : cellDatas.h.frequency * height * 0.01;
+    }
+
     return cellDatas;
   }
 
-  getCurrentCell(event) {
+  getCurrentCell(event: MouseEvent) {
     if (this.inputDatas) {
       const canvasPosition =
         this.matrixDiv.nativeElement.getBoundingClientRect();
@@ -856,31 +897,32 @@ export class MatrixCanvasComponent
     }
   }
 
-  onContrastChanged(event) {
-    // this.khiopsLibraryService.trackEvent('click', 'matrix_contrast', event.value);
+  onContrastChanged(event: { value: number | undefined }) {
+    // this.trackerService.trackEvent('click', 'matrix_contrast', event.value);
     this.contrast = event.value;
     this.contrastChange.emit(this.contrast);
-    localStorage.setItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST',
-      this.contrast.toString(),
-    );
+    this.contrast &&
+      localStorage.setItem(
+        AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST',
+        this.contrast.toString(),
+      );
     this.drawMatrix();
   }
 
   onClickOnInvertAxis() {
-    // this.khiopsLibraryService.trackEvent('click', 'matrix_inverted');
+    // this.trackerService.trackEvent('click', 'matrix_inverted');
     this.isAxisInverted = !this.isAxisInverted;
     this.drawMatrix();
     this.matrixAxisInverted.emit();
   }
 
   onClickOnToggleZeros() {
-    // this.khiopsLibraryService.trackEvent('click', 'matrix_toggle_zeros');
+    // this.trackerService.trackEvent('click', 'matrix_toggle_zeros');
     this.isZerosToggled = !this.isZerosToggled;
     this.drawMatrix();
   }
 
-  showTooltip(event) {
+  showTooltip(event: MouseEvent) {
     this.tooltipCell = this.getCurrentCell(event);
     const x = event.pageX;
     const y = event.pageY;
@@ -895,14 +937,14 @@ export class MatrixCanvasComponent
   }
 
   onClickOnZoomIn() {
-    // this.khiopsLibraryService.trackEvent('click', 'matrix_zoom', 'in');
+    // this.trackerService.trackEvent('click', 'matrix_zoom', 'in');
     this.currentMouseY = 0;
     this.currentMouseX = 0;
     this.zoomCanvas(-1, true);
   }
 
   onClickOnZoomOut() {
-    // this.khiopsLibraryService.trackEvent('click', 'matrix_zoom', 'out');
+    // this.trackerService.trackEvent('click', 'matrix_zoom', 'out');
     this.currentMouseY = 0;
     this.currentMouseX = 0;
     this.zoomCanvas(1, true);
@@ -910,7 +952,7 @@ export class MatrixCanvasComponent
 
   onClickOnResetZoom() {
     this.currentMouseY = 0;
-    // this.khiopsLibraryService.trackEvent('click', 'matrix_zoom', 'reset');
+    // this.trackerService.trackEvent('click', 'matrix_zoom', 'reset');
     this.currentMouseX = 0;
     this.zoomCanvas(0);
   }

@@ -8,7 +8,6 @@ import {
 import { AppConfig } from 'src/environments/environment';
 import { UnfoldHierarchyComponent } from '../unfold-hierarchy/unfold-hierarchy.component';
 import { ManageViewsComponent } from '../manage-views/manage-views.component';
-import * as _ from 'lodash'; // Important to import lodash in karma
 import { ImportExtDatasListComponent } from '../import-ext-datas-list/import-ext-datas-list.component';
 import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
 
@@ -24,50 +23,32 @@ export class HeaderManageViewComponent {
 
   constructor(
     private dialog: MatDialog,
-    private dimensionsService: DimensionsDatasService,
+    private dimensionsDatasService: DimensionsDatasService,
   ) {}
 
   clickUnfodHierarchy() {
-    this.dimensionsDatas = this.dimensionsService.getDatas();
+    this.dimensionsDatas = this.dimensionsDatasService.getDatas();
     const config = new MatDialogConfig();
     config.width = AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.WIDTH;
     config.height = AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.HEIGHT;
-    const dialogRef: MatDialogRef<UnfoldHierarchyComponent> = this.dialog.open(
-      UnfoldHierarchyComponent,
-      config,
-    );
-    dialogRef
-      .afterClosed()
-      .toPromise()
-      .then(() => {});
+    this.dialog.open(UnfoldHierarchyComponent, config);
   }
 
   clickManageLayout() {
-    this.dimensionsDatas = this.dimensionsService.getDatas();
+    this.dimensionsDatas = this.dimensionsDatasService.getDatas();
     const config = new MatDialogConfig();
     config.width = AppConfig.covisualizationCommon.MANAGE_VIEWS.WIDTH;
     config.maxWidth = AppConfig.covisualizationCommon.MANAGE_VIEWS.MAX_WIDTH;
-    const dialogRef: MatDialogRef<ManageViewsComponent> = this.dialog.open(
-      ManageViewsComponent,
-      config,
-    );
-    dialogRef
-      .afterClosed()
-      .toPromise()
-      .then(() => {});
+    this.dialog.open(ManageViewsComponent, config);
   }
 
   clickImportExternalData() {
-    this.dimensionsDatas = this.dimensionsService.getDatas();
+    this.dimensionsDatas = this.dimensionsDatasService.getDatas();
     const config = new MatDialogConfig();
     config.width = AppConfig.covisualizationCommon.MANAGE_VIEWS.WIDTH;
     config.maxWidth = AppConfig.covisualizationCommon.MANAGE_VIEWS.MAX_WIDTH;
     const dialogRef: MatDialogRef<ImportExtDatasListComponent> =
       this.dialog.open(ImportExtDatasListComponent, config);
     dialogRef.disableClose = true;
-    dialogRef
-      .afterClosed()
-      .toPromise()
-      .then(() => {});
   }
 }

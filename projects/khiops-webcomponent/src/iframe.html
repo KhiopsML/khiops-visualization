@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <iframe src="./frame.html" frameborder="0" style="height: 100vh; width: 100vw;" id="visu-frame"></iframe>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const visu = document.getElementById('visu-frame');
+
+            const file = "./assets/mock/AdultAllReports.json"
+            visu.onload = () => {
+                fetch(file).then((response) => {
+                    response.json().then((data) => {
+                        if (visu && visu.contentWindow) {
+                            visu.contentWindow.postMessage(data);
+                        }
+                    })
+                });
+                console.log(visu.contentWindow.document);
+                visu.contentWindow.document.addEventListener("valueChanged", (e) => console.log(e));
+            };
+        });
+    </script>
+</body>
+</html>

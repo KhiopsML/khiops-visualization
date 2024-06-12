@@ -38,7 +38,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngstack/translate';
 import { ReleaseNotesComponent } from './components/release-notes/release-notes.component';
-import { TranslatePipe } from './pipes/translate.pipe';
 import { ToPrecisionPipe } from './pipes/toPrecision.pipe';
 import { HeaderTitleComponent } from './components/header-title/header-title.component';
 import { NoDataComponent } from './components/no-data/no-data.component';
@@ -60,13 +59,23 @@ import { RowIdentifierPipe } from './pipes/rowIdentifierPipe.pipe';
 import { ImportFileLoaderComponent } from './components/import-file-loader/import-file-loader.component';
 import { WatchResizeComponent } from './components/watch-resize/watch-resize.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
-import { MarkdownModule } from 'ngx-markdown';
+import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
+import { LibraryComponent } from './library.component';
 import { BtnFullscreenComponent } from './components/btn-fullscreen/btn-fullscreen.component';
-import EnTransaltion from '../../i18n/en.json';
+import { MarkedOptionsFactory } from './factory/markdown.factory';
+import { MatrixToggleComponent } from './components/matrix-toggle/matrix-toggle.component';
+import { MatrixModeComponent } from './components/matrix-mode/matrix-mode.component';
+import { GraphOptionsMenuComponent } from './components/graph-options-menu/graph-options-menu.component';
+import EnTransaltion from '../../assets/i18n/en.json';
 
 @NgModule({
   imports: [
-    MarkdownModule.forRoot(),
+    MarkdownModule.forRoot({
+      markedOptions: {
+        provide: MarkedOptions,
+        useFactory: MarkedOptionsFactory,
+      },
+    }),
     CommonModule,
     HttpClientModule,
     MatSlideToggleModule,
@@ -106,16 +115,17 @@ import EnTransaltion from '../../i18n/en.json';
     }),
   ],
   declarations: [
+    LibraryComponent,
     CellStatsComponent,
     WatchResizeComponent,
     SelectableComponent,
+    GraphOptionsMenuComponent,
     FileLoaderComponent,
     ReleaseNotesComponent,
     ConfirmDialogComponent,
     HeaderToolsComponent,
     BtnFullscreenComponent,
     GraphHeaderComponent,
-    TranslatePipe,
     RowIdentifierPipe,
     ToPrecisionPipe,
     LibVersionComponent,
@@ -127,6 +137,8 @@ import EnTransaltion from '../../i18n/en.json';
     MatrixCanvasComponent,
     AgGridComponent,
     MatrixTooltipComponent,
+    MatrixToggleComponent,
+    MatrixModeComponent,
     CheckboxCellComponent,
     IconCellComponent,
     DistributionGraphCanvasComponent,
@@ -137,6 +149,7 @@ import EnTransaltion from '../../i18n/en.json';
   ],
   providers: [ConfigService, EventsService, TranslateService],
   exports: [
+    LibraryComponent,
     CommonModule,
     HttpClientModule,
     MatTableModule,
@@ -181,11 +194,13 @@ import EnTransaltion from '../../i18n/en.json';
     BtnFullscreenComponent,
     GraphHeaderComponent,
     ToPrecisionPipe,
-    TranslatePipe,
     InformationsBlockComponent,
     MatrixCanvasComponent,
     AgGridComponent,
     MatrixTooltipComponent,
+    MatrixToggleComponent,
+    GraphOptionsMenuComponent,
+    MatrixModeComponent,
     CheckboxCellComponent,
     IconCellComponent,
     DistributionGraphCanvasComponent,

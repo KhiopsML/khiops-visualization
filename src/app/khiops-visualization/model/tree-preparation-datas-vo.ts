@@ -6,18 +6,17 @@ export class TreePreparationDatasVO {
   selectedVariable?: TreePreparationVariableVO = undefined;
   selectedNodes?: TreeNodeVO[] = undefined;
   selectedNode?: TreeNodeVO = undefined;
-  treeColorsMap?: {} = undefined;
+  treeColorsMap?: any = undefined;
   dimensionTree?: [TreeNodeVO] = undefined;
   selectedFlattenTree?: TreeNodeVO[] = undefined;
-  currentIntervalDatas: GridDatasI;
-
+  currentIntervalDatas!: GridDatasI;
   appDatas: any = undefined;
-  maxFrequencies: number;
-  minFrequencies: number;
+  maxFrequencies!: number;
+  minFrequencies!: number;
 
   classesCount: number;
 
-  constructor(appDatas) {
+  constructor(appDatas: any) {
     this.appDatas = appDatas;
     this.classesCount =
       this.appDatas?.treePreparationReport?.summary?.targetValues?.values?.length;
@@ -27,12 +26,7 @@ export class TreePreparationDatasVO {
    * Check if current datas are valid
    */
   isValid(): boolean {
-    return (
-      this.appDatas &&
-      this.appDatas.treePreparationReport &&
-      this.appDatas.treePreparationReport.variablesStatistics &&
-      this.appDatas.treePreparationReport.variablesStatistics[0]
-    );
+    return this.appDatas?.treePreparationReport?.variablesStatistics?.[0];
   }
 
   /**
@@ -49,7 +43,7 @@ export class TreePreparationDatasVO {
         variablesDetailedStatistics[this.selectedVariable.rank].dataGrid
           .dimensions;
       const dimIndex = dimensions.findIndex(
-        (e) => e.variable === this.selectedVariable.name,
+        (e: any) => e.variable === this.selectedVariable?.name,
       );
       const dimDatas = dimensions[dimIndex].partition;
       const colors = [
@@ -102,5 +96,6 @@ export class TreePreparationDatasVO {
       }
       return this.treeColorsMap;
     }
+    return undefined;
   }
 }

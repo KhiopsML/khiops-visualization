@@ -7,6 +7,7 @@ export class EventsService {
   treeSelectedNodeChanged: EventEmitter<any> = new EventEmitter();
   importedDatasChanged: EventEmitter<any> = new EventEmitter();
   treeNodeNameChanged: EventEmitter<any> = new EventEmitter();
+  conditionalOnContextChanged: EventEmitter<any> = new EventEmitter();
 
   constructor() {}
 
@@ -20,5 +21,9 @@ export class EventsService {
 
   emitImportedDatasChanged(event = {}) {
     this.importedDatasChanged.emit(event);
+  }
+
+  emitConditionalOnContextChanged(event = {}) {
+    this.conditionalOnContextChanged.emit(event);
   }
 }

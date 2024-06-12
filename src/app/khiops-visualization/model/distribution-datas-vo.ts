@@ -11,28 +11,26 @@ export class DistributionDatasVO {
   distributionTypeX = '';
   distributionTypeY = '';
 
-  distributionGraphOptions: DistributionOptionsI = undefined;
-  distributionGraphOptionsX: DistributionOptionsI = undefined;
-  distributionGraphOptionsY: DistributionOptionsI = undefined;
-  distributionGraphDatas: ChartDatasVO = undefined;
+  distributionGraphOptions: DistributionOptionsI | undefined = undefined;
+  distributionGraphOptionsX: DistributionOptionsI | undefined = undefined;
+  distributionGraphOptionsY: DistributionOptionsI | undefined = undefined;
+  distributionGraphDatas: ChartDatasVO | undefined = undefined;
 
   histogramDatas: HistogramValuesI[] | undefined = undefined;
 
-  treeNodedistributionGraphDatas: ChartDatasVO = undefined;
+  treeNodedistributionGraphDatas: ChartDatasVO | undefined = undefined;
 
-  targetDistributionDisplayedValues: ChartToggleValuesI[];
+  targetDistributionDisplayedValues: ChartToggleValuesI[] | undefined;
   targetDistributionType: string = TYPES.PROBABILITIES;
-  targetDistributionGraphDatas: ChartDatasVO = undefined;
+  targetDistributionGraphDatas: ChartDatasVO | undefined = undefined;
 
-  treeHyperDisplayedValues: ChartToggleValuesI[];
-  treeNodeTargetDistributionDisplayedValues: ChartToggleValuesI[];
   treeNodeTargetDistributionType: string = TYPES.PROBABILITIES;
-  treeNodeTargetDistributionGraphDatas: ChartDatasVO = undefined;
+  treeNodeTargetDistributionGraphDatas: ChartDatasVO | undefined = undefined;
 
   preparationSource: string = '';
 
   appDatas: any = undefined;
-  treeHyperGraphDatas: ChartDatasVO = undefined;
+  treeHyperGraphDatas: ChartDatasVO | undefined = undefined;
 
   constructor(appDatas) {
     this.appDatas = appDatas;
@@ -42,11 +40,7 @@ export class DistributionDatasVO {
    * Check if current datas are valid
    */
   isValid(): boolean {
-    return (
-      this.appDatas &&
-      this.appDatas[this.preparationSource] &&
-      this.appDatas[this.preparationSource].variablesDetailedStatistics
-    );
+    return this.appDatas?.[this.preparationSource]?.variablesDetailedStatistics;
   }
 
   initTreeNodeTargetDistributionGraphDatas() {
@@ -111,7 +105,6 @@ export class DistributionDatasVO {
 
   initTreeHyperGraphDatas() {
     this.treeHyperGraphDatas = new ChartDatasVO();
-    // this.treeNodeTargetDistributionDisplayedValues = undefined; // No !!! otherwise the select box do not work
   }
 
   checkTreeNodeTargetDistributionGraphDatas() {
@@ -134,7 +127,6 @@ export class DistributionDatasVO {
 
   initTargetDistributionGraphDatas() {
     this.targetDistributionGraphDatas = new ChartDatasVO();
-    // this.targetDistributionDisplayedValues = undefined; // No !!! otherwise the select box do not work
   }
 
   checkTargetDistributionGraphDatas() {

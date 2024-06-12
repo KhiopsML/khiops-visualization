@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
-
-import _ from 'lodash';
 import { ExtDatasVO } from '@khiops-covisualization/model/ext-datas-vo';
 import { FileVO } from '@khiops-library/model/file-vo';
 import { AppService } from './app.service';
 import { TranslateService } from '@ngstack/translate';
-import { ConfigService } from '@khiops-library/providers/config.service';
 import { ImportFileLoaderService } from '@khiops-library/components/import-file-loader/import-file-loader.service';
 
 @Injectable({
@@ -19,63 +16,52 @@ export class ImportExtDatasService {
     private translate: TranslateService,
     private importFileLoaderService: ImportFileLoaderService,
     private appService: AppService,
-    private configService: ConfigService,
   ) {
     this.importExtDatas = [];
     this.savedExternalDatas = {};
   }
 
+  /**
+   * Chat gpt optimisation
+   * Big external datas file long loading #110
+   */
   formatImportedDatas(
     fileDatas: FileVO,
     joinKey?,
     fieldName?,
     separator?: string,
   ): any {
-    // init the object
     const formatedDatas = {
       keys: [],
       values: [],
     };
+
     if (fileDatas.datas) {
-      const lines: any = fileDatas.datas.split(/\n/);
-      for (let i = 0; i < lines.length; i++) {
-        lines[i] = lines[i].replaceAll('\r', '\n');
-        lines[i] = lines[i].split(/\t/);
-      }
+      // Split lines without removing carriage returns
+      const lines: string[] = fileDatas.datas.split(/\r?\n/);
 
-      // remove eof lines
-      for (let i = 0; i < lines.length; i++) {
-        if (lines[i].length === 1) {
-          lines[i - 1][1] = lines[i - 1][1] + lines[i][0];
-          lines.splice(i, 1);
-          i--;
+      // Process lines
+      lines.forEach((line) => {
+        const columns = line.split(/\t/);
+
+        // Handle merging lines
+        if (columns.length === 1 && formatedDatas.values.length > 0) {
+          formatedDatas.values[formatedDatas.values.length - 1][1] +=
+            '\n' + columns[0];
+        } else {
+          // Remove first and last double quotes and trailing newline
+          const formattedColumn = columns[1]
+            ?.replace(/^"|"$/g, '')
+            .replace(/""/g, '"');
+          formatedDatas.values.push([columns[0], formattedColumn]);
         }
-      }
+      });
 
-      for (let i = 0; i < lines.length; i++) {
-        // Remove first and last dble quotes
-        if (
-          lines[i][1].charAt(0) === '"' &&
-          lines[i][1].charAt(lines[i][1].length - 2) === '"'
-        ) {
-          lines[i][1] = lines[i][1].slice(1, lines[i][1].length);
-          lines[i][1] = lines[i][1].slice(0, lines[i][1].length - 1);
-        }
-        // Remove eol
-        lines[i][1] = lines[i][1].slice(0, -1);
-      }
-
-      // convert double double quotes to double quotes
-      for (let i = 0; i < lines.length; i++) {
-        lines[i][1] = lines[i][1].replaceAll('""', '"');
-      }
-
-      if (lines.length > 0) {
-        formatedDatas.keys = lines[0];
-
-        // Remove first line for values
-        lines.shift();
-        formatedDatas.values = lines;
+      // Set keys and remove the first line for values
+      if (formatedDatas.values.length > 0) {
+        formatedDatas.keys =
+          formatedDatas.values.shift()?.map((key) => key.replace(/""/g, '"')) ||
+          [];
       }
     }
 
@@ -124,10 +110,7 @@ export class ImportExtDatasService {
   }
 
   getImportedDatasFromDimension(dimension) {
-    return (
-      this.savedExternalDatas &&
-      this.savedExternalDatas[dimension.name.toLowerCase()]
-    );
+    return this.savedExternalDatas?.[dimension?.name?.toLowerCase()];
   }
 
   getImportedDatas() {
@@ -171,28 +154,30 @@ export class ImportExtDatasService {
           '',
         ); // remove carriage return #53
 
-        if (
-          !this.savedExternalDatas[externalDatas.dimension.toLowerCase()][
-            extKey
-          ]
-        ) {
-          this.savedExternalDatas[externalDatas.dimension.toLowerCase()][
-            extKey
-          ] = [];
-        }
-        if (
-          !this.savedExternalDatas[externalDatas.dimension.toLowerCase()][
-            extKey
-          ].find((e) => e.key === formatedDatas.keys[fieldIndex])
-        ) {
-          const currentExtData = {
-            key: formatedDatas.keys[fieldIndex],
-            value: formatedDatas.values[j][fieldIndex],
-          };
-          this.savedExternalDatas[externalDatas.dimension.toLowerCase()][
-            extKey
-          ].push(currentExtData);
-        }
+        try {
+          if (
+            !this.savedExternalDatas[externalDatas.dimension.toLowerCase()][
+              extKey
+            ]
+          ) {
+            this.savedExternalDatas[externalDatas.dimension.toLowerCase()][
+              extKey
+            ] = [];
+          }
+          if (
+            !this.savedExternalDatas[externalDatas.dimension.toLowerCase()][
+              extKey
+            ].find((e) => e.key === formatedDatas.keys[fieldIndex])
+          ) {
+            const currentExtData = {
+              key: formatedDatas.keys[fieldIndex],
+              value: formatedDatas.values[j][fieldIndex],
+            };
+            this.savedExternalDatas[externalDatas.dimension.toLowerCase()][
+              extKey
+            ].push(currentExtData);
+          }
+        } catch (e) {}
       }
       resolve(externalDatas.dimension);
     });
@@ -210,39 +195,23 @@ export class ImportExtDatasService {
           const externalDatas: ExtDatasVO = this.importExtDatas[i];
           const joinKey = externalDatas.joinKey;
           const fieldName = externalDatas.field.name;
-          // method called when ext data is saved
-          // read file from electron context
-          if (this.configService.getConfig().onReadFile) {
-            this.configService
-              .getConfig()
-              .onReadFile(externalDatas.filename, (datas: any) =>
-                this.onFileRead(
-                  datas,
-                  externalDatas,
-                  percentIndex,
-                  progressCallback,
-                  fieldName,
-                  joinKey,
-                  importExtDatasLength,
-                  resolve,
-                ),
-              );
-          } else {
-            this.importFileLoaderService
-              .readFile(externalDatas.file)
-              .then((res: any) =>
-                this.onFileRead(
-                  res.datas,
-                  externalDatas,
-                  percentIndex,
-                  progressCallback,
-                  fieldName,
-                  joinKey,
-                  importExtDatasLength,
-                  resolve,
-                ),
-              );
-          }
+          this.importFileLoaderService
+            .readFile(externalDatas.file)
+            .then((res: any) =>
+              this.onFileRead(
+                res.datas,
+                externalDatas,
+                percentIndex,
+                progressCallback,
+                fieldName,
+                joinKey,
+                importExtDatasLength,
+                resolve,
+              ),
+            )
+            .catch(() => {
+              resolve(undefined);
+            });
         });
         promises.push(promise);
       }

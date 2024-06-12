@@ -1,5 +1,3 @@
-import * as d3 from 'd3';
-import { N } from '../../models/n/n';
 import { IUnitDisk } from '../unitdisk/unitdisk';
 import { ILayer } from './layer';
 import { mergeDeep } from '../../ducd/';
@@ -62,12 +60,7 @@ export class LayerStack {
       timings.push(performance.now() - beginTime);
       names.push(layer.name);
     }
-
     this.d3meta = { Δ: timings, names: names };
-
-    // console.log("🚀 ~ file: layerstack.ts ~ line 71 ~ updateData ~ this.layers['labels']", this.layers['labels'])
-    // if (this.layers['labels'])
-    // this.layers['labels'].update.style()
   }
 
   private updatePath() {
@@ -92,7 +85,5 @@ export class LayerStack {
       Δ: [t1 - t0, t2 - t1, t3 - t2],
       names: ['path-arcs', 'link-arcs-focus', 'labels'],
     };
-    //if (this.layers['link-lines']) this.layers['link-lines'].update.style()
-    //if (this.layers.nodes) this.layers.nodes.update.style()
   }
 }

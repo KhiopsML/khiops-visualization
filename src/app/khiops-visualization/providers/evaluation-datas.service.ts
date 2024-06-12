@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AppService } from './app.service';
 import { TranslateService } from '@ngstack/translate';
-import * as _ from 'lodash'; // Important to import lodash in karma
 import { AppConfig } from 'src/environments/environment';
 import { EvaluationTypeVO } from '../model/evaluation-type-vo';
 import { UtilsService } from '@khiops-library/providers/utils.service';
@@ -42,14 +41,14 @@ export class EvaluationDatasService {
     this.evaluationDatas.liftGraphDisplayedValues = object;
   }
 
-  getLiftGraphDisplayedValues(): ChartToggleValuesI[] {
+  getLiftGraphDisplayedValues(): ChartToggleValuesI[] | undefined {
     return this.evaluationDatas.liftGraphDisplayedValues;
   }
   setSelectedEvaluationTypeVariable(object: EvaluationTypeVO) {
     this.evaluationDatas.selectedEvaluationTypeVariable = object;
   }
 
-  getSelectedEvaluationTypeVariable(): EvaluationTypeVO {
+  getSelectedEvaluationTypeVariable(): EvaluationTypeVO | undefined {
     return this.evaluationDatas.selectedEvaluationTypeVariable;
   }
 
@@ -60,18 +59,18 @@ export class EvaluationDatasService {
   getPredictorEvaluationVariableFromEvaluationType(
     type: string,
   ): EvaluationPredictorVO {
-    return this.evaluationDatas.predictorEvaluations.values.find(
+    return this.evaluationDatas.predictorEvaluations.values?.find(
       (e) =>
         e.type === type &&
         e.rank ===
-          this.evaluationDatas.selectedPredictorEvaluationVariable.rank,
+          this.evaluationDatas?.selectedPredictorEvaluationVariable?.rank,
     );
   }
 
   getEvaluationVariableFromPredictorEvaluationType(
     type: string,
   ): EvaluationTypeVO {
-    return this.evaluationDatas.evaluationTypesSummary.values.find(
+    return this.evaluationDatas.evaluationTypesSummary.values?.find(
       (e) => e.type === type,
     );
   }
@@ -82,11 +81,8 @@ export class EvaluationDatasService {
     this.evaluationDatas.evaluationTypes = [];
 
     Object.keys(appDatas).forEach((value) => {
-      if (
-        appDatas[value].reportType &&
-        appDatas[value].reportType === 'Evaluation'
-      ) {
-        this.evaluationDatas.evaluationTypes.push(appDatas[value]);
+      if (appDatas?.[value]?.reportType === 'Evaluation') {
+        this.evaluationDatas?.evaluationTypes?.push(appDatas[value]);
       }
     });
     return this.evaluationDatas.evaluationTypes;
@@ -106,12 +102,12 @@ export class EvaluationDatasService {
       let currentReport: any;
       // get the correct report : train or test
       if (
-        this.evaluationDatas.selectedEvaluationTypeVariable.type ===
+        this.evaluationDatas?.selectedEvaluationTypeVariable?.type ===
         PREDICTOR_TYPES.TRAIN
       ) {
         currentReport = appDatas.trainEvaluationReport;
       } else if (
-        this.evaluationDatas.selectedEvaluationTypeVariable.type ===
+        this.evaluationDatas?.selectedEvaluationTypeVariable?.type ===
         PREDICTOR_TYPES.TEST
       ) {
         currentReport = appDatas.testEvaluationReport;
@@ -130,7 +126,7 @@ export class EvaluationDatasService {
           values: undefined,
           displayedColumns: [
             {
-              headerName: 'Target',
+              headerName: this.translate.get('GLOBAL.TARGET'),
               field: 'target',
               tooltip: this.translate.get(
                 'TOOLTIPS.EVALUATION.CONFUSION_MATRIX.TARGET',
@@ -280,19 +276,21 @@ export class EvaluationDatasService {
       values: undefined,
       displayedColumns: [
         {
-          headerName: 'Type',
+          headerName: this.translate.get('GLOBAL.TYPE'),
           field: 'type',
           tooltip: this.translate.get('TOOLTIPS.EVALUATION.TYPES.TYPE'),
         },
         {
-          headerName: 'Dictionary',
+          headerName: this.translate.get('GLOBAL.DICTIONARY'),
           field: 'dictionary',
           tooltip: this.translate.get('TOOLTIPS.EVALUATION.TYPES.NAME'),
         },
         {
-          headerName: 'Instances',
+          headerName: this.translate.get('GLOBAL.INSTANCES'),
           field: 'instances',
-          tooltip: this.translate.get('TOOLTIPS.EVALUATION.TYPES.INSTANCES'),
+          tooltip: this.translate.get(
+            'TOOLTIPS.EVALUATION.TYPES.INSTANCES',
+          ),
         },
       ],
     };
@@ -549,7 +547,7 @@ export class EvaluationDatasService {
           (e) => e.targetValue === target,
         );
 
-        if (currentLiftCurve && currentLiftCurve.curves) {
+        if (currentLiftCurve?.curves) {
           for (let j = 0; j < currentLiftCurve.curves.length; j++) {
             const currentSerie: LiftCurveSerieI[] = [];
             for (let k = 0; k < xAxis.length; k = k + 1) {
@@ -618,8 +616,7 @@ export class EvaluationDatasService {
     }
 
     if (
-      currentEvalReport &&
-      currentEvalReport.predictorsDetailedPerformance &&
+      currentEvalReport?.predictorsDetailedPerformance &&
       currentEvalReport.liftCurves
     ) {
       targetLift = {
@@ -651,8 +648,7 @@ export class EvaluationDatasService {
       } else {
         // Check if mainTargetValue is set and is consistent
         const mainTargetValue: string =
-          currentEvalReport.summary &&
-          currentEvalReport.summary.mainTargetValue;
+          currentEvalReport?.summary?.mainTargetValue;
         const isConsistentTarget =
           mainTargetValue && targetLift.targets.indexOf(mainTargetValue) > -1;
         if (isConsistentTarget) {
@@ -670,17 +666,12 @@ export class EvaluationDatasService {
   isRegressionAnalysis(): boolean {
     const appDatas = this.appService.getDatas().datas;
     if (
-      appDatas &&
-      appDatas.trainEvaluationReport &&
-      appDatas.trainEvaluationReport.summary &&
-      appDatas.trainEvaluationReport.summary.learningTask === TASKS.REGRESSION
+      appDatas?.trainEvaluationReport?.summary?.learningTask ===
+      TASKS.REGRESSION
     ) {
       return true;
     } else if (
-      appDatas &&
-      appDatas.preparationReport &&
-      appDatas.preparationReport.summary &&
-      appDatas.preparationReport.summary.learningTask === TASKS.REGRESSION
+      appDatas?.preparationReport?.summary?.learningTask === TASKS.REGRESSION
     ) {
       return true;
     } else {

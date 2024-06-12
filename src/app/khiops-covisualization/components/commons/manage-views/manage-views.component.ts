@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AppService } from '@khiops-covisualization/providers/app.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
@@ -11,7 +11,7 @@ import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data
   templateUrl: './manage-views.component.html',
   styleUrls: ['./manage-views.component.scss'],
 })
-export class ManageViewsComponent implements OnInit {
+export class ManageViewsComponent {
   viewsLayout: ViewLayoutVO;
   dimensionsDatas: DimensionsDatasVO;
   isDimVisible: boolean[];
@@ -21,10 +21,10 @@ export class ManageViewsComponent implements OnInit {
 
   constructor(
     private appService: AppService,
-    private dimensionsService: DimensionsDatasService,
+    private dimensionsDatasService: DimensionsDatasService,
     private dialogRef: MatDialogRef<ManageViewsComponent>,
   ) {
-    this.dimensionsDatas = this.dimensionsService.getDatas();
+    this.dimensionsDatas = this.dimensionsDatasService.getDatas();
     this.viewsLayout = _.cloneDeep(this.appService.getViewsLayout());
     this.isContextView = this.appService.getActiveTabIndex() === 1;
 
@@ -41,8 +41,6 @@ export class ManageViewsComponent implements OnInit {
       }
     }
   }
-
-  ngOnInit() {}
 
   onClickOnSave() {
     this.appService.saveViewsLayout(this.viewsLayout);

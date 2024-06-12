@@ -12,7 +12,7 @@ export class SummaryVO {
   selectionValue: string;
   evaluatedVariables: string;
 
-  displayDatas: InfosDatasI[];
+  displayDatas!: InfosDatasI[];
 
   constructor(object) {
     this.dictionary = object.dictionary || '';

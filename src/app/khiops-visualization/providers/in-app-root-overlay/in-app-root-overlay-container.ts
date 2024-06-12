@@ -16,7 +16,7 @@ export class InAppRootOverlayContainer
     super(_document, platform);
   }
 
-  ngOnDestroy() {
+  override ngOnDestroy() {
     super.ngOnDestroy();
   }
 
@@ -26,7 +26,7 @@ export class InAppRootOverlayContainer
       .shadowRoot.querySelector('app-home-layout');
   }
 
-  protected _createContainer(): void {
+  protected override _createContainer(): void {
     super._createContainer();
     this._appendToRootComponent();
   }

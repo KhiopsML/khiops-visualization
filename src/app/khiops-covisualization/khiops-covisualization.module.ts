@@ -13,7 +13,6 @@ import { AngularSplitModule } from 'angular-split';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { KhiopsLibraryModule } from '@khiops-library/khiops-library.module';
 import { ReleaseNotesComponent } from '@khiops-library/components/release-notes/release-notes.component';
-import { TranslateModule, TranslateService } from '@ngstack/translate';
 import { AxisViewComponent } from './components/axis-view/axis-view.component';
 import { AxisComponent } from './components/commons/axis/axis.component';
 import { ProjectViewComponent } from './components/project-view/project-view.component';
@@ -39,11 +38,7 @@ import { ExternalDatasComponent } from './components/commons/external-datas/exte
 import { ConfirmDialogComponent } from '@khiops-library/components/confirm-dialog/confirm-dialog.component';
 import { InAppRootOverlayContainer } from '@khiops-covisualization/providers/in-app-root-overlay/in-app-root-overlay-container';
 import { OverlayContainer } from '@angular/cdk/overlay';
-
-export function setupTranslateFactory(service: TranslateService) {
-  const serv = () => service.use('en');
-  return serv;
-}
+import { HierarchyDetailsComponent } from './components/commons/hierarchy-details/hierarchy-details.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +57,7 @@ export function setupTranslateFactory(service: TranslateService) {
     TreeSelectComponent,
     UserSettingsComponent,
     HierarchySelectComponent,
+    HierarchyDetailsComponent,
     ClusterDetailsComponent,
     AnnotationComponent,
     CompositionComponent,
@@ -85,17 +81,8 @@ export function setupTranslateFactory(service: TranslateService) {
     AgGridModule,
     HttpClientModule,
     AngularSplitModule,
-    TranslateModule.forChild(),
-    KhiopsLibraryModule,
   ],
   providers: [
-    TranslateService,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: setupTranslateFactory,
-      deps: [TranslateService],
-      multi: true,
-    },
     { provide: OverlayContainer, useClass: InAppRootOverlayContainer },
   ],
   exports: [AppComponent],

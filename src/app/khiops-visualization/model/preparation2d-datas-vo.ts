@@ -7,15 +7,17 @@ export class Preparation2dDatasVO {
   selectedVariable?: Preparation2dVariableVO = undefined;
   selectedCellIndex: number = 0;
   selectedCell: CellVO = undefined;
-  matrixDatas: {
-    variable: {
-      nameX: string;
-      nameY: string;
-      xParts: number;
-      yParts: number;
-    };
-    matrixCellDatas: any[];
-  };
+  matrixDatas:
+    | {
+        variable: {
+          nameX: string | undefined;
+          nameY: string | undefined;
+          xParts: number;
+          yParts: number;
+        };
+        matrixCellDatas: any[];
+      }
+    | undefined;
   isTargetAvailable = false;
   currentCellDatas: {
     values: any[][]; // Dynamic values according to the input datas
@@ -34,38 +36,17 @@ export class Preparation2dDatasVO {
    * Check if current datas are valid
    */
   isValid(): boolean {
-    return (
-      this.appDatas &&
-      this.appDatas.bivariatePreparationReport &&
-      this.appDatas.bivariatePreparationReport.variablesPairsStatistics &&
-      this.appDatas.bivariatePreparationReport.variablesPairsStatistics[0]
-    );
+    return this.appDatas?.bivariatePreparationReport
+      ?.variablesPairsStatistics[0];
   }
 
   isSupervisedVariable(): boolean {
-    return (
-      this.appDatas &&
-      this.appDatas.bivariatePreparationReport &&
-      this.appDatas.bivariatePreparationReport
-        .variablesPairsDetailedStatistics &&
-      this.appDatas.bivariatePreparationReport.variablesPairsDetailedStatistics[
-        Object.keys(
-          this.appDatas.bivariatePreparationReport
-            .variablesPairsDetailedStatistics,
-        )[0]
-      ] &&
-      this.appDatas.bivariatePreparationReport.variablesPairsDetailedStatistics[
-        Object.keys(
-          this.appDatas.bivariatePreparationReport
-            .variablesPairsDetailedStatistics,
-        )[0]
-      ].dataGrid &&
-      this.appDatas.bivariatePreparationReport.variablesPairsDetailedStatistics[
-        Object.keys(
-          this.appDatas.bivariatePreparationReport
-            .variablesPairsDetailedStatistics,
-        )[0]
-      ].dataGrid.isSupervised
-    );
+    return this.appDatas?.bivariatePreparationReport
+      ?.variablesPairsDetailedStatistics?.[
+      Object.keys(
+        this.appDatas?.bivariatePreparationReport
+          ?.variablesPairsDetailedStatistics,
+      )?.[0]
+    ]?.dataGrid?.isSupervised;
   }
 }

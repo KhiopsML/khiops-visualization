@@ -1,13 +1,11 @@
 #preparation-view-comp {
+  background: var(--bgColor) !important;
 
-	background: var(--bgColor) !important;
+  #preparation-target-variable-stats {
+    padding: 0 em;
+  }
 
-	#preparation-target-variable-stats {
-		padding: 0 em;
-	}
-
-	app-regression-matrix{
-		overflow: hidden;
-	}
-
+  app-regression-matrix {
+    overflow: hidden;
+  }
 }

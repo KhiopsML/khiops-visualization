@@ -66,8 +66,7 @@ export class TreenodesService {
   initSavedUnfoldRank() {
     //Initialize unfold rank if set into json
     const appDatas = this.appService.getDatas().datas;
-    const savedUnfoldRank =
-      appDatas.savedDatas && appDatas.savedDatas.unfoldHierarchyState;
+    const savedUnfoldRank = appDatas?.savedDatas?.unfoldHierarchyState;
     savedUnfoldRank && this.setSelectedUnfoldHierarchy(savedUnfoldRank);
   }
 
@@ -189,7 +188,17 @@ export class TreenodesService {
     }
   }
 
-  getFirstVisibleNode(nodes, nodeVO: TreeNodeVO, lastVisibleNode) {
+  getLastVisibleNode(nodes: TreeNodeVO[]) {
+    if (nodes[0].isLeaf) {
+      return nodes[0];
+    } else if (!nodes[0].isCollapsed) {
+      return this.getLastVisibleNode(nodes[0].children);
+    } else {
+      return nodes[0];
+    }
+  }
+
+  getFirstVisibleNode(nodes, nodeVO: TreeNodeVO, lastVisibleNode?) {
     const parentNode: TreeNodeVO = nodes.find(
       (e) => e.name === nodeVO?.parentCluster,
     );
@@ -201,6 +210,10 @@ export class TreenodesService {
     } else {
       return lastVisibleNode;
     }
+  }
+
+  initSelectedNodes() {
+    this.dimensionsDatas.selectedNodes = [];
   }
 
   getSelectedNodes() {
@@ -222,6 +235,9 @@ export class TreenodesService {
         }
       }
     }
+    const savedHierarchy =
+      this.appService.getSavedDatas('unfoldHierarchyState') || 0;
+    this.setSelectedUnfoldHierarchy(savedHierarchy);
   }
 
   getNodesNames() {
@@ -259,8 +275,12 @@ export class TreenodesService {
 
   updateCurrentHierarchyClustersCount(rank: number) {
     for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
+      const currentIndex: number =
+        this.dimensionsDatas.selectedDimensions.findIndex((e) => {
+          return this.dimensionsDatas.dimensions[i].name === e.name;
+        });
       const nodesVO: TreeNodeVO[] = UtilsService.fastFilter(
-        this.dimensionsDatas.dimensionsClusters[i],
+        this.dimensionsDatas.dimensionsClusters[currentIndex],
         (e) => {
           return !e.isLeaf && e.hierarchicalRank < rank;
         },
@@ -296,10 +316,7 @@ export class TreenodesService {
   getHierarchyDatas(): HierarchyDatasVO {
     const appDatas = this.appService.getInitialDatas().datas;
 
-    if (
-      appDatas.coclusteringReport &&
-      appDatas.coclusteringReport.dimensionSummaries
-    ) {
+    if (appDatas?.coclusteringReport?.dimensionSummaries) {
       this.dimensionsDatas.hierarchyDatas.totalClusters = 0;
       const l = appDatas.coclusteringReport.dimensionSummaries.length;
       this.dimensionsDatas.hierarchyDatas.minClusters = l;
@@ -314,7 +331,7 @@ export class TreenodesService {
           this.dimensionsDatas.hierarchyDatas.totalClusters;
       }
     }
-    if (appDatas.coclusteringReport && appDatas.coclusteringReport.summary) {
+    if (appDatas?.coclusteringReport?.summary) {
       // Get the total cell
       this.dimensionsDatas.hierarchyDatas.totalCells +=
         appDatas.coclusteringReport.summary.cells;
@@ -323,11 +340,7 @@ export class TreenodesService {
   }
 
   getUnfoldHierarchy(): number {
-    return (
-      (this.dimensionsDatas.hierarchyDatas &&
-        this.dimensionsDatas.hierarchyDatas.selectedUnfoldHierarchy) ||
-      0
-    );
+    return this.dimensionsDatas?.hierarchyDatas?.selectedUnfoldHierarchy || 0;
   }
 
   setSelectedUnfoldHierarchy(selectedUnfoldHierarchy: number) {
@@ -336,11 +349,14 @@ export class TreenodesService {
   }
 
   updateCollapsedNodesToSave(dimensionName: string, nodeName: string, way) {
+    if (!this.collapsedNodesToSave) {
+      this.collapsedNodesToSave = {};
+    }
     // Add or remove collapsed nodes to save them into json file
-    if (!this.collapsedNodesToSave[dimensionName]) {
+    if (!this.collapsedNodesToSave?.[dimensionName]) {
       this.collapsedNodesToSave[dimensionName] = [];
     }
-    const index = this.collapsedNodesToSave[dimensionName].indexOf(nodeName);
+    const index = this.collapsedNodesToSave?.[dimensionName].indexOf(nodeName);
     if (way === -1) {
       if (index !== -1) {
         this.collapsedNodesToSave[dimensionName].splice(index, 1);
@@ -388,6 +404,7 @@ export class TreenodesService {
     const propagateChanges = currentIndex <= 1 ? true : false;
     // hack to limit re-rendering and optimize perf
     this.dimensionsDatasService.getMatrixDatas(propagateChanges);
+    this.dimensionsDatasService.computeMatrixDataFreqMap();
   }
 
   constructDatasToSave(collapsedNodesInput?) {
@@ -442,7 +459,11 @@ export class TreenodesService {
     return initialDatas;
   }
 
-  constructSavedJson(collapsedNodesInput?) {
+  isSaveChanged(savedDatas, testedSavedDatas) {
+    return !_.isEqual(savedDatas, testedSavedDatas);
+  }
+
+  constructSavedJson(collapsedNodesInput?, isReduced = false) {
     let newJson = this.constructDatasToSave(collapsedNodesInput);
     if (collapsedNodesInput) {
       // Transform json if collapsed nodes
@@ -471,7 +492,7 @@ export class TreenodesService {
       // t1 = performance.now();
       // console.log("updateSummariesCells " + (t1 - t0) + " milliseconds.");
 
-      if (!collapsedNodesInput) {
+      if (!collapsedNodesInput || isReduced) {
         // Remove collapsed nodes and selected nodes because they have been reduced
         delete newJson.savedDatas.collapsedNodes;
       }
@@ -507,7 +528,7 @@ export class TreenodesService {
           // Get children list
           nodeDetails && nodeDetails.getChildrenList();
 
-          if (nodeDetails && nodeDetails.childrenList) {
+          if (nodeDetails?.childrenList) {
             nodeChildren = nodeDetails.childrenList;
             const nodeChildrenLength = nodeChildren.length;
             for (let j = nodeChildrenLength - 1; j >= 0; j--) {
@@ -547,7 +568,6 @@ export class TreenodesService {
     const truncatedPartition = _.cloneDeep(
       datas.coclusteringReport.dimensionPartitions,
     );
-    // const truncatedPartition = [ ...datas.coclusteringReport.dimensionPartitions ];
 
     Object.keys(datas.savedDatas.collapsedNodes).forEach((dim, key) => {
       const nodes = datas.savedDatas.collapsedNodes[dim];
@@ -594,7 +614,7 @@ export class TreenodesService {
       const nodeDetails: TreeNodeVO = this.dimensionsDatas.dimensionsClusters[
         dimIndex
       ].find((e) => e.cluster === nodeName);
-      if (nodeDetails && nodeDetails.childrenList) {
+      if (nodeDetails?.childrenList) {
         nodeChildren = nodeDetails.childrenList;
 
         let cancatValueGroup;
@@ -637,6 +657,7 @@ export class TreenodesService {
           );
       }
     }
+    return currentTruncatedPartition;
   }
 
   computeNumPartition(nodes, dimIndex, currentTruncatedPartition) {
@@ -648,7 +669,7 @@ export class TreenodesService {
       const nodeDetails: TreeNodeVO = this.dimensionsDatas.dimensionsClusters[
         dimIndex
       ].find((e) => e.cluster === nodeName);
-      if (nodeDetails && nodeDetails.childrenList) {
+      if (nodeDetails?.childrenList) {
         nodeChildren = nodeDetails.childrenList;
         const nodeChildrenLength = nodeChildren.length;
         for (let j = 0; j < nodeChildrenLength; j++) {
@@ -664,34 +685,73 @@ export class TreenodesService {
                   currentTruncatedPartition.intervals[intervalIndex];
                 if (currentInterval) {
                   // Because nodes are not present into partition values
-
                   currentTruncatedPartition.intervals.splice(intervalIndex, 1);
                 }
               }
             }
           }
         }
-        // Add the current parent node after children deletion
-        let currentNodeBound: any = nodeDetails.bounds;
-        currentNodeBound = currentNodeBound.replaceAll('[', '');
-        currentNodeBound = currentNodeBound.replaceAll(']', '');
-        currentNodeBound = currentNodeBound.replaceAll('Missing U ', ''); // #73
-        currentNodeBound = currentNodeBound.split(';');
-        // convert each array string to number
-        for (let j = 0; j < currentNodeBound.length; j++) {
-          currentNodeBound[j] = 1 * currentNodeBound[j];
+
+        if (
+          currentTruncatedPartition.intervals
+            .map((e) => e.cluster)
+            .includes(nodeDetails.parentCluster)
+        ) {
+          // #142 Error in the description of dimensionPartitions during numerical variable folding
+          // Do not add current interval if it's parent is already added
+        } else {
+          // Add the current parent node after children deletion
+          let currentNodeBound: any = nodeDetails.bounds;
+          currentNodeBound = currentNodeBound.replaceAll('[', '');
+          currentNodeBound = currentNodeBound.replaceAll(']', '');
+          currentNodeBound = currentNodeBound.replaceAll('Missing U ', ''); // #73
+          currentNodeBound = currentNodeBound.split(';');
+          // convert each array string to number
+          for (let j = 0; j < currentNodeBound.length; j++) {
+            currentNodeBound[j] = 1 * currentNodeBound[j];
+          }
+          currentTruncatedPartition.intervals.push({
+            cluster: nodeDetails.cluster,
+            bounds: currentNodeBound,
+          });
         }
-        currentTruncatedPartition.intervals.push({
-          cluster: nodeDetails.cluster,
-          bounds: currentNodeBound,
-        });
         // Sort intervals
         currentTruncatedPartition.intervals.sort(function (a, b) {
           return a.bounds[0] - b.bounds[0];
         });
-        // console.table(currentTruncatedPartition.intervals);
       }
     }
+
+    const includedIntervals = this.findIncludedIntervals(
+      currentTruncatedPartition.intervals.map((e) => e.bounds),
+    );
+    if (includedIntervals.length > 0) {
+      for (let k = includedIntervals.length - 1; k >= 0; k--) {
+        currentTruncatedPartition.intervals.splice(includedIntervals[k], 1);
+      }
+    }
+
+    return currentTruncatedPartition;
+  }
+
+  findIncludedIntervals(intervals) {
+    let includedIndices = [];
+
+    for (let i = 0; i < intervals.length; i++) {
+      for (let j = 0; j < intervals.length; j++) {
+        if (i !== j && this.isIncluded(intervals[i], intervals[j])) {
+          includedIndices.push(i);
+          break;
+        }
+      }
+    }
+
+    return includedIndices;
+  }
+
+  // Fonction pour vérifier si l'intervalle a est inclus dans l'intervalle b
+  isIncluded(a, b) {
+    return a[0] >= b[0] && a[1] <= b[1];
   }
 
   updateSummariesParts(datas) {
@@ -713,7 +773,9 @@ export class TreenodesService {
   }
 
   updateSummariesCells(datas) {
-    // the "cells" field in "summary" must contain the number of non-empty cells, which can be less than the theoretical number of cells. It is obtained by counting the number of elements in the list "cellPartIndexes" or in "cellFrequencies"
+    // the "cells" field in "summary" must contain the number of non-empty cells,
+    // which can be less than the theoretical number of cells.
+    // It is obtained by counting the number of elements in the list "cellPartIndexes" or in "cellFrequencies"
     datas.coclusteringReport.summary.cells =
       datas.coclusteringReport.cellFrequencies.length;
 
@@ -727,12 +789,10 @@ export class TreenodesService {
     const CI = {
       ...this.appService.getInitialDatas().datas,
     };
-
     const transitionMatrix: any[] = [];
 
-    let t0 = performance.now();
-
-    // Step 1: we build the transition matrix which makes it possible to pass from the part indices of the CI to the part indices of the CC
+    // Step 1: we build the transition matrix which makes it possible to pass from the part
+    // indices of the CI to the part indices of the CC
     for (
       let k = 0;
       k < CI.coclusteringReport.dimensionHierarchies.length;
@@ -758,7 +818,11 @@ export class TreenodesService {
         ].valueGroups.map((e) => e.values);
       }
 
-      // Loop the parts of the CI variable: for each part, we try to associate its index in the partition of the initial coclustering with its index in the partition of the final coclustering. We use the fact that the partitions are nested and that their order does not change: an "initial" part is either kept as it is in the current coclustering or included in a folded part in the current coclustering
+      // Loop the parts of the CI variable: for each part, we try to associate its index in
+      // the partition of the initial coclustering with its index in the partition of the final coclustering.
+      // We use the fact that the partitions are nested and that their order does not change:
+      // an "initial" part is either kept as it is in the current coclustering or included in
+      // a folded part in the current coclustering
       let currentP = 0; // initialize the index of the part of the current variable
       let currentPart = currentVariable[currentP]; // we initialize the current part
 
@@ -781,14 +845,10 @@ export class TreenodesService {
                   initialPart[1] <= currentVariable[currentP][1]
                 )
               ) {
-                // while (!(this.isRangeIncluded(initialPart, currentVariable))) {
                 currentPart = currentVariable[++currentP];
               }
             } catch (e) {
-              console.log(
-                'file: save.service.ts:446 ~ truncateJsonCells ~ e:',
-                e,
-              );
+              console.log('truncateJsonCells ~ e:', e);
             }
           }
         } else {
@@ -803,13 +863,8 @@ export class TreenodesService {
       }
     }
 
-    // let t1 = performance.now();
-    // console.log("STEP 1 " + (t1 - t0) + " milliseconds.");
-
-    t0 = performance.now();
-
-    // Step 2: build the list of cells in the current coclustering by calculating the indexes of these cells and their resGroup
-    // let indexesCCSet = new Set();
+    // Step 2: build the list of cells in the current coclustering by calculating the indexes
+    // of these cells and their resGroup
     let resGroup: any[] = [];
 
     // chat GPT optimization
@@ -835,7 +890,6 @@ export class TreenodesService {
         resGroupMap.set(currentIndexesString, cellFrequencies[i]);
       }
     }
-    // console.log('file: save.service.ts:540 ~ truncateJsonCells ~ resGroupMap:', resGroupMap);
     resGroupMap = new Map([...resGroupMap.entries()].sort());
 
     // Convert the map back to an array of objects if needed
@@ -844,10 +898,6 @@ export class TreenodesService {
       value,
     }));
 
-    // t1 = performance.now();
-    // console.log("STEP 2 " + (t1 - t0) + " milliseconds.");
-
-    t0 = performance.now();
     resGroup.sort(function (a: any, b: any) {
       if (a.value === b.value) {
         return a.key.localeCompare(b.key, undefined, {
@@ -856,8 +906,6 @@ export class TreenodesService {
       }
       return b.value - a.value;
     });
-    // t1 = performance.now();
-    // console.log("STEP 3 " + (t1 - t0) + " milliseconds.");
 
     CC.coclusteringReport.cellFrequencies = resGroup.map((e) => e.value);
     // Convert cellPartIndexes strings to integers
@@ -865,7 +913,6 @@ export class TreenodesService {
       e.key.split(/\s*,\s*/).map(Number),
     );
 
-    // console.log('file: save.service.ts:547 ~ truncateJsonCells ~ CC:', CC.coclusteringReport.cellFrequencies);
     return CC;
   }
 }

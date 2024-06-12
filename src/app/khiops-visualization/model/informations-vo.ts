@@ -11,7 +11,7 @@ export class InformationsVO {
   valueGrouping: string;
   evaluatedVariablePairs: number;
 
-  displayDatas: InfosDatasI[];
+  displayDatas: InfosDatasI[] | undefined;
 
   constructor(object) {
     this.evaluatedVariables = object.evaluatedVariables;

@@ -1,9 +1,10 @@
-@import "../../global.scss";
+@import '../../theme.scss';
+@import '../../global.scss';
 
 #root-loading-logo {
-	background-image: url("../../assets/shadow-logo.png");
+  background-image: url('../../assets/shadow-logo.png');
 }
 
 .mat-app-background {
-	font-size: 14px;
+  font-size: 14px;
 }

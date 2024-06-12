@@ -1,11 +1,11 @@
 import * as d3 from 'd3';
 import { HTML } from '../../ducd/';
-import { clone, stringhash } from '../../ducd/';
+import { clone } from '../../ducd/';
 import { HypertreeArgs } from '../../models/hypertree/model';
 import { N } from '../../models/n/n';
 import { Path } from '../../models/path/path';
 import { setZ } from '../../models/n/n-layouts';
-import { dfsFlat, πify } from '../../models/transformation/hyperbolic-math';
+import { πify } from '../../models/transformation/hyperbolic-math';
 import { C } from '../../models/transformation/hyperbolic-math';
 import { CassignC } from '../../models/transformation/hyperbolic-math';
 import {
@@ -17,60 +17,32 @@ import { sigmoid } from '../../models/transformation/hyperbolic-math';
 import { IUnitDisk } from '../unitdisk/unitdisk';
 import { presets } from '../../models/hypertree/preset-base';
 import { mergeDeep } from '../../ducd/';
-import { doLabelStuff } from '../../models/hypertree/preset-process';
-
 let globelhtid = 0;
-
-const π = Math.PI;
-const htmlpreloader = `
-    <div class="spinner">
-        <div class="double-bounce1"></div>
-        <div class="double-bounce2"></div>
-    </div>`;
-
-const grad = [255, 96, 36, 0];
-const bubbleSvgDef = `<defs>
-        <radialGradient id="exampleGradient">            
-            <stop offset="58%"  stop-color="rgb(${grad[0]},${grad[0]},${grad[0]})" stop-opacity=".15"/>            
-            <stop offset="92%"  stop-color="rgb(${grad[1]},${grad[1]},${grad[1]})" stop-opacity=".15"/>
-            <stop offset="98%"  stop-color="rgb(${grad[2]},${grad[2]},${grad[2]})" stop-opacity=".15"/>
-            <stop offset="100%" stop-color="rgb(${grad[3]},${grad[3]},${grad[3]})" stop-opacity=".15"/>
-        </radialGradient>
-    </defs>`;
-
-const hypertreehtml = `<div class="unitdisk-nav">        
+const hypertreehtml = `<div class="unitdisk-nav">
         <svg width="100%" height="100%" preserveAspectRatio="xMidYMid meet" viewBox="-0 0 1000 1000">
-            ${bubbleSvgDef}
         </svg>
-        <div class="preloader"></div>
     </div>`;
 
 export class Hypertree {
   args: HypertreeArgs;
   data: N;
   langMap: {};
-
   view_: {
     parent: HTMLElement;
     html?: HTMLElement;
-    //unitdisk?      : IUnitDisk,
   };
-
   unitdisk: IUnitDisk;
   transition: Transition;
   log = [];
-
   modelMeta;
   langMeta;
   layoutMeta;
-
   initPromise: Promise<void>;
   initPromisHandler: {
     resolve;
     reject;
   };
   isInitializing = false;
-
   lastCenterNode = undefined;
 
   constructor(
@@ -79,10 +51,8 @@ export class Hypertree {
     },
     args: HypertreeArgs,
   ) {
-    // console.group("hypertree constructor")
     this.view_ = view;
     this.initPromise = this.api.setModel(args);
-    // console.groupEnd()
   }
 
   /*
@@ -90,25 +60,20 @@ export class Hypertree {
    * and call the according update function(s)
    */
   public api = {
-    setModel: (model: HypertreeArgs) =>
-      new Promise<void>((ok, err) => {
-        //model = mergeDeep_(presets[model.baseCfg], model)
+    setModel: (model: HypertreeArgs) => {
+      console.log('setModel ~ model:', model);
+      return new Promise<void>((ok, err) => {
         this.isInitializing = true;
         const base = presets.modelBase();
-        // console.group("set model: merging ", model, ' into ', base)
-
-        //this.args = mergeDeep(model, base)
         this.args = mergeDeep(base, model);
-        // console.log('merge result: ', this.args)
-
-        // wenn parent updatedated hat wraum ist da nich eine alte transformations in der disk
         this.update.view.parent();
-        this.api.setDataloader(ok, err, this.args.dataloader); // resetData is hier drin 🤔
+        this.api.setDataloader(ok, err, this.args.dataloader); // resetData
         this.api.setLangloader(ok, err, this.args.langloader);
-        // console.groupEnd()
-      }),
-    updateNodesVisualization: () =>
-      new Promise<void>((ok, err) => {
+      });
+    },
+    updateNodesVisualization: () => {
+      console.log('updateNodesVisualization:');
+      return new Promise<void>((ok, err) => {
         const previousPosition = JSON.parse(
           JSON.stringify(this.args.geometry.transformation.state.P),
         );
@@ -131,80 +96,72 @@ export class Hypertree {
 
         // Go to previous state without animation
         this.animateTo(ok, err, previousPosition, null);
-      }),
-    updateNodesDatas: (model: HypertreeArgs) =>
-      new Promise<void>((ok, err) => {
-        const previousPosition = JSON.parse(
-          JSON.stringify(this.args.geometry.transformation.state.P),
-        );
+      });
+    },
+    // updateNodesDatas: (model: HypertreeArgs) => {
+    //   console.log('updateNodesDatas ~ model:', model);
+    //   return new Promise<void>((ok, err) => {
+    //     const previousPosition = JSON.parse(
+    //       JSON.stringify(this.args.geometry.transformation.state.P),
+    //     );
 
-        this.isInitializing = false;
-        const base = presets.modelBase();
-        this.args = mergeDeep(base, model);
+    //     this.isInitializing = false;
+    //     const base = presets.modelBase();
+    //     this.args = mergeDeep(base, model);
 
-        // wenn parent updatedated hat wraum ist da nich eine alte transformations in der disk
-        // this.update.view.parent()
-        this.updateUnitdiskView();
-        this.api.updateDataloader(ok, err, this.args.dataloader); // resetData is hier drin 🤔
-        // this.update.data();
-        // this.api.setLangloader(ok, err, this.args.langloader)
-        this.animateTo(ok, err, previousPosition, null, 0);
-        // this.animateTo(ok, err, n.layout.z, null, 0)
-      }),
+    //     // wenn parent updatedated hat wraum ist da nich eine alte transformations in der disk
+    //     // this.update.view.parent()
+    //     this.updateUnitdiskView();
+    //     this.api.updateDataloader(ok, err, this.args.dataloader); // resetData is hier drin
+    //     // this.update.data();
+    //     // this.api.setLangloader(ok, err, this.args.langloader)
+    //     this.animateTo(ok, err, previousPosition, null, 0);
+    //     // this.animateTo(ok, err, n.layout.z, null, 0)
+    //   });
+    // },
     setLangloader: (ok, err, ll) => {
-      // console.group("langloader initiate")
+      console.log('setLangloader ~ ok:');
       this.args.langloader = ll;
-
       this.args.langloader((langMap, t1, dl) => {
-        // console.group("langloader", langMap && Object.keys(langMap).length || 0)
         this.langMap = langMap || {};
-        this.updateLang_(dl);
-        //requestAnimationFrame(()=> this.update.data())
+        this.updateLang_();
         this.update.data();
-        // console.groupEnd()
-
         if (this.data) {
           this.isInitializing = false;
+          // try to fix broken hyperview at init #170
+          // works on nodes change but not at first init
+          // this.api.updateNodesVisualization();
+
           ok();
         }
       });
-      // console.groupEnd()
     },
     setDataloader: (ok, err, dl) => {
-      // console.group("dataloader initiate")
+      console.log('setDataloader ~ ok:');
       this.args.dataloader = dl;
       const t0 = performance.now();
       this.resetData();
-
       this.args.dataloader((d3h, t1, dl) => {
-        // console.group("dataloader")
         this.initData(d3h, t0, t1, dl);
-        // console.groupEnd()
-
         if (this.langMap) {
           this.isInitializing = false;
           ok();
         }
       });
-      // console.groupEnd()
     },
     updateDataloader: (ok, err, dl) => {
-      // console.group("dataloader initiate")
+      console.log('updateDataloader ~ ok:');
       this.args.dataloader = dl;
       const t0 = performance.now();
       this.resetData();
 
       this.args.dataloader((d3h, t1, dl) => {
-        // console.group("dataloader")
         this.initData(d3h, t0, t1, dl);
-        // console.groupEnd()
-
         if (this.langMap) {
           this.isInitializing = false;
           ok();
         }
       });
-      // console.groupEnd()
     },
     toggleSelection: (n: N) => {
       this.toggleSelection(n);
@@ -218,7 +175,6 @@ export class Hypertree {
       this.update.pathes();
     },
     addPath: (pathid, node: N, color) => {
-      // // console.log("🚀 ~ file: hypertree.ts ~ line 151 ~ pathid, node: N, color", color)
       this.addPath(pathid, node, color);
     },
     removePath: (pathid, node: N) => {
@@ -239,7 +195,6 @@ export class Hypertree {
         n.pathes.finalcolor = undefined;
         n.pathes.isPartOfAnyQuery = false;
       });
-      // console.log('QUERY:', lq)
       this.args.objects.pathes = [];
       this.data.each((n) => {
         if (n.data) {
@@ -265,21 +220,23 @@ export class Hypertree {
         ),
       ),
     gotoNode: (n: N, duration: number) =>
-      new Promise((ok, err) =>
-        this.animateTo(
-          ok,
-          err,
-          CmulR(
-            {
-              re: n.layout.z.re,
-              im: n.layout.z.im,
-            },
-            -1,
-          ),
-          null,
-          duration,
-        ),
-      ),
+      new Promise((ok, err) => {
+        if (n?.layout?.z?.re) {
+          this.animateTo(
+            ok,
+            err,
+            CmulR(
+              {
+                re: n.layout.z.re,
+                im: n.layout.z.im,
+              },
+              -1,
+            ),
+            null,
+            duration,
+          );
+        }
+      }),
     goto: (p, l) => new Promise((ok, err) => this.animateTo(ok, err, p, l)),
     gotoλ: (l) => new Promise((ok, err) => this.animateToλ(ok, err, l)),
   };
@@ -343,9 +300,8 @@ export class Hypertree {
   }
 
   protected updateUnitdiskView() {
-    // console.log("_updateUnitdiskView")
+    console.log('_updateUnitdiskView');
     var udparent = this.view_.html.querySelector('.unitdisk-nav > svg');
-    udparent.innerHTML = bubbleSvgDef;
     this.unitdisk = new this.args.geometry.decorator(
       {
         parent: udparent,
@@ -384,8 +340,7 @@ export class Hypertree {
   //########################################################################################################
 
   protected resetData() {
-    // // console.log("_resetData")
-    this.view_.html.querySelector('.preloader').innerHTML = htmlpreloader;
+    console.log('_resetData');
     this.unitdisk.args.data = undefined;
     this.data = undefined;
     this.langMap = undefined;
@@ -441,33 +396,17 @@ export class Hypertree {
 
     // cells können true initialisert werden
     this.data.each((n) => (n.precalc.clickable = true));
-    // dataInitBFS:
-    // - emoji*
-    // - img*
-    this.data.each((n) => this.args.dataInitBFS(this, n));
     this.modelMeta = {
       Δ: [t1 - t0, t2 - t1, t3 - t2, performance.now() - t3],
       filesize: dl,
       nodecount: ncount - 1,
     };
-    // von rest trennen, da lang alleine benötigt wird
-    // langInitBFS:
-    // - lang
-    // - wiki*
-    // - labelslen automatisch
-    // - clickable=selectable*
-    // - cell* default = clickable? oder true?
     this.updateLang_();
-
-    // hmm, wird niergens mitgemessen :(
     this.findInitλ_();
-
-    this.view_.html.querySelector('.preloader').innerHTML = '';
   }
 
   protected updateWeights_(): void {
     // console.log("_updateWeights")
-    // sum dinger
     this.sum(this.data, this.args.layout.weight, 'layoutWeight');
     this.sum(this.data, this.args.filter.weightFilter.weight, 'cullingWeight');
     this.sum(this.data, this.args.layout.weight, 'visWeight');
@@ -495,30 +434,17 @@ export class Hypertree {
     });
   }
 
-  protected updateLang_(dl = 0): void {
-    // console.log("_updateLang")
-    const t0 = performance.now();
-
+  protected updateLang_(): void {
     if (this.data) {
       this.data.each((n) => this.args.langInitBFS(this, n));
       this.updateLabelLen_();
     }
-
-    if (dl || !this.langMeta)
-      this.langMeta = {
-        Δ: [performance.now() - t0],
-        map: this.langMap,
-        filesize: dl,
-      };
   }
 
   protected findInitλ_(): void {
-    // console.groupCollapsed('_findInitλ')
-
     for (let i = 0; i < 50; i++) {
       const progress01 = i / 50;
       const λ = 0.02 + sigmoid(progress01) * 0.75;
-      //console.log('#'+progress01, λ)
       this.args.geometry.transformation.state.λ = λ;
       this.updateLayoutPath_(this.data);
       this.unitdisk.args.cacheUpdate(this.unitdisk, this.unitdisk.cache);
@@ -530,14 +456,10 @@ export class Hypertree {
       );
 
       if (maxR > (this.args.layout.initSize || 0.95)) {
-        // console.info('MaxR at abort', maxR)
         break;
       }
     }
     this.data.each((n: N) => (n.layoutReference = clone(n.layout)));
-
-    // console.groupEnd()
-    // console.info('auto λ = ', this.args.geometry.transformation.state.λ)
   }
 
   //########################################################################################################
@@ -549,7 +471,6 @@ export class Hypertree {
   private virtualCanvas = undefined;
   private virtualCanvasContext = undefined;
   protected updateLabelLen_(): void {
-    // console.log("_updateLabelLen")
     var canvas =
       this.virtualCanvas ||
       (this.virtualCanvas = document.createElement('canvas'));
@@ -557,15 +478,12 @@ export class Hypertree {
       this.virtualCanvasContext ||
       (this.virtualCanvasContext = canvas.getContext('2d'));
     context.font = this.args.geometry.captionFont;
-    //context.textBaseLine = 'middle'
-    //context.textAlign = 'center'
 
     const updateLabelLen_ = (txtprop, lenprop) => {
       this.data.each((n) => {
         if (n.precalc[txtprop]) {
           const metrics = context.measureText(n.precalc[txtprop]);
           n.precalc[lenprop] = metrics.width / 200 / window.devicePixelRatio;
-          // console.assert(typeof n.precalc[lenprop] === 'number')
         } else n.precalc[lenprop] = undefined;
       });
     };
@@ -577,8 +495,6 @@ export class Hypertree {
 
   public updateLayoutPath_(preservingnode: N): void {
     const t = this.args.geometry.transformation;
-    //// console.log("_updateLayoutPath_", t.state.λ)
-    // console.assert(preservingnode)
     const t0 = performance.now();
 
     preservingnode
@@ -638,13 +554,6 @@ export class Hypertree {
   }
 
   protected addPath(pathType: string, n: N, color?) {
-    // console.log("🚀 ~ file: hypertree.ts ~ line 568 ~ Hypertree ~ addPath ~ pathType", pathType)
-    // // console.log("🚀 ~ file: hypertree.ts ~ line 505 ~ addPath ~ color", color)
-    const plidx = stringhash(n.precalc.label);
-    // const color = ({
-    //     'HoverPath': 'none',
-    //     'Query': googlePalette(15)
-    // })[pathType] || googlePalette(plidx) || googlePalette(1)
     color = color || '#8ba9dd';
 
     const newpath: Path = {
@@ -787,17 +696,6 @@ export class Hypertree {
     return view || nav || lowdetail;
   }
 }
-
-/*
-class TransitionModel {
-    public hypertree : Hypertree
-    public type : 'animation' | 'interaction' | 'script'
-    public frames : Frame[] = []
-    public lowdetail = true
-    public currentframe : Frame    
-    public beginTime
-    public endTime
-}*/
 
 export class Transition {
   public hypertree: Hypertree;

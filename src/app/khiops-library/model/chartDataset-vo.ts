@@ -1,7 +1,7 @@
 export class ChartDatasetVO {
-  label: string;
+  label: string | undefined;
   data: any = [];
-  extra = [];
+  extra: any = [];
   minBarLength: number = 3;
   fill: boolean = false;
   borderSkipped: boolean = false;
@@ -17,7 +17,7 @@ export class ChartDatasetVO {
   backgroundColor?: string[];
   borderColor?: string[];
 
-  constructor(label?, type?) {
+  constructor(label?: string, type?: string) {
     this.label = label || '';
     this.type = type || 'bar'; // By default
   }

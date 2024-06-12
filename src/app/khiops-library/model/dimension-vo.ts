@@ -25,11 +25,11 @@ export class DimensionVO {
 
   constructor(object, startPosition = 0) {
     this.startPosition = startPosition;
-    this.name = (object && object.name) || '';
-    this.type = (object && object.type) || '';
-    this.parts = (object && object.parts) || undefined;
-    this.initialParts = (object && object.initialParts) || undefined;
-    this.values = (object && object.values) || undefined;
+    this.name = object?.name || '';
+    this.type = object?.type || '';
+    this.parts = object?.parts || undefined;
+    this.initialParts = object?.initialParts || undefined;
+    this.values = object?.values || undefined;
     this.currentHierarchyClusterCount = this.parts;
     this.hierarchyFold = true;
 
@@ -48,9 +48,9 @@ export class DimensionVO {
     if (object.variable) {
       this.name = object.variable;
     }
-    this.partitionType = (object && object.partitionType) || undefined;
-    this.variable = (object && object.variable) || '';
-    this.defaultGroupIndex = (object && object.defaultGroupIndex) || 0;
+    this.partitionType = object?.partitionType || undefined;
+    this.variable = object?.variable || '';
+    this.defaultGroupIndex = object?.defaultGroupIndex || 0;
   }
 
   setHierarchyFold(state: boolean) {
@@ -65,6 +65,17 @@ export class DimensionVO {
     if (this.isNumerical) {
       this.intervals = dimensionPartition.intervals;
       this.min = this.intervals[0].bounds[0];
+
+      if (!this.min) {
+        // bounds are missing for first interval, take the second #123
+        /**
+          {
+            bounds: []
+            cluster: "Missing"
+          }
+         */
+        this.min = this.intervals[1].bounds[0];
+      }
       this.max = this.intervals[this.intervals.length - 1].bounds[1];
     } else {
       this.valueGroups = dimensionPartition.valueGroups;

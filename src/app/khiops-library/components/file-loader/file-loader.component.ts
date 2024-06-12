@@ -23,7 +23,7 @@ export class FileLoaderComponent implements OnInit {
   @Output('onFileOpen') onFileOpen: EventEmitter<any> = new EventEmitter<any>();
   fileLoaderDatas: any;
   isProdMode = false;
-  associationFiles = [];
+  associationFiles: string[] = [];
   cyInputText: string; // cypress input field, used to load files in cypress
 
   constructor(
@@ -67,14 +67,16 @@ export class FileLoaderComponent implements OnInit {
     this.onFileLoaderDataChanged(undefined);
 
     this.ngzone.run(() => {
-      this.fileLoaderService
-        .readWebFile(file)
-        .then((datas) => {
-          this.onFileLoaderDataChanged(datas);
-        })
-        .catch((error) => {
-          console.warn(this.translate.get('SNACKS.OPEN_FILE_ERROR'), error);
-        });
+      if (file) {
+        this.fileLoaderService
+          .readWebFile(file)
+          .then((datas) => {
+            this.onFileLoaderDataChanged(datas);
+          })
+          .catch((error) => {
+            console.warn(this.translate.get('SNACKS.OPEN_FILE_ERROR'), error);
+          });
+      }
     });
   }
 
@@ -106,7 +108,7 @@ export class FileLoaderComponent implements OnInit {
             console.warn(this.translate.get('SNACKS.OPEN_FILE_ERROR'), error);
             this.snackBar.open(
               this.translate.get('SNACKS.OPEN_FILE_ERROR'),
-              null,
+              undefined,
               {
                 duration: 4000,
                 panelClass: 'error',

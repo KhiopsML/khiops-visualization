@@ -1,0 +1,18 @@
+<div class="graph-options-menu-comp">
+  <button
+    mat-stroked-button
+    color="primary"
+    [matMenuTriggerFor]="graphOptionsTypes"
+  >
+    {{ graphOptions.selected | translate }} <em>v</em>
+  </button>
+  <mat-menu #graphOptionsTypes>
+    <button
+      mat-menu-item
+      *ngFor="let opt of graphOptions.types"
+      (click)="changeGraphOption(opt)"
+    >
+      {{ opt | translate }}
+    </button>
+  </mat-menu>
+</div>

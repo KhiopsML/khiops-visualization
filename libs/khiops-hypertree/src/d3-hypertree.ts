@@ -14,8 +14,6 @@ export * from './components/layerstack/d3updatePattern';
 import * as cell from './components/layers/cell-layer';
 import * as arc from './components/layers/link-layer';
 import * as node from './components/layers/node-layer';
-import * as img from './components/layers/image-layer';
-import * as sym from './components/layers/symbol-layer';
 import * as text from './components/layers/label-layer';
 import * as textf from './components/layers/label-force-layer';
 import * as bg from './components/layers/background-layer';
@@ -30,10 +28,6 @@ export namespace layers {
   export type ArcLayerArgs = arc.ArcLayerArgs;
   export var NodeLayer = node.NodeLayer;
   export type NodeLayerArgs = node.NodeLayerArgs;
-  export var ImageLayer = img.ImageLayer;
-  export type ImageLayerArgs = img.ImageLayerArgs;
-  export var SymbolLayer = sym.SymbolLayer;
-  export type SymbolLayerArgs = sym.SymbolLayerArgs;
   export var LabelLayer = text.LabelLayer;
   export type LabelLayerArgs = text.LabelLayerArgs;
   export var LabelForceLayer = textf.LabelForceLayer;
@@ -49,7 +43,6 @@ export namespace layers {
 }
 
 export * from './components/unitdisk/unitdisk';
-
 import * as loaders_ from './models/n/n-loaders';
 import * as layouts_ from './models/n/n-layouts';
 export var loaders = loaders_;

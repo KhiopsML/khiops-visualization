@@ -2,9 +2,7 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 import {
   Component,
   HostListener,
-  OnInit,
   NgZone,
-  OnDestroy,
   EventEmitter,
   OnChanges,
   Output,
@@ -12,7 +10,6 @@ import {
   AfterViewInit,
   Input,
 } from '@angular/core';
-import _ from 'lodash';
 import TreeView from '@khiops-library/libs/treeview/treeview';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
@@ -30,7 +27,7 @@ import { TreeNodeVO } from '@khiops-visualization/model/tree-node-vo';
 })
 export class TreeSelectComponent
   extends SelectableComponent
-  implements OnInit, AfterViewInit, OnChanges, OnDestroy
+  implements AfterViewInit, OnChanges
 {
   @Input() selectedNodes: TreeNodeVO[];
   @Input() selectedNode: TreeNodeVO;
@@ -40,48 +37,42 @@ export class TreeSelectComponent
 
   componentType = 'kvtree'; // needed to copy datas
   tree: any;
-  id: any = undefined;
+  override id: any = undefined;
   nodeInSelection: any;
 
   isFullscreen: boolean = false;
 
   constructor(
-    public ngzone: NgZone,
+    public override ngzone: NgZone,
     private appService: AppService,
     private treePreparationDatasService: TreePreparationDatasService,
-    public selectableService: SelectableService,
+    public override selectableService: SelectableService,
     private snackBar: MatSnackBar,
     public translate: TranslateService,
-    public configService: ConfigService,
+    public override configService: ConfigService,
   ) {
     super(selectableService, ngzone, configService);
   }
 
-  ngOnInit() {}
-
-  ngOnDestroy() {}
-
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.dimensionTree && changes.dimensionTree.currentValue) {
+    if (changes.dimensionTree?.currentValue) {
       this.initialize();
     }
     if (
-      changes.selectedNodes &&
-      changes.selectedNodes.currentValue &&
+      changes.selectedNodes?.currentValue &&
       !changes.selectedNodes.firstChange
     ) {
       this.tree.selectNodes(changes.selectedNodes.currentValue);
     }
     if (
-      changes.selectedNode &&
-      changes.selectedNode.currentValue &&
+      changes.selectedNode?.currentValue &&
       !changes.selectedNode.firstChange
     ) {
       this.tree.scrollToNode(changes.selectedNode.currentValue._id);
     }
   }
 
-  ngAfterViewInit() {
+  override ngAfterViewInit() {
     // Init at first time
     this.initialize();
   }
@@ -101,7 +92,7 @@ export class TreeSelectComponent
   }
 
   initTree(selectedNodes?) {
-    if (this.dimensionTree && this.dimensionTree[0]) {
+    if (this.dimensionTree?.[0]) {
       // @ts-ignore
       this.tree = new TreeView(
         this.dimensionTree,

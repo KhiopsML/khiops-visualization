@@ -6,6 +6,7 @@ import {
   Output,
   OnInit,
   SimpleChanges,
+  AfterViewInit,
 } from '@angular/core';
 import { TranslateService } from '@ngstack/translate';
 import { CompositionVO } from '@khiops-covisualization/model/composition-vo';
@@ -17,13 +18,15 @@ import { Subscription } from 'rxjs';
 import _ from 'lodash';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
+import { ExtDatasVO } from '@khiops-covisualization/model/ext-datas-vo';
+import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
 
 @Component({
   selector: 'app-composition',
   templateUrl: './composition.component.html',
   styleUrls: ['./composition.component.scss'],
 })
-export class CompositionComponent implements OnInit, OnDestroy {
+export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() selectedNode: TreeNodeVO;
   @Input() dimensionsClusters: TreeNodeVO[][];
   @Input() position: number;
@@ -42,18 +45,19 @@ export class CompositionComponent implements OnInit, OnDestroy {
 
   constructor(
     private translate: TranslateService,
+    private importExtDatasService: ImportExtDatasService,
     private treenodesService: TreenodesService,
     private clustersService: ClustersService,
     private eventsService: EventsService,
   ) {
     this.compositionDisplayedColumns = [
       {
-        headerName: 'cluster',
+        headerName: this.translate.get('GLOBAL.CLUSTER'),
         field: 'cluster',
         tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.CLUSTER'),
       },
       {
-        headerName: 'terminalCluster',
+        headerName: this.translate.get('GLOBAL.TERMINAL_CLUSTER'),
         show: false,
         field: 'terminalCluster',
         tooltip: this.translate.get(
@@ -61,23 +65,23 @@ export class CompositionComponent implements OnInit, OnDestroy {
         ),
       },
       {
-        headerName: 'rank',
+        headerName: this.translate.get('GLOBAL.RANK'),
         show: false,
         field: 'rank',
         tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.RANK'),
       },
       {
-        headerName: 'typicality',
+        headerName: this.translate.get('GLOBAL.TYPICALITY'),
         field: 'typicality',
         tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.TYPICALITY'),
       },
       {
-        headerName: 'value',
+        headerName: this.translate.get('GLOBAL.VALUE'),
         field: 'value',
         tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.VALUE'),
       },
       {
-        headerName: 'frequency',
+        headerName: this.translate.get('GLOBAL.FREQUENCY'),
         field: 'frequency',
         tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.FREQUENCY'),
       },
@@ -91,8 +95,21 @@ export class CompositionComponent implements OnInit, OnDestroy {
 
     this.importedDatasChangedSub =
       this.eventsService.importedDatasChanged.subscribe((e) => {
-        if (this.selectedNode) {
-          this.updateTable(this.selectedNode);
+        if (this.selectedNode && this.selectedDimension) {
+          const externalDatas: ExtDatasVO =
+            this.importExtDatasService.getImportedDatasFromDimension(
+              this.selectedDimension,
+            );
+
+          this.compositionValues.forEach((composition: CompositionVO) => {
+            if (externalDatas?.[composition?.value]) {
+              composition.externalData = externalDatas[composition.value];
+            }
+          });
+
+          // Force selection change to update external dats component #113
+          this.selectedComposition = { ...this.selectedComposition };
+          this.selectedCompositionChanged.emit(this.selectedComposition);
         }
       });
   }
@@ -100,9 +117,12 @@ export class CompositionComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.id = 'cluster-composition-' + this.position;
     this.title = this.translate.get('GLOBAL.COMPOSITION');
+  }
 
+  ngAfterViewInit() {
     // #40 loss of display after resizing the coclustering
     // We need to update table at init if component was hidden
+    // Also linked to #111
     this.updateTable(this.selectedNode);
   }
 
@@ -138,6 +158,8 @@ export class CompositionComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.treeSelectedNodeChangedSub.unsubscribe();
     this.importedDatasChangedSub.unsubscribe();
+    this.selectedComposition = undefined;
+    this.selectedCompositionChanged.emit(this.selectedComposition);
   }
 
   onDoubleClickListItem(item: TreeNodeVO) {
@@ -148,10 +170,10 @@ export class CompositionComponent implements OnInit, OnDestroy {
     );
   }
 
-  onSelectRowChanged(item: TreeNodeVO) {
+  onSelectRowChanged(item: CompositionVO) {
     // find composition in local to get external datas
     this.selectedComposition = this.compositionValues.find(
-      (e) => e.cluster === item.cluster,
+      (e) => e.value === item.value,
     );
     this.selectedCompositionChanged.emit(this.selectedComposition);
   }

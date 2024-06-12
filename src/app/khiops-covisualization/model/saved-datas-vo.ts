@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { ViewLayoutVO } from './view-layout-vo';
 
 export class SavedDatasVO {

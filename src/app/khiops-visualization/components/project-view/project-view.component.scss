@@ -1,23 +1,20 @@
 #project-view-comp {
+  display: inline-table !important;
+  background: var(--bgColor) !important;
 
-	display: inline-table !important;
-	background: var(--bgColor) !important;
+  #project-view-comp-table {
+    margin: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
 
-	#project-view-comp-table {
-		margin: auto;
-		height: auto;
-		display: flex;
-		flex-direction: column;
-		padding: 1rem;
+    kl-informations-block {
+      padding-bottom: 1em;
+    }
 
-		kl-informations-block {
-			padding-bottom: 1em;
-		}
-
-		kl-file-loader {
-			margin-right: 1rem;
-		}
-
-	}
-
+    kl-file-loader {
+      margin-right: 1rem;
+    }
+  }
 }

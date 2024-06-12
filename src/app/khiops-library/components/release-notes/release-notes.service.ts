@@ -35,9 +35,9 @@ export class ReleaseNotesService {
           }),
         })
         .subscribe(
-          (datas: []) => {
+          (datas: any) => {
             if (datas) {
-              const notes = [];
+              const notes: NoteVO[] = [];
               for (let i = 0; i < datas.length; i++) {
                 const noteVO = new NoteVO(datas[i]);
                 notes.push(noteVO);

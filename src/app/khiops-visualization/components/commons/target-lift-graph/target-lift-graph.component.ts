@@ -49,12 +49,12 @@ export class TargetLiftGraphComponent
   chartOptions: ChartOptions;
 
   constructor(
-    public selectableService: SelectableService,
+    public override selectableService: SelectableService,
     private evaluationDatasService: EvaluationDatasService,
     private translate: TranslateService,
     private khiopsLibraryService: KhiopsLibraryService,
-    public ngzone: NgZone,
-    public configService: ConfigService,
+    public override ngzone: NgZone,
+    public override configService: ConfigService,
   ) {
     super(selectableService, ngzone, configService);
     this.evaluationDatas = this.evaluationDatasService.getDatas();
@@ -98,7 +98,7 @@ export class TargetLiftGraphComponent
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.selectedVariable && changes.selectedVariable.currentValue) {
+    if (changes?.selectedVariable?.currentValue) {
       this.getDatas();
     }
   }
@@ -111,8 +111,7 @@ export class TargetLiftGraphComponent
   }
 
   getDatas() {
-    const currentTarget =
-      (this.targetLift && this.targetLift.selected) || undefined;
+    const currentTarget = this.targetLift?.selected || undefined;
     this.targetLift = this.evaluationDatasService.getLiftTargets(currentTarget);
 
     const filteredValues = localStorage.getItem(
@@ -162,7 +161,7 @@ export class TargetLiftGraphComponent
   }
 
   onSelectToggleButtonChanged(displayedValues) {
-    // this.khiopsLibraryService.trackEvent('click', 'toggle_target_lift_values');
+    // this.trackerService.trackEvent('click', 'toggle_target_lift_values');
     localStorage.setItem(
       this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
         'TARGET_LIFT_VALUES',
@@ -185,7 +184,7 @@ export class TargetLiftGraphComponent
   }
 
   changeTargetLift(target) {
-    // this.khiopsLibraryService.trackEvent('click', 'change_target_lift');
+    // this.trackerService.trackEvent('click', 'change_target_lift');
     this.title =
       this.translate.get('GLOBAL.CUMULATIVE_GAIN_CHART_OF') +
       ' ' +

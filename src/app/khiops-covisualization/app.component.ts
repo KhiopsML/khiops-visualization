@@ -13,13 +13,13 @@ import {
   MatDialog,
   MatDialogConfig,
 } from '@angular/material/dialog';
-import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { AppService } from './providers/app.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { AppConfig } from 'src/environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ReleaseNotesComponent } from '@khiops-library/components/release-notes/release-notes.component';
 import { TreenodesService } from './providers/treenodes.service';
+import { TrackerService } from '@khiops-library/providers/tracker.service';
 
 @Component({
   selector: 'app-root-covisualization',
@@ -29,21 +29,18 @@ import { TreenodesService } from './providers/treenodes.service';
 })
 export class AppComponent implements AfterViewInit {
   appdatas: any;
-  isDarkTheme: boolean =
-    localStorage.getItem(
-      AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR',
-    ) === 'dark'
-      ? true
-      : false;
-  theme: string =
-    localStorage.getItem(
-      AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR',
-    ) || 'light';
 
   @ViewChild('appElement', {
     static: false,
   })
   appElement: ElementRef<HTMLElement>;
+
+  private _valueChangeEvent = 'valueChanged';
+
+  theme: string =
+    localStorage.getItem(
+      AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR',
+    ) || 'light';
 
   constructor(
     private ngzone: NgZone,
@@ -51,13 +48,32 @@ export class AppComponent implements AfterViewInit {
     private appService: AppService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private khiopsLibraryService: KhiopsLibraryService,
+    private trackerService: TrackerService,
     private configService: ConfigService,
     private translate: TranslateService,
     private treenodesService: TreenodesService,
     private element: ElementRef,
   ) {
     this.appService.initialize();
+  }
+
+  updateElementValue() {
+    setInterval(() => {
+      if (
+        this.treenodesService.isSaveChanged(
+          this.element.nativeElement.value,
+          this.treenodesService.constructDatasToSave(),
+        )
+      ) {
+        this.element.nativeElement.value =
+          this.treenodesService.constructDatasToSave();
+        this.element.nativeElement.dispatchEvent(
+          new CustomEvent(this._valueChangeEvent, {
+            detail: this.element.nativeElement.value,
+          }),
+        );
+      }
+    }, 500);
   }
 
   ngAfterViewInit(): void {
@@ -70,6 +86,7 @@ export class AppComponent implements AfterViewInit {
         this.appdatas = {
           ...datas,
         };
+        this.element.nativeElement.value = datas;
       });
     };
     this.element.nativeElement.openReleaseNotesDialog = () => {
@@ -90,12 +107,9 @@ export class AppComponent implements AfterViewInit {
         );
         dialogRef.componentInstance.displayRejectBtn = true;
 
-        dialogRef
-          .afterClosed()
-          .toPromise()
-          .then((e) => {
-            cb(e);
-          });
+        dialogRef.afterClosed().subscribe((e) => {
+          cb(e);
+        });
       });
     };
     this.element.nativeElement.openChannelDialog = (cb) => {
@@ -110,12 +124,9 @@ export class AppComponent implements AfterViewInit {
         dialogRef.componentInstance.message = this.translate.get(
           'GLOBAL.BETA_VERSIONS_WARNING',
         );
-        dialogRef
-          .afterClosed()
-          .toPromise()
-          .then((e) => {
-            cb(e);
-          });
+        dialogRef.afterClosed().subscribe((e) => {
+          cb(e);
+        });
       });
     };
     this.element.nativeElement.constructDatasToSave = () => {
@@ -123,10 +134,26 @@ export class AppComponent implements AfterViewInit {
     };
     this.element.nativeElement.constructPrunedDatasToSave = () => {
       const collapsedNodes = this.treenodesService.getSavedCollapsedNodes();
-      return this.treenodesService.constructSavedJson(collapsedNodes);
+      // #142 Remove collapsed nodes because datas are truncated
+      return this.treenodesService.constructSavedJson(collapsedNodes, true);
     };
     this.element.nativeElement.setConfig = (config) => {
       this.configService.setConfig(config);
+
+      const trackerId = this.configService.getConfig().trackerId;
+      const appSource = this.configService.getConfig().appSource;
+
+      if (this.configService.getConfig().changeDetector) {
+        this.updateElementValue();
+      }
+
+      if (trackerId) {
+        this.trackerService.initTracker(
+          AppConfig.covisualizationCommon,
+          trackerId,
+          appSource,
+        );
+      }
     };
     this.element.nativeElement.snack = (title, duration, panelClass) => {
       this.ngzone.run(() => {
@@ -138,6 +165,13 @@ export class AppComponent implements AfterViewInit {
     };
     this.element.nativeElement.clean = () => (this.appdatas = null);
     this.setTheme();
+
+    // Test analytics in local
+    this.trackerService.initTracker(
+      AppConfig.covisualizationCommon,
+      '<tracker_id>',
+      '<appSource>',
+    );
   }
 
   setTheme() {
@@ -147,67 +181,7 @@ export class AppComponent implements AfterViewInit {
           AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR',
         ) || 'light';
       document.documentElement.setAttribute('data-color-scheme', themeColor);
-      this.configService.getConfig().onThemeChanged &&
-        this.configService.getConfig().onThemeChanged(themeColor);
-    });
-  }
-
-  initCookieConsent() {
-    const localAcceptCookies = localStorage.getItem(
-      AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'COOKIE_CONSENT',
-    );
-    if (localAcceptCookies !== null) {
-      this.khiopsLibraryService.initMatomo();
-      this.khiopsLibraryService.trackEvent(
-        'cookie_consent',
-        localAcceptCookies.toString(),
-      );
-      this.khiopsLibraryService.enableMatomo();
-      return;
-    }
-    this.dialogRef.closeAll();
-    const config = new MatDialogConfig();
-    config.width = '400px';
-    config.hasBackdrop = false;
-    config.disableClose = false;
-
-    const dialogRef: MatDialogRef<ConfirmDialogComponent> = this.dialog.open(
-      ConfirmDialogComponent,
-      config,
-    );
-    dialogRef.updatePosition({
-      bottom: '50px',
-      right: '50px',
-    });
-    dialogRef.componentInstance.message = this.translate.get(
-      'COOKIE_CONSENT.MESSAGE',
-    );
-    dialogRef.componentInstance.displayRejectBtn = true;
-    dialogRef.componentInstance.displayCancelBtn = false;
-    dialogRef.componentInstance.confirmTranslation = this.translate.get(
-      'COOKIE_CONSENT.ALLOW',
-    );
-
-    this.ngzone.run(() => {
-      dialogRef
-        .afterClosed()
-        .toPromise()
-        .then((e) => {
-          const acceptCookies = e === 'confirm' ? 'true' : 'false';
-
-          localStorage.setItem(
-            AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'COOKIE_CONSENT',
-            acceptCookies,
-          );
-
-          this.khiopsLibraryService.initMatomo();
-          this.khiopsLibraryService.trackEvent('cookie_consent', acceptCookies);
-          if (acceptCookies === 'false') {
-            this.khiopsLibraryService.disableMatomo();
-          } else {
-            this.khiopsLibraryService.enableMatomo();
-          }
-        });
+      this.configService?.getConfig()?.onThemeChanged?.(themeColor);
     });
   }
 }

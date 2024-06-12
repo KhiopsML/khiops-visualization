@@ -14,6 +14,7 @@ npm i khiops-visualization
 <khiops-visualization></khiops-visualization>
 <khiops-covisualization></khiops-covisualization>
 ```
+
 ```
 const kv = document.querySelector('khiops-visualization');
 kv.setConfig({
@@ -30,9 +31,7 @@ kv.setConfig({
 	onThemeChanged : function(data) {
 		console.log(data);
 	},
-	onReadFile : function(data) {
-		console.log(data);
-	}
+
 });
 kv.setDatas(DATA);
 kv.getDatas();

@@ -27,16 +27,16 @@ export class AnnotationComponent
   @Input() selectedNode: TreeNodeVO;
   @Input() position: number;
   value: string;
-  id: any = undefined;
+  override id: any = undefined;
   componentType = 'annotations'; // needed to copy datas
   title: string;
 
   constructor(
+    public override selectableService: SelectableService,
+    public override ngzone: NgZone,
+    public override configService: ConfigService,
     private annotationService: AnnotationService,
     private translate: TranslateService,
-    public selectableService: SelectableService,
-    public ngzone: NgZone,
-    public configService: ConfigService,
   ) {
     super(selectableService, ngzone, configService);
   }
@@ -46,10 +46,10 @@ export class AnnotationComponent
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.selectedNode && changes.selectedNode.currentValue) {
+    if (changes?.selectedNode?.currentValue) {
       this.value = changes.selectedNode.currentValue.annotation;
       this.title = this.translate.get('GLOBAL.ANNOTATION_OF', {
-        name: changes.selectedNode.currentValue.name,
+        name: changes.selectedNode.currentValue.shortDescription,
       });
     }
   }

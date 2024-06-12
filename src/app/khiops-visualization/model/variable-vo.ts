@@ -10,7 +10,7 @@ export class VariableVO {
   values: number;
   type: string;
   mode: string;
-  modeCoverage: number;
+  modeCoverage: number | undefined;
   min: number;
   max: number;
   mean: number;
@@ -19,7 +19,7 @@ export class VariableVO {
   derivationRule: string;
   targetParts: number;
 
-  constructor(object, detailedDatas) {
+  constructor(object: any, detailedDatas: any) {
     // Generate id for grid
     this._id = object.name;
 
@@ -51,7 +51,7 @@ export class VariableVO {
     this.derivationRule = object.derivationRule || undefined;
   }
 
-  computeModeCoverage(detailedDatas) {
+  computeModeCoverage(detailedDatas: any) {
     const modeIndex = detailedDatas.inputValues.values.indexOf(this.mode);
     const modeCoverage =
       detailedDatas.inputValues.frequencies[modeIndex] /

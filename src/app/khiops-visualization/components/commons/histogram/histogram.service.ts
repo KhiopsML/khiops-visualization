@@ -20,8 +20,6 @@ export class HistogramService {
   };
   rangeXLog: RangeXLogI = {};
 
-  constructor() {}
-
   getRangeX(datas: HistogramValuesI[]): [RangeXLinI, RangeXLogI] {
     this.rangeXLog.inf = datas.find(function (d: HistogramValuesI) {
       return d.partition[0] === 0 || d.partition[1] === 0;
@@ -97,7 +95,7 @@ export class HistogramService {
     return ratioY;
   }
 
-  computeXbarDimensions(
+  computeXbarsDimensions(
     datas: HistogramValuesI[],
     xType: string,
   ): HistogramBarVO[] {

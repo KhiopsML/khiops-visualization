@@ -29,7 +29,6 @@ export class LoadExtDatasComponent implements OnInit {
       .then((e) => {
         this.eventsService.emitImportedDatasChanged(e);
         this.dialogRef.close();
-      })
-      .finally(() => {});
+      });
   }
 }

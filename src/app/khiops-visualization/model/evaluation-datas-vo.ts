@@ -10,12 +10,10 @@ export class EvaluationDatasVO {
   selectedPredictorEvaluationVariable: EvaluationPredictorVO | undefined =
     undefined;
   evaluationTypes: any[] | undefined = undefined; // complex values
-  evaluationTypesSummary: GridDatasI = undefined;
-  liftGraphDatas: ChartDatasVO = undefined;
+  evaluationTypesSummary: GridDatasI | undefined = undefined;
+  liftGraphDatas: ChartDatasVO | undefined = undefined;
   liftGraphDisplayedValues: ChartToggleValuesI[] | undefined = undefined;
-  confusionMatrix: GridDatasI = undefined;
-  predictorEvaluations: GridDatasI = undefined;
+  confusionMatrix: GridDatasI | undefined = undefined;
+  predictorEvaluations: GridDatasI | undefined = undefined;
   confusionMatrixType: string = TYPES.FREQUENCY;
-
-  constructor() {}
 }

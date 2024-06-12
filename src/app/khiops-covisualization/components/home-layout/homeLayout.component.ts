@@ -23,7 +23,6 @@ import {
 import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
 import { LoadExtDatasComponent } from '../commons/load-ext-datas/load-ext-datas.component';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
-import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import pjson from 'package.json';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
 import { ClustersService } from '@khiops-covisualization/providers/clusters.service';
@@ -32,6 +31,7 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
 import { Subscription } from 'rxjs';
+import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 
 @Component({
   selector: 'app-home-layout',
@@ -57,9 +57,11 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
   @Input()
   public set appDatas(datas) {
     this.appService.setFileDatas(datas);
-    if (datas && !UtilsService.isEmpty(datas)) {
+    if (datas) {
       this.initializeHome(datas);
-      this.onFileLoaderDataChanged(datas);
+      if (!UtilsService.isEmpty(datas)) {
+        this.onFileLoaderDataChanged(datas);
+      }
     }
   }
   activeTab = AppConfig.covisualizationCommon.HOME.ACTIVE_TAB_INDEX;
@@ -102,7 +104,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
   );
 
   importedDatasChangedSub: Subscription;
-
   constructor(
     private configService: ConfigService,
     private appService: AppService,
@@ -111,10 +112,10 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     private snackBar: MatSnackBar,
     private clustersService: ClustersService,
     private annotationService: AnnotationService,
-    private khiopsLibraryService: KhiopsLibraryService,
+    private trackerService: TrackerService,
     public selectableService: SelectableService,
     private importExtDatasService: ImportExtDatasService,
-    private dimensionsService: DimensionsDatasService,
+    private dimensionsDatasService: DimensionsDatasService,
     private treenodesService: TreenodesService,
     private eventsService: EventsService,
     private dialog: MatDialog,
@@ -126,20 +127,28 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 
     this.importedDatasChangedSub =
       this.eventsService.importedDatasChanged.subscribe((dimName) => {
-        if (dimName && dimName[0]) {
-          this.dimensionsService.constructDimensionsTrees();
-          const dimIndex = this.dimensionsService.getDimensionPositionFromName(
-            dimName[0],
-          );
-          // Update selected nodes ext datas
-          this.treenodesService.setSelectedNode(
-            this.dimensionsService.dimensionsDatas.selectedDimensions[dimIndex]
-              .name,
-            this.treenodesService.dimensionsDatas.selectedNodes[dimIndex]._id,
-            false,
-          );
-          // Enable ext datas view if not displayed
-          this.appService.enableExtDatasView(dimName[0]);
+        if (dimName?.[0]) {
+          this.dimensionsDatasService.constructDimensionsTrees();
+          const dimIndex =
+            this.dimensionsDatasService.getDimensionPositionFromName(
+              dimName[0],
+            );
+          if (
+            this.dimensionsDatasService.dimensionsDatas.selectedDimensions[
+              dimIndex
+            ]
+          ) {
+            // Update selected nodes ext datas
+            this.treenodesService.setSelectedNode(
+              this.dimensionsDatasService.dimensionsDatas.selectedDimensions[
+                dimIndex
+              ].name,
+              this.treenodesService.dimensionsDatas.selectedNodes[dimIndex]._id,
+              false,
+            );
+            // Enable ext datas view if not displayed
+            this.appService.enableExtDatasView(dimName[0]);
+          }
         }
       });
   }
@@ -164,9 +173,9 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
   interceptTabChange(tab: MatTab, tabHeader: MatTabHeader, index: number) {
     if (index === 1 && this.isContextDimensions) {
       this.openContextView = true;
-      this.khiopsLibraryService.trackEvent('page_view', 'context');
+      this.trackerService.trackEvent('page_view', 'context');
     } else if (index === 0) {
-      this.khiopsLibraryService.trackEvent('page_view', 'axis');
+      this.trackerService.trackEvent('page_view', 'axis');
       this.openContextView = false;
     }
     return MatTabGroup.prototype._handleClick.apply(this.tabsMenu, arguments);
@@ -185,9 +194,9 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.khiopsLibraryService.trackEvent('page_view', 'axis');
+    this.trackerService.trackEvent('page_view', 'axis');
     this.onFileLoaderDataChangedCb = (obj) => this.onFileLoaderDataChanged(obj);
-    this.khiopsLibraryService.trackEvent('page_view', 'visit', this.appVersion);
+    this.trackerService.trackEvent('page_view', 'visit', this.appVersion);
   }
 
   ngAfterViewInit() {
@@ -221,55 +230,62 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
   initializeHome(datas) {
     this.isCompatibleJson = this.appService.isCompatibleJson(datas);
     const isCollidingJson = this.appService.isCollidingJson(datas);
+    this.appService.resetSearch();
 
     this.showProjectTab = this.configService.getConfig().showProjectTab;
     if (this.showProjectTab === undefined) {
       this.showProjectTab = true;
     }
-
-    if (!this.isCompatibleJson) {
-      this.snackBar.open(
-        this.translate.get('SNACKS.OPEN_FILE_ERROR'),
-        undefined,
-        {
-          duration: 4000,
-          panelClass: 'error',
-        },
-      );
-    } else {
-      this.snackBar.open(this.translate.get('SNACKS.DATAS_LOADED'), undefined, {
-        duration: 2000,
-        panelClass: 'success',
-      });
-    }
-    if (isCollidingJson) {
-      this.snackBar.open(
-        this.translate.get('SNACKS.COLLIDING_FILE'),
-        undefined,
-        {
-          duration: 10000,
-          panelClass: 'warning',
-        },
-      );
+    if (!UtilsService.isEmpty(datas)) {
+      if (!this.isCompatibleJson) {
+        this.snackBar.open(
+          this.translate.get('SNACKS.OPEN_FILE_ERROR'),
+          undefined,
+          {
+            duration: 4000,
+            panelClass: 'error',
+          },
+        );
+      } else {
+        this.snackBar.open(
+          this.translate.get('SNACKS.DATAS_LOADED'),
+          undefined,
+          {
+            duration: 2000,
+            panelClass: 'success',
+          },
+        );
+      }
+      if (isCollidingJson) {
+        this.snackBar.open(
+          this.translate.get('SNACKS.COLLIDING_FILE'),
+          undefined,
+          {
+            duration: 10000,
+            panelClass: 'warning',
+          },
+        );
+      }
     }
 
     // @ts-ignore
-    this.appProjectView && this.appProjectView.initialize();
+    this.appProjectView?.initialize();
 
     this.initializeServices();
 
     // @ts-ignore
-    this.appAxisView && this.appAxisView.initialize();
+    this.appAxisView?.initialize();
   }
 
   initializeServices() {
-    this.dimensionsService.initialize();
+    this.dimensionsDatasService.initialize();
     this.annotationService.initialize();
     this.clustersService.initialize();
     this.treenodesService.initialize();
     this.importExtDatasService.initExtDatasFiles();
     this.openLoadExternalDataDialog();
-    this.isContextDimensions = this.dimensionsService.isContextDimensions();
+    this.isContextDimensions =
+      this.dimensionsDatasService.isContextDimensions();
   }
 
   openLoadExternalDataDialog() {
@@ -281,10 +297,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
       config,
     );
     dialogRef.disableClose = true;
-    dialogRef
-      .afterClosed()
-      .toPromise()
-      .then(() => {});
   }
 
   reloadView() {

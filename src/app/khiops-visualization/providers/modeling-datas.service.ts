@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AppService } from './app.service';
 import { TranslateService } from '@ngstack/translate';
-import * as _ from 'lodash'; // Important to import lodash in karma
 import { PreparationDatasService } from './preparation-datas.service';
 import { ModelingPredictorVO } from '../model/modeling-predictor-vo';
 import { SummaryVO } from '../model/summary-vo';
@@ -14,6 +13,7 @@ import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { PreparationVariableVO } from '@khiops-visualization/model/preparation-variable-vo';
 import { Preparation2dVariableVO } from '@khiops-visualization/model/preparation2d-variable-vo';
 import { TreePreparationVariableVO } from '@khiops-visualization/model/tree-preparation-variable-vo';
+import { UtilsService } from '@khiops-library/providers/utils.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -70,29 +70,28 @@ export class ModelingDatasService {
   getSelectedVariable():
     | Preparation2dVariableVO
     | PreparationVariableVO
-    | TreePreparationVariableVO {
+    | TreePreparationVariableVO
+    | undefined {
     return this.modelingDatas.selectedVariable;
   }
 
   initSelectedVariable() {
     const appDatas = this.appService.getDatas().datas;
-    if (
-      appDatas &&
-      appDatas.modelingReport &&
-      appDatas.modelingReport.trainedPredictorsDetails
-    ) {
+    if (appDatas?.modelingReport?.trainedPredictorsDetails) {
       const variables = appDatas.modelingReport.trainedPredictorsDetails;
-      const variable =
-        variables[Object.keys(variables)[0]].selectedVariables[0];
-      this.setSelectedVariable(this.getVariableFromName(variable.name));
+      const key = Object.keys(variables)[0];
+      if (key) {
+        const variable = variables[key].selectedVariables[0];
+        this.setSelectedVariable(this.getVariableFromName(variable.name));
 
-      // Also set the preparation selected variable if json is incomplete
-      const preparationSource =
-        this.preparationDatasService.getAvailablePreparationReport();
-      this.preparationDatasService.setSelectedVariable(
-        variable,
-        preparationSource,
-      );
+        // Also set the preparation selected variable if json is incomplete
+        const preparationSource =
+          this.preparationDatasService.getAvailablePreparationReport();
+        this.preparationDatasService.setSelectedVariable(
+          variable,
+          preparationSource,
+        );
+      }
     }
   }
 
@@ -100,16 +99,12 @@ export class ModelingDatasService {
     let variable: any;
     const appDatas = this.appService.getDatas().datas;
 
-    if (
-      appDatas &&
-      appDatas.modelingReport &&
-      appDatas.modelingReport.trainedPredictorsDetails
-    ) {
+    if (appDatas?.modelingReport?.trainedPredictorsDetails) {
       Object.keys(appDatas.modelingReport.trainedPredictorsDetails).forEach(
         function (key) {
           variable = appDatas.modelingReport.trainedPredictorsDetails[
             key
-          ].selectedVariables.find((e) => e.name === name);
+          ].selectedVariables.find((e: any) => e.name === name);
           if (variable) {
             return variable;
           }
@@ -122,12 +117,12 @@ export class ModelingDatasService {
   getTrainedPredictorDisplayedColumns(): GridColumnsI[] {
     const displayedColumns: GridColumnsI[] = [];
     if (this.modelingDatas.trainedPredictorsListDatas) {
-      const typicalData = this.modelingDatas.trainedPredictorsListDatas[0];
+      const typicalData: any = this.modelingDatas.trainedPredictorsListDatas[0];
       Object.keys(typicalData).forEach((key) => {
         // Add columns of available objects (defined into ModelingPredictorVO)
         if (key !== '_id' && typicalData[key] !== undefined) {
           displayedColumns.push({
-            headerName: key,
+            headerName: UtilsService.capitalizeFirstLetter(key),
             field: key,
             tooltip: this.translate.get(
               'TOOLTIPS.MODELING.VARIABLES.' + key.toUpperCase(),
@@ -140,12 +135,12 @@ export class ModelingDatasService {
     return displayedColumns;
   }
 
-  getSummaryDatas(): InfosDatasI[] {
+  getSummaryDatas(): InfosDatasI[] | undefined {
     let summaryDatas;
     const appDatas = this.appService.getDatas().datas;
     const preparationSource =
       this.preparationDatasService.getAvailablePreparationReport();
-    if (appDatas[preparationSource] && appDatas[preparationSource].summary) {
+    if (appDatas?.[preparationSource]?.summary) {
       summaryDatas = new SummaryVO(appDatas[preparationSource].summary);
       return summaryDatas.displayDatas;
     } else {
@@ -169,22 +164,21 @@ export class ModelingDatasService {
     return trainedPredictorsSummaryDatas;
   }
 
-  setSelectedPredictor(predictor) {
+  setSelectedPredictor(predictor: any) {
     this.modelingDatas.selectedPredictor = new ModelingPredictorVO(predictor);
   }
 
-  getSelectedPredictor(): ModelingPredictorVO {
-    return this.modelingDatas.selectedPredictor;
+  getSelectedPredictor(): ModelingPredictorVO | undefined {
+    return this.modelingDatas?.selectedPredictor;
   }
 
-  getTrainedPredictorListDatas(): TrainedPredictorVO[] {
+  getTrainedPredictorListDatas(): TrainedPredictorVO[] | undefined {
     const appDatas = this.appService.getDatas().datas;
     const selectedPredictor = this.getSelectedPredictor();
     if (
-      selectedPredictor &&
-      selectedPredictor.rank &&
-      appDatas.modelingReport.trainedPredictorsDetails &&
-      appDatas.modelingReport.trainedPredictorsDetails[selectedPredictor.rank]
+      appDatas?.modelingReport?.trainedPredictorsDetails?.[
+        selectedPredictor?.rank
+      ]
     ) {
       const currentDatas =
         appDatas.modelingReport.trainedPredictorsDetails[selectedPredictor.rank]
@@ -208,10 +202,10 @@ export class ModelingDatasService {
             preparationSource,
           );
         if (!currentVarDetails) {
-          currentVarDetails =
-            this.treePreparationDatasService.getVariableFromName(
-              currentVar.name,
-            );
+          currentVarDetails = this.preparationDatasService.getVariableFromName(
+            currentVar.name,
+            'treePreparationReport',
+          );
         }
         if (!currentVarDetails) {
           currentVarDetails =

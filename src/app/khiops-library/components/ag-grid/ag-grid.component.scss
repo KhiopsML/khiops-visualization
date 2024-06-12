@@ -1,14 +1,13 @@
-// TODO move to variable
-@import '../../../../theme.scss';
-
 .ag-grid-comp {
   background: var(--bgColor) !important;
   padding: 1px; // Important for selected border
 
   .comp-header {
-    // flex-wrap: wrap;
     position: relative;
-    margin-top: 10px !important;
+    padding-top: 10px !important;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 10px;
 
     h1 {
       margin-top: 0 !important;
@@ -53,18 +52,19 @@
 
       ::ng-deep .search-input-btn {
         border-radius: 4px;
-        margin-right: 20px;
+        margin-right: 5px;
         transition: width 2s;
         margin-left: 10px;
         border: 1px solid var(--primary);
-        min-height: 34px;
+        min-height: 33px;
+        min-width: 36px;
 
         button {
           height: 30px;
           line-height: 30px;
           margin-right: 0;
           width: 30px;
-          margin: 0 3px;
+          margin: 0 1px 0 2px;
           mat-icon {
             font-size: 21px;
           }

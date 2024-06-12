@@ -6,15 +6,16 @@ export class DimensionsDatasVO {
   matrixDatas: any = undefined;
   allMatrixDatas: any = undefined;
   allMatrixCellDatas: any = undefined;
+  matrixCellFreqDataMap: any = undefined;
 
   cellPartIndexes: number[][] = [[]];
   initialDimensions: DimensionVO[] = [];
   dimensions: DimensionVO[] = [];
   contextSelection: number[][] = [[]];
   contextDimensions: DimensionVO[] = [];
-  selectedDimensions: DimensionVO[] = undefined;
+  selectedDimensions: DimensionVO[] = [];
   contextDimensionCount: number = 0;
-  hierarchyDatas: HierarchyDatasVO = undefined;
+  hierarchyDatas: HierarchyDatasVO | undefined = undefined;
   dimensionsTrees: TreeNodeVO[][] = [];
   currentDimensionsTrees: TreeNodeVO[][] = [];
   dimensionsClusters: TreeNodeVO[][] = [[]];
@@ -25,8 +26,8 @@ export class DimensionsDatasVO {
   isAxisInverted: boolean = false;
   conditionalOnContext: boolean = true;
   matrixContrast: number | undefined = undefined;
-  matrixOption: string = undefined;
-  matrixMode: number = undefined;
+  matrixOption: string | undefined = undefined;
+  matrixMode: number | undefined = undefined;
   nodesNames: {} = {};
   annotations: {} = {};
   selectedNodes: TreeNodeVO[] = [];

@@ -13,22 +13,21 @@ import {
   MatDialogConfig,
 } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '@khiops-library/components/confirm-dialog/confirm-dialog.component';
-import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { AppService } from './providers/app.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
+import { TrackerService } from '@khiops-library/providers/tracker.service';
 import { SaveService } from './providers/save.service';
 import { AppConfig } from 'src/environments/environment';
 import { ReleaseNotesComponent } from '@khiops-library/components/release-notes/release-notes.component';
 
 @Component({
   selector: 'app-root-visualization',
-  templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  templateUrl: './app.component.html',
   encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class AppComponent implements AfterViewInit {
   appdatas: any;
-  show = true;
 
   @ViewChild('appElement', {
     static: false,
@@ -45,10 +44,10 @@ export class AppComponent implements AfterViewInit {
     private ngzone: NgZone,
     private dialog: MatDialog,
     private appService: AppService,
-    private khiopsLibraryService: KhiopsLibraryService,
     private translate: TranslateService,
     private configService: ConfigService,
     private saveService: SaveService,
+    private trackerService: TrackerService,
     private element: ElementRef,
   ) {
     this.appService.initialize();
@@ -65,16 +64,14 @@ export class AppComponent implements AfterViewInit {
         this.appdatas = {
           ...datas,
         };
+        this.element.nativeElement.value = datas;
       });
     };
     this.element.nativeElement.openReleaseNotesDialog = () => {
       this.dialogRef.closeAll();
       this.ngzone.run(() => {
         const config = new MatDialogConfig();
-        const dialogRef: MatDialogRef<ReleaseNotesComponent> = this.dialog.open(
-          ReleaseNotesComponent,
-          config,
-        );
+        this.dialog.open(ReleaseNotesComponent, config);
       });
     };
     this.element.nativeElement.openChannelDialog = (cb) => {
@@ -89,17 +86,24 @@ export class AppComponent implements AfterViewInit {
         dialogRef.componentInstance.message = this.translate.get(
           'GLOBAL.BETA_VERSIONS_WARNING',
         );
-        dialogRef
-          .afterClosed()
-          .toPromise()
-          .then((e) => {
-            cb(e);
-          });
+        dialogRef.afterClosed().subscribe((e) => {
+          cb(e);
+        });
       });
     };
     this.element.nativeElement.setConfig = (config) => {
       this.configService.setConfig(config);
-      this.initCookieConsent();
+
+      const trackerId = this.configService.getConfig().trackerId;
+      const appSource = this.configService.getConfig().appSource;
+
+      if (trackerId) {
+        this.trackerService.initTracker(
+          AppConfig.covisualizationCommon,
+          trackerId,
+          appSource,
+        );
+      }
     };
     this.element.nativeElement.clean = () => {
       this.ngzone.run(() => {
@@ -110,10 +114,8 @@ export class AppComponent implements AfterViewInit {
   }
 
   clean() {
-    this.show = false;
     this.appdatas = undefined;
     this.appService.initialize();
-    this.show = true;
   }
 
   setTheme() {
@@ -123,69 +125,7 @@ export class AppComponent implements AfterViewInit {
           AppConfig.visualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR',
         ) || 'light';
       document.documentElement.setAttribute('data-color-scheme', themeColor);
-      this.configService.getConfig().onThemeChanged &&
-        this.configService.getConfig().onThemeChanged(themeColor);
-    });
-  }
-
-  initCookieConsent() {
-    this.ngzone.run(() => {
-      const localAcceptCookies = localStorage.getItem(
-        AppConfig.visualizationCommon.GLOBAL.LS_ID + 'COOKIE_CONSENT',
-      );
-      if (localAcceptCookies !== null) {
-        this.khiopsLibraryService.initMatomo();
-        this.khiopsLibraryService.trackEvent(
-          'cookie_consent',
-          localAcceptCookies.toString(),
-        );
-        this.khiopsLibraryService.enableMatomo();
-        return;
-      }
-
-      console.log(localAcceptCookies);
-      this.dialogRef.closeAll();
-      const config = new MatDialogConfig();
-      config.width = '400px';
-      config.hasBackdrop = false;
-      config.disableClose = false;
-
-      const dialogRef: MatDialogRef<ConfirmDialogComponent> = this.dialog.open(
-        ConfirmDialogComponent,
-        config,
-      );
-      dialogRef.updatePosition({
-        bottom: '50px',
-        right: '50px',
-      });
-      dialogRef.componentInstance.message = this.translate.get(
-        'COOKIE_CONSENT.MESSAGE',
-      );
-      dialogRef.componentInstance.displayRejectBtn = true;
-      dialogRef.componentInstance.displayCancelBtn = false;
-      dialogRef.componentInstance.confirmTranslation = this.translate.get(
-        'COOKIE_CONSENT.ALLOW',
-      );
-
-      dialogRef
-        .afterClosed()
-        .toPromise()
-        .then((e) => {
-          const acceptCookies = e === 'confirm' ? 'true' : 'false';
-
-          localStorage.setItem(
-            AppConfig.visualizationCommon.GLOBAL.LS_ID + 'COOKIE_CONSENT',
-            acceptCookies,
-          );
-
-          this.khiopsLibraryService.initMatomo();
-          this.khiopsLibraryService.trackEvent('cookie_consent', acceptCookies);
-          if (acceptCookies === 'false') {
-            this.khiopsLibraryService.disableMatomo();
-          } else {
-            this.khiopsLibraryService.enableMatomo();
-          }
-        });
+      this.configService?.getConfig()?.onThemeChanged?.(themeColor);
     });
   }
 }

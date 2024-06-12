@@ -1,42 +1,39 @@
 .legend-comp {
-	display: flex;
+  display: flex;
 
-	.legend {
-		border-radius: 5px;
-		padding: 0.4em 0 0.4em 0.8em;
-		display: initial;
-		overflow: auto;
-		margin: 0 1em;
-		max-height: 54px;
+  .legend {
+    border-radius: 5px;
+    padding: 0.4em 0 0.4em 0.8em;
+    display: initial;
+    overflow: auto;
+    margin: 0 1em;
+    max-height: 54px;
 
-		.legend-item {
-			margin-right: 1em;
-			float: left;
-			cursor: default;
+    .legend-item {
+      margin-right: 1em;
+      float: left;
+      cursor: default;
 
-			span {
-				color: var(--bgColorContrast) !important;
-				font-size: 0.9em;
-			}
-		}
+      span {
+        color: var(--bgColorContrast) !important;
+        font-size: 0.9em;
+      }
+    }
 
-		.legend-item.legend-selected {
-			font-weight: bold;
+    .legend-item.legend-selected {
+      font-weight: bold;
 
-			.square {
-				border: 2px solid black;
-			}
-		}
-	}
+      .square {
+        border: 2px solid black;
+      }
+    }
+  }
 }
 
-
 .legend-comp.bottom {
-	margin-bottom: 1em;
-
+  margin-bottom: 1em;
 }
 
 .legend-comp.top {
-	margin: 0.6em 0;
-
+  margin: 0.6em 0;
 }

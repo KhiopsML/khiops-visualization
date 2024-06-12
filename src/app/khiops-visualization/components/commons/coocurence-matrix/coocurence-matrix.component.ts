@@ -12,7 +12,6 @@ import { Preparation2dDatasService } from '@khiops-visualization/providers/prepa
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { TranslateService } from '@ngstack/translate';
 import { AppConfig } from 'src/environments/environment';
-import _ from 'lodash';
 import { deepEqual } from 'fast-equals';
 import { MatrixCanvasComponent } from '@khiops-library/components/matrix-canvas/matrix-canvas.component';
 import { AppService } from '@khiops-visualization/providers/app.service';
@@ -68,12 +67,6 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
   ngAfterViewInit() {
     setTimeout(() => {
       // Avoid ExpressionChangedAfterItHasBeenCheckedError
-
-      this.matrixOptions.selected =
-        localStorage.getItem(
-          AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_TYPE_OPTION',
-        ) || this.matrixOptions.types[0];
-
       this.preparation2dDatasService.getMatrixCanvasDatas(
         this.preparation2dDatas.selectedVariable,
       );
@@ -89,8 +82,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
 
   ngOnChanges(changes: SimpleChanges) {
     if (
-      changes.selectedVariable &&
-      changes.selectedVariable.currentValue &&
+      changes.selectedVariable?.currentValue &&
       !deepEqual(
         changes.selectedVariable.currentValue,
         changes.selectedVariable.previousValue,
@@ -141,12 +133,13 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
         },
         {
           mode: 'FREQUENCY',
-          title: 'Frequency',
+          title: this.translate.get('GLOBAL.FREQUENCY'),
         },
         {
           mode: 'FREQUENCY_CELL',
           title:
-            'Frequency (' +
+            this.translate.get('GLOBAL.FREQUENCY') +
+            ' (' +
             this.translate.get('GLOBAL.TARGET') +
             ' | ' +
             varName2 +
@@ -178,7 +171,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
         },
         {
           mode: 'CELL_INTEREST',
-          title: 'Cells Interests',
+          title: this.translate.get('GLOBAL.CELLS_INTERESTS'),
         },
       ];
     } else {
@@ -189,7 +182,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
         },
         {
           mode: 'FREQUENCY',
-          title: 'Frequency',
+          title: this.translate.get('GLOBAL.FREQUENCY'),
         },
         {
           mode: 'PROB_CELL',
@@ -201,26 +194,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
         },
       ];
     }
-    if (!this.matrixModes.selected) {
-      // Get previous selected target if compatible
-      const previousSelectedModeIndex = localStorage.getItem(
-        AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_MODE_OPTION_INDEX',
-      );
-      if (previousSelectedModeIndex) {
-        this.matrixModes.selected =
-          this.matrixModes.types[previousSelectedModeIndex];
-        this.matrixModes.selectedIndex = previousSelectedModeIndex;
-      } else {
-        // Select first by default
-        this.matrixModes.selected = this.matrixModes.types[0];
-        this.matrixModes.selectedIndex = 0;
-      }
-    } else {
-      // In case of variable selection change
-      // We must update the combobox
-      this.matrixModes.selected =
-        this.matrixModes.types[this.matrixModes.selectedIndex];
-    }
+    this.matrixModes = { ...this.matrixModes };
   }
 
   onToggleFullscreen(isFullscreen: boolean) {
@@ -235,10 +209,10 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
       .getRootElementDom()
       .querySelector<HTMLElement>('#matrix-option-toggle');
     if (e.index === 1) {
-      // this.khiopsLibraryService.trackEvent('click', 'matrix_tab', 'cells');
+      // this.trackerService.trackEvent('click', 'matrix_tab', 'cells');
       matrixOptionsToggle.style.display = 'none';
     } else {
-      // this.khiopsLibraryService.trackEvent('click', 'matrix_tab', 'matrix');
+      // this.trackerService.trackEvent('click', 'matrix_tab', 'matrix');
 
       matrixOptionsToggle.style.display = 'flex';
 
@@ -262,10 +236,10 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
     // Add optional targets if available
     if (
       this.preparation2dDatasService.getTargetsIfAvailable() &&
-      (this.matrixModes.selected.mode === 'FREQUENCY_CELL' ||
-        this.matrixModes.selected.mode === 'PROB_TARGET_WITH_CELL' ||
-        this.matrixModes.selected.mode === 'MUTUAL_INFO_TARGET_WITH_CELL' ||
-        this.matrixModes.selected.mode === 'PROB_CELL_WITH_TARGET')
+      (this.matrixModes.selected?.mode === 'FREQUENCY_CELL' ||
+        this.matrixModes.selected?.mode === 'PROB_TARGET_WITH_CELL' ||
+        this.matrixModes.selected?.mode === 'MUTUAL_INFO_TARGET_WITH_CELL' ||
+        this.matrixModes.selected?.mode === 'PROB_CELL_WITH_TARGET')
     ) {
       // Get previous selected target if compatible
       const previousSelectedTarget = localStorage.getItem(
@@ -285,31 +259,14 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
     }
   }
 
-  changeMatrixType(type: string) {
-    // this.khiopsLibraryService.trackEvent('click', 'matrix_type', type);
-    localStorage.setItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_TYPE_OPTION',
-      type,
-    );
-    this.matrixOptions.selected = type;
-  }
-
   changeMatrixMode(mode: MatrixModeI) {
-    // this.khiopsLibraryService.trackEvent('click', 'matrix_mode', mode.mode);
-    this.matrixModes.selected = mode;
-    this.matrixModes.selectedIndex = this.matrixModes.types.findIndex(
-      (e) => e.mode === mode.mode,
-    );
-    localStorage.setItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_MODE_OPTION_INDEX',
-      this.matrixModes.selectedIndex.toString(),
-    );
+    // this.trackerService.trackEvent('click', 'matrix_mode', mode.mode);
     this.constructTargetSelectBox();
     this.selectTargetSelectBox(this.matrixTargets.selected);
   }
 
   changeMatrixTarget(target: string) {
-    // this.khiopsLibraryService.trackEvent('click', 'matrix_target');
+    // this.trackerService.trackEvent('click', 'matrix_target');
     this.matrixTargets.selected = target;
     localStorage.setItem(
       AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_TARGET_OPTION',

@@ -8,6 +8,6 @@ export class LibVersionService {
   constructor() {}
 
   static getVersion() {
-    return (pjson && pjson.version) || undefined;
+    return pjson?.version || undefined;
   }
 }

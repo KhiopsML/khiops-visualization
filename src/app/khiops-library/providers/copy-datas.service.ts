@@ -1,7 +1,6 @@
 import { ConfigService } from './config.service';
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngstack/translate';
-import _ from 'lodash';
 import { UtilsService } from './utils.service';
 
 @Injectable({
@@ -15,7 +14,7 @@ export class CopyDatasService {
 
   copyDatasToClipboard(selectedArea: any) {
     // console.log('​CopyDatasService -> copyDatasToClipboard -> selectedArea', selectedArea);
-    let formattedDatas: string;
+    let formattedDatas: string = '';
 
     switch (selectedArea.componentType) {
       case 'histogram':
@@ -270,10 +269,10 @@ export class CopyDatasService {
     formattedDatas += this.translate.get('GLOBAL.DECISION_TREE') + '\n';
 
     // HEADER
-    formattedDatas += 'node' + '\t';
-    formattedDatas += 'type' + '\t';
-    formattedDatas += 'variable' + '\n';
-    // formattedDatas += 'partition' + '\n';
+    formattedDatas += this.translate.get('GLOBAL.NODE') + '\t';
+    formattedDatas += this.translate.get('GLOBAL.TYPE') + '\t';
+    formattedDatas += this.translate.get('GLOBAL.VARIABLE') + '\n';
+    // formattedDatas += this.translate.get('GLOBAL.PARTITION') + '\n';
 
     // CONTENT
     for (let i = 0; i < currentDatas.length; i++) {
@@ -307,13 +306,14 @@ export class CopyDatasService {
       '\n';
 
     // HEADER
-    formattedDatas += 'name' + '\t';
-    formattedDatas += 'parentCluster' + '\t';
-    formattedDatas += 'frequency' + '\t';
-    formattedDatas += 'interest' + '\t';
-    formattedDatas += 'hierarchicalLevel' + '\t';
-    formattedDatas += 'rank' + '\t';
-    formattedDatas += 'hierarchicalRank' + '\n';
+    formattedDatas += this.translate.get('GLOBAL.NAME') + '\t';
+    formattedDatas += this.translate.get('GLOBAL.PARENT_CLUSTER') + '\t';
+    formattedDatas += this.translate.get('GLOBAL.FREQUENCY') + '\t';
+    formattedDatas += this.translate.get('GLOBAL.INTEREST') + '\t';
+    formattedDatas +=
+      this.translate.get('GLOBAL.HIERARCHICAL_LEVEL') + '\t';
+    formattedDatas += this.translate.get('GLOBAL.RANK') + '\t';
+    formattedDatas += this.translate.get('GLOBAL.HIERARCHICAL_RANK') + '\n';
 
     // CONTENT
     for (let i = 0; i < flattenDatas.length; i++) {

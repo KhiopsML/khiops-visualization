@@ -13,7 +13,6 @@ import {
 } from '@angular/core';
 import { SelectableComponent } from '../selectable/selectable.component';
 import { SelectableService } from '../selectable/selectable.service';
-import _ from 'lodash';
 import { ConfigService } from '@khiops-library/providers/config.service';
 
 @Component({
@@ -38,9 +37,9 @@ export class ScrollableGraphCanvasComponent
   graphWrapper: any;
 
   constructor(
-    public selectableService: SelectableService,
-    public ngzone: NgZone,
-    public configService: ConfigService,
+    public override selectableService: SelectableService,
+    public override ngzone: NgZone,
+    public override configService: ConfigService,
   ) {
     super(selectableService, ngzone, configService);
     this.onScroll = this.onScroll.bind(this);
@@ -51,7 +50,7 @@ export class ScrollableGraphCanvasComponent
     this.resizeGraph();
   }
 
-  ngAfterViewInit() {
+  override ngAfterViewInit() {
     // Resize at init to take saved scale value
     this.resizeGraph(true);
   }
@@ -64,7 +63,7 @@ export class ScrollableGraphCanvasComponent
       this.graphWrapper = this.configService
         .getRootElementDom()
         .querySelector('#' + this.graphIdContainer);
-      if (this.graphWrapper && this.graphWrapper.children[0]) {
+      if (this.graphWrapper?.children[0]) {
         const el: any = this.graphWrapper.children[0];
         el.addEventListener('scroll', this.onScroll, {
           passive: true,
@@ -80,11 +79,11 @@ export class ScrollableGraphCanvasComponent
     });
   }
 
-  ngOnDestroy() {
+  override ngOnDestroy() {
     const graphWrapper: any = this.configService
       .getRootElementDom()
       .querySelector('#' + this.graphIdContainer);
-    if (graphWrapper && graphWrapper.children[0]) {
+    if (graphWrapper?.children[0]) {
       const el: any = graphWrapper.children[0];
       el.removeEventListener('scroll', this.onScroll, {
         passive: true,
@@ -100,7 +99,7 @@ export class ScrollableGraphCanvasComponent
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.inputDatas && changes.inputDatas.currentValue) {
+    if (changes.inputDatas?.currentValue) {
       if (!this.graphWrapper && changes.inputDatas.firstChange) {
         this.initScrollEvents();
       }
@@ -111,24 +110,19 @@ export class ScrollableGraphCanvasComponent
     }
 
     // change scale
-    if (
-      changes.scaleValue &&
-      changes.scaleValue.currentValue &&
-      !changes.scaleValue.firstChange
-    ) {
+    if (changes.scaleValue?.currentValue && !changes.scaleValue.firstChange) {
       this.resizeGraph();
     }
 
     // change scroll position on change
     if (
-      changes.scrollPosition &&
-      changes.scrollPosition.currentValue &&
+      changes.scrollPosition?.currentValue &&
       !changes.scrollPosition.firstChange
     ) {
       const graphWrapper: any = this.configService
         .getRootElementDom()
         .querySelector('#' + this.graphIdContainer);
-      if (graphWrapper && graphWrapper.children[0]) {
+      if (graphWrapper?.children[0]) {
         const el: any = graphWrapper.children[0];
         let srollLeft = changes.scrollPosition.currentValue;
         if (srollLeft < 10) {
@@ -149,7 +143,7 @@ export class ScrollableGraphCanvasComponent
         .getRootElementDom()
         .querySelector('#' + this.graphIdContainer);
 
-      if (graphWrapper && graphWrapper.children[0]) {
+      if (graphWrapper?.children[0]) {
         const el: any = graphWrapper.children[0].children[0];
 
         const elMonitor: any = el.children[0];
@@ -209,7 +203,7 @@ export class ScrollableGraphCanvasComponent
     const graphWrapper: any = this.configService
       .getRootElementDom()
       .querySelector('#' + this.graphIdContainer);
-    if (graphWrapper && graphWrapper.children[0]) {
+    if (graphWrapper?.children[0]) {
       const el: any = graphWrapper.children[0].children[0];
 
       const maxScrollLeft = el.scrollWidth - graphWrapper.clientWidth;

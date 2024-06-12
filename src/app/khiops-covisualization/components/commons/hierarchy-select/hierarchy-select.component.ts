@@ -14,6 +14,7 @@ import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngstack/translate';
 import { AppConfig } from 'src/environments/environment';
+import { SelectedTreeClusterVO } from '@khiops-covisualization/model/selected-tree-cluster';
 
 @Component({
   selector: 'app-hierarchy-select',
@@ -45,21 +46,28 @@ export class HierarchySelectComponent implements OnChanges, AfterViewInit {
   @Input() dimensions: DimensionVO[];
 
   showStats = false;
-  intervals = 0;
+  selectedTreeCluster: SelectedTreeClusterVO;
 
   constructor(
     private treenodesService: TreenodesService,
     private snackBar: MatSnackBar,
     private translate: TranslateService,
     private appService: AppService,
-    private dimensionsService: DimensionsDatasService,
+    private dimensionsDatasService: DimensionsDatasService,
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.selectedDimension && changes.selectedDimension.currentValue) {
-      this.intervals = this.dimensionsService.getDimensionIntervals(
-        this.selectedDimension.name,
+    if (changes.selectedDimension?.currentValue) {
+      this.selectedTreeCluster = new SelectedTreeClusterVO(
+        this.selectedDimension,
       );
+      this.selectedTreeCluster.intervals =
+        this.dimensionsDatasService.getDimensionIntervals(
+          this.selectedDimension.name,
+        );
+    }
+    if (changes.selectedNode?.currentValue) {
+      this.selectedTreeCluster.setCurrentNodeInformations(this.selectedNode);
     }
   }
 
@@ -87,7 +95,7 @@ export class HierarchySelectComponent implements OnChanges, AfterViewInit {
     if (isBigJsonFile) {
       this.snackBar.open(
         this.translate.get('GLOBAL.BIG_FILES_LOADING_WARNING'),
-        null,
+        undefined,
         {
           duration: 2000,
           panelClass: 'success',
@@ -99,10 +107,14 @@ export class HierarchySelectComponent implements OnChanges, AfterViewInit {
     // Reverse selected nodes on selection changed
     this.treenodesService.updateSelectedNodes(dimension, this.position);
     // Reverse dimensions datas on selection changed
-    this.dimensionsService.updateSelectedDimension(dimension, this.position);
+    this.dimensionsDatasService.updateSelectedDimension(
+      dimension,
+      this.position,
+    );
     // Recompute datas
-    this.dimensionsService.saveInitialDimension();
-    this.dimensionsService.constructDimensionsTrees();
-    this.dimensionsService.getMatrixDatas();
+    this.dimensionsDatasService.saveInitialDimension();
+    this.dimensionsDatasService.constructDimensionsTrees();
+    this.dimensionsDatasService.getMatrixDatas();
+    this.dimensionsDatasService.computeMatrixDataFreqMap();
   }
 }

@@ -1,66 +1,59 @@
-// TODO move to variable
-@import "../../../../theme.scss";
-
 #release-notes-comp {
-	#dialog-title {
-		h1 {
-			margin-left: 0;
-			margin-bottom: 1em;
-			font-size: 1.4em !important;
-		}
+  #dialog-title {
+    h1 {
+      margin-left: 0;
+      margin-bottom: 1em;
+      font-size: 1.4em !important;
+    }
 
-		kl-lib-version {
-			margin-right: 2em;
-			display: flex;
+    kl-lib-version {
+      margin-right: 2em;
+      display: flex;
 
-			::ng-deep p {
-				font-size: 0.8em !important;
-			}
-		}
-	}
+      ::ng-deep p {
+        font-size: 0.8em !important;
+      }
+    }
+  }
 
-	#release-notes-spinner {
-		min-height: 200px !important;
-		width: 60vw !important;
-	}
+  #release-notes-spinner {
+    min-height: 200px !important;
+    width: 60vw !important;
+  }
 
-	.release-notes-container {
-		margin-bottom: 40px;
-		border-radius: 5px;
+  .release-notes-container {
+    margin-bottom: 40px;
+    border-radius: 5px;
 
-		.note-title {
-			padding: 0 0.4em;
-		}
+    .note-title {
+      padding: 0 0.4em;
+    }
 
+    h1 {
+      margin: 0 !important;
+      padding: 0 !important;
+      margin-right: 0.4rem !important;
+      font-size: 1em !important;
+    }
 
-		h1 {
-			margin: 0 !important;
-			padding: 0 !important;
-			margin-right: 0.4rem !important;
-			font-size: 1em !important;
-		}
+    h2 {
+      font-size: 1em !important;
+      margin: 0 !important;
+      margin-left: 0.6rem !important;
+      padding: 0 !important;
+      color: var(--primary) !important;
+      font-weight: 400 !important;
+    }
 
-		h2 {
-			font-size: 1em !important;
-			margin: 0 !important;
-			margin-left: 0.6rem !important;
-			padding: 0 !important;
-			color: var(--primary)  !important;
-			font-weight: 400 !important;
-		}
+    ::ng-deep markdown {
+      h3 {
+        font-weight: 500 !important;
+        font-size: 1em !important;
+      }
+    }
+  }
 
-		::ng-deep markdown {
-			h3 {
-				font-weight: 500 !important;
-				font-size: 1em !important;
-			}
-		}
-
-
-	}
-
-	::ng-deep mat-dialog-content {
-		width: 60vw;
-	}
-
+  ::ng-deep mat-dialog-content {
+    width: 60vw;
+  }
 }

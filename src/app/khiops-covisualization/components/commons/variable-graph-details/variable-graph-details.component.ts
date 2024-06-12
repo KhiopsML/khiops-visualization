@@ -1,6 +1,5 @@
 import {
   Component,
-  OnInit,
   OnChanges,
   OnDestroy,
   ViewChild,
@@ -32,7 +31,7 @@ import * as _ from 'lodash';
   styleUrls: ['./variable-graph-details.component.scss'],
 })
 export class VariableGraphDetailsComponent
-  implements OnInit, OnChanges, OnDestroy, AfterViewInit
+  implements OnChanges, OnDestroy, AfterViewInit
 {
   @ViewChild('distributionGraph', {
     static: false,
@@ -48,6 +47,7 @@ export class VariableGraphDetailsComponent
 
   scrollPosition = 0;
   treeSelectedNodeChangedSub: Subscription;
+  conditionalOnContextChangedSub: Subscription;
 
   isLoadingGraphDatas: boolean;
   scaleValue: number;
@@ -85,10 +85,14 @@ export class VariableGraphDetailsComponent
           this.setLegendTitle(this.position);
         });
       });
+    this.conditionalOnContextChangedSub =
+      this.eventsService.conditionalOnContextChanged.subscribe(() => {
+        this.getFilteredDistribution(this.dimensionsTree, true);
+      });
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.selectedNode && changes.selectedNode.currentValue) {
+    if (changes?.selectedNode?.currentValue) {
       // get active entries index from name
       if (this.graphDetails) {
         this.activeEntries = this.graphDetails.labels.findIndex(
@@ -98,8 +102,6 @@ export class VariableGraphDetailsComponent
       }
     }
   }
-
-  ngOnInit() {}
 
   ngAfterViewInit() {
     this.getFilteredDistribution(this.dimensionsTree);
@@ -116,7 +118,7 @@ export class VariableGraphDetailsComponent
       ' ' +
       this.selectedDimensions[currentIndex].name +
       ' ' +
-      this.translate.get('GLOBAL.OVER') +
+      this.translate.get('GLOBAL.GIVEN') +
       ' ' +
       this.selectedDimensions[otherIndex].name;
   }
@@ -136,18 +138,17 @@ export class VariableGraphDetailsComponent
 
   ngOnDestroy() {
     this.treeSelectedNodeChangedSub.unsubscribe();
+    this.conditionalOnContextChangedSub.unsubscribe();
   }
 
   getFilteredDistribution(dimensionsTree, force = false) {
     if (dimensionsTree && this.selectedNode) {
       if (this.prevSelectedNode !== this.selectedNode || force) {
-        if (this.position === 0) {
-        }
         this.graphDetails = this.clustersService.getDistributionDetailsFromNode(
           this.position,
         );
 
-        if (this.graphDetails && this.graphDetails.labels) {
+        if (this.graphDetails?.labels) {
           this.activeEntries = this.graphDetails.labels.findIndex(
             (e) => e === this.selectedNode.shortDescription,
           );
@@ -159,9 +160,10 @@ export class VariableGraphDetailsComponent
   }
 
   setLegendTitle(position: number) {
+    const otherIndex = this.position === 0 ? 1 : 0;
     this.graphDetails.datasets[0].label =
       this.dimensionsDatasService.dimensionsDatas.selectedNodes[
-        position
+        otherIndex
       ].shortDescription;
     // force legend update
     this.graphDetails = _.cloneDeep(this.graphDetails);

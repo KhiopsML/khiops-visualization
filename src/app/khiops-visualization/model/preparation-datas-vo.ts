@@ -10,7 +10,7 @@ export class PreparationDatasVO {
     currentIntervalDatas: {
       title: undefined,
       values: undefined,
-      displayedColumns: undefined,
+      displayedColumns: [],
     },
   };
   textPreparationReport: {
@@ -21,9 +21,8 @@ export class PreparationDatasVO {
     currentIntervalDatas: {
       title: undefined,
       values: undefined,
-      displayedColumns: undefined,
+      displayedColumns: [],
     },
   };
 
-  constructor() {}
 }

@@ -12,9 +12,7 @@ import { LevelDistributionGraphCanvasComponent } from '../commons/level-distribu
 import { VariableGraphDetailsComponent } from '../commons/variable-graph-details/variable-graph-details.component';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
-import { TreeLeafDetailsComponent } from '../commons/tree-leaf-details/tree-leaf-details.component';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
-import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
@@ -24,7 +22,9 @@ import { DistributionDatasVO } from '@khiops-visualization/model/distribution-da
 import { PreparationDatasVO } from '@khiops-visualization/model/preparation-datas-vo';
 import { TreePreparationDatasVO } from '@khiops-visualization/model/tree-preparation-datas-vo';
 import { TreePreparationVariableVO } from '@khiops-visualization/model/tree-preparation-variable-vo';
-import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
+import { TrackerService } from '@khiops-library/providers/tracker.service';
+import { TranslateService } from '@ngstack/translate';
+import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 
 @Component({
   selector: 'app-tree-preparation-view',
@@ -36,15 +36,9 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
     static: false,
   })
   appVariableGraphDetails: VariableGraphDetailsComponent;
-
-  @ViewChild('appTreeLeafDetails', {
-    static: false,
-  })
-  appTreeLeafDetails: TreeLeafDetailsComponent;
-
   appDatas: any;
   sizes: any;
-
+  preparationSource: string = 'treePreparationReport';
   summaryDatas: InfosDatasI[];
   informationsDatas: InfosDatasI[];
   targetVariableStatsDatas: ChartDatasVO;
@@ -59,44 +53,53 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
   distributionDatas: DistributionDatasVO;
 
   // managed by selectable-tab component
-  tabIndex = 5;
+  override tabIndex = 5;
 
   variablesDisplayedColumns: GridColumnsI[] = [
     {
-      headerName: 'Rank',
+      headerName: this.translate.get('GLOBAL.RANK'),
       field: 'rank',
+      tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.RANK'),
     },
     {
-      headerName: 'Name',
+      headerName: this.translate.get('GLOBAL.NAME'),
       field: 'name',
+      tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.NAME'),
     },
     {
-      headerName: 'Level',
+      headerName: this.translate.get('GLOBAL.LEVEL'),
       field: 'level',
+      tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.LEVEL'),
     },
     {
-      headerName: 'Parts',
+      headerName: this.translate.get('GLOBAL.PARTS'),
       field: 'parts',
+      tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.PARTS'),
     },
     {
-      headerName: 'Values',
+      headerName: this.translate.get('GLOBAL.VALUES'),
       field: 'values',
+      tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.VALUES'),
     },
     {
-      headerName: 'Type',
+      headerName: this.translate.get('GLOBAL.TYPE'),
       field: 'type',
+      tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.TYPE'),
     },
     {
-      headerName: 'Mode',
+      headerName: this.translate.get('GLOBAL.MODE'),
       field: 'mode',
       show: false,
+      tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.MODE'),
     },
   ];
 
   constructor(
+    private preparationDatasService: PreparationDatasService,
     private treePreparationDatasService: TreePreparationDatasService,
     private dialog: MatDialog,
-    private khiopsLibraryService: KhiopsLibraryService,
+    private translate: TranslateService,
+    private trackerService: TrackerService,
     private distributionDatasService: DistributionDatasService,
     private appService: AppService,
     private modelingDatasService: ModelingDatasService,
@@ -105,19 +108,28 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
   }
 
   ngOnInit() {
-    this.khiopsLibraryService.trackEvent('page_view', 'treePreparation');
+    this.trackerService.trackEvent('page_view', 'treePreparation');
 
     this.appDatas = this.appService.getDatas().datas;
     this.treePreparationDatas = this.treePreparationDatasService.getDatas();
     this.sizes = this.appService.getViewSplitSizes('treePreparationView');
-    this.summaryDatas = this.treePreparationDatasService.getSummaryDatas();
-    this.informationsDatas =
-      this.treePreparationDatasService.getInformationsDatas();
+    this.summaryDatas = this.preparationDatasService.getSummaryDatas(
+      this.preparationSource,
+    );
+    this.informationsDatas = this.preparationDatasService.getInformationsDatas(
+      this.preparationSource,
+    );
     this.targetVariableStatsDatas =
-      this.treePreparationDatasService.getTargetVariableStatsDatas();
+      this.preparationDatasService.getTargetVariableStatsDatas(
+        this.preparationSource,
+      );
     this.targetVariableStatsInformations =
-      this.treePreparationDatasService.getTargetVariableStatsInformations();
-    this.variablesDatas = this.treePreparationDatasService.getVariablesDatas();
+      this.preparationDatasService.getTargetVariableStatsInformations(
+        this.preparationSource,
+      );
+    this.variablesDatas = this.preparationDatasService.getVariablesDatas(
+      this.preparationSource,
+    );
     this.treePreparationDatasService.getCurrentIntervalDatas();
     this.distributionDatas = this.distributionDatasService.getDatas();
   }
@@ -176,21 +188,5 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
       currentValues,
       currentValues[0],
     );
-  }
-
-  onTreeNodeTargetDistributionGraphDisplayedValuesChanged(
-    displayedValues: ChartToggleValuesI[],
-  ) {
-    if (this.appTreeLeafDetails) {
-      this.appTreeLeafDetails.onTreeNodeTargetDistributionGraphDisplayedValuesChanged(
-        displayedValues,
-      );
-    }
-  }
-
-  onTreeHyperDisplayedValuesChanged(displayedValues: ChartToggleValuesI[]) {
-    if (this.appTreeLeafDetails) {
-      this.appTreeLeafDetails.onTreeHyperValuesChanged(displayedValues);
-    }
   }
 }

@@ -7,7 +7,7 @@ export function setupHierarchyTests(datas) {
   testsValues.push('Nb of clusters per dimension');
   // testsValues.push("Total Number of Clusters"); // can't get canvas value
   testsValues.push('Max Number of Cluster');
-  testsValues.push('FoldUnfold');
+  testsValues.push('Fold / Unfold');
 
   for (
     let index = 2;

@@ -9,9 +9,9 @@ import { TYPES } from '@khiops-library/enum/types';
 export class MatrixUtilsDatasService {
   constructor() {}
 
-  static getStandardAxisValues(xDimension, yDimension) {
-    let xValues: number[];
-    let yValues: number[];
+  static getStandardAxisValues(xDimension, yDimension): [number[], number[]] {
+    let xValues: number[] = [];
+    let yValues: number[] = [];
     if (xDimension.type === TYPES.CATEGORICAL) {
       let currentXAxisFullPart;
       if (xDimension.valueGroups) {
@@ -79,9 +79,13 @@ export class MatrixUtilsDatasService {
     return [xValues, yValues];
   }
 
-  static getFrequencyAxisValues(xDimension, yDimension, cellFrequencies) {
-    let xValues: number[];
-    let yValues: number[];
+  static getFrequencyAxisValues(
+    xDimension,
+    yDimension,
+    cellFrequencies,
+  ): [number[], number[]] {
+    let xValues: number[] = [];
+    let yValues: number[] = [];
 
     if (xDimension.type === TYPES.CATEGORICAL) {
       const currentLineVal = UtilsService.getLinesTotals(
@@ -125,7 +129,9 @@ export class MatrixUtilsDatasService {
         // replace [ by ] for all indexes excepting 0
         if (iter !== 0) {
           // Closed bracket for the non 0 iters
-          displayaxisPart = displayaxisPart.replace('[', ']');
+          // displayaxisPart = displayaxisPart.replace('[', ']');
+          // Code scanning alerts #2
+          displayaxisPart = displayaxisPart.replace(/\[/g, ']');
         }
       } else {
         displayaxisPart = Array.isArray(axisPartShortDescription[iter])
@@ -155,7 +161,7 @@ export class MatrixUtilsDatasService {
     yValues,
   ) {
     // var t0 = performance.now();
-    const cells = [];
+    const cells: CellVO[] = [];
 
     const xLength = xDimension.parts;
     const yLength = yDimension.parts;
@@ -251,10 +257,10 @@ export class MatrixUtilsDatasService {
           cell.cellFreqHash = cellFreqHash;
         }
 
-        if (cellInterests && cellInterests[currentIndex]) {
+        if (cellInterests?.[currentIndex]) {
           cell.cellInterest = cellInterests[currentIndex];
         }
-        if (cellTargetFrequencies && cellTargetFrequencies[currentIndex]) {
+        if (cellTargetFrequencies?.[currentIndex]) {
           // If target freq, cellFreq already computed into cellFrequencies
           cell.cellFreq = cellFrequencies[currentIndex];
         } else {
@@ -402,7 +408,7 @@ export class MatrixUtilsDatasService {
     dimensionsParts,
     cellPartIndexes,
     inputCellFrequencies,
-    zDimension = [],
+    zDimension: any[] = [],
   ) {
     // var t0 = performance.now();
     let res;

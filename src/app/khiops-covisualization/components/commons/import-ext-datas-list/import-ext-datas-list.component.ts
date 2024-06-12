@@ -4,7 +4,6 @@ import {
   MatDialog,
   MatDialogConfig,
 } from '@angular/material/dialog';
-import * as _ from 'lodash'; // Important to import lodash in karma
 import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
 import { TranslateService } from '@ngstack/translate';
 import { FileVO } from '@khiops-library/model/file-vo';
@@ -39,19 +38,19 @@ export class ImportExtDatasListComponent {
     this.importedDatas = {
       displayedColumns: [
         {
-          headerName: 'file name',
+          headerName: this.translate.get('GLOBAL.FILE_NAME'),
           field: 'filename',
         },
         {
-          headerName: 'join key',
+          headerName: this.translate.get('GLOBAL.JOIN_KEY'),
           field: 'joinKey',
         },
         {
-          headerName: 'field',
+          headerName: this.translate.get('GLOBAL.FIELD'),
           field: 'field',
         },
         {
-          headerName: 'dimension',
+          headerName: this.translate.get('GLOBAL.DIMENSION'),
           field: 'dimension',
         },
         {
@@ -91,7 +90,7 @@ export class ImportExtDatasListComponent {
     );
     this.snackBar.open(
       this.translate.get('SNACKS.EXTERNAL_DATA_DELETED'),
-      null,
+      undefined,
       {
         duration: 2000,
         panelClass: 'success',
@@ -100,7 +99,7 @@ export class ImportExtDatasListComponent {
     if (importedDatas) {
       this.snackBar.open(
         this.translate.get('SNACKS.EXTERNAL_DATA_DELETED'),
-        null,
+        undefined,
         {
           duration: 2000,
           panelClass: 'success',
@@ -109,7 +108,7 @@ export class ImportExtDatasListComponent {
     } else {
       this.snackBar.open(
         this.translate.get('SNACKS.EXTERNAL_DATA_DELETE_ERROR'),
-        null,
+        undefined,
         {
           duration: 2000,
           panelClass: 'error',
@@ -134,10 +133,6 @@ export class ImportExtDatasListComponent {
       config,
     );
     dialogRef.disableClose = true;
-    dialogRef
-      .afterClosed()
-      .toPromise()
-      .then(() => {});
   }
 
   closeImport() {

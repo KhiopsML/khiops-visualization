@@ -7,9 +7,11 @@ import {
   Output,
 } from '@angular/core';
 import { AppConfig } from 'src/environments/environment';
-import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
+import { TrackerService } from '../../../../khiops-library/providers/tracker.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateService } from '@ngstack/translate';
 
 @Component({
   selector: 'app-user-settings',
@@ -28,16 +30,20 @@ export class UserSettingsComponent implements OnChanges {
       AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR',
     ) || 'light';
 
-  constructor(private khiopsLibraryService: KhiopsLibraryService) {}
+  constructor(
+    private translate: TranslateService,
+    private trackerService: TrackerService,
+    private snackBar: MatSnackBar,
+  ) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.opened && changes.opened.currentValue) {
+    if (changes?.opened?.currentValue) {
       this.onNavDrawerOpen();
     }
   }
 
   onNavDrawerOpen() {
-    this.khiopsLibraryService.trackEvent('page_view', 'settings');
+    this.trackerService.trackEvent('page_view', 'settings');
 
     // Matrix contrast
     this.contrastValue =
@@ -79,16 +85,6 @@ export class UserSettingsComponent implements OnChanges {
       this.allowCookies.toString(),
     );
 
-    if (this.initialAllowCookies !== this.allowCookies) {
-      if (this.allowCookies === true) {
-        // init matomo
-        this.khiopsLibraryService.initMatomo();
-        this.khiopsLibraryService.enableMatomo();
-      } else {
-        this.khiopsLibraryService.disableMatomo();
-      }
-    }
-
     // theme
     localStorage.setItem(
       AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR',
@@ -96,8 +92,16 @@ export class UserSettingsComponent implements OnChanges {
     );
     location.reload();
 
-    // this.khiopsLibraryService.trackEvent('click', 'settings', 'significant_number', this.numberPrecision);
-    // this.khiopsLibraryService.trackEvent('click', 'settings', 'matrix_contrast', this.contrastValue);
+    // this.trackerService.trackEvent('click', 'settings', 'significant_number', this.numberPrecision);
+    // this.trackerService.trackEvent('click', 'settings', 'matrix_contrast', this.contrastValue);
+  }
+
+  onClickOnClearDatas() {
+    localStorage.clear();
+    this.snackBar.open(this.translate.get('SNACKS.DATAS_DELETED'), undefined, {
+      duration: 2000,
+      panelClass: 'success',
+    });
   }
 
   isThemeChecked(theme: string): boolean {

@@ -63,5 +63,6 @@ export class HierarchyService {
 
     this.dimensionsDatasService.constructDimensionsTrees();
     this.dimensionsDatasService.getMatrixDatas();
+    this.dimensionsDatasService.computeMatrixDataFreqMap();
   }
 }

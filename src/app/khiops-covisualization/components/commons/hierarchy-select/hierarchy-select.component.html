@@ -5,7 +5,7 @@
 >
   <div
     class="comp-header-tools"
-    fxFlexFill
+    fxFlex
     fxLayout="row"
     fxLayoutAlign="start center"
   >
@@ -33,6 +33,7 @@
       </mat-menu>
     </div>
     <button
+      class="screenshot-hide"
       mat-icon-button
       color="accent"
       attr.aria-label="{{ 'TOOLTIPS.AXIS.DIMENSION.STATISTICS' | translate }}"
@@ -52,19 +53,37 @@
   >
     <span
       >{{ 'GLOBAL.TYPE' | translate }} :
-      <strong>{{ selectedDimension?.type }}</strong></span
+      <strong>{{ selectedTreeCluster?.dimensionType }}</strong></span
+    >
+    <span *ngIf="selectedTreeCluster?.isNumerical"
+      >{{ 'GLOBAL.INTERVALS' | translate }} :
+      <strong>{{ selectedTreeCluster?.intervals }}</strong></span
+    >
+    <span *ngIf="selectedTreeCluster?.isCategorical"
+      >{{ 'GLOBAL.CLUSTERS' | translate }} :
+      <strong>{{ selectedTreeCluster?.intervals }}</strong></span
+    >
+    <br />
+    <span *ngIf="selectedDimension.isNumerical"
+      >{{ 'GLOBAL.INTERVAL' | translate }} :
+      <strong>{{ selectedTreeCluster?.interval }}</strong></span
+    >
+    <span *ngIf="selectedDimension.isCategorical"
+      >{{ 'GLOBAL.CLUSTER' | translate }} :
+      <strong>{{ selectedTreeCluster?.interval }}</strong></span
     >
     <span
-      >{{ 'GLOBAL.INTERVAL' | translate }} :
-      <strong>{{ selectedNode?.name }}</strong></span
+      *ngIf="
+        selectedTreeCluster?.isCategorical &&
+        selectedNode?.isLeaf &&
+        !selectedNode?.isCollapsed
+      "
+      >{{ 'GLOBAL.CLUSTER_LENGTH' | translate }} :
+      <strong>{{ selectedTreeCluster?.nbClusters }}</strong></span
     >
     <span
       >{{ 'GLOBAL.FREQUENCY' | translate }} :
-      <strong>{{ selectedNode?.frequency }}</strong></span
-    >
-    <span
-      >{{ 'GLOBAL.INTERVALS' | translate }} :
-      <strong>{{ intervals }}</strong></span
+      <strong>{{ selectedTreeCluster?.frequency }}</strong></span
     >
   </div>
 </div>

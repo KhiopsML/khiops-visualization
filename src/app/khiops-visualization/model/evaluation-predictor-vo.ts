@@ -86,8 +86,7 @@ export class EvaluationPredictorVO {
   computeRobustness(train) {
     if (
       this.currentEvaluationType === PREDICTOR_TYPES.TEST &&
-      train &&
-      train.auc &&
+      train?.auc &&
       this.auc
     ) {
       // find into data train the corresponding AUC train

@@ -1,13 +1,10 @@
 import * as d3 from 'd3';
-import * as d3f from 'd3-force-gravity';
-import { N } from '../../models/n/n';
 import { ILayer } from '../layerstack/layer';
 import { ILayerView } from '../layerstack/layer';
 import { ILayerArgs } from '../layerstack/layer';
 import { D3UpdatePattern } from '../layerstack/d3updatePattern';
-import { CptoCk, CktoCp } from '../../models/transformation/hyperbolic-math';
-import { CmulR, CaddC } from '../../models/transformation/hyperbolic-math';
-import { bboxCenter } from '../layers/label-layer';
+import { CptoCk } from '../../models/transformation/hyperbolic-math';
+import { CaddC } from '../../models/transformation/hyperbolic-math';
 
 export interface LabelForceLayerArgs extends ILayerArgs {
   name: string;
@@ -89,7 +86,7 @@ export class LabelForceLayer implements ILayer {
       //       .strength(-.001))
       /*.on("tick", ()=> {
                 //console.log('sim tick')
-                this.update.transformation() 
+                this.update.transformation()
             })*/
       .stop();
   }

@@ -22,6 +22,7 @@ import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { MatrixRangeValuesI } from '@khiops-visualization/interfaces/matrix-range-values';
 import { VariableVO } from '@khiops-visualization/model/variable-vo';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
+import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 
 @Injectable({
   providedIn: 'root',
@@ -61,7 +62,7 @@ export class Preparation2dDatasService {
     return this.preparation2dDatas;
   }
 
-  getInformationsDatas(): InfosDatasI[] {
+  getInformationsDatas(): InfosDatasI[] | undefined {
     const appDatas = this.appService.getDatas().datas;
     const informationsDatas = new InformationsVO(
       appDatas.bivariatePreparationReport.summary,
@@ -78,12 +79,9 @@ export class Preparation2dDatasService {
     return this.preparation2dDatas.isAxisInverted;
   }
 
-  setSelectedCellIndex(index) {
+  setSelectedCellIndex(index: number) {
     this.preparation2dDatas.selectedCellIndex = index;
-    if (
-      this.preparation2dDatas.matrixDatas &&
-      this.preparation2dDatas.matrixDatas.matrixCellDatas
-    ) {
+    if (this.preparation2dDatas?.matrixDatas?.matrixCellDatas) {
       const currentCell =
         this.preparation2dDatas.matrixDatas.matrixCellDatas.find(
           (e) => e.index === index,
@@ -109,19 +107,20 @@ export class Preparation2dDatasService {
     return this.preparation2dDatas.selectedCell;
   }
 
-  computeDistributionIndexFromMatrixCellIndex(index: number) {
+  computeDistributionIndexFromMatrixCellIndex(index: number): number {
     // get distribution bar chart index from selected matrix cell index
     if (this.preparation2dDatas.matrixDatas) {
       let moduloOfCellIndex = 0;
       moduloOfCellIndex =
-        ((index / this.preparation2dDatas.selectedVariable.parts) % 1) *
-        this.preparation2dDatas.selectedVariable.parts;
+        ((index / this.preparation2dDatas?.selectedVariable?.parts) % 1) *
+        this.preparation2dDatas?.selectedVariable?.parts;
       moduloOfCellIndex = Math.round(moduloOfCellIndex);
       return moduloOfCellIndex;
     }
+    return 0;
   }
 
-  setSelectedVariable(object: any): Preparation2dVariableVO {
+  setSelectedVariable(object: any): Preparation2dVariableVO | undefined {
     if (object) {
       const variable = this.getVariableFromNames(object.name1, object.name2);
       if (variable) {
@@ -132,6 +131,7 @@ export class Preparation2dDatasService {
         return this.preparation2dDatas.selectedVariable;
       }
     }
+    return undefined;
   }
 
   /**
@@ -141,12 +141,12 @@ export class Preparation2dDatasService {
     this.preparation2dDatas.selectedVariable = currentVar;
   }
 
-  getSelectedVariable(): Preparation2dVariableVO {
+  getSelectedVariable(): Preparation2dVariableVO | undefined {
     return this.preparation2dDatas.selectedVariable;
   }
 
   getSelectedVariableRank(): string {
-    return this.preparation2dDatas.selectedVariable.rank;
+    return this.preparation2dDatas?.selectedVariable?.rank;
   }
 
   isSupervised(): boolean {
@@ -155,16 +155,15 @@ export class Preparation2dDatasService {
 
   getVariablesd2Datas(): Variable2dVO[] {
     const appDatas = this.appService.getDatas().datas;
-    const variableDatas = [];
-    if (
-      appDatas.bivariatePreparationReport &&
-      appDatas.bivariatePreparationReport.variablesPairsStatistics
-    ) {
+    const variableDatas: Variable2dVO[] = [];
+    if (appDatas?.bivariatePreparationReport?.variablesPairsStatistics) {
       const currentDatas =
         appDatas.bivariatePreparationReport.variablesPairsStatistics;
       if (currentDatas) {
         for (let i = 0; i < currentDatas.length; i++) {
-          const varItem: Variable2dVO = new Variable2dVO(currentDatas[i]);
+          const varItem: Variable2dVO | undefined = new Variable2dVO(
+            currentDatas[i],
+          );
           variableDatas.push(varItem);
         }
       }
@@ -173,13 +172,13 @@ export class Preparation2dDatasService {
     return variableDatas;
   }
 
-  getVariableFromNames(name1: string, name2: string): Preparation2dVariableVO {
-    let preparation2dVariable: Preparation2dVariableVO;
+  getVariableFromNames(
+    name1: string,
+    name2: string,
+  ): Preparation2dVariableVO | undefined {
+    let preparation2dVariable: Preparation2dVariableVO | undefined;
     const appDatas = this.appService.getDatas().datas;
-    if (
-      appDatas.bivariatePreparationReport &&
-      appDatas.bivariatePreparationReport.variablesPairsStatistics
-    ) {
+    if (appDatas?.bivariatePreparationReport?.variablesPairsStatistics) {
       preparation2dVariable =
         appDatas.bivariatePreparationReport.variablesPairsStatistics.find(
           (e) => e.name1 === name1 && e.name2 === name2,
@@ -207,18 +206,15 @@ export class Preparation2dDatasService {
    * Format matrix datas to be displayed into table
    * @param fullFrequencies
    */
-  getMatrixCoocurenceCellsDatas(): CoocurenceCellsVO {
-    let matrixCells: CoocurenceCellsVO;
+  getMatrixCoocurenceCellsDatas(): CoocurenceCellsVO | undefined {
+    let matrixCells: CoocurenceCellsVO | undefined;
 
-    if (
-      this.preparation2dDatas.matrixDatas &&
-      this.preparation2dDatas.matrixDatas.matrixCellDatas
-    ) {
+    if (this.preparation2dDatas?.matrixDatas?.matrixCellDatas) {
       const selectedVariable = this.getSelectedVariable();
       matrixCells = new CoocurenceCellsVO(
         this.translate,
-        selectedVariable.nameX,
-        selectedVariable.nameY,
+        selectedVariable?.nameX,
+        selectedVariable?.nameY,
       );
 
       const values: CoocurenceCellVO[] = [];
@@ -256,10 +252,10 @@ export class Preparation2dDatasService {
   } {
     const selectedVariable = this.getSelectedVariable();
 
-    const datasX = [],
-      datasY = [],
-      displayedColumnsX = [],
-      displayedColumnsY = [];
+    const datasX: any = [],
+      datasY: any = [],
+      displayedColumnsX: GridColumnsI[] = [],
+      displayedColumnsY: GridColumnsI[] = [];
 
     this.preparation2dDatas.currentCellDatas = {
       values: [datasX, datasY],
@@ -270,7 +266,7 @@ export class Preparation2dDatasService {
       const variableDetails = this.getVariableDetails(selectedVariable.rank);
       const selectedCell = this.getSelectedCell();
 
-      if (selectedCell && variableDetails && variableDetails.dataGrid) {
+      if (selectedCell && variableDetails?.dataGrid) {
         const xName = selectedVariable.nameX;
         const yName = selectedVariable.nameY;
         const xType = variableDetails.dataGrid.dimensions[0].type;
@@ -331,12 +327,12 @@ export class Preparation2dDatasService {
   }
 
   getCellDatasByAxis(
-    type,
-    axisPartValues,
-    displayaxisPart,
-    datasAxis,
-    displayedColumns,
-    variableName,
+    type: string,
+    axisPartValues: string[],
+    displayaxisPart: string,
+    datasAxis: any,
+    displayedColumns: GridColumnsI[],
+    variableName: string,
   ) {
     if (axisPartValues) {
       if (type === TYPES.NUMERICAL) {
@@ -360,7 +356,7 @@ export class Preparation2dDatasService {
     }
   }
 
-  getModalityFrequency(source, variable, partition) {
+  getModalityFrequency(source: any, variable: string, partition: string) {
     let currentVar;
     Object.keys(source).forEach((key) => {
       if (source[key].dataGrid.dimensions[0].variable === variable) {
@@ -380,15 +376,10 @@ export class Preparation2dDatasService {
     this.preparation2dDatas.isTargetAvailable = false;
     let targets: any;
 
-    const variablesDetails: VariableDetailsVO = this.getVariableDetails(
-      this.preparation2dDatas.selectedVariable.rank,
-    );
+    const variablesDetails: VariableDetailsVO | undefined =
+      this.getVariableDetails(this.preparation2dDatas?.selectedVariable?.rank);
 
-    if (
-      variablesDetails &&
-      variablesDetails.dataGrid &&
-      variablesDetails.dataGrid.cellIds
-    ) {
+    if (variablesDetails?.dataGrid?.cellIds) {
       const isTargetAvailable: any = variablesDetails.dataGrid.dimensions.find(
         (e) => e.variable === 'Target',
       );
@@ -401,18 +392,18 @@ export class Preparation2dDatasService {
     }
   }
 
-  getVariableDetails(rank): VariableDetailsVO {
+  getVariableDetails(rank: string): VariableDetailsVO | undefined {
     const appDatas = this.appService.getDatas().datas;
-    let variableDetails: VariableDetailsVO;
+    let variableDetails: VariableDetailsVO | undefined;
     const isRegressionOrExplanatoryAnalysis =
       this.preparationDatasService.isExplanatoryAnalysis() ||
       this.evaluationDatasService.isRegressionAnalysis();
 
     if (
       !isRegressionOrExplanatoryAnalysis &&
-      appDatas.bivariatePreparationReport &&
-      appDatas.bivariatePreparationReport.variablesPairsDetailedStatistics &&
-      appDatas.bivariatePreparationReport.variablesPairsDetailedStatistics[rank]
+      appDatas?.bivariatePreparationReport?.variablesPairsDetailedStatistics?.[
+        rank
+      ]
     ) {
       // normal case
       const currentVar =
@@ -425,9 +416,7 @@ export class Preparation2dDatasService {
       );
     } else if (
       isRegressionOrExplanatoryAnalysis &&
-      appDatas.textPreparationReport &&
-      appDatas.textPreparationReport.variablesDetailedStatistics &&
-      appDatas.textPreparationReport.variablesDetailedStatistics[rank]
+      appDatas?.textPreparationReport?.variablesDetailedStatistics?.[rank]
     ) {
       // regression or explanatory case: textPreparationReport
       const currentVar =
@@ -438,9 +427,7 @@ export class Preparation2dDatasService {
       );
     } else if (
       isRegressionOrExplanatoryAnalysis &&
-      appDatas.preparationReport &&
-      appDatas.preparationReport.variablesDetailedStatistics &&
-      appDatas.preparationReport.variablesDetailedStatistics[rank]
+      appDatas?.preparationReport?.variablesDetailedStatistics?.[rank]
     ) {
       // regression or explanatory case: preparationReport
       const currentVar =
@@ -453,14 +440,14 @@ export class Preparation2dDatasService {
     return variableDetails;
   }
 
-  getMatrixCanvasDatas(selectedVariable): any {
+  getMatrixCanvasDatas(
+    selectedVariable: Variable2dVO | Preparation2dVariableVO | VariableVO,
+  ): any {
     this.preparation2dDatas.matrixDatas = undefined;
-    const variablesDetails: VariableDetailsVO = this.getVariableDetails(
-      selectedVariable.rank,
-    );
+    const variablesDetails: VariableDetailsVO | undefined =
+      this.getVariableDetails(selectedVariable.rank);
 
     if (variablesDetails) {
-      // const variableDatas = copy(variablesDetails.dataGrid);
       const variableDatas: VariableDetailsVO = _.cloneDeep(variablesDetails);
 
       if (variableDatas) {
@@ -560,8 +547,10 @@ export class Preparation2dDatasService {
           // Maybe can be improved and be taken into cell datas ?
           this.preparation2dDatas.matrixDatas = {
             variable: {
-              nameX: selectedVariable.name1,
-              nameY: selectedVariable.name2,
+              // @ts-ignore
+              nameX: selectedVariable.name1, // can be undefined in case of regression
+              // @ts-ignore
+              nameY: selectedVariable.name2, // can be undefined in case of regression
               xParts: xDimension.parts,
               yParts: yDimension.parts,
             },
@@ -628,7 +617,7 @@ export class Preparation2dDatasService {
    * @returns
    */
   getGlobalMinAndMax2dValues(
-    variablesDatas: Variable2dVO[] | VariableVO[],
+    variablesDatas: Variable2dVO[] | Preparation2dVariableVO[] | VariableVO[], // for regression,
   ): MatrixRangeValuesI {
     const currentRes: MatrixRangeValuesI = {
       CELL_INTEREST: [],
@@ -641,7 +630,7 @@ export class Preparation2dDatasService {
       const inputDatas = this.getMatrixCanvasDatas(variablesDatas[i]);
       if (inputDatas) {
         let matrixFreqsValues, matrixValues, matrixExtras;
-        let graphMode = {
+        let graphMode: MatrixModeI = {
           mode: 'MUTUAL_INFO_TARGET_WITH_CELL',
         };
         [matrixFreqsValues, matrixValues, matrixExtras] =

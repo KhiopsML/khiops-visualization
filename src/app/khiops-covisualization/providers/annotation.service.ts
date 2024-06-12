@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
 import { AppService } from './app.service';

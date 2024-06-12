@@ -3,17 +3,17 @@ import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.s
 import { AppConfig } from 'src/environments/environment';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { ViewLayoutVO } from '../model/view-layout-vo';
-import copy from 'fast-copy';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
+import { ProjectSummaryVO } from '@khiops-library/model/project-summary-vo';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AppService {
   splitSizes: any;
-  appDatas: any;
-  initialDatas: any;
+  appDatas: any = undefined;
+  initialDatas: any = undefined;
   viewsLayout: ViewLayoutVO;
   activeTabIndex = 0;
   viewsLayoutChanged: EventEmitter<any> = new EventEmitter();
@@ -88,18 +88,40 @@ export class AppService {
   }
 
   getSavedDatas(type): any {
-    if (
-      this.appDatas &&
-      this.appDatas.datas &&
-      this.appDatas.datas.savedDatas &&
-      this.appDatas.datas.savedDatas[type] !== undefined
-    ) {
+    if (this.appDatas?.datas?.savedDatas?.[type] !== undefined) {
       return this.appDatas.datas.savedDatas[type];
     }
   }
 
+  checkCollapsedNodesIntegrity(collapsedNodes) {
+    if (collapsedNodes) {
+      for (const [key, value] of Object.entries(collapsedNodes)) {
+        const dimIndex =
+          this.appDatas.datas.coclusteringReport.dimensionHierarchies.findIndex(
+            (e) => e.name === key,
+          );
+        if (dimIndex === -1) {
+          // broken saved data
+          delete collapsedNodes[key];
+        }
+        for (let k = collapsedNodes?.[key]?.length - 1; k >= 0; k--) {
+          const node = value[k];
+          const nodeDetails =
+            this.appDatas.datas.coclusteringReport.dimensionHierarchies?.[
+              dimIndex
+            ]?.clusters?.find((e) => e.cluster === node);
+          if (!nodeDetails || nodeDetails?.isLeaf) {
+            // it's a leaf or it's a broken leaf name
+            collapsedNodes[key].splice(collapsedNodes[key][k], 1);
+          }
+        }
+      }
+    }
+    return collapsedNodes;
+  }
+
   setSavedDatas(datas: any) {
-    if (datas && datas.savedDatas) {
+    if (datas?.savedDatas) {
       if (datas.savedDatas.splitSizes) {
         this.setSplitSizes(datas.savedDatas.splitSizes);
       }
@@ -125,12 +147,7 @@ export class AppService {
   }
 
   isBigJsonFile(): boolean {
-    return (
-      this.appDatas &&
-      this.appDatas.datas &&
-      this.appDatas.datas.coclusteringReport &&
-      this.appDatas.datas.coclusteringReport.summary.cells > 10000
-    );
+    return this.appDatas?.datas?.coclusteringReport?.summary?.cells > 10000;
   }
 
   getViewSplitSizes(view) {
@@ -174,16 +191,11 @@ export class AppService {
   getProjectSummaryDatas(): InfosDatasI[] {
     const appDatas = this.appDatas.datas;
     if (appDatas.coclusteringReport) {
-      return [
-        {
-          title: 'GLOBAL.PROJECT_FILE',
-          value: appDatas.filename,
-        },
-        {
-          title: 'GLOBAL.DATABASE',
-          value: appDatas.coclusteringReport.summary.database,
-        },
-      ];
+      const projectSummaryDatas = new ProjectSummaryVO(
+        appDatas,
+        'coclusteringReport',
+      );
+      return projectSummaryDatas.displayDatas;
     } else {
       return undefined;
     }
@@ -198,14 +210,19 @@ export class AppService {
         isContextView,
       );
     }
-    // First get state from ls
-    const lsStorage = localStorage.getItem(
-      AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'VIEWS_LAYOUT',
-    );
-    if (lsStorage && lsStorage !== 'undefined') {
-      const lsValues = JSON.parse(lsStorage);
-      // Merge current values with values from LS
-      this.viewsLayout.megeWithPreviousValues(lsValues);
+
+    // View manager behavior #129
+    // Do not restore LS values because we have a save functionnality
+    if (AppConfig.cypress) {
+      // Do it only for cypress tests
+      const lsStorage = localStorage.getItem(
+        AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'VIEWS_LAYOUT',
+      );
+      if (lsStorage && lsStorage !== 'undefined') {
+        const lsValues = JSON.parse(lsStorage);
+        // Merge current values with values from LS
+        this.viewsLayout.megeWithPreviousValues(lsValues);
+      }
     }
 
     // Then get saved json state
@@ -219,7 +236,7 @@ export class AppService {
   }
 
   updateViewsLayout(dimensions): ViewLayoutVO {
-    const previousValues = copy(this.viewsLayout);
+    const previousValues = _.cloneDeep(this.viewsLayout);
     if (previousValues) {
       this.viewsLayout = new ViewLayoutVO();
       for (let i = 0; i < dimensions.length; i++) {
@@ -297,5 +314,24 @@ export class AppService {
       this.splitSizes[newView]['col0Row' + newPosition + 'Col2Row'],
       this.splitSizes[oldView]['col0Row' + oldPosition + 'Col2Row'],
     ];
+  }
+
+  /**
+   * #127 Reset grid search on file change
+   */
+  resetSearch() {
+    for (let i = 0; i < localStorage.length; i++) {
+      let key = localStorage.key(i);
+      if (
+        key.startsWith(
+          AppConfig.covisualizationCommon.GLOBAL.LS_ID +
+            'OPTIONS_AG_GRID_SEARCH_',
+        )
+      ) {
+        localStorage.removeItem(key);
+        // Decrement i to avoid skipping a key because the length of localStorage has decreased.
+        i--;
+      }
+    }
   }
 }

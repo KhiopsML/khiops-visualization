@@ -3,7 +3,6 @@ import {
   Input,
   EventEmitter,
   Output,
-  OnInit,
   AfterViewInit,
   OnChanges,
   SimpleChanges,
@@ -12,7 +11,6 @@ import * as ChartJs from 'chart.js';
 
 import { UtilsService } from '../../providers/utils.service';
 import { KhiopsLibraryService } from '../../providers/khiops-library.service';
-import { ToPrecisionPipe } from '../../pipes/toPrecision.pipe';
 import { ChartColorsSetI } from '../../interfaces/chart-colors-set';
 import { ChartOptions } from 'chart.js';
 import { ConfigService } from '@khiops-library/providers/config.service';
@@ -23,25 +21,25 @@ import { ChartDatasetVO } from '@khiops-library/model/chartDataset-vo';
   selector: 'kl-chart-next',
   templateUrl: './chart-next.component.html',
   styleUrls: ['./chart-next.component.scss'],
-  providers: [ToPrecisionPipe],
 })
-export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
+export class ChartNextComponent implements AfterViewInit, OnChanges {
   @Input() canvasIdContainer = 'kl-chart-canvas'; // May be updated if multiple graph
   @Input() inputDatas: ChartDatasVO;
   @Input() activeEntries: number;
   @Input() type: ChartJs.ChartType = 'bar';
   @Input() chartOptions: ChartOptions;
-  @Input() colorSet: ChartColorsSetI;
+  @Input() colorSet: ChartColorsSetI | undefined;
   @Input() enableSelection = true;
-  @Input() selectedLineChartItem: string = undefined;
+  @Input() selectedLineChartItem: string | undefined = undefined;
 
   @Output() selectBarIndex: EventEmitter<number> = new EventEmitter();
 
   AppConfig: any;
+
   ctx: ChartJs.ChartItem;
   chart: ChartJs.Chart;
-  color: string;
-  barColor: string;
+  color: string = '';
+  barColor: string = '';
   fontColor: string = '#999';
 
   constructor(
@@ -49,7 +47,6 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
     private khiopsLibraryService: KhiopsLibraryService,
   ) {
     this.AppConfig = this.khiopsLibraryService.getAppConfig().common;
-
     this.color =
       localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + 'THEME_COLOR') ===
       'dark'
@@ -60,11 +57,8 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
       'dark'
         ? 'rgba(255, 255, 255, 1)'
         : 'rgba(0, 0, 0, 1)';
-
     this.colorSet = this.khiopsLibraryService.getGraphColorSet()[0];
   }
-
-  ngOnInit() {}
 
   ngAfterViewInit(): void {
     this.initChart();
@@ -86,7 +80,7 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
 
       const chartAreaBorder = {
         id: 'chartAreaBorder',
-        beforeDraw(chart, args, options) {
+        beforeDraw(chart: any, args: any, options: ChartJs.LineOptions) {
           const {
             ctx,
             chartArea: { left, top, width, height },
@@ -109,15 +103,15 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
           },
           tooltip: {
             callbacks: {
-              title: (items) => {
-                if (items && items[0]) {
+              title: (items: any) => {
+                if (items?.[0]) {
                   return items[0].label;
                 }
               },
-              label: (items) => {
-                if (items && items[0]) {
+              label: (items: any) => {
+                if (items?.[0]) {
                   return items[0].dataset.label;
-                } else if (items && items.dataset) {
+                } else if (items?.dataset) {
                   return items.dataset.label;
                 }
               },
@@ -150,7 +144,7 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
             ticks: {
               color: this.fontColor,
               maxTicksLimit: 7,
-              callback: function (value, index, values) {
+              callback: function (value: any) {
                 // Fix axis labels display on responsive small size
                 // For example 50 is displayed 50,00000000000
                 return value;
@@ -187,7 +181,7 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
         Object.values(ChartJs).filter((chartClass) => chartClass.id),
       );
 
-      const data: ChartJs.ChartData = undefined;
+      const data: ChartJs.ChartData | undefined = undefined;
       const config: ChartJs.ChartConfiguration = {
         type: this.type,
         data: data,
@@ -209,11 +203,11 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
       this.chart.update();
     }
 
-    if (changes.inputDatas && changes.inputDatas.currentValue) {
+    if (changes.inputDatas?.currentValue) {
       this.updateGraph();
     }
 
-    if (changes.chartOptions && changes.chartOptions.currentValue) {
+    if (changes.chartOptions?.currentValue) {
       // We must reconstruct the chart if the scale change
       this.initChart();
     }
@@ -226,11 +220,7 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
       this.updateGraph();
     }
 
-    if (
-      changes.scaleValue &&
-      changes.scaleValue.currentValue &&
-      !changes.scaleValue.firstChange
-    ) {
+    if (changes.scaleValue?.currentValue && !changes.scaleValue.firstChange) {
       this.updateGraph();
     }
   }
@@ -254,7 +244,7 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
     });
   }
 
-  graphClickEvent(e, items) {
+  graphClickEvent(e: any, items: string | any[]) {
     if (this.enableSelection) {
       const l = items.length;
       if (l > 0) {
@@ -269,7 +259,7 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
     }
   }
 
-  selectCurrentBarIndex(index) {
+  selectCurrentBarIndex(index: number) {
     if (this.chart && this.enableSelection) {
       this.colorize();
       for (let i = 0; i < this.chart.data.datasets.length; i++) {
@@ -292,14 +282,14 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
       }
 
       dataset.backgroundColor = new Array(this.inputDatas.labels.length).fill(
-        UtilsService.hexToRGBa(this.colorSet.domain[i], 0.8),
+        UtilsService.hexToRGBa(this.colorSet?.domain[i], 0.8),
       );
       const defaultGroupIndex = dataset.extra?.findIndex(
-        (e) => e.defaultGroupIndex,
+        (e: any) => e.defaultGroupIndex,
       );
       if (defaultGroupIndex !== -1) {
         dataset.backgroundColor[defaultGroupIndex] = UtilsService.hexToRGBa(
-          this.colorSet.domain[i],
+          this.colorSet?.domain[i],
           0.15,
         );
       }
@@ -320,7 +310,7 @@ export class ChartNextComponent implements OnInit, AfterViewInit, OnChanges {
       }
 
       dataset.borderColor = new Array(this.inputDatas.labels.length).fill(
-        UtilsService.hexToRGBa(this.colorSet.domain[i], borderOpacity),
+        UtilsService.hexToRGBa(this.colorSet?.domain[i], borderOpacity),
       );
     }
   }

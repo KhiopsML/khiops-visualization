@@ -8,6 +8,7 @@ import { PreparationDatasService } from '@khiops-visualization/providers/prepara
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { REPORTS } from '@khiops-library/enum/reports';
 import { TYPES } from '@khiops-library/enum/types';
+import { TranslateModule } from '@ngstack/translate';
 
 let distributionDatasService: DistributionDatasService;
 let preparationDatasService: PreparationDatasService;
@@ -18,7 +19,7 @@ describe('Visualization', () => {
   describe('DistributionDatasService', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule],
+        imports: [HttpClientModule, TranslateModule.forRoot()],
       });
 
       // Inject services

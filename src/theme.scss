@@ -248,6 +248,7 @@ $theme: mat.define-light-theme(
   --bgColor-30: #333;
   --bgColor-40: #444;
   --bgColor-50: #555;
+  --scrollbar: #181818;
   // --primary: #ff6600;
   --primary: #22659b;
   --primary-10: #adadad;
@@ -275,6 +276,7 @@ $theme: mat.define-light-theme(
   --bgColor-30: #ccc;
   --bgColor-40: #bbb;
   --bgColor-50: #aaa;
+  --scrollbar: #eee;
   --primary: #374779;
   --primary-10: #1e326d;
   --grey-text: #757575;
@@ -301,6 +303,7 @@ $theme: mat.define-light-theme(
   --bgColor-30: #ccc;
   --bgColor-40: #bbb;
   --bgColor-50: #aaa;
+  --scrollbar: #eee;
   --primary: #000;
   --primary-10: #222222;
   --grey-text: #757575;
@@ -312,7 +315,7 @@ $theme: mat.define-light-theme(
   --gutter-hover: #ededed;
   --bgTooltip: #444;
   --chart-border: #e5e5e5;
-  --yellowMain: #fbb33a;
+  --yellowMain: #ff6600;
   --redMain: #fb473a;
   --gripOpacity: 1;
 }

@@ -1,9 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  NgModule,
-  APP_INITIALIZER,
-  CUSTOM_ELEMENTS_SCHEMA,
-} from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
@@ -19,8 +15,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TargetVariableStatsCanvasComponent } from './components/commons/target-variable-stats-canvas/target-variable-stats-canvas.component';
 import { DescriptionBlockComponent } from './components/commons/description-block/description-block.component';
 import { KhiopsLibraryModule } from '@khiops-library/khiops-library.module';
-import { ReleaseNotesComponent } from '@khiops-library/components/release-notes/release-notes.component';
-import { TranslateModule, TranslateService } from '@ngstack/translate';
+import { TranslateService } from '@ngstack/translate';
 import { LevelDistributionGraphCanvasComponent } from './components/commons/level-distribution-graph-canvas/level-distribution-graph-canvas.component';
 import { SelectTrainedPredictorComponent } from './components/commons/select-trained-predictor/select-trained-predictor.component';
 import { VariableGraphDetailsComponent } from './components/commons/variable-graph-details/variable-graph-details.component';
@@ -32,7 +27,6 @@ import { RegressionMatrixComponent } from './components/commons/regression-matri
 import { AgGridModule } from '@ag-grid-community/angular';
 import { TargetDistributionGraphCanvasComponent } from './components/commons/target-distribution-graph-canvas/target-distribution-graph-canvas.component';
 import { TreePreparationViewComponent } from './components/tree-preparation-view/tree-preparation-view.component';
-import { ConfirmDialogComponent } from '@khiops-library/components/confirm-dialog/confirm-dialog.component';
 import { TreeDetailsComponent } from './components/commons/tree-details/tree-details.component';
 import { TreeLeafDetailsComponent } from './components/commons/tree-leaf-details/tree-leaf-details.component';
 import { TreeHyperComponent } from './components/commons/tree-hyper/tree-hyper.component';
@@ -45,11 +39,12 @@ import { InAppRootOverlayContainer } from '@khiops-visualization/providers/in-ap
 import { HistogramComponent } from './components/commons/histogram/histogram.component';
 import { AngularResizeEventModule } from 'angular-resize-event';
 import { BrowserModule } from '@angular/platform-browser';
+import { HistogramTooltipComponent } from './components/commons/histogram/histogram.tooltip.component';
 
-export function setupTranslateFactory(service: TranslateService) {
-  const serv = () => service.use('en');
-  return serv;
-}
+const providers = [
+  TranslateService,
+  { provide: OverlayContainer, useClass: InAppRootOverlayContainer },
+];
 
 @NgModule({
   declarations: [
@@ -57,6 +52,7 @@ export function setupTranslateFactory(service: TranslateService) {
     // ConfirmDialogComponent,
     // LevelDistributionGraphCanvasComponent,
     HistogramComponent,
+    HistogramTooltipComponent,
     AppComponent,
     HomeLayoutComponent,
     PreparationViewComponent,
@@ -96,20 +92,11 @@ export function setupTranslateFactory(service: TranslateService) {
     ReactiveFormsModule,
     HttpClientModule,
     AngularSplitModule,
-    TranslateModule.forChild(),
+
     AngularResizeEventModule,
   ],
-  providers: [
-    TranslateService,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: setupTranslateFactory,
-      deps: [TranslateService],
-      multi: true,
-    },
-    { provide: OverlayContainer, useClass: InAppRootOverlayContainer },
-  ],
   exports: [AppComponent],
+  providers: providers,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class KhiopsVisualizationModule {}

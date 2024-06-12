@@ -13,6 +13,7 @@ export const visualizationCommonEnvironment = {
     MAX_GRAPH_TOOLTIP_LABEL_LENGTH: 70,
     MAT_MENU_PAGINATION: 20,
     LIFT_CHART_COUNT: 6,
+    SMALL_SCREEN_LIMIT: 1400,
   },
   HOME: {
     ACTIVE_TAB_INDEX: 0,
@@ -35,8 +36,6 @@ export const visualizationCommonEnvironment = {
     EXT_NAME: '',
   },
   TRACKER: {
-    ENABLE: true,
-    SITE_ID: '2211',
     TRACKER_URL: 'https://matomo.apps.tech.orange/',
   },
 };

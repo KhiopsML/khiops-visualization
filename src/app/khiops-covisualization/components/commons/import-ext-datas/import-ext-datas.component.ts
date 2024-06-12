@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
-import * as _ from 'lodash'; // Important to import lodash in karma
 import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
 import { TranslateService } from '@ngstack/translate';
 import { FileVO } from '@khiops-library/model/file-vo';
@@ -32,12 +31,12 @@ export class ImportExtDatasComponent implements OnInit {
   @Output() closeImport: EventEmitter<any> = new EventEmitter();
 
   constructor(
-    private dimensionsService: DimensionsDatasService,
+    private dimensionsDatasService: DimensionsDatasService,
     private importExtDatasService: ImportExtDatasService,
     public translate: TranslateService,
     private snackBar: MatSnackBar,
   ) {
-    this.dimensionsDatas = this.dimensionsService.getDatas();
+    this.dimensionsDatas = this.dimensionsDatasService.getDatas();
     this.selectedDimension = this.dimensionsDatas.dimensions[0];
   }
 
@@ -57,7 +56,7 @@ export class ImportExtDatasComponent implements OnInit {
       const currentField = this.fieldsToImport.values[i];
       if (currentField.import) {
         const importedData = this.importExtDatasService.addImportedDatas(
-          this.importExtDatas.filename,
+          this.importExtDatas.file.name,
           this.selectedDimension.name,
           this.joinKeys.selected,
           this.separatorInput,
@@ -67,7 +66,7 @@ export class ImportExtDatasComponent implements OnInit {
         if (importedData) {
           this.snackBar.open(
             this.translate.get('SNACKS.EXTERNAL_DATA_ADDED'),
-            null,
+            undefined,
             {
               duration: 2000,
               panelClass: 'success',
@@ -76,7 +75,7 @@ export class ImportExtDatasComponent implements OnInit {
         } else {
           this.snackBar.open(
             this.translate.get('SNACKS.EXTERNAL_DATA_ALREADY_ADDED'),
-            null,
+            undefined,
             {
               duration: 2000,
               panelClass: 'error',
@@ -118,11 +117,11 @@ export class ImportExtDatasComponent implements OnInit {
 
     this.fieldsToImport.displayedColumns = [
       {
-        headerName: 'name',
+        headerName: this.translate.get('GLOBAL.NAME'),
         field: 'name',
       },
       {
-        headerName: 'import',
+        headerName: this.translate.get('GLOBAL.IMPORT'),
         field: 'import',
         cellRendererFramework: CheckboxCellComponent,
       },

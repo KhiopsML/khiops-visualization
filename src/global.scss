@@ -90,7 +90,7 @@ as-split-area {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--bgColor-30) !important;
+  background: var(--scrollbar) !important;
   border: unset !important;
 }
 
@@ -697,7 +697,6 @@ mat-button-toggle-group {
 // Override grid style
 
 ag-grid-angular {
-  padding-top: 10px;
   background: white;
   margin: 2px !important;
 }
@@ -855,6 +854,10 @@ button {
   height: 32px !important;
 }
 
+.mat-button-toggle {
+  color: var(--primary) !important;
+}
+
 .rotate-90 {
   transform: rotate(90deg);
 }
@@ -875,8 +878,13 @@ canvas:focus {
   }
 }
 
+.mat-drawer-container {
+  background-color: var(--bgColor) !important;
+  color: var(--bgColorContrast) !important;
+}
+
 .mat-badge-content {
-  border: 3px solid white !important;
+  border: 3px solid var(--bgColor) !important;
   width: 10px !important;
   height: 10px !important;
   line-height: 12px !important;
@@ -902,6 +910,10 @@ canvas:focus {
 
 .cc-floating .cc-compliance > .cc-btn:hover {
   background-color: #000000cc;
+}
+
+.mat-checkbox-layout .mat-checkbox-label {
+  font-size: 0.8rem !important;
 }
 
 .fullscreen {

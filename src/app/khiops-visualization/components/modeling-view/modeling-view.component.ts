@@ -1,5 +1,4 @@
 import { ViewChild, Component } from '@angular/core';
-import _ from 'lodash';
 import {
   MatDialog,
   MatDialogRef,
@@ -17,7 +16,6 @@ import { VariableGraphDetailsComponent } from '@khiops-visualization/components/
 import { TargetDistributionGraphCanvasComponent } from '@khiops-visualization/components/commons/target-distribution-graph-canvas/target-distribution-graph-canvas.component';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { Distribution2dDatasService } from '@khiops-visualization/providers/distribution2d-datas.service';
-import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { REPORTS } from '@khiops-library/enum/reports';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
@@ -26,6 +24,7 @@ import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { ModelingDatasVO } from '@khiops-visualization/model/modeling-datas-vo';
 import { Preparation2dDatasVO } from '@khiops-visualization/model/preparation2d-datas-vo';
 import { TreePreparationDatasVO } from '@khiops-visualization/model/tree-preparation-datas-vo';
+import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 
 @Component({
   selector: 'app-modeling-view',
@@ -37,19 +36,14 @@ export class ModelingViewComponent extends SelectableTabComponent {
     static: false,
   })
   appVariableGraphDetails: VariableGraphDetailsComponent;
-
   @ViewChild('targetDistributionGraphCanvas', {
     static: false,
   })
   targetDistributionGraphCanvas: TargetDistributionGraphCanvasComponent;
-
   preparationSource: string;
-
   appDatas: any;
   sizes: any;
-
   preparationVariable: any; // Complex, can be multiple types according to the preparationSource
-
   summaryDatas: InfosDatasI[];
   targetVariableStatsDatas: ChartDatasVO;
   trainedPredictorsSummaryDatas: InfosDatasI[];
@@ -69,12 +63,12 @@ export class ModelingViewComponent extends SelectableTabComponent {
   targetVariableStatsInformations: InfosDatasI[];
 
   // managed by selectable-tab component
-  tabIndex = 3;
+  override tabIndex = 3;
 
   constructor(
     private modelingDatasService: ModelingDatasService,
     private evaluationDatasService: EvaluationDatasService,
-    private khiopsLibraryService: KhiopsLibraryService,
+    private trackerService: TrackerService,
     private preparation2dDatasService: Preparation2dDatasService,
     private appService: AppService,
     private dialog: MatDialog,
@@ -83,10 +77,12 @@ export class ModelingViewComponent extends SelectableTabComponent {
     private treePreparationDatasService: TreePreparationDatasService,
   ) {
     super();
+    this.preparationSource =
+      this.preparationDatasService.getAvailablePreparationReport();
   }
 
   ngOnInit() {
-    this.khiopsLibraryService.trackEvent('page_view', 'modeling');
+    this.trackerService.trackEvent('page_view', 'modeling');
 
     this.preparationSource =
       this.preparationDatasService.getAvailablePreparationReport();
@@ -153,7 +149,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
 
   onSelectListItemChanged(item: any) {
     // Get var from name
-    if (item.name && item.name.includes('Tree_')) {
+    if (item.name?.includes('Tree_')) {
       this.preparationSource = REPORTS.TREE_PREPARATION_REPORT;
       this.preparationVariable =
         this.treePreparationDatasService.setSelectedVariable(item);
@@ -164,7 +160,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
     } else {
       this.preparationSource =
         this.preparationDatasService.getPreparationSourceFromVariable(item);
-      if (item.name && item.name.includes('`')) {
+      if (item.name?.includes('`')) {
         // Check the case of 2d variable : names are separated by `
         item.name1 = item.name.split('`')[0];
         item.name2 = item.name.split('`')[1];

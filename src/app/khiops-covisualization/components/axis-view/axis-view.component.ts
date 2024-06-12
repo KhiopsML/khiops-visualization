@@ -46,7 +46,7 @@ export class AxisViewComponent
   viewsLayout: ViewLayoutVO;
   viewsLayoutChangedSub: Subscription;
   isBigJsonFile = false;
-  loadingView = false;
+  override loadingView = false;
 
   constructor(
     private appService: AppService,
@@ -69,23 +69,29 @@ export class AxisViewComponent
     setTimeout(() => {
       this.sizes = this.appService.getViewSplitSizes('axisView');
       this.initializeDatas();
-      this.initializeSavedState();
 
-      const isLargeCocluster = this.dimensionsDatasService.isLargeCocluster();
-      const collapsedNodes = this.appService.getSavedDatas('collapsedNodes');
+      if (this.dimensionsDatas.dimensions.length > 0) {
+        this.initializeSavedState();
 
-      if (collapsedNodes) {
-        this.computeSavedState(collapsedNodes);
-      } else if (isLargeCocluster) {
-        this.computeLargeCoclustering();
+        const isLargeCocluster = this.dimensionsDatasService.isLargeCocluster();
+        let collapsedNodes = this.appService.getSavedDatas('collapsedNodes');
+        collapsedNodes =
+          this.appService.checkCollapsedNodesIntegrity(collapsedNodes);
+        this.treenodesService.setSavedCollapsedNodes(collapsedNodes);
+        if (collapsedNodes) {
+          this.computeSavedState(collapsedNodes);
+        } else if (isLargeCocluster) {
+          this.computeLargeCoclustering();
+        }
+
+        this.dimensionsDatasService.getMatrixDatas();
+        this.dimensionsDatasService.computeMatrixDataFreqMap();
+        this.loadingView = false;
+
+        this.viewsLayout = this.appService.initViewsLayout(
+          this.dimensionsDatas.selectedDimensions,
+        );
       }
-
-      this.dimensionsDatasService.getMatrixDatas();
-      this.loadingView = false;
-
-      this.viewsLayout = this.appService.initViewsLayout(
-        this.dimensionsDatas.selectedDimensions,
-      );
     }, 500); // To show loader when big files
 
     // Listen for view layout changes

@@ -27,6 +27,7 @@ import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.s
 import pjson from 'package.json';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { UtilsService } from '@khiops-library/providers/utils.service';
+import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 
 @Component({
   selector: 'app-home-layout',
@@ -86,6 +87,7 @@ export class HomeLayoutComponent implements OnInit {
     public selectableService: SelectableService,
     private distributionDatasService: DistributionDatasService,
     private modelingDatasService: ModelingDatasService,
+    private trackerService: TrackerService,
     private evaluationDatasService: EvaluationDatasService,
     private preparationDatasService: PreparationDatasService,
     private treePreparationDatasService: TreePreparationDatasService,
@@ -99,7 +101,9 @@ export class HomeLayoutComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   sizeChange() {
-    this.isLargeScreen = window.innerWidth > 1400; // TODO put it into conf
+    this.isLargeScreen =
+      window.innerWidth >
+      AppConfig.visualizationCommon.GLOBAL.SMALL_SCREEN_LIMIT;
   }
 
   onSelectedTabChanged(e) {
@@ -110,7 +114,7 @@ export class HomeLayoutComponent implements OnInit {
 
   ngOnInit() {
     this.onFileLoaderDataChangedCb = (obj) => this.onFileLoaderDataChanged(obj);
-    this.khiopsLibraryService.trackEvent('page_view', 'visit', this.appVersion);
+    this.trackerService.trackEvent('page_view', 'visit', this.appVersion);
   }
 
   ngAfterViewInit() {
@@ -156,10 +160,14 @@ export class HomeLayoutComponent implements OnInit {
         },
       );
     } else {
-      this.snackBar.open(this.translate.get('SNACKS.DATAS_LOADED'), undefined, {
-        duration: 2000,
-        panelClass: 'success',
-      });
+      this.snackBar.open(
+        this.translate.get('SNACKS.DATAS_LOADED'),
+        undefined,
+        {
+          duration: 2000,
+          panelClass: 'success',
+        },
+      );
     }
 
     this.preparationDatasService.initialize();
@@ -170,7 +178,7 @@ export class HomeLayoutComponent implements OnInit {
     this.modelingDatasService.initialize();
 
     // @ts-ignore
-    this.appProjectView && this.appProjectView.initialize();
+    this.appProjectView?.initialize();
   }
 
   reloadView() {

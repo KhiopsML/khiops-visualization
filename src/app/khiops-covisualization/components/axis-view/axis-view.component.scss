@@ -1,21 +1,21 @@
 .axis-view-comp {
-	#axis-container {
-		position: relative;
-	}
+  #axis-container {
+    position: relative;
+  }
 
-	.app-axis-context-container {
-		position: absolute;
-		top: 0;
-		right: 0;
-		height: 100%;
-		width: 100%;
-		z-index: 10;
-	}
+  .app-axis-context-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+  }
 
-	.loading-axis {
-		background-color: var(--bgColor) !important;
-		span {
-			margin-top: 1em;
-		}
-	}
+  .loading-axis {
+    background-color: var(--bgColor) !important;
+    span {
+      margin-top: 1em;
+    }
+  }
 }

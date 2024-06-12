@@ -1,3 +1,4 @@
+import { MatrixCoordI } from '../interfaces/matrix-coord';
 import { UtilsService } from '../providers/utils.service';
 
 export class CellVO {
@@ -27,22 +28,10 @@ export class CellVO {
   yCanvas: number;
   wCanvas: number;
   hCanvas: number;
-  x: {
-    standard: number;
-    frequency: number;
-  };
-  y: {
-    standard: number;
-    frequency: number;
-  };
-  w: {
-    standard: number;
-    frequency: number;
-  };
-  h: {
-    standard: number;
-    frequency: number;
-  };
+  x: MatrixCoordI;
+  y: MatrixCoordI;
+  w: MatrixCoordI;
+  h: MatrixCoordI;
   concatName: string[];
   xaxisPart: string;
   yaxisPart: string;
@@ -66,8 +55,6 @@ export class CellVO {
   cellHellingerAbsoluteValue: number[] = [];
   matrixTotal: number[] = [];
 
-  constructor() {}
-
   setIndex(currentIndex: number) {
     this.index = currentIndex;
     this.id = currentIndex + 1; // cells begin from 0 and rows from 1 ...
@@ -80,18 +67,7 @@ export class CellVO {
     this.targetCellFreq = UtilsService.initNumberIfNan(this.targetCellFreq);
   }
 
-  setCoordValues(
-    i,
-    j,
-    xValues: {
-      standard: number;
-      frequency: number;
-    },
-    yValues: {
-      standard: number;
-      frequency: number;
-    },
-  ) {
+  setCoordValues(i, j, xValues: MatrixCoordI, yValues: MatrixCoordI) {
     this.x = {
       standard: xValues.standard[i],
       frequency: xValues.frequency[i],

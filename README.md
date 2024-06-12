@@ -1,11 +1,11 @@
-![test workflow](https://github.com/KhiopsML/khiops-visualization/actions/workflows/test.yml/badge.svg) [![Publish to NPM](https://github.com/KhiopsML/khiops-visualization/actions/workflows/publish.yml/badge.svg?branch=master)](https://github.com/KhiopsML/khiops-visualization/actions/workflows/publish.yml) [![npm version](https://badge.fury.io/js/khiops-visualization.svg)](https://www.npmjs.com/package/khiops-visualization) [![End-to-end tests](https://github.com/KhiopsML/khiops-visualization/actions/workflows/e2e.yml/badge.svg)](https://github.com/KhiopsML/khiops-visualization/actions/workflows/e2e.yml)
+[![Unit tests](https://github.com/KhiopsML/khiops-visualization/actions/workflows/test.yml/badge.svg)](https://github.com/KhiopsML/khiops-visualization/actions/workflows/test.yml) [![Publish to NPM](https://github.com/KhiopsML/khiops-visualization/actions/workflows/publish.yml/badge.svg?branch=master)](https://github.com/KhiopsML/khiops-visualization/actions/workflows/publish.yml) [![npm version](https://badge.fury.io/js/khiops-visualization.svg)](https://www.npmjs.com/package/khiops-visualization) [![End-to-end tests](https://github.com/KhiopsML/khiops-visualization/actions/workflows/e2e.yml/badge.svg)](https://github.com/KhiopsML/khiops-visualization/actions/workflows/e2e.yml) <img alt="gitleaks badge" src="https://img.shields.io/badge/protected%20by-gitleaks-blue">
 
 
-# Introduction
+# Khiops Visualization component
 
-Khiops Visualization component. Contains the code of Visualization and Covisualization tools
+Contains the code of Visualization and Covisualization tools
 
-![image](https://github.com/KhiopsML/khiops-visualization/assets/13203455/c11d51be-f12d-4f72-9bea-e2d2c0f36d36)
+![khiops-demo](https://github.com/KhiopsML/khiops-visualization/assets/13203455/53a90746-64da-4d44-adaf-f18c6f854622)
 
 ## Development server
 

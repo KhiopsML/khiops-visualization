@@ -6,7 +6,6 @@ import { CtoStr } from '../../models/transformation/hyperbolic-math';
 import { bboxCenter } from '../layerstack/d3updatePattern';
 import { CellLayer } from '../layers/cell-layer';
 import { BackgroundLayer } from '../layers/background-layer';
-import { SymbolLayer } from '../layers/symbol-layer';
 import { ArcLayer } from '../layers/link-layer';
 import { LabelLayer } from '../layers/label-layer';
 import { UnitDisk } from './unitdisk';
@@ -27,8 +26,6 @@ const labelDelta = (ud: UnitDisk) => (d: N, i: number, v: N[]) =>
 
 export const navBackgroundLayers = [
   (v, ud: UnitDisk) => new BackgroundLayer(v, {}),
-  // @ts-ignore
-
   (v, ud: UnitDisk) =>
     new CellLayer(v, {
       invisible: true,
@@ -36,8 +33,6 @@ export const navBackgroundLayers = [
       clip: '#circle-clip' + ud.args.clipRadius,
       data: () => ud.cache.cells,
     }),
-  // @ts-ignore
-
   (v, ud: UnitDisk) =>
     new ArcLayer(v, {
       name: 'link-arcs',
@@ -49,8 +44,6 @@ export const navBackgroundLayers = [
       width: (n: N) => arcWidth(n),
       classed: (s, w) => {},
     }),
-  // @ts-ignore
-
   (v, ud: UnitDisk) =>
     new ArcLayer(v, {
       name: 'link-arcs-focus',
@@ -62,8 +55,6 @@ export const navBackgroundLayers = [
       width: (d: N) => arcWidth(d) + 0.005 * d.dampedDistScale,
       classed: (s, w) => {},
     }),
-  // @ts-ignore
-
   (v, ud: UnitDisk) =>
     new ArcLayer(v, {
       name: 'path-arcs',
@@ -85,8 +76,6 @@ export const navBackgroundLayers = [
           )
           .style('stroke', (d) => d.pathes && d.pathes.finalcolor),
     }),
-  // @ts-ignore
-
   (v, ud: UnitDisk) =>
     new LabelLayer(v, {
       invisible: true,
@@ -99,8 +88,6 @@ export const navBackgroundLayers = [
       transform: (d: N, delta: C) =>
         ` translate(${CtoStr(CaddC((d.layoutReference || d.layout).z, delta))})`,
     }),
-  // @ts-ignore
-
   (v, ud: UnitDisk) =>
     new LabelLayer(v, {
       name: 'labels',
@@ -110,16 +97,5 @@ export const navBackgroundLayers = [
       delta: labelDelta(ud),
       transform: (d: N, delta: C) =>
         ` translate(${CtoStr(CaddC((d.layoutReference || d.layout).z, delta))})`,
-    }),
-  (v, ud: UnitDisk) =>
-    new SymbolLayer(v, {
-      name: 'symbols',
-      data: () => ud.cache.spezialNodes,
-      // @ts-ignore
-
-      r: (d: N) => 0.03,
-      transform: (d: N) =>
-        ` translate(${(d.layoutReference || d.layout).zStrCache})` +
-        ` scale(${d.dampedDistScale})`,
     }),
 ];

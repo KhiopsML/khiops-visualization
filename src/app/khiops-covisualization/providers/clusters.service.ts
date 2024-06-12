@@ -11,6 +11,8 @@ import { ClusterDetailsVO } from '@khiops-covisualization/model/cluster-details-
 import { TreenodesService } from './treenodes.service';
 import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
 import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
+import { ExtDatasVO } from '@khiops-covisualization/model/ext-datas-vo';
+import { ImportExtDatasService } from './import-ext-datas.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -22,6 +24,7 @@ export class ClustersService {
     private appService: AppService,
     private treenodesService: TreenodesService,
     private dimensionsDatasService: DimensionsDatasService,
+    private importExtDatasService: ImportExtDatasService,
   ) {
     this.initialize();
   }
@@ -150,15 +153,8 @@ export class ClustersService {
       );
     filteredotherList = [...new Set(filteredotherList)]; // keep uniq
 
-    const matrixCellDataMap =
-      this.dimensionsDatasService.dimensionsDatas.matrixDatas.matrixCellDatas.reduce(
-        (map, data, index) => {
-          const key = `${data.yaxisPart}-${data.xaxisPart}`;
-          map[key] = index;
-          return map;
-        },
-        {},
-      );
+    const matrixCellFreqDataMap =
+      this.dimensionsDatasService.dimensionsDatas.matrixCellFreqDataMap;
 
     for (let i = 0; i < otherselectedNode.childrenList.length; i++) {
       const element = otherselectedNode.childrenList[i];
@@ -172,7 +168,7 @@ export class ClustersService {
             ? `${otherelement}-${element}`
             : `${element}-${otherelement}`;
 
-        const cell = matrixCellDataMap[key];
+        const cell = matrixCellFreqDataMap[key];
 
         if (cell !== undefined) {
           if (!currentDataSetData[labelIndex]) {
@@ -324,10 +320,7 @@ export class ClustersService {
     const appinitialDatas = this.appService.getInitialDatas().datas;
     const compositionValues: CompositionVO[] = [];
 
-    if (
-      appDatas.coclusteringReport &&
-      appDatas.coclusteringReport.dimensionPartitions
-    ) {
+    if (appDatas?.coclusteringReport?.dimensionPartitions) {
       const currentDimensionDetails: DimensionVO =
         this.dimensionsDatas.selectedDimensions.find(
           (e) => e.name === hierarchyName,
@@ -347,11 +340,11 @@ export class ClustersService {
           currentDimensionDetails.startPosition
         ];
 
-      // Set  dimesnion partitions from intervals or valueGroup
+      // Set  dimension partitions from intervals or valueGroup
       currentInitialDimensionDetails.setPartition(dimensionPartition);
 
       // Composition only available for numerical Dimensions
-      if (currentDimensionDetails && currentDimensionDetails.isCategorical) {
+      if (currentDimensionDetails?.isCategorical) {
         node.getChildrenList();
 
         if (node.childrenLeafList) {
@@ -380,10 +373,16 @@ export class ClustersService {
                   currentDimensionHierarchyCluster.shortDescription =
                     node.shortDescription;
                 }
+                const externalDatas: ExtDatasVO =
+                  this.importExtDatasService.getImportedDatasFromDimension(
+                    currentDimensionDetails,
+                  );
+
                 const composition = new CompositionVO(
                   currentClusterDetails,
                   currentDimensionHierarchyCluster,
                   j,
+                  externalDatas,
                 );
                 compositionValues.push(composition);
               }

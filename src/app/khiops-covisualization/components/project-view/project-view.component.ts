@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AppService } from '@khiops-covisualization/providers/app.service';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
+import { TrackerService } from '@khiops-library/providers/tracker.service';
 
 @Component({
   selector: 'app-project-view',
@@ -20,9 +21,12 @@ export class ProjectViewComponent
   appName = 'khiops-covisualization';
 
   // managed by selectable-tab component
-  tabIndex = 0;
+  override tabIndex = 0;
 
-  constructor(private appService: AppService) {
+  constructor(
+    private appService: AppService,
+    private trackerService: TrackerService,
+  ) {
     super();
     this.initialize();
   }
@@ -34,6 +38,7 @@ export class ProjectViewComponent
   }
 
   ngOnInit() {
+    this.trackerService.trackEvent('page_view', 'project');
     this.onFileLoaderDataChangedCb = (obj) => this.projectFileChanged.emit(obj);
   }
 }

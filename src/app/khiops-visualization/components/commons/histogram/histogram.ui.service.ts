@@ -7,10 +7,8 @@ import { HistogramValuesI } from './histogram.interfaces';
   providedIn: 'root',
 })
 export class HistogramUIService {
-  static chartColors: string[] = ['#6e93d5', '#ffbe46'];
+  static readonly chartColors: string[] = ['#6e93d5', '#ffbe46'];
   static translate: TranslateService;
-
-  constructor() {}
 
   static setTranslationService(translate: TranslateService) {
     this.translate = translate;
@@ -22,6 +20,32 @@ export class HistogramUIService {
 
   static getColors(): string[] {
     return this.chartColors;
+  }
+
+  // @ts-ignore
+  static getCurrentBarPosition(
+    datas: HistogramValuesI[],
+    yPadding: number,
+    canvasPosition: DOMRect,
+    event: MouseEvent,
+  ) {
+    if (datas) {
+      let x = event.pageX - canvasPosition.left;
+      let y = event.pageY - canvasPosition.top;
+
+      for (let i = 0; i < datas.length; i++) {
+        if (
+          y > datas?.[i].coords?.y &&
+          y < datas?.[i].coords?.y + datas?.[i].coords?.barH + yPadding / 2 &&
+          x > datas?.[i].coords?.x &&
+          x < datas?.[i].coords?.x + datas?.[i].coords?.barW
+        ) {
+          return i;
+        }
+      }
+    }
+
+    return undefined;
   }
 
   static generateTooltip(
@@ -49,5 +73,26 @@ export class HistogramUIService {
       ': ' +
       bounds
     );
+  }
+
+  static initCanvasContext(canvas: HTMLCanvasElement, w: number, h: number) {
+    const ctx = canvas.getContext('2d');
+    ctx.imageSmoothingEnabled = true;
+    canvas.width = w;
+    canvas.height = h;
+    return ctx;
+  }
+
+  /**
+   * Before draw canvas, clean dom
+   */
+  static cleanDomContext(
+    ctx: CanvasRenderingContext2D,
+    canvas: HTMLCanvasElement,
+  ) {
+    if (canvas) {
+      ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
   }
 }

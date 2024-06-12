@@ -4,7 +4,9 @@ export default defineConfig({
   e2e: {
     baseUrl: 'http://localhost:4200/',
   },
-
+  env: {
+    CYPRESS_TEST: true,
+  },
   includeShadowDom: true,
   chromeWebSecurity: false,
   watchForFileChanges: true,

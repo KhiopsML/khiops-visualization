@@ -39,7 +39,7 @@ export class FileLoaderService {
     // ===================
     //
 
-    let urlKV = './assets/mocks/kv/new-hyper-tree.json';
+    // let urlKV = './assets/mocks/kv/new-hyper-tree.json';
     // let urlKV = './assets/mocks/kv/NGrams10_AnalysisResults.json';
     // let urlKV = './assets/mocks/kv/NGrams100_AnalysisResults.json';
     // let urlKV = './assets/mocks/kv/000_000_10000words_AllReports.json';
@@ -91,9 +91,10 @@ export class FileLoaderService {
     // let urlKV = './assets/mocks/kv/irisU.json';
     // let urlKV = './assets/mocks/kv/CoronaWords100000_AllReports.V11.json';
     // let urlKV = './assets/mocks/kv/CrirteoAllReports.json';
+    // let urlKV = './assets/mocks/kv/CriteoAnalysisResults.khj';
     // let urlKV = './assets/mocks/kv/Words100_AllReports.json';
     // let urlKV = './assets/mocks/kv/UnivariateAnalysisResults.json';
-    // let urlKV = './assets/mocks/kv/ylogAdultAllReports.json';
+    let urlKV = './assets/mocks/kv/ylogAdultAllReports.json';
     // let urlKV = './assets/mocks/kv/AdultAllReports.json';
     // let urlKV = './assets/mocks/kv/20NewsgroupAllReports.json';
 
@@ -105,7 +106,9 @@ export class FileLoaderService {
     // let urlKC = './assets/mocks/kc/Coclustering.json';
     // let urlKC = './assets/mocks/kc/Co-simple-2vars.json';
     // let urlKC = './assets/mocks/kc/Coclustering-6.json';
-    let urlKC = './assets/mocks/kc/Coclustering-4.json';
+    // let urlKC = './assets/mocks/kc/Coclustering-4.json';
+    // let urlKC = './assets/mocks/kc/1-Adult2varsEducationOccupation.khcj';
+    // let urlKC = './assets/mocks/kc/2-Iris3vars-Coclustering.khcj';
     // let urlKC = './assets/mocks/kc/co-IrisMissing.json';
     // let urlKC = './assets/mocks/kc/adult2var.json';
     // let urlKC = './assets/mocks/kc/sample3.json';
@@ -124,13 +127,13 @@ export class FileLoaderService {
     // let urlKC = './assets/mocks/kc/v4.json';
     // let urlKC = './assets/mocks/kc/NovaCoclustering4mb.json';
     // let urlKC =
-    //   './assets/mocks/kc/donotworkk10.1.1_id_feat_nospace_Coclustering.json';
+    //   './assets/mocks/kc/10.1.1_id_feat_nospace_Coclustering.json';
     // let urlKC = './assets/mocks/kc/co-3-num.json';
     // let urlKC = './assets/mocks/kc/h-Coclustering-2-2.json';
     // let urlKC = './assets/mocks/kc/ext-CC_Coclustering.json';
     // let urlKC = './assets/mocks/kc/ext-datas_Coclustering.json';
     // let urlKC = './assets/mocks/kc/ext-CC_Coclustering.json';
-    // let urlKC = './assets/mocks/kc/CC_3_Coclustering.json';
+    let urlKC = './assets/mocks/kc/CC_3_Coclustering.json';
 
     if (fileName) {
       urlKV = './assets/mocks/kv/' + fileName;

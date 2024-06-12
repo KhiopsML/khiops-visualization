@@ -45,7 +45,7 @@ export class ImportFileLoaderComponent implements OnInit {
               console.warn(this.translate.get('SNACKS.OPEN_FILE_ERROR'), error);
               this.snackBar.open(
                 this.translate.get('SNACKS.OPEN_FILE_ERROR'),
-                null,
+                undefined,
                 {
                   duration: 4000,
                   panelClass: 'error',

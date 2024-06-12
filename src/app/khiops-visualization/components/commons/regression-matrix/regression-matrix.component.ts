@@ -10,8 +10,6 @@ import {
 } from '@angular/core';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
-import { AppConfig } from 'src/environments/environment';
-import _ from 'lodash';
 import { deepEqual } from 'fast-equals';
 import { MatrixCanvasComponent } from '@khiops-library/components/matrix-canvas/matrix-canvas.component';
 import { AppService } from '@khiops-visualization/providers/app.service';
@@ -19,7 +17,6 @@ import { PreparationVariableVO } from '@khiops-visualization/model/preparation-v
 import { Preparation2dDatasVO } from '@khiops-visualization/model/preparation2d-datas-vo';
 import { MatrixOptionsI } from '@khiops-library/interfaces/matrix-options';
 import { MatrixModesI } from '@khiops-library/interfaces/matrix-modes';
-import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 import { MatrixRangeValuesI } from '@khiops-visualization/interfaces/matrix-range-values';
 import { CellVO } from '@khiops-library/model/cell-vo';
 import { Preparation2dVariableVO } from '@khiops-visualization/model/preparation2d-variable-vo';
@@ -59,14 +56,11 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
   }
 
   ngAfterViewInit() {
+    const variable = this.preparationDatasService.getVariablesDatas(
+      this.preparationSource,
+    );
     this.minMaxValues =
-      this.preparation2dDatasService.getGlobalMinAndMax2dValues(
-        this.preparationDatasService.getVariablesDatas(this.preparationSource),
-      );
-    this.matrixOptions.selected =
-      localStorage.getItem(
-        AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_TYPE_OPTION',
-      ) || this.matrixOptions.types[0];
+      this.preparation2dDatasService.getGlobalMinAndMax2dValues(variable);
     this.preparation2dDatasService.getMatrixCanvasDatas(
       this.preparation2dDatas.selectedVariable,
     );
@@ -81,8 +75,7 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (
-      changes.selectedVariable &&
-      changes.selectedVariable.currentValue &&
+      changes?.selectedVariable?.currentValue &&
       !deepEqual(
         changes.selectedVariable.currentValue,
         changes.selectedVariable.previousValue,
@@ -136,35 +129,7 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
         title: 'P (' + varName1 + ' | ' + varName2 + ')',
       },
     ];
-    if (!this.matrixModes.selected) {
-      // Get previous selected target if compatible
-      const previousSelectedModeIndex = localStorage.getItem(
-        AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_MODE_OPTION_INDEX',
-      );
-      if (previousSelectedModeIndex) {
-        this.matrixModes.selected =
-          this.matrixModes.types[previousSelectedModeIndex];
-        this.matrixModes.selectedIndex = previousSelectedModeIndex;
-      } else {
-        // Select first by default
-        this.matrixModes.selected = this.matrixModes.types[0];
-        this.matrixModes.selectedIndex = 0;
-      }
-    } else {
-      // In case of variable selection change
-      // We must update the combobox
-      this.matrixModes.selected =
-        this.matrixModes.types[this.matrixModes.selectedIndex];
-    }
-  }
-
-  changeMatrixType(type: string) {
-    // this.khiopsLibraryService.trackEvent('click', 'matrix_type', type);
-    localStorage.setItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_TYPE_OPTION',
-      type,
-    );
-    this.matrixOptions.selected = type;
+    this.matrixModes = { ...this.matrixModes };
   }
 
   onToggleFullscreen(isFullscreen: boolean) {
@@ -172,18 +137,6 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
     setTimeout(() => {
       this.matrixCanvas.drawMatrix();
     });
-  }
-
-  changeMatrixMode(mode: MatrixModeI) {
-    // this.khiopsLibraryService.trackEvent('click', 'matrix_mode', mode.mode);
-    this.matrixModes.selected = mode;
-    this.matrixModes.selectedIndex = this.matrixModes.types.findIndex(
-      (e) => e.mode === mode.mode,
-    );
-    localStorage.setItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_MODE_OPTION_INDEX',
-      this.matrixModes.selectedIndex.toString(),
-    );
   }
 
   onMatrixAxisInverted() {

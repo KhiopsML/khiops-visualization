@@ -11,6 +11,7 @@ export class TreeNodeVO {
   name: string;
   cluster: string;
   bounds: string;
+  valueGroup: string[] | undefined = []; // in case of categorical
 
   shortDescription: string;
   parentCluster: string;
@@ -21,7 +22,7 @@ export class TreeNodeVO {
   hierarchicalRank: number;
   isLeaf: boolean;
   children: TreeNodeVO[];
-  description: string;
+  description: string | undefined;
   annotation: string;
 
   childrenList: string[] = [];
@@ -33,9 +34,9 @@ export class TreeNodeVO {
   isParentCluster = false;
   isUnfoldedByDefault = false;
 
-  externalData: string;
+  externalData: any = undefined;
 
-  clusterCompositionSize: number;
+  clusterCompositionSize: number | undefined;
 
   constructor(
     id,
@@ -48,6 +49,7 @@ export class TreeNodeVO {
     currentNodesNames?,
     currentAnnotations?,
     extData?,
+    valueGroup?: string[] | undefined,
   ) {
     // Generate id for tree node plugin
     this.id = id;
@@ -58,41 +60,52 @@ export class TreeNodeVO {
     this.leafPosition = leafPosition || -1;
     this.hierarchy = dimension.name || '';
 
-    this.cluster = (object && object.cluster) || '';
+    this.cluster = object?.cluster || '';
     this.bounds = this.cluster;
 
     if (dimension.type === TYPES.NUMERICAL) {
       // Reformat numerical values
       this.bounds = this.bounds.replace(']-inf', '[' + dimension.min);
       this.bounds = this.bounds.replace('+inf[', dimension.max + ']');
-      this.bounds = this.bounds.replace('*', 'Missing U ');
+      // this.bounds = this.bounds.replace('*', 'Missing U ');
+      // Code scanning alerts #4
+      this.bounds = this.bounds.replace(/\*/g, 'Missing U ');
     }
 
-    this.name = (object && object.name) || this.cluster;
+    this.name = object?.name || this.cluster;
 
-    if (currentNodesNames && currentNodesNames[this.name]) {
+    if (currentNodesNames?.[this.name]) {
       this.shortDescription = currentNodesNames[this.name];
     } else {
-      this.shortDescription =
-        (object && object.shortDescription) || this.bounds;
+      this.shortDescription = object?.shortDescription || this.bounds;
     }
-    if (currentAnnotations && currentAnnotations[this.name]) {
+    if (currentAnnotations?.[this.name]) {
       this.annotation = currentAnnotations[this.name];
     } else {
-      this.annotation = (object && object.annotation) || '';
+      this.annotation = object?.annotation || '';
     }
 
-    this.externalData =
-      (extData && extData[this.name.slice(1, -1)]) || undefined;
-    this.parentCluster = (object && object.parentCluster) || '';
+    this.valueGroup = valueGroup;
+    if (this.valueGroup && extData) {
+      for (let index = 0; index < this.valueGroup?.values.length; index++) {
+        const element = this.valueGroup.values[index];
+        if (extData[element]) {
+          if (!this.externalData) {
+            this.externalData = {};
+          }
+          this.externalData[element] = extData[element];
+        }
+      }
+    }
+    this.parentCluster = object?.parentCluster || '';
 
-    this.children = (object && object.children) || [];
-    this.frequency = (object && object.frequency) || undefined;
-    this.interest = (object && object.interest) || undefined;
-    this.hierarchicalLevel = (object && object.hierarchicalLevel) || undefined;
-    this.rank = (object && object.rank) || undefined;
-    this.hierarchicalRank = (object && object.hierarchicalRank) || undefined;
-    this.isLeaf = (object && object.isLeaf) || false;
+    this.children = object?.children || [];
+    this.frequency = object?.frequency || undefined;
+    this.interest = object?.interest || undefined;
+    this.hierarchicalLevel = object?.hierarchicalLevel || undefined;
+    this.rank = object?.rank || undefined;
+    this.hierarchicalRank = object?.hierarchicalRank || undefined;
+    this.isLeaf = object?.isLeaf || false;
 
     if (this.parentCluster === '') {
       this.isParentCluster = true;

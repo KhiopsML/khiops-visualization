@@ -1,16 +1,16 @@
 .target-distribution-graph-canvas-comp {
-	padding: 10px 1px 1px 1px;
-	background-color: var(--bgColor) !important; // for copy image
+  padding: 10px 1px 1px 1px;
+  background-color: var(--bgColor) !important; // for copy image
 
-	::ng-deep .bar-chart {
-		g[ng-reflect-height="0"] {
-			display: none !important;
-		}
-	}
-	::ng-deep .comp-header .comp-header-tools {
-		align-items: flex-end;
-		button {
-			margin-bottom: 4px;
-		}
-	}
+  ::ng-deep .bar-chart {
+    g[ng-reflect-height='0'] {
+      display: none !important;
+    }
+  }
+  ::ng-deep .comp-header .comp-header-tools {
+    align-items: flex-end;
+    button {
+      margin-bottom: 4px;
+    }
+  }
 }

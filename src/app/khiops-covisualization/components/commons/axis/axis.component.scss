@@ -1,11 +1,10 @@
 .axis-comp {
+  .app-cluster-details-container {
+    overflow: hidden !important;
+  }
 
-	.app-cluster-details-container {
-		overflow: hidden !important;
-	}
-
-	app-tree-select{
-		overflow: auto;
-		height: 100%;
-	}
+  app-tree-select {
+    overflow: auto;
+    height: 100%;
+  }
 }

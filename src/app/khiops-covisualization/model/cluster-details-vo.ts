@@ -19,7 +19,7 @@ export class ClusterDetailsVO {
     this.rank = object.rank;
     this._id = object.cluster;
 
-    if (currentNodesNames && currentNodesNames[object.parentCluster]) {
+    if (currentNodesNames?.[object.parentCluster]) {
       this.father = currentNodesNames[object.parentCluster];
     } else {
       this.father = object.parentCluster;

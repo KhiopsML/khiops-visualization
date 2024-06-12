@@ -2,7 +2,7 @@ import { DimensionVO } from '@khiops-library/model/dimension-vo';
 import * as _ from 'lodash'; // Important to import lodash in karma
 
 export class VariableDetailsVO {
-  dataGrid: {
+  dataGrid!: {
     dimensions: DimensionVO[];
     partTargetFrequencies: []; // regression or explanatory case
     partInterests: []; // regression or explanatory case
@@ -13,19 +13,19 @@ export class VariableDetailsVO {
     cellFrequencies: []; // normal 2d case
     frequencies: []; // normal case
   };
-  inputValues: {
+  inputValues!: {
     // regression or explanatory case
     values: string[];
     frequencies: string[];
   };
   isLimitedDatas = true;
 
-  constructor(object, maxDatasSize) {
+  constructor(object: any, maxDatasSize: number) {
     this.isLimitedDatas = false;
     if (object) {
       const clone = _.cloneDeep(object);
-      this.dataGrid = (clone && clone.dataGrid) || undefined;
-      this.inputValues = (clone && clone.inputValues) || undefined;
+      this.dataGrid = clone?.dataGrid || undefined;
+      this.inputValues = clone?.inputValues || undefined;
 
       // Limit datas to 10000
       if (

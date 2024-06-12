@@ -30,7 +30,7 @@ export class DistributionGraphCanvasComponent
   implements OnInit
 {
   @Input() position = 0;
-  @Input() inputDatas: ChartDatasVO = undefined;
+  @Input() override inputDatas: ChartDatasVO = undefined;
   @Input() graphOptions: DistributionOptionsI;
   @Input() activeEntries: number;
   @Input() isLoadingDatas = false;
@@ -44,19 +44,19 @@ export class DistributionGraphCanvasComponent
   datas = [];
   title: string;
 
-  graphIdContainer: string | undefined = undefined;
+  override graphIdContainer: string | undefined = undefined;
   colorSet: ChartColorsSetI;
   chartOptions: ChartOptions;
   scaleType: string;
-  maxScale: number = 0;
-  minScale: number = 0;
+  override maxScale: number = 0;
+  override minScale: number = 0;
 
   constructor(
-    public selectableService: SelectableService,
+    public override selectableService: SelectableService,
+    public override ngzone: NgZone,
+    public override configService: ConfigService,
     private toPrecision: ToPrecisionPipe,
     private khiopsLibraryService: KhiopsLibraryService,
-    public ngzone: NgZone,
-    public configService: ConfigService,
   ) {
     super(selectableService, ngzone, configService);
 
@@ -78,7 +78,7 @@ export class DistributionGraphCanvasComponent
         tooltip: {
           callbacks: {
             label: (items: any) => {
-              if (items && items.dataset) {
+              if (items?.dataset) {
                 if (
                   !this.hideGraphOptions &&
                   this.graphOptions &&
@@ -88,13 +88,10 @@ export class DistributionGraphCanvasComponent
                     items.dataset.extra[items.dataIndex].extra.coverageValue,
                   );
                 } else if (
-                  !this.hideGraphOptions &&
-                  this.graphOptions.selected === TYPES.FREQUENCY
+                  (!this.hideGraphOptions &&
+                    this.graphOptions.selected === TYPES.FREQUENCY) ||
+                  this.graphOptions.selected === HistogramType.YLOG
                 ) {
-                  return this.toPrecision.transform(
-                    items.dataset.extra[items.dataIndex].extra.value,
-                  );
-                } else if (this.graphOptions.selected === HistogramType.YLOG) {
                   return this.toPrecision.transform(
                     items.dataset.extra[items.dataIndex].extra.value,
                   );
@@ -104,9 +101,10 @@ export class DistributionGraphCanvasComponent
                   );
                 }
               }
+              return undefined;
             },
             afterLabel: (items: any) => {
-              if (items && items.dataset) {
+              if (items?.dataset) {
                 if (
                   !this.hideGraphOptions &&
                   this.graphOptions &&
@@ -125,6 +123,7 @@ export class DistributionGraphCanvasComponent
                   }
                 }
               }
+              return undefined;
             },
           },
         },
@@ -140,8 +139,8 @@ export class DistributionGraphCanvasComponent
               ) {
                 // Frequency log mode
                 if (
-                  value.toString().charAt(0) === '0' ||
-                  value.toString().charAt(0) === '1'
+                  value.toString().startsWith('0') ||
+                  value.toString().startsWith('1')
                 ) {
                   return value.toLocaleString();
                 } else {
@@ -181,22 +180,25 @@ export class DistributionGraphCanvasComponent
   }
 
   changeGraphType(type) {
-    // this.khiopsLibraryService.trackEvent('click', 'distribution_graph_type', this.graphOptions.selected);
+    // this.trackerService.trackEvent('click', 'distribution_graph_type', this.graphOptions.selected);
 
     localStorage.setItem(
       this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
         'DISTRIBUTION_GRAPH_OPTION',
       type,
     );
-    this.chartOptions.scales!.y!.max = undefined;
-    this.chartOptions.scales!.y!.min = undefined;
-
-    this.graphOptions.selected = type;
     this.graphTypeChanged.emit(type);
-    this.chartOptions.scales!.y!.type = TYPES.LINEAR;
 
+    this.chartOptions.scales.y.max = undefined;
+    this.chartOptions.scales.y.min = undefined;
+    this.chartOptions.scales.y.type = TYPES.LINEAR;
     const minValue = Math.min(...this.inputDatas.datasets[0].data);
-    this.chartOptions.scales!.y!.min = minValue;
+
+    if (minValue > 0) {
+      this.chartOptions.scales.y.min = 0;
+    } else {
+      this.chartOptions.scales.y.min = minValue;
+    }
     this.chartOptions = _.cloneDeep(this.chartOptions);
   }
 }

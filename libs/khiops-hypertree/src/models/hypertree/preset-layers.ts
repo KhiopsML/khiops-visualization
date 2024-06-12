@@ -1,20 +1,16 @@
 import { N } from '../n/n';
-import { C, CptoCk, CktoCp, πify } from '../transformation/hyperbolic-math';
-import { CaddC, CsubC, CmulR } from '../transformation/hyperbolic-math';
+import { C, CptoCk } from '../transformation/hyperbolic-math';
+import { CaddC } from '../transformation/hyperbolic-math';
 import { UnitDisk } from '../../components/unitdisk/unitdisk';
 import { NodeLayer } from '../../components/layers/node-layer';
 import { CellLayer } from '../../components/layers/cell-layer';
 import { BackgroundLayer } from '../../components/layers/background-layer';
-import { SymbolLayer } from '../../components/layers/symbol-layer';
 import { ArcLayer } from '../../components/layers/link-layer';
 import { LabelLayer } from '../../components/layers/label-layer';
 import { LabelForceLayer } from '../../components/layers/label-force-layer';
 import { InteractionLayer } from '../../components/layers/interaction-layer';
 import { InteractionLayer2 } from '../../components/layers/interaction-layer-2';
-import { TraceLayer } from '../../components/layers/trace-layer';
-import { ImageLayer } from '../../components/layers/image-layer';
 import { FocusLayer } from '../../components/layers/focus-layer';
-import { StemLayer } from '../../components/layers/stem-layer';
 import { bboxCenter, bboxOval } from '../../d3-hypertree';
 
 export const labeloffsets = {
@@ -114,7 +110,7 @@ export const layerSrc = [
             className:  'weigths',
             data:       ()=> ud.cache.weights,
             r:          d=> ud.args.nodeRadius(ud, d),
-            transform:  d=> d.transformStrCache 
+            transform:  d=> d.transformStrCache
                             + ` scale(${ud.args.nodeScale(d)})`,
         }),
         (v, ud:UnitDisk)=> new NodeLayer(v, {
@@ -124,7 +120,7 @@ export const layerSrc = [
             className:  'wedges',
             data:       ()=> ud.cache.weights,
             r:          d=> ud.args.nodeRadius(ud, d),
-            transform:  d=> d.transformStrCache 
+            transform:  d=> d.transformStrCache
                             + ` scale(${ud.args.nodeScale(d)})`,
         }),
 
@@ -200,33 +196,6 @@ export const layerSrc = [
 
       //.attr("stroke-width", d=> w(d))
     }),
-  // (v, ud: UnitDisk) => new StemLayer(v, {
-  //     invisible: false,
-  //     hideOnDrag: false,
-  //     name: 'stem-arc',
-  //     className: 'arc',
-  //     curvature: '+',
-  //     clip: '#circle-clip' + ud.args.clipRadius,
-  //     data: () => [],
-  //     nodePos: n => n.cache,
-  //     nodePosStr: n => n.strCache,
-  //     width: d => ud.args.linkWidth(d) + .001,
-  //     classed: (s, w) => s
-  //         .classed("hovered", d => d.pathes && d.pathes.isPartOfAnyHoverPath)
-  //         .classed("selected", d => d.pathes && d.pathes.isPartOfAnySelectionPath)
-  //         .style("stroke", d => d.pathes && d.pathes.finalcolor)
-  //         .attr("stroke-width", d => w(d))
-  //     ,
-  //     classed2: (s, w) => s
-  //         .classed("hovered-path", d => d.pathes && d.pathes.isPartOfAnyHoverPath)
-  //         .classed("selected-path", d => d.pathes && d.pathes.isPartOfAnySelectionPath)
-  //         .style("stroke", d => d.pathes && d.pathes.finalcolor)
-  //         .attr("stroke-width", d => w(d) +
-  //             (((d.pathes && d.pathes.isPartOfAnySelectionPath) ||
-  //                 (d.pathes && d.pathes.isPartOfAnyHoverPath)) ? .015 : 0)),
-  // }),
-
-  // nodes
 
   // @ts-ignore
   (v, ud: UnitDisk) =>
@@ -245,34 +214,6 @@ export const layerSrc = [
       transform: (d) => d.transformStrCache + ` scale(${ud.args.nodeScale(d)})`,
     }),
 
-  // IMAGE LABLE SYMBOL EMOJI
-
-  (v, ud: UnitDisk) =>
-    new SymbolLayer(v, {
-      invisible: false,
-      hideOnDrag: false,
-      name: 'symbols',
-      data: () => ud.cache.spezialNodes,
-      transform: (d) => d.transformStrCache + ` scale(${d.dampedDistScale})`,
-    }),
-  (v, ud: UnitDisk) =>
-    new ImageLayer(v, {
-      name: 'images',
-      data: () => ud.cache.images,
-      width: 0.05,
-      height: 0.05,
-      imagehref: (d) => d.precalc.imageHref,
-      delta: (d) =>
-        CmulR(
-          {
-            re: -0.05,
-            im: -0.05,
-          },
-          d.distScale,
-        ),
-      transform: (d, delta) =>
-        ` translate(${d.cache.re} ${d.cache.im})` + ` scale(${d.distScale})`,
-    }),
   (v, ud: UnitDisk) =>
     new LabelLayer(v, {
       //invisible:  true,
@@ -355,12 +296,5 @@ export const layerSrc = [
         ud.view.hypertree.api.toggleSelection(s); // toggle selection
         ud.view.hypertree.args.interaction.onNodeSelect(s); // focus splitter
       },
-    }),
-  (v, ud: UnitDisk) =>
-    new TraceLayer(v, {
-      invisible: true,
-      hideOnDrag: true,
-      name: 'traces',
-      data: () => ud.view.hypertree.args.objects.traces,
     }),
 ];

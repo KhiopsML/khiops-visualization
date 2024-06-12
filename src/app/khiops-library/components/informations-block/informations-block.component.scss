@@ -1,44 +1,43 @@
-// TODO move to variable
-@import "../../../../theme.scss";
-
 .informations-block-comp {
-	h1 {
-		mat-icon {
-			margin-right: 0.4em;
-			font-size: 21px;
-		}
-	}
+  overflow: auto;
+  h1 {
+    mat-icon {
+      margin-right: 0.4em;
+      font-size: 21px;
+    }
+  }
 
-	table {
-		margin: 0.2em 1.1em;
-		padding-bottom: 1em;
+  table {
+    margin: 0.2em 1.1em;
+    padding-bottom: 1em;
 
-		tr {
-			th {
-				padding: 0;
-				text-align: left;
-				padding-right: 10px;
-			}
-			td {
-				padding: 0;
-				word-break: break-all;
-			}
+    tr {
+      th {
+        padding: 0;
+        text-align: left;
+        padding-right: 10px;
+      }
+      td {
+        padding: 0;
+        word-break: break-all;
+        min-width: 80px;
+      }
 
-			strong {
-				font-size: 0.95em;
-				font-weight: 500;
-				color: var(--primary-10);
-			}
+      strong {
+        font-size: 0.95em;
+        font-weight: 500;
+        color: var(--primary-10);
+      }
 
-			em {
-				font-size: 0.95em;
-				font-weight: 500;
-				color: var(--primary-contrast);
-				background: var(--bgColor-20);
-				padding: 1px 5px;
-				border-radius: 4px;
-				margin: 4px 0;
-			}
-		}
-	}
+      em {
+        font-size: 0.95em;
+        font-weight: 500;
+        color: var(--primary-contrast);
+        background: var(--bgColor-20);
+        padding: 1px 5px;
+        border-radius: 4px;
+        margin: 4px 0;
+      }
+    }
+  }
 }

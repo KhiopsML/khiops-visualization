@@ -18,6 +18,7 @@ import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
 import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
 import { ChartOptions } from 'chart.js';
 import { ConfigService } from '@khiops-library/providers/config.service';
+import { VariableVO } from '@khiops-visualization/model/variable-vo';
 
 @Component({
   selector: 'app-level-distribution-graph',
@@ -29,10 +30,10 @@ export class LevelDistributionGraphCanvasComponent
   extends ScrollableGraphCanvasComponent
   implements OnInit
 {
-  @Input() datas: string;
+  @Input() datas: VariableVO[];
   @Input() levelDistributionTitle: string;
 
-  inputDatas: ChartDatasVO = undefined;
+  override inputDatas: ChartDatasVO = undefined;
   colorSet: ChartColorsSetI;
 
   @ViewChild('levelGraph', {
@@ -41,27 +42,27 @@ export class LevelDistributionGraphCanvasComponent
   levelGraph: ElementRef;
 
   // define an id to be copied into clipboard
-  id: any = 'level-distribution-graph-canvas-comp';
+  override id: any = 'level-distribution-graph-canvas-comp';
 
-  maxScale: number =
+  override maxScale: number =
     AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.MAX_LENGTH;
-  minScale: number =
+  override minScale: number =
     AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.MIN_LENGTH;
   stepScale: number =
     AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.STEP;
   chartOptions: ChartOptions;
 
   componentType = '1dBarChart'; // needed to copy datas
-  graphIdContainer = 'level-distribution-graph-canvas';
+  override graphIdContainer = 'level-distribution-graph-canvas';
 
   constructor(
     private distributionDatasService: DistributionDatasService,
-    public selectableService: SelectableService,
+    public override selectableService: SelectableService,
+    public override ngzone: NgZone,
+    public override configService: ConfigService,
     private translate: TranslateService,
     private snackBar: MatSnackBar,
     private khiopsLibraryService: KhiopsLibraryService,
-    public ngzone: NgZone,
-    public configService: ConfigService,
   ) {
     super(selectableService, ngzone, configService);
 
@@ -76,6 +77,7 @@ export class LevelDistributionGraphCanvasComponent
               if (items && items.dataset) {
                 return items.formattedValue;
               }
+              return undefined;
             },
           },
         },
@@ -102,7 +104,7 @@ export class LevelDistributionGraphCanvasComponent
     ) {
       this.snackBar.open(
         this.translate.get('SNACKS.TOO_MANY_VARIABLES'),
-        null,
+        undefined,
         {
           duration: 5000,
           panelClass: 'warning',

@@ -1,0 +1,27 @@
+<div
+  class="matrix-mode-comp"
+  fxFlex
+  fxLayout="row"
+  fxLayoutAlign="start center"
+>
+  <button
+    class="button-accent"
+    mat-stroked-button
+    color="accent"
+    [title]="matrixModes.selected.tooltip || ''"
+    [matMenuTriggerFor]="matrixModesTypes"
+  >
+    {{ matrixModes.selected.title | translate }} <em>v</em>
+  </button>
+  <mat-menu #matrixModesTypes>
+    <button
+      mat-menu-item
+      *ngFor="let opt of matrixModes.types"
+      (click)="changeMatrixMode(opt)"
+    >
+      <span [title]="opt.tooltip || ''">
+        {{ opt.title | translate }}
+      </span>
+    </button>
+  </mat-menu>
+</div>

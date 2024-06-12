@@ -18,6 +18,7 @@ import { HistogramValuesI } from '@khiops-visualization/components/commons/histo
 import { TreeNodeVO } from '@khiops-visualization/model/tree-node-vo';
 import { PreparationVariableVO } from '@khiops-visualization/model/preparation-variable-vo';
 import { TreePreparationVariableVO } from '@khiops-visualization/model/tree-preparation-variable-vo';
+import { DistributionChartDatasVO } from '@khiops-visualization/interfaces/distribution-chart-datas-vo';
 
 @Injectable({
   providedIn: 'root',
@@ -51,37 +52,23 @@ export class DistributionDatasService {
     this.distributionDatas.targetDistributionDisplayedValues = values;
   }
 
-  setTreeNodeTargetDistributionDisplayedValues(values: ChartToggleValuesI[]) {
-    this.distributionDatas.treeNodeTargetDistributionDisplayedValues = values;
-  }
-
-  getTreeNodeTargetDistributionDisplayedValues(): ChartToggleValuesI[] {
-    return this.distributionDatas.treeNodeTargetDistributionDisplayedValues;
-  }
-
-  setTreeHyperDisplayedValues(values: ChartToggleValuesI[]) {
-    this.distributionDatas.treeHyperDisplayedValues = values;
-  }
-
-  getTreeHyperDisplayedValues(): ChartToggleValuesI[] {
-    return this.distributionDatas.treeHyperDisplayedValues;
-  }
-
   computeModalityCounts(modality): ModalityCountsVO {
     const counts = new ModalityCountsVO();
-    const dimensionLength = modality[0].length;
-    for (let i = 0; i < modality.length; i++) {
-      for (let j = 0; j < dimensionLength; j++) {
-        if (!counts.series[j]) {
-          counts.series[j] = 0;
+    if (modality) {
+      const dimensionLength = modality[0].length;
+      for (let i = 0; i < modality.length; i++) {
+        for (let j = 0; j < dimensionLength; j++) {
+          if (!counts.series[j]) {
+            counts.series[j] = 0;
+          }
+          counts.series[j] = counts.series[j] + modality[i][j];
+          counts.total = counts.total + modality[i][j];
         }
-        counts.series[j] = counts.series[j] + modality[i][j];
-        counts.total = counts.total + modality[i][j];
       }
-    }
-    for (let k = 0; k < dimensionLength; k++) {
-      counts.totalProbability[k] =
-        counts.series[k] / counts.series.reduce((a, b) => a + b, 0);
+      for (let k = 0; k < dimensionLength; k++) {
+        counts.totalProbability[k] =
+          counts.series[k] / counts.series.reduce((a, b) => a + b, 0);
+      }
     }
 
     return counts;
@@ -148,12 +135,11 @@ export class DistributionDatasService {
     if (
       this.distributionDatas.preparationSource &&
       selectedVariable &&
-      selectedNode &&
-      selectedNode.isLeaf
+      selectedNode?.isLeaf
     ) {
       const allTargetValues: string[] =
         appDatas.treePreparationReport.summary.targetValues.values;
-      const fullTarget = [];
+      const fullTarget: any[] = [];
       // Update currentDatas and fill empty values with 0
       for (let i = 0; i < allTargetValues.length; i++) {
         const currentTargetIndex = selectedNode.targetValues.values.indexOf(
@@ -174,19 +160,19 @@ export class DistributionDatasService {
         currentVar,
         this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_TABLE_SIZE,
       );
-      const currentDatas = variableDetails.dataGrid.partTargetFrequencies;
+      const currentDatas = variableDetails?.dataGrid?.partTargetFrequencies;
 
       //get selectednode index
       const currentXAxis = [selectedNode.nodeId];
       [
         this.distributionDatas.treeNodeTargetDistributionGraphDatas,
-        this.distributionDatas.treeNodeTargetDistributionDisplayedValues,
+        this.distributionDatas.targetDistributionDisplayedValues,
       ] = this.computeTargetDistributionGraph(
         allTargetValues,
         currentDatas,
         [fullTarget],
         [currentXAxis],
-        this.distributionDatas.treeNodeTargetDistributionDisplayedValues,
+        this.distributionDatas.targetDistributionDisplayedValues,
         this.distributionDatas.treeNodeTargetDistributionType,
         selectedVariable.type,
       );
@@ -200,10 +186,10 @@ export class DistributionDatasService {
     currentDatas: number[][],
     allDatas: number[][],
     currentXAxis: string[] | number[] | string[][] | number[][],
-    displayedValues: ChartToggleValuesI[],
+    displayedValues: ChartToggleValuesI[] | undefined,
     type: string,
     selectedVariableType: string,
-  ): [ChartDatasVO, ChartToggleValuesI[]] {
+  ): [ChartDatasVO, ChartToggleValuesI[] | undefined] {
     const targetDistributionGraphDatas = new ChartDatasVO();
 
     let dimensionLength = 0;
@@ -226,7 +212,7 @@ export class DistributionDatasService {
 
       for (let k = 0; k < dimensionLength; k++) {
         const currentPartition = partition[k];
-        const currentDataSet = new ChartDatasetVO(currentPartition);
+        const currentDataSet = new ChartDatasetVO(currentPartition.toString());
         targetDistributionGraphDatas.datasets.push(currentDataSet);
 
         let l: number = currentXAxis.length;
@@ -250,7 +236,7 @@ export class DistributionDatasService {
             (e) => e.name === currentPartition,
           );
 
-          if (kObj && kObj.show) {
+          if (kObj?.show) {
             if (type === TYPES.PROBABILITIES) {
               currentValue = (el[k] * 100) / currentTotal;
             } else {
@@ -339,16 +325,13 @@ export class DistributionDatasService {
     return distributionsGraphDetails;
   }
 
-  getHistogramGraphDatas(selectedVariable): HistogramValuesI[] {
+  getHistogramGraphDatas(selectedVariable): HistogramValuesI[] | undefined {
     const appDatas = this.appService.getDatas().datas;
     const varDatas =
-      appDatas.preparationReport.variablesDetailedStatistics[
-        selectedVariable.rank
-      ] &&
-      appDatas.preparationReport.variablesDetailedStatistics[
-        selectedVariable.rank
-      ].dataGrid;
-    let histogramGraphDetails: HistogramValuesI[] = undefined;
+      appDatas?.preparationReport?.variablesDetailedStatistics?.[
+        selectedVariable?.rank
+      ]?.dataGrid;
+    let histogramGraphDetails: HistogramValuesI[] | undefined = undefined;
 
     if (varDatas) {
       this.distributionDatas.setHistogramGraphOptions();
@@ -374,7 +357,7 @@ export class DistributionDatasService {
               value: value,
               logValue: logValue,
             };
-            histogramGraphDetails.push(data);
+            histogramGraphDetails?.push(data);
           }
         },
       );
@@ -392,11 +375,8 @@ export class DistributionDatasService {
     currentXAxis,
     selectedVariable,
   ): any {
-    let distributionsGraphDetails = {
-      datasets: [],
-      labels: [],
-      intervals: [],
-    };
+    let distributionsGraphDetails: DistributionChartDatasVO =
+      new ChartDatasVO();
 
     if (currentDimension) {
       // Add trash info to the defaultGroupIndex
@@ -405,8 +385,7 @@ export class DistributionDatasService {
           ', *';
       }
 
-      partition =
-        currentDimension.partition && currentDimension.partition.length;
+      partition = currentDimension?.partition?.length;
       const currentDataSet = new ChartDatasetVO(
         this.distributionDatas.distributionType,
       );
@@ -425,12 +404,12 @@ export class DistributionDatasService {
         const frequencyValue = frequencyArray[i];
 
         // format x axis legend text
-        const currentName = this.formatXAxis(
+        const currentName: string = this.formatXAxis(
           currentXAxis[i],
           i,
           selectedVariable.type,
         );
-
+        distributionsGraphDetails.intervals = [];
         distributionsGraphDetails.labels.push(currentName);
         distributionsGraphDetails.intervals.push(currentXAxis[i]);
         const graphItem: BarVO = new BarVO();
@@ -465,8 +444,8 @@ export class DistributionDatasService {
   }
 
   getAllFrequencyAndCoverageValues(currentDatas, dimensions, partition) {
-    const frequencyArray = [];
-    const coverageArray = [];
+    const frequencyArray: number[] = [];
+    const coverageArray: number[] = [];
     for (let i = 0; i < currentDatas.length; i++) {
       const coverageValue = this.getCoverageValueFromDimensionAndPartition(
         dimensions,
@@ -523,7 +502,7 @@ export class DistributionDatasService {
       }
       graphItem.value = el.level || 0; // Do not add tofixed here because datas are < 0.00
       currentDataSet.data.push(graphItem.value);
-      levelDistributionGraphDatas.labels.push(graphItem.name);
+      levelDistributionGraphDatas.labels.push(graphItem.name || '');
     }
 
     return levelDistributionGraphDatas;

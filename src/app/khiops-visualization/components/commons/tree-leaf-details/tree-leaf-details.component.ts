@@ -6,7 +6,6 @@ import {
   SimpleChanges,
   Input,
 } from '@angular/core';
-import _ from 'lodash';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
 import { TranslateService } from '@ngstack/translate';
@@ -29,7 +28,7 @@ export class TreeLeafDetailsComponent implements OnInit, OnChanges {
 
   populationCount: number = 10;
 
-  treePreparationDatas: TreePreparationDatasVO;
+  treePreparationDatas: TreePreparationDatasVO | undefined;
   distributionDatas: DistributionDatasVO;
   position = 1; // to change graph id
 
@@ -51,24 +50,22 @@ export class TreeLeafDetailsComponent implements OnInit, OnChanges {
   }
 
   updateComponentDatas() {
-    setTimeout(() => {
+    if (this.selectedNode) {
       this.distributionDatasService.getTreeNodeTargetDistributionGraphDatas(
         this.selectedNode,
       );
-      //Set the same as other components at init
-      this.distributionDatasService.setTreeHyperDisplayedValues(
-        this.distributionDatas.treeNodeTargetDistributionDisplayedValues,
-      );
       this.treeLeafRules = this.treePreparationDatasService.getTreeLeafRules();
-
       this.populationCount = UtilsService.arraySum(
         this.selectedNode.targetValues.frequencies,
       );
-    });
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.selectedNode && changes.selectedNode.currentValue) {
+    if (changes.selectedNode?.currentValue) {
+      this.updateComponentDatas();
+    }
+    if (changes.displayedValues?.currentValue) {
       this.updateComponentDatas();
     }
   }
@@ -83,17 +80,11 @@ export class TreeLeafDetailsComponent implements OnInit, OnChanges {
     );
   }
 
-  onTreeNodeTargetDistributionGraphDisplayedValuesChanged(displayedValues) {
-    this.distributionDatasService.setTreeNodeTargetDistributionDisplayedValues(
+  onTreeNodeTargetDistributionGraphDisplayedValuesChanged(
+    displayedValues: ChartToggleValuesI[],
+  ) {
+    this.distributionDatasService.setTargetDistributionDisplayedValues(
       displayedValues,
     );
-    this.distributionDatasService.getTreeNodeTargetDistributionGraphDatas(
-      this.selectedNode,
-      this.treeNodeTargetDistributionGraphType,
-    );
-  }
-
-  onTreeHyperValuesChanged(displayedValues: ChartToggleValuesI[]) {
-    this.distributionDatasService.setTreeHyperDisplayedValues(displayedValues);
   }
 }
