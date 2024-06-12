@@ -3,6 +3,7 @@
 @import 'app/khiops-library/components/ag-grid/ag-theme-material.scss';
 @import 'app/khiops-library/libs/treeview/treeview.scss';
 @import '../libs/khiops-hypertree/dist/d3-hypertree-light';
+@import 'material.scss';
 html,
 body {
   margin: 0;
@@ -12,10 +13,6 @@ body {
   min-height: 600px;
   overflow: hidden;
   font-size: 12px !important;
-}
-
-::ng-deep mat-dialog-container {
-  background-color: var(-bgColor) !important;
 }
 
 ::ng-deep .unitdisk-nav {
@@ -35,14 +32,6 @@ h1 {
 #header-title-comp {
   background: transparent !important;
 }
-
-// .mat-drawer-content,
-// .mat-tab-group {
-//   background: transparent !important;
-// }
-// #home-layout-comp #main-tab-group > .mat-tab-body-wrapper {
-//   background: transparent !important;
-// }
 
 #project-view-comp,
 #preparation-view-comp {
@@ -64,13 +53,6 @@ h1 {
   font-style: italic;
 }
 
-.mat-checkbox-background {
-  border: 2px solid var(--bgColor-30) !important;
-}
-.mat-checkbox-checked.mat-accent .mat-checkbox-background {
-  border: 0px !important;
-}
-
 .comp-header {
   background: var(--bgColor) !important;
 }
@@ -80,11 +62,6 @@ h1 {
 ag-grid-angular {
   background: var(--bgColor) !important;
 }
-
-// .mat-tab-body {
-//   background: var(--bgColor-20) !important;
-// }
-
 as-split-area {
   background: var(--bgColor) !important;
 }
@@ -132,15 +109,6 @@ as-split-area {
 
 .ag-row {
   color: var(--bgColorContrast) !important;
-}
-
-::ng-deep .mat-badge-content {
-  border-color: var(--bgColor) !important;
-}
-
-.mat-mini-fab {
-  width: 36px !important;
-  height: 36px !important;
 }
 
 .material-icons {
@@ -301,81 +269,8 @@ split-gutter {
   background-color: rgba(0, 0, 0, 0.04) !important;
 }
 
-.mat-elevation-z1 {
-  border-bottom: 1px solid var(--bgColor-10) !important;
-  box-shadow: none !important;
-}
-
-// .mat-tab-header {
-//   background-color: var(--bgColor) !important;
-//   border-bottom: 1px solid var(--bgColor-10) !important;
-//   height: 68px !important;
-//   width: 100% !important;
-//   z-index: 1000;
-//   box-shadow: none !important;
-// }
-
-// .mat-mdc-tab-body-wrapper {
-//   flex: 1;
-//   z-index: 1000 !important;
-//   height: 100%;
-//   // width: 100%;
-// }
-
-// mat-tab-header {
-//   box-shadow: 0 2px 4px -2px rgba(0, 0, 0, 0.2) !important;
-//   border-bottom: 0px !important;
-// }
-
-.mat-paginator-container {
-  min-height: 36px !important;
-  padding: 0 !important;
-}
-
-.mat-tab-label {
-  height: 68px !important;
-  // text-transform: uppercase;
-  margin: 0 20px;
-  opacity: 0.7 !important;
-}
-
-.mat-tab-label-active {
-  background-color: none !important;
-  opacity: 1 !important;
-}
-
-.mat-tab-label:hover {
-  background-color: var(--bgColor-10) !important;
-}
-
-.mat-tab-label.mat-tab-label-active {
-  // color: var(--primary) !important;
-}
-
-.mat-tab-label {
-  min-width: 100px !important;
-  padding: 5px !important;
-  margin: 0px !important;
-  font-size: 0.9em !important;
-}
-
 em {
   font-style: normal;
-}
-
-.mat-menu-trigger {
-  span {
-    em {
-      transform: scaleX(2);
-      display: inline-block;
-      font-size: 0.6em;
-      font-family: verdana;
-    }
-  }
-}
-
-.mat-elevation-z4 {
-  box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.12) !important;
 }
 
 h1 {
@@ -422,7 +317,7 @@ h2 {
 }
 
 .selected {
-  .mat-tab-group {
+  .mat-mdc-tab-group {
     box-shadow: inset 0px 0px 0px 1px var(--selected);
     padding: 1px;
 
@@ -444,26 +339,6 @@ h2 {
   padding: 1px !important;
 }
 
-.mat-simple-snackbar {
-  color: white !important;
-}
-
-.mat-snack-bar-container.success {
-  background-color: var(--primary) !important;
-}
-
-.mat-snack-bar-container.warning {
-  background: var(--yellowMain) !important;
-
-  span {
-    color: #374779;
-  }
-}
-
-.mat-snack-bar-container.error {
-  background: var(--redMain) !important;
-}
-
 app-home-layout {
   flex: 1;
   position: absolute;
@@ -483,22 +358,6 @@ app-home-layout {
       em {
         margin-left: 1em;
         font-style: normal;
-      }
-    }
-  }
-}
-
-.mat-menu-panel {
-  max-width: none !important;
-
-  mat-checkbox {
-    display: block;
-
-    label {
-      display: block;
-
-      span {
-        text-transform: capitalize;
       }
     }
   }
@@ -529,18 +388,6 @@ app-home-layout {
   .graph-comp-chart {
     position: relative;
   }
-}
-
-.mat-tooltip {
-  font-size: 14px !important;
-  background: var(--bgTooltip) !important;
-}
-
-.mat-ink-bar {
-  height: 3px !important;
-  transition: 100ms cubic-bezier(0.35, 0, 0.25, 1) !important;
-  // border-top-left-radius: 3px !important;
-  // border-top-right-radius: 3px !important;
 }
 
 .variables-list-container {
@@ -580,45 +427,6 @@ kl-legend {
   }
 }
 
-.checkbox-select-all {
-  margin-bottom: 1em;
-
-  .mat-menu-panel mat-checkbox label span {
-    text-transform: uppercase;
-  }
-}
-
-.checkbox-select {
-  mat-checkbox {
-    label {
-      padding-left: 3em !important;
-      padding-right: 3em !important;
-    }
-  }
-}
-
-.mat-tab-group {
-  background: white;
-  z-index: 999;
-  position: relative;
-}
-
-.mat-button,
-.mat-flat-button {
-  line-height: 32px !important;
-  padding: 0 12px !important;
-}
-
-.mat-stroked-button {
-  line-height: 30px !important;
-  padding: 0 12px !important;
-}
-
-.mat-menu-item {
-  line-height: 2.8em !important;
-  height: 2.8em !important;
-}
-
 .line-highlight {
   opacity: 0; // hide gradient on line charts
 }
@@ -651,22 +459,6 @@ kl-legend {
   overflow: hidden !important;
   position: absolute;
   border: 1px solid #eeeeee;
-}
-
-mat-button-toggle-group {
-  margin-right: 0.8em;
-  height: 36px;
-  line-height: 34px !important;
-  max-height: 36px;
-
-  .mat-button-toggle-label-content {
-    line-height: 0px !important;
-  }
-
-  .mat-button-toggle-checked {
-    background-color: var(--primary) !important;
-    color: white !important;
-  }
 }
 
 .as-vertical > .as-split-gutter .as-split-gutter-icon {
@@ -759,41 +551,15 @@ ag-grid-angular {
   color: var(--primary);
 }
 
-.mat-slider-thumb {
-  border-width: 3px !important;
-  transform: scale(0.7) !important;
-}
-
-.mat-drawer-content {
-  background: white;
-}
-
-.mat-paginator-icon {
-  height: 20px !important;
-}
-
 kl-chart-next {
   height: 100%;
   margin: 0 1em;
   min-height: 0px;
 }
 
-button.primary-btn {
-  mat-icon {
-    color: white !important;
-    font-size: 20px !important;
-  }
-}
-
 kl-matrix-canvas {
   width: calc(100% - 2px); // for selectable service
   padding-bottom: 1px; // important to avoid useless scrollbar
-}
-
-.mat-list mat-row {
-  height: 2.4em !important;
-  min-height: 2.4em !important;
-  max-height: 2.4em !important;
 }
 
 #root-loading {
@@ -822,31 +588,12 @@ kl-matrix-canvas {
   background-position: center;
 }
 
-.mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
-  display: none !important;
-}
-
 button {
   span {
     font-weight: 400 !important;
     font-size: 0.8rem !important;
   }
 }
-
-.mat-progress-bar .mat-progress-bar-fill {
-  transition-duration: initial !important;
-}
-
-.mat-button-toggle-standalone,
-.mat-button-toggle-group {
-  font-size: 0.8em !important;
-  height: 32px !important;
-}
-
-.mat-button-toggle {
-  color: var(--primary) !important;
-}
-
 .rotate-90 {
   transform: rotate(90deg);
 }
@@ -855,30 +602,6 @@ canvas:focus {
   outline: 0;
   outline-color: transparent;
   outline-style: none;
-}
-
-.more-menu + * .cdk-overlay-pane > div.mat-menu-panel > div.mat-menu-content {
-  padding: 0.9em 0 0 1em;
-}
-
-.mat-tab-label-content {
-  label {
-    cursor: pointer;
-  }
-}
-
-.mat-drawer-container {
-  background-color: var(--bgColor) !important;
-  color: var(--bgColorContrast) !important;
-}
-
-.mat-badge-content {
-  border: 3px solid var(--bgColor) !important;
-  width: 10px !important;
-  height: 10px !important;
-  line-height: 12px !important;
-  top: -8px !important;
-  right: -6px !important;
 }
 
 .cc-floating.cc-theme-classic {
@@ -901,10 +624,6 @@ canvas:focus {
   background-color: #000000cc;
 }
 
-.mat-checkbox-layout .mat-checkbox-label {
-  font-size: 0.8rem !important;
-}
-
 .fullscreen {
   position: fixed !important;
   z-index: 10000 !important;
@@ -919,10 +638,6 @@ canvas:focus {
   background-color: var(--bgColor) !important;
   // box-shadow: 0px 0px 5px black;
   border: 4px solid rgba(0, 0, 0, 0.2);
-}
-
-.mat-badge-small .mat-badge-content {
-  font-size: 0px !important;
 }
 
 .ag-theme-balham .ag-icon-asc:before {
@@ -969,79 +684,3 @@ DO NOT DELETE aggrid SVG icons SOURCES
 <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.715 6.36694L14.405 10.6669C14.7769 10.9319 14.9977 11.3603 14.9977 11.8169C14.9977 12.2736 14.7769 12.702 14.405 12.9669L8.715 17.6669C8.23425 18.0513 7.58151 18.1412 7.01475 17.9011C6.44799 17.6611 6.05842 17.1297 6 16.5169V7.51694C6.05842 6.90422 6.44799 6.37281 7.01475 6.13275C7.58151 5.89269 8.23425 5.9826 8.715 6.36694Z" stroke="#999999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 6.01697V18.017" stroke="#999999" stroke-width="1.5" stroke-linecap="round"/></svg>
 
 */
-
-/*******************************************************************/
-.mat-mdc-tab-header {
-  width: 100% !important;
-  background-color: var(--bgColor) !important;
-  border-bottom: 1px solid var(--bgColor-10) !important;
-}
-.mat-mdc-tab-header .mat-mdc-tab {
-  flex-grow: 0 !important;
-  min-width: 100px;
-  width: auto;
-  padding: 0 5px !important;
-  align-items: center;
-
-  height: 68px !important;
-  z-index: 1000;
-  box-shadow: none !important;
-}
-
-.mat-mdc-tab-labels {
-  justify-content: center;
-  align-items: center;
-}
-
-.button-accent {
-  em {
-    margin-left: 1em;
-    font-style: normal;
-    transform: scaleX(2);
-    display: inline-block;
-    font-size: 0.6em;
-    font-family: verdana;
-  }
-}
-.mdc-tab__text-label {
-  font-size: 0.9em;
-  font-weight: 500;
-}
-
-.mat-icon {
-  width: unset !important;
-  margin: unset !important;
-  font-size: 18px !important;
-}
-
-.mat-mdc-tab-body-wrapper {
-  flex: 1;
-  z-index: 1000 !important;
-  height: 100%;
-  // width: 100%;
-}
-
-//   mat-tab-header {
-// 	box-shadow: 0 2px 4px -2px rgba(0, 0, 0, 0.2) !important;
-// 	border-bottom: 0px !important;
-//   }
-
-.mat-drawer-content,
-.mat-tab-group {
-  background: transparent !important;
-}
-#home-layout-comp #main-tab-group > .mat-tab-body-wrapper {
-  background: transparent !important;
-}
-
-.mdc-button,
-// .mat-raised-button,
-// .mat-icon-button,
-// .mat-stroked-button,
-// .mat-flat-button,
-// .mat-fab,
-// .mat-menu-item,
-// .mat-mini-fab
-{
-  font-size: 1em !important;
-}

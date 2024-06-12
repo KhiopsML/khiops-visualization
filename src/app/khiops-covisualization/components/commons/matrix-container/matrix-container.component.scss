@@ -17,22 +17,29 @@
         margin-right: 0.5rem;
       }
 
-      mat-checkbox {
-        color: var(--primary-contrast);
-        background: var(--bgColor-20);
-        padding: 5px 5px 5px 8px;
-        border-radius: 4px;
-        margin: 4px 0;
-      }
+      // mat-checkbox {
+      // color: var(--primary-contrast);
+      // background: var(--bgColor-20);
+      // padding: 5px 5px 5px 8px;
+      // border-radius: 4px;
+      // margin: 4px 0;
+      // }
 
-      .matrix-conditionalOnContext-checkbox {
-        margin: auto 0.5rem;
-
-        ::ng-deep .mat-checkbox-label {
-          font-size: 0.8rem;
-          max-width: 100px !important;
-          line-height: 13px !important;
-          white-space: pre-line !important;
+      ::ng-deep .matrix-conditionalOnContext-checkbox {
+        margin: auto 0.5rem !important;
+        padding-left: 15px !important;
+        ::ng-deep .mdc-form-field {
+          .mdc-checkbox {
+            position: absolute !important;
+            left: -3px;
+          }
+          .mdc-label {
+            font-size: 0.8rem;
+            max-width: 100px !important;
+            line-height: 13px !important;
+            white-space: pre-line !important;
+            margin-left: 12px !important;
+          }
         }
       }
     }

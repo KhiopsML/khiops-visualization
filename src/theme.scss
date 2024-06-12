@@ -227,8 +227,8 @@ $theme: mat.define-light-theme(
     color: black !important;
   }
 
-  .mat-ink-bar {
-    background-color: #ff6600 !important;
+  .mdc-tab-indicator .mdc-tab-indicator__content {
+    border-color: #ff6600 !important;
   }
 }
 
