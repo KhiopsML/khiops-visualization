@@ -72,7 +72,7 @@ import EnTransaltion from '../../assets/i18n/en.json';
   imports: [
     MarkdownModule.forRoot({
       markedOptions: {
-        provide: MarkedOptions,
+        provide: [] as MarkedOptions,
         useFactory: MarkedOptionsFactory,
       },
     }),
