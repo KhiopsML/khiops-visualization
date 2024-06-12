@@ -108,15 +108,11 @@
         <button
           attr.aria-label="{{ 'ARIA.AG_GRID.CLOSE_SEARCH_INPUT' | translate }}"
           mat-icon-button
+          (click)="removeSearch()"
           color="primary"
           *ngIf="this.searchFormVisible"
         >
-          <mat-icon
-            fxFlexFill
-            fxLayoutAlign="center center"
-            (click)="removeSearch()"
-            >close</mat-icon
-          >
+          <mat-icon fxFlexFill fxLayoutAlign="center center">close</mat-icon>
         </button>
       </form>
       <button
