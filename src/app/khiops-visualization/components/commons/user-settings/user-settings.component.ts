@@ -22,7 +22,7 @@ export class UserSettingsComponent implements OnChanges {
   @Output() toggleNavDrawerChanged: EventEmitter<any> = new EventEmitter();
   @Input() opened: boolean;
 
-  numberPrecision: any;
+  numberPrecision: number;
   contrastValue: number;
   allowCookies: boolean;
   currentTheme: string =
@@ -47,13 +47,16 @@ export class UserSettingsComponent implements OnChanges {
     this.trackerService.trackEvent('page_view', 'settings');
 
     // Global number precision
-    this.numberPrecision =
+    this.numberPrecision = parseInt(
       localStorage.getItem(
         AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_NUMBER_PRECISION',
-      ) || AppConfig.visualizationCommon.GLOBAL.TO_FIXED;
+      ) || AppConfig.visualizationCommon.GLOBAL.TO_FIXED.toString(),
+      10,
+    );
+
     localStorage.setItem(
       AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_NUMBER_PRECISION',
-      this.numberPrecision,
+      this.numberPrecision.toString(),
     );
     AppConfig.visualizationCommon.GLOBAL.TO_FIXED = this.numberPrecision;
 
@@ -88,7 +91,7 @@ export class UserSettingsComponent implements OnChanges {
     // Save all items
     localStorage.setItem(
       AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_NUMBER_PRECISION',
-      this.numberPrecision,
+      this.numberPrecision.toString(),
     );
     AppConfig.visualizationCommon.GLOBAL.TO_FIXED = this.numberPrecision;
 
@@ -112,19 +115,18 @@ export class UserSettingsComponent implements OnChanges {
       this.allowCookies.toString(),
     );
 
-    location.reload();
+    setTimeout(() => {
+      // Wait for drawer close before reload
+      location.reload();
+    }, 200);
   }
 
   onClickOnClearDatas() {
     localStorage.clear();
-    this.snackBar.open(
-      this.translate.get('SNACKS.DATAS_DELETED'),
-      undefined,
-      {
-        duration: 2000,
-        panelClass: 'success',
-      },
-    );
+    this.snackBar.open(this.translate.get('SNACKS.DATAS_DELETED'), undefined, {
+      duration: 2000,
+      panelClass: 'success',
+    });
   }
 
   isThemeChecked(theme: string): boolean {

@@ -90,7 +90,10 @@ export class UserSettingsComponent implements OnChanges {
       AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR',
       this.currentTheme,
     );
-    location.reload();
+    setTimeout(() => {
+      // Wait for drawer close before reload
+      location.reload();
+    }, 200);
 
     // this.trackerService.trackEvent('click', 'settings', 'significant_number', this.numberPrecision);
     // this.trackerService.trackEvent('click', 'settings', 'matrix_contrast', this.contrastValue);

@@ -15,7 +15,7 @@
   </div>
   <div fxLayout="column" id="user-settings-content" fxLayoutAlign="start start">
     <h2>{{ 'SETTINGS.NUMBER_PRECISION' | translate }}</h2>
-    <!-- <div fxLayout="row" fxLayoutAlign="start center">
+    <div fxLayout="row" fxLayoutAlign="start center">
       <mat-slider
         color="primary"
         attr.aria-label="{{
@@ -24,9 +24,12 @@
         [min]="1"
         [max]="8"
         [step]="1"
-        [thumbLabel]="true"
-        [(ngModel)]="numberPrecision"
       >
+        <input
+          [value]="numberPrecision"
+          matSliderThumb
+          (valueChange)="numberPrecision = $event"
+        />
       </mat-slider>
       <span>{{ numberPrecision }} {{ 'SETTINGS.NUMBER' | translate }}</span>
     </div>
@@ -40,12 +43,15 @@
         [max]="90"
         [min]="0"
         [step]="10"
-        [thumbLabel]="false"
-        [(ngModel)]="contrastValue"
       >
+        <input
+          [value]="contrastValue"
+          matSliderThumb
+          (valueChange)="contrastValue = $event"
+        />
       </mat-slider>
       <span>{{ contrastValue }} %</span>
-    </div> -->
+    </div>
     <h2>{{ 'COOKIE_CONSENT.TITLE' | translate }}</h2>
     <div fxLayout="row" fxLayoutAlign="start center">
       <mat-slide-toggle color="primary" [(ngModel)]="allowCookies">
