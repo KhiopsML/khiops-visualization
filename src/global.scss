@@ -604,17 +604,6 @@ kl-legend {
 }
 
 .mat-button,
-.mat-raised-button,
-.mat-icon-button,
-.mat-stroked-button,
-.mat-flat-button,
-.mat-fab,
-.mat-menu-item,
-.mat-mini-fab {
-  font-size: 1em !important;
-}
-
-.mat-button,
 .mat-flat-button {
   line-height: 32px !important;
   padding: 0 12px !important;
@@ -1043,4 +1032,16 @@ DO NOT DELETE aggrid SVG icons SOURCES
 }
 #home-layout-comp #main-tab-group > .mat-tab-body-wrapper {
   background: transparent !important;
+}
+
+.mdc-button,
+// .mat-raised-button,
+// .mat-icon-button,
+// .mat-stroked-button,
+// .mat-flat-button,
+// .mat-fab,
+// .mat-menu-item,
+// .mat-mini-fab
+{
+  font-size: 1em !important;
 }

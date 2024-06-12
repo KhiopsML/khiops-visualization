@@ -109,7 +109,7 @@ describe('Test Khiops Visualization sample files', () => {
         }
 
         testView.forEach((view) => {
-          cy.get('.mat-tab-label:contains("' + view + '")')
+          cy.get('.mat-mdc-tab:contains("' + view + '")')
             .first()
             .click();
           let testValue = testsValues[view];

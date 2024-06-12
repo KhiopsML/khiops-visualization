@@ -69,7 +69,7 @@ describe('Test Khiops Covisualization sample files', () => {
         }
 
         testView.forEach((view) => {
-          cy.get('.mat-tab-label:contains("' + view + '")')
+          cy.get('.mat-mdc-tab:contains("' + view + '")')
             .first()
             .click();
 
@@ -84,7 +84,7 @@ describe('Test Khiops Covisualization sample files', () => {
           }
         });
 
-        cy.get('.mat-flat-button:contains("timeline")').first().click();
+        cy.get('.button-unfold-hierarchy').first().click();
 
         const hierarchyTests = setupHierarchyTests(datas);
 
