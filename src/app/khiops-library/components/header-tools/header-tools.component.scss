@@ -5,9 +5,13 @@
   button {
     box-shadow: none !important;
     margin: 0 0 0 0.5rem;
+    min-width: 36px !important;
+    width: 36px !important;
+    border-radius: 50%;
     mat-icon {
       font-size: 1rem !important;
       line-height: 1.3rem !important;
+      position: absolute;
     }
   }
   button:first-child {
@@ -26,8 +30,7 @@
     font-weight: 400;
   }
 
-  ::ng-deep .mat-progress-spinner.mat-accent circle,
-  .mat-spinner.mat-accent circle {
-    stroke: #ffffff;
+  ::ng-deep .mat-mdc-progress-spinner circle {
+    stroke: #ffffff !important;
   }
 }

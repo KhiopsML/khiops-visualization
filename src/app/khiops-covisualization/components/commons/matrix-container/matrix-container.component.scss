@@ -27,7 +27,10 @@
 
       ::ng-deep .matrix-conditionalOnContext-checkbox {
         margin: auto 0.5rem !important;
+        padding: 5px 5px 5px 8px;
+        border-radius: 4px;
         padding-left: 15px !important;
+        background: var(--bgColor-20);
         ::ng-deep .mdc-form-field {
           .mdc-checkbox {
             position: absolute !important;

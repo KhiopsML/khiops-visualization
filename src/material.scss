@@ -28,7 +28,7 @@
   align-items: center;
 }
 
-.button-accent {
+button {
   em {
     margin-left: 1em;
     font-style: normal;
@@ -141,10 +141,14 @@
   line-height: 2.8em !important;
   height: 2.8em !important;
   min-height: 2.8em !important;
-  padding-left: 5px !important;
+}
+.mat-mdc-menu-item-text {
+  mat-checkbox {
+    margin-left: -12px;
+  }
 }
 
-.mat-elevation-z4 {
+.mat-mdc-elevation-specific {
   box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.12) !important;
 }
 
@@ -205,7 +209,7 @@
 .checkbox-select {
   mat-checkbox {
     label {
-      padding-left: 3em !important;
+      padding-left: 1.5em !important;
       padding-right: 3em !important;
     }
   }
@@ -281,7 +285,8 @@ mat-pseudo-checkbox {
 }
 
 mat-checkbox .mdc-form-field label {
-  font-size: 0.8rem !important;
+  font-size: 0.75rem !important;
+  // line-height: 1rem;
 }
 
 // .mat-drawer-content,
