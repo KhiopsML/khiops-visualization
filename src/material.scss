@@ -346,3 +346,11 @@ mat-checkbox .mdc-form-field label {
 //   min-height: 2.4em !important;
 //   max-height: 2.4em !important;
 // }
+.mat-mdc-slider .mdc-slider__thumb-knob {
+  transform: scale(0.7) translate(-70%, -80%) !important;
+}
+
+.mdc-slider__track--active,
+.mdc-slider__track--inactive {
+  height: 3px !important;
+}

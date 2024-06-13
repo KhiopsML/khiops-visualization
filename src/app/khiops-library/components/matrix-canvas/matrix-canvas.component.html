@@ -111,17 +111,16 @@
       >
         <span>Contrast</span>
         <mat-slider
-          color="accent"
           attr.aria-label="{{
             'ARIA.MATRIX.UPDATE_MATRIX_CONTRAST' | translate
           }}"
           [max]="90"
           title="{{ 'TOOLTIPS.COMMONS.MATRIX_CONTRAST' | translate }}"
-          [min]="0"
-          [(ngModel)]="contrast"
           (input)="onContrastChanged($event)"
+          [min]="0"
           [step]="10"
         >
+          <input [(ngModel)]="contrast" matSliderThumb />
         </mat-slider>
       </div>
       <div id="legend" fxFlex fxLayout="column" fxLayoutAlign="center center">
