@@ -166,8 +166,8 @@ button {
   .mdc-snackbar__surface {
     background: var(--yellowMain) !important;
 
-    span {
-      color: #374779;
+    .mat-mdc-snack-bar-label {
+      color: var(--black-text);
     }
   }
 }
@@ -353,4 +353,7 @@ mat-checkbox .mdc-form-field label {
 .mdc-slider__track--active,
 .mdc-slider__track--inactive {
   height: 3px !important;
+}
+.mat-mdc-dialog-container .mdc-dialog__surface {
+  padding: 1rem;
 }
