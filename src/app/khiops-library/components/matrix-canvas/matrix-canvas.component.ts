@@ -896,7 +896,7 @@ export class MatrixCanvasComponent
   }
 
   onContrastChanged(event: Event) {
-    this.contrast = event?.target['value'];
+    this.contrast = parseInt(event?.target?.['value'], 10);
     this.contrast &&
       localStorage.setItem(
         AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST',

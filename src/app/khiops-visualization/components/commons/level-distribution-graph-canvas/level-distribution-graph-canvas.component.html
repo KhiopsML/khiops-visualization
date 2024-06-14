@@ -12,15 +12,13 @@
       <div class="comp-header-tools screenshot-hide" fxLayout="row">
         <h2>{{ 'GLOBAL.SCALE' | translate }} :</h2>
         <mat-slider
-          color="accent"
           [max]="maxScale"
           [min]="minScale"
           [step]="stepScale"
-          [thumbLabel]="false"
+          (input)="onScaleChanged($event?.target?.['valueAsNumber'])"
           attr.aria-label="{{ 'ARIA.CHARTS.UPDATE_GRAPH_SCALE' | translate }}"
-          [(ngModel)]="scaleValue"
-          (change)="onScaleChanged($event)"
         >
+          <input [(ngModel)]="scaleValue" matSliderThumb />
         </mat-slider>
         <kl-header-tools [showMenu]="false"></kl-header-tools>
       </div>

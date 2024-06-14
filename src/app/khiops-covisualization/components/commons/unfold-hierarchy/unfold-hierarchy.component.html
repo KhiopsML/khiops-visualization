@@ -48,14 +48,12 @@
             <b>{{ currentUnfoldHierarchy }}</b></span
           >
           <mat-slider
-            color="accent"
             [max]="hierarchyDatas.totalClusters"
             [min]="hierarchyDatas.minClusters"
-            (change)="onHierarchyChanged($event)"
-            [thumbLabel]="true"
-            [(ngModel)]="currentUnfoldHierarchy"
             [step]="1"
+            (input)="onHierarchyChanged($event?.target?.['valueAsNumber'])"
           >
+            <input [(ngModel)]="currentUnfoldHierarchy" matSliderThumb />
           </mat-slider>
         </div>
         <div fxLayout="column" class="increment">

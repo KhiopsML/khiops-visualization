@@ -21,14 +21,13 @@
   >
     <h2>{{ 'GLOBAL.SCALE' | translate }}</h2>
     <mat-slider
-      color="accent"
       attr.aria-label="{{ 'ARIA.CHARTS.UPDATE_GRAPH_SCALE' | translate }}"
       [max]="maxScale"
       [min]="minScale"
       [step]="stepScale"
-      [(ngModel)]="scaleValue"
-      (input)="onScaleChanged($event)"
+      (input)="onScaleChanged($event?.target?.['valueAsNumber'])"
     >
+      <input [(ngModel)]="scaleValue" matSliderThumb />
     </mat-slider>
   </div>
   <kl-btn-fullscreen

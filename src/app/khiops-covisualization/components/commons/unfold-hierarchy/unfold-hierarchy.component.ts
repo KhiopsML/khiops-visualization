@@ -129,10 +129,12 @@ export class UnfoldHierarchyComponent implements OnInit {
     this.clustersPerDimDatasChartOptions.scales.y.title.text =
       this.translate.get('GLOBAL.NB_OF_CLUSTERS_PER_DIM');
 
-    this.infoPerClusterChartOptions.scales.x.title.text =
-      this.translate.get('GLOBAL.TOTAL_NUMBER_OF_CLUSTERS');
-    this.infoPerClusterChartOptions.scales.y.title.text =
-      this.translate.get('GLOBAL.INFORMATION_RATE');
+    this.infoPerClusterChartOptions.scales.x.title.text = this.translate.get(
+      'GLOBAL.TOTAL_NUMBER_OF_CLUSTERS',
+    );
+    this.infoPerClusterChartOptions.scales.y.title.text = this.translate.get(
+      'GLOBAL.INFORMATION_RATE',
+    );
   }
 
   highlightChartLine(name: string) {
@@ -199,8 +201,8 @@ export class UnfoldHierarchyComponent implements OnInit {
     }); // Do not freeze ui during graph render
   }
 
-  onHierarchyChanged(event) {
-    this.currentUnfoldHierarchy = event.value;
+  onHierarchyChanged(value: number) {
+    this.currentUnfoldHierarchy = value;
 
     this.clustersPerDimDatas = this.clustersService.getClustersPerDimDatas(
       this.currentUnfoldHierarchy,
@@ -235,10 +237,11 @@ export class UnfoldHierarchyComponent implements OnInit {
     }
     this.defaultMaxUnfoldHierarchy = this.currentUnfoldHierarchy;
 
-    if (event.value > this.defaultMaxUnfoldHierarchy) {
+    if (value > this.defaultMaxUnfoldHierarchy) {
       setTimeout(() => {
+        // Reset hierarchy rank
         this.currentUnfoldHierarchy = this.defaultMaxUnfoldHierarchy;
-        event.source.value = this.currentUnfoldHierarchy;
+
         this.snackBar.open(
           this.translate.get('SNACKS.UNFOLDED_DATAS_MAXIMUM_UNFOLD', {
             count: this.currentUnfoldHierarchy,
@@ -250,7 +253,7 @@ export class UnfoldHierarchyComponent implements OnInit {
             verticalPosition: 'bottom',
           },
         );
-      });
+      }, 200); // important to increase timeout to make slider changes
     }
     // Dimension changed, clone to update array
     this.dimensions = _.cloneDeep(this.dimensionsDatas.dimensions);
@@ -284,17 +287,13 @@ export class UnfoldHierarchyComponent implements OnInit {
 
   increaseUnfoldHierarchy() {
     if (this.hierarchyDatas.totalClusters > this.currentUnfoldHierarchy) {
-      this.onHierarchyChanged({
-        value: this.currentUnfoldHierarchy + 1,
-      });
+      this.onHierarchyChanged(this.currentUnfoldHierarchy + 1);
     }
   }
 
   decreaseUnfoldHierarchy() {
     if (this.hierarchyDatas.minClusters < this.currentUnfoldHierarchy) {
-      this.onHierarchyChanged({
-        value: this.currentUnfoldHierarchy - 1,
-      });
+      this.onHierarchyChanged(this.currentUnfoldHierarchy - 1);
     }
   }
 
