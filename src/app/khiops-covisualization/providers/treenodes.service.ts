@@ -154,8 +154,8 @@ export class TreenodesService {
             nodeVO.name ===
             e.name /*|| nodeVO.shortDescription === e.shortDescription*/
           );
-          // also check into shortDescription (for distribution graph for instance)
-          // no !!! otherwise it return multiple nodes
+          // do not check into shortDescription (for distribution graph for instance)
+          // otherwise it return multiple nodes
         });
         realNodeVO.getChildrenList();
         this.eventsService.emitTreeSelectedNodeChanged({
@@ -221,6 +221,7 @@ export class TreenodesService {
   }
 
   initSavedDatas() {
+    this.collapsedNodesToSave = undefined;
     this.dimensionsDatas.nodesNames =
       this.appService.getSavedDatas('nodesNames') || {};
     const savedNodes = this.appService.getSavedDatas('selectedNodes');
