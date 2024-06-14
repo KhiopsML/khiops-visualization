@@ -80,7 +80,9 @@ export class AxisViewComponent
         this.treenodesService.setSavedCollapsedNodes(collapsedNodes);
         if (collapsedNodes) {
           this.computeSavedState(collapsedNodes);
-        } else if (isLargeCocluster) {
+        }
+        // Always computeLargeCoclustering if it's a LargeCocluster
+        if (isLargeCocluster) {
           this.computeLargeCoclustering();
         }
 

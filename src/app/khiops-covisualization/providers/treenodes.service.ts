@@ -433,6 +433,7 @@ export class TreenodesService {
     } else {
       collapsedNodes = this.getSavedCollapsedNodes();
     }
+
     const importedDatas = this.importExtDatasService.getImportedDatas();
     const matrixContrast = this.dimensionsDatas.matrixContrast;
     const conditionalOnContext = this.dimensionsDatas.conditionalOnContext;
@@ -514,37 +515,40 @@ export class TreenodesService {
           (e) => e.name === dim,
         );
 
-        const nodes = datas.savedDatas.collapsedNodes[dim];
-        const dimHierarchy = truncatedHierarchy.find((e) => e.name === dim);
+        // Check for collapsed node integrity
+        if (dimIndex !== -1) {
+          const nodes = datas.savedDatas.collapsedNodes[dim];
+          const dimHierarchy = truncatedHierarchy.find((e) => e.name === dim);
 
-        const nodesLength = nodes.length;
-        for (let i = 0; i < nodesLength; i++) {
-          const nodeName = nodes[i];
-          let nodeChildren: any[] = [];
-          const nodeDetails: TreeNodeVO =
-            this.dimensionsDatas.dimensionsClusters[dimIndex].find(
-              (e) => e.cluster === nodeName,
-            );
-
-          // Get children list
-          nodeDetails && nodeDetails.getChildrenList();
-
-          if (nodeDetails?.childrenList) {
-            nodeChildren = nodeDetails.childrenList;
-            const nodeChildrenLength = nodeChildren.length;
-            for (let j = nodeChildrenLength - 1; j >= 0; j--) {
-              const nodeIndex = dimHierarchy.clusters.findIndex(
-                (e) => e.cluster === nodeChildren[j],
+          const nodesLength = nodes.length;
+          for (let i = 0; i < nodesLength; i++) {
+            const nodeName = nodes[i];
+            let nodeChildren: any[] = [];
+            const nodeDetails: TreeNodeVO =
+              this.dimensionsDatas.dimensionsClusters[dimIndex].find(
+                (e) => e.cluster === nodeName,
               );
-              if (nodeChildren[j] !== nodeName) {
-                // Do not remove current collapsed node
-                if (nodeIndex !== -1) {
-                  dimHierarchy.clusters.splice(nodeIndex, 1);
-                }
-              } else {
-                if (nodeIndex !== -1) {
-                  // Set the isLeaf of the last collapsed node
-                  dimHierarchy.clusters[nodeIndex].isLeaf = true;
+
+            // Get children list
+            nodeDetails && nodeDetails.getChildrenList();
+
+            if (nodeDetails?.childrenList) {
+              nodeChildren = nodeDetails.childrenList;
+              const nodeChildrenLength = nodeChildren.length;
+              for (let j = nodeChildrenLength - 1; j >= 0; j--) {
+                const nodeIndex = dimHierarchy.clusters.findIndex(
+                  (e) => e.cluster === nodeChildren[j],
+                );
+                if (nodeChildren[j] !== nodeName) {
+                  // Do not remove current collapsed node
+                  if (nodeIndex !== -1) {
+                    dimHierarchy.clusters.splice(nodeIndex, 1);
+                  }
+                } else {
+                  if (nodeIndex !== -1) {
+                    // Set the isLeaf of the last collapsed node
+                    dimHierarchy.clusters[nodeIndex].isLeaf = true;
+                  }
                 }
               }
             }
@@ -576,25 +580,29 @@ export class TreenodesService {
       const dimIndex = this.dimensionsDatas.selectedDimensions.findIndex(
         (e) => e.name === dim,
       );
-      const dimVO: DimensionVO = this.dimensionsDatas.selectedDimensions.find(
-        (e) => e.name === dim,
-      );
-      const dimIndexInitial = this.dimensionsDatas.dimensions.findIndex(
-        (e) => e.name === dim,
-      );
 
-      if (dimVO.isCategorical) {
-        this.computeCatPartition(
-          nodes,
-          dimIndex,
-          truncatedPartition[dimIndexInitial],
+      // Check for collapsed node integrity
+      if (dimIndex !== -1) {
+        const dimVO: DimensionVO = this.dimensionsDatas.selectedDimensions.find(
+          (e) => e.name === dim,
         );
-      } else {
-        this.computeNumPartition(
-          nodes,
-          dimIndex,
-          truncatedPartition[dimIndexInitial],
+        const dimIndexInitial = this.dimensionsDatas.dimensions.findIndex(
+          (e) => e.name === dim,
         );
+
+        if (dimVO.isCategorical) {
+          this.computeCatPartition(
+            nodes,
+            dimIndex,
+            truncatedPartition[dimIndexInitial],
+          );
+        } else {
+          this.computeNumPartition(
+            nodes,
+            dimIndex,
+            truncatedPartition[dimIndexInitial],
+          );
+        }
       }
     });
 
