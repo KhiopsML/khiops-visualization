@@ -7,6 +7,7 @@ import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { ProjectLogVO } from '@khiops-library/model/project-log-vo';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
+import { ConfigService } from '@khiops-library/providers/config.service';
 
 @Component({
   selector: 'app-project-view',
@@ -26,6 +27,7 @@ export class ProjectViewComponent
   appName = 'khiops-visualization';
   logsTitle: string;
   sizes: any;
+  isElectron: boolean = false;
 
   // managed by selectable-tab component
   override tabIndex = 0;
@@ -45,10 +47,13 @@ export class ProjectViewComponent
 
   constructor(
     private appService: AppService,
+    private configService: ConfigService,
     private translate: TranslateService,
     private trackerService: TrackerService,
   ) {
     super();
+    this.isElectron = this.configService.getConfig().appSource === 'ELECTRON';
+
     this.initialize();
   }
 

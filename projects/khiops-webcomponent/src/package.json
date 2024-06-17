@@ -1,5 +1,18 @@
 {
-    "name": "khiops-visualization",
-    "version": "NPM_PUBLISH_VERSION",
-    "author": "Stephane Gouache <stephane.gouache@orange.com>"
+  "name": "khiops-visualization",
+  "version": "NPM_PUBLISH_VERSION",
+  "license": "BSD-3-Clause-Clear",
+  "author": {
+    "name": "Orange",
+    "email": "khiops.team@orange.com"
+  },
+  "description": "Khiops Visualization component. Contains the code of Visualization and Covisualization tools",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KhiopsML/khiops-visualization.git"
+  },
+  "bugs": {
+    "url": "https://github.com/KhiopsML/khiops-visualization/issues"
+  },
+  "homepage": "https://github.com/KhiopsML/khiops-visualization#readme"
 }

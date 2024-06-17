@@ -59,9 +59,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     this.appService.setFileDatas(datas);
     if (datas) {
       this.initializeHome(datas);
-      if (!UtilsService.isEmpty(datas)) {
-        this.onFileLoaderDataChanged(datas);
-      }
     }
   }
   activeTab = AppConfig.covisualizationCommon.HOME.ACTIVE_TAB_INDEX;
@@ -273,8 +270,10 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 
     this.initializeServices();
 
-    // @ts-ignore
-    this.appAxisView?.initialize();
+    if (this.configService.getConfig().appSource !== 'ELECTRON') {
+      // @ts-ignore
+      this.appAxisView?.initialize();
+    }
   }
 
   initializeServices() {
