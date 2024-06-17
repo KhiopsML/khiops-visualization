@@ -75,15 +75,12 @@ export class AxisViewComponent
 
         const isLargeCocluster = this.dimensionsDatasService.isLargeCocluster();
         let collapsedNodes = this.appService.getSavedDatas('collapsedNodes');
-        collapsedNodes =
-          this.appService.checkCollapsedNodesIntegrity(collapsedNodes);
-        this.treenodesService.setSavedCollapsedNodes(collapsedNodes);
         if (collapsedNodes) {
           this.computeSavedState(collapsedNodes);
         }
         // Always computeLargeCoclustering if it's a LargeCocluster
         if (isLargeCocluster) {
-          this.computeLargeCoclustering();
+          this.computeLargeCoclustering(collapsedNodes);
         }
 
         this.dimensionsDatasService.getMatrixDatas();
@@ -136,14 +133,21 @@ export class AxisViewComponent
   /**
    * Recompute json for large coclustering to prevent freeze
    */
-  computeLargeCoclustering() {
+  computeLargeCoclustering(collapsedNodesSaved) {
     const unfoldState =
       this.dimensionsDatas.dimensions.length *
       AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.ERGONOMIC_LIMIT;
 
     this.treenodesService.setSelectedUnfoldHierarchy(unfoldState);
-    const collapsedNodes =
+    let collapsedNodes =
       this.treenodesService.getLeafNodesForARank(unfoldState);
+
+    // Merge collapsed nodes
+    collapsedNodes = this.treenodesService.mergeCollapsedNodes(
+      collapsedNodes,
+      collapsedNodesSaved,
+    );
+
     this.treenodesService.setSavedCollapsedNodes(collapsedNodes);
 
     let datas = this.treenodesService.constructSavedJson(collapsedNodes);
