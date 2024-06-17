@@ -110,7 +110,7 @@ export class AppService {
             this.appDatas.datas.coclusteringReport.dimensionHierarchies?.[
               dimIndex
             ]?.clusters?.find((e) => e.cluster === node);
-          if (!nodeDetails /*|| nodeDetails?.isLeaf*/) {
+          if (!nodeDetails || nodeDetails?.isLeaf) {
             // it's a leaf or it's a broken leaf name
             collapsedNodes[key].splice(collapsedNodes[key][k], 1);
           }
