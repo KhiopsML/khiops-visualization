@@ -83,6 +83,26 @@ export class TreenodesService {
     }
   }
 
+  mergeCollapsedNodes(obj1, obj2): any {
+    if (!obj1) {
+      obj1 = {};
+    }
+    if (!obj2) {
+      obj2 = {};
+    }
+    const result = { ...obj1 };
+    Object.keys(obj2).forEach((key) => {
+      if (Array.isArray(obj2[key])) {
+        const set = new Set([...(result[key] || []), ...obj2[key]]);
+        result[key] = [...set];
+      } else {
+        result[key] = obj2[key];
+      }
+    });
+
+    return result;
+  }
+
   setSelectedNode(
     hierarchyName,
     nodeName,
