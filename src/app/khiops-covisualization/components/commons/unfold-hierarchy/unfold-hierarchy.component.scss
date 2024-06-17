@@ -30,9 +30,14 @@
       padding: 1em;
 
       .mat-slider-horizontal {
-        min-width: 300px;
+        width: 30vw;
       }
-
+      .unfold-information-rate {
+        margin-left: 1rem;
+        span {
+          text-align: right;
+        }
+      }
       .increment {
         margin-left: 2em;
 
