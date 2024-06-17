@@ -237,11 +237,10 @@ export class ClustersService {
     ) {
       infoPerCluster.labels.push(j + 1 + '');
       let currentValue = 0;
+
+      // Manage current rank selection bar
       if (j + 1 === rank) {
-        currentValue =
-          infoPerCluster.datasets[0].data[
-            rank - this.dimensionsDatas.dimensions.length
-          ];
+        currentValue = 100;
       }
       currentDataSet.data.push(currentValue);
     }
