@@ -23,8 +23,9 @@
             [inputDatas]="projectSummaryDatas"
           >
           </kl-informations-block>
+          <!-- Important to do not show loader on Electron to prevent multiple onFileLoaderDataChanged -->
           <kl-file-loader
-            *ngIf="debugFile"
+            *ngIf="debugFile && !isElectron"
             [onFileLoaderDataChanged]="onFileLoaderDataChangedCb"
             [applicationName]="appName"
           >

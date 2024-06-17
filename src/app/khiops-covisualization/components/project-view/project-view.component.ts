@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AppService } from '@khiops-covisualization/providers/app.service';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
+import { ConfigService } from '@khiops-library/providers/config.service';
 import { TrackerService } from '@khiops-library/providers/tracker.service';
 
 @Component({
@@ -22,12 +23,16 @@ export class ProjectViewComponent
 
   // managed by selectable-tab component
   override tabIndex = 0;
+  isElectron: boolean = false;
 
   constructor(
     private appService: AppService,
     private trackerService: TrackerService,
+    private configService: ConfigService,
   ) {
     super();
+    this.isElectron = this.configService.getConfig().appSource === 'ELECTRON';
+
     this.initialize();
   }
   public initialize() {
