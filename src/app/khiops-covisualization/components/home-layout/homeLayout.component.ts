@@ -292,8 +292,8 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 
   openLoadExternalDataDialog() {
     const config = new MatDialogConfig();
-    config.width = AppConfig.covisualizationCommon.MANAGE_VIEWS.WIDTH;
-    config.maxWidth = AppConfig.covisualizationCommon.MANAGE_VIEWS.MAX_WIDTH;
+    config.panelClass = 'hidden';
+    config.backdropClass = 'hidden';
     const dialogRef: MatDialogRef<LoadExtDatasComponent> = this.dialog.open(
       LoadExtDatasComponent,
       config,
