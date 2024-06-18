@@ -101,7 +101,7 @@ export class FileLoaderService {
     // Co visualization files
     // ======================
     //
-    // let urlKC = './assets/mocks/kc/Coclustering-100x100.json';
+    let urlKC = './assets/mocks/kc/Coclustering-100x100.json';
     // let urlKC = './assets/mocks/kc/cc.json';
     // let urlKC = './assets/mocks/kc/Coclustering.json';
     // let urlKC = './assets/mocks/kc/Co-simple-2vars.json';
@@ -129,11 +129,10 @@ export class FileLoaderService {
     // let urlKC =
     //   './assets/mocks/kc/10.1.1_id_feat_nospace_Coclustering.json';
     // let urlKC = './assets/mocks/kc/co-3-num.json';
-    // let urlKC = './assets/mocks/kc/h-Coclustering-2-2.json';
     // let urlKC = './assets/mocks/kc/ext-CC_Coclustering.json';
     // let urlKC = './assets/mocks/kc/ext-datas_Coclustering.json';
     // let urlKC = './assets/mocks/kc/ext-CC_Coclustering.json';
-    let urlKC = './assets/mocks/kc/CC_3_Coclustering.json';
+    // let urlKC = './assets/mocks/kc/CC_3_Coclustering.json';
 
     if (fileName) {
       urlKV = './assets/mocks/kv/' + fileName;

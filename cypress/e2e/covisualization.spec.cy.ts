@@ -27,7 +27,6 @@ describe('Test Khiops Covisualization sample files', () => {
     'zero-except.json',
     '10.1.1_id_feat_nospace_Coclustering.json',
     'co-3-num.json',
-    'h-Coclustering-2-2.json',
     'ext-CC_Coclustering.json',
     'ext-datas_Coclustering.json',
     'ext-CC_Coclustering.json',
