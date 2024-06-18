@@ -230,6 +230,7 @@ export class ClustersService {
     currentDataSet.maxBarThickness = 5;
     currentDataSet.barThickness = 5;
 
+    // Manage current rank selection bar
     for (
       let j = this.dimensionsDatas.dimensions.length - 1;
       j < this.dimensionsDatas.hierarchyDatas.totalClusters;
@@ -238,7 +239,6 @@ export class ClustersService {
       infoPerCluster.labels.push(j + 1 + '');
       let currentValue = 0;
 
-      // Manage current rank selection bar
       if (j + 1 === rank) {
         currentValue = 100;
       }
