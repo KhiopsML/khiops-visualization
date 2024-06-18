@@ -5,7 +5,8 @@
   button {
     box-shadow: none !important;
     margin: 0 0 0 0.5rem;
-    min-width: 36px !important;
+    min-width: 32px !important;
+    max-width: 32px !important;
     width: 36px !important;
     border-radius: 50%;
     mat-icon {
