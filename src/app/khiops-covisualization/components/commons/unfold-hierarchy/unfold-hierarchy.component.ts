@@ -142,7 +142,7 @@ export class UnfoldHierarchyComponent implements OnInit {
   }
 
   setCypressInput(cyInput) {
-    this.currentUnfoldHierarchy = cyInput;
+    this.onHierarchyChanged({ value: cyInput });
   }
 
   ngOnInit() {
@@ -153,21 +153,16 @@ export class UnfoldHierarchyComponent implements OnInit {
     );
     this.currentUnfoldHierarchy = this.previousHierarchyRank;
 
+    // #150 If saved json unfoldState is > to the maximum unfold state available, reset it
+    if (this.currentUnfoldHierarchy > this.defaultMaxUnfoldHierarchy) {
+      this.currentUnfoldHierarchy = this.defaultMaxUnfoldHierarchy;
+    }
+
     setTimeout(() => {
       this.dimensionsDatas = this.dimensionsDatasService.getDatas();
       this.dimensions = _.cloneDeep(this.dimensionsDatas.dimensions);
 
-      // Reset current herarchy cluster count if modal has been dismissed
-      this.treenodesService.updateCurrentHierarchyClustersCount(
-        this.currentUnfoldHierarchy,
-      );
-
-      // get graph details datas
-      this.clustersPerDimDatas = this.clustersService.getClustersPerDimDatas(
-        this.currentUnfoldHierarchy,
-      );
-      this.currentCellsPerCluster =
-        this.clustersService.getCurrentCellsPerCluster();
+      this.updateDatas();
 
       // compute legend labels
       this.legend = [
@@ -194,32 +189,14 @@ export class UnfoldHierarchyComponent implements OnInit {
       this.colorSetClusterPerDim.domain[
         this.clustersPerDimDatas.datasets.length - 1
       ] = this.borderColor;
-
-      this.infoPerCluster = this.clustersService.getInfoPerCluster(
-        this.currentUnfoldHierarchy,
-      );
     }); // Do not freeze ui during graph render
   }
 
   onHierarchyChanged(value: number) {
     this.currentUnfoldHierarchy = value;
 
-    this.clustersPerDimDatas = this.clustersService.getClustersPerDimDatas(
-      this.currentUnfoldHierarchy,
-    );
-    this.infoPerCluster = this.clustersService.getInfoPerCluster(
-      this.currentUnfoldHierarchy,
-    );
-    this.currentInformationPerCluster =
-      this.infoPerCluster.datasets[0].data[
-        this.currentUnfoldHierarchy - this.dimensions.length
-      ];
-    this.treenodesService.updateCurrentHierarchyClustersCount(
-      this.currentUnfoldHierarchy,
-    );
+    this.updateDatas();
 
-    this.currentCellsPerCluster =
-      this.clustersService.getCurrentCellsPerCluster();
     if (
       this.currentCellsPerCluster >
       AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.TECHNICAL_LIMIT
@@ -257,6 +234,25 @@ export class UnfoldHierarchyComponent implements OnInit {
     }
     // Dimension changed, clone to update array
     this.dimensions = _.cloneDeep(this.dimensionsDatas.dimensions);
+  }
+
+  updateDatas() {
+    this.clustersPerDimDatas = this.clustersService.getClustersPerDimDatas(
+      this.currentUnfoldHierarchy,
+    );
+    this.infoPerCluster = this.clustersService.getInfoPerCluster(
+      this.currentUnfoldHierarchy,
+    );
+    this.currentInformationPerCluster =
+      this.infoPerCluster.datasets[0].data[
+        this.currentUnfoldHierarchy - this.dimensions.length
+      ];
+    this.treenodesService.updateCurrentHierarchyClustersCount(
+      this.currentUnfoldHierarchy,
+    );
+
+    this.currentCellsPerCluster =
+      this.clustersService.getCurrentCellsPerCluster();
   }
 
   onClickOnSave() {

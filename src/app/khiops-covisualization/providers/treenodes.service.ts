@@ -345,6 +345,9 @@ export class TreenodesService {
         // Concat all dimensions clusters
         this.dimensionsDatas.hierarchyDatas.totalClusters +=
           appDatas.coclusteringReport.dimensionSummaries[i].parts;
+        // 150 Also compute totalInitialClusters to generate information rate chart
+        this.dimensionsDatas.hierarchyDatas.totalInitialClusters +=
+          appDatas.coclusteringReport.dimensionSummaries[i].initialParts;
       }
       // Init with all clusters
       if (this.dimensionsDatas.hierarchyDatas.selectedUnfoldHierarchy === 0) {
@@ -576,6 +579,38 @@ export class TreenodesService {
         }
       });
 
+      // Update truncated hierarchy ranks
+      // for (const dimension of truncatedHierarchy) {
+      //   let rank = 1;
+      //   // Loop through each cluster within the dimension
+      //   for (const cluster of dimension.clusters) {
+      //     // Update rank for leaf nodes based on their order in the loop
+      //     cluster.rank = rank++;
+      //   }
+      // }
+
+      // Update truncated hierarchy hierarchicalRank based on hierarchicalLevel information
+      // let allClusters = [];
+      // truncatedHierarchy.forEach((dimension) => {
+      //   allClusters = allClusters.concat(dimension.clusters);
+      // });
+
+      // // Sort clusters by ascending hierarchicalLevel
+      // allClusters.sort((a, b) => a.hierarchicalLevel - b.hierarchicalLevel);
+
+      // // Update hierarchicalRank
+      // let rank = truncatedHierarchy.length;
+      // for (let i = 0; i < allClusters.length; i++) {
+      //   if (
+      //     i > 0 &&
+      //     allClusters[i].hierarchicalLevel !==
+      //       allClusters[i - 1].hierarchicalLevel
+      //   ) {
+      //     rank++;
+      //   }
+      //   allClusters[i].hierarchicalRank = rank;
+      // }
+
       // Sort clusters by leaf and rank
       for (let k = 0; k < truncatedHierarchy.length; k++) {
         truncatedHierarchy[k].clusters = _.sortBy(
@@ -586,6 +621,7 @@ export class TreenodesService {
 
       datas.coclusteringReport.dimensionHierarchies = truncatedHierarchy;
     }
+
     return datas;
   }
 

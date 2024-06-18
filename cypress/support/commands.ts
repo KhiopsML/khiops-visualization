@@ -2,7 +2,7 @@
 
 //@ts-ignore
 Cypress.Commands.add('loadFile', (ctx: string, file: string) => {
-  // Load the visualization page
+  // Load the visualization or covisualization page
   cy.visit('/' + ctx + '/');
 
   // Switch to the desired tab (assuming it's the last tab)

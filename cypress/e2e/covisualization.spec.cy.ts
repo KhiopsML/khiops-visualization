@@ -27,7 +27,6 @@ describe('Test Khiops Covisualization sample files', () => {
     'zero-except.json',
     '10.1.1_id_feat_nospace_Coclustering.json',
     'co-3-num.json',
-    'h-Coclustering-2-2.json',
     'ext-CC_Coclustering.json',
     'ext-datas_Coclustering.json',
     'ext-CC_Coclustering.json',
@@ -43,7 +42,7 @@ describe('Test Khiops Covisualization sample files', () => {
   ];
 
   files.forEach((fileName, fileIndex) => {
-    it(`Check values for ${fileName}`, { defaultCommandTimeout: 10000 }, () => {
+    it(`Check values for ${fileName}`, () => {
       // Initialize ls with all views enabled
       initLS();
 

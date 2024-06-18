@@ -225,6 +225,9 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
   }
 
   initializeHome(datas) {
+    // Close dialogs when opening new file #148
+    this.dialogRef.closeAll();
+
     this.isCompatibleJson = this.appService.isCompatibleJson(datas);
     const isCollidingJson = this.appService.isCollidingJson(datas);
     this.appService.resetSearch();

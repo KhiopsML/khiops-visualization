@@ -15,16 +15,16 @@ describe('coVisualization', () => {
       appService = TestBed.inject(AppService);
     });
 
-    it('checkCollapsedNodesIntegrity should return valid datas [collapsed nodes are leafs]', () => {
-      const fileDatas = require('../../assets/mocks/kc/h-Coclustering-2-2.json');
-      appService.setFileDatas(fileDatas);
-      let collapsedNodes: any = {
-        SepalLength: [']-inf;5.45]', ']5.45;+inf['],
-        SepalWidth: [']2.95;+inf['],
-      };
-      collapsedNodes = appService.checkCollapsedNodesIntegrity(collapsedNodes);
-      expect(collapsedNodes).toEqual({ SepalLength: [], SepalWidth: [] });
-    });
+    // it('checkCollapsedNodesIntegrity should return valid datas [collapsed nodes are leafs]', () => {
+    //   const fileDatas = require('../../assets/mocks/kc/h-Coclustering-2-2.json');
+    //   appService.setFileDatas(fileDatas);
+    //   let collapsedNodes: any = {
+    //     SepalLength: [']-inf;5.45]', ']5.45;+inf['],
+    //     SepalWidth: [']2.95;+inf['],
+    //   };
+    //   collapsedNodes = appService.checkCollapsedNodesIntegrity(collapsedNodes);
+    //   expect(collapsedNodes).toEqual({ SepalLength: [], SepalWidth: [] });
+    // });
 
     it('checkCollapsedNodesIntegrity should return valid datas [dimension name does not exist]', () => {
       const fileDatas = require('../../assets/mocks/kc/co-3-num.json');

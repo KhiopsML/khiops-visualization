@@ -29,10 +29,15 @@
       border-radius: 5px;
       padding: 1em;
 
-      > div:first-child {
-        min-width: 260px;
+      .mat-slider-horizontal {
+        width: 30vw;
       }
-
+      .unfold-information-rate {
+        margin-left: 1rem;
+        span {
+          text-align: right;
+        }
+      }
       .increment {
         margin-left: 2em;
 
