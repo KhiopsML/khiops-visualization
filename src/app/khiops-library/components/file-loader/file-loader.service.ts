@@ -126,8 +126,8 @@ export class FileLoaderService {
     // let urlKC = './assets/mocks/kc/VerbNounCoclustering27mo.json';
     // let urlKC = './assets/mocks/kc/v4.json';
     // let urlKC = './assets/mocks/kc/NovaCoclustering4mb.json';
-    let urlKC =
-      './assets/mocks/kc/10.1.1_id_feat_nospace_Coclustering.json';
+    // let urlKC =
+    //   './assets/mocks/kc/10.1.1_id_feat_nospace_Coclustering.json';
     // let urlKC = './assets/mocks/kc/co-3-num.json';
     // let urlKC = './assets/mocks/kc/ext-CC_Coclustering.json';
     // let urlKC = './assets/mocks/kc/ext-datas_Coclustering.json';

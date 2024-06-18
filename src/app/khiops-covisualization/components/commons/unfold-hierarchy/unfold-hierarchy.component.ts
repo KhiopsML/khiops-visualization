@@ -142,7 +142,7 @@ export class UnfoldHierarchyComponent implements OnInit {
   }
 
   setCypressInput(cyInput) {
-    this.onHierarchyChanged({ value: cyInput });
+    this.onHierarchyChanged(cyInput);
   }
 
   ngOnInit() {
