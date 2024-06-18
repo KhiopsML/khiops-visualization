@@ -17,17 +17,34 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       // Open unfold Hierarchy view
       cy.get('.button-unfold-hierarchy').click();
 
-      // Reduce hierarchy
-      cy.get('#cy-unfold-value-input').type('60', {
+      // Reduce hierarchy and check values
+      cy.wait(250);
+      // force to work on hidden elt
+      cy.get('#cy-unfold-value-input').clear({ force: true }).type('200', {
         force: true,
       });
-
       cy.get('#cy-unfold-value-button').click({
         force: true,
       });
+      cy.wait(250);
+      cy.get('.unfold-information-rate').contains('53790');
+      cy.get('.unfold-information-rate').contains('92.5%');
 
+      // Reduce hierarchy and check values
+      cy.get('#cy-unfold-value-input').clear({ force: true }).type('60', {
+        force: true,
+      });
+      cy.get('#cy-unfold-value-button').click({
+        force: true,
+      });
+      cy.wait(250);
+      cy.get('.unfold-information-rate').contains('5746');
+      cy.get('.unfold-information-rate').contains('69.8%');
+
+      // Close dialog
       cy.get('.button-confirm-hierarchy').click();
 
+      // Check values
       cy.get('#tree-comp-0').contains('A214');
 
       // Check that node has been folded
