@@ -47,11 +47,13 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       // Check values
       cy.get('#tree-comp-0').contains('A214');
 
-      // Check that node has been folded
-      cy.get('#tree-comp-1')
-        .find('#tree-leaf-2')
-        .parent()
-        .should('have.css', 'display', 'none');
+      // Now we check matrix values
+      cy.get('#matrix-selected').trigger('mousemove', {
+        position: 'bottomRight',
+      });
+
+      // Check Matrix tooltip
+      cy.get('.matrix-tooltip-comp').contains(23);
     });
   });
 
