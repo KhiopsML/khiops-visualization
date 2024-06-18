@@ -14,6 +14,12 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       //@ts-ignore
       cy.loadFile('covisualization', fileName);
 
+      // Now we check matrix values
+      cy.get('#matrix-selected').trigger('mousemove', {
+        position: 'center',
+      });
+      cy.get('.matrix-tooltip-comp').contains(2496);
+
       // Open unfold Hierarchy view
       cy.get('.button-unfold-hierarchy').click();
 
@@ -28,7 +34,7 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       });
       cy.wait(250);
       cy.get('.unfold-information-rate').contains('53790');
-      cy.get('.unfold-information-rate').contains('92.5%');
+      cy.get('.unfold-information-rate').contains('92.4%');
 
       // Reduce hierarchy and check values
       cy.get('#cy-unfold-value-input').clear({ force: true }).type('60', {
@@ -49,11 +55,9 @@ describe('Behaviors tests for Khiops Covisualization', () => {
 
       // Now we check matrix values
       cy.get('#matrix-selected').trigger('mousemove', {
-        position: 'bottomRight',
+        position: 'center',
       });
-
-      // Check Matrix tooltip
-      cy.get('.matrix-tooltip-comp').contains(23);
+      cy.get('.matrix-tooltip-comp').contains(221);
     });
   });
 

@@ -101,7 +101,7 @@ export class FileLoaderService {
     // Co visualization files
     // ======================
     //
-    let urlKC = './assets/mocks/kc/Coclustering-100x100.json';
+    // let urlKC = './assets/mocks/kc/Coclustering-100x100.json';
     // let urlKC = './assets/mocks/kc/cc.json';
     // let urlKC = './assets/mocks/kc/Coclustering.json';
     // let urlKC = './assets/mocks/kc/Co-simple-2vars.json';
@@ -116,7 +116,7 @@ export class FileLoaderService {
     // let urlKC = './assets/mocks/kc/sample0.json';
     // let urlKC = './assets/mocks/kc/WebSpamCoclustering18mb.json';
     // let urlKC = './assets/mocks/kc/adultmissing.json';
-    // let urlKC = './assets/mocks/kc/DigitCoclustering.json';
+    let urlKC = './assets/mocks/kc/DigitCoclustering.json';
     // let urlKC = './assets/mocks/kc/mushroom.json';
     // let urlKC = './assets/mocks/kc/SimplifiedCoclusteringIrisOldFormat_BugUndefined.json';
     // let urlKC = './assets/mocks/kc/h-Coclustering.json';
