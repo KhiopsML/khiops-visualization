@@ -43,7 +43,7 @@ describe('Test Khiops Covisualization sample files', () => {
   ];
 
   files.forEach((fileName, fileIndex) => {
-    it(`Check values for ${fileName}`, { defaultCommandTimeout: 10000 }, () => {
+    it(`Check values for ${fileName}`, () => {
       // Initialize ls with all views enabled
       initLS();
 

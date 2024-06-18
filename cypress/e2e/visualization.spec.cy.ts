@@ -71,7 +71,7 @@ describe('Test Khiops Visualization sample files', () => {
   ];
 
   files.forEach((fileName, fileIndex) => {
-    it(`Check values for ${fileName}`, { defaultCommandTimeout: 10000 }, () => {
+    it(`Check values for ${fileName}`, () => {
       //@ts-ignore
       cy.loadFile('visualization', fileName);
 
