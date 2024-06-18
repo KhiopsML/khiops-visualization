@@ -84,7 +84,7 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       // Now reverse dimenions
       cy.get('.hierarchy-select-comp-button').first().click();
       cy.wait(500);
-      cy.get('.mat-menu-item').eq(2).click();
+      cy.get('.mat-mdc-menu-item').eq(2).click();
 
       // Check that dimension has been changed
       cy.get('.hierarchy-select-comp-button').first().contains('race');

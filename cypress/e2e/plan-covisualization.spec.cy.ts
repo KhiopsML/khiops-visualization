@@ -136,7 +136,7 @@ describe('Test Plan for Khiops Covisualization', () => {
         // Now reverse dimenions
         cy.get('.hierarchy-select-comp-button').first().click();
         cy.wait(200);
-        cy.get('.mat-menu-item').eq(1).click();
+        cy.get('.mat-mdc-menu-item').eq(1).click();
       });
     });
   });
