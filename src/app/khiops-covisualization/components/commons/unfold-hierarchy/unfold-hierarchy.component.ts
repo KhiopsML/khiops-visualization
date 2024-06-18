@@ -153,6 +153,11 @@ export class UnfoldHierarchyComponent implements OnInit {
     );
     this.currentUnfoldHierarchy = this.previousHierarchyRank;
 
+    // #150 If saved json unfoldState is > to the maximum unfold state available, reset it
+    if (this.currentUnfoldHierarchy > this.defaultMaxUnfoldHierarchy) {
+      this.currentUnfoldHierarchy = this.defaultMaxUnfoldHierarchy;
+    }
+
     setTimeout(() => {
       this.dimensionsDatas = this.dimensionsDatasService.getDatas();
       this.dimensions = _.cloneDeep(this.dimensionsDatas.dimensions);

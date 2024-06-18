@@ -201,7 +201,7 @@ export class ClustersService {
     currentDataSet = new ChartDatasetVO('info', 'line');
     for (
       let j = this.dimensionsDatas.dimensions.length - 1;
-      j <= this.dimensionsDatas.hierarchyDatas.totalClusters;
+      j <= this.dimensionsDatas.hierarchyDatas.totalInitialClusters;
       j++
     ) {
       let currentCluster;
@@ -215,12 +215,15 @@ export class ClustersService {
           break;
         }
       }
-      let currentInfo =
-        (currentCluster && currentCluster.hierarchicalLevel * 100) || 0;
-      if (currentInfo < 0) {
-        currentInfo = 0;
+      // 150 currentCluster may be deleted by an auto unfold,
+      // If not found, do nothing and loop
+      if (currentCluster) {
+        let currentInfo = currentCluster.hierarchicalLevel * 100 || 0;
+        if (currentInfo < 0) {
+          currentInfo = 0;
+        }
+        currentDataSet.data.push(currentInfo);
       }
-      currentDataSet.data.push(currentInfo);
     }
     infoPerCluster.datasets.push(currentDataSet);
 

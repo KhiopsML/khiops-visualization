@@ -345,6 +345,9 @@ export class TreenodesService {
         // Concat all dimensions clusters
         this.dimensionsDatas.hierarchyDatas.totalClusters +=
           appDatas.coclusteringReport.dimensionSummaries[i].parts;
+        // 150 Also compute totalInitialClusters to generate information rate chart
+        this.dimensionsDatas.hierarchyDatas.totalInitialClusters +=
+          appDatas.coclusteringReport.dimensionSummaries[i].initialParts;
       }
       // Init with all clusters
       if (this.dimensionsDatas.hierarchyDatas.selectedUnfoldHierarchy === 0) {
