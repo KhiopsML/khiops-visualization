@@ -36,10 +36,6 @@
         line-height: 33px !important;
         min-width: 40px !important;
         max-width: 40px !important;
-
-        mat-icon {
-          font-size: 21px !important;
-        }
       }
 
       ::ng-deep .search-input-btn {
@@ -58,9 +54,6 @@
           margin: 0 1px 0 2px;
           display: flex;
           padding: 7px !important;
-          mat-icon {
-            font-size: 21px;
-          }
         }
 
         ::-webkit-input-placeholder {
