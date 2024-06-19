@@ -15,8 +15,6 @@
 
     .comp-header-tools {
       .mdc-button.mat-warn {
-        // min-width: 34px !important;
-        // width: 35px;
         height: 33px !important;
         min-width: 34px !important;
         width: 34px !important;
@@ -26,13 +24,6 @@
           font-size: 18px !important;
         }
       }
-      // .mat-flat-button {
-      // 	height: 33px !important;
-      // 	min-width: 38px !important;
-      // 	padding: 0 !important;
-      // 	margin-right: 5px !important;
-
-      // }
 
       .level-distribution-btn {
         font-size: 0.9em !important;
@@ -41,6 +32,7 @@
 
       .level-distribution-btn.small-div {
         height: 33px !important;
+        padding: 0 !important;
         line-height: 33px !important;
         min-width: 40px !important;
         max-width: 40px !important;
