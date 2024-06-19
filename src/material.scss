@@ -48,14 +48,14 @@ button {
   font-weight: 500;
 }
 
-.mat-tab-label-active {
-  background-color: none !important;
-  opacity: 1 !important;
-}
+// .mat-tab-label-active {
+//   background-color: none !important;
+//   opacity: 1 !important;
+// }
 
-.mat-tab-label:hover {
-  background-color: var(--bgColor-10) !important;
-}
+// .mat-tab-label:hover {
+//   background-color: var(--bgColor-10) !important;
+// }
 
 .mat-mdc-tab-body {
   background: var(--bgColor-20) !important;
@@ -79,13 +79,13 @@ button {
 // 	border-bottom: 0px !important;
 //   }
 
-.mat-drawer-content,
-.mat-tab-group {
-  background: transparent !important;
-}
-#home-layout-comp #main-tab-group > .mat-tab-body-wrapper {
-  background: transparent !important;
-}
+// .mat-drawer-content,
+// .mat-tab-group {
+//   background: transparent !important;
+// }
+// #home-layout-comp #main-tab-group > .mat-tab-body-wrapper {
+//   background: transparent !important;
+// }
 
 .mdc-button
 // .mat-raised-button,
