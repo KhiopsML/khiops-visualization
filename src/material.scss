@@ -291,7 +291,9 @@ mat-pseudo-checkbox {
 
 mat-checkbox .mdc-form-field label {
   font-size: 0.75rem !important;
-  // line-height: 1rem;
+  line-height: 1rem;
+  padding: 0.6rem 0;
+  min-width: 100%;
 }
 
 // .mat-drawer-content,
