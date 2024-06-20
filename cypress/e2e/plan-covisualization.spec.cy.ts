@@ -25,7 +25,7 @@ describe('Test Plan for Khiops Covisualization', () => {
     {
       matrixTooltip: [3942, 27815, 923],
       nodesName: ['[-0.999999999;0.57661]', '[-0.999988212;0.577313]'],
-      unfoldH: 150,
+      unfoldH: 100,
       matrixValues: 27815, // selected cell excpected Freq
     },
   ];
