@@ -51,7 +51,7 @@ describe('Test Plan for Khiops Covisualization', () => {
         });
 
         // Check Matrix tooltip
-        cy.wait(100);
+        cy.wait(500);
         cy.get('.matrix-tooltip-comp').contains(res.matrixTooltip[0]);
 
         // Fold some nodes nodes
@@ -65,7 +65,7 @@ describe('Test Plan for Khiops Covisualization', () => {
         });
 
         // Check MAtrix tooltip
-        cy.wait(100);
+        cy.wait(500);
         cy.get('.matrix-tooltip-comp').contains(res.matrixTooltip[1]);
 
         // Check Clusters table
@@ -133,7 +133,7 @@ describe('Test Plan for Khiops Covisualization', () => {
         });
 
         // Check Matrix tooltip
-        cy.wait(100);
+        cy.wait(500);
         cy.get('.matrix-tooltip-comp').contains(res.matrixTooltip[2]);
 
         // Now reverse dimenions
