@@ -18,6 +18,7 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       cy.get('#matrix-selected').trigger('mousemove', {
         position: 'center',
       });
+      cy.wait(100);
       cy.get('.matrix-tooltip-comp').contains(2496);
 
       // Open unfold Hierarchy view
@@ -57,6 +58,7 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       cy.get('#matrix-selected').trigger('mousemove', {
         position: 'center',
       });
+      cy.wait(100);
       cy.get('.matrix-tooltip-comp').contains(221);
     });
   });
