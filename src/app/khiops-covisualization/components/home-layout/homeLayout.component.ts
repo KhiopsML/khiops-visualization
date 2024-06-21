@@ -273,7 +273,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 
     this.initializeServices();
 
-    if (this.configService.getConfig().appSource !== 'ELECTRON') {
+    if (!this.configService.isElectron) {
       // @ts-ignore
       this.appAxisView?.initialize();
     }
@@ -285,7 +285,10 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     this.clustersService.initialize();
     this.treenodesService.initialize();
     this.importExtDatasService.initExtDatasFiles();
-    this.openLoadExternalDataDialog();
+    // Loading local files is forbidden in js
+    if (this.configService.isElectron) {
+      this.openLoadExternalDataDialog();
+    }
     this.isContextDimensions =
       this.dimensionsDatasService.isContextDimensions();
   }

@@ -52,7 +52,7 @@ export class ProjectViewComponent
     private trackerService: TrackerService,
   ) {
     super();
-    this.isElectron = this.configService.getConfig().appSource === 'ELECTRON';
+    this.isElectron = this.configService.isElectron;
 
     this.initialize();
   }

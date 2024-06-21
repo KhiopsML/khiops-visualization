@@ -31,7 +31,7 @@ export class ProjectViewComponent
     private configService: ConfigService,
   ) {
     super();
-    this.isElectron = this.configService.getConfig().appSource === 'ELECTRON';
+    this.isElectron = this.configService.isElectron;
 
     this.initialize();
   }

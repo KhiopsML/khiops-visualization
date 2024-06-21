@@ -28,4 +28,8 @@ export class ConfigService {
   getConfig(): ConfigModel {
     return this.config;
   }
+
+  get isElectron(): boolean {
+    return this.getConfig().appSource === 'ELECTRON';
+  }
 }

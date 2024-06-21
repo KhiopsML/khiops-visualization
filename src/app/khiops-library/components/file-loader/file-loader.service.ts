@@ -116,7 +116,8 @@ export class FileLoaderService {
     // let urlKC = './assets/mocks/kc/sample0.json';
     // let urlKC = './assets/mocks/kc/WebSpamCoclustering18mb.json';
     // let urlKC = './assets/mocks/kc/adultmissing.json';
-    let urlKC = './assets/mocks/kc/DigitCoclustering.json';
+    // let urlKC = './assets/mocks/kc/DigitCoclustering.json';
+    let urlKC = './assets/mocks/kc/check-ext-datas.json';
     // let urlKC = './assets/mocks/kc/mushroom.json';
     // let urlKC = './assets/mocks/kc/SimplifiedCoclusteringIrisOldFormat_BugUndefined.json';
     // let urlKC = './assets/mocks/kc/h-Coclustering.json';

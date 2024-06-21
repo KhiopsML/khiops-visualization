@@ -7,4 +7,5 @@ export class ConfigModel {
   onCopyData: Function;
   onCopyImage: Function;
   onThemeChanged: Function;
+  readLocalFile?: Function;
 }

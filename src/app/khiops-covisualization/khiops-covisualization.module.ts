@@ -8,7 +8,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularSplitModule } from 'angular-split';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { KhiopsLibraryModule } from '@khiops-library/khiops-library.module';
-import { ReleaseNotesComponent } from '@khiops-library/components/release-notes/release-notes.component';
 import { AxisViewComponent } from './components/axis-view/axis-view.component';
 import { AxisComponent } from './components/commons/axis/axis.component';
 import { ProjectViewComponent } from './components/project-view/project-view.component';
@@ -22,8 +21,6 @@ import { VariableGraphDetailsComponent } from './components/commons/variable-gra
 import { SelectedClustersComponent } from './components/commons/selected-clusters/selected-clusters.component';
 import { MatrixContainerComponent } from './components/commons/matrix-container/matrix-container.component';
 import { UnfoldHierarchyComponent } from './components/commons/unfold-hierarchy/unfold-hierarchy.component';
-import { CheckboxCellComponent } from '@khiops-library/components/ag-grid/checkbox-cell/checkbox-cell.component';
-import { IconCellComponent } from '@khiops-library/components/ag-grid/icon-cell/icon-cell.component';
 import { LoadExtDatasComponent } from './components/commons/load-ext-datas/load-ext-datas.component';
 import { ImportExtDatasComponent } from './components/commons/import-ext-datas/import-ext-datas.component';
 import { ImportExtDatasListComponent } from './components/commons/import-ext-datas-list/import-ext-datas-list.component';
@@ -31,7 +28,6 @@ import { ManageViewsComponent } from './components/commons/manage-views/manage-v
 import { AgGridModule } from '@ag-grid-community/angular';
 import { UserSettingsComponent } from './components/commons/user-settings/user-settings.component';
 import { ExternalDatasComponent } from './components/commons/external-datas/external-datas.component';
-import { ConfirmDialogComponent } from '@khiops-library/components/confirm-dialog/confirm-dialog.component';
 import { InAppRootOverlayContainer } from '@khiops-covisualization/providers/in-app-root-overlay/in-app-root-overlay-container';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { HierarchyDetailsComponent } from './components/commons/hierarchy-details/hierarchy-details.component';
