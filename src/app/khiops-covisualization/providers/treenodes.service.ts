@@ -920,22 +920,17 @@ export class TreenodesService {
         resGroupMap.set(currentIndexesString, cellFrequencies[i]);
       }
     }
-    resGroupMap = new Map([...resGroupMap.entries()].sort());
+
+    // Sort map by frequency
+    resGroupMap = new Map(
+      [...resGroupMap.entries()].sort((a, b) => b[1] - a[1]),
+    );
 
     // Convert the map back to an array of objects if needed
     resGroup = Array.from(resGroupMap, ([key, value]) => ({
       key,
       value,
     }));
-
-    resGroup.sort(function (a: any, b: any) {
-      if (a.value === b.value) {
-        return a.key.localeCompare(b.key, undefined, {
-          numeric: true,
-        });
-      }
-      return b.value - a.value;
-    });
 
     CC.coclusteringReport.cellFrequencies = resGroup.map((e) => e.value);
     // Convert cellPartIndexes strings to integers
