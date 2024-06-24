@@ -389,9 +389,6 @@ export class MatrixCanvasService {
 			)`;
   }
 
-  /**
-   * ChatGPT optimization
-   */
   static hexToRgb(hex) {
     const bigint = parseInt(hex.slice(1), 16);
     const r = (bigint >> 16) & 255;
@@ -400,9 +397,6 @@ export class MatrixCanvasService {
     return { r, g, b };
   }
 
-  /**
-   * ChatGPT optimization
-   */
   static getFrequencyColors() {
     const hotLength = this.hot.length;
     const map = new Array(hotLength);
