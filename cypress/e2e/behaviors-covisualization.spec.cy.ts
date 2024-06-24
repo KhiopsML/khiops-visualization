@@ -5,6 +5,49 @@ import { initLS } from 'cypress/setups/init-ls';
 describe('Behaviors tests for Khiops Covisualization', () => {
   let files = ['DigitCoclustering.json'];
   files.forEach((fileName, fileIndex) => {
+    it(`Test unfold hierarchy slider on big datas`, () => {
+      // Initialize ls with all views enabled
+      initLS();
+
+      //@ts-ignore
+      cy.initViews();
+      //@ts-ignore
+      cy.loadFile('covisualization', fileName);
+
+      // Open unfold Hierarchy view
+      cy.get('.button-unfold-hierarchy').click();
+
+      // Reduce hierarchy and check values
+      cy.wait(250);
+      // force to work on hidden elt
+      cy.get('#cy-unfold-value-input').clear({ force: true }).type('378', {
+        force: true,
+      });
+      cy.get('#cy-unfold-value-button').click({
+        force: true,
+      });
+      cy.wait(250);
+
+      cy.get('.unfold-information-rate').contains('112530');
+      cy.get('#unfold-hierarchy-settings').contains('Number of clusters : 378');
+      cy.wait(250);
+
+      cy.get('.button-reduce-hierarchy').click();
+      cy.wait(250);
+
+      cy.get('.unfold-information-rate').contains('112200');
+      cy.get('#unfold-hierarchy-settings').contains('Number of clusters : 377');
+
+      cy.get('.button-increase-hierarchy').click();
+      cy.wait(250);
+
+      cy.get('.unfold-information-rate').contains('112530');
+      cy.get('#unfold-hierarchy-settings').contains('Number of clusters : 378');
+    });
+  });
+
+  files = ['DigitCoclustering.json'];
+  files.forEach((fileName, fileIndex) => {
     it(`Test unfold hierarchy on big datas`, () => {
       // Initialize ls with all views enabled
       initLS();
