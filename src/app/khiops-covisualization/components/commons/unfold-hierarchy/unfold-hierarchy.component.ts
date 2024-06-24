@@ -217,6 +217,9 @@ export class UnfoldHierarchyComponent implements OnInit {
     if (event.value > this.defaultMaxUnfoldHierarchy) {
       setTimeout(() => {
         this.currentUnfoldHierarchy = this.defaultMaxUnfoldHierarchy;
+        event.source.value = this.currentUnfoldHierarchy; // important to update manually the slider,
+        // otherwise, if user click twice, he can set too high state
+
         this.snackBar.open(
           this.translate.get('SNACKS.UNFOLDED_DATAS_MAXIMUM_UNFOLD', {
             count: this.currentUnfoldHierarchy,
