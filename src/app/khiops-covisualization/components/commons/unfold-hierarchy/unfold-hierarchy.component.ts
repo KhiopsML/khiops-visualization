@@ -203,7 +203,7 @@ export class UnfoldHierarchyComponent implements OnInit {
     ) {
       this.currentUnfoldHierarchy =
         this.treenodesService.getHierarchyFromClustersCount(
-          this.currentUnfoldHierarchy,
+          this.currentUnfoldHierarchy + 1,
           AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.TECHNICAL_LIMIT,
         );
       this.treenodesService.updateCurrentHierarchyClustersCount(
@@ -211,13 +211,12 @@ export class UnfoldHierarchyComponent implements OnInit {
       );
       this.currentCellsPerCluster =
         this.clustersService.getCurrentCellsPerCluster();
+      this.defaultMaxUnfoldHierarchy = this.currentUnfoldHierarchy;
     }
-    this.defaultMaxUnfoldHierarchy = this.currentUnfoldHierarchy;
 
     if (event.value > this.defaultMaxUnfoldHierarchy) {
       setTimeout(() => {
         this.currentUnfoldHierarchy = this.defaultMaxUnfoldHierarchy;
-        event.source.value = this.currentUnfoldHierarchy;
         this.snackBar.open(
           this.translate.get('SNACKS.UNFOLDED_DATAS_MAXIMUM_UNFOLD', {
             count: this.currentUnfoldHierarchy,
@@ -229,7 +228,7 @@ export class UnfoldHierarchyComponent implements OnInit {
             verticalPosition: 'bottom',
           },
         );
-      });
+      }, 200); // important to increase timeout to make slider changes
     }
     // Dimension changed, clone to update array
     this.dimensions = _.cloneDeep(this.dimensionsDatas.dimensions);
