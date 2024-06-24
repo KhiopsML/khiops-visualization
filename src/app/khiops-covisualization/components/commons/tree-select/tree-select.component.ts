@@ -146,17 +146,21 @@ export class TreeSelectComponent
       });
     });
     this.tree.on('expand', (e) => {
-      this.treenodesService.expandNode(
-        this.selectedDimension.name,
-        e.data.name,
-      );
+      setTimeout(() => {
+        this.treenodesService.expandNode(
+          this.selectedDimension.name,
+          e.data.name,
+        );
+      });
     });
     this.tree.on('expandAll', (e) => {});
     this.tree.on('collapse', (e) => {
-      this.treenodesService.collapseNode(
-        this.selectedDimension.name,
-        e.data.name,
-      );
+      setTimeout(() => {
+        this.treenodesService.collapseNode(
+          this.selectedDimension.name,
+          e.data.name,
+        );
+      });
     });
     this.tree.on('collapseAll', (e) => {});
     this.tree.on('updateNodeName', (e) => {
