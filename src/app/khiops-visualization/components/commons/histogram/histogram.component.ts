@@ -271,7 +271,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
       this.drawRect(
         this.ctxHover,
         this.datas[barPosition],
-        this.barPosition,
+        -1,
         this.bars[barPosition],
         this.ratio,
         barPosition,
