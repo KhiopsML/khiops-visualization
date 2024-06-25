@@ -13,8 +13,6 @@ jobs:
           yarn install
           yarn build:webcomponents
 
-      - run: chown -R 1001:1001 /github/home/.cache && echo "pwn dat cache"
-
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
