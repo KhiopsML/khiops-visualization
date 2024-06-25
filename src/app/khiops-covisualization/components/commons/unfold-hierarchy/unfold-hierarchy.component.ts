@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
@@ -135,6 +135,13 @@ export class UnfoldHierarchyComponent implements OnInit {
     this.infoPerClusterChartOptions.scales.y.title.text = this.translate.get(
       'GLOBAL.INFORMATION_RATE',
     );
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      this.onClickOnSave();
+    }
   }
 
   highlightChartLine(name: string) {
