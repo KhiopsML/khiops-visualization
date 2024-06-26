@@ -19,6 +19,7 @@ describe('Behaviors tests for Khiops Covisualization', () => {
 
       // Reduce hierarchy and check values
       cy.wait(250);
+
       // force to work on hidden elt
       cy.get('#cy-unfold-value-input').clear({ force: true }).type('378', {
         force: true,
@@ -28,12 +29,19 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       });
       cy.wait(250);
 
+      // Check table values
+      cy.get('#unfold-hierarchy-table').contains('341');
+      cy.get('#unfold-hierarchy-table').contains('15');
+      cy.get('#unfold-hierarchy-table').contains('22');
+
       cy.get('.unfold-information-rate').contains('112530');
       cy.get('#unfold-hierarchy-settings').contains('Number of clusters : 378');
       cy.wait(250);
 
       cy.get('.button-reduce-hierarchy').click();
       cy.wait(250);
+      // Check table values
+      cy.get('#unfold-hierarchy-table').contains('340');
 
       cy.get('.unfold-information-rate').contains('112200');
       cy.get('#unfold-hierarchy-settings').contains('Number of clusters : 377');

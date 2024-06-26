@@ -221,6 +221,9 @@ export class UnfoldHierarchyComponent implements OnInit {
 
     this.currentCellsPerCluster =
       this.clustersService.getCurrentCellsPerCluster();
+
+    // Dimension changed, clone to update array
+    this.dimensions = _.cloneDeep(this.dimensionsDatas.dimensions);
   }
 
   onClickOnSave() {
