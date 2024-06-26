@@ -7,9 +7,9 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 })
 export class ImportFileLoaderService {
   constructor(private configService: ConfigService) {}
-  readFile(file: File): any {
+  readImportFile(file: File): any {
     if (this.configService.isElectron) {
-      // Method called autoùmatically at startup
+      // Method called automatically at startup
       // For security reasons, local files can not be loaded automatically without Electron
       return new Promise((resolve, reject) => {
         this.configService?.getConfig()?.readLocalFile?.(file, (datas) => {
