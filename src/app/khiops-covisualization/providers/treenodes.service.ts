@@ -71,11 +71,11 @@ export class TreenodesService {
   }
 
   initConditionalOnContextNodes() {
-    for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
+    for (let i = 0; i < this.dimensionsDatas.selectedDimensions.length; i++) {
       if (i >= 2) {
         // re init context nodes with conditionalOnContext to false
         this.setSelectedNode(
-          this.dimensionsDatas.dimensions[i].name,
+          this.dimensionsDatas.selectedDimensions[i].name,
           this.dimensionsDatas.selectedNodes[i]._id,
           false,
         );
