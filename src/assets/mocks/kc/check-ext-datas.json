@@ -1184,6 +1184,7 @@
 		    "path":"C:\\Users\\jcdf8453\\WORK\\workspace\\khiops\\visualization-component\\src\\assets\\mocks\\kc\\ExternalDataEducation.txt",
         "dimension": "education",
         "joinKey": "education",
+        "file": {},
         "field": {
           "name": "An example of text",
           "import": true
