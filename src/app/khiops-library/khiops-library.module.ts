@@ -37,7 +37,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngstack/translate';
-import { ReleaseNotesComponent } from './components/release-notes/release-notes.component';
 import { ToPrecisionPipe } from './pipes/toPrecision.pipe';
 import { HeaderTitleComponent } from './components/header-title/header-title.component';
 import { NoDataComponent } from './components/no-data/no-data.component';
@@ -120,7 +119,6 @@ import EnTransaltion from '../../assets/i18n/en.json';
     SelectableComponent,
     GraphOptionsMenuComponent,
     FileLoaderComponent,
-    ReleaseNotesComponent,
     ConfirmDialogComponent,
     HeaderToolsComponent,
     BtnFullscreenComponent,
@@ -181,7 +179,6 @@ import EnTransaltion from '../../assets/i18n/en.json';
     TranslateModule,
     WatchResizeComponent,
     SelectableComponent,
-    ReleaseNotesComponent,
     ConfirmDialogComponent,
     FileLoaderComponent,
     HeaderToolsComponent,
