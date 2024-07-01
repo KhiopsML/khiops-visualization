@@ -191,7 +191,13 @@ export class DistributionGraphCanvasComponent
 
     this.chartOptions.scales.y.max = undefined;
     this.chartOptions.scales.y.min = undefined;
-    this.chartOptions.scales.y.type = TYPES.LINEAR;
+
+    // Histogram: Missing logarithmic scale for "frequency" mode #185
+    this.chartOptions.scales.y.type =
+      this.graphOptions.selected === 'GLOBAL.FREQUENCY'
+        ? TYPES.LOGARITHMIC
+        : TYPES.LINEAR;
+
     const minValue = Math.min(...this.inputDatas.datasets[0].data);
 
     if (minValue > 0) {

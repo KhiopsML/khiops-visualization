@@ -8,6 +8,7 @@ export enum TYPES {
   LIFT = 'GLOBAL.LIFT',
 
   LINEAR = 'linear',
+  LOGARITHMIC = 'logarithmic',
   NUMERICAL = 'Numerical',
   CATEGORICAL = 'Categorical',
 }
