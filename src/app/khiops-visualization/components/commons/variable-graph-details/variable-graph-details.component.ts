@@ -19,6 +19,7 @@ import { TreePreparationVariableVO } from '@khiops-visualization/model/tree-prep
 import { DistributionDatasVO } from '@khiops-visualization/model/distribution-datas-vo';
 import { REPORTS } from '@khiops-library/enum/reports';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
+import { ConfigService } from '@khiops-library/providers/config.service';
 
 @Component({
   selector: 'app-variable-graph-details',
@@ -58,6 +59,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
 
   constructor(
     private preparationDatasService: PreparationDatasService,
+    private configService: ConfigService,
     private treePreparationDatasService: TreePreparationDatasService,
     private distributionDatasService: DistributionDatasService,
   ) {
@@ -146,6 +148,16 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
     setTimeout(() => {
       this.resize();
     });
+
+    // #187 Simulate click on component to enable selection
+    this.configService
+      .getRootElementDom()
+      .querySelector<HTMLElement>('#distribution-graph' + this.position)
+      ?.click();
+    this.configService
+      .getRootElementDom()
+      .querySelector<HTMLElement>('#app-histogram')
+      ?.click();
   }
 
   onScaleValueChanged(value: number) {
