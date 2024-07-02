@@ -68,7 +68,7 @@ export class ImportExtDatasService {
     return formatedDatas;
   }
 
-  addImportedDatas(filename, dimension, joinKey, separator, field, file) {
+  addImportedDatas(filename, path, dimension, joinKey, separator, field, file) {
     const data = new ExtDatasVO(
       filename,
       dimension,
@@ -76,6 +76,7 @@ export class ImportExtDatasService {
       separator,
       field,
       file,
+      path,
     );
     if (
       !this.importExtDatas.find(
@@ -193,10 +194,19 @@ export class ImportExtDatasService {
       for (let i = 0; i < importExtDatasLength; i++) {
         const promise = new Promise((resolve, reject) => {
           const externalDatas: ExtDatasVO = this.importExtDatas[i];
+          if (!(externalDatas.file instanceof File)) {
+            // If command is called by user
+            // @ts-ignore
+            externalDatas.file.path = externalDatas.path;
+          }
+          console.log(
+            'ImportExtDatasService ~ promise ~ externalDatas:',
+            externalDatas,
+          );
           const joinKey = externalDatas.joinKey;
           const fieldName = externalDatas.field.name;
           this.importFileLoaderService
-            .readFile(externalDatas.file)
+            .readImportFile(externalDatas.file)
             .then((res: any) =>
               this.onFileRead(
                 res.datas,

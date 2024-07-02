@@ -95,6 +95,7 @@ export class FileLoaderService {
     // let urlKV = './assets/mocks/kv/Words100_AllReports.json';
     // let urlKV = './assets/mocks/kv/UnivariateAnalysisResults.json';
     // let urlKV = './assets/mocks/kv/ylogAdultAllReports.json';
+    let urlKV = './assets/mocks/kv/ko-AnalysisResults.khj';
     // let urlKV = './assets/mocks/kv/AdultAllReports.json';
     // let urlKV = './assets/mocks/kv/20NewsgroupAllReports.json';
 
@@ -117,6 +118,7 @@ export class FileLoaderService {
     // let urlKC = './assets/mocks/kc/WebSpamCoclustering18mb.json';
     // let urlKC = './assets/mocks/kc/adultmissing.json';
     let urlKC = './assets/mocks/kc/DigitCoclustering.json';
+    // let urlKC = './assets/mocks/kc/check-ext-datas.json';
     // let urlKC = './assets/mocks/kc/mushroom.json';
     // let urlKC = './assets/mocks/kc/SimplifiedCoclusteringIrisOldFormat_BugUndefined.json';
     // let urlKC = './assets/mocks/kc/h-Coclustering.json';

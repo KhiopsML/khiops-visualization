@@ -35,7 +35,7 @@ export class ClustersService {
 
   getSelectedClustersDetails(): TreeNodeVO[][] {
     const details: TreeNodeVO[][] = [];
-    for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
+    for (let i = 0; i < this.dimensionsDatas.selectedDimensions.length; i++) {
       details.push(
         this.getCurrentClusterDetailsFromNode(
           this.dimensionsDatas.dimensionsTrees[i],
@@ -47,10 +47,10 @@ export class ClustersService {
 
   getCurrentCellsPerCluster(): number {
     let currentCellsPerCluster = 1;
-    for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
+    for (let i = 0; i < this.dimensionsDatas.selectedDimensions.length; i++) {
       currentCellsPerCluster =
         currentCellsPerCluster *
-        this.dimensionsDatas.dimensions[i].currentHierarchyClusterCount;
+        this.dimensionsDatas.selectedDimensions[i].currentHierarchyClusterCount;
     }
     return currentCellsPerCluster;
   }
@@ -258,15 +258,15 @@ export class ClustersService {
 
     let currentDataSet: ChartDatasetVO;
 
-    for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
+    for (let i = 0; i < this.dimensionsDatas.selectedDimensions.length; i++) {
       currentDataSet = new ChartDatasetVO(
-        this.dimensionsDatas.dimensions[i].name,
+        this.dimensionsDatas.selectedDimensions[i].name,
         'line',
       );
 
       let rankedCount = 1;
       for (
-        let j = this.dimensionsDatas.dimensions.length - 1;
+        let j = this.dimensionsDatas.selectedDimensions.length - 1;
         j <= this.dimensionsDatas.hierarchyDatas.totalClusters;
         j++
       ) {
@@ -284,12 +284,12 @@ export class ClustersService {
     for (let k = 0; k < clustersPerDimDatas.datasets.length; k++) {
       if (
         clustersPerDimDatas.datasets[k].data[
-          rank - this.dimensionsDatas.dimensions.length
+          rank - this.dimensionsDatas.selectedDimensions.length
         ] > maxGraphValue
       ) {
         maxGraphValue =
           clustersPerDimDatas.datasets[k].data[
-            rank - this.dimensionsDatas.dimensions.length
+            rank - this.dimensionsDatas.selectedDimensions.length
           ];
       }
     }
@@ -301,7 +301,7 @@ export class ClustersService {
     currentDataSet.barThickness = 5;
 
     for (
-      let j = this.dimensionsDatas.dimensions.length - 1;
+      let j = this.dimensionsDatas.selectedDimensions.length - 1;
       j < this.dimensionsDatas.hierarchyDatas.totalClusters;
       j++
     ) {

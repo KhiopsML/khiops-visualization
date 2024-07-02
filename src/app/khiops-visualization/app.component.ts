@@ -18,7 +18,6 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 import { TrackerService } from '@khiops-library/providers/tracker.service';
 import { SaveService } from './providers/save.service';
 import { AppConfig } from 'src/environments/environment';
-import { ReleaseNotesComponent } from '@khiops-library/components/release-notes/release-notes.component';
 
 @Component({
   selector: 'app-root-visualization',
@@ -65,13 +64,6 @@ export class AppComponent implements AfterViewInit {
           ...datas,
         };
         this.element.nativeElement.value = datas;
-      });
-    };
-    this.element.nativeElement.openReleaseNotesDialog = () => {
-      this.dialogRef.closeAll();
-      this.ngzone.run(() => {
-        const config = new MatDialogConfig();
-        this.dialog.open(ReleaseNotesComponent, config);
       });
     };
     this.element.nativeElement.openChannelDialog = (cb) => {

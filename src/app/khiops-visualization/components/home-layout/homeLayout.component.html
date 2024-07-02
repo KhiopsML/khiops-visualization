@@ -75,7 +75,7 @@
           id="welcome-message"
           fxFlexFill
           fxLayoutAlign="center center"
-          *ngIf="!(appDatas && appDatas.datas && isCompatibleJson)"
+          *ngIf="checkEmptyMessageVisibility()"
           [message]="'NO_DATAS.WELCOME'"
         >
         </kl-no-data>

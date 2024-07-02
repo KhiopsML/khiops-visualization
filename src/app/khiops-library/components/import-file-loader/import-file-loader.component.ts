@@ -35,7 +35,7 @@ export class ImportFileLoaderComponent implements OnInit {
       setTimeout(() => {
         this.ngzone.run(() => {
           this.importFileLoaderService
-            .readFile(file)
+            .readImportFile(file)
             .then((fileDatas: FileVO) => {
               this.filename = fileDatas.filename;
               this.datasLoaded.emit(fileDatas);

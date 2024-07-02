@@ -112,6 +112,14 @@ export class HomeLayoutComponent implements OnInit {
     this.selectedTab = e;
   }
 
+  checkEmptyMessageVisibility(): boolean {
+    return (
+      !this.appDatas ||
+      !this.appDatas?.datas ||
+      UtilsService.isEmpty(this.appDatas?.datas)
+    );
+  }
+
   ngOnInit() {
     this.onFileLoaderDataChangedCb = (obj) => this.onFileLoaderDataChanged(obj);
     this.trackerService.trackEvent('page_view', 'visit', this.appVersion);
@@ -134,6 +142,11 @@ export class HomeLayoutComponent implements OnInit {
   }
 
   onFileLoaderDataChanged(datas) {
+    console.log(
+      'HomeLayoutComponent ~ onFileLoaderDataChanged ~ datas:',
+      datas,
+    );
+    this.isCompatibleJson = false;
     this.selectedTab = undefined;
     this.currentDatas = datas;
     this.appService.setFileDatas(datas);
@@ -160,14 +173,10 @@ export class HomeLayoutComponent implements OnInit {
         },
       );
     } else {
-      this.snackBar.open(
-        this.translate.get('SNACKS.DATAS_LOADED'),
-        undefined,
-        {
-          duration: 2000,
-          panelClass: 'success',
-        },
-      );
+      this.snackBar.open(this.translate.get('SNACKS.DATAS_LOADED'), undefined, {
+        duration: 2000,
+        panelClass: 'success',
+      });
     }
 
     this.preparationDatasService.initialize();

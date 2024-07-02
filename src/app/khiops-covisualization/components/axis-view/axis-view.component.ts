@@ -68,11 +68,12 @@ export class AxisViewComponent
 
     setTimeout(() => {
       this.sizes = this.appService.getViewSplitSizes('axisView');
+
+      // #154 initializeSavedState before datas to get saved json datas
+      this.initializeSavedState();
       this.initializeDatas();
 
       if (this.dimensionsDatas.dimensions.length > 0) {
-        this.initializeSavedState();
-
         const isLargeCocluster = this.dimensionsDatasService.isLargeCocluster();
         let collapsedNodes = this.appService.getSavedDatas('collapsedNodes');
         // collapsedNodes =
@@ -114,7 +115,7 @@ export class AxisViewComponent
 
   /**
    * Init saved datas from Json savedDatas
-   * nodeNames, selectedNodes, matrix states and selections, view layouts ...
+   * nodesNames, selectedNodes, matrix states and selections, view layouts ...
    */
   initializeSavedState() {
     this.treenodesService.initSavedDatas();

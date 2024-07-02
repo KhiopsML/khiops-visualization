@@ -37,7 +37,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngstack/translate';
-import { ReleaseNotesComponent } from './components/release-notes/release-notes.component';
 import { ToPrecisionPipe } from './pipes/toPrecision.pipe';
 import { HeaderTitleComponent } from './components/header-title/header-title.component';
 import { NoDataComponent } from './components/no-data/no-data.component';
@@ -59,10 +58,8 @@ import { RowIdentifierPipe } from './pipes/rowIdentifierPipe.pipe';
 import { ImportFileLoaderComponent } from './components/import-file-loader/import-file-loader.component';
 import { WatchResizeComponent } from './components/watch-resize/watch-resize.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
-import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 import { LibraryComponent } from './library.component';
 import { BtnFullscreenComponent } from './components/btn-fullscreen/btn-fullscreen.component';
-import { MarkedOptionsFactory } from './factory/markdown.factory';
 import { MatrixToggleComponent } from './components/matrix-toggle/matrix-toggle.component';
 import { MatrixModeComponent } from './components/matrix-mode/matrix-mode.component';
 import { GraphOptionsMenuComponent } from './components/graph-options-menu/graph-options-menu.component';
@@ -70,12 +67,6 @@ import EnTransaltion from '../../assets/i18n/en.json';
 
 @NgModule({
   imports: [
-    MarkdownModule.forRoot({
-      markedOptions: {
-        provide: [] as MarkedOptions,
-        useFactory: MarkedOptionsFactory,
-      },
-    }),
     CommonModule,
     HttpClientModule,
     MatSlideToggleModule,
@@ -121,7 +112,6 @@ import EnTransaltion from '../../assets/i18n/en.json';
     SelectableComponent,
     GraphOptionsMenuComponent,
     FileLoaderComponent,
-    ReleaseNotesComponent,
     ConfirmDialogComponent,
     HeaderToolsComponent,
     BtnFullscreenComponent,
@@ -182,7 +172,6 @@ import EnTransaltion from '../../assets/i18n/en.json';
     TranslateModule,
     WatchResizeComponent,
     SelectableComponent,
-    ReleaseNotesComponent,
     ConfirmDialogComponent,
     FileLoaderComponent,
     HeaderToolsComponent,

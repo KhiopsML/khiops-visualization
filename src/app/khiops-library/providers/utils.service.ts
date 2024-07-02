@@ -164,16 +164,6 @@ export class UtilsService {
     }
     return sum;
   }
-  /**
-   * ChatGPT optimization
-   */
-  // static sumArrayOfArray(array) {
-  // 	let sum = 0;
-  // 	for (const subArray of array) {
-  // 		sum += subArray.reduce((acc, curr) => acc + curr, 0);
-  // 	}
-  // 	return sum;
-  // }
 
   static sumArrayItems(arrays) {
     const total = [];
@@ -342,23 +332,6 @@ export class UtilsService {
     }
     return percentArray;
   }
-  /**
-   * ChatGPT optimization
-   */
-  // static generateArrayPercentsFromArrayValues(array) {
-  // 	const percentArray = new Array(array.length + 1);
-  // 	percentArray[0] = 0;
-  // 	let arraySum = 0;
-  // 	for (let i = 0, len = array.length; i < len; i++) {
-  // 	  arraySum += array[i];
-  // 	}
-  // 	let cumulativePercent = 0;
-  // 	for (let i = 0, len = array.length; i < len; i++) {
-  // 	  cumulativePercent += (array[i] * 100 / arraySum);
-  // 	  percentArray[i + 1] = cumulativePercent;
-  // 	}
-  // 	return percentArray;
-  // }
 
   /**
    * Generate array of percent from array length of numbers
@@ -402,23 +375,6 @@ export class UtilsService {
   static flatten(arr) {
     return [].concat.apply([], arr);
   }
-  /**
-   * ChatGPT optimization
-   */
-  // static flatten(arr) {
-  // 	const flattenedArray = [];
-  // 	function flattenArray(element) {
-  // 		if (Array.isArray(element)) {
-  // 			for (let i = 0; i < element.length; i++) {
-  // 				flattenArray(element[i]);
-  // 			}
-  // 		} else {
-  // 			flattenedArray.push(element);
-  // 		}
-  // 	}
-  // 	flattenArray(arr);
-  // 	return flattenedArray;
-  // }
 
   static getPrecisionNumber(value, exp?) {
     if (typeof value === 'number' && isFinite(value)) {

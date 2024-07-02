@@ -24,6 +24,7 @@ import { TYPES } from '@khiops-library/enum/types';
 import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options';
 import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
 import * as _ from 'lodash';
+import { ConfigService } from '@khiops-library/providers/config.service';
 
 @Component({
   selector: 'app-variable-graph-details',
@@ -68,6 +69,7 @@ export class VariableGraphDetailsComponent
     private translate: TranslateService,
     private dimensionsDatasService: DimensionsDatasService,
     private treenodesService: TreenodesService,
+    private configService: ConfigService,
     private clustersService: ClustersService,
     private eventsService: EventsService,
     private khiopsLibraryService: KhiopsLibraryService,
@@ -134,6 +136,12 @@ export class VariableGraphDetailsComponent
     setTimeout(() => {
       this.resize();
     });
+
+    // #187 Simulate click on component to enable selection
+    this.configService
+      .getRootElementDom()
+      .querySelector<HTMLElement>('#cluster-distribution-' + this.position)
+      .click();
   }
 
   ngOnDestroy() {

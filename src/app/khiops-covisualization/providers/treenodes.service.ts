@@ -71,11 +71,11 @@ export class TreenodesService {
   }
 
   initConditionalOnContextNodes() {
-    for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
+    for (let i = 0; i < this.dimensionsDatas.selectedDimensions.length; i++) {
       if (i >= 2) {
         // re init context nodes with conditionalOnContext to false
         this.setSelectedNode(
-          this.dimensionsDatas.dimensions[i].name,
+          this.dimensionsDatas.selectedDimensions[i].name,
           this.dimensionsDatas.selectedNodes[i]._id,
           false,
         );
@@ -579,38 +579,6 @@ export class TreenodesService {
         }
       });
 
-      // Update truncated hierarchy ranks
-      // for (const dimension of truncatedHierarchy) {
-      //   let rank = 1;
-      //   // Loop through each cluster within the dimension
-      //   for (const cluster of dimension.clusters) {
-      //     // Update rank for leaf nodes based on their order in the loop
-      //     cluster.rank = rank++;
-      //   }
-      // }
-
-      // Update truncated hierarchy hierarchicalRank based on hierarchicalLevel information
-      // let allClusters = [];
-      // truncatedHierarchy.forEach((dimension) => {
-      //   allClusters = allClusters.concat(dimension.clusters);
-      // });
-
-      // // Sort clusters by ascending hierarchicalLevel
-      // allClusters.sort((a, b) => a.hierarchicalLevel - b.hierarchicalLevel);
-
-      // // Update hierarchicalRank
-      // let rank = truncatedHierarchy.length;
-      // for (let i = 0; i < allClusters.length; i++) {
-      //   if (
-      //     i > 0 &&
-      //     allClusters[i].hierarchicalLevel !==
-      //       allClusters[i - 1].hierarchicalLevel
-      //   ) {
-      //     rank++;
-      //   }
-      //   allClusters[i].hierarchicalRank = rank;
-      // }
-
       // Sort clusters by leaf and rank
       for (let k = 0; k < truncatedHierarchy.length; k++) {
         truncatedHierarchy[k].clusters = _.sortBy(
@@ -847,9 +815,6 @@ export class TreenodesService {
     return datas;
   }
 
-  /**
-   * ChatGPT optimization
-   */
   truncateJsonCells(CC) {
     const CI = {
       ...this.appService.getInitialDatas().datas,
@@ -955,22 +920,17 @@ export class TreenodesService {
         resGroupMap.set(currentIndexesString, cellFrequencies[i]);
       }
     }
-    resGroupMap = new Map([...resGroupMap.entries()].sort());
+
+    // Sort map by frequency
+    resGroupMap = new Map(
+      [...resGroupMap.entries()].sort((a, b) => b[1] - a[1]),
+    );
 
     // Convert the map back to an array of objects if needed
     resGroup = Array.from(resGroupMap, ([key, value]) => ({
       key,
       value,
     }));
-
-    resGroup.sort(function (a: any, b: any) {
-      if (a.value === b.value) {
-        return a.key.localeCompare(b.key, undefined, {
-          numeric: true,
-        });
-      }
-      return b.value - a.value;
-    });
 
     CC.coclusteringReport.cellFrequencies = resGroup.map((e) => e.value);
     // Convert cellPartIndexes strings to integers
