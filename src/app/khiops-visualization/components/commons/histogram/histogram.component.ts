@@ -515,7 +515,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 
       // Tooltip issue on histogram #189
       if (barW < 1) {
-        barW = 1;
+        barW = 1.5;
       }
 
       // keep current coords to bind clicks and tooltip
