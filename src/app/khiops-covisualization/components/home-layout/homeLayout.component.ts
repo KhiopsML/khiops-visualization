@@ -150,6 +150,14 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
       });
   }
 
+  checkEmptyMessageVisibility(): boolean {
+    return (
+      !this.appDatas ||
+      !this.appDatas?.datas ||
+      UtilsService.isEmpty(this.appDatas?.datas)
+    );
+  }
+
   ngOnDestroy() {
     this.importedDatasChangedSub.unsubscribe();
   }
