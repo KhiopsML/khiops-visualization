@@ -37,7 +37,7 @@ export class Preparation2dDatasVO {
    */
   isValid(): boolean {
     return this.appDatas?.bivariatePreparationReport
-      ?.variablesPairsStatistics[0];
+      ?.variablesPairsStatistics?.[0];
   }
 
   isSupervisedVariable(): boolean {
