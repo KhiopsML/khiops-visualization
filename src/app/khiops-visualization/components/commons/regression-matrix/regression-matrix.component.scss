@@ -2,6 +2,7 @@
   .comp-header {
     margin-top: 1.4em !important;
     margin-bottom: 1em !important;
+    overflow-x: auto;
 
     button {
       text-transform: none;
@@ -26,5 +27,4 @@
   ::ng-deep .mat-tab-label.mat-tab-disabled:hover {
     background-color: transparent !important;
   }
-
 }
