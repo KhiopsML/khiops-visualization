@@ -120,7 +120,7 @@
         >
         </kl-no-data>
       </div>
-      <div [hidden]="!isCompatibleJson" class="container" fxLayout="column">
+      <div *ngIf="isCompatibleJson" class="container" fxLayout="column">
         <kl-header-title [title]="appTitle">
           <svg
             logo
