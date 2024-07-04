@@ -23,6 +23,7 @@ import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { VariableVO } from '@khiops-visualization/model/variable-vo';
 import { Preparation2dDatasVO } from '@khiops-visualization/model/preparation2d-datas-vo';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
+import { BorderTextCellComponent } from '../../../khiops-library/components/ag-grid/border-text-cell/border-text-cell.component';
 
 @Component({
   selector: 'app-preparation-view',
@@ -96,14 +97,13 @@ export class PreparationViewComponent extends SelectableTabComponent {
       {
         headerName: this.translate.get('GLOBAL.VALUES'),
         field: 'values',
-        tooltip: this.translate.get(
-          'TOOLTIPS.PREPARATION.VARIABLES.VALUES',
-        ),
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.VALUES'),
       },
       {
         headerName: this.translate.get('GLOBAL.TYPE'),
         field: 'type',
         tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.TYPE'),
+        cellRendererFramework: BorderTextCellComponent,
       },
       {
         headerName: this.translate.get('GLOBAL.MODE'),
@@ -141,9 +141,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
         headerName: this.translate.get('GLOBAL.STD_DEV'),
         field: 'stdDev',
         show: false,
-        tooltip: this.translate.get(
-          'TOOLTIPS.PREPARATION.VARIABLES.STD_DEV',
-        ),
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.STD_DEV'),
       },
       {
         headerName: this.translate.get('GLOBAL.MISSING_NUMBER'),

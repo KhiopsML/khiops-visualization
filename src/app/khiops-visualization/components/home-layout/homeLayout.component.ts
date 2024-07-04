@@ -142,10 +142,6 @@ export class HomeLayoutComponent implements OnInit {
   }
 
   onFileLoaderDataChanged(datas) {
-    console.log(
-      'HomeLayoutComponent ~ onFileLoaderDataChanged ~ datas:',
-      datas,
-    );
     this.isCompatibleJson = false;
     this.selectedTab = undefined;
     this.currentDatas = datas;
