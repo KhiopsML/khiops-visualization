@@ -342,6 +342,7 @@ mat-tab-header {
 .mat-tab-label-active {
   background-color: none !important;
   opacity: 1 !important;
+  color: var(--primary) !important;
 }
 
 .mat-tab-label:hover {
