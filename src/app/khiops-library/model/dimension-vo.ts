@@ -66,9 +66,9 @@ export class DimensionVO {
       this.intervals = dimensionPartition.intervals;
       this.min = this.intervals[0].bounds[0];
 
-      if (!this.min) {
+      if (this.min === undefined) {
         // bounds are missing for first interval, take the second #123
-        /**
+        /*
           {
             bounds: []
             cluster: "Missing"
