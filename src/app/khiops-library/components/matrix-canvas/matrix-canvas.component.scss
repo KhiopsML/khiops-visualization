@@ -72,6 +72,16 @@
     }
   }
 
+  .axis-matrix {
+    font-size: 0.95em;
+    font-weight: 500;
+    color: var(--primary-contrast);
+    background: var(--bgColor-30);
+    padding: 1px 5px;
+    border-radius: 4px;
+    margin: 4px 0;
+  }
+
   #y-axis {
     white-space: nowrap;
     overflow: hidden;
@@ -92,7 +102,7 @@
     min-height: 32px;
 
     span {
-      margin: 0.4em;
+      margin-top: 6px !important;
     }
   }
 
