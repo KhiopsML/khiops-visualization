@@ -25,9 +25,9 @@
   min-width: 15px;
   padding-left: 1px;
   padding-right: 1px;
-  font-family: monospace !important;
   user-select: none;
   font-weight: bold;
+  color: var(--grey-text);
 }
 
 .tree-leaf .tree-icon {
