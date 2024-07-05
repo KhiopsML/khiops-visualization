@@ -18,13 +18,6 @@ body {
   background-color: var(-bgColor) !important;
 }
 
-::ng-deep .unitdisk-nav {
-  svg {
-    .background-circle {
-      fill: var(-bgColor-30) !important;
-    }
-  }
-}
 .ag-theme-balham .ag-header-cell-resize {
   width: 14px !important;
 }
