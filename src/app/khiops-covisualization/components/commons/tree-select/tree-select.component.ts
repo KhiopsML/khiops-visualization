@@ -17,7 +17,7 @@ import { TranslateService } from '@ngstack/translate';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { Subscription } from 'rxjs';
 import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
-import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
+import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 
 @Component({
   selector: 'app-tree-select',
@@ -38,10 +38,10 @@ export class TreeSelectComponent
   id: any = undefined;
   tree: any;
 
-  dimensionsDatas: DimensionsDatasVO;
   nodeInSelection: any;
 
   constructor(
+    private dimensionsDatasService: DimensionsDatasService,
     private ngzone: NgZone,
     private configService: ConfigService,
     private eventsService: EventsService,
@@ -138,14 +138,17 @@ export class TreeSelectComponent
     this.tree.on('select', (e) => {
       // Do ngzone to emit event
       this.ngzone.run(() => {
-        this.treenodesService.setSelectedNode(
-          this.selectedDimension.name,
-          e.data.name,
-          false,
-        );
+        setTimeout(() => {
+          this.treenodesService.setSelectedNode(
+            this.selectedDimension.name,
+            e.data.name,
+            false,
+          );
+        });
       });
     });
     this.tree.on('expand', (e) => {
+      this.dimensionsDatasService.setIsLoading(true);
       // Important to do in ngzone to do prevent event miss
       this.ngzone.run(() => {
         setTimeout(() => {
@@ -157,6 +160,7 @@ export class TreeSelectComponent
       });
     });
     this.tree.on('collapse', (e) => {
+      this.dimensionsDatasService.setIsLoading(true);
       // Important to do in ngzone to do prevent event miss
       this.ngzone.run(() => {
         setTimeout(() => {

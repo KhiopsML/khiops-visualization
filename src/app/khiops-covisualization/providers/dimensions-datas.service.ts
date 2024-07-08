@@ -79,6 +79,15 @@ export class DimensionsDatasService {
     );
   }
 
+  setIsLoading(status: boolean) {
+    const nb = this.dimensionsDatas.initialDimensions
+      .map((e) => e.parts)
+      .reduce((accumulator, currentValue) => accumulator * currentValue, 1);
+    if (nb > 10000) {
+      this.dimensionsDatas.isLoading = status;
+    }
+  }
+
   isContextDimensions(): boolean {
     const appDatas = this.appService.getDatas().datas;
     return appDatas?.coclusteringReport?.summary?.initialDimensions > 2;

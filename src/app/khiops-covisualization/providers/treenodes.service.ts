@@ -429,6 +429,7 @@ export class TreenodesService {
     // hack to limit re-rendering and optimize perf
     this.dimensionsDatasService.getMatrixDatas(propagateChanges);
     this.dimensionsDatasService.computeMatrixDataFreqMap();
+    this.dimensionsDatasService.setIsLoading(false);
   }
 
   constructDatasToSave(collapsedNodesInput?) {
