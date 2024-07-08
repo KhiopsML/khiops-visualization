@@ -320,6 +320,13 @@ mat-tab-header {
   border-bottom: 0px !important;
 }
 
+.mat-flat-button,
+.search-input-btn,
+.mat-stroked-button,
+mat-button-toggle-group {
+  box-shadow: 0 2px 4px -2px rgba(0, 0, 0, 0.2) !important;
+}
+
 .mat-paginator-container {
   min-height: 36px !important;
   padding: 0 !important;
