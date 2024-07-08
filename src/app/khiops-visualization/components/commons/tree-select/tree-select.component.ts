@@ -133,11 +133,6 @@ export class TreeSelectComponent
           this.selectTreeItemChanged.emit(e.data);
         });
       });
-      this.tree.on('expand', (e) => {});
-      this.tree.on('expandAll', (e) => {});
-      this.tree.on('collapse', (e) => {});
-      this.tree.on('collapseAll', (e) => {});
-      this.tree.on('updateNodeName', (e) => {});
       this.tree.on('error', (e) => {
         this.snackBar.open(this.translate.get(e.data), null, {
           duration: 4000,

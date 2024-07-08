@@ -156,7 +156,6 @@ export class TreeSelectComponent
         });
       });
     });
-    this.tree.on('expandAll', (e) => {});
     this.tree.on('collapse', (e) => {
       // Important to do in ngzone to do prevent event miss
       this.ngzone.run(() => {
@@ -168,7 +167,6 @@ export class TreeSelectComponent
         });
       });
     });
-    this.tree.on('collapseAll', (e) => {});
     this.tree.on('updateNodeName', (e) => {
       // Important when node name change
       this.ngzone.run(() => {
