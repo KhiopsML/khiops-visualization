@@ -69,23 +69,17 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
       {
         headerName: this.translate.get('GLOBAL.RANK'),
         field: 'rank',
-        tooltip: this.translate.get(
-          'TOOLTIPS.PREPARATION_2D.VARIABLES.RANK',
-        ),
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.RANK'),
       },
       {
         headerName: this.translate.get('GLOBAL.NAME_1'),
         field: 'name1',
-        tooltip: this.translate.get(
-          'TOOLTIPS.PREPARATION_2D.VARIABLES.NAME1',
-        ),
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.NAME1'),
       },
       {
         headerName: this.translate.get('GLOBAL.NAME_2'),
         field: 'name2',
-        tooltip: this.translate.get(
-          'TOOLTIPS.PREPARATION_2D.VARIABLES.NAME2',
-        ),
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.NAME2'),
       },
       {
         headerName: this.translate.get('GLOBAL.DELTA_LEVEL'),
@@ -98,24 +92,18 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
       {
         headerName: this.translate.get('GLOBAL.LEVEL'),
         field: 'level',
-        tooltip: this.translate.get(
-          'TOOLTIPS.PREPARATION_2D.VARIABLES.LEVEL',
-        ),
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.LEVEL'),
       },
       {
         headerName: this.translate.get('GLOBAL.LEVEL_1'),
         field: 'level1',
-        tooltip: this.translate.get(
-          'TOOLTIPS.PREPARATION_2D.VARIABLES.LEVEL1',
-        ),
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.LEVEL1'),
         show: this.preparation2dDatasService.isSupervised(),
       },
       {
         headerName: this.translate.get('GLOBAL.LEVEL_2'),
         field: 'level2',
-        tooltip: this.translate.get(
-          'TOOLTIPS.PREPARATION_2D.VARIABLES.LEVEL2',
-        ),
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.LEVEL2'),
         show: this.preparation2dDatasService.isSupervised(),
       },
       {
@@ -128,23 +116,17 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
       {
         headerName: this.translate.get('GLOBAL.PARTS_1'),
         field: 'parts1',
-        tooltip: this.translate.get(
-          'TOOLTIPS.PREPARATION_2D.VARIABLES.PARTS1',
-        ),
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.PARTS1'),
       },
       {
         headerName: this.translate.get('GLOBAL.PARTS_2'),
         field: 'parts2',
-        tooltip: this.translate.get(
-          'TOOLTIPS.PREPARATION_2D.VARIABLES.PARTS2',
-        ),
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.PARTS2'),
       },
       {
         headerName: this.translate.get('GLOBAL.CELLS'),
         field: 'cells',
-        tooltip: this.translate.get(
-          'TOOLTIPS.PREPARATION_2D.VARIABLES.CELLS',
-        ),
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.CELLS'),
       },
     ];
 

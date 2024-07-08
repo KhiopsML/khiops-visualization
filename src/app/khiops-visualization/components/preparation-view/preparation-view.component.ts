@@ -103,7 +103,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
         headerName: this.translate.get('GLOBAL.TYPE'),
         field: 'type',
         tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.TYPE'),
-        // cellRendererFramework: BorderTextCellComponent,
+        cellRendererFramework: BorderTextCellComponent,
       },
       {
         headerName: this.translate.get('GLOBAL.MODE'),
