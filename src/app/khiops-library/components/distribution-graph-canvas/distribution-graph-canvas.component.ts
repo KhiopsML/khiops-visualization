@@ -18,6 +18,7 @@ import { TYPES } from '@khiops-library/enum/types';
 import { HistogramType } from '@khiops-visualization/components/commons/histogram/histogram.types';
 import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
 import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options';
+import { UtilsService } from '@khiops-library/providers/utils.service';
 
 @Component({
   selector: 'kl-distribution-graph-canvas',
@@ -70,7 +71,7 @@ export class DistributionGraphCanvasComponent
 
     // Keep this into ref to access it into tick callback
     // We can not use arrow function to access native getLabelForValue function
-    // let self = this;
+    let self = this;
 
     // Override tooltip infos
     this.chartOptions = {
@@ -160,8 +161,14 @@ export class DistributionGraphCanvasComponent
           ticks: {
             // @ts-ignore
             callback: function (value: number, index: number, e) {
+              let label = this.getLabelForValue(value);
+              label = UtilsService.ellipsis(
+                label,
+                self.khiopsLibraryService.getAppConfig().common.GLOBAL
+                  .MAX_LABEL_LENGTH,
+              );
               // Default chartjs
-              return this.getLabelForValue(value);
+              return label;
             },
           },
         },
