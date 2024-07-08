@@ -688,6 +688,15 @@ mat-button-toggle-group {
 .as-horizontal > .as-split-gutter .as-split-gutter-icon {
   background-size: 4px !important;
 }
+
+as-split.as-disabled {
+  .as-split-gutter {
+    .as-split-gutter-icon {
+      display: none !important;
+    }
+  }
+}
+
 .as-split-gutter-icon {
   opacity: var(--gripOpacity);
 }
