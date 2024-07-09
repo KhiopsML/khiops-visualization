@@ -477,7 +477,7 @@ export class AgGridComponent
   }
 
   showSearchForm() {
-    this.searchFormVisible = !this.searchFormVisible;
+    this.searchFormVisible = true;
 
     if (this.searchFormVisible) {
       this.divWidth -= 100;
@@ -732,6 +732,7 @@ export class AgGridComponent
               this.id.toUpperCase(),
           ) || '';
         if (this.searchInput) {
+          console.log('setTimeout ~ this.searchInput:', this.searchInput);
           this.showSearchForm();
           this.search();
         }
