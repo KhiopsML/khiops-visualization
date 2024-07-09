@@ -7,7 +7,7 @@ export class ChartDatasetVO {
   borderSkipped: boolean = false;
   type: string; // By default
   borderWidth: number;
-  maxBarThickness: number;
+  maxBarThickness: number = 50;
   barThickness: number;
   barPercentage: number;
   categoryPercentage: number;
