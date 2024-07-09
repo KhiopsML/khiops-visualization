@@ -336,6 +336,12 @@ mat-tab-header {
 mat-button-toggle-group {
   box-shadow: 0 2px 4px -2px rgba(0, 0, 0, 0.2) !important;
 }
+.mat-flat-button:hover,
+.search-input-btn:hover,
+.mat-stroked-button:hover,
+mat-button-toggle-group:hover {
+  box-shadow: 0 2px 4px -2px rgba(0, 0, 0, 0.4) !important;
+}
 
 .mat-paginator-container {
   min-height: 36px !important;
