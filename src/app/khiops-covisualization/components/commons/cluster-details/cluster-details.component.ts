@@ -31,7 +31,6 @@ export class ClusterDetailsComponent implements OnInit, OnChanges {
 
   title: string;
   filteredDimensionsClusters: ClusterDetailsVO[];
-  updateValues: ClusterDetailsVO[];
   id: any;
 
   constructor(

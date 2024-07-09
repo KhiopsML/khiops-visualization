@@ -49,7 +49,6 @@ export class AgGridComponent
 
   @Input() suppressRowClickSelection = false;
   @Input() inputDatas: any[]; // Can be any types of datas
-  @Input() updateValues: any;
   @Input() displayedColumns: GridColumnsI[];
   @Input() override id: any = undefined;
   @Input() title: string;
@@ -230,38 +229,12 @@ export class AgGridComponent
       // always do it in case of shortdesc change
       this.selectNode(changes.selectedVariable.currentValue);
     }
-    if (changes.updateValues?.currentValue) {
-      this.updateGridValues(changes.updateValues.currentValue);
-    }
   }
 
   updateColumnFilterBadge() {
     const hiddenColumns = this.displayedColumns.filter((e) => e.show === false);
     // _id is always hidden
     this.hideFilterBadge = hiddenColumns.length <= 1;
-  }
-
-  updateGridValues(updateValues) {
-    // Update only modified datas
-    if (this.agGrid && updateValues.length > 0 && this.showLineSelection) {
-      for (let i = 0; i < updateValues.length; i++) {
-        const currentUpdateValue = updateValues[i];
-        this.agGrid.api.forEachNode((node) => {
-          if (currentUpdateValue?._id === node.data['_id']) {
-            for (const [key, value] of Object.entries(currentUpdateValue)) {
-              if (key !== '_id') {
-                const current = this.displayedColumns.find(
-                  (e) => e.field === key,
-                );
-                if (current) {
-                  node.setDataValue(current.headerName, value);
-                }
-              }
-            }
-          }
-        });
-      }
-    }
   }
 
   override ngAfterViewInit() {
@@ -452,16 +425,12 @@ export class AgGridComponent
           this.rowData.push(currentRow);
         }
       }
+    }
 
-      if (updateSelectedVariable) {
-        setTimeout(() => {
-          this.selectNode(this.selectedVariable);
-        });
-      }
-      if (this.agGrid && this.columnDefs.length === 0) {
-        // Reset column defs in case of show/hide colum to reorder
-        this.agGrid.api.setColumnDefs(this.columnDefs);
-      }
+    // Update grid data
+    if (this.agGrid?.api) {
+      this.agGrid.api.setColumnDefs(this.columnDefs);
+      this.agGrid.api.setRowData(this.rowData);
     }
   }
 
