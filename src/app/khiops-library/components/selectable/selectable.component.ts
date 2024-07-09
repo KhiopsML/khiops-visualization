@@ -61,7 +61,14 @@ export class SelectableComponent
   }
 
   @HostListener('click', ['$event'])
-  onClick() {
+  onClick(event) {
+    if (event.isTrusted) {
+      this.selectableService.setSelectedArea(this);
+    }
+  }
+
+  @HostListener('trustedClick', ['$event'])
+  customClick() {
     this.selectableService.setSelectedArea(this);
   }
 }

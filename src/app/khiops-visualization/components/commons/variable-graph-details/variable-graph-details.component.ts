@@ -149,15 +149,19 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
       this.resize();
     });
 
-    // #187 Simulate click on component to enable selection
+    // #187 Simulate trusted click on component to enable selection
+    const trustedClickEvent = new CustomEvent('trustedClick', {
+      bubbles: true, // Propagate
+      cancelable: true,
+    });
     this.configService
       .getRootElementDom()
-      .querySelector<HTMLElement>('#distribution-graph' + this.position)
-      ?.click();
+      .querySelector('#distribution-graph' + this.position)
+      ?.dispatchEvent(trustedClickEvent);
     this.configService
       .getRootElementDom()
-      .querySelector<HTMLElement>('#app-histogram')
-      ?.click();
+      .querySelector('#app-histogram')
+      ?.dispatchEvent(trustedClickEvent);
   }
 
   onScaleValueChanged(value: number) {
