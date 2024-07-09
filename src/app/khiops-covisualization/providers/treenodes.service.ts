@@ -77,7 +77,6 @@ export class TreenodesService {
         this.setSelectedNode(
           this.dimensionsDatas.selectedDimensions[i].name,
           this.dimensionsDatas.selectedNodes[i]._id,
-          false,
         );
       }
     }
@@ -178,12 +177,14 @@ export class TreenodesService {
           // otherwise it return multiple nodes
         });
         realNodeVO.getChildrenList();
-        this.eventsService.emitTreeSelectedNodeChanged({
-          hierarchyName: hierarchyName,
-          selectedNode: nodeVO,
-          realNodeVO: realNodeVO,
-          stopPropagation: stopPropagation,
-        });
+        if (!stopPropagation) {
+          this.eventsService.emitTreeSelectedNodeChanged({
+            hierarchyName: hierarchyName,
+            selectedNode: nodeVO,
+            realNodeVO: realNodeVO,
+            stopPropagation: stopPropagation,
+          });
+        }
       }
     }
     return nodeVO;
@@ -398,14 +399,14 @@ export class TreenodesService {
 
   collapseNode(dimensionName: string, nodeName: string) {
     this.updateCollapsedNodesToSave(dimensionName, nodeName, 1);
+    this.setSelectedNode(dimensionName, nodeName, true);
     this.update(dimensionName);
-    this.setSelectedNode(dimensionName, nodeName, false);
   }
 
   expandNode(dimensionName: string, nodeName: string) {
     this.updateCollapsedNodesToSave(dimensionName, nodeName, -1);
+    this.setSelectedNode(dimensionName, nodeName, true);
     this.update(dimensionName);
-    this.setSelectedNode(dimensionName, nodeName, false);
   }
 
   update(dimensionName: string) {

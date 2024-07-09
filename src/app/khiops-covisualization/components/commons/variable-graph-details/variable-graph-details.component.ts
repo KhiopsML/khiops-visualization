@@ -174,9 +174,9 @@ export class VariableGraphDetailsComponent
   setLegendTitle(position: number) {
     const otherIndex = this.position === 0 ? 1 : 0;
     this.graphDetails.datasets[0].label =
-      this.dimensionsDatasService.dimensionsDatas.selectedNodes[
+      this.dimensionsDatasService?.dimensionsDatas?.selectedNodes?.[
         otherIndex
-      ].shortDescription;
+      ]?.shortDescription;
     // force legend update
     this.graphDetails = _.cloneDeep(this.graphDetails);
   }

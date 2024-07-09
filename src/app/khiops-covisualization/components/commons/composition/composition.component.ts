@@ -167,7 +167,6 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
     this.treenodesService.setSelectedNode(
       this.selectedDimension.name,
       item.cluster,
-      false,
     );
   }
 

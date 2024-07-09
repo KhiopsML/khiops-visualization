@@ -50,23 +50,17 @@ export class ClusterDetailsComponent implements OnInit, OnChanges {
         headerName: this.translate.get('GLOBAL.FATHER'),
         field: 'father',
         show: false,
-        tooltip: this.translate.get(
-          'TOOLTIPS.AXIS.CURRENT_CLUSTERS.FATHER',
-        ),
+        tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.FATHER'),
       },
       {
         headerName: this.translate.get('GLOBAL.FREQUENCY'),
         field: 'frequency',
-        tooltip: this.translate.get(
-          'TOOLTIPS.AXIS.CURRENT_CLUSTERS.FREQUENCY',
-        ),
+        tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.FREQUENCY'),
       },
       {
         headerName: this.translate.get('GLOBAL.INTEREST'),
         field: 'interest',
-        tooltip: this.translate.get(
-          'TOOLTIPS.AXIS.CURRENT_CLUSTERS.INTEREST',
-        ),
+        tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.INTEREST'),
       },
       {
         headerName: this.translate.get('GLOBAL.HIERARCHICAL_LEVEL'),
@@ -160,7 +154,6 @@ export class ClusterDetailsComponent implements OnInit, OnChanges {
     this.treenodesService.setSelectedNode(
       this.selectedDimension.name,
       item._id,
-      false,
     );
   }
 }

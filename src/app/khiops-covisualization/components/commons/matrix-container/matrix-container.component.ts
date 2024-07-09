@@ -184,12 +184,10 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
     this.treenodesService.setSelectedNode(
       event.datas.xnamePart,
       event.datas.xaxisPart,
-      true,
     );
     this.treenodesService.setSelectedNode(
       event.datas.ynamePart,
       event.datas.yaxisPart,
-      true,
     );
   }
 

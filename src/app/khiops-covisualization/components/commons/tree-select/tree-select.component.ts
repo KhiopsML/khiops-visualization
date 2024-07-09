@@ -142,7 +142,6 @@ export class TreeSelectComponent
           this.treenodesService.setSelectedNode(
             this.selectedDimension.name,
             e.data.name,
-            false,
           );
         });
       });

@@ -486,7 +486,7 @@
                 let parent = node.parentNode;
                 parent.classList.remove('selected');
               });
-              if (currentNode && currentNode.parentNode) {
+              if (currentNode?.parentNode) {
                 currentNode.parentNode.classList.add('selected');
 
                 currentNode.parentNode.scrollIntoViewIfNeeded({
