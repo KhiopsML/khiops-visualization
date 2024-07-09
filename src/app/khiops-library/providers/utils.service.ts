@@ -121,7 +121,7 @@ export class UtilsService {
    * @param length before truncate
    */
   static ellipsis(text: string, length: number): string {
-    if (text.length > length) {
+    if (text?.length > length) {
       return text.substring(0, length) + '...';
     } else {
       return text;
