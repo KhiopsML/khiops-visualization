@@ -398,14 +398,14 @@ export class TreenodesService {
 
   collapseNode(dimensionName: string, nodeName: string) {
     this.updateCollapsedNodesToSave(dimensionName, nodeName, 1);
-    this.setSelectedNode(dimensionName, nodeName, false);
     this.update(dimensionName);
+    this.setSelectedNode(dimensionName, nodeName, false);
   }
 
   expandNode(dimensionName: string, nodeName: string) {
     this.updateCollapsedNodesToSave(dimensionName, nodeName, -1);
-    this.setSelectedNode(dimensionName, nodeName, false);
     this.update(dimensionName);
+    this.setSelectedNode(dimensionName, nodeName, false);
   }
 
   update(dimensionName: string) {
