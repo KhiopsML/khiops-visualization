@@ -17,6 +17,10 @@ body {
 .mat-progress-bar {
   height: 5px !important;
 }
+.mat-progress-bar-secondary {
+  animation-duration: 1000ms !important;
+}
+
 .mat-progress-bar-background {
   fill: #ffffff00 !important;
 }
