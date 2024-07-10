@@ -249,7 +249,6 @@ $theme: mat.define-light-theme(
   --bgColor-40: #444;
   --bgColor-50: #555;
   --scrollbar: #181818;
-  // --primary: #ff6600;
   --primary: #22659b;
   --primary-10: #adadad;
   --grey-text: #adadad;
@@ -263,7 +262,10 @@ $theme: mat.define-light-theme(
   --chart-border: #555;
   --yellowMain: #fbb33a;
   --redMain: #fb473a;
+  --greenMain: #3afb74;
   --gripOpacity: 0.3;
+  --cell-type-num: #438aa9;
+  --cell-type-cat: #c58416;
 }
 
 [data-color-scheme='light'] {
@@ -273,7 +275,7 @@ $theme: mat.define-light-theme(
   --bgColor: #fff;
   --bgColor-10: #eee;
   --bgColor-20: #f6f8fb;
-  --bgColor-30: #ccc;
+  --bgColor-30: #eee;
   --bgColor-40: #bbb;
   --bgColor-50: #aaa;
   --scrollbar: #eee;
@@ -290,7 +292,10 @@ $theme: mat.define-light-theme(
   --chart-border: #e5e5e5;
   --yellowMain: #fbb33a;
   --redMain: #fb473a;
+  --greenMain: #3afb74;
   --gripOpacity: 1;
+  --cell-type-num: #d1dcee;
+  --cell-type-cat: #f5ddaf;
 }
 
 [data-color-scheme='orange'] {
@@ -317,5 +322,8 @@ $theme: mat.define-light-theme(
   --chart-border: #e5e5e5;
   --yellowMain: #ff6600;
   --redMain: #fb473a;
+  --greenMain: #3afb74;
   --gripOpacity: 1;
+  --cell-type-num: #d1dcee;
+  --cell-type-cat: #f5ddaf;
 }

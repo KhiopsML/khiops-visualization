@@ -25,6 +25,7 @@ import { TreePreparationVariableVO } from '@khiops-visualization/model/tree-prep
 import { TrackerService } from '@khiops-library/providers/tracker.service';
 import { TranslateService } from '@ngstack/translate';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
+import { BorderTextCellComponent } from '@khiops-library/components/ag-grid/border-text-cell/border-text-cell.component';
 
 @Component({
   selector: 'app-tree-preparation-view',
@@ -85,6 +86,7 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
       headerName: this.translate.get('GLOBAL.TYPE'),
       field: 'type',
       tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.TYPE'),
+      cellRendererFramework: BorderTextCellComponent,
     },
     {
       headerName: this.translate.get('GLOBAL.MODE'),

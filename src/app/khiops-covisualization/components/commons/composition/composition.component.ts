@@ -156,8 +156,8 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy() {
-    this.treeSelectedNodeChangedSub.unsubscribe();
-    this.importedDatasChangedSub.unsubscribe();
+    this.treeSelectedNodeChangedSub?.unsubscribe();
+    this.importedDatasChangedSub?.unsubscribe();
     this.selectedComposition = undefined;
     this.selectedCompositionChanged.emit(this.selectedComposition);
   }
@@ -166,7 +166,6 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
     this.treenodesService.setSelectedNode(
       this.selectedDimension.name,
       item.cluster,
-      false,
     );
   }
 

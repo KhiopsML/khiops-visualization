@@ -142,10 +142,6 @@ export class HomeLayoutComponent implements OnInit {
   }
 
   onFileLoaderDataChanged(datas) {
-    console.log(
-      'HomeLayoutComponent ~ onFileLoaderDataChanged ~ datas:',
-      datas,
-    );
     this.isCompatibleJson = false;
     this.selectedTab = undefined;
     this.currentDatas = datas;
@@ -158,6 +154,8 @@ export class HomeLayoutComponent implements OnInit {
 
   initializeHome(datas) {
     this.isCompatibleJson = this.appService.isCompatibleJson(datas);
+    UtilsService.resetSearch(AppConfig.visualizationCommon.GLOBAL.LS_ID);
+
     this.showProjectTab = this.configService.getConfig().showProjectTab;
     if (this.showProjectTab === undefined) {
       this.showProjectTab = true;

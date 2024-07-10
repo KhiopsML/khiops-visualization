@@ -53,15 +53,15 @@ export class ImportExtDatasListComponent {
           headerName: this.translate.get('GLOBAL.DIMENSION'),
           field: 'dimension',
         },
-        {
-          headerName: '',
-          field: 'remove',
-          cellRendererFramework: IconCellComponent,
-          cellRendererParams: {
-            icon: 'delete',
-            action: this.removeExtDatasFromList.bind(this),
-          },
-        },
+        // {
+        //   headerName: '',
+        //   field: 'remove',
+        //   cellRendererFramework: IconCellComponent,
+        //   cellRendererParams: {
+        //     icon: 'delete',
+        //     action: this.removeExtDatasFromList.bind(this),
+        //   },
+        // },
       ],
       values: [],
     };

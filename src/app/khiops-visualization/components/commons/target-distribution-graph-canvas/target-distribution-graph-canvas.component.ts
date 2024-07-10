@@ -18,6 +18,7 @@ import { ResizedEvent } from 'angular-resize-event';
 import { TYPES } from '@khiops-library/enum/types';
 import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
+import { UtilsService } from '@khiops-library/providers/utils.service';
 
 @Component({
   selector: 'app-target-distribution-graph-canvas',
@@ -90,6 +91,10 @@ export class TargetDistributionGraphCanvasComponent
     this.hideGraph = true;
     this.buttonTitle = this.translate.get('GLOBAL.VALUES');
 
+    // Keep this into ref to access it into tick callback
+    // We can not use arrow function to access native getLabelForValue function
+    let self = this;
+
     // Override tooltip infos
     this.chartOptions = {
       plugins: {
@@ -118,14 +123,30 @@ export class TargetDistributionGraphCanvasComponent
           },
         },
       },
+      scales: {
+        x: {
+          ticks: {
+            // @ts-ignore
+            callback: function (value: number, index: number, e) {
+              let label = this.getLabelForValue(value);
+              label = UtilsService.ellipsis(
+                label,
+                self.khiopsLibraryService.getAppConfig().common.GLOBAL
+                  .MAX_LABEL_LENGTH,
+              );
+              // Default chartjs
+              return label;
+            },
+          },
+        },
+      },
     };
   }
 
   ngOnInit() {
     this.graphIdContainer =
       'target-distribution-graph-canvas-comp-' + this.position;
-    this.title =
-      this.title || this.translate.get('GLOBAL.TARGET_DISTRIBUTION');
+    this.title = this.title || this.translate.get('GLOBAL.TARGET_DISTRIBUTION');
   }
 
   onResized(event: ResizedEvent) {

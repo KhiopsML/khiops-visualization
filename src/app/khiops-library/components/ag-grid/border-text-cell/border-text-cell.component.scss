@@ -1,0 +1,13 @@
+.kl-border-text-cell {
+  padding: 2px 8px;
+  border-radius: 10px;
+  color: var(--bgColorContrast) !important;
+  font-size: 0.9em !important;
+}
+
+.kl-border-text-cell.Numerical {
+  background-color: var(--cell-type-num);
+}
+.kl-border-text-cell.Categorical {
+  background-color: var(--cell-type-cat);
+}

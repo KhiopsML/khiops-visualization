@@ -140,6 +140,9 @@ export class ModelingViewComponent extends SelectableTabComponent {
         this.onSelectListItemChanged(
           this.modelingDatas.trainedPredictorsListDatas[0],
         );
+      } else {
+        // Select trained predictor auto redirection #202
+        this.onSelectListItemChanged(isVarAvailable);
       }
     } else {
       // no modeling datas

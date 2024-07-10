@@ -11,7 +11,9 @@
     fxLayoutAlign="start center"
     class="mat-elevation-z1"
   >
-    <h1 fxFlex>{{ 'GLOBAL.HYPER_TREE' | translate }}</h1>
+    <h1 fxFlex fxLayoutAlign="start center">
+      <mat-icon>blur_on</mat-icon> {{ 'GLOBAL.HYPER_TREE' | translate }}
+    </h1>
     <app-select-toggle-button
       *ngIf="
         distributionDatas && distributionDatas.targetDistributionDisplayedValues

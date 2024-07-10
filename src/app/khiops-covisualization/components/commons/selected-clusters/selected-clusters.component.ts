@@ -23,7 +23,6 @@ export class SelectedClustersComponent implements OnDestroy {
 
   id: any = 'selected-clusters-grid';
   title: string;
-  updateValues: SelectedClusterVO[];
 
   constructor(
     private translate: TranslateService,
@@ -86,13 +85,11 @@ export class SelectedClustersComponent implements OnDestroy {
 
   updateClusterValues(e) {
     if (this.selectedClusters) {
-      this.updateValues = [];
       let selectedCluster: SelectedClusterVO = this.selectedClusters.find(
         (cluster) => cluster._id === e.hierarchyName,
       );
       selectedCluster.shortDescription = e.selectedNode.shortDescription;
       selectedCluster = this.updateDimensionIntervals(e.hierarchyName);
-      this.updateValues.push(selectedCluster);
     }
   }
 

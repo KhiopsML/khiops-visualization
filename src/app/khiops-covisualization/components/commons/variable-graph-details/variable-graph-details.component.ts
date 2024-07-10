@@ -137,11 +137,15 @@ export class VariableGraphDetailsComponent
       this.resize();
     });
 
-    // #187 Simulate click on component to enable selection
+    // #187 Simulate trusted click on component to enable selection
+    const trustedClickEvent = new CustomEvent('trustedClick', {
+      bubbles: true, // Propagate
+      cancelable: true,
+    });
     this.configService
       .getRootElementDom()
-      .querySelector<HTMLElement>('#cluster-distribution-' + this.position)
-      .click();
+      .querySelector('#cluster-distribution-' + this.position)
+      .dispatchEvent(trustedClickEvent);
   }
 
   ngOnDestroy() {
@@ -170,9 +174,9 @@ export class VariableGraphDetailsComponent
   setLegendTitle(position: number) {
     const otherIndex = this.position === 0 ? 1 : 0;
     this.graphDetails.datasets[0].label =
-      this.dimensionsDatasService.dimensionsDatas.selectedNodes[
+      this.dimensionsDatasService?.dimensionsDatas?.selectedNodes?.[
         otherIndex
-      ].shortDescription;
+      ]?.shortDescription;
     // force legend update
     this.graphDetails = _.cloneDeep(this.graphDetails);
   }

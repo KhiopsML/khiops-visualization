@@ -56,7 +56,9 @@
         </button>
       </div>
       <div fxFlex id="y-axis" fxLayoutAlign="center center">
-        <span title="{{ yAxisLabel }}">{{ yAxisLabel }}</span>
+        <span class="axis-matrix" title="{{ yAxisLabel }}">{{
+          yAxisLabel
+        }}</span>
       </div>
       <button
         *ngIf="graphMode && graphMode.mode === 'MUTUAL_INFO' && !isKhiopsCovisu"
@@ -119,6 +121,6 @@
     </div>
   </div>
   <div fxLayout="row" id="x-axis" fxLayoutAlign="center center">
-    <span title="{{ xAxisLabel }}">{{ xAxisLabel }}</span>
+    <span class="axis-matrix" title="{{ xAxisLabel }}">{{ xAxisLabel }}</span>
   </div>
 </div>

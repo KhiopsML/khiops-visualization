@@ -2,8 +2,9 @@
   overflow: auto;
   h1 {
     mat-icon {
-      margin-right: 0.4em !important;
-      font-size: 21px !important;
+      margin-right: 0.4em;
+      margin-top: 2px;
+      font-size: 21px;
     }
   }
 
@@ -17,6 +18,7 @@
         padding: 0;
         text-align: left;
         padding-right: 10px;
+        min-width: 140px;
       }
       td {
         padding: 0;
@@ -34,7 +36,7 @@
         font-size: 0.95em;
         font-weight: 500;
         color: var(--primary-contrast);
-        background: var(--bgColor-20);
+        background: var(--bgColor-30);
         padding: 1px 5px;
         border-radius: 4px;
         margin: 4px 0;

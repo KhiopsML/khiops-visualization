@@ -20,6 +20,7 @@ export class DimensionsDatasVO {
   currentDimensionsTrees: TreeNodeVO[][] = [];
   dimensionsClusters: TreeNodeVO[][] = [[]];
   currentDimensionsClusters: TreeNodeVO[][] = [[]];
+  isLoading: boolean = false;
 
   // Saved datas
   // Those variables will be saved into json

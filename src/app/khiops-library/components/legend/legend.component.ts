@@ -109,7 +109,7 @@ export class LegendComponent implements OnChanges {
       // Ellipsis long legend text
       for (let i = 0; i < this.legend.length; i++) {
         this.legend[i].shortname = UtilsService.ellipsis(
-          this.legend[i].name.toString(),
+          this.legend?.[i]?.name?.toString(),
           20,
         );
       }

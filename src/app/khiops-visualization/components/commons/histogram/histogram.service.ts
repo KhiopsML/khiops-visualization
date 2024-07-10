@@ -77,8 +77,14 @@ export class HistogramService {
 
   getLogRangeY(datas: HistogramValuesI[]): RangeXLinI {
     const dataValues = datas.map((e) => e.logValue).filter((e) => e !== 0);
+
+    // Numerical histogram Ylog broken when only one data #194
     this.rangeYLog.max = Math.max(...dataValues);
-    this.rangeYLog.min = Math.min(...dataValues);
+    if (dataValues.length === 1) {
+      this.rangeYLog.min = 0;
+    } else {
+      this.rangeYLog.min = Math.min(...dataValues);
+    }
 
     return this.rangeYLog;
   }

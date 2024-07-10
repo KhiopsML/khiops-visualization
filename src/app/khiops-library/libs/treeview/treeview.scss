@@ -25,7 +25,6 @@
   min-width: 15px;
   padding-left: 1px;
   padding-right: 1px;
-  font-family: monospace !important;
   user-select: none;
   font-weight: bold;
 }
@@ -54,8 +53,11 @@
   visibility: hidden;
 }
 
-.tree-leaf .tree-expando:hover {
-  background: rgba(200, 200, 200, 0.4);
+.tree-leaf .tree-leaf-content:not(.selected) .tree-expando:hover {
+  background: rgba(0, 0, 0, 0.15);
+}
+.tree-leaf .tree-leaf-content .tree-expando:hover {
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .tree-leaf .tree-leaf-text {

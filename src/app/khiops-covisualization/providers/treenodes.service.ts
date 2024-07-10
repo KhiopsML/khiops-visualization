@@ -77,7 +77,6 @@ export class TreenodesService {
         this.setSelectedNode(
           this.dimensionsDatas.selectedDimensions[i].name,
           this.dimensionsDatas.selectedNodes[i]._id,
-          false,
         );
       }
     }
@@ -178,12 +177,14 @@ export class TreenodesService {
           // otherwise it return multiple nodes
         });
         realNodeVO.getChildrenList();
-        this.eventsService.emitTreeSelectedNodeChanged({
-          hierarchyName: hierarchyName,
-          selectedNode: nodeVO,
-          realNodeVO: realNodeVO,
-          stopPropagation: stopPropagation,
-        });
+        if (!stopPropagation) {
+          this.eventsService.emitTreeSelectedNodeChanged({
+            hierarchyName: hierarchyName,
+            selectedNode: nodeVO,
+            realNodeVO: realNodeVO,
+            stopPropagation: stopPropagation,
+          });
+        }
       }
     }
     return nodeVO;
@@ -398,13 +399,13 @@ export class TreenodesService {
 
   collapseNode(dimensionName: string, nodeName: string) {
     this.updateCollapsedNodesToSave(dimensionName, nodeName, 1);
-    this.setSelectedNode(dimensionName, nodeName, false);
+    this.setSelectedNode(dimensionName, nodeName, true);
     this.update(dimensionName);
   }
 
   expandNode(dimensionName: string, nodeName: string) {
     this.updateCollapsedNodesToSave(dimensionName, nodeName, -1);
-    this.setSelectedNode(dimensionName, nodeName, false);
+    this.setSelectedNode(dimensionName, nodeName, true);
     this.update(dimensionName);
   }
 
@@ -429,6 +430,7 @@ export class TreenodesService {
     // hack to limit re-rendering and optimize perf
     this.dimensionsDatasService.getMatrixDatas(propagateChanges);
     this.dimensionsDatasService.computeMatrixDataFreqMap();
+    this.dimensionsDatasService.setIsLoading(false);
   }
 
   constructDatasToSave(collapsedNodesInput?) {

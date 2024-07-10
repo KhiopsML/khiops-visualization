@@ -79,7 +79,7 @@
           [message]="'NO_DATAS.WELCOME'"
         >
         </kl-no-data>
-        <div fxFlexFill *ngIf="isCompatibleJson">
+        <div fxFlexFill [hidden]="!isCompatibleJson">
           <mat-tab-group
             id="main-tab-group"
             color="primary"

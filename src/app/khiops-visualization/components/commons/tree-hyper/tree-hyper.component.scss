@@ -7,6 +7,13 @@
   #graph-header-comp {
     flex-wrap: wrap;
     padding: 5px 0;
+    h1 {
+      mat-icon {
+        margin-right: 0.4em;
+        margin-top: 2px;
+        font-size: 21px;
+      }
+    }
     kl-btn-fullscreen {
       margin-left: 0.3rem;
       margin-right: 0.3rem;
