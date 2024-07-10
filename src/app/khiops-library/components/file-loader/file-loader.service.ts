@@ -39,7 +39,7 @@ export class FileLoaderService {
     // ===================
     //
 
-    let urlKV = './assets/mocks/kv/new-hyper-tree.json';
+    // let urlKV = './assets/mocks/kv/new-hyper-tree.json';
     // let urlKV = './assets/mocks/kv/NGrams10_AnalysisResults.json';
     // let urlKV = './assets/mocks/kv/NGrams100_AnalysisResults.json';
     // let urlKV = './assets/mocks/kv/000_000_10000words_AllReports.json';

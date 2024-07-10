@@ -6,6 +6,43 @@
   font-size: 14px;
 }
 
+.mat-mdc-progress-bar {
+  height: 5px !important;
+}
+.mat-mdc-progress-bar-secondary {
+  animation-duration: 1000ms !important;
+}
+
+.mat-mdc-progress-bar-background {
+  fill: #ffffff00 !important;
+}
+.mat-mdc-progress-bar-buffer {
+  display: none !important;
+}
+
+
+.mat-mdc-flat-button,
+.search-input-btn,
+.mat-mdc-stroked-button,
+mat-button-toggle-group {
+  box-shadow: 0 2px 4px -2px rgba(0, 0, 0, 0.2) !important;
+}
+.mat-mdc-stroked-button,
+mat-button-toggle-group {
+  border: 1px solid var(--bgColor-40) !important;
+}
+.mat-mdc-flat-button:hover,
+.search-input-btn:hover,
+.mat-mdc-stroked-button:hover,
+mat-button-toggle-group:hover {
+  box-shadow: 0 2px 4px -2px rgba(0, 0, 0, 0.4) !important;
+}
+
+
+.mat-tab-label-active {
+  color: var(--primary) !important;
+}
+
 .mat-mdc-tab-header {
   width: 100% !important;
   background-color: var(--bgColor) !important;
