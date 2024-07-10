@@ -20,6 +20,7 @@ import { DistributionDatasVO } from '@khiops-visualization/model/distribution-da
 import { REPORTS } from '@khiops-library/enum/reports';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 import { ConfigService } from '@khiops-library/providers/config.service';
+import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 
 @Component({
   selector: 'app-variable-graph-details',
@@ -60,6 +61,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
   constructor(
     private preparationDatasService: PreparationDatasService,
     private configService: ConfigService,
+    private selectableService: SelectableService,
     private treePreparationDatasService: TreePreparationDatasService,
     private distributionDatasService: DistributionDatasService,
   ) {
@@ -154,9 +156,17 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
       bubbles: true, // Propagate
       cancelable: true,
     });
+
+    const currentSelection = this.selectableService.getSelectedArea()?.id;
+    // select distribution-graph by default unless target-distribution-graph is already selected
+    const compToSelect =
+      currentSelection === 'target-distribution-graph' + this.position
+        ? '#target-distribution-graph' + this.position
+        : '#distribution-graph' + this.position;
+
     this.configService
       .getRootElementDom()
-      .querySelector('#distribution-graph' + this.position)
+      .querySelector(compToSelect)
       ?.dispatchEvent(trustedClickEvent);
     this.configService
       .getRootElementDom()
