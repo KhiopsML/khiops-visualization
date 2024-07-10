@@ -732,7 +732,6 @@ export class AgGridComponent
               this.id.toUpperCase(),
           ) || '';
         if (this.searchInput) {
-          console.log('setTimeout ~ this.searchInput:', this.searchInput);
           this.showSearchForm();
           this.search();
         }

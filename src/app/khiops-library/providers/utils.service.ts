@@ -840,4 +840,18 @@ export class UtilsService {
     const b = parseInt(c.slice(5, 7), 16);
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
   }
+
+  /**
+   * #127, #201 Reset grid search on file change
+   */
+  static resetSearch(ls_id: string) {
+    for (let i = 0; i < localStorage.length; i++) {
+      let key = localStorage.key(i);
+      if (key.startsWith(ls_id + 'OPTIONS_AG_GRID_SEARCH_')) {
+        localStorage.removeItem(key);
+        // Decrement i to avoid skipping a key because the length of localStorage has decreased.
+        i--;
+      }
+    }
+  }
 }
