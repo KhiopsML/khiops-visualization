@@ -82,16 +82,14 @@ export class DistributionGraphCanvasComponent
               if (items?.dataset) {
                 if (
                   !this.hideGraphOptions &&
-                  this.graphOptions &&
-                  this.graphOptions.selected === TYPES.COVERAGE
+                  this.graphOptions?.selected === HistogramType.YLIN
                 ) {
                   return this.toPrecision.transform(
                     items.dataset.extra[items.dataIndex].extra.coverageValue,
                   );
                 } else if (
-                  (!this.hideGraphOptions &&
-                    this.graphOptions.selected === TYPES.FREQUENCY) ||
-                  this.graphOptions.selected === HistogramType.YLOG
+                  !this.hideGraphOptions &&
+                  this.graphOptions?.selected === HistogramType.YLOG
                 ) {
                   return this.toPrecision.transform(
                     items.dataset.extra[items.dataIndex].extra.value,
@@ -108,8 +106,7 @@ export class DistributionGraphCanvasComponent
               if (items?.dataset) {
                 if (
                   !this.hideGraphOptions &&
-                  this.graphOptions &&
-                  this.graphOptions.selected === TYPES.COVERAGE
+                  this.graphOptions?.selected === HistogramType.YLIN
                 ) {
                   if (items.dataset.extra[items.dataIndex].extra.percent) {
                     return (
@@ -135,8 +132,7 @@ export class DistributionGraphCanvasComponent
             callback: (value) => {
               if (
                 !this.hideGraphOptions &&
-                this.graphOptions &&
-                this.graphOptions.selected === TYPES.FREQUENCY
+                this.graphOptions?.selected === HistogramType.YLOG
               ) {
                 // Frequency log mode
                 if (
@@ -192,7 +188,7 @@ export class DistributionGraphCanvasComponent
 
     localStorage.setItem(
       this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
-        'DISTRIBUTION_GRAPH_OPTION',
+        'DISTRIBUTION_GRAPH_OPTION_Y',
       type,
     );
 

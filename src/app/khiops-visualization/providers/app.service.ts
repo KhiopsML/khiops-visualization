@@ -137,9 +137,6 @@ export class AppService {
       AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SELECTED_TRAIN_PREDICTOR',
     );
     localStorage.removeItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'DISTRIBUTION_GRAPH_OPTION',
-    );
-    localStorage.removeItem(
       AppConfig.visualizationCommon.GLOBAL.LS_ID +
         'DISTRIBUTION_GRAPH_OPTION_X',
     );

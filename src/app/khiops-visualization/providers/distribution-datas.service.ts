@@ -334,7 +334,7 @@ export class DistributionDatasService {
     let histogramGraphDetails: HistogramValuesI[] | undefined = undefined;
 
     if (varDatas) {
-      this.distributionDatas.setHistogramGraphOptions();
+      this.distributionDatas.setDefaultGraphOptions();
 
       histogramGraphDetails = [];
       const totalFreq = varDatas.frequencies.reduce(
