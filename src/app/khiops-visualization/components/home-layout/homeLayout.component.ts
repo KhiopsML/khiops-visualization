@@ -162,6 +162,7 @@ export class HomeLayoutComponent implements OnInit {
     }
 
     if (!this.isCompatibleJson) {
+      this.closeFile();
       this.snackBar.open(
         this.translate.get('SNACKS.OPEN_FILE_ERROR'),
         undefined,

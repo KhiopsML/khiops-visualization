@@ -246,6 +246,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     }
     if (!UtilsService.isEmpty(datas)) {
       if (!this.isCompatibleJson) {
+        this.closeFile();
         this.snackBar.open(
           this.translate.get('SNACKS.OPEN_FILE_ERROR'),
           undefined,
