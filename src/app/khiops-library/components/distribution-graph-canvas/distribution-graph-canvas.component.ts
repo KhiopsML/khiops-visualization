@@ -179,6 +179,7 @@ export class DistributionGraphCanvasComponent
   ngOnInit() {
     this.graphIdContainer = 'distribution-graph-canvas-comp-' + this.position;
     this.title = 'Distribution';
+    this.updateChartOptions();
   }
 
   onSelectBarChanged(e) {
@@ -194,8 +195,12 @@ export class DistributionGraphCanvasComponent
         'DISTRIBUTION_GRAPH_OPTION',
       type,
     );
-    this.graphTypeChanged.emit(type);
 
+    this.updateChartOptions();
+    this.graphTypeChanged.emit(type);
+  }
+
+  updateChartOptions() {
     this.chartOptions.scales.y.max = undefined;
     this.chartOptions.scales.y.min = undefined;
 
