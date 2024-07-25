@@ -1,6 +1,6 @@
 {
   "name": "visualization-component",
-  "version": "11.4.5",
+  "version": "11.4.7",
   "license": "BSD-3-Clause-Clear",
   "author": {
     "name": "Orange",
@@ -129,7 +129,8 @@
   "resolutions": {
     "webpack": "5.90.x",
     "@angular-devkit/build-angular": "^17.2.0",
-    "@angular-devkit/core": "^17.2.0"
+    "@angular-devkit/core": "^17.2.0",
+    "ws": "8.17.1"
   },
   "appdescription": {
     "visualization": "Khiops Visualization",

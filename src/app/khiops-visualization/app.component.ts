@@ -91,7 +91,7 @@ export class AppComponent implements AfterViewInit {
 
       if (trackerId) {
         this.trackerService.initTracker(
-          AppConfig.covisualizationCommon,
+          AppConfig.visualizationCommon,
           trackerId,
           appSource,
         );

@@ -157,13 +157,6 @@ export class AppComponent implements AfterViewInit {
     };
     this.element.nativeElement.clean = () => (this.appdatas = null);
     this.setTheme();
-
-    // Test analytics in local
-    this.trackerService.initTracker(
-      AppConfig.covisualizationCommon,
-      '<tracker_id>',
-      '<appSource>',
-    );
   }
 
   setTheme() {

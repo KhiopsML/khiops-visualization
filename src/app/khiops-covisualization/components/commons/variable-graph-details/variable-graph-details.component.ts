@@ -20,11 +20,11 @@ import { DimensionsDatasService } from '@khiops-covisualization/providers/dimens
 import { ClustersService } from '@khiops-covisualization/providers/clusters.service';
 import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
 import { Subscription } from 'rxjs';
-import { TYPES } from '@khiops-library/enum/types';
 import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options';
 import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
 import * as _ from 'lodash';
 import { ConfigService } from '@khiops-library/providers/config.service';
+import { HistogramType } from '@khiops-visualization/components/commons/histogram/histogram.types';
 
 @Component({
   selector: 'app-variable-graph-details',
@@ -54,7 +54,7 @@ export class VariableGraphDetailsComponent
   scaleValue: number;
   graphDetails: ChartDatasVO;
   graphOptions: DistributionOptionsI = {
-    types: [TYPES.COVERAGE, TYPES.FREQUENCY],
+    types: [HistogramType.YLIN, HistogramType.YLOG],
     selected: undefined,
   };
   activeEntries: number;
@@ -81,7 +81,7 @@ export class VariableGraphDetailsComponent
         setTimeout(() => {
           if (e.selectedNode) {
             // Only compute distribution of the other node
-            this.getFilteredDistribution(this.dimensionsTree);
+            this.getFilteredDistribution();
             this.prevSelectedNode = e.selectedNode;
           }
           this.setLegendTitle(this.position);
@@ -89,7 +89,7 @@ export class VariableGraphDetailsComponent
       });
     this.conditionalOnContextChangedSub =
       this.eventsService.conditionalOnContextChanged.subscribe(() => {
-        this.getFilteredDistribution(this.dimensionsTree, true);
+        this.getFilteredDistribution();
       });
   }
 
@@ -106,7 +106,7 @@ export class VariableGraphDetailsComponent
   }
 
   ngAfterViewInit() {
-    this.getFilteredDistribution(this.dimensionsTree);
+    this.getFilteredDistribution();
   }
 
   updateGraphTitle() {
@@ -153,21 +153,17 @@ export class VariableGraphDetailsComponent
     this.conditionalOnContextChangedSub.unsubscribe();
   }
 
-  getFilteredDistribution(dimensionsTree, force = false) {
-    if (dimensionsTree && this.selectedNode) {
-      if (this.prevSelectedNode !== this.selectedNode || force) {
-        this.graphDetails = this.clustersService.getDistributionDetailsFromNode(
-          this.position,
+  getFilteredDistribution() {
+    if (this.dimensionsTree && this.selectedNode) {
+      this.graphDetails = this.clustersService.getDistributionDetailsFromNode(
+        this.position,
+      );
+      if (this.graphDetails?.labels) {
+        this.activeEntries = this.graphDetails.labels.findIndex(
+          (e) => e === this.selectedNode.shortDescription,
         );
-
-        if (this.graphDetails?.labels) {
-          this.activeEntries = this.graphDetails.labels.findIndex(
-            (e) => e === this.selectedNode.shortDescription,
-          );
-        }
-        this.updateGraphTitle();
       }
-      this.prevSelectedNode = this.selectedNode;
+      this.updateGraphTitle();
     }
   }
 

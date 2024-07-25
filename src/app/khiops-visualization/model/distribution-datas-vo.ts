@@ -7,11 +7,10 @@ import { AppConfig } from 'src/environments/environment';
 import { HistogramValuesI } from '@khiops-visualization/components/commons/histogram/histogram.interfaces';
 
 export class DistributionDatasVO {
-  distributionType: string = TYPES.COVERAGE;
+  distributionType: string = HistogramType.YLIN;
   distributionTypeX = '';
   distributionTypeY = '';
 
-  distributionGraphOptions: DistributionOptionsI | undefined = undefined;
   distributionGraphOptionsX: DistributionOptionsI | undefined = undefined;
   distributionGraphOptionsY: DistributionOptionsI | undefined = undefined;
   distributionGraphDatas: ChartDatasVO | undefined = undefined;
@@ -49,27 +48,6 @@ export class DistributionDatasVO {
   }
 
   setDefaultGraphOptions() {
-    this.distributionGraphOptionsY = undefined;
-    this.distributionGraphOptionsX = undefined;
-    this.distributionGraphOptions = {
-      types: [TYPES.COVERAGE, TYPES.FREQUENCY],
-      selected: undefined,
-    };
-    const savedOption = localStorage.getItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'DISTRIBUTION_GRAPH_OPTION',
-    );
-    if (this.distributionGraphOptions.types.includes(savedOption)) {
-      this.distributionGraphOptions.selected = savedOption;
-    } else {
-      this.distributionGraphOptions.selected =
-        this.distributionGraphOptions.types[0];
-    }
-    this.distributionType = this.distributionGraphOptions.selected;
-    this.distributionTypeX = '';
-    this.distributionTypeY = '';
-  }
-
-  setHistogramGraphOptions() {
     this.distributionGraphOptionsY = {
       types: [HistogramType.YLIN, HistogramType.YLOG],
       selected: undefined,

@@ -899,7 +899,8 @@ export class MatrixCanvasComponent
     this.contrast = parseInt(event?.target?.['value'], 10);
     this.contrast &&
       localStorage.setItem(
-        AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST',
+        this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
+          'SETTING_MATRIX_CONTRAST',
         this.contrast.toString(),
       );
     this.drawMatrix();
