@@ -199,8 +199,8 @@ export class UnfoldHierarchyComponent implements OnInit {
     }); // Do not freeze ui during graph render
   }
 
-  onHierarchyChanged(event) {
-    this.currentUnfoldHierarchy = event.value;
+  onHierarchyChanged(value: number) {
+    this.currentUnfoldHierarchy = value;
     this.updateDatas();
   }
 
