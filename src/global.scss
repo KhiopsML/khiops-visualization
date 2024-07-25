@@ -15,6 +15,14 @@ body {
   font-size: 12px !important;
 }
 
+.mat-mdc-progress-bar {
+  height: 5px !important;
+}
+
+.mdc-linear-progress__buffer-bar {
+  display: none !important;
+}
+
 ::ng-deep .unitdisk-nav {
   svg {
     .background-circle {
@@ -608,7 +616,7 @@ button {
   }
 }
 
-.mat-progress-bar .mat-progress-bar-fill {
+.mat-mdc-progress-bar .mat-mdc-progress-bar-fill {
   transition-duration: initial !important;
 }
 
