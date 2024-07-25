@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
 
 import { AgRendererComponent } from '@ag-grid-community/angular';
-import {
-  ICellRendererParams,
-  IAfterGuiAttachedParams,
-} from '@ag-grid-community/core';
+import { ICellRendererParams } from '@ag-grid-community/core';
 
 @Component({
   selector: 'kl-checkbox-cell',
@@ -18,8 +15,6 @@ export class CheckboxCellComponent implements AgRendererComponent {
   agInit(params: ICellRendererParams): void {
     this.params = params;
   }
-
-  afterGuiAttached(params?: IAfterGuiAttachedParams): void {}
 
   refresh(params: any): boolean {
     if (this.params.colDef?.field) {
