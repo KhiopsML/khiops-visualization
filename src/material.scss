@@ -20,24 +20,25 @@
   display: none !important;
 }
 
-
 .mat-mdc-flat-button,
 .search-input-btn,
 .mat-mdc-stroked-button,
+.mat-mdc-outlined-button,
 mat-button-toggle-group {
   box-shadow: 0 2px 4px -2px rgba(0, 0, 0, 0.2) !important;
 }
 .mat-mdc-stroked-button,
+.mat-mdc-outlined-button,
 mat-button-toggle-group {
   border: 1px solid var(--bgColor-40) !important;
 }
 .mat-mdc-flat-button:hover,
 .search-input-btn:hover,
+.mat-mdc-outlined-button:hover,
 .mat-mdc-stroked-button:hover,
 mat-button-toggle-group:hover {
   box-shadow: 0 2px 4px -2px rgba(0, 0, 0, 0.4) !important;
 }
-
 
 .mat-tab-label-active {
   color: var(--primary) !important;
@@ -390,6 +391,9 @@ mat-checkbox .mdc-form-field label {
 //   min-height: 2.4em !important;
 //   max-height: 2.4em !important;
 // }
+.mat-mdc-slider {
+  min-width: 80px !important;
+}
 .mat-mdc-slider .mdc-slider__thumb-knob {
   transform: scale(0.7) translate(-70%, -80%) !important;
 }
@@ -406,4 +410,8 @@ button.mdc-icon-button {
   padding: 0 !important;
   max-height: 2rem !important;
   max-width: 2rem !important;
+}
+
+.mat-mdc-slider-visual-thumb .mat-ripple {
+  display: none !important;
 }
