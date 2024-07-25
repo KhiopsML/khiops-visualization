@@ -17,15 +17,15 @@ describe('Test Plan for Khiops Covisualization', () => {
 
   const expectedResults: ResultI[] = [
     {
-      matrixTooltip: [1608, 5097, 3596],
+      matrixTooltip: [1608, 5097, 6951],
       nodesName: ['A7', 'B5'],
-      unfoldH: 6,
+      unfoldH: 5,
       matrixValues: 5097,
     },
     {
-      matrixTooltip: [3942, 27815, 1869],
+      matrixTooltip: [3942, 27815, 923],
       nodesName: ['[-0.999999999;0.57661]', '[-0.999988212;0.577313]'],
-      unfoldH: 25,
+      unfoldH: 150,
       matrixValues: 27815, // selected cell excpected Freq
     },
   ];
@@ -51,7 +51,6 @@ describe('Test Plan for Khiops Covisualization', () => {
         });
 
         // Check Matrix tooltip
-        cy.wait(500);
         cy.get('.matrix-tooltip-comp').contains(res.matrixTooltip[0]);
 
         // Fold some nodes nodes
@@ -65,7 +64,6 @@ describe('Test Plan for Khiops Covisualization', () => {
         });
 
         // Check MAtrix tooltip
-        cy.wait(500);
         cy.get('.matrix-tooltip-comp').contains(res.matrixTooltip[1]);
 
         // Check Clusters table
@@ -127,13 +125,26 @@ describe('Test Plan for Khiops Covisualization', () => {
         cy.get('.button-confirm-hierarchy').click();
 
         // Move to the last matrix cell
-        //@ts-ignore
-        cy.get('#matrix-selected').trigger('mousemove', {
+        cy.get('#matrix-container').trigger('mousemove', {
+          position: 'topRight',
+        });
+        cy.get('#matrix-container').trigger('mousemove', {
+          position: 'topRight',
+        });
+        cy.get('#matrix-container').trigger('mousemove', {
+          position: 'topRight',
+        });
+        cy.get('#matrix-container').trigger('mousemove', {
+          position: 'topRight',
+        });
+        cy.get('#matrix-container').trigger('mousemove', {
+          position: 'topRight',
+        });
+        cy.get('#matrix-container').trigger('mousemove', {
           position: 'topRight',
         });
 
         // Check Matrix tooltip
-        cy.wait(500);
         cy.get('.matrix-tooltip-comp').contains(res.matrixTooltip[2]);
 
         // Now reverse dimenions
