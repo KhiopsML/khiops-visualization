@@ -242,4 +242,11 @@ export class PreparationViewComponent extends SelectableTabComponent {
       this.dialog.open(LevelDistributionGraphCanvasComponent, config);
     dialogRef.componentInstance.datas = datas;
   }
+
+  getDerivationRuleValue(): string {
+    return (
+      this.preparationDatas.selectedVariable?.derivationRule ||
+      this.translate.get('GLOBAL.NO_DERIVATION_RULE')
+    );
+  }
 }
