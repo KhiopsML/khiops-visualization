@@ -23,4 +23,8 @@
   app-regression-matrix {
     overflow: hidden;
   }
+
+  .trained-predictor-details-container {
+    height: calc(100% - 50px) !important;
+  }
 }
