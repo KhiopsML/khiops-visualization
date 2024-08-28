@@ -188,11 +188,6 @@ export class PreparationViewComponent extends SelectableTabComponent {
       this.preparationSource,
     );
 
-    // Remove level and parts if not supervised analysis
-    if (!this.preparationDatasService.isSupervised()) {
-      this.variablesDisplayedColumns.splice(2, 2);
-    }
-
     const includesTargetParts =
       this.preparationDatasService.includesTargetParts(this.variablesDatas);
     if (includesTargetParts) {

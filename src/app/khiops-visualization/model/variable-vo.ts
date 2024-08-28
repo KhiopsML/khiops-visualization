@@ -28,7 +28,7 @@ export class VariableVO {
     this.level = object.level || 0;
     this.targetParts = object.targetParts || undefined;
 
-    this.parts = object.parts || 0;
+    this.parts = object.parts || undefined;
     this.values = object.values || 0;
     this.type = object.type || undefined;
     this.mode = object.mode;
