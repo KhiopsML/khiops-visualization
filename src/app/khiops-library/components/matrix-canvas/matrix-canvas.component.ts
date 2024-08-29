@@ -19,7 +19,6 @@ import { UtilsService } from '../../providers/utils.service';
 import { MatrixCanvasService } from './matrix-canvas.service';
 import { CellVO } from '../../model/cell-vo';
 import { ConfigService } from '@khiops-library/providers/config.service';
-import { AppConfig } from 'src/environments/environment';
 import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 import { MatrixCoordI } from '@khiops-library/interfaces/matrix-coord';
@@ -780,7 +779,7 @@ export class MatrixCanvasComponent
         this.graphMode.mode === 'HELLINGER' ||
         this.graphMode.mode === 'MUTUAL_INFO_TARGET_WITH_CELL'
       ) {
-        const isPositiveValue = colorValue >= 0 ? true : false;
+        const isPositiveValue = colorValue >= 0;
         percentColors = MatrixCanvasService.getInterestColors(isPositiveValue);
         colorValue = Math.abs(colorValue);
       } else {
