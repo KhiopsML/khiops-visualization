@@ -19,6 +19,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngstack/translate';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { TreeNodeVO } from '@khiops-visualization/model/tree-node-vo';
+import { COMPONENT_TYPES } from '@khiops-library/enum/componentTypes';
 
 @Component({
   selector: 'app-tree-select',
@@ -35,7 +36,7 @@ export class TreeSelectComponent
 
   @Output() selectTreeItemChanged: EventEmitter<any> = new EventEmitter();
 
-  componentType = 'kvtree'; // needed to copy datas
+  componentType = COMPONENT_TYPES.KV_TREE; // needed to copy datas
   tree: any;
   override id: any = undefined;
   nodeInSelection: any;
@@ -140,6 +141,14 @@ export class TreeSelectComponent
         });
       });
     }
+  }
+
+  hideActiveEntries() {
+    this.tree.unselectNodes();
+  }
+
+  showActiveEntries() {
+    this.tree.selectNodes(this.selectedNodes);
   }
 
   @HostListener('window:keyup', ['$event'])

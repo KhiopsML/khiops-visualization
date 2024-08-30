@@ -16,6 +16,7 @@ import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
 import { ChartOptions } from 'chart.js';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
+import { COMPONENT_TYPES } from '@khiops-library/enum/componentTypes';
 
 @Component({
   selector: 'app-target-variable-stats-canvas',
@@ -32,7 +33,7 @@ export class TargetVariableStatsCanvasComponent
   groupPadding: number;
 
   colorSet: ChartColorsSetI;
-  componentType = 'ndBarChart'; // needed to copy datas
+  componentType = COMPONENT_TYPES.ND_BAR_CHART; // needed to copy datas
   @Input() title: string;
   chartOptions: ChartOptions;
   isFullscreen = false;

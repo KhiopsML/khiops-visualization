@@ -24,6 +24,7 @@ import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 import { MatrixCoordI } from '@khiops-library/interfaces/matrix-coord';
 import { Subscription } from 'rxjs';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
+import { COMPONENT_TYPES } from '@khiops-library/enum/componentTypes';
 
 @Component({
   selector: 'kl-matrix-canvas',
@@ -56,7 +57,7 @@ export class MatrixCanvasComponent
   conditionalOnContextChangedSub: Subscription;
 
   isKhiopsCovisu: boolean;
-  componentType = 'matrix'; // needed to copy datas
+  componentType = COMPONENT_TYPES.MATRIX; // needed to copy datas
   selectedCells: CellVO[];
 
   xAxisLabel: string;

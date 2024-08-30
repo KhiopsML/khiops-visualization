@@ -11,6 +11,7 @@ import { SelectableComponent } from '@khiops-library/components/selectable/selec
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { TreeSelectComponent } from '../tree-select/tree-select.component';
+import { COMPONENT_TYPES } from '@khiops-library/enum/componentTypes';
 
 @Component({
   selector: 'app-hierarchy-details',
@@ -27,7 +28,7 @@ export class HierarchyDetailsComponent extends SelectableComponent {
   @Input() dimensions: DimensionVO[];
   @Input() dimensionsTree: TreeNodeVO[];
 
-  componentType = 'tree'; // needed to copy datas
+  componentType = COMPONENT_TYPES.TREE; // needed to copy datas
   override id: any = undefined;
 
   constructor(

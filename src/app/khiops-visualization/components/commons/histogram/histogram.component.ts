@@ -31,6 +31,7 @@ import {
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options';
 import { debounceTime, Subject } from 'rxjs';
+import { COMPONENT_TYPES } from '@khiops-library/enum/componentTypes';
 
 @Component({
   selector: 'app-histogram',
@@ -41,7 +42,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   @ViewChild('chart', { static: false })
   chart!: ElementRef;
 
-  componentType = 'histogram'; // needed to copy datas
+  componentType = COMPONENT_TYPES.HISTOGRAM; // needed to copy datas
   svg: d3.Selection<SVGElement, unknown, HTMLElement, any>;
   private resizeSubject = new Subject<ResizedEvent>();
 
@@ -116,6 +117,9 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   }
 
   override ngAfterViewInit(): void {
+    // Keep a ref of instance
+    this.chart.nativeElement.componentInstance = this;
+
     this.histogramCanvas = this.configService
       .getRootElementDom()
       .querySelector('#histogram-canvas');
@@ -146,6 +150,14 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 
   ngOnInit(): void {
     this.datas && this.init();
+  }
+
+  hideActiveEntries() {
+    console.log('hideActiveEntries');
+  }
+
+  showActiveEntries() {
+    console.log('showActiveEntries');
   }
 
   override ngOnDestroy() {

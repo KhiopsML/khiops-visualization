@@ -22,6 +22,7 @@
         'collapseAll',
         'selectNode',
         'selectNextNode',
+        'unselectNodes',
         'selectNodes',
         'select',
         'error',
@@ -496,6 +497,26 @@
             }
           }
         }
+      };
+
+      TreeView.prototype.unselectNodes = function () {
+        let self = this;
+
+        setTimeout(function () {
+          // When we make multiple nodes,
+          // we must override simple select node selection with a timeout
+
+          let el = self.rootElementDom.querySelector('#' + self.node);
+          if (el) {
+            let nodes = el.querySelectorAll('.tree-leaf-text');
+            if (nodes) {
+              forEach(nodes, function (node) {
+                let parent = node.parentNode;
+                parent.classList.remove('selected');
+              });
+            }
+          }
+        });
       };
 
       TreeView.prototype.selectNodes = function (nodesToSelect) {

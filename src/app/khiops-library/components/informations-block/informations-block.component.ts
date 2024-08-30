@@ -9,6 +9,7 @@ import { SelectableComponent } from '../../components/selectable/selectable.comp
 import { SelectableService } from '../../components/selectable/selectable.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
+import { COMPONENT_TYPES } from '@khiops-library/enum/componentTypes';
 
 @Component({
   selector: 'kl-informations-block',
@@ -20,7 +21,7 @@ export class InformationsBlockComponent extends SelectableComponent {
   @Input() inputDatas: InfosDatasI[];
   @Input() title: string;
   @Input() icon = 'tune';
-  componentType = 'informations'; // needed to copy datas
+  componentType = COMPONENT_TYPES.INFORMATIONS; // needed to copy datas
 
   constructor(
     public override selectableService: SelectableService,

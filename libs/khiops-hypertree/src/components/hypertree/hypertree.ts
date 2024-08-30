@@ -61,7 +61,7 @@ export class Hypertree {
    */
   public api = {
     setModel: (model: HypertreeArgs) => {
-      console.log('setModel ~ model:', model);
+      // console.log('setModel ~ model:', model);
       return new Promise<void>((ok, err) => {
         this.isInitializing = true;
         const base = presets.modelBase();
@@ -72,7 +72,7 @@ export class Hypertree {
       });
     },
     updateNodesVisualization: () => {
-      console.log('updateNodesVisualization:');
+      // console.log('updateNodesVisualization:');
       return new Promise<void>((ok, err) => {
         const previousPosition = JSON.parse(
           JSON.stringify(this.args.geometry.transformation.state.P),
@@ -120,7 +120,7 @@ export class Hypertree {
     //   });
     // },
     setLangloader: (ok, err, ll) => {
-      console.log('setLangloader ~ ok:');
+      // console.log('setLangloader ~ ok:');
       this.args.langloader = ll;
       this.args.langloader((langMap, t1, dl) => {
         this.langMap = langMap || {};
@@ -137,7 +137,7 @@ export class Hypertree {
       });
     },
     setDataloader: (ok, err, dl) => {
-      console.log('setDataloader ~ ok:');
+      // console.log('setDataloader ~ ok:');
       this.args.dataloader = dl;
       const t0 = performance.now();
       this.resetData();
@@ -150,7 +150,7 @@ export class Hypertree {
       });
     },
     updateDataloader: (ok, err, dl) => {
-      console.log('updateDataloader ~ ok:');
+      // console.log('updateDataloader ~ ok:');
       this.args.dataloader = dl;
       const t0 = performance.now();
       this.resetData();
@@ -291,7 +291,7 @@ export class Hypertree {
   //########################################################################################################
 
   protected updateParent() {
-    console.log('_updateParent');
+    // console.log('_updateParent');
     this.view_.parent.innerHTML = ''; // actually just remove this.view if present ... do less
     this.view_.html = HTML.parse<HTMLElement>(hypertreehtml)();
     this.view_.parent.appendChild(this.view_.html);
@@ -300,7 +300,7 @@ export class Hypertree {
   }
 
   protected updateUnitdiskView() {
-    console.log('_updateUnitdiskView');
+    // console.log('_updateUnitdiskView');
     var udparent = this.view_.html.querySelector('.unitdisk-nav > svg');
     this.unitdisk = new this.args.geometry.decorator(
       {
@@ -340,7 +340,7 @@ export class Hypertree {
   //########################################################################################################
 
   protected resetData() {
-    console.log('_resetData');
+    // console.log('_resetData');
     this.unitdisk.args.data = undefined;
     this.data = undefined;
     this.langMap = undefined;
@@ -360,7 +360,7 @@ export class Hypertree {
   }
 
   protected initData(d3h, t0, t1, dl) {
-    console.log('_initData');
+    // console.log('_initData');
     var t2 = performance.now();
     var ncount = 1;
     globelhtid++;

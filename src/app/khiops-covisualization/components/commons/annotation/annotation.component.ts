@@ -13,6 +13,7 @@ import { TranslateService } from '@ngstack/translate';
 import { AnnotationService } from '@khiops-covisualization/providers/annotation.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { DimensionVO } from '@khiops-library/model/dimension-vo';
+import { COMPONENT_TYPES } from '../../../../khiops-library/enum/componentTypes';
 
 @Component({
   selector: 'app-annotation',
@@ -28,7 +29,7 @@ export class AnnotationComponent
   @Input() position: number;
   value: string;
   override id: any = undefined;
-  componentType = 'annotations'; // needed to copy datas
+  componentType = COMPONENT_TYPES.ANNOTATIONS; // needed to copy datas
   title: string;
 
   constructor(

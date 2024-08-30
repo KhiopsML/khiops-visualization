@@ -8,6 +8,7 @@ import { TranslateService } from '@ngstack/translate';
 import { HotkeysService, Hotkey } from 'angular2-hotkeys';
 import { CopyDatasService } from '../../providers/copy-datas.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
+import { COMPONENT_TYPES } from '@khiops-library/enum/componentTypes';
 
 @Component({
   selector: 'kl-header-tools',
@@ -52,14 +53,10 @@ export class HeaderToolsComponent {
     if (currentSelectedArea) {
       this.copyDatasService.copyDatasToClipboard(currentSelectedArea);
 
-      this.snackBar.open(
-        this.translate.get('SNACKS.DATAS_COPIED'),
-        undefined,
-        {
-          duration: 2000,
-          panelClass: 'success',
-        },
-      );
+      this.snackBar.open(this.translate.get('SNACKS.DATAS_COPIED'), undefined, {
+        duration: 2000,
+        panelClass: 'success',
+      });
     } else {
       this.snackBar.open(
         this.translate.get('SNACKS.NO_AREA_SELECTED'),
@@ -79,11 +76,15 @@ export class HeaderToolsComponent {
 
     if (currentSelectedArea) {
       this.isCopyingImage = true;
-      setTimeout(() => {
-        try {
+      try {
+        const componentInstance =
+          this.getComponentInstance(currentSelectedArea);
+        componentInstance.hideActiveEntries();
+        setTimeout(() => {
           let currentDiv: any = this.configService
             .getRootElementDom()
             .querySelector('#' + currentSelectedArea.id)?.firstChild;
+
           this.rePaintGraph(currentDiv);
 
           // convert div screenshot to canvas
@@ -126,6 +127,7 @@ export class HeaderToolsComponent {
               );
 
               this.isCopyingImage = false;
+              componentInstance.showActiveEntries();
             })
             .catch((e) => {
               console.error('​HeaderToolsComponent -> copyImage -> e', e);
@@ -141,18 +143,14 @@ export class HeaderToolsComponent {
             .finally(() => {
               this.isCopyingImage = false;
             });
-        } catch (e) {
-          this.snackBar.open(
-            this.translate.get('SNACKS.COPY_ERROR'),
-            undefined,
-            {
-              duration: 4000,
-              panelClass: 'error',
-            },
-          );
-          this.isCopyingImage = false;
-        }
-      }, 100);
+        }, 100);
+      } catch (e) {
+        this.snackBar.open(this.translate.get('SNACKS.COPY_ERROR'), undefined, {
+          duration: 4000,
+          panelClass: 'error',
+        });
+        this.isCopyingImage = false;
+      }
     } else {
       this.snackBar.open(
         this.translate.get('SNACKS.NO_AREA_SELECTED'),
@@ -186,5 +184,28 @@ export class HeaderToolsComponent {
 
   toggleSideBar() {
     this.toggleNavDrawerChanged.emit();
+  }
+
+  getComponentInstance(currentSelectedArea) {
+    let chartContainer: any;
+    if (currentSelectedArea.componentType === COMPONENT_TYPES.HISTOGRAM) {
+      chartContainer = currentSelectedArea.chart.nativeElement;
+    } else if (
+      currentSelectedArea.componentType === COMPONENT_TYPES.BAR_CHART ||
+      currentSelectedArea.componentType === COMPONENT_TYPES.ND_BAR_CHART
+    ) {
+      chartContainer = this.configService
+        .getRootElementDom()
+        .querySelector('#' + currentSelectedArea.graphIdContainer);
+    } else if (
+      currentSelectedArea.componentType === COMPONENT_TYPES.GRID ||
+      currentSelectedArea.componentType === COMPONENT_TYPES.HYPER_TREE ||
+      currentSelectedArea.componentType === COMPONENT_TYPES.KV_TREE
+    ) {
+      return currentSelectedArea;
+    } else if (currentSelectedArea.componentType === COMPONENT_TYPES.TREE) {
+      return currentSelectedArea.treeSelect;
+    }
+    return chartContainer?.componentInstance;
   }
 }
