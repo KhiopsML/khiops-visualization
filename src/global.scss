@@ -446,6 +446,7 @@ h2 {
 }
 
 .selected {
+  position: relative;
   .mat-tab-group {
     box-shadow: inset 0px 0px 0px 1px var(--selected);
     padding: 1px;
@@ -454,10 +455,17 @@ h2 {
       box-shadow: none !important;
     }
   }
+}
 
-  > div {
-    box-shadow: inset 0px 0px 0px 1px var(--selected);
-  }
+.selected::before {
+  content: '';
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  border: 1px solid var(--selected);
+  pointer-events: none;
 }
 
 .parent-selected {
