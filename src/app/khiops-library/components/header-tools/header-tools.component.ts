@@ -195,16 +195,23 @@ export class HeaderToolsComponent {
   }
 
   getComponentInstance(currentSelectedArea) {
-    let chartContainer: any;
     if (currentSelectedArea.componentType === COMPONENT_TYPES.HISTOGRAM) {
-      chartContainer = currentSelectedArea.chart.nativeElement;
+      let chartContainer = currentSelectedArea.chart.nativeElement;
+      return chartContainer?.componentInstance;
     } else if (
       currentSelectedArea.componentType === COMPONENT_TYPES.BAR_CHART ||
       currentSelectedArea.componentType === COMPONENT_TYPES.ND_BAR_CHART
     ) {
-      chartContainer = this.configService
-        .getRootElementDom()
-        .querySelector('#' + currentSelectedArea.graphIdContainer);
+      if (currentSelectedArea.graphIdContainer) {
+        let chartContainer: any = this.configService
+          .getRootElementDom()
+          .querySelector('#' + currentSelectedArea.graphIdContainer);
+        return chartContainer?.componentInstance;
+      } else {
+        return this.configService
+          .getRootElementDom()
+          .querySelector('#' + currentSelectedArea.id);
+      }
     } else if (
       currentSelectedArea.componentType === COMPONENT_TYPES.GRID ||
       currentSelectedArea.componentType === COMPONENT_TYPES.HYPER_TREE ||
@@ -213,7 +220,8 @@ export class HeaderToolsComponent {
       return currentSelectedArea;
     } else if (currentSelectedArea.componentType === COMPONENT_TYPES.TREE) {
       return currentSelectedArea.treeSelect;
+    } else {
+      return currentSelectedArea;
     }
-    return chartContainer?.componentInstance;
   }
 }
