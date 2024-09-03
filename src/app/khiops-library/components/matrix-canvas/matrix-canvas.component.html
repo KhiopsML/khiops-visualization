@@ -24,8 +24,9 @@
   ></kl-cell-stats>
   <div fxLayout="row" fxFlex>
     <div fxLayout="column">
-      <div class="screenshot-hide" fxLayout="column">
+      <div fxLayout="column">
         <button
+          class="screenshot-hide"
           mat-icon-button
           color="accent"
           matTooltip="{{ 'GLOBAL.ZOOM_IN' | translate }}"
@@ -40,6 +41,7 @@
         </button>
         <button
           mat-icon-button
+          class="screenshot-hide"
           color="accent"
           matTooltip="{{ 'GLOBAL.RESET_ZOOM' | translate }}"
           attr.aria-label="{{ 'GLOBAL.RESET_ZOOM' | translate }}"
@@ -52,6 +54,7 @@
           >
         </button>
         <button
+          class="screenshot-hide"
           mat-icon-button
           color="accent"
           matTooltip="{{ 'GLOBAL.ZOOM_OUT' | translate }}"
@@ -71,6 +74,7 @@
         }}</span>
       </div>
       <button
+        class="screenshot-hide"
         *ngIf="graphMode && graphMode.mode === 'MUTUAL_INFO' && !isKhiopsCovisu"
         mat-icon-button
         matTooltip="{{ 'GLOBAL.TOGGLE_ZERO' | translate }}"
@@ -85,6 +89,7 @@
         >
       </button>
       <button
+        class="screenshot-hide"
         mat-icon-button
         matTooltip="{{ 'GLOBAL.INVERT_AXIS' | translate }}"
         attr.aria-label="{{ 'GLOBAL.INVERT_AXIS' | translate }}"

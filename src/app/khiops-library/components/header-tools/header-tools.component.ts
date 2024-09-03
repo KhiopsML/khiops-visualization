@@ -146,7 +146,7 @@ export class HeaderToolsComponent {
             .finally(() => {
               this.isCopyingImage = false;
             });
-        }, 100);
+        }, 500);
       } catch (e) {
         this.snackBar.open(this.translate.get('SNACKS.COPY_ERROR'), undefined, {
           duration: 4000,
@@ -173,6 +173,7 @@ export class HeaderToolsComponent {
 
     // Hide useless header informations for screenshots
     this.eltsToHide = elt.getElementsByClassName('screenshot-hide');
+
     if (this.eltsToHide?.[0]) {
       for (let i = 0; i < this.eltsToHide.length; i++) {
         this.eltsToHide[i].style.display = 'none';
