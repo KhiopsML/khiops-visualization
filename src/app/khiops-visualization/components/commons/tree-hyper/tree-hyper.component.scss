@@ -6,7 +6,6 @@
 
   #graph-header-comp {
     flex-wrap: wrap;
-    padding: 5px 0;
     h1 {
       mat-icon {
         margin-right: 0.4em;
@@ -18,9 +17,9 @@
       margin-left: 0.3rem;
       margin-right: 0.3rem;
     }
-    #graph-header-tools {
+    .graph-header-tools {
       mat-checkbox {
-        margin: 0 0 0 1rem;
+        margin: 0.5rem 0 0.5rem 1rem;
       }
 
       ::ng-deep .mat-checkbox-layout .mat-checkbox-label {
