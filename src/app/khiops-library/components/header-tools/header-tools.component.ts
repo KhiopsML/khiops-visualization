@@ -79,9 +79,13 @@ export class HeaderToolsComponent {
       try {
         const componentInstance =
           this.getComponentInstance(currentSelectedArea);
-        componentInstance.hideActiveEntries();
+
+        if ('hideActiveEntries' in componentInstance) {
+          componentInstance.hideActiveEntries();
+        }
+
         setTimeout(() => {
-          let currentDiv: any = this.configService
+          const currentDiv: any = this.configService
             .getRootElementDom()
             .querySelector('#' + currentSelectedArea.id)?.firstChild;
 
@@ -109,12 +113,9 @@ export class HeaderToolsComponent {
                   this.eltsToHide[i].style.display = 'flex';
                 }
               }
-              currentDiv.classList.contains('printing') &&
-                currentDiv.classList.remove('printing') &&
-                currentDiv.classList.add('selected');
-              currentDiv.parentNode.classList.contains('printing') &&
-                currentDiv.parentNode.classList.remove('printing') &&
-                currentDiv.parentNode.classList.add('selected');
+
+              // reset selected class
+              this.addSelectedClass(currentDiv);
 
               // Show snack
               this.snackBar.open(
@@ -127,7 +128,9 @@ export class HeaderToolsComponent {
               );
 
               this.isCopyingImage = false;
-              componentInstance.showActiveEntries();
+              if ('showActiveEntries' in componentInstance) {
+                componentInstance.showActiveEntries();
+              }
             })
             .catch((e) => {
               console.error('​HeaderToolsComponent -> copyImage -> e', e);
@@ -166,12 +169,7 @@ export class HeaderToolsComponent {
   rePaintGraph(elt: any) {
     // Remove box shadow to prevent bliue overlay on exported screenshot
     // https://stackoverflow.com/questions/57070074/issue-with-html2canvas-green-overlay-while-exporting
-    elt.classList.contains('selected') &&
-      elt.classList.remove('selected') &&
-      elt.classList.add('printing');
-    elt.parentNode.classList.contains('selected') &&
-      elt.parentNode.classList.remove('selected') &&
-      elt.parentNode.classList.add('printing');
+    this.removeSelectedClass(elt);
 
     // Hide useless header informations for screenshots
     this.eltsToHide = elt.getElementsByClassName('screenshot-hide');
@@ -180,6 +178,16 @@ export class HeaderToolsComponent {
         this.eltsToHide[i].style.display = 'none';
       }
     }
+  }
+
+  removeSelectedClass(elt) {
+    elt.classList.replace('selected', 'printing');
+    elt.parentNode.classList.replace('selected', 'printing');
+  }
+
+  addSelectedClass(elt) {
+    elt.classList.replace('printing', 'selected');
+    elt.parentNode.classList.replace('printing', 'selected');
   }
 
   toggleSideBar() {
