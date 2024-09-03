@@ -92,7 +92,7 @@ export class HeaderToolsComponent {
           this.rePaintGraph(currentDiv);
 
           // convert div screenshot to canvas
-          html2canvas(currentDiv)
+          html2canvas(currentDiv, { scale: 1.1  })
             .then((canvas) => {
               canvas
                 .getContext('2d')
