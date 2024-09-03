@@ -241,6 +241,14 @@ export class MatrixCanvasComponent
     });
   }
 
+  hideActiveEntries() {
+    this.cleanSelectedDomContext();
+  }
+
+  showActiveEntries() {
+    this.drawSelectedNodes();
+  }
+
   drawMatrix() {
     if (!this.isDrawing) {
       requestAnimationFrame(() => {
