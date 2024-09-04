@@ -126,6 +126,7 @@
   },
   "resolutions": {
     "webpack": "5.90.3",
+    "micromatch": "4.0.8",
     "ws": "8.17.1"
   },
   "appdescription": {
