@@ -285,6 +285,7 @@ export class TreeHyperComponent
       if (initView) {
         // zoom out
         this.ht.initPromise.then(() => this.ht.api.gotoλ(0.15));
+        this.ht.api.updateNodesVisualization();
       }
     }
   }
