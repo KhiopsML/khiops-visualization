@@ -32,11 +32,12 @@
     "merge2": "^1.4.1",
     "sass": "^1.75.0",
     "typescript": "^3.0.0",
-    "webpack": "^5.91.0",
+    "webpack": "^5.94.0",
     "webpack-stream": "^7.0.0",
     "yargs": "17.7.2"
   },
   "resolutions": {
+    "micromatch": "4.0.8",
     "d3-color": "3.1.0",
     "glob-parent": "6.0.2",
     "braces": "3.0.3"

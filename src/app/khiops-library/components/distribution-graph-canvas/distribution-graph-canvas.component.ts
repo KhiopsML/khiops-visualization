@@ -19,6 +19,7 @@ import { HistogramType } from '@khiops-visualization/components/commons/histogra
 import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
 import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options';
 import { UtilsService } from '@khiops-library/providers/utils.service';
+import { COMPONENT_TYPES } from '@khiops-library/enum/componentTypes';
 
 @Component({
   selector: 'kl-distribution-graph-canvas',
@@ -39,7 +40,7 @@ export class DistributionGraphCanvasComponent
 
   @Output() graphTypeChanged: EventEmitter<any> = new EventEmitter();
   @Output() selectedItemChanged: EventEmitter<any> = new EventEmitter();
-  componentType = '1dBarChart'; // needed to copy datas
+  componentType = COMPONENT_TYPES.BAR_CHART; // needed to copy datas
 
   labels = [];
   datas = [];

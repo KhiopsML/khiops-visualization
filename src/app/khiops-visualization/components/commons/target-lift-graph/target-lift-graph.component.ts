@@ -18,6 +18,7 @@ import { ChartOptions } from 'chart.js';
 import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
 import { EvaluationDatasVO } from '@khiops-visualization/model/evaluation-datas-vo';
 import { TargetLiftValuesI } from '@khiops-visualization/interfaces/target-lift-values';
+import { COMPONENT_TYPES } from '@khiops-library/enum/componentTypes';
 
 @Component({
   selector: 'app-target-lift-graph',
@@ -41,7 +42,7 @@ export class TargetLiftGraphComponent
   buttonTitle: string;
   isFullscreen = false;
 
-  componentType = 'ndLineChart'; // needed to copy datas
+  componentType = COMPONENT_TYPES.ND_LINE_CHART; // needed to copy datas
   title: string;
   targetLiftAllGraph: ChartDatasVO;
   titleWithoutDetails: string;

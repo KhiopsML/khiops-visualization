@@ -8,6 +8,7 @@ import { TranslateService } from '@ngstack/translate';
 import { HotkeysService, Hotkey } from 'angular2-hotkeys';
 import { CopyDatasService } from '../../providers/copy-datas.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
+import { COMPONENT_TYPES } from '@khiops-library/enum/componentTypes';
 
 @Component({
   selector: 'kl-header-tools',
@@ -52,14 +53,10 @@ export class HeaderToolsComponent {
     if (currentSelectedArea) {
       this.copyDatasService.copyDatasToClipboard(currentSelectedArea);
 
-      this.snackBar.open(
-        this.translate.get('SNACKS.DATAS_COPIED'),
-        undefined,
-        {
-          duration: 2000,
-          panelClass: 'success',
-        },
-      );
+      this.snackBar.open(this.translate.get('SNACKS.DATAS_COPIED'), undefined, {
+        duration: 2000,
+        panelClass: 'success',
+      });
     } else {
       this.snackBar.open(
         this.translate.get('SNACKS.NO_AREA_SELECTED'),
@@ -79,15 +76,23 @@ export class HeaderToolsComponent {
 
     if (currentSelectedArea) {
       this.isCopyingImage = true;
-      setTimeout(() => {
-        try {
-          let currentDiv: any = this.configService
+      try {
+        const componentInstance =
+          this.getComponentInstance(currentSelectedArea);
+
+        if ('hideActiveEntries' in componentInstance) {
+          componentInstance.hideActiveEntries();
+        }
+
+        setTimeout(() => {
+          const currentDiv: any = this.configService
             .getRootElementDom()
             .querySelector('#' + currentSelectedArea.id)?.firstChild;
+
           this.rePaintGraph(currentDiv);
 
           // convert div screenshot to canvas
-          html2canvas(currentDiv)
+          html2canvas(currentDiv, { scale: 1.1  })
             .then((canvas) => {
               canvas
                 .getContext('2d')
@@ -108,12 +113,9 @@ export class HeaderToolsComponent {
                   this.eltsToHide[i].style.display = 'flex';
                 }
               }
-              currentDiv.classList.contains('printing') &&
-                currentDiv.classList.remove('printing') &&
-                currentDiv.classList.add('selected');
-              currentDiv.parentNode.classList.contains('printing') &&
-                currentDiv.parentNode.classList.remove('printing') &&
-                currentDiv.parentNode.classList.add('selected');
+
+              // reset selected class
+              this.addSelectedClass(currentDiv);
 
               // Show snack
               this.snackBar.open(
@@ -126,6 +128,9 @@ export class HeaderToolsComponent {
               );
 
               this.isCopyingImage = false;
+              if ('showActiveEntries' in componentInstance) {
+                componentInstance.showActiveEntries();
+              }
             })
             .catch((e) => {
               console.error('​HeaderToolsComponent -> copyImage -> e', e);
@@ -141,18 +146,14 @@ export class HeaderToolsComponent {
             .finally(() => {
               this.isCopyingImage = false;
             });
-        } catch (e) {
-          this.snackBar.open(
-            this.translate.get('SNACKS.COPY_ERROR'),
-            undefined,
-            {
-              duration: 4000,
-              panelClass: 'error',
-            },
-          );
-          this.isCopyingImage = false;
-        }
-      }, 100);
+        }, 500);
+      } catch (e) {
+        this.snackBar.open(this.translate.get('SNACKS.COPY_ERROR'), undefined, {
+          duration: 4000,
+          panelClass: 'error',
+        });
+        this.isCopyingImage = false;
+      }
     } else {
       this.snackBar.open(
         this.translate.get('SNACKS.NO_AREA_SELECTED'),
@@ -168,15 +169,11 @@ export class HeaderToolsComponent {
   rePaintGraph(elt: any) {
     // Remove box shadow to prevent bliue overlay on exported screenshot
     // https://stackoverflow.com/questions/57070074/issue-with-html2canvas-green-overlay-while-exporting
-    elt.classList.contains('selected') &&
-      elt.classList.remove('selected') &&
-      elt.classList.add('printing');
-    elt.parentNode.classList.contains('selected') &&
-      elt.parentNode.classList.remove('selected') &&
-      elt.parentNode.classList.add('printing');
+    this.removeSelectedClass(elt);
 
     // Hide useless header informations for screenshots
     this.eltsToHide = elt.getElementsByClassName('screenshot-hide');
+
     if (this.eltsToHide?.[0]) {
       for (let i = 0; i < this.eltsToHide.length; i++) {
         this.eltsToHide[i].style.display = 'none';
@@ -184,7 +181,48 @@ export class HeaderToolsComponent {
     }
   }
 
+  removeSelectedClass(elt) {
+    elt.classList.replace('selected', 'printing');
+    elt.parentNode.classList.replace('selected', 'printing');
+  }
+
+  addSelectedClass(elt) {
+    elt.classList.replace('printing', 'selected');
+    elt.parentNode.classList.replace('printing', 'selected');
+  }
+
   toggleSideBar() {
     this.toggleNavDrawerChanged.emit();
+  }
+
+  getComponentInstance(currentSelectedArea) {
+    if (currentSelectedArea.componentType === COMPONENT_TYPES.HISTOGRAM) {
+      let chartContainer = currentSelectedArea.chart.nativeElement;
+      return chartContainer?.componentInstance;
+    } else if (
+      currentSelectedArea.componentType === COMPONENT_TYPES.BAR_CHART ||
+      currentSelectedArea.componentType === COMPONENT_TYPES.ND_BAR_CHART
+    ) {
+      if (currentSelectedArea.graphIdContainer) {
+        let chartContainer: any = this.configService
+          .getRootElementDom()
+          .querySelector('#' + currentSelectedArea.graphIdContainer);
+        return chartContainer?.componentInstance;
+      } else {
+        return this.configService
+          .getRootElementDom()
+          .querySelector('#' + currentSelectedArea.id);
+      }
+    } else if (
+      currentSelectedArea.componentType === COMPONENT_TYPES.GRID ||
+      currentSelectedArea.componentType === COMPONENT_TYPES.HYPER_TREE ||
+      currentSelectedArea.componentType === COMPONENT_TYPES.KV_TREE
+    ) {
+      return currentSelectedArea;
+    } else if (currentSelectedArea.componentType === COMPONENT_TYPES.TREE) {
+      return currentSelectedArea.treeSelect;
+    } else {
+      return currentSelectedArea;
+    }
   }
 }

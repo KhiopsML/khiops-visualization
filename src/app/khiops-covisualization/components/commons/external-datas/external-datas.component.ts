@@ -4,6 +4,7 @@ import { SelectableComponent } from '@khiops-library/components/selectable/selec
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { DimensionVO } from '@khiops-library/model/dimension-vo';
 import { ConfigService } from '@khiops-library/providers/config.service';
+import { COMPONENT_TYPES } from '../../../../khiops-library/enum/componentTypes';
 
 @Component({
   selector: 'app-external-datas',
@@ -22,7 +23,7 @@ export class ExternalDatasComponent
   override id: any = undefined;
   currentExternalDatasTitle: string = '';
   currentExternalDatas: any[] = [];
-  componentType = 'external-datas'; // needed to copy datas
+  componentType = COMPONENT_TYPES.EXTERNAL_DATAS; // needed to copy datas
 
   constructor(
     public override selectableService: SelectableService,

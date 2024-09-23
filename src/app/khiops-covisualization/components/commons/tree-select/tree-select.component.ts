@@ -81,6 +81,14 @@ export class TreeSelectComponent
     this.tree?.selectNextNode('tree-comp-' + this.position, keyCode);
   }
 
+  hideActiveEntries() {
+    this.tree.unselectNodes();
+  }
+
+  showActiveEntries() {
+    this.tree.selectNode(this.selectedNode);
+  }
+
   ngOnDestroy() {
     this.treeSelectedNodeChangedSub.unsubscribe();
   }

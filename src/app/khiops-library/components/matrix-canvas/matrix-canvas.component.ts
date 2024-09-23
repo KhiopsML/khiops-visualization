@@ -19,12 +19,12 @@ import { UtilsService } from '../../providers/utils.service';
 import { MatrixCanvasService } from './matrix-canvas.service';
 import { CellVO } from '../../model/cell-vo';
 import { ConfigService } from '@khiops-library/providers/config.service';
-import { AppConfig } from 'src/environments/environment';
 import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 import { MatrixCoordI } from '@khiops-library/interfaces/matrix-coord';
 import { Subscription } from 'rxjs';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
+import { COMPONENT_TYPES } from '@khiops-library/enum/componentTypes';
 
 @Component({
   selector: 'kl-matrix-canvas',
@@ -55,7 +55,7 @@ export class MatrixCanvasComponent
   conditionalOnContextChangedSub: Subscription;
 
   isKhiopsCovisu: boolean;
-  componentType = 'matrix'; // needed to copy datas
+  componentType = COMPONENT_TYPES.MATRIX; // needed to copy datas
   selectedCells: CellVO[];
 
   xAxisLabel: string;
@@ -237,6 +237,14 @@ export class MatrixCanvasComponent
         }
       }
     });
+  }
+
+  hideActiveEntries() {
+    this.cleanSelectedDomContext();
+  }
+
+  showActiveEntries() {
+    this.drawSelectedNodes();
   }
 
   drawMatrix() {
@@ -778,7 +786,7 @@ export class MatrixCanvasComponent
         this.graphMode.mode === 'HELLINGER' ||
         this.graphMode.mode === 'MUTUAL_INFO_TARGET_WITH_CELL'
       ) {
-        const isPositiveValue = colorValue >= 0 ? true : false;
+        const isPositiveValue = colorValue >= 0;
         percentColors = MatrixCanvasService.getInterestColors(isPositiveValue);
         colorValue = Math.abs(colorValue);
       } else {

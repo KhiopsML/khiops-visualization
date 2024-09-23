@@ -29,6 +29,7 @@ import {
   Column,
 } from '@ag-grid-community/core';
 import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
+import { COMPONENT_TYPES } from '@khiops-library/enum/componentTypes';
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
 @Component({
@@ -88,7 +89,7 @@ export class AgGridComponent
   gridMode: string = '';
   gridModes = {}; // 'fitToSpace' or 'fitToContent'
 
-  componentType = 'grid'; // needed to copy datas
+  componentType = COMPONENT_TYPES.GRID; // needed to copy datas
   columnDefs: ColDef[] = [];
   searchInput: string | null = '';
   rowData: any = [];
@@ -192,6 +193,14 @@ export class AgGridComponent
 
     this.dataOptions.selected = type;
     this.dataTypeChanged.emit(type);
+  }
+
+  hideActiveEntries() {
+    this.gridOptions?.api?.deselectAll();
+  }
+
+  showActiveEntries() {
+    this.selectNode(this.selectedVariable);
   }
 
   ngOnChanges(changes: SimpleChanges) {

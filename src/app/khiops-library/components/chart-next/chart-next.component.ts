@@ -6,6 +6,7 @@ import {
   AfterViewInit,
   OnChanges,
   SimpleChanges,
+  ElementRef,
 } from '@angular/core';
 import * as ChartJs from 'chart.js';
 
@@ -44,6 +45,7 @@ export class ChartNextComponent implements AfterViewInit, OnChanges {
 
   constructor(
     private configService: ConfigService,
+    private el: ElementRef,
     private khiopsLibraryService: KhiopsLibraryService,
   ) {
     this.AppConfig = this.khiopsLibraryService.getAppConfig().common;
@@ -58,6 +60,11 @@ export class ChartNextComponent implements AfterViewInit, OnChanges {
         ? 'rgba(255, 255, 255, 1)'
         : 'rgba(0, 0, 0, 1)';
     this.colorSet = this.khiopsLibraryService.getGraphColorSet()[0];
+  }
+
+  ngOnInit() {
+    // Keep a ref of instance
+    this.el.nativeElement.componentInstance = this;
   }
 
   ngAfterViewInit(): void {
@@ -242,6 +249,16 @@ export class ChartNextComponent implements AfterViewInit, OnChanges {
         this.chart.update();
       }
     });
+  }
+
+  hideActiveEntries() {
+    this.selectCurrentBarIndex(undefined);
+    this.chart.update();
+  }
+
+  showActiveEntries() {
+    this.selectCurrentBarIndex(this.activeEntries);
+    this.chart.update();
   }
 
   graphClickEvent(e: any, items: string | any[]) {

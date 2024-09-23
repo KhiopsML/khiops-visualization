@@ -19,6 +19,7 @@ import { TYPES } from '@khiops-library/enum/types';
 import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 import { UtilsService } from '@khiops-library/providers/utils.service';
+import { COMPONENT_TYPES } from '@khiops-library/enum/componentTypes';
 
 @Component({
   selector: 'app-target-distribution-graph-canvas',
@@ -48,7 +49,7 @@ export class TargetDistributionGraphCanvasComponent
   @Output() selectedItemChanged: EventEmitter<any> = new EventEmitter();
   override graphIdContainer: string | undefined = undefined;
 
-  componentType = 'ndBarChart'; // needed to copy datas
+  componentType = COMPONENT_TYPES.ND_BAR_CHART; // needed to copy datas
 
   colorSet: ChartColorsSetI;
   graphOptions = {

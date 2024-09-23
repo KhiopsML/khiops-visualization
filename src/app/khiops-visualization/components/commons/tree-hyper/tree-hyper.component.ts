@@ -23,6 +23,7 @@ import { DistributionDatasService } from '@khiops-visualization/providers/distri
 import { TreeNodeVO } from '@khiops-visualization/model/tree-node-vo';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
+import { COMPONENT_TYPES } from '@khiops-library/enum/componentTypes';
 
 @Component({
   selector: 'app-tree-hyper',
@@ -42,7 +43,7 @@ export class TreeHyperComponent
   @ViewChild('hyperTree') hyperTree: ElementRef<HTMLElement>;
 
   buttonTitle: string;
-  componentType = 'hyptree'; // needed to copy datas
+  componentType = COMPONENT_TYPES.HYPER_TREE; // needed to copy datas
   isFullscreen = false;
   visualization: any = {
     population: false,
@@ -95,6 +96,25 @@ export class TreeHyperComponent
     this.initHyperTree();
   }
 
+  removeNodes(selectedNodes: TreeNodeVO[]) {
+    // remove previous paths
+    for (let i = 0; i < selectedNodes.length; i++) {
+      const node = selectedNodes[i];
+      const dataTree = UtilsService.deepFind(this.ht.data, node.id);
+      if (dataTree) {
+        this.ht.api.removePath('SelectionPath', dataTree);
+      }
+    }
+  }
+
+  selectNodes(selectedNodes: TreeNodeVO[]) {
+    for (let i = 0; i < selectedNodes.length; i++) {
+      const node = selectedNodes[i];
+      const dataTree = UtilsService.deepFind(this.ht.data, node.id);
+      this.ht.api.addPath('SelectionPath', dataTree, node.color);
+    }
+  }
+
   ngOnChanges(changes: SimpleChanges) {
     let userSelectedNode;
     if (changes.dimensionTree?.currentValue && this.hyperTree) {
@@ -106,22 +126,12 @@ export class TreeHyperComponent
     }
     if (changes.selectedNodes?.previousValue) {
       // remove previous paths
-      for (let i = 0; i < changes.selectedNodes.previousValue.length; i++) {
-        const node = changes.selectedNodes.previousValue[i];
-        const dataTree = UtilsService.deepFind(this.ht.data, node.id);
-        if (dataTree) {
-          this.ht.api.removePath('SelectionPath', dataTree);
-        }
-      }
+      this.removeNodes(changes.selectedNodes.previousValue);
     }
 
     if (changes.selectedNodes?.currentValue) {
       // draw new selection paths
-      for (let i = 0; i < changes.selectedNodes.currentValue.length; i++) {
-        const node = changes.selectedNodes.currentValue[i];
-        const dataTree = UtilsService.deepFind(this.ht.data, node.id);
-        this.ht.api.addPath('SelectionPath', dataTree, node.color);
-      }
+      this.selectNodes(changes.selectedNodes.currentValue);
 
       // Find trusted node to center view on it
       const trustedNode = this.selectedNodes.find((e) => e.isTrusted);
@@ -164,6 +174,16 @@ export class TreeHyperComponent
       // } else {
       // }
     }
+  }
+
+  hideActiveEntries() {
+    this.removeNodes(this.selectedNodes);
+    this.ht.api.updateNodesVisualization();
+  }
+
+  showActiveEntries() {
+    this.selectNodes(this.selectedNodes);
+    this.ht.api.updateNodesVisualization();
   }
 
   onSelectToggleButtonChanged(displayedValues: ChartToggleValuesI[]) {
@@ -265,6 +285,7 @@ export class TreeHyperComponent
       if (initView) {
         // zoom out
         this.ht.initPromise.then(() => this.ht.api.gotoλ(0.15));
+        this.ht.api.updateNodesVisualization();
       }
     }
   }

@@ -19,6 +19,7 @@ import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
 import { ChartOptions } from 'chart.js';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { VariableVO } from '@khiops-visualization/model/variable-vo';
+import { COMPONENT_TYPES } from '@khiops-library/enum/componentTypes';
 
 @Component({
   selector: 'app-level-distribution-graph',
@@ -52,7 +53,7 @@ export class LevelDistributionGraphCanvasComponent
     AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.STEP;
   chartOptions: ChartOptions;
 
-  componentType = '1dBarChart'; // needed to copy datas
+  componentType = COMPONENT_TYPES.BAR_CHART; // needed to copy datas
   override graphIdContainer = 'level-distribution-graph-canvas';
 
   constructor(

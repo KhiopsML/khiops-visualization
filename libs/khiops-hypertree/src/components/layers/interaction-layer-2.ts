@@ -152,8 +152,10 @@ export class InteractionLayer2 implements ILayer {
 
     const m = this.currMousePosAsC();
     requestAnimationFrame(() => {
-      if (this[eventName]('mouse', m))
-        this.view.hypertree.update.transformation();
+      try {
+        if (this[eventName]('mouse', m))
+          this.view.hypertree.update.transformation();
+      } catch (error) {}
     });
   }
 

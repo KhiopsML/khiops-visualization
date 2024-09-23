@@ -1,6 +1,6 @@
 {
   "name": "visualization-component",
-  "version": "11.4.7",
+  "version": "11.4.8",
   "license": "BSD-3-Clause-Clear",
   "author": {
     "name": "Orange",
@@ -127,9 +127,9 @@
     "webpack-bundle-analyzer": "4.10.1"
   },
   "resolutions": {
-    "webpack": "5.91.0",
-    "ws": "8.17.1",
-    "css-loader": "7.1.2"
+    "webpack": "^5.94.0",
+    "micromatch": "4.0.8",
+    "ws": "8.17.1"
   },
   "appdescription": {
     "visualization": "Khiops Visualization",

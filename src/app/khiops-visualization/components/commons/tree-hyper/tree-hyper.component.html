@@ -10,37 +10,47 @@
     id="graph-header-comp"
     fxLayoutAlign="start center"
     class="mat-elevation-z1"
+    fxLayout="row"
   >
-    <h1 fxFlex fxLayoutAlign="start center">
-      <mat-icon>blur_on</mat-icon> {{ 'GLOBAL.HYPER_TREE' | translate }}
-    </h1>
-    <app-select-toggle-button
-      *ngIf="
-        distributionDatas && distributionDatas.targetDistributionDisplayedValues
-      "
-      [displayedValues]="distributionDatas.targetDistributionDisplayedValues"
-      (selectToggleButtonChanged)="onSelectToggleButtonChanged($event)"
-      [buttonTitle]="buttonTitle"
+    <div fxLayout="column" fxFlex fxLayoutAlign="start start">
+      <h1 fxFlex fxLayoutAlign="start center">
+        <mat-icon>blur_on</mat-icon> {{ 'GLOBAL.HYPER_TREE' | translate }}
+      </h1>
+      <div fxLayout="row" fxFlex class="graph-header-tools screenshot-hide">
+        <mat-checkbox
+          [checked]="visualization.purity"
+          (change)="togglePurityVisualization($event.checked)"
+        >
+          {{ 'GLOBAL.DISPLAY_PURITY_BY_OPACITY' | translate }}
+        </mat-checkbox>
+        <mat-checkbox
+          [checked]="visualization.population"
+          (change)="togglePopulationVisualization($event.checked)"
+        >
+          {{ 'GLOBAL.DISPLAY_LEAF_SIZES_BY_POPULATION' | translate }}
+        </mat-checkbox>
+      </div>
+    </div>
+    <div
+      fxLayoutAlign="start start"
+      fxLayout="row"
+      class="graph-header-tools screenshot-hide"
     >
-    </app-select-toggle-button>
-    <div id="graph-header-tools" fxLayout="column" fxLayoutAlign="end center">
-      <mat-checkbox
-        [checked]="visualization.purity"
-        (change)="togglePurityVisualization($event.checked)"
+      <app-select-toggle-button
+        class="screenshot-hide"
+        *ngIf="
+          distributionDatas &&
+          distributionDatas.targetDistributionDisplayedValues
+        "
+        [displayedValues]="distributionDatas.targetDistributionDisplayedValues"
+        (selectToggleButtonChanged)="onSelectToggleButtonChanged($event)"
+        [buttonTitle]="buttonTitle"
       >
-        {{ 'GLOBAL.DISPLAY_PURITY_BY_OPACITY' | translate }}
-      </mat-checkbox>
+      </app-select-toggle-button>
+
+      <kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">
+      </kl-btn-fullscreen>
     </div>
-    <div id="graph-header-tools" fxLayout="column" fxLayoutAlign="end center">
-      <mat-checkbox
-        [checked]="visualization.population"
-        (change)="togglePopulationVisualization($event.checked)"
-      >
-        {{ 'GLOBAL.DISPLAY_LEAF_SIZES_BY_POPULATION' | translate }}
-      </mat-checkbox>
-    </div>
-    <kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">
-    </kl-btn-fullscreen>
   </div>
   <div id="hyperTree"></div>
 </div>

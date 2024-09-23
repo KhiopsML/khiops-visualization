@@ -8,7 +8,12 @@
     <div fxFlex fxLayout="row" fxLayoutAlign="start center">
       <div fxFlex fxLayout="row" fxLayoutAlign="start center">
         <h1>{{ titleWithoutDetails }}</h1>
-        <div fxLayout="row" fxLayoutAlign="start center" *ngIf="targetLift">
+        <div
+          fxLayout="row"
+          class="screenshot-hide"
+          fxLayoutAlign="start center"
+          *ngIf="targetLift"
+        >
           <button
             mat-stroked-button
             title="{{ 'TOOLTIPS.EVALUATION.GAIN_CHART.SELECT' | translate }}"
@@ -37,7 +42,10 @@
         >
         </app-select-toggle-button>
       </div>
-      <kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">
+      <kl-btn-fullscreen
+        class="screenshot-hide"
+        (toggleFullscreen)="onToggleFullscreen($event)"
+      >
       </kl-btn-fullscreen>
     </div>
   </div>
