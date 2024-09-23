@@ -125,10 +125,7 @@
   "resolutions": {
     "webpack": "^5.94.0",
     "micromatch": "4.0.8",
-    "ws": "8.17.1",
-    "path-to-regexp": "8.1.0",
-    "body-parser": "2.0.1",
-    "vite": "5.4.7"
+    "ws": "8.17.1"
   },
   "appdescription": {
     "visualization": "Khiops Visualization",
