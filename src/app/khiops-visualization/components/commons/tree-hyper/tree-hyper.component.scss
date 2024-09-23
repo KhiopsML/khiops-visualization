@@ -22,10 +22,11 @@
         margin: 0.5rem 0 0.5rem 1rem;
       }
 
-      ::ng-deep .mat-checkbox-layout .mat-checkbox-label {
+      ::ng-deep mat-checkbox .mdc-form-field label {
         width: 130px !important;
         white-space: normal !important;
         line-height: inherit !important;
+        font-size: 0.75rem !important;
       }
     }
   }

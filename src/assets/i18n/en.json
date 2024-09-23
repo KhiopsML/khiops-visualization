@@ -102,6 +102,7 @@
     "MESSAGE": "Enable Dark mode"
   },
   "GLOBAL": {
+    "NO_DERIVATION_RULE": "No derivation rule",
     "BOUNDS": "Bounds",
     "DENSITY": "Density",
     "OPEN_FULLSCREEN": "Open in fullscreen",

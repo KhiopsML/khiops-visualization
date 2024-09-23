@@ -6,7 +6,7 @@ Cypress.Commands.add('loadFile', (ctx: string, file: string) => {
   cy.visit('/' + ctx + '/');
 
   // Switch to the desired tab (assuming it's the last tab)
-  cy.get('.mat-tab-label').last().click();
+  cy.get('.mat-mdc-tab').last().click();
 
   // Upload the file
   cy.get('#open-file-input').first().type(file, { force: true });

@@ -29,7 +29,7 @@
       border-radius: 5px;
       padding: 1em;
 
-      .mat-slider-horizontal {
+      mat-slider {
         width: 30vw;
       }
       .unfold-information-rate {
@@ -51,7 +51,7 @@
       }
 
       .non-info-warning {
-        color: #374779;
+        color: var(--redMain);
         margin-top: 5px;
 
         mat-icon {

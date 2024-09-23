@@ -16,11 +16,14 @@
   }
 
   button {
-    margin: 0.1em 0.5em;
     transition:
       color 0.2s ease,
       background-color 0.2s ease,
       transform 0.3s ease;
+    margin: 0em 0.2em;
+    mat-icon {
+      font-size: 24px !important;
+    }
   }
 
   button.invert-axis.toggled-false {
@@ -115,6 +118,12 @@
       }
     }
 
+    mat-slider {
+      transform: rotate(-90deg);
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
     #legend {
       font-size: 0.9em;
 
@@ -131,16 +140,6 @@
         height: 1.5em;
         white-space: nowrap;
         text-align: center;
-      }
-    }
-  }
-
-  @media screen and (max-width: 1280px), screen and (max-height: 1024px) {
-    button {
-      margin: 0em 0.5em;
-
-      mat-icon {
-        font-size: 1.8em;
       }
     }
   }

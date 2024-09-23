@@ -41,8 +41,6 @@ export class MatrixCanvasComponent
   @Input() graphType: string;
   @Input() graphMode: MatrixModeI;
   @Input() contrast: number | undefined;
-  @Output() contrastChange: EventEmitter<number> = new EventEmitter();
-
   @Input() graphTargets: string[];
   @Input() graphTarget: string;
   @Input() selectedNodes: TreeNodeVO[]; // KC use case
@@ -905,10 +903,8 @@ export class MatrixCanvasComponent
     }
   }
 
-  onContrastChanged(event: { value: number | undefined }) {
-    // this.trackerService.trackEvent('click', 'matrix_contrast', event.value);
-    this.contrast = event.value;
-    this.contrastChange.emit(this.contrast);
+  onContrastChanged(event: Event) {
+    this.contrast = parseInt(event?.target?.['value'], 10);
     this.contrast &&
       localStorage.setItem(
         this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +

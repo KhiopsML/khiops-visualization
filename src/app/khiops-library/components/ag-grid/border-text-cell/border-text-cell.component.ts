@@ -8,7 +8,7 @@ import { ICellRendererParams } from '@ag-grid-community/core';
   templateUrl: './border-text-cell.component.html',
 })
 export class BorderTextCellComponent implements AgRendererComponent {
-  public params: any;
+  public params: ICellRendererParams;
 
   constructor() {}
 

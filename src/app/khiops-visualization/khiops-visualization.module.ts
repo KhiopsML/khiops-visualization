@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { HomeLayoutComponent } from './components/home-layout/homeLayout.component';
@@ -48,6 +48,9 @@ const providers = [
 
 @NgModule({
   declarations: [
+    // ReleaseNotesComponent,
+    // ConfirmDialogComponent,
+    // LevelDistributionGraphCanvasComponent,
     HistogramComponent,
     HistogramTooltipComponent,
     AppComponent,
@@ -86,6 +89,7 @@ const providers = [
     AgGridModule,
     FlexLayoutModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     AngularSplitModule,
 

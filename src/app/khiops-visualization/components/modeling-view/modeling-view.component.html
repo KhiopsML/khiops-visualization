@@ -63,91 +63,91 @@
         </as-split-area>
       </as-split>
     </as-split-area>
+
     <as-split-area [size]="sizes.row[1]">
-      <as-split [gutterSize]="7" direction="vertical">
-        <app-select-trained-predictor
-          [inputDatas]="appDatas.datas.modelingReport.trainedPredictors"
-          (selectedPredictorChanged)="onSelectedPredictorChanged($event)"
-        ></app-select-trained-predictor>
-        <as-split
-          [gutterSize]="7"
-          direction="horizontal"
-          (dragEnd)="onSplitDragEnd($event, 'row1Col')"
-        >
-          <as-split-area [size]="sizes.row1Col[0]">
-            <as-split
-              [gutterSize]="7"
-              *ngIf="modelingDatas.trainedPredictorsListDatas"
-              direction="vertical"
-              (dragEnd)="onSplitDragEnd($event, 'row1Col0Row')"
-            >
-              <as-split-area class="variables-list-container">
-                <kl-ag-grid
-                  id="modeling-variables-list"
-                  class="variables-list"
-                  fxFlexFill
-                  titleTooltip="{{
-                    'TOOLTIPS.MODELING.VARIABLES.TITLE' | translate
-                  }}"
-                  [showLevelDistribution]="true"
-                  [showSearch]="true"
-                  [watchResize]="true"
-                  [displayCount]="true"
-                  [selectedVariable]="modelingDatas.selectedVariable"
-                  (selectListItem)="onSelectListItemChanged($event)"
-                  [showLineSelection]="true"
-                  [showColumnsSelection]="true"
-                  [rowHeight]="30"
-                  [inputDatas]="modelingDatas.trainedPredictorsListDatas"
-                  [smallTitle]="true"
-                  (showLevelDistributionGraph)="
-                    onShowLevelDistributionGraph($event)
-                  "
-                  [displayedColumns]="trainedPredictorsDisplayedColumns"
-                >
-                </kl-ag-grid>
-              </as-split-area>
-            </as-split>
-            <kl-no-data
-              fxFlexFill
-              *ngIf="!modelingDatas.trainedPredictorsListDatas"
-              [message]="'NO_DATAS.NO_PREDICTORS_DETAILS'"
-            ></kl-no-data>
-          </as-split-area>
-          <as-split-area [size]="sizes.row1Col[1]">
-            <app-var-details-preparation
-              [preparationSource]="preparationSource"
-              *ngIf="
-                modelingDatas.selectedVariable &&
-                modelingDatas.selectedVariable.variableType === 'preparation'
-              "
-            >
-            </app-var-details-preparation>
-            <app-var-details-preparation-2d
-              *ngIf="
-                modelingDatas.selectedVariable &&
-                modelingDatas.selectedVariable.variableType === 'preparation-2d'
-              "
-            >
-            </app-var-details-preparation-2d>
-            <app-var-details-tree-preparation
-              *ngIf="
-                modelingDatas.selectedVariable &&
-                modelingDatas.selectedVariable.variableType ===
-                  'preparation-tree'
-              "
-            >
-            </app-var-details-tree-preparation>
-            <kl-no-data
-              fxFlexFill
-              *ngIf="
-                !modelingDatas.trainedPredictorsListDatas ||
-                !modelingDatas.selectedVariable
-              "
-              [message]="'NO_DATAS.NO_PREDICTORS_DETAILS'"
-            ></kl-no-data>
-          </as-split-area>
-        </as-split>
+      <app-select-trained-predictor
+        [inputDatas]="appDatas.datas.modelingReport.trainedPredictors"
+        (selectedPredictorChanged)="onSelectedPredictorChanged($event)"
+      ></app-select-trained-predictor>
+
+      <as-split
+        class="trained-predictor-details-container"
+        [gutterSize]="7"
+        direction="horizontal"
+        (dragEnd)="onSplitDragEnd($event, 'row1Col')"
+      >
+        <as-split-area [size]="sizes.row1Col[0]">
+          <as-split
+            [gutterSize]="7"
+            *ngIf="modelingDatas.trainedPredictorsListDatas"
+            direction="vertical"
+            (dragEnd)="onSplitDragEnd($event, 'row1Col0Row')"
+          >
+            <as-split-area class="variables-list-container">
+              <kl-ag-grid
+                id="modeling-variables-list"
+                class="variables-list"
+                fxFlexFill
+                titleTooltip="{{
+                  'TOOLTIPS.MODELING.VARIABLES.TITLE' | translate
+                }}"
+                [showLevelDistribution]="true"
+                [showSearch]="true"
+                [watchResize]="true"
+                [displayCount]="true"
+                [selectedVariable]="modelingDatas.selectedVariable"
+                (selectListItem)="onSelectListItemChanged($event)"
+                [showLineSelection]="true"
+                [showColumnsSelection]="true"
+                [rowHeight]="30"
+                [inputDatas]="modelingDatas.trainedPredictorsListDatas"
+                [smallTitle]="true"
+                (showLevelDistributionGraph)="
+                  onShowLevelDistributionGraph($event)
+                "
+                [displayedColumns]="trainedPredictorsDisplayedColumns"
+              >
+              </kl-ag-grid>
+            </as-split-area>
+          </as-split>
+          <kl-no-data
+            fxFlexFill
+            *ngIf="!modelingDatas.trainedPredictorsListDatas"
+            [message]="'NO_DATAS.NO_PREDICTORS_DETAILS'"
+          ></kl-no-data>
+        </as-split-area>
+        <as-split-area [size]="sizes.row1Col[1]">
+          <app-var-details-preparation
+            [preparationSource]="preparationSource"
+            *ngIf="
+              modelingDatas.selectedVariable &&
+              modelingDatas.selectedVariable.variableType === 'preparation'
+            "
+          >
+          </app-var-details-preparation>
+          <app-var-details-preparation-2d
+            *ngIf="
+              modelingDatas.selectedVariable &&
+              modelingDatas.selectedVariable.variableType === 'preparation-2d'
+            "
+          >
+          </app-var-details-preparation-2d>
+          <app-var-details-tree-preparation
+            *ngIf="
+              modelingDatas.selectedVariable &&
+              modelingDatas.selectedVariable.variableType === 'preparation-tree'
+            "
+          >
+          </app-var-details-tree-preparation>
+          <kl-no-data
+            fxFlexFill
+            *ngIf="
+              !modelingDatas.trainedPredictorsListDatas ||
+              !modelingDatas.selectedVariable
+            "
+            [message]="'NO_DATAS.NO_PREDICTORS_DETAILS'"
+          ></kl-no-data>
+        </as-split-area>
       </as-split>
     </as-split-area>
   </as-split>

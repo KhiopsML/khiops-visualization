@@ -24,9 +24,12 @@
         [min]="1"
         [max]="8"
         [step]="1"
-        [thumbLabel]="true"
-        [(ngModel)]="numberPrecision"
       >
+        <input
+          [value]="numberPrecision"
+          matSliderThumb
+          (valueChange)="numberPrecision = $event"
+        />
       </mat-slider>
       <span>{{ numberPrecision }} {{ 'SETTINGS.NUMBER' | translate }}</span>
     </div>
@@ -40,9 +43,12 @@
         [max]="90"
         [min]="0"
         [step]="10"
-        [thumbLabel]="false"
-        [(ngModel)]="contrastValue"
       >
+        <input
+          [value]="contrastValue"
+          matSliderThumb
+          (valueChange)="contrastValue = $event"
+        />
       </mat-slider>
       <span>{{ contrastValue }} %</span>
     </div>

@@ -52,6 +52,27 @@ export class SelectedClustersComponent implements OnDestroy {
       },
     ];
     this.title = this.translate.get('GLOBAL.SELECTED_CLUSTERS');
+    this.clustersDisplayedColumns = [
+      {
+        headerName: 'Name',
+        field: 'hierarchy',
+        tooltip: this.translate.get('TOOLTIPS.AXIS.SELECTED_CLUSTERS.NAME'),
+      },
+      {
+        headerName: 'Current Cluster',
+        field: 'shortDescription',
+        tooltip: this.translate.get(
+          'TOOLTIPS.AXIS.SELECTED_CLUSTERS.CURRENT_CLUSTERS',
+        ),
+      },
+      {
+        headerName: 'Nb Clusters',
+        field: 'nbClusters',
+        tooltip: this.translate.get(
+          'TOOLTIPS.AXIS.SELECTED_CLUSTERS.NB_CLUSTERS',
+        ),
+      },
+    ];
 
     this.treeSelectedNodeChangedSub =
       this.eventsService.treeSelectedNodeChanged.subscribe((e) => {

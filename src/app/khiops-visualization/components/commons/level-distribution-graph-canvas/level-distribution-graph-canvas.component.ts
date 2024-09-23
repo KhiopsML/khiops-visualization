@@ -123,13 +123,14 @@ export class LevelDistributionGraphCanvasComponent
     }
   }
 
-  onScaleChanged(event) {
+  onScaleChanged(value: number) {
     // Save current scale value into ls
     localStorage.setItem(
       this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
         'SCALE_VALUE',
-      event.value,
+      value.toString(),
     );
+    this.scaleValue = value;
     this.resizeGraph();
   }
 }

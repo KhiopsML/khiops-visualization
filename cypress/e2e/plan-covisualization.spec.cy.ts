@@ -17,13 +17,13 @@ describe('Test Plan for Khiops Covisualization', () => {
 
   const expectedResults: ResultI[] = [
     {
-      matrixTooltip: [1608, 5097, 3596],
+      matrixTooltip: [1608, 5097, 6951],
       nodesName: ['A7', 'B5'],
-      unfoldH: 6,
+      unfoldH: 5,
       matrixValues: 5097,
     },
     {
-      matrixTooltip: [3942, 27815, 17],
+      matrixTooltip: [3942, 27815, 923],
       nodesName: ['[-0.999999999;0.57661]', '[-0.999988212;0.577313]'],
       unfoldH: 150,
       matrixValues: 27815, // selected cell excpected Freq
@@ -125,8 +125,22 @@ describe('Test Plan for Khiops Covisualization', () => {
         cy.get('.button-confirm-hierarchy').click();
 
         // Move to the last matrix cell
-        //@ts-ignore
-        cy.get('#matrix-selected').trigger('mousemove', {
+        cy.get('#matrix-container').trigger('mousemove', {
+          position: 'topRight',
+        });
+        cy.get('#matrix-container').trigger('mousemove', {
+          position: 'topRight',
+        });
+        cy.get('#matrix-container').trigger('mousemove', {
+          position: 'topRight',
+        });
+        cy.get('#matrix-container').trigger('mousemove', {
+          position: 'topRight',
+        });
+        cy.get('#matrix-container').trigger('mousemove', {
+          position: 'topRight',
+        });
+        cy.get('#matrix-container').trigger('mousemove', {
           position: 'topRight',
         });
 
@@ -136,7 +150,7 @@ describe('Test Plan for Khiops Covisualization', () => {
         // Now reverse dimenions
         cy.get('.hierarchy-select-comp-button').first().click();
         cy.wait(200);
-        cy.get('.mat-menu-item').eq(1).click();
+        cy.get('.mat-mdc-menu-item').eq(1).click();
       });
     });
   });

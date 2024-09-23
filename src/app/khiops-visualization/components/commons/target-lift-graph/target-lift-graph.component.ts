@@ -115,15 +115,6 @@ export class TargetLiftGraphComponent
     const currentTarget = this.targetLift?.selected || undefined;
     this.targetLift = this.evaluationDatasService.getLiftTargets(currentTarget);
 
-    const filteredValues = localStorage.getItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'TARGET_LIFT_VALUES',
-    );
-    if (filteredValues) {
-      this.evaluationDatasService.setLiftGraphDisplayedValues(
-        JSON.parse(filteredValues),
-      );
-    }
-
     if (this.targetLift) {
       // Get previous selected target if compatible
       const previousSelectedTarget = localStorage.getItem(
@@ -162,13 +153,6 @@ export class TargetLiftGraphComponent
   }
 
   onSelectToggleButtonChanged(displayedValues) {
-    // this.trackerService.trackEvent('click', 'toggle_target_lift_values');
-    localStorage.setItem(
-      this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
-        'TARGET_LIFT_VALUES',
-      JSON.stringify(displayedValues),
-    );
-    this.evaluationDatasService.setLiftGraphDisplayedValues(displayedValues);
     this.getDatas();
 
     this.colorSet = _.cloneDeep(

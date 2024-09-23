@@ -84,6 +84,9 @@ export class ModelingViewComponent extends SelectableTabComponent {
   ngOnInit() {
     this.trackerService.trackEvent('page_view', 'modeling');
 
+    this.preparationSource =
+      this.preparationDatasService.getAvailablePreparationReport();
+
     this.appDatas = this.appService.getDatas();
     this.modelingDatas = this.modelingDatasService.getDatas();
     this.treePreparationDatas = this.treePreparationDatasService.getDatas();

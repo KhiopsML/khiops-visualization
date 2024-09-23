@@ -506,6 +506,7 @@ export class AgGridComponent
 
   removeSearch() {
     this.searchInput = '';
+    console.log('removeSearch ~ this.searchInput :', this.searchInput );
     this.search();
     this.searchFormVisible = false;
   }

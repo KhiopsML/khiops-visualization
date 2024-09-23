@@ -1,6 +1,10 @@
-import { NgModule } from '@angular/core';
+import {
+  APP_INITIALIZER,
+  CUSTOM_ELEMENTS_SCHEMA,
+  NgModule,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { HomeLayoutComponent } from './components/home-layout/homeLayout.component';
@@ -34,6 +38,12 @@ import { HierarchyDetailsComponent } from './components/commons/hierarchy-detail
 
 @NgModule({
   declarations: [
+    // ReleaseNotesComponent,
+    // UnfoldHierarchyComponent,
+    // CheckboxCellComponent,
+    // IconCellComponent,
+    // ConfirmDialogComponent,
+    // ManageViewsComponent,
     AppComponent,
     HomeLayoutComponent,
     ProjectViewComponent,
@@ -63,6 +73,7 @@ import { HierarchyDetailsComponent } from './components/commons/hierarchy-detail
     KhiopsLibraryModule,
     FlexLayoutModule,
     FormsModule,
+    ReactiveFormsModule,
     AgGridModule,
     HttpClientModule,
     AngularSplitModule,
@@ -71,5 +82,6 @@ import { HierarchyDetailsComponent } from './components/commons/hierarchy-detail
     { provide: OverlayContainer, useClass: InAppRootOverlayContainer },
   ],
   exports: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class KhiopsCovisualizationModule {}

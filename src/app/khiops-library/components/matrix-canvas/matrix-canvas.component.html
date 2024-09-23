@@ -29,27 +29,21 @@
           class="screenshot-hide"
           mat-icon-button
           color="accent"
+          (click)="onClickOnZoomIn()"
           matTooltip="{{ 'GLOBAL.ZOOM_IN' | translate }}"
           attr.aria-label="{{ 'GLOBAL.ZOOM_IN' | translate }}"
         >
-          <mat-icon
-            fxFlexFill
-            fxLayoutAlign="center center"
-            (click)="onClickOnZoomIn()"
-            >zoom_in</mat-icon
-          >
+          <mat-icon fxFlexFill fxLayoutAlign="center center">zoom_in</mat-icon>
         </button>
         <button
           mat-icon-button
           class="screenshot-hide"
           color="accent"
+          (click)="onClickOnResetZoom()"
           matTooltip="{{ 'GLOBAL.RESET_ZOOM' | translate }}"
           attr.aria-label="{{ 'GLOBAL.RESET_ZOOM' | translate }}"
         >
-          <mat-icon
-            fxFlexFill
-            fxLayoutAlign="center center"
-            (click)="onClickOnResetZoom()"
+          <mat-icon fxFlexFill fxLayoutAlign="center center"
             >zoom_out_map</mat-icon
           >
         </button>
@@ -57,15 +51,11 @@
           class="screenshot-hide"
           mat-icon-button
           color="accent"
+          (click)="onClickOnZoomOut()"
           matTooltip="{{ 'GLOBAL.ZOOM_OUT' | translate }}"
           attr.aria-label="{{ 'GLOBAL.ZOOM_OUT' | translate }}"
         >
-          <mat-icon
-            fxFlexFill
-            fxLayoutAlign="center center"
-            (click)="onClickOnZoomOut()"
-            >zoom_out</mat-icon
-          >
+          <mat-icon fxFlexFill fxLayoutAlign="center center">zoom_out</mat-icon>
         </button>
       </div>
       <div fxFlex id="y-axis" fxLayoutAlign="center center">
@@ -78,29 +68,23 @@
         *ngIf="graphMode && graphMode.mode === 'MUTUAL_INFO' && !isKhiopsCovisu"
         mat-icon-button
         matTooltip="{{ 'GLOBAL.TOGGLE_ZERO' | translate }}"
+        (click)="onClickOnToggleZeros()"
         [ngClass]="['toggle-zero', 'toggled-' + isZerosToggled]"
         attr.aria-label="{{ 'GLOBAL.TOGGLE_ZERO' | translate }}"
       >
-        <mat-icon
-          fxFlexFill
-          fxLayoutAlign="center center"
-          (click)="onClickOnToggleZeros()"
-          >{{ isZerosToggled ? 'visibility' : 'visibility_off' }}</mat-icon
-        >
+        <mat-icon fxFlexFill fxLayoutAlign="center center">{{
+          isZerosToggled ? 'visibility' : 'visibility_off'
+        }}</mat-icon>
       </button>
       <button
         class="screenshot-hide"
         mat-icon-button
         matTooltip="{{ 'GLOBAL.INVERT_AXIS' | translate }}"
+        (click)="onClickOnInvertAxis()"
         attr.aria-label="{{ 'GLOBAL.INVERT_AXIS' | translate }}"
         [ngClass]="['invert-axis', 'toggled-' + isAxisInverted]"
       >
-        <mat-icon
-          fxFlexFill
-          fxLayoutAlign="center center"
-          (click)="onClickOnInvertAxis()"
-          >transform</mat-icon
-        >
+        <mat-icon fxFlexFill fxLayoutAlign="center center">transform</mat-icon>
       </button>
     </div>
     <div fxFlex id="matrix-area" #matrixArea>
@@ -118,18 +102,16 @@
       >
         <span>Contrast</span>
         <mat-slider
-          color="accent"
           attr.aria-label="{{
             'ARIA.MATRIX.UPDATE_MATRIX_CONTRAST' | translate
           }}"
           [max]="90"
           title="{{ 'TOOLTIPS.COMMONS.MATRIX_CONTRAST' | translate }}"
-          [min]="0"
-          [(ngModel)]="contrast"
           (input)="onContrastChanged($event)"
+          [min]="0"
           [step]="10"
-          [vertical]="true"
         >
+          <input [(ngModel)]="contrast" matSliderThumb />
         </mat-slider>
       </div>
       <div id="legend" fxFlex fxLayout="column" fxLayoutAlign="center center">

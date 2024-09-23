@@ -14,14 +14,14 @@
     }
 
     .comp-header-tools {
-      .mat-flat-button {
+      .mdc-button.mat-warn {
         height: 33px !important;
         min-width: 34px !important;
+        width: 34px !important;
         padding: 0 !important;
         margin-right: 5px !important;
-
         mat-icon {
-          font-size: 22px !important;
+          font-size: 18px !important;
         }
       }
 
@@ -32,13 +32,10 @@
 
       .level-distribution-btn.small-div {
         height: 33px !important;
+        padding: 0 !important;
         line-height: 33px !important;
         min-width: 40px !important;
         max-width: 40px !important;
-
-        mat-icon {
-          font-size: 21px !important;
-        }
       }
 
       ::ng-deep .search-input-btn {
@@ -53,12 +50,10 @@
         button {
           height: 30px;
           line-height: 30px;
-          margin-right: 0;
           width: 30px;
           margin: 0 1px 0 2px;
-          mat-icon {
-            font-size: 21px;
-          }
+          display: flex;
+          padding: 7px !important;
         }
 
         ::-webkit-input-placeholder {

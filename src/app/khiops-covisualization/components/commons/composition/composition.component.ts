@@ -86,7 +86,6 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
         tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.FREQUENCY'),
       },
     ];
-
     this.treeSelectedNodeChangedSub =
       this.eventsService.treeSelectedNodeChanged.subscribe((e) => {
         if (e.realNodeVO && e.hierarchyName === this.selectedDimension.name) {

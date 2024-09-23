@@ -78,7 +78,7 @@ export class TreeSelectComponent
     this.nodeInSelection = this.id;
 
     // propagate event
-    this.tree.selectNextNode('tree-comp-' + this.position, keyCode);
+    this.tree?.selectNextNode('tree-comp-' + this.position, keyCode);
   }
 
   hideActiveEntries() {

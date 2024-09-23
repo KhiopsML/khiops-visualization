@@ -1,9 +1,8 @@
 @import '../../../../theme.scss';
 #home-layout-comp {
-  .mat-tab-label-container {
-    margin-right: 15em;
+  .mat-mdc-tab-label-container {
+    margin-right: 10rem;
   }
-
   #header-right {
     position: absolute;
     top: 0;

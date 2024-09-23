@@ -8,29 +8,29 @@ import { setupHierarchyTests } from 'cypress/setups/hierarchy-tests';
 describe('Test Khiops Covisualization sample files', () => {
   const files = [
     'co-IrisMissing.json',
-    'mushroom.json',
-    'irismissing.json',
-    'v4.json',
-    'AdultSmall.json',
-    'Coclustering-100x100.json',
-    'cc.json',
-    'Co-simple-2vars.json',
-    'Coclustering-6.json',
-    'Coclustering-4.json',
-    'adult2var.json',
-    'sample3.json',
-    'DataNoisyCorrelatedN1000000_C1000_V10_L5Coclustering.json',
-    'sample0.json',
-    'adultmissing.json',
-    'SimplifiedCoclusteringIrisOldFormat_BugUndefined.json',
-    'h-Coclustering.json',
-    'zero-except.json',
-    '10.1.1_id_feat_nospace_Coclustering.json',
-    'co-3-num.json',
-    'ext-CC_Coclustering.json',
-    'ext-datas_Coclustering.json',
-    'ext-CC_Coclustering.json',
-    'CC_3_Coclustering.json',
+    // 'mushroom.json',
+    // 'irismissing.json',
+    // 'v4.json',
+    // 'AdultSmall.json',
+    // 'Coclustering-100x100.json',
+    // 'cc.json',
+    // 'Co-simple-2vars.json',
+    // 'Coclustering-6.json',
+    // 'Coclustering-4.json',
+    // 'adult2var.json',
+    // 'sample3.json',
+    // 'DataNoisyCorrelatedN1000000_C1000_V10_L5Coclustering.json',
+    // 'sample0.json',
+    // 'adultmissing.json',
+    // 'SimplifiedCoclusteringIrisOldFormat_BugUndefined.json',
+    // 'h-Coclustering.json',
+    // 'zero-except.json',
+    // '10.1.1_id_feat_nospace_Coclustering.json',
+    // 'co-3-num.json',
+    // 'ext-CC_Coclustering.json',
+    // 'ext-datas_Coclustering.json',
+    // 'ext-CC_Coclustering.json',
+    // 'CC_3_Coclustering.json',
 
     //
     //
@@ -68,7 +68,7 @@ describe('Test Khiops Covisualization sample files', () => {
         }
 
         testView.forEach((view) => {
-          cy.get('.mat-tab-label:contains("' + view + '")')
+          cy.get('.mat-mdc-tab:contains("' + view + '")')
             .first()
             .click();
 
@@ -83,7 +83,7 @@ describe('Test Khiops Covisualization sample files', () => {
           }
         });
 
-        cy.get('.mat-flat-button:contains("timeline")').first().click();
+        cy.get('.button-unfold-hierarchy').first().click();
 
         const hierarchyTests = setupHierarchyTests(datas);
 

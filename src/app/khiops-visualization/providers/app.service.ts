@@ -122,13 +122,7 @@ export class AppService {
       AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_MODE_OPTION',
     );
     localStorage.removeItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'TARGET_LIFT_VALUES',
-    );
-    localStorage.removeItem(
       AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_TARGET_OPTION',
-    );
-    localStorage.removeItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'TARGET_LIFT_VALUES',
     );
     localStorage.removeItem(
       AppConfig.visualizationCommon.GLOBAL.LS_ID + 'TARGET_LIFT',

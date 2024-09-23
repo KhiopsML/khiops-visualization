@@ -207,7 +207,11 @@ export class DistributionGraphCanvasComponent
         ? TYPES.LOGARITHMIC
         : TYPES.LINEAR;
 
-    const minValue = Math.min(...this.inputDatas.datasets[0].data);
+    let minValues = this.inputDatas?.datasets?.[0]?.data;
+    let minValue = 0;
+    if (minValues) {
+      minValue = Math.min(...minValues);
+    }
 
     if (minValue > 0) {
       this.chartOptions.scales.y.min = 0;

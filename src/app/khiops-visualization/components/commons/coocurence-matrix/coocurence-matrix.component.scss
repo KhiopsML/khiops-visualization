@@ -17,36 +17,26 @@
     margin-left: 1em;
   }
 
-  ::ng-deep .mat-tab-disabled {
-    opacity: 1 !important;
-  }
-
-  ::ng-deep .mat-tab-header {
-    z-index: 999 !important;
-    height: 48px !important;
-  }
-
-  ::ng-deep .mat-tab-labels {
-    justify-content: start !important;
-  }
-
-  ::ng-deep .mat-tab-label {
-    height: 48px !important;
-    height: 48px !important;
-    margin: 0 !important;
-  }
-
-  ::ng-deep .mat-tab-label-container {
-    width: 100% !important;
-  }
-
-  ::ng-deep .mat-tab-label.mat-tab-disabled {
-    position: absolute !important;
+  kl-matrix-toggle {
+    position: absolute;
     right: 0 !important;
     padding-right: 0 !important;
+    z-index: 1000;
+    margin-top: 0.4rem;
   }
 
-  ::ng-deep .mat-tab-label.mat-tab-disabled:hover {
+  ::ng-deep .mat-mdc-tab-header {
+    height: 48px !important;
+  }
+
+  ::ng-deep .mat-mdc-tab-labels {
+    justify-content: unset !important;
+  }
+
+  ::ng-deep .mat-mdc-tab.mdc-tab {
+    max-height: 48px !important;
+  }
+  ::ng-deep .mat-mdc-tab-label.mat-mdc-tab-disabled:hover {
     background-color: transparent !important;
   }
 }

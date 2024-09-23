@@ -8,8 +8,17 @@
     margin: 0 1em 0 0.4em;
   }
 
+  .mat-mdc-icon-button {
+    .mat-icon {
+      margin-top: 5px !important;
+    }
+  }
+
   button {
     border-color: inherit !important;
+    mat-icon {
+      font-size: 22px !important;
+    }
   }
 
   button.enabled {

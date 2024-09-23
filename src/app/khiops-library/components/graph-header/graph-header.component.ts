@@ -50,13 +50,13 @@ export class GraphHeaderComponent implements OnInit {
     this.toggleFullscreen?.emit($event);
   }
 
-  onScaleChanged(event: { value: string }) {
+  onScaleChanged(value: number) {
     // Save current scale value into ls
     localStorage.setItem(
       this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
         'SCALE_VALUE',
-      event.value,
+      value.toString(),
     );
-    this.scaleValueChanged.emit(event.value);
+    this.scaleValueChanged.emit(value);
   }
 }

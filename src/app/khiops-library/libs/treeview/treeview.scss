@@ -30,12 +30,16 @@
 }
 
 .tree-leaf .tree-icon {
-  float: left;
-  margin-left: 0.4em;
+  margin-left: 0.4em !important;
   color: var(--yellowMain);
+  -webkit-user-select: none;
   user-select: none;
   cursor: pointer;
   min-width: 24px;
+  margin-right: 0em !important;
+  font-size: 20px !important;
+  display: flex;
+  align-items: center;
 }
 
 .tree-leaf .tree-icon.is-leaf {

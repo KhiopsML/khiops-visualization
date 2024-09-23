@@ -10,21 +10,22 @@
     }
   }
 
-  ::ng-deep .mat-tab-labels {
-    justify-content: start !important;
-  }
+  // ::ng-deep .mat-tab-labels {
+  //   justify-content: start !important;
+  // }
 
-  ::ng-deep .mat-tab-label-container {
-    width: 100% !important;
-  }
+  // ::ng-deep .mat-tab-label-container {
+  //   width: 100% !important;
+  // }
 
-  ::ng-deep .mat-tab-label.mat-tab-disabled {
-    position: absolute !important;
-    right: 0 !important;
-    padding-right: 0 !important;
-  }
+  // ::ng-deep .mat-tab-label.mat-tab-disabled {
+  //   position: absolute !important;
+  //   right: 0 !important;
+  //   padding-right: 0 !important;
+  // }
 
-  ::ng-deep .mat-tab-label.mat-tab-disabled:hover {
-    background-color: transparent !important;
-  }
+  // ::ng-deep .mat-tab-label.mat-tab-disabled:hover {
+  //   background-color: transparent !important;
+  // }
+
 }

@@ -149,7 +149,7 @@ export class UnfoldHierarchyComponent implements OnInit {
   }
 
   setCypressInput(cyInput) {
-    this.onHierarchyChanged({ value: cyInput });
+    this.onHierarchyChanged(cyInput);
   }
 
   ngOnInit() {
@@ -199,8 +199,8 @@ export class UnfoldHierarchyComponent implements OnInit {
     }); // Do not freeze ui during graph render
   }
 
-  onHierarchyChanged(event) {
-    this.currentUnfoldHierarchy = event.value;
+  onHierarchyChanged(value: number) {
+    this.currentUnfoldHierarchy = value;
     this.updateDatas();
   }
 
@@ -284,17 +284,13 @@ export class UnfoldHierarchyComponent implements OnInit {
 
   increaseUnfoldHierarchy() {
     if (this.hierarchyDatas.totalClusters > this.currentUnfoldHierarchy) {
-      this.onHierarchyChanged({
-        value: this.currentUnfoldHierarchy + 1,
-      });
+      this.onHierarchyChanged(this.currentUnfoldHierarchy + 1);
     }
   }
 
   decreaseUnfoldHierarchy() {
     if (this.hierarchyDatas.minClusters < this.currentUnfoldHierarchy) {
-      this.onHierarchyChanged({
-        value: this.currentUnfoldHierarchy - 1,
-      });
+      this.onHierarchyChanged(this.currentUnfoldHierarchy - 1);
     }
   }
 

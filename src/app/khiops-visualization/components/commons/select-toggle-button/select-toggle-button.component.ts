@@ -57,27 +57,6 @@ export class SelectToggleButtonComponent implements OnInit, OnChanges {
     );
   }
 
-  toggleGraphOptionValue($event: MatCheckboxChange, opt: ChartToggleValuesI) {
-    // this.trackerService.trackEvent('click', 'target_distribution_graph_value');
-
-    // clone obj to make change and emit changes
-    const currentDisplayedValues: ChartToggleValuesI[] = _.cloneDeep(
-      this.displayedValues,
-    );
-    this.displayedValues = undefined;
-
-    const currentOpt: ChartToggleValuesI = currentDisplayedValues.find(
-      (e) => e.name === opt.name,
-    );
-    currentOpt.show = $event.checked;
-
-    this.displayedValues = currentDisplayedValues;
-    this.updateSelectElts(currentDisplayedValues);
-
-    // emit to update graph
-    this.selectToggleButtonChanged.emit(this.displayedValues);
-  }
-
   updateSelectElts(currentDisplayedValues: ChartToggleValuesI[]) {
     // update all checkbox status
     const valuesShown: number = currentDisplayedValues.filter(
@@ -90,9 +69,7 @@ export class SelectToggleButtonComponent implements OnInit, OnChanges {
     if (valuesShown === this.displayedValues.length) {
       this.isSelectAllChecked = true;
       this.isSelectAllIndeterminate = false;
-      this.selectAllCheckboxText = this.translate.get(
-        'GLOBAL.UNSELECT_ALL',
-      );
+      this.selectAllCheckboxText = this.translate.get('GLOBAL.UNSELECT_ALL');
     } else if (valuesHidden === this.displayedValues.length) {
       this.isSelectAllChecked = false;
       this.isSelectAllIndeterminate = false;
@@ -103,6 +80,19 @@ export class SelectToggleButtonComponent implements OnInit, OnChanges {
     }
   }
 
+  toggleGraphOptionValue($event: MatCheckboxChange, opt: ChartToggleValuesI) {
+    const currentOpt: ChartToggleValuesI = this.displayedValues.find(
+      (e) => e.name === opt.name,
+    );
+    currentOpt.show = $event.checked;
+
+    // Force update
+    this.displayedValues = [...this.displayedValues];
+
+    // emit to update graph
+    this.selectToggleButtonChanged.emit(this.displayedValues);
+  }
+
   toggleGraphOptionAllValue($event: any) {
     // update all checkbox status
     this.isSelectAllIndeterminate = false;
@@ -111,16 +101,16 @@ export class SelectToggleButtonComponent implements OnInit, OnChanges {
     // update checkboxes
     for (let i = 0; i < this.displayedValues.length; i++) {
       const opt: ChartToggleValuesI = this.displayedValues[i];
-      this.toggleGraphOptionValue($event, opt);
+      opt.show = $event.checked;
     }
     if ($event.checked) {
-      this.selectAllCheckboxText = this.translate.get(
-        'GLOBAL.UNSELECT_ALL',
-      );
+      this.selectAllCheckboxText = this.translate.get('GLOBAL.UNSELECT_ALL');
     } else {
       this.selectAllCheckboxText = this.translate.get('GLOBAL.SELECT_ALL');
     }
 
+    // Force update
+    this.displayedValues = [...this.displayedValues];
     // emit to update graph
     this.selectToggleButtonChanged.emit(this.displayedValues);
 

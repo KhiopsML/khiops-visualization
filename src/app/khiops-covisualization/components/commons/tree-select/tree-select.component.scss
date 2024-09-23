@@ -1,10 +1,7 @@
 .tree-select-comp {
   overflow: auto;
   padding: 1em 0;
-  mat-icon {
-    margin-right: 0.4em;
-    font-size: 1.4em;
-  }
+
   span {
     text-overflow: ellipsis;
     white-space: nowrap;
