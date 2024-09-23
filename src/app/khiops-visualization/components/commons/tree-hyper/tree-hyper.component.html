@@ -16,7 +16,12 @@
       <h1 fxFlex fxLayoutAlign="start center">
         <mat-icon>blur_on</mat-icon> {{ 'GLOBAL.HYPER_TREE' | translate }}
       </h1>
-      <div fxLayout="row" fxFlex class="graph-header-tools screenshot-hide">
+      <div
+        fxLayout="row"
+        fxLayoutAlign="start center"
+        fxFlex
+        class="graph-header-tools screenshot-hide"
+      >
         <mat-checkbox
           [checked]="visualization.purity"
           (change)="togglePurityVisualization($event.checked)"
