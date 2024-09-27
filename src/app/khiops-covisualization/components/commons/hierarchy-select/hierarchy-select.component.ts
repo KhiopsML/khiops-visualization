@@ -67,13 +67,13 @@ export class HierarchySelectComponent implements OnChanges, AfterViewInit {
           this.selectedDimension.name,
         );
     }
-
-    const currentNode = this.treenodesService.getNodeFromDimensionTree(
-      this.selectedDimension.name,
-      this.selectedNode.name,
-    );
-
-    this.selectedTreeCluster.setCurrentNodeInformations(currentNode);
+    if (changes.selectedNode?.currentValue) {
+      const currentNode = this.treenodesService.getNodeFromDimensionTree(
+        this.selectedDimension.name,
+        this.selectedNode.name,
+      );
+      this.selectedTreeCluster.setCurrentNodeInformations(currentNode);
+    }
   }
 
   ngAfterViewInit() {
