@@ -23,6 +23,29 @@ export class SelectedTreeClusterVO {
   setCurrentNodeInformations(selectedNode: TreeNodeVO) {
     this.interval = selectedNode?.name;
     this.frequency = selectedNode?.frequency;
-    this.nbClusters = selectedNode?.valueGroup?.values?.length;
+    if (selectedNode?.valueGroup) {
+      this.nbClusters = selectedNode?.valueGroup?.values?.length;
+    } else {
+      this.nbClusters = this.countClusters(selectedNode);
+    }
+  }
+
+  countClusters(selectedNode: TreeNodeVO): number {
+    let count = 0;
+
+    function recursiveCount(node: TreeNodeVO): number {
+      if (node.valueGroup) {
+        return node.valueGroup.values.length;
+      } else if (node.children) {
+        return node.children.reduce(
+          (acc, child) => acc + recursiveCount(child),
+          0,
+        );
+      }
+      return 0;
+    }
+
+    count = recursiveCount(selectedNode);
+    return count;
   }
 }

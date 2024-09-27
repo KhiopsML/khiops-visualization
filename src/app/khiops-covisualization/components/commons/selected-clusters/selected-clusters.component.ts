@@ -83,35 +83,6 @@ export class SelectedClustersComponent implements OnDestroy {
       });
   }
 
-  updateClusterValues(e) {
-    if (this.selectedClusters) {
-      let selectedCluster: SelectedClusterVO = this.selectedClusters.find(
-        (cluster) => cluster._id === e.hierarchyName,
-      );
-      selectedCluster.shortDescription = e.selectedNode.shortDescription;
-      selectedCluster = this.updateDimensionIntervals(e.hierarchyName);
-    }
-  }
-
-  updateDimensionIntervals(dimName): SelectedClusterVO | undefined {
-    if (this.selectedClusters) {
-      // Update intervals of current node
-      const nbClusters =
-        this.dimensionsDatasService.getDimensionIntervals(dimName);
-
-      // Just update intervals on change
-      const selectedCluster: SelectedClusterVO = this.selectedClusters.find(
-        (e) => e.hierarchy === dimName,
-      );
-      if (selectedCluster) {
-        selectedCluster.nbClusters = nbClusters;
-      }
-      return selectedCluster;
-    } else {
-      return undefined;
-    }
-  }
-
   updateClustersInformations() {
     // Check if all nodes are selected to update to optimize
     if (

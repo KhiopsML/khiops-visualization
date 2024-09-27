@@ -266,6 +266,42 @@ export class TreenodesService {
     return this.dimensionsDatas.nodesNames;
   }
 
+  getNodeFromDimensionTree(dimensionName, nodeName): TreeNodeVO {
+    let nodeVO: TreeNodeVO;
+    const currentIndex: number =
+      this.dimensionsDatas.selectedDimensions.findIndex((e) => {
+        return dimensionName === e.name;
+      });
+
+    if (currentIndex !== -1) {
+      // here we must search recursively into getNodeFromDimensionTree field of
+      // this.dimensionsDatas.dimensionTrees[currentIndex]
+      const searchNode = (
+        nodes: TreeNodeVO[],
+        nodeName: string,
+      ): TreeNodeVO | undefined => {
+        for (const node of nodes) {
+          if (node.name === nodeName) {
+            return node;
+          }
+          if (node.children && node.children.length > 0) {
+            const foundNode = searchNode(node.children, nodeName);
+            if (foundNode) {
+              return foundNode;
+            }
+          }
+        }
+        return undefined;
+      };
+
+      nodeVO = searchNode(
+        this.dimensionsDatas.dimensionsTrees[currentIndex],
+        nodeName,
+      );
+    }
+    return _.cloneDeep(nodeVO); // important to clone datas to keep origin immmutable
+  }
+
   getNodeFromName(dimensionName, nodeName): TreeNodeVO {
     let nodeVO: TreeNodeVO;
     const currentIndex: number =

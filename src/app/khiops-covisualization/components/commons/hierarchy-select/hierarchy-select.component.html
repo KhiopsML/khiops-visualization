@@ -72,12 +72,7 @@
       >{{ 'GLOBAL.CLUSTER' | translate }} :
       <strong>{{ selectedTreeCluster?.interval }}</strong></span
     >
-    <span
-      *ngIf="
-        selectedTreeCluster?.isCategorical &&
-        selectedNode?.isLeaf &&
-        !selectedNode?.isCollapsed
-      "
+    <span *ngIf="selectedTreeCluster?.isCategorical"
       >{{ 'GLOBAL.CLUSTER_LENGTH' | translate }} :
       <strong>{{ selectedTreeCluster?.nbClusters }}</strong></span
     >

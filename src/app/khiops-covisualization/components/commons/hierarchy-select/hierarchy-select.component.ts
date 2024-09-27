@@ -44,6 +44,7 @@ export class HierarchySelectComponent implements OnChanges, AfterViewInit {
   @Input() selectedNode: TreeNodeVO;
   @Input() position: number;
   @Input() dimensions: DimensionVO[];
+  @Input() dimensionsTree: TreeNodeVO[];
 
   showStats = false;
   selectedTreeCluster: SelectedTreeClusterVO;
@@ -66,9 +67,13 @@ export class HierarchySelectComponent implements OnChanges, AfterViewInit {
           this.selectedDimension.name,
         );
     }
-    if (changes.selectedNode?.currentValue) {
-      this.selectedTreeCluster.setCurrentNodeInformations(this.selectedNode);
-    }
+
+    const currentNode = this.treenodesService.getNodeFromDimensionTree(
+      this.selectedDimension.name,
+      this.selectedNode.name,
+    );
+
+    this.selectedTreeCluster.setCurrentNodeInformations(currentNode);
   }
 
   ngAfterViewInit() {
