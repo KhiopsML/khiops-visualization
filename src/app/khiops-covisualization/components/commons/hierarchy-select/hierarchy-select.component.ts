@@ -4,6 +4,8 @@ import {
   OnChanges,
   Input,
   AfterViewInit,
+  EventEmitter,
+  Output,
 } from '@angular/core';
 import { trigger, transition, animate, style } from '@angular/animations';
 import { DimensionVO } from '@khiops-library/model/dimension-vo';
@@ -45,9 +47,10 @@ export class HierarchySelectComponent implements OnChanges, AfterViewInit {
   @Input() position: number;
   @Input() dimensions: DimensionVO[];
   @Input() dimensionsTree: TreeNodeVO[];
+  @Input() selectedTreeCluster: SelectedTreeClusterVO;
+  @Output() selectedTreeClusterChange = new EventEmitter<any>();
 
   showStats = false;
-  selectedTreeCluster: SelectedTreeClusterVO;
 
   constructor(
     private treenodesService: TreenodesService,
@@ -73,6 +76,7 @@ export class HierarchySelectComponent implements OnChanges, AfterViewInit {
         this.selectedNode.name,
       );
       this.selectedTreeCluster.setCurrentNodeInformations(currentNode);
+      this.selectedTreeClusterChange.emit(this.selectedTreeCluster);
     }
   }
 

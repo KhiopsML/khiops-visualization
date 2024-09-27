@@ -11,6 +11,8 @@
       [selectedDimension]="selectedDimension"
       [dimensions]="dimensions"
       [dimensionsTree]="dimensionsTree"
+      [selectedTreeCluster]="selectedTreeCluster"
+      (selectedTreeClusterChange)="onClusterChange($event)"
     ></app-hierarchy-select>
     <app-tree-select
       [attr.id]="'tree-comp-' + position"

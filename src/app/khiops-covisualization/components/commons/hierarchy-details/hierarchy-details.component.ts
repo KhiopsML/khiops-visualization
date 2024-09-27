@@ -12,6 +12,7 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { TreeSelectComponent } from '../tree-select/tree-select.component';
 import { COMPONENT_TYPES } from '@khiops-library/enum/componentTypes';
+import { SelectedTreeClusterVO } from '@khiops-covisualization/model/selected-tree-cluster';
 
 @Component({
   selector: 'app-hierarchy-details',
@@ -27,6 +28,8 @@ export class HierarchyDetailsComponent extends SelectableComponent {
   @Input() position: number;
   @Input() dimensions: DimensionVO[];
   @Input() dimensionsTree: TreeNodeVO[];
+
+  selectedTreeCluster: SelectedTreeClusterVO;
 
   componentType = COMPONENT_TYPES.TREE; // needed to copy datas
   override id: any = undefined;
@@ -56,5 +59,13 @@ export class HierarchyDetailsComponent extends SelectableComponent {
     } else {
       return;
     }
+  }
+
+  /**
+   * Function to update the selected tree cluster
+   * used to copy datas
+   */
+  onClusterChange(cluster: any) {
+    this.selectedTreeCluster = cluster;
   }
 }

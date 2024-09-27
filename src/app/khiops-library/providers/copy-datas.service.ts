@@ -13,7 +13,10 @@ export class CopyDatasService {
   ) {}
 
   copyDatasToClipboard(selectedArea: any) {
-    // console.log('​CopyDatasService -> copyDatasToClipboard -> selectedArea', selectedArea);
+    // console.log(
+    //   '​CopyDatasService -> copyDatasToClipboard -> selectedArea',
+    //   selectedArea,
+    // );
     let formattedDatas: string = '';
 
     switch (selectedArea.componentType) {
@@ -303,15 +306,56 @@ export class CopyDatasService {
       this.translate.get('GLOBAL.HIERARCHY') +
       '\t' +
       flattenDatas[0].hierarchy +
-      '\n';
+      '\n\n';
+
+    // SELECTED NODE INFORMATIONS
+    if (selectedArea.selectedTreeCluster) {
+      formattedDatas +=
+        this.translate.get('GLOBAL.TYPE') +
+        ': ' +
+        selectedArea.selectedTreeCluster.dimensionType +
+        '\n';
+      if (selectedArea.selectedTreeCluster.dimensionType === 'Numerical') {
+        formattedDatas +=
+          this.translate.get('GLOBAL.INTERVALS') +
+          ': ' +
+          selectedArea.selectedTreeCluster.intervals +
+          '\n';
+        formattedDatas +=
+          this.translate.get('GLOBAL.INTERVAL') +
+          ': ' +
+          selectedArea.selectedTreeCluster.interval +
+          '\n';
+      } else {
+        formattedDatas +=
+          this.translate.get('GLOBAL.CLUSTERS') +
+          ': ' +
+          selectedArea.selectedTreeCluster.intervals +
+          '\n';
+        formattedDatas +=
+          this.translate.get('GLOBAL.CLUSTER') +
+          ': ' +
+          selectedArea.selectedTreeCluster.interval +
+          '\n';
+        formattedDatas +=
+          this.translate.get('GLOBAL.CLUSTER_LENGTH') +
+          ': ' +
+          selectedArea.selectedTreeCluster.nbClusters +
+          '\n';
+      }
+      formattedDatas +=
+        this.translate.get('GLOBAL.FREQUENCY') +
+        ': ' +
+        selectedArea.selectedTreeCluster.frequency +
+        '\n\n';
+    }
 
     // HEADER
     formattedDatas += this.translate.get('GLOBAL.NAME') + '\t';
     formattedDatas += this.translate.get('GLOBAL.PARENT_CLUSTER') + '\t';
     formattedDatas += this.translate.get('GLOBAL.FREQUENCY') + '\t';
     formattedDatas += this.translate.get('GLOBAL.INTEREST') + '\t';
-    formattedDatas +=
-      this.translate.get('GLOBAL.HIERARCHICAL_LEVEL') + '\t';
+    formattedDatas += this.translate.get('GLOBAL.HIERARCHICAL_LEVEL') + '\t';
     formattedDatas += this.translate.get('GLOBAL.RANK') + '\t';
     formattedDatas += this.translate.get('GLOBAL.HIERARCHICAL_RANK') + '\n';
 
