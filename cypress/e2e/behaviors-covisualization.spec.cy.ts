@@ -5,6 +5,53 @@ import { initLS } from 'cypress/setups/init-ls';
 describe('Behaviors tests for Khiops Covisualization', () => {
   let files = ['DigitCoclustering.json'];
   files.forEach((fileName, fileIndex) => {
+    it(`Test unfold hierarchy slider on big datas and hierarchy checkboxes`, () => {
+      // Initialize ls with all views enabled
+      initLS();
+
+      //@ts-ignore
+      cy.initViews();
+      //@ts-ignore
+      cy.loadFile('covisualization', fileName);
+
+      // Open unfold Hierarchy view
+      cy.get('.button-unfold-hierarchy').click();
+
+      // Reduce hierarchy and check values
+      cy.wait(250);
+
+      // force to work on hidden elt
+      cy.get('#cy-unfold-value-input').clear({ force: true }).type('20', {
+        force: true,
+      });
+      cy.wait(250);
+
+      cy.get('#cy-unfold-value-button').click({
+        force: true,
+      });
+      cy.wait(250);
+      cy.get('.button-reduce-hierarchy').click();
+      cy.wait(250);
+
+      cy.get('kl-checkbox-cell').first().find('input').click({ force: true });
+      cy.wait(250);
+
+      // Close dialog
+      cy.get('.button-confirm-hierarchy').click();
+
+      // Open statistics panels
+      cy.get('.hierarchy-infos-button').eq(0).click({ force: true });
+      cy.get('.hierarchy-infos-button').eq(1).click({ force: true });
+      cy.wait(250);
+
+      // Check values
+      cy.get('.hierarchy-select-comp').eq(0).contains('473');
+      cy.get('.hierarchy-select-comp').eq(0).contains('19275');
+
+      cy.get('.hierarchy-select-comp').eq(1).contains(']-inf;9.5]');
+      cy.get('.hierarchy-select-comp').eq(1).contains('623752');
+    });
+
     it(`Test unfold hierarchy slider on big datas`, () => {
       // Initialize ls with all views enabled
       initLS();
