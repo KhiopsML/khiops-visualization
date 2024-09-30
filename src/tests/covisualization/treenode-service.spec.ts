@@ -9,7 +9,7 @@ let treenodesService: TreenodesService;
 let dimensionsDatasService: DimensionsDatasService;
 
 describe('coVisualization', () => {
-  describe('Histogram datas', () => {
+  describe('Treenode service datas', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [HttpClientModule, TranslateModule.forRoot()],
@@ -96,7 +96,7 @@ describe('coVisualization', () => {
       expect(computedPartition.intervals[6].bounds).toEqual([19.5, 24.5]);
     });
 
-    it('2 - computeNumPartition should return valid datas [auto folded datas]', () => {
+    it('2 - computeNumPartition should return valid datas [unfoldState=44]', () => {
       dimensionsDatasService.getDimensions();
       dimensionsDatasService.initSelectedDimensions();
       dimensionsDatasService.saveInitialDimension();
@@ -122,6 +122,71 @@ describe('coVisualization', () => {
       expect(
         datas.coclusteringReport.dimensionPartitions[2].intervals[5].bounds,
       ).toEqual([19.5, 24.5]);
+    });
+  });
+
+  describe('Treenode service datas', () => {
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [HttpClientModule, TranslateModule.forRoot()],
+      });
+
+      // Inject services
+      dimensionsDatasService = TestBed.inject(DimensionsDatasService);
+      treenodesService = TestBed.inject(TreenodesService);
+      appService = TestBed.inject(AppService);
+
+      const fileDatas = require('../../assets/mocks/kc/DataNoisyCorrelatedN1000000_C1000_V10_L5Coclustering.json');
+      appService.setFileDatas(fileDatas);
+    });
+
+    it('1 - computeCatPartition should return valid datas [auto folded datas]', () => {
+      dimensionsDatasService.getDimensions();
+      dimensionsDatasService.initSelectedDimensions();
+      dimensionsDatasService.saveInitialDimension();
+      dimensionsDatasService.constructDimensionsTrees();
+
+      dimensionsDatasService.getDatas();
+      const unfoldState = 20;
+      treenodesService.setSelectedUnfoldHierarchy(unfoldState);
+      const collapsedNodes = treenodesService.getLeafNodesForARank(unfoldState);
+      treenodesService.setSavedCollapsedNodes(collapsedNodes);
+      const datas = treenodesService.constructSavedJson(collapsedNodes);
+      expect(
+        datas.coclusteringReport.dimensionPartitions[0].valueGroups[0].cluster,
+      ).toEqual('A31');
+      expect(
+        datas.coclusteringReport.dimensionPartitions[0].valueGroups[2].cluster,
+      ).toEqual('A36');
+      expect(
+        datas.coclusteringReport.dimensionPartitions[0].valueGroups[3].cluster,
+      ).toEqual('A38');
+    });
+
+    it('1 - computeCatPartition should return valid datas [unfoldState = 200]', () => {
+      dimensionsDatasService.getDimensions();
+      dimensionsDatasService.initSelectedDimensions();
+      dimensionsDatasService.saveInitialDimension();
+      dimensionsDatasService.constructDimensionsTrees();
+
+      dimensionsDatasService.getDatas();
+      const unfoldState = 200;
+      treenodesService.setSelectedUnfoldHierarchy(unfoldState);
+      const collapsedNodes = treenodesService.getLeafNodesForARank(unfoldState);
+      treenodesService.setSavedCollapsedNodes(collapsedNodes);
+      const datas = treenodesService.constructSavedJson(collapsedNodes);
+      expect(
+        datas.coclusteringReport.dimensionPartitions[0].valueGroups[0].cluster,
+      ).toEqual('A257');
+      expect(
+        datas.coclusteringReport.dimensionPartitions[0].valueGroups[2].cluster,
+      ).toEqual('A255');
+      expect(
+        datas.coclusteringReport.dimensionPartitions[0].valueGroups[3].cluster,
+      ).toEqual('A264');
+      expect(
+        datas.coclusteringReport.dimensionPartitions[0].valueGroups[8].cluster,
+      ).toEqual('A267');
     });
   });
 });
