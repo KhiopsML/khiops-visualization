@@ -56,45 +56,7 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
   // managed by selectable-tab component
   override tabIndex = 5;
 
-  variablesDisplayedColumns: GridColumnsI[] = [
-    {
-      headerName: this.translate.get('GLOBAL.RANK'),
-      field: 'rank',
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.RANK'),
-    },
-    {
-      headerName: this.translate.get('GLOBAL.NAME'),
-      field: 'name',
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.NAME'),
-    },
-    {
-      headerName: this.translate.get('GLOBAL.LEVEL'),
-      field: 'level',
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.LEVEL'),
-    },
-    {
-      headerName: this.translate.get('GLOBAL.PARTS'),
-      field: 'parts',
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.PARTS'),
-    },
-    {
-      headerName: this.translate.get('GLOBAL.VALUES'),
-      field: 'values',
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.VALUES'),
-    },
-    {
-      headerName: this.translate.get('GLOBAL.TYPE'),
-      field: 'type',
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.TYPE'),
-      cellRendererFramework: BorderTextCellComponent,
-    },
-    {
-      headerName: this.translate.get('GLOBAL.MODE'),
-      field: 'mode',
-      show: false,
-      tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.MODE'),
-    },
-  ];
+  variablesDisplayedColumns: GridColumnsI[] = [];
 
   constructor(
     private preparationDatasService: PreparationDatasService,
@@ -107,6 +69,46 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
     private modelingDatasService: ModelingDatasService,
   ) {
     super();
+
+    this.variablesDisplayedColumns = [
+      {
+        headerName: this.translate.get('GLOBAL.RANK'),
+        field: 'rank',
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.RANK'),
+      },
+      {
+        headerName: this.translate.get('GLOBAL.NAME'),
+        field: 'name',
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.NAME'),
+      },
+      {
+        headerName: this.translate.get('GLOBAL.LEVEL'),
+        field: 'level',
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.LEVEL'),
+      },
+      {
+        headerName: this.translate.get('GLOBAL.PARTS'),
+        field: 'parts',
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.PARTS'),
+      },
+      {
+        headerName: this.translate.get('GLOBAL.VALUES'),
+        field: 'values',
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.VALUES'),
+      },
+      {
+        headerName: this.translate.get('GLOBAL.TYPE'),
+        field: 'type',
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.TYPE'),
+        cellRendererFramework: BorderTextCellComponent,
+      },
+      {
+        headerName: this.translate.get('GLOBAL.MODE'),
+        field: 'mode',
+        show: false,
+        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.MODE'),
+      },
+    ];
   }
 
   ngOnInit() {

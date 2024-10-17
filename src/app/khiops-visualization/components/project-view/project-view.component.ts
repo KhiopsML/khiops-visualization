@@ -34,16 +34,7 @@ export class ProjectViewComponent
 
   debugFile = AppConfig.debugFile;
 
-  logsDisplayedColumns: GridColumnsI[] = [
-    {
-      headerName: this.translate.get('GLOBAL.TASK'),
-      field: 'task',
-    },
-    {
-      headerName: this.translate.get('GLOBAL.MESSAGE'),
-      field: 'message',
-    },
-  ];
+  logsDisplayedColumns: GridColumnsI[] = [];
 
   constructor(
     private appService: AppService,
@@ -53,6 +44,17 @@ export class ProjectViewComponent
   ) {
     super();
     this.isElectron = this.configService.isElectron;
+
+    this.logsDisplayedColumns = [
+      {
+        headerName: this.translate.get('GLOBAL.TASK'),
+        field: 'task',
+      },
+      {
+        headerName: this.translate.get('GLOBAL.MESSAGE'),
+        field: 'message',
+      },
+    ];
 
     this.initialize();
   }
