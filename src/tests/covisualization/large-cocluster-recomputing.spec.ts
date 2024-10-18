@@ -3,7 +3,7 @@ import { AppService } from '@khiops-covisualization/providers/app.service';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { HttpClientModule } from '@angular/common/http';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
-import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensionsData.model';
+import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-data.model';
 import { AppConfig } from 'src/environments/environment';
 import { TranslateModule } from '@ngstack/translate';
 let appService: AppService;

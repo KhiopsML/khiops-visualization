@@ -15,9 +15,9 @@ import { AppConfig } from 'src/environments/environment';
 import { deepEqual } from 'fast-equals';
 import { MatrixCanvasComponent } from '@khiops-library/components/matrix-canvas/matrix-canvas.component';
 import { AppService } from '@khiops-visualization/providers/app.service';
-import { Preparation2dDatasVO } from '@khiops-visualization/model/preparation2d-datas-vo';
-import { Preparation2dVariableVO } from '@khiops-visualization/model/preparation2d-variable-vo';
-import { CoocurenceCellsVO } from '@khiops-visualization/model/coocurence-cells-vo';
+import { Preparation2dDatasModel } from '@khiops-visualization/model/preparation2d-datas.model';
+import { Preparation2dVariableModel } from '@khiops-visualization/model/preparation2d-variable.model';
+import { CoocurenceCellsModel } from '@khiops-visualization/model/coocurence-cells.model';
 import { MatrixModesModel } from '@khiops-library/model/matrix-modes.model';
 import { MatrixTargetsModel } from '@khiops-library/model/matrix-targets.model';
 import { MatrixOptionsModel } from '@khiops-library/model/matrix-options.model';
@@ -39,14 +39,14 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
   })
   matrixCanvas: MatrixCanvasComponent;
 
-  preparation2dDatas: Preparation2dDatasVO;
-  @Input() selectedVariable: Preparation2dVariableVO;
+  preparation2dDatas: Preparation2dDatasModel;
+  @Input() selectedVariable: Preparation2dVariableModel;
   @Output() selectCellRowChanged: EventEmitter<any> = new EventEmitter();
 
   matrixOptions: MatrixOptionsModel = new MatrixOptionsModel();
   matrixModes: MatrixModesModel = new MatrixModesModel();
   matrixTargets: MatrixTargetsModel = new MatrixTargetsModel();
-  matrixCells: CoocurenceCellsVO;
+  matrixCells: CoocurenceCellsModel;
   minMaxValues: MatrixRangeValuesI;
   isFullscreen = false;
 

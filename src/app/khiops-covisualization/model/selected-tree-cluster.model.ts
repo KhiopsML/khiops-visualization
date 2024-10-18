@@ -1,5 +1,5 @@
 import { DimensionModel } from '@khiops-library/model/dimension.model';
-import { TreeNodeModel } from './treeNode.model';
+import { TreeNodeModel } from './tree-node.model';
 
 export class SelectedTreeClusterModel {
   // Dimension informations

@@ -3,9 +3,9 @@ import { AppService } from '../../providers/app.service';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { EvaluationDatasService } from '@khiops-visualization/providers/evaluation-datas.service';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
-import { EvaluationDatasVO } from '@khiops-visualization/model/evaluation-datas-vo';
-import { EvaluationPredictorVO } from '@khiops-visualization/model/evaluation-predictor-vo';
-import { EvaluationTypeVO } from '@khiops-visualization/model/evaluation-type-vo';
+import { EvaluationDatasModel } from '@khiops-visualization/model/evaluation-datas.model';
+import { EvaluationPredictorModel } from '@khiops-visualization/model/evaluation-predictor.model';
+import { EvaluationTypeModel } from '@khiops-visualization/model/evaluation-type.model';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 
 @Component({
@@ -22,7 +22,7 @@ export class EvaluationViewComponent
   // managed by selectable-tab component
   override tabIndex = 4;
   summaryDatas: InfosDatasI[];
-  evaluationDatas: EvaluationDatasVO;
+  evaluationDatas: EvaluationDatasModel;
 
   constructor(
     private trackerService: TrackerService,
@@ -52,7 +52,7 @@ export class EvaluationViewComponent
     this.trackerService.trackEvent('page_view', 'evaluation');
   }
 
-  onSelectEvaluationTypeChanged(item: EvaluationTypeVO) {
+  onSelectEvaluationTypeChanged(item: EvaluationTypeModel) {
     this.evaluationDatasService.setSelectedEvaluationTypeVariable(item);
     const predictorEvaluationVariable =
       this.evaluationDatasService.getPredictorEvaluationVariableFromEvaluationType(
@@ -64,7 +64,7 @@ export class EvaluationViewComponent
     this.evaluationDatasService.getConfusionMatrix();
   }
 
-  onSelectPredictorEvaluationChanged(item: EvaluationPredictorVO) {
+  onSelectPredictorEvaluationChanged(item: EvaluationPredictorModel) {
     this.evaluationDatasService.setSelectedPredictorEvaluationVariable(item);
     const evaluationVariable =
       this.evaluationDatasService.getEvaluationVariableFromPredictorEvaluationType(

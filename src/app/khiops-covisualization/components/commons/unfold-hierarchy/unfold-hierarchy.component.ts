@@ -11,10 +11,10 @@ import { AppConfig } from 'src/environments/environment';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HierarchyService } from '@khiops-covisualization/providers/hierarchy.service';
-import { ChartDatasModel } from '@khiops-library/model/chartDatas.model';
+import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
-import { HierarchyDatasModel } from '@khiops-covisualization/model/hierarchyDatas.model';
-import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensionsData.model';
+import { HierarchyDatasModel } from '@khiops-covisualization/model/hierarchy-datas.model';
+import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-data.model';
 import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
 import { DimensionModel } from '@khiops-library/model/dimension.model';
 

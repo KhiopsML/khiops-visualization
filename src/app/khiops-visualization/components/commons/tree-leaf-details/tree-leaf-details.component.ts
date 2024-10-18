@@ -11,11 +11,11 @@ import { DistributionDatasService } from '@khiops-visualization/providers/distri
 import { TranslateService } from '@ngstack/translate';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
-import { TreePreparationDatasVO } from '@khiops-visualization/model/tree-preparation-datas-vo';
-import { DistributionDatasVO } from '@khiops-visualization/model/distribution-datas-vo';
+import { TreePreparationDatasModel } from '@khiops-visualization/model/tree-preparation-datas.model';
+import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
-import { TreeNodeModel } from '@khiops-visualization/model/tree-node-vo';
+import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 
 @Component({
   selector: 'app-tree-leaf-details',
@@ -28,8 +28,8 @@ export class TreeLeafDetailsComponent implements OnInit, OnChanges {
 
   populationCount: number = 10;
 
-  treePreparationDatas: TreePreparationDatasVO | undefined;
-  distributionDatas: DistributionDatasVO;
+  treePreparationDatas: TreePreparationDatasModel | undefined;
+  distributionDatas: DistributionDatasModel;
   position = 1; // to change graph id
 
   treeLeafRules: GridDatasI;

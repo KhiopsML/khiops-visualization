@@ -29,7 +29,7 @@ import {
   Column,
 } from '@ag-grid-community/core';
 import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
-import { COMPONENT_TYPES } from '@khiops-library/enum/componentTypes';
+import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
 @Component({

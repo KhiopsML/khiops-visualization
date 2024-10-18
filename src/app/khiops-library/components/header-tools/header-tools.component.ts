@@ -8,7 +8,7 @@ import { TranslateService } from '@ngstack/translate';
 import { HotkeysService, Hotkey } from 'angular2-hotkeys';
 import { CopyDatasService } from '../../providers/copy-datas.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
-import { COMPONENT_TYPES } from '@khiops-library/enum/componentTypes';
+import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 
 @Component({
   selector: 'kl-header-tools',

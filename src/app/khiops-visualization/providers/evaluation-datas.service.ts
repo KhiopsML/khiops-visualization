@@ -2,15 +2,15 @@ import { Injectable } from '@angular/core';
 import { AppService } from './app.service';
 import { TranslateService } from '@ngstack/translate';
 import { AppConfig } from 'src/environments/environment';
-import { EvaluationTypeVO } from '../model/evaluation-type-vo';
+import { EvaluationTypeModel } from '../model/evaluation-type.model';
 import { UtilsService } from '@khiops-library/providers/utils.service';
-import { EvaluationPredictorVO } from '../model/evaluation-predictor-vo';
+import { EvaluationPredictorModel } from '../model/evaluation-predictor.model';
 import { TYPES } from '@khiops-library/enum/types';
 import { TASKS } from '@khiops-library/enum/tasks';
-import { PREDICTOR_TYPES } from '@khiops-library/enum/predictorTypes';
-import { EvaluationDatasVO } from '@khiops-visualization/model/evaluation-datas-vo';
-import { ChartDatasetModel } from '@khiops-library/model/chartDataset.model';
-import { ChartDatasModel } from '@khiops-library/model/chartDatas.model';
+import { PREDICTOR_TYPES } from '@khiops-library/enum/predictor-types';
+import { EvaluationDatasModel } from '@khiops-visualization/model/evaluation-datas.model';
+import { ChartDatasetModel } from '@khiops-library/model/chart-dataset.model';
+import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { TargetLiftValuesI } from '@khiops-visualization/interfaces/target-lift-values';
 import { LiftCurveValuesI } from '@khiops-visualization/interfaces/lift-curve-values';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
@@ -22,7 +22,7 @@ import { LiftCurveSerieI } from '../interfaces/lift-curve-serie';
   providedIn: 'root',
 })
 export class EvaluationDatasService {
-  evaluationDatas: EvaluationDatasVO;
+  evaluationDatas: EvaluationDatasModel;
 
   constructor(
     private translate: TranslateService,
@@ -30,10 +30,10 @@ export class EvaluationDatasService {
   ) {}
 
   initialize() {
-    this.evaluationDatas = new EvaluationDatasVO();
+    this.evaluationDatas = new EvaluationDatasModel();
   }
 
-  getDatas(): EvaluationDatasVO {
+  getDatas(): EvaluationDatasModel {
     return this.evaluationDatas;
   }
 
@@ -44,21 +44,21 @@ export class EvaluationDatasService {
   getLiftGraphDisplayedValues(): ChartToggleValuesI[] | undefined {
     return this.evaluationDatas.liftGraphDisplayedValues;
   }
-  setSelectedEvaluationTypeVariable(object: EvaluationTypeVO) {
+  setSelectedEvaluationTypeVariable(object: EvaluationTypeModel) {
     this.evaluationDatas.selectedEvaluationTypeVariable = object;
   }
 
-  getSelectedEvaluationTypeVariable(): EvaluationTypeVO | undefined {
+  getSelectedEvaluationTypeVariable(): EvaluationTypeModel | undefined {
     return this.evaluationDatas.selectedEvaluationTypeVariable;
   }
 
-  setSelectedPredictorEvaluationVariable(object: EvaluationPredictorVO) {
+  setSelectedPredictorEvaluationVariable(object: EvaluationPredictorModel) {
     this.evaluationDatas.selectedPredictorEvaluationVariable = object;
   }
 
   getPredictorEvaluationVariableFromEvaluationType(
     type: string,
-  ): EvaluationPredictorVO {
+  ): EvaluationPredictorModel {
     return this.evaluationDatas.predictorEvaluations.values?.find(
       (e) =>
         e.type === type &&
@@ -69,7 +69,7 @@ export class EvaluationDatasService {
 
   getEvaluationVariableFromPredictorEvaluationType(
     type: string,
-  ): EvaluationTypeVO {
+  ): EvaluationTypeModel {
     return this.evaluationDatas.evaluationTypesSummary.values?.find(
       (e) => e.type === type,
     );
@@ -295,11 +295,11 @@ export class EvaluationDatasService {
       ],
     };
 
-    const datas: EvaluationTypeVO[] = [];
+    const datas: EvaluationTypeModel[] = [];
     if (this.evaluationDatas.evaluationTypes.length > 0) {
       for (let i = 0; i < this.evaluationDatas.evaluationTypes.length; i++) {
         const currentEvaluation = this.evaluationDatas.evaluationTypes[i];
-        const evalTypeItem: EvaluationTypeVO = new EvaluationTypeVO();
+        const evalTypeItem: EvaluationTypeModel = new EvaluationTypeModel();
         evalTypeItem.type =
           currentEvaluation.evaluationType || currentEvaluation.reportType; // evaluationType is empty for only evaluation case
         evalTypeItem.dictionary = currentEvaluation.summary.dictionary;
@@ -324,7 +324,7 @@ export class EvaluationDatasService {
       values: undefined,
       displayedColumns: undefined,
     };
-    const datas: EvaluationPredictorVO[] = [];
+    const datas: EvaluationPredictorModel[] = [];
     const displayedColumns: GridColumnsI[] = [];
 
     if (this.evaluationDatas.evaluationTypesSummary.values) {
@@ -347,7 +347,7 @@ export class EvaluationDatasService {
             currentEvaluationType.evaluationType ||
             currentEvaluationType.reportType; // evaluationType is empty for only evaluation case
           const obj = currentEvaluationType.predictorsPerformance[j];
-          const currentEl = new EvaluationPredictorVO(
+          const currentEl = new EvaluationPredictorModel(
             type,
             currentEvaluationType,
             obj,
@@ -357,8 +357,8 @@ export class EvaluationDatasService {
 
         // Now compute robustness for each object
         for (let j = 0; j < datas.length; j++) {
-          const currentEl: EvaluationPredictorVO = datas[j];
-          const train: EvaluationPredictorVO | undefined = datas.find(
+          const currentEl: EvaluationPredictorModel = datas[j];
+          const train: EvaluationPredictorModel | undefined = datas.find(
             (e) =>
               e.currentEvaluationType === PREDICTOR_TYPES.TRAIN &&
               e.name === currentEl.name,

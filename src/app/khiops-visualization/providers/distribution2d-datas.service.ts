@@ -1,23 +1,23 @@
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { UtilsService } from '@khiops-library/providers/utils.service';
-import { BarVO } from '../model/bar-vo';
+import { BarModel } from '../model/bar.model';
 import { DistributionDatasService } from './distribution-datas.service';
 import { MatrixUtilsDatasService } from '@khiops-library/providers/matrix-utils-datas.service';
-import { VariableDetailsVO } from '../model/variableDetails-vo';
-import { ChartDatasetModel } from '@khiops-library/model/chartDataset.model';
+import { VariableDetailsModel } from '../model/variable-details.model';
+import { ChartDatasetModel } from '@khiops-library/model/chart-dataset.model';
 import { Preparation2dDatasService } from './preparation2d-datas.service';
 import { AppService } from './app.service';
-import { DistributionDatasVO } from '../model/distribution-datas-vo';
+import { DistributionDatasModel } from '../model/distribution-datas.model';
 import { TYPES } from '@khiops-library/enum/types';
-import { ChartDatasModel } from '@khiops-library/model/chartDatas.model';
-import { ModalityCountsVO } from '@khiops-visualization/model/modality-counts-vo';
+import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
+import { ModalityCountsModel } from '@khiops-visualization/model/modality-counts.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Distribution2dDatasService {
-  distributionDatas: DistributionDatasVO;
+  distributionDatas: DistributionDatasModel;
 
   constructor(
     private distributionDatasService: DistributionDatasService,
@@ -29,12 +29,12 @@ export class Distribution2dDatasService {
 
   initialize(): any {
     const appDatas = this.appService.getDatas().datas;
-    this.distributionDatas = new DistributionDatasVO(appDatas);
+    this.distributionDatas = new DistributionDatasModel(appDatas);
 
     return this.distributionDatas;
   }
 
-  getDatas(): DistributionDatasVO {
+  getDatas(): DistributionDatasModel {
     return this.distributionDatas;
   }
 
@@ -45,7 +45,7 @@ export class Distribution2dDatasService {
     const selectedVariable =
       this.preparation2dDatasService.getSelectedVariable();
     const preparation2dDatas = this.preparation2dDatasService.getDatas();
-    const variablesDetails: VariableDetailsVO | undefined =
+    const variablesDetails: VariableDetailsModel | undefined =
       this.preparation2dDatasService.getVariableDetails(
         preparation2dDatas?.selectedVariable?.rank,
       );
@@ -64,7 +64,7 @@ export class Distribution2dDatasService {
         computedCellTargetFreqs[preparation2dDatas.selectedCellIndex];
       const targets = this.preparation2dDatasService.getTargetsIfAvailable();
       if (currentDatas && targets) {
-        const modalityCounts: ModalityCountsVO =
+        const modalityCounts: ModalityCountsModel =
           this.distributionDatasService.computeModalityCounts(
             computedCellTargetFreqs,
           );
@@ -72,7 +72,7 @@ export class Distribution2dDatasService {
         for (let i = 0; i < currentDatas.length; i++) {
           const el = currentDatas[i];
 
-          const graphItem: BarVO = new BarVO();
+          const graphItem: BarModel = new BarModel();
           graphItem.name = targets[i];
 
           if (type && type === TYPES.LIFT) {

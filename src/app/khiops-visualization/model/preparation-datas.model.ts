@@ -1,9 +1,9 @@
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
-import { PreparationVariableVO } from './preparation-variable-vo';
+import { PreparationVariableModel } from './preparation-variable.model';
 
-export class PreparationDatasVO {
+export class PreparationDatasModel {
   preparationReport: {
-    selectedVariable?: PreparationVariableVO;
+    selectedVariable?: PreparationVariableModel;
     currentIntervalDatas: GridDatasI;
   } = {
     selectedVariable: undefined,
@@ -14,7 +14,7 @@ export class PreparationDatasVO {
     },
   };
   textPreparationReport: {
-    selectedVariable?: PreparationVariableVO;
+    selectedVariable?: PreparationVariableModel;
     currentIntervalDatas: GridDatasI;
   } = {
     selectedVariable: undefined,

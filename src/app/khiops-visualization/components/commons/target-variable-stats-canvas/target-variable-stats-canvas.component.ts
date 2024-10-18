@@ -11,12 +11,12 @@ import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.s
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { TranslateService } from '@ngstack/translate';
-import { ToPrecisionPipe } from '@khiops-library/pipes/toPrecision.pipe';
+import { ToPrecisionPipe } from '@khiops-library/pipes/to-precision.pipe';
 import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
 import { ChartOptions } from 'chart.js';
 import { ConfigService } from '@khiops-library/providers/config.service';
-import { ChartDatasModel } from '@khiops-library/model/chartDatas.model';
-import { COMPONENT_TYPES } from '@khiops-library/enum/componentTypes';
+import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
+import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 
 @Component({
   selector: 'app-target-variable-stats-canvas',

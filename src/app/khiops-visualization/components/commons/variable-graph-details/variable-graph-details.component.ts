@@ -14,9 +14,9 @@ import { DistributionGraphCanvasComponent } from '@khiops-library/components/dis
 import { TargetDistributionGraphCanvasComponent } from '@khiops-visualization/components/commons/target-distribution-graph-canvas/target-distribution-graph-canvas.component';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { AppConfig } from 'src/environments/environment';
-import { PreparationVariableVO } from '@khiops-visualization/model/preparation-variable-vo';
-import { TreePreparationVariableVO } from '@khiops-visualization/model/tree-preparation-variable-vo';
-import { DistributionDatasVO } from '@khiops-visualization/model/distribution-datas-vo';
+import { PreparationVariableModel } from '@khiops-visualization/model/preparation-variable.model';
+import { TreePreparationVariableModel } from '@khiops-visualization/model/tree-preparation-variable.model';
+import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
 import { REPORTS } from '@khiops-library/enum/reports';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 import { ConfigService } from '@khiops-library/providers/config.service';
@@ -40,7 +40,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
 
   @Input() showTargetDistributionGraph = true;
   @Input() showDistributionGraph = true;
-  @Input() selectedVariable: PreparationVariableVO | TreePreparationVariableVO;
+  @Input() selectedVariable: PreparationVariableModel | TreePreparationVariableModel;
   @Input() selectedGraphItemIndex = 0;
   @Input() preparationSource: string;
   @Input() displayedValues?: ChartToggleValuesI[]; // optional input to update chart on value changes (for instance when another component of tree preparation view changed)
@@ -48,7 +48,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
 
   @Output() selectedItemChanged: EventEmitter<any> = new EventEmitter();
 
-  distributionDatas: DistributionDatasVO;
+  distributionDatas: DistributionDatasModel;
   scrollPosition = 0;
   scaleValue: number;
   distributionGraphType: string;

@@ -1,10 +1,10 @@
 import { CellModel } from '@khiops-library/model/cell.model';
-import { Preparation2dVariableVO } from './preparation2d-variable-vo';
+import { Preparation2dVariableModel } from './preparation2d-variable.model';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 
-export class Preparation2dDatasVO {
+export class Preparation2dDatasModel {
   isAxisInverted = false;
-  selectedVariable?: Preparation2dVariableVO = undefined;
+  selectedVariable?: Preparation2dVariableModel = undefined;
   selectedCellIndex: number = 0;
   selectedCell: CellModel = undefined;
   matrixDatas:

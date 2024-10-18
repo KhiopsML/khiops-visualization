@@ -1,7 +1,7 @@
 import { TYPES } from '@khiops-library/enum/types';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 
-export class VariableVO {
+export class VariableModel {
   _id: string;
   rank: string;
   name: string;

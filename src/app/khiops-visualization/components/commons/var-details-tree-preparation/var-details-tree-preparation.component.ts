@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { VariableGraphDetailsComponent } from '../variable-graph-details/variable-graph-details.component';
-import { TreePreparationDatasVO } from '@khiops-visualization/model/tree-preparation-datas-vo';
+import { TreePreparationDatasModel } from '@khiops-visualization/model/tree-preparation-datas.model';
 
 @Component({
   selector: 'app-var-details-tree-preparation',
@@ -15,7 +15,7 @@ export class VarDetailsTreePreparationComponent {
   })
   appVariableGraphDetails: VariableGraphDetailsComponent;
 
-  treePreparationDatas: TreePreparationDatasVO;
+  treePreparationDatas: TreePreparationDatasModel;
 
   appDatas: any;
   sizes: any;

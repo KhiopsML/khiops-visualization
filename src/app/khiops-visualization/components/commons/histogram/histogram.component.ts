@@ -13,7 +13,7 @@ import * as d3 from 'd3';
 import { HistogramService } from './histogram.service';
 import { format } from 'mathjs';
 import { HistogramUIService } from './histogram.ui.service';
-import { HistogramBarVO } from './histogram.bar-vo';
+import { HistogramBarModel } from './histogram.bar.model';
 import { ResizedEvent } from 'angular-resize-event';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
@@ -31,7 +31,7 @@ import {
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options';
 import { debounceTime, Subject } from 'rxjs';
-import { COMPONENT_TYPES } from '@khiops-library/enum/componentTypes';
+import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 
 @Component({
   selector: 'app-histogram',
@@ -59,7 +59,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   w: number = 0;
   xPadding: number = 40;
   yPadding: number = 50;
-  bars: HistogramBarVO[] = [];
+  bars: HistogramBarModel[] = [];
 
   // Static config values
   xTickCount: number;
@@ -489,7 +489,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     ctx: CanvasRenderingContext2D,
     d: HistogramValuesI,
     i: number,
-    bar: HistogramBarVO,
+    bar: HistogramBarModel,
     ratio: number = 0,
     selectedItem: number = -1,
   ) {

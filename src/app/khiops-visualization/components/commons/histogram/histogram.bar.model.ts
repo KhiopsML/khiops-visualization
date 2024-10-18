@@ -1,8 +1,8 @@
-import { HistogramUIService } from '../histogram/histogram.ui.service';
+import { HistogramUIService } from './histogram.ui.service';
 import { HistogramValuesI } from './histogram.interfaces';
 import { HistogramType } from './histogram.types';
 
-export class HistogramBarVO {
+export class HistogramBarModel {
   barWlog: number = 0;
   barXlog: number = 0;
   barWlin: number = 0;
@@ -39,18 +39,18 @@ export class HistogramBarVO {
     }
   }
 
-  computeXLog(bars: HistogramBarVO[]) {
+  computeXLog(bars: HistogramBarModel[]) {
     let sum = bars.reduce(
-      (partialSum: number, a: HistogramBarVO) =>
+      (partialSum: number, a: HistogramBarModel) =>
         Math.abs(partialSum) + Math.abs(a.barWlog),
       0,
     );
     this.barXlog = sum || 0;
   }
 
-  computeXLin(bars: HistogramBarVO[]) {
+  computeXLin(bars: HistogramBarModel[]) {
     let sum = bars.reduce(
-      (partialSum: number, a: HistogramBarVO) =>
+      (partialSum: number, a: HistogramBarModel) =>
         Math.abs(partialSum) + Math.abs(a.barWlin),
       0,
     );

@@ -1,11 +1,11 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { AppService } from '@khiops-covisualization/providers/app.service';
-import { DimensionViewLayoutModel } from '@khiops-covisualization/model/viewLayout.model';
+import { DimensionViewLayoutModel } from '@khiops-covisualization/model/view-layout.model';
 import { VariableGraphDetailsComponent } from '../variable-graph-details/variable-graph-details.component';
 import { DimensionModel } from '@khiops-library/model/dimension.model';
-import { TreeNodeModel } from '@khiops-covisualization/model/treeNode.model';
+import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
 import { CompositionModel } from '@khiops-covisualization/model/composition.model';
-import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensionsData.model';
+import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-data.model';
 
 @Component({
   selector: 'app-axis',

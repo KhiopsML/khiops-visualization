@@ -11,13 +11,13 @@ import { SelectableTabComponent } from '@khiops-library/components/selectable-ta
 import { AppConfig } from 'src/environments/environment';
 import { AppService } from '@khiops-covisualization/providers/app.service';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
-import { ViewLayoutVO } from '@khiops-covisualization/model/viewLayout.model';
+import { ViewLayoutVO } from '@khiops-covisualization/model/view-layout.model';
 import { AxisComponent } from '../commons/axis/axis.component';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
 import { TranslateService } from '@ngstack/translate';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
-import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensionsData.model';
+import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-data.model';
 import { AnnotationService } from '@khiops-covisualization/providers/annotation.service';
 
 @Component({

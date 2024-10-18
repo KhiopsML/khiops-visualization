@@ -6,7 +6,7 @@ import { FileModel } from '@khiops-library/model/file.model';
 import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { CheckboxCellComponent } from '@khiops-library/components/ag-grid/checkbox-cell/checkbox-cell.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensionsData.model';
+import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-data.model';
 
 @Component({
   selector: 'app-import-ext-datas',

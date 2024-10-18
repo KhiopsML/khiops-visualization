@@ -5,22 +5,22 @@ import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { TranslateService } from '@ngstack/translate';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { EvaluationDatasService } from './evaluation-datas.service';
-import { Preparation2dVariableVO } from '../model/preparation2d-variable-vo';
+import { Preparation2dVariableModel } from '../model/preparation2d-variable.model';
 import { CellModel } from '@khiops-library/model/cell.model';
 import { MatrixUtilsDatasService } from '@khiops-library/providers/matrix-utils-datas.service';
 import { PreparationDatasService } from './preparation-datas.service';
-import { VariableDetailsVO } from '../model/variableDetails-vo';
-import { Variable2dVO } from '../model/variable2d-vo';
+import { VariableDetailsModel } from '../model/variable-details.model';
+import { Variable2dModel } from '../model/variable-2d.model';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
-import { CoocurenceCellModel } from '../model/coocurence-cell-vo';
+import { CoocurenceCellModel } from '../model/coocurence-cell.model';
 import { MatrixCanvasService } from '@khiops-library/components/matrix-canvas/matrix-canvas.service';
-import { Preparation2dDatasVO } from '../model/preparation2d-datas-vo';
-import { CoocurenceCellsVO } from '../model/coocurence-cells-vo';
-import { InformationsVO } from '@khiops-visualization/model/informations-vo';
+import { Preparation2dDatasModel } from '../model/preparation2d-datas.model';
+import { CoocurenceCellsModel } from '../model/coocurence-cells.model';
+import { InformationsModel } from '@khiops-visualization/model/informations.model';
 import { TYPES } from '@khiops-library/enum/types';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { MatrixRangeValuesI } from '@khiops-visualization/interfaces/matrix-range-values';
-import { VariableVO } from '@khiops-visualization/model/variable-vo';
+import { VariableModel } from '@khiops-visualization/model/variable.model';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 
@@ -28,7 +28,7 @@ import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
   providedIn: 'root',
 })
 export class Preparation2dDatasService {
-  preparation2dDatas: Preparation2dDatasVO;
+  preparation2dDatas: Preparation2dDatasModel;
 
   constructor(
     private translate: TranslateService,
@@ -40,7 +40,7 @@ export class Preparation2dDatasService {
 
   initialize() {
     const appDatas = this.appService.getDatas().datas;
-    this.preparation2dDatas = new Preparation2dDatasVO(appDatas);
+    this.preparation2dDatas = new Preparation2dDatasModel(appDatas);
 
     // select the first item of the list by default
     if (this.preparation2dDatas.isValid()) {
@@ -58,13 +58,13 @@ export class Preparation2dDatasService {
     }
   }
 
-  getDatas(): Preparation2dDatasVO {
+  getDatas(): Preparation2dDatasModel {
     return this.preparation2dDatas;
   }
 
   getInformationsDatas(): InfosDatasI[] | undefined {
     const appDatas = this.appService.getDatas().datas;
-    const informationsDatas = new InformationsVO(
+    const informationsDatas = new InformationsModel(
       appDatas.bivariatePreparationReport.summary,
     );
     return informationsDatas.displayDatas;
@@ -120,11 +120,11 @@ export class Preparation2dDatasService {
     return 0;
   }
 
-  setSelectedVariable(object: any): Preparation2dVariableVO | undefined {
+  setSelectedVariable(object: any): Preparation2dVariableModel | undefined {
     if (object) {
       const variable = this.getVariableFromNames(object.name1, object.name2);
       if (variable) {
-        this.preparation2dDatas.selectedVariable = new Preparation2dVariableVO(
+        this.preparation2dDatas.selectedVariable = new Preparation2dVariableModel(
           variable,
         );
         this.setSelectedCellIndex(0);
@@ -137,11 +137,11 @@ export class Preparation2dDatasService {
   /**
    * Case of regression data into modeling view
    */
-  setSelectedRegressionVariable(currentVar: Preparation2dVariableVO) {
+  setSelectedRegressionVariable(currentVar: Preparation2dVariableModel) {
     this.preparation2dDatas.selectedVariable = currentVar;
   }
 
-  getSelectedVariable(): Preparation2dVariableVO | undefined {
+  getSelectedVariable(): Preparation2dVariableModel | undefined {
     return this.preparation2dDatas.selectedVariable;
   }
 
@@ -153,15 +153,15 @@ export class Preparation2dDatasService {
     return this.preparation2dDatas.isSupervisedVariable();
   }
 
-  getVariablesd2Datas(): Variable2dVO[] {
+  getVariablesd2Datas(): Variable2dModel[] {
     const appDatas = this.appService.getDatas().datas;
-    const variableDatas: Variable2dVO[] = [];
+    const variableDatas: Variable2dModel[] = [];
     if (appDatas?.bivariatePreparationReport?.variablesPairsStatistics) {
       const currentDatas =
         appDatas.bivariatePreparationReport.variablesPairsStatistics;
       if (currentDatas) {
         for (let i = 0; i < currentDatas.length; i++) {
-          const varItem: Variable2dVO | undefined = new Variable2dVO(
+          const varItem: Variable2dModel | undefined = new Variable2dModel(
             currentDatas[i],
           );
           variableDatas.push(varItem);
@@ -175,8 +175,8 @@ export class Preparation2dDatasService {
   getVariableFromNames(
     name1: string,
     name2: string,
-  ): Preparation2dVariableVO | undefined {
-    let preparation2dVariable: Preparation2dVariableVO | undefined;
+  ): Preparation2dVariableModel | undefined {
+    let preparation2dVariable: Preparation2dVariableModel | undefined;
     const appDatas = this.appService.getDatas().datas;
     if (appDatas?.bivariatePreparationReport?.variablesPairsStatistics) {
       preparation2dVariable =
@@ -184,7 +184,7 @@ export class Preparation2dDatasService {
           (e) => e.name1 === name1 && e.name2 === name2,
         );
       if (preparation2dVariable) {
-        preparation2dVariable = new Preparation2dVariableVO(
+        preparation2dVariable = new Preparation2dVariableModel(
           preparation2dVariable,
         );
       }
@@ -206,12 +206,12 @@ export class Preparation2dDatasService {
    * Format matrix datas to be displayed into table
    * @param fullFrequencies
    */
-  getMatrixCoocurenceCellsDatas(): CoocurenceCellsVO | undefined {
-    let matrixCells: CoocurenceCellsVO | undefined;
+  getMatrixCoocurenceCellsDatas(): CoocurenceCellsModel | undefined {
+    let matrixCells: CoocurenceCellsModel | undefined;
 
     if (this.preparation2dDatas?.matrixDatas?.matrixCellDatas) {
       const selectedVariable = this.getSelectedVariable();
-      matrixCells = new CoocurenceCellsVO(
+      matrixCells = new CoocurenceCellsModel(
         this.translate,
         selectedVariable?.nameX,
         selectedVariable?.nameY,
@@ -376,7 +376,7 @@ export class Preparation2dDatasService {
     this.preparation2dDatas.isTargetAvailable = false;
     let targets: any;
 
-    const variablesDetails: VariableDetailsVO | undefined =
+    const variablesDetails: VariableDetailsModel | undefined =
       this.getVariableDetails(this.preparation2dDatas?.selectedVariable?.rank);
 
     if (variablesDetails?.dataGrid?.cellIds) {
@@ -392,9 +392,9 @@ export class Preparation2dDatasService {
     }
   }
 
-  getVariableDetails(rank: string): VariableDetailsVO | undefined {
+  getVariableDetails(rank: string): VariableDetailsModel | undefined {
     const appDatas = this.appService.getDatas().datas;
-    let variableDetails: VariableDetailsVO | undefined;
+    let variableDetails: VariableDetailsModel | undefined;
     const isRegressionOrExplanatoryAnalysis =
       this.preparationDatasService.isExplanatoryAnalysis() ||
       this.evaluationDatasService.isRegressionAnalysis();
@@ -410,7 +410,7 @@ export class Preparation2dDatasService {
         appDatas.bivariatePreparationReport.variablesPairsDetailedStatistics[
           rank
         ];
-      variableDetails = new VariableDetailsVO(
+      variableDetails = new VariableDetailsModel(
         currentVar,
         this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_TABLE_SIZE,
       );
@@ -421,7 +421,7 @@ export class Preparation2dDatasService {
       // regression or explanatory case: textPreparationReport
       const currentVar =
         appDatas.textPreparationReport.variablesDetailedStatistics[rank];
-      variableDetails = new VariableDetailsVO(
+      variableDetails = new VariableDetailsModel(
         currentVar,
         this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_TABLE_SIZE,
       );
@@ -432,7 +432,7 @@ export class Preparation2dDatasService {
       // regression or explanatory case: preparationReport
       const currentVar =
         appDatas.preparationReport.variablesDetailedStatistics[rank];
-      variableDetails = new VariableDetailsVO(
+      variableDetails = new VariableDetailsModel(
         currentVar,
         this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_TABLE_SIZE,
       );
@@ -441,14 +441,14 @@ export class Preparation2dDatasService {
   }
 
   getMatrixCanvasDatas(
-    selectedVariable: Variable2dVO | Preparation2dVariableVO | VariableVO,
+    selectedVariable: Variable2dModel | Preparation2dVariableModel | VariableModel,
   ): any {
     this.preparation2dDatas.matrixDatas = undefined;
-    const variablesDetails: VariableDetailsVO | undefined =
+    const variablesDetails: VariableDetailsModel | undefined =
       this.getVariableDetails(selectedVariable.rank);
 
     if (variablesDetails) {
-      const variableDatas: VariableDetailsVO = _.cloneDeep(variablesDetails);
+      const variableDatas: VariableDetailsModel = _.cloneDeep(variablesDetails);
 
       if (variableDatas) {
         const xDimension = new DimensionModel(
@@ -617,7 +617,7 @@ export class Preparation2dDatasService {
    * @returns
    */
   getGlobalMinAndMax2dValues(
-    variablesDatas: Variable2dVO[] | Preparation2dVariableVO[] | VariableVO[], // for regression,
+    variablesDatas: Variable2dModel[] | Preparation2dVariableModel[] | VariableModel[], // for regression,
   ): MatrixRangeValuesI {
     const currentRes: MatrixRangeValuesI = {
       CELL_INTEREST: [],

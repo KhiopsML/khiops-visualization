@@ -1,9 +1,9 @@
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
-import { TreeNodeModel } from './tree-node-vo';
-import { TreePreparationVariableVO } from './tree-preparation-variable-vo';
+import { TreeNodeModel } from './tree-node.model';
+import { TreePreparationVariableModel } from './tree-preparation-variable.model';
 
-export class TreePreparationDatasVO {
-  selectedVariable?: TreePreparationVariableVO = undefined;
+export class TreePreparationDatasModel {
+  selectedVariable?: TreePreparationVariableModel = undefined;
   selectedNodes?: TreeNodeModel[] = undefined;
   selectedNode?: TreeNodeModel = undefined;
   treeColorsMap?: any = undefined;

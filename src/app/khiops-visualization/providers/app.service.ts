@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { AppConfig } from 'src/environments/environment';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { UtilsService } from '@khiops-library/providers/utils.service';
-import { ProjectLogModel } from '@khiops-library/model/projectLog.model';
+import { ProjectLogModel } from '@khiops-library/model/project-log.model';
 import { REPORTS } from '@khiops-library/enum/reports';
-import { ProjectSummaryModel } from '@khiops-library/model/projectSummary.model';
+import { ProjectSummaryModel } from '@khiops-library/model/project-summary.model';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 
 @Injectable({

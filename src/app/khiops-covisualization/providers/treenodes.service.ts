@@ -3,14 +3,14 @@ import { DimensionsDatasService } from './dimensions-datas.service';
 import { EventsService } from './events.service';
 import { AppService } from './app.service';
 import { UtilsService } from '@khiops-library/providers/utils.service';
-import { TreeNodeModel } from '../model/treeNode.model';
+import { TreeNodeModel } from '../model/tree-node.model';
 import { deepEqual } from 'fast-equals';
 import _ from 'lodash';
 import { DimensionModel } from '@khiops-library/model/dimension.model';
-import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensionsData.model';
-import { HierarchyDatasModel } from '@khiops-covisualization/model/hierarchyDatas.model';
+import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-data.model';
+import { HierarchyDatasModel } from '@khiops-covisualization/model/hierarchy-datas.model';
 import { TYPES } from '@khiops-library/enum/types';
-import { SavedDatasModel } from '@khiops-covisualization/model/savedDatas.model';
+import { SavedDatasModel } from '@khiops-covisualization/model/saved-datas.model';
 import { AnnotationService } from './annotation.service';
 import { ImportExtDatasService } from './import-ext-datas.service';
 

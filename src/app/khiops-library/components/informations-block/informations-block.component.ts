@@ -9,7 +9,7 @@ import { SelectableComponent } from '../../components/selectable/selectable.comp
 import { SelectableService } from '../../components/selectable/selectable.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
-import { COMPONENT_TYPES } from '@khiops-library/enum/componentTypes';
+import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 
 @Component({
   selector: 'kl-informations-block',

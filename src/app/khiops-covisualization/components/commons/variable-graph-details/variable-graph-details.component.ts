@@ -18,10 +18,10 @@ import { TreenodesService } from '@khiops-covisualization/providers/treenodes.se
 import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { ClustersService } from '@khiops-covisualization/providers/clusters.service';
-import { TreeNodeModel } from '@khiops-covisualization/model/treeNode.model';
+import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
 import { Subscription } from 'rxjs';
 import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options';
-import { ChartDatasModel } from '@khiops-library/model/chartDatas.model';
+import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import * as _ from 'lodash';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { HistogramType } from '@khiops-visualization/components/commons/histogram/histogram.types';

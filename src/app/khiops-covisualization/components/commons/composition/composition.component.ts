@@ -17,8 +17,8 @@ import { TreenodesService } from '@khiops-covisualization/providers/treenodes.se
 import { Subscription } from 'rxjs';
 import _ from 'lodash';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
-import { TreeNodeModel } from '@khiops-covisualization/model/treeNode.model';
-import { ExtDatasModel } from '@khiops-covisualization/model/extDatas.model';
+import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
+import { ExtDatasModel } from '@khiops-covisualization/model/ext-datas.model';
 import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
 
 @Component({

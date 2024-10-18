@@ -1,6 +1,6 @@
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 
-export class SummaryVO {
+export class SummaryModel {
   dictionary: string;
   database: string;
   targetVariable: string;

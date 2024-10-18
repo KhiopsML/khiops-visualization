@@ -9,7 +9,7 @@ import { AppConfig } from 'src/environments/environment';
 import { UnfoldHierarchyComponent } from '../unfold-hierarchy/unfold-hierarchy.component';
 import { ManageViewsComponent } from '../manage-views/manage-views.component';
 import { ImportExtDatasListComponent } from '../import-ext-datas-list/import-ext-datas-list.component';
-import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensionsData.model';
+import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-data.model';
 
 @Component({
   selector: 'app-header-manage-view',

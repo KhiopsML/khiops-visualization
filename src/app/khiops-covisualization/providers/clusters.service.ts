@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { DimensionsDatasService } from './dimensions-datas.service';
-import { TreeNodeModel } from '../model/treeNode.model';
-import { ChartDatasetModel } from '@khiops-library/model/chartDataset.model';
+import { TreeNodeModel } from '../model/tree-node.model';
+import { ChartDatasetModel } from '@khiops-library/model/chart-dataset.model';
 import { TranslateService } from '@ngstack/translate';
 import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { AppService } from './app.service';
 import { CompositionModel } from '../model/composition.model';
 import { MatrixCanvasService } from '@khiops-library/components/matrix-canvas/matrix-canvas.service';
-import { ClusterDetailsModel } from '@khiops-covisualization/model/clusterDetails.model';
+import { ClusterDetailsModel } from '@khiops-covisualization/model/cluster-details.model';
 import { TreenodesService } from './treenodes.service';
-import { ChartDatasModel } from '@khiops-library/model/chartDatas.model';
-import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensionsData.model';
-import { ExtDatasModel } from '@khiops-covisualization/model/extDatas.model';
+import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
+import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-data.model';
+import { ExtDatasModel } from '@khiops-covisualization/model/ext-datas.model';
 import { ImportExtDatasService } from './import-ext-datas.service';
 @Injectable({
   providedIn: 'root',

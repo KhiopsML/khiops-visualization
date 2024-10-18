@@ -6,13 +6,13 @@ import {
   ViewChild,
 } from '@angular/core';
 import { DimensionModel } from '@khiops-library/model/dimension.model';
-import { TreeNodeModel } from '@khiops-covisualization/model/treeNode.model';
+import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { TreeSelectComponent } from '../tree-select/tree-select.component';
-import { COMPONENT_TYPES } from '@khiops-library/enum/componentTypes';
-import { SelectedTreeClusterModel } from '@khiops-covisualization/model/selectedTreeCluster.model';
+import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
+import { SelectedTreeClusterModel } from '@khiops-covisualization/model/selected-tree-cluster.model';
 
 @Component({
   selector: 'app-hierarchy-details',

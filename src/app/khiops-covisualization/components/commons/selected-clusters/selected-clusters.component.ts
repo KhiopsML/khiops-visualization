@@ -1,6 +1,6 @@
 import { Component, OnDestroy, Input } from '@angular/core';
-import { SelectedClusterModel } from '@khiops-covisualization/model/selectedCluster.model';
-import { TreeNodeModel } from '@khiops-covisualization/model/treeNode.model';
+import { SelectedClusterModel } from '@khiops-covisualization/model/selected-cluster.model';
+import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
 import { TranslateService } from '@ngstack/translate';

@@ -1,21 +1,21 @@
 import { Injectable } from '@angular/core';
 import { AppService } from './app.service';
 import { TranslateService } from '@ngstack/translate';
-import { BarVO } from '../model/bar-vo';
+import { BarModel } from '../model/bar.model';
 import { UtilsService } from '@khiops-library/providers/utils.service';
-import { PreparationVariableVO } from '../model/preparation-variable-vo';
-import { VariableVO } from '../model/variable-vo';
-import { VariableDetailsVO } from '../model/variableDetails-vo';
-import { ChartDatasetModel } from '@khiops-library/model/chartDataset.model';
+import { PreparationVariableModel } from '../model/preparation-variable.model';
+import { VariableModel } from '../model/variable.model';
+import { VariableDetailsModel } from '../model/variable-details.model';
+import { ChartDatasetModel } from '@khiops-library/model/chart-dataset.model';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
-import { SummaryVO } from '../model/summary-vo';
-import { InformationsVO } from '../model/informations-vo';
+import { SummaryModel } from '../model/summary.model';
+import { InformationsModel } from '../model/informations.model';
 import { REPORTS } from '@khiops-library/enum/reports';
 import { TASKS } from '@khiops-library/enum/tasks';
 import { TYPES } from '@khiops-library/enum/types';
-import { PreparationDatasVO } from '@khiops-visualization/model/preparation-datas-vo';
+import { PreparationDatasModel } from '@khiops-visualization/model/preparation-datas.model';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
-import { ChartDatasModel } from '@khiops-library/model/chartDatas.model';
+import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { GridColumnsI } from '../../khiops-library/interfaces/grid-columns';
 
@@ -23,7 +23,7 @@ import { GridColumnsI } from '../../khiops-library/interfaces/grid-columns';
   providedIn: 'root',
 })
 export class PreparationDatasService {
-  preparationDatas: PreparationDatasVO;
+  preparationDatas: PreparationDatasModel;
 
   constructor(
     private translate: TranslateService,
@@ -32,7 +32,7 @@ export class PreparationDatasService {
   ) {}
 
   initialize() {
-    this.preparationDatas = new PreparationDatasVO();
+    this.preparationDatas = new PreparationDatasModel();
 
     const appDatas = this.appService.getDatas().datas;
 
@@ -73,7 +73,7 @@ export class PreparationDatasService {
   }
 
   getDatas(preparationSource: string): {
-    selectedVariable: PreparationVariableVO;
+    selectedVariable: PreparationVariableModel;
     currentIntervalDatas: GridDatasI;
   } {
     return this.preparationDatas[preparationSource];
@@ -82,19 +82,19 @@ export class PreparationDatasService {
   setSelectedVariable(
     object: any,
     preparationSource: string,
-  ): PreparationVariableVO | undefined {
+  ): PreparationVariableModel | undefined {
     if (object) {
       const variable = this.getVariableFromName(object.name, preparationSource);
       if (variable) {
         this.preparationDatas[preparationSource].selectedVariable =
-          new PreparationVariableVO(variable, variable.name);
+          new PreparationVariableModel(variable, variable.name);
         return this.preparationDatas[preparationSource].selectedVariable;
       }
     }
     return undefined;
   }
 
-  getSelectedVariable(preparationSource: string): PreparationVariableVO {
+  getSelectedVariable(preparationSource: string): PreparationVariableModel {
     return this.preparationDatas[preparationSource].selectedVariable;
   }
 
@@ -128,13 +128,13 @@ export class PreparationDatasService {
     if (!preparationSource) {
       preparationSource = this.getAvailablePreparationReport();
     }
-    const summaryVO = new SummaryVO(appDatas[preparationSource].summary);
-    return summaryVO.displayDatas;
+    const SummaryModel = new SummaryModel(appDatas[preparationSource].summary);
+    return SummaryModel.displayDatas;
   }
 
   getInformationsDatas(preparationSource: string): InfosDatasI[] | undefined {
     const appDatas = this.appService.getDatas().datas;
-    const informationsDatas = new InformationsVO(
+    const informationsDatas = new InformationsModel(
       appDatas[preparationSource].summary,
     );
     return informationsDatas.displayDatas;
@@ -160,7 +160,7 @@ export class PreparationDatasService {
         appDatas[preparationSource].variablesDetailedStatistics[
           this.preparationDatas[preparationSource].selectedVariable.rank
         ];
-      const variableDetails: VariableDetailsVO = new VariableDetailsVO(
+      const variableDetails: VariableDetailsModel = new VariableDetailsModel(
         currentVar,
         this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_TABLE_SIZE,
       );
@@ -292,16 +292,16 @@ export class PreparationDatasService {
     return this.preparationDatas[preparationSource].currentIntervalDatas;
   }
 
-  getVariablesDatas(preparationSource: string): VariableVO[] {
+  getVariablesDatas(preparationSource: string): VariableModel[] {
     const appDatas = this.appService.getDatas().datas;
     const currentDatas = appDatas[preparationSource].variablesStatistics;
     const currentDetailedDatas =
       appDatas[preparationSource].variablesDetailedStatistics;
-    const variableDatas: VariableVO[] = [];
+    const variableDatas: VariableModel[] = [];
 
     if (currentDatas) {
       for (let i = 0; i < currentDatas.length; i++) {
-        const varItem: VariableVO = new VariableVO(
+        const varItem: VariableModel = new VariableModel(
           currentDatas[i],
           currentDetailedDatas?.[currentDatas?.[i]?.rank],
         );
@@ -326,7 +326,7 @@ export class PreparationDatasService {
         for (let i = 0; i < currentDatas.values.length; i++) {
           const currentDataSet = new ChartDatasetModel();
 
-          const graphItem: BarVO = new BarVO();
+          const graphItem: BarModel = new BarModel();
           graphItem.name = currentDatas.values[i];
           graphItem.value =
             (currentDatas.frequencies[i] * 100) /

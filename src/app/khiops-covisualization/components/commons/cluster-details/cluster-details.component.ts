@@ -11,10 +11,10 @@ import { TranslateService } from '@ngstack/translate';
 import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { ClustersService } from '@khiops-covisualization/providers/clusters.service';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
-import { ClusterDetailsModel } from '@khiops-covisualization/model/clusterDetails.model';
+import { ClusterDetailsModel } from '@khiops-covisualization/model/cluster-details.model';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { TYPES } from '@khiops-library/enum/types';
-import { TreeNodeModel } from '@khiops-covisualization/model/treeNode.model';
+import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
 
 @Component({
   selector: 'app-cluster-details',

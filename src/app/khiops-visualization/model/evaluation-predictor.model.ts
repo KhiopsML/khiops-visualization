@@ -1,6 +1,6 @@
-import { PREDICTOR_TYPES } from '@khiops-library/enum/predictorTypes';
+import { PREDICTOR_TYPES } from '@khiops-library/enum/predictor-types';
 
-export class EvaluationPredictorVO {
+export class EvaluationPredictorModel {
   _id: string;
   type: string;
   rank: string;

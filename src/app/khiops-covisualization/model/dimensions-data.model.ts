@@ -1,6 +1,6 @@
 import { DimensionModel } from '@khiops-library/model/dimension.model';
-import { TreeNodeModel } from './treeNode.model';
-import { HierarchyDatasModel } from './hierarchyDatas.model';
+import { TreeNodeModel } from './tree-node.model';
+import { HierarchyDatasModel } from './hierarchy-datas.model';
 
 export class DimensionsDatasModel {
   matrixDatas: any = undefined;

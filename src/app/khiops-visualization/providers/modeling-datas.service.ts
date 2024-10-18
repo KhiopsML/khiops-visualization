@@ -2,23 +2,23 @@ import { Injectable } from '@angular/core';
 import { AppService } from './app.service';
 import { TranslateService } from '@ngstack/translate';
 import { PreparationDatasService } from './preparation-datas.service';
-import { ModelingPredictorVO } from '../model/modeling-predictor-vo';
-import { SummaryVO } from '../model/summary-vo';
+import { ModelingPredictorModel } from '../model/modeling-predictor.model';
+import { SummaryModel } from '../model/summary.model';
 import { Preparation2dDatasService } from './preparation2d-datas.service';
 import { TreePreparationDatasService } from './tree-preparation-datas.service';
-import { ModelingDatasVO } from '../model/modeling-datas-vo';
+import { ModelingDatasModel } from '../model/modeling-datas.model';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
-import { TrainedPredictorVO } from '@khiops-visualization/model/trained-predictor-vo copy';
+import { TrainedPredictorModel } from '@khiops-visualization/model/trained-predictor.model';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
-import { PreparationVariableVO } from '@khiops-visualization/model/preparation-variable-vo';
-import { Preparation2dVariableVO } from '@khiops-visualization/model/preparation2d-variable-vo';
-import { TreePreparationVariableVO } from '@khiops-visualization/model/tree-preparation-variable-vo';
+import { PreparationVariableModel } from '@khiops-visualization/model/preparation-variable.model';
+import { Preparation2dVariableModel } from '@khiops-visualization/model/preparation2d-variable.model';
+import { TreePreparationVariableModel } from '@khiops-visualization/model/tree-preparation-variable.model';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 @Injectable({
   providedIn: 'root',
 })
 export class ModelingDatasService {
-  modelingDatas: ModelingDatasVO;
+  modelingDatas: ModelingDatasModel;
 
   constructor(
     private translate: TranslateService,
@@ -29,7 +29,7 @@ export class ModelingDatasService {
   ) {}
 
   initialize() {
-    this.modelingDatas = new ModelingDatasVO();
+    this.modelingDatas = new ModelingDatasModel();
 
     // at init select the corresponding var
     // get the variable selected into PreparationDatasService
@@ -46,15 +46,15 @@ export class ModelingDatasService {
     }
   }
 
-  getDatas(): ModelingDatasVO {
+  getDatas(): ModelingDatasModel {
     return this.modelingDatas;
   }
 
   setSelectedVariable(
     object:
-      | Preparation2dVariableVO
-      | PreparationVariableVO
-      | TreePreparationVariableVO,
+      | Preparation2dVariableModel
+      | PreparationVariableModel
+      | TreePreparationVariableModel,
   ) {
     if (this.modelingDatas && object) {
       this.modelingDatas.selectedVariable = object;
@@ -68,9 +68,9 @@ export class ModelingDatasService {
   }
 
   getSelectedVariable():
-    | Preparation2dVariableVO
-    | PreparationVariableVO
-    | TreePreparationVariableVO
+    | Preparation2dVariableModel
+    | PreparationVariableModel
+    | TreePreparationVariableModel
     | undefined {
     return this.modelingDatas.selectedVariable;
   }
@@ -119,7 +119,7 @@ export class ModelingDatasService {
     if (this.modelingDatas.trainedPredictorsListDatas) {
       const typicalData: any = this.modelingDatas.trainedPredictorsListDatas[0];
       Object.keys(typicalData).forEach((key) => {
-        // Add columns of available objects (defined into ModelingPredictorVO)
+        // Add columns of available objects (defined into ModelingPredictorModel)
         if (key !== '_id' && typicalData[key] !== undefined) {
           displayedColumns.push({
             headerName: UtilsService.capitalizeFirstLetter(key),
@@ -141,7 +141,7 @@ export class ModelingDatasService {
     const preparationSource =
       this.preparationDatasService.getAvailablePreparationReport();
     if (appDatas?.[preparationSource]?.summary) {
-      summaryDatas = new SummaryVO(appDatas[preparationSource].summary);
+      summaryDatas = new SummaryModel(appDatas[preparationSource].summary);
       return summaryDatas.displayDatas;
     } else {
       return undefined;
@@ -165,14 +165,14 @@ export class ModelingDatasService {
   }
 
   setSelectedPredictor(predictor: any) {
-    this.modelingDatas.selectedPredictor = new ModelingPredictorVO(predictor);
+    this.modelingDatas.selectedPredictor = new ModelingPredictorModel(predictor);
   }
 
-  getSelectedPredictor(): ModelingPredictorVO | undefined {
+  getSelectedPredictor(): ModelingPredictorModel | undefined {
     return this.modelingDatas?.selectedPredictor;
   }
 
-  getTrainedPredictorListDatas(): TrainedPredictorVO[] | undefined {
+  getTrainedPredictorListDatas(): TrainedPredictorModel[] | undefined {
     const appDatas = this.appService.getDatas().datas;
     const selectedPredictor = this.getSelectedPredictor();
     if (
@@ -214,7 +214,7 @@ export class ModelingDatasService {
               currentVar.name.split('`')[1],
             );
         }
-        const varItem: TrainedPredictorVO = new TrainedPredictorVO(
+        const varItem: TrainedPredictorModel = new TrainedPredictorModel(
           currentVar,
           availableKeys,
         );

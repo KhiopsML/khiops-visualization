@@ -9,7 +9,7 @@ import { SelectableService } from '@khiops-library/components/selectable/selecta
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { TranslateService } from '@ngstack/translate';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
-import { TreeNodeModel } from '@khiops-visualization/model/tree-node-vo';
+import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 
 @Component({
   selector: 'app-tree-details',

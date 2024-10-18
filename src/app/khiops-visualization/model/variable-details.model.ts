@@ -1,7 +1,7 @@
 import { DimensionModel } from '@khiops-library/model/dimension.model';
 import * as _ from 'lodash'; // Important to import lodash in karma
 
-export class VariableDetailsVO {
+export class VariableDetailsModel {
   dataGrid!: {
     dimensions: DimensionModel[];
     partTargetFrequencies: []; // regression or explanatory case

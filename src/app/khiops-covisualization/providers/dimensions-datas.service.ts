@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { AppService } from './app.service';
 import { DimensionModel } from '@khiops-library/model/dimension.model';
-import { TreeNodeModel } from '../model/treeNode.model';
+import { TreeNodeModel } from '../model/tree-node.model';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { MatrixUtilsDatasService } from '@khiops-library/providers/matrix-utils-datas.service';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { AppConfig } from 'src/environments/environment';
-import { DimensionsDatasModel } from '../model/dimensionsData.model';
+import { DimensionsDatasModel } from '../model/dimensions-data.model';
 import { TYPES } from '@khiops-library/enum/types';
-import { ExtDatasModel } from '@khiops-covisualization/model/extDatas.model';
+import { ExtDatasModel } from '@khiops-covisualization/model/ext-datas.model';
 import { ImportExtDatasService } from './import-ext-datas.service';
 
 @Injectable({

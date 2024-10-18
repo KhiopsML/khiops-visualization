@@ -15,10 +15,10 @@ import _ from 'lodash';
 import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { ChartOptions } from 'chart.js';
-import { ChartDatasModel } from '@khiops-library/model/chartDatas.model';
-import { EvaluationDatasVO } from '@khiops-visualization/model/evaluation-datas-vo';
+import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
+import { EvaluationDatasModel } from '@khiops-visualization/model/evaluation-datas.model';
 import { TargetLiftValuesI } from '@khiops-visualization/interfaces/target-lift-values';
-import { COMPONENT_TYPES } from '@khiops-library/enum/componentTypes';
+import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 
 @Component({
   selector: 'app-target-lift-graph',
@@ -38,7 +38,7 @@ export class TargetLiftGraphComponent
   view: '';
   xAxisLabel: string;
   yAxisLabel: string;
-  evaluationDatas: EvaluationDatasVO;
+  evaluationDatas: EvaluationDatasModel;
   buttonTitle: string;
   isFullscreen = false;
 

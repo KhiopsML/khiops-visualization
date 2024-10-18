@@ -4,8 +4,8 @@ import { Preparation2dDatasService } from '@khiops-visualization/providers/prepa
 import { TargetDistributionGraphCanvasComponent } from '../target-distribution-graph-canvas/target-distribution-graph-canvas.component';
 import { AppConfig } from 'src/environments/environment';
 import { Distribution2dDatasService } from '@khiops-visualization/providers/distribution2d-datas.service';
-import { Preparation2dDatasVO } from '@khiops-visualization/model/preparation2d-datas-vo';
-import { DistributionDatasVO } from '@khiops-visualization/model/distribution-datas-vo';
+import { Preparation2dDatasModel } from '@khiops-visualization/model/preparation2d-datas.model';
+import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
 
 @Component({
   selector: 'app-var-details-preparation-2d',
@@ -21,8 +21,8 @@ export class VarDetailsPreparation2dComponent {
   appDatas: any;
   sizes: any;
 
-  preparation2dDatas: Preparation2dDatasVO;
-  distribution2dDatas: DistributionDatasVO;
+  preparation2dDatas: Preparation2dDatasModel;
+  distribution2dDatas: DistributionDatasModel;
   scaleValue =
     localStorage.getItem(
       AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SCALE_VALUE',

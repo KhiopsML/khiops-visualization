@@ -1,6 +1,6 @@
 import { TYPES } from '@khiops-library/enum/types';
 
-export class PreparationVariableVO {
+export class PreparationVariableModel {
   _id: string;
   mode: string;
   name: string;

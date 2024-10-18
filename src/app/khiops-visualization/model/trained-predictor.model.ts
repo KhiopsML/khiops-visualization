@@ -1,4 +1,4 @@
-export class TrainedPredictorVO {
+export class TrainedPredictorModel {
   _id: string;
   name: string;
   level: number;

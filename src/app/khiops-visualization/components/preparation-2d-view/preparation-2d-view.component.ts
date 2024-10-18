@@ -15,12 +15,12 @@ import { ModelingDatasService } from '@khiops-visualization/providers/modeling-d
 import { TranslateService } from '@ngstack/translate';
 import { Distribution2dDatasService } from '@khiops-visualization/providers/distribution2d-datas.service';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
-import { ChartDatasModel } from '@khiops-library/model/chartDatas.model';
+import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
-import { Variable2dVO } from '@khiops-visualization/model/variable2d-vo';
-import { Preparation2dDatasVO } from '@khiops-visualization/model/preparation2d-datas-vo';
-import { Preparation2dVariableVO } from '@khiops-visualization/model/preparation2d-variable-vo';
+import { Variable2dModel } from '@khiops-visualization/model/variable-2d.model';
+import { Preparation2dDatasModel } from '@khiops-visualization/model/preparation2d-datas.model';
+import { Preparation2dVariableModel } from '@khiops-visualization/model/preparation2d-variable.model';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 
 @Component({
@@ -39,12 +39,12 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
   appDatas: any;
   sizes: any;
 
-  preparation2dDatas: Preparation2dDatasVO;
+  preparation2dDatas: Preparation2dDatasModel;
   summaryDatas: InfosDatasI[];
   informationsDatas: InfosDatasI[];
   targetVariableStatsDatas: ChartDatasModel;
   currentIntervalDatas: GridDatasI | undefined;
-  variables2dDatas: Variable2dVO[];
+  variables2dDatas: Variable2dModel[];
   targetDistributionGraphDatas: ChartDatasModel | undefined;
   levelDistributionTitle: string = '';
 
@@ -159,7 +159,7 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
     this.resizeTargetDistributionGraph();
   }
 
-  onSelectListItemChanged(item: Preparation2dVariableVO) {
+  onSelectListItemChanged(item: Preparation2dVariableModel) {
     this.preparation2dDatasService.setSelectedVariable(item);
     const modelingVariable =
       this.preparation2dDatasService.getVariableFromNames(

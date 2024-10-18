@@ -15,11 +15,11 @@ import { TranslateService } from '@ngstack/translate';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ScrollableGraphCanvasComponent } from '@khiops-library/components/scrollable-graph-canvas/scrollable-graph-canvas.component';
 import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
-import { ChartDatasModel } from '@khiops-library/model/chartDatas.model';
+import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { ChartOptions } from 'chart.js';
 import { ConfigService } from '@khiops-library/providers/config.service';
-import { VariableVO } from '@khiops-visualization/model/variable-vo';
-import { COMPONENT_TYPES } from '@khiops-library/enum/componentTypes';
+import { VariableModel } from '@khiops-visualization/model/variable.model';
+import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 
 @Component({
   selector: 'app-level-distribution-graph',
@@ -31,7 +31,7 @@ export class LevelDistributionGraphCanvasComponent
   extends ScrollableGraphCanvasComponent
   implements OnInit
 {
-  @Input() datas: VariableVO[];
+  @Input() datas: VariableModel[];
   @Input() levelDistributionTitle: string;
 
   override inputDatas: ChartDatasModel = undefined;

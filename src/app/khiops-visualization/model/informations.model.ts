@@ -1,6 +1,6 @@
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 
-export class InformationsVO {
+export class InformationsModel {
   evaluatedVariables: number;
   constructedVariables: number;
   informativeVariables: number;

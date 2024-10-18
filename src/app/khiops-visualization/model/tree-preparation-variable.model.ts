@@ -1,6 +1,6 @@
 import { TYPES } from '@khiops-library/enum/types';
 
-export class TreePreparationVariableVO {
+export class TreePreparationVariableModel {
   _id: string;
   mode: string;
   name: string;

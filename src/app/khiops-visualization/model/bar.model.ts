@@ -1,4 +1,4 @@
-export class BarVO {
+export class BarModel {
   name: string | undefined;
   value: number | undefined;
   defaultGroupIndex: boolean = false;

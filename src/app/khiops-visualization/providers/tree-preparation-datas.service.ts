@@ -3,11 +3,11 @@ import _ from 'lodash'; // Important to import lodash in karma
 import { AppService } from './app.service';
 import { TranslateService } from '@ngstack/translate';
 import { UtilsService } from '@khiops-library/providers/utils.service';
-import { VariableDetailsVO } from '../model/variableDetails-vo';
+import { VariableDetailsModel } from '../model/variable-details.model';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
-import { TreePreparationVariableVO } from '../model/tree-preparation-variable-vo';
-import { TreeNodeModel } from '../model/tree-node-vo';
-import { TreePreparationDatasVO } from '../model/tree-preparation-datas-vo';
+import { TreePreparationVariableModel } from '../model/tree-preparation-variable.model';
+import { TreeNodeModel } from '../model/tree-node.model';
+import { TreePreparationDatasModel } from '../model/tree-preparation-datas.model';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { TYPES } from '@khiops-library/enum/types';
 import { PreparationDatasService } from './preparation-datas.service';
@@ -16,7 +16,7 @@ import { PreparationDatasService } from './preparation-datas.service';
   providedIn: 'root',
 })
 export class TreePreparationDatasService {
-  treePreparationDatas: TreePreparationDatasVO | undefined;
+  treePreparationDatas: TreePreparationDatasModel | undefined;
 
   constructor(
     private preparationDatasService: PreparationDatasService,
@@ -27,7 +27,7 @@ export class TreePreparationDatasService {
 
   initialize() {
     const appDatas = this.appService.getDatas().datas;
-    this.treePreparationDatas = new TreePreparationDatasVO(appDatas);
+    this.treePreparationDatas = new TreePreparationDatasModel(appDatas);
 
     // select the first item of the list by default
     if (this.treePreparationDatas.isValid()) {
@@ -47,7 +47,7 @@ export class TreePreparationDatasService {
     }
   }
 
-  getDatas(): TreePreparationDatasVO | undefined {
+  getDatas(): TreePreparationDatasModel | undefined {
     return this.treePreparationDatas;
   }
 
@@ -92,8 +92,8 @@ export class TreePreparationDatasService {
   }
 
   setSelectedVariable(
-    object: TreePreparationVariableVO,
-  ): TreePreparationVariableVO | undefined {
+    object: TreePreparationVariableModel,
+  ): TreePreparationVariableModel | undefined {
     if (this.treePreparationDatas && object) {
       const variable = this.preparationDatasService.getVariableFromName(
         object.name,
@@ -106,7 +106,7 @@ export class TreePreparationDatasService {
 
         // Init selected variable and construct tree
         this.treePreparationDatas.selectedVariable =
-          new TreePreparationVariableVO(variable, variable.name);
+          new TreePreparationVariableModel(variable, variable.name);
         this.setSelectedFlattenTree(object.rank);
         this.computeNodesFreqsComparedToOthers();
         this.treePreparationDatas.computeTreeColorsMap();
@@ -171,7 +171,7 @@ export class TreePreparationDatasService {
     return item;
   }
 
-  getSelectedVariable(): TreePreparationVariableVO | undefined {
+  getSelectedVariable(): TreePreparationVariableModel | undefined {
     return this.treePreparationDatas.selectedVariable;
   }
 
@@ -212,7 +212,7 @@ export class TreePreparationDatasService {
           appDatas.treePreparationReport.variablesDetailedStatistics[
             this.treePreparationDatas.selectedVariable.rank
           ];
-        const variableDetails: VariableDetailsVO = new VariableDetailsVO(
+        const variableDetails: VariableDetailsModel = new VariableDetailsModel(
           currentVar,
           this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_TABLE_SIZE,
         );

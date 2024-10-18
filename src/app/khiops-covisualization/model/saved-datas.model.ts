@@ -1,4 +1,4 @@
-import { ViewLayoutVO } from './viewLayout.model';
+import { ViewLayoutVO } from './view-layout.model';
 
 export class SavedDatasModel {
   viewsLayout: ViewLayoutVO;

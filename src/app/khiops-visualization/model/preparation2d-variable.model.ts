@@ -1,4 +1,4 @@
-export class Preparation2dVariableVO {
+export class Preparation2dVariableModel {
   _id: string;
 
   noCorrelation: boolean;

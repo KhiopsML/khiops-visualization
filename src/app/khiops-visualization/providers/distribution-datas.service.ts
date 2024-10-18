@@ -2,29 +2,29 @@ import { Injectable } from '@angular/core';
 import { AppService } from './app.service';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { AppConfig } from 'src/environments/environment';
-import { BarVO } from '../model/bar-vo';
-import { ChartDatasetModel } from '@khiops-library/model/chartDataset.model';
+import { BarModel } from '../model/bar.model';
+import { ChartDatasetModel } from '@khiops-library/model/chart-dataset.model';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { TranslateService } from '@ngstack/translate';
-import { VariableDetailsVO } from '../model/variableDetails-vo';
+import { VariableDetailsModel } from '../model/variable-details.model';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
-import { DistributionDatasVO } from '../model/distribution-datas-vo';
-import { ChartDatasModel } from '@khiops-library/model/chartDatas.model';
+import { DistributionDatasModel } from '../model/distribution-datas.model';
+import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { TreePreparationDatasService } from './tree-preparation-datas.service';
 import { TYPES } from '@khiops-library/enum/types';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
-import { ModalityCountsVO } from '@khiops-visualization/model/modality-counts-vo';
+import { ModalityCountsModel } from '@khiops-visualization/model/modality-counts.model';
 import { HistogramValuesI } from '@khiops-visualization/components/commons/histogram/histogram.interfaces';
-import { TreeNodeModel } from '@khiops-visualization/model/tree-node-vo';
-import { PreparationVariableVO } from '@khiops-visualization/model/preparation-variable-vo';
-import { TreePreparationVariableVO } from '@khiops-visualization/model/tree-preparation-variable-vo';
-import { DistributionChartDatasModel } from '@khiops-visualization/interfaces/distribution-chart-datas-vo';
+import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
+import { PreparationVariableModel } from '@khiops-visualization/model/preparation-variable.model';
+import { TreePreparationVariableModel } from '@khiops-visualization/model/tree-preparation-variable.model';
+import { DistributionChartDatasModel } from '@khiops-visualization/model/distribution-chart-datas.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DistributionDatasService {
-  distributionDatas: DistributionDatasVO;
+  distributionDatas: DistributionDatasModel;
 
   constructor(
     private translate: TranslateService,
@@ -37,10 +37,10 @@ export class DistributionDatasService {
 
   initialize() {
     const appDatas = this.appService.getDatas().datas;
-    this.distributionDatas = new DistributionDatasVO(appDatas);
+    this.distributionDatas = new DistributionDatasModel(appDatas);
   }
 
-  getDatas(): DistributionDatasVO {
+  getDatas(): DistributionDatasModel {
     return this.distributionDatas;
   }
 
@@ -52,8 +52,8 @@ export class DistributionDatasService {
     this.distributionDatas.targetDistributionDisplayedValues = values;
   }
 
-  computeModalityCounts(modality): ModalityCountsVO {
-    const counts = new ModalityCountsVO();
+  computeModalityCounts(modality): ModalityCountsModel {
+    const counts = new ModalityCountsModel();
     if (modality) {
       const dimensionLength = modality[0].length;
       for (let i = 0; i < modality.length; i++) {
@@ -76,7 +76,7 @@ export class DistributionDatasService {
 
   // tslint:disable-next-line:typedef-whitespace
   getTargetDistributionGraphDatas(
-    selectedVariable: PreparationVariableVO | TreePreparationVariableVO,
+    selectedVariable: PreparationVariableModel | TreePreparationVariableModel,
     type?: string,
     initActiveEntries?: boolean,
   ): ChartDatasModel {
@@ -93,7 +93,7 @@ export class DistributionDatasService {
           .variablesDetailedStatistics[selectedVariable.rank];
 
       if (currentVar) {
-        const variableDetails: VariableDetailsVO = new VariableDetailsVO(
+        const variableDetails: VariableDetailsModel = new VariableDetailsModel(
           currentVar,
           this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_TABLE_SIZE,
         );
@@ -156,7 +156,7 @@ export class DistributionDatasService {
       const currentVar =
         appDatas[this.distributionDatas.preparationSource]
           .variablesDetailedStatistics[selectedVariable.rank];
-      const variableDetails: VariableDetailsVO = new VariableDetailsVO(
+      const variableDetails: VariableDetailsModel = new VariableDetailsModel(
         currentVar,
         this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_TABLE_SIZE,
       );
@@ -207,7 +207,7 @@ export class DistributionDatasService {
           });
         }
       }
-      const modalityCounts: ModalityCountsVO =
+      const modalityCounts: ModalityCountsModel =
         this.computeModalityCounts(currentDatas);
 
       for (let k = 0; k < dimensionLength; k++) {
@@ -253,7 +253,7 @@ export class DistributionDatasService {
             // Remove the min height bar when hidden
             currentValue = null;
           }
-          const graphItem: BarVO = new BarVO();
+          const graphItem: BarModel = new BarModel();
           graphItem.value = parseFloat(currentValue); // parseFloat to remove uselesse .0*
           graphItem.extra.value = el[k];
           currentDataSet.data.push(graphItem.value);
@@ -287,7 +287,7 @@ export class DistributionDatasService {
       if (currentVar) {
         this.distributionDatas.setDefaultGraphOptions();
 
-        const variableDetails: VariableDetailsVO = new VariableDetailsVO(
+        const variableDetails: VariableDetailsModel = new VariableDetailsModel(
           currentVar,
           this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_TABLE_SIZE,
         );
@@ -412,7 +412,7 @@ export class DistributionDatasService {
         distributionsGraphDetails.intervals = [];
         distributionsGraphDetails.labels.push(currentName);
         distributionsGraphDetails.intervals.push(currentXAxis[i]);
-        const graphItem: BarVO = new BarVO();
+        const graphItem: BarModel = new BarModel();
         graphItem.defaultGroupIndex = i === currentDimension.defaultGroupIndex;
         graphItem.name = currentName;
         graphItem.extra.index = i;
@@ -492,7 +492,7 @@ export class DistributionDatasService {
     }
 
     for (let i = 0; i < l; i++) {
-      const graphItem: BarVO = new BarVO();
+      const graphItem: BarModel = new BarModel();
 
       const el = inputDatas[i];
       if (el.name) {

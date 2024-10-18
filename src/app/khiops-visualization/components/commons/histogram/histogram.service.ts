@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HistogramBarVO } from './histogram.bar-vo';
+import { HistogramBarModel } from './histogram.bar.model';
 import { HistogramType } from './histogram.types';
 import {
   HistogramValuesI,
@@ -104,11 +104,11 @@ export class HistogramService {
   computeXbarsDimensions(
     datas: HistogramValuesI[],
     xType: string,
-  ): HistogramBarVO[] {
-    let bars: HistogramBarVO[] = [];
+  ): HistogramBarModel[] {
+    let bars: HistogramBarModel[] = [];
 
     datas.forEach((d: HistogramValuesI, i: number) => {
-      let histogramBar = new HistogramBarVO(
+      let histogramBar = new HistogramBarModel(
         d,
         this.rangeXLog.middlewidth,
         xType,

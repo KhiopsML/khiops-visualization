@@ -13,15 +13,15 @@ import { VariableGraphDetailsComponent } from '../commons/variable-graph-details
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
-import { ChartDatasModel } from '@khiops-library/model/chartDatas.model';
+import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
-import { VariableVO } from '@khiops-visualization/model/variable-vo';
-import { Preparation2dDatasVO } from '@khiops-visualization/model/preparation2d-datas-vo';
-import { DistributionDatasVO } from '@khiops-visualization/model/distribution-datas-vo';
-import { PreparationDatasVO } from '@khiops-visualization/model/preparation-datas-vo';
-import { TreePreparationDatasVO } from '@khiops-visualization/model/tree-preparation-datas-vo';
-import { TreePreparationVariableVO } from '@khiops-visualization/model/tree-preparation-variable-vo';
+import { VariableModel } from '@khiops-visualization/model/variable.model';
+import { Preparation2dDatasModel } from '@khiops-visualization/model/preparation2d-datas.model';
+import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
+import { PreparationDatasModel } from '@khiops-visualization/model/preparation-datas.model';
+import { TreePreparationDatasModel } from '@khiops-visualization/model/tree-preparation-datas.model';
+import { TreePreparationVariableModel } from '@khiops-visualization/model/tree-preparation-variable.model';
 import { TrackerService } from '@khiops-library/providers/tracker.service';
 import { TranslateService } from '@ngstack/translate';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
@@ -46,12 +46,12 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
   currentIntervalDatas: GridDatasI;
   matrixRegSelectedCell: number = 0;
   selectedBarIndex: number = 0;
-  variablesDatas: VariableVO[];
+  variablesDatas: VariableModel[];
   targetVariableStatsInformations: InfosDatasI[];
-  preparation2dDatas: Preparation2dDatasVO;
-  treePreparationDatas: TreePreparationDatasVO;
-  preparationDatas: PreparationDatasVO;
-  distributionDatas: DistributionDatasVO;
+  preparation2dDatas: Preparation2dDatasModel;
+  treePreparationDatas: TreePreparationDatasModel;
+  preparationDatas: PreparationDatasModel;
+  distributionDatas: DistributionDatasModel;
 
   // managed by selectable-tab component
   override tabIndex = 5;
@@ -152,7 +152,7 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
     }
   }
 
-  onSelectListItemChanged(item: TreePreparationVariableVO) {
+  onSelectListItemChanged(item: TreePreparationVariableModel) {
     const modelingVariable =
       this.treePreparationDatasService.setSelectedVariable(item);
     this.modelingDatasService.setSelectedVariable(modelingVariable);

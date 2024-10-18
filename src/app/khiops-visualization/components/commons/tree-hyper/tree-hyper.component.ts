@@ -20,10 +20,10 @@ import { TreePreparationDatasService } from '@khiops-visualization/providers/tre
 import { Hypertree } from '@khiops-hypertree/js/components/hypertree/hypertree';
 import { AppConfig } from 'src/environments/environment';
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
-import { TreeNodeModel } from '@khiops-visualization/model/tree-node-vo';
+import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
-import { COMPONENT_TYPES } from '@khiops-library/enum/componentTypes';
+import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 
 @Component({
   selector: 'app-tree-hyper',

@@ -4,7 +4,7 @@ import { SelectableComponent } from '@khiops-library/components/selectable/selec
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { ConfigService } from '@khiops-library/providers/config.service';
-import { COMPONENT_TYPES } from '../../../../khiops-library/enum/componentTypes';
+import { COMPONENT_TYPES } from '../../../../khiops-library/enum/component-types';
 
 @Component({
   selector: 'app-external-datas',

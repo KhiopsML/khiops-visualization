@@ -1,4 +1,4 @@
-export class ModelingPredictorVO {
+export class ModelingPredictorModel {
   rank: string;
   type: string;
   family: string;

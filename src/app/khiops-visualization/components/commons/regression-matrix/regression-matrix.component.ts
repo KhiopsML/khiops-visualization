@@ -13,13 +13,13 @@ import { Preparation2dDatasService } from '@khiops-visualization/providers/prepa
 import { deepEqual } from 'fast-equals';
 import { MatrixCanvasComponent } from '@khiops-library/components/matrix-canvas/matrix-canvas.component';
 import { AppService } from '@khiops-visualization/providers/app.service';
-import { PreparationVariableVO } from '@khiops-visualization/model/preparation-variable-vo';
-import { Preparation2dDatasVO } from '@khiops-visualization/model/preparation2d-datas-vo';
+import { PreparationVariableModel } from '@khiops-visualization/model/preparation-variable.model';
+import { Preparation2dDatasModel } from '@khiops-visualization/model/preparation2d-datas.model';
 import { MatrixOptionsModel } from '@khiops-library/model/matrix-options.model';
 import { MatrixModesModel } from '@khiops-library/model/matrix-modes.model';
 import { MatrixRangeValuesI } from '@khiops-visualization/interfaces/matrix-range-values';
 import { CellModel } from '@khiops-library/model/cell.model';
-import { Preparation2dVariableVO } from '@khiops-visualization/model/preparation2d-variable-vo';
+import { Preparation2dVariableModel } from '@khiops-visualization/model/preparation2d-variable.model';
 
 /**
  * Test it with irisR file
@@ -36,10 +36,10 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
   matrixCanvas: MatrixCanvasComponent;
 
   @Output() selectedCellChanged: EventEmitter<number> = new EventEmitter();
-  @Input() selectedVariable: PreparationVariableVO;
+  @Input() selectedVariable: PreparationVariableModel;
   @Input() selectedCell: number;
   @Input() preparationSource: string;
-  preparation2dDatas: Preparation2dDatasVO;
+  preparation2dDatas: Preparation2dDatasModel;
   isFullscreen = false;
 
   matrixOptions: MatrixOptionsModel = new MatrixOptionsModel();
@@ -82,7 +82,7 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
       )
     ) {
       // For regression matrix, Define names based on current name and target variable
-      const currentVar: Preparation2dVariableVO =
+      const currentVar: Preparation2dVariableModel =
         changes.selectedVariable.currentValue;
       currentVar.name1 = currentVar.nameX = currentVar.name;
       currentVar.name2 = currentVar.nameY =

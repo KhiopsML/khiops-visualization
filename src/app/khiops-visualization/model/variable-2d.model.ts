@@ -1,4 +1,4 @@
-export class Variable2dVO {
+export class Variable2dModel {
   _id: string;
   rank: string;
   name1: string;

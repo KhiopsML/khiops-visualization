@@ -19,12 +19,12 @@ import { UtilsService } from '../../providers/utils.service';
 import { MatrixCanvasService } from './matrix-canvas.service';
 import { CellModel } from '../../model/cell.model';
 import { ConfigService } from '@khiops-library/providers/config.service';
-import { TreeNodeModel } from '@khiops-covisualization/model/treeNode.model';
+import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 import { MatrixCoordI } from '@khiops-library/interfaces/matrix-coord';
 import { Subscription } from 'rxjs';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
-import { COMPONENT_TYPES } from '@khiops-library/enum/componentTypes';
+import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 
 @Component({
   selector: 'kl-matrix-canvas',

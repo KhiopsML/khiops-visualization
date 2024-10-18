@@ -6,14 +6,14 @@ import {
   OnChanges,
   OnInit,
 } from '@angular/core';
-import { TreeNodeModel } from '@khiops-covisualization/model/treeNode.model';
+import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { TranslateService } from '@ngstack/translate';
 import { AnnotationService } from '@khiops-covisualization/providers/annotation.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { DimensionModel } from '@khiops-library/model/dimension.model';
-import { COMPONENT_TYPES } from '../../../../khiops-library/enum/componentTypes';
+import { COMPONENT_TYPES } from '../../../../khiops-library/enum/component-types';
 
 @Component({
   selector: 'app-annotation',

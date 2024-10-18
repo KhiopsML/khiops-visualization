@@ -1,4 +1,4 @@
-export class EvaluationTypeVO {
+export class EvaluationTypeModel {
   _id?: string;
   type?: string;
   dictionary?: string;

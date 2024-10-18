@@ -37,7 +37,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngstack/translate';
-import { ToPrecisionPipe } from './pipes/toPrecision.pipe';
+import { ToPrecisionPipe } from './pipes/to-precision.pipe';
 import { HeaderTitleComponent } from './components/header-title/header-title.component';
 import { NoDataComponent } from './components/no-data/no-data.component';
 import { LegendComponent } from './components/legend/legend.component';
@@ -54,7 +54,7 @@ import { DistributionGraphCanvasComponent } from './components/distribution-grap
 import { ScrollableGraphCanvasComponent } from './components/scrollable-graph-canvas/scrollable-graph-canvas.component';
 import { AgGridModule } from '@ag-grid-community/angular';
 import { ChartNextComponent } from './components/chart-next/chart-next.component';
-import { RowIdentifierPipe } from './pipes/rowIdentifierPipe.pipe';
+import { RowIdentifierPipe } from './pipes/row-identifie.pipe';
 import { ImportFileLoaderComponent } from './components/import-file-loader/import-file-loader.component';
 import { WatchResizeComponent } from './components/watch-resize/watch-resize.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';

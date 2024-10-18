@@ -16,12 +16,12 @@ import { VariableGraphDetailsComponent } from '../commons/variable-graph-details
 import { TranslateService } from '@ngstack/translate';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { REPORTS } from '@khiops-library/enum/reports';
-import { ChartDatasModel } from '@khiops-library/model/chartDatas.model';
+import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
-import { PreparationVariableVO } from '@khiops-visualization/model/preparation-variable-vo';
+import { PreparationVariableModel } from '@khiops-visualization/model/preparation-variable.model';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
-import { VariableVO } from '@khiops-visualization/model/variable-vo';
-import { Preparation2dDatasVO } from '@khiops-visualization/model/preparation2d-datas-vo';
+import { VariableModel } from '@khiops-visualization/model/variable.model';
+import { Preparation2dDatasModel } from '@khiops-visualization/model/preparation2d-datas.model';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 import { BorderTextCellComponent } from '../../../khiops-library/components/ag-grid/border-text-cell/border-text-cell.component';
 
@@ -42,7 +42,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
   sizes: any;
 
   preparationDatas: {
-    selectedVariable: PreparationVariableVO;
+    selectedVariable: PreparationVariableModel;
     currentIntervalDatas: GridDatasI;
   };
   summaryDatas: InfosDatasI[];
@@ -51,8 +51,8 @@ export class PreparationViewComponent extends SelectableTabComponent {
   currentIntervalDatas: GridDatasI;
   matrixRegSelectedCell = 0;
   distributionSelectedBarIndex = 0;
-  preparation2dDatas: Preparation2dDatasVO;
-  variablesDatas: VariableVO[];
+  preparation2dDatas: Preparation2dDatasModel;
+  variablesDatas: VariableModel[];
   isRegressionOrExplanatoryAnalysis: boolean;
   targetVariableStatsInformations: InfosDatasI[];
 
@@ -215,7 +215,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
     }
   }
 
-  onSelectListItemChanged(item: VariableVO) {
+  onSelectListItemChanged(item: VariableModel) {
     const modelingVariable = this.preparationDatasService.setSelectedVariable(
       item,
       this.preparationSource,

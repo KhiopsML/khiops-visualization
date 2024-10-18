@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AppService } from './app.service';
 import { PreparationDatasService } from './preparation-datas.service';
 import { Preparation2dDatasService } from './preparation2d-datas.service';
-import { SavedDatasModel } from '../model/saved-datas-vo';
+import { SavedDatasModel } from '../model/saved-datas.model';
 
 @Injectable({
   providedIn: 'root',

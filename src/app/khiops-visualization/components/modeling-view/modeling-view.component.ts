@@ -18,12 +18,12 @@ import { TreePreparationDatasService } from '@khiops-visualization/providers/tre
 import { Distribution2dDatasService } from '@khiops-visualization/providers/distribution2d-datas.service';
 import { REPORTS } from '@khiops-library/enum/reports';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
-import { ChartDatasModel } from '@khiops-library/model/chartDatas.model';
+import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
-import { ModelingDatasVO } from '@khiops-visualization/model/modeling-datas-vo';
-import { Preparation2dDatasVO } from '@khiops-visualization/model/preparation2d-datas-vo';
-import { TreePreparationDatasVO } from '@khiops-visualization/model/tree-preparation-datas-vo';
+import { ModelingDatasModel } from '@khiops-visualization/model/modeling-datas.model';
+import { Preparation2dDatasModel } from '@khiops-visualization/model/preparation2d-datas.model';
+import { TreePreparationDatasModel } from '@khiops-visualization/model/tree-preparation-datas.model';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 
 @Component({
@@ -47,9 +47,9 @@ export class ModelingViewComponent extends SelectableTabComponent {
   summaryDatas: InfosDatasI[];
   targetVariableStatsDatas: ChartDatasModel;
   trainedPredictorsSummaryDatas: InfosDatasI[];
-  modelingDatas: ModelingDatasVO;
-  preparation2dDatas: Preparation2dDatasVO;
-  treePreparationDatas: TreePreparationDatasVO;
+  modelingDatas: ModelingDatasModel;
+  preparation2dDatas: Preparation2dDatasModel;
+  treePreparationDatas: TreePreparationDatasModel;
   matrixRegSelectedCell = 0;
   distributionSelectedBarIndex = 0;
   trainedPredictorsDisplayedColumns: GridColumnsI[];

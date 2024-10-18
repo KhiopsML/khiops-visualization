@@ -1,4 +1,4 @@
-import { ExtDatasModel } from './extDatas.model';
+import { ExtDatasModel } from './ext-datas.model';
 
 export class CompositionModel {
   _id: string;

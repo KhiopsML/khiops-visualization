@@ -9,17 +9,17 @@ import {
 import { SelectableService } from '../selectable/selectable.service';
 import { ScrollableGraphCanvasComponent } from '../scrollable-graph-canvas/scrollable-graph-canvas.component';
 import { KhiopsLibraryService } from '../../providers/khiops-library.service';
-import { ToPrecisionPipe } from '../../pipes/toPrecision.pipe';
+import { ToPrecisionPipe } from '../../pipes/to-precision.pipe';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { ChartColorsSetI } from '../../interfaces/chart-colors-set';
 import { ChartOptions } from 'chart.js';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { TYPES } from '@khiops-library/enum/types';
 import { HistogramType } from '@khiops-visualization/components/commons/histogram/histogram.types';
-import { ChartDatasModel } from '@khiops-library/model/chartDatas.model';
+import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options';
 import { UtilsService } from '@khiops-library/providers/utils.service';
-import { COMPONENT_TYPES } from '@khiops-library/enum/componentTypes';
+import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 
 @Component({
   selector: 'kl-distribution-graph-canvas',

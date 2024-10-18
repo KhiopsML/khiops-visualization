@@ -16,7 +16,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngstack/translate';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { Subscription } from 'rxjs';
-import { TreeNodeModel } from '@khiops-covisualization/model/treeNode.model';
+import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 
 @Component({

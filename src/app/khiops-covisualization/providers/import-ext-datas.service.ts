@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ExtDatasModel } from '@khiops-covisualization/model/extDatas.model';
+import { ExtDatasModel } from '@khiops-covisualization/model/ext-datas.model';
 import { FileModel } from '@khiops-library/model/file.model';
 import { AppService } from './app.service';
 import { TranslateService } from '@ngstack/translate';

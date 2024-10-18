@@ -1,7 +1,7 @@
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
-import { CoocurenceCellModel } from './coocurence-cell-vo';
+import { CoocurenceCellModel } from './coocurence-cell.model';
 
-export class CoocurenceCellsVO {
+export class CoocurenceCellsModel {
   title: string;
   values: CoocurenceCellModel[];
 

@@ -1,4 +1,4 @@
-import { ChartDatasetModel } from './chartDataset.model';
+import { ChartDatasetModel } from './chart-dataset.model';
 
 export class ChartDatasModel {
   datasets: ChartDatasetModel[] = [];

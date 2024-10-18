@@ -18,8 +18,8 @@ import { AppService } from '@khiops-visualization/providers/app.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngstack/translate';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
-import { TreeNodeModel } from '@khiops-visualization/model/tree-node-vo';
-import { COMPONENT_TYPES } from '@khiops-library/enum/componentTypes';
+import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
+import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 
 @Component({
   selector: 'app-tree-select',

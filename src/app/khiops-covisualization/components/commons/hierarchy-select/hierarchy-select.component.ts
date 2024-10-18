@@ -12,11 +12,11 @@ import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
 import { AppService } from '@khiops-covisualization/providers/app.service';
-import { TreeNodeModel } from '@khiops-covisualization/model/treeNode.model';
+import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngstack/translate';
 import { AppConfig } from 'src/environments/environment';
-import { SelectedTreeClusterModel } from '@khiops-covisualization/model/selectedTreeCluster.model';
+import { SelectedTreeClusterModel } from '@khiops-covisualization/model/selected-tree-cluster.model';
 
 @Component({
   selector: 'app-hierarchy-select',

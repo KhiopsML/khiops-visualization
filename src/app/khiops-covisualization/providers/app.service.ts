@@ -2,10 +2,10 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { AppConfig } from 'src/environments/environment';
 import { UtilsService } from '@khiops-library/providers/utils.service';
-import { ViewLayoutVO } from '../model/viewLayout.model';
+import { ViewLayoutVO } from '../model/view-layout.model';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
-import { ProjectSummaryModel } from '@khiops-library/model/projectSummary.model';
+import { ProjectSummaryModel } from '@khiops-library/model/project-summary.model';
 
 @Injectable({
   providedIn: 'root',
