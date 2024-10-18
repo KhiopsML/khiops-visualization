@@ -55,12 +55,13 @@ describe('Visualization', () => {
       const expectedRes = {
         datasets: [
           {
+            label: '0',
             data: [0.4700365714285714],
             extra: [
               {
-                defaultGroupIndex: false,
                 name: '0',
                 value: 0.4700365714285714,
+                defaultGroupIndex: false,
                 extra: {
                   value: 4935384,
                   percent: 47.00365714285714,
@@ -70,16 +71,16 @@ describe('Visualization', () => {
             minBarLength: 3,
             fill: false,
             borderSkipped: false,
-            label: '0',
             type: 'bar',
           },
           {
+            label: '1',
             data: [0.5299634285714285],
             extra: [
               {
-                defaultGroupIndex: false,
                 name: '1',
                 value: 0.5299634285714285,
+                defaultGroupIndex: false,
                 extra: {
                   value: 5564616,
                   percent: 52.99634285714286,
@@ -89,7 +90,6 @@ describe('Visualization', () => {
             minBarLength: 3,
             fill: false,
             borderSkipped: false,
-            label: '1',
             type: 'bar',
           },
         ],
@@ -112,12 +112,13 @@ describe('Visualization', () => {
       const expectedRes = {
         datasets: [
           {
+            label: 'less',
             data: [0.7616316497922397],
             extra: [
               {
-                defaultGroupIndex: false,
                 name: 'less',
                 value: 0.7616316497922397,
+                defaultGroupIndex: false,
                 extra: {
                   value: 26028,
                   percent: 76.16316497922398,
@@ -127,16 +128,16 @@ describe('Visualization', () => {
             minBarLength: 3,
             fill: false,
             borderSkipped: false,
-            label: 'less',
             type: 'bar',
           },
           {
+            label: 'more',
             data: [0.2383683502077603],
             extra: [
               {
-                defaultGroupIndex: false,
                 name: 'more',
                 value: 0.2383683502077603,
+                defaultGroupIndex: false,
                 extra: {
                   value: 8146,
                   percent: 23.83683502077603,
@@ -146,7 +147,6 @@ describe('Visualization', () => {
             minBarLength: 3,
             fill: false,
             borderSkipped: false,
-            label: 'more',
             type: 'bar',
           },
         ],
