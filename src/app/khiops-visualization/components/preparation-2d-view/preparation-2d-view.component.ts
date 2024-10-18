@@ -9,8 +9,8 @@ import { AppConfig } from 'src/environments/environment';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
-import { LevelDistributionGraphCanvasComponent } from '@khiops-visualization/components/commons/level-distribution-graph-canvas/level-distribution-graph-canvas.component';
-import { TargetDistributionGraphCanvasComponent } from '@khiops-visualization/components/commons/target-distribution-graph-canvas/target-distribution-graph-canvas.component';
+import { LevelDistributionGraphComponent } from '@khiops-visualization/components/commons/level-distribution-graph/level-distribution-graph.component';
+import { TargetDistributionGraphComponent } from '@khiops-visualization/components/commons/target-distribution-graph/target-distribution-graph.component';
 import { ModelingDatasService } from '@khiops-visualization/providers/modeling-datas.service';
 import { TranslateService } from '@ngstack/translate';
 import { Distribution2dDatasService } from '@khiops-visualization/providers/distribution2d-datas.service';
@@ -29,12 +29,10 @@ import { TrackerService } from '../../../khiops-library/providers/tracker.servic
   styleUrls: ['./preparation-2d-view.component.scss'],
 })
 export class Preparation2dViewComponent extends SelectableTabComponent {
-  @ViewChild('targetDistributionGraphCanvas', {
+  @ViewChild('targetDistributionGraph', {
     static: false,
   })
-  targetDistributionGraphCanvas:
-    | TargetDistributionGraphCanvasComponent
-    | undefined;
+  targetDistributionGraph: TargetDistributionGraphComponent | undefined;
 
   appDatas: any;
   sizes: any;
@@ -176,8 +174,8 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
     config.width = AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.WIDTH;
     config.height =
       AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.HEIGHT;
-    const dialogRef: MatDialogRef<LevelDistributionGraphCanvasComponent> =
-      this.dialog.open(LevelDistributionGraphCanvasComponent, config);
+    const dialogRef: MatDialogRef<LevelDistributionGraphComponent> =
+      this.dialog.open(LevelDistributionGraphComponent, config);
     dialogRef.componentInstance.levelDistributionTitle =
       this.levelDistributionTitle;
     dialogRef.componentInstance.datas = datas;
@@ -186,8 +184,8 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
   resizeTargetDistributionGraph() {
     setTimeout(() => {
       // Resize to update graphs dimensions
-      if (this.targetDistributionGraphCanvas) {
-        this.targetDistributionGraphCanvas.resizeGraph();
+      if (this.targetDistributionGraph) {
+        this.targetDistributionGraph.resizeGraph();
       }
     }); // do it after view dom complete
   }

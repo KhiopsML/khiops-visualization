@@ -11,7 +11,7 @@ import {
 } from '@angular/material/dialog';
 import { EvaluationDatasService } from '@khiops-visualization/providers/evaluation-datas.service';
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
-import { LevelDistributionGraphCanvasComponent } from '../commons/level-distribution-graph-canvas/level-distribution-graph-canvas.component';
+import { LevelDistributionGraphComponent } from '../commons/level-distribution-graph/level-distribution-graph.component';
 import { VariableGraphDetailsComponent } from '../commons/variable-graph-details/variable-graph-details.component';
 import { TranslateService } from '@ngstack/translate';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
@@ -233,8 +233,8 @@ export class PreparationViewComponent extends SelectableTabComponent {
     config.width = AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.WIDTH;
     config.height =
       AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.HEIGHT;
-    const dialogRef: MatDialogRef<LevelDistributionGraphCanvasComponent> =
-      this.dialog.open(LevelDistributionGraphCanvasComponent, config);
+    const dialogRef: MatDialogRef<LevelDistributionGraphComponent> =
+      this.dialog.open(LevelDistributionGraphComponent, config);
     dialogRef.componentInstance.datas = datas;
   }
 

@@ -1,4 +1,4 @@
-.target-variable-stats-canvas-comp {
+.target-variable-stats-comp {
   position: relative;
   padding-top: 1px;
   padding-bottom: 1px;
@@ -20,7 +20,7 @@
     position: relative;
   }
 
-  ::ng-deep .kl-chart-canvas-comp {
+  ::ng-deep .kl-chart-comp {
     min-width: 200px !important;
 
     canvas {

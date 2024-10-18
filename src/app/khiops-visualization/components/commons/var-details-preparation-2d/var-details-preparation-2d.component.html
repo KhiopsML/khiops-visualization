@@ -38,8 +38,8 @@
         [size]="sizes.row1Col1Row0Col[1]"
         class="variables-list-container"
       >
-        <app-target-distribution-graph-canvas
-          #targetDistributionGraphCanvas
+        <app-target-distribution-graph
+          #targetDistributionGraph
           fxFlex="1 1 100%"
           [showFullscreenBtn]="true"
           titleTooltip="{{
@@ -50,7 +50,7 @@
           [scaleValue]="scaleValue"
           (graphTypeChanged)="onTargetDistributionGraphTypeChanged($event)"
         >
-        </app-target-distribution-graph-canvas>
+        </app-target-distribution-graph>
       </as-split-area>
     </as-split>
   </as-split-area>

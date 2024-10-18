@@ -19,13 +19,13 @@ import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 
 @Component({
-  selector: 'app-target-variable-stats-canvas',
-  templateUrl: './target-variable-stats-canvas.component.html',
-  styleUrls: ['./target-variable-stats-canvas.component.scss'],
+  selector: 'app-target-variable-stats',
+  templateUrl: './target-variable-stats.component.html',
+  styleUrls: ['./target-variable-stats.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ToPrecisionPipe],
 })
-export class TargetVariableStatsCanvasComponent
+export class TargetVariableStatsComponent
   extends SelectableComponent
   implements OnChanges
 {

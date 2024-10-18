@@ -7,7 +7,7 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { SelectableService } from '../selectable/selectable.service';
-import { ScrollableGraphCanvasComponent } from '../scrollable-graph-canvas/scrollable-graph-canvas.component';
+import { ScrollableGraphComponent } from '../scrollable-graph/scrollable-graph.component';
 import { KhiopsLibraryService } from '../../providers/khiops-library.service';
 import { ToPrecisionPipe } from '../../pipes/to-precision.pipe';
 import * as _ from 'lodash'; // Important to import lodash in karma
@@ -22,13 +22,13 @@ import { UtilsService } from '@khiops-library/providers/utils.service';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 
 @Component({
-  selector: 'kl-distribution-graph-canvas',
-  templateUrl: './distribution-graph-canvas.component.html',
-  styleUrls: ['./distribution-graph-canvas.component.scss'],
+  selector: 'kl-distribution-graph',
+  templateUrl: './distribution-graph.component.html',
+  styleUrls: ['./distribution-graph.component.scss'],
   providers: [ToPrecisionPipe],
 })
-export class DistributionGraphCanvasComponent
-  extends ScrollableGraphCanvasComponent
+export class DistributionGraphComponent
+  extends ScrollableGraphComponent
   implements OnInit
 {
   @Input() position = 0;
@@ -174,7 +174,7 @@ export class DistributionGraphCanvasComponent
   }
 
   ngOnInit() {
-    this.graphIdContainer = 'distribution-graph-canvas-comp-' + this.position;
+    this.graphIdContainer = 'distribution-graph-comp-' + this.position;
     this.title = 'Distribution';
     this.updateChartOptions();
   }

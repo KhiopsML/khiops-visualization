@@ -1,4 +1,4 @@
-#level-distribution-graph-canvas-comp {
+#level-distribution-graph-nvas-comp {
   background-color: var(--bgColor) !important; // for copy image
 
   kl-chart {
@@ -13,7 +13,7 @@
   }
 }
 
-#level-distribution-graph-canvas-comp.selected {
+#level-distribution-graph-comp.selected {
   > div {
     box-shadow: none !important;
   }

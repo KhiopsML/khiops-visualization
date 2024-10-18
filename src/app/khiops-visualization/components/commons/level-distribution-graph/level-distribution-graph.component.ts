@@ -13,7 +13,7 @@ import { SelectableService } from '@khiops-library/components/selectable/selecta
 import { AppConfig } from 'src/environments/environment';
 import { TranslateService } from '@ngstack/translate';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ScrollableGraphCanvasComponent } from '@khiops-library/components/scrollable-graph-canvas/scrollable-graph-canvas.component';
+import { ScrollableGraphComponent } from '@khiops-library/components/scrollable-graph/scrollable-graph.component';
 import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { ChartOptions } from 'chart.js';
@@ -23,12 +23,12 @@ import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 
 @Component({
   selector: 'app-level-distribution-graph',
-  templateUrl: './level-distribution-graph-canvas.component.html',
-  styleUrls: ['./level-distribution-graph-canvas.component.scss'],
+  templateUrl: './level-distribution-graph.component.html',
+  styleUrls: ['./level-distribution-graph.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LevelDistributionGraphCanvasComponent
-  extends ScrollableGraphCanvasComponent
+export class LevelDistributionGraphComponent
+  extends ScrollableGraphComponent
   implements OnInit
 {
   @Input() datas: VariableModel[];
@@ -43,7 +43,7 @@ export class LevelDistributionGraphCanvasComponent
   levelGraph: ElementRef;
 
   // define an id to be copied into clipboard
-  override id: any = 'level-distribution-graph-canvas-comp';
+  override id: any = 'level-distribution-graph-comp';
 
   override maxScale: number =
     AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.MAX_LENGTH;
@@ -54,7 +54,7 @@ export class LevelDistributionGraphCanvasComponent
   chartOptions: ChartOptions;
 
   componentType = COMPONENT_TYPES.BAR_CHART; // needed to copy datas
-  override graphIdContainer = 'level-distribution-graph-canvas';
+  override graphIdContainer = 'level-distribution-graph';
 
   constructor(
     private distributionDatasService: DistributionDatasService,

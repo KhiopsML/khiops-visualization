@@ -12,7 +12,7 @@
       <ng-template matTabContent>
         <div fxFlexFill fxLayout="column">
           <div fxLayout="column" fxFlexFill>
-            <app-target-distribution-graph-canvas
+            <app-target-distribution-graph
               #targetDistributionGraph
               fxFlex="1 1 100%"
               class="target-distribution-graph"
@@ -35,7 +35,7 @@
                 onTreeNodeTargetDistributionGraphDisplayedValuesChanged($event)
               "
             >
-            </app-target-distribution-graph-canvas>
+            </app-target-distribution-graph>
 
             <div
               id="tree-node-infos"

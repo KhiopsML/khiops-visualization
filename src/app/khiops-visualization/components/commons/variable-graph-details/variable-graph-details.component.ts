@@ -10,8 +10,8 @@ import {
 } from '@angular/core';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
-import { DistributionGraphCanvasComponent } from '@khiops-library/components/distribution-graph-canvas/distribution-graph-canvas.component';
-import { TargetDistributionGraphCanvasComponent } from '@khiops-visualization/components/commons/target-distribution-graph-canvas/target-distribution-graph-canvas.component';
+import { DistributionGraphComponent } from '@khiops-library/components/distribution-graph/distribution-graph.component';
+import { TargetDistributionGraphComponent } from '@khiops-visualization/components/commons/target-distribution-graph/target-distribution-graph.component';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { AppConfig } from 'src/environments/environment';
 import { PreparationVariableModel } from '@khiops-visualization/model/preparation-variable.model';
@@ -31,16 +31,18 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
   @ViewChild('distributionGraph', {
     static: false,
   })
-  distributionGraph: DistributionGraphCanvasComponent;
+  distributionGraph: DistributionGraphComponent;
 
   @ViewChild('targetDistributionGraph', {
     static: false,
   })
-  targetDistributionGraph: TargetDistributionGraphCanvasComponent;
+  targetDistributionGraph: TargetDistributionGraphComponent;
 
   @Input() showTargetDistributionGraph = true;
   @Input() showDistributionGraph = true;
-  @Input() selectedVariable: PreparationVariableModel | TreePreparationVariableModel;
+  @Input() selectedVariable:
+    | PreparationVariableModel
+    | TreePreparationVariableModel;
   @Input() selectedGraphItemIndex = 0;
   @Input() preparationSource: string;
   @Input() displayedValues?: ChartToggleValuesI[]; // optional input to update chart on value changes (for instance when another component of tree preparation view changed)

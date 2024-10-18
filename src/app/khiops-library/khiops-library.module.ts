@@ -50,8 +50,8 @@ import { AgGridComponent } from './components/ag-grid/ag-grid.component';
 import { MatrixTooltipComponent } from './components/matrix-tooltip/matrix-tooltip.component';
 import { CheckboxCellComponent } from './components/ag-grid/checkbox-cell/checkbox-cell.component';
 import { IconCellComponent } from './components/ag-grid/icon-cell/icon-cell.component';
-import { DistributionGraphCanvasComponent } from './components/distribution-graph-canvas/distribution-graph-canvas.component';
-import { ScrollableGraphCanvasComponent } from './components/scrollable-graph-canvas/scrollable-graph-canvas.component';
+import { DistributionGraphComponent } from './components/distribution-graph/distribution-graph.component';
+import { ScrollableGraphComponent } from './components/scrollable-graph/scrollable-graph.component';
 import { AgGridModule } from '@ag-grid-community/angular';
 import { ChartComponent } from './components/chart/chart.component';
 import { RowIdentifierPipe } from './pipes/row-identifie.pipe';
@@ -131,8 +131,8 @@ import EnTransaltion from '../../assets/i18n/en.json';
     MatrixModeComponent,
     CheckboxCellComponent,
     IconCellComponent,
-    DistributionGraphCanvasComponent,
-    ScrollableGraphCanvasComponent,
+    DistributionGraphComponent,
+    ScrollableGraphComponent,
     ChartComponent,
     RowIdentifierPipe,
     ImportFileLoaderComponent,
@@ -192,7 +192,7 @@ import EnTransaltion from '../../assets/i18n/en.json';
     MatrixModeComponent,
     CheckboxCellComponent,
     IconCellComponent,
-    DistributionGraphCanvasComponent,
+    DistributionGraphComponent,
     ChartComponent,
     ImportFileLoaderComponent,
   ],

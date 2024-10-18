@@ -12,11 +12,11 @@ import { ModelingViewComponent } from './components/modeling-view/modeling-view.
 import { EvaluationViewComponent } from './components/evaluation-view/evaluation-view.component';
 import { ProjectViewComponent } from './components/project-view/project-view.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { TargetVariableStatsCanvasComponent } from './components/commons/target-variable-stats-canvas/target-variable-stats-canvas.component';
+import { TargetVariableStatsComponent } from './components/commons/target-variable-stats/target-variable-stats.component';
 import { DescriptionBlockComponent } from './components/commons/description-block/description-block.component';
 import { KhiopsLibraryModule } from '@khiops-library/khiops-library.module';
 import { TranslateService } from '@ngstack/translate';
-import { LevelDistributionGraphCanvasComponent } from './components/commons/level-distribution-graph-canvas/level-distribution-graph-canvas.component';
+import { LevelDistributionGraphComponent } from './components/commons/level-distribution-graph/level-distribution-graph.component';
 import { SelectTrainedPredictorComponent } from './components/commons/select-trained-predictor/select-trained-predictor.component';
 import { VariableGraphDetailsComponent } from './components/commons/variable-graph-details/variable-graph-details.component';
 import { TargetLiftGraphComponent } from './components/commons/target-lift-graph/target-lift-graph.component';
@@ -25,7 +25,7 @@ import { UserSettingsComponent } from './components/commons/user-settings/user-s
 import { CoocurenceMatrixComponent } from './components/commons/coocurence-matrix/coocurence-matrix.component';
 import { RegressionMatrixComponent } from './components/commons/regression-matrix/regression-matrix.component';
 import { AgGridModule } from '@ag-grid-community/angular';
-import { TargetDistributionGraphCanvasComponent } from './components/commons/target-distribution-graph-canvas/target-distribution-graph-canvas.component';
+import { TargetDistributionGraphComponent } from './components/commons/target-distribution-graph/target-distribution-graph.component';
 import { TreePreparationViewComponent } from './components/tree-preparation-view/tree-preparation-view.component';
 import { TreeDetailsComponent } from './components/commons/tree-details/tree-details.component';
 import { TreeLeafDetailsComponent } from './components/commons/tree-leaf-details/tree-leaf-details.component';
@@ -50,7 +50,7 @@ const providers = [
   declarations: [
     // ReleaseNotesComponent,
     // ConfirmDialogComponent,
-    // LevelDistributionGraphCanvasComponent,
+    // LevelDistributionGraphComponent,
     HistogramComponent,
     HistogramTooltipComponent,
     AppComponent,
@@ -68,9 +68,9 @@ const providers = [
     ModelingViewComponent,
     EvaluationViewComponent,
     ProjectViewComponent,
-    TargetVariableStatsCanvasComponent,
+    TargetVariableStatsComponent,
     DescriptionBlockComponent,
-    LevelDistributionGraphCanvasComponent,
+    LevelDistributionGraphComponent,
     SelectTrainedPredictorComponent,
     VariableGraphDetailsComponent,
     TargetLiftGraphComponent,
@@ -78,7 +78,7 @@ const providers = [
     UserSettingsComponent,
     CoocurenceMatrixComponent,
     RegressionMatrixComponent,
-    TargetDistributionGraphCanvasComponent,
+    TargetDistributionGraphComponent,
     AppComponent,
   ],
   imports: [

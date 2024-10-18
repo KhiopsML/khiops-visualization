@@ -12,7 +12,7 @@ import {
 import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { TranslateService } from '@ngstack/translate';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
-import { DistributionGraphCanvasComponent } from '@khiops-library/components/distribution-graph-canvas/distribution-graph-canvas.component';
+import { DistributionGraphComponent } from '@khiops-library/components/distribution-graph/distribution-graph.component';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
 import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
@@ -37,7 +37,7 @@ export class VariableGraphDetailsComponent
   @ViewChild('distributionGraph', {
     static: false,
   })
-  distributionGraph: DistributionGraphCanvasComponent;
+  distributionGraph: DistributionGraphComponent;
 
   @Input() selectedNode: TreeNodeModel;
   @Output() selectedItemChanged: EventEmitter<any> = new EventEmitter();

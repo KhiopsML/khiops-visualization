@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
-import { ScrollableGraphCanvasComponent } from '@khiops-library/components/scrollable-graph-canvas/scrollable-graph-canvas.component';
+import { ScrollableGraphComponent } from '@khiops-library/components/scrollable-graph/scrollable-graph.component';
 import { TranslateService } from '@ngstack/translate';
 import { ToPrecisionPipe } from '@khiops-library/pipes/to-precision.pipe';
 import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
@@ -22,13 +22,13 @@ import { UtilsService } from '@khiops-library/providers/utils.service';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 
 @Component({
-  selector: 'app-target-distribution-graph-canvas',
-  templateUrl: './target-distribution-graph-canvas.component.html',
-  styleUrls: ['./target-distribution-graph-canvas.component.scss'],
+  selector: 'app-target-distribution-graph',
+  templateUrl: './target-distribution-graph.component.html',
+  styleUrls: ['./target-distribution-graph.component.scss'],
   providers: [ToPrecisionPipe],
 })
-export class TargetDistributionGraphCanvasComponent
-  extends ScrollableGraphCanvasComponent
+export class TargetDistributionGraphComponent
+  extends ScrollableGraphComponent
   implements OnInit
 {
   @Input() position = 0;
@@ -145,8 +145,7 @@ export class TargetDistributionGraphCanvasComponent
   }
 
   ngOnInit() {
-    this.graphIdContainer =
-      'target-distribution-graph-canvas-comp-' + this.position;
+    this.graphIdContainer = 'target-distribution-graph-comp-' + this.position;
     this.title = this.title || this.translate.get('GLOBAL.TARGET_DISTRIBUTION');
   }
 

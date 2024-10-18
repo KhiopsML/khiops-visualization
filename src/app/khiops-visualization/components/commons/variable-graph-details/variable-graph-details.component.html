@@ -20,7 +20,7 @@
       [hideScale]="distributionDatas.histogramDatas"
     >
     </kl-graph-header>
-    <kl-distribution-graph-canvas
+    <kl-distribution-graph
       #distributionGraph
       fxFlex="1 1 100%"
       *ngIf="
@@ -42,7 +42,7 @@
       [activeEntries]="activeEntries"
       (selectedItemChanged)="onSelectedDistributionGraphItemChanged($event)"
     >
-    </kl-distribution-graph-canvas>
+    </kl-distribution-graph>
 
     <app-histogram
       id="app-histogram"
@@ -57,7 +57,7 @@
     >
     </app-histogram>
 
-    <app-target-distribution-graph-canvas
+    <app-target-distribution-graph
       #targetDistributionGraph
       fxFlex="1 1 100%"
       titleTooltip="{{
@@ -85,7 +85,7 @@
         onTargetDistributionGraphDisplayedValuesChanged($event)
       "
       [activeEntries]="activeEntries"
-    ></app-target-distribution-graph-canvas>
+    ></app-target-distribution-graph>
   </div>
   <kl-no-data
     fxFlexFill

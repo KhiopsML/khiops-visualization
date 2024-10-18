@@ -24,7 +24,7 @@ import { ChartDatasetModel } from '@khiops-library/model/chart-dataset.model';
   styleUrls: ['./chart.component.scss'],
 })
 export class ChartComponent implements AfterViewInit, OnChanges {
-  @Input() canvasIdContainer = 'kl-chart-canvas'; // May be updated if multiple graph
+  @Input() canvasIdContainer = 'kl-chart'; // May be updated if multiple graph
   @Input() inputDatas: ChartDatasModel;
   @Input() activeEntries: number;
   @Input() type: ChartJs.ChartType = 'bar';

@@ -11,9 +11,9 @@ import { AppConfig } from 'src/environments/environment';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { EvaluationDatasService } from '@khiops-visualization/providers/evaluation-datas.service';
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
-import { LevelDistributionGraphCanvasComponent } from '@khiops-visualization/components/commons/level-distribution-graph-canvas/level-distribution-graph-canvas.component';
+import { LevelDistributionGraphComponent } from '@khiops-visualization/components/commons/level-distribution-graph/level-distribution-graph.component';
 import { VariableGraphDetailsComponent } from '@khiops-visualization/components/commons/variable-graph-details/variable-graph-details.component';
-import { TargetDistributionGraphCanvasComponent } from '@khiops-visualization/components/commons/target-distribution-graph-canvas/target-distribution-graph-canvas.component';
+import { TargetDistributionGraphComponent } from '@khiops-visualization/components/commons/target-distribution-graph/target-distribution-graph.component';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { Distribution2dDatasService } from '@khiops-visualization/providers/distribution2d-datas.service';
 import { REPORTS } from '@khiops-library/enum/reports';
@@ -36,10 +36,10 @@ export class ModelingViewComponent extends SelectableTabComponent {
     static: false,
   })
   appVariableGraphDetails: VariableGraphDetailsComponent;
-  @ViewChild('targetDistributionGraphCanvas', {
+  @ViewChild('targetDistributionGraph', {
     static: false,
   })
-  targetDistributionGraphCanvas: TargetDistributionGraphCanvasComponent;
+  targetDistributionGraph: TargetDistributionGraphComponent;
   preparationSource: string;
   appDatas: any;
   sizes: any;
@@ -200,16 +200,16 @@ export class ModelingViewComponent extends SelectableTabComponent {
     config.width = AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.WIDTH;
     config.height =
       AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.HEIGHT;
-    const dialogRef: MatDialogRef<LevelDistributionGraphCanvasComponent> =
-      this.dialog.open(LevelDistributionGraphCanvasComponent, config);
+    const dialogRef: MatDialogRef<LevelDistributionGraphComponent> =
+      this.dialog.open(LevelDistributionGraphComponent, config);
     dialogRef.componentInstance.datas = datas;
   }
 
   resizeTargetDistributionGraph() {
     setTimeout(() => {
       // Resize to update graphs dimensions
-      if (this.targetDistributionGraphCanvas) {
-        this.targetDistributionGraphCanvas.resizeGraph();
+      if (this.targetDistributionGraph) {
+        this.targetDistributionGraph.resizeGraph();
       }
     }); // do it after view dom complete
   }

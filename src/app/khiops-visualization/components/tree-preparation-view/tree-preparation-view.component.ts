@@ -8,7 +8,7 @@ import {
   MatDialogRef,
   MatDialogConfig,
 } from '@angular/material/dialog';
-import { LevelDistributionGraphCanvasComponent } from '../commons/level-distribution-graph-canvas/level-distribution-graph-canvas.component';
+import { LevelDistributionGraphComponent } from '../commons/level-distribution-graph/level-distribution-graph.component';
 import { VariableGraphDetailsComponent } from '../commons/variable-graph-details/variable-graph-details.component';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
@@ -166,8 +166,8 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
     config.width = AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.WIDTH;
     config.height =
       AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.HEIGHT;
-    const dialogRef: MatDialogRef<LevelDistributionGraphCanvasComponent> =
-      this.dialog.open(LevelDistributionGraphCanvasComponent, config);
+    const dialogRef: MatDialogRef<LevelDistributionGraphComponent> =
+      this.dialog.open(LevelDistributionGraphComponent, config);
     dialogRef.componentInstance.datas = datas;
   }
 

@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
-import { TargetDistributionGraphCanvasComponent } from '../target-distribution-graph-canvas/target-distribution-graph-canvas.component';
+import { TargetDistributionGraphComponent } from '../target-distribution-graph/target-distribution-graph.component';
 import { AppConfig } from 'src/environments/environment';
 import { Distribution2dDatasService } from '@khiops-visualization/providers/distribution2d-datas.service';
 import { Preparation2dDatasModel } from '@khiops-visualization/model/preparation2d-datas.model';
@@ -13,10 +13,10 @@ import { DistributionDatasModel } from '@khiops-visualization/model/distribution
   styleUrls: ['./var-details-preparation-2d.component.scss'],
 })
 export class VarDetailsPreparation2dComponent {
-  @ViewChild('targetDistributionGraphCanvas', {
+  @ViewChild('targetDistributionGraph', {
     static: false,
   })
-  targetDistributionGraphCanvas: TargetDistributionGraphCanvasComponent;
+  targetDistributionGraph: TargetDistributionGraphComponent;
 
   appDatas: any;
   sizes: any;
@@ -71,8 +71,8 @@ export class VarDetailsPreparation2dComponent {
   resizeTargetDistributionGraph() {
     setTimeout(() => {
       // Resize to update graphs dimensions
-      if (this.targetDistributionGraphCanvas) {
-        this.targetDistributionGraphCanvas.resizeGraph();
+      if (this.targetDistributionGraph) {
+        this.targetDistributionGraph.resizeGraph();
       }
     }); // do it after view dom complete
   }

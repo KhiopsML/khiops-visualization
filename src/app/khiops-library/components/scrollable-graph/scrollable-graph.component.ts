@@ -19,7 +19,7 @@ import { ConfigService } from '@khiops-library/providers/config.service';
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ScrollableGraphCanvasComponent
+export class ScrollableGraphComponent
   extends SelectableComponent
   implements OnChanges, AfterViewInit, OnDestroy
 {

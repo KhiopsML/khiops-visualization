@@ -1,4 +1,4 @@
-<div id="distribution-graph-canvas-comp" fxLayout="column" fxFlexFill>
+<div id="distribution-graph-comp" fxLayout="column" fxFlexFill>
   <div *ngIf="inputDatas" fxFlexFill fxLayout="column">
     <div fxLayout="row" fxLayoutAlign="end center" class="comp-header">
       <div
@@ -28,9 +28,9 @@
       </div>
     </div>
     <kl-chart
-      id="{{ 'distribution-graph-canvas-comp-' + position }}"
+      id="{{ 'distribution-graph-comp-' + position }}"
       [chartOptions]="chartOptions"
-      [canvasIdContainer]="'distribution-chart-canvas-' + position"
+      [canvasIdContainer]="'distribution-chart-' + position"
       (selectBarIndex)="onSelectBarChanged($event)"
       [colorSet]="colorSet"
       [inputDatas]="inputDatas"

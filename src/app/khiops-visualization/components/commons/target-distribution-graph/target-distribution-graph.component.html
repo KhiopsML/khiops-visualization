@@ -1,5 +1,5 @@
 <div
-  class="target-distribution-graph-canvas-comp"
+  class="target-distribution-graph-comp"
   fxFlexFill
   fxLayout="column"
   (resized)="onResized($event)"
@@ -38,9 +38,9 @@
       </kl-btn-fullscreen>
     </div>
     <kl-chart
-      id="{{ 'target-distribution-graph-canvas-comp-' + position }}"
+      id="{{ 'target-distribution-graph-comp-' + position }}"
       [chartOptions]="chartOptions"
-      [canvasIdContainer]="'target-distribution-chart-canvas-' + position"
+      [canvasIdContainer]="'target-distribution-chart-' + position"
       (selectBarIndex)="onSelectBarChanged($event)"
       [colorSet]="colorSet"
       [inputDatas]="inputDatas"

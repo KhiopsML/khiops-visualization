@@ -38,13 +38,13 @@
               </kl-informations-block>
             </as-split-area>
             <as-split-area [size]="sizes.col0Row0Col[1]">
-              <app-target-variable-stats-canvas
+              <app-target-variable-stats
                 *ngIf="targetVariableStatsDatas"
                 id="tree-preparation-target-variable-stats"
                 fxFlexFill
                 [inputDatas]="targetVariableStatsDatas"
               >
-              </app-target-variable-stats-canvas>
+              </app-target-variable-stats>
               <kl-no-data
                 fxFlexFill
                 *ngIf="
