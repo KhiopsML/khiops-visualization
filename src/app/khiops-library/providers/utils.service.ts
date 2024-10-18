@@ -5,6 +5,17 @@ import * as _ from 'lodash'; // Important to import lodash in karma
   providedIn: 'root',
 })
 export class UtilsService {
+  /**
+   * Computes the technical threshold based on the maximum threshold and dimension count.
+   *
+   * This function calculates the technical threshold by taking the maximum threshold
+   * and raising it to the power of the reciprocal of the dimension count, then rounding
+   * up to the nearest integer.
+   *
+   * @param maxThreshold - The maximum threshold value.
+   * @param dimCount - The number of dimensions.
+   * @returns The computed technical threshold as an integer.
+   */
   static computeTechnicalThreshold(
     maxThreshold: number,
     dimCount: number,
@@ -12,6 +23,14 @@ export class UtilsService {
     return Math.ceil(Math.pow(maxThreshold, 1 / dimCount));
   }
 
+  /**
+   * Generates an array of numbers with logarithmic spacing between a minimum and maximum value.
+   *
+   * @param minValue - The minimum value of the range. If negative, the resulting values will also be negative.
+   * @param maxValue - The maximum value of the range.
+   * @param numValues - The number of values to generate in the array.
+   * @returns An array of numbers with logarithmic spacing between the specified minimum and maximum values.
+   */
   static fillArrayWithLogarithmicSpacing(minValue, maxValue, numValues) {
     const minLog = Math.log10(Math.abs(minValue));
     const maxLog = Math.log10(Math.abs(maxValue));
@@ -27,10 +46,21 @@ export class UtilsService {
     return array;
   }
 
+  /**
+   * Checks if a given number is a power of ten.
+   *
+   * @param num - The number to check.
+   * @returns `true` if the number is a power of ten, otherwise `false`.
+   */
   static isPowerOfTen(num) {
     return Math.log10(num) % 1 === 0;
   }
 
+  /**
+   * Sets the cursor to a waiting state for a specified duration.
+   *
+   * @param time - The duration in milliseconds for which the cursor should remain in the waiting state. Defaults to 0.
+   */
   static setWaitingCursor(time = 0) {
     document.body.style.cursor = 'wait';
     setTimeout(() => {
@@ -49,6 +79,18 @@ export class UtilsService {
     }
   }
 
+  /**
+   * Computes the deep difference between two objects.
+   *
+   * This method recursively compares the properties of the `object` and `base` objects,
+   * and returns an object representing the differences. If a property in `object` is not
+   * equal to the corresponding property in `base`, it is included in the result. If both
+   * properties are objects, the method is called recursively to find nested differences.
+   *
+   * @param object - The object to compare.
+   * @param base - The base object to compare against.
+   * @returns An object representing the differences between `object` and `base`.
+   */
   static deepDiff(object, base) {
     // tslint:disable-next-line: no-shadowed-variable
     function changes(object, base) {
@@ -64,6 +106,15 @@ export class UtilsService {
     return changes(object, base);
   }
 
+  /**
+   * Computes the Hellinger distance for a given cell frequency.
+   *
+   * @param cellFreq - The frequency of the cell.
+   * @param totalFreqs - The total frequency of all cells.
+   * @param freqColVal - The frequency value of the column.
+   * @param freqLineVals - The frequency value of the line.
+   * @returns A tuple containing the Hellinger value and its absolute value.
+   */
   static computeHellinger(
     cellFreq,
     totalFreqs,
@@ -78,6 +129,17 @@ export class UtilsService {
     return [hellingerValue, hellingerAbsoluteValue];
   }
 
+  /**
+   * Computes the mutual information (MI) between two variables.
+   *
+   * @param cellFreq - The frequency of the cell (joint frequency of the two variables).
+   * @param totalFreqs - The total frequency (sum of all joint frequencies).
+   * @param freqColVal - The frequency of the column variable.
+   * @param freqLineVals - The frequency of the line variable.
+   * @returns A tuple containing:
+   *   - The computed mutual information value.
+   *   - A boolean indicating if the computed MI value is extra (i.e., NaN or the cell frequency is zero).
+   */
   static computeMutualInfo(
     cellFreq,
     totalFreqs,
@@ -94,6 +156,15 @@ export class UtilsService {
     return [MIij, MIijExtra];
   }
 
+  /**
+   * Computes the expected frequency based on the given total frequencies,
+   * frequency column value, and frequency line values.
+   *
+   * @param totalFreqs - The total frequencies.
+   * @param freqColVal - The frequency value of the column.
+   * @param freqLineVals - The frequency values of the line.
+   * @returns The computed expected frequency.
+   */
   static computeExpectedFrequency(
     totalFreqs,
     freqColVal,
@@ -165,6 +236,12 @@ export class UtilsService {
     return sum;
   }
 
+  /**
+   * Sums the corresponding items of multiple arrays.
+   *
+   * @param arrays - An array of arrays containing numbers to be summed.
+   * @returns An array where each element is the sum of the corresponding elements in the input arrays.
+   */
   static sumArrayItems(arrays) {
     const total = [];
     const arraysLength = arrays.length;
@@ -176,6 +253,12 @@ export class UtilsService {
     return total;
   }
 
+  /**
+   * Sums the elements of a 2D array by their respective indices.
+   *
+   * @param array - A 2D array of numbers where each sub-array is expected to have the same length.
+   * @returns A new array where each element is the sum of the elements at the corresponding index in the input sub-arrays.
+   */
   static sumArrayItemsByIndex(array) {
     const total = new Array(array[0].length).fill(0);
     const totalLength = total.length;
@@ -188,6 +271,12 @@ export class UtilsService {
     return total;
   }
 
+  /**
+   * Sums the items of each sub-array within a given array.
+   *
+   * @param array - The array containing sub-arrays whose items need to be summed.
+   * @returns An array where each element is the sum of the corresponding sub-array's items.
+   */
   static sumArrayItemsOfArray(array) {
     const sumArray = [];
     const arrayLength = array.length;
@@ -198,7 +287,12 @@ export class UtilsService {
   }
 
   /**
-   * @param values can be a number or an array of numbers
+   * Computes the totals for each column in a 2D array representation.
+   *
+   * @param arrayALength - The length of the inner arrays (number of columns).
+   * @param arrayBLength - The length of the outer array (number of rows).
+   * @param values - A flat array containing the values to be summed. Each row's values are contiguous.
+   * @returns An array containing the sum of values for each column.
    */
   static getColumnsTotals(arrayALength, arrayBLength, values) {
     const currentColVal = [];
@@ -217,6 +311,14 @@ export class UtilsService {
     return currentColVal;
   }
 
+  /**
+   * Computes the totals of multi-dimensional columns.
+   *
+   * @param arrayALength - The length of the first dimension array.
+   * @param arrayBLength - The length of the second dimension array.
+   * @param values - A 2D array of numbers representing the values to be totaled.
+   * @returns A 2D array where each element represents the total of the corresponding column values.
+   */
   static getMultiDimColumnsTotals(arrayALength, arrayBLength, values) {
     const currentColVal = [];
     for (let i = 0; i < arrayBLength; i++) {
@@ -233,7 +335,12 @@ export class UtilsService {
   }
 
   /**
-   * @param values can be a number or an array of numbers
+   * Computes the totals for each column in a 2D array.
+   *
+   * @param arrayALength - The number of rows in the 2D array.
+   * @param arrayBLength - The number of columns in the 2D array.
+   * @param values - A flat array representing the 2D array values. Each element can be a number or an array of numbers.
+   * @returns An array containing the totals for each column.
    */
   static getLinesTotals(arrayALength, arrayBLength, values) {
     const currentColVal = [];
@@ -255,6 +362,14 @@ export class UtilsService {
     return currentColVal;
   }
 
+  /**
+   * Computes the totals of multi-dimensional lines from the given values.
+   *
+   * @param arrayALength - The length of the first dimension array.
+   * @param arrayBLength - The length of the second dimension array.
+   * @param values - A 2D array containing the values to be totaled.
+   * @returns A 2D array where each element represents the total of the corresponding column values.
+   */
   static getMultiDimLinesTotals(arrayALength, arrayBLength, values) {
     const currentColVal = [];
     for (let i = 0; i < arrayBLength; i++) {
@@ -273,6 +388,15 @@ export class UtilsService {
     return currentColVal;
   }
 
+  /**
+   * Inverts the values of an array for axis representation.
+   *
+   * This method reverses the order of the input array and then
+   * inverts each value by subtracting it from 100.
+   *
+   * @param values - An array of numbers representing axis values.
+   * @returns The modified array with inverted axis values.
+   */
   static invertAxisValues(values) {
     values = values.reverse();
     // Add each y axis based on values
@@ -283,6 +407,22 @@ export class UtilsService {
     return values;
   }
 
+  /**
+   * Calculates the interval between the minimum and maximum values in a 2D array.
+   *
+   * This method assumes that the input array is a 2D array where each sub-array contains at least two elements.
+   * The first element of each sub-array is considered as a potential minimum value, and the second element of the last sub-array is considered as a potential maximum value.
+   * If the second element of the last sub-array is zero, it is treated as infinite and set to twice the first element of the last sub-array.
+   *
+   * @param array - A 2D array of numbers where each sub-array contains at least two elements.
+   * @returns The interval between the minimum and maximum values in the array.
+   * @example
+   * ```typescript
+   * const array = [[0, 1], [1, 3], [3, 6]];
+   * const interval = UtilsService.getArrayMatrixInterval(array);
+   * console.log(interval); // Output: 6
+   * ```
+   */
   static getArrayMatrixInterval(array) {
     let max = array[array.length - 1][1];
     if (max === 0) {
@@ -294,6 +434,22 @@ export class UtilsService {
     return Number(max - min);
   }
 
+  /**
+   * Generates a missing interval for a given partition.
+   *
+   * If the first interval in the partition is missing (i.e., has a length of 0),
+   * this method calculates a new interval that is 5% of the range between the
+   * second and last intervals in the partition. Otherwise, it returns the first interval.
+   *
+   * @param partition - An array of intervals, where each interval is represented as a tuple [start, end].
+   * @returns A new interval if the first interval is missing, otherwise the first interval in the partition.
+   * @example
+   * ```typescript
+   * const partition = [[0, 0], [1, 3], [3, 6]];
+   * const missingInterval = UtilsService.generateMissingInterval(partition);
+   * console.log(missingInterval); // Output: [1, 3]
+   * ```
+   */
   static generateMissingInterval(partition) {
     // Give an interval of 5% if missing
     if (partition[0].length === 0) {
@@ -306,8 +462,17 @@ export class UtilsService {
   }
 
   /**
-   * Generate array of percent from array of interval of numbers
-   * @param array interval of numbers
+   * Generates an array of percentage values based on the given length.
+   * Each value in the array represents a percentage corresponding to its position in the array.
+   *
+   * @param length - The length of the array to generate.
+   * @returns An array of numbers where each number is a percentage value.
+   * @example
+   * ```typescript
+   * const length = 5;
+   * const percentArray = UtilsService.generateArrayPercentsFromArrayIntervals(length);
+   * console.log(percentArray); // Output: [0, 20, 40, 60, 80, 100]
+   * ```
    */
   static generateArrayPercentsFromArrayIntervals(length): number[] {
     const countArray = [];
@@ -318,8 +483,16 @@ export class UtilsService {
   }
 
   /**
-   * Generate array of percent from array of values numbers
-   * @param array of numbers
+   * Generates an array of cumulative percentage values from an input array of numbers.
+   *
+   * @param array - The input array of numbers.
+   * @returns An array of cumulative percentage values corresponding to the input array.
+   * @example
+   * ```typescript
+   * const array = [1, 20, 3, 50, 10];
+   * const percentArray = UtilsService.generateArrayPercentsFromArrayValues(array);
+   * console.log(percentArray); // Output: [0, 1, 21, 24, 74, 84]s
+   * ```
    */
   static generateArrayPercentsFromArrayValues(array): number[] {
     const percentArray = [];
@@ -334,9 +507,18 @@ export class UtilsService {
   }
 
   /**
-   * Generate array of percent from array length of numbers
-   * @param array of numbers
-   * @param arrayTotal of numbers
+   * Generates an array of cumulative percentages based on the lengths of sub-arrays within the input array.
+   *
+   * @param array - An array containing sub-arrays whose lengths will be used to calculate percentages.
+   * @param arrayTotal - The total length of all sub-arrays combined, used as the denominator for percentage calculations.
+   * @returns An array of cumulative percentages, where each element represents the cumulative percentage up to that point.
+   * @example
+   * ```typescript
+   * const array = [[1, 2, 3], [4, 5], [6]];
+   * const arrayTotal = 6;
+   * const percentArray = UtilsService.generateArrayPercentsFromArrayLength(array, arrayTotal);
+   * console.log(percentArray); // Output: [0, 50, 100]
+   * ```
    */
   static generateArrayPercentsFromArrayLength(array, arrayTotal): number[] {
     const percentArray = [];
@@ -349,9 +531,18 @@ export class UtilsService {
   }
 
   /**
-   * Generate array of percent from intervals array and a total count
-   * @param array of intervals
-   * @param arrayTotal number
+   * Generates an array of cumulative percentages from an array of intervals and a total count.
+   *
+   * @param array - An array of intervals, where each interval is represented as a tuple [start, end].
+   * @param arrayTotal - The total count used to calculate the percentages.
+   * @returns An array of cumulative percentages.
+   * @example
+   * ```typescript
+   * const array = [[0, 1], [1, 3], [3, 6]];
+   * const arrayTotal = 6;
+   * const percentArray = UtilsService.generateArrayPercentsFromArrayIntervalsAndTotalCount(array, arrayTotal);
+   * console.log(percentArray); // Output: [0, 16.666666666666668, 50, 100]
+   * ```
    */
   static generateArrayPercentsFromArrayIntervalsAndTotalCount(
     array,
@@ -369,13 +560,34 @@ export class UtilsService {
   }
 
   /**
-   * Flatten multi dim array
-   * flatten([[1, 2, 3], [4, 5]]); becomes [1, 2, 3, 4, 5]
+   * Flattens a nested array into a single array.
+   *
+   * @param arr - The nested array to flatten.
+   * @returns A new array with all sub-array elements concatenated into it.
+   * @example
+   * ```typescript
+   * const nestedArray = [[1, 2, 3], [4, 5]];
+   * const flattenedArray = UtilsService.flatten(nestedArray);
+   * console.log(flattenedArray); // Output: [1, 2, 3, 4, 5]
+   * ```
    */
   static flatten(arr) {
     return [].concat.apply([], arr);
   }
 
+  /**
+   * Returns a string representation of a number with a specified precision.
+   *
+   * This method handles different cases based on the value of the number:
+   * - If the number is zero, it returns zero.
+   * - If the absolute value of the number is less than 0.1, it formats the number with leading zeros after the decimal point.
+   * - If the number has a fractional part, it rounds the number to the specified precision.
+   * - Otherwise, it returns the number as a string.
+   *
+   * @param value - The number to format.
+   * @param exp - The number of decimal places to include in the result. Optional.
+   * @returns A string representation of the number with the specified precision, or the original value if it is not a finite number.
+   */
   static getPrecisionNumber(value, exp?) {
     if (typeof value === 'number' && isFinite(value)) {
       let num = this.toPlainString(value).split('.');
@@ -406,14 +618,32 @@ export class UtilsService {
     }
   }
 
+  /**
+   * Returns the sign of the given number as a string.
+   *
+   * @param input - The number to evaluate.
+   * @returns An empty string if the number is non-negative, otherwise a hyphen ('-').
+   */
   static getSign(input: number) {
     return input >= 0 ? '' : '-';
   }
 
+  /**
+   * Returns a sign indicator based on the logarithm base 10 of the input number.
+   *
+   * @param input - The number to evaluate.
+   * @returns An empty string if the logarithm base 10 of the input is positive, otherwise a hyphen ('-').
+   */
   static getLogSign(input: number) {
     return Math.log10(input) > 0 ? '' : '-';
   }
 
+  /**
+   * Converts a number to its plain string representation without scientific notation.
+   *
+   * @param num - The number to be converted to a plain string.
+   * @returns The plain string representation of the number.
+   */
   static toPlainString(num) {
     return ('' + +num).replace(
       /(-?)(\d*)\.?(\d*)e([+-]\d+)/,
@@ -428,10 +658,12 @@ export class UtilsService {
   }
 
   /**
-   * Convert flat array into tree
-   * @param array to convert
-   * @param parent Optional parent array
-   * @param tree Optional result
+   * Converts a flat array of objects into a nested tree structure based on parent-child relationships.
+   *
+   * @param array - The flat array of objects to be transformed.
+   * @param parent - The parent object used to find its children. Defaults to an object with an empty `cluster` property.
+   * @param tree - The resulting tree structure. Defaults to an empty array.
+   * @returns The nested tree structure.
    */
   static unflatten(array, parent?, tree?) {
     tree = typeof tree !== 'undefined' ? tree : [];
@@ -462,6 +694,13 @@ export class UtilsService {
     return tree;
   }
 
+  /**
+   * Recursively flattens a tree structure into a single array.
+   *
+   * @param output - The array to store the flattened tree nodes.
+   * @param treeDatas - The current tree node to be flattened.
+   * @returns The array containing all the flattened tree nodes.
+   */
   static flattenTree(output, treeDatas) {
     output.push(treeDatas);
     if (treeDatas.childNodes && treeDatas.childNodes.length > 0) {
@@ -473,6 +712,13 @@ export class UtilsService {
     return output;
   }
 
+  /**
+   * Recursively flattens a tree structure, including only nodes that are not collapsed.
+   *
+   * @param output - The array to store the flattened tree nodes.
+   * @param treeDatas - The current node of the tree being processed.
+   * @returns The array containing the flattened tree nodes.
+   */
   static flattenUncollapsedTree(output, treeDatas) {
     if (treeDatas.children && treeDatas.children.length > 0) {
       const treeDatasChildrenLength = treeDatas.children.length;
@@ -486,6 +732,14 @@ export class UtilsService {
     return output;
   }
 
+  /**
+   * Filters an array based on a provided test function.
+   *
+   * @param array - The array to be filtered.
+   * @param fn - The test function to apply to each element in the array.
+   * @param thisArg - Optional. The value to use as `this` when executing the test function.
+   * @returns A new array containing all elements that pass the test implemented by the provided function.
+   */
   static fastFilter(array, fn, thisArg?) {
     const result = [],
       test =
@@ -505,7 +759,15 @@ export class UtilsService {
   }
 
   /**
-   * Set default split sizes if not into local storage
+   * Sets default local storage values for split sizes.
+   *
+   * This method takes stored split values and default split sizes, and ensures that
+   * all necessary split sizes are present. If a split size is missing in the stored
+   * values, it will be populated with the default value from `splitSizes`.
+   *
+   * @param storedSplitValues - A JSON string representing the stored split values.
+   * @param splitSizes - An object containing the default split sizes.
+   * @returns An object with the combined split sizes from the stored values and the default values.
    */
   static setDefaultLSValues(storedSplitValues, splitSizes) {
     if (storedSplitValues) {
@@ -526,6 +788,12 @@ export class UtilsService {
     }
   }
 
+  /**
+   * Calculates the sum of all elements in an array.
+   *
+   * @param array - The array of numbers to sum.
+   * @returns The sum of the array elements. If the input is not an array, returns 0.
+   */
   static arraySum(array) {
     let res = 0;
     if (Array.isArray(array)) {
@@ -542,6 +810,13 @@ export class UtilsService {
     return !isNaN(parseFloat(n)) && isFinite(n);
   }
 
+  /**
+   * Gets the minimum and maximum values from an array of numbers.
+   *
+   * @param array - The array of numbers to evaluate.
+   * @returns A tuple containing the minimum and maximum values from the array,
+   *          or `undefined` if the array is not provided.
+   */
   static getMinAndMaxFromArray(array) {
     if (array) {
       let lowest = Number.POSITIVE_INFINITY;
@@ -563,6 +838,13 @@ export class UtilsService {
     }
   }
 
+  /**
+   * Computes the average of the minimum and maximum values by normalizing them to the same absolute value.
+   *
+   * @param lowest - The lowest value to consider.
+   * @param highest - The highest value to consider.
+   * @returns A tuple containing the normalized minimum and maximum values.
+   */
   static averageMinAndMaxValues(lowest, highest) {
     let low, high;
     const max = Math.max(Math.abs(lowest), Math.abs(highest));
@@ -571,13 +853,35 @@ export class UtilsService {
     return [low, high];
   }
 
+  /**
+   * Calculates the mean (average) of the numbers in the provided array.
+   *
+   * @param array - An array of numbers.
+   * @returns The mean of the numbers in the array.
+   */
   static getMoyFromArray(array) {
     return array.reduce((a, b) => a + b, 0) / array.length;
   }
 
-  // construct parts according to dimensions parts
-  // Ex : [0, 1, 2],[0, 1, 2, 3, 4], [0, 1, 2]
-  // To generate corresponding matrix
+  /**
+   * Generates a 2D array where each sub-array contains a sequence of numbers from 0 to the value specified in the corresponding index of the input array.
+   *
+   * @param dimensionsParts - An array of numbers where each number specifies the length of the sequence to generate for that dimension.
+   * @returns A 2D array where each sub-array contains a sequence of numbers from 0 to the value specified in the corresponding index of the input array.
+   *
+   * @example
+   * ```typescript
+   * const dimensionsParts = [3, 5, 2];
+   * const maxParts = UtilsService.generateMaxParts(dimensionsParts);
+   * console.log(maxParts);
+   * // Output:
+   * // [
+   * //   [0, 1, 2],
+   * //   [0, 1, 2, 3, 4],
+   * //   [0, 1]
+   * // ]
+   * ```
+   */
   static generateMaxParts(dimensionsParts) {
     const maxParts = [];
     const dimensionsPartsLength = dimensionsParts.length;
@@ -590,10 +894,32 @@ export class UtilsService {
     return maxParts;
   }
 
+  /**
+   * Searches for a value in a hash and returns the corresponding value if found.
+   *
+   * @param v - The value to search for in the hash.
+   * @param h - The hash object where the search is performed.
+   * @returns The value associated with the key if found, otherwise -1.
+   */
   static findArrayIntoHash(v, h) {
     return h.hasOwnProperty(v) ? h[v] : -1;
   }
 
+  /**
+   * Generates a hash map from an array of indexes.
+   * Each element in the array is used as a key in the hash map,
+   * with the value being the index of that element in the array.
+   *
+   * @param indexes - The array of indexes to generate the hash map from.
+   * @returns A hash map where each key is an element from the array and each value is the index of that element.
+   *
+   * @example
+   * ```typescript
+   * const indexes = ['a', 'b', 'c'];
+   * const hash = UtilsService.generateHashFromArray(indexes);
+   * console.log(hash); // { a: 0, b: 1, c: 2 }
+   * ```
+   */
   static generateHashFromArray(indexes) {
     const hash = {};
     const l = indexes.length;
@@ -603,6 +929,37 @@ export class UtilsService {
     return hash;
   }
 
+  /**
+   * Generates all possible combinations of elements from the provided 2D array.
+   * Each combination is represented as an array, and the result is an array of these combinations.
+   *
+   * @param arg - A 2D array where each sub-array contains elements to be combined.
+   * @returns An array of arrays, where each inner array is a unique combination of elements from the input.
+   * @example
+   * ```typescript
+   * const input = [
+   *  [1, 2],
+   * ['a', 'b', 'c'],
+   * [true, false]
+   * ];
+   * const result = UtilsService.generateMatrixCombinations(input);
+   * // result:
+   * // [
+   * //   [1, 'a', true],
+   * //   [1, 'a', false],
+   * //   [1, 'b', true],
+   * //   [1, 'b', false],
+   * //   [1, 'c', true],
+   * //   [1, 'c', false],
+   * //   [2, 'a', true],
+   * //   [2, 'a', false],
+   * //   [2, 'b', true],
+   * //   [2, 'b', false],
+   * //   [2, 'c', true],
+   * //   [2, 'c', false]
+   * // ]
+   * ```
+   */
   static generateMatrixCombinations(arg) {
     const r = [];
     const max = arg.length - 1;
@@ -623,6 +980,13 @@ export class UtilsService {
     return r;
   }
 
+  /**
+   * Splits an array into smaller arrays of a specified size.
+   *
+   * @param myArray - The array to be split into chunks.
+   * @param chunk_size - The size of each chunk.
+   * @returns An array containing the chunks.
+   */
   static chunkArray(myArray, chunk_size) {
     const arrayLength = myArray.length;
     const tempArray = [];
@@ -635,6 +999,30 @@ export class UtilsService {
     return tempArray;
   }
 
+  /**
+   * Merges the values of a multi-dimensional array by their indices.
+   *
+   * This function takes a multi-dimensional array (an array of arrays) and
+   * sums the values at each index across all inner arrays. The result is a
+   * single array where each element is the sum of the corresponding elements
+   * from the input arrays.
+   *
+   * @param array - The multi-dimensional array to be merged. Each inner array
+   * should have the same length.
+   * @returns An array where each element is the sum of the corresponding
+   * elements from the input arrays.
+   *
+   * @example
+   * ```typescript
+   * const input = [
+   *   [1, 2, 3],
+   *   [4, 5, 6],
+   *   [7, 8, 9]
+   * ];
+   * const result = UtilsService.mergeMultiDimArrayValuesByIndex(input);
+   * console.log(result); // Output: [12, 15, 18]
+   * ```
+   */
   static mergeMultiDimArrayValuesByIndex(array) {
     const merged = [];
     const arrayLength = array.length;
@@ -650,6 +1038,13 @@ export class UtilsService {
     return merged;
   }
 
+  /**
+   * Retrieves values from a multi-dimensional array at a specified index.
+   *
+   * @param array - The multi-dimensional array from which to extract values.
+   * @param index - The index at which to retrieve values from each sub-array.
+   * @returns An array containing the values from each sub-array at the specified index.
+   */
   static getMultiDimArrayValuesByIndex(array, index) {
     const merged = [];
     const arrayLength = array.length;
@@ -665,6 +1060,12 @@ export class UtilsService {
   }
 
   /**
+   * Constructs a hierarchical structure from a flat array based on a given ID.
+   *
+   * @param array - The flat array of objects to be transformed into a hierarchy.
+   * @param id - The ID to match for constructing the hierarchy.
+   * @returns A hierarchical array of objects where each object contains its children.
+   *
    * From a structured tree by "children" nodes,
    * return a hierarchy branch with all recursive parents
    * For example, if we search for L4 in this case :
@@ -727,6 +1128,13 @@ export class UtilsService {
     return array.reduce(s, []);
   }
 
+  /**
+   * Recursively searches for an element with a matching title within a hierarchical structure.
+   *
+   * @param element - The root element to start the search from. This element should have a `data` property with an `id` and optionally a `children` property which is an array of child elements.
+   * @param matchingTitle - The title to match against the `id` of the elements.
+   * @returns The element with the matching title if found, otherwise `null`.
+   */
   static deepFind(element, matchingTitle) {
     if (element.data.id === matchingTitle) {
       return element;
@@ -758,17 +1166,17 @@ export class UtilsService {
     }
   }
 
-  static fastConcat(arr1, arr2) {
-    const arr1Length = arr1.length;
-    const arr2Length = arr2.length;
-    // Pre allocate size
-    arr1.length = arr1Length + arr2Length;
-    for (let i = 0; i < arr2Length; i++) {
-      arr1[arr1Length + i] = arr2[i];
-    }
-    return arr1;
-  }
-
+  /**
+   * Concatenates the values of two objects with the same keys.
+   *
+   * This method takes two objects as input and concatenates the values of the
+   * properties that have the same keys in both objects. The concatenated values
+   * are assigned to the properties of the first object.
+   *
+   * @param obj1 - The first object whose property values will be concatenated and updated.
+   * @param obj2 - The second object whose property values will be concatenated with those of the first object.
+   * @returns The first object with updated property values.
+   */
   static concat2ObjectsValues(obj1, obj2) {
     Object.keys(obj1).forEach((obj1Prop, obj2PropIndex) => {
       obj1[obj1Prop] = obj1[obj1Prop].concat(obj2[obj1Prop]);
@@ -776,6 +1184,13 @@ export class UtilsService {
     return obj1;
   }
 
+  /**
+   * Retrieves all indexes of a specified value in an array.
+   *
+   * @param arr - The array to search within.
+   * @param val - The value to search for.
+   * @returns An array of indexes where the specified value is found.
+   */
   static getAllIndexes(arr, val) {
     const indexes = [];
     const arrLength = arr.length;
@@ -795,9 +1210,15 @@ export class UtilsService {
   }
 
   /**
-   * Deep merge two objects.
-   * @param target
-   *  ...sources
+   * Merges multiple source objects into a target object deeply.
+   *
+   * This method recursively merges properties of source objects into the target object.
+   * If a property is an object in both the target and source, it will merge those objects.
+   * Otherwise, it will overwrite the target property with the source property.
+   *
+   * @param target - The target object to merge properties into.
+   * @param sources - One or more source objects whose properties will be merged into the target.
+   * @returns The target object with merged properties.
    */
   static mergeDeep(target, ...sources) {
     if (!sources.length) {
@@ -825,6 +1246,14 @@ export class UtilsService {
     return this.mergeDeep(target, ...sources);
   }
 
+  /**
+   * Converts a hexadecimal color code to an RGBA color string.
+   *
+   * @param {string} hex - The hexadecimal color code. It should be in the format `#RRGGBB` or `#RGB`.
+   * @param {number} alpha - The alpha (opacity) value for the RGBA color. It should be a number between 0 and 1.
+   * @returns {string} The RGBA color string in the format `rgba(r, g, b, alpha)`.
+   * @throws {Error} If the provided hexadecimal color code is invalid.
+   */
   static hexToRgba(hex, alpha) {
     if (!/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
       throw new Error('Format hexadécimal invalide');
@@ -843,6 +1272,12 @@ export class UtilsService {
 
   /**
    * #127, #201 Reset grid search on file change
+   * Resets the search options stored in the local storage for a given identifier.
+   *
+   * This method iterates through all keys in the local storage and removes any key
+   * that starts with the specified identifier followed by 'OPTIONS_AG_GRID_SEARCH_'.
+   *
+   * @param ls_id - The identifier used to match the keys in the local storage.
    */
   static resetSearch(ls_id: string) {
     for (let i = 0; i < localStorage.length; i++) {
