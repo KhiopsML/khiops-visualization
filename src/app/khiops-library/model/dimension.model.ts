@@ -24,12 +24,10 @@ export class DimensionModel {
   defaultGroupIndex: number; // KV
 
   constructor(object, startPosition = 0) {
+    // Assign values from input
+    Object.assign(this, object);
+
     this.startPosition = startPosition;
-    this.name = object?.name || '';
-    this.type = object?.type || '';
-    this.parts = object?.parts || undefined;
-    this.initialParts = object?.initialParts || undefined;
-    this.values = object?.values || undefined;
     this.currentHierarchyClusterCount = this.parts;
     this.hierarchyFold = true;
 
@@ -38,8 +36,6 @@ export class DimensionModel {
 
     // KV
     if (object.partition) {
-      this.partition = object.partition;
-
       // Clone partition to keep real datas
       this.partitionInputs = _.clone(object.partition);
       this.setMissingPartition();
@@ -48,8 +44,6 @@ export class DimensionModel {
     if (object.variable) {
       this.name = object.variable;
     }
-    this.partitionType = object?.partitionType || undefined;
-    this.variable = object?.variable || '';
     this.defaultGroupIndex = object?.defaultGroupIndex || 0;
   }
 
