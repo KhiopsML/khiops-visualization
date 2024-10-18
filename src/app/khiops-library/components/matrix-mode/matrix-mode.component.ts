@@ -7,7 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
-import { MatrixModesI } from '@khiops-library/interfaces/matrix-modes';
+import { MatrixModesI } from '@khiops-library/model/matrix-modes.model';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 
 @Component({

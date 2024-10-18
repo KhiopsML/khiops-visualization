@@ -15,8 +15,8 @@ import { EventsService } from '@khiops-covisualization/providers/events.service'
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
 import { Subscription } from 'rxjs';
 import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
-import { MatrixModesI } from '@khiops-library/interfaces/matrix-modes';
-import { MatrixOptionsI } from '@khiops-library/interfaces/matrix-options';
+import { MatrixModesI } from '@khiops-library/model/matrix-modes.model';
+import { MatrixOptionsI } from '@khiops-library/model/matrix-options.model';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 import { CellVO } from '@khiops-library/model/cell.model';
 import { TranslateService } from '@ngstack/translate';

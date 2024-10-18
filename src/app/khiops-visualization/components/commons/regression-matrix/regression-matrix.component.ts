@@ -15,8 +15,8 @@ import { MatrixCanvasComponent } from '@khiops-library/components/matrix-canvas/
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { PreparationVariableVO } from '@khiops-visualization/model/preparation-variable-vo';
 import { Preparation2dDatasVO } from '@khiops-visualization/model/preparation2d-datas-vo';
-import { MatrixOptionsI } from '@khiops-library/interfaces/matrix-options';
-import { MatrixModesI } from '@khiops-library/interfaces/matrix-modes';
+import { MatrixOptionsI } from '@khiops-library/model/matrix-options.model';
+import { MatrixModesI } from '@khiops-library/model/matrix-modes.model';
 import { MatrixRangeValuesI } from '@khiops-visualization/interfaces/matrix-range-values';
 import { CellVO } from '@khiops-library/model/cell.model';
 import { Preparation2dVariableVO } from '@khiops-visualization/model/preparation2d-variable-vo';

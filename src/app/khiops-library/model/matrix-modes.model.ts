@@ -1,4 +1,4 @@
-import { MatrixModeI } from './matrix-mode';
+import { MatrixModeI } from '../interfaces/matrix-mode';
 
 export class MatrixModesI {
   types: MatrixModeI[] = [];

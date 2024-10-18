@@ -6,7 +6,7 @@ import {
   EventEmitter,
   Output,
 } from '@angular/core';
-import { MatrixOptionsI } from '@khiops-library/interfaces/matrix-options';
+import { MatrixOptionsI } from '@khiops-library/model/matrix-options.model';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 
 @Component({
