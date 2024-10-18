@@ -267,7 +267,7 @@
             forEach(
               clonedContainer.querySelectorAll('.tree-leaf-text'),
               function (node) {
-                node.style.display = 'block';
+                node.style.display = 'flex';
               },
             );
             forEach(
