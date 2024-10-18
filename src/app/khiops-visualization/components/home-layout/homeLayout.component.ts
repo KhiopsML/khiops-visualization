@@ -19,8 +19,6 @@ import { PreparationDatasService } from '@khiops-visualization/providers/prepara
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { FileSaverService } from '@khiops-library/providers/file-saver.service';
-import { SaveService } from '@khiops-visualization/providers/save.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
@@ -78,11 +76,9 @@ export class HomeLayoutComponent implements OnInit {
   constructor(
     private configService: ConfigService,
     private translate: TranslateService,
-    private saveService: SaveService,
     private dialogRef: MatDialog,
     private appService: AppService,
     private snackBar: MatSnackBar,
-    private fileSaverService: FileSaverService,
     public khiopsLibraryService: KhiopsLibraryService,
     public selectableService: SelectableService,
     private distributionDatasService: DistributionDatasService,
@@ -220,18 +216,5 @@ export class HomeLayoutComponent implements OnInit {
   openFile(filename) {
     this.dialogRef.closeAll();
     this.fileLoader.openFile(filename);
-  }
-
-  save() {
-    this.dialogRef.closeAll();
-    this.fileSaverService.save(
-      this.appName,
-      this.saveService.constructDatasToSave(),
-    );
-  }
-
-  saveAs() {
-    this.dialogRef.closeAll();
-    this.fileSaverService.saveAs(this.saveService.constructDatasToSave());
   }
 }
