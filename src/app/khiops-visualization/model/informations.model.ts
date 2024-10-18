@@ -14,15 +14,8 @@ export class InformationsModel {
   displayDatas: InfosDatasI[] | undefined;
 
   constructor(object) {
-    this.evaluatedVariables = object.evaluatedVariables;
-    this.constructedVariables = object.constructedVariables;
-    this.informativeVariables = object.informativeVariables;
-    this.informativeVariablePairs = object.informativeVariablePairs;
-    this.selectedVariables = object.selectedVariables;
-    this.selectedVariablePairs = object.selectedVariablePairs;
-    this.discretization = object.discretization;
-    this.valueGrouping = object.valueGrouping;
-    this.evaluatedVariablePairs = object.evaluatedVariablePairs;
+    // Assign values from input
+    Object.assign(this, object);
 
     this.formatDatas();
   }

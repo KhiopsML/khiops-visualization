@@ -20,31 +20,17 @@ export class EvaluationPredictorModel {
   rankMae?: string;
   rankNlpd?: string;
 
-  constructor(type, currentEvaluationType, obj) {
+  constructor(type, currentEvaluationType, object) {
+    // Assign values from input
+    Object.assign(this, object);
+
     // Common values
     this.type = type;
-    this.evaluationType = obj.evaluationType;
-    this.rank = obj.rank;
-    this.family = obj.family;
     this.currentEvaluationType = currentEvaluationType.evaluationType;
-    this.name = obj.name;
-
-    // Normal values
-    this.accuracy = obj.accuracy;
-    this.compression = obj.compression;
-    this.auc = obj.auc;
     this.robustness = '';
     if (this.auc) {
       this.gini = 2 * this.auc - 1 || ''; // empty if undefined
     }
-
-    // Regression values
-    this.rmse = obj.rmse;
-    this.mae = obj.mae;
-    this.nlpd = obj.nlpd;
-    this.rankRmse = obj.rankRmse;
-    this.rankMae = obj.rankMae;
-    this.rankNlpd = obj.rankNlpd;
 
     this.removeUnexistingValues();
 

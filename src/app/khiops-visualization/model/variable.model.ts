@@ -20,27 +20,20 @@ export class VariableModel {
   targetParts: number;
 
   constructor(object: any, detailedDatas: any) {
+    // Assign values from input
+    Object.assign(this, object);
+
     // Generate id for grid
     this._id = object.name;
 
-    this.rank = object.rank || undefined;
-    this.name = object.name || undefined;
     this.level = object.level || 0;
-    this.targetParts = object.targetParts || undefined;
 
-    this.parts = object.parts || undefined;
     this.values = object.values || 0;
-    this.type = object.type || undefined;
-    this.mode = object.mode;
     if (this.type === TYPES.CATEGORICAL && detailedDatas) {
       this.modeCoverage = this.computeModeCoverage(detailedDatas) || undefined;
     } else {
       this.modeCoverage = undefined;
     }
-    this.min = object.min;
-    this.max = object.max;
-    this.mean = object.mean;
-    this.stdDev = object.stdDev;
     if (this.type === TYPES.NUMERICAL) {
       this.missingNumber = object.missingNumber || 0;
     } else {

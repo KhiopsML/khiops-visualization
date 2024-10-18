@@ -1,3 +1,5 @@
+import { VARIABLE_TYPES } from '@khiops-library/enum/variable-types';
+
 export class Preparation2dVariableModel {
   _id: string;
 
@@ -25,29 +27,10 @@ export class Preparation2dVariableModel {
   variables: number;
 
   constructor(object) {
-    this.variableType = 'preparation-2d';
+    // Assign values from input
+    Object.assign(this, object);
 
-    this.noCorrelation = object.noCorrelation || undefined;
-
-    this.name = object.name || undefined;
-    this.name1 = object.name1 || undefined;
-    this.name2 = object.name2 || undefined;
-    this.nameX = object.nameX || undefined;
-    this.nameY = object.nameY || undefined;
-    this.rank = object.rank || undefined;
-
-    this.parts = object.parts || undefined;
-    this.values = object.values || undefined;
-    this.cells = object.cells || undefined;
-    this.dataCost = object.dataCost || undefined;
-    this.parts1 = object.parts1 || undefined;
-    this.parts2 = object.parts2 || undefined;
-    this.level = object.level !== undefined ? object.level : undefined;
-    this.level1 = object.level1 !== undefined ? object.level1 : undefined;
-    this.level2 = object.level2 !== undefined ? object.level2 : undefined;
-    this.preparationCost = object.preparationCost || undefined;
-    this.constructionCost = object.constructionCost || undefined;
-    this.variables = object.variables || undefined;
+    this.variableType = VARIABLE_TYPES.PREPARATION_2D;
 
     if (!this.noCorrelation) {
       if ((object.level1 === 0 || object.level2 === 0) && !object.level) {

@@ -15,16 +15,8 @@ export class SummaryModel {
   displayDatas!: InfosDatasI[];
 
   constructor(object) {
-    this.dictionary = object.dictionary || '';
-    this.database = object.database || '';
-    this.targetVariable = object.targetVariable || '';
-    this.instances = object.instances || '';
-    this.learningTask = object.learningTask || '';
-    this.samplePercentage = object.samplePercentage || '';
-    this.samplingMode = object.samplingMode || '';
-    this.selectionVariable = object.selectionVariable || '';
-    this.selectionValue = object.selectionValue || '';
-    this.evaluatedVariables = object.evaluatedVariables || '';
+    // Assign values from input
+    Object.assign(this, object);
 
     this.formatDatas();
   }

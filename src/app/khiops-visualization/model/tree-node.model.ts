@@ -25,12 +25,12 @@ export class TreeNodeModel {
   isCollapsed: boolean;
 
   constructor(object, classesCount, color?, isTrusted?) {
+    // Assign values from input
+    Object.assign(this, object);
+
     this.id = object.nodeId || undefined;
-    this.nodeId = object.nodeId || undefined;
     this._id = this.id;
-    this.childNodes = object.childNodes;
     this.isLeaf = object.childNodes ? false : true;
-    this.variable = object.variable || undefined;
     this.color = color || '#999'; // for folders : grey
 
     this.isTrusted = isTrusted || false;
@@ -41,17 +41,12 @@ export class TreeNodeModel {
       frequencies: [],
       values: [],
     };
-    this.type = object.type || undefined;
-    this.partitionType = object.partitionType || undefined;
-    this.partition = object.partition || [];
     this.children = object.childNodes || [];
-    this.defaultGroupIndex = object.defaultGroupIndex || undefined;
     if (this.isLeaf) {
       this.totalFreqs = UtilsService.arraySum(this.targetValues?.frequencies);
     } else {
       this.deepGetChildrenModalityTargetValues(this.childNodes);
     }
-    this.isCollapsed = object.isCollapsed || false;
 
     this.purity = this.getPurity(classesCount);
   }
