@@ -33,7 +33,7 @@ import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 })
 export class MatrixComponent extends SelectableComponent implements OnChanges {
   @Input() inputDatas: any;
-  @Input() minMaxValues: any; // dynamic and complex value object
+  @Input() minMaxValues: any; // dynamic and complex value object. Regression and Coocurence matrix purposes
 
   @Input() graphType: string;
   @Input() graphMode: MatrixModeI;
@@ -206,12 +206,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
       }
 
       // Draw matrix on change
-      if (
-        this.inputDatas &&
-        this.matrixDiv?.nativeElement
-        // &&
-        // (!changes.selectedNodes || !_.isEmpty(diff))
-      ) {
+      if (this.inputDatas && this.matrixDiv?.nativeElement) {
         if (
           this.inputDatas.matrixCellDatas &&
           this.inputDatas.propagateChanges === false
@@ -279,70 +274,27 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
               }
 
               if (this.inputDatas.matrixCellDatas) {
-                let minVal: number | undefined;
-                let maxVal: number | undefined;
-                let minValH: number | undefined;
-                let maxValH: number | undefined;
-
-                if (!this.minMaxValues) {
-                  [minVal, maxVal] = UtilsService.getMinAndMaxFromArray(
+                let [minVal, maxVal, minValH, maxValH] =
+                  this.getMinAndMaxFromGraphMode(
                     this.matrixValues,
+                    this.minMaxValues,
+                    this.graphMode.mode,
                   );
 
-                  if (this.graphMode.mode === 'MUTUAL_INFO') {
-                    [minVal, maxVal] = UtilsService.averageMinAndMaxValues(
-                      minVal,
-                      maxVal,
-                    );
-                  }
-                  if (this.graphMode.mode === 'HELLINGER') {
-                    // For KC purpose
-                    [minValH, maxValH] = UtilsService.averageMinAndMaxValues(
-                      minVal,
-                      maxVal,
-                    );
-                  }
-                } else {
-                  // For KV purpose
-                  [minVal, maxVal] = this.minMaxValues[this.graphMode.mode];
-                }
+                this.computeLegendValues(
+                  minVal,
+                  maxVal,
+                  minValH,
+                  maxValH,
+                  this.graphMode.mode,
+                );
 
-                if (this.graphMode.mode === 'HELLINGER') {
-                  // For KC purpose
-                  this.legend.min = minValH;
-                  this.legend.max = maxValH;
-                } else {
-                  this.legend.min = minVal;
-                  this.legend.max = maxVal;
-                }
-                if (this.legend.min > 0) {
-                  this.legend.min = 0;
-                }
+                this.updateLegendBar();
 
                 this.xAxisLabel = this.inputDatas.variable.nameX;
                 this.yAxisLabel = this.inputDatas.variable.nameY;
 
-                if (this.isAxisInverted) {
-                  [this.xAxisLabel, this.yAxisLabel] = [
-                    this.yAxisLabel,
-                    this.xAxisLabel,
-                  ];
-                } else {
-                  this.matrixCtx.translate(0, height);
-                  this.matrixCtx.scale(1, -1);
-                  this.matrixSelectedCtx.translate(0, height);
-                  this.matrixSelectedCtx.scale(1, -1);
-                }
-
-                this.updateLegendBar();
-                if (this.isAxisInverted) {
-                  this.matrixCtx.translate(0, width);
-                  this.matrixCtx.scale(-1, -1);
-                  this.matrixCtx.rotate(Math.PI / 2);
-                  this.matrixSelectedCtx.translate(0, width);
-                  this.matrixSelectedCtx.scale(-1, -1);
-                  this.matrixSelectedCtx.rotate(Math.PI / 2);
-                }
+                this.setMatrixEltsOrientation(width, height);
 
                 this.selectedCells = [];
                 if (this.selectedCell) {
@@ -350,21 +302,14 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
                   this.selectedCells.push(this.selectedCell);
                 }
 
-                // Compute totlal mutual info
-                const totalMutInfo =
-                  this.graphMode.mode === 'MUTUAL_INFO'
-                    ? UtilsService.arraySum(this.matrixValues)
-                    : 0;
-
+                let totalMutInfo = this.getTotalMutInfo();
                 const cellsLength = this.inputDatas.matrixCellDatas.length;
+
                 this.matrixCtx.beginPath();
                 this.matrixCtx.strokeStyle = 'rgba(255,255,255,0.3)';
                 this.matrixCtx.lineWidth = 1;
                 for (let index = 0; index < cellsLength; index++) {
-                  if (
-                    this.graphMode.mode === 'MUTUAL_INFO' &&
-                    this.isKhiopsCovisu
-                  ) {
+                  if (totalMutInfo) {
                     // hide zero exeptions do not work anymore #110
                     this.matrixExtras[index] = totalMutInfo;
                   }
@@ -908,5 +853,74 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     // this.trackerService.trackEvent('click', 'matrix_zoom', 'reset');
     this.currentMouseX = 0;
     this.zoomCanvas(0);
+  }
+
+  getMinAndMaxFromGraphMode(matrixValues, minMaxValues, mode: string) {
+    let minVal: number | undefined;
+    let maxVal: number | undefined;
+    let minValH: number | undefined;
+    let maxValH: number | undefined;
+
+    if (!minMaxValues) {
+      [minVal, maxVal] = UtilsService.getMinAndMaxFromArray(matrixValues);
+
+      if (mode === 'MUTUAL_INFO') {
+        [minVal, maxVal] = UtilsService.averageMinAndMaxValues(minVal, maxVal);
+      }
+      if (mode === 'HELLINGER') {
+        // For KC purpose
+        [minValH, maxValH] = UtilsService.averageMinAndMaxValues(
+          minVal,
+          maxVal,
+        );
+      }
+    } else {
+      // For KV purpose
+      [minVal, maxVal] = minMaxValues[mode];
+    }
+    return [minVal, maxVal, minValH, maxValH];
+  }
+
+  computeLegendValues(minVal, maxVal, minValH, maxValH, mode: string) {
+    if (mode === 'HELLINGER') {
+      // For KC purpose
+      this.legend.min = minValH;
+      this.legend.max = maxValH;
+    } else {
+      this.legend.min = minVal;
+      this.legend.max = maxVal;
+    }
+    if (this.legend.min > 0) {
+      this.legend.min = 0;
+    }
+  }
+
+  setMatrixEltsOrientation(width, height) {
+    if (this.isAxisInverted) {
+      [this.xAxisLabel, this.yAxisLabel] = [this.yAxisLabel, this.xAxisLabel];
+      this.matrixCtx.translate(0, width);
+      this.matrixCtx.scale(-1, -1);
+      this.matrixCtx.rotate(Math.PI / 2);
+      this.matrixSelectedCtx.translate(0, width);
+      this.matrixSelectedCtx.scale(-1, -1);
+      this.matrixSelectedCtx.rotate(Math.PI / 2);
+    } else {
+      this.matrixCtx.translate(0, height);
+      this.matrixCtx.scale(1, -1);
+      this.matrixSelectedCtx.translate(0, height);
+      this.matrixSelectedCtx.scale(1, -1);
+    }
+  }
+
+  getTotalMutInfo() {
+    let totalMutInfo;
+    if (this.graphMode.mode === 'MUTUAL_INFO' && this.isKhiopsCovisu) {
+      // Compute total mutual info
+      totalMutInfo =
+        this.graphMode.mode === 'MUTUAL_INFO'
+          ? UtilsService.arraySum(this.matrixValues)
+          : 0;
+    }
+    return totalMutInfo;
   }
 }
