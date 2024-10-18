@@ -51,16 +51,17 @@ export class TreeNodeModel {
     extData?,
     valueGroup?: string[] | undefined,
   ) {
+    // Assign values from input
+    Object.assign(this, object);
+
     // Generate id for tree node plugin
     this.id = id;
 
     // Generate id for grid
     this._id = object.cluster;
-    this.nbClusters = nbClusters || '';
     this.leafPosition = leafPosition || -1;
     this.hierarchy = dimension.name || '';
 
-    this.cluster = object?.cluster || '';
     this.bounds = this.cluster;
 
     if (dimension.type === TYPES.NUMERICAL) {
@@ -85,7 +86,6 @@ export class TreeNodeModel {
       this.annotation = object?.annotation || '';
     }
 
-    this.valueGroup = valueGroup;
     if (this.valueGroup && extData) {
       for (let index = 0; index < this.valueGroup?.values.length; index++) {
         const element = this.valueGroup.values[index];
@@ -97,15 +97,8 @@ export class TreeNodeModel {
         }
       }
     }
-    this.parentCluster = object?.parentCluster || '';
 
     this.children = object?.children || [];
-    this.frequency = object?.frequency || undefined;
-    this.interest = object?.interest || undefined;
-    this.hierarchicalLevel = object?.hierarchicalLevel || undefined;
-    this.rank = object?.rank || undefined;
-    this.hierarchicalRank = object?.hierarchicalRank || undefined;
-    this.isLeaf = object?.isLeaf || false;
 
     if (this.parentCluster === '') {
       this.isParentCluster = true;

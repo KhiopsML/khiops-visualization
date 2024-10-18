@@ -183,7 +183,8 @@ export class HomeLayoutComponent implements OnInit {
     this.evaluationDatasService.initialize();
     this.modelingDatasService.initialize();
 
-    this.appProjectView?.nativeElement.initialize();
+    // @ts-ignore
+    this.appProjectView?.initialize();
   }
 
   reloadView() {

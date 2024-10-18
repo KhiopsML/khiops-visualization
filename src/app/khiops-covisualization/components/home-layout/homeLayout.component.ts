@@ -278,12 +278,14 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
       }
     }
 
-    this.appProjectView?.nativeElement.initialize();
+    // @ts-ignore
+    this.appProjectView?.initialize();
 
     this.initializeServices();
 
     if (!this.configService.isElectron) {
-      this.appAxisView?.nativeElement.initialize();
+      // @ts-ignore
+      this.appAxisView?.initialize();
     }
   }
 

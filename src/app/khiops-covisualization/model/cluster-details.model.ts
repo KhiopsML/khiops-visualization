@@ -10,13 +10,11 @@ export class ClusterDetailsModel {
   rank: number;
 
   constructor(object, currentNodesNames?) {
+    // Assign values from input
+    Object.assign(this, object);
+
     this.name = object.shortDescription;
-    this.frequency = object.frequency;
-    this.interest = object.interest;
     this.size = object.clusterCompositionSize;
-    this.hierarchicalRank = object.hierarchicalRank;
-    this.hierarchicalLevel = object.hierarchicalLevel;
-    this.rank = object.rank;
     this._id = object.cluster;
 
     if (currentNodesNames?.[object.parentCluster]) {
