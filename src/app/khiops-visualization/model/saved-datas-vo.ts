@@ -1,4 +1,4 @@
-export class SavedDatasVO {
+export class SavedDatasModel {
   splitSizes: {};
   selectedRank: {};
   selected2dRank: {};

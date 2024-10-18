@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
-import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
+import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensionsData.model';
 import { AppService } from './app.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AnnotationService {
-  dimensionsDatas: DimensionsDatasVO;
+  dimensionsDatas: DimensionsDatasModel;
 
   constructor(
     private appService: AppService,

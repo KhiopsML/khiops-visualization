@@ -1,4 +1,4 @@
-export class ClusterDetailsVO {
+export class ClusterDetailsModel {
   name: string;
   _id: number;
   father: string;

@@ -18,7 +18,7 @@ import { TreenodesService } from '@khiops-covisualization/providers/treenodes.se
 import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { ClustersService } from '@khiops-covisualization/providers/clusters.service';
-import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
+import { TreeNodeModel } from '@khiops-covisualization/model/treeNode.model';
 import { Subscription } from 'rxjs';
 import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options';
 import { ChartDatasModel } from '@khiops-library/model/chartDatas.model';
@@ -39,10 +39,10 @@ export class VariableGraphDetailsComponent
   })
   distributionGraph: DistributionGraphCanvasComponent;
 
-  @Input() selectedNode: TreeNodeVO;
+  @Input() selectedNode: TreeNodeModel;
   @Output() selectedItemChanged: EventEmitter<any> = new EventEmitter();
   @Input() position: number;
-  @Input() dimensionsTree: TreeNodeVO[];
+  @Input() dimensionsTree: TreeNodeModel[];
   @Input() selectedDimension: DimensionModel;
   @Input() selectedDimensions: DimensionModel[];
 
@@ -63,7 +63,7 @@ export class VariableGraphDetailsComponent
   colorSet: ChartColorsSetI;
   isFullscreen: boolean = false;
 
-  prevSelectedNode: TreeNodeVO;
+  prevSelectedNode: TreeNodeModel;
 
   constructor(
     private translate: TranslateService,

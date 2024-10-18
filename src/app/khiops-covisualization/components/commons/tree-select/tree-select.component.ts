@@ -16,7 +16,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngstack/translate';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { Subscription } from 'rxjs';
-import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
+import { TreeNodeModel } from '@khiops-covisualization/model/treeNode.model';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 
 @Component({
@@ -29,9 +29,9 @@ export class TreeSelectComponent
   implements AfterViewInit, OnChanges, OnDestroy
 {
   @Input() selectedDimension: DimensionModel;
-  @Input() selectedNode: TreeNodeVO;
+  @Input() selectedNode: TreeNodeModel;
   @Input() position: number;
-  @Input() dimensionsTree: TreeNodeVO[];
+  @Input() dimensionsTree: TreeNodeModel[];
 
   treeSelectedNodeChangedSub: Subscription;
 
@@ -114,7 +114,7 @@ export class TreeSelectComponent
     });
   }
 
-  initTree(selectedNode?: TreeNodeVO) {
+  initTree(selectedNode?: TreeNodeModel) {
     // @ts-ignore
     this.tree = new TreeView(
       this.dimensionsTree,
@@ -126,7 +126,7 @@ export class TreeSelectComponent
       if (!selectedNode) {
         //  init selected node 0 and propagate event
         // Here get the first available visible node (if tree is collapsed)
-        const lastVisibleNode: TreeNodeVO =
+        const lastVisibleNode: TreeNodeModel =
           this.treenodesService.getLastVisibleNode(this.dimensionsTree);
         this.tree.selectNode(lastVisibleNode.id || 0, true);
       } else {

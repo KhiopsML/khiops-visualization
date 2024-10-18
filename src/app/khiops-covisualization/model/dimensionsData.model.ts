@@ -1,8 +1,8 @@
 import { DimensionModel } from '@khiops-library/model/dimension.model';
-import { TreeNodeVO } from './tree-node-vo';
-import { HierarchyDatasVO } from './hierarchy-datas-vo';
+import { TreeNodeModel } from './treeNode.model';
+import { HierarchyDatasModel } from './hierarchyDatas.model';
 
-export class DimensionsDatasVO {
+export class DimensionsDatasModel {
   matrixDatas: any = undefined;
   allMatrixDatas: any = undefined;
   allMatrixCellDatas: any = undefined;
@@ -15,11 +15,11 @@ export class DimensionsDatasVO {
   contextDimensions: DimensionModel[] = [];
   selectedDimensions: DimensionModel[] = [];
   contextDimensionCount: number = 0;
-  hierarchyDatas: HierarchyDatasVO | undefined = undefined;
-  dimensionsTrees: TreeNodeVO[][] = [];
-  currentDimensionsTrees: TreeNodeVO[][] = [];
-  dimensionsClusters: TreeNodeVO[][] = [[]];
-  currentDimensionsClusters: TreeNodeVO[][] = [[]];
+  hierarchyDatas: HierarchyDatasModel | undefined = undefined;
+  dimensionsTrees: TreeNodeModel[][] = [];
+  currentDimensionsTrees: TreeNodeModel[][] = [];
+  dimensionsClusters: TreeNodeModel[][] = [[]];
+  currentDimensionsClusters: TreeNodeModel[][] = [[]];
   isLoading: boolean = false;
 
   // Saved datas
@@ -31,9 +31,9 @@ export class DimensionsDatasVO {
   matrixMode: number | undefined = undefined;
   nodesNames: {} = {};
   annotations: {} = {};
-  selectedNodes: TreeNodeVO[] = [];
+  selectedNodes: TreeNodeModel[] = [];
 
   constructor() {
-    this.hierarchyDatas = new HierarchyDatasVO();
+    this.hierarchyDatas = new HierarchyDatasModel();
   }
 }

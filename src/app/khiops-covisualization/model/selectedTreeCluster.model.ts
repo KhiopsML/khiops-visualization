@@ -1,7 +1,7 @@
 import { DimensionModel } from '@khiops-library/model/dimension.model';
-import { TreeNodeVO } from './tree-node-vo';
+import { TreeNodeModel } from './treeNode.model';
 
-export class SelectedTreeClusterVO {
+export class SelectedTreeClusterModel {
   // Dimension informations
   dimensionType: string;
   isCategorical: boolean = false;
@@ -20,7 +20,7 @@ export class SelectedTreeClusterVO {
     this.dimensionType = dimension?.type;
   }
 
-  setCurrentNodeInformations(selectedNode: TreeNodeVO) {
+  setCurrentNodeInformations(selectedNode: TreeNodeModel) {
     this.interval = selectedNode?.name;
     this.frequency = selectedNode?.frequency;
     if (selectedNode?.valueGroup) {
@@ -30,10 +30,10 @@ export class SelectedTreeClusterVO {
     }
   }
 
-  countClusters(selectedNode: TreeNodeVO): number {
+  countClusters(selectedNode: TreeNodeModel): number {
     let count = 0;
 
-    function recursiveCount(node: TreeNodeVO): number {
+    function recursiveCount(node: TreeNodeModel): number {
       if (node.valueGroup) {
         return node.valueGroup.values.length;
       } else if (node.children) {

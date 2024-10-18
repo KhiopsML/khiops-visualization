@@ -3,7 +3,7 @@ import { AppService } from '@khiops-covisualization/providers/app.service';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { HttpClientModule } from '@angular/common/http';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
-import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
+import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensionsData.model';
 import { AppConfig } from 'src/environments/environment';
 import { TranslateModule } from '@ngstack/translate';
 let appService: AppService;
@@ -37,7 +37,7 @@ describe('CoVisualization', () => {
       dimensionsDatasService.saveInitialDimension();
       dimensionsDatasService.constructDimensionsTrees();
 
-      const dimensionsDatas: DimensionsDatasVO =
+      const dimensionsDatas: DimensionsDatasModel =
         dimensionsDatasService.getDatas();
 
       expect(dimensionsDatas.cellPartIndexes.length).toEqual(45057);
@@ -60,7 +60,7 @@ describe('CoVisualization', () => {
       dimensionsDatasService.saveInitialDimension();
       dimensionsDatasService.constructDimensionsTrees();
 
-      const dimensionsDatas: DimensionsDatasVO =
+      const dimensionsDatas: DimensionsDatasModel =
         dimensionsDatasService.getDatas();
 
       const unfoldState =
@@ -98,7 +98,7 @@ describe('CoVisualization', () => {
       dimensionsDatasService.saveInitialDimension();
       dimensionsDatasService.constructDimensionsTrees();
 
-      const dimensionsDatas: DimensionsDatasVO =
+      const dimensionsDatas: DimensionsDatasModel =
         dimensionsDatasService.getDatas();
 
       const unfoldState =
@@ -148,7 +148,7 @@ describe('CoVisualization', () => {
 
       treenodesService.constructSavedJson(collapsedNodes);
 
-      const dimensionsDatas: DimensionsDatasVO =
+      const dimensionsDatas: DimensionsDatasModel =
         dimensionsDatasService.getDatas();
 
       expect(dimensionsDatas.cellPartIndexes.length).toEqual(26);

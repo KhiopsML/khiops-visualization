@@ -7,7 +7,7 @@ import {
 import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
 import { TranslateService } from '@ngstack/translate';
 import { FileModel } from '@khiops-library/model/file.model';
-import { ExtDatasVO } from '@khiops-covisualization/model/ext-datas-vo';
+import { ExtDatasModel } from '@khiops-covisualization/model/extDatas.model';
 import { IconCellComponent } from '@khiops-library/components/ag-grid/icon-cell/icon-cell.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AppConfig } from 'src/environments/environment';
@@ -66,7 +66,7 @@ export class ImportExtDatasListComponent {
       values: [],
     };
 
-    const importedValues: ExtDatasVO[] =
+    const importedValues: ExtDatasModel[] =
       this.importExtDatasService.getImportedDatas();
     if (importedValues.length > 0) {
       for (let i = 0; i < importedValues.length; i++) {

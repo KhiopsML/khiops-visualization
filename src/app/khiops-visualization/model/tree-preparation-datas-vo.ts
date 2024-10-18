@@ -1,14 +1,14 @@
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
-import { TreeNodeVO } from './tree-node-vo';
+import { TreeNodeModel } from './tree-node-vo';
 import { TreePreparationVariableVO } from './tree-preparation-variable-vo';
 
 export class TreePreparationDatasVO {
   selectedVariable?: TreePreparationVariableVO = undefined;
-  selectedNodes?: TreeNodeVO[] = undefined;
-  selectedNode?: TreeNodeVO = undefined;
+  selectedNodes?: TreeNodeModel[] = undefined;
+  selectedNode?: TreeNodeModel = undefined;
   treeColorsMap?: any = undefined;
-  dimensionTree?: [TreeNodeVO] = undefined;
-  selectedFlattenTree?: TreeNodeVO[] = undefined;
+  dimensionTree?: [TreeNodeModel] = undefined;
+  selectedFlattenTree?: TreeNodeModel[] = undefined;
   currentIntervalDatas!: GridDatasI;
   appDatas: any = undefined;
   maxFrequencies!: number;

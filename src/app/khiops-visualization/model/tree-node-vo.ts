@@ -1,6 +1,6 @@
 import { UtilsService } from '@khiops-library/providers/utils.service';
 
-export class TreeNodeVO {
+export class TreeNodeModel {
   id: string;
   nodeId: string;
   _id: string;
@@ -15,7 +15,7 @@ export class TreeNodeVO {
     frequencies: number[];
     values: string[];
   };
-  children: TreeNodeVO[];
+  children: TreeNodeModel[];
   color: string;
   isTrusted: boolean;
   defaultGroupIndex: number;

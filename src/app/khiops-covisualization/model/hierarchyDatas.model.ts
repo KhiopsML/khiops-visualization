@@ -1,4 +1,4 @@
-export class HierarchyDatasVO {
+export class HierarchyDatasModel {
   minClusters: number = 0;
   totalClusters: number = 0;
   totalInitialClusters: number = 0;

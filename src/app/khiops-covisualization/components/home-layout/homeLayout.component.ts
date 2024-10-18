@@ -29,7 +29,7 @@ import { ClustersService } from '@khiops-covisualization/providers/clusters.serv
 import { AnnotationService } from '@khiops-covisualization/providers/annotation.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { UtilsService } from '@khiops-library/providers/utils.service';
-import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
+import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensionsData.model';
 import { Subscription } from 'rxjs';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 import { ElementRefI } from '@khiops-library/interfaces/element-ref';
@@ -73,7 +73,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 
   // Hack to override click on tab
   private tabsMenu: MatTabGroup;
-  dimensionsDatas: DimensionsDatasVO;
+  dimensionsDatas: DimensionsDatasModel;
   isContextDimensions = false;
   @ViewChild('tabsMenu', {
     static: false,

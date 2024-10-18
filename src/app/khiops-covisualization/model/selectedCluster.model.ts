@@ -1,4 +1,4 @@
-export class SelectedClusterVO {
+export class SelectedClusterModel {
   _id: string;
   hierarchy: string;
   shortDescription: string;

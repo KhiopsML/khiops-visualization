@@ -3,14 +3,14 @@ import { DimensionsDatasService } from './dimensions-datas.service';
 import { EventsService } from './events.service';
 import { AppService } from './app.service';
 import { UtilsService } from '@khiops-library/providers/utils.service';
-import { TreeNodeVO } from '../model/tree-node-vo';
+import { TreeNodeModel } from '../model/treeNode.model';
 import { deepEqual } from 'fast-equals';
 import _ from 'lodash';
 import { DimensionModel } from '@khiops-library/model/dimension.model';
-import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
-import { HierarchyDatasVO } from '@khiops-covisualization/model/hierarchy-datas-vo';
+import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensionsData.model';
+import { HierarchyDatasModel } from '@khiops-covisualization/model/hierarchyDatas.model';
 import { TYPES } from '@khiops-library/enum/types';
-import { SavedDatasVO } from '@khiops-covisualization/model/saved-datas-vo';
+import { SavedDatasModel } from '@khiops-covisualization/model/savedDatas.model';
 import { AnnotationService } from './annotation.service';
 import { ImportExtDatasService } from './import-ext-datas.service';
 
@@ -18,7 +18,7 @@ import { ImportExtDatasService } from './import-ext-datas.service';
   providedIn: 'root',
 })
 export class TreenodesService {
-  dimensionsDatas: DimensionsDatasVO;
+  dimensionsDatas: DimensionsDatasModel;
   collapsedNodesToSave: {} = {};
 
   constructor(
@@ -41,7 +41,7 @@ export class TreenodesService {
     const collapsedNodes = {};
     for (let i = 0; i < this.dimensionsDatas.selectedDimensions.length; i++) {
       collapsedNodes[this.dimensionsDatas.selectedDimensions[i].name] = [];
-      const nodesVO: TreeNodeVO[] = UtilsService.fastFilter(
+      const nodesVO: TreeNodeModel[] = UtilsService.fastFilter(
         this.dimensionsDatas.dimensionsClusters[i],
         (e) => {
           return rank <= e.hierarchicalRank && !e.isLeaf;
@@ -106,8 +106,8 @@ export class TreenodesService {
     hierarchyName,
     nodeName,
     stopPropagation = false,
-  ): TreeNodeVO {
-    let nodeVO: TreeNodeVO;
+  ): TreeNodeModel {
+    let nodeVO: TreeNodeModel;
     if (this.dimensionsDatas.selectedDimensions) {
       const previousSelectedNodes = Object.assign(
         [],
@@ -147,9 +147,9 @@ export class TreenodesService {
           } else {
             // conditionalOnContext unset
             // get the parent node
-            const parentNodeVO: TreeNodeVO =
+            const parentNodeVO: TreeNodeModel =
               this.dimensionsDatas.currentDimensionsClusters[currentIndex].find(
-                (e: TreeNodeVO) => e.isParentCluster,
+                (e: TreeNodeModel) => e.isParentCluster,
               );
             parentNodeVO.getChildrenList();
             // and set their chidren leafs to context nodes
@@ -209,7 +209,7 @@ export class TreenodesService {
     }
   }
 
-  getLastVisibleNode(nodes: TreeNodeVO[]) {
+  getLastVisibleNode(nodes: TreeNodeModel[]) {
     if (nodes[0].isLeaf) {
       return nodes[0];
     } else if (!nodes[0].isCollapsed) {
@@ -219,8 +219,8 @@ export class TreenodesService {
     }
   }
 
-  getFirstVisibleNode(nodes, nodeVO: TreeNodeVO, lastVisibleNode?) {
-    const parentNode: TreeNodeVO = nodes.find(
+  getFirstVisibleNode(nodes, nodeVO: TreeNodeModel, lastVisibleNode?) {
+    const parentNode: TreeNodeModel = nodes.find(
       (e) => e.name === nodeVO?.parentCluster,
     );
     if (!nodeVO.isParentCluster) {
@@ -266,8 +266,8 @@ export class TreenodesService {
     return this.dimensionsDatas.nodesNames;
   }
 
-  getNodeFromDimensionTree(dimensionName, nodeName): TreeNodeVO {
-    let nodeVO: TreeNodeVO;
+  getNodeFromDimensionTree(dimensionName, nodeName): TreeNodeModel {
+    let nodeVO: TreeNodeModel;
     const currentIndex: number =
       this.dimensionsDatas.selectedDimensions.findIndex((e) => {
         return dimensionName === e.name;
@@ -277,9 +277,9 @@ export class TreenodesService {
       // here we must search recursively into getNodeFromDimensionTree field of
       // this.dimensionsDatas.dimensionTrees[currentIndex]
       const searchNode = (
-        nodes: TreeNodeVO[],
+        nodes: TreeNodeModel[],
         nodeName: string,
-      ): TreeNodeVO | undefined => {
+      ): TreeNodeModel | undefined => {
         for (const node of nodes) {
           if (node.name === nodeName) {
             return node;
@@ -302,8 +302,8 @@ export class TreenodesService {
     return _.cloneDeep(nodeVO); // important to clone datas to keep origin immmutable
   }
 
-  getNodeFromName(dimensionName, nodeName): TreeNodeVO {
-    let nodeVO: TreeNodeVO;
+  getNodeFromName(dimensionName, nodeName): TreeNodeModel {
+    let nodeVO: TreeNodeModel;
     const currentIndex: number =
       this.dimensionsDatas.selectedDimensions.findIndex((e) => {
         return dimensionName === e.name;
@@ -337,7 +337,7 @@ export class TreenodesService {
         this.dimensionsDatas.selectedDimensions.findIndex((e) => {
           return this.dimensionsDatas.dimensions[i].name === e.name;
         });
-      const nodesVO: TreeNodeVO[] = UtilsService.fastFilter(
+      const nodesVO: TreeNodeModel[] = UtilsService.fastFilter(
         this.dimensionsDatas.dimensionsClusters[currentIndex],
         (e) => {
           return !e.isLeaf && e.hierarchicalRank < rank;
@@ -359,7 +359,7 @@ export class TreenodesService {
       maxRank = maxRank - 1;
       currentDimClustersCount = 1;
       for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
-        const nodesVO: TreeNodeVO[] = UtilsService.fastFilter(
+        const nodesVO: TreeNodeModel[] = UtilsService.fastFilter(
           this.dimensionsDatas.dimensionsClusters[i],
           (e) => {
             return !e.isLeaf && e.hierarchicalRank < maxRank;
@@ -371,7 +371,7 @@ export class TreenodesService {
     return maxRank;
   }
 
-  getHierarchyDatas(): HierarchyDatasVO {
+  getHierarchyDatas(): HierarchyDatasModel {
     const appDatas = this.appService.getInitialDatas().datas;
 
     if (appDatas?.coclusteringReport?.dimensionSummaries) {
@@ -502,7 +502,7 @@ export class TreenodesService {
     const matrixMode = this.dimensionsDatas.matrixMode;
     const isAxisInverted = this.dimensionsDatas.isAxisInverted;
 
-    initialDatas.savedDatas = new SavedDatasVO(
+    initialDatas.savedDatas = new SavedDatasModel(
       viewsLayout,
       splitSizes,
       selectedNodesMap,
@@ -585,7 +585,7 @@ export class TreenodesService {
           for (let i = 0; i < nodesLength; i++) {
             const nodeName = nodes[i];
             let nodeChildren: any[] = [];
-            const nodeDetails: TreeNodeVO =
+            const nodeDetails: TreeNodeModel =
               this.dimensionsDatas.dimensionsClusters[dimIndex].find(
                 (e) => e.cluster === nodeName,
               );
@@ -682,7 +682,7 @@ export class TreenodesService {
         currentTruncatedPartition.valueGroups[
           currentTruncatedPartition.defaultGroupIndex
         ].values;
-      const nodeDetails: TreeNodeVO = this.dimensionsDatas.dimensionsClusters[
+      const nodeDetails: TreeNodeModel = this.dimensionsDatas.dimensionsClusters[
         dimIndex
       ].find((e) => e.cluster === nodeName);
       if (nodeDetails?.childrenList) {
@@ -737,7 +737,7 @@ export class TreenodesService {
       const nodeName = nodes[i];
       let nodeChildren: any[] = [];
 
-      const nodeDetails: TreeNodeVO = this.dimensionsDatas.dimensionsClusters[
+      const nodeDetails: TreeNodeModel = this.dimensionsDatas.dimensionsClusters[
         dimIndex
       ].find((e) => e.cluster === nodeName);
       if (nodeDetails?.childrenList) {

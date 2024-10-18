@@ -9,7 +9,7 @@ import { AppConfig } from 'src/environments/environment';
 import { UnfoldHierarchyComponent } from '../unfold-hierarchy/unfold-hierarchy.component';
 import { ManageViewsComponent } from '../manage-views/manage-views.component';
 import { ImportExtDatasListComponent } from '../import-ext-datas-list/import-ext-datas-list.component';
-import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
+import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensionsData.model';
 
 @Component({
   selector: 'app-header-manage-view',
@@ -19,7 +19,7 @@ import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data
 export class HeaderManageViewComponent {
   @Output() toggleContext: EventEmitter<any> = new EventEmitter();
   @Output() toggleUnfoldHierarchy: EventEmitter<any> = new EventEmitter();
-  dimensionsDatas: DimensionsDatasVO;
+  dimensionsDatas: DimensionsDatasModel;
 
   constructor(
     private dialog: MatDialog,

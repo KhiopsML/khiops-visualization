@@ -19,7 +19,7 @@ import { UtilsService } from '../../providers/utils.service';
 import { MatrixCanvasService } from './matrix-canvas.service';
 import { CellModel } from '../../model/cell.model';
 import { ConfigService } from '@khiops-library/providers/config.service';
-import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
+import { TreeNodeModel } from '@khiops-covisualization/model/treeNode.model';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 import { MatrixCoordI } from '@khiops-library/interfaces/matrix-coord';
 import { Subscription } from 'rxjs';
@@ -43,7 +43,7 @@ export class MatrixCanvasComponent
   @Input() contrast: number | undefined;
   @Input() graphTargets: string[];
   @Input() graphTarget: string;
-  @Input() selectedNodes: TreeNodeVO[]; // KC use case
+  @Input() selectedNodes: TreeNodeModel[]; // KC use case
   @Input() selectedCell: CellModel; // KV use case
   @Input() contextSelection: number[] = [];
   @Input() isAxisInverted: boolean;

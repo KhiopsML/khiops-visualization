@@ -1,11 +1,11 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { AppService } from '@khiops-covisualization/providers/app.service';
-import { DimensionViewLayoutVO } from '@khiops-covisualization/model/view-layout-vo';
+import { DimensionViewLayoutModel } from '@khiops-covisualization/model/viewLayout.model';
 import { VariableGraphDetailsComponent } from '../variable-graph-details/variable-graph-details.component';
 import { DimensionModel } from '@khiops-library/model/dimension.model';
-import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
-import { CompositionVO } from '@khiops-covisualization/model/composition-vo';
-import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
+import { TreeNodeModel } from '@khiops-covisualization/model/treeNode.model';
+import { CompositionModel } from '@khiops-covisualization/model/composition.model';
+import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensionsData.model';
 
 @Component({
   selector: 'app-axis',
@@ -21,14 +21,14 @@ export class AxisComponent implements OnInit {
   @Input() viewId: string;
   @Input() sizeId: string;
   @Input() position: number;
-  @Input() dimensionsDatas: DimensionsDatasVO;
-  @Input() axisLayout: DimensionViewLayoutVO;
+  @Input() dimensionsDatas: DimensionsDatasModel;
+  @Input() axisLayout: DimensionViewLayoutModel;
   sizes: any;
 
   selectedDimension: DimensionModel;
   selectedNode: DimensionModel;
-  dimensionsTree: TreeNodeVO[];
-  dimensionsClusters: TreeNodeVO[][];
+  dimensionsTree: TreeNodeModel[];
+  dimensionsClusters: TreeNodeModel[][];
 
   column0Index = 0;
   column1Index = 1;
@@ -36,9 +36,9 @@ export class AxisComponent implements OnInit {
   column3Index = 3;
   column4Index = 4;
 
-  viewLayout: DimensionViewLayoutVO;
+  viewLayout: DimensionViewLayoutModel;
   invertedPosition: number;
-  selectedComposition: CompositionVO;
+  selectedComposition: CompositionModel;
 
   constructor(private appService: AppService) {}
 
@@ -106,7 +106,7 @@ export class AxisComponent implements OnInit {
     }
   }
 
-  selectedCompositionChanged(composition: CompositionVO) {
+  selectedCompositionChanged(composition: CompositionModel) {
     this.selectedComposition = composition;
   }
 }

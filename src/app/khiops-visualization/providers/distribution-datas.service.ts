@@ -15,7 +15,7 @@ import { TYPES } from '@khiops-library/enum/types';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 import { ModalityCountsVO } from '@khiops-visualization/model/modality-counts-vo';
 import { HistogramValuesI } from '@khiops-visualization/components/commons/histogram/histogram.interfaces';
-import { TreeNodeVO } from '@khiops-visualization/model/tree-node-vo';
+import { TreeNodeModel } from '@khiops-visualization/model/tree-node-vo';
 import { PreparationVariableVO } from '@khiops-visualization/model/preparation-variable-vo';
 import { TreePreparationVariableVO } from '@khiops-visualization/model/tree-preparation-variable-vo';
 import { DistributionChartDatasModel } from '@khiops-visualization/interfaces/distribution-chart-datas-vo';
@@ -122,7 +122,7 @@ export class DistributionDatasService {
   }
 
   getTreeNodeTargetDistributionGraphDatas(
-    selectedNode: TreeNodeVO,
+    selectedNode: TreeNodeModel,
     type?: string,
   ): ChartDatasModel {
     this.distributionDatas.initTreeNodeTargetDistributionGraphDatas();

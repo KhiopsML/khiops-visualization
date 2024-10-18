@@ -1,4 +1,4 @@
-export class ExtDatasVO {
+export class ExtDatasModel {
   filename: string;
   dimension: string;
   joinKey: string;

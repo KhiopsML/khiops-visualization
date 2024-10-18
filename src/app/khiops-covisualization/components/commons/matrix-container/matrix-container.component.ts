@@ -10,11 +10,11 @@ import {
 import { AppService } from '@khiops-covisualization/providers/app.service';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { MatrixCanvasComponent } from '@khiops-library/components/matrix-canvas/matrix-canvas.component';
-import { ViewLayoutVO } from '@khiops-covisualization/model/view-layout-vo';
+import { ViewLayoutVO } from '@khiops-covisualization/model/viewLayout.model';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
 import { Subscription } from 'rxjs';
-import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
+import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensionsData.model';
 import { MatrixModesModel } from '@khiops-library/model/matrix-modes.model';
 import { MatrixOptionsModel } from '@khiops-library/model/matrix-options.model';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
@@ -40,7 +40,7 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
 
   sizes: any;
 
-  dimensionsDatas: DimensionsDatasVO;
+  dimensionsDatas: DimensionsDatasModel;
   matrixModes: MatrixModesModel = new MatrixModesModel();
   matrixOptions: MatrixOptionsModel = new MatrixOptionsModel();
 

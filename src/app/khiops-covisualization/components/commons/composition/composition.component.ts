@@ -9,7 +9,7 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { TranslateService } from '@ngstack/translate';
-import { CompositionVO } from '@khiops-covisualization/model/composition-vo';
+import { CompositionModel } from '@khiops-covisualization/model/composition.model';
 import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
 import { ClustersService } from '@khiops-covisualization/providers/clusters.service';
@@ -17,8 +17,8 @@ import { TreenodesService } from '@khiops-covisualization/providers/treenodes.se
 import { Subscription } from 'rxjs';
 import _ from 'lodash';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
-import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
-import { ExtDatasVO } from '@khiops-covisualization/model/ext-datas-vo';
+import { TreeNodeModel } from '@khiops-covisualization/model/treeNode.model';
+import { ExtDatasModel } from '@khiops-covisualization/model/extDatas.model';
 import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
 
 @Component({
@@ -27,16 +27,16 @@ import { ImportExtDatasService } from '@khiops-covisualization/providers/import-
   styleUrls: ['./composition.component.scss'],
 })
 export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
-  @Input() selectedNode: TreeNodeVO;
-  @Input() dimensionsClusters: TreeNodeVO[][];
+  @Input() selectedNode: TreeNodeModel;
+  @Input() dimensionsClusters: TreeNodeModel[][];
   @Input() position: number;
   @Input() selectedDimension: DimensionModel;
 
   @Output() selectedCompositionChanged: EventEmitter<any> = new EventEmitter();
 
   title: string;
-  selectedComposition: CompositionVO;
-  compositionValues: CompositionVO[];
+  selectedComposition: CompositionModel;
+  compositionValues: CompositionModel[];
   id: any;
   treeSelectedNodeChangedSub: Subscription;
   importedDatasChangedSub: Subscription;
@@ -96,12 +96,12 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
     this.importedDatasChangedSub =
       this.eventsService.importedDatasChanged.subscribe((e) => {
         if (this.selectedNode && this.selectedDimension) {
-          const externalDatas: ExtDatasVO =
+          const externalDatas: ExtDatasModel =
             this.importExtDatasService.getImportedDatasFromDimension(
               this.selectedDimension,
             );
 
-          this.compositionValues.forEach((composition: CompositionVO) => {
+          this.compositionValues.forEach((composition: CompositionModel) => {
             if (externalDatas?.[composition?.value]) {
               composition.externalData = externalDatas[composition.value];
             }
@@ -126,7 +126,7 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
     this.updateTable(this.selectedNode);
   }
 
-  updateTable(selectedNode: TreeNodeVO) {
+  updateTable(selectedNode: TreeNodeModel) {
     if (selectedNode) {
       this.compositionValues = Object.assign(
         [],
@@ -162,14 +162,14 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
     this.selectedCompositionChanged.emit(this.selectedComposition);
   }
 
-  onDoubleClickListItem(item: TreeNodeVO) {
+  onDoubleClickListItem(item: TreeNodeModel) {
     this.treenodesService.setSelectedNode(
       this.selectedDimension.name,
       item.cluster,
     );
   }
 
-  onSelectRowChanged(item: CompositionVO) {
+  onSelectRowChanged(item: CompositionModel) {
     // find composition in local to get external datas
     this.selectedComposition = this.compositionValues.find(
       (e) => e.value === item.value,

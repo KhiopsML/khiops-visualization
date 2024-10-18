@@ -1,4 +1,4 @@
-export class DimensionViewLayoutVO {
+export class DimensionViewLayoutModel {
   name: string;
   isChecked = true;
   isHierarchyChecked = true;
@@ -21,7 +21,7 @@ export class ViewLayoutVO {
   isDimensionsChecked = true;
   isCoocurenceChecked = true;
 
-  dimensionsViewsLayoutsVO: DimensionViewLayoutVO[];
+  dimensionsViewsLayoutsVO: DimensionViewLayoutModel[];
 
   constructor() {
     this.dimensionsViewsLayoutsVO = [];
@@ -30,9 +30,9 @@ export class ViewLayoutVO {
   addDimensionViewLayout(
     dimensionName,
     isContextView,
-    previousLayout?: DimensionViewLayoutVO,
+    previousLayout?: DimensionViewLayoutModel,
   ) {
-    let viewLayoutDimension = new DimensionViewLayoutVO(
+    let viewLayoutDimension = new DimensionViewLayoutModel(
       dimensionName,
       isContextView,
     );

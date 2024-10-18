@@ -15,7 +15,7 @@ import { TreePreparationDatasVO } from '@khiops-visualization/model/tree-prepara
 import { DistributionDatasVO } from '@khiops-visualization/model/distribution-datas-vo';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
-import { TreeNodeVO } from '@khiops-visualization/model/tree-node-vo';
+import { TreeNodeModel } from '@khiops-visualization/model/tree-node-vo';
 
 @Component({
   selector: 'app-tree-leaf-details',
@@ -23,7 +23,7 @@ import { TreeNodeVO } from '@khiops-visualization/model/tree-node-vo';
   styleUrls: ['./tree-leaf-details.component.scss'],
 })
 export class TreeLeafDetailsComponent implements OnInit, OnChanges {
-  @Input() selectedNode: TreeNodeVO;
+  @Input() selectedNode: TreeNodeModel;
   @Input() displayedValues: ChartToggleValuesI[];
 
   populationCount: number = 10;

@@ -11,10 +11,10 @@ import { TranslateService } from '@ngstack/translate';
 import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { ClustersService } from '@khiops-covisualization/providers/clusters.service';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
-import { ClusterDetailsVO } from '@khiops-covisualization/model/cluster-details-vo';
+import { ClusterDetailsModel } from '@khiops-covisualization/model/clusterDetails.model';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { TYPES } from '@khiops-library/enum/types';
-import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
+import { TreeNodeModel } from '@khiops-covisualization/model/treeNode.model';
 
 @Component({
   selector: 'app-cluster-details',
@@ -23,14 +23,14 @@ import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
 })
 export class ClusterDetailsComponent implements OnInit, OnChanges {
   @Input() position: number;
-  @Input() dimensionsTree: TreeNodeVO[];
+  @Input() dimensionsTree: TreeNodeModel[];
   @Input() selectedDimension: DimensionModel;
-  @Input() selectedNode: TreeNodeVO;
-  nodeToSelect: TreeNodeVO;
+  @Input() selectedNode: TreeNodeModel;
+  nodeToSelect: TreeNodeModel;
   clusterDisplayedColumns: GridColumnsI[] = [];
 
   title: string;
-  filteredDimensionsClusters: ClusterDetailsVO[];
+  filteredDimensionsClusters: ClusterDetailsModel[];
   id: any;
 
   constructor(
@@ -117,7 +117,7 @@ export class ClusterDetailsComponent implements OnInit, OnChanges {
       );
       if (!findNodeToSelect) {
         // get the parent
-        const parentNode: ClusterDetailsVO =
+        const parentNode: ClusterDetailsModel =
           this.filteredDimensionsClusters.find(
             (e) =>
               e._id.toString() === this.nodeToSelect?.parentCluster.toString(),
@@ -142,7 +142,7 @@ export class ClusterDetailsComponent implements OnInit, OnChanges {
     }
   }
 
-  getFirstNodeLeaf(node: TreeNodeVO): TreeNodeVO {
+  getFirstNodeLeaf(node: TreeNodeModel): TreeNodeModel {
     if (node.children.length > 0 && node.children[0].isLeaf === false) {
       return this.getFirstNodeLeaf(node.children[0]);
     } else {
@@ -150,7 +150,7 @@ export class ClusterDetailsComponent implements OnInit, OnChanges {
     }
   }
 
-  onSelectRowChanged(item: ClusterDetailsVO) {
+  onSelectRowChanged(item: ClusterDetailsModel) {
     this.treenodesService.setSelectedNode(
       this.selectedDimension.name,
       item._id,

@@ -3,13 +3,13 @@ import { AppService } from '@khiops-covisualization/providers/app.service';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { TreenodesService } from './treenodes.service';
 import { DimensionModel } from '@khiops-library/model/dimension.model';
-import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
+import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensionsData.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HierarchyService {
-  dimensionsDatas: DimensionsDatasVO;
+  dimensionsDatas: DimensionsDatasModel;
   hierarchyFold: any = {};
 
   constructor(

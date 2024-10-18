@@ -9,7 +9,7 @@ import { SelectableService } from '@khiops-library/components/selectable/selecta
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { TranslateService } from '@ngstack/translate';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
-import { TreeNodeVO } from '@khiops-visualization/model/tree-node-vo';
+import { TreeNodeModel } from '@khiops-visualization/model/tree-node-vo';
 
 @Component({
   selector: 'app-tree-details',
@@ -17,8 +17,8 @@ import { TreeNodeVO } from '@khiops-visualization/model/tree-node-vo';
   styleUrls: ['./tree-details.component.scss'],
 })
 export class TreeDetailsComponent implements OnChanges {
-  @Input() selectedNodes: TreeNodeVO[];
-  @Input() selectedNode: TreeNodeVO;
+  @Input() selectedNodes: TreeNodeModel[];
+  @Input() selectedNode: TreeNodeModel;
 
   treeDetails: GridDatasI;
 

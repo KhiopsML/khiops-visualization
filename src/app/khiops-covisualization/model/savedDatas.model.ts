@@ -1,6 +1,6 @@
-import { ViewLayoutVO } from './view-layout-vo';
+import { ViewLayoutVO } from './viewLayout.model';
 
-export class SavedDatasVO {
+export class SavedDatasModel {
   viewsLayout: ViewLayoutVO;
   splitSizes: {};
   selectedNodes: string[];

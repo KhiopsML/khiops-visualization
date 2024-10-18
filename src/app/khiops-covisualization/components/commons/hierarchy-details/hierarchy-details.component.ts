@@ -6,13 +6,13 @@ import {
   ViewChild,
 } from '@angular/core';
 import { DimensionModel } from '@khiops-library/model/dimension.model';
-import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
+import { TreeNodeModel } from '@khiops-covisualization/model/treeNode.model';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { TreeSelectComponent } from '../tree-select/tree-select.component';
 import { COMPONENT_TYPES } from '@khiops-library/enum/componentTypes';
-import { SelectedTreeClusterVO } from '@khiops-covisualization/model/selected-tree-cluster';
+import { SelectedTreeClusterModel } from '@khiops-covisualization/model/selectedTreeCluster.model';
 
 @Component({
   selector: 'app-hierarchy-details',
@@ -24,12 +24,12 @@ export class HierarchyDetailsComponent extends SelectableComponent {
   treeSelect: TreeSelectComponent;
 
   @Input() selectedDimension: DimensionModel;
-  @Input() selectedNode: TreeNodeVO;
+  @Input() selectedNode: TreeNodeModel;
   @Input() position: number;
   @Input() dimensions: DimensionModel[];
-  @Input() dimensionsTree: TreeNodeVO[];
+  @Input() dimensionsTree: TreeNodeModel[];
 
-  selectedTreeCluster: SelectedTreeClusterVO;
+  selectedTreeCluster: SelectedTreeClusterModel;
 
   componentType = COMPONENT_TYPES.TREE; // needed to copy datas
   override id: any = undefined;

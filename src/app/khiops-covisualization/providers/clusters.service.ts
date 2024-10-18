@@ -1,23 +1,23 @@
 import { Injectable } from '@angular/core';
 import { DimensionsDatasService } from './dimensions-datas.service';
-import { TreeNodeVO } from '../model/tree-node-vo';
+import { TreeNodeModel } from '../model/treeNode.model';
 import { ChartDatasetModel } from '@khiops-library/model/chartDataset.model';
 import { TranslateService } from '@ngstack/translate';
 import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { AppService } from './app.service';
-import { CompositionVO } from '../model/composition-vo';
+import { CompositionModel } from '../model/composition.model';
 import { MatrixCanvasService } from '@khiops-library/components/matrix-canvas/matrix-canvas.service';
-import { ClusterDetailsVO } from '@khiops-covisualization/model/cluster-details-vo';
+import { ClusterDetailsModel } from '@khiops-covisualization/model/clusterDetails.model';
 import { TreenodesService } from './treenodes.service';
 import { ChartDatasModel } from '@khiops-library/model/chartDatas.model';
-import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
-import { ExtDatasVO } from '@khiops-covisualization/model/ext-datas-vo';
+import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensionsData.model';
+import { ExtDatasModel } from '@khiops-covisualization/model/extDatas.model';
 import { ImportExtDatasService } from './import-ext-datas.service';
 @Injectable({
   providedIn: 'root',
 })
 export class ClustersService {
-  dimensionsDatas: DimensionsDatasVO;
+  dimensionsDatas: DimensionsDatasModel;
 
   constructor(
     private translate: TranslateService,
@@ -33,8 +33,8 @@ export class ClustersService {
     this.dimensionsDatas = this.dimensionsDatasService.getDatas();
   }
 
-  getSelectedClustersDetails(): TreeNodeVO[][] {
-    const details: TreeNodeVO[][] = [];
+  getSelectedClustersDetails(): TreeNodeModel[][] {
+    const details: TreeNodeModel[][] = [];
     for (let i = 0; i < this.dimensionsDatas.selectedDimensions.length; i++) {
       details.push(
         this.getCurrentClusterDetailsFromNode(
@@ -56,12 +56,12 @@ export class ClustersService {
   }
 
   getCurrentClusterDetailsFromNode(
-    nodes: TreeNodeVO[],
-    currentClusterDetailsFromNode: TreeNodeVO[] = [],
-  ): TreeNodeVO[] {
+    nodes: TreeNodeModel[],
+    currentClusterDetailsFromNode: TreeNodeModel[] = [],
+  ): TreeNodeModel[] {
     const nodesLength = nodes.length;
     for (let i = 0; i < nodesLength; i++) {
-      const currentNode: TreeNodeVO = nodes[i];
+      const currentNode: TreeNodeModel = nodes[i];
       if (currentNode.isLeaf) {
         currentClusterDetailsFromNode.push(currentNode);
       } else {
@@ -317,10 +317,10 @@ export class ClustersService {
     return clustersPerDimDatas;
   }
 
-  getCompositionClusters(hierarchyName: string, node: any): CompositionVO[] {
+  getCompositionClusters(hierarchyName: string, node: any): CompositionModel[] {
     const appDatas = this.appService.getDatas().datas;
     const appinitialDatas = this.appService.getInitialDatas().datas;
-    const compositionValues: CompositionVO[] = [];
+    const compositionValues: CompositionModel[] = [];
 
     if (appDatas?.coclusteringReport?.dimensionPartitions) {
       const currentDimensionDetails: DimensionModel =
@@ -375,12 +375,12 @@ export class ClustersService {
                   currentDimensionHierarchyCluster.shortDescription =
                     node.shortDescription;
                 }
-                const externalDatas: ExtDatasVO =
+                const externalDatas: ExtDatasModel =
                   this.importExtDatasService.getImportedDatasFromDimension(
                     currentDimensionDetails,
                   );
 
-                const composition = new CompositionVO(
+                const composition = new CompositionModel(
                   currentClusterDetails,
                   currentDimensionHierarchyCluster,
                   j,
@@ -400,8 +400,8 @@ export class ClustersService {
   getFilteredDimensionTree(
     dimensionsTree,
     selectedDimension: DimensionModel,
-  ): ClusterDetailsVO[] {
-    let filteredDimensionsClusters: ClusterDetailsVO[] = [];
+  ): ClusterDetailsModel[] {
+    let filteredDimensionsClusters: ClusterDetailsModel[] = [];
     if (dimensionsTree) {
       const appinitialDatas = this.appService.getInitialDatas().datas;
       const filteredDimensionsClustersDatas = [].concat(
@@ -410,14 +410,14 @@ export class ClustersService {
       for (let i = 0; i < filteredDimensionsClustersDatas.length; i++) {
         const currentNodesNames =
           this.dimensionsDatas.nodesNames[selectedDimension.name];
-        const clusterDetails: ClusterDetailsVO = new ClusterDetailsVO(
+        const clusterDetails: ClusterDetailsModel = new ClusterDetailsModel(
           filteredDimensionsClustersDatas[i],
           currentNodesNames,
         );
 
         if (!clusterDetails.size) {
           // get the size of collapsed nodes
-          const treeNode: TreeNodeVO = this.treenodesService.getNodeFromName(
+          const treeNode: TreeNodeModel = this.treenodesService.getNodeFromName(
             selectedDimension.name,
             clusterDetails.name,
           );

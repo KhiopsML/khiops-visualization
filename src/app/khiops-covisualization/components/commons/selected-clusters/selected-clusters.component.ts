@@ -1,6 +1,6 @@
 import { Component, OnDestroy, Input } from '@angular/core';
-import { SelectedClusterVO } from '@khiops-covisualization/model/selected-cluster';
-import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
+import { SelectedClusterModel } from '@khiops-covisualization/model/selectedCluster.model';
+import { TreeNodeModel } from '@khiops-covisualization/model/treeNode.model';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
 import { TranslateService } from '@ngstack/translate';
@@ -15,10 +15,10 @@ import { Subscription } from 'rxjs';
 })
 export class SelectedClustersComponent implements OnDestroy {
   clustersDisplayedColumns: GridColumnsI[] = [];
-  @Input() selectedNodes: TreeNodeVO[];
-  selectedNodesDimensions: TreeNodeVO[];
-  selectedClusters: SelectedClusterVO[] = undefined;
-  activeClusters: SelectedClusterVO[] = undefined;
+  @Input() selectedNodes: TreeNodeModel[];
+  selectedNodesDimensions: TreeNodeModel[];
+  selectedClusters: SelectedClusterModel[] = undefined;
+  activeClusters: SelectedClusterModel[] = undefined;
   treeSelectedNodeChangedSub: Subscription;
 
   id: any = 'selected-clusters-grid';
@@ -94,8 +94,8 @@ export class SelectedClustersComponent implements OnDestroy {
       this.selectedClusters = [];
 
       for (let i = 0; i < this.selectedNodes.length; i++) {
-        const nodeVO: TreeNodeVO = this.selectedNodes[i];
-        const selectedCluster: SelectedClusterVO = new SelectedClusterVO(
+        const nodeVO: TreeNodeModel = this.selectedNodes[i];
+        const selectedCluster: SelectedClusterModel = new SelectedClusterModel(
           nodeVO.hierarchy,
           nodeVO.shortDescription,
           details[i].length,

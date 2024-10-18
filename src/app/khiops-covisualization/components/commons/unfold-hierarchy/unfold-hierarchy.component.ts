@@ -13,8 +13,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { HierarchyService } from '@khiops-covisualization/providers/hierarchy.service';
 import { ChartDatasModel } from '@khiops-library/model/chartDatas.model';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
-import { HierarchyDatasVO } from '@khiops-covisualization/model/hierarchy-datas-vo';
-import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
+import { HierarchyDatasModel } from '@khiops-covisualization/model/hierarchyDatas.model';
+import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensionsData.model';
 import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
 import { DimensionModel } from '@khiops-library/model/dimension.model';
 
@@ -24,9 +24,9 @@ import { DimensionModel } from '@khiops-library/model/dimension.model';
   styleUrls: ['./unfold-hierarchy.component.scss'],
 })
 export class UnfoldHierarchyComponent implements OnInit {
-  dimensionsDatas: DimensionsDatasVO;
+  dimensionsDatas: DimensionsDatasModel;
   currentUnfoldHierarchy: number = 0;
-  hierarchyDatas: HierarchyDatasVO;
+  hierarchyDatas: HierarchyDatasModel;
   loadingHierarchy: boolean = false;
   clustersPerDimDatas: ChartDatasModel;
   infoPerCluster: ChartDatasModel;

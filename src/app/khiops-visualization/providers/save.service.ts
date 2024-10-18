@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AppService } from './app.service';
 import { PreparationDatasService } from './preparation-datas.service';
 import { Preparation2dDatasService } from './preparation2d-datas.service';
-import { SavedDatasVO } from '../model/saved-datas-vo';
+import { SavedDatasModel } from '../model/saved-datas-vo';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +22,7 @@ export class SaveService {
       this.preparation2dDatasService.getSelectedVariableRank();
     const selected2dCell =
       this.preparation2dDatasService.getSelectedCellIndex();
-    appDatas.savedDatas = new SavedDatasVO(
+    appDatas.savedDatas = new SavedDatasModel(
       splitSizes,
       selectedRank,
       selected2dRank,

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ExtDatasVO } from '@khiops-covisualization/model/ext-datas-vo';
+import { ExtDatasModel } from '@khiops-covisualization/model/extDatas.model';
 import { FileModel } from '@khiops-library/model/file.model';
 import { AppService } from './app.service';
 import { TranslateService } from '@ngstack/translate';
@@ -9,7 +9,7 @@ import { ImportFileLoaderService } from '@khiops-library/components/import-file-
   providedIn: 'root',
 })
 export class ImportExtDatasService {
-  importExtDatas: ExtDatasVO[];
+  importExtDatas: ExtDatasModel[];
   savedExternalDatas: any;
 
   constructor(
@@ -69,7 +69,7 @@ export class ImportExtDatasService {
   }
 
   addImportedDatas(filename, path, dimension, joinKey, separator, field, file) {
-    const data = new ExtDatasVO(
+    const data = new ExtDatasModel(
       filename,
       dimension,
       joinKey,
@@ -120,7 +120,7 @@ export class ImportExtDatasService {
 
   onFileRead(
     datas: any,
-    externalDatas: ExtDatasVO,
+    externalDatas: ExtDatasModel,
     percentIndex: number,
     progressCallback,
     fieldName: string,
@@ -193,7 +193,7 @@ export class ImportExtDatasService {
       const importExtDatasLength = this.importExtDatas.length;
       for (let i = 0; i < importExtDatasLength; i++) {
         const promise = new Promise((resolve, reject) => {
-          const externalDatas: ExtDatasVO = this.importExtDatas[i];
+          const externalDatas: ExtDatasModel = this.importExtDatas[i];
           if (!(externalDatas.file instanceof File)) {
             // If command is called by user
             // @ts-ignore

@@ -18,7 +18,7 @@ import { AppService } from '@khiops-visualization/providers/app.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngstack/translate';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
-import { TreeNodeVO } from '@khiops-visualization/model/tree-node-vo';
+import { TreeNodeModel } from '@khiops-visualization/model/tree-node-vo';
 import { COMPONENT_TYPES } from '@khiops-library/enum/componentTypes';
 
 @Component({
@@ -30,9 +30,9 @@ export class TreeSelectComponent
   extends SelectableComponent
   implements AfterViewInit, OnChanges
 {
-  @Input() selectedNodes: TreeNodeVO[];
-  @Input() selectedNode: TreeNodeVO;
-  @Input() dimensionTree: [TreeNodeVO];
+  @Input() selectedNodes: TreeNodeModel[];
+  @Input() selectedNode: TreeNodeModel;
+  @Input() dimensionTree: [TreeNodeModel];
 
   @Output() selectTreeItemChanged: EventEmitter<any> = new EventEmitter();
 

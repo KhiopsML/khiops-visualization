@@ -6,7 +6,7 @@ import { UtilsService } from '@khiops-library/providers/utils.service';
 import { VariableDetailsVO } from '../model/variableDetails-vo';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { TreePreparationVariableVO } from '../model/tree-preparation-variable-vo';
-import { TreeNodeVO } from '../model/tree-node-vo';
+import { TreeNodeModel } from '../model/tree-node-vo';
 import { TreePreparationDatasVO } from '../model/tree-preparation-datas-vo';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { TYPES } from '@khiops-library/enum/types';
@@ -65,7 +65,7 @@ export class TreePreparationDatasService {
     }
   }
 
-  getFirstNodeLeaf(node: TreeNodeVO): TreeNodeVO | undefined {
+  getFirstNodeLeaf(node: TreeNodeModel): TreeNodeModel | undefined {
     if (node.children.length > 0 && node?.children?.[0]?.isLeaf === false) {
       return this.getFirstNodeLeaf(node?.children?.[0]);
     } else {
@@ -159,9 +159,9 @@ export class TreePreparationDatasService {
     }
   }
 
-  formatTreeNodesDatas(item: TreeNodeVO) {
+  formatTreeNodesDatas(item: TreeNodeModel) {
     const color = this.treePreparationDatas?.treeColorsMap[item.nodeId];
-    item = new TreeNodeVO(item, this.treePreparationDatas?.classesCount, color);
+    item = new TreeNodeModel(item, this.treePreparationDatas?.classesCount, color);
 
     if (item?.children) {
       for (let i = 0; i < item.children.length; i++) {
@@ -179,8 +179,8 @@ export class TreePreparationDatasService {
     return this.treePreparationDatas.selectedVariable.rank;
   }
 
-  getNodeFromName(name: string): TreeNodeVO | undefined {
-    let node: TreeNodeVO | undefined;
+  getNodeFromName(name: string): TreeNodeModel | undefined {
+    let node: TreeNodeModel | undefined;
     if (this.treePreparationDatas?.selectedFlattenTree) {
       node = this.treePreparationDatas.selectedFlattenTree.find(
         (e) => e.nodeId === name,
@@ -342,14 +342,14 @@ export class TreePreparationDatasService {
   }
 
   setSelectedNodes(nodes: string[], trustedNodeSelection?: string) {
-    const selectedNodes: TreeNodeVO[] = [];
+    const selectedNodes: TreeNodeModel[] = [];
     for (let i = 0; i < nodes.length; i++) {
       const nodeDatas = this.getNodeFromName(nodes[i]);
       if (nodeDatas) {
         const color =
           this.treePreparationDatas?.treeColorsMap[nodeDatas.nodeId];
         // Define the trusted node selection to go to clicked node into hyper tree
-        const treeNodeVo = new TreeNodeVO(
+        const treeNodeVo = new TreeNodeModel(
           nodeDatas,
           this.treePreparationDatas.classesCount,
           color,
@@ -374,20 +374,20 @@ export class TreePreparationDatasService {
     }
   }
 
-  getSelectedNodes(): TreeNodeVO[] | undefined {
+  getSelectedNodes(): TreeNodeModel[] | undefined {
     return this.treePreparationDatas?.selectedNodes;
   }
 
-  getSelectedNode(): TreeNodeVO | undefined {
+  getSelectedNode(): TreeNodeModel | undefined {
     return this.treePreparationDatas?.selectedNode;
   }
 
-  setSelectedNode(node: TreeNodeVO, trustedNodeSelection: string | boolean) {
+  setSelectedNode(node: TreeNodeModel, trustedNodeSelection: string | boolean) {
     if (this.treePreparationDatas) {
       const nodeDatas = this.getNodeFromName(node.nodeId);
       const color = this.treePreparationDatas?.treeColorsMap[nodeDatas.nodeId];
       // Define the trusted node selection to go to clicked node into hyper tree
-      const treeNodeVo = new TreeNodeVO(
+      const treeNodeVo = new TreeNodeModel(
         nodeDatas,
         this.treePreparationDatas.classesCount,
         color,
@@ -484,13 +484,13 @@ export class TreePreparationDatasService {
       ];
 
       // get a hierarchy branch with all recursive parents
-      const nodeHierarchy: TreeNodeVO[] = UtilsService.returnHierarchy(
+      const nodeHierarchy: TreeNodeModel[] = UtilsService.returnHierarchy(
         _.cloneDeep(this.treePreparationDatas.dimensionTree),
         this.treePreparationDatas.selectedNode.id,
       );
 
       // get obj rules into one array
-      let rules: TreeNodeVO[] | undefined = [];
+      let rules: TreeNodeModel[] | undefined = [];
       if (nodeHierarchy) {
         rules = this.getRecursiveNodeDatasRules(nodeHierarchy[0], rules);
       }
@@ -503,7 +503,7 @@ export class TreePreparationDatasService {
             // Find index of the current node to get correct partition info
             let currentChildrenId = rule?.children?.[0]?.nodeId;
             let partitionIndex = rule.childNodes.findIndex(
-              (e: TreeNodeVO) => e.nodeId === currentChildrenId,
+              (e: TreeNodeModel) => e.nodeId === currentChildrenId,
             );
             let partition: any = rule.partition[partitionIndex];
 
@@ -533,9 +533,9 @@ export class TreePreparationDatasService {
   }
 
   getRecursiveNodeDatasRules(
-    node: TreeNodeVO | undefined,
-    rules: TreeNodeVO[],
-  ): TreeNodeVO[] | undefined {
+    node: TreeNodeModel | undefined,
+    rules: TreeNodeModel[],
+  ): TreeNodeModel[] | undefined {
     if (node?.children && node.children.length > 0) {
       rules.push(node);
       return this.getRecursiveNodeDatasRules(node.children[0], rules);

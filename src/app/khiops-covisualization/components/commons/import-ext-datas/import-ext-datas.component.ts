@@ -6,7 +6,7 @@ import { FileModel } from '@khiops-library/model/file.model';
 import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { CheckboxCellComponent } from '@khiops-library/components/ag-grid/checkbox-cell/checkbox-cell.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
+import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensionsData.model';
 
 @Component({
   selector: 'app-import-ext-datas',
@@ -14,7 +14,7 @@ import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data
   styleUrls: ['./import-ext-datas.component.scss'],
 })
 export class ImportExtDatasComponent implements OnInit {
-  dimensionsDatas: DimensionsDatasVO;
+  dimensionsDatas: DimensionsDatasModel;
   separatorInput: string;
   formatedDatas: any;
   joinKeys = {

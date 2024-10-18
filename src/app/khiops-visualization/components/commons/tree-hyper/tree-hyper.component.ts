@@ -20,7 +20,7 @@ import { TreePreparationDatasService } from '@khiops-visualization/providers/tre
 import { Hypertree } from '@khiops-hypertree/js/components/hypertree/hypertree';
 import { AppConfig } from 'src/environments/environment';
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
-import { TreeNodeVO } from '@khiops-visualization/model/tree-node-vo';
+import { TreeNodeModel } from '@khiops-visualization/model/tree-node-vo';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 import { COMPONENT_TYPES } from '@khiops-library/enum/componentTypes';
@@ -34,9 +34,9 @@ export class TreeHyperComponent
   extends SelectableComponent
   implements OnInit, AfterViewInit, OnChanges
 {
-  @Input() selectedNodes: TreeNodeVO[];
-  @Input() selectedNode: TreeNodeVO;
-  @Input() dimensionTree: [TreeNodeVO];
+  @Input() selectedNodes: TreeNodeModel[];
+  @Input() selectedNode: TreeNodeModel;
+  @Input() dimensionTree: [TreeNodeModel];
   @Input() displayedValues: ChartToggleValuesI[];
   @Output() selectTreeItemChanged: EventEmitter<any> = new EventEmitter();
 
@@ -96,7 +96,7 @@ export class TreeHyperComponent
     this.initHyperTree();
   }
 
-  removeNodes(selectedNodes: TreeNodeVO[]) {
+  removeNodes(selectedNodes: TreeNodeModel[]) {
     // remove previous paths
     for (let i = 0; i < selectedNodes.length; i++) {
       const node = selectedNodes[i];
@@ -107,7 +107,7 @@ export class TreeHyperComponent
     }
   }
 
-  selectNodes(selectedNodes: TreeNodeVO[]) {
+  selectNodes(selectedNodes: TreeNodeModel[]) {
     for (let i = 0; i < selectedNodes.length; i++) {
       const node = selectedNodes[i];
       const dataTree = UtilsService.deepFind(this.ht.data, node.id);
@@ -300,12 +300,12 @@ export class TreeHyperComponent
   }
 
   getStrokeColor(n) {
-    const node: TreeNodeVO = n.data;
+    const node: TreeNodeModel = n.data;
     return node.color;
   }
 
   getNodeColor(n) {
-    const node: TreeNodeVO = n.data;
+    const node: TreeNodeModel = n.data;
     return node.color;
   }
 
@@ -344,7 +344,7 @@ export class TreeHyperComponent
   }
 
   getNodeOpacity(n) {
-    const node: TreeNodeVO = n.data;
+    const node: TreeNodeModel = n.data;
     // return 0.2;
 
     if (this.treePreparationDatas && node.isLeaf) {

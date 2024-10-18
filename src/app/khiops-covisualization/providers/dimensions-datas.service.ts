@@ -1,21 +1,21 @@
 import { Injectable } from '@angular/core';
 import { AppService } from './app.service';
 import { DimensionModel } from '@khiops-library/model/dimension.model';
-import { TreeNodeVO } from '../model/tree-node-vo';
+import { TreeNodeModel } from '../model/treeNode.model';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { MatrixUtilsDatasService } from '@khiops-library/providers/matrix-utils-datas.service';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { AppConfig } from 'src/environments/environment';
-import { DimensionsDatasVO } from '../model/dimensions-data-vo';
+import { DimensionsDatasModel } from '../model/dimensionsData.model';
 import { TYPES } from '@khiops-library/enum/types';
-import { ExtDatasVO } from '@khiops-covisualization/model/ext-datas-vo';
+import { ExtDatasModel } from '@khiops-covisualization/model/extDatas.model';
 import { ImportExtDatasService } from './import-ext-datas.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DimensionsDatasService {
-  dimensionsDatas: DimensionsDatasVO;
+  dimensionsDatas: DimensionsDatasModel;
 
   constructor(
     private importExtDatasService: ImportExtDatasService,
@@ -25,7 +25,7 @@ export class DimensionsDatasService {
   }
 
   initialize(): any {
-    this.dimensionsDatas = new DimensionsDatasVO();
+    this.dimensionsDatas = new DimensionsDatasModel();
     return this.dimensionsDatas;
   }
 
@@ -60,7 +60,7 @@ export class DimensionsDatasService {
     }
   }
 
-  getDatas(): DimensionsDatasVO {
+  getDatas(): DimensionsDatasModel {
     return this.dimensionsDatas;
   }
 
@@ -139,14 +139,14 @@ export class DimensionsDatasService {
         return dimensionName === e.name;
       });
     if (this.dimensionsDatas?.dimensionsTrees?.[currentIndex]?.[0]) {
-      const currentTreeNode: TreeNodeVO =
+      const currentTreeNode: TreeNodeModel =
         this.dimensionsDatas.dimensionsTrees[currentIndex][0];
       count = this.getNodeIntervalsCount(currentTreeNode);
     }
     return count;
   }
 
-  getNodeIntervalsCount(treeNode: TreeNodeVO, count = 0): number {
+  getNodeIntervalsCount(treeNode: TreeNodeModel, count = 0): number {
     if (treeNode.isLeaf) {
       count++;
     }
@@ -308,7 +308,7 @@ export class DimensionsDatasService {
             this.dimensionsDatas?.nodesNames?.[dimensionHierarchy?.name];
           const currentAnnotations =
             this.dimensionsDatas?.annotations?.[dimensionHierarchy?.name];
-          const externalDatas: ExtDatasVO =
+          const externalDatas: ExtDatasModel =
             this.importExtDatasService.getImportedDatasFromDimension(dimension);
 
           // First convert each child into a treenode value object
@@ -320,7 +320,7 @@ export class DimensionsDatasService {
             const currentDimensionNodesToCollapse =
               collapsedNodes?.[dimension?.name] || [];
 
-            const currentObj: TreeNodeVO = new TreeNodeVO(
+            const currentObj: TreeNodeModel = new TreeNodeModel(
               index,
               dimensionHierarchy.clusters[j],
               dimension,
@@ -371,7 +371,7 @@ export class DimensionsDatasService {
             this.dimensionsDatas?.annotations?.[
               currentDimensionHierarchy?.name
             ];
-          const externalDatas: ExtDatasVO =
+          const externalDatas: ExtDatasModel =
             this.importExtDatasService.getImportedDatasFromDimension(dimension);
 
           // First convert each child into a treenode value object
@@ -382,7 +382,7 @@ export class DimensionsDatasService {
             }
             const currentDimensionNodesToCollapse =
               (collapsedNodes && collapsedNodes[dimension.name]) || [];
-            const currentObj: TreeNodeVO = new TreeNodeVO(
+            const currentObj: TreeNodeModel = new TreeNodeModel(
               index,
               currentDimensionHierarchy.clusters[j],
               dimension,
@@ -440,7 +440,7 @@ export class DimensionsDatasService {
     }
 
     // context is an array of array (may have multiple contexts)
-    const zDimensionClusters: TreeNodeVO[][] = [];
+    const zDimensionClusters: TreeNodeModel[][] = [];
     for (let i = 2; i < this.dimensionsDatas.dimensionsClusters.length; i++) {
       zDimensionClusters.push(this.dimensionsDatas.dimensionsClusters[i]);
     }

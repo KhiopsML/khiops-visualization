@@ -1,6 +1,6 @@
-import { ExtDatasVO } from './ext-datas-vo';
+import { ExtDatasModel } from './extDatas.model';
 
-export class CompositionVO {
+export class CompositionModel {
   _id: string;
   name: string;
   cluster: string;
@@ -15,7 +15,7 @@ export class CompositionVO {
     object,
     currentDimensionHierarchyCluster,
     index: number,
-    externalDatas: ExtDatasVO,
+    externalDatas: ExtDatasModel,
   ) {
     this.terminalCluster =
       object.cluster || currentDimensionHierarchyCluster.shortDescription;

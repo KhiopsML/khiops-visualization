@@ -1,6 +1,6 @@
 import { TYPES } from '@khiops-library/enum/types';
 
-export class TreeNodeVO {
+export class TreeNodeModel {
   id: number;
   _id: number;
   hierarchy: string;
@@ -21,7 +21,7 @@ export class TreeNodeVO {
   rank: number;
   hierarchicalRank: number;
   isLeaf: boolean;
-  children: TreeNodeVO[];
+  children: TreeNodeModel[];
   description: string | undefined;
   annotation: string;
 

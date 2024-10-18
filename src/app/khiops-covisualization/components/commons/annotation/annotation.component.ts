@@ -6,7 +6,7 @@ import {
   OnChanges,
   OnInit,
 } from '@angular/core';
-import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
+import { TreeNodeModel } from '@khiops-covisualization/model/treeNode.model';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { TranslateService } from '@ngstack/translate';
@@ -25,7 +25,7 @@ export class AnnotationComponent
   implements OnInit, OnChanges
 {
   @Input() selectedDimension: DimensionModel;
-  @Input() selectedNode: TreeNodeVO;
+  @Input() selectedNode: TreeNodeModel;
   @Input() position: number;
   value: string;
   override id: any = undefined;
