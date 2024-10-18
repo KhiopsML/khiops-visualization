@@ -7,6 +7,17 @@ import { TYPES } from '@khiops-library/enum/types';
   providedIn: 'root',
 })
 export class MatrixUtilsDatasService {
+  /**
+   * Generates standard axis values for the given x and y dimensions.
+   *
+   * This method processes the provided x and y dimensions to generate arrays of percentage values
+   * based on their types (CATEGORICAL or NUMERICAL). It handles different use cases for each type,
+   * including value groups, partitions, and intervals.
+   *
+   * @param xDimension - The dimension object for the x-axis, containing type and relevant data.
+   * @param yDimension - The dimension object for the y-axis, containing type and relevant data.
+   * @returns A tuple containing two arrays: the first array represents the x-axis values, and the second array represents the y-axis values.
+   */
   static getStandardAxisValues(xDimension, yDimension): [number[], number[]] {
     let xValues: number[] = [];
     let yValues: number[] = [];
@@ -77,6 +88,14 @@ export class MatrixUtilsDatasService {
     return [xValues, yValues];
   }
 
+  /**
+   * Computes the frequency axis values for the given dimensions and cell frequencies.
+   *
+   * @param xDimension - The x-axis dimension, which can be either categorical or numerical.
+   * @param yDimension - The y-axis dimension, which can be either categorical or numerical.
+   * @param cellFrequencies - The frequencies of the cells in the matrix.
+   * @returns A tuple containing two arrays: the x-axis values and the y-axis values.
+   */
   static getFrequencyAxisValues(
     xDimension,
     yDimension,
@@ -117,6 +136,20 @@ export class MatrixUtilsDatasService {
     return [xValues, yValues];
   }
 
+  /**
+   * Formats the display text for an axis part based on its short description, iteration index, and dimension type.
+   *
+   * @param axisPartShortDescription - An array containing the short descriptions of the axis parts.
+   * @param iter - The current iteration index.
+   * @param dimension - The dimension object which contains the type of the dimension.
+   * @returns The formatted display text for the axis part.
+   *
+   * @remarks
+   * - If the axis part short description at the given index is not a string:
+   *   - For numerical dimensions, the description is enclosed in brackets. For non-zero iterations, the opening bracket is replaced with a closing bracket.
+   *   - For other types, the description is joined into a string if it is an array, otherwise it is converted to a string.
+   * - If the axis part short description at the given index is a string, it is returned as is.
+   */
   static formatAxisDisplayText(axisPartShortDescription, iter, dimension) {
     let displayaxisPart;
     if (typeof axisPartShortDescription[iter] !== 'string') {
@@ -144,6 +177,23 @@ export class MatrixUtilsDatasService {
     return displayaxisPart;
   }
 
+  /**
+   * Generates cell data for a matrix visualization.
+   *
+   * @param xDimension - The x-axis dimension object containing parts and name.
+   * @param yDimension - The y-axis dimension object containing parts and name.
+   * @param zDimension - The z-axis dimension array containing parts and name.
+   * @param xAxisPartNames - Array of names for the x-axis parts.
+   * @param yAxisPartNames - Array of names for the y-axis parts.
+   * @param xAxisPartShortDescription - Short description for the x-axis parts.
+   * @param yAxisPartShortDescription - Short description for the y-axis parts.
+   * @param cellFrequencies - Array of cell frequencies.
+   * @param cellInterests - Array of cell interests.
+   * @param cellTargetFrequencies - Array of target frequencies for the cells.
+   * @param xValues - Array of x-axis values.
+   * @param yValues - Array of y-axis values.
+   * @returns An array of CellVO objects representing the cells in the matrix.
+   */
   static getCellDatas(
     xDimension,
     yDimension,
@@ -399,8 +449,13 @@ export class MatrixUtilsDatasService {
   }
 
   /**
-   * Get full frequency list sorted into n dimension array according to number of context
-   * @param zDimension An array of n contexts
+   * Computes the cell frequencies for a given set of dimensions and cell part indexes.
+   *
+   * @param dimensionsParts - An array representing the parts of each dimension.
+   * @param cellPartIndexes - An array of indexes representing the parts of each cell.
+   * @param inputCellFrequencies - An array of input frequencies for each cell.
+   * @param zDimension - An optional array representing additional dimensions (default is an empty array).
+   * @returns An array of cell frequencies. If `zDimension` is provided, returns a nested array of frequencies.
    */
   static getCellFrequencies(
     dimensionsParts,
