@@ -53,7 +53,7 @@ import { IconCellComponent } from './components/ag-grid/icon-cell/icon-cell.comp
 import { DistributionGraphCanvasComponent } from './components/distribution-graph-canvas/distribution-graph-canvas.component';
 import { ScrollableGraphCanvasComponent } from './components/scrollable-graph-canvas/scrollable-graph-canvas.component';
 import { AgGridModule } from '@ag-grid-community/angular';
-import { ChartNextComponent } from './components/chart-next/chart-next.component';
+import { ChartComponent } from './components/chart/chart.component';
 import { RowIdentifierPipe } from './pipes/row-identifie.pipe';
 import { ImportFileLoaderComponent } from './components/import-file-loader/import-file-loader.component';
 import { WatchResizeComponent } from './components/watch-resize/watch-resize.component';
@@ -133,7 +133,7 @@ import EnTransaltion from '../../assets/i18n/en.json';
     IconCellComponent,
     DistributionGraphCanvasComponent,
     ScrollableGraphCanvasComponent,
-    ChartNextComponent,
+    ChartComponent,
     RowIdentifierPipe,
     ImportFileLoaderComponent,
   ],
@@ -193,7 +193,7 @@ import EnTransaltion from '../../assets/i18n/en.json';
     CheckboxCellComponent,
     IconCellComponent,
     DistributionGraphCanvasComponent,
-    ChartNextComponent,
+    ChartComponent,
     ImportFileLoaderComponent,
   ],
 })

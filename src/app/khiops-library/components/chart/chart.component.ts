@@ -19,11 +19,11 @@ import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { ChartDatasetModel } from '@khiops-library/model/chart-dataset.model';
 
 @Component({
-  selector: 'kl-chart-next',
-  templateUrl: './chart-next.component.html',
-  styleUrls: ['./chart-next.component.scss'],
+  selector: 'kl-chart',
+  templateUrl: './chart.component.html',
+  styleUrls: ['./chart.component.scss'],
 })
-export class ChartNextComponent implements AfterViewInit, OnChanges {
+export class ChartComponent implements AfterViewInit, OnChanges {
   @Input() canvasIdContainer = 'kl-chart-canvas'; // May be updated if multiple graph
   @Input() inputDatas: ChartDatasModel;
   @Input() activeEntries: number;

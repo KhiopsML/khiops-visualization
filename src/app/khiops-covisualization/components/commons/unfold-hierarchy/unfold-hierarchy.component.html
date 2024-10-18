@@ -113,7 +113,7 @@
             <h1>{{ 'GLOBAL.INFORMATION_RATE' | translate }}</h1>
           </div>
         </div>
-        <kl-chart-next
+        <kl-chart
           title="{{
             'TOOLTIPS.AXIS.UNFOLD_HIERARCHY.INFO_RATE_CHART' | translate
           }}"
@@ -124,7 +124,7 @@
           [colorSet]="colorSetInfoPerCluster"
           [chartOptions]="infoPerClusterChartOptions"
         >
-        </kl-chart-next>
+        </kl-chart>
       </div>
       <div fxFlex fxLayout="column">
         <div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
@@ -144,7 +144,7 @@
           >
           </kl-legend>
         </div>
-        <kl-chart-next
+        <kl-chart
           [canvasIdContainer]="'clusters-per-dim-graph-canvas'"
           fxFlex
           [inputDatas]="clustersPerDimDatas"
@@ -153,7 +153,7 @@
           [selectedLineChartItem]="selectedLineChartItem"
           [chartOptions]="clustersPerDimDatasChartOptions"
         >
-        </kl-chart-next>
+        </kl-chart>
       </div>
       <div fxFlex id="unfold-hierarchy-table" fxLayout="column">
         <kl-ag-grid

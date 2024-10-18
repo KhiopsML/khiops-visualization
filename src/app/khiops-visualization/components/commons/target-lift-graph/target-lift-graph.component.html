@@ -55,7 +55,7 @@
     *ngIf="targetLiftGraph"
     class="graph-comp-chart-container"
   >
-    <kl-chart-next
+    <kl-chart
       id="level-distribution-graph-canvas"
       [canvasIdContainer]="'target-lift-chart-canvas'"
       [type]="'line'"
@@ -63,7 +63,7 @@
       [colorSet]="colorSet"
       [inputDatas]="targetLiftGraph"
     >
-    </kl-chart-next>
+    </kl-chart>
   </div>
   <div class="clear-bottom-graph"></div>
   <kl-legend

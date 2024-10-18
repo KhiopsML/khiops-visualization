@@ -27,7 +27,7 @@
         ></kl-graph-options-menu>
       </div>
     </div>
-    <kl-chart-next
+    <kl-chart
       id="{{ 'distribution-graph-canvas-comp-' + position }}"
       [chartOptions]="chartOptions"
       [canvasIdContainer]="'distribution-chart-canvas-' + position"
@@ -35,7 +35,7 @@
       [colorSet]="colorSet"
       [inputDatas]="inputDatas"
       [activeEntries]="activeEntries"
-    ></kl-chart-next>
+    ></kl-chart>
   </div>
   <kl-no-data fxFlexFill *ngIf="!inputDatas"></kl-no-data>
 </div>

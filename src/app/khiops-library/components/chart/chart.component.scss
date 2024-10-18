@@ -1,9 +1,9 @@
-.chart-next-comp {
+.chart-comp {
   overflow-x: auto;
   overflow-y: hidden;
   height: 100%;
 
-  .kl-chart-next-canvas-comp {
+  .kl-chart-canvas-comp {
     height: 100%;
     overflow: hidden;
     max-width: 50000px; // Avoid canvas break

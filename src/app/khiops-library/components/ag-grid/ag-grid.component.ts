@@ -506,7 +506,7 @@ export class AgGridComponent
 
   removeSearch() {
     this.searchInput = '';
-    console.log('removeSearch ~ this.searchInput :', this.searchInput );
+    console.log('removeSearch ~ this.searchInput :', this.searchInput);
     this.search();
     this.searchFormVisible = false;
   }
@@ -664,12 +664,7 @@ export class AgGridComponent
 
   saveState(grid) {
     const state = {
-      // colState: this.agGrid.columnApi && this.agGrid.columnApi.getColumnState(),
-      // groupState: this.agGrid.columnApi && this.agGrid.columnApi.getColumnGroupState(),
-      // sortState: this.agGrid.api && this.agGrid.api.getSortModel()
       sortState: this.gridOptions?.columnApi?.getColumnState(),
-      /*,
-						filterState: this.searchInput*/
     };
     localStorage.setItem(
       this.AppConfig.GLOBAL.LS_ID + 'OPTIONS_AG_GRID_' + this.id.toUpperCase(),
@@ -687,18 +682,6 @@ export class AgGridComponent
         );
         const state = (PREV_STATE && JSON.parse(PREV_STATE)) || {};
 
-        // if (state.colState && this.gridOptions.columnApi) {
-        // 	for (let i = 0; i < state.colState.length; i++) {
-        // 		if (!this.gridOptions.columnDefs.map(e => e.headerName).includes(state.colState[i].colId)) {
-        // 			// delete state.colState[i];
-        // 			state.colState[i].hide = false;
-        // 		}
-        // 	}
-        // 	this.gridOptions.columnApi.setColumnState(state.colState);
-        // }
-        // if (state.groupState && this.gridOptions.columnApi) {
-        // 	this.gridOptions.columnApi.setColumnGroupState(state.groupState);
-        // }
         if (state.sortState && this.gridOptions.columnApi) {
           // First reorder state according to displayed columns order
           const sortedState: any = [];
@@ -717,23 +700,11 @@ export class AgGridComponent
             state.sortState[i] && delete state.sortState[i].width;
             state.sortState[i] && delete state.sortState[i].hide;
           }
-          // this.gridOptions.api.setSortModel(state.sortState);
-          // this.gridOptions.columnApi.applyColumnState(state.sortState);
           this.gridOptions.columnApi.applyColumnState({
             state: state.sortState,
             applyOrder: true,
           });
         }
-
-        // Risk if user change json : datas grid may be empty !
-        // Solution ? reset filter on json loading change ?
-        // if (state.filterState && this.gridOptions.api) {
-        // 	// this.gridOptions.api.setFilterModel(state.filterState);
-        // 	this.agGrid.api.setQuickFilter(state.filterState);
-        // 	this.showSearchForm();
-        // 	this.searchInput = state.filterState;
-        // }
-
         // Restore search
         this.searchInput =
           localStorage.getItem(
