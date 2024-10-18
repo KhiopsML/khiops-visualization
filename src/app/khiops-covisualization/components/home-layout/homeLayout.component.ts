@@ -32,6 +32,7 @@ import { UtilsService } from '@khiops-library/providers/utils.service';
 import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
 import { Subscription } from 'rxjs';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
+import { ElementRefI } from '@khiops-library/interfaces/element-ref';
 
 @Component({
   selector: 'app-home-layout',
@@ -45,11 +46,11 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
   @ViewChild('appProjectView', {
     static: false,
   })
-  appProjectView: ElementRef<HTMLElement>;
+  appProjectView: ElementRef<HTMLElement & ElementRefI>;
   @ViewChild('appAxisView', {
     static: false,
   })
-  appAxisView: ElementRef<HTMLElement>;
+  appAxisView: ElementRef<HTMLElement & ElementRefI>;
 
   public get appDatas() {
     return this.appService.getDatas();
@@ -277,14 +278,12 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
       }
     }
 
-    // @ts-ignore
-    this.appProjectView?.initialize();
+    this.appProjectView?.nativeElement.initialize();
 
     this.initializeServices();
 
     if (!this.configService.isElectron) {
-      // @ts-ignore
-      this.appAxisView?.initialize();
+      this.appAxisView?.nativeElement.initialize();
     }
   }
 

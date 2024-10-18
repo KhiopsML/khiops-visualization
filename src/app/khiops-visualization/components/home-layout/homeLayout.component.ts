@@ -26,6 +26,7 @@ import pjson from 'package.json';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
+import { ElementRefI } from '@khiops-library/interfaces/element-ref';
 
 @Component({
   selector: 'app-home-layout',
@@ -47,7 +48,7 @@ export class HomeLayoutComponent implements OnInit {
   @ViewChild('appProjectView', {
     static: false,
   })
-  appProjectView: ElementRef<HTMLElement>;
+  appProjectView: ElementRef<HTMLElement & ElementRefI>;
 
   activeTab = AppConfig.visualizationCommon.HOME.ACTIVE_TAB_INDEX;
   @ViewChild('fileLoader', {
@@ -174,6 +175,7 @@ export class HomeLayoutComponent implements OnInit {
       });
     }
 
+    // Init services
     this.preparationDatasService.initialize();
     this.treePreparationDatasService.initialize();
     this.preparation2dDatasService.initialize();
@@ -181,8 +183,7 @@ export class HomeLayoutComponent implements OnInit {
     this.evaluationDatasService.initialize();
     this.modelingDatasService.initialize();
 
-    // @ts-ignore
-    this.appProjectView?.initialize();
+    this.appProjectView?.nativeElement.initialize();
   }
 
   reloadView() {

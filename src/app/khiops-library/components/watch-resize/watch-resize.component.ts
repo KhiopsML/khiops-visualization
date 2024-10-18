@@ -1,6 +1,20 @@
 import { Component, Input, AfterViewInit, NgZone } from '@angular/core';
 import { ConfigService } from '@khiops-library/providers/config.service';
 
+/**
+ * Component that watches for resize events on a specified element.
+ *
+ * This component uses the ResizeObserver API to monitor changes in the size of an element
+ * and triggers a callback when the size changes.
+ *
+ * @remarks
+ * The component requires an element ID to be provided via the `id` input property.
+ * The `watchResize` input property enables or disables the resize observation.
+ *
+ * @property {any} id - The ID of the element to observe for resize events.
+ * @property {boolean} watchResize - Flag to enable or disable resize observation.
+ *
+ */
 @Component({
   template: '',
 })
