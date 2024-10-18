@@ -6,7 +6,7 @@ import {
   EventEmitter,
   Output,
 } from '@angular/core';
-import { MatrixOptionsI } from '@khiops-library/model/matrix-options.model';
+import { MatrixOptionsModel } from '@khiops-library/model/matrix-options.model';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 
 @Component({
@@ -18,7 +18,7 @@ import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.s
 export class MatrixToggleComponent implements OnChanges {
   AppConfig: any;
 
-  @Input() matrixOptions: MatrixOptionsI = new MatrixOptionsI();
+  @Input() matrixOptions: MatrixOptionsModel = new MatrixOptionsModel();
   @Output() matrixOptionChange = new EventEmitter<string>();
 
   constructor(private khiopsLibraryService: KhiopsLibraryService) {

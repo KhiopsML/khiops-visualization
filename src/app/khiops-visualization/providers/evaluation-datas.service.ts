@@ -9,8 +9,8 @@ import { TYPES } from '@khiops-library/enum/types';
 import { TASKS } from '@khiops-library/enum/tasks';
 import { PREDICTOR_TYPES } from '@khiops-library/enum/predictorTypes';
 import { EvaluationDatasVO } from '@khiops-visualization/model/evaluation-datas-vo';
-import { ChartDatasetVO } from '@khiops-library/model/chartDataset.model';
-import { ChartDatasVO } from '@khiops-library/model/chartDatas.model';
+import { ChartDatasetModel } from '@khiops-library/model/chartDataset.model';
+import { ChartDatasModel } from '@khiops-library/model/chartDatas.model';
 import { TargetLiftValuesI } from '@khiops-visualization/interfaces/target-lift-values';
 import { LiftCurveValuesI } from '@khiops-visualization/interfaces/lift-curve-values';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
@@ -398,7 +398,7 @@ export class EvaluationDatasService {
   }
 
   // tslint:disable-next-line:typedef-whitespace
-  getLiftGraphDatas(target?: string): ChartDatasVO {
+  getLiftGraphDatas(target?: string): ChartDatasModel {
     // Generate X axis values
     const xAxis = new Array(1001);
     xAxis[0] = '0';
@@ -482,11 +482,11 @@ export class EvaluationDatasService {
     }
 
     // format datas for new chartjs lib
-    this.evaluationDatas.liftGraphDatas = new ChartDatasVO();
+    this.evaluationDatas.liftGraphDatas = new ChartDatasModel();
     this.evaluationDatas.liftGraphDatas.labels = xAxis;
 
     for (let i = 0; i < liftGraphDatas.length; i++) {
-      const currentData: ChartDatasetVO = new ChartDatasetVO(
+      const currentData: ChartDatasetModel = new ChartDatasetModel(
         liftGraphDatas[i].name,
         'line',
       );

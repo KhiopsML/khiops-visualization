@@ -1,7 +1,7 @@
 import { TYPES } from '@khiops-library/enum/types';
 import _ from 'lodash';
 
-export class DimensionVO {
+export class DimensionModel {
   name: string;
   type: string;
   parts: number;

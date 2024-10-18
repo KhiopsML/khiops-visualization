@@ -16,7 +16,7 @@ import { VariableGraphDetailsComponent } from '../commons/variable-graph-details
 import { TranslateService } from '@ngstack/translate';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { REPORTS } from '@khiops-library/enum/reports';
-import { ChartDatasVO } from '@khiops-library/model/chartDatas.model';
+import { ChartDatasModel } from '@khiops-library/model/chartDatas.model';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { PreparationVariableVO } from '@khiops-visualization/model/preparation-variable-vo';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
@@ -47,7 +47,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
   };
   summaryDatas: InfosDatasI[];
   informationsDatas: InfosDatasI[];
-  targetVariableStatsDatas: ChartDatasVO;
+  targetVariableStatsDatas: ChartDatasModel;
   currentIntervalDatas: GridDatasI;
   matrixRegSelectedCell = 0;
   distributionSelectedBarIndex = 0;

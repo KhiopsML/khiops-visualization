@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AppService } from './app.service';
-import { DimensionVO } from '@khiops-library/model/dimension.model';
+import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { TreeNodeVO } from '../model/tree-node-vo';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { MatrixUtilsDatasService } from '@khiops-library/providers/matrix-utils-datas.service';
@@ -126,7 +126,7 @@ export class DimensionsDatasService {
     return selectedDimensions;
   }
 
-  getSelectedDimensions(): DimensionVO[] {
+  getSelectedDimensions(): DimensionModel[] {
     return this.dimensionsDatas.selectedDimensions;
   }
 
@@ -162,7 +162,7 @@ export class DimensionsDatasService {
     return count;
   }
 
-  getDimensions(): DimensionVO[] {
+  getDimensions(): DimensionModel[] {
     const appDatas = this.appService.getDatas().datas;
     this.dimensionsDatas.dimensions = [];
 
@@ -174,7 +174,7 @@ export class DimensionsDatasService {
       if (appDatas?.coclusteringReport?.dimensionSummaries) {
         const l = appDatas.coclusteringReport.dimensionSummaries.length;
         for (let i = 0; i < l; i++) {
-          const dimension = new DimensionVO(
+          const dimension = new DimensionModel(
             appDatas.coclusteringReport.dimensionSummaries[i],
             i,
           );
@@ -427,9 +427,9 @@ export class DimensionsDatasService {
     this.dimensionsDatas.allMatrixDatas = {};
     this.dimensionsDatas.allMatrixCellDatas = {};
 
-    const xDimension: DimensionVO = this.dimensionsDatas.selectedDimensions[0];
-    const yDimension: DimensionVO = this.dimensionsDatas.selectedDimensions[1];
-    const zDimension: DimensionVO[] = [];
+    const xDimension: DimensionModel = this.dimensionsDatas.selectedDimensions[0];
+    const yDimension: DimensionModel = this.dimensionsDatas.selectedDimensions[1];
+    const zDimension: DimensionModel[] = [];
     for (let i = 2; i < this.dimensionsDatas.selectedDimensions.length; i++) {
       zDimension.push(this.dimensionsDatas.selectedDimensions[i]);
     }

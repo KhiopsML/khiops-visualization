@@ -4,7 +4,7 @@ import { AppService } from '@khiops-visualization/providers/app.service';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { TranslateService } from '@ngstack/translate';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
-import { ProjectLogVO } from '@khiops-library/model/projectLog.model';
+import { ProjectLogModel } from '@khiops-library/model/projectLog.model';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
@@ -22,7 +22,7 @@ export class ProjectViewComponent
 
   appDatas: any;
   projectSummaryDatas: InfosDatasI[];
-  projectLogsDatas: ProjectLogVO[];
+  projectLogsDatas: ProjectLogModel[];
   onFileLoaderDataChangedCb: Function;
   appName = 'khiops-visualization';
   logsTitle: string;

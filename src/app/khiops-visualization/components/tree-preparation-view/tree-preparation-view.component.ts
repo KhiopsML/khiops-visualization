@@ -13,7 +13,7 @@ import { VariableGraphDetailsComponent } from '../commons/variable-graph-details
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
-import { ChartDatasVO } from '@khiops-library/model/chartDatas.model';
+import { ChartDatasModel } from '@khiops-library/model/chartDatas.model';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { VariableVO } from '@khiops-visualization/model/variable-vo';
@@ -42,7 +42,7 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
   preparationSource: string = 'treePreparationReport';
   summaryDatas: InfosDatasI[];
   informationsDatas: InfosDatasI[];
-  targetVariableStatsDatas: ChartDatasVO;
+  targetVariableStatsDatas: ChartDatasModel;
   currentIntervalDatas: GridDatasI;
   matrixRegSelectedCell: number = 0;
   selectedBarIndex: number = 0;

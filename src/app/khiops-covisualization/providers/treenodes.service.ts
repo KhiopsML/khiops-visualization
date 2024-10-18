@@ -6,7 +6,7 @@ import { UtilsService } from '@khiops-library/providers/utils.service';
 import { TreeNodeVO } from '../model/tree-node-vo';
 import { deepEqual } from 'fast-equals';
 import _ from 'lodash';
-import { DimensionVO } from '@khiops-library/model/dimension.model';
+import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
 import { HierarchyDatasVO } from '@khiops-covisualization/model/hierarchy-datas-vo';
 import { TYPES } from '@khiops-library/enum/types';
@@ -190,7 +190,7 @@ export class TreenodesService {
     return nodeVO;
   }
 
-  updateSelectedNodes(dimension: DimensionVO, position: number) {
+  updateSelectedNodes(dimension: DimensionModel, position: number) {
     // Find current dim position
     const currentIndex: number =
       this.dimensionsDatas.selectedDimensions.findIndex((e) => {
@@ -343,7 +343,7 @@ export class TreenodesService {
           return !e.isLeaf && e.hierarchicalRank < rank;
         },
       );
-      const dimension: DimensionVO = this.dimensionsDatas.dimensions[i];
+      const dimension: DimensionModel = this.dimensionsDatas.dimensions[i];
       dimension.setCurrentHierarchyClusterCount(nodesVO.length + 1);
     }
   }
@@ -645,7 +645,7 @@ export class TreenodesService {
 
       // Check for collapsed node integrity
       if (dimIndex !== -1) {
-        const dimVO: DimensionVO = this.dimensionsDatas.selectedDimensions.find(
+        const dimVO: DimensionModel = this.dimensionsDatas.selectedDimensions.find(
           (e) => e.name === dim,
         );
         const dimIndexInitial = this.dimensionsDatas.dimensions.findIndex(

@@ -15,8 +15,8 @@ import { KhiopsLibraryService } from '../../providers/khiops-library.service';
 import { ChartColorsSetI } from '../../interfaces/chart-colors-set';
 import { ChartOptions } from 'chart.js';
 import { ConfigService } from '@khiops-library/providers/config.service';
-import { ChartDatasVO } from '@khiops-library/model/chartDatas.model';
-import { ChartDatasetVO } from '@khiops-library/model/chartDataset.model';
+import { ChartDatasModel } from '@khiops-library/model/chartDatas.model';
+import { ChartDatasetModel } from '@khiops-library/model/chartDataset.model';
 
 @Component({
   selector: 'kl-chart-next',
@@ -25,7 +25,7 @@ import { ChartDatasetVO } from '@khiops-library/model/chartDataset.model';
 })
 export class ChartNextComponent implements AfterViewInit, OnChanges {
   @Input() canvasIdContainer = 'kl-chart-canvas'; // May be updated if multiple graph
-  @Input() inputDatas: ChartDatasVO;
+  @Input() inputDatas: ChartDatasModel;
   @Input() activeEntries: number;
   @Input() type: ChartJs.ChartType = 'bar';
   @Input() chartOptions: ChartOptions;
@@ -280,7 +280,7 @@ export class ChartNextComponent implements AfterViewInit, OnChanges {
     if (this.chart && this.enableSelection) {
       this.colorize();
       for (let i = 0; i < this.chart.data.datasets.length; i++) {
-        const dataset = <ChartDatasetVO>this.chart.data.datasets[i];
+        const dataset = <ChartDatasetModel>this.chart.data.datasets[i];
         dataset.borderColor[index] = this.barColor;
         dataset.borderSkipped = false;
         dataset.borderWidth = 2;
@@ -290,7 +290,7 @@ export class ChartNextComponent implements AfterViewInit, OnChanges {
 
   colorize() {
     for (let i = 0; i < this.chart.data.datasets.length; i++) {
-      const dataset: ChartDatasetVO = <ChartDatasetVO>(
+      const dataset: ChartDatasetModel = <ChartDatasetModel>(
         this.chart.data.datasets[i]
       );
       if (!dataset.borderWidth) {

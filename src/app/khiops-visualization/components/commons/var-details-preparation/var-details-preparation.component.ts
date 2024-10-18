@@ -11,7 +11,7 @@ import { EvaluationDatasService } from '@khiops-visualization/providers/evaluati
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
 import { VariableGraphDetailsComponent } from '../variable-graph-details/variable-graph-details.component';
-import { ChartDatasVO } from '@khiops-library/model/chartDatas.model';
+import { ChartDatasModel } from '@khiops-library/model/chartDatas.model';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { Preparation2dDatasVO } from '@khiops-visualization/model/preparation2d-datas-vo';
@@ -40,7 +40,7 @@ export class VarDetailsPreparationComponent implements OnInit, OnChanges {
 
   summaryDatas: InfosDatasI[];
   informationsDatas: InfosDatasI[];
-  targetVariableStatsDatas: ChartDatasVO;
+  targetVariableStatsDatas: ChartDatasModel;
   currentIntervalDatas: GridDatasI;
   matrixRegSelectedCell = 0;
   distributionSelectedBarIndex = 0;

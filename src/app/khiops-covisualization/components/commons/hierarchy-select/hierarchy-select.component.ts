@@ -8,7 +8,7 @@ import {
   Output,
 } from '@angular/core';
 import { trigger, transition, animate, style } from '@angular/animations';
-import { DimensionVO } from '@khiops-library/model/dimension.model';
+import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
 import { AppService } from '@khiops-covisualization/providers/app.service';
@@ -42,10 +42,10 @@ import { SelectedTreeClusterVO } from '@khiops-covisualization/model/selected-tr
   ],
 })
 export class HierarchySelectComponent implements OnChanges, AfterViewInit {
-  @Input() selectedDimension: DimensionVO;
+  @Input() selectedDimension: DimensionModel;
   @Input() selectedNode: TreeNodeVO;
   @Input() position: number;
-  @Input() dimensions: DimensionVO[];
+  @Input() dimensions: DimensionModel[];
   @Input() dimensionsTree: TreeNodeVO[];
   @Input() selectedTreeCluster: SelectedTreeClusterVO;
   @Output() selectedTreeClusterChange = new EventEmitter<any>();
@@ -99,7 +99,7 @@ export class HierarchySelectComponent implements OnChanges, AfterViewInit {
     );
   }
 
-  changeSelectedDimension(dimension: DimensionVO, newPosition: number) {
+  changeSelectedDimension(dimension: DimensionModel, newPosition: number) {
     const isBigJsonFile = this.appService.isBigJsonFile();
     if (isBigJsonFile) {
       this.snackBar.open(

@@ -16,7 +16,7 @@ import { ChartOptions } from 'chart.js';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { TYPES } from '@khiops-library/enum/types';
 import { HistogramType } from '@khiops-visualization/components/commons/histogram/histogram.types';
-import { ChartDatasVO } from '@khiops-library/model/chartDatas.model';
+import { ChartDatasModel } from '@khiops-library/model/chartDatas.model';
 import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { COMPONENT_TYPES } from '@khiops-library/enum/componentTypes';
@@ -32,7 +32,7 @@ export class DistributionGraphCanvasComponent
   implements OnInit
 {
   @Input() position = 0;
-  @Input() override inputDatas: ChartDatasVO = undefined;
+  @Input() override inputDatas: ChartDatasModel = undefined;
   @Input() graphOptions: DistributionOptionsI;
   @Input() activeEntries: number;
   @Input() isLoadingDatas = false;

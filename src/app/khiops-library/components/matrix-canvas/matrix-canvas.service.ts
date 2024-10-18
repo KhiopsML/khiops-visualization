@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UtilsService } from '../../providers/utils.service';
-import { CellVO } from '../../model/cell.model';
+import { CellModel } from '../../model/cell.model';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 
 @Injectable({
@@ -90,7 +90,7 @@ export class MatrixCanvasService {
               );
               return MIij || 0;
             });
-            matrixExtras = inputDatas.matrixCellDatas.map((e: CellVO) => {
+            matrixExtras = inputDatas.matrixCellDatas.map((e: CellModel) => {
               let [matrixTotal, cellFreqs, freqColVals, freqLineVals] =
                 this.computeValsByContext(
                   e,
@@ -124,7 +124,7 @@ export class MatrixCanvasService {
               res = hellingerValue;
               return res || 0;
             });
-            matrixExtras = inputDatas.matrixCellDatas.map((e: CellVO) => {
+            matrixExtras = inputDatas.matrixCellDatas.map((e: CellModel) => {
               let [matrixTotal, cellFreqs, freqColVals, freqLineVals] =
                 this.computeValsByContext(
                   e,
@@ -181,7 +181,7 @@ export class MatrixCanvasService {
 
       // Compute expected cell frequencies
       matrixExpectedFreqsValues = inputDatas.matrixCellDatas.map(
-        (e: CellVO) => {
+        (e: CellModel) => {
           let [matrixTotal, cellFreqs, freqColVals, freqLineVals] =
             this.computeValsByContext(e, partPositions, partPositionsLength);
           let ef = UtilsService.computeExpectedFrequency(
@@ -461,8 +461,8 @@ export class MatrixCanvasService {
     matrixCellDatas,
     isAxisInverted,
     currentCellIndex,
-  ): CellVO {
-    let changeCell: CellVO;
+  ): CellModel {
+    let changeCell: CellModel;
 
     let selectedCellIndex;
 

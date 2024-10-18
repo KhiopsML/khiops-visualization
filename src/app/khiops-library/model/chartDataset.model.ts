@@ -1,4 +1,4 @@
-export class ChartDatasetVO {
+export class ChartDatasetModel {
   label: string | undefined;
   data: any = [];
   extra: any = [];

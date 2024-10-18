@@ -9,7 +9,7 @@ import {
   EventEmitter,
   SimpleChanges,
 } from '@angular/core';
-import { DimensionVO } from '@khiops-library/model/dimension.model';
+import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { TranslateService } from '@ngstack/translate';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { DistributionGraphCanvasComponent } from '@khiops-library/components/distribution-graph-canvas/distribution-graph-canvas.component';
@@ -21,7 +21,7 @@ import { ClustersService } from '@khiops-covisualization/providers/clusters.serv
 import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
 import { Subscription } from 'rxjs';
 import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options';
-import { ChartDatasVO } from '@khiops-library/model/chartDatas.model';
+import { ChartDatasModel } from '@khiops-library/model/chartDatas.model';
 import * as _ from 'lodash';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { HistogramType } from '@khiops-visualization/components/commons/histogram/histogram.types';
@@ -43,8 +43,8 @@ export class VariableGraphDetailsComponent
   @Output() selectedItemChanged: EventEmitter<any> = new EventEmitter();
   @Input() position: number;
   @Input() dimensionsTree: TreeNodeVO[];
-  @Input() selectedDimension: DimensionVO;
-  @Input() selectedDimensions: DimensionVO[];
+  @Input() selectedDimension: DimensionModel;
+  @Input() selectedDimensions: DimensionModel[];
 
   scrollPosition = 0;
   treeSelectedNodeChangedSub: Subscription;
@@ -52,7 +52,7 @@ export class VariableGraphDetailsComponent
 
   isLoadingGraphDatas: boolean;
   scaleValue: number;
-  graphDetails: ChartDatasVO;
+  graphDetails: ChartDatasModel;
   graphOptions: DistributionOptionsI = {
     types: [HistogramType.YLIN, HistogramType.YLOG],
     selected: undefined,

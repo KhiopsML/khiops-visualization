@@ -1,7 +1,7 @@
 import { TYPES } from '@khiops-library/enum/types';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 
-export class ProjectSummaryVO {
+export class ProjectSummaryModel {
   filename: string;
   database: string;
   shortDescription: string;

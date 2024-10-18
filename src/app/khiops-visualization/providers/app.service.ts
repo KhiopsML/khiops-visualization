@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { AppConfig } from 'src/environments/environment';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { UtilsService } from '@khiops-library/providers/utils.service';
-import { ProjectLogVO } from '@khiops-library/model/projectLog.model';
+import { ProjectLogModel } from '@khiops-library/model/projectLog.model';
 import { REPORTS } from '@khiops-library/enum/reports';
-import { ProjectSummaryVO } from '@khiops-library/model/projectSummary.model';
+import { ProjectSummaryModel } from '@khiops-library/model/projectSummary.model';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 
 @Injectable({
@@ -287,7 +287,7 @@ export class AppService {
   getProjectSummaryDatas(): InfosDatasI[] {
     const appDatas = this.appDatas.datas;
     if (appDatas.preparationReport) {
-      const projectSummaryDatas = new ProjectSummaryVO(
+      const projectSummaryDatas = new ProjectSummaryModel(
         appDatas,
         'preparationReport',
       );
@@ -297,7 +297,7 @@ export class AppService {
     }
   }
 
-  getProjectLogsDatas(): ProjectLogVO[] {
+  getProjectLogsDatas(): ProjectLogModel[] {
     const appDatas = this.appDatas.datas;
     let logs;
 
@@ -305,7 +305,7 @@ export class AppService {
       logs = [];
       for (let i = 0; i < appDatas.logs.length; i++) {
         for (let j = 0; j < appDatas.logs[i].messages.length; j++) {
-          const log = new ProjectLogVO(
+          const log = new ProjectLogModel(
             appDatas.logs[i],
             appDatas.logs[i].messages[j],
           );

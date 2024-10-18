@@ -2,7 +2,7 @@ import { Component, OnInit, NgZone, Input } from '@angular/core';
 import { CompositionVO } from '@khiops-covisualization/model/composition-vo';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
-import { DimensionVO } from '@khiops-library/model/dimension.model';
+import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { COMPONENT_TYPES } from '../../../../khiops-library/enum/componentTypes';
 
@@ -18,7 +18,7 @@ export class ExternalDatasComponent
   @Input() position: number;
   @Input() externalData: any[];
   @Input() selectedComposition: CompositionVO;
-  @Input() selectedDimension: DimensionVO;
+  @Input() selectedDimension: DimensionModel;
 
   override id: any = undefined;
   currentExternalDatasTitle: string = '';

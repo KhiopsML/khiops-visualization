@@ -15,7 +15,7 @@ import _ from 'lodash';
 import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { ChartOptions } from 'chart.js';
-import { ChartDatasVO } from '@khiops-library/model/chartDatas.model';
+import { ChartDatasModel } from '@khiops-library/model/chartDatas.model';
 import { EvaluationDatasVO } from '@khiops-visualization/model/evaluation-datas-vo';
 import { TargetLiftValuesI } from '@khiops-visualization/interfaces/target-lift-values';
 import { COMPONENT_TYPES } from '@khiops-library/enum/componentTypes';
@@ -32,7 +32,7 @@ export class TargetLiftGraphComponent
   @Input() selectedVariable;
 
   targetLift: TargetLiftValuesI;
-  targetLiftGraph: ChartDatasVO;
+  targetLiftGraph: ChartDatasModel;
   colorSet: ChartColorsSetI;
   legendColorSet: ChartColorsSetI;
   view: '';
@@ -44,7 +44,7 @@ export class TargetLiftGraphComponent
 
   componentType = COMPONENT_TYPES.ND_LINE_CHART; // needed to copy datas
   title: string;
-  targetLiftAllGraph: ChartDatasVO;
+  targetLiftAllGraph: ChartDatasModel;
   titleWithoutDetails: string;
 
   chartOptions: ChartOptions;

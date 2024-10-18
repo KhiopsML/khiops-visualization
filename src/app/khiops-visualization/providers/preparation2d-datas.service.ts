@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { AppService } from './app.service';
-import { DimensionVO } from '@khiops-library/model/dimension.model';
+import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { TranslateService } from '@ngstack/translate';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { EvaluationDatasService } from './evaluation-datas.service';
 import { Preparation2dVariableVO } from '../model/preparation2d-variable-vo';
-import { CellVO } from '@khiops-library/model/cell.model';
+import { CellModel } from '@khiops-library/model/cell.model';
 import { MatrixUtilsDatasService } from '@khiops-library/providers/matrix-utils-datas.service';
 import { PreparationDatasService } from './preparation-datas.service';
 import { VariableDetailsVO } from '../model/variableDetails-vo';
 import { Variable2dVO } from '../model/variable2d-vo';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
-import { CoocurenceCellVO } from '../model/coocurence-cell-vo';
+import { CoocurenceCellModel } from '../model/coocurence-cell-vo';
 import { MatrixCanvasService } from '@khiops-library/components/matrix-canvas/matrix-canvas.service';
 import { Preparation2dDatasVO } from '../model/preparation2d-datas-vo';
 import { CoocurenceCellsVO } from '../model/coocurence-cells-vo';
@@ -92,7 +92,7 @@ export class Preparation2dDatasService {
     }
   }
 
-  setSelectedCell(cell: CellVO) {
+  setSelectedCell(cell: CellModel) {
     if (cell) {
       this.preparation2dDatas.selectedCellIndex = cell.index;
       this.preparation2dDatas.selectedCell = cell;
@@ -103,7 +103,7 @@ export class Preparation2dDatasService {
     return this.preparation2dDatas.selectedCellIndex;
   }
 
-  getSelectedCell(): CellVO {
+  getSelectedCell(): CellModel {
     return this.preparation2dDatas.selectedCell;
   }
 
@@ -217,16 +217,16 @@ export class Preparation2dDatasService {
         selectedVariable?.nameY,
       );
 
-      const values: CoocurenceCellVO[] = [];
+      const values: CoocurenceCellModel[] = [];
 
       for (
         let i = 0;
         i < this.preparation2dDatas.matrixDatas.matrixCellDatas.length;
         i++
       ) {
-        const cell: CellVO =
+        const cell: CellModel =
           this.preparation2dDatas.matrixDatas.matrixCellDatas[i];
-        const coocurenceCell = new CoocurenceCellVO(cell.index);
+        const coocurenceCell = new CoocurenceCellModel(cell.index);
 
         // coocurenceCell has dynamic fields
         coocurenceCell[matrixCells.displayedColumns[1].field] =
@@ -451,10 +451,10 @@ export class Preparation2dDatasService {
       const variableDatas: VariableDetailsVO = _.cloneDeep(variablesDetails);
 
       if (variableDatas) {
-        const xDimension = new DimensionVO(
+        const xDimension = new DimensionModel(
           variableDatas.dataGrid.dimensions[0],
         );
-        const yDimension = new DimensionVO(
+        const yDimension = new DimensionModel(
           variableDatas.dataGrid.dimensions[1],
         );
 

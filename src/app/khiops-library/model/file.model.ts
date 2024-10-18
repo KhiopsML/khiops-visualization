@@ -1,4 +1,4 @@
-export class FileVO {
+export class FileModel {
   file: File;
   filename: string;
   datas: any;

@@ -2,7 +2,7 @@ import { Component, OnInit, Output, NgZone, EventEmitter } from '@angular/core';
 import { ImportFileLoaderService } from './import-file-loader.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngstack/translate';
-import { FileVO } from '../../model/file.model';
+import { FileModel } from '../../model/file.model';
 
 @Component({
   selector: 'kl-import-file-loader',
@@ -36,7 +36,7 @@ export class ImportFileLoaderComponent implements OnInit {
         this.ngzone.run(() => {
           this.importFileLoaderService
             .readImportFile(file)
-            .then((fileDatas: FileVO) => {
+            .then((fileDatas: FileModel) => {
               this.filename = fileDatas.filename;
               this.datasLoaded.emit(fileDatas);
               this.isLoadingDatas = false;

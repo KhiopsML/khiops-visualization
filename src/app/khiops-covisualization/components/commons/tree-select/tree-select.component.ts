@@ -9,7 +9,7 @@ import {
   Input,
 } from '@angular/core';
 import * as TreeView from '@khiops-library/libs/treeview/treeview';
-import { DimensionVO } from '@khiops-library/model/dimension.model';
+import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -28,7 +28,7 @@ import { DimensionsDatasService } from '@khiops-covisualization/providers/dimens
 export class TreeSelectComponent
   implements AfterViewInit, OnChanges, OnDestroy
 {
-  @Input() selectedDimension: DimensionVO;
+  @Input() selectedDimension: DimensionModel;
   @Input() selectedNode: TreeNodeVO;
   @Input() position: number;
   @Input() dimensionsTree: TreeNodeVO[];

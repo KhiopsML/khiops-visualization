@@ -2,8 +2,8 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
 import { TranslateService } from '@ngstack/translate';
-import { FileVO } from '@khiops-library/model/file.model';
-import { DimensionVO } from '@khiops-library/model/dimension.model';
+import { FileModel } from '@khiops-library/model/file.model';
+import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { CheckboxCellComponent } from '@khiops-library/components/ag-grid/checkbox-cell/checkbox-cell.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
@@ -21,12 +21,12 @@ export class ImportExtDatasComponent implements OnInit {
     keys: [],
     selected: undefined,
   };
-  selectedDimension: DimensionVO;
+  selectedDimension: DimensionModel;
   fieldsToImport = {
     values: [],
     displayedColumns: [],
   };
-  @Input() importExtDatas: FileVO;
+  @Input() importExtDatas: FileModel;
 
   @Output() closeImport: EventEmitter<any> = new EventEmitter();
 
@@ -95,7 +95,7 @@ export class ImportExtDatasComponent implements OnInit {
     this.closeImport.emit();
   }
 
-  changeSelectedDimension(dimension: DimensionVO) {
+  changeSelectedDimension(dimension: DimensionModel) {
     this.selectedDimension = dimension;
   }
 

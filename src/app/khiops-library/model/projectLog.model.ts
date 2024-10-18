@@ -1,4 +1,4 @@
-export class ProjectLogVO {
+export class ProjectLogModel {
   task: string;
   message: string;
 

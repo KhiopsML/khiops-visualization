@@ -15,7 +15,7 @@ import { ToPrecisionPipe } from '@khiops-library/pipes/toPrecision.pipe';
 import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
 import { ChartOptions } from 'chart.js';
 import { ConfigService } from '@khiops-library/providers/config.service';
-import { ChartDatasVO } from '@khiops-library/model/chartDatas.model';
+import { ChartDatasModel } from '@khiops-library/model/chartDatas.model';
 import { COMPONENT_TYPES } from '@khiops-library/enum/componentTypes';
 
 @Component({
@@ -29,7 +29,7 @@ export class TargetVariableStatsCanvasComponent
   extends SelectableComponent
   implements OnChanges
 {
-  @Input() inputDatas: ChartDatasVO;
+  @Input() inputDatas: ChartDatasModel;
   groupPadding: number;
 
   colorSet: ChartColorsSetI;

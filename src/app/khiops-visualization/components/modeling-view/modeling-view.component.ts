@@ -18,7 +18,7 @@ import { TreePreparationDatasService } from '@khiops-visualization/providers/tre
 import { Distribution2dDatasService } from '@khiops-visualization/providers/distribution2d-datas.service';
 import { REPORTS } from '@khiops-library/enum/reports';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
-import { ChartDatasVO } from '@khiops-library/model/chartDatas.model';
+import { ChartDatasModel } from '@khiops-library/model/chartDatas.model';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { ModelingDatasVO } from '@khiops-visualization/model/modeling-datas-vo';
@@ -45,7 +45,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
   sizes: any;
   preparationVariable: any; // Complex, can be multiple types according to the preparationSource
   summaryDatas: InfosDatasI[];
-  targetVariableStatsDatas: ChartDatasVO;
+  targetVariableStatsDatas: ChartDatasModel;
   trainedPredictorsSummaryDatas: InfosDatasI[];
   modelingDatas: ModelingDatasVO;
   preparation2dDatas: Preparation2dDatasVO;
@@ -58,7 +58,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
     localStorage.getItem(
       AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SCALE_VALUE',
     ) || AppConfig.visualizationCommon.GLOBAL.DEFAULT_GRAPH_SCALE;
-  targetDistributionGraphDatas: ChartDatasVO;
+  targetDistributionGraphDatas: ChartDatasModel;
   currentIntervalDatas: GridDatasI;
   targetVariableStatsInformations: InfosDatasI[];
 

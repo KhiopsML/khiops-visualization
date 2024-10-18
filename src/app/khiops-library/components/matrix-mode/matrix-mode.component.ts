@@ -7,7 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
-import { MatrixModesI } from '@khiops-library/model/matrix-modes.model';
+import { MatrixModesModel } from '@khiops-library/model/matrix-modes.model';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 
 @Component({
@@ -18,7 +18,7 @@ import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.s
 })
 export class MatrixModeComponent implements OnChanges {
   AppConfig: any;
-  @Input() matrixModes: MatrixModesI = new MatrixModesI();
+  @Input() matrixModes: MatrixModesModel = new MatrixModesModel();
   @Output() matrixModeChange = new EventEmitter<MatrixModeI>();
 
   constructor(private khiopsLibraryService: KhiopsLibraryService) {

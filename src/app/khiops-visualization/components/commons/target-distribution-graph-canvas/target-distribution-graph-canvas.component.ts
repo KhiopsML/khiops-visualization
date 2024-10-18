@@ -16,7 +16,7 @@ import { ChartOptions } from 'chart.js';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { ResizedEvent } from 'angular-resize-event';
 import { TYPES } from '@khiops-library/enum/types';
-import { ChartDatasVO } from '@khiops-library/model/chartDatas.model';
+import { ChartDatasModel } from '@khiops-library/model/chartDatas.model';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { COMPONENT_TYPES } from '@khiops-library/enum/componentTypes';
@@ -32,7 +32,7 @@ export class TargetDistributionGraphCanvasComponent
   implements OnInit
 {
   @Input() position = 0;
-  @Input() override inputDatas: ChartDatasVO = undefined;
+  @Input() override inputDatas: ChartDatasModel = undefined;
   @Input() titleTooltip: string;
   @Input() title: string;
   @Input() activeEntries: number;

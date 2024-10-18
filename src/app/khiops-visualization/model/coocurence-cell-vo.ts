@@ -1,4 +1,4 @@
-export class CoocurenceCellVO {
+export class CoocurenceCellModel {
   id: string;
   _id: string;
   frequency: number | undefined;

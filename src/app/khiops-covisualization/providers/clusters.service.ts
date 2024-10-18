@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { DimensionsDatasService } from './dimensions-datas.service';
 import { TreeNodeVO } from '../model/tree-node-vo';
-import { ChartDatasetVO } from '@khiops-library/model/chartDataset.model';
+import { ChartDatasetModel } from '@khiops-library/model/chartDataset.model';
 import { TranslateService } from '@ngstack/translate';
-import { DimensionVO } from '@khiops-library/model/dimension.model';
+import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { AppService } from './app.service';
 import { CompositionVO } from '../model/composition-vo';
 import { MatrixCanvasService } from '@khiops-library/components/matrix-canvas/matrix-canvas.service';
 import { ClusterDetailsVO } from '@khiops-covisualization/model/cluster-details-vo';
 import { TreenodesService } from './treenodes.service';
-import { ChartDatasVO } from '@khiops-library/model/chartDatas.model';
+import { ChartDatasModel } from '@khiops-library/model/chartDatas.model';
 import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
 import { ExtDatasVO } from '@khiops-covisualization/model/ext-datas-vo';
 import { ImportExtDatasService } from './import-ext-datas.service';
@@ -78,7 +78,7 @@ export class ClustersService {
     return currentClusterDetailsFromNode;
   }
 
-  getDistributionDetailsFromNode(position): ChartDatasVO {
+  getDistributionDetailsFromNode(position): ChartDatasModel {
     let filteredDimensionsClusters = this.getCurrentClusterDetailsFromNode(
       this.dimensionsDatasService.dimensionsDatas.dimensionsTrees[0],
     );
@@ -125,13 +125,13 @@ export class ClustersService {
       -1,
     );
 
-    const currentDataSet = new ChartDatasetVO(
+    const currentDataSet = new ChartDatasetModel(
       this.dimensionsDatasService.dimensionsDatas.selectedNodes[
         position
       ].shortDescription,
     );
 
-    let distributionsGraphDetails = new ChartDatasVO();
+    let distributionsGraphDetails = new ChartDatasModel();
     const currentDataSetData = [];
 
     let filteredList;
@@ -192,13 +192,13 @@ export class ClustersService {
     return distributionsGraphDetails;
   }
 
-  getInfoPerCluster(rank: number): ChartDatasVO {
+  getInfoPerCluster(rank: number): ChartDatasModel {
     const appinitialDatas = this.appService.getInitialDatas().datas;
 
-    const infoPerCluster = new ChartDatasVO();
+    const infoPerCluster = new ChartDatasModel();
 
-    let currentDataSet: ChartDatasetVO;
-    currentDataSet = new ChartDatasetVO('info', 'line');
+    let currentDataSet: ChartDatasetModel;
+    currentDataSet = new ChartDatasetModel('info', 'line');
     for (
       let j = this.dimensionsDatas.dimensions.length - 1;
       j <= this.dimensionsDatas.hierarchyDatas.totalInitialClusters;
@@ -227,7 +227,7 @@ export class ClustersService {
     }
     infoPerCluster.datasets.push(currentDataSet);
 
-    currentDataSet = new ChartDatasetVO(
+    currentDataSet = new ChartDatasetModel(
       this.translate.get('GLOBAL.NUMBER_OF_CLUSTERS'),
     );
     currentDataSet.maxBarThickness = 5;
@@ -252,14 +252,14 @@ export class ClustersService {
     return infoPerCluster;
   }
 
-  getClustersPerDimDatas(rank): ChartDatasVO {
-    const clustersPerDimDatas = new ChartDatasVO();
+  getClustersPerDimDatas(rank): ChartDatasModel {
+    const clustersPerDimDatas = new ChartDatasModel();
     let maxGraphValue = 0;
 
-    let currentDataSet: ChartDatasetVO;
+    let currentDataSet: ChartDatasetModel;
 
     for (let i = 0; i < this.dimensionsDatas.selectedDimensions.length; i++) {
-      currentDataSet = new ChartDatasetVO(
+      currentDataSet = new ChartDatasetModel(
         this.dimensionsDatas.selectedDimensions[i].name,
         'line',
       );
@@ -294,7 +294,7 @@ export class ClustersService {
       }
     }
 
-    currentDataSet = new ChartDatasetVO(
+    currentDataSet = new ChartDatasetModel(
       this.translate.get('GLOBAL.NUMBER_OF_CLUSTERS'),
     );
     currentDataSet.maxBarThickness = 5;
@@ -323,7 +323,7 @@ export class ClustersService {
     const compositionValues: CompositionVO[] = [];
 
     if (appDatas?.coclusteringReport?.dimensionPartitions) {
-      const currentDimensionDetails: DimensionVO =
+      const currentDimensionDetails: DimensionModel =
         this.dimensionsDatas.selectedDimensions.find(
           (e) => e.name === hierarchyName,
         );
@@ -331,7 +331,7 @@ export class ClustersService {
         this.dimensionsDatas.selectedDimensions.findIndex((e) => {
           return hierarchyName === e.name;
         });
-      const currentInitialDimensionDetails: DimensionVO = new DimensionVO(
+      const currentInitialDimensionDetails: DimensionModel = new DimensionModel(
         appinitialDatas.coclusteringReport.dimensionSummaries[
           currentDimensionDetails.startPosition
         ],
@@ -399,7 +399,7 @@ export class ClustersService {
 
   getFilteredDimensionTree(
     dimensionsTree,
-    selectedDimension: DimensionVO,
+    selectedDimension: DimensionModel,
   ): ClusterDetailsVO[] {
     let filteredDimensionsClusters: ClusterDetailsVO[] = [];
     if (dimensionsTree) {

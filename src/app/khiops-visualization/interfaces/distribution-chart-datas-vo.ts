@@ -1,5 +1,5 @@
-import { ChartDatasVO } from '@khiops-library/model/chartDatas.model';
+import { ChartDatasModel } from '@khiops-library/model/chartDatas.model';
 
-export type DistributionChartDatasVO = ChartDatasVO & {
+export type DistributionChartDatasModel = ChartDatasModel & {
   intervals?: string[];
 };

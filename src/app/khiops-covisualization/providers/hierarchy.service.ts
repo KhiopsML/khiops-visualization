@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AppService } from '@khiops-covisualization/providers/app.service';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { TreenodesService } from './treenodes.service';
-import { DimensionVO } from '@khiops-library/model/dimension.model';
+import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
 
 @Injectable({
@@ -35,7 +35,7 @@ export class HierarchyService {
   toggleDimensionHierarchyFold(dimensionName: string, state: boolean) {
     this.hierarchyFold[dimensionName] = state;
 
-    const dimension: DimensionVO = this.dimensionsDatas.dimensions.find(
+    const dimension: DimensionModel = this.dimensionsDatas.dimensions.find(
       (e) => e.name === dimensionName,
     );
     dimension.setHierarchyFold(state);

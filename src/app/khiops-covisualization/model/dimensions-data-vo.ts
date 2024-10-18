@@ -1,4 +1,4 @@
-import { DimensionVO } from '@khiops-library/model/dimension.model';
+import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { TreeNodeVO } from './tree-node-vo';
 import { HierarchyDatasVO } from './hierarchy-datas-vo';
 
@@ -9,11 +9,11 @@ export class DimensionsDatasVO {
   matrixCellFreqDataMap: any = undefined;
 
   cellPartIndexes: number[][] = [[]];
-  initialDimensions: DimensionVO[] = [];
-  dimensions: DimensionVO[] = [];
+  initialDimensions: DimensionModel[] = [];
+  dimensions: DimensionModel[] = [];
   contextSelection: number[][] = [[]];
-  contextDimensions: DimensionVO[] = [];
-  selectedDimensions: DimensionVO[] = [];
+  contextDimensions: DimensionModel[] = [];
+  selectedDimensions: DimensionModel[] = [];
   contextDimensionCount: number = 0;
   hierarchyDatas: HierarchyDatasVO | undefined = undefined;
   dimensionsTrees: TreeNodeVO[][] = [];

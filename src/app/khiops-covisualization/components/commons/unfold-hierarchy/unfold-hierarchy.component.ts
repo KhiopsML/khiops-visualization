@@ -11,12 +11,12 @@ import { AppConfig } from 'src/environments/environment';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HierarchyService } from '@khiops-covisualization/providers/hierarchy.service';
-import { ChartDatasVO } from '@khiops-library/model/chartDatas.model';
+import { ChartDatasModel } from '@khiops-library/model/chartDatas.model';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { HierarchyDatasVO } from '@khiops-covisualization/model/hierarchy-datas-vo';
 import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
 import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
-import { DimensionVO } from '@khiops-library/model/dimension.model';
+import { DimensionModel } from '@khiops-library/model/dimension.model';
 
 @Component({
   selector: 'app-unfold-hierarchy',
@@ -28,15 +28,15 @@ export class UnfoldHierarchyComponent implements OnInit {
   currentUnfoldHierarchy: number = 0;
   hierarchyDatas: HierarchyDatasVO;
   loadingHierarchy: boolean = false;
-  clustersPerDimDatas: ChartDatasVO;
-  infoPerCluster: ChartDatasVO;
+  clustersPerDimDatas: ChartDatasModel;
+  infoPerCluster: ChartDatasModel;
   colorSetClusterPerDim: ChartColorsSetI;
   colorSetInfoPerCluster: ChartColorsSetI;
   previousHierarchyRank: number;
   currentInformationPerCluster = 100;
   cyInput: number; // cypress input value to automatise unfold hierarchy
 
-  dimensions: DimensionVO[];
+  dimensions: DimensionModel[];
   unfoldHierarchyTableTitle = '';
   selectedLineChartItem = '';
 

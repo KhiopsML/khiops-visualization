@@ -1,4 +1,4 @@
-import { DimensionVO } from '@khiops-library/model/dimension.model';
+import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { TreeNodeVO } from './tree-node-vo';
 
 export class SelectedTreeClusterVO {
@@ -14,7 +14,7 @@ export class SelectedTreeClusterVO {
   interval: string;
   frequency: number;
 
-  constructor(dimension: DimensionVO) {
+  constructor(dimension: DimensionModel) {
     this.isCategorical = dimension?.isCategorical;
     this.isNumerical = dimension?.isNumerical;
     this.dimensionType = dimension?.type;

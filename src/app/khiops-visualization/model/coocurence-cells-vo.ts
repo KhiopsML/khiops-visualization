@@ -1,9 +1,9 @@
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
-import { CoocurenceCellVO } from './coocurence-cell-vo';
+import { CoocurenceCellModel } from './coocurence-cell-vo';
 
 export class CoocurenceCellsVO {
   title: string;
-  values: CoocurenceCellVO[];
+  values: CoocurenceCellModel[];
 
   // coocurenceCell has dynamic fields
   displayedColumns: GridColumnsI[] = [];

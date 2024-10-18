@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FileVO } from '../../model/file.model';
+import { FileModel } from '../../model/file.model';
 import { ConfigService } from '@khiops-library/providers/config.service';
 
 @Injectable({
@@ -13,7 +13,7 @@ export class ImportFileLoaderService {
       // For security reasons, local files can not be loaded automatically without Electron
       return new Promise((resolve, reject) => {
         this.configService?.getConfig()?.readLocalFile?.(file, (datas) => {
-          resolve(new FileVO(datas, file.name, file));
+          resolve(new FileModel(datas, file.name, file));
         });
       });
     } else {
@@ -25,7 +25,7 @@ export class ImportFileLoaderService {
           // @ts-ignore
           const datas = e.target.result.toString();
           // @ts-ignore
-          resolve(new FileVO(datas, file.path, file));
+          resolve(new FileModel(datas, file.path, file));
         });
         reader.addEventListener('error', () => {
           reader.abort();

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UtilsService } from '../providers/utils.service';
-import { CellVO } from '../model/cell.model';
+import { CellModel } from '../model/cell.model';
 import { TYPES } from '@khiops-library/enum/types';
 
 @Injectable({
@@ -192,7 +192,7 @@ export class MatrixUtilsDatasService {
    * @param cellTargetFrequencies - Array of target frequencies for the cells.
    * @param xValues - Array of x-axis values.
    * @param yValues - Array of y-axis values.
-   * @returns An array of CellVO objects representing the cells in the matrix.
+   * @returns An array of CellModel objects representing the cells in the matrix.
    */
   static getCellDatas(
     xDimension,
@@ -209,7 +209,7 @@ export class MatrixUtilsDatasService {
     yValues,
   ) {
     // var t0 = performance.now();
-    const cells: CellVO[] = [];
+    const cells: CellModel[] = [];
 
     const xLength = xDimension.parts;
     const yLength = yDimension.parts;
@@ -274,7 +274,7 @@ export class MatrixUtilsDatasService {
     for (let i = 0; i < xLength; i++) {
       for (let j = 0; j < yLength; j++) {
         // cell definition
-        const cell: CellVO = new CellVO();
+        const cell: CellModel = new CellModel();
 
         cell.xaxisPartValues = xAxisPartNames[i];
         cell.xaxisPart = xAxisPartNames[i].toString();

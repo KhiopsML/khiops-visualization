@@ -1,7 +1,7 @@
 import { MatrixCoordI } from '../interfaces/matrix-coord';
 import { UtilsService } from '../providers/utils.service';
 
-export class CellVO {
+export class CellModel {
   /*
 		WARNING
 		Do not make nested objects here

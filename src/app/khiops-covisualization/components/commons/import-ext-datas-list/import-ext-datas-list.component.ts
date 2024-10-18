@@ -6,7 +6,7 @@ import {
 } from '@angular/material/dialog';
 import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
 import { TranslateService } from '@ngstack/translate';
-import { FileVO } from '@khiops-library/model/file.model';
+import { FileModel } from '@khiops-library/model/file.model';
 import { ExtDatasVO } from '@khiops-covisualization/model/ext-datas-vo';
 import { IconCellComponent } from '@khiops-library/components/ag-grid/icon-cell/icon-cell.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -20,7 +20,7 @@ import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
   styleUrls: ['./import-ext-datas-list.component.scss'],
 })
 export class ImportExtDatasListComponent {
-  importExtDatas: FileVO;
+  importExtDatas: FileModel;
   importedDatas: GridDatasI;
   isLoadingDatas = false;
 
@@ -140,7 +140,7 @@ export class ImportExtDatasListComponent {
     this.constructImportedDatasTable();
   }
 
-  datasLoaded(fileDatas: FileVO) {
+  datasLoaded(fileDatas: FileModel) {
     this.importExtDatas = fileDatas;
   }
 }

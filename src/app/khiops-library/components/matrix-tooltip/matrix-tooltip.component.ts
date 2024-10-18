@@ -7,7 +7,7 @@ import {
   ViewChild,
   ElementRef,
 } from '@angular/core';
-import { CellVO } from '@khiops-library/model/cell.model';
+import { CellModel } from '@khiops-library/model/cell.model';
 
 @Component({
   selector: 'kl-matrix-tooltip',
@@ -16,7 +16,7 @@ import { CellVO } from '@khiops-library/model/cell.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MatrixTooltipComponent implements OnChanges {
-  @Input() cell: CellVO;
+  @Input() cell: CellModel;
   @Input() matrixSize: number[];
   @Input() position: {
     x: number;

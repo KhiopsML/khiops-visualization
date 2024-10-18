@@ -5,7 +5,7 @@ import {
   HostListener,
   ViewChild,
 } from '@angular/core';
-import { DimensionVO } from '@khiops-library/model/dimension.model';
+import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { ConfigService } from '@khiops-library/providers/config.service';
@@ -23,10 +23,10 @@ export class HierarchyDetailsComponent extends SelectableComponent {
   @ViewChild(TreeSelectComponent)
   treeSelect: TreeSelectComponent;
 
-  @Input() selectedDimension: DimensionVO;
+  @Input() selectedDimension: DimensionModel;
   @Input() selectedNode: TreeNodeVO;
   @Input() position: number;
-  @Input() dimensions: DimensionVO[];
+  @Input() dimensions: DimensionModel[];
   @Input() dimensionsTree: TreeNodeVO[];
 
   selectedTreeCluster: SelectedTreeClusterVO;

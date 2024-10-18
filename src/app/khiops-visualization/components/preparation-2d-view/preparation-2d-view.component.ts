@@ -15,7 +15,7 @@ import { ModelingDatasService } from '@khiops-visualization/providers/modeling-d
 import { TranslateService } from '@ngstack/translate';
 import { Distribution2dDatasService } from '@khiops-visualization/providers/distribution2d-datas.service';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
-import { ChartDatasVO } from '@khiops-library/model/chartDatas.model';
+import { ChartDatasModel } from '@khiops-library/model/chartDatas.model';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { Variable2dVO } from '@khiops-visualization/model/variable2d-vo';
@@ -42,10 +42,10 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
   preparation2dDatas: Preparation2dDatasVO;
   summaryDatas: InfosDatasI[];
   informationsDatas: InfosDatasI[];
-  targetVariableStatsDatas: ChartDatasVO;
+  targetVariableStatsDatas: ChartDatasModel;
   currentIntervalDatas: GridDatasI | undefined;
   variables2dDatas: Variable2dVO[];
-  targetDistributionGraphDatas: ChartDatasVO | undefined;
+  targetDistributionGraphDatas: ChartDatasModel | undefined;
   levelDistributionTitle: string = '';
 
   // managed by selectable-tab component

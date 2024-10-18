@@ -5,7 +5,7 @@ import { UtilsService } from '@khiops-library/providers/utils.service';
 import { ViewLayoutVO } from '../model/view-layout-vo';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
-import { ProjectSummaryVO } from '@khiops-library/model/projectSummary.model';
+import { ProjectSummaryModel } from '@khiops-library/model/projectSummary.model';
 
 @Injectable({
   providedIn: 'root',
@@ -191,7 +191,7 @@ export class AppService {
   getProjectSummaryDatas(): InfosDatasI[] {
     const appDatas = this.appDatas.datas;
     if (appDatas.coclusteringReport) {
-      const projectSummaryDatas = new ProjectSummaryVO(
+      const projectSummaryDatas = new ProjectSummaryModel(
         appDatas,
         'coclusteringReport',
       );

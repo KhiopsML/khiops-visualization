@@ -5,12 +5,12 @@ import { BarVO } from '../model/bar-vo';
 import { DistributionDatasService } from './distribution-datas.service';
 import { MatrixUtilsDatasService } from '@khiops-library/providers/matrix-utils-datas.service';
 import { VariableDetailsVO } from '../model/variableDetails-vo';
-import { ChartDatasetVO } from '@khiops-library/model/chartDataset.model';
+import { ChartDatasetModel } from '@khiops-library/model/chartDataset.model';
 import { Preparation2dDatasService } from './preparation2d-datas.service';
 import { AppService } from './app.service';
 import { DistributionDatasVO } from '../model/distribution-datas-vo';
 import { TYPES } from '@khiops-library/enum/types';
-import { ChartDatasVO } from '@khiops-library/model/chartDatas.model';
+import { ChartDatasModel } from '@khiops-library/model/chartDatas.model';
 import { ModalityCountsVO } from '@khiops-visualization/model/modality-counts-vo';
 
 @Injectable({
@@ -38,7 +38,7 @@ export class Distribution2dDatasService {
     return this.distributionDatas;
   }
 
-  getTargetDistributionGraphDatas(type?: string): ChartDatasVO {
+  getTargetDistributionGraphDatas(type?: string): ChartDatasModel {
     this.distributionDatas.initTargetDistributionGraphDatas();
     this.distributionDatas.setTargetDistributionType(type);
 
@@ -89,7 +89,7 @@ export class Distribution2dDatasService {
           graphItem.extra.percent =
             (el * 100) / UtilsService.arraySum(currentDatas);
 
-          const currentDataSet = new ChartDatasetVO(graphItem.name);
+          const currentDataSet = new ChartDatasetModel(graphItem.name);
           currentDataSet.data.push(graphItem.value);
           currentDataSet.extra.push(graphItem);
           this.distributionDatas.targetDistributionGraphDatas.datasets.push(

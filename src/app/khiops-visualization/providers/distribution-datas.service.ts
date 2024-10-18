@@ -3,13 +3,13 @@ import { AppService } from './app.service';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { AppConfig } from 'src/environments/environment';
 import { BarVO } from '../model/bar-vo';
-import { ChartDatasetVO } from '@khiops-library/model/chartDataset.model';
+import { ChartDatasetModel } from '@khiops-library/model/chartDataset.model';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { TranslateService } from '@ngstack/translate';
 import { VariableDetailsVO } from '../model/variableDetails-vo';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { DistributionDatasVO } from '../model/distribution-datas-vo';
-import { ChartDatasVO } from '@khiops-library/model/chartDatas.model';
+import { ChartDatasModel } from '@khiops-library/model/chartDatas.model';
 import { TreePreparationDatasService } from './tree-preparation-datas.service';
 import { TYPES } from '@khiops-library/enum/types';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
@@ -18,7 +18,7 @@ import { HistogramValuesI } from '@khiops-visualization/components/commons/histo
 import { TreeNodeVO } from '@khiops-visualization/model/tree-node-vo';
 import { PreparationVariableVO } from '@khiops-visualization/model/preparation-variable-vo';
 import { TreePreparationVariableVO } from '@khiops-visualization/model/tree-preparation-variable-vo';
-import { DistributionChartDatasVO } from '@khiops-visualization/interfaces/distribution-chart-datas-vo';
+import { DistributionChartDatasModel } from '@khiops-visualization/interfaces/distribution-chart-datas-vo';
 
 @Injectable({
   providedIn: 'root',
@@ -79,7 +79,7 @@ export class DistributionDatasService {
     selectedVariable: PreparationVariableVO | TreePreparationVariableVO,
     type?: string,
     initActiveEntries?: boolean,
-  ): ChartDatasVO {
+  ): ChartDatasModel {
     if (initActiveEntries === undefined) {
       initActiveEntries = initActiveEntries || true;
     }
@@ -124,7 +124,7 @@ export class DistributionDatasService {
   getTreeNodeTargetDistributionGraphDatas(
     selectedNode: TreeNodeVO,
     type?: string,
-  ): ChartDatasVO {
+  ): ChartDatasModel {
     this.distributionDatas.initTreeNodeTargetDistributionGraphDatas();
     this.distributionDatas.setTreeNodeTargetDistributionType(type);
 
@@ -189,8 +189,8 @@ export class DistributionDatasService {
     displayedValues: ChartToggleValuesI[] | undefined,
     type: string,
     selectedVariableType: string,
-  ): [ChartDatasVO, ChartToggleValuesI[] | undefined] {
-    const targetDistributionGraphDatas = new ChartDatasVO();
+  ): [ChartDatasModel, ChartToggleValuesI[] | undefined] {
+    const targetDistributionGraphDatas = new ChartDatasModel();
 
     let dimensionLength = 0;
     if (partition) {
@@ -212,7 +212,7 @@ export class DistributionDatasService {
 
       for (let k = 0; k < dimensionLength; k++) {
         const currentPartition = partition[k];
-        const currentDataSet = new ChartDatasetVO(currentPartition.toString());
+        const currentDataSet = new ChartDatasetModel(currentPartition.toString());
         targetDistributionGraphDatas.datasets.push(currentDataSet);
 
         let l: number = currentXAxis.length;
@@ -269,8 +269,8 @@ export class DistributionDatasService {
     selectedVariable,
     type?: string,
     initActiveEntries?: boolean,
-  ): ChartDatasVO {
-    let distributionsGraphDetails = new ChartDatasVO();
+  ): ChartDatasModel {
+    let distributionsGraphDetails = new ChartDatasModel();
     const appDatas = this.appService.getDatas().datas;
 
     if (initActiveEntries === undefined) {
@@ -375,8 +375,8 @@ export class DistributionDatasService {
     currentXAxis,
     selectedVariable,
   ): any {
-    let distributionsGraphDetails: DistributionChartDatasVO =
-      new ChartDatasVO();
+    let distributionsGraphDetails: DistributionChartDatasModel =
+      new ChartDatasModel();
 
     if (currentDimension) {
       // Add trash info to the defaultGroupIndex
@@ -386,7 +386,7 @@ export class DistributionDatasService {
       }
 
       partition = currentDimension?.partition?.length;
-      const currentDataSet = new ChartDatasetVO(
+      const currentDataSet = new ChartDatasetModel(
         this.distributionDatas.distributionType,
       );
       const [frequencyArray, coverageArray] =
@@ -478,10 +478,10 @@ export class DistributionDatasService {
     return coverageValue;
   }
 
-  getLeveldistributionGraphDatas(inputDatas: any, limit = 0): ChartDatasVO {
-    const levelDistributionGraphDatas: ChartDatasVO = new ChartDatasVO();
+  getLeveldistributionGraphDatas(inputDatas: any, limit = 0): ChartDatasModel {
+    const levelDistributionGraphDatas: ChartDatasModel = new ChartDatasModel();
 
-    const currentDataSet = new ChartDatasetVO('level');
+    const currentDataSet = new ChartDatasetModel('level');
     levelDistributionGraphDatas.datasets.push(currentDataSet);
 
     let l = inputDatas.length;

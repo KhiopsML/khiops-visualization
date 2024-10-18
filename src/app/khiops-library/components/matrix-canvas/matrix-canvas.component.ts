@@ -17,7 +17,7 @@ import { KhiopsLibraryService } from '../../providers/khiops-library.service';
 import * as panzoom from 'pan-zoom';
 import { UtilsService } from '../../providers/utils.service';
 import { MatrixCanvasService } from './matrix-canvas.service';
-import { CellVO } from '../../model/cell.model';
+import { CellModel } from '../../model/cell.model';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
@@ -44,7 +44,7 @@ export class MatrixCanvasComponent
   @Input() graphTargets: string[];
   @Input() graphTarget: string;
   @Input() selectedNodes: TreeNodeVO[]; // KC use case
-  @Input() selectedCell: CellVO; // KV use case
+  @Input() selectedCell: CellModel; // KV use case
   @Input() contextSelection: number[] = [];
   @Input() isAxisInverted: boolean;
 
@@ -56,7 +56,7 @@ export class MatrixCanvasComponent
 
   isKhiopsCovisu: boolean;
   componentType = COMPONENT_TYPES.MATRIX; // needed to copy datas
-  selectedCells: CellVO[];
+  selectedCells: CellModel[];
 
   xAxisLabel: string;
   yAxisLabel: string;
@@ -108,7 +108,7 @@ export class MatrixCanvasComponent
   unpanzoom: any;
   isPaning = false;
 
-  tooltipCell: CellVO | undefined;
+  tooltipCell: CellModel | undefined;
   tooltipPosition: {
     x: number;
     y: number;
@@ -578,7 +578,7 @@ export class MatrixCanvasComponent
             this.drawSelectedCell(cell);
           }
         } else {
-          const cell: CellVO = new CellVO();
+          const cell: CellModel = new CellModel();
           cell.xCanvas = 0;
           cell.yCanvas = 0;
           cell.wCanvas = this.matrixCtx.canvas.width;
@@ -589,7 +589,7 @@ export class MatrixCanvasComponent
     }
   }
 
-  drawSelectedCell(cell: CellVO) {
+  drawSelectedCell(cell: CellModel) {
     if (cell) {
       this.matrixSelectedCtx.strokeStyle = '#ffffff';
       this.matrixSelectedCtx.lineWidth = 4;
@@ -618,7 +618,7 @@ export class MatrixCanvasComponent
     }
   }
 
-  drawProbExceptionCell(cell: CellVO) {
+  drawProbExceptionCell(cell: CellModel) {
     if (!this.canvasPattern) {
       this.drawZeroExceptionCanvasPattern();
     }
