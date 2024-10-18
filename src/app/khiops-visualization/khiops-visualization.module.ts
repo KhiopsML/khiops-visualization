@@ -48,9 +48,6 @@ const providers = [
 
 @NgModule({
   declarations: [
-    // ReleaseNotesComponent,
-    // ConfirmDialogComponent,
-    // LevelDistributionGraphComponent,
     HistogramComponent,
     HistogramTooltipComponent,
     AppComponent,

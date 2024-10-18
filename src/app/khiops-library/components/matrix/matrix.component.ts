@@ -205,18 +205,6 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
         this.isZerosToggled = false;
       }
 
-      // Check if nodes have changed to updat ui #117
-      // let diff = {};
-      // if (
-      //   changes.selectedNodes?.currentValue &&
-      //   changes.selectedNodes?.previousValue
-      // ) {
-      //   diff = UtilsService.deepDiff(
-      //     changes.selectedNodes.currentValue,
-      //     changes.selectedNodes.previousValue,
-      //   );
-      // }
-
       // Draw matrix on change
       if (
         this.inputDatas &&
@@ -381,10 +369,10 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
                     this.matrixExtras[index] = totalMutInfo;
                   }
 
-                  const cellDatas = this.inputDatas.matrixCellDatas[index];
+                  let cellDatas = this.inputDatas.matrixCellDatas[index];
 
                   const currentVal = this.matrixValues[index];
-                  this.adaptCellDimensionsToZoom(
+                  cellDatas = MatrixService.adaptCellDimensionsToZoom(
                     cellDatas,
                     width,
                     height,
@@ -829,43 +817,6 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     height = Number(height.toFixed(0));
 
     return [width, height];
-  }
-
-  adaptCellDimensionsToZoom(
-    cellDatas: {
-      xCanvas: number;
-      x: MatrixCoordI;
-      yCanvas: number;
-      y: MatrixCoordI;
-      wCanvas: number;
-      w: MatrixCoordI;
-      hCanvas: number;
-      h: MatrixCoordI;
-    },
-    width: number | undefined,
-    height: number | undefined,
-    graphType: string,
-  ) {
-    if (width && height) {
-      cellDatas.xCanvas =
-        graphType === 'GLOBAL.STANDARD'
-          ? cellDatas.x.standard * width * 0.01
-          : cellDatas.x.frequency * width * 0.01;
-      cellDatas.yCanvas =
-        graphType === 'GLOBAL.STANDARD'
-          ? cellDatas.y.standard * height * 0.01
-          : cellDatas.y.frequency * height * 0.01;
-      cellDatas.wCanvas =
-        graphType === 'GLOBAL.STANDARD'
-          ? cellDatas.w.standard * width * 0.01
-          : cellDatas.w.frequency * width * 0.01;
-      cellDatas.hCanvas =
-        graphType === 'GLOBAL.STANDARD'
-          ? cellDatas.h.standard * height * 0.01
-          : cellDatas.h.frequency * height * 0.01;
-    }
-
-    return cellDatas;
   }
 
   getCurrentCell(event: MouseEvent) {

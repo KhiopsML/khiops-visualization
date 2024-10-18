@@ -59,8 +59,8 @@ export class HierarchyService {
     this.dimensionsDatas = this.dimensionsDatasService.getDatas();
     this.dimensionsDatasService.getDimensions();
     this.dimensionsDatasService.initSelectedDimensions();
+    
     this.dimensionsDatasService.saveInitialDimension();
-
     this.dimensionsDatasService.constructDimensionsTrees();
     this.dimensionsDatasService.getMatrixDatas();
     this.dimensionsDatasService.computeMatrixDataFreqMap();

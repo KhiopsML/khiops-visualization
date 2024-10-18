@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { UtilsService } from '../../providers/utils.service';
 import { CellModel } from '../../model/cell.model';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
+import { MatrixCoordI } from '@khiops-library/interfaces/matrix-coord';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +22,20 @@ export class MatrixService {
     '#000000',
   ];
 
+  /**
+   * Computes various matrix values based on the provided graph mode, input data, context selection, and selected target index.
+   *
+   * @param {MatrixModeI} graphMode - The mode of the graph which determines the type of computation to perform.
+   * @param {any} inputDatas - The input data containing matrix cell data and other relevant information.
+   * @param {any} contextSelection - The context selection used to filter or modify the computation.
+   * @param {number} selectedTargetIndex - The index of the selected target, used in specific graph modes.
+   *
+   * @returns {Array<any>} An array containing:
+   * - `matrixFreqsValues`: The computed frequency values for the matrix.
+   * - `matrixValues`: The computed matrix values based on the graph mode.
+   * - `matrixExtras`: Additional computed values for certain graph modes.
+   * - `matrixExpectedFreqsValues`: The expected frequency values for the matrix cells.
+   */
   static computeMatrixValues(
     graphMode: MatrixModeI,
     inputDatas: any,
@@ -353,7 +368,21 @@ export class MatrixService {
     ];
   }
 
-  static computeValsByContext(e, partPositions, partPositionsLength): number[] {
+  /**
+   * Computes the total values for matrix, cell frequencies, column frequencies, and line frequencies
+   * based on the provided context and part positions.
+   *
+   * @param e - The context object containing matrixTotal, cellFreqs, freqColVals, and freqLineVals arrays.
+   * @param partPositions - An array of indices representing the positions to be considered in the computation.
+   * @param partPositionsLength - The length of the partPositions array.
+   * @returns An array containing the computed totals in the following order:
+   *          [matrixTotal, cellFreqs, freqColVals, freqLineVals].
+   */
+  static computeValsByContext(
+    e: CellModel,
+    partPositions,
+    partPositionsLength,
+  ): number[] {
     let matrixTotal = 0;
     let cellFreqs = 0;
     let freqColVals = 0;
@@ -367,6 +396,15 @@ export class MatrixService {
     return [matrixTotal, cellFreqs, freqColVals, freqLineVals];
   }
 
+  /**
+   * Generates a linear gradient string representing the frequency colors legend.
+   *
+   * This method constructs a CSS linear gradient string that transitions through
+   * the colors defined in the `hot` array. Each color is spaced evenly based on
+   * the length of the array.
+   *
+   * @returns {string} A CSS linear gradient string.
+   */
   static getFrequencyColorsLegend(): string {
     let strHex = `linear-gradient(
 			to top,`;
@@ -380,6 +418,14 @@ export class MatrixService {
     return strHex;
   }
 
+  /**
+   * Generates a CSS linear gradient string representing a color legend.
+   *
+   * The gradient transitions from red at the top (0%) to white in the middle (50%),
+   * and finally to blue at the bottom (100%).
+   *
+   * @returns {string} A CSS linear gradient string.
+   */
   static getInterestColorsLegend(): string {
     return `linear-gradient(
 			to bottom,
@@ -389,19 +435,18 @@ export class MatrixService {
 			)`;
   }
 
-  static hexToRgb(hex) {
-    const bigint = parseInt(hex.slice(1), 16);
-    const r = (bigint >> 16) & 255;
-    const g = (bigint >> 8) & 255;
-    const b = bigint & 255;
-    return { r, g, b };
-  }
-
+  /**
+   * Generates a map of frequency colors based on the `hot` color array.
+   * Each color is converted from hex to RGB and associated with a percentage.
+   *
+   * @returns {Array<{ pct: number, color: { r: number, g: number, b: number } }>}
+   * An array of objects where each object contains a percentage (`pct`) and a color in RGB format.
+   */
   static getFrequencyColors() {
     const hotLength = this.hot.length;
     const map = new Array(hotLength);
     for (let i = 0; i < hotLength; i++) {
-      const rgb = this.hexToRgb(this.hot[i]);
+      const rgb = UtilsService.hexToRgb(this.hot[i]);
       map[i] = {
         pct: i / 10,
         color: {
@@ -414,6 +459,15 @@ export class MatrixService {
     return map;
   }
 
+  /**
+   * Returns an array of color objects representing a gradient based on the input value.
+   *
+   * @param isPositiveValue - A boolean indicating whether the value is positive or not.
+   * @returns An array of objects, each containing a percentage (`pct`) and a color (`color`).
+   *          The color object includes red (`r`), green (`g`), and blue (`b`) components.
+   *          If `isPositiveValue` is true, the gradient ranges from white to red.
+   *          If `isPositiveValue` is false, the gradient ranges from white to blue.
+   */
   static getInterestColors(isPositiveValue) {
     if (isPositiveValue) {
       return [
@@ -456,6 +510,16 @@ export class MatrixService {
     }
   }
 
+  /**
+   * Determines the next cell to navigate to based on the provided key code and current cell index.
+   *
+   * @param keyCode - The key code representing the navigation direction (e.g., 38 for UP, 40 for DOWN, 37 for LEFT, 39 for RIGHT).
+   * @param matrixCellDatas - An array of cell data objects, each containing xCanvas and yCanvas coordinates.
+   * @param isAxisInverted - A boolean indicating whether the axis is inverted.
+   * @param currentCellIndex - The index of the current cell.
+   *
+   * @returns The next cell to navigate to as a `CellModel` object, or `undefined` if the navigation is not possible.
+   */
   static getNavigationCell(
     keyCode,
     matrixCellDatas,
@@ -533,5 +597,52 @@ export class MatrixService {
     }
     changeCell = matrixCellDatas[selectedCellIndex];
     return changeCell;
+  }
+
+  /**
+   * Adjusts the dimensions of a cell based on the zoom level and graph type.
+   *
+   * @param cellDatas - An object containing the current canvas and matrix coordinates for the cell.
+   * @param graphType - The type of graph, which determines how the dimensions are calculated.
+   * @param width - The width of the canvas.
+   * @param height - The height of the canvas.
+   *
+   * @returns The updated cell data with adjusted canvas coordinates and dimensions.
+   */
+  static adaptCellDimensionsToZoom(
+    cellDatas: {
+      xCanvas: number;
+      x: MatrixCoordI;
+      yCanvas: number;
+      y: MatrixCoordI;
+      wCanvas: number;
+      w: MatrixCoordI;
+      hCanvas: number;
+      h: MatrixCoordI;
+    },
+    width: number | undefined,
+    height: number | undefined,
+    graphType: string,
+  ) {
+    if (width && height) {
+      cellDatas.xCanvas =
+        graphType === 'GLOBAL.STANDARD'
+          ? cellDatas.x.standard * width * 0.01
+          : cellDatas.x.frequency * width * 0.01;
+      cellDatas.yCanvas =
+        graphType === 'GLOBAL.STANDARD'
+          ? cellDatas.y.standard * height * 0.01
+          : cellDatas.y.frequency * height * 0.01;
+      cellDatas.wCanvas =
+        graphType === 'GLOBAL.STANDARD'
+          ? cellDatas.w.standard * width * 0.01
+          : cellDatas.w.frequency * width * 0.01;
+      cellDatas.hCanvas =
+        graphType === 'GLOBAL.STANDARD'
+          ? cellDatas.h.standard * height * 0.01
+          : cellDatas.h.frequency * height * 0.01;
+    }
+
+    return cellDatas;
   }
 }
