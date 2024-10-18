@@ -11,7 +11,7 @@ import {
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
 import { deepEqual } from 'fast-equals';
-import { MatrixCanvasComponent } from '@khiops-library/components/matrix-canvas/matrix-canvas.component';
+import { MatrixComponent } from '@khiops-library/components/matrix/matrix.component';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { PreparationVariableModel } from '@khiops-visualization/model/preparation-variable.model';
 import { Preparation2dDatasModel } from '@khiops-visualization/model/preparation2d-datas.model';
@@ -30,10 +30,10 @@ import { Preparation2dVariableModel } from '@khiops-visualization/model/preparat
   styleUrls: ['./regression-matrix.component.scss'],
 })
 export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
-  @ViewChild('matrixCanvas', {
+  @ViewChild('matrix', {
     static: false,
   })
-  matrixCanvas: MatrixCanvasComponent;
+  matrix: MatrixComponent;
 
   @Output() selectedCellChanged: EventEmitter<number> = new EventEmitter();
   @Input() selectedVariable: PreparationVariableModel;
@@ -61,7 +61,7 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
     );
     this.minMaxValues =
       this.preparation2dDatasService.getGlobalMinAndMax2dValues(variable);
-    this.preparation2dDatasService.getMatrixCanvasDatas(
+    this.preparation2dDatasService.getMatrixDatas(
       this.preparation2dDatas.selectedVariable,
     );
 
@@ -92,7 +92,7 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
       this.preparation2dDatasService.setSelectedRegressionVariable(currentVar);
 
       this.constructModeSelectBox();
-      this.preparation2dDatasService.getMatrixCanvasDatas(
+      this.preparation2dDatasService.getMatrixDatas(
         this.preparation2dDatas.selectedVariable,
       );
       this.preparation2dDatasService.setSelectedCellIndex(0);
@@ -135,7 +135,7 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
   onToggleFullscreen(isFullscreen: boolean) {
     this.isFullscreen = isFullscreen;
     setTimeout(() => {
-      this.matrixCanvas.drawMatrix();
+      this.matrix.drawMatrix();
     });
   }
 

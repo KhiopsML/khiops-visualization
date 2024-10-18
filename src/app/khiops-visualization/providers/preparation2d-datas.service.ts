@@ -13,7 +13,7 @@ import { VariableDetailsModel } from '../model/variable-details.model';
 import { Variable2dModel } from '../model/variable-2d.model';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { CoocurenceCellModel } from '../model/coocurence-cell.model';
-import { MatrixCanvasService } from '@khiops-library/components/matrix-canvas/matrix-canvas.service';
+import { MatrixService } from '@khiops-library/components/matrix/matrix.service';
 import { Preparation2dDatasModel } from '../model/preparation2d-datas.model';
 import { CoocurenceCellsModel } from '../model/coocurence-cells.model';
 import { InformationsModel } from '@khiops-visualization/model/informations.model';
@@ -440,7 +440,7 @@ export class Preparation2dDatasService {
     return variableDetails;
   }
 
-  getMatrixCanvasDatas(
+  getMatrixDatas(
     selectedVariable: Variable2dModel | Preparation2dVariableModel | VariableModel,
   ): any {
     this.preparation2dDatas.matrixDatas = undefined;
@@ -627,14 +627,14 @@ export class Preparation2dDatasService {
       MUTUAL_INFO_TARGET_WITH_CELL: [],
     };
     for (let i = 0; i < variablesDatas.length; i++) {
-      const inputDatas = this.getMatrixCanvasDatas(variablesDatas[i]);
+      const inputDatas = this.getMatrixDatas(variablesDatas[i]);
       if (inputDatas) {
         let matrixFreqsValues, matrixValues, matrixExtras;
         let graphMode: MatrixModeI = {
           mode: 'MUTUAL_INFO_TARGET_WITH_CELL',
         };
         [matrixFreqsValues, matrixValues, matrixExtras] =
-          MatrixCanvasService.computeMatrixValues(
+          MatrixService.computeMatrixValues(
             graphMode,
             inputDatas,
             undefined,
@@ -646,7 +646,7 @@ export class Preparation2dDatasService {
           mode: 'CELL_INTEREST',
         };
         [matrixFreqsValues, matrixValues, matrixExtras] =
-          MatrixCanvasService.computeMatrixValues(
+          MatrixService.computeMatrixValues(
             graphMode,
             inputDatas,
             undefined,

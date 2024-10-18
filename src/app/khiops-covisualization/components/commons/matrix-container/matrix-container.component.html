@@ -47,8 +47,8 @@
           <kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">
           </kl-btn-fullscreen>
         </div>
-        <kl-matrix-canvas
-          #matrixCanvas
+        <kl-matrix
+          #matrix
           fxFlex
           fxLayout="row"
           [id]="'matrix-container-comp-wrapper'"
@@ -63,7 +63,7 @@
           [inputDatas]="dimensionsDatas.matrixDatas"
           [graphType]="matrixOptions.selected"
         >
-        </kl-matrix-canvas>
+        </kl-matrix>
       </div>
     </as-split-area>
   </as-split>

@@ -13,7 +13,7 @@ import { SelectableService } from '@khiops-library/components/selectable/selecta
 import { TranslateService } from '@ngstack/translate';
 import { AppConfig } from 'src/environments/environment';
 import { deepEqual } from 'fast-equals';
-import { MatrixCanvasComponent } from '@khiops-library/components/matrix-canvas/matrix-canvas.component';
+import { MatrixComponent } from '@khiops-library/components/matrix/matrix.component';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { Preparation2dDatasModel } from '@khiops-visualization/model/preparation2d-datas.model';
 import { Preparation2dVariableModel } from '@khiops-visualization/model/preparation2d-variable.model';
@@ -34,10 +34,10 @@ import { MatrixRangeValuesI } from '@khiops-visualization/interfaces/matrix-rang
   styleUrls: ['./coocurence-matrix.component.scss'],
 })
 export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
-  @ViewChild('matrixCanvas', {
+  @ViewChild('matrix', {
     static: false,
   })
-  matrixCanvas: MatrixCanvasComponent;
+  matrix: MatrixComponent;
 
   preparation2dDatas: Preparation2dDatasModel;
   @Input() selectedVariable: Preparation2dVariableModel;
@@ -67,7 +67,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
   ngAfterViewInit() {
     setTimeout(() => {
       // Avoid ExpressionChangedAfterItHasBeenCheckedError
-      this.preparation2dDatasService.getMatrixCanvasDatas(
+      this.preparation2dDatasService.getMatrixDatas(
         this.preparation2dDatas.selectedVariable,
       );
 
@@ -91,7 +91,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
       this.constructTargetSelectBox();
       this.constructModeSelectBox();
       this.selectTargetSelectBox();
-      this.preparation2dDatasService.getMatrixCanvasDatas(
+      this.preparation2dDatasService.getMatrixDatas(
         this.preparation2dDatas.selectedVariable,
       );
       this.preparation2dDatasService.setSelectedCellIndex(0);
@@ -200,7 +200,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
   onToggleFullscreen(isFullscreen: boolean) {
     this.isFullscreen = isFullscreen;
     setTimeout(() => {
-      this.matrixCanvas.drawMatrix();
+      this.matrix.drawMatrix();
     });
   }
 
@@ -217,7 +217,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
       matrixOptionsToggle.style.display = 'flex';
 
       // Redraw matrix otherwise it is empty
-      this.matrixCanvas.drawMatrix();
+      this.matrix.drawMatrix();
     }
   }
 

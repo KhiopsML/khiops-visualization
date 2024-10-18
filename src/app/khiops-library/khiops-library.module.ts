@@ -45,7 +45,7 @@ import { SelectableTabComponent } from './components/selectable-tab/selectable-t
 import { CellStatsComponent } from './components/cell-stats/cell-stats.component';
 import { GraphHeaderComponent } from './components/graph-header/graph-header.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatrixCanvasComponent } from './components/matrix-canvas/matrix-canvas.component';
+import { MatrixComponent } from './components/matrix/matrix.component';
 import { AgGridComponent } from './components/ag-grid/ag-grid.component';
 import { MatrixTooltipComponent } from './components/matrix-tooltip/matrix-tooltip.component';
 import { CheckboxCellComponent } from './components/ag-grid/checkbox-cell/checkbox-cell.component';
@@ -124,7 +124,7 @@ import EnTransaltion from '../../assets/i18n/en.json';
     LegendComponent,
     SelectableTabComponent,
     InformationsBlockComponent,
-    MatrixCanvasComponent,
+    MatrixComponent,
     AgGridComponent,
     MatrixTooltipComponent,
     MatrixToggleComponent,
@@ -184,7 +184,7 @@ import EnTransaltion from '../../assets/i18n/en.json';
     GraphHeaderComponent,
     ToPrecisionPipe,
     InformationsBlockComponent,
-    MatrixCanvasComponent,
+    MatrixComponent,
     AgGridComponent,
     MatrixTooltipComponent,
     MatrixToggleComponent,

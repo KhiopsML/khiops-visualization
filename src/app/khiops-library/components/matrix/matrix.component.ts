@@ -16,7 +16,7 @@ import { KhiopsLibraryService } from '../../providers/khiops-library.service';
 // @ts-ignore
 import * as panzoom from 'pan-zoom';
 import { UtilsService } from '../../providers/utils.service';
-import { MatrixCanvasService } from './matrix-canvas.service';
+import { MatrixService } from './matrix.service';
 import { CellModel } from '../../model/cell.model';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
@@ -27,14 +27,11 @@ import { EventsService } from '@khiops-covisualization/providers/events.service'
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 
 @Component({
-  selector: 'kl-matrix-canvas',
-  templateUrl: './matrix-canvas.component.html',
-  styleUrls: ['./matrix-canvas.component.scss'],
+  selector: 'kl-matrix',
+  templateUrl: './matrix.component.html',
+  styleUrls: ['./matrix.component.scss'],
 })
-export class MatrixCanvasComponent
-  extends SelectableComponent
-  implements OnChanges
-{
+export class MatrixComponent extends SelectableComponent implements OnChanges {
   @Input() inputDatas: any;
   @Input() minMaxValues: any; // dynamic and complex value object
 
@@ -90,10 +87,10 @@ export class MatrixCanvasComponent
     static: false,
   })
   matrixArea: ElementRef<HTMLElement>;
-  @ViewChild('matrixCanvasComp', {
+  @ViewChild('matrixComp', {
     static: false,
   })
-  matrixCanvasComp: ElementRef<HTMLElement>;
+  matrixComp: ElementRef<HTMLElement>;
   @ViewChild('matrixContainerDiv', {
     static: false,
   })
@@ -172,7 +169,7 @@ export class MatrixCanvasComponent
       currentSelectedArea.id === this.id &&
       this.selectedCells.length === 1
     ) {
-      const changeCell = MatrixCanvasService.getNavigationCell(
+      const changeCell = MatrixService.getNavigationCell(
         event.keyCode,
         this.inputDatas.matrixCellDatas,
         this.isAxisInverted,
@@ -267,7 +264,7 @@ export class MatrixCanvasComponent
             this.matrixValues,
             this.matrixExtras,
             this.matrixExpectedFreqsValues,
-          ] = MatrixCanvasService.computeMatrixValues(
+          ] = MatrixService.computeMatrixValues(
             this.graphMode,
             this.inputDatas,
             this.contextSelection,
@@ -757,10 +754,10 @@ export class MatrixCanvasComponent
       this.graphMode.mode === 'MUTUAL_INFO_TARGET_WITH_CELL'
     ) {
       this.legendBar.nativeElement.style.background =
-        MatrixCanvasService.getInterestColorsLegend();
+        MatrixService.getInterestColorsLegend();
     } else {
       this.legendBar.nativeElement.style.background =
-        MatrixCanvasService.getFrequencyColorsLegend();
+        MatrixService.getFrequencyColorsLegend();
     }
   }
 
@@ -787,10 +784,10 @@ export class MatrixCanvasComponent
         this.graphMode.mode === 'MUTUAL_INFO_TARGET_WITH_CELL'
       ) {
         const isPositiveValue = colorValue >= 0;
-        percentColors = MatrixCanvasService.getInterestColors(isPositiveValue);
+        percentColors = MatrixService.getInterestColors(isPositiveValue);
         colorValue = Math.abs(colorValue);
       } else {
-        percentColors = MatrixCanvasService.getFrequencyColors();
+        percentColors = MatrixService.getFrequencyColors();
       }
 
       let i = 1;

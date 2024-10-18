@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { AppService } from '@khiops-covisualization/providers/app.service';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { HttpClientModule } from '@angular/common/http';
-import { MatrixCanvasService } from '@khiops-library/components/matrix-canvas/matrix-canvas.service';
+import { MatrixService } from '@khiops-library/components/matrix/matrix.service';
 import { TranslateModule } from '@ngstack/translate';
 
 let appService: AppService;
@@ -120,7 +120,7 @@ describe('CoVisualization', () => {
         mode: 'PROB_CELL',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixCanvasService.computeMatrixValues(
+        MatrixService.computeMatrixValues(
           graphMode,
           inputDatas,
           [[0]],
@@ -160,7 +160,7 @@ describe('CoVisualization', () => {
         mode: 'PROB_CELL',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixCanvasService.computeMatrixValues(
+        MatrixService.computeMatrixValues(
           graphMode,
           inputDatas,
           [[0, 1]],
@@ -199,7 +199,7 @@ describe('CoVisualization', () => {
         mode: 'PROB_CELL_REVERSE',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixCanvasService.computeMatrixValues(
+        MatrixService.computeMatrixValues(
           graphMode,
           inputDatas,
           [[0, 1]],
@@ -242,7 +242,7 @@ describe('CoVisualization', () => {
         mode: 'HELLINGER',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixCanvasService.computeMatrixValues(
+        MatrixService.computeMatrixValues(
           graphMode,
           inputDatas,
           [[0, 1]],
@@ -291,7 +291,7 @@ describe('CoVisualization', () => {
         mode: 'HELLINGER',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixCanvasService.computeMatrixValues(
+        MatrixService.computeMatrixValues(
           graphMode,
           inputDatas,
           [[0]],
@@ -340,7 +340,7 @@ describe('CoVisualization', () => {
         mode: 'MUTUAL_INFO',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixCanvasService.computeMatrixValues(
+        MatrixService.computeMatrixValues(
           graphMode,
           inputDatas,
           [[0]],

@@ -586,7 +586,7 @@ kl-chart {
   min-height: 0px;
 }
 
-kl-matrix-canvas {
+kl-matrix {
   width: calc(100% - 2px); // for selectable service
   padding-bottom: 1px; // important to avoid useless scrollbar
 }

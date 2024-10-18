@@ -64,8 +64,8 @@
               </kl-btn-fullscreen>
             </div>
           </div>
-          <kl-matrix-canvas
-            #matrixCanvas
+          <kl-matrix
+            #matrix
             fxFlex
             fxLayout="row"
             (cellSelected)="onCellSelected($event)"
@@ -80,7 +80,7 @@
             [graphMode]="matrixModes.selected"
             [graphTarget]="matrixTargets.selected"
           >
-          </kl-matrix-canvas>
+          </kl-matrix>
         </div>
       </ng-template>
     </mat-tab>

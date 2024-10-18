@@ -6,7 +6,7 @@ import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 @Injectable({
   providedIn: 'root',
 })
-export class MatrixCanvasService {
+export class MatrixService {
   static readonly hot: string[] = [
     '#FFFFFF',
     '#FF8000',

@@ -20,8 +20,8 @@
         </kl-btn-fullscreen>
       </div>
     </div>
-    <kl-matrix-canvas
-      #matrixCanvas
+    <kl-matrix
+      #matrix
       fxFlex
       fxLayout="row"
       [id]="'regression-matrix-comp'"
@@ -34,7 +34,7 @@
       [minMaxValues]="minMaxValues"
       [graphMode]="matrixModes.selected"
     >
-    </kl-matrix-canvas>
+    </kl-matrix>
   </div>
   <kl-no-data fxFlex *ngIf="!preparation2dDatas.matrixDatas"></kl-no-data>
 </div>

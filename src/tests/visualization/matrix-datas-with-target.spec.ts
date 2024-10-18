@@ -28,7 +28,7 @@ describe('Visualization', () => {
         fileDatas.bivariatePreparationReport.variablesPairsStatistics[11],
       );
       const preparation2dDatas = preparation2dDatasService.getDatas();
-      const result = preparation2dDatasService.getMatrixCanvasDatas(
+      const result = preparation2dDatasService.getMatrixDatas(
         preparation2dDatas.selectedVariable,
       );
       cells = result.matrixCellDatas;

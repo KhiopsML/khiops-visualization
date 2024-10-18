@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { AppService } from '@khiops-covisualization/providers/app.service';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
-import { MatrixCanvasComponent } from '@khiops-library/components/matrix-canvas/matrix-canvas.component';
+import { MatrixComponent } from '@khiops-library/components/matrix/matrix.component';
 import { ViewLayoutVO } from '@khiops-covisualization/model/view-layout.model';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
@@ -28,10 +28,10 @@ import { DimensionModel } from '@khiops-library/model/dimension.model';
   styleUrls: ['./matrix-container.component.scss'],
 })
 export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
-  @ViewChild('matrixCanvas', {
+  @ViewChild('matrix', {
     static: false,
   })
-  matrixCanvas: MatrixCanvasComponent;
+  matrix: MatrixComponent;
 
   @Input() viewId: string;
   @Input() sizeId: string;
@@ -76,12 +76,12 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
                 this.dimensionsDatas.dimensions.length) ||
             isContextDimension
           ) {
-            this.matrixCanvas.drawMatrix();
+            this.matrix.drawMatrix();
           } else if (
             !e.stopPropagation &&
             this.initNodesEvents > this.dimensionsDatas.dimensions.length
           ) {
-            this.matrixCanvas.drawSelectedNodes();
+            this.matrix.drawSelectedNodes();
           }
         }
       });
@@ -123,7 +123,7 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
   onToggleFullscreen(isFullscreen: boolean) {
     this.isFullscreen = isFullscreen;
     setTimeout(() => {
-      this.matrixCanvas.drawMatrix();
+      this.matrix.drawMatrix();
     });
   }
 

@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { HttpClientModule } from '@angular/common/http';
-import { MatrixCanvasService } from '@khiops-library/components/matrix-canvas/matrix-canvas.service';
+import { MatrixService } from '@khiops-library/components/matrix/matrix.service';
 import { TranslateModule } from '@ngstack/translate';
 let appService: AppService;
 
@@ -25,7 +25,7 @@ describe('Visualization', () => {
         mode: 'FREQUENCY',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixCanvasService.computeMatrixValues(
+        MatrixService.computeMatrixValues(
           graphMode,
           inputDatas,
           undefined,
@@ -40,7 +40,7 @@ describe('Visualization', () => {
         mode: 'FREQUENCY',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixCanvasService.computeMatrixValues(
+        MatrixService.computeMatrixValues(
           graphMode,
           inputDatas,
           undefined,
@@ -55,7 +55,7 @@ describe('Visualization', () => {
         mode: 'FREQUENCY_CELL',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixCanvasService.computeMatrixValues(
+        MatrixService.computeMatrixValues(
           graphMode,
           inputDatas,
           undefined,
@@ -70,7 +70,7 @@ describe('Visualization', () => {
         mode: 'FREQUENCY_CELL',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixCanvasService.computeMatrixValues(
+        MatrixService.computeMatrixValues(
           graphMode,
           inputDatas,
           undefined,
@@ -85,7 +85,7 @@ describe('Visualization', () => {
         mode: 'FREQUENCY_CELL',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixCanvasService.computeMatrixValues(
+        MatrixService.computeMatrixValues(
           graphMode,
           inputDatas,
           undefined,
@@ -100,7 +100,7 @@ describe('Visualization', () => {
         mode: 'FREQUENCY_CELL',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixCanvasService.computeMatrixValues(
+        MatrixService.computeMatrixValues(
           graphMode,
           inputDatas,
           undefined,
@@ -115,7 +115,7 @@ describe('Visualization', () => {
         mode: 'PROB_TARGET_WITH_CELL',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixCanvasService.computeMatrixValues(
+        MatrixService.computeMatrixValues(
           graphMode,
           inputDatas,
           undefined,
@@ -132,7 +132,7 @@ describe('Visualization', () => {
         mode: 'PROB_TARGET_WITH_CELL',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixCanvasService.computeMatrixValues(
+        MatrixService.computeMatrixValues(
           graphMode,
           inputDatas,
           undefined,
@@ -149,7 +149,7 @@ describe('Visualization', () => {
         mode: 'PROB_CELL_WITH_TARGET',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixCanvasService.computeMatrixValues(
+        MatrixService.computeMatrixValues(
           graphMode,
           inputDatas,
           undefined,
@@ -166,7 +166,7 @@ describe('Visualization', () => {
         mode: 'CELL_INTEREST',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixCanvasService.computeMatrixValues(
+        MatrixService.computeMatrixValues(
           graphMode,
           inputDatas,
           undefined,
@@ -181,7 +181,7 @@ describe('Visualization', () => {
         mode: 'FREQUENCY',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixCanvasService.computeMatrixValues(
+        MatrixService.computeMatrixValues(
           graphMode,
           inputDatas,
           undefined,
@@ -196,7 +196,7 @@ describe('Visualization', () => {
         mode: 'FREQUENCY',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixCanvasService.computeMatrixValues(
+        MatrixService.computeMatrixValues(
           graphMode,
           inputDatas,
           undefined,
@@ -211,7 +211,7 @@ describe('Visualization', () => {
         mode: 'PROB_CELL',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixCanvasService.computeMatrixValues(
+        MatrixService.computeMatrixValues(
           graphMode,
           inputDatas,
           undefined,
@@ -228,7 +228,7 @@ describe('Visualization', () => {
         mode: 'PROB_CELL_REVERSE',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixCanvasService.computeMatrixValues(
+        MatrixService.computeMatrixValues(
           graphMode,
           inputDatas,
           undefined,
@@ -245,7 +245,7 @@ describe('Visualization', () => {
         mode: 'MUTUAL_INFO',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixCanvasService.computeMatrixValues(
+        MatrixService.computeMatrixValues(
           graphMode,
           inputDatas,
           undefined,
@@ -263,7 +263,7 @@ describe('Visualization', () => {
         mode: 'MUTUAL_INFO',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixCanvasService.computeMatrixValues(
+        MatrixService.computeMatrixValues(
           graphMode,
           inputDatas,
           undefined,
@@ -288,7 +288,7 @@ describe('Visualization', () => {
         mode: 'MUTUAL_INFO',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixCanvasService.computeMatrixValues(
+        MatrixService.computeMatrixValues(
           graphMode,
           inputDatas,
           undefined,
