@@ -37,8 +37,6 @@ export class HistogramTooltipComponent {
   @Input() canvasW: number = 0;
   @Input() display: boolean = false;
 
-  constructor() {}
-
   computeYPos() {
     let top = this.posY - 0;
     if (top < 10) {

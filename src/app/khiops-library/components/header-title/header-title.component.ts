@@ -15,8 +15,6 @@ export class HeaderTitleComponent implements OnInit {
   @Input() title: string;
   displayedTitle: string[];
 
-  constructor() {}
-
   ngOnInit() {
     if (this.title) {
       this.displayedTitle = this.title.split(' ');

@@ -24,8 +24,6 @@ export class MatrixTooltipComponent implements OnChanges {
   };
   @ViewChild('matrixTooltipDiv') matrixTooltipDiv: ElementRef<HTMLElement>;
 
-  constructor() {}
-
   ngOnChanges(changes: SimpleChanges) {
     if (
       this.matrixTooltipDiv?.nativeElement &&

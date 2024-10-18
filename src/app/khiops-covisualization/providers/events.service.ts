@@ -9,8 +9,6 @@ export class EventsService {
   treeNodeNameChanged: EventEmitter<any> = new EventEmitter();
   conditionalOnContextChanged: EventEmitter<any> = new EventEmitter();
 
-  constructor() {}
-
   emitTreeNodeNameChanged(event = {}) {
     this.treeNodeNameChanged.emit(event);
   }

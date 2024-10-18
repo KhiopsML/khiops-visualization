@@ -10,8 +10,6 @@ import { ICellRendererParams } from '@ag-grid-community/core';
 export class BorderTextCellComponent implements AgRendererComponent {
   public params: ICellRendererParams;
 
-  constructor() {}
-
   agInit(params: ICellRendererParams): void {
     this.params = params;
   }

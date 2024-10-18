@@ -16,8 +16,6 @@ export class CellStatsComponent implements OnChanges {
     Total: number;
   };
 
-  constructor() {}
-
   ngOnChanges(changes: SimpleChanges) {
     if (changes?.selectedCells?.currentValue) {
       if (changes?.selectedCells?.currentValue.length > 1) {

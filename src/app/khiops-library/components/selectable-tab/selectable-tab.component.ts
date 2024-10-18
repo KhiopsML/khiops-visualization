@@ -16,8 +16,6 @@ export class SelectableTabComponent implements OnChanges {
   tabIndex: number;
   loadingView = true;
 
-  constructor() {}
-
   ngOnChanges(changes: SimpleChanges) {
     if (
       changes.selectedTab

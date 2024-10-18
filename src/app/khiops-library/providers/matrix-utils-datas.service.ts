@@ -7,8 +7,6 @@ import { TYPES } from '@khiops-library/enum/types';
   providedIn: 'root',
 })
 export class MatrixUtilsDatasService {
-  constructor() {}
-
   static getStandardAxisValues(xDimension, yDimension): [number[], number[]] {
     let xValues: number[] = [];
     let yValues: number[] = [];

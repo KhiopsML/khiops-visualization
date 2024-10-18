@@ -13,8 +13,6 @@ import {
 export class IconCellComponent implements AgRendererComponent {
   public params: any;
 
-  constructor() {}
-
   agInit(params: ICellRendererParams): void {
     this.params = params;
   }
