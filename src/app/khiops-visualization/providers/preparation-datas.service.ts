@@ -128,8 +128,8 @@ export class PreparationDatasService {
     if (!preparationSource) {
       preparationSource = this.getAvailablePreparationReport();
     }
-    const SummaryModel = new SummaryModel(appDatas[preparationSource].summary);
-    return SummaryModel.displayDatas;
+    const summary = new SummaryModel(appDatas[preparationSource].summary);
+    return summary.displayDatas;
   }
 
   getInformationsDatas(preparationSource: string): InfosDatasI[] | undefined {
