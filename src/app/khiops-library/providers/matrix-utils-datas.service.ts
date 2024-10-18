@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UtilsService } from '../providers/utils.service';
-import { CellVO } from '../model/cell-vo';
+import { CellVO } from '../model/cell.model';
 import { TYPES } from '@khiops-library/enum/types';
 
 @Injectable({

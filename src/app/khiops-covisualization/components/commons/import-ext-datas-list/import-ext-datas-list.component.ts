@@ -6,7 +6,7 @@ import {
 } from '@angular/material/dialog';
 import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
 import { TranslateService } from '@ngstack/translate';
-import { FileVO } from '@khiops-library/model/file-vo';
+import { FileVO } from '@khiops-library/model/file.model';
 import { ExtDatasVO } from '@khiops-covisualization/model/ext-datas-vo';
 import { IconCellComponent } from '@khiops-library/components/ag-grid/icon-cell/icon-cell.component';
 import { MatSnackBar } from '@angular/material/snack-bar';

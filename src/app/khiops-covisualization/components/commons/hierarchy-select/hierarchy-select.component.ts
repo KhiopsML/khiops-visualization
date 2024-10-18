@@ -8,7 +8,7 @@ import {
   Output,
 } from '@angular/core';
 import { trigger, transition, animate, style } from '@angular/animations';
-import { DimensionVO } from '@khiops-library/model/dimension-vo';
+import { DimensionVO } from '@khiops-library/model/dimension.model';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
 import { AppService } from '@khiops-covisualization/providers/app.service';

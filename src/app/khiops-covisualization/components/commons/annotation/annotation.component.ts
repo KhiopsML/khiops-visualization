@@ -12,7 +12,7 @@ import { SelectableComponent } from '@khiops-library/components/selectable/selec
 import { TranslateService } from '@ngstack/translate';
 import { AnnotationService } from '@khiops-covisualization/providers/annotation.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
-import { DimensionVO } from '@khiops-library/model/dimension-vo';
+import { DimensionVO } from '@khiops-library/model/dimension.model';
 import { COMPONENT_TYPES } from '../../../../khiops-library/enum/componentTypes';
 
 @Component({

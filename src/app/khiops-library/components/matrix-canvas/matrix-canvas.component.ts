@@ -17,7 +17,7 @@ import { KhiopsLibraryService } from '../../providers/khiops-library.service';
 import * as panzoom from 'pan-zoom';
 import { UtilsService } from '../../providers/utils.service';
 import { MatrixCanvasService } from './matrix-canvas.service';
-import { CellVO } from '../../model/cell-vo';
+import { CellVO } from '../../model/cell.model';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';

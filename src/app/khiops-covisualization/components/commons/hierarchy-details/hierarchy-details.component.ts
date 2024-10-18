@@ -5,7 +5,7 @@ import {
   HostListener,
   ViewChild,
 } from '@angular/core';
-import { DimensionVO } from '@khiops-library/model/dimension-vo';
+import { DimensionVO } from '@khiops-library/model/dimension.model';
 import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { ConfigService } from '@khiops-library/providers/config.service';

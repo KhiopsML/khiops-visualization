@@ -9,7 +9,7 @@ import {
   Input,
 } from '@angular/core';
 import * as TreeView from '@khiops-library/libs/treeview/treeview';
-import { DimensionVO } from '@khiops-library/model/dimension-vo';
+import { DimensionVO } from '@khiops-library/model/dimension.model';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
 import { MatSnackBar } from '@angular/material/snack-bar';

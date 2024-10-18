@@ -1,5 +1,5 @@
 import { TYPES } from '@khiops-library/enum/types';
-import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
+import { ChartDatasVO } from '@khiops-library/model/chartDatas.model';
 import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options';
 import { HistogramType } from '@khiops-visualization/components/commons/histogram/histogram.types';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';

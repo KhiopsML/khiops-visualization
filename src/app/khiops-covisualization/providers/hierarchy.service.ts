@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AppService } from '@khiops-covisualization/providers/app.service';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { TreenodesService } from './treenodes.service';
-import { DimensionVO } from '@khiops-library/model/dimension-vo';
+import { DimensionVO } from '@khiops-library/model/dimension.model';
 import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
 
 @Injectable({

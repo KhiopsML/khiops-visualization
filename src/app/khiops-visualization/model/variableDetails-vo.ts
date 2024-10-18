@@ -1,4 +1,4 @@
-import { DimensionVO } from '@khiops-library/model/dimension-vo';
+import { DimensionVO } from '@khiops-library/model/dimension.model';
 import * as _ from 'lodash'; // Important to import lodash in karma
 
 export class VariableDetailsVO {

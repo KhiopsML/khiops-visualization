@@ -15,7 +15,7 @@ import { ModelingDatasService } from '@khiops-visualization/providers/modeling-d
 import { TranslateService } from '@ngstack/translate';
 import { Distribution2dDatasService } from '@khiops-visualization/providers/distribution2d-datas.service';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
-import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
+import { ChartDatasVO } from '@khiops-library/model/chartDatas.model';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { Variable2dVO } from '@khiops-visualization/model/variable2d-vo';

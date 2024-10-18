@@ -6,7 +6,7 @@ import { UtilsService } from '@khiops-library/providers/utils.service';
 import { TreeNodeVO } from '../model/tree-node-vo';
 import { deepEqual } from 'fast-equals';
 import _ from 'lodash';
-import { DimensionVO } from '@khiops-library/model/dimension-vo';
+import { DimensionVO } from '@khiops-library/model/dimension.model';
 import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
 import { HierarchyDatasVO } from '@khiops-covisualization/model/hierarchy-datas-vo';
 import { TYPES } from '@khiops-library/enum/types';

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FileVO } from '../../model/file-vo';
+import { FileVO } from '../../model/file.model';
 import { ConfigService } from '@khiops-library/providers/config.service';
 
 @Injectable({

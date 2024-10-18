@@ -2,7 +2,7 @@ import { Component, OnInit, Output, NgZone, EventEmitter } from '@angular/core';
 import { ImportFileLoaderService } from './import-file-loader.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngstack/translate';
-import { FileVO } from '../../model/file-vo';
+import { FileVO } from '../../model/file.model';
 
 @Component({
   selector: 'kl-import-file-loader',

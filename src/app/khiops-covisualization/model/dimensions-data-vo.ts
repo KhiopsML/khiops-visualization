@@ -1,4 +1,4 @@
-import { DimensionVO } from '@khiops-library/model/dimension-vo';
+import { DimensionVO } from '@khiops-library/model/dimension.model';
 import { TreeNodeVO } from './tree-node-vo';
 import { HierarchyDatasVO } from './hierarchy-datas-vo';
 

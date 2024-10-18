@@ -7,7 +7,7 @@ import {
   ViewChild,
   ElementRef,
 } from '@angular/core';
-import { CellVO } from '@khiops-library/model/cell-vo';
+import { CellVO } from '@khiops-library/model/cell.model';
 
 @Component({
   selector: 'kl-matrix-tooltip',

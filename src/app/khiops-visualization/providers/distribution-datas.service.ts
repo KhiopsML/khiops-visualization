@@ -3,13 +3,13 @@ import { AppService } from './app.service';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { AppConfig } from 'src/environments/environment';
 import { BarVO } from '../model/bar-vo';
-import { ChartDatasetVO } from '@khiops-library/model/chartDataset-vo';
+import { ChartDatasetVO } from '@khiops-library/model/chartDataset.model';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { TranslateService } from '@ngstack/translate';
 import { VariableDetailsVO } from '../model/variableDetails-vo';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { DistributionDatasVO } from '../model/distribution-datas-vo';
-import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
+import { ChartDatasVO } from '@khiops-library/model/chartDatas.model';
 import { TreePreparationDatasService } from './tree-preparation-datas.service';
 import { TYPES } from '@khiops-library/enum/types';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';

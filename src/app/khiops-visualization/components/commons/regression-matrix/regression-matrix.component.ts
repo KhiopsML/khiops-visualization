@@ -18,7 +18,7 @@ import { Preparation2dDatasVO } from '@khiops-visualization/model/preparation2d-
 import { MatrixOptionsI } from '@khiops-library/interfaces/matrix-options';
 import { MatrixModesI } from '@khiops-library/interfaces/matrix-modes';
 import { MatrixRangeValuesI } from '@khiops-visualization/interfaces/matrix-range-values';
-import { CellVO } from '@khiops-library/model/cell-vo';
+import { CellVO } from '@khiops-library/model/cell.model';
 import { Preparation2dVariableVO } from '@khiops-visualization/model/preparation2d-variable-vo';
 
 /**

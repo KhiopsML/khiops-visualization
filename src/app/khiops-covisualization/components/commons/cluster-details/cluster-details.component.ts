@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import _ from 'lodash';
 import { TranslateService } from '@ngstack/translate';
-import { DimensionVO } from '@khiops-library/model/dimension-vo';
+import { DimensionVO } from '@khiops-library/model/dimension.model';
 import { ClustersService } from '@khiops-covisualization/providers/clusters.service';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
 import { ClusterDetailsVO } from '@khiops-covisualization/model/cluster-details-vo';

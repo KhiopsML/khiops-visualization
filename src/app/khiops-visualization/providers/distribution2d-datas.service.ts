@@ -5,12 +5,12 @@ import { BarVO } from '../model/bar-vo';
 import { DistributionDatasService } from './distribution-datas.service';
 import { MatrixUtilsDatasService } from '@khiops-library/providers/matrix-utils-datas.service';
 import { VariableDetailsVO } from '../model/variableDetails-vo';
-import { ChartDatasetVO } from '@khiops-library/model/chartDataset-vo';
+import { ChartDatasetVO } from '@khiops-library/model/chartDataset.model';
 import { Preparation2dDatasService } from './preparation2d-datas.service';
 import { AppService } from './app.service';
 import { DistributionDatasVO } from '../model/distribution-datas-vo';
 import { TYPES } from '@khiops-library/enum/types';
-import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
+import { ChartDatasVO } from '@khiops-library/model/chartDatas.model';
 import { ModalityCountsVO } from '@khiops-visualization/model/modality-counts-vo';
 
 @Injectable({

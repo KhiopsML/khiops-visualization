@@ -1,5 +1,5 @@
 import { TYPES } from '@khiops-library/enum/types';
-import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
+import { ChartDatasVO } from '@khiops-library/model/chartDatas.model';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 import { EvaluationPredictorVO } from './evaluation-predictor-vo';

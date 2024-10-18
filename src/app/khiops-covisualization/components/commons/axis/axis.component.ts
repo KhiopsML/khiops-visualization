@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { AppService } from '@khiops-covisualization/providers/app.service';
 import { DimensionViewLayoutVO } from '@khiops-covisualization/model/view-layout-vo';
 import { VariableGraphDetailsComponent } from '../variable-graph-details/variable-graph-details.component';
-import { DimensionVO } from '@khiops-library/model/dimension-vo';
+import { DimensionVO } from '@khiops-library/model/dimension.model';
 import { TreeNodeVO } from '@khiops-covisualization/model/tree-node-vo';
 import { CompositionVO } from '@khiops-covisualization/model/composition-vo';
 import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';

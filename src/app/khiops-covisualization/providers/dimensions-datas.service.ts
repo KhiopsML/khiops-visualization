@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AppService } from './app.service';
-import { DimensionVO } from '@khiops-library/model/dimension-vo';
+import { DimensionVO } from '@khiops-library/model/dimension.model';
 import { TreeNodeVO } from '../model/tree-node-vo';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { MatrixUtilsDatasService } from '@khiops-library/providers/matrix-utils-datas.service';

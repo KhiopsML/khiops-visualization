@@ -6,7 +6,7 @@ import { UtilsService } from '@khiops-library/providers/utils.service';
 import { PreparationVariableVO } from '../model/preparation-variable-vo';
 import { VariableVO } from '../model/variable-vo';
 import { VariableDetailsVO } from '../model/variableDetails-vo';
-import { ChartDatasetVO } from '@khiops-library/model/chartDataset-vo';
+import { ChartDatasetVO } from '@khiops-library/model/chartDataset.model';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { SummaryVO } from '../model/summary-vo';
 import { InformationsVO } from '../model/informations-vo';
@@ -15,7 +15,7 @@ import { TASKS } from '@khiops-library/enum/tasks';
 import { TYPES } from '@khiops-library/enum/types';
 import { PreparationDatasVO } from '@khiops-visualization/model/preparation-datas-vo';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
-import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
+import { ChartDatasVO } from '@khiops-library/model/chartDatas.model';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { GridColumnsI } from '../../khiops-library/interfaces/grid-columns';
 

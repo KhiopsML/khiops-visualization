@@ -1,6 +1,6 @@
 import { Component, SimpleChanges, OnChanges, Input } from '@angular/core';
 import { UtilsService } from '../../providers/utils.service';
-import { CellVO } from '@khiops-library/model/cell-vo';
+import { CellVO } from '@khiops-library/model/cell.model';
 
 @Component({
   selector: 'kl-cell-stats',

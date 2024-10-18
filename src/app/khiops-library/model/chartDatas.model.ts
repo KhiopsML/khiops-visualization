@@ -1,4 +1,4 @@
-import { ChartDatasetVO } from './chartDataset-vo';
+import { ChartDatasetVO } from './chartDataset.model';
 
 export class ChartDatasVO {
   datasets: ChartDatasetVO[] = [];

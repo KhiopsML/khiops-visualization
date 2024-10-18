@@ -11,12 +11,12 @@ import { AppConfig } from 'src/environments/environment';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HierarchyService } from '@khiops-covisualization/providers/hierarchy.service';
-import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
+import { ChartDatasVO } from '@khiops-library/model/chartDatas.model';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { HierarchyDatasVO } from '@khiops-covisualization/model/hierarchy-datas-vo';
 import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data-vo';
 import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
-import { DimensionVO } from '@khiops-library/model/dimension-vo';
+import { DimensionVO } from '@khiops-library/model/dimension.model';
 
 @Component({
   selector: 'app-unfold-hierarchy',

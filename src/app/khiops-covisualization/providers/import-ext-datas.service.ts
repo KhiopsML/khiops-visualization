@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ExtDatasVO } from '@khiops-covisualization/model/ext-datas-vo';
-import { FileVO } from '@khiops-library/model/file-vo';
+import { FileVO } from '@khiops-library/model/file.model';
 import { AppService } from './app.service';
 import { TranslateService } from '@ngstack/translate';
 import { ImportFileLoaderService } from '@khiops-library/components/import-file-loader/import-file-loader.service';

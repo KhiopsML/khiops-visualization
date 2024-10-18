@@ -15,8 +15,8 @@ import { KhiopsLibraryService } from '../../providers/khiops-library.service';
 import { ChartColorsSetI } from '../../interfaces/chart-colors-set';
 import { ChartOptions } from 'chart.js';
 import { ConfigService } from '@khiops-library/providers/config.service';
-import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
-import { ChartDatasetVO } from '@khiops-library/model/chartDataset-vo';
+import { ChartDatasVO } from '@khiops-library/model/chartDatas.model';
+import { ChartDatasetVO } from '@khiops-library/model/chartDataset.model';
 
 @Component({
   selector: 'kl-chart-next',

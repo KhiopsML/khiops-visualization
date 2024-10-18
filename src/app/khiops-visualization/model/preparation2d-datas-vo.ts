@@ -1,4 +1,4 @@
-import { CellVO } from '@khiops-library/model/cell-vo';
+import { CellVO } from '@khiops-library/model/cell.model';
 import { Preparation2dVariableVO } from './preparation2d-variable-vo';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 

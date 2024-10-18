@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { AppService } from './app.service';
-import { DimensionVO } from '@khiops-library/model/dimension-vo';
+import { DimensionVO } from '@khiops-library/model/dimension.model';
 import { TranslateService } from '@ngstack/translate';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { EvaluationDatasService } from './evaluation-datas.service';
 import { Preparation2dVariableVO } from '../model/preparation2d-variable-vo';
-import { CellVO } from '@khiops-library/model/cell-vo';
+import { CellVO } from '@khiops-library/model/cell.model';
 import { MatrixUtilsDatasService } from '@khiops-library/providers/matrix-utils-datas.service';
 import { PreparationDatasService } from './preparation-datas.service';
 import { VariableDetailsVO } from '../model/variableDetails-vo';

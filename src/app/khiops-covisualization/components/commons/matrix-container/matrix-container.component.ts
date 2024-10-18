@@ -18,9 +18,9 @@ import { DimensionsDatasVO } from '@khiops-covisualization/model/dimensions-data
 import { MatrixModesI } from '@khiops-library/interfaces/matrix-modes';
 import { MatrixOptionsI } from '@khiops-library/interfaces/matrix-options';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
-import { CellVO } from '@khiops-library/model/cell-vo';
+import { CellVO } from '@khiops-library/model/cell.model';
 import { TranslateService } from '@ngstack/translate';
-import { DimensionVO } from '@khiops-library/model/dimension-vo';
+import { DimensionVO } from '@khiops-library/model/dimension.model';
 
 @Component({
   selector: 'app-matrix-container',

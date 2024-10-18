@@ -18,7 +18,7 @@ import { TreePreparationDatasService } from '@khiops-visualization/providers/tre
 import { Distribution2dDatasService } from '@khiops-visualization/providers/distribution2d-datas.service';
 import { REPORTS } from '@khiops-library/enum/reports';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
-import { ChartDatasVO } from '@khiops-library/model/chart-datas-vo';
+import { ChartDatasVO } from '@khiops-library/model/chartDatas.model';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { ModelingDatasVO } from '@khiops-visualization/model/modeling-datas-vo';
