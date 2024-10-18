@@ -4,7 +4,7 @@ import { KhiopsVisualizationModule } from './khiops-visualization/khiops-visuali
 import { KhiopsCovisualizationModule } from './khiops-covisualization/khiops-covisualization.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { MenuComponent } from './menu.component';
+import { MenuComponent } from './khiops-library/components/main-menu/menu.component';
 import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({

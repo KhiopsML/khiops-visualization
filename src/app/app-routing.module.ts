@@ -1,4 +1,4 @@
-import { MenuComponent } from './menu.component';
+import { MenuComponent } from './khiops-library/components/main-menu/menu.component';
 import { AppComponent as visualizationComponent } from '@khiops-visualization/app.component';
 import { AppComponent as covisualizationComponent } from '@khiops-covisualization/app.component';
 import { NgModule } from '@angular/core';
