@@ -24,7 +24,7 @@ export class MatrixToggleComponent implements OnChanges {
   @Output() matrixOptionChange = new EventEmitter<string>();
 
   constructor(
-    private Ls: Ls,
+    private ls: Ls,
     private khiopsLibraryService: KhiopsLibraryService,
   ) {
     this.AppConfig = this.khiopsLibraryService.getAppConfig().common;
@@ -33,7 +33,7 @@ export class MatrixToggleComponent implements OnChanges {
   ngOnChanges() {
     // may has been set by saved datas
     if (!this.matrixOptions.selected) {
-      this.matrixOptions.selected = this.Ls.get(
+      this.matrixOptions.selected = this.ls.get(
         LS.MATRIX_TYPE_OPTION,
         this.matrixOptions.types[0],
       );
@@ -42,7 +42,7 @@ export class MatrixToggleComponent implements OnChanges {
 
   changeMatrixType(type: string) {
     // this.trackerService.trackEvent('click', 'matrix_type', type);
-    this.Ls.set(LS.MATRIX_TYPE_OPTION, type);
+    this.ls.set(LS.MATRIX_TYPE_OPTION, type);
     this.matrixOptions.selected = type;
     this.matrixOptionChange.emit(type);
   }

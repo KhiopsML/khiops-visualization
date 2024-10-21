@@ -24,7 +24,7 @@ export class MatrixModeComponent implements OnChanges {
   @Output() matrixModeChange = new EventEmitter<MatrixModeI>();
 
   constructor(
-    private Ls: Ls,
+    private ls: Ls,
     private khiopsLibraryService: KhiopsLibraryService,
   ) {
     this.AppConfig = this.khiopsLibraryService.getAppConfig().common;
@@ -33,7 +33,7 @@ export class MatrixModeComponent implements OnChanges {
   ngOnChanges() {
     if (!this.matrixModes.selected) {
       // Get previous selected target if compatible
-      const previousSelectedModeIndex = this.Ls.get(
+      const previousSelectedModeIndex = this.ls.get(
         LS.MATRIX_MODE_OPTION_INDEX,
       );
       if (previousSelectedModeIndex) {
@@ -59,7 +59,7 @@ export class MatrixModeComponent implements OnChanges {
     this.matrixModes.selectedIndex = this.matrixModes.types.findIndex(
       (e) => e.mode === mode.mode,
     );
-    this.Ls.set(
+    this.ls.set(
       LS.MATRIX_MODE_OPTION_INDEX,
       this.matrixModes.selectedIndex.toString(),
     );

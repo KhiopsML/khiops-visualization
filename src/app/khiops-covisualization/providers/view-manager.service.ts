@@ -14,7 +14,7 @@ export class ViewManagerService {
   viewsLayoutChanged: EventEmitter<any> = new EventEmitter();
 
   constructor(
-    private Ls: Ls,
+    private ls: Ls,
     private appService: AppService,
   ) {}
 
@@ -32,7 +32,7 @@ export class ViewManagerService {
     // Do not restore LS values because we have a save functionnality
     if (AppConfig.cypress) {
       // Do it only for cypress tests
-      const lsStorage = this.Ls.get(LS.VIEWS_LAYOUT);
+      const lsStorage = this.ls.get(LS.VIEWS_LAYOUT);
       if (lsStorage && lsStorage !== 'undefined') {
         const lsValues = JSON.parse(lsStorage);
         // Merge current values with values from LS
@@ -72,7 +72,7 @@ export class ViewManagerService {
           previousLayout,
         );
       }
-      const lsStorage = this.Ls.get(LS.VIEWS_LAYOUT);
+      const lsStorage = this.ls.get(LS.VIEWS_LAYOUT);
       if (lsStorage && lsStorage !== 'undefined') {
         const lsValues = JSON.parse(lsStorage);
         // Merge current values with values from LS
@@ -102,7 +102,7 @@ export class ViewManagerService {
 
   saveViewsLayout(viewsLayout: ViewLayoutVO) {
     this.viewsLayout = viewsLayout;
-    this.Ls.set(LS.VIEWS_LAYOUT, JSON.stringify(this.viewsLayout));
+    this.ls.set(LS.VIEWS_LAYOUT, JSON.stringify(this.viewsLayout));
     this.viewsLayoutChanged.emit(this.viewsLayout);
   }
 }

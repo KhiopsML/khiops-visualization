@@ -9,12 +9,12 @@ import { Ls } from './ls.service';
 export class LayoutService {
   splitSizes: any;
 
-  constructor(private Ls: Ls) {}
+  constructor(private ls: Ls) {}
 
   initialize(splitSizes) {
     this.splitSizes = splitSizes;
 
-    const storedSplitValues = this.Ls.get(LS.SPLIT_SIZES);
+    const storedSplitValues = this.ls.get(LS.SPLIT_SIZES);
 
     // Set default split sizes if not into local storage
     this.splitSizes = UtilsService.setDefaultLSValues(
@@ -38,7 +38,7 @@ export class LayoutService {
 
   setSplitSizes(splitSizes) {
     this.splitSizes = splitSizes;
-    this.Ls.set(LS.SPLIT_SIZES, JSON.stringify(this.splitSizes));
+    this.ls.set(LS.SPLIT_SIZES, JSON.stringify(this.splitSizes));
   }
 
   resizeAndSetSplitSizes(item, sizes, itemSize, view, dispatchEvent?) {

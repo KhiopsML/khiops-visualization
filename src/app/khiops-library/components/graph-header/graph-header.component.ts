@@ -35,7 +35,7 @@ export class GraphHeaderComponent implements OnInit {
 
   constructor(
     private khiopsLibraryService: KhiopsLibraryService,
-    private Ls: Ls,
+    private ls: Ls,
   ) {
     this.maxScale =
       this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_GRAPH_SCALE;
@@ -57,7 +57,7 @@ export class GraphHeaderComponent implements OnInit {
 
   onScaleChanged(value: number) {
     // Save current scale value into ls
-    this.Ls.set(LS.SCALE_VALUE, value.toString());
+    this.ls.set(LS.SCALE_VALUE, value.toString());
     this.scaleValueChanged.emit(value);
   }
 }

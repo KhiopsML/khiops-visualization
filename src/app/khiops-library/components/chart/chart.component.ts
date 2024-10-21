@@ -46,15 +46,15 @@ export class ChartComponent implements AfterViewInit, OnChanges {
   fontColor: string = '#999';
 
   constructor(
-    private Ls: Ls,
+    private ls: Ls,
     private configService: ConfigService,
     private el: ElementRef,
     private khiopsLibraryService: KhiopsLibraryService,
   ) {
     this.AppConfig = this.khiopsLibraryService.getAppConfig().common;
-    this.color = this.Ls.get(LS.THEME_COLOR) === 'dark' ? '#555' : '#e5e5e5';
+    this.color = this.ls.get(LS.THEME_COLOR) === 'dark' ? '#555' : '#e5e5e5';
     this.barColor =
-      this.Ls.get(LS.THEME_COLOR) === 'dark'
+      this.ls.get(LS.THEME_COLOR) === 'dark'
         ? 'rgba(255, 255, 255, 1)'
         : 'rgba(0, 0, 0, 1)';
     this.colorSet = this.khiopsLibraryService.getGraphColorSet()[0];

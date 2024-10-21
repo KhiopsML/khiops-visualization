@@ -123,7 +123,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   isDrawing = false;
 
   constructor(
-    private Ls: Ls,
+    private ls: Ls,
     public override selectableService: SelectableService,
     private eventsService: EventsService,
     public override ngzone: NgZone,
@@ -193,7 +193,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     setTimeout(() => {
       // #165 on variable change matrixDiv has been reset and so is undefined
       if (this.contrast === undefined) {
-        this.contrast = this.Ls.get(
+        this.contrast = this.ls.get(
           LS.SETTING_MATRIX_CONTRAST,
           this.khiopsLibraryService.getAppConfig().common.GLOBAL
             .MATRIX_CONTRAST,
@@ -799,7 +799,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   onContrastChanged(event: Event) {
     this.contrast = parseInt(event?.target?.['value'], 10);
     this.contrast &&
-      this.Ls.set(LS.SETTING_MATRIX_CONTRAST, this.contrast.toString());
+      this.ls.set(LS.SETTING_MATRIX_CONTRAST, this.contrast.toString());
     this.drawMatrix();
   }
 

@@ -127,7 +127,7 @@ export class AgGridComponent
   KEY_DOWN = 'ArrowDown';
 
   constructor(
-    private Ls: Ls,
+    private ls: Ls,
     public override selectableService: SelectableService,
     public override ngzone: NgZone,
     public override configService: ConfigService,
@@ -138,7 +138,7 @@ export class AgGridComponent
     this.AppConfig = this.khiopsLibraryService.getAppConfig().common;
     this.paginationSize = this.AppConfig.GLOBAL.PAGINATION_SIZE;
 
-    this.dataOptions.selected = this.Ls.get(
+    this.dataOptions.selected = this.ls.get(
       LS.AG_GRID_GRAPH_OPTION,
       this.dataOptions.types[0],
     );
@@ -146,17 +146,17 @@ export class AgGridComponent
     this.title = this.translate.get('GLOBAL.VARIABLES') || this.title;
 
     try {
-      const PREV_CELL_AG_GRID = this.Ls.get(LS.CELL_AG_GRID);
+      const PREV_CELL_AG_GRID = this.ls.get(LS.CELL_AG_GRID);
       this.cellsSizes =
         (PREV_CELL_AG_GRID && JSON.parse(PREV_CELL_AG_GRID)) || {};
     } catch (e) {}
     try {
-      const PREV_COLUMNS_AG_GRID = this.Ls.get(LS.COLUMNS_AG_GRID);
+      const PREV_COLUMNS_AG_GRID = this.ls.get(LS.COLUMNS_AG_GRID);
       this.visibleColumns =
         (PREV_COLUMNS_AG_GRID && JSON.parse(PREV_COLUMNS_AG_GRID)) || {};
     } catch (e) {}
     try {
-      const PREV_MODES_AG_GRID = this.Ls.get(LS.MODES_AG_GRID);
+      const PREV_MODES_AG_GRID = this.ls.get(LS.MODES_AG_GRID);
       this.gridModes =
         (PREV_MODES_AG_GRID && JSON.parse(PREV_MODES_AG_GRID)) || {}; // 'fitToSpace' or 'fitToContent'
     } catch (e) {}
@@ -183,7 +183,7 @@ export class AgGridComponent
   }
 
   changeDataType(type: string) {
-    this.Ls.set(LS.AG_GRID_GRAPH_OPTION, type);
+    this.ls.set(LS.AG_GRID_GRAPH_OPTION, type);
 
     this.dataOptions.selected = type;
     this.dataTypeChanged.emit(type);
@@ -509,12 +509,12 @@ export class AgGridComponent
     // this.trackerService.trackEvent('click', 'search');
     this.agGrid.api.setQuickFilter(this.searchInput || '');
     if (this.searchInput) {
-      this.Ls.set(
+      this.ls.set(
         LS.OPTIONS_AG_GRID_SEARCH + '_' + this.id.toUpperCase(),
         this.searchInput,
       );
     } else {
-      this.Ls.del(LS.OPTIONS_AG_GRID_SEARCH + '_' + this.id.toUpperCase());
+      this.ls.del(LS.OPTIONS_AG_GRID_SEARCH + '_' + this.id.toUpperCase());
     }
   }
 
@@ -575,7 +575,7 @@ export class AgGridComponent
       this.cellsSizes[this.id] = {};
     }
     this.cellsSizes[this.id][field] = width;
-    this.Ls.set(LS.CELL_AG_GRID, JSON.stringify(this.cellsSizes));
+    this.ls.set(LS.CELL_AG_GRID, JSON.stringify(this.cellsSizes));
   }
 
   saveVisibleColumns(column, isVisible) {
@@ -583,7 +583,7 @@ export class AgGridComponent
       this.visibleColumns[this.id] = {};
     }
     this.visibleColumns[this.id][column] = isVisible;
-    this.Ls.set(LS.COLUMNS_AG_GRID, JSON.stringify(this.visibleColumns));
+    this.ls.set(LS.COLUMNS_AG_GRID, JSON.stringify(this.visibleColumns));
   }
 
   fitToSpace() {
@@ -591,7 +591,7 @@ export class AgGridComponent
 
     // Reinit current saved columns sizes when user fit grid to space
     delete this.cellsSizes[this.id];
-    this.Ls.set(LS.CELL_AG_GRID, JSON.stringify(this.cellsSizes));
+    this.ls.set(LS.CELL_AG_GRID, JSON.stringify(this.cellsSizes));
 
     // FIX : if table is fitted to available space at start,
     // then user fitToContent and fitToSpace, header col width are broken
@@ -616,7 +616,7 @@ export class AgGridComponent
 
   saveGridModes(gridMode) {
     this.gridModes[this.id] = gridMode;
-    this.Ls.set(LS.MODES_AG_GRID, JSON.stringify(this.gridModes));
+    this.ls.set(LS.MODES_AG_GRID, JSON.stringify(this.gridModes));
   }
 
   /**
@@ -642,7 +642,7 @@ export class AgGridComponent
     const state = {
       sortState: this.gridOptions?.columnApi?.getColumnState(),
     };
-    this.Ls.set(
+    this.ls.set(
       LS.OPTIONS_AG_GRID + '_' + this.id.toUpperCase(),
       JSON.stringify(state),
     );
@@ -651,7 +651,7 @@ export class AgGridComponent
   restoreState() {
     setTimeout(() => {
       if (this.id) {
-        const PREV_STATE = this.Ls.get(
+        const PREV_STATE = this.ls.get(
           LS.OPTIONS_AG_GRID + '_' + this.id.toUpperCase(),
         );
         const state = (PREV_STATE && JSON.parse(PREV_STATE)) || {};
@@ -680,7 +680,7 @@ export class AgGridComponent
           });
         }
         // Restore search
-        this.searchInput = this.Ls.get(
+        this.searchInput = this.ls.get(
           LS.OPTIONS_AG_GRID_SEARCH + '_' + this.id.toUpperCase(),
           '',
         );

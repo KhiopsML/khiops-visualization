@@ -18,10 +18,10 @@ export class AppService {
   constructor(
     private layoutService: LayoutService,
     private khiopsLibraryService: KhiopsLibraryService,
-    private Ls: Ls,
+    private ls: Ls,
   ) {
     // Render Ls static methods with current instance
-    AppService.Ls = this.Ls;
+    AppService.Ls = this.ls;
 
     this.initialize();
   }
@@ -45,10 +45,10 @@ export class AppService {
    */
   initGlobalConfigVariables() {
     AppConfig.visualizationCommon.GLOBAL.TO_FIXED =
-      parseInt(this.Ls.get(LS.SETTING_NUMBER_PRECISION) || '', 10) ||
+      parseInt(this.ls.get(LS.SETTING_NUMBER_PRECISION) || '', 10) ||
       AppConfig.visualizationCommon.GLOBAL.TO_FIXED;
     AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST =
-      parseInt(this.Ls.get(LS.SETTING_MATRIX_CONTRAST) || '', 10) ||
+      parseInt(this.ls.get(LS.SETTING_MATRIX_CONTRAST) || '', 10) ||
       AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST;
 
     AppConfig.common = {
@@ -62,15 +62,15 @@ export class AppService {
    * Initializes session variables by deleting specific keys from local storage.
    */
   initSessionVariables() {
-    this.Ls.del(LS.MATRIX_MODE_OPTION_INDEX);
-    this.Ls.del(LS.MATRIX_TYPE_OPTION);
-    this.Ls.del(LS.TARGET_DISTRIBUTION_GRAPH_OPTION);
-    this.Ls.del(LS.MATRIX_MODE_OPTION);
-    this.Ls.del(LS.MATRIX_TARGET_OPTION);
-    this.Ls.del(LS.TARGET_LIFT);
-    this.Ls.del(LS.SELECTED_TRAIN_PREDICTOR);
-    this.Ls.del(LS.DISTRIBUTION_GRAPH_OPTION_X);
-    this.Ls.del(LS.DISTRIBUTION_GRAPH_OPTION_Y);
+    this.ls.del(LS.MATRIX_MODE_OPTION_INDEX);
+    this.ls.del(LS.MATRIX_TYPE_OPTION);
+    this.ls.del(LS.TARGET_DISTRIBUTION_GRAPH_OPTION);
+    this.ls.del(LS.MATRIX_MODE_OPTION);
+    this.ls.del(LS.MATRIX_TARGET_OPTION);
+    this.ls.del(LS.TARGET_LIFT);
+    this.ls.del(LS.SELECTED_TRAIN_PREDICTOR);
+    this.ls.del(LS.DISTRIBUTION_GRAPH_OPTION_X);
+    this.ls.del(LS.DISTRIBUTION_GRAPH_OPTION_Y);
   }
 
   /**

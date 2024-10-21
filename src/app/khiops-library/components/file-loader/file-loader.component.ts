@@ -33,7 +33,7 @@ export class FileLoaderComponent implements OnInit {
     private snackBar: MatSnackBar,
     public translate: TranslateService,
     private configService: ConfigService,
-    private Ls: Ls,
+    private ls: Ls,
   ) {
     this.fileLoaderDatas = this.fileLoaderService.getDatas();
     this.isProdMode = this.khiopsLibraryService.getAppConfig().production;
@@ -41,7 +41,7 @@ export class FileLoaderComponent implements OnInit {
 
   ngOnInit() {
     const associationFiles = ['.json'];
-    if (this.Ls.LS_ID === 'KHIOPS_VISUALIZATION_') {
+    if (this.ls.LS_ID === 'KHIOPS_VISUALIZATION_') {
       associationFiles.push('.khj');
     } else {
       associationFiles.push('.khcj');

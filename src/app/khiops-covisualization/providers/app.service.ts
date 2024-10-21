@@ -18,11 +18,11 @@ export class AppService {
 
   constructor(
     private khiopsLibraryService: KhiopsLibraryService,
-    private Ls: Ls,
+    private ls: Ls,
     private layoutService: LayoutService,
   ) {
     // Render Ls static methods with current instance
-    AppService.Ls = this.Ls;
+    AppService.Ls = this.ls;
 
     this.initialize();
   }

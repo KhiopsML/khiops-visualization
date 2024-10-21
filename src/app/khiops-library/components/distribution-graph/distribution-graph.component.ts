@@ -61,7 +61,7 @@ export class DistributionGraphComponent
     public override configService: ConfigService,
     private toPrecision: ToPrecisionPipe,
     private khiopsLibraryService: KhiopsLibraryService,
-    private Ls: Ls,
+    private ls: Ls,
   ) {
     super(selectableService, ngzone, configService);
 
@@ -189,7 +189,7 @@ export class DistributionGraphComponent
 
   changeGraphType(type) {
     // this.trackerService.trackEvent('click', 'distribution_graph_type', this.graphOptions.selected);
-    this.Ls.set(LS.DISTRIBUTION_GRAPH_OPTION_Y, type);
+    this.ls.set(LS.DISTRIBUTION_GRAPH_OPTION_Y, type);
     this.updateChartOptions();
     this.graphTypeChanged.emit(type);
   }

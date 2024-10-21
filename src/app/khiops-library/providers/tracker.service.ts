@@ -19,7 +19,7 @@ export class TrackerService {
   appSource: string;
 
   constructor(
-    private Ls: Ls,
+    private ls: Ls,
     private dialogRef: MatDialog,
     private ngzone: NgZone,
     private dialog: MatDialog,
@@ -43,7 +43,7 @@ export class TrackerService {
   }
 
   getCookieStatus(): boolean | undefined {
-    const cookieStatus = this.Ls.get(LS.COOKIE_CONSENT);
+    const cookieStatus = this.ls.get(LS.COOKIE_CONSENT);
     if (cookieStatus !== null) {
       return cookieStatus === 'true';
     } else {
@@ -57,10 +57,10 @@ export class TrackerService {
   }
 
   getVisitorId() {
-    let uuid = this.Ls.get(LS.UUID);
+    let uuid = this.ls.get(LS.UUID);
     if (!uuid) {
       uuid = uuidv4().replace(/-/g, '') || '';
-      this.Ls.set(LS.UUID, uuid);
+      this.ls.set(LS.UUID, uuid);
     }
     return uuid;
   }
@@ -122,7 +122,7 @@ export class TrackerService {
 
       dialogRef.afterClosed().subscribe((e) => {
         const acceptCookies = e === 'confirm' ? 'true' : 'false';
-        this.Ls.set(LS.COOKIE_CONSENT, acceptCookies);
+        this.ls.set(LS.COOKIE_CONSENT, acceptCookies);
         this.addTrackerScript(config, trackerId, () => {
           this.trackEvent('cookie_consent', acceptCookies);
           if (acceptCookies === 'false') {

@@ -17,7 +17,7 @@ export class FileLoaderService {
   tmp = {};
 
   constructor(
-    private Ls: Ls,
+    private ls: Ls,
     private http: HttpClient,
     private khiopsLibraryService: KhiopsLibraryService,
   ) {
@@ -211,7 +211,7 @@ export class FileLoaderService {
   }
 
   setFileHistory(filename) {
-    const currentLs = this.Ls.get(LS.OPEN_FILE);
+    const currentLs = this.ls.get(LS.OPEN_FILE);
     let parsedLs = {
       files: [],
     };
@@ -232,11 +232,11 @@ export class FileLoaderService {
     // add to the top of the list
     parsedLs.files.unshift(filename);
 
-    this.Ls.set(LS.OPEN_FILE, JSON.stringify(parsedLs));
+    this.ls.set(LS.OPEN_FILE, JSON.stringify(parsedLs));
   }
 
   getFileHistory() {
-    const currentLs = this.Ls.get(LS.OPEN_FILE);
+    const currentLs = this.ls.get(LS.OPEN_FILE);
     if (currentLs) {
       return JSON.parse(currentLs);
     } else {
