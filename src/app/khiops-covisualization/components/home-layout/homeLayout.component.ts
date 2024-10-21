@@ -277,8 +277,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
       }
     }
 
-    // @ts-ignore
-    this.appProjectView?.initialize();
     this.fileLoaderService.fileLoaded.next({});
 
     this.initializeServices();

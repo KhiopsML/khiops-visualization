@@ -179,8 +179,6 @@ export class HomeLayoutComponent implements OnInit {
     this.evaluationDatasService.initialize();
     this.modelingDatasService.initialize();
 
-    // @ts-ignore
-    this.appProjectView?.initialize();
     this.fileLoaderService.fileLoaded.next({});
   }
 

@@ -1,8 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { AppService } from '@khiops-covisualization/providers/app.service';
 import { ProjectDatasService } from '@khiops-covisualization/providers/project-datas.service';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
-import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { TrackerService } from '@khiops-library/providers/tracker.service';
 
@@ -17,8 +15,6 @@ export class ProjectViewComponent
 {
   @Output() projectFileChanged: EventEmitter<any> = new EventEmitter();
 
-  appDatas: any;
-  projectSummaryDatas: InfosDatasI[];
   onFileLoaderDataChangedCb: Function;
 
   // managed by selectable-tab component
@@ -26,22 +22,12 @@ export class ProjectViewComponent
   isElectron: boolean = false;
 
   constructor(
-    private appService: AppService,
     private trackerService: TrackerService,
     private configService: ConfigService,
     public projectDatasService: ProjectDatasService,
   ) {
     super();
     this.isElectron = this.configService.isElectron;
-
-    this.initialize();
-  }
-  public initialize() {
-    this.appDatas = this.appService.getDatas();
-    if (this.appDatas.datas) {
-      this.projectSummaryDatas =
-        this.projectDatasService.getProjectSummaryDatas();
-    }
   }
 
   ngOnInit() {
