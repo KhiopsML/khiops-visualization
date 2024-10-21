@@ -65,11 +65,7 @@
             />
           </svg>
         </kl-header-title>
-        <kl-file-loader
-          #fileLoader
-          [hidden]="true"
-          [onFileLoaderDataChanged]="onFileLoaderDataChangedCb"
-        ></kl-file-loader>
+        <kl-file-loader #fileLoader [hidden]="true"></kl-file-loader>
         <kl-no-data
           id="welcome-message"
           fxFlexFill
@@ -198,7 +194,6 @@
                 <app-project-view
                   #appProjectView
                   [selectedTab]="selectedTab"
-                  (projectFileChanged)="onFileLoaderDataChanged($event)"
                 ></app-project-view>
               </ng-template>
             </mat-tab>

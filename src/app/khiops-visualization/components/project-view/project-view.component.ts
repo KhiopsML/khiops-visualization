@@ -21,7 +21,6 @@ export class ProjectViewComponent
   @Output() projectFileChanged: EventEmitter<any> = new EventEmitter<any>();
 
   appDatas: any;
-  onFileLoaderDataChangedCb: Function;
   sizes: any;
   isElectron: boolean = false;
 
@@ -43,7 +42,6 @@ export class ProjectViewComponent
 
   ngOnInit() {
     this.trackerService.trackEvent('page_view', 'project');
-    this.onFileLoaderDataChangedCb = (obj) => this.projectFileChanged.emit(obj);
   }
 
   ngAfterViewInit() {

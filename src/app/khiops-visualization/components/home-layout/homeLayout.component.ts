@@ -29,6 +29,7 @@ import { TrackerService } from '../../../khiops-library/providers/tracker.servic
 import { ElementRefI } from '@khiops-library/interfaces/element-ref';
 import { LS } from '@khiops-library/enum/ls';
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home-layout',
@@ -38,13 +39,14 @@ import { FileLoaderService } from '@khiops-library/providers/file-loader.service
 })
 export class HomeLayoutComponent implements OnInit {
   showProjectTab: boolean;
+  private fileLoadedSub?: Subscription;
 
   @Input()
   get appDatas(): any {
     return this.appService.getDatas();
   }
   set appDatas(datas: any) {
-    this.onFileLoaderDataChanged(datas);
+    this.initialize(datas);
   }
 
   @ViewChild('appProjectView', {
@@ -59,7 +61,6 @@ export class HomeLayoutComponent implements OnInit {
   fileLoader: FileLoaderComponent;
   appTitle: string;
 
-  onFileLoaderDataChangedCb: Function;
   appVersion: string;
   opened = false;
   public selectedTab: Object | undefined;
@@ -114,7 +115,6 @@ export class HomeLayoutComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.onFileLoaderDataChangedCb = (obj) => this.onFileLoaderDataChanged(obj);
     this.trackerService.trackEvent('page_view', 'visit', this.appVersion);
   }
 
@@ -124,6 +124,13 @@ export class HomeLayoutComponent implements OnInit {
         this.fileLoader.loadDebugFile();
       }, 100);
     }
+    this.fileLoadedSub = this.fileLoaderService.fileLoaded$.subscribe((e) => {
+      this.initialize(e);
+    });
+  }
+
+  ngOnDestroy() {
+    this.fileLoadedSub?.unsubscribe();
   }
 
   onToggleNavDrawerChanged(mustReload: boolean) {
@@ -134,7 +141,7 @@ export class HomeLayoutComponent implements OnInit {
     }
   }
 
-  onFileLoaderDataChanged(datas) {
+  initialize(datas = undefined) {
     this.isCompatibleJson = false;
     this.selectedTab = undefined;
     this.currentDatas = datas;
@@ -178,16 +185,14 @@ export class HomeLayoutComponent implements OnInit {
     this.distributionDatasService.initialize();
     this.evaluationDatasService.initialize();
     this.modelingDatasService.initialize();
-
-    this.fileLoaderService.fileLoaded.next({});
   }
 
   reloadView() {
     const currentDatas = this.currentDatas;
     setTimeout(() => {
-      this.onFileLoaderDataChanged(undefined);
+      this.initialize();
       setTimeout(() => {
-        this.onFileLoaderDataChanged(currentDatas);
+        this.initialize(currentDatas);
       }); // do it after timeout to be launched
     }, 250); // do it after nav drawer anim
   }

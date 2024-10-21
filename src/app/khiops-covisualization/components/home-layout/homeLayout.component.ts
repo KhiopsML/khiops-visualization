@@ -45,7 +45,7 @@ import { FileLoaderService } from '@khiops-library/providers/file-loader.service
 })
 export class HomeLayoutComponent implements OnInit, OnDestroy {
   showProjectTab: boolean;
-
+  private fileLoadedSub?: Subscription;
   @ViewChild('appProjectView', {
     static: false,
   })
@@ -88,7 +88,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     }
   }
 
-  onFileLoaderDataChangedCb: Function;
   appVersion: string;
   opened = false;
   openContextView = false;
@@ -159,6 +158,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.fileLoadedSub?.unsubscribe();
     this.importedDatasChangedSub.unsubscribe();
   }
 
@@ -200,7 +200,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.trackerService.trackEvent('page_view', 'axis');
-    this.onFileLoaderDataChangedCb = (obj) => this.onFileLoaderDataChanged(obj);
     this.trackerService.trackEvent('page_view', 'visit', this.appVersion);
   }
 
@@ -210,6 +209,9 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
         this.fileLoader.loadDebugFile();
       }, 100);
     }
+    this.fileLoadedSub = this.fileLoaderService.fileLoaded$.subscribe((e) => {
+      this.initialize(e);
+    });
   }
 
   onToggleNavDrawerChanged(mustReload: boolean) {
@@ -220,7 +222,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     }
   }
 
-  onFileLoaderDataChanged(datas) {
+  initialize(datas = undefined) {
     this.currentDatas = datas;
     this.appService.setFileDatas(datas);
 
@@ -277,8 +279,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
       }
     }
 
-    this.fileLoaderService.fileLoaded.next({});
-
     this.initializeServices();
 
     if (!this.configService.isElectron) {
@@ -315,9 +315,9 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
   reloadView() {
     const currentDatas = this.currentDatas;
     setTimeout(() => {
-      this.onFileLoaderDataChanged(undefined);
+      this.initialize();
       setTimeout(() => {
-        this.onFileLoaderDataChanged(currentDatas);
+        this.initialize(currentDatas);
       }); // do it after timeout to be launched
     }, 250); // do it after nav drawer anim
   }

@@ -12,6 +12,7 @@ import { TranslateService } from '@ngstack/translate';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { Ls } from '@khiops-library/providers/ls.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'kl-file-loader',
@@ -19,7 +20,6 @@ import { Ls } from '@khiops-library/providers/ls.service';
   styleUrls: ['./file-loader.component.scss'],
 })
 export class FileLoaderComponent implements OnInit {
-  @Input() onFileLoaderDataChanged: Function;
   @Output('onFileOpen') onFileOpen: EventEmitter<any> = new EventEmitter<any>();
   fileLoaderDatas: any;
   isProdMode = false;
@@ -50,33 +50,19 @@ export class FileLoaderComponent implements OnInit {
   }
 
   loadDebugFile(fileName?: string) {
-    this.onFileLoaderDataChanged(undefined);
-
     this.ngzone.run(() => {
-      this.fileLoaderService
-        .debugReadDatas(fileName)
-        .then((datas) => {
-          this.onFileLoaderDataChanged(datas);
-        })
-        .catch((error) => {
-          console.warn(this.translate.get('SNACKS.OPEN_FILE_ERROR'), error);
-        });
+      this.fileLoaderService.debugReadDatas(fileName).catch((error) => {
+        console.warn(this.translate.get('SNACKS.OPEN_FILE_ERROR'), error);
+      });
     });
   }
 
   loadWebFile(file?: string) {
-    this.onFileLoaderDataChanged(undefined);
-
     this.ngzone.run(() => {
       if (file) {
-        this.fileLoaderService
-          .readWebFile(file)
-          .then((datas) => {
-            this.onFileLoaderDataChanged(datas);
-          })
-          .catch((error) => {
-            console.warn(this.translate.get('SNACKS.OPEN_FILE_ERROR'), error);
-          });
+        this.fileLoaderService.readWebFile(file).catch((error) => {
+          console.warn(this.translate.get('SNACKS.OPEN_FILE_ERROR'), error);
+        });
       }
     });
   }
@@ -92,15 +78,12 @@ export class FileLoaderComponent implements OnInit {
   }
 
   openFile(filename) {
-    this.onFileLoaderDataChanged(undefined);
-
     if (filename) {
       this.ngzone.run(() => {
         this.fileLoaderService
           .readFile(filename)
           .then((datas) => {
             this.fileLoaderService.setFileHistory(filename);
-            this.onFileLoaderDataChanged(datas);
           })
           .catch((error) => {
             console.warn(this.translate.get('SNACKS.OPEN_FILE_ERROR'), error);
@@ -121,7 +104,7 @@ export class FileLoaderComponent implements OnInit {
 
   closeFile() {
     this.ngzone.run(() => {
-      this.onFileLoaderDataChanged(undefined);
+      this.fileLoaderService.closeFile();
     });
   }
 

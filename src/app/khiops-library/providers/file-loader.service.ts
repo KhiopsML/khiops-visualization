@@ -169,6 +169,7 @@ export class FileLoaderService {
 
           this.fileLoaderDatas.datas.filename = url;
           this.fileLoaderDatas.isLoadingDatas = false;
+          this.fileLoaded.next(this.fileLoaderDatas.datas);
           if (datas) {
             resolve(this.fileLoaderDatas.datas);
           } else {
@@ -179,6 +180,7 @@ export class FileLoaderService {
         },
         (error) => {
           this.fileLoaderDatas.isLoadingDatas = false;
+          this.fileLoaded.next(undefined);
 
           reject({
             status: 500,
@@ -203,14 +205,21 @@ export class FileLoaderService {
           e.target.result.toString(),
         );
         this.fileLoaderDatas.datas.filename = filename;
+        this.fileLoaded.next(this.fileLoaderDatas.datas);
         resolve(this.fileLoaderDatas.datas);
       });
       reader.addEventListener('error', () => {
         reader.abort();
+        this.fileLoaded.next(undefined);
         reject(new Error('failed to process file'));
       });
       reader.readAsText(filename);
     });
+  }
+
+  closeFile() {
+    this.fileLoaderDatas.datas = undefined;
+    this.fileLoaded.next(this.fileLoaderDatas.datas);
   }
 
   setFileHistory(filename) {

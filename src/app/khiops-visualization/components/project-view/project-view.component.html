@@ -21,12 +21,7 @@
             fxFlex
             [projectDatasService]="projectDatasService"
           ></app-project-summary>
-          <!-- Important to do not show loader on Electron to prevent multiple onFileLoaderDataChanged -->
-          <kl-file-loader
-            *ngIf="debugFile && !isElectron"
-            [onFileLoaderDataChanged]="onFileLoaderDataChangedCb"
-          >
-          </kl-file-loader>
+          <kl-file-loader *ngIf="debugFile && !isElectron"> </kl-file-loader>
         </div>
       </div>
     </as-split-area>

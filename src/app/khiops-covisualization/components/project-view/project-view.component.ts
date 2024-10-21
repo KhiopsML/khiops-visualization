@@ -13,10 +13,6 @@ export class ProjectViewComponent
   extends SelectableTabComponent
   implements OnInit
 {
-  @Output() projectFileChanged: EventEmitter<any> = new EventEmitter();
-
-  onFileLoaderDataChangedCb: Function;
-
   // managed by selectable-tab component
   override tabIndex = 0;
   isElectron: boolean = false;
@@ -32,6 +28,5 @@ export class ProjectViewComponent
 
   ngOnInit() {
     this.trackerService.trackEvent('page_view', 'project');
-    this.onFileLoaderDataChangedCb = (obj) => this.projectFileChanged.emit(obj);
   }
 }
