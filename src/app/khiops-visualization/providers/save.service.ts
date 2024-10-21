@@ -16,6 +16,12 @@ export class SaveService {
     private preparation2dDatasService: Preparation2dDatasService,
   ) {}
 
+  /**
+   * Constructs the data to be saved by gathering necessary information
+   * from various services and combining them into a SavedDatasModel.
+   *
+   * @returns The constructed data to be saved.
+   */
   constructDatasToSave() {
     const appDatas = this.appService.getDatas().datas;
     const splitSizes = this.layoutService.getSplitSizes();

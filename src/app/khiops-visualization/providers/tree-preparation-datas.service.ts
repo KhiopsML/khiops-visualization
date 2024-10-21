@@ -25,6 +25,10 @@ export class TreePreparationDatasService {
     private appService: AppService,
   ) {}
 
+  /**
+   * Initializes the tree preparation data service by loading data from the app service
+   * and setting the default selected variable.
+   */
   initialize() {
     const appDatas = this.appService.getDatas().datas;
     this.treePreparationDatas = new TreePreparationDatasModel(appDatas);
@@ -47,10 +51,17 @@ export class TreePreparationDatasService {
     }
   }
 
+  /**
+   * Returns the current tree preparation data model.
+   * @returns {TreePreparationDatasModel | undefined} The current tree preparation data model.
+   */
   getDatas(): TreePreparationDatasModel | undefined {
     return this.treePreparationDatas;
   }
 
+  /**
+   * Initializes the selected nodes based on the first partition of the selected variable.
+   */
   initSelectedNodes() {
     const appDatas = this.appService.getDatas().datas;
     const variablesDetailedStatistics =
@@ -65,6 +76,11 @@ export class TreePreparationDatasService {
     }
   }
 
+  /**
+   * Recursively finds the first leaf node in the tree starting from the given node.
+   * @param {TreeNodeModel} node - The starting node.
+   * @returns {TreeNodeModel | undefined} The first leaf node.
+   */
   getFirstNodeLeaf(node: TreeNodeModel): TreeNodeModel | undefined {
     if (node.children.length > 0 && node?.children?.[0]?.isLeaf === false) {
       return this.getFirstNodeLeaf(node?.children?.[0]);
@@ -73,6 +89,11 @@ export class TreePreparationDatasService {
     }
   }
 
+  /**
+   * Retrieves nodes linked to a specific node by its ID.
+   * @param {string} id - The ID of the node.
+   * @returns {Array} An array containing the dimension index and the linked nodes.
+   */
   getNodesLinkedToOneNode(id: string) {
     const appDatas = this.appService.getDatas().datas;
     const variablesDetailedStatistics =
@@ -91,6 +112,11 @@ export class TreePreparationDatasService {
     return [dimDatasIndex, dimDatas[dimDatasIndex]];
   }
 
+  /**
+   * Sets the selected variable and initializes related data.
+   * @param {TreePreparationVariableModel} object - The variable to be selected.
+   * @returns {TreePreparationVariableModel | undefined} The selected variable.
+   */
   setSelectedVariable(
     object: TreePreparationVariableModel,
   ): TreePreparationVariableModel | undefined {
@@ -117,6 +143,10 @@ export class TreePreparationDatasService {
     return undefined;
   }
 
+  /**
+   * Sets the selected flattened tree based on the given rank.
+   * @param {string} rank - The rank of the variable.
+   */
   setSelectedFlattenTree(rank: string) {
     const appDatas = this.appService.getDatas().datas;
     const treeDatas = appDatas?.treePreparationReport?.treeDetails;
@@ -129,6 +159,10 @@ export class TreePreparationDatasService {
     }
   }
 
+  /**
+   * Constructs the dimension tree for the selected variable.
+   * It clones the tree nodes from the application data and formats them.
+   */
   constructDimensionTree() {
     const appDatas = this.appService.getDatas().datas;
     const treeDatas = appDatas?.treePreparationReport?.treeDetails;
@@ -143,6 +177,10 @@ export class TreePreparationDatasService {
     }
   }
 
+  /**
+   * Computes the frequencies of nodes compared to others in the tree.
+   * It calculates the minimum and maximum frequencies and updates the tree preparation data.
+   */
   computeNodesFreqsComparedToOthers() {
     let treeLeafs: any = this.treePreparationDatas?.selectedFlattenTree?.map(
       (e) => e?.targetValues?.frequencies,
@@ -159,9 +197,19 @@ export class TreePreparationDatasService {
     }
   }
 
+  /**
+   * Formats the tree nodes data by adding color and other properties.
+   * It recursively formats all child nodes.
+   * @param {TreeNodeModel} item - The tree node to format.
+   * @returns {TreeNodeModel} The formatted tree node.
+   */
   formatTreeNodesDatas(item: TreeNodeModel) {
     const color = this.treePreparationDatas?.treeColorsMap[item.nodeId];
-    item = new TreeNodeModel(item, this.treePreparationDatas?.classesCount, color);
+    item = new TreeNodeModel(
+      item,
+      this.treePreparationDatas?.classesCount,
+      color,
+    );
 
     if (item?.children) {
       for (let i = 0; i < item.children.length; i++) {
@@ -171,14 +219,27 @@ export class TreePreparationDatasService {
     return item;
   }
 
+  /**
+   * Retrieves the selected variable from the tree preparation data.
+   * @returns {TreePreparationVariableModel | undefined} The selected variable.
+   */
   getSelectedVariable(): TreePreparationVariableModel | undefined {
     return this.treePreparationDatas.selectedVariable;
   }
 
+  /**
+   * Retrieves the rank of the selected variable.
+   * @returns {string} The rank of the selected variable.
+   */
   getSelectedVariableRank(): string {
     return this.treePreparationDatas.selectedVariable.rank;
   }
 
+  /**
+   * Retrieves a tree node by its name from the selected flattened tree.
+   * @param {string} name - The name of the node.
+   * @returns {TreeNodeModel | undefined} The tree node with the given name.
+   */
   getNodeFromName(name: string): TreeNodeModel | undefined {
     let node: TreeNodeModel | undefined;
     if (this.treePreparationDatas?.selectedFlattenTree) {
@@ -189,6 +250,14 @@ export class TreePreparationDatasService {
     return node;
   }
 
+  /**
+   * Retrieves the current interval data for the selected variable.
+   * This method constructs a grid data object containing the interval or group data
+   * for the selected variable based on its type (numerical or categorical).
+   *
+   * @param {number} [index=0] - The index of the interval or group to retrieve. Defaults to 0.
+   * @returns {GridDatasI} The grid data object containing the interval or group data.
+   */
   getCurrentIntervalDatas(index?: number): GridDatasI {
     index = index || 0;
 
@@ -341,6 +410,11 @@ export class TreePreparationDatasService {
     return this.treePreparationDatas.currentIntervalDatas;
   }
 
+  /**
+   * Sets the selected nodes based on the provided node IDs and optionally a trusted node selection.
+   * @param {string[]} nodes - The array of node IDs to be selected.
+   * @param {string} [trustedNodeSelection] - The ID of the trusted node selection.
+   */
   setSelectedNodes(nodes: string[], trustedNodeSelection?: string) {
     const selectedNodes: TreeNodeModel[] = [];
     for (let i = 0; i < nodes.length; i++) {
@@ -374,14 +448,27 @@ export class TreePreparationDatasService {
     }
   }
 
+  /**
+   * Retrieves the currently selected nodes.
+   * @returns {TreeNodeModel[] | undefined} The array of selected nodes.
+   */
   getSelectedNodes(): TreeNodeModel[] | undefined {
     return this.treePreparationDatas?.selectedNodes;
   }
 
+  /**
+   * Retrieves the currently selected node.
+   * @returns {TreeNodeModel | undefined} The selected node.
+   */
   getSelectedNode(): TreeNodeModel | undefined {
     return this.treePreparationDatas?.selectedNode;
   }
 
+  /**
+   * Sets the selected node based on the provided node and trusted node selection.
+   * @param {TreeNodeModel} node - The node to be selected.
+   * @param {string | boolean} trustedNodeSelection - The trusted node selection.
+   */
   setSelectedNode(node: TreeNodeModel, trustedNodeSelection: string | boolean) {
     if (this.treePreparationDatas) {
       const nodeDatas = this.getNodeFromName(node.nodeId);
@@ -405,6 +492,11 @@ export class TreePreparationDatasService {
     }
   }
 
+  /**
+   * Retrieves the details of the selected tree nodes.
+   * Constructs a grid data object containing the node ID, values, and frequencies.
+   * @returns {GridDatasI} The grid data object containing the details of the selected tree nodes.
+   */
   getTreeDetails(): GridDatasI {
     const treeDetails: GridDatasI = {
       title:
@@ -457,6 +549,11 @@ export class TreePreparationDatasService {
     return treeDetails;
   }
 
+  /**
+   * Retrieves the rules for the selected tree leaf node.
+   * Constructs a grid data object containing the variable, type, and partition information.
+   * @returns {GridDatasI} The grid data object containing the rules for the selected tree leaf node.
+   */
   getTreeLeafRules(): GridDatasI {
     const treeLeafRules: GridDatasI = {
       title:
@@ -532,6 +629,12 @@ export class TreePreparationDatasService {
     return treeLeafRules;
   }
 
+  /**
+   * Recursively retrieves the rules for a given node and its children.
+   * @param {TreeNodeModel | undefined} node - The node to retrieve rules for.
+   * @param {TreeNodeModel[]} rules - The array to store the rules.
+   * @returns {TreeNodeModel[] | undefined} The array of rules.
+   */
   getRecursiveNodeDatasRules(
     node: TreeNodeModel | undefined,
     rules: TreeNodeModel[],

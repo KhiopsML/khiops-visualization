@@ -10,6 +10,10 @@ import { AppService } from './app.service';
 export class ProjectDatasService {
   constructor(private appService: AppService) {}
 
+  /**
+   * Retrieves project summary data.
+   * @returns {InfosDatasI[]} An array of project summary data or undefined if no preparation report is available.
+   */
   getProjectSummaryDatas(): InfosDatasI[] {
     const appDatas = this.appService.getDatas();
     if (appDatas.preparationReport) {
@@ -23,6 +27,10 @@ export class ProjectDatasService {
     }
   }
 
+  /**
+   * Retrieves project logs data.
+   * @returns {ProjectLogModel[]} An array of project log models.
+   */
   getProjectLogsDatas(): ProjectLogModel[] {
     const appDatas = this.appService.getDatas().datas;
     let logs;
