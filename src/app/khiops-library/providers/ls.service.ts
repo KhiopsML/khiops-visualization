@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { LS } from '@khiops-library/enum/ls';
 
 @Injectable({
   providedIn: 'root',
@@ -12,16 +11,14 @@ export class Ls {
   }
 
   get(key: string, defaultValue?) {
-    return (
-      localStorage.getItem(this.LS_ID + LS[key]) || defaultValue || undefined
-    );
+    return localStorage.getItem(this.LS_ID + key) || defaultValue || undefined;
   }
 
   set(key: string, value: any) {
-    localStorage.setItem(this.LS_ID + LS[key], value);
+    localStorage.setItem(this.LS_ID + key, value);
   }
 
   del(key: string) {
-    localStorage.removeItem(this.LS_ID + LS[key]);
+    localStorage.removeItem(this.LS_ID + key);
   }
 }

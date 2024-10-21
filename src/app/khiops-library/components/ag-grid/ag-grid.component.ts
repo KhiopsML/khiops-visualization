@@ -680,10 +680,10 @@ export class AgGridComponent
           });
         }
         // Restore search
-        this.searchInput =
-          this.Ls.get(
-            LS.OPTIONS_AG_GRID_SEARCH + '_' + this.id.toUpperCase(),
-          ) || '';
+        this.searchInput = this.Ls.get(
+          LS.OPTIONS_AG_GRID_SEARCH + '_' + this.id.toUpperCase(),
+          '',
+        );
         if (this.searchInput) {
           this.showSearchForm();
           this.search();
