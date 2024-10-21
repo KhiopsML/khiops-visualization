@@ -22,8 +22,14 @@ export class ImportExtDatasService {
   }
 
   /**
-   * Chat gpt optimisation
+   * Formats the imported data from a file into a structured object containing keys and values.
    * Big external datas file long loading #110
+   *
+   * @param fileDatas - The file data model containing the data to be formatted.
+   * @param joinKey - (Optional) The key to join the data on.
+   * @param fieldName - (Optional) The name of the field to be used.
+   * @param separator - (Optional) The separator used to split the data. Defaults to tab.
+   * @returns An object containing the formatted keys and values.
    */
   formatImportedDatas(
     fileDatas: FileModel,
@@ -68,6 +74,17 @@ export class ImportExtDatasService {
     return formatedDatas;
   }
 
+  /**
+   * Adds imported data to the list if it doesn't already exist.
+   * @param filename The name of the file.
+   * @param path The path of the file.
+   * @param dimension The dimension of the data.
+   * @param joinKey The key to join the data.
+   * @param separator The separator used in the file.
+   * @param field The field information.
+   * @param file The file object.
+   * @returns The added data or false if it already exists.
+   */
   addImportedDatas(filename, path, dimension, joinKey, separator, field, file) {
     const data = new ExtDatasModel(
       filename,
@@ -94,6 +111,15 @@ export class ImportExtDatasService {
     }
   }
 
+  /**
+   * Removes imported data from the list if it exists.
+   * @param filename The name of the file.
+   * @param dimension The dimension of the data.
+   * @param joinKey The key to join the data.
+   * @param separator The separator used in the file.
+   * @param fieldName The name of the field.
+   * @returns True if the data was removed, false otherwise.
+   */
   removeImportedDatas(filename, dimension, joinKey, separator, fieldName) {
     const extDataPos = this.importExtDatas.findIndex(
       (e) =>
@@ -110,14 +136,34 @@ export class ImportExtDatasService {
     }
   }
 
+  /**
+   * Retrieves imported data for a specific dimension.
+   * @param dimension The dimension to retrieve data for.
+   * @returns The imported data for the specified dimension.
+   */
   getImportedDatasFromDimension(dimension) {
     return this.savedExternalDatas?.[dimension?.name?.toLowerCase()];
   }
 
+  /**
+   * Retrieves all imported data.
+   * @returns The list of all imported data.
+   */
   getImportedDatas() {
     return this.importExtDatas;
   }
 
+  /**
+   * Handles the file read operation and processes the data.
+   * @param datas The data read from the file.
+   * @param externalDatas The external data model.
+   * @param percentIndex The current progress index.
+   * @param progressCallback The callback function to report progress.
+   * @param fieldName The name of the field.
+   * @param joinKey The key to join the data.
+   * @param importExtDatasLength The total number of data items to import.
+   * @param resolve The resolve function for the promise.
+   */
   onFileRead(
     datas: any,
     externalDatas: ExtDatasModel,
@@ -184,6 +230,11 @@ export class ImportExtDatasService {
     });
   }
 
+  /**
+   * Loads saved external data files and processes them.
+   * @param progressCallback Optional callback function to report progress.
+   * @returns A promise that resolves when all files are processed.
+   */
   loadSavedExternalDatas(progressCallback?) {
     const promises: Promise<any>[] = [];
     this.savedExternalDatas = {};

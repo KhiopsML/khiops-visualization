@@ -18,6 +18,9 @@ export class HierarchyService {
     private treenodesService: TreenodesService,
   ) {}
 
+  /**
+   * Initializes the hierarchy service by fetching dimension data and setting hierarchy fold states.
+   */
   initialize() {
     this.dimensionsDatas = this.dimensionsDatasService.getDatas();
     for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
@@ -32,6 +35,11 @@ export class HierarchyService {
     }
   }
 
+  /**
+   * Toggles the hierarchy fold state for a given dimension.
+   * @param dimensionName - The name of the dimension to toggle.
+   * @param state - The new fold state (true for folded, false for unfolded).
+   */
   toggleDimensionHierarchyFold(dimensionName: string, state: boolean) {
     this.hierarchyFold[dimensionName] = state;
 
@@ -41,6 +49,10 @@ export class HierarchyService {
     dimension.setHierarchyFold(state);
   }
 
+  /**
+   * Unfolds the hierarchy for the given rank, updating the collapsed nodes and refreshing dimension data.
+   * @param currentRank - The rank for which to unfold the hierarchy.
+   */
   unfoldHierarchy(currentRank) {
     const collapsedNodes =
       this.treenodesService.getLeafNodesForARank(currentRank);
@@ -59,7 +71,7 @@ export class HierarchyService {
     this.dimensionsDatas = this.dimensionsDatasService.getDatas();
     this.dimensionsDatasService.getDimensions();
     this.dimensionsDatasService.initSelectedDimensions();
-    
+
     this.dimensionsDatasService.saveInitialDimension();
     this.dimensionsDatasService.constructDimensionsTrees();
     this.dimensionsDatasService.getMatrixDatas();

@@ -23,12 +23,22 @@ export class DimensionsDatasService {
   ) {
     this.initialize();
   }
-
+  /**
+   * Initializes the dimensions data model.
+   * This method creates a new instance of the DimensionsDatasModel and assigns it to the dimensionsDatas property.
+   *
+   * @returns {DimensionsDatasModel} - The initialized dimensions data model.
+   */
   initialize(): any {
     this.dimensionsDatas = new DimensionsDatasModel();
     return this.dimensionsDatas;
   }
 
+  /**
+   * Initializes the saved data.
+   * This method retrieves saved data from the app service and assigns it to the dimensions data model.
+   * It sets various properties such as conditionalOnContext, matrixContrast, matrixMode, matrixOption, and isAxisInverted.
+   */
   initSavedDatas() {
     // Set it to false if no context
     if (!this.isContextDimensions()) {
@@ -60,14 +70,32 @@ export class DimensionsDatasService {
     }
   }
 
+  /**
+   * Retrieves the dimensions data model.
+   * This method returns the current state of the dimensions data model.
+   *
+   * @returns {DimensionsDatasModel} - The current dimensions data model.
+   */
   getDatas(): DimensionsDatasModel {
     return this.dimensionsDatas;
   }
 
+  /**
+   * Retrieves the count of dimensions.
+   * This method returns the number of dimensions in the dimensions data model.
+   *
+   * @returns {number} - The count of dimensions.
+   */
   getDimensionCount(): number {
     return this.dimensionsDatas.dimensions.length;
   }
 
+  /**
+   * Checks if the cocluster is large.
+   * This method calculates the current size of the cocluster and compares it to an ergonomic limit.
+   *
+   * @returns {boolean} - True if the cocluster is large, false otherwise.
+   */
   isLargeCocluster(): boolean {
     const currentSize = this.dimensionsDatas.dimensions
       .map((e) => e.parts)
@@ -79,6 +107,13 @@ export class DimensionsDatasService {
     );
   }
 
+  /**
+   * Sets the loading status.
+   * This method updates the isLoading property based on the number of parts in the initial dimensions.
+   *
+   * @param {boolean} status - The loading status to be set.
+   * @returns {void}
+   */
   setIsLoading(status: boolean) {
     const nb = this.dimensionsDatas.initialDimensions
       .map((e) => e.parts)
@@ -88,11 +123,24 @@ export class DimensionsDatasService {
     }
   }
 
+  /**
+   * Checks if there are context dimensions.
+   * This method determines if the application data contains more than two initial dimensions.
+   *
+   * @returns {boolean} - True if there are context dimensions, false otherwise.
+   */
   isContextDimensions(): boolean {
     const appDatas = this.appService.getDatas().datas;
     return appDatas?.coclusteringReport?.summary?.initialDimensions > 2;
   }
 
+  /**
+   * Checks if a dimension is a context dimension.
+   * This method determines if the specified dimension is a context dimension based on its position.
+   *
+   * @param {string} dimensionName - The name of the dimension to check.
+   * @returns {boolean} - True if the dimension is a context dimension, false otherwise.
+   */
   isContextDimension(dimensionName): boolean {
     // Find current dim position
     const currentIndex: number =
@@ -102,10 +150,23 @@ export class DimensionsDatasService {
     return currentIndex > 1;
   }
 
+  /**
+   * Toggles the axis inversion status.
+   * This method inverts the current value of the isAxisInverted property.
+   *
+   * @returns {void}
+   */
   toggleIsAxisInverted() {
     this.dimensionsDatas.isAxisInverted = !this.dimensionsDatas.isAxisInverted;
   }
 
+  /**
+   * Retrieves the position of a dimension by its name.
+   * This method finds the index of the specified dimension in the selected dimensions array.
+   *
+   * @param {string} dimensionName - The name of the dimension to find.
+   * @returns {number} - The position of the dimension in the selected dimensions array.
+   */
   getDimensionPositionFromName(dimensionName): number {
     // Find current dim position
     return this.dimensionsDatas?.selectedDimensions?.findIndex((e) => {
@@ -113,6 +174,12 @@ export class DimensionsDatasService {
     });
   }
 
+  /**
+   * Retrieves the dimensions to be saved.
+   * This method extracts the names of the selected dimensions and returns them in an array.
+   *
+   * @returns {any} - An array of objects containing the names of the selected dimensions.
+   */
   getDimensionsToSave(): any {
     const selectedDimensions: { name: string }[] = [];
     const dimensions = this.getSelectedDimensions();
@@ -126,10 +193,23 @@ export class DimensionsDatasService {
     return selectedDimensions;
   }
 
+  /**
+   * Retrieves the selected dimensions.
+   * This method returns the array of selected dimensions from the dimensions data.
+   *
+   * @returns {DimensionModel[]} - The array of selected dimensions.
+   */
   getSelectedDimensions(): DimensionModel[] {
     return this.dimensionsDatas.selectedDimensions;
   }
 
+  /**
+   * Retrieves the number of intervals for a given dimension.
+   * This method calculates the number of intervals for the specified dimension based on its collapsed nodes.
+   *
+   * @param {string} dimensionName - The name of the dimension.
+   * @returns {number} - The number of intervals for the specified dimension.
+   */
   getDimensionIntervals(dimensionName: string): number {
     // Get nbclusters of current dimension based on collapsed nodes
     let count = 0;
@@ -146,6 +226,14 @@ export class DimensionsDatasService {
     return count;
   }
 
+  /**
+   * Recursively counts the number of intervals in a tree node.
+   * This method traverses the tree node and its children to count the number of intervals.
+   *
+   * @param {TreeNodeModel} treeNode - The tree node to count intervals for.
+   * @param {number} count - The current count of intervals (default is 0).
+   * @returns {number} - The total count of intervals.
+   */
   getNodeIntervalsCount(treeNode: TreeNodeModel, count = 0): number {
     if (treeNode.isLeaf) {
       count++;
@@ -162,6 +250,12 @@ export class DimensionsDatasService {
     return count;
   }
 
+  /**
+   * Retrieves the dimensions from the application data.
+   * This method extracts the dimension summaries and partitions from the application data and initializes the dimensions data.
+   *
+   * @returns {DimensionModel[]} - The array of dimensions.
+   */
   getDimensions(): DimensionModel[] {
     const appDatas = this.appService.getDatas().datas;
     this.dimensionsDatas.dimensions = [];
@@ -190,6 +284,12 @@ export class DimensionsDatasService {
     return this.dimensionsDatas.dimensions;
   }
 
+  /**
+   * Saves the initial dimensions.
+   * This method stores the initial dimensions in memory if they have not been saved yet.
+   *
+   * @returns {void}
+   */
   saveInitialDimension() {
     // keep initial dim in memory
     if (this.dimensionsDatas.initialDimensions.length === 0) {
@@ -200,6 +300,14 @@ export class DimensionsDatasService {
     }
   }
 
+  /**
+   * Initializes the selected dimensions.
+   * This method sets the selected dimensions and context dimensions based on the initial dimensions data.
+   * It also restores the saved selected dimensions if available.
+   *
+   * @param {boolean} initContextSelection - Flag to determine if context selection should be initialized (default is true).
+   * @returns {DimensionModel[]} - The array of selected dimensions.
+   */
   initSelectedDimensions(initContextSelection = true) {
     this.dimensionsDatas.selectedDimensions = [];
     for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
@@ -236,6 +344,17 @@ export class DimensionsDatasService {
     return this.dimensionsDatas.selectedDimensions;
   }
 
+  /**
+   * Updates the selected dimension at a given position.
+   *
+   * This method swaps the positions of the current dimension and the new dimension
+   * in the selected dimensions array. It also updates the cell part indexes to reflect
+   * the new selection order, ensuring that matrix combinations are updated accordingly.
+   *
+   * @param {DimensionModel} dimension - The dimension to be updated.
+   * @param {number} position - The position at which the dimension should be placed.
+   * @returns {DimensionModel[]} - The updated array of selected dimensions.
+   */
   updateSelectedDimension(dimension, position) {
     // Find current dim position
     const currentIndex: number =
@@ -274,6 +393,22 @@ export class DimensionsDatasService {
     return this.dimensionsDatas.selectedDimensions;
   }
 
+  /**
+   * Constructs the dimensions trees for the visualization component.
+   *
+   * This method initializes the `dimensionsTrees` and `currentDimensionsTrees` arrays,
+   * and populates them based on the initial and current data from the application service.
+   * It also checks for any collapsed nodes from the saved data.
+   *
+   * The method processes each selected dimension, converting each child into a `TreeNodeModel`
+   * object and sorting them by rank to order intervals. The trees are then unflattened and set
+   * to the respective clusters.
+   *
+   * @remarks
+   * - Collapsed nodes are taken into account if they exist in the saved data.
+   *
+   * @returns {void}
+   */
   constructDimensionsTrees() {
     this.dimensionsDatas.dimensionsTrees = [];
     this.dimensionsDatas.currentDimensionsTrees = [];
@@ -418,6 +553,14 @@ export class DimensionsDatasService {
     }
   }
 
+  /**
+   * Retrieves and processes matrix data based on the selected dimensions.
+   * This method initializes the matrix data structures, extracts relevant data
+   * from the application state, and computes the necessary values for matrix visualization.
+   *
+   * @param {boolean} propagateChanges - Flag to determine if changes should be propagated.
+   * @returns {any} - The processed matrix data.
+   */
   getMatrixDatas(propagateChanges = true) {
     // const t0 = performance.now();
 
