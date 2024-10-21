@@ -76,8 +76,6 @@ export class AxisViewComponent
       if (this.dimensionsDatas.dimensions.length > 0) {
         const isLargeCocluster = this.dimensionsDatasService.isLargeCocluster();
         let collapsedNodes = this.appService.getSavedDatas('collapsedNodes');
-        // collapsedNodes =
-        //   this.appService.checkCollapsedNodesIntegrity(collapsedNodes);
 
         if (collapsedNodes) {
           this.computeSavedState(collapsedNodes);

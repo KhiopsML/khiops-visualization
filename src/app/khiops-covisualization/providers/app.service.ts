@@ -101,33 +101,6 @@ export class AppService {
     }
   }
 
-  checkCollapsedNodesIntegrity(collapsedNodes) {
-    if (collapsedNodes) {
-      for (const [key, value] of Object.entries(collapsedNodes)) {
-        const dimIndex =
-          this.appDatas.datas.coclusteringReport.dimensionHierarchies.findIndex(
-            (e) => e.name === key,
-          );
-        if (dimIndex === -1) {
-          // broken saved data
-          delete collapsedNodes[key];
-        }
-        for (let k = collapsedNodes?.[key]?.length - 1; k >= 0; k--) {
-          const node = value[k];
-          const nodeDetails =
-            this.appDatas.datas.coclusteringReport.dimensionHierarchies?.[
-              dimIndex
-            ]?.clusters?.find((e) => e.cluster === node);
-          if (!nodeDetails || nodeDetails?.isLeaf) {
-            // it's a leaf or it's a broken leaf name
-            collapsedNodes[key].splice(collapsedNodes[key][k], 1);
-          }
-        }
-      }
-    }
-    return collapsedNodes;
-  }
-
   setSavedDatas(datas: any) {
     if (datas?.savedDatas) {
       if (datas.savedDatas.splitSizes) {
