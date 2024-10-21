@@ -20,7 +20,6 @@ export class ProjectViewComponent
   @Output() projectFileChanged: EventEmitter<any> = new EventEmitter<any>();
 
   appDatas: any;
-  projectSummaryDatas: InfosDatasI[];
   onFileLoaderDataChangedCb: Function;
   sizes: any;
   isElectron: boolean = false;
@@ -32,7 +31,6 @@ export class ProjectViewComponent
 
   constructor(
     private appService: AppService,
-    private projectDatasService: ProjectDatasService,
     private configService: ConfigService,
     private trackerService: TrackerService,
     private layoutService: LayoutService,
@@ -48,9 +46,6 @@ export class ProjectViewComponent
 
     if (this.appDatas.datas) {
       this.sizes = this.layoutService.getViewSplitSizes('projectView');
-
-      this.projectSummaryDatas =
-        this.projectDatasService.getProjectSummaryDatas();
     }
   }
 
