@@ -34,6 +34,7 @@ import { Subscription } from 'rxjs';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 import { ElementRefI } from '@khiops-library/interfaces/element-ref';
 import { LS } from '@khiops-library/enum/ls';
+import { ViewManagerService } from '@khiops-covisualization/providers/view-manager.service';
 
 @Component({
   selector: 'app-home-layout',
@@ -108,6 +109,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     public selectableService: SelectableService,
     private importExtDatasService: ImportExtDatasService,
     private dimensionsDatasService: DimensionsDatasService,
+    private viewManagerService: ViewManagerService,
     private treenodesService: TreenodesService,
     private eventsService: EventsService,
     private dialog: MatDialog,
@@ -140,7 +142,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
               false,
             );
             // Enable ext datas view if not displayed
-            this.appService.enableExtDatasView(dimName[0]);
+            this.viewManagerService.enableExtDatasView(dimName[0]);
           }
         }
       });

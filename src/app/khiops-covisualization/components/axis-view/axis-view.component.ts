@@ -20,6 +20,7 @@ import { Subscription } from 'rxjs';
 import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-data.model';
 import { AnnotationService } from '@khiops-covisualization/providers/annotation.service';
 import { LayoutService } from '@khiops-library/providers/layout.service';
+import { ViewManagerService } from '@khiops-covisualization/providers/view-manager.service';
 
 @Component({
   selector: 'app-axis-view',
@@ -55,6 +56,7 @@ export class AxisViewComponent
     private dimensionsDatasService: DimensionsDatasService,
     private annotationService: AnnotationService,
     private translate: TranslateService,
+    private viewManagerService: ViewManagerService,
     private snackBar: MatSnackBar,
     private layoutService: LayoutService,
   ) {
@@ -91,18 +93,17 @@ export class AxisViewComponent
         this.dimensionsDatasService.computeMatrixDataFreqMap();
         this.loadingView = false;
 
-        this.viewsLayout = this.appService.initViewsLayout(
+        this.viewsLayout = this.viewManagerService.initViewsLayout(
           this.dimensionsDatas.selectedDimensions,
         );
       }
     }, 500); // To show loader when big files
 
     // Listen for view layout changes
-    this.viewsLayoutChangedSub = this.appService.viewsLayoutChanged.subscribe(
-      (viewsLayout) => {
+    this.viewsLayoutChangedSub =
+      this.viewManagerService.viewsLayoutChanged.subscribe((viewsLayout) => {
         this.viewsLayout = viewsLayout;
-      },
-    );
+      });
   }
 
   initializeDatas() {
@@ -121,7 +122,7 @@ export class AxisViewComponent
     this.treenodesService.initSavedDatas();
     this.annotationService.initSavedDatas();
     this.dimensionsDatasService.initSavedDatas();
-    this.appService.initSavedDatas();
+    this.viewManagerService.initSavedLayout();
   }
 
   /**

@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { AppService } from '@khiops-covisualization/providers/app.service';
 import { DimensionViewLayoutModel } from '@khiops-covisualization/model/view-layout.model';
 import { VariableGraphDetailsComponent } from '../variable-graph-details/variable-graph-details.component';
 import { DimensionModel } from '@khiops-library/model/dimension.model';
@@ -7,6 +6,7 @@ import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
 import { CompositionModel } from '@khiops-covisualization/model/composition.model';
 import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-data.model';
 import { LayoutService } from '@khiops-library/providers/layout.service';
+import { ViewManagerService } from '@khiops-covisualization/providers/view-manager.service';
 
 @Component({
   selector: 'app-axis',
@@ -43,7 +43,7 @@ export class AxisComponent implements OnInit {
 
   constructor(
     private layoutService: LayoutService,
-    private appService: AppService,
+    private viewManagerService: ViewManagerService,
   ) {}
 
   ngOnInit() {
@@ -81,7 +81,9 @@ export class AxisComponent implements OnInit {
    */
   computeComponentsSizes() {
     this.viewLayout =
-      this.appService.getViewsLayout().dimensionsViewsLayoutsVO[this.position];
+      this.viewManagerService.getViewsLayout().dimensionsViewsLayoutsVO[
+        this.position
+      ];
     if (this.viewLayout) {
       let i = 0;
       if (this.viewLayout.isHierarchyChecked) {

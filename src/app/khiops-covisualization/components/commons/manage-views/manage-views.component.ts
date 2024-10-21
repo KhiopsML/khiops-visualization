@@ -5,6 +5,7 @@ import { DimensionsDatasService } from '@khiops-covisualization/providers/dimens
 import { ViewLayoutVO } from '@khiops-covisualization/model/view-layout.model';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-data.model';
+import { ViewManagerService } from '@khiops-covisualization/providers/view-manager.service';
 
 @Component({
   selector: 'app-manage-views',
@@ -21,11 +22,12 @@ export class ManageViewsComponent {
 
   constructor(
     private appService: AppService,
+    private viewManagerService: ViewManagerService,
     private dimensionsDatasService: DimensionsDatasService,
     private dialogRef: MatDialogRef<ManageViewsComponent>,
   ) {
     this.dimensionsDatas = this.dimensionsDatasService.getDatas();
-    this.viewsLayout = _.cloneDeep(this.appService.getViewsLayout());
+    this.viewsLayout = _.cloneDeep(this.viewManagerService.getViewsLayout());
     this.isContextView = this.appService.getActiveTabIndex() === 1;
 
     this.isDimVisible = new Array(
@@ -43,7 +45,7 @@ export class ManageViewsComponent {
   }
 
   onClickOnSave() {
-    this.appService.saveViewsLayout(this.viewsLayout);
+    this.viewManagerService.saveViewsLayout(this.viewsLayout);
     this.dialogRef.close();
   }
 

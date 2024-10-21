@@ -7,7 +7,6 @@ import {
   SimpleChanges,
   OnChanges,
 } from '@angular/core';
-import { AppService } from '@khiops-covisualization/providers/app.service';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { MatrixComponent } from '@khiops-library/components/matrix/matrix.component';
 import { ViewLayoutVO } from '@khiops-covisualization/model/view-layout.model';
@@ -22,6 +21,7 @@ import { CellModel } from '@khiops-library/model/cell.model';
 import { TranslateService } from '@ngstack/translate';
 import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { LayoutService } from '@khiops-library/providers/layout.service';
+import { ViewManagerService } from '@khiops-covisualization/providers/view-manager.service';
 
 @Component({
   selector: 'app-matrix-container',
@@ -52,7 +52,7 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
   isFirstLoad = true;
 
   constructor(
-    private appService: AppService,
+    private viewManagerService: ViewManagerService,
     private translate: TranslateService,
     private treenodesService: TreenodesService,
     private eventsService: EventsService,
@@ -88,16 +88,15 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
         }
       });
 
-    this.viewsLayoutChangedSub = this.appService.viewsLayoutChanged.subscribe(
-      (viewsLayout) => {
+    this.viewsLayoutChangedSub =
+      this.viewManagerService.viewsLayoutChanged.subscribe((viewsLayout) => {
         this.viewsLayout = viewsLayout;
 
         // Redraw matrix event to resize cells
         setTimeout(() => {
           window.dispatchEvent(new Event('resize'));
         });
-      },
-    );
+      });
   }
 
   ngOnInit() {

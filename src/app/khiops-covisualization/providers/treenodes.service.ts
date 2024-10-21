@@ -14,6 +14,7 @@ import { SavedDatasModel } from '@khiops-covisualization/model/saved-datas.model
 import { AnnotationService } from './annotation.service';
 import { ImportExtDatasService } from './import-ext-datas.service';
 import { LayoutService } from '@khiops-library/providers/layout.service';
+import { ViewManagerService } from './view-manager.service';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +30,7 @@ export class TreenodesService {
     private dimensionsDatasService: DimensionsDatasService,
     private eventsService: EventsService,
     private layoutService: LayoutService,
+    private viewManagerService: ViewManagerService,
   ) {
     this.initialize();
   }
@@ -480,7 +482,7 @@ export class TreenodesService {
       this.dimensionsDatasService.getDimensionsToSave();
     const unfoldHierarchyState = this.getUnfoldHierarchy();
     const splitSizes = this.layoutService.getSplitSizes();
-    const viewsLayout = this.appService.getViewsLayout();
+    const viewsLayout = this.viewManagerService.getViewsLayout();
 
     const nodesNames = this.getNodesNames();
     const annotations = this.annotationService.getAnnotations();
