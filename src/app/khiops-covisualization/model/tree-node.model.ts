@@ -38,6 +38,20 @@ export class TreeNodeModel {
 
   clusterCompositionSize: number | undefined;
 
+  /**
+   * Constructor to initialize a TreeNodeModel instance.
+   * @param id - The unique identifier for the node.
+   * @param object - The object containing node properties.
+   * @param dimension - The dimension information.
+   * @param collapsedNodes - List of nodes that are collapsed.
+   * @param nbClusters - Number of clusters.
+   * @param leafPosition - Position of the leaf.
+   * @param j - Index for matrix.
+   * @param currentNodesNames - Optional current node names.
+   * @param currentAnnotations - Optional current annotations.
+   * @param extData - Optional external data.
+   * @param valueGroup - Optional value group for categorical data.
+   */
   constructor(
     id,
     object,
@@ -120,6 +134,10 @@ export class TreeNodeModel {
     this.annotation = annotation;
   }
 
+  /**
+   * Populates the childrenList, childrenLeafList, and childrenLeafIndexes arrays
+   * by traversing the tree starting from the current node.
+   */
   getChildrenList() {
     this.childrenList = [];
     this.childrenLeafList = [];
@@ -127,6 +145,12 @@ export class TreeNodeModel {
     this.deepGetChildrenNames(this.children, this.name, this.matrixIndex);
   }
 
+  /**
+   * Recursively traverses the tree to collect names and matrix indexes of children nodes.
+   * @param children - The children nodes to traverse.
+   * @param name - The name of the current node.
+   * @param matrixIndex - The matrix index of the current node.
+   */
   deepGetChildrenNames(children, name, matrixIndex) {
     this.childrenList.push(name);
     if (children.length === 0) {

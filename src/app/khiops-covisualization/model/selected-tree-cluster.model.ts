@@ -19,7 +19,10 @@ export class SelectedTreeClusterModel {
     this.isNumerical = dimension?.isNumerical;
     this.dimensionType = dimension?.type;
   }
-
+  /**
+   * Sets the current node information based on the selected node.
+   * @param selectedNode - The selected tree node.
+   */
   setCurrentNodeInformations(selectedNode: TreeNodeModel) {
     this.interval = selectedNode?.name;
     this.frequency = selectedNode?.frequency;
@@ -30,6 +33,11 @@ export class SelectedTreeClusterModel {
     }
   }
 
+  /**
+   * Counts the number of clusters in the selected node.
+   * @param selectedNode - The selected tree node.
+   * @returns The number of clusters.
+   */
   countClusters(selectedNode: TreeNodeModel): number {
     let count = 0;
 

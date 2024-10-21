@@ -1,21 +1,4 @@
-export class DimensionViewLayoutModel {
-  name: string;
-  isChecked = true;
-  isHierarchyChecked = true;
-  isClustersChecked = false;
-  isAnnotationChecked = false;
-  isCompositionChecked = true;
-  isExternalDataChecked = false;
-  isDistributionChecked = false;
-
-  constructor(name, isContextView) {
-    this.name = name || '';
-
-    if (isContextView) {
-      this.isDistributionChecked = false;
-    }
-  }
-}
+import { DimensionViewLayoutModel } from './dimension-view-layout.model';
 
 export class ViewLayoutVO {
   isDimensionsChecked = true;
@@ -27,6 +10,14 @@ export class ViewLayoutVO {
     this.dimensionsViewsLayoutsVO = [];
   }
 
+  /**
+   * Adds a new DimensionViewLayoutModel to the dimensionsViewsLayoutsVO array.
+   * If a previous layout is provided, it merges the previous values into the new layout.
+   *
+   * @param dimensionName - The name of the dimension.
+   * @param isContextView - Boolean indicating if it is a context view.
+   * @param previousLayout - Optional previous layout to merge values from.
+   */
   addDimensionViewLayout(
     dimensionName,
     isContextView,
@@ -43,6 +34,12 @@ export class ViewLayoutVO {
     this.dimensionsViewsLayoutsVO.push(viewLayoutDimension);
   }
 
+  /**
+   * Merges the current ViewLayoutVO instance with previous values.
+   * Updates the properties of the current instance with the values from the provided lsValues.
+   *
+   * @param lsValues - The previous values to merge with.
+   */
   megeWithPreviousValues(lsValues) {
     this.isDimensionsChecked = lsValues.isDimensionsChecked;
     this.isCoocurenceChecked = lsValues.isCoocurenceChecked;
@@ -50,7 +47,7 @@ export class ViewLayoutVO {
       const prevValue = lsValues.dimensionsViewsLayoutsVO[i];
       if (
         prevValue &&
-        (!prevValue.name || // Alow init for cypress tests
+        (!prevValue.name || // Allow init for cypress tests
           prevValue?.name === this.dimensionsViewsLayoutsVO[i].name)
       ) {
         this.dimensionsViewsLayoutsVO[i] = Object.assign(

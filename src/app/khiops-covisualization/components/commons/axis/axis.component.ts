@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { DimensionViewLayoutModel } from '@khiops-covisualization/model/view-layout.model';
 import { VariableGraphDetailsComponent } from '../variable-graph-details/variable-graph-details.component';
 import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
@@ -7,6 +6,7 @@ import { CompositionModel } from '@khiops-covisualization/model/composition.mode
 import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-data.model';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { ViewManagerService } from '@khiops-covisualization/providers/view-manager.service';
+import { DimensionViewLayoutModel } from '@khiops-covisualization/model/dimension-view-layout.model';
 
 @Component({
   selector: 'app-axis',
