@@ -27,6 +27,11 @@ export class Distribution2dDatasService {
     this.initialize();
   }
 
+  /**
+   * Initializes the distribution data by fetching the application data
+   * and creating a new DistributionDatasModel instance.
+   * @returns The initialized DistributionDatasModel instance.
+   */
   initialize(): any {
     const appDatas = this.appService.getDatas().datas;
     this.distributionDatas = new DistributionDatasModel(appDatas);
@@ -34,10 +39,19 @@ export class Distribution2dDatasService {
     return this.distributionDatas;
   }
 
+  /**
+   * Retrieves the current distribution data.
+   * @returns The current DistributionDatasModel instance.
+   */
   getDatas(): DistributionDatasModel {
     return this.distributionDatas;
   }
 
+  /**
+   * Generates the target distribution graph data based on the specified type.
+   * @param type Optional parameter to specify the type of distribution (e.g., LIFT).
+   * @returns The generated ChartDatasModel instance containing the graph data.
+   */
   getTargetDistributionGraphDatas(type?: string): ChartDatasModel {
     this.distributionDatas.initTargetDistributionGraphDatas();
     this.distributionDatas.setTargetDistributionType(type);

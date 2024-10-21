@@ -26,6 +26,10 @@ export class AppService {
     this.initialize();
   }
 
+  /**
+   * Initializes the application by setting up global configuration variables,
+   * session variables, and initializing the layout service.
+   */
   initialize() {
     this.initGlobalConfigVariables();
     this.initSessionVariables();
@@ -36,6 +40,9 @@ export class AppService {
     };
   }
 
+  /**
+   * Initializes global configuration variables from local storage or defaults.
+   */
   initGlobalConfigVariables() {
     AppConfig.visualizationCommon.GLOBAL.TO_FIXED =
       parseInt(this.Ls.get(LS.SETTING_NUMBER_PRECISION) || '', 10) ||
@@ -51,6 +58,9 @@ export class AppService {
     this.khiopsLibraryService.setAppConfig(AppConfig);
   }
 
+  /**
+   * Initializes session variables by deleting specific keys from local storage.
+   */
   initSessionVariables() {
     this.Ls.del(LS.MATRIX_MODE_OPTION_INDEX);
     this.Ls.del(LS.MATRIX_TYPE_OPTION);
@@ -63,6 +73,10 @@ export class AppService {
     this.Ls.del(LS.DISTRIBUTION_GRAPH_OPTION_Y);
   }
 
+  /**
+   * Sets the file data, enriches it, and removes missing information for numerical variables.
+   * @param datas - The data to be set and processed.
+   */
   setFileDatas(datas: any) {
     this.initSessionVariables();
     this.appDatas.datas = datas;
@@ -82,12 +96,21 @@ export class AppService {
     this.setSavedDatas(this.appDatas.datas);
   }
 
+  /**
+   * Retrieves saved data of a specific type.
+   * @param type - The type of saved data to retrieve.
+   * @returns The saved data of the specified type.
+   */
   getSavedDatas(type): any {
     if (this.appDatas?.datas?.savedDatas?.[type]) {
       return this.appDatas.datas.savedDatas[type];
     }
   }
 
+  /**
+   * Sets the saved data and updates the layout service with split sizes if available.
+   * @param datas - The data to be saved.
+   */
   setSavedDatas(datas: any) {
     if (datas?.savedDatas) {
       if (datas.savedDatas.splitSizes) {
@@ -96,10 +119,19 @@ export class AppService {
     }
   }
 
+  /**
+   * Retrieves the current application data.
+   * @returns The current application data.
+   */
   getDatas(): any {
     return this.appDatas;
   }
 
+  /**
+   * Checks if the provided JSON data is compatible with the application.
+   * @param datas - The data to be checked.
+   * @returns True if the data is compatible, false otherwise.
+   */
   isCompatibleJson(datas): boolean {
     if (datas) {
       if (
