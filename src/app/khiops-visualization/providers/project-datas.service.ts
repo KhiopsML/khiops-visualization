@@ -35,7 +35,7 @@ export class ProjectDatasService {
   getProjectLogsDatas(): ProjectLogModel[] {
     const appDatas = this.appService.getDatas().datas;
     let logs;
-    if (appDatas.logs) {
+    if (appDatas?.logs) {
       logs = [];
       for (let i = 0; i < appDatas.logs.length; i++) {
         for (let j = 0; j < appDatas.logs[i].messages.length; j++) {

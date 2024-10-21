@@ -59,6 +59,7 @@
   },
   "NO_DATAS": {
     "WELCOME": "Open a file from the menu",
+    "NO_LOGS": "No logs",
     "DEFAULT": "No data",
     "OPEN_COMPOSITION_VIEW_TO_DISPLAY_EXTERNAL_DATAS": "Open composition view to display external datas",
     "COMPUTING": "Loading...",

@@ -28,6 +28,7 @@ import { UtilsService } from '@khiops-library/providers/utils.service';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 import { ElementRefI } from '@khiops-library/interfaces/element-ref';
 import { LS } from '@khiops-library/enum/ls';
+import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
 
 @Component({
   selector: 'app-home-layout',
@@ -82,6 +83,7 @@ export class HomeLayoutComponent implements OnInit {
     private preparationDatasService: PreparationDatasService,
     private treePreparationDatasService: TreePreparationDatasService,
     private preparation2dDatasService: Preparation2dDatasService,
+    private fileLoaderService: FileLoaderService,
   ) {
     this.currentChannel = AppService.Ls.get(LS.CHANNEL, 'latest');
     if (pjson) {
@@ -179,6 +181,7 @@ export class HomeLayoutComponent implements OnInit {
 
     // @ts-ignore
     this.appProjectView?.initialize();
+    this.fileLoaderService.fileLoaded.next({});
   }
 
   reloadView() {

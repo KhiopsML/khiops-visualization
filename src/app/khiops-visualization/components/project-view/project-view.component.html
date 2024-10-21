@@ -32,21 +32,8 @@
         </div>
       </div>
     </as-split-area>
-    <as-split-area [size]="sizes?.row[1]" *ngIf="projectLogsDatas">
-      <kl-ag-grid
-        id="project-logs"
-        class="variables-list"
-        fxFlexFill
-        [showLevelDistribution]="false"
-        [showSearch]="false"
-        [displayCount]="false"
-        [showLineSelection]="false"
-        [title]="logsTitle"
-        [showColumnsSelection]="false"
-        [inputDatas]="projectLogsDatas"
-        [displayedColumns]="logsDisplayedColumns"
-      >
-      </kl-ag-grid>
+    <as-split-area [size]="sizes?.row[1]">
+      <app-project-logs></app-project-logs>
     </as-split-area>
   </as-split>
 </div>

@@ -40,6 +40,7 @@ import { HistogramComponent } from './components/commons/histogram/histogram.com
 import { AngularResizeEventModule } from 'angular-resize-event';
 import { BrowserModule } from '@angular/platform-browser';
 import { HistogramTooltipComponent } from './components/commons/histogram/histogram.tooltip.component';
+import { ProjectLogsComponent } from './components/commons/project-logs/project-logs.component';
 
 const providers = [
   TranslateService,
@@ -49,6 +50,7 @@ const providers = [
 @NgModule({
   declarations: [
     HistogramComponent,
+    ProjectLogsComponent,
     HistogramTooltipComponent,
     AppComponent,
     HomeLayoutComponent,

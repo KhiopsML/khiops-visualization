@@ -1,0 +1,23 @@
+<div class="project-logs-comp" fxFlexFill>
+  <kl-ag-grid
+    *ngIf="projectLogsDatas"
+    id="project-logs"
+    class="variables-list"
+    fxFlexFill
+    [showLevelDistribution]="false"
+    [showSearch]="false"
+    [displayCount]="false"
+    [showLineSelection]="false"
+    [title]="logsTitle"
+    [showColumnsSelection]="false"
+    [inputDatas]="projectLogsDatas"
+    [displayedColumns]="logsDisplayedColumns"
+  >
+  </kl-ag-grid>
+  <kl-no-data
+    fxFlexFill
+    *ngIf="!projectLogsDatas"
+    [message]="'NO_DATAS.NO_LOGS'"
+  >
+  </kl-no-data>
+</div>

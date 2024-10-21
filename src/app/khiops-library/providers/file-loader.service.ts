@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { KhiopsLibraryService } from '../../providers/khiops-library.service';
+import { KhiopsLibraryService } from './khiops-library.service';
 import { Ls } from '@khiops-library/providers/ls.service';
 import { LS } from '@khiops-library/enum/ls';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FileLoaderService {
+  public fileLoaded: BehaviorSubject<any> = new BehaviorSubject(undefined);
+  public fileLoaded$: Observable<any> = this.fileLoaded.asObservable();
+
   fileLoaderDatas: {
     isLoadingDatas: boolean;
     datas: any;
@@ -165,7 +169,6 @@ export class FileLoaderService {
 
           this.fileLoaderDatas.datas.filename = url;
           this.fileLoaderDatas.isLoadingDatas = false;
-
           if (datas) {
             resolve(this.fileLoaderDatas.datas);
           } else {
