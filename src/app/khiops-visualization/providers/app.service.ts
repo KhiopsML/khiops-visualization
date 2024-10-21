@@ -8,6 +8,7 @@ import { ProjectSummaryModel } from '@khiops-library/model/project-summary.model
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { LS } from '@khiops-library/enum/ls';
 import { Ls } from '@khiops-library/providers/ls.service';
+import { EnrichDatasService } from './enrich-datas.service';
 
 @Injectable({
   providedIn: 'root',
@@ -120,14 +121,16 @@ export class AppService {
   setFileDatas(datas: any) {
     this.initSessionVariables();
     this.appDatas.datas = datas;
-    this.appDatas.datas = this.enrichJsonDatas(this.appDatas.datas);
+    this.appDatas.datas = EnrichDatasService.enrichJsonDatas(
+      this.appDatas.datas,
+    );
 
     // #86 Remove missing informations for numerical variables
-    this.appDatas.datas = this.ignoreMissingPartitionForNumerical(
+    this.appDatas.datas = EnrichDatasService.ignoreMissingPartitionForNumerical(
       this.appDatas.datas,
       REPORTS.PREPARATION_REPORT,
     );
-    this.appDatas.datas = this.ignoreMissingPartitionForNumerical(
+    this.appDatas.datas = EnrichDatasService.ignoreMissingPartitionForNumerical(
       this.appDatas.datas,
       REPORTS.TEXT_PREPARATION_REPORT,
     );
@@ -196,66 +199,6 @@ export class AppService {
       sizes[item] = itemSize;
       this.setViewSplitSizes(view, sizes);
     }
-  }
-
-  /**
-   * Enrich json file with missing informations
-   */
-  enrichJsonDatas(datas: any): any {
-    if (datas) {
-      // For evaluation, we need optimal information
-      Object.keys(datas).forEach((value) => {
-        // do not add optimal if not liftcurve (regression)
-        if (
-          datas?.[value]?.reportType === 'Evaluation' &&
-          datas[value].liftCurves
-        ) {
-          const isOptimalAdded: any = datas[value].predictorsPerformance.find(
-            function (el) {
-              return el.name && el.name === 'Optimal';
-            },
-          );
-          if (!isOptimalAdded) {
-            // First add optimal datas into global datas
-            datas[value].predictorsPerformance.push({
-              accuracy: 1,
-              auc: 1,
-              compression: 1,
-              family: datas[value].evaluationType,
-              rank:
-                'R' +
-                parseInt(datas[value].predictorsPerformance.length + 1, 10),
-              name: 'Optimal',
-              type: datas[value].evaluationType,
-            });
-          }
-        }
-      });
-    }
-    return datas;
-  }
-
-  /**
-   * #86 Remove missing informations for numerical variables
-   */
-  ignoreMissingPartitionForNumerical(
-    datas: any,
-    preparationSource: string,
-  ): any {
-    if (datas?.[preparationSource]) {
-      for (const rank in datas[preparationSource].variablesDetailedStatistics) {
-        const variable =
-          datas[preparationSource].variablesDetailedStatistics[rank];
-        if (
-          !variable.dataGrid.isSupervised &&
-          variable.dataGrid.dimensions[0].partition[0].length === 0
-        ) {
-          variable.dataGrid.dimensions[0].partition.shift();
-          variable.dataGrid.frequencies.shift();
-        }
-      }
-    }
-    return datas;
   }
 
   getProjectSummaryDatas(): InfosDatasI[] {
