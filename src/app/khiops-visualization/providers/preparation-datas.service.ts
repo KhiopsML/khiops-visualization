@@ -31,6 +31,11 @@ export class PreparationDatasService {
     private appService: AppService,
   ) {}
 
+  /**
+   * Initializes the preparation data by setting default selected variables.
+   * It selects the first variable from the preparation report and text preparation report by default.
+   * If a saved selected variable rank is found, it sets that variable as the selected variable.
+   */
   initialize() {
     this.preparationDatas = new PreparationDatasModel();
 
@@ -72,6 +77,11 @@ export class PreparationDatasService {
     }
   }
 
+  /**
+   * Retrieves the data for the specified preparation source.
+   * @param {string} preparationSource - The source of the preparation data.
+   * @returns {object} An object containing the selected variable and current interval data.
+   */
   getDatas(preparationSource: string): {
     selectedVariable: PreparationVariableModel;
     currentIntervalDatas: GridDatasI;
@@ -79,6 +89,12 @@ export class PreparationDatasService {
     return this.preparationDatas[preparationSource];
   }
 
+  /**
+   * Sets the selected variable for the specified preparation source.
+   * @param {any} object - The object containing the variable information.
+   * @param {string} preparationSource - The source of the preparation data.
+   * @returns {PreparationVariableModel | undefined} The selected variable model or undefined if not found.
+   */
   setSelectedVariable(
     object: any,
     preparationSource: string,
@@ -94,14 +110,29 @@ export class PreparationDatasService {
     return undefined;
   }
 
+  /**
+   * Retrieves the selected variable for the specified preparation source.
+   * @param {string} preparationSource - The source of the preparation data.
+   * @returns {PreparationVariableModel} The selected variable model.
+   */
   getSelectedVariable(preparationSource: string): PreparationVariableModel {
     return this.preparationDatas[preparationSource].selectedVariable;
   }
 
+  /**
+   * Retrieves the rank of the selected variable.
+   * @returns {string} The rank of the selected variable.
+   */
   getSelectedVariableRank(): string {
     return this.preparationDatas.preparationReport.selectedVariable.rank;
   }
 
+  /**
+   * Retrieves a variable by its name from the specified preparation source.
+   * @param {string} name - The name of the variable.
+   * @param {string} preparationSource - The source of the preparation data.
+   * @returns {any} The variable with the specified name.
+   */
   getVariableFromName(name: string, preparationSource: string): any {
     let variable: any;
     const appDatas = this.appService.getDatas().datas;
@@ -114,6 +145,12 @@ export class PreparationDatasService {
     return variable;
   }
 
+  /**
+   * Retrieves a variable by its rank from the specified preparation source.
+   * @param {string} rank - The rank of the variable.
+   * @param {string} preparationSource - The source of the preparation data.
+   * @returns {any} The variable with the specified rank.
+   */
   getVariableFromRank(rank: string, preparationSource: string): any {
     let variable: any;
     const appDatas = this.appService.getDatas().datas;
@@ -123,6 +160,12 @@ export class PreparationDatasService {
     return variable;
   }
 
+  /**
+   * Retrieves summary data for the specified preparation source.
+   * If no preparation source is provided, it defaults to the available preparation report.
+   * @param {string} [preparationSource] - The source of the preparation data.
+   * @returns {InfosDatasI[]} The summary data.
+   */
   getSummaryDatas(preparationSource?: string): InfosDatasI[] {
     const appDatas = this.appService.getDatas().datas;
     if (!preparationSource) {
@@ -132,6 +175,11 @@ export class PreparationDatasService {
     return summary.displayDatas;
   }
 
+  /**
+   * Retrieves information data for the specified preparation source.
+   * @param {string} preparationSource - The source of the preparation data.
+   * @returns {InfosDatasI[] | undefined} The information data.
+   */
   getInformationsDatas(preparationSource: string): InfosDatasI[] | undefined {
     const appDatas = this.appService.getDatas().datas;
     const informationsDatas = new InformationsModel(
@@ -140,6 +188,12 @@ export class PreparationDatasService {
     return informationsDatas.displayDatas;
   }
 
+  /**
+   * Retrieves the current interval data for the specified preparation source and index.
+   * @param {string} preparationSource - The source of the preparation data.
+   * @param {number} [index] - The index of the interval data.
+   * @returns {GridDatasI} The current interval data.
+   */
   getCurrentIntervalDatas(preparationSource: string, index?): GridDatasI {
     index = index || 0;
 
@@ -292,6 +346,11 @@ export class PreparationDatasService {
     return this.preparationDatas[preparationSource].currentIntervalDatas;
   }
 
+  /**
+   * Retrieves variable data for the specified preparation source.
+   * @param {string} preparationSource - The source of the preparation data.
+   * @returns {VariableModel[]} The variable data.
+   */
   getVariablesDatas(preparationSource: string): VariableModel[] {
     const appDatas = this.appService.getDatas().datas;
     const currentDatas = appDatas[preparationSource].variablesStatistics;
@@ -311,6 +370,12 @@ export class PreparationDatasService {
     return variableDatas;
   }
 
+  /**
+   * Retrieves the target variable statistics data for a given preparation source.
+   * If no preparation source is provided, it defaults to the available preparation report.
+   * @param {string} [preparationSource] - The source of the preparation data.
+   * @returns {ChartDatasModel} The target variable statistics data.
+   */
   getTargetVariableStatsDatas(preparationSource?: string): ChartDatasModel {
     let variableStatsDatas = new ChartDatasModel();
     if (!preparationSource) {
@@ -350,6 +415,12 @@ export class PreparationDatasService {
     return variableStatsDatas;
   }
 
+  /**
+   * Retrieves the target variable statistics information for a given preparation source.
+   * If no preparation source is provided, it defaults to the available preparation report.
+   * @param {string} [preparationSource] - The source of the preparation data.
+   * @returns {InfosDatasI[] | undefined} The target variable statistics information.
+   */
   getTargetVariableStatsInformations(
     preparationSource?: string,
   ): InfosDatasI[] | undefined {
@@ -375,11 +446,21 @@ export class PreparationDatasService {
     return informationsDatas;
   }
 
+  /**
+   * Retrieves the target variable for a given preparation source.
+   * @param {string} preparationSource - The source of the preparation data.
+   * @returns {string} The target variable.
+   */
   getTargetVariable(preparationSource: string): string {
     const appDatas = this.appService.getDatas().datas;
     return appDatas[preparationSource].summary.targetVariable;
   }
 
+  /**
+   * Determines if the analysis is explanatory.
+   * Checks the detailed variable statistics and the presence of bivariate preparation report.
+   * @returns {boolean} True if the analysis is explanatory, false otherwise.
+   */
   isExplanatoryAnalysis(): boolean {
     const preparationSource = this.getAvailablePreparationReport();
     const appDatas = this.appService.getDatas().datas;
@@ -407,11 +488,21 @@ export class PreparationDatasService {
     return false;
   }
 
+  /**
+   * Checks if the variable data includes target parts.
+   * @param {any[]} variableDatas - The variable data to check.
+   * @returns {boolean} True if target parts are included, false otherwise.
+   */
   includesTargetParts(variableDatas): boolean {
     const targetParts = variableDatas.map((e) => e.targetParts);
     return targetParts.every((e) => e === undefined) ? false : true;
   }
 
+  /**
+   * Determines if the analysis is supervised.
+   * Checks the detailed variable statistics or the summary learning task to determine supervision.
+   * @returns {boolean} True if the analysis is supervised, false otherwise.
+   */
   isSupervised(): boolean {
     const preparationSource = this.getAvailablePreparationReport();
     const appDatas = this.appService.getDatas().datas;
@@ -424,9 +515,9 @@ export class PreparationDatasService {
         return detailedVar.dataGrid.isSupervised;
       }
     } else if (appDatas?.[preparationSource]?.summary?.learningTask) {
-      // 	"Unsupervised analysis" : seul cas non supervisé (équivalent de isSupervised = False)
-      //   "Regression analysis" : cas supervisé (équivalent de isSupervised = True)
-      //   "Classification analysis" : (équivalent de isSupervised = True)
+      // "Unsupervised analysis": only non-supervised case (equivalent to isSupervised = False)
+      // "Regression analysis": supervised case (equivalent to isSupervised = True)
+      // "Classification analysis": (equivalent to isSupervised = True)
       return (
         appDatas[preparationSource].summary.learningTask === TASKS.REGRESSION ||
         appDatas[preparationSource].summary.learningTask ===
@@ -436,6 +527,12 @@ export class PreparationDatasService {
     return false;
   }
 
+  /**
+   * Determines the available preparation report.
+   * If the standard preparation report is not available or lacks variable statistics,
+   * it defaults to the text preparation report.
+   * @returns {string} The available preparation report.
+   */
   getAvailablePreparationReport(): string {
     const appDatas = this.appService.getDatas()?.datas;
     let preparationSource = REPORTS.PREPARATION_REPORT;
@@ -449,6 +546,12 @@ export class PreparationDatasService {
     return preparationSource;
   }
 
+  /**
+   * Determines the preparation source for a given variable.
+   * Checks if the variable exists in the standard preparation report or the text preparation report.
+   * @param {any} variable - The variable to check.
+   * @returns {string} The preparation source for the variable.
+   */
   getPreparationSourceFromVariable(variable): string {
     const appDatas = this.appService.getDatas().datas;
     // Find the current variable into preparationReport or textPreparationReport
