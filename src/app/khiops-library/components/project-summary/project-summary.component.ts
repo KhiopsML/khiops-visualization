@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { ProjectDatasService } from '@khiops-visualization/providers/project-datas.service';
+import { Component, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
@@ -11,12 +10,11 @@ import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 })
 export class ProjectSummaryComponent {
   private fileLoadedSub?: Subscription;
+  @Input() projectDatasService: any;
+
   projectSummaryDatas: InfosDatasI[];
 
-  constructor(
-    private fileLoaderService: FileLoaderService,
-    private projectDatasService: ProjectDatasService,
-  ) {}
+  constructor(private fileLoaderService: FileLoaderService) {}
 
   ngAfterViewInit() {
     this.fileLoadedSub = this.fileLoaderService.fileLoaded$.subscribe(() => {

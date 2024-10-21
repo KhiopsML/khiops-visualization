@@ -2,7 +2,6 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AppConfig } from 'src/environments/environment';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
-import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { LayoutService } from '@khiops-library/providers/layout.service';
@@ -34,6 +33,7 @@ export class ProjectViewComponent
     private configService: ConfigService,
     private trackerService: TrackerService,
     private layoutService: LayoutService,
+    public projectDatasService: ProjectDatasService,
   ) {
     super();
     this.isElectron = this.configService.isElectron;

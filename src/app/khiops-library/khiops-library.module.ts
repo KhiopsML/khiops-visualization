@@ -64,6 +64,7 @@ import { MatrixToggleComponent } from './components/matrix-toggle/matrix-toggle.
 import { MatrixModeComponent } from './components/matrix-mode/matrix-mode.component';
 import { GraphOptionsMenuComponent } from './components/graph-options-menu/graph-options-menu.component';
 import EnTransaltion from '../../assets/i18n/en.json';
+import { ProjectSummaryComponent } from './components/project-summary/project-summary.component';
 
 @NgModule({
   imports: [
@@ -136,6 +137,7 @@ import EnTransaltion from '../../assets/i18n/en.json';
     ChartComponent,
     RowIdentifierPipe,
     ImportFileLoaderComponent,
+    ProjectSummaryComponent,
   ],
   providers: [ConfigService, EventsService, TranslateService],
   exports: [
@@ -195,6 +197,7 @@ import EnTransaltion from '../../assets/i18n/en.json';
     DistributionGraphComponent,
     ChartComponent,
     ImportFileLoaderComponent,
+    ProjectSummaryComponent,
   ],
 })
 export class KhiopsLibraryModule {

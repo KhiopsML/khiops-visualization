@@ -17,7 +17,10 @@
           fxLayoutAlign="start start"
           fxLayout="row"
         >
-          <app-project-summary fxFlex></app-project-summary>
+          <app-project-summary
+            fxFlex
+            [projectDatasService]="projectDatasService"
+          ></app-project-summary>
           <!-- Important to do not show loader on Electron to prevent multiple onFileLoaderDataChanged -->
           <kl-file-loader
             *ngIf="debugFile && !isElectron"

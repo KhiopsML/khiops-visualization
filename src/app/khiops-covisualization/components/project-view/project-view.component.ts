@@ -28,8 +28,8 @@ export class ProjectViewComponent
   constructor(
     private appService: AppService,
     private trackerService: TrackerService,
-    private projectDatasService: ProjectDatasService,
     private configService: ConfigService,
+    public projectDatasService: ProjectDatasService,
   ) {
     super();
     this.isElectron = this.configService.isElectron;

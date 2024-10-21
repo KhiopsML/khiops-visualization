@@ -6,12 +6,10 @@
 >
   <div fxLayout="column" fxFlexFill fxLayoutAlign="start start">
     <div id="project-view-comp-table" fxFlexFill fxLayout="row">
-      <kl-informations-block
+      <app-project-summary
+        [projectDatasService]="projectDatasService"
         fxFlex
-        title="{{ 'GLOBAL.SUMMARY' | translate }}"
-        [inputDatas]="projectSummaryDatas"
-      >
-      </kl-informations-block>
+      ></app-project-summary>
       <!-- Important to do not show loader on Electron to prevent multiple onFileLoaderDataChanged -->
       <kl-file-loader
         *ngIf="!isElectron"
