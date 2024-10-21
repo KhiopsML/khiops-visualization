@@ -26,6 +26,12 @@ export class ProjectSummaryModel {
     this.formatDatas();
   }
 
+  /**
+   * Computes the count of variables by summing categorical and numerical variables.
+   * If a target variable is present, it subtracts one from the total count.
+   * @param appDatas - The application data containing variable information.
+   * @param source - The source key to access specific data within appDatas.
+   */
   computeVariablesCount(appDatas: any, source: string) {
     const varDatas = appDatas[source]?.summary?.variables || undefined;
     if (varDatas) {
@@ -48,6 +54,10 @@ export class ProjectSummaryModel {
     }
   }
 
+  /**
+   * Formats the data to be displayed by pushing relevant information
+   * into the displayDatas array.
+   */
   formatDatas() {
     this.displayDatas = [];
     if (this.filename) {

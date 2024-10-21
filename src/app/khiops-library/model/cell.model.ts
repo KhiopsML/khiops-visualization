@@ -55,18 +55,32 @@ export class CellModel {
   cellHellingerAbsoluteValue: number[] = [];
   matrixTotal: number[] = [];
 
+  /**
+   * Sets the index for the cell and updates related properties.
+   * @param currentIndex - The current index to set.
+   */
   setIndex(currentIndex: number) {
     this.index = currentIndex;
     this.id = currentIndex + 1; // cells begin from 0 and rows from 1 ...
     this._id = currentIndex;
   }
 
+  /**
+   * Formats the cell values by initializing them if they are NaN.
+   */
   formatValues() {
     this.cellTargetProb = UtilsService.initNumberIfNan(this.cellTargetProb);
     this.cellFreq = UtilsService.initNumberIfNan(this.cellFreq);
     this.targetCellFreq = UtilsService.initNumberIfNan(this.targetCellFreq);
   }
 
+  /**
+   * Sets the coordinate values for the cell.
+   * @param i - The index for the x-axis values.
+   * @param j - The index for the y-axis values.
+   * @param xValues - The x-axis values.
+   * @param yValues - The y-axis values.
+   */
   setCoordValues(i, j, xValues: MatrixCoordI, yValues: MatrixCoordI) {
     this.x = {
       standard: xValues.standard[i],

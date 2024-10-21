@@ -18,6 +18,16 @@ export class ViewManagerService {
     private appService: AppService,
   ) {}
 
+  /**
+   * Initializes the views layout based on the provided dimensions.
+   *
+   * This method creates a new instance of `ViewLayoutVO` and iterates over the given dimensions
+   * to add dimension view layouts. It also handles specific behavior for Cypress tests and merges
+   * saved values from local storage or saved JSON state.
+   *
+   * @param dimensions - An array of dimension objects, each containing a `name` property.
+   * @returns The initialized `ViewLayoutVO` instance.
+   */
   initViewsLayout(dimensions): ViewLayoutVO {
     this.viewsLayout = new ViewLayoutVO();
     for (let i = 0; i < dimensions.length; i++) {
@@ -50,6 +60,10 @@ export class ViewManagerService {
     return this.viewsLayout;
   }
 
+  /**
+   * Initializes the saved layout by retrieving it from the app service.
+   * If a saved layout is found, it sets the views layout to the saved layout.
+   */
   initSavedLayout() {
     const viewsLayout = this.appService.getSavedDatas('viewsLayout');
     if (viewsLayout !== undefined) {
@@ -57,6 +71,14 @@ export class ViewManagerService {
     }
   }
 
+  /**
+   * Updates the views layout based on the provided dimensions.
+   * This method creates a new instance of `ViewLayoutVO` and iterates over the given dimensions
+   * to add dimension view layouts. It also merges previous values and local storage values.
+   *
+   * @param dimensions - An array of dimension objects, each containing a `name` property.
+   * @returns The updated `ViewLayoutVO` instance.
+   */
   updateViewsLayout(dimensions): ViewLayoutVO {
     const previousValues = _.cloneDeep(this.viewsLayout);
     if (previousValues) {
@@ -82,14 +104,29 @@ export class ViewManagerService {
     return this.viewsLayout;
   }
 
+  /**
+   * Retrieves the current views layout.
+   *
+   * @returns The current `ViewLayoutVO` instance.
+   */
   getViewsLayout(): ViewLayoutVO {
     return this.viewsLayout;
   }
 
+  /**
+   * Sets the views layout to the provided layout.
+   *
+   * @param viewsLayout - The `ViewLayoutVO` instance to set as the current views layout.
+   */
   setViewsLayout(viewsLayout: ViewLayoutVO) {
     this.viewsLayout = viewsLayout;
   }
 
+  /**
+   * Enables the external data view for a specific dimension.
+   *
+   * @param dimension - The name of the dimension for which to enable the external data view.
+   */
   enableExtDatasView(dimension: string) {
     const currentDim = this.viewsLayout?.dimensionsViewsLayoutsVO?.find(
       (e) => e.name === dimension,
@@ -100,6 +137,11 @@ export class ViewManagerService {
     }
   }
 
+  /**
+   * Saves the current views layout to local storage and emits an event indicating the layout has changed.
+   *
+   * @param viewsLayout - The `ViewLayoutVO` instance to save.
+   */
   saveViewsLayout(viewsLayout: ViewLayoutVO) {
     this.viewsLayout = viewsLayout;
     this.ls.set(LS.VIEWS_LAYOUT, JSON.stringify(this.viewsLayout));

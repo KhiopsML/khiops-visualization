@@ -47,14 +47,26 @@ export class DimensionModel {
     this.defaultGroupIndex = object?.defaultGroupIndex || 0;
   }
 
+  /**
+   * Sets the hierarchy fold state.
+   * @param state - The new state of the hierarchy fold.
+   */
   setHierarchyFold(state: boolean) {
     this.hierarchyFold = state;
   }
 
+  /**
+   * Sets the current hierarchy cluster count.
+   * @param count - The new count of the hierarchy clusters.
+   */
   setCurrentHierarchyClusterCount(count) {
     this.currentHierarchyClusterCount = count;
   }
 
+  /**
+   * Sets the partition for the dimension.
+   * @param dimensionPartition - The partition data for the dimension.
+   */
   setPartition(dimensionPartition: any) {
     if (this.isNumerical) {
       this.intervals = dimensionPartition.intervals;
@@ -76,6 +88,9 @@ export class DimensionModel {
     }
   }
 
+  /**
+   * Sets the missing partition input to 'Missing' if it is empty.
+   */
   setMissingPartition() {
     if (this.partitionInputs[0] && this.partitionInputs[0].length === 0) {
       this.partitionInputs[0] = 'Missing';
