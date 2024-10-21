@@ -1286,4 +1286,42 @@ export class UtilsService {
       }
     }
   }
+
+  /**
+   * Checks if interval 'a' is included within interval 'b'.
+   * This method assumes that both intervals are represented as arrays of two numbers,
+   * where the first number is the start of the interval and the second number is the end.
+   *
+   * @param {number[]} a - The interval to check for inclusion.
+   * @param {number[]} b - The interval within which to check for inclusion.
+   * @returns {boolean} - Returns true if interval 'a' is included within interval 'b', otherwise false.
+   */
+  static isIncluded(a, b) {
+    return a[0] >= b[0] && a[1] <= b[1];
+  }
+
+  /**
+   * Finds the indices of intervals that are included within other intervals.
+   * This method iterates through the list of intervals and checks if each interval
+   * is included within another interval using the UtilsService.isIncluded method.
+   * If an interval is found to be included within another, its index is added to the
+   * includedIndices array.
+   *
+   * @param {Array} intervals - The list of intervals to check for inclusion.
+   * @returns {Array} - An array of indices representing the intervals that are included within other intervals.
+   */
+  static findIncludedIntervals(intervals) {
+    let includedIndices = [];
+
+    for (let i = 0; i < intervals.length; i++) {
+      for (let j = 0; j < intervals.length; j++) {
+        if (i !== j && UtilsService.isIncluded(intervals[i], intervals[j])) {
+          includedIndices.push(i);
+          break;
+        }
+      }
+    }
+
+    return includedIndices;
+  }
 }

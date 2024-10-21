@@ -35,12 +35,21 @@ export class TreenodesService {
     this.initialize();
   }
 
+  /**
+   * Initializes the service by fetching dimensions data and collapsed nodes to save.
+   */
   initialize() {
     this.dimensionsDatas = this.dimensionsDatasService.getDatas();
     this.collapsedNodesToSave =
       this.appService.getSavedDatas('collapsedNodes') || {};
   }
 
+  /**
+   * Retrieves leaf nodes for a given hierarchical rank.
+   *
+   * @param {number} rank - The hierarchical rank to filter nodes.
+   * @returns {object} - An object containing the leaf nodes for each dimension.
+   */
   getLeafNodesForARank(rank: number) {
     const collapsedNodes = {};
     for (let i = 0; i < this.dimensionsDatas.selectedDimensions.length; i++) {
@@ -57,6 +66,13 @@ export class TreenodesService {
     return collapsedNodes;
   }
 
+  /**
+   * Updates the name of a selected node.
+   *
+   * @param {string} dimensionName - The name of the dimension.
+   * @param {string} name - The current name of the node.
+   * @param {string} newName - The new name to set for the node.
+   */
   updateSelectedNodeName(dimensionName, name, newName) {
     if (!this.dimensionsDatas.nodesNames) {
       this.dimensionsDatas.nodesNames = {};
@@ -67,13 +83,19 @@ export class TreenodesService {
     this.update(dimensionName);
   }
 
+  /**
+   * Initializes the saved unfold rank from the application data.
+   */
   initSavedUnfoldRank() {
-    //Initialize unfold rank if set into json
+    // Initialize unfold rank if set into json
     const appDatas = this.appService.getDatas().datas;
     const savedUnfoldRank = appDatas?.savedDatas?.unfoldHierarchyState;
     savedUnfoldRank && this.setSelectedUnfoldHierarchy(savedUnfoldRank);
   }
 
+  /**
+   * Initializes conditional context nodes for selected dimensions.
+   */
   initConditionalOnContextNodes() {
     for (let i = 0; i < this.dimensionsDatas.selectedDimensions.length; i++) {
       if (i >= 2) {
@@ -86,6 +108,13 @@ export class TreenodesService {
     }
   }
 
+  /**
+   * Merges two collapsed nodes objects.
+   *
+   * @param {object} obj1 - The first collapsed nodes object.
+   * @param {object} obj2 - The second collapsed nodes object.
+   * @returns {object} - The merged collapsed nodes object.
+   */
   mergeCollapsedNodes(obj1, obj2): any {
     if (!obj1) {
       obj1 = {};
@@ -106,6 +135,14 @@ export class TreenodesService {
     return result;
   }
 
+  /**
+   * Sets the selected node for a given hierarchy and node name.
+   *
+   * @param {string} hierarchyName - The name of the hierarchy.
+   * @param {string} nodeName - The name of the node.
+   * @param {boolean} stopPropagation - Flag to stop event propagation.
+   * @returns {TreeNodeModel} - The selected node model.
+   */
   setSelectedNode(
     hierarchyName,
     nodeName,
@@ -142,12 +179,6 @@ export class TreenodesService {
           if (this.dimensionsDatas.conditionalOnContext) {
             this.dimensionsDatas.contextSelection[currentIndex - 2] =
               nodeVO.childrenLeafIndexes;
-            // for contexts, we must get the real node to get the childrenLeafIndexes
-            // const realNodeVO = this.dimensionsDatas.dimensionsClusters[currentIndex].find(e => {
-            // 	return nodeVO.name === e.name || nodeVO.shortDescription === e.shortDescription; // also check into shortDescription (for distribution graph for instance)
-            // });
-            // realNodeVO.getChildrenList();
-            // this.dimensionsDatas.contextSelection[currentIndex - 2] = realNodeVO.childrenLeafIndexes;
           } else {
             // conditionalOnContext unset
             // get the parent node
@@ -194,6 +225,12 @@ export class TreenodesService {
     return nodeVO;
   }
 
+  /**
+   * Updates the selected nodes for a given dimension and position.
+   *
+   * @param {DimensionModel} dimension - The dimension model.
+   * @param {number} position - The position to update.
+   */
   updateSelectedNodes(dimension: DimensionModel, position: number) {
     // Find current dim position
     const currentIndex: number =
@@ -213,6 +250,12 @@ export class TreenodesService {
     }
   }
 
+  /**
+   * Retrieves the last visible node from a list of nodes.
+   *
+   * @param {TreeNodeModel[]} nodes - The list of nodes.
+   * @returns {TreeNodeModel} - The last visible node.
+   */
   getLastVisibleNode(nodes: TreeNodeModel[]) {
     if (nodes[0].isLeaf) {
       return nodes[0];
@@ -223,6 +266,14 @@ export class TreenodesService {
     }
   }
 
+  /**
+   * Retrieves the first visible node from a list of nodes.
+   *
+   * @param {TreeNodeModel[]} nodes - The list of nodes.
+   * @param {TreeNodeModel} nodeVO - The node model.
+   * @param {TreeNodeModel} lastVisibleNode - The last visible node.
+   * @returns {TreeNodeModel} - The first visible node.
+   */
   getFirstVisibleNode(nodes, nodeVO: TreeNodeModel, lastVisibleNode?) {
     const parentNode: TreeNodeModel = nodes.find(
       (e) => e.name === nodeVO?.parentCluster,
@@ -237,14 +288,25 @@ export class TreenodesService {
     }
   }
 
+  /**
+   * Initializes the selected nodes array.
+   */
   initSelectedNodes() {
     this.dimensionsDatas.selectedNodes = [];
   }
 
+  /**
+   * Retrieves the selected nodes.
+   *
+   * @returns {TreeNodeModel[]} - The selected nodes.
+   */
   getSelectedNodes() {
     return this.dimensionsDatas.selectedNodes;
   }
 
+  /**
+   * Initializes the saved data for the service.
+   */
   initSavedDatas() {
     this.collapsedNodesToSave = undefined;
     this.dimensionsDatas.nodesNames =
@@ -266,10 +328,22 @@ export class TreenodesService {
     this.setSelectedUnfoldHierarchy(savedHierarchy);
   }
 
+  /**
+   * Retrieves the names of the nodes.
+   *
+   * @returns {object} - The names of the nodes.
+   */
   getNodesNames() {
     return this.dimensionsDatas.nodesNames;
   }
 
+  /**
+   * Retrieves a node from the dimension tree by its name.
+   *
+   * @param {string} dimensionName - The name of the dimension.
+   * @param {string} nodeName - The name of the node.
+   * @returns {TreeNodeModel} - The node model.
+   */
   getNodeFromDimensionTree(dimensionName, nodeName): TreeNodeModel {
     let nodeVO: TreeNodeModel;
     const currentIndex: number =
@@ -306,6 +380,13 @@ export class TreenodesService {
     return _.cloneDeep(nodeVO); // important to clone datas to keep origin immmutable
   }
 
+  /**
+   * Retrieves a node by its name.
+   *
+   * @param {string} dimensionName - The name of the dimension.
+   * @param {string} nodeName - The name of the node.
+   * @returns {TreeNodeModel} - The node model.
+   */
   getNodeFromName(dimensionName, nodeName): TreeNodeModel {
     let nodeVO: TreeNodeModel;
     const currentIndex: number =
@@ -331,10 +412,20 @@ export class TreenodesService {
     return _.cloneDeep(nodeVO); // important to clone datas to keep origin immmutable
   }
 
+  /**
+   * Sets the saved collapsed nodes.
+   *
+   * @param {object} collapsedNodesToSave - The collapsed nodes to save.
+   */
   setSavedCollapsedNodes(collapsedNodesToSave) {
     this.collapsedNodesToSave = collapsedNodesToSave;
   }
 
+  /**
+   * Updates the current hierarchy clusters count for a given rank.
+   *
+   * @param {number} rank - The hierarchical rank to update.
+   */
   updateCurrentHierarchyClustersCount(rank: number) {
     for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
       const currentIndex: number =
@@ -375,6 +466,13 @@ export class TreenodesService {
     return maxRank;
   }
 
+  /**
+   * Retrieves the hierarchy data from the initial application data.
+   * This method calculates the total number of clusters, initial clusters, and cells
+   * from the coclustering report and updates the hierarchy data accordingly.
+   *
+   * @returns {HierarchyDatasModel} - The updated hierarchy data model.
+   */
   getHierarchyDatas(): HierarchyDatasModel {
     const appDatas = this.appService.getInitialDatas().datas;
 
@@ -404,15 +502,32 @@ export class TreenodesService {
     return this.dimensionsDatas.hierarchyDatas;
   }
 
+  /**
+   * Retrieves the selected unfold hierarchy value.
+   *
+   * @returns {number} - The selected unfold hierarchy value.
+   */
   getUnfoldHierarchy(): number {
     return this.dimensionsDatas?.hierarchyDatas?.selectedUnfoldHierarchy || 0;
   }
 
+  /**
+   * Sets the selected unfold hierarchy value.
+   *
+   * @param {number} selectedUnfoldHierarchy - The value to set for the selected unfold hierarchy.
+   */
   setSelectedUnfoldHierarchy(selectedUnfoldHierarchy: number) {
     this.dimensionsDatas.hierarchyDatas.selectedUnfoldHierarchy =
       selectedUnfoldHierarchy;
   }
 
+  /**
+   * Updates the collapsed nodes to save based on the given dimension name and node name.
+   *
+   * @param {string} dimensionName - The name of the dimension.
+   * @param {string} nodeName - The name of the node.
+   * @param {number} way - The way to update the collapsed nodes (1 to add, -1 to remove).
+   */
   updateCollapsedNodesToSave(dimensionName: string, nodeName: string, way) {
     if (!this.collapsedNodesToSave) {
       this.collapsedNodesToSave = {};
@@ -433,22 +548,48 @@ export class TreenodesService {
     }
   }
 
+  /**
+   * Retrieves the saved collapsed nodes.
+   *
+   * @returns {object} - The saved collapsed nodes.
+   */
   getSavedCollapsedNodes() {
     return this.collapsedNodesToSave;
   }
 
+  /**
+   * Collapses a node based on the given dimension name and node name.
+   *
+   * @param {string} dimensionName - The name of the dimension.
+   * @param {string} nodeName - The name of the node.
+   */
   collapseNode(dimensionName: string, nodeName: string) {
     this.updateCollapsedNodesToSave(dimensionName, nodeName, 1);
     this.setSelectedNode(dimensionName, nodeName, true);
     this.update(dimensionName);
   }
 
+  /**
+   * Expands a node based on the given dimension name and node name.
+   *
+   * @param {string} dimensionName - The name of the dimension.
+   * @param {string} nodeName - The name of the node.
+   */
   expandNode(dimensionName: string, nodeName: string) {
     this.updateCollapsedNodesToSave(dimensionName, nodeName, -1);
     this.setSelectedNode(dimensionName, nodeName, true);
     this.update(dimensionName);
   }
 
+  /**
+   * Updates the current state based on the given dimension name.
+   * This method retrieves the saved collapsed nodes, constructs the saved JSON data,
+   * updates the application service with the cropped file data, and reinitializes
+   * the dimensions data and selected dimensions. It also propagates changes if necessary
+   * and optimizes performance by limiting re-rendering.
+   *
+   * @param {string} dimensionName - The name of the dimension to update.
+   */
   update(dimensionName: string) {
     let collapsedNodes = this.getSavedCollapsedNodes();
     let datas = this.constructSavedJson(
@@ -473,6 +614,15 @@ export class TreenodesService {
     this.dimensionsDatasService.setIsLoading(false);
   }
 
+  /**
+   * Constructs the data object to be saved, including various states and configurations.
+   * This method retrieves the initial data, selected dimensions, hierarchy state, layout settings,
+   * node names, annotations, selected nodes, collapsed nodes, imported data, and other relevant
+   * settings. It then creates a new SavedDatasModel object with these values.
+   *
+   * @param {any} [collapsedNodesInput] - Optional input for collapsed nodes.
+   * @returns {any} - The constructed data object to be saved.
+   */
   constructDatasToSave(collapsedNodesInput?) {
     const initialDatas = JSON.parse(
       JSON.stringify(this.appService.getInitialDatas().datas),
@@ -526,38 +676,37 @@ export class TreenodesService {
     return initialDatas;
   }
 
+  /**
+   * Checks if the saved data has changed compared to the tested saved data.
+   * This method uses a deep equality check to determine if the two data objects are equal.
+   *
+   * @param {any} savedDatas - The original saved data object.
+   * @param {any} testedSavedDatas - The tested saved data object to compare against.
+   * @returns {boolean} - True if the saved data has changed, false otherwise.
+   */
   isSaveChanged(savedDatas, testedSavedDatas) {
     return !_.isEqual(savedDatas, testedSavedDatas);
   }
 
+  /**
+   * Constructs the saved JSON data, optionally truncating it based on collapsed nodes.
+   * This method constructs the data to save, and if collapsed nodes are provided, it
+   * truncates the hierarchy, updates summaries, partitions, and cells, and removes
+   * collapsed nodes and selected nodes if necessary.
+   *
+   * @param {any} [collapsedNodesInput] - Optional input for collapsed nodes.
+   * @param {boolean} [isReduced=false] - Flag indicating whether to reduce the data.
+   * @returns {any} - The constructed saved JSON data.
+   */
   constructSavedJson(collapsedNodesInput?, isReduced = false) {
     let newJson = this.constructDatasToSave(collapsedNodesInput);
     if (collapsedNodesInput) {
       // Transform json if collapsed nodes
-      // let t0 = performance.now();
       newJson = this.truncateJsonHierarchy(newJson);
-      // let t1 = performance.now();
-      // console.log("truncateJsonHierarchy " + (t1 - t0) + " milliseconds.");
-
-      // t0 = performance.now();
       newJson = this.updateSummariesParts(newJson);
-      // t1 = performance.now();
-      // console.log("updateSummariesParts " + (t1 - t0) + " milliseconds.");
-
-      // t0 = performance.now();
       newJson = this.truncateJsonPartition(newJson);
-      // t1 = performance.now();
-      // console.log("truncateJsonPartition " + (t1 - t0) + " milliseconds.");
-
-      // t0 = performance.now();
       newJson = this.truncateJsonCells(newJson);
-      // t1 = performance.now();
-      // console.log("truncateJsonCells " + (t1 - t0) + " milliseconds.");
-
-      // t0 = performance.now();
       newJson = this.updateSummariesCells(newJson);
-      // t1 = performance.now();
-      // console.log("updateSummariesCells " + (t1 - t0) + " milliseconds.");
 
       if (!collapsedNodesInput || isReduced) {
         // Remove collapsed nodes and selected nodes because they have been reduced
@@ -566,10 +715,18 @@ export class TreenodesService {
     }
 
     // delete datasToSave.savedDatas.selectedNodes; // do not do that to keep context selection
-    // console.log('file: save.service.ts:114 ~ constructSavedJson ~ newJson:', newJson);
     return newJson;
   }
 
+  /**
+   * Truncates the hierarchy in the given data object based on the collapsed nodes.
+   * This method processes each dimension, retrieves the collapsed nodes, and updates
+   * the corresponding hierarchy by removing the clusters corresponding to the children nodes
+   * and marking the parent node as a leaf.
+   *
+   * @param {any} datas - The data object containing the coclustering report and saved data.
+   * @returns {any} - The updated data object with the truncated hierarchy.
+   */
   truncateJsonHierarchy(datas) {
     if (datas.savedDatas.collapsedNodes) {
       const truncatedHierarchy = [
@@ -635,6 +792,15 @@ export class TreenodesService {
     return datas;
   }
 
+  /**
+   * Truncates the partitions in the given data object based on the collapsed nodes.
+   * This method processes each dimension, retrieves the collapsed nodes, and updates
+   * the corresponding partition (categorical or numerical) by removing the values or
+   * intervals corresponding to the children nodes and concatenating them into the parent node.
+   *
+   * @param {any} datas - The data object containing the coclustering report and saved data.
+   * @returns {any} - The updated data object with the truncated partitions.
+   */
   truncateJsonPartition(datas) {
     const truncatedPartition = _.cloneDeep(
       datas.coclusteringReport.dimensionPartitions,
@@ -675,6 +841,17 @@ export class TreenodesService {
     return datas;
   }
 
+  /**
+   * Computes the categorical partition for the given nodes and updates the current truncated partition.
+   * This method processes each node, retrieves its children, and updates the value groups in the partition
+   * by removing the value groups corresponding to the children nodes and concatenating them into the parent node.
+   * It also ensures that the default group index is correctly set in the updated partition.
+   *
+   * @param {string[]} nodes - The list of node names to process.
+   * @param {number} dimIndex - The index of the dimension in the dimensionsClusters array.
+   * @param {any} currentTruncatedPartition - The current truncated partition to update.
+   * @returns {any} - The updated truncated partition with the computed categorical value groups.
+   */
   computeCatPartition(nodes, dimIndex, currentTruncatedPartition) {
     const nodesLength = nodes.length;
     for (let i = 0; i < nodesLength; i++) {
@@ -735,6 +912,17 @@ export class TreenodesService {
     return currentTruncatedPartition;
   }
 
+  /**
+   * Computes the numerical partition for the given nodes and updates the current truncated partition.
+   * This method processes each node, retrieves its children, and updates the intervals in the partition
+   * by removing the intervals corresponding to the children nodes and adding the interval for the parent node.
+   * It also ensures that the intervals are sorted and removes any included intervals.
+   *
+   * @param {string[]} nodes - The list of node names to process.
+   * @param {number} dimIndex - The index of the dimension in the dimensionsClusters array.
+   * @param {any} currentTruncatedPartition - The current truncated partition to update.
+   * @returns {any} - The updated truncated partition with the computed numerical intervals.
+   */
   computeNumPartition(nodes, dimIndex, currentTruncatedPartition) {
     const nodesLength = nodes.length;
     for (let i = 0; i < nodesLength; i++) {
@@ -798,7 +986,7 @@ export class TreenodesService {
       }
     }
 
-    const includedIntervals = this.findIncludedIntervals(
+    const includedIntervals = UtilsService.findIncludedIntervals(
       currentTruncatedPartition.intervals.map((e) => e.bounds),
     );
     if (includedIntervals.length > 0) {
@@ -810,26 +998,15 @@ export class TreenodesService {
     return currentTruncatedPartition;
   }
 
-  findIncludedIntervals(intervals) {
-    let includedIndices = [];
-
-    for (let i = 0; i < intervals.length; i++) {
-      for (let j = 0; j < intervals.length; j++) {
-        if (i !== j && this.isIncluded(intervals[i], intervals[j])) {
-          includedIndices.push(i);
-          break;
-        }
-      }
-    }
-
-    return includedIndices;
-  }
-
-  // Fonction pour vérifier si l'intervalle a est inclus dans l'intervalle b
-  isIncluded(a, b) {
-    return a[0] >= b[0] && a[1] <= b[1];
-  }
-
+  /**
+   * Updates the "parts" field in the "dimensionSummaries" section of the given data object.
+   * The "parts" field should contain the number of leaf clusters for each dimension.
+   * This is achieved by filtering the clusters in the "dimensionHierarchies" section
+   * to count only those that are marked as leaves.
+   *
+   * @param {any} datas - The data object containing the coclustering report.
+   * @returns {any} - The updated data object with the correct number of leaf clusters.
+   */
   updateSummariesParts(datas) {
     for (
       let i = 0;
@@ -848,6 +1025,15 @@ export class TreenodesService {
     return datas;
   }
 
+  /**
+   * Updates the "cells" field in the "summary" section of the given data object.
+   * The "cells" field should contain the number of non-empty cells, which can be
+   * less than the theoretical number of cells. This is achieved by counting the
+   * number of elements in the "cellPartIndexes" or "cellFrequencies" lists.
+   *
+   * @param {any} datas - The data object containing the coclustering report.
+   * @returns {any} - The updated data object with the correct number of non-empty cells.
+   */
   updateSummariesCells(datas) {
     // the "cells" field in "summary" must contain the number of non-empty cells,
     // which can be less than the theoretical number of cells.
@@ -858,6 +1044,15 @@ export class TreenodesService {
     return datas;
   }
 
+  /**
+   * Truncates the cells in the given coclustering report (CC) based on the initial data (CI).
+   * This method builds a transition matrix to map part indices from the initial coclustering (CI)
+   * to the current coclustering (CC). It then constructs the list of cells in the current coclustering
+   * by calculating the indexes of these cells and their frequencies.
+   *
+   * @param {any} CC - The current coclustering report to be truncated.
+   * @returns {any} - The truncated coclustering report with updated cell frequencies and part indexes.
+   */
   truncateJsonCells(CC) {
     const CI = {
       ...this.appService.getInitialDatas().datas,

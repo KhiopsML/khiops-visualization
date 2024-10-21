@@ -9,6 +9,13 @@ import { AppService } from './app.service';
 export class ProjectDatasService {
   constructor(private appService: AppService) {}
 
+  /**
+   * Retrieves project summary data from the application service.
+   * If the coclustering report is available, it creates a new ProjectSummaryModel
+   * and returns its display data. Otherwise, it returns undefined.
+   *
+   * @returns {InfosDatasI[] | undefined} The project summary data or undefined if not available.
+   */
   getProjectSummaryDatas(): InfosDatasI[] {
     const appDatas = this.appService.getDatas().datas;
     if (appDatas.coclusteringReport) {
