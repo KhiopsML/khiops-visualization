@@ -40,3 +40,4 @@ export const TREE_COLORS = [
   '#ff9800',
   '#146738',
 ];
+export const HISTOGRAM_COLORS = ['#6e93d5', '#ffbe46'];

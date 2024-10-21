@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ChartColorsSetI } from '../interfaces/chart-colors-set';
-import { ConfigService } from '@khiops-library/providers/config.service';
+import {
+  CHART_COLORS_0,
+  CHART_COLORS_1,
+  CHART_COLORS_2,
+} from '@khiops-library/config/colors';
 
 @Injectable({
   providedIn: 'root',
@@ -9,128 +13,25 @@ export class KhiopsLibraryService {
   graphColorSet: ChartColorsSetI[];
   appConfig: any;
 
-  graphColors: string[] = Array(10)
-    .fill([
-      '#10246e',
-      '#6e93d5',
-      '#b54d79',
-      '#C9190B',
-      '#7D1007',
-      '#BDE2B9',
-      '#7CC674',
-      '#F9E0A2',
-      '#F4C145',
-      '#F0F0F0',
-      '#B8BBBE',
-      '#A2D9D9',
-      '#009596',
-      '#F4B678',
-      '#EC7A08',
-      '#10246e',
-      '#6e93d5',
-      '#b54d79',
-      '#C9190B',
-      '#7D1007',
-      '#BDE2B9',
-      '#7CC674',
-      '#F9E0A2',
-      '#F4C145',
-      '#F0F0F0',
-      '#B8BBBE',
-      '#A2D9D9',
-      '#009596',
-      '#F4B678',
-      '#EC7A08',
-      '#10246e',
-      '#6e93d5',
-      '#b54d79',
-      '#C9190B',
-      '#7D1007',
-      '#BDE2B9',
-      '#7CC674',
-      '#F9E0A2',
-      '#F4C145',
-      '#F0F0F0',
-      '#B8BBBE',
-      '#A2D9D9',
-      '#009596',
-      '#F4B678',
-      '#EC7A08',
-      '#10246e',
-      '#6e93d5',
-      '#b54d79',
-      '#C9190B',
-      '#7D1007',
-      '#BDE2B9',
-      '#7CC674',
-      '#F9E0A2',
-      '#F4C145',
-      '#F0F0F0',
-      '#B8BBBE',
-      '#A2D9D9',
-      '#009596',
-      '#F4B678',
-      '#EC7A08',
-      '#10246e',
-      '#6e93d5',
-      '#b54d79',
-      '#C9190B',
-      '#7D1007',
-      '#BDE2B9',
-      '#7CC674',
-      '#F9E0A2',
-      '#F4C145',
-      '#F0F0F0',
-      '#B8BBBE',
-      '#A2D9D9',
-      '#009596',
-      '#F4B678',
-      '#EC7A08',
-      '#10246e',
-      '#6e93d5',
-      '#b54d79',
-      '#C9190B',
-      '#7D1007',
-      '#BDE2B9',
-      '#7CC674',
-      '#F9E0A2',
-      '#F4C145',
-      '#F0F0F0',
-      '#B8BBBE',
-      '#A2D9D9',
-      '#009596',
-      '#F4B678',
-      '#EC7A08',
-    ])
-    // @ts-ignore
-    .flat();
+  /**
+   * An array of graph colors used for chart visualizations.
+   *
+   * This array is initialized with 10 sets of colors from the `CHART_COLORS_2` constant,
+   * flattened into a single array. Each color set is repeated 10 times to ensure a
+   * sufficient number of colors for the charts.
+   */
+  graphColors: string[] = Array(10).fill(CHART_COLORS_1).flat();
 
-  constructor(private configService: ConfigService) {
+  constructor() {
     this.graphColorSet = [
       {
-        domain: [
-          '#864672',
-          '#ffdda3',
-          '#2196f3',
-          '#00b862',
-          '#a7b61a',
-          '#ff9800',
-          '#ff4514',
-          '#FAC51D',
-          '#3e796c',
-          '#e9569f',
-          '#a3d0e4',
-          '#959ee1',
-        ],
+        domain: CHART_COLORS_0,
       },
       {
         domain: this.graphColors,
       },
       {
-        domain: ['#ffbe46'],
-      },
-      {
-        domain: ['#666666'],
+        domain: CHART_COLORS_2,
       },
     ];
   }

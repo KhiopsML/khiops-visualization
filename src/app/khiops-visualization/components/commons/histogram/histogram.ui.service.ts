@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngstack/translate';
 import * as d3 from 'd3';
 import { HistogramValuesI } from './histogram.interfaces';
+import { HISTOGRAM_COLORS } from '@khiops-visualization/config/colors';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HistogramUIService {
-  static readonly chartColors: string[] = ['#6e93d5', '#ffbe46'];
+  static readonly chartColors: string[] = HISTOGRAM_COLORS;
   static translate: TranslateService;
 
   static setTranslationService(translate: TranslateService) {
