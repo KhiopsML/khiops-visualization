@@ -5,6 +5,7 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '@khiops-library/components/confirm-dialog/confirm-dialog.component';
+import { LS } from '@khiops-library/enum/ls';
 import { TranslateService } from '@ngstack/translate';
 declare const window: any;
 import { v4 as uuidv4 } from 'uuid';
@@ -41,7 +42,7 @@ export class TrackerService {
 
   getCookieStatus(config): boolean | undefined {
     const cookieStatus = localStorage.getItem(
-      config.GLOBAL.LS_ID + 'COOKIE_CONSENT',
+      config.GLOBAL.LS_ID + LS.COOKIE_CONSENT,
     );
     if (cookieStatus !== null) {
       return cookieStatus === 'true';
@@ -56,10 +57,10 @@ export class TrackerService {
   }
 
   getVisitorId(config) {
-    let uuid = localStorage.getItem(config.GLOBAL.LS_ID + 'UUID') || undefined;
+    let uuid = localStorage.getItem(config.GLOBAL.LS_ID + LS.UUID) || undefined;
     if (!uuid) {
       uuid = uuidv4().replace(/-/g, '') || '';
-      localStorage.setItem(config.GLOBAL.LS_ID + 'UUID', uuid);
+      localStorage.setItem(config.GLOBAL.LS_ID + LS.UUID, uuid);
     }
     return uuid;
   }
@@ -122,7 +123,7 @@ export class TrackerService {
       dialogRef.afterClosed().subscribe((e) => {
         const acceptCookies = e === 'confirm' ? 'true' : 'false';
         localStorage.setItem(
-          config.GLOBAL.LS_ID + 'COOKIE_CONSENT',
+          config.GLOBAL.LS_ID + LS.COOKIE_CONSENT,
           acceptCookies,
         );
         this.addTrackerScript(config, trackerId, () => {

@@ -6,6 +6,7 @@ import {
   EventEmitter,
   Output,
 } from '@angular/core';
+import { LS } from '@khiops-library/enum/ls';
 import { MatrixOptionsModel } from '@khiops-library/model/matrix-options.model';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 
@@ -30,7 +31,7 @@ export class MatrixToggleComponent implements OnChanges {
     if (!this.matrixOptions.selected) {
       this.matrixOptions.selected =
         localStorage.getItem(
-          this.AppConfig.GLOBAL.LS_ID + 'MATRIX_TYPE_OPTION',
+          this.AppConfig.GLOBAL.LS_ID + LS.MATRIX_TYPE_OPTION,
         ) || this.matrixOptions.types[0];
     }
   }
@@ -38,7 +39,7 @@ export class MatrixToggleComponent implements OnChanges {
   changeMatrixType(type: string) {
     // this.trackerService.trackEvent('click', 'matrix_type', type);
     localStorage.setItem(
-      this.AppConfig.GLOBAL.LS_ID + 'MATRIX_TYPE_OPTION',
+      this.AppConfig.GLOBAL.LS_ID + LS.MATRIX_TYPE_OPTION,
       type,
     );
     this.matrixOptions.selected = type;

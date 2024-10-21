@@ -32,6 +32,7 @@ import { UtilsService } from '@khiops-library/providers/utils.service';
 import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options';
 import { debounceTime, Subject } from 'rxjs';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
+import { LS } from '@khiops-library/enum/ls';
 
 @Component({
   selector: 'app-histogram',
@@ -68,7 +69,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   minBarHeight = 4;
   defaultBarColor: string =
     localStorage.getItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR',
+      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.THEME_COLOR,
     ) === 'dark'
       ? 'white'
       : 'black';

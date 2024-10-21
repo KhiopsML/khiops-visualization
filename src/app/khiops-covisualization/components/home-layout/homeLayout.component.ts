@@ -33,6 +33,7 @@ import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-d
 import { Subscription } from 'rxjs';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 import { ElementRefI } from '@khiops-library/interfaces/element-ref';
+import { LS } from '@khiops-library/enum/ls';
 
 @Component({
   selector: 'app-home-layout',
@@ -95,10 +96,10 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
   isCompatibleJson: boolean;
   currentChannel =
     localStorage.getItem(
-      AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'CHANNEL',
+      AppConfig.covisualizationCommon.GLOBAL.LS_ID + LS.CHANNEL,
     ) || 'latest';
   showReleaseNotes = localStorage.getItem(
-    AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'SHOW_RELEASE_NOTES',
+    AppConfig.covisualizationCommon.GLOBAL.LS_ID + LS.SHOW_RELEASE_NOTES,
   );
 
   importedDatasChangedSub: Subscription;

@@ -24,6 +24,7 @@ import { MatrixOptionsModel } from '@khiops-library/model/matrix-options.model';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { MatrixRangeValuesI } from '@khiops-visualization/interfaces/matrix-range-values';
+import { LS } from '@khiops-library/enum/ls';
 
 /**
  * Test it with iris2d file
@@ -243,7 +244,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
     ) {
       // Get previous selected target if compatible
       const previousSelectedTarget = localStorage.getItem(
-        AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_TARGET_OPTION',
+        AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.MATRIX_TARGET_OPTION,
       );
       if (
         previousSelectedTarget &&
@@ -269,7 +270,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
     // this.trackerService.trackEvent('click', 'matrix_target');
     this.matrixTargets.selected = target;
     localStorage.setItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_TARGET_OPTION',
+      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.MATRIX_TARGET_OPTION,
       target,
     );
   }

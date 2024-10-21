@@ -6,6 +6,7 @@ import { ProjectLogModel } from '@khiops-library/model/project-log.model';
 import { REPORTS } from '@khiops-library/enum/reports';
 import { ProjectSummaryModel } from '@khiops-library/model/project-summary.model';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
+import { LS } from '@khiops-library/enum/ls';
 
 @Injectable({
   providedIn: 'root',
@@ -72,7 +73,7 @@ export class AppService {
     };
 
     const storedSplitValues = localStorage.getItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SPLIT_SIZES',
+      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.SPLIT_SIZES,
     );
 
     // Set default split sizes if not into local storage
@@ -95,7 +96,7 @@ export class AppService {
       parseInt(
         localStorage.getItem(
           AppConfig.visualizationCommon.GLOBAL.LS_ID +
-            'SETTING_MATRIX_CONTRAST',
+            LS.SETTING_MATRIX_CONTRAST,
         ) || '',
         10,
       ) || AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST;
@@ -109,34 +110,34 @@ export class AppService {
 
   initSessionVariables() {
     localStorage.removeItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_MODE_OPTION_INDEX',
+      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.MATRIX_MODE_OPTION_INDEX,
     );
     localStorage.removeItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_TYPE_OPTION',
-    );
-    localStorage.removeItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID +
-        'TARGET_DISTRIBUTION_GRAPH_OPTION',
-    );
-    localStorage.removeItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_MODE_OPTION',
-    );
-    localStorage.removeItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'MATRIX_TARGET_OPTION',
-    );
-    localStorage.removeItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'TARGET_LIFT',
-    );
-    localStorage.removeItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SELECTED_TRAIN_PREDICTOR',
+      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.MATRIX_TYPE_OPTION,
     );
     localStorage.removeItem(
       AppConfig.visualizationCommon.GLOBAL.LS_ID +
-        'DISTRIBUTION_GRAPH_OPTION_X',
+        LS.TARGET_DISTRIBUTION_GRAPH_OPTION,
+    );
+    localStorage.removeItem(
+      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.MATRIX_MODE_OPTION,
+    );
+    localStorage.removeItem(
+      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.MATRIX_TARGET_OPTION,
+    );
+    localStorage.removeItem(
+      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.TARGET_LIFT,
+    );
+    localStorage.removeItem(
+      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.SELECTED_TRAIN_PREDICTOR,
     );
     localStorage.removeItem(
       AppConfig.visualizationCommon.GLOBAL.LS_ID +
-        'DISTRIBUTION_GRAPH_OPTION_Y',
+        LS.DISTRIBUTION_GRAPH_OPTION_X,
+    );
+    localStorage.removeItem(
+      AppConfig.visualizationCommon.GLOBAL.LS_ID +
+        LS.DISTRIBUTION_GRAPH_OPTION_Y,
     );
   }
 
@@ -211,7 +212,7 @@ export class AppService {
   setSplitSizes(splitSizes) {
     this.splitSizes = splitSizes;
     localStorage.setItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SPLIT_SIZES',
+      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.SPLIT_SIZES,
       JSON.stringify(this.splitSizes),
     );
   }

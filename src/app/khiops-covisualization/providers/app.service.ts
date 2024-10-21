@@ -6,6 +6,7 @@ import { ViewLayoutVO } from '../model/view-layout.model';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { ProjectSummaryModel } from '@khiops-library/model/project-summary.model';
+import { LS } from '@khiops-library/enum/ls';
 
 @Injectable({
   providedIn: 'root',
@@ -59,7 +60,7 @@ export class AppService {
     };
 
     const storedSplitValues = localStorage.getItem(
-      AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'SPLIT_SIZES',
+      AppConfig.covisualizationCommon.GLOBAL.LS_ID + LS.SPLIT_SIZES,
     );
 
     // Set default split sizes if not into local storage
@@ -166,7 +167,7 @@ export class AppService {
   setSplitSizes(splitSizes) {
     this.splitSizes = splitSizes;
     localStorage.setItem(
-      AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'SPLIT_SIZES',
+      AppConfig.covisualizationCommon.GLOBAL.LS_ID + LS.SPLIT_SIZES,
       JSON.stringify(this.splitSizes),
     );
   }
@@ -216,7 +217,7 @@ export class AppService {
     if (AppConfig.cypress) {
       // Do it only for cypress tests
       const lsStorage = localStorage.getItem(
-        AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'VIEWS_LAYOUT',
+        AppConfig.covisualizationCommon.GLOBAL.LS_ID + LS.VIEWS_LAYOUT,
       );
       if (lsStorage && lsStorage !== 'undefined') {
         const lsValues = JSON.parse(lsStorage);
@@ -251,7 +252,7 @@ export class AppService {
         );
       }
       const lsStorage = localStorage.getItem(
-        AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'VIEWS_LAYOUT',
+        AppConfig.covisualizationCommon.GLOBAL.LS_ID + LS.VIEWS_LAYOUT,
       );
       if (lsStorage && lsStorage !== 'undefined') {
         const lsValues = JSON.parse(lsStorage);
@@ -279,7 +280,7 @@ export class AppService {
   saveViewsLayout(viewsLayout: ViewLayoutVO) {
     this.viewsLayout = viewsLayout;
     localStorage.setItem(
-      AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'VIEWS_LAYOUT',
+      AppConfig.covisualizationCommon.GLOBAL.LS_ID + LS.VIEWS_LAYOUT,
       JSON.stringify(this.viewsLayout),
     );
     this.viewsLayoutChanged.emit(this.viewsLayout);

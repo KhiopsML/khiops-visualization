@@ -17,6 +17,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngstack/translate';
 import { AppConfig } from 'src/environments/environment';
 import { SelectedTreeClusterModel } from '@khiops-covisualization/model/selected-tree-cluster.model';
+import { LS } from '@khiops-library/enum/ls';
 
 @Component({
   selector: 'app-hierarchy-select',
@@ -84,7 +85,8 @@ export class HierarchySelectComponent implements OnChanges, AfterViewInit {
     this.showStats =
       localStorage.getItem(
         AppConfig.covisualizationCommon.GLOBAL.LS_ID +
-          'SHOW_DIMNSION_STATS_' +
+          LS.SHOW_DIMNSION_STATS +
+          '_' +
           this.position,
       ) === 'true';
   }
@@ -93,7 +95,8 @@ export class HierarchySelectComponent implements OnChanges, AfterViewInit {
     this.showStats = !this.showStats;
     localStorage.setItem(
       AppConfig.covisualizationCommon.GLOBAL.LS_ID +
-        'SHOW_DIMNSION_STATS_' +
+        LS.SHOW_DIMNSION_STATS +
+        '_' +
         this.position,
       this.showStats.toString(),
     );

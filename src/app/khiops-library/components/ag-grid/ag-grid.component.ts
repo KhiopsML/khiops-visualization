@@ -30,6 +30,7 @@ import {
 } from '@ag-grid-community/core';
 import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
+import { LS } from '@khiops-library/enum/ls';
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
 @Component({
@@ -136,28 +137,28 @@ export class AgGridComponent
 
     this.dataOptions.selected =
       localStorage.getItem(
-        this.AppConfig.GLOBAL.LS_ID + 'AG_GRID_GRAPH_OPTION',
+        this.AppConfig.GLOBAL.LS_ID + LS.AG_GRID_GRAPH_OPTION,
       ) || this.dataOptions.types[0];
 
     this.title = this.translate.get('GLOBAL.VARIABLES') || this.title;
 
     try {
       const PREV_CELL_AG_GRID = localStorage.getItem(
-        this.AppConfig.GLOBAL.LS_ID + 'CELL_AG_GRID',
+        this.AppConfig.GLOBAL.LS_ID + LS.CELL_AG_GRID,
       );
       this.cellsSizes =
         (PREV_CELL_AG_GRID && JSON.parse(PREV_CELL_AG_GRID)) || {};
     } catch (e) {}
     try {
       const PREV_COLUMNS_AG_GRID = localStorage.getItem(
-        this.AppConfig.GLOBAL.LS_ID + 'COLUMNS_AG_GRID',
+        this.AppConfig.GLOBAL.LS_ID + LS.COLUMNS_AG_GRID,
       );
       this.visibleColumns =
         (PREV_COLUMNS_AG_GRID && JSON.parse(PREV_COLUMNS_AG_GRID)) || {};
     } catch (e) {}
     try {
       const PREV_MODES_AG_GRID = localStorage.getItem(
-        this.AppConfig.GLOBAL.LS_ID + 'MODES_AG_GRID',
+        this.AppConfig.GLOBAL.LS_ID + LS.MODES_AG_GRID,
       );
       this.gridModes =
         (PREV_MODES_AG_GRID && JSON.parse(PREV_MODES_AG_GRID)) || {}; // 'fitToSpace' or 'fitToContent'
@@ -187,7 +188,7 @@ export class AgGridComponent
   changeDataType(type: string) {
     localStorage.setItem(
       this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
-        'AG_GRID_GRAPH_OPTION',
+        LS.AG_GRID_GRAPH_OPTION,
       type,
     );
 
@@ -588,7 +589,7 @@ export class AgGridComponent
     }
     this.cellsSizes[this.id][field] = width;
     localStorage.setItem(
-      this.AppConfig.GLOBAL.LS_ID + 'CELL_AG_GRID',
+      this.AppConfig.GLOBAL.LS_ID + LS.CELL_AG_GRID,
       JSON.stringify(this.cellsSizes),
     );
   }
@@ -599,7 +600,7 @@ export class AgGridComponent
     }
     this.visibleColumns[this.id][column] = isVisible;
     localStorage.setItem(
-      this.AppConfig.GLOBAL.LS_ID + 'COLUMNS_AG_GRID',
+      this.AppConfig.GLOBAL.LS_ID + LS.COLUMNS_AG_GRID,
       JSON.stringify(this.visibleColumns),
     );
   }
@@ -610,7 +611,7 @@ export class AgGridComponent
     // Reinit current saved columns sizes when user fit grid to space
     delete this.cellsSizes[this.id];
     localStorage.setItem(
-      this.AppConfig.GLOBAL.LS_ID + 'CELL_AG_GRID',
+      this.AppConfig.GLOBAL.LS_ID + LS.CELL_AG_GRID,
       JSON.stringify(this.cellsSizes),
     );
 
@@ -638,7 +639,7 @@ export class AgGridComponent
   saveGridModes(gridMode) {
     this.gridModes[this.id] = gridMode;
     localStorage.setItem(
-      this.AppConfig.GLOBAL.LS_ID + 'MODES_AG_GRID',
+      this.AppConfig.GLOBAL.LS_ID + LS.MODES_AG_GRID,
       JSON.stringify(this.gridModes),
     );
   }
@@ -667,7 +668,10 @@ export class AgGridComponent
       sortState: this.gridOptions?.columnApi?.getColumnState(),
     };
     localStorage.setItem(
-      this.AppConfig.GLOBAL.LS_ID + 'OPTIONS_AG_GRID_' + this.id.toUpperCase(),
+      this.AppConfig.GLOBAL.LS_ID +
+        LS.OPTIONS_AG_GRID +
+        '_' +
+        this.id.toUpperCase(),
       JSON.stringify(state),
     );
   }
@@ -677,7 +681,8 @@ export class AgGridComponent
       if (this.id) {
         const PREV_STATE = localStorage.getItem(
           this.AppConfig.GLOBAL.LS_ID +
-            'OPTIONS_AG_GRID_' +
+            LS.OPTIONS_AG_GRID +
+            '_' +
             this.id.toUpperCase(),
         );
         const state = (PREV_STATE && JSON.parse(PREV_STATE)) || {};

@@ -25,6 +25,7 @@ import { ModelingDatasModel } from '@khiops-visualization/model/modeling-datas.m
 import { Preparation2dDatasModel } from '@khiops-visualization/model/preparation2d-datas.model';
 import { TreePreparationDatasModel } from '@khiops-visualization/model/tree-preparation-datas.model';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
+import { LS } from '@khiops-library/enum/ls';
 
 @Component({
   selector: 'app-modeling-view',
@@ -56,7 +57,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
   isRegressionOrExplanatoryAnalysis: boolean;
   scaleValue =
     localStorage.getItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SCALE_VALUE',
+      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.SCALE_VALUE,
     ) || AppConfig.visualizationCommon.GLOBAL.DEFAULT_GRAPH_SCALE;
   targetDistributionGraphDatas: ChartDatasModel;
   currentIntervalDatas: GridDatasI;

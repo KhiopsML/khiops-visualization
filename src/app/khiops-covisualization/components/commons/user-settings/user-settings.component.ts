@@ -12,6 +12,7 @@ import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { TrackerService } from '../../../../khiops-library/providers/tracker.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngstack/translate';
+import { LS } from '@khiops-library/enum/ls';
 
 @Component({
   selector: 'app-user-settings',
@@ -27,7 +28,7 @@ export class UserSettingsComponent implements OnChanges {
   initialAllowCookies: boolean;
   currentTheme: string =
     localStorage.getItem(
-      AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR',
+      AppConfig.covisualizationCommon.GLOBAL.LS_ID + LS.THEME_COLOR,
     ) || 'light';
 
   constructor(
@@ -50,12 +51,12 @@ export class UserSettingsComponent implements OnChanges {
       parseInt(
         localStorage.getItem(
           AppConfig.covisualizationCommon.GLOBAL.LS_ID +
-            'SETTING_MATRIX_CONTRAST',
+            LS.SETTING_MATRIX_CONTRAST,
         ),
         10,
       ) || AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST;
     localStorage.setItem(
-      AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST',
+      AppConfig.covisualizationCommon.GLOBAL.LS_ID + LS.SETTING_MATRIX_CONTRAST,
       this.contrastValue.toString(),
     );
     AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
@@ -63,7 +64,7 @@ export class UserSettingsComponent implements OnChanges {
     // Allow cookies
     this.allowCookies =
       localStorage.getItem(
-        AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'COOKIE_CONSENT',
+        AppConfig.covisualizationCommon.GLOBAL.LS_ID + LS.COOKIE_CONSENT,
       ) === 'true' || false;
     this.initialAllowCookies = _.cloneDeep(this.allowCookies);
   }
@@ -75,19 +76,19 @@ export class UserSettingsComponent implements OnChanges {
   onClickOnSave() {
     // Save all items
     localStorage.setItem(
-      AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST',
+      AppConfig.covisualizationCommon.GLOBAL.LS_ID + LS.SETTING_MATRIX_CONTRAST,
       this.contrastValue.toString(),
     );
     AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
 
     localStorage.setItem(
-      AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'COOKIE_CONSENT',
+      AppConfig.covisualizationCommon.GLOBAL.LS_ID + LS.COOKIE_CONSENT,
       this.allowCookies.toString(),
     );
 
     // theme
     localStorage.setItem(
-      AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR',
+      AppConfig.covisualizationCommon.GLOBAL.LS_ID + LS.THEME_COLOR,
       this.currentTheme,
     );
     setTimeout(() => {

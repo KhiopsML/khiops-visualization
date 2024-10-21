@@ -18,6 +18,7 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 import { TrackerService } from '@khiops-library/providers/tracker.service';
 import { SaveService } from './providers/save.service';
 import { AppConfig } from 'src/environments/environment';
+import { LS } from '@khiops-library/enum/ls';
 
 @Component({
   selector: 'app-root-visualization',
@@ -35,7 +36,7 @@ export class AppComponent implements AfterViewInit {
 
   theme: string =
     localStorage.getItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR',
+      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.THEME_COLOR,
     ) || 'light';
 
   constructor(
@@ -114,7 +115,7 @@ export class AppComponent implements AfterViewInit {
     setTimeout(() => {
       let themeColor =
         localStorage.getItem(
-          AppConfig.visualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR',
+          AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.THEME_COLOR,
         ) || 'light';
       document.documentElement.setAttribute('data-color-scheme', themeColor);
       this.configService?.getConfig()?.onThemeChanged?.(themeColor);

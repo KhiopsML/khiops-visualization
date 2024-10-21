@@ -12,6 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngstack/translate';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { TrackerService } from '../../../../khiops-library/providers/tracker.service';
+import { LS } from '@khiops-library/enum/ls';
 
 @Component({
   selector: 'app-user-settings',
@@ -27,7 +28,7 @@ export class UserSettingsComponent implements OnChanges {
   allowCookies: boolean;
   currentTheme: string =
     localStorage.getItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR',
+      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.THEME_COLOR,
     ) || 'light';
   initialAllowCookies: boolean;
 
@@ -49,13 +50,14 @@ export class UserSettingsComponent implements OnChanges {
     // Global number precision
     this.numberPrecision = parseInt(
       localStorage.getItem(
-        AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_NUMBER_PRECISION',
+        AppConfig.visualizationCommon.GLOBAL.LS_ID +
+          LS.SETTING_NUMBER_PRECISION,
       ) || AppConfig.visualizationCommon.GLOBAL.TO_FIXED.toString(),
       10,
     );
 
     localStorage.setItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_NUMBER_PRECISION',
+      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.SETTING_NUMBER_PRECISION,
       this.numberPrecision.toString(),
     );
     AppConfig.visualizationCommon.GLOBAL.TO_FIXED = this.numberPrecision;
@@ -65,12 +67,12 @@ export class UserSettingsComponent implements OnChanges {
       parseInt(
         localStorage.getItem(
           AppConfig.visualizationCommon.GLOBAL.LS_ID +
-            'SETTING_MATRIX_CONTRAST',
+            LS.SETTING_MATRIX_CONTRAST,
         ),
         10,
       ) || AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST;
     localStorage.setItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST',
+      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.SETTING_MATRIX_CONTRAST,
       this.contrastValue.toString(),
     );
     AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
@@ -78,7 +80,7 @@ export class UserSettingsComponent implements OnChanges {
     // Allow cookies
     this.allowCookies =
       localStorage.getItem(
-        AppConfig.visualizationCommon.GLOBAL.LS_ID + 'COOKIE_CONSENT',
+        AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.COOKIE_CONSENT,
       ) === 'true' || false;
     this.initialAllowCookies = _.cloneDeep(this.allowCookies);
   }
@@ -90,20 +92,20 @@ export class UserSettingsComponent implements OnChanges {
   onClickOnSave() {
     // Save all items
     localStorage.setItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_NUMBER_PRECISION',
+      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.SETTING_NUMBER_PRECISION,
       this.numberPrecision.toString(),
     );
     AppConfig.visualizationCommon.GLOBAL.TO_FIXED = this.numberPrecision;
 
     localStorage.setItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SETTING_MATRIX_CONTRAST',
+      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.SETTING_MATRIX_CONTRAST,
       this.contrastValue.toString(),
     );
     AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
 
     // theme
     localStorage.setItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR',
+      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.THEME_COLOR,
       this.currentTheme,
     );
 
@@ -111,7 +113,7 @@ export class UserSettingsComponent implements OnChanges {
     this.toggleNavDrawerChanged.emit(true);
 
     localStorage.setItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'COOKIE_CONSENT',
+      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.COOKIE_CONSENT,
       this.allowCookies.toString(),
     );
 

@@ -27,6 +27,7 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 import { ElementRefI } from '@khiops-library/interfaces/element-ref';
+import { LS } from '@khiops-library/enum/ls';
 
 @Component({
   selector: 'app-home-layout',
@@ -66,10 +67,10 @@ export class HomeLayoutComponent implements OnInit {
   isCompatibleJson: boolean;
   currentChannel =
     localStorage.getItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'CHANNEL',
+      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.CHANNEL,
     ) || 'latest';
   showReleaseNotes = localStorage.getItem(
-    AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SHOW_RELEASE_NOTES',
+    AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.SHOW_RELEASE_NOTES,
   );
 
   isLargeScreen: boolean;
@@ -199,7 +200,7 @@ export class HomeLayoutComponent implements OnInit {
 
   setChannel(channel) {
     localStorage.setItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'CHANNEL',
+      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.CHANNEL,
       channel,
     );
     this.currentChannel = channel;

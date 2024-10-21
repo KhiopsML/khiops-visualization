@@ -6,6 +6,7 @@ import { AppConfig } from 'src/environments/environment';
 import { Distribution2dDatasService } from '@khiops-visualization/providers/distribution2d-datas.service';
 import { Preparation2dDatasModel } from '@khiops-visualization/model/preparation2d-datas.model';
 import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
+import { LS } from '@khiops-library/enum/ls';
 
 @Component({
   selector: 'app-var-details-preparation-2d',
@@ -25,7 +26,7 @@ export class VarDetailsPreparation2dComponent {
   distribution2dDatas: DistributionDatasModel;
   scaleValue =
     localStorage.getItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + 'SCALE_VALUE',
+      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.SCALE_VALUE,
     ) || AppConfig.visualizationCommon.GLOBAL.DEFAULT_GRAPH_SCALE;
   currentCellIndex: number;
   targetDistributionGraphType: string;

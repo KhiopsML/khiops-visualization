@@ -17,6 +17,7 @@ import { ChartOptions } from 'chart.js';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { ChartDatasetModel } from '@khiops-library/model/chart-dataset.model';
+import { LS } from '@khiops-library/enum/ls';
 
 @Component({
   selector: 'kl-chart',
@@ -50,12 +51,12 @@ export class ChartComponent implements AfterViewInit, OnChanges {
   ) {
     this.AppConfig = this.khiopsLibraryService.getAppConfig().common;
     this.color =
-      localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + 'THEME_COLOR') ===
+      localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + LS.THEME_COLOR) ===
       'dark'
         ? '#555'
         : '#e5e5e5';
     this.barColor =
-      localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + 'THEME_COLOR') ===
+      localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + LS.THEME_COLOR) ===
       'dark'
         ? 'rgba(255, 255, 255, 1)'
         : 'rgba(0, 0, 0, 1)';

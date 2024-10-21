@@ -19,6 +19,7 @@ import { AppConfig } from 'src/environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TreenodesService } from './providers/treenodes.service';
 import { TrackerService } from '@khiops-library/providers/tracker.service';
+import { LS } from '@khiops-library/enum/ls';
 
 @Component({
   selector: 'app-root-covisualization',
@@ -38,7 +39,7 @@ export class AppComponent implements AfterViewInit {
 
   theme: string =
     localStorage.getItem(
-      AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR',
+      AppConfig.covisualizationCommon.GLOBAL.LS_ID + LS.THEME_COLOR,
     ) || 'light';
 
   constructor(
@@ -163,7 +164,7 @@ export class AppComponent implements AfterViewInit {
     setTimeout(() => {
       let themeColor =
         localStorage.getItem(
-          AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR',
+          AppConfig.covisualizationCommon.GLOBAL.LS_ID + LS.THEME_COLOR,
         ) || 'light';
       document.documentElement.setAttribute('data-color-scheme', themeColor);
       this.configService?.getConfig()?.onThemeChanged?.(themeColor);

@@ -17,6 +17,7 @@ import { HierarchyDatasModel } from '@khiops-covisualization/model/hierarchy-dat
 import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-data.model';
 import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
 import { DimensionModel } from '@khiops-library/model/dimension.model';
+import { LS } from '@khiops-library/enum/ls';
 
 @Component({
   selector: 'app-unfold-hierarchy',
@@ -42,7 +43,7 @@ export class UnfoldHierarchyComponent implements OnInit {
 
   borderColor =
     localStorage.getItem(
-      AppConfig.covisualizationCommon.GLOBAL.LS_ID + 'THEME_COLOR',
+      AppConfig.covisualizationCommon.GLOBAL.LS_ID + LS.THEME_COLOR,
     ) === 'dark'
       ? '#ffffff'
       : '#000000';

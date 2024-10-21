@@ -25,6 +25,7 @@ import { MatrixCoordI } from '@khiops-library/interfaces/matrix-coord';
 import { Subscription } from 'rxjs';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
+import { LS } from '@khiops-library/enum/ls';
 
 @Component({
   selector: 'kl-matrix',
@@ -194,7 +195,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
         this.contrast =
           localStorage.getItem(
             this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
-              'SETTING_MATRIX_CONTRAST',
+              LS.SETTING_MATRIX_CONTRAST,
           ) ||
           this.khiopsLibraryService.getAppConfig().common.GLOBAL
             .MATRIX_CONTRAST;
@@ -801,7 +802,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     this.contrast &&
       localStorage.setItem(
         this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
-          'SETTING_MATRIX_CONTRAST',
+          LS.SETTING_MATRIX_CONTRAST,
         this.contrast.toString(),
       );
     this.drawMatrix();

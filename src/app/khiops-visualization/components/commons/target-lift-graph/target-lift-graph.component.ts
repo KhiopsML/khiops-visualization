@@ -19,6 +19,7 @@ import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { EvaluationDatasModel } from '@khiops-visualization/model/evaluation-datas.model';
 import { TargetLiftValuesI } from '@khiops-visualization/interfaces/target-lift-values';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
+import { LS } from '@khiops-library/enum/ls';
 
 @Component({
   selector: 'app-target-lift-graph',
@@ -118,7 +119,7 @@ export class TargetLiftGraphComponent
     if (this.targetLift) {
       // Get previous selected target if compatible
       const previousSelectedTarget = localStorage.getItem(
-        AppConfig.visualizationCommon.GLOBAL.LS_ID + 'TARGET_LIFT',
+        AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.TARGET_LIFT,
       );
       if (
         previousSelectedTarget &&
@@ -176,7 +177,7 @@ export class TargetLiftGraphComponent
       this.targetLift.selected;
     localStorage.setItem(
       this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
-        'TARGET_LIFT',
+        LS.TARGET_LIFT,
       target,
     );
     this.targetLift.selected = target;
