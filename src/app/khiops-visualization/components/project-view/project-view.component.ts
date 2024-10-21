@@ -1,6 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AppConfig } from 'src/environments/environment';
-import { AppService } from '@khiops-visualization/providers/app.service';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
@@ -32,7 +31,6 @@ export class ProjectViewComponent
   debugFile = AppConfig.debugFile;
 
   constructor(
-    private appService: AppService,
     private fileLoaderService: FileLoaderService,
     private configService: ConfigService,
     private trackerService: TrackerService,
