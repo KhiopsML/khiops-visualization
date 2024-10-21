@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AppConfig } from 'src/environments/environment';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
-import { UtilsService } from '@khiops-library/providers/utils.service';
 import { ProjectLogModel } from '@khiops-library/model/project-log.model';
 import { REPORTS } from '@khiops-library/enum/reports';
 import { ProjectSummaryModel } from '@khiops-library/model/project-summary.model';
@@ -9,17 +8,18 @@ import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { LS } from '@khiops-library/enum/ls';
 import { Ls } from '@khiops-library/providers/ls.service';
 import { EnrichDatasService } from './enrich-datas.service';
+import { LayoutService } from '../../khiops-library/providers/layout.service';
+import { VIEW_LAYOUT } from '@khiops-visualization/config/view-layout';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AppService {
   static Ls: Ls;
-
-  splitSizes: any;
   appDatas: any;
 
   constructor(
+    private layoutService: LayoutService,
     private khiopsLibraryService: KhiopsLibraryService,
     private Ls: Ls,
   ) {
@@ -32,63 +32,11 @@ export class AppService {
   initialize() {
     this.initGlobalConfigVariables();
     this.initSessionVariables();
+    this.layoutService.initialize(VIEW_LAYOUT);
 
     this.appDatas = {
       datas: undefined,
     };
-
-    this.splitSizes = {
-      projectView: {
-        row: [70, 30],
-      },
-      preparationView: {
-        row: [20, 80],
-        row0Col: [20, 60, 20],
-        row1Col: [60, 40],
-        row1Col0Row: [80, 20],
-        row1Col1Row: [80, 20],
-        row1Col1Row0Col: [30, 70],
-      },
-      treePreparationView: {
-        col: [70, 30],
-        col0Row: [20, 40, 40],
-        col0Row0Col: [20, 60, 20],
-        col0Row1Col: [60, 40],
-        col0Row2Col: [30, 70],
-        col0Row2Col1Row: [50, 50],
-        row1Col1Row: [80, 20], // for modeling tree view
-        row1Col1Row0Col: [30, 70], // for modeling tree view
-      },
-      preparation2dView: {
-        row: [20, 80],
-        row0Col: [100],
-        row1Col: [60, 40],
-        row1Col0Row: [100],
-        row1Col1Row: [80, 20],
-        row1Col1Row0Col: [80, 20],
-      },
-      modelingView: {
-        row: [20, 80],
-        row0Col: [30, 30, 40],
-        row1Col: [60, 40],
-        row1Col0Row: [80, 20],
-        row1Col1Row: [60, 40],
-        row1Col1Row0Col: [30, 70],
-      },
-      evaluationView: {
-        col: [50, 50],
-        col0Row: [20, 50, 30],
-        col1Row: [70, 30],
-      },
-    };
-
-    const storedSplitValues = AppService.Ls.get(LS.SPLIT_SIZES);
-
-    // Set default split sizes if not into local storage
-    this.splitSizes = UtilsService.setDefaultLSValues(
-      storedSplitValues,
-      this.splitSizes,
-    );
   }
 
   initGlobalConfigVariables() {
@@ -146,7 +94,7 @@ export class AppService {
   setSavedDatas(datas: any) {
     if (datas?.savedDatas) {
       if (datas.savedDatas.splitSizes) {
-        this.setSplitSizes(datas.savedDatas.splitSizes);
+        this.layoutService.setSplitSizes(datas.savedDatas.splitSizes);
       }
     }
   }
@@ -173,32 +121,6 @@ export class AppService {
       }
     }
     return false;
-  }
-
-  getViewSplitSizes(view): any {
-    return this.splitSizes[view];
-  }
-
-  getSplitSizes(): any {
-    return this.splitSizes;
-  }
-
-  setViewSplitSizes(view, sizes) {
-    this.splitSizes[view] = sizes;
-    this.setSplitSizes(this.splitSizes);
-  }
-
-  setSplitSizes(splitSizes) {
-    this.splitSizes = splitSizes;
-    this.Ls.set(LS.SPLIT_SIZES, JSON.stringify(this.splitSizes));
-  }
-
-  resizeAndSetSplitSizes(item, sizes, itemSize, view) {
-    window.dispatchEvent(new Event('resize'));
-    if (item) {
-      sizes[item] = itemSize;
-      this.setViewSplitSizes(view, sizes);
-    }
   }
 
   getProjectSummaryDatas(): InfosDatasI[] {

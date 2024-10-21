@@ -24,6 +24,7 @@ import { VariableModel } from '@khiops-visualization/model/variable.model';
 import { Preparation2dDatasModel } from '@khiops-visualization/model/preparation2d-datas.model';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 import { BorderTextCellComponent } from '../../../khiops-library/components/ag-grid/border-text-cell/border-text-cell.component';
+import { LayoutService } from '@khiops-library/providers/layout.service';
 
 @Component({
   selector: 'app-preparation-view',
@@ -68,6 +69,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
     private evaluationDatasService: EvaluationDatasService,
     private dialog: MatDialog,
     private preparation2dDatasService: Preparation2dDatasService,
+    private layoutService: LayoutService,
     private appService: AppService,
     private modelingDatasService: ModelingDatasService,
   ) {
@@ -175,7 +177,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
     );
     this.preparation2dDatas = this.preparation2dDatasService.getDatas();
 
-    this.sizes = this.appService.getViewSplitSizes('preparationView');
+    this.sizes = this.layoutService.getViewSplitSizes('preparationView');
     this.summaryDatas = this.preparationDatasService.getSummaryDatas();
     this.informationsDatas = this.preparationDatasService.getInformationsDatas(
       this.preparationSource,
@@ -202,7 +204,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
   }
 
   onSplitDragEnd(event: any, item: string) {
-    this.appService.resizeAndSetSplitSizes(
+    this.layoutService.resizeAndSetSplitSizes(
       item,
       this.sizes,
       event.sizes,

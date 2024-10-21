@@ -16,6 +16,7 @@ import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { Preparation2dDatasModel } from '@khiops-visualization/model/preparation2d-datas.model';
 import { PreparationVariableModel } from '@khiops-visualization/model/preparation-variable.model';
+import { LayoutService } from '@khiops-library/providers/layout.service';
 
 @Component({
   selector: 'app-var-details-preparation',
@@ -50,12 +51,13 @@ export class VarDetailsPreparationComponent implements OnInit, OnChanges {
     private preparationDatasService: PreparationDatasService,
     private evaluationDatasService: EvaluationDatasService,
     private preparation2dDatasService: Preparation2dDatasService,
+    private layoutService: LayoutService,
     private appService: AppService,
   ) {}
 
   ngOnInit() {
     this.appDatas = this.appService.getDatas().datas;
-    this.sizes = this.appService.getViewSplitSizes('preparationView');
+    this.sizes = this.layoutService.getViewSplitSizes('preparationView');
     this.isRegressionOrExplanatoryAnalysis =
       this.preparationDatasService.isExplanatoryAnalysis() ||
       this.evaluationDatasService.isRegressionAnalysis();
@@ -69,7 +71,7 @@ export class VarDetailsPreparationComponent implements OnInit, OnChanges {
   }
 
   onSplitDragEnd(event: any, item: string) {
-    this.appService.resizeAndSetSplitSizes(
+    this.layoutService.resizeAndSetSplitSizes(
       item,
       this.sizes,
       event.sizes,

@@ -1,13 +1,14 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { AppConfig } from 'src/environments/environment';
-import { UtilsService } from '@khiops-library/providers/utils.service';
 import { ViewLayoutVO } from '../model/view-layout.model';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { ProjectSummaryModel } from '@khiops-library/model/project-summary.model';
 import { LS } from '@khiops-library/enum/ls';
 import { Ls } from '@khiops-library/providers/ls.service';
+import { LayoutService } from '@khiops-library/providers/layout.service';
+import { VIEW_LAYOUT } from '@khiops-covisualization/config/view-layout';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,6 @@ import { Ls } from '@khiops-library/providers/ls.service';
 export class AppService {
   static Ls: Ls;
 
-  splitSizes: any;
   appDatas: any = undefined;
   initialDatas: any = undefined;
   viewsLayout: ViewLayoutVO;
@@ -25,6 +25,7 @@ export class AppService {
   constructor(
     private khiopsLibraryService: KhiopsLibraryService,
     private Ls: Ls,
+    private layoutService: LayoutService,
   ) {
     // Render Ls static methods with current instance
     AppService.Ls = this.Ls;
@@ -42,7 +43,7 @@ export class AppService {
 
   initialize() {
     this.initGlobalConfigVariables();
-
+    this.layoutService.initialize(VIEW_LAYOUT);
     this.appDatas = {
       datas: undefined,
     };
@@ -50,31 +51,6 @@ export class AppService {
     this.initialDatas = {
       datas: undefined,
     };
-
-    this.splitSizes = {
-      axisView: {
-        col: [70, 30],
-        col0Row: [50, 50],
-        col1Row: [20, 80],
-        col0Row0Col: [25, 25, 25, 25],
-        col0Row0Col2Row: [50, 50],
-        col0Row1Col: [25, 25, 25, 25],
-        col0Row1Col2Row: [30, 70],
-      },
-      contextView: {
-        col: [70, 30],
-        col0Row0Col: [25, 25, 25, 25],
-        col0Row0Col2Row: [30, 70],
-      },
-    };
-
-    const storedSplitValues = this.Ls.get(LS.SPLIT_SIZES);
-
-    // Set default split sizes if not into local storage
-    this.splitSizes = UtilsService.setDefaultLSValues(
-      storedSplitValues,
-      this.splitSizes,
-    );
   }
 
   initSavedDatas() {
@@ -104,7 +80,7 @@ export class AppService {
   setSavedDatas(datas: any) {
     if (datas?.savedDatas) {
       if (datas.savedDatas.splitSizes) {
-        this.setSplitSizes(datas.savedDatas.splitSizes);
+        this.layoutService.setSplitSizes(datas.savedDatas.splitSizes);
       }
     }
   }
@@ -129,34 +105,6 @@ export class AppService {
 
   isBigJsonFile(): boolean {
     return this.appDatas?.datas?.coclusteringReport?.summary?.cells > 10000;
-  }
-
-  getViewSplitSizes(view) {
-    return this.splitSizes[view];
-  }
-
-  getSplitSizes() {
-    return this.splitSizes;
-  }
-
-  setViewSplitSizes(view, sizes) {
-    this.splitSizes[view] = sizes;
-    this.setSplitSizes(this.splitSizes);
-  }
-
-  setSplitSizes(splitSizes) {
-    this.splitSizes = splitSizes;
-    this.Ls.set(LS.SPLIT_SIZES, JSON.stringify(this.splitSizes));
-  }
-
-  resizeAndSetSplitSizes(item, sizes, itemSize, view, dispatchEvent?) {
-    if (dispatchEvent !== false) {
-      window.dispatchEvent(new Event('resize'));
-    }
-    if (item) {
-      sizes[item] = itemSize;
-      this.setViewSplitSizes(view, sizes);
-    }
   }
 
   initGlobalConfigVariables() {
@@ -254,36 +202,5 @@ export class AppService {
     this.viewsLayout = viewsLayout;
     this.Ls.set(LS.VIEWS_LAYOUT, JSON.stringify(this.viewsLayout));
     this.viewsLayoutChanged.emit(this.viewsLayout);
-  }
-
-  switchSplitSizes(oldPosition, newPosition) {
-    const oldView =
-      oldPosition === 0 || oldPosition === 1 ? 'axisView' : 'contextView';
-    const newView =
-      newPosition === 0 || newPosition === 1 ? 'axisView' : 'contextView';
-
-    // All contexts have same layout
-    if (newView === 'contextView') {
-      newPosition = 0;
-    }
-    if (oldPosition > 1) {
-      oldPosition = 0;
-    }
-
-    // Maybe split view sizes managment needs a deep refactoring
-    [
-      this.splitSizes[oldView]['col0Row' + oldPosition + 'Col'],
-      this.splitSizes[newView]['col0Row' + newPosition + 'Col'],
-    ] = [
-      this.splitSizes[newView]['col0Row' + newPosition + 'Col'],
-      this.splitSizes[oldView]['col0Row' + oldPosition + 'Col'],
-    ];
-    [
-      this.splitSizes[oldView]['col0Row' + oldPosition + 'Col2Row'],
-      this.splitSizes[newView]['col0Row' + newPosition + 'Col2Row'],
-    ] = [
-      this.splitSizes[newView]['col0Row' + newPosition + 'Col2Row'],
-      this.splitSizes[oldView]['col0Row' + oldPosition + 'Col2Row'],
-    ];
   }
 }

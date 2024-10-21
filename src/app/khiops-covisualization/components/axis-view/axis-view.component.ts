@@ -19,6 +19,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-data.model';
 import { AnnotationService } from '@khiops-covisualization/providers/annotation.service';
+import { LayoutService } from '@khiops-library/providers/layout.service';
 
 @Component({
   selector: 'app-axis-view',
@@ -55,6 +56,7 @@ export class AxisViewComponent
     private annotationService: AnnotationService,
     private translate: TranslateService,
     private snackBar: MatSnackBar,
+    private layoutService: LayoutService,
   ) {
     super();
   }
@@ -67,7 +69,7 @@ export class AxisViewComponent
     this.isBigJsonFile = this.appService.isBigJsonFile();
 
     setTimeout(() => {
-      this.sizes = this.appService.getViewSplitSizes('axisView');
+      this.sizes = this.layoutService.getViewSplitSizes('axisView');
 
       // #154 initializeSavedState before datas to get saved json datas
       this.initializeSavedState();
@@ -176,7 +178,7 @@ export class AxisViewComponent
   }
 
   onSplitDragEnd(event, item) {
-    this.appService.resizeAndSetSplitSizes(
+    this.layoutService.resizeAndSetSplitSizes(
       item,
       this.sizes,
       event.sizes,

@@ -6,6 +6,7 @@ import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
 import { CompositionModel } from '@khiops-covisualization/model/composition.model';
 import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-data.model';
+import { LayoutService } from '@khiops-library/providers/layout.service';
 
 @Component({
   selector: 'app-axis',
@@ -40,21 +41,24 @@ export class AxisComponent implements OnInit {
   invertedPosition: number;
   selectedComposition: CompositionModel;
 
-  constructor(private appService: AppService) {}
+  constructor(
+    private layoutService: LayoutService,
+    private appService: AppService,
+  ) {}
 
   ngOnInit() {
     this.initializeView();
   }
 
   initializeView() {
-    this.sizes = this.appService.getViewSplitSizes(this.viewId);
+    this.sizes = this.layoutService.getViewSplitSizes(this.viewId);
     this.computeComponentsSizes();
     this.invertedPosition = this.position === 0 ? 1 : 0;
   }
 
   onSplitDragEnd(event, item) {
     if (event && item) {
-      this.appService.resizeAndSetSplitSizes(
+      this.layoutService.resizeAndSetSplitSizes(
         item,
         this.sizes,
         event.sizes,

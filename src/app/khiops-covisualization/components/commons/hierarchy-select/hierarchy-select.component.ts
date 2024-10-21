@@ -17,6 +17,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngstack/translate';
 import { SelectedTreeClusterModel } from '@khiops-covisualization/model/selected-tree-cluster.model';
 import { LS } from '@khiops-library/enum/ls';
+import { LayoutService } from '@khiops-library/providers/layout.service';
 
 @Component({
   selector: 'app-hierarchy-select',
@@ -58,6 +59,7 @@ export class HierarchySelectComponent implements OnChanges, AfterViewInit {
     private translate: TranslateService,
     private appService: AppService,
     private dimensionsDatasService: DimensionsDatasService,
+    private layoutService: LayoutService,
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -107,7 +109,7 @@ export class HierarchySelectComponent implements OnChanges, AfterViewInit {
       );
     }
 
-    this.appService.switchSplitSizes(this.position, newPosition);
+    this.layoutService.switchSplitSizes(this.position, newPosition);
     // Reverse selected nodes on selection changed
     this.treenodesService.updateSelectedNodes(dimension, this.position);
     // Reverse dimensions datas on selection changed

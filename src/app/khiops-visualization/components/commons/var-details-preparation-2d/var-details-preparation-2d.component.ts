@@ -7,6 +7,7 @@ import { Distribution2dDatasService } from '@khiops-visualization/providers/dist
 import { Preparation2dDatasModel } from '@khiops-visualization/model/preparation2d-datas.model';
 import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
 import { LS } from '@khiops-library/enum/ls';
+import { LayoutService } from '@khiops-library/providers/layout.service';
 
 @Component({
   selector: 'app-var-details-preparation-2d',
@@ -29,6 +30,7 @@ export class VarDetailsPreparation2dComponent {
   constructor(
     private distribution2dDatasService: Distribution2dDatasService,
     private preparation2dDatasService: Preparation2dDatasService,
+    private layoutService: LayoutService,
     private appService: AppService,
   ) {
     this.scaleValue = AppService.Ls.get(
@@ -43,14 +45,14 @@ export class VarDetailsPreparation2dComponent {
     this.preparation2dDatas = this.preparation2dDatasService.getDatas();
     this.distribution2dDatas = this.distribution2dDatasService.getDatas();
 
-    this.sizes = this.appService.getViewSplitSizes('preparation2dView');
+    this.sizes = this.layoutService.getViewSplitSizes('preparation2dView');
     this.distribution2dDatasService.getTargetDistributionGraphDatas(
       this.targetDistributionGraphType,
     );
   }
 
   onSplitDragEnd(event: any, item: string) {
-    this.appService.resizeAndSetSplitSizes(
+    this.layoutService.resizeAndSetSplitSizes(
       item,
       this.sizes,
       event.sizes,

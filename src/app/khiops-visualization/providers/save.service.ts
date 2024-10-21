@@ -3,6 +3,7 @@ import { AppService } from './app.service';
 import { PreparationDatasService } from './preparation-datas.service';
 import { Preparation2dDatasService } from './preparation2d-datas.service';
 import { SavedDatasModel } from '../model/saved-datas.model';
+import { LayoutService } from '../../khiops-library/providers/layout.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,13 +11,14 @@ import { SavedDatasModel } from '../model/saved-datas.model';
 export class SaveService {
   constructor(
     private appService: AppService,
+    private layoutService: LayoutService,
     private preparationDatasService: PreparationDatasService,
     private preparation2dDatasService: Preparation2dDatasService,
   ) {}
 
   constructDatasToSave() {
     const appDatas = this.appService.getDatas().datas;
-    const splitSizes = this.appService.getSplitSizes();
+    const splitSizes = this.layoutService.getSplitSizes();
     const selectedRank = this.preparationDatasService.getSelectedVariableRank();
     const selected2dRank =
       this.preparation2dDatasService.getSelectedVariableRank();

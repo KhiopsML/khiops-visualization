@@ -21,6 +21,7 @@ import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 import { CellModel } from '@khiops-library/model/cell.model';
 import { TranslateService } from '@ngstack/translate';
 import { DimensionModel } from '@khiops-library/model/dimension.model';
+import { LayoutService } from '@khiops-library/providers/layout.service';
 
 @Component({
   selector: 'app-matrix-container',
@@ -56,6 +57,7 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
     private treenodesService: TreenodesService,
     private eventsService: EventsService,
     private dimensionsDatasService: DimensionsDatasService,
+    private layoutService: LayoutService,
   ) {
     this.dimensionsDatas = this.dimensionsDatasService.getDatas();
 
@@ -99,7 +101,7 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit() {
-    this.sizes = this.appService.getViewSplitSizes(this.viewId);
+    this.sizes = this.layoutService.getViewSplitSizes(this.viewId);
     this.constructModeSelectBox();
 
     // Check if saved into json
@@ -172,7 +174,7 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   onSplitDragEnd(event, item) {
-    this.appService.resizeAndSetSplitSizes(
+    this.layoutService.resizeAndSetSplitSizes(
       item,
       this.sizes,
       event.sizes,

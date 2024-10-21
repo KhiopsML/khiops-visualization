@@ -26,6 +26,7 @@ import { TrackerService } from '@khiops-library/providers/tracker.service';
 import { TranslateService } from '@ngstack/translate';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { BorderTextCellComponent } from '@khiops-library/components/ag-grid/border-text-cell/border-text-cell.component';
+import { LayoutService } from '@khiops-library/providers/layout.service';
 
 @Component({
   selector: 'app-tree-preparation-view',
@@ -67,6 +68,7 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
     private distributionDatasService: DistributionDatasService,
     private appService: AppService,
     private modelingDatasService: ModelingDatasService,
+    private layoutService: LayoutService,
   ) {
     super();
 
@@ -116,7 +118,7 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
 
     this.appDatas = this.appService.getDatas().datas;
     this.treePreparationDatas = this.treePreparationDatasService.getDatas();
-    this.sizes = this.appService.getViewSplitSizes('treePreparationView');
+    this.sizes = this.layoutService.getViewSplitSizes('treePreparationView');
     this.summaryDatas = this.preparationDatasService.getSummaryDatas(
       this.preparationSource,
     );
@@ -139,7 +141,7 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
   }
 
   onSplitDragEnd(event: any, item: string) {
-    this.appService.resizeAndSetSplitSizes(
+    this.layoutService.resizeAndSetSplitSizes(
       item,
       this.sizes,
       event.sizes,

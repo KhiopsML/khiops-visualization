@@ -7,6 +7,7 @@ import { EvaluationDatasModel } from '@khiops-visualization/model/evaluation-dat
 import { EvaluationPredictorModel } from '@khiops-visualization/model/evaluation-predictor.model';
 import { EvaluationTypeModel } from '@khiops-visualization/model/evaluation-type.model';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
+import { LayoutService } from '@khiops-library/providers/layout.service';
 
 @Component({
   selector: 'app-evaluation-view',
@@ -26,12 +27,12 @@ export class EvaluationViewComponent
 
   constructor(
     private trackerService: TrackerService,
-    private appService: AppService,
+    private layoutService: LayoutService,
     private evaluationDatasService: EvaluationDatasService,
   ) {
     super();
 
-    this.sizes = this.appService.getViewSplitSizes('evaluationView');
+    this.sizes = this.layoutService.getViewSplitSizes('evaluationView');
     this.evaluationDatas = this.evaluationDatasService.getDatas();
     this.evaluationDatasService.getEvaluationTypes();
     this.evaluationDatasService.getEvaluationTypesSummary();
@@ -40,7 +41,7 @@ export class EvaluationViewComponent
   }
 
   onSplitDragEnd(event: any, item: string) {
-    this.appService.resizeAndSetSplitSizes(
+    this.layoutService.resizeAndSetSplitSizes(
       item,
       this.sizes,
       event.sizes,

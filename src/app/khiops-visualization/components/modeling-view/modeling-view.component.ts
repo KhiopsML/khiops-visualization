@@ -26,6 +26,7 @@ import { Preparation2dDatasModel } from '@khiops-visualization/model/preparation
 import { TreePreparationDatasModel } from '@khiops-visualization/model/tree-preparation-datas.model';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 import { LS } from '@khiops-library/enum/ls';
+import { LayoutService } from '@khiops-library/providers/layout.service';
 
 @Component({
   selector: 'app-modeling-view',
@@ -73,6 +74,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
     private distribution2dDatasService: Distribution2dDatasService,
     private preparationDatasService: PreparationDatasService,
     private treePreparationDatasService: TreePreparationDatasService,
+    private layoutService: LayoutService,
   ) {
     super();
     this.scaleValue = AppService.Ls.get(
@@ -93,7 +95,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
     this.modelingDatas = this.modelingDatasService.getDatas();
     this.treePreparationDatas = this.treePreparationDatasService.getDatas();
     this.preparation2dDatas = this.preparation2dDatasService.getDatas();
-    this.sizes = this.appService.getViewSplitSizes('modelingView');
+    this.sizes = this.layoutService.getViewSplitSizes('modelingView');
 
     this.summaryDatas = this.modelingDatasService.getSummaryDatas();
     this.targetVariableStatsDatas =
@@ -109,7 +111,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
   }
 
   onSplitDragEnd(event, item?) {
-    this.appService.resizeAndSetSplitSizes(
+    this.layoutService.resizeAndSetSplitSizes(
       item,
       this.sizes,
       event.sizes,

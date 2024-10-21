@@ -3,6 +3,7 @@ import { AppService } from '@khiops-visualization/providers/app.service';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { VariableGraphDetailsComponent } from '../variable-graph-details/variable-graph-details.component';
 import { TreePreparationDatasModel } from '@khiops-visualization/model/tree-preparation-datas.model';
+import { LayoutService } from '@khiops-library/providers/layout.service';
 
 @Component({
   selector: 'app-var-details-tree-preparation',
@@ -23,17 +24,18 @@ export class VarDetailsTreePreparationComponent {
 
   constructor(
     private treePreparationDatasService: TreePreparationDatasService,
+    private layoutService: LayoutService,
     private appService: AppService,
   ) {
     this.appDatas = this.appService.getDatas().datas;
     this.treePreparationDatas = this.treePreparationDatasService.getDatas();
-    this.sizes = this.appService.getViewSplitSizes('treePreparationView');
+    this.sizes = this.layoutService.getViewSplitSizes('treePreparationView');
 
     this.onSelectedGraphItemChanged(0);
   }
 
   onSplitDragEnd(event: any, item: string) {
-    this.appService.resizeAndSetSplitSizes(
+    this.layoutService.resizeAndSetSplitSizes(
       item,
       this.sizes,
       event.sizes,

@@ -13,6 +13,7 @@ import { TYPES } from '@khiops-library/enum/types';
 import { SavedDatasModel } from '@khiops-covisualization/model/saved-datas.model';
 import { AnnotationService } from './annotation.service';
 import { ImportExtDatasService } from './import-ext-datas.service';
+import { LayoutService } from '@khiops-library/providers/layout.service';
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +28,7 @@ export class TreenodesService {
     private importExtDatasService: ImportExtDatasService,
     private dimensionsDatasService: DimensionsDatasService,
     private eventsService: EventsService,
+    private layoutService: LayoutService,
   ) {
     this.initialize();
   }
@@ -477,7 +479,7 @@ export class TreenodesService {
     const selectedDimensions =
       this.dimensionsDatasService.getDimensionsToSave();
     const unfoldHierarchyState = this.getUnfoldHierarchy();
-    const splitSizes = this.appService.getSplitSizes();
+    const splitSizes = this.layoutService.getSplitSizes();
     const viewsLayout = this.appService.getViewsLayout();
 
     const nodesNames = this.getNodesNames();
@@ -645,9 +647,8 @@ export class TreenodesService {
 
       // Check for collapsed node integrity
       if (dimIndex !== -1) {
-        const dimVO: DimensionModel = this.dimensionsDatas.selectedDimensions.find(
-          (e) => e.name === dim,
-        );
+        const dimVO: DimensionModel =
+          this.dimensionsDatas.selectedDimensions.find((e) => e.name === dim);
         const dimIndexInitial = this.dimensionsDatas.dimensions.findIndex(
           (e) => e.name === dim,
         );
@@ -682,9 +683,10 @@ export class TreenodesService {
         currentTruncatedPartition.valueGroups[
           currentTruncatedPartition.defaultGroupIndex
         ].values;
-      const nodeDetails: TreeNodeModel = this.dimensionsDatas.dimensionsClusters[
-        dimIndex
-      ].find((e) => e.cluster === nodeName);
+      const nodeDetails: TreeNodeModel =
+        this.dimensionsDatas.dimensionsClusters[dimIndex].find(
+          (e) => e.cluster === nodeName,
+        );
       if (nodeDetails?.childrenList) {
         nodeChildren = nodeDetails.childrenList;
 
@@ -737,9 +739,10 @@ export class TreenodesService {
       const nodeName = nodes[i];
       let nodeChildren: any[] = [];
 
-      const nodeDetails: TreeNodeModel = this.dimensionsDatas.dimensionsClusters[
-        dimIndex
-      ].find((e) => e.cluster === nodeName);
+      const nodeDetails: TreeNodeModel =
+        this.dimensionsDatas.dimensionsClusters[dimIndex].find(
+          (e) => e.cluster === nodeName,
+        );
       if (nodeDetails?.childrenList) {
         nodeChildren = nodeDetails.childrenList;
         const nodeChildrenLength = nodeChildren.length;

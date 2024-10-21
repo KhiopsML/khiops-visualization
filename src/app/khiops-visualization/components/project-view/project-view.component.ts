@@ -8,6 +8,7 @@ import { ProjectLogModel } from '@khiops-library/model/project-log.model';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
+import { LayoutService } from '@khiops-library/providers/layout.service';
 
 @Component({
   selector: 'app-project-view',
@@ -40,6 +41,7 @@ export class ProjectViewComponent
     private configService: ConfigService,
     private translate: TranslateService,
     private trackerService: TrackerService,
+    private layoutService: LayoutService,
   ) {
     super();
     this.isElectron = this.configService.isElectron;
@@ -62,7 +64,7 @@ export class ProjectViewComponent
     this.appDatas = this.appService.getDatas();
 
     if (this.appDatas.datas) {
-      this.sizes = this.appService.getViewSplitSizes('projectView');
+      this.sizes = this.layoutService.getViewSplitSizes('projectView');
 
       this.logsTitle = this.translate.get('GLOBAL.LOGS');
       this.projectSummaryDatas = this.appService.getProjectSummaryDatas();
@@ -76,7 +78,7 @@ export class ProjectViewComponent
   }
 
   onSplitDragEnd(event: any, item: string) {
-    this.appService.resizeAndSetSplitSizes(
+    this.layoutService.resizeAndSetSplitSizes(
       item,
       this.sizes,
       event.sizes,
