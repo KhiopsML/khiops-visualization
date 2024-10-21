@@ -29,33 +29,66 @@ export class EvaluationDatasService {
     private appService: AppService,
   ) {}
 
+  /**
+   * Initializes the evaluation data model.
+   */
   initialize() {
     this.evaluationDatas = new EvaluationDatasModel();
   }
 
+  /**
+   * Retrieves the evaluation data model.
+   * @returns The evaluation data model.
+   */
   getDatas(): EvaluationDatasModel {
     return this.evaluationDatas;
   }
 
+  /**
+   * Sets the displayed values for the lift graph.
+   * @param object - The chart toggle values to set.
+   */
   setLiftGraphDisplayedValues(object: ChartToggleValuesI[]) {
     this.evaluationDatas.liftGraphDisplayedValues = object;
   }
 
+  /**
+   * Retrieves the displayed values for the lift graph.
+   * @returns The chart toggle values.
+   */
   getLiftGraphDisplayedValues(): ChartToggleValuesI[] | undefined {
     return this.evaluationDatas.liftGraphDisplayedValues;
   }
+
+  /**
+   * Sets the selected evaluation type variable.
+   * @param object - The evaluation type model to set.
+   */
   setSelectedEvaluationTypeVariable(object: EvaluationTypeModel) {
     this.evaluationDatas.selectedEvaluationTypeVariable = object;
   }
 
+  /**
+   * Retrieves the selected evaluation type variable.
+   * @returns The selected evaluation type model.
+   */
   getSelectedEvaluationTypeVariable(): EvaluationTypeModel | undefined {
     return this.evaluationDatas.selectedEvaluationTypeVariable;
   }
 
+  /**
+   * Sets the selected predictor evaluation variable.
+   * @param object - The evaluation predictor model to set.
+   */
   setSelectedPredictorEvaluationVariable(object: EvaluationPredictorModel) {
     this.evaluationDatas.selectedPredictorEvaluationVariable = object;
   }
 
+  /**
+   * Retrieves the predictor evaluation variable for the specified evaluation type.
+   * @param type - The evaluation type.
+   * @returns The corresponding EvaluationPredictorModel.
+   */
   getPredictorEvaluationVariableFromEvaluationType(
     type: string,
   ): EvaluationPredictorModel {
@@ -67,6 +100,11 @@ export class EvaluationDatasService {
     );
   }
 
+  /**
+   * Retrieves the evaluation variable for the specified predictor evaluation type.
+   * @param type - The predictor evaluation type.
+   * @returns The corresponding EvaluationTypeModel.
+   */
   getEvaluationVariableFromPredictorEvaluationType(
     type: string,
   ): EvaluationTypeModel {
@@ -75,6 +113,10 @@ export class EvaluationDatasService {
     );
   }
 
+  /**
+   * Retrieves the list of evaluation types from the application data.
+   * @returns An array of evaluation types.
+   */
   getEvaluationTypes(): any[] {
     const appDatas = this.appService.getDatas().datas;
 
@@ -88,7 +130,11 @@ export class EvaluationDatasService {
     return this.evaluationDatas.evaluationTypes;
   }
 
-  // tslint:disable-next-line:typedef-whitespace
+  /**
+   * Retrieves the confusion matrix for the specified type.
+   * @param type - The type of confusion matrix (optional).
+   * @returns The confusion matrix as a GridDatasI object.
+   */
   getConfusionMatrix(type?: string): GridDatasI {
     const appDatas = this.appService.getDatas().datas;
 
@@ -269,6 +315,10 @@ export class EvaluationDatasService {
     return this.evaluationDatas.confusionMatrix;
   }
 
+  /**
+   * Retrieves the summary of evaluation types.
+   * @returns The evaluation types summary as a GridDatasI object.
+   */
   getEvaluationTypesSummary(): GridDatasI {
     // init the object
     this.evaluationDatas.evaluationTypesSummary = {
@@ -288,9 +338,7 @@ export class EvaluationDatasService {
         {
           headerName: this.translate.get('GLOBAL.INSTANCES'),
           field: 'instances',
-          tooltip: this.translate.get(
-            'TOOLTIPS.EVALUATION.TYPES.INSTANCES',
-          ),
+          tooltip: this.translate.get('TOOLTIPS.EVALUATION.TYPES.INSTANCES'),
         },
       ],
     };
@@ -318,6 +366,10 @@ export class EvaluationDatasService {
     return this.evaluationDatas.evaluationTypesSummary;
   }
 
+  /**
+   * Retrieves the predictor evaluations.
+   * @returns The predictor evaluations as a GridDatasI object.
+   */
   getPredictorEvaluations(): GridDatasI {
     this.evaluationDatas.predictorEvaluations = {
       title: this.translate.get('GLOBAL.PREDICTOR_EVALUATIONS'),
@@ -397,7 +449,11 @@ export class EvaluationDatasService {
     return this.evaluationDatas.predictorEvaluations;
   }
 
-  // tslint:disable-next-line:typedef-whitespace
+  /**
+   * Retrieves the lift graph data for the specified target.
+   * @param target - The target value (optional).
+   * @returns The lift graph data as a ChartDatasModel.
+   */
   getLiftGraphDatas(target?: string): ChartDatasModel {
     // Generate X axis values
     const xAxis = new Array(1001);
@@ -500,7 +556,13 @@ export class EvaluationDatasService {
     return this.evaluationDatas.liftGraphDatas;
   }
 
-  // tslint:disable-next-line:typedef-whitespace
+  /**
+   * Generates lift curve values for the specified evaluation type and target.
+   * @param xAxis - The x-axis values.
+   * @param type - The evaluation type (TRAIN or TEST).
+   * @param target - The target value (optional).
+   * @returns An array of LiftCurveValuesI containing the generated lift curve values.
+   */
   generateLiftCurveValuesForEvaluation(
     xAxis,
     type,
@@ -570,7 +632,12 @@ export class EvaluationDatasService {
     return graphDatas;
   }
 
-  // tslint:disable-next-line:typedef-whitespace
+  /**
+   * Generates random lift data for the given x-axis values and title.
+   * @param xAxis - The x-axis values.
+   * @param title - The title for the lift data.
+   * @returns An array of LiftCurveValuesI containing the generated lift data.
+   */
   generateRandomLiftDatas(xAxis, title) {
     const graphDatas: LiftCurveValuesI[] = [];
 
@@ -590,6 +657,11 @@ export class EvaluationDatasService {
     return graphDatas;
   }
 
+  /**
+   * Retrieves the lift targets for the current evaluation report.
+   * @param currentTarget - The current target value (optional).
+   * @returns An object containing the selected target and the list of targets.
+   */
   getLiftTargets(currentTarget?): TargetLiftValuesI {
     const appDatas = this.appService.getDatas().datas;
     let targetLift: TargetLiftValuesI;
@@ -663,6 +735,10 @@ export class EvaluationDatasService {
     return targetLift;
   }
 
+  /**
+   * Determines if the current analysis is a regression analysis.
+   * @returns A boolean indicating whether the analysis is a regression analysis.
+   */
   isRegressionAnalysis(): boolean {
     const appDatas = this.appService.getDatas().datas;
     if (
