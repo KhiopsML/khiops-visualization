@@ -88,7 +88,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 
   onFileLoaderDataChangedCb: Function;
   appVersion: string;
-  appName = 'khiops-covisualization';
   opened = false;
   openContextView = false;
   public selectedTab: Object | undefined;

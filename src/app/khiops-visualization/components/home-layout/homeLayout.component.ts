@@ -60,7 +60,6 @@ export class HomeLayoutComponent implements OnInit {
 
   onFileLoaderDataChangedCb: Function;
   appVersion: string;
-  appName = 'khiops-visualization';
   opened = false;
   public selectedTab: Object | undefined;
   currentDatas: any;

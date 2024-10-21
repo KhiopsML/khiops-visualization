@@ -19,7 +19,6 @@ export class ProjectViewComponent
   appDatas: any;
   projectSummaryDatas: InfosDatasI[];
   onFileLoaderDataChangedCb: Function;
-  appName = 'khiops-covisualization';
 
   // managed by selectable-tab component
   override tabIndex = 0;

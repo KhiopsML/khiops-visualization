@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { LS } from '@khiops-library/enum/ls';
-import { AppConfig } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',

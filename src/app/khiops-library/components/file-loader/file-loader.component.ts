@@ -11,6 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngstack/translate';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
+import { Ls } from '@khiops-library/providers/ls.service';
 
 @Component({
   selector: 'kl-file-loader',
@@ -18,7 +19,6 @@ import { ConfigService } from '@khiops-library/providers/config.service';
   styleUrls: ['./file-loader.component.scss'],
 })
 export class FileLoaderComponent implements OnInit {
-  @Input() applicationName: string;
   @Input() onFileLoaderDataChanged: Function;
   @Output('onFileOpen') onFileOpen: EventEmitter<any> = new EventEmitter<any>();
   fileLoaderDatas: any;
@@ -33,6 +33,7 @@ export class FileLoaderComponent implements OnInit {
     private snackBar: MatSnackBar,
     public translate: TranslateService,
     private configService: ConfigService,
+    private Ls: Ls,
   ) {
     this.fileLoaderDatas = this.fileLoaderService.getDatas();
     this.isProdMode = this.khiopsLibraryService.getAppConfig().production;
@@ -40,7 +41,7 @@ export class FileLoaderComponent implements OnInit {
 
   ngOnInit() {
     const associationFiles = ['.json'];
-    if (this.applicationName === 'khiops-visualization') {
+    if (this.Ls.LS_ID === 'KHIOPS_VISUALIZATION_') {
       associationFiles.push('.khj');
     } else {
       associationFiles.push('.khcj');
@@ -98,10 +99,7 @@ export class FileLoaderComponent implements OnInit {
         this.fileLoaderService
           .readFile(filename)
           .then((datas) => {
-            this.fileLoaderService.setFileHistory(
-              this.applicationName,
-              filename,
-            );
+            this.fileLoaderService.setFileHistory(filename);
             this.onFileLoaderDataChanged(datas);
           })
           .catch((error) => {

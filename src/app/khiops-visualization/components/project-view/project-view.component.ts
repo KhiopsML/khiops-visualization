@@ -24,7 +24,6 @@ export class ProjectViewComponent
   projectSummaryDatas: InfosDatasI[];
   projectLogsDatas: ProjectLogModel[];
   onFileLoaderDataChangedCb: Function;
-  appName = 'khiops-visualization';
   logsTitle: string;
   sizes: any;
   isElectron: boolean = false;
