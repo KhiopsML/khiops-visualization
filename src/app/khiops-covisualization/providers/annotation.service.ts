@@ -15,20 +15,39 @@ export class AnnotationService {
   ) {
     this.initialize();
   }
-
+  /**
+   * Initializes the dimensions data by fetching it from the DimensionsDatasService.
+   */
   initialize() {
     this.dimensionsDatas = this.dimensionsDatasService.getDatas();
   }
 
+  /**
+   * Retrieves the annotations from the dimensions data.
+   *
+   * @returns An object containing the annotations.
+   */
   getAnnotations() {
     return this.dimensionsDatas.annotations;
   }
 
+  /**
+   * Initializes the annotations with saved data from the AppService.
+   * If no saved data is found, it initializes with an empty object.
+   */
   initSavedDatas() {
     this.dimensionsDatas.annotations =
       this.appService.getSavedDatas('annotations') || {};
   }
 
+  /**
+   * Sets an annotation for a specific node within a given dimension.
+   * If the annotations object or the specific dimension does not exist, they are initialized.
+   *
+   * @param dimensionName - The name of the dimension.
+   * @param nodeName - The name of the node within the dimension.
+   * @param annotation - The annotation to set for the node.
+   */
   setNodeAnnotation(
     dimensionName: string,
     nodeName: string,

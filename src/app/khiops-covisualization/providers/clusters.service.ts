@@ -28,11 +28,18 @@ export class ClustersService {
   ) {
     this.initialize();
   }
-
+  /**
+   * Initializes the dimensions data by retrieving it from the dimensions data service.
+   */
   initialize() {
     this.dimensionsDatas = this.dimensionsDatasService.getDatas();
   }
 
+  /**
+   * Retrieves the details of the selected clusters for each dimension.
+   *
+   * @returns {TreeNodeModel[][]} - An array of arrays containing the details of the selected clusters for each dimension.
+   */
   getSelectedClustersDetails(): TreeNodeModel[][] {
     const details: TreeNodeModel[][] = [];
     for (let i = 0; i < this.dimensionsDatas.selectedDimensions.length; i++) {
@@ -45,6 +52,11 @@ export class ClustersService {
     return details;
   }
 
+  /**
+   * Calculates the current number of cells per cluster based on the selected dimensions.
+   *
+   * @returns {number} - The current number of cells per cluster.
+   */
   getCurrentCellsPerCluster(): number {
     let currentCellsPerCluster = 1;
     for (let i = 0; i < this.dimensionsDatas.selectedDimensions.length; i++) {
@@ -55,6 +67,14 @@ export class ClustersService {
     return currentCellsPerCluster;
   }
 
+  /**
+   * Retrieves the current cluster details from the given nodes.
+   * This method processes the nodes recursively to gather details of the clusters.
+   *
+   * @param {TreeNodeModel[]} nodes - The nodes representing the current clusters.
+   * @param {TreeNodeModel[]} [currentClusterDetailsFromNode=[]] - An array to store the details of the current clusters.
+   * @returns {TreeNodeModel[]} - An array containing the details of the current clusters.
+   */
   getCurrentClusterDetailsFromNode(
     nodes: TreeNodeModel[],
     currentClusterDetailsFromNode: TreeNodeModel[] = [],
@@ -78,6 +98,12 @@ export class ClustersService {
     return currentClusterDetailsFromNode;
   }
 
+  /**
+   * Retrieves the distribution details from a specified node position.
+   *
+   * @param {number} position - The position of the node to get distribution details from.
+   * @returns {ChartDatasModel} - The chart data model containing distribution details.
+   */
   getDistributionDetailsFromNode(position): ChartDatasModel {
     let filteredDimensionsClusters = this.getCurrentClusterDetailsFromNode(
       this.dimensionsDatasService.dimensionsDatas.dimensionsTrees[0],
@@ -192,6 +218,13 @@ export class ClustersService {
     return distributionsGraphDetails;
   }
 
+  /**
+   * Generates a dataset representing information per cluster at a given rank.
+   * This method processes the initial data and hierarchy data to create a chart dataset.
+   *
+   * @param rank - The rank at which the clusters are being evaluated.
+   * @returns A ChartDatasModel containing the information per cluster data.
+   */
   getInfoPerCluster(rank: number): ChartDatasModel {
     const appinitialDatas = this.appService.getInitialDatas().datas;
 
@@ -252,6 +285,13 @@ export class ClustersService {
     return infoPerCluster;
   }
 
+  /**
+   * Generates a dataset representing the number of clusters per dimension at a given rank.
+   * This method processes the selected dimensions and their hierarchy data to create a chart dataset.
+   *
+   * @param rank - The rank at which the clusters are being evaluated.
+   * @returns A ChartDatasModel containing the clusters per dimension data.
+   */
   getClustersPerDimDatas(rank): ChartDatasModel {
     const clustersPerDimDatas = new ChartDatasModel();
     let maxGraphValue = 0;
@@ -317,6 +357,16 @@ export class ClustersService {
     return clustersPerDimDatas;
   }
 
+  /**
+   * Retrieves the composition clusters for a given hierarchy and node.
+   * This method processes the dimension partitions and clusters to generate
+   * composition models, which include details about the clusters and their
+   * associated data.
+   *
+   * @param hierarchyName - The name of the hierarchy for which composition clusters are being retrieved.
+   * @param node - The node representing the current cluster in the hierarchy.
+   * @returns An array of CompositionModel containing details of the composition clusters.
+   */
   getCompositionClusters(hierarchyName: string, node: any): CompositionModel[] {
     const appDatas = this.appService.getDatas().datas;
     const appinitialDatas = this.appService.getInitialDatas().datas;
@@ -397,6 +447,13 @@ export class ClustersService {
     return compositionValues;
   }
 
+  /**
+   * Filters the dimension tree to retrieve cluster details for a selected dimension.
+   *
+   * @param dimensionsTree - The tree structure representing the dimensions.
+   * @param selectedDimension - The dimension model for which clusters are being filtered.
+   * @returns An array of ClusterDetailsModel containing details of the filtered clusters.
+   */
   getFilteredDimensionTree(
     dimensionsTree,
     selectedDimension: DimensionModel,

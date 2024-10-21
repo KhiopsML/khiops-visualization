@@ -118,8 +118,7 @@ describe('CoVisualization', () => {
       dimensionsDatasService.saveInitialDimension();
       dimensionsDatasService.constructDimensionsTrees();
 
-      let [generationDuration, matrixDatas] =
-        dimensionsDatasService.getMatrixDatas();
+      let matrixDatas = dimensionsDatasService.getMatrixDatas();
 
       expect(matrixDatas.matrixCellDatas.length).toEqual(225);
       expect(matrixDatas.matrixCellDatas[0].cellFreq).toEqual(12080);

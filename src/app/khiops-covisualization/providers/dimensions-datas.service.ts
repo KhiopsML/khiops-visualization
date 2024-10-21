@@ -419,7 +419,7 @@ export class DimensionsDatasService {
   }
 
   getMatrixDatas(propagateChanges = true) {
-    const t0 = performance.now();
+    // const t0 = performance.now();
 
     const appDatas = this.appService.getDatas().datas;
 
@@ -427,8 +427,10 @@ export class DimensionsDatasService {
     this.dimensionsDatas.allMatrixDatas = {};
     this.dimensionsDatas.allMatrixCellDatas = {};
 
-    const xDimension: DimensionModel = this.dimensionsDatas.selectedDimensions[0];
-    const yDimension: DimensionModel = this.dimensionsDatas.selectedDimensions[1];
+    const xDimension: DimensionModel =
+      this.dimensionsDatas.selectedDimensions[0];
+    const yDimension: DimensionModel =
+      this.dimensionsDatas.selectedDimensions[1];
     const zDimension: DimensionModel[] = [];
     for (let i = 2; i < this.dimensionsDatas.selectedDimensions.length; i++) {
       zDimension.push(this.dimensionsDatas.selectedDimensions[i]);
@@ -539,15 +541,17 @@ export class DimensionsDatasService {
     // hack to limit re-rendering and optimize perf
     this.dimensionsDatas.matrixDatas.propagateChanges = propagateChanges;
 
-    const t1 = performance.now();
+    // const t1 = performance.now();
     // console.log("getMatrixDatas " + (t1 - t0) + " milliseconds.");
-    const generationDuration = t1 - t0;
+    // const generationDuration = t1 - t0;
     // console.log("TCL: DimensionsDatasService -> getMatrixDatas -> this.dimensionsDatas.matrixDatas", JSON.stringify(this.dimensionsDatas.matrixDatas))
-    return [generationDuration, this.dimensionsDatas.matrixDatas];
+    return this.dimensionsDatas.matrixDatas;
   }
 
   /**
-   * Generate a map of frequencies based on each potential dimensions map
+   * Compute a frequency map for matrix data cells.
+   * The map keys are combinations of y-axis and x-axis parts,
+   * and the values are the corresponding indices in the matrix cell data array.
    * for instance:
    *
     {11th, 10th, 9th, ...}-{Local-gov}: 21

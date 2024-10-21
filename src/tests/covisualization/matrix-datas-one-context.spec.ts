@@ -29,7 +29,7 @@ describe('CoVisualization', () => {
       dimensionsDatasService.getDimensions();
       dimensionsDatasService.initSelectedDimensions();
       dimensionsDatasService.constructDimensionsTrees();
-      const [initTime, result] = dimensionsDatasService.getMatrixDatas();
+      const result = dimensionsDatasService.getMatrixDatas();
       cells = result.matrixCellDatas;
     });
 
@@ -120,12 +120,7 @@ describe('CoVisualization', () => {
         mode: 'PROB_CELL',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixService.computeMatrixValues(
-          graphMode,
-          inputDatas,
-          [[0]],
-          -1,
-        );
+        MatrixService.computeMatrixValues(graphMode, inputDatas, [[0]], -1);
     });
 
     it('matrixValues should return valid datas', () => {
@@ -160,12 +155,7 @@ describe('CoVisualization', () => {
         mode: 'PROB_CELL',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixService.computeMatrixValues(
-          graphMode,
-          inputDatas,
-          [[0, 1]],
-          -1,
-        );
+        MatrixService.computeMatrixValues(graphMode, inputDatas, [[0, 1]], -1);
     });
 
     it('matrixValues should return valid datas', () => {
@@ -199,12 +189,7 @@ describe('CoVisualization', () => {
         mode: 'PROB_CELL_REVERSE',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixService.computeMatrixValues(
-          graphMode,
-          inputDatas,
-          [[0, 1]],
-          -1,
-        );
+        MatrixService.computeMatrixValues(graphMode, inputDatas, [[0, 1]], -1);
     });
 
     it('matrixValues should return valid datas', () => {
@@ -242,12 +227,7 @@ describe('CoVisualization', () => {
         mode: 'HELLINGER',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixService.computeMatrixValues(
-          graphMode,
-          inputDatas,
-          [[0, 1]],
-          -1,
-        );
+        MatrixService.computeMatrixValues(graphMode, inputDatas, [[0, 1]], -1);
     });
 
     it('matrixFreqsValues should return valid datas', () => {
@@ -291,12 +271,7 @@ describe('CoVisualization', () => {
         mode: 'HELLINGER',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixService.computeMatrixValues(
-          graphMode,
-          inputDatas,
-          [[0]],
-          -1,
-        );
+        MatrixService.computeMatrixValues(graphMode, inputDatas, [[0]], -1);
     });
 
     it('matrixFreqsValues should return valid datas', () => {
@@ -340,12 +315,7 @@ describe('CoVisualization', () => {
         mode: 'MUTUAL_INFO',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixService.computeMatrixValues(
-          graphMode,
-          inputDatas,
-          [[0]],
-          -1,
-        );
+        MatrixService.computeMatrixValues(graphMode, inputDatas, [[0]], -1);
     });
 
     it('matrixFreqsValues should return valid datas', () => {

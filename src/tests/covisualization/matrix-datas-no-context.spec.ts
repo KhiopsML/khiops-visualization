@@ -28,7 +28,7 @@ describe('CoVisualization', () => {
       dimensionsDatasService.getDimensions();
       dimensionsDatasService.initSelectedDimensions();
       dimensionsDatasService.constructDimensionsTrees();
-      const [initTime, result] = dimensionsDatasService.getMatrixDatas();
+      const result = dimensionsDatasService.getMatrixDatas();
       cells = result.matrixCellDatas;
     });
 
