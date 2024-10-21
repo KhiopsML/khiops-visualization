@@ -9,6 +9,7 @@ import { LS } from '@khiops-library/enum/ls';
 import { TranslateService } from '@ngstack/translate';
 declare const window: any;
 import { v4 as uuidv4 } from 'uuid';
+import { Ls } from '@khiops-library/providers/ls.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,7 @@ export class TrackerService {
   appSource: string;
 
   constructor(
+    private Ls: Ls,
     private dialogRef: MatDialog,
     private ngzone: NgZone,
     private dialog: MatDialog,
@@ -26,7 +28,7 @@ export class TrackerService {
 
   initTracker(config, trackerId: string, appSource: string) {
     this.appSource = appSource;
-    const cookieStatus = this.getCookieStatus(config);
+    const cookieStatus = this.getCookieStatus();
 
     if (cookieStatus === undefined) {
       // user have never set the setting
@@ -40,10 +42,8 @@ export class TrackerService {
     }
   }
 
-  getCookieStatus(config): boolean | undefined {
-    const cookieStatus = localStorage.getItem(
-      config.GLOBAL.LS_ID + LS.COOKIE_CONSENT,
-    );
+  getCookieStatus(): boolean | undefined {
+    const cookieStatus = this.Ls.get(LS.COOKIE_CONSENT);
     if (cookieStatus !== null) {
       return cookieStatus === 'true';
     } else {
@@ -56,11 +56,11 @@ export class TrackerService {
     window._paq = undefined;
   }
 
-  getVisitorId(config) {
-    let uuid = localStorage.getItem(config.GLOBAL.LS_ID + LS.UUID) || undefined;
+  getVisitorId() {
+    let uuid = this.Ls.get(LS.UUID);
     if (!uuid) {
       uuid = uuidv4().replace(/-/g, '') || '';
-      localStorage.setItem(config.GLOBAL.LS_ID + LS.UUID, uuid);
+      this.Ls.set(LS.UUID, uuid);
     }
     return uuid;
   }
@@ -75,7 +75,7 @@ export class TrackerService {
       window._paq.push(['trackPageView']);
       window._paq.push(['disableCookies']); // remove cookies : do not work on electron local file
 
-      const visitorId = this.getVisitorId(config);
+      const visitorId = this.getVisitorId();
       if (visitorId) {
         // genereate and keep in local storage unique visitor id to filter visitors analytics
         window._paq.push(['setVisitorId', visitorId]);
@@ -122,10 +122,7 @@ export class TrackerService {
 
       dialogRef.afterClosed().subscribe((e) => {
         const acceptCookies = e === 'confirm' ? 'true' : 'false';
-        localStorage.setItem(
-          config.GLOBAL.LS_ID + LS.COOKIE_CONSENT,
-          acceptCookies,
-        );
+        this.Ls.set(LS.COOKIE_CONSENT, acceptCookies);
         this.addTrackerScript(config, trackerId, () => {
           this.trackEvent('cookie_consent', acceptCookies);
           if (acceptCookies === 'false') {

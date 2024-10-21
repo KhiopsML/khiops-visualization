@@ -20,6 +20,8 @@ import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
+import { LS } from '@khiops-library/enum/ls';
+import { Ls } from '@khiops-library/providers/ls.service';
 
 @Component({
   selector: 'kl-distribution-graph',
@@ -59,6 +61,7 @@ export class DistributionGraphComponent
     public override configService: ConfigService,
     private toPrecision: ToPrecisionPipe,
     private khiopsLibraryService: KhiopsLibraryService,
+    private Ls: Ls,
   ) {
     super(selectableService, ngzone, configService);
 
@@ -186,13 +189,7 @@ export class DistributionGraphComponent
 
   changeGraphType(type) {
     // this.trackerService.trackEvent('click', 'distribution_graph_type', this.graphOptions.selected);
-
-    localStorage.setItem(
-      this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
-        'DISTRIBUTION_GRAPH_OPTION_Y',
-      type,
-    );
-
+    this.Ls.set(LS.DISTRIBUTION_GRAPH_OPTION_Y, type);
     this.updateChartOptions();
     this.graphTypeChanged.emit(type);
   }

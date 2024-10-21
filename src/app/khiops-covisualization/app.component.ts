@@ -36,11 +36,7 @@ export class AppComponent implements AfterViewInit {
   appElement: ElementRef<HTMLElement>;
 
   private _valueChangeEvent = 'valueChanged';
-
-  theme: string =
-    localStorage.getItem(
-      AppConfig.covisualizationCommon.GLOBAL.LS_ID + LS.THEME_COLOR,
-    ) || 'light';
+  theme: string;
 
   constructor(
     private ngzone: NgZone,
@@ -54,6 +50,8 @@ export class AppComponent implements AfterViewInit {
     private treenodesService: TreenodesService,
     private element: ElementRef,
   ) {
+    AppService.Ls.setLsId(AppConfig.covisualizationCommon.GLOBAL.LS_ID);
+    this.theme = AppService.Ls.get(LS.THEME_COLOR, 'light');
     this.appService.initialize();
   }
 
@@ -162,10 +160,7 @@ export class AppComponent implements AfterViewInit {
 
   setTheme() {
     setTimeout(() => {
-      let themeColor =
-        localStorage.getItem(
-          AppConfig.covisualizationCommon.GLOBAL.LS_ID + LS.THEME_COLOR,
-        ) || 'light';
+      let themeColor = AppService.Ls.get(LS.THEME_COLOR, 'light');
       document.documentElement.setAttribute('data-color-scheme', themeColor);
       this.configService?.getConfig()?.onThemeChanged?.(themeColor);
     });

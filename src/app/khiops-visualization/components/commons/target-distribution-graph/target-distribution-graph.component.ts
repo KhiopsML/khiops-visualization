@@ -20,6 +20,8 @@ import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
+import { AppService } from '@khiops-visualization/providers/app.service';
+import { LS } from '@khiops-library/enum/ls';
 
 @Component({
   selector: 'app-target-distribution-graph',
@@ -82,11 +84,10 @@ export class TargetDistributionGraphComponent
     this.minScale =
       this.khiopsLibraryService.getAppConfig().common.GLOBAL.MIN_GRAPH_SCALE;
 
-    this.graphOptions.selected =
-      localStorage.getItem(
-        this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
-          'TARGET_DISTRIBUTION_GRAPH_OPTION',
-      ) || this.graphOptions.types[0];
+    this.graphOptions.selected = AppService.Ls.get(
+      LS.TARGET_DISTRIBUTION_GRAPH_OPTION,
+      this.graphOptions.types[0],
+    );
 
     this.colorSet = this.khiopsLibraryService.getGraphColorSet()[1];
     this.hideGraph = true;
@@ -172,11 +173,7 @@ export class TargetDistributionGraphComponent
 
   changeGraphType(type: string) {
     // this.trackerService.trackEvent('click', 'target_distribution_graph_type', type);
-    localStorage.setItem(
-      this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
-        'TARGET_DISTRIBUTION_GRAPH_OPTION',
-      type,
-    );
+    AppService.Ls.set(LS.TARGET_DISTRIBUTION_GRAPH_OPTION, type);
 
     this.graphTypeChanged.emit(type);
   }

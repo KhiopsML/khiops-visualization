@@ -34,10 +34,7 @@ export class AppComponent implements AfterViewInit {
   })
   appElement: ElementRef<HTMLElement>;
 
-  theme: string =
-    localStorage.getItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.THEME_COLOR,
-    ) || 'light';
+  theme: string;
 
   constructor(
     private dialogRef: MatDialog,
@@ -50,6 +47,8 @@ export class AppComponent implements AfterViewInit {
     private trackerService: TrackerService,
     private element: ElementRef,
   ) {
+    AppService.Ls.setLsId(AppConfig.visualizationCommon.GLOBAL.LS_ID);
+    this.theme = AppService.Ls.get(LS.THEME_COLOR) || 'light';
     this.appService.initialize();
   }
 
@@ -113,10 +112,7 @@ export class AppComponent implements AfterViewInit {
 
   setTheme() {
     setTimeout(() => {
-      let themeColor =
-        localStorage.getItem(
-          AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.THEME_COLOR,
-        ) || 'light';
+      let themeColor = AppService.Ls.get(LS.THEME_COLOR, 'light');
       document.documentElement.setAttribute('data-color-scheme', themeColor);
       this.configService?.getConfig()?.onThemeChanged?.(themeColor);
     });

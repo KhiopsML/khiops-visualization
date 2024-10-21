@@ -31,6 +31,8 @@ import {
 import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { LS } from '@khiops-library/enum/ls';
+import { Ls } from '@khiops-library/providers/ls.service';
+
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
 @Component({
@@ -125,6 +127,7 @@ export class AgGridComponent
   KEY_DOWN = 'ArrowDown';
 
   constructor(
+    private Ls: Ls,
     public override selectableService: SelectableService,
     public override ngzone: NgZone,
     public override configService: ConfigService,
@@ -135,31 +138,25 @@ export class AgGridComponent
     this.AppConfig = this.khiopsLibraryService.getAppConfig().common;
     this.paginationSize = this.AppConfig.GLOBAL.PAGINATION_SIZE;
 
-    this.dataOptions.selected =
-      localStorage.getItem(
-        this.AppConfig.GLOBAL.LS_ID + LS.AG_GRID_GRAPH_OPTION,
-      ) || this.dataOptions.types[0];
+    this.dataOptions.selected = this.Ls.get(
+      LS.AG_GRID_GRAPH_OPTION,
+      this.dataOptions.types[0],
+    );
 
     this.title = this.translate.get('GLOBAL.VARIABLES') || this.title;
 
     try {
-      const PREV_CELL_AG_GRID = localStorage.getItem(
-        this.AppConfig.GLOBAL.LS_ID + LS.CELL_AG_GRID,
-      );
+      const PREV_CELL_AG_GRID = this.Ls.get(LS.CELL_AG_GRID);
       this.cellsSizes =
         (PREV_CELL_AG_GRID && JSON.parse(PREV_CELL_AG_GRID)) || {};
     } catch (e) {}
     try {
-      const PREV_COLUMNS_AG_GRID = localStorage.getItem(
-        this.AppConfig.GLOBAL.LS_ID + LS.COLUMNS_AG_GRID,
-      );
+      const PREV_COLUMNS_AG_GRID = this.Ls.get(LS.COLUMNS_AG_GRID);
       this.visibleColumns =
         (PREV_COLUMNS_AG_GRID && JSON.parse(PREV_COLUMNS_AG_GRID)) || {};
     } catch (e) {}
     try {
-      const PREV_MODES_AG_GRID = localStorage.getItem(
-        this.AppConfig.GLOBAL.LS_ID + LS.MODES_AG_GRID,
-      );
+      const PREV_MODES_AG_GRID = this.Ls.get(LS.MODES_AG_GRID);
       this.gridModes =
         (PREV_MODES_AG_GRID && JSON.parse(PREV_MODES_AG_GRID)) || {}; // 'fitToSpace' or 'fitToContent'
     } catch (e) {}
@@ -186,11 +183,7 @@ export class AgGridComponent
   }
 
   changeDataType(type: string) {
-    localStorage.setItem(
-      this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
-        LS.AG_GRID_GRAPH_OPTION,
-      type,
-    );
+    this.Ls.set(LS.AG_GRID_GRAPH_OPTION, type);
 
     this.dataOptions.selected = type;
     this.dataTypeChanged.emit(type);
@@ -516,18 +509,12 @@ export class AgGridComponent
     // this.trackerService.trackEvent('click', 'search');
     this.agGrid.api.setQuickFilter(this.searchInput || '');
     if (this.searchInput) {
-      localStorage.setItem(
-        this.AppConfig.GLOBAL.LS_ID +
-          'OPTIONS_AG_GRID_SEARCH_' +
-          this.id.toUpperCase(),
+      this.Ls.set(
+        LS.OPTIONS_AG_GRID_SEARCH + '_' + this.id.toUpperCase(),
         this.searchInput,
       );
     } else {
-      localStorage.removeItem(
-        this.AppConfig.GLOBAL.LS_ID +
-          'OPTIONS_AG_GRID_SEARCH_' +
-          this.id.toUpperCase(),
-      );
+      this.Ls.del(LS.OPTIONS_AG_GRID_SEARCH + '_' + this.id.toUpperCase());
     }
   }
 
@@ -588,10 +575,7 @@ export class AgGridComponent
       this.cellsSizes[this.id] = {};
     }
     this.cellsSizes[this.id][field] = width;
-    localStorage.setItem(
-      this.AppConfig.GLOBAL.LS_ID + LS.CELL_AG_GRID,
-      JSON.stringify(this.cellsSizes),
-    );
+    this.Ls.set(LS.CELL_AG_GRID, JSON.stringify(this.cellsSizes));
   }
 
   saveVisibleColumns(column, isVisible) {
@@ -599,10 +583,7 @@ export class AgGridComponent
       this.visibleColumns[this.id] = {};
     }
     this.visibleColumns[this.id][column] = isVisible;
-    localStorage.setItem(
-      this.AppConfig.GLOBAL.LS_ID + LS.COLUMNS_AG_GRID,
-      JSON.stringify(this.visibleColumns),
-    );
+    this.Ls.set(LS.COLUMNS_AG_GRID, JSON.stringify(this.visibleColumns));
   }
 
   fitToSpace() {
@@ -610,10 +591,7 @@ export class AgGridComponent
 
     // Reinit current saved columns sizes when user fit grid to space
     delete this.cellsSizes[this.id];
-    localStorage.setItem(
-      this.AppConfig.GLOBAL.LS_ID + LS.CELL_AG_GRID,
-      JSON.stringify(this.cellsSizes),
-    );
+    this.Ls.set(LS.CELL_AG_GRID, JSON.stringify(this.cellsSizes));
 
     // FIX : if table is fitted to available space at start,
     // then user fitToContent and fitToSpace, header col width are broken
@@ -638,10 +616,7 @@ export class AgGridComponent
 
   saveGridModes(gridMode) {
     this.gridModes[this.id] = gridMode;
-    localStorage.setItem(
-      this.AppConfig.GLOBAL.LS_ID + LS.MODES_AG_GRID,
-      JSON.stringify(this.gridModes),
-    );
+    this.Ls.set(LS.MODES_AG_GRID, JSON.stringify(this.gridModes));
   }
 
   /**
@@ -667,11 +642,8 @@ export class AgGridComponent
     const state = {
       sortState: this.gridOptions?.columnApi?.getColumnState(),
     };
-    localStorage.setItem(
-      this.AppConfig.GLOBAL.LS_ID +
-        LS.OPTIONS_AG_GRID +
-        '_' +
-        this.id.toUpperCase(),
+    this.Ls.set(
+      LS.OPTIONS_AG_GRID + '_' + this.id.toUpperCase(),
       JSON.stringify(state),
     );
   }
@@ -679,11 +651,8 @@ export class AgGridComponent
   restoreState() {
     setTimeout(() => {
       if (this.id) {
-        const PREV_STATE = localStorage.getItem(
-          this.AppConfig.GLOBAL.LS_ID +
-            LS.OPTIONS_AG_GRID +
-            '_' +
-            this.id.toUpperCase(),
+        const PREV_STATE = this.Ls.get(
+          LS.OPTIONS_AG_GRID + '_' + this.id.toUpperCase(),
         );
         const state = (PREV_STATE && JSON.parse(PREV_STATE)) || {};
 
@@ -712,10 +681,8 @@ export class AgGridComponent
         }
         // Restore search
         this.searchInput =
-          localStorage.getItem(
-            this.AppConfig.GLOBAL.LS_ID +
-              'OPTIONS_AG_GRID_SEARCH_' +
-              this.id.toUpperCase(),
+          this.Ls.get(
+            LS.OPTIONS_AG_GRID_SEARCH + '_' + this.id.toUpperCase(),
           ) || '';
         if (this.searchInput) {
           this.showSearchForm();

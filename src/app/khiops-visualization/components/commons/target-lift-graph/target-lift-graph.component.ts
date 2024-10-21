@@ -10,7 +10,6 @@ import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.s
 import { TranslateService } from '@ngstack/translate';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
-import { AppConfig } from 'src/environments/environment';
 import _ from 'lodash';
 import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
 import { ConfigService } from '@khiops-library/providers/config.service';
@@ -20,6 +19,7 @@ import { EvaluationDatasModel } from '@khiops-visualization/model/evaluation-dat
 import { TargetLiftValuesI } from '@khiops-visualization/interfaces/target-lift-values';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { LS } from '@khiops-library/enum/ls';
+import { AppService } from '@khiops-visualization/providers/app.service';
 
 @Component({
   selector: 'app-target-lift-graph',
@@ -118,9 +118,7 @@ export class TargetLiftGraphComponent
 
     if (this.targetLift) {
       // Get previous selected target if compatible
-      const previousSelectedTarget = localStorage.getItem(
-        AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.TARGET_LIFT,
-      );
+      const previousSelectedTarget = AppService.Ls.get(LS.TARGET_LIFT);
       if (
         previousSelectedTarget &&
         this.targetLift.targets.includes(previousSelectedTarget)
@@ -175,11 +173,7 @@ export class TargetLiftGraphComponent
       this.translate.get('GLOBAL.CUMULATIVE_GAIN_CHART_OF') +
       ' ' +
       this.targetLift.selected;
-    localStorage.setItem(
-      this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
-        LS.TARGET_LIFT,
-      target,
-    );
+    AppService.Ls.set(LS.TARGET_LIFT, target);
     this.targetLift.selected = target;
     this.getDatas();
   }

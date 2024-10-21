@@ -10,6 +10,7 @@ import { LS } from '@khiops-library/enum/ls';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 import { MatrixModesModel } from '@khiops-library/model/matrix-modes.model';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
+import { Ls } from '@khiops-library/providers/ls.service';
 
 @Component({
   selector: 'kl-matrix-mode',
@@ -22,15 +23,18 @@ export class MatrixModeComponent implements OnChanges {
   @Input() matrixModes: MatrixModesModel = new MatrixModesModel();
   @Output() matrixModeChange = new EventEmitter<MatrixModeI>();
 
-  constructor(private khiopsLibraryService: KhiopsLibraryService) {
+  constructor(
+    private Ls: Ls,
+    private khiopsLibraryService: KhiopsLibraryService,
+  ) {
     this.AppConfig = this.khiopsLibraryService.getAppConfig().common;
   }
 
   ngOnChanges() {
     if (!this.matrixModes.selected) {
       // Get previous selected target if compatible
-      const previousSelectedModeIndex = localStorage.getItem(
-        this.AppConfig.GLOBAL.LS_ID + LS.MATRIX_MODE_OPTION_INDEX,
+      const previousSelectedModeIndex = this.Ls.get(
+        LS.MATRIX_MODE_OPTION_INDEX,
       );
       if (previousSelectedModeIndex) {
         this.matrixModes.selected =
@@ -55,8 +59,8 @@ export class MatrixModeComponent implements OnChanges {
     this.matrixModes.selectedIndex = this.matrixModes.types.findIndex(
       (e) => e.mode === mode.mode,
     );
-    localStorage.setItem(
-      this.AppConfig.GLOBAL.LS_ID + LS.MATRIX_MODE_OPTION_INDEX,
+    this.Ls.set(
+      LS.MATRIX_MODE_OPTION_INDEX,
       this.matrixModes.selectedIndex.toString(),
     );
 

@@ -65,14 +65,7 @@ export class HomeLayoutComponent implements OnInit {
   public selectedTab: Object | undefined;
   currentDatas: any;
   isCompatibleJson: boolean;
-  currentChannel =
-    localStorage.getItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.CHANNEL,
-    ) || 'latest';
-  showReleaseNotes = localStorage.getItem(
-    AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.SHOW_RELEASE_NOTES,
-  );
-
+  currentChannel: string;
   isLargeScreen: boolean;
 
   constructor(
@@ -91,6 +84,7 @@ export class HomeLayoutComponent implements OnInit {
     private treePreparationDatasService: TreePreparationDatasService,
     private preparation2dDatasService: Preparation2dDatasService,
   ) {
+    this.currentChannel = AppService.Ls.get(LS.CHANNEL, 'latest');
     if (pjson) {
       this.appTitle = pjson.title.visualization;
       this.appVersion = pjson.version;
@@ -199,10 +193,7 @@ export class HomeLayoutComponent implements OnInit {
   }
 
   setChannel(channel) {
-    localStorage.setItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.CHANNEL,
-      channel,
-    );
+    AppService.Ls.set(LS.CHANNEL, channel);
     this.currentChannel = channel;
   }
 

@@ -55,10 +55,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
   distributionSelectedBarIndex = 0;
   trainedPredictorsDisplayedColumns: GridColumnsI[];
   isRegressionOrExplanatoryAnalysis: boolean;
-  scaleValue =
-    localStorage.getItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.SCALE_VALUE,
-    ) || AppConfig.visualizationCommon.GLOBAL.DEFAULT_GRAPH_SCALE;
+  scaleValue: number;
   targetDistributionGraphDatas: ChartDatasModel;
   currentIntervalDatas: GridDatasI;
   targetVariableStatsInformations: InfosDatasI[];
@@ -78,6 +75,10 @@ export class ModelingViewComponent extends SelectableTabComponent {
     private treePreparationDatasService: TreePreparationDatasService,
   ) {
     super();
+    this.scaleValue = AppService.Ls.get(
+      LS.SCALE_VALUE,
+      AppConfig.visualizationCommon.GLOBAL.DEFAULT_GRAPH_SCALE,
+    );
     this.preparationSource =
       this.preparationDatasService.getAvailablePreparationReport();
   }

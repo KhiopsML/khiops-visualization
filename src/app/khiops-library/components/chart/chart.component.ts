@@ -18,6 +18,7 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { ChartDatasetModel } from '@khiops-library/model/chart-dataset.model';
 import { LS } from '@khiops-library/enum/ls';
+import { Ls } from '@khiops-library/providers/ls.service';
 
 @Component({
   selector: 'kl-chart',
@@ -45,19 +46,15 @@ export class ChartComponent implements AfterViewInit, OnChanges {
   fontColor: string = '#999';
 
   constructor(
+    private Ls: Ls,
     private configService: ConfigService,
     private el: ElementRef,
     private khiopsLibraryService: KhiopsLibraryService,
   ) {
     this.AppConfig = this.khiopsLibraryService.getAppConfig().common;
-    this.color =
-      localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + LS.THEME_COLOR) ===
-      'dark'
-        ? '#555'
-        : '#e5e5e5';
+    this.color = this.Ls.get(LS.THEME_COLOR) === 'dark' ? '#555' : '#e5e5e5';
     this.barColor =
-      localStorage.getItem(this.AppConfig.GLOBAL.LS_ID + LS.THEME_COLOR) ===
-      'dark'
+      this.Ls.get(LS.THEME_COLOR) === 'dark'
         ? 'rgba(255, 255, 255, 1)'
         : 'rgba(0, 0, 0, 1)';
     this.colorSet = this.khiopsLibraryService.getGraphColorSet()[0];

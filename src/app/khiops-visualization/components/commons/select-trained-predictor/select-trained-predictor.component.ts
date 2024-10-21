@@ -6,8 +6,9 @@ import {
   EventEmitter,
   ChangeDetectionStrategy,
 } from '@angular/core';
+import { LS } from '@khiops-library/enum/ls';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
-import { AppConfig } from 'src/environments/environment';
+import { AppService } from '@khiops-visualization/providers/app.service';
 
 @Component({
   selector: 'app-select-trained-predictor',
@@ -32,11 +33,8 @@ export class SelectTrainedPredictorComponent implements OnInit {
     // Get previous selected target if compatible
     let previousSelectedPredictor;
     try {
-      previousSelectedPredictor = JSON.parse(
-        localStorage.getItem(
-          AppConfig.visualizationCommon.GLOBAL.LS_ID +
-            'SELECTED_TRAIN_PREDICTOR',
-        ),
+      previousSelectedPredictor = AppService.Ls.get(
+        LS.SELECTED_TRAIN_PREDICTOR,
       );
     } catch (e) {}
     if (previousSelectedPredictor) {
@@ -57,11 +55,7 @@ export class SelectTrainedPredictorComponent implements OnInit {
 
   changeTrainedPredictorsType(opt) {
     // this.trackerService.trackEvent('click', 'select_trained_predictor');
-    localStorage.setItem(
-      this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
-        'SELECTED_TRAIN_PREDICTOR',
-      JSON.stringify(opt),
-    );
+    AppService.Ls.set(LS.SELECTED_TRAIN_PREDICTOR, JSON.stringify(opt));
     this.selectedPredictor = opt.name;
     this.selectedPredictorChanged.emit(opt);
   }

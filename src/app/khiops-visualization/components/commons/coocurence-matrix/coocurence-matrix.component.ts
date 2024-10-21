@@ -11,7 +11,6 @@ import {
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { TranslateService } from '@ngstack/translate';
-import { AppConfig } from 'src/environments/environment';
 import { deepEqual } from 'fast-equals';
 import { MatrixComponent } from '@khiops-library/components/matrix/matrix.component';
 import { AppService } from '@khiops-visualization/providers/app.service';
@@ -243,9 +242,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
         this.matrixModes.selected?.mode === 'PROB_CELL_WITH_TARGET')
     ) {
       // Get previous selected target if compatible
-      const previousSelectedTarget = localStorage.getItem(
-        AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.MATRIX_TARGET_OPTION,
-      );
+      const previousSelectedTarget = AppService.Ls.get(LS.MATRIX_TARGET_OPTION);
       if (
         previousSelectedTarget &&
         this.matrixTargets.targets.includes(previousSelectedTarget)
@@ -269,10 +266,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
   changeMatrixTarget(target: string) {
     // this.trackerService.trackEvent('click', 'matrix_target');
     this.matrixTargets.selected = target;
-    localStorage.setItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.MATRIX_TARGET_OPTION,
-      target,
-    );
+    AppService.Ls.set(LS.MATRIX_TARGET_OPTION, target);
   }
 
   onMatrixAxisInverted() {

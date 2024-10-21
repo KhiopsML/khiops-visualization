@@ -7,11 +7,14 @@ import * as _ from 'lodash'; // Important to import lodash in karma
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { ProjectSummaryModel } from '@khiops-library/model/project-summary.model';
 import { LS } from '@khiops-library/enum/ls';
+import { Ls } from '@khiops-library/providers/ls.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AppService {
+  static Ls: Ls;
+
   splitSizes: any;
   appDatas: any = undefined;
   initialDatas: any = undefined;
@@ -19,7 +22,13 @@ export class AppService {
   activeTabIndex = 0;
   viewsLayoutChanged: EventEmitter<any> = new EventEmitter();
 
-  constructor(private khiopsLibraryService: KhiopsLibraryService) {
+  constructor(
+    private khiopsLibraryService: KhiopsLibraryService,
+    private Ls: Ls,
+  ) {
+    // Render Ls static methods with current instance
+    AppService.Ls = this.Ls;
+
     this.initialize();
   }
 
@@ -59,9 +68,7 @@ export class AppService {
       },
     };
 
-    const storedSplitValues = localStorage.getItem(
-      AppConfig.covisualizationCommon.GLOBAL.LS_ID + LS.SPLIT_SIZES,
-    );
+    const storedSplitValues = this.Ls.get(LS.SPLIT_SIZES);
 
     // Set default split sizes if not into local storage
     this.splitSizes = UtilsService.setDefaultLSValues(
@@ -166,10 +173,7 @@ export class AppService {
 
   setSplitSizes(splitSizes) {
     this.splitSizes = splitSizes;
-    localStorage.setItem(
-      AppConfig.covisualizationCommon.GLOBAL.LS_ID + LS.SPLIT_SIZES,
-      JSON.stringify(this.splitSizes),
-    );
+    this.Ls.set(LS.SPLIT_SIZES, JSON.stringify(this.splitSizes));
   }
 
   resizeAndSetSplitSizes(item, sizes, itemSize, view, dispatchEvent?) {
@@ -216,9 +220,7 @@ export class AppService {
     // Do not restore LS values because we have a save functionnality
     if (AppConfig.cypress) {
       // Do it only for cypress tests
-      const lsStorage = localStorage.getItem(
-        AppConfig.covisualizationCommon.GLOBAL.LS_ID + LS.VIEWS_LAYOUT,
-      );
+      const lsStorage = this.Ls.get(LS.VIEWS_LAYOUT);
       if (lsStorage && lsStorage !== 'undefined') {
         const lsValues = JSON.parse(lsStorage);
         // Merge current values with values from LS
@@ -251,9 +253,7 @@ export class AppService {
           previousLayout,
         );
       }
-      const lsStorage = localStorage.getItem(
-        AppConfig.covisualizationCommon.GLOBAL.LS_ID + LS.VIEWS_LAYOUT,
-      );
+      const lsStorage = this.Ls.get(LS.VIEWS_LAYOUT);
       if (lsStorage && lsStorage !== 'undefined') {
         const lsValues = JSON.parse(lsStorage);
         // Merge current values with values from LS
@@ -279,10 +279,7 @@ export class AppService {
 
   saveViewsLayout(viewsLayout: ViewLayoutVO) {
     this.viewsLayout = viewsLayout;
-    localStorage.setItem(
-      AppConfig.covisualizationCommon.GLOBAL.LS_ID + LS.VIEWS_LAYOUT,
-      JSON.stringify(this.viewsLayout),
-    );
+    this.Ls.set(LS.VIEWS_LAYOUT, JSON.stringify(this.viewsLayout));
     this.viewsLayoutChanged.emit(this.viewsLayout);
   }
 

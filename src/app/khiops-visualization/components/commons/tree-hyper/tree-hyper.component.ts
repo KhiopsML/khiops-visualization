@@ -24,6 +24,8 @@ import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
+import { AppService } from '@khiops-visualization/providers/app.service';
+import { LS } from '@khiops-library/enum/ls';
 
 @Component({
   selector: 'app-tree-hyper',
@@ -64,22 +66,16 @@ export class TreeHyperComponent
 
     this.buttonTitle = this.translate.get('GLOBAL.VALUES');
 
-    const previousVisualizationPopulationState = JSON.parse(
-      localStorage.getItem(
-        AppConfig.visualizationCommon.GLOBAL.LS_ID +
-          'SETTING_HYPERTREE_VISU_POPULATION',
-      ),
+    const previousVisualizationPopulationState = AppService.Ls.get(
+      LS.SETTING_HYPERTREE_VISU_POPULATION,
     );
     this.visualization.population =
       previousVisualizationPopulationState === undefined
         ? AppConfig.visualizationCommon.HYPERTREE.VISU_POPULATION
         : previousVisualizationPopulationState;
 
-    const previousVisualizationPurityState = JSON.parse(
-      localStorage.getItem(
-        AppConfig.visualizationCommon.GLOBAL.LS_ID +
-          'SETTING_HYPERTREE_VISU_PURITY',
-      ),
+    const previousVisualizationPurityState = AppService.Ls.get(
+      LS.SETTING_HYPERTREE_VISU_PURITY,
     );
     this.visualization.purity =
       previousVisualizationPurityState === undefined
@@ -200,22 +196,14 @@ export class TreeHyperComponent
     // this.trackerService.trackEvent('click', 'toggle_purity_tree', state);
     this.visualization.purity = state;
     this.ht.api.updateNodesVisualization();
-    localStorage.setItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID +
-        'SETTING_HYPERTREE_VISU_PURITY',
-      state,
-    );
+    AppService.Ls.set(LS.SETTING_HYPERTREE_VISU_PURITY, state);
   }
 
   togglePopulationVisualization(state) {
     // this.trackerService.trackEvent('click', 'toggle_population_tree', state);
     this.visualization.population = state;
     this.ht.api.updateNodesVisualization();
-    localStorage.setItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID +
-        'SETTING_HYPERTREE_VISU_POPULATION',
-      state,
-    );
+    AppService.Ls.set(LS.SETTING_HYPERTREE_VISU_POPULATION, state);
   }
 
   initHyperTree(initView = true) {

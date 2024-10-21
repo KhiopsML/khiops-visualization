@@ -18,16 +18,11 @@ export class VarDetailsPreparation2dComponent {
     static: false,
   })
   targetDistributionGraph: TargetDistributionGraphComponent;
-
   appDatas: any;
   sizes: any;
-
   preparation2dDatas: Preparation2dDatasModel;
   distribution2dDatas: DistributionDatasModel;
-  scaleValue =
-    localStorage.getItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.SCALE_VALUE,
-    ) || AppConfig.visualizationCommon.GLOBAL.DEFAULT_GRAPH_SCALE;
+  scaleValue: number;
   currentCellIndex: number;
   targetDistributionGraphType: string;
 
@@ -36,9 +31,12 @@ export class VarDetailsPreparation2dComponent {
     private preparation2dDatasService: Preparation2dDatasService,
     private appService: AppService,
   ) {
-    this.targetDistributionGraphType = localStorage.getItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID +
-        'TARGET_DISTRIBUTION_GRAPH_OPTION',
+    this.scaleValue = AppService.Ls.get(
+      LS.SCALE_VALUE,
+      AppConfig.visualizationCommon.GLOBAL.DEFAULT_GRAPH_SCALE,
+    );
+    this.targetDistributionGraphType = AppService.Ls.get(
+      LS.TARGET_DISTRIBUTION_GRAPH_OPTION,
     );
 
     this.appDatas = this.appService.getDatas().datas;

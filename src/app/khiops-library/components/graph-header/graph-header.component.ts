@@ -7,6 +7,8 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { KhiopsLibraryService } from '../../providers/khiops-library.service';
+import { Ls } from '@khiops-library/providers/ls.service';
+import { LS } from '@khiops-library/enum/ls';
 
 @Component({
   selector: 'kl-graph-header',
@@ -31,7 +33,10 @@ export class GraphHeaderComponent implements OnInit {
   @Input() hideScale = false;
   iterateTo = 0;
 
-  constructor(private khiopsLibraryService: KhiopsLibraryService) {
+  constructor(
+    private khiopsLibraryService: KhiopsLibraryService,
+    private Ls: Ls,
+  ) {
     this.maxScale =
       this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_GRAPH_SCALE;
     this.minScale =
@@ -52,11 +57,7 @@ export class GraphHeaderComponent implements OnInit {
 
   onScaleChanged(value: number) {
     // Save current scale value into ls
-    localStorage.setItem(
-      this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
-        'SCALE_VALUE',
-      value.toString(),
-    );
+    this.Ls.set(LS.SCALE_VALUE, value.toString());
     this.scaleValueChanged.emit(value);
   }
 }

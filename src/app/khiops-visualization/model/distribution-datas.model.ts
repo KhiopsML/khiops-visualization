@@ -3,8 +3,9 @@ import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options';
 import { HistogramType } from '@khiops-visualization/components/commons/histogram/histogram.types';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
-import { AppConfig } from 'src/environments/environment';
 import { HistogramValuesI } from '@khiops-visualization/components/commons/histogram/histogram.interfaces';
+import { AppService } from '@khiops-visualization/providers/app.service';
+import { LS } from '@khiops-library/enum/ls';
 
 export class DistributionDatasModel {
   distributionType: string = HistogramType.YLIN;
@@ -52,10 +53,7 @@ export class DistributionDatasModel {
       types: [HistogramType.YLIN, HistogramType.YLOG],
       selected: undefined,
     };
-    const savedOption = localStorage.getItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID +
-        'DISTRIBUTION_GRAPH_OPTION_Y',
-    );
+    const savedOption = AppService.Ls.get(LS.DISTRIBUTION_GRAPH_OPTION_Y);
     if (this.distributionGraphOptionsY.types.includes(savedOption)) {
       this.distributionGraphOptionsY.selected = savedOption;
     } else {
@@ -68,10 +66,7 @@ export class DistributionDatasModel {
       types: [HistogramType.XLIN, HistogramType.XLOG],
       selected: undefined,
     };
-    const savedOptionX = localStorage.getItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID +
-        'DISTRIBUTION_GRAPH_OPTION_X',
-    );
+    const savedOptionX = AppService.Ls.get(LS.DISTRIBUTION_GRAPH_OPTION_X);
     if (this.distributionGraphOptionsX.types.includes(savedOptionX)) {
       this.distributionGraphOptionsX.selected = savedOptionX;
     } else {

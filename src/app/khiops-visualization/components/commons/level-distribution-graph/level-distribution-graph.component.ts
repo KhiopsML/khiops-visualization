@@ -20,6 +20,8 @@ import { ChartOptions } from 'chart.js';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { VariableModel } from '@khiops-visualization/model/variable.model';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
+import { AppService } from '@khiops-visualization/providers/app.service';
+import { LS } from '@khiops-library/enum/ls';
 
 @Component({
   selector: 'app-level-distribution-graph',
@@ -125,11 +127,7 @@ export class LevelDistributionGraphComponent
 
   onScaleChanged(value: number) {
     // Save current scale value into ls
-    localStorage.setItem(
-      this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
-        'SCALE_VALUE',
-      value.toString(),
-    );
+    AppService.Ls.set(LS.SCALE_VALUE, value.toString());
     this.scaleValue = value;
     this.resizeGraph();
   }

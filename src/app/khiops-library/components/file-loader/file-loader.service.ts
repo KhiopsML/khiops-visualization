@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { KhiopsLibraryService } from '../../providers/khiops-library.service';
+import { Ls } from '@khiops-library/providers/ls.service';
+import { LS } from '@khiops-library/enum/ls';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +17,7 @@ export class FileLoaderService {
   tmp = {};
 
   constructor(
+    private Ls: Ls,
     private http: HttpClient,
     private khiopsLibraryService: KhiopsLibraryService,
   ) {
@@ -208,9 +211,7 @@ export class FileLoaderService {
   }
 
   setFileHistory(application, filename) {
-    const currentLs = localStorage.getItem(
-      this.getLSVariableName(application) + '_OPEN_FILE',
-    );
+    const currentLs = this.Ls.get(LS.OPEN_FILE);
     let parsedLs = {
       files: [],
     };
@@ -231,16 +232,11 @@ export class FileLoaderService {
     // add to the top of the list
     parsedLs.files.unshift(filename);
 
-    localStorage.setItem(
-      this.getLSVariableName(application) + '_OPEN_FILE',
-      JSON.stringify(parsedLs),
-    );
+    this.Ls.set(LS.OPEN_FILE, JSON.stringify(parsedLs));
   }
 
-  getFileHistory(application: string) {
-    const currentLs = localStorage.getItem(
-      this.getLSVariableName(application) + '_OPEN_FILE',
-    );
+  getFileHistory() {
+    const currentLs = this.Ls.get(LS.OPEN_FILE);
     if (currentLs) {
       return JSON.parse(currentLs);
     } else {
@@ -248,11 +244,5 @@ export class FileLoaderService {
         files: [],
       };
     }
-  }
-
-  getLSVariableName(application: string): string {
-    return application === 'khiops-visualization'
-      ? 'KHIOPS_VISUALIZATION'
-      : 'KHIOPS_COVISUALIZATION';
   }
 }

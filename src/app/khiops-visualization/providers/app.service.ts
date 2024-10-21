@@ -7,15 +7,24 @@ import { REPORTS } from '@khiops-library/enum/reports';
 import { ProjectSummaryModel } from '@khiops-library/model/project-summary.model';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { LS } from '@khiops-library/enum/ls';
+import { Ls } from '@khiops-library/providers/ls.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AppService {
+  static Ls: Ls;
+
   splitSizes: any;
   appDatas: any;
 
-  constructor(private khiopsLibraryService: KhiopsLibraryService) {
+  constructor(
+    private khiopsLibraryService: KhiopsLibraryService,
+    private Ls: Ls,
+  ) {
+    // Render Ls static methods with current instance
+    AppService.Ls = this.Ls;
+
     this.initialize();
   }
 
@@ -72,9 +81,7 @@ export class AppService {
       },
     };
 
-    const storedSplitValues = localStorage.getItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.SPLIT_SIZES,
-    );
+    const storedSplitValues = AppService.Ls.get(LS.SPLIT_SIZES);
 
     // Set default split sizes if not into local storage
     this.splitSizes = UtilsService.setDefaultLSValues(
@@ -85,21 +92,11 @@ export class AppService {
 
   initGlobalConfigVariables() {
     AppConfig.visualizationCommon.GLOBAL.TO_FIXED =
-      parseInt(
-        localStorage.getItem(
-          AppConfig.visualizationCommon.GLOBAL.LS_ID +
-            'SETTING_NUMBER_PRECISION',
-        ) || '',
-        10,
-      ) || AppConfig.visualizationCommon.GLOBAL.TO_FIXED;
+      parseInt(this.Ls.get(LS.SETTING_NUMBER_PRECISION) || '', 10) ||
+      AppConfig.visualizationCommon.GLOBAL.TO_FIXED;
     AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST =
-      parseInt(
-        localStorage.getItem(
-          AppConfig.visualizationCommon.GLOBAL.LS_ID +
-            LS.SETTING_MATRIX_CONTRAST,
-        ) || '',
-        10,
-      ) || AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST;
+      parseInt(this.Ls.get(LS.SETTING_MATRIX_CONTRAST) || '', 10) ||
+      AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST;
 
     AppConfig.common = {
       ...AppConfig.visualizationCommon,
@@ -109,36 +106,15 @@ export class AppService {
   }
 
   initSessionVariables() {
-    localStorage.removeItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.MATRIX_MODE_OPTION_INDEX,
-    );
-    localStorage.removeItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.MATRIX_TYPE_OPTION,
-    );
-    localStorage.removeItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID +
-        LS.TARGET_DISTRIBUTION_GRAPH_OPTION,
-    );
-    localStorage.removeItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.MATRIX_MODE_OPTION,
-    );
-    localStorage.removeItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.MATRIX_TARGET_OPTION,
-    );
-    localStorage.removeItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.TARGET_LIFT,
-    );
-    localStorage.removeItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.SELECTED_TRAIN_PREDICTOR,
-    );
-    localStorage.removeItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID +
-        LS.DISTRIBUTION_GRAPH_OPTION_X,
-    );
-    localStorage.removeItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID +
-        LS.DISTRIBUTION_GRAPH_OPTION_Y,
-    );
+    this.Ls.del(LS.MATRIX_MODE_OPTION_INDEX);
+    this.Ls.del(LS.MATRIX_TYPE_OPTION);
+    this.Ls.del(LS.TARGET_DISTRIBUTION_GRAPH_OPTION);
+    this.Ls.del(LS.MATRIX_MODE_OPTION);
+    this.Ls.del(LS.MATRIX_TARGET_OPTION);
+    this.Ls.del(LS.TARGET_LIFT);
+    this.Ls.del(LS.SELECTED_TRAIN_PREDICTOR);
+    this.Ls.del(LS.DISTRIBUTION_GRAPH_OPTION_X);
+    this.Ls.del(LS.DISTRIBUTION_GRAPH_OPTION_Y);
   }
 
   setFileDatas(datas: any) {
@@ -211,10 +187,7 @@ export class AppService {
 
   setSplitSizes(splitSizes) {
     this.splitSizes = splitSizes;
-    localStorage.setItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.SPLIT_SIZES,
-      JSON.stringify(this.splitSizes),
-    );
+    this.Ls.set(LS.SPLIT_SIZES, JSON.stringify(this.splitSizes));
   }
 
   resizeAndSetSplitSizes(item, sizes, itemSize, view) {

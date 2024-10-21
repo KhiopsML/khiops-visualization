@@ -13,6 +13,7 @@ import { TrackerService } from '../../../../khiops-library/providers/tracker.ser
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngstack/translate';
 import { LS } from '@khiops-library/enum/ls';
+import { AppService } from '@khiops-covisualization/providers/app.service';
 
 @Component({
   selector: 'app-user-settings',
@@ -26,16 +27,15 @@ export class UserSettingsComponent implements OnChanges {
   allowCookies: boolean;
   contrastValue: number;
   initialAllowCookies: boolean;
-  currentTheme: string =
-    localStorage.getItem(
-      AppConfig.covisualizationCommon.GLOBAL.LS_ID + LS.THEME_COLOR,
-    ) || 'light';
+  currentTheme: string;
 
   constructor(
     private translate: TranslateService,
     private trackerService: TrackerService,
     private snackBar: MatSnackBar,
-  ) {}
+  ) {
+    this.currentTheme == AppService.Ls.get(LS.THEME_COLOR, 'light');
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes?.opened?.currentValue) {
@@ -48,24 +48,17 @@ export class UserSettingsComponent implements OnChanges {
 
     // Matrix contrast
     this.contrastValue =
-      parseInt(
-        localStorage.getItem(
-          AppConfig.covisualizationCommon.GLOBAL.LS_ID +
-            LS.SETTING_MATRIX_CONTRAST,
-        ),
-        10,
-      ) || AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST;
-    localStorage.setItem(
-      AppConfig.covisualizationCommon.GLOBAL.LS_ID + LS.SETTING_MATRIX_CONTRAST,
+      parseInt(AppService.Ls.get(LS.SETTING_MATRIX_CONTRAST), 10) ||
+      AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST;
+    AppService.Ls.set(
+      LS.SETTING_MATRIX_CONTRAST,
       this.contrastValue.toString(),
     );
     AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
 
     // Allow cookies
     this.allowCookies =
-      localStorage.getItem(
-        AppConfig.covisualizationCommon.GLOBAL.LS_ID + LS.COOKIE_CONSENT,
-      ) === 'true' || false;
+      AppService.Ls.get(LS.COOKIE_CONSENT) === 'true' || false;
     this.initialAllowCookies = _.cloneDeep(this.allowCookies);
   }
 
@@ -75,22 +68,16 @@ export class UserSettingsComponent implements OnChanges {
 
   onClickOnSave() {
     // Save all items
-    localStorage.setItem(
-      AppConfig.covisualizationCommon.GLOBAL.LS_ID + LS.SETTING_MATRIX_CONTRAST,
+    AppService.Ls.set(
+      LS.SETTING_MATRIX_CONTRAST,
       this.contrastValue.toString(),
     );
     AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
 
-    localStorage.setItem(
-      AppConfig.covisualizationCommon.GLOBAL.LS_ID + LS.COOKIE_CONSENT,
-      this.allowCookies.toString(),
-    );
+    AppService.Ls.set(LS.COOKIE_CONSENT, this.allowCookies.toString());
 
     // theme
-    localStorage.setItem(
-      AppConfig.covisualizationCommon.GLOBAL.LS_ID + LS.THEME_COLOR,
-      this.currentTheme,
-    );
+    AppService.Ls.set(LS.THEME_COLOR, this.currentTheme);
     setTimeout(() => {
       // Wait for drawer close before reload
       location.reload();

@@ -13,7 +13,6 @@ import { DistributionDatasService } from '@khiops-visualization/providers/distri
 import { DistributionGraphComponent } from '@khiops-library/components/distribution-graph/distribution-graph.component';
 import { TargetDistributionGraphComponent } from '@khiops-visualization/components/commons/target-distribution-graph/target-distribution-graph.component';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
-import { AppConfig } from 'src/environments/environment';
 import { PreparationVariableModel } from '@khiops-visualization/model/preparation-variable.model';
 import { TreePreparationVariableModel } from '@khiops-visualization/model/tree-preparation-variable.model';
 import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
@@ -21,6 +20,8 @@ import { REPORTS } from '@khiops-library/enum/reports';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
+import { LS } from '@khiops-library/enum/ls';
+import { AppService } from '@khiops-visualization/providers/app.service';
 
 @Component({
   selector: 'app-variable-graph-details',
@@ -67,9 +68,8 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
     private treePreparationDatasService: TreePreparationDatasService,
     private distributionDatasService: DistributionDatasService,
   ) {
-    this.targetDistributionGraphType = localStorage.getItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID +
-        'TARGET_DISTRIBUTION_GRAPH_OPTION',
+    this.targetDistributionGraphType = AppService.Ls.get(
+      LS.TARGET_DISTRIBUTION_GRAPH_OPTION,
     );
   }
 

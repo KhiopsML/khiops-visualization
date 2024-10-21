@@ -94,15 +94,9 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
   public selectedTab: Object | undefined;
   currentDatas: any; // same type as global appDatas
   isCompatibleJson: boolean;
-  currentChannel =
-    localStorage.getItem(
-      AppConfig.covisualizationCommon.GLOBAL.LS_ID + LS.CHANNEL,
-    ) || 'latest';
-  showReleaseNotes = localStorage.getItem(
-    AppConfig.covisualizationCommon.GLOBAL.LS_ID + LS.SHOW_RELEASE_NOTES,
-  );
-
+  currentChannel: string;
   importedDatasChangedSub: Subscription;
+
   constructor(
     private configService: ConfigService,
     private appService: AppService,
@@ -119,6 +113,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     private eventsService: EventsService,
     private dialog: MatDialog,
   ) {
+    this.currentChannel = AppService.Ls.get(LS.CHANNEL, 'latest');
     if (pjson) {
       this.appTitle = pjson.title.covisualization;
       this.appVersion = pjson.version;

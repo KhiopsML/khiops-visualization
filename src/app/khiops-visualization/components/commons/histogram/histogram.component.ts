@@ -20,7 +20,6 @@ import { SelectableComponent } from '@khiops-library/components/selectable/selec
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { HistogramType } from './histogram.types';
-import { AppConfig } from 'src/environments/environment';
 import { TranslateService } from '@ngstack/translate';
 import {
   HistogramValuesI,
@@ -33,6 +32,7 @@ import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-op
 import { debounceTime, Subject } from 'rxjs';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { LS } from '@khiops-library/enum/ls';
+import { AppService } from '@khiops-visualization/providers/app.service';
 
 @Component({
   selector: 'app-histogram',
@@ -67,12 +67,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   yTicksCount = 10;
   tickSize = 0;
   minBarHeight = 4;
-  defaultBarColor: string =
-    localStorage.getItem(
-      AppConfig.visualizationCommon.GLOBAL.LS_ID + LS.THEME_COLOR,
-    ) === 'dark'
-      ? 'white'
-      : 'black';
+  defaultBarColor: string;
 
   // Local variables
   rangeXLog: RangeXLogI;
@@ -108,6 +103,9 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     public override configService: ConfigService,
   ) {
     super(selectableService, ngzone, configService);
+
+    this.defaultBarColor =
+      AppService.Ls.get(LS.THEME_COLOR) === 'dark' ? 'white' : 'black';
     HistogramUIService.setTranslationService(translate);
 
     this.colorSet = HistogramUIService.getColors();
@@ -177,21 +175,13 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   }
 
   changeGraphTypeX(type: string) {
-    localStorage.setItem(
-      this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
-        'DISTRIBUTION_GRAPH_OPTION_X',
-      type,
-    );
+    AppService.Ls.set(LS.DISTRIBUTION_GRAPH_OPTION_X, type);
     this.graphOptionsX.selected = type;
     this.datas && this.init();
   }
 
   changeGraphTypeY(type: string) {
-    localStorage.setItem(
-      this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
-        'DISTRIBUTION_GRAPH_OPTION_Y',
-      type,
-    );
+    AppService.Ls.set(LS.DISTRIBUTION_GRAPH_OPTION_Y, type);
     this.graphOptionsY.selected = type;
     this.datas && this.init();
   }

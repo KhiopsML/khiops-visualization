@@ -21,11 +21,11 @@ import { CellModel } from '../../model/cell.model';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
-import { MatrixCoordI } from '@khiops-library/interfaces/matrix-coord';
 import { Subscription } from 'rxjs';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { LS } from '@khiops-library/enum/ls';
+import { Ls } from '@khiops-library/providers/ls.service';
 
 @Component({
   selector: 'kl-matrix',
@@ -123,6 +123,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   isDrawing = false;
 
   constructor(
+    private Ls: Ls,
     public override selectableService: SelectableService,
     private eventsService: EventsService,
     public override ngzone: NgZone,
@@ -192,13 +193,11 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     setTimeout(() => {
       // #165 on variable change matrixDiv has been reset and so is undefined
       if (this.contrast === undefined) {
-        this.contrast =
-          localStorage.getItem(
-            this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
-              LS.SETTING_MATRIX_CONTRAST,
-          ) ||
+        this.contrast = this.Ls.get(
+          LS.SETTING_MATRIX_CONTRAST,
           this.khiopsLibraryService.getAppConfig().common.GLOBAL
-            .MATRIX_CONTRAST;
+            .MATRIX_CONTRAST,
+        );
       }
 
       // if graph mode change, reset isZerosToggled
@@ -800,11 +799,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   onContrastChanged(event: Event) {
     this.contrast = parseInt(event?.target?.['value'], 10);
     this.contrast &&
-      localStorage.setItem(
-        this.khiopsLibraryService.getAppConfig().common.GLOBAL.LS_ID +
-          LS.SETTING_MATRIX_CONTRAST,
-        this.contrast.toString(),
-      );
+      this.Ls.set(LS.SETTING_MATRIX_CONTRAST, this.contrast.toString());
     this.drawMatrix();
   }
 

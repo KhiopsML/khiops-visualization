@@ -128,6 +128,6 @@ export class FileLoaderComponent implements OnInit {
   }
 
   getOpenedFiles() {
-    return this.fileLoaderService.getFileHistory(this.applicationName);
+    return this.fileLoaderService.getFileHistory();
   }
 }

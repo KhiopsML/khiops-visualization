@@ -18,6 +18,7 @@ import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-d
 import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
 import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { LS } from '@khiops-library/enum/ls';
+import { AppService } from '@khiops-covisualization/providers/app.service';
 
 @Component({
   selector: 'app-unfold-hierarchy',
@@ -41,12 +42,7 @@ export class UnfoldHierarchyComponent implements OnInit {
   unfoldHierarchyTableTitle = '';
   selectedLineChartItem = '';
 
-  borderColor =
-    localStorage.getItem(
-      AppConfig.covisualizationCommon.GLOBAL.LS_ID + LS.THEME_COLOR,
-    ) === 'dark'
-      ? '#ffffff'
-      : '#000000';
+  borderColor: string;
   defaultMaxUnfoldHierarchy = 0;
   hierarchyDisplayedColumns: GridColumnsI[] = [];
   chartOptions = {
@@ -94,6 +90,9 @@ export class UnfoldHierarchyComponent implements OnInit {
     private khiopsLibraryService: KhiopsLibraryService,
     private dialogRef: MatDialogRef<UnfoldHierarchyComponent>,
   ) {
+    this.borderColor =
+      AppService.Ls.get(LS.THEME_COLOR) === 'dark' ? '#ffffff' : '#000000';
+
     this.hierarchyDisplayedColumns = [
       {
         headerName: this.translate.get('GLOBAL.DIMENSION'),
