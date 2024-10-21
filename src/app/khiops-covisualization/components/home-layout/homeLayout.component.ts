@@ -35,6 +35,7 @@ import { TrackerService } from '../../../khiops-library/providers/tracker.servic
 import { ElementRefI } from '@khiops-library/interfaces/element-ref';
 import { LS } from '@khiops-library/enum/ls';
 import { ViewManagerService } from '@khiops-covisualization/providers/view-manager.service';
+import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
 
 @Component({
   selector: 'app-home-layout',
@@ -113,6 +114,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     private treenodesService: TreenodesService,
     private eventsService: EventsService,
     private dialog: MatDialog,
+    private fileLoaderService: FileLoaderService,
   ) {
     this.currentChannel = AppService.Ls.get(LS.CHANNEL, 'latest');
     if (pjson) {
@@ -277,6 +279,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 
     // @ts-ignore
     this.appProjectView?.initialize();
+    this.fileLoaderService.fileLoaded.next({});
 
     this.initializeServices();
 
