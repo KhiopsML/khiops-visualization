@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AppService } from '@khiops-covisualization/providers/app.service';
+import { ProjectDatasService } from '@khiops-covisualization/providers/project-datas.service';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { ConfigService } from '@khiops-library/providers/config.service';
@@ -27,6 +28,7 @@ export class ProjectViewComponent
   constructor(
     private appService: AppService,
     private trackerService: TrackerService,
+    private projectDatasService: ProjectDatasService,
     private configService: ConfigService,
   ) {
     super();
@@ -37,7 +39,8 @@ export class ProjectViewComponent
   public initialize() {
     this.appDatas = this.appService.getDatas();
     if (this.appDatas.datas) {
-      this.projectSummaryDatas = this.appService.getProjectSummaryDatas();
+      this.projectSummaryDatas =
+        this.projectDatasService.getProjectSummaryDatas();
     }
   }
 

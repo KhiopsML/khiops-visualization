@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { AppConfig } from 'src/environments/environment';
 import * as _ from 'lodash'; // Important to import lodash in karma
-import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
-import { ProjectSummaryModel } from '@khiops-library/model/project-summary.model';
 import { Ls } from '@khiops-library/providers/ls.service';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { VIEW_LAYOUT } from '@khiops-covisualization/config/view-layout';
@@ -101,18 +99,5 @@ export class AppService {
       ...AppConfig.covisualizationCommon,
     };
     this.khiopsLibraryService.setAppConfig(AppConfig);
-  }
-
-  getProjectSummaryDatas(): InfosDatasI[] {
-    const appDatas = this.appDatas.datas;
-    if (appDatas.coclusteringReport) {
-      const projectSummaryDatas = new ProjectSummaryModel(
-        appDatas,
-        'coclusteringReport',
-      );
-      return projectSummaryDatas.displayDatas;
-    } else {
-      return undefined;
-    }
   }
 }

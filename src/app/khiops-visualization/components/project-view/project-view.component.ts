@@ -9,6 +9,7 @@ import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { LayoutService } from '@khiops-library/providers/layout.service';
+import { ProjectDatasService } from '@khiops-visualization/providers/project-datas.service';
 
 @Component({
   selector: 'app-project-view',
@@ -38,6 +39,7 @@ export class ProjectViewComponent
 
   constructor(
     private appService: AppService,
+    private projectDatasService: ProjectDatasService,
     private configService: ConfigService,
     private translate: TranslateService,
     private trackerService: TrackerService,
@@ -67,8 +69,9 @@ export class ProjectViewComponent
       this.sizes = this.layoutService.getViewSplitSizes('projectView');
 
       this.logsTitle = this.translate.get('GLOBAL.LOGS');
-      this.projectSummaryDatas = this.appService.getProjectSummaryDatas();
-      this.projectLogsDatas = this.appService.getProjectLogsDatas();
+      this.projectSummaryDatas =
+        this.projectDatasService.getProjectSummaryDatas();
+      this.projectLogsDatas = this.projectDatasService.getProjectLogsDatas();
     }
   }
 
