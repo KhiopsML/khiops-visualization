@@ -15,7 +15,7 @@ export class ProjectDatasService {
    * @returns {InfosDatasI[]} An array of project summary data or undefined if no preparation report is available.
    */
   getProjectSummaryDatas(): InfosDatasI[] {
-    const appDatas = this.appService.getDatas();
+    const appDatas = this.appService.getDatas().datas;
     if (appDatas.preparationReport) {
       const projectSummaryDatas = new ProjectSummaryModel(
         appDatas,
