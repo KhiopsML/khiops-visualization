@@ -5,7 +5,6 @@ import { PreparationDatasService } from './preparation-datas.service';
 import { ModelingPredictorModel } from '../model/modeling-predictor.model';
 import { SummaryModel } from '../model/summary.model';
 import { Preparation2dDatasService } from './preparation2d-datas.service';
-import { TreePreparationDatasService } from './tree-preparation-datas.service';
 import { ModelingDatasModel } from '../model/modeling-datas.model';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { TrainedPredictorModel } from '@khiops-visualization/model/trained-predictor.model';
@@ -24,10 +23,14 @@ export class ModelingDatasService {
     private translate: TranslateService,
     private appService: AppService,
     private preparationDatasService: PreparationDatasService,
-    private treePreparationDatasService: TreePreparationDatasService,
     private preparation2dDatasService: Preparation2dDatasService,
   ) {}
 
+  /**
+   * Initializes the modeling data and sets the selected variable.
+   * If a variable is already selected in the preparation data, it is set as the selected variable.
+   * Otherwise, the first variable from the trained predictors details is set as the selected variable.
+   */
   initialize() {
     this.modelingDatas = new ModelingDatasModel();
 
@@ -46,10 +49,20 @@ export class ModelingDatasService {
     }
   }
 
+  /**
+   * Retrieves the modeling data.
+   * @returns The current modeling data model.
+   */
   getDatas(): ModelingDatasModel {
     return this.modelingDatas;
   }
 
+  /**
+   * Sets the selected variable in the modeling data.
+   * If the provided variable object is valid, it is set as the selected variable.
+   * Otherwise, the first variable from the trained predictors details is set as the selected variable.
+   * @param object - The variable object to be set as selected.
+   */
   setSelectedVariable(
     object:
       | Preparation2dVariableModel
@@ -63,10 +76,17 @@ export class ModelingDatasService {
     }
   }
 
+  /**
+   * Removes the currently selected variable from the modeling data.
+   */
   removeSelectedVariable() {
     this.modelingDatas.selectedVariable = undefined;
   }
 
+  /**
+   * Retrieves the currently selected variable from the modeling data.
+   * @returns The selected variable model or undefined if not set.
+   */
   getSelectedVariable():
     | Preparation2dVariableModel
     | PreparationVariableModel
@@ -75,6 +95,12 @@ export class ModelingDatasService {
     return this.modelingDatas.selectedVariable;
   }
 
+  /**
+   * Initializes the selected variable in the modeling data.
+   * If the application data contains trained predictor details, the first variable
+   * from the details is set as the selected variable. Also updates the preparation
+   * selected variable if the JSON data is incomplete.
+   */
   initSelectedVariable() {
     const appDatas = this.appService.getDatas().datas;
     if (appDatas?.modelingReport?.trainedPredictorsDetails) {
@@ -95,6 +121,11 @@ export class ModelingDatasService {
     }
   }
 
+  /**
+   * Retrieves a variable by its name from the application data.
+   * @param name - The name of the variable to retrieve.
+   * @returns The variable object if found, otherwise undefined.
+   */
   getVariableFromName(name: string): any {
     let variable: any;
     const appDatas = this.appService.getDatas().datas;
@@ -114,6 +145,10 @@ export class ModelingDatasService {
     return variable;
   }
 
+  /**
+   * Retrieves the columns to be displayed for trained predictors.
+   * @returns An array of `GridColumnsI` objects representing the columns.
+   */
   getTrainedPredictorDisplayedColumns(): GridColumnsI[] {
     const displayedColumns: GridColumnsI[] = [];
     if (this.modelingDatas.trainedPredictorsListDatas) {
@@ -135,6 +170,11 @@ export class ModelingDatasService {
     return displayedColumns;
   }
 
+  /**
+   * Retrieves summary data for the current preparation source.
+   * @returns An array of `InfosDatasI` objects representing the summary data,
+   * or undefined if the summary data is not available.
+   */
   getSummaryDatas(): InfosDatasI[] | undefined {
     let summaryDatas;
     const appDatas = this.appService.getDatas().datas;
@@ -148,6 +188,16 @@ export class ModelingDatasService {
     }
   }
 
+  /**
+   * Retrieves a summary of trained predictors.
+   *
+   * This method fetches data from the application service and constructs an array of
+   * `InfosDatasI` objects, each representing a trained predictor. The summary includes
+   * the name of the predictor and the number of variables it uses, translated into the
+   * appropriate language.
+   *
+   * @returns {InfosDatasI[]} An array of summary data for each trained predictor.
+   */
   getTrainedPredictorsSummaryDatas(): InfosDatasI[] {
     const appDatas = this.appService.getDatas().datas;
     const trainedPredictorsSummaryDatas: InfosDatasI[] = [];
@@ -164,14 +214,34 @@ export class ModelingDatasService {
     return trainedPredictorsSummaryDatas;
   }
 
+  /**
+   * Sets the selected predictor in the modeling data.
+   * @param predictor - The predictor to be set as selected.
+   */
   setSelectedPredictor(predictor: any) {
-    this.modelingDatas.selectedPredictor = new ModelingPredictorModel(predictor);
+    this.modelingDatas.selectedPredictor = new ModelingPredictorModel(
+      predictor,
+    );
   }
 
+  /**
+   * Gets the currently selected predictor from the modeling data.
+   * @returns The selected predictor model or undefined if not set.
+   */
   getSelectedPredictor(): ModelingPredictorModel | undefined {
     return this.modelingDatas?.selectedPredictor;
   }
 
+  /**
+   * Retrieves a list of trained predictor data objects.
+   *
+   * This method fetches the trained predictor details from the application data
+   * and processes each predictor to gather its corresponding variable details.
+   * The processed data is then stored in `modelingDatas.trainedPredictorsListDatas`.
+   *
+   * @returns {TrainedPredictorModel[] | undefined} An array of `TrainedPredictorModel` objects
+   * if the trained predictor details are available, otherwise `undefined`.
+   */
   getTrainedPredictorListDatas(): TrainedPredictorModel[] | undefined {
     const appDatas = this.appService.getDatas().datas;
     const selectedPredictor = this.getSelectedPredictor();
