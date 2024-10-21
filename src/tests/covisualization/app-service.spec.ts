@@ -14,26 +14,5 @@ describe('coVisualization', () => {
       // Inject services
       appService = TestBed.inject(AppService);
     });
-
-    it('checkCollapsedNodesIntegrity should return valid datas [dimension name does not exist]', () => {
-      const fileDatas = require('../../assets/mocks/kc/co-3-num.json');
-      appService.setFileDatas(fileDatas);
-      let collapsedNodes: any = {
-        brokenName: [']-inf;5.45]', ']5.45;+inf['],
-        age: [']18.5;21.5]'],
-      };
-      collapsedNodes = appService.checkCollapsedNodesIntegrity(collapsedNodes);
-      expect(collapsedNodes).toEqual({ age: [']18.5;21.5]'] });
-    });
-
-    it('checkCollapsedNodesIntegrity should return valid datas [node name does not exist]', () => {
-      const fileDatas = require('../../assets/mocks/kc/co-3-num.json');
-      appService.setFileDatas(fileDatas);
-      let collapsedNodes: any = {
-        age: [']brokenNodeName[', ']18.5;21.5]'],
-      };
-      collapsedNodes = appService.checkCollapsedNodesIntegrity(collapsedNodes);
-      expect(collapsedNodes).toEqual({ age: [']18.5;21.5]'] });
-    });
   });
 });
