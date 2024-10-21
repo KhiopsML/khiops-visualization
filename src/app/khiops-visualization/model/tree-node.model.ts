@@ -51,6 +51,14 @@ export class TreeNodeModel {
     this.purity = this.getPurity(classesCount);
   }
 
+  /**
+   * Computes the probabilities of each target value.
+   * This method calculates the probability of each target value by dividing
+   * its frequency by the total frequency of all target values. The computed
+   * probabilities are stored in the `valuesProbs` array.
+   *
+   * @returns The array of computed probabilities.
+   */
   computeValuesProbs() {
     this.valuesProbs = [];
     for (let i = 0; i < this.targetValues.frequencies.length; i++) {
@@ -58,7 +66,14 @@ export class TreeNodeModel {
     }
     return this.valuesProbs;
   }
-
+  /**
+   * Recursively aggregates the target values (frequencies and values) from child nodes.
+   * This method traverses through the child nodes and collects their target values,
+   * merging them into the current node's target values. If a value already exists,
+   * its frequency is updated; otherwise, the value and its frequency are added.
+   *
+   * @param childNodes - The child nodes to aggregate target values from.
+   */
   deepGetChildrenModalityTargetValues(childNodes) {
     if (childNodes) {
       for (let i = 0; i < childNodes.length; i++) {
@@ -93,11 +108,13 @@ export class TreeNodeModel {
   }
 
   /**
-   * Compute purity of one node
-   * Purity is defined as the entropy S of the distribution of classes
-   * 1 + (p1*log2(p1) + p2*log2(p2) + … + pM*log2(pM)) / log2(M)
-   * Example for [30, 20, 50]
-   * 1 + (0.3*log2(0.3) + 0.2*log2(0.2) + 0.5*log2(0.5)) / log2(3)
+   * Compute the purity of a node.
+   * Purity is defined as the entropy S of the distribution of classes.
+   * The formula used is: 1 + (p1*log2(p1) + p2*log2(p2) + … + pM*log2(pM)) / log2(M)
+   * Example for [30, 20, 50]: 1 + (0.3*log2(0.3) + 0.2*log2(0.2) + 0.5*log2(0.5)) / log2(3)
+   *
+   * @param M - The number of classes.
+   * @returns The purity value or undefined if the node is not a leaf.
    */
   getPurity(M: number): number | undefined {
     let purity = undefined;

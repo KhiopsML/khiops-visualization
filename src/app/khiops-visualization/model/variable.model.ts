@@ -44,6 +44,12 @@ export class VariableModel {
     this.derivationRule = object.derivationRule || undefined;
   }
 
+  /**
+   * Computes the coverage of the mode value within the provided detailed data.
+   *
+   * @param detailedDatas - An object containing input values and their frequencies.
+   * @returns The coverage of the mode value as a fraction of the total frequencies.
+   */
   computeModeCoverage(detailedDatas: any) {
     const modeIndex = detailedDatas.inputValues.values.indexOf(this.mode);
     const modeCoverage =

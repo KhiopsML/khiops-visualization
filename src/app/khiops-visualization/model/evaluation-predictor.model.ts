@@ -69,6 +69,14 @@ export class EvaluationPredictorModel {
     }
   }
 
+  /**
+   * Computes the robustness of the predictor based on the training data.
+   * If the current evaluation type is 'TEST' and both training and current AUC values are available,
+   * it calculates the robustness as the minimum ratio between training AUC and current AUC.
+   * If the robustness cannot be computed, it is set to an empty string.
+   *
+   * @param train - The training data object containing the AUC value.
+   */
   computeRobustness(train) {
     if (
       this.currentEvaluationType === PREDICTOR_TYPES.TEST &&
