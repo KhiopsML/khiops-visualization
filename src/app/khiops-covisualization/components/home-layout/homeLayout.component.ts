@@ -63,6 +63,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     this.appService.setFileDatas(datas);
     if (datas) {
       this.initializeHome(datas);
+      this.selectFirstTab();
     }
   }
   activeTab = AppConfig.covisualizationCommon.HOME.ACTIVE_TAB_INDEX;
@@ -209,9 +210,11 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
         this.fileLoader.loadDebugFile();
       }, 100);
     }
-    this.fileLoadedSub = this.fileLoaderService.fileLoaded$.subscribe((e) => {
-      this.initialize(e);
-    });
+    this.fileLoadedSub = this.fileLoaderService.fileLoaded$.subscribe(
+      (datas) => {
+        this.initialize(datas);
+      },
+    );
   }
 
   onToggleNavDrawerChanged(mustReload: boolean) {
@@ -222,15 +225,19 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     }
   }
 
+  selectFirstTab() {
+    this.openContextView = false;
+    this.selectedTab = undefined;
+    this.activeTab = 0;
+  }
+
   initialize(datas = undefined) {
     this.currentDatas = datas;
     this.appService.setFileDatas(datas);
 
     if (datas && !UtilsService.isEmpty(datas)) {
       this.initializeHome(datas);
-      this.openContextView = false;
-      this.selectedTab = undefined;
-      this.activeTab = 0;
+      this.selectFirstTab();
     }
   }
 
@@ -280,11 +287,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     }
 
     this.initializeServices();
-
-    if (!this.configService.isElectron) {
-      // @ts-ignore
-      this.appAxisView?.initialize();
-    }
   }
 
   initializeServices() {
@@ -329,7 +331,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 
   openFileDialog() {
     this.dialogRef.closeAll();
-
     this.fileLoader.openFileDialog(null);
   }
 

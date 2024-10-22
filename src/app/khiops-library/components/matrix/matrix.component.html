@@ -108,7 +108,7 @@
           [max]="90"
           title="{{ 'TOOLTIPS.COMMONS.MATRIX_CONTRAST' | translate }}"
           (input)="onContrastChanged($event)"
-          [min]="0"
+          [min]="10"
           [step]="10"
         >
           <input [(ngModel)]="contrast" matSliderThumb />

@@ -21,6 +21,7 @@ import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-d
 import { AnnotationService } from '@khiops-covisualization/providers/annotation.service';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { ViewManagerService } from '@khiops-covisualization/providers/view-manager.service';
+import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
 
 @Component({
   selector: 'app-axis-view',
@@ -49,12 +50,14 @@ export class AxisViewComponent
   viewsLayoutChangedSub: Subscription;
   isBigJsonFile = false;
   override loadingView = false;
+  private fileLoadedSub?: Subscription;
 
   constructor(
     private appService: AppService,
     private treenodesService: TreenodesService,
     private dimensionsDatasService: DimensionsDatasService,
     private annotationService: AnnotationService,
+    private fileLoaderService: FileLoaderService,
     private translate: TranslateService,
     private viewManagerService: ViewManagerService,
     private snackBar: MatSnackBar,
@@ -62,8 +65,11 @@ export class AxisViewComponent
   ) {
     super();
   }
+
   ngOnInit() {
-    this.initialize();
+    this.fileLoadedSub = this.fileLoaderService.fileLoaded$.subscribe(() => {
+      this.initialize();
+    });
   }
 
   initialize() {
@@ -136,7 +142,19 @@ export class AxisViewComponent
   }
 
   /**
-   * Recompute json for large coclustering to prevent freeze
+   * Computes the large coclustering by unfolding the hierarchy state and merging collapsed nodes.
+   *
+   * @param {any} collapsedNodesSaved - The previously saved collapsed nodes.
+   *
+   * This method performs the following steps:
+   * 1. Retrieves the unfold hierarchy state from the app service or calculates it based on dimensions data.
+   * 2. Sets the selected unfold hierarchy state in the treenodes service.
+   * 3. Retrieves the leaf nodes for the given rank from the treenodes service.
+   * 4. Merges the current collapsed nodes with the previously saved collapsed nodes.
+   * 5. Saves the merged collapsed nodes in the treenodes service.
+   * 6. Constructs the saved JSON data from the collapsed nodes and sets it in the app service.
+   * 7. Initializes the data.
+   * 8. Displays a snackbar warning about the performance impact of unfolded data.
    */
   computeLargeCoclustering(collapsedNodesSaved) {
     const unfoldState =
@@ -176,6 +194,7 @@ export class AxisViewComponent
 
   ngOnDestroy() {
     this.viewsLayoutChangedSub?.unsubscribe();
+    this.fileLoadedSub?.unsubscribe();
   }
 
   onSplitDragEnd(event, item) {
