@@ -105,10 +105,7 @@
             />
           </svg>
         </kl-header-title>
-        <kl-file-loader
-          #fileLoader
-          [hidden]="true"
-        ></kl-file-loader>
+        <kl-file-loader #fileLoader [hidden]="true"></kl-file-loader>
         <kl-no-data
           id="welcome-message"
           fxFlexFill
@@ -246,12 +243,10 @@
           </mat-tab>
         </mat-tab-group>
         <app-project-view
-          #appProjectView
           [hidden]="!showProjectView()"
           [selectedTab]="selectedTab"
         ></app-project-view>
         <app-axis-view
-          #appAxisView
           [hidden]="!showAxisView()"
           [selectedTab]="selectedTab"
           [openContextView]="openContextView"

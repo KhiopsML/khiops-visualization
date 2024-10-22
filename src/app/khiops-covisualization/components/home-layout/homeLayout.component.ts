@@ -5,7 +5,6 @@ import {
   OnDestroy,
   ViewEncapsulation,
   Input,
-  ElementRef,
 } from '@angular/core';
 import { MatTabGroup, MatTabHeader, MatTab } from '@angular/material/tabs';
 import { AppConfig } from 'src/environments/environment';
@@ -29,11 +28,8 @@ import { ClustersService } from '@khiops-covisualization/providers/clusters.serv
 import { AnnotationService } from '@khiops-covisualization/providers/annotation.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { UtilsService } from '@khiops-library/providers/utils.service';
-import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-data.model';
 import { Subscription } from 'rxjs';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
-import { ElementRefI } from '@khiops-library/interfaces/element-ref';
-import { LS } from '@khiops-library/enum/ls';
 import { ViewManagerService } from '@khiops-covisualization/providers/view-manager.service';
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
 
@@ -44,17 +40,7 @@ import { FileLoaderService } from '@khiops-library/providers/file-loader.service
   encapsulation: ViewEncapsulation.None,
 })
 export class HomeLayoutComponent implements OnInit, OnDestroy {
-  showProjectTab: boolean;
-  private fileLoadedSub?: Subscription;
-  @ViewChild('appProjectView', {
-    static: false,
-  })
-  appProjectView: ElementRef<HTMLElement & ElementRefI>;
-  @ViewChild('appAxisView', {
-    static: false,
-  })
-  appAxisView: ElementRef<HTMLElement & ElementRefI>;
-
+  public showProjectTab: boolean;
   public get appDatas() {
     return this.appService.getDatas();
   }
@@ -66,19 +52,20 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
       this.selectFirstTab();
     }
   }
-  activeTab = AppConfig.covisualizationCommon.HOME.ACTIVE_TAB_INDEX;
-
+  public activeTab = AppConfig.covisualizationCommon.HOME.ACTIVE_TAB_INDEX;
   @ViewChild('fileLoader', {
     static: false,
   })
-  fileLoader: FileLoaderComponent;
+  public fileLoader: FileLoaderComponent;
+  public appTitle: string;
+  public isContextDimensions = false;
+  public appVersion: string;
+  public opened = false;
+  public openContextView = false;
+  public selectedTab: Object | undefined;
+  public isCompatibleJson: boolean;
 
-  appTitle: string;
-
-  // Hack to override click on tab
-  private tabsMenu: MatTabGroup;
-  dimensionsDatas: DimensionsDatasModel;
-  isContextDimensions = false;
+  private tabsMenu: MatTabGroup; // Hack to override click on tab
   @ViewChild('tabsMenu', {
     static: false,
   })
@@ -88,15 +75,9 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
       this.tabsMenu._handleClick = this.interceptTabChange.bind(this);
     }
   }
-
-  appVersion: string;
-  opened = false;
-  openContextView = false;
-  public selectedTab: Object | undefined;
-  currentDatas: any; // same type as global appDatas
-  isCompatibleJson: boolean;
-  currentChannel: string;
-  importedDatasChangedSub: Subscription;
+  private currentDatas: any; // same type as global appDatas
+  private importedDatasChangedSub: Subscription;
+  private fileLoadedSub?: Subscription;
 
   constructor(
     private configService: ConfigService,
@@ -116,7 +97,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private fileLoaderService: FileLoaderService,
   ) {
-    this.currentChannel = AppService.Ls.get(LS.CHANNEL, 'latest');
     if (pjson) {
       this.appTitle = pjson.title.covisualization;
       this.appVersion = pjson.version;
@@ -150,6 +130,24 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
       });
   }
 
+  ngOnInit() {
+    this.trackerService.trackEvent('page_view', 'axis');
+    this.trackerService.trackEvent('page_view', 'visit', this.appVersion);
+  }
+
+  ngAfterViewInit() {
+    if (AppConfig.debugFile) {
+      setTimeout(() => {
+        this.fileLoader.loadDebugFile();
+      }, 100);
+    }
+    this.fileLoadedSub = this.fileLoaderService.fileLoaded$.subscribe(
+      (datas) => {
+        this.initialize(datas);
+      },
+    );
+  }
+
   checkEmptyMessageVisibility(): boolean {
     return (
       !this.appDatas ||
@@ -176,7 +174,11 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     );
   }
 
-  interceptTabChange(tab: MatTab, tabHeader: MatTabHeader, index: number) {
+  private interceptTabChange(
+    tab: MatTab,
+    tabHeader: MatTabHeader,
+    index: number,
+  ) {
     if (index === 1 && this.isContextDimensions) {
       this.openContextView = true;
       this.trackerService.trackEvent('page_view', 'context');
@@ -199,24 +201,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     this.appService.setActiveTabIndex(this.activeTab);
   }
 
-  ngOnInit() {
-    this.trackerService.trackEvent('page_view', 'axis');
-    this.trackerService.trackEvent('page_view', 'visit', this.appVersion);
-  }
-
-  ngAfterViewInit() {
-    if (AppConfig.debugFile) {
-      setTimeout(() => {
-        this.fileLoader.loadDebugFile();
-      }, 100);
-    }
-    this.fileLoadedSub = this.fileLoaderService.fileLoaded$.subscribe(
-      (datas) => {
-        this.initialize(datas);
-      },
-    );
-  }
-
   onToggleNavDrawerChanged(mustReload: boolean) {
     this.opened = !this.opened;
 
@@ -225,13 +209,13 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     }
   }
 
-  selectFirstTab() {
+  private selectFirstTab() {
     this.openContextView = false;
     this.selectedTab = undefined;
     this.activeTab = 0;
   }
 
-  initialize(datas = undefined) {
+  private initialize(datas = undefined) {
     this.currentDatas = datas;
     this.appService.setFileDatas(datas);
 
@@ -241,7 +225,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     }
   }
 
-  initializeHome(datas) {
+  private initializeHome(datas) {
     // Close dialogs when opening new file #148
     this.dialogRef.closeAll();
 
@@ -289,7 +273,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     this.initializeServices();
   }
 
-  initializeServices() {
+  private initializeServices() {
     this.dimensionsDatasService.initialize();
     this.annotationService.initialize();
     this.clustersService.initialize();
@@ -303,7 +287,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
       this.dimensionsDatasService.isContextDimensions();
   }
 
-  openLoadExternalDataDialog() {
+  private openLoadExternalDataDialog() {
     const config = new MatDialogConfig();
     config.panelClass = 'hidden';
     config.backdropClass = 'hidden';
@@ -314,7 +298,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     dialogRef.disableClose = true;
   }
 
-  reloadView() {
+  private reloadView() {
     const currentDatas = this.currentDatas;
     setTimeout(() => {
       this.initialize();
@@ -327,15 +311,5 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
   closeFile() {
     this.dialogRef.closeAll();
     this.fileLoader.closeFile();
-  }
-
-  openFileDialog() {
-    this.dialogRef.closeAll();
-    this.fileLoader.openFileDialog(null);
-  }
-
-  openFile(filename) {
-    this.dialogRef.closeAll();
-    this.fileLoader.openFile(filename);
   }
 }
