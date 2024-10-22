@@ -41,6 +41,11 @@ export class FileLoaderService {
     return this.fileLoaderDatas;
   }
 
+  setDatas(datas): any {
+    this.fileLoaderDatas.datas = datas;
+    this.fileLoaded.next(datas);
+  }
+
   debugReadDatas(fileName?: string): any {
     // Visualization files
     // ===================
@@ -159,17 +164,15 @@ export class FileLoaderService {
   }
 
   readWebFile(url: string): any {
-    this.fileLoaderDatas.datas = undefined;
     this.fileLoaderDatas.isLoadingDatas = true;
+    this.setDatas(undefined);
 
     return new Promise((resolve, reject) => {
       this.http.get(url).subscribe(
         (datas: any) => {
-          this.fileLoaderDatas.datas = datas;
-
-          this.fileLoaderDatas.datas.filename = url;
+          datas.filename = url;
           this.fileLoaderDatas.isLoadingDatas = false;
-          this.fileLoaded.next(this.fileLoaderDatas.datas);
+          this.setDatas(datas);
           if (datas) {
             resolve(this.fileLoaderDatas.datas);
           } else {
@@ -180,7 +183,7 @@ export class FileLoaderService {
         },
         (error) => {
           this.fileLoaderDatas.isLoadingDatas = false;
-          this.fileLoaded.next(undefined);
+          this.setDatas(undefined);
 
           reject({
             status: 500,
@@ -191,26 +194,23 @@ export class FileLoaderService {
   }
 
   readFile(filename) {
-    this.fileLoaderDatas.datas = undefined;
     this.fileLoaderDatas.isLoadingDatas = true;
     this.fileLoaderDatas.isBigJsonFile = false;
+    this.setDatas(undefined);
 
     return new Promise((resolve, reject) => {
       let reader = new FileReader();
 
       reader.addEventListener('loadend', async (e) => {
         this.fileLoaderDatas.isLoadingDatas = false;
-        // @ts-ignore
-        this.fileLoaderDatas.datas = await JSON.parse(
-          e.target.result.toString(),
-        );
-        this.fileLoaderDatas.datas.filename = filename;
-        this.fileLoaded.next(this.fileLoaderDatas.datas);
+        const datas = await JSON.parse(e.target.result.toString());
+        datas.filename = filename;
+        this.setDatas(datas);
         resolve(this.fileLoaderDatas.datas);
       });
       reader.addEventListener('error', () => {
         reader.abort();
-        this.fileLoaded.next(undefined);
+        this.setDatas(undefined);
         reject(new Error('failed to process file'));
       });
       reader.readAsText(filename);
@@ -218,8 +218,7 @@ export class FileLoaderService {
   }
 
   closeFile() {
-    this.fileLoaderDatas.datas = undefined;
-    this.fileLoaded.next(this.fileLoaderDatas.datas);
+    this.setDatas(undefined);
   }
 
   setFileHistory(filename) {

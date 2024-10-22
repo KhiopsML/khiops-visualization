@@ -20,6 +20,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { TreenodesService } from './providers/treenodes.service';
 import { TrackerService } from '@khiops-library/providers/tracker.service';
 import { LS } from '@khiops-library/enum/ls';
+import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
 
 @Component({
   selector: 'app-root-covisualization',
@@ -47,6 +48,7 @@ export class AppComponent implements AfterViewInit {
     private trackerService: TrackerService,
     private configService: ConfigService,
     private translate: TranslateService,
+    private fileLoaderService: FileLoaderService,
     private treenodesService: TreenodesService,
     private element: ElementRef,
   ) {
@@ -85,6 +87,7 @@ export class AppComponent implements AfterViewInit {
           ...datas,
         };
         this.element.nativeElement.value = datas;
+        this.fileLoaderService.setDatas(datas);
       });
     };
     this.element.nativeElement.openSaveBeforeQuitDialog = (cb) => {

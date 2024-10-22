@@ -47,10 +47,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
   @Input()
   public set appDatas(datas) {
     this.appService.setFileDatas(datas);
-    if (datas) {
-      this.initializeHome(datas);
-      this.selectFirstTab();
-    }
   }
   public activeTab = AppConfig.covisualizationCommon.HOME.ACTIVE_TAB_INDEX;
   @ViewChild('fileLoader', {

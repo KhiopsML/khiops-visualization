@@ -42,9 +42,6 @@ export class HomeLayoutComponent implements OnInit {
   }
   public set appDatas(datas: any) {
     this.appService.setFileDatas(datas);
-    if (datas) {
-      this.initializeHome(datas);
-    }
   }
   public showProjectTab: boolean;
   public activeTab = AppConfig.visualizationCommon.HOME.ACTIVE_TAB_INDEX;
@@ -100,12 +97,6 @@ export class HomeLayoutComponent implements OnInit {
 
   ngOnInit() {
     this.trackerService.trackEvent('page_view', 'visit', this.appVersion);
-  }
-
-  private selectFirstTab() {
-    this.selectedTab = undefined;
-    this.activeTab = 0;
-    this.mainTabGroup.selectedIndex = 0;
   }
 
   ngAfterViewInit() {
@@ -191,5 +182,11 @@ export class HomeLayoutComponent implements OnInit {
   private closeFile() {
     this.dialogRef.closeAll();
     this.fileLoader.closeFile();
+  }
+
+  private selectFirstTab() {
+    this.selectedTab = undefined;
+    this.activeTab = 0;
+    this.mainTabGroup.selectedIndex = 0;
   }
 }

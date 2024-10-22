@@ -19,6 +19,7 @@ import { TrackerService } from '@khiops-library/providers/tracker.service';
 import { SaveService } from './providers/save.service';
 import { AppConfig } from 'src/environments/environment';
 import { LS } from '@khiops-library/enum/ls';
+import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
 
 @Component({
   selector: 'app-root-visualization',
@@ -45,6 +46,7 @@ export class AppComponent implements AfterViewInit {
     private configService: ConfigService,
     private saveService: SaveService,
     private trackerService: TrackerService,
+    private fileLoaderService: FileLoaderService,
     private element: ElementRef,
   ) {
     AppService.Ls.setLsId(AppConfig.visualizationCommon.GLOBAL.LS_ID);
@@ -64,6 +66,7 @@ export class AppComponent implements AfterViewInit {
           ...datas,
         };
         this.element.nativeElement.value = datas;
+        this.fileLoaderService.setDatas(datas);
       });
     };
     this.element.nativeElement.openChannelDialog = (cb) => {
