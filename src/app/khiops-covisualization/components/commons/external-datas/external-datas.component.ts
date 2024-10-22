@@ -15,15 +15,15 @@ export class ExternalDatasComponent
   extends SelectableComponent
   implements OnInit
 {
-  @Input() position: number;
-  @Input() externalData: any[];
-  @Input() selectedComposition: CompositionModel;
-  @Input() selectedDimension: DimensionModel;
+  @Input() private position: number;
+  @Input() private externalData: any[];
+  @Input() private selectedComposition: CompositionModel;
+  @Input() private selectedDimension: DimensionModel;
 
-  override id: any = undefined;
-  currentExternalDatasTitle: string = '';
-  currentExternalDatas: any[] = [];
-  componentType = COMPONENT_TYPES.EXTERNAL_DATAS; // needed to copy datas
+  public override id: any = undefined;
+  public currentExternalDatasTitle: string = '';
+  public currentExternalDatas: any[] = [];
+  public componentType = COMPONENT_TYPES.EXTERNAL_DATAS; // needed to copy datas
 
   constructor(
     public override selectableService: SelectableService,
@@ -53,7 +53,7 @@ export class ExternalDatasComponent
     }
   }
 
-  updateExternalDatas() {
+  private updateExternalDatas() {
     this.currentExternalDatas = [];
     if (this.selectedComposition?.externalData) {
       // If composition is available, load datas from it (faster)

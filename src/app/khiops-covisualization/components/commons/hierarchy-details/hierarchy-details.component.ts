@@ -21,18 +21,17 @@ import { SelectedTreeClusterModel } from '@khiops-covisualization/model/selected
 })
 export class HierarchyDetailsComponent extends SelectableComponent {
   @ViewChild(TreeSelectComponent)
-  treeSelect: TreeSelectComponent;
+  private treeSelect: TreeSelectComponent;
 
-  @Input() selectedDimension: DimensionModel;
-  @Input() selectedNode: TreeNodeModel;
-  @Input() position: number;
-  @Input() dimensions: DimensionModel[];
-  @Input() dimensionsTree: TreeNodeModel[];
+  @Input() public selectedDimension: DimensionModel;
+  @Input() public selectedNode: TreeNodeModel;
+  @Input() public position: number;
+  @Input() public dimensions: DimensionModel[];
+  @Input() public dimensionsTree: TreeNodeModel[];
 
-  selectedTreeCluster: SelectedTreeClusterModel;
-
-  componentType = COMPONENT_TYPES.TREE; // needed to copy datas
-  override id: any = undefined;
+  public selectedTreeCluster: SelectedTreeClusterModel;
+  public componentType = COMPONENT_TYPES.TREE; // needed to copy datas
+  public override id: any = undefined;
 
   constructor(
     public override selectableService: SelectableService,
@@ -50,6 +49,14 @@ export class HierarchyDetailsComponent extends SelectableComponent {
     });
   }
 
+  /**
+   * Function to update the selected tree cluster
+   * used to copy datas
+   */
+  onClusterChange(cluster: any) {
+    this.selectedTreeCluster = cluster;
+  }
+
   @HostListener('window:keyup', ['$event'])
   keyEvent(event) {
     const currentSelectedArea = this.selectableService.getSelectedArea();
@@ -59,13 +66,5 @@ export class HierarchyDetailsComponent extends SelectableComponent {
     } else {
       return;
     }
-  }
-
-  /**
-   * Function to update the selected tree cluster
-   * used to copy datas
-   */
-  onClusterChange(cluster: any) {
-    this.selectedTreeCluster = cluster;
   }
 }
