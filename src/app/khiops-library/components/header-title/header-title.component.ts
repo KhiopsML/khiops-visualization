@@ -14,10 +14,13 @@ import {
 export class HeaderTitleComponent implements OnInit {
   @Input() title: string;
   displayedTitle: string[];
+  logoPath: string;
 
   ngOnInit() {
     if (this.title) {
       this.displayedTitle = this.title.split(' ');
     }
+
+    this.logoPath = `./../../../../assets/logo-${this.displayedTitle[1].toLowerCase()}.svg`;
   }
 }
