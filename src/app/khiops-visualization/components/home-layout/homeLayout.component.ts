@@ -3,9 +3,7 @@ import {
   OnInit,
   ViewEncapsulation,
   ViewChild,
-  HostListener,
   Input,
-  ElementRef,
 } from '@angular/core';
 
 import { FileLoaderComponent } from '@khiops-library/components/file-loader/file-loader.component';
@@ -26,8 +24,6 @@ import pjson from 'package.json';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
-import { ElementRefI } from '@khiops-library/interfaces/element-ref';
-import { LS } from '@khiops-library/enum/ls';
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
 import { Subscription } from 'rxjs';
 
@@ -38,36 +34,27 @@ import { Subscription } from 'rxjs';
   encapsulation: ViewEncapsulation.None,
 })
 export class HomeLayoutComponent implements OnInit {
-  showProjectTab: boolean;
-  private fileLoadedSub?: Subscription;
-
+  public showProjectTab: boolean;
   @Input()
-  get appDatas(): any {
+  public get appDatas(): any {
     return this.appService.getDatas();
   }
-  set appDatas(datas: any) {
+  public set appDatas(datas: any) {
     this.initialize(datas);
   }
+  public activeTab = AppConfig.visualizationCommon.HOME.ACTIVE_TAB_INDEX;
+  public appTitle: string;
+  public appVersion: string;
+  public opened = false;
+  public selectedTab: Object | undefined;
+  public isCompatibleJson: boolean;
 
-  @ViewChild('appProjectView', {
-    static: false,
-  })
-  appProjectView: ElementRef<HTMLElement & ElementRefI>;
-
-  activeTab = AppConfig.visualizationCommon.HOME.ACTIVE_TAB_INDEX;
   @ViewChild('fileLoader', {
     static: false,
   })
-  fileLoader: FileLoaderComponent;
-  appTitle: string;
-
-  appVersion: string;
-  opened = false;
-  public selectedTab: Object | undefined;
-  currentDatas: any;
-  isCompatibleJson: boolean;
-  currentChannel: string;
-  isLargeScreen: boolean;
+  private fileLoader: FileLoaderComponent;
+  private currentDatas: any;
+  private fileLoadedSub?: Subscription;
 
   constructor(
     private configService: ConfigService,
@@ -86,18 +73,10 @@ export class HomeLayoutComponent implements OnInit {
     private preparation2dDatasService: Preparation2dDatasService,
     private fileLoaderService: FileLoaderService,
   ) {
-    this.currentChannel = AppService.Ls.get(LS.CHANNEL, 'latest');
     if (pjson) {
       this.appTitle = pjson.title.visualization;
       this.appVersion = pjson.version;
     }
-  }
-
-  @HostListener('window:resize', ['$event'])
-  sizeChange() {
-    this.isLargeScreen =
-      window.innerWidth >
-      AppConfig.visualizationCommon.GLOBAL.SMALL_SCREEN_LIMIT;
   }
 
   onSelectedTabChanged(e) {
@@ -141,7 +120,7 @@ export class HomeLayoutComponent implements OnInit {
     }
   }
 
-  initialize(datas = undefined) {
+  private initialize(datas = undefined) {
     this.isCompatibleJson = false;
     this.selectedTab = undefined;
     this.currentDatas = datas;
@@ -152,7 +131,7 @@ export class HomeLayoutComponent implements OnInit {
     }
   }
 
-  initializeHome(datas) {
+  private initializeHome(datas) {
     this.isCompatibleJson = this.appService.isCompatibleJson(datas);
     UtilsService.resetSearch(AppConfig.visualizationCommon.GLOBAL.LS_ID);
 
@@ -187,7 +166,7 @@ export class HomeLayoutComponent implements OnInit {
     this.modelingDatasService.initialize();
   }
 
-  reloadView() {
+  private reloadView() {
     const currentDatas = this.currentDatas;
     setTimeout(() => {
       this.initialize();
@@ -197,23 +176,8 @@ export class HomeLayoutComponent implements OnInit {
     }, 250); // do it after nav drawer anim
   }
 
-  setChannel(channel) {
-    AppService.Ls.set(LS.CHANNEL, channel);
-    this.currentChannel = channel;
-  }
-
-  closeFile() {
+  private closeFile() {
     this.dialogRef.closeAll();
     this.fileLoader.closeFile();
-  }
-
-  openFileDialog() {
-    this.dialogRef.closeAll();
-    this.fileLoader.openFileDialog(null);
-  }
-
-  openFile(filename) {
-    this.dialogRef.closeAll();
-    this.fileLoader.openFile(filename);
   }
 }
