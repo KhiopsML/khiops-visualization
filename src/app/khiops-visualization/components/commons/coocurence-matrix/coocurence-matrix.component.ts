@@ -37,18 +37,19 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
   @ViewChild('matrix', {
     static: false,
   })
-  matrix: MatrixComponent;
+  private matrix: MatrixComponent;
 
-  preparation2dDatas: Preparation2dDatasModel;
-  @Input() selectedVariable: Preparation2dVariableModel;
-  @Output() selectCellRowChanged: EventEmitter<any> = new EventEmitter();
+  public preparation2dDatas: Preparation2dDatasModel;
+  @Input() private selectedVariable: Preparation2dVariableModel; // used to detect var change
+  @Output() private selectCellRowChanged: EventEmitter<any> =
+    new EventEmitter();
 
-  matrixOptions: MatrixOptionsModel = new MatrixOptionsModel();
-  matrixModes: MatrixModesModel = new MatrixModesModel();
-  matrixTargets: MatrixTargetsModel = new MatrixTargetsModel();
-  matrixCells: CoocurenceCellsModel;
-  minMaxValues: MatrixRangeValuesI;
-  isFullscreen = false;
+  public matrixOptions: MatrixOptionsModel = new MatrixOptionsModel();
+  public matrixModes: MatrixModesModel = new MatrixModesModel();
+  public matrixTargets: MatrixTargetsModel = new MatrixTargetsModel();
+  public matrixCells: CoocurenceCellsModel;
+  public minMaxValues: MatrixRangeValuesI;
+  public isFullscreen = false;
 
   constructor(
     public selectableService: SelectableService,
@@ -110,7 +111,67 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
     }
   }
 
-  constructModeSelectBox() {
+  onToggleFullscreen(isFullscreen: boolean) {
+    this.isFullscreen = isFullscreen;
+    setTimeout(() => {
+      this.matrix.drawMatrix();
+    });
+  }
+
+  onSelectedMatrixTabChanged(e) {
+    const matrixOptionsToggle = this.configService
+      .getRootElementDom()
+      .querySelector<HTMLElement>('#matrix-option-toggle');
+    if (e.index === 1) {
+      // this.trackerService.trackEvent('click', 'matrix_tab', 'cells');
+      matrixOptionsToggle.style.display = 'none';
+    } else {
+      // this.trackerService.trackEvent('click', 'matrix_tab', 'matrix');
+
+      matrixOptionsToggle.style.display = 'flex';
+
+      // Redraw matrix otherwise it is empty
+      this.matrix.drawMatrix();
+    }
+  }
+
+  changeMatrixMode(mode: MatrixModeI) {
+    // this.trackerService.trackEvent('click', 'matrix_mode', mode.mode);
+    this.constructTargetSelectBox();
+    this.selectTargetSelectBox(this.matrixTargets.selected);
+  }
+
+  changeMatrixTarget(target: string) {
+    // this.trackerService.trackEvent('click', 'matrix_target');
+    this.matrixTargets.selected = target;
+    AppService.Ls.set(LS.MATRIX_TARGET_OPTION, target);
+  }
+
+  onMatrixAxisInverted() {
+    this.preparation2dDatasService.toggleIsAxisInverted();
+    this.constructModeSelectBox();
+    this.selectCellRowChanged.emit(0);
+  }
+
+  onCellSelected(event: any) {
+    // event type can change
+    if (event.datas) {
+      const currentIndex = event.datas.index;
+      this.preparation2dDatasService.setSelectedCellIndex(currentIndex);
+      this.preparation2dDatasService.getCurrentCellDatas();
+      this.selectCellRowChanged.emit(currentIndex);
+    }
+  }
+
+  onSelectCellRowChanged(rowItem: any) {
+    // event type can change
+    const currentIndex = rowItem.id;
+    this.preparation2dDatasService.setSelectedCellIndex(currentIndex);
+    this.preparation2dDatasService.getCurrentCellDatas();
+    this.selectCellRowChanged.emit(currentIndex);
+  }
+
+  private constructModeSelectBox() {
     let varName1 = this.preparation2dDatas.selectedVariable.name1;
     let varName2 = this.preparation2dDatas.selectedVariable.name2;
     if (this.preparation2dDatasService.isAxisInverted()) {
@@ -197,31 +258,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
     this.matrixModes = { ...this.matrixModes };
   }
 
-  onToggleFullscreen(isFullscreen: boolean) {
-    this.isFullscreen = isFullscreen;
-    setTimeout(() => {
-      this.matrix.drawMatrix();
-    });
-  }
-
-  onSelectedMatrixTabChanged(e) {
-    const matrixOptionsToggle = this.configService
-      .getRootElementDom()
-      .querySelector<HTMLElement>('#matrix-option-toggle');
-    if (e.index === 1) {
-      // this.trackerService.trackEvent('click', 'matrix_tab', 'cells');
-      matrixOptionsToggle.style.display = 'none';
-    } else {
-      // this.trackerService.trackEvent('click', 'matrix_tab', 'matrix');
-
-      matrixOptionsToggle.style.display = 'flex';
-
-      // Redraw matrix otherwise it is empty
-      this.matrix.drawMatrix();
-    }
-  }
-
-  constructTargetSelectBox() {
+  private constructTargetSelectBox() {
     // Add optional targets if available
     if (this.preparation2dDatasService.getTargetsIfAvailable()) {
       this.matrixTargets.targets =
@@ -232,7 +269,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
     }
   }
 
-  selectTargetSelectBox(selected = null) {
+  private selectTargetSelectBox(selected = null) {
     // Add optional targets if available
     if (
       this.preparation2dDatasService.getTargetsIfAvailable() &&
@@ -255,41 +292,5 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
     } else {
       this.matrixTargets.selected = undefined;
     }
-  }
-
-  changeMatrixMode(mode: MatrixModeI) {
-    // this.trackerService.trackEvent('click', 'matrix_mode', mode.mode);
-    this.constructTargetSelectBox();
-    this.selectTargetSelectBox(this.matrixTargets.selected);
-  }
-
-  changeMatrixTarget(target: string) {
-    // this.trackerService.trackEvent('click', 'matrix_target');
-    this.matrixTargets.selected = target;
-    AppService.Ls.set(LS.MATRIX_TARGET_OPTION, target);
-  }
-
-  onMatrixAxisInverted() {
-    this.preparation2dDatasService.toggleIsAxisInverted();
-    this.constructModeSelectBox();
-    this.selectCellRowChanged.emit(0);
-  }
-
-  onCellSelected(event: any) {
-    // event type can change
-    if (event.datas) {
-      const currentIndex = event.datas.index;
-      this.preparation2dDatasService.setSelectedCellIndex(currentIndex);
-      this.preparation2dDatasService.getCurrentCellDatas();
-      this.selectCellRowChanged.emit(currentIndex);
-    }
-  }
-
-  onSelectCellRowChanged(rowItem: any) {
-    // event type can change
-    const currentIndex = rowItem.id;
-    this.preparation2dDatasService.setSelectedCellIndex(currentIndex);
-    this.preparation2dDatasService.getCurrentCellDatas();
-    this.selectCellRowChanged.emit(currentIndex);
   }
 }

@@ -36,19 +36,17 @@ import { MatTabGroup } from '@angular/material/tabs';
 })
 export class HomeLayoutComponent implements OnInit {
   @ViewChild('mainTabGroup') public mainTabGroup!: MatTabGroup;
-
-  public showProjectTab: boolean;
   @Input()
   public get appDatas(): any {
     return this.appService.getDatas();
   }
   public set appDatas(datas: any) {
-    // this.initialize(datas);
     this.appService.setFileDatas(datas);
     if (datas) {
       this.initializeHome(datas);
     }
   }
+  public showProjectTab: boolean;
   public activeTab = AppConfig.visualizationCommon.HOME.ACTIVE_TAB_INDEX;
   public appTitle: string;
   public appVersion: string;

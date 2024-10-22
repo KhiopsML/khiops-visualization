@@ -42,9 +42,13 @@ export class ProjectViewComponent
   }
 
   ngAfterViewInit() {
-    this.fileLoadedSub = this.fileLoaderService.fileLoaded$.subscribe(() => {
-      this.sizes = this.layoutService.getViewSplitSizes('projectView');
-    });
+    this.fileLoadedSub = this.fileLoaderService.fileLoaded$.subscribe(
+      (datas) => {
+        if (datas) {
+          this.sizes = this.layoutService.getViewSplitSizes('projectView');
+        }
+      },
+    );
   }
 
   ngOnDestroy(): void {

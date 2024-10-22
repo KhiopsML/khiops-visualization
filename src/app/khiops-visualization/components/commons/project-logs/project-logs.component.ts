@@ -37,9 +37,14 @@ export class ProjectLogsComponent {
   }
 
   ngAfterViewInit() {
-    this.fileLoadedSub = this.fileLoaderService.fileLoaded$.subscribe(() => {
-      this.projectLogsDatas = this.projectDatasService.getProjectLogsDatas();
-    });
+    this.fileLoadedSub = this.fileLoaderService.fileLoaded$.subscribe(
+      (datas) => {
+        if (datas) {
+          this.projectLogsDatas =
+            this.projectDatasService.getProjectLogsDatas();
+        }
+      },
+    );
   }
 
   ngOnDestroy(): void {

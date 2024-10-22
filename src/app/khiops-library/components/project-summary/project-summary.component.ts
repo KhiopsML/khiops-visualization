@@ -17,10 +17,14 @@ export class ProjectSummaryComponent {
   constructor(private fileLoaderService: FileLoaderService) {}
 
   ngAfterViewInit() {
-    this.fileLoadedSub = this.fileLoaderService.fileLoaded$.subscribe(() => {
-      this.projectSummaryDatas =
-        this.projectDatasService.getProjectSummaryDatas();
-    });
+    this.fileLoadedSub = this.fileLoaderService.fileLoaded$.subscribe(
+      (datas) => {
+        if (datas) {
+          this.projectSummaryDatas =
+            this.projectDatasService.getProjectSummaryDatas();
+        }
+      },
+    );
   }
 
   ngOnDestroy(): void {

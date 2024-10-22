@@ -57,9 +57,13 @@ export class AxisViewComponent
   }
 
   ngOnInit() {
-    this.fileLoadedSub = this.fileLoaderService.fileLoaded$.subscribe(() => {
-      this.initialize();
-    });
+    this.fileLoadedSub = this.fileLoaderService.fileLoaded$.subscribe(
+      (datas) => {
+        if (datas) {
+          this.initialize();
+        }
+      },
+    );
   }
 
   ngOnDestroy() {
