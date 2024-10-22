@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AppService } from '../../providers/app.service';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { EvaluationDatasService } from '@khiops-visualization/providers/evaluation-datas.service';
-import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { EvaluationDatasModel } from '@khiops-visualization/model/evaluation-datas.model';
 import { EvaluationPredictorModel } from '@khiops-visualization/model/evaluation-predictor.model';
 import { EvaluationTypeModel } from '@khiops-visualization/model/evaluation-type.model';
@@ -18,12 +16,9 @@ export class EvaluationViewComponent
   extends SelectableTabComponent
   implements OnInit
 {
-  sizes: any;
-
-  // managed by selectable-tab component
-  override tabIndex = 4;
-  summaryDatas: InfosDatasI[];
-  evaluationDatas: EvaluationDatasModel;
+  public sizes: any;
+  public override tabIndex = 4; // managed by selectable-tab component
+  public evaluationDatas: EvaluationDatasModel;
 
   constructor(
     private trackerService: TrackerService,
