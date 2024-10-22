@@ -26,6 +26,7 @@ import { UtilsService } from '@khiops-library/providers/utils.service';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
 import { Subscription } from 'rxjs';
+import { MatTabGroup } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-home-layout',
@@ -34,6 +35,8 @@ import { Subscription } from 'rxjs';
   encapsulation: ViewEncapsulation.None,
 })
 export class HomeLayoutComponent implements OnInit {
+  @ViewChild('mainTabGroup') public mainTabGroup!: MatTabGroup;
+
   public showProjectTab: boolean;
   @Input()
   public get appDatas(): any {
@@ -101,6 +104,12 @@ export class HomeLayoutComponent implements OnInit {
     this.trackerService.trackEvent('page_view', 'visit', this.appVersion);
   }
 
+  private selectFirstTab() {
+    this.selectedTab = undefined;
+    this.activeTab = 0;
+    this.mainTabGroup.selectedIndex = 0;
+  }
+
   ngAfterViewInit() {
     if (AppConfig.debugFile) {
       setTimeout(() => {
@@ -132,6 +141,7 @@ export class HomeLayoutComponent implements OnInit {
     this.appService.setFileDatas(datas);
     if (datas && !UtilsService.isEmpty(datas)) {
       this.initializeHome(datas);
+      this.selectFirstTab();
     }
   }
 
