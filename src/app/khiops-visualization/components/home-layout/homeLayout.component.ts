@@ -40,7 +40,11 @@ export class HomeLayoutComponent implements OnInit {
     return this.appService.getDatas();
   }
   public set appDatas(datas: any) {
-    this.initialize(datas);
+    // this.initialize(datas);
+    this.appService.setFileDatas(datas);
+    if (datas) {
+      this.initializeHome(datas);
+    }
   }
   public activeTab = AppConfig.visualizationCommon.HOME.ACTIVE_TAB_INDEX;
   public appTitle: string;
@@ -103,9 +107,11 @@ export class HomeLayoutComponent implements OnInit {
         this.fileLoader.loadDebugFile();
       }, 100);
     }
-    this.fileLoadedSub = this.fileLoaderService.fileLoaded$.subscribe((e) => {
-      this.initialize(e);
-    });
+    this.fileLoadedSub = this.fileLoaderService.fileLoaded$.subscribe(
+      (datas) => {
+        this.initialize(datas);
+      },
+    );
   }
 
   ngOnDestroy() {
@@ -122,12 +128,10 @@ export class HomeLayoutComponent implements OnInit {
 
   private initialize(datas = undefined) {
     this.isCompatibleJson = false;
-    this.selectedTab = undefined;
     this.currentDatas = datas;
     this.appService.setFileDatas(datas);
     if (datas && !UtilsService.isEmpty(datas)) {
       this.initializeHome(datas);
-      this.activeTab = 0;
     }
   }
 
