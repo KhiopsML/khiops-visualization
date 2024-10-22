@@ -22,16 +22,16 @@ import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
   styleUrls: ['./cluster-details.component.scss'],
 })
 export class ClusterDetailsComponent implements OnInit, OnChanges {
-  @Input() position: number;
-  @Input() dimensionsTree: TreeNodeModel[];
-  @Input() selectedDimension: DimensionModel;
-  @Input() selectedNode: TreeNodeModel;
-  nodeToSelect: TreeNodeModel;
-  clusterDisplayedColumns: GridColumnsI[] = [];
+  @Input() public position: number;
+  @Input() private dimensionsTree: TreeNodeModel[];
+  @Input() private selectedDimension: DimensionModel;
+  @Input() private selectedNode: TreeNodeModel;
 
-  title: string;
-  filteredDimensionsClusters: ClusterDetailsModel[];
-  id: any;
+  public nodeToSelect: TreeNodeModel;
+  public clusterDisplayedColumns: GridColumnsI[] = [];
+  public title: string;
+  public filteredDimensionsClusters: ClusterDetailsModel[];
+  public id: any;
 
   constructor(
     private translate: TranslateService,
@@ -108,7 +108,14 @@ export class ClusterDetailsComponent implements OnInit, OnChanges {
     }
   }
 
-  updateSelectedNode() {
+  onSelectRowChanged(item: ClusterDetailsModel) {
+    this.treenodesService.setSelectedNode(
+      this.selectedDimension.name,
+      item._id,
+    );
+  }
+
+  private updateSelectedNode() {
     if (this.selectedNode && this.filteredDimensionsClusters) {
       // Get nodes from input to update it
       this.nodeToSelect = _.cloneDeep(this.selectedNode);
@@ -142,18 +149,11 @@ export class ClusterDetailsComponent implements OnInit, OnChanges {
     }
   }
 
-  getFirstNodeLeaf(node: TreeNodeModel): TreeNodeModel {
+  private getFirstNodeLeaf(node: TreeNodeModel): TreeNodeModel {
     if (node.children.length > 0 && node.children[0].isLeaf === false) {
       return this.getFirstNodeLeaf(node.children[0]);
     } else {
       return node.children[0];
     }
-  }
-
-  onSelectRowChanged(item: ClusterDetailsModel) {
-    this.treenodesService.setSelectedNode(
-      this.selectedDimension.name,
-      item._id,
-    );
   }
 }
