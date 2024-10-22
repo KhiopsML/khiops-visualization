@@ -43,15 +43,14 @@ import { LayoutService } from '@khiops-library/providers/layout.service';
   ],
 })
 export class HierarchySelectComponent implements OnChanges, AfterViewInit {
-  @Input() selectedDimension: DimensionModel;
-  @Input() selectedNode: TreeNodeModel;
-  @Input() position: number;
-  @Input() dimensions: DimensionModel[];
-  @Input() dimensionsTree: TreeNodeModel[];
-  @Input() selectedTreeCluster: SelectedTreeClusterModel;
-  @Output() selectedTreeClusterChange = new EventEmitter<any>();
+  @Input() public selectedDimension: DimensionModel;
+  @Input() public dimensions: DimensionModel[];
+  @Input() public selectedTreeCluster: SelectedTreeClusterModel;
+  @Input() private selectedNode: TreeNodeModel;
+  @Input() private position: number;
+  @Output() private selectedTreeClusterChange = new EventEmitter<any>();
 
-  showStats = false;
+  public showStats = false;
 
   constructor(
     private treenodesService: TreenodesService,
@@ -96,6 +95,16 @@ export class HierarchySelectComponent implements OnChanges, AfterViewInit {
     );
   }
 
+  /**
+   * Changes the selected dimension and updates the position.
+   * Displays a warning if the file is large.
+   * Switches the layout split sizes based on the new position.
+   * Updates selected nodes and dimension data.
+   * Recomputes and constructs dimension trees and matrix data.
+   *
+   * @param dimension - The new dimension to be selected.
+   * @param newPosition - The new position for the dimension.
+   */
   changeSelectedDimension(dimension: DimensionModel, newPosition: number) {
     const isBigJsonFile = this.appService.isBigJsonFile();
     if (isBigJsonFile) {

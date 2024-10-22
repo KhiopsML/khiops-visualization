@@ -32,24 +32,23 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild('matrix', {
     static: false,
   })
-  matrix: MatrixComponent;
+  private matrix: MatrixComponent;
 
-  @Input() viewId: string;
-  @Input() sizeId: string;
-  @Input() selectedDimensions: DimensionModel[];
-  @Input() viewsLayout: ViewLayoutVO;
+  @Input() public sizeId: string;
+  @Input() public viewsLayout: ViewLayoutVO;
+  @Input() private viewId: string;
+  @Input() private selectedDimensions: DimensionModel[]; // Used to check for dim change
 
-  sizes: any;
+  public sizes: any;
+  public dimensionsDatas: DimensionsDatasModel;
+  public matrixModes: MatrixModesModel = new MatrixModesModel();
+  public matrixOptions: MatrixOptionsModel = new MatrixOptionsModel();
+  public initNodesEvents = 0; // improve draw matrix perf
+  public isFullscreen = false;
 
-  dimensionsDatas: DimensionsDatasModel;
-  matrixModes: MatrixModesModel = new MatrixModesModel();
-  matrixOptions: MatrixOptionsModel = new MatrixOptionsModel();
-
-  isFullscreen = false;
-  treeSelectedNodeChangedSub: Subscription;
-  viewsLayoutChangedSub: Subscription;
-  initNodesEvents = 0; // improve draw matrix perf
-  isFirstLoad = true;
+  private treeSelectedNodeChangedSub: Subscription;
+  private viewsLayoutChangedSub: Subscription;
+  private isFirstLoad = true;
 
   constructor(
     private viewManagerService: ViewManagerService,
@@ -63,29 +62,7 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
 
     this.treeSelectedNodeChangedSub =
       this.eventsService.treeSelectedNodeChanged.subscribe((e) => {
-        this.initNodesEvents++;
-        if (this.isFirstLoad) {
-          // At first launch collapse saved collapsed nodes
-          this.isFirstLoad = false;
-        } else {
-          // check if it's a context selection to redraw matrix
-          const isContextDimension =
-            this.dimensionsDatasService.isContextDimension(e.hierarchyName);
-
-          if (
-            (!e.stopPropagation &&
-              this.initNodesEvents ===
-                this.dimensionsDatas.dimensions.length) ||
-            isContextDimension
-          ) {
-            this.matrix.drawMatrix();
-          } else if (
-            !e.stopPropagation &&
-            this.initNodesEvents > this.dimensionsDatas.dimensions.length
-          ) {
-            this.matrix.drawSelectedNodes();
-          }
-        }
+        this.onTreeSelectedNodeChanged(e);
       });
 
     this.viewsLayoutChangedSub =
@@ -128,7 +105,47 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
     });
   }
 
-  constructModeSelectBox() {
+  onSplitDragEnd(event, item) {
+    this.layoutService.resizeAndSetSplitSizes(
+      item,
+      this.sizes,
+      event.sizes,
+      this.viewId,
+    );
+  }
+
+  onCellSelected(event: { datas: CellModel }) {
+    this.treenodesService.setSelectedNode(
+      event.datas.xnamePart,
+      event.datas.xaxisPart,
+    );
+    this.treenodesService.setSelectedNode(
+      event.datas.ynamePart,
+      event.datas.yaxisPart,
+    );
+  }
+
+  onMatrixAxisInverted() {
+    this.dimensionsDatasService.toggleIsAxisInverted();
+  }
+
+  changeMatrixType(type: string) {
+    this.dimensionsDatas.matrixOption = type; // Save it into the global model to keep it into saved datas
+  }
+
+  changeMatrixMode(mode: MatrixModeI) {
+    this.dimensionsDatas.matrixMode = this.matrixModes.selectedIndex; // Save it into the global model to keep it into saved datas
+  }
+
+  changeConditionalOnContext() {
+    // this.trackerService.trackEvent('click', 'matrix_conditionnal_on_context');
+    this.dimensionsDatas.conditionalOnContext =
+      !this.dimensionsDatas.conditionalOnContext;
+    this.treenodesService.initConditionalOnContextNodes();
+    this.eventsService.emitConditionalOnContextChanged();
+  }
+
+  private constructModeSelectBox() {
     const varName1 = this.dimensionsDatas.selectedDimensions[0].name;
     const varName2 = this.dimensionsDatas.selectedDimensions[1].name;
 
@@ -172,43 +189,39 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  onSplitDragEnd(event, item) {
-    this.layoutService.resizeAndSetSplitSizes(
-      item,
-      this.sizes,
-      event.sizes,
-      this.viewId,
-    );
-  }
+  /**
+   * Handles the event when a tree node is selected.
+   * Increments the initNodesEvents counter to improve matrix drawing performance.
+   * On the first load, it collapses saved collapsed nodes.
+   * If it's not the first load, it checks if the selected node is a context dimension.
+   * If the event should propagate and all nodes are initialized, or if it's a context dimension,
+   * it redraws the matrix. Otherwise, it redraws only the selected nodes.
+   *
+   * @param e - The event object containing details about the selected node.
+   */
+  private onTreeSelectedNodeChanged(e) {
+    this.initNodesEvents++;
+    if (this.isFirstLoad) {
+      // At first launch collapse saved collapsed nodes
+      this.isFirstLoad = false;
+    } else {
+      // check if it's a context selection to redraw matrix
+      const isContextDimension = this.dimensionsDatasService.isContextDimension(
+        e.hierarchyName,
+      );
 
-  onCellSelected(event: { datas: CellModel }) {
-    this.treenodesService.setSelectedNode(
-      event.datas.xnamePart,
-      event.datas.xaxisPart,
-    );
-    this.treenodesService.setSelectedNode(
-      event.datas.ynamePart,
-      event.datas.yaxisPart,
-    );
-  }
-
-  onMatrixAxisInverted() {
-    this.dimensionsDatasService.toggleIsAxisInverted();
-  }
-
-  changeMatrixType(type: string) {
-    this.dimensionsDatas.matrixOption = type; // Save it into the global model to keep it into saved datas
-  }
-
-  changeMatrixMode(mode: MatrixModeI) {
-    this.dimensionsDatas.matrixMode = this.matrixModes.selectedIndex; // Save it into the global model to keep it into saved datas
-  }
-
-  changeConditionalOnContext() {
-    // this.trackerService.trackEvent('click', 'matrix_conditionnal_on_context');
-    this.dimensionsDatas.conditionalOnContext =
-      !this.dimensionsDatas.conditionalOnContext;
-    this.treenodesService.initConditionalOnContextNodes();
-    this.eventsService.emitConditionalOnContextChanged();
+      if (
+        (!e.stopPropagation &&
+          this.initNodesEvents === this.dimensionsDatas.dimensions.length) ||
+        isContextDimension
+      ) {
+        this.matrix.drawMatrix();
+      } else if (
+        !e.stopPropagation &&
+        this.initNodesEvents > this.dimensionsDatas.dimensions.length
+      ) {
+        this.matrix.drawSelectedNodes();
+      }
+    }
   }
 }

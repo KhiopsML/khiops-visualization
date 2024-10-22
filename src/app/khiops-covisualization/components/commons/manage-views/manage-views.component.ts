@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { AppService } from '@khiops-covisualization/providers/app.service';
 import { MatDialogRef } from '@angular/material/dialog';
-import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { ViewLayoutVO } from '@khiops-covisualization/model/view-layout.model';
 import * as _ from 'lodash'; // Important to import lodash in karma
-import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-data.model';
 import { ViewManagerService } from '@khiops-covisualization/providers/view-manager.service';
+import { MAT_RIPPLE_COLOR } from '@khiops-covisualization/config/colors';
 
 @Component({
   selector: 'app-manage-views',
@@ -13,35 +12,19 @@ import { ViewManagerService } from '@khiops-covisualization/providers/view-manag
   styleUrls: ['./manage-views.component.scss'],
 })
 export class ManageViewsComponent {
-  viewsLayout: ViewLayoutVO;
-  dimensionsDatas: DimensionsDatasModel;
-  isDimVisible: boolean[];
-  isContextView = true;
-
-  matRippleColor = 'rgba(80, 124, 182, .4)';
+  public viewsLayout: ViewLayoutVO;
+  public isDimVisible: boolean[];
+  public isContextView = true;
+  public matRippleColor = MAT_RIPPLE_COLOR;
 
   constructor(
     private appService: AppService,
     private viewManagerService: ViewManagerService,
-    private dimensionsDatasService: DimensionsDatasService,
     private dialogRef: MatDialogRef<ManageViewsComponent>,
   ) {
-    this.dimensionsDatas = this.dimensionsDatasService.getDatas();
     this.viewsLayout = _.cloneDeep(this.viewManagerService.getViewsLayout());
     this.isContextView = this.appService.getActiveTabIndex() === 1;
-
-    this.isDimVisible = new Array(
-      this.viewsLayout.dimensionsViewsLayoutsVO.length,
-    ).fill(true);
-    for (let i = 0; i < this.viewsLayout.dimensionsViewsLayoutsVO.length; i++) {
-      if (this.appService.getActiveTabIndex() === 0 && i >= 2) {
-        // Hide views layouts of contexts
-        this.isDimVisible[i] = false;
-      } else if (this.appService.getActiveTabIndex() === 1 && i < 2) {
-        // Hide views layouts of selected dimensions
-        this.isDimVisible[i] = false;
-      }
-    }
+    this.computeIsDimensionVisible();
   }
 
   onClickOnSave() {
@@ -56,5 +39,25 @@ export class ManageViewsComponent {
   toggleDimension(dimensionLayout): boolean {
     dimensionLayout.isChecked = !dimensionLayout.isChecked;
     return false;
+  }
+
+  /**
+   * Computes the visibility of dimension views layouts based on the active tab index.
+   * If the active tab index is 0, hides views layouts of contexts (i.e., dimensions with index >= 2).
+   * If the active tab index is 1, hides views layouts of selected dimensions (i.e., dimensions with index < 2).
+   */
+  private computeIsDimensionVisible() {
+    this.isDimVisible = new Array(
+      this.viewsLayout.dimensionsViewsLayoutsVO.length,
+    ).fill(true);
+    for (let i = 0; i < this.viewsLayout.dimensionsViewsLayoutsVO.length; i++) {
+      if (this.appService.getActiveTabIndex() === 0 && i >= 2) {
+        // Hide views layouts of contexts
+        this.isDimVisible[i] = false;
+      } else if (this.appService.getActiveTabIndex() === 1 && i < 2) {
+        // Hide views layouts of selected dimensions
+        this.isDimVisible[i] = false;
+      }
+    }
   }
 }

@@ -14,15 +14,15 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./selected-clusters.component.scss'],
 })
 export class SelectedClustersComponent implements OnDestroy {
-  clustersDisplayedColumns: GridColumnsI[] = [];
-  @Input() selectedNodes: TreeNodeModel[];
-  selectedNodesDimensions: TreeNodeModel[];
-  selectedClusters: SelectedClusterModel[] = undefined;
-  activeClusters: SelectedClusterModel[] = undefined;
-  treeSelectedNodeChangedSub: Subscription;
+  @Input() private selectedNodes: TreeNodeModel[];
 
-  id: any = 'selected-clusters-grid';
-  title: string;
+  public clustersDisplayedColumns: GridColumnsI[] = [];
+  public selectedClusters: SelectedClusterModel[] = undefined;
+  public activeClusters: SelectedClusterModel[] = undefined;
+  public id: any = 'selected-clusters-grid';
+  public title: string;
+
+  private treeSelectedNodeChangedSub: Subscription;
 
   constructor(
     private translate: TranslateService,
@@ -83,7 +83,16 @@ export class SelectedClustersComponent implements OnDestroy {
       });
   }
 
-  updateClustersInformations() {
+  ngOnDestroy() {
+    this.treeSelectedNodeChangedSub.unsubscribe();
+  }
+
+  /**
+   * Updates the clusters information based on the selected nodes.
+   * If all nodes are selected, it optimizes the update by fetching the details
+   * from the clusters service and creating a list of selected clusters.
+   */
+  private updateClustersInformations() {
     // Check if all nodes are selected to update to optimize
     if (
       this.selectedNodes &&
@@ -106,7 +115,12 @@ export class SelectedClustersComponent implements OnDestroy {
     }
   }
 
-  selectActiveClusters() {
+  /**
+   * Selects the active clusters from the list of selected clusters.
+   * It determines the positions of the dimensions and adds the corresponding
+   * clusters to the active clusters list.
+   */
+  private selectActiveClusters() {
     const currentActiveClusters = [];
     const firstDimPos =
       this.dimensionsDatasService.getDimensionPositionFromName(
@@ -119,9 +133,5 @@ export class SelectedClustersComponent implements OnDestroy {
     currentActiveClusters.push(this.selectedClusters[firstDimPos]);
     currentActiveClusters.push(this.selectedClusters[secondDimPos]);
     this.activeClusters = currentActiveClusters;
-  }
-
-  ngOnDestroy() {
-    this.treeSelectedNodeChangedSub.unsubscribe();
   }
 }

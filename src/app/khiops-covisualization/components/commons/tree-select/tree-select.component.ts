@@ -28,17 +28,15 @@ import { DimensionsDatasService } from '@khiops-covisualization/providers/dimens
 export class TreeSelectComponent
   implements AfterViewInit, OnChanges, OnDestroy
 {
-  @Input() selectedDimension: DimensionModel;
-  @Input() selectedNode: TreeNodeModel;
-  @Input() position: number;
-  @Input() dimensionsTree: TreeNodeModel[];
+  @Input() public position: number;
+  @Input() private selectedDimension: DimensionModel;
+  @Input() private selectedNode: TreeNodeModel;
+  @Input() private dimensionsTree: TreeNodeModel[];
 
-  treeSelectedNodeChangedSub: Subscription;
-
-  id: any = undefined;
-  tree: any;
-
-  nodeInSelection: any;
+  public id: any = undefined;
+  private treeSelectedNodeChangedSub: Subscription;
+  private tree: any;
+  private nodeInSelection: any;
 
   constructor(
     private dimensionsDatasService: DimensionsDatasService,
@@ -73,7 +71,7 @@ export class TreeSelectComponent
       });
   }
 
-  selectNextNode(keyCode) {
+  public selectNextNode(keyCode) {
     // Keep id into node selection
     this.nodeInSelection = this.id;
 
@@ -81,11 +79,11 @@ export class TreeSelectComponent
     this.tree?.selectNextNode('tree-comp-' + this.position, keyCode);
   }
 
-  hideActiveEntries() {
+  public hideActiveEntries() {
     this.tree.unselectNodes();
   }
 
-  showActiveEntries() {
+  public showActiveEntries() {
     this.tree.selectNode(this.selectedNode);
   }
 
@@ -114,7 +112,7 @@ export class TreeSelectComponent
     });
   }
 
-  initTree(selectedNode?: TreeNodeModel) {
+  private initTree(selectedNode?: TreeNodeModel) {
     // @ts-ignore
     this.tree = new TreeView(
       this.dimensionsTree,
