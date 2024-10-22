@@ -218,7 +218,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
   private initialize(datas = undefined) {
     this.currentDatas = datas;
     this.appService.setFileDatas(datas);
-
     if (datas && !UtilsService.isEmpty(datas)) {
       this.initializeHome(datas);
       this.selectFirstTab();

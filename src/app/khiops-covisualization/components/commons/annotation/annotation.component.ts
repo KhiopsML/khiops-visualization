@@ -24,13 +24,13 @@ export class AnnotationComponent
   extends SelectableComponent
   implements OnInit, OnChanges
 {
-  @Input() selectedDimension: DimensionModel;
-  @Input() selectedNode: TreeNodeModel;
-  @Input() position: number;
-  value: string;
-  override id: any = undefined;
-  componentType = COMPONENT_TYPES.ANNOTATIONS; // needed to copy datas
-  title: string;
+  @Input() private selectedDimension: DimensionModel;
+  @Input() public selectedNode: TreeNodeModel;
+  @Input() private position: number;
+  public value: string;
+  public override id: any = undefined;
+  public componentType = COMPONENT_TYPES.ANNOTATIONS; // needed to copy datas
+  public title: string;
 
   constructor(
     public override selectableService: SelectableService,

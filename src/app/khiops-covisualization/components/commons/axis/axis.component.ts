@@ -1,7 +1,4 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { VariableGraphDetailsComponent } from '../variable-graph-details/variable-graph-details.component';
-import { DimensionModel } from '@khiops-library/model/dimension.model';
-import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
 import { CompositionModel } from '@khiops-covisualization/model/composition.model';
 import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-data.model';
 import { LayoutService } from '@khiops-library/providers/layout.service';
@@ -14,32 +11,21 @@ import { DimensionViewLayoutModel } from '@khiops-covisualization/model/dimensio
   styleUrls: ['./axis.component.scss'],
 })
 export class AxisComponent implements OnInit {
-  @ViewChild('appVariableGraphDetails', {
-    static: false,
-  })
-  appVariableGraphDetails: VariableGraphDetailsComponent;
+  @Input() public sizeId: string;
+  @Input() public position: number;
+  @Input() public dimensionsDatas: DimensionsDatasModel;
+  @Input() public axisLayout: DimensionViewLayoutModel;
+  @Input() private viewId: string;
 
-  @Input() viewId: string;
-  @Input() sizeId: string;
-  @Input() position: number;
-  @Input() dimensionsDatas: DimensionsDatasModel;
-  @Input() axisLayout: DimensionViewLayoutModel;
-  sizes: any;
-
-  selectedDimension: DimensionModel;
-  selectedNode: DimensionModel;
-  dimensionsTree: TreeNodeModel[];
-  dimensionsClusters: TreeNodeModel[][];
-
-  column0Index = 0;
-  column1Index = 1;
-  column2Index = 2;
-  column3Index = 3;
-  column4Index = 4;
-
-  viewLayout: DimensionViewLayoutModel;
-  invertedPosition: number;
-  selectedComposition: CompositionModel;
+  public sizes: any;
+  public column0Index = 0;
+  public column1Index = 1;
+  public column2Index = 2;
+  public column3Index = 3;
+  public column4Index = 4;
+  public invertedPosition: number;
+  public selectedComposition: CompositionModel;
+  private viewLayout: DimensionViewLayoutModel;
 
   constructor(
     private layoutService: LayoutService,
@@ -48,12 +34,6 @@ export class AxisComponent implements OnInit {
 
   ngOnInit() {
     this.initializeView();
-  }
-
-  initializeView() {
-    this.sizes = this.layoutService.getViewSplitSizes(this.viewId);
-    this.computeComponentsSizes();
-    this.invertedPosition = this.position === 0 ? 1 : 0;
   }
 
   onSplitDragEnd(event, item) {
@@ -67,11 +47,16 @@ export class AxisComponent implements OnInit {
       );
       this.computeComponentsSizes();
     }
+  }
 
-    // Resize to update graphs dimensions
-    if (this.appVariableGraphDetails) {
-      this.appVariableGraphDetails.resize();
-    }
+  selectedCompositionChanged(composition: CompositionModel) {
+    this.selectedComposition = composition;
+  }
+
+  private initializeView() {
+    this.sizes = this.layoutService.getViewSplitSizes(this.viewId);
+    this.computeComponentsSizes();
+    this.invertedPosition = this.position === 0 ? 1 : 0;
   }
 
   /**
@@ -79,7 +64,7 @@ export class AxisComponent implements OnInit {
    * to get correct width split value from local storage
    * because sizes[sizeId] is an array of visible components length
    */
-  computeComponentsSizes() {
+  private computeComponentsSizes() {
     this.viewLayout =
       this.viewManagerService.getViewsLayout().dimensionsViewsLayoutsVO[
         this.position
@@ -110,9 +95,5 @@ export class AxisComponent implements OnInit {
         i++;
       }
     }
-  }
-
-  selectedCompositionChanged(composition: CompositionModel) {
-    this.selectedComposition = composition;
   }
 }
