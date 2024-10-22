@@ -1,12 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Output,
-  ViewChild,
-  OnDestroy,
-  EventEmitter,
-  Input,
-} from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, Input } from '@angular/core';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { AppConfig } from 'src/environments/environment';
 import { AppService } from '@khiops-covisualization/providers/app.service';
@@ -32,24 +24,22 @@ export class AxisViewComponent
   extends SelectableTabComponent
   implements OnInit, OnDestroy
 {
+  @Input() public openContextView = false;
+  public sizes: any;
+  public dimensionsDatas: DimensionsDatasModel;
+  public viewsLayout: ViewLayoutVO;
+  public isBigJsonFile = false;
+  public override loadingView = false;
+
   @ViewChild('axisAppPos0', {
     static: false,
   })
-  axisAppPos0: AxisComponent;
-
+  private axisAppPos0: AxisComponent;
   @ViewChild('axisAppPos1', {
     static: false,
   })
-  axisAppPos1: AxisComponent;
-
-  sizes: any;
-  dimensionsDatas: DimensionsDatasModel;
-  @Output() toggleContext: EventEmitter<any> = new EventEmitter();
-  @Input() openContextView = false;
-  viewsLayout: ViewLayoutVO;
-  viewsLayoutChangedSub: Subscription;
-  isBigJsonFile = false;
-  override loadingView = false;
+  private axisAppPos1: AxisComponent;
+  private viewsLayoutChangedSub: Subscription;
   private fileLoadedSub?: Subscription;
 
   constructor(
@@ -72,7 +62,25 @@ export class AxisViewComponent
     });
   }
 
-  initialize() {
+  ngOnDestroy() {
+    this.viewsLayoutChangedSub?.unsubscribe();
+    this.fileLoadedSub?.unsubscribe();
+  }
+
+  onSplitDragEnd(event, item) {
+    this.layoutService.resizeAndSetSplitSizes(
+      item,
+      this.sizes,
+      event.sizes,
+      'axisView',
+    );
+
+    // Resize graph when area is resized
+    this.axisAppPos0.onSplitDragEnd(null, null);
+    this.axisAppPos1.onSplitDragEnd(null, null);
+  }
+
+  private initialize() {
     this.loadingView = true;
     this.isBigJsonFile = this.appService.isBigJsonFile();
 
@@ -121,7 +129,7 @@ export class AxisViewComponent
    * 4. Saves the initial dimension state.
    * 5. Constructs the dimensions trees.
    */
-  initializeDatas() {
+  private initializeDatas() {
     this.dimensionsDatas = this.dimensionsDatasService.getDatas();
     this.dimensionsDatasService.getDimensions();
     this.dimensionsDatasService.initSelectedDimensions();
@@ -133,7 +141,7 @@ export class AxisViewComponent
    * Init saved datas from Json savedDatas
    * nodesNames, selectedNodes, matrix states and selections, view layouts ...
    */
-  initializeSavedState() {
+  private initializeSavedState() {
     this.treenodesService.initSavedDatas();
     this.annotationService.initSavedDatas();
     this.dimensionsDatasService.initSavedDatas();
@@ -144,7 +152,7 @@ export class AxisViewComponent
    * Recompute json when nodes have been collapsed
    * @param collapsedNodes
    */
-  computeSavedState(collapsedNodes) {
+  private computeSavedState(collapsedNodes) {
     let datas = this.treenodesService.constructSavedJson(collapsedNodes);
     this.appService.setCroppedFileDatas(datas);
     this.initializeDatas();
@@ -165,7 +173,7 @@ export class AxisViewComponent
    * 7. Initializes the data.
    * 8. Displays a snackbar warning about the performance impact of unfolded data.
    */
-  computeLargeCoclustering(collapsedNodesSaved) {
+  private computeLargeCoclustering(collapsedNodesSaved) {
     const unfoldState =
       this.appService.getSavedDatas('unfoldHierarchyState') ||
       this.dimensionsDatas.dimensions.length *
@@ -199,23 +207,5 @@ export class AxisViewComponent
         verticalPosition: 'bottom',
       },
     );
-  }
-
-  ngOnDestroy() {
-    this.viewsLayoutChangedSub?.unsubscribe();
-    this.fileLoadedSub?.unsubscribe();
-  }
-
-  onSplitDragEnd(event, item) {
-    this.layoutService.resizeAndSetSplitSizes(
-      item,
-      this.sizes,
-      event.sizes,
-      'axisView',
-    );
-
-    // Resize graph when area is resized
-    this.axisAppPos0.onSplitDragEnd(null, null);
-    this.axisAppPos1.onSplitDragEnd(null, null);
   }
 }
