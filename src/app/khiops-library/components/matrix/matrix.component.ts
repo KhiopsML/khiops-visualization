@@ -26,6 +26,7 @@ import { EventsService } from '@khiops-covisualization/providers/events.service'
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { LS } from '@khiops-library/enum/ls';
 import { Ls } from '@khiops-library/providers/ls.service';
+import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 
 @Component({
   selector: 'kl-matrix',
@@ -275,7 +276,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
 
               if (this.inputDatas.matrixCellDatas) {
                 let [minVal, maxVal, minValH, maxValH] =
-                  this.getMinAndMaxFromGraphMode(
+                  MatrixService.getMinAndMaxFromGraphMode(
                     this.matrixValues,
                     this.minMaxValues,
                     this.graphMode.mode,
@@ -333,9 +334,11 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
 
                   if (currentVal && maxVal) {
                     // Do not draw empty cells
-                    const color = this.getColorForPercentage(
+                    const color = MatrixService.getColorForPercentage(
                       currentVal,
                       maxVal,
+                      this.contrast,
+                      this.graphMode.mode,
                     );
                     this.matrixCtx.fillStyle = color;
                     const { xCanvas, yCanvas, wCanvas, hCanvas } = cellDatas;
@@ -534,9 +537,9 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
 
       this.matrixSelectedCtx.lineWidth = 2;
       this.matrixSelectedCtx.strokeStyle =
-        this.graphMode.mode === 'MUTUAL_INFO' ||
-        this.graphMode.mode === 'HELLINGER' ||
-        this.graphMode.mode === 'MUTUAL_INFO_TARGET_WITH_CELL'
+        this.graphMode.mode === MATRIX_MODES.MUTUAL_INFO ||
+        this.graphMode.mode === MATRIX_MODES.HELLINGER ||
+        this.graphMode.mode === MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL
           ? '#000000'
           : '#57689d';
       this.matrixSelectedCtx.strokeRect(
@@ -682,67 +685,15 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   updateLegendBar() {
     if (!this.legendBar.nativeElement) return;
     if (
-      this.graphMode.mode === 'MUTUAL_INFO' ||
-      this.graphMode.mode === 'HELLINGER' ||
-      this.graphMode.mode === 'MUTUAL_INFO_TARGET_WITH_CELL'
+      this.graphMode.mode === MATRIX_MODES.MUTUAL_INFO ||
+      this.graphMode.mode === MATRIX_MODES.HELLINGER ||
+      this.graphMode.mode === MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL
     ) {
       this.legendBar.nativeElement.style.background =
         MatrixService.getInterestColorsLegend();
     } else {
       this.legendBar.nativeElement.style.background =
         MatrixService.getFrequencyColorsLegend();
-    }
-  }
-
-  getColorForPercentage(currentColorVal: number, maxVal: number) {
-    let colorValue = 0;
-    const A = this.contrast;
-    const cste = 0.1;
-    const P = Math.exp(Math.log(cste) / 100);
-    const c = Math.pow(P, A);
-
-    if (currentColorVal >= 0) {
-      colorValue = Math.pow(currentColorVal / maxVal, c);
-    } else {
-      colorValue = -Math.pow(-currentColorVal / maxVal, c);
-    }
-
-    if (currentColorVal === 0) {
-      return 'white';
-    } else {
-      let percentColors;
-      if (
-        this.graphMode.mode === 'MUTUAL_INFO' ||
-        this.graphMode.mode === 'HELLINGER' ||
-        this.graphMode.mode === 'MUTUAL_INFO_TARGET_WITH_CELL'
-      ) {
-        const isPositiveValue = colorValue >= 0;
-        percentColors = MatrixService.getInterestColors(isPositiveValue);
-        colorValue = Math.abs(colorValue);
-      } else {
-        percentColors = MatrixService.getFrequencyColors();
-      }
-
-      let i = 1;
-      for (i; i < percentColors.length - 1; i++) {
-        if (colorValue < percentColors[i].pct) {
-          break;
-        }
-      }
-      const lower = percentColors[i - 1];
-      const upper = percentColors[i];
-      const range = upper.pct - lower.pct;
-      const rangePct = (colorValue - lower.pct) / range;
-      const pctLower = 1 - rangePct;
-      const pctUpper = rangePct;
-      const color = {
-        r: Math.floor(lower.color.r * pctLower + upper.color.r * pctUpper),
-        g: Math.floor(lower.color.g * pctLower + upper.color.g * pctUpper),
-        b: Math.floor(lower.color.b * pctLower + upper.color.b * pctUpper),
-      };
-      const rgba = 'rgba(' + [color.r, color.g, color.b, 1].join(',') + ')';
-
-      return rgba;
     }
   }
 
@@ -855,34 +806,8 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     this.zoomCanvas(0);
   }
 
-  getMinAndMaxFromGraphMode(matrixValues, minMaxValues, mode: string) {
-    let minVal: number | undefined;
-    let maxVal: number | undefined;
-    let minValH: number | undefined;
-    let maxValH: number | undefined;
-
-    if (!minMaxValues) {
-      [minVal, maxVal] = UtilsService.getMinAndMaxFromArray(matrixValues);
-
-      if (mode === 'MUTUAL_INFO') {
-        [minVal, maxVal] = UtilsService.averageMinAndMaxValues(minVal, maxVal);
-      }
-      if (mode === 'HELLINGER') {
-        // For KC purpose
-        [minValH, maxValH] = UtilsService.averageMinAndMaxValues(
-          minVal,
-          maxVal,
-        );
-      }
-    } else {
-      // For KV purpose
-      [minVal, maxVal] = minMaxValues[mode];
-    }
-    return [minVal, maxVal, minValH, maxValH];
-  }
-
   computeLegendValues(minVal, maxVal, minValH, maxValH, mode: string) {
-    if (mode === 'HELLINGER') {
+    if (mode === MATRIX_MODES.HELLINGER) {
       // For KC purpose
       this.legend.min = minValH;
       this.legend.max = maxValH;
@@ -914,10 +839,13 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
 
   getTotalMutInfo() {
     let totalMutInfo;
-    if (this.graphMode.mode === 'MUTUAL_INFO' && this.isKhiopsCovisu) {
+    if (
+      this.graphMode.mode === MATRIX_MODES.MUTUAL_INFO &&
+      this.isKhiopsCovisu
+    ) {
       // Compute total mutual info
       totalMutInfo =
-        this.graphMode.mode === 'MUTUAL_INFO'
+        this.graphMode.mode === MATRIX_MODES.MUTUAL_INFO
           ? UtilsService.arraySum(this.matrixValues)
           : 0;
     }

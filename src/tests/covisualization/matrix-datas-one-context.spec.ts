@@ -4,6 +4,7 @@ import { DimensionsDatasService } from '@khiops-covisualization/providers/dimens
 import { HttpClientModule } from '@angular/common/http';
 import { MatrixService } from '@khiops-library/components/matrix/matrix.service';
 import { TranslateModule } from '@ngstack/translate';
+import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 
 let appService: AppService;
 let dimensionsDatasService: DimensionsDatasService;
@@ -312,7 +313,7 @@ describe('CoVisualization', () => {
 
       const inputDatas = require('../mocks/covisualization/input-matrix-datas/adultmissing-4-cells-folding.json');
       const graphMode = {
-        mode: 'MUTUAL_INFO',
+        mode: MATRIX_MODES.MUTUAL_INFO,
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
         MatrixService.computeMatrixValues(graphMode, inputDatas, [[0]], -1);

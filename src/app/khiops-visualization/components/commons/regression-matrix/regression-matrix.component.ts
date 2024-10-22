@@ -20,6 +20,7 @@ import { MatrixModesModel } from '@khiops-library/model/matrix-modes.model';
 import { MatrixRangeValuesI } from '@khiops-visualization/interfaces/matrix-range-values';
 import { CellModel } from '@khiops-library/model/cell.model';
 import { Preparation2dVariableModel } from '@khiops-visualization/model/preparation2d-variable.model';
+import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 
 /**
  * Test it with irisR file
@@ -113,19 +114,19 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
 
     this.matrixModes.types = [
       {
-        mode: 'MUTUAL_INFO',
+        mode: MATRIX_MODES.MUTUAL_INFO,
         title: 'I (' + varName1 + ' , ' + varName2 + ')',
       },
       {
-        mode: 'FREQUENCY',
+        mode: MATRIX_MODES.FREQUENCY,
         title: 'Frequency',
       },
       {
-        mode: 'PROB_CELL',
+        mode: MATRIX_MODES.PROB_CELL,
         title: 'P (' + varName2 + ' | ' + varName1 + ')',
       },
       {
-        mode: 'PROB_CELL_REVERSE',
+        mode: MATRIX_MODES.PROB_CELL_REVERSE,
         title: 'P (' + varName1 + ' | ' + varName2 + ')',
       },
     ];

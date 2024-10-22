@@ -3,6 +3,7 @@ import { UtilsService } from '../../providers/utils.service';
 import { CellModel } from '../../model/cell.model';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 import { MatrixCoordI } from '@khiops-library/interfaces/matrix-coord';
+import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 
 @Injectable({
   providedIn: 'root',
@@ -79,7 +80,7 @@ export class MatrixService {
         return res;
       });
 
-      if (graphMode.mode === 'FREQUENCY') {
+      if (graphMode.mode === MATRIX_MODES.FREQUENCY) {
         matrixValues = matrixFreqsValues;
       } else {
         // Map current matrix datas to freq values correpsonding to current part positions
@@ -89,7 +90,7 @@ export class MatrixService {
         let freqColVals = 0;
         let freqLineVals = 0;
         switch (graphMode.mode) {
-          case 'MUTUAL_INFO':
+          case MATRIX_MODES.MUTUAL_INFO:
             matrixValues = inputDatas.matrixCellDatas.map((e) => {
               [matrixTotal, cellFreqs, freqColVals, freqLineVals] =
                 this.computeValsByContext(
@@ -121,7 +122,7 @@ export class MatrixService {
               return MIijExtra;
             });
             break;
-          case 'HELLINGER':
+          case MATRIX_MODES.HELLINGER:
             matrixValues = inputDatas.matrixCellDatas.map((e) => {
               [matrixTotal, cellFreqs, freqColVals, freqLineVals] =
                 this.computeValsByContext(
@@ -156,7 +157,7 @@ export class MatrixService {
               return hellingerAbsoluteValue;
             });
             break;
-          case 'PROB_CELL':
+          case MATRIX_MODES.PROB_CELL:
             matrixValues = inputDatas.matrixCellDatas.map((e) => {
               let [matrixTotal, cellFreqs, freqColVals, freqLineVals] =
                 this.computeValsByContext(
@@ -169,7 +170,7 @@ export class MatrixService {
                 : cellFreqs / freqColVals;
             });
             break;
-          case 'PROB_CELL_REVERSE':
+          case MATRIX_MODES.PROB_CELL_REVERSE:
             matrixValues = inputDatas.matrixCellDatas.map((e) => {
               let [matrixTotal, cellFreqs, freqColVals, freqLineVals] =
                 this.computeValsByContext(
@@ -183,7 +184,7 @@ export class MatrixService {
             });
             break;
           // Only on KV
-          case 'CELL_INTEREST':
+          case MATRIX_MODES.CELL_INTEREST:
             matrixValues = inputDatas.matrixCellDatas.map((e) => {
               for (let i = 0; i < partPositionsLength; i++) {
                 res = res + e.cellInterest[partPositions[i]];
@@ -220,14 +221,14 @@ export class MatrixService {
       }
 
       if (
-        graphMode.mode === 'FREQUENCY' ||
-        graphMode.mode === 'FREQUENCY_CELL'
+        graphMode.mode === MATRIX_MODES.FREQUENCY ||
+        graphMode.mode === MATRIX_MODES.FREQUENCY_CELL
       ) {
         matrixValues = matrixFreqsValues;
       } else {
         // 2 dim without context or with target : iris2d
         switch (graphMode.mode) {
-          case 'MUTUAL_INFO':
+          case MATRIX_MODES.MUTUAL_INFO:
             matrixValues = inputDatas.matrixCellDatas.map((e) => {
               let [MIij, MIijExtra] = UtilsService.computeMutualInfo(
                 e.cellFreqs[0],
@@ -247,7 +248,7 @@ export class MatrixService {
               return MIijExtra;
             });
             break;
-          case 'HELLINGER':
+          case MATRIX_MODES.HELLINGER:
             matrixValues = inputDatas.matrixCellDatas.map((e) => {
               const [hellingerValue, hellingerAbsoluteValue] =
                 UtilsService.computeHellinger(
@@ -269,27 +270,27 @@ export class MatrixService {
               return hellingerAbsoluteValue || 0;
             });
             break;
-          case 'PROB_CELL':
+          case MATRIX_MODES.PROB_CELL:
             matrixValues = inputDatas.matrixCellDatas.map((e) => {
               return isNaN(e.cellFreqs[0] / e.freqColVals[0])
                 ? 0
                 : e.cellFreqs[0] / e.freqColVals[0];
             });
             break;
-          case 'PROB_CELL_REVERSE':
+          case MATRIX_MODES.PROB_CELL_REVERSE:
             matrixValues = inputDatas.matrixCellDatas.map((e) => {
               return isNaN(e.cellFreqs[0] / e.freqLineVals[0])
                 ? 0
                 : e.cellFreqs[0] / e.freqLineVals[0];
             });
             break;
-          case 'CELL_INTEREST':
+          case MATRIX_MODES.CELL_INTEREST:
             // Only on KV do not need to recompute because nodes can not be folded
             matrixValues = inputDatas.matrixCellDatas.map(
               (e) => e.cellInterest,
             );
             break;
-          case 'MUTUAL_INFO_TARGET_WITH_CELL':
+          case MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL:
             for (
               let i = 0;
               i < inputDatas.matrixCellDatas[0].cellFreqs.length;
@@ -644,5 +645,108 @@ export class MatrixService {
     }
 
     return cellDatas;
+  }
+
+  /**
+   * Retrieves the minimum and maximum values from the provided matrix values based on the specified graph mode.
+   * If `minMaxValues` is not provided, it calculates the min and max values from `matrixValues`.
+   * Depending on the `mode`, it may adjust these values using specific methods from `UtilsService`.
+   *
+   * @param matrixValues - The array of values from which to determine the min and max.
+   * @param minMaxValues - An optional object containing precomputed min and max values for different modes.
+   * @param mode - The mode to determine how to process the min and max values. Can be 'MUTUAL_INFO' or 'HELLINGER'.
+   *
+   * @returns A tuple containing the min and max values. If the mode is 'HELLINGER', it also returns adjusted min and max values.
+   */
+  static getMinAndMaxFromGraphMode(matrixValues, minMaxValues, mode: string) {
+    let minVal: number | undefined;
+    let maxVal: number | undefined;
+    let minValH: number | undefined;
+    let maxValH: number | undefined;
+
+    if (!minMaxValues) {
+      [minVal, maxVal] = UtilsService.getMinAndMaxFromArray(matrixValues);
+
+      if (mode === MATRIX_MODES.MUTUAL_INFO) {
+        [minVal, maxVal] = UtilsService.averageMinAndMaxValues(minVal, maxVal);
+      }
+      if (mode === MATRIX_MODES.HELLINGER) {
+        // For KC purpose
+        [minValH, maxValH] = UtilsService.averageMinAndMaxValues(
+          minVal,
+          maxVal,
+        );
+      }
+    } else {
+      // For KV purpose
+      [minVal, maxVal] = minMaxValues[mode];
+    }
+    return [minVal, maxVal, minValH, maxValH];
+  }
+
+  /**
+   * Calculates the color for a given percentage value based on the specified mode and contrast.
+   *
+   * @param currentColorVal - The current value to be converted to a color.
+   * @param maxVal - The maximum value used for normalization.
+   * @param contrast - The contrast adjustment factor.
+   * @param mode - The mode determining the color scheme to use. Possible values are 'MUTUAL_INFO', 'HELLINGER', 'MUTUAL_INFO_TARGET_WITH_CELL', or others.
+   * @returns The calculated color in rgba format or 'white' if the currentColorVal is zero.
+   */
+  static getColorForPercentage(
+    currentColorVal: number,
+    maxVal: number,
+    contrast: number,
+    mode: string,
+  ) {
+    let colorValue = 0;
+    const A = contrast;
+    const cste = 0.1;
+    const P = Math.exp(Math.log(cste) / 100);
+    const c = Math.pow(P, A);
+
+    if (currentColorVal >= 0) {
+      colorValue = Math.pow(currentColorVal / maxVal, c);
+    } else {
+      colorValue = -Math.pow(-currentColorVal / maxVal, c);
+    }
+
+    if (currentColorVal === 0) {
+      return 'white';
+    } else {
+      let percentColors;
+      if (
+        mode === MATRIX_MODES.MUTUAL_INFO ||
+        mode === MATRIX_MODES.HELLINGER ||
+        mode === MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL
+      ) {
+        const isPositiveValue = colorValue >= 0;
+        percentColors = MatrixService.getInterestColors(isPositiveValue);
+        colorValue = Math.abs(colorValue);
+      } else {
+        percentColors = MatrixService.getFrequencyColors();
+      }
+
+      let i = 1;
+      for (i; i < percentColors.length - 1; i++) {
+        if (colorValue < percentColors[i].pct) {
+          break;
+        }
+      }
+      const lower = percentColors[i - 1];
+      const upper = percentColors[i];
+      const range = upper.pct - lower.pct;
+      const rangePct = (colorValue - lower.pct) / range;
+      const pctLower = 1 - rangePct;
+      const pctUpper = rangePct;
+      const color = {
+        r: Math.floor(lower.color.r * pctLower + upper.color.r * pctUpper),
+        g: Math.floor(lower.color.g * pctLower + upper.color.g * pctUpper),
+        b: Math.floor(lower.color.b * pctLower + upper.color.b * pctUpper),
+      };
+      const rgba = 'rgba(' + [color.r, color.g, color.b, 1].join(',') + ')';
+
+      return rgba;
+    }
   }
 }

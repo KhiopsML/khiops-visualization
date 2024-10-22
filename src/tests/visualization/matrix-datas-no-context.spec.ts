@@ -3,6 +3,7 @@ import { AppService } from '@khiops-visualization/providers/app.service';
 import { HttpClientModule } from '@angular/common/http';
 import { MatrixService } from '@khiops-library/components/matrix/matrix.service';
 import { TranslateModule } from '@ngstack/translate';
+import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 let appService: AppService;
 
 let cells;
@@ -25,12 +26,7 @@ describe('Visualization', () => {
         mode: 'FREQUENCY',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixService.computeMatrixValues(
-          graphMode,
-          inputDatas,
-          undefined,
-          -1,
-        );
+        MatrixService.computeMatrixValues(graphMode, inputDatas, undefined, -1);
       expect(matrixFreqsValues).toEqual([37, 21, 29, 12]);
     });
 
@@ -40,12 +36,7 @@ describe('Visualization', () => {
         mode: 'FREQUENCY',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixService.computeMatrixValues(
-          graphMode,
-          inputDatas,
-          undefined,
-          -1,
-        );
+        MatrixService.computeMatrixValues(graphMode, inputDatas, undefined, -1);
       expect(matrixValues).toEqual([37, 21, 29, 12]);
     });
 
@@ -55,12 +46,7 @@ describe('Visualization', () => {
         mode: 'FREQUENCY_CELL',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixService.computeMatrixValues(
-          graphMode,
-          inputDatas,
-          undefined,
-          0,
-        );
+        MatrixService.computeMatrixValues(graphMode, inputDatas, undefined, 0);
       expect(matrixValues).toEqual([6, 0, 25, 0]);
     });
 
@@ -70,12 +56,7 @@ describe('Visualization', () => {
         mode: 'FREQUENCY_CELL',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixService.computeMatrixValues(
-          graphMode,
-          inputDatas,
-          undefined,
-          0,
-        );
+        MatrixService.computeMatrixValues(graphMode, inputDatas, undefined, 0);
       expect(matrixFreqsValues).toEqual([6, 0, 25, 0]);
     });
 
@@ -85,12 +66,7 @@ describe('Visualization', () => {
         mode: 'FREQUENCY_CELL',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixService.computeMatrixValues(
-          graphMode,
-          inputDatas,
-          undefined,
-          2,
-        );
+        MatrixService.computeMatrixValues(graphMode, inputDatas, undefined, 2);
       expect(matrixValues).toEqual([2, 20, 0, 9]);
     });
 
@@ -100,12 +76,7 @@ describe('Visualization', () => {
         mode: 'FREQUENCY_CELL',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixService.computeMatrixValues(
-          graphMode,
-          inputDatas,
-          undefined,
-          2,
-        );
+        MatrixService.computeMatrixValues(graphMode, inputDatas, undefined, 2);
       expect(matrixFreqsValues).toEqual([2, 20, 0, 9]);
     });
 
@@ -115,12 +86,7 @@ describe('Visualization', () => {
         mode: 'PROB_TARGET_WITH_CELL',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixService.computeMatrixValues(
-          graphMode,
-          inputDatas,
-          undefined,
-          2,
-        );
+        MatrixService.computeMatrixValues(graphMode, inputDatas, undefined, 2);
       expect(matrixValues).toEqual([
         0.05405405405405406, 0.9523809523809523, 0, 0.75,
       ]);
@@ -132,12 +98,7 @@ describe('Visualization', () => {
         mode: 'PROB_TARGET_WITH_CELL',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixService.computeMatrixValues(
-          graphMode,
-          inputDatas,
-          undefined,
-          2,
-        );
+        MatrixService.computeMatrixValues(graphMode, inputDatas, undefined, 2);
       expect(matrixValues).toEqual([
         0.05405405405405406, 0.9523809523809523, 0, 0.75,
       ]);
@@ -149,12 +110,7 @@ describe('Visualization', () => {
         mode: 'PROB_CELL_WITH_TARGET',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixService.computeMatrixValues(
-          graphMode,
-          inputDatas,
-          undefined,
-          2,
-        );
+        MatrixService.computeMatrixValues(graphMode, inputDatas, undefined, 2);
       expect(matrixValues).toEqual([
         0.06451612903225806, 0.6451612903225806, 0, 0.2903225806451613,
       ]);
@@ -166,12 +122,7 @@ describe('Visualization', () => {
         mode: 'CELL_INTEREST',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixService.computeMatrixValues(
-          graphMode,
-          inputDatas,
-          undefined,
-          2,
-        );
+        MatrixService.computeMatrixValues(graphMode, inputDatas, undefined, 2);
       expect(matrixValues).toEqual([0.225374, 0.324608, 0.343006, 0.107012]);
     });
 
@@ -181,12 +132,7 @@ describe('Visualization', () => {
         mode: 'FREQUENCY',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixService.computeMatrixValues(
-          graphMode,
-          inputDatas,
-          undefined,
-          -1,
-        );
+        MatrixService.computeMatrixValues(graphMode, inputDatas, undefined, -1);
       expect(matrixFreqsValues).toEqual([31, 0, 0, 0, 32, 5, 0, 0, 31]);
     });
 
@@ -196,12 +142,7 @@ describe('Visualization', () => {
         mode: 'FREQUENCY',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixService.computeMatrixValues(
-          graphMode,
-          inputDatas,
-          undefined,
-          -1,
-        );
+        MatrixService.computeMatrixValues(graphMode, inputDatas, undefined, -1);
       expect(matrixValues).toEqual([31, 0, 0, 0, 32, 5, 0, 0, 31]);
     });
 
@@ -211,12 +152,7 @@ describe('Visualization', () => {
         mode: 'PROB_CELL',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixService.computeMatrixValues(
-          graphMode,
-          inputDatas,
-          undefined,
-          -1,
-        );
+        MatrixService.computeMatrixValues(graphMode, inputDatas, undefined, -1);
       expect(matrixValues).toEqual([
         1, 0, 0, 0, 0.8648648648648649, 0.13513513513513514, 0, 0, 1,
       ]);
@@ -228,12 +164,7 @@ describe('Visualization', () => {
         mode: 'PROB_CELL_REVERSE',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixService.computeMatrixValues(
-          graphMode,
-          inputDatas,
-          undefined,
-          -1,
-        );
+        MatrixService.computeMatrixValues(graphMode, inputDatas, undefined, -1);
       expect(matrixValues).toEqual([
         1, 0, 0, 0, 1, 0.1388888888888889, 0, 0, 0.8611111111111112,
       ]);
@@ -242,15 +173,10 @@ describe('Visualization', () => {
     it('matrixValues should return valid datas Regression MUTUAL_INFO', () => {
       const inputDatas = require('../mocks/visualization/matrix-inputs/irisR-R3.json');
       const graphMode = {
-        mode: 'MUTUAL_INFO',
+        mode: MATRIX_MODES.MUTUAL_INFO,
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixService.computeMatrixValues(
-          graphMode,
-          inputDatas,
-          undefined,
-          -1,
-        );
+        MatrixService.computeMatrixValues(graphMode, inputDatas, undefined, -1);
       expect(matrixValues).toEqual([
         0.36358699005184597, 0, 0, 0, 0.31812587878476467, -0.04999389336018405,
         0, 0, 0.31676392183871593,
@@ -260,15 +186,10 @@ describe('Visualization', () => {
     it('matrixExtras should return valid datas Regression MUTUAL_INFO', () => {
       const inputDatas = require('../mocks/visualization/matrix-inputs/irisR-R3.json');
       const graphMode = {
-        mode: 'MUTUAL_INFO',
+        mode: MATRIX_MODES.MUTUAL_INFO,
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixService.computeMatrixValues(
-          graphMode,
-          inputDatas,
-          undefined,
-          -1,
-        );
+        MatrixService.computeMatrixValues(graphMode, inputDatas, undefined, -1);
       expect(matrixExtras).toEqual([
         false,
         true,
@@ -285,15 +206,10 @@ describe('Visualization', () => {
     it('matrixFreqsValues should return valid datas Regression MUTUAL_INFO', () => {
       const inputDatas = require('../mocks/visualization/matrix-inputs/irisR-R3.json');
       const graphMode = {
-        mode: 'MUTUAL_INFO',
+        mode: MATRIX_MODES.MUTUAL_INFO,
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixService.computeMatrixValues(
-          graphMode,
-          inputDatas,
-          undefined,
-          -1,
-        );
+        MatrixService.computeMatrixValues(graphMode, inputDatas, undefined, -1);
       expect(matrixFreqsValues).toEqual([31, 0, 0, 0, 32, 5, 0, 0, 31]);
     });
   });

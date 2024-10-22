@@ -22,6 +22,7 @@ import { TranslateService } from '@ngstack/translate';
 import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { ViewManagerService } from '@khiops-covisualization/providers/view-manager.service';
+import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 
 @Component({
   selector: 'app-matrix-container',
@@ -151,27 +152,27 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
 
     this.matrixModes.types = [
       {
-        mode: 'MUTUAL_INFO',
+        mode: MATRIX_MODES.MUTUAL_INFO,
         title: 'I (' + varName1 + ' , ' + varName2 + ')',
         tooltip: this.translate.get('TOOLTIPS.AXIS.MATRIX.I'),
       },
       {
-        mode: 'FREQUENCY',
+        mode: MATRIX_MODES.FREQUENCY,
         title: 'Frequency',
         tooltip: this.translate.get('TOOLTIPS.AXIS.MATRIX.F'),
       },
       {
-        mode: 'PROB_CELL',
+        mode: MATRIX_MODES.PROB_CELL,
         title: 'P (' + varName2 + ' | ' + varName1 + ')',
         tooltip: this.translate.get('TOOLTIPS.AXIS.MATRIX.P'),
       },
       {
-        mode: 'PROB_CELL_REVERSE',
+        mode: MATRIX_MODES.PROB_CELL_REVERSE,
         title: 'P (' + varName1 + ' | ' + varName2 + ')',
         tooltip: this.translate.get('TOOLTIPS.AXIS.MATRIX.P'),
       },
       {
-        mode: 'HELLINGER',
+        mode: MATRIX_MODES.HELLINGER,
         title: 'H (' + varName1 + ' , ' + varName2 + ')',
         tooltip: this.translate.get('TOOLTIPS.AXIS.MATRIX.H'),
       },

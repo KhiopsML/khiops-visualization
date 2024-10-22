@@ -24,6 +24,7 @@ import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { MatrixRangeValuesI } from '@khiops-visualization/interfaces/matrix-range-values';
 import { LS } from '@khiops-library/enum/ls';
+import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 
 /**
  * Test it with iris2d file
@@ -182,7 +183,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
     if (this.matrixTargets.targets.length > 0) {
       this.matrixModes.types = [
         {
-          mode: 'MUTUAL_INFO_TARGET_WITH_CELL',
+          mode: MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL,
           title:
             'I (' +
             this.translate.get('GLOBAL.TARGET') +
@@ -193,11 +194,11 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
             ')',
         },
         {
-          mode: 'FREQUENCY',
+          mode: MATRIX_MODES.FREQUENCY,
           title: this.translate.get('GLOBAL.FREQUENCY'),
         },
         {
-          mode: 'FREQUENCY_CELL',
+          mode: MATRIX_MODES.FREQUENCY_CELL,
           title:
             this.translate.get('GLOBAL.FREQUENCY') +
             ' (' +
@@ -209,7 +210,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
             ')',
         },
         {
-          mode: 'PROB_TARGET_WITH_CELL',
+          mode: MATRIX_MODES.PROB_TARGET_WITH_CELL,
           title:
             'P (' +
             this.translate.get('GLOBAL.TARGET') +
@@ -220,7 +221,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
             ')',
         },
         {
-          mode: 'PROB_CELL_WITH_TARGET',
+          mode: MATRIX_MODES.PROB_CELL_WITH_TARGET,
           title:
             'P (' +
             varName2 +
@@ -231,26 +232,26 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
             ')',
         },
         {
-          mode: 'CELL_INTEREST',
+          mode: MATRIX_MODES.CELL_INTEREST,
           title: this.translate.get('GLOBAL.CELLS_INTERESTS'),
         },
       ];
     } else {
       this.matrixModes.types = [
         {
-          mode: 'MUTUAL_INFO',
+          mode: MATRIX_MODES.MUTUAL_INFO,
           title: 'I (' + varName1 + ' , ' + varName2 + ')',
         },
         {
-          mode: 'FREQUENCY',
+          mode: MATRIX_MODES.FREQUENCY,
           title: this.translate.get('GLOBAL.FREQUENCY'),
         },
         {
-          mode: 'PROB_CELL',
+          mode: MATRIX_MODES.PROB_CELL,
           title: 'P (' + varName2 + ' | ' + varName1 + ')',
         },
         {
-          mode: 'PROB_CELL_REVERSE',
+          mode: MATRIX_MODES.PROB_CELL_REVERSE,
           title: 'P (' + varName1 + ' | ' + varName2 + ')',
         },
       ];
@@ -273,10 +274,12 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
     // Add optional targets if available
     if (
       this.preparation2dDatasService.getTargetsIfAvailable() &&
-      (this.matrixModes.selected?.mode === 'FREQUENCY_CELL' ||
-        this.matrixModes.selected?.mode === 'PROB_TARGET_WITH_CELL' ||
-        this.matrixModes.selected?.mode === 'MUTUAL_INFO_TARGET_WITH_CELL' ||
-        this.matrixModes.selected?.mode === 'PROB_CELL_WITH_TARGET')
+      (this.matrixModes.selected?.mode === MATRIX_MODES.FREQUENCY_CELL ||
+        this.matrixModes.selected?.mode ===
+          MATRIX_MODES.PROB_TARGET_WITH_CELL ||
+        this.matrixModes.selected?.mode ===
+          MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL ||
+        this.matrixModes.selected?.mode === MATRIX_MODES.PROB_CELL_WITH_TARGET)
     ) {
       // Get previous selected target if compatible
       const previousSelectedTarget = AppService.Ls.get(LS.MATRIX_TARGET_OPTION);

@@ -1,6 +1,7 @@
 import { Component, SimpleChanges, OnChanges, Input } from '@angular/core';
 import { UtilsService } from '../../providers/utils.service';
 import { CellModel } from '@khiops-library/model/cell.model';
+import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 
 @Component({
   selector: 'kl-cell-stats',
@@ -28,13 +29,15 @@ export class CellStatsComponent implements OnChanges {
             this.selectedCells.map((e) => e.displayedValue?.ef),
           ),
           I:
-            this.selectedCells[0].displayedValue?.type === 'MUTUAL_INFO'
+            this.selectedCells[0].displayedValue?.type ===
+            MATRIX_MODES.MUTUAL_INFO
               ? UtilsService.arraySum(
                   this.selectedCells.map((e) => e.displayedValue.value),
                 )
               : undefined,
           Total:
-            this.selectedCells[0].displayedValue?.type === 'MUTUAL_INFO'
+            this.selectedCells[0].displayedValue?.type ===
+            MATRIX_MODES.MUTUAL_INFO
               ? UtilsService.arraySum(
                   this.selectedCells.map((e) => e.displayedValue.extra),
                 )
@@ -46,11 +49,13 @@ export class CellStatsComponent implements OnChanges {
           F: this.selectedCells[0].displayedFreqValue,
           EF: this.selectedCells[0].displayedValue?.ef,
           I:
-            this.selectedCells[0].displayedValue?.type === 'MUTUAL_INFO'
+            this.selectedCells[0].displayedValue?.type ===
+            MATRIX_MODES.MUTUAL_INFO
               ? this.selectedCells[0].displayedValue?.value
               : undefined,
           Total:
-            this.selectedCells[0].displayedValue?.type === 'MUTUAL_INFO'
+            this.selectedCells[0].displayedValue?.type ===
+            MATRIX_MODES.MUTUAL_INFO
               ? this.selectedCells[0].displayedValue?.extra
               : undefined,
         };
