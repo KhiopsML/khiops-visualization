@@ -1,7 +1,6 @@
-import { Component, ViewChild, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { PreparationDatasService } from '../../providers/preparation-datas.service';
 import { AppConfig } from 'src/environments/environment';
-import { AppService } from '../../providers/app.service';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { ModelingDatasService } from '@khiops-visualization/providers/modeling-datas.service';
 import {
@@ -9,10 +8,7 @@ import {
   MatDialogRef,
   MatDialogConfig,
 } from '@angular/material/dialog';
-import { EvaluationDatasService } from '@khiops-visualization/providers/evaluation-datas.service';
-import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
 import { LevelDistributionGraphComponent } from '../commons/level-distribution-graph/level-distribution-graph.component';
-import { VariableGraphDetailsComponent } from '../commons/variable-graph-details/variable-graph-details.component';
 import { TranslateService } from '@ngstack/translate';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { REPORTS } from '@khiops-library/enum/reports';
@@ -21,7 +17,6 @@ import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { PreparationVariableModel } from '@khiops-visualization/model/preparation-variable.model';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { VariableModel } from '@khiops-visualization/model/variable.model';
-import { Preparation2dDatasModel } from '@khiops-visualization/model/preparation2d-datas.model';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 import { BorderTextCellComponent } from '../../../khiops-library/components/ag-grid/border-text-cell/border-text-cell.component';
 import { LayoutService } from '@khiops-library/providers/layout.service';
@@ -32,45 +27,26 @@ import { LayoutService } from '@khiops-library/providers/layout.service';
   styleUrls: ['./preparation-view.component.scss'],
 })
 export class PreparationViewComponent extends SelectableTabComponent {
-  @ViewChild('appVariableGraphDetails', {
-    static: false,
-  })
-  appVariableGraphDetails: VariableGraphDetailsComponent;
-
-  @Input() preparationSource = REPORTS.PREPARATION_REPORT; // By default
-
-  appDatas: any;
-  sizes: any;
-
-  preparationDatas: {
+  @Input() public preparationSource = REPORTS.PREPARATION_REPORT; // By default
+  public sizes: any;
+  public preparationDatas: {
     selectedVariable: PreparationVariableModel;
     currentIntervalDatas: GridDatasI;
   };
-  summaryDatas: InfosDatasI[];
-  informationsDatas: InfosDatasI[];
-  targetVariableStatsDatas: ChartDatasModel;
-  currentIntervalDatas: GridDatasI;
-  matrixRegSelectedCell = 0;
-  distributionSelectedBarIndex = 0;
-  preparation2dDatas: Preparation2dDatasModel;
-  variablesDatas: VariableModel[];
-  isRegressionOrExplanatoryAnalysis: boolean;
-  targetVariableStatsInformations: InfosDatasI[];
-
-  // managed by selectable-tab component
-  override tabIndex = 1;
-
-  variablesDisplayedColumns: GridColumnsI[] = [];
+  public summaryDatas: InfosDatasI[];
+  public informationsDatas: InfosDatasI[];
+  public targetVariableStatsDatas: ChartDatasModel;
+  public variablesDatas: VariableModel[];
+  public targetVariableStatsInformations: InfosDatasI[];
+  public override tabIndex = 1; // managed by selectable-tab component
+  public variablesDisplayedColumns: GridColumnsI[] = [];
 
   constructor(
     private preparationDatasService: PreparationDatasService,
     private translate: TranslateService,
     private trackerService: TrackerService,
-    private evaluationDatasService: EvaluationDatasService,
     private dialog: MatDialog,
-    private preparation2dDatasService: Preparation2dDatasService,
     private layoutService: LayoutService,
-    private appService: AppService,
     private modelingDatasService: ModelingDatasService,
   ) {
     super();
@@ -171,11 +147,9 @@ export class PreparationViewComponent extends SelectableTabComponent {
         : 'textPreparation';
     this.trackerService.trackEvent('page_view', trackView);
 
-    this.appDatas = this.appService.getDatas().datas;
     this.preparationDatas = this.preparationDatasService.getDatas(
       this.preparationSource,
     );
-    this.preparation2dDatas = this.preparation2dDatasService.getDatas();
 
     this.sizes = this.layoutService.getViewSplitSizes('preparationView');
     this.summaryDatas = this.preparationDatasService.getSummaryDatas();
@@ -210,11 +184,6 @@ export class PreparationViewComponent extends SelectableTabComponent {
       event.sizes,
       'preparationView',
     );
-
-    // Resize to update graphs dimensions
-    if (this.appVariableGraphDetails) {
-      this.appVariableGraphDetails.resize();
-    }
   }
 
   onSelectListItemChanged(item: VariableModel) {
@@ -223,11 +192,6 @@ export class PreparationViewComponent extends SelectableTabComponent {
       this.preparationSource,
     );
     this.modelingDatasService.setSelectedVariable(modelingVariable);
-
-    // check if current variable is explanatory on change
-    this.isRegressionOrExplanatoryAnalysis =
-      this.preparationDatasService.isExplanatoryAnalysis() ||
-      this.evaluationDatasService.isRegressionAnalysis();
   }
 
   onShowLevelDistributionGraph(datas: any) {

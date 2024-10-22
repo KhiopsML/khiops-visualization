@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AppConfig } from 'src/environments/environment';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
@@ -18,16 +18,13 @@ export class ProjectViewComponent
   implements OnInit
 {
   private fileLoadedSub?: Subscription;
-  @Output() projectFileChanged: EventEmitter<any> = new EventEmitter<any>();
 
-  appDatas: any;
-  sizes: any;
-  isElectron: boolean = false;
+  public sizes: any;
+  public isElectron: boolean = false;
+  public debugFile = AppConfig.debugFile;
 
   // managed by selectable-tab component
-  override tabIndex = 0;
-
-  debugFile = AppConfig.debugFile;
+  public override tabIndex = 0;
 
   constructor(
     private fileLoaderService: FileLoaderService,

@@ -6,17 +6,14 @@ import {
 } from '@angular/material/dialog';
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
 import { AppConfig } from 'src/environments/environment';
-import { AppService } from '@khiops-visualization/providers/app.service';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { LevelDistributionGraphComponent } from '@khiops-visualization/components/commons/level-distribution-graph/level-distribution-graph.component';
 import { TargetDistributionGraphComponent } from '@khiops-visualization/components/commons/target-distribution-graph/target-distribution-graph.component';
 import { ModelingDatasService } from '@khiops-visualization/providers/modeling-datas.service';
 import { TranslateService } from '@ngstack/translate';
-import { Distribution2dDatasService } from '@khiops-visualization/providers/distribution2d-datas.service';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
-import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { Variable2dModel } from '@khiops-visualization/model/variable-2d.model';
 import { Preparation2dDatasModel } from '@khiops-visualization/model/preparation2d-datas.model';
@@ -33,24 +30,17 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
   @ViewChild('targetDistributionGraph', {
     static: false,
   })
-  targetDistributionGraph: TargetDistributionGraphComponent | undefined;
+  private targetDistributionGraph: TargetDistributionGraphComponent | undefined;
 
-  appDatas: any;
-  sizes: any;
-
-  preparation2dDatas: Preparation2dDatasModel;
-  summaryDatas: InfosDatasI[];
-  informationsDatas: InfosDatasI[];
-  targetVariableStatsDatas: ChartDatasModel;
-  currentIntervalDatas: GridDatasI | undefined;
-  variables2dDatas: Variable2dModel[];
-  targetDistributionGraphDatas: ChartDatasModel | undefined;
-  levelDistributionTitle: string = '';
-
-  // managed by selectable-tab component
-  override tabIndex = 2;
-
-  variablesDisplayedColumns: GridColumnsI[] = [];
+  public sizes: any;
+  public preparation2dDatas: Preparation2dDatasModel;
+  public summaryDatas: InfosDatasI[];
+  public informationsDatas: InfosDatasI[];
+  public targetVariableStatsDatas: ChartDatasModel;
+  public variables2dDatas: Variable2dModel[];
+  public levelDistributionTitle: string = '';
+  public override tabIndex = 2; // managed by selectable-tab component
+  public variablesDisplayedColumns: GridColumnsI[] = [];
 
   constructor(
     private preparationDatasService: PreparationDatasService,
@@ -58,9 +48,7 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
     private translate: TranslateService,
     private dialog: MatDialog,
     private modelingDatasService: ModelingDatasService,
-    private distribution2dDatasService: Distribution2dDatasService,
     private preparation2dDatasService: Preparation2dDatasService,
-    private appService: AppService,
     private layoutService: LayoutService,
   ) {
     super();
@@ -130,7 +118,6 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
       },
     ];
 
-    this.appDatas = this.appService.getDatas().datas;
     this.preparation2dDatas = this.preparation2dDatasService.getDatas();
     this.sizes = this.layoutService.getViewSplitSizes('preparation2dView');
     this.informationsDatas =
@@ -167,8 +154,6 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
         item.name2,
       );
     this.modelingDatasService.setSelectedVariable(modelingVariable);
-    this.targetDistributionGraphDatas =
-      this.distribution2dDatasService.getTargetDistributionGraphDatas();
   }
 
   onShowLevelDistributionGraph(datas: any) {
@@ -183,7 +168,7 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
     dialogRef.componentInstance.datas = datas;
   }
 
-  resizeTargetDistributionGraph() {
+  private resizeTargetDistributionGraph() {
     setTimeout(() => {
       // Resize to update graphs dimensions
       if (this.targetDistributionGraph) {

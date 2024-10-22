@@ -112,6 +112,15 @@ export class AxisViewComponent
       });
   }
 
+  /**
+   * Initializes the dimensions data by fetching and setting up the necessary data structures.
+   * This method performs the following steps:
+   * 1. Retrieves the dimensions data from the service.
+   * 2. Fetches the dimensions from the service.
+   * 3. Initializes the selected dimensions.
+   * 4. Saves the initial dimension state.
+   * 5. Constructs the dimensions trees.
+   */
   initializeDatas() {
     this.dimensionsDatas = this.dimensionsDatasService.getDatas();
     this.dimensionsDatasService.getDimensions();
@@ -208,9 +217,5 @@ export class AxisViewComponent
     // Resize graph when area is resized
     this.axisAppPos0.onSplitDragEnd(null, null);
     this.axisAppPos1.onSplitDragEnd(null, null);
-  }
-
-  clickOutsideContext() {
-    this.toggleContext.emit();
   }
 }

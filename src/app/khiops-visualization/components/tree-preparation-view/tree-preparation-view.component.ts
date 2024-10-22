@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { AppConfig } from 'src/environments/environment';
-import { AppService } from '../../providers/app.service';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { ModelingDatasService } from '@khiops-visualization/providers/modeling-datas.service';
 import {
@@ -14,12 +13,9 @@ import { TreePreparationDatasService } from '@khiops-visualization/providers/tre
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
-import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { VariableModel } from '@khiops-visualization/model/variable.model';
-import { Preparation2dDatasModel } from '@khiops-visualization/model/preparation2d-datas.model';
 import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
-import { PreparationDatasModel } from '@khiops-visualization/model/preparation-datas.model';
 import { TreePreparationDatasModel } from '@khiops-visualization/model/tree-preparation-datas.model';
 import { TreePreparationVariableModel } from '@khiops-visualization/model/tree-preparation-variable.model';
 import { TrackerService } from '@khiops-library/providers/tracker.service';
@@ -38,27 +34,20 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
   @ViewChild('appVariableGraphDetails', {
     static: false,
   })
-  appVariableGraphDetails: VariableGraphDetailsComponent;
-  appDatas: any;
-  sizes: any;
-  preparationSource: string = REPORTS.TREE_PREPARATION_REPORT;
-  summaryDatas: InfosDatasI[];
-  informationsDatas: InfosDatasI[];
-  targetVariableStatsDatas: ChartDatasModel;
-  currentIntervalDatas: GridDatasI;
-  matrixRegSelectedCell: number = 0;
-  selectedBarIndex: number = 0;
-  variablesDatas: VariableModel[];
-  targetVariableStatsInformations: InfosDatasI[];
-  preparation2dDatas: Preparation2dDatasModel;
-  treePreparationDatas: TreePreparationDatasModel;
-  preparationDatas: PreparationDatasModel;
-  distributionDatas: DistributionDatasModel;
+  private appVariableGraphDetails: VariableGraphDetailsComponent;
+  private preparationSource: string = REPORTS.TREE_PREPARATION_REPORT;
 
-  // managed by selectable-tab component
-  override tabIndex = 5;
-
-  variablesDisplayedColumns: GridColumnsI[] = [];
+  public sizes: any;
+  public summaryDatas: InfosDatasI[];
+  public informationsDatas: InfosDatasI[];
+  public targetVariableStatsDatas: ChartDatasModel;
+  public selectedBarIndex: number = 0;
+  public variablesDatas: VariableModel[];
+  public targetVariableStatsInformations: InfosDatasI[];
+  public treePreparationDatas: TreePreparationDatasModel;
+  public distributionDatas: DistributionDatasModel;
+  public variablesDisplayedColumns: GridColumnsI[] = [];
+  public override tabIndex = 5; // managed by selectable-tab component
 
   constructor(
     private preparationDatasService: PreparationDatasService,
@@ -67,7 +56,6 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
     private translate: TranslateService,
     private trackerService: TrackerService,
     private distributionDatasService: DistributionDatasService,
-    private appService: AppService,
     private modelingDatasService: ModelingDatasService,
     private layoutService: LayoutService,
   ) {
@@ -117,7 +105,6 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
   ngOnInit() {
     this.trackerService.trackEvent('page_view', 'treePreparation');
 
-    this.appDatas = this.appService.getDatas().datas;
     this.treePreparationDatas = this.treePreparationDatasService.getDatas();
     this.sizes = this.layoutService.getViewSplitSizes('treePreparationView');
     this.summaryDatas = this.preparationDatasService.getSummaryDatas(

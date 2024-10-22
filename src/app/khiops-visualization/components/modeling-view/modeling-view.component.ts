@@ -52,7 +52,6 @@ export class ModelingViewComponent extends SelectableTabComponent {
   modelingDatas: ModelingDatasModel;
   preparation2dDatas: Preparation2dDatasModel;
   treePreparationDatas: TreePreparationDatasModel;
-  matrixRegSelectedCell = 0;
   distributionSelectedBarIndex = 0;
   trainedPredictorsDisplayedColumns: GridColumnsI[];
   isRegressionOrExplanatoryAnalysis: boolean;
