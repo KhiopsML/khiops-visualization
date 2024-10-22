@@ -185,8 +185,10 @@ export class HomeLayoutComponent implements OnInit {
   }
 
   private selectFirstTab() {
-    this.selectedTab = undefined;
-    this.activeTab = 0;
-    this.mainTabGroup.selectedIndex = 0;
+    setTimeout(() => {
+      this.selectedTab = undefined;
+      this.activeTab = 0;
+      this.mainTabGroup.selectedIndex = 0;
+    });
   }
 }
