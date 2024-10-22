@@ -28,7 +28,6 @@ export class UserSettingsComponent implements OnChanges {
   contrastValue: number;
   allowCookies: boolean;
   currentTheme: string;
-  initialAllowCookies: boolean;
 
   constructor(
     private translate: TranslateService,
@@ -73,7 +72,6 @@ export class UserSettingsComponent implements OnChanges {
     // Allow cookies
     this.allowCookies =
       AppService.Ls.get(LS.COOKIE_CONSENT) === 'true' || false;
-    this.initialAllowCookies = _.cloneDeep(this.allowCookies);
   }
 
   onClickOnCancel() {

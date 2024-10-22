@@ -26,26 +26,28 @@ import { AppService } from '@khiops-covisualization/providers/app.service';
   styleUrls: ['./unfold-hierarchy.component.scss'],
 })
 export class UnfoldHierarchyComponent implements OnInit {
-  dimensionsDatas: DimensionsDatasModel;
-  currentUnfoldHierarchy: number = 0;
-  hierarchyDatas: HierarchyDatasModel;
-  loadingHierarchy: boolean = false;
-  clustersPerDimDatas: ChartDatasModel;
-  infoPerCluster: ChartDatasModel;
-  colorSetClusterPerDim: ChartColorsSetI;
-  colorSetInfoPerCluster: ChartColorsSetI;
-  previousHierarchyRank: number;
-  currentInformationPerCluster = 100;
-  cyInput: number; // cypress input value to automatise unfold hierarchy
+  public currentUnfoldHierarchy: number = 0;
+  public hierarchyDatas: HierarchyDatasModel;
+  public loadingHierarchy: boolean = false;
+  public clustersPerDimDatas: ChartDatasModel;
+  public infoPerCluster: ChartDatasModel;
+  public colorSetClusterPerDim: ChartColorsSetI;
+  public colorSetInfoPerCluster: ChartColorsSetI;
+  public currentInformationPerCluster = 100;
+  public cyInput: number; // cypress input value to automatise unfold hierarchy
+  public dimensions: DimensionModel[];
+  public unfoldHierarchyTableTitle = '';
+  public selectedLineChartItem = '';
+  public hierarchyDisplayedColumns: GridColumnsI[] = [];
+  public currentCellsPerCluster = 0;
+  public unfoldHierarchyLegend: string;
+  public legend: any;
 
-  dimensions: DimensionModel[];
-  unfoldHierarchyTableTitle = '';
-  selectedLineChartItem = '';
-
-  borderColor: string;
-  defaultMaxUnfoldHierarchy = 0;
-  hierarchyDisplayedColumns: GridColumnsI[] = [];
-  chartOptions = {
+  private dimensionsDatas: DimensionsDatasModel;
+  private previousHierarchyRank: number;
+  private borderColor: string;
+  private defaultMaxUnfoldHierarchy = 0;
+  private chartOptions = {
     elements: {
       point: {
         radius: 0,
@@ -74,11 +76,8 @@ export class UnfoldHierarchyComponent implements OnInit {
       },
     },
   };
-  clustersPerDimDatasChartOptions = _.cloneDeep(this.chartOptions);
-  infoPerClusterChartOptions = _.cloneDeep(this.chartOptions);
-  legend: any;
-  currentCellsPerCluster = 0;
-  unfoldHierarchyLegend: string;
+  public clustersPerDimDatasChartOptions = _.cloneDeep(this.chartOptions);
+  public infoPerClusterChartOptions = _.cloneDeep(this.chartOptions);
 
   constructor(
     private translate: TranslateService,
@@ -204,28 +203,14 @@ export class UnfoldHierarchyComponent implements OnInit {
     this.updateDatas();
   }
 
-  updateDatas() {
-    this.clustersPerDimDatas = this.clustersService.getClustersPerDimDatas(
-      this.currentUnfoldHierarchy,
-    );
-    this.infoPerCluster = this.clustersService.getInfoPerCluster(
-      this.currentUnfoldHierarchy,
-    );
-    this.currentInformationPerCluster =
-      this.infoPerCluster.datasets[0].data[
-        this.currentUnfoldHierarchy - this.dimensions.length
-      ];
-    this.treenodesService.updateCurrentHierarchyClustersCount(
-      this.currentUnfoldHierarchy,
-    );
-
-    this.currentCellsPerCluster =
-      this.clustersService.getCurrentCellsPerCluster();
-
-    // Dimension changed, clone to update array
-    this.dimensions = _.cloneDeep(this.dimensionsDatas.dimensions);
-  }
-
+  /**
+   * Handles the save action for the unfold hierarchy component.
+   * It checks if the current cells per cluster exceed the technical limit
+   * and adjusts the current unfold hierarchy accordingly. If the limit is exceeded,
+   * a snack bar notification is displayed. The method then updates the dimensions,
+   * sets the loading state, and initializes the selected nodes. Finally, it unfolds
+   * the hierarchy and closes the dialog.
+   */
   onClickOnSave() {
     // this.trackerService.trackEvent('click', 'unfold_hierarchy', 'nb_clusters', this.currentUnfoldHierarchy);
 
@@ -299,5 +284,32 @@ export class UnfoldHierarchyComponent implements OnInit {
       event.data.name,
       event.state,
     );
+  }
+
+  /**
+   * Updates the data for clusters per dimension and information per cluster
+   * based on the current unfold hierarchy level. Also updates the current
+   * information per cluster, current cells per cluster, and dimensions.
+   */
+  private updateDatas() {
+    this.clustersPerDimDatas = this.clustersService.getClustersPerDimDatas(
+      this.currentUnfoldHierarchy,
+    );
+    this.infoPerCluster = this.clustersService.getInfoPerCluster(
+      this.currentUnfoldHierarchy,
+    );
+    this.currentInformationPerCluster =
+      this.infoPerCluster.datasets[0].data[
+        this.currentUnfoldHierarchy - this.dimensions.length
+      ];
+    this.treenodesService.updateCurrentHierarchyClustersCount(
+      this.currentUnfoldHierarchy,
+    );
+
+    this.currentCellsPerCluster =
+      this.clustersService.getCurrentCellsPerCluster();
+
+    // Dimension changed, clone to update array
+    this.dimensions = _.cloneDeep(this.dimensionsDatas.dimensions);
   }
 }

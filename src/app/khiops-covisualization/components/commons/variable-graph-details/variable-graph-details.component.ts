@@ -11,11 +11,9 @@ import {
 } from '@angular/core';
 import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { TranslateService } from '@ngstack/translate';
-import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { DistributionGraphComponent } from '@khiops-library/components/distribution-graph/distribution-graph.component';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
-import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { ClustersService } from '@khiops-covisualization/providers/clusters.service';
 import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
@@ -39,31 +37,25 @@ export class VariableGraphDetailsComponent
   })
   distributionGraph: DistributionGraphComponent;
 
-  @Input() selectedNode: TreeNodeModel;
-  @Output() selectedItemChanged: EventEmitter<any> = new EventEmitter();
-  @Input() position: number;
-  @Input() dimensionsTree: TreeNodeModel[];
-  @Input() selectedDimension: DimensionModel;
-  @Input() selectedDimensions: DimensionModel[];
+  @Input() public selectedNode: TreeNodeModel;
+  @Output() public selectedItemChanged: EventEmitter<any> = new EventEmitter();
+  @Input() public position: number;
+  @Input() private dimensionsTree: TreeNodeModel[];
+  @Input() private selectedDimensions: DimensionModel[];
 
-  scrollPosition = 0;
-  treeSelectedNodeChangedSub: Subscription;
-  conditionalOnContextChangedSub: Subscription;
-
-  isLoadingGraphDatas: boolean;
-  scaleValue: number;
-  graphDetails: ChartDatasModel;
-  graphOptions: DistributionOptionsI = {
+  public scrollPosition = 0;
+  public scaleValue: number;
+  public graphDetails: ChartDatasModel;
+  public graphOptions: DistributionOptionsI = {
     types: [HistogramType.YLIN, HistogramType.YLOG],
     selected: undefined,
   };
-  activeEntries: number;
-  title: string;
-  legend: any;
-  colorSet: ChartColorsSetI;
-  isFullscreen: boolean = false;
+  public activeEntries: number;
+  public title: string;
+  public isFullscreen: boolean = false;
 
-  prevSelectedNode: TreeNodeModel;
+  private treeSelectedNodeChangedSub: Subscription;
+  private conditionalOnContextChangedSub: Subscription;
 
   constructor(
     private translate: TranslateService,
@@ -72,19 +64,15 @@ export class VariableGraphDetailsComponent
     private configService: ConfigService,
     private clustersService: ClustersService,
     private eventsService: EventsService,
-    private khiopsLibraryService: KhiopsLibraryService,
   ) {
-    this.colorSet = this.khiopsLibraryService.getGraphColorSet()[2];
-
     this.treeSelectedNodeChangedSub =
       this.eventsService.treeSelectedNodeChanged.subscribe((e) => {
         setTimeout(() => {
           if (e.selectedNode) {
             // Only compute distribution of the other node
             this.getFilteredDistribution();
-            this.prevSelectedNode = e.selectedNode;
           }
-          this.setLegendTitle(this.position);
+          this.setLegendTitle();
         });
       });
     this.conditionalOnContextChangedSub =
@@ -100,7 +88,7 @@ export class VariableGraphDetailsComponent
         this.activeEntries = this.graphDetails.labels.findIndex(
           (e) => e === this.selectedNode.shortDescription,
         );
-        this.setLegendTitle(this.position);
+        this.setLegendTitle();
       }
     }
   }
@@ -109,7 +97,7 @@ export class VariableGraphDetailsComponent
     this.getFilteredDistribution();
   }
 
-  updateGraphTitle() {
+  private updateGraphTitle() {
     const currentIndex = this.position;
     const otherIndex = this.position === 0 ? 1 : 0;
 
@@ -125,7 +113,7 @@ export class VariableGraphDetailsComponent
       this.selectedDimensions[otherIndex].name;
   }
 
-  resize() {
+  private resize() {
     if (this.distributionGraph) {
       this.distributionGraph.resizeGraph();
     }
@@ -153,30 +141,6 @@ export class VariableGraphDetailsComponent
     this.conditionalOnContextChangedSub.unsubscribe();
   }
 
-  getFilteredDistribution() {
-    if (this.dimensionsTree && this.selectedNode) {
-      this.graphDetails = this.clustersService.getDistributionDetailsFromNode(
-        this.position,
-      );
-      if (this.graphDetails?.labels) {
-        this.activeEntries = this.graphDetails.labels.findIndex(
-          (e) => e === this.selectedNode.shortDescription,
-        );
-      }
-      this.updateGraphTitle();
-    }
-  }
-
-  setLegendTitle(position: number) {
-    const otherIndex = this.position === 0 ? 1 : 0;
-    this.graphDetails.datasets[0].label =
-      this.dimensionsDatasService?.dimensionsDatas?.selectedNodes?.[
-        otherIndex
-      ]?.shortDescription;
-    // force legend update
-    this.graphDetails = _.cloneDeep(this.graphDetails);
-  }
-
   onSelectBarChanged(index: number) {
     this.activeEntries = index;
 
@@ -198,7 +162,51 @@ export class VariableGraphDetailsComponent
     this.scrollPosition = position;
   }
 
-  invertDimensionsPositions() {
+  /**
+   * Fetches and updates the filtered distribution details for the selected node.
+   * It updates the graph details and active entries based on the selected node.
+   * Also, updates the graph title accordingly.
+   */
+  private getFilteredDistribution() {
+    if (this.dimensionsTree && this.selectedNode) {
+      this.graphDetails = this.clustersService.getDistributionDetailsFromNode(
+        this.position,
+      );
+      if (this.graphDetails?.labels) {
+        this.activeEntries = this.graphDetails.labels.findIndex(
+          (e) => e === this.selectedNode.shortDescription,
+        );
+      }
+      this.updateGraphTitle();
+    }
+  }
+
+  /**
+   * Sets the legend title for the graph.
+   *
+   * This method updates the label of the first dataset in the graph details
+   * to the short description of the selected node from the other dimension.
+   * It then forces an update of the legend by cloning the graph details object.
+   */
+  private setLegendTitle() {
+    const otherIndex = this.position === 0 ? 1 : 0;
+    this.graphDetails.datasets[0].label =
+      this.dimensionsDatasService?.dimensionsDatas?.selectedNodes?.[
+        otherIndex
+      ]?.shortDescription;
+    // force legend update
+    this.graphDetails = _.cloneDeep(this.graphDetails);
+  }
+
+  /**
+   * Inverts the positions of dimensions.
+   *
+   * This method determines the current position and returns an array with the current position
+   * and the other position. If the current position is 0, the other position is set to 1.
+   *
+   * @returns An array containing the current position and the other position.
+   */
+  private invertDimensionsPositions() {
     const currentIndex = this.position;
     let otherIndex = 0;
     if (currentIndex === 0) {

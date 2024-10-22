@@ -21,13 +21,13 @@ import { AppService } from '@khiops-covisualization/providers/app.service';
   styleUrls: ['./user-settings.component.scss'],
 })
 export class UserSettingsComponent implements OnChanges {
-  @Output() toggleNavDrawerChanged: EventEmitter<any> = new EventEmitter();
+  @Output() private toggleNavDrawerChanged: EventEmitter<any> =
+    new EventEmitter();
   @Input() opened: boolean;
 
-  allowCookies: boolean;
-  contrastValue: number;
-  initialAllowCookies: boolean;
-  currentTheme: string;
+  public allowCookies: boolean;
+  public contrastValue: number;
+  private currentTheme: string;
 
   constructor(
     private translate: TranslateService,
@@ -43,7 +43,7 @@ export class UserSettingsComponent implements OnChanges {
     }
   }
 
-  onNavDrawerOpen() {
+  private onNavDrawerOpen() {
     this.trackerService.trackEvent('page_view', 'settings');
 
     // Matrix contrast
@@ -59,7 +59,6 @@ export class UserSettingsComponent implements OnChanges {
     // Allow cookies
     this.allowCookies =
       AppService.Ls.get(LS.COOKIE_CONSENT) === 'true' || false;
-    this.initialAllowCookies = _.cloneDeep(this.allowCookies);
   }
 
   onClickOnCancel() {
