@@ -27,21 +27,21 @@ import { ImportExtDatasService } from '@khiops-covisualization/providers/import-
   styleUrls: ['./composition.component.scss'],
 })
 export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
-  @Input() selectedNode: TreeNodeModel;
-  @Input() dimensionsClusters: TreeNodeModel[][];
-  @Input() position: number;
-  @Input() selectedDimension: DimensionModel;
+  @Input() public position: number;
+  @Input() public selectedDimension: DimensionModel;
+  @Input() private selectedNode: TreeNodeModel;
 
-  @Output() selectedCompositionChanged: EventEmitter<any> = new EventEmitter();
+  @Output() private selectedCompositionChanged: EventEmitter<any> =
+    new EventEmitter();
 
-  title: string;
-  selectedComposition: CompositionModel;
-  compositionValues: CompositionModel[];
-  id: any;
-  treeSelectedNodeChangedSub: Subscription;
-  importedDatasChangedSub: Subscription;
+  public title: string;
+  public selectedComposition: CompositionModel;
+  public compositionValues: CompositionModel[];
+  public id: any;
+  public compositionDisplayedColumns: GridColumnsI[] = [];
 
-  compositionDisplayedColumns: GridColumnsI[] = [];
+  private treeSelectedNodeChangedSub: Subscription;
+  private importedDatasChangedSub: Subscription;
 
   constructor(
     private translate: TranslateService,
@@ -127,24 +127,6 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
     this.updateTable(this.selectedNode);
   }
 
-  updateTable(selectedNode: TreeNodeModel) {
-    if (selectedNode) {
-      this.compositionValues = Object.assign(
-        [],
-        this.clustersService.getCompositionClusters(
-          selectedNode.hierarchy,
-          _.cloneDeep(selectedNode),
-        ),
-      );
-      // if composition values : categorical
-      if (this.compositionValues.length > 0) {
-        // Select first by default
-        this.selectedComposition = this.compositionValues[0];
-        this.selectedCompositionChanged.emit(this.selectedComposition);
-      }
-    }
-  }
-
   ngOnChanges(changes: SimpleChanges) {
     // update when dimension change (with combo)
     if (
@@ -176,5 +158,23 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
       (e) => e.value === item.value,
     );
     this.selectedCompositionChanged.emit(this.selectedComposition);
+  }
+
+  private updateTable(selectedNode: TreeNodeModel) {
+    if (selectedNode) {
+      this.compositionValues = Object.assign(
+        [],
+        this.clustersService.getCompositionClusters(
+          selectedNode.hierarchy,
+          _.cloneDeep(selectedNode),
+        ),
+      );
+      // if composition values : categorical
+      if (this.compositionValues.length > 0) {
+        // Select first by default
+        this.selectedComposition = this.compositionValues[0];
+        this.selectedCompositionChanged.emit(this.selectedComposition);
+      }
+    }
   }
 }
