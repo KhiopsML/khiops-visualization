@@ -196,8 +196,9 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
         this.contrast = this.ls.get(
           LS.SETTING_MATRIX_CONTRAST,
           this.khiopsLibraryService.getAppConfig().common.GLOBAL
-            .MATRIX_CONTRAST,
+          .MATRIX_CONTRAST,
         );
+        console.log('MatrixComponent ~ setTimeout ~ this.contrast:', this.contrast);
       }
 
       // if graph mode change, reset isZerosToggled
@@ -798,6 +799,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
 
   onContrastChanged(event: Event) {
     this.contrast = parseInt(event?.target?.['value'], 10);
+    console.log('MatrixComponent ~ onContrastChanged ~ this.contrast:', this.contrast);
     this.contrast &&
       this.ls.set(LS.SETTING_MATRIX_CONTRAST, this.contrast.toString());
     this.drawMatrix();
