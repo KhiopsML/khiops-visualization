@@ -32,6 +32,7 @@ import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-mod
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { LS } from '@khiops-library/enum/ls';
 import { Ls } from '@khiops-library/providers/ls.service';
+import { KEYBOARD } from '@khiops-library/enum/keyboard';
 
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
@@ -47,90 +48,80 @@ export class AgGridComponent
   @ViewChild('agGrid', {
     static: false,
   })
-  agGrid: AgGridAngular;
-
-  AppConfig: any;
-
-  @Input() suppressRowClickSelection = false;
-  @Input() inputDatas: any[]; // Can be any types of datas
-  @Input() displayedColumns: GridColumnsI[];
-  @Input() override id: any = undefined;
-  @Input() title: string;
-  @Input() titleTooltip: string;
-  @Input() selectedVariable: any; // Can be any types of data
-  @Input() showLevelDistribution = true;
-  @Input() levelDistributionTitle: string;
-  @Input() showColumnsSelection = true;
-  @Input() showLineSelection = true;
-  @Input() showDataTypeSelection = false;
-  @Input() showSearch = true;
-  @Input() displayCount = false;
-  @Input() smallTitle = false;
-  @Input() rowSelection = 'single';
-  @Input() sizeColumnsToFit = false;
-  @Input() rowHeight = 28;
-  @Input() override watchResize = true;
-  @Input() enablePrecision = true;
-  @Input() paginationSize: number | undefined;
-
-  showHeader = false;
-  hideFilterBadge = true;
-  isFullscreen = false;
+  private agGrid: AgGridAngular;
 
   @ViewChild('searchInputEl', {
     static: false,
   })
-  searchInputEl: ElementRef;
+  private searchInputEl: ElementRef;
 
-  rowIdentifiers = ['_id'];
-  searchFormVisible = false;
+  @Input() public suppressRowClickSelection = false;
+  @Input() public inputDatas: any[]; // Can be any types of datas
+  @Input() public displayedColumns: GridColumnsI[];
+  @Input() public override id: any = undefined;
+  @Input() public title: string;
+  @Input() public titleTooltip: string;
+  @Input() public showLevelDistribution = true;
+  @Input() public levelDistributionTitle: string;
+  @Input() public showColumnsSelection = true;
+  @Input() public showDataTypeSelection = false;
+  @Input() public showSearch = true;
+  @Input() public displayCount = false;
+  @Input() public paginationSize: number | undefined;
+  @Input() public rowSelection = 'single';
+  @Input() private showLineSelection = true;
+  @Input() private rowHeight = 28;
+  @Input() private enablePrecision = true;
+  @Input() private selectedVariable: any; // Can be any types of data
 
-  modules: Module[] = [ClientSideRowModelModule];
+  @Output() private selectListItem: EventEmitter<any> = new EventEmitter();
+  @Output() private doubleClickListItem: EventEmitter<any> = new EventEmitter();
+  @Output() private dataTypeChanged: EventEmitter<any> = new EventEmitter();
+  @Output() private gridCheckboxChanged: EventEmitter<any> = new EventEmitter();
+  @Output() private showLevelDistributionGraph: EventEmitter<any> =
+    new EventEmitter();
 
-  cellsSizes = {};
-  visibleColumns = {};
-  gridMode: string = '';
-  gridModes = {}; // 'fitToSpace' or 'fitToContent'
-
-  componentType = COMPONENT_TYPES.GRID; // needed to copy datas
-  columnDefs: ColDef[] = [];
-  searchInput: string | null = '';
-  rowData: any = [];
-  context: {
+  public AppConfig: any;
+  public showHeader = false;
+  public hideFilterBadge = true;
+  public isFullscreen = false;
+  public searchFormVisible = false;
+  public modules: Module[] = [ClientSideRowModelModule];
+  public componentType = COMPONENT_TYPES.GRID; // needed to copy datas
+  public columnDefs: ColDef[] = [];
+  public searchInput: string | null = '';
+  public rowData: any = [];
+  public context: {
     componentParent: AgGridComponent;
   } = {
     componentParent: this, // used by CheckboxCellComponent
   };
-
-  @Output() selectListItem: EventEmitter<any> = new EventEmitter();
-  @Output() doubleClickListItem: EventEmitter<any> = new EventEmitter();
-  @Output() dataTypeChanged: EventEmitter<any> = new EventEmitter();
-  @Output() gridCheckboxChanged: EventEmitter<any> = new EventEmitter();
-  @Output() showLevelDistributionGraph: EventEmitter<any> = new EventEmitter();
-  isSmallDiv: boolean = false;
-  divWidth: number;
+  public isSmallDiv: boolean = false;
 
   // For evaluation view
-  dataOptions: any = {
+  public dataOptions: any = {
     types: [TYPES.FREQUENCY, TYPES.COVERAGE],
     selected: undefined,
   };
 
-  gridOptions = <GridOptions>{
+  public gridOptions = <GridOptions>{
     suppressAnimationFrame: true,
     enableBrowserTooltips: true,
     suppressColumnMoveAnimation: true,
     animateRows: false,
   };
 
-  KEY_UP = 'ArrowUp';
-  KEY_DOWN = 'ArrowDown';
+  private cellsSizes = {};
+  private visibleColumns = {};
+  private gridMode: string = '';
+  private gridModes = {}; // 'fitToSpace' or 'fitToContent'
+  private divWidth: number;
 
   constructor(
-    private ls: Ls,
     public override selectableService: SelectableService,
     public override ngzone: NgZone,
     public override configService: ConfigService,
+    private ls: Ls,
     private khiopsLibraryService: KhiopsLibraryService,
     private translate: TranslateService,
   ) {
@@ -226,7 +217,7 @@ export class AgGridComponent
     }
     if (changes.inputDatas?.currentValue) {
       // We must update table always, even if content do not changed, to update header informations
-      this.updateTable(changes?.selectedVariable?.currentValue);
+      this.updateTable();
     }
     if (changes.selectedVariable?.currentValue) {
       // always do it in case of shortdesc change
@@ -254,7 +245,7 @@ export class AgGridComponent
         this.levelDistributionTitle === undefined
       ) {
         this.levelDistributionTitle = this.translate.get(
-          'GLOBAL.LEVEL_DISTRIBUTION',
+          TYPES.LEVEL_DISTRIBUTION,
         );
       }
 
@@ -357,7 +348,7 @@ export class AgGridComponent
     this.gridCheckboxChanged.emit(e);
   }
 
-  updateTable(updateSelectedVariable?) {
+  updateTable() {
     if (this.displayedColumns && this.inputDatas) {
       // Update columns at any changes to update sort a,d other ...
       this.columnDefs = [];
@@ -463,7 +454,7 @@ export class AgGridComponent
     this.updateColumnFilterBadge();
 
     // Update the table
-    this.updateTable(true);
+    this.updateTable();
   }
 
   checkIsSmallDiv() {
@@ -525,10 +516,10 @@ export class AgGridComponent
       let nextRowIndex;
       if (previousRowIndex !== undefined) {
         switch (params.key) {
-          case this.KEY_DOWN:
+          case KEYBOARD.KEY_DOWN:
             nextRowIndex = previousRowIndex + 1;
             break;
-          case this.KEY_UP:
+          case KEYBOARD.KEY_UP:
             nextRowIndex = previousRowIndex - 1;
             break;
         }

@@ -200,7 +200,7 @@ export class DistributionGraphComponent
 
     // Histogram: Missing logarithmic scale for "frequency" mode #185
     this.chartOptions.scales.y.type =
-      this.graphOptions.selected === 'GLOBAL.FREQUENCY'
+      this.graphOptions.selected === TYPES.FREQUENCY
         ? TYPES.LOGARITHMIC
         : TYPES.LINEAR;
 

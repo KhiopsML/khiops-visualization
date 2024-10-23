@@ -22,6 +22,7 @@ import { VariableModel } from '@khiops-visualization/model/variable.model';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { LS } from '@khiops-library/enum/ls';
+import { TYPES } from '@khiops-library/enum/types';
 
 @Component({
   selector: 'app-level-distribution-graph',
@@ -120,7 +121,7 @@ export class LevelDistributionGraphComponent
       this.levelDistributionTitle === undefined
     ) {
       this.levelDistributionTitle = this.translate.get(
-        'GLOBAL.LEVEL_DISTRIBUTION',
+        TYPES.LEVEL_DISTRIBUTION,
       );
     }
   }

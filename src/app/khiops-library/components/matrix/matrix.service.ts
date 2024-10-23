@@ -4,6 +4,7 @@ import { CellModel } from '../../model/cell.model';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 import { MatrixCoordI } from '@khiops-library/interfaces/matrix-coord';
 import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
+import { TYPES } from '@khiops-library/enum/types';
 
 @Injectable({
   providedIn: 'root',
@@ -627,19 +628,19 @@ export class MatrixService {
   ) {
     if (width && height) {
       cellDatas.xCanvas =
-        graphType === 'GLOBAL.STANDARD'
+        graphType === TYPES.STANDARD
           ? cellDatas.x.standard * width * 0.01
           : cellDatas.x.frequency * width * 0.01;
       cellDatas.yCanvas =
-        graphType === 'GLOBAL.STANDARD'
+        graphType === TYPES.STANDARD
           ? cellDatas.y.standard * height * 0.01
           : cellDatas.y.frequency * height * 0.01;
       cellDatas.wCanvas =
-        graphType === 'GLOBAL.STANDARD'
+        graphType === TYPES.STANDARD
           ? cellDatas.w.standard * width * 0.01
           : cellDatas.w.frequency * width * 0.01;
       cellDatas.hCanvas =
-        graphType === 'GLOBAL.STANDARD'
+        graphType === TYPES.STANDARD
           ? cellDatas.h.standard * height * 0.01
           : cellDatas.h.frequency * height * 0.01;
     }
