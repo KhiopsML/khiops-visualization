@@ -15,7 +15,7 @@ import { ChartColorsSetI } from '../../interfaces/chart-colors-set';
 import { ChartOptions } from 'chart.js';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { TYPES } from '@khiops-library/enum/types';
-import { HistogramType } from '@khiops-visualization/components/commons/histogram/histogram.types';
+import { HistogramType } from '@khiops-visualization/components/commons/histogram/histogram.type';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options';
 import { UtilsService } from '@khiops-library/providers/utils.service';

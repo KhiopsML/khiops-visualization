@@ -1,7 +1,7 @@
 import { TYPES } from '@khiops-library/enum/types';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options';
-import { HistogramType } from '@khiops-visualization/components/commons/histogram/histogram.types';
+import { HistogramType } from '@khiops-visualization/components/commons/histogram/histogram.type';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 import { HistogramValuesI } from '@khiops-visualization/components/commons/histogram/histogram.interfaces';
 import { AppService } from '@khiops-visualization/providers/app.service';

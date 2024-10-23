@@ -1,6 +1,6 @@
 import { HistogramUIService } from './histogram.ui.service';
 import { HistogramValuesI } from './histogram.interfaces';
-import { HistogramType } from './histogram.types';
+import { HistogramType } from './histogram.type';
 
 export class HistogramBarModel {
   barWlog: number = 0;

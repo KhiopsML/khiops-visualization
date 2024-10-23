@@ -5,8 +5,8 @@ import { AppService } from '@khiops-visualization/providers/app.service';
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { REPORTS } from '@khiops-library/enum/reports';
-import { HistogramType } from '@khiops-visualization/components/commons/histogram/histogram.types';
 import { TranslateModule } from '@ngstack/translate';
+import { HistogramType } from '@khiops-visualization/components/commons/histogram/histogram.type';
 
 let appService: AppService;
 let histogramService: HistogramService;

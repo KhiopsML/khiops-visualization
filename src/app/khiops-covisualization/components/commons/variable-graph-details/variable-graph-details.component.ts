@@ -22,7 +22,7 @@ import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-op
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import * as _ from 'lodash';
 import { ConfigService } from '@khiops-library/providers/config.service';
-import { HistogramType } from '@khiops-visualization/components/commons/histogram/histogram.types';
+import { HistogramType } from '@khiops-visualization/components/commons/histogram/histogram.type';
 
 @Component({
   selector: 'app-variable-graph-details',

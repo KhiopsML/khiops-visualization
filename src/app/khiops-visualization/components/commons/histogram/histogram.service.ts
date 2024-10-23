@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HistogramBarModel } from './histogram.bar.model';
-import { HistogramType } from './histogram.types';
+import { HistogramType } from './histogram.type';
 import {
   HistogramValuesI,
   RangeXLinI,

@@ -19,7 +19,7 @@ import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.s
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
-import { HistogramType } from './histogram.types';
+import { HistogramType } from './histogram.type';
 import { TranslateService } from '@ngstack/translate';
 import {
   HistogramValuesI,
