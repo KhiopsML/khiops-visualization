@@ -17,21 +17,20 @@ import { LS } from '@khiops-library/enum/ls';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GraphHeaderComponent implements OnInit {
-  maxScale: number;
-  minScale: number;
-  stepScale: number;
+  @Output() public toggleFullscreen?: EventEmitter<boolean> =
+    new EventEmitter();
+  @Output() private scaleValueChanged: EventEmitter<number> =
+    new EventEmitter();
 
-  // Get scale value from ls if set
-  scaleValue: any;
-  truncatedTitle: string | undefined;
+  @Input() public selectedVariable: any; // Type depends of the context
+  @Input() public title: string;
+  @Input() public smallTitle = false;
+  @Input() public hideScale = false;
 
-  @Output() scaleValueChanged: EventEmitter<any> = new EventEmitter();
-  @Output() toggleFullscreen?: EventEmitter<boolean> = new EventEmitter();
-  @Input() selectedVariable: any; // Type depends of the context
-  @Input() title: string;
-  @Input() smallTitle = false;
-  @Input() hideScale = false;
-  iterateTo = 0;
+  public maxScale: number;
+  public minScale: number;
+  public stepScale: number;
+  public scaleValue: number;
 
   constructor(
     private khiopsLibraryService: KhiopsLibraryService,
