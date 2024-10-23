@@ -1,5 +1,4 @@
 import { Component, ViewChild } from '@angular/core';
-import { AppService } from '@khiops-visualization/providers/app.service';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { VariableGraphDetailsComponent } from '../variable-graph-details/variable-graph-details.component';
 import { TreePreparationDatasModel } from '@khiops-visualization/model/tree-preparation-datas.model';
@@ -14,20 +13,15 @@ export class VarDetailsTreePreparationComponent {
   @ViewChild('appVariableGraphDetails', {
     static: false,
   })
-  appVariableGraphDetails: VariableGraphDetailsComponent;
-
-  treePreparationDatas: TreePreparationDatasModel;
-
-  appDatas: any;
-  sizes: any;
-  selectedBarIndex = 0;
+  private appVariableGraphDetails: VariableGraphDetailsComponent;
+  public treePreparationDatas: TreePreparationDatasModel;
+  public sizes: any;
+  public selectedBarIndex = 0;
 
   constructor(
     private treePreparationDatasService: TreePreparationDatasService,
     private layoutService: LayoutService,
-    private appService: AppService,
   ) {
-    this.appDatas = this.appService.getDatas().datas;
     this.treePreparationDatas = this.treePreparationDatasService.getDatas();
     this.sizes = this.layoutService.getViewSplitSizes('treePreparationView');
 
