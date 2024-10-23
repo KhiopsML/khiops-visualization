@@ -33,6 +33,7 @@ import { debounceTime, Subject } from 'rxjs';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { LS } from '@khiops-library/enum/ls';
 import { AppService } from '@khiops-visualization/providers/app.service';
+import { THEME } from '@khiops-library/enum/theme';
 
 @Component({
   selector: 'app-histogram',
@@ -105,7 +106,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     super(selectableService, ngzone, configService);
 
     this.defaultBarColor =
-      AppService.Ls.get(LS.THEME_COLOR) === 'dark' ? 'white' : 'black';
+      AppService.Ls.get(LS.THEME_COLOR) === THEME.DARK ? 'white' : 'black';
     HistogramUIService.setTranslationService(translate);
 
     this.colorSet = HistogramUIService.getColors();

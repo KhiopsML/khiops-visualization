@@ -14,6 +14,7 @@ import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { TrackerService } from '../../../../khiops-library/providers/tracker.service';
 import { LS } from '@khiops-library/enum/ls';
 import { AppService } from '@khiops-visualization/providers/app.service';
+import { THEME } from '@khiops-library/enum/theme';
 
 @Component({
   selector: 'app-user-settings',
@@ -34,7 +35,7 @@ export class UserSettingsComponent implements OnChanges {
     private snackBar: MatSnackBar,
     private trackerService: TrackerService,
   ) {
-    this.currentTheme = AppService.Ls.get(LS.THEME_COLOR, 'light');
+    this.currentTheme = AppService.Ls.get(LS.THEME_COLOR, THEME.LIGHT);
   }
 
   ngOnChanges(changes: SimpleChanges) {

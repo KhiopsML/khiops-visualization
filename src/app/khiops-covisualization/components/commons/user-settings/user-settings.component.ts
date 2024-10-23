@@ -14,6 +14,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngstack/translate';
 import { LS } from '@khiops-library/enum/ls';
 import { AppService } from '@khiops-covisualization/providers/app.service';
+import { THEME } from '@khiops-library/enum/theme';
 
 @Component({
   selector: 'app-user-settings',
@@ -34,7 +35,7 @@ export class UserSettingsComponent implements OnChanges {
     private trackerService: TrackerService,
     private snackBar: MatSnackBar,
   ) {
-    this.currentTheme == AppService.Ls.get(LS.THEME_COLOR, 'light');
+    this.currentTheme == AppService.Ls.get(LS.THEME_COLOR, THEME.LIGHT);
   }
 
   ngOnChanges(changes: SimpleChanges) {

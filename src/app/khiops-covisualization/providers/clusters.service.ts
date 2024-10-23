@@ -13,6 +13,7 @@ import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-data.model';
 import { ExtDatasModel } from '@khiops-covisualization/model/ext-datas.model';
 import { ImportExtDatasService } from './import-ext-datas.service';
+import { CHART_TYPES } from '@khiops-library/enum/chart-types';
 @Injectable({
   providedIn: 'root',
 })
@@ -231,7 +232,7 @@ export class ClustersService {
     const infoPerCluster = new ChartDatasModel();
 
     let currentDataSet: ChartDatasetModel;
-    currentDataSet = new ChartDatasetModel('info', 'line');
+    currentDataSet = new ChartDatasetModel('info', CHART_TYPES.LINE);
     for (
       let j = this.dimensionsDatas.dimensions.length - 1;
       j <= this.dimensionsDatas.hierarchyDatas.totalInitialClusters;
@@ -301,7 +302,7 @@ export class ClustersService {
     for (let i = 0; i < this.dimensionsDatas.selectedDimensions.length; i++) {
       currentDataSet = new ChartDatasetModel(
         this.dimensionsDatas.selectedDimensions[i].name,
-        'line',
+        CHART_TYPES.LINE,
       );
 
       let rankedCount = 1;

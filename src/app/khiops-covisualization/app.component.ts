@@ -21,6 +21,7 @@ import { TreenodesService } from './providers/treenodes.service';
 import { TrackerService } from '@khiops-library/providers/tracker.service';
 import { LS } from '@khiops-library/enum/ls';
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
+import { THEME } from '@khiops-library/enum/theme';
 
 @Component({
   selector: 'app-root-covisualization',
@@ -53,7 +54,7 @@ export class AppComponent implements AfterViewInit {
     private element: ElementRef,
   ) {
     AppService.Ls.setLsId(AppConfig.covisualizationCommon.GLOBAL.LS_ID);
-    this.theme = AppService.Ls.get(LS.THEME_COLOR, 'light');
+    this.theme = AppService.Ls.get(LS.THEME_COLOR, THEME.LIGHT);
     this.appService.initialize();
   }
 
@@ -163,7 +164,7 @@ export class AppComponent implements AfterViewInit {
 
   setTheme() {
     setTimeout(() => {
-      let themeColor = AppService.Ls.get(LS.THEME_COLOR, 'light');
+      let themeColor = AppService.Ls.get(LS.THEME_COLOR, THEME.LIGHT);
       document.documentElement.setAttribute('data-color-scheme', themeColor);
       this.configService?.getConfig()?.onThemeChanged?.(themeColor);
     });

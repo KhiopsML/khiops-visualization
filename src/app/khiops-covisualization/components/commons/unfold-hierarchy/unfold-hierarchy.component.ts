@@ -19,6 +19,7 @@ import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
 import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { LS } from '@khiops-library/enum/ls';
 import { AppService } from '@khiops-covisualization/providers/app.service';
+import { THEME } from '@khiops-library/enum/theme';
 
 @Component({
   selector: 'app-unfold-hierarchy',
@@ -90,7 +91,7 @@ export class UnfoldHierarchyComponent implements OnInit {
     private dialogRef: MatDialogRef<UnfoldHierarchyComponent>,
   ) {
     this.borderColor =
-      AppService.Ls.get(LS.THEME_COLOR) === 'dark' ? '#ffffff' : '#000000';
+      AppService.Ls.get(LS.THEME_COLOR) === THEME.DARK ? '#ffffff' : '#000000';
 
     this.hierarchyDisplayedColumns = [
       {

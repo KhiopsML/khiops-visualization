@@ -1,3 +1,5 @@
+import { CHART_TYPES } from '@khiops-library/enum/chart-types';
+
 export class ChartDatasetModel {
   label: string | undefined;
   data: any = [];
@@ -20,6 +22,6 @@ export class ChartDatasetModel {
 
   constructor(label?: string, type?: string) {
     this.label = label || '';
-    this.type = type || 'bar'; // By default
+    this.type = type || CHART_TYPES.BAR; // By default
   }
 }

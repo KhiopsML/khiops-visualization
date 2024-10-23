@@ -17,6 +17,7 @@ import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { LiftCurveSerieI } from '../interfaces/lift-curve-serie';
+import { CHART_TYPES } from '@khiops-library/enum/chart-types';
 
 @Injectable({
   providedIn: 'root',
@@ -544,7 +545,7 @@ export class EvaluationDatasService {
     for (let i = 0; i < liftGraphDatas.length; i++) {
       const currentData: ChartDatasetModel = new ChartDatasetModel(
         liftGraphDatas[i].name,
-        'line',
+        CHART_TYPES.LINE,
       );
       currentData.data = liftGraphDatas[i].series.map((e) => e.value);
       currentData.pointRadius = 0;

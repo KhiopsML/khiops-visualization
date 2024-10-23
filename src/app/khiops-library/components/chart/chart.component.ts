@@ -19,6 +19,8 @@ import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { ChartDatasetModel } from '@khiops-library/model/chart-dataset.model';
 import { LS } from '@khiops-library/enum/ls';
 import { Ls } from '@khiops-library/providers/ls.service';
+import { CHART_TYPES } from '@khiops-library/enum/chart-types';
+import { THEME } from '@khiops-library/enum/theme';
 
 @Component({
   selector: 'kl-chart',
@@ -26,24 +28,22 @@ import { Ls } from '@khiops-library/providers/ls.service';
   styleUrls: ['./chart.component.scss'],
 })
 export class ChartComponent implements AfterViewInit, OnChanges {
-  @Input() canvasIdContainer = 'kl-chart'; // May be updated if multiple graph
-  @Input() inputDatas: ChartDatasModel;
-  @Input() activeEntries: number;
-  @Input() type: ChartJs.ChartType = 'bar';
-  @Input() chartOptions: ChartOptions;
-  @Input() colorSet: ChartColorsSetI | undefined;
-  @Input() enableSelection = true;
-  @Input() selectedLineChartItem: string | undefined = undefined;
+  @Input() public canvasIdContainer = 'kl-chart'; // May be updated if multiple graph
+  @Input() private inputDatas: ChartDatasModel;
+  @Input() private activeEntries: number;
+  @Input() private type: ChartJs.ChartType = CHART_TYPES.BAR;
+  @Input() private chartOptions: ChartOptions;
+  @Input() private colorSet: ChartColorsSetI | undefined;
+  @Input() private enableSelection = true;
+  @Input() private selectedLineChartItem: string | undefined = undefined;
 
-  @Output() selectBarIndex: EventEmitter<number> = new EventEmitter();
+  @Output() private selectBarIndex: EventEmitter<number> = new EventEmitter();
 
-  AppConfig: any;
-
-  ctx: ChartJs.ChartItem;
-  chart: ChartJs.Chart;
-  color: string = '';
-  barColor: string = '';
-  fontColor: string = '#999';
+  private ctx: ChartJs.ChartItem;
+  private chart: ChartJs.Chart;
+  private color: string = '';
+  private barColor: string = '';
+  private fontColor: string = '#999';
 
   constructor(
     private ls: Ls,
@@ -51,10 +51,10 @@ export class ChartComponent implements AfterViewInit, OnChanges {
     private el: ElementRef,
     private khiopsLibraryService: KhiopsLibraryService,
   ) {
-    this.AppConfig = this.khiopsLibraryService.getAppConfig().common;
-    this.color = this.ls.get(LS.THEME_COLOR) === 'dark' ? '#555' : '#e5e5e5';
+    this.color =
+      this.ls.get(LS.THEME_COLOR) === THEME.DARK ? '#555' : '#e5e5e5';
     this.barColor =
-      this.ls.get(LS.THEME_COLOR) === 'dark'
+      this.ls.get(LS.THEME_COLOR) === THEME.DARK
         ? 'rgba(255, 255, 255, 1)'
         : 'rgba(0, 0, 0, 1)';
     this.colorSet = this.khiopsLibraryService.getGraphColorSet()[0];
@@ -310,7 +310,7 @@ export class ChartComponent implements AfterViewInit, OnChanges {
       }
 
       let borderOpacity = 1;
-      if (dataset.type === 'line') {
+      if (dataset.type === CHART_TYPES.LINE) {
         // hide non selected lines
         if (this.selectedLineChartItem === '') {
           dataset.borderWidth = 2;
