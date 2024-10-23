@@ -43,11 +43,11 @@ import { LayoutService } from '@khiops-library/providers/layout.service';
   ],
 })
 export class HierarchySelectComponent implements OnChanges, AfterViewInit {
-  @Input() public selectedDimension: DimensionModel;
-  @Input() public dimensions: DimensionModel[];
-  @Input() public selectedTreeCluster: SelectedTreeClusterModel;
-  @Input() private selectedNode: TreeNodeModel;
-  @Input() private position: number;
+  @Input() public selectedDimension: DimensionModel | undefined;
+  @Input() public dimensions: DimensionModel[] | undefined;
+  @Input() public selectedTreeCluster: SelectedTreeClusterModel | undefined;
+  @Input() selectedNode: TreeNodeModel | undefined;
+  @Input() private position: number = 0;
   @Output() private selectedTreeClusterChange = new EventEmitter<any>();
 
   public showStats = false;
@@ -62,7 +62,7 @@ export class HierarchySelectComponent implements OnChanges, AfterViewInit {
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.selectedDimension?.currentValue) {
+    if (changes.selectedDimension?.currentValue && this.selectedDimension) {
       this.selectedTreeCluster = new SelectedTreeClusterModel(
         this.selectedDimension,
       );
@@ -71,13 +71,15 @@ export class HierarchySelectComponent implements OnChanges, AfterViewInit {
           this.selectedDimension.name,
         );
     }
-    if (changes.selectedNode?.currentValue) {
+    if (changes.selectedNode?.currentValue && this.selectedDimension) {
       const currentNode = this.treenodesService.getNodeFromDimensionTree(
         this.selectedDimension.name,
-        this.selectedNode.name,
+        changes.selectedNode?.currentValue.name,
       );
-      this.selectedTreeCluster.setCurrentNodeInformations(currentNode);
-      this.selectedTreeClusterChange.emit(this.selectedTreeCluster);
+      if (this.selectedTreeCluster) {
+        this.selectedTreeCluster.setCurrentNodeInformations(currentNode);
+        this.selectedTreeClusterChange.emit(this.selectedTreeCluster);
+      }
     }
   }
 

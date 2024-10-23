@@ -1,4 +1,5 @@
 import { Injectable, EventEmitter } from '@angular/core';
+import { TreeNodeChangedEventI } from '@khiops-covisualization/interfaces/events';
 
 @Injectable({
   providedIn: 'root',
@@ -6,22 +7,13 @@ import { Injectable, EventEmitter } from '@angular/core';
 export class EventsService {
   public treeSelectedNodeChanged: EventEmitter<any> = new EventEmitter();
   public importedDatasChanged: EventEmitter<any> = new EventEmitter();
-  public treeNodeNameChanged: EventEmitter<any> = new EventEmitter();
   public conditionalOnContextChanged: EventEmitter<any> = new EventEmitter();
-
-  /**
-   * Emits an event when the name of a tree node changes.
-   * @param event - The event data to emit.
-   */
-  emitTreeNodeNameChanged(event = {}) {
-    this.treeNodeNameChanged.emit(event);
-  }
 
   /**
    * Emits an event when the selected tree node changes.
    * @param event - The event data to emit.
    */
-  emitTreeSelectedNodeChanged(event = {}) {
+  emitTreeSelectedNodeChanged(event: TreeNodeChangedEventI) {
     this.treeSelectedNodeChanged.emit(event);
   }
 
@@ -37,7 +29,7 @@ export class EventsService {
    * Emits an event when the conditional context changes.
    * @param event - The event data to emit.
    */
-  emitConditionalOnContextChanged(event = {}) {
-    this.conditionalOnContextChanged.emit(event);
+  emitConditionalOnContextChanged() {
+    this.conditionalOnContextChanged.emit();
   }
 }

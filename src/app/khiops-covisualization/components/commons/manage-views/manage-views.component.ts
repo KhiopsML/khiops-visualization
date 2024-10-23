@@ -5,6 +5,7 @@ import { ViewLayoutVO } from '@khiops-covisualization/model/view-layout.model';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { ViewManagerService } from '@khiops-covisualization/providers/view-manager.service';
 import { MAT_RIPPLE_COLOR } from '@khiops-covisualization/config/colors';
+import { DimensionViewLayoutModel } from '@khiops-covisualization/model/dimension-view-layout.model';
 
 @Component({
   selector: 'app-manage-views',
@@ -13,7 +14,7 @@ import { MAT_RIPPLE_COLOR } from '@khiops-covisualization/config/colors';
 })
 export class ManageViewsComponent {
   public viewsLayout: ViewLayoutVO;
-  public isDimVisible: boolean[];
+  public isDimVisible: boolean[] = [];
   public isContextView = true;
   public matRippleColor = MAT_RIPPLE_COLOR;
 
@@ -36,7 +37,7 @@ export class ManageViewsComponent {
     this.dialogRef.close();
   }
 
-  toggleDimension(dimensionLayout): boolean {
+  toggleDimension(dimensionLayout: DimensionViewLayoutModel): boolean {
     dimensionLayout.isChecked = !dimensionLayout.isChecked;
     return false;
   }

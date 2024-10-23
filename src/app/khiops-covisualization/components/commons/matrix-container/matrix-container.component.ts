@@ -24,6 +24,7 @@ import { LayoutService } from '@khiops-library/providers/layout.service';
 import { ViewManagerService } from '@khiops-covisualization/providers/view-manager.service';
 import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 import { SplitGutterInteractionEvent } from 'angular-split';
+import { TreeNodeChangedEventI } from '@khiops-covisualization/interfaces/events';
 
 @Component({
   selector: 'app-matrix-container',
@@ -34,12 +35,12 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild('matrix', {
     static: false,
   })
-  private matrix: MatrixComponent;
+  private matrix: MatrixComponent | undefined;
 
-  @Input() public sizeId: string;
-  @Input() public viewsLayout: ViewLayoutVO;
-  @Input() private viewId: string;
-  @Input() private selectedDimensions: DimensionModel[]; // Used to check for dim change
+  @Input() public sizeId: string = '';
+  @Input() public viewsLayout: ViewLayoutVO | undefined;
+  @Input() private viewId: string = '';
+  @Input() selectedDimensions: DimensionModel[] | undefined; // Used to check for dim change
 
   public sizes: any;
   public dimensionsDatas: DimensionsDatasModel;
@@ -63,9 +64,11 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
     this.dimensionsDatas = this.dimensionsDatasService.getDatas();
 
     this.treeSelectedNodeChangedSub =
-      this.eventsService.treeSelectedNodeChanged.subscribe((e) => {
-        this.onTreeSelectedNodeChanged(e);
-      });
+      this.eventsService.treeSelectedNodeChanged.subscribe(
+        (e: TreeNodeChangedEventI) => {
+          this.onTreeSelectedNodeChanged(e);
+        },
+      );
 
     this.viewsLayoutChangedSub =
       this.viewManagerService.viewsLayoutChanged.subscribe((viewsLayout) => {
@@ -103,7 +106,7 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
   onToggleFullscreen(isFullscreen: boolean) {
     this.isFullscreen = isFullscreen;
     setTimeout(() => {
-      this.matrix.drawMatrix();
+      this.matrix?.drawMatrix();
     });
   }
 
@@ -148,46 +151,48 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private constructModeSelectBox() {
-    const varName1 = this.dimensionsDatas.selectedDimensions[0].name;
-    const varName2 = this.dimensionsDatas.selectedDimensions[1].name;
+    if (this.dimensionsDatas.selectedDimensions) {
+      const varName1 = this.dimensionsDatas.selectedDimensions[0]?.name;
+      const varName2 = this.dimensionsDatas.selectedDimensions[1]?.name;
 
-    this.matrixModes.types = [
-      {
-        mode: MATRIX_MODES.MUTUAL_INFO,
-        title: 'I (' + varName1 + ' , ' + varName2 + ')',
-        tooltip: this.translate.get('TOOLTIPS.AXIS.MATRIX.I'),
-      },
-      {
-        mode: MATRIX_MODES.FREQUENCY,
-        title: 'Frequency',
-        tooltip: this.translate.get('TOOLTIPS.AXIS.MATRIX.F'),
-      },
-      {
-        mode: MATRIX_MODES.PROB_CELL,
-        title: 'P (' + varName2 + ' | ' + varName1 + ')',
-        tooltip: this.translate.get('TOOLTIPS.AXIS.MATRIX.P'),
-      },
-      {
-        mode: MATRIX_MODES.PROB_CELL_REVERSE,
-        title: 'P (' + varName1 + ' | ' + varName2 + ')',
-        tooltip: this.translate.get('TOOLTIPS.AXIS.MATRIX.P'),
-      },
-      {
-        mode: MATRIX_MODES.HELLINGER,
-        title: 'H (' + varName1 + ' , ' + varName2 + ')',
-        tooltip: this.translate.get('TOOLTIPS.AXIS.MATRIX.H'),
-      },
-    ];
-    this.matrixModes = { ...this.matrixModes };
+      this.matrixModes.types = [
+        {
+          mode: MATRIX_MODES.MUTUAL_INFO,
+          title: 'I (' + varName1 + ' , ' + varName2 + ')',
+          tooltip: this.translate.get('TOOLTIPS.AXIS.MATRIX.I'),
+        },
+        {
+          mode: MATRIX_MODES.FREQUENCY,
+          title: 'Frequency',
+          tooltip: this.translate.get('TOOLTIPS.AXIS.MATRIX.F'),
+        },
+        {
+          mode: MATRIX_MODES.PROB_CELL,
+          title: 'P (' + varName2 + ' | ' + varName1 + ')',
+          tooltip: this.translate.get('TOOLTIPS.AXIS.MATRIX.P'),
+        },
+        {
+          mode: MATRIX_MODES.PROB_CELL_REVERSE,
+          title: 'P (' + varName1 + ' | ' + varName2 + ')',
+          tooltip: this.translate.get('TOOLTIPS.AXIS.MATRIX.P'),
+        },
+        {
+          mode: MATRIX_MODES.HELLINGER,
+          title: 'H (' + varName1 + ' , ' + varName2 + ')',
+          tooltip: this.translate.get('TOOLTIPS.AXIS.MATRIX.H'),
+        },
+      ];
+      this.matrixModes = { ...this.matrixModes };
 
-    // Check if saved into json
-    if (
-      this.dimensionsDatas.matrixMode !== undefined &&
-      this.dimensionsDatas.matrixMode < this.matrixModes.types.length
-    ) {
-      this.matrixModes.selected =
-        this.matrixModes.types[this.dimensionsDatas.matrixMode];
-      this.matrixModes.selectedIndex = this.dimensionsDatas.matrixMode;
+      // Check if saved into json
+      if (
+        this.dimensionsDatas.matrixMode !== undefined &&
+        this.dimensionsDatas.matrixMode < this.matrixModes.types.length
+      ) {
+        this.matrixModes.selected =
+          this.matrixModes.types[this.dimensionsDatas.matrixMode];
+        this.matrixModes.selectedIndex = this.dimensionsDatas.matrixMode;
+      }
     }
   }
 
@@ -201,7 +206,7 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
    *
    * @param e - The event object containing details about the selected node.
    */
-  private onTreeSelectedNodeChanged(e) {
+  private onTreeSelectedNodeChanged(e: TreeNodeChangedEventI) {
     this.initNodesEvents++;
     if (this.isFirstLoad) {
       // At first launch collapse saved collapsed nodes
@@ -217,12 +222,12 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
           this.initNodesEvents === this.dimensionsDatas.dimensions.length) ||
         isContextDimension
       ) {
-        this.matrix.drawMatrix();
+        this.matrix?.drawMatrix();
       } else if (
         !e.stopPropagation &&
         this.initNodesEvents > this.dimensionsDatas.dimensions.length
       ) {
-        this.matrix.drawSelectedNodes();
+        this.matrix?.drawSelectedNodes();
       }
     }
   }
