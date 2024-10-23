@@ -21,9 +21,9 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 export class WatchResizeComponent implements AfterViewInit {
   [sizeChanged: string]: any; // Index signature for sizeChanged callback
 
-  @Input() id: any;
-  @Input() watchResize = true;
-  el: HTMLElement | null;
+  @Input() public id: any;
+  @Input() private watchResize = true;
+  private el: HTMLElement | null;
 
   constructor(
     public ngzone: NgZone,

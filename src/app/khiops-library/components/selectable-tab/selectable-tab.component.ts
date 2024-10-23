@@ -7,14 +7,28 @@ import {
 } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 
+/**
+ * SelectableTabComponent handles the selection of Material tabs.
+ *
+ * Inputs:
+ * - selectedTab: MatTabChangeEvent - The event that is triggered when a tab is selected.
+ *
+ * Properties:
+ * - tabIndex: number - The index of the currently selected tab.
+ * - loadingView: boolean - A flag indicating whether the view is in a loading state.
+ *
+ * Methods:
+ * - loaded(): void - Sets the loadingView to false after a timeout and calls loadView.
+ * - loadView(): void - Dispatches a resize event to refresh the graph after the view is loaded.
+ */
 @Component({
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectableTabComponent implements OnChanges {
   @Input() selectedTab: MatTabChangeEvent;
-  tabIndex: number;
-  loadingView = true;
+  public tabIndex: number;
+  public loadingView = true;
 
   ngOnChanges(changes: SimpleChanges) {
     if (
