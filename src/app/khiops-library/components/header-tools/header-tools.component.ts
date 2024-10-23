@@ -16,11 +16,12 @@ import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
   styleUrls: ['./header-tools.component.scss'],
 })
 export class HeaderToolsComponent {
-  @Input() appVersion: string;
-  @Input() showMenu = true;
-  isCopyingImage = false;
-  @Output() toggleNavDrawerChanged: EventEmitter<any> = new EventEmitter();
-  eltsToHide: any;
+  @Input() public showMenu = true;
+  @Output() private toggleNavDrawerChanged: EventEmitter<any> =
+    new EventEmitter();
+
+  public isCopyingImage = false;
+  private eltsToHide: any;
 
   constructor(
     public selectableService: SelectableService,
@@ -166,7 +167,7 @@ export class HeaderToolsComponent {
     }
   }
 
-  rePaintGraph(elt: any) {
+  private rePaintGraph(elt: any) {
     // Remove box shadow to prevent bliue overlay on exported screenshot
     // https://stackoverflow.com/questions/57070074/issue-with-html2canvas-green-overlay-while-exporting
     this.removeSelectedClass(elt);
@@ -181,12 +182,12 @@ export class HeaderToolsComponent {
     }
   }
 
-  removeSelectedClass(elt) {
+  private removeSelectedClass(elt) {
     elt.classList.replace('selected', 'printing');
     elt.parentNode.classList.replace('selected', 'printing');
   }
 
-  addSelectedClass(elt) {
+  private addSelectedClass(elt) {
     elt.classList.replace('printing', 'selected');
     elt.parentNode.classList.replace('printing', 'selected');
   }
@@ -195,7 +196,7 @@ export class HeaderToolsComponent {
     this.toggleNavDrawerChanged.emit();
   }
 
-  getComponentInstance(currentSelectedArea) {
+  private getComponentInstance(currentSelectedArea) {
     if (currentSelectedArea.componentType === COMPONENT_TYPES.HISTOGRAM) {
       let chartContainer = currentSelectedArea.chart.nativeElement;
       return chartContainer?.componentInstance;

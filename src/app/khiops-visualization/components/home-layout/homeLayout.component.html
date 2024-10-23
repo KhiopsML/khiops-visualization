@@ -153,7 +153,6 @@
         <div id="header-right" fxLayoutAlign="start center" layout="row">
           <div fxLayoutAlign="center center" fxLayout="row">
             <kl-header-tools
-              [appVersion]="appVersion"
               *ngIf="appDatas && appDatas.datas && isCompatibleJson"
               (toggleNavDrawerChanged)="onToggleNavDrawerChanged($event)"
             >
