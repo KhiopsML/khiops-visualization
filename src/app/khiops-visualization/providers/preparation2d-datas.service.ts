@@ -28,7 +28,7 @@ import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
   providedIn: 'root',
 })
 export class Preparation2dDatasService {
-  preparation2dDatas: Preparation2dDatasModel;
+  private preparation2dDatas: Preparation2dDatasModel;
 
   constructor(
     private translate: TranslateService,

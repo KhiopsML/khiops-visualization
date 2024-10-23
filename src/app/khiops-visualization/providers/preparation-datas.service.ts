@@ -23,7 +23,7 @@ import { GridColumnsI } from '../../khiops-library/interfaces/grid-columns';
   providedIn: 'root',
 })
 export class PreparationDatasService {
-  preparationDatas: PreparationDatasModel;
+  private preparationDatas: PreparationDatasModel;
 
   constructor(
     private translate: TranslateService,

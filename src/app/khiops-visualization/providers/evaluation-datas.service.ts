@@ -23,7 +23,7 @@ import { CHART_TYPES } from '@khiops-library/enum/chart-types';
   providedIn: 'root',
 })
 export class EvaluationDatasService {
-  evaluationDatas: EvaluationDatasModel;
+  private evaluationDatas: EvaluationDatasModel;
 
   constructor(
     private translate: TranslateService,

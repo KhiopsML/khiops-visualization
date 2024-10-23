@@ -24,7 +24,7 @@ import { DistributionChartDatasModel } from '@khiops-visualization/model/distrib
   providedIn: 'root',
 })
 export class DistributionDatasService {
-  distributionDatas: DistributionDatasModel;
+  private distributionDatas: DistributionDatasModel;
 
   constructor(
     private translate: TranslateService,

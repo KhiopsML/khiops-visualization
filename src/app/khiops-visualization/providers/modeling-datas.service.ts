@@ -18,7 +18,7 @@ import { REPORTS } from '@khiops-library/enum/reports';
   providedIn: 'root',
 })
 export class ModelingDatasService {
-  modelingDatas: ModelingDatasModel;
+  private modelingDatas: ModelingDatasModel;
 
   constructor(
     private translate: TranslateService,

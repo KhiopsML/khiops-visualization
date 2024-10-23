@@ -13,7 +13,7 @@ import { VIEW_LAYOUT } from '@khiops-visualization/config/view-layout';
 })
 export class AppService {
   static Ls: Ls;
-  appDatas: any;
+  private appDatas: any;
 
   constructor(
     private layoutService: LayoutService,

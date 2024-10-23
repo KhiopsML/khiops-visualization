@@ -17,7 +17,7 @@ import { ModalityCountsModel } from '@khiops-visualization/model/modality-counts
   providedIn: 'root',
 })
 export class Distribution2dDatasService {
-  distributionDatas: DistributionDatasModel;
+  private distributionDatas: DistributionDatasModel;
 
   constructor(
     private distributionDatasService: DistributionDatasService,

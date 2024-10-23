@@ -17,7 +17,7 @@ import { REPORTS } from '@khiops-library/enum/reports';
   providedIn: 'root',
 })
 export class TreePreparationDatasService {
-  treePreparationDatas: TreePreparationDatasModel | undefined;
+  private treePreparationDatas: TreePreparationDatasModel | undefined;
 
   constructor(
     private preparationDatasService: PreparationDatasService,
