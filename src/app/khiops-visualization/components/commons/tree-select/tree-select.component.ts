@@ -30,27 +30,26 @@ export class TreeSelectComponent
   extends SelectableComponent
   implements AfterViewInit, OnChanges
 {
+  @Input() public dimensionTree: [TreeNodeModel];
   @Input() selectedNodes: TreeNodeModel[];
   @Input() selectedNode: TreeNodeModel;
-  @Input() dimensionTree: [TreeNodeModel];
 
-  @Output() selectTreeItemChanged: EventEmitter<any> = new EventEmitter();
+  @Output() private selectTreeItemChanged: EventEmitter<any> =
+    new EventEmitter();
 
-  componentType = COMPONENT_TYPES.KV_TREE; // needed to copy datas
-  tree: any;
-  override id: any = undefined;
-  nodeInSelection: any;
-
-  isFullscreen: boolean = false;
+  public componentType = COMPONENT_TYPES.KV_TREE; // needed to copy datas
+  public override id: any = undefined;
+  public isFullscreen: boolean = false;
+  private tree: any;
 
   constructor(
     public override ngzone: NgZone,
+    public override selectableService: SelectableService,
+    public override configService: ConfigService,
+    public translate: TranslateService,
     private appService: AppService,
     private treePreparationDatasService: TreePreparationDatasService,
-    public override selectableService: SelectableService,
     private snackBar: MatSnackBar,
-    public translate: TranslateService,
-    public override configService: ConfigService,
   ) {
     super(selectableService, ngzone, configService);
   }
@@ -82,7 +81,7 @@ export class TreeSelectComponent
     this.isFullscreen = isFullscreen;
   }
 
-  initialize() {
+  private initialize() {
     // At launch check if there are saved selected nodes into inpout
     const savedSelectedNodes = this.appService.getSavedDatas('selectedNodes');
     if (savedSelectedNodes) {
@@ -92,7 +91,7 @@ export class TreeSelectComponent
     }
   }
 
-  initTree(selectedNodes?) {
+  private initTree(selectedNodes?) {
     if (this.dimensionTree?.[0]) {
       // @ts-ignore
       this.tree = new TreeView(
@@ -155,8 +154,6 @@ export class TreeSelectComponent
   keyEvent(event) {
     const currentSelectedArea = this.selectableService.getSelectedArea();
     if (currentSelectedArea && currentSelectedArea.id === this.id) {
-      // Keep id into node selection
-      this.nodeInSelection = this.id;
       this.tree.selectNextNode(this.id, event.keyCode);
     } else {
       return;
