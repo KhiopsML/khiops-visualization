@@ -40,7 +40,7 @@ import { FileLoaderService } from '@khiops-library/providers/file-loader.service
   encapsulation: ViewEncapsulation.None,
 })
 export class HomeLayoutComponent implements OnInit, OnDestroy {
-  public showProjectTab: boolean = false;
+  public showProjectTab: boolean = true;
   public get appDatas() {
     return this.appService.getDatas();
   }
@@ -230,8 +230,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     const isCollidingJson = this.appService.isCollidingJson(datas);
     UtilsService.resetSearch(AppConfig.covisualizationCommon.GLOBAL.LS_ID);
 
-    this.showProjectTab =
-      this.configService.getConfig().showProjectTab || false;
+    this.showProjectTab = this.configService.getConfig().showProjectTab || true;
     if (this.showProjectTab === undefined) {
       this.showProjectTab = true;
     }
