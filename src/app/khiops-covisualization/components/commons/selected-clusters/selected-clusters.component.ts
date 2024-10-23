@@ -14,11 +14,11 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./selected-clusters.component.scss'],
 })
 export class SelectedClustersComponent implements OnDestroy {
-  @Input() private selectedNodes: TreeNodeModel[];
+  @Input() private selectedNodes: TreeNodeModel[] | undefined;
 
   public clustersDisplayedColumns: GridColumnsI[] = [];
-  public selectedClusters: SelectedClusterModel[] = undefined;
-  public activeClusters: SelectedClusterModel[] = undefined;
+  public selectedClusters: SelectedClusterModel[] | undefined = undefined;
+  public activeClusters: SelectedClusterModel[] | undefined = undefined;
   public id: any = 'selected-clusters-grid';
   public title: string;
 
@@ -103,13 +103,16 @@ export class SelectedClustersComponent implements OnDestroy {
       this.selectedClusters = [];
 
       for (let i = 0; i < this.selectedNodes.length; i++) {
-        const nodeVO: TreeNodeModel = this.selectedNodes[i];
-        const selectedCluster: SelectedClusterModel = new SelectedClusterModel(
-          nodeVO.hierarchy,
-          nodeVO.shortDescription,
-          details[i].length,
-        );
-        this.selectedClusters.push(selectedCluster);
+        const nodeVO: TreeNodeModel | undefined = this.selectedNodes[i];
+        if (nodeVO) {
+          const selectedCluster: SelectedClusterModel =
+            new SelectedClusterModel(
+              nodeVO.hierarchy,
+              nodeVO.shortDescription,
+              details[i]?.length,
+            );
+          this.selectedClusters.push(selectedCluster);
+        }
       }
       this.selectActiveClusters();
     }
@@ -121,17 +124,21 @@ export class SelectedClustersComponent implements OnDestroy {
    * clusters to the active clusters list.
    */
   private selectActiveClusters() {
-    const currentActiveClusters = [];
-    const firstDimPos =
-      this.dimensionsDatasService.getDimensionPositionFromName(
-        this.selectedClusters[0].hierarchy,
-      );
-    const secondDimPos =
-      this.dimensionsDatasService.getDimensionPositionFromName(
-        this.selectedClusters[1].hierarchy,
-      );
-    currentActiveClusters.push(this.selectedClusters[firstDimPos]);
-    currentActiveClusters.push(this.selectedClusters[secondDimPos]);
-    this.activeClusters = currentActiveClusters;
+    const currentActiveClusters: SelectedClusterModel[] | undefined = [];
+    if (this.selectedClusters) {
+      const firstDimPos =
+        this.dimensionsDatasService.getDimensionPositionFromName(
+          this.selectedClusters[0]?.hierarchy,
+        );
+      const secondDimPos =
+        this.dimensionsDatasService.getDimensionPositionFromName(
+          this.selectedClusters[1]?.hierarchy,
+        );
+      this.selectedClusters[firstDimPos] &&
+        currentActiveClusters.push(this.selectedClusters[firstDimPos]);
+      this.selectedClusters[secondDimPos] &&
+        currentActiveClusters.push(this.selectedClusters[secondDimPos]);
+      this.activeClusters = currentActiveClusters;
+    }
   }
 }

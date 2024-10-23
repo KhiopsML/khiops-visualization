@@ -18,6 +18,11 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 import { Subscription } from 'rxjs';
 import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
+import {
+  TreeViewErrorEventI,
+  TreeViewNodeEventI,
+  TreeViewUpdateNodeNameEventI,
+} from '@khiops-covisualization/interfaces/events';
 
 @Component({
   selector: 'app-tree-select',
@@ -28,10 +33,10 @@ import { DimensionsDatasService } from '@khiops-covisualization/providers/dimens
 export class TreeSelectComponent
   implements AfterViewInit, OnChanges, OnDestroy
 {
-  @Input() public position: number;
-  @Input() private selectedDimension: DimensionModel;
-  @Input() private selectedNode: TreeNodeModel;
-  @Input() private dimensionsTree: TreeNodeModel[];
+  @Input() public position: number = 0;
+  @Input() private selectedDimension: DimensionModel | undefined;
+  @Input() private selectedNode: TreeNodeModel | undefined;
+  @Input() private dimensionsTree: TreeNodeModel[] | undefined;
 
   public id: any = undefined;
   private treeSelectedNodeChangedSub: Subscription;
@@ -52,7 +57,7 @@ export class TreeSelectComponent
         if (
           this.tree &&
           e.selectedNode &&
-          e.hierarchyName === this.selectedDimension.name
+          e.hierarchyName === this.selectedDimension?.name
         ) {
           let propagateEvent = true;
           if (e.stopPropagation) {
@@ -71,7 +76,7 @@ export class TreeSelectComponent
       });
   }
 
-  public selectNextNode(keyCode) {
+  public selectNextNode(keyCode: number) {
     // Keep id into node selection
     this.nodeInSelection = this.id;
 
@@ -120,74 +125,83 @@ export class TreeSelectComponent
       'tree_' + this.position,
     );
 
-    this.tree.on('init', (e) => {
-      if (!selectedNode) {
-        //  init selected node 0 and propagate event
-        // Here get the first available visible node (if tree is collapsed)
-        const lastVisibleNode: TreeNodeModel =
-          this.treenodesService.getLastVisibleNode(this.dimensionsTree);
-        this.tree.selectNode(lastVisibleNode.id || 0, true);
-      } else {
-        // Select previous nodes if unfold hierarchy changed or if hierarchy has been saved
-        // Find the node tree id into current tree
-        const nodeTree = this.treenodesService.getNodeFromName(
-          this.selectedDimension.name,
-          selectedNode._id,
-        );
-        const nodeTreeId = nodeTree?.id;
-        if (nodeTreeId !== undefined && nodeTreeId >= 0) {
-          this.tree.selectNode(nodeTreeId, true);
+    this.tree.on('init', () => {
+      if (this.dimensionsTree) {
+        if (!selectedNode) {
+          //  init selected node 0 and propagate event
+          // Here get the first available visible node (if tree is collapsed)
+          const lastVisibleNode: TreeNodeModel =
+            this.treenodesService.getLastVisibleNode(this.dimensionsTree);
+          this.tree.selectNode(lastVisibleNode.id || 0, true);
+        } else {
+          // Select previous nodes if unfold hierarchy changed or if hierarchy has been saved
+          // Find the node tree id into current tree
+          const nodeTree = this.treenodesService.getNodeFromName(
+            this.selectedDimension?.name,
+            selectedNode._id,
+          );
+          const nodeTreeId = nodeTree?.id;
+          if (nodeTreeId !== undefined && nodeTreeId >= 0) {
+            this.tree.selectNode(nodeTreeId, true);
+          }
         }
       }
     });
 
-    this.tree.on('select', (e) => {
+    this.tree.on('select', (e: TreeViewNodeEventI) => {
+      console.log('this.tree.on select~ e:', e);
       // Do ngzone to emit event
       this.ngzone.run(() => {
         setTimeout(() => {
           this.treenodesService.setSelectedNode(
-            this.selectedDimension.name,
-            e.data.name,
+            this.selectedDimension?.name,
+            e.name,
           );
         });
       });
     });
-    this.tree.on('expand', (e) => {
+    this.tree.on('expand', (e: TreeViewNodeEventI) => {
       this.dimensionsDatasService.setIsLoading(true);
       // Important to do in ngzone to do prevent event miss
       this.ngzone.run(() => {
         setTimeout(() => {
-          this.treenodesService.expandNode(
-            this.selectedDimension.name,
-            e.data.name,
-          );
+          if (this.selectedDimension) {
+            this.treenodesService.expandNode(
+              this.selectedDimension.name,
+              e.name,
+            );
+          }
         });
       });
     });
-    this.tree.on('collapse', (e) => {
+    this.tree.on('collapse', (e: TreeViewNodeEventI) => {
       this.dimensionsDatasService.setIsLoading(true);
       // Important to do in ngzone to do prevent event miss
       this.ngzone.run(() => {
         setTimeout(() => {
-          this.treenodesService.collapseNode(
-            this.selectedDimension.name,
-            e.data.name,
-          );
+          if (this.selectedDimension) {
+            this.treenodesService.collapseNode(
+              this.selectedDimension.name,
+              e.name,
+            );
+          }
         });
       });
     });
-    this.tree.on('updateNodeName', (e) => {
+    this.tree.on('updateNodeName', (e: TreeViewUpdateNodeNameEventI) => {
       // Important when node name change
       this.ngzone.run(() => {
-        this.treenodesService.updateSelectedNodeName(
-          this.selectedDimension.name,
-          e.name,
-          e.newName,
-        );
+        if (this.selectedDimension) {
+          this.treenodesService.updateSelectedNodeName(
+            this.selectedDimension.name,
+            e.name,
+            e.newName,
+          );
+        }
       });
     });
-    this.tree.on('error', (e) => {
-      this.snackBar.open(this.translate.get(e.data), undefined, {
+    this.tree.on('error', (e: TreeViewErrorEventI) => {
+      this.snackBar.open(this.translate.get(e.message), undefined, {
         duration: 4000,
         panelClass: 'error',
       });

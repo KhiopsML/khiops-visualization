@@ -7,6 +7,7 @@ import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { CheckboxCellComponent } from '@khiops-library/components/ag-grid/checkbox-cell/checkbox-cell.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-data.model';
+import { GridCheckboxEventI } from '@khiops-library/interfaces/events';
 
 @Component({
   selector: 'app-import-ext-datas',
@@ -104,7 +105,7 @@ export class ImportExtDatasComponent implements OnInit {
     this.constructFieldsToImportTable();
   }
 
-  onGridCheckboxChanged(event) {
+  onGridCheckboxChanged(event: GridCheckboxEventI) {
     const currentField = this.fieldsToImport.values.find(
       (e) => e.name === event.data.name,
     );

@@ -33,6 +33,7 @@ import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { LS } from '@khiops-library/enum/ls';
 import { Ls } from '@khiops-library/providers/ls.service';
 import { KEYBOARD } from '@khiops-library/enum/keyboard';
+import { GridCheckboxEventI } from '@khiops-library/interfaces/events';
 
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
@@ -77,7 +78,8 @@ export class AgGridComponent
   @Output() private selectListItem: EventEmitter<any> = new EventEmitter();
   @Output() private doubleClickListItem: EventEmitter<any> = new EventEmitter();
   @Output() private dataTypeChanged: EventEmitter<any> = new EventEmitter();
-  @Output() private gridCheckboxChanged: EventEmitter<any> = new EventEmitter();
+  @Output() private gridCheckboxChanged: EventEmitter<GridCheckboxEventI> =
+    new EventEmitter();
   @Output() private showLevelDistributionGraph: EventEmitter<any> =
     new EventEmitter();
 

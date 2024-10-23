@@ -73,7 +73,7 @@ export class TreenodesService {
    * @param {string} name - The current name of the node.
    * @param {string} newName - The new name to set for the node.
    */
-  updateSelectedNodeName(dimensionName, name, newName) {
+  updateSelectedNodeName(dimensionName: string, name: string, newName: string) {
     if (!this.dimensionsDatas.nodesNames) {
       this.dimensionsDatas.nodesNames = {};
     }

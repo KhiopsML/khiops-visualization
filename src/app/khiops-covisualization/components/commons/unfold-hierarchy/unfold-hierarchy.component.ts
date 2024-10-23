@@ -20,6 +20,7 @@ import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { LS } from '@khiops-library/enum/ls';
 import { AppService } from '@khiops-covisualization/providers/app.service';
 import { THEME } from '@khiops-library/enum/theme';
+import { GridCheckboxEventI } from '@khiops-library/interfaces/events';
 
 @Component({
   selector: 'app-unfold-hierarchy',
@@ -30,13 +31,13 @@ export class UnfoldHierarchyComponent implements OnInit {
   public currentUnfoldHierarchy: number = 0;
   public hierarchyDatas: HierarchyDatasModel;
   public loadingHierarchy: boolean = false;
-  public clustersPerDimDatas: ChartDatasModel;
-  public infoPerCluster: ChartDatasModel;
-  public colorSetClusterPerDim: ChartColorsSetI;
-  public colorSetInfoPerCluster: ChartColorsSetI;
+  public clustersPerDimDatas: ChartDatasModel | undefined;
+  public infoPerCluster: ChartDatasModel | undefined;
+  public colorSetClusterPerDim: ChartColorsSetI | undefined;
+  public colorSetInfoPerCluster: ChartColorsSetI | undefined;
   public currentInformationPerCluster = 100;
-  public cyInput: number; // cypress input value to automatise unfold hierarchy
-  public dimensions: DimensionModel[];
+  public cyInput: number = 0; // cypress input value to automatise unfold hierarchy
+  public dimensions: DimensionModel[] | undefined;
   public unfoldHierarchyTableTitle = '';
   public selectedLineChartItem = '';
   public hierarchyDisplayedColumns: GridColumnsI[] = [];
@@ -44,8 +45,8 @@ export class UnfoldHierarchyComponent implements OnInit {
   public unfoldHierarchyLegend: string;
   public legend: any;
 
-  private dimensionsDatas: DimensionsDatasModel;
-  private previousHierarchyRank: number;
+  private dimensionsDatas: DimensionsDatasModel | undefined;
+  private previousHierarchyRank: number = 0;
   private borderColor: string;
   private defaultMaxUnfoldHierarchy = 0;
   private chartOptions = {
@@ -148,7 +149,7 @@ export class UnfoldHierarchyComponent implements OnInit {
     this.selectedLineChartItem = name;
   }
 
-  setCypressInput(cyInput) {
+  setCypressInput(cyInput: number) {
     this.onHierarchyChanged(cyInput);
   }
 
@@ -177,11 +178,13 @@ export class UnfoldHierarchyComponent implements OnInit {
           series: [],
         },
       ];
-      // Do not insert bar chart legend (nb of clusters)
-      for (let i = 0; i < this.clustersPerDimDatas.datasets.length - 1; i++) {
-        this.legend[0].series.push({
-          name: this.clustersPerDimDatas.datasets[i].label,
-        });
+      if (this.clustersPerDimDatas?.datasets) {
+        // Do not insert bar chart legend (nb of clusters)
+        for (let i = 0; i < this.clustersPerDimDatas.datasets.length - 1; i++) {
+          this.legend[0].series.push({
+            name: this.clustersPerDimDatas.datasets[i].label,
+          });
+        }
       }
 
       this.colorSetClusterPerDim = _.cloneDeep(
@@ -243,7 +246,7 @@ export class UnfoldHierarchyComponent implements OnInit {
     }
 
     // Dimension changed, clone to update array
-    this.dimensions = _.cloneDeep(this.dimensionsDatas.dimensions);
+    this.dimensions = _.cloneDeep(this.dimensionsDatas?.dimensions);
 
     this.loadingHierarchy = true;
 
@@ -280,7 +283,7 @@ export class UnfoldHierarchyComponent implements OnInit {
     }
   }
 
-  onGridCheckboxChanged(event) {
+  onGridCheckboxChanged(event: GridCheckboxEventI) {
     this.hierarchyService.toggleDimensionHierarchyFold(
       event.data.name,
       event.state,
@@ -311,6 +314,6 @@ export class UnfoldHierarchyComponent implements OnInit {
       this.clustersService.getCurrentCellsPerCluster();
 
     // Dimension changed, clone to update array
-    this.dimensions = _.cloneDeep(this.dimensionsDatas.dimensions);
+    this.dimensions = _.cloneDeep(this.dimensionsDatas?.dimensions);
   }
 }
