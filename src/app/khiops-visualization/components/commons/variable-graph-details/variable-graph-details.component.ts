@@ -57,7 +57,6 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
   distributionGraphType: string;
   targetDistributionGraphType: string | null;
 
-  isLoadingGraphDatas: boolean;
   activeEntries = 0;
   isFullscreen: boolean = false;
 
@@ -82,8 +81,6 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
       changes.selectedVariable?.currentValue ||
       changes.displayedValues?.currentValue
     ) {
-      this.isLoadingGraphDatas = true;
-
       this.selectedGraphItemIndex = 0;
       this.initActiveEntries(this.selectedGraphItemIndex);
 
@@ -122,8 +119,6 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
             this.preparationSource,
           );
         }
-
-        this.isLoadingGraphDatas = false;
       }); // do it async to dont freeze during graph rendering
     }
     if (

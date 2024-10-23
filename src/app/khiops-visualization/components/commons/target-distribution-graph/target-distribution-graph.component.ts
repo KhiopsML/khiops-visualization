@@ -33,41 +33,35 @@ export class TargetDistributionGraphComponent
   extends ScrollableGraphComponent
   implements OnInit
 {
-  @Input() position = 0;
-  @Input() override inputDatas: ChartDatasModel = undefined;
-  @Input() titleTooltip: string;
-  @Input() title: string;
-  @Input() activeEntries: number;
-  @Input() override scrollPosition = 0;
-  @Input() displayedValues: ChartToggleValuesI[];
-  @Input() isLoadingDatas = false;
-  @Input() showFullscreenBtn = false;
-
-  override view: any = undefined; // managed into ScrollableGraphComponent
-
   @Output() graphTypeChanged: EventEmitter<any> = new EventEmitter();
   @Output() targetDistributionGraphDisplayedValuesChanged: EventEmitter<any> =
     new EventEmitter();
   @Output() selectedItemChanged: EventEmitter<any> = new EventEmitter();
-  override graphIdContainer: string | undefined = undefined;
 
-  componentType = COMPONENT_TYPES.ND_BAR_CHART; // needed to copy datas
+  @Input() override scrollPosition = 0;
+  @Input() override inputDatas: ChartDatasModel = undefined;
+  @Input() public position = 0;
+  @Input() public titleTooltip: string;
+  @Input() public title: string;
+  @Input() public activeEntries: number;
+  @Input() public displayedValues: ChartToggleValuesI[];
+  @Input() public showFullscreenBtn = false;
 
-  colorSet: ChartColorsSetI;
-  graphOptions = {
+  public override view: any = undefined; // managed into ScrollableGraphComponent
+  public override graphIdContainer: string | undefined = undefined;
+  public override maxScale: number = 0;
+  public override minScale: number = 0;
+  public componentType = COMPONENT_TYPES.ND_BAR_CHART; // needed to copy datas
+  public colorSet: ChartColorsSetI;
+  public graphOptions = {
     types: [TYPES.PROBABILITIES, TYPES.LIFT],
     selected: undefined,
   };
-  hideGraph: boolean;
-  initialViewCheck = false;
-  legend: any[];
-  buttonTitle: string;
-  chartOptions: ChartOptions;
-  override maxScale: number = 0;
-  override minScale: number = 0;
-  selectedBarIndex: number;
-  isFullscreen = false;
-  isSmallDiv = false;
+  public buttonTitle: string;
+  public chartOptions: ChartOptions;
+  public isFullscreen = false;
+  public isSmallDiv = false;
+  private selectedBarIndex: number;
 
   constructor(
     public override selectableService: SelectableService,
@@ -90,7 +84,6 @@ export class TargetDistributionGraphComponent
     );
 
     this.colorSet = this.khiopsLibraryService.getGraphColorSet()[1];
-    this.hideGraph = true;
     this.buttonTitle = this.translate.get('GLOBAL.VALUES');
 
     // Keep this into ref to access it into tick callback

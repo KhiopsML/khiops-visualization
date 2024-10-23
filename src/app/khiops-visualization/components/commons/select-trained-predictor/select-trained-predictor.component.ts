@@ -7,7 +7,6 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { LS } from '@khiops-library/enum/ls';
-import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { AppService } from '@khiops-visualization/providers/app.service';
 
 @Component({
@@ -20,9 +19,10 @@ export class SelectTrainedPredictorComponent implements OnInit {
   @Input() inputDatas: any;
   selectedPredictor: string;
 
-  @Output() selectedPredictorChanged: EventEmitter<any> = new EventEmitter();
+  @Output() private selectedPredictorChanged: EventEmitter<any> =
+    new EventEmitter();
 
-  constructor(private khiopsLibraryService: KhiopsLibraryService) {}
+  constructor() {}
 
   ngOnInit() {
     // select by default Selective Naive Bayes

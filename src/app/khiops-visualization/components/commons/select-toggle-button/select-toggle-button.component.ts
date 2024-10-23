@@ -20,16 +20,19 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
   styleUrls: ['./select-toggle-button.component.scss'],
 })
 export class SelectToggleButtonComponent implements OnInit, OnChanges {
-  @Input() buttonTitle: string;
-  @Input() displayedValues: ChartToggleValuesI[];
-  isSelectAllChecked = true;
-  isSelectAllIndeterminate = false;
-  selectAllCheckboxText: string;
-  @Output() selectToggleButtonChanged: EventEmitter<ChartToggleValuesI[]> =
-    new EventEmitter();
-  currentItemsToShow: ChartToggleValuesI[];
+  @Input() public buttonTitle: string;
+  @Input() public displayedValues: ChartToggleValuesI[];
 
-  pageSize: number = AppConfig.visualizationCommon.GLOBAL.MAT_MENU_PAGINATION;
+  @Output() private selectToggleButtonChanged: EventEmitter<
+    ChartToggleValuesI[]
+  > = new EventEmitter();
+
+  public isSelectAllChecked = true;
+  public isSelectAllIndeterminate = false;
+  public selectAllCheckboxText: string;
+  public currentItemsToShow: ChartToggleValuesI[];
+  public pageSize: number =
+    AppConfig.visualizationCommon.GLOBAL.MAT_MENU_PAGINATION;
 
   constructor(private translate: TranslateService) {}
 
@@ -57,7 +60,7 @@ export class SelectToggleButtonComponent implements OnInit, OnChanges {
     );
   }
 
-  updateSelectElts(currentDisplayedValues: ChartToggleValuesI[]) {
+  private updateSelectElts(currentDisplayedValues: ChartToggleValuesI[]) {
     // update all checkbox status
     const valuesShown: number = currentDisplayedValues.filter(
       (e) => e.show === true,

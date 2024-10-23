@@ -34,19 +34,18 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
   @ViewChild('matrix', {
     static: false,
   })
-  matrix: MatrixComponent;
+  private matrix: MatrixComponent;
 
-  @Output() selectedCellChanged: EventEmitter<number> = new EventEmitter();
+  @Output() private selectedCellChanged: EventEmitter<number> =
+    new EventEmitter();
   @Input() selectedVariable: PreparationVariableModel;
   @Input() selectedCell: number;
-  @Input() preparationSource: string;
-  preparation2dDatas: Preparation2dDatasModel;
-  isFullscreen = false;
-
-  matrixOptions: MatrixOptionsModel = new MatrixOptionsModel();
-  matrixModes: MatrixModesModel = new MatrixModesModel();
-
-  minMaxValues: MatrixRangeValuesI;
+  @Input() private preparationSource: string;
+  public preparation2dDatas: Preparation2dDatasModel;
+  public isFullscreen = false;
+  public matrixOptions: MatrixOptionsModel = new MatrixOptionsModel();
+  public matrixModes: MatrixModesModel = new MatrixModesModel();
+  public minMaxValues: MatrixRangeValuesI;
 
   constructor(
     private preparationDatasService: PreparationDatasService,
@@ -108,7 +107,7 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
     }
   }
 
-  constructModeSelectBox() {
+  private constructModeSelectBox() {
     const varName1 = this.preparation2dDatas.selectedVariable.nameX;
     const varName2 = this.preparation2dDatas.selectedVariable.nameY;
 

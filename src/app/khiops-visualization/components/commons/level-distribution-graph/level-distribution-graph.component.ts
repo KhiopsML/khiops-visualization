@@ -34,30 +34,29 @@ export class LevelDistributionGraphComponent
   extends ScrollableGraphComponent
   implements OnInit
 {
-  @Input() datas: VariableModel[];
-  @Input() levelDistributionTitle: string;
-
-  override inputDatas: ChartDatasModel = undefined;
-  colorSet: ChartColorsSetI;
-
   @ViewChild('levelGraph', {
     static: false,
   })
-  levelGraph: ElementRef;
+  private levelGraph: ElementRef;
+
+  @Input() public datas: VariableModel[];
+  @Input() public levelDistributionTitle: string;
+
+  public override inputDatas: ChartDatasModel = undefined;
+  public colorSet: ChartColorsSetI;
+  public componentType = COMPONENT_TYPES.BAR_CHART; // needed to copy datas
+  public override graphIdContainer = 'level-distribution-graph';
 
   // define an id to be copied into clipboard
-  override id: any = 'level-distribution-graph-comp';
+  public override id: any = 'level-distribution-graph-comp';
 
-  override maxScale: number =
+  public override maxScale: number =
     AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.MAX_LENGTH;
-  override minScale: number =
+  public override minScale: number =
     AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.MIN_LENGTH;
-  stepScale: number =
+  public stepScale: number =
     AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.STEP;
-  chartOptions: ChartOptions;
-
-  componentType = COMPONENT_TYPES.BAR_CHART; // needed to copy datas
-  override graphIdContainer = 'level-distribution-graph';
+  public chartOptions: ChartOptions;
 
   constructor(
     private distributionDatasService: DistributionDatasService,
