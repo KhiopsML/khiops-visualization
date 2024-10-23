@@ -22,6 +22,7 @@ import { UtilsService } from '@khiops-library/providers/utils.service';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { LS } from '@khiops-library/enum/ls';
 import { Ls } from '@khiops-library/providers/ls.service';
+import { TranslateService } from '@ngstack/translate';
 
 @Component({
   selector: 'kl-distribution-graph',
@@ -46,7 +47,6 @@ export class DistributionGraphComponent
   public override maxScale: number = 0;
   public override minScale: number = 0;
   public componentType = COMPONENT_TYPES.BAR_CHART; // needed to copy datas
-  public title: string;
   public colorSet: ChartColorsSetI;
   public chartOptions: ChartOptions;
 
@@ -55,6 +55,7 @@ export class DistributionGraphComponent
     public override ngzone: NgZone,
     public override configService: ConfigService,
     private toPrecision: ToPrecisionPipe,
+    private translate: TranslateService,
     private khiopsLibraryService: KhiopsLibraryService,
     private ls: Ls,
   ) {
@@ -173,7 +174,6 @@ export class DistributionGraphComponent
 
   ngOnInit() {
     this.graphIdContainer = 'distribution-graph-comp-' + this.position;
-    this.title = 'Distribution';
     this.updateChartOptions();
   }
 
