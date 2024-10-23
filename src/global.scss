@@ -65,9 +65,6 @@ h1 {
   font-style: italic;
 }
 
-.comp-header {
-  background: var(--bgColor) !important;
-}
 .ag-grid-comp {
   background: var(--bgColor) !important;
 }
@@ -304,13 +301,6 @@ h1.small-title {
   line-height: 1em;
 }
 
-.comp-header {
-  h1 {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-}
-
 h2 {
   margin: 0em 1em 0 1.1em;
   font-size: 1em;
@@ -367,14 +357,18 @@ app-home-layout {
 }
 
 .comp-header {
-  // margin: 0em 0.4em 2.4em 1px;
   background: transparent !important;
+  min-height: 34px;
+  background: var(--bgColor) !important;
+  margin: 0em 0.4em 0em 1px;
 
+  h1 {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
   .comp-header-tools {
     button {
       margin-right: 0.8em;
-      // text-transform: uppercase;
-
       em {
         margin-left: 1em;
         font-style: normal;
@@ -570,10 +564,6 @@ ag-grid-angular {
 
 .ag-paging-panel {
   height: 42px !important;
-}
-
-.comp-header {
-  margin: 0em 0.4em 0em 1px;
 }
 
 .titlebar .window-title {
