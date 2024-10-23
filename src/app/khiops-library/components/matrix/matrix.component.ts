@@ -15,7 +15,6 @@ import { SelectableComponent } from '../selectable/selectable.component';
 import { KhiopsLibraryService } from '../../providers/khiops-library.service';
 // @ts-ignore
 import * as panzoom from 'pan-zoom';
-import { UtilsService } from '../../providers/utils.service';
 import { MatrixService } from './matrix.service';
 import { CellModel } from '../../model/cell.model';
 import { ConfigService } from '@khiops-library/providers/config.service';
@@ -34,94 +33,81 @@ import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
   styleUrls: ['./matrix.component.scss'],
 })
 export class MatrixComponent extends SelectableComponent implements OnChanges {
-  @Input() inputDatas: any;
-  @Input() minMaxValues: any; // dynamic and complex value object. Regression and Coocurence matrix purposes
+  @Input() public isAxisInverted: boolean;
+  @Input() public graphMode: MatrixModeI;
+  @Input() public contrast: number | undefined;
+  @Input() private inputDatas: any;
+  @Input() private minMaxValues: any; // dynamic and complex value object. Regression and Coocurence matrix purposes
+  @Input() private graphType: string;
+  @Input() private graphTargets: string[];
+  @Input() private graphTarget: string;
+  @Input() private selectedNodes: TreeNodeModel[]; // KC use case
+  @Input() private selectedCell: CellModel; // KV use case
+  @Input() private contextSelection: number[] = [];
 
-  @Input() graphType: string;
-  @Input() graphMode: MatrixModeI;
-  @Input() contrast: number | undefined;
-  @Input() graphTargets: string[];
-  @Input() graphTarget: string;
-  @Input() selectedNodes: TreeNodeModel[]; // KC use case
-  @Input() selectedCell: CellModel; // KV use case
-  @Input() contextSelection: number[] = [];
-  @Input() isAxisInverted: boolean;
-
-  @Output() matrixAxisInverted: EventEmitter<any> = new EventEmitter();
-  @Output() cellSelected: EventEmitter<any> = new EventEmitter();
-  @Output() cellSelectedByEvent: EventEmitter<any> = new EventEmitter();
-
-  conditionalOnContextChangedSub: Subscription;
-
-  isKhiopsCovisu: boolean;
-  componentType = COMPONENT_TYPES.MATRIX; // needed to copy datas
-  selectedCells: CellModel[];
-
-  xAxisLabel: string;
-  yAxisLabel: string;
-  tooltipText: string;
-  legend: {
-    min: number | undefined;
-    max: number | undefined;
-  };
-  selectedTargetIndex = -1;
-  isZerosToggled = false;
-
-  matrixValues: number[];
-  matrixFreqsValues: number[];
-  matrixExpectedFreqsValues: number[];
-  matrixExtras: number[];
-
-  loadingMatrixSvg = true;
-  isFirstResize = true;
+  @Output() private matrixAxisInverted: EventEmitter<any> = new EventEmitter();
+  @Output() private cellSelected: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('matrixDiv', {
     static: false,
   })
-  matrixDiv: ElementRef<HTMLCanvasElement>;
-  matrixCtx: any;
+  private matrixDiv: ElementRef<HTMLCanvasElement>;
+  private matrixCtx: any;
   @ViewChild('matrixSelectedDiv', {
     static: false,
   })
-  matrixSelectedDiv: ElementRef<HTMLCanvasElement>;
-  matrixSelectedCtx: any;
+  private matrixSelectedDiv: ElementRef<HTMLCanvasElement>;
+  private matrixSelectedCtx: any;
   @ViewChild('matrixArea', {
     static: false,
   })
-  matrixArea: ElementRef<HTMLElement>;
-  @ViewChild('matrixComp', {
-    static: false,
-  })
-  matrixComp: ElementRef<HTMLElement>;
+  private matrixArea: ElementRef<HTMLElement>;
   @ViewChild('matrixContainerDiv', {
     static: false,
   })
-  matrixContainerDiv: ElementRef<HTMLElement>;
+  private matrixContainerDiv: ElementRef<HTMLElement>;
   @ViewChild('legendBar', {
     static: false,
   })
-  legendBar: ElementRef<HTMLElement>;
+  private legendBar: ElementRef<HTMLElement>;
 
-  numberPrecision: number;
-  zoom = 1;
-  unpanzoom: any;
-  isPaning = false;
-
-  tooltipCell: CellModel | undefined;
-  tooltipPosition: {
+  public isKhiopsCovisu: boolean;
+  public componentType = COMPONENT_TYPES.MATRIX; // needed to copy datas
+  public selectedCells: CellModel[];
+  public xAxisLabel: string;
+  public yAxisLabel: string;
+  public legend: {
+    min: number | undefined;
+    max: number | undefined;
+  };
+  public loadingMatrixSvg = true;
+  public isZerosToggled = false;
+  public tooltipCell: CellModel | undefined;
+  public tooltipPosition: {
     x: number;
     y: number;
   };
-  currentEvent: MouseEvent;
-  zoomFactor = 0.5;
-  lastScrollPosition: {
+
+  private conditionalOnContextChangedSub: Subscription;
+  private selectedTargetIndex = -1;
+  private matrixValues: number[];
+  private matrixFreqsValues: number[];
+  private matrixExpectedFreqsValues: number[];
+  private matrixExtras: number[];
+  private isFirstResize = true;
+  private zoom = 1;
+  private unpanzoom: any;
+  private isPaning = false;
+  private currentEvent: MouseEvent;
+  private zoomFactor = 0.5;
+  private lastScrollPosition: {
     scrollLeft: number;
     scrollTop: number;
   };
-  currentMouseX: number;
-  currentMouseY: number;
-  canvasPattern: HTMLCanvasElement;
-  isDrawing = false;
+  private currentMouseX: number;
+  private currentMouseY: number;
+  private canvasPattern: HTMLCanvasElement;
+  private isDrawing = false;
 
   constructor(
     private ls: Ls,
@@ -139,8 +125,6 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
       scrollLeft: 0,
       scrollTop: 0,
     };
-    this.numberPrecision =
-      this.khiopsLibraryService.getAppConfig().common.GLOBAL.TO_FIXED;
 
     this.legend = {
       min: 0,
@@ -282,7 +266,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
                     this.graphMode.mode,
                   );
 
-                this.computeLegendValues(
+                this.legend = MatrixService.computeLegendValues(
                   minVal,
                   maxVal,
                   minValH,
@@ -303,7 +287,11 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
                   this.selectedCells.push(this.selectedCell);
                 }
 
-                let totalMutInfo = this.getTotalMutInfo();
+                let totalMutInfo = MatrixService.computeTotalMutInfo(
+                  this.matrixValues,
+                  this.graphMode.mode,
+                  this.isKhiopsCovisu,
+                );
                 const cellsLength = this.inputDatas.matrixCellDatas.length;
 
                 this.matrixCtx.beginPath();
@@ -393,61 +381,8 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
               }, 100);
             }
           }
-
-          this.matrixSelectedDiv.nativeElement.addEventListener(
-            'click',
-            (event) => {
-              this.clickOnCell(event);
-            },
-            {
-              passive: true,
-            },
-          );
-
-          this.matrixSelectedDiv.nativeElement.addEventListener(
-            'mouseout',
-            (event) => {
-              this.hideTooltip();
-            },
-            {
-              passive: true,
-            },
-          );
-
-          this.matrixSelectedDiv.nativeElement.addEventListener(
-            'mousemove',
-            (event) => {
-              this.currentEvent = event;
-              this.showTooltip(event);
-            },
-            {
-              passive: true,
-            },
-          );
-
-          this.matrixSelectedDiv.nativeElement.addEventListener(
-            'wheel',
-            (event) => {
-              // Keep event in memory to manage zoom factor on scroll
-              this.currentEvent = event;
-            },
-            {
-              passive: true,
-            },
-          );
-
-          this.matrixArea.nativeElement.addEventListener(
-            'scroll',
-            (event: any) => {
-              this.lastScrollPosition = {
-                scrollLeft: event.target.scrollLeft,
-                scrollTop: event.target.scrollTop,
-              };
-            },
-            {
-              passive: true,
-            },
-          );
+          // Add all events listeners after drawing
+          this.addEventsListeners();
           this.isDrawing = false;
           // const t3 = performance.now();
         }
@@ -455,7 +390,64 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     }
   }
 
-  clickOnCell(event: MouseEvent) {
+  private addEventsListeners() {
+    this.matrixSelectedDiv.nativeElement.addEventListener(
+      'click',
+      (event) => {
+        this.clickOnCell(event);
+      },
+      {
+        passive: true,
+      },
+    );
+
+    this.matrixSelectedDiv.nativeElement.addEventListener(
+      'mouseout',
+      (event) => {
+        this.hideTooltip();
+      },
+      {
+        passive: true,
+      },
+    );
+
+    this.matrixSelectedDiv.nativeElement.addEventListener(
+      'mousemove',
+      (event) => {
+        this.currentEvent = event;
+        this.showTooltip(event);
+      },
+      {
+        passive: true,
+      },
+    );
+
+    this.matrixSelectedDiv.nativeElement.addEventListener(
+      'wheel',
+      (event) => {
+        // Keep event in memory to manage zoom factor on scroll
+        this.currentEvent = event;
+      },
+      {
+        passive: true,
+      },
+    );
+
+    this.matrixArea.nativeElement.addEventListener(
+      'scroll',
+      (event: any) => {
+        this.lastScrollPosition = {
+          scrollLeft: event.target.scrollLeft,
+          scrollTop: event.target.scrollTop,
+        };
+      },
+      {
+        passive: true,
+      },
+    );
+  }
+
+  private clickOnCell(event: MouseEvent) {
     // Hack to prevent event emit if user pan matrix
     if (!this.isPaning || this.isPaning === undefined) {
       this.isPaning = false;
@@ -551,7 +543,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     }
   }
 
-  drawProbExceptionCell(cell: CellModel) {
+  private drawProbExceptionCell(cell: CellModel) {
     if (!this.canvasPattern) {
       this.drawZeroExceptionCanvasPattern();
     }
@@ -567,7 +559,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     );
   }
 
-  drawZeroExceptionCanvasPattern() {
+  private drawZeroExceptionCanvasPattern() {
     this.canvasPattern = document.createElement('canvas');
     this.canvasPattern.width = 16;
     this.canvasPattern.height = 16;
@@ -594,7 +586,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   /**
    * Before draw canvas, clean dom and clone divs to remove listeners
    */
-  cleanDomContext() {
+  private cleanDomContext() {
     // Clone to remove listeners
     if (this.matrixDiv) {
       this.matrixCtx = this.matrixDiv.nativeElement.getContext('2d');
@@ -608,7 +600,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     }
   }
 
-  cleanSelectedDomContext() {
+  private cleanSelectedDomContext() {
     if (this.matrixSelectedDiv) {
       this.matrixSelectedCtx =
         this.matrixSelectedDiv.nativeElement.getContext('2d');
@@ -622,7 +614,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     }
   }
 
-  zoomCanvas(delta: number, preventTranslate = false) {
+  private zoomCanvas(delta: number, preventTranslate = false) {
     const previousZoom = this.zoom;
     if (delta < 0) {
       this.zoom = this.zoom + this.zoomFactor;
@@ -682,7 +674,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     }
   }
 
-  updateLegendBar() {
+  private updateLegendBar() {
     if (!this.legendBar.nativeElement) return;
     if (
       this.graphMode.mode === MATRIX_MODES.MUTUAL_INFO ||
@@ -697,7 +689,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     }
   }
 
-  getZoomDimensions() {
+  private getZoomDimensions() {
     if (this.zoom === 1) {
       this.matrixArea.nativeElement.style.overflow = 'hidden';
     } else {
@@ -715,7 +707,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     return [width, height];
   }
 
-  getCurrentCell(event: MouseEvent) {
+  private getCurrentCell(event: MouseEvent) {
     if (this.inputDatas) {
       const canvasPosition =
         this.matrixDiv.nativeElement.getBoundingClientRect();
@@ -749,10 +741,6 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
 
   onContrastChanged(event: Event) {
     this.contrast = parseInt(event?.target?.['value'], 10);
-    console.log(
-      'MatrixComponent ~ onContrastChanged ~ this.contrast:',
-      this.contrast,
-    );
     this.contrast &&
       this.ls.set(LS.SETTING_MATRIX_CONTRAST, this.contrast.toString());
     this.drawMatrix();
@@ -771,7 +759,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     this.drawMatrix();
   }
 
-  showTooltip(event: MouseEvent) {
+  private showTooltip(event: MouseEvent) {
     this.tooltipCell = this.getCurrentCell(event);
     const x = event.pageX;
     const y = event.pageY;
@@ -781,7 +769,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     };
   }
 
-  hideTooltip() {
+  private hideTooltip() {
     this.tooltipCell = undefined;
   }
 
@@ -806,21 +794,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     this.zoomCanvas(0);
   }
 
-  computeLegendValues(minVal, maxVal, minValH, maxValH, mode: string) {
-    if (mode === MATRIX_MODES.HELLINGER) {
-      // For KC purpose
-      this.legend.min = minValH;
-      this.legend.max = maxValH;
-    } else {
-      this.legend.min = minVal;
-      this.legend.max = maxVal;
-    }
-    if (this.legend.min > 0) {
-      this.legend.min = 0;
-    }
-  }
-
-  setMatrixEltsOrientation(width, height) {
+  private setMatrixEltsOrientation(width, height) {
     if (this.isAxisInverted) {
       [this.xAxisLabel, this.yAxisLabel] = [this.yAxisLabel, this.xAxisLabel];
       this.matrixCtx.translate(0, width);
@@ -835,20 +809,5 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
       this.matrixSelectedCtx.translate(0, height);
       this.matrixSelectedCtx.scale(1, -1);
     }
-  }
-
-  getTotalMutInfo() {
-    let totalMutInfo;
-    if (
-      this.graphMode.mode === MATRIX_MODES.MUTUAL_INFO &&
-      this.isKhiopsCovisu
-    ) {
-      // Compute total mutual info
-      totalMutInfo =
-        this.graphMode.mode === MATRIX_MODES.MUTUAL_INFO
-          ? UtilsService.arraySum(this.matrixValues)
-          : 0;
-    }
-    return totalMutInfo;
   }
 }

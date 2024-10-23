@@ -750,4 +750,70 @@ export class MatrixService {
       return rgba;
     }
   }
+
+  /**
+   * Computes the total mutual information for the given matrix values.
+   *
+   * This method calculates the sum of the matrix values if the mode is 'MUTUAL_INFO'
+   * and the isKhiopsCovisu flag is true. Otherwise, it returns 0.
+   *
+   * @param {number[]} matrixValues - An array of matrix values to be summed.
+   * @param {string} mode - The mode of the computation, expected to be 'MUTUAL_INFO'.
+   * @param {boolean} isKhiopsCovisu - A flag indicating whether the computation is for Khiops Covisu.
+   *
+   * @returns {number} The total mutual information if conditions are met, otherwise 0.
+   */
+  static computeTotalMutInfo(
+    matrixValues: number[],
+    mode: string,
+    isKhiopsCovisu: boolean,
+  ) {
+    let totalMutInfo;
+    if (mode === MATRIX_MODES.MUTUAL_INFO && isKhiopsCovisu) {
+      // Compute total mutual info
+      totalMutInfo =
+        mode === MATRIX_MODES.MUTUAL_INFO
+          ? UtilsService.arraySum(matrixValues)
+          : 0;
+    }
+    return totalMutInfo;
+  }
+
+  /**
+   * Computes the legend values for the matrix visualization based on the provided min and max values.
+   *
+   * This method determines the appropriate legend values to be displayed in the matrix visualization.
+   * It takes into account the mode of the matrix (e.g., HELLINGER) to adjust the legend values accordingly.
+   *
+   * @param {number} minVal - The minimum value from the matrix values.
+   * @param {number} maxVal - The maximum value from the matrix values.
+   * @param {number} minValH - The minimum Hellinger value, used when the mode is HELLINGER.
+   * @param {number} maxValH - The maximum Hellinger value, used when the mode is HELLINGER.
+   * @param {string} mode - The mode of the matrix visualization (e.g., HELLINGER).
+   *
+   * @returns {Object} An object containing the computed legend values:
+   * - `min`: The minimum value to be displayed in the legend.
+   * - `max`: The maximum value to be displayed in the legend.
+   */
+  static computeLegendValues(minVal, maxVal, minValH, maxValH, mode: string) {
+    let legend: {
+      min: number | undefined;
+      max: number | undefined;
+    } = {
+      min: undefined,
+      max: undefined,
+    };
+    if (mode === MATRIX_MODES.HELLINGER) {
+      // For KC purpose
+      legend.min = minValH;
+      legend.max = maxValH;
+    } else {
+      legend.min = minVal;
+      legend.max = maxVal;
+    }
+    if (legend.min > 0) {
+      legend.min = 0;
+    }
+    return legend;
+  }
 }
