@@ -69,7 +69,7 @@ export class ChartComponent implements AfterViewInit, OnChanges {
     this.initChart();
   }
 
-  initChart() {
+  private initChart() {
     this.ctx = <ChartJs.ChartItem>(
       this.configService
         .getRootElementDom()
@@ -230,7 +230,7 @@ export class ChartComponent implements AfterViewInit, OnChanges {
     }
   }
 
-  updateGraph() {
+  private updateGraph() {
     setTimeout(() => {
       if (this.inputDatas && this.chart) {
         // Update datas
@@ -249,17 +249,17 @@ export class ChartComponent implements AfterViewInit, OnChanges {
     });
   }
 
-  hideActiveEntries() {
+  private hideActiveEntries() {
     this.selectCurrentBarIndex(undefined);
     this.chart.update();
   }
 
-  showActiveEntries() {
+  private showActiveEntries() {
     this.selectCurrentBarIndex(this.activeEntries);
     this.chart.update();
   }
 
-  graphClickEvent(e: any, items: string | any[]) {
+  private graphClickEvent(e: any, items: string | any[]) {
     if (this.enableSelection) {
       const l = items.length;
       if (l > 0) {
@@ -274,7 +274,7 @@ export class ChartComponent implements AfterViewInit, OnChanges {
     }
   }
 
-  selectCurrentBarIndex(index: number) {
+  private selectCurrentBarIndex(index: number) {
     if (this.chart && this.enableSelection) {
       this.colorize();
       for (let i = 0; i < this.chart.data.datasets.length; i++) {
@@ -286,7 +286,7 @@ export class ChartComponent implements AfterViewInit, OnChanges {
     }
   }
 
-  colorize() {
+  private colorize() {
     for (let i = 0; i < this.chart.data.datasets.length; i++) {
       const dataset: ChartDatasetModel = <ChartDatasetModel>(
         this.chart.data.datasets[i]
@@ -330,7 +330,7 @@ export class ChartComponent implements AfterViewInit, OnChanges {
     }
   }
 
-  onKeyUp(event: KeyboardEvent) {
+  private onKeyUp(event: KeyboardEvent) {
     if (this.activeEntries !== undefined) {
       // can be 0
       if (event.key === 'ArrowLeft' && this.activeEntries > 0) {

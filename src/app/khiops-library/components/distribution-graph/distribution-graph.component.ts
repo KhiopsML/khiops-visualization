@@ -33,27 +33,22 @@ export class DistributionGraphComponent
   extends ScrollableGraphComponent
   implements OnInit
 {
-  @Input() position = 0;
-  @Input() override inputDatas: ChartDatasModel = undefined;
-  @Input() graphOptions: DistributionOptionsI;
-  @Input() activeEntries: number;
-  @Input() isLoadingDatas = false;
-  @Input() hideGraphOptions = false;
+  @Input() public position = 0;
+  @Input() public override inputDatas: ChartDatasModel = undefined;
+  @Input() public graphOptions: DistributionOptionsI;
+  @Input() public activeEntries: number;
+  @Input() public hideGraphOptions = false;
 
-  @Output() graphTypeChanged: EventEmitter<any> = new EventEmitter();
-  @Output() selectedItemChanged: EventEmitter<any> = new EventEmitter();
-  componentType = COMPONENT_TYPES.BAR_CHART; // needed to copy datas
+  @Output() private graphTypeChanged: EventEmitter<any> = new EventEmitter();
+  @Output() private selectedItemChanged: EventEmitter<any> = new EventEmitter();
 
-  labels = [];
-  datas = [];
-  title: string;
-
-  override graphIdContainer: string | undefined = undefined;
-  colorSet: ChartColorsSetI;
-  chartOptions: ChartOptions;
-  scaleType: string;
-  override maxScale: number = 0;
-  override minScale: number = 0;
+  public override graphIdContainer: string | undefined = undefined;
+  public override maxScale: number = 0;
+  public override minScale: number = 0;
+  public componentType = COMPONENT_TYPES.BAR_CHART; // needed to copy datas
+  public title: string;
+  public colorSet: ChartColorsSetI;
+  public chartOptions: ChartOptions;
 
   constructor(
     public override selectableService: SelectableService,
@@ -194,7 +189,7 @@ export class DistributionGraphComponent
     this.graphTypeChanged.emit(type);
   }
 
-  updateChartOptions() {
+  private updateChartOptions() {
     this.chartOptions.scales.y.max = undefined;
     this.chartOptions.scales.y.min = undefined;
 
