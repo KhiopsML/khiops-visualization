@@ -443,7 +443,7 @@ export class TreePreparationDatasService {
       this.treePreparationDatas?.selectedNodes,
       selectedNodes,
     );
-    if (!this.treePreparationDatas.selectedNodes || !_.isEmpty(diff)) {
+    if (!this.treePreparationDatas?.selectedNodes || !_.isEmpty(diff)) {
       // clone it to emit onchange
       this.treePreparationDatas.selectedNodes = _.cloneDeep(selectedNodes);
     }
@@ -473,22 +473,25 @@ export class TreePreparationDatasService {
   setSelectedNode(node: TreeNodeModel, trustedNodeSelection: string | boolean) {
     if (this.treePreparationDatas) {
       const nodeDatas = this.getNodeFromName(node.nodeId);
-      const color = this.treePreparationDatas?.treeColorsMap[nodeDatas.nodeId];
-      // Define the trusted node selection to go to clicked node into hyper tree
-      const treeNodeVo = new TreeNodeModel(
-        nodeDatas,
-        this.treePreparationDatas.classesCount,
-        color,
-        nodeDatas && nodeDatas.nodeId === trustedNodeSelection,
-      );
+      if (nodeDatas) {
+        const color =
+          this.treePreparationDatas?.treeColorsMap[nodeDatas.nodeId];
+        // Define the trusted node selection to go to clicked node into hyper tree
+        const treeNodeVo = new TreeNodeModel(
+          nodeDatas,
+          this.treePreparationDatas.classesCount,
+          color,
+          nodeDatas && nodeDatas.nodeId === trustedNodeSelection,
+        );
 
-      const diff = UtilsService.deepDiff(
-        this.treePreparationDatas.selectedNode,
-        treeNodeVo,
-      );
-      if (!this.treePreparationDatas.selectedNode || !_.isEmpty(diff)) {
-        // clone it to emit onchange
-        this.treePreparationDatas.selectedNode = _.cloneDeep(treeNodeVo);
+        const diff = UtilsService.deepDiff(
+          this.treePreparationDatas.selectedNode,
+          treeNodeVo,
+        );
+        if (!this.treePreparationDatas.selectedNode || !_.isEmpty(diff)) {
+          // clone it to emit onchange
+          this.treePreparationDatas.selectedNode = _.cloneDeep(treeNodeVo);
+        }
       }
     }
   }

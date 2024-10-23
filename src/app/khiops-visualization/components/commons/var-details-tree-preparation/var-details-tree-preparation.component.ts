@@ -3,6 +3,7 @@ import { TreePreparationDatasService } from '@khiops-visualization/providers/tre
 import { VariableGraphDetailsComponent } from '../variable-graph-details/variable-graph-details.component';
 import { TreePreparationDatasModel } from '@khiops-visualization/model/tree-preparation-datas.model';
 import { LayoutService } from '@khiops-library/providers/layout.service';
+import { SplitGutterInteractionEvent } from 'angular-split';
 
 @Component({
   selector: 'app-var-details-tree-preparation',
@@ -28,7 +29,7 @@ export class VarDetailsTreePreparationComponent {
     this.onSelectedGraphItemChanged(0);
   }
 
-  onSplitDragEnd(event: any, item: string) {
+  onSplitDragEnd(event: SplitGutterInteractionEvent, item: string) {
     this.layoutService.resizeAndSetSplitSizes(
       item,
       this.sizes,

@@ -24,6 +24,7 @@ import { PreparationDatasService } from '@khiops-visualization/providers/prepara
 import { BorderTextCellComponent } from '@khiops-library/components/ag-grid/border-text-cell/border-text-cell.component';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { REPORTS } from '@khiops-library/enum/reports';
+import { SplitGutterInteractionEvent } from 'angular-split';
 
 @Component({
   selector: 'app-tree-preparation-view',
@@ -128,7 +129,7 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
     this.distributionDatas = this.distributionDatasService.getDatas();
   }
 
-  onSplitDragEnd(event: any, item: string) {
+  onSplitDragEnd(event: SplitGutterInteractionEvent, item: string) {
     this.layoutService.resizeAndSetSplitSizes(
       item,
       this.sizes,

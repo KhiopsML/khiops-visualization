@@ -20,6 +20,7 @@ import { Preparation2dDatasModel } from '@khiops-visualization/model/preparation
 import { Preparation2dVariableModel } from '@khiops-visualization/model/preparation2d-variable.model';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 import { LayoutService } from '@khiops-library/providers/layout.service';
+import { SplitGutterInteractionEvent } from 'angular-split';
 
 @Component({
   selector: 'app-preparation-2d-view',
@@ -136,7 +137,7 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
     this.trackerService.trackEvent('page_view', 'preparation2d');
   }
 
-  onSplitDragEnd(event: any, item: string) {
+  onSplitDragEnd(event: SplitGutterInteractionEvent, item: string) {
     this.layoutService.resizeAndSetSplitSizes(
       item,
       this.sizes,

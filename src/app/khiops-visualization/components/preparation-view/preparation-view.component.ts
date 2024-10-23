@@ -20,6 +20,7 @@ import { VariableModel } from '@khiops-visualization/model/variable.model';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 import { BorderTextCellComponent } from '../../../khiops-library/components/ag-grid/border-text-cell/border-text-cell.component';
 import { LayoutService } from '@khiops-library/providers/layout.service';
+import { SplitGutterInteractionEvent } from 'angular-split';
 
 @Component({
   selector: 'app-preparation-view',
@@ -177,7 +178,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
     }
   }
 
-  onSplitDragEnd(event: any, item: string) {
+  onSplitDragEnd(event: SplitGutterInteractionEvent, item: string) {
     this.layoutService.resizeAndSetSplitSizes(
       item,
       this.sizes,

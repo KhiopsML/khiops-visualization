@@ -6,6 +6,7 @@ import { EvaluationPredictorModel } from '@khiops-visualization/model/evaluation
 import { EvaluationTypeModel } from '@khiops-visualization/model/evaluation-type.model';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 import { LayoutService } from '@khiops-library/providers/layout.service';
+import { SplitGutterInteractionEvent } from 'angular-split';
 
 @Component({
   selector: 'app-evaluation-view',
@@ -35,7 +36,7 @@ export class EvaluationViewComponent
     this.evaluationDatasService.getConfusionMatrix();
   }
 
-  onSplitDragEnd(event: any, item: string) {
+  onSplitDragEnd(event: SplitGutterInteractionEvent, item: string) {
     this.layoutService.resizeAndSetSplitSizes(
       item,
       this.sizes,

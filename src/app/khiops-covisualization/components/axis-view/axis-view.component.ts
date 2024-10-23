@@ -14,6 +14,7 @@ import { AnnotationService } from '@khiops-covisualization/providers/annotation.
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { ViewManagerService } from '@khiops-covisualization/providers/view-manager.service';
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
+import { SplitGutterInteractionEvent } from 'angular-split';
 
 @Component({
   selector: 'app-axis-view',
@@ -26,20 +27,20 @@ export class AxisViewComponent
 {
   @Input() public openContextView = false;
   public sizes: any;
-  public dimensionsDatas: DimensionsDatasModel;
-  public viewsLayout: ViewLayoutVO;
+  public dimensionsDatas: DimensionsDatasModel | undefined;
+  public viewsLayout: ViewLayoutVO | undefined;
   public isBigJsonFile = false;
   public override loadingView = false;
 
   @ViewChild('axisAppPos0', {
     static: false,
   })
-  private axisAppPos0: AxisComponent;
+  private axisAppPos0: AxisComponent | undefined;
   @ViewChild('axisAppPos1', {
     static: false,
   })
-  private axisAppPos1: AxisComponent;
-  private viewsLayoutChangedSub: Subscription;
+  private axisAppPos1: AxisComponent | undefined;
+  private viewsLayoutChangedSub: Subscription | undefined;
   private fileLoadedSub?: Subscription;
 
   constructor(
@@ -71,7 +72,7 @@ export class AxisViewComponent
     this.fileLoadedSub?.unsubscribe();
   }
 
-  onSplitDragEnd(event, item) {
+  onSplitDragEnd(event: SplitGutterInteractionEvent, item: string) {
     this.layoutService.resizeAndSetSplitSizes(
       item,
       this.sizes,
@@ -80,8 +81,8 @@ export class AxisViewComponent
     );
 
     // Resize graph when area is resized
-    this.axisAppPos0.onSplitDragEnd(null, null);
-    this.axisAppPos1.onSplitDragEnd(null, null);
+    this.axisAppPos0?.onSplitDragEnd(null, null);
+    this.axisAppPos1?.onSplitDragEnd(null, null);
   }
 
   private initialize() {

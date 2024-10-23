@@ -7,6 +7,7 @@ import { LayoutService } from '@khiops-library/providers/layout.service';
 import { ProjectDatasService } from '@khiops-visualization/providers/project-datas.service';
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
 import { Subscription } from 'rxjs';
+import { SplitGutterInteractionEvent } from 'angular-split';
 
 @Component({
   selector: 'app-project-view',
@@ -55,7 +56,7 @@ export class ProjectViewComponent
     this.fileLoadedSub?.unsubscribe();
   }
 
-  onSplitDragEnd(event: any, item: string) {
+  onSplitDragEnd(event: SplitGutterInteractionEvent, item: string) {
     this.layoutService.resizeAndSetSplitSizes(
       item,
       this.sizes,

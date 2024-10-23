@@ -23,6 +23,7 @@ import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { ViewManagerService } from '@khiops-covisualization/providers/view-manager.service';
 import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
+import { SplitGutterInteractionEvent } from 'angular-split';
 
 @Component({
   selector: 'app-matrix-container',
@@ -106,7 +107,7 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
     });
   }
 
-  onSplitDragEnd(event, item) {
+  onSplitDragEnd(event: SplitGutterInteractionEvent, item: string) {
     this.layoutService.resizeAndSetSplitSizes(
       item,
       this.sizes,

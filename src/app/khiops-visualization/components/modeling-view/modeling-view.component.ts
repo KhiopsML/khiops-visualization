@@ -19,6 +19,7 @@ import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { ModelingDatasModel } from '@khiops-visualization/model/modeling-datas.model';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 import { LayoutService } from '@khiops-library/providers/layout.service';
+import { SplitGutterInteractionEvent } from 'angular-split';
 
 @Component({
   selector: 'app-modeling-view',
@@ -74,7 +75,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
       this.modelingDatasService.getTrainedPredictorsSummaryDatas();
   }
 
-  onSplitDragEnd(event, item?) {
+  onSplitDragEnd(event: SplitGutterInteractionEvent, item: string) {
     this.layoutService.resizeAndSetSplitSizes(
       item,
       this.sizes,

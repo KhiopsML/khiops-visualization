@@ -8,6 +8,7 @@ import { Preparation2dDatasModel } from '@khiops-visualization/model/preparation
 import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
 import { LS } from '@khiops-library/enum/ls';
 import { LayoutService } from '@khiops-library/providers/layout.service';
+import { SplitGutterInteractionEvent } from 'angular-split';
 
 @Component({
   selector: 'app-var-details-preparation-2d',
@@ -48,7 +49,7 @@ export class VarDetailsPreparation2dComponent {
     );
   }
 
-  onSplitDragEnd(event: any, item: string) {
+  onSplitDragEnd(event: SplitGutterInteractionEvent, item: string) {
     this.layoutService.resizeAndSetSplitSizes(
       item,
       this.sizes,

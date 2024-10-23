@@ -65,7 +65,7 @@ export class EvaluationDatasService {
    * Sets the selected evaluation type variable.
    * @param object - The evaluation type model to set.
    */
-  setSelectedEvaluationTypeVariable(object: EvaluationTypeModel) {
+  setSelectedEvaluationTypeVariable(object: EvaluationTypeModel | undefined) {
     this.evaluationDatas.selectedEvaluationTypeVariable = object;
   }
 

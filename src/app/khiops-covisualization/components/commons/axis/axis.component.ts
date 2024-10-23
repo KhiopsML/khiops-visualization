@@ -4,6 +4,7 @@ import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-d
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { ViewManagerService } from '@khiops-covisualization/providers/view-manager.service';
 import { DimensionViewLayoutModel } from '@khiops-covisualization/model/dimension-view-layout.model';
+import { SplitGutterInteractionEvent } from 'angular-split';
 
 @Component({
   selector: 'app-axis',
@@ -36,7 +37,7 @@ export class AxisComponent implements OnInit {
     this.initializeView();
   }
 
-  onSplitDragEnd(event, item) {
+  onSplitDragEnd(event: SplitGutterInteractionEvent, item: string) {
     if (event && item) {
       this.layoutService.resizeAndSetSplitSizes(
         item,

@@ -14,6 +14,7 @@ import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { Preparation2dDatasModel } from '@khiops-visualization/model/preparation2d-datas.model';
 import { PreparationVariableModel } from '@khiops-visualization/model/preparation-variable.model';
 import { LayoutService } from '@khiops-library/providers/layout.service';
+import { SplitGutterInteractionEvent } from 'angular-split';
 
 @Component({
   selector: 'app-var-details-preparation',
@@ -59,7 +60,7 @@ export class VarDetailsPreparationComponent implements OnInit, OnChanges {
     );
   }
 
-  onSplitDragEnd(event: any, item: string) {
+  onSplitDragEnd(event: SplitGutterInteractionEvent, item: string) {
     this.layoutService.resizeAndSetSplitSizes(
       item,
       this.sizes,
