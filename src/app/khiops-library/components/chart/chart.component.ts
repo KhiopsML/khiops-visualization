@@ -330,7 +330,7 @@ export class ChartComponent implements AfterViewInit, OnChanges {
     }
   }
 
-  private onKeyUp(event: KeyboardEvent) {
+  onKeyUp(event: KeyboardEvent) {
     if (this.activeEntries !== undefined) {
       // can be 0
       if (event.key === 'ArrowLeft' && this.activeEntries > 0) {

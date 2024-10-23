@@ -11,8 +11,7 @@ export class ConfirmDialogComponent implements OnInit {
   public displayRejectBtn: boolean = false;
   public displayCancelBtn: boolean = true;
   public confirmButtonText: string;
-
-  private confirmTranslation: string;
+  public confirmTranslation: string;
 
   constructor(private translate: TranslateService) {
     this.confirmButtonText = this.translate.get('GLOBAL.YES');
