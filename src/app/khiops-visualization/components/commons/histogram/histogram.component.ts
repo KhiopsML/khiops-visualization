@@ -15,7 +15,6 @@ import { format } from 'mathjs';
 import { HistogramUIService } from './histogram.ui.service';
 import { HistogramBarModel } from './histogram.bar.model';
 import { ResizedEvent } from 'angular-resize-event';
-import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
@@ -42,61 +41,55 @@ import { THEME } from '@khiops-library/enum/theme';
 })
 export class HistogramComponent extends SelectableComponent implements OnInit {
   @ViewChild('chart', { static: false })
-  chart!: ElementRef;
+  private chart!: ElementRef;
 
-  componentType = COMPONENT_TYPES.HISTOGRAM; // needed to copy datas
-  svg: d3.Selection<SVGElement, unknown, HTMLElement, any>;
+  public componentType = COMPONENT_TYPES.HISTOGRAM; // needed to copy datas
+  private svg: d3.Selection<SVGElement, unknown, HTMLElement, any>;
   private resizeSubject = new Subject<ResizedEvent>();
 
   // Outputs
-  @Output() selectedItemChanged: EventEmitter<any> = new EventEmitter();
+  @Output() private selectedItemChanged: EventEmitter<any> = new EventEmitter();
 
   // Dynamic values
-  @Input() datas: HistogramValuesI[];
-  @Input() selectedItem: number = 0;
-  @Input() graphOptionsX: DistributionOptionsI | undefined = undefined;
-  @Input() graphOptionsY: DistributionOptionsI | undefined = undefined;
+  @Input() public datas: HistogramValuesI[];
+  @Input() private selectedItem: number = 0;
+  @Input() public graphOptionsX: DistributionOptionsI | undefined = undefined;
+  @Input() public graphOptionsY: DistributionOptionsI | undefined = undefined;
 
-  h: number = 0;
-  w: number = 0;
-  xPadding: number = 40;
-  yPadding: number = 50;
-  bars: HistogramBarModel[] = [];
+  private h: number = 0;
+  public w: number = 0;
+  private xPadding: number = 40;
+  private yPadding: number = 50;
+  private bars: HistogramBarModel[] = [];
 
   // Static config values
-  xTickCount: number;
-  yTicksCount = 10;
-  tickSize = 0;
-  minBarHeight = 4;
-  defaultBarColor: string;
+  private xTickCount: number;
+  private yTicksCount = 10;
+  private tickSize = 0;
+  private minBarHeight = 4;
+  private defaultBarColor: string;
 
   // Local variables
-  rangeXLog: RangeXLogI;
-  rangeXLin: RangeXLinI;
-  rangeYLin: number;
-  rangeYLog: RangeYLogI;
-
-  ratioY = 0;
-  ratio: number = 0;
-  isLoading: boolean = false;
-
-  colorSet: string[];
-
-  ctx: CanvasRenderingContext2D;
-  ctxSelected: CanvasRenderingContext2D;
-  ctxHover: CanvasRenderingContext2D;
-
-  histogramCanvas: HTMLCanvasElement;
-  histogramHoverCanvas: HTMLCanvasElement;
-  histogramSelectedCanvas: HTMLCanvasElement;
-
-  tooltipText: string = '';
-  tooltipPosX: number = 0;
-  tooltipPosY: number = 0;
-  tooltipDisplay: boolean = false;
+  public isLoading: boolean = false;
+  public colorSet: string[];
+  public tooltipText: string = '';
+  public tooltipPosX: number = 0;
+  public tooltipPosY: number = 0;
+  public tooltipDisplay: boolean = false;
+  private rangeXLog: RangeXLogI;
+  private rangeXLin: RangeXLinI;
+  private rangeYLin: number;
+  private rangeYLog: RangeYLogI;
+  private ratioY = 0;
+  private ratio: number = 0;
+  private ctx: CanvasRenderingContext2D;
+  private ctxSelected: CanvasRenderingContext2D;
+  private ctxHover: CanvasRenderingContext2D;
+  private histogramCanvas: HTMLCanvasElement;
+  private histogramHoverCanvas: HTMLCanvasElement;
+  private histogramSelectedCanvas: HTMLCanvasElement;
 
   constructor(
-    private khiopsLibraryService: KhiopsLibraryService,
     private histogramService: HistogramService,
     public translate: TranslateService,
     public override selectableService: SelectableService,
@@ -152,11 +145,11 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     this.datas && this.init();
   }
 
-  hideActiveEntries() {
+  private hideActiveEntries() {
     console.log('hideActiveEntries');
   }
 
-  showActiveEntries() {
+  private showActiveEntries() {
     console.log('showActiveEntries');
   }
 
