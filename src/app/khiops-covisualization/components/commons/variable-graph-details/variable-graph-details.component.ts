@@ -35,23 +35,23 @@ export class VariableGraphDetailsComponent
   @ViewChild('distributionGraph', {
     static: false,
   })
-  distributionGraph: DistributionGraphComponent;
+  distributionGraph: DistributionGraphComponent | undefined;
 
-  @Input() public selectedNode: TreeNodeModel;
+  @Input() public selectedNode: TreeNodeModel | undefined;
   @Output() public selectedItemChanged: EventEmitter<any> = new EventEmitter();
-  @Input() public position: number;
-  @Input() private dimensionsTree: TreeNodeModel[];
-  @Input() private selectedDimensions: DimensionModel[];
+  @Input() public position: number = 0;
+  @Input() private dimensionsTree: TreeNodeModel[] | undefined;
+  @Input() private selectedDimensions: DimensionModel[] | undefined;
 
   public scrollPosition = 0;
-  public scaleValue: number;
-  public graphDetails: ChartDatasModel;
+  public scaleValue: number = 0;
+  public graphDetails: ChartDatasModel | undefined;
   public graphOptions: DistributionOptionsI = {
     types: [HistogramType.YLIN, HistogramType.YLOG],
     selected: undefined,
   };
-  public activeEntries: number;
-  public title: string;
+  public activeEntries: number = 0;
+  public title: string = '';
   public isFullscreen: boolean = false;
 
   private treeSelectedNodeChangedSub: Subscription;
@@ -86,7 +86,7 @@ export class VariableGraphDetailsComponent
       // get active entries index from name
       if (this.graphDetails) {
         this.activeEntries = this.graphDetails.labels.findIndex(
-          (e) => e === this.selectedNode.shortDescription,
+          (e) => e === this.selectedNode?.shortDescription,
         );
         this.setLegendTitle();
       }
@@ -106,11 +106,11 @@ export class VariableGraphDetailsComponent
       ' ' +
       this.translate.get('GLOBAL.OF') +
       ' ' +
-      this.selectedDimensions[currentIndex].name +
+      this.selectedDimensions?.[currentIndex].name +
       ' ' +
       this.translate.get('GLOBAL.GIVEN') +
       ' ' +
-      this.selectedDimensions[otherIndex].name;
+      this.selectedDimensions?.[otherIndex].name;
   }
 
   private resize() {
@@ -131,9 +131,9 @@ export class VariableGraphDetailsComponent
       cancelable: true,
     });
     this.configService
-      .getRootElementDom()
-      .querySelector('#cluster-distribution-' + this.position)
-      .dispatchEvent(trustedClickEvent);
+      ?.getRootElementDom()
+      ?.querySelector('#cluster-distribution-' + this.position)
+      ?.dispatchEvent(trustedClickEvent);
   }
 
   ngOnDestroy() {
@@ -147,11 +147,11 @@ export class VariableGraphDetailsComponent
     const [currentIndex, otherIndex] = this.invertDimensionsPositions();
 
     // Find node name from index
-    const currentNodeName = this.graphDetails.labels[index];
-    this.treenodesService.setSelectedNode(
-      this.selectedDimensions[currentIndex].name,
-      currentNodeName,
-    );
+    const currentNodeName = this.graphDetails?.labels[index];
+    const dimName = this.selectedDimensions[currentIndex].name;
+    if (currentNodeName) {
+      this.treenodesService.setSelectedNode(dimName, currentNodeName);
+    }
   }
 
   onScaleValueChanged(value: number) {
@@ -174,7 +174,7 @@ export class VariableGraphDetailsComponent
       );
       if (this.graphDetails?.labels) {
         this.activeEntries = this.graphDetails.labels.findIndex(
-          (e) => e === this.selectedNode.shortDescription,
+          (e) => e === this.selectedNode?.shortDescription,
         );
       }
       this.updateGraphTitle();

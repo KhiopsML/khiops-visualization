@@ -144,8 +144,8 @@ export class TreenodesService {
    * @returns {TreeNodeModel} - The selected node model.
    */
   setSelectedNode(
-    hierarchyName,
-    nodeName,
+    hierarchyName: string,
+    nodeName: string | number,
     stopPropagation = false,
   ): TreeNodeModel {
     let nodeVO: TreeNodeModel;

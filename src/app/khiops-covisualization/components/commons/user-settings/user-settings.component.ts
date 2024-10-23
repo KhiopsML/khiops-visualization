@@ -24,11 +24,11 @@ import { THEME } from '@khiops-library/enum/theme';
 export class UserSettingsComponent implements OnChanges {
   @Output() private toggleNavDrawerChanged: EventEmitter<any> =
     new EventEmitter();
-  @Input() opened: boolean;
+  @Input() opened: boolean = false;
 
-  public allowCookies: boolean;
-  public contrastValue: number;
-  private currentTheme: string;
+  public allowCookies: boolean = false;
+  public contrastValue: number = 0;
+  private currentTheme: string = THEME.LIGHT;
 
   constructor(
     private translate: TranslateService,

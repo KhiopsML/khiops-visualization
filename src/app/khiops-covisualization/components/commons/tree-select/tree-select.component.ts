@@ -149,7 +149,6 @@ export class TreeSelectComponent
     });
 
     this.tree.on('select', (e: TreeViewNodeEventI) => {
-      console.log('this.tree.on select~ e:', e);
       // Do ngzone to emit event
       this.ngzone.run(() => {
         setTimeout(() => {
