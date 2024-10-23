@@ -23,25 +23,21 @@ import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
   styleUrls: ['./tree-leaf-details.component.scss'],
 })
 export class TreeLeafDetailsComponent implements OnInit, OnChanges {
-  @Input() selectedNode: TreeNodeModel;
-  @Input() displayedValues: ChartToggleValuesI[];
+  @Input() public selectedNode: TreeNodeModel;
+  @Input() public displayedValues: ChartToggleValuesI[];
 
-  populationCount: number = 10;
-
-  treePreparationDatas: TreePreparationDatasModel | undefined;
-  distributionDatas: DistributionDatasModel;
-  position = 1; // to change graph id
-
-  treeLeafRules: GridDatasI;
-  distributionGraphType: string;
-  treeNodeTargetDistributionGraphType: string;
+  public populationCount: number = 10;
+  public treePreparationDatas: TreePreparationDatasModel | undefined;
+  public distributionDatas: DistributionDatasModel;
+  public position = 1; // to change graph id
+  public treeLeafRules: GridDatasI;
 
   constructor(
     public ngzone: NgZone,
     public selectableService: SelectableService,
+    public translate: TranslateService,
     private treePreparationDatasService: TreePreparationDatasService,
     private distributionDatasService: DistributionDatasService,
-    public translate: TranslateService,
   ) {}
 
   ngOnInit() {
@@ -49,34 +45,19 @@ export class TreeLeafDetailsComponent implements OnInit, OnChanges {
     this.distributionDatas = this.distributionDatasService.getDatas();
   }
 
-  updateComponentDatas() {
-    if (this.selectedNode) {
-      this.distributionDatasService.getTreeNodeTargetDistributionGraphDatas(
-        this.selectedNode,
-      );
-      this.treeLeafRules = this.treePreparationDatasService.getTreeLeafRules();
-      this.populationCount = UtilsService.arraySum(
-        this.selectedNode.targetValues.frequencies,
-      );
-    }
-  }
-
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.selectedNode?.currentValue) {
-      this.updateComponentDatas();
-    }
-    if (changes.displayedValues?.currentValue) {
+    if (
+      changes.selectedNode?.currentValue ||
+      changes.displayedValues?.currentValue
+    ) {
       this.updateComponentDatas();
     }
   }
-
-  onSelectedTreeLeafDetailsTabChanged(e) {}
 
   onTreeNodeTargetDistributionGraphTypeChanged(type: string) {
-    this.treeNodeTargetDistributionGraphType = type;
     this.distributionDatasService.getTreeNodeTargetDistributionGraphDatas(
       this.selectedNode,
-      this.treeNodeTargetDistributionGraphType,
+      type,
     );
   }
 
@@ -86,5 +67,17 @@ export class TreeLeafDetailsComponent implements OnInit, OnChanges {
     this.distributionDatasService.setTargetDistributionDisplayedValues(
       displayedValues,
     );
+  }
+
+  private updateComponentDatas() {
+    if (this.selectedNode) {
+      this.distributionDatasService.getTreeNodeTargetDistributionGraphDatas(
+        this.selectedNode,
+      );
+      this.treeLeafRules = this.treePreparationDatasService.getTreeLeafRules();
+      this.populationCount = UtilsService.arraySum(
+        this.selectedNode.targetValues.frequencies,
+      );
+    }
   }
 }
