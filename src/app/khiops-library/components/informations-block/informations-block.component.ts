@@ -18,10 +18,10 @@ import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InformationsBlockComponent extends SelectableComponent {
-  @Input() inputDatas: InfosDatasI[];
-  @Input() title: string;
-  @Input() icon = 'tune';
-  componentType = COMPONENT_TYPES.INFORMATIONS; // needed to copy datas
+  @Input() public inputDatas: InfosDatasI[];
+  @Input() public title: string;
+  @Input() public icon = 'tune';
+  public componentType = COMPONENT_TYPES.INFORMATIONS; // needed to copy datas
 
   constructor(
     public override selectableService: SelectableService,

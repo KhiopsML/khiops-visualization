@@ -16,15 +16,17 @@ import { UtilsService } from '../../providers/utils.service';
   styleUrls: ['./legend.component.scss'],
 })
 export class LegendComponent implements OnChanges {
-  @Input() inputDatas: any; // change according to the chart type
-  @Input() type: string;
-  @Input() tooltip: string;
-  @Input() colorSet: ChartColorsSetI;
-  @Input() position = 'top';
-  @Output() legendItemClicked: EventEmitter<string> = new EventEmitter();
+  @Input() public tooltip: string;
+  @Input() public position = 'top';
+  @Input() private inputDatas: any; // change according to the chart type
+  @Input() private type: string;
+  @Input() private colorSet: ChartColorsSetI;
 
-  legend: any[];
-  selectedItem: string = undefined;
+  @Output() private legendItemClicked: EventEmitter<string> =
+    new EventEmitter();
+
+  public legend: any[];
+  public selectedItem: string = undefined;
 
   constructor(private translate: TranslateService) {}
 
@@ -44,7 +46,14 @@ export class LegendComponent implements OnChanges {
     }
   }
 
-  checkForDefaultGroupIndex(input) {
+  /**
+   * Checks for the default group index in the input data and adds a corresponding legend item.
+   * If the input data contains an 'extra' property with an element that has a 'defaultGroupIndex',
+   * a legend item with the name 'GLOBAL.DEFAULT_GROUP_INDEX' and a semi-transparent color is added.
+   *
+   * @param input - The input data to check for the default group index.
+   */
+  private checkForDefaultGroupIndex(input) {
     if (input?.extra) {
       const defaultIndex = input.extra.findIndex((e) => e.defaultGroupIndex);
       if (defaultIndex !== -1) {
@@ -56,7 +65,7 @@ export class LegendComponent implements OnChanges {
     }
   }
 
-  updateLegend() {
+  private updateLegend() {
     if (this.inputDatas) {
       this.legend = [];
       if (this.type === 'chart-1d') {
