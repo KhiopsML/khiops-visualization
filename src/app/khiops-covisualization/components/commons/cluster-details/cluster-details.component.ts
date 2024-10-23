@@ -22,15 +22,15 @@ import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
   styleUrls: ['./cluster-details.component.scss'],
 })
 export class ClusterDetailsComponent implements OnInit, OnChanges {
-  @Input() public position: number;
-  @Input() private dimensionsTree: TreeNodeModel[];
-  @Input() private selectedDimension: DimensionModel;
-  @Input() private selectedNode: TreeNodeModel;
+  @Input() public position: number = 0;
+  @Input() private dimensionsTree: TreeNodeModel[] | undefined;
+  @Input() private selectedDimension: DimensionModel | undefined;
+  @Input() private selectedNode: TreeNodeModel | undefined;
 
-  public nodeToSelect: TreeNodeModel;
+  public nodeToSelect: TreeNodeModel | undefined;
   public clusterDisplayedColumns: GridColumnsI[] = [];
   public title: string;
-  public filteredDimensionsClusters: ClusterDetailsModel[];
+  public filteredDimensionsClusters: ClusterDetailsModel[] | undefined;
   public id: any;
 
   constructor(
@@ -84,7 +84,7 @@ export class ClusterDetailsComponent implements OnInit, OnChanges {
     this.id = 'cluster-details-grid-' + this.position;
 
     // Insert size column if it is a categorical dimension
-    if (this.selectedDimension.type === TYPES.CATEGORICAL) {
+    if (this.selectedDimension?.type === TYPES.CATEGORICAL) {
       this.clusterDisplayedColumns.splice(2, 0, {
         headerName: this.translate.get('GLOBAL.SIZE'),
         field: 'size',
@@ -110,7 +110,7 @@ export class ClusterDetailsComponent implements OnInit, OnChanges {
 
   onSelectRowChanged(item: ClusterDetailsModel) {
     this.treenodesService.setSelectedNode(
-      this.selectedDimension.name,
+      this.selectedDimension?.name,
       item._id,
     );
   }
@@ -120,11 +120,11 @@ export class ClusterDetailsComponent implements OnInit, OnChanges {
       // Get nodes from input to update it
       this.nodeToSelect = _.cloneDeep(this.selectedNode);
       const findNodeToSelect = this.filteredDimensionsClusters.find(
-        (e) => e._id.toString() === this.nodeToSelect._id.toString(),
+        (e) => e._id.toString() === this.nodeToSelect?._id.toString(),
       );
       if (!findNodeToSelect) {
         // get the parent
-        const parentNode: ClusterDetailsModel =
+        const parentNode: ClusterDetailsModel | undefined =
           this.filteredDimensionsClusters.find(
             (e) =>
               e._id.toString() === this.nodeToSelect?.parentCluster.toString(),
@@ -149,8 +149,12 @@ export class ClusterDetailsComponent implements OnInit, OnChanges {
     }
   }
 
-  private getFirstNodeLeaf(node: TreeNodeModel): TreeNodeModel {
-    if (node.children.length > 0 && node.children[0].isLeaf === false) {
+  private getFirstNodeLeaf(node: TreeNodeModel): TreeNodeModel | undefined {
+    if (
+      node.children.length > 0 &&
+      node.children[0] &&
+      node.children?.[0].isLeaf === false
+    ) {
       return this.getFirstNodeLeaf(node.children[0]);
     } else {
       return node.children[0];

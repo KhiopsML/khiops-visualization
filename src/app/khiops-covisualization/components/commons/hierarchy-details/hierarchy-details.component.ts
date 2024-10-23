@@ -21,15 +21,15 @@ import { SelectedTreeClusterModel } from '@khiops-covisualization/model/selected
 })
 export class HierarchyDetailsComponent extends SelectableComponent {
   @ViewChild(TreeSelectComponent)
-  private treeSelect: TreeSelectComponent;
+  private treeSelect: TreeSelectComponent | undefined;
 
-  @Input() public selectedDimension: DimensionModel;
-  @Input() public selectedNode: TreeNodeModel;
-  @Input() public position: number;
-  @Input() public dimensions: DimensionModel[];
-  @Input() public dimensionsTree: TreeNodeModel[];
+  @Input() public selectedDimension: DimensionModel | undefined;
+  @Input() public selectedNode: TreeNodeModel | undefined;
+  @Input() public position: number = 0;
+  @Input() public dimensions: DimensionModel[] | undefined;
+  @Input() public dimensionsTree: TreeNodeModel[] | undefined;
 
-  public selectedTreeCluster: SelectedTreeClusterModel;
+  public selectedTreeCluster: SelectedTreeClusterModel | undefined;
   public componentType = COMPONENT_TYPES.TREE; // needed to copy datas
   public override id: any = undefined;
 
@@ -58,11 +58,11 @@ export class HierarchyDetailsComponent extends SelectableComponent {
   }
 
   @HostListener('window:keyup', ['$event'])
-  keyEvent(event) {
+  keyEvent(event: KeyboardEvent) {
     const currentSelectedArea = this.selectableService.getSelectedArea();
     if (currentSelectedArea && currentSelectedArea.id === this.id) {
       // Keep id into node selection
-      this.treeSelect.selectNextNode(event.keyCode);
+      this.treeSelect?.selectNextNode(event.keyCode);
     } else {
       return;
     }

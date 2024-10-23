@@ -12,11 +12,11 @@ import { SplitGutterInteractionEvent } from 'angular-split';
   styleUrls: ['./axis.component.scss'],
 })
 export class AxisComponent implements OnInit {
-  @Input() public sizeId: string;
-  @Input() public position: number;
-  @Input() public dimensionsDatas: DimensionsDatasModel;
-  @Input() public axisLayout: DimensionViewLayoutModel;
-  @Input() private viewId: string;
+  @Input() public sizeId: string = '';
+  @Input() public position: number = 0;
+  @Input() public dimensionsDatas: DimensionsDatasModel | undefined;
+  @Input() public axisLayout: DimensionViewLayoutModel | undefined;
+  @Input() private viewId: string = '';
 
   public sizes: any;
   public column0Index = 0;
@@ -24,9 +24,9 @@ export class AxisComponent implements OnInit {
   public column2Index = 2;
   public column3Index = 3;
   public column4Index = 4;
-  public invertedPosition: number;
-  public selectedComposition: CompositionModel;
-  private viewLayout: DimensionViewLayoutModel;
+  public invertedPosition: number = 0;
+  public selectedComposition: CompositionModel | undefined;
+  private viewLayout: DimensionViewLayoutModel | undefined;
 
   constructor(
     private layoutService: LayoutService,

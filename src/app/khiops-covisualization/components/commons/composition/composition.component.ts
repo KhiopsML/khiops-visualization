@@ -27,16 +27,16 @@ import { ImportExtDatasService } from '@khiops-covisualization/providers/import-
   styleUrls: ['./composition.component.scss'],
 })
 export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
-  @Input() public position: number;
-  @Input() public selectedDimension: DimensionModel;
-  @Input() private selectedNode: TreeNodeModel;
+  @Input() public position: number = 0;
+  @Input() public selectedDimension: DimensionModel | undefined;
+  @Input() private selectedNode: TreeNodeModel | undefined;
 
   @Output() private selectedCompositionChanged: EventEmitter<any> =
     new EventEmitter();
 
-  public title: string;
-  public selectedComposition: CompositionModel;
-  public compositionValues: CompositionModel[];
+  public title: string = '';
+  public selectedComposition: CompositionModel | undefined;
+  public compositionValues: CompositionModel[] | undefined;
   public id: any;
   public compositionDisplayedColumns: GridColumnsI[] = [];
 
@@ -89,7 +89,7 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.treeSelectedNodeChangedSub =
       this.eventsService.treeSelectedNodeChanged.subscribe((e) => {
-        if (e.realNodeVO && e.hierarchyName === this.selectedDimension.name) {
+        if (e.realNodeVO && e.hierarchyName === this.selectedDimension?.name) {
           this.updateTable(e.realNodeVO);
         }
       });
@@ -102,7 +102,7 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
               this.selectedDimension,
             );
 
-          this.compositionValues.forEach((composition: CompositionModel) => {
+          this.compositionValues?.forEach((composition: CompositionModel) => {
             if (externalDatas?.[composition?.value]) {
               composition.externalData = externalDatas[composition.value];
             }
@@ -147,20 +147,20 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onDoubleClickListItem(item: TreeNodeModel) {
     this.treenodesService.setSelectedNode(
-      this.selectedDimension.name,
+      this.selectedDimension?.name,
       item.cluster,
     );
   }
 
   onSelectRowChanged(item: CompositionModel) {
     // find composition in local to get external datas
-    this.selectedComposition = this.compositionValues.find(
+    this.selectedComposition = this.compositionValues?.find(
       (e) => e.value === item.value,
     );
     this.selectedCompositionChanged.emit(this.selectedComposition);
   }
 
-  private updateTable(selectedNode: TreeNodeModel) {
+  private updateTable(selectedNode: TreeNodeModel | undefined) {
     if (selectedNode) {
       this.compositionValues = Object.assign(
         [],

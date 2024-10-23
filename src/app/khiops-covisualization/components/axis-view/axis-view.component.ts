@@ -1,10 +1,9 @@
-import { Component, OnInit, ViewChild, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { AppConfig } from 'src/environments/environment';
 import { AppService } from '@khiops-covisualization/providers/app.service';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { ViewLayoutVO } from '@khiops-covisualization/model/view-layout.model';
-import { AxisComponent } from '../commons/axis/axis.component';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
 import { TranslateService } from '@ngstack/translate';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -84,7 +83,10 @@ export class AxisViewComponent
       this.initializeSavedState();
       this.initializeDatas();
 
-      if (this.dimensionsDatas?.dimensions?.length > 0) {
+      if (
+        this.dimensionsDatas?.dimensions &&
+        this.dimensionsDatas.dimensions.length > 0
+      ) {
         const isLargeCocluster = this.dimensionsDatasService.isLargeCocluster();
         let collapsedNodes = this.appService.getSavedDatas('collapsedNodes');
 
@@ -167,38 +169,40 @@ export class AxisViewComponent
    * 8. Displays a snackbar warning about the performance impact of unfolded data.
    */
   private computeLargeCoclustering(collapsedNodesSaved) {
-    const unfoldState =
-      this.appService.getSavedDatas('unfoldHierarchyState') ||
-      this.dimensionsDatas.dimensions.length *
-        AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.ERGONOMIC_LIMIT;
+    if (this.dimensionsDatas) {
+      const unfoldState =
+        this.appService.getSavedDatas('unfoldHierarchyState') ||
+        this.dimensionsDatas.dimensions.length *
+          AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.ERGONOMIC_LIMIT;
 
-    this.treenodesService.setSelectedUnfoldHierarchy(unfoldState);
-    let collapsedNodes =
-      this.treenodesService.getLeafNodesForARank(unfoldState);
+      this.treenodesService.setSelectedUnfoldHierarchy(unfoldState);
+      let collapsedNodes =
+        this.treenodesService.getLeafNodesForARank(unfoldState);
 
-    // Merge collapsed nodes
-    collapsedNodes = this.treenodesService.mergeCollapsedNodes(
-      collapsedNodes,
-      collapsedNodesSaved,
-    );
+      // Merge collapsed nodes
+      collapsedNodes = this.treenodesService.mergeCollapsedNodes(
+        collapsedNodes,
+        collapsedNodesSaved,
+      );
 
-    this.treenodesService.setSavedCollapsedNodes(collapsedNodes);
+      this.treenodesService.setSavedCollapsedNodes(collapsedNodes);
 
-    let datas = this.treenodesService.constructSavedJson(collapsedNodes);
-    this.appService.setCroppedFileDatas(datas);
+      let datas = this.treenodesService.constructSavedJson(collapsedNodes);
+      this.appService.setCroppedFileDatas(datas);
 
-    this.initializeDatas();
+      this.initializeDatas();
 
-    this.snackBar.open(
-      this.translate.get('SNACKS.UNFOLDED_DATAS_PERFORMANCE_WARNING', {
-        count: unfoldState,
-      }),
-      this.translate.get('GLOBAL.OK'),
-      {
-        duration: 4000,
-        panelClass: 'warning',
-        verticalPosition: 'bottom',
-      },
-    );
+      this.snackBar.open(
+        this.translate.get('SNACKS.UNFOLDED_DATAS_PERFORMANCE_WARNING', {
+          count: unfoldState,
+        }),
+        this.translate.get('GLOBAL.OK'),
+        {
+          duration: 4000,
+          panelClass: 'warning',
+          verticalPosition: 'bottom',
+        },
+      );
+    }
   }
 }

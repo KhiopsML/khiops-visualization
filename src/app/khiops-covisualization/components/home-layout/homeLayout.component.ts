@@ -40,7 +40,7 @@ import { FileLoaderService } from '@khiops-library/providers/file-loader.service
   encapsulation: ViewEncapsulation.None,
 })
 export class HomeLayoutComponent implements OnInit, OnDestroy {
-  public showProjectTab: boolean;
+  public showProjectTab: boolean = false;
   public get appDatas() {
     return this.appService.getDatas();
   }
@@ -52,16 +52,16 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
   @ViewChild('fileLoader', {
     static: false,
   })
-  public fileLoader: FileLoaderComponent;
-  public appTitle: string;
+  public fileLoader: FileLoaderComponent | undefined;
+  public appTitle: string = '';
   public isContextDimensions = false;
-  public appVersion: string;
+  public appVersion: string = '';
   public opened = false;
   public openContextView = false;
   public selectedTab: Object | undefined;
-  public isCompatibleJson: boolean;
+  public isCompatibleJson: boolean = false;
 
-  private tabsMenu: MatTabGroup; // Hack to override click on tab
+  private tabsMenu: MatTabGroup | undefined; // Hack to override click on tab
   @ViewChild('tabsMenu', {
     static: false,
   })
@@ -136,7 +136,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
   ngAfterViewInit() {
     if (AppConfig.debugFile) {
       setTimeout(() => {
-        this.fileLoader.loadDebugFile();
+        this.fileLoader?.loadDebugFile();
       }, 100);
     }
     this.fileLoadedSub = this.fileLoaderService.fileLoaded$.subscribe(
@@ -230,7 +230,8 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     const isCollidingJson = this.appService.isCollidingJson(datas);
     UtilsService.resetSearch(AppConfig.covisualizationCommon.GLOBAL.LS_ID);
 
-    this.showProjectTab = this.configService.getConfig().showProjectTab;
+    this.showProjectTab =
+      this.configService.getConfig().showProjectTab || false;
     if (this.showProjectTab === undefined) {
       this.showProjectTab = true;
     }
@@ -307,6 +308,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 
   closeFile() {
     this.dialogRef.closeAll();
-    this.fileLoader.closeFile();
+    this.fileLoader?.closeFile();
   }
 }

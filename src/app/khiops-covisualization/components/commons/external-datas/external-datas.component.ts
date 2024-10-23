@@ -15,10 +15,10 @@ export class ExternalDatasComponent
   extends SelectableComponent
   implements OnInit
 {
-  @Input() private position: number;
-  @Input() private externalData: any[];
-  @Input() private selectedComposition: CompositionModel;
-  @Input() private selectedDimension: DimensionModel;
+  @Input() private position: number = 0;
+  @Input() private externalData: any[] | undefined;
+  @Input() private selectedComposition: CompositionModel | undefined;
+  @Input() private selectedDimension: DimensionModel | undefined;
 
   public override id: any = undefined;
   public currentExternalDatasTitle: string = '';
@@ -42,7 +42,7 @@ export class ExternalDatasComponent
   }
 
   getNoDatasMessage() {
-    if (this.selectedDimension.isNumerical) {
+    if (this.selectedDimension?.isNumerical) {
       return 'NO_DATAS.NO_EXTERNAL_DATAS_FOR_NUMERICAL';
     } else {
       if (this.selectedComposition) {
@@ -65,7 +65,7 @@ export class ExternalDatasComponent
     ) {
       // get first item if no composition selected
       this.currentExternalDatas = [Object.values(this.externalData)[0]];
-      this.currentExternalDatasTitle = Object.keys(this.externalData)[0];
+      this.currentExternalDatasTitle = Object.keys(this.externalData)[0] || '';
     }
   }
 }

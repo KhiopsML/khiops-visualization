@@ -6,7 +6,6 @@ import { TranslateService } from '@ngstack/translate';
 import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { AppService } from './app.service';
 import { CompositionModel } from '../model/composition.model';
-import { MatrixUiService } from '@khiops-library/components/matrix/matrix.ui.service';
 import { ClusterDetailsModel } from '@khiops-covisualization/model/cluster-details.model';
 import { TreenodesService } from './treenodes.service';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
@@ -19,7 +18,7 @@ import { MatrixUtilsService } from '@khiops-library/components/matrix/matrix.uti
   providedIn: 'root',
 })
 export class ClustersService {
-  private dimensionsDatas: DimensionsDatasModel;
+  private dimensionsDatas: DimensionsDatasModel | undefined;
 
   constructor(
     private translate: TranslateService,
@@ -457,8 +456,8 @@ export class ClustersService {
    * @returns An array of ClusterDetailsModel containing details of the filtered clusters.
    */
   getFilteredDimensionTree(
-    dimensionsTree,
-    selectedDimension: DimensionModel,
+    dimensionsTree: TreeNodeModel[] | undefined,
+    selectedDimension: DimensionModel | undefined,
   ): ClusterDetailsModel[] {
     let filteredDimensionsClusters: ClusterDetailsModel[] = [];
     if (dimensionsTree) {
