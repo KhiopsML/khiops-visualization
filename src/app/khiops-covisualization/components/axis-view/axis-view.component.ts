@@ -32,14 +32,6 @@ export class AxisViewComponent
   public isBigJsonFile = false;
   public override loadingView = false;
 
-  @ViewChild('axisAppPos0', {
-    static: false,
-  })
-  private axisAppPos0: AxisComponent | undefined;
-  @ViewChild('axisAppPos1', {
-    static: false,
-  })
-  private axisAppPos1: AxisComponent | undefined;
   private viewsLayoutChangedSub: Subscription | undefined;
   private fileLoadedSub?: Subscription;
 
@@ -79,10 +71,6 @@ export class AxisViewComponent
       event.sizes,
       'axisView',
     );
-
-    // Resize graph when area is resized
-    this.axisAppPos0?.onSplitDragEnd(null, null);
-    this.axisAppPos1?.onSplitDragEnd(null, null);
   }
 
   private initialize() {
@@ -96,7 +84,7 @@ export class AxisViewComponent
       this.initializeSavedState();
       this.initializeDatas();
 
-      if (this.dimensionsDatas.dimensions.length > 0) {
+      if (this.dimensionsDatas?.dimensions?.length > 0) {
         const isLargeCocluster = this.dimensionsDatasService.isLargeCocluster();
         let collapsedNodes = this.appService.getSavedDatas('collapsedNodes');
 
@@ -113,7 +101,7 @@ export class AxisViewComponent
         this.loadingView = false;
 
         this.viewsLayout = this.viewManagerService.initViewsLayout(
-          this.dimensionsDatas.selectedDimensions,
+          this.dimensionsDatas?.selectedDimensions,
         );
       }
     }, 500); // To show loader when big files
