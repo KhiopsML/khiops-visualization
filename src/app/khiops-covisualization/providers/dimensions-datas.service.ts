@@ -15,7 +15,7 @@ import { ImportExtDatasService } from './import-ext-datas.service';
   providedIn: 'root',
 })
 export class DimensionsDatasService {
-  dimensionsDatas: DimensionsDatasModel;
+  public dimensionsDatas: DimensionsDatasModel;
 
   constructor(
     private importExtDatasService: ImportExtDatasService,

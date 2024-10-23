@@ -10,8 +10,8 @@ import { LS } from '@khiops-library/enum/ls';
   providedIn: 'root',
 })
 export class ViewManagerService {
-  viewsLayout: ViewLayoutVO;
-  viewsLayoutChanged: EventEmitter<any> = new EventEmitter();
+  private viewsLayout: ViewLayoutVO;
+  public viewsLayoutChanged: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private ls: Ls,

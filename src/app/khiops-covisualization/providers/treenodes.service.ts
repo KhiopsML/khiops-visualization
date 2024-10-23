@@ -20,8 +20,8 @@ import { ViewManagerService } from './view-manager.service';
   providedIn: 'root',
 })
 export class TreenodesService {
-  dimensionsDatas: DimensionsDatasModel;
-  collapsedNodesToSave: {} = {};
+  private dimensionsDatas: DimensionsDatasModel;
+  private collapsedNodesToSave: {} = {};
 
   constructor(
     private annotationService: AnnotationService,

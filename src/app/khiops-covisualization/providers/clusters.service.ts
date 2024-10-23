@@ -18,7 +18,7 @@ import { CHART_TYPES } from '@khiops-library/enum/chart-types';
   providedIn: 'root',
 })
 export class ClustersService {
-  dimensionsDatas: DimensionsDatasModel;
+  private dimensionsDatas: DimensionsDatasModel;
 
   constructor(
     private translate: TranslateService,

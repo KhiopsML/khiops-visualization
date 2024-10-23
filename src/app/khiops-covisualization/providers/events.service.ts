@@ -4,10 +4,10 @@ import { Injectable, EventEmitter } from '@angular/core';
   providedIn: 'root',
 })
 export class EventsService {
-  treeSelectedNodeChanged: EventEmitter<any> = new EventEmitter();
-  importedDatasChanged: EventEmitter<any> = new EventEmitter();
-  treeNodeNameChanged: EventEmitter<any> = new EventEmitter();
-  conditionalOnContextChanged: EventEmitter<any> = new EventEmitter();
+  public treeSelectedNodeChanged: EventEmitter<any> = new EventEmitter();
+  public importedDatasChanged: EventEmitter<any> = new EventEmitter();
+  public treeNodeNameChanged: EventEmitter<any> = new EventEmitter();
+  public conditionalOnContextChanged: EventEmitter<any> = new EventEmitter();
 
   /**
    * Emits an event when the name of a tree node changes.

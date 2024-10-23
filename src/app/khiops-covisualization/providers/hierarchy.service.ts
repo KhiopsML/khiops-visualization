@@ -9,8 +9,8 @@ import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-d
   providedIn: 'root',
 })
 export class HierarchyService {
-  dimensionsDatas: DimensionsDatasModel;
-  hierarchyFold: any = {};
+  private dimensionsDatas: DimensionsDatasModel;
+  private hierarchyFold: any = {};
 
   constructor(
     private appService: AppService,

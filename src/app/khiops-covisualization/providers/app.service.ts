@@ -12,9 +12,9 @@ import { VIEW_LAYOUT } from '@khiops-covisualization/config/view-layout';
 export class AppService {
   static Ls: Ls;
 
-  appDatas: any = undefined;
-  initialDatas: any = undefined;
-  activeTabIndex = 0;
+  private appDatas: any = undefined;
+  private initialDatas: any = undefined;
+  private activeTabIndex = 0;
 
   constructor(
     private khiopsLibraryService: KhiopsLibraryService,

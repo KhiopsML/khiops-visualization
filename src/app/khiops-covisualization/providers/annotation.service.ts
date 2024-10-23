@@ -7,7 +7,7 @@ import { AppService } from './app.service';
   providedIn: 'root',
 })
 export class AnnotationService {
-  dimensionsDatas: DimensionsDatasModel;
+ private dimensionsDatas: DimensionsDatasModel;
 
   constructor(
     private appService: AppService,

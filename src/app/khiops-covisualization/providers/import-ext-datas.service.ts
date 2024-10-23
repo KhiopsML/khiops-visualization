@@ -9,8 +9,8 @@ import { ImportFileLoaderService } from '@khiops-library/components/import-file-
   providedIn: 'root',
 })
 export class ImportExtDatasService {
-  importExtDatas: ExtDatasModel[];
-  savedExternalDatas: any;
+  private importExtDatas: ExtDatasModel[];
+  private savedExternalDatas: any;
 
   constructor(
     private translate: TranslateService,

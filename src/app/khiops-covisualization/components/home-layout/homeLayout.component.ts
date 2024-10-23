@@ -116,7 +116,9 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
               this.dimensionsDatasService.dimensionsDatas.selectedDimensions[
                 dimIndex
               ].name,
-              this.treenodesService.dimensionsDatas.selectedNodes[dimIndex]._id,
+              this.dimensionsDatasService.dimensionsDatas.selectedNodes[
+                dimIndex
+              ]._id,
               false,
             );
             // Enable ext datas view if not displayed
