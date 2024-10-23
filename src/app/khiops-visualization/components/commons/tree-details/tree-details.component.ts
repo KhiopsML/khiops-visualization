@@ -19,8 +19,7 @@ import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 export class TreeDetailsComponent implements OnChanges {
   @Input() selectedNodes: TreeNodeModel[];
   @Input() selectedNode: TreeNodeModel;
-
-  treeDetails: GridDatasI;
+  public treeDetails: GridDatasI;
 
   constructor(
     public ngzone: NgZone,
