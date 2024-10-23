@@ -32,33 +32,32 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
   @ViewChild('distributionGraph', {
     static: false,
   })
-  distributionGraph: DistributionGraphComponent;
+  private distributionGraph: DistributionGraphComponent;
 
   @ViewChild('targetDistributionGraph', {
     static: false,
   })
-  targetDistributionGraph: TargetDistributionGraphComponent;
+  private targetDistributionGraph: TargetDistributionGraphComponent;
 
-  @Input() showTargetDistributionGraph = true;
-  @Input() showDistributionGraph = true;
-  @Input() selectedVariable:
+  @Output() private selectedItemChanged: EventEmitter<any> = new EventEmitter();
+
+  @Input() public showTargetDistributionGraph = true;
+  @Input() public showDistributionGraph = true;
+  @Input() public selectedVariable:
     | PreparationVariableModel
     | TreePreparationVariableModel;
-  @Input() selectedGraphItemIndex = 0;
-  @Input() preparationSource: string;
-  @Input() displayedValues?: ChartToggleValuesI[]; // optional input to update chart on value changes (for instance when another component of tree preparation view changed)
-  @Input() position = 0; // in case of multiple component in the same page
+  @Input() private selectedGraphItemIndex = 0;
+  @Input() private preparationSource: string;
+  @Input() public displayedValues?: ChartToggleValuesI[]; // optional input to update chart on value changes (for instance when another component of tree preparation view changed)
+  @Input() public position = 0; // in case of multiple component in the same page
 
-  @Output() selectedItemChanged: EventEmitter<any> = new EventEmitter();
-
-  distributionDatas: DistributionDatasModel;
-  scrollPosition = 0;
-  scaleValue: number;
-  distributionGraphType: string;
-  targetDistributionGraphType: string | null;
-
-  activeEntries = 0;
-  isFullscreen: boolean = false;
+  public scrollPosition = 0;
+  public scaleValue: number;
+  public activeEntries = 0;
+  public isFullscreen: boolean = false;
+  public distributionDatas: DistributionDatasModel;
+  private distributionGraphType: string;
+  private targetDistributionGraphType: string | null;
 
   constructor(
     private preparationDatasService: PreparationDatasService,
@@ -206,7 +205,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
     this.initActiveEntries(this.selectedGraphItemIndex);
   }
 
-  getCurrentVariable() {
+  private getCurrentVariable() {
     let selectedVariable;
     if (this.preparationSource === REPORTS.TREE_PREPARATION_REPORT) {
       selectedVariable = this.treePreparationDatasService.getSelectedVariable();
@@ -218,7 +217,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
     return selectedVariable;
   }
 
-  initActiveEntries(index = 0) {
+  private initActiveEntries(index = 0) {
     this.activeEntries = index;
   }
 
