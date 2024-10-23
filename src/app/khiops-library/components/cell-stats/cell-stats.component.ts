@@ -2,6 +2,7 @@ import { Component, SimpleChanges, OnChanges, Input } from '@angular/core';
 import { UtilsService } from '../../providers/utils.service';
 import { CellModel } from '@khiops-library/model/cell.model';
 import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
+import { CellStatsI } from '@khiops-library/interfaces/cell-stats';
 
 @Component({
   selector: 'kl-cell-stats',
@@ -9,19 +10,15 @@ import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
   styleUrls: ['./cell-stats.component.scss'],
 })
 export class CellStatsComponent implements OnChanges {
-  @Input() selectedCells: CellModel[];
-  datas: {
-    F: number;
-    EF: number;
-    I: number;
-    Total: number;
-  };
+  @Input() private selectedCells: CellModel[];
+
+  public cellStats: CellStatsI;
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes?.selectedCells?.currentValue) {
       if (changes?.selectedCells?.currentValue.length > 1) {
         // Multiple selection
-        this.datas = {
+        this.cellStats = {
           F: UtilsService.arraySum(
             this.selectedCells.map((e) => e.displayedFreqValue),
           ),
@@ -45,7 +42,7 @@ export class CellStatsComponent implements OnChanges {
         };
       } else if (changes?.selectedCells?.currentValue.length === 1) {
         // Simple selection
-        this.datas = {
+        this.cellStats = {
           F: this.selectedCells[0].displayedFreqValue,
           EF: this.selectedCells[0].displayedValue?.ef,
           I:
