@@ -26,6 +26,7 @@
           "builder": "ngx-build-plus:browser",
           "options": {
             "allowedCommonJsDependencies": [
+              "rxjs",
               "mathjs",
               "fast-equals",
               "html2canvas",
@@ -187,6 +188,7 @@
           "builder": "ngx-build-plus:browser",
           "options": {
             "allowedCommonJsDependencies": [
+              "rxjs",
               "mathjs",
               "fast-equals",
               "html2canvas",
