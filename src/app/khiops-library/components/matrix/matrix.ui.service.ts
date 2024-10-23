@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UtilsService } from '../../providers/utils.service';
 import { CellModel } from '../../model/cell.model';
-import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 import { MatrixCoordI } from '@khiops-library/interfaces/matrix-coord';
 import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 import { TYPES } from '@khiops-library/enum/types';

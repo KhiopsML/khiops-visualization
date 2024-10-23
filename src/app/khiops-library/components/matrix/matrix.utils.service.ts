@@ -667,7 +667,9 @@ export class MatrixUtilsService {
             cell.cellFreqs = currentFrequencies[currentIndex] || [0];
           } else {
             // if not an array (irisU)
-            cell.cellFreqs = [currentFrequencies[currentIndex]] || [0];
+            cell.cellFreqs = (currentFrequencies[currentIndex] && [
+              currentFrequencies[currentIndex],
+            ]) || [0];
           }
         }
 
