@@ -32,31 +32,26 @@ export class TargetLiftGraphComponent
 {
   @Input() selectedVariable;
 
-  targetLift: TargetLiftValuesI;
-  targetLiftGraph: ChartDatasModel;
-  colorSet: ChartColorsSetI;
-  legendColorSet: ChartColorsSetI;
-  view: '';
-  xAxisLabel: string;
-  yAxisLabel: string;
-  evaluationDatas: EvaluationDatasModel;
-  buttonTitle: string;
-  isFullscreen = false;
-
-  componentType = COMPONENT_TYPES.ND_LINE_CHART; // needed to copy datas
-  title: string;
-  targetLiftAllGraph: ChartDatasModel;
-  titleWithoutDetails: string;
-
-  chartOptions: ChartOptions;
+  public targetLift: TargetLiftValuesI;
+  public targetLiftGraph: ChartDatasModel;
+  public colorSet: ChartColorsSetI;
+  public legendColorSet: ChartColorsSetI;
+  public evaluationDatas: EvaluationDatasModel;
+  public buttonTitle: string;
+  public isFullscreen = false;
+  public componentType = COMPONENT_TYPES.ND_LINE_CHART; // needed to copy datas
+  public title: string; // for copy graph datas
+  public targetLiftAllGraph: ChartDatasModel; // for copy graph datas
+  public titleWithoutDetails: string;
+  public chartOptions: ChartOptions;
 
   constructor(
     public override selectableService: SelectableService,
+    public override ngzone: NgZone,
+    public override configService: ConfigService,
     private evaluationDatasService: EvaluationDatasService,
     private translate: TranslateService,
     private khiopsLibraryService: KhiopsLibraryService,
-    public override ngzone: NgZone,
-    public override configService: ConfigService,
   ) {
     super(selectableService, ngzone, configService);
     this.evaluationDatas = this.evaluationDatasService.getDatas();
@@ -68,7 +63,16 @@ export class TargetLiftGraphComponent
       this.khiopsLibraryService.getGraphColorSet()[1],
     );
 
-    // Override tooltip infos
+    let xAxisLabel: string;
+    let yAxisLabel: string;
+    if (this.evaluationDatasService.isRegressionAnalysis()) {
+      xAxisLabel = this.translate.get('GLOBAL.RANK_ERROR') + ' %';
+      yAxisLabel = this.translate.get('GLOBAL.POPULATION') + ' %';
+    } else {
+      xAxisLabel = this.translate.get('GLOBAL.POPULATION') + ' %';
+      yAxisLabel = this.translate.get('GLOBAL.TARGET_MODALITY') + ' %';
+    }
+
     this.chartOptions = {
       interaction: {
         intersect: true,
@@ -86,15 +90,21 @@ export class TargetLiftGraphComponent
       },
       normalized: true,
       animation: false,
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: xAxisLabel,
+          },
+        },
+        y: {
+          title: {
+            display: true,
+            text: yAxisLabel,
+          },
+        },
+      },
     };
-
-    if (this.evaluationDatasService.isRegressionAnalysis()) {
-      this.xAxisLabel = this.translate.get('GLOBAL.RANK_ERROR') + ' %';
-      this.yAxisLabel = this.translate.get('GLOBAL.POPULATION') + ' %';
-    } else {
-      this.xAxisLabel = this.translate.get('GLOBAL.POPULATION') + ' %';
-      this.yAxisLabel = this.translate.get('GLOBAL.TARGET_MODALITY') + ' %';
-    }
 
     this.buttonTitle = this.translate.get('GLOBAL.FILTER_CURVES');
   }
