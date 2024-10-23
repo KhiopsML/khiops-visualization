@@ -29,26 +29,24 @@ export class TargetVariableStatsComponent
   extends SelectableComponent
   implements OnChanges
 {
-  @Input() inputDatas: ChartDatasModel;
-  groupPadding: number;
+  @Input() public inputDatas: ChartDatasModel;
+  @Input() public title: string;
 
-  colorSet: ChartColorsSetI;
-  componentType = COMPONENT_TYPES.ND_BAR_CHART; // needed to copy datas
-  @Input() title: string;
-  chartOptions: ChartOptions;
-  isFullscreen = false;
+  public colorSet: ChartColorsSetI;
+  public componentType = COMPONENT_TYPES.ND_BAR_CHART; // needed to copy datas
+  public chartOptions: ChartOptions;
+  public isFullscreen = false;
 
   constructor(
     public override selectableService: SelectableService,
+    public override ngzone: NgZone,
+    public override configService: ConfigService,
     private toPrecision: ToPrecisionPipe,
     private translate: TranslateService,
     private khiopsLibraryService: KhiopsLibraryService,
-    public override ngzone: NgZone,
-    public override configService: ConfigService,
   ) {
     super(selectableService, ngzone, configService);
     this.colorSet = this.khiopsLibraryService.getGraphColorSet()[1];
-    this.groupPadding = 20; // default
     if (!this.title) {
       this.title = this.translate.get('GLOBAL.TARGET_VARIABLE_STATS');
     }

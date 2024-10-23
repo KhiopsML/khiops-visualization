@@ -111,18 +111,23 @@ export class TargetLiftGraphComponent
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes?.selectedVariable?.currentValue) {
-      this.getDatas();
+      this.computeTargetLiftDatas();
     }
   }
 
   onToggleFullscreen(isFullscreen: boolean) {
     this.isFullscreen = isFullscreen;
     setTimeout(() => {
-      this.getDatas();
+      this.computeTargetLiftDatas();
     });
   }
 
-  getDatas() {
+  /**
+   * Fetches and updates the target lift data and graph data based on the selected target.
+   * If a target is selected, it retrieves the lift targets and graph data for that target.
+   * If no target is selected, it retrieves the default lift graph data.
+   */
+  private computeTargetLiftDatas() {
     const currentTarget = this.targetLift?.selected || undefined;
     this.targetLift = this.evaluationDatasService.getLiftTargets(currentTarget);
 
@@ -162,7 +167,7 @@ export class TargetLiftGraphComponent
   }
 
   onSelectToggleButtonChanged(displayedValues) {
-    this.getDatas();
+    this.computeTargetLiftDatas();
 
     this.colorSet = _.cloneDeep(
       this.khiopsLibraryService.getGraphColorSet()[1],
@@ -185,6 +190,6 @@ export class TargetLiftGraphComponent
       this.targetLift.selected;
     AppService.Ls.set(LS.TARGET_LIFT, target);
     this.targetLift.selected = target;
-    this.getDatas();
+    this.computeTargetLiftDatas();
   }
 }
