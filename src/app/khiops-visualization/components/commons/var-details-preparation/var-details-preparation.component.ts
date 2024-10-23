@@ -6,14 +6,11 @@ import {
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
-import { AppService } from '@khiops-visualization/providers/app.service';
 import { EvaluationDatasService } from '@khiops-visualization/providers/evaluation-datas.service';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
 import { VariableGraphDetailsComponent } from '../variable-graph-details/variable-graph-details.component';
-import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
-import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { Preparation2dDatasModel } from '@khiops-visualization/model/preparation2d-datas.model';
 import { PreparationVariableModel } from '@khiops-visualization/model/preparation-variable.model';
 import { LayoutService } from '@khiops-library/providers/layout.service';
@@ -27,36 +24,28 @@ export class VarDetailsPreparationComponent implements OnInit, OnChanges {
   @ViewChild('appVariableGraphDetails', {
     static: false,
   })
-  appVariableGraphDetails: VariableGraphDetailsComponent;
+  private appVariableGraphDetails: VariableGraphDetailsComponent;
 
-  @Input() preparationSource: string;
+  @Input() public preparationSource: string;
 
-  isRegressionOrExplanatoryAnalysis: boolean;
-  preparationDatas: {
+  public isRegressionOrExplanatoryAnalysis: boolean;
+  public preparationDatas: {
     selectedVariable: PreparationVariableModel;
     currentIntervalDatas: GridDatasI;
   };
-  appDatas: any;
-  sizes: any;
-
-  summaryDatas: InfosDatasI[];
-  informationsDatas: InfosDatasI[];
-  targetVariableStatsDatas: ChartDatasModel;
-  currentIntervalDatas: GridDatasI;
-  matrixRegSelectedCell = 0;
-  distributionSelectedBarIndex = 0;
-  preparation2dDatas: Preparation2dDatasModel;
+  public sizes: any;
+  public matrixRegSelectedCell = 0;
+  public distributionSelectedBarIndex = 0;
+  public preparation2dDatas: Preparation2dDatasModel;
 
   constructor(
     private preparationDatasService: PreparationDatasService,
     private evaluationDatasService: EvaluationDatasService,
     private preparation2dDatasService: Preparation2dDatasService,
     private layoutService: LayoutService,
-    private appService: AppService,
   ) {}
 
   ngOnInit() {
-    this.appDatas = this.appService.getDatas().datas;
     this.sizes = this.layoutService.getViewSplitSizes('preparationView');
     this.isRegressionOrExplanatoryAnalysis =
       this.preparationDatasService.isExplanatoryAnalysis() ||
