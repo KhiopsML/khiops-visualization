@@ -18,20 +18,18 @@ export class VarDetailsPreparation2dComponent {
   @ViewChild('targetDistributionGraph', {
     static: false,
   })
-  targetDistributionGraph: TargetDistributionGraphComponent;
-  appDatas: any;
-  sizes: any;
-  preparation2dDatas: Preparation2dDatasModel;
-  distribution2dDatas: DistributionDatasModel;
-  scaleValue: number;
-  currentCellIndex: number;
-  targetDistributionGraphType: string;
+  private targetDistributionGraph: TargetDistributionGraphComponent;
+
+  public sizes: any;
+  public preparation2dDatas: Preparation2dDatasModel;
+  public distribution2dDatas: DistributionDatasModel;
+  public scaleValue: number;
+  private targetDistributionGraphType: string;
 
   constructor(
     private distribution2dDatasService: Distribution2dDatasService,
     private preparation2dDatasService: Preparation2dDatasService,
     private layoutService: LayoutService,
-    private appService: AppService,
   ) {
     this.scaleValue = AppService.Ls.get(
       LS.SCALE_VALUE,
@@ -41,7 +39,6 @@ export class VarDetailsPreparation2dComponent {
       LS.TARGET_DISTRIBUTION_GRAPH_OPTION,
     );
 
-    this.appDatas = this.appService.getDatas().datas;
     this.preparation2dDatas = this.preparation2dDatasService.getDatas();
     this.distribution2dDatas = this.distribution2dDatasService.getDatas();
 
@@ -62,7 +59,6 @@ export class VarDetailsPreparation2dComponent {
   }
 
   onSelectCellRowChanged(index: number) {
-    this.currentCellIndex = index;
     this.distribution2dDatasService.getTargetDistributionGraphDatas(
       this.targetDistributionGraphType,
     );
