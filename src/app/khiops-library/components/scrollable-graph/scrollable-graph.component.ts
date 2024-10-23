@@ -23,18 +23,18 @@ export class ScrollableGraphComponent
   extends SelectableComponent
   implements OnChanges, AfterViewInit, OnDestroy
 {
-  @Input() maxScale: number;
-  @Input() minScale: number;
-  @Input() inputDatas: any;
-  @Input() scrollPosition: number;
-  @Input() scaleValue = 0;
-  @Input() view: any;
-  @Input() graphIdContainer: any;
-  @Output() scrollPositionChanged: EventEmitter<any> = new EventEmitter();
+  @Input() public view: any;
+  @Input() public maxScale: number;
+  @Input() public minScale: number;
+  @Input() public inputDatas: any;
+  @Input() public scrollPosition: number;
+  @Input() public scaleValue = 0;
+  @Input() public graphIdContainer: any;
 
-  @Output() mouseWheelUp = new EventEmitter();
-  @Output() mouseWheelDown = new EventEmitter();
-  graphWrapper: any;
+  @Output() private scrollPositionChanged: EventEmitter<any> =
+    new EventEmitter();
+
+  private graphWrapper: any;
 
   constructor(
     public override selectableService: SelectableService,

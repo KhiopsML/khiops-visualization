@@ -10,9 +10,8 @@ import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 })
 export class ProjectSummaryComponent {
   private fileLoadedSub?: Subscription;
-  @Input() projectDatasService: any;
-
-  projectSummaryDatas: InfosDatasI[];
+  @Input() private projectDatasService: any;
+  public projectSummaryDatas: InfosDatasI[];
 
   constructor(private fileLoaderService: FileLoaderService) {}
 

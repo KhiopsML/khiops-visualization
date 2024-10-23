@@ -20,9 +20,8 @@ export class SelectableComponent
   extends WatchResizeComponent
   implements OnDestroy, AfterViewInit
 {
-  @Input() override id: [any] | undefined = undefined;
-  @Input() type: [any];
-  selectedServiceChangeSub: Subscription;
+  @Input() public override id: [any] | undefined = undefined;
+  private selectedServiceChangeSub: Subscription;
 
   constructor(
     public selectableService: SelectableService,
@@ -65,10 +64,5 @@ export class SelectableComponent
     if (event.isTrusted) {
       this.selectableService.setSelectedArea(this);
     }
-  }
-
-  @HostListener('trustedClick', ['$event'])
-  customClick() {
-    this.selectableService.setSelectedArea(this);
   }
 }
