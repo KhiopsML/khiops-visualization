@@ -204,11 +204,11 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     });
   }
 
-  hideActiveEntries() {
+  public hideActiveEntries() {
     this.cleanSelectedDomContext();
   }
 
-  showActiveEntries() {
+  public showActiveEntries() {
     this.drawSelectedNodes();
   }
 

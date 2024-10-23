@@ -249,12 +249,12 @@ export class ChartComponent implements AfterViewInit, OnChanges {
     });
   }
 
-  private hideActiveEntries() {
+  public hideActiveEntries() {
     this.selectCurrentBarIndex(undefined);
     this.chart.update();
   }
 
-  private showActiveEntries() {
+  public showActiveEntries() {
     this.selectCurrentBarIndex(this.activeEntries);
     this.chart.update();
   }

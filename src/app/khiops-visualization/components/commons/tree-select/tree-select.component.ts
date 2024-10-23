@@ -143,11 +143,11 @@ export class TreeSelectComponent
     }
   }
 
-  hideActiveEntries() {
+  public hideActiveEntries() {
     this.tree.unselectNodes();
   }
 
-  showActiveEntries() {
+  public showActiveEntries() {
     this.tree.selectNodes(this.selectedNodes);
   }
 

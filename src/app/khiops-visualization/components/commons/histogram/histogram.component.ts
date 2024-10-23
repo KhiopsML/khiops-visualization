@@ -145,12 +145,12 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     this.datas && this.init();
   }
 
-  private hideActiveEntries() {
-    console.log('hideActiveEntries');
+  public hideActiveEntries() {
+    this.histogramSelectedCanvas.style.display = 'none';
   }
 
-  private showActiveEntries() {
-    console.log('showActiveEntries');
+  public showActiveEntries() {
+    this.histogramSelectedCanvas.style.display = 'block';
   }
 
   override ngOnDestroy() {

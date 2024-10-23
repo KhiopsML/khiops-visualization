@@ -172,12 +172,12 @@ export class TreeHyperComponent
     }
   }
 
-  hideActiveEntries() {
+  public hideActiveEntries() {
     this.removeNodes(this.selectedNodes);
     this.ht.api.updateNodesVisualization();
   }
 
-  showActiveEntries() {
+  public showActiveEntries() {
     this.selectNodes(this.selectedNodes);
     this.ht.api.updateNodesVisualization();
   }

@@ -180,11 +180,11 @@ export class AgGridComponent
     this.dataTypeChanged.emit(type);
   }
 
-  hideActiveEntries() {
+  public hideActiveEntries() {
     this.gridOptions?.api?.deselectAll();
   }
 
-  showActiveEntries() {
+  public showActiveEntries() {
     this.selectNode(this.selectedVariable);
   }
 
