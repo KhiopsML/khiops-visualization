@@ -321,7 +321,7 @@ export class MatrixService {
               return MIijExtra;
             });
             break;
-          case 'PROB_TARGET_WITH_CELL':
+          case MATRIX_MODES.PROB_TARGET_WITH_CELL:
             // Only on KV do not need to recompute because nodes can not be folded
             if (selectedTargetIndex !== -1) {
               matrixValues = inputDatas.matrixCellDatas.map(
@@ -329,7 +329,7 @@ export class MatrixService {
               );
             }
             break;
-          case 'PROB_CELL_WITH_TARGET':
+          case MATRIX_MODES.PROB_CELL_WITH_TARGET:
             // Only on KV do not need to recompute because nodes can not be folded
             if (selectedTargetIndex !== -1) {
               matrixValues = inputDatas.matrixCellDatas.map(
