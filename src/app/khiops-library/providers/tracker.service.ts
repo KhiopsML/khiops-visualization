@@ -15,8 +15,8 @@ import { Ls } from '@khiops-library/providers/ls.service';
   providedIn: 'root',
 })
 export class TrackerService {
-  trackerScriptElement: HTMLScriptElement;
-  appSource: string;
+  private trackerScriptElement: HTMLScriptElement;
+  private appSource: string;
 
   constructor(
     private ls: Ls,

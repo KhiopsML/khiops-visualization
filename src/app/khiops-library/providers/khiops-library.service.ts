@@ -10,8 +10,8 @@ import {
   providedIn: 'root',
 })
 export class KhiopsLibraryService {
-  graphColorSet: ChartColorsSetI[];
-  appConfig: any;
+  private graphColorSet: ChartColorsSetI[];
+  private appConfig: any;
 
   /**
    * An array of graph colors used for chart visualizations.

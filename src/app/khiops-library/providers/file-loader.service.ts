@@ -18,7 +18,6 @@ export class FileLoaderService {
     isBigJsonFile: boolean;
     loadingInfo: string;
   };
-  tmp = {};
 
   constructor(
     private ls: Ls,

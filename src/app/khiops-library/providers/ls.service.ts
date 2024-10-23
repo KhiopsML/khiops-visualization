@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class Ls {
-  LS_ID: string;
+  public LS_ID: string;
 
   setLsId(id: string) {
     this.LS_ID = id;

@@ -1,4 +1,3 @@
-import { EventsService } from './providers/events.service';
 import { ConfigService } from './providers/config.service';
 import { NgModule } from '@angular/core';
 import { LibVersionComponent } from './components/lib-version/lib-version.component';
@@ -139,7 +138,7 @@ import { ProjectSummaryComponent } from './components/project-summary/project-su
     ImportFileLoaderComponent,
     ProjectSummaryComponent,
   ],
-  providers: [ConfigService, EventsService, TranslateService],
+  providers: [ConfigService, TranslateService],
   exports: [
     LibraryComponent,
     CommonModule,

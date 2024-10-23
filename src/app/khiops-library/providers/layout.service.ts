@@ -7,7 +7,7 @@ import { Ls } from './ls.service';
   providedIn: 'root',
 })
 export class LayoutService {
-  splitSizes: any;
+  private splitSizes: any;
 
   constructor(private ls: Ls) {}
 
