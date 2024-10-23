@@ -3,7 +3,7 @@ import { AppService } from './app.service';
 import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { TreeNodeModel } from '../model/tree-node.model';
 import { UtilsService } from '@khiops-library/providers/utils.service';
-import { MatrixUtilsDatasService } from '@khiops-library/providers/matrix-utils-datas.service';
+import { MatrixUtilsService } from '@khiops-library/components/matrix/matrix.utils.service';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { AppConfig } from 'src/environments/environment';
 import { DimensionsDatasModel } from '../model/dimensions-data.model';
@@ -627,7 +627,7 @@ export class DimensionsDatasService {
     );
 
     // Get the full frequency list
-    const cellFrequencies = MatrixUtilsDatasService.getCellFrequencies(
+    const cellFrequencies = MatrixUtilsService.getCellFrequencies(
       dimensionParts,
       this.dimensionsDatas.cellPartIndexes,
       appDatas.coclusteringReport.cellFrequencies,
@@ -644,13 +644,13 @@ export class DimensionsDatasService {
     };
 
     [xValues.frequency, yValues.frequency] =
-      MatrixUtilsDatasService.getFrequencyAxisValues(
+      MatrixUtilsService.getFrequencyAxisValues(
         xDimension,
         yDimension,
         cellFrequencies,
       );
     [xValues.standard, yValues.standard] =
-      MatrixUtilsDatasService.getStandardAxisValues(xDimension, yDimension);
+      MatrixUtilsService.getStandardAxisValues(xDimension, yDimension);
 
     // To display axis names
     this.dimensionsDatas.allMatrixDatas.variable =
@@ -662,7 +662,7 @@ export class DimensionsDatasService {
       };
 
     // Compute cells
-    const cellDatas = MatrixUtilsDatasService.getCellDatas(
+    const cellDatas = MatrixUtilsService.getCellDatas(
       xDimension,
       yDimension,
       zDimension,

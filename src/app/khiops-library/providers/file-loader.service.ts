@@ -50,7 +50,7 @@ export class FileLoaderService {
     // ===================
     //
 
-    // let urlKV = './assets/mocks/kv/new-hyper-tree.json';
+    let urlKV = './assets/mocks/kv/new-hyper-tree.json';
     // let urlKV = './assets/mocks/kv/NGrams10_AnalysisResults.json';
     // let urlKV = './assets/mocks/kv/NGrams100_AnalysisResults.json';
     // let urlKV = './assets/mocks/kv/000_000_10000words_AllReports.json';
@@ -105,7 +105,7 @@ export class FileLoaderService {
     // let urlKV = './assets/mocks/kv/CriteoAnalysisResults.khj';
     // let urlKV = './assets/mocks/kv/Words100_AllReports.json';
     // let urlKV = './assets/mocks/kv/UnivariateAnalysisResults.json';
-    let urlKV = './assets/mocks/kv/ylogAdultAllReports.json';
+    // let urlKV = './assets/mocks/kv/ylogAdultAllReports.json';
     // let urlKV = './assets/mocks/kv/ko-AnalysisResults.khj';
     // let urlKV = './assets/mocks/kv/AdultAllReports.json';
     // let urlKV = './assets/mocks/kv/20NewsgroupAllReports.json';

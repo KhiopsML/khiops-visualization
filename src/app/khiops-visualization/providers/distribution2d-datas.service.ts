@@ -3,7 +3,7 @@ import * as _ from 'lodash'; // Important to import lodash in karma
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { BarModel } from '../model/bar.model';
 import { DistributionDatasService } from './distribution-datas.service';
-import { MatrixUtilsDatasService } from '@khiops-library/providers/matrix-utils-datas.service';
+import { MatrixUtilsService } from '@khiops-library/components/matrix/matrix.utils.service';
 import { VariableDetailsModel } from '../model/variable-details.model';
 import { ChartDatasetModel } from '@khiops-library/model/chart-dataset.model';
 import { Preparation2dDatasService } from './preparation2d-datas.service';
@@ -68,7 +68,7 @@ export class Distribution2dDatasService {
 
     if (variablesDetails?.dataGrid?.cellTargetFrequencies) {
       const computedCellTargetFreqs =
-        MatrixUtilsDatasService.getCellFrequencies(
+        MatrixUtilsService.getCellFrequencies(
           [selectedVariable?.parts1, selectedVariable?.parts2],
           variablesDetails.dataGrid.cellPartIndexes,
           variablesDetails.dataGrid.cellTargetFrequencies,

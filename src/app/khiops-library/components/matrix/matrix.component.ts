@@ -15,7 +15,7 @@ import { SelectableComponent } from '../selectable/selectable.component';
 import { KhiopsLibraryService } from '../../providers/khiops-library.service';
 // @ts-ignore
 import * as panzoom from 'pan-zoom';
-import { MatrixService } from './matrix.service';
+import { MatrixUiService } from './matrix.ui.service';
 import { CellModel } from '../../model/cell.model';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
@@ -26,6 +26,7 @@ import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { LS } from '@khiops-library/enum/ls';
 import { Ls } from '@khiops-library/providers/ls.service';
 import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
+import { MatrixUtilsService } from './matrix.utils.service';
 
 @Component({
   selector: 'kl-matrix',
@@ -156,7 +157,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
       currentSelectedArea.id === this.id &&
       this.selectedCells.length === 1
     ) {
-      const changeCell = MatrixService.getNavigationCell(
+      const changeCell = MatrixUiService.getNavigationCell(
         event.keyCode,
         this.inputDatas.matrixCellDatas,
         this.isAxisInverted,
@@ -232,7 +233,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
             this.matrixValues,
             this.matrixExtras,
             this.matrixExpectedFreqsValues,
-          ] = MatrixService.computeMatrixValues(
+          ] = MatrixUtilsService.computeMatrixValues(
             this.graphMode,
             this.inputDatas,
             this.contextSelection,
@@ -260,13 +261,13 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
 
               if (this.inputDatas.matrixCellDatas) {
                 let [minVal, maxVal, minValH, maxValH] =
-                  MatrixService.getMinAndMaxFromGraphMode(
+                  MatrixUtilsService.getMinAndMaxFromGraphMode(
                     this.matrixValues,
                     this.minMaxValues,
                     this.graphMode.mode,
                   );
 
-                this.legend = MatrixService.computeLegendValues(
+                this.legend = MatrixUiService.computeLegendValues(
                   minVal,
                   maxVal,
                   minValH,
@@ -287,7 +288,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
                   this.selectedCells.push(this.selectedCell);
                 }
 
-                let totalMutInfo = MatrixService.computeTotalMutInfo(
+                let totalMutInfo = MatrixUtilsService.computeTotalMutInfo(
                   this.matrixValues,
                   this.graphMode.mode,
                   this.isKhiopsCovisu,
@@ -306,7 +307,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
                   let cellDatas = this.inputDatas.matrixCellDatas[index];
 
                   const currentVal = this.matrixValues[index];
-                  cellDatas = MatrixService.adaptCellDimensionsToZoom(
+                  cellDatas = MatrixUiService.adaptCellDimensionsToZoom(
                     cellDatas,
                     width,
                     height,
@@ -322,7 +323,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
 
                   if (currentVal && maxVal) {
                     // Do not draw empty cells
-                    const color = MatrixService.getColorForPercentage(
+                    const color = MatrixUiService.getColorForPercentage(
                       currentVal,
                       maxVal,
                       this.contrast,
@@ -682,10 +683,10 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
       this.graphMode.mode === MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL
     ) {
       this.legendBar.nativeElement.style.background =
-        MatrixService.getInterestColorsLegend();
+        MatrixUiService.getInterestColorsLegend();
     } else {
       this.legendBar.nativeElement.style.background =
-        MatrixService.getFrequencyColorsLegend();
+        MatrixUiService.getFrequencyColorsLegend();
     }
   }
 

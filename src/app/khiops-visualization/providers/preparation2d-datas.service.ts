@@ -7,13 +7,13 @@ import { UtilsService } from '@khiops-library/providers/utils.service';
 import { EvaluationDatasService } from './evaluation-datas.service';
 import { Preparation2dVariableModel } from '../model/preparation2d-variable.model';
 import { CellModel } from '@khiops-library/model/cell.model';
-import { MatrixUtilsDatasService } from '@khiops-library/providers/matrix-utils-datas.service';
+import { MatrixUtilsService } from '@khiops-library/components/matrix/matrix.utils.service';
 import { PreparationDatasService } from './preparation-datas.service';
 import { VariableDetailsModel } from '../model/variable-details.model';
 import { Variable2dModel } from '../model/variable-2d.model';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { CoocurenceCellModel } from '../model/coocurence-cell.model';
-import { MatrixService } from '@khiops-library/components/matrix/matrix.service';
+import { MatrixUiService } from '@khiops-library/components/matrix/matrix.ui.service';
 import { Preparation2dDatasModel } from '../model/preparation2d-datas.model';
 import { CoocurenceCellsModel } from '../model/coocurence-cells.model';
 import { InformationsModel } from '@khiops-visualization/model/informations.model';
@@ -590,7 +590,7 @@ export class Preparation2dDatasService {
           );
         } else if (variableDatas.dataGrid.cellFrequencies) {
           // Get the full frequency list
-          const computedCellFreqs = MatrixUtilsDatasService.getCellFrequencies(
+          const computedCellFreqs = MatrixUtilsService.getCellFrequencies(
             [xDimension.parts, yDimension.parts],
             variableDatas.dataGrid.cellPartIndexes,
             variableDatas.dataGrid.cellFrequencies,
@@ -598,12 +598,11 @@ export class Preparation2dDatasService {
           variableDatas.setCellFrequencies(computedCellFreqs);
         } else if (variableDatas.dataGrid.cellTargetFrequencies) {
           // Get the full frequency list
-          const computedCellTargetFreqs =
-            MatrixUtilsDatasService.getCellFrequencies(
-              [xDimension.parts, yDimension.parts],
-              variableDatas.dataGrid.cellPartIndexes,
-              variableDatas.dataGrid.cellTargetFrequencies,
-            );
+          const computedCellTargetFreqs = MatrixUtilsService.getCellFrequencies(
+            [xDimension.parts, yDimension.parts],
+            variableDatas.dataGrid.cellPartIndexes,
+            variableDatas.dataGrid.cellTargetFrequencies,
+          );
           variableDatas.setTargetCellFrequencies(computedCellTargetFreqs);
           const sum = UtilsService.sumArrayItemsOfArray(
             computedCellTargetFreqs,
@@ -627,18 +626,15 @@ export class Preparation2dDatasService {
             frequency: [],
           };
           [xValues.frequency, yValues.frequency] =
-            MatrixUtilsDatasService.getFrequencyAxisValues(
+            MatrixUtilsService.getFrequencyAxisValues(
               xDimension,
               yDimension,
               variableDatas.dataGrid.cellFrequencies ||
                 variableDatas.dataGrid.cellTargetFrequencies,
             );
           [xValues.standard, yValues.standard] =
-            MatrixUtilsDatasService.getStandardAxisValues(
-              xDimension,
-              yDimension,
-            );
-          const cellDatas = MatrixUtilsDatasService.getCellDatas(
+            MatrixUtilsService.getStandardAxisValues(xDimension, yDimension);
+          const cellDatas = MatrixUtilsService.getCellDatas(
             xDimension,
             yDimension,
             [],
@@ -773,7 +769,7 @@ export class Preparation2dDatasService {
           mode: 'MUTUAL_INFO_TARGET_WITH_CELL',
         };
         [matrixFreqsValues, matrixValues, matrixExtras] =
-          MatrixService.computeMatrixValues(
+          MatrixUtilsService.computeMatrixValues(
             graphMode,
             inputDatas,
             undefined,
@@ -785,7 +781,7 @@ export class Preparation2dDatasService {
           mode: 'CELL_INTEREST',
         };
         [matrixFreqsValues, matrixValues, matrixExtras] =
-          MatrixService.computeMatrixValues(
+          MatrixUtilsService.computeMatrixValues(
             graphMode,
             inputDatas,
             undefined,

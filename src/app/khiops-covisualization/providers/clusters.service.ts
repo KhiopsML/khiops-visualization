@@ -6,7 +6,7 @@ import { TranslateService } from '@ngstack/translate';
 import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { AppService } from './app.service';
 import { CompositionModel } from '../model/composition.model';
-import { MatrixService } from '@khiops-library/components/matrix/matrix.service';
+import { MatrixUiService } from '@khiops-library/components/matrix/matrix.ui.service';
 import { ClusterDetailsModel } from '@khiops-covisualization/model/cluster-details.model';
 import { TreenodesService } from './treenodes.service';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
@@ -14,6 +14,7 @@ import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-d
 import { ExtDatasModel } from '@khiops-covisualization/model/ext-datas.model';
 import { ImportExtDatasService } from './import-ext-datas.service';
 import { CHART_TYPES } from '@khiops-library/enum/chart-types';
+import { MatrixUtilsService } from '@khiops-library/components/matrix/matrix.utils.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -143,7 +144,7 @@ export class ClustersService {
       matrixValues,
       matrixExtras,
       matrixExpectedFreqsValues,
-    ] = MatrixService.computeMatrixValues(
+    ] = MatrixUtilsService.computeMatrixValues(
       {
         mode: 'FREQUENCY',
       },

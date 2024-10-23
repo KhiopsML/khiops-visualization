@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { AppService } from '@khiops-covisualization/providers/app.service';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { HttpClientModule } from '@angular/common/http';
-import { MatrixService } from '@khiops-library/components/matrix/matrix.service';
+import { MatrixUiService } from '@khiops-library/components/matrix/matrix.ui.service';
 import { TranslateModule } from '@ngstack/translate';
 let appService: AppService;
 let dimensionsDatasService: DimensionsDatasService;
@@ -90,7 +90,7 @@ describe('CoVisualization', () => {
         mode: 'PROB_CELL',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixService.computeMatrixValues(graphMode, inputDatas, [], -1);
+        MatrixUiService.computeMatrixValues(graphMode, inputDatas, [], -1);
     });
 
     it('matrixFreqsValues should return valid datas', () => {
@@ -126,7 +126,7 @@ describe('CoVisualization', () => {
         title: 'P (GillSize | GillSpacing)',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixService.computeMatrixValues(graphMode, inputDatas, [], -1);
+        MatrixUiService.computeMatrixValues(graphMode, inputDatas, [], -1);
     });
 
     it('matrixFreqsValues should return valid datas', () => {
