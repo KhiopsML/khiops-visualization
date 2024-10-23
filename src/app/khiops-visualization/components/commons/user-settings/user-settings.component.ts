@@ -22,13 +22,15 @@ import { THEME } from '@khiops-library/enum/theme';
   styleUrls: ['./user-settings.component.scss'],
 })
 export class UserSettingsComponent implements OnChanges {
-  @Output() toggleNavDrawerChanged: EventEmitter<any> = new EventEmitter();
+  @Output() private toggleNavDrawerChanged: EventEmitter<any> =
+    new EventEmitter();
+
   @Input() opened: boolean;
 
-  numberPrecision: number;
-  contrastValue: number;
-  allowCookies: boolean;
-  currentTheme: string;
+  public numberPrecision: number;
+  public contrastValue: number;
+  public allowCookies: boolean;
+  private currentTheme: string;
 
   constructor(
     private translate: TranslateService,
@@ -44,7 +46,7 @@ export class UserSettingsComponent implements OnChanges {
     }
   }
 
-  onNavDrawerOpen() {
+  private onNavDrawerOpen() {
     this.trackerService.trackEvent('page_view', 'settings');
 
     // Global number precision
