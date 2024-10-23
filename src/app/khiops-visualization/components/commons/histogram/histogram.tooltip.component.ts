@@ -31,11 +31,11 @@ import { Component, Input } from '@angular/core';
   ],
 })
 export class HistogramTooltipComponent {
-  @Input() text: string = '';
-  @Input() posX: number = 0;
-  @Input() posY: number = 0;
-  @Input() canvasW: number = 0;
-  @Input() display: boolean = false;
+  @Input() public text: string = '';
+  @Input() public display: boolean = false;
+  @Input() private posX: number = 0;
+  @Input() private posY: number = 0;
+  @Input() private canvasW: number = 0;
 
   computeYPos() {
     let top = this.posY - 0;

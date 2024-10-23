@@ -168,23 +168,23 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     );
   }
 
-  changeGraphTypeX(type: string) {
+  public changeGraphTypeX(type: string) {
     AppService.Ls.set(LS.DISTRIBUTION_GRAPH_OPTION_X, type);
     this.graphOptionsX.selected = type;
     this.datas && this.init();
   }
 
-  changeGraphTypeY(type: string) {
+  public changeGraphTypeY(type: string) {
     AppService.Ls.set(LS.DISTRIBUTION_GRAPH_OPTION_Y, type);
     this.graphOptionsY.selected = type;
     this.datas && this.init();
   }
 
-  onResized(event: ResizedEvent) {
+  public onResized(event: ResizedEvent) {
     this.resizeSubject.next(event);
   }
 
-  handleResized(event: ResizedEvent) {
+  private handleResized(event: ResizedEvent) {
     this.h = this.chart.nativeElement.offsetHeight + 10 - 60; // graph header = 60, +10 to take more height
     this.w = this.chart.nativeElement.offsetWidth;
     // if (!event.isFirst) {
@@ -202,7 +202,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     }
   }
 
-  handleCanvasClick(event) {
+  private handleCanvasClick(event) {
     const canvasPosition = this.histogramCanvas.getBoundingClientRect();
     const barPosition = HistogramUIService.getCurrentBarPosition(
       this.datas,
@@ -219,7 +219,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     }
   }
 
-  drawSelectedItem() {
+  private drawSelectedItem() {
     HistogramUIService.cleanDomContext(
       this.ctxSelected,
       this.histogramSelectedCanvas,
@@ -235,7 +235,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     );
   }
 
-  handleCanvasOut() {
+  private handleCanvasOut() {
     this.hideTooltip();
     HistogramUIService.cleanDomContext(
       this.ctxHover,
@@ -243,7 +243,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     );
   }
 
-  handleCanvasMove(event) {
+  private handleCanvasMove(event) {
     const canvasPosition = this.histogramCanvas.getBoundingClientRect();
     const barPosition = HistogramUIService.getCurrentBarPosition(
       this.datas,
@@ -278,18 +278,18 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     }
   }
 
-  showTooltip(event: MouseEvent, text: string) {
+  private showTooltip(event: MouseEvent, text: string) {
     this.tooltipPosX = event.offsetX + 20;
     this.tooltipPosY = event.offsetY - 40;
     this.tooltipText = text;
     this.tooltipDisplay = true;
   }
 
-  hideTooltip() {
+  private hideTooltip() {
     this.tooltipDisplay = false;
   }
 
-  init() {
+  private init() {
     if (this.histogramCanvas) {
       HistogramUIService.cleanDomContext(this.ctx, this.histogramCanvas);
       HistogramUIService.cleanDomContext(
@@ -462,7 +462,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     }
   }
 
-  drawChart(chartW: number) {
+  private drawChart(chartW: number) {
     this.svg = d3
       .select(this.chart.nativeElement)
       .append('svg')
@@ -470,7 +470,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
       .attr('height', this.h + this.yPadding);
   }
 
-  drawRect(
+  private drawRect(
     ctx: CanvasRenderingContext2D,
     d: HistogramValuesI,
     i: number,
@@ -532,7 +532,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     }
   }
 
-  drawHistogram(datasSet: HistogramValuesI[]) {
+  private drawHistogram(datasSet: HistogramValuesI[]) {
     this.bars = this.histogramService.computeXbarsDimensions(
       datasSet,
       this.graphOptionsX.selected,
@@ -553,7 +553,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     });
   }
 
-  drawXAxis(domain: number[], shift: number, width: number) {
+  private drawXAxis(domain: number[], shift: number, width: number) {
     if (width !== 0) {
       let xAxis;
       shift = shift + this.xPadding;
@@ -594,7 +594,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     }
   }
 
-  drawYAxis() {
+  private drawYAxis() {
     let y;
 
     // Create the scale

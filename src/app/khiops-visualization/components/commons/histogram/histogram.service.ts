@@ -12,13 +12,13 @@ import {
   providedIn: 'root',
 })
 export class HistogramService {
-  rangeXLin: RangeXLinI = {};
-  rangeYLin: number = 0;
-  rangeYLog: RangeYLogI = {
+  private rangeXLin: RangeXLinI = {};
+  private rangeYLin: number = 0;
+  private rangeYLog: RangeYLogI = {
     min: 0,
     max: 0,
   };
-  rangeXLog: RangeXLogI = {};
+  private rangeXLog: RangeXLogI = {};
 
   getRangeX(datas: HistogramValuesI[]): [RangeXLinI, RangeXLogI] {
     this.rangeXLog.inf = datas.find(function (d: HistogramValuesI) {

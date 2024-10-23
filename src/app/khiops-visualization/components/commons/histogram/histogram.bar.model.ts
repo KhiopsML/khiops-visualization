@@ -3,12 +3,12 @@ import { HistogramValuesI } from './histogram.interfaces';
 import { HistogramType } from './histogram.type';
 
 export class HistogramBarModel {
-  barWlog: number = 0;
-  barXlog: number = 0;
-  barWlin: number = 0;
-  barXlin: number = 0;
-  color: string = HistogramUIService.getColor(1);
-  partition = [];
+  public barWlog: number = 0;
+  public barXlog: number = 0;
+  public barWlin: number = 0;
+  public barXlin: number = 0;
+  public color: string = HistogramUIService.getColor(1);
+  private partition = [];
 
   constructor(d: HistogramValuesI, middlewidth: number, xType: string) {
     this.partition = d.partition;
@@ -39,7 +39,7 @@ export class HistogramBarModel {
     }
   }
 
-  computeXLog(bars: HistogramBarModel[]) {
+  public computeXLog(bars: HistogramBarModel[]) {
     let sum = bars.reduce(
       (partialSum: number, a: HistogramBarModel) =>
         Math.abs(partialSum) + Math.abs(a.barWlog),
@@ -48,7 +48,7 @@ export class HistogramBarModel {
     this.barXlog = sum || 0;
   }
 
-  computeXLin(bars: HistogramBarModel[]) {
+  public computeXLin(bars: HistogramBarModel[]) {
     let sum = bars.reduce(
       (partialSum: number, a: HistogramBarModel) =>
         Math.abs(partialSum) + Math.abs(a.barWlin),
