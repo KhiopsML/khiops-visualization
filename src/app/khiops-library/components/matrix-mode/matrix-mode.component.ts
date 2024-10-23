@@ -9,7 +9,6 @@ import {
 import { LS } from '@khiops-library/enum/ls';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 import { MatrixModesModel } from '@khiops-library/model/matrix-modes.model';
-import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { Ls } from '@khiops-library/providers/ls.service';
 
 @Component({
@@ -19,16 +18,10 @@ import { Ls } from '@khiops-library/providers/ls.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MatrixModeComponent implements OnChanges {
-  AppConfig: any;
-  @Input() matrixModes: MatrixModesModel = new MatrixModesModel();
-  @Output() matrixModeChange = new EventEmitter<MatrixModeI>();
+  @Input() public matrixModes: MatrixModesModel = new MatrixModesModel();
+  @Output() private matrixModeChange = new EventEmitter<MatrixModeI>();
 
-  constructor(
-    private ls: Ls,
-    private khiopsLibraryService: KhiopsLibraryService,
-  ) {
-    this.AppConfig = this.khiopsLibraryService.getAppConfig().common;
-  }
+  constructor(private ls: Ls) {}
 
   ngOnChanges() {
     if (!this.matrixModes.selected) {

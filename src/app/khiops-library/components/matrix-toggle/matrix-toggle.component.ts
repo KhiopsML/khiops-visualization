@@ -8,7 +8,6 @@ import {
 } from '@angular/core';
 import { LS } from '@khiops-library/enum/ls';
 import { MatrixOptionsModel } from '@khiops-library/model/matrix-options.model';
-import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { Ls } from '@khiops-library/providers/ls.service';
 
 @Component({
@@ -18,17 +17,10 @@ import { Ls } from '@khiops-library/providers/ls.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MatrixToggleComponent implements OnChanges {
-  AppConfig: any;
+  @Input() public matrixOptions: MatrixOptionsModel = new MatrixOptionsModel();
+  @Output() private matrixOptionChange = new EventEmitter<string>();
 
-  @Input() matrixOptions: MatrixOptionsModel = new MatrixOptionsModel();
-  @Output() matrixOptionChange = new EventEmitter<string>();
-
-  constructor(
-    private ls: Ls,
-    private khiopsLibraryService: KhiopsLibraryService,
-  ) {
-    this.AppConfig = this.khiopsLibraryService.getAppConfig().common;
-  }
+  constructor(private ls: Ls) {}
 
   ngOnChanges() {
     // may has been set by saved datas
