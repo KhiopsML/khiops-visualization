@@ -531,12 +531,13 @@ export class MatrixUtilsService {
     yAxisPartNames: string[] | number[][], // KC: string[], KV: Number[][]
     xAxisPartShortDescription: string[] | number[][], // KC: string[], KV: Number[][]
     yAxisPartShortDescription: string[] | number[][], // KC: string[], KV: Number[][]
-    cellFrequencies,
+    cellFrequencies: number[] | number[][],
     cellInterests,
     cellTargetFrequencies,
     xValues,
     yValues,
   ) {
+    console.log('MatrixUtilsService ~ cellFrequencies:', cellFrequencies);
     // var t0 = performance.now();
     const cells: CellModel[] = [];
 
@@ -637,17 +638,22 @@ export class MatrixUtilsService {
         if (cellInterests?.[currentIndex]) {
           cell.cellInterest = cellInterests[currentIndex];
         }
-        if (cellTargetFrequencies?.[currentIndex]) {
+
+        const currentCellFreq = cellFrequencies[currentIndex];
+        if (
+          cellTargetFrequencies?.[currentIndex] &&
+          !Array.isArray(currentCellFreq)
+        ) {
           // If target freq, cellFreq already computed into cellFrequencies
-          cell.cellFreq = cellFrequencies[currentIndex];
+          cell.cellFreq = currentCellFreq;
         } else {
-          if (Array.isArray(cellFrequencies[currentIndex])) {
+          if (Array.isArray(currentCellFreq)) {
             cell.cellFreq = UtilsService.arraySum(
               cellFrequencies[currentIndex],
             );
           } else {
             // if not an array (irisU for instance)
-            cell.cellFreq = cellFrequencies[currentIndex];
+            cell.cellFreq = currentCellFreq;
           }
         }
 
