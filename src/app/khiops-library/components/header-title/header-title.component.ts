@@ -12,14 +12,15 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderTitleComponent implements OnInit {
-  @Input() title: string;
-  displayedTitle: string[];
-  appName: string;
+  @Input() title: string = '';
+  displayedTitle: string[] = [];
+  appName: string | undefined;
 
   ngOnInit() {
     if (this.title) {
       this.displayedTitle = this.title.split(' ');
-      this.appName = this.displayedTitle[1].toLowerCase();
+      this.appName =
+        this.displayedTitle[1] && this.displayedTitle[1].toLowerCase();
     }
   }
 }

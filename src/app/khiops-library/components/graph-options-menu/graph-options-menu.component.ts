@@ -14,11 +14,13 @@ import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-op
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GraphOptionsMenuComponent {
-  @Input() graphOptions: DistributionOptionsI;
+  @Input() graphOptions: DistributionOptionsI | undefined;
   @Output() graphOptionsChange = new EventEmitter<string>();
 
   changeGraphOption(option: string) {
-    this.graphOptions.selected = option;
-    this.graphOptionsChange.emit(option);
+    if (this.graphOptions) {
+      this.graphOptions.selected = option;
+      this.graphOptionsChange.emit(option);
+    }
   }
 }

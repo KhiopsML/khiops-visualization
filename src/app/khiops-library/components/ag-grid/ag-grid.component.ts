@@ -219,8 +219,6 @@ export class AgGridComponent
             col.show = this.visibleColumns[this.id][col.field];
           }
         }
-        console.log('ngOnChanges ~ this.visibleColumns:', this.visibleColumns);
-
         this.updateColumnFilterBadge();
       }
     }

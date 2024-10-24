@@ -23,7 +23,7 @@ export class GraphHeaderComponent implements OnInit {
     new EventEmitter();
 
   @Input() public selectedVariable: any; // Type depends of the context
-  @Input() public title: string;
+  @Input() public title: string = '';
   @Input() public smallTitle = false;
   @Input() public hideScale = false;
 
