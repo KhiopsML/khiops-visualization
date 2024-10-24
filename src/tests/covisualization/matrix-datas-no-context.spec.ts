@@ -90,7 +90,12 @@ describe('CoVisualization', () => {
         mode: 'PROB_CELL',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixUtilsService.computeMatrixValues(graphMode, inputDatas, [], -1);
+        MatrixUtilsService.computeMatrixValues(
+          graphMode,
+          inputDatas.matrixCellDatas,
+          [],
+          -1,
+        );
     });
 
     it('matrixFreqsValues should return valid datas', () => {
@@ -126,7 +131,7 @@ describe('CoVisualization', () => {
         title: 'P (GillSize | GillSpacing)',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixUtilsService.computeMatrixValues(graphMode, inputDatas, [], -1);
+        MatrixUtilsService.computeMatrixValues(graphMode, inputDatas.matrixCellDatas, [], -1);
     });
 
     it('matrixFreqsValues should return valid datas', () => {

@@ -123,7 +123,7 @@ describe('CoVisualization', () => {
       [matrixFreqsValues, matrixValues, matrixExtras] =
         MatrixUtilsService.computeMatrixValues(
           graphMode,
-          inputDatas,
+          inputDatas.matrixCellDatas,
           [[0]],
           -1,
         );
@@ -163,7 +163,7 @@ describe('CoVisualization', () => {
       [matrixFreqsValues, matrixValues, matrixExtras] =
         MatrixUtilsService.computeMatrixValues(
           graphMode,
-          inputDatas,
+          inputDatas.matrixCellDatas,
           [[0, 1]],
           -1,
         );
@@ -202,7 +202,7 @@ describe('CoVisualization', () => {
       [matrixFreqsValues, matrixValues, matrixExtras] =
         MatrixUtilsService.computeMatrixValues(
           graphMode,
-          inputDatas,
+          inputDatas.matrixCellDatas,
           [[0, 1]],
           -1,
         );
@@ -245,7 +245,7 @@ describe('CoVisualization', () => {
       [matrixFreqsValues, matrixValues, matrixExtras] =
         MatrixUtilsService.computeMatrixValues(
           graphMode,
-          inputDatas,
+          inputDatas.matrixCellDatas,
           [[0, 1]],
           -1,
         );
@@ -294,7 +294,7 @@ describe('CoVisualization', () => {
       [matrixFreqsValues, matrixValues, matrixExtras] =
         MatrixUtilsService.computeMatrixValues(
           graphMode,
-          inputDatas,
+          inputDatas.matrixCellDatas,
           [[0]],
           -1,
         );
@@ -343,7 +343,7 @@ describe('CoVisualization', () => {
       [matrixFreqsValues, matrixValues, matrixExtras] =
         MatrixUtilsService.computeMatrixValues(
           graphMode,
-          inputDatas,
+          inputDatas.matrixCellDatas,
           [[0]],
           -1,
         );

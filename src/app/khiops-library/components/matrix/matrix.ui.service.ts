@@ -4,6 +4,7 @@ import { CellModel } from '../../model/cell.model';
 import { MatrixCoordI } from '@khiops-library/interfaces/matrix-coord';
 import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 import { TYPES } from '@khiops-library/enum/types';
+import { DimensionModel } from '@khiops-library/model/dimension.model';
 
 @Injectable({
   providedIn: 'root',
@@ -38,9 +39,9 @@ export class MatrixUiService {
    * - If the axis part short description at the given index is a string, it is returned as is.
    */
   static formatAxisDisplayText(
-    axisPartShortDescription,
+    axisPartShortDescription: string[] | number[],
     iter: number,
-    dimension,
+    dimension: DimensionModel,
   ) {
     let displayaxisPart;
     if (typeof axisPartShortDescription[iter] !== 'string') {
@@ -194,7 +195,7 @@ export class MatrixUiService {
    */
   static getNavigationCell(
     keyCode: number,
-    matrixCellDatas,
+    matrixCellDatas: CellModel[],
     isAxisInverted: boolean,
     currentCellIndex: number,
   ): CellModel | undefined {
@@ -282,16 +283,7 @@ export class MatrixUiService {
    * @returns The updated cell data with adjusted canvas coordinates and dimensions.
    */
   static adaptCellDimensionsToZoom(
-    cellDatas: {
-      xCanvas: number;
-      x: MatrixCoordI;
-      yCanvas: number;
-      y: MatrixCoordI;
-      wCanvas: number;
-      w: MatrixCoordI;
-      hCanvas: number;
-      h: MatrixCoordI;
-    },
+    cellDatas: CellModel,
     width: number | undefined,
     height: number | undefined,
     graphType: string,

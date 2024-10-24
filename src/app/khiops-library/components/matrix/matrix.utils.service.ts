@@ -27,7 +27,7 @@ export class MatrixUtilsService {
    */
   static computeMatrixValues(
     graphMode: MatrixModeI,
-    inputDatas: any,
+    matrixCellDatas: CellModel[],
     contextSelection: any,
     selectedTargetIndex: number,
   ) {
@@ -53,14 +53,14 @@ export class MatrixUtilsService {
       for (let i = 0; i < cellCombinationsLength; i++) {
         const currentCellPartPosition = UtilsService.findArrayIntoHash(
           cellCombinations[i],
-          inputDatas.matrixCellDatas[0].cellFreqHash,
+          matrixCellDatas[0].cellFreqHash,
         );
         partPositions.push(currentCellPartPosition);
       }
 
       const partPositionsLength = partPositions.length;
       // Always compute freqs for distribution graph datas
-      matrixFreqsValues = inputDatas.matrixCellDatas.map((e) => {
+      matrixFreqsValues = matrixCellDatas.map((e) => {
         let res = 0;
         for (let i = 0; i < partPositionsLength; i++) {
           res = res + e.cellFreqs[partPositions[i]]; // values are added
@@ -79,7 +79,7 @@ export class MatrixUtilsService {
         let freqLineVals = 0;
         switch (graphMode.mode) {
           case MATRIX_MODES.MUTUAL_INFO:
-            matrixValues = inputDatas.matrixCellDatas.map((e) => {
+            matrixValues = matrixCellDatas.map((e) => {
               [matrixTotal, cellFreqs, freqColVals, freqLineVals] =
                 this.computeValsByContext(
                   e,
@@ -94,7 +94,7 @@ export class MatrixUtilsService {
               );
               return MIij || 0;
             });
-            matrixExtras = inputDatas.matrixCellDatas.map((e: CellModel) => {
+            matrixExtras = matrixCellDatas.map((e: CellModel) => {
               let [matrixTotal, cellFreqs, freqColVals, freqLineVals] =
                 this.computeValsByContext(
                   e,
@@ -111,7 +111,7 @@ export class MatrixUtilsService {
             });
             break;
           case MATRIX_MODES.HELLINGER:
-            matrixValues = inputDatas.matrixCellDatas.map((e) => {
+            matrixValues = matrixCellDatas.map((e) => {
               [matrixTotal, cellFreqs, freqColVals, freqLineVals] =
                 this.computeValsByContext(
                   e,
@@ -128,7 +128,7 @@ export class MatrixUtilsService {
               res = hellingerValue;
               return res || 0;
             });
-            matrixExtras = inputDatas.matrixCellDatas.map((e: CellModel) => {
+            matrixExtras = matrixCellDatas.map((e: CellModel) => {
               let [matrixTotal, cellFreqs, freqColVals, freqLineVals] =
                 this.computeValsByContext(
                   e,
@@ -146,7 +146,7 @@ export class MatrixUtilsService {
             });
             break;
           case MATRIX_MODES.PROB_CELL:
-            matrixValues = inputDatas.matrixCellDatas.map((e) => {
+            matrixValues = matrixCellDatas.map((e) => {
               let [matrixTotal, cellFreqs, freqColVals, freqLineVals] =
                 this.computeValsByContext(
                   e,
@@ -159,7 +159,7 @@ export class MatrixUtilsService {
             });
             break;
           case MATRIX_MODES.PROB_CELL_REVERSE:
-            matrixValues = inputDatas.matrixCellDatas.map((e) => {
+            matrixValues = matrixCellDatas.map((e) => {
               let [matrixTotal, cellFreqs, freqColVals, freqLineVals] =
                 this.computeValsByContext(
                   e,
@@ -173,7 +173,7 @@ export class MatrixUtilsService {
             break;
           // Only on KV
           case MATRIX_MODES.CELL_INTEREST:
-            matrixValues = inputDatas.matrixCellDatas.map((e) => {
+            matrixValues = matrixCellDatas.map((e) => {
               for (let i = 0; i < partPositionsLength; i++) {
                 res = res + e.cellInterest[partPositions[i]];
               }
@@ -184,23 +184,21 @@ export class MatrixUtilsService {
       }
 
       // Compute expected cell frequencies
-      matrixExpectedFreqsValues = inputDatas.matrixCellDatas.map(
-        (e: CellModel) => {
-          let [matrixTotal, cellFreqs, freqColVals, freqLineVals] =
-            this.computeValsByContext(e, partPositions, partPositionsLength);
-          let ef = UtilsService.computeExpectedFrequency(
-            matrixTotal,
-            freqColVals,
-            freqLineVals,
-          );
-          return ef;
-        },
-      );
+      matrixExpectedFreqsValues = matrixCellDatas.map((e: CellModel) => {
+        let [matrixTotal, cellFreqs, freqColVals, freqLineVals] =
+          this.computeValsByContext(e, partPositions, partPositionsLength);
+        let ef = UtilsService.computeExpectedFrequency(
+          matrixTotal,
+          freqColVals,
+          freqLineVals,
+        );
+        return ef;
+      });
     } else {
       // Always compute freqs for distribution graph datas
-      matrixFreqsValues = inputDatas.matrixCellDatas.map((e) => e.cellFreqs);
+      matrixFreqsValues = matrixCellDatas.map((e) => e.cellFreqs);
       if (selectedTargetIndex !== -1) {
-        matrixFreqsValues = inputDatas.matrixCellDatas.map(
+        matrixFreqsValues = matrixCellDatas.map(
           (e) => e.cellFreqs[selectedTargetIndex] || 0,
         );
       } else {
@@ -217,7 +215,7 @@ export class MatrixUtilsService {
         // 2 dim without context or with target : iris2d
         switch (graphMode.mode) {
           case MATRIX_MODES.MUTUAL_INFO:
-            matrixValues = inputDatas.matrixCellDatas.map((e) => {
+            matrixValues = matrixCellDatas.map((e) => {
               let [MIij, MIijExtra] = UtilsService.computeMutualInfo(
                 e.cellFreqs[0],
                 e.matrixTotal[0],
@@ -226,7 +224,7 @@ export class MatrixUtilsService {
               );
               return MIij || 0;
             });
-            matrixExtras = inputDatas.matrixCellDatas.map((e) => {
+            matrixExtras = matrixCellDatas.map((e) => {
               let [MIij, MIijExtra] = UtilsService.computeMutualInfo(
                 e.cellFreqs[0],
                 e.matrixTotal[0],
@@ -237,7 +235,7 @@ export class MatrixUtilsService {
             });
             break;
           case MATRIX_MODES.HELLINGER:
-            matrixValues = inputDatas.matrixCellDatas.map((e) => {
+            matrixValues = matrixCellDatas.map((e) => {
               const [hellingerValue, hellingerAbsoluteValue] =
                 UtilsService.computeHellinger(
                   e.cellFreqs[0],
@@ -247,7 +245,7 @@ export class MatrixUtilsService {
                 );
               return hellingerValue || 0;
             });
-            matrixExtras = inputDatas.matrixCellDatas.map((e) => {
+            matrixExtras = matrixCellDatas.map((e) => {
               const [hellingerValue, hellingerAbsoluteValue] =
                 UtilsService.computeHellinger(
                   e.cellFreqs[0],
@@ -259,14 +257,14 @@ export class MatrixUtilsService {
             });
             break;
           case MATRIX_MODES.PROB_CELL:
-            matrixValues = inputDatas.matrixCellDatas.map((e) => {
+            matrixValues = matrixCellDatas.map((e) => {
               return isNaN(e.cellFreqs[0] / e.freqColVals[0])
                 ? 0
                 : e.cellFreqs[0] / e.freqColVals[0];
             });
             break;
           case MATRIX_MODES.PROB_CELL_REVERSE:
-            matrixValues = inputDatas.matrixCellDatas.map((e) => {
+            matrixValues = matrixCellDatas.map((e) => {
               return isNaN(e.cellFreqs[0] / e.freqLineVals[0])
                 ? 0
                 : e.cellFreqs[0] / e.freqLineVals[0];
@@ -274,32 +272,24 @@ export class MatrixUtilsService {
             break;
           case MATRIX_MODES.CELL_INTEREST:
             // Only on KV do not need to recompute because nodes can not be folded
-            matrixValues = inputDatas.matrixCellDatas.map(
-              (e) => e.cellInterest,
-            );
+            matrixValues = matrixCellDatas.map((e) => e.cellInterest);
             break;
           case MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL:
-            for (
-              let i = 0;
-              i < inputDatas.matrixCellDatas[0].cellFreqs.length;
-              i++
-            ) {
-              const currentMatrixValues = inputDatas.matrixCellDatas.map(
-                (e) => {
-                  const [MIij, MIijExtra] = UtilsService.computeMutualInfo(
-                    e.cellFreqs[i],
-                    UtilsService.arraySum(e.matrixTotal),
-                    e.freqColVals[i],
-                    e.freqLineVals[i],
-                  );
-                  return MIij || 0;
-                },
-              );
+            for (let i = 0; i < matrixCellDatas[0].cellFreqs.length; i++) {
+              const currentMatrixValues = matrixCellDatas.map((e) => {
+                const [MIij, MIijExtra] = UtilsService.computeMutualInfo(
+                  e.cellFreqs[i],
+                  UtilsService.arraySum(e.matrixTotal),
+                  e.freqColVals[i],
+                  e.freqLineVals[i],
+                );
+                return MIij || 0;
+              });
               if (i === selectedTargetIndex) {
                 matrixValues = currentMatrixValues;
               }
             }
-            matrixExtras = inputDatas.matrixCellDatas.map((e) => {
+            matrixExtras = matrixCellDatas.map((e) => {
               const [MIij, MIijExtra] = UtilsService.computeMutualInfo(
                 e.cellFreqs[selectedTargetIndex],
                 UtilsService.arraySum(e.matrixTotal),
@@ -312,7 +302,7 @@ export class MatrixUtilsService {
           case MATRIX_MODES.PROB_TARGET_WITH_CELL:
             // Only on KV do not need to recompute because nodes can not be folded
             if (selectedTargetIndex !== -1) {
-              matrixValues = inputDatas.matrixCellDatas.map(
+              matrixValues = matrixCellDatas.map(
                 (e) => e.cellProbsRev[selectedTargetIndex] || 0,
               );
             }
@@ -320,7 +310,7 @@ export class MatrixUtilsService {
           case MATRIX_MODES.PROB_CELL_WITH_TARGET:
             // Only on KV do not need to recompute because nodes can not be folded
             if (selectedTargetIndex !== -1) {
-              matrixValues = inputDatas.matrixCellDatas.map(
+              matrixValues = matrixCellDatas.map(
                 (e) => e.cellProbs[selectedTargetIndex] || 0,
               );
             }
@@ -329,7 +319,7 @@ export class MatrixUtilsService {
       }
 
       // Compute expected cell frequencies
-      matrixExpectedFreqsValues = inputDatas.matrixCellDatas.map((e) => {
+      matrixExpectedFreqsValues = matrixCellDatas.map((e) => {
         let ef;
         if (Array.isArray(e.matrixTotal)) {
           ef = UtilsService.computeExpectedFrequency(

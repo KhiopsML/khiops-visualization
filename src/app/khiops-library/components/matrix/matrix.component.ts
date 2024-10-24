@@ -238,7 +238,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
             this.matrixExpectedFreqsValues,
           ] = MatrixUtilsService.computeMatrixValues(
             this.graphMode,
-            this.inputDatas,
+            this.inputDatas.matrixCellDatas,
             this.contextSelection,
             this.selectedTargetIndex,
           );

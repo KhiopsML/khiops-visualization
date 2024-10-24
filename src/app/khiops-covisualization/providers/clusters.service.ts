@@ -147,7 +147,7 @@ export class ClustersService {
       {
         mode: 'FREQUENCY',
       },
-      this.dimensionsDatasService.dimensionsDatas.matrixDatas,
+      this.dimensionsDatasService.dimensionsDatas.matrixDatas.matrixCellDatas,
       this.dimensionsDatasService.dimensionsDatas.contextSelection,
       -1,
     );

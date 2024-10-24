@@ -28,7 +28,7 @@ describe('Visualization', () => {
       [matrixFreqsValues, matrixValues, matrixExtras] =
         MatrixUtilsService.computeMatrixValues(
           graphMode,
-          inputDatas,
+          inputDatas.matrixCellDatas,
           undefined,
           -1,
         );
@@ -43,7 +43,7 @@ describe('Visualization', () => {
       [matrixFreqsValues, matrixValues, matrixExtras] =
         MatrixUtilsService.computeMatrixValues(
           graphMode,
-          inputDatas,
+          inputDatas.matrixCellDatas,
           undefined,
           -1,
         );
@@ -58,7 +58,7 @@ describe('Visualization', () => {
       [matrixFreqsValues, matrixValues, matrixExtras] =
         MatrixUtilsService.computeMatrixValues(
           graphMode,
-          inputDatas,
+          inputDatas.matrixCellDatas,
           undefined,
           0,
         );
@@ -73,7 +73,7 @@ describe('Visualization', () => {
       [matrixFreqsValues, matrixValues, matrixExtras] =
         MatrixUtilsService.computeMatrixValues(
           graphMode,
-          inputDatas,
+          inputDatas.matrixCellDatas,
           undefined,
           0,
         );
@@ -88,7 +88,7 @@ describe('Visualization', () => {
       [matrixFreqsValues, matrixValues, matrixExtras] =
         MatrixUtilsService.computeMatrixValues(
           graphMode,
-          inputDatas,
+          inputDatas.matrixCellDatas,
           undefined,
           2,
         );
@@ -103,7 +103,7 @@ describe('Visualization', () => {
       [matrixFreqsValues, matrixValues, matrixExtras] =
         MatrixUtilsService.computeMatrixValues(
           graphMode,
-          inputDatas,
+          inputDatas.matrixCellDatas,
           undefined,
           2,
         );
@@ -118,7 +118,7 @@ describe('Visualization', () => {
       [matrixFreqsValues, matrixValues, matrixExtras] =
         MatrixUtilsService.computeMatrixValues(
           graphMode,
-          inputDatas,
+          inputDatas.matrixCellDatas,
           undefined,
           2,
         );
@@ -135,7 +135,7 @@ describe('Visualization', () => {
       [matrixFreqsValues, matrixValues, matrixExtras] =
         MatrixUtilsService.computeMatrixValues(
           graphMode,
-          inputDatas,
+          inputDatas.matrixCellDatas,
           undefined,
           2,
         );
@@ -152,7 +152,7 @@ describe('Visualization', () => {
       [matrixFreqsValues, matrixValues, matrixExtras] =
         MatrixUtilsService.computeMatrixValues(
           graphMode,
-          inputDatas,
+          inputDatas.matrixCellDatas,
           undefined,
           2,
         );
@@ -169,7 +169,7 @@ describe('Visualization', () => {
       [matrixFreqsValues, matrixValues, matrixExtras] =
         MatrixUtilsService.computeMatrixValues(
           graphMode,
-          inputDatas,
+          inputDatas.matrixCellDatas,
           undefined,
           2,
         );
@@ -184,7 +184,7 @@ describe('Visualization', () => {
       [matrixFreqsValues, matrixValues, matrixExtras] =
         MatrixUtilsService.computeMatrixValues(
           graphMode,
-          inputDatas,
+          inputDatas.matrixCellDatas,
           undefined,
           -1,
         );
@@ -199,7 +199,7 @@ describe('Visualization', () => {
       [matrixFreqsValues, matrixValues, matrixExtras] =
         MatrixUtilsService.computeMatrixValues(
           graphMode,
-          inputDatas,
+          inputDatas.matrixCellDatas,
           undefined,
           -1,
         );
@@ -214,7 +214,7 @@ describe('Visualization', () => {
       [matrixFreqsValues, matrixValues, matrixExtras] =
         MatrixUtilsService.computeMatrixValues(
           graphMode,
-          inputDatas,
+          inputDatas.matrixCellDatas,
           undefined,
           -1,
         );
@@ -231,7 +231,7 @@ describe('Visualization', () => {
       [matrixFreqsValues, matrixValues, matrixExtras] =
         MatrixUtilsService.computeMatrixValues(
           graphMode,
-          inputDatas,
+          inputDatas.matrixCellDatas,
           undefined,
           -1,
         );
@@ -248,7 +248,7 @@ describe('Visualization', () => {
       [matrixFreqsValues, matrixValues, matrixExtras] =
         MatrixUtilsService.computeMatrixValues(
           graphMode,
-          inputDatas,
+          inputDatas.matrixCellDatas,
           undefined,
           -1,
         );
@@ -266,7 +266,7 @@ describe('Visualization', () => {
       [matrixFreqsValues, matrixValues, matrixExtras] =
         MatrixUtilsService.computeMatrixValues(
           graphMode,
-          inputDatas,
+          inputDatas.matrixCellDatas,
           undefined,
           -1,
         );
@@ -291,7 +291,7 @@ describe('Visualization', () => {
       [matrixFreqsValues, matrixValues, matrixExtras] =
         MatrixUtilsService.computeMatrixValues(
           graphMode,
-          inputDatas,
+          inputDatas.matrixCellDatas,
           undefined,
           -1,
         );

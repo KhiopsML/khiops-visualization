@@ -771,7 +771,7 @@ export class Preparation2dDatasService {
         [matrixFreqsValues, matrixValues, matrixExtras] =
           MatrixUtilsService.computeMatrixValues(
             graphMode,
-            inputDatas,
+            inputDatas.matrixCellDatas,
             undefined,
             0,
           );
@@ -783,7 +783,7 @@ export class Preparation2dDatasService {
         [matrixFreqsValues, matrixValues, matrixExtras] =
           MatrixUtilsService.computeMatrixValues(
             graphMode,
-            inputDatas,
+            inputDatas.matrixCellDatas,
             undefined,
             0,
           );
