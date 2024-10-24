@@ -243,7 +243,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
             this.selectedTargetIndex,
           );
 
-          if (this.matrixFreqsValues[0] && !isNaN(this.matrixFreqsValues[0])) {
+          if (this.matrixFreqsValues && !isNaN(this.matrixFreqsValues[0])) {
             // check if we have a wrong context selection
 
             // Clean dom canvas
