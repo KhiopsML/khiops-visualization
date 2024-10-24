@@ -529,8 +529,8 @@ export class MatrixUtilsService {
     zDimension: DimensionModel[],
     xAxisPartNames: string[] | number[][], // KC: string[], KV: Number[][]
     yAxisPartNames: string[] | number[][], // KC: string[], KV: Number[][]
-    xAxisPartShortDescription,
-    yAxisPartShortDescription,
+    xAxisPartShortDescription: string[] | number[][], // KC: string[], KV: Number[][]
+    yAxisPartShortDescription: string[] | number[][], // KC: string[], KV: Number[][]
     cellFrequencies,
     cellInterests,
     cellTargetFrequencies,

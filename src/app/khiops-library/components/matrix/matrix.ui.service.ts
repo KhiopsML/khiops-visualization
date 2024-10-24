@@ -39,7 +39,7 @@ export class MatrixUiService {
    * - If the axis part short description at the given index is a string, it is returned as is.
    */
   static formatAxisDisplayText(
-    axisPartShortDescription: string[] | number[],
+    axisPartShortDescription: string[] | number[][],
     iter: number,
     dimension: DimensionModel,
   ) {
@@ -59,7 +59,7 @@ export class MatrixUiService {
       } else {
         displayaxisPart = Array.isArray(axisPartShortDescription[iter])
           ? axisPartShortDescription[iter].join(', ')
-          : axisPartShortDescription[iter].toString();
+          : axisPartShortDescription[iter];
       }
     } else {
       // In KC we get a formated array
