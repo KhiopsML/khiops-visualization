@@ -154,7 +154,7 @@ export class TreeSelectComponent
         setTimeout(() => {
           this.treenodesService.setSelectedNode(
             this.selectedDimension?.name,
-            e.name,
+            e.data.name,
           );
         });
       });
@@ -167,7 +167,7 @@ export class TreeSelectComponent
           if (this.selectedDimension) {
             this.treenodesService.expandNode(
               this.selectedDimension.name,
-              e.name,
+              e.data.name,
             );
           }
         });
@@ -181,7 +181,7 @@ export class TreeSelectComponent
           if (this.selectedDimension) {
             this.treenodesService.collapseNode(
               this.selectedDimension.name,
-              e.name,
+              e.data.name,
             );
           }
         });
@@ -193,14 +193,14 @@ export class TreeSelectComponent
         if (this.selectedDimension) {
           this.treenodesService.updateSelectedNodeName(
             this.selectedDimension.name,
-            e.name,
-            e.newName,
+            e.data.name,
+            e.data.newName,
           );
         }
       });
     });
     this.tree.on('error', (e: TreeViewErrorEventI) => {
-      this.snackBar.open(this.translate.get(e.message), undefined, {
+      this.snackBar.open(this.translate.get(e.data.message), undefined, {
         duration: 4000,
         panelClass: 'error',
       });

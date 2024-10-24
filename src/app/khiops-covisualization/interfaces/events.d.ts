@@ -8,16 +8,13 @@ export interface TreeNodeChangedEventI {
 }
 
 export interface TreeViewErrorEventI {
-  message: string;
+  data: { message: string };
 }
 
 export interface TreeViewNodeEventI {
-  id: number;
-  isLeaf: boolean;
-  name: string;
+  data: { id: number; isLeaf: boolean; name: string };
 }
 
 export interface TreeViewUpdateNodeNameEventI {
-  name: string;
-  newName: string;
+  data: { name: string; newName: string };
 }

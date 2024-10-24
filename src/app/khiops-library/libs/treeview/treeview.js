@@ -219,15 +219,19 @@
 
                 // emit event
                 emit(self, 'updateNodeName', {
-                  name: data.name,
-                  newName: newName,
+                  data: {
+                    name: data.name,
+                    newName: newName,
+                  },
                 });
 
                 // remove input
                 removeAllEditInputs();
               } else {
                 emit(self, 'error', {
-                  message: 'SNACKS.NAME_CAN_NOT_BE_EMPTY',
+                  data: {
+                    message: 'SNACKS.NAME_CAN_NOT_BE_EMPTY',
+                  },
                 });
               }
             };
@@ -285,7 +289,7 @@
             // Do not if it is a callback
             let data = JSON.parse(parent.getAttribute('data-item'));
             emit(self, 'select', {
-              data,
+              data: data,
             });
             // }
 
@@ -317,7 +321,7 @@
               }
             } else {
               emit(self, 'select', {
-                data,
+                data: data,
               });
             }
           };
@@ -401,7 +405,7 @@
         let data = JSON.parse(node.getAttribute('data-item'));
 
         emit(this, 'expand', {
-          data,
+          data: data,
         });
       };
 
@@ -612,7 +616,7 @@
         let data = JSON.parse(node.getAttribute('data-item'));
 
         emit(this, 'collapse', {
-          data,
+          data: data,
         });
       };
 
