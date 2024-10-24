@@ -96,8 +96,8 @@ export class HeaderToolsComponent {
           html2canvas(currentDiv, { scale: 1.1 })
             .then((canvas) => {
               canvas
-                .getContext('2d')
-                .getImageData(0, 0, canvas.width, canvas.height);
+                ?.getContext('2d')
+                ?.getImageData(0, 0, canvas.width, canvas.height);
 
               if (!this.configService.getConfig().onCopyImage) {
                 canvas.toBlob((blob) => {
@@ -167,7 +167,7 @@ export class HeaderToolsComponent {
     }
   }
 
-  private rePaintGraph(elt: any) {
+  private rePaintGraph(elt: HTMLElement) {
     // Remove box shadow to prevent bliue overlay on exported screenshot
     // https://stackoverflow.com/questions/57070074/issue-with-html2canvas-green-overlay-while-exporting
     this.removeSelectedClass(elt);
@@ -182,14 +182,20 @@ export class HeaderToolsComponent {
     }
   }
 
-  private removeSelectedClass(elt) {
+  private removeSelectedClass(elt: HTMLElement) {
     elt.classList.replace('selected', 'printing');
-    elt.parentNode.classList.replace('selected', 'printing');
+    const parent = elt.parentNode as HTMLElement;
+    if (parent && parent.classList.contains('selected')) {
+      parent.classList.replace('selected', 'printing');
+    }
   }
 
-  private addSelectedClass(elt) {
+  private addSelectedClass(elt: HTMLElement) {
     elt.classList.replace('printing', 'selected');
-    elt.parentNode.classList.replace('printing', 'selected');
+    const parent = elt.parentNode as HTMLElement;
+    if (parent && parent.classList.contains('printing')) {
+      parent.classList.replace('printing', 'selected');
+    }
   }
 
   toggleSideBar() {
