@@ -7,6 +7,7 @@ import { MatrixUiService } from './matrix.ui.service';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { DimensionModel } from '@khiops-library/model/dimension.model';
+import { MatrixValuesModel } from '@khiops-library/model/matrix-value.model';
 
 @Injectable({
   providedIn: 'root',
@@ -532,12 +533,11 @@ export class MatrixUtilsService {
     xAxisPartShortDescription: string[] | number[][], // KC: string[], KV: Number[][]
     yAxisPartShortDescription: string[] | number[][], // KC: string[], KV: Number[][]
     cellFrequencies: number[] | number[][],
-    cellInterests,
-    cellTargetFrequencies,
-    xValues,
-    yValues,
-  ) {
-    console.log('MatrixUtilsService ~ cellFrequencies:', cellFrequencies);
+    cellInterests: number[] | undefined, // KC: undefined
+    cellTargetFrequencies: number[][] | undefined, // KC: undefined
+    xValues: MatrixValuesModel,
+    yValues: MatrixValuesModel,
+  ): CellModel[] {
     // var t0 = performance.now();
     const cells: CellModel[] = [];
 

@@ -1,5 +1,6 @@
 import { MatrixCoordI } from '../interfaces/matrix-coord';
 import { UtilsService } from '../providers/utils.service';
+import { MatrixValuesModel } from './matrix-value.model';
 
 export class CellModel {
   /*
@@ -81,7 +82,7 @@ export class CellModel {
    * @param xValues - The x-axis values.
    * @param yValues - The y-axis values.
    */
-  setCoordValues(i, j, xValues: MatrixCoordI, yValues: MatrixCoordI) {
+  setCoordValues(i, j, xValues: MatrixValuesModel, yValues: MatrixValuesModel) {
     this.x = {
       standard: xValues.standard[i],
       frequency: xValues.frequency[i],
