@@ -31,6 +31,7 @@
     "lib": ["es2020", "es2019", "es2017", "es2016", "es2015", "dom"],
     "paths": {
       "@khiops-library/*": ["./src/app/khiops-library/*"],
+      "@khiops-treeview/*": ["./libs/khiops-treeview/*"],
       "@khiops-hypertree/*": ["./libs/khiops-hypertree/dist/*"],
       "@khiops-visualization/*": ["./src/app/khiops-visualization/*"],
       "@khiops-covisualization/*": ["./src/app/khiops-covisualization/*"],

@@ -8,7 +8,7 @@ import {
   AfterViewInit,
   Input,
 } from '@angular/core';
-import * as TreeView from '@khiops-library/libs/treeview/treeview';
+import * as TreeView from '@khiops-treeview/treeview';
 import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';

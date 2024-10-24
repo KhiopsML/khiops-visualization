@@ -1,7 +1,7 @@
 @import 'app/khiops-library/components/ag-grid/ag-grid-theme.scss';
 @import 'app/khiops-library/components/ag-grid/ag-theme-balham.scss';
 @import 'app/khiops-library/components/ag-grid/ag-theme-material.scss';
-@import 'app/khiops-library/libs/treeview/treeview.scss';
+@import '../libs/khiops-treeview/treeview.scss';
 @import '../libs/khiops-hypertree/dist/d3-hypertree-light';
 @import 'material.scss';
 html,

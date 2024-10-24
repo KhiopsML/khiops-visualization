@@ -37,7 +37,7 @@
               "pan-zoom",
               "clone-deep",
               "@khiops-hypertree/js/d3-hypertree",
-              "@khiops-library/libs/treeview/treeview",
+              "@khiops-treeview",
               "typed-function",
               "seedrandom",
               "javascript-natural-sort",
@@ -53,7 +53,7 @@
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
-              "src/app/khiops-library/libs/treeview/treeview.scss",
+              "./libs/khiops-treeview/treeview.scss",
               "./libs/khiops-hypertree/dist/d3-hypertree-light.css",
               "src/styles.scss"
             ],
@@ -199,7 +199,7 @@
               "pan-zoom",
               "clone-deep",
               "@khiops-hypertree/js/d3-hypertree",
-              "@khiops-library/libs/treeview/treeview",
+              "@khiops-treeview",
               "typed-function",
               "seedrandom",
               "javascript-natural-sort",

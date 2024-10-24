@@ -10,7 +10,7 @@ import {
   AfterViewInit,
   Input,
 } from '@angular/core';
-import TreeView from '@khiops-library/libs/treeview/treeview';
+import TreeView from '@khiops-treeview/treeview';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 
