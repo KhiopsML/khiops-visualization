@@ -11,7 +11,7 @@ export class CellModel {
 
   _id: string | number;
   cellFreq: number;
-  cellFreqHash: {};
+  cellFreqHash: {} | undefined;
   displayedFreqValue: number;
   displayedValue: {
     type: string;

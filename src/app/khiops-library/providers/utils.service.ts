@@ -806,7 +806,7 @@ export class UtilsService {
    * @returns A tuple containing the minimum and maximum values from the array,
    *          or `undefined` if the array is not provided.
    */
-  static getMinAndMaxFromArray(array) {
+  static getMinAndMaxFromArray(array: number[]): [number, number] {
     if (array) {
       let lowest = Number.POSITIVE_INFINITY;
       let highest = Number.NEGATIVE_INFINITY;
@@ -814,16 +814,18 @@ export class UtilsService {
       const arrayLength = array.length;
       for (let i = arrayLength - 1; i >= 0; i--) {
         tmp = array[i];
-        if (tmp < lowest) {
-          lowest = tmp;
-        }
-        if (tmp > highest) {
-          highest = tmp;
+        if (tmp) {
+          if (tmp < lowest) {
+            lowest = tmp;
+          }
+          if (tmp > highest) {
+            highest = tmp;
+          }
         }
       }
       return [lowest, highest];
     } else {
-      return undefined;
+      return [0, 0];
     }
   }
 

@@ -5,6 +5,7 @@ import { TYPES } from '@khiops-library/enum/types';
 import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 import { MatrixUiService } from './matrix.ui.service';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
+import { DynamicI } from '@khiops-library/interfaces/globals';
 
 @Injectable({
   providedIn: 'root',
@@ -797,7 +798,7 @@ export class MatrixUtilsService {
    */
   static getCellFrequencies(
     dimensionsParts,
-    cellPartIndexes,
+    cellPartIndexes: number[][],
     inputCellFrequencies,
     zDimension: any[] = [],
   ) {
@@ -876,7 +877,11 @@ export class MatrixUtilsService {
    *
    * @returns A tuple containing the min and max values. If the mode is 'HELLINGER', it also returns adjusted min and max values.
    */
-  static getMinAndMaxFromGraphMode(matrixValues, minMaxValues, mode: string) {
+  static getMinAndMaxFromGraphMode(
+    matrixValues: number[],
+    minMaxValues: DynamicI,
+    mode: string,
+  ) {
     let minVal: number | undefined;
     let maxVal: number | undefined;
     let minValH: number | undefined;

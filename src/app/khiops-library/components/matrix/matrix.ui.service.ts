@@ -37,7 +37,11 @@ export class MatrixUiService {
    *   - For other types, the description is joined into a string if it is an array, otherwise it is converted to a string.
    * - If the axis part short description at the given index is a string, it is returned as is.
    */
-  static formatAxisDisplayText(axisPartShortDescription, iter, dimension) {
+  static formatAxisDisplayText(
+    axisPartShortDescription,
+    iter: number,
+    dimension,
+  ) {
     let displayaxisPart;
     if (typeof axisPartShortDescription[iter] !== 'string') {
       // In KV we get an unformated array
@@ -136,7 +140,7 @@ export class MatrixUiService {
    *          If `isPositiveValue` is true, the gradient ranges from white to red.
    *          If `isPositiveValue` is false, the gradient ranges from white to blue.
    */
-  static getInterestColors(isPositiveValue) {
+  static getInterestColors(isPositiveValue: boolean) {
     if (isPositiveValue) {
       return [
         {
@@ -189,11 +193,11 @@ export class MatrixUiService {
    * @returns The next cell to navigate to as a `CellModel` object, or `undefined` if the navigation is not possible.
    */
   static getNavigationCell(
-    keyCode,
+    keyCode: number,
     matrixCellDatas,
-    isAxisInverted,
-    currentCellIndex,
-  ): CellModel {
+    isAxisInverted: boolean,
+    currentCellIndex: number,
+  ): CellModel | undefined {
     let changeCell: CellModel;
 
     let selectedCellIndex;
@@ -396,7 +400,13 @@ export class MatrixUiService {
    * - `min`: The minimum value to be displayed in the legend.
    * - `max`: The maximum value to be displayed in the legend.
    */
-  static computeLegendValues(minVal, maxVal, minValH, maxValH, mode: string) {
+  static computeLegendValues(
+    minVal: number,
+    maxVal: number,
+    minValH: number,
+    maxValH: number,
+    mode: string,
+  ) {
     let legend: {
       min: number | undefined;
       max: number | undefined;
