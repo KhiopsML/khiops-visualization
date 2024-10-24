@@ -27,6 +27,10 @@ import {
   ModuleRegistry,
   ColumnResizedEvent,
   Column,
+  GridReadyEvent,
+  SortChangedEvent,
+  CellDoubleClickedEvent,
+  NavigateToNextCellParams,
 } from '@ag-grid-community/core';
 import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
@@ -34,6 +38,7 @@ import { LS } from '@khiops-library/enum/ls';
 import { Ls } from '@khiops-library/providers/ls.service';
 import { KEYBOARD } from '@khiops-library/enum/keyboard';
 import { GridCheckboxEventI } from '@khiops-library/interfaces/events';
+import { DynamicI } from '@khiops-library/interfaces/globals';
 
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
@@ -49,21 +54,21 @@ export class AgGridComponent
   @ViewChild('agGrid', {
     static: false,
   })
-  private agGrid: AgGridAngular;
+  private agGrid: AgGridAngular | undefined;
 
   @ViewChild('searchInputEl', {
     static: false,
   })
-  private searchInputEl: ElementRef;
+  private searchInputEl: ElementRef | undefined;
 
   @Input() public suppressRowClickSelection = false;
-  @Input() public inputDatas: any[]; // Can be any types of datas
-  @Input() public displayedColumns: GridColumnsI[];
+  @Input() public inputDatas: any[] | undefined; // Can be any types of datas
+  @Input() public displayedColumns: GridColumnsI[] | undefined;
   @Input() public override id: any = undefined;
-  @Input() public title: string;
-  @Input() public titleTooltip: string;
+  @Input() public title: string = '';
+  @Input() public titleTooltip: string = '';
   @Input() public showLevelDistribution = true;
-  @Input() public levelDistributionTitle: string;
+  @Input() public levelDistributionTitle: string = '';
   @Input() public showColumnsSelection = true;
   @Input() public showDataTypeSelection = false;
   @Input() public showSearch = true;
@@ -113,11 +118,11 @@ export class AgGridComponent
     animateRows: false,
   };
 
-  private cellsSizes = {};
-  private visibleColumns = {};
+  private cellsSizes: DynamicI = {};
+  private visibleColumns: DynamicI = {};
   private gridMode: string = '';
-  private gridModes = {}; // 'fitToSpace' or 'fitToContent'
-  private divWidth: number;
+  private gridModes: DynamicI = {}; //  values can be: 'fitToSpace' or 'fitToContent'
+  private divWidth: number = 0;
 
   constructor(
     public override selectableService: SelectableService,
@@ -155,7 +160,7 @@ export class AgGridComponent
     } catch (e) {}
   }
 
-  sizeChanged(width) {
+  sizeChanged(width: number) {
     this.divWidth = width;
     this.checkIsSmallDiv();
 
@@ -166,11 +171,11 @@ export class AgGridComponent
     }
   }
 
-  onSortChanged(grid) {
+  onSortChanged(grid: SortChangedEvent) {
     this.saveState(grid);
   }
 
-  onGridReady(params) {
+  onGridReady(params: GridReadyEvent) {
     this.restoreState();
     this.fitToSpace();
   }
@@ -194,7 +199,7 @@ export class AgGridComponent
     if (changes.displayedColumns?.currentValue) {
       if (
         this.showLineSelection !== false &&
-        this.displayedColumns.findIndex((e) => e.field === '_id') === -1
+        this.displayedColumns?.findIndex((e) => e.field === '_id') === -1
       ) {
         // Add the hidden id key if it does not exists
         this.displayedColumns.push({
@@ -207,12 +212,14 @@ export class AgGridComponent
         for (let i = 0; i < this.displayedColumns.length; i++) {
           const col = this.displayedColumns[i];
           if (
+            col &&
             this.visibleColumns[this.id] &&
             this.visibleColumns[this.id][col.field] !== undefined
           ) {
             col.show = this.visibleColumns[this.id][col.field];
           }
         }
+        console.log('ngOnChanges ~ this.visibleColumns:', this.visibleColumns);
 
         this.updateColumnFilterBadge();
       }
@@ -228,9 +235,11 @@ export class AgGridComponent
   }
 
   updateColumnFilterBadge() {
-    const hiddenColumns = this.displayedColumns.filter((e) => e.show === false);
+    const hiddenColumns = this.displayedColumns?.filter(
+      (e) => e.show === false,
+    );
     // _id is always hidden
-    this.hideFilterBadge = hiddenColumns.length <= 1;
+    this.hideFilterBadge = (hiddenColumns && hiddenColumns.length <= 1) || true;
   }
 
   override ngAfterViewInit() {
@@ -281,11 +290,18 @@ export class AgGridComponent
     this.fitToSpace();
   }
 
-  onCellDoubleClicked(e) {
+  onCellDoubleClicked(e: CellDoubleClickedEvent) {
     this.doubleClickListItem.emit(e.data);
   }
 
-  selectNode(selectedVariable) {
+  /**
+   * Selects a node or multiple nodes in the ag-Grid based on the provided variable(s).
+   *
+   * @param selectedVariable - The variable(s) to be selected. It can be of any type.
+   *                           If it is an array, multiple nodes will be selected.
+   *                           If it is a single object, only one node will be selected.
+   */
+  selectNode(selectedVariable: any) {
     if (selectedVariable && this.agGrid?.api) {
       // unselect previous
       if (this.gridOptions.api) {
@@ -305,7 +321,7 @@ export class AgGridComponent
     }
   }
 
-  selectNodeFromIndex(nodeIndex) {
+  selectNodeFromIndex(nodeIndex: number) {
     if (nodeIndex !== undefined && this.showLineSelection) {
       if (this.agGrid?.api) {
         this.agGrid.api.forEachNode((node) => {
@@ -315,14 +331,14 @@ export class AgGridComponent
             // let pageToSelect = node.rowIndex / this.gridOptions.api.paginationGetPageSize();
             // pageToSelect = Math.ceil(pageToSelect) - 1; // -1 to begin at 0
             // this.gridOptions.api.paginationGoToPage(pageToSelect);
-            this.agGrid.api.ensureIndexVisible(node.rowIndex || 0);
+            this.agGrid?.api.ensureIndexVisible(node.rowIndex || 0);
           }
         });
       }
     }
   }
 
-  selectNodeFromId(nodeId) {
+  selectNodeFromId(nodeId: string) {
     if (nodeId !== undefined && this.showLineSelection) {
       if (this.agGrid?.api) {
         this.agGrid.api.forEachNode((node) => {
@@ -346,7 +362,7 @@ export class AgGridComponent
     }
   }
 
-  toggleGridCheckbox(e) {
+  toggleGridCheckbox(e: GridCheckboxEventI) {
     this.gridCheckboxChanged.emit(e);
   }
 
@@ -362,58 +378,59 @@ export class AgGridComponent
       // Advanced tables (for instance unfold hierarchy)
       for (let i = 0; i < this.displayedColumns.length; i++) {
         const col = this.displayedColumns[i];
-        const gridCol: ColDef | any = {
-          headerName: col.headerName,
-          headerTooltip: col.tooltip
-            ? col.headerName + ': ' + col.tooltip
-            : col.headerName,
-          // tooltipShowDelay: 500,
-          colId: col.headerName,
-          field: col.field,
-          sortable: true,
-          suppressMovable: true,
-          resizable: true,
-          valueFormatter: this.enablePrecision
-            ? (params) =>
-                params.value &&
-                UtilsService.getPrecisionNumber(
-                  params.value,
-                  this.AppConfig.GLOBAL.TO_FIXED,
-                )
-            : undefined,
-          hide: col.show === false, // ! if undefined : show it
-          width: this.cellsSizes?.[this.id]?.[col.field],
-          cellRendererFramework: col.cellRendererFramework,
-          cellRendererParams: col.cellRendererParams,
-          comparator: function (a, b) {
-            const result = a - b;
-            if (isNaN(result)) {
-              if (!a || a === '' || a === 'undefined') {
-                a = '0';
+        if (col) {
+          const gridCol: ColDef | any = {
+            headerName: col.headerName,
+            headerTooltip: col.tooltip
+              ? col.headerName + ': ' + col.tooltip
+              : col.headerName,
+            // tooltipShowDelay: 500,
+            colId: col.headerName,
+            field: col.field,
+            sortable: true,
+            suppressMovable: true,
+            resizable: true,
+            valueFormatter: this.enablePrecision
+              ? (params) =>
+                  params.value &&
+                  UtilsService.getPrecisionNumber(
+                    params.value,
+                    this.AppConfig.GLOBAL.TO_FIXED,
+                  )
+              : undefined,
+            hide: col.show === false, // ! if undefined : show it
+            width: this.cellsSizes?.[this.id]?.[col.field],
+            cellRendererFramework: col.cellRendererFramework,
+            cellRendererParams: col.cellRendererParams,
+            comparator: function (a: any, b: any) {
+              const result = a - b;
+              if (isNaN(result)) {
+                if (!a || a === '' || a === 'undefined') {
+                  a = '0';
+                }
+                if (!b || b === '' || b === 'undefined') {
+                  b = '0';
+                }
+                return a
+                  .toString()
+                  .trim()
+                  .localeCompare(b.toString().trim(), undefined, {
+                    numeric: true,
+                  });
+              } else {
+                return result;
               }
-              if (!b || b === '' || b === 'undefined') {
-                b = '0';
-              }
-              return a
-                .toString()
-                .trim()
-                .localeCompare(b.toString().trim(), undefined, {
-                  numeric: true,
-                });
-            } else {
-              return result;
-            }
-          },
-        };
-
-        this.columnDefs.push(gridCol);
+            },
+          };
+          this.columnDefs.push(gridCol);
+        }
       }
 
       this.rowData = [];
       for (let i = 0; i < this.inputDatas.length; i++) {
         const currentData = this.inputDatas[i];
         if (currentData) {
-          const currentRow = {};
+          const currentRow: DynamicI = {};
           for (let j = 0; j < this.displayedColumns.length; j++) {
             currentRow[this.displayedColumns[j].field] =
               currentData[this.displayedColumns[j].field];
@@ -432,7 +449,7 @@ export class AgGridComponent
 
   openLevelDistributionDialog(): void {
     // always sort inputDatas by level to show level distributiuon
-    this.inputDatas = this.inputDatas.sort((a: any, b: any) => {
+    this.inputDatas = this.inputDatas?.sort((a: any, b: any) => {
       return this.compare(a.level || 0, b.level || 0, false);
     });
     this.showLevelDistributionGraph.emit(this.inputDatas);
@@ -446,12 +463,13 @@ export class AgGridComponent
 
   toggleTableColumn(event: MatCheckboxChange, opt: GridColumnsI) {
     // Update current displayed column state
-    const currentColumn = this.displayedColumns.find((e) => {
+    const currentColumn = this.displayedColumns?.find((e) => {
       return e.field === opt.field;
     });
-    currentColumn.show = event.checked;
-
-    this.saveVisibleColumns(currentColumn.field, currentColumn.show);
+    if (currentColumn) {
+      currentColumn.show = event.checked;
+      this.saveVisibleColumns(currentColumn.field, currentColumn.show);
+    }
 
     this.updateColumnFilterBadge();
 
@@ -500,7 +518,7 @@ export class AgGridComponent
 
   search() {
     // this.trackerService.trackEvent('click', 'search');
-    this.agGrid.api.setQuickFilter(this.searchInput || '');
+    this.agGrid?.api.setQuickFilter(this.searchInput || '');
     if (this.searchInput) {
       this.ls.set(
         LS.OPTIONS_AG_GRID_SEARCH + '_' + this.id.toUpperCase(),
@@ -511,12 +529,15 @@ export class AgGridComponent
     }
   }
 
-  keyboardNavigation = (params) => {
-    const selectedNodes = this.agGrid.api.getSelectedNodes();
+  keyboardNavigation = (params: NavigateToNextCellParams) => {
+    const selectedNodes = this.agGrid?.api.getSelectedNodes();
     if (selectedNodes?.[0]) {
       const previousRowIndex = selectedNodes[0].rowIndex;
       let nextRowIndex;
-      if (previousRowIndex !== undefined) {
+      if (
+        previousRowIndex !== undefined &&
+        typeof previousRowIndex === 'number'
+      ) {
         switch (params.key) {
           case KEYBOARD.KEY_DOWN:
             nextRowIndex = previousRowIndex + 1;
@@ -532,15 +553,17 @@ export class AgGridComponent
         this.gridOptions?.api?.paginationGetPageSize() || 0;
       const currentPage: number =
         this.gridOptions?.api?.paginationGetCurrentPage() || 0;
-      if (
-        currentPage * pageSize <= nextRowIndex &&
-        nextRowIndex < (currentPage + 1) * pageSize
-      ) {
-        this.selectNodeFromIndex(nextRowIndex);
-        // this.selectListItem.emit(this.agGrid.api.getSelectedNodes()[0].data);
-        this.selectListItem.emit(
-          this.agGrid.api.getDisplayedRowAtIndex(nextRowIndex)?.data,
-        );
+      if (nextRowIndex !== undefined && typeof nextRowIndex === 'number') {
+        if (
+          currentPage * pageSize <= nextRowIndex &&
+          nextRowIndex < (currentPage + 1) * pageSize
+        ) {
+          this.selectNodeFromIndex(nextRowIndex);
+          // this.selectListItem.emit(this.agGrid.api.getSelectedNodes()[0].data);
+          this.selectListItem.emit(
+            this.agGrid?.api.getDisplayedRowAtIndex(nextRowIndex)?.data,
+          );
+        }
       }
     }
   };
@@ -563,7 +586,7 @@ export class AgGridComponent
     }
   }
 
-  saveColumnSize(field, width) {
+  saveColumnSize(field: string, width: number) {
     if (!this.cellsSizes[this.id]) {
       this.cellsSizes[this.id] = {};
     }
@@ -571,7 +594,7 @@ export class AgGridComponent
     this.ls.set(LS.CELL_AG_GRID, JSON.stringify(this.cellsSizes));
   }
 
-  saveVisibleColumns(column, isVisible) {
+  saveVisibleColumns(column: string, isVisible: boolean) {
     if (!this.visibleColumns[this.id]) {
       this.visibleColumns[this.id] = {};
     }
@@ -607,7 +630,7 @@ export class AgGridComponent
     this.restoreState();
   }
 
-  saveGridModes(gridMode) {
+  saveGridModes(gridMode: string) {
     this.gridModes[this.id] = gridMode;
     this.ls.set(LS.MODES_AG_GRID, JSON.stringify(this.gridModes));
   }
@@ -617,7 +640,7 @@ export class AgGridComponent
    * @param allowShrink if false, columns will NOT be resized when there is no "empty" horizontal space
    */
   resizeColumnsToFit() {
-    if (this.agGrid.api) {
+    if (this.agGrid?.api) {
       /**
        * this is a "hacK" - there is no way to check if there is "empty" space in the grid using the
        * public grid api - we have to use the internal tools here.
@@ -631,7 +654,7 @@ export class AgGridComponent
     }
   }
 
-  saveState(grid) {
+  saveState(grid: SortChangedEvent) {
     const state = {
       sortState: this.gridOptions?.columnApi?.getColumnState(),
     };
@@ -649,12 +672,16 @@ export class AgGridComponent
         );
         const state = (PREV_STATE && JSON.parse(PREV_STATE)) || {};
 
-        if (state.sortState && this.gridOptions.columnApi) {
+        if (
+          this.displayedColumns &&
+          state.sortState &&
+          this.gridOptions.columnApi
+        ) {
           // First reorder state according to displayed columns order
           const sortedState: any = [];
           for (let i = 0; i < this.displayedColumns.length; i++) {
             const currentState = state.sortState.find(
-              (e) => e.colId === this.displayedColumns[i].headerName,
+              (e: any) => e.colId === this.displayedColumns?.[i]?.headerName,
             );
             if (currentState) {
               sortedState.push(currentState);

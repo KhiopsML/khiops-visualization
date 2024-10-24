@@ -24,13 +24,13 @@ export class AnnotationComponent
   extends SelectableComponent
   implements OnInit, OnChanges
 {
-  @Input() private selectedDimension: DimensionModel;
-  @Input() public selectedNode: TreeNodeModel;
-  @Input() private position: number;
-  public value: string;
+  @Input() private selectedDimension: DimensionModel | undefined;
+  @Input() public selectedNode: TreeNodeModel | undefined;
+  @Input() private position: number = 0;
+  public value: string = '';
   public override id: any = undefined;
   public componentType = COMPONENT_TYPES.ANNOTATIONS; // needed to copy datas
-  public title: string;
+  public title: string = '';
 
   constructor(
     public override selectableService: SelectableService,
@@ -57,11 +57,13 @@ export class AnnotationComponent
 
   onAnnotationChanged(annotation: string) {
     this.value = annotation;
-    this.selectedNode.updateAnnotation(annotation);
-    this.annotationService.setNodeAnnotation(
-      this.selectedDimension.name,
-      this.selectedNode.name,
-      annotation,
-    );
+    if (this.selectedNode && this.selectedDimension) {
+      this.selectedNode.updateAnnotation(annotation);
+      this.annotationService.setNodeAnnotation(
+        this.selectedDimension.name,
+        this.selectedNode.name,
+        annotation,
+      );
+    }
   }
 }
