@@ -6,6 +6,7 @@ import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 import { MatrixUiService } from './matrix.ui.service';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 import { DynamicI } from '@khiops-library/interfaces/globals';
+import { DimensionModel } from '@khiops-library/model/dimension.model';
 
 @Injectable({
   providedIn: 'root',
@@ -357,8 +358,8 @@ export class MatrixUtilsService {
    */
   static computeValsByContext(
     e: CellModel,
-    partPositions,
-    partPositionsLength,
+    partPositions: number[],
+    partPositionsLength: number,
   ): number[] {
     let matrixTotal = 0;
     let cellFreqs = 0;
@@ -384,7 +385,10 @@ export class MatrixUtilsService {
    * @param yDimension - The dimension object for the y-axis, containing type and relevant data.
    * @returns A tuple containing two arrays: the first array represents the x-axis values, and the second array represents the y-axis values.
    */
-  static getStandardAxisValues(xDimension, yDimension): [number[], number[]] {
+  static getStandardAxisValues(
+    xDimension: DimensionModel,
+    yDimension: DimensionModel,
+  ): [number[], number[]] {
     let xValues: number[] = [];
     let yValues: number[] = [];
     if (xDimension.type === TYPES.CATEGORICAL) {
@@ -463,9 +467,9 @@ export class MatrixUtilsService {
    * @returns A tuple containing two arrays: the x-axis values and the y-axis values.
    */
   static getFrequencyAxisValues(
-    xDimension,
-    yDimension,
-    cellFrequencies,
+    xDimension: DimensionModel,
+    yDimension: DimensionModel,
+    cellFrequencies: number[][],
   ): [number[], number[]] {
     let xValues: number[] = [];
     let yValues: number[] = [];
@@ -520,9 +524,9 @@ export class MatrixUtilsService {
    * @returns An array of CellModel objects representing the cells in the matrix.
    */
   static getCellDatas(
-    xDimension,
-    yDimension,
-    zDimension,
+    xDimension: DimensionModel,
+    yDimension: DimensionModel,
+    zDimension: DimensionModel[],
     xAxisPartNames,
     yAxisPartNames,
     xAxisPartShortDescription,

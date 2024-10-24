@@ -13,7 +13,6 @@ import { VariableDetailsModel } from '../model/variable-details.model';
 import { Variable2dModel } from '../model/variable-2d.model';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { CoocurenceCellModel } from '../model/coocurence-cell.model';
-import { MatrixUiService } from '@khiops-library/components/matrix/matrix.ui.service';
 import { Preparation2dDatasModel } from '../model/preparation2d-datas.model';
 import { CoocurenceCellsModel } from '../model/coocurence-cells.model';
 import { InformationsModel } from '@khiops-visualization/model/informations.model';
@@ -23,6 +22,7 @@ import { MatrixRangeValuesI } from '@khiops-visualization/interfaces/matrix-rang
 import { VariableModel } from '@khiops-visualization/model/variable.model';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
+import { MatrixValuesModel } from '@khiops-library/model/matrix-value.model';
 
 @Injectable({
   providedIn: 'root',
@@ -410,12 +410,13 @@ export class Preparation2dDatasService {
    */
   getCellDatasByAxis(
     type: string,
-    axisPartValues: string[],
+    axisPartValues: string[] | number[],
     displayaxisPart: string,
     datasAxis: any,
     displayedColumns: GridColumnsI[],
     variableName: string,
   ) {
+    console.log('Preparation2dDatasService ~ axisPartValues:', axisPartValues);
     if (axisPartValues) {
       if (type === TYPES.NUMERICAL) {
         axisPartValues = [displayaxisPart]; // join into one array for numerical values (bivar)
@@ -430,7 +431,7 @@ export class Preparation2dDatasService {
           const modalityFreq = this.getModalityFrequency(
             appDatas.preparationReport.variablesDetailedStatistics,
             variableName,
-            axisPartValues[k],
+            axisPartValues[k].toString(),
           );
           datasAxis[k][displayedColumns[1].field] = modalityFreq;
         }
@@ -617,14 +618,9 @@ export class Preparation2dDatasService {
           variableDatas.dataGrid.cellFrequencies ||
           variableDatas.dataGrid.cellTargetFrequencies
         ) {
-          const xValues = {
-            standard: [],
-            frequency: [],
-          };
-          const yValues = {
-            standard: [],
-            frequency: [],
-          };
+          const xValues = new MatrixValuesModel();
+          const yValues = new MatrixValuesModel();
+
           [xValues.frequency, yValues.frequency] =
             MatrixUtilsService.getFrequencyAxisValues(
               xDimension,

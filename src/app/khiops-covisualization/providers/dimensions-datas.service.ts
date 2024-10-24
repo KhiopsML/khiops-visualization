@@ -10,6 +10,7 @@ import { DimensionsDatasModel } from '../model/dimensions-data.model';
 import { TYPES } from '@khiops-library/enum/types';
 import { ExtDatasModel } from '@khiops-covisualization/model/ext-datas.model';
 import { ImportExtDatasService } from './import-ext-datas.service';
+import { MatrixValuesModel } from '@khiops-library/model/matrix-value.model';
 
 @Injectable({
   providedIn: 'root',
@@ -634,14 +635,8 @@ export class DimensionsDatasService {
       zDimension,
     );
 
-    const xValues = {
-      standard: [],
-      frequency: [],
-    };
-    const yValues = {
-      standard: [],
-      frequency: [],
-    };
+    const xValues = new MatrixValuesModel();
+    const yValues = new MatrixValuesModel();
 
     [xValues.frequency, yValues.frequency] =
       MatrixUtilsService.getFrequencyAxisValues(
