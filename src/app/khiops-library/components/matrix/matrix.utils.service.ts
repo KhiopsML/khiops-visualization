@@ -28,7 +28,7 @@ export class MatrixUtilsService {
   static computeMatrixValues(
     graphMode: MatrixModeI,
     matrixCellDatas: CellModel[],
-    contextSelection: any,
+    contextSelection: number[][],
     selectedTargetIndex: number,
   ) {
     let matrixFreqsValues;

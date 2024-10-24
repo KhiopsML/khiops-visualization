@@ -45,7 +45,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   @Input() private graphTarget: string = '';
   @Input() private selectedNodes: TreeNodeModel[] | undefined; // KC use case
   @Input() private selectedCell: CellModel | undefined; // KV use case
-  @Input() private contextSelection: number[] = [];
+  @Input() private contextSelection: number[][] = [];
 
   @Output() private matrixAxisInverted: EventEmitter<any> = new EventEmitter();
   @Output() private cellSelected: EventEmitter<any> = new EventEmitter();
