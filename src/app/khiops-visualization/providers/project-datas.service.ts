@@ -17,7 +17,7 @@ export class ProjectDatasService {
    */
   getProjectSummaryDatas(): InfosDatasI[] {
     const appDatas = this.appService.getDatas().datas;
-    if (appDatas.preparationReport) {
+    if (appDatas?.preparationReport) {
       const projectSummaryDatas = new ProjectSummaryModel(
         appDatas,
         REPORTS.PREPARATION_REPORT,
