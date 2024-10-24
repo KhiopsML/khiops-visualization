@@ -6,12 +6,12 @@ import { TranslateService } from '@ngstack/translate';
   templateUrl: './confirm-dialog.component.html',
 })
 export class ConfirmDialogComponent implements OnInit {
-  public title: string;
-  public message: string;
+  public title: string = '';
+  public message: string = '';
   public displayRejectBtn: boolean = false;
   public displayCancelBtn: boolean = true;
   public confirmButtonText: string;
-  public confirmTranslation: string;
+  public confirmTranslation: string = '';
 
   constructor(private translate: TranslateService) {
     this.confirmButtonText = this.translate.get('GLOBAL.YES');
