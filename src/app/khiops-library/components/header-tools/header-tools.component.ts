@@ -202,7 +202,7 @@ export class HeaderToolsComponent {
     this.toggleNavDrawerChanged.emit();
   }
 
-  private getComponentInstance(currentSelectedArea) {
+  private getComponentInstance(currentSelectedArea: any) {
     if (currentSelectedArea.componentType === COMPONENT_TYPES.HISTOGRAM) {
       let chartContainer = currentSelectedArea.chart.nativeElement;
       return chartContainer?.componentInstance;

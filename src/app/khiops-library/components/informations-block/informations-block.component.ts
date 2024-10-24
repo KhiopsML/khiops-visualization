@@ -18,8 +18,8 @@ import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InformationsBlockComponent extends SelectableComponent {
-  @Input() public inputDatas: InfosDatasI[];
-  @Input() public title: string;
+  @Input() public inputDatas: InfosDatasI[] | undefined;
+  @Input() public title: string = '';
   @Input() public icon = 'tune';
   public componentType = COMPONENT_TYPES.INFORMATIONS; // needed to copy datas
 
@@ -31,7 +31,7 @@ export class InformationsBlockComponent extends SelectableComponent {
     super(selectableService, ngzone, configService);
   }
 
-  show_value(value) {
+  show_value(value: any) {
     if (value instanceof File) return value.name;
     return value;
   }

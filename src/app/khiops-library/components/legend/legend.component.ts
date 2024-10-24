@@ -9,6 +9,8 @@ import {
 import { TranslateService } from '@ngstack/translate';
 import { ChartColorsSetI } from '../../interfaces/chart-colors-set';
 import { UtilsService } from '../../providers/utils.service';
+import { DynamicI } from '@khiops-library/interfaces/globals';
+import { ChartDatasetModel } from '@khiops-library/model/chart-dataset.model';
 
 @Component({
   selector: 'kl-legend',
@@ -16,22 +18,22 @@ import { UtilsService } from '../../providers/utils.service';
   styleUrls: ['./legend.component.scss'],
 })
 export class LegendComponent implements OnChanges {
-  @Input() public tooltip: string;
+  @Input() public tooltip: string = '';
   @Input() public position = 'top';
   @Input() private inputDatas: any; // change according to the chart type
-  @Input() private type: string;
-  @Input() private colorSet: ChartColorsSetI;
+  @Input() private type: string = '';
+  @Input() private colorSet: ChartColorsSetI | undefined;
 
   @Output() private legendItemClicked: EventEmitter<string> =
     new EventEmitter();
 
-  public legend: any[];
-  public selectedItem: string = undefined;
+  public legend: any[] = [];
+  public selectedItem: string | undefined;
 
   constructor(private translate: TranslateService) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    this.inputDatas = changes.inputDatas.currentValue;
+    this.inputDatas = changes?.inputDatas?.currentValue;
     this.updateLegend();
   }
 
@@ -53,13 +55,15 @@ export class LegendComponent implements OnChanges {
    *
    * @param input - The input data to check for the default group index.
    */
-  private checkForDefaultGroupIndex(input) {
+  private checkForDefaultGroupIndex(input: ChartDatasetModel) {
     if (input?.extra) {
-      const defaultIndex = input.extra.findIndex((e) => e.defaultGroupIndex);
+      const defaultIndex = input.extra.findIndex(
+        (e: DynamicI) => e.defaultGroupIndex,
+      );
       if (defaultIndex !== -1) {
         this.legend.push({
           name: this.translate.get('GLOBAL.DEFAULT_GROUP_INDEX'),
-          color: UtilsService.hexToRGBa(this.colorSet.domain[0], 0.3),
+          color: UtilsService.hexToRGBa(this.colorSet?.domain[0], 0.3),
         });
       }
     }
@@ -72,13 +76,13 @@ export class LegendComponent implements OnChanges {
         if (this.inputDatas?.datasets?.[0]) {
           this.legend.push({
             name: this.translate.get(this.inputDatas.datasets[0].label),
-            color: this.colorSet.domain[0],
+            color: this.colorSet?.domain[0],
           });
           this.checkForDefaultGroupIndex(this.inputDatas.datasets[0]);
         } else {
           this.legend.push({
             name: this.translate.get(this.inputDatas),
-            color: this.colorSet.domain[0],
+            color: this.colorSet?.domain[0],
           });
         }
       } else if (this.type === 'chart-nd') {
@@ -88,7 +92,7 @@ export class LegendComponent implements OnChanges {
           for (let i = 0; i < series.length; i++) {
             this.legend.push({
               name: series[i].name,
-              color: this.colorSet.domain[i],
+              color: this.colorSet?.domain[i],
             });
           }
         } else if (
@@ -99,7 +103,7 @@ export class LegendComponent implements OnChanges {
           for (let i = 0; i < this.inputDatas.datasets.length; i++) {
             this.legend.push({
               name: this.inputDatas.datasets[i].label,
-              color: this.colorSet.domain[i],
+              color: this.colorSet?.domain[i],
             });
           }
         }
@@ -109,7 +113,7 @@ export class LegendComponent implements OnChanges {
           if (this.inputDatas[i].show === true) {
             this.legend.push({
               name: this.inputDatas[i].name,
-              color: this.colorSet.domain[i],
+              color: this.colorSet?.domain[i],
             });
           }
         }
