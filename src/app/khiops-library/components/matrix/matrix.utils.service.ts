@@ -30,11 +30,11 @@ export class MatrixUtilsService {
     matrixCellDatas: CellModel[],
     contextSelection: number[][],
     selectedTargetIndex: number,
-  ) {
-    let matrixFreqsValues;
-    let matrixValues;
-    let matrixExtras;
-    let matrixExpectedFreqsValues;
+  ): [number[], number[], number[] | boolean[], number[]] {
+    let matrixFreqsValues: number[];
+    let matrixValues: number[];
+    let matrixExtras: number[] | boolean[];
+    let matrixExpectedFreqsValues: number[];
 
     if (contextSelection && contextSelection.length > 0) {
       // KC use case
@@ -195,15 +195,13 @@ export class MatrixUtilsService {
         return ef;
       });
     } else {
-      // Always compute freqs for distribution graph datas
-      matrixFreqsValues = matrixCellDatas.map((e) => e.cellFreqs);
       if (selectedTargetIndex !== -1) {
         matrixFreqsValues = matrixCellDatas.map(
           (e) => e.cellFreqs[selectedTargetIndex] || 0,
         );
       } else {
-        matrixFreqsValues =
-          UtilsService.sumArrayItemsOfArray(matrixFreqsValues);
+        const cellFreqs = matrixCellDatas.map((e) => e.cellFreqs);
+        matrixFreqsValues = UtilsService.sumArrayItemsOfArray(cellFreqs);
       }
 
       if (

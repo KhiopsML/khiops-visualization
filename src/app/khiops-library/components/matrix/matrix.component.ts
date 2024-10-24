@@ -97,7 +97,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   private matrixValues: number[] = [];
   private matrixFreqsValues: number[] = [];
   private matrixExpectedFreqsValues: number[] = [];
-  private matrixExtras: number[] = [];
+  private matrixExtras: number[] | boolean[] = [];
   private isFirstResize = true;
   private zoom = 1;
   private unpanzoom: any;
