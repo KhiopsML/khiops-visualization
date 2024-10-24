@@ -528,10 +528,10 @@ export class MatrixUtilsService {
     xDimension: DimensionModel,
     yDimension: DimensionModel,
     zDimension: DimensionModel[],
-    xAxisPartNames: string[] | number[][], // KC: string[], KV: Number[][]
-    yAxisPartNames: string[] | number[][], // KC: string[], KV: Number[][]
-    xAxisPartShortDescription: string[] | number[][], // KC: string[], KV: Number[][]
-    yAxisPartShortDescription: string[] | number[][], // KC: string[], KV: Number[][]
+    xAxisPartNames: string[] | number[][], // KC: string[], KV: number[][]
+    yAxisPartNames: string[] | number[][], // KC: string[], KV: number[][]
+    xAxisPartShortDescription: string[] | number[][], // KC: string[], KV: number[][]
+    yAxisPartShortDescription: string[] | number[][], // KC: string[], KV: number[][]
     cellFrequencies: number[] | number[][],
     cellInterests: number[] | undefined, // KC: undefined
     cellTargetFrequencies: number[][] | undefined, // KC: undefined
@@ -795,9 +795,9 @@ export class MatrixUtilsService {
    * @returns An array of cell frequencies. If `zDimension` is provided, returns a nested array of frequencies.
    */
   static getCellFrequencies(
-    dimensionsParts,
+    dimensionsParts: number[],
     cellPartIndexes: number[][],
-    inputCellFrequencies,
+    inputCellFrequencies: number[] | number[][], // KC: number[], KV: number[][]
     zDimension: any[] = [],
   ) {
     // var t0 = performance.now();
