@@ -13,7 +13,7 @@ import { Ls } from '@khiops-library/providers/ls.service';
 export class FileLoaderComponent implements OnInit {
   public fileLoaderDatas: any;
   public associationFiles: string[] = [];
-  public cyInputText: string; // cypress input field, used to load files in cypress
+  public cyInputText: string = ''; // cypress input field, used to load files in cypress
 
   constructor(
     private ngzone: NgZone,
@@ -44,22 +44,23 @@ export class FileLoaderComponent implements OnInit {
     });
   }
 
-  onClickOpen(inputFile) {
+  onClickOpen(inputFile: HTMLInputElement) {
     !this.configService.getConfig().onFileOpen
       ? inputFile.click()
       : this.configService.getConfig().onFileOpen();
   }
 
-  openFileDialog(e) {
-    if (e.target.files) this.openFile(e.target.files[0]);
+  openFileDialog(e: Event) {
+    const input = e.target as HTMLInputElement;
+    if (input.files && input.files[0]) this.openFile(input.files[0]);
   }
 
-  private openFile(filename) {
+  private openFile(filename: File) {
     if (filename) {
       this.ngzone.run(() => {
         this.fileLoaderService
           .readFile(filename)
-          .then((datas) => {
+          .then(() => {
             this.fileLoaderService.setFileHistory(filename);
           })
           .catch((error) => {
