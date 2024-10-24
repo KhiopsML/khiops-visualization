@@ -410,16 +410,15 @@ export class Preparation2dDatasService {
    */
   getCellDatasByAxis(
     type: string,
-    axisPartValues: string[] | number[],
+    axisPartValues: number[] | string,
     displayaxisPart: string,
     datasAxis: any,
     displayedColumns: GridColumnsI[],
     variableName: string,
   ) {
-    console.log('Preparation2dDatasService ~ axisPartValues:', axisPartValues);
     if (axisPartValues) {
       if (type === TYPES.NUMERICAL) {
-        axisPartValues = [displayaxisPart]; // join into one array for numerical values (bivar)
+        axisPartValues = [Number(displayaxisPart)]; // join into one array for numerical values (bivar)
       }
 
       const appDatas = this.appService.getDatas().datas;

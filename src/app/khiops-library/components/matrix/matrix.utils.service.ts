@@ -527,8 +527,8 @@ export class MatrixUtilsService {
     xDimension: DimensionModel,
     yDimension: DimensionModel,
     zDimension: DimensionModel[],
-    xAxisPartNames,
-    yAxisPartNames,
+    xAxisPartNames: string[] | number[][], // KC: string[], KV: Number[][]
+    yAxisPartNames: string[] | number[][], // KC: string[], KV: Number[][]
     xAxisPartShortDescription,
     yAxisPartShortDescription,
     cellFrequencies,
