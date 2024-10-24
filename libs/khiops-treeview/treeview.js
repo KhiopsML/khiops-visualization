@@ -17,7 +17,6 @@
         'init',
         'updateNodeName',
         'expandAll',
-        'expandAllNodeChildren',
         'collapse',
         'collapseAll',
         'selectNode',
@@ -68,9 +67,7 @@
             instance.handlers[name] instanceof Array
           ) {
             forEach(instance.handlers[name], function (handle) {
-              // window.setTimeout(function () {
               handle.callback.apply(handle.context, args);
-              // });
             });
           }
         } else {
@@ -284,14 +281,10 @@
             let parent = currentNode.parentNode;
             removeAllEditInputs();
 
-            // if (e.isTrusted) {
-            // Emit if it is a user click
-            // Do not if it is a callback
             let data = JSON.parse(parent.getAttribute('data-item'));
             emit(self, 'select', {
               data: data,
             });
-            // }
 
             forEach(
               clonedContainer.querySelectorAll('.tree-leaf-text'),
@@ -502,7 +495,6 @@
         setTimeout(function () {
           // When we make multiple nodes,
           // we must override simple select node selection with a timeout
-
           let el = self.rootElementDom.querySelector('#' + self.node);
           if (el) {
             let nodes = el.querySelectorAll('.tree-leaf-text');
@@ -522,7 +514,6 @@
         setTimeout(function () {
           // When we make multiple nodes,
           // we must override simple select node selection with a timeout
-
           let el = self.rootElementDom.querySelector('#' + self.node);
           if (el && nodesToSelect) {
             let nodes = el.querySelectorAll('.tree-leaf-text');
