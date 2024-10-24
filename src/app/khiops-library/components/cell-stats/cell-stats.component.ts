@@ -10,9 +10,9 @@ import { CellStatsI } from '@khiops-library/interfaces/cell-stats';
   styleUrls: ['./cell-stats.component.scss'],
 })
 export class CellStatsComponent implements OnChanges {
-  @Input() private selectedCells: CellModel[];
+  @Input() private selectedCells: CellModel[] = [];
 
-  public cellStats: CellStatsI;
+  public cellStats: CellStatsI | undefined;
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes?.selectedCells?.currentValue) {

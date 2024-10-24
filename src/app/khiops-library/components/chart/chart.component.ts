@@ -29,18 +29,18 @@ import { THEME } from '@khiops-library/enum/theme';
 })
 export class ChartComponent implements AfterViewInit, OnChanges {
   @Input() public canvasIdContainer = 'kl-chart'; // May be updated if multiple graph
-  @Input() private inputDatas: ChartDatasModel;
-  @Input() private activeEntries: number;
+  @Input() private inputDatas: ChartDatasModel | undefined;
+  @Input() private activeEntries: number | undefined;
   @Input() private type: ChartJs.ChartType = CHART_TYPES.BAR;
-  @Input() private chartOptions: ChartOptions;
+  @Input() private chartOptions: ChartOptions | undefined;
   @Input() private colorSet: ChartColorsSetI | undefined;
   @Input() private enableSelection = true;
-  @Input() private selectedLineChartItem: string | undefined = undefined;
+  @Input() private selectedLineChartItem: string | undefined;
 
   @Output() private selectBarIndex: EventEmitter<number> = new EventEmitter();
 
-  private ctx: ChartJs.ChartItem;
-  private chart: ChartJs.Chart;
+  private ctx: ChartJs.ChartItem | undefined;
+  private chart: ChartJs.Chart | undefined;
   private color: string = '';
   private barColor: string = '';
   private fontColor: string = '#999';
@@ -80,7 +80,7 @@ export class ChartComponent implements AfterViewInit, OnChanges {
       // Destroy old chart if exists
       // Do it even if canvas is undefined to remove other canvas ids
       try {
-        this.chart.destroy();
+        this.chart?.destroy();
       } catch (e) {}
 
       const chartAreaBorder = {
@@ -186,7 +186,7 @@ export class ChartComponent implements AfterViewInit, OnChanges {
         Object.values(ChartJs).filter((chartClass) => chartClass.id),
       );
 
-      const data: ChartJs.ChartData | undefined = undefined;
+      const data: ChartJs.ChartData = { datasets: [], labels: [] };
       const config: ChartJs.ChartConfiguration = {
         type: this.type,
         data: data,
@@ -251,12 +251,12 @@ export class ChartComponent implements AfterViewInit, OnChanges {
 
   public hideActiveEntries() {
     this.selectCurrentBarIndex(undefined);
-    this.chart.update();
+    this.chart?.update();
   }
 
   public showActiveEntries() {
     this.selectCurrentBarIndex(this.activeEntries);
-    this.chart.update();
+    this.chart?.update();
   }
 
   private graphClickEvent(e: any, items: string | any[]) {
@@ -268,13 +268,13 @@ export class ChartComponent implements AfterViewInit, OnChanges {
           const selectedIndex = items[i].index;
           this.selectCurrentBarIndex(selectedIndex);
           this.selectBarIndex.emit(items[i].index);
-          this.chart.update();
+          this.chart?.update();
         }
       }
     }
   }
 
-  private selectCurrentBarIndex(index: number) {
+  private selectCurrentBarIndex(index: number | undefined) {
     if (this.chart && this.enableSelection) {
       this.colorize();
       for (let i = 0; i < this.chart.data.datasets.length; i++) {
@@ -287,46 +287,48 @@ export class ChartComponent implements AfterViewInit, OnChanges {
   }
 
   private colorize() {
-    for (let i = 0; i < this.chart.data.datasets.length; i++) {
-      const dataset: ChartDatasetModel = <ChartDatasetModel>(
-        this.chart.data.datasets[i]
-      );
-      if (!dataset.borderWidth) {
-        dataset.borderSkipped = false;
-        dataset.borderWidth = 2;
-      }
-
-      dataset.backgroundColor = new Array(this.inputDatas.labels.length).fill(
-        UtilsService.hexToRGBa(this.colorSet?.domain[i], 0.8),
-      );
-      const defaultGroupIndex = dataset.extra?.findIndex(
-        (e: any) => e.defaultGroupIndex,
-      );
-      if (defaultGroupIndex !== -1) {
-        dataset.backgroundColor[defaultGroupIndex] = UtilsService.hexToRGBa(
-          this.colorSet?.domain[i],
-          0.15,
+    if (this.chart && this.inputDatas) {
+      for (let i = 0; i < this.chart.data.datasets.length; i++) {
+        const dataset: ChartDatasetModel = <ChartDatasetModel>(
+          this.chart.data.datasets[i]
         );
-      }
-
-      let borderOpacity = 1;
-      if (dataset.type === CHART_TYPES.LINE) {
-        // hide non selected lines
-        if (this.selectedLineChartItem === '') {
+        if (!dataset.borderWidth) {
+          dataset.borderSkipped = false;
           dataset.borderWidth = 2;
         }
-        if (this.selectedLineChartItem && this.selectedLineChartItem !== '') {
-          if (this.selectedLineChartItem !== dataset.label) {
-            borderOpacity = 0.35;
-          } else {
-            dataset.borderWidth = 4;
+
+        dataset.backgroundColor = new Array(this.inputDatas.labels.length).fill(
+          UtilsService.hexToRGBa(this.colorSet?.domain[i], 0.8),
+        );
+        const defaultGroupIndex = dataset.extra?.findIndex(
+          (e: any) => e.defaultGroupIndex,
+        );
+        if (defaultGroupIndex !== -1) {
+          dataset.backgroundColor[defaultGroupIndex] = UtilsService.hexToRGBa(
+            this.colorSet?.domain[i],
+            0.15,
+          );
+        }
+
+        let borderOpacity = 1;
+        if (dataset.type === CHART_TYPES.LINE) {
+          // hide non selected lines
+          if (this.selectedLineChartItem === '') {
+            dataset.borderWidth = 2;
+          }
+          if (this.selectedLineChartItem && this.selectedLineChartItem !== '') {
+            if (this.selectedLineChartItem !== dataset.label) {
+              borderOpacity = 0.35;
+            } else {
+              dataset.borderWidth = 4;
+            }
           }
         }
-      }
 
-      dataset.borderColor = new Array(this.inputDatas.labels.length).fill(
-        UtilsService.hexToRGBa(this.colorSet?.domain[i], borderOpacity),
-      );
+        dataset.borderColor = new Array(this.inputDatas.labels.length).fill(
+          UtilsService.hexToRGBa(this.colorSet?.domain[i], borderOpacity),
+        );
+      }
     }
   }
 
@@ -343,7 +345,7 @@ export class ChartComponent implements AfterViewInit, OnChanges {
         this.activeEntries = this.activeEntries + 1;
       }
       this.selectCurrentBarIndex(this.activeEntries);
-      this.chart.update();
+      this.chart?.update();
       this.selectBarIndex.emit(this.activeEntries);
     }
   }

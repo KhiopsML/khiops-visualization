@@ -14,7 +14,7 @@ import { TranslateService } from '@ngstack/translate';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BtnFullscreenComponent {
-  isFullscreen: boolean;
+  isFullscreen: boolean = false;
   @Output() toggleFullscreen: EventEmitter<boolean> = new EventEmitter();
 
   constructor(public translate: TranslateService) {}
