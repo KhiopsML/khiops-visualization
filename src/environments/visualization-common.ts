@@ -3,7 +3,7 @@ export const visualizationCommonEnvironment = {
     TO_FIXED: 8,
     LS_ID: 'KHIOPS_VISUALIZATION_',
     DEBUG_SOFTWARE_LABEL: 'KV',
-    MATRIX_CONTRAST: 0,
+    MATRIX_CONTRAST: 10,
     PAGINATION_SIZE: 500,
     DEFAULT_GRAPH_SCALE: 100,
     MAX_GRAPH_SCALE: 400,

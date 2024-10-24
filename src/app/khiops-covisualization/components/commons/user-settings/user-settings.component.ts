@@ -27,7 +27,8 @@ export class UserSettingsComponent implements OnChanges {
   @Input() opened: boolean = false;
 
   public allowCookies: boolean = false;
-  public contrastValue: number = 0;
+  public contrastValue: number =
+    AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST;
   private currentTheme: string = THEME.LIGHT;
 
   constructor(

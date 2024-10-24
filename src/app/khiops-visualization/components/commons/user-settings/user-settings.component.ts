@@ -28,7 +28,8 @@ export class UserSettingsComponent implements OnChanges {
   @Input() opened: boolean;
 
   public numberPrecision: number;
-  public contrastValue: number;
+  public contrastValue: number =
+    AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST;
   public allowCookies: boolean;
   private currentTheme: string;
 
