@@ -38,9 +38,11 @@ export class FileLoaderComponent implements OnInit {
 
   loadDebugFile(fileName?: string) {
     this.ngzone.run(() => {
-      this.fileLoaderService.debugReadDatas(fileName).catch((error) => {
-        console.warn(this.translate.get('SNACKS.OPEN_FILE_ERROR'), error);
-      });
+      this.fileLoaderService
+        .debugReadDatas(fileName)
+        .catch((error: { status: number }) => {
+          console.warn(this.translate.get('SNACKS.OPEN_FILE_ERROR'), error);
+        });
     });
   }
 
