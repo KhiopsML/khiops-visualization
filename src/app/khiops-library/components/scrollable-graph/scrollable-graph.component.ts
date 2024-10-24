@@ -24,10 +24,10 @@ export class ScrollableGraphComponent
   implements OnChanges, AfterViewInit, OnDestroy
 {
   @Input() public view: any;
-  @Input() public maxScale: number;
-  @Input() public minScale: number;
+  @Input() public maxScale: number = 0;
+  @Input() public minScale: number = 0;
   @Input() public inputDatas: any;
-  @Input() public scrollPosition: number;
+  @Input() public scrollPosition: number = 0;
   @Input() public scaleValue = 0;
   @Input() public graphIdContainer: any;
 

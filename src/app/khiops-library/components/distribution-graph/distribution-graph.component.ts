@@ -35,9 +35,9 @@ export class DistributionGraphComponent
   implements OnInit
 {
   @Input() public position = 0;
-  @Input() public override inputDatas: ChartDatasModel = undefined;
-  @Input() public graphOptions: DistributionOptionsI;
-  @Input() public activeEntries: number;
+  @Input() public declare inputDatas: ChartDatasModel | undefined;
+  @Input() public graphOptions: DistributionOptionsI | undefined;
+  @Input() public activeEntries: number = 0;
   @Input() public hideGraphOptions = false;
 
   @Output() private graphTypeChanged: EventEmitter<any> = new EventEmitter();
@@ -47,7 +47,7 @@ export class DistributionGraphComponent
   public override maxScale: number = 0;
   public override minScale: number = 0;
   public componentType = COMPONENT_TYPES.BAR_CHART; // needed to copy datas
-  public colorSet: ChartColorsSetI;
+  public colorSet: ChartColorsSetI | undefined;
   public chartOptions: ChartOptions;
 
   constructor(
@@ -182,7 +182,7 @@ export class DistributionGraphComponent
     this.selectedItemChanged.emit(e);
   }
 
-  changeGraphType(type) {
+  changeGraphType(type: string) {
     // this.trackerService.trackEvent('click', 'distribution_graph_type', this.graphOptions.selected);
     this.ls.set(LS.DISTRIBUTION_GRAPH_OPTION_Y, type);
     this.updateChartOptions();
