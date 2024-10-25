@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { REPORT } from '@khiops-library/enum/report';
 import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas';
 
 @Injectable({
@@ -64,7 +65,7 @@ export class EnrichDatasService {
    */
   static ignoreMissingPartitionForNumerical(
     datas: VisualizationDatas,
-    preparationSource: string,
+    preparationSource: REPORT,
   ): any {
     if (datas?.[preparationSource]) {
       for (const rank in datas[preparationSource].variablesDetailedStatistics) {

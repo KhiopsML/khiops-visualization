@@ -19,6 +19,7 @@ import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 import { PreparationVariableModel } from '@khiops-visualization/model/preparation-variable.model';
 import { TreePreparationVariableModel } from '@khiops-visualization/model/tree-preparation-variable.model';
 import { DistributionChartDatasModel } from '@khiops-visualization/model/distribution-chart-datas.model';
+import { REPORT } from '@khiops-library/enum/report';
 
 @Injectable({
   providedIn: 'root',
@@ -63,7 +64,7 @@ export class DistributionDatasService {
    *
    * @param preparationSource - The source of the preparation to be set.
    */
-  setPreparationSource(preparationSource: string) {
+  setPreparationSource(preparationSource: REPORT) {
     this.distributionDatas.preparationSource = preparationSource;
   }
 

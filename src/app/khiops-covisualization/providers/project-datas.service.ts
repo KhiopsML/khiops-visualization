@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { ProjectSummaryModel } from '@khiops-library/model/project-summary.model';
 import { AppService } from './app.service';
-import { REPORTS } from '@khiops-library/enum/reports';
+import { REPORT } from '@khiops-library/enum/report';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +22,7 @@ export class ProjectDatasService {
     if (appDatas.coclusteringReport) {
       const projectSummaryDatas = new ProjectSummaryModel(
         appDatas,
-        REPORTS.COCLUSTERING_REPORT,
+        REPORT.COCLUSTERING_REPORT,
       );
       return projectSummaryDatas.displayDatas;
     } else {

@@ -4,7 +4,7 @@ import { HistogramService } from '@khiops-visualization/components/commons/histo
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
-import { REPORTS } from '@khiops-library/enum/reports';
+import { REPORT } from '@khiops-library/enum/report';
 import { TranslateModule } from '@ngstack/translate';
 import { HistogramType } from '@khiops-visualization/components/commons/histogram/histogram.type';
 
@@ -17,13 +17,13 @@ function getHistogramGraphDatas(fileDatas, variable) {
   appService.setFileDatas(fileDatas);
   preparationDatasService.initialize();
   distributionDatasService.initialize();
-  distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
+  distributionDatasService.setPreparationSource(REPORT.PREPARATION_REPORT);
   preparationDatasService.setSelectedVariable(
     fileDatas.preparationReport.variablesStatistics[variable].name,
-    REPORTS.PREPARATION_REPORT,
+    REPORT.PREPARATION_REPORT,
   );
   const selectedVariable = preparationDatasService.getSelectedVariable(
-    REPORTS.PREPARATION_REPORT,
+    REPORT.PREPARATION_REPORT,
   );
   return distributionDatasService.getHistogramGraphDatas(selectedVariable);
 }

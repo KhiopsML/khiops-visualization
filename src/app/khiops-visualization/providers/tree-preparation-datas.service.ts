@@ -11,11 +11,9 @@ import { TreePreparationDatasModel } from '../model/tree-preparation-datas.model
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { TYPES } from '@khiops-library/enum/types';
 import { PreparationDatasService } from './preparation-datas.service';
-import { REPORTS } from '@khiops-library/enum/reports';
+import { REPORT } from '@khiops-library/enum/report';
 import { TreePreparationVariableStatistic } from '@khiops-visualization/interfaces/tree-preparation-report';
 import { DynamicI } from '@khiops-library/interfaces/globals';
-import { TextPreparationVariableStatistic } from '@khiops-visualization/interfaces/text-preparation-report';
-import { PreparationVariableStatistic } from '@khiops-visualization/interfaces/preparation-report';
 
 @Injectable({
   providedIn: 'root',
@@ -48,7 +46,7 @@ export class TreePreparationDatasService {
       if (savedSelectedRank) {
         defaultVariable = this.preparationDatasService.getVariableFromRank(
           savedSelectedRank,
-          REPORTS.TREE_PREPARATION_REPORT,
+          REPORT.TREE_PREPARATION_REPORT,
         );
       }
 
@@ -125,7 +123,7 @@ export class TreePreparationDatasService {
     if (this.treePreparationDatas && name) {
       const variable = this.preparationDatasService.getVariableFromName(
         name,
-        REPORTS.TREE_PREPARATION_REPORT,
+        REPORT.TREE_PREPARATION_REPORT,
       );
       if (variable) {
         // Init datas

@@ -23,7 +23,7 @@ import { TranslateService } from '@ngstack/translate';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { BorderTextCellComponent } from '@khiops-library/components/ag-grid/border-text-cell/border-text-cell.component';
 import { LayoutService } from '@khiops-library/providers/layout.service';
-import { REPORTS } from '@khiops-library/enum/reports';
+import { REPORT } from '@khiops-library/enum/report';
 import { SplitGutterInteractionEvent } from 'angular-split';
 
 @Component({
@@ -36,7 +36,7 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
     static: false,
   })
   private appVariableGraphDetails: VariableGraphDetailsComponent;
-  private preparationSource: string = REPORTS.TREE_PREPARATION_REPORT;
+  private preparationSource: REPORT = REPORT.TREE_PREPARATION_REPORT;
 
   public sizes: any;
   public summaryDatas: InfosDatasI[];

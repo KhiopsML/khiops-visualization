@@ -3,7 +3,7 @@ import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { ProjectLogModel } from '@khiops-library/model/project-log.model';
 import { ProjectSummaryModel } from '@khiops-library/model/project-summary.model';
 import { AppService } from './app.service';
-import { REPORTS } from '@khiops-library/enum/reports';
+import { REPORT } from '@khiops-library/enum/report';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +20,7 @@ export class ProjectDatasService {
     if (appDatas?.preparationReport) {
       const projectSummaryDatas = new ProjectSummaryModel(
         appDatas,
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       return projectSummaryDatas.displayDatas;
     } else {

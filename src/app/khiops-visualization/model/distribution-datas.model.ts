@@ -6,6 +6,7 @@ import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggl
 import { HistogramValuesI } from '@khiops-visualization/components/commons/histogram/histogram.interfaces';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { LS } from '@khiops-library/enum/ls';
+import { REPORT } from '@khiops-library/enum/report';
 
 export class DistributionDatasModel {
   distributionType: string = HistogramType.YLIN;
@@ -27,7 +28,7 @@ export class DistributionDatasModel {
   treeNodeTargetDistributionType: string = TYPES.PROBABILITIES;
   treeNodeTargetDistributionGraphDatas: ChartDatasModel | undefined = undefined;
 
-  preparationSource: string = '';
+  preparationSource: REPORT;
 
   appDatas: any = undefined;
   treeHyperGraphDatas: ChartDatasModel | undefined = undefined;

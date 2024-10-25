@@ -4,7 +4,7 @@ import { PreparationDatasService } from '@khiops-visualization/providers/prepara
 import { HttpClientModule } from '@angular/common/http';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import * as _ from 'lodash'; // Important to import lodash in karma
-import { REPORTS } from '@khiops-library/enum/reports';
+import { REPORT } from '@khiops-library/enum/report';
 import { TranslateModule } from '@ngstack/translate';
 
 let preparationDatasService: PreparationDatasService;
@@ -47,7 +47,7 @@ describe('Visualization', () => {
       preparationDatasService.initialize();
 
       preparationDatasService.getSummaryDatas();
-      preparationDatasService.getInformationsDatas(REPORTS.PREPARATION_REPORT);
+      preparationDatasService.getInformationsDatas(REPORT.PREPARATION_REPORT);
       const intervalDatas = JSON.stringify(
         preparationDatasService.getTargetVariableStatsDatas(),
       );
@@ -104,7 +104,7 @@ describe('Visualization', () => {
       preparationDatasService.initialize();
 
       preparationDatasService.getSummaryDatas();
-      preparationDatasService.getInformationsDatas(REPORTS.PREPARATION_REPORT);
+      preparationDatasService.getInformationsDatas(REPORT.PREPARATION_REPORT);
       const intervalDatas = JSON.stringify(
         preparationDatasService.getTargetVariableStatsDatas(),
       );
@@ -162,10 +162,10 @@ describe('Visualization', () => {
 
       preparationDatasService.setSelectedVariable(
         fileDatas.preparationReport.variablesStatistics[0].name,
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       const intervalDatas = preparationDatasService.getCurrentIntervalDatas(
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
 
       const expectedRes = {
@@ -194,10 +194,10 @@ describe('Visualization', () => {
 
       preparationDatasService.setSelectedVariable(
         fileDatas.preparationReport.variablesStatistics[1].name,
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       const intervalDatas = preparationDatasService.getCurrentIntervalDatas(
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
         15,
       );
 
@@ -227,10 +227,10 @@ describe('Visualization', () => {
 
       preparationDatasService.setSelectedVariable(
         fileDatas.preparationReport.variablesStatistics[0].name,
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       const intervalDatas = preparationDatasService.getCurrentIntervalDatas(
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
 
       const expectedRes = {
@@ -267,10 +267,10 @@ describe('Visualization', () => {
 
       preparationDatasService.setSelectedVariable(
         fileDatas.preparationReport.variablesStatistics[0].name,
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       const intervalDatas = preparationDatasService.getCurrentIntervalDatas(
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
         1,
       );
 
@@ -304,10 +304,10 @@ describe('Visualization', () => {
 
       preparationDatasService.setSelectedVariable(
         fileDatas.preparationReport.variablesStatistics[1].name,
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       const intervalDatas = preparationDatasService.getCurrentIntervalDatas(
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
         1,
       );
 
@@ -336,10 +336,10 @@ describe('Visualization', () => {
 
       preparationDatasService.setSelectedVariable(
         fileDatas.preparationReport.variablesStatistics[5].name,
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       const intervalDatas = preparationDatasService.getCurrentIntervalDatas(
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
         3,
       );
 
@@ -397,10 +397,10 @@ describe('Visualization', () => {
 
       preparationDatasService.setSelectedVariable(
         fileDatas.preparationReport.variablesStatistics[56].name,
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       const intervalDatas = preparationDatasService.getCurrentIntervalDatas(
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
         0,
       );
 

@@ -13,7 +13,7 @@ import { PreparationVariableModel } from '@khiops-visualization/model/preparatio
 import { Preparation2dVariableModel } from '@khiops-visualization/model/preparation2d-variable.model';
 import { TreePreparationVariableModel } from '@khiops-visualization/model/tree-preparation-variable.model';
 import { UtilsService } from '@khiops-library/providers/utils.service';
-import { REPORTS } from '@khiops-library/enum/reports';
+import { REPORT } from '@khiops-library/enum/report';
 import { ModelingVariableStatistic } from '@khiops-visualization/interfaces/modeling-report';
 @Injectable({
   providedIn: 'root',
@@ -277,7 +277,7 @@ export class ModelingDatasService {
         if (!currentVarDetails) {
           currentVarDetails = this.preparationDatasService.getVariableFromName(
             currentVar.name,
-            REPORTS.TREE_PREPARATION_REPORT,
+            REPORT.TREE_PREPARATION_REPORT,
           );
         }
         if (!currentVarDetails) {

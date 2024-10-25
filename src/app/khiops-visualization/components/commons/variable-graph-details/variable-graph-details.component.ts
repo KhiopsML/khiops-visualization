@@ -16,7 +16,7 @@ import { TreePreparationDatasService } from '@khiops-visualization/providers/tre
 import { PreparationVariableModel } from '@khiops-visualization/model/preparation-variable.model';
 import { TreePreparationVariableModel } from '@khiops-visualization/model/tree-preparation-variable.model';
 import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
-import { REPORTS } from '@khiops-library/enum/reports';
+import { REPORT } from '@khiops-library/enum/report';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
@@ -47,7 +47,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
     | PreparationVariableModel
     | TreePreparationVariableModel;
   @Input() private selectedGraphItemIndex = 0;
-  @Input() private preparationSource: string;
+  @Input() private preparationSource: REPORT;
   @Input() public displayedValues?: ChartToggleValuesI[]; // optional input to update chart on value changes (for instance when another component of tree preparation view changed)
   @Input() public position = 0; // in case of multiple component in the same page
 
@@ -111,7 +111,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
           }
         }
 
-        if (this.preparationSource === REPORTS.TREE_PREPARATION_REPORT) {
+        if (this.preparationSource === REPORT.TREE_PREPARATION_REPORT) {
           this.treePreparationDatasService.getCurrentIntervalDatas();
         } else {
           this.preparationDatasService.getCurrentIntervalDatas(
@@ -207,7 +207,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
 
   private getCurrentVariable() {
     let selectedVariable;
-    if (this.preparationSource === REPORTS.TREE_PREPARATION_REPORT) {
+    if (this.preparationSource === REPORT.TREE_PREPARATION_REPORT) {
       selectedVariable = this.treePreparationDatasService.getSelectedVariable();
     } else {
       selectedVariable = this.preparationDatasService.getSelectedVariable(

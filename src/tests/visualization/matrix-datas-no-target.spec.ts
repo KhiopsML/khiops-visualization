@@ -3,7 +3,7 @@ import { AppService } from '@khiops-visualization/providers/app.service';
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
 import { HttpClientModule } from '@angular/common/http';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
-import { REPORTS } from '@khiops-library/enum/reports';
+import { REPORT } from '@khiops-library/enum/report';
 import { TranslateModule } from '@ngstack/translate';
 
 let appService: AppService;
@@ -32,11 +32,11 @@ describe('Visualization', () => {
       let currentVar = fileDatas.preparationReport.variablesStatistics[0];
       preparationDatasService.setSelectedVariable(
         currentVar.name,
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       currentVar.name1 = currentVar.name;
       currentVar.name2 = preparationDatasService.getTargetVariable(
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       // Set the variable
       preparation2dDatasService.setSelectedRegressionVariable(currentVar);

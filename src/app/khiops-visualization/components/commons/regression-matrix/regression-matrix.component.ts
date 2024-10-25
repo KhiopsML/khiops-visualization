@@ -21,6 +21,7 @@ import { MatrixRangeValuesI } from '@khiops-visualization/interfaces/matrix-rang
 import { CellModel } from '@khiops-library/model/cell.model';
 import { Preparation2dVariableModel } from '@khiops-visualization/model/preparation2d-variable.model';
 import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
+import { REPORT } from '@khiops-library/enum/report';
 
 /**
  * Test it with irisR file
@@ -40,7 +41,7 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
     new EventEmitter();
   @Input() selectedVariable: PreparationVariableModel;
   @Input() selectedCell: number;
-  @Input() private preparationSource: string;
+  @Input() private preparationSource: REPORT;
   public preparation2dDatas: Preparation2dDatasModel;
   public isFullscreen = false;
   public matrixOptions: MatrixOptionsModel = new MatrixOptionsModel();

@@ -12,7 +12,7 @@ import { SelectableTabComponent } from '@khiops-library/components/selectable-ta
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
 import { LevelDistributionGraphComponent } from '@khiops-visualization/components/commons/level-distribution-graph/level-distribution-graph.component';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
-import { REPORTS } from '@khiops-library/enum/reports';
+import { REPORT } from '@khiops-library/enum/report';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
@@ -29,7 +29,7 @@ import { VariableModel } from '@khiops-visualization/model/variable.model';
   styleUrls: ['./modeling-view.component.scss'],
 })
 export class ModelingViewComponent extends SelectableTabComponent {
-  public preparationSource: string;
+  public preparationSource: REPORT;
   public appDatas: any;
   public sizes: any;
   public summaryDatas: InfosDatasI[];
@@ -122,7 +122,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
     );
     // Get var from name
     if (item.name?.includes('Tree_')) {
-      this.preparationSource = REPORTS.TREE_PREPARATION_REPORT;
+      this.preparationSource = REPORT.TREE_PREPARATION_REPORT;
       this.preparationVariable =
         this.treePreparationDatasService.setSelectedVariable(item.name);
     } else {

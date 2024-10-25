@@ -6,7 +6,7 @@ import { AppService } from '@khiops-visualization/providers/app.service';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
-import { REPORTS } from '@khiops-library/enum/reports';
+import { REPORT } from '@khiops-library/enum/report';
 import { TYPES } from '@khiops-library/enum/types';
 import { TranslateModule } from '@ngstack/translate';
 
@@ -26,7 +26,7 @@ describe('Visualization', () => {
       distributionDatasService = TestBed.inject(DistributionDatasService);
       preparationDatasService = TestBed.inject(PreparationDatasService);
       treePreparationDatasService = TestBed.inject(TreePreparationDatasService);
-      distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
+      distributionDatasService.setPreparationSource(REPORT.PREPARATION_REPORT);
       appService = TestBed.inject(AppService);
     });
 
@@ -44,14 +44,14 @@ describe('Visualization', () => {
 
       preparationDatasService.initialize();
       distributionDatasService.initialize();
-      distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
+      distributionDatasService.setPreparationSource(REPORT.PREPARATION_REPORT);
 
       preparationDatasService.setSelectedVariable(
         fileDatas.preparationReport.variablesStatistics[0].name,
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       const selectedVariable = preparationDatasService.getSelectedVariable(
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       const res =
         distributionDatasService.getTargetDistributionGraphDatas(
@@ -67,14 +67,14 @@ describe('Visualization', () => {
 
       preparationDatasService.initialize();
       distributionDatasService.initialize();
-      distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
+      distributionDatasService.setPreparationSource(REPORT.PREPARATION_REPORT);
 
       preparationDatasService.setSelectedVariable(
         fileDatas.preparationReport.variablesStatistics[0].name,
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       const selectedVariable = preparationDatasService.getSelectedVariable(
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       const res =
         distributionDatasService.getTargetDistributionGraphDatas(
@@ -90,14 +90,14 @@ describe('Visualization', () => {
 
       preparationDatasService.initialize();
       distributionDatasService.initialize();
-      distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
+      distributionDatasService.setPreparationSource(REPORT.PREPARATION_REPORT);
 
       preparationDatasService.setSelectedVariable(
         fileDatas.preparationReport.variablesStatistics[0].name,
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       const selectedVariable = preparationDatasService.getSelectedVariable(
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       const res =
         distributionDatasService.getTargetDistributionGraphDatas(
@@ -113,14 +113,14 @@ describe('Visualization', () => {
 
       preparationDatasService.initialize();
       distributionDatasService.initialize();
-      distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
+      distributionDatasService.setPreparationSource(REPORT.PREPARATION_REPORT);
 
       preparationDatasService.setSelectedVariable(
         fileDatas.preparationReport.variablesStatistics[40].name,
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       const selectedVariable = preparationDatasService.getSelectedVariable(
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       const res = distributionDatasService.getTargetDistributionGraphDatas(
         selectedVariable,
@@ -136,14 +136,14 @@ describe('Visualization', () => {
 
       preparationDatasService.initialize();
       distributionDatasService.initialize();
-      distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
+      distributionDatasService.setPreparationSource(REPORT.PREPARATION_REPORT);
 
       preparationDatasService.setSelectedVariable(
         fileDatas.preparationReport.variablesStatistics[1].name,
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       const selectedVariable = preparationDatasService.getSelectedVariable(
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       const res =
         distributionDatasService.getdistributionGraphDatas(selectedVariable);
@@ -156,14 +156,14 @@ describe('Visualization', () => {
 
       preparationDatasService.initialize();
       distributionDatasService.initialize();
-      distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
+      distributionDatasService.setPreparationSource(REPORT.PREPARATION_REPORT);
 
       preparationDatasService.setSelectedVariable(
         fileDatas.preparationReport.variablesStatistics[0].name,
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       const selectedVariable = preparationDatasService.getSelectedVariable(
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       const res =
         distributionDatasService.getHistogramGraphDatas(selectedVariable);
@@ -180,14 +180,14 @@ describe('Visualization', () => {
 
       preparationDatasService.initialize();
       distributionDatasService.initialize();
-      distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
+      distributionDatasService.setPreparationSource(REPORT.PREPARATION_REPORT);
 
       preparationDatasService.setSelectedVariable(
         fileDatas.preparationReport.variablesStatistics[14].name,
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       const selectedVariable = preparationDatasService.getSelectedVariable(
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       const res =
         distributionDatasService.getdistributionGraphDatas(selectedVariable);
@@ -200,14 +200,14 @@ describe('Visualization', () => {
 
       preparationDatasService.initialize();
       distributionDatasService.initialize();
-      distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
+      distributionDatasService.setPreparationSource(REPORT.PREPARATION_REPORT);
 
       preparationDatasService.setSelectedVariable(
         fileDatas.preparationReport.variablesStatistics[14].name,
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       const selectedVariable = preparationDatasService.getSelectedVariable(
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       const res =
         distributionDatasService.getdistributionGraphDatas(selectedVariable);
@@ -220,14 +220,14 @@ describe('Visualization', () => {
 
       preparationDatasService.initialize();
       distributionDatasService.initialize();
-      distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
+      distributionDatasService.setPreparationSource(REPORT.PREPARATION_REPORT);
 
       preparationDatasService.setSelectedVariable(
         fileDatas.preparationReport.variablesStatistics[0].name,
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       const selectedVariable = preparationDatasService.getSelectedVariable(
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       const res =
         distributionDatasService.getdistributionGraphDatas(selectedVariable);
@@ -240,14 +240,14 @@ describe('Visualization', () => {
 
       preparationDatasService.initialize();
       distributionDatasService.initialize();
-      distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
+      distributionDatasService.setPreparationSource(REPORT.PREPARATION_REPORT);
 
       preparationDatasService.setSelectedVariable(
         fileDatas.preparationReport.variablesStatistics[0].name,
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       const selectedVariable = preparationDatasService.getSelectedVariable(
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       const res =
         distributionDatasService.getdistributionGraphDatas(selectedVariable);
@@ -261,15 +261,15 @@ describe('Visualization', () => {
       preparationDatasService.initialize();
       distributionDatasService.initialize();
       distributionDatasService.setPreparationSource(
-        REPORTS.TREE_PREPARATION_REPORT,
+        REPORT.TREE_PREPARATION_REPORT,
       );
 
       preparationDatasService.setSelectedVariable(
         fileDatas.preparationReport.variablesStatistics[0].name,
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       const selectedVariable = preparationDatasService.getSelectedVariable(
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       const res =
         distributionDatasService.getdistributionGraphDatas(selectedVariable);
@@ -283,7 +283,7 @@ describe('Visualization', () => {
       treePreparationDatasService.initialize();
       distributionDatasService.initialize();
       distributionDatasService.setPreparationSource(
-        REPORTS.TREE_PREPARATION_REPORT,
+        REPORT.TREE_PREPARATION_REPORT,
       );
 
       treePreparationDatasService.setSelectedVariable(
@@ -305,7 +305,7 @@ describe('Visualization', () => {
       treePreparationDatasService.initialize();
       distributionDatasService.initialize();
       distributionDatasService.setPreparationSource(
-        REPORTS.TREE_PREPARATION_REPORT,
+        REPORT.TREE_PREPARATION_REPORT,
       );
 
       treePreparationDatasService.setSelectedVariable(
@@ -330,14 +330,14 @@ describe('Visualization', () => {
 
       preparationDatasService.initialize();
       distributionDatasService.initialize();
-      distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
+      distributionDatasService.setPreparationSource(REPORT.PREPARATION_REPORT);
 
       preparationDatasService.setSelectedVariable(
         fileDatas.preparationReport.variablesStatistics[0].name,
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       const selectedVariable = preparationDatasService.getSelectedVariable(
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       const res =
         distributionDatasService.getHistogramGraphDatas(selectedVariable);
@@ -354,14 +354,14 @@ describe('Visualization', () => {
 
       preparationDatasService.initialize();
       distributionDatasService.initialize();
-      distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
+      distributionDatasService.setPreparationSource(REPORT.PREPARATION_REPORT);
 
       preparationDatasService.setSelectedVariable(
         fileDatas.preparationReport.variablesStatistics[2].name,
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       const selectedVariable = preparationDatasService.getSelectedVariable(
-        REPORTS.PREPARATION_REPORT,
+        REPORT.PREPARATION_REPORT,
       );
       const res =
         distributionDatasService.getHistogramGraphDatas(selectedVariable);

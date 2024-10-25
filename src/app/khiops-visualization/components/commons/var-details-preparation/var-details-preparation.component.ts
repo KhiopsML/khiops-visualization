@@ -15,6 +15,7 @@ import { Preparation2dDatasModel } from '@khiops-visualization/model/preparation
 import { PreparationVariableModel } from '@khiops-visualization/model/preparation-variable.model';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { SplitGutterInteractionEvent } from 'angular-split';
+import { REPORT } from '@khiops-library/enum/report';
 
 @Component({
   selector: 'app-var-details-preparation',
@@ -27,7 +28,7 @@ export class VarDetailsPreparationComponent implements OnInit, OnChanges {
   })
   private appVariableGraphDetails: VariableGraphDetailsComponent;
 
-  @Input() public preparationSource: string;
+  @Input() public preparationSource: REPORT;
 
   public isRegressionOrExplanatoryAnalysis: boolean;
   public preparationDatas: {

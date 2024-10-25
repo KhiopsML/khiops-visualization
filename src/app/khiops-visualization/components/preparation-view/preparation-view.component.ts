@@ -11,7 +11,7 @@ import {
 import { LevelDistributionGraphComponent } from '../commons/level-distribution-graph/level-distribution-graph.component';
 import { TranslateService } from '@ngstack/translate';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
-import { REPORTS } from '@khiops-library/enum/reports';
+import { REPORT } from '@khiops-library/enum/report';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { PreparationVariableModel } from '@khiops-visualization/model/preparation-variable.model';
@@ -28,7 +28,7 @@ import { SplitGutterInteractionEvent } from 'angular-split';
   styleUrls: ['./preparation-view.component.scss'],
 })
 export class PreparationViewComponent extends SelectableTabComponent {
-  @Input() public preparationSource = REPORTS.PREPARATION_REPORT; // By default
+  @Input() public preparationSource = REPORT.PREPARATION_REPORT; // By default
   public sizes: any;
   public preparationDatas: {
     selectedVariable: PreparationVariableModel;
@@ -143,7 +143,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
 
   ngOnInit() {
     const trackView =
-      this.preparationSource === REPORTS.PREPARATION_REPORT
+      this.preparationSource === REPORT.PREPARATION_REPORT
         ? 'preparation'
         : 'textPreparation';
     this.trackerService.trackEvent('page_view', trackView);
