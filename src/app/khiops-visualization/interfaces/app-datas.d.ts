@@ -5,6 +5,7 @@ import { TestEvaluationReport } from './test-evaluation-report';
 import { PreparationReport } from './preparation-report';
 import { TreePreparationReport } from './tree-preparation-report';
 import { BivariatePreparationReport } from './bivariate-preparation-report';
+import { TextPreparationReport } from './text-preparation-report';
 
 export interface AppDatasI {
   datas: VisualizationDatas;
@@ -21,13 +22,11 @@ export interface VisualizationDatas {
   preparationReport: PreparationReport;
   treePreparationReport: TreePreparationReport;
   bivariatePreparationReport: BivariatePreparationReport;
-  textPreparationReport: TextPreparationReport | any;
+  textPreparationReport: TextPreparationReport;
   evaluationReport: EvaluationReport | any;
   logs: Log[];
   savedDatas: DynamicI;
 }
-
-interface TextPreparationReport {}
 
 interface EvaluationReport {}
 
