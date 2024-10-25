@@ -4,6 +4,7 @@ import {
 } from '@khiops-covisualization/interfaces/app-datas';
 import { TYPES } from '@khiops-library/enum/types';
 import { DynamicI } from '@khiops-library/interfaces/globals';
+import { DimensionModel } from '@khiops-library/model/dimension.model';
 
 export class TreeNodeModel {
   id: number;
@@ -58,12 +59,12 @@ export class TreeNodeModel {
    * @param valueGroups - Optional value group for categorical data.
    */
   constructor(
-    id,
+    id: number,
     object: Cluster,
-    dimension,
-    collapsedNodes,
-    leafPosition,
-    j,
+    dimension: DimensionModel,
+    collapsedNodes: DynamicI,
+    leafPosition: number,
+    j: number,
     currentNodesNames?,
     currentAnnotations?,
     extData?,
@@ -157,7 +158,7 @@ export class TreeNodeModel {
    * @param name - The name of the current node.
    * @param matrixIndex - The matrix index of the current node.
    */
-  deepGetChildrenNames(children, name, matrixIndex) {
+  deepGetChildrenNames(children: TreeNodeModel[], name: string, matrixIndex) {
     this.childrenList.push(name);
     if (children.length === 0) {
       this.childrenLeafList.push(name);

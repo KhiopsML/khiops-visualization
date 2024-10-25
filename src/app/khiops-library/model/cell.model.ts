@@ -82,7 +82,12 @@ export class CellModel {
    * @param xValues - The x-axis values.
    * @param yValues - The y-axis values.
    */
-  setCoordValues(i, j, xValues: MatrixValuesModel, yValues: MatrixValuesModel) {
+  setCoordValues(
+    i: number,
+    j: number,
+    xValues: MatrixValuesModel,
+    yValues: MatrixValuesModel,
+  ) {
     this.x = {
       standard: xValues.standard[i],
       frequency: xValues.frequency[i],

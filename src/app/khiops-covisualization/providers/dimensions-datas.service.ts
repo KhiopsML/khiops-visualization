@@ -434,10 +434,6 @@ export class DimensionsDatasService {
           this.dimensionsDatas.dimensionsTrees[i] = [];
           this.dimensionsDatas.dimensionsClusters[i] = [];
 
-          const nbClusters =
-            appinitialDatas.coclusteringReport.dimensionSummaries[i]
-              .initialParts;
-          // const nbClusters = appinitialDatas.coclusteringReport.dimensionSummaries[i].parts;
           let index = 0;
 
           const currentNodesNames =
@@ -496,9 +492,6 @@ export class DimensionsDatasService {
           this.dimensionsDatas.currentDimensionsTrees[i] = [];
           this.dimensionsDatas.currentDimensionsClusters[i] = [];
 
-          const nbClusters =
-            appDatas.coclusteringReport.dimensionSummaries[i].initialParts;
-          // const nbClusters = appinitialDatas.coclusteringReport.dimensionSummaries[i].parts;
           let index = 0;
 
           const currentNodesNames =
