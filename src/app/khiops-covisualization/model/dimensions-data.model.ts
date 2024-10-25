@@ -3,12 +3,13 @@ import { TreeNodeModel } from './tree-node.model';
 import { HierarchyDatasModel } from './hierarchy-datas.model';
 import { MatrixDatasModel } from '@khiops-library/model/matrix-datas.model';
 import { CellModel } from '@khiops-library/model/cell.model';
+import { DynamicI } from '@khiops-library/interfaces/globals';
 
 export class DimensionsDatasModel {
   matrixDatas: MatrixDatasModel;
   allMatrixDatas: MatrixDatasModel;
   allMatrixCellDatas: CellModel[] = [];
-  matrixCellFreqDataMap: any = undefined;
+  matrixCellFreqDataMap: DynamicI = undefined;
 
   cellPartIndexes: number[][] = [[]];
   initialDimensions: DimensionModel[] = [];
@@ -31,8 +32,8 @@ export class DimensionsDatasModel {
   matrixContrast: number | undefined = undefined;
   matrixOption: string | undefined = undefined;
   matrixMode: number | undefined = undefined;
-  nodesNames: {} = {};
-  annotations: {} = {};
+  nodesNames: DynamicI = {};
+  annotations: DynamicI = {};
   selectedNodes: TreeNodeModel[] = [];
 
   constructor() {

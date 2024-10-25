@@ -138,7 +138,7 @@ export class TreeSelectComponent
           // Find the node tree id into current tree
           const nodeTree = this.treenodesService.getNodeFromName(
             this.selectedDimension?.name,
-            selectedNode._id,
+            selectedNode._id.toString(),
           );
           const nodeTreeId = nodeTree?.id;
           if (nodeTreeId !== undefined && nodeTreeId >= 0) {

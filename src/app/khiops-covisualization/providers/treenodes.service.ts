@@ -15,13 +15,14 @@ import { AnnotationService } from './annotation.service';
 import { ImportExtDatasService } from './import-ext-datas.service';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { ViewManagerService } from './view-manager.service';
+import { DynamicI } from '@khiops-library/interfaces/globals';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TreenodesService {
   private dimensionsDatas: DimensionsDatasModel;
-  private collapsedNodesToSave: {} = {};
+  private collapsedNodesToSave: DynamicI = {};
 
   constructor(
     private annotationService: AnnotationService,
@@ -115,7 +116,7 @@ export class TreenodesService {
    * @param {object} obj2 - The second collapsed nodes object.
    * @returns {object} - The merged collapsed nodes object.
    */
-  mergeCollapsedNodes(obj1, obj2): any {
+  mergeCollapsedNodes(obj1: DynamicI, obj2: DynamicI): any {
     if (!obj1) {
       obj1 = {};
     }
@@ -274,7 +275,11 @@ export class TreenodesService {
    * @param {TreeNodeModel} lastVisibleNode - The last visible node.
    * @returns {TreeNodeModel} - The first visible node.
    */
-  getFirstVisibleNode(nodes, nodeVO: TreeNodeModel, lastVisibleNode?) {
+  getFirstVisibleNode(
+    nodes: TreeNodeModel[],
+    nodeVO: TreeNodeModel,
+    lastVisibleNode?: TreeNodeModel,
+  ): TreeNodeModel {
     const parentNode: TreeNodeModel = nodes.find(
       (e) => e.name === nodeVO?.parentCluster,
     );
@@ -300,7 +305,7 @@ export class TreenodesService {
    *
    * @returns {TreeNodeModel[]} - The selected nodes.
    */
-  getSelectedNodes() {
+  getSelectedNodes(): TreeNodeModel[] {
     return this.dimensionsDatas.selectedNodes;
   }
 
@@ -333,7 +338,7 @@ export class TreenodesService {
    *
    * @returns {object} - The names of the nodes.
    */
-  getNodesNames() {
+  getNodesNames(): DynamicI {
     return this.dimensionsDatas.nodesNames;
   }
 
@@ -344,7 +349,10 @@ export class TreenodesService {
    * @param {string} nodeName - The name of the node.
    * @returns {TreeNodeModel} - The node model.
    */
-  getNodeFromDimensionTree(dimensionName, nodeName): TreeNodeModel {
+  getNodeFromDimensionTree(
+    dimensionName: string,
+    nodeName: string,
+  ): TreeNodeModel {
     let nodeVO: TreeNodeModel;
     const currentIndex: number =
       this.dimensionsDatas.selectedDimensions.findIndex((e) => {
@@ -387,7 +395,7 @@ export class TreenodesService {
    * @param {string} nodeName - The name of the node.
    * @returns {TreeNodeModel} - The node model.
    */
-  getNodeFromName(dimensionName, nodeName): TreeNodeModel {
+  getNodeFromName(dimensionName: string, nodeName: string): TreeNodeModel {
     let nodeVO: TreeNodeModel;
     const currentIndex: number =
       this.dimensionsDatas.selectedDimensions.findIndex((e) => {
@@ -417,7 +425,7 @@ export class TreenodesService {
    *
    * @param {object} collapsedNodesToSave - The collapsed nodes to save.
    */
-  setSavedCollapsedNodes(collapsedNodesToSave) {
+  setSavedCollapsedNodes(collapsedNodesToSave: DynamicI) {
     this.collapsedNodesToSave = collapsedNodesToSave;
   }
 
@@ -448,7 +456,7 @@ export class TreenodesService {
    * @param maxRank the current number of clusters
    * @param nbCells the cells count wish
    */
-  getHierarchyFromClustersCount(maxRank: number, nbCells: number) {
+  getHierarchyFromClustersCount(maxRank: number, nbCells: number): number {
     let currentDimClustersCount = 1;
     do {
       maxRank = maxRank - 1;
@@ -553,7 +561,7 @@ export class TreenodesService {
    *
    * @returns {object} - The saved collapsed nodes.
    */
-  getSavedCollapsedNodes() {
+  getSavedCollapsedNodes(): DynamicI {
     return this.collapsedNodesToSave;
   }
 
@@ -623,7 +631,7 @@ export class TreenodesService {
    * @param {any} [collapsedNodesInput] - Optional input for collapsed nodes.
    * @returns {any} - The constructed data object to be saved.
    */
-  constructDatasToSave(collapsedNodesInput?) {
+  constructDatasToSave(collapsedNodesInput?: DynamicI) {
     const initialDatas = JSON.parse(
       JSON.stringify(this.appService.getInitialDatas().datas),
     );
@@ -684,7 +692,7 @@ export class TreenodesService {
    * @param {any} testedSavedDatas - The tested saved data object to compare against.
    * @returns {boolean} - True if the saved data has changed, false otherwise.
    */
-  isSaveChanged(savedDatas, testedSavedDatas) {
+  isSaveChanged(savedDatas, testedSavedDatas): boolean {
     return !_.isEqual(savedDatas, testedSavedDatas);
   }
 
@@ -698,7 +706,7 @@ export class TreenodesService {
    * @param {boolean} [isReduced=false] - Flag indicating whether to reduce the data.
    * @returns {any} - The constructed saved JSON data.
    */
-  constructSavedJson(collapsedNodesInput?, isReduced = false) {
+  constructSavedJson(collapsedNodesInput?: DynamicI, isReduced = false) {
     let newJson = this.constructDatasToSave(collapsedNodesInput);
     if (collapsedNodesInput) {
       // Transform json if collapsed nodes
@@ -852,7 +860,11 @@ export class TreenodesService {
    * @param {any} currentTruncatedPartition - The current truncated partition to update.
    * @returns {any} - The updated truncated partition with the computed categorical value groups.
    */
-  computeCatPartition(nodes, dimIndex, currentTruncatedPartition) {
+  computeCatPartition(
+    nodes: string[],
+    dimIndex: number,
+    currentTruncatedPartition,
+  ) {
     const nodesLength = nodes.length;
     for (let i = 0; i < nodesLength; i++) {
       const nodeName = nodes[i];
@@ -923,7 +935,11 @@ export class TreenodesService {
    * @param {any} currentTruncatedPartition - The current truncated partition to update.
    * @returns {any} - The updated truncated partition with the computed numerical intervals.
    */
-  computeNumPartition(nodes, dimIndex, currentTruncatedPartition) {
+  computeNumPartition(
+    nodes: string[],
+    dimIndex: number,
+    currentTruncatedPartition,
+  ) {
     const nodesLength = nodes.length;
     for (let i = 0; i < nodesLength; i++) {
       const nodeName = nodes[i];

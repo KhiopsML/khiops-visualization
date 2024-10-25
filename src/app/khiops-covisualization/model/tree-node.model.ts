@@ -1,4 +1,5 @@
 import { TYPES } from '@khiops-library/enum/types';
+import { DynamicI } from '@khiops-library/interfaces/globals';
 import { ValueGroupsI } from '@khiops-library/interfaces/value-groups';
 
 export class TreeNodeModel {
@@ -35,7 +36,7 @@ export class TreeNodeModel {
   isParentCluster = false;
   isUnfoldedByDefault = false;
 
-  externalData: any = undefined;
+  externalData: DynamicI = undefined;
 
   clusterCompositionSize: number | undefined;
 
