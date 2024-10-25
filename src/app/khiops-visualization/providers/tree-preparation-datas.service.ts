@@ -12,7 +12,10 @@ import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { TYPES } from '@khiops-library/enum/types';
 import { PreparationDatasService } from './preparation-datas.service';
 import { REPORT } from '@khiops-library/enum/report';
-import { TreePreparationVariableStatistic } from '@khiops-visualization/interfaces/tree-preparation-report';
+import {
+  TreeDetails,
+  TreePreparationVariableStatistic,
+} from '@khiops-visualization/interfaces/tree-preparation-report';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 
 @Injectable({
@@ -165,7 +168,7 @@ export class TreePreparationDatasService {
    */
   constructDimensionTree() {
     const appDatas = this.appService.getDatas().datas;
-    const treeDatas = appDatas?.treePreparationReport?.treeDetails;
+    const treeDatas: TreeDetails = appDatas?.treePreparationReport?.treeDetails;
     const currentRank = this.getSelectedVariableRank();
     if (currentRank && treeDatas?.[currentRank]) {
       const currenetDimTree: TreeNodeModel = new TreeNodeModel(

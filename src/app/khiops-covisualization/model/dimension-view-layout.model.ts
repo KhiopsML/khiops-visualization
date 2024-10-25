@@ -8,7 +8,7 @@ export class DimensionViewLayoutModel {
   isExternalDataChecked = false;
   isDistributionChecked = false;
 
-  constructor(name, isContextView) {
+  constructor(name: string, isContextView: boolean) {
     this.name = name || '';
 
     if (isContextView) {

@@ -12,6 +12,7 @@ import { ExtDatasModel } from '@khiops-covisualization/model/ext-datas.model';
 import { ImportExtDatasService } from './import-ext-datas.service';
 import { MatrixValuesModel } from '@khiops-library/model/matrix-value.model';
 import { MatrixDatasModel } from '@khiops-library/model/matrix-datas.model';
+import { DimensionHierarchy } from '@khiops-covisualization/interfaces/app-datas';
 
 @Injectable({
   providedIn: 'root',
@@ -425,7 +426,7 @@ export class DimensionsDatasService {
         let leafPosition = -1;
 
         const dimension = this.dimensionsDatas.selectedDimensions[i];
-        const dimensionHierarchy: any =
+        const dimensionHierarchy: DimensionHierarchy =
           appinitialDatas.coclusteringReport.dimensionHierarchies.find(
             (e) => e.name === dimension.name,
           );
@@ -487,7 +488,7 @@ export class DimensionsDatasService {
           );
         }
 
-        const currentDimensionHierarchy: any =
+        const currentDimensionHierarchy: DimensionHierarchy =
           appDatas.coclusteringReport.dimensionHierarchies.find(
             (e) => e.name === dimension.name,
           );
