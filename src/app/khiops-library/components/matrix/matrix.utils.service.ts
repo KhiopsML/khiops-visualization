@@ -611,7 +611,7 @@ export class MatrixUtilsService {
         cell.xDisplayaxisPart = MatrixUiService.formatAxisDisplayText(
           xAxisPartShortDescription,
           i,
-          xDimension,
+          xDimension.type,
         );
         cell.xnamePart = xDimension.name;
 
@@ -620,7 +620,7 @@ export class MatrixUtilsService {
         cell.yDisplayaxisPart = MatrixUiService.formatAxisDisplayText(
           yAxisPartShortDescription,
           j,
-          yDimension,
+          yDimension.type,
         );
         cell.ynamePart = yDimension.name;
 

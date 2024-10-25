@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { UtilsService } from '../../providers/utils.service';
 import { CellModel } from '../../model/cell.model';
-import { MatrixCoordI } from '@khiops-library/interfaces/matrix-coord';
 import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 import { TYPES } from '@khiops-library/enum/types';
-import { DimensionModel } from '@khiops-library/model/dimension.model';
 
 @Injectable({
   providedIn: 'root',
@@ -41,13 +39,13 @@ export class MatrixUiService {
   static formatAxisDisplayText(
     axisPartShortDescription: string[] | number[][],
     iter: number,
-    dimension: DimensionModel,
+    type: string | TYPES,
   ) {
     let displayaxisPart;
     if (typeof axisPartShortDescription[iter] !== 'string') {
       // In KV we get an unformated array
       // We must format datas with opened or closed brackets
-      if (dimension.type === TYPES.NUMERICAL) {
+      if (type === TYPES.NUMERICAL) {
         displayaxisPart = '[' + axisPartShortDescription[iter].toString() + ']';
         // replace [ by ] for all indexes excepting 0
         if (iter !== 0) {

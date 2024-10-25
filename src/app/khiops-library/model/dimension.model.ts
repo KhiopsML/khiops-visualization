@@ -30,7 +30,7 @@ export class DimensionModel {
   /**
    * Commons
    */
-  type: string;
+  type: string | TYPES;
 
   partitionInputs: number[][] | string[]; // KV
 
@@ -49,7 +49,6 @@ export class DimensionModel {
     object: DimensionCovisualization | DimensionVisualization,
     startPosition = 0,
   ) {
-    console.log('DimensionModel ~ constructor ~ object:', object);
     // Assign values from input
     Object.assign(this, object);
 
