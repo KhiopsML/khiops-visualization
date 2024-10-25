@@ -18,6 +18,8 @@ import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggl
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { LiftCurveSerieI } from '../interfaces/lift-curve-serie';
 import { CHART_TYPES } from '@khiops-library/enum/chart-types';
+import { TestEvaluationReport } from '@khiops-visualization/interfaces/test-evaluation-report';
+import { TrainEvaluationReport } from '@khiops-visualization/interfaces/train-evaluation-report';
 
 @Injectable({
   providedIn: 'root',
@@ -667,7 +669,8 @@ export class EvaluationDatasService {
     const appDatas = this.appService.getDatas().datas;
     let targetLift: TargetLiftValuesI;
 
-    let currentEvalReport = appDatas.trainEvaluationReport;
+    let currentEvalReport: TestEvaluationReport | TrainEvaluationReport =
+      appDatas.trainEvaluationReport;
     if (!currentEvalReport) {
       currentEvalReport = appDatas.evaluationReport;
     }

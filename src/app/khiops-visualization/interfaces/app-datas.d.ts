@@ -1,6 +1,7 @@
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { ModelingReport } from './modeling-report';
 import { TrainEvaluationReport } from './train-evaluation-report';
+import { TestEvaluationReport } from './test-evaluation-report';
 
 export interface AppDatasI {
   datas: VisualizationDatas;
@@ -13,7 +14,7 @@ export interface VisualizationDatas {
   shortDescription: string;
   modelingReport: ModelingReport;
   trainEvaluationReport: TrainEvaluationReport;
-  testEvaluationReport: TestEvaluationReport | any;
+  testEvaluationReport: TestEvaluationReport;
   preparationReport: PreparationReport | any;
   treePreparationReport: TreePreparationReport | any;
   bivariatePreparationReport: BivariatePreparationReport | any;
@@ -22,8 +23,6 @@ export interface VisualizationDatas {
   logs: Log[];
   savedDatas: DynamicI;
 }
-
-interface TestEvaluationReport {}
 
 interface PreparationReport {}
 

@@ -1,11 +1,11 @@
-import { RecCurve, LiftCurve } from './curves';
+import { LiftCurve, RecCurve } from './curves';
 
-export interface TrainEvaluationReport {
+export interface TestEvaluationReport {
   reportType: string;
   evaluationType: string;
   summary: Summary;
   predictorsPerformance: PredictorPerformance[];
-  predictorsDetailedPerformance: Record<string, PredictorDetailedPerformance>;
+  predictorsDetailedPerformance: PredictorsDetailedPerformance;
   recCurves: RecCurve[];
   liftCurves: LiftCurve[];
 }
@@ -13,6 +13,10 @@ export interface TrainEvaluationReport {
 export interface Summary {
   dictionary: string;
   database: string;
+  samplePercentage: number;
+  samplingMode: string;
+  selectionVariable: string;
+  selectionValue: string;
   instances: number;
   learningTask: string;
   targetVariable: string;
@@ -24,17 +28,18 @@ export interface PredictorPerformance {
   type: string;
   family: string;
   name: string;
-  rmse: number;
-  mae: number;
-  nlpd: number;
-  rankRmse: number;
-  rankMae: number;
-  rankNlpd: number;
+  accuracy: number;
+  compression: number;
+  auc: number;
 }
 
-export interface PredictorDetailedPerformance {
-  dataGrid: DataGrid;
+export interface PredictorsDetailedPerformance {
+  [key: string]: PredictorDetail;
+}
+
+export interface PredictorDetail {
   confusionMatrix: ConfusionMatrix;
+  dataGrid?: DataGrid;
 }
 
 export interface ConfusionMatrix {
@@ -53,6 +58,5 @@ export interface Dimension {
   variable: string;
   type: string;
   partitionType: string;
-  partition: (string[] | number[])[];
-  defaultGroupIndex?: number;
+  partition: number[] | string[];
 }
