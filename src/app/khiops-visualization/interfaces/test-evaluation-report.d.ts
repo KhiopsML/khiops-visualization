@@ -1,4 +1,4 @@
-import { LiftCurve, RecCurve } from './curves';
+import { LiftCurve, RecCurve } from './app-datas';
 
 export interface TestEvaluationReport {
   reportType: string;

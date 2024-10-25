@@ -1,7 +1,8 @@
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { TargetValues } from '@khiops-visualization/interfaces/modeling-report';
+import { NodeElt } from '@khiops-visualization/interfaces/tree-preparation-report';
 
-export class TreeNodeModel {
+export class TreeNodeModel implements NodeElt {
   id: string;
   nodeId: string;
   _id: string;
@@ -22,7 +23,7 @@ export class TreeNodeModel {
   totalFreqs: number;
   isCollapsed: boolean;
 
-  constructor(object, classesCount, color?, isTrusted?) {
+  constructor(object, classesCount?, color?, isTrusted?) {
     // Assign values from input
     Object.assign(this, object);
 
@@ -46,7 +47,9 @@ export class TreeNodeModel {
       this.deepGetChildrenModalityTargetValues(this.childNodes);
     }
 
-    this.purity = this.getPurity(classesCount);
+    if (classesCount) {
+      this.purity = this.getPurity(classesCount);
+    }
   }
 
   /**

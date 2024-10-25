@@ -12,6 +12,7 @@ import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { TYPES } from '@khiops-library/enum/types';
 import { PreparationDatasService } from './preparation-datas.service';
 import { REPORTS } from '@khiops-library/enum/reports';
+import { VariableStatistic } from '@khiops-visualization/interfaces/tree-preparation-report';
 
 @Injectable({
   providedIn: 'root',
@@ -36,7 +37,7 @@ export class TreePreparationDatasService {
 
     // select the first item of the list by default
     if (this.treePreparationDatas.isValid()) {
-      let defaultVariable =
+      let defaultVariable: VariableStatistic =
         appDatas.treePreparationReport.variablesStatistics[0];
 
       // Check if there is a saved selected variable into json
@@ -119,7 +120,7 @@ export class TreePreparationDatasService {
    * @returns {TreePreparationVariableModel | undefined} The selected variable.
    */
   setSelectedVariable(
-    object: TreePreparationVariableModel,
+    object: VariableStatistic,
   ): TreePreparationVariableModel | undefined {
     if (this.treePreparationDatas && object) {
       const variable = this.preparationDatasService.getVariableFromName(
@@ -169,9 +170,10 @@ export class TreePreparationDatasService {
     const treeDatas = appDatas?.treePreparationReport?.treeDetails;
     const currentRank = this.getSelectedVariableRank();
     if (currentRank && treeDatas?.[currentRank]) {
-      this.treePreparationDatas.dimensionTree = _.cloneDeep([
+      const currenetDimTree: TreeNodeModel = new TreeNodeModel(
         treeDatas[currentRank].treeNodes,
-      ]);
+      );
+      this.treePreparationDatas.dimensionTree = _.cloneDeep([currenetDimTree]);
       this.treePreparationDatas.dimensionTree[0] = this.formatTreeNodesDatas(
         this.treePreparationDatas.dimensionTree[0],
       );
@@ -183,16 +185,19 @@ export class TreePreparationDatasService {
    * It calculates the minimum and maximum frequencies and updates the tree preparation data.
    */
   computeNodesFreqsComparedToOthers() {
-    let treeLeafs: any = this.treePreparationDatas?.selectedFlattenTree?.map(
-      (e) => e?.targetValues?.frequencies,
-    );
+    let treeLeafs: number[][] =
+      this.treePreparationDatas?.selectedFlattenTree?.map(
+        (e) => e?.targetValues?.frequencies,
+      );
+
     if (treeLeafs) {
       treeLeafs = treeLeafs.filter(function (e) {
         return e !== undefined;
       });
-      treeLeafs = UtilsService.sumArrayItemsOfArray(treeLeafs);
+      const treeLeafsSums: number[] =
+        UtilsService.sumArrayItemsOfArray(treeLeafs);
       const [minVal, maxVal]: any =
-        UtilsService.getMinAndMaxFromArray(treeLeafs);
+        UtilsService.getMinAndMaxFromArray(treeLeafsSums);
       this.treePreparationDatas.maxFrequencies = maxVal;
       this.treePreparationDatas.minFrequencies = minVal;
     }
@@ -204,7 +209,7 @@ export class TreePreparationDatasService {
    * @param {TreeNodeModel} item - The tree node to format.
    * @returns {TreeNodeModel} The formatted tree node.
    */
-  formatTreeNodesDatas(item: TreeNodeModel) {
+  formatTreeNodesDatas(item: TreeNodeModel): TreeNodeModel {
     const color = this.treePreparationDatas?.treeColorsMap[item.nodeId];
     item = new TreeNodeModel(
       item,

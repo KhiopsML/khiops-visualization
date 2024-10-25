@@ -1,3 +1,5 @@
+import { VariablesDetailedStatistics } from './app-datas';
+
 export interface PreparationReport {
   reportType: string;
   summary: PreparationSummary;
@@ -73,34 +75,4 @@ export interface VariableStatistic {
   constructionCost: number;
   preparationCost: number;
   dataCost: number;
-}
-
-export interface VariablesDetailedStatistics {
-  [key: string]: VariableDetail;
-}
-
-export interface VariableDetail {
-  dataGrid: DataGrid;
-  inputValues: InputValues;
-}
-
-export interface DataGrid {
-  isSupervised: boolean;
-  dimensions: Dimension[];
-  partTargetFrequencies: number[][];
-  partInterests: number[];
-  frequencies: number[];
-}
-
-export interface Dimension {
-  variable: string;
-  type: string;
-  partitionType: string;
-  partition: Array<string | string[]>; // Nested arrays for cases like ["L3"], ["L4"], etc.
-  defaultGroupIndex?: number;
-}
-
-export interface InputValues {
-  values: string[];
-  frequencies: number[];
 }

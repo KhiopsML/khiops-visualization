@@ -1,4 +1,4 @@
-import { RecCurve, LiftCurve } from './curves';
+import { LiftCurve, RecCurve } from './app-datas';
 
 export interface TrainEvaluationReport {
   reportType: string;
