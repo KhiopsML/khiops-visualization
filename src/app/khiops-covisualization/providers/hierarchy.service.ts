@@ -53,7 +53,7 @@ export class HierarchyService {
    * Unfolds the hierarchy for the given rank, updating the collapsed nodes and refreshing dimension data.
    * @param currentRank - The rank for which to unfold the hierarchy.
    */
-  unfoldHierarchy(currentRank) {
+  unfoldHierarchy(currentRank: number) {
     const collapsedNodes =
       this.treenodesService.getLeafNodesForARank(currentRank);
 

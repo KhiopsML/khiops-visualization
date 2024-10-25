@@ -2,6 +2,7 @@ import { ConfigService } from './config.service';
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngstack/translate';
 import { UtilsService } from './utils.service';
+import { DynamicI } from '@khiops-library/interfaces/globals';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,7 @@ export class CopyDatasService {
     private configService: ConfigService,
   ) {}
 
-  copyDatasToClipboard(selectedArea: any) {
+  copyDatasToClipboard(selectedArea: DynamicI) {
     // console.log(
     //   '​CopyDatasService -> copyDatasToClipboard -> selectedArea',
     //   selectedArea,
@@ -77,7 +78,7 @@ export class CopyDatasService {
     }
   }
 
-  getKvHistogramDatas(selectedArea: any): string {
+  getKvHistogramDatas(selectedArea: DynamicI): string {
     let formattedDatas = '';
 
     // TITLE
@@ -100,7 +101,7 @@ export class CopyDatasService {
     return formattedDatas;
   }
 
-  getMatrixDatas(selectedArea: any) {
+  getMatrixDatas(selectedArea: DynamicI) {
     let formattedDatas = '';
 
     // TITLE
@@ -137,7 +138,7 @@ export class CopyDatasService {
     return formattedDatas;
   }
 
-  get1dBarChartDatas(selectedArea: any) {
+  get1dBarChartDatas(selectedArea: DynamicI) {
     let formattedDatas = '';
 
     // TITLE
@@ -184,7 +185,7 @@ export class CopyDatasService {
     return formattedDatas;
   }
 
-  getNdBarChartDatas(selectedArea: any) {
+  getNdBarChartDatas(selectedArea: DynamicI) {
     let formattedDatas = '';
     // TITLE
     if (selectedArea.title) {
@@ -221,7 +222,7 @@ export class CopyDatasService {
     return formattedDatas;
   }
 
-  getInformationsDatas(selectedArea: any) {
+  getInformationsDatas(selectedArea: DynamicI) {
     let formattedDatas = '';
 
     // TITLE
@@ -240,7 +241,7 @@ export class CopyDatasService {
     return formattedDatas;
   }
 
-  getDescriptionsDatas(selectedArea: any) {
+  getDescriptionsDatas(selectedArea: DynamicI) {
     let formattedDatas = '';
 
     formattedDatas += selectedArea.title + '\n';
@@ -261,7 +262,7 @@ export class CopyDatasService {
     return formattedDatas;
   }
 
-  getKvTreeDatas(selectedArea: any) {
+  getKvTreeDatas(selectedArea: DynamicI) {
     let formattedDatas = '';
 
     const currentDatas =
@@ -292,7 +293,7 @@ export class CopyDatasService {
     return formattedDatas;
   }
 
-  getTreeDatas(selectedArea: any) {
+  getTreeDatas(selectedArea: DynamicI) {
     let formattedDatas = '';
 
     // First flatten the tree
@@ -374,7 +375,7 @@ export class CopyDatasService {
     return formattedDatas;
   }
 
-  getTableDatas(selectedArea: any) {
+  getTableDatas(selectedArea: DynamicI) {
     let formattedDatas = '';
 
     // TITLE
