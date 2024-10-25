@@ -1,4 +1,7 @@
-import { ValueGroup } from '@khiops-covisualization/interfaces/app-datas';
+import {
+  Cluster,
+  ValueGroup,
+} from '@khiops-covisualization/interfaces/app-datas';
 import { TYPES } from '@khiops-library/enum/types';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 
@@ -56,7 +59,7 @@ export class TreeNodeModel {
    */
   constructor(
     id,
-    object,
+    object: Cluster,
     dimension,
     collapsedNodes,
     leafPosition,
@@ -90,17 +93,17 @@ export class TreeNodeModel {
       this.bounds = this.bounds.replace(/\*/g, 'Missing U ');
     }
 
-    this.name = object?.name || this.cluster;
+    this.name = this.cluster;
 
     if (currentNodesNames?.[this.name]) {
       this.shortDescription = currentNodesNames[this.name];
     } else {
-      this.shortDescription = object?.shortDescription || this.bounds;
+      this.shortDescription = this.bounds;
     }
     if (currentAnnotations?.[this.name]) {
       this.annotation = currentAnnotations[this.name];
     } else {
-      this.annotation = object?.annotation || '';
+      this.annotation = '';
     }
 
     if (this.valueGroups && extData) {
@@ -115,7 +118,7 @@ export class TreeNodeModel {
       }
     }
 
-    this.children = object?.children || [];
+    this.children = [];
 
     if (this.parentCluster === '') {
       this.isParentCluster = true;
