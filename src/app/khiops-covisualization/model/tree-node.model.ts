@@ -1,4 +1,5 @@
 import { TYPES } from '@khiops-library/enum/types';
+import { ValueGroupsI } from '@khiops-library/interfaces/value-groups';
 
 export class TreeNodeModel {
   id: number;
@@ -11,7 +12,7 @@ export class TreeNodeModel {
   name: string;
   cluster: string;
   bounds: string;
-  valueGroup: string[] | undefined = []; // in case of categorical
+  valueGroups: ValueGroupsI | undefined; // in case of categorical
 
   shortDescription: string;
   parentCluster: string;
@@ -50,26 +51,27 @@ export class TreeNodeModel {
    * @param currentNodesNames - Optional current node names.
    * @param currentAnnotations - Optional current annotations.
    * @param extData - Optional external data.
-   * @param valueGroup - Optional value group for categorical data.
+   * @param valueGroups - Optional value group for categorical data.
    */
   constructor(
     id,
     object,
     dimension,
     collapsedNodes,
-    nbClusters,
     leafPosition,
     j,
     currentNodesNames?,
     currentAnnotations?,
     extData?,
-    valueGroup?: string[] | undefined,
+    valueGroups?: ValueGroupsI,
   ) {
     // Assign values from input
     Object.assign(this, object);
 
     // Generate id for tree node plugin
     this.id = id;
+
+    this.valueGroups = valueGroups;
 
     // Generate id for grid
     this._id = object.cluster;
@@ -100,9 +102,9 @@ export class TreeNodeModel {
       this.annotation = object?.annotation || '';
     }
 
-    if (this.valueGroup && extData) {
-      for (let index = 0; index < this.valueGroup?.values.length; index++) {
-        const element = this.valueGroup.values[index];
+    if (this.valueGroups && extData) {
+      for (let index = 0; index < this.valueGroups?.values.length; index++) {
+        const element = this.valueGroups.values[index];
         if (extData[element]) {
           if (!this.externalData) {
             this.externalData = {};

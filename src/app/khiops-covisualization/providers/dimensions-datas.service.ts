@@ -455,20 +455,20 @@ export class DimensionsDatasService {
             const currentDimensionNodesToCollapse =
               collapsedNodes?.[dimension?.name] || [];
 
+            const currentValueGroups = dimension.valueGroups?.find(
+              (e) => e.cluster === dimensionHierarchy.clusters[j].cluster,
+            );
             const currentObj: TreeNodeModel = new TreeNodeModel(
               index,
               dimensionHierarchy.clusters[j],
               dimension,
               currentDimensionNodesToCollapse,
-              nbClusters,
               leafPosition,
               j,
               currentNodesNames,
               currentAnnotations,
               externalDatas,
-              dimension.valueGroups?.find(
-                (e) => e.cluster === dimensionHierarchy.clusters[j].cluster,
-              ),
+              currentValueGroups,
             );
             this.dimensionsDatas.dimensionsClusters[i].push(currentObj);
 
@@ -517,20 +517,20 @@ export class DimensionsDatasService {
             }
             const currentDimensionNodesToCollapse =
               (collapsedNodes && collapsedNodes[dimension.name]) || [];
+            const currentValueGroups = dimension.valueGroups?.find(
+              (e) => e.cluster === dimensionHierarchy.clusters[j].cluster,
+            );
             const currentObj: TreeNodeModel = new TreeNodeModel(
               index,
               currentDimensionHierarchy.clusters[j],
               dimension,
               currentDimensionNodesToCollapse,
-              nbClusters,
               leafPosition,
               j,
               currentNodesNames,
               currentAnnotations,
               externalDatas,
-              dimension.valueGroups?.find(
-                (e) => e.cluster === dimensionHierarchy.clusters[j].cluster,
-              ),
+              currentValueGroups,
             );
             this.dimensionsDatas.currentDimensionsClusters[i].push(currentObj);
 

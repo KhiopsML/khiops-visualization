@@ -1,4 +1,5 @@
 import { TYPES } from '@khiops-library/enum/types';
+import { ValueGroupsI } from '@khiops-library/interfaces/value-groups';
 import _ from 'lodash';
 
 export class DimensionModel {
@@ -15,8 +16,11 @@ export class DimensionModel {
   isNumerical: boolean;
   isCategorical: boolean;
   currentHierarchyClusterCount: number;
-  intervals: any[];
-  valueGroups: any[];
+  intervals: {
+    cluster: string;
+    bounds: number[];
+  }[];
+  valueGroups: ValueGroupsI[];
   partition: number[][] | string[]; // KV
   partitionInputs: number[][] | string[]; // KV
   partitionType: string[]; // KV

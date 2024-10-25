@@ -26,8 +26,8 @@ export class SelectedTreeClusterModel {
   setCurrentNodeInformations(selectedNode: TreeNodeModel) {
     this.interval = selectedNode?.name;
     this.frequency = selectedNode?.frequency;
-    if (selectedNode?.valueGroup) {
-      this.nbClusters = selectedNode?.valueGroup?.values?.length;
+    if (selectedNode?.valueGroups) {
+      this.nbClusters = selectedNode?.valueGroups?.values?.length;
     } else {
       this.nbClusters = this.countClusters(selectedNode);
     }
@@ -42,8 +42,8 @@ export class SelectedTreeClusterModel {
     let count = 0;
 
     function recursiveCount(node: TreeNodeModel): number {
-      if (node.valueGroup) {
-        return node.valueGroup.values.length;
+      if (node.valueGroups) {
+        return node.valueGroups.values.length;
       } else if (node.children) {
         return node.children.reduce(
           (acc, child) => acc + recursiveCount(child),
