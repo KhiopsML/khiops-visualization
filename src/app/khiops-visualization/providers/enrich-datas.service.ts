@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas';
 
 @Injectable({
   providedIn: 'root',
@@ -62,7 +63,7 @@ export class EnrichDatasService {
    * @returns The modified `datas` object with empty partitions removed for numerical variables.
    */
   static ignoreMissingPartitionForNumerical(
-    datas: any,
+    datas: VisualizationDatas,
     preparationSource: string,
   ): any {
     if (datas?.[preparationSource]) {

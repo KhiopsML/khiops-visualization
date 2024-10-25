@@ -10,7 +10,6 @@ import { EvaluationReport } from './evaluation-report';
 
 export interface AppDatasI {
   datas: VisualizationDatas;
-  //   savedDatas?: any;
 }
 
 export interface VisualizationDatas {

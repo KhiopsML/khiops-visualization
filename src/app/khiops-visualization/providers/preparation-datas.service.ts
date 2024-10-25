@@ -18,6 +18,7 @@ import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { GridColumnsI } from '../../khiops-library/interfaces/grid-columns';
+import { DynamicI } from '@khiops-library/interfaces/globals';
 
 @Injectable({
   providedIn: 'root',
@@ -197,7 +198,7 @@ export class PreparationDatasService {
   getCurrentIntervalDatas(preparationSource: string, index?): GridDatasI {
     index = index || 0;
 
-    const datas: any[] = [];
+    const datas: DynamicI = [];
     let title = '';
     const displayedColumns: GridColumnsI[] = [];
 

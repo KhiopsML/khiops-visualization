@@ -13,6 +13,7 @@ import { TYPES } from '@khiops-library/enum/types';
 import { PreparationDatasService } from './preparation-datas.service';
 import { REPORTS } from '@khiops-library/enum/reports';
 import { VariableStatistic } from '@khiops-visualization/interfaces/tree-preparation-report';
+import { DynamicI } from '@khiops-library/interfaces/globals';
 
 @Injectable({
   providedIn: 'root',
@@ -267,7 +268,7 @@ export class TreePreparationDatasService {
   getCurrentIntervalDatas(index?: number): GridDatasI {
     index = index || 0;
 
-    const datas: any[] = [];
+    const datas: DynamicI = [];
     let title = '';
     const displayedColumns: any[] = [];
 

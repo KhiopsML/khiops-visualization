@@ -21,6 +21,7 @@ import { CHART_TYPES } from '@khiops-library/enum/chart-types';
 import { TestEvaluationReport } from '@khiops-visualization/interfaces/test-evaluation-report';
 import { TrainEvaluationReport } from '@khiops-visualization/interfaces/train-evaluation-report';
 import { EvaluationReport } from '@khiops-visualization/interfaces/evaluation-report';
+import { DynamicI } from '@khiops-library/interfaces/globals';
 
 @Injectable({
   providedIn: 'root',
@@ -147,7 +148,7 @@ export class EvaluationDatasService {
     }
 
     if (this.evaluationDatas.selectedPredictorEvaluationVariable) {
-      const datas: any = [];
+      const datas: DynamicI[] = [];
 
       let currentReport: any;
       // get the correct report : train or test
