@@ -25,6 +25,7 @@ import { ViewManagerService } from '@khiops-covisualization/providers/view-manag
 import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 import { SplitGutterInteractionEvent } from 'angular-split';
 import { TreeNodeChangedEventI } from '@khiops-covisualization/interfaces/events';
+import { DynamicI } from '@khiops-library/interfaces/globals';
 
 @Component({
   selector: 'app-matrix-container',
@@ -42,7 +43,7 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
   @Input() private viewId: string = '';
   @Input() selectedDimensions: DimensionModel[] | undefined; // Used to check for dim change
 
-  public sizes: any;
+  public sizes: DynamicI;
   public dimensionsDatas: DimensionsDatasModel;
   public matrixModes: MatrixModesModel = new MatrixModesModel();
   public matrixOptions: MatrixOptionsModel = new MatrixOptionsModel();

@@ -4,6 +4,7 @@ import { VariableGraphDetailsComponent } from '../variable-graph-details/variabl
 import { TreePreparationDatasModel } from '@khiops-visualization/model/tree-preparation-datas.model';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { SplitGutterInteractionEvent } from 'angular-split';
+import { DynamicI } from '@khiops-library/interfaces/globals';
 
 @Component({
   selector: 'app-var-details-tree-preparation',
@@ -16,7 +17,7 @@ export class VarDetailsTreePreparationComponent {
   })
   private appVariableGraphDetails: VariableGraphDetailsComponent;
   public treePreparationDatas: TreePreparationDatasModel;
-  public sizes: any;
+  public sizes: DynamicI;
   public selectedBarIndex = 0;
 
   constructor(

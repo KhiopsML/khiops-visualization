@@ -20,8 +20,7 @@ import { ModelingDatasModel } from '@khiops-visualization/model/modeling-datas.m
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { SplitGutterInteractionEvent } from 'angular-split';
-import { TrainedPredictorModel } from '@khiops-visualization/model/trained-predictor.model';
-import { VariableModel } from '@khiops-visualization/model/variable.model';
+import { DynamicI } from '@khiops-library/interfaces/globals';
 
 @Component({
   selector: 'app-modeling-view',
@@ -31,7 +30,7 @@ import { VariableModel } from '@khiops-visualization/model/variable.model';
 export class ModelingViewComponent extends SelectableTabComponent {
   public preparationSource: REPORT;
   public appDatas: any;
-  public sizes: any;
+  public sizes: DynamicI;
   public summaryDatas: InfosDatasI[];
   public targetVariableStatsDatas: ChartDatasModel;
   public trainedPredictorsSummaryDatas: InfosDatasI[];

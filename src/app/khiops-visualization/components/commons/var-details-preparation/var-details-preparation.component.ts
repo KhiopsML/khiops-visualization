@@ -16,6 +16,7 @@ import { PreparationVariableModel } from '@khiops-visualization/model/preparatio
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { SplitGutterInteractionEvent } from 'angular-split';
 import { REPORT } from '@khiops-library/enum/report';
+import { DynamicI } from '@khiops-library/interfaces/globals';
 
 @Component({
   selector: 'app-var-details-preparation',
@@ -35,7 +36,7 @@ export class VarDetailsPreparationComponent implements OnInit, OnChanges {
     selectedVariable: PreparationVariableModel;
     currentIntervalDatas: GridDatasI;
   };
-  public sizes: any;
+  public sizes: DynamicI;
   public matrixRegSelectedCell = 0;
   public distributionSelectedBarIndex = 0;
   public preparation2dDatas: Preparation2dDatasModel;

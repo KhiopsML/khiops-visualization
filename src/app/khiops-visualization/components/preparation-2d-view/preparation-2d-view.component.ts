@@ -21,6 +21,7 @@ import { Preparation2dVariableModel } from '@khiops-visualization/model/preparat
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { SplitGutterInteractionEvent } from 'angular-split';
+import { DynamicI } from '@khiops-library/interfaces/globals';
 
 @Component({
   selector: 'app-preparation-2d-view',
@@ -33,7 +34,7 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
   })
   private targetDistributionGraph: TargetDistributionGraphComponent | undefined;
 
-  public sizes: any;
+  public sizes: DynamicI;
   public preparation2dDatas: Preparation2dDatasModel;
   public summaryDatas: InfosDatasI[];
   public informationsDatas: InfosDatasI[];

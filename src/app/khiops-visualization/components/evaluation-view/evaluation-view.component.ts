@@ -7,6 +7,7 @@ import { EvaluationTypeModel } from '@khiops-visualization/model/evaluation-type
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { SplitGutterInteractionEvent } from 'angular-split';
+import { DynamicI } from '@khiops-library/interfaces/globals';
 
 @Component({
   selector: 'app-evaluation-view',
@@ -17,7 +18,7 @@ export class EvaluationViewComponent
   extends SelectableTabComponent
   implements OnInit
 {
-  public sizes: any;
+  public sizes: DynamicI;
   public override tabIndex = 4; // managed by selectable-tab component
   public evaluationDatas: EvaluationDatasModel;
 

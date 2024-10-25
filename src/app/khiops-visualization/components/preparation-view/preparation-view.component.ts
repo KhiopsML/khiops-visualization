@@ -21,6 +21,7 @@ import { TrackerService } from '../../../khiops-library/providers/tracker.servic
 import { BorderTextCellComponent } from '../../../khiops-library/components/ag-grid/border-text-cell/border-text-cell.component';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { SplitGutterInteractionEvent } from 'angular-split';
+import { DynamicI } from '@khiops-library/interfaces/globals';
 
 @Component({
   selector: 'app-preparation-view',
@@ -29,7 +30,7 @@ import { SplitGutterInteractionEvent } from 'angular-split';
 })
 export class PreparationViewComponent extends SelectableTabComponent {
   @Input() public preparationSource = REPORT.PREPARATION_REPORT; // By default
-  public sizes: any;
+  public sizes: DynamicI;
   public preparationDatas: {
     selectedVariable: PreparationVariableModel;
     currentIntervalDatas: GridDatasI;

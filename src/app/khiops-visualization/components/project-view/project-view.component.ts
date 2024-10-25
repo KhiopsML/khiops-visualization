@@ -8,6 +8,7 @@ import { ProjectDatasService } from '@khiops-visualization/providers/project-dat
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
 import { Subscription } from 'rxjs';
 import { SplitGutterInteractionEvent } from 'angular-split';
+import { DynamicI } from '@khiops-library/interfaces/globals';
 
 @Component({
   selector: 'app-project-view',
@@ -20,7 +21,7 @@ export class ProjectViewComponent
 {
   private fileLoadedSub?: Subscription;
 
-  public sizes: any;
+  public sizes: DynamicI;
   public isElectron: boolean = false;
   public debugFile = AppConfig.debugFile;
 

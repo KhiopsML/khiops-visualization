@@ -14,6 +14,7 @@ import { LayoutService } from '@khiops-library/providers/layout.service';
 import { ViewManagerService } from '@khiops-covisualization/providers/view-manager.service';
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
 import { SplitGutterInteractionEvent } from 'angular-split';
+import { DynamicI } from '@khiops-library/interfaces/globals';
 
 @Component({
   selector: 'app-axis-view',
@@ -25,7 +26,7 @@ export class AxisViewComponent
   implements OnInit, OnDestroy
 {
   @Input() public openContextView = false;
-  public sizes: any;
+  public sizes: DynamicI;
   public dimensionsDatas: DimensionsDatasModel | undefined;
   public viewsLayout: ViewLayoutVO | undefined;
   public isBigJsonFile = false;

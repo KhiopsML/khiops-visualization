@@ -25,6 +25,7 @@ import { BorderTextCellComponent } from '@khiops-library/components/ag-grid/bord
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { REPORT } from '@khiops-library/enum/report';
 import { SplitGutterInteractionEvent } from 'angular-split';
+import { DynamicI } from '@khiops-library/interfaces/globals';
 
 @Component({
   selector: 'app-tree-preparation-view',
@@ -38,7 +39,7 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
   private appVariableGraphDetails: VariableGraphDetailsComponent;
   private preparationSource: REPORT = REPORT.TREE_PREPARATION_REPORT;
 
-  public sizes: any;
+  public sizes: DynamicI;
   public summaryDatas: InfosDatasI[];
   public informationsDatas: InfosDatasI[];
   public targetVariableStatsDatas: ChartDatasModel;

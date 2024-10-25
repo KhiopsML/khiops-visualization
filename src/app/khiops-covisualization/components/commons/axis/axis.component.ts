@@ -5,6 +5,7 @@ import { LayoutService } from '@khiops-library/providers/layout.service';
 import { ViewManagerService } from '@khiops-covisualization/providers/view-manager.service';
 import { DimensionViewLayoutModel } from '@khiops-covisualization/model/dimension-view-layout.model';
 import { SplitGutterInteractionEvent } from 'angular-split';
+import { DynamicI } from '@khiops-library/interfaces/globals';
 
 @Component({
   selector: 'app-axis',
@@ -18,7 +19,7 @@ export class AxisComponent implements OnInit {
   @Input() public axisLayout: DimensionViewLayoutModel | undefined;
   @Input() private viewId: string = '';
 
-  public sizes: any;
+  public sizes: DynamicI;
   public column0Index = 0;
   public column1Index = 1;
   public column2Index = 2;

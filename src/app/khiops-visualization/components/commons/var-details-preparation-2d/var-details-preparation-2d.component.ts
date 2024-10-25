@@ -9,6 +9,7 @@ import { DistributionDatasModel } from '@khiops-visualization/model/distribution
 import { LS } from '@khiops-library/enum/ls';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { SplitGutterInteractionEvent } from 'angular-split';
+import { DynamicI } from '@khiops-library/interfaces/globals';
 
 @Component({
   selector: 'app-var-details-preparation-2d',
@@ -21,7 +22,7 @@ export class VarDetailsPreparation2dComponent {
   })
   private targetDistributionGraph: TargetDistributionGraphComponent;
 
-  public sizes: any;
+  public sizes: DynamicI;
   public preparation2dDatas: Preparation2dDatasModel;
   public distribution2dDatas: DistributionDatasModel;
   public scaleValue: number;
