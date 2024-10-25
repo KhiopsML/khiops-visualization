@@ -196,7 +196,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
     this.modelingDatasService.setSelectedVariable(modelingVariable);
   }
 
-  onShowLevelDistributionGraph(datas: any) {
+  onShowLevelDistributionGraph(datas: VariableModel[]) {
     const config = new MatDialogConfig();
     config.width = AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.WIDTH;
     config.height =

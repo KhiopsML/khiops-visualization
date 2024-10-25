@@ -22,6 +22,7 @@ import { TrackerService } from '../../../khiops-library/providers/tracker.servic
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals';
+import { VariableModel } from '@khiops-visualization/model/variable.model';
 
 @Component({
   selector: 'app-preparation-2d-view',
@@ -158,7 +159,7 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
     this.modelingDatasService.setSelectedVariable(modelingVariable);
   }
 
-  onShowLevelDistributionGraph(datas: any) {
+  onShowLevelDistributionGraph(datas: VariableModel[]) {
     const config = new MatDialogConfig();
     config.width = AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.WIDTH;
     config.height =
