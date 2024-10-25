@@ -1,6 +1,6 @@
+import { ValueGroup } from '@khiops-covisualization/interfaces/app-datas';
 import { TYPES } from '@khiops-library/enum/types';
 import { DynamicI } from '@khiops-library/interfaces/globals';
-import { ValueGroupsI } from '@khiops-library/interfaces/value-groups';
 
 export class TreeNodeModel {
   id: number;
@@ -13,7 +13,7 @@ export class TreeNodeModel {
   name: string;
   cluster: string;
   bounds: string;
-  valueGroups: ValueGroupsI | undefined; // in case of categorical
+  valueGroups: ValueGroup | undefined; // in case of categorical
 
   shortDescription: string;
   parentCluster: string;
@@ -64,7 +64,7 @@ export class TreeNodeModel {
     currentNodesNames?,
     currentAnnotations?,
     extData?,
-    valueGroups?: ValueGroupsI,
+    valueGroups?: ValueGroup,
   ) {
     // Assign values from input
     Object.assign(this, object);

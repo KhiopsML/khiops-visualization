@@ -32,6 +32,10 @@ import { Subscription } from 'rxjs';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 import { ViewManagerService } from '@khiops-covisualization/providers/view-manager.service';
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
+import {
+  AppDatasI,
+  CovisualizationDatas,
+} from '@khiops-covisualization/interfaces/app-datas';
 
 @Component({
   selector: 'app-home-layout',
@@ -41,11 +45,11 @@ import { FileLoaderService } from '@khiops-library/providers/file-loader.service
 })
 export class HomeLayoutComponent implements OnInit, OnDestroy {
   public showProjectTab: boolean = true;
-  public get appDatas() {
+  public get appDatas(): AppDatasI {
     return this.appService.getDatas();
   }
   @Input()
-  public set appDatas(datas) {
+  public set appDatas(datas: CovisualizationDatas) {
     this.appService.setFileDatas(datas);
   }
   public activeTab = AppConfig.covisualizationCommon.HOME.ACTIVE_TAB_INDEX;
@@ -71,7 +75,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
       this.tabsMenu._handleClick = this.interceptTabChange.bind(this);
     }
   }
-  private currentDatas: any; // same type as global appDatas
+  private currentDatas: AppDatasI; // same type as global appDatas
   private importedDatasChangedSub: Subscription;
   private fileLoadedSub?: Subscription;
 
