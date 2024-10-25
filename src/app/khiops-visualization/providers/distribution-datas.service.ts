@@ -380,7 +380,9 @@ export class DistributionDatasService {
    * @param selectedVariable - The variable for which histogram data is to be generated. It should have a `rank` property.
    * @returns An array of `HistogramValuesI` objects containing the histogram graph details, or `undefined` if the data is not available.
    */
-  getHistogramGraphDatas(selectedVariable): HistogramValuesI[] | undefined {
+  getHistogramGraphDatas(
+    selectedVariable: PreparationVariableModel | TreePreparationVariableModel,
+  ): HistogramValuesI[] | undefined {
     const appDatas = this.appService.getDatas().datas;
     const varDatas =
       appDatas?.preparationReport?.variablesDetailedStatistics?.[

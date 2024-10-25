@@ -1,10 +1,10 @@
 import { TYPES } from '@khiops-library/enum/types';
 import { VARIABLE_TYPES } from '@khiops-library/enum/variable-types';
+import { VariableStatistic } from '../interfaces/preparation-report';
 
-export class PreparationVariableModel {
+export class PreparationVariableModel implements VariableStatistic {
   _id: string;
   mode: string;
-  name: string;
   name1: string;
   name2: string;
   nameX: string;
@@ -29,6 +29,15 @@ export class PreparationVariableModel {
   level: number;
 
   is2dVariable = false;
+
+  name: string;
+  targetParts: number;
+  min?: number;
+  max?: number;
+  mean?: number;
+  stdDev?: number;
+  missingNumber: number;
+  sparseMissingNumber: number;
 
   constructor(object, id) {
     // Assign values from input
