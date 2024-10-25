@@ -6,6 +6,7 @@ import { PreparationReport } from './preparation-report';
 import { TreePreparationReport } from './tree-preparation-report';
 import { BivariatePreparationReport } from './bivariate-preparation-report';
 import { TextPreparationReport } from './text-preparation-report';
+import { EvaluationReport } from './evaluation-report';
 
 export interface AppDatasI {
   datas: VisualizationDatas;
@@ -23,12 +24,10 @@ export interface VisualizationDatas {
   treePreparationReport: TreePreparationReport;
   bivariatePreparationReport: BivariatePreparationReport;
   textPreparationReport: TextPreparationReport;
-  evaluationReport: EvaluationReport | any;
+  evaluationReport: EvaluationReport;
   logs: Log[];
   savedDatas: DynamicI;
 }
-
-interface EvaluationReport {}
 
 interface Log {
   taskName: string;

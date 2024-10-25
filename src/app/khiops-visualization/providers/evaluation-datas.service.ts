@@ -20,6 +20,7 @@ import { LiftCurveSerieI } from '../interfaces/lift-curve-serie';
 import { CHART_TYPES } from '@khiops-library/enum/chart-types';
 import { TestEvaluationReport } from '@khiops-visualization/interfaces/test-evaluation-report';
 import { TrainEvaluationReport } from '@khiops-visualization/interfaces/train-evaluation-report';
+import { EvaluationReport } from '@khiops-visualization/interfaces/evaluation-report';
 
 @Injectable({
   providedIn: 'root',
@@ -669,8 +670,10 @@ export class EvaluationDatasService {
     const appDatas = this.appService.getDatas().datas;
     let targetLift: TargetLiftValuesI;
 
-    let currentEvalReport: TestEvaluationReport | TrainEvaluationReport =
-      appDatas.trainEvaluationReport;
+    let currentEvalReport:
+      | TestEvaluationReport
+      | TrainEvaluationReport
+      | EvaluationReport = appDatas.trainEvaluationReport;
     if (!currentEvalReport) {
       currentEvalReport = appDatas.evaluationReport;
     }
