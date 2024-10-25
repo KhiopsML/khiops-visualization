@@ -1,23 +1,14 @@
 import { CellModel } from '@khiops-library/model/cell.model';
 import { Preparation2dVariableModel } from './preparation2d-variable.model';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
+import { MatrixDatasModel } from '@khiops-library/model/matrix-datas.model';
 
 export class Preparation2dDatasModel {
   isAxisInverted = false;
   selectedVariable?: Preparation2dVariableModel = undefined;
   selectedCellIndex: number = 0;
   selectedCell: CellModel = undefined;
-  matrixDatas:
-    | {
-        variable: {
-          nameX: string | undefined;
-          nameY: string | undefined;
-          xParts: number;
-          yParts: number;
-        };
-        matrixCellDatas: any[];
-      }
-    | undefined;
+  matrixDatas: MatrixDatasModel;
   isTargetAvailable = false;
   currentCellDatas: {
     values: any[][]; // Dynamic values according to the input datas

@@ -1,11 +1,13 @@
 import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { TreeNodeModel } from './tree-node.model';
 import { HierarchyDatasModel } from './hierarchy-datas.model';
+import { MatrixDatasModel } from '@khiops-library/model/matrix-datas.model';
+import { CellModel } from '@khiops-library/model/cell.model';
 
 export class DimensionsDatasModel {
-  matrixDatas: any = undefined;
-  allMatrixDatas: any = undefined;
-  allMatrixCellDatas: any = undefined;
+  matrixDatas: MatrixDatasModel;
+  allMatrixDatas: MatrixDatasModel;
+  allMatrixCellDatas: CellModel[] = [];
   matrixCellFreqDataMap: any = undefined;
 
   cellPartIndexes: number[][] = [[]];

@@ -11,6 +11,7 @@ import { TYPES } from '@khiops-library/enum/types';
 import { ExtDatasModel } from '@khiops-covisualization/model/ext-datas.model';
 import { ImportExtDatasService } from './import-ext-datas.service';
 import { MatrixValuesModel } from '@khiops-library/model/matrix-value.model';
+import { MatrixDatasModel } from '@khiops-library/model/matrix-datas.model';
 
 @Injectable({
   providedIn: 'root',
@@ -142,7 +143,7 @@ export class DimensionsDatasService {
    * @param {string} dimensionName - The name of the dimension to check.
    * @returns {boolean} - True if the dimension is a context dimension, false otherwise.
    */
-  isContextDimension(dimensionName): boolean {
+  isContextDimension(dimensionName: string): boolean {
     // Find current dim position
     const currentIndex: number =
       this.dimensionsDatas.selectedDimensions.findIndex((e) => {
@@ -168,7 +169,7 @@ export class DimensionsDatasService {
    * @param {string} dimensionName - The name of the dimension to find.
    * @returns {number} - The position of the dimension in the selected dimensions array.
    */
-  getDimensionPositionFromName(dimensionName): number {
+  getDimensionPositionFromName(dimensionName: string): number {
     // Find current dim position
     return this.dimensionsDatas?.selectedDimensions?.findIndex((e) => {
       return dimensionName === e.name;
@@ -181,7 +182,7 @@ export class DimensionsDatasService {
    *
    * @returns {any} - An array of objects containing the names of the selected dimensions.
    */
-  getDimensionsToSave(): any {
+  getDimensionsToSave(): { name: string }[] {
     const selectedDimensions: { name: string }[] = [];
     const dimensions = this.getSelectedDimensions();
     if (dimensions) {
@@ -356,7 +357,7 @@ export class DimensionsDatasService {
    * @param {number} position - The position at which the dimension should be placed.
    * @returns {DimensionModel[]} - The updated array of selected dimensions.
    */
-  updateSelectedDimension(dimension, position) {
+  updateSelectedDimension(dimension: DimensionModel, position: number) {
     // Find current dim position
     const currentIndex: number =
       this.dimensionsDatas.selectedDimensions.findIndex((e) => {
@@ -407,8 +408,6 @@ export class DimensionsDatasService {
    *
    * @remarks
    * - Collapsed nodes are taken into account if they exist in the saved data.
-   *
-   * @returns {void}
    */
   constructDimensionsTrees() {
     this.dimensionsDatas.dimensionsTrees = [];
@@ -562,14 +561,14 @@ export class DimensionsDatasService {
    * @param {boolean} propagateChanges - Flag to determine if changes should be propagated.
    * @returns {any} - The processed matrix data.
    */
-  getMatrixDatas(propagateChanges = true) {
+  getMatrixDatas(propagateChanges = true): MatrixDatasModel {
     // const t0 = performance.now();
 
     const appDatas = this.appService.getDatas().datas;
 
-    this.dimensionsDatas.matrixDatas = {};
-    this.dimensionsDatas.allMatrixDatas = {};
-    this.dimensionsDatas.allMatrixCellDatas = {};
+    this.dimensionsDatas.matrixDatas = new MatrixDatasModel();
+    this.dimensionsDatas.allMatrixDatas = new MatrixDatasModel();
+    this.dimensionsDatas.allMatrixCellDatas = [];
 
     const xDimension: DimensionModel =
       this.dimensionsDatas.selectedDimensions[0];
@@ -683,6 +682,10 @@ export class DimensionsDatasService {
     // console.log("getMatrixDatas " + (t1 - t0) + " milliseconds.");
     // const generationDuration = t1 - t0;
     // console.log("TCL: DimensionsDatasService -> getMatrixDatas -> this.dimensionsDatas.matrixDatas", JSON.stringify(this.dimensionsDatas.matrixDatas))
+    // console.log(
+    //   'DimensionsDatasService ~ getMatrixDatas ~ this.dimensionsDatas.matrixDatas:',
+    //   this.dimensionsDatas.matrixDatas,
+    // );
     return this.dimensionsDatas.matrixDatas;
   }
 
