@@ -21,6 +21,7 @@ import { AppConfig } from 'src/environments/environment';
 import { LS } from '@khiops-library/enum/ls';
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
 import { THEME } from '@khiops-library/enum/theme';
+import { AppDatasI } from './interfaces/app-datas';
 
 @Component({
   selector: 'app-root-visualization',
@@ -29,7 +30,7 @@ import { THEME } from '@khiops-library/enum/theme';
   encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class AppComponent implements AfterViewInit {
-  appdatas: any;
+  appdatas: AppDatasI;
 
   @ViewChild('appElement', {
     static: false,

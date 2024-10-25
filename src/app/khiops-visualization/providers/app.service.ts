@@ -7,13 +7,17 @@ import { Ls } from '@khiops-library/providers/ls.service';
 import { EnrichDatasService } from './enrich-datas.service';
 import { LayoutService } from '../../khiops-library/providers/layout.service';
 import { VIEW_LAYOUT } from '@khiops-visualization/config/view-layout';
+import {
+  AppDatasI,
+  VisualizationDatas,
+} from '@khiops-visualization/interfaces/app-datas';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AppService {
   static Ls: Ls;
-  private appDatas: any;
+  private appDatas: AppDatasI = undefined;
 
   constructor(
     private layoutService: LayoutService,
@@ -77,7 +81,7 @@ export class AppService {
    * Sets the file data, enriches it, and removes missing information for numerical variables.
    * @param datas - The data to be set and processed.
    */
-  setFileDatas(datas: any) {
+  setFileDatas(datas: VisualizationDatas) {
     this.initSessionVariables();
     this.appDatas.datas = datas;
     this.appDatas.datas = EnrichDatasService.enrichJsonDatas(
@@ -111,7 +115,7 @@ export class AppService {
    * Sets the saved data and updates the layout service with split sizes if available.
    * @param datas - The data to be saved.
    */
-  setSavedDatas(datas: any) {
+  setSavedDatas(datas: VisualizationDatas) {
     if (datas?.savedDatas) {
       if (datas.savedDatas.splitSizes) {
         this.layoutService.setSplitSizes(datas.savedDatas.splitSizes);
@@ -123,7 +127,7 @@ export class AppService {
    * Retrieves the current application data.
    * @returns The current application data.
    */
-  getDatas(): any {
+  getDatas(): AppDatasI {
     return this.appDatas;
   }
 
@@ -132,7 +136,7 @@ export class AppService {
    * @param datas - The data to be checked.
    * @returns True if the data is compatible, false otherwise.
    */
-  isCompatibleJson(datas): boolean {
+  isCompatibleJson(datas: VisualizationDatas): boolean {
     if (datas) {
       if (
         datas.tool === 'Khiops' &&

@@ -1,4 +1,5 @@
 import { UtilsService } from '@khiops-library/providers/utils.service';
+import { TargetValues } from '@khiops-visualization/interfaces/modeling-report';
 
 export class TreeNodeModel {
   id: string;
@@ -11,10 +12,7 @@ export class TreeNodeModel {
   type: string;
   childNodes: [];
   partition: [];
-  targetValues: {
-    frequencies: number[];
-    values: string[];
-  };
+  targetValues: TargetValues;
   children: TreeNodeModel[];
   color: string;
   isTrusted: boolean;
