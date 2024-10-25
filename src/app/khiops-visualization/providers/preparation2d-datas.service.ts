@@ -23,6 +23,7 @@ import { VariableModel } from '@khiops-visualization/model/variable.model';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 import { MatrixValuesModel } from '@khiops-library/model/matrix-value.model';
+import { VariablePairStatistics } from '@khiops-visualization/interfaces/bivariate-preparation-report';
 
 @Injectable({
   providedIn: 'root',
@@ -245,13 +246,13 @@ export class Preparation2dDatasService {
     let preparation2dVariable: Preparation2dVariableModel | undefined;
     const appDatas = this.appService.getDatas().datas;
     if (appDatas?.bivariatePreparationReport?.variablesPairsStatistics) {
-      preparation2dVariable =
+      const currentPreparation2dVariable: VariablePairStatistics =
         appDatas.bivariatePreparationReport.variablesPairsStatistics.find(
           (e) => e.name1 === name1 && e.name2 === name2,
         );
       if (preparation2dVariable) {
         preparation2dVariable = new Preparation2dVariableModel(
-          preparation2dVariable,
+          currentPreparation2dVariable,
         );
       }
     }

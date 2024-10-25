@@ -4,6 +4,7 @@ import { TrainEvaluationReport } from './train-evaluation-report';
 import { TestEvaluationReport } from './test-evaluation-report';
 import { PreparationReport } from './preparation-report';
 import { TreePreparationReport } from './tree-preparation-report';
+import { BivariatePreparationReport } from './bivariate-preparation-report';
 
 export interface AppDatasI {
   datas: VisualizationDatas;
@@ -19,14 +20,12 @@ export interface VisualizationDatas {
   testEvaluationReport: TestEvaluationReport;
   preparationReport: PreparationReport;
   treePreparationReport: TreePreparationReport;
-  bivariatePreparationReport: BivariatePreparationReport | any;
+  bivariatePreparationReport: BivariatePreparationReport;
   textPreparationReport: TextPreparationReport | any;
   evaluationReport: EvaluationReport | any;
   logs: Log[];
   savedDatas: DynamicI;
 }
-
-interface BivariatePreparationReport {}
 
 interface TextPreparationReport {}
 
@@ -59,7 +58,7 @@ export interface InputValues {
   frequencies: number[];
 }
 
-export interface Dimension {
+interface Dimension {
   variable: string;
   type: string;
   partitionType: string;
