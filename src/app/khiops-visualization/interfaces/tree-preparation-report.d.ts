@@ -51,9 +51,9 @@ export interface VariableStatistic {
   values: number;
   mode: string;
   modeFrequency: number;
-  constructionCost: number;
-  preparationCost: number;
-  dataCost: number;
+  constructionCost?: number;
+  preparationCost?: number;
+  dataCost?: number;
   derivationRule: string;
 }
 

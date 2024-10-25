@@ -13,9 +13,6 @@ export class TreePreparationVariableModel implements VariableStatistic {
   values: number;
   parts: number;
   modeFrequency: number;
-  constructionCost: number;
-  preparationCost: number;
-  dataCost: number;
   level: number;
 
   isCategorical: boolean;

@@ -50,9 +50,9 @@ export interface VariableStatistic {
   stdDev: number;
   missingNumber: number;
   sparseMissingNumber: number;
-  constructionCost: number;
-  preparationCost: number;
-  dataCost: number;
+  constructionCost?: number;
+  preparationCost?: number;
+  dataCost?: number;
   derivationRule: string;
 }
 

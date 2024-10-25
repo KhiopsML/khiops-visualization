@@ -28,9 +28,9 @@ export interface VariablePairStatistics {
   parts1: number;
   parts2: number;
   cells: number;
-  constructionCost: number;
-  preparationCost: number;
-  dataCost: number;
+  constructionCost?: number;
+  preparationCost?: number;
+  dataCost?: number;
 }
 
 interface VariablesPairsDetailedStatistics {

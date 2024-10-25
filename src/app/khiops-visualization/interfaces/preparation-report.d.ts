@@ -51,9 +51,9 @@ export interface FeatureEngineering {
 }
 
 export interface NullModel {
-  constructionCost: number;
-  preparationCost: number;
-  dataCost: number;
+  constructionCost?: number;
+  preparationCost?: number;
+  dataCost?: number;
 }
 
 export interface VariableStatistic {
@@ -61,18 +61,11 @@ export interface VariableStatistic {
   name: string;
   type: string;
   level: number;
-  targetParts: number;
   parts: number;
   values: number;
-  min?: number; // Optional, since it may not be present for categorical variables
-  max?: number; // Optional, for the same reason
-  mean?: number; // Optional
-  stdDev?: number; // Optional
   mode?: string; // Optional, only present for categorical variables
   modeFrequency?: number; // Optional, only for categorical variables
-  missingNumber: number;
-  sparseMissingNumber: number;
-  constructionCost: number;
-  preparationCost: number;
-  dataCost: number;
+  constructionCost?: number; // unused var
+  preparationCost?: number; // unused var
+  dataCost?: number; // unused var
 }

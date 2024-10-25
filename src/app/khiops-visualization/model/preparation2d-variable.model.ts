@@ -23,8 +23,6 @@ export class Preparation2dVariableModel implements VariablePairStatistics {
   level: number;
   level1: number;
   level2: number;
-  preparationCost: number;
-  constructionCost: number;
   variables: number;
 
   constructor(object) {

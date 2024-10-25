@@ -23,9 +23,6 @@ export class PreparationVariableModel implements VariableStatistic {
   values: number;
   parts: number;
   modeFrequency: number;
-  constructionCost: number;
-  preparationCost: number;
-  dataCost: number;
   level: number;
 
   is2dVariable = false;
