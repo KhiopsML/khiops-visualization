@@ -128,7 +128,7 @@ export class HomeLayoutComponent implements OnInit {
     }
   }
 
-  private initialize(datas = undefined) {
+  private initialize(datas: VisualizationDatas = undefined) {
     this.isCompatibleJson = false;
     this.currentDatas = datas;
     this.appService.setFileDatas(datas);
@@ -138,7 +138,7 @@ export class HomeLayoutComponent implements OnInit {
     }
   }
 
-  private initializeHome(datas) {
+  private initializeHome(datas: VisualizationDatas) {
     this.isCompatibleJson = this.appService.isCompatibleJson(datas);
     UtilsService.resetSearch(AppConfig.visualizationCommon.GLOBAL.LS_ID);
 

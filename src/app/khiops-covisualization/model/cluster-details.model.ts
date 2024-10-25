@@ -1,6 +1,8 @@
+import { TreeNodeModel } from './tree-node.model';
+
 export class ClusterDetailsModel {
   name: string;
-  _id: number;
+  _id: string;
   father: string;
   frequency: number;
   interest: number;
@@ -9,7 +11,7 @@ export class ClusterDetailsModel {
   hierarchicalLevel: number;
   rank: number;
 
-  constructor(object, currentNodesNames?) {
+  constructor(object: TreeNodeModel, currentNodesNames?: TreeNodeModel[]) {
     // Assign values from input
     Object.assign(this, object);
 

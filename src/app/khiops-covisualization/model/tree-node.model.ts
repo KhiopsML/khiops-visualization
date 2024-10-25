@@ -4,7 +4,7 @@ import { DynamicI } from '@khiops-library/interfaces/globals';
 
 export class TreeNodeModel {
   id: number;
-  _id: number;
+  _id: string;
   hierarchy: string;
   nbClusters: number;
   leafPosition: number;

@@ -1,19 +1,20 @@
+import { ValueGroup } from '@khiops-covisualization/interfaces/app-datas';
 import { ExtDatasModel } from './ext-datas.model';
+import { TreeNodeModel } from './tree-node.model';
 
 export class CompositionModel {
   _id: string;
-  name: string;
   cluster: string;
   terminalCluster: string;
-  typicality: string;
+  typicality: number;
   value: string;
   frequency: number;
   rank: number;
   externalData: string | undefined;
 
   constructor(
-    object,
-    currentDimensionHierarchyCluster,
+    object: ValueGroup,
+    currentDimensionHierarchyCluster: TreeNodeModel,
     index: number,
     externalDatas: ExtDatasModel,
   ) {
@@ -21,7 +22,6 @@ export class CompositionModel {
       object.cluster || currentDimensionHierarchyCluster.shortDescription;
     this.cluster = currentDimensionHierarchyCluster.shortDescription;
 
-    this.name = object.shortDescription;
     this.value = object.values[index];
     this.value = this.value.replace(/[\n\r]+/g, ''); // remove carriage return #53
     this.typicality = object.valueTypicalities[index];

@@ -227,7 +227,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     }
   }
 
-  private initializeHome(datas) {
+  private initializeHome(datas: CovisualizationDatas) {
     // Close dialogs when opening new file #148
     this.dialogRef.closeAll();
 
