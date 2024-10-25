@@ -250,7 +250,7 @@ export class Preparation2dDatasService {
         appDatas.bivariatePreparationReport.variablesPairsStatistics.find(
           (e) => e.name1 === name1 && e.name2 === name2,
         );
-      if (preparation2dVariable) {
+      if (currentPreparation2dVariable) {
         preparation2dVariable = new Preparation2dVariableModel(
           currentPreparation2dVariable,
         );
