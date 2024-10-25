@@ -19,7 +19,7 @@ export class SelectedClustersComponent implements OnDestroy {
   public clustersDisplayedColumns: GridColumnsI[] = [];
   public selectedClusters: SelectedClusterModel[] | undefined = undefined;
   public activeClusters: SelectedClusterModel[] | undefined = undefined;
-  public id: any = 'selected-clusters-grid';
+  public id: string = 'selected-clusters-grid';
   public title: string;
 
   private treeSelectedNodeChangedSub: Subscription;

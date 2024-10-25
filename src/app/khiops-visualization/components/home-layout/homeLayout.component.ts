@@ -27,6 +27,10 @@ import { TrackerService } from '../../../khiops-library/providers/tracker.servic
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
 import { Subscription } from 'rxjs';
 import { MatTabGroup } from '@angular/material/tabs';
+import {
+  AppDatasI,
+  VisualizationDatas,
+} from '@khiops-visualization/interfaces/app-datas';
 
 @Component({
   selector: 'app-home-layout',
@@ -37,10 +41,10 @@ import { MatTabGroup } from '@angular/material/tabs';
 export class HomeLayoutComponent implements OnInit {
   @ViewChild('mainTabGroup') public mainTabGroup!: MatTabGroup;
   @Input()
-  public get appDatas(): any {
+  public get appDatas(): AppDatasI {
     return this.appService.getDatas();
   }
-  public set appDatas(datas: any) {
+  public set appDatas(datas: VisualizationDatas) {
     this.appService.setFileDatas(datas);
   }
   public showProjectTab: boolean = true;
@@ -55,7 +59,7 @@ export class HomeLayoutComponent implements OnInit {
     static: false,
   })
   private fileLoader: FileLoaderComponent;
-  private currentDatas: any;
+  private currentDatas: VisualizationDatas;
   private fileLoadedSub?: Subscription;
 
   constructor(

@@ -37,7 +37,7 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
   public title: string = '';
   public selectedComposition: CompositionModel | undefined;
   public compositionValues: CompositionModel[] | undefined;
-  public id: any;
+  public id: string;
   public compositionDisplayedColumns: GridColumnsI[] = [];
 
   private treeSelectedNodeChangedSub: Subscription;

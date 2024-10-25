@@ -31,7 +31,7 @@ export class ClusterDetailsComponent implements OnInit, OnChanges {
   public clusterDisplayedColumns: GridColumnsI[] = [];
   public title: string;
   public filteredDimensionsClusters: ClusterDetailsModel[] | undefined;
-  public id: any;
+  public id: string = '';
 
   constructor(
     private translate: TranslateService,

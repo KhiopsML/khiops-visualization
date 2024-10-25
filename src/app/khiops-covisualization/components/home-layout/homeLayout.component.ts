@@ -75,7 +75,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
       this.tabsMenu._handleClick = this.interceptTabChange.bind(this);
     }
   }
-  private currentDatas: AppDatasI; // same type as global appDatas
+  private currentDatas: CovisualizationDatas;
   private importedDatasChangedSub: Subscription;
   private fileLoadedSub?: Subscription;
 
@@ -217,7 +217,8 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     this.activeTab = 0;
   }
 
-  private initialize(datas = undefined) {
+  private initialize(datas: CovisualizationDatas = undefined) {
+    console.log('HomeLayoutComponent ~ initialize ~ datas:', datas);
     this.currentDatas = datas;
     this.appService.setFileDatas(datas);
     if (datas && !UtilsService.isEmpty(datas)) {

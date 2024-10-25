@@ -53,7 +53,7 @@ export class HierarchyDetailsComponent extends SelectableComponent {
    * Function to update the selected tree cluster
    * used to copy datas
    */
-  onClusterChange(cluster: any) {
+  onClusterChange(cluster: SelectedTreeClusterModel) {
     this.selectedTreeCluster = cluster;
   }
 
