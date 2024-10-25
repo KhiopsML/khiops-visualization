@@ -1,3 +1,5 @@
+import { DimensionVisualization } from './app-datas';
+
 export interface TextPreparationReport {
   reportType: string;
   summary: Summary;
@@ -62,14 +64,7 @@ export interface VariableDetailedStatistic {
 
 export interface DataGrid {
   isSupervised: boolean;
-  dimensions: Dimension[];
+  dimensions: DimensionVisualization[];
   partTargetFrequencies: number[][];
   partInterests: number[];
-}
-
-export interface Dimension {
-  variable: string;
-  type: string;
-  partitionType: string;
-  partition: (number[] | string[])[];
 }

@@ -1,9 +1,9 @@
-import { DimensionModel } from '@khiops-library/model/dimension.model';
+import { DimensionVisualization } from '@khiops-visualization/interfaces/app-datas';
 import * as _ from 'lodash'; // Important to import lodash in karma
 
 export class VariableDetailsModel {
   dataGrid!: {
-    dimensions: DimensionModel[];
+    dimensions: DimensionVisualization[];
     partTargetFrequencies: []; // regression or explanatory case
     partInterests: []; // regression or explanatory case
     cellTargetFrequencies: []; // bivariate case

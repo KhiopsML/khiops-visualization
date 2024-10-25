@@ -15,7 +15,7 @@ export interface CovisualizationDatas {
 
 export interface CoclusteringReport {
   summary: Summary;
-  dimensionSummaries: DimensionSummary[];
+  dimensionSummaries: DimensionCovisualization[];
   dimensionPartitions: DimensionPartition[];
   dimensionHierarchies: DimensionHierarchy[];
   cellPartIndexes: number[][];
@@ -34,7 +34,7 @@ export interface Summary {
   database: string;
 }
 
-export interface DimensionSummary {
+export interface DimensionCovisualization {
   name: string;
   type: string;
   parts: number;

@@ -44,7 +44,7 @@ export interface VariableDetail {
 
 export interface DataGrid {
   isSupervised: boolean;
-  dimensions: Dimension[];
+  dimensions: DimensionVisualization[];
   partTargetFrequencies: number[][];
   partInterests: number[];
   frequencies: number[];
@@ -55,11 +55,11 @@ export interface InputValues {
   frequencies: number[];
 }
 
-interface Dimension {
+export interface DimensionVisualization {
   variable: string;
   type: string;
   partitionType: string;
-  partition: Array<string | string[]>; // Nested arrays for cases like ["L3"], ["L4"], etc.
+  partition: number[][] | string[];
   defaultGroupIndex?: number;
 }
 export interface RecCurve {

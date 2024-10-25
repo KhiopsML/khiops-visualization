@@ -1,4 +1,4 @@
-import { LiftCurve, RecCurve } from './app-datas';
+import { DimensionVisualization, LiftCurve, RecCurve } from './app-datas';
 
 export interface TestEvaluationReport {
   reportType: string;
@@ -49,14 +49,7 @@ export interface ConfusionMatrix {
 
 export interface DataGrid {
   isSupervised: boolean;
-  dimensions: Dimension[];
+  dimensions: DimensionVisualization[];
   partTargetFrequencies: number[][];
   partInterests: number[];
-}
-
-export interface Dimension {
-  variable: string;
-  type: string;
-  partitionType: string;
-  partition: number[] | string[];
 }

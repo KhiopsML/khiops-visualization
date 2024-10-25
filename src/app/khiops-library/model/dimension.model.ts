@@ -1,33 +1,55 @@
-import { ValueGroup } from '@khiops-covisualization/interfaces/app-datas';
+import {
+  DimensionCovisualization,
+  ValueGroup,
+} from '@khiops-covisualization/interfaces/app-datas';
 import { TYPES } from '@khiops-library/enum/types';
+import { DimensionVisualization } from '@khiops-visualization/interfaces/app-datas';
 import _ from 'lodash';
 
 export class DimensionModel {
+  /**
+   * KC use case
+   */
   name: string;
-  type: string;
   parts: number;
   initialParts: number;
-  startPosition: number;
   values: number;
   interest: number;
   min: number;
   max: number;
+  description: string;
+
+  /**
+   * KV use case
+   */
+  partition: number[][] | string[]; // KV
+  partitionType: string[]; // KV
+  variable: string; // KV
+  defaultGroupIndex: number; // KV
+
+  /**
+   * Commons
+   */
+  type: string;
+
+  partitionInputs: number[][] | string[]; // KV
+
   hierarchyFold: boolean;
   isNumerical: boolean;
   isCategorical: boolean;
   currentHierarchyClusterCount: number;
+  startPosition: number;
   intervals: {
     cluster: string;
     bounds: number[];
   }[];
   valueGroups: ValueGroup[];
-  partition: number[][] | string[]; // KV
-  partitionInputs: number[][] | string[]; // KV
-  partitionType: string[]; // KV
-  variable: string; // KV
-  defaultGroupIndex: number; // KV
 
-  constructor(object, startPosition = 0) {
+  constructor(
+    object: DimensionCovisualization | DimensionVisualization,
+    startPosition = 0,
+  ) {
+    console.log('DimensionModel ~ constructor ~ object:', object);
     // Assign values from input
     Object.assign(this, object);
 
@@ -39,16 +61,20 @@ export class DimensionModel {
     this.isCategorical = this.type === TYPES.CATEGORICAL;
 
     // KV
-    if (object.partition) {
+    if ('partition' in object) {
       // Clone partition to keep real datas
       this.partitionInputs = _.clone(object.partition);
       this.setMissingPartition();
       this.parts = this.partition.length;
     }
-    if (object.variable) {
+    if ('variable' in object) {
       this.name = object.variable;
     }
-    this.defaultGroupIndex = object?.defaultGroupIndex || 0;
+    if ('defaultGroupIndex' in object) {
+      this.defaultGroupIndex = object.defaultGroupIndex;
+    } else {
+      this.defaultGroupIndex = 0;
+    }
   }
 
   /**

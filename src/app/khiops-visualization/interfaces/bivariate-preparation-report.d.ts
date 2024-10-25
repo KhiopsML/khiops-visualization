@@ -1,3 +1,5 @@
+import { DimensionVisualization } from './app-datas';
+
 export interface BivariatePreparationReport {
   reportType: string;
   summary: Summary;
@@ -43,16 +45,8 @@ interface VariablePairDetailedStats {
 
 interface DataGrid {
   isSupervised: boolean;
-  dimensions: Dimension[];
+  dimensions: DimensionVisualization[];
   cellIds: string[];
   cellPartIndexes: number[][];
   cellFrequencies: number[];
-}
-
-interface Dimension {
-  variable: string;
-  type: string;
-  partitionType: string;
-  partition: string[][];
-  defaultGroupIndex: number;
 }
