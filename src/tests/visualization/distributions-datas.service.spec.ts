@@ -47,7 +47,7 @@ describe('Visualization', () => {
       distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
 
       preparationDatasService.setSelectedVariable(
-        fileDatas.preparationReport.variablesStatistics[0],
+        fileDatas.preparationReport.variablesStatistics[0].name,
         REPORTS.PREPARATION_REPORT,
       );
       const selectedVariable = preparationDatasService.getSelectedVariable(
@@ -70,7 +70,7 @@ describe('Visualization', () => {
       distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
 
       preparationDatasService.setSelectedVariable(
-        fileDatas.preparationReport.variablesStatistics[0],
+        fileDatas.preparationReport.variablesStatistics[0].name,
         REPORTS.PREPARATION_REPORT,
       );
       const selectedVariable = preparationDatasService.getSelectedVariable(
@@ -93,7 +93,7 @@ describe('Visualization', () => {
       distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
 
       preparationDatasService.setSelectedVariable(
-        fileDatas.preparationReport.variablesStatistics[0],
+        fileDatas.preparationReport.variablesStatistics[0].name,
         REPORTS.PREPARATION_REPORT,
       );
       const selectedVariable = preparationDatasService.getSelectedVariable(
@@ -116,7 +116,7 @@ describe('Visualization', () => {
       distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
 
       preparationDatasService.setSelectedVariable(
-        fileDatas.preparationReport.variablesStatistics[40],
+        fileDatas.preparationReport.variablesStatistics[40].name,
         REPORTS.PREPARATION_REPORT,
       );
       const selectedVariable = preparationDatasService.getSelectedVariable(
@@ -139,7 +139,7 @@ describe('Visualization', () => {
       distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
 
       preparationDatasService.setSelectedVariable(
-        fileDatas.preparationReport.variablesStatistics[1],
+        fileDatas.preparationReport.variablesStatistics[1].name,
         REPORTS.PREPARATION_REPORT,
       );
       const selectedVariable = preparationDatasService.getSelectedVariable(
@@ -159,7 +159,7 @@ describe('Visualization', () => {
       distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
 
       preparationDatasService.setSelectedVariable(
-        fileDatas.preparationReport.variablesStatistics[0],
+        fileDatas.preparationReport.variablesStatistics[0].name,
         REPORTS.PREPARATION_REPORT,
       );
       const selectedVariable = preparationDatasService.getSelectedVariable(
@@ -183,7 +183,7 @@ describe('Visualization', () => {
       distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
 
       preparationDatasService.setSelectedVariable(
-        fileDatas.preparationReport.variablesStatistics[14],
+        fileDatas.preparationReport.variablesStatistics[14].name,
         REPORTS.PREPARATION_REPORT,
       );
       const selectedVariable = preparationDatasService.getSelectedVariable(
@@ -203,7 +203,7 @@ describe('Visualization', () => {
       distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
 
       preparationDatasService.setSelectedVariable(
-        fileDatas.preparationReport.variablesStatistics[14],
+        fileDatas.preparationReport.variablesStatistics[14].name,
         REPORTS.PREPARATION_REPORT,
       );
       const selectedVariable = preparationDatasService.getSelectedVariable(
@@ -223,7 +223,7 @@ describe('Visualization', () => {
       distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
 
       preparationDatasService.setSelectedVariable(
-        fileDatas.preparationReport.variablesStatistics[0],
+        fileDatas.preparationReport.variablesStatistics[0].name,
         REPORTS.PREPARATION_REPORT,
       );
       const selectedVariable = preparationDatasService.getSelectedVariable(
@@ -243,7 +243,7 @@ describe('Visualization', () => {
       distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
 
       preparationDatasService.setSelectedVariable(
-        fileDatas.preparationReport.variablesStatistics[0],
+        fileDatas.preparationReport.variablesStatistics[0].name,
         REPORTS.PREPARATION_REPORT,
       );
       const selectedVariable = preparationDatasService.getSelectedVariable(
@@ -265,7 +265,7 @@ describe('Visualization', () => {
       );
 
       preparationDatasService.setSelectedVariable(
-        fileDatas.preparationReport.variablesStatistics[0],
+        fileDatas.preparationReport.variablesStatistics[0].name,
         REPORTS.PREPARATION_REPORT,
       );
       const selectedVariable = preparationDatasService.getSelectedVariable(
@@ -287,7 +287,7 @@ describe('Visualization', () => {
       );
 
       treePreparationDatasService.setSelectedVariable(
-        fileDatas.treePreparationReport.variablesStatistics[0],
+        fileDatas.treePreparationReport.variablesStatistics[0].name,
       );
       treePreparationDatasService.initSelectedNodes();
       const selectedNode = treePreparationDatasService.getSelectedNode();
@@ -309,7 +309,7 @@ describe('Visualization', () => {
       );
 
       treePreparationDatasService.setSelectedVariable(
-        fileDatas.treePreparationReport.variablesStatistics[0],
+        fileDatas.treePreparationReport.variablesStatistics[0].name,
       );
       treePreparationDatasService.initSelectedNodes();
       const nodeToSelect = treePreparationDatasService.getNodeFromName('L16');
@@ -333,7 +333,7 @@ describe('Visualization', () => {
       distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
 
       preparationDatasService.setSelectedVariable(
-        fileDatas.preparationReport.variablesStatistics[0],
+        fileDatas.preparationReport.variablesStatistics[0].name,
         REPORTS.PREPARATION_REPORT,
       );
       const selectedVariable = preparationDatasService.getSelectedVariable(
@@ -357,7 +357,7 @@ describe('Visualization', () => {
       distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
 
       preparationDatasService.setSelectedVariable(
-        fileDatas.preparationReport.variablesStatistics[2],
+        fileDatas.preparationReport.variablesStatistics[2].name,
         REPORTS.PREPARATION_REPORT,
       );
       const selectedVariable = preparationDatasService.getSelectedVariable(

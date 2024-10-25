@@ -20,6 +20,8 @@ import { ModelingDatasModel } from '@khiops-visualization/model/modeling-datas.m
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { SplitGutterInteractionEvent } from 'angular-split';
+import { TrainedPredictorModel } from '@khiops-visualization/model/trained-predictor.model';
+import { VariableModel } from '@khiops-visualization/model/variable.model';
 
 @Component({
   selector: 'app-modeling-view',
@@ -114,24 +116,29 @@ export class ModelingViewComponent extends SelectableTabComponent {
   }
 
   onSelectListItemChanged(item: any) {
+    console.log(
+      'ModelingViewComponent ~ onSelectListItemChanged ~ item:',
+      item,
+    );
     // Get var from name
     if (item.name?.includes('Tree_')) {
       this.preparationSource = REPORTS.TREE_PREPARATION_REPORT;
       this.preparationVariable =
-        this.treePreparationDatasService.setSelectedVariable(item);
+        this.treePreparationDatasService.setSelectedVariable(item.name);
     } else {
       this.preparationSource =
         this.preparationDatasService.getPreparationSourceFromVariable(item);
       if (item.name?.includes('`')) {
         // Check the case of 2d variable : names are separated by `
-        item.name1 = item.name.split('`')[0];
-        item.name2 = item.name.split('`')[1];
         this.preparationVariable =
-          this.preparation2dDatasService.setSelectedVariable(item);
+          this.preparation2dDatasService.setSelectedVariable(
+            item.name.split('`')[0],
+            item.name.split('`')[1],
+          );
       } else {
         this.preparationVariable =
           this.preparationDatasService.setSelectedVariable(
-            item,
+            item.name,
             this.preparationSource,
           );
       }

@@ -48,7 +48,7 @@ export class Preparation2dDatasService {
 
     // select the first item of the list by default
     if (this.preparation2dDatas.isValid()) {
-      let defaultVariable =
+      let defaultVariable: VariablePairStatistics =
         appDatas.bivariatePreparationReport.variablesPairsStatistics[0];
 
       // Check if there is a saved selected variable into json
@@ -58,7 +58,7 @@ export class Preparation2dDatasService {
         defaultVariable = this.getVariableFromRank(savedSelected2dRank);
       }
 
-      this.setSelectedVariable(defaultVariable);
+      this.setSelectedVariable(defaultVariable.name1, defaultVariable.name2);
     }
   }
 
@@ -162,12 +162,14 @@ export class Preparation2dDatasService {
 
   /**
    * Sets the selected variable.
-   * @param object - The variable object to select.
    * @returns The selected Preparation2dVariableModel or undefined.
    */
-  setSelectedVariable(object: any): Preparation2dVariableModel | undefined {
-    if (object) {
-      const variable = this.getVariableFromNames(object.name1, object.name2);
+  setSelectedVariable(
+    name1: string,
+    name2: string,
+  ): Preparation2dVariableModel | undefined {
+    if (name1 && name2) {
+      const variable = this.getVariableFromNames(name1, name2);
       if (variable) {
         this.preparation2dDatas.selectedVariable =
           new Preparation2dVariableModel(variable);

@@ -14,6 +14,7 @@ import { Preparation2dVariableModel } from '@khiops-visualization/model/preparat
 import { TreePreparationVariableModel } from '@khiops-visualization/model/tree-preparation-variable.model';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { REPORTS } from '@khiops-library/enum/reports';
+import { ModelingVariableStatistic } from '@khiops-visualization/interfaces/modeling-report';
 @Injectable({
   providedIn: 'root',
 })
@@ -39,7 +40,7 @@ export class ModelingDatasService {
     // get the variable selected into PreparationDatasService
     const preparationSource =
       this.preparationDatasService.getAvailablePreparationReport();
-    const preparationSelectedVar =
+    const preparationSelectedVar: PreparationVariableModel =
       this.preparationDatasService.getSelectedVariable(preparationSource);
     // select the first item of the list by default
     if (preparationSelectedVar) {
@@ -108,14 +109,15 @@ export class ModelingDatasService {
       const variables = appDatas.modelingReport.trainedPredictorsDetails;
       const key = Object.keys(variables)[0];
       if (key) {
-        const variable = variables[key].selectedVariables[0];
+        const variable: ModelingVariableStatistic =
+          variables[key].selectedVariables[0];
         this.setSelectedVariable(this.getVariableFromName(variable.name));
 
         // Also set the preparation selected variable if json is incomplete
         const preparationSource =
           this.preparationDatasService.getAvailablePreparationReport();
         this.preparationDatasService.setSelectedVariable(
-          variable,
+          variable.name,
           preparationSource,
         );
       }

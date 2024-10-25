@@ -12,8 +12,10 @@ import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { TYPES } from '@khiops-library/enum/types';
 import { PreparationDatasService } from './preparation-datas.service';
 import { REPORTS } from '@khiops-library/enum/reports';
-import { VariableStatistic } from '@khiops-visualization/interfaces/tree-preparation-report';
+import { TreePreparationVariableStatistic } from '@khiops-visualization/interfaces/tree-preparation-report';
 import { DynamicI } from '@khiops-library/interfaces/globals';
+import { TextPreparationVariableStatistic } from '@khiops-visualization/interfaces/text-preparation-report';
+import { PreparationVariableStatistic } from '@khiops-visualization/interfaces/preparation-report';
 
 @Injectable({
   providedIn: 'root',
@@ -38,7 +40,7 @@ export class TreePreparationDatasService {
 
     // select the first item of the list by default
     if (this.treePreparationDatas.isValid()) {
-      let defaultVariable: VariableStatistic =
+      let defaultVariable: TreePreparationVariableStatistic =
         appDatas.treePreparationReport.variablesStatistics[0];
 
       // Check if there is a saved selected variable into json
@@ -50,7 +52,7 @@ export class TreePreparationDatasService {
         );
       }
 
-      this.setSelectedVariable(defaultVariable);
+      this.setSelectedVariable(defaultVariable.name);
     }
   }
 
@@ -117,15 +119,12 @@ export class TreePreparationDatasService {
 
   /**
    * Sets the selected variable and initializes related data.
-   * @param {TreePreparationVariableModel} object - The variable to be selected.
    * @returns {TreePreparationVariableModel | undefined} The selected variable.
    */
-  setSelectedVariable(
-    object: VariableStatistic,
-  ): TreePreparationVariableModel | undefined {
-    if (this.treePreparationDatas && object) {
+  setSelectedVariable(name: string): TreePreparationVariableModel | undefined {
+    if (this.treePreparationDatas && name) {
       const variable = this.preparationDatasService.getVariableFromName(
-        object.name,
+        name,
         REPORTS.TREE_PREPARATION_REPORT,
       );
       if (variable) {
@@ -136,7 +135,7 @@ export class TreePreparationDatasService {
         // Init selected variable and construct tree
         this.treePreparationDatas.selectedVariable =
           new TreePreparationVariableModel(variable, variable.name);
-        this.setSelectedFlattenTree(object.rank);
+        this.setSelectedFlattenTree(variable.rank);
         this.computeNodesFreqsComparedToOthers();
         this.treePreparationDatas.computeTreeColorsMap();
         this.constructDimensionTree();

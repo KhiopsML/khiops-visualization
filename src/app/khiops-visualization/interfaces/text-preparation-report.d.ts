@@ -1,7 +1,7 @@
 export interface TextPreparationReport {
   reportType: string;
   summary: Summary;
-  variablesStatistics: VariableStatistic[];
+  variablesStatistics: TextPreparationVariableStatistic[];
   variablesDetailedStatistics: { [key: string]: VariableDetailedStatistic };
 }
 
@@ -36,7 +36,7 @@ export interface TargetDescriptiveStats {
   sparseMissingNumber: number;
 }
 
-export interface VariableStatistic {
+export interface TextPreparationVariableStatistic {
   rank: string;
   name: string;
   type: string;

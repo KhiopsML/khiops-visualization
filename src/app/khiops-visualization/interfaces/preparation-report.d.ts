@@ -3,7 +3,7 @@ import { VariablesDetailedStatistics } from './app-datas';
 export interface PreparationReport {
   reportType: string;
   summary: PreparationSummary;
-  variablesStatistics: VariableStatistic[];
+  variablesStatistics: PreparationVariableStatistic[];
   variablesDetailedStatistics: VariablesDetailedStatistics[];
 }
 
@@ -56,7 +56,7 @@ export interface NullModel {
   dataCost?: number;
 }
 
-export interface VariableStatistic {
+export interface PreparationVariableStatistic {
   rank: string;
   name: string;
   type: string;

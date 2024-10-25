@@ -3,7 +3,7 @@ import { VariablesDetailedStatistics } from './app-datas';
 export interface TreePreparationReport {
   reportType: string;
   summary: Summary;
-  variablesStatistics: VariableStatistic[];
+  variablesStatistics: TreePreparationVariableStatistic[];
   variablesDetailedStatistics: VariablesDetailedStatistics[];
   treeDetails: TreeDetails;
 }
@@ -42,7 +42,7 @@ export interface TargetValues {
   frequencies: number[];
 }
 
-export interface VariableStatistic {
+export interface TreePreparationVariableStatistic {
   rank: string;
   name: string;
   type: string;

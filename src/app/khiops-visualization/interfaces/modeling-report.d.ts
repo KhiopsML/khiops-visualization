@@ -28,17 +28,19 @@ export interface TrainedPredictor {
 
 export interface TrainedPredictorsDetails {
   [key: string]: {
-    selectedVariables: {
-      preparedName: string;
-      name: string;
-      level: number;
-      weight: number;
-      importance: number;
-    }[];
+    selectedVariables: ModelingVariableStatistic[];
   };
 }
 
 interface TargetValues {
   frequencies: number[];
   values: string[];
+}
+
+export interface ModelingVariableStatistic {
+  preparedName: string;
+  name: string;
+  level: number;
+  weight: number;
+  importance: number;
 }

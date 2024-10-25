@@ -19,7 +19,7 @@ function getHistogramGraphDatas(fileDatas, variable) {
   distributionDatasService.initialize();
   distributionDatasService.setPreparationSource(REPORTS.PREPARATION_REPORT);
   preparationDatasService.setSelectedVariable(
-    fileDatas.preparationReport.variablesStatistics[variable],
+    fileDatas.preparationReport.variablesStatistics[variable].name,
     REPORTS.PREPARATION_REPORT,
   );
   const selectedVariable = preparationDatasService.getSelectedVariable(

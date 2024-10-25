@@ -148,7 +148,7 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
   }
 
   onSelectListItemChanged(item: Preparation2dVariableModel) {
-    this.preparation2dDatasService.setSelectedVariable(item);
+    this.preparation2dDatasService.setSelectedVariable(item.name1, item.name2);
     const modelingVariable =
       this.preparation2dDatasService.getVariableFromNames(
         item.name1,

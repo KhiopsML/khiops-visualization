@@ -161,7 +161,7 @@ describe('Visualization', () => {
       preparationDatasService.initialize();
 
       preparationDatasService.setSelectedVariable(
-        fileDatas.preparationReport.variablesStatistics[0],
+        fileDatas.preparationReport.variablesStatistics[0].name,
         REPORTS.PREPARATION_REPORT,
       );
       const intervalDatas = preparationDatasService.getCurrentIntervalDatas(
@@ -193,7 +193,7 @@ describe('Visualization', () => {
       preparationDatasService.initialize();
 
       preparationDatasService.setSelectedVariable(
-        fileDatas.preparationReport.variablesStatistics[1],
+        fileDatas.preparationReport.variablesStatistics[1].name,
         REPORTS.PREPARATION_REPORT,
       );
       const intervalDatas = preparationDatasService.getCurrentIntervalDatas(
@@ -226,7 +226,7 @@ describe('Visualization', () => {
       preparationDatasService.initialize();
 
       preparationDatasService.setSelectedVariable(
-        fileDatas.preparationReport.variablesStatistics[0],
+        fileDatas.preparationReport.variablesStatistics[0].name,
         REPORTS.PREPARATION_REPORT,
       );
       const intervalDatas = preparationDatasService.getCurrentIntervalDatas(
@@ -266,7 +266,7 @@ describe('Visualization', () => {
       preparationDatasService.initialize();
 
       preparationDatasService.setSelectedVariable(
-        fileDatas.preparationReport.variablesStatistics[0],
+        fileDatas.preparationReport.variablesStatistics[0].name,
         REPORTS.PREPARATION_REPORT,
       );
       const intervalDatas = preparationDatasService.getCurrentIntervalDatas(
@@ -303,7 +303,7 @@ describe('Visualization', () => {
       preparationDatasService.initialize();
 
       preparationDatasService.setSelectedVariable(
-        fileDatas.preparationReport.variablesStatistics[1],
+        fileDatas.preparationReport.variablesStatistics[1].name,
         REPORTS.PREPARATION_REPORT,
       );
       const intervalDatas = preparationDatasService.getCurrentIntervalDatas(
@@ -335,7 +335,7 @@ describe('Visualization', () => {
       preparationDatasService.initialize();
 
       preparationDatasService.setSelectedVariable(
-        fileDatas.preparationReport.variablesStatistics[5],
+        fileDatas.preparationReport.variablesStatistics[5].name,
         REPORTS.PREPARATION_REPORT,
       );
       const intervalDatas = preparationDatasService.getCurrentIntervalDatas(
@@ -396,7 +396,7 @@ describe('Visualization', () => {
       preparationDatasService.initialize();
 
       preparationDatasService.setSelectedVariable(
-        fileDatas.preparationReport.variablesStatistics[56],
+        fileDatas.preparationReport.variablesStatistics[56].name,
         REPORTS.PREPARATION_REPORT,
       );
       const intervalDatas = preparationDatasService.getCurrentIntervalDatas(

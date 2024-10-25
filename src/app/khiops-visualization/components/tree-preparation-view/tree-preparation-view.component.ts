@@ -145,7 +145,7 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
 
   onSelectListItemChanged(item: TreePreparationVariableModel) {
     const modelingVariable =
-      this.treePreparationDatasService.setSelectedVariable(item);
+      this.treePreparationDatasService.setSelectedVariable(item.name);
     this.modelingDatasService.setSelectedVariable(modelingVariable);
     this.treePreparationDatasService.getCurrentIntervalDatas(
       this.selectedBarIndex,

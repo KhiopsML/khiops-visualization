@@ -1,8 +1,7 @@
 import { TYPES } from '@khiops-library/enum/types';
 import { UtilsService } from '@khiops-library/providers/utils.service';
-import { VariableStatistic } from '@khiops-visualization/interfaces/preparation-report';
 
-export class VariableModel implements VariableStatistic {
+export class VariableModel {
   _id: string;
   rank: string;
   name: string;

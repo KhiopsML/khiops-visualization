@@ -41,7 +41,7 @@ describe('Visualization', () => {
       modelingDatasService.initialize();
 
       preparationDatasService.setSelectedVariable(
-        fileDatas.preparationReport.variablesStatistics[5],
+        fileDatas.preparationReport.variablesStatistics[5].name,
         REPORTS.PREPARATION_REPORT,
       );
       const res = JSON.stringify(

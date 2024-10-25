@@ -19,6 +19,9 @@ import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { GridColumnsI } from '../../khiops-library/interfaces/grid-columns';
 import { DynamicI } from '@khiops-library/interfaces/globals';
+import { PreparationVariableStatistic } from '@khiops-visualization/interfaces/preparation-report';
+import { TextPreparationVariableStatistic } from '@khiops-visualization/interfaces/text-preparation-report';
+import { ModelingVariableStatistic } from '@khiops-visualization/interfaces/modeling-report';
 
 @Injectable({
   providedIn: 'root',
@@ -55,11 +58,14 @@ export class PreparationDatasService {
         );
       }
 
-      this.setSelectedVariable(defaultVariable, REPORTS.PREPARATION_REPORT);
+      this.setSelectedVariable(
+        defaultVariable.name,
+        REPORTS.PREPARATION_REPORT,
+      );
     }
     // select the first item of the list by default
     if (appDatas?.textPreparationReport?.variablesStatistics?.[0]) {
-      let defaultVariable =
+      let defaultVariable: TextPreparationVariableStatistic =
         appDatas.textPreparationReport.variablesStatistics[0];
 
       // Check if there is a saved selected variable into json
@@ -72,7 +78,7 @@ export class PreparationDatasService {
       }
 
       this.setSelectedVariable(
-        defaultVariable,
+        defaultVariable.name,
         REPORTS.TEXT_PREPARATION_REPORT,
       );
     }
@@ -92,16 +98,15 @@ export class PreparationDatasService {
 
   /**
    * Sets the selected variable for the specified preparation source.
-   * @param {any} object - The object containing the variable information.
    * @param {string} preparationSource - The source of the preparation data.
    * @returns {PreparationVariableModel | undefined} The selected variable model or undefined if not found.
    */
   setSelectedVariable(
-    object: any,
+    name: string,
     preparationSource: string,
   ): PreparationVariableModel | undefined {
-    if (object) {
-      const variable = this.getVariableFromName(object.name, preparationSource);
+    if (name) {
+      const variable = this.getVariableFromName(name, preparationSource);
       if (variable) {
         this.preparationDatas[preparationSource].selectedVariable =
           new PreparationVariableModel(variable, variable.name);
