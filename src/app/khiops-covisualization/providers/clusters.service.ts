@@ -105,7 +105,7 @@ export class ClustersService {
    * @param {number} position - The position of the node to get distribution details from.
    * @returns {ChartDatasModel} - The chart data model containing distribution details.
    */
-  getDistributionDetailsFromNode(position): ChartDatasModel {
+  getDistributionDetailsFromNode(position: number): ChartDatasModel {
     let filteredDimensionsClusters = this.getCurrentClusterDetailsFromNode(
       this.dimensionsDatasService.dimensionsDatas.dimensionsTrees[0],
     );
@@ -293,7 +293,7 @@ export class ClustersService {
    * @param rank - The rank at which the clusters are being evaluated.
    * @returns A ChartDatasModel containing the clusters per dimension data.
    */
-  getClustersPerDimDatas(rank): ChartDatasModel {
+  getClustersPerDimDatas(rank: number): ChartDatasModel {
     const clustersPerDimDatas = new ChartDatasModel();
     let maxGraphValue = 0;
 
@@ -368,7 +368,10 @@ export class ClustersService {
    * @param node - The node representing the current cluster in the hierarchy.
    * @returns An array of CompositionModel containing details of the composition clusters.
    */
-  getCompositionClusters(hierarchyName: string, node: any): CompositionModel[] {
+  getCompositionClusters(
+    hierarchyName: string,
+    node: TreeNodeModel,
+  ): CompositionModel[] {
     const appDatas = this.appService.getDatas().datas;
     const appinitialDatas = this.appService.getInitialDatas().datas;
     const compositionValues: CompositionModel[] = [];
