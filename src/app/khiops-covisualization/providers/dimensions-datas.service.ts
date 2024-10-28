@@ -640,11 +640,11 @@ export class DimensionsDatasService {
         yDimension,
         cellFrequencies,
       );
-    [xValues.standard, yValues.standard] =
-      MatrixUtilsService.getStandardCovisualizationAxisValues(
-        xDimension,
-        yDimension,
-      );
+
+    xValues.standard =
+      MatrixUtilsService.getStandardCovisualizationAxisValues(xDimension);
+    yValues.standard =
+      MatrixUtilsService.getStandardCovisualizationAxisValues(yDimension);
 
     // To display axis names
     this.dimensionsDatas.allMatrixDatas.variable =

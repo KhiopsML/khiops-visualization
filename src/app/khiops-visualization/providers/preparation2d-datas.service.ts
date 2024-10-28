@@ -630,11 +630,12 @@ export class Preparation2dDatasService {
               variableDatas.dataGrid.cellFrequencies ||
                 variableDatas.dataGrid.cellTargetFrequencies,
             );
-          [xValues.standard, yValues.standard] =
-            MatrixUtilsService.getStandardVisualizationAxisValues(
-              xDimension,
-              yDimension,
-            );
+
+          xValues.standard =
+            MatrixUtilsService.getStandardVisualizationAxisValues(xDimension);
+          yValues.standard =
+            MatrixUtilsService.getStandardVisualizationAxisValues(yDimension);
+
           const cellDatas = MatrixUtilsService.getCellDatas(
             xDimension,
             yDimension,

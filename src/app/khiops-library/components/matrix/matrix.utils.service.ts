@@ -378,208 +378,75 @@ export class MatrixUtilsService {
   }
 
   /**
-   * Generates standard axis values for the given x and y dimensions.
+   * Generates standard axis values for covisualization based on the provided dimension.
    *
-   * This method processes the provided x and y dimensions to generate arrays of percentage values
-   * based on their types (CATEGORICAL or NUMERICAL). It handles different use cases for each type,
-   * including value groups, partitions, and intervals.
-   *
-   * @param xDimension - The dimension object for the x-axis, containing type and relevant data.
-   * @param yDimension - The dimension object for the y-axis, containing type and relevant data.
-   * @returns A tuple containing two arrays: the first array represents the x-axis values, and the second array represents the y-axis values.
+   * @param {DimensionCovisualizationModel} dimension - The dimension object containing either categorical or numerical data.
+   * @returns {number[]} An array of axis values calculated as percentages.
    */
-  // static getStandardAxisValues(
-  //   xDimension: DimensionModel,
-  //   yDimension: DimensionModel,
-  // ): [number[], number[]] {
-  //   let xValues: number[] = [];
-  //   let yValues: number[] = [];
-  //   if (xDimension.type === TYPES.CATEGORICAL) {
-  //     let currentXAxisFullPart;
-  //     if (xDimension.valueGroups) {
-  //       currentXAxisFullPart = xDimension.valueGroups.map((e) => e.values); // KC use case
-  //     } else {
-  //       currentXAxisFullPart = xDimension.partition; // KV use case
-  //     }
-  //     const axisPartTotal =
-  //       UtilsService.getArrayOfArrayLength(currentXAxisFullPart);
-  //     xValues = UtilsService.generateArrayPercentsFromArrayLength(
-  //       currentXAxisFullPart,
-  //       axisPartTotal,
-  //     );
-  //   } else if (xDimension.type === TYPES.NUMERICAL) {
-  //     let currentXAxisFullPart;
-  //     if (xDimension.intervals) {
-  //       currentXAxisFullPart = xDimension.intervals.map((e) => e.bounds); // KC use case
-  //     } else {
-  //       currentXAxisFullPart = xDimension.partition; // KV use case
-  //     }
-  //     // Give an interval of 5% if missing
-  //     currentXAxisFullPart[0] =
-  //       UtilsService.generateMissingInterval(currentXAxisFullPart);
-  //     const axisPartTotal =
-  //       UtilsService.getArrayMatrixInterval(currentXAxisFullPart);
-  //     xValues =
-  //       UtilsService.generateArrayPercentsFromArrayIntervalsAndTotalCount(
-  //         currentXAxisFullPart,
-  //         axisPartTotal,
-  //       );
-  //   }
-  //   if (yDimension.type === TYPES.CATEGORICAL) {
-  //     let currentYAxisFullPart;
-  //     if (yDimension.valueGroups) {
-  //       currentYAxisFullPart = yDimension.valueGroups.map((e) => e.values); // KC use case
-  //     } else {
-  //       currentYAxisFullPart = yDimension.partition; // KV use case
-  //     }
-  //     const axisPartTotal =
-  //       UtilsService.getArrayOfArrayLength(currentYAxisFullPart);
-  //     yValues = UtilsService.generateArrayPercentsFromArrayLength(
-  //       currentYAxisFullPart,
-  //       axisPartTotal,
-  //     );
-  //   } else if (yDimension.type === TYPES.NUMERICAL) {
-  //     let currentYAxisFullPart;
-  //     if (yDimension.intervals) {
-  //       currentYAxisFullPart = yDimension.intervals.map((e) => e.bounds); // KC use case
-  //     } else {
-  //       currentYAxisFullPart = yDimension.partition; // KV use case
-  //     }
-  //     // Give an interval of 5% if missing
-  //     currentYAxisFullPart[0] =
-  //       UtilsService.generateMissingInterval(currentYAxisFullPart);
-  //     const axisPartTotal =
-  //       UtilsService.getArrayMatrixInterval(currentYAxisFullPart);
-  //     yValues =
-  //       UtilsService.generateArrayPercentsFromArrayIntervalsAndTotalCount(
-  //         currentYAxisFullPart,
-  //         axisPartTotal,
-  //       );
-  //   }
-
-  //   return [xValues, yValues];
-  // }
-
   static getStandardCovisualizationAxisValues(
-    xDimension: DimensionCovisualizationModel,
-    yDimension: DimensionCovisualizationModel,
-  ): [number[], number[]] {
-    let xValues: number[] = [];
-    let yValues: number[] = [];
-    if (xDimension.type === TYPES.CATEGORICAL) {
-      let currentXAxisFullPart;
-      currentXAxisFullPart = xDimension.valueGroups.map((e) => e.values);
+    dimension: DimensionCovisualizationModel,
+  ): number[] {
+    let axisValues: number[] = [];
+    let currentAxisFullPart;
+    if (dimension.type === TYPES.CATEGORICAL) {
+      currentAxisFullPart = dimension.valueGroups.map((e) => e.values);
       const axisPartTotal =
-        UtilsService.getArrayOfArrayLength(currentXAxisFullPart);
-      xValues = UtilsService.generateArrayPercentsFromArrayLength(
-        currentXAxisFullPart,
+        UtilsService.getArrayOfArrayLength(currentAxisFullPart);
+      axisValues = UtilsService.generateArrayPercentsFromArrayLength(
+        currentAxisFullPart,
         axisPartTotal,
       );
-    } else if (xDimension.type === TYPES.NUMERICAL) {
-      let currentXAxisFullPart;
-      currentXAxisFullPart = xDimension.intervals.map((e) => e.bounds);
+    } else if (dimension.type === TYPES.NUMERICAL) {
+      currentAxisFullPart = dimension.intervals.map((e) => e.bounds);
       // Give an interval of 5% if missing
-      currentXAxisFullPart[0] =
-        UtilsService.generateMissingInterval(currentXAxisFullPart);
+      currentAxisFullPart[0] =
+        UtilsService.generateMissingInterval(currentAxisFullPart);
       const axisPartTotal =
-        UtilsService.getArrayMatrixInterval(currentXAxisFullPart);
-      xValues =
+        UtilsService.getArrayMatrixInterval(currentAxisFullPart);
+      axisValues =
         UtilsService.generateArrayPercentsFromArrayIntervalsAndTotalCount(
-          currentXAxisFullPart,
+          currentAxisFullPart,
           axisPartTotal,
         );
     }
-    if (yDimension.type === TYPES.CATEGORICAL) {
-      let currentYAxisFullPart;
-      currentYAxisFullPart = yDimension.valueGroups.map((e) => e.values);
-      const axisPartTotal =
-        UtilsService.getArrayOfArrayLength(currentYAxisFullPart);
-      yValues = UtilsService.generateArrayPercentsFromArrayLength(
-        currentYAxisFullPart,
-        axisPartTotal,
-      );
-    } else if (yDimension.type === TYPES.NUMERICAL) {
-      let currentYAxisFullPart;
-      currentYAxisFullPart = yDimension.intervals.map((e) => e.bounds);
-      // Give an interval of 5% if missing
-      currentYAxisFullPart[0] =
-        UtilsService.generateMissingInterval(currentYAxisFullPart);
-      const axisPartTotal =
-        UtilsService.getArrayMatrixInterval(currentYAxisFullPart);
-      yValues =
-        UtilsService.generateArrayPercentsFromArrayIntervalsAndTotalCount(
-          currentYAxisFullPart,
-          axisPartTotal,
-        );
-    }
-
-    return [xValues, yValues];
-  }
-
-  static getStandardVisualizationAxisValues(
-    xDimension: DimensionVisualizationModel,
-    yDimension: DimensionVisualizationModel,
-  ): [number[], number[]] {
-    let xValues: number[] = [];
-    let yValues: number[] = [];
-    if (xDimension.type === TYPES.CATEGORICAL) {
-      let currentXAxisFullPart;
-      currentXAxisFullPart = xDimension.partition; // KV use case
-      const axisPartTotal =
-        UtilsService.getArrayOfArrayLength(currentXAxisFullPart);
-      xValues = UtilsService.generateArrayPercentsFromArrayLength(
-        currentXAxisFullPart,
-        axisPartTotal,
-      );
-    } else if (xDimension.type === TYPES.NUMERICAL) {
-      let currentXAxisFullPart;
-      currentXAxisFullPart = xDimension.partition; // KV use case
-      // Give an interval of 5% if missing
-      currentXAxisFullPart[0] =
-        UtilsService.generateMissingInterval(currentXAxisFullPart);
-      const axisPartTotal =
-        UtilsService.getArrayMatrixInterval(currentXAxisFullPart);
-      xValues =
-        UtilsService.generateArrayPercentsFromArrayIntervalsAndTotalCount(
-          currentXAxisFullPart,
-          axisPartTotal,
-        );
-    }
-    if (yDimension.type === TYPES.CATEGORICAL) {
-      let currentYAxisFullPart;
-      currentYAxisFullPart = yDimension.partition; // KV use case
-      const axisPartTotal =
-        UtilsService.getArrayOfArrayLength(currentYAxisFullPart);
-      yValues = UtilsService.generateArrayPercentsFromArrayLength(
-        currentYAxisFullPart,
-        axisPartTotal,
-      );
-    } else if (yDimension.type === TYPES.NUMERICAL) {
-      let currentYAxisFullPart;
-      currentYAxisFullPart = yDimension.partition; // KV use case
-      // Give an interval of 5% if missing
-      currentYAxisFullPart[0] =
-        UtilsService.generateMissingInterval(currentYAxisFullPart);
-      const axisPartTotal =
-        UtilsService.getArrayMatrixInterval(currentYAxisFullPart);
-      yValues =
-        UtilsService.generateArrayPercentsFromArrayIntervalsAndTotalCount(
-          currentYAxisFullPart,
-          axisPartTotal,
-        );
-    }
-
-    return [xValues, yValues];
+    return axisValues;
   }
 
   /**
-   * Computes the frequency axis values for the given dimensions and cell frequencies.
+   * Generates standard axis values for visualization based on the provided dimension.
    *
-   * @param xDimension - The x-axis dimension, which can be either categorical or numerical.
-   * @param yDimension - The y-axis dimension, which can be either categorical or numerical.
-   * @param cellFrequencies - The frequencies of the cells in the matrix.
-   * @returns A tuple containing two arrays: the x-axis values and the y-axis values.
+   * @param {DimensionVisualizationModel} dimension - The dimension object containing either categorical or numerical data.
+   * @returns {number[]} An array of axis values calculated as percentages.
    */
+  static getStandardVisualizationAxisValues(
+    dimension: DimensionVisualizationModel,
+  ): number[] {
+    let axisValues: number[] = [];
+    let currentAxisFullPart;
+    if (dimension.type === TYPES.CATEGORICAL) {
+      currentAxisFullPart = dimension.partition;
+      const axisPartTotal =
+        UtilsService.getArrayOfArrayLength(currentAxisFullPart);
+      axisValues = UtilsService.generateArrayPercentsFromArrayLength(
+        currentAxisFullPart,
+        axisPartTotal,
+      );
+    } else if (dimension.type === TYPES.NUMERICAL) {
+      currentAxisFullPart = dimension.partition;
+      // Give an interval of 5% if missing
+      currentAxisFullPart[0] =
+        UtilsService.generateMissingInterval(currentAxisFullPart);
+      const axisPartTotal =
+        UtilsService.getArrayMatrixInterval(currentAxisFullPart);
+      axisValues =
+        UtilsService.generateArrayPercentsFromArrayIntervalsAndTotalCount(
+          currentAxisFullPart,
+          axisPartTotal,
+        );
+    }
+    return axisValues;
+  }
+
   static getFrequencyAxisValues(
     xDimension: DimensionCovisualizationModel | DimensionVisualizationModel,
     yDimension: DimensionCovisualizationModel | DimensionVisualizationModel,
