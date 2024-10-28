@@ -122,7 +122,7 @@ export class EvaluationDatasService {
    * Retrieves the list of evaluation types from the application data.
    * @returns An array of evaluation types.
    */
-  getEvaluationTypes(): any[] {
+  getEvaluationTypes(): EvaluationReport[] {
     this.evaluationDatas.evaluationTypes = [];
 
     Object.keys(this.appService.appDatas).forEach((value) => {
@@ -567,8 +567,8 @@ export class EvaluationDatasService {
    * @returns An array of LiftCurveValuesI containing the generated lift curve values.
    */
   generateLiftCurveValuesForEvaluation(
-    xAxis,
-    type,
+    xAxis: number[],
+    type: PREDICTOR_TYPES,
     target?: string,
   ): LiftCurveValuesI[] {
     let currentReport: any;
@@ -641,7 +641,7 @@ export class EvaluationDatasService {
    * @param title - The title for the lift data.
    * @returns An array of LiftCurveValuesI containing the generated lift data.
    */
-  generateRandomLiftDatas(xAxis, title) {
+  generateRandomLiftDatas(xAxis: number[], title: string) {
     const graphDatas: LiftCurveValuesI[] = [];
 
     const currentSerie: LiftCurveSerieI[] = [];
@@ -665,7 +665,7 @@ export class EvaluationDatasService {
    * @param currentTarget - The current target value (optional).
    * @returns An object containing the selected target and the list of targets.
    */
-  getLiftTargets(currentTarget?): TargetLiftValuesI {
+  getLiftTargets(currentTarget?: string): TargetLiftValuesI {
     let targetLift: TargetLiftValuesI;
 
     let currentEvalReport:

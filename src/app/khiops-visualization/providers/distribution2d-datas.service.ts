@@ -32,7 +32,7 @@ export class Distribution2dDatasService {
    * and creating a new DistributionDatasModel instance.
    * @returns The initialized DistributionDatasModel instance.
    */
-  initialize(): any {
+  initialize() {
     this.distributionDatas = new DistributionDatasModel(
       this.appService.appDatas,
     );
@@ -74,7 +74,7 @@ export class Distribution2dDatasService {
         variablesDetails.dataGrid.cellTargetFrequencies,
       );
 
-      const currentDatas: any =
+      const currentDatas =
         computedCellTargetFreqs[preparation2dDatas.selectedCellIndex];
       const targets = this.preparation2dDatasService.getTargetsIfAvailable();
       if (currentDatas && targets) {

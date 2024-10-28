@@ -16,7 +16,7 @@ export class EnrichDatasService {
    * @param datas - The JSON data to be enriched.
    * @returns The enriched JSON data.
    */
-  static enrichJsonDatas(datas: any): any {
+  static enrichJsonDatas(datas: VisualizationDatas): any {
     if (datas) {
       // For evaluation, we need optimal information
       Object.keys(datas).forEach((value) => {
@@ -25,11 +25,11 @@ export class EnrichDatasService {
           datas?.[value]?.reportType === 'Evaluation' &&
           datas[value].liftCurves
         ) {
-          const isOptimalAdded: any = datas[value].predictorsPerformance.find(
-            function (el) {
-              return el.name && el.name === 'Optimal';
-            },
-          );
+          const isOptimalAdded: boolean = datas[
+            value
+          ].predictorsPerformance.find(function (el) {
+            return el.name && el.name === 'Optimal';
+          });
           if (!isOptimalAdded) {
             // First add optimal datas into global datas
             datas[value].predictorsPerformance.push({
@@ -66,7 +66,7 @@ export class EnrichDatasService {
   static ignoreMissingPartitionForNumerical(
     datas: VisualizationDatas,
     preparationSource: REPORT,
-  ): any {
+  ): VisualizationDatas {
     if (datas?.[preparationSource]) {
       for (const rank in datas[preparationSource].variablesDetailedStatistics) {
         const variable =
