@@ -37,7 +37,7 @@
           >
             <mat-tab
               label="{{ 'TITLE.PREPARATION' | translate }}"
-              *ngIf="appDatas?.datas?.preparationReport"
+              *ngIf="appDatas?.preparationReport"
             >
               <ng-template matTabLabel>
                 <label title="{{ 'TOOLTIPS.TABS.PREPARATION' | translate }}">{{
@@ -52,7 +52,7 @@
             </mat-tab>
             <mat-tab
               label="{{ 'TITLE.TEXT_PREPARATION' | translate }}"
-              *ngIf="appDatas?.datas?.textPreparationReport"
+              *ngIf="appDatas?.textPreparationReport"
             >
               <ng-template matTabLabel>
                 <label
@@ -69,7 +69,7 @@
             </mat-tab>
             <mat-tab
               label="{{ 'TITLE.TREE_PREPARATION' | translate }}"
-              *ngIf="appDatas?.datas?.treePreparationReport"
+              *ngIf="appDatas?.treePreparationReport"
             >
               <ng-template matTabLabel>
                 <label
@@ -85,7 +85,7 @@
             </mat-tab>
             <mat-tab
               label="{{ 'TITLE.PREPARATION_2D' | translate }}"
-              *ngIf="appDatas?.datas?.bivariatePreparationReport"
+              *ngIf="appDatas?.bivariatePreparationReport"
             >
               <ng-template matTabLabel>
                 <label
@@ -101,7 +101,7 @@
             </mat-tab>
             <mat-tab
               label="{{ 'TITLE.MODELING' | translate }}"
-              *ngIf="appDatas?.datas?.modelingReport"
+              *ngIf="appDatas?.modelingReport"
             >
               <ng-template matTabLabel>
                 <label title="{{ 'TOOLTIPS.TABS.MODELING' | translate }}">{{
@@ -117,9 +117,9 @@
             <mat-tab
               label="{{ 'TITLE.EVALUATION' | translate }}"
               *ngIf="
-                appDatas?.datas?.trainEvaluationReport ||
-                appDatas?.datas?.evaluationReport ||
-                appDatas?.datas?.testEvaluationReport
+                appDatas?.trainEvaluationReport ||
+                appDatas?.evaluationReport ||
+                appDatas?.testEvaluationReport
               "
             >
               <ng-template matTabLabel>
@@ -153,7 +153,7 @@
         <div id="header-right" fxLayoutAlign="start center" layout="row">
           <div fxLayoutAlign="center center" fxLayout="row">
             <kl-header-tools
-              *ngIf="appDatas && appDatas.datas && isCompatibleJson"
+              *ngIf="appDatas && isCompatibleJson"
               (toggleNavDrawerChanged)="onToggleNavDrawerChanged($event)"
             >
             </kl-header-tools>

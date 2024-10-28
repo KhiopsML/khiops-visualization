@@ -123,13 +123,13 @@ export class EvaluationDatasService {
    * @returns An array of evaluation types.
    */
   getEvaluationTypes(): any[] {
-    const appDatas = this.appService.getDatas().datas;
-
     this.evaluationDatas.evaluationTypes = [];
 
-    Object.keys(appDatas).forEach((value) => {
-      if (appDatas?.[value]?.reportType === 'Evaluation') {
-        this.evaluationDatas?.evaluationTypes?.push(appDatas[value]);
+    Object.keys(this.appService.appDatas).forEach((value) => {
+      if (this.appService.appDatas?.[value]?.reportType === 'Evaluation') {
+        this.evaluationDatas?.evaluationTypes?.push(
+          this.appService.appDatas[value],
+        );
       }
     });
     return this.evaluationDatas.evaluationTypes;
@@ -141,8 +141,6 @@ export class EvaluationDatasService {
    * @returns The confusion matrix as a GridDatasI object.
    */
   getConfusionMatrix(type?: string): GridDatasI {
-    const appDatas = this.appService.getDatas().datas;
-
     if (type) {
       this.evaluationDatas.confusionMatrixType = type;
     }
@@ -156,14 +154,14 @@ export class EvaluationDatasService {
         this.evaluationDatas?.selectedEvaluationTypeVariable?.type ===
         PREDICTOR_TYPES.TRAIN
       ) {
-        currentReport = appDatas.trainEvaluationReport;
+        currentReport = this.appService.appDatas.trainEvaluationReport;
       } else if (
         this.evaluationDatas?.selectedEvaluationTypeVariable?.type ===
         PREDICTOR_TYPES.TEST
       ) {
-        currentReport = appDatas.testEvaluationReport;
+        currentReport = this.appService.appDatas.testEvaluationReport;
       } else {
-        currentReport = appDatas.evaluationReport;
+        currentReport = this.appService.appDatas.evaluationReport;
       }
       if (
         currentReport.predictorsDetailedPerformance &&
@@ -576,14 +574,14 @@ export class EvaluationDatasService {
     let currentReport: any;
     // get the correct report : train or test
     if (type === PREDICTOR_TYPES.TRAIN) {
-      currentReport = this.appService.getDatas().datas.trainEvaluationReport;
+      currentReport = this.appService.appDatas.trainEvaluationReport;
     } else if (type === PREDICTOR_TYPES.TEST) {
-      currentReport = this.appService.getDatas().datas.testEvaluationReport;
+      currentReport = this.appService.appDatas.testEvaluationReport;
     }
 
     if (!currentReport) {
       // Manage the case when we have only evaluation report
-      currentReport = this.appService.getDatas().datas.evaluationReport;
+      currentReport = this.appService.appDatas.evaluationReport;
     }
 
     const graphDatas: LiftCurveValuesI[] = [];
@@ -668,30 +666,29 @@ export class EvaluationDatasService {
    * @returns An object containing the selected target and the list of targets.
    */
   getLiftTargets(currentTarget?): TargetLiftValuesI {
-    const appDatas = this.appService.getDatas().datas;
     let targetLift: TargetLiftValuesI;
 
     let currentEvalReport:
       | TestEvaluationReport
       | TrainEvaluationReport
-      | EvaluationReport = appDatas.trainEvaluationReport;
+      | EvaluationReport = this.appService.appDatas.trainEvaluationReport;
     if (!currentEvalReport) {
-      currentEvalReport = appDatas.evaluationReport;
+      currentEvalReport = this.appService.appDatas.evaluationReport;
     }
     if (!currentEvalReport) {
-      currentEvalReport = appDatas.testEvaluationReport;
+      currentEvalReport = this.appService.appDatas.testEvaluationReport;
     }
     if (this.evaluationDatas.selectedPredictorEvaluationVariable) {
       if (
         this.evaluationDatas.selectedPredictorEvaluationVariable.type ===
         PREDICTOR_TYPES.TRAIN
       ) {
-        currentEvalReport = appDatas.trainEvaluationReport;
+        currentEvalReport = this.appService.appDatas.trainEvaluationReport;
       } else if (
         this.evaluationDatas.selectedPredictorEvaluationVariable.type ===
         PREDICTOR_TYPES.TEST
       ) {
-        currentEvalReport = appDatas.testEvaluationReport;
+        currentEvalReport = this.appService.appDatas.testEvaluationReport;
       }
     }
 
@@ -748,14 +745,14 @@ export class EvaluationDatasService {
    * @returns A boolean indicating whether the analysis is a regression analysis.
    */
   isRegressionAnalysis(): boolean {
-    const appDatas = this.appService.getDatas().datas;
     if (
-      appDatas?.trainEvaluationReport?.summary?.learningTask ===
+      this.appService.appDatas?.trainEvaluationReport?.summary?.learningTask ===
       TASKS.REGRESSION
     ) {
       return true;
     } else if (
-      appDatas?.preparationReport?.summary?.learningTask === TASKS.REGRESSION
+      this.appService.appDatas?.preparationReport?.summary?.learningTask ===
+      TASKS.REGRESSION
     ) {
       return true;
     } else {

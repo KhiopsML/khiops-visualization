@@ -33,8 +33,9 @@ export class Distribution2dDatasService {
    * @returns The initialized DistributionDatasModel instance.
    */
   initialize(): any {
-    const appDatas = this.appService.getDatas().datas;
-    this.distributionDatas = new DistributionDatasModel(appDatas);
+    this.distributionDatas = new DistributionDatasModel(
+      this.appService.appDatas,
+    );
 
     return this.distributionDatas;
   }
@@ -67,12 +68,11 @@ export class Distribution2dDatasService {
     this.distributionDatas.targetDistributionGraphDatas.labels = [''];
 
     if (variablesDetails?.dataGrid?.cellTargetFrequencies) {
-      const computedCellTargetFreqs =
-        MatrixUtilsService.getCellFrequencies(
-          [selectedVariable?.parts1, selectedVariable?.parts2],
-          variablesDetails.dataGrid.cellPartIndexes,
-          variablesDetails.dataGrid.cellTargetFrequencies,
-        );
+      const computedCellTargetFreqs = MatrixUtilsService.getCellFrequencies(
+        [selectedVariable?.parts1, selectedVariable?.parts2],
+        variablesDetails.dataGrid.cellPartIndexes,
+        variablesDetails.dataGrid.cellTargetFrequencies,
+      );
 
       const currentDatas: any =
         computedCellTargetFreqs[preparation2dDatas.selectedCellIndex];

@@ -104,9 +104,9 @@ export class ModelingDatasService {
    * selected variable if the JSON data is incomplete.
    */
   initSelectedVariable() {
-    const appDatas = this.appService.getDatas().datas;
-    if (appDatas?.modelingReport?.trainedPredictorsDetails) {
-      const variables = appDatas.modelingReport.trainedPredictorsDetails;
+    if (this.appService.appDatas?.modelingReport?.trainedPredictorsDetails) {
+      const variables =
+        this.appService.appDatas.modelingReport.trainedPredictorsDetails;
       const key = Object.keys(variables)[0];
       if (key) {
         const variable: ModelingVariableStatistic =
@@ -129,22 +129,30 @@ export class ModelingDatasService {
    * @param name - The name of the variable to retrieve.
    * @returns The variable object if found, otherwise undefined.
    */
-  getVariableFromName(name: string): any {
+  getVariableFromName(
+    name: string,
+  ):
+    | Preparation2dVariableModel
+    | PreparationVariableModel
+    | TreePreparationVariableModel {
     let variable: any;
-    const appDatas = this.appService.getDatas().datas;
 
-    if (appDatas?.modelingReport?.trainedPredictorsDetails) {
-      Object.keys(appDatas.modelingReport.trainedPredictorsDetails).forEach(
-        function (key) {
-          variable = appDatas.modelingReport.trainedPredictorsDetails[
+    if (this.appService.appDatas?.modelingReport?.trainedPredictorsDetails) {
+      Object.keys(
+        this.appService.appDatas?.modelingReport?.trainedPredictorsDetails,
+      ).forEach((key) => {
+        variable =
+          this.appService.appDatas?.modelingReport?.trainedPredictorsDetails[
             key
-          ].selectedVariables.find((e: any) => e.name === name);
-          if (variable) {
-            return variable;
-          }
-        },
-      );
+          ].selectedVariables.find(
+            (e: ModelingVariableStatistic) => e.name === name,
+          );
+        if (variable) {
+          return variable;
+        }
+      });
     }
+
     return variable;
   }
 
@@ -180,11 +188,12 @@ export class ModelingDatasService {
    */
   getSummaryDatas(): InfosDatasI[] | undefined {
     let summaryDatas;
-    const appDatas = this.appService.getDatas().datas;
     const preparationSource =
       this.preparationDatasService.getAvailablePreparationReport();
-    if (appDatas?.[preparationSource]?.summary) {
-      summaryDatas = new SummaryModel(appDatas[preparationSource].summary);
+    if (this.appService.appDatas?.[preparationSource]?.summary) {
+      summaryDatas = new SummaryModel(
+        this.appService.appDatas[preparationSource].summary,
+      );
       return summaryDatas.displayDatas;
     } else {
       return undefined;
@@ -202,14 +211,19 @@ export class ModelingDatasService {
    * @returns {InfosDatasI[]} An array of summary data for each trained predictor.
    */
   getTrainedPredictorsSummaryDatas(): InfosDatasI[] {
-    const appDatas = this.appService.getDatas().datas;
     const trainedPredictorsSummaryDatas: InfosDatasI[] = [];
 
-    for (let i = 0; i < appDatas.modelingReport.trainedPredictors.length; i++) {
+    for (
+      let i = 0;
+      i < this.appService.appDatas.modelingReport.trainedPredictors.length;
+      i++
+    ) {
       trainedPredictorsSummaryDatas.push({
-        title: appDatas.modelingReport.trainedPredictors[i].name,
+        title:
+          this.appService.appDatas.modelingReport.trainedPredictors[i].name,
         value:
-          appDatas.modelingReport.trainedPredictors[i].variables +
+          this.appService.appDatas.modelingReport.trainedPredictors[i]
+            .variables +
           ' ' +
           this.translate.get('GLOBAL.VARIABLES'),
       });
@@ -246,16 +260,16 @@ export class ModelingDatasService {
    * if the trained predictor details are available, otherwise `undefined`.
    */
   getTrainedPredictorListDatas(): TrainedPredictorModel[] | undefined {
-    const appDatas = this.appService.getDatas().datas;
     const selectedPredictor = this.getSelectedPredictor();
     if (
-      appDatas?.modelingReport?.trainedPredictorsDetails?.[
+      this.appService.appDatas?.modelingReport?.trainedPredictorsDetails?.[
         selectedPredictor?.rank
       ]
     ) {
       const currentDatas =
-        appDatas.modelingReport.trainedPredictorsDetails[selectedPredictor.rank]
-          .selectedVariables;
+        this.appService.appDatas.modelingReport.trainedPredictorsDetails[
+          selectedPredictor.rank
+        ].selectedVariables;
 
       // Get a typical data object
       const availableKeys = Object.keys(currentDatas[0]);

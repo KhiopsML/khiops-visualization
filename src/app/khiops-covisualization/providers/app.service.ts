@@ -16,8 +16,8 @@ import {
 export class AppService {
   static Ls: Ls;
 
-  private appDatas: AppDatasI = undefined;
-  private initialDatas: AppDatasI = undefined;
+  private _appDatas: AppDatasI = undefined;
+  private _initialDatas: AppDatasI = undefined;
   private activeTabIndex = 0;
 
   constructor(
@@ -29,6 +29,14 @@ export class AppService {
     AppService.Ls = this.ls;
 
     this.initialize();
+  }
+
+  get appDatas(): CovisualizationDatas {
+    return this._appDatas.datas;
+  }
+
+  get initialDatas(): CovisualizationDatas {
+    return this._initialDatas.datas;
   }
 
   /**
@@ -54,11 +62,11 @@ export class AppService {
   initialize() {
     this.initGlobalConfigVariables();
     this.layoutService.initialize(VIEW_LAYOUT);
-    this.appDatas = {
+    this._appDatas = {
       datas: undefined,
     };
 
-    this.initialDatas = {
+    this._initialDatas = {
       datas: undefined,
     };
   }
@@ -68,7 +76,7 @@ export class AppService {
    * @param datas - The cropped file data.
    */
   setCroppedFileDatas(datas: CovisualizationDatas) {
-    this.appDatas.datas = datas;
+    this._appDatas.datas = datas;
     this.setSavedDatas(datas);
   }
 
@@ -77,8 +85,8 @@ export class AppService {
    * @param datas - The file data.
    */
   setFileDatas(datas: CovisualizationDatas) {
-    this.appDatas.datas = datas;
-    this.initialDatas.datas = _.cloneDeep(datas);
+    this._appDatas.datas = datas;
+    this._initialDatas.datas = _.cloneDeep(datas);
     this.setSavedDatas(datas);
   }
 
@@ -88,8 +96,8 @@ export class AppService {
    * @returns The saved data of the specified type.
    */
   getSavedDatas(type): any {
-    if (this.appDatas?.datas?.savedDatas?.[type] !== undefined) {
-      return this.appDatas.datas.savedDatas[type];
+    if (this._appDatas?.datas?.savedDatas?.[type] !== undefined) {
+      return this._appDatas.datas.savedDatas[type];
     }
   }
 
@@ -103,22 +111,6 @@ export class AppService {
         this.layoutService.setSplitSizes(datas.savedDatas.splitSizes);
       }
     }
-  }
-
-  /**
-   * Gets the current application data.
-   * @returns The current application data.
-   */
-  getDatas(): AppDatasI {
-    return this.appDatas;
-  }
-
-  /**
-   * Gets the initial application data.
-   * @returns The initial application data.
-   */
-  getInitialDatas(): AppDatasI {
-    return this.initialDatas;
   }
 
   /**
@@ -148,7 +140,7 @@ export class AppService {
    * @returns True if the JSON file is large, false otherwise.
    */
   isBigJsonFile(): boolean {
-    return this.appDatas?.datas?.coclusteringReport?.summary?.cells > 10000;
+    return this.appDatas?.coclusteringReport?.summary?.cells > 10000;
   }
 
   /**

@@ -43,11 +43,10 @@ export class PreparationDatasService {
   initialize() {
     this.preparationDatas = new PreparationDatasModel();
 
-    const appDatas = this.appService.getDatas().datas;
-
     // select the first item of the list by default
-    if (appDatas?.preparationReport?.variablesStatistics?.[0]) {
-      let defaultVariable = appDatas.preparationReport.variablesStatistics[0];
+    if (this.appService.appDatas?.preparationReport?.variablesStatistics?.[0]) {
+      let defaultVariable =
+        this.appService.appDatas.preparationReport.variablesStatistics[0];
 
       // Check if there is a saved selected variable into json
       const savedSelectedRank = this.appService.getSavedDatas('selectedRank');
@@ -58,15 +57,14 @@ export class PreparationDatasService {
         );
       }
 
-      this.setSelectedVariable(
-        defaultVariable.name,
-        REPORT.PREPARATION_REPORT,
-      );
+      this.setSelectedVariable(defaultVariable.name, REPORT.PREPARATION_REPORT);
     }
     // select the first item of the list by default
-    if (appDatas?.textPreparationReport?.variablesStatistics?.[0]) {
+    if (
+      this.appService.appDatas?.textPreparationReport?.variablesStatistics?.[0]
+    ) {
       let defaultVariable: TextPreparationVariableStatistic =
-        appDatas.textPreparationReport.variablesStatistics[0];
+        this.appService.appDatas.textPreparationReport.variablesStatistics[0];
 
       // Check if there is a saved selected variable into json
       const savedSelectedRank = this.appService.getSavedDatas('selectedRank');
@@ -141,11 +139,10 @@ export class PreparationDatasService {
    */
   getVariableFromName(name: string, preparationSource: REPORT): any {
     let variable: any;
-    const appDatas = this.appService.getDatas().datas;
-    if (appDatas?.[preparationSource]?.variablesStatistics) {
-      variable = appDatas[preparationSource].variablesStatistics.find(
-        (e) => e.name === name,
-      );
+    if (this.appService.appDatas?.[preparationSource]?.variablesStatistics) {
+      variable = this.appService.appDatas[
+        preparationSource
+      ].variablesStatistics.find((e) => e.name === name);
     }
 
     return variable;
@@ -159,10 +156,9 @@ export class PreparationDatasService {
    */
   getVariableFromRank(rank: string, preparationSource: REPORT): any {
     let variable: any;
-    const appDatas = this.appService.getDatas().datas;
-    variable = appDatas[preparationSource].variablesStatistics.find(
-      (e) => e.rank === rank,
-    );
+    variable = this.appService.appDatas[
+      preparationSource
+    ].variablesStatistics.find((e) => e.rank === rank);
     return variable;
   }
 
@@ -173,11 +169,12 @@ export class PreparationDatasService {
    * @returns {InfosDatasI[]} The summary data.
    */
   getSummaryDatas(preparationSource?: string): InfosDatasI[] {
-    const appDatas = this.appService.getDatas().datas;
     if (!preparationSource) {
       preparationSource = this.getAvailablePreparationReport();
     }
-    const summary = new SummaryModel(appDatas[preparationSource].summary);
+    const summary = new SummaryModel(
+      this.appService.appDatas[preparationSource].summary,
+    );
     return summary.displayDatas;
   }
 
@@ -187,9 +184,8 @@ export class PreparationDatasService {
    * @returns {InfosDatasI[] | undefined} The information data.
    */
   getInformationsDatas(preparationSource: REPORT): InfosDatasI[] | undefined {
-    const appDatas = this.appService.getDatas().datas;
     const informationsDatas = new InformationsModel(
-      appDatas[preparationSource].summary,
+      this.appService.appDatas[preparationSource].summary,
     );
     return informationsDatas.displayDatas;
   }
@@ -214,10 +210,11 @@ export class PreparationDatasService {
       displayedColumns: displayedColumns,
     };
 
-    const appDatas = this.appService.getDatas().datas;
-    if (appDatas?.[preparationSource]?.variablesDetailedStatistics) {
+    if (
+      this.appService.appDatas?.[preparationSource]?.variablesDetailedStatistics
+    ) {
       const currentVar =
-        appDatas[preparationSource].variablesDetailedStatistics[
+        this.appService.appDatas[preparationSource].variablesDetailedStatistics[
           this.preparationDatas[preparationSource].selectedVariable.rank
         ];
       const variableDetails: VariableDetailsModel = new VariableDetailsModel(
@@ -358,10 +355,10 @@ export class PreparationDatasService {
    * @returns {VariableModel[]} The variable data.
    */
   getVariablesDatas(preparationSource: REPORT): VariableModel[] {
-    const appDatas = this.appService.getDatas().datas;
-    const currentDatas = appDatas[preparationSource].variablesStatistics;
+    const currentDatas =
+      this.appService.appDatas[preparationSource].variablesStatistics;
     const currentDetailedDatas =
-      appDatas[preparationSource].variablesDetailedStatistics;
+      this.appService.appDatas[preparationSource].variablesDetailedStatistics;
     const variableDatas: VariableModel[] = [];
 
     if (currentDatas) {
@@ -388,10 +385,10 @@ export class PreparationDatasService {
       preparationSource = this.getAvailablePreparationReport();
     }
 
-    const appDatas = this.appService.getDatas().datas;
-    if (appDatas?.[preparationSource]?.summary) {
+    if (this.appService.appDatas?.[preparationSource]?.summary) {
       variableStatsDatas.emptyLabels();
-      const currentDatas = appDatas[preparationSource].summary.targetValues;
+      const currentDatas =
+        this.appService.appDatas[preparationSource].summary.targetValues;
 
       if (currentDatas) {
         for (let i = 0; i < currentDatas.values.length; i++) {
@@ -430,21 +427,23 @@ export class PreparationDatasService {
   getTargetVariableStatsInformations(
     preparationSource?: string,
   ): InfosDatasI[] | undefined {
-    const appDatas = this.appService.getDatas().datas;
     if (!preparationSource) {
       preparationSource = this.getAvailablePreparationReport();
     }
 
     let informationsDatas: InfosDatasI[] | undefined;
-    if (appDatas[preparationSource].summary.targetDescriptiveStats) {
+    if (
+      this.appService.appDatas[preparationSource].summary.targetDescriptiveStats
+    ) {
       informationsDatas = [];
-      for (const item in appDatas[preparationSource].summary
+      for (const item in this.appService.appDatas[preparationSource].summary
         .targetDescriptiveStats) {
         if (item) {
           informationsDatas.push({
             title: item,
             value:
-              appDatas[preparationSource].summary.targetDescriptiveStats[item],
+              this.appService.appDatas[preparationSource].summary
+                .targetDescriptiveStats[item],
           });
         }
       }
@@ -458,8 +457,7 @@ export class PreparationDatasService {
    * @returns {string} The target variable.
    */
   getTargetVariable(preparationSource: REPORT): string {
-    const appDatas = this.appService.getDatas().datas;
-    return appDatas[preparationSource].summary.targetVariable;
+    return this.appService.appDatas[preparationSource].summary.targetVariable;
   }
 
   /**
@@ -469,13 +467,13 @@ export class PreparationDatasService {
    */
   isExplanatoryAnalysis(): boolean {
     const preparationSource = this.getAvailablePreparationReport();
-    const appDatas = this.appService.getDatas().datas;
     if (
-      appDatas?.[preparationSource]?.variablesDetailedStatistics &&
-      !appDatas.bivariatePreparationReport
+      this.appService.appDatas?.[preparationSource]
+        ?.variablesDetailedStatistics &&
+      !this.appService.appDatas.bivariatePreparationReport
     ) {
       const detailedVar =
-        appDatas[preparationSource].variablesDetailedStatistics[
+        this.appService.appDatas[preparationSource].variablesDetailedStatistics[
           this.preparationDatas[preparationSource].selectedVariable.rank
         ];
       if (detailedVar?.dataGrid) {
@@ -511,22 +509,26 @@ export class PreparationDatasService {
    */
   isSupervised(): boolean {
     const preparationSource = this.getAvailablePreparationReport();
-    const appDatas = this.appService.getDatas().datas;
-    if (appDatas?.[preparationSource]?.variablesDetailedStatistics) {
+    if (
+      this.appService.appDatas?.[preparationSource]?.variablesDetailedStatistics
+    ) {
       const detailedVar =
-        appDatas[preparationSource].variablesDetailedStatistics[
+        this.appService.appDatas[preparationSource].variablesDetailedStatistics[
           this.preparationDatas[preparationSource].selectedVariable.rank
         ];
       if (detailedVar?.dataGrid) {
         return detailedVar.dataGrid.isSupervised;
       }
-    } else if (appDatas?.[preparationSource]?.summary?.learningTask) {
+    } else if (
+      this.appService.appDatas?.[preparationSource]?.summary?.learningTask
+    ) {
       // "Unsupervised analysis": only non-supervised case (equivalent to isSupervised = False)
       // "Regression analysis": supervised case (equivalent to isSupervised = True)
       // "Classification analysis": (equivalent to isSupervised = True)
       return (
-        appDatas[preparationSource].summary.learningTask === TASKS.REGRESSION ||
-        appDatas[preparationSource].summary.learningTask ===
+        this.appService.appDatas[preparationSource].summary.learningTask ===
+          TASKS.REGRESSION ||
+        this.appService.appDatas[preparationSource].summary.learningTask ===
           TASKS.CLASSIFICATION
       );
     }
@@ -540,12 +542,11 @@ export class PreparationDatasService {
    * @returns {string} The available preparation report.
    */
   getAvailablePreparationReport(): REPORT {
-    const appDatas = this.appService.getDatas()?.datas;
     let preparationSource = REPORT.PREPARATION_REPORT;
     if (
-      !appDatas?.[preparationSource] ||
-      (!appDatas?.[preparationSource]?.variablesStatistics &&
-        appDatas?.[REPORT.TEXT_PREPARATION_REPORT])
+      !this.appService.appDatas?.[preparationSource] ||
+      (!this.appService.appDatas?.[preparationSource]?.variablesStatistics &&
+        this.appService.appDatas?.[REPORT.TEXT_PREPARATION_REPORT])
     ) {
       preparationSource = REPORT.TEXT_PREPARATION_REPORT;
     }
@@ -559,11 +560,10 @@ export class PreparationDatasService {
    * @returns {string} The preparation source for the variable.
    */
   getPreparationSourceFromVariable(variable): REPORT {
-    const appDatas = this.appService.getDatas().datas;
     // Find the current variable into preparationReport or textPreparationReport
-    if (appDatas?.preparationReport?.variablesStatistics) {
+    if (this.appService.appDatas?.preparationReport?.variablesStatistics) {
       const isPreparationReport =
-        appDatas.preparationReport.variablesStatistics.find(
+        this.appService.appDatas.preparationReport.variablesStatistics.find(
           (e) => e.name === variable.name,
         );
       if (isPreparationReport) {

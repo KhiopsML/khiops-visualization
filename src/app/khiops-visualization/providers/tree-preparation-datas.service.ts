@@ -36,13 +36,14 @@ export class TreePreparationDatasService {
    * and setting the default selected variable.
    */
   initialize() {
-    const appDatas = this.appService.getDatas().datas;
-    this.treePreparationDatas = new TreePreparationDatasModel(appDatas);
+    this.treePreparationDatas = new TreePreparationDatasModel(
+      this.appService.appDatas,
+    );
 
     // select the first item of the list by default
     if (this.treePreparationDatas.isValid()) {
       let defaultVariable: TreePreparationVariableStatistic =
-        appDatas.treePreparationReport.variablesStatistics[0];
+        this.appService.appDatas.treePreparationReport.variablesStatistics[0];
 
       // Check if there is a saved selected variable into json
       const savedSelectedRank = this.appService.getSavedDatas('selectedRank');
@@ -69,9 +70,9 @@ export class TreePreparationDatasService {
    * Initializes the selected nodes based on the first partition of the selected variable.
    */
   initSelectedNodes() {
-    const appDatas = this.appService.getDatas().datas;
     const variablesDetailedStatistics =
-      appDatas?.treePreparationReport?.variablesDetailedStatistics;
+      this.appService.appDatas?.treePreparationReport
+        ?.variablesDetailedStatistics;
     if (this.treePreparationDatas?.selectedVariable) {
       const dimensions =
         variablesDetailedStatistics[
@@ -101,9 +102,9 @@ export class TreePreparationDatasService {
    * @returns {Array} An array containing the dimension index and the linked nodes.
    */
   getNodesLinkedToOneNode(id: string) {
-    const appDatas = this.appService.getDatas().datas;
     const variablesDetailedStatistics =
-      appDatas?.treePreparationReport?.variablesDetailedStatistics;
+      this.appService.appDatas?.treePreparationReport
+        ?.variablesDetailedStatistics;
 
     const dimensions =
       variablesDetailedStatistics[
@@ -151,8 +152,8 @@ export class TreePreparationDatasService {
    * @param {string} rank - The rank of the variable.
    */
   setSelectedFlattenTree(rank: string) {
-    const appDatas = this.appService.getDatas().datas;
-    const treeDatas = appDatas?.treePreparationReport?.treeDetails;
+    const treeDatas =
+      this.appService.appDatas?.treePreparationReport?.treeDetails;
     if (treeDatas?.[rank]?.treeNodes) {
       const flattenTree = UtilsService.flattenTree(
         [],
@@ -167,8 +168,8 @@ export class TreePreparationDatasService {
    * It clones the tree nodes from the application data and formats them.
    */
   constructDimensionTree() {
-    const appDatas = this.appService.getDatas().datas;
-    const treeDatas: TreeDetails = appDatas?.treePreparationReport?.treeDetails;
+    const treeDatas: TreeDetails =
+      this.appService.appDatas?.treePreparationReport?.treeDetails;
     const currentRank = this.getSelectedVariableRank();
     if (currentRank && treeDatas?.[currentRank]) {
       const currenetDimTree: TreeNodeModel = new TreeNodeModel(
@@ -282,10 +283,13 @@ export class TreePreparationDatasService {
     if (index !== -1) {
       // otherwise it's a node selection
 
-      const appDatas = this.appService.getDatas().datas;
-      if (appDatas?.treePreparationReport?.variablesDetailedStatistics) {
+      if (
+        this.appService.appDatas?.treePreparationReport
+          ?.variablesDetailedStatistics
+      ) {
         const currentVar =
-          appDatas.treePreparationReport.variablesDetailedStatistics[
+          this.appService.appDatas.treePreparationReport
+            .variablesDetailedStatistics[
             this.treePreparationDatas.selectedVariable.rank
           ];
         const variableDetails: VariableDetailsModel = new VariableDetailsModel(

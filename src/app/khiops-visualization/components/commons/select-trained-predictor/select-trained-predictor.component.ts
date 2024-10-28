@@ -7,16 +7,16 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { LS } from '@khiops-library/enum/ls';
+import { TrainedPredictor } from '@khiops-visualization/interfaces/modeling-report';
 import { AppService } from '@khiops-visualization/providers/app.service';
 
 @Component({
   selector: 'app-select-trained-predictor',
   templateUrl: './select-trained-predictor.component.html',
   styleUrls: ['./select-trained-predictor.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectTrainedPredictorComponent implements OnInit {
-  @Input() inputDatas: any;
+  @Input() inputDatas: TrainedPredictor[] | undefined;
   selectedPredictor: string;
 
   @Output() private selectedPredictorChanged: EventEmitter<any> =
@@ -26,7 +26,7 @@ export class SelectTrainedPredictorComponent implements OnInit {
 
   ngOnInit() {
     // select by default Selective Naive Bayes
-    let defaultSelection = this.inputDatas.find(
+    let defaultSelection = this.inputDatas?.find(
       (e) => e.name === 'Selective Naive Bayes',
     );
 
@@ -39,7 +39,7 @@ export class SelectTrainedPredictorComponent implements OnInit {
     } catch (e) {}
     if (previousSelectedPredictor) {
       if (
-        this.inputDatas.find((e) => e.name === previousSelectedPredictor.name)
+        this.inputDatas?.find((e) => e.name === previousSelectedPredictor.name)
       ) {
         defaultSelection = previousSelectedPredictor;
       }
@@ -48,7 +48,7 @@ export class SelectTrainedPredictorComponent implements OnInit {
       this.selectedPredictor = defaultSelection.name;
     } else {
       // else select first predictor
-      this.selectedPredictor = this.inputDatas[0].name;
+      this.selectedPredictor = this.inputDatas?.[0].name;
     }
     this.selectedPredictorChanged.emit(defaultSelection);
   }

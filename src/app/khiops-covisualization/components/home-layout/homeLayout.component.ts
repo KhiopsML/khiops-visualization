@@ -32,10 +32,7 @@ import { Subscription } from 'rxjs';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 import { ViewManagerService } from '@khiops-covisualization/providers/view-manager.service';
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
-import {
-  AppDatasI,
-  CovisualizationDatas,
-} from '@khiops-covisualization/interfaces/app-datas';
+import { CovisualizationDatas } from '@khiops-covisualization/interfaces/app-datas';
 
 @Component({
   selector: 'app-home-layout',
@@ -45,8 +42,8 @@ import {
 })
 export class HomeLayoutComponent implements OnInit, OnDestroy {
   public showProjectTab: boolean = true;
-  public get appDatas(): AppDatasI {
-    return this.appService.getDatas();
+  public get appDatas(): CovisualizationDatas {
+    return this.appService.appDatas;
   }
   @Input()
   public set appDatas(datas: CovisualizationDatas) {
@@ -151,11 +148,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
   }
 
   checkEmptyMessageVisibility(): boolean {
-    return (
-      !this.appDatas ||
-      !this.appDatas?.datas ||
-      UtilsService.isEmpty(this.appDatas?.datas)
-    );
+    return !this.appDatas || UtilsService.isEmpty(this.appDatas);
   }
 
   ngOnDestroy() {

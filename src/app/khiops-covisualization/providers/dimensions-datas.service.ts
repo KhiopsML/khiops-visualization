@@ -32,7 +32,7 @@ export class DimensionsDatasService {
    *
    * @returns {DimensionsDatasModel} - The initialized dimensions data model.
    */
-  initialize(): any {
+  initialize(): DimensionsDatasModel {
     this.dimensionsDatas = new DimensionsDatasModel();
     return this.dimensionsDatas;
   }
@@ -133,8 +133,10 @@ export class DimensionsDatasService {
    * @returns {boolean} - True if there are context dimensions, false otherwise.
    */
   isContextDimensions(): boolean {
-    const appDatas = this.appService.getDatas().datas;
-    return appDatas?.coclusteringReport?.summary?.initialDimensions > 2;
+    return (
+      this.appService.appDatas?.coclusteringReport?.summary?.initialDimensions >
+      2
+    );
   }
 
   /**
@@ -260,23 +262,23 @@ export class DimensionsDatasService {
    * @returns {DimensionCovisualizationModel[]} - The array of dimensions.
    */
   getDimensions(): DimensionCovisualizationModel[] {
-    const appDatas = this.appService.getDatas().datas;
     this.dimensionsDatas.dimensions = [];
 
-    if (appDatas) {
+    if (this.appService.appDatas) {
       this.dimensionsDatas.cellPartIndexes =
-        appDatas?.coclusteringReport?.cellPartIndexes;
+        this.appService.appDatas?.coclusteringReport?.cellPartIndexes;
 
       // Get dimension summaries
-      if (appDatas?.coclusteringReport?.dimensionSummaries) {
-        const l = appDatas.coclusteringReport.dimensionSummaries.length;
+      if (this.appService.appDatas?.coclusteringReport?.dimensionSummaries) {
+        const l =
+          this.appService.appDatas.coclusteringReport.dimensionSummaries.length;
         for (let i = 0; i < l; i++) {
           const dimension = new DimensionCovisualizationModel(
-            appDatas.coclusteringReport.dimensionSummaries[i],
+            this.appService.appDatas.coclusteringReport.dimensionSummaries[i],
             i,
           );
           const dimensionPartition =
-            appDatas.coclusteringReport.dimensionPartitions[i];
+            this.appService.appDatas.coclusteringReport.dimensionPartitions[i];
           // Set  dimension partitions from intervals or valueGroup
           dimension.setPartition(dimensionPartition);
           this.dimensionsDatas.dimensions.push(dimension);
@@ -416,13 +418,11 @@ export class DimensionsDatasService {
   constructDimensionsTrees() {
     this.dimensionsDatas.dimensionsTrees = [];
     this.dimensionsDatas.currentDimensionsTrees = [];
-    const appinitialDatas = this.appService.getInitialDatas().datas;
-    const appDatas = this.appService.getDatas().datas;
 
     // At launch check if there are collapsed nodes into input json file
     const collapsedNodes = this.appService.getSavedDatas('collapsedNodes');
 
-    if (appinitialDatas?.coclusteringReport) {
+    if (this.appService.initialDatas?.coclusteringReport) {
       const selectedDimensionsLength =
         this.dimensionsDatas.selectedDimensions.length;
       for (let i = 0; i < selectedDimensionsLength; i++) {
@@ -430,7 +430,7 @@ export class DimensionsDatasService {
 
         const dimension = this.dimensionsDatas.selectedDimensions[i];
         const dimensionHierarchy: DimensionHierarchy =
-          appinitialDatas.coclusteringReport.dimensionHierarchies.find(
+          this.appService.initialDatas.coclusteringReport.dimensionHierarchies.find(
             (e) => e.name === dimension.name,
           );
         if (dimensionHierarchy) {
@@ -488,7 +488,7 @@ export class DimensionsDatasService {
         }
 
         const currentDimensionHierarchy: DimensionHierarchy =
-          appDatas.coclusteringReport.dimensionHierarchies.find(
+          this.appService.appDatas.coclusteringReport.dimensionHierarchies.find(
             (e) => e.name === dimension.name,
           );
         if (currentDimensionHierarchy) {
@@ -561,8 +561,6 @@ export class DimensionsDatasService {
   getMatrixDatas(propagateChanges = true): MatrixDatasModel {
     // const t0 = performance.now();
 
-    const appDatas = this.appService.getDatas().datas;
-
     this.dimensionsDatas.matrixDatas = new MatrixDatasModel();
     this.dimensionsDatas.allMatrixDatas = new MatrixDatasModel();
     this.dimensionsDatas.allMatrixCellDatas = [];
@@ -627,7 +625,7 @@ export class DimensionsDatasService {
     const cellFrequencies = MatrixUtilsService.getCellFrequencies(
       dimensionParts,
       this.dimensionsDatas.cellPartIndexes,
-      appDatas.coclusteringReport.cellFrequencies,
+      this.appService.appDatas.coclusteringReport.cellFrequencies,
       zDimension,
     );
 

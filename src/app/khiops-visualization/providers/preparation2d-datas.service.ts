@@ -43,13 +43,15 @@ export class Preparation2dDatasService {
    * Selects the first variable by default or a saved variable if available.
    */
   initialize() {
-    const appDatas = this.appService.getDatas().datas;
-    this.preparation2dDatas = new Preparation2dDatasModel(appDatas);
+    this.preparation2dDatas = new Preparation2dDatasModel(
+      this.appService.appDatas,
+    );
 
     // select the first item of the list by default
     if (this.preparation2dDatas.isValid()) {
       let defaultVariable: VariablePairStatistics =
-        appDatas.bivariatePreparationReport.variablesPairsStatistics[0];
+        this.appService.appDatas.bivariatePreparationReport
+          .variablesPairsStatistics[0];
 
       // Check if there is a saved selected variable into json
       const savedSelected2dRank =
@@ -75,9 +77,8 @@ export class Preparation2dDatasService {
    * @returns An array of InfosDatasI or undefined.
    */
   getInformationsDatas(): InfosDatasI[] | undefined {
-    const appDatas = this.appService.getDatas().datas;
     const informationsDatas = new InformationsModel(
-      appDatas.bivariatePreparationReport.summary,
+      this.appService.appDatas.bivariatePreparationReport.summary,
     );
     return informationsDatas.displayDatas;
   }
@@ -217,11 +218,14 @@ export class Preparation2dDatasService {
    * @returns An array of Variable2dModel.
    */
   getVariablesd2Datas(): Variable2dModel[] {
-    const appDatas = this.appService.getDatas().datas;
     const variableDatas: Variable2dModel[] = [];
-    if (appDatas?.bivariatePreparationReport?.variablesPairsStatistics) {
+    if (
+      this.appService.appDatas?.bivariatePreparationReport
+        ?.variablesPairsStatistics
+    ) {
       const currentDatas =
-        appDatas.bivariatePreparationReport.variablesPairsStatistics;
+        this.appService.appDatas.bivariatePreparationReport
+          .variablesPairsStatistics;
       if (currentDatas) {
         for (let i = 0; i < currentDatas.length; i++) {
           const varItem: Variable2dModel | undefined = new Variable2dModel(
@@ -246,10 +250,12 @@ export class Preparation2dDatasService {
     name2: string,
   ): Preparation2dVariableModel | undefined {
     let preparation2dVariable: Preparation2dVariableModel | undefined;
-    const appDatas = this.appService.getDatas().datas;
-    if (appDatas?.bivariatePreparationReport?.variablesPairsStatistics) {
+    if (
+      this.appService.appDatas?.bivariatePreparationReport
+        ?.variablesPairsStatistics
+    ) {
       const currentPreparation2dVariable: VariablePairStatistics =
-        appDatas.bivariatePreparationReport.variablesPairsStatistics.find(
+        this.appService.appDatas.bivariatePreparationReport.variablesPairsStatistics.find(
           (e) => e.name1 === name1 && e.name2 === name2,
         );
       if (currentPreparation2dVariable) {
@@ -268,9 +274,8 @@ export class Preparation2dDatasService {
    */
   getVariableFromRank(rank: string): any {
     let variable: any;
-    const appDatas = this.appService.getDatas().datas;
     variable =
-      appDatas.bivariatePreparationReport.variablesPairsStatistics.find(
+      this.appService.appDatas.bivariatePreparationReport.variablesPairsStatistics.find(
         (e) => e.rank === rank,
       );
     return variable;
@@ -424,14 +429,14 @@ export class Preparation2dDatasService {
         axisPartValues = [Number(displayaxisPart)]; // join into one array for numerical values (bivar)
       }
 
-      const appDatas = this.appService.getDatas().datas;
       for (let k = 0; k < axisPartValues.length; k++) {
         // get value into global json
         datasAxis[k] = {};
         datasAxis[k][displayedColumns[0].field] = axisPartValues[k];
         if (displayedColumns[1]) {
           const modalityFreq = this.getModalityFrequency(
-            appDatas.preparationReport.variablesDetailedStatistics,
+            this.appService.appDatas.preparationReport
+              .variablesDetailedStatistics,
             variableName,
             axisPartValues[k].toString(),
           );
@@ -494,7 +499,6 @@ export class Preparation2dDatasService {
    * @returns The VariableDetailsModel containing detailed information about the variable, or undefined if not found.
    */
   getVariableDetails(rank: string): VariableDetailsModel | undefined {
-    const appDatas = this.appService.getDatas().datas;
     let variableDetails: VariableDetailsModel | undefined;
     const isRegressionOrExplanatoryAnalysis =
       this.preparationDatasService.isExplanatoryAnalysis() ||
@@ -502,37 +506,40 @@ export class Preparation2dDatasService {
 
     if (
       !isRegressionOrExplanatoryAnalysis &&
-      appDatas?.bivariatePreparationReport?.variablesPairsDetailedStatistics?.[
-        rank
-      ]
+      this.appService.appDatas?.bivariatePreparationReport
+        ?.variablesPairsDetailedStatistics?.[rank]
     ) {
       // normal case
       const currentVar =
-        appDatas.bivariatePreparationReport.variablesPairsDetailedStatistics[
-          rank
-        ];
+        this.appService.appDatas.bivariatePreparationReport
+          .variablesPairsDetailedStatistics[rank];
       variableDetails = new VariableDetailsModel(
         currentVar,
         this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_TABLE_SIZE,
       );
     } else if (
       isRegressionOrExplanatoryAnalysis &&
-      appDatas?.textPreparationReport?.variablesDetailedStatistics?.[rank]
+      this.appService.appDatas?.textPreparationReport
+        ?.variablesDetailedStatistics?.[rank]
     ) {
       // regression or explanatory case: textPreparationReport
       const currentVar =
-        appDatas.textPreparationReport.variablesDetailedStatistics[rank];
+        this.appService.appDatas.textPreparationReport
+          .variablesDetailedStatistics[rank];
       variableDetails = new VariableDetailsModel(
         currentVar,
         this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_TABLE_SIZE,
       );
     } else if (
       isRegressionOrExplanatoryAnalysis &&
-      appDatas?.preparationReport?.variablesDetailedStatistics?.[rank]
+      this.appService.appDatas?.preparationReport
+        ?.variablesDetailedStatistics?.[rank]
     ) {
       // regression or explanatory case: preparationReport
       const currentVar =
-        appDatas.preparationReport.variablesDetailedStatistics[rank];
+        this.appService.appDatas.preparationReport.variablesDetailedStatistics[
+          rank
+        ];
       variableDetails = new VariableDetailsModel(
         currentVar,
         this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_TABLE_SIZE,

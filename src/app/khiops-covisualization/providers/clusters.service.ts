@@ -14,6 +14,7 @@ import { ExtDatasModel } from '@khiops-covisualization/model/ext-datas.model';
 import { ImportExtDatasService } from './import-ext-datas.service';
 import { CHART_TYPES } from '@khiops-library/enum/chart-types';
 import { MatrixUtilsService } from '@khiops-library/components/matrix/matrix.utils.service';
+import { CovisualizationDatas } from '@khiops-covisualization/interfaces/app-datas';
 @Injectable({
   providedIn: 'root',
 })
@@ -227,8 +228,6 @@ export class ClustersService {
    * @returns A ChartDatasModel containing the information per cluster data.
    */
   getInfoPerCluster(rank: number): ChartDatasModel {
-    const appinitialDatas = this.appService.getInitialDatas().datas;
-
     const infoPerCluster = new ChartDatasModel();
 
     let currentDataSet: ChartDatasetModel;
@@ -241,7 +240,9 @@ export class ClustersService {
       let currentCluster;
       for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
         const currentDimensionHierarchy: any =
-          appinitialDatas.coclusteringReport.dimensionHierarchies[i];
+          this.appService.initialDatas.coclusteringReport.dimensionHierarchies[
+            i
+          ];
         currentCluster = currentDimensionHierarchy.clusters.find(
           (e) => e.hierarchicalRank === j + 1,
         );
@@ -372,11 +373,10 @@ export class ClustersService {
     hierarchyName: string,
     node: TreeNodeModel,
   ): CompositionModel[] {
-    const appDatas = this.appService.getDatas().datas;
-    const appinitialDatas = this.appService.getInitialDatas().datas;
+    const appinitialDatas: CovisualizationDatas = this.appService.initialDatas;
     const compositionValues: CompositionModel[] = [];
 
-    if (appDatas?.coclusteringReport?.dimensionPartitions) {
+    if (this.appService.appDatas?.coclusteringReport?.dimensionPartitions) {
       const currentDimensionDetails: DimensionCovisualizationModel =
         this.dimensionsDatas.selectedDimensions.find(
           (e) => e.name === hierarchyName,
@@ -465,7 +465,6 @@ export class ClustersService {
   ): ClusterDetailsModel[] {
     let filteredDimensionsClusters: ClusterDetailsModel[] = [];
     if (dimensionsTree) {
-      const appinitialDatas = this.appService.getInitialDatas().datas;
       const filteredDimensionsClustersDatas = [].concat(
         this.getCurrentClusterDetailsFromNode(dimensionsTree),
       );
@@ -496,9 +495,9 @@ export class ClustersService {
               const elementIndex = treeNode.childrenLeafIndexes[index];
               if (selectedDimension.isCategorical) {
                 size +=
-                  appinitialDatas.coclusteringReport.dimensionPartitions[
-                    selectedDimension.startPosition
-                  ].valueGroups[elementIndex].values.length;
+                  this.appService.initialDatas.coclusteringReport
+                    .dimensionPartitions[selectedDimension.startPosition]
+                    .valueGroups[elementIndex].values.length;
               }
             }
             clusterDetails.size = size;

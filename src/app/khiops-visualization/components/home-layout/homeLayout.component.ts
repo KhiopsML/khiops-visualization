@@ -27,10 +27,7 @@ import { TrackerService } from '../../../khiops-library/providers/tracker.servic
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
 import { Subscription } from 'rxjs';
 import { MatTabGroup } from '@angular/material/tabs';
-import {
-  AppDatasI,
-  VisualizationDatas,
-} from '@khiops-visualization/interfaces/app-datas';
+import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas';
 
 @Component({
   selector: 'app-home-layout',
@@ -41,8 +38,8 @@ import {
 export class HomeLayoutComponent implements OnInit {
   @ViewChild('mainTabGroup') public mainTabGroup!: MatTabGroup;
   @Input()
-  public get appDatas(): AppDatasI {
-    return this.appService.getDatas();
+  public get appDatas(): VisualizationDatas {
+    return this.appService.appDatas;
   }
   public set appDatas(datas: VisualizationDatas) {
     this.appService.setFileDatas(datas);
@@ -92,11 +89,7 @@ export class HomeLayoutComponent implements OnInit {
   }
 
   checkEmptyMessageVisibility(): boolean {
-    return (
-      !this.appDatas ||
-      !this.appDatas?.datas ||
-      UtilsService.isEmpty(this.appDatas?.datas)
-    );
+    return !this.appDatas || UtilsService.isEmpty(this.appDatas);
   }
 
   ngOnInit() {

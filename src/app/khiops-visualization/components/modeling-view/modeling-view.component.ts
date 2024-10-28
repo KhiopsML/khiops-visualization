@@ -4,7 +4,6 @@ import {
   MatDialogRef,
   MatDialogConfig,
 } from '@angular/material/dialog';
-import { AppService } from '@khiops-visualization/providers/app.service';
 import { ModelingDatasService } from '@khiops-visualization/providers/modeling-datas.service';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { AppConfig } from 'src/environments/environment';
@@ -22,6 +21,9 @@ import { LayoutService } from '@khiops-library/providers/layout.service';
 import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { VariableModel } from '@khiops-visualization/model/variable.model';
+import { AppService } from '../../../khiops-visualization/providers/app.service';
+import { TrainedPredictor } from '@khiops-visualization/interfaces/modeling-report';
+import { TrainedPredictorModel } from '@khiops-visualization/model/trained-predictor.model';
 
 @Component({
   selector: 'app-modeling-view',
@@ -39,6 +41,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
   public trainedPredictorsDisplayedColumns: GridColumnsI[];
   public targetVariableStatsInformations: InfosDatasI[];
   public override tabIndex = 3; // managed by selectable-tab component
+  public trainedPredictors: TrainedPredictor[];
 
   private preparationVariable: any; // Complex, can be multiple types according to the preparationSource
 
@@ -46,11 +49,11 @@ export class ModelingViewComponent extends SelectableTabComponent {
     private modelingDatasService: ModelingDatasService,
     private trackerService: TrackerService,
     private preparation2dDatasService: Preparation2dDatasService,
-    private appService: AppService,
     private dialog: MatDialog,
     private preparationDatasService: PreparationDatasService,
     private treePreparationDatasService: TreePreparationDatasService,
     private layoutService: LayoutService,
+    private appService: AppService,
   ) {
     super();
 
@@ -60,11 +63,12 @@ export class ModelingViewComponent extends SelectableTabComponent {
 
   ngOnInit() {
     this.trackerService.trackEvent('page_view', 'modeling');
+    this.trainedPredictors =
+      this.appService.appDatas?.modelingReport?.trainedPredictors;
 
     this.preparationSource =
       this.preparationDatasService.getAvailablePreparationReport();
 
-    this.appDatas = this.appService.getDatas();
     this.modelingDatas = this.modelingDatasService.getDatas();
     this.sizes = this.layoutService.getViewSplitSizes('modelingView');
 
@@ -115,11 +119,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
     }
   }
 
-  onSelectListItemChanged(item: any) {
-    console.log(
-      'ModelingViewComponent ~ onSelectListItemChanged ~ item:',
-      item,
-    );
+  onSelectListItemChanged(item: TrainedPredictorModel) {
     // Get var from name
     if (item.name?.includes('Tree_')) {
       this.preparationSource = REPORT.TREE_PREPARATION_REPORT;

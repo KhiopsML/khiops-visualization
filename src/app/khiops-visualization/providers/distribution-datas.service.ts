@@ -46,8 +46,9 @@ export class DistributionDatasService {
    * for the component.
    */
   initialize() {
-    const appDatas = this.appService.getDatas().datas;
-    this.distributionDatas = new DistributionDatasModel(appDatas);
+    this.distributionDatas = new DistributionDatasModel(
+      this.appService.appDatas,
+    );
   }
 
   /**
@@ -97,10 +98,9 @@ export class DistributionDatasService {
     this.distributionDatas.initTargetDistributionGraphDatas();
     this.distributionDatas.setTargetDistributionType(type);
 
-    const appDatas = this.appService.getDatas().datas;
     if (this.distributionDatas.isValid()) {
       const currentVar =
-        appDatas[this.distributionDatas.preparationSource]
+        this.appService.appDatas[this.distributionDatas.preparationSource]
           .variablesDetailedStatistics[selectedVariable.rank];
 
       if (currentVar) {
@@ -153,7 +153,6 @@ export class DistributionDatasService {
     this.distributionDatas.initTreeNodeTargetDistributionGraphDatas();
     this.distributionDatas.setTreeNodeTargetDistributionType(type);
 
-    const appDatas = this.appService.getDatas().datas;
     const selectedVariable =
       this.treePreparationDatasService.getSelectedVariable();
 
@@ -163,7 +162,8 @@ export class DistributionDatasService {
       selectedNode?.isLeaf
     ) {
       const allTargetValues: string[] =
-        appDatas.treePreparationReport.summary.targetValues.values;
+        this.appService.appDatas.treePreparationReport.summary.targetValues
+          .values;
       const fullTarget: any[] = [];
       // Update currentDatas and fill empty values with 0
       for (let i = 0; i < allTargetValues.length; i++) {
@@ -179,7 +179,7 @@ export class DistributionDatasService {
         }
       }
       const currentVar =
-        appDatas[this.distributionDatas.preparationSource]
+        this.appService.appDatas[this.distributionDatas.preparationSource]
           .variablesDetailedStatistics[selectedVariable.rank];
       const variableDetails: VariableDetailsModel = new VariableDetailsModel(
         currentVar,
@@ -317,7 +317,6 @@ export class DistributionDatasService {
     initActiveEntries?: boolean,
   ): ChartDatasModel {
     let distributionsGraphDetails = new ChartDatasModel();
-    const appDatas = this.appService.getDatas().datas;
 
     if (initActiveEntries === undefined) {
       initActiveEntries = true;
@@ -328,7 +327,7 @@ export class DistributionDatasService {
 
     if (this.distributionDatas.isValid()) {
       const currentVar =
-        appDatas[this.distributionDatas.preparationSource]
+        this.appService.appDatas[this.distributionDatas.preparationSource]
           .variablesDetailedStatistics[selectedVariable.rank];
       if (currentVar) {
         this.distributionDatas.setDefaultGraphOptions();
@@ -384,11 +383,9 @@ export class DistributionDatasService {
   getHistogramGraphDatas(
     selectedVariable: PreparationVariableModel | TreePreparationVariableModel,
   ): HistogramValuesI[] | undefined {
-    const appDatas = this.appService.getDatas().datas;
     const varDatas =
-      appDatas?.preparationReport?.variablesDetailedStatistics?.[
-        selectedVariable?.rank
-      ]?.dataGrid;
+      this.appService.appDatas?.preparationReport
+        ?.variablesDetailedStatistics?.[selectedVariable?.rank]?.dataGrid;
     let histogramGraphDetails: HistogramValuesI[] | undefined = undefined;
 
     if (varDatas) {

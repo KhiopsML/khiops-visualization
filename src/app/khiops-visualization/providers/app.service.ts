@@ -17,7 +17,7 @@ import {
 })
 export class AppService {
   static Ls: Ls;
-  private appDatas: AppDatasI = undefined;
+  private _appDatas: AppDatasI = undefined;
 
   constructor(
     private layoutService: LayoutService,
@@ -30,6 +30,10 @@ export class AppService {
     this.initialize();
   }
 
+  get appDatas(): VisualizationDatas {
+    return this._appDatas.datas;
+  }
+
   /**
    * Initializes the application by setting up global configuration variables,
    * session variables, and initializing the layout service.
@@ -39,7 +43,7 @@ export class AppService {
     this.initSessionVariables();
     this.layoutService.initialize(VIEW_LAYOUT);
 
-    this.appDatas = {
+    this._appDatas = {
       datas: undefined,
     };
   }
@@ -83,21 +87,23 @@ export class AppService {
    */
   setFileDatas(datas: VisualizationDatas) {
     this.initSessionVariables();
-    this.appDatas.datas = datas;
-    this.appDatas.datas = EnrichDatasService.enrichJsonDatas(
-      this.appDatas.datas,
+    this._appDatas.datas = datas;
+    this._appDatas.datas = EnrichDatasService.enrichJsonDatas(
+      this._appDatas.datas,
     );
 
     // #86 Remove missing informations for numerical variables
-    this.appDatas.datas = EnrichDatasService.ignoreMissingPartitionForNumerical(
-      this.appDatas.datas,
-      REPORT.PREPARATION_REPORT,
-    );
-    this.appDatas.datas = EnrichDatasService.ignoreMissingPartitionForNumerical(
-      this.appDatas.datas,
-      REPORT.TEXT_PREPARATION_REPORT,
-    );
-    this.setSavedDatas(this.appDatas.datas);
+    this._appDatas.datas =
+      EnrichDatasService.ignoreMissingPartitionForNumerical(
+        this._appDatas.datas,
+        REPORT.PREPARATION_REPORT,
+      );
+    this._appDatas.datas =
+      EnrichDatasService.ignoreMissingPartitionForNumerical(
+        this._appDatas.datas,
+        REPORT.TEXT_PREPARATION_REPORT,
+      );
+    this.setSavedDatas(this._appDatas.datas);
   }
 
   /**
@@ -106,8 +112,8 @@ export class AppService {
    * @returns The saved data of the specified type.
    */
   getSavedDatas(type): any {
-    if (this.appDatas?.datas?.savedDatas?.[type]) {
-      return this.appDatas.datas.savedDatas[type];
+    if (this._appDatas?.datas?.savedDatas?.[type]) {
+      return this._appDatas.datas.savedDatas[type];
     }
   }
 
@@ -121,14 +127,6 @@ export class AppService {
         this.layoutService.setSplitSizes(datas.savedDatas.splitSizes);
       }
     }
-  }
-
-  /**
-   * Retrieves the current application data.
-   * @returns The current application data.
-   */
-  getDatas(): AppDatasI {
-    return this.appDatas;
   }
 
   /**
