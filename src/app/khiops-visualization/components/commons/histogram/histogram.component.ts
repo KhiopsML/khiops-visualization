@@ -33,6 +33,7 @@ import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { LS } from '@khiops-library/enum/ls';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { THEME } from '@khiops-library/enum/theme';
+import { BIG_CHART_SIZE } from '@khiops-library/config/global';
 
 @Component({
   selector: 'app-histogram',
@@ -321,7 +322,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
       if (this.chart) {
         this.chart.nativeElement.innerHTML = '';
         if (this.datas) {
-          if (this.datas.length > 500) {
+          if (this.datas.length > BIG_CHART_SIZE) {
             // display loading
             this.isLoading = true;
           }

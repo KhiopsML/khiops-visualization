@@ -55,7 +55,6 @@ export class DistributionGraphComponent
     public override ngzone: NgZone,
     public override configService: ConfigService,
     private toPrecision: ToPrecisionPipe,
-    private translate: TranslateService,
     private khiopsLibraryService: KhiopsLibraryService,
     private ls: Ls,
   ) {

@@ -56,6 +56,8 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
   public activeEntries = 0;
   public isFullscreen: boolean = false;
   public distributionDatas: DistributionDatasModel;
+  public isLoading: boolean = false;
+
   private distributionGraphType: string;
   private targetDistributionGraphType: string | null;
 
@@ -83,42 +85,49 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
       this.selectedGraphItemIndex = 0;
       this.initActiveEntries(this.selectedGraphItemIndex);
 
-      setTimeout(() => {
-        this.distributionDatasService.setPreparationSource(
-          this.preparationSource,
+      this.distributionDatasService.setPreparationSource(
+        this.preparationSource,
+      );
+      this.isLoading =
+        !this.isHistogramDisplayed() &&
+        this.distributionDatasService.isBigDistributionVariable(
+          this.selectedVariable.rank,
         );
-        if (this.showTargetDistributionGraph) {
-          this.distributionDatasService.getTargetDistributionGraphDatas(
-            this.selectedVariable,
-          );
-        }
-        if (this.showDistributionGraph) {
-          // Reinit datas
-          this.distributionDatas.histogramDatas = undefined;
-          this.distributionDatas.distributionGraphDatas = undefined;
 
-          if (
-            this.selectedVariable.isNumerical &&
-            !this.preparationDatasService.isSupervised()
-          ) {
-            this.distributionDatasService.getHistogramGraphDatas(
-              this.selectedVariable,
-            );
-          } else {
-            this.distributionDatasService.getdistributionGraphDatas(
+      setTimeout(
+        () => {
+          if (this.showTargetDistributionGraph) {
+            this.distributionDatasService.getTargetDistributionGraphDatas(
               this.selectedVariable,
             );
           }
-        }
+          if (this.showDistributionGraph) {
+            // Reinit datas
+            this.distributionDatas.histogramDatas = undefined;
+            this.distributionDatas.distributionGraphDatas = undefined;
 
-        if (this.preparationSource === REPORT.TREE_PREPARATION_REPORT) {
-          this.treePreparationDatasService.getCurrentIntervalDatas();
-        } else {
-          this.preparationDatasService.getCurrentIntervalDatas(
-            this.preparationSource,
-          );
-        }
-      }); // do it async to dont freeze during graph rendering
+            if (this.isHistogramDisplayed()) {
+              this.distributionDatasService.getHistogramGraphDatas(
+                this.selectedVariable,
+              );
+            } else {
+              this.distributionDatasService.getdistributionGraphDatas(
+                this.selectedVariable,
+              );
+            }
+          }
+
+          if (this.preparationSource === REPORT.TREE_PREPARATION_REPORT) {
+            this.treePreparationDatasService.getCurrentIntervalDatas();
+          } else {
+            this.preparationDatasService.getCurrentIntervalDatas(
+              this.preparationSource,
+            );
+          }
+          this.isLoading = false;
+        },
+        this.isLoading ? 100 : 0,
+      ); // do it async to dont freeze during graph rendering
     }
     if (
       changes.selectedGraphItemIndex &&
@@ -126,6 +135,13 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
     ) {
       this.initActiveEntries(this.selectedGraphItemIndex);
     }
+  }
+
+  isHistogramDisplayed(): boolean {
+    return (
+      this.selectedVariable.isNumerical &&
+      !this.preparationDatasService.isSupervised()
+    );
   }
 
   resize() {

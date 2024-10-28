@@ -6,11 +6,26 @@
 >
   <div
     fxLayout="column"
+    class="histogram-loading-indicator"
+    fxLayoutAlign="center center"
+    fxFlexFill
+    *ngIf="isLoading"
+  >
+    <mat-spinner
+      diameter="40"
+      color="accent"
+      mode="indeterminate"
+    ></mat-spinner>
+    <span>{{ 'GLOBAL.BIG_FILES_LOADING_WARNING' | translate }}</span>
+  </div>
+  <div
+    fxLayout="column"
     fxFlexFill
     *ngIf="
-      distributionDatas.distributionGraphDatas ||
-      distributionDatas.targetDistributionGraphDatas ||
-      distributionDatas.histogramDatas
+      !isLoading &&
+      (distributionDatas.distributionGraphDatas ||
+        distributionDatas.targetDistributionGraphDatas ||
+        distributionDatas.histogramDatas)
     "
   >
     <kl-graph-header

@@ -14,7 +14,7 @@ export const visualizationCommonEnvironment = {
     MAT_MENU_PAGINATION: 20,
     MAX_LABEL_LENGTH: 30,
     LIFT_CHART_COUNT: 6,
-    SMALL_SCREEN_LIMIT: 1400,
+    BIG_DISTRIBUTION_SIZE: 10000,
   },
   HOME: {
     ACTIVE_TAB_INDEX: 0,

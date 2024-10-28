@@ -21,6 +21,7 @@ import { LS } from '@khiops-library/enum/ls';
 import { Ls } from '@khiops-library/providers/ls.service';
 import { CHART_TYPES } from '@khiops-library/enum/chart-types';
 import { THEME } from '@khiops-library/enum/theme';
+import { BIG_CHART_SIZE } from '@khiops-library/config/global';
 
 @Component({
   selector: 'kl-chart',
@@ -83,11 +84,6 @@ export class ChartComponent implements AfterViewInit, OnChanges {
       try {
         this.chart?.destroy();
       } catch (e) {}
-
-      if (this.inputDatas.labels.length > 500) {
-        // display loading
-        this.isLoading = true;
-      }
 
       const chartAreaBorder = {
         id: 'chartAreaBorder',
@@ -237,11 +233,6 @@ export class ChartComponent implements AfterViewInit, OnChanges {
   }
 
   private updateGraph() {
-    if (this.inputDatas.labels.length > 500) {
-      // display loading
-      this.isLoading = true;
-    }
-
     setTimeout(
       () => {
         if (this.inputDatas && this.chart) {

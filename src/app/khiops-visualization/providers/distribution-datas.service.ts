@@ -370,6 +370,16 @@ export class DistributionDatasService {
     return distributionsGraphDetails;
   }
 
+  isBigDistributionVariable(rank: string) {
+    const currentVar = this.appService.appDatas[
+      this.distributionDatas.preparationSource
+    ].variablesStatistics.find((e) => e.rank === rank);
+    return (
+      currentVar?.values >
+      AppConfig.visualizationCommon.GLOBAL.BIG_DISTRIBUTION_SIZE
+    );
+  }
+
   /**
    * Retrieves histogram graph data for a selected variable.
    *
