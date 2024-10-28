@@ -328,7 +328,6 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 
           setTimeout(
             () => {
-              // const t0 = performance.now();
               if (this.graphOptionsY.selected === HistogramType.YLOG) {
                 this.rangeYLog = this.histogramService.getLogRangeY(this.datas);
                 this.ratioY = this.histogramService.getLogRatioY(
@@ -451,8 +450,6 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
                 }
               }
               this.drawSelectedItem();
-              // const t1 = performance.now();
-              // console.log('draw histogram ' + (t1 - t0) + ' milliseconds.');
               this.isLoading = false;
             },
             this.isLoading ? 100 : 0,

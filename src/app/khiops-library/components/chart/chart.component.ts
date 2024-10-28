@@ -44,6 +44,7 @@ export class ChartComponent implements AfterViewInit, OnChanges {
   private color: string = '';
   private barColor: string = '';
   private fontColor: string = '#999';
+  public isLoading: boolean = false;
 
   constructor(
     private ls: Ls,
@@ -82,6 +83,11 @@ export class ChartComponent implements AfterViewInit, OnChanges {
       try {
         this.chart?.destroy();
       } catch (e) {}
+
+      if (this.inputDatas.labels.length > 500) {
+        // display loading
+        this.isLoading = true;
+      }
 
       const chartAreaBorder = {
         id: 'chartAreaBorder',
@@ -231,22 +237,31 @@ export class ChartComponent implements AfterViewInit, OnChanges {
   }
 
   private updateGraph() {
-    setTimeout(() => {
-      if (this.inputDatas && this.chart) {
-        // Update datas
-        // @ts-ignore force khiops VO into Chart dataset
-        this.chart.data.datasets = this.inputDatas.datasets;
-        this.chart.data.labels = this.inputDatas.labels;
+    if (this.inputDatas.labels.length > 500) {
+      // display loading
+      this.isLoading = true;
+    }
 
-        this.colorize();
-        if (this.activeEntries !== undefined) {
-          // can be 0
-          // Select previous value if set
-          this.selectCurrentBarIndex(this.activeEntries);
+    setTimeout(
+      () => {
+        if (this.inputDatas && this.chart) {
+          // Update datas
+          // @ts-ignore force khiops VO into Chart dataset
+          this.chart.data.datasets = this.inputDatas.datasets;
+          this.chart.data.labels = this.inputDatas.labels;
+
+          this.colorize();
+          if (this.activeEntries !== undefined) {
+            // can be 0
+            // Select previous value if set
+            this.selectCurrentBarIndex(this.activeEntries);
+          }
+          this.chart.update();
+          this.isLoading = false;
         }
-        this.chart.update();
-      }
-    });
+      },
+      this.isLoading ? 100 : 0,
+    );
   }
 
   public hideActiveEntries() {

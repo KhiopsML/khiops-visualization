@@ -2,7 +2,12 @@
   overflow-x: auto;
   overflow-y: hidden;
   height: 100%;
-
+  .kl-chart-loading-indicator {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bgColor);
+  }
   .kl-chart-comp {
     height: 100%;
     overflow: hidden;
