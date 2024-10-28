@@ -19,9 +19,8 @@ import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { GridColumnsI } from '../../khiops-library/interfaces/grid-columns';
 import { DynamicI } from '@khiops-library/interfaces/globals';
-import { PreparationVariableStatistic } from '@khiops-visualization/interfaces/preparation-report';
 import { TextPreparationVariableStatistic } from '@khiops-visualization/interfaces/text-preparation-report';
-import { ModelingVariableStatistic } from '@khiops-visualization/interfaces/modeling-report';
+import { TrainedPredictorModel } from '@khiops-visualization/model/trained-predictor.model';
 
 @Injectable({
   providedIn: 'root',
@@ -196,7 +195,10 @@ export class PreparationDatasService {
    * @param {number} [index] - The index of the interval data.
    * @returns {GridDatasI} The current interval data.
    */
-  getCurrentIntervalDatas(preparationSource: REPORT, index?): GridDatasI {
+  getCurrentIntervalDatas(
+    preparationSource: REPORT,
+    index?: number,
+  ): GridDatasI {
     index = index || 0;
 
     const datas: DynamicI = [];
@@ -494,10 +496,10 @@ export class PreparationDatasService {
 
   /**
    * Checks if the variable data includes target parts.
-   * @param {any[]} variableDatas - The variable data to check.
+   * @param {VariableModel[]} variableDatas - The variable data to check.
    * @returns {boolean} True if target parts are included, false otherwise.
    */
-  includesTargetParts(variableDatas): boolean {
+  includesTargetParts(variableDatas: VariableModel[]): boolean {
     const targetParts = variableDatas.map((e) => e.targetParts);
     return targetParts.every((e) => e === undefined) ? false : true;
   }
@@ -556,10 +558,10 @@ export class PreparationDatasService {
   /**
    * Determines the preparation source for a given variable.
    * Checks if the variable exists in the standard preparation report or the text preparation report.
-   * @param {any} variable - The variable to check.
+   * @param {TrainedPredictorModel} variable - The variable to check.
    * @returns {string} The preparation source for the variable.
    */
-  getPreparationSourceFromVariable(variable): REPORT {
+  getPreparationSourceFromVariable(variable: TrainedPredictorModel): REPORT {
     // Find the current variable into preparationReport or textPreparationReport
     if (this.appService.appDatas?.preparationReport?.variablesStatistics) {
       const isPreparationReport =

@@ -4,7 +4,6 @@ import { TranslateService } from '@ngstack/translate';
 import { PreparationDatasService } from './preparation-datas.service';
 import { ModelingPredictorModel } from '../model/modeling-predictor.model';
 import { SummaryModel } from '../model/summary.model';
-import { Preparation2dDatasService } from './preparation2d-datas.service';
 import { ModelingDatasModel } from '../model/modeling-datas.model';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { TrainedPredictorModel } from '@khiops-visualization/model/trained-predictor.model';
@@ -13,8 +12,10 @@ import { PreparationVariableModel } from '@khiops-visualization/model/preparatio
 import { Preparation2dVariableModel } from '@khiops-visualization/model/preparation2d-variable.model';
 import { TreePreparationVariableModel } from '@khiops-visualization/model/tree-preparation-variable.model';
 import { UtilsService } from '@khiops-library/providers/utils.service';
-import { REPORT } from '@khiops-library/enum/report';
-import { ModelingVariableStatistic } from '@khiops-visualization/interfaces/modeling-report';
+import {
+  ModelingVariableStatistic,
+  TrainedPredictor,
+} from '@khiops-visualization/interfaces/modeling-report';
 @Injectable({
   providedIn: 'root',
 })
@@ -25,7 +26,6 @@ export class ModelingDatasService {
     private translate: TranslateService,
     private appService: AppService,
     private preparationDatasService: PreparationDatasService,
-    private preparation2dDatasService: Preparation2dDatasService,
   ) {}
 
   /**
@@ -235,7 +235,7 @@ export class ModelingDatasService {
    * Sets the selected predictor in the modeling data.
    * @param predictor - The predictor to be set as selected.
    */
-  setSelectedPredictor(predictor: any) {
+  setSelectedPredictor(predictor: TrainedPredictor) {
     this.modelingDatas.selectedPredictor = new ModelingPredictorModel(
       predictor,
     );

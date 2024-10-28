@@ -24,6 +24,12 @@ import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 import { MatrixValuesModel } from '@khiops-library/model/matrix-value.model';
 import { VariablePairStatistics } from '@khiops-visualization/interfaces/bivariate-preparation-report';
 import { DimensionVisualizationModel } from '@khiops-library/model/dimension.visualization.model';
+import {
+  DimensionVisualization,
+  InputValues,
+  VariablesDetailedStatistics,
+} from '@khiops-visualization/interfaces/app-datas';
+import { MatrixDatasModel } from '@khiops-library/model/matrix-datas.model';
 
 @Injectable({
   providedIn: 'root',
@@ -385,7 +391,7 @@ export class Preparation2dDatasService {
           });
         }
 
-        this.getCellDatasByAxis(
+        this.computeCellDatasByAxis(
           xType,
           selectedCell.xaxisPartValues,
           selectedCell.xDisplayaxisPart,
@@ -393,7 +399,7 @@ export class Preparation2dDatasService {
           displayedColumnsX,
           xName,
         );
-        this.getCellDatasByAxis(
+        this.computeCellDatasByAxis(
           yType,
           selectedCell.yaxisPartValues,
           selectedCell.yDisplayaxisPart,
@@ -408,7 +414,7 @@ export class Preparation2dDatasService {
   }
 
   /**
-   * Retrieves cell data for a given axis and formats it for display.
+   * Compute cell data for a given axis and formats it for display.
    * @param type - The type of the axis (e.g., numerical or categorical).
    * @param axisPartValues - The values of the axis parts.
    * @param displayaxisPart - The display value of the axis part.
@@ -416,7 +422,7 @@ export class Preparation2dDatasService {
    * @param displayedColumns - The columns to be displayed.
    * @param variableName - The name of the variable.
    */
-  getCellDatasByAxis(
+  computeCellDatasByAxis(
     type: string,
     axisPartValues: number[] | string,
     displayaxisPart: string,
@@ -435,8 +441,6 @@ export class Preparation2dDatasService {
         datasAxis[k][displayedColumns[0].field] = axisPartValues[k];
         if (displayedColumns[1]) {
           const modalityFreq = this.getModalityFrequency(
-            this.appService.appDatas.preparationReport
-              .variablesDetailedStatistics,
             variableName,
             axisPartValues[k].toString(),
           );
@@ -453,8 +457,10 @@ export class Preparation2dDatasService {
    * @param partition - The partition value of the variable.
    * @returns The frequency of the modality or undefined if not found.
    */
-  getModalityFrequency(source: any, variable: string, partition: string) {
-    let currentVar;
+  getModalityFrequency(variable: string, partition: string) {
+    let currentVar: InputValues;
+    const source: VariablesDetailedStatistics[] =
+      this.appService.appDatas.preparationReport.variablesDetailedStatistics;
     Object.keys(source).forEach((key) => {
       if (source[key].dataGrid.dimensions[0].variable === variable) {
         currentVar = source[key].inputValues;
@@ -472,25 +478,33 @@ export class Preparation2dDatasService {
    * Checks if target data is available and retrieves it if present.
    * @returns The target data if available, otherwise undefined.
    */
-  getTargetsIfAvailable() {
+  getTargetsIfAvailable(): string[] | undefined {
     // Initialize
     this.preparation2dDatas.isTargetAvailable = false;
-    let targets: any;
+    let targets: string[];
 
     const variablesDetails: VariableDetailsModel | undefined =
       this.getVariableDetails(this.preparation2dDatas?.selectedVariable?.rank);
 
     if (variablesDetails?.dataGrid?.cellIds) {
-      const isTargetAvailable: any = variablesDetails.dataGrid.dimensions.find(
-        (e) => e.variable === 'Target',
-      );
+      const TargetDimension: DimensionVisualization =
+        variablesDetails.dataGrid.dimensions.find(
+          (e) => e.variable === 'Target',
+        );
 
-      if (isTargetAvailable) {
-        targets = isTargetAvailable.partition;
+      if (TargetDimension) {
+        targets =
+          Array.isArray(TargetDimension.partition) &&
+          typeof TargetDimension.partition[0] === 'string'
+            ? (TargetDimension.partition as string[])
+            : undefined;
       }
-      this.preparation2dDatas.isTargetAvailable = isTargetAvailable;
+      this.preparation2dDatas.isTargetAvailable = TargetDimension
+        ? true
+        : false;
       return targets;
     }
+    return undefined;
   }
 
   /**
@@ -562,7 +576,8 @@ export class Preparation2dDatasService {
       | Variable2dModel
       | Preparation2dVariableModel
       | VariableModel,
-  ): any {
+  ): //any
+  MatrixDatasModel {
     this.preparation2dDatas.matrixDatas = undefined;
     const variablesDetails: VariableDetailsModel | undefined =
       this.getVariableDetails(selectedVariable.rank);
@@ -799,12 +814,10 @@ export class Preparation2dDatasService {
         currentRes['CELL_INTEREST'].push(matrixValues);
 
         for (let j = 0; j < inputDatas.matrixCellDatas.length; j++) {
-          currentRes['FREQUENCY'].push(
-            UtilsService.arraySum(inputDatas.matrixCellDatas[j].cellFreqs),
-          );
-          currentRes['FREQUENCY_CELL'].push(
-            inputDatas.matrixCellDatas[j].cellFreqs,
-          );
+          const cellFreqs = inputDatas.matrixCellDatas[j].cellFreqs;
+          currentRes['FREQUENCY'].push(UtilsService.arraySum(cellFreqs));
+          // @ts-ignore
+          currentRes['FREQUENCY_CELL'].push(cellFreqs);
         }
       }
     }
@@ -825,7 +838,6 @@ export class Preparation2dDatasService {
     res['CELL_INTEREST'] = UtilsService.getMinAndMaxFromArray(
       currentRes['CELL_INTEREST'].flat(),
     );
-
     res['FREQUENCY'] = UtilsService.getMinAndMaxFromArray(
       currentRes['FREQUENCY'].flat(),
     );

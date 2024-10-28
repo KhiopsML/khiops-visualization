@@ -87,7 +87,7 @@ export class Distribution2dDatasService {
           const el = currentDatas[i];
 
           const graphItem: BarModel = new BarModel();
-          graphItem.name = targets[i];
+          graphItem.name = targets[i].toString();
 
           if (type && type === TYPES.LIFT) {
             // compute lift
