@@ -279,28 +279,6 @@ export class ModelingDatasService {
         // Find the corresponding rank of the current variable into preparation, 2d or tree
         const currentVar = currentDatas[i];
 
-        const preparationSource =
-          this.preparationDatasService.getPreparationSourceFromVariable(
-            currentVar,
-          );
-        let currentVarDetails =
-          this.preparationDatasService.getVariableFromName(
-            currentVar.name,
-            preparationSource,
-          );
-        if (!currentVarDetails) {
-          currentVarDetails = this.preparationDatasService.getVariableFromName(
-            currentVar.name,
-            REPORT.TREE_PREPARATION_REPORT,
-          );
-        }
-        if (!currentVarDetails) {
-          currentVarDetails =
-            this.preparation2dDatasService.getVariableFromNames(
-              currentVar.name.split('`')[0],
-              currentVar.name.split('`')[1],
-            );
-        }
         const varItem: TrainedPredictorModel = new TrainedPredictorModel(
           currentVar,
           availableKeys,
