@@ -44,12 +44,14 @@ export class ClustersService {
    */
   getSelectedClustersDetails(): TreeNodeModel[][] {
     const details: TreeNodeModel[][] = [];
-    for (let i = 0; i < this.dimensionsDatas.selectedDimensions.length; i++) {
-      details.push(
-        this.getCurrentClusterDetailsFromNode(
-          this.dimensionsDatas.dimensionsTrees[i],
-        ),
-      );
+    if (this.dimensionsDatas) {
+      for (let i = 0; i < this.dimensionsDatas.selectedDimensions.length; i++) {
+        details.push(
+          this.getCurrentClusterDetailsFromNode(
+            this.dimensionsDatas.dimensionsTrees[i]!,
+          ),
+        );
+      }
     }
     return details;
   }
@@ -61,10 +63,13 @@ export class ClustersService {
    */
   getCurrentCellsPerCluster(): number {
     let currentCellsPerCluster = 1;
-    for (let i = 0; i < this.dimensionsDatas.selectedDimensions.length; i++) {
-      currentCellsPerCluster =
-        currentCellsPerCluster *
-        this.dimensionsDatas.selectedDimensions[i].currentHierarchyClusterCount;
+    if (this.dimensionsDatas) {
+      for (let i = 0; i < this.dimensionsDatas.selectedDimensions.length; i++) {
+        currentCellsPerCluster =
+          currentCellsPerCluster *
+          this.dimensionsDatas.selectedDimensions[i]!
+            .currentHierarchyClusterCount;
+      }
     }
     return currentCellsPerCluster;
   }
@@ -83,15 +88,15 @@ export class ClustersService {
   ): TreeNodeModel[] {
     const nodesLength = nodes.length;
     for (let i = 0; i < nodesLength; i++) {
-      const currentNode: TreeNodeModel = nodes[i];
-      if (currentNode.isLeaf) {
+      const currentNode: TreeNodeModel | undefined = nodes[i];
+      if (currentNode?.isLeaf) {
         currentClusterDetailsFromNode.push(currentNode);
       } else {
-        if (currentNode.isCollapsed) {
+        if (currentNode?.isCollapsed) {
           currentClusterDetailsFromNode.push(currentNode);
         } else {
           this.getCurrentClusterDetailsFromNode(
-            currentNode.children,
+            currentNode!.children,
             currentClusterDetailsFromNode,
           );
         }
@@ -107,8 +112,9 @@ export class ClustersService {
    * @returns {ChartDatasModel} - The chart data model containing distribution details.
    */
   getDistributionDetailsFromNode(position: number): ChartDatasModel {
-    let filteredDimensionsClusters = this.getCurrentClusterDetailsFromNode(
-      this.dimensionsDatasService.dimensionsDatas.dimensionsTrees[0],
+    let filteredDimensionsClusters: TreeNodeModel[] = [];
+    filteredDimensionsClusters = this.getCurrentClusterDetailsFromNode(
+      this.dimensionsDatasService.dimensionsDatas.dimensionsTrees[0]!,
     );
     let selectedNode =
       this.dimensionsDatasService.dimensionsDatas.selectedNodes[0];
@@ -118,7 +124,7 @@ export class ClustersService {
 
     if (position === 1) {
       filteredDimensionsClusters = this.getCurrentClusterDetailsFromNode(
-        this.dimensionsDatasService.dimensionsDatas.dimensionsTrees[1],
+        this.dimensionsDatasService.dimensionsDatas.dimensionsTrees[1]!,
       );
       selectedNode =
         this.dimensionsDatasService.dimensionsDatas.selectedNodes[1];
@@ -126,8 +132,8 @@ export class ClustersService {
         this.dimensionsDatasService.dimensionsDatas.selectedNodes[0];
     }
 
-    selectedNode.getChildrenList();
-    otherselectedNode.getChildrenList();
+    selectedNode && selectedNode.getChildrenList();
+    otherselectedNode && otherselectedNode.getChildrenList();
 
     let distributionsGraphLabelsInit = [];
     let distributionsGraphLabels = [];
@@ -148,7 +154,7 @@ export class ClustersService {
       {
         mode: 'FREQUENCY',
       },
-      this.dimensionsDatasService.dimensionsDatas.matrixDatas.matrixCellDatas,
+      this.dimensionsDatasService.dimensionsDatas.matrixDatas.matrixCellDatas!,
       this.dimensionsDatasService.dimensionsDatas.contextSelection,
       -1,
     );
@@ -156,19 +162,19 @@ export class ClustersService {
     const currentDataSet = new ChartDatasetModel(
       this.dimensionsDatasService.dimensionsDatas.selectedNodes[
         position
-      ].shortDescription,
+      ]!.shortDescription,
     );
 
     let distributionsGraphDetails = new ChartDatasModel();
     const currentDataSetData = [];
 
     let filteredList;
-    if (selectedNode.isLeaf || selectedNode.isCollapsed) {
+    if (selectedNode?.isLeaf || selectedNode?.isCollapsed) {
       filteredList = selectedNode.name;
     } else {
       // not collapsed node remove the node of children list
-      filteredList = selectedNode.childrenList;
-      filteredList.shift();
+      filteredList = selectedNode?.childrenList;
+      filteredList && filteredList.shift();
     }
 
     let axisPartName = 'yaxisPart';

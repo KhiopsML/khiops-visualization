@@ -21,7 +21,9 @@ import { AppConfig } from 'src/environments/environment';
 import { LS } from '@khiops-library/enum/ls';
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
 import { THEME } from '@khiops-library/enum/theme';
-import { AppDatasI } from './interfaces/app-datas';
+import { VisualizationDatas } from './interfaces/app-datas';
+import { CallbackI } from '@khiops-library/interfaces/globals';
+import { ConfigModel } from '@khiops-library/model/config.model';
 
 @Component({
   selector: 'app-root-visualization',
@@ -30,12 +32,12 @@ import { AppDatasI } from './interfaces/app-datas';
   encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class AppComponent implements AfterViewInit {
-  appdatas: AppDatasI;
+  appdatas: VisualizationDatas | undefined;
 
   @ViewChild('appElement', {
     static: false,
   })
-  appElement: ElementRef<HTMLElement>;
+  appElement: ElementRef<HTMLElement> | undefined;
 
   theme: string;
 
@@ -60,10 +62,13 @@ export class AppComponent implements AfterViewInit {
     this.configService.setRootElement(this.appElement);
     this.element.nativeElement.getDatas = () =>
       this.saveService.constructDatasToSave();
-    this.element.nativeElement.setDatas = (datas) => {
+    this.element.nativeElement.setDatas = (
+      datas: VisualizationDatas | undefined,
+    ) => {
       // Set data into ngzone to detect change into another context (electron for instance)
       this.ngzone.run(() => {
         this.clean();
+        // @ts-ignore
         this.appdatas = {
           ...datas,
         };
@@ -71,7 +76,7 @@ export class AppComponent implements AfterViewInit {
         this.fileLoaderService.setDatas(datas);
       });
     };
-    this.element.nativeElement.openChannelDialog = (cb) => {
+    this.element.nativeElement.openChannelDialog = (cb: CallbackI) => {
       this.dialogRef.closeAll();
       this.ngzone.run(() => {
         const config = new MatDialogConfig();
@@ -88,7 +93,7 @@ export class AppComponent implements AfterViewInit {
         });
       });
     };
-    this.element.nativeElement.setConfig = (config) => {
+    this.element.nativeElement.setConfig = (config: ConfigModel) => {
       this.configService.setConfig(config);
 
       const trackerId = this.configService.getConfig().trackerId;

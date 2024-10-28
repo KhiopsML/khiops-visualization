@@ -8,3 +8,7 @@
 export interface DynamicI {
   [key: string]: any;
 }
+
+export interface CallbackI {
+  (param?: any): void;
+}

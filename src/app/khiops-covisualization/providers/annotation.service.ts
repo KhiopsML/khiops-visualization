@@ -7,7 +7,7 @@ import { AppService } from './app.service';
   providedIn: 'root',
 })
 export class AnnotationService {
-  private dimensionsDatas: DimensionsDatasModel;
+  private dimensionsDatas: DimensionsDatasModel | undefined;
 
   constructor(
     private appService: AppService,
@@ -28,7 +28,7 @@ export class AnnotationService {
    * @returns An object containing the annotations.
    */
   getAnnotations() {
-    return this.dimensionsDatas.annotations;
+    return this.dimensionsDatas?.annotations;
   }
 
   /**
@@ -36,8 +36,10 @@ export class AnnotationService {
    * If no saved data is found, it initializes with an empty object.
    */
   initSavedDatas() {
-    this.dimensionsDatas.annotations =
-      this.appService.getSavedDatas('annotations') || {};
+    if (this.dimensionsDatas) {
+      this.dimensionsDatas.annotations =
+        this.appService.getSavedDatas('annotations') || {};
+    }
   }
 
   /**
@@ -53,11 +55,13 @@ export class AnnotationService {
     nodeName: string,
     annotation: string,
   ) {
-    if (!this.dimensionsDatas.annotations) {
-      this.dimensionsDatas.annotations = {};
+    if (this.dimensionsDatas) {
+      if (!this.dimensionsDatas.annotations) {
+        this.dimensionsDatas.annotations = {};
+      }
+      this.dimensionsDatas.annotations[dimensionName] =
+        this.dimensionsDatas.annotations[dimensionName] || {};
+      this.dimensionsDatas.annotations[dimensionName][nodeName] = annotation;
     }
-    this.dimensionsDatas.annotations[dimensionName] =
-      this.dimensionsDatas.annotations[dimensionName] || {};
-    this.dimensionsDatas.annotations[dimensionName][nodeName] = annotation;
   }
 }

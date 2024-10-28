@@ -22,7 +22,9 @@ import { TrackerService } from '@khiops-library/providers/tracker.service';
 import { LS } from '@khiops-library/enum/ls';
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
 import { THEME } from '@khiops-library/enum/theme';
-import { AppDatasI } from './interfaces/app-datas';
+import { CovisualizationDatas } from './interfaces/app-datas';
+import { CallbackI } from '@khiops-library/interfaces/globals';
+import { ConfigModel } from '@khiops-library/model/config.model';
 
 @Component({
   selector: 'app-root-covisualization',
@@ -31,12 +33,12 @@ import { AppDatasI } from './interfaces/app-datas';
   encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class AppComponent implements AfterViewInit {
-  appdatas: AppDatasI;
+  appdatas: CovisualizationDatas | undefined;
 
   @ViewChild('appElement', {
     static: false,
   })
-  appElement: ElementRef<HTMLElement>;
+  appElement: ElementRef<HTMLElement> | undefined;
 
   private _valueChangeEvent = 'valueChanged';
   theme: string;
@@ -82,7 +84,7 @@ export class AppComponent implements AfterViewInit {
     this.configService.setRootElement(this.appElement);
     this.element.nativeElement.getDatas = () =>
       this.treenodesService.constructDatasToSave();
-    this.element.nativeElement.setDatas = (datas) => {
+    this.element.nativeElement.setDatas = (datas: CovisualizationDatas) => {
       // Set data into ngzone to detect change into another context (electron for instance)
       this.ngzone.run(() => {
         this.appdatas = {
@@ -92,7 +94,7 @@ export class AppComponent implements AfterViewInit {
         this.fileLoaderService.setDatas(datas);
       });
     };
-    this.element.nativeElement.openSaveBeforeQuitDialog = (cb) => {
+    this.element.nativeElement.openSaveBeforeQuitDialog = (cb: CallbackI) => {
       this.dialogRef.closeAll();
       this.ngzone.run(() => {
         const config = new MatDialogConfig();
@@ -108,7 +110,7 @@ export class AppComponent implements AfterViewInit {
         });
       });
     };
-    this.element.nativeElement.openChannelDialog = (cb) => {
+    this.element.nativeElement.openChannelDialog = (cb: CallbackI) => {
       this.dialogRef.closeAll();
       this.ngzone.run(() => {
         const config = new MatDialogConfig();
@@ -133,7 +135,7 @@ export class AppComponent implements AfterViewInit {
       // #142 Remove collapsed nodes because datas are truncated
       return this.treenodesService.constructSavedJson(collapsedNodes, true);
     };
-    this.element.nativeElement.setConfig = (config) => {
+    this.element.nativeElement.setConfig = (config: ConfigModel) => {
       this.configService.setConfig(config);
 
       const trackerId = this.configService.getConfig().trackerId;
@@ -151,7 +153,11 @@ export class AppComponent implements AfterViewInit {
         );
       }
     };
-    this.element.nativeElement.snack = (title, duration, panelClass) => {
+    this.element.nativeElement.snack = (
+      title: string,
+      duration: number,
+      panelClass: string,
+    ) => {
       this.ngzone.run(() => {
         this.snackBar.open(title, undefined, {
           duration: duration,
@@ -159,7 +165,7 @@ export class AppComponent implements AfterViewInit {
         });
       });
     };
-    this.element.nativeElement.clean = () => (this.appdatas = null);
+    this.element.nativeElement.clean = () => (this.appdatas = undefined);
     this.setTheme();
   }
 

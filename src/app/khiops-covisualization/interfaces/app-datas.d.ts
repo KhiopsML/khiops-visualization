@@ -1,7 +1,7 @@
 import { DynamicI } from '@khiops-library/interfaces/globals';
 
 export interface AppDatasI {
-  datas: CovisualizationDatas;
+  datas: CovisualizationDatas | undefined;
   // savedDatas?: any;
 }
 

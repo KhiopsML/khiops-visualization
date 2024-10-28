@@ -16,8 +16,8 @@ import {
 export class AppService {
   static Ls: Ls;
 
-  private _appDatas: AppDatasI = undefined;
-  private _initialDatas: AppDatasI = undefined;
+  private _appDatas: AppDatasI | undefined;
+  private _initialDatas: AppDatasI | undefined;
   private activeTabIndex = 0;
 
   constructor(
@@ -31,12 +31,12 @@ export class AppService {
     this.initialize();
   }
 
-  get appDatas(): CovisualizationDatas {
-    return this._appDatas.datas;
+  get appDatas(): CovisualizationDatas | undefined {
+    return this._appDatas?.datas;
   }
 
-  get initialDatas(): CovisualizationDatas {
-    return this._initialDatas.datas;
+  get initialDatas(): CovisualizationDatas | undefined {
+    return this._initialDatas?.datas;
   }
 
   /**
@@ -76,7 +76,9 @@ export class AppService {
    * @param datas - The cropped file data.
    */
   setCroppedFileDatas(datas: CovisualizationDatas) {
-    this._appDatas.datas = datas;
+    if (this._appDatas) {
+      this._appDatas.datas = datas;
+    }
     this.setSavedDatas(datas);
   }
 
@@ -85,8 +87,12 @@ export class AppService {
    * @param datas - The file data.
    */
   setFileDatas(datas: CovisualizationDatas) {
-    this._appDatas.datas = datas;
-    this._initialDatas.datas = _.cloneDeep(datas);
+    if (this._appDatas) {
+      this._appDatas.datas = datas;
+    }
+    if (this._initialDatas) {
+      this._initialDatas.datas = _.cloneDeep(datas);
+    }
     this.setSavedDatas(datas);
   }
 
@@ -95,7 +101,7 @@ export class AppService {
    * @param type - The type of saved data to retrieve.
    * @returns The saved data of the specified type.
    */
-  getSavedDatas(type): any {
+  getSavedDatas(type: string) {
     if (this._appDatas?.datas?.savedDatas?.[type] !== undefined) {
       return this._appDatas.datas.savedDatas[type];
     }
@@ -140,7 +146,7 @@ export class AppService {
    * @returns True if the JSON file is large, false otherwise.
    */
   isBigJsonFile(): boolean {
-    return this.appDatas?.coclusteringReport?.summary?.cells > 10000;
+    return (this.appDatas?.coclusteringReport?.summary?.cells ?? 0) > 10000;
   }
 
   /**
