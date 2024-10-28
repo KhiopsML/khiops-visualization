@@ -4,7 +4,7 @@ import {
 } from '@khiops-covisualization/interfaces/app-datas';
 import { TYPES } from '@khiops-library/enum/types';
 import { DynamicI } from '@khiops-library/interfaces/globals';
-import { DimensionModel } from '@khiops-library/model/dimension.model';
+import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 
 export class TreeNodeModel {
   id: number;
@@ -61,7 +61,7 @@ export class TreeNodeModel {
   constructor(
     id: number,
     object: Cluster,
-    dimension: DimensionModel,
+    dimension: DimensionCovisualizationModel,
     collapsedNodes: DynamicI,
     leafPosition: number,
     j: number,

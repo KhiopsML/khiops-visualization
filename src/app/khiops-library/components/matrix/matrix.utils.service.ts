@@ -6,8 +6,10 @@ import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 import { MatrixUiService } from './matrix.ui.service';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 import { DynamicI } from '@khiops-library/interfaces/globals';
-import { DimensionModel } from '@khiops-library/model/dimension.model';
+// import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { MatrixValuesModel } from '@khiops-library/model/matrix-value.model';
+import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
+import { DimensionVisualizationModel } from '@khiops-library/model/dimension.visualization.model';
 
 @Injectable({
   providedIn: 'root',
@@ -386,19 +388,87 @@ export class MatrixUtilsService {
    * @param yDimension - The dimension object for the y-axis, containing type and relevant data.
    * @returns A tuple containing two arrays: the first array represents the x-axis values, and the second array represents the y-axis values.
    */
-  static getStandardAxisValues(
-    xDimension: DimensionModel,
-    yDimension: DimensionModel,
+  // static getStandardAxisValues(
+  //   xDimension: DimensionModel,
+  //   yDimension: DimensionModel,
+  // ): [number[], number[]] {
+  //   let xValues: number[] = [];
+  //   let yValues: number[] = [];
+  //   if (xDimension.type === TYPES.CATEGORICAL) {
+  //     let currentXAxisFullPart;
+  //     if (xDimension.valueGroups) {
+  //       currentXAxisFullPart = xDimension.valueGroups.map((e) => e.values); // KC use case
+  //     } else {
+  //       currentXAxisFullPart = xDimension.partition; // KV use case
+  //     }
+  //     const axisPartTotal =
+  //       UtilsService.getArrayOfArrayLength(currentXAxisFullPart);
+  //     xValues = UtilsService.generateArrayPercentsFromArrayLength(
+  //       currentXAxisFullPart,
+  //       axisPartTotal,
+  //     );
+  //   } else if (xDimension.type === TYPES.NUMERICAL) {
+  //     let currentXAxisFullPart;
+  //     if (xDimension.intervals) {
+  //       currentXAxisFullPart = xDimension.intervals.map((e) => e.bounds); // KC use case
+  //     } else {
+  //       currentXAxisFullPart = xDimension.partition; // KV use case
+  //     }
+  //     // Give an interval of 5% if missing
+  //     currentXAxisFullPart[0] =
+  //       UtilsService.generateMissingInterval(currentXAxisFullPart);
+  //     const axisPartTotal =
+  //       UtilsService.getArrayMatrixInterval(currentXAxisFullPart);
+  //     xValues =
+  //       UtilsService.generateArrayPercentsFromArrayIntervalsAndTotalCount(
+  //         currentXAxisFullPart,
+  //         axisPartTotal,
+  //       );
+  //   }
+  //   if (yDimension.type === TYPES.CATEGORICAL) {
+  //     let currentYAxisFullPart;
+  //     if (yDimension.valueGroups) {
+  //       currentYAxisFullPart = yDimension.valueGroups.map((e) => e.values); // KC use case
+  //     } else {
+  //       currentYAxisFullPart = yDimension.partition; // KV use case
+  //     }
+  //     const axisPartTotal =
+  //       UtilsService.getArrayOfArrayLength(currentYAxisFullPart);
+  //     yValues = UtilsService.generateArrayPercentsFromArrayLength(
+  //       currentYAxisFullPart,
+  //       axisPartTotal,
+  //     );
+  //   } else if (yDimension.type === TYPES.NUMERICAL) {
+  //     let currentYAxisFullPart;
+  //     if (yDimension.intervals) {
+  //       currentYAxisFullPart = yDimension.intervals.map((e) => e.bounds); // KC use case
+  //     } else {
+  //       currentYAxisFullPart = yDimension.partition; // KV use case
+  //     }
+  //     // Give an interval of 5% if missing
+  //     currentYAxisFullPart[0] =
+  //       UtilsService.generateMissingInterval(currentYAxisFullPart);
+  //     const axisPartTotal =
+  //       UtilsService.getArrayMatrixInterval(currentYAxisFullPart);
+  //     yValues =
+  //       UtilsService.generateArrayPercentsFromArrayIntervalsAndTotalCount(
+  //         currentYAxisFullPart,
+  //         axisPartTotal,
+  //       );
+  //   }
+
+  //   return [xValues, yValues];
+  // }
+
+  static getStandardCovisualizationAxisValues(
+    xDimension: DimensionCovisualizationModel,
+    yDimension: DimensionCovisualizationModel,
   ): [number[], number[]] {
     let xValues: number[] = [];
     let yValues: number[] = [];
     if (xDimension.type === TYPES.CATEGORICAL) {
       let currentXAxisFullPart;
-      if (xDimension.valueGroups) {
-        currentXAxisFullPart = xDimension.valueGroups.map((e) => e.values); // KC use case
-      } else {
-        currentXAxisFullPart = xDimension.partition; // KV use case
-      }
+      currentXAxisFullPart = xDimension.valueGroups.map((e) => e.values);
       const axisPartTotal =
         UtilsService.getArrayOfArrayLength(currentXAxisFullPart);
       xValues = UtilsService.generateArrayPercentsFromArrayLength(
@@ -407,11 +477,7 @@ export class MatrixUtilsService {
       );
     } else if (xDimension.type === TYPES.NUMERICAL) {
       let currentXAxisFullPart;
-      if (xDimension.intervals) {
-        currentXAxisFullPart = xDimension.intervals.map((e) => e.bounds); // KC use case
-      } else {
-        currentXAxisFullPart = xDimension.partition; // KV use case
-      }
+      currentXAxisFullPart = xDimension.intervals.map((e) => e.bounds);
       // Give an interval of 5% if missing
       currentXAxisFullPart[0] =
         UtilsService.generateMissingInterval(currentXAxisFullPart);
@@ -425,11 +491,7 @@ export class MatrixUtilsService {
     }
     if (yDimension.type === TYPES.CATEGORICAL) {
       let currentYAxisFullPart;
-      if (yDimension.valueGroups) {
-        currentYAxisFullPart = yDimension.valueGroups.map((e) => e.values); // KC use case
-      } else {
-        currentYAxisFullPart = yDimension.partition; // KV use case
-      }
+      currentYAxisFullPart = yDimension.valueGroups.map((e) => e.values);
       const axisPartTotal =
         UtilsService.getArrayOfArrayLength(currentYAxisFullPart);
       yValues = UtilsService.generateArrayPercentsFromArrayLength(
@@ -438,11 +500,7 @@ export class MatrixUtilsService {
       );
     } else if (yDimension.type === TYPES.NUMERICAL) {
       let currentYAxisFullPart;
-      if (yDimension.intervals) {
-        currentYAxisFullPart = yDimension.intervals.map((e) => e.bounds); // KC use case
-      } else {
-        currentYAxisFullPart = yDimension.partition; // KV use case
-      }
+      currentYAxisFullPart = yDimension.intervals.map((e) => e.bounds);
       // Give an interval of 5% if missing
       currentYAxisFullPart[0] =
         UtilsService.generateMissingInterval(currentYAxisFullPart);
@@ -455,7 +513,62 @@ export class MatrixUtilsService {
         );
     }
 
-    // console.log("TCL: MatrixUtilsService -> getStandardAxisValues -> [xValues, yValues]", [xValues, yValues])
+    return [xValues, yValues];
+  }
+
+  static getStandardVisualizationAxisValues(
+    xDimension: DimensionVisualizationModel,
+    yDimension: DimensionVisualizationModel,
+  ): [number[], number[]] {
+    let xValues: number[] = [];
+    let yValues: number[] = [];
+    if (xDimension.type === TYPES.CATEGORICAL) {
+      let currentXAxisFullPart;
+      currentXAxisFullPart = xDimension.partition; // KV use case
+      const axisPartTotal =
+        UtilsService.getArrayOfArrayLength(currentXAxisFullPart);
+      xValues = UtilsService.generateArrayPercentsFromArrayLength(
+        currentXAxisFullPart,
+        axisPartTotal,
+      );
+    } else if (xDimension.type === TYPES.NUMERICAL) {
+      let currentXAxisFullPart;
+      currentXAxisFullPart = xDimension.partition; // KV use case
+      // Give an interval of 5% if missing
+      currentXAxisFullPart[0] =
+        UtilsService.generateMissingInterval(currentXAxisFullPart);
+      const axisPartTotal =
+        UtilsService.getArrayMatrixInterval(currentXAxisFullPart);
+      xValues =
+        UtilsService.generateArrayPercentsFromArrayIntervalsAndTotalCount(
+          currentXAxisFullPart,
+          axisPartTotal,
+        );
+    }
+    if (yDimension.type === TYPES.CATEGORICAL) {
+      let currentYAxisFullPart;
+      currentYAxisFullPart = yDimension.partition; // KV use case
+      const axisPartTotal =
+        UtilsService.getArrayOfArrayLength(currentYAxisFullPart);
+      yValues = UtilsService.generateArrayPercentsFromArrayLength(
+        currentYAxisFullPart,
+        axisPartTotal,
+      );
+    } else if (yDimension.type === TYPES.NUMERICAL) {
+      let currentYAxisFullPart;
+      currentYAxisFullPart = yDimension.partition; // KV use case
+      // Give an interval of 5% if missing
+      currentYAxisFullPart[0] =
+        UtilsService.generateMissingInterval(currentYAxisFullPart);
+      const axisPartTotal =
+        UtilsService.getArrayMatrixInterval(currentYAxisFullPart);
+      yValues =
+        UtilsService.generateArrayPercentsFromArrayIntervalsAndTotalCount(
+          currentYAxisFullPart,
+          axisPartTotal,
+        );
+    }
+
     return [xValues, yValues];
   }
 
@@ -468,8 +581,8 @@ export class MatrixUtilsService {
    * @returns A tuple containing two arrays: the x-axis values and the y-axis values.
    */
   static getFrequencyAxisValues(
-    xDimension: DimensionModel,
-    yDimension: DimensionModel,
+    xDimension: DimensionCovisualizationModel | DimensionVisualizationModel,
+    yDimension: DimensionCovisualizationModel | DimensionVisualizationModel,
     cellFrequencies: number[][],
   ): [number[], number[]] {
     let xValues: number[] = [];
@@ -525,9 +638,9 @@ export class MatrixUtilsService {
    * @returns An array of CellModel objects representing the cells in the matrix.
    */
   static getCellDatas(
-    xDimension: DimensionModel,
-    yDimension: DimensionModel,
-    zDimension: DimensionModel[],
+    xDimension: DimensionCovisualizationModel | DimensionVisualizationModel,
+    yDimension: DimensionCovisualizationModel | DimensionVisualizationModel,
+    zDimension: DimensionCovisualizationModel[],
     xAxisPartNames: string[] | number[][], // KC: string[], KV: number[][]
     yAxisPartNames: string[] | number[][], // KC: string[], KV: number[][]
     xAxisPartShortDescription: string[] | number[][], // KC: string[], KV: number[][]

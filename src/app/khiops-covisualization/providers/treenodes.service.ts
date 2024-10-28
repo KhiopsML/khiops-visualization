@@ -6,7 +6,6 @@ import { UtilsService } from '@khiops-library/providers/utils.service';
 import { TreeNodeModel } from '../model/tree-node.model';
 import { deepEqual } from 'fast-equals';
 import _ from 'lodash';
-import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-data.model';
 import { HierarchyDatasModel } from '@khiops-covisualization/model/hierarchy-datas.model';
 import { TYPES } from '@khiops-library/enum/types';
@@ -16,6 +15,7 @@ import { ImportExtDatasService } from './import-ext-datas.service';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { ViewManagerService } from './view-manager.service';
 import { DynamicI } from '@khiops-library/interfaces/globals';
+import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 
 @Injectable({
   providedIn: 'root',
@@ -229,10 +229,13 @@ export class TreenodesService {
   /**
    * Updates the selected nodes for a given dimension and position.
    *
-   * @param {DimensionModel} dimension - The dimension model.
+   * @param {DimensionCovisualizationModel} dimension - The dimension model.
    * @param {number} position - The position to update.
    */
-  updateSelectedNodes(dimension: DimensionModel, position: number) {
+  updateSelectedNodes(
+    dimension: DimensionCovisualizationModel,
+    position: number,
+  ) {
     // Find current dim position
     const currentIndex: number =
       this.dimensionsDatas.selectedDimensions.findIndex((e) => {
@@ -446,7 +449,8 @@ export class TreenodesService {
           return !e.isLeaf && e.hierarchicalRank < rank;
         },
       );
-      const dimension: DimensionModel = this.dimensionsDatas.dimensions[i];
+      const dimension: DimensionCovisualizationModel =
+        this.dimensionsDatas.dimensions[i];
       dimension.setCurrentHierarchyClusterCount(nodesVO.length + 1);
     }
   }
@@ -823,7 +827,7 @@ export class TreenodesService {
 
       // Check for collapsed node integrity
       if (dimIndex !== -1) {
-        const dimVO: DimensionModel =
+        const dimVO: DimensionCovisualizationModel =
           this.dimensionsDatas.selectedDimensions.find((e) => e.name === dim);
         const dimIndexInitial = this.dimensionsDatas.dimensions.findIndex(
           (e) => e.name === dim,

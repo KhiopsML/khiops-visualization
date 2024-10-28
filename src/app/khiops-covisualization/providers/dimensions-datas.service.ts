@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AppService } from './app.service';
-import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { TreeNodeModel } from '../model/tree-node.model';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { MatrixUtilsService } from '@khiops-library/components/matrix/matrix.utils.service';
@@ -13,6 +12,7 @@ import { ImportExtDatasService } from './import-ext-datas.service';
 import { MatrixValuesModel } from '@khiops-library/model/matrix-value.model';
 import { MatrixDatasModel } from '@khiops-library/model/matrix-datas.model';
 import { DimensionHierarchy } from '@khiops-covisualization/interfaces/app-datas';
+import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 
 @Injectable({
   providedIn: 'root',
@@ -200,9 +200,9 @@ export class DimensionsDatasService {
    * Retrieves the selected dimensions.
    * This method returns the array of selected dimensions from the dimensions data.
    *
-   * @returns {DimensionModel[]} - The array of selected dimensions.
+   * @returns {DimensionCovisualizationModel[]} - The array of selected dimensions.
    */
-  getSelectedDimensions(): DimensionModel[] {
+  getSelectedDimensions(): DimensionCovisualizationModel[] {
     return this.dimensionsDatas.selectedDimensions;
   }
 
@@ -257,9 +257,9 @@ export class DimensionsDatasService {
    * Retrieves the dimensions from the application data.
    * This method extracts the dimension summaries and partitions from the application data and initializes the dimensions data.
    *
-   * @returns {DimensionModel[]} - The array of dimensions.
+   * @returns {DimensionCovisualizationModel[]} - The array of dimensions.
    */
-  getDimensions(): DimensionModel[] {
+  getDimensions(): DimensionCovisualizationModel[] {
     const appDatas = this.appService.getDatas().datas;
     this.dimensionsDatas.dimensions = [];
 
@@ -271,7 +271,7 @@ export class DimensionsDatasService {
       if (appDatas?.coclusteringReport?.dimensionSummaries) {
         const l = appDatas.coclusteringReport.dimensionSummaries.length;
         for (let i = 0; i < l; i++) {
-          const dimension = new DimensionModel(
+          const dimension = new DimensionCovisualizationModel(
             appDatas.coclusteringReport.dimensionSummaries[i],
             i,
           );
@@ -309,7 +309,7 @@ export class DimensionsDatasService {
    * It also restores the saved selected dimensions if available.
    *
    * @param {boolean} initContextSelection - Flag to determine if context selection should be initialized (default is true).
-   * @returns {DimensionModel[]} - The array of selected dimensions.
+   * @returns {DimensionCovisualizationModel[]} - The array of selected dimensions.
    */
   initSelectedDimensions(initContextSelection = true) {
     this.dimensionsDatas.selectedDimensions = [];
@@ -354,11 +354,14 @@ export class DimensionsDatasService {
    * in the selected dimensions array. It also updates the cell part indexes to reflect
    * the new selection order, ensuring that matrix combinations are updated accordingly.
    *
-   * @param {DimensionModel} dimension - The dimension to be updated.
+   * @param {DimensionCovisualizationModel} dimension - The dimension to be updated.
    * @param {number} position - The position at which the dimension should be placed.
-   * @returns {DimensionModel[]} - The updated array of selected dimensions.
+   * @returns {DimensionCovisualizationModel[]} - The updated array of selected dimensions.
    */
-  updateSelectedDimension(dimension: DimensionModel, position: number) {
+  updateSelectedDimension(
+    dimension: DimensionCovisualizationModel,
+    position: number,
+  ): DimensionCovisualizationModel[] {
     // Find current dim position
     const currentIndex: number =
       this.dimensionsDatas.selectedDimensions.findIndex((e) => {
@@ -564,11 +567,11 @@ export class DimensionsDatasService {
     this.dimensionsDatas.allMatrixDatas = new MatrixDatasModel();
     this.dimensionsDatas.allMatrixCellDatas = [];
 
-    const xDimension: DimensionModel =
+    const xDimension: DimensionCovisualizationModel =
       this.dimensionsDatas.selectedDimensions[0];
-    const yDimension: DimensionModel =
+    const yDimension: DimensionCovisualizationModel =
       this.dimensionsDatas.selectedDimensions[1];
-    const zDimension: DimensionModel[] = [];
+    const zDimension: DimensionCovisualizationModel[] = [];
     for (let i = 2; i < this.dimensionsDatas.selectedDimensions.length; i++) {
       zDimension.push(this.dimensionsDatas.selectedDimensions[i]);
     }
@@ -638,7 +641,10 @@ export class DimensionsDatasService {
         cellFrequencies,
       );
     [xValues.standard, yValues.standard] =
-      MatrixUtilsService.getStandardAxisValues(xDimension, yDimension);
+      MatrixUtilsService.getStandardCovisualizationAxisValues(
+        xDimension,
+        yDimension,
+      );
 
     // To display axis names
     this.dimensionsDatas.allMatrixDatas.variable =

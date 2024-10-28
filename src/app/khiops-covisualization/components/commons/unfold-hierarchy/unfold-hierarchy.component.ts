@@ -16,7 +16,7 @@ import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { HierarchyDatasModel } from '@khiops-covisualization/model/hierarchy-datas.model';
 import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-data.model';
 import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
-import { DimensionModel } from '@khiops-library/model/dimension.model';
+import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { LS } from '@khiops-library/enum/ls';
 import { AppService } from '@khiops-covisualization/providers/app.service';
 import { THEME } from '@khiops-library/enum/theme';
@@ -37,7 +37,7 @@ export class UnfoldHierarchyComponent implements OnInit {
   public colorSetInfoPerCluster: ChartColorsSetI | undefined;
   public currentInformationPerCluster = 100;
   public cyInput: number = 0; // cypress input value to automatise unfold hierarchy
-  public dimensions: DimensionModel[] | undefined;
+  public dimensions: DimensionCovisualizationModel[] | undefined;
   public unfoldHierarchyTableTitle = '';
   public selectedLineChartItem = '';
   public hierarchyDisplayedColumns: GridColumnsI[] = [];

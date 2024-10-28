@@ -1,9 +1,9 @@
-import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { TreeNodeModel } from './tree-node.model';
 import { HierarchyDatasModel } from './hierarchy-datas.model';
 import { MatrixDatasModel } from '@khiops-library/model/matrix-datas.model';
 import { CellModel } from '@khiops-library/model/cell.model';
 import { DynamicI } from '@khiops-library/interfaces/globals';
+import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 
 export class DimensionsDatasModel {
   matrixDatas: MatrixDatasModel;
@@ -12,11 +12,11 @@ export class DimensionsDatasModel {
   matrixCellFreqDataMap: DynamicI = undefined;
 
   cellPartIndexes: number[][] = [[]];
-  initialDimensions: DimensionModel[] = [];
-  dimensions: DimensionModel[] = [];
+  initialDimensions: DimensionCovisualizationModel[] = [];
+  dimensions: DimensionCovisualizationModel[] = [];
   contextSelection: number[][] = [[]];
-  contextDimensions: DimensionModel[] = [];
-  selectedDimensions: DimensionModel[] = [];
+  contextDimensions: DimensionCovisualizationModel[] = [];
+  selectedDimensions: DimensionCovisualizationModel[] = [];
   contextDimensionCount: number = 0;
   hierarchyDatas: HierarchyDatasModel | undefined = undefined;
   dimensionsTrees: TreeNodeModel[][] = [];

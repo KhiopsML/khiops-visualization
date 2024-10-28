@@ -9,7 +9,6 @@ import {
   EventEmitter,
   SimpleChanges,
 } from '@angular/core';
-import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { TranslateService } from '@ngstack/translate';
 import { DistributionGraphComponent } from '@khiops-library/components/distribution-graph/distribution-graph.component';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
@@ -23,6 +22,7 @@ import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import * as _ from 'lodash';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { HistogramType } from '@khiops-visualization/components/commons/histogram/histogram.type';
+import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 
 @Component({
   selector: 'app-variable-graph-details',
@@ -41,7 +41,9 @@ export class VariableGraphDetailsComponent
   @Output() public selectedItemChanged: EventEmitter<any> = new EventEmitter();
   @Input() public position: number = 0;
   @Input() private dimensionsTree: TreeNodeModel[] | undefined;
-  @Input() private selectedDimensions: DimensionModel[] | undefined;
+  @Input() private selectedDimensions:
+    | DimensionCovisualizationModel[]
+    | undefined;
 
   public scrollPosition = 0;
   public scaleValue: number = 0;

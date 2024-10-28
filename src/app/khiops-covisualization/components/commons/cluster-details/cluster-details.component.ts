@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import _ from 'lodash';
 import { TranslateService } from '@ngstack/translate';
-import { DimensionModel } from '@khiops-library/model/dimension.model';
+import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { ClustersService } from '@khiops-covisualization/providers/clusters.service';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
 import { ClusterDetailsModel } from '@khiops-covisualization/model/cluster-details.model';
@@ -24,7 +24,7 @@ import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
 export class ClusterDetailsComponent implements OnInit, OnChanges {
   @Input() public position: number = 0;
   @Input() private dimensionsTree: TreeNodeModel[] | undefined;
-  @Input() private selectedDimension: DimensionModel | undefined;
+  @Input() private selectedDimension: DimensionCovisualizationModel | undefined;
   @Input() private selectedNode: TreeNodeModel | undefined;
 
   public nodeToSelect: TreeNodeModel | undefined;

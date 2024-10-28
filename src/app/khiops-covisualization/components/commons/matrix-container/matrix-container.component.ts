@@ -19,13 +19,13 @@ import { MatrixOptionsModel } from '@khiops-library/model/matrix-options.model';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 import { CellModel } from '@khiops-library/model/cell.model';
 import { TranslateService } from '@ngstack/translate';
-import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { ViewManagerService } from '@khiops-covisualization/providers/view-manager.service';
 import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 import { SplitGutterInteractionEvent } from 'angular-split';
 import { TreeNodeChangedEventI } from '@khiops-covisualization/interfaces/events';
 import { DynamicI } from '@khiops-library/interfaces/globals';
+import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 
 @Component({
   selector: 'app-matrix-container',
@@ -41,7 +41,7 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
   @Input() public sizeId: string = '';
   @Input() public viewsLayout: ViewLayoutVO | undefined;
   @Input() private viewId: string = '';
-  @Input() selectedDimensions: DimensionModel[] | undefined; // Used to check for dim change
+  @Input() selectedDimensions: DimensionCovisualizationModel[] | undefined; // Used to check for dim change
 
   public sizes: DynamicI;
   public dimensionsDatas: DimensionsDatasModel;

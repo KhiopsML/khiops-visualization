@@ -3,7 +3,7 @@ import { DimensionsDatasService } from './dimensions-datas.service';
 import { TreeNodeModel } from '../model/tree-node.model';
 import { ChartDatasetModel } from '@khiops-library/model/chart-dataset.model';
 import { TranslateService } from '@ngstack/translate';
-import { DimensionModel } from '@khiops-library/model/dimension.model';
+import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { AppService } from './app.service';
 import { CompositionModel } from '../model/composition.model';
 import { ClusterDetailsModel } from '@khiops-covisualization/model/cluster-details.model';
@@ -377,7 +377,7 @@ export class ClustersService {
     const compositionValues: CompositionModel[] = [];
 
     if (appDatas?.coclusteringReport?.dimensionPartitions) {
-      const currentDimensionDetails: DimensionModel =
+      const currentDimensionDetails: DimensionCovisualizationModel =
         this.dimensionsDatas.selectedDimensions.find(
           (e) => e.name === hierarchyName,
         );
@@ -385,12 +385,13 @@ export class ClustersService {
         this.dimensionsDatas.selectedDimensions.findIndex((e) => {
           return hierarchyName === e.name;
         });
-      const currentInitialDimensionDetails: DimensionModel = new DimensionModel(
-        appinitialDatas.coclusteringReport.dimensionSummaries[
-          currentDimensionDetails.startPosition
-        ],
-        currentIndex,
-      );
+      const currentInitialDimensionDetails: DimensionCovisualizationModel =
+        new DimensionCovisualizationModel(
+          appinitialDatas.coclusteringReport.dimensionSummaries[
+            currentDimensionDetails.startPosition
+          ],
+          currentIndex,
+        );
       const dimensionPartition =
         appinitialDatas.coclusteringReport.dimensionPartitions[
           currentDimensionDetails.startPosition
@@ -460,7 +461,7 @@ export class ClustersService {
    */
   getFilteredDimensionTree(
     dimensionsTree: TreeNodeModel[] | undefined,
-    selectedDimension: DimensionModel | undefined,
+    selectedDimension: DimensionCovisualizationModel | undefined,
   ): ClusterDetailsModel[] {
     let filteredDimensionsClusters: ClusterDetailsModel[] = [];
     if (dimensionsTree) {

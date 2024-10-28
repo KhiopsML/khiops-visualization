@@ -8,7 +8,7 @@ import {
   Output,
 } from '@angular/core';
 import { trigger, transition, animate, style } from '@angular/animations';
-import { DimensionModel } from '@khiops-library/model/dimension.model';
+import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
 import { AppService } from '@khiops-covisualization/providers/app.service';
@@ -43,8 +43,8 @@ import { LayoutService } from '@khiops-library/providers/layout.service';
   ],
 })
 export class HierarchySelectComponent implements OnChanges, AfterViewInit {
-  @Input() public selectedDimension: DimensionModel | undefined;
-  @Input() public dimensions: DimensionModel[] | undefined;
+  @Input() public selectedDimension: DimensionCovisualizationModel | undefined;
+  @Input() public dimensions: DimensionCovisualizationModel[] | undefined;
   @Input() public selectedTreeCluster: SelectedTreeClusterModel | undefined;
   @Input() selectedNode: TreeNodeModel | undefined;
   @Input() private position: number = 0;
@@ -107,7 +107,10 @@ export class HierarchySelectComponent implements OnChanges, AfterViewInit {
    * @param dimension - The new dimension to be selected.
    * @param newPosition - The new position for the dimension.
    */
-  changeSelectedDimension(dimension: DimensionModel, newPosition: number) {
+  changeSelectedDimension(
+    dimension: DimensionCovisualizationModel,
+    newPosition: number,
+  ) {
     const isBigJsonFile = this.appService.isBigJsonFile();
     if (isBigJsonFile) {
       this.snackBar.open(

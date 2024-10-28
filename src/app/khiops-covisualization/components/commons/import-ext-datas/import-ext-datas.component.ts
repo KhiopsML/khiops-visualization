@@ -3,11 +3,11 @@ import { DimensionsDatasService } from '@khiops-covisualization/providers/dimens
 import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
 import { TranslateService } from '@ngstack/translate';
 import { FileModel } from '@khiops-library/model/file.model';
-import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { CheckboxCellComponent } from '@khiops-library/components/ag-grid/checkbox-cell/checkbox-cell.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-data.model';
 import { GridCheckboxEventI } from '@khiops-library/interfaces/events';
+import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 
 @Component({
   selector: 'app-import-ext-datas',
@@ -22,7 +22,7 @@ export class ImportExtDatasComponent implements OnInit {
     keys: [],
     selected: undefined,
   };
-  selectedDimension: DimensionModel;
+  selectedDimension: DimensionCovisualizationModel;
   fieldsToImport = {
     values: [],
     displayedColumns: [],
@@ -96,7 +96,7 @@ export class ImportExtDatasComponent implements OnInit {
     this.closeImport.emit();
   }
 
-  changeSelectedDimension(dimension: DimensionModel) {
+  changeSelectedDimension(dimension: DimensionCovisualizationModel) {
     this.selectedDimension = dimension;
   }
 

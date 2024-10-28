@@ -12,7 +12,7 @@ import { SelectableComponent } from '@khiops-library/components/selectable/selec
 import { TranslateService } from '@ngstack/translate';
 import { AnnotationService } from '@khiops-covisualization/providers/annotation.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
-import { DimensionModel } from '@khiops-library/model/dimension.model';
+import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { COMPONENT_TYPES } from '../../../../khiops-library/enum/component-types';
 
 @Component({
@@ -24,7 +24,7 @@ export class AnnotationComponent
   extends SelectableComponent
   implements OnInit, OnChanges
 {
-  @Input() private selectedDimension: DimensionModel | undefined;
+  @Input() private selectedDimension: DimensionCovisualizationModel | undefined;
   @Input() public selectedNode: TreeNodeModel | undefined;
   @Input() private position: number = 0;
   public value: string = '';

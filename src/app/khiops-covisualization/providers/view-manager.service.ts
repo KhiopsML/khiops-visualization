@@ -5,7 +5,7 @@ import { AppConfig } from 'src/environments/environment';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { AppService } from './app.service';
 import { LS } from '@khiops-library/enum/ls';
-import { DimensionModel } from '@khiops-library/model/dimension.model';
+import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +29,7 @@ export class ViewManagerService {
    * @param dimensions - An array of dimension objects, each containing a `name` property.
    * @returns The initialized `ViewLayoutVO` instance.
    */
-  initViewsLayout(dimensions: DimensionModel[]): ViewLayoutVO {
+  initViewsLayout(dimensions: DimensionCovisualizationModel[]): ViewLayoutVO {
     this.viewsLayout = new ViewLayoutVO();
     for (let i = 0; i < dimensions.length; i++) {
       const isContextView = i >= 2;
@@ -80,7 +80,7 @@ export class ViewManagerService {
    * @param dimensions - An array of dimension objects, each containing a `name` property.
    * @returns The updated `ViewLayoutVO` instance.
    */
-  updateViewsLayout(dimensions: DimensionModel[]): ViewLayoutVO {
+  updateViewsLayout(dimensions: DimensionCovisualizationModel[]): ViewLayoutVO {
     const previousValues = _.cloneDeep(this.viewsLayout);
     if (previousValues) {
       this.viewsLayout = new ViewLayoutVO();

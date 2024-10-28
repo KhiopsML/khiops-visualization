@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { TranslateService } from '@ngstack/translate';
 import { CompositionModel } from '@khiops-covisualization/model/composition.model';
-import { DimensionModel } from '@khiops-library/model/dimension.model';
+import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
 import { ClustersService } from '@khiops-covisualization/providers/clusters.service';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
@@ -28,7 +28,7 @@ import { ImportExtDatasService } from '@khiops-covisualization/providers/import-
 })
 export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() public position: number = 0;
-  @Input() public selectedDimension: DimensionModel | undefined;
+  @Input() public selectedDimension: DimensionCovisualizationModel | undefined;
   @Input() private selectedNode: TreeNodeModel | undefined;
 
   @Output() private selectedCompositionChanged: EventEmitter<any> =

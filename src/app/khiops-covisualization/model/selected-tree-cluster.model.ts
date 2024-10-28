@@ -1,4 +1,4 @@
-import { DimensionModel } from '@khiops-library/model/dimension.model';
+import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { TreeNodeModel } from './tree-node.model';
 
 export class SelectedTreeClusterModel {
@@ -14,7 +14,7 @@ export class SelectedTreeClusterModel {
   interval: string;
   frequency: number;
 
-  constructor(dimension: DimensionModel) {
+  constructor(dimension: DimensionCovisualizationModel) {
     this.isCategorical = dimension?.isCategorical;
     this.isNumerical = dimension?.isNumerical;
     this.dimensionType = dimension?.type;

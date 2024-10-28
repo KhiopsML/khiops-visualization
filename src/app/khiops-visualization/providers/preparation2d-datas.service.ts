@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { AppService } from './app.service';
-import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { TranslateService } from '@ngstack/translate';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { EvaluationDatasService } from './evaluation-datas.service';
@@ -24,6 +23,7 @@ import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 import { MatrixValuesModel } from '@khiops-library/model/matrix-value.model';
 import { VariablePairStatistics } from '@khiops-visualization/interfaces/bivariate-preparation-report';
+import { DimensionVisualizationModel } from '@khiops-library/model/dimension.visualization.model';
 
 @Injectable({
   providedIn: 'root',
@@ -564,10 +564,10 @@ export class Preparation2dDatasService {
       const variableDatas: VariableDetailsModel = _.cloneDeep(variablesDetails);
 
       if (variableDatas) {
-        const xDimension = new DimensionModel(
+        const xDimension = new DimensionVisualizationModel(
           variableDatas.dataGrid.dimensions[0],
         );
-        const yDimension = new DimensionModel(
+        const yDimension = new DimensionVisualizationModel(
           variableDatas.dataGrid.dimensions[1],
         );
 
@@ -631,7 +631,10 @@ export class Preparation2dDatasService {
                 variableDatas.dataGrid.cellTargetFrequencies,
             );
           [xValues.standard, yValues.standard] =
-            MatrixUtilsService.getStandardAxisValues(xDimension, yDimension);
+            MatrixUtilsService.getStandardVisualizationAxisValues(
+              xDimension,
+              yDimension,
+            );
           const cellDatas = MatrixUtilsService.getCellDatas(
             xDimension,
             yDimension,
