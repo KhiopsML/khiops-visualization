@@ -20,6 +20,9 @@ import { PreparationVariableModel } from '@khiops-visualization/model/preparatio
 import { TreePreparationVariableModel } from '@khiops-visualization/model/tree-preparation-variable.model';
 import { DistributionChartDatasModel } from '@khiops-visualization/model/distribution-chart-datas.model';
 import { REPORT } from '@khiops-library/enum/report';
+import { DimensionVisualization } from '@khiops-visualization/interfaces/app-datas';
+import { VariableModel } from '@khiops-visualization/model/variable.model';
+import { Variable2dModel } from '@khiops-visualization/model/variable-2d.model';
 
 @Injectable({
   providedIn: 'root',
@@ -257,7 +260,7 @@ export class DistributionDatasService {
         let l: number = currentXAxis.length;
         for (let i = 0; i < l; i++) {
           const currentLabel = this.formatXAxis(
-            currentXAxis[i],
+            currentXAxis[i].toString(),
             i,
             selectedVariableType,
           ).toString();
@@ -336,14 +339,14 @@ export class DistributionDatasService {
           currentVar,
           this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_TABLE_SIZE,
         );
-        const dimensions: any[] = _.cloneDeep(
+        const dimensions: DimensionVisualization[] = _.cloneDeep(
           variableDetails.dataGrid.dimensions,
         );
         const currentXAxis = dimensions[0].partition;
         const partition = 0;
 
-        let currentDatas: any;
-        let currentDimension: any;
+        let currentDatas: number[] | number[][];
+        let currentDimension: DimensionVisualization;
 
         if (dimensions.length === 1) {
           currentDimension = dimensions[0];
@@ -450,12 +453,12 @@ export class DistributionDatasService {
    * @returns The computed distribution graph details or undefined if no datasets are available.
    */
   computeDistributionGraph(
-    currentDimension,
-    currentDatas,
-    dimensions,
-    partition,
-    currentXAxis,
-    selectedVariable,
+    currentDimension: DimensionVisualization,
+    currentDatas: number[] | number[][],
+    dimensions: DimensionVisualization[],
+    partition: number,
+    currentXAxis: number[][] | string[],
+    selectedVariable: PreparationVariableModel | TreePreparationVariableModel,
   ): any {
     let distributionsGraphDetails: DistributionChartDatasModel =
       new ChartDatasModel();
@@ -463,6 +466,7 @@ export class DistributionDatasService {
     if (currentDimension) {
       // Add trash info to the defaultGroupIndex
       if (currentDimension.defaultGroupIndex !== undefined) {
+        // @ts-ignore
         currentDimension.partition[currentDimension.defaultGroupIndex][0] +=
           ', *';
       }
@@ -493,7 +497,7 @@ export class DistributionDatasService {
         );
         distributionsGraphDetails.intervals = [];
         distributionsGraphDetails.labels.push(currentName);
-        distributionsGraphDetails.intervals.push(currentXAxis[i]);
+        distributionsGraphDetails.intervals.push(currentXAxis[i].toString());
         const graphItem: BarModel = new BarModel();
         graphItem.defaultGroupIndex = i === currentDimension.defaultGroupIndex;
         graphItem.name = currentName;
@@ -535,7 +539,11 @@ export class DistributionDatasService {
    *   - The first array contains the frequency values (logarithm of coverage values).
    *   - The second array contains the coverage values.
    */
-  getAllFrequencyAndCoverageValues(currentDatas, dimensions, partition) {
+  getAllFrequencyAndCoverageValues(
+    currentDatas: number[] | number[][],
+    dimensions: DimensionVisualization[],
+    partition: number,
+  ) {
     const frequencyArray: number[] = [];
     const coverageArray: number[] = [];
     for (let i = 0; i < currentDatas.length; i++) {
@@ -559,10 +567,14 @@ export class DistributionDatasService {
    * @param el - The element used to compute the coverage value. It can be a number or an array of numbers.
    * @returns The computed coverage value.
    */
-  getCoverageValueFromDimensionAndPartition(dimensions, partition, el) {
+  getCoverageValueFromDimensionAndPartition(
+    dimensions: DimensionVisualization[],
+    partition: number,
+    el: number | number[],
+  ) {
     let coverageValue = 0;
     // compute total
-    if (dimensions.length === 1) {
+    if (dimensions.length === 1 && !Array.isArray(el)) {
       coverageValue = el;
     } else {
       for (let j = 0; j < partition; j++) {
@@ -585,13 +597,15 @@ export class DistributionDatasService {
    * @param limit - An optional limit on the number of variables to include in the graph. Defaults to 0.
    * @returns A `ChartDatasModel` object containing the datasets and labels for the level distribution graph.
    */
-  getLeveldistributionGraphDatas(inputDatas: any, limit = 0): ChartDatasModel {
+  getLeveldistributionGraphDatas(
+    variables: VariableModel[] | Variable2dModel[],
+  ): ChartDatasModel {
     const levelDistributionGraphDatas: ChartDatasModel = new ChartDatasModel();
 
     const currentDataSet = new ChartDatasetModel('level');
     levelDistributionGraphDatas.datasets.push(currentDataSet);
 
-    let l = inputDatas.length;
+    let l = variables.length;
     if (
       l > AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.MAX_VARIABLES
     ) {
@@ -601,10 +615,10 @@ export class DistributionDatasService {
     for (let i = 0; i < l; i++) {
       const graphItem: BarModel = new BarModel();
 
-      const el = inputDatas[i];
-      if (el.name) {
+      const el = variables[i];
+      if (el instanceof VariableModel) {
         graphItem.name = el.name;
-      } else if (el.name1 && el.name2) {
+      } else if (el instanceof Variable2dModel) {
         graphItem.name = el.name1 + ' x ' + el.name2;
       }
       graphItem.value = el.level || 0; // Do not add tofixed here because datas are < 0.00
@@ -623,7 +637,11 @@ export class DistributionDatasService {
    * @param partitionType - The type of partition, either 'Numerical' or 'Categorical'.
    * @returns The formatted X-axis label as a string.
    */
-  formatXAxis(currentXAxis: any, index: number, partitionType: string): string {
+  formatXAxis(
+    currentXAxis: number[] | string,
+    index: number,
+    partitionType: string,
+  ): string {
     let currentName: string;
 
     if (partitionType === 'Numerical') {
@@ -645,7 +663,7 @@ export class DistributionDatasService {
           currentName += ']';
         }
       } else {
-        currentName = currentXAxis;
+        currentName = currentXAxis.toString();
       }
       if (currentName.length === 0) {
         currentName = this.translate.get('GLOBAL.MISSING');
@@ -681,7 +699,7 @@ export class DistributionDatasService {
    * The method iterates through the modality data to calculate the series counts and total counts.
    * It then computes the total probability for each dimension.
    */
-  computeModalityCounts(modality): ModalityCountsModel {
+  computeModalityCounts(modality: number[][]): ModalityCountsModel {
     const counts = new ModalityCountsModel();
     if (modality) {
       const dimensionLength = modality[0].length;

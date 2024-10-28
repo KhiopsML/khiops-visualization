@@ -4,14 +4,14 @@ import * as _ from 'lodash'; // Important to import lodash in karma
 export class VariableDetailsModel {
   dataGrid!: {
     dimensions: DimensionVisualization[];
-    partTargetFrequencies: []; // regression or explanatory case
-    partInterests: []; // regression or explanatory case
-    cellTargetFrequencies: []; // bivariate case
-    cellInterests: []; // bivariate case
-    cellIds: []; // normal 2d case
-    cellPartIndexes: []; // normal 2d case
-    cellFrequencies: []; // normal 2d case
-    frequencies: []; // normal case
+    partTargetFrequencies: number[][]; // regression or explanatory case
+    partInterests: number[]; // regression or explanatory case
+    cellTargetFrequencies: number[][]; // bivariate case
+    cellInterests: number[]; // bivariate case
+    cellIds: string[]; // normal 2d case
+    cellPartIndexes: number[][]; // normal 2d case
+    cellFrequencies: number[][]; // normal 2d case
+    frequencies: number[]; // normal case
   };
   inputValues!: {
     // regression or explanatory case

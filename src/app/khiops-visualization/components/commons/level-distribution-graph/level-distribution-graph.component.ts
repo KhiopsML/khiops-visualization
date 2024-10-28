@@ -23,6 +23,7 @@ import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { LS } from '@khiops-library/enum/ls';
 import { TYPES } from '@khiops-library/enum/types';
+import { Variable2dModel } from '@khiops-visualization/model/variable-2d.model';
 
 @Component({
   selector: 'app-level-distribution-graph',
@@ -39,7 +40,7 @@ export class LevelDistributionGraphComponent
   })
   private levelGraph: ElementRef;
 
-  @Input() public datas: VariableModel[];
+  @Input() public datas: VariableModel[] | Variable2dModel[];
   @Input() public levelDistributionTitle: string;
 
   public override inputDatas: ChartDatasModel = undefined;
