@@ -11,6 +11,7 @@ import {
   AppDatasI,
   VisualizationDatas,
 } from '@khiops-visualization/interfaces/app-datas';
+import { DynamicI } from '@khiops-library/interfaces/globals';
 
 @Injectable({
   providedIn: 'root',
@@ -111,10 +112,8 @@ export class AppService {
    * @param type - The type of saved data to retrieve.
    * @returns The saved data of the specified type.
    */
-  getSavedDatas(type): any {
-    if (this._appDatas?.datas?.savedDatas?.[type]) {
-      return this._appDatas.datas.savedDatas[type];
-    }
+  getSavedDatas(type: string) {
+    return this._appDatas?.datas?.savedDatas?.[type];
   }
 
   /**

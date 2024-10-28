@@ -312,7 +312,7 @@ export class DistributionDatasService {
    * @returns A `ChartDatasModel` object containing the computed distribution graph data. If no valid data is found, returns `undefined`.
    */
   getdistributionGraphDatas(
-    selectedVariable,
+    selectedVariable: PreparationVariableModel | TreePreparationVariableModel,
     type?: string,
     initActiveEntries?: boolean,
   ): ChartDatasModel {
@@ -370,6 +370,12 @@ export class DistributionDatasService {
     return distributionsGraphDetails;
   }
 
+  /**
+   * Checks if the variable with the given rank is considered a "big distribution variable".
+   *
+   * @param rank - The rank of the variable to check.
+   * @returns A boolean indicating whether the variable is a big distribution variable.
+   */
   isBigDistributionVariable(rank: string) {
     const currentVar = this.appService.appDatas[
       this.distributionDatas.preparationSource

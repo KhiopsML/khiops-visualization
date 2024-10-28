@@ -90,7 +90,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
     );
   }
 
-  onSelectedPredictorChanged(value) {
+  onSelectedPredictorChanged(value: TrainedPredictor) {
     this.modelingDatasService.setSelectedPredictor(value);
     this.modelingDatasService.getTrainedPredictorListDatas();
     this.trainedPredictorsDisplayedColumns =
