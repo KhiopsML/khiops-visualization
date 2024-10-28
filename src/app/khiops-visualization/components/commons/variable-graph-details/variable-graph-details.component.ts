@@ -250,4 +250,11 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
     // launch event to parent to manage interval table datas or matrix selection
     this.selectedItemChanged.emit(index);
   }
+
+  hideScaleElt() {
+    return (
+      this.distributionDatas.histogramDatas ||
+      this.distributionDatas.distributionGraphDatas?.labels?.length < 10
+    );
+  }
 }

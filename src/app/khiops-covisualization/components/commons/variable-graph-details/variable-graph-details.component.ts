@@ -216,4 +216,8 @@ export class VariableGraphDetailsComponent
     }
     return [currentIndex, otherIndex];
   }
+
+  hideScaleElt() {
+    return this.graphDetails?.labels?.length < 10;
+  }
 }

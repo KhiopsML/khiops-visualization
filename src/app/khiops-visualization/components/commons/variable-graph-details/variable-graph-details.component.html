@@ -32,7 +32,7 @@
       [selectedVariable]="selectedVariable"
       (scaleValueChanged)="onScaleValueChanged($event)"
       (toggleFullscreen)="onToggleFullscreen($event)"
-      [hideScale]="distributionDatas.histogramDatas"
+      [hideScale]="hideScaleElt()"
     >
     </kl-graph-header>
     <kl-distribution-graph
