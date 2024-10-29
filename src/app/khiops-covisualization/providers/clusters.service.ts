@@ -415,7 +415,7 @@ export class ClustersService {
           new DimensionCovisualizationModel(
             this.appService.initialDatas.coclusteringReport.dimensionSummaries[
               position
-            ],
+            ]!,
             currentIndex,
           );
         const dimensionPartition =
@@ -450,7 +450,7 @@ export class ClustersService {
                 for (let j = 0; j < currentClusterDetailsLength; j++) {
                   const currentDimensionHierarchyCluster: any =
                     currentDimensionClusters.find(
-                      (e) => e.cluster === currentLeafName,
+                      (e: any) => e.cluster === currentLeafName,
                     );
                   if (node.isCollapsed) {
                     currentDimensionHierarchyCluster.shortDescription =
@@ -493,6 +493,7 @@ export class ClustersService {
     let filteredDimensionsClusters: ClusterDetailsModel[] = [];
     if (dimensionsTree && selectedDimension && dimensionsTree) {
       const filteredDimensionsClustersDatas = [].concat(
+        // @ts-ignore
         this.getCurrentClusterDetailsFromNode(dimensionsTree),
       );
       for (let i = 0; i < filteredDimensionsClustersDatas.length; i++) {
@@ -505,10 +506,11 @@ export class ClustersService {
 
         if (!clusterDetails.size) {
           // get the size of collapsed nodes
-          const treeNode: TreeNodeModel = this.treenodesService.getNodeFromName(
-            selectedDimension.name,
-            clusterDetails.name,
-          );
+          const treeNode: TreeNodeModel | undefined =
+            this.treenodesService.getNodeFromName(
+              selectedDimension.name,
+              clusterDetails.name,
+            );
           if (treeNode) {
             treeNode.getChildrenList();
 
@@ -519,9 +521,10 @@ export class ClustersService {
               index < treeNode.childrenLeafIndexes.length;
               index++
             ) {
-              const elementIndex = treeNode.childrenLeafIndexes[index];
+              const elementIndex = treeNode.childrenLeafIndexes[index] || 0;
               if (selectedDimension.isCategorical) {
                 size +=
+                  // @ts-ignore
                   this.appService.initialDatas.coclusteringReport
                     .dimensionPartitions[selectedDimension.startPosition]
                     .valueGroups[elementIndex].values.length;

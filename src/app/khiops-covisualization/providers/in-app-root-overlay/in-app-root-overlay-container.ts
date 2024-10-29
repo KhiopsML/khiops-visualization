@@ -25,7 +25,7 @@ export class InAppRootOverlayContainer
     super.ngOnDestroy();
   }
 
-  getRootElement(): Element {
+  getRootElement(): Element | null {
     return this.configService
       .getRootElementDom()
       .querySelector('app-home-layout');
