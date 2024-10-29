@@ -25,7 +25,7 @@
     direction="horizontal"
     (dragEnd)="onSplitDragEnd($event, 'col')"
   >
-    <as-split-area id="axis-container" [size]="sizes.col[0]">
+    <as-split-area id="axis-container" [size]="sizes?.col[0]">
       <as-split
         [gutterSize]="7"
         direction="vertical"
@@ -47,7 +47,7 @@
           </app-axis>
         </as-split-area>
         <as-split-area
-          [size]="sizes.col0Row[1]"
+          [size]="sizes?.col0Row[1]"
           order="2"
           [visible]="viewsLayout.dimensionsViewsLayoutsVO[1]?.isChecked"
         >
@@ -88,7 +88,7 @@
       </as-split>
     </as-split-area>
     <as-split-area
-      [size]="sizes.col[1]"
+      [size]="sizes?.col[1]"
       [visible]="
         viewsLayout?.isDimensionsChecked || viewsLayout?.isCoocurenceChecked
       "

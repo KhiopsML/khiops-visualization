@@ -1,6 +1,6 @@
 <div class="composition-comp" fxLayout="column" fxFlexFill>
   <kl-ag-grid
-    *ngIf="selectedDimension.isCategorical"
+    *ngIf="selectedDimension?.isCategorical"
     fxFlexFill
     [showLevelDistribution]="false"
     [paginationSize]="50"
@@ -20,7 +20,7 @@
   <kl-no-data
     fxFlexFill
     fxLayoutAlign="center center"
-    *ngIf="!selectedDimension.isCategorical"
+    *ngIf="!selectedDimension?.isCategorical"
     [message]="'NO_DATAS.NO_COMPOSITION_FOR_NUMERICAL'"
   >
   </kl-no-data>

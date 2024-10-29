@@ -43,7 +43,7 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
   @Input() private viewId: string = '';
   @Input() selectedDimensions: DimensionCovisualizationModel[] | undefined; // Used to check for dim change
 
-  public sizes: DynamicI;
+  public sizes: DynamicI | undefined;
   public dimensionsDatas: DimensionsDatasModel;
   public matrixModes: MatrixModesModel = new MatrixModesModel();
   public matrixOptions: MatrixOptionsModel = new MatrixOptionsModel();

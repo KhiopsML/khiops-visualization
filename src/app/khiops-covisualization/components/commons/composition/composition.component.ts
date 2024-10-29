@@ -103,12 +103,15 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
             );
 
           this.compositionValues?.forEach((composition: CompositionModel) => {
-            if (externalDatas?.[composition?.value]) {
-              composition.externalData = externalDatas[composition.value];
+            // @ts-ignore
+            const currentExtData = externalDatas[composition.value];
+            if (currentExtData) {
+              composition.externalData = currentExtData;
             }
           });
 
           // Force selection change to update external dats component #113
+          // @ts-ignore
           this.selectedComposition = { ...this.selectedComposition };
           this.selectedCompositionChanged.emit(this.selectedComposition);
         }
