@@ -1,9 +1,9 @@
 export class FileModel {
-  file: File;
+  file: File | undefined;
   filename: string;
   datas: any;
 
-  constructor(datas, filename, file?) {
+  constructor(datas: any, filename: string, file?: File) {
     this.filename = filename || '';
     this.datas = datas || undefined;
     this.file = file;

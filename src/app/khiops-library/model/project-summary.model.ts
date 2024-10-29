@@ -10,7 +10,7 @@ export class ProjectSummaryModel {
   instances: string;
   variables: number | undefined;
 
-  displayDatas: InfosDatasI[];
+  displayDatas!: InfosDatasI[];
 
   constructor(appDatas: any, source: string) {
     this.filename = appDatas.filename || '';
