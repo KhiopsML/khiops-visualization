@@ -16,13 +16,17 @@ import { LayoutService } from '@khiops-library/providers/layout.service';
 import { ViewManagerService } from './view-manager.service';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
+import {
+  CovisualizationDatas,
+  DimensionPartition,
+} from '@khiops-covisualization/interfaces/app-datas';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TreenodesService {
-  private dimensionsDatas: DimensionsDatasModel;
-  private collapsedNodesToSave: DynamicI = {};
+  private dimensionsDatas!: DimensionsDatasModel;
+  private collapsedNodesToSave: DynamicI | undefined = {};
 
   constructor(
     private annotationService: AnnotationService,
@@ -102,8 +106,8 @@ export class TreenodesService {
       if (i >= 2) {
         // re init context nodes with conditionalOnContext to false
         this.setSelectedNode(
-          this.dimensionsDatas.selectedDimensions[i].name,
-          this.dimensionsDatas.selectedNodes[i]._id,
+          this.dimensionsDatas.selectedDimensions[i]!.name,
+          this.dimensionsDatas.selectedNodes[i]!._id,
         );
       }
     }
@@ -148,8 +152,8 @@ export class TreenodesService {
     hierarchyName: string,
     nodeName: string | number,
     stopPropagation = false,
-  ): TreeNodeModel {
-    let nodeVO: TreeNodeModel;
+  ): TreeNodeModel | undefined {
+    let nodeVO: TreeNodeModel | undefined;
     if (this.dimensionsDatas.selectedDimensions) {
       const previousSelectedNodes = Object.assign(
         [],
@@ -166,31 +170,35 @@ export class TreenodesService {
         // get Node VO from name
         nodeVO = this.dimensionsDatas.currentDimensionsClusters[
           currentIndex
-        ].find((e) => {
-          return nodeName === e.name || nodeName === e.shortDescription; // TODO ? also check into shortDescription (for distribution graph for instance)
+        ]?.find((e) => {
+          return nodeName === e.name || nodeName === e.shortDescription; // also check into shortDescription (for distribution graph for instance)
         });
         if (!nodeVO) {
           // if not found take the first (it's maybe an unfoldHierarchy)
           nodeVO =
-            this.dimensionsDatas.currentDimensionsClusters[currentIndex][0];
+            this.dimensionsDatas.currentDimensionsClusters[currentIndex]?.[0];
         }
-        nodeVO.getChildrenList();
+        if (nodeVO) {
+          nodeVO.getChildrenList();
 
-        if (currentIndex !== 0 && currentIndex !== 1) {
-          if (this.dimensionsDatas.conditionalOnContext) {
-            this.dimensionsDatas.contextSelection[currentIndex - 2] =
-              nodeVO.childrenLeafIndexes;
-          } else {
-            // conditionalOnContext unset
-            // get the parent node
-            const parentNodeVO: TreeNodeModel =
-              this.dimensionsDatas.currentDimensionsClusters[currentIndex].find(
-                (e: TreeNodeModel) => e.isParentCluster,
-              );
-            parentNodeVO.getChildrenList();
-            // and set their chidren leafs to context nodes
-            this.dimensionsDatas.contextSelection[currentIndex - 2] =
-              parentNodeVO.childrenLeafIndexes;
+          if (currentIndex !== 0 && currentIndex !== 1) {
+            if (this.dimensionsDatas.conditionalOnContext) {
+              this.dimensionsDatas.contextSelection[currentIndex - 2] =
+                nodeVO.childrenLeafIndexes;
+            } else {
+              // conditionalOnContext unset
+              // get the parent node
+              const parentNodeVO: TreeNodeModel | undefined =
+                this.dimensionsDatas.currentDimensionsClusters[
+                  currentIndex
+                ]?.find((e: TreeNodeModel) => e.isParentCluster);
+              if (parentNodeVO) {
+                parentNodeVO.getChildrenList();
+                // and set their chidren leafs to context nodes
+                this.dimensionsDatas.contextSelection[currentIndex - 2] =
+                  parentNodeVO.childrenLeafIndexes;
+              }
+            }
           }
         }
 
@@ -204,22 +212,24 @@ export class TreenodesService {
         // search in the complete datas the corresponding node
         const realNodeVO = this.dimensionsDatas.dimensionsClusters[
           currentIndex
-        ].find((e) => {
+        ]?.find((e: TreeNodeModel) => {
           return (
-            nodeVO.name ===
+            nodeVO?.name ===
             e.name /*|| nodeVO.shortDescription === e.shortDescription*/
           );
           // do not check into shortDescription (for distribution graph for instance)
           // otherwise it return multiple nodes
         });
-        realNodeVO.getChildrenList();
-        if (!stopPropagation) {
-          this.eventsService.emitTreeSelectedNodeChanged({
-            hierarchyName: hierarchyName,
-            selectedNode: nodeVO,
-            realNodeVO: realNodeVO,
-            stopPropagation: stopPropagation,
-          });
+        if (realNodeVO) {
+          realNodeVO.getChildrenList();
+          if (!stopPropagation) {
+            this.eventsService.emitTreeSelectedNodeChanged({
+              hierarchyName: hierarchyName,
+              selectedNode: nodeVO!,
+              realNodeVO: realNodeVO,
+              stopPropagation: stopPropagation,
+            });
+          }
         }
       }
     }
@@ -260,11 +270,11 @@ export class TreenodesService {
    * @param {TreeNodeModel[]} nodes - The list of nodes.
    * @returns {TreeNodeModel} - The last visible node.
    */
-  getLastVisibleNode(nodes: TreeNodeModel[]) {
-    if (nodes[0].isLeaf) {
+  getLastVisibleNode(nodes: TreeNodeModel[]): TreeNodeModel {
+    if (nodes[0]?.isLeaf) {
       return nodes[0];
-    } else if (!nodes[0].isCollapsed) {
-      return this.getLastVisibleNode(nodes[0].children);
+    } else if (!nodes[0]?.isCollapsed) {
+      return this.getLastVisibleNode(nodes[0]!.children);
     } else {
       return nodes[0];
     }
@@ -282,15 +292,15 @@ export class TreenodesService {
     nodes: TreeNodeModel[],
     nodeVO: TreeNodeModel,
     lastVisibleNode?: TreeNodeModel,
-  ): TreeNodeModel {
-    const parentNode: TreeNodeModel = nodes.find(
+  ): TreeNodeModel | undefined {
+    const parentNode: TreeNodeModel | undefined = nodes.find(
       (e) => e.name === nodeVO?.parentCluster,
     );
     if (!nodeVO.isParentCluster) {
-      if (parentNode.isCollapsed) {
+      if (parentNode?.isCollapsed) {
         lastVisibleNode = parentNode;
       }
-      return this.getFirstVisibleNode(nodes, parentNode, lastVisibleNode);
+      return this.getFirstVisibleNode(nodes, parentNode!, lastVisibleNode);
     } else {
       return lastVisibleNode;
     }
@@ -355,8 +365,8 @@ export class TreenodesService {
   getNodeFromDimensionTree(
     dimensionName: string,
     nodeName: string,
-  ): TreeNodeModel {
-    let nodeVO: TreeNodeModel;
+  ): TreeNodeModel | undefined {
+    let nodeVO: TreeNodeModel | undefined;
     const currentIndex: number =
       this.dimensionsDatas.selectedDimensions.findIndex((e) => {
         return dimensionName === e.name;
@@ -384,7 +394,7 @@ export class TreenodesService {
       };
 
       nodeVO = searchNode(
-        this.dimensionsDatas.dimensionsTrees[currentIndex],
+        this.dimensionsDatas.dimensionsTrees[currentIndex]!,
         nodeName,
       );
     }
@@ -398,8 +408,11 @@ export class TreenodesService {
    * @param {string} nodeName - The name of the node.
    * @returns {TreeNodeModel} - The node model.
    */
-  getNodeFromName(dimensionName: string, nodeName: string): TreeNodeModel {
-    let nodeVO: TreeNodeModel;
+  getNodeFromName(
+    dimensionName: string,
+    nodeName: string,
+  ): TreeNodeModel | undefined {
+    let nodeVO: TreeNodeModel | undefined;
     const currentIndex: number =
       this.dimensionsDatas.selectedDimensions.findIndex((e) => {
         return dimensionName === e.name;
@@ -407,13 +420,13 @@ export class TreenodesService {
 
     if (currentIndex !== -1) {
       // get Node VO from name
-      nodeVO = this.dimensionsDatas.dimensionsClusters[currentIndex].find(
+      nodeVO = this.dimensionsDatas.dimensionsClusters[currentIndex]?.find(
         (e) => {
           return nodeName === e.name;
         },
       );
       if (!nodeVO) {
-        nodeVO = this.dimensionsDatas.dimensionsClusters[currentIndex].find(
+        nodeVO = this.dimensionsDatas.dimensionsClusters[currentIndex]?.find(
           (e) => {
             return nodeName === e.bounds;
           },
@@ -441,7 +454,7 @@ export class TreenodesService {
     for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
       const currentIndex: number =
         this.dimensionsDatas.selectedDimensions.findIndex((e) => {
-          return this.dimensionsDatas.dimensions[i].name === e.name;
+          return this.dimensionsDatas.dimensions[i]?.name === e.name;
         });
       const nodesVO: TreeNodeModel[] = UtilsService.fastFilter(
         this.dimensionsDatas.dimensionsClusters[currentIndex],
@@ -449,9 +462,9 @@ export class TreenodesService {
           return !e.isLeaf && e.hierarchicalRank < rank;
         },
       );
-      const dimension: DimensionCovisualizationModel =
+      const dimension: DimensionCovisualizationModel | undefined =
         this.dimensionsDatas.dimensions[i];
-      dimension.setCurrentHierarchyClusterCount(nodesVO.length + 1);
+      dimension?.setCurrentHierarchyClusterCount(nodesVO.length + 1);
     }
   }
 
@@ -485,34 +498,34 @@ export class TreenodesService {
    *
    * @returns {HierarchyDatasModel} - The updated hierarchy data model.
    */
-  getHierarchyDatas(): HierarchyDatasModel {
+  getHierarchyDatas(): HierarchyDatasModel | undefined {
     if (this.appService.initialDatas?.coclusteringReport?.dimensionSummaries) {
-      this.dimensionsDatas.hierarchyDatas.totalClusters = 0;
+      this.dimensionsDatas.hierarchyDatas!.totalClusters = 0;
       const l =
         this.appService.initialDatas.coclusteringReport.dimensionSummaries
           .length;
-      this.dimensionsDatas.hierarchyDatas.minClusters = l;
+      this.dimensionsDatas.hierarchyDatas!.minClusters = l;
       for (let i = 0; i < l; i++) {
         // Concat all dimensions clusters
-        this.dimensionsDatas.hierarchyDatas.totalClusters +=
+        this.dimensionsDatas.hierarchyDatas!.totalClusters +=
           this.appService.initialDatas.coclusteringReport.dimensionSummaries[
             i
-          ].parts;
+          ]!.parts;
         // 150 Also compute totalInitialClusters to generate information rate chart
-        this.dimensionsDatas.hierarchyDatas.totalInitialClusters +=
+        this.dimensionsDatas.hierarchyDatas!.totalInitialClusters +=
           this.appService.initialDatas.coclusteringReport.dimensionSummaries[
             i
-          ].initialParts;
+          ]!.initialParts;
       }
       // Init with all clusters
-      if (this.dimensionsDatas.hierarchyDatas.selectedUnfoldHierarchy === 0) {
-        this.dimensionsDatas.hierarchyDatas.selectedUnfoldHierarchy =
-          this.dimensionsDatas.hierarchyDatas.totalClusters;
+      if (this.dimensionsDatas.hierarchyDatas!.selectedUnfoldHierarchy === 0) {
+        this.dimensionsDatas.hierarchyDatas!.selectedUnfoldHierarchy =
+          this.dimensionsDatas.hierarchyDatas!.totalClusters;
       }
     }
     if (this.appService.initialDatas?.coclusteringReport?.summary) {
       // Get the total cell
-      this.dimensionsDatas.hierarchyDatas.totalCells +=
+      this.dimensionsDatas.hierarchyDatas!.totalCells +=
         this.appService.initialDatas.coclusteringReport.summary.cells;
     }
     return this.dimensionsDatas.hierarchyDatas;
@@ -533,7 +546,7 @@ export class TreenodesService {
    * @param {number} selectedUnfoldHierarchy - The value to set for the selected unfold hierarchy.
    */
   setSelectedUnfoldHierarchy(selectedUnfoldHierarchy: number) {
-    this.dimensionsDatas.hierarchyDatas.selectedUnfoldHierarchy =
+    this.dimensionsDatas.hierarchyDatas!.selectedUnfoldHierarchy =
       selectedUnfoldHierarchy;
   }
 
@@ -544,7 +557,11 @@ export class TreenodesService {
    * @param {string} nodeName - The name of the node.
    * @param {number} way - The way to update the collapsed nodes (1 to add, -1 to remove).
    */
-  updateCollapsedNodesToSave(dimensionName: string, nodeName: string, way) {
+  updateCollapsedNodesToSave(
+    dimensionName: string,
+    nodeName: string,
+    way = 1 | -1,
+  ) {
     if (!this.collapsedNodesToSave) {
       this.collapsedNodesToSave = {};
     }
@@ -569,7 +586,7 @@ export class TreenodesService {
    *
    * @returns {object} - The saved collapsed nodes.
    */
-  getSavedCollapsedNodes(): DynamicI {
+  getSavedCollapsedNodes(): DynamicI | undefined {
     return this.collapsedNodesToSave;
   }
 
@@ -639,7 +656,7 @@ export class TreenodesService {
    * @param {any} [collapsedNodesInput] - Optional input for collapsed nodes.
    * @returns {any} - The constructed data object to be saved.
    */
-  constructDatasToSave(collapsedNodesInput?: DynamicI) {
+  constructDatasToSave(collapsedNodesInput?: DynamicI): CovisualizationDatas {
     const initialDatas = JSON.parse(
       JSON.stringify(this.appService.initialDatas),
     );
@@ -654,7 +671,7 @@ export class TreenodesService {
     const annotations = this.annotationService.getAnnotations();
 
     let selectedNodes = this.getSelectedNodes();
-    let selectedNodesMap = [];
+    let selectedNodesMap: string[] = [];
     if (selectedNodes) {
       selectedNodesMap = selectedNodes.map((e) => e.name);
     }
@@ -710,11 +727,14 @@ export class TreenodesService {
    * truncates the hierarchy, updates summaries, partitions, and cells, and removes
    * collapsed nodes and selected nodes if necessary.
    *
-   * @param {any} [collapsedNodesInput] - Optional input for collapsed nodes.
+   * @param {DynamicI} [collapsedNodesInput] - Optional input for collapsed nodes.
    * @param {boolean} [isReduced=false] - Flag indicating whether to reduce the data.
-   * @returns {any} - The constructed saved JSON data.
+   * @returns {CovisualizationDatas} - The constructed saved JSON data.
    */
-  constructSavedJson(collapsedNodesInput?: DynamicI, isReduced = false) {
+  constructSavedJson(
+    collapsedNodesInput?: DynamicI,
+    isReduced = false,
+  ): CovisualizationDatas {
     let newJson = this.constructDatasToSave(collapsedNodesInput);
     if (collapsedNodesInput) {
       // Transform json if collapsed nodes
@@ -740,10 +760,10 @@ export class TreenodesService {
    * the corresponding hierarchy by removing the clusters corresponding to the children nodes
    * and marking the parent node as a leaf.
    *
-   * @param {any} datas - The data object containing the coclustering report and saved data.
-   * @returns {any} - The updated data object with the truncated hierarchy.
+   * @param {CovisualizationDatas} datas - The data object containing the coclustering report and saved data.
+   * @returns {CovisualizationDatas} - The updated data object with the truncated hierarchy.
    */
-  truncateJsonHierarchy(datas) {
+  truncateJsonHierarchy(datas: CovisualizationDatas): CovisualizationDatas {
     if (datas.savedDatas.collapsedNodes) {
       const truncatedHierarchy = [
         ...datas.coclusteringReport.dimensionHierarchies,
@@ -814,10 +834,10 @@ export class TreenodesService {
    * the corresponding partition (categorical or numerical) by removing the values or
    * intervals corresponding to the children nodes and concatenating them into the parent node.
    *
-   * @param {any} datas - The data object containing the coclustering report and saved data.
-   * @returns {any} - The updated data object with the truncated partitions.
+   * @param {CovisualizationDatas} datas - The data object containing the coclustering report and saved data.
+   * @returns {CovisualizationDatas} - The updated data object with the truncated partitions.
    */
-  truncateJsonPartition(datas) {
+  truncateJsonPartition(datas: CovisualizationDatas): CovisualizationDatas {
     const truncatedPartition = _.cloneDeep(
       datas.coclusteringReport.dimensionPartitions,
     );
@@ -871,12 +891,12 @@ export class TreenodesService {
   computeCatPartition(
     nodes: string[],
     dimIndex: number,
-    currentTruncatedPartition,
-  ) {
+    currentTruncatedPartition: DimensionPartition,
+  ): DimensionPartition {
     const nodesLength = nodes.length;
     for (let i = 0; i < nodesLength; i++) {
       const nodeName = nodes[i];
-      let nodeChildren: any[] = [];
+      let nodeChildren: string[] = [];
       const currentDefaultGroup =
         currentTruncatedPartition.defaultGroupIndex &&
         currentTruncatedPartition.valueGroups[
@@ -946,12 +966,12 @@ export class TreenodesService {
   computeNumPartition(
     nodes: string[],
     dimIndex: number,
-    currentTruncatedPartition,
-  ) {
+    currentTruncatedPartition: DimensionPartition,
+  ): DimensionPartition {
     const nodesLength = nodes.length;
     for (let i = 0; i < nodesLength; i++) {
       const nodeName = nodes[i];
-      let nodeChildren: any[] = [];
+      let nodeChildren: string[] = [];
 
       const nodeDetails: TreeNodeModel =
         this.dimensionsDatas.dimensionsClusters[dimIndex].find(
@@ -1028,10 +1048,10 @@ export class TreenodesService {
    * This is achieved by filtering the clusters in the "dimensionHierarchies" section
    * to count only those that are marked as leaves.
    *
-   * @param {any} datas - The data object containing the coclustering report.
-   * @returns {any} - The updated data object with the correct number of leaf clusters.
+   * @param {CovisualizationDatas} datas - The data object containing the coclustering report.
+   * @returns {CovisualizationDatas} - The updated data object with the correct number of leaf clusters.
    */
-  updateSummariesParts(datas) {
+  updateSummariesParts(datas: CovisualizationDatas): CovisualizationDatas {
     for (
       let i = 0;
       i < datas.coclusteringReport.dimensionSummaries.length;
@@ -1055,10 +1075,10 @@ export class TreenodesService {
    * less than the theoretical number of cells. This is achieved by counting the
    * number of elements in the "cellPartIndexes" or "cellFrequencies" lists.
    *
-   * @param {any} datas - The data object containing the coclustering report.
-   * @returns {any} - The updated data object with the correct number of non-empty cells.
+   * @param {CovisualizationDatas} datas - The data object containing the coclustering report.
+   * @returns {CovisualizationDatas} - The updated data object with the correct number of non-empty cells.
    */
-  updateSummariesCells(datas) {
+  updateSummariesCells(datas: CovisualizationDatas): CovisualizationDatas {
     // the "cells" field in "summary" must contain the number of non-empty cells,
     // which can be less than the theoretical number of cells.
     // It is obtained by counting the number of elements in the list "cellPartIndexes" or in "cellFrequencies"
@@ -1074,10 +1094,10 @@ export class TreenodesService {
    * to the current coclustering (CC). It then constructs the list of cells in the current coclustering
    * by calculating the indexes of these cells and their frequencies.
    *
-   * @param {any} CC - The current coclustering report to be truncated.
-   * @returns {any} - The truncated coclustering report with updated cell frequencies and part indexes.
+   * @param {CovisualizationDatas} CC - The current coclustering report to be truncated.
+   * @returns {CovisualizationDatas} - The truncated coclustering report with updated cell frequencies and part indexes.
    */
-  truncateJsonCells(CC) {
+  truncateJsonCells(CC: CovisualizationDatas): CovisualizationDatas {
     const CI = {
       ...this.appService.initialDatas,
     };
@@ -1159,7 +1179,6 @@ export class TreenodesService {
     // of these cells and their resGroup
     let resGroup: any[] = [];
 
-    // chat GPT optimization
     const { cellPartIndexes, dimensionHierarchies, cellFrequencies } =
       CI.coclusteringReport;
     let resGroupMap = new Map();
