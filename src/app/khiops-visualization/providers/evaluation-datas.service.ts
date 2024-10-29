@@ -385,7 +385,7 @@ export class EvaluationDatasService {
     const datas: EvaluationPredictorModel[] = [];
     const displayedColumns: GridColumnsI[] = [];
 
-    if (this.evaluationDatas.evaluationTypesSummary.values) {
+    if (this.evaluationDatas.evaluationTypesSummary?.values) {
       // cant make VO because it is not always the same column names
       for (
         let i = 0;
@@ -393,7 +393,7 @@ export class EvaluationDatasService {
         i++
       ) {
         // get current from json datas
-        const currentEvaluationType = this.evaluationDatas.evaluationTypes[i];
+        const currentEvaluationType = this.evaluationDatas.evaluationTypes?.[i];
 
         // combine all the tables train + test + other ?
         for (
@@ -415,13 +415,15 @@ export class EvaluationDatasService {
 
         // Now compute robustness for each object
         for (let j = 0; j < datas.length; j++) {
-          const currentEl: EvaluationPredictorModel = datas[j];
+          const currentEl: EvaluationPredictorModel | undefined = datas[j];
           const train: EvaluationPredictorModel | undefined = datas.find(
             (e) =>
-              e.currentEvaluationType === PREDICTOR_TYPES.TRAIN &&
-              e.name === currentEl.name,
+              e.evaluationType === PREDICTOR_TYPES.TRAIN &&
+              e.name === currentEl?.name,
           ); // find into data train the corresponding AUC train
-          currentEl.computeRobustness(train);
+          if (train) {
+            currentEl?.computeRobustness(train);
+          }
         }
       }
 

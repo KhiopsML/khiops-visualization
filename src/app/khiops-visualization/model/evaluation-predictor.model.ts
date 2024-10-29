@@ -21,7 +21,6 @@ export class EvaluationPredictorModel {
   rankRmse?: string;
   rankMae?: string;
   rankNlpd?: string;
-  currentEvaluationType: string;
 
   constructor(
     type: string,
@@ -87,7 +86,7 @@ export class EvaluationPredictorModel {
    *
    * @param train - The training data object containing the AUC value.
    */
-  computeRobustness(train) {
+  computeRobustness(train: EvaluationPredictorModel) {
     if (
       this.evaluationType === PREDICTOR_TYPES.TEST &&
       train?.auc &&

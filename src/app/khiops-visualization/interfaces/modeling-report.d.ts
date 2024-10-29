@@ -32,11 +32,6 @@ export interface TrainedPredictorsDetails {
   };
 }
 
-interface TargetValues {
-  frequencies: number[];
-  values: string[];
-}
-
 export interface ModelingVariableStatistic {
   preparedName: string;
   name: string;

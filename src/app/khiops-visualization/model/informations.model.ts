@@ -1,15 +1,15 @@
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 
 export class InformationsModel {
-  evaluatedVariables: number;
-  constructedVariables: number;
-  informativeVariables: number;
-  informativeVariablePairs: number;
-  selectedVariables: number;
-  selectedVariablePairs: number;
-  discretization: string;
-  valueGrouping: string;
-  evaluatedVariablePairs: number;
+  evaluatedVariables!: number;
+  constructedVariables!: number;
+  informativeVariables!: number;
+  informativeVariablePairs!: number;
+  selectedVariables!: number;
+  selectedVariablePairs!: number;
+  discretization!: string;
+  valueGrouping!: string;
+  evaluatedVariablePairs!: number;
 
   displayDatas: InfosDatasI[] | undefined;
 

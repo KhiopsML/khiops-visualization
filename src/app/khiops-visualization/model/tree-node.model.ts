@@ -1,5 +1,5 @@
 import { UtilsService } from '@khiops-library/providers/utils.service';
-import { TargetValues } from '@khiops-visualization/interfaces/modeling-report';
+import { TargetValues } from '@khiops-visualization/interfaces/app-datas';
 import { NodeElt } from '@khiops-visualization/interfaces/tree-preparation-report';
 
 export class TreeNodeModel implements NodeElt {

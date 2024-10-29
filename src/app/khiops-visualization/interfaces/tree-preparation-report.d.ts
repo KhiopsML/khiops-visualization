@@ -1,4 +1,4 @@
-import { VariablesDetailedStatistics } from './app-datas';
+import { TargetValues, VariablesDetailedStatistics } from './app-datas';
 
 export interface TreePreparationReport {
   reportType: string;
@@ -35,11 +35,6 @@ export interface TargetDescriptiveStats {
   values: number;
   mode: string;
   modeFrequency: number;
-}
-
-export interface TargetValues {
-  values: string[];
-  frequencies: number[];
 }
 
 export interface TreePreparationVariableStatistic {
@@ -83,9 +78,4 @@ interface ChildNode {
   partition?: number[][]; // Optional, as it may not be present in all child nodes
   targetValues?: TargetValues; // Optional, as it may not be present in all child nodes
   childNodes?: ChildNode[]; // Optional, to allow for further nesting
-}
-
-interface TargetValues {
-  values: string[];
-  frequencies: number[];
 }

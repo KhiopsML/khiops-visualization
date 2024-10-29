@@ -1,4 +1,4 @@
-import { DimensionVisualization } from './app-datas';
+import { DimensionVisualization, TargetValues } from './app-datas';
 
 export interface BivariatePreparationReport {
   reportType: string;
@@ -12,8 +12,17 @@ export interface Summary {
   variables: VariablesInfo;
   database: string; // File path as string
   instances: number;
-  x;
+  targetVariable: string;
+  mainTargetValue: string;
+  targetDescriptiveStats: TargetDescriptiveStats;
+  targetValues: TargetValues;
   learningTask: string; // e.g., "Unsupervised analysis"
+}
+
+export interface TargetDescriptiveStats {
+  values: number;
+  mode: string;
+  modeFrequency: number;
 }
 
 export interface VariablesInfo {

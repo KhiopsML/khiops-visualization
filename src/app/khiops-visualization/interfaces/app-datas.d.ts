@@ -76,3 +76,8 @@ export interface Curve {
   classifier: string;
   values: number[];
 }
+
+export interface TargetValues {
+  frequencies: number[];
+  values: string[];
+}
