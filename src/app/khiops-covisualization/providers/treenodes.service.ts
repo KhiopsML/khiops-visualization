@@ -782,8 +782,8 @@ export class TreenodesService {
           for (let i = 0; i < nodesLength; i++) {
             const nodeName = nodes[i];
             let nodeChildren: any[] = [];
-            const nodeDetails: TreeNodeModel =
-              this.dimensionsDatas.dimensionsClusters[dimIndex].find(
+            const nodeDetails: TreeNodeModel | undefined =
+              this.dimensionsDatas.dimensionsClusters[dimIndex]?.find(
                 (e) => e.cluster === nodeName,
               );
 
@@ -794,7 +794,7 @@ export class TreenodesService {
               nodeChildren = nodeDetails.childrenList;
               const nodeChildrenLength = nodeChildren.length;
               for (let j = nodeChildrenLength - 1; j >= 0; j--) {
-                const nodeIndex = dimHierarchy.clusters.findIndex(
+                const nodeIndex = dimHierarchy?.clusters.findIndex(
                   (e) => e.cluster === nodeChildren[j],
                 );
                 if (nodeChildren[j] !== nodeName) {
@@ -816,8 +816,8 @@ export class TreenodesService {
 
       // Sort clusters by leaf and rank
       for (let k = 0; k < truncatedHierarchy.length; k++) {
-        truncatedHierarchy[k].clusters = _.sortBy(
-          truncatedHierarchy[k].clusters,
+        truncatedHierarchy[k]!.clusters = _.sortBy(
+          truncatedHierarchy[k]?.clusters,
           [(e) => e.isLeaf === false, 'rank'],
         );
       }
@@ -851,23 +851,23 @@ export class TreenodesService {
 
       // Check for collapsed node integrity
       if (dimIndex !== -1) {
-        const dimVO: DimensionCovisualizationModel =
+        const dimVO: DimensionCovisualizationModel | undefined =
           this.dimensionsDatas.selectedDimensions.find((e) => e.name === dim);
         const dimIndexInitial = this.dimensionsDatas.dimensions.findIndex(
           (e) => e.name === dim,
         );
 
-        if (dimVO.isCategorical) {
+        if (dimVO?.isCategorical) {
           this.computeCatPartition(
             nodes,
             dimIndex,
-            truncatedPartition[dimIndexInitial],
+            truncatedPartition[dimIndexInitial]!,
           );
         } else {
           this.computeNumPartition(
             nodes,
             dimIndex,
-            truncatedPartition[dimIndexInitial],
+            truncatedPartition[dimIndexInitial]!,
           );
         }
       }
@@ -899,11 +899,11 @@ export class TreenodesService {
       let nodeChildren: string[] = [];
       const currentDefaultGroup =
         currentTruncatedPartition.defaultGroupIndex &&
-        currentTruncatedPartition.valueGroups[
+        currentTruncatedPartition.valueGroups?.[
           currentTruncatedPartition.defaultGroupIndex
-        ].values;
-      const nodeDetails: TreeNodeModel =
-        this.dimensionsDatas.dimensionsClusters[dimIndex].find(
+        ]?.values;
+      const nodeDetails: TreeNodeModel | undefined =
+        this.dimensionsDatas.dimensionsClusters[dimIndex]?.find(
           (e) => e.cluster === nodeName,
         );
       if (nodeDetails?.childrenList) {
@@ -944,8 +944,8 @@ export class TreenodesService {
       // Now find currentDefaultGroup into new constructed currentTruncatedPartition.valueGroups to set defaultGroupIndex
       if (currentDefaultGroup) {
         currentTruncatedPartition.defaultGroupIndex =
-          currentTruncatedPartition.valueGroups.findIndex((e) =>
-            e.values.includes(currentDefaultGroup[0]),
+          currentTruncatedPartition.valueGroups?.findIndex((e) =>
+            e.values.includes(currentDefaultGroup[0]!),
           );
       }
     }
@@ -973,8 +973,8 @@ export class TreenodesService {
       const nodeName = nodes[i];
       let nodeChildren: string[] = [];
 
-      const nodeDetails: TreeNodeModel =
-        this.dimensionsDatas.dimensionsClusters[dimIndex].find(
+      const nodeDetails: TreeNodeModel | undefined =
+        this.dimensionsDatas.dimensionsClusters[dimIndex]?.find(
           (e) => e.cluster === nodeName,
         );
       if (nodeDetails?.childrenList) {
@@ -1002,7 +1002,7 @@ export class TreenodesService {
 
         if (
           currentTruncatedPartition.intervals
-            .map((e) => e.cluster)
+            ?.map((e) => e.cluster)
             .includes(nodeDetails.parentCluster)
         ) {
           // #142 Error in the description of dimensionPartitions during numerical variable folding
@@ -1018,24 +1018,24 @@ export class TreenodesService {
           for (let j = 0; j < currentNodeBound.length; j++) {
             currentNodeBound[j] = 1 * currentNodeBound[j];
           }
-          currentTruncatedPartition.intervals.push({
+          currentTruncatedPartition.intervals?.push({
             cluster: nodeDetails.cluster,
             bounds: currentNodeBound,
           });
         }
         // Sort intervals
-        currentTruncatedPartition.intervals.sort(function (a, b) {
+        currentTruncatedPartition.intervals?.sort(function (a, b) {
           return a.bounds[0] - b.bounds[0];
         });
       }
     }
 
     const includedIntervals = UtilsService.findIncludedIntervals(
-      currentTruncatedPartition.intervals.map((e) => e.bounds),
+      currentTruncatedPartition.intervals?.map((e) => e.bounds),
     );
     if (includedIntervals.length > 0) {
       for (let k = includedIntervals.length - 1; k >= 0; k--) {
-        currentTruncatedPartition.intervals.splice(includedIntervals[k], 1);
+        currentTruncatedPartition.intervals?.splice(includedIntervals[k]!, 1);
       }
     }
 
@@ -1058,12 +1058,12 @@ export class TreenodesService {
       i++
     ) {
       const dimIndex = this.dimensionsDatas.selectedDimensions.findIndex(
-        (e) => e.name === datas.coclusteringReport.dimensionSummaries[i].name,
+        (e) => e.name === datas.coclusteringReport.dimensionSummaries[i]?.name,
       );
-      datas.coclusteringReport.dimensionSummaries[dimIndex].parts =
-        datas.coclusteringReport.dimensionHierarchies[dimIndex].clusters.filter(
-          (e) => e.isLeaf === true,
-        ).length;
+      datas.coclusteringReport.dimensionSummaries[dimIndex]!.parts =
+        datas.coclusteringReport.dimensionHierarchies[
+          dimIndex
+        ]!.clusters.filter((e) => e.isLeaf === true).length;
     }
 
     return datas;
@@ -1107,13 +1107,13 @@ export class TreenodesService {
     // indices of the CI to the part indices of the CC
     for (
       let k = 0;
-      k < CI.coclusteringReport.dimensionHierarchies.length;
+      k < CI.coclusteringReport!.dimensionHierarchies.length;
       k++
     ) {
       let initialVariable;
       let currentVariable;
       if (
-        CC.coclusteringReport.dimensionPartitions[k].type === TYPES.NUMERICAL
+        CC.coclusteringReport.dimensionPartitions[k]?.type === TYPES.NUMERICAL
       ) {
         initialVariable = CI.coclusteringReport.dimensionPartitions[
           k
@@ -1146,9 +1146,9 @@ export class TreenodesService {
         }
 
         if (
-          CC.coclusteringReport.dimensionPartitions[k].type === TYPES.NUMERICAL
+          CC.coclusteringReport.dimensionPartitions[k]!.type === TYPES.NUMERICAL
         ) {
-          if (initialPart.length !== 0) {
+          if (initialPart?.length !== 0) {
             // #73
             try {
               while (
