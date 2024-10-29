@@ -17,8 +17,8 @@ export class ProjectDatasService {
    *
    * @returns {InfosDatasI[] | undefined} The project summary data or undefined if not available.
    */
-  getProjectSummaryDatas(): InfosDatasI[] {
-    if (this.appService.appDatas.coclusteringReport) {
+  getProjectSummaryDatas(): InfosDatasI[] | undefined {
+    if (this.appService.appDatas?.coclusteringReport) {
       const projectSummaryDatas = new ProjectSummaryModel(
         this.appService.appDatas,
         REPORT.COCLUSTERING_REPORT,
