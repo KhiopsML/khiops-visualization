@@ -59,6 +59,7 @@ export class HierarchyService {
     for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
       // Remove dimension if unchecked
       if (this.dimensionsDatas.dimensions[i]?.hierarchyFold === false) {
+        // @ts-ignore
         delete collapsedNodes[this.dimensionsDatas.dimensions[i].name];
       }
     }

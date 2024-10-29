@@ -210,7 +210,7 @@ export class ClustersService {
               ? `${otherelement}-${element}`
               : `${element}-${otherelement}`;
 
-          const cell = matrixCellFreqDataMap[key];
+          const cell = matrixCellFreqDataMap?.[key];
 
           if (cell !== undefined) {
             if (!currentDataSetData[labelIndex]) {
