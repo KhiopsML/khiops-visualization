@@ -139,6 +139,23 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
       this.eventsService.conditionalOnContextChanged.subscribe(() => {
         this.drawMatrix();
       });
+
+    this.clickOnCellHandler = (event: MouseEvent) => this.clickOnCell(event);
+
+    this.mouseoutHandler = (event: Event) => this.hideTooltip();
+    this.mousemoveHandler = (event: MouseEvent) => {
+      this.currentEvent = event;
+      this.showTooltip(event);
+    };
+    this.wheelHandler = (event: WheelEvent) => {
+      this.currentEvent = event;
+    };
+    this.scrollHandler = (event: any) => {
+      this.lastScrollPosition = {
+        scrollLeft: event.target.scrollLeft,
+        scrollTop: event.target.scrollTop,
+      };
+    };
   }
 
   @HostListener('window:resize', ['$event'])
@@ -398,60 +415,64 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   }
 
   private addEventsListeners() {
-    this.matrixSelectedDiv?.nativeElement.addEventListener(
-      'click',
-      (event) => {
-        this.clickOnCell(event);
-      },
-      {
-        passive: true,
-      },
-    );
+    if (this.matrixSelectedDiv?.nativeElement) {
+      // Remove existing listeners
+      this.matrixSelectedDiv.nativeElement.removeEventListener(
+        'click',
+        this.clickOnCellHandler,
+      );
+      this.matrixSelectedDiv.nativeElement.removeEventListener(
+        'mouseout',
+        this.mouseoutHandler,
+      );
+      this.matrixSelectedDiv.nativeElement.removeEventListener(
+        'mousemove',
+        this.mousemoveHandler,
+      );
+      this.matrixSelectedDiv.nativeElement.removeEventListener(
+        'wheel',
+        this.wheelHandler,
+      );
 
-    this.matrixSelectedDiv?.nativeElement.addEventListener(
-      'mouseout',
-      (event) => {
-        this.hideTooltip();
-      },
-      {
-        passive: true,
-      },
-    );
+      // Add event listeners with passive options
+      this.matrixSelectedDiv?.nativeElement.addEventListener(
+        'click',
+        this.clickOnCellHandler,
+        {
+          passive: true,
+        },
+      );
+      this.matrixSelectedDiv.nativeElement.addEventListener(
+        'mouseout',
+        this.mouseoutHandler,
+        { passive: true },
+      );
+      this.matrixSelectedDiv.nativeElement.addEventListener(
+        'mousemove',
+        this.mousemoveHandler,
+        { passive: true },
+      );
+      this.matrixSelectedDiv.nativeElement.addEventListener(
+        'wheel',
+        this.wheelHandler,
+        { passive: true },
+      );
+    }
 
-    this.matrixSelectedDiv?.nativeElement.addEventListener(
-      'mousemove',
-      (event) => {
-        this.currentEvent = event;
-        this.showTooltip(event);
-      },
-      {
-        passive: true,
-      },
-    );
+    if (this.matrixArea?.nativeElement) {
+      // Remove the existing listener for the scroll event
+      this.matrixArea.nativeElement.removeEventListener(
+        'scroll',
+        this.scrollHandler,
+      );
 
-    this.matrixSelectedDiv?.nativeElement.addEventListener(
-      'wheel',
-      (event) => {
-        // Keep event in memory to manage zoom factor on scroll
-        this.currentEvent = event;
-      },
-      {
-        passive: true,
-      },
-    );
-
-    this.matrixArea?.nativeElement.addEventListener(
-      'scroll',
-      (event: any) => {
-        this.lastScrollPosition = {
-          scrollLeft: event.target.scrollLeft,
-          scrollTop: event.target.scrollTop,
-        };
-      },
-      {
-        passive: true,
-      },
-    );
+      // Add the scroll event listener
+      this.matrixArea.nativeElement.addEventListener(
+        'scroll',
+        this.scrollHandler,
+        { passive: true },
+      );
+    }
   }
 
   private clickOnCell(event: MouseEvent) {
@@ -465,6 +486,8 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
       this.drawSelectedCell(clicked);
 
       setTimeout(() => {
+        console.log('MatrixComponent ~ clickOnCell ~ event:', event);
+
         this.cellSelected.emit({
           datas: clicked,
         });
