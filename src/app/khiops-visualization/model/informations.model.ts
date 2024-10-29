@@ -1,4 +1,12 @@
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
+import { BivariatePreparationSummary } from '@khiops-visualization/interfaces/bivariate-preparation-report';
+import { EvaluationSummary } from '@khiops-visualization/interfaces/evaluation-report';
+import { ModelingSummary } from '@khiops-visualization/interfaces/modeling-report';
+import { PreparationSummary } from '@khiops-visualization/interfaces/preparation-report';
+import { TestEvaluationSummary } from '@khiops-visualization/interfaces/test-evaluation-report';
+import { TextPreparationSummary } from '@khiops-visualization/interfaces/text-preparation-report';
+import { TrainEvaluationSummary } from '@khiops-visualization/interfaces/train-evaluation-report';
+import { TreePreparationSummary } from '@khiops-visualization/interfaces/tree-preparation-report';
 
 export class InformationsModel {
   evaluatedVariables!: number;
@@ -13,7 +21,17 @@ export class InformationsModel {
 
   displayDatas: InfosDatasI[] | undefined;
 
-  constructor(object) {
+  constructor(
+    object:
+      | TreePreparationSummary
+      | TextPreparationSummary
+      | TestEvaluationSummary
+      | ModelingSummary
+      | PreparationSummary
+      | TrainEvaluationSummary
+      | EvaluationSummary
+      | BivariatePreparationSummary,
+  ) {
     // Assign values from input
     Object.assign(this, object);
 

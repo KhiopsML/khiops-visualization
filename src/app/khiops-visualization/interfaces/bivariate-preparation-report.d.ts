@@ -17,6 +17,12 @@ export interface BivariatePreparationSummary {
   targetDescriptiveStats: TargetDescriptiveStats;
   targetValues: TargetValues;
   learningTask: string; // e.g., "Unsupervised analysis"
+  samplePercentage?: number;
+  samplingMode?: string;
+  selectionVariable?: string;
+  selectionValue?: string;
+  evaluatedVariablePairs?: number;
+  informativeVariablePairs?: number;
 }
 
 export interface TargetDescriptiveStats {
@@ -42,6 +48,9 @@ export interface VariablePairStatistics {
   constructionCost?: number;
   preparationCost?: number;
   dataCost?: number;
+  deltaLevel?: number;
+  level1?: number;
+  level2?: number;
 }
 
 interface VariablesPairsDetailedStatistics {
