@@ -4,39 +4,35 @@ import { PreparationVariableStatistic } from '../interfaces/preparation-report';
 
 export class PreparationVariableModel implements PreparationVariableStatistic {
   _id: string;
-  mode: string;
-  name1: string;
-  name2: string;
-  nameX: string;
-  nameY: string;
+  mode!: string;
 
-  rank: string;
+  rank!: string;
   variableType: string;
-  type: string;
-  preparedName: string;
-  derivationRule: string;
+  type!: string;
+  preparedName!: string;
+  derivationRule!: string;
 
   isCategorical: boolean;
   isNumerical: boolean;
 
-  weight: number;
-  values: number;
-  parts: number;
-  modeFrequency: number;
-  level: number;
+  weight!: number;
+  values!: number;
+  parts!: number;
+  modeFrequency!: number;
+  level!: number;
 
   is2dVariable = false;
 
-  name: string;
-  targetParts: number;
+  name!: string;
+  targetParts!: number;
   min?: number;
   max?: number;
   mean?: number;
   stdDev?: number;
-  missingNumber: number;
-  sparseMissingNumber: number;
+  missingNumber!: number;
+  sparseMissingNumber!: number;
 
-  constructor(object, id) {
+  constructor(object: PreparationVariableStatistic, id: string) {
     // Assign values from input
     Object.assign(this, object);
 
@@ -47,20 +43,5 @@ export class PreparationVariableModel implements PreparationVariableStatistic {
     this.isCategorical = this.type === TYPES.CATEGORICAL;
 
     this.variableType = VARIABLE_TYPES.PREPARATION;
-    if (object.name1 && object.name2) {
-      this.is2dVariable = true;
-      this.variableType = VARIABLE_TYPES.PREPARATION_2D;
-    }
-
-    // for regression matrix
-    if (this.name1) {
-      this.nameX = this.name1;
-    }
-    if (this.name2) {
-      this.nameY = this.name2;
-    }
-    if (!this.name && this.name1 && this.name2) {
-      this.name = this.name1 + '`' + this.name2;
-    }
   }
 }

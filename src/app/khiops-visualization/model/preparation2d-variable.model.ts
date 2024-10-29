@@ -25,7 +25,7 @@ export class Preparation2dVariableModel implements VariablePairStatistics {
   level2: number;
   variables: number;
 
-  constructor(object) {
+  constructor(object: VariablePairStatistics) {
     // Assign values from input
     Object.assign(this, object);
 
@@ -46,6 +46,6 @@ export class Preparation2dVariableModel implements VariablePairStatistics {
     }
 
     // Generate id for grid
-    this._id = object.name;
+    this._id = this.name;
   }
 }

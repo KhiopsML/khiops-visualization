@@ -21,12 +21,13 @@ import { GridColumnsI } from '../../khiops-library/interfaces/grid-columns';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { TextPreparationVariableStatistic } from '@khiops-visualization/interfaces/text-preparation-report';
 import { TrainedPredictorModel } from '@khiops-visualization/model/trained-predictor.model';
+import { PreparationVariableStatistic } from '@khiops-visualization/interfaces/preparation-report';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PreparationDatasService {
-  private preparationDatas: PreparationDatasModel;
+  private preparationDatas!: PreparationDatasModel;
 
   constructor(
     private translate: TranslateService,
@@ -103,7 +104,10 @@ export class PreparationDatasService {
     preparationSource: REPORT,
   ): PreparationVariableModel | undefined {
     if (name) {
-      const variable = this.getVariableFromName(name, preparationSource);
+      const variable: PreparationVariableStatistic = this.getVariableFromName(
+        name,
+        preparationSource,
+      );
       if (variable) {
         this.preparationDatas[preparationSource].selectedVariable =
           new PreparationVariableModel(variable, variable.name);
