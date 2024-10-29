@@ -14,7 +14,11 @@ import { ExtDatasModel } from '@khiops-covisualization/model/ext-datas.model';
 import { ImportExtDatasService } from './import-ext-datas.service';
 import { CHART_TYPES } from '@khiops-library/enum/chart-types';
 import { MatrixUtilsService } from '@khiops-library/components/matrix/matrix.utils.service';
-import { CovisualizationDatas } from '@khiops-covisualization/interfaces/app-datas';
+import {
+  Cluster,
+  DimensionHierarchy,
+} from '@khiops-covisualization/interfaces/app-datas';
+import { CellModel } from '@khiops-library/model/cell.model';
 @Injectable({
   providedIn: 'root',
 })
@@ -111,7 +115,9 @@ export class ClustersService {
    * @param {number} position - The position of the node to get distribution details from.
    * @returns {ChartDatasModel} - The chart data model containing distribution details.
    */
-  getDistributionDetailsFromNode(position: number): ChartDatasModel {
+  getDistributionDetailsFromNode(
+    position: number,
+  ): ChartDatasModel | undefined {
     let filteredDimensionsClusters: TreeNodeModel[] = [];
     filteredDimensionsClusters = this.getCurrentClusterDetailsFromNode(
       this.dimensionsDatasService.dimensionsDatas.dimensionsTrees[0]!,
@@ -165,7 +171,8 @@ export class ClustersService {
       ]!.shortDescription,
     );
 
-    let distributionsGraphDetails = new ChartDatasModel();
+    let distributionsGraphDetails: ChartDatasModel | undefined =
+      new ChartDatasModel();
     const currentDataSetData = [];
 
     let filteredList;
@@ -182,33 +189,35 @@ export class ClustersService {
       axisPartName = 'xaxisPart';
     }
     let filteredotherList =
-      this.dimensionsDatasService.dimensionsDatas.matrixDatas.matrixCellDatas.map(
-        (e) => e[axisPartName],
+      this.dimensionsDatasService.dimensionsDatas?.matrixDatas?.matrixCellDatas?.map(
+        (e: CellModel) => e[axisPartName as keyof CellModel],
       );
     filteredotherList = [...new Set(filteredotherList)]; // keep uniq
 
     const matrixCellFreqDataMap =
       this.dimensionsDatasService.dimensionsDatas.matrixCellFreqDataMap;
 
-    for (let i = 0; i < otherselectedNode.childrenList.length; i++) {
-      const element = otherselectedNode.childrenList[i];
+    if (otherselectedNode) {
+      for (let i = 0; i < otherselectedNode.childrenList.length; i++) {
+        const element = otherselectedNode.childrenList[i];
 
-      for (let j = 0; j < filteredotherList.length; j++) {
-        const otherelement = filteredotherList[j];
-        const labelIndex = distributionsGraphLabelsInit.indexOf(otherelement);
+        for (let j = 0; j < filteredotherList.length; j++) {
+          const otherelement = filteredotherList[j];
+          const labelIndex = distributionsGraphLabelsInit.indexOf(otherelement);
 
-        const key =
-          position === 1
-            ? `${otherelement}-${element}`
-            : `${element}-${otherelement}`;
+          const key =
+            position === 1
+              ? `${otherelement}-${element}`
+              : `${element}-${otherelement}`;
 
-        const cell = matrixCellFreqDataMap[key];
+          const cell = matrixCellFreqDataMap[key];
 
-        if (cell !== undefined) {
-          if (!currentDataSetData[labelIndex]) {
-            currentDataSetData[labelIndex] = matrixValues[cell];
-          } else {
-            currentDataSetData[labelIndex] += matrixValues[cell];
+          if (cell !== undefined) {
+            if (!currentDataSetData[labelIndex]) {
+              currentDataSetData[labelIndex] = matrixValues[cell];
+            } else {
+              currentDataSetData[labelIndex] += matrixValues[cell]!;
+            }
           }
         }
       }
@@ -238,57 +247,58 @@ export class ClustersService {
 
     let currentDataSet: ChartDatasetModel;
     currentDataSet = new ChartDatasetModel('info', CHART_TYPES.LINE);
-    for (
-      let j = this.dimensionsDatas.dimensions.length - 1;
-      j <= this.dimensionsDatas.hierarchyDatas.totalInitialClusters;
-      j++
-    ) {
-      let currentCluster;
-      for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
-        const currentDimensionHierarchy: any =
-          this.appService.initialDatas.coclusteringReport.dimensionHierarchies[
-            i
-          ];
-        currentCluster = currentDimensionHierarchy.clusters.find(
-          (e) => e.hierarchicalRank === j + 1,
-        );
+    if (this.dimensionsDatas?.hierarchyDatas) {
+      for (
+        let j = this.dimensionsDatas.dimensions.length - 1;
+        j <= this.dimensionsDatas.hierarchyDatas.totalInitialClusters;
+        j++
+      ) {
+        let currentCluster;
+        for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
+          const currentDimensionHierarchy: DimensionHierarchy | undefined =
+            this.appService.initialDatas?.coclusteringReport
+              .dimensionHierarchies[i];
+          currentCluster = currentDimensionHierarchy?.clusters.find(
+            (e: Cluster) => e.hierarchicalRank === j + 1,
+          );
+          if (currentCluster) {
+            break;
+          }
+        }
+        // 150 currentCluster may be deleted by an auto unfold,
+        // If not found, do nothing and loop
         if (currentCluster) {
-          break;
+          let currentInfo = currentCluster.hierarchicalLevel * 100 || 0;
+          if (currentInfo < 0) {
+            currentInfo = 0;
+          }
+          currentDataSet.data.push(currentInfo);
         }
       }
-      // 150 currentCluster may be deleted by an auto unfold,
-      // If not found, do nothing and loop
-      if (currentCluster) {
-        let currentInfo = currentCluster.hierarchicalLevel * 100 || 0;
-        if (currentInfo < 0) {
-          currentInfo = 0;
+      infoPerCluster.datasets.push(currentDataSet);
+
+      currentDataSet = new ChartDatasetModel(
+        this.translate.get('GLOBAL.NUMBER_OF_CLUSTERS'),
+      );
+      currentDataSet.maxBarThickness = 5;
+      currentDataSet.barThickness = 5;
+
+      // Manage current rank selection bar
+      for (
+        let j = this.dimensionsDatas.dimensions.length - 1;
+        j < this.dimensionsDatas.hierarchyDatas.totalClusters;
+        j++
+      ) {
+        infoPerCluster.labels.push(j + 1 + '');
+        let currentValue = 0;
+
+        if (j + 1 === rank) {
+          currentValue = 100;
         }
-        currentDataSet.data.push(currentInfo);
+        currentDataSet.data.push(currentValue);
       }
+      infoPerCluster.datasets.push(currentDataSet);
     }
-    infoPerCluster.datasets.push(currentDataSet);
-
-    currentDataSet = new ChartDatasetModel(
-      this.translate.get('GLOBAL.NUMBER_OF_CLUSTERS'),
-    );
-    currentDataSet.maxBarThickness = 5;
-    currentDataSet.barThickness = 5;
-
-    // Manage current rank selection bar
-    for (
-      let j = this.dimensionsDatas.dimensions.length - 1;
-      j < this.dimensionsDatas.hierarchyDatas.totalClusters;
-      j++
-    ) {
-      infoPerCluster.labels.push(j + 1 + '');
-      let currentValue = 0;
-
-      if (j + 1 === rank) {
-        currentValue = 100;
-      }
-      currentDataSet.data.push(currentValue);
-    }
-    infoPerCluster.datasets.push(currentDataSet);
 
     return infoPerCluster;
   }
@@ -304,63 +314,68 @@ export class ClustersService {
     const clustersPerDimDatas = new ChartDatasModel();
     let maxGraphValue = 0;
 
-    let currentDataSet: ChartDatasetModel;
+    if (
+      this.dimensionsDatas?.selectedDimensions &&
+      this.dimensionsDatas.hierarchyDatas
+    ) {
+      let currentDataSet: ChartDatasetModel;
 
-    for (let i = 0; i < this.dimensionsDatas.selectedDimensions.length; i++) {
+      for (let i = 0; i < this.dimensionsDatas.selectedDimensions.length; i++) {
+        currentDataSet = new ChartDatasetModel(
+          this.dimensionsDatas?.selectedDimensions[i]?.name,
+          CHART_TYPES.LINE,
+        );
+
+        let rankedCount = 1;
+        for (
+          let j = this.dimensionsDatas.selectedDimensions.length - 1;
+          j <= this.dimensionsDatas.hierarchyDatas.totalClusters;
+          j++
+        ) {
+          const isCurrentNodeRanked = this.dimensionsDatas.dimensionsClusters[
+            i
+          ]?.find((e) => e.hierarchicalRank === j && !e.isLeaf);
+          if (isCurrentNodeRanked) {
+            rankedCount++;
+          }
+          currentDataSet.data.push(rankedCount);
+        }
+        clustersPerDimDatas.datasets.push(currentDataSet);
+      }
+
+      for (let k = 0; k < clustersPerDimDatas.datasets.length; k++) {
+        if (
+          clustersPerDimDatas.datasets[k]?.data[
+            rank - this.dimensionsDatas.selectedDimensions.length
+          ] > maxGraphValue
+        ) {
+          maxGraphValue =
+            clustersPerDimDatas.datasets[k]?.data[
+              rank - this.dimensionsDatas.selectedDimensions.length
+            ];
+        }
+      }
+
       currentDataSet = new ChartDatasetModel(
-        this.dimensionsDatas.selectedDimensions[i].name,
-        CHART_TYPES.LINE,
+        this.translate.get('GLOBAL.NUMBER_OF_CLUSTERS'),
       );
+      currentDataSet.maxBarThickness = 5;
+      currentDataSet.barThickness = 5;
 
-      let rankedCount = 1;
       for (
         let j = this.dimensionsDatas.selectedDimensions.length - 1;
-        j <= this.dimensionsDatas.hierarchyDatas.totalClusters;
+        j < this.dimensionsDatas.hierarchyDatas.totalClusters;
         j++
       ) {
-        const isCurrentNodeRanked = this.dimensionsDatas.dimensionsClusters[
-          i
-        ].find((e) => e.hierarchicalRank === j && !e.isLeaf);
-        if (isCurrentNodeRanked) {
-          rankedCount++;
+        clustersPerDimDatas.labels.push(j + 1 + '');
+        let currentValue = 0;
+        if (j + 1 === rank) {
+          currentValue = maxGraphValue;
         }
-        currentDataSet.data.push(rankedCount);
+        currentDataSet.data.push(currentValue);
       }
       clustersPerDimDatas.datasets.push(currentDataSet);
     }
-
-    for (let k = 0; k < clustersPerDimDatas.datasets.length; k++) {
-      if (
-        clustersPerDimDatas.datasets[k].data[
-          rank - this.dimensionsDatas.selectedDimensions.length
-        ] > maxGraphValue
-      ) {
-        maxGraphValue =
-          clustersPerDimDatas.datasets[k].data[
-            rank - this.dimensionsDatas.selectedDimensions.length
-          ];
-      }
-    }
-
-    currentDataSet = new ChartDatasetModel(
-      this.translate.get('GLOBAL.NUMBER_OF_CLUSTERS'),
-    );
-    currentDataSet.maxBarThickness = 5;
-    currentDataSet.barThickness = 5;
-
-    for (
-      let j = this.dimensionsDatas.selectedDimensions.length - 1;
-      j < this.dimensionsDatas.hierarchyDatas.totalClusters;
-      j++
-    ) {
-      clustersPerDimDatas.labels.push(j + 1 + '');
-      let currentValue = 0;
-      if (j + 1 === rank) {
-        currentValue = maxGraphValue;
-      }
-      currentDataSet.data.push(currentValue);
-    }
-    clustersPerDimDatas.datasets.push(currentDataSet);
 
     return clustersPerDimDatas;
   }
@@ -379,75 +394,81 @@ export class ClustersService {
     hierarchyName: string,
     node: TreeNodeModel,
   ): CompositionModel[] {
-    const appinitialDatas: CovisualizationDatas = this.appService.initialDatas;
     const compositionValues: CompositionModel[] = [];
 
-    if (this.appService.appDatas?.coclusteringReport?.dimensionPartitions) {
-      const currentDimensionDetails: DimensionCovisualizationModel =
+    if (
+      this.appService.initialDatas?.coclusteringReport?.dimensionSummaries &&
+      this.appService.appDatas?.coclusteringReport?.dimensionPartitions &&
+      this.dimensionsDatas?.selectedDimensions
+    ) {
+      const currentDimensionDetails: DimensionCovisualizationModel | undefined =
         this.dimensionsDatas.selectedDimensions.find(
           (e) => e.name === hierarchyName,
         );
-      const currentIndex: number =
-        this.dimensionsDatas.selectedDimensions.findIndex((e) => {
-          return hierarchyName === e.name;
-        });
-      const currentInitialDimensionDetails: DimensionCovisualizationModel =
-        new DimensionCovisualizationModel(
-          appinitialDatas.coclusteringReport.dimensionSummaries[
-            currentDimensionDetails.startPosition
-          ],
-          currentIndex,
-        );
-      const dimensionPartition =
-        appinitialDatas.coclusteringReport.dimensionPartitions[
-          currentDimensionDetails.startPosition
-        ];
-
-      // Set  dimension partitions from intervals or valueGroup
-      currentInitialDimensionDetails.setPartition(dimensionPartition);
-
-      // Composition only available for numerical Dimensions
-      if (currentDimensionDetails?.isCategorical) {
-        node.getChildrenList();
-
-        if (node.childrenLeafList) {
-          const currentDimensionClusters = Object.assign(
-            [],
-            this.dimensionsDatas.dimensionsClusters[currentIndex],
+      if (currentDimensionDetails) {
+        const currentIndex: number =
+          this.dimensionsDatas.selectedDimensions.findIndex((e) => {
+            return hierarchyName === e.name;
+          });
+        const position = currentDimensionDetails.startPosition;
+        const currentInitialDimensionDetails: DimensionCovisualizationModel =
+          new DimensionCovisualizationModel(
+            this.appService.initialDatas.coclusteringReport.dimensionSummaries[
+              position
+            ],
+            currentIndex,
           );
-          const childrenLeafListLength = node.childrenLeafList.length;
+        const dimensionPartition =
+          this.appService.initialDatas.coclusteringReport.dimensionPartitions[
+            position
+          ];
 
-          for (let i = 0; i < childrenLeafListLength; i++) {
-            const currentLeafName = node.childrenLeafList[i];
-            // Check if this name has been updated
-            const currentClusterDetails =
-              currentInitialDimensionDetails.valueGroups.find(
-                (e) => e.cluster === currentLeafName,
-              );
-            if (currentClusterDetails) {
-              const currentClusterDetailsLength =
-                currentClusterDetails.values.length;
-              for (let j = 0; j < currentClusterDetailsLength; j++) {
-                const currentDimensionHierarchyCluster: any =
-                  currentDimensionClusters.find(
-                    (e) => e.cluster === currentLeafName,
-                  );
-                if (node.isCollapsed) {
-                  currentDimensionHierarchyCluster.shortDescription =
-                    node.shortDescription;
-                }
-                const externalDatas: ExtDatasModel =
-                  this.importExtDatasService.getImportedDatasFromDimension(
-                    currentDimensionDetails,
-                  );
+        // Set  dimension partitions from intervals or valueGroup
+        currentInitialDimensionDetails.setPartition(dimensionPartition);
 
-                const composition = new CompositionModel(
-                  currentClusterDetails,
-                  currentDimensionHierarchyCluster,
-                  j,
-                  externalDatas,
+        // Composition only available for numerical Dimensions
+        if (currentDimensionDetails?.isCategorical) {
+          node.getChildrenList();
+
+          if (node.childrenLeafList) {
+            const currentDimensionClusters = Object.assign(
+              [],
+              this.dimensionsDatas.dimensionsClusters[currentIndex],
+            );
+            const childrenLeafListLength = node.childrenLeafList.length;
+
+            for (let i = 0; i < childrenLeafListLength; i++) {
+              const currentLeafName = node.childrenLeafList[i];
+              // Check if this name has been updated
+              const currentClusterDetails =
+                currentInitialDimensionDetails.valueGroups.find(
+                  (e) => e.cluster === currentLeafName,
                 );
-                compositionValues.push(composition);
+              if (currentClusterDetails) {
+                const currentClusterDetailsLength =
+                  currentClusterDetails.values.length;
+                for (let j = 0; j < currentClusterDetailsLength; j++) {
+                  const currentDimensionHierarchyCluster: any =
+                    currentDimensionClusters.find(
+                      (e) => e.cluster === currentLeafName,
+                    );
+                  if (node.isCollapsed) {
+                    currentDimensionHierarchyCluster.shortDescription =
+                      node.shortDescription;
+                  }
+                  const externalDatas: ExtDatasModel =
+                    this.importExtDatasService.getImportedDatasFromDimension(
+                      currentDimensionDetails,
+                    );
+
+                  const composition = new CompositionModel(
+                    currentClusterDetails,
+                    currentDimensionHierarchyCluster,
+                    j,
+                    externalDatas,
+                  );
+                  compositionValues.push(composition);
+                }
               }
             }
           }
@@ -470,15 +491,15 @@ export class ClustersService {
     selectedDimension: DimensionCovisualizationModel | undefined,
   ): ClusterDetailsModel[] {
     let filteredDimensionsClusters: ClusterDetailsModel[] = [];
-    if (dimensionsTree) {
+    if (dimensionsTree && selectedDimension && dimensionsTree) {
       const filteredDimensionsClustersDatas = [].concat(
         this.getCurrentClusterDetailsFromNode(dimensionsTree),
       );
       for (let i = 0; i < filteredDimensionsClustersDatas.length; i++) {
         const currentNodesNames =
-          this.dimensionsDatas.nodesNames[selectedDimension.name];
+          this.dimensionsDatas?.nodesNames[selectedDimension.name];
         const clusterDetails: ClusterDetailsModel = new ClusterDetailsModel(
-          filteredDimensionsClustersDatas[i],
+          filteredDimensionsClustersDatas[i]!,
           currentNodesNames,
         );
 
