@@ -13,7 +13,7 @@ import { DimensionViewLayoutModel } from '@khiops-covisualization/model/dimensio
   styleUrls: ['./manage-views.component.scss'],
 })
 export class ManageViewsComponent {
-  public viewsLayout: ViewLayoutVO;
+  public viewsLayout: ViewLayoutVO | undefined;
   public isDimVisible: boolean[] = [];
   public isContextView = true;
   public matRippleColor = MAT_RIPPLE_COLOR;
@@ -49,9 +49,13 @@ export class ManageViewsComponent {
    */
   private computeIsDimensionVisible() {
     this.isDimVisible = new Array(
-      this.viewsLayout.dimensionsViewsLayoutsVO.length,
+      this.viewsLayout?.dimensionsViewsLayoutsVO.length,
     ).fill(true);
-    for (let i = 0; i < this.viewsLayout.dimensionsViewsLayoutsVO.length; i++) {
+    for (
+      let i = 0;
+      i < this.viewsLayout!.dimensionsViewsLayoutsVO.length;
+      i++
+    ) {
       if (this.appService.getActiveTabIndex() === 0 && i >= 2) {
         // Hide views layouts of contexts
         this.isDimVisible[i] = false;

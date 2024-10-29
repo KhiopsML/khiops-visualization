@@ -8,7 +8,6 @@ import { ImportExtDatasService } from '@khiops-covisualization/providers/import-
 import { TranslateService } from '@ngstack/translate';
 import { FileModel } from '@khiops-library/model/file.model';
 import { ExtDatasModel } from '@khiops-covisualization/model/ext-datas.model';
-import { IconCellComponent } from '@khiops-library/components/ag-grid/icon-cell/icon-cell.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AppConfig } from 'src/environments/environment';
 import { LoadExtDatasComponent } from '../load-ext-datas/load-ext-datas.component';
@@ -20,8 +19,8 @@ import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
   styleUrls: ['./import-ext-datas-list.component.scss'],
 })
 export class ImportExtDatasListComponent {
-  importExtDatas: FileModel;
-  importedDatas: GridDatasI;
+  importExtDatas: FileModel | undefined;
+  importedDatas: GridDatasI | undefined;
   isLoadingDatas = false;
 
   constructor(
@@ -70,17 +69,17 @@ export class ImportExtDatasListComponent {
       this.importExtDatasService.getImportedDatas();
     if (importedValues.length > 0) {
       for (let i = 0; i < importedValues.length; i++) {
-        this.importedDatas.values.push({
-          filename: importedValues[i].filename,
-          field: importedValues[i].field.name,
-          joinKey: importedValues[i].joinKey,
-          dimension: importedValues[i].dimension,
+        this.importedDatas.values!.push({
+          filename: importedValues[i]?.filename,
+          field: importedValues[i]?.field.name,
+          joinKey: importedValues[i]?.joinKey,
+          dimension: importedValues[i]?.dimension,
         });
       }
     }
   }
 
-  removeExtDatasFromList(e) {
+  removeExtDatasFromList(e: any) {
     const importedDatas = this.importExtDatasService.removeImportedDatas(
       e.data.filename,
       e.data.dimension,

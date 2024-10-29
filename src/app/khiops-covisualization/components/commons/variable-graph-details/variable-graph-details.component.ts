@@ -108,11 +108,11 @@ export class VariableGraphDetailsComponent
       ' ' +
       this.translate.get('GLOBAL.OF') +
       ' ' +
-      this.selectedDimensions?.[currentIndex].name +
+      this.selectedDimensions?.[currentIndex]?.name +
       ' ' +
       this.translate.get('GLOBAL.GIVEN') +
       ' ' +
-      this.selectedDimensions?.[otherIndex].name;
+      this.selectedDimensions?.[otherIndex]?.name;
   }
 
   private resize() {
@@ -150,9 +150,11 @@ export class VariableGraphDetailsComponent
 
     // Find node name from index
     const currentNodeName = this.graphDetails?.labels[index];
-    const dimName = this.selectedDimensions[currentIndex].name;
-    if (currentNodeName) {
-      this.treenodesService.setSelectedNode(dimName, currentNodeName);
+    if (currentIndex !== -1 && this.selectedDimensions) {
+      const dimName = this.selectedDimensions[currentIndex]?.name;
+      if (currentNodeName && dimName) {
+        this.treenodesService.setSelectedNode(dimName, currentNodeName);
+      }
     }
   }
 
@@ -192,7 +194,7 @@ export class VariableGraphDetailsComponent
    */
   private setLegendTitle() {
     const otherIndex = this.position === 0 ? 1 : 0;
-    this.graphDetails.datasets[0].label =
+    this.graphDetails!.datasets[0]!.label =
       this.dimensionsDatasService?.dimensionsDatas?.selectedNodes?.[
         otherIndex
       ]?.shortDescription;
@@ -208,7 +210,7 @@ export class VariableGraphDetailsComponent
    *
    * @returns An array containing the current position and the other position.
    */
-  private invertDimensionsPositions() {
+  private invertDimensionsPositions(): [number, number] {
     const currentIndex = this.position;
     let otherIndex = 0;
     if (currentIndex === 0) {
@@ -218,6 +220,9 @@ export class VariableGraphDetailsComponent
   }
 
   hideScaleElt() {
-    return this.graphDetails?.labels?.length < 10;
+    return (
+      this.graphDetails?.labels?.length !== undefined &&
+      this.graphDetails.labels.length < 10
+    );
   }
 }

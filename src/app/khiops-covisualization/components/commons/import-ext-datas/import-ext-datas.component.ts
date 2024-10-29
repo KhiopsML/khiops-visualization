@@ -16,18 +16,18 @@ import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.c
 })
 export class ImportExtDatasComponent implements OnInit {
   dimensionsDatas: DimensionsDatasModel;
-  separatorInput: string;
+  separatorInput: string = '';
   formatedDatas: any;
-  joinKeys = {
+  joinKeys: any = {
     keys: [],
     selected: undefined,
   };
-  selectedDimension: DimensionCovisualizationModel;
-  fieldsToImport = {
+  selectedDimension: DimensionCovisualizationModel | undefined;
+  fieldsToImport: any = {
     values: [],
     displayedColumns: [],
   };
-  @Input() importExtDatas: FileModel;
+  @Input() importExtDatas!: FileModel;
 
   @Output() closeImport: EventEmitter<any> = new EventEmitter();
 
@@ -54,15 +54,15 @@ export class ImportExtDatasComponent implements OnInit {
 
   onClickOnSave() {
     for (let i = 0; i < this.fieldsToImport.values.length; i++) {
-      const currentField = this.fieldsToImport.values[i];
-      if (currentField.import) {
+      const currentField: any = this.fieldsToImport.values[i];
+      if (currentField?.import) {
         // @ts-ignore
         let path = this.importExtDatas?.file?.path;
 
         const importedData = this.importExtDatasService.addImportedDatas(
           this.importExtDatas.file.name,
           path,
-          this.selectedDimension.name,
+          this.selectedDimension?.name,
           this.joinKeys.selected,
           this.separatorInput,
           currentField,
@@ -107,7 +107,7 @@ export class ImportExtDatasComponent implements OnInit {
 
   onGridCheckboxChanged(event: GridCheckboxEventI) {
     const currentField = this.fieldsToImport.values.find(
-      (e) => e.name === event.data.name,
+      (e: any) => e.name === event.data.name,
     );
     if (currentField) {
       currentField.import = event.state;
@@ -133,7 +133,7 @@ export class ImportExtDatasComponent implements OnInit {
     ];
 
     const selectedKeyIndex = this.formatedDatas.keys.findIndex(
-      (e) => e === this.joinKeys.selected,
+      (e: any) => e === this.joinKeys.selected,
     );
 
     // Clone array

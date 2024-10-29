@@ -5,18 +5,18 @@
     (dragEnd)="onSplitDragEnd($event, sizeId)"
   >
     <as-split-area
-      [size]="sizes[sizeId][0]"
+      [size]="sizes?.[sizeId]?.[0]"
       order="1"
-      [visible]="viewsLayout.isDimensionsChecked"
+      [visible]="viewsLayout?.isDimensionsChecked"
     >
       <app-selected-clusters [selectedNodes]="dimensionsDatas.selectedNodes">
       </app-selected-clusters>
     </as-split-area>
     <as-split-area
       class="matrix-container-comp-wrapper"
-      [size]="sizes[sizeId][1]"
+      [size]="sizes?.[sizeId]?.[1]"
       order="2"
-      [visible]="viewsLayout.isCoocurenceChecked"
+      [visible]="viewsLayout?.isCoocurenceChecked"
     >
       <div
         fxFlexFill

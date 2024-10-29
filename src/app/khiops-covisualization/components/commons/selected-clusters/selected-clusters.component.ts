@@ -128,11 +128,11 @@ export class SelectedClustersComponent implements OnDestroy {
     if (this.selectedClusters) {
       const firstDimPos =
         this.dimensionsDatasService.getDimensionPositionFromName(
-          this.selectedClusters[0]?.hierarchy,
+          this.selectedClusters[0]!.hierarchy,
         );
       const secondDimPos =
         this.dimensionsDatasService.getDimensionPositionFromName(
-          this.selectedClusters[1]?.hierarchy,
+          this.selectedClusters[1]!.hierarchy,
         );
       this.selectedClusters[firstDimPos] &&
         currentActiveClusters.push(this.selectedClusters[firstDimPos]);

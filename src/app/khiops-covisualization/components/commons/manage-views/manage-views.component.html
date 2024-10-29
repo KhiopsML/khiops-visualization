@@ -12,7 +12,7 @@
     <div fxLayout="column" fxFlex="80">
       <div
         *ngFor="
-          let dimensionLayout of viewsLayout.dimensionsViewsLayoutsVO;
+          let dimensionLayout of viewsLayout?.dimensionsViewsLayoutsVO;
           let dimIndex = index
         "
       >
@@ -141,7 +141,7 @@
       fxFlex="20"
       [ngClass]="{
         disabled:
-          !viewsLayout.isDimensionsChecked && !viewsLayout.isCoocurenceChecked
+          !viewsLayout?.isDimensionsChecked && !viewsLayout?.isCoocurenceChecked
       }"
     >
       <div
@@ -151,9 +151,9 @@
         fxLayoutAlign="center center"
         fxFlex="30"
         (click)="
-          viewsLayout.isDimensionsChecked = !viewsLayout.isDimensionsChecked
+          viewsLayout!.isDimensionsChecked = !viewsLayout?.isDimensionsChecked
         "
-        [ngClass]="{ disabled: !viewsLayout.isDimensionsChecked }"
+        [ngClass]="{ disabled: !viewsLayout?.isDimensionsChecked }"
       >
         {{ 'GLOBAL.DIMENSIONS' | translate }}
       </div>
@@ -164,9 +164,9 @@
         fxLayoutAlign="center center"
         fxFlex="70"
         (click)="
-          viewsLayout.isCoocurenceChecked = !viewsLayout.isCoocurenceChecked
+          viewsLayout!.isCoocurenceChecked = !viewsLayout?.isCoocurenceChecked
         "
-        [ngClass]="{ disabled: !viewsLayout.isCoocurenceChecked }"
+        [ngClass]="{ disabled: !viewsLayout?.isCoocurenceChecked }"
       >
         {{ 'GLOBAL.COOCURENCE' | translate }}
       </div>

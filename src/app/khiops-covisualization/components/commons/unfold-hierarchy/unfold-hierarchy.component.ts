@@ -29,7 +29,7 @@ import { GridCheckboxEventI } from '@khiops-library/interfaces/events';
 })
 export class UnfoldHierarchyComponent implements OnInit {
   public currentUnfoldHierarchy: number = 0;
-  public hierarchyDatas: HierarchyDatasModel;
+  public hierarchyDatas: HierarchyDatasModel | undefined;
   public loadingHierarchy: boolean = false;
   public clustersPerDimDatas: ChartDatasModel | undefined;
   public infoPerCluster: ChartDatasModel | undefined;
@@ -116,7 +116,7 @@ export class UnfoldHierarchyComponent implements OnInit {
 
     this.treenodesService.initSavedUnfoldRank();
     this.hierarchyDatas = this.treenodesService.getHierarchyDatas();
-    this.defaultMaxUnfoldHierarchy = this.hierarchyDatas.totalClusters;
+    this.defaultMaxUnfoldHierarchy = this.hierarchyDatas?.totalClusters || 0;
 
     this.unfoldHierarchyTableTitle = this.translate.get(
       'GLOBAL.NB_OF_CLUSTERS_PER_DIM',
@@ -157,7 +157,7 @@ export class UnfoldHierarchyComponent implements OnInit {
     this.hierarchyService.initialize();
 
     this.previousHierarchyRank = _.cloneDeep(
-      this.hierarchyDatas.selectedUnfoldHierarchy,
+      this.hierarchyDatas!.selectedUnfoldHierarchy,
     );
     this.currentUnfoldHierarchy = this.previousHierarchyRank;
 
@@ -182,7 +182,7 @@ export class UnfoldHierarchyComponent implements OnInit {
         // Do not insert bar chart legend (nb of clusters)
         for (let i = 0; i < this.clustersPerDimDatas.datasets.length - 1; i++) {
           this.legend[0].series.push({
-            name: this.clustersPerDimDatas.datasets[i].label,
+            name: this.clustersPerDimDatas.datasets[i]?.label,
           });
         }
       }
@@ -195,9 +195,9 @@ export class UnfoldHierarchyComponent implements OnInit {
       );
 
       // set the current hierarchy selection to black
-      this.colorSetInfoPerCluster.domain[1] = this.borderColor;
-      this.colorSetClusterPerDim.domain[
-        this.clustersPerDimDatas.datasets.length - 1
+      this.colorSetInfoPerCluster!.domain[1] = this.borderColor;
+      this.colorSetClusterPerDim!.domain[
+        this.clustersPerDimDatas!.datasets.length - 1
       ] = this.borderColor;
     }); // Do not freeze ui during graph render
   }
@@ -272,13 +272,13 @@ export class UnfoldHierarchyComponent implements OnInit {
   }
 
   increaseUnfoldHierarchy() {
-    if (this.hierarchyDatas.totalClusters > this.currentUnfoldHierarchy) {
+    if (this.hierarchyDatas!.totalClusters > this.currentUnfoldHierarchy) {
       this.onHierarchyChanged(this.currentUnfoldHierarchy + 1);
     }
   }
 
   decreaseUnfoldHierarchy() {
-    if (this.hierarchyDatas.minClusters < this.currentUnfoldHierarchy) {
+    if (this.hierarchyDatas!.minClusters < this.currentUnfoldHierarchy) {
       this.onHierarchyChanged(this.currentUnfoldHierarchy - 1);
     }
   }
@@ -303,8 +303,8 @@ export class UnfoldHierarchyComponent implements OnInit {
       this.currentUnfoldHierarchy,
     );
     this.currentInformationPerCluster =
-      this.infoPerCluster.datasets[0].data[
-        this.currentUnfoldHierarchy - this.dimensions.length
+      this.infoPerCluster.datasets[0]?.data[
+        this.currentUnfoldHierarchy - this.dimensions!.length
       ];
     this.treenodesService.updateCurrentHierarchyClustersCount(
       this.currentUnfoldHierarchy,

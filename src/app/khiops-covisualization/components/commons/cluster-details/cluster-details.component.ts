@@ -110,7 +110,7 @@ export class ClusterDetailsComponent implements OnInit, OnChanges {
 
   onSelectRowChanged(item: ClusterDetailsModel) {
     this.treenodesService.setSelectedNode(
-      this.selectedDimension?.name,
+      this.selectedDimension?.name!,
       item._id,
     );
   }

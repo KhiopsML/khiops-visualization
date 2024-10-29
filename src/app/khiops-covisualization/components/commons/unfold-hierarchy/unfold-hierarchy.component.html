@@ -48,8 +48,8 @@
             <b>{{ currentUnfoldHierarchy }}</b></span
           >
           <mat-slider
-            [max]="hierarchyDatas.totalClusters"
-            [min]="hierarchyDatas.minClusters"
+            [max]="hierarchyDatas?.totalClusters"
+            [min]="hierarchyDatas?.minClusters"
             [step]="1"
             (input)="onHierarchyChanged($event?.target?.['valueAsNumber'])"
           >

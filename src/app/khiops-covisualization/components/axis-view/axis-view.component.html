@@ -35,7 +35,7 @@
         <as-split-area
           [size]="sizes && sizes.col0Row[0]"
           order="1"
-          [visible]="viewsLayout.dimensionsViewsLayoutsVO[0].isChecked"
+          [visible]="viewsLayout.dimensionsViewsLayoutsVO[0]?.isChecked"
         >
           <app-axis
             [sizeId]="'col0Row0Col'"
@@ -49,7 +49,7 @@
         <as-split-area
           [size]="sizes.col0Row[1]"
           order="2"
-          [visible]="viewsLayout.dimensionsViewsLayoutsVO[1].isChecked"
+          [visible]="viewsLayout.dimensionsViewsLayoutsVO[1]?.isChecked"
         >
           <app-axis
             [sizeId]="'col0Row1Col'"
@@ -72,15 +72,15 @@
           *ngFor="let item of dimensionsDatas.contextDimensions; let i = index"
           order="i+2"
           [visible]="
-            viewsLayout.dimensionsViewsLayoutsVO[i + 2] &&
-            viewsLayout.dimensionsViewsLayoutsVO[i + 2].isChecked
+            viewsLayout?.dimensionsViewsLayoutsVO[i + 2] &&
+            viewsLayout?.dimensionsViewsLayoutsVO[i + 2].isChecked
           "
         >
           <app-axis
             [sizeId]="'col0Row0Col'"
             [viewId]="'contextView'"
             [position]="i + 2"
-            [axisLayout]="viewsLayout.dimensionsViewsLayoutsVO[i + 2]"
+            [axisLayout]="viewsLayout?.dimensionsViewsLayoutsVO[i + 2]"
             [dimensionsDatas]="dimensionsDatas"
           >
           </app-axis>
@@ -90,7 +90,7 @@
     <as-split-area
       [size]="sizes.col[1]"
       [visible]="
-        viewsLayout.isDimensionsChecked || viewsLayout.isCoocurenceChecked
+        viewsLayout?.isDimensionsChecked || viewsLayout?.isCoocurenceChecked
       "
     >
       <app-matrix-container

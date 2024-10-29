@@ -6,7 +6,7 @@
     fxFlexFill
   >
     <as-split-area
-      [size]="sizes[sizeId][column0Index]"
+      [size]="sizes?.[sizeId]?.[column0Index]"
       order="1"
       [visible]="axisLayout.isHierarchyChecked"
     >
@@ -19,7 +19,7 @@
       ></app-hierarchy-details>
     </as-split-area>
     <as-split-area
-      [size]="sizes[sizeId][column1Index]"
+      [size]="sizes?.[sizeId]?.[column1Index]"
       class="app-cluster-details-container"
       order="2"
       *ngIf="axisLayout.isClustersChecked"
@@ -32,7 +32,7 @@
       ></app-cluster-details>
     </as-split-area>
     <as-split-area
-      [size]="sizes[sizeId][column2Index]"
+      [size]="sizes?.[sizeId]?.[column2Index]"
       order="3"
       *ngIf="axisLayout.isAnnotationChecked || axisLayout.isCompositionChecked"
     >
@@ -64,7 +64,7 @@
       </as-split>
     </as-split-area>
     <as-split-area
-      [size]="sizes[sizeId][column3Index]"
+      [size]="sizes?.[sizeId]?.[column3Index]"
       order="4"
       *ngIf="axisLayout.isExternalDataChecked"
     >
@@ -79,7 +79,7 @@
       </app-external-datas>
     </as-split-area>
     <as-split-area
-      [size]="sizes[sizeId][column4Index]"
+      [size]="sizes?.[sizeId]?.[column4Index]"
       order="5"
       *ngIf="
         axisLayout.isDistributionChecked && (position === 0 || position === 1)

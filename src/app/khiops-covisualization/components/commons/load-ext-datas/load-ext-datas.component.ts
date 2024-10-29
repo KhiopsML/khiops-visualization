@@ -10,7 +10,7 @@ import { EventsService } from '@khiops-covisualization/providers/events.service'
   styleUrls: ['./load-ext-datas.component.scss'],
 })
 export class LoadExtDatasComponent implements OnInit {
-  loadingDatasStatus: string;
+  loadingDatasStatus: string = '';
   loadingDatasPercent = 0;
 
   constructor(
@@ -22,7 +22,7 @@ export class LoadExtDatasComponent implements OnInit {
 
   ngOnInit() {
     this.importExtDatasService
-      .loadSavedExternalDatas((e, percent) => {
+      .loadSavedExternalDatas((e: any, percent: any) => {
         this.loadingDatasPercent = percent;
         this.loadingDatasStatus = e;
       })

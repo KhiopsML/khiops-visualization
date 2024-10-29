@@ -19,7 +19,7 @@ export class AxisComponent implements OnInit {
   @Input() public axisLayout: DimensionViewLayoutModel | undefined;
   @Input() private viewId: string = '';
 
-  public sizes: DynamicI;
+  public sizes: DynamicI | undefined;
   public column0Index = 0;
   public column1Index = 1;
   public column2Index = 2;
@@ -68,7 +68,7 @@ export class AxisComponent implements OnInit {
    */
   private computeComponentsSizes() {
     this.viewLayout =
-      this.viewManagerService.getViewsLayout().dimensionsViewsLayoutsVO[
+      this.viewManagerService.getViewsLayout()?.dimensionsViewsLayoutsVO[
         this.position
       ];
     if (this.viewLayout) {
