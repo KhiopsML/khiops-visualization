@@ -1,5 +1,6 @@
 import {
   DimensionCovisualization,
+  Interval,
   ValueGroup,
 } from '@khiops-covisualization/interfaces/app-datas';
 import { TYPES } from '@khiops-library/enum/types';
@@ -17,10 +18,7 @@ export class DimensionVisualizationModel implements DimensionVisualization {
   parts: number; // KV
   name: string; // KV
 
-  intervals: {
-    cluster: string;
-    bounds: number[];
-  }[];
+  intervals: Interval[];
   valueGroups: ValueGroup[];
 
   constructor(object: DimensionVisualization) {
