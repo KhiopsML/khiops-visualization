@@ -58,14 +58,16 @@ export class TreenodesService {
   getLeafNodesForARank(rank: number) {
     const collapsedNodes = {};
     for (let i = 0; i < this.dimensionsDatas.selectedDimensions.length; i++) {
-      collapsedNodes[this.dimensionsDatas.selectedDimensions[i].name] = [];
+      // @ts-ignore
+      collapsedNodes[this.dimensionsDatas.selectedDimensions[i]?.name] = [];
       const nodesVO: TreeNodeModel[] = UtilsService.fastFilter(
         this.dimensionsDatas.dimensionsClusters[i],
-        (e) => {
+        (e: TreeNodeModel) => {
           return rank <= e.hierarchicalRank && !e.isLeaf;
         },
       );
-      collapsedNodes[this.dimensionsDatas.selectedDimensions[i].name] =
+      // @ts-ignore
+      collapsedNodes[this.dimensionsDatas.selectedDimensions[i]?.name] =
         nodesVO.map((e) => e.cluster);
     }
     return collapsedNodes;
@@ -202,7 +204,9 @@ export class TreenodesService {
           }
         }
 
-        this.dimensionsDatas.selectedNodes[currentIndex] = nodeVO;
+        if (nodeVO) {
+          this.dimensionsDatas.selectedNodes[currentIndex] = nodeVO;
+        }
       }
 
       // Do not send event changed if only one node selected and if nodes does not changed
@@ -255,7 +259,9 @@ export class TreenodesService {
     if (currentIndex !== -1) {
       // Invert values if already selected
       [
+        // @ts-ignore
         this.dimensionsDatas.selectedNodes[currentIndex],
+        // @ts-ignore
         this.dimensionsDatas.selectedNodes[position],
       ] = [
         this.dimensionsDatas.selectedNodes[position],
@@ -458,7 +464,7 @@ export class TreenodesService {
         });
       const nodesVO: TreeNodeModel[] = UtilsService.fastFilter(
         this.dimensionsDatas.dimensionsClusters[currentIndex],
-        (e) => {
+        (e: TreeNodeModel) => {
           return !e.isLeaf && e.hierarchicalRank < rank;
         },
       );
@@ -481,7 +487,7 @@ export class TreenodesService {
       for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
         const nodesVO: TreeNodeModel[] = UtilsService.fastFilter(
           this.dimensionsDatas.dimensionsClusters[i],
-          (e) => {
+          (e: TreeNodeModel) => {
             return !e.isLeaf && e.hierarchicalRank < maxRank;
           },
         );
@@ -717,7 +723,7 @@ export class TreenodesService {
    * @param {any} testedSavedDatas - The tested saved data object to compare against.
    * @returns {boolean} - True if the saved data has changed, false otherwise.
    */
-  isSaveChanged(savedDatas, testedSavedDatas): boolean {
+  isSaveChanged(savedDatas: DynamicI, testedSavedDatas: DynamicI): boolean {
     return !_.isEqual(savedDatas, testedSavedDatas);
   }
 
@@ -799,13 +805,15 @@ export class TreenodesService {
                 );
                 if (nodeChildren[j] !== nodeName) {
                   // Do not remove current collapsed node
-                  if (nodeIndex !== -1) {
-                    dimHierarchy.clusters.splice(nodeIndex, 1);
+                  if (nodeIndex !== undefined && nodeIndex !== -1) {
+                    dimHierarchy!.clusters.splice(nodeIndex, 1);
                   }
                 } else {
-                  if (nodeIndex !== -1) {
+                  if (nodeIndex !== undefined && nodeIndex !== -1) {
                     // Set the isLeaf of the last collapsed node
-                    dimHierarchy.clusters[nodeIndex].isLeaf = true;
+                    if (dimHierarchy?.clusters[nodeIndex]) {
+                      dimHierarchy.clusters[nodeIndex].isLeaf = true;
+                    }
                   }
                 }
               }
@@ -1025,6 +1033,7 @@ export class TreenodesService {
         }
         // Sort intervals
         currentTruncatedPartition.intervals?.sort(function (a, b) {
+          // @ts-ignore
           return a.bounds[0] - b.bounds[0];
         });
       }
@@ -1110,24 +1119,24 @@ export class TreenodesService {
       k < CI.coclusteringReport!.dimensionHierarchies.length;
       k++
     ) {
-      let initialVariable;
-      let currentVariable;
+      let initialVariable: any;
+      let currentVariable: any;
       if (
         CC.coclusteringReport.dimensionPartitions[k]?.type === TYPES.NUMERICAL
       ) {
-        initialVariable = CI.coclusteringReport.dimensionPartitions[
+        initialVariable = CI.coclusteringReport?.dimensionPartitions[
           k
-        ].intervals.map((e) => e.bounds);
-        currentVariable = CC.coclusteringReport.dimensionPartitions[
+        ]?.intervals?.map((e) => e.bounds);
+        currentVariable = CC.coclusteringReport?.dimensionPartitions[
           k
-        ].intervals.map((e) => e.bounds);
+        ]?.intervals?.map((e) => e.bounds);
       } else {
-        initialVariable = CI.coclusteringReport.dimensionPartitions[
+        initialVariable = CI.coclusteringReport?.dimensionPartitions[
           k
-        ].valueGroups.map((e) => e.values);
-        currentVariable = CC.coclusteringReport.dimensionPartitions[
+        ]?.valueGroups?.map((e) => e.values);
+        currentVariable = CC.coclusteringReport?.dimensionPartitions[
           k
-        ].valueGroups.map((e) => e.values);
+        ]?.valueGroups?.map((e) => e.values);
       }
 
       // Loop the parts of the CI variable: for each part, we try to associate its index in
@@ -1136,42 +1145,45 @@ export class TreenodesService {
       // an "initial" part is either kept as it is in the current coclustering or included in
       // a folded part in the current coclustering
       let currentP = 0; // initialize the index of the part of the current variable
-      let currentPart = currentVariable[currentP]; // we initialize the current part
+      let currentPart: any = currentVariable?.[currentP]; // we initialize the current part
 
       // parcours des parties initiales
-      for (let initialP = 0; initialP < initialVariable.length; initialP++) {
-        let initialPart = initialVariable[initialP];
-        if (!transitionMatrix[k]) {
-          transitionMatrix[k] = [];
-        }
+      if (initialVariable && currentVariable) {
+        for (let initialP = 0; initialP < initialVariable.length; initialP++) {
+          let initialPart: any = initialVariable[initialP];
+          if (!transitionMatrix[k]) {
+            transitionMatrix[k] = [];
+          }
 
-        if (
-          CC.coclusteringReport.dimensionPartitions[k]!.type === TYPES.NUMERICAL
-        ) {
-          if (initialPart?.length !== 0) {
-            // #73
-            try {
-              while (
-                !(
-                  initialPart[0] >= currentVariable[currentP][0] &&
-                  initialPart[1] <= currentVariable[currentP][1]
-                )
-              ) {
-                currentPart = currentVariable[++currentP];
+          if (
+            CC.coclusteringReport.dimensionPartitions[k]!.type ===
+            TYPES.NUMERICAL
+          ) {
+            if (initialPart?.length !== 0) {
+              // #73
+              try {
+                while (
+                  !(
+                    initialPart[0] >= currentVariable[currentP][0] &&
+                    initialPart[1] <= currentVariable[currentP][1]
+                  )
+                ) {
+                  currentPart = currentVariable[++currentP];
+                }
+              } catch (e) {
+                console.log('truncateJsonCells ~ e:', e);
               }
-            } catch (e) {
-              console.log('truncateJsonCells ~ e:', e);
+            }
+          } else {
+            // The inclusion test consists of going through the modalities of the initial part
+            // and check that they are all in the list of modalities of the current part.
+            if (!currentPart?.includes(initialPart[0])) {
+              currentPart = currentVariable[++currentP];
             }
           }
-        } else {
-          // The inclusion test consists of going through the modalities of the initial part
-          // and check that they are all in the list of modalities of the current part.
-          if (!currentPart.includes(initialPart[0])) {
-            currentPart = currentVariable[++currentP];
-          }
-        }
 
-        transitionMatrix[k][initialP] = currentP;
+          transitionMatrix[k][initialP] = currentP;
+        }
       }
     }
 
@@ -1179,8 +1191,8 @@ export class TreenodesService {
     // of these cells and their resGroup
     let resGroup: any[] = [];
 
-    const { cellPartIndexes, dimensionHierarchies, cellFrequencies } =
-      CI.coclusteringReport;
+    const { cellPartIndexes, dimensionHierarchies, cellFrequencies }: any =
+      CI.coclusteringReport || {};
     let resGroupMap = new Map();
     // Browse the cells of the initial coclustering json file ("cellPartIndexes" field)
     for (let i = 0; i < cellPartIndexes.length; i++) {

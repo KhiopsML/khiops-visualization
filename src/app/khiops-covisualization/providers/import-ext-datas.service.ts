@@ -254,7 +254,7 @@ export class ImportExtDatasService {
    * @param progressCallback Optional callback function to report progress.
    * @returns A promise that resolves when all files are processed.
    */
-  loadSavedExternalDatas(progressCallback?: CallbackI) {
+  loadSavedExternalDatas(progressCallback?: any): Promise<any> {
     const promises: Promise<any>[] = [];
     this.savedExternalDatas = {};
     if (this.importExtDatas.length > 0) {
