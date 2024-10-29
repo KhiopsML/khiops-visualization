@@ -26,7 +26,7 @@ export class AxisViewComponent
   implements OnInit, OnDestroy
 {
   @Input() public openContextView = false;
-  public sizes: DynamicI;
+  public sizes: DynamicI | undefined;
   public dimensionsDatas: DimensionsDatasModel | undefined;
   public viewsLayout: ViewLayoutVO | undefined;
   public isBigJsonFile = false;
@@ -148,7 +148,7 @@ export class AxisViewComponent
    * Recompute json when nodes have been collapsed
    * @param collapsedNodes
    */
-  private computeSavedState(collapsedNodes) {
+  private computeSavedState(collapsedNodes: DynamicI) {
     let datas = this.treenodesService.constructSavedJson(collapsedNodes);
     this.appService.setCroppedFileDatas(datas);
     this.initializeDatas();
@@ -169,7 +169,7 @@ export class AxisViewComponent
    * 7. Initializes the data.
    * 8. Displays a snackbar warning about the performance impact of unfolded data.
    */
-  private computeLargeCoclustering(collapsedNodesSaved) {
+  private computeLargeCoclustering(collapsedNodesSaved: DynamicI) {
     if (this.dimensionsDatas) {
       const unfoldState =
         this.appService.getSavedDatas('unfoldHierarchyState') ||

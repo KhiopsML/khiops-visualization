@@ -86,7 +86,7 @@ export class AppService {
    * Sets the file data and saves it. Also clones the initial data.
    * @param datas - The file data.
    */
-  setFileDatas(datas: CovisualizationDatas) {
+  setFileDatas(datas: CovisualizationDatas | undefined) {
     if (this._appDatas) {
       this._appDatas.datas = datas;
     }
@@ -111,7 +111,7 @@ export class AppService {
    * Sets the saved data and updates the layout split sizes if available.
    * @param datas - The data to save.
    */
-  setSavedDatas(datas: CovisualizationDatas) {
+  setSavedDatas(datas: CovisualizationDatas | undefined) {
     if (datas?.savedDatas) {
       if (datas.savedDatas.splitSizes) {
         this.layoutService.setSplitSizes(datas.savedDatas.splitSizes);
