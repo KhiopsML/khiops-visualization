@@ -9,16 +9,16 @@ import { TrainEvaluationSummary } from '@khiops-visualization/interfaces/train-e
 import { TreePreparationSummary } from '@khiops-visualization/interfaces/tree-preparation-report';
 
 export class SummaryModel {
-  dictionary: string;
-  database: string;
-  targetVariable: string;
-  instances: string;
-  learningTask: string;
-  samplePercentage: number;
-  samplingMode: string;
-  selectionVariable: string;
-  selectionValue: string;
-  evaluatedVariables: string;
+  dictionary!: string;
+  database!: string;
+  targetVariable!: string;
+  instances!: string;
+  learningTask!: string;
+  samplePercentage!: number;
+  samplingMode!: string;
+  selectionVariable!: string;
+  selectionValue!: string;
+  evaluatedVariables!: string;
 
   displayDatas!: InfosDatasI[];
 
