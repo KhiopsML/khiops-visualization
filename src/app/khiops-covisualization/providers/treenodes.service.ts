@@ -592,7 +592,7 @@ export class TreenodesService {
    *
    * @returns {object} - The saved collapsed nodes.
    */
-  getSavedCollapsedNodes(): DynamicI | undefined {
+  getSavedCollapsedNodes(): {} | undefined {
     return this.collapsedNodesToSave;
   }
 

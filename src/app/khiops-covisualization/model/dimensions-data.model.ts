@@ -6,8 +6,8 @@ import { DynamicI } from '@khiops-library/interfaces/globals';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 
 export class DimensionsDatasModel {
-  matrixDatas: MatrixDatasModel;
-  allMatrixDatas: MatrixDatasModel;
+  matrixDatas!: MatrixDatasModel;
+  allMatrixDatas!: MatrixDatasModel;
   allMatrixCellDatas: CellModel[] = [];
   matrixCellFreqDataMap: DynamicI | undefined = undefined;
 

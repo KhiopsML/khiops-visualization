@@ -6,9 +6,9 @@ export class CompositionModel {
   _id: string;
   cluster: string;
   terminalCluster: string;
-  typicality: number;
-  value: string;
-  frequency: number;
+  typicality: number | undefined;
+  value: string | undefined;
+  frequency: number | undefined;
   rank: number;
   externalData: string | undefined;
 
@@ -23,10 +23,11 @@ export class CompositionModel {
     this.cluster = currentDimensionHierarchyCluster.shortDescription;
 
     this.value = object.values[index];
-    this.value = this.value.replace(/[\n\r]+/g, ''); // remove carriage return #53
+    this.value = this.value?.replace(/[\n\r]+/g, ''); // remove carriage return #53
     this.typicality = object.valueTypicalities[index];
     this.frequency = object.valueFrequencies[index];
 
+    // @ts-ignore
     this.externalData = externalDatas?.[this.value] || undefined;
 
     // Get rank and name if it has been changed from dimensionHierarchies array

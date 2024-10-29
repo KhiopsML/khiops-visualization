@@ -1,13 +1,13 @@
 import { ViewLayoutVO } from './view-layout.model';
 
 export class SavedDatasModel {
-  viewsLayout: ViewLayoutVO;
+  viewsLayout: ViewLayoutVO | undefined;
   splitSizes: {};
   selectedNodes: string[];
-  selectedDimensions: [];
-  collapsedNodes: {};
+  selectedDimensions: { name: string }[];
+  collapsedNodes: {} | undefined;
   nodesNames: {};
-  annotations: {};
+  annotations: {} | undefined;
   importedDatas: {};
   unfoldHierarchyState: number | undefined;
   matrixContrast: number | undefined;
@@ -17,20 +17,20 @@ export class SavedDatasModel {
   matrixMode: number | undefined;
 
   constructor(
-    viewsLayout,
-    splitSizes,
-    selectedNodes,
-    selectedDimensions,
-    collapsedNodes,
-    nodesNames,
-    annotations,
-    importedDatas,
-    matrixContrast?,
-    unfoldHierarchyState?,
-    conditionalOnContext?,
-    matrixOption?,
-    matrixMode?,
-    isAxisInverted?,
+    viewsLayout: ViewLayoutVO | undefined,
+    splitSizes: {},
+    selectedNodes: string[],
+    selectedDimensions: { name: string }[],
+    collapsedNodes: {} | undefined,
+    nodesNames: {},
+    annotations: {} | undefined,
+    importedDatas: {},
+    matrixContrast?: number,
+    unfoldHierarchyState?: number,
+    conditionalOnContext?: boolean,
+    matrixOption?: string,
+    matrixMode?: number,
+    isAxisInverted?: boolean,
   ) {
     this.viewsLayout = viewsLayout;
     this.splitSizes = splitSizes;
