@@ -10,39 +10,39 @@ export class CellModel {
 		and optimize performances
 	*/
 
-  _id: string | number;
-  cellFreq: number;
+  _id!: string | number;
+  cellFreq!: number;
   cellFreqHash: {} | undefined;
-  displayedFreqValue: number;
-  displayedValue: {
+  displayedFreqValue!: number;
+  displayedValue!: {
     type: string;
     value: number;
     extra: 0;
     ef: number;
   };
-  targetCellFreq: number;
-  index: number;
-  id: number; // KV for row identification (regression table case)
-  cellInterest: number;
-  cellTargetProb: number;
-  xCanvas: number;
-  yCanvas: number;
-  wCanvas: number;
-  hCanvas: number;
-  x: MatrixCoordI;
-  y: MatrixCoordI;
-  w: MatrixCoordI;
-  h: MatrixCoordI;
-  concatName: string[];
-  xaxisPart: string;
-  yaxisPart: string;
-  xaxisPartValues: number[] | string; // KV use only
-  yaxisPartValues: number[] | string; // KV use only
-  xDisplayaxisPart: string;
-  yDisplayaxisPart: string;
-  xnamePart: string;
-  ynamePart: string;
-  coverage;
+  targetCellFreq!: number;
+  index!: number;
+  id!: number; // KV for row identification (regression table case)
+  cellInterest!: number;
+  cellTargetProb!: number;
+  xCanvas!: number;
+  yCanvas!: number;
+  wCanvas!: number;
+  hCanvas!: number;
+  x!: MatrixCoordI;
+  y!: MatrixCoordI;
+  w!: MatrixCoordI;
+  h!: MatrixCoordI;
+  concatName!: string[];
+  xaxisPart!: string;
+  yaxisPart!: string;
+  xaxisPartValues!: number[] | string; // KV use only
+  yaxisPartValues!: number[] | string; // KV use only
+  xDisplayaxisPart!: string;
+  yDisplayaxisPart!: string;
+  xnamePart!: string;
+  ynamePart!: string;
+  coverage!: number;
 
   // Important to init those variables needed at construction
   cellProbs: number[] = [];
@@ -89,20 +89,20 @@ export class CellModel {
     yValues: MatrixValuesModel,
   ) {
     this.x = {
-      standard: xValues.standard[i],
-      frequency: xValues.frequency[i],
+      standard: xValues.standard[i]!,
+      frequency: xValues.frequency[i]!,
     };
     this.y = {
-      standard: yValues.standard[j],
-      frequency: yValues.frequency[j],
+      standard: yValues.standard[j]!,
+      frequency: yValues.frequency[j]!,
     };
     this.w = {
-      standard: xValues.standard[i + 1] - this.x.standard,
-      frequency: xValues.frequency[i + 1] - this.x.frequency,
+      standard: xValues.standard[i + 1]! - this.x.standard,
+      frequency: xValues.frequency[i + 1]! - this.x.frequency,
     };
     this.h = {
-      standard: yValues.standard[j + 1] - this.y.standard,
-      frequency: yValues.frequency[j + 1] - this.y.frequency,
+      standard: yValues.standard[j + 1]! - this.y.standard,
+      frequency: yValues.frequency[j + 1]! - this.y.frequency,
     };
   }
 }
