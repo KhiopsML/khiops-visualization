@@ -19,8 +19,8 @@ export class ViewLayoutVO {
    * @param previousLayout - Optional previous layout to merge values from.
    */
   addDimensionViewLayout(
-    dimensionName,
-    isContextView,
+    dimensionName: string,
+    isContextView: boolean,
     previousLayout?: DimensionViewLayoutModel,
   ) {
     let viewLayoutDimension = new DimensionViewLayoutModel(
@@ -40,7 +40,7 @@ export class ViewLayoutVO {
    *
    * @param lsValues - The previous values to merge with.
    */
-  megeWithPreviousValues(lsValues) {
+  megeWithPreviousValues(lsValues: any) {
     this.isDimensionsChecked = lsValues.isDimensionsChecked;
     this.isCoocurenceChecked = lsValues.isCoocurenceChecked;
     for (let i = 0; i < this.dimensionsViewsLayoutsVO.length; i++) {
@@ -48,10 +48,10 @@ export class ViewLayoutVO {
       if (
         prevValue &&
         (!prevValue.name || // Allow init for cypress tests
-          prevValue?.name === this.dimensionsViewsLayoutsVO[i].name)
+          prevValue?.name === this.dimensionsViewsLayoutsVO[i]?.name)
       ) {
         this.dimensionsViewsLayoutsVO[i] = Object.assign(
-          this.dimensionsViewsLayoutsVO[i],
+          this.dimensionsViewsLayoutsVO[i]!,
           prevValue,
         );
       }

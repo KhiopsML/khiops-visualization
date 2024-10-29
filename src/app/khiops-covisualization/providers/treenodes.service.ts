@@ -185,6 +185,7 @@ export class TreenodesService {
 
           if (currentIndex !== 0 && currentIndex !== 1) {
             if (this.dimensionsDatas.conditionalOnContext) {
+              // @ts-ignore
               this.dimensionsDatas.contextSelection[currentIndex - 2] =
                 nodeVO.childrenLeafIndexes;
             } else {
@@ -197,6 +198,7 @@ export class TreenodesService {
               if (parentNodeVO) {
                 parentNodeVO.getChildrenList();
                 // and set their chidren leafs to context nodes
+                // @ts-ignore
                 this.dimensionsDatas.contextSelection[currentIndex - 2] =
                   parentNodeVO.childrenLeafIndexes;
               }

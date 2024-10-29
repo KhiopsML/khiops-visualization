@@ -521,7 +521,8 @@ export class ClustersService {
               index < treeNode.childrenLeafIndexes.length;
               index++
             ) {
-              const elementIndex = treeNode.childrenLeafIndexes[index] || 0;
+              const elementIndex: any =
+                treeNode.childrenLeafIndexes[index] || 0;
               if (selectedDimension.isCategorical) {
                 size +=
                   // @ts-ignore

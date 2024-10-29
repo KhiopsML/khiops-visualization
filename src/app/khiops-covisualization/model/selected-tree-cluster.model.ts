@@ -11,8 +11,8 @@ export class SelectedTreeClusterModel {
   // Node informations
   nbClusters: number = 0;
   values: number = 0;
-  interval: string;
-  frequency: number;
+  interval!: string;
+  frequency!: number;
 
   constructor(dimension: DimensionCovisualizationModel) {
     this.isCategorical = dimension?.isCategorical;

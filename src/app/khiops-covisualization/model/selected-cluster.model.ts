@@ -4,7 +4,7 @@ export class SelectedClusterModel {
   shortDescription: string;
   nbClusters: number;
 
-  constructor(hierarchy, shortDescription, nbClusters) {
+  constructor(hierarchy: string, shortDescription: string, nbClusters: number) {
     this._id = hierarchy;
     this.hierarchy = hierarchy;
     this.shortDescription = shortDescription;

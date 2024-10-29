@@ -32,7 +32,7 @@ export class TreeNodeModel {
   annotation: string;
 
   childrenList: string[] = [];
-  childrenLeafIndexes: number[] = [];
+  childrenLeafIndexes: number[] | string[] = [];
   childrenLeafList: string[] = [];
 
   isCollapsed: boolean;
@@ -65,9 +65,9 @@ export class TreeNodeModel {
     collapsedNodes: DynamicI,
     leafPosition: number,
     j: number,
-    currentNodesNames?,
-    currentAnnotations?,
-    extData?,
+    currentNodesNames?: any,
+    currentAnnotations?: any,
+    extData?: any,
     valueGroups?: ValueGroup,
   ) {
     // Assign values from input
@@ -110,7 +110,7 @@ export class TreeNodeModel {
     if (this.valueGroups && extData) {
       for (let index = 0; index < this.valueGroups?.values.length; index++) {
         const element = this.valueGroups.values[index];
-        if (extData[element]) {
+        if (element && extData[element]) {
           if (!this.externalData) {
             this.externalData = {};
           }
@@ -158,17 +158,22 @@ export class TreeNodeModel {
    * @param name - The name of the current node.
    * @param matrixIndex - The matrix index of the current node.
    */
-  deepGetChildrenNames(children: TreeNodeModel[], name: string, matrixIndex) {
+  deepGetChildrenNames(
+    children: TreeNodeModel[],
+    name: string,
+    matrixIndex: number | string,
+  ) {
     this.childrenList.push(name);
     if (children.length === 0) {
       this.childrenLeafList.push(name);
+      // @ts-ignore
       this.childrenLeafIndexes.push(matrixIndex);
     }
     for (let i = 0; i < children.length; i++) {
       this.deepGetChildrenNames(
-        children[i].children,
-        children[i].name,
-        children[i].matrixIndex,
+        children[i]!.children,
+        children[i]!.name,
+        children[i]!.matrixIndex,
       );
     }
   }
