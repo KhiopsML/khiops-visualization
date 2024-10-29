@@ -6,24 +6,24 @@ export class Preparation2dVariableModel implements VariablePairStatistics {
 
   noCorrelation: boolean;
 
-  name: string;
-  name1: string;
-  name2: string;
-  nameX: string;
-  nameY: string;
+  name!: string;
+  name1!: string;
+  name2!: string;
+  nameX!: string;
+  nameY!: string;
   variableType: string;
-  rank: string;
+  rank!: string;
 
-  values: number;
-  cells: number;
-  dataCost: number;
-  parts: number;
-  parts1: number;
-  parts2: number;
-  level: number;
-  level1: number;
-  level2: number;
-  variables: number;
+  values!: number;
+  cells!: number;
+  dataCost!: number;
+  parts!: number;
+  parts1!: number;
+  parts2!: number;
+  level!: number;
+  level1!: number;
+  level2!: number;
+  variables!: number;
 
   constructor(object: VariablePairStatistics) {
     // Assign values from input
@@ -31,12 +31,10 @@ export class Preparation2dVariableModel implements VariablePairStatistics {
 
     this.variableType = VARIABLE_TYPES.PREPARATION_2D;
 
-    if (!this.noCorrelation) {
-      if ((object.level1 === 0 || object.level2 === 0) && !object.level) {
-        this.noCorrelation = true;
-      } else {
-        this.noCorrelation = false;
-      }
+    if ((object.level1 === 0 || object.level2 === 0) && !object.level) {
+      this.noCorrelation = true;
+    } else {
+      this.noCorrelation = false;
     }
 
     if (this.name1 && this.name2) {

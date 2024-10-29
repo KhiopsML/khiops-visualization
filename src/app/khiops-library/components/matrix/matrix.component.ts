@@ -486,8 +486,6 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
       this.drawSelectedCell(clicked);
 
       setTimeout(() => {
-        console.log('MatrixComponent ~ clickOnCell ~ event:', event);
-
         this.cellSelected.emit({
           datas: clicked,
         });

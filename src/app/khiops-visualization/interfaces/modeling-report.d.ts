@@ -37,5 +37,6 @@ export interface ModelingVariableStatistic {
   name: string;
   level: number;
   weight: number;
+  map: boolean;
   importance: number;
 }

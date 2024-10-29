@@ -263,27 +263,29 @@ export class ModelingDatasService {
     const selectedPredictor = this.getSelectedPredictor();
     if (
       this.appService.appDatas?.modelingReport?.trainedPredictorsDetails?.[
-        selectedPredictor?.rank
+        selectedPredictor?.rank!
       ]
     ) {
-      const currentDatas =
+      const currentDatas: ModelingVariableStatistic[] | undefined =
         this.appService.appDatas.modelingReport.trainedPredictorsDetails[
-          selectedPredictor.rank
-        ].selectedVariables;
+          selectedPredictor?.rank!
+        ]?.selectedVariables;
+      if (currentDatas) {
+        // Get a typical data object
+        const availableKeys = Object.keys(currentDatas?.[0]!);
 
-      // Get a typical data object
-      const availableKeys = Object.keys(currentDatas[0]);
+        this.modelingDatas.trainedPredictorsListDatas = [];
+        for (let i = 0; i < currentDatas.length; i++) {
+          // Find the corresponding rank of the current variable into preparation, 2d or tree
+          const currentVar: ModelingVariableStatistic | undefined =
+            currentDatas[i];
 
-      this.modelingDatas.trainedPredictorsListDatas = [];
-      for (let i = 0; i < currentDatas.length; i++) {
-        // Find the corresponding rank of the current variable into preparation, 2d or tree
-        const currentVar = currentDatas[i];
-
-        const varItem: TrainedPredictorModel = new TrainedPredictorModel(
-          currentVar,
-          availableKeys,
-        );
-        this.modelingDatas.trainedPredictorsListDatas.push(varItem);
+          const varItem: TrainedPredictorModel = new TrainedPredictorModel(
+            currentVar!,
+            availableKeys,
+          );
+          this.modelingDatas.trainedPredictorsListDatas.push(varItem);
+        }
       }
     } else {
       this.modelingDatas.trainedPredictorsListDatas = undefined;
