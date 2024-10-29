@@ -34,7 +34,7 @@ export class ViewManagerService {
     for (let i = 0; i < dimensions.length; i++) {
       const isContextView = i >= 2;
       this.viewsLayout.addDimensionViewLayout(
-        dimensions[i]?.name,
+        dimensions[i]?.name!,
         isContextView,
       );
     }
@@ -92,7 +92,7 @@ export class ViewManagerService {
         );
         const isContextView = i >= 2;
         this.viewsLayout.addDimensionViewLayout(
-          dimensions[i]?.name,
+          dimensions[i]?.name!,
           isContextView,
           previousLayout,
         );

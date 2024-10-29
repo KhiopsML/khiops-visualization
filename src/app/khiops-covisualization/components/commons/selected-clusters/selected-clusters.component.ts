@@ -109,7 +109,7 @@ export class SelectedClustersComponent implements OnDestroy {
             new SelectedClusterModel(
               nodeVO.hierarchy,
               nodeVO.shortDescription,
-              details[i]?.length,
+              details[i]?.length!,
             );
           this.selectedClusters.push(selectedCluster);
         }
