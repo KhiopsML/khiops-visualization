@@ -6,7 +6,12 @@ import {
   ViewEncapsulation,
   Input,
 } from '@angular/core';
-import { MatTabGroup, MatTabHeader, MatTab } from '@angular/material/tabs';
+import {
+  MatTabGroup,
+  MatTabHeader,
+  MatTab,
+  MatTabChangeEvent,
+} from '@angular/material/tabs';
 import { AppConfig } from 'src/environments/environment';
 import { FileLoaderComponent } from '@khiops-library/components/file-loader/file-loader.component';
 import { AppService } from '@khiops-covisualization/providers/app.service';
@@ -42,7 +47,7 @@ import { CovisualizationDatas } from '@khiops-covisualization/interfaces/app-dat
 })
 export class HomeLayoutComponent implements OnInit, OnDestroy {
   public showProjectTab: boolean = true;
-  public get appDatas(): CovisualizationDatas {
+  public get appDatas(): CovisualizationDatas | undefined {
     return this.appService.appDatas;
   }
   @Input()
@@ -72,7 +77,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
       this.tabsMenu._handleClick = this.interceptTabChange.bind(this);
     }
   }
-  private currentDatas: CovisualizationDatas;
+  private currentDatas: CovisualizationDatas | undefined;
   private importedDatasChangedSub: Subscription;
   private fileLoadedSub?: Subscription;
 
@@ -119,7 +124,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
               ].name,
               this.dimensionsDatasService.dimensionsDatas.selectedNodes[
                 dimIndex
-              ]._id,
+              ]!._id,
               false,
             );
             // Enable ext datas view if not displayed
@@ -181,10 +186,11 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
       this.trackerService.trackEvent('page_view', 'axis');
       this.openContextView = false;
     }
+    // @ts-ignore
     return MatTabGroup.prototype._handleClick.apply(this.tabsMenu, arguments);
   }
 
-  onSelectedTabChanged(e) {
+  onSelectedTabChanged(e: MatTabChangeEvent) {
     if (e.index === 0 || (e.index === 1 && !this.isContextDimensions)) {
       this.openContextView = false;
     }
@@ -210,8 +216,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     this.activeTab = 0;
   }
 
-  private initialize(datas: CovisualizationDatas = undefined) {
-    console.log('HomeLayoutComponent ~ initialize ~ datas:', datas);
+  private initialize(datas: CovisualizationDatas | undefined = undefined) {
     this.currentDatas = datas;
     this.appService.setFileDatas(datas);
     if (datas && !UtilsService.isEmpty(datas)) {
