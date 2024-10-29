@@ -11,7 +11,7 @@ import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.c
   providedIn: 'root',
 })
 export class ViewManagerService {
-  private viewsLayout: ViewLayoutVO;
+  private viewsLayout: ViewLayoutVO | undefined;
   public viewsLayoutChanged: EventEmitter<any> = new EventEmitter();
 
   constructor(
@@ -34,7 +34,7 @@ export class ViewManagerService {
     for (let i = 0; i < dimensions.length; i++) {
       const isContextView = i >= 2;
       this.viewsLayout.addDimensionViewLayout(
-        dimensions[i].name,
+        dimensions[i]?.name,
         isContextView,
       );
     }
@@ -80,17 +80,19 @@ export class ViewManagerService {
    * @param dimensions - An array of dimension objects, each containing a `name` property.
    * @returns The updated `ViewLayoutVO` instance.
    */
-  updateViewsLayout(dimensions: DimensionCovisualizationModel[]): ViewLayoutVO {
+  updateViewsLayout(
+    dimensions: DimensionCovisualizationModel[],
+  ): ViewLayoutVO | undefined {
     const previousValues = _.cloneDeep(this.viewsLayout);
     if (previousValues) {
       this.viewsLayout = new ViewLayoutVO();
       for (let i = 0; i < dimensions.length; i++) {
         const previousLayout = previousValues.dimensionsViewsLayoutsVO.find(
-          (e) => e.name === dimensions[i].name,
+          (e) => e.name === dimensions[i]?.name,
         );
         const isContextView = i >= 2;
         this.viewsLayout.addDimensionViewLayout(
-          dimensions[i].name,
+          dimensions[i]?.name,
           isContextView,
           previousLayout,
         );
@@ -110,7 +112,7 @@ export class ViewManagerService {
    *
    * @returns The current `ViewLayoutVO` instance.
    */
-  getViewsLayout(): ViewLayoutVO {
+  getViewsLayout(): ViewLayoutVO | undefined {
     return this.viewsLayout;
   }
 
@@ -119,7 +121,7 @@ export class ViewManagerService {
    *
    * @param viewsLayout - The `ViewLayoutVO` instance to set as the current views layout.
    */
-  setViewsLayout(viewsLayout: ViewLayoutVO) {
+  setViewsLayout(viewsLayout: ViewLayoutVO | undefined) {
     this.viewsLayout = viewsLayout;
   }
 
@@ -143,7 +145,7 @@ export class ViewManagerService {
    *
    * @param viewsLayout - The `ViewLayoutVO` instance to save.
    */
-  saveViewsLayout(viewsLayout: ViewLayoutVO) {
+  saveViewsLayout(viewsLayout: ViewLayoutVO | undefined) {
     this.viewsLayout = viewsLayout;
     this.ls.set(LS.VIEWS_LAYOUT, JSON.stringify(this.viewsLayout));
     this.viewsLayoutChanged.emit(this.viewsLayout);
