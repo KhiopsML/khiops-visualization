@@ -137,10 +137,9 @@ export class DimensionsDatasService {
    * @returns {boolean} - True if there are context dimensions, false otherwise.
    */
   isContextDimensions(): boolean {
-    return (
-      this.appService.appDatas?.coclusteringReport?.summary?.initialDimensions >
-      2
-    );
+    const initialDimsCount =
+      this.appService.appDatas?.coclusteringReport?.summary?.initialDimensions;
+    return initialDimsCount! > 2 || false;
   }
 
   /**
@@ -378,7 +377,9 @@ export class DimensionsDatasService {
     if (currentIndex !== -1) {
       // Invert values if already selected
       [
+        // @ts-ignore
         this.dimensionsDatas.selectedDimensions[currentIndex],
+        // @ts-ignore
         this.dimensionsDatas.selectedDimensions[position],
       ] = [
         this.dimensionsDatas.selectedDimensions[position],
@@ -390,11 +391,13 @@ export class DimensionsDatasService {
         this.dimensionsDatas?.cellPartIndexes?.length;
       for (let i = 0; i < cellPartIndexesLength; i++) {
         [
+          // @ts-ignore
           this.dimensionsDatas.cellPartIndexes[i][currentIndex],
+          // @ts-ignore
           this.dimensionsDatas.cellPartIndexes[i][position],
         ] = [
-          this.dimensionsDatas.cellPartIndexes[i][position],
-          this.dimensionsDatas.cellPartIndexes[i][currentIndex],
+          this.dimensionsDatas.cellPartIndexes[i]?.[position],
+          this.dimensionsDatas.cellPartIndexes[i]?.[currentIndex],
         ];
       }
     }
@@ -534,7 +537,7 @@ export class DimensionsDatasService {
               externalDatas,
               currentValueGroups,
             );
-            this.dimensionsDatas.currentDimensionsClusters[i].push(currentObj);
+            this.dimensionsDatas.currentDimensionsClusters[i]!.push(currentObj);
 
             index++;
           }
@@ -614,7 +617,7 @@ export class DimensionsDatasService {
           this.dimensionsDatas.nodesNames[xDimension!.name],
         )) {
           const index = xDimensionLeafsShortDescription.indexOf(key);
-          xDimensionLeafsShortDescription.splice(index, 1, value);
+          xDimensionLeafsShortDescription.splice(index, 1, value as string);
         }
       }
       if (this.dimensionsDatas?.nodesNames?.[yDimension!.name]) {
@@ -622,7 +625,7 @@ export class DimensionsDatasService {
           this.dimensionsDatas.nodesNames[yDimension!.name],
         )) {
           const index = yDimensionLeafsShortDescription.indexOf(key);
-          yDimensionLeafsShortDescription.splice(index, 1, value);
+          yDimensionLeafsShortDescription.splice(index, 1, value as string);
         }
       }
 
@@ -717,6 +720,7 @@ export class DimensionsDatasService {
       this.dimensionsDatas.matrixDatas.matrixCellDatas?.reduce(
         (map, data, index) => {
           const key = `${data.yaxisPart}-${data.xaxisPart}`;
+          // @ts-ignore
           map[key] = index;
           return map;
         },

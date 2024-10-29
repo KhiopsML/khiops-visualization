@@ -9,7 +9,7 @@ export class DimensionsDatasModel {
   matrixDatas: MatrixDatasModel;
   allMatrixDatas: MatrixDatasModel;
   allMatrixCellDatas: CellModel[] = [];
-  matrixCellFreqDataMap: DynamicI = undefined;
+  matrixCellFreqDataMap: DynamicI | undefined = undefined;
 
   cellPartIndexes: number[][] = [[]];
   initialDimensions: DimensionCovisualizationModel[] = [];
