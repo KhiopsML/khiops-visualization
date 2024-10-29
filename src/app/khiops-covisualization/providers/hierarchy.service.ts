@@ -9,7 +9,7 @@ import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.c
   providedIn: 'root',
 })
 export class HierarchyService {
-  private dimensionsDatas: DimensionsDatasModel;
+  private dimensionsDatas!: DimensionsDatasModel;
   private hierarchyFold: any = {};
 
   constructor(
@@ -25,11 +25,11 @@ export class HierarchyService {
     this.dimensionsDatas = this.dimensionsDatasService.getDatas();
     for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
       if (
-        this.hierarchyFold[this.dimensionsDatas.dimensions[i].name] !==
+        this.hierarchyFold[this.dimensionsDatas.dimensions[i]!.name] !==
         undefined
       ) {
-        this.dimensionsDatas.dimensions[i].setHierarchyFold(
-          this.hierarchyFold[this.dimensionsDatas.dimensions[i].name],
+        this.dimensionsDatas.dimensions[i]?.setHierarchyFold(
+          this.hierarchyFold[this.dimensionsDatas.dimensions[i]!.name],
         );
       }
     }
@@ -43,9 +43,9 @@ export class HierarchyService {
   toggleDimensionHierarchyFold(dimensionName: string, state: boolean) {
     this.hierarchyFold[dimensionName] = state;
 
-    const dimension: DimensionCovisualizationModel =
+    const dimension: DimensionCovisualizationModel | undefined =
       this.dimensionsDatas.dimensions.find((e) => e.name === dimensionName);
-    dimension.setHierarchyFold(state);
+    dimension?.setHierarchyFold(state);
   }
 
   /**
@@ -58,7 +58,7 @@ export class HierarchyService {
 
     for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
       // Remove dimension if unchecked
-      if (this.dimensionsDatas.dimensions[i].hierarchyFold === false) {
+      if (this.dimensionsDatas.dimensions[i]?.hierarchyFold === false) {
         delete collapsedNodes[this.dimensionsDatas.dimensions[i].name];
       }
     }
