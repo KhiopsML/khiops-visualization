@@ -272,7 +272,7 @@ export class ModelingDatasService {
         ]?.selectedVariables;
       if (currentDatas) {
         // Get a typical data object
-        const availableKeys = Object.keys(currentDatas?.[0]!);
+        const availableKeys: string[] = Object.keys(currentDatas?.[0]!);
 
         this.modelingDatas.trainedPredictorsListDatas = [];
         for (let i = 0; i < currentDatas.length; i++) {

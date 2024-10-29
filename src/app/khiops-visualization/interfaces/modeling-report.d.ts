@@ -33,10 +33,10 @@ export interface TrainedPredictorsDetails {
 }
 
 export interface ModelingVariableStatistic {
-  preparedName: string;
   name: string;
-  level: number;
-  weight: number;
-  map: boolean;
-  importance: number;
+  preparedName?: string;
+  level?: number;
+  weight?: number;
+  map?: boolean;
+  importance?: number;
 }

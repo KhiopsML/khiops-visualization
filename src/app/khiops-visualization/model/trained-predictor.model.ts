@@ -3,13 +3,13 @@ import { ModelingVariableStatistic } from '@khiops-visualization/interfaces/mode
 export class TrainedPredictorModel implements ModelingVariableStatistic {
   _id: string;
   name: string;
-  level!: number;
-  weight!: number;
-  preparedName!: string;
-  importance!: number;
-  map!: boolean | undefined;
 
-  constructor(object: ModelingVariableStatistic, availableKeys) {
+  level: number | undefined;
+  weight: number | undefined;
+  importance: number | undefined;
+  map: boolean | undefined;
+
+  constructor(object: ModelingVariableStatistic, availableKeys: string[]) {
     // Generate id for grid
     this._id = object.name;
 
