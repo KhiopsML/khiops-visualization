@@ -1,13 +1,15 @@
 import { PREDICTOR_TYPES } from '@khiops-library/enum/predictor-types';
+import { PredictorPerformance } from '@khiops-visualization/interfaces/evaluation-report';
+import { TestPredictorPerformance } from '@khiops-visualization/interfaces/test-evaluation-report';
+import { TrainPredictorPerformance } from '@khiops-visualization/interfaces/train-evaluation-report';
 
 export class EvaluationPredictorModel {
   _id: string;
   type: string;
-  rank: string;
-  family: string;
-  evaluationType: string;
-  currentEvaluationType: string;
-  name: string;
+  rank!: string;
+  family!: string;
+  evaluationType!: PREDICTOR_TYPES | string;
+  name!: string;
   accuracy?: string;
   compression?: string;
   auc?: number;
@@ -19,14 +21,22 @@ export class EvaluationPredictorModel {
   rankRmse?: string;
   rankMae?: string;
   rankNlpd?: string;
+  currentEvaluationType: string;
 
-  constructor(type, currentEvaluationType, object) {
+  constructor(
+    type: string,
+    evaluationType: PREDICTOR_TYPES | string,
+    predictor:
+      | PredictorPerformance
+      | TestPredictorPerformance
+      | TrainPredictorPerformance,
+  ) {
     // Assign values from input
-    Object.assign(this, object);
+    Object.assign(this, predictor);
 
     // Common values
     this.type = type;
-    this.currentEvaluationType = currentEvaluationType.evaluationType;
+    this.evaluationType = evaluationType;
     this.robustness = '';
     if (this.auc) {
       this.gini = 2 * this.auc - 1 || ''; // empty if undefined
@@ -79,7 +89,7 @@ export class EvaluationPredictorModel {
    */
   computeRobustness(train) {
     if (
-      this.currentEvaluationType === PREDICTOR_TYPES.TEST &&
+      this.evaluationType === PREDICTOR_TYPES.TEST &&
       train?.auc &&
       this.auc
     ) {

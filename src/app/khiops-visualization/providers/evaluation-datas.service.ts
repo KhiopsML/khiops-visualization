@@ -122,7 +122,10 @@ export class EvaluationDatasService {
    * Retrieves the list of evaluation types from the application data.
    * @returns An array of evaluation types.
    */
-  getEvaluationTypes(): EvaluationReport[] {
+  getEvaluationTypes():
+    | EvaluationReport[]
+    | TestEvaluationReport[]
+    | TrainEvaluationReport[] {
     this.evaluationDatas.evaluationTypes = [];
 
     Object.keys(this.appService.appDatas).forEach((value) => {
@@ -404,7 +407,7 @@ export class EvaluationDatasService {
           const obj = currentEvaluationType.predictorsPerformance[j];
           const currentEl = new EvaluationPredictorModel(
             type,
-            currentEvaluationType,
+            currentEvaluationType.evaluationType,
             obj,
           );
           datas.push(currentEl);

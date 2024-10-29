@@ -4,7 +4,7 @@ export interface TrainEvaluationReport {
   reportType: string;
   evaluationType: string;
   summary: Summary;
-  predictorsPerformance: PredictorPerformance[];
+  predictorsPerformance: TrainPredictorPerformance[];
   predictorsDetailedPerformance: Record<string, PredictorDetailedPerformance>;
   recCurves: RecCurve[];
   liftCurves: LiftCurve[];
@@ -19,7 +19,7 @@ export interface Summary {
   mainTargetValue: string;
 }
 
-export interface PredictorPerformance {
+export interface TrainPredictorPerformance {
   rank: string;
   type: string;
   family: string;

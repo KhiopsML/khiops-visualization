@@ -2,7 +2,7 @@ export class EvaluationTypeModel {
   _id?: string;
   type?: string;
   dictionary?: string;
-  instances?: string;
+  instances?: number;
 
   constructor() {
     this._id = undefined;

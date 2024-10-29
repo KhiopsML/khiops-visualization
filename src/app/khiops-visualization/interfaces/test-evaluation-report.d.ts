@@ -4,7 +4,7 @@ export interface TestEvaluationReport {
   reportType: string;
   evaluationType: string;
   summary: Summary;
-  predictorsPerformance: PredictorPerformance[];
+  predictorsPerformance: TestPredictorPerformance[];
   predictorsDetailedPerformance: PredictorsDetailedPerformance;
   recCurves: RecCurve[];
   liftCurves: LiftCurve[];
@@ -23,7 +23,7 @@ export interface Summary {
   mainTargetValue: string;
 }
 
-export interface PredictorPerformance {
+export interface TestPredictorPerformance {
   rank: string;
   type: string;
   family: string;
