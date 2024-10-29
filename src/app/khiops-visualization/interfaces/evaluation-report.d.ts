@@ -1,7 +1,7 @@
 export interface EvaluationReport {
   reportType: string;
   evaluationType: string;
-  summary: Summary;
+  summary: EvaluationSummary;
   predictorsPerformance: PredictorPerformance[];
   predictorsDetailedPerformance: {
     [key: string]: PredictorDetailedPerformance;
@@ -9,7 +9,7 @@ export interface EvaluationReport {
   liftCurves: LiftCurve[];
 }
 
-export interface Summary {
+export interface EvaluationSummary {
   dictionary: string;
   database: string;
   instances: number;

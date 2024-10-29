@@ -2,12 +2,12 @@ import { DynamicI } from '@khiops-library/interfaces/globals';
 
 export interface ModelingReport {
   reportType: string;
-  summary: Summary;
+  summary: ModelingSummary;
   trainedPredictors: TrainedPredictor[];
   trainedPredictorsDetails: TrainedPredictorsDetails;
 }
 
-export interface Summary {
+export interface ModelingSummary {
   dictionary: string;
   database: string;
   samplePercentage: number;

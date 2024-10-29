@@ -2,13 +2,13 @@ import { TargetValues, VariablesDetailedStatistics } from './app-datas';
 
 export interface TreePreparationReport {
   reportType: string;
-  summary: Summary;
+  summary: TreePreparationSummary;
   variablesStatistics: TreePreparationVariableStatistic[];
   variablesDetailedStatistics: VariablesDetailedStatistics[];
   treeDetails: TreeDetails;
 }
 
-export interface Summary {
+export interface TreePreparationSummary {
   dictionary: string;
   variables: Variables;
   database: string;

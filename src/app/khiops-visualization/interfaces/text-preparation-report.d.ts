@@ -2,12 +2,12 @@ import { DimensionVisualization } from './app-datas';
 
 export interface TextPreparationReport {
   reportType: string;
-  summary: Summary;
+  summary: TextPreparationSummary;
   variablesStatistics: TextPreparationVariableStatistic[];
   variablesDetailedStatistics: { [key: string]: VariableDetailedStatistic };
 }
 
-export interface Summary {
+export interface TextPreparationSummary {
   dictionary: string;
   variables: VariablesInfo;
   database: string;

@@ -3,14 +3,14 @@ import { DimensionVisualization, LiftCurve, RecCurve } from './app-datas';
 export interface TrainEvaluationReport {
   reportType: string;
   evaluationType: string;
-  summary: Summary;
+  summary: TrainEvaluationSummary;
   predictorsPerformance: TrainPredictorPerformance[];
   predictorsDetailedPerformance: Record<string, PredictorDetailedPerformance>;
   recCurves: RecCurve[];
   liftCurves: LiftCurve[];
 }
 
-export interface Summary {
+export interface TrainEvaluationSummary {
   dictionary: string;
   database: string;
   instances: number;

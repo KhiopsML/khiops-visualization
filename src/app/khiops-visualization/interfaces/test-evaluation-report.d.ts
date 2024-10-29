@@ -3,14 +3,14 @@ import { DimensionVisualization, LiftCurve, RecCurve } from './app-datas';
 export interface TestEvaluationReport {
   reportType: string;
   evaluationType: string;
-  summary: Summary;
+  summary: TestEvaluationSummary;
   predictorsPerformance: TestPredictorPerformance[];
   predictorsDetailedPerformance: PredictorsDetailedPerformance;
   recCurves: RecCurve[];
   liftCurves: LiftCurve[];
 }
 
-export interface Summary {
+export interface TestEvaluationSummary {
   dictionary: string;
   database: string;
   samplePercentage: number;

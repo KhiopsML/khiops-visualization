@@ -2,12 +2,12 @@ import { DimensionVisualization, TargetValues } from './app-datas';
 
 export interface BivariatePreparationReport {
   reportType: string;
-  summary: Summary;
+  summary: BivariatePreparationSummary;
   variablesPairsStatistics: VariablePairStatistics[];
   variablesPairsDetailedStatistics: VariablesPairsDetailedStatistics[];
 }
 
-export interface Summary {
+export interface BivariatePreparationSummary {
   dictionary: string; // e.g., "Adult"
   variables: VariablesInfo;
   database: string; // File path as string
