@@ -4,6 +4,8 @@ import { FileModel } from '@khiops-library/model/file.model';
 import { AppService } from './app.service';
 import { TranslateService } from '@ngstack/translate';
 import { ImportFileLoaderService } from '@khiops-library/components/import-file-loader/import-file-loader.service';
+import { ExtDatasFieldI } from '@khiops-covisualization/interfaces/ext-datas-field';
+import { CallbackI } from '@khiops-library/interfaces/globals';
 
 @Injectable({
   providedIn: 'root',
@@ -33,8 +35,8 @@ export class ImportExtDatasService {
    */
   formatImportedDatas(
     fileDatas: FileModel,
-    joinKey?,
-    fieldName?,
+    joinKey?: string,
+    fieldName?: string,
     separator?: string,
   ): any {
     const formatedDatas = {
@@ -52,6 +54,7 @@ export class ImportExtDatasService {
 
         // Handle merging lines
         if (columns.length === 1 && formatedDatas.values.length > 0) {
+          // @ts-ignore
           formatedDatas.values[formatedDatas.values.length - 1][1] +=
             '\n' + columns[0];
         } else {
@@ -59,6 +62,7 @@ export class ImportExtDatasService {
           const formattedColumn = columns[1]
             ?.replace(/^"|"$/g, '')
             .replace(/""/g, '"');
+          // @ts-ignore
           formatedDatas.values.push([columns[0], formattedColumn]);
         }
       });
@@ -66,6 +70,7 @@ export class ImportExtDatasService {
       // Set keys and remove the first line for values
       if (formatedDatas.values.length > 0) {
         formatedDatas.keys =
+          // @ts-ignore
           formatedDatas.values.shift()?.map((key) => key.replace(/""/g, '"')) ||
           [];
       }
@@ -85,7 +90,15 @@ export class ImportExtDatasService {
    * @param file The file object.
    * @returns The added data or false if it already exists.
    */
-  addImportedDatas(filename, path, dimension, joinKey, separator, field, file) {
+  addImportedDatas(
+    filename: string,
+    path: string,
+    dimension: string,
+    joinKey: string,
+    separator: string,
+    field: ExtDatasFieldI,
+    file: File,
+  ) {
     const data = new ExtDatasModel(
       filename,
       dimension,
@@ -120,7 +133,13 @@ export class ImportExtDatasService {
    * @param fieldName The name of the field.
    * @returns True if the data was removed, false otherwise.
    */
-  removeImportedDatas(filename, dimension, joinKey, separator, fieldName) {
+  removeImportedDatas(
+    filename: string,
+    dimension: string,
+    joinKey: string,
+    separator: string,
+    fieldName: string,
+  ) {
     const extDataPos = this.importExtDatas.findIndex(
       (e) =>
         e.filename === filename &&
@@ -141,7 +160,7 @@ export class ImportExtDatasService {
    * @param dimension The dimension to retrieve data for.
    * @returns The imported data for the specified dimension.
    */
-  getImportedDatasFromDimension(dimension) {
+  getImportedDatasFromDimension(dimension: any) {
     return this.savedExternalDatas?.[dimension?.name?.toLowerCase()];
   }
 
@@ -168,11 +187,11 @@ export class ImportExtDatasService {
     datas: any,
     externalDatas: ExtDatasModel,
     percentIndex: number,
-    progressCallback,
+    progressCallback: any,
     fieldName: string,
     joinKey: string,
     importExtDatasLength: number,
-    resolve,
+    resolve: any,
   ) {
     const fileDatas = new FileModel(datas, externalDatas.filename);
 
@@ -183,7 +202,7 @@ export class ImportExtDatasService {
           fieldName: fieldName,
           dimension: externalDatas.dimension,
         });
-        const percent = (percentIndex / importExtDatasLength) * 100;
+        const percent: number = (percentIndex / importExtDatasLength) * 100;
         progressCallback(msg, percent);
       }
       const formatedDatas = this.formatImportedDatas(fileDatas);
@@ -214,7 +233,7 @@ export class ImportExtDatasService {
           if (
             !this.savedExternalDatas[externalDatas.dimension.toLowerCase()][
               extKey
-            ].find((e) => e.key === formatedDatas.keys[fieldIndex])
+            ].find((e: any) => e.key === formatedDatas.keys[fieldIndex])
           ) {
             const currentExtData = {
               key: formatedDatas.keys[fieldIndex],
@@ -235,7 +254,7 @@ export class ImportExtDatasService {
    * @param progressCallback Optional callback function to report progress.
    * @returns A promise that resolves when all files are processed.
    */
-  loadSavedExternalDatas(progressCallback?) {
+  loadSavedExternalDatas(progressCallback?: CallbackI) {
     const promises: Promise<any>[] = [];
     this.savedExternalDatas = {};
     if (this.importExtDatas.length > 0) {
@@ -244,35 +263,35 @@ export class ImportExtDatasService {
       const importExtDatasLength = this.importExtDatas.length;
       for (let i = 0; i < importExtDatasLength; i++) {
         const promise = new Promise((resolve, reject) => {
-          const externalDatas: ExtDatasModel = this.importExtDatas[i];
-          if (!(externalDatas.file instanceof File)) {
+          const externalDatas: ExtDatasModel | undefined =
+            this.importExtDatas[i];
+          if (!(externalDatas?.file instanceof File)) {
             // If command is called by user
             // @ts-ignore
             externalDatas.file.path = externalDatas.path;
           }
-          console.log(
-            'ImportExtDatasService ~ promise ~ externalDatas:',
-            externalDatas,
-          );
-          const joinKey = externalDatas.joinKey;
-          const fieldName = externalDatas.field.name;
-          this.importFileLoaderService
-            .readImportFile(externalDatas.file)
-            .then((res: any) =>
-              this.onFileRead(
-                res.datas,
-                externalDatas,
-                percentIndex,
-                progressCallback,
-                fieldName,
-                joinKey,
-                importExtDatasLength,
-                resolve,
-              ),
-            )
-            .catch(() => {
-              resolve(undefined);
-            });
+
+          if (externalDatas?.file) {
+            const joinKey = externalDatas?.joinKey;
+            const fieldName = externalDatas?.field.name;
+            this.importFileLoaderService
+              .readImportFile(externalDatas.file)
+              .then((res: any) =>
+                this.onFileRead(
+                  res.datas,
+                  externalDatas,
+                  percentIndex,
+                  progressCallback,
+                  fieldName,
+                  joinKey,
+                  importExtDatasLength,
+                  resolve,
+                ),
+              )
+              .catch(() => {
+                resolve(undefined);
+              });
+          }
         });
         promises.push(promise);
       }

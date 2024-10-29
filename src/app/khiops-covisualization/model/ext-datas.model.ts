@@ -1,17 +1,23 @@
+import { ExtDatasFieldI } from '@khiops-covisualization/interfaces/ext-datas-field';
+
 export class ExtDatasModel {
   filename: string;
   dimension: string;
   joinKey: string;
   separator: string;
-  field: {
-    name: string;
-    type: string;
-    import: boolean;
-  };
+  field: ExtDatasFieldI;
   file?: File;
   path?: string;
 
-  constructor(filename, dimension, joinKey, separator, field, file?, path?) {
+  constructor(
+    filename: string,
+    dimension: string,
+    joinKey: string,
+    separator: string,
+    field: ExtDatasFieldI,
+    file?: File,
+    path?: string,
+  ) {
     this.filename = filename;
     this.dimension = dimension;
     this.joinKey = joinKey;
