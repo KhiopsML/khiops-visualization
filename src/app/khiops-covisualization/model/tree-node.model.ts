@@ -10,23 +10,23 @@ export class TreeNodeModel {
   id: number;
   _id: string;
   hierarchy: string;
-  nbClusters: number;
+  nbClusters!: number;
   leafPosition: number;
 
   // name and cluster have always same value
   name: string;
-  cluster: string;
+  cluster!: string;
   bounds: string;
   valueGroups: ValueGroup | undefined; // in case of categorical
 
   shortDescription: string;
-  parentCluster: string;
-  frequency: number;
-  interest: number;
-  hierarchicalLevel: number;
-  rank: number;
-  hierarchicalRank: number;
-  isLeaf: boolean;
+  parentCluster!: string;
+  frequency!: number;
+  interest!: number;
+  hierarchicalLevel!: number;
+  rank!: number;
+  hierarchicalRank!: number;
+  isLeaf!: boolean;
   children: TreeNodeModel[];
   description: string | undefined;
   annotation: string;
@@ -40,7 +40,7 @@ export class TreeNodeModel {
   isParentCluster = false;
   isUnfoldedByDefault = false;
 
-  externalData: DynamicI = undefined;
+  externalData!: DynamicI;
 
   clusterCompositionSize: number | undefined;
 
