@@ -19,8 +19,6 @@ export class DimensionCovisualizationModel implements DimensionCovisualization {
   description!: string;
   type!: string | TYPES;
 
-  partitionInputs!: number[][] | string[];
-
   hierarchyFold: boolean;
   isNumerical: boolean;
   isCategorical: boolean;

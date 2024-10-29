@@ -8,18 +8,18 @@ import { DimensionVisualization } from '@khiops-visualization/interfaces/app-dat
 import _ from 'lodash';
 
 export class DimensionVisualizationModel implements DimensionVisualization {
-  partition: number[][] | string[]; // KV
-  partitionType: string; // KV
-  variable: string; // KV
-  defaultGroupIndex: number; // KV
-  type: string | TYPES;
+  partition!: number[][] | string[];
+  partitionType!: string;
+  variable!: string;
+  defaultGroupIndex: number | undefined;
+  type!: string | TYPES;
 
-  partitionInputs: number[][] | string[]; // KV
-  parts: number; // KV
-  name: string; // KV
+  partitionInputs!: number[][] | string[];
+  parts!: number;
+  name!: string;
 
-  intervals: Interval[];
-  valueGroups: ValueGroup[];
+  intervals!: Interval[];
+  valueGroups!: ValueGroup[];
 
   constructor(object: DimensionVisualization) {
     // Assign values from input
