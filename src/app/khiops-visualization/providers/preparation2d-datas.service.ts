@@ -297,7 +297,6 @@ export class Preparation2dDatasService {
     if (this.preparation2dDatas?.matrixDatas?.matrixCellDatas) {
       const selectedVariable = this.getSelectedVariable();
       matrixCells = new CoocurenceCellsModel(
-        this.translate,
         selectedVariable?.nameX,
         selectedVariable?.nameY,
       );

@@ -7,11 +7,12 @@ import { HistogramValuesI } from '@khiops-visualization/components/commons/histo
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { LS } from '@khiops-library/enum/ls';
 import { REPORT } from '@khiops-library/enum/report';
+import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas';
 
 export class DistributionDatasModel {
   distributionType: string = HistogramType.YLIN;
-  distributionTypeX = '';
-  distributionTypeY = '';
+  distributionTypeX: string | undefined = '';
+  distributionTypeY: string | undefined = '';
 
   distributionGraphOptionsX: DistributionOptionsI | undefined = undefined;
   distributionGraphOptionsY: DistributionOptionsI | undefined = undefined;
@@ -28,12 +29,12 @@ export class DistributionDatasModel {
   treeNodeTargetDistributionType: string = TYPES.PROBABILITIES;
   treeNodeTargetDistributionGraphDatas: ChartDatasModel | undefined = undefined;
 
-  preparationSource: REPORT;
+  preparationSource!: REPORT;
 
   appDatas: any = undefined;
   treeHyperGraphDatas: ChartDatasModel | undefined = undefined;
 
-  constructor(appDatas) {
+  constructor(appDatas: VisualizationDatas) {
     this.appDatas = appDatas;
   }
 

@@ -60,13 +60,13 @@ export class ImportExtDatasComponent implements OnInit {
         let path = this.importExtDatas?.file?.path;
 
         const importedData = this.importExtDatasService.addImportedDatas(
-          this.importExtDatas.file.name,
+          this.importExtDatas.file!.name,
           path,
           this.selectedDimension?.name!,
           this.joinKeys.selected,
           this.separatorInput,
           currentField,
-          this.importExtDatas.file,
+          this.importExtDatas.file!,
         );
         if (importedData) {
           this.snackBar.open(

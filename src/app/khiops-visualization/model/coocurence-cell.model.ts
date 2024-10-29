@@ -4,9 +4,9 @@ export class CoocurenceCellModel {
   frequency: number | undefined;
   coverage: number | undefined;
 
-  constructor(index) {
-    this.id = index;
-    this._id = index;
+  constructor(index: number) {
+    this.id = index.toString();
+    this._id = index.toString();
     this.frequency = undefined;
     this.coverage = undefined;
   }

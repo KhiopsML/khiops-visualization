@@ -9,7 +9,7 @@ export class CoocurenceCellsModel {
   // coocurenceCell has dynamic fields
   displayedColumns: GridColumnsI[] = [];
 
-  constructor(nameX, nameY) {
+  constructor(nameX: string, nameY: string) {
     this.title =
       AppService.translate.get('GLOBAL.CELLS_OF') + ' ' + nameX + ' x ' + nameY;
 
