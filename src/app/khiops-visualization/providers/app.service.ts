@@ -12,21 +12,26 @@ import {
   VisualizationDatas,
 } from '@khiops-visualization/interfaces/app-datas';
 import { DynamicI } from '@khiops-library/interfaces/globals';
+import { TranslateService } from '@ngstack/translate';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AppService {
   static Ls: Ls;
+  static translate: TranslateService;
+
   private _appDatas: AppDatasI = undefined;
 
   constructor(
     private layoutService: LayoutService,
+    private translate: TranslateService,
     private khiopsLibraryService: KhiopsLibraryService,
     private ls: Ls,
   ) {
     // Render Ls static methods with current instance
     AppService.Ls = this.ls;
+    AppService.translate = this.translate;
 
     this.initialize();
   }

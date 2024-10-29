@@ -101,7 +101,6 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 
     this.defaultBarColor =
       AppService.Ls.get(LS.THEME_COLOR) === THEME.DARK ? 'white' : 'black';
-    HistogramUIService.setTranslationService(translate);
 
     this.colorSet = HistogramUIService.getColors();
 

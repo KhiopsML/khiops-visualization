@@ -1,41 +1,46 @@
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { CoocurenceCellModel } from './coocurence-cell.model';
+import { AppService } from '@khiops-visualization/providers/app.service';
 
 export class CoocurenceCellsModel {
   title: string;
-  values: CoocurenceCellModel[];
+  values!: CoocurenceCellModel[];
 
   // coocurenceCell has dynamic fields
   displayedColumns: GridColumnsI[] = [];
 
-  constructor(translate, nameX, nameY) {
+  constructor(nameX, nameY) {
     this.title =
-      translate.get('GLOBAL.CELLS_OF') + ' ' + nameX + ' x ' + nameY;
+      AppService.translate.get('GLOBAL.CELLS_OF') + ' ' + nameX + ' x ' + nameY;
 
     this.displayedColumns.push({
-      headerName: translate.get('GLOBAL.CELL_ID'),
+      headerName: AppService.translate.get('GLOBAL.CELL_ID'),
       field: 'id',
-      tooltip: translate.get('TOOLTIPS.PREPARATION_2D.CELLS.ID'),
+      tooltip: AppService.translate.get('TOOLTIPS.PREPARATION_2D.CELLS.ID'),
     });
     this.displayedColumns.push({
       headerName: nameX,
       field: nameX,
-      tooltip: translate.get('TOOLTIPS.PREPARATION_2D.CELLS.NAMEX'),
+      tooltip: AppService.translate.get('TOOLTIPS.PREPARATION_2D.CELLS.NAMEX'),
     });
     this.displayedColumns.push({
       headerName: nameY,
       field: nameY,
-      tooltip: translate.get('TOOLTIPS.PREPARATION_2D.CELLS.NAMEY'),
+      tooltip: AppService.translate.get('TOOLTIPS.PREPARATION_2D.CELLS.NAMEY'),
     });
     this.displayedColumns.push({
-      headerName: translate.get('GLOBAL.FREQUENCY'),
+      headerName: AppService.translate.get('GLOBAL.FREQUENCY'),
       field: 'frequency',
-      tooltip: translate.get('TOOLTIPS.PREPARATION_2D.CELLS.FREQUENCY'),
+      tooltip: AppService.translate.get(
+        'TOOLTIPS.PREPARATION_2D.CELLS.FREQUENCY',
+      ),
     });
     this.displayedColumns.push({
-      headerName: translate.get('GLOBAL.COVERAGE'),
+      headerName: AppService.translate.get('GLOBAL.COVERAGE'),
       field: 'coverage',
-      tooltip: translate.get('TOOLTIPS.PREPARATION_2D.CELLS.COVERAGE'),
+      tooltip: AppService.translate.get(
+        'TOOLTIPS.PREPARATION_2D.CELLS.COVERAGE',
+      ),
     });
   }
 }
