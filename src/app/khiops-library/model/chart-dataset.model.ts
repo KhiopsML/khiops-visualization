@@ -8,12 +8,12 @@ export class ChartDatasetModel {
   fill: boolean = false;
   borderSkipped: boolean = false;
   type: string; // By default
-  borderWidth: number;
+  borderWidth!: number;
   // maxBarThickness: number = 50;
-  maxBarThickness: number;
-  barThickness: number;
-  barPercentage: number;
-  categoryPercentage: number;
+  maxBarThickness!: number;
+  barThickness!: number;
+  barPercentage!: number;
+  categoryPercentage!: number;
   pointRadius?: number;
   pointHitRadius?: number;
   pointHoverRadius?: number;

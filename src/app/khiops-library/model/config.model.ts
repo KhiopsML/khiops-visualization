@@ -1,11 +1,11 @@
 export class ConfigModel {
   showProjectTab?: boolean;
-  appSource: string;
+  appSource!: string;
   trackerId?: string;
   changeDetector: boolean = false;
-  onFileOpen: Function;
-  onCopyData: Function;
-  onCopyImage: Function;
-  onThemeChanged: Function;
+  onFileOpen!: Function;
+  onCopyData!: Function;
+  onCopyImage!: Function;
+  onThemeChanged!: Function;
   readLocalFile?: Function;
 }

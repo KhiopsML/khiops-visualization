@@ -1,4 +1,4 @@
 export class CustomEventModel {
-  eventName: string;
+  eventName!: string;
   eventDatas: any = null;
 }

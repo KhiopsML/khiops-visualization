@@ -1,5 +1,6 @@
 import {
   DimensionCovisualization,
+  DimensionPartition,
   Interval,
   ValueGroup,
 } from '@khiops-covisualization/interfaces/app-datas';
@@ -8,17 +9,17 @@ import { DimensionVisualization } from '@khiops-visualization/interfaces/app-dat
 import _ from 'lodash';
 
 export class DimensionCovisualizationModel implements DimensionCovisualization {
-  name: string;
-  parts: number;
-  initialParts: number;
-  values: number;
-  interest: number;
-  min: number;
-  max: number;
-  description: string;
-  type: string | TYPES;
+  name!: string;
+  parts!: number;
+  initialParts!: number;
+  values!: number;
+  interest!: number;
+  min!: number | undefined;
+  max!: number | undefined;
+  description!: string;
+  type!: string | TYPES;
 
-  partitionInputs: number[][] | string[]; // KV
+  partitionInputs!: number[][] | string[];
 
   hierarchyFold: boolean;
   isNumerical: boolean;
@@ -26,8 +27,8 @@ export class DimensionCovisualizationModel implements DimensionCovisualization {
   currentHierarchyClusterCount: number;
   startPosition: number;
 
-  intervals: Interval[];
-  valueGroups: ValueGroup[];
+  intervals!: Interval[] | undefined;
+  valueGroups!: ValueGroup[] | undefined;
 
   constructor(
     object: DimensionCovisualization | DimensionVisualization,
@@ -56,7 +57,7 @@ export class DimensionCovisualizationModel implements DimensionCovisualization {
    * Sets the current hierarchy cluster count.
    * @param count - The new count of the hierarchy clusters.
    */
-  setCurrentHierarchyClusterCount(count) {
+  setCurrentHierarchyClusterCount(count: number) {
     this.currentHierarchyClusterCount = count;
   }
 
@@ -64,10 +65,10 @@ export class DimensionCovisualizationModel implements DimensionCovisualization {
    * Sets the partition for the dimension.
    * @param dimensionPartition - The partition data for the dimension.
    */
-  setPartition(dimensionPartition: any) {
+  setPartition(dimensionPartition: DimensionPartition) {
     if (this.isNumerical) {
       this.intervals = dimensionPartition.intervals;
-      this.min = this.intervals[0].bounds[0];
+      this.min = this.intervals?.[0]?.bounds[0];
 
       if (this.min === undefined) {
         // bounds are missing for first interval, take the second #123
@@ -77,9 +78,9 @@ export class DimensionCovisualizationModel implements DimensionCovisualization {
             cluster: "Missing"
           }
          */
-        this.min = this.intervals[1].bounds[0];
+        this.min = this.intervals?.[1]?.bounds[0];
       }
-      this.max = this.intervals[this.intervals.length - 1].bounds[1];
+      this.max = this.intervals?.[this.intervals?.length - 1]?.bounds[1];
     } else {
       this.valueGroups = dimensionPartition.valueGroups;
     }
