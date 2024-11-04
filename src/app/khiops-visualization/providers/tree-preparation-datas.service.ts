@@ -275,7 +275,6 @@ export class TreePreparationDatasService {
           ];
         const variableDetails: VariableDetailsModel = new VariableDetailsModel(
           currentVar,
-          this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_TABLE_SIZE,
         );
 
         if (variableDetails?.dataGrid) {

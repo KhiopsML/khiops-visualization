@@ -1,10 +1,12 @@
-import { DimensionVisualization } from './app-datas';
+import {
+  VariablesDetailedStatistics,
+} from './app-datas';
 
 export interface TextPreparationReport {
   reportType: string;
   summary: TextPreparationSummary;
   variablesStatistics: TextPreparationVariableStatistic[];
-  variablesDetailedStatistics: { [key: string]: VariableDetailedStatistic };
+  variablesDetailedStatistics: { [key: string]: VariablesDetailedStatistics };
 }
 
 export interface TextPreparationSummary {
@@ -56,15 +58,4 @@ export interface TextPreparationVariableStatistic {
   preparationCost?: number;
   dataCost?: number;
   derivationRule: string;
-}
-
-export interface VariableDetailedStatistic {
-  dataGrid: DataGrid;
-}
-
-export interface DataGrid {
-  isSupervised: boolean;
-  dimensions: DimensionVisualization[];
-  partTargetFrequencies: number[][];
-  partInterests: number[];
 }

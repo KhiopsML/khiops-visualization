@@ -109,7 +109,6 @@ export class DistributionDatasService {
       if (currentVar) {
         const variableDetails: VariableDetailsModel = new VariableDetailsModel(
           currentVar,
-          this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_TABLE_SIZE,
         );
         if (variableDetails.dataGrid.dimensions.length > 1) {
           const currentDatas = variableDetails.dataGrid.partTargetFrequencies;
@@ -186,7 +185,6 @@ export class DistributionDatasService {
           .variablesDetailedStatistics[selectedVariable.rank];
       const variableDetails: VariableDetailsModel = new VariableDetailsModel(
         currentVar,
-        this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_TABLE_SIZE,
       );
       const currentDatas = variableDetails?.dataGrid?.partTargetFrequencies;
 
@@ -337,7 +335,6 @@ export class DistributionDatasService {
 
         const variableDetails: VariableDetailsModel = new VariableDetailsModel(
           currentVar,
-          this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_TABLE_SIZE,
         );
         const dimensions: DimensionVisualization[] = _.cloneDeep(
           variableDetails.dataGrid.dimensions,

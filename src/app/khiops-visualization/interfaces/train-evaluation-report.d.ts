@@ -1,4 +1,8 @@
-import { DimensionVisualization, LiftCurve, RecCurve } from './app-datas';
+import {
+  DataGrid,
+  LiftCurve,
+  RecCurve,
+} from './app-datas';
 
 export interface TrainEvaluationReport {
   reportType: string;
@@ -40,11 +44,4 @@ export interface PredictorDetailedPerformance {
 export interface ConfusionMatrix {
   values: string[];
   matrix: number[][];
-}
-
-export interface DataGrid {
-  isSupervised: boolean;
-  dimensions: DimensionVisualization[];
-  partTargetFrequencies: number[][];
-  partInterests: number[];
 }

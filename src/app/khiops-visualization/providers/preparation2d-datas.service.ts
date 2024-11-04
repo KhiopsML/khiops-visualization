@@ -526,10 +526,7 @@ export class Preparation2dDatasService {
       const currentVar =
         this.appService.appDatas.bivariatePreparationReport
           .variablesPairsDetailedStatistics[rank];
-      variableDetails = new VariableDetailsModel(
-        currentVar,
-        this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_TABLE_SIZE,
-      );
+      variableDetails = new VariableDetailsModel(currentVar);
     } else if (
       isRegressionOrExplanatoryAnalysis &&
       this.appService.appDatas?.textPreparationReport
@@ -539,10 +536,7 @@ export class Preparation2dDatasService {
       const currentVar =
         this.appService.appDatas.textPreparationReport
           .variablesDetailedStatistics[rank];
-      variableDetails = new VariableDetailsModel(
-        currentVar,
-        this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_TABLE_SIZE,
-      );
+      variableDetails = new VariableDetailsModel(currentVar);
     } else if (
       isRegressionOrExplanatoryAnalysis &&
       this.appService.appDatas?.preparationReport
@@ -553,10 +547,7 @@ export class Preparation2dDatasService {
         this.appService.appDatas.preparationReport.variablesDetailedStatistics[
           rank
         ];
-      variableDetails = new VariableDetailsModel(
-        currentVar,
-        this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_TABLE_SIZE,
-      );
+      variableDetails = new VariableDetailsModel(currentVar);
     }
     return variableDetails;
   }

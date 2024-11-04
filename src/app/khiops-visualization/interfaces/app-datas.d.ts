@@ -39,7 +39,7 @@ export interface VariablesDetailedStatistics {
 
 export interface VariableDetail {
   dataGrid: DataGrid;
-  inputValues: InputValues;
+  inputValues?: InputValues;
 }
 
 export interface DataGrid {
@@ -47,7 +47,7 @@ export interface DataGrid {
   dimensions: DimensionVisualization[];
   partTargetFrequencies: number[][];
   partInterests: number[];
-  frequencies: number[];
+  frequencies?: number[];
 }
 
 export interface InputValues {

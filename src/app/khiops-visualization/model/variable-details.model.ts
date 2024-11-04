@@ -1,5 +1,9 @@
-import { DimensionVisualization } from '@khiops-visualization/interfaces/app-datas';
+import {
+  DimensionVisualization,
+  VariablesDetailedStatistics,
+} from '@khiops-visualization/interfaces/app-datas';
 import * as _ from 'lodash'; // Important to import lodash in karma
+import { AppConfig } from 'src/environments/environment';
 
 export class VariableDetailsModel {
   dataGrid!: {
@@ -20,14 +24,19 @@ export class VariableDetailsModel {
   };
   isLimitedDatas = true;
 
-  constructor(object: any, maxDatasSize: number) {
+  constructor(object: VariablesDetailedStatistics) {
     this.isLimitedDatas = false;
     if (object) {
-      const clone = _.cloneDeep(object);
+      const clone: VariablesDetailedStatistics = _.cloneDeep(object);
+
+      // @ts-ignore
       this.dataGrid = clone?.dataGrid || undefined;
+
+      // @ts-ignore
       this.inputValues = clone?.inputValues || undefined;
 
       // Limit datas to 10000
+      const maxDatasSize = AppConfig.visualizationCommon.GLOBAL.MAX_TABLE_SIZE;
       if (
         maxDatasSize &&
         this.inputValues &&
