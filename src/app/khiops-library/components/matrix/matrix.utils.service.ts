@@ -450,7 +450,7 @@ export class MatrixUtilsService {
   static getFrequencyAxisValues(
     xDimension: DimensionCovisualizationModel | DimensionVisualizationModel,
     yDimension: DimensionCovisualizationModel | DimensionVisualizationModel,
-    cellFrequencies: number[][],
+    cellFrequencies: number[] | number[][],
   ): [number[], number[]] {
     let xValues: number[] = [];
     let yValues: number[] = [];

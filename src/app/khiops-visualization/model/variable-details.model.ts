@@ -14,7 +14,7 @@ export class VariableDetailsModel {
     cellInterests: number[]; // bivariate case
     cellIds: string[]; // normal 2d case
     cellPartIndexes: number[][]; // normal 2d case
-    cellFrequencies: number[][]; // normal 2d case
+    cellFrequencies: number[]; // normal 2d case
     frequencies: number[]; // normal case
   };
   inputValues!: {
@@ -48,7 +48,7 @@ export class VariableDetailsModel {
     }
   }
 
-  setCellFrequencies(cellFrequencies: number[][]) {
+  setCellFrequencies(cellFrequencies: number[]) {
     this.dataGrid.cellFrequencies = cellFrequencies;
   }
 
