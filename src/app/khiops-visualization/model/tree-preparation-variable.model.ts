@@ -6,16 +6,16 @@ export class TreePreparationVariableModel
   implements TreePreparationVariableStatistic
 {
   _id: string;
-  mode: string;
-  name: string;
-  rank: string;
+  mode!: string;
+  name!: string;
+  rank!: string;
   variableType: string;
-  type: string;
-  derivationRule: string;
-  values: number;
-  parts: number;
-  modeFrequency: number;
-  level: number;
+  type!: string;
+  derivationRule!: string;
+  values!: number;
+  parts!: number;
+  modeFrequency!: number;
+  level!: number;
 
   isCategorical: boolean;
   isNumerical: boolean;

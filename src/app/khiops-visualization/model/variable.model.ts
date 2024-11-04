@@ -3,21 +3,21 @@ import { UtilsService } from '@khiops-library/providers/utils.service';
 
 export class VariableModel {
   _id: string;
-  rank: string;
-  name: string;
+  rank?: string;
+  name?: string;
   level: number;
-  parts: number;
+  parts?: number;
   values: number;
-  type: string;
-  mode: string;
+  type?: string;
+  mode?: string;
   modeCoverage: number | undefined;
-  min: number;
-  max: number;
-  mean: number;
-  stdDev: number;
+  min?: number;
+  max?: number;
+  mean?: number;
+  stdDev?: number;
   missingNumber: number;
   derivationRule: string;
-  targetParts: number;
+  targetParts?: number;
 
   constructor(object: any, detailedDatas: any) {
     // Assign values from input

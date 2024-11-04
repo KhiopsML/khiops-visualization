@@ -39,11 +39,11 @@ export class VariableDetailsModel {
     }
   }
 
-  setCellFrequencies(cellFrequencies) {
+  setCellFrequencies(cellFrequencies: number[][]) {
     this.dataGrid.cellFrequencies = cellFrequencies;
   }
 
-  setTargetCellFrequencies(cellTargetFrequencies) {
+  setTargetCellFrequencies(cellTargetFrequencies: number[][]) {
     this.dataGrid.cellTargetFrequencies = cellTargetFrequencies;
   }
 }
