@@ -50,15 +50,18 @@ export class TreePreparationDatasModel {
       const dimensions =
         variablesDetailedStatistics?.[this.selectedVariable.rank]?.dataGrid
           .dimensions;
-      const dimIndex = dimensions.findIndex(
-        (e: any) => e.variable === this.selectedVariable?.name,
-      );
-      const dimDatas = dimensions[dimIndex].partition;
+      const dimIndex =
+        dimensions?.findIndex(
+          (e: any) => e.variable === this.selectedVariable?.name,
+        ) || 0;
+      const dimDatas = dimensions![dimIndex]?.partition;
 
       this.treeColorsMap = {};
-      for (let i = 0; i < dimDatas.length; i++) {
-        for (let j = 0; j < dimDatas[i].length; j++) {
-          this.treeColorsMap[dimDatas[i][j]] = TREE_COLORS[i];
+      if (dimDatas) {
+        for (let i = 0; i < dimDatas.length; i++) {
+          for (let j = 0; j < dimDatas[i]!.length; j++) {
+            this.treeColorsMap[dimDatas[i]![j]!] = TREE_COLORS[i];
+          }
         }
       }
       return this.treeColorsMap;
