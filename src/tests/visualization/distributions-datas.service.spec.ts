@@ -9,6 +9,7 @@ import { TreePreparationDatasService } from '@khiops-visualization/providers/tre
 import { REPORT } from '@khiops-library/enum/report';
 import { TYPES } from '@khiops-library/enum/types';
 import { TranslateModule } from '@ngstack/translate';
+import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 
 let distributionDatasService: DistributionDatasService;
 let preparationDatasService: PreparationDatasService;
@@ -313,7 +314,8 @@ describe('Visualization', () => {
       );
       treePreparationDatasService.initSelectedNodes();
       const nodeToSelect = treePreparationDatasService.getNodeFromName('L16');
-      treePreparationDatasService.setSelectedNode(nodeToSelect, true);
+      const node = new TreeNodeModel(nodeToSelect, null, true);
+      treePreparationDatasService.setSelectedNode(node, true);
       const selectedNode = treePreparationDatasService.getSelectedNode();
       const res =
         distributionDatasService.getTreeNodeTargetDistributionGraphDatas(
