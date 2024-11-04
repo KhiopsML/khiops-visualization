@@ -17,7 +17,10 @@ import {
   TreePreparationVariableStatistic,
 } from '@khiops-visualization/interfaces/tree-preparation-report';
 import { DynamicI } from '@khiops-library/interfaces/globals';
-import { VariablesDetailedStatistics } from '@khiops-visualization/interfaces/app-datas';
+import {
+  VariableDetail,
+  VariablesDetailedStatistics,
+} from '@khiops-visualization/interfaces/app-datas';
 
 @Injectable({
   providedIn: 'root',
@@ -104,20 +107,23 @@ export class TreePreparationDatasService {
    * @param {string} id - The ID of the node.
    * @returns {Array} An array containing the dimension index and the linked nodes.
    */
-  getNodesLinkedToOneNode(id: string) {
+  getNodesLinkedToOneNode(
+    id: string,
+  ): [number | undefined, string[] | undefined] {
     const variablesDetailedStatistics =
       this.appService.appDatas?.treePreparationReport
         ?.variablesDetailedStatistics;
 
-    const dimensions =
-      variablesDetailedStatistics[
-        this.treePreparationDatas.selectedVariable.rank
-      ].dataGrid.dimensions;
+    const rank: string | undefined =
+      this.treePreparationDatas?.selectedVariable?.rank;
+    const varDetails: VariableDetail = variablesDetailedStatistics[rank];
+    const dimensions = varDetails.dataGrid?.dimensions;
     const dimIndex = dimensions.findIndex(
       (e: any) =>
         e.variable === this.treePreparationDatas?.selectedVariable?.name,
     );
-    const dimDatas = dimensions[dimIndex].partition;
+    // @ts-ignore
+    const dimDatas: string[][] = dimensions[dimIndex].partition; // in case of tree, partition is never a number
     const dimDatasIndex = dimDatas.findIndex((e: any) => e.includes(id));
     return [dimDatasIndex, dimDatas[dimDatasIndex]];
   }
@@ -291,7 +297,8 @@ export class TreePreparationDatasService {
             // init datas array
             datas[0] = {};
             if (
-              variableDetails.dataGrid.dimensions[0].partition[index].length > 0
+              variableDetails.dataGrid.dimensions[0]!.partition[index]!.length >
+              0
             ) {
               datas[0]['interval'] = JSON.stringify(
                 variableDetails.dataGrid.dimensions[0]?.partition[index],
@@ -306,12 +313,12 @@ export class TreePreparationDatasService {
             let startIter = 0;
 
             const currentVal: any =
-              variableDetails.dataGrid.dimensions[0].partition[index][0];
+              variableDetails.dataGrid.dimensions[0]?.partition[index]?.[0];
 
             displayedColumns.push({
               headerName:
                 this.translate.get('GLOBAL.VALUES_OF') +
-                variableDetails.dataGrid.dimensions[0].variable,
+                variableDetails.dataGrid.dimensions[0]?.variable,
               field: 'values',
             });
             displayedColumns.push({
@@ -320,13 +327,13 @@ export class TreePreparationDatasService {
             });
 
             const partValuesLength = UtilsService.flatten(
-              variableDetails.dataGrid.dimensions[0].partition,
+              variableDetails.dataGrid.dimensions[0]?.partition,
             ).length;
             const partLength =
-              variableDetails.dataGrid.dimensions[0].partition.length;
+              variableDetails.dataGrid.dimensions[0]?.partition.length;
             const isMultiDimPartition = partValuesLength !== partLength;
             const defaultGroupIndex =
-              variableDetails.dataGrid.dimensions[0].defaultGroupIndex;
+              variableDetails.dataGrid.dimensions[0]?.defaultGroupIndex;
 
             // If multi dimension array, trash cat is managed at the end of treatment
             if (!isMultiDimPartition) {
@@ -337,20 +344,21 @@ export class TreePreparationDatasService {
               } else {
                 dimensionLength =
                   startIter +
-                  variableDetails.dataGrid.dimensions[0].partition[index]
+                  variableDetails.dataGrid.dimensions[0]!.partition[index]!
                     .length;
               }
             } else {
               startIter = 0;
               dimensionLength =
-                variableDetails.dataGrid.dimensions[0].partition[index].length;
+                variableDetails.dataGrid.dimensions[0]?.partition[index]
+                  ?.length || 0;
             }
 
             for (let i = startIter; i < dimensionLength; i++) {
               let currentPartitionInput;
               if (isMultiDimPartition) {
                 currentPartitionInput =
-                  variableDetails.dataGrid.dimensions[0].partition[index][i];
+                  variableDetails.dataGrid.dimensions[0]?.partition[index]?.[i];
               } else {
                 currentPartitionInput = variableDetails.inputValues.values[i];
               }
@@ -359,7 +367,7 @@ export class TreePreparationDatasService {
               datas[i - startIter]['values'] = currentPartitionInput;
               const currentValueIndex: number =
                 variableDetails.inputValues.values.indexOf(
-                  currentPartitionInput,
+                  currentPartitionInput as string,
                 );
               datas[i - startIter]['frequency'] =
                 variableDetails.inputValues.frequencies[currentValueIndex];
@@ -393,7 +401,7 @@ export class TreePreparationDatasService {
               ')';
           }
         }
-        this.treePreparationDatas.currentIntervalDatas.title = title;
+        this.treePreparationDatas!.currentIntervalDatas.title = title;
       }
     }
 
@@ -589,7 +597,7 @@ export class TreePreparationDatasService {
             // Find index of the current node to get correct partition info
             let currentChildrenId = rule?.children?.[0]?.nodeId;
             let partitionIndex = rule.childNodes.findIndex(
-              (e: TreeNodeModel) => e.nodeId === currentChildrenId,
+              (e: TreeChildNode) => e.nodeId === currentChildrenId,
             );
             let partition: any = rule.partition[partitionIndex];
 
