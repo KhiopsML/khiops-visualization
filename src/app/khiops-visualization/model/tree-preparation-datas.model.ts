@@ -3,6 +3,7 @@ import { TreeNodeModel } from './tree-node.model';
 import { TreePreparationVariableModel } from './tree-preparation-variable.model';
 import { TREE_COLORS } from '@khiops-visualization/config/colors';
 import { TreeChildNode } from '@khiops-visualization/interfaces/tree-preparation-report';
+import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas';
 
 export class TreePreparationDatasModel {
   selectedVariable?: TreePreparationVariableModel = undefined;
@@ -12,13 +13,13 @@ export class TreePreparationDatasModel {
   dimensionTree?: [TreeNodeModel] = undefined;
   selectedFlattenTree?: TreeChildNode[] = undefined;
   currentIntervalDatas!: GridDatasI;
-  appDatas: any = undefined;
+  appDatas: VisualizationDatas = undefined;
   maxFrequencies!: number;
   minFrequencies!: number;
 
   classesCount: number;
 
-  constructor(appDatas: any) {
+  constructor(appDatas: VisualizationDatas) {
     this.appDatas = appDatas;
     this.classesCount =
       this.appDatas?.treePreparationReport?.summary?.targetValues?.values?.length;
@@ -28,7 +29,9 @@ export class TreePreparationDatasModel {
    * Check if current datas are valid
    */
   isValid(): boolean {
-    return this.appDatas?.treePreparationReport?.variablesStatistics?.[0];
+    return this.appDatas?.treePreparationReport?.variablesStatistics?.[0]
+      ? true
+      : false;
   }
 
   /**

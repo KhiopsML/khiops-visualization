@@ -16,7 +16,7 @@ export class Preparation2dDatasModel {
     displayedColumns: GridColumnsI[][];
   };
 
-  appDatas: any = undefined;
+  appDatas: VisualizationDatas = undefined;
   isSupervised = false;
 
   constructor(appDatas: VisualizationDatas) {
@@ -29,7 +29,9 @@ export class Preparation2dDatasModel {
    */
   isValid(): boolean {
     return this.appDatas?.bivariatePreparationReport
-      ?.variablesPairsStatistics?.[0];
+      ?.variablesPairsStatistics?.[0]
+      ? true
+      : false;
   }
 
   isSupervisedVariable(): boolean {

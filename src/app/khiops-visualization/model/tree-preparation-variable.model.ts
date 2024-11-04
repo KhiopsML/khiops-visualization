@@ -20,7 +20,7 @@ export class TreePreparationVariableModel
   isCategorical: boolean;
   isNumerical: boolean;
 
-  constructor(object: any, id: any) {
+  constructor(object: TreePreparationVariableStatistic, id: string) {
     // Assign values from input
     Object.assign(this, object);
 

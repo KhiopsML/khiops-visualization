@@ -4,7 +4,6 @@ import { AppService } from './app.service';
 import { TranslateService } from '@ngstack/translate';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { VariableDetailsModel } from '../model/variable-details.model';
-import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { TreePreparationVariableModel } from '../model/tree-preparation-variable.model';
 import { TreeNodeModel } from '../model/tree-node.model';
 import { TreePreparationDatasModel } from '../model/tree-preparation-datas.model';
@@ -29,7 +28,6 @@ export class TreePreparationDatasService {
   constructor(
     private preparationDatasService: PreparationDatasService,
     private translate: TranslateService,
-    private khiopsLibraryService: KhiopsLibraryService,
     private appService: AppService,
   ) {}
 
@@ -130,10 +128,11 @@ export class TreePreparationDatasService {
    */
   setSelectedVariable(name: string): TreePreparationVariableModel | undefined {
     if (this.treePreparationDatas && name) {
-      const variable = this.preparationDatasService.getVariableFromName(
-        name,
-        REPORT.TREE_PREPARATION_REPORT,
-      );
+      const variable: TreePreparationVariableStatistic =
+        this.preparationDatasService.getVariableFromName(
+          name,
+          REPORT.TREE_PREPARATION_REPORT,
+        );
       if (variable) {
         // Init datas
         this.treePreparationDatas.selectedNodes = undefined;
