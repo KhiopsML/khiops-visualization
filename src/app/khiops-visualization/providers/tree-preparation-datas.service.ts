@@ -17,6 +17,7 @@ import {
   TreePreparationVariableStatistic,
 } from '@khiops-visualization/interfaces/tree-preparation-report';
 import { DynamicI } from '@khiops-library/interfaces/globals';
+import { VariablesDetailedStatistics } from '@khiops-visualization/interfaces/app-datas';
 
 @Injectable({
   providedIn: 'root',
@@ -42,7 +43,7 @@ export class TreePreparationDatasService {
 
     // select the first item of the list by default
     if (this.treePreparationDatas.isValid()) {
-      let defaultVariable: TreePreparationVariableStatistic =
+      let defaultVariable: TreePreparationVariableStatistic | undefined =
         this.appService.appDatas.treePreparationReport.variablesStatistics[0];
 
       // Check if there is a saved selected variable into json
@@ -54,7 +55,9 @@ export class TreePreparationDatasService {
         );
       }
 
-      this.setSelectedVariable(defaultVariable.name);
+      if (defaultVariable) {
+        this.setSelectedVariable(defaultVariable.name);
+      }
     }
   }
 
@@ -70,16 +73,17 @@ export class TreePreparationDatasService {
    * Initializes the selected nodes based on the first partition of the selected variable.
    */
   initSelectedNodes() {
-    const variablesDetailedStatistics =
+    const variablesDetailedStatistics: VariablesDetailedStatistics[] =
       this.appService.appDatas?.treePreparationReport
         ?.variablesDetailedStatistics;
     if (this.treePreparationDatas?.selectedVariable) {
-      const dimensions =
-        variablesDetailedStatistics[
-          this.treePreparationDatas.selectedVariable.rank
-        ].dataGrid.dimensions;
-      const firstpartition = dimensions[0].partition[0];
-      this.setSelectedNodes(firstpartition, firstpartition[0]);
+      const rank: string = this.treePreparationDatas.selectedVariable.rank;
+      if (rank && variablesDetailedStatistics[rank]) {
+        const dimensions =
+          variablesDetailedStatistics[rank].dataGrid.dimensions;
+        const firstpartition = dimensions[0]?.partition[0];
+        this.setSelectedNodes(firstpartition, firstpartition[0]);
+      }
     }
   }
 
@@ -112,7 +116,7 @@ export class TreePreparationDatasService {
       ].dataGrid.dimensions;
     const dimIndex = dimensions.findIndex(
       (e: any) =>
-        e.variable === this.treePreparationDatas.selectedVariable.name,
+        e.variable === this.treePreparationDatas?.selectedVariable?.name,
     );
     const dimDatas = dimensions[dimIndex].partition;
     const dimDatasIndex = dimDatas.findIndex((e: any) => e.includes(id));
@@ -152,14 +156,14 @@ export class TreePreparationDatasService {
    * @param {string} rank - The rank of the variable.
    */
   setSelectedFlattenTree(rank: string) {
-    const treeDatas =
+    const treeDatas: TreeDetails =
       this.appService.appDatas?.treePreparationReport?.treeDetails;
     if (treeDatas?.[rank]?.treeNodes) {
       const flattenTree = UtilsService.flattenTree(
         [],
         _.cloneDeep(treeDatas[rank].treeNodes),
       );
-      this.treePreparationDatas.selectedFlattenTree = flattenTree;
+      this.treePreparationDatas!.selectedFlattenTree = flattenTree;
     }
   }
 
@@ -175,9 +179,9 @@ export class TreePreparationDatasService {
       const currenetDimTree: TreeNodeModel = new TreeNodeModel(
         treeDatas[currentRank].treeNodes,
       );
-      this.treePreparationDatas.dimensionTree = _.cloneDeep([currenetDimTree]);
-      this.treePreparationDatas.dimensionTree[0] = this.formatTreeNodesDatas(
-        this.treePreparationDatas.dimensionTree[0],
+      this.treePreparationDatas!.dimensionTree = _.cloneDeep([currenetDimTree]);
+      this.treePreparationDatas!.dimensionTree[0] = this.formatTreeNodesDatas(
+        this.treePreparationDatas!.dimensionTree[0],
       );
     }
   }
@@ -187,7 +191,7 @@ export class TreePreparationDatasService {
    * It calculates the minimum and maximum frequencies and updates the tree preparation data.
    */
   computeNodesFreqsComparedToOthers() {
-    let treeLeafs: number[][] =
+    let treeLeafs: number[][] | undefined =
       this.treePreparationDatas?.selectedFlattenTree?.map(
         (e) => e?.targetValues?.frequencies,
       );
@@ -200,8 +204,8 @@ export class TreePreparationDatasService {
         UtilsService.sumArrayItemsOfArray(treeLeafs);
       const [minVal, maxVal]: any =
         UtilsService.getMinAndMaxFromArray(treeLeafsSums);
-      this.treePreparationDatas.maxFrequencies = maxVal;
-      this.treePreparationDatas.minFrequencies = minVal;
+      this.treePreparationDatas!.maxFrequencies = maxVal;
+      this.treePreparationDatas!.minFrequencies = minVal;
     }
   }
 
@@ -221,7 +225,7 @@ export class TreePreparationDatasService {
 
     if (item?.children) {
       for (let i = 0; i < item.children.length; i++) {
-        item.children[i] = this.formatTreeNodesDatas(item.children[i]);
+        item.children[i] = this.formatTreeNodesDatas(item.children[i]!);
       }
     }
     return item;
@@ -232,15 +236,15 @@ export class TreePreparationDatasService {
    * @returns {TreePreparationVariableModel | undefined} The selected variable.
    */
   getSelectedVariable(): TreePreparationVariableModel | undefined {
-    return this.treePreparationDatas.selectedVariable;
+    return this.treePreparationDatas?.selectedVariable;
   }
 
   /**
    * Retrieves the rank of the selected variable.
    * @returns {string} The rank of the selected variable.
    */
-  getSelectedVariableRank(): string {
-    return this.treePreparationDatas.selectedVariable.rank;
+  getSelectedVariableRank(): string | undefined {
+    return this.treePreparationDatas?.selectedVariable?.rank;
   }
 
   /**
@@ -266,7 +270,7 @@ export class TreePreparationDatasService {
    * @param {number} [index=0] - The index of the interval or group to retrieve. Defaults to 0.
    * @returns {GridDatasI} The grid data object containing the interval or group data.
    */
-  getCurrentIntervalDatas(index?: number): GridDatasI {
+  getCurrentIntervalDatas(index?: number): GridDatasI | undefined {
     index = index || 0;
 
     const datas: DynamicI = [];
@@ -274,7 +278,7 @@ export class TreePreparationDatasService {
     const displayedColumns: any[] = [];
 
     // init the object
-    this.treePreparationDatas.currentIntervalDatas = {
+    this.treePreparationDatas!.currentIntervalDatas = {
       title: title,
       values: datas,
       displayedColumns: displayedColumns,
@@ -299,13 +303,13 @@ export class TreePreparationDatasService {
 
         if (variableDetails?.dataGrid) {
           const currentVariableType =
-            variableDetails.dataGrid.dimensions[0].type;
+            variableDetails.dataGrid.dimensions[0]?.type;
 
           if (currentVariableType === TYPES.NUMERICAL) {
             displayedColumns.push({
               headerName:
                 this.translate.get('GLOBAL.INTERVAL_OF') +
-                variableDetails.dataGrid.dimensions[0].variable,
+                variableDetails.dataGrid.dimensions[0]?.variable,
               field: 'interval',
             });
 
@@ -315,7 +319,7 @@ export class TreePreparationDatasService {
               variableDetails.dataGrid.dimensions[0].partition[index].length > 0
             ) {
               datas[0]['interval'] = JSON.stringify(
-                variableDetails.dataGrid.dimensions[0].partition[index],
+                variableDetails.dataGrid.dimensions[0]?.partition[index],
               );
             } else {
               datas[0]['interval'] = this.translate.get('GLOBAL.MISSING');
@@ -418,7 +422,7 @@ export class TreePreparationDatasService {
       }
     }
 
-    return this.treePreparationDatas.currentIntervalDatas;
+    return this.treePreparationDatas?.currentIntervalDatas;
   }
 
   /**
@@ -429,14 +433,14 @@ export class TreePreparationDatasService {
   setSelectedNodes(nodes: string[], trustedNodeSelection?: string) {
     const selectedNodes: TreeNodeModel[] = [];
     for (let i = 0; i < nodes.length; i++) {
-      const nodeDatas = this.getNodeFromName(nodes[i]);
+      const nodeDatas = this.getNodeFromName(nodes[i]!);
       if (nodeDatas) {
         const color =
           this.treePreparationDatas?.treeColorsMap[nodeDatas.nodeId];
         // Define the trusted node selection to go to clicked node into hyper tree
         const treeNodeVo = new TreeNodeModel(
           nodeDatas,
-          this.treePreparationDatas.classesCount,
+          this.treePreparationDatas?.classesCount,
           color,
           nodeDatas.nodeId === trustedNodeSelection,
         );
@@ -455,7 +459,7 @@ export class TreePreparationDatasService {
     );
     if (!this.treePreparationDatas?.selectedNodes || !_.isEmpty(diff)) {
       // clone it to emit onchange
-      this.treePreparationDatas.selectedNodes = _.cloneDeep(selectedNodes);
+      this.treePreparationDatas!.selectedNodes = _.cloneDeep(selectedNodes);
     }
   }
 
@@ -597,7 +601,7 @@ export class TreePreparationDatasService {
       // get a hierarchy branch with all recursive parents
       const nodeHierarchy: TreeNodeModel[] = UtilsService.returnHierarchy(
         _.cloneDeep(this.treePreparationDatas.dimensionTree),
-        this.treePreparationDatas.selectedNode.id,
+        this.treePreparationDatas.selectedNode?.id,
       );
 
       // get obj rules into one array
