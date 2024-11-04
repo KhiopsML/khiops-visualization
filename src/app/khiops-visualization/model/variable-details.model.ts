@@ -1,6 +1,6 @@
 import {
   DimensionVisualization,
-  VariablesDetailedStatistics,
+  VariableDetail,
 } from '@khiops-visualization/interfaces/app-datas';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { AppConfig } from 'src/environments/environment';
@@ -24,10 +24,10 @@ export class VariableDetailsModel {
   };
   isLimitedDatas = true;
 
-  constructor(object: VariablesDetailedStatistics) {
+  constructor(object: VariableDetail) {
     this.isLimitedDatas = false;
     if (object) {
-      const clone: VariablesDetailedStatistics = _.cloneDeep(object);
+      const clone: VariableDetail = _.cloneDeep(object);
 
       // @ts-ignore
       this.dataGrid = clone?.dataGrid || undefined;

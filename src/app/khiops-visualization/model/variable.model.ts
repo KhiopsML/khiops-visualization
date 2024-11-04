@@ -61,10 +61,14 @@ export class VariableModel {
    * @returns The coverage of the mode value as a fraction of the total frequencies.
    */
   computeModeCoverage(detailedDatas: VariableDetail) {
-    const modeIndex = detailedDatas.inputValues.values.indexOf(this.mode);
-    const modeCoverage =
-      detailedDatas.inputValues.frequencies[modeIndex] /
-      UtilsService.arraySum(detailedDatas.inputValues.frequencies);
-    return modeCoverage;
+    const modeIndex = detailedDatas.inputValues?.values.indexOf(this.mode!);
+    if (modeIndex) {
+      const modeCoverage =
+        detailedDatas.inputValues?.frequencies[modeIndex]! /
+        UtilsService.arraySum(detailedDatas.inputValues?.frequencies);
+      return modeCoverage;
+    } else {
+      return undefined;
+    }
   }
 }

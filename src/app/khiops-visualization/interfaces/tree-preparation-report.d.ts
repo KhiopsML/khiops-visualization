@@ -1,10 +1,10 @@
-import { TargetValues, VariablesDetailedStatistics } from './app-datas';
+import { TargetValues, VariableDetail } from './app-datas';
 
 export interface TreePreparationReport {
   reportType: string;
   summary: TreePreparationSummary;
   variablesStatistics: TreePreparationVariableStatistic[];
-  variablesDetailedStatistics: VariablesDetailedStatistics[];
+  variablesDetailedStatistics: { [key: string]: VariableDetail };
   treeDetails: TreeDetails;
 }
 

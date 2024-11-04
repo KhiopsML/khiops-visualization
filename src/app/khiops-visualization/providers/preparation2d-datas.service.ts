@@ -10,7 +10,6 @@ import { MatrixUtilsService } from '@khiops-library/components/matrix/matrix.uti
 import { PreparationDatasService } from './preparation-datas.service';
 import { VariableDetailsModel } from '../model/variable-details.model';
 import { Variable2dModel } from '../model/variable-2d.model';
-import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { CoocurenceCellModel } from '../model/coocurence-cell.model';
 import { Preparation2dDatasModel } from '../model/preparation2d-datas.model';
 import { CoocurenceCellsModel } from '../model/coocurence-cells.model';
@@ -27,7 +26,7 @@ import { DimensionVisualizationModel } from '@khiops-library/model/dimension.vis
 import {
   DimensionVisualization,
   InputValues,
-  VariablesDetailedStatistics,
+  VariableDetail,
 } from '@khiops-visualization/interfaces/app-datas';
 import { MatrixDatasModel } from '@khiops-library/model/matrix-datas.model';
 
@@ -41,7 +40,6 @@ export class Preparation2dDatasService {
     private translate: TranslateService,
     private preparationDatasService: PreparationDatasService,
     private appService: AppService,
-    private khiopsLibraryService: KhiopsLibraryService,
     private evaluationDatasService: EvaluationDatasService,
   ) {}
   /**
@@ -458,7 +456,7 @@ export class Preparation2dDatasService {
    */
   getModalityFrequency(variable: string, partition: string) {
     let currentVar: InputValues;
-    const source: VariablesDetailedStatistics[] =
+    const source: { [key: string]: VariableDetail } =
       this.appService.appDatas.preparationReport.variablesDetailedStatistics;
     Object.keys(source).forEach((key) => {
       if (source[key].dataGrid.dimensions[0].variable === variable) {

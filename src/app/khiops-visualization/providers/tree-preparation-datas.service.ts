@@ -17,10 +17,7 @@ import {
   TreePreparationVariableStatistic,
 } from '@khiops-visualization/interfaces/tree-preparation-report';
 import { DynamicI } from '@khiops-library/interfaces/globals';
-import {
-  VariableDetail,
-  VariablesDetailedStatistics,
-} from '@khiops-visualization/interfaces/app-datas';
+import { VariableDetail } from '@khiops-visualization/interfaces/app-datas';
 
 @Injectable({
   providedIn: 'root',
@@ -75,7 +72,7 @@ export class TreePreparationDatasService {
    * Initializes the selected nodes based on the first partition of the selected variable.
    */
   initSelectedNodes() {
-    const variablesDetailedStatistics: VariablesDetailedStatistics[] =
+    const variablesDetailedStatistics: { [key: string]: VariableDetail } =
       this.appService.appDatas?.treePreparationReport
         ?.variablesDetailedStatistics;
     if (this.treePreparationDatas?.selectedVariable) {
@@ -83,7 +80,7 @@ export class TreePreparationDatasService {
       if (rank && variablesDetailedStatistics[rank]) {
         const dimensions =
           variablesDetailedStatistics[rank].dataGrid.dimensions;
-        const firstpartition = dimensions[0]?.partition[0];
+        const firstpartition: any = dimensions[0]?.partition[0];
         this.setSelectedNodes(firstpartition, firstpartition[0]);
       }
     }

@@ -414,7 +414,9 @@ export class DistributionDatasService {
       );
 
       varDatas.dimensions[0].partition.forEach(
+        //@ts-ignore
         (partition: number[], i: number) => {
+          // partition is always numbers in this case
           if (partition.length !== 0) {
             const delta = partition[1] - partition[0];
             let value = varDatas.frequencies[i] / totalFreq / delta;

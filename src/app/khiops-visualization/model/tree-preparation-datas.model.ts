@@ -13,7 +13,7 @@ export class TreePreparationDatasModel {
   dimensionTree?: [TreeNodeModel] = undefined;
   selectedFlattenTree?: TreeChildNode[] = undefined;
   currentIntervalDatas!: GridDatasI;
-  appDatas: VisualizationDatas = undefined;
+  appDatas: VisualizationDatas | undefined = undefined;
   maxFrequencies!: number;
   minFrequencies!: number;
 
@@ -47,9 +47,8 @@ export class TreePreparationDatasModel {
         this.appDatas?.treePreparationReport?.variablesDetailedStatistics;
 
       this.treeColorsMap = {};
-
       const dimensions =
-        variablesDetailedStatistics[this.selectedVariable.rank].dataGrid
+        variablesDetailedStatistics?.[this.selectedVariable.rank]?.dataGrid
           .dimensions;
       const dimIndex = dimensions.findIndex(
         (e: any) => e.variable === this.selectedVariable?.name,

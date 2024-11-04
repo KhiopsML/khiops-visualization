@@ -33,10 +33,6 @@ interface Log {
   messages: string[];
 }
 
-export interface VariablesDetailedStatistics {
-  [key: string]: VariableDetail;
-}
-
 export interface VariableDetail {
   dataGrid: DataGrid;
   inputValues?: InputValues;

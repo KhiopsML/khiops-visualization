@@ -1,10 +1,10 @@
-import { VariablesDetailedStatistics } from './app-datas';
+import { VariableDetail } from './app-datas';
 
 export interface PreparationReport {
   reportType: string;
   summary: PreparationSummary;
   variablesStatistics: PreparationVariableStatistic[];
-  variablesDetailedStatistics: VariablesDetailedStatistics[];
+  variablesDetailedStatistics: { [key: string]: VariableDetail };
 }
 
 export interface PreparationSummary {
