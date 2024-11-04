@@ -340,8 +340,6 @@ export class MatrixUtilsService {
         return ef;
       });
     }
-    console.log('MatrixUtilsService ~ matrixValues:', matrixValues);
-    console.log('MatrixUtilsService ~ matrixExtras:', matrixExtras);
 
     return [
       matrixFreqsValues,

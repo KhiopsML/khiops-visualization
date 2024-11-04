@@ -20,7 +20,7 @@ export class AppService {
   static Ls: Ls;
   static translate: TranslateService;
 
-  private _appDatas: AppDatasI = undefined;
+  private _appDatas: AppDatasI | undefined = undefined;
 
   constructor(
     private layoutService: LayoutService,
@@ -35,8 +35,8 @@ export class AppService {
     this.initialize();
   }
 
-  get appDatas(): VisualizationDatas {
-    return this._appDatas.datas;
+  get appDatas(): VisualizationDatas | undefined {
+    return this._appDatas?.datas;
   }
 
   /**
@@ -92,23 +92,23 @@ export class AppService {
    */
   setFileDatas(datas: VisualizationDatas) {
     this.initSessionVariables();
-    this._appDatas.datas = datas;
-    this._appDatas.datas = EnrichDatasService.enrichJsonDatas(
-      this._appDatas.datas,
+    this._appDatas!.datas = datas;
+    this._appDatas!.datas = EnrichDatasService.enrichJsonDatas(
+      this._appDatas!.datas,
     );
 
     // #86 Remove missing informations for numerical variables
-    this._appDatas.datas =
+    this._appDatas!.datas =
       EnrichDatasService.ignoreMissingPartitionForNumerical(
-        this._appDatas.datas,
+        this._appDatas!.datas!,
         REPORT.PREPARATION_REPORT,
       );
-    this._appDatas.datas =
+    this._appDatas!.datas =
       EnrichDatasService.ignoreMissingPartitionForNumerical(
-        this._appDatas.datas,
+        this._appDatas!.datas,
         REPORT.TEXT_PREPARATION_REPORT,
       );
-    this.setSavedDatas(this._appDatas.datas);
+    this.setSavedDatas(this._appDatas!.datas);
   }
 
   /**

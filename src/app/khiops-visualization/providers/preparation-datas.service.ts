@@ -7,7 +7,6 @@ import { PreparationVariableModel } from '../model/preparation-variable.model';
 import { VariableModel } from '../model/variable.model';
 import { VariableDetailsModel } from '../model/variable-details.model';
 import { ChartDatasetModel } from '@khiops-library/model/chart-dataset.model';
-import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { SummaryModel } from '../model/summary.model';
 import { InformationsModel } from '../model/informations.model';
 import { REPORT } from '@khiops-library/enum/report';
@@ -33,7 +32,6 @@ export class PreparationDatasService {
 
   constructor(
     private translate: TranslateService,
-    private khiopsLibraryService: KhiopsLibraryService,
     private appService: AppService,
   ) {}
 
@@ -89,10 +87,12 @@ export class PreparationDatasService {
    * @param {string} preparationSource - The source of the preparation data.
    * @returns {object} An object containing the selected variable and current interval data.
    */
-  getDatas(preparationSource: REPORT): {
-    selectedVariable: PreparationVariableModel;
-    currentIntervalDatas: GridDatasI;
-  } {
+  getDatas(preparationSource: REPORT):
+    | {
+        selectedVariable: PreparationVariableModel;
+        currentIntervalDatas: GridDatasI;
+      }
+    | undefined {
     return this.preparationDatas[preparationSource];
   }
 
@@ -111,9 +111,9 @@ export class PreparationDatasService {
         preparationSource,
       );
       if (variable) {
-        this.preparationDatas[preparationSource].selectedVariable =
+        this.preparationDatas[preparationSource]!.selectedVariable =
           new PreparationVariableModel(variable, variable.name);
-        return this.preparationDatas[preparationSource].selectedVariable;
+        return this.preparationDatas[preparationSource]?.selectedVariable;
       }
     }
     return undefined;
@@ -124,16 +124,18 @@ export class PreparationDatasService {
    * @param {string} preparationSource - The source of the preparation data.
    * @returns {PreparationVariableModel} The selected variable model.
    */
-  getSelectedVariable(preparationSource: REPORT): PreparationVariableModel {
-    return this.preparationDatas[preparationSource].selectedVariable;
+  getSelectedVariable(
+    preparationSource: REPORT,
+  ): PreparationVariableModel | undefined {
+    return this.preparationDatas[preparationSource]?.selectedVariable;
   }
 
   /**
    * Retrieves the rank of the selected variable.
    * @returns {string} The rank of the selected variable.
    */
-  getSelectedVariableRank(): string {
-    return this.preparationDatas.preparationReport.selectedVariable.rank;
+  getSelectedVariableRank(): string | undefined {
+    return this.preparationDatas.preparationReport?.selectedVariable?.rank;
   }
 
   /**
@@ -161,7 +163,7 @@ export class PreparationDatasService {
    */
   getVariableFromRank(rank: string, preparationSource: REPORT): any {
     let variable: any;
-    variable = this.appService.appDatas[
+    variable = this.appService.appDatas?.[
       preparationSource
     ].variablesStatistics.find((e) => e.rank === rank);
     return variable;
@@ -173,12 +175,12 @@ export class PreparationDatasService {
    * @param {string} [preparationSource] - The source of the preparation data.
    * @returns {InfosDatasI[]} The summary data.
    */
-  getSummaryDatas(preparationSource?: string): InfosDatasI[] {
+  getSummaryDatas(preparationSource?: REPORT): InfosDatasI[] {
     if (!preparationSource) {
       preparationSource = this.getAvailablePreparationReport();
     }
     const summary = new SummaryModel(
-      this.appService.appDatas[preparationSource].summary,
+      this.appService.appDatas![preparationSource].summary,
     );
     return summary.displayDatas;
   }
@@ -190,7 +192,7 @@ export class PreparationDatasService {
    */
   getInformationsDatas(preparationSource: REPORT): InfosDatasI[] | undefined {
     const informationsDatas = new InformationsModel(
-      this.appService.appDatas[preparationSource].summary,
+      this.appService.appDatas![preparationSource].summary,
     );
     return informationsDatas.displayDatas;
   }
@@ -221,32 +223,33 @@ export class PreparationDatasService {
     if (
       this.appService.appDatas?.[preparationSource]?.variablesDetailedStatistics
     ) {
-      const currentVar =
+      const currentVar: VariableDetail | undefined =
         this.appService.appDatas[preparationSource].variablesDetailedStatistics[
           this.preparationDatas[preparationSource].selectedVariable.rank
         ];
       const variableDetails: VariableDetailsModel = new VariableDetailsModel(
-        currentVar,
+        currentVar!,
       );
 
       if (variableDetails?.dataGrid) {
-        const currentVariableType = variableDetails.dataGrid.dimensions[0].type;
+        const currentVariableType =
+          variableDetails.dataGrid.dimensions[0]?.type;
 
         if (currentVariableType === TYPES.NUMERICAL) {
           displayedColumns.push({
             headerName:
               this.translate.get('GLOBAL.INTERVAL_OF') +
-              variableDetails.dataGrid.dimensions[0].variable,
+              variableDetails.dataGrid.dimensions[0]?.variable,
             field: 'interval',
           });
 
           // init datas array
           datas[0] = {};
           if (
-            variableDetails.dataGrid.dimensions[0].partition[index].length > 0
+            variableDetails.dataGrid.dimensions[0]!.partition[index]!.length > 0
           ) {
             let currentPartition = JSON.stringify(
-              variableDetails.dataGrid.dimensions[0].partition[index],
+              variableDetails.dataGrid.dimensions[0]!.partition[index],
             );
             if (index !== 0) {
               // replace [ by ] for all indexes excepting 0
@@ -264,13 +267,13 @@ export class PreparationDatasService {
           let dimensionLength = 0;
           let startIter = 0;
 
-          const currentVal: string | number =
-            variableDetails.dataGrid.dimensions[0].partition[index][0];
+          const currentVal: string | number | undefined =
+            variableDetails.dataGrid.dimensions[0]?.partition[index]?.[0];
 
           displayedColumns.push({
             headerName:
               this.translate.get('GLOBAL.VALUES_OF') +
-              variableDetails.dataGrid.dimensions[0].variable,
+              variableDetails.dataGrid.dimensions[0]?.variable,
             field: 'values',
           });
           displayedColumns.push({
@@ -279,37 +282,38 @@ export class PreparationDatasService {
           });
 
           const partValuesLength = UtilsService.flatten(
-            variableDetails.dataGrid.dimensions[0].partition,
+            variableDetails.dataGrid.dimensions[0]?.partition,
           ).length;
           const partLength =
-            variableDetails.dataGrid.dimensions[0].partition.length;
+            variableDetails.dataGrid.dimensions[0]!.partition.length;
           const isMultiDimPartition = partValuesLength !== partLength;
           const defaultGroupIndex =
-            variableDetails.dataGrid.dimensions[0].defaultGroupIndex;
+            variableDetails.dataGrid.dimensions[0]?.defaultGroupIndex;
 
           // If multi dimension array, trash cat is managed at the end of treatment
           if (!isMultiDimPartition) {
             startIter = variableDetails.inputValues.values.indexOf(
-              currentVal.toString(),
+              currentVal!.toString(),
             );
             if (index === defaultGroupIndex) {
               dimensionLength = variableDetails.inputValues.values.length;
             } else {
               dimensionLength =
                 startIter +
-                variableDetails.dataGrid.dimensions[0].partition[index].length;
+                variableDetails.dataGrid.dimensions[0]!.partition[index]!
+                  .length;
             }
           } else {
             startIter = 0;
             dimensionLength =
-              variableDetails.dataGrid.dimensions[0].partition[index].length;
+              variableDetails.dataGrid.dimensions[0]!.partition[index]!.length;
           }
 
           for (let i = startIter; i < dimensionLength; i++) {
             let currentPartitionInput;
             if (isMultiDimPartition) {
               currentPartitionInput =
-                variableDetails.dataGrid.dimensions[0].partition[index][i];
+                variableDetails.dataGrid.dimensions[0]!.partition[index]![i];
             } else {
               currentPartitionInput = variableDetails.inputValues.values[i];
             }
@@ -317,7 +321,9 @@ export class PreparationDatasService {
             datas[i - startIter] = {};
             datas[i - startIter]['values'] = currentPartitionInput;
             const currentValueIndex: any =
-              variableDetails.inputValues.values.indexOf(currentPartitionInput);
+              variableDetails.inputValues.values.indexOf(
+                currentPartitionInput + '',
+              );
             datas[i - startIter]['frequency'] =
               variableDetails.inputValues.frequencies[currentValueIndex];
           }
@@ -365,17 +371,18 @@ export class PreparationDatasService {
     const currentDatas:
       | PreparationVariableStatistic[]
       | TextPreparationVariableStatistic[]
-      | TreePreparationVariableStatistic[] =
-      this.appService.appDatas[preparationSource].variablesStatistics;
-    const currentDetailedDatas: VariableDetail[] =
-      this.appService.appDatas[preparationSource].variablesDetailedStatistics;
+      | TreePreparationVariableStatistic[]
+      | undefined =
+      this.appService.appDatas?.[preparationSource].variablesStatistics;
+    const currentDetailedDatas =
+      this.appService.appDatas?.[preparationSource].variablesDetailedStatistics;
     const variableDatas: VariableModel[] = [];
 
     if (currentDatas) {
       for (let i = 0; i < currentDatas.length; i++) {
         const varItem: VariableModel = new VariableModel(
-          currentDatas[i],
-          currentDetailedDatas?.[currentDatas?.[i]?.rank],
+          currentDatas[i]!,
+          currentDetailedDatas?.[currentDatas[i]!.rank]!,
         );
         variableDatas.push(varItem);
       }
@@ -389,7 +396,9 @@ export class PreparationDatasService {
    * @param {string} [preparationSource] - The source of the preparation data.
    * @returns {ChartDatasModel} The target variable statistics data.
    */
-  getTargetVariableStatsDatas(preparationSource?: string): ChartDatasModel {
+  getTargetVariableStatsDatas(
+    preparationSource?: string,
+  ): ChartDatasModel | undefined {
     let variableStatsDatas = new ChartDatasModel();
     if (!preparationSource) {
       preparationSource = this.getAvailablePreparationReport();
@@ -398,7 +407,7 @@ export class PreparationDatasService {
     if (this.appService.appDatas?.[preparationSource]?.summary) {
       variableStatsDatas.emptyLabels();
       const currentDatas =
-        this.appService.appDatas[preparationSource].summary.targetValues;
+        this.appService.appDatas?.[preparationSource]?.summary.targetValues;
 
       if (currentDatas) {
         for (let i = 0; i < currentDatas.values.length; i++) {
@@ -467,7 +476,7 @@ export class PreparationDatasService {
    * @returns {string} The target variable.
    */
   getTargetVariable(preparationSource: REPORT): string {
-    return this.appService.appDatas[preparationSource].summary.targetVariable;
+    return this.appService.appDatas?.[preparationSource].summary.targetVariable;
   }
 
   /**
@@ -484,7 +493,7 @@ export class PreparationDatasService {
     ) {
       const detailedVar =
         this.appService.appDatas[preparationSource].variablesDetailedStatistics[
-          this.preparationDatas[preparationSource].selectedVariable.rank
+          this.preparationDatas[preparationSource]!.selectedVariable!.rank
         ];
       if (detailedVar?.dataGrid) {
         const detailedVarTypes = detailedVar.dataGrid.dimensions.map(
@@ -524,7 +533,7 @@ export class PreparationDatasService {
     ) {
       const detailedVar =
         this.appService.appDatas[preparationSource].variablesDetailedStatistics[
-          this.preparationDatas[preparationSource].selectedVariable.rank
+          this.preparationDatas[preparationSource]!.selectedVariable!.rank
         ];
       if (detailedVar?.dataGrid) {
         return detailedVar.dataGrid.isSupervised;
@@ -551,7 +560,7 @@ export class PreparationDatasService {
    * it defaults to the text preparation report.
    * @returns {string} The available preparation report.
    */
-  getAvailablePreparationReport(): REPORT {
+  getAvailablePreparationReport() {
     let preparationSource = REPORT.PREPARATION_REPORT;
     if (
       !this.appService.appDatas?.[preparationSource] ||

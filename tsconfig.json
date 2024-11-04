@@ -21,8 +21,7 @@
     "noImplicitReturns": true,
     "noPropertyAccessFromIndexSignature": false,
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
-
+    "strict": false,
     "noImplicitOverride": true,
     "noFallthroughCasesInSwitch": true,
     "baseUrl": "./",

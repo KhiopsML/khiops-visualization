@@ -2,10 +2,12 @@ import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { PreparationVariableModel } from './preparation-variable.model';
 
 export class PreparationDatasModel {
-  preparationReport: {
-    selectedVariable?: PreparationVariableModel;
-    currentIntervalDatas: GridDatasI;
-  } = {
+  preparationReport:
+    | {
+        selectedVariable?: PreparationVariableModel;
+        currentIntervalDatas: GridDatasI;
+      }
+    | undefined = {
     selectedVariable: undefined,
     currentIntervalDatas: {
       title: undefined,
@@ -13,10 +15,12 @@ export class PreparationDatasModel {
       displayedColumns: [],
     },
   };
-  textPreparationReport: {
-    selectedVariable?: PreparationVariableModel;
-    currentIntervalDatas: GridDatasI;
-  } = {
+  textPreparationReport:
+    | {
+        selectedVariable?: PreparationVariableModel;
+        currentIntervalDatas: GridDatasI;
+      }
+    | undefined = {
     selectedVariable: undefined,
     currentIntervalDatas: {
       title: undefined,
@@ -24,5 +28,5 @@ export class PreparationDatasModel {
       displayedColumns: [],
     },
   };
-
+  treePreparationReport: any;
 }

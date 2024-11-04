@@ -9,7 +9,7 @@ import { TextPreparationReport } from './text-preparation-report';
 import { EvaluationReport } from './evaluation-report';
 
 export interface AppDatasI {
-  datas: VisualizationDatas;
+  datas?: VisualizationDatas;
 }
 
 export interface VisualizationDatas {
