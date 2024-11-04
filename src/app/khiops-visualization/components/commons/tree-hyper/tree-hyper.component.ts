@@ -80,6 +80,7 @@ export class TreeHyperComponent
       previousVisualizationPopulationState === undefined
         ? AppConfig.visualizationCommon.HYPERTREE.VISU_POPULATION
         : previousVisualizationPopulationState;
+    this.visualization.population = this.visualization.population === 'true';
 
     const previousVisualizationPurityState = AppService.Ls.get(
       LS.SETTING_HYPERTREE_VISU_PURITY,
@@ -88,6 +89,7 @@ export class TreeHyperComponent
       previousVisualizationPurityState === undefined
         ? AppConfig.visualizationCommon.HYPERTREE.VISU_PURITY
         : previousVisualizationPurityState;
+    this.visualization.purity = this.visualization.purity === 'true';
   }
 
   ngOnInit() {
