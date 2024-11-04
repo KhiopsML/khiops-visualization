@@ -60,22 +60,14 @@ interface TreeNode {
   name: string;
   variableNumber: number;
   depth: number;
-  treeNodes: NodeElt;
+  treeNodes: TreeChildNode;
 }
 
-export interface NodeElt {
-  nodeId: string;
-  variable: string;
-  type: string; // e.g., "Numerical"
-  partition: number[][];
-  childNodes: ChildNode[];
-}
-
-interface ChildNode {
+interface TreeChildNode {
   nodeId: string;
   variable?: string; // Optional, as it may not be present in all child nodes
   type?: string; // Optional, as it may not be present in all child nodes
   partition?: number[][]; // Optional, as it may not be present in all child nodes
   targetValues?: TargetValues; // Optional, as it may not be present in all child nodes
-  childNodes?: ChildNode[]; // Optional, to allow for further nesting
+  childNodes?: TreeChildNode[]; // Optional, to allow for further nesting
 }

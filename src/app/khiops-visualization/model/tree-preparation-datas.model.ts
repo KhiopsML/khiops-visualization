@@ -2,6 +2,7 @@ import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { TreeNodeModel } from './tree-node.model';
 import { TreePreparationVariableModel } from './tree-preparation-variable.model';
 import { TREE_COLORS } from '@khiops-visualization/config/colors';
+import { TreeChildNode } from '@khiops-visualization/interfaces/tree-preparation-report';
 
 export class TreePreparationDatasModel {
   selectedVariable?: TreePreparationVariableModel = undefined;
@@ -9,7 +10,7 @@ export class TreePreparationDatasModel {
   selectedNode?: TreeNodeModel = undefined;
   treeColorsMap?: any = undefined;
   dimensionTree?: [TreeNodeModel] = undefined;
-  selectedFlattenTree?: TreeNodeModel[] = undefined;
+  selectedFlattenTree?: TreeChildNode[] = undefined;
   currentIntervalDatas!: GridDatasI;
   appDatas: any = undefined;
   maxFrequencies!: number;

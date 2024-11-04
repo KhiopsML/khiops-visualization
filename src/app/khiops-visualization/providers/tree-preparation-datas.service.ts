@@ -13,6 +13,7 @@ import { TYPES } from '@khiops-library/enum/types';
 import { PreparationDatasService } from './preparation-datas.service';
 import { REPORT } from '@khiops-library/enum/report';
 import {
+  TreeChildNode,
   TreeDetails,
   TreePreparationVariableStatistic,
 } from '@khiops-visualization/interfaces/tree-preparation-report';
@@ -159,7 +160,7 @@ export class TreePreparationDatasService {
     const treeDatas: TreeDetails =
       this.appService.appDatas?.treePreparationReport?.treeDetails;
     if (treeDatas?.[rank]?.treeNodes) {
-      const flattenTree = UtilsService.flattenTree(
+      const flattenTree: TreeChildNode[] = UtilsService.flattenTree(
         [],
         _.cloneDeep(treeDatas[rank].treeNodes),
       );
@@ -193,7 +194,7 @@ export class TreePreparationDatasService {
   computeNodesFreqsComparedToOthers() {
     let treeLeafs: number[][] | undefined =
       this.treePreparationDatas?.selectedFlattenTree?.map(
-        (e) => e?.targetValues?.frequencies,
+        (e: TreeChildNode) => e?.targetValues?.frequencies,
       );
 
     if (treeLeafs) {
@@ -252,8 +253,8 @@ export class TreePreparationDatasService {
    * @param {string} name - The name of the node.
    * @returns {TreeNodeModel | undefined} The tree node with the given name.
    */
-  getNodeFromName(name: string): TreeNodeModel | undefined {
-    let node: TreeNodeModel | undefined;
+  getNodeFromName(name: string): TreeChildNode | undefined {
+    let node: TreeChildNode | undefined;
     if (this.treePreparationDatas?.selectedFlattenTree) {
       node = this.treePreparationDatas.selectedFlattenTree.find(
         (e) => e.nodeId === name,
@@ -433,7 +434,7 @@ export class TreePreparationDatasService {
   setSelectedNodes(nodes: string[], trustedNodeSelection?: string) {
     const selectedNodes: TreeNodeModel[] = [];
     for (let i = 0; i < nodes.length; i++) {
-      const nodeDatas = this.getNodeFromName(nodes[i]!);
+      const nodeDatas: TreeChildNode = this.getNodeFromName(nodes[i]!);
       if (nodeDatas) {
         const color =
           this.treePreparationDatas?.treeColorsMap[nodeDatas.nodeId];
@@ -448,7 +449,7 @@ export class TreePreparationDatasService {
 
         // Save current selected node
         if (trustedNodeSelection && trustedNodeSelection === nodes[i]) {
-          this.setSelectedNode(nodeDatas, trustedNodeSelection);
+          this.setSelectedNode(treeNodeVo, trustedNodeSelection);
         }
       }
     }

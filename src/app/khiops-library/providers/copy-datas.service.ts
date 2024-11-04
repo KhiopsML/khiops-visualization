@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngstack/translate';
 import { UtilsService } from './utils.service';
 import { DynamicI } from '@khiops-library/interfaces/globals';
+import { TreeChildNode } from '@khiops-visualization/interfaces/tree-preparation-report';
 
 @Injectable({
   providedIn: 'root',
@@ -265,7 +266,7 @@ export class CopyDatasService {
   getKvTreeDatas(selectedArea: DynamicI) {
     let formattedDatas = '';
 
-    const currentDatas =
+    const currentDatas: TreeChildNode[] =
       selectedArea.treePreparationDatasService.treePreparationDatas
         .selectedFlattenTree;
 

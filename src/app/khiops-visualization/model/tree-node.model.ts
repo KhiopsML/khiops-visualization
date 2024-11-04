@@ -1,29 +1,34 @@
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { TargetValues } from '@khiops-visualization/interfaces/app-datas';
-import { NodeElt } from '@khiops-visualization/interfaces/tree-preparation-report';
+import { TreeChildNode } from '@khiops-visualization/interfaces/tree-preparation-report';
 
-export class TreeNodeModel implements NodeElt {
-  id: string;
-  nodeId: string;
-  _id: string;
+export class TreeNodeModel implements TreeChildNode {
+  id: string | undefined;
+  nodeId!: string;
+  _id: string | undefined;
   shortDescription: string;
   isLeaf: boolean;
-  variable: string;
-  partitionType: string;
-  type: string;
-  childNodes: [];
-  partition: [];
+  variable!: string;
+  partitionType!: string;
+  type!: string;
+  childNodes!: [];
+  partition!: [];
   targetValues: TargetValues;
-  children: TreeNodeModel[];
+  children!: any[];
   color: string;
   isTrusted: boolean;
-  defaultGroupIndex: number;
+  defaultGroupIndex?: number;
   valuesProbs: number[] = [];
-  purity: number;
-  totalFreqs: number;
-  isCollapsed: boolean;
+  purity?: number;
+  totalFreqs?: number;
+  isCollapsed?: boolean;
 
-  constructor(object, classesCount?, color?, isTrusted?) {
+  constructor(
+    object: TreeChildNode,
+    classesCount?: number,
+    color?: string,
+    isTrusted?: boolean,
+  ) {
     // Assign values from input
     Object.assign(this, object);
 
