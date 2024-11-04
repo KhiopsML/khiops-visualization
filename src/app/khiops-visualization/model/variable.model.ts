@@ -1,5 +1,9 @@
 import { TYPES } from '@khiops-library/enum/types';
 import { UtilsService } from '@khiops-library/providers/utils.service';
+import { VariableDetail } from '@khiops-visualization/interfaces/app-datas';
+import { PreparationVariableStatistic } from '@khiops-visualization/interfaces/preparation-report';
+import { TextPreparationVariableStatistic } from '@khiops-visualization/interfaces/text-preparation-report';
+import { TreePreparationVariableStatistic } from '@khiops-visualization/interfaces/tree-preparation-report';
 
 export class VariableModel {
   _id: string;
@@ -15,11 +19,17 @@ export class VariableModel {
   max?: number;
   mean?: number;
   stdDev?: number;
-  missingNumber: number;
-  derivationRule: string;
+  missingNumber?: number;
+  derivationRule?: string;
   targetParts?: number;
 
-  constructor(object: any, detailedDatas: any) {
+  constructor(
+    object:
+      | PreparationVariableStatistic
+      | TextPreparationVariableStatistic
+      | TreePreparationVariableStatistic,
+    detailedDatas: VariableDetail,
+  ) {
     // Assign values from input
     Object.assign(this, object);
 
@@ -34,6 +44,7 @@ export class VariableModel {
     } else {
       this.modeCoverage = undefined;
     }
+
     if (this.type === TYPES.NUMERICAL) {
       this.missingNumber = object.missingNumber || 0;
     } else {
@@ -41,7 +52,6 @@ export class VariableModel {
       this.missingNumber =
         object.missingNumber !== undefined ? object.missingNumber : undefined;
     }
-    this.derivationRule = object.derivationRule || undefined;
   }
 
   /**
@@ -50,7 +60,7 @@ export class VariableModel {
    * @param detailedDatas - An object containing input values and their frequencies.
    * @returns The coverage of the mode value as a fraction of the total frequencies.
    */
-  computeModeCoverage(detailedDatas: any) {
+  computeModeCoverage(detailedDatas: VariableDetail) {
     const modeIndex = detailedDatas.inputValues.values.indexOf(this.mode);
     const modeCoverage =
       detailedDatas.inputValues.frequencies[modeIndex] /

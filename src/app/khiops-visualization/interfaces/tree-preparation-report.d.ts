@@ -50,6 +50,7 @@ export interface TreePreparationVariableStatistic {
   preparationCost?: number;
   dataCost?: number;
   derivationRule: string;
+  missingNumber?: number;
 }
 
 interface TreeDetails {

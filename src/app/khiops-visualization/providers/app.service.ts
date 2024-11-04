@@ -11,7 +11,6 @@ import {
   AppDatasI,
   VisualizationDatas,
 } from '@khiops-visualization/interfaces/app-datas';
-import { DynamicI } from '@khiops-library/interfaces/globals';
 import { TranslateService } from '@ngstack/translate';
 
 @Injectable({

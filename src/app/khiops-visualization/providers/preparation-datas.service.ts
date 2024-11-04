@@ -22,6 +22,8 @@ import { DynamicI } from '@khiops-library/interfaces/globals';
 import { TextPreparationVariableStatistic } from '@khiops-visualization/interfaces/text-preparation-report';
 import { TrainedPredictorModel } from '@khiops-visualization/model/trained-predictor.model';
 import { PreparationVariableStatistic } from '@khiops-visualization/interfaces/preparation-report';
+import { TreePreparationVariableStatistic } from '@khiops-visualization/interfaces/tree-preparation-report';
+import { VariableDetail } from '@khiops-visualization/interfaces/app-datas';
 
 @Injectable({
   providedIn: 'root',
@@ -361,9 +363,12 @@ export class PreparationDatasService {
    * @returns {VariableModel[]} The variable data.
    */
   getVariablesDatas(preparationSource: REPORT): VariableModel[] {
-    const currentDatas =
+    const currentDatas:
+      | PreparationVariableStatistic[]
+      | TextPreparationVariableStatistic[]
+      | TreePreparationVariableStatistic[] =
       this.appService.appDatas[preparationSource].variablesStatistics;
-    const currentDetailedDatas =
+    const currentDetailedDatas: VariableDetail[] =
       this.appService.appDatas[preparationSource].variablesDetailedStatistics;
     const variableDatas: VariableModel[] = [];
 

@@ -68,4 +68,7 @@ export interface PreparationVariableStatistic {
   constructionCost?: number; // unused var
   preparationCost?: number; // unused var
   dataCost?: number; // unused var
+  targetParts?: number;
+  missingNumber?: number;
+  sparseMissingNumber?: number; // unused var
 }
