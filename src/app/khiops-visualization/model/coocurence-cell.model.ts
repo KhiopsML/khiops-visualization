@@ -4,6 +4,8 @@ export class CoocurenceCellModel {
   frequency: number | undefined;
   coverage: number | undefined;
 
+  [key: string]: any;
+
   constructor(index: number) {
     this.id = index.toString();
     this._id = index.toString();

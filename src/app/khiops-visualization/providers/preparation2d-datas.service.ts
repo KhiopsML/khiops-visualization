@@ -73,7 +73,7 @@ export class Preparation2dDatasService {
    * Returns the current preparation2dDatas.
    * @returns The current Preparation2dDatasModel.
    */
-  getDatas(): Preparation2dDatasModel {
+  getDatas(): Preparation2dDatasModel | undefined {
     return this.preparation2dDatas;
   }
 
@@ -92,8 +92,8 @@ export class Preparation2dDatasService {
    * Toggles the isAxisInverted property of preparation2dDatas.
    */
   toggleIsAxisInverted() {
-    this.preparation2dDatas.isAxisInverted =
-      !this.preparation2dDatas.isAxisInverted;
+    this.preparation2dDatas!.isAxisInverted =
+      !this.preparation2dDatas?.isAxisInverted;
   }
 
   /**
@@ -101,7 +101,7 @@ export class Preparation2dDatasService {
    * @returns True if the axis is inverted, otherwise false.
    */
   isAxisInverted() {
-    return this.preparation2dDatas.isAxisInverted;
+    return this.preparation2dDatas?.isAxisInverted;
   }
 
   /**
@@ -109,7 +109,7 @@ export class Preparation2dDatasService {
    * @param index - The index of the cell to select.
    */
   setSelectedCellIndex(index: number) {
-    this.preparation2dDatas.selectedCellIndex = index;
+    this.preparation2dDatas!.selectedCellIndex = index;
     if (this.preparation2dDatas?.matrixDatas?.matrixCellDatas) {
       const currentCell =
         this.preparation2dDatas.matrixDatas.matrixCellDatas.find(
@@ -127,8 +127,8 @@ export class Preparation2dDatasService {
    */
   setSelectedCell(cell: CellModel) {
     if (cell) {
-      this.preparation2dDatas.selectedCellIndex = cell.index;
-      this.preparation2dDatas.selectedCell = cell;
+      this.preparation2dDatas!.selectedCellIndex = cell.index;
+      this.preparation2dDatas!.selectedCell = cell;
     }
   }
 
@@ -136,16 +136,16 @@ export class Preparation2dDatasService {
    * Gets the index of the selected cell.
    * @returns The index of the selected cell.
    */
-  getSelectedCellIndex(): number {
-    return this.preparation2dDatas.selectedCellIndex;
+  getSelectedCellIndex(): number | undefined {
+    return this.preparation2dDatas?.selectedCellIndex;
   }
 
   /**
    * Gets the selected cell.
    * @returns The selected CellModel.
    */
-  getSelectedCell(): CellModel {
-    return this.preparation2dDatas.selectedCell;
+  getSelectedCell(): CellModel | undefined {
+    return this.preparation2dDatas?.selectedCell;
   }
 
   /**
@@ -155,11 +155,11 @@ export class Preparation2dDatasService {
    */
   computeDistributionIndexFromMatrixCellIndex(index: number): number {
     // get distribution bar chart index from selected matrix cell index
-    if (this.preparation2dDatas.matrixDatas) {
+    if (this.preparation2dDatas?.matrixDatas) {
       let moduloOfCellIndex = 0;
       moduloOfCellIndex =
-        ((index / this.preparation2dDatas?.selectedVariable?.parts) % 1) *
-        this.preparation2dDatas?.selectedVariable?.parts;
+        ((index / this.preparation2dDatas?.selectedVariable?.parts!) % 1) *
+        this.preparation2dDatas?.selectedVariable?.parts!;
       moduloOfCellIndex = Math.round(moduloOfCellIndex);
       return moduloOfCellIndex;
     }
@@ -177,10 +177,10 @@ export class Preparation2dDatasService {
     if (name1 && name2) {
       const variable = this.getVariableFromNames(name1, name2);
       if (variable) {
-        this.preparation2dDatas.selectedVariable =
+        this.preparation2dDatas!.selectedVariable =
           new Preparation2dVariableModel(variable);
         this.setSelectedCellIndex(0);
-        return this.preparation2dDatas.selectedVariable;
+        return this.preparation2dDatas?.selectedVariable;
       }
     }
     return undefined;
@@ -191,7 +191,7 @@ export class Preparation2dDatasService {
    * @param currentVar - The current regression variable to select.
    */
   setSelectedRegressionVariable(currentVar: Preparation2dVariableModel) {
-    this.preparation2dDatas.selectedVariable = currentVar;
+    this.preparation2dDatas!.selectedVariable = currentVar;
   }
 
   /**
@@ -199,14 +199,14 @@ export class Preparation2dDatasService {
    * @returns The selected Preparation2dVariableModel or undefined.
    */
   getSelectedVariable(): Preparation2dVariableModel | undefined {
-    return this.preparation2dDatas.selectedVariable;
+    return this.preparation2dDatas!.selectedVariable;
   }
 
   /**
    * Gets the rank of the selected variable.
    * @returns The rank of the selected variable.
    */
-  getSelectedVariableRank(): string {
+  getSelectedVariableRank(): string | undefined {
     return this.preparation2dDatas?.selectedVariable?.rank;
   }
 
@@ -215,7 +215,7 @@ export class Preparation2dDatasService {
    * @returns True if the variable is supervised, otherwise false.
    */
   isSupervised(): boolean {
-    return this.preparation2dDatas.isSupervisedVariable();
+    return this.preparation2dDatas?.isSupervisedVariable() || false;
   }
 
   /**
@@ -234,7 +234,7 @@ export class Preparation2dDatasService {
       if (currentDatas) {
         for (let i = 0; i < currentDatas.length; i++) {
           const varItem: Variable2dModel | undefined = new Variable2dModel(
-            currentDatas[i],
+            currentDatas[i]!,
           );
           variableDatas.push(varItem);
         }
@@ -259,7 +259,7 @@ export class Preparation2dDatasService {
       this.appService.appDatas?.bivariatePreparationReport
         ?.variablesPairsStatistics
     ) {
-      const currentPreparation2dVariable: VariablePairStatistics =
+      const currentPreparation2dVariable: VariablePairStatistics | undefined =
         this.appService.appDatas.bivariatePreparationReport.variablesPairsStatistics.find(
           (e) => e.name1 === name1 && e.name2 === name2,
         );
@@ -296,8 +296,8 @@ export class Preparation2dDatasService {
     if (this.preparation2dDatas?.matrixDatas?.matrixCellDatas) {
       const selectedVariable = this.getSelectedVariable();
       matrixCells = new CoocurenceCellsModel(
-        selectedVariable?.nameX,
-        selectedVariable?.nameY,
+        selectedVariable?.nameX!,
+        selectedVariable?.nameY!,
       );
 
       const values: CoocurenceCellModel[] = [];
@@ -307,17 +307,17 @@ export class Preparation2dDatasService {
         i < this.preparation2dDatas.matrixDatas.matrixCellDatas.length;
         i++
       ) {
-        const cell: CellModel =
+        const cell: CellModel | undefined =
           this.preparation2dDatas.matrixDatas.matrixCellDatas[i];
-        const coocurenceCell = new CoocurenceCellModel(cell.index);
+        const coocurenceCell = new CoocurenceCellModel(cell!.index);
 
         // coocurenceCell has dynamic fields
-        coocurenceCell[matrixCells.displayedColumns[1].field] =
-          UtilsService.ellipsis(cell.xDisplayaxisPart, 60);
-        coocurenceCell[matrixCells.displayedColumns[2].field] =
-          UtilsService.ellipsis(cell.yDisplayaxisPart, 60);
-        coocurenceCell.frequency = cell.cellFreq;
-        coocurenceCell.coverage = cell.coverage;
+        coocurenceCell[matrixCells.displayedColumns[1]!.field] =
+          UtilsService.ellipsis(cell!.xDisplayaxisPart, 60);
+        coocurenceCell[matrixCells.displayedColumns[2]!.field] =
+          UtilsService.ellipsis(cell!.yDisplayaxisPart, 60);
+        coocurenceCell.frequency = cell?.cellFreq;
+        coocurenceCell.coverage = cell?.coverage;
         values.push(coocurenceCell);
       }
       matrixCells.values = values;
@@ -331,10 +331,12 @@ export class Preparation2dDatasService {
    * Formats the data for display in a table, including column headers and values.
    * @returns An object containing the values and displayed columns for the current cell data.
    */
-  getCurrentCellDatas(): {
-    values: any[][]; // Dynamic values according to the input datas
-    displayedColumns: GridColumnsI[][];
-  } {
+  getCurrentCellDatas():
+    | {
+        values: any[][]; // Dynamic values according to the input datas
+        displayedColumns: GridColumnsI[][];
+      }
+    | undefined {
     const selectedVariable = this.getSelectedVariable();
 
     const datasX: any = [],
@@ -342,7 +344,7 @@ export class Preparation2dDatasService {
       displayedColumnsX: GridColumnsI[] = [],
       displayedColumnsY: GridColumnsI[] = [];
 
-    this.preparation2dDatas.currentCellDatas = {
+    this.preparation2dDatas!.currentCellDatas = {
       values: [datasX, datasY],
       displayedColumns: [displayedColumnsX, displayedColumnsY],
     };
@@ -354,8 +356,8 @@ export class Preparation2dDatasService {
       if (selectedCell && variableDetails?.dataGrid) {
         const xName = selectedVariable.nameX;
         const yName = selectedVariable.nameY;
-        const xType = variableDetails.dataGrid.dimensions[0].type;
-        const yType = variableDetails.dataGrid.dimensions[1].type;
+        const xType = variableDetails.dataGrid.dimensions[0]?.type;
+        const yType = variableDetails.dataGrid.dimensions[1]?.type;
 
         // Define column titles
         if (xType === TYPES.NUMERICAL) {
@@ -390,7 +392,7 @@ export class Preparation2dDatasService {
         }
 
         this.computeCellDatasByAxis(
-          xType,
+          xType!,
           selectedCell.xaxisPartValues,
           selectedCell.xDisplayaxisPart,
           datasX,
@@ -398,7 +400,7 @@ export class Preparation2dDatasService {
           xName,
         );
         this.computeCellDatasByAxis(
-          yType,
+          yType!,
           selectedCell.yaxisPartValues,
           selectedCell.yDisplayaxisPart,
           datasY,
@@ -408,7 +410,7 @@ export class Preparation2dDatasService {
       }
     }
 
-    return this.preparation2dDatas.currentCellDatas;
+    return this.preparation2dDatas?.currentCellDatas;
   }
 
   /**
@@ -436,11 +438,11 @@ export class Preparation2dDatasService {
       for (let k = 0; k < axisPartValues.length; k++) {
         // get value into global json
         datasAxis[k] = {};
-        datasAxis[k][displayedColumns[0].field] = axisPartValues[k];
+        datasAxis[k][displayedColumns[0]?.field!] = axisPartValues[k];
         if (displayedColumns[1]) {
           const modalityFreq = this.getModalityFrequency(
             variableName,
-            axisPartValues[k].toString(),
+            axisPartValues[k]?.toString()!,
           );
           datasAxis[k][displayedColumns[1].field] = modalityFreq;
         }
@@ -456,11 +458,11 @@ export class Preparation2dDatasService {
    * @returns The frequency of the modality or undefined if not found.
    */
   getModalityFrequency(variable: string, partition: string) {
-    let currentVar: InputValues;
+    let currentVar: InputValues | undefined;
     const source: { [key: string]: VariableDetail } =
       this.appService.appDatas.preparationReport.variablesDetailedStatistics;
     Object.keys(source).forEach((key) => {
-      if (source[key].dataGrid.dimensions[0].variable === variable) {
+      if (source[key]?.dataGrid.dimensions[0]?.variable === variable) {
         currentVar = source[key].inputValues;
       }
     });
@@ -478,14 +480,14 @@ export class Preparation2dDatasService {
    */
   getTargetsIfAvailable(): string[] | undefined {
     // Initialize
-    this.preparation2dDatas.isTargetAvailable = false;
-    let targets: string[];
+    this.preparation2dDatas!.isTargetAvailable = false;
+    let targets: string[] | undefined;
 
     const variablesDetails: VariableDetailsModel | undefined =
-      this.getVariableDetails(this.preparation2dDatas?.selectedVariable?.rank);
+      this.getVariableDetails(this.preparation2dDatas?.selectedVariable?.rank!);
 
     if (variablesDetails?.dataGrid?.cellIds) {
-      const TargetDimension: DimensionVisualization =
+      const TargetDimension: DimensionVisualization | undefined =
         variablesDetails.dataGrid.dimensions.find(
           (e) => e.variable === 'Target',
         );
@@ -497,7 +499,7 @@ export class Preparation2dDatasService {
             ? (TargetDimension.partition as string[])
             : undefined;
       }
-      this.preparation2dDatas.isTargetAvailable = TargetDimension
+      this.preparation2dDatas!.isTargetAvailable = TargetDimension
         ? true
         : false;
       return targets;
@@ -567,19 +569,19 @@ export class Preparation2dDatasService {
       | VariableModel,
   ): //any
   MatrixDatasModel {
-    this.preparation2dDatas.matrixDatas = undefined;
+    this.preparation2dDatas!.matrixDatas = undefined;
     const variablesDetails: VariableDetailsModel | undefined =
-      this.getVariableDetails(selectedVariable.rank);
+      this.getVariableDetails(selectedVariable.rank!);
 
     if (variablesDetails) {
       const variableDatas: VariableDetailsModel = _.cloneDeep(variablesDetails);
 
       if (variableDatas) {
         const xDimension = new DimensionVisualizationModel(
-          variableDatas.dataGrid.dimensions[0],
+          variableDatas.dataGrid.dimensions[0]!,
         );
         const yDimension = new DimensionVisualizationModel(
-          variableDatas.dataGrid.dimensions[1],
+          variableDatas.dataGrid.dimensions[1]!,
         );
 
         if (
@@ -604,11 +606,12 @@ export class Preparation2dDatasService {
           );
         } else if (variableDatas.dataGrid.cellFrequencies) {
           // Get the full frequency list
-          const computedCellFreqs = MatrixUtilsService.getCellFrequencies(
-            [xDimension.parts, yDimension.parts],
-            variableDatas.dataGrid.cellPartIndexes,
-            variableDatas.dataGrid.cellFrequencies,
-          );
+          const computedCellFreqs: number[] =
+            MatrixUtilsService.getCellFrequencies(
+              [xDimension.parts, yDimension.parts],
+              variableDatas.dataGrid.cellPartIndexes,
+              variableDatas.dataGrid.cellFrequencies,
+            );
           variableDatas.setCellFrequencies(computedCellFreqs);
         } else if (variableDatas.dataGrid.cellTargetFrequencies) {
           // Get the full frequency list
@@ -618,7 +621,7 @@ export class Preparation2dDatasService {
             variableDatas.dataGrid.cellTargetFrequencies,
           );
           variableDatas.setTargetCellFrequencies(computedCellTargetFreqs);
-          const sum = UtilsService.sumArrayItemsOfArray(
+          const sum: number[] = UtilsService.sumArrayItemsOfArray(
             computedCellTargetFreqs,
           );
           variableDatas.setCellFrequencies(sum);
@@ -638,6 +641,7 @@ export class Preparation2dDatasService {
             MatrixUtilsService.getFrequencyAxisValues(
               xDimension,
               yDimension,
+              // @ts-ignore
               variableDatas.dataGrid.cellFrequencies ||
                 variableDatas.dataGrid.cellTargetFrequencies,
             );

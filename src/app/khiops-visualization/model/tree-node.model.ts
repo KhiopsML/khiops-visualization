@@ -35,7 +35,7 @@ export class TreeNodeModel implements TreeChildNode {
     this.id = object.nodeId || undefined;
     this._id = this.id;
     this.isLeaf = object.childNodes ? false : true;
-    this.color = treePreparationDatas?.treeColorsMap[this.id] || '#999'; // for folders : grey
+    this.color = treePreparationDatas?.treeColorsMap[this.id!] || '#999'; // for folders : grey
 
     this.isTrusted = isTrusted || false;
     this.shortDescription = object.nodeId + ' ';
