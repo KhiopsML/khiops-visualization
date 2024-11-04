@@ -113,7 +113,7 @@ export class TreeHyperComponent
   }
 
   private selectNodes(selectedNodes: TreeNodeModel[]) {
-    for (let i = 0; i < selectedNodes.length; i++) {
+    for (let i = 0; i < selectedNodes?.length; i++) {
       const node = selectedNodes[i];
       const dataTree = UtilsService.deepFind(this.ht.data, node.id);
       this.ht.api.addPath('SelectionPath', dataTree, node.color);
@@ -272,9 +272,13 @@ export class TreeHyperComponent
 
       if (initView) {
         // zoom out
-        this.ht.initPromise.then(() => this.ht.api.gotoλ(0.15));
-        this.ht.api.updateNodesVisualization();
+        this.ht.initPromise.then(() => {
+          // this.ht.api.gotoλ(0.15)
+          // At init select the first node
+          this.selectNodes(this.selectedNodes);
+        });
       }
+      this.ht.api.updateNodesVisualization();
     }
   }
 
