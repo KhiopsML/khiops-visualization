@@ -567,8 +567,7 @@ export class Preparation2dDatasService {
       | Variable2dModel
       | Preparation2dVariableModel
       | VariableModel,
-  ): //any
-  MatrixDatasModel {
+  ): MatrixDatasModel | undefined {
     this.preparation2dDatas!.matrixDatas = undefined;
     const variablesDetails: VariableDetailsModel | undefined =
       this.getVariableDetails(selectedVariable.rank!);
@@ -668,7 +667,7 @@ export class Preparation2dDatasService {
 
           // TO display axis names
           // Maybe can be improved and be taken into cell datas ?
-          this.preparation2dDatas.matrixDatas = {
+          this.preparation2dDatas!.matrixDatas = {
             variable: {
               // @ts-ignore
               nameX: selectedVariable.name1, // can be undefined in case of regression
@@ -683,7 +682,7 @@ export class Preparation2dDatasService {
       }
     }
 
-    return this.preparation2dDatas.matrixDatas;
+    return this.preparation2dDatas?.matrixDatas;
   }
 
   /**
@@ -779,7 +778,7 @@ export class Preparation2dDatasService {
       MUTUAL_INFO_TARGET_WITH_CELL: [],
     };
     for (let i = 0; i < variablesDatas.length; i++) {
-      const inputDatas = this.getMatrixDatas(variablesDatas[i]);
+      const inputDatas = this.getMatrixDatas(variablesDatas[i]!);
       if (inputDatas) {
         let matrixFreqsValues, matrixValues, matrixExtras;
         let graphMode: MatrixModeI = {
@@ -788,11 +787,11 @@ export class Preparation2dDatasService {
         [matrixFreqsValues, matrixValues, matrixExtras] =
           MatrixUtilsService.computeMatrixValues(
             graphMode,
-            inputDatas.matrixCellDatas,
+            inputDatas.matrixCellDatas!,
             undefined,
             0,
           );
-        currentRes['MUTUAL_INFO_TARGET_WITH_CELL'].push(matrixValues);
+        currentRes['MUTUAL_INFO_TARGET_WITH_CELL']!.push(matrixValues);
 
         graphMode = {
           mode: 'CELL_INTEREST',
@@ -800,15 +799,15 @@ export class Preparation2dDatasService {
         [matrixFreqsValues, matrixValues, matrixExtras] =
           MatrixUtilsService.computeMatrixValues(
             graphMode,
-            inputDatas.matrixCellDatas,
+            inputDatas.matrixCellDatas!,
             undefined,
             0,
           );
-        currentRes['CELL_INTEREST'].push(matrixValues);
+        currentRes['CELL_INTEREST']!.push(matrixValues);
 
-        for (let j = 0; j < inputDatas.matrixCellDatas.length; j++) {
-          const cellFreqs = inputDatas.matrixCellDatas[j].cellFreqs;
-          currentRes['FREQUENCY'].push(UtilsService.arraySum(cellFreqs));
+        for (let j = 0; j < inputDatas.matrixCellDatas!.length; j++) {
+          const cellFreqs = inputDatas.matrixCellDatas?.[j]?.cellFreqs;
+          currentRes['FREQUENCY']!.push(UtilsService.arraySum(cellFreqs));
           // @ts-ignore
           currentRes['FREQUENCY_CELL'].push(cellFreqs);
         }
@@ -816,7 +815,7 @@ export class Preparation2dDatasService {
     }
 
     // Reinit values after computing
-    this.preparation2dDatas.matrixDatas = undefined;
+    this.preparation2dDatas!.matrixDatas = undefined;
     const res: any = {};
 
     res['MUTUAL_INFO_TARGET_WITH_CELL'] = UtilsService.getMinAndMaxFromArray(
