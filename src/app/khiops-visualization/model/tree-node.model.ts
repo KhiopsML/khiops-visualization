@@ -1,6 +1,7 @@
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { TargetValues } from '@khiops-visualization/interfaces/app-datas';
 import { TreeChildNode } from '@khiops-visualization/interfaces/tree-preparation-report';
+import { TreePreparationDatasModel } from './tree-preparation-datas.model';
 
 export class TreeNodeModel implements TreeChildNode {
   id: string | undefined;
@@ -11,10 +12,10 @@ export class TreeNodeModel implements TreeChildNode {
   variable!: string;
   partitionType!: string;
   type!: string;
-  childNodes!: [];
+  childNodes!: TreeChildNode[];
   partition!: [];
   targetValues: TargetValues;
-  children!: any[];
+  children!: TreeNodeModel[];
   color: string;
   isTrusted: boolean;
   defaultGroupIndex?: number;
@@ -25,8 +26,7 @@ export class TreeNodeModel implements TreeChildNode {
 
   constructor(
     object: TreeChildNode,
-    classesCount?: number,
-    color?: string,
+    treePreparationDatas?: TreePreparationDatasModel,
     isTrusted?: boolean,
   ) {
     // Assign values from input
@@ -35,7 +35,7 @@ export class TreeNodeModel implements TreeChildNode {
     this.id = object.nodeId || undefined;
     this._id = this.id;
     this.isLeaf = object.childNodes ? false : true;
-    this.color = color || '#999'; // for folders : grey
+    this.color = treePreparationDatas?.treeColorsMap[this.id] || '#999'; // for folders : grey
 
     this.isTrusted = isTrusted || false;
     this.shortDescription = object.nodeId + ' ';
@@ -45,15 +45,44 @@ export class TreeNodeModel implements TreeChildNode {
       frequencies: [],
       values: [],
     };
-    this.children = object.childNodes || [];
+    this.children = [];
+
+    this.formatChildrenNodesDatas(this.childNodes, treePreparationDatas);
     if (this.isLeaf) {
       this.totalFreqs = UtilsService.arraySum(this.targetValues?.frequencies);
     } else {
       this.deepGetChildrenModalityTargetValues(this.childNodes);
     }
 
-    if (classesCount) {
-      this.purity = this.getPurity(classesCount);
+    if (treePreparationDatas?.classesCount) {
+      this.purity = this.computePurity(treePreparationDatas?.classesCount);
+    }
+  }
+
+  /**
+   * Formats the child nodes data.
+   * This method initializes the `children` array and populates it with new instances
+   * of `TreeNodeModel` created from the provided `childNodes`. Each child node is
+   * recursively processed to ensure the entire tree structure is correctly instantiated.
+   *
+   * @param childNodes - The array of child nodes to format.
+   * @param treePreparationDatas - Optional data used for tree preparation, such as color mapping.
+   */
+  formatChildrenNodesDatas(
+    childNodes: TreeChildNode[],
+    treePreparationDatas?: TreePreparationDatasModel,
+  ) {
+    if (childNodes) {
+      this.children = [];
+      for (let i = 0; i < childNodes.length; i++) {
+        this.children.push(
+          new TreeNodeModel(
+            childNodes[i],
+            treePreparationDatas,
+            this.isTrusted,
+          ),
+        );
+      }
     }
   }
 
@@ -122,7 +151,7 @@ export class TreeNodeModel implements TreeChildNode {
    * @param M - The number of classes.
    * @returns The purity value or undefined if the node is not a leaf.
    */
-  getPurity(M: number): number | undefined {
+  computePurity(M: number): number | undefined {
     let purity = undefined;
     if (this.isLeaf) {
       this.computeValuesProbs();

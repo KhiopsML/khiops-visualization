@@ -1107,8 +1107,8 @@ export class UtilsService {
         });
         return r;
       }
-      children = children.reduce(s, []);
-      if (children.length) {
+      children = children?.reduce(s, []);
+      if (children?.length) {
         r.push({
           ...object,
           children,

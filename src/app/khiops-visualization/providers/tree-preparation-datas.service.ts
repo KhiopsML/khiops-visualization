@@ -177,13 +177,11 @@ export class TreePreparationDatasService {
       this.appService.appDatas?.treePreparationReport?.treeDetails;
     const currentRank = this.getSelectedVariableRank();
     if (currentRank && treeDatas?.[currentRank]) {
-      const currenetDimTree: TreeNodeModel = new TreeNodeModel(
+      const currentDimTree: TreeNodeModel = new TreeNodeModel(
         treeDatas[currentRank].treeNodes,
+        this.treePreparationDatas,
       );
-      this.treePreparationDatas!.dimensionTree = _.cloneDeep([currenetDimTree]);
-      this.treePreparationDatas!.dimensionTree[0] = this.formatTreeNodesDatas(
-        this.treePreparationDatas!.dimensionTree[0],
-      );
+      this.treePreparationDatas!.dimensionTree = _.cloneDeep([currentDimTree]);
     }
   }
 
@@ -208,28 +206,6 @@ export class TreePreparationDatasService {
       this.treePreparationDatas!.maxFrequencies = maxVal;
       this.treePreparationDatas!.minFrequencies = minVal;
     }
-  }
-
-  /**
-   * Formats the tree nodes data by adding color and other properties.
-   * It recursively formats all child nodes.
-   * @param {TreeNodeModel} item - The tree node to format.
-   * @returns {TreeNodeModel} The formatted tree node.
-   */
-  formatTreeNodesDatas(item: TreeNodeModel): TreeNodeModel {
-    const color = this.treePreparationDatas?.treeColorsMap[item.nodeId];
-    item = new TreeNodeModel(
-      item,
-      this.treePreparationDatas?.classesCount,
-      color,
-    );
-
-    if (item?.children) {
-      for (let i = 0; i < item.children.length; i++) {
-        item.children[i] = this.formatTreeNodesDatas(item.children[i]!);
-      }
-    }
-    return item;
   }
 
   /**
@@ -441,8 +417,7 @@ export class TreePreparationDatasService {
         // Define the trusted node selection to go to clicked node into hyper tree
         const treeNodeVo = new TreeNodeModel(
           nodeDatas,
-          this.treePreparationDatas?.classesCount,
-          color,
+          this.treePreparationDatas,
           nodeDatas.nodeId === trustedNodeSelection,
         );
         selectedNodes.push(treeNodeVo);
@@ -489,13 +464,10 @@ export class TreePreparationDatasService {
     if (this.treePreparationDatas) {
       const nodeDatas = this.getNodeFromName(node.nodeId);
       if (nodeDatas) {
-        const color =
-          this.treePreparationDatas?.treeColorsMap[nodeDatas.nodeId];
         // Define the trusted node selection to go to clicked node into hyper tree
         const treeNodeVo = new TreeNodeModel(
           nodeDatas,
-          this.treePreparationDatas.classesCount,
-          color,
+          this.treePreparationDatas,
           nodeDatas && nodeDatas.nodeId === trustedNodeSelection,
         );
 
