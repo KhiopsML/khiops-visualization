@@ -34,7 +34,7 @@ import { MatrixDatasModel } from '@khiops-library/model/matrix-datas.model';
   providedIn: 'root',
 })
 export class Preparation2dDatasService {
-  private preparation2dDatas: Preparation2dDatasModel;
+  private preparation2dDatas?: Preparation2dDatasModel;
 
   constructor(
     private translate: TranslateService,
@@ -53,7 +53,7 @@ export class Preparation2dDatasService {
 
     // select the first item of the list by default
     if (this.preparation2dDatas.isValid()) {
-      let defaultVariable: VariablePairStatistics =
+      let defaultVariable: VariablePairStatistics | undefined =
         this.appService.appDatas.bivariatePreparationReport
           .variablesPairsStatistics[0];
 
@@ -63,8 +63,9 @@ export class Preparation2dDatasService {
       if (savedSelected2dRank) {
         defaultVariable = this.getVariableFromRank(savedSelected2dRank);
       }
-
-      this.setSelectedVariable(defaultVariable.name1, defaultVariable.name2);
+      if (defaultVariable) {
+        this.setSelectedVariable(defaultVariable.name1, defaultVariable.name2);
+      }
     }
   }
 
@@ -523,7 +524,7 @@ export class Preparation2dDatasService {
       // normal case
       const currentVar =
         this.appService.appDatas.bivariatePreparationReport
-          .variablesPairsDetailedStatistics[rank];
+          .variablesPairsDetailedStatistics?.[rank];
       variableDetails = new VariableDetailsModel(currentVar);
     } else if (
       isRegressionOrExplanatoryAnalysis &&
@@ -533,7 +534,7 @@ export class Preparation2dDatasService {
       // regression or explanatory case: textPreparationReport
       const currentVar =
         this.appService.appDatas.textPreparationReport
-          .variablesDetailedStatistics[rank];
+          .variablesDetailedStatistics?.[rank];
       variableDetails = new VariableDetailsModel(currentVar);
     } else if (
       isRegressionOrExplanatoryAnalysis &&
@@ -815,7 +816,7 @@ export class Preparation2dDatasService {
     const res: any = {};
 
     res['MUTUAL_INFO_TARGET_WITH_CELL'] = UtilsService.getMinAndMaxFromArray(
-      currentRes['MUTUAL_INFO_TARGET_WITH_CELL'].flat(),
+      currentRes['MUTUAL_INFO_TARGET_WITH_CELL']!.flat(),
     );
     res['MUTUAL_INFO_TARGET_WITH_CELL'] = UtilsService.averageMinAndMaxValues(
       res['MUTUAL_INFO_TARGET_WITH_CELL'][0],
@@ -824,13 +825,13 @@ export class Preparation2dDatasService {
     res['MUTUAL_INFO'] = res['MUTUAL_INFO_TARGET_WITH_CELL'];
 
     res['CELL_INTEREST'] = UtilsService.getMinAndMaxFromArray(
-      currentRes['CELL_INTEREST'].flat(),
+      currentRes['CELL_INTEREST']!.flat(),
     );
     res['FREQUENCY'] = UtilsService.getMinAndMaxFromArray(
-      currentRes['FREQUENCY'].flat(),
+      currentRes['FREQUENCY']!.flat(),
     );
     res['FREQUENCY_CELL'] = UtilsService.getMinAndMaxFromArray(
-      currentRes['FREQUENCY_CELL'].flat(),
+      currentRes['FREQUENCY_CELL']!.flat(),
     );
 
     res['PROB_CELL'] = [0, 1];

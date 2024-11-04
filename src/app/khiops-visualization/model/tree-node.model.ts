@@ -77,7 +77,7 @@ export class TreeNodeModel implements TreeChildNode {
       for (let i = 0; i < childNodes.length; i++) {
         this.children.push(
           new TreeNodeModel(
-            childNodes[i],
+            childNodes[i]!,
             treePreparationDatas,
             this.isTrusted,
           ),
@@ -97,7 +97,9 @@ export class TreeNodeModel implements TreeChildNode {
   computeValuesProbs() {
     this.valuesProbs = [];
     for (let i = 0; i < this.targetValues.frequencies.length; i++) {
-      this.valuesProbs.push(this.targetValues.frequencies[i] / this.totalFreqs);
+      this.valuesProbs.push(
+        this.targetValues.frequencies[i]! / this.totalFreqs!,
+      );
     }
     return this.valuesProbs;
   }
@@ -109,35 +111,37 @@ export class TreeNodeModel implements TreeChildNode {
    *
    * @param childNodes - The child nodes to aggregate target values from.
    */
-  deepGetChildrenModalityTargetValues(childNodes) {
+  deepGetChildrenModalityTargetValues(childNodes: TreeChildNode[]) {
     if (childNodes) {
       for (let i = 0; i < childNodes.length; i++) {
-        if (childNodes[i].targetValues) {
+        if (childNodes[i]?.targetValues) {
           for (
             let j = 0;
-            j < childNodes[i].targetValues.frequencies.length;
+            j < childNodes[i]!.targetValues!.frequencies.length;
             j++
           ) {
             const isExistingIndex =
               this.targetValues.values.length > 0 &&
               this.targetValues.values.indexOf(
-                childNodes[i].targetValues.values[j],
+                childNodes[i]!.targetValues!.values[j]!,
               );
             if (!isExistingIndex || isExistingIndex === -1) {
               this.targetValues.values.push(
-                childNodes[i].targetValues.values[j],
+                childNodes[i]!.targetValues!.values[j]!,
               );
               this.targetValues.frequencies.push(
-                childNodes[i].targetValues.frequencies[j],
+                childNodes[i]!.targetValues!.frequencies[j]!,
               );
             } else {
               this.targetValues.frequencies[isExistingIndex] =
+                // @ts-ignore
                 this.targetValues.frequencies[isExistingIndex] +
+                // @ts-ignore
                 childNodes[i].targetValues.frequencies[j];
             }
           }
         }
-        this.deepGetChildrenModalityTargetValues(childNodes[i].childNodes);
+        this.deepGetChildrenModalityTargetValues(childNodes[i]!.childNodes!);
       }
     }
   }
@@ -158,7 +162,7 @@ export class TreeNodeModel implements TreeChildNode {
 
       let pClassLog2 = 0;
       for (let i = 0; i < this.targetValues.frequencies.length; i++) {
-        pClassLog2 += this.valuesProbs[i] * Math.log2(this.valuesProbs[i]);
+        pClassLog2 += this.valuesProbs[i]! * Math.log2(this.valuesProbs[i]!);
       }
       purity = 1 + pClassLog2 / Math.log2(M);
     }

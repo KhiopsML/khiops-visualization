@@ -1,10 +1,16 @@
-import { DimensionVisualization, TargetValues } from './app-datas';
+import {
+  DimensionVisualization,
+  TargetValues,
+  VariableDetail,
+} from './app-datas';
 
 export interface BivariatePreparationReport {
   reportType: string;
   summary: BivariatePreparationSummary;
   variablesPairsStatistics: VariablePairStatistics[];
-  variablesPairsDetailedStatistics: VariablesPairsDetailedStatistics[];
+  variablesPairsDetailedStatistics: {
+    [rank: string]: VariableDetail;
+  };
 }
 
 export interface BivariatePreparationSummary {
@@ -51,14 +57,6 @@ export interface VariablePairStatistics {
   deltaLevel?: number;
   level1?: number;
   level2?: number;
-}
-
-interface VariablesPairsDetailedStatistics {
-  [rank: string]: VariablePairDetailedStats;
-}
-
-interface VariablePairDetailedStats {
-  dataGrid: DataGrid;
 }
 
 interface DataGrid {

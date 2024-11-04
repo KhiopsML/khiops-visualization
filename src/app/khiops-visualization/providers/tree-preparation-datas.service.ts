@@ -113,9 +113,10 @@ export class TreePreparationDatasService {
 
     const rank: string | undefined =
       this.treePreparationDatas?.selectedVariable?.rank;
-    const varDetails: VariableDetail = variablesDetailedStatistics[rank];
-    const dimensions = varDetails.dataGrid?.dimensions;
-    const dimIndex = dimensions.findIndex(
+    const varDetails: VariableDetail | undefined =
+      variablesDetailedStatistics[rank!];
+    const dimensions = varDetails?.dataGrid?.dimensions;
+    const dimIndex = dimensions?.findIndex(
       (e: any) =>
         e.variable === this.treePreparationDatas?.selectedVariable?.name,
     );
@@ -192,11 +193,10 @@ export class TreePreparationDatasService {
    * It calculates the minimum and maximum frequencies and updates the tree preparation data.
    */
   computeNodesFreqsComparedToOthers() {
-    let treeLeafs: number[][] | undefined =
+    let treeLeafs: (number[] | undefined)[] | undefined =
       this.treePreparationDatas?.selectedFlattenTree?.map(
         (e: TreeChildNode) => e?.targetValues?.frequencies,
       );
-
     if (treeLeafs) {
       treeLeafs = treeLeafs.filter(function (e) {
         return e !== undefined;
@@ -273,131 +273,135 @@ export class TreePreparationDatasService {
         const currentVar =
           this.appService.appDatas.treePreparationReport
             .variablesDetailedStatistics[
-            this.treePreparationDatas.selectedVariable.rank
+            this.treePreparationDatas?.selectedVariable?.rank!
           ];
-        const variableDetails: VariableDetailsModel = new VariableDetailsModel(
-          currentVar,
-        );
+        if (currentVar) {
+          const variableDetails: VariableDetailsModel =
+            new VariableDetailsModel(currentVar);
 
-        if (variableDetails?.dataGrid) {
-          const currentVariableType =
-            variableDetails.dataGrid.dimensions[0]?.type;
+          if (variableDetails?.dataGrid) {
+            const currentVariableType =
+              variableDetails.dataGrid.dimensions[0]?.type;
 
-          if (currentVariableType === TYPES.NUMERICAL) {
-            displayedColumns.push({
-              headerName:
-                this.translate.get('GLOBAL.INTERVAL_OF') +
-                variableDetails.dataGrid.dimensions[0]?.variable,
-              field: 'interval',
-            });
+            if (currentVariableType === TYPES.NUMERICAL) {
+              displayedColumns.push({
+                headerName:
+                  this.translate.get('GLOBAL.INTERVAL_OF') +
+                  variableDetails.dataGrid.dimensions[0]?.variable,
+                field: 'interval',
+              });
 
-            // init datas array
-            datas[0] = {};
-            if (
-              variableDetails.dataGrid.dimensions[0]!.partition[index]!.length >
-              0
-            ) {
-              datas[0]['interval'] = JSON.stringify(
-                variableDetails.dataGrid.dimensions[0]?.partition[index],
-              );
-            } else {
-              datas[0]['interval'] = this.translate.get('GLOBAL.MISSING');
-            }
-
-            title = this.translate.get('GLOBAL.CURRENT_INTERVAL');
-          } else if (currentVariableType === TYPES.CATEGORICAL) {
-            let dimensionLength = 0;
-            let startIter = 0;
-
-            const currentVal: any =
-              variableDetails.dataGrid.dimensions[0]?.partition[index]?.[0];
-
-            displayedColumns.push({
-              headerName:
-                this.translate.get('GLOBAL.VALUES_OF') +
-                variableDetails.dataGrid.dimensions[0]?.variable,
-              field: 'values',
-            });
-            displayedColumns.push({
-              headerName: this.translate.get('GLOBAL.FREQUENCY'),
-              field: 'frequency',
-            });
-
-            const partValuesLength = UtilsService.flatten(
-              variableDetails.dataGrid.dimensions[0]?.partition,
-            ).length;
-            const partLength =
-              variableDetails.dataGrid.dimensions[0]?.partition.length;
-            const isMultiDimPartition = partValuesLength !== partLength;
-            const defaultGroupIndex =
-              variableDetails.dataGrid.dimensions[0]?.defaultGroupIndex;
-
-            // If multi dimension array, trash cat is managed at the end of treatment
-            if (!isMultiDimPartition) {
-              startIter =
-                variableDetails.inputValues.values.indexOf(currentVal);
-              if (index === defaultGroupIndex) {
-                dimensionLength = variableDetails.inputValues.values.length;
-              } else {
-                dimensionLength =
-                  startIter +
-                  variableDetails.dataGrid.dimensions[0]!.partition[index]!
-                    .length;
-              }
-            } else {
-              startIter = 0;
-              dimensionLength =
-                variableDetails.dataGrid.dimensions[0]?.partition[index]
-                  ?.length || 0;
-            }
-
-            for (let i = startIter; i < dimensionLength; i++) {
-              let currentPartitionInput;
-              if (isMultiDimPartition) {
-                currentPartitionInput =
-                  variableDetails.dataGrid.dimensions[0]?.partition[index]?.[i];
-              } else {
-                currentPartitionInput = variableDetails.inputValues.values[i];
-              }
-
-              datas[i - startIter] = {};
-              datas[i - startIter]['values'] = currentPartitionInput;
-              const currentValueIndex: number =
-                variableDetails.inputValues.values.indexOf(
-                  currentPartitionInput as string,
+              // init datas array
+              datas[0] = {};
+              if (
+                variableDetails.dataGrid.dimensions[0]!.partition[index]!
+                  .length > 0
+              ) {
+                datas[0]['interval'] = JSON.stringify(
+                  variableDetails.dataGrid.dimensions[0]?.partition[index],
                 );
-              datas[i - startIter]['frequency'] =
-                variableDetails.inputValues.frequencies[currentValueIndex];
-            }
+              } else {
+                datas[0]['interval'] = this.translate.get('GLOBAL.MISSING');
+              }
 
-            // trash cat management for multi dim
-            if (isMultiDimPartition && index === defaultGroupIndex) {
-              const inputValuesLength =
-                variableDetails.inputValues.values.length;
-              const unpartitionnedValuesLength =
-                inputValuesLength - partValuesLength;
-              if (unpartitionnedValuesLength !== 0) {
-                for (let i = partValuesLength; i < inputValuesLength; i++) {
-                  const currentPartitionInput =
-                    variableDetails.inputValues.values[i];
-                  datas.push({
-                    values: currentPartitionInput,
-                    frequency: variableDetails.inputValues.frequencies[i],
-                  });
+              title = this.translate.get('GLOBAL.CURRENT_INTERVAL');
+            } else if (currentVariableType === TYPES.CATEGORICAL) {
+              let dimensionLength = 0;
+              let startIter = 0;
+
+              const currentVal: any =
+                variableDetails.dataGrid.dimensions[0]?.partition[index]?.[0];
+
+              displayedColumns.push({
+                headerName:
+                  this.translate.get('GLOBAL.VALUES_OF') +
+                  variableDetails.dataGrid.dimensions[0]?.variable,
+                field: 'values',
+              });
+              displayedColumns.push({
+                headerName: this.translate.get('GLOBAL.FREQUENCY'),
+                field: 'frequency',
+              });
+
+              const partValuesLength = UtilsService.flatten(
+                variableDetails.dataGrid.dimensions[0]?.partition,
+              ).length;
+              const partLength =
+                variableDetails.dataGrid.dimensions[0]?.partition.length;
+              const isMultiDimPartition = partValuesLength !== partLength;
+              const defaultGroupIndex =
+                variableDetails.dataGrid.dimensions[0]?.defaultGroupIndex;
+
+              // If multi dimension array, trash cat is managed at the end of treatment
+              if (!isMultiDimPartition) {
+                startIter =
+                  variableDetails.inputValues.values.indexOf(currentVal);
+                if (index === defaultGroupIndex) {
+                  dimensionLength = variableDetails.inputValues.values.length;
+                } else {
+                  dimensionLength =
+                    startIter +
+                    variableDetails.dataGrid.dimensions[0]!.partition[index]!
+                      .length;
+                }
+              } else {
+                startIter = 0;
+                dimensionLength =
+                  variableDetails.dataGrid.dimensions[0]?.partition[index]
+                    ?.length || 0;
+              }
+
+              for (let i = startIter; i < dimensionLength; i++) {
+                let currentPartitionInput;
+                if (isMultiDimPartition) {
+                  currentPartitionInput =
+                    variableDetails.dataGrid.dimensions[0]?.partition[index]?.[
+                      i
+                    ];
+                } else {
+                  currentPartitionInput = variableDetails.inputValues.values[i];
+                }
+
+                datas[i - startIter] = {};
+                datas[i - startIter]['values'] = currentPartitionInput;
+                const currentValueIndex: number =
+                  variableDetails.inputValues.values.indexOf(
+                    currentPartitionInput as string,
+                  );
+                datas[i - startIter]['frequency'] =
+                  variableDetails.inputValues.frequencies[currentValueIndex];
+              }
+
+              // trash cat management for multi dim
+              if (isMultiDimPartition && index === defaultGroupIndex) {
+                const inputValuesLength =
+                  variableDetails.inputValues.values.length;
+                const unpartitionnedValuesLength =
+                  inputValuesLength - partValuesLength;
+                if (unpartitionnedValuesLength !== 0) {
+                  for (let i = partValuesLength; i < inputValuesLength; i++) {
+                    const currentPartitionInput =
+                      variableDetails.inputValues.values[i];
+                    datas.push({
+                      values: currentPartitionInput,
+                      frequency: variableDetails.inputValues.frequencies[i],
+                    });
+                  }
                 }
               }
+
+              title = this.translate.get('GLOBAL.CURRENT_GROUP');
             }
 
-            title = this.translate.get('GLOBAL.CURRENT_GROUP');
-          }
-
-          if (variableDetails.isLimitedDatas) {
-            title +=
-              ' ( * ' +
-              this.translate.get('GLOBAL.LIMIT_GRAPH_DATAS_WARNING') +
-              ')';
+            if (variableDetails.isLimitedDatas) {
+              title +=
+                ' ( * ' +
+                this.translate.get('GLOBAL.LIMIT_GRAPH_DATAS_WARNING') +
+                ')';
+            }
           }
         }
+
         this.treePreparationDatas!.currentIntervalDatas.title = title;
       }
     }
@@ -413,10 +417,10 @@ export class TreePreparationDatasService {
   setSelectedNodes(nodes: string[], trustedNodeSelection?: string) {
     const selectedNodes: TreeNodeModel[] = [];
     for (let i = 0; i < nodes.length; i++) {
-      const nodeDatas: TreeChildNode = this.getNodeFromName(nodes[i]!);
+      const nodeDatas: TreeChildNode | undefined = this.getNodeFromName(
+        nodes[i]!,
+      );
       if (nodeDatas) {
-        const color =
-          this.treePreparationDatas?.treeColorsMap[nodeDatas.nodeId];
         // Define the trusted node selection to go to clicked node into hyper tree
         const treeNodeVo = new TreeNodeModel(
           nodeDatas,

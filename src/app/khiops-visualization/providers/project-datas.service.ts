@@ -15,7 +15,7 @@ export class ProjectDatasService {
    * Retrieves project summary data.
    * @returns {InfosDatasI[]} An array of project summary data or undefined if no preparation report is available.
    */
-  getProjectSummaryDatas(): InfosDatasI[] {
+  getProjectSummaryDatas(): InfosDatasI[] | undefined {
     if (this.appService.appDatas?.preparationReport) {
       const projectSummaryDatas = new ProjectSummaryModel(
         this.appService.appDatas,
@@ -31,19 +31,19 @@ export class ProjectDatasService {
    * Retrieves project logs data.
    * @returns {ProjectLogModel[]} An array of project log models.
    */
-  getProjectLogsDatas(): ProjectLogModel[] {
+  getProjectLogsDatas(): ProjectLogModel[] | undefined {
     let logs;
     if (this.appService.appDatas?.logs) {
       logs = [];
       for (let i = 0; i < this.appService.appDatas.logs.length; i++) {
         for (
           let j = 0;
-          j < this.appService.appDatas.logs[i].messages.length;
+          j < this.appService.appDatas.logs[i]!.messages.length;
           j++
         ) {
           const log = new ProjectLogModel(
-            this.appService.appDatas.logs[i],
-            this.appService.appDatas.logs[i].messages[j],
+            this.appService.appDatas.logs[i]!,
+            this.appService.appDatas.logs[i]!.messages[j]!,
           );
           logs.push(log);
         }

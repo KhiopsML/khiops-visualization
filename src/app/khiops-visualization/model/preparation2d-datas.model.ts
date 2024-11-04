@@ -9,14 +9,14 @@ export class Preparation2dDatasModel {
   selectedVariable?: Preparation2dVariableModel = undefined;
   selectedCellIndex: number = 0;
   selectedCell!: CellModel;
-  matrixDatas!: MatrixDatasModel;
+  matrixDatas!: MatrixDatasModel | undefined;
   isTargetAvailable = false;
   currentCellDatas!: {
     values: any[][]; // Dynamic values according to the input datas
     displayedColumns: GridColumnsI[][];
   };
 
-  appDatas: VisualizationDatas = undefined;
+  appDatas?: VisualizationDatas = undefined;
   isSupervised = false;
 
   constructor(appDatas: VisualizationDatas) {
@@ -35,12 +35,14 @@ export class Preparation2dDatasModel {
   }
 
   isSupervisedVariable(): boolean {
-    return this.appDatas?.bivariatePreparationReport
-      ?.variablesPairsDetailedStatistics?.[
-      Object.keys(
-        this.appDatas?.bivariatePreparationReport
-          ?.variablesPairsDetailedStatistics,
-      )?.[0]!
-    ]?.dataGrid?.isSupervised;
+    return (
+      this.appDatas?.bivariatePreparationReport
+        ?.variablesPairsDetailedStatistics?.[
+        Object.keys(
+          this.appDatas?.bivariatePreparationReport
+            ?.variablesPairsDetailedStatistics,
+        )?.[0]!
+      ]?.dataGrid?.isSupervised || false
+    );
   }
 }
