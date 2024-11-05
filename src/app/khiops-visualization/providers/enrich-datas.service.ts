@@ -67,8 +67,9 @@ export class EnrichDatasService {
     datas: VisualizationDatas | any,
     preparationSource: string,
   ): VisualizationDatas {
-    if (datas[preparationSource]) {
-      for (const rank in datas[preparationSource].variablesDetailedStatistics) {
+    if (datas?.[preparationSource]) {
+      for (const rank in datas?.[preparationSource]
+        ?.variablesDetailedStatistics) {
         const variable =
           datas[preparationSource].variablesDetailedStatistics[rank];
         if (

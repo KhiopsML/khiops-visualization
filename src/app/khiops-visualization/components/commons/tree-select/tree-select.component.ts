@@ -30,9 +30,9 @@ export class TreeSelectComponent
   extends SelectableComponent
   implements AfterViewInit, OnChanges
 {
-  @Input() public dimensionTree: [TreeNodeModel];
-  @Input() selectedNodes: TreeNodeModel[];
-  @Input() selectedNode: TreeNodeModel;
+  @Input() public dimensionTree?: [TreeNodeModel];
+  @Input() selectedNodes?: TreeNodeModel[];
+  @Input() selectedNode?: TreeNodeModel;
 
   @Output() private selectTreeItemChanged: EventEmitter<any> =
     new EventEmitter();
@@ -91,7 +91,7 @@ export class TreeSelectComponent
     }
   }
 
-  private initTree(selectedNodes?) {
+  private initTree(selectedNodes?: TreeNodeModel[]) {
     if (this.dimensionTree?.[0]) {
       // @ts-ignore
       this.tree = new TreeView(
@@ -104,7 +104,7 @@ export class TreeSelectComponent
         },
       );
 
-      this.tree.on('init', (e) => {
+      this.tree.on('init', () => {
         if (!selectedNodes) {
           // get the first
           this.treePreparationDatasService.initSelectedNodes();
@@ -112,7 +112,7 @@ export class TreeSelectComponent
         this.tree.selectNodes(this.selectedNodes);
       });
 
-      this.tree.on('select', (e) => {
+      this.tree.on('select', (e: any) => {
         // Do ngzone to emit event
         this.ngzone.run(() => {
           const trustedNodeSelection = e.data.id;
@@ -133,8 +133,8 @@ export class TreeSelectComponent
           this.selectTreeItemChanged.emit(e.data);
         });
       });
-      this.tree.on('error', (e) => {
-        this.snackBar.open(this.translate.get(e.data), null, {
+      this.tree.on('error', (e: any) => {
+        this.snackBar.open(this.translate.get(e.data), undefined, {
           duration: 4000,
           panelClass: 'error',
         });
@@ -151,7 +151,7 @@ export class TreeSelectComponent
   }
 
   @HostListener('window:keyup', ['$event'])
-  keyEvent(event) {
+  keyEvent(event: { keyCode: any }) {
     const currentSelectedArea = this.selectableService.getSelectedArea();
     if (currentSelectedArea && currentSelectedArea.id === this.id) {
       this.tree.selectNextNode(this.id, event.keyCode);

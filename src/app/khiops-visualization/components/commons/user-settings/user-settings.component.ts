@@ -25,12 +25,12 @@ export class UserSettingsComponent implements OnChanges {
   @Output() private toggleNavDrawerChanged: EventEmitter<any> =
     new EventEmitter();
 
-  @Input() opened: boolean;
+  @Input() opened?: boolean;
 
-  public numberPrecision: number;
+  public numberPrecision?: number;
   public contrastValue: number =
     AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST;
-  public allowCookies: boolean;
+  public allowCookies?: boolean;
   private currentTheme: string;
 
   constructor(
@@ -86,9 +86,11 @@ export class UserSettingsComponent implements OnChanges {
     // Save all items
     AppService.Ls.set(
       LS.SETTING_NUMBER_PRECISION,
-      this.numberPrecision.toString(),
+      this.numberPrecision?.toString(),
     );
-    AppConfig.visualizationCommon.GLOBAL.TO_FIXED = this.numberPrecision;
+    if (this.numberPrecision !== undefined) {
+      AppConfig.visualizationCommon.GLOBAL.TO_FIXED = this.numberPrecision;
+    }
 
     AppService.Ls.set(
       LS.SETTING_MATRIX_CONTRAST,
@@ -102,7 +104,7 @@ export class UserSettingsComponent implements OnChanges {
     // Close the nav drawer
     this.toggleNavDrawerChanged.emit(true);
 
-    AppService.Ls.set(LS.COOKIE_CONSENT, this.allowCookies.toString());
+    AppService.Ls.set(LS.COOKIE_CONSENT, this.allowCookies?.toString());
 
     setTimeout(() => {
       // Wait for drawer close before reload

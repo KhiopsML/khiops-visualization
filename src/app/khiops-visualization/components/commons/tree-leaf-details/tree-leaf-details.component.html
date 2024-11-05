@@ -25,7 +25,7 @@
               class="target-distribution-graph"
               [displayedValues]="displayedValues"
               [inputDatas]="
-                distributionDatas.treeNodeTargetDistributionGraphDatas
+                distributionDatas?.treeNodeTargetDistributionGraphDatas
               "
               (graphTypeChanged)="
                 onTreeNodeTargetDistributionGraphTypeChanged($event)
@@ -41,10 +41,7 @@
               fxLayout="row"
               fxLayoutAlign="start center"
               class="comp-header"
-              *ngIf="
-                treePreparationDatas.selectedNode &&
-                treePreparationDatas.selectedNode.isLeaf
-              "
+              *ngIf="treePreparationDatas?.selectedNode.isLeaf"
             >
               <div fxLayout="row" fxLayoutAlign="start center">
                 <h2>
@@ -59,7 +56,7 @@
                   }}"
                 >
                   {{ 'GLOBAL.PURITY' | translate }} :
-                  {{ selectedNode.purity | toPrecision }}
+                  {{ selectedNode?.purity | toPrecision }}
                 </h2>
               </div>
             </div>

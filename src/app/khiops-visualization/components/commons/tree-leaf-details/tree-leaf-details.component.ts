@@ -23,14 +23,14 @@ import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
   styleUrls: ['./tree-leaf-details.component.scss'],
 })
 export class TreeLeafDetailsComponent implements OnInit, OnChanges {
-  @Input() public selectedNode: TreeNodeModel;
-  @Input() public displayedValues: ChartToggleValuesI[];
+  @Input() public selectedNode?: TreeNodeModel;
+  @Input() public displayedValues?: ChartToggleValuesI[];
 
   public populationCount: number = 10;
   public treePreparationDatas: TreePreparationDatasModel | undefined;
-  public distributionDatas: DistributionDatasModel;
+  public distributionDatas?: DistributionDatasModel;
   public position = 1; // to change graph id
-  public treeLeafRules: GridDatasI;
+  public treeLeafRules?: GridDatasI;
 
   constructor(
     public ngzone: NgZone,
@@ -56,7 +56,7 @@ export class TreeLeafDetailsComponent implements OnInit, OnChanges {
 
   onTreeNodeTargetDistributionGraphTypeChanged(type: string) {
     this.distributionDatasService.getTreeNodeTargetDistributionGraphDatas(
-      this.selectedNode,
+      this.selectedNode!,
       type,
     );
   }

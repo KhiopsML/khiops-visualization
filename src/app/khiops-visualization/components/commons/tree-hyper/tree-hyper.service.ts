@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 import { N } from '@khiops-hypertree/d/models/n/n';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
+import { TreePreparationDatasModel } from '@khiops-visualization/model/tree-preparation-datas.model';
 
 @Injectable({
   providedIn: 'root',
@@ -81,11 +82,15 @@ export class TreeHyperService {
    * @param n - The node to get the opacity from.
    * @returns The opacity of the node.
    */
-  static getNodeOpacity(datas, purity, n: N) {
+  static getNodeOpacity(
+    datas: TreePreparationDatasModel,
+    purity: boolean,
+    n: N,
+  ) {
     const node: TreeNodeModel = n.data;
     if (datas && node.isLeaf) {
       if (purity) {
-        return Math.sqrt(node.purity);
+        return Math.sqrt(node.purity!);
       } else {
         return 0.9;
       }

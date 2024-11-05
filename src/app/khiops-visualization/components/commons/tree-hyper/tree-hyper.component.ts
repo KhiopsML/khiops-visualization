@@ -40,12 +40,12 @@ export class TreeHyperComponent
   extends SelectableComponent
   implements OnInit, AfterViewInit, OnChanges
 {
-  @ViewChild('hyperTree') private hyperTree: ElementRef<HTMLElement>;
+  @ViewChild('hyperTree') private hyperTree?: ElementRef<HTMLElement>;
 
-  @Input() public dimensionTree: [TreeNodeModel];
-  @Input() private selectedNodes: TreeNodeModel[];
-  @Input() private selectedNode: TreeNodeModel;
-  @Input() private displayedValues: ChartToggleValuesI[];
+  @Input() public dimensionTree?: [TreeNodeModel];
+  @Input() private selectedNodes?: TreeNodeModel[];
+  @Input() private selectedNode?: TreeNodeModel;
+  @Input() private displayedValues?: ChartToggleValuesI[];
   @Output() private selectTreeItemChanged: EventEmitter<any> =
     new EventEmitter();
 
@@ -57,9 +57,9 @@ export class TreeHyperComponent
     purity: false,
   };
   private options: any;
-  private ht: Hypertree;
-  private treePreparationDatas: TreePreparationDatasModel;
-  public distributionDatas: DistributionDatasModel;
+  private ht?: Hypertree;
+  private treePreparationDatas?: TreePreparationDatasModel;
+  public distributionDatas?: DistributionDatasModel;
 
   constructor(
     public override ngzone: NgZone,
@@ -105,9 +105,9 @@ export class TreeHyperComponent
     // remove previous paths
     for (let i = 0; i < selectedNodes.length; i++) {
       const node = selectedNodes[i];
-      const dataTree = UtilsService.deepFind(this.ht.data, node.id);
+      const dataTree = UtilsService.deepFind(this.ht?.data, node?.id);
       if (dataTree) {
-        this.ht.api.removePath('SelectionPath', dataTree);
+        this.ht?.api.removePath('SelectionPath', dataTree);
       }
     }
   }
@@ -115,19 +115,19 @@ export class TreeHyperComponent
   private selectNodes(selectedNodes: TreeNodeModel[]) {
     for (let i = 0; i < selectedNodes?.length; i++) {
       const node = selectedNodes[i];
-      const dataTree = UtilsService.deepFind(this.ht.data, node.id);
-      this.ht.api.addPath('SelectionPath', dataTree, node.color);
+      const dataTree = UtilsService.deepFind(this.ht?.data, node?.id);
+      this.ht?.api.addPath('SelectionPath', dataTree, node?.color);
     }
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    let userSelectedNode;
+    let userSelectedNode: any;
     if (changes.dimensionTree?.currentValue && this.hyperTree) {
       this.initHyperTree();
     }
     if (!this.ht) return;
     if (changes.displayedValues?.currentValue && this.ht) {
-      this.ht.api.updateNodesVisualization();
+      this.ht?.api.updateNodesVisualization();
     }
     if (changes.selectedNodes?.previousValue) {
       // remove previous paths
@@ -139,40 +139,42 @@ export class TreeHyperComponent
       this.selectNodes(changes.selectedNodes.currentValue);
 
       // Find trusted node to center view on it
-      const trustedNode = this.selectedNodes.find((e) => e.isTrusted);
+      const trustedNode = this.selectedNodes?.find((e) => e.isTrusted);
       if (trustedNode) {
         // it's a user click event
-        userSelectedNode = UtilsService.deepFind(this.ht.data, trustedNode.id);
+        userSelectedNode = UtilsService.deepFind(this.ht?.data, trustedNode.id);
       } else {
         // it's a redirection from another component
         // So take the first node
         userSelectedNode = UtilsService.deepFind(
-          this.ht.data,
-          this.selectedNodes[0].id,
+          this.ht?.data,
+          this.selectedNodes?.[0]?.id,
         );
       }
 
       if (userSelectedNode.data.isLeaf) {
-        this.ht.initPromise.then(() => this.ht.api.gotoNode(userSelectedNode));
+        this.ht?.initPromise.then(() =>
+          this.ht?.api.gotoNode(userSelectedNode),
+        );
       }
     }
     if (changes.selectedNode?.currentValue) {
       userSelectedNode = UtilsService.deepFind(
-        this.ht.data,
-        this.selectedNode.id,
+        this.ht?.data,
+        this.selectedNode?.id,
       );
-      this.ht.initPromise.then(() => this.ht.api.gotoNode(userSelectedNode));
+      this.ht?.initPromise.then(() => this.ht?.api.gotoNode(userSelectedNode));
     }
   }
 
   public hideActiveEntries() {
-    this.removeNodes(this.selectedNodes);
-    this.ht.api.updateNodesVisualization();
+    this.removeNodes(this.selectedNodes!);
+    this.ht?.api.updateNodesVisualization();
   }
 
   public showActiveEntries() {
-    this.selectNodes(this.selectedNodes);
-    this.ht.api.updateNodesVisualization();
+    this.selectNodes(this.selectedNodes!);
+    this.ht?.api.updateNodesVisualization();
   }
 
   onSelectToggleButtonChanged(displayedValues: ChartToggleValuesI[]) {
@@ -185,25 +187,25 @@ export class TreeHyperComponent
     this.isFullscreen = isFullscreen;
   }
 
-  togglePurityVisualization(state) {
+  togglePurityVisualization(state: boolean) {
     // this.trackerService.trackEvent('click', 'toggle_purity_tree', state);
     this.visualization.purity = state;
-    this.ht.api.updateNodesVisualization();
+    this.ht?.api.updateNodesVisualization();
     AppService.Ls.set(LS.SETTING_HYPERTREE_VISU_PURITY, state);
   }
 
-  togglePopulationVisualization(state) {
+  togglePopulationVisualization(state: boolean) {
     // this.trackerService.trackEvent('click', 'toggle_population_tree', state);
     this.visualization.population = state;
-    this.ht.api.updateNodesVisualization();
+    this.ht?.api.updateNodesVisualization();
     AppService.Ls.set(LS.SETTING_HYPERTREE_VISU_POPULATION, state);
   }
 
   private initHyperTree(initView = true) {
     if (this.dimensionTree?.[0]) {
       this.options = {
-        dataloader: (ok) => ok(this.dimensionTree[0]),
-        langInitBFS: (ht, n: N) => (n.precalc.label = n.data.id),
+        dataloader: (ok: any) => ok(this.dimensionTree?.[0]),
+        langInitBFS: (ht: any, n: N) => (n.precalc.label = n.data.id),
         filter: {
           cullingRadius: 1,
           rangeCullingWeight: {
@@ -213,8 +215,8 @@ export class TreeHyperComponent
           maxlabels: 100000,
         },
         geometry: {
-          nodeRadius: (ud, n: N) => this.getNodeRadius(n),
-          nodeScale: (ud, n: N) => {
+          nodeRadius: (ud: any, n: N) => this.getNodeRadius(n),
+          nodeScale: (ud: any, n: N) => {
             return 1;
           },
           nodeFilter: (n: N) => {
@@ -226,7 +228,7 @@ export class TreeHyperComponent
           layerOptions: {
             'link-arcs': {
               strokeWidth: (n: N) =>
-                TreeHyperService.getLinkStrokeWidth(n, this.displayedValues),
+                TreeHyperService.getLinkStrokeWidth(n, this.displayedValues!),
             },
             λ: {
               invisible: true, // Hide home location circle
@@ -238,7 +240,7 @@ export class TreeHyperComponent
                 return false;
               },
               isVisible: (n: N) =>
-                TreeHyperService.isNodeLayerVisible(this.displayedValues, n),
+                TreeHyperService.isNodeLayerVisible(this.displayedValues!, n),
             },
             'labels-force': {
               invisible: true,
@@ -246,7 +248,7 @@ export class TreeHyperComponent
             nodes: {
               opacity: (n: N) =>
                 TreeHyperService.getNodeOpacity(
-                  this.treePreparationDatas,
+                  this.treePreparationDatas!,
                   this.visualization.purity,
                   n,
                 ),
@@ -259,26 +261,26 @@ export class TreeHyperComponent
         },
         interaction: {
           mouseRadius: 5,
-          onNodeClick: (n, m, l) => this.nodeClick(n),
+          onNodeClick: (n: any, m: any, l: any) => this.nodeClick(n),
         },
       };
 
       this.ht = new hyt.Hypertree(
         {
-          parent: this.hyperTree.nativeElement.querySelector('#hyperTree'),
+          parent: this.hyperTree?.nativeElement.querySelector('#hyperTree'),
         },
         this.options,
       );
 
       if (initView) {
         // zoom out
-        this.ht.initPromise.then(() => {
-          // this.ht.api.gotoλ(0.15)
+        this.ht?.initPromise.then(() => {
+          // this.ht?.api.gotoλ(0.15)
           // At init select the first node
-          this.selectNodes(this.selectedNodes);
+          this.selectNodes(this.selectedNodes!);
         });
       }
-      this.ht.api.updateNodesVisualization();
+      this.ht?.api.updateNodesVisualization();
     }
   }
 
@@ -341,7 +343,7 @@ export class TreeHyperComponent
       } else {
         const isVisible = TreeHyperService.filterVisibleNodes(
           n,
-          this.displayedValues,
+          this.displayedValues!,
         );
         if (isVisible) {
           return 0.03;
