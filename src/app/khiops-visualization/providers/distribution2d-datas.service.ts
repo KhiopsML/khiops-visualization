@@ -17,7 +17,7 @@ import { ModalityCountsModel } from '@khiops-visualization/model/modality-counts
   providedIn: 'root',
 })
 export class Distribution2dDatasService {
-  private distributionDatas: DistributionDatasModel;
+  private distributionDatas!: DistributionDatasModel;
 
   constructor(
     private distributionDatasService: DistributionDatasService,
@@ -34,7 +34,7 @@ export class Distribution2dDatasService {
    */
   initialize() {
     this.distributionDatas = new DistributionDatasModel(
-      this.appService.appDatas,
+      this.appService.appDatas!,
     );
 
     return this.distributionDatas;
@@ -53,7 +53,7 @@ export class Distribution2dDatasService {
    * @param type Optional parameter to specify the type of distribution (e.g., LIFT).
    * @returns The generated ChartDatasModel instance containing the graph data.
    */
-  getTargetDistributionGraphDatas(type?: string): ChartDatasModel {
+  getTargetDistributionGraphDatas(type?: string): ChartDatasModel | undefined {
     this.distributionDatas.initTargetDistributionGraphDatas();
     this.distributionDatas.setTargetDistributionType(type);
 
@@ -62,20 +62,20 @@ export class Distribution2dDatasService {
     const preparation2dDatas = this.preparation2dDatasService.getDatas();
     const variablesDetails: VariableDetailsModel | undefined =
       this.preparation2dDatasService.getVariableDetails(
-        preparation2dDatas?.selectedVariable?.rank,
+        preparation2dDatas?.selectedVariable?.rank!,
       );
 
-    this.distributionDatas.targetDistributionGraphDatas.labels = [''];
+    this.distributionDatas.targetDistributionGraphDatas!.labels = [''];
 
     if (variablesDetails?.dataGrid?.cellTargetFrequencies) {
       const computedCellTargetFreqs = MatrixUtilsService.getCellFrequencies(
-        [selectedVariable?.parts1, selectedVariable?.parts2],
+        [selectedVariable?.parts1!, selectedVariable?.parts2!],
         variablesDetails.dataGrid.cellPartIndexes,
         variablesDetails.dataGrid.cellTargetFrequencies,
       );
 
       const currentDatas =
-        computedCellTargetFreqs[preparation2dDatas.selectedCellIndex];
+        computedCellTargetFreqs[preparation2dDatas?.selectedCellIndex!];
       const targets = this.preparation2dDatasService.getTargetsIfAvailable();
       if (currentDatas && targets) {
         const modalityCounts: ModalityCountsModel =
@@ -87,14 +87,14 @@ export class Distribution2dDatasService {
           const el = currentDatas[i];
 
           const graphItem: BarModel = new BarModel();
-          graphItem.name = targets[i].toString();
+          graphItem.name = targets[i]?.toString();
 
           if (type && type === TYPES.LIFT) {
             // compute lift
             graphItem.value =
               el /
               UtilsService.arraySum(currentDatas) /
-              modalityCounts.totalProbability[i];
+              modalityCounts.totalProbability[i]!;
           } else {
             graphItem.value = (el * 100) / UtilsService.arraySum(currentDatas);
           }
@@ -106,7 +106,7 @@ export class Distribution2dDatasService {
           const currentDataSet = new ChartDatasetModel(graphItem.name);
           currentDataSet.data.push(graphItem.value);
           currentDataSet.extra.push(graphItem);
-          this.distributionDatas.targetDistributionGraphDatas.datasets.push(
+          this.distributionDatas.targetDistributionGraphDatas?.datasets.push(
             currentDataSet,
           );
         }
@@ -114,7 +114,7 @@ export class Distribution2dDatasService {
     }
 
     if (
-      this.distributionDatas.targetDistributionGraphDatas.datasets.length === 0
+      this.distributionDatas.targetDistributionGraphDatas?.datasets.length === 0
     ) {
       this.distributionDatas.targetDistributionGraphDatas = undefined;
     }
