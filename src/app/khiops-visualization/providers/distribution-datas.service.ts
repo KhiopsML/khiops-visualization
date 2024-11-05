@@ -7,7 +7,6 @@ import { ChartDatasetModel } from '@khiops-library/model/chart-dataset.model';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { TranslateService } from '@ngstack/translate';
 import { VariableDetailsModel } from '../model/variable-details.model';
-import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { DistributionDatasModel } from '../model/distribution-datas.model';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { TreePreparationDatasService } from './tree-preparation-datas.service';
@@ -28,12 +27,11 @@ import { Variable2dModel } from '@khiops-visualization/model/variable-2d.model';
   providedIn: 'root',
 })
 export class DistributionDatasService {
-  private distributionDatas: DistributionDatasModel;
+  private distributionDatas!: DistributionDatasModel;
 
   constructor(
     private translate: TranslateService,
     private treePreparationDatasService: TreePreparationDatasService,
-    private khiopsLibraryService: KhiopsLibraryService,
     private appService: AppService,
   ) {
     this.initialize();
@@ -50,7 +48,7 @@ export class DistributionDatasService {
    */
   initialize() {
     this.distributionDatas = new DistributionDatasModel(
-      this.appService.appDatas,
+      this.appService.appDatas!,
     );
   }
 
@@ -94,7 +92,7 @@ export class DistributionDatasService {
     selectedVariable: PreparationVariableModel | TreePreparationVariableModel,
     type?: string,
     initActiveEntries?: boolean,
-  ): ChartDatasModel {
+  ): ChartDatasModel | undefined {
     if (initActiveEntries === undefined) {
       initActiveEntries = initActiveEntries || true;
     }
@@ -112,16 +110,17 @@ export class DistributionDatasService {
         );
         if (variableDetails.dataGrid.dimensions.length > 1) {
           const currentDatas = variableDetails.dataGrid.partTargetFrequencies;
-          const currentXAxis = variableDetails.dataGrid.dimensions[0].partition;
-          const partition = variableDetails.dataGrid.dimensions[1].partition;
+          const currentXAxis =
+            variableDetails.dataGrid.dimensions[0]?.partition;
+          const partition = variableDetails.dataGrid.dimensions[1]?.partition;
           [
             this.distributionDatas.targetDistributionGraphDatas,
             this.distributionDatas.targetDistributionDisplayedValues,
           ] = this.computeTargetDistributionGraph(
-            partition,
+            partition!,
             currentDatas,
             currentDatas,
-            currentXAxis,
+            currentXAxis!,
             this.distributionDatas.targetDistributionDisplayedValues,
             this.distributionDatas.targetDistributionType,
             selectedVariable.type,
@@ -151,7 +150,7 @@ export class DistributionDatasService {
   getTreeNodeTargetDistributionGraphDatas(
     selectedNode: TreeNodeModel,
     type?: string,
-  ): ChartDatasModel {
+  ): ChartDatasModel | undefined {
     this.distributionDatas.initTreeNodeTargetDistributionGraphDatas();
     this.distributionDatas.setTreeNodeTargetDistributionType(type);
 
@@ -164,13 +163,13 @@ export class DistributionDatasService {
       selectedNode?.isLeaf
     ) {
       const allTargetValues: string[] =
-        this.appService.appDatas.treePreparationReport.summary.targetValues
-          .values;
+        this.appService.appDatas?.treePreparationReport.summary.targetValues
+          .values || [];
       const fullTarget: any[] = [];
       // Update currentDatas and fill empty values with 0
       for (let i = 0; i < allTargetValues.length; i++) {
         const currentTargetIndex = selectedNode.targetValues.values.indexOf(
-          allTargetValues[i],
+          allTargetValues[i]!,
         );
         if (currentTargetIndex !== -1) {
           fullTarget.push(
@@ -240,7 +239,7 @@ export class DistributionDatasService {
         displayedValues = [];
         for (let l = 0; l < partition.length; l++) {
           displayedValues.push({
-            name: partition[l].toString(),
+            name: partition[l]!.toString(),
             show: true,
           });
         }
@@ -251,14 +250,14 @@ export class DistributionDatasService {
       for (let k = 0; k < dimensionLength; k++) {
         const currentPartition = partition[k];
         const currentDataSet = new ChartDatasetModel(
-          currentPartition.toString(),
+          currentPartition!.toString(),
         );
         targetDistributionGraphDatas.datasets.push(currentDataSet);
 
         let l: number = currentXAxis.length;
         for (let i = 0; i < l; i++) {
           const currentLabel = this.formatXAxis(
-            currentXAxis[i].toString(),
+            currentXAxis[i]!.toString(),
             i,
             selectedVariableType,
           ).toString();
@@ -272,7 +271,7 @@ export class DistributionDatasService {
           const currentTotal = UtilsService.arraySum(el);
 
           // if currentPartition must be displayed (graph options)
-          const kObj: ChartToggleValuesI = displayedValues.find(
+          const kObj: ChartToggleValuesI | undefined = displayedValues.find(
             (e) => e.name === currentPartition,
           );
 
@@ -284,7 +283,7 @@ export class DistributionDatasService {
               const currentTotalProba = el.reduce((a, b) => a + b, 0);
               // compute lift
               currentValue =
-                el[k] / currentTotalProba / modalityCounts.totalProbability[k];
+                el[k] / currentTotalProba / modalityCounts.totalProbability[k]!;
             }
           } else {
             currentValue = 0;

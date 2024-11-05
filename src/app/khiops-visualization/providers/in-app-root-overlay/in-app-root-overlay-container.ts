@@ -2,6 +2,7 @@ import { Inject, Injectable, OnDestroy, InjectionToken } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Platform } from '@angular/cdk/platform';
+import { ConfigService } from '@khiops-library/providers/config.service';
 
 export const OVERLAY_PARENT_HTML = new InjectionToken<string>(
   'OVERLAY_PARENT_HTML',
@@ -12,7 +13,11 @@ export class InAppRootOverlayContainer
   extends OverlayContainer
   implements OnDestroy
 {
-  constructor(@Inject(DOCUMENT) _document: any, platform: Platform) {
+  constructor(
+    @Inject(DOCUMENT) _document: any,
+    platform: Platform,
+    private configService: ConfigService,
+  ) {
     super(_document, platform);
   }
 
@@ -20,10 +25,10 @@ export class InAppRootOverlayContainer
     super.ngOnDestroy();
   }
 
-  getRootElement(): Element {
-    return this._document
-      .querySelector('khiops-visualization')
-      .shadowRoot.querySelector('app-home-layout');
+  getRootElement(): Element | null {
+    return this.configService
+      .getRootElementDom()
+      .querySelector('app-home-layout');
   }
 
   protected override _createContainer(): void {
