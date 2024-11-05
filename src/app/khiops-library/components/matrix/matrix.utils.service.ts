@@ -270,6 +270,7 @@ export class MatrixUtilsService {
             break;
           case MATRIX_MODES.CELL_INTEREST:
             // Only on KV do not need to recompute because nodes can not be folded
+            // @ts-ignore
             matrixValues = matrixCellDatas.map((e) => e.cellInterest);
             break;
           case MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL:
@@ -363,12 +364,10 @@ export class MatrixUtilsService {
     let freqColVals = 0;
     let freqLineVals = 0;
     for (let i = 0; i < partPositionsLength; i++) {
-      if (partPositions[i]) {
-        matrixTotal = matrixTotal + e.matrixTotal[partPositions[i]!]!;
-        cellFreqs = cellFreqs + e.cellFreqs[partPositions[i]!]!;
-        freqColVals = freqColVals + e.freqColVals[partPositions[i]!]!;
-        freqLineVals = freqLineVals + e.freqLineVals[partPositions[i]!]!;
-      }
+      matrixTotal = matrixTotal + e.matrixTotal[partPositions[i]!]!;
+      cellFreqs = cellFreqs + e.cellFreqs[partPositions[i]!]!;
+      freqColVals = freqColVals + e.freqColVals[partPositions[i]!]!;
+      freqLineVals = freqLineVals + e.freqLineVals[partPositions[i]!]!;
     }
     return [matrixTotal, cellFreqs, freqColVals, freqLineVals];
   }
@@ -585,7 +584,7 @@ export class MatrixUtilsService {
         const cell: CellModel = new CellModel();
 
         cell.xaxisPartValues = xAxisPartNames[i];
-        cell.xaxisPart = xAxisPartNames[i].toString();
+        cell.xaxisPart = xAxisPartNames[i]!.toString();
         cell.xDisplayaxisPart = MatrixUiService.formatAxisDisplayText(
           xAxisPartShortDescription,
           i,
@@ -594,7 +593,7 @@ export class MatrixUtilsService {
         cell.xnamePart = xDimension.name;
 
         cell.yaxisPartValues = yAxisPartNames[j];
-        cell.yaxisPart = yAxisPartNames[j].toString();
+        cell.yaxisPart = yAxisPartNames[j]!.toString();
         cell.yDisplayaxisPart = MatrixUiService.formatAxisDisplayText(
           yAxisPartShortDescription,
           j,
@@ -638,7 +637,7 @@ export class MatrixUtilsService {
         if (cellTargetFrequencies) {
           cell.cellFreqs =
             currentFrequencies[currentIndex] ||
-            new Array(cellTargetFrequencies[0].length).fill(0);
+            new Array(cellTargetFrequencies[0]!.length).fill(0);
         } else {
           if (Array.isArray(cellFrequencies[currentIndex])) {
             cell.cellFreqs = currentFrequencies[currentIndex] || [0];
@@ -672,10 +671,10 @@ export class MatrixUtilsService {
           cell.infosMutExtra.push(MIijExtra);
 
           // Compute Prob values
-          const cellProb = cell.cellFreq / currentColVal[i];
+          const cellProb = cell.cellFreq! / currentColVal[i];
           cell.cellProbs.push(cellProb || 0);
 
-          const cellProbRev = cell.cellFreq / currentLineVal[j];
+          const cellProbRev = cell.cellFreq! / currentLineVal[j];
           cell.cellProbsRev.push(cellProbRev || 0);
 
           cell.freqColVals.push(currentColVal[i] || 0);
@@ -683,7 +682,7 @@ export class MatrixUtilsService {
 
           // Compute Hellinger value
           const HIij =
-            Math.sqrt(cell.cellFreq / matrixTotal) -
+            Math.sqrt(cell.cellFreq! / matrixTotal) -
             Math.sqrt(
               ((currentColVal[i] / matrixTotal) * currentLineVal[j]) /
                 matrixTotal,
@@ -693,17 +692,18 @@ export class MatrixUtilsService {
         } else {
           // KC when context or KV with target case (iris2d for example)
 
+          // @ts-ignore
           cell.matrixTotal = matrixTotalsByIndex;
 
           // Compute coverage from total
-          cell.coverage = cell.cellFreq / matrixTotal;
+          cell.coverage = cell.cellFreq! / matrixTotal;
 
           const cellsFreqsLength = cell.cellFreqs.length;
           for (let k = 0; k < cellsFreqsLength; k++) {
             // Compute mutual information
             const [MIij, MIijExtra] = UtilsService.computeMutualInfo(
               cell.cellFreqs[k],
-              matrixMultiDimTotal[k],
+              matrixMultiDimTotal![k],
               currentColVal[i][k],
               currentLineVal[j][k],
             );
@@ -712,15 +712,15 @@ export class MatrixUtilsService {
 
             if (!Array.isArray(currentColVal[i])) {
               // KV with targets iris2d case
-              const cellProb = cell.cellFreqs[k] / matrixTotalsByIndex[k];
+              const cellProb = cell.cellFreqs[k]! / matrixTotalsByIndex![k];
               cell.cellProbs.push(cellProb || 0);
 
               const cellProbRev =
-                cell.cellFreqs[k] /
+                cell.cellFreqs[k]! /
                 UtilsService.arraySum(currentFrequencies[currentIndex]);
               cell.cellProbsRev.push(cellProbRev || 0);
 
-              cell.freqColVals.push(matrixTotalsByIndex[k] || 0);
+              cell.freqColVals.push(matrixTotalsByIndex![k] || 0);
               cell.freqLineVals.push(
                 UtilsService.arraySum(currentFrequencies[currentIndex]) || 0,
               );
@@ -729,19 +729,19 @@ export class MatrixUtilsService {
 
               // Compute Hellinger value
               const HIij =
-                Math.sqrt(cell.cellFreqs[k] / matrixMultiDimTotal[k]) -
+                Math.sqrt(cell.cellFreqs[k]! / matrixMultiDimTotal![k]) -
                 Math.sqrt(
-                  ((currentColVal[i][k] / matrixMultiDimTotal[k]) *
+                  ((currentColVal[i][k] / matrixMultiDimTotal![k]) *
                     currentLineVal[j][k]) /
-                    matrixMultiDimTotal[k],
+                    matrixMultiDimTotal![k],
                 );
               cell.cellHellingerValue.push(HIij || 0);
               cell.cellHellingerAbsoluteValue.push(Math.pow(HIij, 2) || 0);
 
               // Compute Prob values
-              const cellProb = cell.cellFreqs[k] / currentColVal[i][k];
+              const cellProb = cell.cellFreqs[k]! / currentColVal[i][k];
               cell.cellProbs.push(cellProb || 0);
-              const cellProbRev = cell.cellFreqs[k] / currentLineVal[j][k];
+              const cellProbRev = cell.cellFreqs[k]! / currentLineVal[j][k];
               cell.cellProbsRev.push(cellProbRev || 0);
 
               cell.freqColVals.push(currentColVal[i][k] || 0);
@@ -872,8 +872,8 @@ export class MatrixUtilsService {
       if (mode === MATRIX_MODES.HELLINGER) {
         // For KC purpose
         [minValH, maxValH] = UtilsService.averageMinAndMaxValues(
-          minVal,
-          maxVal,
+          minVal!,
+          maxVal!,
         );
       }
     } else {

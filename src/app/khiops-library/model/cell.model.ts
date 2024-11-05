@@ -11,7 +11,7 @@ export class CellModel {
 	*/
 
   _id!: string | number;
-  cellFreq!: number;
+  cellFreq?: number;
   cellFreqHash: {} | undefined;
   displayedFreqValue!: number;
   displayedValue!: {
@@ -23,7 +23,7 @@ export class CellModel {
   targetCellFreq!: number;
   index!: number;
   id!: number; // KV for row identification (regression table case)
-  cellInterest!: number;
+  cellInterest?: number;
   cellTargetProb!: number;
   xCanvas!: number;
   yCanvas!: number;
@@ -34,12 +34,12 @@ export class CellModel {
   w!: MatrixCoordI;
   h!: MatrixCoordI;
   concatName!: string[];
-  xaxisPart!: string;
-  yaxisPart!: string;
-  xaxisPartValues!: number[] | string; // KV use only
-  yaxisPartValues!: number[] | string; // KV use only
-  xDisplayaxisPart!: string;
-  yDisplayaxisPart!: string;
+  xaxisPart?: string;
+  yaxisPart?: string;
+  xaxisPartValues?: number[] | string; // KV use only
+  yaxisPartValues?: number[] | string; // KV use only
+  xDisplayaxisPart?: string;
+  yDisplayaxisPart?: string;
   xnamePart!: string;
   ynamePart!: string;
   coverage!: number;
@@ -54,7 +54,7 @@ export class CellModel {
   infosMutExtra: any[] = []; // can be complex
   cellHellingerValue: number[] = [];
   cellHellingerAbsoluteValue: number[] = [];
-  matrixTotal: number[] = [];
+  matrixTotal?: number[] = [];
 
   /**
    * Sets the index for the cell and updates related properties.
