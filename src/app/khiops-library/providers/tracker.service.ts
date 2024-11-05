@@ -8,6 +8,7 @@ import { ConfirmDialogComponent } from '@khiops-library/components/confirm-dialo
 import { LS } from '@khiops-library/enum/ls';
 import { TranslateService } from '@ngstack/translate';
 declare const window: any;
+// @ts-ignore
 import { v4 as uuidv4 } from 'uuid';
 import { Ls } from '@khiops-library/providers/ls.service';
 
@@ -15,8 +16,8 @@ import { Ls } from '@khiops-library/providers/ls.service';
   providedIn: 'root',
 })
 export class TrackerService {
-  private trackerScriptElement: HTMLScriptElement;
-  private appSource: string;
+  private trackerScriptElement?: HTMLScriptElement;
+  private appSource: string = '';
 
   constructor(
     private ls: Ls,
@@ -26,7 +27,7 @@ export class TrackerService {
     private translate: TranslateService,
   ) {}
 
-  initTracker(config, trackerId: string, appSource: string) {
+  initTracker(config: any, trackerId: string, appSource: string) {
     this.appSource = appSource;
     const cookieStatus = this.getCookieStatus();
 
@@ -52,7 +53,9 @@ export class TrackerService {
   }
 
   removeTrackerScript() {
-    this.trackerScriptElement.parentNode.removeChild(this.trackerScriptElement);
+    this.trackerScriptElement?.parentNode!.removeChild(
+      this.trackerScriptElement,
+    );
     window._paq = undefined;
   }
 
@@ -65,7 +68,7 @@ export class TrackerService {
     return uuid;
   }
 
-  addTrackerScript(config, trackerId: string, cb?: any) {
+  addTrackerScript(config: any, trackerId: string, cb?: any) {
     window._paq = window._paq || [];
 
     (() => {
@@ -87,7 +90,7 @@ export class TrackerService {
       g.async = true;
       g.defer = true;
       g.src = u + 'matomo.js';
-      s.parentNode.insertBefore(g, s);
+      s?.parentNode?.insertBefore(g, s);
       this.trackerScriptElement = g;
       this.trackerScriptElement.onload = () => {
         cb?.();
@@ -95,7 +98,7 @@ export class TrackerService {
     })();
   }
 
-  showCookieConsentDialog(config, trackerId) {
+  showCookieConsentDialog(config: any, trackerId: string) {
     this.ngzone.run(() => {
       this.dialogRef.closeAll();
       const configDialog = new MatDialogConfig();
