@@ -39,10 +39,10 @@
             [showLineSelection]="true"
             [showColumnsSelection]="false"
             [rowHeight]="30"
-            [inputDatas]="evaluationDatas.evaluationTypesSummary.values"
-            [title]="evaluationDatas.evaluationTypesSummary.title"
+            [inputDatas]="evaluationDatas.evaluationTypesSummary?.values"
+            [title]="evaluationDatas.evaluationTypesSummary?.title"
             [displayedColumns]="
-              evaluationDatas.evaluationTypesSummary.displayedColumns
+              evaluationDatas.evaluationTypesSummary?.displayedColumns
             "
           >
           </kl-ag-grid>
@@ -64,10 +64,10 @@
             [showLineSelection]="true"
             [showColumnsSelection]="false"
             [rowHeight]="30"
-            [inputDatas]="evaluationDatas.predictorEvaluations.values"
-            [title]="evaluationDatas.predictorEvaluations.title"
+            [inputDatas]="evaluationDatas.predictorEvaluations?.values"
+            [title]="evaluationDatas.predictorEvaluations?.title"
             [displayedColumns]="
-              evaluationDatas.predictorEvaluations.displayedColumns
+              evaluationDatas.predictorEvaluations?.displayedColumns
             "
             [selectedVariable]="
               evaluationDatas.selectedPredictorEvaluationVariable

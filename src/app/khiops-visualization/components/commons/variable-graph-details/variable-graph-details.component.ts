@@ -32,33 +32,33 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
   @ViewChild('distributionGraph', {
     static: false,
   })
-  private distributionGraph: DistributionGraphComponent;
+  private distributionGraph?: DistributionGraphComponent;
 
   @ViewChild('targetDistributionGraph', {
     static: false,
   })
-  private targetDistributionGraph: TargetDistributionGraphComponent;
+  private targetDistributionGraph?: TargetDistributionGraphComponent;
 
   @Output() private selectedItemChanged: EventEmitter<any> = new EventEmitter();
 
   @Input() public showTargetDistributionGraph = true;
   @Input() public showDistributionGraph = true;
-  @Input() public selectedVariable:
+  @Input() public selectedVariable?:
     | PreparationVariableModel
     | TreePreparationVariableModel;
   @Input() private selectedGraphItemIndex = 0;
-  @Input() private preparationSource: string;
+  @Input() private preparationSource?: string;
   @Input() public displayedValues?: ChartToggleValuesI[]; // optional input to update chart on value changes (for instance when another component of tree preparation view changed)
   @Input() public position = 0; // in case of multiple component in the same page
 
   public scrollPosition = 0;
-  public scaleValue: number;
+  public scaleValue?: number;
   public activeEntries = 0;
   public isFullscreen: boolean = false;
-  public distributionDatas: DistributionDatasModel;
+  public distributionDatas?: DistributionDatasModel;
   public isLoading: boolean = false;
 
-  private distributionGraphType: string;
+  private distributionGraphType?: string;
   private targetDistributionGraphType: string | null;
 
   constructor(
@@ -86,33 +86,33 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
       this.initActiveEntries(this.selectedGraphItemIndex);
 
       this.distributionDatasService.setPreparationSource(
-        this.preparationSource,
+        this.preparationSource!,
       );
       this.isLoading =
         !this.isHistogramDisplayed() &&
         this.distributionDatasService.isBigDistributionVariable(
-          this.selectedVariable.rank,
+          this.selectedVariable?.rank!,
         );
 
       setTimeout(
         () => {
           if (this.showTargetDistributionGraph) {
             this.distributionDatasService.getTargetDistributionGraphDatas(
-              this.selectedVariable,
+              this.selectedVariable!,
             );
           }
           if (this.showDistributionGraph) {
             // Reinit datas
-            this.distributionDatas.histogramDatas = undefined;
-            this.distributionDatas.distributionGraphDatas = undefined;
+            this.distributionDatas!.histogramDatas = undefined;
+            this.distributionDatas!.distributionGraphDatas = undefined;
 
             if (this.isHistogramDisplayed()) {
               this.distributionDatasService.getHistogramGraphDatas(
-                this.selectedVariable,
+                this.selectedVariable!,
               );
             } else {
               this.distributionDatasService.getdistributionGraphDatas(
-                this.selectedVariable,
+                this.selectedVariable!,
               );
             }
           }
@@ -121,7 +121,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
             this.treePreparationDatasService.getCurrentIntervalDatas();
           } else {
             this.preparationDatasService.getCurrentIntervalDatas(
-              this.preparationSource,
+              this.preparationSource!,
             );
           }
           this.isLoading = false;
@@ -139,8 +139,9 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
 
   isHistogramDisplayed(): boolean {
     return (
-      this.selectedVariable.isNumerical &&
-      !this.preparationDatasService.isSupervised()
+      (this.selectedVariable?.isNumerical &&
+        !this.preparationDatasService.isSupervised()) ||
+      false
     );
   }
 
@@ -190,13 +191,15 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
     this.scaleValue = value;
   }
 
-  onTargetDistributionGraphDisplayedValuesChanged(displayedValues) {
+  onTargetDistributionGraphDisplayedValuesChanged(
+    displayedValues: ChartToggleValuesI[],
+  ) {
     this.distributionDatasService.setTargetDistributionDisplayedValues(
       displayedValues,
     );
     this.distributionDatasService.getTargetDistributionGraphDatas(
-      this.getCurrentVariable(),
-      this.targetDistributionGraphType,
+      this.getCurrentVariable()!,
+      this.targetDistributionGraphType!,
     );
     this.initActiveEntries();
   }
@@ -204,7 +207,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
   onTargetDistributionGraphTypeChanged(type: string) {
     this.targetDistributionGraphType = type;
     this.distributionDatasService.getTargetDistributionGraphDatas(
-      this.getCurrentVariable(),
+      this.getCurrentVariable()!,
       this.targetDistributionGraphType,
       false,
     );
@@ -214,7 +217,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
   onDistributionGraphTypeChanged(type: string) {
     this.distributionGraphType = type;
     this.distributionDatasService.getdistributionGraphDatas(
-      this.getCurrentVariable(),
+      this.getCurrentVariable()!,
       this.distributionGraphType,
       false,
     );
@@ -227,7 +230,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
       selectedVariable = this.treePreparationDatasService.getSelectedVariable();
     } else {
       selectedVariable = this.preparationDatasService.getSelectedVariable(
-        this.preparationSource,
+        this.preparationSource!,
       );
     }
     return selectedVariable;
@@ -253,8 +256,8 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
 
   hideScaleElt() {
     return (
-      this.distributionDatas.histogramDatas ||
-      this.distributionDatas.distributionGraphDatas?.labels?.length < 10
+      this.distributionDatas?.histogramDatas ||
+      this.distributionDatas?.distributionGraphDatas?.labels?.length! < 10
     );
   }
 }

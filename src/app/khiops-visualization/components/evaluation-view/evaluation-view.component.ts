@@ -54,7 +54,7 @@ export class EvaluationViewComponent
     this.evaluationDatasService.setSelectedEvaluationTypeVariable(item);
     const predictorEvaluationVariable =
       this.evaluationDatasService.getPredictorEvaluationVariableFromEvaluationType(
-        item.type,
+        item.type!,
       );
     this.evaluationDatasService.setSelectedPredictorEvaluationVariable(
       predictorEvaluationVariable,

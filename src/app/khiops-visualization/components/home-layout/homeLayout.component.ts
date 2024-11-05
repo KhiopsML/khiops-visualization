@@ -26,7 +26,7 @@ import { UtilsService } from '@khiops-library/providers/utils.service';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
 import { Subscription } from 'rxjs';
-import { MatTabGroup } from '@angular/material/tabs';
+import { MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs';
 import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas';
 
 @Component({
@@ -38,7 +38,7 @@ import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas';
 export class HomeLayoutComponent implements OnInit {
   @ViewChild('mainTabGroup') public mainTabGroup!: MatTabGroup;
   @Input()
-  public get appDatas(): VisualizationDatas {
+  public get appDatas(): VisualizationDatas | undefined {
     return this.appService.appDatas;
   }
   public set appDatas(datas: VisualizationDatas) {
@@ -46,17 +46,17 @@ export class HomeLayoutComponent implements OnInit {
   }
   public showProjectTab: boolean = true;
   public activeTab = AppConfig.visualizationCommon.HOME.ACTIVE_TAB_INDEX;
-  public appTitle: string;
-  public appVersion: string;
+  public appTitle?: string;
+  public appVersion?: string;
   public opened = false;
   public selectedTab: Object | undefined;
-  public isCompatibleJson: boolean;
+  public isCompatibleJson?: boolean;
 
   @ViewChild('fileLoader', {
     static: false,
   })
-  private fileLoader: FileLoaderComponent;
-  private currentDatas: VisualizationDatas;
+  private fileLoader?: FileLoaderComponent;
+  private currentDatas?: VisualizationDatas;
   private fileLoadedSub?: Subscription;
 
   constructor(
@@ -82,7 +82,7 @@ export class HomeLayoutComponent implements OnInit {
     }
   }
 
-  onSelectedTabChanged(e) {
+  onSelectedTabChanged(e: MatTabChangeEvent) {
     // init selected area to undefined
     this.selectableService.initialize();
     this.selectedTab = e;
@@ -99,7 +99,7 @@ export class HomeLayoutComponent implements OnInit {
   ngAfterViewInit() {
     if (AppConfig.debugFile) {
       setTimeout(() => {
-        this.fileLoader.loadDebugFile();
+        this.fileLoader?.loadDebugFile();
       }, 100);
     }
     this.fileLoadedSub = this.fileLoaderService.fileLoaded$.subscribe(
@@ -121,7 +121,7 @@ export class HomeLayoutComponent implements OnInit {
     }
   }
 
-  private initialize(datas: VisualizationDatas = undefined) {
+  private initialize(datas: VisualizationDatas | undefined = undefined) {
     this.isCompatibleJson = false;
     this.currentDatas = datas;
     this.appService.setFileDatas(datas);
@@ -178,7 +178,7 @@ export class HomeLayoutComponent implements OnInit {
 
   private closeFile() {
     this.dialogRef.closeAll();
-    this.fileLoader.closeFile();
+    this.fileLoader?.closeFile();
   }
 
   private selectFirstTab() {

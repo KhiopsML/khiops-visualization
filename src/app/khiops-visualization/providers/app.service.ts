@@ -90,7 +90,7 @@ export class AppService {
    * Sets the file data, enriches it, and removes missing information for numerical variables.
    * @param datas - The data to be set and processed.
    */
-  setFileDatas(datas: VisualizationDatas) {
+  setFileDatas(datas: VisualizationDatas | undefined) {
     this.initSessionVariables();
     this._appDatas!.datas = datas;
     this._appDatas!.datas = EnrichDatasService.enrichJsonDatas(
