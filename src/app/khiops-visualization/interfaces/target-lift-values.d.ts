@@ -1,4 +1,4 @@
 export interface TargetLiftValuesI {
-  selected: string;
-  targets: string[];
+  selected?: string;
+  targets?: string[];
 }
