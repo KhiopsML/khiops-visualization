@@ -18,8 +18,10 @@ import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 import { PreparationVariableModel } from '@khiops-visualization/model/preparation-variable.model';
 import { TreePreparationVariableModel } from '@khiops-visualization/model/tree-preparation-variable.model';
 import { DistributionChartDatasModel } from '@khiops-visualization/model/distribution-chart-datas.model';
-import { REPORT } from '@khiops-library/enum/report';
-import { DimensionVisualization } from '@khiops-visualization/interfaces/app-datas';
+import {
+  DimensionVisualization,
+  VariableDetail,
+} from '@khiops-visualization/interfaces/app-datas';
 import { VariableModel } from '@khiops-visualization/model/variable.model';
 import { Variable2dModel } from '@khiops-visualization/model/variable-2d.model';
 
@@ -100,7 +102,8 @@ export class DistributionDatasService {
     this.distributionDatas.setTargetDistributionType(type);
 
     if (this.distributionDatas.isValid()) {
-      const currentVar =
+      const currentVar: VariableDetail =
+        // @ts-ignore
         this.appService.appDatas[this.distributionDatas.preparationSource]
           .variablesDetailedStatistics[selectedVariable.rank];
 
@@ -179,7 +182,8 @@ export class DistributionDatasService {
           fullTarget.push(0);
         }
       }
-      const currentVar =
+      const currentVar: VariableDetail =
+        // @ts-ignore
         this.appService.appDatas[this.distributionDatas.preparationSource]
           .variablesDetailedStatistics[selectedVariable.rank];
       const variableDetails: VariableDetailsModel = new VariableDetailsModel(
@@ -280,7 +284,10 @@ export class DistributionDatasService {
               currentValue = (el[k] * 100) / currentTotal;
             } else {
               // get sum of current proba
-              const currentTotalProba = el.reduce((a, b) => a + b, 0);
+              const currentTotalProba = el.reduce(
+                (a: number, b: number) => a + b,
+                0,
+              );
               // compute lift
               currentValue =
                 el[k] / currentTotalProba / modalityCounts.totalProbability[k]!;
@@ -293,6 +300,7 @@ export class DistributionDatasService {
             currentValue = null;
           }
           const graphItem: BarModel = new BarModel();
+          // @ts-ignore
           graphItem.value = parseFloat(currentValue); // parseFloat to remove uselesse .0*
           graphItem.extra.value = el[k];
           currentDataSet.data.push(graphItem.value);
@@ -315,8 +323,9 @@ export class DistributionDatasService {
     selectedVariable: PreparationVariableModel | TreePreparationVariableModel,
     type?: string,
     initActiveEntries?: boolean,
-  ): ChartDatasModel {
-    let distributionsGraphDetails = new ChartDatasModel();
+  ): ChartDatasModel | undefined {
+    let distributionsGraphDetails: ChartDatasModel | undefined =
+      new ChartDatasModel();
 
     if (initActiveEntries === undefined) {
       initActiveEntries = true;
@@ -326,7 +335,8 @@ export class DistributionDatasService {
     }
 
     if (this.distributionDatas.isValid()) {
-      const currentVar =
+      const currentVar: VariableDetail =
+        // @ts-ignore
         this.appService.appDatas[this.distributionDatas.preparationSource]
           .variablesDetailedStatistics[selectedVariable.rank];
       if (currentVar) {
@@ -338,11 +348,11 @@ export class DistributionDatasService {
         const dimensions: DimensionVisualization[] = _.cloneDeep(
           variableDetails.dataGrid.dimensions,
         );
-        const currentXAxis = dimensions[0].partition;
+        const currentXAxis = dimensions[0]?.partition;
         const partition = 0;
 
         let currentDatas: number[] | number[][];
-        let currentDimension: DimensionVisualization;
+        let currentDimension: DimensionVisualization | undefined;
 
         if (dimensions.length === 1) {
           currentDimension = dimensions[0];
@@ -352,16 +362,16 @@ export class DistributionDatasService {
           currentDatas = variableDetails.dataGrid.partTargetFrequencies;
         }
         distributionsGraphDetails = this.computeDistributionGraph(
-          currentDimension,
+          currentDimension!,
           currentDatas,
           dimensions,
           partition,
-          currentXAxis,
+          currentXAxis!,
           selectedVariable,
         );
       }
     }
-    if (distributionsGraphDetails.datasets.length === 0) {
+    if (distributionsGraphDetails?.datasets.length === 0) {
       distributionsGraphDetails = undefined;
     }
     this.distributionDatas.distributionGraphDatas = distributionsGraphDetails;
@@ -376,9 +386,10 @@ export class DistributionDatasService {
    * @returns A boolean indicating whether the variable is a big distribution variable.
    */
   isBigDistributionVariable(rank: string) {
+    // @ts-ignore
     const currentVar = this.appService.appDatas[
       this.distributionDatas.preparationSource
-    ].variablesStatistics.find((e) => e.rank === rank);
+    ].variablesStatistics.find((e: any) => e.rank === rank);
     return (
       currentVar?.values >
       AppConfig.visualizationCommon.GLOBAL.BIG_DISTRIBUTION_SIZE
@@ -407,18 +418,22 @@ export class DistributionDatasService {
       this.distributionDatas.setDefaultGraphOptions();
 
       histogramGraphDetails = [];
-      const totalFreq = varDatas.frequencies.reduce(
+      const totalFreq = varDatas.frequencies?.reduce(
         (partialSum: number, a: number) => partialSum + a,
         0,
       );
 
-      varDatas.dimensions[0].partition.forEach(
+      varDatas.dimensions[0]?.partition.forEach(
         //@ts-ignore
         (partition: number[], i: number) => {
           // partition is always numbers in this case
-          if (partition.length !== 0) {
-            const delta = partition[1] - partition[0];
-            let value = varDatas.frequencies[i] / totalFreq / delta;
+          if (
+            varDatas.frequencies &&
+            varDatas.frequencies[i] &&
+            partition.length !== 0
+          ) {
+            const delta = partition[1]! - partition[0]!;
+            let value = varDatas.frequencies[i] / totalFreq! / delta;
             let logValue = Math.log10(value);
             if (logValue === -Infinity) {
               logValue = 0;
@@ -457,8 +472,8 @@ export class DistributionDatasService {
     partition: number,
     currentXAxis: number[][] | string[],
     selectedVariable: PreparationVariableModel | TreePreparationVariableModel,
-  ): any {
-    let distributionsGraphDetails: DistributionChartDatasModel =
+  ): DistributionChartDatasModel | undefined {
+    let distributionsGraphDetails: DistributionChartDatasModel | undefined =
       new ChartDatasModel();
 
     if (currentDimension) {
@@ -483,18 +498,19 @@ export class DistributionDatasService {
       let l: number = currentDatas.length;
 
       for (let i = 0; i < l; i++) {
-        let currentValue = 0;
-        const coverageValue = coverageArray[i];
-        const frequencyValue = frequencyArray[i];
+        let currentValue: number | undefined = 0;
+        const coverageValue = coverageArray?.[i];
+        const frequencyValue = frequencyArray?.[i];
 
         // format x axis legend text
         const currentName: string = this.formatXAxis(
-          currentXAxis[i],
+          currentXAxis[i]!,
           i,
           selectedVariable.type,
         );
         distributionsGraphDetails.intervals = [];
         distributionsGraphDetails.labels.push(currentName);
+        // @ts-ignore
         distributionsGraphDetails.intervals.push(currentXAxis[i].toString());
         const graphItem: BarModel = new BarModel();
         graphItem.defaultGroupIndex = i === currentDimension.defaultGroupIndex;
@@ -509,12 +525,12 @@ export class DistributionDatasService {
         } else {
           currentValue = coverageValue;
           total = UtilsService.arraySum(coverageArray);
-          graphItem.value = (currentValue * 100) / total;
+          graphItem.value = (currentValue! * 100) / total;
         }
         graphItem.extra.frequencyValue = frequencyValue;
         graphItem.extra.coverageValue = coverageValue;
         graphItem.extra.value = coverageValue;
-        graphItem.extra.percent = (currentValue * 100) / total;
+        graphItem.extra.percent = (currentValue! * 100) / total;
 
         currentDataSet.data.push(graphItem.value);
         currentDataSet.extra.push(graphItem);
@@ -548,7 +564,7 @@ export class DistributionDatasService {
       const coverageValue = this.getCoverageValueFromDimensionAndPartition(
         dimensions,
         partition,
-        currentDatas[i],
+        currentDatas[i]!,
       );
       const frequencyValue = Math.log(coverageValue);
       coverageArray.push(coverageValue);
@@ -578,7 +594,7 @@ export class DistributionDatasService {
       for (let j = 0; j < partition; j++) {
         if (Array.isArray(el)) {
           // Normal case
-          coverageValue = coverageValue + el[j];
+          coverageValue = coverageValue + el[j]!;
         } else {
           // Descriptive analysis
           coverageValue = coverageValue + el;
@@ -619,7 +635,7 @@ export class DistributionDatasService {
       } else if (el instanceof Variable2dModel) {
         graphItem.name = el.name1 + ' x ' + el.name2;
       }
-      graphItem.value = el.level || 0; // Do not add tofixed here because datas are < 0.00
+      graphItem.value = el?.level || 0; // Do not add tofixed here because datas are < 0.00
       currentDataSet.data.push(graphItem.value);
       levelDistributionGraphDatas.labels.push(graphItem.name || '');
     }
@@ -700,19 +716,19 @@ export class DistributionDatasService {
   computeModalityCounts(modality: number[][]): ModalityCountsModel {
     const counts = new ModalityCountsModel();
     if (modality) {
-      const dimensionLength = modality[0].length;
+      const dimensionLength = modality[0]?.length;
       for (let i = 0; i < modality.length; i++) {
-        for (let j = 0; j < dimensionLength; j++) {
+        for (let j = 0; j < dimensionLength!; j++) {
           if (!counts.series[j]) {
             counts.series[j] = 0;
           }
-          counts.series[j] = counts.series[j] + modality[i][j];
-          counts.total = counts.total + modality[i][j];
+          counts.series[j] = counts.series[j]! + modality[i]![j]!;
+          counts.total = counts.total + modality[i]![j]!;
         }
       }
-      for (let k = 0; k < dimensionLength; k++) {
+      for (let k = 0; k < dimensionLength!; k++) {
         counts.totalProbability[k] =
-          counts.series[k] / counts.series.reduce((a, b) => a + b, 0);
+          counts.series[k]! / counts.series.reduce((a, b) => a + b, 0);
       }
     }
 
