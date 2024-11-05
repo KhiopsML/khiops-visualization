@@ -30,16 +30,16 @@ import { DynamicI } from '@khiops-library/interfaces/globals';
 })
 export class PreparationViewComponent extends SelectableTabComponent {
   @Input() public preparationSource = REPORT.PREPARATION_REPORT; // By default
-  public sizes: DynamicI;
-  public preparationDatas: {
+  public sizes?: DynamicI;
+  public preparationDatas?: {
     selectedVariable: PreparationVariableModel;
     currentIntervalDatas: GridDatasI;
   };
-  public summaryDatas: InfosDatasI[];
-  public informationsDatas: InfosDatasI[];
-  public targetVariableStatsDatas: ChartDatasModel;
-  public variablesDatas: VariableModel[];
-  public targetVariableStatsInformations: InfosDatasI[];
+  public summaryDatas?: InfosDatasI[];
+  public informationsDatas?: InfosDatasI[];
+  public targetVariableStatsDatas?: ChartDatasModel;
+  public variablesDatas?: VariableModel[];
+  public targetVariableStatsInformations?: InfosDatasI[];
   public override tabIndex = 1; // managed by selectable-tab component
   public variablesDisplayedColumns: GridColumnsI[] = [];
 
@@ -190,10 +190,10 @@ export class PreparationViewComponent extends SelectableTabComponent {
 
   onSelectListItemChanged(item: VariableModel) {
     const modelingVariable = this.preparationDatasService.setSelectedVariable(
-      item.name,
+      item.name!,
       this.preparationSource,
     );
-    this.modelingDatasService.setSelectedVariable(modelingVariable);
+    this.modelingDatasService.setSelectedVariable(modelingVariable!);
   }
 
   onShowLevelDistributionGraph(datas: VariableModel[]) {
@@ -208,7 +208,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
 
   getDerivationRuleValue(): string {
     return (
-      this.preparationDatas.selectedVariable?.derivationRule ||
+      this.preparationDatas?.selectedVariable?.derivationRule ||
       this.translate.get('GLOBAL.NO_DERIVATION_RULE')
     );
   }

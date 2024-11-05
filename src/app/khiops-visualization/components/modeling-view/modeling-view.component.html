@@ -17,20 +17,20 @@
     direction="vertical"
     (dragEnd)="onSplitDragEnd($event, 'row')"
   >
-    <as-split-area [size]="sizes.row[0]">
+    <as-split-area [size]="sizes?.row[0]">
       <as-split
         [gutterSize]="7"
         direction="horizontal"
         (dragEnd)="onSplitDragEnd($event, 'row0Col')"
       >
-        <as-split-area [size]="sizes.row0Col[0]">
+        <as-split-area [size]="sizes?.row0Col[0]">
           <kl-informations-block
             id="modeling-informations-block-summary"
             title="{{ 'GLOBAL.SUMMARY' | translate }}"
             [inputDatas]="summaryDatas"
           ></kl-informations-block>
         </as-split-area>
-        <as-split-area [size]="sizes.row0Col[1]">
+        <as-split-area [size]="sizes?.row0Col[1]">
           <app-target-variable-stats
             *ngIf="targetVariableStatsDatas"
             id="modeling-target-variable-stats"
@@ -53,7 +53,7 @@
             [inputDatas]="targetVariableStatsInformations"
           ></kl-informations-block>
         </as-split-area>
-        <as-split-area [size]="sizes.row0Col[2]">
+        <as-split-area [size]="sizes?.row0Col[2]">
           <kl-informations-block
             id="modeling-informations-block-informations"
             title="{{ 'GLOBAL.TRAINED_PREDICTORS' | translate }}"
@@ -64,7 +64,7 @@
       </as-split>
     </as-split-area>
 
-    <as-split-area [size]="sizes.row[1]">
+    <as-split-area [size]="sizes?.row[1]">
       <app-select-trained-predictor
         [inputDatas]="trainedPredictors"
         (selectedPredictorChanged)="onSelectedPredictorChanged($event)"
@@ -76,10 +76,10 @@
         direction="horizontal"
         (dragEnd)="onSplitDragEnd($event, 'row1Col')"
       >
-        <as-split-area [size]="sizes.row1Col[0]">
+        <as-split-area [size]="sizes?.row1Col[0]">
           <as-split
             [gutterSize]="7"
-            *ngIf="modelingDatas.trainedPredictorsListDatas"
+            *ngIf="modelingDatas?.trainedPredictorsListDatas"
             direction="vertical"
             (dragEnd)="onSplitDragEnd($event, 'row1Col0Row')"
           >
@@ -95,12 +95,12 @@
                 [showSearch]="true"
                 [watchResize]="true"
                 [displayCount]="true"
-                [selectedVariable]="modelingDatas.selectedVariable"
+                [selectedVariable]="modelingDatas?.selectedVariable"
                 (selectListItem)="onSelectListItemChanged($event)"
                 [showLineSelection]="true"
                 [showColumnsSelection]="true"
                 [rowHeight]="30"
-                [inputDatas]="modelingDatas.trainedPredictorsListDatas"
+                [inputDatas]="modelingDatas?.trainedPredictorsListDatas"
                 (showLevelDistributionGraph)="
                   onShowLevelDistributionGraph($event)
                 "
@@ -111,38 +111,36 @@
           </as-split>
           <kl-no-data
             fxFlexFill
-            *ngIf="!modelingDatas.trainedPredictorsListDatas"
+            *ngIf="!modelingDatas?.trainedPredictorsListDatas"
             [message]="'NO_DATAS.NO_PREDICTORS_DETAILS'"
           ></kl-no-data>
         </as-split-area>
-        <as-split-area [size]="sizes.row1Col[1]">
+        <as-split-area [size]="sizes?.row1Col[1]">
           <app-var-details-preparation
             [preparationSource]="preparationSource"
             *ngIf="
-              modelingDatas.selectedVariable &&
-              modelingDatas.selectedVariable.variableType === 'preparation'
+              modelingDatas?.selectedVariable.variableType === 'preparation'
             "
           >
           </app-var-details-preparation>
           <app-var-details-preparation-2d
             *ngIf="
-              modelingDatas.selectedVariable &&
-              modelingDatas.selectedVariable.variableType === 'preparation-2d'
+              modelingDatas?.selectedVariable.variableType === 'preparation-2d'
             "
           >
           </app-var-details-preparation-2d>
           <app-var-details-tree-preparation
             *ngIf="
-              modelingDatas.selectedVariable &&
-              modelingDatas.selectedVariable.variableType === 'preparation-tree'
+              modelingDatas?.selectedVariable.variableType ===
+              'preparation-tree'
             "
           >
           </app-var-details-tree-preparation>
           <kl-no-data
             fxFlexFill
             *ngIf="
-              !modelingDatas.trainedPredictorsListDatas ||
-              !modelingDatas.selectedVariable
+              !modelingDatas?.trainedPredictorsListDatas ||
+              !modelingDatas?.selectedVariable
             "
             [message]="'NO_DATAS.NO_PREDICTORS_DETAILS'"
           ></kl-no-data>

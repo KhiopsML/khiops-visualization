@@ -33,15 +33,15 @@ import { TrainedPredictorModel } from '@khiops-visualization/model/trained-predi
 export class ModelingViewComponent extends SelectableTabComponent {
   public preparationSource: string;
   public appDatas: any;
-  public sizes: DynamicI;
-  public summaryDatas: InfosDatasI[];
-  public targetVariableStatsDatas: ChartDatasModel;
-  public trainedPredictorsSummaryDatas: InfosDatasI[];
-  public modelingDatas: ModelingDatasModel;
-  public trainedPredictorsDisplayedColumns: GridColumnsI[];
-  public targetVariableStatsInformations: InfosDatasI[];
+  public sizes?: DynamicI;
+  public summaryDatas?: InfosDatasI[];
+  public targetVariableStatsDatas?: ChartDatasModel;
+  public trainedPredictorsSummaryDatas?: InfosDatasI[];
+  public modelingDatas?: ModelingDatasModel;
+  public trainedPredictorsDisplayedColumns?: GridColumnsI[];
+  public targetVariableStatsInformations?: InfosDatasI[];
   public override tabIndex = 3; // managed by selectable-tab component
-  public trainedPredictors: TrainedPredictor[];
+  public trainedPredictors?: TrainedPredictor[];
 
   private preparationVariable: any; // Complex, can be multiple types according to the preparationSource
 
@@ -99,15 +99,15 @@ export class ModelingViewComponent extends SelectableTabComponent {
     // Check if selected variable from another tab is available into current modeling datas.
     // Otherwise, select a new one
     if (
-      this.modelingDatas.trainedPredictorsListDatas &&
-      this.modelingDatas.selectedVariable
+      this.modelingDatas?.trainedPredictorsListDatas &&
+      this.modelingDatas?.selectedVariable
     ) {
       const isVarAvailable = this.modelingDatas.trainedPredictorsListDatas.find(
-        (e) => e.name === this.modelingDatas.selectedVariable.name,
+        (e) => e.name === this.modelingDatas?.selectedVariable?.name,
       );
       if (!isVarAvailable) {
         this.onSelectListItemChanged(
-          this.modelingDatas.trainedPredictorsListDatas[0],
+          this.modelingDatas.trainedPredictorsListDatas[0]!,
         );
       } else {
         // Select trained predictor auto redirection #202
@@ -132,8 +132,8 @@ export class ModelingViewComponent extends SelectableTabComponent {
         // Check the case of 2d variable : names are separated by `
         this.preparationVariable =
           this.preparation2dDatasService.setSelectedVariable(
-            item.name.split('`')[0],
-            item.name.split('`')[1],
+            item.name.split('`')[0]!,
+            item.name.split('`')[1]!,
           );
       } else {
         this.preparationVariable =

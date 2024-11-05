@@ -36,18 +36,18 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
   @ViewChild('appVariableGraphDetails', {
     static: false,
   })
-  private appVariableGraphDetails: VariableGraphDetailsComponent;
+  private appVariableGraphDetails!: VariableGraphDetailsComponent;
   private preparationSource = REPORT.TREE_PREPARATION_REPORT;
 
-  public sizes: DynamicI;
-  public summaryDatas: InfosDatasI[];
-  public informationsDatas: InfosDatasI[];
-  public targetVariableStatsDatas: ChartDatasModel;
-  public selectedBarIndex: number = 0;
-  public variablesDatas: VariableModel[];
-  public targetVariableStatsInformations: InfosDatasI[];
-  public treePreparationDatas: TreePreparationDatasModel;
-  public distributionDatas: DistributionDatasModel;
+  public sizes!: DynamicI;
+  public summaryDatas?: InfosDatasI[];
+  public informationsDatas?: InfosDatasI[];
+  public targetVariableStatsDatas?: ChartDatasModel;
+  public selectedBarIndex: number | undefined = 0;
+  public variablesDatas?: VariableModel[];
+  public targetVariableStatsInformations?: InfosDatasI[];
+  public treePreparationDatas?: TreePreparationDatasModel;
+  public distributionDatas?: DistributionDatasModel;
   public variablesDisplayedColumns: GridColumnsI[] = [];
   public override tabIndex = 5; // managed by selectable-tab component
 
@@ -147,7 +147,7 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
   onSelectListItemChanged(item: TreePreparationVariableModel) {
     const modelingVariable =
       this.treePreparationDatasService.setSelectedVariable(item.name);
-    this.modelingDatasService.setSelectedVariable(modelingVariable);
+    this.modelingDatasService.setSelectedVariable(modelingVariable!);
     this.treePreparationDatasService.getCurrentIntervalDatas(
       this.selectedBarIndex,
     );
@@ -179,7 +179,9 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
       this.treePreparationDatasService.getCurrentIntervalDatas(
         this.selectedBarIndex,
       );
-    const currentValues = currentIntervalDatas.values.map((e) => e.values);
+    const currentValues = currentIntervalDatas?.values?.map(
+      (e: any) => e.values,
+    );
     this.treePreparationDatasService.setSelectedNodes(
       currentValues,
       currentValues[0],

@@ -47,7 +47,7 @@
         </as-split-area>
         <as-split-area [size]="sizes.row0Col[2]">
           <kl-informations-block
-            *ngIf="informationsDatas.length !== 0"
+            *ngIf="informationsDatas?.length !== 0"
             id="preparation-2d-informations-block-informations"
             icon="subject"
             title="{{ 'GLOBAL.INFORMATIONS' | translate }}"
@@ -55,7 +55,7 @@
           >
           </kl-informations-block>
           <kl-no-data
-            *ngIf="informationsDatas.length === 0"
+            *ngIf="informationsDatas?.length === 0"
             fxFlexFill
             [message]="'NO_DATAS.NO_INFORMATIONS_DETAILS'"
           >
@@ -98,7 +98,7 @@
                 titleTooltip="{{
                   'TOOLTIPS.PREPARATION_2D.VARIABLES.TITLE' | translate
                 }}"
-                [selectedVariable]="preparation2dDatas.selectedVariable"
+                [selectedVariable]="preparation2dDatas?.selectedVariable"
                 (showLevelDistributionGraph)="
                   onShowLevelDistributionGraph($event)
                 "

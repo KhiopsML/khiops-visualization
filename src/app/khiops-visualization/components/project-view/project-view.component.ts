@@ -21,7 +21,7 @@ export class ProjectViewComponent
 {
   private fileLoadedSub?: Subscription;
 
-  public sizes: DynamicI;
+  public sizes?: DynamicI;
   public isElectron: boolean = false;
   public debugFile = AppConfig.debugFile;
 

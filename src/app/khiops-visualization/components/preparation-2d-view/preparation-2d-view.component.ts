@@ -36,10 +36,10 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
   private targetDistributionGraph: TargetDistributionGraphComponent | undefined;
 
   public sizes: DynamicI;
-  public preparation2dDatas: Preparation2dDatasModel;
+  public preparation2dDatas?: Preparation2dDatasModel;
   public summaryDatas: InfosDatasI[];
-  public informationsDatas: InfosDatasI[];
-  public targetVariableStatsDatas: ChartDatasModel;
+  public informationsDatas?: InfosDatasI[];
+  public targetVariableStatsDatas?: ChartDatasModel;
   public variables2dDatas: Variable2dModel[];
   public levelDistributionTitle: string = '';
   public override tabIndex = 2; // managed by selectable-tab component
@@ -156,7 +156,7 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
         item.name1,
         item.name2,
       );
-    this.modelingDatasService.setSelectedVariable(modelingVariable);
+    this.modelingDatasService.setSelectedVariable(modelingVariable!);
   }
 
   onShowLevelDistributionGraph(datas: VariableModel[] | Variable2dModel[]) {
