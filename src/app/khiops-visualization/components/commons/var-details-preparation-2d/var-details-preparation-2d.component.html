@@ -2,8 +2,8 @@
   [gutterSize]="7"
   id="app-var-details-preparation-2d-comp"
   *ngIf="
-    preparation2dDatas.selectedVariable &&
-    !preparation2dDatas.selectedVariable.noCorrelation
+    preparation2dDatas?.selectedVariable &&
+    !preparation2dDatas?.selectedVariable.noCorrelation
   "
   direction="vertical"
   (dragEnd)="onSplitDragEnd($event, 'row1Col1Row')"
@@ -23,14 +23,14 @@
           id="coocurence-matrix-comp-container"
           fxFlex="1 1 100%"
           (selectCellRowChanged)="onSelectCellRowChanged($event)"
-          [selectedVariable]="preparation2dDatas.selectedVariable"
+          [selectedVariable]="preparation2dDatas?.selectedVariable"
         >
         </app-coocurence-matrix>
       </as-split-area>
       <as-split-area
         *ngIf="
-          preparation2dDatas.selectedVariable.name1 &&
-          preparation2dDatas.selectedVariable.name2 &&
+          preparation2dDatas?.selectedVariable.name1 &&
+          preparation2dDatas?.selectedVariable.name2 &&
           distribution2dDatas &&
           distribution2dDatas.targetDistributionGraphDatas &&
           distribution2dDatas.targetDistributionGraphDatas.datasets
@@ -70,9 +70,9 @@
           [displayCount]="false"
           [showLineSelection]="true"
           [showColumnsSelection]="false"
-          [inputDatas]="preparation2dDatas.currentCellDatas.values[0]"
+          [inputDatas]="preparation2dDatas?.currentCellDatas.values[0]"
           [displayedColumns]="
-            preparation2dDatas.currentCellDatas.displayedColumns[0]
+            preparation2dDatas?.currentCellDatas.displayedColumns[0]
           "
         >
         </kl-ag-grid>
@@ -87,9 +87,9 @@
           [displayCount]="false"
           [showLineSelection]="true"
           [showColumnsSelection]="false"
-          [inputDatas]="preparation2dDatas.currentCellDatas.values[1]"
+          [inputDatas]="preparation2dDatas?.currentCellDatas.values[1]"
           [displayedColumns]="
-            preparation2dDatas.currentCellDatas.displayedColumns[1]
+            preparation2dDatas?.currentCellDatas.displayedColumns[1]
           "
         >
         </kl-ag-grid>
@@ -100,9 +100,9 @@
 <kl-no-data
   fxFlexFill
   *ngIf="
-    (preparation2dDatas.selectedVariable &&
-      preparation2dDatas.selectedVariable.noCorrelation) ||
-    !preparation2dDatas.selectedVariable
+    (preparation2dDatas?.selectedVariable &&
+      preparation2dDatas?.selectedVariable.noCorrelation) ||
+    !preparation2dDatas?.selectedVariable
   "
 >
 </kl-no-data>

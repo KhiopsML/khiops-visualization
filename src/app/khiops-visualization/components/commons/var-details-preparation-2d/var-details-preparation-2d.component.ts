@@ -20,10 +20,10 @@ export class VarDetailsPreparation2dComponent {
   @ViewChild('targetDistributionGraph', {
     static: false,
   })
-  private targetDistributionGraph: TargetDistributionGraphComponent;
+  private targetDistributionGraph?: TargetDistributionGraphComponent;
 
   public sizes: DynamicI;
-  public preparation2dDatas: Preparation2dDatasModel;
+  public preparation2dDatas?: Preparation2dDatasModel;
   public distribution2dDatas: DistributionDatasModel;
   public scaleValue: number;
   private targetDistributionGraphType: string;

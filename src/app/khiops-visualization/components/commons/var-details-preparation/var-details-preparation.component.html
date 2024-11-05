@@ -4,18 +4,18 @@
   direction="vertical"
   (dragEnd)="onSplitDragEnd($event, 'row1Col1Row')"
 >
-  <as-split-area [size]="sizes.row1Col1Row[0]" fxLayout="column">
+  <as-split-area [size]="sizes?.row1Col1Row[0]" fxLayout="column">
     <as-split
       [gutterSize]="7"
       direction="vertical"
       (dragEnd)="onSplitDragEnd($event, 'row1Col1Row0Col')"
     >
-      <as-split-area [size]="sizes.row1Col1Row0Col[0]">
+      <as-split-area [size]="sizes?.row1Col1Row0Col[0]">
         <app-variable-graph-details
           #appVariableGraphDetails
-          *ngIf="preparationDatas.selectedVariable"
+          *ngIf="preparationDatas?.selectedVariable"
           [preparationSource]="preparationSource"
-          [selectedVariable]="preparationDatas.selectedVariable"
+          [selectedVariable]="preparationDatas?.selectedVariable"
           [selectedGraphItemIndex]="distributionSelectedBarIndex"
           (selectedItemChanged)="onSelectedGraphItemChanged($event)"
           fxFlex="1 1 100%"
@@ -24,12 +24,12 @@
         </app-variable-graph-details>
         <kl-no-data
           fxFlex
-          *ngIf="!preparationDatas.selectedVariable"
+          *ngIf="!preparationDatas?.selectedVariable"
         ></kl-no-data>
       </as-split-area>
       <as-split-area
         *ngIf="isRegressionOrExplanatoryAnalysis"
-        [size]="sizes.row1Col1Row0Col[1]"
+        [size]="sizes?.row1Col1Row0Col[1]"
       >
         <app-regression-matrix
           fxFlex="1 1 100%"
@@ -37,16 +37,19 @@
           [preparationSource]="preparationSource"
           (selectedCellChanged)="onSelectedMatrixCellChanged($event)"
           [selectedCell]="matrixRegSelectedCell"
-          [selectedVariable]="preparationDatas.selectedVariable"
+          [selectedVariable]="preparationDatas?.selectedVariable"
         >
         </app-regression-matrix>
       </as-split-area>
     </as-split>
   </as-split-area>
-  <as-split-area class="variables-list-container" [size]="sizes.row1Col1Row[1]">
+  <as-split-area
+    class="variables-list-container"
+    [size]="sizes?.row1Col1Row[1]"
+  >
     <kl-ag-grid
       *ngIf="
-        preparationDatas.currentIntervalDatas.values &&
+        preparationDatas?.currentIntervalDatas.values &&
         !isRegressionOrExplanatoryAnalysis
       "
       id="preparation-current-interval"
@@ -58,24 +61,24 @@
       [displayCount]="false"
       [showLineSelection]="true"
       titleTooltip="{{ 'TOOLTIPS.PREPARATION.INTERVAL.TITLE' | translate }}"
-      [title]="preparationDatas.currentIntervalDatas.title"
+      [title]="preparationDatas?.currentIntervalDatas.title"
       [showColumnsSelection]="false"
-      [inputDatas]="preparationDatas.currentIntervalDatas.values"
+      [inputDatas]="preparationDatas?.currentIntervalDatas.values"
       [displayedColumns]="
-        preparationDatas.currentIntervalDatas.displayedColumns
+        preparationDatas?.currentIntervalDatas.displayedColumns
       "
     >
     </kl-ag-grid>
     <kl-no-data
       fxFlex
-      *ngIf="!preparationDatas.currentIntervalDatas.values"
+      *ngIf="!preparationDatas?.currentIntervalDatas.values"
     ></kl-no-data>
     <as-split
       [gutterSize]="7"
       direction="horizontal"
       *ngIf="
-        (!preparationDatas.currentIntervalDatas.values &&
-          preparation2dDatas.currentCellDatas) ||
+        (!preparationDatas?.currentIntervalDatas.values &&
+          preparation2dDatas?.currentCellDatas) ||
         isRegressionOrExplanatoryAnalysis
       "
     >
@@ -89,15 +92,15 @@
           [displayCount]="false"
           [showLineSelection]="true"
           [showColumnsSelection]="false"
-          [inputDatas]="preparation2dDatas.currentCellDatas.values[0]"
+          [inputDatas]="preparation2dDatas?.currentCellDatas.values[0]"
           [displayedColumns]="
-            preparation2dDatas.currentCellDatas.displayedColumns[0]
+            preparation2dDatas?.currentCellDatas.displayedColumns[0]
           "
         >
         </kl-ag-grid>
         <kl-no-data
           fxFlex
-          *ngIf="!preparation2dDatas.currentCellDatas.values"
+          *ngIf="!preparation2dDatas?.currentCellDatas.values"
         ></kl-no-data>
       </as-split-area>
       <as-split-area class="variables-list-container">
@@ -110,15 +113,15 @@
           [displayCount]="false"
           [showLineSelection]="true"
           [showColumnsSelection]="false"
-          [inputDatas]="preparation2dDatas.currentCellDatas.values[1]"
+          [inputDatas]="preparation2dDatas?.currentCellDatas.values[1]"
           [displayedColumns]="
-            preparation2dDatas.currentCellDatas.displayedColumns[1]
+            preparation2dDatas?.currentCellDatas.displayedColumns[1]
           "
         >
         </kl-ag-grid>
         <kl-no-data
           fxFlex
-          *ngIf="!preparation2dDatas.currentCellDatas.values"
+          *ngIf="!preparation2dDatas?.currentCellDatas.values"
         ></kl-no-data>
       </as-split-area>
     </as-split>

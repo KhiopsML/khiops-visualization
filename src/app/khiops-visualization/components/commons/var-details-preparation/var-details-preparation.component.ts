@@ -27,19 +27,19 @@ export class VarDetailsPreparationComponent implements OnInit, OnChanges {
   @ViewChild('appVariableGraphDetails', {
     static: false,
   })
-  private appVariableGraphDetails: VariableGraphDetailsComponent;
+  private appVariableGraphDetails?: VariableGraphDetailsComponent;
 
-  @Input() public preparationSource: string;
+  @Input() public preparationSource?: string;
 
-  public isRegressionOrExplanatoryAnalysis: boolean;
-  public preparationDatas: {
+  public isRegressionOrExplanatoryAnalysis?: boolean;
+  public preparationDatas?: {
     selectedVariable: PreparationVariableModel;
     currentIntervalDatas: GridDatasI;
   };
-  public sizes: DynamicI;
+  public sizes?: DynamicI;
   public matrixRegSelectedCell = 0;
   public distributionSelectedBarIndex = 0;
-  public preparation2dDatas: Preparation2dDatasModel;
+  public preparation2dDatas?: Preparation2dDatasModel;
 
   constructor(
     private preparationDatasService: PreparationDatasService,
@@ -58,7 +58,7 @@ export class VarDetailsPreparationComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     this.preparationDatas = this.preparationDatasService.getDatas(
-      this.preparationSource,
+      this.preparationSource!,
     );
   }
 
@@ -96,7 +96,7 @@ export class VarDetailsPreparationComponent implements OnInit, OnChanges {
     } else {
       // get interval data if no matrix
       this.preparationDatasService.getCurrentIntervalDatas(
-        this.preparationSource,
+        this.preparationSource!,
         index,
       );
     }

@@ -13,9 +13,9 @@
       <as-split-area [size]="sizes.row1Col1Row0Col[0]">
         <app-variable-graph-details
           #appVariableGraphDetails
-          *ngIf="treePreparationDatas.selectedVariable"
+          *ngIf="treePreparationDatas?.selectedVariable"
           [preparationSource]="'treePreparationReport'"
-          [selectedVariable]="treePreparationDatas.selectedVariable"
+          [selectedVariable]="treePreparationDatas?.selectedVariable"
           [selectedGraphItemIndex]="selectedBarIndex"
           (selectedItemChanged)="onSelectedGraphItemChanged($event)"
           fxFlex="1 1 100%"
@@ -34,11 +34,11 @@
       [showSearch]="false"
       [displayCount]="false"
       [showLineSelection]="true"
-      [title]="treePreparationDatas.currentIntervalDatas.title"
+      [title]="treePreparationDatas?.currentIntervalDatas.title"
       [showColumnsSelection]="false"
-      [inputDatas]="treePreparationDatas.currentIntervalDatas.values"
+      [inputDatas]="treePreparationDatas?.currentIntervalDatas.values"
       [displayedColumns]="
-        treePreparationDatas.currentIntervalDatas.displayedColumns
+        treePreparationDatas?.currentIntervalDatas.displayedColumns
       "
     >
     </kl-ag-grid>

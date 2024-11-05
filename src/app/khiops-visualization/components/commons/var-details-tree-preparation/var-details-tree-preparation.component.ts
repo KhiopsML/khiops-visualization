@@ -15,8 +15,8 @@ export class VarDetailsTreePreparationComponent {
   @ViewChild('appVariableGraphDetails', {
     static: false,
   })
-  private appVariableGraphDetails: VariableGraphDetailsComponent;
-  public treePreparationDatas: TreePreparationDatasModel;
+  private appVariableGraphDetails?: VariableGraphDetailsComponent;
+  public treePreparationDatas?: TreePreparationDatasModel;
   public sizes: DynamicI;
   public selectedBarIndex = 0;
 
@@ -52,7 +52,7 @@ export class VarDetailsTreePreparationComponent {
         this.selectedBarIndex,
       );
     this.treePreparationDatasService.setSelectedNodes(
-      currentIntervalDatas.values.map((e) => e.values),
+      currentIntervalDatas?.values?.map((e: any) => e.values),
     );
   }
 }
