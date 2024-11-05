@@ -38,17 +38,17 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
   @ViewChild('matrix', {
     static: false,
   })
-  private matrix: MatrixComponent;
+  private matrix?: MatrixComponent;
 
-  public preparation2dDatas: Preparation2dDatasModel;
-  @Input() selectedVariable: Preparation2dVariableModel; // used to detect var change
+  public preparation2dDatas?: Preparation2dDatasModel;
+  @Input() selectedVariable?: Preparation2dVariableModel; // used to detect var change
   @Output() private selectCellRowChanged: EventEmitter<any> =
     new EventEmitter();
 
   public matrixOptions: MatrixOptionsModel = new MatrixOptionsModel();
   public matrixModes: MatrixModesModel = new MatrixModesModel();
   public matrixTargets: MatrixTargetsModel = new MatrixTargetsModel();
-  public matrixCells: CoocurenceCellsModel;
+  public matrixCells?: CoocurenceCellsModel;
   public minMaxValues: MatrixRangeValuesI;
   public isFullscreen = false;
 
@@ -70,7 +70,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
     setTimeout(() => {
       // Avoid ExpressionChangedAfterItHasBeenCheckedError
       this.preparation2dDatasService.getMatrixDatas(
-        this.preparation2dDatas.selectedVariable,
+        this.preparation2dDatas?.selectedVariable!,
       );
 
       // Check if there is a saved selected cell into json
@@ -94,7 +94,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
       this.constructModeSelectBox();
       this.selectTargetSelectBox();
       this.preparation2dDatasService.getMatrixDatas(
-        this.preparation2dDatas.selectedVariable,
+        this.preparation2dDatas?.selectedVariable!,
       );
       this.preparation2dDatasService.setSelectedCellIndex(0);
 
@@ -115,24 +115,24 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
   onToggleFullscreen(isFullscreen: boolean) {
     this.isFullscreen = isFullscreen;
     setTimeout(() => {
-      this.matrix.drawMatrix();
+      this.matrix?.drawMatrix();
     });
   }
 
-  onSelectedMatrixTabChanged(e) {
+  onSelectedMatrixTabChanged(e: any) {
     const matrixOptionsToggle = this.configService
       .getRootElementDom()
       .querySelector<HTMLElement>('#matrix-option-toggle');
     if (e.index === 1) {
       // this.trackerService.trackEvent('click', 'matrix_tab', 'cells');
-      matrixOptionsToggle.style.display = 'none';
+      matrixOptionsToggle!.style.display = 'none';
     } else {
       // this.trackerService.trackEvent('click', 'matrix_tab', 'matrix');
 
-      matrixOptionsToggle.style.display = 'flex';
+      matrixOptionsToggle!.style.display = 'flex';
 
       // Redraw matrix otherwise it is empty
-      this.matrix.drawMatrix();
+      this.matrix?.drawMatrix();
     }
   }
 
@@ -173,14 +173,14 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
   }
 
   private constructModeSelectBox() {
-    let varName1 = this.preparation2dDatas.selectedVariable.name1;
-    let varName2 = this.preparation2dDatas.selectedVariable.name2;
+    let varName1 = this.preparation2dDatas?.selectedVariable?.name1;
+    let varName2 = this.preparation2dDatas?.selectedVariable?.name2;
     if (this.preparation2dDatasService.isAxisInverted()) {
-      varName1 = this.preparation2dDatas.selectedVariable.name2;
-      varName2 = this.preparation2dDatas.selectedVariable.name1;
+      varName1 = this.preparation2dDatas?.selectedVariable?.name2;
+      varName2 = this.preparation2dDatas?.selectedVariable?.name1;
     }
 
-    if (this.matrixTargets.targets.length > 0) {
+    if (this.matrixTargets.targets!.length > 0) {
       this.matrixModes.types = [
         {
           mode: MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL,
@@ -270,7 +270,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
     }
   }
 
-  private selectTargetSelectBox(selected = null) {
+  private selectTargetSelectBox(selected?: string) {
     // Add optional targets if available
     if (
       this.preparation2dDatasService.getTargetsIfAvailable() &&
@@ -285,13 +285,13 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
       const previousSelectedTarget = AppService.Ls.get(LS.MATRIX_TARGET_OPTION);
       if (
         previousSelectedTarget &&
-        this.matrixTargets.targets.includes(previousSelectedTarget)
+        this.matrixTargets.targets?.includes(previousSelectedTarget)
       ) {
         this.matrixTargets.selected = previousSelectedTarget;
       }
       // Keep last selected target if defined
       this.matrixTargets.selected =
-        selected || previousSelectedTarget || this.matrixTargets.targets[0];
+        selected || previousSelectedTarget || this.matrixTargets.targets?.[0];
     } else {
       this.matrixTargets.selected = undefined;
     }

@@ -1,4 +1,4 @@
 export class MatrixTargetsModel {
-  targets: string[] = [];
+  targets?: string[] = [];
   selected: string | undefined = undefined;
 }

@@ -59,7 +59,7 @@ export class AppComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.configService.setRootElement(this.appElement);
+    this.configService.setRootElement(this.appElement!);
     this.element.nativeElement.getDatas = () =>
       this.saveService.constructDatasToSave();
     this.element.nativeElement.setDatas = (

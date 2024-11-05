@@ -9,7 +9,7 @@ import { SelectableComponent } from '@khiops-library/components/selectable/selec
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DescriptionBlockComponent extends SelectableComponent {
-  @Input() title: string;
-  @Input() value: string;
+  @Input() title?: string;
+  @Input() value?: string;
   componentType: string = 'descriptions'; // needed to copy datas
 }

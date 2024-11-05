@@ -6,7 +6,7 @@
     [selectedIndex]="0"
     fxLayout="column"
     color="primary"
-    [hidden]="!preparation2dDatas.matrixDatas"
+    [hidden]="!preparation2dDatas?.matrixDatas"
     (selectedTabChange)="onSelectedMatrixTabChanged($event)"
   >
     <mat-tab label="{{ 'GLOBAL.MATRIX' | translate }}">
@@ -70,11 +70,11 @@
             fxLayout="row"
             (cellSelected)="onCellSelected($event)"
             [id]="'coocurence-matrix-comp'"
-            [selectedCell]="preparation2dDatas.selectedCell"
-            [isAxisInverted]="preparation2dDatas.isAxisInverted"
+            [selectedCell]="preparation2dDatas?.selectedCell"
+            [isAxisInverted]="preparation2dDatas?.isAxisInverted"
             [minMaxValues]="minMaxValues"
             (matrixAxisInverted)="onMatrixAxisInverted()"
-            [inputDatas]="preparation2dDatas.matrixDatas"
+            [inputDatas]="preparation2dDatas?.matrixDatas"
             [graphTargets]="matrixTargets.targets"
             [graphType]="matrixOptions.selected"
             [graphMode]="matrixModes.selected"
@@ -93,14 +93,14 @@
             [showLevelDistribution]="false"
             [showSearch]="false"
             [displayCount]="false"
-            [selectedVariable]="preparation2dDatas.selectedCell"
+            [selectedVariable]="preparation2dDatas?.selectedCell"
             (selectListItem)="onSelectCellRowChanged($event)"
             [showLineSelection]="true"
             [showColumnsSelection]="false"
             [rowHeight]="30"
-            [inputDatas]="matrixCells.values"
-            [title]="matrixCells.title"
-            [displayedColumns]="matrixCells.displayedColumns"
+            [inputDatas]="matrixCells?.values"
+            [title]="matrixCells?.title"
+            [displayedColumns]="matrixCells?.displayedColumns"
           >
           </kl-ag-grid>
         </div>
@@ -108,8 +108,11 @@
     </mat-tab>
   </mat-tab-group>
   <kl-matrix-toggle
-    [hidden]="!preparation2dDatas.matrixDatas"
+    [hidden]="!preparation2dDatas?.matrixDatas"
     [matrixOptions]="matrixOptions"
   ></kl-matrix-toggle>
-  <kl-no-data fxFlexFill [hidden]="preparation2dDatas.matrixDatas"></kl-no-data>
+  <kl-no-data
+    fxFlexFill
+    [hidden]="preparation2dDatas?.matrixDatas"
+  ></kl-no-data>
 </div>
