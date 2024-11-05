@@ -61,7 +61,7 @@ export class TreenodesService {
       // @ts-ignore
       collapsedNodes[this.dimensionsDatas.selectedDimensions[i]?.name] = [];
       const nodesVO: TreeNodeModel[] = UtilsService.fastFilter(
-        this.dimensionsDatas.dimensionsClusters[i],
+        this.dimensionsDatas.dimensionsClusters[i]!,
         (e: TreeNodeModel) => {
           return rank <= e.hierarchicalRank && !e.isLeaf;
         },
@@ -465,7 +465,7 @@ export class TreenodesService {
           return this.dimensionsDatas.dimensions[i]?.name === e.name;
         });
       const nodesVO: TreeNodeModel[] = UtilsService.fastFilter(
-        this.dimensionsDatas.dimensionsClusters[currentIndex],
+        this.dimensionsDatas.dimensionsClusters[currentIndex]!,
         (e: TreeNodeModel) => {
           return !e.isLeaf && e.hierarchicalRank < rank;
         },
@@ -488,7 +488,7 @@ export class TreenodesService {
       currentDimClustersCount = 1;
       for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
         const nodesVO: TreeNodeModel[] = UtilsService.fastFilter(
-          this.dimensionsDatas.dimensionsClusters[i],
+          this.dimensionsDatas.dimensionsClusters[i]!,
           (e: TreeNodeModel) => {
             return !e.isLeaf && e.hierarchicalRank < maxRank;
           },
@@ -1042,7 +1042,7 @@ export class TreenodesService {
     }
 
     const includedIntervals = UtilsService.findIncludedIntervals(
-      currentTruncatedPartition.intervals?.map((e) => e.bounds),
+      currentTruncatedPartition.intervals?.map((e) => e.bounds)!,
     );
     if (includedIntervals.length > 0) {
       for (let k = includedIntervals.length - 1; k >= 0; k--) {

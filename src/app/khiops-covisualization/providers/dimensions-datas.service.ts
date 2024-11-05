@@ -283,7 +283,7 @@ export class DimensionsDatasService {
           const dimensionPartition =
             this.appService.appDatas.coclusteringReport.dimensionPartitions[i];
           // Set  dimension partitions from intervals or valueGroup
-          dimension.setPartition(dimensionPartition);
+          dimension.setPartition(dimensionPartition!);
           this.dimensionsDatas.dimensions.push(dimension);
         }
       }
@@ -491,7 +491,7 @@ export class DimensionsDatasService {
 
           // unflat the tree and set childrens to dimensionsClusters
           this.dimensionsDatas.dimensionsTrees[i] = UtilsService.unflatten(
-            this.dimensionsDatas.dimensionsClusters[i],
+            this.dimensionsDatas.dimensionsClusters[i]!,
           );
         }
 
@@ -551,7 +551,7 @@ export class DimensionsDatasService {
           // unflat the tree and set childrens to currentDimensionsClusters
           this.dimensionsDatas.currentDimensionsTrees[i] =
             UtilsService.unflatten(
-              this.dimensionsDatas.currentDimensionsClusters[i],
+              this.dimensionsDatas.currentDimensionsClusters[i]!,
             );
         }
       }

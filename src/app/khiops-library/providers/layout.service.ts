@@ -11,7 +11,7 @@ export class LayoutService {
 
   constructor(private ls: Ls) {}
 
-  initialize(splitSizes) {
+  initialize(splitSizes: any) {
     this.splitSizes = splitSizes;
 
     const storedSplitValues = this.ls.get(LS.SPLIT_SIZES);
@@ -23,7 +23,7 @@ export class LayoutService {
     );
   }
 
-  getViewSplitSizes(view): any {
+  getViewSplitSizes(view: any): any {
     return this.splitSizes[view];
   }
 
@@ -31,17 +31,23 @@ export class LayoutService {
     return this.splitSizes;
   }
 
-  setViewSplitSizes(view, sizes) {
+  setViewSplitSizes(view: string, sizes: any) {
     this.splitSizes[view] = sizes;
     this.setSplitSizes(this.splitSizes);
   }
 
-  setSplitSizes(splitSizes) {
+  setSplitSizes(splitSizes: any) {
     this.splitSizes = splitSizes;
     this.ls.set(LS.SPLIT_SIZES, JSON.stringify(this.splitSizes));
   }
 
-  resizeAndSetSplitSizes(item, sizes, itemSize, view, dispatchEvent?) {
+  resizeAndSetSplitSizes(
+    item: string,
+    sizes: any,
+    itemSize: number,
+    view: string,
+    dispatchEvent?: boolean,
+  ) {
     if (dispatchEvent !== false) {
       window.dispatchEvent(new Event('resize'));
     }
@@ -51,7 +57,7 @@ export class LayoutService {
     }
   }
 
-  switchSplitSizes(oldPosition, newPosition) {
+  switchSplitSizes(oldPosition: number, newPosition: number) {
     const oldView =
       oldPosition === 0 || oldPosition === 1 ? 'axisView' : 'contextView';
     const newView =

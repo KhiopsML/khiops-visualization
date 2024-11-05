@@ -5,11 +5,11 @@ import { ElementRef, Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ConfigService {
-  private appRootElement: ElementRef<HTMLElement>;
+  private appRootElement!: ElementRef<HTMLElement>;
 
   private config: ConfigModel = new ConfigModel();
 
-  setRootElement(appRoot) {
+  setRootElement(appRoot: ElementRef<HTMLElement>) {
     this.appRootElement = appRoot;
   }
 

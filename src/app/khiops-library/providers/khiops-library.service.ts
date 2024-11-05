@@ -40,7 +40,7 @@ export class KhiopsLibraryService {
     return this.graphColorSet;
   }
 
-  setAppConfig(config) {
+  setAppConfig(config: any) {
     this.appConfig = config;
   }
 

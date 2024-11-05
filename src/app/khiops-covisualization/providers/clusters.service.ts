@@ -203,6 +203,7 @@ export class ClustersService {
 
         for (let j = 0; j < filteredotherList.length; j++) {
           const otherelement = filteredotherList[j];
+          // @ts-ignore
           const labelIndex = distributionsGraphLabelsInit.indexOf(otherelement);
 
           const key =
@@ -214,9 +215,9 @@ export class ClustersService {
 
           if (cell !== undefined) {
             if (!currentDataSetData[labelIndex]) {
-              currentDataSetData[labelIndex] = matrixValues[cell];
+              currentDataSetData[labelIndex] = matrixValues![cell];
             } else {
-              currentDataSetData[labelIndex] += matrixValues[cell]!;
+              currentDataSetData[labelIndex] += matrixValues![cell]!;
             }
           }
         }
@@ -424,7 +425,7 @@ export class ClustersService {
           ];
 
         // Set  dimension partitions from intervals or valueGroup
-        currentInitialDimensionDetails.setPartition(dimensionPartition);
+        currentInitialDimensionDetails.setPartition(dimensionPartition!);
 
         // Composition only available for numerical Dimensions
         if (currentDimensionDetails?.isCategorical) {
@@ -441,7 +442,7 @@ export class ClustersService {
               const currentLeafName = node.childrenLeafList[i];
               // Check if this name has been updated
               const currentClusterDetails =
-                currentInitialDimensionDetails.valueGroups.find(
+                currentInitialDimensionDetails.valueGroups?.find(
                   (e) => e.cluster === currentLeafName,
                 );
               if (currentClusterDetails) {

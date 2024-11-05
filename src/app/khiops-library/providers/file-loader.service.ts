@@ -12,7 +12,7 @@ export class FileLoaderService {
   public fileLoaded: BehaviorSubject<any> = new BehaviorSubject(undefined);
   public fileLoaded$: Observable<any> = this.fileLoaded.asObservable();
 
-  fileLoaderDatas: {
+  fileLoaderDatas!: {
     isLoadingDatas: boolean;
     datas: any;
     isBigJsonFile: boolean;
@@ -40,7 +40,7 @@ export class FileLoaderService {
     return this.fileLoaderDatas;
   }
 
-  setDatas(datas): any {
+  setDatas(datas: any): any {
     this.fileLoaderDatas.datas = datas;
     this.fileLoaded.next(datas);
   }
@@ -192,7 +192,7 @@ export class FileLoaderService {
     });
   }
 
-  readFile(filename) {
+  readFile(filename: any) {
     this.fileLoaderDatas.isLoadingDatas = true;
     this.fileLoaderDatas.isBigJsonFile = false;
     this.setDatas(undefined);
@@ -202,7 +202,7 @@ export class FileLoaderService {
 
       reader.addEventListener('loadend', async (e) => {
         this.fileLoaderDatas.isLoadingDatas = false;
-        const datas = await JSON.parse(e.target.result.toString());
+        const datas = await JSON.parse(e.target!.result!.toString());
         datas.filename = filename;
         this.setDatas(datas);
         resolve(this.fileLoaderDatas.datas);
@@ -220,9 +220,9 @@ export class FileLoaderService {
     this.setDatas(undefined);
   }
 
-  setFileHistory(filename) {
+  setFileHistory(filename: string) {
     const currentLs = this.ls.get(LS.OPEN_FILE);
-    let parsedLs = {
+    let parsedLs: any = {
       files: [],
     };
     if (currentLs) {

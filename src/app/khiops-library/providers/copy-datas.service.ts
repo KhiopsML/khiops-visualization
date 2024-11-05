@@ -113,7 +113,7 @@ export class CopyDatasService {
 
     // CONTENT
     const input = selectedArea.inputDatas.matrixCellDatas.map(
-      (e) => e.displayedValue,
+      (e: any) => e.displayedValue,
     );
     if (input) {
       formattedDatas += '\t';
@@ -281,13 +281,10 @@ export class CopyDatasService {
 
     // CONTENT
     for (let i = 0; i < currentDatas.length; i++) {
-      formattedDatas += currentDatas[i].nodeId + '\t';
-      formattedDatas += currentDatas[i].type
-        ? currentDatas[i].type + '\t'
-        : '\t';
-      formattedDatas += currentDatas[i].variable
-        ? currentDatas[i].variable + '\n'
-        : '\n';
+      const data = currentDatas[i];
+      formattedDatas += data!.nodeId + '\t';
+      formattedDatas += data!.type ? data!.type + '\t' : '\t';
+      formattedDatas += data!.variable ? data!.variable + '\n' : '\n';
       // formattedDatas += currentDatas[i].partition ? currentDatas[i].partition.toString() + '\n' : '\n';
     }
 
