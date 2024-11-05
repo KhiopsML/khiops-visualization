@@ -20,7 +20,7 @@ import {
   providedIn: 'root',
 })
 export class ModelingDatasService {
-  private modelingDatas: ModelingDatasModel;
+  private modelingDatas: ModelingDatasModel | undefined;
 
   constructor(
     private translate: TranslateService,
@@ -40,7 +40,7 @@ export class ModelingDatasService {
     // get the variable selected into PreparationDatasService
     const preparationSource =
       this.preparationDatasService.getAvailablePreparationReport();
-    const preparationSelectedVar: PreparationVariableModel =
+    const preparationSelectedVar: PreparationVariableModel | undefined =
       this.preparationDatasService.getSelectedVariable(preparationSource);
     // select the first item of the list by default
     if (preparationSelectedVar) {
@@ -55,7 +55,7 @@ export class ModelingDatasService {
    * Retrieves the modeling data.
    * @returns The current modeling data model.
    */
-  getDatas(): ModelingDatasModel {
+  getDatas(): ModelingDatasModel | undefined {
     return this.modelingDatas;
   }
 
@@ -82,7 +82,7 @@ export class ModelingDatasService {
    * Removes the currently selected variable from the modeling data.
    */
   removeSelectedVariable() {
-    this.modelingDatas.selectedVariable = undefined;
+    this.modelingDatas!.selectedVariable = undefined;
   }
 
   /**
@@ -94,7 +94,7 @@ export class ModelingDatasService {
     | PreparationVariableModel
     | TreePreparationVariableModel
     | undefined {
-    return this.modelingDatas.selectedVariable;
+    return this.modelingDatas?.selectedVariable;
   }
 
   /**
@@ -109,15 +109,15 @@ export class ModelingDatasService {
         this.appService.appDatas.modelingReport.trainedPredictorsDetails;
       const key = Object.keys(variables)[0];
       if (key) {
-        const variable: ModelingVariableStatistic =
-          variables[key].selectedVariables[0];
-        this.setSelectedVariable(this.getVariableFromName(variable.name));
+        const variable: ModelingVariableStatistic | undefined =
+          variables[key]?.selectedVariables[0];
+        this.setSelectedVariable(this.getVariableFromName(variable?.name!));
 
         // Also set the preparation selected variable if json is incomplete
         const preparationSource =
           this.preparationDatasService.getAvailablePreparationReport();
         this.preparationDatasService.setSelectedVariable(
-          variable.name,
+          variable?.name!,
           preparationSource,
         );
       }
@@ -144,7 +144,7 @@ export class ModelingDatasService {
         variable =
           this.appService.appDatas?.modelingReport?.trainedPredictorsDetails[
             key
-          ].selectedVariables.find(
+          ]?.selectedVariables.find(
             (e: ModelingVariableStatistic) => e.name === name,
           );
         if (variable) {
@@ -162,7 +162,7 @@ export class ModelingDatasService {
    */
   getTrainedPredictorDisplayedColumns(): GridColumnsI[] {
     const displayedColumns: GridColumnsI[] = [];
-    if (this.modelingDatas.trainedPredictorsListDatas) {
+    if (this.modelingDatas?.trainedPredictorsListDatas) {
       const typicalData: any = this.modelingDatas.trainedPredictorsListDatas[0];
       Object.keys(typicalData).forEach((key) => {
         // Add columns of available objects (defined into ModelingPredictorModel)
@@ -215,15 +215,15 @@ export class ModelingDatasService {
 
     for (
       let i = 0;
-      i < this.appService.appDatas.modelingReport.trainedPredictors.length;
+      i < this.appService.appDatas!.modelingReport.trainedPredictors.length;
       i++
     ) {
       trainedPredictorsSummaryDatas.push({
         title:
-          this.appService.appDatas.modelingReport.trainedPredictors[i].name,
+          this.appService.appDatas?.modelingReport.trainedPredictors[i]?.name!,
         value:
-          this.appService.appDatas.modelingReport.trainedPredictors[i]
-            .variables +
+          this.appService.appDatas?.modelingReport.trainedPredictors[i]
+            ?.variables +
           ' ' +
           this.translate.get('GLOBAL.VARIABLES'),
       });
@@ -236,7 +236,7 @@ export class ModelingDatasService {
    * @param predictor - The predictor to be set as selected.
    */
   setSelectedPredictor(predictor: TrainedPredictor) {
-    this.modelingDatas.selectedPredictor = new ModelingPredictorModel(
+    this.modelingDatas!.selectedPredictor = new ModelingPredictorModel(
       predictor,
     );
   }
@@ -274,7 +274,7 @@ export class ModelingDatasService {
         // Get a typical data object
         const availableKeys: string[] = Object.keys(currentDatas?.[0]!);
 
-        this.modelingDatas.trainedPredictorsListDatas = [];
+        this.modelingDatas!.trainedPredictorsListDatas = [];
         for (let i = 0; i < currentDatas.length; i++) {
           // Find the corresponding rank of the current variable into preparation, 2d or tree
           const currentVar: ModelingVariableStatistic | undefined =
@@ -284,12 +284,12 @@ export class ModelingDatasService {
             currentVar!,
             availableKeys,
           );
-          this.modelingDatas.trainedPredictorsListDatas.push(varItem);
+          this.modelingDatas!.trainedPredictorsListDatas.push(varItem);
         }
       }
     } else {
-      this.modelingDatas.trainedPredictorsListDatas = undefined;
+      this.modelingDatas!.trainedPredictorsListDatas = undefined;
     }
-    return this.modelingDatas.trainedPredictorsListDatas;
+    return this.modelingDatas!.trainedPredictorsListDatas;
   }
 }
