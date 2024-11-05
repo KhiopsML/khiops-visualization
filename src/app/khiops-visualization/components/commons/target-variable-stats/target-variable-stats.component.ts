@@ -29,10 +29,10 @@ export class TargetVariableStatsComponent
   extends SelectableComponent
   implements OnChanges
 {
-  @Input() public inputDatas: ChartDatasModel;
-  @Input() public title: string;
+  @Input() public inputDatas?: ChartDatasModel;
+  @Input() public title?: string;
 
-  public colorSet: ChartColorsSetI;
+  public colorSet?: ChartColorsSetI;
   public componentType = COMPONENT_TYPES.ND_BAR_CHART; // needed to copy datas
   public chartOptions: ChartOptions;
   public isFullscreen = false;
@@ -102,9 +102,9 @@ export class TargetVariableStatsComponent
     if (changes?.inputDatas?.currentValue) {
       // Keep labels into displayedvalues to copy datas into clipboard
       this.displayedValues = [];
-      Object.keys(this.inputDatas.datasets).map((key, i) => {
+      Object.keys(this.inputDatas?.datasets!).map((key, i) => {
         this.displayedValues.push({
-          name: this.inputDatas.datasets[i].label,
+          name: this.inputDatas?.datasets[i]?.label,
         });
       });
     }

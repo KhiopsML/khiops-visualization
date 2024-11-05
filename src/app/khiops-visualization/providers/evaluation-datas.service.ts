@@ -467,7 +467,7 @@ export class EvaluationDatasService {
    * @param target - The target value (optional).
    * @returns The lift graph data as a ChartDatasModel.
    */
-  getLiftGraphDatas(target?: string): ChartDatasModel {
+  getLiftGraphDatas(target?: string | undefined): ChartDatasModel {
     // Generate X axis values
     const xAxis = new Array(1001);
     xAxis[0] = '0';

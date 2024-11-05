@@ -20,6 +20,8 @@ import { TargetLiftValuesI } from '@khiops-visualization/interfaces/target-lift-
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { LS } from '@khiops-library/enum/ls';
 import { AppService } from '@khiops-visualization/providers/app.service';
+import { EvaluationPredictorModel } from '@khiops-visualization/model/evaluation-predictor.model';
+import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 
 @Component({
   selector: 'app-target-lift-graph',
@@ -30,19 +32,19 @@ export class TargetLiftGraphComponent
   extends SelectableComponent
   implements OnChanges
 {
-  @Input() selectedVariable;
+  @Input() selectedVariable?: EvaluationPredictorModel;
 
-  public targetLift: TargetLiftValuesI;
-  public targetLiftGraph: ChartDatasModel;
-  public colorSet: ChartColorsSetI;
-  public legendColorSet: ChartColorsSetI;
+  public targetLift?: TargetLiftValuesI;
+  public targetLiftGraph?: ChartDatasModel;
+  public colorSet?: ChartColorsSetI;
+  public legendColorSet?: ChartColorsSetI;
   public evaluationDatas: EvaluationDatasModel;
   public buttonTitle: string;
   public isFullscreen = false;
   public componentType = COMPONENT_TYPES.ND_LINE_CHART; // needed to copy datas
-  public title: string; // for copy graph datas
-  public targetLiftAllGraph: ChartDatasModel; // for copy graph datas
-  public titleWithoutDetails: string;
+  public title?: string; // for copy graph datas
+  public targetLiftAllGraph?: ChartDatasModel; // for copy graph datas
+  public titleWithoutDetails?: string;
   public chartOptions: ChartOptions;
 
   constructor(
@@ -136,7 +138,7 @@ export class TargetLiftGraphComponent
       const previousSelectedTarget = AppService.Ls.get(LS.TARGET_LIFT);
       if (
         previousSelectedTarget &&
-        this.targetLift.targets.includes(previousSelectedTarget)
+        this.targetLift.targets?.includes(previousSelectedTarget)
       ) {
         this.targetLift.selected = previousSelectedTarget;
       }
@@ -161,12 +163,11 @@ export class TargetLiftGraphComponent
       this.title = this.translate.get('GLOBAL.REC_CURVES'); // for copy graph datas
       this.targetLiftGraph = this.evaluationDatasService.getLiftGraphDatas();
       // get all datas to copy
-      this.targetLiftAllGraph =
-        this.evaluationDatasService.getLiftGraphDatas(null);
+      this.targetLiftAllGraph = this.evaluationDatasService.getLiftGraphDatas();
     }
   }
 
-  onSelectToggleButtonChanged(displayedValues) {
+  onSelectToggleButtonChanged(displayedValues: ChartToggleValuesI[]) {
     this.computeTargetLiftDatas();
 
     this.colorSet = _.cloneDeep(
@@ -176,20 +177,20 @@ export class TargetLiftGraphComponent
     // Remove hidden curves colors
     let i = displayedValues.length;
     while (i--) {
-      if (displayedValues[i].show === false) {
-        this.colorSet.domain.splice(i, 1);
+      if (displayedValues[i]?.show === false) {
+        this.colorSet?.domain.splice(i, 1);
       }
     }
   }
 
-  changeTargetLift(target) {
+  changeTargetLift(target: string) {
     // this.trackerService.trackEvent('click', 'change_target_lift');
     this.title =
       this.translate.get('GLOBAL.CUMULATIVE_GAIN_CHART_OF') +
       ' ' +
-      this.targetLift.selected;
+      this.targetLift?.selected;
     AppService.Ls.set(LS.TARGET_LIFT, target);
-    this.targetLift.selected = target;
+    this.targetLift!.selected = target;
     this.computeTargetLiftDatas();
   }
 }
