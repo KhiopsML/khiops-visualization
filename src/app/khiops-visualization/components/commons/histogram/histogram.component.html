@@ -30,13 +30,13 @@
           color="primary"
           [matMenuTriggerFor]="graphOptionsXTypes"
         >
-          {{ graphOptionsX.selected | translate }}
+          {{ graphOptionsX?.selected | translate }}
           <em>v</em>
         </button>
         <mat-menu #graphOptionsXTypes>
           <button
             mat-menu-item
-            *ngFor="let opt of graphOptionsX.types"
+            *ngFor="let opt of graphOptionsX?.types"
             (click)="changeGraphTypeX(opt)"
           >
             {{ opt | translate }}
@@ -49,13 +49,13 @@
           color="primary"
           [matMenuTriggerFor]="graphOptionsYTypes"
         >
-          {{ graphOptionsY.selected | translate }}
+          {{ graphOptionsY?.selected | translate }}
           <em>v</em>
         </button>
         <mat-menu #graphOptionsYTypes>
           <button
             mat-menu-item
-            *ngFor="let opt of graphOptionsY.types"
+            *ngFor="let opt of graphOptionsY?.types"
             (click)="changeGraphTypeY(opt)"
           >
             {{ opt | translate }}

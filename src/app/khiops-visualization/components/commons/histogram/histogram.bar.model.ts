@@ -8,16 +8,16 @@ export class HistogramBarModel {
   public barWlin: number = 0;
   public barXlin: number = 0;
   public color: string = HistogramUIService.getColor(1);
-  private partition = [];
+  private partition?: number[] = [];
 
   constructor(d: HistogramValuesI, middlewidth: number, xType: string) {
     this.partition = d.partition;
     if (xType === HistogramType.XLIN) {
       let barWlin = 0;
-      if (this.partition[0] < 0 && this.partition[1] > 0) {
-        barWlin = Math.abs(this.partition[0]) + Math.abs(this.partition[1]);
+      if (this.partition[0]! < 0 && this.partition[1]! > 0) {
+        barWlin = Math.abs(this.partition[0]!) + Math.abs(this.partition[1]!);
       } else {
-        barWlin = Math.abs(this.partition[0]) - Math.abs(this.partition[1]);
+        barWlin = Math.abs(this.partition[0]!) - Math.abs(this.partition[1]!);
       }
       this.barWlin = Math.abs(barWlin);
     } else {
@@ -27,10 +27,10 @@ export class HistogramBarModel {
         this.color = HistogramUIService.getColor(0);
       } else {
         barWlog =
-          Math.log10(Math.abs(this.partition[0])) -
-          Math.log10(Math.abs(this.partition[1]));
+          Math.log10(Math.abs(this.partition[0]!)) -
+          Math.log10(Math.abs(this.partition[1]!));
 
-        if (this.partition[0] < 0 && this.partition[1] > 0) {
+        if (this.partition[0]! < 0 && this.partition[1]! > 0) {
           barWlog = Math.log10(middlewidth) * 2;
           this.color = HistogramUIService.getColor(0);
         }
