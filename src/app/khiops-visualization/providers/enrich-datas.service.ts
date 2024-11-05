@@ -16,18 +16,18 @@ export class EnrichDatasService {
    * @param datas - The JSON data to be enriched.
    * @returns The enriched JSON data.
    */
-  static enrichJsonDatas(datas: VisualizationDatas): any {
+  static enrichJsonDatas(datas: VisualizationDatas | any): any {
     if (datas) {
       // For evaluation, we need optimal information
       Object.keys(datas).forEach((value) => {
         // do not add optimal if not liftcurve (regression)
         if (
-          datas?.[value]?.reportType === 'Evaluation' &&
+          datas[value].reportType === 'Evaluation' &&
           datas[value].liftCurves
         ) {
           const isOptimalAdded: boolean = datas[
             value
-          ].predictorsPerformance.find(function (el) {
+          ].predictorsPerformance.find(function (el: any) {
             return el.name && el.name === 'Optimal';
           });
           if (!isOptimalAdded) {
@@ -64,10 +64,10 @@ export class EnrichDatasService {
    * @returns The modified `datas` object with empty partitions removed for numerical variables.
    */
   static ignoreMissingPartitionForNumerical(
-    datas: VisualizationDatas,
+    datas: VisualizationDatas | any,
     preparationSource: string,
   ): VisualizationDatas {
-    if (datas?.[preparationSource]) {
+    if (datas[preparationSource]) {
       for (const rank in datas[preparationSource].variablesDetailedStatistics) {
         const variable =
           datas[preparationSource].variablesDetailedStatistics[rank];
