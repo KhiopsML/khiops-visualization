@@ -33,36 +33,36 @@ describe('CoVisualization', () => {
     });
 
     it('Cell[0] cellFreq should return valid datas', () => {
-      expect(cells[0].cellFreq).toEqual(2486);
+      expect(cells![0].cellFreq).toEqual(2486);
     });
     it('Cell[0] w.standard should return valid datas', () => {
-      expect(cells[0].w.standard).toEqual(7.142857142857143);
+      expect(cells![0].w.standard).toEqual(7.142857142857143);
     });
     it('Cell[0] w.frequency should return valid datas', () => {
-      expect(cells[0].w.frequency).toEqual(18.38786290487695);
+      expect(cells![0].w.frequency).toEqual(18.38786290487695);
     });
     it('Cell[0] cellFreqs should return valid datas', () => {
-      expect(cells[0].cellFreqs).toEqual([2486]);
+      expect(cells![0].cellFreqs).toEqual([2486]);
     });
     it('Cell[0] infosMut should return valid datas', () => {
-      expect(cells[0].infosMutValue).toEqual([0.026548450553663373]);
+      expect(cells![0].infosMutValue).toEqual([0.026548450553663373]);
     });
     it('Cell[0] infosMut should return valid datas', () => {
-      expect(cells[0].infosMutExtra).toEqual([false]);
+      expect(cells![0].infosMutExtra).toEqual([false]);
     });
     it('Cell[0] cellHellinger should return valid datas', () => {
-      expect(cells[0].cellHellingerValue).toEqual([0.05179098913828861]);
+      expect(cells![0].cellHellingerValue).toEqual([0.05179098913828861]);
     });
     it('Cell[0] cellHellinger should return valid datas', () => {
-      expect(cells[0].cellHellingerAbsoluteValue).toEqual([
+      expect(cells![0].cellHellingerAbsoluteValue).toEqual([
         0.002682306555922329,
       ]);
     });
     it('Cell[0] cellProbs should return valid datas', () => {
-      expect(cells[0].cellProbs).toEqual([0.2768065916935753]);
+      expect(cells![0].cellProbs).toEqual([0.2768065916935753]);
     });
     it('Cell[0] cellProbsRev should return valid datas', () => {
-      expect(cells[0].cellProbsRev).toEqual([0.30978193146417443]);
+      expect(cells![0].cellProbsRev).toEqual([0.30978193146417443]);
     });
   });
 
@@ -99,10 +99,10 @@ describe('CoVisualization', () => {
     });
 
     it('matrixFreqsValues should return valid datas', () => {
-      expect(matrixFreqsValues).toEqual([6824, 1592]);
+      expect(matrixFreqsValues!).toEqual([6824, 1592]);
     });
     it('matrixValues should return valid datas', () => {
-      expect(matrixValues).toEqual([0.8108365019011406, 0.18916349809885932]);
+      expect(matrixValues!).toEqual([0.8108365019011406, 0.18916349809885932]);
     });
   });
 
@@ -135,10 +135,10 @@ describe('CoVisualization', () => {
     });
 
     it('matrixFreqsValues should return valid datas', () => {
-      expect(matrixFreqsValues).toEqual([6824, 1592]);
+      expect(matrixFreqsValues!).toEqual([6824, 1592]);
     });
     it('matrixValues should return valid datas', () => {
-      expect(matrixValues).toEqual([1, 1]);
+      expect(matrixValues!).toEqual([1, 1]);
     });
   });
 });

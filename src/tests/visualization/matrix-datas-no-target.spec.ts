@@ -43,17 +43,17 @@ describe('Visualization', () => {
 
       const preparation2dDatas = preparation2dDatasService.getDatas();
       const result = preparation2dDatasService.getMatrixDatas(
-        preparation2dDatas.selectedVariable,
+        preparation2dDatas?.selectedVariable!,
       );
-      cells = result.matrixCellDatas;
+      cells = result?.matrixCellDatas;
     });
 
     it('Cell[0] xDisplayaxisPart should return valid datas', () => {
-      expect(cells[0].xDisplayaxisPart).toEqual('Missing');
+      expect(cells![0].xDisplayaxisPart).toEqual('Missing');
     });
 
     it('Cell[0] xaxisPart should return valid datas', () => {
-      expect(cells[0].xaxisPart).toEqual('-0.5,0');
+      expect(cells![0].xaxisPart).toEqual('-0.5,0');
     });
   });
 
@@ -77,34 +77,34 @@ describe('Visualization', () => {
       );
       const preparation2dDatas = preparation2dDatasService.getDatas();
       const result = preparation2dDatasService.getMatrixDatas(
-        preparation2dDatas.selectedVariable,
+        preparation2dDatas?.selectedVariable!,
       );
-      cells = result.matrixCellDatas;
+      cells = result?.matrixCellDatas;
     });
 
     it('Cell[0] cellFreq should return valid datas', () => {
-      expect(cells[0].cellFreq).toEqual(22732);
+      expect(cells![0].cellFreq).toEqual(22732);
     });
     it('Cell[0] w.standard should return valid datas', () => {
-      expect(cells[0].w.standard).toEqual(50);
+      expect(cells![0].w.standard).toEqual(50);
     });
     it('Cell[0] w.frequency should return valid datas', () => {
-      expect(cells[0].w.frequency).toEqual(76.07182343065395);
+      expect(cells![0].w.frequency).toEqual(76.07182343065395);
     });
     it('Cell[0] cellFreqs should return valid datas', () => {
-      expect(cells[0].cellFreqs).toEqual([22732]);
+      expect(cells![0].cellFreqs).toEqual([22732]);
     });
     it('Cell[0] infosMutValue should return valid datas', () => {
-      expect(cells[0].infosMutValue).toEqual([-0.04122635226432712]);
+      expect(cells![0].infosMutValue).toEqual([-0.04122635226432712]);
     });
     it('Cell[0] infosMutExtra should return valid datas', () => {
-      expect(cells[0].infosMutExtra).toEqual([false]);
+      expect(cells![0].infosMutExtra).toEqual([false]);
     });
     it('Cell[0] cellProbs should return valid datas', () => {
-      expect(cells[0].cellProbs).toEqual([0.6118153680527519]);
+      expect(cells![0].cellProbs).toEqual([0.6118153680527519]);
     });
     it('Cell[0] cellProbsRev should return valid datas', () => {
-      expect(cells[0].cellProbsRev).toEqual([0.6962327718223583]);
+      expect(cells![0].cellProbsRev).toEqual([0.6962327718223583]);
     });
   });
 });

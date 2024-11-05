@@ -13,7 +13,7 @@ let histogramService: HistogramService;
 let distributionDatasService: DistributionDatasService;
 let preparationDatasService: PreparationDatasService;
 
-function getHistogramGraphDatas(fileDatas, variable) {
+function getHistogramGraphDatas(fileDatas: any, variable: any) {
   appService.setFileDatas(fileDatas);
   preparationDatasService.initialize();
   distributionDatasService.initialize();
@@ -25,7 +25,7 @@ function getHistogramGraphDatas(fileDatas, variable) {
   const selectedVariable = preparationDatasService.getSelectedVariable(
     REPORT.PREPARATION_REPORT,
   );
-  return distributionDatasService.getHistogramGraphDatas(selectedVariable);
+  return distributionDatasService.getHistogramGraphDatas(selectedVariable!);
 }
 
 describe('Visualization', () => {
@@ -49,7 +49,7 @@ describe('Visualization', () => {
     it('getRangeX should return valid datas [ylogAdultAllReports, R1]', () => {
       const fileDatas = require('../../assets/mocks/kv/ylogAdultAllReports.json');
       const histogramDatas = getHistogramGraphDatas(fileDatas, 0);
-      const res = histogramService.getRangeX(histogramDatas);
+      const res = histogramService.getRangeX(histogramDatas!);
 
       expect(res[0].min).toEqual(16.5);
       expect(res[0].max).toEqual(90.5);
@@ -69,7 +69,7 @@ describe('Visualization', () => {
     it('getRangeX should return valid datas [ylogAdultAllReports, R3]', () => {
       const fileDatas = require('../../assets/mocks/kv/ylogAdultAllReports.json');
       const histogramDatas = getHistogramGraphDatas(fileDatas, 2);
-      const res = histogramService.getRangeX(histogramDatas);
+      const res = histogramService.getRangeX(histogramDatas!);
 
       expect(res[0].min).toEqual(-0.5);
       expect(res[0].max).toEqual(4356.5);
@@ -89,7 +89,7 @@ describe('Visualization', () => {
     it('getRangeX should return valid datas [UnivariateAnalysisResults, R1]', () => {
       const fileDatas = require('../../assets/mocks/kv/UnivariateAnalysisResults.json');
       const histogramDatas = getHistogramGraphDatas(fileDatas, 0);
-      const res = histogramService.getRangeX(histogramDatas);
+      const res = histogramService.getRangeX(histogramDatas!);
 
       expect(res[0].min).toEqual(-101556);
       expect(res[0].max).toEqual(497808);
@@ -110,21 +110,21 @@ describe('Visualization', () => {
     it('getLinRangeY should return valid datas [ylogAdultAllReports, R1]', () => {
       const fileDatas = require('../../assets/mocks/kv/ylogAdultAllReports.json');
       const histogramDatas = getHistogramGraphDatas(fileDatas, 0);
-      const res = histogramService.getLinRangeY(histogramDatas);
+      const res = histogramService.getLinRangeY(histogramDatas!);
       expect(res).toEqual(0.026668759583054657);
     });
 
     it('getLinRangeY should return valid datas [ylogAdultAllReports, R3]', () => {
       const fileDatas = require('../../assets/mocks/kv/ylogAdultAllReports.json');
       const histogramDatas = getHistogramGraphDatas(fileDatas, 2);
-      const res = histogramService.getLinRangeY(histogramDatas);
+      const res = histogramService.getLinRangeY(histogramDatas!);
       expect(res).toEqual(0.9532779165472339);
     });
 
     it('getLogRangeY should return valid datas [ylogAdultAllReports, R1]', () => {
       const fileDatas = require('../../assets/mocks/kv/ylogAdultAllReports.json');
       const histogramDatas = getHistogramGraphDatas(fileDatas, 0);
-      const res = histogramService.getLogRangeY(histogramDatas);
+      const res = histogramService.getLogRangeY(histogramDatas!);
       expect(JSON.stringify(res)).toEqual(
         JSON.stringify({
           min: -4.157314522243283,
@@ -136,7 +136,7 @@ describe('Visualization', () => {
     it('getLogRangeY should return valid datas [ylogAdultAllReports, R3]', () => {
       const fileDatas = require('../../assets/mocks/kv/ylogAdultAllReports.json');
       const histogramDatas = getHistogramGraphDatas(fileDatas, 2);
-      const res = histogramService.getLogRangeY(histogramDatas);
+      const res = histogramService.getLogRangeY(histogramDatas!);
       expect(JSON.stringify(res)).toEqual(
         JSON.stringify({
           min: -6.817192708003344,
@@ -149,7 +149,7 @@ describe('Visualization', () => {
       const fileDatas = require('../../assets/mocks/kv/ylogAdultAllReports.json');
       const histogramDatas = getHistogramGraphDatas(fileDatas, 0);
       const res = histogramService.computeXbarsDimensions(
-        histogramDatas,
+        histogramDatas!,
         HistogramType.XLIN,
       );
       expect(JSON.stringify(res[0])).toEqual(
@@ -168,7 +168,7 @@ describe('Visualization', () => {
       const fileDatas = require('../../assets/mocks/kv/ylogAdultAllReports.json');
       const histogramDatas = getHistogramGraphDatas(fileDatas, 1);
       const res = histogramService.computeXbarsDimensions(
-        histogramDatas,
+        histogramDatas!,
         HistogramType.XLIN,
       );
       expect(JSON.stringify(res[0])).toEqual(
@@ -187,7 +187,7 @@ describe('Visualization', () => {
       const fileDatas = require('../../assets/mocks/kv/ylogAdultAllReports.json');
       const histogramDatas = getHistogramGraphDatas(fileDatas, 0);
       const res = histogramService.computeXbarsDimensions(
-        histogramDatas,
+        histogramDatas!,
         HistogramType.XLOG,
       );
       expect(JSON.stringify(res[0])).toEqual(
@@ -205,9 +205,9 @@ describe('Visualization', () => {
     it('computeXbarsDimensions should return valid datas [ylogAdultAllReports, R3]', () => {
       const fileDatas = require('../../assets/mocks/kv/ylogAdultAllReports.json');
       const histogramDatas = getHistogramGraphDatas(fileDatas, 2);
-      histogramService.getRangeX(histogramDatas);
+      histogramService.getRangeX(histogramDatas!);
       const res = histogramService.computeXbarsDimensions(
-        histogramDatas,
+        histogramDatas!,
         HistogramType.XLOG,
       );
       expect(JSON.stringify(res[0])).toEqual(
@@ -225,7 +225,7 @@ describe('Visualization', () => {
     it('getLogRatioY should return valid datas [ylogAdultAllReports, R1]', () => {
       const fileDatas = require('../../assets/mocks/kv/ylogAdultAllReports.json');
       const histogramDatas = getHistogramGraphDatas(fileDatas, 0);
-      histogramService.getLogRangeY(histogramDatas);
+      histogramService.getLogRangeY(histogramDatas!);
       const res = histogramService.getLogRatioY(485, 50);
       expect(res).toEqual(178.0656186306165);
     });
@@ -233,7 +233,7 @@ describe('Visualization', () => {
     it('getLogRatioY should return valid datas [ylogAdultAllReports, R2]', () => {
       const fileDatas = require('../../assets/mocks/kv/ylogAdultAllReports.json');
       const histogramDatas = getHistogramGraphDatas(fileDatas, 1);
-      histogramService.getLogRangeY(histogramDatas);
+      histogramService.getLogRangeY(histogramDatas!);
       const res = histogramService.getLogRatioY(370, 50);
       expect(res).toEqual(50.486935657957105);
     });
@@ -241,7 +241,7 @@ describe('Visualization', () => {
     it('getLinRatioY should return valid datas [ylogAdultAllReports, R1]', () => {
       const fileDatas = require('../../assets/mocks/kv/ylogAdultAllReports.json');
       const histogramDatas = getHistogramGraphDatas(fileDatas, 0);
-      histogramService.getLinRangeY(histogramDatas);
+      histogramService.getLinRangeY(histogramDatas!);
       const res = histogramService.getLinRatioY(370, 50);
       expect(res).toEqual(12936.48468821974);
     });
@@ -250,7 +250,7 @@ describe('Visualization', () => {
       const fileDatas = require('../../assets/mocks/kv/ylogAdultAllReports.json');
       const histogramDatas = getHistogramGraphDatas(fileDatas, 0);
       const res = histogramService.computeXbarsDimensions(
-        histogramDatas,
+        histogramDatas!,
         HistogramType.XLOG,
       );
       const expectedRes = require('../mocks/visualization/histogram-datas/ylogAdultAllReports-histogram-xlog-r1.json');
@@ -261,7 +261,7 @@ describe('Visualization', () => {
       const fileDatas = require('../../assets/mocks/kv/ylogAdultAllReports.json');
       const histogramDatas = getHistogramGraphDatas(fileDatas, 2);
       const res = histogramService.computeXbarsDimensions(
-        histogramDatas,
+        histogramDatas!,
         HistogramType.XLIN,
       );
       const expectedRes = require('../mocks/visualization/histogram-datas/ylogAdultAllReports-histogram-xlin-r3.json');

@@ -42,16 +42,20 @@ describe('CoVisualization', () => {
 
       expect(dimensionsDatas.cellPartIndexes.length).toEqual(45057);
       expect(dimensionsDatas.cellPartIndexes[0]).toEqual([1201, 624]);
-      expect(dimensionsDatas.currentDimensionsClusters[0].length).toEqual(5071);
-      expect(dimensionsDatas.currentDimensionsClusters[0][0].bounds).toEqual(
+      expect(dimensionsDatas.currentDimensionsClusters[0]!.length).toEqual(
+        5071,
+      );
+      expect(dimensionsDatas.currentDimensionsClusters[0]![0]!.bounds).toEqual(
         '{1040, 1719, 1720}',
       );
-      expect(dimensionsDatas.currentDimensionsClusters[1].length).toEqual(1253);
-      expect(dimensionsDatas.currentDimensionsClusters[1][0].bounds).toEqual(
+      expect(dimensionsDatas.currentDimensionsClusters[1]!.length).toEqual(
+        1253,
+      );
+      expect(dimensionsDatas.currentDimensionsClusters[1]![0]!.bounds).toEqual(
         '{feat_1209}',
       );
-      expect(dimensionsDatas.currentDimensionsTrees[0][0].id).toEqual(2955);
-      expect(dimensionsDatas.dimensions[0].initialParts).toEqual(2536);
+      expect(dimensionsDatas.currentDimensionsTrees[0]![0]!.id).toEqual(2955);
+      expect(dimensionsDatas.dimensions[0]!.initialParts).toEqual(2536);
     });
 
     it('Loading large coclustering: computed reduced datas must be valid', () => {
@@ -77,18 +81,22 @@ describe('CoVisualization', () => {
       expect(datas.coclusteringReport.cellPartIndexes[0]).toEqual([14, 13]);
       expect(datas.coclusteringReport.cellFrequencies[0]).toEqual(291203);
       expect(
-        datas.coclusteringReport.dimensionHierarchies[0].clusters.length,
+        datas.coclusteringReport.dimensionHierarchies[0]!.clusters.length,
       ).toEqual(29);
       expect(
-        datas.coclusteringReport.dimensionHierarchies[0].clusters[0].frequency,
+        datas.coclusteringReport.dimensionHierarchies[0]!.clusters![0]!
+          .frequency,
       ).toEqual(74141);
       expect(
-        datas.coclusteringReport.dimensionPartitions[0].valueGroups.length,
+        datas.coclusteringReport.dimensionPartitions[0]!.valueGroups!.length,
       ).toEqual(15);
       expect(
-        datas.coclusteringReport.dimensionPartitions[0].valueGroups[0].cluster,
+        datas.coclusteringReport.dimensionPartitions[0]!.valueGroups![0]!
+          .cluster,
       ).toEqual('A64');
-      expect(datas.coclusteringReport.dimensionSummaries[0].parts).toEqual(15);
+      expect(datas.coclusteringReport.dimensionSummaries![0]!.parts).toEqual(
+        15,
+      );
       expect(datas.coclusteringReport.summary.cells).toEqual(214);
     });
 
@@ -120,9 +128,9 @@ describe('CoVisualization', () => {
 
       let matrixDatas = dimensionsDatasService.getMatrixDatas();
 
-      expect(matrixDatas.matrixCellDatas.length).toEqual(225);
-      expect(matrixDatas.matrixCellDatas[0].cellFreq).toEqual(12080);
-      expect(matrixDatas.matrixCellDatas[0].infosMutValue).toEqual([
+      expect(matrixDatas.matrixCellDatas!.length).toEqual(225);
+      expect(matrixDatas.matrixCellDatas![0]!.cellFreq).toEqual(12080);
+      expect(matrixDatas.matrixCellDatas![0]!.infosMutValue).toEqual([
         0.004023747674614358,
       ]);
     });
@@ -152,14 +160,14 @@ describe('CoVisualization', () => {
 
       expect(dimensionsDatas.cellPartIndexes.length).toEqual(26);
       expect(dimensionsDatas.cellPartIndexes[0]).toEqual([2, 3]);
-      expect(dimensionsDatas.currentDimensionsClusters[0].length).toEqual(5);
-      expect(dimensionsDatas.currentDimensionsClusters[0][0].bounds).toEqual(
+      expect(dimensionsDatas.currentDimensionsClusters[0]!.length).toEqual(5);
+      expect(dimensionsDatas.currentDimensionsClusters[0]![0]!.bounds).toEqual(
         'A64',
       );
 
-      expect(dimensionsDatas.currentDimensionsTrees[0][0].id).toEqual(4);
-      expect(dimensionsDatas.dimensions[0].initialParts).toEqual(2536);
-      expect(dimensionsDatas.dimensions[0].parts).toEqual(3);
+      expect(dimensionsDatas.currentDimensionsTrees[0]![0]!.id).toEqual(4);
+      expect(dimensionsDatas.dimensions[0]!.initialParts).toEqual(2536);
+      expect(dimensionsDatas.dimensions[0]!.parts).toEqual(3);
     });
   });
 });

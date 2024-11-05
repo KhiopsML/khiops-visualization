@@ -88,12 +88,12 @@ describe('coVisualization', () => {
         partition,
       );
 
-      expect(computedPartition.intervals[4].cluster).toEqual(']5.5;9.5]');
-      expect(computedPartition.intervals[4].bounds).toEqual([5.5, 9.5]);
-      expect(computedPartition.intervals[5].cluster).toEqual(']9.5;19.5]');
-      expect(computedPartition.intervals[5].bounds).toEqual([9.5, 19.5]);
-      expect(computedPartition.intervals[6].cluster).toEqual(']19.5;24.5]');
-      expect(computedPartition.intervals[6].bounds).toEqual([19.5, 24.5]);
+      expect(computedPartition.intervals![4]!.cluster).toEqual(']5.5;9.5]');
+      expect(computedPartition.intervals![4]!.bounds).toEqual([5.5, 9.5]);
+      expect(computedPartition.intervals![5]!.cluster).toEqual(']9.5;19.5]');
+      expect(computedPartition.intervals![5]!.bounds).toEqual([9.5, 19.5]);
+      expect(computedPartition.intervals![6]!.cluster).toEqual(']19.5;24.5]');
+      expect(computedPartition.intervals![6]!.bounds).toEqual([19.5, 24.5]);
     });
 
     it('2 - computeNumPartition should return valid datas [unfoldState=44]', () => {
@@ -111,16 +111,16 @@ describe('coVisualization', () => {
 
       // Here we check that 9.5;19.5 interval is removed
       expect(
-        datas.coclusteringReport.dimensionPartitions[2].intervals[4].cluster,
+        datas.coclusteringReport.dimensionPartitions[2]!.intervals![4]!.cluster,
       ).toEqual(']5.5;19.5]');
       expect(
-        datas.coclusteringReport.dimensionPartitions[2].intervals[4].bounds,
+        datas.coclusteringReport.dimensionPartitions[2]!.intervals![4]!.bounds,
       ).toEqual([5.5, 19.5]);
       expect(
-        datas.coclusteringReport.dimensionPartitions[2].intervals[5].cluster,
+        datas.coclusteringReport.dimensionPartitions[2]!.intervals![5]!.cluster,
       ).toEqual(']19.5;24.5]');
       expect(
-        datas.coclusteringReport.dimensionPartitions[2].intervals[5].bounds,
+        datas.coclusteringReport.dimensionPartitions[2]!.intervals![5]!.bounds,
       ).toEqual([19.5, 24.5]);
     });
   });
@@ -153,13 +153,16 @@ describe('coVisualization', () => {
       treenodesService.setSavedCollapsedNodes(collapsedNodes);
       const datas = treenodesService.constructSavedJson(collapsedNodes);
       expect(
-        datas.coclusteringReport.dimensionPartitions[0].valueGroups[0].cluster,
+        datas.coclusteringReport.dimensionPartitions[0]!.valueGroups![0]!
+          .cluster,
       ).toEqual('A31');
       expect(
-        datas.coclusteringReport.dimensionPartitions[0].valueGroups[2].cluster,
+        datas.coclusteringReport.dimensionPartitions[0]!.valueGroups![2]!
+          .cluster,
       ).toEqual('A36');
       expect(
-        datas.coclusteringReport.dimensionPartitions[0].valueGroups[3].cluster,
+        datas.coclusteringReport.dimensionPartitions[0]!.valueGroups![3]!
+          .cluster,
       ).toEqual('A38');
     });
 
@@ -176,16 +179,20 @@ describe('coVisualization', () => {
       treenodesService.setSavedCollapsedNodes(collapsedNodes);
       const datas = treenodesService.constructSavedJson(collapsedNodes);
       expect(
-        datas.coclusteringReport.dimensionPartitions[0].valueGroups[0].cluster,
+        datas.coclusteringReport.dimensionPartitions[0]!.valueGroups![0]!
+          .cluster,
       ).toEqual('A257');
       expect(
-        datas.coclusteringReport.dimensionPartitions[0].valueGroups[2].cluster,
+        datas.coclusteringReport.dimensionPartitions[0]!.valueGroups![2]!
+          .cluster,
       ).toEqual('A255');
       expect(
-        datas.coclusteringReport.dimensionPartitions[0].valueGroups[3].cluster,
+        datas.coclusteringReport.dimensionPartitions[0]!.valueGroups![3]!
+          .cluster,
       ).toEqual('A264');
       expect(
-        datas.coclusteringReport.dimensionPartitions[0].valueGroups[8].cluster,
+        datas.coclusteringReport.dimensionPartitions[0]!.valueGroups![8]!
+          .cluster,
       ).toEqual('A267');
     });
   });

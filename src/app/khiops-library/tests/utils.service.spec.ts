@@ -115,6 +115,7 @@ describe('Library', () => {
 
       const result = UtilsService.flatten(input);
 
+      // @ts-ignore
       expect(result).toEqual(expectedOutput);
     });
 
@@ -129,6 +130,7 @@ describe('Library', () => {
 
       const result = UtilsService.flatten(input);
 
+      // @ts-ignore
       expect(result).toEqual(expectedOutput);
     });
     it('should flatten a multi-dimensional array with integers and decimals', () => {
@@ -140,6 +142,7 @@ describe('Library', () => {
 
       const result = UtilsService.flatten(input);
 
+      // @ts-ignore
       expect(result).toEqual(expectedOutput);
     });
     it('should flatten a multi-dimensional array with 10 arrays containing 2 to 10 values each', () => {
@@ -164,6 +167,7 @@ describe('Library', () => {
 
       const result = UtilsService.flatten(input);
 
+      // @ts-ignore
       expect(result).toEqual(expectedOutput);
     });
   });

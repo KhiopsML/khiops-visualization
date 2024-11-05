@@ -30,30 +30,30 @@ describe('Visualization', () => {
       );
       const preparation2dDatas = preparation2dDatasService.getDatas();
       const result = preparation2dDatasService.getMatrixDatas(
-        preparation2dDatas.selectedVariable,
+        preparation2dDatas?.selectedVariable!,
       );
-      cells = result.matrixCellDatas;
+      cells = result?.matrixCellDatas;
     });
 
     it('Cell[0] cellFreq should return valid datas', () => {
-      expect(cells[0].cellFreq).toEqual(6746);
+      expect(cells![0].cellFreq).toEqual(6746);
     });
     it('Cell[0] w.standard should return valid datas', () => {
-      expect(cells[0].w.standard).toEqual(63.888888888888886);
+      expect(cells![0].w.standard).toEqual(63.888888888888886);
     });
     it('Cell[0] w.frequency should return valid datas', () => {
-      expect(cells[0].w.frequency).toEqual(96.15497161584831);
+      expect(cells![0].w.frequency).toEqual(96.15497161584831);
     });
     it('Cell[0] cellFreqs should return valid datas', () => {
-      expect(cells[0].cellFreqs).toEqual([5824, 922]);
+      expect(cells![0].cellFreqs).toEqual([5824, 922]);
     });
     it('Cell[0] cellProbs should return valid datas', () => {
-      expect(cells[0].cellProbs).toEqual([
+      expect(cells![0].cellProbs).toEqual([
         0.22375902873828185, 0.11318438497422048,
       ]);
     });
     it('Cell[0] cellProbsRev should return valid datas', () => {
-      expect(cells[0].cellProbsRev).toEqual([
+      expect(cells![0].cellProbsRev).toEqual([
         0.8633264156537207, 0.13667358434627927,
       ]);
     });

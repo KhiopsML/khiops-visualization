@@ -54,12 +54,11 @@ describe('Visualization', () => {
       const selectedVariable = preparationDatasService.getSelectedVariable(
         REPORT.PREPARATION_REPORT,
       );
-      const res =
-        distributionDatasService.getTargetDistributionGraphDatas(
-          selectedVariable,
-        );
+      const res = distributionDatasService.getTargetDistributionGraphDatas(
+        selectedVariable!,
+      );
 
-      expect(res.datasets[0].data[0]).toEqual(45.101424849088026);
+      expect(res!.datasets[0]!.data[0]).toEqual(45.101424849088026);
     });
 
     it('getTargetDistributionGraphDatas should return valid labels [C100_AllReports, Numerical, R1]', () => {
@@ -77,12 +76,11 @@ describe('Visualization', () => {
       const selectedVariable = preparationDatasService.getSelectedVariable(
         REPORT.PREPARATION_REPORT,
       );
-      const res =
-        distributionDatasService.getTargetDistributionGraphDatas(
-          selectedVariable,
-        );
+      const res = distributionDatasService.getTargetDistributionGraphDatas(
+        selectedVariable!,
+      );
 
-      expect(res.labels[0]).toEqual('[0.0002370088478,0.3074067]');
+      expect(res!.labels[0]).toEqual('[0.0002370088478,0.3074067]');
     });
 
     it('getTargetDistributionGraphDatas should return valid labels [AdultAllReports, Categorical, R1]', () => {
@@ -100,12 +98,11 @@ describe('Visualization', () => {
       const selectedVariable = preparationDatasService.getSelectedVariable(
         REPORT.PREPARATION_REPORT,
       );
-      const res =
-        distributionDatasService.getTargetDistributionGraphDatas(
-          selectedVariable,
-        );
+      const res = distributionDatasService.getTargetDistributionGraphDatas(
+        selectedVariable!,
+      );
 
-      expect(res.labels[0]).toEqual('{Husband,Wife}');
+      expect(res!.labels[0]).toEqual('{Husband,Wife}');
     });
 
     it('getTargetDistributionGraphDatas should return valid datas [C100_AllReports, Numerical, R41]', () => {
@@ -124,11 +121,11 @@ describe('Visualization', () => {
         REPORT.PREPARATION_REPORT,
       );
       const res = distributionDatasService.getTargetDistributionGraphDatas(
-        selectedVariable,
+        selectedVariable!,
         TYPES.LIFT,
       );
 
-      expect(res.datasets[0].data[0]).toEqual(1.0250084657655503);
+      expect(res!.datasets[0]!.data[0]).toEqual(1.0250084657655503);
     });
 
     it('getdistributionGraphDatas should return valid datas [C100_AllReports, Numerical, R2]', () => {
@@ -146,9 +143,10 @@ describe('Visualization', () => {
       const selectedVariable = preparationDatasService.getSelectedVariable(
         REPORT.PREPARATION_REPORT,
       );
-      const res =
-        distributionDatasService.getdistributionGraphDatas(selectedVariable);
-      expect(res.datasets[0].data[0]).toEqual(50.012209523809524);
+      const res = distributionDatasService.getdistributionGraphDatas(
+        selectedVariable!,
+      );
+      expect(res!.datasets[0]!.data[0]).toEqual(50.012209523809524);
     });
 
     it('getdistributionGraphDatas should return valid datas [defaultGroup, Numerical, R1, Missing informations Non supervised]', () => {
@@ -166,13 +164,14 @@ describe('Visualization', () => {
       const selectedVariable = preparationDatasService.getSelectedVariable(
         REPORT.PREPARATION_REPORT,
       );
-      const res =
-        distributionDatasService.getHistogramGraphDatas(selectedVariable);
+      const res = distributionDatasService.getHistogramGraphDatas(
+        selectedVariable!,
+      );
 
-      expect(res[0].frequency).toEqual(1263);
-      expect(res[0].logValue).toEqual(-5.167337100368651);
-      expect(res[0].partition).toEqual([1000, 11550]);
-      expect(res[0].value).toEqual(0.0000068024114898816155);
+      expect(res![0]!.frequency).toEqual(1263);
+      expect(res![0]!.logValue).toEqual(-5.167337100368651);
+      expect(res![0]!.partition).toEqual([1000, 11550]);
+      expect(res![0]!.value).toEqual(0.0000068024114898816155);
     });
 
     it('getdistributionGraphDatas should return valid datas [C100_AllReports, Numerical, R15]', () => {
@@ -190,9 +189,10 @@ describe('Visualization', () => {
       const selectedVariable = preparationDatasService.getSelectedVariable(
         REPORT.PREPARATION_REPORT,
       );
-      const res =
-        distributionDatasService.getdistributionGraphDatas(selectedVariable);
-      expect(res.datasets[0].data[0]).toEqual(49.042657142857145);
+      const res = distributionDatasService.getdistributionGraphDatas(
+        selectedVariable!,
+      );
+      expect(res!.datasets[0]!.data[0]).toEqual(49.042657142857145);
     });
 
     it('getdistributionGraphDatas should return valid lables [C100_AllReports, Numerical, R15]', () => {
@@ -210,9 +210,10 @@ describe('Visualization', () => {
       const selectedVariable = preparationDatasService.getSelectedVariable(
         REPORT.PREPARATION_REPORT,
       );
-      const res =
-        distributionDatasService.getdistributionGraphDatas(selectedVariable);
-      expect(res.labels[1]).toEqual(']0,0.5]');
+      const res = distributionDatasService.getdistributionGraphDatas(
+        selectedVariable!,
+      );
+      expect(res!.labels[1]).toEqual(']0,0.5]');
     });
 
     it('getdistributionGraphDatas should return valid datas [irisU, Categorical, R1]', () => {
@@ -230,9 +231,10 @@ describe('Visualization', () => {
       const selectedVariable = preparationDatasService.getSelectedVariable(
         REPORT.PREPARATION_REPORT,
       );
-      const res =
-        distributionDatasService.getdistributionGraphDatas(selectedVariable);
-      expect(res.datasets[0].data[0]).toEqual(37.37373737373738);
+      const res = distributionDatasService.getdistributionGraphDatas(
+        selectedVariable!,
+      );
+      expect(res!.datasets[0]!.data[0]).toEqual(37.37373737373738);
     });
 
     it('getdistributionGraphDatas should return valid labels [irisU, Categorical, R1]', () => {
@@ -250,9 +252,10 @@ describe('Visualization', () => {
       const selectedVariable = preparationDatasService.getSelectedVariable(
         REPORT.PREPARATION_REPORT,
       );
-      const res =
-        distributionDatasService.getdistributionGraphDatas(selectedVariable);
-      expect(res.labels[0]).toEqual('{Iris-versicolor}');
+      const res = distributionDatasService.getdistributionGraphDatas(
+        selectedVariable!,
+      );
+      expect(res!.labels[0]).toEqual('{Iris-versicolor}');
     });
 
     it('getdistributionGraphDatas should return valid datas [new-hyper-tree, treePreparationReport, R1]', () => {
@@ -272,9 +275,10 @@ describe('Visualization', () => {
       const selectedVariable = preparationDatasService.getSelectedVariable(
         REPORT.PREPARATION_REPORT,
       );
-      const res =
-        distributionDatasService.getdistributionGraphDatas(selectedVariable);
-      expect(res.datasets[0].data[0]).toEqual(27.55896295429274);
+      const res = distributionDatasService.getdistributionGraphDatas(
+        selectedVariable!,
+      );
+      expect(res!.datasets[0]!.data[0]).toEqual(27.55896295429274);
     });
 
     it('getTreeNodeTargetDistributionGraphDatas should return valid datas [new-hyper-tree, treePreparationReport, R1]', () => {
@@ -294,9 +298,9 @@ describe('Visualization', () => {
       const selectedNode = treePreparationDatasService.getSelectedNode();
       const res =
         distributionDatasService.getTreeNodeTargetDistributionGraphDatas(
-          selectedNode,
+          selectedNode!,
         );
-      expect(res.datasets[0].extra[0].extra.value).toEqual(5074);
+      expect(res!.datasets[0]!.extra[0].extra.value).toEqual(5074);
     });
 
     it('getTreeNodeTargetDistributionGraphDatas should return valid datas [tree-education_AllReports, R1, L16]', () => {
@@ -314,16 +318,16 @@ describe('Visualization', () => {
       );
       treePreparationDatasService.initSelectedNodes();
       const nodeToSelect = treePreparationDatasService.getNodeFromName('L16');
-      const node = new TreeNodeModel(nodeToSelect, null, true);
+      const node = new TreeNodeModel(nodeToSelect!, undefined, true);
       treePreparationDatasService.setSelectedNode(node, true);
       const selectedNode = treePreparationDatasService.getSelectedNode();
       const res =
         distributionDatasService.getTreeNodeTargetDistributionGraphDatas(
-          selectedNode,
+          selectedNode!,
         );
       // First value (9th) must be at index 6
       // https://github.com/khiopsrelease/kv-release/issues/46
-      expect(res.datasets[6].extra[0].extra.value).toEqual(1);
+      expect(res!.datasets[6]!.extra[0].extra.value).toEqual(1);
     });
 
     it('getHistogramGraphDatas should return valid datas [ylogAdultAllReports, R1]', () => {
@@ -341,13 +345,14 @@ describe('Visualization', () => {
       const selectedVariable = preparationDatasService.getSelectedVariable(
         REPORT.PREPARATION_REPORT,
       );
-      const res =
-        distributionDatasService.getHistogramGraphDatas(selectedVariable);
+      const res = distributionDatasService.getHistogramGraphDatas(
+        selectedVariable!,
+      );
 
-      expect(res[0].frequency).toEqual(595);
-      expect(res[0].logValue).toEqual(-1.9142764735569882);
-      expect(res[0].partition).toEqual([16.5, 17.5]);
-      expect(res[0].value).toEqual(0.012182138323573974);
+      expect(res![0]!.frequency).toEqual(595);
+      expect(res![0]!.logValue).toEqual(-1.9142764735569882);
+      expect(res![0]!.partition).toEqual([16.5, 17.5]);
+      expect(res![0]!.value).toEqual(0.012182138323573974);
     });
 
     it('getHistogramGraphDatas should return valid datas [ylogAdultAllReports, R3]', () => {
@@ -365,13 +370,14 @@ describe('Visualization', () => {
       const selectedVariable = preparationDatasService.getSelectedVariable(
         REPORT.PREPARATION_REPORT,
       );
-      const res =
-        distributionDatasService.getHistogramGraphDatas(selectedVariable);
+      const res = distributionDatasService.getHistogramGraphDatas(
+        selectedVariable!,
+      );
 
-      expect(res[0].frequency).toEqual(46560);
-      expect(res[0].logValue).toEqual(-0.020780467643705575);
-      expect(res[0].partition).toEqual([-0.5, 0.5]);
-      expect(res[0].value).toEqual(0.9532779165472339);
+      expect(res![0]!.frequency).toEqual(46560);
+      expect(res![0]!.logValue).toEqual(-0.020780467643705575);
+      expect(res![0]!.partition).toEqual([-0.5, 0.5]);
+      expect(res![0]!.value).toEqual(0.9532779165472339);
     });
   });
 });
