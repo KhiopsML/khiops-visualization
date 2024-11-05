@@ -12,7 +12,7 @@ import { FileLoaderService } from '@khiops-library/providers/file-loader.service
   styleUrls: ['./project-logs.component.scss'],
 })
 export class ProjectLogsComponent {
-  public projectLogsDatas: ProjectLogModel[];
+  public projectLogsDatas?: ProjectLogModel[];
   public logsTitle: string;
   public logsDisplayedColumns: GridColumnsI[] = [];
   private fileLoadedSub?: Subscription;

@@ -38,13 +38,13 @@ export class LevelDistributionGraphComponent
   @ViewChild('levelGraph', {
     static: false,
   })
-  private levelGraph: ElementRef;
+  private levelGraph?: ElementRef;
 
-  @Input() public datas: VariableModel[] | Variable2dModel[];
-  @Input() public levelDistributionTitle: string;
+  @Input() public datas?: VariableModel[] | Variable2dModel[];
+  @Input() public levelDistributionTitle?: string;
 
-  public override inputDatas: ChartDatasModel = undefined;
-  public colorSet: ChartColorsSetI;
+  public override inputDatas?: ChartDatasModel = undefined;
+  public colorSet?: ChartColorsSetI;
   public componentType = COMPONENT_TYPES.BAR_CHART; // needed to copy datas
   public override graphIdContainer = 'level-distribution-graph';
 
@@ -92,11 +92,11 @@ export class LevelDistributionGraphComponent
   ngOnInit() {
     // load datas
     this.inputDatas =
-      this.distributionDatasService.getLeveldistributionGraphDatas(this.datas);
+      this.distributionDatasService.getLeveldistributionGraphDatas(this.datas!);
 
     // simulate click on dialog to make copy available
     setTimeout(() => {
-      this.levelGraph.nativeElement.click();
+      this.levelGraph?.nativeElement.click();
 
       // Resize graph after delay to set its width
       this.resizeGraph();

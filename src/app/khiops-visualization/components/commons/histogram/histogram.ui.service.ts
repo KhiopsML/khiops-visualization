@@ -11,7 +11,7 @@ export class HistogramUIService {
   static readonly chartColors: string[] = HISTOGRAM_COLORS;
 
   static getColor(i: number): string {
-    return this.chartColors[i];
+    return this.chartColors[i] || '';
   }
 
   static getColors(): string[] {
@@ -31,10 +31,11 @@ export class HistogramUIService {
 
       for (let i = 0; i < datas.length; i++) {
         if (
-          y > datas?.[i].coords?.y &&
-          y < datas?.[i].coords?.y + datas?.[i].coords?.barH + yPadding / 2 &&
-          x > datas?.[i].coords?.x &&
-          x < datas?.[i].coords?.x + datas?.[i].coords?.barW
+          y > datas?.[i]?.coords?.y! &&
+          y <
+            datas?.[i]?.coords?.y! + datas?.[i]?.coords?.barH! + yPadding / 2 &&
+          x > datas?.[i]?.coords?.x! &&
+          x < datas?.[i]?.coords?.x! + datas?.[i]?.coords?.barW!
         ) {
           return i;
         }
@@ -73,7 +74,7 @@ export class HistogramUIService {
 
   static initCanvasContext(canvas: HTMLCanvasElement, w: number, h: number) {
     const ctx = canvas.getContext('2d');
-    ctx.imageSmoothingEnabled = true;
+    ctx!.imageSmoothingEnabled = true;
     canvas.width = w;
     canvas.height = h;
     return ctx;
@@ -83,12 +84,12 @@ export class HistogramUIService {
    * Before draw canvas, clean dom
    */
   static cleanDomContext(
-    ctx: CanvasRenderingContext2D,
+    ctx: CanvasRenderingContext2D | null,
     canvas: HTMLCanvasElement,
   ) {
     if (canvas) {
       ctx = canvas.getContext('2d');
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx?.clearRect(0, 0, canvas.width, canvas.height);
     }
   }
 }
