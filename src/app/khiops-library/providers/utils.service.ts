@@ -212,7 +212,7 @@ export class UtilsService {
    * Compute total length of array of array
    * @param array of array
    */
-  static getArrayOfArrayLength(array: any[][] | undefined) {
+  static getArrayOfArrayLength(array: any[] | undefined) {
     let arrayLengthTotal = 0;
     for (let i = 0; i < array!.length; i++) {
       arrayLengthTotal = arrayLengthTotal + array![i]!.length;
@@ -538,7 +538,7 @@ export class UtilsService {
    * ```
    */
   static generateArrayPercentsFromArrayLength(
-    array: any[][],
+    array: any[],
     arrayTotal: number,
   ): number[] {
     const percentArray = [];

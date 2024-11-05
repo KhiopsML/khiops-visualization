@@ -363,10 +363,12 @@ export class MatrixUtilsService {
     let freqColVals = 0;
     let freqLineVals = 0;
     for (let i = 0; i < partPositionsLength; i++) {
-      matrixTotal = matrixTotal + e.matrixTotal[partPositions[i]];
-      cellFreqs = cellFreqs + e.cellFreqs[partPositions[i]];
-      freqColVals = freqColVals + e.freqColVals[partPositions[i]];
-      freqLineVals = freqLineVals + e.freqLineVals[partPositions[i]];
+      if (partPositions[i]) {
+        matrixTotal = matrixTotal + e.matrixTotal[partPositions[i]!]!;
+        cellFreqs = cellFreqs + e.cellFreqs[partPositions[i]!]!;
+        freqColVals = freqColVals + e.freqColVals[partPositions[i]!]!;
+        freqLineVals = freqLineVals + e.freqLineVals[partPositions[i]!]!;
+      }
     }
     return [matrixTotal, cellFreqs, freqColVals, freqLineVals];
   }
@@ -381,25 +383,27 @@ export class MatrixUtilsService {
     dimension: DimensionCovisualizationModel,
   ): number[] {
     let axisValues: number[] = [];
-    let currentAxisFullPart;
+    let currentAxisFullPart: any;
     if (dimension.type === TYPES.CATEGORICAL) {
-      currentAxisFullPart = dimension.valueGroups.map((e) => e.values);
+      currentAxisFullPart = dimension.valueGroups?.map((e) => e.values);
       const axisPartTotal =
         UtilsService.getArrayOfArrayLength(currentAxisFullPart);
       axisValues = UtilsService.generateArrayPercentsFromArrayLength(
-        currentAxisFullPart,
+        currentAxisFullPart!,
         axisPartTotal,
       );
     } else if (dimension.type === TYPES.NUMERICAL) {
-      currentAxisFullPart = dimension.intervals.map((e) => e.bounds);
+      currentAxisFullPart = dimension.intervals?.map((e) => e.bounds);
       // Give an interval of 5% if missing
-      currentAxisFullPart[0] =
-        UtilsService.generateMissingInterval(currentAxisFullPart);
-      const axisPartTotal =
-        UtilsService.getArrayMatrixInterval(currentAxisFullPart);
+      currentAxisFullPart[0] = UtilsService.generateMissingInterval(
+        currentAxisFullPart!,
+      );
+      const axisPartTotal = UtilsService.getArrayMatrixInterval(
+        currentAxisFullPart!,
+      );
       axisValues =
         UtilsService.generateArrayPercentsFromArrayIntervalsAndTotalCount(
-          currentAxisFullPart,
+          currentAxisFullPart!,
           axisPartTotal,
         );
     }
@@ -416,7 +420,7 @@ export class MatrixUtilsService {
     dimension: DimensionVisualizationModel,
   ): number[] {
     let axisValues: number[] = [];
-    let currentAxisFullPart;
+    let currentAxisFullPart: any;
     if (dimension.type === TYPES.CATEGORICAL) {
       currentAxisFullPart = dimension.partition;
       const axisPartTotal =
@@ -518,8 +522,8 @@ export class MatrixUtilsService {
     const xLength = xDimension.parts;
     const yLength = yDimension.parts;
 
-    let currentLineVal = [];
-    let currentColVal = [0];
+    let currentLineVal: any[] = [];
+    let currentColVal: any[] = [0];
 
     if (Array.isArray(cellFrequencies[0]) && cellFrequencies[0].length > 1) {
       currentLineVal = UtilsService.getMultiDimColumnsTotals(
@@ -546,7 +550,7 @@ export class MatrixUtilsService {
     }
 
     const isContextMatrix = zDimension.length > 0;
-    let currentFrequencies;
+    let currentFrequencies: any;
     let matrixTotal = 0;
     let matrixTotalsByIndex;
     let matrixMultiDimTotal;
