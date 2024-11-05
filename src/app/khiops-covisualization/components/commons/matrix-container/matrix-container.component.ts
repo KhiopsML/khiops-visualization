@@ -123,11 +123,11 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
   onCellSelected(event: { datas: CellModel }) {
     this.treenodesService.setSelectedNode(
       event.datas.xnamePart,
-      event.datas.xaxisPart,
+      event.datas.xaxisPart!,
     );
     this.treenodesService.setSelectedNode(
       event.datas.ynamePart,
-      event.datas.yaxisPart,
+      event.datas.yaxisPart!,
     );
   }
 

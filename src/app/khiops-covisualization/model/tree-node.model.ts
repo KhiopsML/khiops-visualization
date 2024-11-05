@@ -133,7 +133,7 @@ export class TreeNodeModel {
     }
     if (dimension.type === TYPES.CATEGORICAL) {
       this.clusterCompositionSize =
-        dimension.valueGroups[leafPosition]?.values?.length;
+        dimension.valueGroups?.[leafPosition]?.values?.length;
     }
   }
 
