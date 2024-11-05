@@ -26,7 +26,7 @@ export class ScrollableGraphComponent
   @Input() public view: any;
   @Input() public maxScale: number = 0;
   @Input() public minScale: number = 0;
-  @Input() public inputDatas: any;
+  @Input() public inputDatas?: any;
   @Input() public scrollPosition: number = 0;
   @Input() public scaleValue = 0;
   @Input() public graphIdContainer: any;
@@ -133,7 +133,7 @@ export class ScrollableGraphComponent
     }
   }
 
-  onScroll(event) {
+  onScroll(event: any) {
     this.scrollPositionChanged.emit(event.currentTarget.scrollLeft);
   }
 

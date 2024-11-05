@@ -39,12 +39,12 @@ export class TargetDistributionGraphComponent
   @Output() selectedItemChanged: EventEmitter<any> = new EventEmitter();
 
   @Input() override scrollPosition = 0;
-  @Input() override inputDatas: ChartDatasModel = undefined;
+  @Input() override inputDatas?: ChartDatasModel = undefined;
   @Input() public position = 0;
-  @Input() public titleTooltip: string;
-  @Input() public title: string;
-  @Input() public activeEntries: number;
-  @Input() public displayedValues: ChartToggleValuesI[];
+  @Input() public titleTooltip?: string;
+  @Input() public title?: string;
+  @Input() public activeEntries?: number;
+  @Input() public displayedValues?: ChartToggleValuesI[];
   @Input() public showFullscreenBtn = false;
 
   public override view: any = undefined; // managed into ScrollableGraphComponent
@@ -52,7 +52,7 @@ export class TargetDistributionGraphComponent
   public override maxScale: number = 0;
   public override minScale: number = 0;
   public componentType = COMPONENT_TYPES.ND_BAR_CHART; // needed to copy datas
-  public colorSet: ChartColorsSetI;
+  public colorSet?: ChartColorsSetI;
   public graphOptions = {
     types: [TYPES.PROBABILITIES, TYPES.LIFT],
     selected: undefined,
@@ -61,7 +61,7 @@ export class TargetDistributionGraphComponent
   public chartOptions: ChartOptions;
   public isFullscreen = false;
   public isSmallDiv = false;
-  private selectedBarIndex: number;
+  private selectedBarIndex?: number;
 
   constructor(
     public override selectableService: SelectableService,

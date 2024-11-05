@@ -17,7 +17,7 @@ import { AppService } from '@khiops-visualization/providers/app.service';
 })
 export class SelectTrainedPredictorComponent implements OnInit {
   @Input() inputDatas: TrainedPredictor[] | undefined;
-  selectedPredictor: string;
+  selectedPredictor?: string;
 
   @Output() private selectedPredictorChanged: EventEmitter<any> =
     new EventEmitter();
@@ -48,12 +48,12 @@ export class SelectTrainedPredictorComponent implements OnInit {
       this.selectedPredictor = defaultSelection.name;
     } else {
       // else select first predictor
-      this.selectedPredictor = this.inputDatas?.[0].name;
+      this.selectedPredictor = this.inputDatas?.[0]?.name;
     }
     this.selectedPredictorChanged.emit(defaultSelection);
   }
 
-  changeTrainedPredictorsType(opt) {
+  changeTrainedPredictorsType(opt: TrainedPredictor) {
     // this.trackerService.trackEvent('click', 'select_trained_predictor');
     AppService.Ls.set(LS.SELECTED_TRAIN_PREDICTOR, JSON.stringify(opt));
     this.selectedPredictor = opt.name;
