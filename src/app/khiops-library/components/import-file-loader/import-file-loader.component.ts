@@ -11,8 +11,8 @@ import { FileModel } from '../../model/file.model';
 })
 export class ImportFileLoaderComponent implements OnInit {
   @Output() datasLoaded: EventEmitter<any> = new EventEmitter();
-  filename: string;
-  isLoadingDatas: boolean;
+  filename?: string;
+  isLoadingDatas?: boolean;
 
   constructor(
     private ngzone: NgZone,
@@ -25,11 +25,11 @@ export class ImportFileLoaderComponent implements OnInit {
     this.isLoadingDatas = false;
   }
 
-  openFileDialog(e) {
+  openFileDialog(e: any) {
     if (e.target.files) this.openFile(e.target.files[0]);
   }
 
-  openFile(file) {
+  openFile(file: any) {
     if (file) {
       this.isLoadingDatas = true;
       setTimeout(() => {
@@ -41,7 +41,7 @@ export class ImportFileLoaderComponent implements OnInit {
               this.datasLoaded.emit(fileDatas);
               this.isLoadingDatas = false;
             })
-            .catch((error) => {
+            .catch((error: any) => {
               console.warn(this.translate.get('SNACKS.OPEN_FILE_ERROR'), error);
               this.snackBar.open(
                 this.translate.get('SNACKS.OPEN_FILE_ERROR'),

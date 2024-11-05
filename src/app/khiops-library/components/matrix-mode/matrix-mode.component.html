@@ -8,10 +8,10 @@
     class="button-accent"
     mat-stroked-button
     color="accent"
-    [title]="matrixModes.selected.tooltip || ''"
+    [title]="matrixModes.selected?.tooltip || ''"
     [matMenuTriggerFor]="matrixModesTypes"
   >
-    {{ matrixModes.selected.title | translate }} <em>v</em>
+    {{ matrixModes.selected?.title | translate }} <em>v</em>
   </button>
   <mat-menu #matrixModesTypes>
     <button

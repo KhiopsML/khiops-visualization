@@ -1,5 +1,6 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
 import html2canvas from 'html2canvas';
+// @ts-ignore
 import { saveAs } from 'file-saver';
 import { MatSnackBar } from '@angular/material/snack-bar';
 

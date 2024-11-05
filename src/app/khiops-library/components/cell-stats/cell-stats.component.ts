@@ -26,14 +26,14 @@ export class CellStatsComponent implements OnChanges {
             this.selectedCells.map((e) => e.displayedValue?.ef),
           ),
           I:
-            this.selectedCells[0].displayedValue?.type ===
+            this.selectedCells[0]?.displayedValue?.type ===
             MATRIX_MODES.MUTUAL_INFO
               ? UtilsService.arraySum(
                   this.selectedCells.map((e) => e.displayedValue.value),
                 )
               : undefined,
           Total:
-            this.selectedCells[0].displayedValue?.type ===
+            this.selectedCells[0]?.displayedValue?.type ===
             MATRIX_MODES.MUTUAL_INFO
               ? UtilsService.arraySum(
                   this.selectedCells.map((e) => e.displayedValue.extra),
@@ -43,17 +43,17 @@ export class CellStatsComponent implements OnChanges {
       } else if (changes?.selectedCells?.currentValue.length === 1) {
         // Simple selection
         this.cellStats = {
-          F: this.selectedCells[0].displayedFreqValue,
-          EF: this.selectedCells[0].displayedValue?.ef,
+          F: this.selectedCells[0]?.displayedFreqValue,
+          EF: this.selectedCells[0]?.displayedValue?.ef,
           I:
-            this.selectedCells[0].displayedValue?.type ===
+            this.selectedCells[0]?.displayedValue?.type ===
             MATRIX_MODES.MUTUAL_INFO
-              ? this.selectedCells[0].displayedValue?.value
+              ? this.selectedCells[0]?.displayedValue?.value
               : undefined,
           Total:
-            this.selectedCells[0].displayedValue?.type ===
+            this.selectedCells[0]?.displayedValue?.type ===
             MATRIX_MODES.MUTUAL_INFO
-              ? this.selectedCells[0].displayedValue?.extra
+              ? this.selectedCells[0]?.displayedValue?.extra
               : undefined,
         };
       }

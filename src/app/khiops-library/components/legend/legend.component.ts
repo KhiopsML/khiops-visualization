@@ -63,7 +63,7 @@ export class LegendComponent implements OnChanges {
       if (defaultIndex !== -1) {
         this.legend.push({
           name: this.translate.get('GLOBAL.DEFAULT_GROUP_INDEX'),
-          color: UtilsService.hexToRGBa(this.colorSet?.domain[0], 0.3),
+          color: UtilsService.hexToRGBa(this.colorSet?.domain[0]!, 0.3),
         });
       }
     }

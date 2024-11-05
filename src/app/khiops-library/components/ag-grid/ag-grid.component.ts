@@ -279,7 +279,7 @@ export class AgGridComponent
     });
   }
 
-  onCellClicked(e) {
+  onCellClicked(e: any) {
     this.selectListItem.emit(e.data);
   }
 
@@ -389,7 +389,7 @@ export class AgGridComponent
             suppressMovable: true,
             resizable: true,
             valueFormatter: this.enablePrecision
-              ? (params) =>
+              ? (params: any) =>
                   params.value &&
                   UtilsService.getPrecisionNumber(
                     params.value,
@@ -430,8 +430,8 @@ export class AgGridComponent
         if (currentData) {
           const currentRow: DynamicI = {};
           for (let j = 0; j < this.displayedColumns.length; j++) {
-            currentRow[this.displayedColumns[j].field] =
-              currentData[this.displayedColumns[j].field];
+            currentRow[this.displayedColumns[j]!.field] =
+              currentData[this.displayedColumns[j]!.field];
           }
           this.rowData.push(currentRow);
         }

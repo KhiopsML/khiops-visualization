@@ -176,7 +176,7 @@ export class DistributionGraphComponent
     this.updateChartOptions();
   }
 
-  onSelectBarChanged(e) {
+  onSelectBarChanged(e: any) {
     // pass event from chart to parent
     this.selectedItemChanged.emit(e);
   }
@@ -189,12 +189,12 @@ export class DistributionGraphComponent
   }
 
   private updateChartOptions() {
-    this.chartOptions.scales.y.max = undefined;
-    this.chartOptions.scales.y.min = undefined;
+    this.chartOptions.scales!.y!.max = undefined;
+    this.chartOptions.scales!.y!.min = undefined;
 
     // Histogram: Missing logarithmic scale for "frequency" mode #185
-    this.chartOptions.scales.y.type =
-      this.graphOptions.selected === TYPES.FREQUENCY
+    this.chartOptions.scales!.y!.type =
+      this.graphOptions!.selected === TYPES.FREQUENCY
         ? TYPES.LOGARITHMIC
         : TYPES.LINEAR;
 
@@ -205,9 +205,9 @@ export class DistributionGraphComponent
     }
 
     if (minValue > 0) {
-      this.chartOptions.scales.y.min = 0;
+      this.chartOptions.scales!.y!.min = 0;
     } else {
-      this.chartOptions.scales.y.min = minValue;
+      this.chartOptions.scales!.y!.min = minValue;
     }
     this.chartOptions = _.cloneDeep(this.chartOptions);
   }

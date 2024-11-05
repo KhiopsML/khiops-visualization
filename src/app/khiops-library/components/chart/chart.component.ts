@@ -285,7 +285,7 @@ export class ChartComponent implements AfterViewInit, OnChanges {
       this.colorize();
       for (let i = 0; i < this.chart.data.datasets.length; i++) {
         const dataset = <ChartDatasetModel>this.chart.data.datasets[i];
-        dataset.borderColor[index] = this.barColor;
+        dataset.borderColor![index!] = this.barColor;
         dataset.borderSkipped = false;
         dataset.borderWidth = 2;
       }
@@ -304,14 +304,15 @@ export class ChartComponent implements AfterViewInit, OnChanges {
         }
 
         dataset.backgroundColor = new Array(this.inputDatas.labels.length).fill(
-          UtilsService.hexToRGBa(this.colorSet?.domain[i], 0.8),
+          UtilsService.hexToRGBa(this.colorSet?.domain[i]!, 0.8),
         );
         const defaultGroupIndex = dataset.extra?.findIndex(
           (e: any) => e.defaultGroupIndex,
         );
         if (defaultGroupIndex !== -1) {
+          // @ts-ignore
           dataset.backgroundColor[defaultGroupIndex] = UtilsService.hexToRGBa(
-            this.colorSet?.domain[i],
+            this.colorSet?.domain[i]!,
             0.15,
           );
         }
@@ -332,7 +333,7 @@ export class ChartComponent implements AfterViewInit, OnChanges {
         }
 
         dataset.borderColor = new Array(this.inputDatas.labels.length).fill(
-          UtilsService.hexToRGBa(this.colorSet?.domain[i], borderOpacity),
+          UtilsService.hexToRGBa(this.colorSet?.domain[i]!, borderOpacity),
         );
       }
     }
@@ -346,7 +347,7 @@ export class ChartComponent implements AfterViewInit, OnChanges {
       }
       if (
         event.code === 'ArrowRight' &&
-        this.activeEntries < this.inputDatas.labels.length - 1
+        this.activeEntries < this.inputDatas!.labels.length - 1
       ) {
         this.activeEntries = this.activeEntries + 1;
       }

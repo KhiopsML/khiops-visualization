@@ -42,7 +42,7 @@ export class MatrixModeComponent implements OnChanges {
       // In case of variable selection change
       // We must update the combobox
       this.matrixModes.selected =
-        this.matrixModes.types[this.matrixModes.selectedIndex];
+        this.matrixModes.types[this.matrixModes.selectedIndex!];
     }
     this.matrixModeChange.emit(this.matrixModes.selected);
   }

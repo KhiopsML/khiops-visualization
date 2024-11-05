@@ -94,10 +94,10 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
 
   private conditionalOnContextChangedSub: Subscription;
   private selectedTargetIndex = -1;
-  private matrixValues: number[] = [];
+  private matrixValues?: number[] = [];
   private matrixFreqsValues: number[] = [];
   private matrixExpectedFreqsValues: number[] = [];
-  private matrixExtras: number[] | boolean[] = [];
+  private matrixExtras?: number[] | boolean[] = [];
   private isFirstResize = true;
   private zoom = 1;
   private unpanzoom: any;
@@ -181,7 +181,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
         event.keyCode,
         this.inputDatas.matrixCellDatas,
         this.isAxisInverted,
-        this.selectedCells[0]?.index,
+        this.selectedCells[0]?.index!,
       );
       if (changeCell) {
         this.cellSelected.emit({
@@ -260,7 +260,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
             this.selectedTargetIndex,
           );
 
-          if (this.matrixFreqsValues && !isNaN(this.matrixFreqsValues[0])) {
+          if (this.matrixFreqsValues && !isNaN(this.matrixFreqsValues[0]!)) {
             // check if we have a wrong context selection
 
             // Clean dom canvas
@@ -282,16 +282,16 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
               if (this.inputDatas.matrixCellDatas) {
                 let [minVal, maxVal, minValH, maxValH] =
                   MatrixUtilsService.getMinAndMaxFromGraphMode(
-                    this.matrixValues,
-                    this.minMaxValues,
+                    this.matrixValues!,
+                    this.minMaxValues!,
                     this.graphMode.mode,
                   );
 
                 this.legend = MatrixUiService.computeLegendValues(
-                  minVal,
-                  maxVal,
-                  minValH,
-                  maxValH,
+                  minVal!,
+                  maxVal!,
+                  minValH!,
+                  maxValH!,
                   this.graphMode.mode,
                 );
 
@@ -309,7 +309,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
                 }
 
                 let totalMutInfo = MatrixUtilsService.computeTotalMutInfo(
-                  this.matrixValues,
+                  this.matrixValues!,
                   this.graphMode.mode,
                   this.isKhiopsCovisu,
                 );
@@ -321,12 +321,12 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
                 for (let index = 0; index < cellsLength; index++) {
                   if (totalMutInfo) {
                     // hide zero exeptions do not work anymore #110
-                    this.matrixExtras[index] = totalMutInfo;
+                    this.matrixExtras![index] = totalMutInfo;
                   }
 
                   let cellDatas = this.inputDatas.matrixCellDatas[index];
 
-                  const currentVal = this.matrixValues[index];
+                  const currentVal = this.matrixValues?.[index];
                   cellDatas = MatrixUiService.adaptCellDimensionsToZoom(
                     cellDatas,
                     width,
@@ -663,10 +663,10 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
       const containerPosition =
         this.matrixArea?.nativeElement.getBoundingClientRect();
       this.currentMouseY = Math.round(
-        this.currentEvent.y - containerPosition.top,
+        this.currentEvent!.y - containerPosition!.top,
       );
       this.currentMouseX = Math.round(
-        this.currentEvent.x - containerPosition.left,
+        this.currentEvent!.x - containerPosition!.left,
       );
 
       this.drawMatrix();
@@ -686,9 +686,9 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
       deltaY = deltaY + 10;
 
       if (!preventTranslate) {
-        this.matrixArea.nativeElement.scrollLeft =
+        this.matrixArea!.nativeElement.scrollLeft =
           this.currentMouseX * this.zoom - this.currentMouseX - deltaX;
-        this.matrixArea.nativeElement.scrollTop =
+        this.matrixArea!.nativeElement.scrollTop =
           this.currentMouseY * this.zoom - this.currentMouseY - deltaY;
       }
 
@@ -719,9 +719,9 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
 
   private getZoomDimensions(): [number, number] {
     if (this.zoom === 1) {
-      this.matrixArea.nativeElement.style.overflow = 'hidden';
+      this.matrixArea!.nativeElement.style.overflow = 'hidden';
     } else {
-      this.matrixArea.nativeElement.style.overflow = 'scroll';
+      this.matrixArea!.nativeElement.style.overflow = 'scroll';
     }
     let width = this.matrixContainerDiv?.nativeElement.clientWidth || 0;
     let height = this.matrixContainerDiv?.nativeElement.clientHeight || 0;
@@ -738,7 +738,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   private getCurrentCell(event: MouseEvent) {
     if (this.inputDatas) {
       const canvasPosition =
-        this.matrixDiv.nativeElement.getBoundingClientRect();
+        this.matrixDiv!.nativeElement.getBoundingClientRect();
       let x = event.pageX - canvasPosition.left;
       let y = event.pageY - canvasPosition.top;
 

@@ -19,7 +19,7 @@
         fxLayoutAlign="start center"
         title="{{ titleTooltip }}"
       >
-        {{ inputDatas.length }} {{ title }}
+        {{ inputDatas?.length }} {{ title }}
       </h1>
       <h1
         fxLayoutAlign="start center"
@@ -195,7 +195,7 @@
     (cellClicked)="onCellClicked($event)"
     (cellDoubleClicked)="onCellDoubleClicked($event)"
     [rowSelection]="rowSelection"
-    [pagination]="inputDatas && inputDatas.length > paginationSize"
+    [pagination]="inputDatas && inputDatas.length > paginationSize!"
     [columnDefs]="columnDefs"
     [modules]="modules"
   >

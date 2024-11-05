@@ -1,6 +1,6 @@
 export interface CellStatsI {
-  F: number;
-  EF: number;
-  I: number;
-  Total: number;
+  F?: number;
+  EF?: number;
+  I?: number;
+  Total?: number;
 }

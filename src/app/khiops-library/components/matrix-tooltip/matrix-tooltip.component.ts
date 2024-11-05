@@ -16,28 +16,28 @@ import { CellModel } from '@khiops-library/model/cell.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MatrixTooltipComponent implements OnChanges {
-  @Input() public cell: CellModel;
-  @Input() private position: {
+  @Input() public cell?: CellModel;
+  @Input() private position?: {
     x: number;
     y: number;
   };
   @ViewChild('matrixTooltipDiv')
-  private matrixTooltipDiv: ElementRef<HTMLElement>;
+  private matrixTooltipDiv?: ElementRef<HTMLElement>;
 
   ngOnChanges(changes: SimpleChanges) {
     if (
       this.matrixTooltipDiv?.nativeElement &&
       changes.position?.currentValue
     ) {
-      if (this.position.x < 400) {
+      if (this.position!.x < 400) {
         this.matrixTooltipDiv.nativeElement.style.left =
-          this.position.x + 40 + 'px';
+          this.position!.x + 40 + 'px';
       } else {
         this.matrixTooltipDiv.nativeElement.style.left =
-          this.position.x - 340 + 'px';
+          this.position!.x - 340 + 'px';
       }
       this.matrixTooltipDiv.nativeElement.style.top =
-        this.position.y - 100 + 'px';
+        this.position!.y - 100 + 'px';
     }
     if (this.matrixTooltipDiv?.nativeElement && changes.cell) {
       if (changes.cell.currentValue) {
