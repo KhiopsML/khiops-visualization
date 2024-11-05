@@ -37,13 +37,13 @@ export class TreePreparationDatasService {
    */
   initialize() {
     this.treePreparationDatas = new TreePreparationDatasModel(
-      this.appService.appDatas,
+      this.appService.appDatas!,
     );
 
     // select the first item of the list by default
     if (this.treePreparationDatas.isValid()) {
       let defaultVariable: TreePreparationVariableStatistic | undefined =
-        this.appService.appDatas.treePreparationReport.variablesStatistics[0];
+        this.appService.appDatas?.treePreparationReport.variablesStatistics[0];
 
       // Check if there is a saved selected variable into json
       const savedSelectedRank = this.appService.getSavedDatas('selectedRank');
@@ -72,14 +72,16 @@ export class TreePreparationDatasService {
    * Initializes the selected nodes based on the first partition of the selected variable.
    */
   initSelectedNodes() {
-    const variablesDetailedStatistics: { [key: string]: VariableDetail } =
+    const variablesDetailedStatistics:
+      | { [key: string]: VariableDetail }
+      | undefined =
       this.appService.appDatas?.treePreparationReport
         ?.variablesDetailedStatistics;
     if (this.treePreparationDatas?.selectedVariable) {
       const rank: string = this.treePreparationDatas.selectedVariable.rank;
-      if (rank && variablesDetailedStatistics[rank]) {
+      if (rank && variablesDetailedStatistics![rank]) {
         const dimensions =
-          variablesDetailedStatistics[rank].dataGrid.dimensions;
+          variablesDetailedStatistics![rank].dataGrid.dimensions;
         const firstpartition: any = dimensions[0]?.partition[0];
         this.setSelectedNodes(firstpartition, firstpartition[0]);
       }
@@ -114,7 +116,7 @@ export class TreePreparationDatasService {
     const rank: string | undefined =
       this.treePreparationDatas?.selectedVariable?.rank;
     const varDetails: VariableDetail | undefined =
-      variablesDetailedStatistics[rank!];
+      variablesDetailedStatistics?.[rank!];
     const dimensions = varDetails?.dataGrid?.dimensions;
     const dimIndex = dimensions?.findIndex(
       (e: any) =>
@@ -160,7 +162,7 @@ export class TreePreparationDatasService {
    * @param {string} rank - The rank of the variable.
    */
   setSelectedFlattenTree(rank: string) {
-    const treeDatas: TreeDetails =
+    const treeDatas: TreeDetails | undefined =
       this.appService.appDatas?.treePreparationReport?.treeDetails;
     if (treeDatas?.[rank]?.treeNodes) {
       const flattenTree: TreeChildNode[] = UtilsService.flattenTree(
@@ -176,7 +178,7 @@ export class TreePreparationDatasService {
    * It clones the tree nodes from the application data and formats them.
    */
   constructDimensionTree() {
-    const treeDatas: TreeDetails =
+    const treeDatas: TreeDetails | undefined =
       this.appService.appDatas?.treePreparationReport?.treeDetails;
     const currentRank = this.getSelectedVariableRank();
     if (currentRank && treeDatas?.[currentRank]) {
@@ -324,7 +326,7 @@ export class TreePreparationDatasService {
               });
 
               const partValuesLength = UtilsService.flatten(
-                variableDetails.dataGrid.dimensions[0]?.partition,
+                variableDetails.dataGrid.dimensions[0]?.partition!,
               ).length;
               const partLength =
                 variableDetails.dataGrid.dimensions[0]?.partition.length;
@@ -580,8 +582,8 @@ export class TreePreparationDatasService {
 
       // get a hierarchy branch with all recursive parents
       const nodeHierarchy: TreeNodeModel[] = UtilsService.returnHierarchy(
-        _.cloneDeep(this.treePreparationDatas.dimensionTree),
-        this.treePreparationDatas.selectedNode?.id,
+        _.cloneDeep(this.treePreparationDatas.dimensionTree)!,
+        this.treePreparationDatas.selectedNode?.id!,
       );
 
       // get obj rules into one array

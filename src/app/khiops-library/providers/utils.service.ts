@@ -274,7 +274,7 @@ export class UtilsService {
    * @param array - The array containing sub-arrays whose items need to be summed.
    * @returns An array where each element is the sum of the corresponding sub-array's items.
    */
-  static sumArrayItemsOfArray(array: number[][]): number[] {
+  static sumArrayItemsOfArray(array: any[]): number[] {
     const sumArray = [];
     const arrayLength = array.length;
     for (let i = 0; i < arrayLength; i++) {

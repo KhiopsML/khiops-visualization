@@ -48,13 +48,13 @@ export class Preparation2dDatasService {
    */
   initialize() {
     this.preparation2dDatas = new Preparation2dDatasModel(
-      this.appService.appDatas,
+      this.appService.appDatas!,
     );
 
     // select the first item of the list by default
     if (this.preparation2dDatas.isValid()) {
       let defaultVariable: VariablePairStatistics | undefined =
-        this.appService.appDatas.bivariatePreparationReport
+        this.appService.appDatas?.bivariatePreparationReport
           .variablesPairsStatistics[0];
 
       // Check if there is a saved selected variable into json
@@ -83,7 +83,7 @@ export class Preparation2dDatasService {
    */
   getInformationsDatas(): InfosDatasI[] | undefined {
     const informationsDatas = new InformationsModel(
-      this.appService.appDatas.bivariatePreparationReport.summary,
+      this.appService.appDatas!.bivariatePreparationReport.summary,
     );
     return informationsDatas.displayDatas;
   }
@@ -280,7 +280,7 @@ export class Preparation2dDatasService {
   getVariableFromRank(rank: string): any {
     let variable: any;
     variable =
-      this.appService.appDatas.bivariatePreparationReport.variablesPairsStatistics.find(
+      this.appService.appDatas?.bivariatePreparationReport.variablesPairsStatistics.find(
         (e) => e.rank === rank,
       );
     return variable;
@@ -313,9 +313,9 @@ export class Preparation2dDatasService {
 
         // coocurenceCell has dynamic fields
         coocurenceCell[matrixCells.displayedColumns[1]!.field] =
-          UtilsService.ellipsis(cell!.xDisplayaxisPart, 60);
+          UtilsService.ellipsis(cell!.xDisplayaxisPart!, 60);
         coocurenceCell[matrixCells.displayedColumns[2]!.field] =
-          UtilsService.ellipsis(cell!.yDisplayaxisPart, 60);
+          UtilsService.ellipsis(cell!.yDisplayaxisPart!, 60);
         coocurenceCell.frequency = cell?.cellFreq;
         coocurenceCell.coverage = cell?.coverage;
         values.push(coocurenceCell);
@@ -393,16 +393,16 @@ export class Preparation2dDatasService {
 
         this.computeCellDatasByAxis(
           xType!,
-          selectedCell.xaxisPartValues,
-          selectedCell.xDisplayaxisPart,
+          selectedCell.xaxisPartValues!,
+          selectedCell.xDisplayaxisPart!,
           datasX,
           displayedColumnsX,
           xName,
         );
         this.computeCellDatasByAxis(
           yType!,
-          selectedCell.yaxisPartValues,
-          selectedCell.yDisplayaxisPart,
+          selectedCell.yaxisPartValues!,
+          selectedCell.yDisplayaxisPart!,
           datasY,
           displayedColumnsY,
           yName,
@@ -459,13 +459,15 @@ export class Preparation2dDatasService {
    */
   getModalityFrequency(variable: string, partition: string) {
     let currentVar: InputValues | undefined;
-    const source: { [key: string]: VariableDetail } =
-      this.appService.appDatas.preparationReport.variablesDetailedStatistics;
-    Object.keys(source).forEach((key) => {
-      if (source[key]?.dataGrid.dimensions[0]?.variable === variable) {
-        currentVar = source[key].inputValues;
-      }
-    });
+    const source: { [key: string]: VariableDetail } | undefined =
+      this.appService.appDatas?.preparationReport.variablesDetailedStatistics;
+    if (source) {
+      Object.keys(source).forEach((key) => {
+        if (source[key]?.dataGrid.dimensions[0]?.variable === variable) {
+          currentVar = source[key].inputValues;
+        }
+      });
+    }
     if (currentVar) {
       const partitionIndex = currentVar.values.indexOf(partition);
       return currentVar.frequencies[partitionIndex];
@@ -791,7 +793,7 @@ export class Preparation2dDatasService {
             undefined,
             0,
           );
-        currentRes['MUTUAL_INFO_TARGET_WITH_CELL']!.push(matrixValues);
+        currentRes['MUTUAL_INFO_TARGET_WITH_CELL']!.push(matrixValues!);
 
         graphMode = {
           mode: 'CELL_INTEREST',
@@ -803,7 +805,7 @@ export class Preparation2dDatasService {
             undefined,
             0,
           );
-        currentRes['CELL_INTEREST']!.push(matrixValues);
+        currentRes['CELL_INTEREST']!.push(matrixValues!);
 
         for (let j = 0; j < inputDatas.matrixCellDatas!.length; j++) {
           const cellFreqs = inputDatas.matrixCellDatas?.[j]?.cellFreqs;

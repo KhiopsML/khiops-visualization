@@ -23,14 +23,14 @@ export class SaveService {
    *
    * @returns The constructed data to be saved.
    */
-  constructDatasToSave(): VisualizationDatas {
+  constructDatasToSave(): VisualizationDatas | undefined {
     const splitSizes = this.layoutService.getSplitSizes();
     const selectedRank = this.preparationDatasService.getSelectedVariableRank();
     const selected2dRank =
       this.preparation2dDatasService.getSelectedVariableRank();
     const selected2dCell =
       this.preparation2dDatasService.getSelectedCellIndex();
-    this.appService.appDatas.savedDatas = new SavedDatasModel(
+    this.appService.appDatas!.savedDatas = new SavedDatasModel(
       splitSizes,
       selectedRank,
       selected2dRank,
