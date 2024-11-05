@@ -41,7 +41,7 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
     new EventEmitter();
   @Input() selectedVariable: PreparationVariableModel;
   @Input() selectedCell: number;
-  @Input() private preparationSource: REPORT;
+  @Input() private preparationSource: string;
   public preparation2dDatas: Preparation2dDatasModel;
   public isFullscreen = false;
   public matrixOptions: MatrixOptionsModel = new MatrixOptionsModel();

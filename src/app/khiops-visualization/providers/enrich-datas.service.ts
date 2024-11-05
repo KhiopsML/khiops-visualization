@@ -65,7 +65,7 @@ export class EnrichDatasService {
    */
   static ignoreMissingPartitionForNumerical(
     datas: VisualizationDatas,
-    preparationSource: REPORT,
+    preparationSource: string,
   ): VisualizationDatas {
     if (datas?.[preparationSource]) {
       for (const rank in datas[preparationSource].variablesDetailedStatistics) {

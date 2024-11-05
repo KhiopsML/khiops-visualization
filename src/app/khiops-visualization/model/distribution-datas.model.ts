@@ -29,7 +29,7 @@ export class DistributionDatasModel {
   treeNodeTargetDistributionType: string = TYPES.PROBABILITIES;
   treeNodeTargetDistributionGraphDatas: ChartDatasModel | undefined = undefined;
 
-  preparationSource!: REPORT;
+  preparationSource!: string;
 
   appDatas: any = undefined;
   treeHyperGraphDatas: ChartDatasModel | undefined = undefined;

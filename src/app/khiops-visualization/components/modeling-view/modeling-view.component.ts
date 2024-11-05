@@ -31,7 +31,7 @@ import { TrainedPredictorModel } from '@khiops-visualization/model/trained-predi
   styleUrls: ['./modeling-view.component.scss'],
 })
 export class ModelingViewComponent extends SelectableTabComponent {
-  public preparationSource: REPORT;
+  public preparationSource: string;
   public appDatas: any;
   public sizes: DynamicI;
   public summaryDatas: InfosDatasI[];

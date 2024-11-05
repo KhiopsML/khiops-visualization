@@ -87,7 +87,7 @@ export class PreparationDatasService {
    * @param {string} preparationSource - The source of the preparation data.
    * @returns {object} An object containing the selected variable and current interval data.
    */
-  getDatas(preparationSource: REPORT):
+  getDatas(preparationSource: string):
     | {
         selectedVariable: PreparationVariableModel;
         currentIntervalDatas: GridDatasI;
@@ -103,7 +103,7 @@ export class PreparationDatasService {
    */
   setSelectedVariable(
     name: string,
-    preparationSource: REPORT,
+    preparationSource: string,
   ): PreparationVariableModel | undefined {
     if (name) {
       const variable: PreparationVariableStatistic = this.getVariableFromName(
@@ -125,7 +125,7 @@ export class PreparationDatasService {
    * @returns {PreparationVariableModel} The selected variable model.
    */
   getSelectedVariable(
-    preparationSource: REPORT,
+    preparationSource: string,
   ): PreparationVariableModel | undefined {
     return this.preparationDatas[preparationSource]?.selectedVariable;
   }
@@ -144,7 +144,7 @@ export class PreparationDatasService {
    * @param {string} preparationSource - The source of the preparation data.
    * @returns {any} The variable with the specified name.
    */
-  getVariableFromName(name: string, preparationSource: REPORT): any {
+  getVariableFromName(name: string, preparationSource: string): any {
     let variable: any;
     if (this.appService.appDatas?.[preparationSource]?.variablesStatistics) {
       variable = this.appService.appDatas[
@@ -161,7 +161,7 @@ export class PreparationDatasService {
    * @param {string} preparationSource - The source of the preparation data.
    * @returns {any} The variable with the specified rank.
    */
-  getVariableFromRank(rank: string, preparationSource: REPORT): any {
+  getVariableFromRank(rank: string, preparationSource: string): any {
     let variable: any;
     variable = this.appService.appDatas?.[
       preparationSource
@@ -190,7 +190,7 @@ export class PreparationDatasService {
    * @param {string} preparationSource - The source of the preparation data.
    * @returns {InfosDatasI[] | undefined} The information data.
    */
-  getInformationsDatas(preparationSource: REPORT): InfosDatasI[] | undefined {
+  getInformationsDatas(preparationSource: string): InfosDatasI[] | undefined {
     const informationsDatas = new InformationsModel(
       this.appService.appDatas![preparationSource].summary,
     );
@@ -204,7 +204,7 @@ export class PreparationDatasService {
    * @returns {GridDatasI} The current interval data.
    */
   getCurrentIntervalDatas(
-    preparationSource: REPORT,
+    preparationSource: string,
     index?: number,
   ): GridDatasI {
     index = index || 0;
@@ -367,7 +367,7 @@ export class PreparationDatasService {
    * @param {string} preparationSource - The source of the preparation data.
    * @returns {VariableModel[]} The variable data.
    */
-  getVariablesDatas(preparationSource: REPORT): VariableModel[] {
+  getVariablesDatas(preparationSource: string): VariableModel[] {
     const currentDatas:
       | PreparationVariableStatistic[]
       | TextPreparationVariableStatistic[]
@@ -472,7 +472,7 @@ export class PreparationDatasService {
    * @param {string} preparationSource - The source of the preparation data.
    * @returns {string} The target variable.
    */
-  getTargetVariable(preparationSource: REPORT): string | undefined {
+  getTargetVariable(preparationSource: string): string | undefined {
     return this.appService.appDatas?.[preparationSource].summary.targetVariable;
   }
 

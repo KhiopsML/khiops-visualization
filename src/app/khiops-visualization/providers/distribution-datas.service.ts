@@ -66,7 +66,7 @@ export class DistributionDatasService {
    *
    * @param preparationSource - The source of the preparation to be set.
    */
-  setPreparationSource(preparationSource: REPORT) {
+  setPreparationSource(preparationSource: string) {
     this.distributionDatas.preparationSource = preparationSource;
   }
 

@@ -29,7 +29,7 @@ export class VarDetailsPreparationComponent implements OnInit, OnChanges {
   })
   private appVariableGraphDetails: VariableGraphDetailsComponent;
 
-  @Input() public preparationSource: REPORT;
+  @Input() public preparationSource: string;
 
   public isRegressionOrExplanatoryAnalysis: boolean;
   public preparationDatas: {
