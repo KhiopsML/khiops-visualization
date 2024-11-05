@@ -21,7 +21,7 @@ export class SelectableService {
     this.selectableDatas.selectedArea = undefined;
   }
 
-  setSelectedArea(area) {
+  setSelectedArea(area: any) {
     this.selectableDatas.selectedArea = area;
     this.selectedServiceChange.next(this.selectableDatas.selectedArea);
   }

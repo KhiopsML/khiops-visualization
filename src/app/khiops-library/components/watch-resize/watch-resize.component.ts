@@ -23,7 +23,7 @@ export class WatchResizeComponent implements AfterViewInit {
 
   @Input() public id: any;
   @Input() private watchResize = true;
-  private el: HTMLElement | null;
+  private el?: HTMLElement | null;
 
   constructor(
     public ngzone: NgZone,

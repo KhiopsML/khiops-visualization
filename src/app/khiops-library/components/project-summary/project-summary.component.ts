@@ -11,7 +11,7 @@ import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 export class ProjectSummaryComponent implements OnInit {
   private fileLoadedSub?: Subscription;
   @Input() private projectDatasService: any;
-  public projectSummaryDatas: InfosDatasI[];
+  public projectSummaryDatas?: InfosDatasI[];
 
   constructor(private fileLoaderService: FileLoaderService) {}
 

@@ -26,8 +26,8 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectableTabComponent implements OnChanges {
-  @Input() selectedTab: MatTabChangeEvent;
-  public tabIndex: number;
+  @Input() selectedTab?: MatTabChangeEvent;
+  public tabIndex?: number;
   public loadingView = true;
 
   ngOnChanges(changes: SimpleChanges) {

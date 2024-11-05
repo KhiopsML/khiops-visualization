@@ -6,7 +6,7 @@ import { TranslateService } from '@ngstack/translate';
   templateUrl: './no-data.component.html',
 })
 export class NoDataComponent {
-  @Input() private message: string;
+  @Input() private message?: string;
   public text: string = '';
 
   constructor(private translate: TranslateService) {}

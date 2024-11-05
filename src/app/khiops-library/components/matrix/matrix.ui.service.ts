@@ -46,7 +46,8 @@ export class MatrixUiService {
       // In KV we get an unformated array
       // We must format datas with opened or closed brackets
       if (type === TYPES.NUMERICAL) {
-        displayaxisPart = '[' + axisPartShortDescription[iter].toString() + ']';
+        displayaxisPart =
+          '[' + axisPartShortDescription[iter]?.toString() + ']';
         // replace [ by ] for all indexes excepting 0
         if (iter !== 0) {
           // Closed bracket for the non 0 iters
@@ -117,7 +118,7 @@ export class MatrixUiService {
     const hotLength = this.hot.length;
     const map = new Array(hotLength);
     for (let i = 0; i < hotLength; i++) {
-      const rgb = UtilsService.hexToRgb(this.hot[i]);
+      const rgb = UtilsService.hexToRgb(this.hot[i]!);
       map[i] = {
         pct: i / 10,
         color: {
@@ -197,7 +198,7 @@ export class MatrixUiService {
     isAxisInverted: boolean,
     currentCellIndex: number,
   ): CellModel | undefined {
-    let changeCell: CellModel;
+    let changeCell: CellModel | undefined;
 
     let selectedCellIndex;
 
@@ -217,16 +218,16 @@ export class MatrixUiService {
       if (keyCode === 38) {
         // UP
         if (
-          matrixCellDatas[selectedCellIndex + 1].xCanvas ===
-          matrixCellDatas[selectedCellIndex].xCanvas
+          matrixCellDatas[selectedCellIndex + 1]!.xCanvas ===
+          matrixCellDatas[selectedCellIndex]?.xCanvas
         ) {
           selectedCellIndex = selectedCellIndex + 1;
         }
       } else if (keyCode === 40) {
         // DOWN
         if (
-          matrixCellDatas[selectedCellIndex - 1].xCanvas ===
-          matrixCellDatas[selectedCellIndex].xCanvas
+          matrixCellDatas[selectedCellIndex - 1]!.xCanvas ===
+          matrixCellDatas[selectedCellIndex]?.xCanvas
         ) {
           selectedCellIndex = selectedCellIndex - 1;
         }
@@ -249,16 +250,16 @@ export class MatrixUiService {
       } else if (keyCode === 37) {
         // LEFT
         if (
-          matrixCellDatas[selectedCellIndex - 1].xCanvas ===
-          matrixCellDatas[selectedCellIndex].xCanvas
+          matrixCellDatas[selectedCellIndex - 1]!.xCanvas ===
+          matrixCellDatas[selectedCellIndex]?.xCanvas
         ) {
           selectedCellIndex = selectedCellIndex - 1;
         }
       } else if (keyCode === 39) {
         // RIGHT
         if (
-          matrixCellDatas[selectedCellIndex + 1].xCanvas ===
-          matrixCellDatas[selectedCellIndex].xCanvas
+          matrixCellDatas[selectedCellIndex + 1]!.xCanvas ===
+          matrixCellDatas[selectedCellIndex]?.xCanvas
         ) {
           selectedCellIndex = selectedCellIndex + 1;
         }
