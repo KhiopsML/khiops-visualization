@@ -427,11 +427,7 @@ export class DistributionDatasService {
         //@ts-ignore
         (partition: number[], i: number) => {
           // partition is always numbers in this case
-          if (
-            varDatas.frequencies &&
-            varDatas.frequencies[i] &&
-            partition.length !== 0
-          ) {
+          if (partition.length !== 0) {
             const delta = partition[1]! - partition[0]!;
             let value = varDatas.frequencies[i] / totalFreq! / delta;
             let logValue = Math.log10(value);
