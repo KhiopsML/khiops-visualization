@@ -2,6 +2,8 @@ import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { PreparationVariableModel } from './preparation-variable.model';
 
 export class PreparationDatasModel {
+  [key: string]: any;
+
   preparationReport:
     | {
         selectedVariable?: PreparationVariableModel;

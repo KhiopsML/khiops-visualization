@@ -145,14 +145,10 @@ export class PreparationDatasService {
    * @returns {any} The variable with the specified name.
    */
   getVariableFromName(name: string, preparationSource: string): any {
-    let variable: any;
-    if (this.appService.appDatas?.[preparationSource]?.variablesStatistics) {
-      variable = this.appService.appDatas[
-        preparationSource
-      ].variablesStatistics.find((e) => e.name === name);
-    }
-
-    return variable;
+    // @ts-ignore
+    return this.appService.appDatas[preparationSource].variablesStatistics.find(
+      (e: any) => e.name === name,
+    );
   }
 
   /**
@@ -162,11 +158,10 @@ export class PreparationDatasService {
    * @returns {any} The variable with the specified rank.
    */
   getVariableFromRank(rank: string, preparationSource: string): any {
-    let variable: any;
-    variable = this.appService.appDatas?.[
+    // @ts-ignore
+    return this.appService.appDatas?.[
       preparationSource
-    ].variablesStatistics.find((e) => e.rank === rank);
-    return variable;
+    ].variablesStatistics.find((e: any) => e.rank === rank);
   }
 
   /**
@@ -180,6 +175,7 @@ export class PreparationDatasService {
       preparationSource = this.getAvailablePreparationReport();
     }
     const summary = new SummaryModel(
+      // @ts-ignore
       this.appService.appDatas![preparationSource].summary,
     );
     return summary.displayDatas;
@@ -192,6 +188,7 @@ export class PreparationDatasService {
    */
   getInformationsDatas(preparationSource: string): InfosDatasI[] | undefined {
     const informationsDatas = new InformationsModel(
+      // @ts-ignore
       this.appService.appDatas![preparationSource].summary,
     );
     return informationsDatas.displayDatas;
@@ -221,9 +218,11 @@ export class PreparationDatasService {
     };
 
     if (
+      // @ts-ignore
       this.appService.appDatas?.[preparationSource]?.variablesDetailedStatistics
     ) {
       const currentVar: VariableDetail | undefined =
+        // @ts-ignore
         this.appService.appDatas[preparationSource].variablesDetailedStatistics[
           this.preparationDatas[preparationSource].selectedVariable.rank
         ];
@@ -373,8 +372,10 @@ export class PreparationDatasService {
       | TextPreparationVariableStatistic[]
       | TreePreparationVariableStatistic[]
       | undefined =
+      // @ts-ignore
       this.appService.appDatas?.[preparationSource].variablesStatistics;
     const currentDetailedDatas =
+      // @ts-ignore
       this.appService.appDatas?.[preparationSource].variablesDetailedStatistics;
     const variableDatas: VariableModel[] = [];
 
@@ -403,6 +404,7 @@ export class PreparationDatasService {
     if (!preparationSource) {
       preparationSource = this.getAvailablePreparationReport();
     }
+    // @ts-ignore
     const summary: any = this.appService.appDatas?.[preparationSource].summary;
     if (summary) {
       variableStatsDatas.emptyLabels();
@@ -451,9 +453,11 @@ export class PreparationDatasService {
 
     let informationsDatas: InfosDatasI[] | undefined;
 
+    // @ts-ignore
     const summary: any = this.appService.appDatas?.[preparationSource].summary;
     if (summary && summary.targetDescriptiveStats) {
       informationsDatas = [];
+      // @ts-ignore
       for (const item in this.appService.appDatas?.[preparationSource].summary
         .targetDescriptiveStats) {
         if (item) {
@@ -473,6 +477,7 @@ export class PreparationDatasService {
    * @returns {string} The target variable.
    */
   getTargetVariable(preparationSource: string): string | undefined {
+    // @ts-ignore
     return this.appService.appDatas?.[preparationSource].summary.targetVariable;
   }
 
