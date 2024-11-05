@@ -220,7 +220,7 @@ export class FileLoaderService {
     this.setDatas(undefined);
   }
 
-  setFileHistory(filename: string) {
+  setFileHistory(filename: any) {
     const currentLs = this.ls.get(LS.OPEN_FILE);
     let parsedLs: any = {
       files: [],

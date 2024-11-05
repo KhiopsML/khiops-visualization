@@ -44,7 +44,7 @@ export class LayoutService {
   resizeAndSetSplitSizes(
     item: string,
     sizes: any,
-    itemSize: number,
+    itemSize: any,
     view: string,
     dispatchEvent?: boolean,
   ) {
