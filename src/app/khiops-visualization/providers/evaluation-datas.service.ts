@@ -27,7 +27,7 @@ import { DynamicI } from '@khiops-library/interfaces/globals';
   providedIn: 'root',
 })
 export class EvaluationDatasService {
-  private evaluationDatas: EvaluationDatasModel;
+  private evaluationDatas!: EvaluationDatasModel;
 
   constructor(
     private translate: TranslateService,
@@ -97,8 +97,8 @@ export class EvaluationDatasService {
   getPredictorEvaluationVariableFromEvaluationType(
     type: string,
   ): EvaluationPredictorModel {
-    return this.evaluationDatas.predictorEvaluations.values?.find(
-      (e) =>
+    return this.evaluationDatas.predictorEvaluations?.values?.find(
+      (e: any) =>
         e.type === type &&
         e.rank ===
           this.evaluationDatas?.selectedPredictorEvaluationVariable?.rank,
@@ -113,8 +113,8 @@ export class EvaluationDatasService {
   getEvaluationVariableFromPredictorEvaluationType(
     type: string,
   ): EvaluationTypeModel {
-    return this.evaluationDatas.evaluationTypesSummary.values?.find(
-      (e) => e.type === type,
+    return this.evaluationDatas.evaluationTypesSummary?.values?.find(
+      (e: any) => e.type === type,
     );
   }
 
@@ -128,11 +128,12 @@ export class EvaluationDatasService {
     | TrainEvaluationReport[] {
     this.evaluationDatas.evaluationTypes = [];
 
-    Object.keys(this.appService.appDatas).forEach((value) => {
-      if (this.appService.appDatas?.[value]?.reportType === 'Evaluation') {
-        this.evaluationDatas?.evaluationTypes?.push(
-          this.appService.appDatas[value],
-        );
+    // @ts-ignore
+    Object.keys(this.appService.appDatas).forEach((value: any) => {
+      // @ts-ignore
+      const currentReport = this.appService.appDatas[value];
+      if (currentReport.reportType === 'Evaluation') {
+        this.evaluationDatas?.evaluationTypes?.push(currentReport);
       }
     });
     return this.evaluationDatas.evaluationTypes;
@@ -143,7 +144,7 @@ export class EvaluationDatasService {
    * @param type - The type of confusion matrix (optional).
    * @returns The confusion matrix as a GridDatasI object.
    */
-  getConfusionMatrix(type?: string): GridDatasI {
+  getConfusionMatrix(type?: string): GridDatasI | undefined {
     if (type) {
       this.evaluationDatas.confusionMatrixType = type;
     }
@@ -157,14 +158,14 @@ export class EvaluationDatasService {
         this.evaluationDatas?.selectedEvaluationTypeVariable?.type ===
         PREDICTOR_TYPES.TRAIN
       ) {
-        currentReport = this.appService.appDatas.trainEvaluationReport;
+        currentReport = this.appService.appDatas?.trainEvaluationReport;
       } else if (
         this.evaluationDatas?.selectedEvaluationTypeVariable?.type ===
         PREDICTOR_TYPES.TEST
       ) {
-        currentReport = this.appService.appDatas.testEvaluationReport;
+        currentReport = this.appService.appDatas?.testEvaluationReport;
       } else {
-        currentReport = this.appService.appDatas.evaluationReport;
+        currentReport = this.appService.appDatas?.evaluationReport;
       }
       if (
         currentReport.predictorsDetailedPerformance &&
@@ -188,7 +189,9 @@ export class EvaluationDatasService {
         };
 
         const targetsLift: GridColumnsI[] = [];
-        let currentConfMat = currentReport.liftCurves.map((e) => e.targetValue); // For optimal
+        let currentConfMat = currentReport.liftCurves.map(
+          (e: any) => e.targetValue,
+        ); // For optimal
         if (
           currentReport.predictorsDetailedPerformance[
             this.evaluationDatas.selectedPredictorEvaluationVariable.rank
@@ -211,7 +214,7 @@ export class EvaluationDatasService {
           });
         }
         this.evaluationDatas.confusionMatrix.displayedColumns =
-          this.evaluationDatas.confusionMatrix.displayedColumns.concat(
+          this.evaluationDatas.confusionMatrix.displayedColumns?.concat(
             targetsLift,
           );
 
@@ -257,19 +260,19 @@ export class EvaluationDatasService {
         if (this.evaluationDatas.confusionMatrixType === TYPES.COVERAGE) {
           for (
             let j = 0;
-            j < this.evaluationDatas.confusionMatrix.displayedColumns.length;
+            j < this.evaluationDatas.confusionMatrix.displayedColumns!.length;
             j++
           ) {
             if (
-              this.evaluationDatas.confusionMatrix.displayedColumns[j].field !==
-              'target'
+              this.evaluationDatas.confusionMatrix.displayedColumns?.[j]
+                ?.field !== 'target'
             ) {
               // Add % before each title
-              this.evaluationDatas.confusionMatrix.displayedColumns[
+              this.evaluationDatas.confusionMatrix.displayedColumns![
                 j
-              ].headerName =
+              ]!.headerName =
                 '%' +
-                this.evaluationDatas.confusionMatrix.displayedColumns[j]
+                this.evaluationDatas.confusionMatrix.displayedColumns![j]!
                   .headerName;
             }
           }
@@ -281,25 +284,25 @@ export class EvaluationDatasService {
 
           for (
             let j = 0;
-            j < this.evaluationDatas.confusionMatrix.displayedColumns.length;
+            j < this.evaluationDatas.confusionMatrix.displayedColumns!.length;
             j++
           ) {
             if (
-              this.evaluationDatas.confusionMatrix.displayedColumns[j].field ===
-              'target'
+              this.evaluationDatas.confusionMatrix.displayedColumns?.[j]
+                ?.field === 'target'
             ) {
-              datas[i][
-                this.evaluationDatas.confusionMatrix.displayedColumns[j].field
+              datas[i]![
+                this.evaluationDatas.confusionMatrix.displayedColumns[j]!.field
               ] = '$' + currentPerformance.values[i];
             } else {
-              datas[i][
-                this.evaluationDatas.confusionMatrix.displayedColumns[j].field
+              datas[i]![
+                this.evaluationDatas.confusionMatrix.displayedColumns![j]!.field
               ] = currentPerformance.matrix[i][j - 1];
 
               if (this.evaluationDatas.confusionMatrixType === TYPES.COVERAGE) {
                 let percent =
-                  (datas[i][
-                    this.evaluationDatas.confusionMatrix.displayedColumns[j]
+                  (datas[i]![
+                    this.evaluationDatas.confusionMatrix.displayedColumns![j]!
                       .field
                   ] *
                     100) /
@@ -307,8 +310,10 @@ export class EvaluationDatasService {
                 if (isNaN(percent)) {
                   percent = 0;
                 }
-                datas[i][
-                  this.evaluationDatas.confusionMatrix.displayedColumns[j].field
+                datas[i]![
+                  this.evaluationDatas.confusionMatrix.displayedColumns![
+                    j
+                  ]!.field
                 ] = percent;
               }
             }
@@ -350,14 +355,14 @@ export class EvaluationDatasService {
     };
 
     const datas: EvaluationTypeModel[] = [];
-    if (this.evaluationDatas.evaluationTypes.length > 0) {
-      for (let i = 0; i < this.evaluationDatas.evaluationTypes.length; i++) {
-        const currentEvaluation = this.evaluationDatas.evaluationTypes[i];
+    if (this.evaluationDatas.evaluationTypes!.length > 0) {
+      for (let i = 0; i < this.evaluationDatas.evaluationTypes!.length; i++) {
+        const currentEvaluation = this.evaluationDatas.evaluationTypes![i];
         const evalTypeItem: EvaluationTypeModel = new EvaluationTypeModel();
         evalTypeItem.type =
-          currentEvaluation.evaluationType || currentEvaluation.reportType; // evaluationType is empty for only evaluation case
-        evalTypeItem.dictionary = currentEvaluation.summary.dictionary;
-        evalTypeItem.instances = currentEvaluation.summary.instances;
+          currentEvaluation?.evaluationType || currentEvaluation?.reportType; // evaluationType is empty for only evaluation case
+        evalTypeItem.dictionary = currentEvaluation?.summary.dictionary;
+        evalTypeItem.instances = currentEvaluation?.summary.instances;
         evalTypeItem._id = evalTypeItem.type + i.toString(); // used for unique key
         datas.push(evalTypeItem);
       }
@@ -398,17 +403,17 @@ export class EvaluationDatasService {
         // combine all the tables train + test + other ?
         for (
           let j = 0;
-          j < currentEvaluationType.predictorsPerformance.length;
+          j < currentEvaluationType!.predictorsPerformance.length;
           j++
         ) {
           const type =
-            currentEvaluationType.evaluationType ||
-            currentEvaluationType.reportType; // evaluationType is empty for only evaluation case
-          const obj = currentEvaluationType.predictorsPerformance[j];
+            currentEvaluationType?.evaluationType ||
+            currentEvaluationType?.reportType; // evaluationType is empty for only evaluation case
+          const obj = currentEvaluationType?.predictorsPerformance[j];
           const currentEl = new EvaluationPredictorModel(
-            type,
-            currentEvaluationType.evaluationType,
-            obj,
+            type!,
+            currentEvaluationType?.evaluationType!,
+            obj!,
           );
           datas.push(currentEl);
         }
@@ -428,7 +433,7 @@ export class EvaluationDatasService {
       }
 
       // hide some columns and currentEvaluationType
-      Object.keys(datas[0]).forEach((value) => {
+      Object.keys(datas[0]!).forEach((value) => {
         displayedColumns.push({
           headerName: value,
           field: value,
@@ -450,7 +455,7 @@ export class EvaluationDatasService {
 
       // Init selection the first time
       if (!this.evaluationDatas.selectedPredictorEvaluationVariable) {
-        this.setSelectedPredictorEvaluationVariable(datas[0]);
+        this.setSelectedPredictorEvaluationVariable(datas[0]!);
       }
     }
 
@@ -507,7 +512,7 @@ export class EvaluationDatasService {
         this.evaluationDatas.liftGraphDisplayedValues = [];
         for (let j = 0; j < graphDatas.length; j++) {
           this.evaluationDatas.liftGraphDisplayedValues.push({
-            name: graphDatas[j].name,
+            name: graphDatas[j]?.name!,
             show: j < AppConfig.visualizationCommon.GLOBAL.LIFT_CHART_COUNT,
           });
         }
@@ -518,11 +523,11 @@ export class EvaluationDatasService {
           k < this.evaluationDatas.liftGraphDisplayedValues.length;
           k++
         ) {
-          if (!this.evaluationDatas.liftGraphDisplayedValues[k].show) {
+          if (!this.evaluationDatas.liftGraphDisplayedValues[k]?.show) {
             const currentCurveDatas = graphDatas.find(
               (e) =>
                 e.name ===
-                this.evaluationDatas.liftGraphDisplayedValues[k].name,
+                this.evaluationDatas.liftGraphDisplayedValues![k]!.name,
             );
             if (currentCurveDatas) {
               currentCurveDatas.series = [];
@@ -535,11 +540,12 @@ export class EvaluationDatasService {
       );
       for (let j = 0; j < displayedMap.length; j++) {
         liftGraphDatas.push(
+          // @ts-ignore
           graphDatas.find((e) => e.name === displayedMap[j].name),
         );
       }
       liftGraphDatas.filter((e) => {
-        return this.evaluationDatas.liftGraphDisplayedValues.find(
+        return this.evaluationDatas.liftGraphDisplayedValues!.find(
           (el) => e.name === el.name && el.show,
         );
       });
@@ -551,10 +557,10 @@ export class EvaluationDatasService {
 
     for (let i = 0; i < liftGraphDatas.length; i++) {
       const currentData: ChartDatasetModel = new ChartDatasetModel(
-        liftGraphDatas[i].name,
+        liftGraphDatas[i]?.name,
         CHART_TYPES.LINE,
       );
-      currentData.data = liftGraphDatas[i].series.map((e) => e.value);
+      currentData.data = liftGraphDatas[i]?.series.map((e) => e.value);
       currentData.pointRadius = 0;
       currentData.pointHitRadius = 20;
       currentData.pointHoverRadius = 2;
@@ -579,14 +585,14 @@ export class EvaluationDatasService {
     let currentReport: any;
     // get the correct report : train or test
     if (type === PREDICTOR_TYPES.TRAIN) {
-      currentReport = this.appService.appDatas.trainEvaluationReport;
+      currentReport = this.appService.appDatas?.trainEvaluationReport;
     } else if (type === PREDICTOR_TYPES.TEST) {
-      currentReport = this.appService.appDatas.testEvaluationReport;
+      currentReport = this.appService.appDatas?.testEvaluationReport;
     }
 
     if (!currentReport) {
       // Manage the case when we have only evaluation report
-      currentReport = this.appService.appDatas.evaluationReport;
+      currentReport = this.appService.appDatas?.evaluationReport;
     }
 
     const graphDatas: LiftCurveValuesI[] = [];
@@ -601,7 +607,7 @@ export class EvaluationDatasService {
               // to smooth curve
               const currentCurveValue = currentReport.recCurves[j].values[k];
               currentSerie.push({
-                name: Number(xAxis[k] * 100),
+                name: Number(xAxis[k]! * 100),
                 value: Number(currentCurveValue),
               });
             }
@@ -614,7 +620,7 @@ export class EvaluationDatasService {
       } else {
         // Normal case
         const currentLiftCurve: any = currentReport.liftCurves.find(
-          (e) => e.targetValue === target,
+          (e: any) => e.targetValue === target,
         );
 
         if (currentLiftCurve?.curves) {
@@ -624,7 +630,7 @@ export class EvaluationDatasService {
               // to smooth curve
               const currentCurveValue = currentLiftCurve.curves[j].values[k];
               currentSerie.push({
-                name: Number(xAxis[k] * 100),
+                name: Number(xAxis[k]! * 100),
                 value: Number(currentCurveValue),
               });
             }
@@ -653,8 +659,8 @@ export class EvaluationDatasService {
     for (let k = 0; k < xAxis.length; k = k + 1) {
       // to smooth curve
       currentSerie.push({
-        name: xAxis[k] * 100,
-        value: xAxis[k] * 100,
+        name: xAxis[k]! * 100,
+        value: xAxis[k]! * 100,
       });
     }
     graphDatas.push({
@@ -670,30 +676,31 @@ export class EvaluationDatasService {
    * @param currentTarget - The current target value (optional).
    * @returns An object containing the selected target and the list of targets.
    */
-  getLiftTargets(currentTarget?: string): TargetLiftValuesI {
-    let targetLift: TargetLiftValuesI;
+  getLiftTargets(currentTarget?: string): TargetLiftValuesI | undefined {
+    let targetLift: TargetLiftValuesI | undefined;
 
     let currentEvalReport:
       | TestEvaluationReport
       | TrainEvaluationReport
-      | EvaluationReport = this.appService.appDatas.trainEvaluationReport;
+      | EvaluationReport
+      | undefined = this.appService.appDatas?.trainEvaluationReport;
     if (!currentEvalReport) {
-      currentEvalReport = this.appService.appDatas.evaluationReport;
+      currentEvalReport = this.appService.appDatas?.evaluationReport;
     }
     if (!currentEvalReport) {
-      currentEvalReport = this.appService.appDatas.testEvaluationReport;
+      currentEvalReport = this.appService.appDatas?.testEvaluationReport;
     }
     if (this.evaluationDatas.selectedPredictorEvaluationVariable) {
       if (
         this.evaluationDatas.selectedPredictorEvaluationVariable.type ===
         PREDICTOR_TYPES.TRAIN
       ) {
-        currentEvalReport = this.appService.appDatas.trainEvaluationReport;
+        currentEvalReport = this.appService.appDatas?.trainEvaluationReport;
       } else if (
         this.evaluationDatas.selectedPredictorEvaluationVariable.type ===
         PREDICTOR_TYPES.TEST
       ) {
-        currentEvalReport = this.appService.appDatas.testEvaluationReport;
+        currentEvalReport = this.appService.appDatas?.testEvaluationReport;
       }
     }
 
@@ -706,20 +713,20 @@ export class EvaluationDatasService {
         targets: undefined,
       };
 
-      let targetsLiftList: string[] = [];
+      let targetsLiftList: string[] | undefined = [];
       if (
         currentEvalReport.predictorsDetailedPerformance[
-          this.evaluationDatas.selectedPredictorEvaluationVariable.rank
+          this.evaluationDatas.selectedPredictorEvaluationVariable?.rank!
         ]
       ) {
         targetsLiftList =
           currentEvalReport.predictorsDetailedPerformance[
-            this.evaluationDatas.selectedPredictorEvaluationVariable.rank
-          ].confusionMatrix.values;
+            this.evaluationDatas.selectedPredictorEvaluationVariable?.rank!
+          ]?.confusionMatrix.values;
       } else {
         // For optimal
         for (let i = 0; i < currentEvalReport.liftCurves.length; i++) {
-          targetsLiftList.push(currentEvalReport.liftCurves[i].targetValue);
+          targetsLiftList.push(currentEvalReport.liftCurves[i]!.targetValue);
         }
       }
 
@@ -732,12 +739,12 @@ export class EvaluationDatasService {
         const mainTargetValue: string =
           currentEvalReport?.summary?.mainTargetValue;
         const isConsistentTarget =
-          mainTargetValue && targetLift.targets.indexOf(mainTargetValue) > -1;
+          mainTargetValue && targetLift.targets!.indexOf(mainTargetValue) > -1;
         if (isConsistentTarget) {
           targetLift.selected = mainTargetValue;
         } else {
           // Else set the first value
-          targetLift.selected = targetLift.targets[0];
+          targetLift.selected = targetLift.targets?.[0];
         }
       }
     }
