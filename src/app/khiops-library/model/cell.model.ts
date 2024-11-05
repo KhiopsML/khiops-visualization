@@ -54,7 +54,7 @@ export class CellModel {
   infosMutExtra: any[] = []; // can be complex
   cellHellingerValue: number[] = [];
   cellHellingerAbsoluteValue: number[] = [];
-  matrixTotal?: number[] = [];
+  matrixTotal: number[] | undefined = [];
 
   /**
    * Sets the index for the cell and updates related properties.
@@ -71,7 +71,7 @@ export class CellModel {
    */
   formatValues() {
     this.cellTargetProb = UtilsService.initNumberIfNan(this.cellTargetProb);
-    this.cellFreq = UtilsService.initNumberIfNan(this.cellFreq);
+    this.cellFreq = UtilsService.initNumberIfNan(this.cellFreq!);
     this.targetCellFreq = UtilsService.initNumberIfNan(this.targetCellFreq);
   }
 

@@ -216,7 +216,7 @@ export class MatrixUtilsService {
             matrixValues = matrixCellDatas.map((e) => {
               let [MIij, MIijExtra] = UtilsService.computeMutualInfo(
                 e.cellFreqs[0],
-                e.matrixTotal[0],
+                e.matrixTotal![0],
                 e.freqColVals[0],
                 e.freqLineVals[0],
               );
@@ -225,7 +225,7 @@ export class MatrixUtilsService {
             matrixExtras = matrixCellDatas.map((e) => {
               let [MIij, MIijExtra] = UtilsService.computeMutualInfo(
                 e.cellFreqs[0],
-                e.matrixTotal[0],
+                e.matrixTotal![0],
                 e.freqColVals[0],
                 e.freqLineVals[0],
               );
@@ -237,7 +237,7 @@ export class MatrixUtilsService {
               const [hellingerValue, hellingerAbsoluteValue] =
                 UtilsService.computeHellinger(
                   e.cellFreqs[0],
-                  e.matrixTotal[0],
+                  e.matrixTotal![0],
                   e.freqColVals[0],
                   e.freqLineVals[0],
                 );
@@ -247,7 +247,7 @@ export class MatrixUtilsService {
               const [hellingerValue, hellingerAbsoluteValue] =
                 UtilsService.computeHellinger(
                   e.cellFreqs[0],
-                  e.matrixTotal[0],
+                  e.matrixTotal![0],
                   e.freqColVals[0],
                   e.freqLineVals[0],
                 );
@@ -364,7 +364,7 @@ export class MatrixUtilsService {
     let freqColVals = 0;
     let freqLineVals = 0;
     for (let i = 0; i < partPositionsLength; i++) {
-      matrixTotal = matrixTotal + e.matrixTotal[partPositions[i]!]!;
+      matrixTotal = matrixTotal + e.matrixTotal![partPositions[i]!]!;
       cellFreqs = cellFreqs + e.cellFreqs[partPositions[i]!]!;
       freqColVals = freqColVals + e.freqColVals[partPositions[i]!]!;
       freqLineVals = freqLineVals + e.freqLineVals[partPositions[i]!]!;
@@ -658,7 +658,7 @@ export class MatrixUtilsService {
         // Compute Frequencies
         if (cellFreqsLength === 1) {
           // KV or KC when no context
-          cell.matrixTotal.push(matrixTotal);
+          cell.matrixTotal!.push(matrixTotal);
 
           // Compute mutual information
           const [MIij, MIijExtra] = UtilsService.computeMutualInfo(
