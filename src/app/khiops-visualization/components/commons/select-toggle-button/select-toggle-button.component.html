@@ -39,7 +39,7 @@
       *ngIf="displayedValues?.length > pageSize"
       (page)="onPageChange($event)"
       (click)="$event.stopPropagation()"
-      [length]="displayedValues.length"
+      [length]="displayedValues?.length"
       [pageSize]="pageSize"
     >
     </mat-paginator>

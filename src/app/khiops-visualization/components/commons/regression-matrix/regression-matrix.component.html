@@ -2,7 +2,7 @@
   <div
     fxFlexFill
     fxLayout="column"
-    *ngIf="preparation2dDatas.matrixDatas"
+    *ngIf="preparation2dDatas?.matrixDatas"
     [ngClass]="{ fullscreen: isFullscreen }"
   >
     <div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
@@ -26,15 +26,15 @@
       fxLayout="row"
       [id]="'regression-matrix-comp'"
       (cellSelected)="onCellSelected($event)"
-      [isAxisInverted]="preparation2dDatas.isAxisInverted"
+      [isAxisInverted]="preparation2dDatas?.isAxisInverted"
       (matrixAxisInverted)="onMatrixAxisInverted()"
-      [selectedCell]="preparation2dDatas.selectedCell"
-      [inputDatas]="preparation2dDatas.matrixDatas"
+      [selectedCell]="preparation2dDatas?.selectedCell"
+      [inputDatas]="preparation2dDatas?.matrixDatas"
       [graphType]="matrixOptions.selected"
       [minMaxValues]="minMaxValues"
       [graphMode]="matrixModes.selected"
     >
     </kl-matrix>
   </div>
-  <kl-no-data fxFlex *ngIf="!preparation2dDatas.matrixDatas"></kl-no-data>
+  <kl-no-data fxFlex *ngIf="!preparation2dDatas?.matrixDatas"></kl-no-data>
 </div>

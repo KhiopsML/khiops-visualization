@@ -20,8 +20,8 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
   styleUrls: ['./select-toggle-button.component.scss'],
 })
 export class SelectToggleButtonComponent implements OnInit, OnChanges {
-  @Input() public buttonTitle: string;
-  @Input() public displayedValues: ChartToggleValuesI[];
+  @Input() public buttonTitle?: string;
+  @Input() public displayedValues?: ChartToggleValuesI[];
 
   @Output() private selectToggleButtonChanged: EventEmitter<
     ChartToggleValuesI[]
@@ -29,8 +29,8 @@ export class SelectToggleButtonComponent implements OnInit, OnChanges {
 
   public isSelectAllChecked = true;
   public isSelectAllIndeterminate = false;
-  public selectAllCheckboxText: string;
-  public currentItemsToShow: ChartToggleValuesI[];
+  public selectAllCheckboxText?: string;
+  public currentItemsToShow?: ChartToggleValuesI[];
   public pageSize: number =
     AppConfig.visualizationCommon.GLOBAL.MAT_MENU_PAGINATION;
 
@@ -45,7 +45,7 @@ export class SelectToggleButtonComponent implements OnInit, OnChanges {
       });
 
       // At init some elts may be hidden from last context
-      this.updateSelectElts(this.displayedValues);
+      this.updateSelectElts(this.displayedValues!);
     }
   }
 
@@ -54,7 +54,7 @@ export class SelectToggleButtonComponent implements OnInit, OnChanges {
   }
 
   onPageChange($event: PageChangeEventI) {
-    this.currentItemsToShow = this.displayedValues.slice(
+    this.currentItemsToShow = this.displayedValues?.slice(
       $event.pageIndex * $event.pageSize,
       $event.pageIndex * $event.pageSize + $event.pageSize,
     );
@@ -69,11 +69,11 @@ export class SelectToggleButtonComponent implements OnInit, OnChanges {
       (e) => e.show === false,
     ).length;
 
-    if (valuesShown === this.displayedValues.length) {
+    if (valuesShown === this.displayedValues?.length) {
       this.isSelectAllChecked = true;
       this.isSelectAllIndeterminate = false;
       this.selectAllCheckboxText = this.translate.get('GLOBAL.UNSELECT_ALL');
-    } else if (valuesHidden === this.displayedValues.length) {
+    } else if (valuesHidden === this.displayedValues?.length) {
       this.isSelectAllChecked = false;
       this.isSelectAllIndeterminate = false;
     } else {
@@ -84,13 +84,12 @@ export class SelectToggleButtonComponent implements OnInit, OnChanges {
   }
 
   toggleGraphOptionValue($event: MatCheckboxChange, opt: ChartToggleValuesI) {
-    const currentOpt: ChartToggleValuesI = this.displayedValues.find(
-      (e) => e.name === opt.name,
-    );
-    currentOpt.show = $event.checked;
+    const currentOpt: ChartToggleValuesI | undefined =
+      this.displayedValues?.find((e) => e.name === opt.name);
+    currentOpt!.show = $event.checked;
 
     // Force update
-    this.displayedValues = [...this.displayedValues];
+    this.displayedValues = [...this.displayedValues!];
 
     // emit to update graph
     this.selectToggleButtonChanged.emit(this.displayedValues);
@@ -102,9 +101,9 @@ export class SelectToggleButtonComponent implements OnInit, OnChanges {
     this.isSelectAllChecked = $event.checked;
 
     // update checkboxes
-    for (let i = 0; i < this.displayedValues.length; i++) {
-      const opt: ChartToggleValuesI = this.displayedValues[i];
-      opt.show = $event.checked;
+    for (let i = 0; i < this.displayedValues!.length; i++) {
+      const opt: ChartToggleValuesI | undefined = this.displayedValues?.[i];
+      opt!.show = $event.checked;
     }
     if ($event.checked) {
       this.selectAllCheckboxText = this.translate.get('GLOBAL.UNSELECT_ALL');
@@ -113,7 +112,7 @@ export class SelectToggleButtonComponent implements OnInit, OnChanges {
     }
 
     // Force update
-    this.displayedValues = [...this.displayedValues];
+    this.displayedValues = [...this.displayedValues!];
     // emit to update graph
     this.selectToggleButtonChanged.emit(this.displayedValues);
 
