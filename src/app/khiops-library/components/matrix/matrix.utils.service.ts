@@ -6,7 +6,6 @@ import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 import { MatrixUiService } from './matrix.ui.service';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 import { DynamicI } from '@khiops-library/interfaces/globals';
-// import { DimensionModel } from '@khiops-library/model/dimension.model';
 import { MatrixValuesModel } from '@khiops-library/model/matrix-value.model';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { DimensionVisualizationModel } from '@khiops-library/model/dimension.visualization.model';
@@ -34,10 +33,15 @@ export class MatrixUtilsService {
     matrixCellDatas: CellModel[],
     contextSelection: number[][] | undefined,
     selectedTargetIndex: number,
-  ): [number[], number[], number[] | boolean[], number[]] {
+  ): [
+    number[],
+    number[] | undefined,
+    number[] | boolean[] | undefined,
+    number[],
+  ] {
     let matrixFreqsValues: number[];
-    let matrixValues: number[];
-    let matrixExtras: number[] | boolean[];
+    let matrixValues: number[] | undefined;
+    let matrixExtras: number[] | boolean[] | undefined;
     let matrixExpectedFreqsValues: number[];
 
     if (contextSelection && contextSelection.length > 0) {
@@ -52,12 +56,12 @@ export class MatrixUtilsService {
       );
 
       // Compute all positions according to combinations
-      const partPositions = [];
+      const partPositions: number[] = [];
       const cellCombinationsLength = cellCombinations.length;
       for (let i = 0; i < cellCombinationsLength; i++) {
         const currentCellPartPosition = UtilsService.findArrayIntoHash(
           cellCombinations[i],
-          matrixCellDatas[0].cellFreqHash,
+          matrixCellDatas[0]?.cellFreqHash,
         );
         partPositions.push(currentCellPartPosition);
       }
@@ -67,6 +71,7 @@ export class MatrixUtilsService {
       matrixFreqsValues = matrixCellDatas.map((e) => {
         let res = 0;
         for (let i = 0; i < partPositionsLength; i++) {
+          // @ts-ignore
           res = res + e.cellFreqs[partPositions[i]]; // values are added
         }
         return res;
@@ -77,10 +82,10 @@ export class MatrixUtilsService {
       } else {
         // Map current matrix datas to freq values correpsonding to current part positions
         let res = 0;
-        let matrixTotal = 0;
-        let cellFreqs = 0;
-        let freqColVals = 0;
-        let freqLineVals = 0;
+        let matrixTotal: number | undefined = 0;
+        let cellFreqs: number | undefined = 0;
+        let freqColVals: number | undefined = 0;
+        let freqLineVals: number | undefined = 0;
         switch (graphMode.mode) {
           case MATRIX_MODES.MUTUAL_INFO:
             matrixValues = matrixCellDatas.map((e) => {
@@ -157,9 +162,9 @@ export class MatrixUtilsService {
                   partPositions,
                   partPositionsLength,
                 );
-              return isNaN(cellFreqs / freqColVals)
+              return isNaN(cellFreqs! / freqColVals!)
                 ? 0
-                : cellFreqs / freqColVals;
+                : cellFreqs! / freqColVals!;
             });
             break;
           case MATRIX_MODES.PROB_CELL_REVERSE:
@@ -170,9 +175,9 @@ export class MatrixUtilsService {
                   partPositions,
                   partPositionsLength,
                 );
-              return isNaN(cellFreqs / freqLineVals)
+              return isNaN(cellFreqs! / freqLineVals!)
                 ? 0
-                : cellFreqs / freqLineVals;
+                : cellFreqs! / freqLineVals!;
             });
             break;
         }
@@ -251,16 +256,16 @@ export class MatrixUtilsService {
             break;
           case MATRIX_MODES.PROB_CELL:
             matrixValues = matrixCellDatas.map((e) => {
-              return isNaN(e.cellFreqs[0] / e.freqColVals[0])
+              return isNaN(e.cellFreqs[0]! / e.freqColVals[0]!)
                 ? 0
-                : e.cellFreqs[0] / e.freqColVals[0];
+                : e.cellFreqs[0]! / e.freqColVals[0]!;
             });
             break;
           case MATRIX_MODES.PROB_CELL_REVERSE:
             matrixValues = matrixCellDatas.map((e) => {
-              return isNaN(e.cellFreqs[0] / e.freqLineVals[0])
+              return isNaN(e.cellFreqs[0]! / e.freqLineVals[0]!)
                 ? 0
-                : e.cellFreqs[0] / e.freqLineVals[0];
+                : e.cellFreqs[0]! / e.freqLineVals[0]!;
             });
             break;
           case MATRIX_MODES.CELL_INTEREST:
@@ -268,7 +273,7 @@ export class MatrixUtilsService {
             matrixValues = matrixCellDatas.map((e) => e.cellInterest);
             break;
           case MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL:
-            for (let i = 0; i < matrixCellDatas[0].cellFreqs.length; i++) {
+            for (let i = 0; i < matrixCellDatas[0]!.cellFreqs.length; i++) {
               const currentMatrixValues = matrixCellDatas.map((e) => {
                 const [MIij, MIijExtra] = UtilsService.computeMutualInfo(
                   e.cellFreqs[i],
@@ -314,7 +319,7 @@ export class MatrixUtilsService {
       // Compute expected cell frequencies
       matrixExpectedFreqsValues = matrixCellDatas.map((e: CellModel) => {
         let ef;
-        let matrixTotal = 0;
+        let matrixTotal: number | undefined = 0;
         if (Array.isArray(e.matrixTotal)) {
           matrixTotal = e.matrixTotal[0];
         } else {
