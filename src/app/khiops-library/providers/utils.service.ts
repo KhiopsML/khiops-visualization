@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 import * as _ from 'lodash'; // Important to import lodash in karma
 
 @Injectable({
@@ -31,7 +32,11 @@ export class UtilsService {
    * @param numValues - The number of values to generate in the array.
    * @returns An array of numbers with logarithmic spacing between the specified minimum and maximum values.
    */
-  static fillArrayWithLogarithmicSpacing(minValue, maxValue, numValues) {
+  static fillArrayWithLogarithmicSpacing(
+    minValue: number,
+    maxValue: number,
+    numValues: number,
+  ) {
     const minLog = Math.log10(Math.abs(minValue));
     const maxLog = Math.log10(Math.abs(maxValue));
     const logDiff = (maxLog - minLog) / (numValues - 1);
@@ -52,7 +57,7 @@ export class UtilsService {
    * @param num - The number to check.
    * @returns `true` if the number is a power of ten, otherwise `false`.
    */
-  static isPowerOfTen(num) {
+  static isPowerOfTen(num: number) {
     return Math.log10(num) % 1 === 0;
   }
 
@@ -76,14 +81,17 @@ export class UtilsService {
    * equal to the corresponding property in `base`, it is included in the result. If both
    * properties are objects, the method is called recursively to find nested differences.
    *
-   * @param object - The object to compare.
+   * @param object - The object to compare.z
    * @param base - The base object to compare against.
    * @returns An object representing the differences between `object` and `base`.
    */
-  static deepDiff(object, base) {
+  static deepDiff(
+    object: TreeNodeModel | TreeNodeModel[] | undefined,
+    base: TreeNodeModel | TreeNodeModel[],
+  ) {
     // tslint:disable-next-line: no-shadowed-variable
-    function changes(object, base) {
-      return _.transform(object, function (result, value, key) {
+    function changes(object: object | undefined, base: object) {
+      return _.transform(object || {}, function (result: any, value, key) {
         if (!_.isEqual(value, base[key])) {
           result[key] =
             _.isObject(value) && _.isObject(base[key])
@@ -105,14 +113,14 @@ export class UtilsService {
    * @returns A tuple containing the Hellinger value and its absolute value.
    */
   static computeHellinger(
-    cellFreq,
-    totalFreqs,
-    freqColVal,
-    freqLineVals,
+    cellFreq: number | undefined,
+    totalFreqs: number | undefined,
+    freqColVal: number | undefined,
+    freqLineVals: number | undefined,
   ): [number, number] {
     const HIij =
-      Math.sqrt(cellFreq / totalFreqs) -
-      Math.sqrt(((freqColVal / totalFreqs) * freqLineVals) / totalFreqs);
+      Math.sqrt(cellFreq! / totalFreqs!) -
+      Math.sqrt(((freqColVal! / totalFreqs!) * freqLineVals!) / totalFreqs!);
     const hellingerValue = HIij || 0;
     const hellingerAbsoluteValue = Math.pow(HIij, 2) || 0;
     return [hellingerValue, hellingerAbsoluteValue];
@@ -130,14 +138,14 @@ export class UtilsService {
    *   - A boolean indicating if the computed MI value is extra (i.e., NaN or the cell frequency is zero).
    */
   static computeMutualInfo(
-    cellFreq,
-    totalFreqs,
-    freqColVal,
-    freqLineVals,
+    cellFreq: number | undefined,
+    totalFreqs: number | undefined,
+    freqColVal: number | undefined,
+    freqLineVals: number | undefined,
   ): [number, boolean] {
     let MIij =
-      (cellFreq / totalFreqs) *
-      Math.log((totalFreqs * cellFreq) / (freqColVal * freqLineVals));
+      (cellFreq! / totalFreqs!) *
+      Math.log((totalFreqs! * cellFreq!) / (freqColVal! * freqLineVals!));
     const MIijExtra = isNaN(MIij) || cellFreq === 0;
     if (!isFinite(MIij)) {
       MIij = 0;
@@ -155,21 +163,22 @@ export class UtilsService {
    * @returns The computed expected frequency.
    */
   static computeExpectedFrequency(
-    totalFreqs,
-    freqColVal,
-    freqLineVals,
+    totalFreqs: number | undefined,
+    freqColVal: number | undefined,
+    freqLineVals: number | undefined,
   ): number {
-    return (freqLineVals * freqColVal) / totalFreqs;
+    return (freqLineVals! * freqColVal!) / totalFreqs!;
   }
 
   static capitalizeFirstLetter(string: string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  static getFileNameFromPath(path) {
+  static getFileNameFromPath(path: string) {
     let filename;
     filename = path.substring(path.lastIndexOf('/') + 1);
     if (!filename) {
+      // @ts-ignore
       filename = path.substring(path.lastIndexOf(/\\/) + 1);
     }
     return filename;
@@ -203,11 +212,10 @@ export class UtilsService {
    * Compute total length of array of array
    * @param array of array
    */
-  static getArrayOfArrayLength(array) {
+  static getArrayOfArrayLength(array: any[][] | undefined) {
     let arrayLengthTotal = 0;
-    const arrayLength = array.length;
-    for (let i = 0; i < arrayLength; i++) {
-      arrayLengthTotal = arrayLengthTotal + array[i].length;
+    for (let i = 0; i < array!.length; i++) {
+      arrayLengthTotal = arrayLengthTotal + array![i]!.length;
     }
     return arrayLengthTotal;
   }
@@ -216,7 +224,7 @@ export class UtilsService {
    * Make an array of array sum
    * @param array of array
    */
-  static sumArrayOfArray(array) {
+  static sumArrayOfArray(array: number[][]) {
     let sum = 0;
     const arrayLength = array.length;
     for (let i = 0; i < arrayLength; i++) {
@@ -231,12 +239,12 @@ export class UtilsService {
    * @param arrays - An array of arrays containing numbers to be summed.
    * @returns An array where each element is the sum of the corresponding elements in the input arrays.
    */
-  static sumArrayItems(arrays) {
-    const total = [];
+  static sumArrayItems(arrays: number[][]) {
+    const total: any[] = [];
     const arraysLength = arrays.length;
     for (let i = 0, l0 = arraysLength; i < l0; i++) {
-      for (let j = 0, arg = arrays[i], l1 = arg.length; j < l1; j++) {
-        total[j] = (total[j] === undefined ? 0 : total[j]) + arg[j];
+      for (let j = 0, arg = arrays[i], l1 = arg!.length; j < l1; j++) {
+        total[j] = (total[j] === undefined ? 0 : total[j]) + arg![j];
       }
     }
     return total;
@@ -248,13 +256,13 @@ export class UtilsService {
    * @param array - A 2D array of numbers where each sub-array is expected to have the same length.
    * @returns A new array where each element is the sum of the elements at the corresponding index in the input sub-arrays.
    */
-  static sumArrayItemsByIndex(array) {
-    const total = new Array(array[0].length).fill(0);
+  static sumArrayItemsByIndex(array: number[][]) {
+    const total = new Array(array[0]!.length).fill(0);
     const totalLength = total.length;
     for (let j = 0; j < totalLength; j++) {
       const arrayLength = array.length;
       for (let i = 0; i < arrayLength; i++) {
-        total[j] += array[i][j];
+        total[j] += array[i]![j];
       }
     }
     return total;
@@ -266,7 +274,7 @@ export class UtilsService {
    * @param array - The array containing sub-arrays whose items need to be summed.
    * @returns An array where each element is the sum of the corresponding sub-array's items.
    */
-  static sumArrayItemsOfArray(array) {
+  static sumArrayItemsOfArray(array: number[][]): number[] {
     const sumArray = [];
     const arrayLength = array.length;
     for (let i = 0; i < arrayLength; i++) {
@@ -283,7 +291,11 @@ export class UtilsService {
    * @param values - A flat array containing the values to be summed. Each row's values are contiguous.
    * @returns An array containing the sum of values for each column.
    */
-  static getColumnsTotals(arrayALength, arrayBLength, values) {
+  static getColumnsTotals(
+    arrayALength: number,
+    arrayBLength: number,
+    values: number[][] | number[],
+  ) {
     const currentColVal = [];
     for (let i = 0; i < arrayBLength; i++) {
       currentColVal[i] = 0;
@@ -291,9 +303,11 @@ export class UtilsService {
       for (let j = i * arrayALength; j < i * arrayALength + arrayALength; j++) {
         if (Array.isArray(values[j])) {
           // sum all values if it is an array to compute cell frequency sizes
-          currentColVal[i] = currentColVal[i] + this.arraySum(values[j]);
+          // @ts-ignore
+          currentColVal[i] = currentColVal[i]! + this.arraySum(values[j]);
         } else {
-          currentColVal[i] = currentColVal[i] + values[j];
+          // @ts-ignore
+          currentColVal[i] = currentColVal[i]! + values[j]!;
         }
       }
     }
@@ -308,15 +322,19 @@ export class UtilsService {
    * @param values - A 2D array of numbers representing the values to be totaled.
    * @returns A 2D array where each element represents the total of the corresponding column values.
    */
-  static getMultiDimColumnsTotals(arrayALength, arrayBLength, values) {
+  static getMultiDimColumnsTotals(
+    arrayALength: number,
+    arrayBLength: number,
+    values: any[],
+  ) {
     const currentColVal = [];
     for (let i = 0; i < arrayBLength; i++) {
-      currentColVal[i] = new Array(values[0].length).fill(0);
+      currentColVal[i] = new Array(values[0]!.length).fill(0);
       // compute the total of one line values
       for (let j = i * arrayALength; j < i * arrayALength + arrayALength; j++) {
-        const valLength = values[j].length;
+        const valLength = values[j]!.length;
         for (let k = 0; k < valLength; k++) {
-          currentColVal[i][k] = currentColVal[i][k] + values[j][k];
+          currentColVal[i]![k] = currentColVal[i]![k] + values[j]![k];
         }
       }
     }
@@ -331,7 +349,11 @@ export class UtilsService {
    * @param values - A flat array representing the 2D array values. Each element can be a number or an array of numbers.
    * @returns An array containing the totals for each column.
    */
-  static getLinesTotals(arrayALength, arrayBLength, values) {
+  static getLinesTotals(
+    arrayALength: number,
+    arrayBLength: number,
+    values: number[] | number[][],
+  ) {
     const currentColVal = [];
     for (let i = 0; i < arrayBLength; i++) {
       // compute the total of one column values
@@ -342,8 +364,10 @@ export class UtilsService {
         if (Array.isArray(values[i * arrayALength + j])) {
           // sum all values if it is an array to compute cell frequency sizes
           currentColVal[j] =
-            currentColVal[j] + this.arraySum(values[i * arrayALength + j]);
+            // @ts-ignore
+            currentColVal[j]! + this.arraySum(values[i * arrayALength + j]);
         } else {
+          // @ts-ignore
           currentColVal[j] = currentColVal[j] + values[i * arrayALength + j];
         }
       }
@@ -359,18 +383,22 @@ export class UtilsService {
    * @param values - A 2D array containing the values to be totaled.
    * @returns A 2D array where each element represents the total of the corresponding column values.
    */
-  static getMultiDimLinesTotals(arrayALength, arrayBLength, values) {
+  static getMultiDimLinesTotals(
+    arrayALength: number,
+    arrayBLength: number,
+    values: any[],
+  ) {
     const currentColVal = [];
     for (let i = 0; i < arrayBLength; i++) {
       // compute the total of one column values
       for (let j = 0; j < arrayALength; j++) {
         if (!currentColVal[j]) {
-          currentColVal[j] = new Array(values[0].length).fill(0);
+          currentColVal[j] = new Array(values[0]!.length).fill(0);
         }
-        const valueILength = values[i].length;
+        const valueILength = values[i]!.length;
         for (let k = 0; k < valueILength; k++) {
-          currentColVal[j][k] =
-            currentColVal[j][k] + values[i * arrayALength + j][k];
+          currentColVal[j]![k] =
+            currentColVal[j]![k] + values[i * arrayALength + j]![k];
         }
       }
     }
@@ -386,12 +414,12 @@ export class UtilsService {
    * @param values - An array of numbers representing axis values.
    * @returns The modified array with inverted axis values.
    */
-  static invertAxisValues(values) {
+  static invertAxisValues(values: number[]) {
     values = values.reverse();
     // Add each y axis based on values
     const valuesLength = values.length;
     for (let i = 0; i < valuesLength; i++) {
-      values[i] = 100 - values[i];
+      values[i] = 100 - values[i]!;
     }
     return values;
   }
@@ -412,15 +440,15 @@ export class UtilsService {
    * console.log(interval); // Output: 6
    * ```
    */
-  static getArrayMatrixInterval(array) {
-    let max = array[array.length - 1][1];
+  static getArrayMatrixInterval(array: number[][]) {
+    let max = array[array.length - 1]![1];
     if (max === 0) {
       // it is infinite
-      max = array[array.length - 1][0] * 2;
-      array[array.length - 1][1] = max;
+      max = array[array.length - 1]![0]! * 2;
+      array[array.length - 1]![1] = max;
     }
-    const min = array[0][0];
-    return Number(max - min);
+    const min = array[0]![0];
+    return Number(max! - min!);
   }
 
   /**
@@ -439,12 +467,12 @@ export class UtilsService {
    * console.log(missingInterval); // Output: [1, 3]
    * ```
    */
-  static generateMissingInterval(partition) {
+  static generateMissingInterval(partition: number[][]) {
     // Give an interval of 5% if missing
-    if (partition[0].length === 0) {
+    if (partition[0]!.length === 0) {
       const percent =
-        (partition[partition.length - 1][1] - partition[1][0]) * 0.05;
-      return [partition[1][0] - percent, partition[1][0]];
+        (partition[partition.length - 1]![1]! - partition[1]![0]!) * 0.05;
+      return [partition[1]![0]! - percent, partition[1]![0]];
     } else {
       return partition[0];
     }
@@ -463,7 +491,7 @@ export class UtilsService {
    * console.log(percentArray); // Output: [0, 20, 40, 60, 80, 100]
    * ```
    */
-  static generateArrayPercentsFromArrayIntervals(length): number[] {
+  static generateArrayPercentsFromArrayIntervals(length: number): number[] {
     const countArray = [];
     for (let i = 0; i <= length; i++) {
       countArray.push((i * 100) / length);
@@ -483,13 +511,13 @@ export class UtilsService {
    * console.log(percentArray); // Output: [0, 1, 21, 24, 74, 84]s
    * ```
    */
-  static generateArrayPercentsFromArrayValues(array): number[] {
+  static generateArrayPercentsFromArrayValues(array: number[]): number[] {
     const percentArray = [];
     percentArray.push(0);
     const arrayLength = array.length;
     for (let i = 0; i < arrayLength; i++) {
       percentArray.push(
-        (array[i] * 100) / this.arraySum(array) + percentArray[i],
+        (array[i]! * 100) / this.arraySum(array) + percentArray[i]!,
       );
     }
     return percentArray;
@@ -509,12 +537,17 @@ export class UtilsService {
    * console.log(percentArray); // Output: [0, 50, 100]
    * ```
    */
-  static generateArrayPercentsFromArrayLength(array, arrayTotal): number[] {
+  static generateArrayPercentsFromArrayLength(
+    array: any[][],
+    arrayTotal: number,
+  ): number[] {
     const percentArray = [];
     percentArray.push(0);
     const arrayLength = array.length;
     for (let i = 0; i < arrayLength; i++) {
-      percentArray.push((array[i].length * 100) / arrayTotal + percentArray[i]);
+      percentArray.push(
+        (array[i]!.length * 100) / arrayTotal + percentArray[i]!,
+      );
     }
     return percentArray;
   }
@@ -534,15 +567,15 @@ export class UtilsService {
    * ```
    */
   static generateArrayPercentsFromArrayIntervalsAndTotalCount(
-    array,
-    arrayTotal,
+    array: number[][],
+    arrayTotal: number,
   ): number[] {
     const percentArray = [];
     percentArray.push(0);
     const arrayLength = array.length;
     for (let i = 0; i < arrayLength; i++) {
       percentArray.push(
-        ((array[i][1] - array[i][0]) * 100) / arrayTotal + percentArray[i],
+        ((array[i]![1]! - array[i]![0]!) * 100) / arrayTotal + percentArray[i]!,
       );
     }
     return percentArray;
@@ -560,7 +593,8 @@ export class UtilsService {
    * console.log(flattenedArray); // Output: [1, 2, 3, 4, 5]
    * ```
    */
-  static flatten(arr) {
+  static flatten(arr: any[]) {
+    // @ts-ignore
     return [].concat.apply([], arr);
   }
 
@@ -577,7 +611,7 @@ export class UtilsService {
    * @param exp - The number of decimal places to include in the result. Optional.
    * @returns A string representation of the number with the specified precision, or the original value if it is not a finite number.
    */
-  static getPrecisionNumber(value, exp?) {
+  static getPrecisionNumber(value: any, exp?: number) {
     if (typeof value === 'number' && isFinite(value)) {
       let num = this.toPlainString(value).split('.');
       let part1 = num[1];
@@ -585,7 +619,7 @@ export class UtilsService {
         return value;
       } else if (Math.abs(value) < 0.1) {
         let zeroAfterComma = -Math.floor(Math.log10(Math.abs(value)) + 1);
-        let usefullInfo = part1.slice(zeroAfterComma, zeroAfterComma + exp);
+        let usefullInfo = part1?.slice(zeroAfterComma, zeroAfterComma + exp!);
         let res = '0.';
         res += '0'.repeat(zeroAfterComma);
         res += usefullInfo;
@@ -594,10 +628,10 @@ export class UtilsService {
         let e = Number(value);
         let entier = Math.floor(e);
         let decimal = e - entier;
-        if (decimal < Math.pow(10, -exp)) {
+        if (decimal < Math.pow(10, -exp!)) {
           decimal = 0;
         }
-        let res = Math.round(e * Math.pow(10, exp)) / Math.pow(10, exp);
+        let res = Math.round(e * Math.pow(10, exp!)) / Math.pow(10, exp!);
         return res.toString();
       } else {
         return value.toString();
@@ -633,7 +667,7 @@ export class UtilsService {
    * @param num - The number to be converted to a plain string.
    * @returns The plain string representation of the number.
    */
-  static toPlainString(num) {
+  static toPlainString(num: number) {
     return ('' + +num).replace(
       /(-?)(\d*)\.?(\d*)e([+-]\d+)/,
       function (a, b, c, d, e) {
@@ -654,7 +688,7 @@ export class UtilsService {
    * @param tree - The resulting tree structure. Defaults to an empty array.
    * @returns The nested tree structure.
    */
-  static unflatten(array, parent?, tree?) {
+  static unflatten(array: any[], parent?: any, tree?: any) {
     tree = typeof tree !== 'undefined' ? tree : [];
     parent =
       typeof parent !== 'undefined'
@@ -665,7 +699,7 @@ export class UtilsService {
 
     const children = this.fastFilter(
       array,
-      (child) => child.parentCluster === parent.cluster,
+      (child: any) => child.parentCluster === parent.cluster,
     );
 
     if (!this.isEmpty(children)) {
@@ -690,7 +724,7 @@ export class UtilsService {
    * @param treeDatas - The current tree node to be flattened.
    * @returns The array containing all the flattened tree nodes.
    */
-  static flattenTree(output, treeDatas) {
+  static flattenTree(output: any, treeDatas: any) {
     output.push(treeDatas);
     if (treeDatas.childNodes && treeDatas.childNodes.length > 0) {
       const treeDatasChildrenLength = treeDatas.childNodes.length;
@@ -708,7 +742,7 @@ export class UtilsService {
    * @param treeDatas - The current node of the tree being processed.
    * @returns The array containing the flattened tree nodes.
    */
-  static flattenUncollapsedTree(output, treeDatas) {
+  static flattenUncollapsedTree(output: any, treeDatas: any) {
     if (treeDatas.children && treeDatas.children.length > 0) {
       const treeDatasChildrenLength = treeDatas.children.length;
       for (let i = 0; i < treeDatasChildrenLength; i++) {
@@ -729,12 +763,12 @@ export class UtilsService {
    * @param thisArg - Optional. The value to use as `this` when executing the test function.
    * @returns A new array containing all elements that pass the test implemented by the provided function.
    */
-  static fastFilter(array, fn, thisArg?) {
+  static fastFilter(array: any[], fn: any, thisArg?: any) {
     const result = [],
       test =
         thisArg === undefined
           ? fn
-          : function (a, b, c) {
+          : function (a: any, b: any, c: any) {
               return fn.call(thisArg, a, b, c);
             };
     let i, len;
@@ -758,7 +792,7 @@ export class UtilsService {
    * @param splitSizes - An object containing the default split sizes.
    * @returns An object with the combined split sizes from the stored values and the default values.
    */
-  static setDefaultLSValues(storedSplitValues, splitSizes) {
+  static setDefaultLSValues(storedSplitValues: any, splitSizes: any) {
     if (storedSplitValues) {
       const parsedSplitSizes = JSON.parse(storedSplitValues);
       Object.keys(splitSizes).forEach((value) => {
@@ -783,7 +817,7 @@ export class UtilsService {
    * @param array - The array of numbers to sum.
    * @returns The sum of the array elements. If the input is not an array, returns 0.
    */
-  static arraySum(array) {
+  static arraySum(array: number[] | number | undefined) {
     let res = 0;
     if (Array.isArray(array)) {
       res = array.reduce((pv, cv) => pv + cv, 0);
@@ -791,11 +825,11 @@ export class UtilsService {
     return res;
   }
 
-  static isEmpty(obj) {
+  static isEmpty(obj: any) {
     return Object.keys(obj).length === 0;
   }
 
-  static isNumeric(n) {
+  static isNumeric(n: any) {
     return !isNaN(parseFloat(n)) && isFinite(n);
   }
 
@@ -836,7 +870,7 @@ export class UtilsService {
    * @param highest - The highest value to consider.
    * @returns A tuple containing the normalized minimum and maximum values.
    */
-  static averageMinAndMaxValues(lowest, highest) {
+  static averageMinAndMaxValues(lowest: number, highest: number) {
     let low, high;
     const max = Math.max(Math.abs(lowest), Math.abs(highest));
     low = -max;
@@ -850,7 +884,7 @@ export class UtilsService {
    * @param array - An array of numbers.
    * @returns The mean of the numbers in the array.
    */
-  static getMoyFromArray(array) {
+  static getMoyFromArray(array: number[]) {
     return array.reduce((a, b) => a + b, 0) / array.length;
   }
 
@@ -873,13 +907,13 @@ export class UtilsService {
    * // ]
    * ```
    */
-  static generateMaxParts(dimensionsParts) {
-    const maxParts = [];
+  static generateMaxParts(dimensionsParts: number[]): number[][] {
+    const maxParts: number[][] = [];
     const dimensionsPartsLength = dimensionsParts.length;
     for (let i = 0; i < dimensionsPartsLength; i++) {
       maxParts[i] = [];
-      for (let j = 0; j < dimensionsParts[i]; j++) {
-        maxParts[i].push(j);
+      for (let j = 0; j < dimensionsParts[i]!; j++) {
+        maxParts[i]!.push(j);
       }
     }
     return maxParts;
@@ -892,7 +926,7 @@ export class UtilsService {
    * @param h - The hash object where the search is performed.
    * @returns The value associated with the key if found, otherwise -1.
    */
-  static findArrayIntoHash(v, h) {
+  static findArrayIntoHash(v: any, h: any) {
     return h.hasOwnProperty(v) ? h[v] : -1;
   }
 
@@ -903,19 +937,15 @@ export class UtilsService {
    *
    * @param indexes - The array of indexes to generate the hash map from.
    * @returns A hash map where each key is an element from the array and each value is the index of that element.
-   *
-   * @example
-   * ```typescript
-   * const indexes = ['a', 'b', 'c'];
-   * const hash = UtilsService.generateHashFromArray(indexes);
-   * console.log(hash); // { a: 0, b: 1, c: 2 }
-   * ```
    */
-  static generateHashFromArray(indexes) {
+  static generateHashFromArray(indexes: number[][]) {
     const hash = {};
     const l = indexes.length;
     for (let i = 0; i < l; i++) {
-      hash[indexes[i]] = i;
+      if (indexes[i]) {
+        // @ts-ignore
+        hash[indexes[i]] = i;
+      }
     }
     return hash;
   }
@@ -951,15 +981,15 @@ export class UtilsService {
    * // ]
    * ```
    */
-  static generateMatrixCombinations(arg) {
-    const r = [];
+  static generateMatrixCombinations(arg: any[][]) {
+    const r: any[][] = [];
     const max = arg.length - 1;
 
-    function helper(arr, i) {
-      const argILength = arg[i].length;
+    function helper(arr: any[][], i: number) {
+      const argILength = arg[i]!.length;
       for (let j = 0, l = argILength; j < l; j++) {
         const a = arr.slice(0); // clone arr
-        a.push(arg[i][j]);
+        a.push(arg[i]![j]);
         if (i === max) {
           r.push(a.reverse());
         } else {
@@ -974,16 +1004,16 @@ export class UtilsService {
   /**
    * Splits an array into smaller arrays of a specified size.
    *
-   * @param myArray - The array to be split into chunks.
+   * @param array - The array to be split into chunks.
    * @param chunk_size - The size of each chunk.
    * @returns An array containing the chunks.
    */
-  static chunkArray(myArray, chunk_size) {
-    const arrayLength = myArray.length;
+  static chunkArray(array: any[], chunk_size: number) {
+    const arrayLength = array.length;
     const tempArray = [];
 
     for (let index = 0; index < arrayLength; index += chunk_size) {
-      const chunk = myArray.slice(index, index + chunk_size);
+      const chunk = array.slice(index, index + chunk_size);
       tempArray.push(chunk);
     }
 
@@ -1014,16 +1044,16 @@ export class UtilsService {
    * console.log(result); // Output: [12, 15, 18]
    * ```
    */
-  static mergeMultiDimArrayValuesByIndex(array) {
+  static mergeMultiDimArrayValuesByIndex(array: number[][]) {
     const merged = [];
     const arrayLength = array.length;
     for (let i = 0; i < arrayLength; i++) {
-      const arrayILength = array[i].length;
+      const arrayILength = array[i]!.length;
       for (let j = 0; j < arrayILength; j++) {
         if (!merged[j]) {
           merged[j] = 0;
         }
-        merged[j] = merged[j] + array[i][j];
+        merged[j] = merged[j]! + array[i]![j]!;
       }
     }
     return merged;
@@ -1036,14 +1066,14 @@ export class UtilsService {
    * @param index - The index at which to retrieve values from each sub-array.
    * @returns An array containing the values from each sub-array at the specified index.
    */
-  static getMultiDimArrayValuesByIndex(array, index) {
+  static getMultiDimArrayValuesByIndex(array: any[][], index: number) {
     const merged = [];
     const arrayLength = array.length;
     for (let i = 0; i < arrayLength; i++) {
-      const arrayILength = array[i].length;
+      const arrayILength = array[i]!.length;
       for (let j = 0; j < arrayILength; j++) {
         if (index === j) {
-          merged.push(array[i][j]);
+          merged.push(array[i]![j]!);
         }
       }
     }
@@ -1098,7 +1128,8 @@ export class UtilsService {
    *		 ]
    * }]
    */
-  static returnHierarchy(array, id) {
+  static returnHierarchy(array: any[], id: string) {
+    // @ts-ignore
     const s = (r, { children, ...object }) => {
       if (object.id.includes(id)) {
         r.push({
@@ -1126,7 +1157,7 @@ export class UtilsService {
    * @param matchingTitle - The title to match against the `id` of the elements.
    * @returns The element with the matching title if found, otherwise `null`.
    */
-  static deepFind(element, matchingTitle) {
+  static deepFind(element: any, matchingTitle: any): any {
     if (element.data.id === matchingTitle) {
       return element;
     } else if (element.children != null) {
@@ -1141,7 +1172,7 @@ export class UtilsService {
     return null;
   }
 
-  static hexToRGBa(hex, alpha = 1) {
+  static hexToRGBa(hex: string, alpha = 1) {
     if (hex) {
       const r = parseInt(hex.slice(1, 3), 16),
         g = parseInt(hex.slice(3, 5), 16),
@@ -1157,7 +1188,7 @@ export class UtilsService {
     }
   }
 
-  static hexToRgb(hex) {
+  static hexToRgb(hex: string) {
     const bigint = parseInt(hex.slice(1), 16);
     const r = (bigint >> 16) & 255;
     const g = (bigint >> 8) & 255;
@@ -1176,7 +1207,7 @@ export class UtilsService {
    * @param obj2 - The second object whose property values will be concatenated with those of the first object.
    * @returns The first object with updated property values.
    */
-  static concat2ObjectsValues(obj1, obj2) {
+  static concat2ObjectsValues(obj1: any, obj2: any) {
     Object.keys(obj1).forEach((obj1Prop, obj2PropIndex) => {
       obj1[obj1Prop] = obj1[obj1Prop].concat(obj2[obj1Prop]);
     });
@@ -1190,7 +1221,7 @@ export class UtilsService {
    * @param val - The value to search for.
    * @returns An array of indexes where the specified value is found.
    */
-  static getAllIndexes(arr, val) {
+  static getAllIndexes(arr: any[], val: any) {
     const indexes = [];
     const arrLength = arr.length;
     for (let i = 0; i < arrLength; i++) {
@@ -1204,7 +1235,7 @@ export class UtilsService {
   /**
    * Simple object check.
    */
-  static isObject(item) {
+  static isObject(item: any) {
     return item && typeof item === 'object' && !Array.isArray(item);
   }
 
@@ -1219,7 +1250,7 @@ export class UtilsService {
    * @param sources - One or more source objects whose properties will be merged into the target.
    * @returns The target object with merged properties.
    */
-  static mergeDeep(target, ...sources) {
+  static mergeDeep(target: any, ...sources: any): any {
     if (!sources.length) {
       return target;
     }
@@ -1253,7 +1284,7 @@ export class UtilsService {
    * @returns {string} The RGBA color string in the format `rgba(r, g, b, alpha)`.
    * @throws {Error} If the provided hexadecimal color code is invalid.
    */
-  static hexToRgba(hex, alpha) {
+  static hexToRgba(hex: string, alpha: number) {
     if (!/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
       throw new Error('Format hexadécimal invalide');
     }
@@ -1281,7 +1312,7 @@ export class UtilsService {
   static resetSearch(ls_id: string) {
     for (let i = 0; i < localStorage.length; i++) {
       let key = localStorage.key(i);
-      if (key.startsWith(ls_id + 'OPTIONS_AG_GRID_SEARCH_')) {
+      if (key?.startsWith(ls_id + 'OPTIONS_AG_GRID_SEARCH_')) {
         localStorage.removeItem(key);
         // Decrement i to avoid skipping a key because the length of localStorage has decreased.
         i--;
@@ -1298,8 +1329,8 @@ export class UtilsService {
    * @param {number[]} b - The interval within which to check for inclusion.
    * @returns {boolean} - Returns true if interval 'a' is included within interval 'b', otherwise false.
    */
-  static isIncluded(a, b) {
-    return a[0] >= b[0] && a[1] <= b[1];
+  static isIncluded(a: number[], b: number[]) {
+    return a![0]! >= b![0]! && a![1]! <= b![1]!;
   }
 
   /**
@@ -1312,7 +1343,7 @@ export class UtilsService {
    * @param {Array} intervals - The list of intervals to check for inclusion.
    * @returns {Array} - An array of indices representing the intervals that are included within other intervals.
    */
-  static findIncludedIntervals(intervals) {
+  static findIncludedIntervals(intervals: any[]) {
     let includedIndices = [];
 
     for (let i = 0; i < intervals.length; i++) {

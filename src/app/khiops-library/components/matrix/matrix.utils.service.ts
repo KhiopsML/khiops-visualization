@@ -175,15 +175,6 @@ export class MatrixUtilsService {
                 : cellFreqs / freqLineVals;
             });
             break;
-          // Only on KV
-          case MATRIX_MODES.CELL_INTEREST:
-            matrixValues = matrixCellDatas.map((e) => {
-              for (let i = 0; i < partPositionsLength; i++) {
-                res = res + e.cellInterest[partPositions[i]];
-              }
-              return res || 0;
-            });
-            break;
         }
       }
 
@@ -321,21 +312,19 @@ export class MatrixUtilsService {
       }
 
       // Compute expected cell frequencies
-      matrixExpectedFreqsValues = matrixCellDatas.map((e) => {
+      matrixExpectedFreqsValues = matrixCellDatas.map((e: CellModel) => {
         let ef;
+        let matrixTotal = 0;
         if (Array.isArray(e.matrixTotal)) {
-          ef = UtilsService.computeExpectedFrequency(
-            e.matrixTotal[0],
-            e.freqColVals[0],
-            e.freqLineVals[0],
-          );
+          matrixTotal = e.matrixTotal[0];
         } else {
-          ef = UtilsService.computeExpectedFrequency(
-            e.matrixTotal,
-            e.freqColVals,
-            e.freqLineVals,
-          );
+          matrixTotal = e.matrixTotal;
         }
+        ef = UtilsService.computeExpectedFrequency(
+          matrixTotal,
+          e.freqColVals[0],
+          e.freqLineVals[0],
+        );
 
         return ef;
       });
