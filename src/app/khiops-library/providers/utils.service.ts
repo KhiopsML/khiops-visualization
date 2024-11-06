@@ -7,24 +7,6 @@ import * as _ from 'lodash'; // Important to import lodash in karma
 })
 export class UtilsService {
   /**
-   * Computes the technical threshold based on the maximum threshold and dimension count.
-   *
-   * This function calculates the technical threshold by taking the maximum threshold
-   * and raising it to the power of the reciprocal of the dimension count, then rounding
-   * up to the nearest integer.
-   *
-   * @param maxThreshold - The maximum threshold value.
-   * @param dimCount - The number of dimensions.
-   * @returns The computed technical threshold as an integer.
-   */
-  static computeTechnicalThreshold(
-    maxThreshold: number,
-    dimCount: number,
-  ): number {
-    return Math.ceil(Math.pow(maxThreshold, 1 / dimCount));
-  }
-
-  /**
    * Generates an array of numbers with logarithmic spacing between a minimum and maximum value.
    *
    * @param minValue - The minimum value of the range. If negative, the resulting values will also be negative.
@@ -296,22 +278,22 @@ export class UtilsService {
     arrayBLength: number,
     values: number[][] | number[],
   ) {
-    const currentColVal = [];
+    const res = [];
     for (let i = 0; i < arrayBLength; i++) {
-      currentColVal[i] = 0;
+      res[i] = 0;
       // compute the total of one line values
       for (let j = i * arrayALength; j < i * arrayALength + arrayALength; j++) {
         if (Array.isArray(values[j])) {
           // sum all values if it is an array to compute cell frequency sizes
           // @ts-ignore
-          currentColVal[i] = currentColVal[i]! + this.arraySum(values[j]);
+          res[i] = res[i]! + this.arraySum(values[j]);
         } else {
           // @ts-ignore
-          currentColVal[i] = currentColVal[i]! + values[j]!;
+          res[i] = res[i]! + values[j]!;
         }
       }
     }
-    return currentColVal;
+    return res;
   }
 
   /**
@@ -354,25 +336,26 @@ export class UtilsService {
     arrayBLength: number,
     values: number[] | number[][],
   ) {
-    const currentColVal = [];
+    const res = [];
     for (let i = 0; i < arrayBLength; i++) {
       // compute the total of one column values
       for (let j = 0; j < arrayALength; j++) {
-        if (!currentColVal[j]) {
-          currentColVal[j] = 0;
+        if (!res[j]) {
+          res[j] = 0;
         }
         if (Array.isArray(values[i * arrayALength + j])) {
           // sum all values if it is an array to compute cell frequency sizes
-          currentColVal[j] =
+          res[j] =
             // @ts-ignore
-            currentColVal[j]! + this.arraySum(values[i * arrayALength + j]);
+            res[j]! + this.arraySum(values[i * arrayALength + j]);
         } else {
           // @ts-ignore
-          currentColVal[j] = currentColVal[j] + values[i * arrayALength + j];
+          res[j] = res[j] + values[i * arrayALength + j];
         }
       }
     }
-    return currentColVal;
+    console.log('UtilsService ~ res:', res);
+    return res;
   }
 
   /**
