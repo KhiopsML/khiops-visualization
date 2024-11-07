@@ -6,27 +6,28 @@
 
   #graph-header-comp {
     flex-wrap: wrap;
-    h1 {
-      mat-icon {
-        margin-right: 0.4em;
-        margin-top: 2px;
-        font-size: 21px;
+    div {
+      h1 {
+        mat-icon {
+          padding-right: 0.4em;
+          padding-top: 2px;
+        }
       }
-    }
-    kl-btn-fullscreen {
-      margin-left: 0.3rem;
-      margin-right: 0.3rem;
-    }
-    .graph-header-tools {
-      mat-checkbox {
-        margin: 0.5rem 0 0.5rem 1rem;
+      kl-btn-fullscreen {
+        margin-left: 0.3rem;
+        margin-right: 0.3rem;
       }
+      .graph-header-tools {
+        mat-checkbox {
+          margin: 0.5rem 0 0.5rem 1rem;
+        }
 
-      ::ng-deep mat-checkbox .mdc-form-field label {
-        width: 130px !important;
-        white-space: normal !important;
-        line-height: inherit !important;
-        font-size: 0.75rem !important;
+        ::ng-deep mat-checkbox .mdc-form-field label {
+          width: 130px !important;
+          white-space: normal !important;
+          line-height: inherit !important;
+          font-size: 0.75rem !important;
+        }
       }
     }
   }
