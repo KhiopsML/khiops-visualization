@@ -354,7 +354,6 @@ export class UtilsService {
         }
       }
     }
-    console.log('UtilsService ~ res:', res);
     return res;
   }
 
