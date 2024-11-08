@@ -4,6 +4,7 @@ import { DimensionsDatasService } from '@khiops-covisualization/providers/dimens
 import { TreenodesService } from './treenodes.service';
 import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-data.model';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
+import { SaveService } from './save.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,7 @@ export class HierarchyService {
     private appService: AppService,
     private dimensionsDatasService: DimensionsDatasService,
     private treenodesService: TreenodesService,
+    private saveService: SaveService,
   ) {}
 
   /**
@@ -65,7 +67,7 @@ export class HierarchyService {
     }
     this.treenodesService.setSavedCollapsedNodes(collapsedNodes);
 
-    let datas = this.treenodesService.constructSavedJson(collapsedNodes);
+    let datas = this.saveService.constructSavedJson(collapsedNodes);
     this.appService.setCroppedFileDatas(datas);
 
     this.dimensionsDatas = this.dimensionsDatasService.getDatas();

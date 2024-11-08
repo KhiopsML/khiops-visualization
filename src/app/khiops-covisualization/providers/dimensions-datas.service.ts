@@ -42,6 +42,30 @@ export class DimensionsDatasService {
   }
 
   /**
+   * Recomputes data from a new JSON input.
+   * This method updates the dimensions, initializes selected dimensions, saves the initial dimensions,
+   * constructs the dimensions trees, and recalculates the matrix data and frequency map.
+   *
+   * @param {string} dimensionName - The name of the dimension to be updated.
+   */
+  recomputeDatasFromNewJson(dimensionName: string) {
+    this.getDimensions();
+    this.initSelectedDimensions(false); // do not reinitialize selected context node
+    this.saveInitialDimension();
+    this.constructDimensionsTrees();
+
+    const currentIndex: number =
+      this.dimensionsDatas.selectedDimensions.findIndex((e) => {
+        return dimensionName === e.name;
+      });
+    const propagateChanges = currentIndex <= 1 ? true : false;
+    // hack to limit re-rendering and optimize performance
+    this.getMatrixDatas(propagateChanges);
+    this.computeMatrixDataFreqMap();
+    this.setIsLoading(false);
+  }
+
+  /**
    * Initializes the saved data.
    * This method retrieves saved data from the app service and assigns it to the dimensions data model.
    * It sets various properties such as conditionalOnContext, matrixContrast, matrixMode, matrixOption, and isAxisInverted.

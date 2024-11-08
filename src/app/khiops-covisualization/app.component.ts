@@ -25,6 +25,7 @@ import { THEME } from '@khiops-library/enum/theme';
 import { CovisualizationDatas } from './interfaces/app-datas';
 import { CallbackI } from '@khiops-library/interfaces/globals';
 import { ConfigModel } from '@khiops-library/model/config.model';
+import { SaveService } from './providers/save.service';
 
 @Component({
   selector: 'app-root-covisualization',
@@ -54,6 +55,7 @@ export class AppComponent implements AfterViewInit {
     private translate: TranslateService,
     private fileLoaderService: FileLoaderService,
     private treenodesService: TreenodesService,
+    private saveService: SaveService,
     private element: ElementRef,
   ) {
     AppService.Ls.setLsId(AppConfig.covisualizationCommon.GLOBAL.LS_ID);
@@ -66,11 +68,11 @@ export class AppComponent implements AfterViewInit {
       if (
         this.treenodesService.isSaveChanged(
           this.element.nativeElement.value,
-          this.treenodesService.constructDatasToSave(),
+          this.saveService.constructDatasToSave(),
         )
       ) {
         this.element.nativeElement.value =
-          this.treenodesService.constructDatasToSave();
+          this.saveService.constructDatasToSave();
         this.element.nativeElement.dispatchEvent(
           new CustomEvent(this._valueChangeEvent, {
             detail: this.element.nativeElement.value,
@@ -83,7 +85,7 @@ export class AppComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.configService.setRootElement(this.appElement!);
     this.element.nativeElement.getDatas = () =>
-      this.treenodesService.constructDatasToSave();
+      this.saveService.constructDatasToSave();
     this.element.nativeElement.setDatas = (datas: CovisualizationDatas) => {
       // Set data into ngzone to detect change into another context (electron for instance)
       this.ngzone.run(() => {
@@ -128,12 +130,12 @@ export class AppComponent implements AfterViewInit {
       });
     };
     this.element.nativeElement.constructDatasToSave = () => {
-      return this.treenodesService.constructDatasToSave();
+      return this.saveService.constructDatasToSave();
     };
     this.element.nativeElement.constructPrunedDatasToSave = () => {
       const collapsedNodes = this.treenodesService.getSavedCollapsedNodes();
       // #142 Remove collapsed nodes because datas are truncated
-      return this.treenodesService.constructSavedJson(collapsedNodes, true);
+      return this.saveService.constructSavedJson(collapsedNodes, true);
     };
     this.element.nativeElement.setConfig = (config: ConfigModel) => {
       this.configService.setConfig(config);

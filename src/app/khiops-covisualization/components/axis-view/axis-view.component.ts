@@ -15,6 +15,7 @@ import { ViewManagerService } from '@khiops-covisualization/providers/view-manag
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
 import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals';
+import { SaveService } from '@khiops-covisualization/providers/save.service';
 
 @Component({
   selector: 'app-axis-view',
@@ -42,6 +43,7 @@ export class AxisViewComponent
     private annotationService: AnnotationService,
     private fileLoaderService: FileLoaderService,
     private translate: TranslateService,
+    private saveService: SaveService,
     private viewManagerService: ViewManagerService,
     private snackBar: MatSnackBar,
     private layoutService: LayoutService,
@@ -149,7 +151,7 @@ export class AxisViewComponent
    * @param collapsedNodes
    */
   private computeSavedState(collapsedNodes: DynamicI) {
-    let datas = this.treenodesService.constructSavedJson(collapsedNodes);
+    let datas = this.saveService.constructSavedJson(collapsedNodes);
     this.appService.setCroppedFileDatas(datas);
     this.initializeDatas();
   }
@@ -188,7 +190,7 @@ export class AxisViewComponent
 
       this.treenodesService.setSavedCollapsedNodes(collapsedNodes);
 
-      let datas = this.treenodesService.constructSavedJson(collapsedNodes);
+      let datas = this.saveService.constructSavedJson(collapsedNodes);
       this.appService.setCroppedFileDatas(datas);
 
       this.initializeDatas();

@@ -23,6 +23,7 @@ import {
   TreeViewNodeEventI,
   TreeViewUpdateNodeNameEventI,
 } from '@khiops-covisualization/interfaces/events';
+import { SaveService } from '@khiops-covisualization/providers/save.service';
 
 @Component({
   selector: 'app-tree-select',
@@ -48,6 +49,7 @@ export class TreeSelectComponent
     private ngzone: NgZone,
     private configService: ConfigService,
     private eventsService: EventsService,
+    private saveService: SaveService,
     private treenodesService: TreenodesService,
     private snackBar: MatSnackBar,
     public translate: TranslateService,
@@ -169,6 +171,10 @@ export class TreeSelectComponent
               this.selectedDimension.name,
               e.data.name,
             );
+            this.saveService.updateJSon(
+              this.selectedDimension.name,
+              this.treenodesService.getSavedCollapsedNodes(),
+            );
           }
         });
       });
@@ -183,6 +189,10 @@ export class TreeSelectComponent
               this.selectedDimension.name,
               e.data.name,
             );
+            this.saveService.updateJSon(
+              this.selectedDimension.name,
+              this.treenodesService.getSavedCollapsedNodes(),
+            );
           }
         });
       });
@@ -195,6 +205,10 @@ export class TreeSelectComponent
             this.selectedDimension.name,
             e.data.name,
             e.data.newName,
+          );
+          this.saveService.updateJSon(
+            this.selectedDimension.name,
+            this.treenodesService.getSavedCollapsedNodes(),
           );
         }
       });
