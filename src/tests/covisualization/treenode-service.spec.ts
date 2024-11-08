@@ -138,6 +138,7 @@ describe('coVisualization', () => {
       dimensionsDatasService = TestBed.inject(DimensionsDatasService);
       treenodesService = TestBed.inject(TreenodesService);
       appService = TestBed.inject(AppService);
+      saveService = TestBed.inject(SaveService);
 
       const fileDatas = require('../../assets/mocks/kc/DataNoisyCorrelatedN1000000_C1000_V10_L5Coclustering.json');
       appService.setFileDatas(fileDatas);
