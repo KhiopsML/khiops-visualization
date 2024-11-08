@@ -57,7 +57,7 @@ export class ImportExtDatasComponent implements OnInit {
       const currentField: any = this.fieldsToImport.values[i];
       if (currentField?.import) {
         // @ts-ignore
-        let path = this.importExtDatas?.file?.path;
+        let path = this.importExtDatas?.filename;
 
         const importedData = this.importExtDatasService.addImportedDatas(
           this.importExtDatas.file!.name,

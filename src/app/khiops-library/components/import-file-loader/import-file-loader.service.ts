@@ -12,9 +12,11 @@ export class ImportFileLoaderService {
       // Method called automatically at startup
       // For security reasons, local files can not be loaded automatically without Electron
       return new Promise((resolve, reject) => {
-        this.configService?.getConfig()?.readLocalFile?.(file, (datas: any) => {
-          resolve(new FileModel(datas, file.name, file));
-        });
+        this.configService
+          ?.getConfig()
+          ?.readLocalFile?.(file, (fileContent: any, filePath: string) => {
+            resolve(new FileModel(fileContent, filePath, file));
+          });
       });
     } else {
       // Method called when user open an external file manually
