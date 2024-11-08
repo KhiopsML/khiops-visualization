@@ -4,9 +4,11 @@ import { DimensionsDatasService } from '@khiops-covisualization/providers/dimens
 import { HttpClientModule } from '@angular/common/http';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
 import { TranslateModule } from '@ngstack/translate';
+import { SaveService } from '../../app/khiops-covisualization/providers/save.service';
 let appService: AppService;
 let treenodesService: TreenodesService;
 let dimensionsDatasService: DimensionsDatasService;
+let saveService: SaveService;
 
 describe('coVisualization', () => {
   describe('Treenode service datas', () => {
@@ -18,6 +20,7 @@ describe('coVisualization', () => {
       // Inject services
       dimensionsDatasService = TestBed.inject(DimensionsDatasService);
       treenodesService = TestBed.inject(TreenodesService);
+      saveService = TestBed.inject(SaveService);
       appService = TestBed.inject(AppService);
 
       const fileDatas = require('../../assets/mocks/kc/8-TS4624User_Coclustering.json');
@@ -82,7 +85,7 @@ describe('coVisualization', () => {
         ],
       };
 
-      const computedPartition = treenodesService.computeNumPartition(
+      const computedPartition = saveService.computeNumPartition(
         nodes,
         index,
         partition,
@@ -107,7 +110,7 @@ describe('coVisualization', () => {
       treenodesService.setSelectedUnfoldHierarchy(unfoldState);
       const collapsedNodes = treenodesService.getLeafNodesForARank(unfoldState);
       treenodesService.setSavedCollapsedNodes(collapsedNodes);
-      const datas = treenodesService.constructSavedJson(collapsedNodes);
+      const datas = saveService.constructSavedJson(collapsedNodes);
 
       // Here we check that 9.5;19.5 interval is removed
       expect(
@@ -151,7 +154,7 @@ describe('coVisualization', () => {
       treenodesService.setSelectedUnfoldHierarchy(unfoldState);
       const collapsedNodes = treenodesService.getLeafNodesForARank(unfoldState);
       treenodesService.setSavedCollapsedNodes(collapsedNodes);
-      const datas = treenodesService.constructSavedJson(collapsedNodes);
+      const datas = saveService.constructSavedJson(collapsedNodes);
       expect(
         datas.coclusteringReport.dimensionPartitions[0]!.valueGroups![0]!
           .cluster,
@@ -177,7 +180,7 @@ describe('coVisualization', () => {
       treenodesService.setSelectedUnfoldHierarchy(unfoldState);
       const collapsedNodes = treenodesService.getLeafNodesForARank(unfoldState);
       treenodesService.setSavedCollapsedNodes(collapsedNodes);
-      const datas = treenodesService.constructSavedJson(collapsedNodes);
+      const datas = saveService.constructSavedJson(collapsedNodes);
       expect(
         datas.coclusteringReport.dimensionPartitions[0]!.valueGroups![0]!
           .cluster,

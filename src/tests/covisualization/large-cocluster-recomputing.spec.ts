@@ -6,7 +6,9 @@ import { TreenodesService } from '@khiops-covisualization/providers/treenodes.se
 import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-data.model';
 import { AppConfig } from 'src/environments/environment';
 import { TranslateModule } from '@ngstack/translate';
+import { SaveService } from '../../app/khiops-covisualization/providers/save.service';
 let appService: AppService;
+let saveService: SaveService;
 let treenodesService: TreenodesService;
 let dimensionsDatasService: DimensionsDatasService;
 
@@ -20,6 +22,7 @@ describe('CoVisualization', () => {
       // Inject services
       dimensionsDatasService = TestBed.inject(DimensionsDatasService);
       treenodesService = TestBed.inject(TreenodesService);
+      saveService = TestBed.inject(SaveService);
       appService = TestBed.inject(AppService);
 
       const fileDatas = require('../../assets/mocks/kc/10.1.1_id_feat_nospace_Coclustering.json');
@@ -74,7 +77,7 @@ describe('CoVisualization', () => {
       treenodesService.setSelectedUnfoldHierarchy(unfoldState);
       const collapsedNodes = treenodesService.getLeafNodesForARank(unfoldState);
       treenodesService.setSavedCollapsedNodes(collapsedNodes);
-      let datas = treenodesService.constructSavedJson(collapsedNodes);
+      let datas = saveService.constructSavedJson(collapsedNodes);
 
       expect(datas.coclusteringReport.cellFrequencies.length).toEqual(214);
       expect(datas.coclusteringReport.cellPartIndexes.length).toEqual(214);
@@ -116,8 +119,7 @@ describe('CoVisualization', () => {
       treenodesService.setSelectedUnfoldHierarchy(unfoldState);
       const collapsedNodes = treenodesService.getLeafNodesForARank(unfoldState);
       treenodesService.setSavedCollapsedNodes(collapsedNodes);
-      const datasCollpased =
-        treenodesService.constructSavedJson(collapsedNodes);
+      const datasCollpased = saveService.constructSavedJson(collapsedNodes);
       appService.setCroppedFileDatas(datasCollpased);
 
       // Recompute with updated datas
@@ -141,8 +143,7 @@ describe('CoVisualization', () => {
       dimensionsDatasService.saveInitialDimension();
       dimensionsDatasService.constructDimensionsTrees();
 
-      const datasCollpased =
-        treenodesService.constructSavedJson(collapsedNodes);
+      const datasCollpased = saveService.constructSavedJson(collapsedNodes);
       appService.setCroppedFileDatas(datasCollpased);
 
       // Recompute with updated datas
@@ -153,7 +154,7 @@ describe('CoVisualization', () => {
 
       treenodesService.setSavedCollapsedNodes(collapsedNodes);
 
-      treenodesService.constructSavedJson(collapsedNodes);
+      saveService.constructSavedJson(collapsedNodes);
 
       const dimensionsDatas: DimensionsDatasModel =
         dimensionsDatasService.getDatas();
