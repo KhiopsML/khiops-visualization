@@ -2,14 +2,12 @@ import { TestBed } from '@angular/core/testing';
 
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { HttpClientModule } from '@angular/common/http';
-import { AppService } from '@khiops-visualization/providers/app.service';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { CopyDatasService } from '@khiops-library/providers/copy-datas.service';
 import { TranslateModule } from '@ngstack/translate';
 
 let preparationDatasService: PreparationDatasService;
 let copyDatasService: CopyDatasService;
-let appService: AppService;
 
 describe('Visualization', () => {
   describe('PreparationDatasService', () => {
@@ -21,7 +19,6 @@ describe('Visualization', () => {
       // Inject services
       preparationDatasService = TestBed.inject(PreparationDatasService);
       copyDatasService = TestBed.inject(CopyDatasService);
-      appService = TestBed.inject(AppService);
       preparationDatasService.initialize();
     });
 

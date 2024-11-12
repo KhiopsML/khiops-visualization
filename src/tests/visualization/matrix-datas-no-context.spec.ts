@@ -1,12 +1,9 @@
 import { TestBed } from '@angular/core/testing';
-import { AppService } from '@khiops-visualization/providers/app.service';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngstack/translate';
 import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 import { MatrixUtilsService } from '@khiops-library/components/matrix/matrix.utils.service';
-let appService: AppService;
 
-let cells;
 let matrixFreqsValues, matrixValues, matrixExtras;
 
 describe('Visualization', () => {
@@ -15,9 +12,6 @@ describe('Visualization', () => {
       TestBed.configureTestingModule({
         imports: [HttpClientModule, TranslateModule.forRoot()],
       });
-
-      // Inject services
-      appService = TestBed.inject(AppService);
     });
 
     it('matrixFreqsValues should return valid datas 2D FREQUENCY', () => {

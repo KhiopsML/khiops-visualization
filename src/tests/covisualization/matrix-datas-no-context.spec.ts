@@ -8,7 +8,7 @@ let appService: AppService;
 let dimensionsDatasService: DimensionsDatasService;
 
 let cells;
-let matrixFreqsValues, matrixValues, matrixExtras;
+let matrixFreqsValues, matrixValues;
 
 describe('CoVisualization', () => {
   describe('Matrix Datas : NO Context [Co-simple-2vars file]', () => {
@@ -89,7 +89,7 @@ describe('CoVisualization', () => {
       const graphMode = {
         mode: 'PROB_CELL',
       };
-      [matrixFreqsValues, matrixValues, matrixExtras] =
+      [matrixFreqsValues, matrixValues] =
         MatrixUtilsService.computeMatrixValues(
           graphMode,
           inputDatas.matrixCellDatas,
@@ -130,8 +130,13 @@ describe('CoVisualization', () => {
         mode: 'PROB_CELL_REVERSE',
         title: 'P (GillSize | GillSpacing)',
       };
-      [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixUtilsService.computeMatrixValues(graphMode, inputDatas.matrixCellDatas, [], -1);
+      [matrixFreqsValues, matrixValues] =
+        MatrixUtilsService.computeMatrixValues(
+          graphMode,
+          inputDatas.matrixCellDatas,
+          [],
+          -1,
+        );
     });
 
     it('matrixFreqsValues should return valid datas', () => {
