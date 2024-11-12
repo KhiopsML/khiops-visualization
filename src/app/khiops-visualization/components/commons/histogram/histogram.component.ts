@@ -41,6 +41,8 @@ import { BIG_CHART_SIZE } from '@khiops-library/config/global';
   styleUrls: ['./histogram.component.scss'],
 })
 export class HistogramComponent extends SelectableComponent implements OnInit {
+  @ViewChild('histogramContainer', { static: false })
+  private histogramContainer!: ElementRef;
   @ViewChild('chart', { static: false })
   private chart!: ElementRef;
 
@@ -90,8 +92,16 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   private histogramHoverCanvas?: HTMLCanvasElement | null;
   private histogramSelectedCanvas?: HTMLCanvasElement | null;
 
+  /**
+   * zoom and drag variables
+   */
   private scaleFactor = 1;
   private isZooming = false;
+  private isDragging = false;
+  private startX = 0;
+  private startY = 0;
+  private scrollLeft = 0;
+  private scrollTop = 0;
 
   constructor(
     private histogramService: HistogramService,
@@ -207,6 +217,33 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     this.w = this.chart.nativeElement.offsetWidth * this.scaleFactor;
     this.datas && this.init();
     this.isZooming = true;
+  }
+
+  public onMouseDown(event: MouseEvent) {
+    event.preventDefault();
+    this.isDragging = true;
+    this.startX =
+      event.pageX - this.histogramContainer?.nativeElement.offsetLeft;
+    this.startY =
+      event.pageY - this.histogramContainer?.nativeElement.offsetTop;
+    this.scrollLeft = this.histogramContainer?.nativeElement.scrollLeft;
+    this.scrollTop = this.histogramContainer?.nativeElement.scrollTop;
+  }
+
+  public onMouseMove(event: MouseEvent) {
+    if (!this.isDragging) return;
+
+    const x = event.pageX - this.histogramContainer?.nativeElement.offsetLeft;
+    const y = event.pageY - this.histogramContainer?.nativeElement.offsetTop;
+    const walkX = (x - this.startX) * 1; // Facteur de vitesse
+    const walkY = (y - this.startY) * 1;
+
+    this.histogramContainer!.nativeElement.scrollLeft = this.scrollLeft - walkX;
+    this.histogramContainer!.nativeElement.scrollTop = this.scrollTop - walkY;
+  }
+
+  public onMouseUp(_event: MouseEvent) {
+    this.isDragging = false;
   }
 
   private handleResized(_event: ResizedEvent) {

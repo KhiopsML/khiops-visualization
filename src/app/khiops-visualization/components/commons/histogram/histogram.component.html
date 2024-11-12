@@ -64,8 +64,15 @@
       </div>
     </div>
   </div>
-  <div id="histogram-container">
-    <div fxFlexFill (resized)="onResized($event)" (wheel)="onWheel($event)">
+  <div id="histogram-container" #histogramContainer>
+    <div
+      fxFlexFill
+      (resized)="onResized($event)"
+      (wheel)="onWheel($event)"
+      (mousedown)="onMouseDown($event)"
+      (mousemove)="onMouseMove($event)"
+      (mouseup)="onMouseUp($event)"
+    >
       <canvas id="histogram-canvas" fxFlex> </canvas>
       <canvas id="histogram-canvas-hover" fxFlex> </canvas>
       <canvas id="histogram-canvas-selected" fxFlex> </canvas>
