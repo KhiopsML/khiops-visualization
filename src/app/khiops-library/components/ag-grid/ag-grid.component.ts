@@ -175,7 +175,7 @@ export class AgGridComponent
     this.saveState(grid);
   }
 
-  onGridReady(params: GridReadyEvent) {
+  onGridReady(_params: GridReadyEvent) {
     this.restoreState();
     this.fitToSpace();
   }
@@ -652,7 +652,7 @@ export class AgGridComponent
     }
   }
 
-  saveState(grid: SortChangedEvent) {
+  saveState(_grid: SortChangedEvent) {
     const state = {
       sortState: this.gridOptions?.columnApi?.getColumnState(),
     };

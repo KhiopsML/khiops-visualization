@@ -116,7 +116,7 @@ export class TreeSelectComponent
         // Do ngzone to emit event
         this.ngzone.run(() => {
           const trustedNodeSelection = e.data.id;
-          let [index, nodesToSelect] =
+          let [_index, nodesToSelect] =
             this.treePreparationDatasService.getNodesLinkedToOneNode(
               trustedNodeSelection,
             );

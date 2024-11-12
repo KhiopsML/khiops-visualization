@@ -95,7 +95,7 @@ export class MatrixUtilsService {
                   partPositions,
                   partPositionsLength,
                 );
-              let [MIij, MIijExtra] = UtilsService.computeMutualInfo(
+              let [MIij, _MIijExtra] = UtilsService.computeMutualInfo(
                 cellFreqs,
                 matrixTotal,
                 freqColVals,
@@ -110,7 +110,7 @@ export class MatrixUtilsService {
                   partPositions,
                   partPositionsLength,
                 );
-              let [MIij, MIijExtra] = UtilsService.computeMutualInfo(
+              let [_MIij, MIijExtra] = UtilsService.computeMutualInfo(
                 cellFreqs,
                 matrixTotal,
                 freqColVals,
@@ -127,7 +127,7 @@ export class MatrixUtilsService {
                   partPositions,
                   partPositionsLength,
                 );
-              const [hellingerValue, hellingerAbsoluteValue] =
+              const [hellingerValue, _hellingerAbsoluteValue] =
                 UtilsService.computeHellinger(
                   cellFreqs,
                   matrixTotal,
@@ -144,7 +144,7 @@ export class MatrixUtilsService {
                   partPositions,
                   partPositionsLength,
                 );
-              const [hellingerValue, hellingerAbsoluteValue] =
+              const [_hellingerValue, hellingerAbsoluteValue] =
                 UtilsService.computeHellinger(
                   cellFreqs,
                   matrixTotal,
@@ -156,7 +156,7 @@ export class MatrixUtilsService {
             break;
           case MATRIX_MODES.PROB_CELL:
             matrixValues = matrixCellDatas.map((e) => {
-              let [matrixTotal, cellFreqs, freqColVals, freqLineVals] =
+              let [_matrixTotal, cellFreqs, freqColVals, __freqLineVals] =
                 this.computeValsByContext(
                   e,
                   partPositions,
@@ -169,7 +169,7 @@ export class MatrixUtilsService {
             break;
           case MATRIX_MODES.PROB_CELL_REVERSE:
             matrixValues = matrixCellDatas.map((e) => {
-              let [matrixTotal, cellFreqs, freqColVals, freqLineVals] =
+              let [_matrixTotal, cellFreqs, _freqColVals, freqLineVals] =
                 this.computeValsByContext(
                   e,
                   partPositions,
@@ -185,7 +185,7 @@ export class MatrixUtilsService {
 
       // Compute expected cell frequencies
       matrixExpectedFreqsValues = matrixCellDatas.map((e: CellModel) => {
-        let [matrixTotal, cellFreqs, freqColVals, freqLineVals] =
+        let [matrixTotal, _cellFreqs, freqColVals, freqLineVals] =
           this.computeValsByContext(e, partPositions, partPositionsLength);
         let ef = UtilsService.computeExpectedFrequency(
           matrixTotal,
@@ -214,7 +214,7 @@ export class MatrixUtilsService {
         switch (graphMode.mode) {
           case MATRIX_MODES.MUTUAL_INFO:
             matrixValues = matrixCellDatas.map((e) => {
-              let [MIij, MIijExtra] = UtilsService.computeMutualInfo(
+              let [MIij, _MIijExtra] = UtilsService.computeMutualInfo(
                 e.cellFreqs[0],
                 e.matrixTotal![0],
                 e.freqColVals[0],
@@ -223,7 +223,7 @@ export class MatrixUtilsService {
               return MIij || 0;
             });
             matrixExtras = matrixCellDatas.map((e) => {
-              let [MIij, MIijExtra] = UtilsService.computeMutualInfo(
+              let [_MIij, MIijExtra] = UtilsService.computeMutualInfo(
                 e.cellFreqs[0],
                 e.matrixTotal![0],
                 e.freqColVals[0],
@@ -234,7 +234,7 @@ export class MatrixUtilsService {
             break;
           case MATRIX_MODES.HELLINGER:
             matrixValues = matrixCellDatas.map((e) => {
-              const [hellingerValue, hellingerAbsoluteValue] =
+              const [hellingerValue, _hellingerAbsoluteValue] =
                 UtilsService.computeHellinger(
                   e.cellFreqs[0],
                   e.matrixTotal![0],
@@ -244,7 +244,7 @@ export class MatrixUtilsService {
               return hellingerValue || 0;
             });
             matrixExtras = matrixCellDatas.map((e) => {
-              const [hellingerValue, hellingerAbsoluteValue] =
+              const [_hellingerValue, hellingerAbsoluteValue] =
                 UtilsService.computeHellinger(
                   e.cellFreqs[0],
                   e.matrixTotal![0],
@@ -276,7 +276,7 @@ export class MatrixUtilsService {
           case MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL:
             for (let i = 0; i < matrixCellDatas[0]!.cellFreqs.length; i++) {
               const currentMatrixValues = matrixCellDatas.map((e) => {
-                const [MIij, MIijExtra] = UtilsService.computeMutualInfo(
+                const [MIij, _MIijExtra] = UtilsService.computeMutualInfo(
                   e.cellFreqs[i],
                   UtilsService.arraySum(e.matrixTotal),
                   e.freqColVals[i],
@@ -289,7 +289,7 @@ export class MatrixUtilsService {
               }
             }
             matrixExtras = matrixCellDatas.map((e) => {
-              const [MIij, MIijExtra] = UtilsService.computeMutualInfo(
+              const [_MIij, MIijExtra] = UtilsService.computeMutualInfo(
                 e.cellFreqs[selectedTargetIndex],
                 UtilsService.arraySum(e.matrixTotal),
                 e.freqColVals[selectedTargetIndex],

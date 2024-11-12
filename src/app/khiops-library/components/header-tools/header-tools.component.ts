@@ -34,13 +34,13 @@ export class HeaderToolsComponent {
   ) {
     // define hotkeys
     this.hotkeysService.add(
-      new Hotkey('ctrl+c', (event: KeyboardEvent): boolean => {
+      new Hotkey('ctrl+c', (_event: KeyboardEvent): boolean => {
         this.copyImage();
         return false; // Prevent bubbling
       }),
     );
     this.hotkeysService.add(
-      new Hotkey('ctrl+d', (event: KeyboardEvent): boolean => {
+      new Hotkey('ctrl+d', (_event: KeyboardEvent): boolean => {
         this.copyDatas();
         return false; // Prevent bubbling
       }),

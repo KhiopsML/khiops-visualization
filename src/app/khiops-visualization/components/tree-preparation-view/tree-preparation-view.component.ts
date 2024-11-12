@@ -164,7 +164,7 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
   }
 
   onSelectTreeItemChanged(item: { id: string; isLeaf: boolean }) {
-    const [index, nodesToSelect] =
+    const [index, _nodesToSelect] =
       this.treePreparationDatasService.getNodesLinkedToOneNode(item.id);
     this.selectedBarIndex = index;
     this.treePreparationDatasService.getCurrentIntervalDatas(

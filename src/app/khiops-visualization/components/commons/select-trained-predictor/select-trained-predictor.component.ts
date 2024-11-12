@@ -1,11 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { LS } from '@khiops-library/enum/ls';
 import { TrainedPredictor } from '@khiops-visualization/interfaces/modeling-report';
 import { AppService } from '@khiops-visualization/providers/app.service';

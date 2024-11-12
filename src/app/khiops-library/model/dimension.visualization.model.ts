@@ -1,5 +1,4 @@
 import {
-  DimensionCovisualization,
   Interval,
   ValueGroup,
 } from '@khiops-covisualization/interfaces/app-datas';

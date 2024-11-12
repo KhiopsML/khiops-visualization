@@ -21,7 +21,6 @@ import { LS } from '@khiops-library/enum/ls';
 import { Ls } from '@khiops-library/providers/ls.service';
 import { CHART_TYPES } from '@khiops-library/enum/chart-types';
 import { THEME } from '@khiops-library/enum/theme';
-import { BIG_CHART_SIZE } from '@khiops-library/config/global';
 
 @Component({
   selector: 'kl-chart',
@@ -87,7 +86,7 @@ export class ChartComponent implements AfterViewInit, OnChanges {
 
       const chartAreaBorder = {
         id: 'chartAreaBorder',
-        beforeDraw(chart: any, args: any, options: ChartJs.LineOptions) {
+        beforeDraw(chart: any, _args: any, options: ChartJs.LineOptions) {
           const {
             ctx,
             chartArea: { left, top, width, height },
@@ -265,7 +264,7 @@ export class ChartComponent implements AfterViewInit, OnChanges {
     this.chart?.update();
   }
 
-  private graphClickEvent(e: any, items: string | any[]) {
+  private graphClickEvent(_e: any, items: string | any[]) {
     if (this.enableSelection) {
       const l = items.length;
       if (l > 0) {

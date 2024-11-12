@@ -184,7 +184,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     this.resizeSubject.next(event);
   }
 
-  private handleResized(event: ResizedEvent) {
+  private handleResized(_event: ResizedEvent) {
     this.h = this.chart.nativeElement.offsetHeight + 10 - 60; // graph header = 60, +10 to take more height
     this.w = this.chart.nativeElement.offsetWidth;
     // if (!event.isFirst) {

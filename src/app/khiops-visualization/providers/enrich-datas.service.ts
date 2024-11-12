@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { REPORT } from '@khiops-library/enum/report';
 import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas';
 
 @Injectable({

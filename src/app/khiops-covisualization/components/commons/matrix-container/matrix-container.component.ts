@@ -139,7 +139,7 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
     this.dimensionsDatas.matrixOption = type; // Save it into the global model to keep it into saved datas
   }
 
-  changeMatrixMode(mode: MatrixModeI) {
+  changeMatrixMode(_mode: MatrixModeI) {
     this.dimensionsDatas.matrixMode = this.matrixModes.selectedIndex; // Save it into the global model to keep it into saved datas
   }
 

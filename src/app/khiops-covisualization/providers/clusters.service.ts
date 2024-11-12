@@ -152,10 +152,10 @@ export class ClustersService {
     );
 
     let [
-      matrixFreqsValues,
+      _matrixFreqsValues,
       matrixValues,
-      matrixExtras,
-      matrixExpectedFreqsValues,
+      _matrixExtras,
+      _matrixExpectedFreqsValues,
     ] = MatrixUtilsService.computeMatrixValues(
       {
         mode: 'FREQUENCY',

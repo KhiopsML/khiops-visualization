@@ -136,7 +136,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
     }
   }
 
-  changeMatrixMode(mode: MatrixModeI) {
+  changeMatrixMode(_mode: MatrixModeI) {
     // this.trackerService.trackEvent('click', 'matrix_mode', mode.mode);
     this.constructTargetSelectBox();
     this.selectTargetSelectBox(this.matrixTargets.selected);

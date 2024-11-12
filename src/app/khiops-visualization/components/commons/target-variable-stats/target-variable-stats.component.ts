@@ -102,7 +102,7 @@ export class TargetVariableStatsComponent
     if (changes?.inputDatas?.currentValue) {
       // Keep labels into displayedvalues to copy datas into clipboard
       this.displayedValues = [];
-      Object.keys(this.inputDatas?.datasets!).map((key, i) => {
+      Object.keys(this.inputDatas?.datasets!).map((_key, i) => {
         this.displayedValues.push({
           name: this.inputDatas?.datasets[i]?.label,
         });

@@ -146,7 +146,7 @@ export class VariableGraphDetailsComponent
   onSelectBarChanged(index: number) {
     this.activeEntries = index;
 
-    const [currentIndex, otherIndex] = this.invertDimensionsPositions();
+    const [currentIndex, _otherIndex] = this.invertDimensionsPositions();
 
     // Find node name from index
     const currentNodeName = this.graphDetails?.labels[index];

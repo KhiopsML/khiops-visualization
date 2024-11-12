@@ -21,7 +21,6 @@ import { MatrixRangeValuesI } from '@khiops-visualization/interfaces/matrix-rang
 import { CellModel } from '@khiops-library/model/cell.model';
 import { Preparation2dVariableModel } from '@khiops-visualization/model/preparation2d-variable.model';
 import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
-import { REPORT } from '@khiops-library/enum/report';
 
 /**
  * Test it with irisR file

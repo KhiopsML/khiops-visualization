@@ -782,11 +782,10 @@ export class Preparation2dDatasService {
     for (let i = 0; i < variablesDatas.length; i++) {
       const inputDatas = this.getMatrixDatas(variablesDatas[i]!);
       if (inputDatas) {
-        let matrixFreqsValues, matrixValues, matrixExtras;
         let graphMode: MatrixModeI = {
           mode: 'MUTUAL_INFO_TARGET_WITH_CELL',
         };
-        [matrixFreqsValues, matrixValues, matrixExtras] =
+        let [_matrixFreqsValues, matrixValues, _matrixExtras] =
           MatrixUtilsService.computeMatrixValues(
             graphMode,
             inputDatas.matrixCellDatas!,
@@ -798,7 +797,7 @@ export class Preparation2dDatasService {
         graphMode = {
           mode: 'CELL_INTEREST',
         };
-        [matrixFreqsValues, matrixValues, matrixExtras] =
+        [_matrixFreqsValues, matrixValues, _matrixExtras] =
           MatrixUtilsService.computeMatrixValues(
             graphMode,
             inputDatas.matrixCellDatas!,

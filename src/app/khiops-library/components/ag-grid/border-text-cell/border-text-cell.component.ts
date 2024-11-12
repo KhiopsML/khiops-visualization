@@ -14,7 +14,7 @@ export class BorderTextCellComponent implements AgRendererComponent {
     this.params = params;
   }
 
-  refresh(params: any): boolean {
+  refresh(): boolean {
     return false;
   }
 }

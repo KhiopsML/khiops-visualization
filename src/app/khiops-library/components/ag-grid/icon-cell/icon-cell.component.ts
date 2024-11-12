@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 
 import { AgRendererComponent } from '@ag-grid-community/angular';
 import {
-  IAfterGuiAttachedParams,
   ICellRendererParams,
 } from '@ag-grid-community/core';
 
@@ -17,13 +16,13 @@ export class IconCellComponent implements AgRendererComponent {
     this.params = params;
   }
 
-  afterGuiAttached(params?: IAfterGuiAttachedParams): void {}
+  afterGuiAttached(): void {}
 
   onClick(): void {
     this.params.action(this.params);
   }
 
-  refresh(params: any): boolean {
+  refresh(): boolean {
     return false;
   }
 }

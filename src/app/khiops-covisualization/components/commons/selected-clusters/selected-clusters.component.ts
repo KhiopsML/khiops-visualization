@@ -75,7 +75,7 @@ export class SelectedClustersComponent implements OnDestroy {
     ];
 
     this.treeSelectedNodeChangedSub =
-      this.eventsService.treeSelectedNodeChanged.subscribe((e) => {
+      this.eventsService.treeSelectedNodeChanged.subscribe(() => {
         this.updateClustersInformations();
         if (this.selectedClusters) {
           this.selectActiveClusters();

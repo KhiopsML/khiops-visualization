@@ -60,7 +60,7 @@ export class VarDetailsPreparation2dComponent {
     this.resizeTargetDistributionGraph();
   }
 
-  onSelectCellRowChanged(index: number) {
+  onSelectCellRowChanged() {
     this.distribution2dDatasService.getTargetDistributionGraphDatas(
       this.targetDistributionGraphType,
     );

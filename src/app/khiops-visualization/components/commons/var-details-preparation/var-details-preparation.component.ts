@@ -1,11 +1,4 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  Input,
-  OnChanges,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, OnInit, ViewChild, Input, OnChanges } from '@angular/core';
 import { EvaluationDatasService } from '@khiops-visualization/providers/evaluation-datas.service';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
@@ -15,7 +8,6 @@ import { Preparation2dDatasModel } from '@khiops-visualization/model/preparation
 import { PreparationVariableModel } from '@khiops-visualization/model/preparation-variable.model';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { SplitGutterInteractionEvent } from 'angular-split';
-import { REPORT } from '@khiops-library/enum/report';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 
 @Component({
@@ -56,7 +48,7 @@ export class VarDetailsPreparationComponent implements OnInit, OnChanges {
     this.preparation2dDatas = this.preparation2dDatasService.getDatas();
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges() {
     this.preparationDatas = this.preparationDatasService.getDatas(
       this.preparationSource!,
     );

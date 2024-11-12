@@ -6,7 +6,6 @@ import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggl
 import { HistogramValuesI } from '@khiops-visualization/components/commons/histogram/histogram.interfaces';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { LS } from '@khiops-library/enum/ls';
-import { REPORT } from '@khiops-library/enum/report';
 import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas';
 
 export class DistributionDatasModel {

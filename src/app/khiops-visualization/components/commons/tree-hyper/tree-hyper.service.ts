@@ -70,7 +70,7 @@ export class TreeHyperService {
    * @param n - The node to get the stroke width from.
    * @returns The stroke width of the node.
    */
-  static getNodeStrokeWidth(n: N) {
+  static getNodeStrokeWidth(_n: N) {
     // Selected Path stroke width
     return 0.01;
   }

@@ -34,9 +34,9 @@ export class ImportExtDatasService {
    */
   formatImportedDatas(
     fileDatas: FileModel,
-    joinKey?: string,
-    fieldName?: string,
-    separator?: string,
+    _joinKey?: string,
+    __fieldName?: string,
+    _separator?: string,
   ): any {
     const formatedDatas = {
       keys: [],
@@ -136,7 +136,7 @@ export class ImportExtDatasService {
     filename: string,
     dimension: string,
     joinKey: string,
-    separator: string,
+    _separator: string,
     fieldName: string,
   ) {
     const extDataPos = this.importExtDatas.findIndex(
@@ -261,7 +261,7 @@ export class ImportExtDatasService {
 
       const importExtDatasLength = this.importExtDatas.length;
       for (let i = 0; i < importExtDatasLength; i++) {
-        const promise = new Promise((resolve, reject) => {
+        const promise = new Promise((resolve) => {
           const externalDatas: ExtDatasModel | undefined =
             this.importExtDatas[i];
           if (!(externalDatas?.file instanceof File)) {

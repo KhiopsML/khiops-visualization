@@ -22,7 +22,6 @@ import { UtilsService } from '@khiops-library/providers/utils.service';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { LS } from '@khiops-library/enum/ls';
 import { Ls } from '@khiops-library/providers/ls.service';
-import { TranslateService } from '@ngstack/translate';
 
 @Component({
   selector: 'kl-distribution-graph',

@@ -175,8 +175,8 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
   }
 
   private interceptTabChange(
-    tab: MatTab,
-    tabHeader: MatTabHeader,
+    _tab: MatTab,
+    _tabHeader: MatTabHeader,
     index: number,
   ) {
     if (index === 1 && this.isContextDimensions) {

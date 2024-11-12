@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CompositionModel } from '@khiops-covisualization/model/composition.model';
 import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-data.model';
 import { LayoutService } from '@khiops-library/providers/layout.service';

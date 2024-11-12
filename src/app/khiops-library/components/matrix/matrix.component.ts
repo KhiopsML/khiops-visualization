@@ -142,7 +142,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
 
     this.clickOnCellHandler = (event: MouseEvent) => this.clickOnCell(event);
 
-    this.mouseoutHandler = (event: Event) => this.hideTooltip();
+    this.mouseoutHandler = (_event: Event) => this.hideTooltip();
     this.mousemoveHandler = (event: MouseEvent) => {
       this.currentEvent = event;
       this.showTooltip(event);

@@ -107,7 +107,7 @@ export class HistogramService {
   ): HistogramBarModel[] {
     let bars: HistogramBarModel[] = [];
 
-    datas.forEach((d: HistogramValuesI, i: number) => {
+    datas.forEach((d: HistogramValuesI, _i: number) => {
       let histogramBar = new HistogramBarModel(
         d,
         this.rangeXLog.middlewidth!,

@@ -163,7 +163,7 @@ export class SaveService {
       datas.coclusteringReport.dimensionPartitions,
     );
 
-    Object.keys(datas.savedDatas.collapsedNodes).forEach((dim, key) => {
+    Object.keys(datas.savedDatas.collapsedNodes).forEach((dim) => {
       const nodes = datas.savedDatas.collapsedNodes[dim];
 
       const dimIndex =

@@ -205,7 +205,7 @@ export class TreeHyperComponent
     if (this.dimensionTree?.[0]) {
       this.options = {
         dataloader: (ok: any) => ok(this.dimensionTree?.[0]),
-        langInitBFS: (ht: any, n: N) => (n.precalc.label = n.data.id),
+        langInitBFS: (_ht: any, n: N) => (n.precalc.label = n.data.id),
         filter: {
           cullingRadius: 1,
           rangeCullingWeight: {
@@ -215,8 +215,8 @@ export class TreeHyperComponent
           maxlabels: 100000,
         },
         geometry: {
-          nodeRadius: (ud: any, n: N) => this.getNodeRadius(n),
-          nodeScale: (ud: any, n: N) => {
+          nodeRadius: (_ud: any, n: N) => this.getNodeRadius(n),
+          nodeScale: (_ud: any, _n: N) => {
             return 1;
           },
           nodeFilter: (n: N) => {
@@ -236,7 +236,7 @@ export class TreeHyperComponent
             },
             labels: {
               hideOnDrag: false,
-              background: (n: N) => {
+              background: (_n: N) => {
                 return false;
               },
               isVisible: (n: N) =>
@@ -261,7 +261,7 @@ export class TreeHyperComponent
         },
         interaction: {
           mouseRadius: 5,
-          onNodeClick: (n: any, m: any, l: any) => this.nodeClick(n),
+          onNodeClick: (n: any, _m: any, _l: any) => this.nodeClick(n),
         },
       };
 
@@ -287,7 +287,7 @@ export class TreeHyperComponent
   private nodeClick(n: N) {
     this.ngzone.run(() => {
       const trustedNodeSelection = n.data.id;
-      let [index, nodesToSelect] =
+      let [, nodesToSelect] =
         this.treePreparationDatasService.getNodesLinkedToOneNode(
           trustedNodeSelection,
         );

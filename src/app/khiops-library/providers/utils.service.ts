@@ -652,7 +652,7 @@ export class UtilsService {
   static toPlainString(num: number) {
     return ('' + +num).replace(
       /(-?)(\d*)\.?(\d*)e([+-]\d+)/,
-      function (a, b, c, d, e) {
+      function (_a, b, c, d, e) {
         return e < 0
           ? //@ts-ignore
             b + '0.' + Array(1 - e - c.length).join(0) + c + d
@@ -1190,7 +1190,7 @@ export class UtilsService {
    * @returns The first object with updated property values.
    */
   static concat2ObjectsValues(obj1: any, obj2: any) {
-    Object.keys(obj1).forEach((obj1Prop, obj2PropIndex) => {
+    Object.keys(obj1).forEach((obj1Prop, _obj2PropIndex) => {
       obj1[obj1Prop] = obj1[obj1Prop].concat(obj2[obj1Prop]);
     });
     return obj1;

@@ -11,7 +11,7 @@ export class ImportFileLoaderService {
     if (this.configService.isElectron) {
       // Method called automatically at startup
       // For security reasons, local files can not be loaded automatically without Electron
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         this.configService
           ?.getConfig()
           ?.readLocalFile?.(file, (fileContent: any, filePath: string) => {

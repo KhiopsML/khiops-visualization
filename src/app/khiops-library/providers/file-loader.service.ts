@@ -180,7 +180,7 @@ export class FileLoaderService {
             });
           }
         },
-        (error) => {
+        (_error) => {
           this.fileLoaderDatas.isLoadingDatas = false;
           this.setDatas(undefined);
 
