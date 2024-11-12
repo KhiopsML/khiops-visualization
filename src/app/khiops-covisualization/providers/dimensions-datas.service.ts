@@ -100,7 +100,7 @@ export class DimensionsDatasService {
       this.dimensionsDatas.isAxisInverted = savedIsAxisInverted;
     }
   }
-
+  
   /**
    * Retrieves the dimensions data model.
    * This method returns the current state of the dimensions data model.

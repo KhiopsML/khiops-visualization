@@ -22,7 +22,6 @@ import { LS } from '@khiops-library/enum/ls';
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
 import { THEME } from '@khiops-library/enum/theme';
 import { VisualizationDatas } from './interfaces/app-datas';
-import { CallbackI } from '@khiops-library/interfaces/globals';
 import { ConfigModel } from '@khiops-library/model/config.model';
 
 @Component({
@@ -76,7 +75,7 @@ export class AppComponent implements AfterViewInit {
         this.fileLoaderService.setDatas(datas);
       });
     };
-    this.element.nativeElement.openChannelDialog = (cb: CallbackI) => {
+    this.element.nativeElement.openChannelDialog = (cb: Function) => {
       this.dialogRef.closeAll();
       this.ngzone.run(() => {
         const config = new MatDialogConfig();

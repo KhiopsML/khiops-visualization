@@ -5,7 +5,6 @@ import { AppService } from './app.service';
 import { TranslateService } from '@ngstack/translate';
 import { ImportFileLoaderService } from '@khiops-library/components/import-file-loader/import-file-loader.service';
 import { ExtDatasFieldI } from '@khiops-covisualization/interfaces/ext-datas-field';
-import { CallbackI } from '@khiops-library/interfaces/globals';
 
 @Injectable({
   providedIn: 'root',
