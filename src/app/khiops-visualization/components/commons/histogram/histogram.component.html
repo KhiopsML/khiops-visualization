@@ -64,18 +64,20 @@
       </div>
     </div>
   </div>
-  <div fxFlexFill (resized)="onResized($event)">
-    <canvas id="histogram-canvas" fxFlex> </canvas>
-    <canvas id="histogram-canvas-hover" fxFlex> </canvas>
-    <canvas id="histogram-canvas-selected" fxFlex> </canvas>
-    <div #chart id="histogram-chart"></div>
-    <app-histogram-tooltip
-      [text]="tooltipText"
-      [canvasW]="w"
-      [posX]="tooltipPosX"
-      [posY]="tooltipPosY"
-      [display]="tooltipDisplay"
-    >
-    </app-histogram-tooltip>
+  <div id="histogram-container">
+    <div fxFlexFill (resized)="onResized($event)" (wheel)="onWheel($event)">
+      <canvas id="histogram-canvas" fxFlex> </canvas>
+      <canvas id="histogram-canvas-hover" fxFlex> </canvas>
+      <canvas id="histogram-canvas-selected" fxFlex> </canvas>
+      <div #chart id="histogram-chart"></div>
+      <app-histogram-tooltip
+        [text]="tooltipText"
+        [canvasW]="w"
+        [posX]="tooltipPosX"
+        [posY]="tooltipPosY"
+        [display]="tooltipDisplay"
+      >
+      </app-histogram-tooltip>
+    </div>
   </div>
 </div>

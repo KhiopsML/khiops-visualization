@@ -1,6 +1,14 @@
 .app-histogram {
   position: absolute;
   top: 0;
+  padding: 1px;
+
+  #histogram-container {
+    overflow: auto;
+    display: flex;
+    height: 100%;
+    position: relative;
+  }
 
   #histogram-canvas,
   #histogram-canvas-hover,
@@ -20,11 +28,9 @@
     min-height: 54px !important;
   }
   #histogram-chart {
-    top: 50px;
-    position: absolute;
     width: 100%;
     height: calc(
-      100% - 50px
+      100% - 10px
     ); // remove header, Warning do not use fxFlex to avoid animations loop in fullscreen mode
 
     ::ng-deep .axis-grid {

@@ -90,6 +90,9 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   private histogramHoverCanvas?: HTMLCanvasElement | null;
   private histogramSelectedCanvas?: HTMLCanvasElement | null;
 
+  private scaleFactor = 1;
+  private isZooming = false;
+
   constructor(
     private histogramService: HistogramService,
     public translate: TranslateService,
@@ -184,13 +187,39 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     this.resizeSubject.next(event);
   }
 
-  private handleResized(_event: ResizedEvent) {
-    this.h = this.chart.nativeElement.offsetHeight + 10 - 60; // graph header = 60, +10 to take more height
-    this.w = this.chart.nativeElement.offsetWidth;
-    // if (!event.isFirst) {
-    // Do it every timesto be sure that chart height has been computed
+  public onWheel(event: WheelEvent) {
+    event.preventDefault();
+    const { deltaY } = event;
+    const zoomIn = deltaY < 0;
+    this.scaleFactor = zoomIn
+      ? this.scaleFactor + 0.25
+      : this.scaleFactor - 0.25;
+
+    if (this.scaleFactor < 1) {
+      this.scaleFactor = 1;
+    }
+    if (this.scaleFactor > 5) {
+      this.scaleFactor = 5;
+    }
+
+    this.h =
+      (this.chart.nativeElement.offsetHeight + 10 - 60) * this.scaleFactor;
+    this.w = this.chart.nativeElement.offsetWidth * this.scaleFactor;
     this.datas && this.init();
-    // }
+    this.isZooming = true;
+  }
+
+  private handleResized(_event: ResizedEvent) {
+    if (_event.isFirst || this.scaleFactor === 1) {
+      this.h = this.chart.nativeElement.offsetHeight + 10 - 60; // graph header = 60, +10 for scrollbar
+      this.w = this.chart.nativeElement.offsetWidth;
+    }
+
+    if (!this.isZooming) {
+      // Do it every timesto be sure that chart height has been computed
+      this.datas && this.init();
+    }
+    this.isZooming = false;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
