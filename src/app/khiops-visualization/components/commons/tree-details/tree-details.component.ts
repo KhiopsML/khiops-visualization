@@ -34,7 +34,7 @@ export class TreeDetailsComponent implements OnChanges {
     }
   }
 
-  onSelectListItemChanged(item: any) {
+  onSelectListItemChanged(item: TreeNodeModel) {
     this.treePreparationDatasService.setSelectedNode(item, true);
   }
 }

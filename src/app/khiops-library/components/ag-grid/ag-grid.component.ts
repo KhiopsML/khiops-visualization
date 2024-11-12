@@ -64,7 +64,7 @@ export class AgGridComponent
   @Input() public suppressRowClickSelection = false;
   @Input() public inputDatas: any[] | undefined; // Can be any types of datas
   @Input() public displayedColumns: GridColumnsI[] | undefined;
-  @Input() public override id: any = undefined;
+  @Input() public override id: string | undefined = undefined;
   @Input() public title: string = '';
   @Input() public titleTooltip: string = '';
   @Input() public showLevelDistribution = true;
@@ -213,10 +213,10 @@ export class AgGridComponent
           const col = this.displayedColumns[i];
           if (
             col &&
-            this.visibleColumns[this.id] &&
-            this.visibleColumns[this.id][col.field] !== undefined
+            this.visibleColumns[this.id!] &&
+            this.visibleColumns[this.id!][col.field] !== undefined
           ) {
-            col.show = this.visibleColumns[this.id][col.field];
+            col.show = this.visibleColumns[this.id!][col.field];
           }
         }
         this.updateColumnFilterBadge();
@@ -397,7 +397,7 @@ export class AgGridComponent
                   )
               : undefined,
             hide: col.show === false, // ! if undefined : show it
-            width: this.cellsSizes?.[this.id]?.[col.field],
+            width: this.cellsSizes?.[this.id!]?.[col.field],
             cellRendererFramework: col.cellRendererFramework,
             cellRendererParams: col.cellRendererParams,
             comparator: function (a: any, b: any) {
@@ -519,11 +519,11 @@ export class AgGridComponent
     this.agGrid?.api.setQuickFilter(this.searchInput || '');
     if (this.searchInput) {
       this.ls.set(
-        LS.OPTIONS_AG_GRID_SEARCH + '_' + this.id.toUpperCase(),
+        LS.OPTIONS_AG_GRID_SEARCH + '_' + this.id?.toUpperCase(),
         this.searchInput,
       );
     } else {
-      this.ls.del(LS.OPTIONS_AG_GRID_SEARCH + '_' + this.id.toUpperCase());
+      this.ls.del(LS.OPTIONS_AG_GRID_SEARCH + '_' + this.id?.toUpperCase());
     }
   }
 
@@ -585,18 +585,18 @@ export class AgGridComponent
   }
 
   saveColumnSize(field: string, width: number) {
-    if (!this.cellsSizes[this.id]) {
-      this.cellsSizes[this.id] = {};
+    if (!this.cellsSizes[this.id!]) {
+      this.cellsSizes[this.id!] = {};
     }
-    this.cellsSizes[this.id][field] = width;
+    this.cellsSizes[this.id!][field] = width;
     this.ls.set(LS.CELL_AG_GRID, JSON.stringify(this.cellsSizes));
   }
 
   saveVisibleColumns(column: string, isVisible: boolean) {
-    if (!this.visibleColumns[this.id]) {
-      this.visibleColumns[this.id] = {};
+    if (!this.visibleColumns[this.id!]) {
+      this.visibleColumns[this.id!] = {};
     }
-    this.visibleColumns[this.id][column] = isVisible;
+    this.visibleColumns[this.id!][column] = isVisible;
     this.ls.set(LS.COLUMNS_AG_GRID, JSON.stringify(this.visibleColumns));
   }
 
@@ -604,7 +604,7 @@ export class AgGridComponent
     this.gridMode = 'fitToSpace';
 
     // Reinit current saved columns sizes when user fit grid to space
-    delete this.cellsSizes[this.id];
+    delete this.cellsSizes[this.id!];
     this.ls.set(LS.CELL_AG_GRID, JSON.stringify(this.cellsSizes));
 
     // FIX : if table is fitted to available space at start,
@@ -629,7 +629,7 @@ export class AgGridComponent
   }
 
   saveGridModes(gridMode: string) {
-    this.gridModes[this.id] = gridMode;
+    this.gridModes[this.id!] = gridMode;
     this.ls.set(LS.MODES_AG_GRID, JSON.stringify(this.gridModes));
   }
 
@@ -645,7 +645,7 @@ export class AgGridComponent
        * it could be that some of this apis will change in future releases
        */
       setTimeout(() => {
-        if (!this.cellsSizes[this.id]) {
+        if (!this.cellsSizes[this.id!]) {
           this.agGrid?.api?.sizeColumnsToFit();
         }
       });
@@ -657,7 +657,7 @@ export class AgGridComponent
       sortState: this.gridOptions?.columnApi?.getColumnState(),
     };
     this.ls.set(
-      LS.OPTIONS_AG_GRID + '_' + this.id.toUpperCase(),
+      LS.OPTIONS_AG_GRID + '_' + this.id?.toUpperCase(),
       JSON.stringify(state),
     );
   }

@@ -31,7 +31,7 @@ export class HierarchyDetailsComponent extends SelectableComponent {
 
   public selectedTreeCluster: SelectedTreeClusterModel | undefined;
   public componentType = COMPONENT_TYPES.TREE; // needed to copy datas
-  public override id: any = undefined;
+  public override id: string | undefined = undefined;
 
   constructor(
     public override selectableService: SelectableService,

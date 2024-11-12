@@ -39,7 +39,7 @@ export class TreeSelectComponent
   @Input() private selectedNode: TreeNodeModel | undefined;
   @Input() private dimensionsTree: TreeNodeModel[] | undefined;
 
-  public id: any = undefined;
+  public id: string | undefined = undefined;
   private treeSelectedNodeChangedSub: Subscription;
   private tree: any;
   private nodeInSelection: any;

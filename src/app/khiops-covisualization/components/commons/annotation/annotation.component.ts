@@ -28,7 +28,7 @@ export class AnnotationComponent
   @Input() public selectedNode: TreeNodeModel | undefined;
   @Input() private position: number = 0;
   public value: string = '';
-  public override id: any = undefined;
+  public override id: string | undefined = undefined;
   public componentType = COMPONENT_TYPES.ANNOTATIONS; // needed to copy datas
   public title: string = '';
 

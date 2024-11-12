@@ -38,7 +38,7 @@ export class TreeSelectComponent
     new EventEmitter();
 
   public componentType = COMPONENT_TYPES.KV_TREE; // needed to copy datas
-  public override id: any = undefined;
+  public override id: string | undefined = undefined;
   public isFullscreen: boolean = false;
   private tree: any;
 

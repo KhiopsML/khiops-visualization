@@ -49,7 +49,7 @@ export class LevelDistributionGraphComponent
   public override graphIdContainer = 'level-distribution-graph';
 
   // define an id to be copied into clipboard
-  public override id: any = 'level-distribution-graph-comp';
+  public override id: string = 'level-distribution-graph-comp';
 
   public override maxScale: number =
     AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.MAX_LENGTH;

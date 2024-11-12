@@ -20,7 +20,7 @@ export class ExternalDatasComponent
   @Input() private selectedComposition: CompositionModel | undefined;
   @Input() private selectedDimension: DimensionCovisualizationModel | undefined;
 
-  public override id: any = undefined;
+  public override id: string | undefined = undefined;
   public currentExternalDatasTitle: string | undefined = '';
   public currentExternalDatas: any[] = [];
   public componentType = COMPONENT_TYPES.EXTERNAL_DATAS; // needed to copy datas

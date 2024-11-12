@@ -7,13 +7,14 @@ import { PreparationDatasService } from '@khiops-visualization/providers/prepara
 import { REPORT } from '@khiops-library/enum/report';
 import { TranslateModule } from '@ngstack/translate';
 import { HistogramType } from '@khiops-visualization/components/commons/histogram/histogram.type';
+import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas';
 
 let appService: AppService;
 let histogramService: HistogramService;
 let distributionDatasService: DistributionDatasService;
 let preparationDatasService: PreparationDatasService;
 
-function getHistogramGraphDatas(fileDatas: any, variable: any) {
+function getHistogramGraphDatas(fileDatas: VisualizationDatas, variable: any) {
   appService.setFileDatas(fileDatas);
   preparationDatasService.initialize();
   distributionDatasService.initialize();
