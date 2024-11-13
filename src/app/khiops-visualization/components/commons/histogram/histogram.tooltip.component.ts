@@ -25,6 +25,7 @@ import { Component, Input } from '@angular/core';
         padding: 0 10px;
         border-radius: 5px;
         font-size: 0.8rem;
+        min-width: 100px;
         pointer-events: none;
       }
     `,
