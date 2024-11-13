@@ -557,6 +557,9 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   }
 
   private drawChart(chartW: number) {
+    // First remove svg if already added to the dom
+    d3.select(this.chart.nativeElement).select('svg').remove();
+
     this.svg = d3
       .select(this.chart.nativeElement)
       .append('svg')
