@@ -15,7 +15,7 @@ Cypress.Commands.add('loadFile', (ctx: string, file: string) => {
 
 //@ts-ignore
 Cypress.Commands.add('initViews', () => {
-  const viewsLayout = {
+  const viewsLayout: any = {
     isDimensionsChecked: true,
     isCoocurenceChecked: true,
     dimensionsViewsLayoutsVO: [],

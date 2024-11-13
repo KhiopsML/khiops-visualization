@@ -1083,7 +1083,7 @@
         },
         {
           "isChecked": true,
-          "isHierarchyChecked": true,
+          "isHierarchyChecked": false,
           "isClustersChecked": true,
           "isAnnotationChecked": true,
           "isCompositionChecked": false,
