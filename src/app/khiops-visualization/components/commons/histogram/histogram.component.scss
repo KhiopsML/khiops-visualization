@@ -8,6 +8,7 @@
     display: flex;
     height: 100%;
     position: relative;
+    width: 100%;
   }
 
   #histogram-canvas,
@@ -29,10 +30,13 @@
   }
   #histogram-chart {
     width: 100%;
-    position: absolute;
-    height: calc(
-      100% - 10px
-    ); // remove header, Warning do not use fxFlex to avoid animations loop in fullscreen mode
+    height: 100%;
+    display: flex;
+    position: relative;
+
+    ::ng-deep svg {
+      position: absolute; // important in case of zoom
+    }
 
     ::ng-deep .axis-grid {
       .domain {

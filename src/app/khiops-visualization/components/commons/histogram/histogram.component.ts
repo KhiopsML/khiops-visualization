@@ -161,15 +161,13 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
       this.zoom(-1);
     });
     this.zoomToolsEventsService.zoomOut$.subscribe(() => {
-      if (this.scaleFactor !== 1) {
-        this.zoom(1);
-      }
+      this.zoom(1);
     });
     this.zoomToolsEventsService.zoomReset$.subscribe(() => {
       this.zoom(0);
     });
 
-    this.datas && this.init();
+    this.datas && this.update();
   }
 
   public hideActiveEntries() {
@@ -198,13 +196,13 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   public changeGraphTypeX(type: string) {
     AppService.Ls.set(LS.DISTRIBUTION_GRAPH_OPTION_X, type);
     this.graphOptionsX!.selected = type;
-    this.datas && this.init();
+    this.datas && this.update();
   }
 
   public changeGraphTypeY(type: string) {
     AppService.Ls.set(LS.DISTRIBUTION_GRAPH_OPTION_Y, type);
     this.graphOptionsY!.selected = type;
-    this.datas && this.init();
+    this.datas && this.update();
   }
 
   public onResized(event: ResizedEvent) {
@@ -219,25 +217,22 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 
   private zoom(delta: number) {
     const zoomIn = delta < 0;
-    this.scaleFactor = zoomIn
-      ? this.scaleFactor + 0.25
-      : this.scaleFactor - 0.25;
+    let scale = zoomIn ? this.scaleFactor + 0.25 : this.scaleFactor - 0.25;
 
-    if (this.scaleFactor <= 1) {
-      this.scaleFactor = 1;
+    if (scale <= 1) {
+      scale = 1;
     }
-    if (this.scaleFactor > 5) {
-      this.scaleFactor = 5;
+    if (scale > 5) {
+      scale = 5;
     }
     if (delta === 0) {
-      this.scaleFactor = 1;
+      scale = 1;
     }
-    this.scaleFactor = Number(this.scaleFactor.toFixed(2));
-
-    this.h =
-      (this.chart.nativeElement.offsetHeight + 10 - 60) * this.scaleFactor;
-    this.w = this.chart.nativeElement.offsetWidth * this.scaleFactor;
-    this.datas && this.init();
+    if (scale !== this.scaleFactor) {
+      this.scaleFactor = Number(scale.toFixed(2));
+      this.computeChartDimensions();
+      this.datas && this.update();
+    }
     this.isZooming = true;
   }
 
@@ -268,22 +263,27 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     this.isDragging = false;
   }
 
+  public computeChartDimensions() {
+    this.h =
+      (this.chart.nativeElement.offsetHeight + 10 - 60) * this.scaleFactor;
+    this.w = this.chart.nativeElement.offsetWidth * this.scaleFactor;
+  }
+
   private handleResized(_event: ResizedEvent) {
-    if (_event.isFirst || this.scaleFactor === 1) {
-      this.h = this.chart.nativeElement.offsetHeight + 10 - 60; // graph header = 60, +10 for scrollbar
-      this.w = this.chart.nativeElement.offsetWidth;
+    if (_event.isFirst || this.scaleFactor === 1 /*&& !this.isZooming*/) {
+      this.computeChartDimensions();
     }
 
     if (!this.isZooming) {
       // Do it every timesto be sure that chart height has been computed
-      this.datas && this.init();
+      this.datas && this.update();
     }
     this.isZooming = false;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.datas && !changes.datas.firstChange) {
-      this.datas && this.init();
+      this.datas && this.update();
     }
     if (changes.selectedItem) {
       this.drawSelectedItem();
@@ -377,7 +377,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     this.tooltipDisplay = false;
   }
 
-  private init() {
+  private update() {
     if (this.histogramCanvas) {
       HistogramUIService.cleanDomContext(this.ctx!, this.histogramCanvas);
       HistogramUIService.cleanDomContext(
