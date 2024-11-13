@@ -270,7 +270,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   }
 
   private handleResized(_event: ResizedEvent) {
-    if (_event.isFirst || this.scaleFactor === 1 /*&& !this.isZooming*/) {
+    if (_event.isFirst || (this.scaleFactor === 1 && !this.isZooming)) {
       this.computeChartDimensions();
     }
 
