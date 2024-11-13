@@ -33,6 +33,7 @@
       (scaleValueChanged)="onScaleValueChanged($event)"
       (toggleFullscreen)="onToggleFullscreen($event)"
       [hideScale]="hideScaleElt()"
+      [showZoom]="distributionDatas?.histogramDatas ? true : false"
     >
     </kl-graph-header>
     <kl-distribution-graph

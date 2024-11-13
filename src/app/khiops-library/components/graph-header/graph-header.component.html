@@ -30,6 +30,7 @@
       <input [(ngModel)]="scaleValue" matSliderThumb />
     </mat-slider>
   </div>
+  <kl-zoom-tools [alignment]="'row'" *ngIf="showZoom"></kl-zoom-tools>
   <kl-btn-fullscreen
     *ngIf="toggleFullscreen?.observers.length > 0"
     (toggleFullscreen)="onToggleFullscreen($event)"

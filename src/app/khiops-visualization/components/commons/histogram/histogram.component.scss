@@ -29,6 +29,7 @@
   }
   #histogram-chart {
     width: 100%;
+    position: absolute;
     height: calc(
       100% - 10px
     ); // remove header, Warning do not use fxFlex to avoid animations loop in fullscreen mode

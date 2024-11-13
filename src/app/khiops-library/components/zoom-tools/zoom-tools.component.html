@@ -1,0 +1,32 @@
+<div class="zoom-tools-comp" [fxLayout]="alignment">
+  <button
+    class="screenshot-hide"
+    mat-icon-button
+    color="accent"
+    (click)="onClickOnZoomIn()"
+    matTooltip="{{ 'GLOBAL.ZOOM_IN' | translate }}"
+    attr.aria-label="{{ 'GLOBAL.ZOOM_IN' | translate }}"
+  >
+    <mat-icon fxFlexFill fxLayoutAlign="center center">zoom_in</mat-icon>
+  </button>
+  <button
+    mat-icon-button
+    class="screenshot-hide"
+    color="accent"
+    (click)="onClickOnResetZoom()"
+    matTooltip="{{ 'GLOBAL.RESET_ZOOM' | translate }}"
+    attr.aria-label="{{ 'GLOBAL.RESET_ZOOM' | translate }}"
+  >
+    <mat-icon fxFlexFill fxLayoutAlign="center center">zoom_out_map</mat-icon>
+  </button>
+  <button
+    class="screenshot-hide"
+    mat-icon-button
+    color="accent"
+    (click)="onClickOnZoomOut()"
+    matTooltip="{{ 'GLOBAL.ZOOM_OUT' | translate }}"
+    attr.aria-label="{{ 'GLOBAL.ZOOM_OUT' | translate }}"
+  >
+    <mat-icon fxFlexFill fxLayoutAlign="center center">zoom_out</mat-icon>
+  </button>
+</div>

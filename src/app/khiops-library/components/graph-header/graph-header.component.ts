@@ -26,6 +26,7 @@ export class GraphHeaderComponent implements OnInit {
   @Input() public title: string = '';
   @Input() public smallTitle = false;
   @Input() public hideScale = false;
+  @Input() public showZoom = false;
 
   public maxScale: number;
   public minScale: number;

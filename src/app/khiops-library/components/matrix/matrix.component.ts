@@ -28,6 +28,7 @@ import { Ls } from '@khiops-library/providers/ls.service';
 import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 import { MatrixUtilsService } from './matrix.utils.service';
 import { DynamicI } from '@khiops-library/interfaces/globals';
+import { ZoomToolsEventsService } from '../zoom-tools/zoom-tools.service';
 
 @Component({
   selector: 'kl-matrix',
@@ -117,6 +118,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     private ls: Ls,
     public override selectableService: SelectableService,
     private eventsService: EventsService,
+    private zoomToolsEventsService: ZoomToolsEventsService,
     public override ngzone: NgZone,
     public override configService: ConfigService,
     private khiopsLibraryService: KhiopsLibraryService,
@@ -163,6 +165,18 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     if (!this.isFirstResize) {
       this.drawMatrix();
     }
+  }
+
+  ngOnInit() {
+    this.zoomToolsEventsService.zoomIn$.subscribe(() => {
+      this.onClickOnZoomIn();
+    });
+    this.zoomToolsEventsService.zoomOut$.subscribe(() => {
+      this.onClickOnZoomOut();
+    });
+    this.zoomToolsEventsService.zoomReset$.subscribe(() => {
+      this.onClickOnResetZoom();
+    });
   }
 
   override ngOnDestroy() {

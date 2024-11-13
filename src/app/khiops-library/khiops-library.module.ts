@@ -64,6 +64,7 @@ import { MatrixModeComponent } from './components/matrix-mode/matrix-mode.compon
 import { GraphOptionsMenuComponent } from './components/graph-options-menu/graph-options-menu.component';
 import EnTransaltion from '../../assets/i18n/en.json';
 import { ProjectSummaryComponent } from './components/project-summary/project-summary.component';
+import { ZoomToolsComponent } from './components/zoom-tools/zoom-tools.component';
 
 @NgModule({
   imports: [
@@ -106,6 +107,7 @@ import { ProjectSummaryComponent } from './components/project-summary/project-su
     }),
   ],
   declarations: [
+    ZoomToolsComponent,
     LibraryComponent,
     CellStatsComponent,
     WatchResizeComponent,

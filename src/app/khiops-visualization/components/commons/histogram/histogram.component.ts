@@ -34,6 +34,7 @@ import { LS } from '@khiops-library/enum/ls';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { THEME } from '@khiops-library/enum/theme';
 import { BIG_CHART_SIZE } from '@khiops-library/config/global';
+import { ZoomToolsEventsService } from '@khiops-library/components/zoom-tools/zoom-tools.service';
 
 @Component({
   selector: 'app-histogram',
@@ -106,6 +107,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   constructor(
     private histogramService: HistogramService,
     public translate: TranslateService,
+    private zoomToolsEventsService: ZoomToolsEventsService,
     public override selectableService: SelectableService,
     public override ngzone: NgZone,
     public override configService: ConfigService,
@@ -155,6 +157,18 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.zoomToolsEventsService.zoomIn$.subscribe(() => {
+      this.zoom(-1);
+    });
+    this.zoomToolsEventsService.zoomOut$.subscribe(() => {
+      if (this.scaleFactor !== 1) {
+        this.zoom(1);
+      }
+    });
+    this.zoomToolsEventsService.zoomReset$.subscribe(() => {
+      this.zoom(0);
+    });
+
     this.datas && this.init();
   }
 
@@ -200,17 +214,25 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   public onWheel(event: WheelEvent) {
     event.preventDefault();
     const { deltaY } = event;
-    const zoomIn = deltaY < 0;
+    this.zoom(deltaY);
+  }
+
+  private zoom(delta: number) {
+    const zoomIn = delta < 0;
     this.scaleFactor = zoomIn
       ? this.scaleFactor + 0.25
       : this.scaleFactor - 0.25;
 
-    if (this.scaleFactor < 1) {
+    if (this.scaleFactor <= 1) {
       this.scaleFactor = 1;
     }
     if (this.scaleFactor > 5) {
       this.scaleFactor = 5;
     }
+    if (delta === 0) {
+      this.scaleFactor = 1;
+    }
+    this.scaleFactor = Number(this.scaleFactor.toFixed(2));
 
     this.h =
       (this.chart.nativeElement.offsetHeight + 10 - 60) * this.scaleFactor;
