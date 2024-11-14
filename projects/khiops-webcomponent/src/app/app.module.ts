@@ -12,7 +12,6 @@ import { KhiopsVisualizationModule } from '@khiops-visualization/khiops-visualiz
     KhiopsVisualizationModule,
     KhiopsCovisualizationModule,
   ],
-  providers: [],
 })
 export class AppModule {
   constructor(private injector: Injector) {}

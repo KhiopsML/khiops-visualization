@@ -140,7 +140,10 @@ import { ZoomToolsComponent } from './components/zoom-tools/zoom-tools.component
     ImportFileLoaderComponent,
     ProjectSummaryComponent,
   ],
-  providers: [ConfigService, TranslateService],
+  providers: [
+    ConfigService,
+    TranslateService,
+  ],
   exports: [
     LibraryComponent,
     CommonModule,

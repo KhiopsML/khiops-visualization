@@ -15,7 +15,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TargetVariableStatsComponent } from './components/commons/target-variable-stats/target-variable-stats.component';
 import { DescriptionBlockComponent } from './components/commons/description-block/description-block.component';
 import { KhiopsLibraryModule } from '@khiops-library/khiops-library.module';
-import { TranslateService } from '@ngstack/translate';
 import { LevelDistributionGraphComponent } from './components/commons/level-distribution-graph/level-distribution-graph.component';
 import { SelectTrainedPredictorComponent } from './components/commons/select-trained-predictor/select-trained-predictor.component';
 import { VariableGraphDetailsComponent } from './components/commons/variable-graph-details/variable-graph-details.component';
@@ -41,11 +40,6 @@ import { AngularResizeEventModule } from 'angular-resize-event';
 import { BrowserModule } from '@angular/platform-browser';
 import { HistogramTooltipComponent } from './components/commons/histogram/histogram.tooltip.component';
 import { ProjectLogsComponent } from './components/commons/project-logs/project-logs.component';
-
-const providers = [
-  TranslateService,
-  { provide: OverlayContainer, useClass: InAppRootOverlayContainer },
-];
 
 @NgModule({
   declarations: [
@@ -91,11 +85,12 @@ const providers = [
     ReactiveFormsModule,
     HttpClientModule,
     AngularSplitModule,
-
     AngularResizeEventModule,
   ],
   exports: [AppComponent],
-  providers: providers,
+  providers: [
+    { provide: OverlayContainer, useClass: InAppRootOverlayContainer },
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class KhiopsVisualizationModule {}
