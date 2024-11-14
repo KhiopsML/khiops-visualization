@@ -5,7 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { HomeLayoutComponent } from './components/home-layout/homeLayout.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AngularSplitModule } from 'angular-split';
 import { PreparationViewComponent } from './components/preparation-view/preparation-view.component';
 import { Preparation2dViewComponent } from './components/preparation-2d-view/preparation-2d-view.component';
 import { ModelingViewComponent } from './components/modeling-view/modeling-view.component';
@@ -84,7 +83,6 @@ import { ProjectLogsComponent } from './components/commons/project-logs/project-
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AngularSplitModule,
     AngularResizeEventModule,
   ],
   exports: [AppComponent],

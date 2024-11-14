@@ -5,7 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { HomeLayoutComponent } from './components/home-layout/homeLayout.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AngularSplitModule } from 'angular-split';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { KhiopsLibraryModule } from '@khiops-library/khiops-library.module';
 import { AxisViewComponent } from './components/axis-view/axis-view.component';
@@ -66,7 +65,6 @@ import { HierarchyDetailsComponent } from './components/commons/hierarchy-detail
     ReactiveFormsModule,
     AgGridModule,
     HttpClientModule,
-    AngularSplitModule,
   ],
   providers: [
     { provide: OverlayContainer, useClass: InAppRootOverlayContainer },

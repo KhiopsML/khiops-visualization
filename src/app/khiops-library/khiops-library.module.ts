@@ -65,6 +65,7 @@ import { GraphOptionsMenuComponent } from './components/graph-options-menu/graph
 import EnTransaltion from '../../assets/i18n/en.json';
 import { ProjectSummaryComponent } from './components/project-summary/project-summary.component';
 import { ZoomToolsComponent } from './components/zoom-tools/zoom-tools.component';
+import { AngularSplitModule } from 'angular-split';
 
 @NgModule({
   imports: [
@@ -140,10 +141,7 @@ import { ZoomToolsComponent } from './components/zoom-tools/zoom-tools.component
     ImportFileLoaderComponent,
     ProjectSummaryComponent,
   ],
-  providers: [
-    ConfigService,
-    TranslateService,
-  ],
+  providers: [ConfigService, TranslateService],
   exports: [
     LibraryComponent,
     CommonModule,
@@ -175,6 +173,7 @@ import { ZoomToolsComponent } from './components/zoom-tools/zoom-tools.component
     MatButtonToggleModule,
     MatDialogModule,
     MatRippleModule,
+    AngularSplitModule,
     TranslateModule,
     WatchResizeComponent,
     SelectableComponent,
