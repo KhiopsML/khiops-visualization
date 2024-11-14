@@ -644,15 +644,15 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
 
   private cleanSelectedDomContext() {
     if (this.matrixSelectedDiv) {
+      let width = this.matrixSelectedDiv.nativeElement.width;
+      let height = this.matrixSelectedDiv.nativeElement.height;
+      if (this.isAxisInverted) {
+        [width, height] = [height, width];
+      }
       this.matrixSelectedCtx =
         this.matrixSelectedDiv.nativeElement.getContext('2d');
       // clear the canvas for redrawing
-      this.matrixSelectedCtx.clearRect(
-        0,
-        0,
-        this.matrixSelectedDiv.nativeElement.width,
-        this.matrixSelectedDiv.nativeElement.height,
-      );
+      this.matrixSelectedCtx.clearRect(0, 0, width, height);
     }
   }
 
