@@ -128,21 +128,12 @@ describe('Test Plan for Khiops Covisualization', () => {
         cy.get('#matrix-container').trigger('mousemove', {
           position: 'topRight',
         });
+        cy.wait(500);
+        // Move to the last matrix cell
         cy.get('#matrix-container').trigger('mousemove', {
           position: 'topRight',
         });
-        cy.get('#matrix-container').trigger('mousemove', {
-          position: 'topRight',
-        });
-        cy.get('#matrix-container').trigger('mousemove', {
-          position: 'topRight',
-        });
-        cy.get('#matrix-container').trigger('mousemove', {
-          position: 'topRight',
-        });
-        cy.get('#matrix-container').trigger('mousemove', {
-          position: 'topRight',
-        });
+        cy.wait(500);
 
         // Check Matrix tooltip
         cy.get('.matrix-tooltip-comp').contains(res.matrixTooltip[2]);
