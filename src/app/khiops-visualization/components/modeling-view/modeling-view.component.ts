@@ -24,6 +24,7 @@ import { VariableModel } from '@khiops-visualization/model/variable.model';
 import { AppService } from '../../../khiops-visualization/providers/app.service';
 import { TrainedPredictor } from '@khiops-visualization/interfaces/modeling-report';
 import { TrainedPredictorModel } from '@khiops-visualization/model/trained-predictor.model';
+import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas';
 
 @Component({
   selector: 'app-modeling-view',
@@ -32,7 +33,7 @@ import { TrainedPredictorModel } from '@khiops-visualization/model/trained-predi
 })
 export class ModelingViewComponent extends SelectableTabComponent {
   public preparationSource: string;
-  public appDatas: any;
+  public appDatas?: VisualizationDatas;
   public sizes?: DynamicI;
   public summaryDatas?: InfosDatasI[];
   public targetVariableStatsDatas?: ChartDatasModel;
