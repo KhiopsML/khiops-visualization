@@ -125,7 +125,10 @@
   "resolutions": {
     "webpack": "^5.94.0",
     "micromatch": "4.0.8",
-    "ws": "8.17.1"
+    "ws": "8.17.1",
+    "http-proxy-middleware": "3.0.3",
+    "rollup": "4.22.4",
+    "vite": "5.3.6"
   },
   "appdescription": {
     "visualization": "Khiops Visualization",
