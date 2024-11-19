@@ -5,7 +5,6 @@ import { TranslateService } from '@ngstack/translate';
 import { FileModel } from '@khiops-library/model/file.model';
 import { CheckboxCellComponent } from '@khiops-library/components/ag-grid/checkbox-cell/checkbox-cell.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-data.model';
 import { GridCheckboxEventI } from '@khiops-library/interfaces/events';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 
@@ -15,7 +14,6 @@ import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.c
   styleUrls: ['./import-ext-datas.component.scss'],
 })
 export class ImportExtDatasComponent implements OnInit {
-  dimensionsDatas: DimensionsDatasModel;
   separatorInput: string = '';
   formatedDatas: any;
   joinKeys: any = {
@@ -32,13 +30,13 @@ export class ImportExtDatasComponent implements OnInit {
   @Output() closeImport: EventEmitter<any> = new EventEmitter();
 
   constructor(
-    private dimensionsDatasService: DimensionsDatasService,
+    public dimensionsDatasService: DimensionsDatasService,
     private importExtDatasService: ImportExtDatasService,
     public translate: TranslateService,
     private snackBar: MatSnackBar,
   ) {
-    this.dimensionsDatas = this.dimensionsDatasService.getDatas();
-    this.selectedDimension = this.dimensionsDatas.dimensions[0];
+    this.selectedDimension =
+      this.dimensionsDatasService.dimensionsDatas.dimensions[0];
   }
 
   ngOnInit() {

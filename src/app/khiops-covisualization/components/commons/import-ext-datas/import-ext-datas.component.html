@@ -89,7 +89,10 @@
           <mat-menu #dimensionMenu>
             <button
               mat-menu-item
-              *ngFor="let dimension of dimensionsDatas.dimensions"
+              *ngFor="
+                let dimension of dimensionsDatasService.dimensionsDatas
+                  .dimensions
+              "
               (click)="changeSelectedDimension(dimension)"
             >
               {{ dimension.name }}

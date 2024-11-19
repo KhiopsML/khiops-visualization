@@ -42,9 +42,9 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
   @Input() public viewsLayout: ViewLayoutVO | undefined;
   @Input() private viewId: string = '';
   @Input() selectedDimensions: DimensionCovisualizationModel[] | undefined; // Used to check for dim change
+  @Input() public dimensionsDatas: DimensionsDatasModel | undefined;
 
   public sizes: DynamicI | undefined;
-  public dimensionsDatas: DimensionsDatasModel;
   public matrixModes: MatrixModesModel = new MatrixModesModel();
   public matrixOptions: MatrixOptionsModel = new MatrixOptionsModel();
   public initNodesEvents = 0; // improve draw matrix perf
@@ -62,8 +62,6 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
     private dimensionsDatasService: DimensionsDatasService,
     private layoutService: LayoutService,
   ) {
-    this.dimensionsDatas = this.dimensionsDatasService.getDatas();
-
     this.treeSelectedNodeChangedSub =
       this.eventsService.treeSelectedNodeChanged.subscribe(
         (e: TreeNodeChangedEventI) => {
@@ -87,7 +85,7 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
     this.constructModeSelectBox();
 
     // Check if saved into json
-    if (this.dimensionsDatas.matrixOption !== undefined) {
+    if (this.dimensionsDatas?.matrixOption !== undefined) {
       this.matrixOptions.selected = this.dimensionsDatas.matrixOption;
     }
   }
@@ -136,25 +134,25 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   changeMatrixType(type: string) {
-    this.dimensionsDatas.matrixOption = type; // Save it into the global model to keep it into saved datas
+    this.dimensionsDatas!.matrixOption = type; // Save it into the global model to keep it into saved datas
   }
 
   changeMatrixMode(_mode: MatrixModeI) {
-    this.dimensionsDatas.matrixMode = this.matrixModes.selectedIndex; // Save it into the global model to keep it into saved datas
+    this.dimensionsDatas!.matrixMode = this.matrixModes.selectedIndex; // Save it into the global model to keep it into saved datas
   }
 
   changeConditionalOnContext() {
     // this.trackerService.trackEvent('click', 'matrix_conditionnal_on_context');
-    this.dimensionsDatas.conditionalOnContext =
-      !this.dimensionsDatas.conditionalOnContext;
+    this.dimensionsDatas!.conditionalOnContext =
+      !this.dimensionsDatas?.conditionalOnContext;
     this.treenodesService.initConditionalOnContextNodes();
     this.eventsService.emitConditionalOnContextChanged();
   }
 
   private constructModeSelectBox() {
-    if (this.dimensionsDatas.selectedDimensions) {
-      const varName1 = this.dimensionsDatas.selectedDimensions[0]?.name;
-      const varName2 = this.dimensionsDatas.selectedDimensions[1]?.name;
+    if (this.dimensionsDatas?.selectedDimensions) {
+      const varName1 = this.dimensionsDatas?.selectedDimensions[0]?.name;
+      const varName2 = this.dimensionsDatas?.selectedDimensions[1]?.name;
 
       this.matrixModes.types = [
         {
@@ -187,12 +185,12 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
 
       // Check if saved into json
       if (
-        this.dimensionsDatas.matrixMode !== undefined &&
+        this.dimensionsDatas?.matrixMode !== undefined &&
         this.dimensionsDatas.matrixMode < this.matrixModes.types.length
       ) {
         this.matrixModes.selected =
-          this.matrixModes.types[this.dimensionsDatas.matrixMode];
-        this.matrixModes.selectedIndex = this.dimensionsDatas.matrixMode;
+          this.matrixModes.types[this.dimensionsDatas?.matrixMode!];
+        this.matrixModes.selectedIndex = this.dimensionsDatas?.matrixMode;
       }
     }
   }
@@ -220,13 +218,13 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
 
       if (
         (!e.stopPropagation &&
-          this.initNodesEvents === this.dimensionsDatas.dimensions.length) ||
+          this.initNodesEvents === this.dimensionsDatas?.dimensions.length) ||
         isContextDimension
       ) {
         this.matrix?.drawMatrix();
       } else if (
         !e.stopPropagation &&
-        this.initNodesEvents > this.dimensionsDatas.dimensions.length
+        this.initNodesEvents > this.dimensionsDatas?.dimensions.length!
       ) {
         this.matrix?.drawSelectedNodes();
       }

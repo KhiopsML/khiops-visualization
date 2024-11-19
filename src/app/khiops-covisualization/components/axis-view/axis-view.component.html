@@ -1,14 +1,14 @@
 <div class="axis-view-comp" fxFlexFill>
   <mat-progress-bar
     mode="indeterminate"
-    *ngIf="dimensionsDatas?.isLoading"
+    *ngIf="dimensionsDatasService.dimensionsDatas?.isLoading"
   ></mat-progress-bar>
   <div
     class="loading-axis"
     fxLayout="column"
     fxFlexFill
     fxLayoutAlign="center center"
-    *ngIf="loadingView || !(dimensionsDatas && dimensionsDatas.matrixDatas)"
+    *ngIf="loadingView || !dimensionsDatasService.dimensionsDatas?.matrixDatas"
   >
     <mat-spinner
       diameter="40"
@@ -21,7 +21,7 @@
   </div>
   <as-split
     [gutterSize]="7"
-    *ngIf="!loadingView && dimensionsDatas && dimensionsDatas.matrixDatas"
+    *ngIf="!loadingView && dimensionsDatasService.dimensionsDatas?.matrixDatas"
     direction="horizontal"
     (dragEnd)="onSplitDragEnd($event, 'col')"
   >
@@ -30,7 +30,9 @@
         [gutterSize]="7"
         direction="vertical"
         (dragEnd)="onSplitDragEnd($event, 'col0Row')"
-        *ngIf="dimensionsDatas.dimensionsTrees && viewsLayout"
+        *ngIf="
+          dimensionsDatasService.dimensionsDatas.dimensionsTrees && viewsLayout
+        "
       >
         <as-split-area
           [size]="sizes && sizes.col0Row[0]"
@@ -42,7 +44,7 @@
             [viewId]="'axisView'"
             [position]="0"
             [axisLayout]="viewsLayout.dimensionsViewsLayoutsVO[0]"
-            [dimensionsDatas]="dimensionsDatas"
+            [dimensionsDatas]="dimensionsDatasService.dimensionsDatas"
           >
           </app-axis>
         </as-split-area>
@@ -56,7 +58,7 @@
             [viewId]="'axisView'"
             [position]="1"
             [axisLayout]="viewsLayout.dimensionsViewsLayoutsVO[1]"
-            [dimensionsDatas]="dimensionsDatas"
+            [dimensionsDatas]="dimensionsDatasService.dimensionsDatas"
           >
           </app-axis>
         </as-split-area>
@@ -69,7 +71,11 @@
         (dragEnd)="onSplitDragEnd($event, 'col0Row')"
       >
         <as-split-area
-          *ngFor="let item of dimensionsDatas.contextDimensions; let i = index"
+          *ngFor="
+            let item of dimensionsDatasService.dimensionsDatas
+              .contextDimensions;
+            let i = index
+          "
           order="i+2"
           [visible]="
             viewsLayout?.dimensionsViewsLayoutsVO[i + 2] &&
@@ -81,7 +87,7 @@
             [viewId]="'contextView'"
             [position]="i + 2"
             [axisLayout]="viewsLayout?.dimensionsViewsLayoutsVO[i + 2]"
-            [dimensionsDatas]="dimensionsDatas"
+            [dimensionsDatas]="dimensionsDatasService.dimensionsDatas"
           >
           </app-axis>
         </as-split-area>
@@ -97,7 +103,10 @@
         [sizeId]="'col0Row1Col2Row'"
         [viewId]="'axisView'"
         [viewsLayout]="viewsLayout"
-        [selectedDimensions]="dimensionsDatas.selectedDimensions"
+        [dimensionsDatas]="dimensionsDatasService.dimensionsDatas"
+        [selectedDimensions]="
+          dimensionsDatasService.dimensionsDatas.selectedDimensions
+        "
       >
       </app-matrix-container>
     </as-split-area>

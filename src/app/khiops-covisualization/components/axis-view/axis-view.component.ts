@@ -8,7 +8,6 @@ import { TreenodesService } from '@khiops-covisualization/providers/treenodes.se
 import { TranslateService } from '@ngstack/translate';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
-import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-data.model';
 import { AnnotationService } from '@khiops-covisualization/providers/annotation.service';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { ViewManagerService } from '@khiops-covisualization/providers/view-manager.service';
@@ -28,7 +27,6 @@ export class AxisViewComponent
 {
   @Input() public openContextView = false;
   public sizes: DynamicI | undefined;
-  public dimensionsDatas: DimensionsDatasModel | undefined;
   public viewsLayout: ViewLayoutVO | undefined;
   public isBigJsonFile = false;
   public override loadingView = false;
@@ -39,7 +37,7 @@ export class AxisViewComponent
   constructor(
     private appService: AppService,
     private treenodesService: TreenodesService,
-    private dimensionsDatasService: DimensionsDatasService,
+    public dimensionsDatasService: DimensionsDatasService,
     private annotationService: AnnotationService,
     private fileLoaderService: FileLoaderService,
     private translate: TranslateService,
@@ -87,8 +85,8 @@ export class AxisViewComponent
       this.initializeDatas();
 
       if (
-        this.dimensionsDatas?.dimensions &&
-        this.dimensionsDatas.dimensions.length > 0
+        this.dimensionsDatasService.dimensionsDatas?.dimensions &&
+        this.dimensionsDatasService.dimensionsDatas.dimensions.length > 0
       ) {
         const isLargeCocluster = this.dimensionsDatasService.isLargeCocluster();
         let collapsedNodes = this.appService.getSavedDatas('collapsedNodes');
@@ -106,7 +104,7 @@ export class AxisViewComponent
         this.loadingView = false;
 
         this.viewsLayout = this.viewManagerService.initViewsLayout(
-          this.dimensionsDatas?.selectedDimensions,
+          this.dimensionsDatasService.dimensionsDatas?.selectedDimensions,
         );
       }
     }, 500); // To show loader when big files
@@ -128,7 +126,6 @@ export class AxisViewComponent
    * 5. Constructs the dimensions trees.
    */
   private initializeDatas() {
-    this.dimensionsDatas = this.dimensionsDatasService.getDatas();
     this.dimensionsDatasService.getDimensions();
     this.dimensionsDatasService.initSelectedDimensions();
     this.dimensionsDatasService.saveInitialDimension();
@@ -172,10 +169,10 @@ export class AxisViewComponent
    * 8. Displays a snackbar warning about the performance impact of unfolded data.
    */
   private computeLargeCoclustering(collapsedNodesSaved: DynamicI) {
-    if (this.dimensionsDatas) {
+    if (this.dimensionsDatasService.dimensionsDatas) {
       const unfoldState =
         this.appService.getSavedDatas('unfoldHierarchyState') ||
-        this.dimensionsDatas.dimensions.length *
+        this.dimensionsDatasService.dimensionsDatas.dimensions.length *
           AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.ERGONOMIC_LIMIT;
 
       this.treenodesService.setSelectedUnfoldHierarchy(unfoldState);

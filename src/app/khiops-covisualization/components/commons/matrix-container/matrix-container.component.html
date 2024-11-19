@@ -9,7 +9,7 @@
       order="1"
       [visible]="viewsLayout?.isDimensionsChecked"
     >
-      <app-selected-clusters [selectedNodes]="dimensionsDatas.selectedNodes">
+      <app-selected-clusters [selectedNodes]="dimensionsDatas?.selectedNodes">
       </app-selected-clusters>
     </as-split-area>
     <as-split-area
@@ -34,8 +34,8 @@
           <mat-checkbox
             color="accent"
             class="matrix-conditionalOnContext-checkbox"
-            *ngIf="dimensionsDatas.contextDimensionCount"
-            [checked]="dimensionsDatas.conditionalOnContext"
+            *ngIf="dimensionsDatas?.contextDimensionCount"
+            [checked]="dimensionsDatas?.conditionalOnContext"
             (change)="changeConditionalOnContext()"
           >
             {{ 'GLOBAL.CONDITIONAL_ON_CONTEXT' | translate }}</mat-checkbox
@@ -54,13 +54,13 @@
           [id]="'matrix-container-comp-wrapper'"
           [attr.id]="'matrix-container-comp-wrapper'"
           (cellSelected)="onCellSelected($event)"
-          [isAxisInverted]="dimensionsDatas.isAxisInverted"
+          [isAxisInverted]="dimensionsDatas?.isAxisInverted"
           (matrixAxisInverted)="onMatrixAxisInverted()"
-          [contextSelection]="dimensionsDatas.contextSelection"
+          [contextSelection]="dimensionsDatas?.contextSelection"
           [graphMode]="matrixModes.selected"
-          [(contrast)]="dimensionsDatas.matrixContrast"
-          [selectedNodes]="dimensionsDatas.selectedNodes"
-          [inputDatas]="dimensionsDatas.matrixDatas"
+          [(contrast)]="dimensionsDatas!.matrixContrast"
+          [selectedNodes]="dimensionsDatas?.selectedNodes"
+          [inputDatas]="dimensionsDatas?.matrixDatas"
           [graphType]="matrixOptions.selected"
         >
         </kl-matrix>

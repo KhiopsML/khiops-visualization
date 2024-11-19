@@ -14,7 +14,6 @@ import { HierarchyService } from '@khiops-covisualization/providers/hierarchy.se
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { HierarchyDatasModel } from '@khiops-covisualization/model/hierarchy-datas.model';
-import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-data.model';
 import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { LS } from '@khiops-library/enum/ls';
@@ -45,7 +44,6 @@ export class UnfoldHierarchyComponent implements OnInit {
   public unfoldHierarchyLegend: string;
   public legend: any;
 
-  private dimensionsDatas: DimensionsDatasModel | undefined;
   private previousHierarchyRank: number = 0;
   private borderColor: string;
   private defaultMaxUnfoldHierarchy = 0;
@@ -167,8 +165,9 @@ export class UnfoldHierarchyComponent implements OnInit {
     }
 
     setTimeout(() => {
-      this.dimensionsDatas = this.dimensionsDatasService.getDatas();
-      this.dimensions = _.cloneDeep(this.dimensionsDatas.dimensions);
+      this.dimensions = _.cloneDeep(
+        this.dimensionsDatasService.dimensionsDatas.dimensions,
+      );
 
       this.updateDatas();
 
@@ -246,7 +245,9 @@ export class UnfoldHierarchyComponent implements OnInit {
     }
 
     // Dimension changed, clone to update array
-    this.dimensions = _.cloneDeep(this.dimensionsDatas?.dimensions);
+    this.dimensions = _.cloneDeep(
+      this.dimensionsDatasService.dimensionsDatas?.dimensions,
+    );
 
     this.loadingHierarchy = true;
 
@@ -314,6 +315,8 @@ export class UnfoldHierarchyComponent implements OnInit {
       this.clustersService.getCurrentCellsPerCluster();
 
     // Dimension changed, clone to update array
-    this.dimensions = _.cloneDeep(this.dimensionsDatas?.dimensions);
+    this.dimensions = _.cloneDeep(
+      this.dimensionsDatasService.dimensionsDatas?.dimensions,
+    );
   }
 }
