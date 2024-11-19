@@ -1,0 +1,55 @@
+/**
+  as split overriding styles
+*/
+.as-split-gutter {
+  background-color: var(--bgColor-20) !important;
+}
+
+.as-vertical:not(.as-disabled) > .as-split-gutter:hover,
+.as-vertical:not(.as-disabled) > .as-split-gutter:active,
+.as-horizontal:not(.as-disabled) > .as-split-gutter:hover,
+.as-horizontal:not(.as-disabled) > .as-split-gutter:active {
+  background-color: var(--gutter-hover) !important;
+  transition: background-color 0.1s ease-in-out 0.1s;
+}
+
+.as-split-gutter {
+  background-color: var(--bgColor-20) !important;
+}
+
+as-split-area {
+  background: var(--bgColor) !important;
+}
+
+// split area border color
+split-gutter {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+}
+
+.as-split-area {
+  height: auto !important;
+  width: auto !important;
+}
+
+.as-vertical > .as-split-gutter .as-split-gutter-icon {
+  background-size: 24px !important;
+}
+
+.as-horizontal > .as-split-gutter .as-split-gutter-icon {
+  background-size: 4px !important;
+}
+
+as-split.as-disabled {
+  .as-split-gutter {
+    .as-split-gutter-icon {
+      display: none !important;
+    }
+  }
+}
+
+.as-split-gutter-icon {
+  opacity: var(--gripOpacity);
+}
+.as-split-gutter {
+  position: relative;
+}

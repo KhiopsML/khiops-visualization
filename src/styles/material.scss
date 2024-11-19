@@ -2,6 +2,28 @@
 /* This file override Angular Material styles                      */
 /*******************************************************************/
 
+.mat-mdc-progress-bar .mat-mdc-progress-bar-fill {
+  transition-duration: initial !important;
+}
+
+.mat-button-toggle-standalone,
+.mat-button-toggle-group {
+  font-size: 0.8em !important;
+  height: 32px !important;
+}
+
+.mat-badge-small .mat-badge-content {
+  font-size: 0px !important;
+}
+
+.mat-mdc-progress-bar {
+  height: 5px !important;
+}
+
+.mdc-linear-progress__buffer-bar {
+  display: none !important;
+}
+
 .mat-app-background {
   font-size: 14px;
 }

@@ -1,4 +1,4 @@
-@import '../../../../theme.scss';
+@import '../../../../styles/theme.scss';
 #home-layout-comp {
   #header-right {
     position: absolute;
@@ -22,16 +22,5 @@
       height: calc(100% - 84px);
       padding: 5px 6px 6px 6px;
     }
-
-    // > .mat-tab-header {
-    //   > .mat-tab-label-container {
-    //     > .mat-tab-list {
-    //       display: inline-flex;
-    //       justify-content: center;
-    //       align-items: center;
-    //       white-space: nowrap;
-    //     }
-    //   }
-    // }
   }
 }
