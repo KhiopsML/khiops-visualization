@@ -31,15 +31,7 @@ export class ClustersService {
     private treenodesService: TreenodesService,
     private dimensionsDatasService: DimensionsDatasService,
     private importExtDatasService: ImportExtDatasService,
-  ) {
-    this.initialize();
-  }
-  /**
-   * Initializes the dimensions data by retrieving it from the dimensions data service.
-   */
-  initialize() {
-    this.dimensionsDatas = this.dimensionsDatasService.getDatas();
-  }
+  ) {}
 
   /**
    * Retrieves the details of the selected clusters for each dimension.
@@ -49,10 +41,15 @@ export class ClustersService {
   getSelectedClustersDetails(): TreeNodeModel[][] {
     const details: TreeNodeModel[][] = [];
     if (this.dimensionsDatas) {
-      for (let i = 0; i < this.dimensionsDatas.selectedDimensions.length; i++) {
+      for (
+        let i = 0;
+        i <
+        this.dimensionsDatasService.dimensionsDatas.selectedDimensions.length;
+        i++
+      ) {
         details.push(
           this.getCurrentClusterDetailsFromNode(
-            this.dimensionsDatas.dimensionsTrees[i]!,
+            this.dimensionsDatasService.dimensionsDatas.dimensionsTrees[i]!,
           ),
         );
       }
@@ -68,10 +65,15 @@ export class ClustersService {
   getCurrentCellsPerCluster(): number {
     let currentCellsPerCluster = 1;
     if (this.dimensionsDatas) {
-      for (let i = 0; i < this.dimensionsDatas.selectedDimensions.length; i++) {
+      for (
+        let i = 0;
+        i <
+        this.dimensionsDatasService.dimensionsDatas.selectedDimensions.length;
+        i++
+      ) {
         currentCellsPerCluster =
           currentCellsPerCluster *
-          this.dimensionsDatas.selectedDimensions[i]!
+          this.dimensionsDatasService.dimensionsDatas.selectedDimensions[i]!
             .currentHierarchyClusterCount;
       }
     }
@@ -250,12 +252,19 @@ export class ClustersService {
     currentDataSet = new ChartDatasetModel('info', CHART_TYPES.LINE);
     if (this.dimensionsDatas?.hierarchyDatas) {
       for (
-        let j = this.dimensionsDatas.dimensions.length - 1;
-        j <= this.dimensionsDatas.hierarchyDatas.totalInitialClusters;
+        let j =
+          this.dimensionsDatasService.dimensionsDatas.dimensions.length - 1;
+        j <=
+        this.dimensionsDatasService.dimensionsDatas.hierarchyDatas!
+          .totalInitialClusters;
         j++
       ) {
         let currentCluster;
-        for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
+        for (
+          let i = 0;
+          i < this.dimensionsDatasService.dimensionsDatas.dimensions.length;
+          i++
+        ) {
           const currentDimensionHierarchy: DimensionHierarchy | undefined =
             this.appService.initialDatas?.coclusteringReport
               .dimensionHierarchies[i];
@@ -286,8 +295,11 @@ export class ClustersService {
 
       // Manage current rank selection bar
       for (
-        let j = this.dimensionsDatas.dimensions.length - 1;
-        j < this.dimensionsDatas.hierarchyDatas.totalClusters;
+        let j =
+          this.dimensionsDatasService.dimensionsDatas.dimensions.length - 1;
+        j <
+        this.dimensionsDatasService.dimensionsDatas.hierarchyDatas!
+          .totalClusters;
         j++
       ) {
         infoPerCluster.labels.push(j + 1 + '');
@@ -317,11 +329,16 @@ export class ClustersService {
 
     if (
       this.dimensionsDatas?.selectedDimensions &&
-      this.dimensionsDatas.hierarchyDatas
+      this.dimensionsDatasService.dimensionsDatas.hierarchyDatas
     ) {
       let currentDataSet: ChartDatasetModel;
 
-      for (let i = 0; i < this.dimensionsDatas.selectedDimensions.length; i++) {
+      for (
+        let i = 0;
+        i <
+        this.dimensionsDatasService.dimensionsDatas.selectedDimensions.length;
+        i++
+      ) {
         currentDataSet = new ChartDatasetModel(
           this.dimensionsDatas?.selectedDimensions[i]?.name,
           CHART_TYPES.LINE,
@@ -329,13 +346,18 @@ export class ClustersService {
 
         let rankedCount = 1;
         for (
-          let j = this.dimensionsDatas.selectedDimensions.length - 1;
-          j <= this.dimensionsDatas.hierarchyDatas.totalClusters;
+          let j =
+            this.dimensionsDatasService.dimensionsDatas.selectedDimensions
+              .length - 1;
+          j <=
+          this.dimensionsDatasService.dimensionsDatas.hierarchyDatas
+            .totalClusters;
           j++
         ) {
-          const isCurrentNodeRanked = this.dimensionsDatas.dimensionsClusters[
-            i
-          ]?.find((e) => e.hierarchicalRank === j && !e.isLeaf);
+          const isCurrentNodeRanked =
+            this.dimensionsDatasService.dimensionsDatas.dimensionsClusters[
+              i
+            ]?.find((e) => e.hierarchicalRank === j && !e.isLeaf);
           if (isCurrentNodeRanked) {
             rankedCount++;
           }
@@ -347,12 +369,16 @@ export class ClustersService {
       for (let k = 0; k < clustersPerDimDatas.datasets.length; k++) {
         if (
           clustersPerDimDatas.datasets[k]?.data[
-            rank - this.dimensionsDatas.selectedDimensions.length
+            rank -
+              this.dimensionsDatasService.dimensionsDatas.selectedDimensions
+                .length
           ] > maxGraphValue
         ) {
           maxGraphValue =
             clustersPerDimDatas.datasets[k]?.data[
-              rank - this.dimensionsDatas.selectedDimensions.length
+              rank -
+                this.dimensionsDatasService.dimensionsDatas.selectedDimensions
+                  .length
             ];
         }
       }
@@ -364,8 +390,12 @@ export class ClustersService {
       currentDataSet.barThickness = 5;
 
       for (
-        let j = this.dimensionsDatas.selectedDimensions.length - 1;
-        j < this.dimensionsDatas.hierarchyDatas.totalClusters;
+        let j =
+          this.dimensionsDatasService.dimensionsDatas.selectedDimensions
+            .length - 1;
+        j <
+        this.dimensionsDatasService.dimensionsDatas.hierarchyDatas
+          .totalClusters;
         j++
       ) {
         clustersPerDimDatas.labels.push(j + 1 + '');
@@ -403,14 +433,16 @@ export class ClustersService {
       this.dimensionsDatas?.selectedDimensions
     ) {
       const currentDimensionDetails: DimensionCovisualizationModel | undefined =
-        this.dimensionsDatas.selectedDimensions.find(
+        this.dimensionsDatasService.dimensionsDatas.selectedDimensions.find(
           (e) => e.name === hierarchyName,
         );
       if (currentDimensionDetails) {
         const currentIndex: number =
-          this.dimensionsDatas.selectedDimensions.findIndex((e) => {
-            return hierarchyName === e.name;
-          });
+          this.dimensionsDatasService.dimensionsDatas.selectedDimensions.findIndex(
+            (e) => {
+              return hierarchyName === e.name;
+            },
+          );
         const position = currentDimensionDetails.startPosition;
         const currentInitialDimensionDetails: DimensionCovisualizationModel =
           new DimensionCovisualizationModel(
@@ -434,7 +466,9 @@ export class ClustersService {
           if (node.childrenLeafList) {
             const currentDimensionClusters = Object.assign(
               [],
-              this.dimensionsDatas.dimensionsClusters[currentIndex],
+              this.dimensionsDatasService.dimensionsDatas.dimensionsClusters[
+                currentIndex
+              ],
             );
             const childrenLeafListLength = node.childrenLeafList.length;
 

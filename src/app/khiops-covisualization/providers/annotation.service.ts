@@ -12,15 +12,7 @@ export class AnnotationService {
   constructor(
     private appService: AppService,
     private dimensionsDatasService: DimensionsDatasService,
-  ) {
-    this.initialize();
-  }
-  /**
-   * Initializes the dimensions data by fetching it from the DimensionsDatasService.
-   */
-  initialize() {
-    this.dimensionsDatas = this.dimensionsDatasService.getDatas();
-  }
+  ) {}
 
   /**
    * Retrieves the annotations from the dimensions data.
@@ -37,7 +29,7 @@ export class AnnotationService {
    */
   initSavedDatas() {
     if (this.dimensionsDatas) {
-      this.dimensionsDatas.annotations =
+      this.dimensionsDatasService.dimensionsDatas.annotations =
         this.appService.getSavedDatas('annotations') || {};
     }
   }
@@ -56,12 +48,16 @@ export class AnnotationService {
     annotation: string,
   ) {
     if (this.dimensionsDatas) {
-      if (!this.dimensionsDatas.annotations) {
-        this.dimensionsDatas.annotations = {};
+      if (!this.dimensionsDatasService.dimensionsDatas.annotations) {
+        this.dimensionsDatasService.dimensionsDatas.annotations = {};
       }
-      this.dimensionsDatas.annotations[dimensionName] =
-        this.dimensionsDatas.annotations[dimensionName] || {};
-      this.dimensionsDatas.annotations[dimensionName][nodeName] = annotation;
+      this.dimensionsDatasService.dimensionsDatas.annotations[dimensionName] =
+        this.dimensionsDatasService.dimensionsDatas.annotations[
+          dimensionName
+        ] || {};
+      this.dimensionsDatasService.dimensionsDatas.annotations[dimensionName][
+        nodeName
+      ] = annotation;
     }
   }
 }

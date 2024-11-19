@@ -29,8 +29,6 @@ import { LoadExtDatasComponent } from '../commons/load-ext-datas/load-ext-datas.
 import { EventsService } from '@khiops-covisualization/providers/events.service';
 import pjson from 'package.json';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
-import { ClustersService } from '@khiops-covisualization/providers/clusters.service';
-import { AnnotationService } from '@khiops-covisualization/providers/annotation.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { Subscription } from 'rxjs';
@@ -87,8 +85,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     private dialogRef: MatDialog,
     private translate: TranslateService,
     private snackBar: MatSnackBar,
-    private clustersService: ClustersService,
-    private annotationService: AnnotationService,
     private trackerService: TrackerService,
     public selectableService: SelectableService,
     private importExtDatasService: ImportExtDatasService,
@@ -275,9 +271,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 
   private initializeServices() {
     this.dimensionsDatasService.initialize();
-    this.annotationService.initialize();
-    this.clustersService.initialize();
-    this.treenodesService.initialize();
     this.importExtDatasService.initExtDatasFiles();
     // Loading local files is forbidden in js
     if (this.configService.isElectron) {

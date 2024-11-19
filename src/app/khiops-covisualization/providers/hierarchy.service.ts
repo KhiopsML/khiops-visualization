@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { AppService } from '@khiops-covisualization/providers/app.service';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { TreenodesService } from './treenodes.service';
-import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-data.model';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { SaveService } from './save.service';
 
@@ -10,7 +9,6 @@ import { SaveService } from './save.service';
   providedIn: 'root',
 })
 export class HierarchyService {
-  private dimensionsDatas!: DimensionsDatasModel;
   private hierarchyFold: any = {};
 
   constructor(
@@ -24,14 +22,22 @@ export class HierarchyService {
    * Initializes the hierarchy service by fetching dimension data and setting hierarchy fold states.
    */
   initialize() {
-    this.dimensionsDatas = this.dimensionsDatasService.getDatas();
-    for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
+    for (
+      let i = 0;
+      i < this.dimensionsDatasService.dimensionsDatas.dimensions.length;
+      i++
+    ) {
       if (
-        this.hierarchyFold[this.dimensionsDatas.dimensions[i]!.name] !==
-        undefined
+        this.hierarchyFold[
+          this.dimensionsDatasService.dimensionsDatas.dimensions[i]!.name
+        ] !== undefined
       ) {
-        this.dimensionsDatas.dimensions[i]?.setHierarchyFold(
-          this.hierarchyFold[this.dimensionsDatas.dimensions[i]!.name],
+        this.dimensionsDatasService.dimensionsDatas.dimensions[
+          i
+        ]?.setHierarchyFold(
+          this.hierarchyFold[
+            this.dimensionsDatasService.dimensionsDatas.dimensions[i]!.name
+          ],
         );
       }
     }
@@ -46,7 +52,9 @@ export class HierarchyService {
     this.hierarchyFold[dimensionName] = state;
 
     const dimension: DimensionCovisualizationModel | undefined =
-      this.dimensionsDatas.dimensions.find((e) => e.name === dimensionName);
+      this.dimensionsDatasService.dimensionsDatas.dimensions.find(
+        (e) => e.name === dimensionName,
+      );
     dimension?.setHierarchyFold(state);
   }
 
@@ -58,11 +66,20 @@ export class HierarchyService {
     const collapsedNodes =
       this.treenodesService.getLeafNodesForARank(currentRank);
 
-    for (let i = 0; i < this.dimensionsDatas.dimensions.length; i++) {
+    for (
+      let i = 0;
+      i < this.dimensionsDatasService.dimensionsDatas.dimensions.length;
+      i++
+    ) {
       // Remove dimension if unchecked
-      if (this.dimensionsDatas.dimensions[i]?.hierarchyFold === false) {
+      if (
+        this.dimensionsDatasService.dimensionsDatas.dimensions[i]
+          ?.hierarchyFold === false
+      ) {
         // @ts-ignore
-        delete collapsedNodes[this.dimensionsDatas.dimensions[i].name];
+        delete collapsedNodes[
+          this.dimensionsDatasService.dimensionsDatas.dimensions[i]!.name
+        ];
       }
     }
     this.treenodesService.setSavedCollapsedNodes(collapsedNodes);
@@ -70,7 +87,6 @@ export class HierarchyService {
     let datas = this.saveService.constructSavedJson(collapsedNodes);
     this.appService.setCroppedFileDatas(datas);
 
-    this.dimensionsDatas = this.dimensionsDatasService.getDatas();
     this.dimensionsDatasService.getDimensions();
     this.dimensionsDatasService.initSelectedDimensions();
 
