@@ -100,7 +100,7 @@ export class DimensionsDatasService {
       this.dimensionsDatas.isAxisInverted = savedIsAxisInverted;
     }
   }
-  
+
   /**
    * Retrieves the dimensions data model.
    * This method returns the current state of the dimensions data model.
@@ -595,8 +595,6 @@ export class DimensionsDatasService {
 
     if (this.dimensionsDatas.selectedDimensions) {
       this.dimensionsDatas.matrixDatas = new MatrixDatasModel();
-      this.dimensionsDatas.allMatrixDatas = new MatrixDatasModel();
-      this.dimensionsDatas.allMatrixCellDatas = [];
 
       const xDimension: DimensionCovisualizationModel | undefined =
         this.dimensionsDatas.selectedDimensions[0];
@@ -682,13 +680,12 @@ export class DimensionsDatasService {
         MatrixUtilsService.getStandardCovisualizationAxisValues(yDimension!);
 
       // To display axis names
-      this.dimensionsDatas.allMatrixDatas.variable =
-        this.dimensionsDatas.matrixDatas.variable = {
-          nameX: this.dimensionsDatas.selectedDimensions[0]!.name,
-          nameY: this.dimensionsDatas.selectedDimensions[1]!.name,
-          xParts: this.dimensionsDatas.selectedDimensions[0]!.parts,
-          yParts: this.dimensionsDatas.selectedDimensions[1]!.parts,
-        };
+      this.dimensionsDatas.matrixDatas.variable = {
+        nameX: this.dimensionsDatas.selectedDimensions[0]!.name,
+        nameY: this.dimensionsDatas.selectedDimensions[1]!.name,
+        xParts: this.dimensionsDatas.selectedDimensions[0]!.parts,
+        yParts: this.dimensionsDatas.selectedDimensions[1]!.parts,
+      };
 
       // Compute cells
       const cellDatas = MatrixUtilsService.getCellDatas(
@@ -707,8 +704,6 @@ export class DimensionsDatasService {
       );
 
       this.dimensionsDatas.matrixDatas.matrixCellDatas = cellDatas;
-      this.dimensionsDatas.allMatrixDatas.matrixCellDatas = cellDatas;
-      this.dimensionsDatas.allMatrixCellDatas = cellDatas;
 
       // hack to limit re-rendering and optimize perf
       this.dimensionsDatas.matrixDatas.propagateChanges = propagateChanges;
