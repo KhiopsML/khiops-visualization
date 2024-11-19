@@ -9,7 +9,6 @@ import { CompositionModel } from '../model/composition.model';
 import { ClusterDetailsModel } from '@khiops-covisualization/model/cluster-details.model';
 import { TreenodesService } from './treenodes.service';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
-import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-data.model';
 import { ExtDatasModel } from '@khiops-covisualization/model/ext-datas.model';
 import { ImportExtDatasService } from './import-ext-datas.service';
 import { CHART_TYPES } from '@khiops-library/enum/chart-types';
@@ -23,8 +22,6 @@ import { CellModel } from '@khiops-library/model/cell.model';
   providedIn: 'root',
 })
 export class ClustersService {
-  private dimensionsDatas: DimensionsDatasModel | undefined;
-
   constructor(
     private translate: TranslateService,
     private appService: AppService,
@@ -40,7 +37,7 @@ export class ClustersService {
    */
   getSelectedClustersDetails(): TreeNodeModel[][] {
     const details: TreeNodeModel[][] = [];
-    if (this.dimensionsDatas) {
+    if (this.dimensionsDatasService.dimensionsDatas) {
       for (
         let i = 0;
         i <
@@ -64,7 +61,7 @@ export class ClustersService {
    */
   getCurrentCellsPerCluster(): number {
     let currentCellsPerCluster = 1;
-    if (this.dimensionsDatas) {
+    if (this.dimensionsDatasService.dimensionsDatas) {
       for (
         let i = 0;
         i <
@@ -250,7 +247,7 @@ export class ClustersService {
 
     let currentDataSet: ChartDatasetModel;
     currentDataSet = new ChartDatasetModel('info', CHART_TYPES.LINE);
-    if (this.dimensionsDatas?.hierarchyDatas) {
+    if (this.dimensionsDatasService.dimensionsDatas?.hierarchyDatas) {
       for (
         let j =
           this.dimensionsDatasService.dimensionsDatas.dimensions.length - 1;
@@ -328,7 +325,7 @@ export class ClustersService {
     let maxGraphValue = 0;
 
     if (
-      this.dimensionsDatas?.selectedDimensions &&
+      this.dimensionsDatasService.dimensionsDatas?.selectedDimensions &&
       this.dimensionsDatasService.dimensionsDatas.hierarchyDatas
     ) {
       let currentDataSet: ChartDatasetModel;
@@ -340,7 +337,9 @@ export class ClustersService {
         i++
       ) {
         currentDataSet = new ChartDatasetModel(
-          this.dimensionsDatas?.selectedDimensions[i]?.name,
+          this.dimensionsDatasService.dimensionsDatas?.selectedDimensions[
+            i
+          ]?.name,
           CHART_TYPES.LINE,
         );
 
@@ -430,7 +429,7 @@ export class ClustersService {
     if (
       this.appService.initialDatas?.coclusteringReport?.dimensionSummaries &&
       this.appService.appDatas?.coclusteringReport?.dimensionPartitions &&
-      this.dimensionsDatas?.selectedDimensions
+      this.dimensionsDatasService.dimensionsDatas?.selectedDimensions
     ) {
       const currentDimensionDetails: DimensionCovisualizationModel | undefined =
         this.dimensionsDatasService.dimensionsDatas.selectedDimensions.find(
@@ -533,7 +532,9 @@ export class ClustersService {
       );
       for (let i = 0; i < filteredDimensionsClustersDatas.length; i++) {
         const currentNodesNames =
-          this.dimensionsDatas?.nodesNames[selectedDimension.name];
+          this.dimensionsDatasService.dimensionsDatas?.nodesNames[
+            selectedDimension.name
+          ];
         const clusterDetails: ClusterDetailsModel = new ClusterDetailsModel(
           filteredDimensionsClustersDatas[i]!,
           currentNodesNames,

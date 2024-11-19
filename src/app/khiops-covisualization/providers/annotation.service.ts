@@ -1,14 +1,11 @@
 import { Injectable } from '@angular/core';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
-import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-data.model';
 import { AppService } from './app.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AnnotationService {
-  private dimensionsDatas: DimensionsDatasModel | undefined;
-
   constructor(
     private appService: AppService,
     private dimensionsDatasService: DimensionsDatasService,
@@ -20,7 +17,7 @@ export class AnnotationService {
    * @returns An object containing the annotations.
    */
   getAnnotations() {
-    return this.dimensionsDatas?.annotations;
+    return this.dimensionsDatasService.dimensionsDatas?.annotations;
   }
 
   /**
@@ -28,7 +25,7 @@ export class AnnotationService {
    * If no saved data is found, it initializes with an empty object.
    */
   initSavedDatas() {
-    if (this.dimensionsDatas) {
+    if (this.dimensionsDatasService.dimensionsDatas) {
       this.dimensionsDatasService.dimensionsDatas.annotations =
         this.appService.getSavedDatas('annotations') || {};
     }
@@ -47,7 +44,7 @@ export class AnnotationService {
     nodeName: string,
     annotation: string,
   ) {
-    if (this.dimensionsDatas) {
+    if (this.dimensionsDatasService.dimensionsDatas) {
       if (!this.dimensionsDatasService.dimensionsDatas.annotations) {
         this.dimensionsDatasService.dimensionsDatas.annotations = {};
       }
