@@ -119,13 +119,13 @@
           <app-var-details-preparation
             [preparationSource]="preparationSource"
             *ngIf="
-              modelingDatas?.selectedVariable.variableType === 'preparation'
+              modelingDatas?.selectedVariable?.variableType === 'preparation'
             "
           >
           </app-var-details-preparation>
           <app-var-details-preparation-2d
             *ngIf="
-              modelingDatas?.selectedVariable.variableType === 'preparation-2d'
+              modelingDatas?.selectedVariable?.variableType === 'preparation-2d'
             "
           >
           </app-var-details-preparation-2d>
