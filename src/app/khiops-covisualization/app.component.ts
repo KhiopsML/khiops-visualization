@@ -139,20 +139,11 @@ export class AppComponent implements AfterViewInit {
     this.element.nativeElement.setConfig = (config: ConfigModel) => {
       this.configService.setConfig(config);
 
-      const trackerId = this.configService.getConfig().trackerId;
-      const appSource = this.configService.getConfig().appSource;
-
       if (this.configService.getConfig().changeDetector) {
         this.updateElementValue();
       }
 
-      if (trackerId) {
-        this.trackerService.initTracker(
-          AppConfig.covisualizationCommon,
-          trackerId,
-          appSource,
-        );
-      }
+      this.trackerService.initTracker();
     };
     this.element.nativeElement.snack = (
       title: string,

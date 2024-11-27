@@ -94,17 +94,7 @@ export class AppComponent implements AfterViewInit {
     };
     this.element.nativeElement.setConfig = (config: ConfigModel) => {
       this.configService.setConfig(config);
-
-      const trackerId = this.configService.getConfig().trackerId;
-      const appSource = this.configService.getConfig().appSource;
-
-      if (trackerId) {
-        this.trackerService.initTracker(
-          AppConfig.visualizationCommon,
-          trackerId,
-          appSource,
-        );
-      }
+      this.trackerService.initTracker();
     };
     this.element.nativeElement.clean = () => {
       this.ngzone.run(() => {
