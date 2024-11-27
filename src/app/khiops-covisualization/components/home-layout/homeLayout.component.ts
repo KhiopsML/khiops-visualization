@@ -50,6 +50,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
   }
   @Input()
   public set appDatas(datas: CovisualizationDatas) {
+    this.isCompatibleJson = this.appService.isCompatibleJson(datas);
     this.appService.setFileDatas(datas);
   }
   public activeTab = AppConfig.covisualizationCommon.HOME.ACTIVE_TAB_INDEX;
