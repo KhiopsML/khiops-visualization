@@ -411,19 +411,20 @@ export class PreparationDatasService {
       variableStatsDatas.emptyLabels();
       const currentDatas = summary.targetValues;
 
-      // Limit datas to 1000 #229
-      const maxDatasSize = AppConfig.visualizationCommon.GLOBAL.MAX_CHART_SIZE;
-      if (currentDatas.values.length > maxDatasSize) {
-        currentDatas.values.length = maxDatasSize;
-
-        const title =
-          ' ( * ' +
-          this.translate.get('GLOBAL.LIMIT_GRAPH_DATAS_WARNING') +
-          ')';
-        variableStatsDatas.labels.push(title);
-      }
-
       if (currentDatas) {
+        // Limit datas to 1000 #229
+        const maxDatasSize =
+          AppConfig.visualizationCommon.GLOBAL.MAX_CHART_SIZE;
+        if (currentDatas.values.length > maxDatasSize) {
+          currentDatas.values.length = maxDatasSize;
+
+          const title =
+            ' ( * ' +
+            this.translate.get('GLOBAL.LIMIT_GRAPH_DATAS_WARNING') +
+            ')';
+          variableStatsDatas.labels.push(title);
+        }
+
         for (let i = 0; i < currentDatas.values.length; i++) {
           const currentDataSet = new ChartDatasetModel();
 
