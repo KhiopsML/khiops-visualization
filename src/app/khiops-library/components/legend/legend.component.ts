@@ -126,6 +126,14 @@ export class LegendComponent implements OnChanges {
           20,
         );
       }
+
+      // captions are not sorted in natural order #232
+      this.legend.sort((a, b) =>
+        a.shortname.localeCompare(b.shortname, undefined, {
+          numeric: true,
+          sensitivity: 'base',
+        }),
+      );
     }
   }
 }
