@@ -49,22 +49,22 @@ export class EvaluationPredictorModel {
 
   removeUnexistingValues() {
     // Remove non existings values if it's a normal type
-    if (!this.rmse) {
+    if (this.rmse === undefined) {
       delete this.rmse;
     }
-    if (!this.mae) {
+    if (this.mae === undefined) {
       delete this.mae;
     }
-    if (!this.nlpd) {
+    if (this.nlpd === undefined) {
       delete this.nlpd;
     }
-    if (!this.rankRmse) {
+    if (this.rankRmse === undefined) {
       delete this.rankRmse;
     }
-    if (!this.rankMae) {
+    if (this.rankMae === undefined) {
       delete this.rankMae;
     }
-    if (!this.rankNlpd) {
+    if (this.rankNlpd === undefined) {
       delete this.rankNlpd;
     }
 
