@@ -69,7 +69,8 @@
     "NO_VARIABLE_DETAILS": "No variable details.",
     "NO_INFORMATIONS_DETAILS": "No informations details.",
     "NO_COMPOSITION_FOR_NUMERICAL": "No composition datas for numerical dimensions",
-    "NO_EXTERNAL_DATAS_FOR_NUMERICAL": "No external datas for numerical dimensions"
+    "NO_EXTERNAL_DATAS_FOR_NUMERICAL": "No external datas for numerical dimensions",
+    "NO_DATA_FOR_REGRESSION_ANALYSIS": "No data for Regression analysis"
   },
   "SETTINGS": {
     "NUMBER": "number",

@@ -4,6 +4,7 @@ import { TreePreparationVariableModel } from './tree-preparation-variable.model'
 import { TREE_COLORS } from '@khiops-visualization/config/colors';
 import { TreeChildNode } from '@khiops-visualization/interfaces/tree-preparation-report';
 import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas';
+import { TASKS } from '@khiops-library/enum/tasks';
 
 export class TreePreparationDatasModel {
   selectedVariable?: TreePreparationVariableModel = undefined;
@@ -16,13 +17,17 @@ export class TreePreparationDatasModel {
   appDatas: VisualizationDatas | undefined = undefined;
   maxFrequencies!: number;
   minFrequencies!: number;
-
+  isRegressionAnalysis: boolean = false;
   classesCount: number;
 
   constructor(appDatas: VisualizationDatas) {
     this.appDatas = appDatas;
     this.classesCount =
       this.appDatas?.treePreparationReport?.summary?.targetValues?.values?.length;
+
+    this.isRegressionAnalysis =
+      this.appDatas?.treePreparationReport?.summary?.learningTask ===
+      TASKS.REGRESSION;
   }
 
   /**
