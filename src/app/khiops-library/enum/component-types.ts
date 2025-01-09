@@ -17,4 +17,5 @@ export enum COMPONENT_TYPES {
   INFORMATIONS = 'informations',
   MATRIX = 'matrix',
   ND_LINE_CHART = 'ndLineChart',
+  DESCRIPTIONS = 'descriptions',
 }

@@ -7,6 +7,7 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
+import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 
 @Component({
   selector: 'app-description-block',
@@ -17,5 +18,5 @@ import { SelectableComponent } from '@khiops-library/components/selectable/selec
 export class DescriptionBlockComponent extends SelectableComponent {
   @Input() title?: string;
   @Input() value?: string;
-  componentType: string = 'descriptions'; // needed to copy datas
+  componentType = COMPONENT_TYPES.DESCRIPTIONS; // needed to copy datas
 }
