@@ -217,6 +217,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     this.openContextView = false;
     this.selectedTab = undefined;
     this.activeTab = 0;
+    this.appService.setActiveTabIndex(this.activeTab);
   }
 
   private initialize(datas: CovisualizationDatas | undefined = undefined) {
