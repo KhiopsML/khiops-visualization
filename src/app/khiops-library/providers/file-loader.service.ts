@@ -56,7 +56,7 @@ export class FileLoaderService {
     // ===================
     //
 
-    let urlKV = './assets/mocks/kv/new-hyper-tree.json';
+    // let urlKV = './assets/mocks/kv/new-hyper-tree.json';
     // let urlKV = './assets/mocks/kv/NGrams10_AnalysisResults.json';
     // let urlKV = './assets/mocks/kv/NGrams100_AnalysisResults.json';
     // let urlKV = './assets/mocks/kv/000_000_10000words_AllReports.json';
@@ -93,7 +93,7 @@ export class FileLoaderService {
     // let urlKV = './assets/mocks/kv/OI_AllReports.json';
     // let urlKV = './assets/mocks/kv/tree.json';
     // let urlKV = './assets/mocks/kv/Natives_AllReports.json';
-    // let urlKV = './assets/mocks/kv/2d-cells-AllReports.json';
+    let urlKV = './assets/mocks/kv/2d-cells-AllReports.json';
     // let urlKV = './assets/mocks/kv/level.json';
     // let urlKV = './assets/mocks/kv/xor.json';
     // let urlKV = './assets/mocks/kv/Natives-Arbres_Paires_AllReports.json';
@@ -248,7 +248,7 @@ export class FileLoaderService {
     // add to the top of the list
     parsedLs.files.unshift(filename);
 
-    this.ls.set(LS.OPEN_FILE, JSON.stringify(parsedLs));
+    this.ls.set(LS.OPEN_FILE, parsedLs);
   }
 
   getFileHistory() {

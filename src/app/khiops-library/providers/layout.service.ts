@@ -44,7 +44,7 @@ export class LayoutService {
 
   setSplitSizes(splitSizes: any) {
     this.splitSizes = splitSizes;
-    this.ls.set(LS.SPLIT_SIZES, JSON.stringify(this.splitSizes));
+    this.ls.set(LS.SPLIT_SIZES, this.splitSizes);
   }
 
   resizeAndSetSplitSizes(

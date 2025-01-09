@@ -1345,4 +1345,29 @@ export class UtilsService {
 
     return includedIndices;
   }
+
+  /**
+   * Rounds all numbers in a JSON object to the nearest integer.
+   * This method recursively iterates through the JSON object and rounds all numbers
+   * to the nearest integer. It handles numbers at any level of nesting, including
+   * numbers in arrays and objects.
+   * @param {Object} data - The JSON object to round numbers in.
+   * @returns {Object} - A new JSON object with all numbers rounded to the nearest integer.
+   */
+  static roundNumbersInJson(data: any): any {
+    if (typeof data === 'number') {
+      return Math.round(data);
+    } else if (Array.isArray(data)) {
+      return data.map((item) => this.roundNumbersInJson(item));
+    } else if (typeof data === 'object' && data !== null) {
+      const roundedData: any = {};
+      for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+          roundedData[key] = this.roundNumbersInJson(data[key]);
+        }
+      }
+      return roundedData;
+    }
+    return data;
+  }
 }

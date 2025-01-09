@@ -595,7 +595,7 @@ export class AgGridComponent
       this.cellsSizes[this.id!] = {};
     }
     this.cellsSizes[this.id!][field] = width;
-    this.ls.set(LS.CELL_AG_GRID, JSON.stringify(this.cellsSizes));
+    this.ls.set(LS.CELL_AG_GRID, this.cellsSizes);
   }
 
   saveVisibleColumns(column: string, isVisible: boolean) {
@@ -603,7 +603,7 @@ export class AgGridComponent
       this.visibleColumns[this.id!] = {};
     }
     this.visibleColumns[this.id!][column] = isVisible;
-    this.ls.set(LS.COLUMNS_AG_GRID, JSON.stringify(this.visibleColumns));
+    this.ls.set(LS.COLUMNS_AG_GRID, this.visibleColumns);
   }
 
   fitToSpace() {
@@ -611,7 +611,7 @@ export class AgGridComponent
 
     // Reinit current saved columns sizes when user fit grid to space
     delete this.cellsSizes[this.id!];
-    this.ls.set(LS.CELL_AG_GRID, JSON.stringify(this.cellsSizes));
+    this.ls.set(LS.CELL_AG_GRID, this.cellsSizes);
 
     // FIX : if table is fitted to available space at start,
     // then user fitToContent and fitToSpace, header col width are broken
@@ -636,7 +636,7 @@ export class AgGridComponent
 
   saveGridModes(gridMode: string) {
     this.gridModes[this.id!] = gridMode;
-    this.ls.set(LS.MODES_AG_GRID, JSON.stringify(this.gridModes));
+    this.ls.set(LS.MODES_AG_GRID, this.gridModes);
   }
 
   /**

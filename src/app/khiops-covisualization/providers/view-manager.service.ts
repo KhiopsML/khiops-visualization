@@ -153,7 +153,7 @@ export class ViewManagerService {
    */
   saveViewsLayout(viewsLayout: ViewLayoutVO | undefined) {
     this.viewsLayout = viewsLayout;
-    this.ls.set(LS.VIEWS_LAYOUT, JSON.stringify(this.viewsLayout));
+    this.ls.set(LS.VIEWS_LAYOUT, this.viewsLayout);
     this.viewsLayoutChanged.emit(this.viewsLayout);
   }
 }
