@@ -29,6 +29,7 @@ import {
   VariableDetail,
 } from '@khiops-visualization/interfaces/app-datas';
 import { MatrixDatasModel } from '@khiops-library/model/matrix-datas.model';
+import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 
 @Injectable({
   providedIn: 'root',
@@ -783,7 +784,7 @@ export class Preparation2dDatasService {
       const inputDatas = this.getMatrixDatas(variablesDatas[i]!);
       if (inputDatas) {
         let graphMode: MatrixModeI = {
-          mode: 'MUTUAL_INFO_TARGET_WITH_CELL',
+          mode: MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL,
         };
         let [_matrixFreqsValues, matrixValues, _matrixExtras] =
           MatrixUtilsService.computeMatrixValues(
@@ -792,10 +793,12 @@ export class Preparation2dDatasService {
             undefined,
             0,
           );
-        currentRes['MUTUAL_INFO_TARGET_WITH_CELL']!.push(matrixValues!);
+        currentRes[MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL]!.push(
+          matrixValues!,
+        );
 
         graphMode = {
-          mode: 'CELL_INTEREST',
+          mode: MATRIX_MODES.CELL_INTEREST,
         };
         [_matrixFreqsValues, matrixValues, _matrixExtras] =
           MatrixUtilsService.computeMatrixValues(
@@ -804,13 +807,15 @@ export class Preparation2dDatasService {
             undefined,
             0,
           );
-        currentRes['CELL_INTEREST']!.push(matrixValues!);
+        currentRes[MATRIX_MODES.CELL_INTEREST]!.push(matrixValues!);
 
         for (let j = 0; j < inputDatas.matrixCellDatas!.length; j++) {
           const cellFreqs = inputDatas.matrixCellDatas?.[j]?.cellFreqs;
-          currentRes['FREQUENCY']!.push(UtilsService.arraySum(cellFreqs));
+          currentRes[MATRIX_MODES.FREQUENCY]!.push(
+            UtilsService.arraySum(cellFreqs),
+          );
           // @ts-ignore
-          currentRes['FREQUENCY_CELL'].push(cellFreqs);
+          currentRes[MATRIX_MODES.FREQUENCY_CELL].push(cellFreqs);
         }
       }
     }
@@ -819,29 +824,32 @@ export class Preparation2dDatasService {
     this.preparation2dDatas!.matrixDatas = undefined;
     const res: any = {};
 
-    res['MUTUAL_INFO_TARGET_WITH_CELL'] = UtilsService.getMinAndMaxFromArray(
-      currentRes['MUTUAL_INFO_TARGET_WITH_CELL']!.flat(),
-    );
-    res['MUTUAL_INFO_TARGET_WITH_CELL'] = UtilsService.averageMinAndMaxValues(
-      res['MUTUAL_INFO_TARGET_WITH_CELL'][0],
-      res['MUTUAL_INFO_TARGET_WITH_CELL'][1],
-    );
-    res['MUTUAL_INFO'] = res['MUTUAL_INFO_TARGET_WITH_CELL'];
+    res[MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL] =
+      UtilsService.getMinAndMaxFromArray(
+        currentRes[MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL]!.flat(),
+      );
+    res[MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL] =
+      UtilsService.averageMinAndMaxValues(
+        res[MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL][0],
+        res[MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL][1],
+      );
+    res[MATRIX_MODES.MUTUAL_INFO] =
+      res[MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL];
 
-    res['CELL_INTEREST'] = UtilsService.getMinAndMaxFromArray(
-      currentRes['CELL_INTEREST']!.flat(),
+    res[MATRIX_MODES.CELL_INTEREST] = UtilsService.getMinAndMaxFromArray(
+      currentRes[MATRIX_MODES.CELL_INTEREST]!.flat(),
     );
-    res['FREQUENCY'] = UtilsService.getMinAndMaxFromArray(
-      currentRes['FREQUENCY']!.flat(),
+    res[MATRIX_MODES.FREQUENCY] = UtilsService.getMinAndMaxFromArray(
+      currentRes[MATRIX_MODES.FREQUENCY]!.flat(),
     );
-    res['FREQUENCY_CELL'] = UtilsService.getMinAndMaxFromArray(
-      currentRes['FREQUENCY_CELL']!.flat(),
+    res[MATRIX_MODES.FREQUENCY_CELL] = UtilsService.getMinAndMaxFromArray(
+      currentRes[MATRIX_MODES.FREQUENCY_CELL]!.flat(),
     );
 
-    res['PROB_CELL'] = [0, 1];
-    res['PROB_TARGET_WITH_CELL'] = [0, 1];
-    res['PROB_CELL_REVERSE'] = [0, 1];
-    res['PROB_CELL_WITH_TARGET'] = [0, 1];
+    res[MATRIX_MODES.PROB_CELL] = [0, 1];
+    res[MATRIX_MODES.PROB_TARGET_WITH_CELL] = [0, 1];
+    res[MATRIX_MODES.PROB_CELL_REVERSE] = [0, 1];
+    res[MATRIX_MODES.PROB_CELL_WITH_TARGET] = [0, 1];
 
     return res;
   }

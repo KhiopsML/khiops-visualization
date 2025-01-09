@@ -18,6 +18,7 @@ import {
   DimensionHierarchy,
 } from '@khiops-covisualization/interfaces/app-datas';
 import { CellModel } from '@khiops-library/model/cell.model';
+import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 @Injectable({
   providedIn: 'root',
 })
@@ -157,7 +158,7 @@ export class ClustersService {
       _matrixExpectedFreqsValues,
     ] = MatrixUtilsService.computeMatrixValues(
       {
-        mode: 'FREQUENCY',
+        mode: MATRIX_MODES.FREQUENCY,
       },
       this.dimensionsDatasService.dimensionsDatas.matrixDatas.matrixCellDatas!,
       this.dimensionsDatasService.dimensionsDatas.contextSelection,
