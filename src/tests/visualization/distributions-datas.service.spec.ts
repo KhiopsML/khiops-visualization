@@ -155,6 +155,28 @@ describe('Visualization', () => {
       expect(res!.datasets[0]!.data[0]).toEqual(50.012209523809524);
     });
 
+    it('getdistributionGraphDatas should return valid default group index [2d-cells-AllReports, Categorical, R06]', () => {
+      const fileDatas = require('../../assets/mocks/kv/2d-cells-AllReports.json');
+      appService.setFileDatas(fileDatas);
+
+      preparationDatasService.initialize();
+      distributionDatasService.initialize();
+      distributionDatasService.setPreparationSource(REPORT.PREPARATION_REPORT);
+
+      preparationDatasService.setSelectedVariable(
+        fileDatas.preparationReport.variablesStatistics[5].name,
+        REPORT.PREPARATION_REPORT,
+      );
+      const selectedVariable = preparationDatasService.getSelectedVariable(
+        REPORT.PREPARATION_REPORT,
+      );
+      const res = distributionDatasService.getdistributionGraphDatas(
+        selectedVariable!,
+      );
+      expect(res!.datasets[0]!.extra[2].defaultGroupIndex).toEqual(false);
+      expect(res!.datasets[0]!.extra[3].defaultGroupIndex).toEqual(true);
+    });
+
     it('getdistributionGraphDatas should return valid datas [defaultGroup, Numerical, R1, Missing informations Non supervised]', () => {
       const fileDatas = require('../../assets/mocks/kv/defaultGroup.json');
       appService.setFileDatas(fileDatas);
