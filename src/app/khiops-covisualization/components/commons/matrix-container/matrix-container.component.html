@@ -9,7 +9,10 @@
       order="1"
       [visible]="viewsLayout?.isDimensionsChecked"
     >
-      <app-selected-clusters [selectedNodes]="dimensionsDatas?.selectedNodes">
+      <app-selected-clusters
+        [selectedNodes]="dimensionsDatas?.selectedNodes"
+        [selectedDimensions]="selectedDimensions"
+      >
       </app-selected-clusters>
     </as-split-area>
     <as-split-area

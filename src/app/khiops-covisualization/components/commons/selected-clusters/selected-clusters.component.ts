@@ -4,7 +4,13 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, OnDestroy, Input } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  Input,
+  SimpleChanges,
+  OnChanges,
+} from '@angular/core';
 import { SelectedClusterModel } from '@khiops-covisualization/model/selected-cluster.model';
 import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
@@ -13,14 +19,16 @@ import { TranslateService } from '@ngstack/translate';
 import { ClustersService } from '@khiops-covisualization/providers/clusters.service';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { Subscription } from 'rxjs';
+import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 
 @Component({
   selector: 'app-selected-clusters',
   templateUrl: './selected-clusters.component.html',
   styleUrls: ['./selected-clusters.component.scss'],
 })
-export class SelectedClustersComponent implements OnDestroy {
+export class SelectedClustersComponent implements OnDestroy, OnChanges {
   @Input() private selectedNodes: TreeNodeModel[] | undefined;
+  @Input() selectedDimensions: DimensionCovisualizationModel[] | undefined; // Used to check for dim change
 
   public clustersDisplayedColumns: GridColumnsI[] = [];
   public selectedClusters: SelectedClusterModel[] | undefined = undefined;
@@ -82,15 +90,25 @@ export class SelectedClustersComponent implements OnDestroy {
 
     this.treeSelectedNodeChangedSub =
       this.eventsService.treeSelectedNodeChanged.subscribe(() => {
-        this.updateClustersInformations();
-        if (this.selectedClusters) {
-          this.selectActiveClusters();
-        }
+        this.updateClusterTable();
       });
   }
 
   ngOnDestroy() {
     this.treeSelectedNodeChangedSub.unsubscribe();
+  }
+
+  updateClusterTable() {
+    this.updateClustersInformations();
+    if (this.selectedClusters) {
+      this.selectActiveClusters();
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.selectedDimensions) {
+      this.updateClusterTable();
+    }
   }
 
   /**
