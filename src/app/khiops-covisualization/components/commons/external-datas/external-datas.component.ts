@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2023-2025 Orange. All rights reserved.
+ * This software is distributed under the BSD 3-Clause-clear License, the text of which is available
+ * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
+ */
+
 import { Component, OnInit, NgZone, Input } from '@angular/core';
 import { CompositionModel } from '@khiops-covisualization/model/composition.model';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
