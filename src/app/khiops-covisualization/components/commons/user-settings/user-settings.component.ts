@@ -36,7 +36,7 @@ export class UserSettingsComponent implements OnChanges {
     private trackerService: TrackerService,
     private snackBar: MatSnackBar,
   ) {
-    this.currentTheme == AppService.Ls.get(LS.THEME_COLOR, THEME.LIGHT);
+    this.currentTheme = AppService.Ls.get(LS.THEME_COLOR, THEME.LIGHT);
   }
 
   ngOnChanges(changes: SimpleChanges) {
