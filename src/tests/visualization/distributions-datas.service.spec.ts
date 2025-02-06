@@ -323,10 +323,10 @@ describe('Visualization', () => {
         fileDatas.treePreparationReport.variablesStatistics[0].name,
       );
       treePreparationDatasService.initSelectedNodes();
-      const selectedNode = treePreparationDatasService.getSelectedNode();
+      const currentNode = treePreparationDatasService.getSelectedNode();
       const res =
         distributionDatasService.getTreeNodeTargetDistributionGraphDatas(
-          selectedNode!,
+          currentNode!,
         );
       expect(res!.datasets[0]!.extra[0].extra.value).toEqual(5074);
     });
@@ -348,10 +348,10 @@ describe('Visualization', () => {
       const nodeToSelect = treePreparationDatasService.getNodeFromName('L16');
       const node = new TreeNodeModel(nodeToSelect!, undefined, true);
       treePreparationDatasService.setSelectedNode(node, true);
-      const selectedNode = treePreparationDatasService.getSelectedNode();
+      const currentNode = treePreparationDatasService.getSelectedNode();
       const res =
         distributionDatasService.getTreeNodeTargetDistributionGraphDatas(
-          selectedNode!,
+          currentNode!,
         );
       // First value (9th) must be at index 6
       // https://github.com/khiopsrelease/kv-release/issues/46

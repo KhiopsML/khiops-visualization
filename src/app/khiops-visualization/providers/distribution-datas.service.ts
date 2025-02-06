@@ -163,7 +163,7 @@ export class DistributionDatasService {
   /**
    * Retrieves and computes the target distribution graph data for a given tree node.
    *
-   * @param {TreeNodeModel} selectedNode - The selected tree node for which the target distribution graph data is to be retrieved.
+   * @param {TreeNodeModel} currentNode - The selected tree node for which the target distribution graph data is to be retrieved.
    * @param {string} [type] - An optional parameter specifying the type of distribution.
    * @returns {ChartDatasModel} - The computed target distribution graph data.
    *
@@ -175,7 +175,7 @@ export class DistributionDatasService {
    * parameters. Finally, it checks the computed graph data and returns it.
    */
   getTreeNodeTargetDistributionGraphDatas(
-    selectedNode: TreeNodeModel,
+    currentNode: TreeNodeModel,
     type?: string,
   ): ChartDatasModel | undefined {
     this.distributionDatas.initTreeNodeTargetDistributionGraphDatas();
@@ -187,13 +187,13 @@ export class DistributionDatasService {
     if (
       this.distributionDatas.preparationSource &&
       selectedVariable &&
-      selectedNode?.isLeaf
+      currentNode?.isLeaf
     ) {
       let currentDatas: number[][] = [];
       let fullTarget: any[] = [];
       let allTargetValues: number[][] | string[] | undefined;
       let currentXAxis: number[][] | string[] | undefined = [
-        selectedNode.nodeId,
+        currentNode.nodeId,
       ];
       const currentVar: VariableDetail =
         // @ts-ignore
@@ -219,15 +219,15 @@ export class DistributionDatasService {
             fullTarget.push(0);
           }
 
-          for (let i = 0; i < selectedNode.targetValues.values.length; i++) {
+          for (let i = 0; i < currentNode.targetValues.values.length; i++) {
             const currentTargetIndex = parseInt(
               // @ts-ignore
-              selectedNode.targetValues.values[i].replace(/\D/g, ''),
+              currentNode.targetValues.values[i].replace(/\D/g, ''),
               10,
             );
             if (currentTargetIndex !== -1) {
               fullTarget[currentTargetIndex] =
-                selectedNode.targetValues.frequencies[i];
+                currentNode.targetValues.frequencies[i];
             }
           }
           currentDatas =
@@ -242,12 +242,12 @@ export class DistributionDatasService {
 
         if (allTargetValues) {
           for (let i = 0; i < allTargetValues.length; i++) {
-            const currentTargetIndex = selectedNode.targetValues.values.indexOf(
+            const currentTargetIndex = currentNode.targetValues.values.indexOf(
               allTargetValues[i]?.toString()!,
             );
             if (currentTargetIndex !== -1) {
               fullTarget.push(
-                selectedNode.targetValues.frequencies[currentTargetIndex],
+                currentNode.targetValues.frequencies[currentTargetIndex],
               );
             } else {
               fullTarget.push(0);
