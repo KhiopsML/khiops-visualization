@@ -30,6 +30,7 @@ import {
 } from '@khiops-visualization/interfaces/app-datas';
 import { VariableModel } from '@khiops-visualization/model/variable.model';
 import { Variable2dModel } from '@khiops-visualization/model/variable-2d.model';
+import { REPORT } from '@khiops-library/enum/report';
 
 @Injectable({
   providedIn: 'root',
@@ -118,22 +119,39 @@ export class DistributionDatasService {
           currentVar,
         );
         if (variableDetails.dataGrid.dimensions.length > 1) {
-          const currentDatas = variableDetails.dataGrid.partTargetFrequencies;
-          const currentXAxis =
-            variableDetails.dataGrid.dimensions[0]?.partition;
-          const partition = variableDetails.dataGrid.dimensions[1]?.partition;
-          [
-            this.distributionDatas.targetDistributionGraphDatas,
-            this.distributionDatas.targetDistributionDisplayedValues,
-          ] = this.computeTargetDistributionGraph(
-            partition!,
-            currentDatas,
-            currentDatas,
-            currentXAxis!,
-            this.distributionDatas.targetDistributionDisplayedValues,
-            this.distributionDatas.targetDistributionType,
-            selectedVariable.type,
-          );
+          let currentDatas: number[][] = [];
+          let partition: number[][] | string[] | undefined;
+          let currentXAxis: number[][] | string[] | undefined;
+          if (
+            this.distributionDatas.preparationSource ===
+              REPORT.TREE_PREPARATION_REPORT &&
+            this.treePreparationDatasService.getDatas()?.isRegressionAnalysis
+          ) {
+            // Compute tree target distribution from current target
+            currentDatas =
+              this.treePreparationDatasService.getDatas()
+                ?.treePartsTargetFrequencies || [];
+            partition =
+              this.appService.appDatas?.treePreparationReport.treeDetails?.[
+                selectedVariable?.rank
+              ]?.targetPartition?.partition;
+            currentXAxis = variableDetails.inputValues.values;
+          } else {
+            // Compute target distribution from global target
+            currentDatas = variableDetails.dataGrid.partTargetFrequencies;
+            partition = variableDetails.dataGrid.dimensions[1]?.partition;
+            currentXAxis = variableDetails.dataGrid.dimensions[0]?.partition;
+          }
+
+          this.distributionDatas.targetDistributionGraphDatas =
+            this.computeTargetDistributionGraph(
+              partition!,
+              currentDatas,
+              currentDatas,
+              currentXAxis!,
+              this.distributionDatas.targetDistributionType,
+              selectedVariable.type,
+            );
         }
       }
     }
@@ -171,23 +189,12 @@ export class DistributionDatasService {
       selectedVariable &&
       selectedNode?.isLeaf
     ) {
-      const allTargetValues: string[] =
-        this.appService.appDatas?.treePreparationReport.summary.targetValues
-          .values || [];
-      const fullTarget: any[] = [];
-      // Update currentDatas and fill empty values with 0
-      for (let i = 0; i < allTargetValues.length; i++) {
-        const currentTargetIndex = selectedNode.targetValues.values.indexOf(
-          allTargetValues[i]!,
-        );
-        if (currentTargetIndex !== -1) {
-          fullTarget.push(
-            selectedNode.targetValues.frequencies[currentTargetIndex],
-          );
-        } else {
-          fullTarget.push(0);
-        }
-      }
+      let currentDatas: number[][] = [];
+      let fullTarget: any[] = [];
+      let allTargetValues: number[][] | string[] | undefined;
+      let currentXAxis: number[][] | string[] | undefined = [
+        selectedNode.nodeId,
+      ];
       const currentVar: VariableDetail =
         // @ts-ignore
         this.appService.appDatas[this.distributionDatas.preparationSource]
@@ -195,25 +202,100 @@ export class DistributionDatasService {
       const variableDetails: VariableDetailsModel = new VariableDetailsModel(
         currentVar,
       );
-      const currentDatas = variableDetails?.dataGrid?.partTargetFrequencies;
 
-      //get selectednode index
-      const currentXAxis = [selectedNode.nodeId];
-      [
-        this.distributionDatas.treeNodeTargetDistributionGraphDatas,
-        this.distributionDatas.targetDistributionDisplayedValues,
-      ] = this.computeTargetDistributionGraph(
-        allTargetValues,
-        currentDatas,
-        [fullTarget],
-        [currentXAxis],
-        this.distributionDatas.targetDistributionDisplayedValues,
-        this.distributionDatas.treeNodeTargetDistributionType,
-        selectedVariable.type,
-      );
+      if (
+        this.distributionDatas.preparationSource ===
+          REPORT.TREE_PREPARATION_REPORT &&
+        this.treePreparationDatasService.getDatas()?.isRegressionAnalysis
+      ) {
+        // Compute tree target distribution from current target
+        allTargetValues =
+          this.appService.appDatas?.treePreparationReport.treeDetails?.[
+            selectedVariable?.rank
+          ]?.targetPartition?.partition;
+        if (allTargetValues) {
+          // init fullTarget with 0
+          for (let i = 0; i < allTargetValues.length; i++) {
+            fullTarget.push(0);
+          }
+
+          for (let i = 0; i < selectedNode.targetValues.values.length; i++) {
+            const currentTargetIndex = parseInt(
+              // @ts-ignore
+              selectedNode.targetValues.values[i].replace(/\D/g, ''),
+              10,
+            );
+            if (currentTargetIndex !== -1) {
+              fullTarget[currentTargetIndex] =
+                selectedNode.targetValues.frequencies[i];
+            }
+          }
+          currentDatas =
+            this.treePreparationDatasService.getDatas()
+              ?.treePartsTargetFrequencies || [];
+        }
+      } else {
+        // Compute target distribution from global target
+        allTargetValues =
+          this.appService.appDatas?.treePreparationReport.summary.targetValues
+            ?.values;
+
+        if (allTargetValues) {
+          for (let i = 0; i < allTargetValues.length; i++) {
+            const currentTargetIndex = selectedNode.targetValues.values.indexOf(
+              allTargetValues[i]?.toString()!,
+            );
+            if (currentTargetIndex !== -1) {
+              fullTarget.push(
+                selectedNode.targetValues.frequencies[currentTargetIndex],
+              );
+            } else {
+              fullTarget.push(0);
+            }
+          }
+          currentDatas = variableDetails?.dataGrid?.partTargetFrequencies;
+        }
+      }
+
+      if (allTargetValues) {
+        this.distributionDatas.treeNodeTargetDistributionGraphDatas =
+          this.computeTargetDistributionGraph(
+            allTargetValues,
+            currentDatas,
+            [fullTarget],
+            [currentXAxis],
+            this.distributionDatas.treeNodeTargetDistributionType,
+            selectedVariable.type,
+          );
+      }
     }
     this.distributionDatas.checkTreeNodeTargetDistributionGraphDatas();
     return this.distributionDatas.treeNodeTargetDistributionGraphDatas;
+  }
+
+  /**
+   * Initializes the target distribution displayed values based on the provided partition.
+   * If the displayed values are not already set, it initializes the graph options to show all values.
+   * Otherwise, it sets the displayed values based on the provided partition.
+   * @param partition - An array representing the partition of data
+   */
+  initTargetDistributionDisplayedValues(partition: string[] | number[][]) {
+    // init graph option to show all values if not already set
+    if (
+      JSON.stringify(
+        this.distributionDatas.targetDistributionDisplayedValues?.map(
+          (e) => e.name,
+        ),
+      ) !== JSON.stringify(partition?.map((e) => e.toString()))
+    ) {
+      this.distributionDatas.targetDistributionDisplayedValues = [];
+      for (let l = 0; l < partition.length; l++) {
+        this.distributionDatas.targetDistributionDisplayedValues?.push({
+          name: partition[l]!.toString(),
+          show: true,
+        });
+      }
+    }
   }
 
   /**
@@ -233,27 +315,17 @@ export class DistributionDatasService {
     currentDatas: number[][],
     allDatas: number[][],
     currentXAxis: string[] | number[] | string[][] | number[][],
-    displayedValues: ChartToggleValuesI[] | undefined,
     type: string,
     selectedVariableType: string,
-  ): [ChartDatasModel, ChartToggleValuesI[] | undefined] {
+  ): ChartDatasModel {
     const targetDistributionGraphDatas = new ChartDatasModel();
+
+    this.initTargetDistributionDisplayedValues(partition);
 
     let dimensionLength = 0;
     if (partition) {
       dimensionLength = partition.length;
 
-      // init graph option to show all values if not already set
-      if (!displayedValues) {
-        // init array
-        displayedValues = [];
-        for (let l = 0; l < partition.length; l++) {
-          displayedValues.push({
-            name: partition[l]!.toString(),
-            show: true,
-          });
-        }
-      }
       const modalityCounts: ModalityCountsModel =
         this.computeModalityCounts(currentDatas);
 
@@ -281,9 +353,10 @@ export class DistributionDatasService {
           const currentTotal = UtilsService.arraySum(el);
 
           // if currentPartition must be displayed (graph options)
-          const kObj: ChartToggleValuesI | undefined = displayedValues.find(
-            (e) => e.name === currentPartition,
-          );
+          const kObj: ChartToggleValuesI | undefined =
+            this.distributionDatas.targetDistributionDisplayedValues?.find(
+              (e) => e.name === currentPartition?.toString(),
+            );
 
           if (kObj?.show) {
             if (type === TYPES.PROBABILITIES) {
@@ -314,7 +387,7 @@ export class DistributionDatasService {
         }
       }
     }
-    return [targetDistributionGraphDatas, displayedValues];
+    return targetDistributionGraphDatas;
   }
 
   /**
@@ -354,24 +427,37 @@ export class DistributionDatasService {
         const dimensions: DimensionVisualization[] = _.cloneDeep(
           variableDetails.dataGrid.dimensions,
         );
-        const currentXAxis = dimensions[0]?.partition;
-        const partition = 0;
-
-        let currentDatas: number[] | number[][];
+        let currentDatas: number[] | number[][] = [];
         let currentDimension: DimensionVisualization | undefined;
-
+        let currentXAxis: number[][] | string[] | undefined;
+        if (
+          this.distributionDatas.preparationSource ===
+            REPORT.TREE_PREPARATION_REPORT &&
+          this.treePreparationDatasService.getDatas()?.isRegressionAnalysis
+        ) {
+          // Compute tree distribution from current target
+          currentXAxis = variableDetails.inputValues.values;
+          const treeDatas = this.treePreparationDatasService.getDatas();
+          currentDatas = treeDatas?.treePartsTargetFrequencies || [];
+        } else {
+          // Compute distribution from global target
+          currentXAxis = dimensions[0]?.partition;
+          if (dimensions.length === 1) {
+            currentDatas = variableDetails.dataGrid.frequencies;
+          } else {
+            currentDatas = variableDetails.dataGrid.partTargetFrequencies;
+          }
+        }
         if (dimensions.length === 1) {
           currentDimension = dimensions[0];
-          currentDatas = variableDetails.dataGrid.frequencies;
         } else {
           currentDimension = dimensions[1];
-          currentDatas = variableDetails.dataGrid.partTargetFrequencies;
         }
+
         distributionsGraphDetails = this.computeDistributionGraph(
           currentDimension!,
           currentDatas,
           dimensions,
-          partition,
           currentXAxis!,
           selectedVariable,
         );
@@ -471,7 +557,6 @@ export class DistributionDatasService {
     currentDimension: DimensionVisualization,
     currentDatas: number[] | number[][],
     dimensions: DimensionVisualization[],
-    partition: number,
     currentXAxis: number[][] | string[],
     selectedVariable: PreparationVariableModel | TreePreparationVariableModel,
   ): DistributionChartDatasModel | undefined {
@@ -486,16 +571,11 @@ export class DistributionDatasService {
           ', *';
       }
 
-      partition = currentDimension?.partition?.length;
       const currentDataSet = new ChartDatasetModel(
         this.distributionDatas.distributionType,
       );
       const [frequencyArray, coverageArray] =
-        this.getAllFrequencyAndCoverageValues(
-          currentDatas,
-          dimensions,
-          partition,
-        );
+        this.getAllFrequencyAndCoverageValues(currentDatas, dimensions);
 
       let l: number = currentDatas.length;
 
@@ -558,14 +638,17 @@ export class DistributionDatasService {
   getAllFrequencyAndCoverageValues(
     currentDatas: number[] | number[][],
     dimensions: DimensionVisualization[],
-    partition: number,
   ) {
     const frequencyArray: number[] = [];
     const coverageArray: number[] = [];
+    // Check partitionSize into currentDatas to be compatible with Regression case
+    const partitionSize = Array.isArray(currentDatas?.[0])
+      ? currentDatas[0].length
+      : 0;
     for (let i = 0; i < currentDatas.length; i++) {
       const coverageValue = this.getCoverageValueFromDimensionAndPartition(
         dimensions,
-        partition,
+        partitionSize,
         currentDatas[i]!,
       );
       const frequencyValue = Math.log(coverageValue);
@@ -585,7 +668,7 @@ export class DistributionDatasService {
    */
   getCoverageValueFromDimensionAndPartition(
     dimensions: DimensionVisualization[],
-    partition: number,
+    partitionSize: number,
     el: number | number[],
   ) {
     let coverageValue = 0;
@@ -593,7 +676,7 @@ export class DistributionDatasService {
     if (dimensions.length === 1 && !Array.isArray(el)) {
       coverageValue = el;
     } else {
-      for (let j = 0; j < partition; j++) {
+      for (let j = 0; j < partitionSize; j++) {
         if (Array.isArray(el)) {
           // Normal case
           coverageValue = coverageValue + el[j]!;

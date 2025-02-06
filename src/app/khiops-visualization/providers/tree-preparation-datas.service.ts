@@ -108,6 +108,32 @@ export class TreePreparationDatasService {
   }
 
   /**
+   * Retrieves the nodes linked to a specific index.
+   * @param {number} index - The index of the node.
+   * @returns {string[]} An array containing the linked nodes.
+   */
+  getNodesLinkedToOneIndex(index: number): string[] {
+    let currentValues;
+    if (this.treePreparationDatas?.isRegressionAnalysis) {
+      const partition =
+        this.appService.appDatas?.treePreparationReport
+          ?.variablesDetailedStatistics?.[
+          this.treePreparationDatas?.selectedVariable?.rank!
+        ]?.inputValues?.values;
+
+      // put each element of partition into an array
+      currentValues = partition?.map((item) => [item]);
+    } else {
+      currentValues =
+        this.appService.appDatas?.treePreparationReport
+          ?.variablesDetailedStatistics?.[
+          this.treePreparationDatas?.selectedVariable?.rank!
+        ]?.dataGrid?.dimensions[0]?.partition;
+    }
+    return currentValues![index] as string[];
+  }
+
+  /**
    * Retrieves nodes linked to a specific node by its ID.
    * @param {string} id - The ID of the node.
    * @returns {Array} An array containing the dimension index and the linked nodes.
@@ -115,23 +141,40 @@ export class TreePreparationDatasService {
   getNodesLinkedToOneNode(
     id: string,
   ): [number | undefined, string[] | undefined] {
-    const variablesDetailedStatistics =
-      this.appService.appDatas?.treePreparationReport
-        ?.variablesDetailedStatistics;
+    if (this.treePreparationDatas?.isRegressionAnalysis) {
+      // Regression case
+      const variablesDetailedStatistics =
+        this.appService.appDatas?.treePreparationReport
+          ?.variablesDetailedStatistics;
 
-    const rank: string | undefined =
-      this.treePreparationDatas?.selectedVariable?.rank;
-    const varDetails: VariableDetail | undefined =
-      variablesDetailedStatistics?.[rank!];
-    const dimensions = varDetails?.dataGrid?.dimensions;
-    const dimIndex = dimensions?.findIndex(
-      (e: any) =>
-        e.variable === this.treePreparationDatas?.selectedVariable?.name,
-    );
-    // @ts-ignore
-    const dimDatas: string[][] = dimensions[dimIndex].partition; // in case of tree, partition is never a number
-    const dimDatasIndex = dimDatas.findIndex((e: any) => e.includes(id));
-    return [dimDatasIndex, dimDatas[dimDatasIndex]];
+      const rank: string | undefined =
+        this.treePreparationDatas?.selectedVariable?.rank;
+      const varDetails: VariableDetail | undefined =
+        variablesDetailedStatistics?.[rank!];
+      const dimensions = varDetails?.inputValues?.values;
+      const dimDatasIndex = dimensions?.findIndex((e: string) => e === id) || 0;
+      const nodeToSelect = dimensions?.[dimDatasIndex] || '';
+      return [dimDatasIndex, [nodeToSelect]];
+    } else {
+      // Classification case
+      const variablesDetailedStatistics =
+        this.appService.appDatas?.treePreparationReport
+          ?.variablesDetailedStatistics;
+
+      const rank: string | undefined =
+        this.treePreparationDatas?.selectedVariable?.rank;
+      const varDetails: VariableDetail | undefined =
+        variablesDetailedStatistics?.[rank!];
+      const dimensions = varDetails?.dataGrid?.dimensions;
+      const dimIndex = dimensions?.findIndex(
+        (e: any) =>
+          e.variable === this.treePreparationDatas?.selectedVariable?.name,
+      );
+      // @ts-ignore
+      const dimDatas: string[][] = dimensions[dimIndex].partition; // in case of tree, partition is never a number
+      const dimDatasIndex = dimDatas.findIndex((e: any) => e.includes(id));
+      return [dimDatasIndex, dimDatas[dimDatasIndex]];
+    }
   }
 
   /**
@@ -155,7 +198,9 @@ export class TreePreparationDatasService {
           new TreePreparationVariableModel(variable, variable.name);
         this.setSelectedFlattenTree(variable.rank);
         this.computeNodesFreqsComparedToOthers();
+        this.treePreparationDatas.computeRegressionClassesCount();
         this.treePreparationDatas.computeTreeColorsMap();
+        this.treePreparationDatas.computeTreePartTargetFrequencies();
         this.constructDimensionTree();
         return this.treePreparationDatas.selectedVariable;
       }
@@ -188,8 +233,9 @@ export class TreePreparationDatasService {
       this.appService.appDatas?.treePreparationReport?.treeDetails;
     const currentRank = this.getSelectedVariableRank();
     if (currentRank && treeDatas?.[currentRank]) {
+      const nodeDatas = treeDatas[currentRank].treeNodes;
       const currentDimTree: TreeNodeModel = new TreeNodeModel(
-        treeDatas[currentRank].treeNodes,
+        nodeDatas,
         this.treePreparationDatas,
       );
       this.treePreparationDatas!.dimensionTree = _.cloneDeep([currentDimTree]);
@@ -448,7 +494,11 @@ export class TreePreparationDatasService {
       this.treePreparationDatas?.selectedNodes,
       selectedNodes,
     );
-    if (!this.treePreparationDatas?.selectedNodes || !_.isEmpty(diff)) {
+    if (
+      !this.treePreparationDatas?.selectedNodes ||
+      this.treePreparationDatas?.selectedNodes.length === 0 || // important if user has selected a folder before
+      !_.isEmpty(diff)
+    ) {
       // clone it to emit onchange
       this.treePreparationDatas!.selectedNodes = _.cloneDeep(selectedNodes);
     }

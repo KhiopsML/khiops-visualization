@@ -11,16 +11,9 @@
       mode="indeterminate"
     ></mat-spinner>
   </div>
-  <kl-no-data
-    fxFlexFill
-    fxLayoutAlign="center center"
-    *ngIf="treePreparationDatas?.isRegressionAnalysis"
-    [message]="'NO_DATAS.NO_DATA_FOR_REGRESSION_ANALYSIS'"
-  >
-  </kl-no-data>
   <as-split
     [gutterSize]="7"
-    *ngIf="!loadingView && sizes && !treePreparationDatas?.isRegressionAnalysis"
+    *ngIf="!loadingView && sizes"
     direction="horizontal"
     (dragEnd)="onSplitDragEnd($event, 'col')"
   >

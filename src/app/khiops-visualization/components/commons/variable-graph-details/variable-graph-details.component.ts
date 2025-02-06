@@ -84,10 +84,20 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (
-      changes.selectedVariable?.currentValue ||
-      changes.displayedValues?.currentValue
-    ) {
+    if (changes.displayedValues?.currentValue) {
+      setTimeout(
+        () => {
+          if (this.showTargetDistributionGraph) {
+            this.distributionDatasService.getTargetDistributionGraphDatas(
+              this.selectedVariable!,
+            );
+          }
+        },
+        this.isLoading ? 100 : 0,
+      ); // do it async to dont freeze during graph rendering
+    }
+
+    if (changes.selectedVariable?.currentValue) {
       this.selectedGraphItemIndex = 0;
       this.initActiveEntries(this.selectedGraphItemIndex);
 
@@ -248,7 +258,6 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
 
   onSelectedDistributionGraphItemChanged(index: number) {
     this.activeEntries = index;
-
     // launch event to parent to manage interval table datas or matrix selection
     this.selectedItemChanged.emit(index);
   }

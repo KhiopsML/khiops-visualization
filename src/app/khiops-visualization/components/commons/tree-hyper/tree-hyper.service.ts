@@ -20,13 +20,13 @@ export class TreeHyperService {
    * @param displayedValues - The values that determine visibility.
    * @returns The stroke width of the link.
    */
-  static getLinkStrokeWidth(n: N, displayedValues: ChartToggleValuesI[]) {
-    const isVisible = this.filterVisibleNodes(n, displayedValues);
-    if (isVisible) {
-      return 0.001;
-    } else {
-      return 0;
-    }
+  static getLinkStrokeWidth(_n: N, _displayedValues: ChartToggleValuesI[]) {
+    // const isVisible = this.filterVisibleNodes(n, displayedValues);
+    // if (isVisible) {
+    return 0.001;
+    // } else {
+    //   return 0;
+    // }
   }
 
   /**
@@ -37,14 +37,20 @@ export class TreeHyperService {
    */
   static filterVisibleNodes(n: N, displayedValues: ChartToggleValuesI[]) {
     let isVisible = false;
+    const values = n.data.targetValues.values;
     if (displayedValues) {
-      for (let i = 0; i < n.data.targetValues.values.length; i++) {
-        if (
-          displayedValues.find(
-            (e) => e.show && e.name === n.data.targetValues.values[i],
-          )
-        ) {
-          isVisible = true;
+      for (let i = 0; i < values.length; i++) {
+        if (n.data.isRegressionAnalysis) {
+          // In case of regression
+          const index = parseInt(values[i].replace(/\D/g, ''), 10);
+          if (displayedValues[index]?.show) {
+            return true;
+          }
+        } else {
+          // In Classification case
+          if (displayedValues.find((e) => e.show && e.name === values[i])) {
+            isVisible = true;
+          }
         }
       }
     }
@@ -112,6 +118,10 @@ export class TreeHyperService {
    * @returns 'block' if the node layer is visible, otherwise 'none'.
    */
   static isNodeLayerVisible(displayedValues: ChartToggleValuesI[], n: N) {
+    if (!displayedValues) {
+      // Set layers visibles at init
+      return 'block';
+    }
     const isVisible = TreeHyperService.filterVisibleNodes(n, displayedValues);
     if (isVisible) {
       return 'block';

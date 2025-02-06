@@ -132,7 +132,6 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
     this.variablesDatas = this.preparationDatasService.getVariablesDatas(
       this.preparationSource,
     );
-    this.treePreparationDatasService.getCurrentIntervalDatas();
     this.distributionDatas = this.distributionDatasService.getDatas();
   }
 
@@ -154,9 +153,6 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
     const modelingVariable =
       this.treePreparationDatasService.setSelectedVariable(item.name);
     this.modelingDatasService.setSelectedVariable(modelingVariable!);
-    this.treePreparationDatasService.getCurrentIntervalDatas(
-      this.selectedBarIndex,
-    );
   }
 
   onShowLevelDistributionGraph(datas: VariableModel[]) {
@@ -170,27 +166,32 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
   }
 
   onSelectTreeItemChanged(item: { id: string; isLeaf: boolean }) {
-    const [index, _nodesToSelect] =
+    let [index, nodesToSelect] =
       this.treePreparationDatasService.getNodesLinkedToOneNode(item.id);
     this.selectedBarIndex = index;
-    this.treePreparationDatasService.getCurrentIntervalDatas(
-      this.selectedBarIndex,
-    );
+
+    if (!item.isLeaf) {
+      nodesToSelect = [item.id];
+    }
+
+    if (nodesToSelect) {
+      this.treePreparationDatasService.setSelectedNodes(
+        nodesToSelect,
+        nodesToSelect[0],
+      );
+    }
   }
 
   onSelectedGraphItemChanged(index: number) {
     // Keep in memory to keep bar charts index on type change
     this.selectedBarIndex = index;
-    const currentIntervalDatas =
-      this.treePreparationDatasService.getCurrentIntervalDatas(
-        this.selectedBarIndex,
-      );
-    const currentValues = currentIntervalDatas?.values?.map(
-      (e: any) => e.values,
-    );
+
+    // Get node linked to index
+    const nodesToSelect =
+      this.treePreparationDatasService.getNodesLinkedToOneIndex(index);
     this.treePreparationDatasService.setSelectedNodes(
-      currentValues,
-      currentValues[0],
+      nodesToSelect,
+      nodesToSelect[0],
     );
   }
 }

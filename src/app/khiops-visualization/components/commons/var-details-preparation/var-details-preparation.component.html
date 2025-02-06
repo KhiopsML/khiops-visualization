@@ -49,7 +49,7 @@
   >
     <kl-ag-grid
       *ngIf="
-        preparationDatas?.currentIntervalDatas.values &&
+        preparationDatas?.currentIntervalDatas?.values &&
         !isRegressionOrExplanatoryAnalysis
       "
       id="preparation-current-interval"
@@ -61,23 +61,23 @@
       [displayCount]="false"
       [showLineSelection]="true"
       titleTooltip="{{ 'TOOLTIPS.PREPARATION.INTERVAL.TITLE' | translate }}"
-      [title]="preparationDatas?.currentIntervalDatas.title"
+      [title]="preparationDatas?.currentIntervalDatas?.title"
       [showColumnsSelection]="false"
-      [inputDatas]="preparationDatas?.currentIntervalDatas.values"
+      [inputDatas]="preparationDatas?.currentIntervalDatas?.values"
       [displayedColumns]="
-        preparationDatas?.currentIntervalDatas.displayedColumns
+        preparationDatas?.currentIntervalDatas?.displayedColumns
       "
     >
     </kl-ag-grid>
     <kl-no-data
       fxFlex
-      *ngIf="!preparationDatas?.currentIntervalDatas.values"
+      *ngIf="!preparationDatas?.currentIntervalDatas?.values"
     ></kl-no-data>
     <as-split
       [gutterSize]="7"
       direction="horizontal"
       *ngIf="
-        (!preparationDatas?.currentIntervalDatas.values &&
+        (!preparationDatas?.currentIntervalDatas?.values &&
           preparation2dDatas?.currentCellDatas) ||
         isRegressionOrExplanatoryAnalysis
       "

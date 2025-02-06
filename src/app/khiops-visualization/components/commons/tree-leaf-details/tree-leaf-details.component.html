@@ -1,4 +1,10 @@
 <div id="tree-leaf-details-comp" fxFlexFill fxLayout="column">
+  <kl-no-data
+    fxFlexFill
+    fxLayoutAlign="center center"
+    *ngIf="!selectedNode?.isLeaf"
+  >
+  </kl-no-data>
   <mat-tab-group
     color="warn"
     fxFlexFill

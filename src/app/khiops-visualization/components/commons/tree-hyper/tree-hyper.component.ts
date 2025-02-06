@@ -158,7 +158,7 @@ export class TreeHyperComponent
         );
       }
 
-      if (userSelectedNode.data.isLeaf) {
+      if (userSelectedNode?.data.isLeaf) {
         this.ht?.initPromise.then(() =>
           this.ht?.api.gotoNode(userSelectedNode),
         );
@@ -328,7 +328,22 @@ export class TreeHyperComponent
       if (this.visualization.population) {
         let totalFreqsToShow = this.displayedValues ? 0 : n.data.totalFreqs;
         if (this.displayedValues) {
+          const values = n.data.targetValues.values;
           for (let i = 0; i < n.data.targetValues.values.length; i++) {
+            if (n.data.isRegressionAnalysis) {
+              // In case of regression
+              const index = parseInt(values[i].replace(/\D/g, ''), 10);
+              if (this.displayedValues[index]?.show) {
+                totalFreqsToShow += n.data.targetValues.frequencies[i];
+              }
+            } else {
+              // In Classification case
+              if (
+                this.displayedValues.find((e) => e.show && e.name === values[i])
+              ) {
+                totalFreqsToShow += n.data.targetValues.frequencies[i];
+              }
+            }
             if (
               this.displayedValues.find(
                 (e) => e.show && e.name === n.data.targetValues.values[i],

@@ -29,6 +29,7 @@ export class TreeNodeModel implements TreeChildNode {
   purity?: number;
   totalFreqs?: number;
   isCollapsed?: boolean;
+  isRegressionAnalysis?: boolean;
 
   constructor(
     object: TreeChildNode,
@@ -52,6 +53,7 @@ export class TreeNodeModel implements TreeChildNode {
       values: [],
     };
     this.children = [];
+    this.isRegressionAnalysis = treePreparationDatas?.isRegressionAnalysis;
 
     this.formatChildrenNodesDatas(this.childNodes, treePreparationDatas);
     if (this.isLeaf) {
@@ -109,6 +111,7 @@ export class TreeNodeModel implements TreeChildNode {
     }
     return this.valuesProbs;
   }
+
   /**
    * Recursively aggregates the target values (frequencies and values) from child nodes.
    * This method traverses through the child nodes and collects their target values,

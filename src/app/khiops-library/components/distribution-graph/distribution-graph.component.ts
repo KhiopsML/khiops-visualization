@@ -181,9 +181,9 @@ export class DistributionGraphComponent
     this.updateChartOptions();
   }
 
-  onSelectBarChanged(e: any) {
+  onSelectBarChanged(index: number) {
     // pass event from chart to parent
-    this.selectedItemChanged.emit(e);
+    this.selectedItemChanged.emit(index);
   }
 
   changeGraphType(type: string) {

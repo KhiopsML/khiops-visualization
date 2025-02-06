@@ -84,7 +84,6 @@ export class FileLoaderService {
     // let urlKV = './assets/mocks/kv/leafrules.khj';
     // let urlKV = './assets/mocks/kv/Filtered_Iris_AnalysisResults.khj';
     // let urlKV = './assets/mocks/kv/defaultGroup.json';
-    // let urlKV = './assets/mocks/kv/bigTreeLeafs.json';
     // let urlKV = './assets/mocks/kv/AdultAgeAllReports.json';
     // let urlKV = './assets/mocks/kv/missing-level-parts.json';
     // let urlKV = './assets/mocks/kv/lift-issue.khj';
@@ -93,7 +92,9 @@ export class FileLoaderService {
     // let urlKV = './assets/mocks/kv/OI_AllReports.json';
     // let urlKV = './assets/mocks/kv/tree.json';
     // let urlKV = './assets/mocks/kv/Natives_AllReports.json';
-    let urlKV = './assets/mocks/kv/2d-cells-AllReports.json';
+    // let urlKV = './assets/mocks/kv/2d-cells-AllReports.json';
+    // let urlKV = './assets/mocks/kv/bigTreeLeafs.json';
+    let urlKV = './assets/mocks/kv/AnalysisResults_regtree_iris.json';
     // let urlKV = './assets/mocks/kv/level.json';
     // let urlKV = './assets/mocks/kv/xor.json';
     // let urlKV = './assets/mocks/kv/Natives-Arbres_Paires_AllReports.json';

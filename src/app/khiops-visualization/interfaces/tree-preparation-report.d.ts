@@ -68,6 +68,15 @@ interface TreeNode {
   variableNumber: number;
   depth: number;
   treeNodes: TreeChildNode;
+  targetPartition?: TargetPartition;
+}
+
+interface TargetPartition {
+  variable: string;
+  type: string;
+  partitionType: string;
+  partition: number[][];
+  frequencies: number[];
 }
 
 interface TreeChildNode {
@@ -76,5 +85,6 @@ interface TreeChildNode {
   type?: string; // Optional, as it may not be present in all child nodes
   partition?: number[][]; // Optional, as it may not be present in all child nodes
   targetValues?: TargetValues; // Optional, as it may not be present in all child nodes
+  targetPartition?: TargetPartition; // Optional, as it may not be present in all child nodes
   childNodes?: TreeChildNode[]; // Optional, to allow for further nesting
 }

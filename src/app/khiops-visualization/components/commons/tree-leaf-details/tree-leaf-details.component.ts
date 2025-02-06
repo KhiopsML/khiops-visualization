@@ -81,6 +81,10 @@ export class TreeLeafDetailsComponent implements OnInit, OnChanges {
         this.selectedNode,
       );
       this.treeLeafRules = this.treePreparationDatasService.getTreeLeafRules();
+      // this.populationCount = UtilsService.arraySum(
+      //   this.selectedNode.targetValues.frequencies ||
+      //     this.selectedNode.targetPartition.frequencies,
+      // );
       this.populationCount = UtilsService.arraySum(
         this.selectedNode.targetValues.frequencies,
       );

@@ -160,14 +160,14 @@ export class TargetDistributionGraphComponent
     });
   }
 
-  onSelectBarChanged(e: number) {
+  onSelectBarChanged(index: number) {
     // Debounce each events
     // Each bar of grouped chart launch same event
-    if (this.selectedBarIndex !== e) {
+    if (this.selectedBarIndex !== index) {
       // pass event from chart to parent
-      this.selectedItemChanged.emit(e);
+      this.selectedItemChanged.emit(index);
     }
-    this.selectedBarIndex = e;
+    this.selectedBarIndex = index;
   }
 
   changeGraphType(type: string) {

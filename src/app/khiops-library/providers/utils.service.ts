@@ -1370,4 +1370,21 @@ export class UtilsService {
     }
     return data;
   }
+
+  /**
+   * Sorts an array of numbers or strings in ascending order.
+   * @param {Array} array - The array of numbers or strings to sort.
+   * @returns {Array} - The sorted array.
+   */
+  static sort(array: number[][] | string[]) {
+    return array.sort((a, b) => {
+      if (a > b) {
+        return 1;
+      }
+      if (a < b) {
+        return -1;
+      }
+      return 0;
+    });
+  }
 }
