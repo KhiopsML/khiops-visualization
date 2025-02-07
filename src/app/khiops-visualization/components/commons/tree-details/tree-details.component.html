@@ -10,7 +10,7 @@
   [title]="treeDetails.title"
   [showColumnsSelection]="true"
   (selectListItem)="onSelectListItemChanged($event)"
-  [selectedVariable]="selectedNode"
+  [selectedVariable]="selectedNode$ | async"
   [inputDatas]="treeDetails.values"
   [displayedColumns]="treeDetails.displayedColumns"
 >

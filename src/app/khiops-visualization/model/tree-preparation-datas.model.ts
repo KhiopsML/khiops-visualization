@@ -14,8 +14,6 @@ import { TASKS } from '@khiops-library/enum/tasks';
 
 export class TreePreparationDatasModel {
   selectedVariable?: TreePreparationVariableModel = undefined;
-  selectedNodes?: TreeNodeModel[] = undefined;
-  selectedNode?: TreeNodeModel = undefined; // Used for selected leaf node in tree preparation
   treeColorsMap?: any = undefined;
   dimensionTree?: [TreeNodeModel] = undefined;
   selectedFlattenTree?: TreeChildNode[] = undefined;

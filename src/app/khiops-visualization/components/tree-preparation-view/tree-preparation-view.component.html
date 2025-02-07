@@ -138,9 +138,6 @@
             >
               <app-tree-select
                 id="tree-preparation-select"
-                [selectedNodes]="treePreparationDatas?.selectedNodes"
-                [selectedNode]="treePreparationDatas?.selectedNode"
-                (selectTreeItemChanged)="onSelectTreeItemChanged($event)"
                 [dimensionTree]="treePreparationDatas?.dimensionTree"
               ></app-tree-select>
             </as-split-area>
@@ -157,11 +154,7 @@
                   class="variables-list-container"
                   [size]="sizes.col0Row2Col1Row[0]"
                 >
-                  <app-tree-details
-                    [selectedNodes]="treePreparationDatas?.selectedNodes"
-                    [selectedNode]="treePreparationDatas?.selectedNode"
-                  >
-                  </app-tree-details>
+                  <app-tree-details> </app-tree-details>
                 </as-split-area>
                 <as-split-area
                   class="variables-list-container"
@@ -173,7 +166,6 @@
                     [displayedValues]="
                       distributionDatas?.targetDistributionDisplayedValues
                     "
-                    [selectedNode]="treePreparationDatas?.selectedNode"
                   >
                   </app-tree-leaf-details>
                   <kl-no-data
@@ -190,10 +182,7 @@
     <as-split-area [size]="sizes.col[1]">
       <app-tree-hyper
         id="tree-preparation-hyper"
-        [selectedNodes]="treePreparationDatas?.selectedNodes"
-        [selectedNode]="treePreparationDatas?.selectedNode"
         [displayedValues]="distributionDatas?.targetDistributionDisplayedValues"
-        (selectTreeItemChanged)="onSelectTreeItemChanged($event)"
         [dimensionTree]="treePreparationDatas?.dimensionTree"
       >
       </app-tree-hyper>

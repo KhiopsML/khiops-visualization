@@ -4,14 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import {
-  Component,
-  OnInit,
-  NgZone,
-  OnChanges,
-  SimpleChanges,
-  Input,
-} from '@angular/core';
+import { Component, OnInit, NgZone, Input } from '@angular/core';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
 import { TranslateService } from '@ngstack/translate';
@@ -22,15 +15,20 @@ import { DistributionDatasModel } from '@khiops-visualization/model/distribution
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
+import { Store } from '@ngrx/store';
+import { AppState } from '@khiops-visualization/store/app.state';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-tree-leaf-details',
   templateUrl: './tree-leaf-details.component.html',
   styleUrls: ['./tree-leaf-details.component.scss'],
 })
-export class TreeLeafDetailsComponent implements OnInit, OnChanges {
-  @Input() public selectedNode?: TreeNodeModel;
+export class TreeLeafDetailsComponent implements OnInit {
   @Input() public displayedValues?: ChartToggleValuesI[];
+
+  selectedNode$: Observable<TreeNodeModel | undefined>;
+  public selectedNode?: TreeNodeModel;
 
   public populationCount: number = 10;
   public treePreparationDatas: TreePreparationDatasModel | undefined;
@@ -44,20 +42,20 @@ export class TreeLeafDetailsComponent implements OnInit, OnChanges {
     public translate: TranslateService,
     private treePreparationDatasService: TreePreparationDatasService,
     private distributionDatasService: DistributionDatasService,
-  ) {}
+    private store: Store<{ appState: AppState }>,
+  ) {
+    this.selectedNode$ = this.store.select(
+      (state) => state.appState.selectedNode,
+    );
+  }
 
   ngOnInit() {
     this.treePreparationDatas = this.treePreparationDatasService.getDatas();
     this.distributionDatas = this.distributionDatasService.getDatas();
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (
-      changes.selectedNode?.currentValue ||
-      changes.displayedValues?.currentValue
-    ) {
-      this.updateComponentDatas();
-    }
+    this.selectedNode$.subscribe((selectedNode) => {
+      this.selectedNode = selectedNode;
+      this.updateComponentDatas(selectedNode);
+    });
   }
 
   onTreeNodeTargetDistributionGraphTypeChanged(type: string) {
@@ -75,18 +73,15 @@ export class TreeLeafDetailsComponent implements OnInit, OnChanges {
     );
   }
 
-  private updateComponentDatas() {
-    if (this.selectedNode) {
+  private updateComponentDatas(selectedNode: TreeNodeModel | undefined) {
+    if (selectedNode) {
       this.distributionDatasService.getTreeNodeTargetDistributionGraphDatas(
-        this.selectedNode,
+        selectedNode,
       );
-      this.treeLeafRules = this.treePreparationDatasService.getTreeLeafRules();
-      // this.populationCount = UtilsService.arraySum(
-      //   this.selectedNode.targetValues.frequencies ||
-      //     this.selectedNode.targetPartition.frequencies,
-      // );
+      this.treeLeafRules =
+        this.treePreparationDatasService.getTreeLeafRules(selectedNode);
       this.populationCount = UtilsService.arraySum(
-        this.selectedNode.targetValues.frequencies,
+        selectedNode.targetValues.frequencies,
       );
     }
   }

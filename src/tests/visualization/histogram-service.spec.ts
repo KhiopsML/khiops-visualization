@@ -14,6 +14,8 @@ import { REPORT } from '@khiops-library/enum/report';
 import { TranslateModule } from '@ngstack/translate';
 import { HistogramType } from '@khiops-visualization/components/commons/histogram/histogram.type';
 import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas';
+import { provideMockStore } from '@ngrx/store/testing';
+import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 
 let appService: AppService;
 let histogramService: HistogramService;
@@ -40,6 +42,13 @@ describe('Visualization', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [HttpClientModule, TranslateModule.forRoot()],
+        providers: [
+          provideMockStore({ initialState: {} }),
+          DistributionDatasService,
+          PreparationDatasService,
+          TreePreparationDatasService,
+          AppService,
+        ],
       });
 
       // Inject services

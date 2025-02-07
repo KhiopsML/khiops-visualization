@@ -9,8 +9,6 @@ import {
   OnInit,
   NgZone,
   OnChanges,
-  Output,
-  EventEmitter,
   SimpleChanges,
   AfterViewInit,
   Input,
@@ -36,6 +34,10 @@ import { TreeHyperService } from './tree-hyper.service';
 import { N } from '@khiops-hypertree/d/models/n/n';
 import { TreePreparationDatasModel } from '@khiops-visualization/model/tree-preparation-datas.model';
 import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
+import { Observable } from 'rxjs';
+import { AppState } from '@khiops-visualization/store/app.state';
+import { Store } from '@ngrx/store';
+import { selectNodesFromId } from '@khiops-visualization/actions/app.action';
 
 @Component({
   selector: 'app-tree-hyper',
@@ -49,11 +51,7 @@ export class TreeHyperComponent
   @ViewChild('hyperTree') private hyperTree?: ElementRef<HTMLElement>;
 
   @Input() public dimensionTree?: [TreeNodeModel];
-  @Input() private selectedNodes?: TreeNodeModel[];
-  @Input() private selectedNode?: TreeNodeModel;
   @Input() private displayedValues?: ChartToggleValuesI[];
-  @Output() private selectTreeItemChanged: EventEmitter<any> =
-    new EventEmitter();
 
   public buttonTitle: string;
   public componentType = COMPONENT_TYPES.HYPER_TREE; // needed to copy datas
@@ -67,6 +65,9 @@ export class TreeHyperComponent
   private treePreparationDatas?: TreePreparationDatasModel;
   public distributionDatas?: DistributionDatasModel;
 
+  selectedNodes$: Observable<TreeNodeModel[]>;
+  selectedNode$: Observable<TreeNodeModel | undefined>;
+
   constructor(
     public override ngzone: NgZone,
     public override selectableService: SelectableService,
@@ -74,8 +75,16 @@ export class TreeHyperComponent
     public translate: TranslateService,
     private treePreparationDatasService: TreePreparationDatasService,
     private distributionDatasService: DistributionDatasService,
+    private store: Store<{ appState: AppState }>,
   ) {
     super(selectableService, ngzone, configService);
+
+    this.selectedNodes$ = this.store.select(
+      (state) => state.appState.selectedNodes,
+    );
+    this.selectedNode$ = this.store.select(
+      (state) => state.appState.selectedNode,
+    );
 
     this.buttonTitle = this.translate.get('GLOBAL.VALUES');
 
@@ -101,6 +110,23 @@ export class TreeHyperComponent
   ngOnInit() {
     this.treePreparationDatas = this.treePreparationDatasService.getDatas();
     this.distributionDatas = this.distributionDatasService.getDatas();
+
+    // listen for selectedNodes change
+    this.selectedNodes$?.subscribe((selectedNodes) => {
+      if (selectedNodes) {
+        this.removeNodes(selectedNodes);
+        this.selectNodes(selectedNodes);
+      }
+    });
+
+    this.selectedNode$?.subscribe((selectedNode) => {
+      if (selectedNode) {
+        const treeNode = UtilsService.deepFind(this.ht?.data, selectedNode.id);
+        if (treeNode?.data.isLeaf) {
+          this.ht?.initPromise.then(() => this.ht?.api.gotoNode(treeNode));
+        }
+      }
+    });
   }
 
   override ngAfterViewInit() {
@@ -121,55 +147,20 @@ export class TreeHyperComponent
   private selectNodes(selectedNodes: TreeNodeModel[]) {
     for (let i = 0; i < selectedNodes?.length; i++) {
       const node = selectedNodes[i];
-      const dataTree = UtilsService.deepFind(this.ht?.data, node?.id);
-      this.ht?.api.addPath('SelectionPath', dataTree, node?.color);
+      if (node) {
+        const dataTree = UtilsService.deepFind(this.ht?.data, node?.id);
+        this.ht?.api.addPath('SelectionPath', dataTree, node?.color);
+      }
     }
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    let userSelectedNode: any;
     if (changes.dimensionTree?.currentValue && this.hyperTree) {
       this.initHyperTree();
     }
     if (!this.ht) return;
     if (changes.displayedValues?.currentValue && this.ht) {
       this.ht?.api.updateNodesVisualization();
-    }
-    if (changes.selectedNodes?.previousValue) {
-      // remove previous paths
-      this.removeNodes(changes.selectedNodes.previousValue);
-    }
-
-    if (changes.selectedNodes?.currentValue) {
-      // draw new selection paths
-      this.selectNodes(changes.selectedNodes.currentValue);
-
-      // Find trusted node to center view on it
-      const trustedNode = this.selectedNodes?.find((e) => e.isTrusted);
-      if (trustedNode) {
-        // it's a user click event
-        userSelectedNode = UtilsService.deepFind(this.ht?.data, trustedNode.id);
-      } else {
-        // it's a redirection from another component
-        // So take the first node
-        userSelectedNode = UtilsService.deepFind(
-          this.ht?.data,
-          this.selectedNodes?.[0]?.id,
-        );
-      }
-
-      if (userSelectedNode?.data.isLeaf) {
-        this.ht?.initPromise.then(() =>
-          this.ht?.api.gotoNode(userSelectedNode),
-        );
-      }
-    }
-    if (changes.selectedNode?.currentValue) {
-      userSelectedNode = UtilsService.deepFind(
-        this.ht?.data,
-        this.selectedNode?.id,
-      );
-      this.ht?.initPromise.then(() => this.ht?.api.gotoNode(userSelectedNode));
     }
   }
 
@@ -292,21 +283,11 @@ export class TreeHyperComponent
 
   private nodeClick(n: N) {
     this.ngzone.run(() => {
-      const trustedNodeSelection = n.data.id;
-      let [, nodesToSelect] =
-        this.treePreparationDatasService.getNodesLinkedToOneNode(
-          trustedNodeSelection,
-        );
-      if (!nodesToSelect) {
-        // it's a folder selection
-        nodesToSelect = [trustedNodeSelection];
-      }
-      this.treePreparationDatasService.setSelectedNodes(
-        nodesToSelect,
-        trustedNodeSelection,
+      this.store.dispatch(
+        selectNodesFromId({
+          id: n.data.id,
+        }),
       );
-      // to update charts
-      this.selectTreeItemChanged.emit(n.data);
     });
   }
 

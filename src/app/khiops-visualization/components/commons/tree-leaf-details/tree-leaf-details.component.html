@@ -47,7 +47,7 @@
               fxLayout="row"
               fxLayoutAlign="start center"
               class="comp-header"
-              *ngIf="treePreparationDatas?.selectedNode?.isLeaf"
+              *ngIf="selectedNode?.isLeaf"
             >
               <div fxLayout="row" fxLayoutAlign="start center">
                 <h2>
@@ -83,7 +83,7 @@
           [showLineSelection]="true"
           [title]="treeLeafRules.title"
           [showColumnsSelection]="true"
-          [selectedVariable]="selectedNode"
+          [selectedVariable]="selectedNode$ | async"
           [inputDatas]="treeLeafRules.values"
           [displayedColumns]="treeLeafRules.displayedColumns"
         >

@@ -16,6 +16,7 @@ import { REPORT } from '@khiops-library/enum/report';
 import { TYPES } from '@khiops-library/enum/types';
 import { TranslateModule } from '@ngstack/translate';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
+import { provideMockStore } from '@ngrx/store/testing';
 
 let distributionDatasService: DistributionDatasService;
 let preparationDatasService: PreparationDatasService;
@@ -27,6 +28,13 @@ describe('Visualization', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [HttpClientModule, TranslateModule.forRoot()],
+        providers: [
+          provideMockStore({ initialState: {} }),
+          DistributionDatasService,
+          PreparationDatasService,
+          TreePreparationDatasService,
+          AppService,
+        ],
       });
 
       // Inject services
@@ -323,7 +331,12 @@ describe('Visualization', () => {
         fileDatas.treePreparationReport.variablesStatistics[0].name,
       );
       treePreparationDatasService.initSelectedNodes();
-      const currentNode = treePreparationDatasService.getSelectedNode();
+      const nodeToSelect = treePreparationDatasService.getNodeFromName('L75');
+      const node = new TreeNodeModel(nodeToSelect!, undefined, true);
+      const currentNode = treePreparationDatasService.setSelectedNode(
+        node,
+        true,
+      );
       const res =
         distributionDatasService.getTreeNodeTargetDistributionGraphDatas(
           currentNode!,
@@ -347,8 +360,10 @@ describe('Visualization', () => {
       treePreparationDatasService.initSelectedNodes();
       const nodeToSelect = treePreparationDatasService.getNodeFromName('L16');
       const node = new TreeNodeModel(nodeToSelect!, undefined, true);
-      treePreparationDatasService.setSelectedNode(node, true);
-      const currentNode = treePreparationDatasService.getSelectedNode();
+      const currentNode = treePreparationDatasService.setSelectedNode(
+        node,
+        true,
+      );
       const res =
         distributionDatasService.getTreeNodeTargetDistributionGraphDatas(
           currentNode!,

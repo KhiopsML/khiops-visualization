@@ -9,9 +9,7 @@ import {
   Component,
   HostListener,
   NgZone,
-  EventEmitter,
   OnChanges,
-  Output,
   SimpleChanges,
   AfterViewInit,
   Input,
@@ -23,9 +21,15 @@ import { SelectableService } from '@khiops-library/components/selectable/selecta
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngstack/translate';
-import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
+import { Observable } from 'rxjs';
+import { AppState } from '@khiops-visualization/store/app.state';
+import { Store } from '@ngrx/store';
+import {
+  initSelectedNodes,
+  selectNodesFromId,
+} from '@khiops-visualization/actions/app.action';
 
 @Component({
   selector: 'app-tree-select',
@@ -37,16 +41,14 @@ export class TreeSelectComponent
   implements AfterViewInit, OnChanges
 {
   @Input() public dimensionTree?: [TreeNodeModel];
-  @Input() selectedNodes?: TreeNodeModel[];
-  @Input() selectedNode?: TreeNodeModel;
-
-  @Output() private selectTreeItemChanged: EventEmitter<any> =
-    new EventEmitter();
 
   public componentType = COMPONENT_TYPES.KV_TREE; // needed to copy datas
   public override id: string | undefined = undefined;
   public isFullscreen: boolean = false;
   private tree: any;
+
+  selectedNodes$: Observable<TreeNodeModel[]>;
+  selectedNode$: Observable<TreeNodeModel | undefined>;
 
   constructor(
     public override ngzone: NgZone,
@@ -54,28 +56,33 @@ export class TreeSelectComponent
     public override configService: ConfigService,
     public translate: TranslateService,
     private appService: AppService,
-    private treePreparationDatasService: TreePreparationDatasService,
     private snackBar: MatSnackBar,
+    private store: Store<{ appState: AppState }>,
   ) {
     super(selectableService, ngzone, configService);
+    this.selectedNodes$ = this.store.select(
+      (state) => state.appState.selectedNodes,
+    );
+    this.selectedNode$ = this.store.select(
+      (state) => state.appState.selectedNode,
+    );
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.dimensionTree?.currentValue) {
       this.initialize();
     }
-    if (
-      changes.selectedNodes?.currentValue &&
-      !changes.selectedNodes.firstChange
-    ) {
-      this.tree.selectNodes(changes.selectedNodes.currentValue);
-    }
-    if (
-      changes.selectedNode?.currentValue &&
-      !changes.selectedNode.firstChange
-    ) {
-      this.tree.scrollToNode(changes.selectedNode.currentValue._id);
-    }
+  }
+
+  ngOnInit() {
+    this.selectedNodes$.subscribe((selectedNodes) => {
+      this.tree.selectNodes(selectedNodes);
+    });
+    this.selectedNode$.subscribe((selectedNode) => {
+      if (selectedNode) {
+        this.tree.scrollToNode(selectedNode._id);
+      }
+    });
   }
 
   override ngAfterViewInit() {
@@ -112,8 +119,7 @@ export class TreeSelectComponent
 
       this.tree.on('init', () => {
         if (!selectedNodes) {
-          // get the first
-          this.treePreparationDatasService.initSelectedNodes();
+          this.store.dispatch(initSelectedNodes());
         }
         this.tree.selectNodes(this.selectedNodes);
       });
@@ -121,22 +127,11 @@ export class TreeSelectComponent
       this.tree.on('select', (e: any) => {
         // Do ngzone to emit event
         this.ngzone.run(() => {
-          const trustedNodeSelection = e.data.id;
-          let [_index, nodesToSelect] =
-            this.treePreparationDatasService.getNodesLinkedToOneNode(
-              trustedNodeSelection,
-            );
-          if (!nodesToSelect) {
-            // it's a folder selection
-            nodesToSelect = [trustedNodeSelection];
-          }
-          this.treePreparationDatasService.setSelectedNodes(
-            nodesToSelect,
-            trustedNodeSelection,
+          this.store.dispatch(
+            selectNodesFromId({
+              id: e.data.id,
+            }),
           );
-
-          // to update charts
-          this.selectTreeItemChanged.emit(e.data);
         });
       });
       this.tree.on('error', (e: any) => {

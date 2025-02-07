@@ -3313,6 +3313,20 @@
   resolved "https://registry.yarnpkg.com/@msgpackr-extract/msgpackr-extract-win32-x64/-/msgpackr-extract-win32-x64-3.0.3.tgz#0aa5502d547b57abfc4ac492de68e2006e417242"
   integrity sha512-x0fWaQtYp4E6sktbsdAqnehxDgEc/VwM7uLsRCYWaiGu0ykYdZPiS8zCWdnjHwyiumousxfBm4SO31eXqwEZhQ==
 
+"@ngrx/effects@^19.0.1":
+  version "19.0.1"
+  resolved "https://registry.yarnpkg.com/@ngrx/effects/-/effects-19.0.1.tgz#fc0009d50814f0382c17759e8b9f3412ac28aa79"
+  integrity sha512-q+eztS1zN1247BtUZ41gxhumj4wMmvtfdSMfkFEuu6zuA57Vbx8zitEsw9boqPGtP5E4Cj5HKJLSJrl2kgwgcQ==
+  dependencies:
+    tslib "^2.0.0"
+
+"@ngrx/store@^19.0.1":
+  version "19.0.1"
+  resolved "https://registry.yarnpkg.com/@ngrx/store/-/store-19.0.1.tgz#65d74333c814ddf83e851ca5f99523ca00ebf746"
+  integrity sha512-+6eBLb+0rdJ856JRuKnvSzFxv1ISbYuX/OM12dMPf4wm+ddxjhyvi6tF8lPiNnaYb717PGNxXQzBFIGfIs4zGQ==
+  dependencies:
+    tslib "^2.0.0"
+
 "@ngstack/translate@10.0.0":
   version "10.0.0"
   resolved "https://registry.yarnpkg.com/@ngstack/translate/-/translate-10.0.0.tgz#31ccfd39fe6c7f58d12434b6476f9c30da5cdc7f"

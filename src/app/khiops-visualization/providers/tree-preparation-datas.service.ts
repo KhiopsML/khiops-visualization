@@ -24,18 +24,28 @@ import {
 } from '@khiops-visualization/interfaces/tree-preparation-report';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { VariableDetail } from '@khiops-visualization/interfaces/app-datas';
+import { Observable, take } from 'rxjs';
+import { AppState } from '@khiops-visualization/store/app.state';
+import { Store } from '@ngrx/store';
+import { selectedNodesSelector } from '@khiops-visualization/selectors/app.selector';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TreePreparationDatasService {
   private treePreparationDatas: TreePreparationDatasModel | undefined;
+  selectedNodes$: Observable<TreeNodeModel[]>;
 
   constructor(
     private preparationDatasService: PreparationDatasService,
     private translate: TranslateService,
     private appService: AppService,
-  ) {}
+    private store: Store<{ appState: AppState }>,
+  ) {
+    this.selectedNodes$ = this.store.select(
+      (state) => state.appState.selectedNodes,
+    );
+  }
 
   /**
    * Initializes the tree preparation data service by loading data from the app service
@@ -78,6 +88,7 @@ export class TreePreparationDatasService {
    * Initializes the selected nodes based on the first partition of the selected variable.
    */
   initSelectedNodes() {
+    let nodes;
     const variablesDetailedStatistics:
       | { [key: string]: VariableDetail }
       | undefined =
@@ -89,9 +100,10 @@ export class TreePreparationDatasService {
         const dimensions =
           variablesDetailedStatistics![rank].dataGrid.dimensions;
         const firstpartition: any = dimensions[0]?.partition[0];
-        this.setSelectedNodes(firstpartition, firstpartition[0]);
+        nodes = this.setSelectedNodes(firstpartition, firstpartition[0]);
       }
     }
+    return nodes;
   }
 
   /**
@@ -189,10 +201,6 @@ export class TreePreparationDatasService {
           REPORT.TREE_PREPARATION_REPORT,
         );
       if (variable) {
-        // Init datas
-        this.treePreparationDatas.selectedNodes = undefined;
-        this.treePreparationDatas.selectedNode = undefined;
-
         // Init selected variable and construct tree
         this.treePreparationDatas.selectedVariable =
           new TreePreparationVariableModel(variable, variable.name);
@@ -482,42 +490,9 @@ export class TreePreparationDatasService {
           nodeDatas.nodeId === trustedNodeSelection,
         );
         selectedNodes.push(treeNodeVo);
-
-        // Save current selected node
-        if (trustedNodeSelection && trustedNodeSelection === nodes[i]) {
-          this.setSelectedNode(treeNodeVo, trustedNodeSelection);
-        }
       }
     }
-
-    const diff = UtilsService.deepDiff(
-      this.treePreparationDatas?.selectedNodes,
-      selectedNodes,
-    );
-    if (
-      !this.treePreparationDatas?.selectedNodes ||
-      this.treePreparationDatas?.selectedNodes.length === 0 || // important if user has selected a folder before
-      !_.isEmpty(diff)
-    ) {
-      // clone it to emit onchange
-      this.treePreparationDatas!.selectedNodes = _.cloneDeep(selectedNodes);
-    }
-  }
-
-  /**
-   * Retrieves the currently selected nodes.
-   * @returns {TreeNodeModel[] | undefined} The array of selected nodes.
-   */
-  getSelectedNodes(): TreeNodeModel[] | undefined {
-    return this.treePreparationDatas?.selectedNodes;
-  }
-
-  /**
-   * Retrieves the currently selected node.
-   * @returns {TreeNodeModel | undefined} The selected node.
-   */
-  getSelectedNode(): TreeNodeModel | undefined {
-    return this.treePreparationDatas?.selectedNode;
+    return selectedNodes;
   }
 
   /**
@@ -526,26 +501,19 @@ export class TreePreparationDatasService {
    * @param {string | boolean} trustedNodeSelection - The trusted node selection.
    */
   setSelectedNode(node: TreeNodeModel, trustedNodeSelection: string | boolean) {
+    let selectedNode;
     if (this.treePreparationDatas) {
       const nodeDatas = this.getNodeFromName(node.nodeId);
       if (nodeDatas) {
         // Define the trusted node selection to go to clicked node into hyper tree
-        const treeNodeVo = new TreeNodeModel(
+        selectedNode = new TreeNodeModel(
           nodeDatas,
           this.treePreparationDatas,
           nodeDatas && nodeDatas.nodeId === trustedNodeSelection,
         );
-
-        const diff = UtilsService.deepDiff(
-          this.treePreparationDatas.selectedNode,
-          treeNodeVo,
-        );
-        if (!this.treePreparationDatas.selectedNode || !_.isEmpty(diff)) {
-          // clone it to emit onchange
-          this.treePreparationDatas.selectedNode = _.cloneDeep(treeNodeVo);
-        }
       }
     }
+    return selectedNode;
   }
 
   /**
@@ -553,19 +521,17 @@ export class TreePreparationDatasService {
    * Constructs a grid data object containing the node ID, values, and frequencies.
    * @returns {GridDatasI} The grid data object containing the details of the selected tree nodes.
    */
-  getTreeDetails(): GridDatasI {
+  getTreeDetails(selectedNodes: TreeNodeModel[]): GridDatasI {
     const treeDetails: GridDatasI = {
       title:
         this.translate.get('GLOBAL.NODES_SELECTION_DETAILS') +
         ' : ' +
-        this.treePreparationDatas?.selectedNodes
-          ?.map((e) => e.nodeId)
-          .join(', '),
+        selectedNodes?.map((e) => e.nodeId).join(', '),
       values: [],
       displayedColumns: [],
     };
 
-    if (this.treePreparationDatas?.selectedNodes?.[0]) {
+    if (selectedNodes?.[0]) {
       treeDetails.displayedColumns = [
         {
           headerName: this.translate.get('GLOBAL.NODE_ID'),
@@ -581,12 +547,8 @@ export class TreePreparationDatasService {
         },
       ];
 
-      for (
-        let i = 0;
-        i < this.treePreparationDatas?.selectedNodes?.length;
-        i++
-      ) {
-        const currentNode = this.treePreparationDatas?.selectedNodes[i];
+      for (let i = 0; i < selectedNodes?.length; i++) {
+        const currentNode = selectedNodes[i];
         if (currentNode?.isLeaf) {
           // it's a leaf
           const rowData: any = {
@@ -610,17 +572,22 @@ export class TreePreparationDatasService {
    * Constructs a grid data object containing the variable, type, and partition information.
    * @returns {GridDatasI} The grid data object containing the rules for the selected tree leaf node.
    */
-  getTreeLeafRules(): GridDatasI {
+  getTreeLeafRules(currentNode: TreeNodeModel): GridDatasI {
     const treeLeafRules: GridDatasI = {
       title:
-        this.translate.get('GLOBAL.LEAF_RULES') +
-        ' : ' +
-        this.treePreparationDatas?.selectedNode?.nodeId,
+        this.translate.get('GLOBAL.LEAF_RULES') + ' : ' + currentNode?.nodeId,
       values: [],
       displayedColumns: [],
     };
 
-    if (this.treePreparationDatas?.selectedNodes?.[0]) {
+    // Take selected nodes from app store with selector
+    let selectedNodes: TreeNodeModel[] = [];
+    this.store
+      .select(selectedNodesSelector)
+      .pipe(take(1))
+      .subscribe((nodes) => (selectedNodes = nodes));
+
+    if (selectedNodes?.[0]) {
       treeLeafRules.displayedColumns = [
         {
           headerName: this.translate.get('GLOBAL.VARIABLE'),
@@ -638,8 +605,8 @@ export class TreePreparationDatasService {
 
       // get a hierarchy branch with all recursive parents
       const nodeHierarchy: TreeNodeModel[] = UtilsService.returnHierarchy(
-        _.cloneDeep(this.treePreparationDatas.dimensionTree)!,
-        this.treePreparationDatas.selectedNode?.id!,
+        _.cloneDeep(this.treePreparationDatas?.dimensionTree)!,
+        currentNode?.id!,
       );
 
       // get obj rules into one array

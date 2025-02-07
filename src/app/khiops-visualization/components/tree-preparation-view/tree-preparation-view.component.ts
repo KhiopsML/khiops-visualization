@@ -32,6 +32,11 @@ import { LayoutService } from '@khiops-library/providers/layout.service';
 import { REPORT } from '@khiops-library/enum/report';
 import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals';
+import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
+import { selectNodesFromIndex } from '@khiops-visualization/actions/app.action';
+import { AppState } from '@khiops-visualization/store/app.state';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-tree-preparation-view',
@@ -57,6 +62,9 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
   public variablesDisplayedColumns: GridColumnsI[] = [];
   public override tabIndex = 5; // managed by selectable-tab component
 
+  selectedNodes$: Observable<TreeNodeModel[]>;
+  selectedNode$: Observable<TreeNodeModel | undefined>;
+
   constructor(
     private preparationDatasService: PreparationDatasService,
     private treePreparationDatasService: TreePreparationDatasService,
@@ -66,8 +74,16 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
     private distributionDatasService: DistributionDatasService,
     private modelingDatasService: ModelingDatasService,
     private layoutService: LayoutService,
+    private store: Store<{ appState: AppState }>,
   ) {
     super();
+
+    this.selectedNodes$ = this.store.select(
+      (state) => state.appState.selectedNodes,
+    );
+    this.selectedNode$ = this.store.select(
+      (state) => state.appState.selectedNode,
+    );
 
     this.variablesDisplayedColumns = [
       {
@@ -133,6 +149,16 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
       this.preparationSource,
     );
     this.distributionDatas = this.distributionDatasService.getDatas();
+
+    this.selectedNode$?.subscribe((selectedNode) => {
+      if (selectedNode?._id) {
+        let [index, _nodesToSelect] =
+          this.treePreparationDatasService.getNodesLinkedToOneNode(
+            selectedNode._id,
+          );
+        this.selectedBarIndex = index;
+      }
+    });
   }
 
   onSplitDragEnd(event: SplitGutterInteractionEvent, item: string) {
@@ -165,33 +191,14 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
     dialogRef.componentInstance.datas = datas;
   }
 
-  onSelectTreeItemChanged(item: { id: string; isLeaf: boolean }) {
-    let [index, nodesToSelect] =
-      this.treePreparationDatasService.getNodesLinkedToOneNode(item.id);
-    this.selectedBarIndex = index;
-
-    if (!item.isLeaf) {
-      nodesToSelect = [item.id];
-    }
-
-    if (nodesToSelect) {
-      this.treePreparationDatasService.setSelectedNodes(
-        nodesToSelect,
-        nodesToSelect[0],
-      );
-    }
-  }
-
   onSelectedGraphItemChanged(index: number) {
     // Keep in memory to keep bar charts index on type change
     this.selectedBarIndex = index;
 
-    // Get node linked to index
-    const nodesToSelect =
-      this.treePreparationDatasService.getNodesLinkedToOneIndex(index);
-    this.treePreparationDatasService.setSelectedNodes(
-      nodesToSelect,
-      nodesToSelect[0],
+    this.store.dispatch(
+      selectNodesFromIndex({
+        index: this.selectedBarIndex,
+      }),
     );
   }
 }
