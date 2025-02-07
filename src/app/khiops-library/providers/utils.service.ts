@@ -1146,7 +1146,7 @@ export class UtilsService {
    * @returns The element with the matching title if found, otherwise `null`.
    */
   static deepFind(element: any, matchingTitle: any): any {
-    if (element.data.id === matchingTitle) {
+    if (element?.data?.id === matchingTitle) {
       return element;
     } else if (element.children != null) {
       let i;
