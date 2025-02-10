@@ -34,7 +34,7 @@ import { TreeHyperService } from './tree-hyper.service';
 import { N } from '@khiops-hypertree/d/models/n/n';
 import { TreePreparationDatasModel } from '@khiops-visualization/model/tree-preparation-datas.model';
 import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
-import { Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { AppState } from '@khiops-visualization/store/app.state';
 import { Store } from '@ngrx/store';
 import { selectNodesFromId } from '@khiops-visualization/actions/app.action';
@@ -164,13 +164,13 @@ export class TreeHyperComponent
     }
   }
 
-  public hideActiveEntries() {
-    this.removeNodes(this.selectedNodes!);
+  public async hideActiveEntries() {
+    this.removeNodes(await firstValueFrom(this.selectedNodes$));
     this.ht?.api.updateNodesVisualization();
   }
 
-  public showActiveEntries() {
-    this.selectNodes(this.selectedNodes!);
+  public async showActiveEntries() {
+    this.selectNodes(await firstValueFrom(this.selectedNodes$));
     this.ht?.api.updateNodesVisualization();
   }
 
