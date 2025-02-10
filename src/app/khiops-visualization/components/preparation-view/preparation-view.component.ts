@@ -19,7 +19,6 @@ import { TranslateService } from '@ngstack/translate';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { REPORT } from '@khiops-library/enum/report';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
-import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { PreparationVariableModel } from '@khiops-visualization/model/preparation-variable.model';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { VariableModel } from '@khiops-visualization/model/variable.model';
@@ -37,10 +36,7 @@ import { DynamicI } from '@khiops-library/interfaces/globals';
 export class PreparationViewComponent extends SelectableTabComponent {
   @Input() public preparationSource = REPORT.PREPARATION_REPORT; // By default
   public sizes?: DynamicI;
-  public preparationDatas?: {
-    selectedVariable: PreparationVariableModel;
-    currentIntervalDatas: GridDatasI;
-  };
+  public selectedVariable: PreparationVariableModel | undefined;
   public summaryDatas?: InfosDatasI[];
   public informationsDatas?: InfosDatasI[];
   public targetVariableStatsDatas?: ChartDatasModel;
@@ -155,7 +151,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
         : 'textPreparation';
     this.trackerService.trackEvent('page_view', trackView);
 
-    this.preparationDatas = this.preparationDatasService.getDatas(
+    this.selectedVariable = this.preparationDatasService.getSelectedVariable(
       this.preparationSource,
     );
 
@@ -214,7 +210,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
 
   getDerivationRuleValue(): string {
     return (
-      this.preparationDatas?.selectedVariable?.derivationRule ||
+      this.selectedVariable?.derivationRule ||
       this.translate.get('GLOBAL.NO_DERIVATION_RULE')
     );
   }
