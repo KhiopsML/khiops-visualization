@@ -4,7 +4,6 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { TreeNodeModel } from './tree-node.model';
 import { TreePreparationVariableModel } from './tree-preparation-variable.model';
 import { TREE_COLORS } from '@khiops-visualization/config/colors';
@@ -17,7 +16,6 @@ export class TreePreparationDatasModel {
   treeColorsMap?: any = undefined;
   dimensionTree?: [TreeNodeModel] = undefined;
   selectedFlattenTree?: TreeChildNode[] = undefined;
-  currentIntervalDatas!: GridDatasI;
   appDatas: VisualizationDatas | undefined = undefined;
   maxFrequencies!: number;
   minFrequencies!: number;

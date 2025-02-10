@@ -16,11 +16,11 @@ import { selectNodesFromId } from '@khiops-visualization/actions/app.action';
 import { AppState } from '@khiops-visualization/store/app.state';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 
 @Component({
   selector: 'app-var-details-tree-preparation',
   templateUrl: './var-details-tree-preparation.component.html',
-  styleUrls: ['./var-details-tree-preparation.component.scss'],
 })
 export class VarDetailsTreePreparationComponent {
   @ViewChild('appVariableGraphDetails', {
@@ -30,7 +30,8 @@ export class VarDetailsTreePreparationComponent {
   public treePreparationDatas?: TreePreparationDatasModel;
   public sizes: DynamicI;
   public selectedBarIndex = 0;
-  selectedNodes$: Observable<TreeNodeModel[]>;
+  public selectedNodes$: Observable<TreeNodeModel[]>;
+  public currentIntervalDatas: GridDatasI | undefined;
 
   constructor(
     private treePreparationDatasService: TreePreparationDatasService,
@@ -63,11 +64,11 @@ export class VarDetailsTreePreparationComponent {
   onSelectedGraphItemChanged(index: number) {
     // Keep in memory to keep bar charts index on type change
     this.selectedBarIndex = index;
-    const currentIntervalDatas =
+    this.currentIntervalDatas =
       this.treePreparationDatasService.getCurrentIntervalDatas(
         this.selectedBarIndex,
       );
-    const nodes = currentIntervalDatas?.values?.map((e: any) => e.values);
+    const nodes = this.currentIntervalDatas?.values?.map((e: any) => e.values);
     this.store.dispatch(
       selectNodesFromId({
         id: nodes,

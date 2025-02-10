@@ -34,12 +34,10 @@
       [showSearch]="false"
       [displayCount]="false"
       [showLineSelection]="true"
-      [title]="treePreparationDatas?.currentIntervalDatas?.title"
+      [title]="currentIntervalDatas?.title"
       [showColumnsSelection]="false"
-      [inputDatas]="treePreparationDatas?.currentIntervalDatas?.values"
-      [displayedColumns]="
-        treePreparationDatas?.currentIntervalDatas?.displayedColumns
-      "
+      [inputDatas]="currentIntervalDatas?.values"
+      [displayedColumns]="currentIntervalDatas?.displayedColumns"
     >
     </kl-ag-grid>
   </as-split-area>

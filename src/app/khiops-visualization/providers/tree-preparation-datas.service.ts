@@ -322,7 +322,7 @@ export class TreePreparationDatasService {
     const displayedColumns: any[] = [];
 
     // init the object
-    this.treePreparationDatas!.currentIntervalDatas = {
+    const currentIntervalDatas = {
       title: title,
       values: datas,
       displayedColumns: displayedColumns,
@@ -467,11 +467,11 @@ export class TreePreparationDatasService {
           }
         }
 
-        this.treePreparationDatas!.currentIntervalDatas.title = title;
+        currentIntervalDatas.title = title;
       }
     }
 
-    return this.treePreparationDatas?.currentIntervalDatas;
+    return currentIntervalDatas;
   }
 
   /**
