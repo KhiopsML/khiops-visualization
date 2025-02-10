@@ -18,12 +18,11 @@ import TreeView from '@khiops-treeview/treeview';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 
-import { AppService } from '@khiops-visualization/providers/app.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngstack/translate';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
-import { Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { AppState } from '@khiops-visualization/store/app.state';
 import { Store } from '@ngrx/store';
 import {
@@ -55,7 +54,6 @@ export class TreeSelectComponent
     public override selectableService: SelectableService,
     public override configService: ConfigService,
     public translate: TranslateService,
-    private appService: AppService,
     private snackBar: MatSnackBar,
     private store: Store<{ appState: AppState }>,
   ) {
@@ -70,58 +68,45 @@ export class TreeSelectComponent
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.dimensionTree?.currentValue) {
-      this.initialize();
+      this.initTree();
     }
   }
 
   ngOnInit() {
     this.selectedNodes$.subscribe((selectedNodes) => {
-      this.tree.selectNodes(selectedNodes);
+      this.tree?.selectNodes(selectedNodes);
     });
     this.selectedNode$.subscribe((selectedNode) => {
       if (selectedNode) {
-        this.tree.scrollToNode(selectedNode._id);
+        this.tree?.scrollToNode(selectedNode._id);
       }
     });
   }
 
   override ngAfterViewInit() {
     // Init at first time
-    this.initialize();
+    this.initTree();
   }
 
   onToggleFullscreen(isFullscreen: boolean) {
     this.isFullscreen = isFullscreen;
   }
 
-  private initialize() {
-    // At launch check if there are saved selected nodes into inpout
-    const savedSelectedNodes = this.appService.getSavedDatas('selectedNodes');
-    if (savedSelectedNodes) {
-      this.initTree(savedSelectedNodes);
-    } else {
-      this.initTree(this.selectedNodes);
-    }
-  }
-
-  private initTree(selectedNodes?: TreeNodeModel[]) {
+  private initTree() {
     if (this.dimensionTree?.[0]) {
       // @ts-ignore
       this.tree = new TreeView(
         this.dimensionTree,
         this.configService.getRootElementDom(),
-        'tree_' + this.position,
+        'tree_0',
         {
           disableCollapse: true,
           disableUpdateName: true,
         },
       );
 
-      this.tree.on('init', () => {
-        if (!selectedNodes) {
-          this.store.dispatch(initSelectedNodes());
-        }
-        this.tree.selectNodes(this.selectedNodes);
+      this.tree.on('init', async () => {
+        this.store.dispatch(initSelectedNodes());
       });
 
       this.tree.on('select', (e: any) => {
@@ -147,15 +132,15 @@ export class TreeSelectComponent
     this.tree.unselectNodes();
   }
 
-  public showActiveEntries() {
-    this.tree.selectNodes(this.selectedNodes);
+  public async showActiveEntries() {
+    this.tree?.selectNodes(await firstValueFrom(this.selectedNodes$));
   }
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: { keyCode: any }) {
     const currentSelectedArea = this.selectableService.getSelectedArea();
     if (currentSelectedArea && currentSelectedArea.id === this.id) {
-      this.tree.selectNextNode(this.id, event.keyCode);
+      this.tree?.selectNextNode(this.id, event.keyCode);
     } else {
       return;
     }

@@ -88,6 +88,9 @@ export class TreePreparationDatasService {
    * Initializes the selected nodes based on the first partition of the selected variable.
    */
   initSelectedNodes() {
+    // const savedSelectedNodes = this.appService.getSavedDatas('selectedNodes');
+    // Todo init nodes from json if exists
+
     let nodes;
     const variablesDetailedStatistics:
       | { [key: string]: VariableDetail }
