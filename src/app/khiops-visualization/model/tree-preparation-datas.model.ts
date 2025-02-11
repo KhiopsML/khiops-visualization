@@ -17,7 +17,7 @@ export interface TreePreparationState {
   previousSelectedNodes: TreeNodeModel[];
 }
 
-export const initialTreePreparationState: TreePreparationState = {
+export const initialState: TreePreparationState = {
   selectedNode: undefined,
   selectedNodes: [],
   previousSelectedNodes: [],

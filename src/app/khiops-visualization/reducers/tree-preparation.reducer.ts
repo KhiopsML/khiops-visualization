@@ -1,9 +1,9 @@
 import { createReducer, on } from '@ngrx/store';
 import { selectNodes, selectNode } from '../actions/tree-preparation.action';
-import { initialTreePreparationState } from '../model/tree-preparation-datas.model';
+import { initialState } from '../model/tree-preparation-datas.model';
 
 export const appReducer = createReducer(
-  initialTreePreparationState,
+  initialState,
 
   on(selectNodes, (state, { selectedNodes }) => ({
     ...state,
