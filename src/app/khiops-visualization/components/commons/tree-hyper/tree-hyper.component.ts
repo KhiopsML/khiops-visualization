@@ -42,6 +42,7 @@ import { Store } from '@ngrx/store';
 import { selectNodesFromId } from '@khiops-visualization/actions/tree-preparation.action';
 import {
   previousSelectedNodesSelector,
+  selectedNodeSelector,
   selectedNodesSelector,
 } from '@khiops-visualization/selectors/tree-preparation.selector';
 
@@ -90,9 +91,7 @@ export class TreeHyperComponent
     this.previousSelectedNodes$ = this.store.select(
       previousSelectedNodesSelector,
     );
-    this.selectedNode$ = this.store.select(
-      (state) => state.TreePreparationState.selectedNode,
-    );
+    this.selectedNode$ = this.store.select(selectedNodeSelector);
 
     this.buttonTitle = this.translate.get('GLOBAL.VALUES');
 

@@ -20,6 +20,7 @@ import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggl
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { selectedNodeSelector } from '@khiops-visualization/selectors/tree-preparation.selector';
 
 @Component({
   selector: 'app-tree-leaf-details',
@@ -46,9 +47,7 @@ export class TreeLeafDetailsComponent implements OnInit {
     private distributionDatasService: DistributionDatasService,
     private store: Store<{ TreePreparationState: TreePreparationState }>,
   ) {
-    this.selectedNode$ = this.store.select(
-      (state) => state.TreePreparationState.selectedNode,
-    );
+    this.selectedNode$ = this.store.select(selectedNodeSelector);
   }
 
   ngOnInit() {
