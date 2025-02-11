@@ -24,8 +24,10 @@ export class Ls {
   set(key: string, value: any) {
     if (typeof value === 'object' && value !== null) {
       value = UtilsService.roundNumbersInJson(value);
+      localStorage.setItem(this.LS_ID + key, JSON.stringify(value));
+    } else {
+      localStorage.setItem(this.LS_ID + key, value);
     }
-    localStorage.setItem(this.LS_ID + key, JSON.stringify(value));
   }
 
   del(key: string) {
