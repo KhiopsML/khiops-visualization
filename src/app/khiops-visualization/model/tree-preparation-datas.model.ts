@@ -73,28 +73,43 @@ export class TreePreparationDatasModel {
    */
   computeTreeColorsMap() {
     if (this.selectedVariable) {
-      const variablesDetailedStatistics =
-        this.appDatas?.treePreparationReport?.variablesDetailedStatistics;
-
-      this.treeColorsMap = {};
-      const dimensions =
-        variablesDetailedStatistics?.[this.selectedVariable.rank]?.dataGrid
-          .dimensions;
-      const dimIndex =
-        dimensions?.findIndex(
-          (e: any) => e.variable === this.selectedVariable?.name,
-        ) || 0;
-      const dimDatas = dimensions![dimIndex]?.partition;
-
-      this.treeColorsMap = {};
-      if (dimDatas) {
-        for (let i = 0; i < dimDatas.length; i++) {
-          for (let j = 0; j < dimDatas[i]!.length; j++) {
-            this.treeColorsMap[dimDatas[i]![j]!] = TREE_COLORS[i];
+      if (this.isRegressionAnalysis) {
+        this.treeColorsMap = {};
+        const variablesDetailedStatistics =
+          this.appDatas?.treePreparationReport?.variablesDetailedStatistics;
+        const values =
+          variablesDetailedStatistics?.[this.selectedVariable.rank]?.inputValues
+            ?.values;
+        if (values) {
+          for (let i = 0; i < values.length; i++) {
+            this.treeColorsMap[values[i]!] = TREE_COLORS[i];
           }
         }
+        return this.treeColorsMap;
+      } else {
+        const variablesDetailedStatistics =
+          this.appDatas?.treePreparationReport?.variablesDetailedStatistics;
+
+        this.treeColorsMap = {};
+        const dimensions =
+          variablesDetailedStatistics?.[this.selectedVariable.rank]?.dataGrid
+            .dimensions;
+        const dimIndex =
+          dimensions?.findIndex(
+            (e: any) => e.variable === this.selectedVariable?.name,
+          ) || 0;
+        const dimDatas = dimensions![dimIndex]?.partition;
+
+        this.treeColorsMap = {};
+        if (dimDatas) {
+          for (let i = 0; i < dimDatas.length; i++) {
+            for (let j = 0; j < dimDatas[i]!.length; j++) {
+              this.treeColorsMap[dimDatas[i]![j]!] = TREE_COLORS[i];
+            }
+          }
+        }
+        return this.treeColorsMap;
       }
-      return this.treeColorsMap;
     }
     return undefined;
   }
