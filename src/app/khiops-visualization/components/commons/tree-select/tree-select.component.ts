@@ -29,6 +29,10 @@ import {
   initSelectedNodes,
   selectNodesFromId,
 } from '@khiops-visualization/actions/app.action';
+import {
+  selectedNodesSelector,
+  selectedNodeSelector,
+} from '@khiops-visualization/selectors/app.selector';
 
 @Component({
   selector: 'app-tree-select',
@@ -58,12 +62,8 @@ export class TreeSelectComponent
     private store: Store<{ appState: AppState }>,
   ) {
     super(selectableService, ngzone, configService);
-    this.selectedNodes$ = this.store.select(
-      (state) => state.appState.selectedNodes,
-    );
-    this.selectedNode$ = this.store.select(
-      (state) => state.appState.selectedNode,
-    );
+    this.selectedNodes$ = this.store.select(selectedNodesSelector);
+    this.selectedNode$ = this.store.select(selectedNodeSelector);
   }
 
   ngOnChanges(changes: SimpleChanges) {

@@ -17,6 +17,7 @@ import { AppState } from '@khiops-visualization/store/app.state';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
+import { selectedNodesSelector } from '@khiops-visualization/selectors/app.selector';
 
 @Component({
   selector: 'app-var-details-tree-preparation',
@@ -38,9 +39,7 @@ export class VarDetailsTreePreparationComponent {
     private layoutService: LayoutService,
     private store: Store<{ appState: AppState }>,
   ) {
-    this.selectedNodes$ = this.store.select(
-      (state) => state.appState.selectedNodes,
-    );
+    this.selectedNodes$ = this.store.select(selectedNodesSelector);
     this.treePreparationDatas = this.treePreparationDatasService.getDatas();
     this.sizes = this.layoutService.getViewSplitSizes('treePreparationView');
 

@@ -14,6 +14,10 @@ import { Observable } from 'rxjs';
 import { AppState } from '@khiops-visualization/store/app.state';
 import { Store } from '@ngrx/store';
 import { selectNodesFromId } from '../../../actions/app.action';
+import {
+  selectedNodeSelector,
+  selectedNodesSelector,
+} from '@khiops-visualization/selectors/app.selector';
 
 @Component({
   selector: 'app-tree-details',
@@ -33,12 +37,8 @@ export class TreeDetailsComponent {
     public translate: TranslateService,
     private store: Store<{ appState: AppState }>,
   ) {
-    this.selectedNodes$ = this.store.select(
-      (state) => state.appState.selectedNodes,
-    );
-    this.selectedNode$ = this.store.select(
-      (state) => state.appState.selectedNode,
-    );
+    this.selectedNodes$ = this.store.select(selectedNodesSelector);
+    this.selectedNode$ = this.store.select(selectedNodeSelector);
   }
 
   ngOnInit() {

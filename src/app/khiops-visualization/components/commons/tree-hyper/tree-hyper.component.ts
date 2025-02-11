@@ -34,10 +34,14 @@ import { TreeHyperService } from './tree-hyper.service';
 import { N } from '@khiops-hypertree/d/models/n/n';
 import { TreePreparationDatasModel } from '@khiops-visualization/model/tree-preparation-datas.model';
 import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
-import { firstValueFrom, Observable } from 'rxjs';
+import { firstValueFrom, Observable, take } from 'rxjs';
 import { AppState } from '@khiops-visualization/store/app.state';
 import { Store } from '@ngrx/store';
 import { selectNodesFromId } from '@khiops-visualization/actions/app.action';
+import {
+  previousSelectedNodesSelector,
+  selectedNodesSelector,
+} from '@khiops-visualization/selectors/app.selector';
 
 @Component({
   selector: 'app-tree-hyper',
@@ -66,6 +70,7 @@ export class TreeHyperComponent
   public distributionDatas?: DistributionDatasModel;
 
   selectedNodes$: Observable<TreeNodeModel[]>;
+  previousSelectedNodes$: Observable<TreeNodeModel[]>;
   selectedNode$: Observable<TreeNodeModel | undefined>;
 
   constructor(
@@ -79,8 +84,9 @@ export class TreeHyperComponent
   ) {
     super(selectableService, ngzone, configService);
 
-    this.selectedNodes$ = this.store.select(
-      (state) => state.appState.selectedNodes,
+    this.selectedNodes$ = this.store.select(selectedNodesSelector);
+    this.previousSelectedNodes$ = this.store.select(
+      previousSelectedNodesSelector,
     );
     this.selectedNode$ = this.store.select(
       (state) => state.appState.selectedNode,
@@ -114,7 +120,15 @@ export class TreeHyperComponent
     // listen for selectedNodes change
     this.selectedNodes$?.subscribe((selectedNodes) => {
       if (selectedNodes) {
-        this.removeNodes(selectedNodes);
+        // get previous values of selected nodes from store synchronously
+        let previousSelectedNodes: TreeNodeModel[] = [];
+        this.previousSelectedNodes$;
+        this.store
+          .select(previousSelectedNodesSelector)
+          .pipe(take(1))
+          .subscribe((nodes) => (previousSelectedNodes = nodes));
+
+        this.removeNodes(previousSelectedNodes);
         this.selectNodes(selectedNodes);
       }
     });

@@ -8,6 +8,7 @@ export const appReducer = createReducer(
   on(selectNodes, (state, { selectedNodes }) => ({
     ...state,
     selectedNodes,
+    previousSelectedNodes: state.selectedNodes,
   })),
 
   on(selectNode, (state, { selectedNode }) => ({

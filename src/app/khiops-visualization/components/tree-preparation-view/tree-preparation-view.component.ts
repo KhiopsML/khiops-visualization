@@ -37,6 +37,10 @@ import { selectNodesFromIndex } from '@khiops-visualization/actions/app.action';
 import { AppState } from '@khiops-visualization/store/app.state';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import {
+  selectedNodeSelector,
+  selectedNodesSelector,
+} from '@khiops-visualization/selectors/app.selector';
 
 @Component({
   selector: 'app-tree-preparation-view',
@@ -78,12 +82,8 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
   ) {
     super();
 
-    this.selectedNodes$ = this.store.select(
-      (state) => state.appState.selectedNodes,
-    );
-    this.selectedNode$ = this.store.select(
-      (state) => state.appState.selectedNode,
-    );
+    this.selectedNodes$ = this.store.select(selectedNodesSelector);
+    this.selectedNode$ = this.store.select(selectedNodeSelector);
 
     this.variablesDisplayedColumns = [
       {

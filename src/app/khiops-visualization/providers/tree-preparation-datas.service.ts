@@ -42,9 +42,7 @@ export class TreePreparationDatasService {
     private appService: AppService,
     private store: Store<{ appState: AppState }>,
   ) {
-    this.selectedNodes$ = this.store.select(
-      (state) => state.appState.selectedNodes,
-    );
+    this.selectedNodes$ = this.store.select(selectedNodesSelector);
   }
 
   /**
