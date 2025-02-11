@@ -1148,12 +1148,12 @@ export class UtilsService {
   static deepFind(element: any, matchingTitle: any): any {
     if (element?.data?.id === matchingTitle) {
       return element;
-    } else if (element.children != null) {
+    } else if (element?.children != null) {
       let i;
       let result = null;
-      const elChildrenLength = element.children.length;
+      const elChildrenLength = element?.children.length;
       for (i = 0; result == null && i < elChildrenLength; i++) {
-        result = this.deepFind(element.children[i], matchingTitle);
+        result = this.deepFind(element?.children[i], matchingTitle);
       }
       return result;
     }

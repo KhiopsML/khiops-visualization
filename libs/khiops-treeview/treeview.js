@@ -451,7 +451,9 @@
       TreeView.prototype.scrollToNode = function (nodeId) {
         let self = this;
         let el = self.rootElementDom.querySelector('#tree-leaf-' + nodeId);
-        scrollIntoView(el.parentNode);
+        if (el) {
+          scrollIntoView(el.parentNode);
+        }
       };
 
       TreeView.prototype.selectNode = function (nodeId, propagateEvent = true) {
