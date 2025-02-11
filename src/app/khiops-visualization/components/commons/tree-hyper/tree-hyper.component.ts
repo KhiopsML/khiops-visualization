@@ -32,16 +32,18 @@ import { AppService } from '@khiops-visualization/providers/app.service';
 import { LS } from '@khiops-library/enum/ls';
 import { TreeHyperService } from './tree-hyper.service';
 import { N } from '@khiops-hypertree/d/models/n/n';
-import { TreePreparationDatasModel } from '@khiops-visualization/model/tree-preparation-datas.model';
+import {
+  TreePreparationDatasModel,
+  TreePreparationState,
+} from '@khiops-visualization/model/tree-preparation-datas.model';
 import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
 import { firstValueFrom, Observable, take } from 'rxjs';
-import { AppState } from '@khiops-visualization/store/app.state';
 import { Store } from '@ngrx/store';
-import { selectNodesFromId } from '@khiops-visualization/actions/app.action';
+import { selectNodesFromId } from '@khiops-visualization/actions/tree-preparation.action';
 import {
   previousSelectedNodesSelector,
   selectedNodesSelector,
-} from '@khiops-visualization/selectors/app.selector';
+} from '@khiops-visualization/selectors/tree-preparation.selector';
 
 @Component({
   selector: 'app-tree-hyper',
@@ -80,7 +82,7 @@ export class TreeHyperComponent
     public translate: TranslateService,
     private treePreparationDatasService: TreePreparationDatasService,
     private distributionDatasService: DistributionDatasService,
-    private store: Store<{ appState: AppState }>,
+    private store: Store<{ TreePreparationState: TreePreparationState }>,
   ) {
     super(selectableService, ngzone, configService);
 
@@ -89,7 +91,7 @@ export class TreeHyperComponent
       previousSelectedNodesSelector,
     );
     this.selectedNode$ = this.store.select(
-      (state) => state.appState.selectedNode,
+      (state) => state.TreePreparationState.selectedNode,
     );
 
     this.buttonTitle = this.translate.get('GLOBAL.VALUES');

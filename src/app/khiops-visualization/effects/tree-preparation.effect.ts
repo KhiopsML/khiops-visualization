@@ -8,7 +8,7 @@ import {
   selectNodesFromId,
   selectNode,
   selectNodesFromIndex,
-} from '../actions/app.action';
+} from '../actions/tree-preparation.action';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 
 @Injectable()

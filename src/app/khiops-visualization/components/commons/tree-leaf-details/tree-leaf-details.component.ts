@@ -10,13 +10,15 @@ import { DistributionDatasService } from '@khiops-visualization/providers/distri
 import { TranslateService } from '@ngstack/translate';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
-import { TreePreparationDatasModel } from '@khiops-visualization/model/tree-preparation-datas.model';
+import {
+  TreePreparationDatasModel,
+  TreePreparationState,
+} from '@khiops-visualization/model/tree-preparation-datas.model';
 import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 import { Store } from '@ngrx/store';
-import { AppState } from '@khiops-visualization/store/app.state';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -42,10 +44,10 @@ export class TreeLeafDetailsComponent implements OnInit {
     public translate: TranslateService,
     private treePreparationDatasService: TreePreparationDatasService,
     private distributionDatasService: DistributionDatasService,
-    private store: Store<{ appState: AppState }>,
+    private store: Store<{ TreePreparationState: TreePreparationState }>,
   ) {
     this.selectedNode$ = this.store.select(
-      (state) => state.appState.selectedNode,
+      (state) => state.TreePreparationState.selectedNode,
     );
   }
 

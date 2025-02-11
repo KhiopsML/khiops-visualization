@@ -29,7 +29,7 @@ describe('Visualization', () => {
       TestBed.configureTestingModule({
         imports: [HttpClientModule, TranslateModule.forRoot()],
         providers: [
-          provideMockStore({ initialState: {} }),
+          provideMockStore({ initialTreePreparationState: {} }),
           DistributionDatasService,
           PreparationDatasService,
           TreePreparationDatasService,

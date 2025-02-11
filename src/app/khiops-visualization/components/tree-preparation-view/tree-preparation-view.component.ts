@@ -22,7 +22,10 @@ import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { VariableModel } from '@khiops-visualization/model/variable.model';
 import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
-import { TreePreparationDatasModel } from '@khiops-visualization/model/tree-preparation-datas.model';
+import {
+  TreePreparationDatasModel,
+  TreePreparationState,
+} from '@khiops-visualization/model/tree-preparation-datas.model';
 import { TreePreparationVariableModel } from '@khiops-visualization/model/tree-preparation-variable.model';
 import { TrackerService } from '@khiops-library/providers/tracker.service';
 import { TranslateService } from '@ngstack/translate';
@@ -33,14 +36,13 @@ import { REPORT } from '@khiops-library/enum/report';
 import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
-import { selectNodesFromIndex } from '@khiops-visualization/actions/app.action';
-import { AppState } from '@khiops-visualization/store/app.state';
+import { selectNodesFromIndex } from '@khiops-visualization/actions/tree-preparation.action';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import {
   selectedNodeSelector,
   selectedNodesSelector,
-} from '@khiops-visualization/selectors/app.selector';
+} from '@khiops-visualization/selectors/tree-preparation.selector';
 
 @Component({
   selector: 'app-tree-preparation-view',
@@ -78,7 +80,7 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
     private distributionDatasService: DistributionDatasService,
     private modelingDatasService: ModelingDatasService,
     private layoutService: LayoutService,
-    private store: Store<{ appState: AppState }>,
+    private store: Store<{ TreePreparationState: TreePreparationState }>,
   ) {
     super();
 

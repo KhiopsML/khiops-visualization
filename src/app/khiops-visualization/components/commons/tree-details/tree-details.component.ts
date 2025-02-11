@@ -11,13 +11,13 @@ import { TranslateService } from '@ngstack/translate';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 import { Observable } from 'rxjs';
-import { AppState } from '@khiops-visualization/store/app.state';
 import { Store } from '@ngrx/store';
-import { selectNodesFromId } from '../../../actions/app.action';
+import { selectNodesFromId } from '../../../actions/tree-preparation.action';
 import {
   selectedNodeSelector,
   selectedNodesSelector,
-} from '@khiops-visualization/selectors/app.selector';
+} from '@khiops-visualization/selectors/tree-preparation.selector';
+import { TreePreparationState } from '@khiops-visualization/model/tree-preparation-datas.model';
 
 @Component({
   selector: 'app-tree-details',
@@ -35,7 +35,7 @@ export class TreeDetailsComponent {
     public selectableService: SelectableService,
     private treePreparationDatasService: TreePreparationDatasService,
     public translate: TranslateService,
-    private store: Store<{ appState: AppState }>,
+    private store: Store<{ TreePreparationState: TreePreparationState }>,
   ) {
     this.selectedNodes$ = this.store.select(selectedNodesSelector);
     this.selectedNode$ = this.store.select(selectedNodeSelector);

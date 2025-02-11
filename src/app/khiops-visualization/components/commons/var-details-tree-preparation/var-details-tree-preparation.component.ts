@@ -7,17 +7,19 @@
 import { Component, ViewChild } from '@angular/core';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { VariableGraphDetailsComponent } from '../variable-graph-details/variable-graph-details.component';
-import { TreePreparationDatasModel } from '@khiops-visualization/model/tree-preparation-datas.model';
+import {
+  TreePreparationDatasModel,
+  TreePreparationState,
+} from '@khiops-visualization/model/tree-preparation-datas.model';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
-import { selectNodesFromId } from '@khiops-visualization/actions/app.action';
-import { AppState } from '@khiops-visualization/store/app.state';
+import { selectNodesFromId } from '@khiops-visualization/actions/tree-preparation.action';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
-import { selectedNodesSelector } from '@khiops-visualization/selectors/app.selector';
+import { selectedNodesSelector } from '@khiops-visualization/selectors/tree-preparation.selector';
 
 @Component({
   selector: 'app-var-details-tree-preparation',
@@ -37,7 +39,7 @@ export class VarDetailsTreePreparationComponent {
   constructor(
     private treePreparationDatasService: TreePreparationDatasService,
     private layoutService: LayoutService,
-    private store: Store<{ appState: AppState }>,
+    private store: Store<{ TreePreparationState: TreePreparationState }>,
   ) {
     this.selectedNodes$ = this.store.select(selectedNodesSelector);
     this.treePreparationDatas = this.treePreparationDatasService.getDatas();

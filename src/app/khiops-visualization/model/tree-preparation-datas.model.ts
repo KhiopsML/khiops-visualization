@@ -11,6 +11,18 @@ import { TreeChildNode } from '@khiops-visualization/interfaces/tree-preparation
 import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas';
 import { TASKS } from '@khiops-library/enum/tasks';
 
+export interface TreePreparationState {
+  selectedNode: TreeNodeModel | undefined;
+  selectedNodes: TreeNodeModel[];
+  previousSelectedNodes: TreeNodeModel[];
+}
+
+export const initialTreePreparationState: TreePreparationState = {
+  selectedNode: undefined,
+  selectedNodes: [],
+  previousSelectedNodes: [],
+};
+
 export class TreePreparationDatasModel {
   selectedVariable?: TreePreparationVariableModel = undefined;
   treeColorsMap?: any = undefined;

@@ -12,7 +12,10 @@ import { UtilsService } from '@khiops-library/providers/utils.service';
 import { VariableDetailsModel } from '../model/variable-details.model';
 import { TreePreparationVariableModel } from '../model/tree-preparation-variable.model';
 import { TreeNodeModel } from '../model/tree-node.model';
-import { TreePreparationDatasModel } from '../model/tree-preparation-datas.model';
+import {
+  TreePreparationDatasModel,
+  TreePreparationState,
+} from '../model/tree-preparation-datas.model';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { TYPES } from '@khiops-library/enum/types';
 import { PreparationDatasService } from './preparation-datas.service';
@@ -25,9 +28,8 @@ import {
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { VariableDetail } from '@khiops-visualization/interfaces/app-datas';
 import { Observable, take } from 'rxjs';
-import { AppState } from '@khiops-visualization/store/app.state';
 import { Store } from '@ngrx/store';
-import { selectedNodesSelector } from '@khiops-visualization/selectors/app.selector';
+import { selectedNodesSelector } from '@khiops-visualization/selectors/tree-preparation.selector';
 
 @Injectable({
   providedIn: 'root',
@@ -40,7 +42,7 @@ export class TreePreparationDatasService {
     private preparationDatasService: PreparationDatasService,
     private translate: TranslateService,
     private appService: AppService,
-    private store: Store<{ appState: AppState }>,
+    private store: Store<{ TreePreparationState: TreePreparationState }>,
   ) {
     this.selectedNodes$ = this.store.select(selectedNodesSelector);
   }

@@ -23,16 +23,16 @@ import { TranslateService } from '@ngstack/translate';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { firstValueFrom, Observable } from 'rxjs';
-import { AppState } from '@khiops-visualization/store/app.state';
 import { Store } from '@ngrx/store';
 import {
   initSelectedNodes,
   selectNodesFromId,
-} from '@khiops-visualization/actions/app.action';
+} from '@khiops-visualization/actions/tree-preparation.action';
 import {
   selectedNodesSelector,
   selectedNodeSelector,
-} from '@khiops-visualization/selectors/app.selector';
+} from '@khiops-visualization/selectors/tree-preparation.selector';
+import { TreePreparationState } from '@khiops-visualization/model/tree-preparation-datas.model';
 
 @Component({
   selector: 'app-tree-select',
@@ -59,7 +59,7 @@ export class TreeSelectComponent
     public override configService: ConfigService,
     public translate: TranslateService,
     private snackBar: MatSnackBar,
-    private store: Store<{ appState: AppState }>,
+    private store: Store<{ TreePreparationState: TreePreparationState }>,
   ) {
     super(selectableService, ngzone, configService);
     this.selectedNodes$ = this.store.select(selectedNodesSelector);
