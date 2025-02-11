@@ -79,7 +79,7 @@ export class FileLoaderService {
     // let urlKV = './assets/mocks/kv/analyse_supervisee_multiclasse.json';
     // let urlKV = './assets/mocks/kv/reg.json';
     // let urlKV = './assets/mocks/kv/copydatas.json';
-    // let urlKV = './assets/mocks/kv/iris2d.json';
+    let urlKV = './assets/mocks/kv/iris2d.json';
     // let urlKV = './assets/mocks/kv/mainTargetValue.json';
     // let urlKV = './assets/mocks/kv/leafrules.khj';
     // let urlKV = './assets/mocks/kv/Filtered_Iris_AnalysisResults.khj';
@@ -93,7 +93,7 @@ export class FileLoaderService {
     // let urlKV = './assets/mocks/kv/tree.json';
     // let urlKV = './assets/mocks/kv/Natives_AllReports.json';
     // let urlKV = './assets/mocks/kv/2d-cells-AllReports.json';
-    let urlKV = './assets/mocks/kv/bigTreeLeafs.json';
+    // let urlKV = './assets/mocks/kv/bigTreeLeafs.json';
     // let urlKV = './assets/mocks/kv/AnalysisResults_regtree_iris.json';
     // let urlKV = './assets/mocks/kv/level.json';
     // let urlKV = './assets/mocks/kv/xor.json';

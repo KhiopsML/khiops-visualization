@@ -99,7 +99,7 @@ export class HierarchySelectComponent implements OnChanges, AfterViewInit {
     this.showStats = !this.showStats;
     AppService.Ls.set(
       LS.SHOW_DIMNSION_STATS + '_' + this.position,
-      this.showStats.toString(),
+      this.showStats,
     );
   }
 

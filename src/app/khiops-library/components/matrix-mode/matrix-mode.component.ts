@@ -58,10 +58,7 @@ export class MatrixModeComponent implements OnChanges {
     this.matrixModes.selectedIndex = this.matrixModes.types.findIndex(
       (e) => e.mode === mode.mode,
     );
-    this.ls.set(
-      LS.MATRIX_MODE_OPTION_INDEX,
-      this.matrixModes.selectedIndex.toString(),
-    );
+    this.ls.set(LS.MATRIX_MODE_OPTION_INDEX, this.matrixModes.selectedIndex);
 
     this.matrixModeChange.emit(this.matrixModes.selected);
   }

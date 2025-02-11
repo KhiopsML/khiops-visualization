@@ -63,20 +63,14 @@ export class UserSettingsComponent implements OnChanges {
       10,
     );
 
-    AppService.Ls.set(
-      LS.SETTING_NUMBER_PRECISION,
-      this.numberPrecision.toString(),
-    );
+    AppService.Ls.set(LS.SETTING_NUMBER_PRECISION, this.numberPrecision);
     AppConfig.visualizationCommon.GLOBAL.TO_FIXED = this.numberPrecision;
 
     // Matrix contrast
     this.contrastValue =
       parseInt(AppService.Ls.get(LS.SETTING_MATRIX_CONTRAST), 10) ||
       AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST;
-    AppService.Ls.set(
-      LS.SETTING_MATRIX_CONTRAST,
-      this.contrastValue.toString(),
-    );
+    AppService.Ls.set(LS.SETTING_MATRIX_CONTRAST, this.contrastValue);
     AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
 
     // Allow cookies
@@ -90,18 +84,12 @@ export class UserSettingsComponent implements OnChanges {
 
   onClickOnSave() {
     // Save all items
-    AppService.Ls.set(
-      LS.SETTING_NUMBER_PRECISION,
-      this.numberPrecision?.toString(),
-    );
+    AppService.Ls.set(LS.SETTING_NUMBER_PRECISION, this.numberPrecision);
     if (this.numberPrecision !== undefined) {
       AppConfig.visualizationCommon.GLOBAL.TO_FIXED = this.numberPrecision;
     }
 
-    AppService.Ls.set(
-      LS.SETTING_MATRIX_CONTRAST,
-      this.contrastValue.toString(),
-    );
+    AppService.Ls.set(LS.SETTING_MATRIX_CONTRAST, this.contrastValue);
     AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
 
     // theme
@@ -110,7 +98,7 @@ export class UserSettingsComponent implements OnChanges {
     // Close the nav drawer
     this.toggleNavDrawerChanged.emit(true);
 
-    AppService.Ls.set(LS.COOKIE_CONSENT, this.allowCookies?.toString());
+    AppService.Ls.set(LS.COOKIE_CONSENT, this.allowCookies);
 
     setTimeout(() => {
       // Wait for drawer close before reload

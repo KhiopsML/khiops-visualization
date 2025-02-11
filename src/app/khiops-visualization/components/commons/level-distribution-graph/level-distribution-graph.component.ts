@@ -134,7 +134,7 @@ export class LevelDistributionGraphComponent
 
   onScaleChanged(value: number) {
     // Save current scale value into ls
-    AppService.Ls.set(LS.SCALE_VALUE, value.toString());
+    AppService.Ls.set(LS.SCALE_VALUE, value);
     this.scaleValue = value;
     this.resizeGraph();
   }

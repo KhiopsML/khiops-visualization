@@ -58,10 +58,7 @@ export class UserSettingsComponent implements OnChanges {
     this.contrastValue =
       parseInt(AppService.Ls.get(LS.SETTING_MATRIX_CONTRAST), 10) ||
       AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST;
-    AppService.Ls.set(
-      LS.SETTING_MATRIX_CONTRAST,
-      this.contrastValue.toString(),
-    );
+    AppService.Ls.set(LS.SETTING_MATRIX_CONTRAST, this.contrastValue);
     AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
 
     // Allow cookies
@@ -75,13 +72,10 @@ export class UserSettingsComponent implements OnChanges {
 
   onClickOnSave() {
     // Save all items
-    AppService.Ls.set(
-      LS.SETTING_MATRIX_CONTRAST,
-      this.contrastValue.toString(),
-    );
+    AppService.Ls.set(LS.SETTING_MATRIX_CONTRAST, this.contrastValue);
     AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
 
-    AppService.Ls.set(LS.COOKIE_CONSENT, this.allowCookies.toString());
+    AppService.Ls.set(LS.COOKIE_CONSENT, this.allowCookies);
 
     // theme
     AppService.Ls.set(LS.THEME_COLOR, this.currentTheme);
