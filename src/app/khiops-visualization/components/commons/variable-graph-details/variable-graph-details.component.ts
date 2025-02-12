@@ -133,13 +133,9 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
             }
           }
 
-          if (this.preparationSource === REPORT.TREE_PREPARATION_REPORT) {
-            this.treePreparationDatasService.getCurrentIntervalDatas();
-          } else {
-            this.preparationDatasService.getCurrentIntervalDatas(
-              this.preparationSource!,
-            );
-          }
+          this.preparationDatasService.getCurrentIntervalDatas(
+            this.preparationSource!,
+          );
           this.isLoading = false;
         },
         this.isLoading ? 100 : 0,

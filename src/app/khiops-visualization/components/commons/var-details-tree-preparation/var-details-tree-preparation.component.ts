@@ -20,6 +20,8 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { selectedNodesSelector } from '@khiops-visualization/selectors/tree-preparation.selector';
+import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
+import { REPORT } from '@khiops-library/enum/report';
 
 @Component({
   selector: 'app-var-details-tree-preparation',
@@ -38,6 +40,7 @@ export class VarDetailsTreePreparationComponent {
 
   constructor(
     private treePreparationDatasService: TreePreparationDatasService,
+    private preparationDatasService: PreparationDatasService,
     private layoutService: LayoutService,
     private store: Store<{ TreePreparationState: TreePreparationState }>,
   ) {
@@ -66,7 +69,8 @@ export class VarDetailsTreePreparationComponent {
     // Keep in memory to keep bar charts index on type change
     this.selectedBarIndex = index;
     this.currentIntervalDatas =
-      this.treePreparationDatasService.getCurrentIntervalDatas(
+      this.preparationDatasService.getCurrentIntervalDatas(
+        REPORT.TREE_PREPARATION_REPORT,
         this.selectedBarIndex,
       );
     const nodes = this.currentIntervalDatas?.values?.map((e: any) => e.values);

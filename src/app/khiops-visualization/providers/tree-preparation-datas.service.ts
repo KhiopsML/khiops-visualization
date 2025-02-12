@@ -9,7 +9,6 @@ import _ from 'lodash'; // Important to import lodash in karma
 import { AppService } from './app.service';
 import { TranslateService } from '@ngstack/translate';
 import { UtilsService } from '@khiops-library/providers/utils.service';
-import { VariableDetailsModel } from '../model/variable-details.model';
 import { TreePreparationVariableModel } from '../model/tree-preparation-variable.model';
 import { TreeNodeModel } from '../model/tree-node.model';
 import {
@@ -17,7 +16,6 @@ import {
   TreePreparationState,
 } from '../model/tree-preparation-datas.model';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
-import { TYPES } from '@khiops-library/enum/types';
 import { PreparationDatasService } from './preparation-datas.service';
 import { REPORT } from '@khiops-library/enum/report';
 import {
@@ -25,7 +23,6 @@ import {
   TreeDetails,
   TreePreparationVariableStatistic,
 } from '@khiops-visualization/interfaces/tree-preparation-report';
-import { DynamicI } from '@khiops-library/interfaces/globals';
 import { VariableDetail } from '@khiops-visualization/interfaces/app-datas';
 import { Observable, take } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -304,174 +301,6 @@ export class TreePreparationDatasService {
       );
     }
     return node;
-  }
-
-  /**
-   * Retrieves the current interval data for the selected variable.
-   * This method constructs a grid data object containing the interval or group data
-   * for the selected variable based on its type (numerical or categorical).
-   *
-   * @param {number} [index=0] - The index of the interval or group to retrieve. Defaults to 0.
-   * @returns {GridDatasI} The grid data object containing the interval or group data.
-   */
-  getCurrentIntervalDatas(index?: number): GridDatasI | undefined {
-    index = index || 0;
-
-    const datas: DynamicI = [];
-    let title = '';
-    const displayedColumns: any[] = [];
-
-    // init the object
-    const currentIntervalDatas = {
-      title: title,
-      values: datas,
-      displayedColumns: displayedColumns,
-    };
-
-    if (index !== -1) {
-      // otherwise it's a node selection
-
-      if (
-        this.appService.appDatas?.treePreparationReport
-          ?.variablesDetailedStatistics
-      ) {
-        const currentVar =
-          this.appService.appDatas.treePreparationReport
-            .variablesDetailedStatistics[
-            this.treePreparationDatas?.selectedVariable?.rank!
-          ];
-        if (currentVar) {
-          const variableDetails: VariableDetailsModel =
-            new VariableDetailsModel(currentVar);
-
-          if (variableDetails?.dataGrid) {
-            const currentVariableType =
-              variableDetails.dataGrid.dimensions[0]?.type;
-
-            if (currentVariableType === TYPES.NUMERICAL) {
-              displayedColumns.push({
-                headerName:
-                  this.translate.get('GLOBAL.INTERVAL_OF') +
-                  variableDetails.dataGrid.dimensions[0]?.variable,
-                field: 'interval',
-              });
-
-              // init datas array
-              datas[0] = {};
-              if (
-                variableDetails.dataGrid.dimensions[0]!.partition[index]!
-                  .length > 0
-              ) {
-                datas[0]['interval'] = JSON.stringify(
-                  variableDetails.dataGrid.dimensions[0]?.partition[index],
-                );
-              } else {
-                datas[0]['interval'] = this.translate.get('GLOBAL.MISSING');
-              }
-
-              title = this.translate.get('GLOBAL.CURRENT_INTERVAL');
-            } else if (currentVariableType === TYPES.CATEGORICAL) {
-              let dimensionLength = 0;
-              let startIter = 0;
-
-              const currentVal: any =
-                variableDetails.dataGrid.dimensions[0]?.partition[index]?.[0];
-
-              displayedColumns.push({
-                headerName:
-                  this.translate.get('GLOBAL.VALUES_OF') +
-                  variableDetails.dataGrid.dimensions[0]?.variable,
-                field: 'values',
-              });
-              displayedColumns.push({
-                headerName: this.translate.get('GLOBAL.FREQUENCY'),
-                field: 'frequency',
-              });
-
-              const partValuesLength = UtilsService.flatten(
-                variableDetails.dataGrid.dimensions[0]?.partition!,
-              ).length;
-              const partLength =
-                variableDetails.dataGrid.dimensions[0]?.partition.length;
-              const isMultiDimPartition = partValuesLength !== partLength;
-              const defaultGroupIndex =
-                variableDetails.dataGrid.dimensions[0]?.defaultGroupIndex;
-
-              // If multi dimension array, trash cat is managed at the end of treatment
-              if (!isMultiDimPartition) {
-                startIter =
-                  variableDetails.inputValues.values.indexOf(currentVal);
-                if (index === defaultGroupIndex) {
-                  dimensionLength = variableDetails.inputValues.values.length;
-                } else {
-                  dimensionLength =
-                    startIter +
-                    variableDetails.dataGrid.dimensions[0]!.partition[index]!
-                      .length;
-                }
-              } else {
-                startIter = 0;
-                dimensionLength =
-                  variableDetails.dataGrid.dimensions[0]?.partition[index]
-                    ?.length || 0;
-              }
-
-              for (let i = startIter; i < dimensionLength; i++) {
-                let currentPartitionInput;
-                if (isMultiDimPartition) {
-                  currentPartitionInput =
-                    variableDetails.dataGrid.dimensions[0]?.partition[index]?.[
-                      i
-                    ];
-                } else {
-                  currentPartitionInput = variableDetails.inputValues.values[i];
-                }
-
-                datas[i - startIter] = {};
-                datas[i - startIter]['values'] = currentPartitionInput;
-                const currentValueIndex: number =
-                  variableDetails.inputValues.values.indexOf(
-                    currentPartitionInput as string,
-                  );
-                datas[i - startIter]['frequency'] =
-                  variableDetails.inputValues.frequencies[currentValueIndex];
-              }
-
-              // trash cat management for multi dim
-              if (isMultiDimPartition && index === defaultGroupIndex) {
-                const inputValuesLength =
-                  variableDetails.inputValues.values.length;
-                const unpartitionnedValuesLength =
-                  inputValuesLength - partValuesLength;
-                if (unpartitionnedValuesLength !== 0) {
-                  for (let i = partValuesLength; i < inputValuesLength; i++) {
-                    const currentPartitionInput =
-                      variableDetails.inputValues.values[i];
-                    datas.push({
-                      values: currentPartitionInput,
-                      frequency: variableDetails.inputValues.frequencies[i],
-                    });
-                  }
-                }
-              }
-
-              title = this.translate.get('GLOBAL.CURRENT_GROUP');
-            }
-
-            if (variableDetails.isLimitedDatas) {
-              title +=
-                ' ( * ' +
-                this.translate.get('GLOBAL.LIMIT_GRAPH_DATAS_WARNING') +
-                ')';
-            }
-          }
-        }
-
-        currentIntervalDatas.title = title;
-      }
-    }
-
-    return currentIntervalDatas;
   }
 
   /**
