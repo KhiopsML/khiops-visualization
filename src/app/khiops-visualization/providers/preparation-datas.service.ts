@@ -348,6 +348,12 @@ export class PreparationDatasService {
                   frequency: variableDetails.inputValues.frequencies[i],
                 });
               }
+            } else {
+              // defaultGroupIndex is missing into group details grid #242
+              datas.push({
+                values: '*',
+                frequency: undefined,
+              });
             }
           }
 
