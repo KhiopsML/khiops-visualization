@@ -4,7 +4,7 @@ on:
   push:
   workflow_dispatch:
   schedule:
-    - cron: "0 4 * * *" # run once a day at 4 AM
+    - cron: '0 4 * * *' # run once a day at 4 AM
 jobs:
   scan:
     name: gitleaks
@@ -16,4 +16,11 @@ jobs:
       - uses: gitleaks/gitleaks-action@v2.3.4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE}}
+          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
+        with:
+          args: detect --redact -v --exit-code=2 --report-format=sarif --report-path=results.sarif --log-level=debug --log-opts=--no-merges --first-parent ${{ github.sha }}^..${{ github.sha }}
+      - name: Upload gitleaks report
+        uses: actions/upload-artifact@v2
+        with:
+          name: gitleaks-results
+          path: results.sarif
