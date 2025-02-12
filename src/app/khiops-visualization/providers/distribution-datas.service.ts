@@ -143,6 +143,8 @@ export class DistributionDatasService {
             currentXAxis = variableDetails.dataGrid.dimensions[0]?.partition;
           }
 
+          this.defineDefaultGroup(variableDetails.dataGrid.dimensions[0]!);
+
           this.distributionDatas.targetDistributionGraphDatas =
             this.computeTargetDistributionGraph(
               partition!,
@@ -428,7 +430,6 @@ export class DistributionDatasService {
           variableDetails.dataGrid.dimensions,
         );
         let currentDatas: number[] | number[][] = [];
-        let currentDimension: DimensionVisualization | undefined;
         let currentXAxis: number[][] | string[] | undefined;
         if (
           this.distributionDatas.preparationSource ===
@@ -448,18 +449,15 @@ export class DistributionDatasService {
             currentDatas = variableDetails.dataGrid.partTargetFrequencies;
           }
         }
-        if (dimensions.length === 1) {
-          currentDimension = dimensions[0];
-        } else {
-          currentDimension = dimensions[1];
-        }
+
+        this.defineDefaultGroup(dimensions[0]!);
 
         distributionsGraphDetails = this.computeDistributionGraph(
-          currentDimension!,
           currentDatas,
           dimensions,
           currentXAxis!,
           selectedVariable,
+          dimensions[0]?.defaultGroupIndex,
         );
       }
     }
@@ -468,6 +466,91 @@ export class DistributionDatasService {
     }
     this.distributionDatas.distributionGraphDatas = distributionsGraphDetails;
 
+    return distributionsGraphDetails;
+  }
+
+  defineDefaultGroup(dimension: DimensionVisualization) {
+    let partition;
+    if (dimension?.defaultGroupIndex !== undefined) {
+      partition = dimension.partition[dimension.defaultGroupIndex];
+      // @ts-ignore
+      partition[partition?.length - 1] += ',*';
+    }
+  }
+
+  /**
+   * Computes the distribution graph based on the provided parameters.
+   *
+   * @param currentDimension - The current dimension object containing partition and default group index.
+   * @param currentDatas - The current data set to be processed.
+   * @param dimensions - The dimensions to be considered for the distribution.
+   * @param partition - The partition value for the current dimension.
+   * @param currentXAxis - The current X-axis values.
+   * @param selectedVariable - The selected variable containing type information.
+   * @returns The computed distribution graph details or undefined if no datasets are available.
+   */
+  computeDistributionGraph(
+    currentDatas: number[] | number[][],
+    dimensions: DimensionVisualization[],
+    currentXAxis: number[][] | string[],
+    selectedVariable: PreparationVariableModel | TreePreparationVariableModel,
+    defaultGroupIndex: number | undefined,
+  ): DistributionChartDatasModel | undefined {
+    let distributionsGraphDetails: DistributionChartDatasModel | undefined =
+      new ChartDatasModel();
+
+    // Add trash info to the defaultGroupIndex
+
+    const currentDataSet = new ChartDatasetModel(
+      this.distributionDatas.distributionType,
+    );
+    const [frequencyArray, coverageArray] =
+      this.getAllFrequencyAndCoverageValues(currentDatas, dimensions);
+
+    let l: number = currentDatas.length;
+
+    for (let i = 0; i < l; i++) {
+      let currentValue: number | undefined = 0;
+      const coverageValue = coverageArray?.[i];
+      const frequencyValue = frequencyArray?.[i];
+
+      // format x axis legend text
+      const currentName: string = this.formatXAxis(
+        currentXAxis[i]!,
+        i,
+        selectedVariable.type,
+      );
+      distributionsGraphDetails.intervals = [];
+      distributionsGraphDetails.labels.push(currentName);
+      // @ts-ignore
+      distributionsGraphDetails.intervals.push(currentXAxis[i].toString());
+      const graphItem: BarModel = new BarModel();
+      graphItem.defaultGroupIndex = i === defaultGroupIndex;
+      graphItem.name = currentName;
+      graphItem.extra.index = i;
+
+      let total = 0;
+      if (this.distributionDatas.distributionType === TYPES.FREQUENCY) {
+        currentValue = frequencyValue;
+        graphItem.value = coverageValue;
+        total = UtilsService.arraySum(frequencyArray);
+      } else {
+        currentValue = coverageValue;
+        total = UtilsService.arraySum(coverageArray);
+        graphItem.value = (currentValue! * 100) / total;
+      }
+      graphItem.extra.frequencyValue = frequencyValue;
+      graphItem.extra.coverageValue = coverageValue;
+      graphItem.extra.value = coverageValue;
+      graphItem.extra.percent = (currentValue! * 100) / total;
+
+      currentDataSet.data.push(graphItem.value);
+      currentDataSet.extra.push(graphItem);
+    }
+    distributionsGraphDetails.datasets.push(currentDataSet);
+    if (distributionsGraphDetails.datasets.length === 0) {
+      distributionsGraphDetails = undefined;
+    }
     return distributionsGraphDetails;
   }
 
@@ -540,89 +623,6 @@ export class DistributionDatasService {
 
     this.distributionDatas.histogramDatas = histogramGraphDetails;
     return histogramGraphDetails;
-  }
-
-  /**
-   * Computes the distribution graph based on the provided parameters.
-   *
-   * @param currentDimension - The current dimension object containing partition and default group index.
-   * @param currentDatas - The current data set to be processed.
-   * @param dimensions - The dimensions to be considered for the distribution.
-   * @param partition - The partition value for the current dimension.
-   * @param currentXAxis - The current X-axis values.
-   * @param selectedVariable - The selected variable containing type information.
-   * @returns The computed distribution graph details or undefined if no datasets are available.
-   */
-  computeDistributionGraph(
-    currentDimension: DimensionVisualization,
-    currentDatas: number[] | number[][],
-    dimensions: DimensionVisualization[],
-    currentXAxis: number[][] | string[],
-    selectedVariable: PreparationVariableModel | TreePreparationVariableModel,
-  ): DistributionChartDatasModel | undefined {
-    let distributionsGraphDetails: DistributionChartDatasModel | undefined =
-      new ChartDatasModel();
-
-    if (currentDimension) {
-      // Add trash info to the defaultGroupIndex
-      if (currentDimension.defaultGroupIndex !== undefined) {
-        // @ts-ignore
-        currentDimension.partition[currentDimension.defaultGroupIndex][0] +=
-          ', *';
-      }
-
-      const currentDataSet = new ChartDatasetModel(
-        this.distributionDatas.distributionType,
-      );
-      const [frequencyArray, coverageArray] =
-        this.getAllFrequencyAndCoverageValues(currentDatas, dimensions);
-
-      let l: number = currentDatas.length;
-
-      for (let i = 0; i < l; i++) {
-        let currentValue: number | undefined = 0;
-        const coverageValue = coverageArray?.[i];
-        const frequencyValue = frequencyArray?.[i];
-
-        // format x axis legend text
-        const currentName: string = this.formatXAxis(
-          currentXAxis[i]!,
-          i,
-          selectedVariable.type,
-        );
-        distributionsGraphDetails.intervals = [];
-        distributionsGraphDetails.labels.push(currentName);
-        // @ts-ignore
-        distributionsGraphDetails.intervals.push(currentXAxis[i].toString());
-        const graphItem: BarModel = new BarModel();
-        graphItem.defaultGroupIndex = i === currentDimension.defaultGroupIndex;
-        graphItem.name = currentName;
-        graphItem.extra.index = i;
-
-        let total = 0;
-        if (this.distributionDatas.distributionType === TYPES.FREQUENCY) {
-          currentValue = frequencyValue;
-          graphItem.value = coverageValue;
-          total = UtilsService.arraySum(frequencyArray);
-        } else {
-          currentValue = coverageValue;
-          total = UtilsService.arraySum(coverageArray);
-          graphItem.value = (currentValue! * 100) / total;
-        }
-        graphItem.extra.frequencyValue = frequencyValue;
-        graphItem.extra.coverageValue = coverageValue;
-        graphItem.extra.value = coverageValue;
-        graphItem.extra.percent = (currentValue! * 100) / total;
-
-        currentDataSet.data.push(graphItem.value);
-        currentDataSet.extra.push(graphItem);
-      }
-      distributionsGraphDetails.datasets.push(currentDataSet);
-    }
-    if (distributionsGraphDetails.datasets.length === 0) {
-      distributionsGraphDetails = undefined;
-    }
-    return distributionsGraphDetails;
   }
 
   /**
