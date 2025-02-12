@@ -9,7 +9,11 @@
       [ngClass]="{ 'legend-selected': selectedItem === data.name }"
       title="{{ tooltip || data.name }}"
     >
-      <div class="square" [style.background-color]="data.color"></div>
+      <div
+        class="square"
+        [style.background-color]="data.color"
+        [style.border-color]="data.borderColor"
+      ></div>
       <span>{{ data.shortname }}</span>
     </div>
   </div>

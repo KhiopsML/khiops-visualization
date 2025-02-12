@@ -318,7 +318,7 @@ export class ChartComponent implements AfterViewInit, OnChanges {
           // @ts-ignore
           dataset.backgroundColor[defaultGroupIndex] = UtilsService.hexToRGBa(
             this.colorSet?.domain[i]!,
-            0.15,
+            0.5,
           );
         }
 
@@ -330,7 +330,7 @@ export class ChartComponent implements AfterViewInit, OnChanges {
           }
           if (this.selectedLineChartItem && this.selectedLineChartItem !== '') {
             if (this.selectedLineChartItem !== dataset.label) {
-              borderOpacity = 0.35;
+              borderOpacity = 0.85;
             } else {
               dataset.borderWidth = 4;
             }
@@ -340,6 +340,14 @@ export class ChartComponent implements AfterViewInit, OnChanges {
         dataset.borderColor = new Array(this.inputDatas.labels.length).fill(
           UtilsService.hexToRGBa(this.colorSet?.domain[i]!, borderOpacity),
         );
+
+        if (defaultGroupIndex !== -1) {
+          // @ts-ignore
+          dataset.borderColor[defaultGroupIndex] = UtilsService.hexToRGBa(
+            '#ff6600',
+            0.9,
+          );
+        }
       }
     }
   }
