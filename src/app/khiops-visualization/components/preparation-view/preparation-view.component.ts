@@ -27,6 +27,7 @@ import { BorderTextCellComponent } from '../../../khiops-library/components/ag-g
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals';
+import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 
 @Component({
   selector: 'app-preparation-view',
@@ -36,7 +37,10 @@ import { DynamicI } from '@khiops-library/interfaces/globals';
 export class PreparationViewComponent extends SelectableTabComponent {
   @Input() public preparationSource = REPORT.PREPARATION_REPORT; // By default
   public sizes?: DynamicI;
-  public selectedVariable: PreparationVariableModel | undefined;
+  public preparationDatas?: {
+    selectedVariable: PreparationVariableModel;
+    currentIntervalDatas: GridDatasI;
+  };
   public summaryDatas?: InfosDatasI[];
   public informationsDatas?: InfosDatasI[];
   public targetVariableStatsDatas?: ChartDatasModel;
@@ -151,7 +155,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
         : 'textPreparation';
     this.trackerService.trackEvent('page_view', trackView);
 
-    this.selectedVariable = this.preparationDatasService.getSelectedVariable(
+    this.preparationDatas = this.preparationDatasService.getDatas(
       this.preparationSource,
     );
 
@@ -210,7 +214,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
 
   getDerivationRuleValue(): string {
     return (
-      this.selectedVariable?.derivationRule ||
+      this.preparationDatas?.selectedVariable?.derivationRule ||
       this.translate.get('GLOBAL.NO_DERIVATION_RULE')
     );
   }

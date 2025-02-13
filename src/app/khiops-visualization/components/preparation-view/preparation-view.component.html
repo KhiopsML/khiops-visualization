@@ -97,7 +97,7 @@
                 [rowHeight]="30"
                 [inputDatas]="variablesDatas"
                 [displayedColumns]="variablesDisplayedColumns"
-                [selectedVariable]="selectedVariable"
+                [selectedVariable]="preparationDatas?.selectedVariable"
                 (showLevelDistributionGraph)="
                   onShowLevelDistributionGraph($event)
                 "
@@ -109,21 +109,27 @@
                 <as-split-area fxFlex="50%">
                   <app-description-block
                     id="preparation-description-block-variable"
-                    *ngIf="selectedVariable"
+                    *ngIf="preparationDatas?.selectedVariable"
                     title="{{ 'GLOBAL.NAME' | translate }}"
-                    [value]="selectedVariable?.name"
+                    [value]="preparationDatas?.selectedVariable?.name"
                   ></app-description-block>
-                  <kl-no-data fxFlex *ngIf="!selectedVariable"></kl-no-data>
+                  <kl-no-data
+                    fxFlex
+                    *ngIf="!preparationDatas?.selectedVariable"
+                  ></kl-no-data>
                 </as-split-area>
                 <as-split-area fxFlex="50%">
                   <app-description-block
                     id="preparation-description-block-derivation"
-                    *ngIf="selectedVariable"
+                    *ngIf="preparationDatas?.selectedVariable"
                     title="{{ 'GLOBAL.DERIVATION_RULE' | translate }}"
                     [value]="getDerivationRuleValue()"
                   >
                   </app-description-block>
-                  <kl-no-data fxFlex *ngIf="!selectedVariable"></kl-no-data>
+                  <kl-no-data
+                    fxFlex
+                    *ngIf="!preparationDatas?.selectedVariable"
+                  ></kl-no-data>
                 </as-split-area>
               </as-split>
             </as-split-area>
