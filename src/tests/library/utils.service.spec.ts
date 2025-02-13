@@ -488,6 +488,55 @@ describe('UtilsService', () => {
     ]);
   });
 
+  it('generateArrayPercentsFromArrayLengthAndDefaultGroupIndex - Array length is different than values count and a defaultGroup index is defined', () => {
+    const array = [['Monday'], ['Friday'], ['Sunday'], ['Saturday']];
+    const result =
+      UtilsService.generateArrayPercentsFromArrayLengthAndDefaultGroupIndex(
+        array,
+        7,
+        0,
+      );
+    expect(result).toEqual([
+      0, 50, 66.66666666666667, 83.33333333333334, 100.00000000000001,
+    ]);
+  });
+
+  it('generateArrayPercentsFromArrayLengthAndDefaultGroupIndex - Array length is equal to values count', () => {
+    const array = [['day'], ['night']];
+    const result =
+      UtilsService.generateArrayPercentsFromArrayLengthAndDefaultGroupIndex(
+        array,
+        2,
+        1,
+      );
+    expect(result).toEqual([0, 50, 100]);
+  });
+
+  it('generateArrayPercentsFromArrayLengthAndDefaultGroupIndex - defaultGroup size is complete (empty uncategorized datas)', () => {
+    const array = [
+      ['2024-W47', '2024-W48', '2024-W43', '2024-W42'],
+      ['2024-W36', '2024-W37', '2024-W38'],
+      ['2024-W50', '2024-W49'],
+      ['2024-W45', '2024-W40'],
+      ['2024-W46', '2024-W44'],
+      ['2024-W52', '2024-W53'],
+      ['2024-W51', '2024-W35'],
+      ['2024-W39'],
+      ['2024-W41'],
+    ];
+    const result =
+      UtilsService.generateArrayPercentsFromArrayLengthAndDefaultGroupIndex(
+        array,
+        19,
+        6,
+      );
+    expect(result).toEqual([
+      0, 21.05263157894737, 36.8421052631579, 47.36842105263158,
+      57.89473684210527, 68.42105263157896, 78.94736842105264,
+      89.47368421052633, 94.73684210526318, 100.00000000000003,
+    ]);
+  });
+
   it('generateArrayPercentsFromArrayIntervalsAndTotalCount', () => {
     const array = [
       [0, 1],
