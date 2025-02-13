@@ -429,12 +429,23 @@ export class MatrixUtilsService {
     let currentAxisFullPart: any;
     if (dimension.type === TYPES.CATEGORICAL) {
       currentAxisFullPart = dimension.partition;
-      axisValues =
-        UtilsService.generateArrayPercentsFromArrayLengthAndDefaultGroupIndex(
+      if (dimensionValues) {
+        // Regression use case
+        axisValues =
+          UtilsService.generateArrayPercentsFromArrayLengthAndDefaultGroupIndex(
+            currentAxisFullPart,
+            dimensionValues,
+            dimension?.defaultGroupIndex,
+          );
+      } else {
+        const axisPartTotal =
+          UtilsService.getArrayOfArrayLength(currentAxisFullPart);
+        // Co-occurence use case
+        axisValues = UtilsService.generateArrayPercentsFromArrayLength(
           currentAxisFullPart,
-          dimensionValues,
-          dimension?.defaultGroupIndex,
+          axisPartTotal,
         );
+      }
     } else if (dimension.type === TYPES.NUMERICAL) {
       currentAxisFullPart = dimension.partition;
       // Give an interval of 5% if missing
