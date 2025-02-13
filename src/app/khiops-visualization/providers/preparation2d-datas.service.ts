@@ -350,14 +350,9 @@ export class Preparation2dDatasService {
     | undefined {
     const selectedVariable = this.getSelectedVariable();
 
-    const datasX: any = [],
-      datasY: any = [],
-      displayedColumnsX: GridColumnsI[] = [],
-      displayedColumnsY: GridColumnsI[] = [];
-
     this.preparation2dDatas!.currentCellDatas = {
-      values: [datasX, datasY],
-      displayedColumns: [displayedColumnsX, displayedColumnsY],
+      values: [],
+      displayedColumns: [],
     };
 
     if (selectedVariable) {
@@ -369,6 +364,8 @@ export class Preparation2dDatasService {
         const yName = selectedVariable.nameY;
         const xType = variableDetails.dataGrid.dimensions[0]?.type;
         const yType = variableDetails.dataGrid.dimensions[1]?.type;
+        const displayedColumnsX: GridColumnsI[] = [];
+        const displayedColumnsY: GridColumnsI[] = [];
 
         // Define column titles
         if (xType === TYPES.NUMERICAL) {
@@ -402,18 +399,37 @@ export class Preparation2dDatasService {
           });
         }
 
-        this.computeCellDatasByAxis(
+        const defaultGroupIndex =
+          variableDetails.dataGrid.dimensions[0]?.defaultGroupIndex;
+        let isCurrentDefaultGroup = false;
+        if (defaultGroupIndex !== undefined) {
+          const defaultGroupPartition =
+            variableDetails.dataGrid.dimensions[0]?.partition[
+              defaultGroupIndex
+            ];
+          isCurrentDefaultGroup = _.isEqual(
+            defaultGroupPartition,
+            selectedCell.xaxisPartValues,
+          );
+        }
+
+        const datasX = this.computeCellDatasByAxis(
           selectedCell.xaxisPartValues!,
-          datasX,
           displayedColumnsX,
           xName,
+          isCurrentDefaultGroup,
         );
-        this.computeCellDatasByAxis(
+        const datasY = this.computeCellDatasByAxis(
           selectedCell.yaxisPartValues!,
-          datasY,
           displayedColumnsY,
           yName,
+          isCurrentDefaultGroup,
         );
+        this.preparation2dDatas!.currentCellDatas.values = [datasX, datasY];
+        this.preparation2dDatas!.currentCellDatas.displayedColumns = [
+          displayedColumnsX,
+          displayedColumnsY,
+        ];
       }
     }
 
@@ -425,16 +441,16 @@ export class Preparation2dDatasService {
    * @param type - The type of the axis (e.g., numerical or categorical).
    * @param axisPartValues - The values of the axis parts.
    * @param displayaxisPart - The display value of the axis part.
-   * @param datasAxis - The data array to store the formatted axis data.
-   * @param displayedColumns - The columns to be displayed.
    * @param variableName - The name of the variable.
+   * @param isCurrentDefaultGroup - True if the current group is the default group, otherwise false.
    */
   computeCellDatasByAxis(
     axisPartValues: number[] | string,
-    datasAxis: any,
     displayedColumns: GridColumnsI[],
     variableName: string,
+    isCurrentDefaultGroup: boolean,
   ) {
+    const datasAxis: any = [];
     if (axisPartValues) {
       for (let k = 0; k < axisPartValues.length; k++) {
         // get value into global json
@@ -448,7 +464,14 @@ export class Preparation2dDatasService {
           datasAxis[k][displayedColumns[1].field] = modalityFreq;
         }
       }
+      if (isCurrentDefaultGroup) {
+        datasAxis.push({
+          values: '*',
+          frequency: undefined,
+        });
+      }
     }
+    return datasAxis;
   }
 
   /**
