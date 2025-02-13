@@ -403,17 +403,13 @@ export class Preparation2dDatasService {
         }
 
         this.computeCellDatasByAxis(
-          xType!,
           selectedCell.xaxisPartValues!,
-          selectedCell.xDisplayaxisPart!,
           datasX,
           displayedColumnsX,
           xName,
         );
         this.computeCellDatasByAxis(
-          yType!,
           selectedCell.yaxisPartValues!,
-          selectedCell.yDisplayaxisPart!,
           datasY,
           displayedColumnsY,
           yName,
@@ -434,18 +430,12 @@ export class Preparation2dDatasService {
    * @param variableName - The name of the variable.
    */
   computeCellDatasByAxis(
-    type: string,
     axisPartValues: number[] | string,
-    displayaxisPart: string,
     datasAxis: any,
     displayedColumns: GridColumnsI[],
     variableName: string,
   ) {
     if (axisPartValues) {
-      if (type === TYPES.NUMERICAL) {
-        axisPartValues = [Number(displayaxisPart)]; // join into one array for numerical values (bivar)
-      }
-
       for (let k = 0; k < axisPartValues.length; k++) {
         // get value into global json
         datasAxis[k] = {};
