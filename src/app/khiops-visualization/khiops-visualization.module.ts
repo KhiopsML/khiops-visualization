@@ -45,7 +45,7 @@ import { AngularResizeEventModule } from 'angular-resize-event';
 import { BrowserModule } from '@angular/platform-browser';
 import { HistogramTooltipComponent } from './components/commons/histogram/histogram.tooltip.component';
 import { ProjectLogsComponent } from './components/commons/project-logs/project-logs.component';
-import { appReducer } from './reducers/tree-preparation.reducer';
+import { treePreparationReducer } from './reducers/tree-preparation.reducer';
 import { StoreModule } from '@ngrx/store';
 import { TreePreparationEffects } from './effects/tree-preparation.effect';
 import { EffectsModule } from '@ngrx/effects';
@@ -94,7 +94,7 @@ import { EffectsModule } from '@ngrx/effects';
     ReactiveFormsModule,
     HttpClientModule,
     AngularResizeEventModule,
-    StoreModule.forRoot({ TreePreparationState: appReducer }),
+    StoreModule.forRoot({ TreePreparationState: treePreparationReducer }),
     EffectsModule.forRoot([TreePreparationEffects]),
   ],
   exports: [AppComponent],
