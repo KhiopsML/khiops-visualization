@@ -423,17 +423,18 @@ export class MatrixUtilsService {
    */
   static getStandardVisualizationAxisValues(
     dimension: DimensionVisualizationModel,
+    dimensionValues: number,
   ): number[] {
     let axisValues: number[] = [];
     let currentAxisFullPart: any;
     if (dimension.type === TYPES.CATEGORICAL) {
       currentAxisFullPart = dimension.partition;
-      const axisPartTotal =
-        UtilsService.getArrayOfArrayLength(currentAxisFullPart);
-      axisValues = UtilsService.generateArrayPercentsFromArrayLength(
-        currentAxisFullPart,
-        axisPartTotal,
-      );
+      axisValues =
+        UtilsService.generateArrayPercentsFromArrayLengthAndDefaultGroupIndex(
+          currentAxisFullPart,
+          dimensionValues,
+          dimension?.defaultGroupIndex,
+        );
     } else if (dimension.type === TYPES.NUMERICAL) {
       currentAxisFullPart = dimension.partition;
       // Give an interval of 5% if missing

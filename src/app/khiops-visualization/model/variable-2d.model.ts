@@ -19,6 +19,7 @@ export class Variable2dModel {
   cells?: number;
   parts1?: number;
   parts2?: number;
+  values?: number;
 
   constructor(object: VariablePairStatistics) {
     // Assign values from input

@@ -541,6 +541,70 @@ export class UtilsService {
   }
 
   /**
+   * Generates an array of cumulative percentages based on the lengths of sub-arrays within the input array.
+   * The method allows for a default group index to be specified, which will receive a different percentage calculation.
+   * The default group index is used to calculate the percentage differently from the other groups.
+   */
+  static generateArrayPercentsFromArrayLengthAndDefaultGroupIndex(
+    array: any[],
+    total: number,
+    defaultIndex?: number,
+  ): number[] {
+    // const percentArray = [];
+    // percentArray.push(0);
+    // const arrayLength = array.reduce(
+    //   (acc, arr) => acc + (Array.isArray(arr) ? arr.length : 0),
+    //   0,
+    // );
+
+    // let multiple = 1;
+    // let currentMultiple = 1;
+    // let totalLength = arrayTotal;
+    // if (arrayLength !== arrayTotal) {
+    //   multiple = arrayTotal - array.length + 1;
+    //   if (multiple > arrayTotal / 2) {
+    //     multiple = Math.floor(arrayTotal / 2);
+    //   }
+    //   totalLength = arrayLength + multiple - 1;
+    // }
+
+    // for (let i = 0; i < array.length; i++) {
+    //   if (arrayLength !== arrayTotal) {
+    //     if (defaultGroupIndex !== i) {
+    //       currentMultiple = 1;
+    //     } else {
+    //       currentMultiple = multiple;
+    //     }
+    //   }
+
+    //   percentArray.push(
+    //     (array[i]!.length * 100 * currentMultiple) / totalLength +
+    //       percentArray[i]!,
+    //   );
+    // }
+    // return percentArray;
+    const percents = [0];
+    const length = array.reduce(
+      (sum, item) => sum + (Array.isArray(item) ? item.length : 0),
+      0,
+    );
+    let factor =
+      length !== total
+        ? Math.min(Math.floor(total / 2), total - array.length + 1)
+        : 1;
+    let adjustedTotal = length !== total ? length + factor - 1 : total;
+
+    array.forEach((item, i) => {
+      let weight = length !== total && defaultIndex === i ? factor : 1;
+      percents.push(
+        (item.length * 100 * weight) / adjustedTotal + percents[i]!,
+      );
+    });
+
+    return percents;
+  }
+
+  /**
    * Generates an array of cumulative percentages from an array of intervals and a total count.
    *
    * @param array - An array of intervals, where each interval is represented as a tuple [start, end].

@@ -672,9 +672,15 @@ export class Preparation2dDatasService {
             );
 
           xValues.standard =
-            MatrixUtilsService.getStandardVisualizationAxisValues(xDimension);
+            MatrixUtilsService.getStandardVisualizationAxisValues(
+              xDimension,
+              selectedVariable?.values || 0,
+            );
           yValues.standard =
-            MatrixUtilsService.getStandardVisualizationAxisValues(yDimension);
+            MatrixUtilsService.getStandardVisualizationAxisValues(
+              yDimension,
+              selectedVariable?.values || 0,
+            );
 
           const cellDatas = MatrixUtilsService.getCellDatas(
             xDimension,
