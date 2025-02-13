@@ -116,6 +116,10 @@ export class Preparation2dDatasService {
    * @param index - The index of the cell to select.
    */
   setSelectedCellIndex(index: number) {
+    if (typeof index === 'string') {
+      // Index may have been converted to string by component
+      index = Number(index);
+    }
     this.preparation2dDatas!.selectedCellIndex = index;
     if (this.preparation2dDatas?.matrixDatas?.matrixCellDatas) {
       const currentCell =

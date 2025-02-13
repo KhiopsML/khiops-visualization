@@ -346,7 +346,7 @@ export class AgGridComponent
     if (nodeId !== undefined && this.showLineSelection) {
       if (this.agGrid?.api) {
         this.agGrid.api.forEachNode((node) => {
-          if (nodeId === node.data['_id']) {
+          if (nodeId.toString() === node.data['_id']) {
             if (!node.isSelected()) {
               node.setSelected(true);
               // Get the page of selected node
