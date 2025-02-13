@@ -112,6 +112,7 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
       this.preparation2dDatasService.setSelectedCellIndex(
         changes.selectedCell.currentValue,
       );
+      this.preparation2dDatasService.getCurrentCellDatas();
     }
   }
 
