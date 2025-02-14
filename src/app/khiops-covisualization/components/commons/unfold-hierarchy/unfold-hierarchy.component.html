@@ -138,7 +138,7 @@
             fxLayout="row"
             [inputDatas]="legend"
             [type]="'chart-nd'"
-            [tooltip]="unfoldHierarchyLegend"
+            tooltip="{{ 'TOOLTIPS.AXIS.UNFOLD_HIERARCHY.LEGEND' | translate }}"
             (legendItemClicked)="highlightChartLine($event)"
             [colorSet]="colorSetClusterPerDim"
           >

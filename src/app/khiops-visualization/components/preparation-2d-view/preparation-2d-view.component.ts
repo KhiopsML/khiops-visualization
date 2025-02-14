@@ -29,6 +29,7 @@ import { LayoutService } from '@khiops-library/providers/layout.service';
 import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { VariableModel } from '@khiops-visualization/model/variable.model';
+import { getPreparation2dVariablesGridColumns } from './preparation-2d-view.config';
 
 @Component({
   selector: 'app-preparation-2d-view',
@@ -62,70 +63,10 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
   ) {
     super();
 
-    this.variablesDisplayedColumns = [
-      {
-        headerName: this.translate.get('GLOBAL.RANK'),
-        field: 'rank',
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.RANK'),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.NAME_1'),
-        field: 'name1',
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.NAME1'),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.NAME_2'),
-        field: 'name2',
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.NAME2'),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.DELTA_LEVEL'),
-        field: 'deltaLevel',
-        tooltip: this.translate.get(
-          'TOOLTIPS.PREPARATION_2D.VARIABLES.DELTALEVEL',
-        ),
-        show: this.preparation2dDatasService.isSupervised(),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.LEVEL'),
-        field: 'level',
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.LEVEL'),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.LEVEL_1'),
-        field: 'level1',
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.LEVEL1'),
-        show: this.preparation2dDatasService.isSupervised(),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.LEVEL_2'),
-        field: 'level2',
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.LEVEL2'),
-        show: this.preparation2dDatasService.isSupervised(),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.VARIABLES'),
-        field: 'variables',
-        tooltip: this.translate.get(
-          'TOOLTIPS.PREPARATION_2D.VARIABLES.VARIABLES',
-        ),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.PARTS_1'),
-        field: 'parts1',
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.PARTS1'),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.PARTS_2'),
-        field: 'parts2',
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.PARTS2'),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.CELLS'),
-        field: 'cells',
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.CELLS'),
-      },
-    ];
+    this.variablesDisplayedColumns = getPreparation2dVariablesGridColumns(
+      this.translate,
+      preparation2dDatasService.isSupervised(),
+    );
 
     this.preparation2dDatas = this.preparation2dDatasService.getDatas();
     this.sizes = this.layoutService.getViewSplitSizes('preparation2dView');

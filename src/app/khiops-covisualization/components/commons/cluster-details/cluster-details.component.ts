@@ -21,6 +21,7 @@ import { ClusterDetailsModel } from '@khiops-covisualization/model/cluster-detai
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { TYPES } from '@khiops-library/enum/types';
 import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
+import { getClusterGridColumns } from './cluster-details.config';
 
 @Component({
   selector: 'app-cluster-details',
@@ -46,43 +47,7 @@ export class ClusterDetailsComponent implements OnInit, OnChanges {
     private clustersService: ClustersService,
   ) {
     this.title = this.translate.get('GLOBAL.CURRENT_CLUSTERS');
-    this.clusterDisplayedColumns = [
-      {
-        headerName: this.translate.get('GLOBAL.NAME'),
-        field: 'name',
-        tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.NAME'),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.FATHER'),
-        field: 'father',
-        show: false,
-        tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.FATHER'),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.FREQUENCY'),
-        field: 'frequency',
-        tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.FREQUENCY'),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.INTEREST'),
-        field: 'interest',
-        tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.INTEREST'),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.HIERARCHICAL_LEVEL'),
-        field: 'hierarchicalLevel',
-        show: false,
-        tooltip: this.translate.get(
-          'TOOLTIPS.AXIS.CURRENT_CLUSTERS.HIERARCHICAL_LEVEL',
-        ),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.RANK'),
-        field: 'rank',
-        show: false,
-        tooltip: this.translate.get('TOOLTIPS.AXIS.CURRENT_CLUSTERS.RANK'),
-      },
-    ];
+    this.clusterDisplayedColumns = getClusterGridColumns(this.translate);
   }
 
   ngOnInit() {

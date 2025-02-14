@@ -9,7 +9,6 @@ import { DimensionsDatasService } from '@khiops-covisualization/providers/dimens
 import { MatDialogRef } from '@angular/material/dialog';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { TranslateService } from '@ngstack/translate';
-import { CheckboxCellComponent } from '@khiops-library/components/ag-grid/checkbox-cell/checkbox-cell.component';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
 import { ClustersService } from '@khiops-covisualization/providers/clusters.service';
@@ -26,6 +25,13 @@ import { LS } from '@khiops-library/enum/ls';
 import { AppService } from '@khiops-covisualization/providers/app.service';
 import { THEME } from '@khiops-library/enum/theme';
 import { GridCheckboxEventI } from '@khiops-library/interfaces/events';
+import {
+  getClusterPerDimChartOptions,
+  getDefaultChartOptions,
+  getHierarchyGridColumns,
+  getInfoPerClusterChartOptions,
+} from './unfold-hierarchy.config';
+import { ChartOptions } from 'chart.js';
 
 @Component({
   selector: 'app-unfold-hierarchy',
@@ -47,43 +53,14 @@ export class UnfoldHierarchyComponent implements OnInit {
   public selectedLineChartItem = '';
   public hierarchyDisplayedColumns: GridColumnsI[] = [];
   public currentCellsPerCluster = 0;
-  public unfoldHierarchyLegend: string;
   public legend: any;
 
   private previousHierarchyRank: number = 0;
   private borderColor: string;
   private defaultMaxUnfoldHierarchy = 0;
-  private chartOptions = {
-    elements: {
-      point: {
-        radius: 0,
-      },
-    },
-    plugins: {
-      tooltip: {
-        enabled: false,
-      },
-    },
-    scales: {
-      y: {
-        title: {
-          display: true,
-          text: '',
-        },
-        gridLines: {
-          color: '#eeeeee',
-        },
-      },
-      x: {
-        title: {
-          display: true,
-          text: '',
-        },
-      },
-    },
-  };
-  public clustersPerDimDatasChartOptions = _.cloneDeep(this.chartOptions);
-  public infoPerClusterChartOptions = _.cloneDeep(this.chartOptions);
+  private chartOptions: ChartOptions | undefined;
+  public clustersPerDimDatasChartOptions: ChartOptions | undefined;
+  public infoPerClusterChartOptions: ChartOptions | undefined;
 
   constructor(
     private translate: TranslateService,
@@ -98,47 +75,24 @@ export class UnfoldHierarchyComponent implements OnInit {
     this.borderColor =
       AppService.Ls.get(LS.THEME_COLOR) === THEME.DARK ? '#ffffff' : '#000000';
 
-    this.hierarchyDisplayedColumns = [
-      {
-        headerName: this.translate.get('GLOBAL.DIMENSION'),
-        field: 'name',
-      },
-      {
-        headerName: this.translate.get('GLOBAL.NB_OF_CLUSTER'),
-        field: 'currentHierarchyClusterCount',
-      },
-      {
-        headerName: this.translate.get('GLOBAL.MAX_NB_OF_CLUSTER'),
-        field: 'initialParts',
-      },
-      {
-        headerName: this.translate.get('GLOBAL.FOLD_UNFOLD'),
-        field: 'hierarchyFold',
-        cellRendererFramework: CheckboxCellComponent,
-      },
-    ];
+    this.hierarchyDisplayedColumns = getHierarchyGridColumns(this.translate);
 
     this.treenodesService.initSavedUnfoldRank();
     this.hierarchyDatas = this.treenodesService.getHierarchyDatas();
     this.defaultMaxUnfoldHierarchy = this.hierarchyDatas?.totalClusters || 0;
-
     this.unfoldHierarchyTableTitle = this.translate.get(
       'GLOBAL.NB_OF_CLUSTERS_PER_DIM',
     );
-    this.unfoldHierarchyLegend = this.translate.get(
-      'TOOLTIPS.AXIS.UNFOLD_HIERARCHY.LEGEND',
+    this.chartOptions = getDefaultChartOptions();
+
+    this.clustersPerDimDatasChartOptions = getClusterPerDimChartOptions(
+      this.translate,
+      this.chartOptions,
     );
 
-    this.clustersPerDimDatasChartOptions.scales.x.title.text =
-      this.translate.get('GLOBAL.TOTAL_NUMBER_OF_CLUSTERS');
-    this.clustersPerDimDatasChartOptions.scales.y.title.text =
-      this.translate.get('GLOBAL.NB_OF_CLUSTERS_PER_DIM');
-
-    this.infoPerClusterChartOptions.scales.x.title.text = this.translate.get(
-      'GLOBAL.TOTAL_NUMBER_OF_CLUSTERS',
-    );
-    this.infoPerClusterChartOptions.scales.y.title.text = this.translate.get(
-      'GLOBAL.INFORMATION_RATE',
+    this.infoPerClusterChartOptions = getInfoPerClusterChartOptions(
+      this.translate,
+      this.chartOptions,
     );
   }
 

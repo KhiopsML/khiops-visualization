@@ -20,6 +20,7 @@ import { ClustersService } from '@khiops-covisualization/providers/clusters.serv
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { Subscription } from 'rxjs';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
+import { getClustersDisplayedColumns } from './selected-clusters.config';
 
 @Component({
   selector: 'app-selected-clusters',
@@ -35,7 +36,6 @@ export class SelectedClustersComponent implements OnDestroy, OnChanges {
   public activeClusters: SelectedClusterModel[] | undefined = undefined;
   public id: string = 'selected-clusters-grid';
   public title: string;
-
   private treeSelectedNodeChangedSub: Subscription;
 
   constructor(
@@ -44,49 +44,8 @@ export class SelectedClustersComponent implements OnDestroy, OnChanges {
     private eventsService: EventsService,
     private dimensionsDatasService: DimensionsDatasService,
   ) {
-    this.clustersDisplayedColumns = [
-      {
-        headerName: this.translate.get('GLOBAL.NAME'),
-        field: 'hierarchy',
-        tooltip: this.translate.get('TOOLTIPS.AXIS.SELECTED_CLUSTERS.NAME'),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.CURRENT_CLUSTER'),
-        field: 'shortDescription',
-        tooltip: this.translate.get(
-          'TOOLTIPS.AXIS.SELECTED_CLUSTERS.CURRENT_CLUSTERS',
-        ),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.NB_CLUSTERS'),
-        field: 'nbClusters',
-        tooltip: this.translate.get(
-          'TOOLTIPS.AXIS.SELECTED_CLUSTERS.NB_CLUSTERS',
-        ),
-      },
-    ];
     this.title = this.translate.get('GLOBAL.SELECTED_CLUSTERS');
-    this.clustersDisplayedColumns = [
-      {
-        headerName: 'Name',
-        field: 'hierarchy',
-        tooltip: this.translate.get('TOOLTIPS.AXIS.SELECTED_CLUSTERS.NAME'),
-      },
-      {
-        headerName: 'Current Cluster',
-        field: 'shortDescription',
-        tooltip: this.translate.get(
-          'TOOLTIPS.AXIS.SELECTED_CLUSTERS.CURRENT_CLUSTERS',
-        ),
-      },
-      {
-        headerName: 'Nb Clusters',
-        field: 'nbClusters',
-        tooltip: this.translate.get(
-          'TOOLTIPS.AXIS.SELECTED_CLUSTERS.NB_CLUSTERS',
-        ),
-      },
-    ];
+    this.clustersDisplayedColumns = getClustersDisplayedColumns(this.translate);
 
     this.treeSelectedNodeChangedSub =
       this.eventsService.treeSelectedNodeChanged.subscribe(() => {

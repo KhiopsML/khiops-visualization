@@ -23,11 +23,11 @@ import { PreparationVariableModel } from '@khiops-visualization/model/preparatio
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { VariableModel } from '@khiops-visualization/model/variable.model';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
-import { BorderTextCellComponent } from '../../../khiops-library/components/ag-grid/border-text-cell/border-text-cell.component';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
+import { getPreparationVariablesGridColumns } from './preparation-view.config';
 
 @Component({
   selector: 'app-preparation-view',
@@ -59,93 +59,9 @@ export class PreparationViewComponent extends SelectableTabComponent {
   ) {
     super();
 
-    this.variablesDisplayedColumns = [
-      {
-        headerName: this.translate.get('GLOBAL.RANK'),
-        field: 'rank',
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.RANK'),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.NAME'),
-        field: 'name',
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.NAME'),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.LEVEL'),
-        field: 'level',
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.LEVEL'),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.PARTS'),
-        field: 'parts',
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.PARTS'),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.VALUES'),
-        field: 'values',
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.VALUES'),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.TYPE'),
-        field: 'type',
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.TYPE'),
-        cellRendererFramework: BorderTextCellComponent,
-      },
-      {
-        headerName: this.translate.get('GLOBAL.MODE'),
-        field: 'mode',
-        show: false,
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.MODE'),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.MODE_COVERAGE'),
-        field: 'modeCoverage',
-        show: false,
-        tooltip: this.translate.get(
-          'TOOLTIPS.PREPARATION.VARIABLES.MODE_COVERAGE',
-        ),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.MIN'),
-        field: 'min',
-        show: false,
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.MIN'),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.MAX'),
-        field: 'max',
-        show: false,
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.MAX'),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.MEAN'),
-        field: 'mean',
-        show: false,
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.MEAN'),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.STD_DEV'),
-        field: 'stdDev',
-        show: false,
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.STD_DEV'),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.MISSING_NUMBER'),
-        field: 'missingNumber',
-        show: false,
-        tooltip: this.translate.get(
-          'TOOLTIPS.PREPARATION.VARIABLES.MISSING_NUMBER',
-        ),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.DERIVATION_RULE'),
-        field: 'derivationRule',
-        show: false,
-        tooltip: this.translate.get(
-          'TOOLTIPS.PREPARATION.VARIABLES.DERIVATION_RULE',
-        ),
-      },
-    ];
+    this.variablesDisplayedColumns = getPreparationVariablesGridColumns(
+      this.translate,
+    );
   }
 
   ngOnInit() {

@@ -26,6 +26,7 @@ import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
 import { ExtDatasModel } from '@khiops-covisualization/model/ext-datas.model';
 import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
+import { getCompositionDisplayedColumns } from './composition.config';
 
 @Component({
   selector: 'app-composition',
@@ -56,42 +57,9 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
     private clustersService: ClustersService,
     private eventsService: EventsService,
   ) {
-    this.compositionDisplayedColumns = [
-      {
-        headerName: this.translate.get('GLOBAL.CLUSTER'),
-        field: 'cluster',
-        tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.CLUSTER'),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.TERMINAL_CLUSTER'),
-        show: false,
-        field: 'terminalCluster',
-        tooltip: this.translate.get(
-          'TOOLTIPS.AXIS.COMPOSITION.TERMINAL_CLUSTER',
-        ),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.RANK'),
-        show: false,
-        field: 'rank',
-        tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.RANK'),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.TYPICALITY'),
-        field: 'typicality',
-        tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.TYPICALITY'),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.VALUE'),
-        field: 'value',
-        tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.VALUE'),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.FREQUENCY'),
-        field: 'frequency',
-        tooltip: this.translate.get('TOOLTIPS.AXIS.COMPOSITION.FREQUENCY'),
-      },
-    ];
+    this.compositionDisplayedColumns = getCompositionDisplayedColumns(
+      this.translate,
+    );
 
     this.treeSelectedNodeChangedSub =
       this.eventsService.treeSelectedNodeChanged.subscribe((e) => {

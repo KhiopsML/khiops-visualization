@@ -30,7 +30,6 @@ import { TreePreparationVariableModel } from '@khiops-visualization/model/tree-p
 import { TrackerService } from '@khiops-library/providers/tracker.service';
 import { TranslateService } from '@ngstack/translate';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
-import { BorderTextCellComponent } from '@khiops-library/components/ag-grid/border-text-cell/border-text-cell.component';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { REPORT } from '@khiops-library/enum/report';
 import { SplitGutterInteractionEvent } from 'angular-split';
@@ -43,6 +42,7 @@ import {
   selectedNodeSelector,
   selectedNodesSelector,
 } from '@khiops-visualization/selectors/tree-preparation.selector';
+import { getTreePreparationVariablesGridColumns } from './tree-preparation-view.config';
 
 @Component({
   selector: 'app-tree-preparation-view',
@@ -87,45 +87,9 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
     this.selectedNodes$ = this.store.select(selectedNodesSelector);
     this.selectedNode$ = this.store.select(selectedNodeSelector);
 
-    this.variablesDisplayedColumns = [
-      {
-        headerName: this.translate.get('GLOBAL.RANK'),
-        field: 'rank',
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.RANK'),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.NAME'),
-        field: 'name',
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.NAME'),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.LEVEL'),
-        field: 'level',
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.LEVEL'),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.PARTS'),
-        field: 'parts',
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.PARTS'),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.VALUES'),
-        field: 'values',
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.VALUES'),
-      },
-      {
-        headerName: this.translate.get('GLOBAL.TYPE'),
-        field: 'type',
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.TYPE'),
-        cellRendererFramework: BorderTextCellComponent,
-      },
-      {
-        headerName: this.translate.get('GLOBAL.MODE'),
-        field: 'mode',
-        show: false,
-        tooltip: this.translate.get('TOOLTIPS.PREPARATION.VARIABLES.MODE'),
-      },
-    ];
+    this.variablesDisplayedColumns = getTreePreparationVariablesGridColumns(
+      this.translate,
+    );
   }
 
   ngOnInit() {
