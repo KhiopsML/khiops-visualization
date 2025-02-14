@@ -412,7 +412,6 @@ export class Preparation2dDatasService {
             selectedCell.xaxisPartValues,
           );
         }
-
         const datasX = this.computeCellDatasByAxis(
           selectedCell.xaxisPartValues!,
           displayedColumnsX,
@@ -467,7 +466,6 @@ export class Preparation2dDatasService {
       if (isCurrentDefaultGroup) {
         datasAxis.push({
           values: '*',
-          frequency: undefined,
         });
       }
     }
