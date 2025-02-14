@@ -422,5 +422,26 @@ describe('Visualization', () => {
       expect(res![0]!.partition).toEqual([-0.5, 0.5]);
       expect(res![0]!.value).toEqual(0.9532779165472339);
     });
+
+    it('getdistributionGraphDatas should return default group index information datas [AnalysisRegressionQ99, preparationReport, R04]', () => {
+      const fileDatas = require('../../assets/mocks/kv/AnalysisRegressionQ99.json');
+      appService.setFileDatas(fileDatas);
+
+      preparationDatasService.initialize();
+      distributionDatasService.initialize();
+      distributionDatasService.setPreparationSource(REPORT.PREPARATION_REPORT);
+
+      preparationDatasService.setSelectedVariable(
+        fileDatas.preparationReport.variablesStatistics[3].name,
+        REPORT.PREPARATION_REPORT,
+      );
+      const selectedVariable = preparationDatasService.getSelectedVariable(
+        REPORT.PREPARATION_REPORT,
+      );
+      const res = distributionDatasService.getdistributionGraphDatas(
+        selectedVariable!,
+      );
+      expect(res!.labels[1]).toEqual('{ho,*}');
+    });
   });
 });
