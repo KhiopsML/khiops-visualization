@@ -8,7 +8,6 @@ import { Component, ViewChild } from '@angular/core';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
 import { TargetDistributionGraphComponent } from '../target-distribution-graph/target-distribution-graph.component';
-import { AppConfig } from 'src/environments/environment';
 import { Distribution2dDatasService } from '@khiops-visualization/providers/distribution2d-datas.service';
 import { Preparation2dDatasModel } from '@khiops-visualization/model/preparation2d-datas.model';
 import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
@@ -31,7 +30,7 @@ export class VarDetailsPreparation2dComponent {
   public sizes: DynamicI;
   public preparation2dDatas?: Preparation2dDatasModel;
   public distribution2dDatas: DistributionDatasModel;
-  public scaleValue: number;
+  public scaleValue: number = 0;
   private targetDistributionGraphType: string;
 
   constructor(
@@ -39,10 +38,6 @@ export class VarDetailsPreparation2dComponent {
     private preparation2dDatasService: Preparation2dDatasService,
     private layoutService: LayoutService,
   ) {
-    this.scaleValue = AppService.Ls.get(
-      LS.SCALE_VALUE,
-      AppConfig.visualizationCommon.GLOBAL.DEFAULT_GRAPH_SCALE,
-    );
     this.targetDistributionGraphType = AppService.Ls.get(
       LS.TARGET_DISTRIBUTION_GRAPH_OPTION,
     );
