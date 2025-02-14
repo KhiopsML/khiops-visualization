@@ -15,7 +15,7 @@
 					6
 				]
 			},
-			"database": "C:\\Users\\YFCO6286\\Desktop\\KHIOPS INTERFACE\\ADULT example\\Adult.txt",
+			"database": "database path",
 			"instances": 48842,
 			"learningTask": "Unsupervised analysis",
 			"evaluatedVariables": 16,
@@ -575,7 +575,7 @@
 					6
 				]
 			},
-			"database": "C:\\Users\\YFCO6286\\Desktop\\KHIOPS INTERFACE\\ADULT example\\Adult.txt",
+			"database": "database path",
 			"instances": 48842,
 			"learningTask": "Unsupervised analysis"
 		},

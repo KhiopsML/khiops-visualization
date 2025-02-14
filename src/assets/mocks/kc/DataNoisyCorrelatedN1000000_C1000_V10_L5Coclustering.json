@@ -12,7 +12,7 @@
 			"initialDimensions": 2,
 			"frequencyVariable": "",
 			"dictionary": "Data",
-			"database": ".\\DataNoisyCorrelatedN1000000_C1000_V10_L5.txt",
+			"database": "database path",
 			"samplePercentage": 100,
 			"samplingMode": "Include sample",
 			"selectionVariable": "",

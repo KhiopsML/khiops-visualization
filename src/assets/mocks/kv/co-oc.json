@@ -6,7 +6,7 @@
 		"reportType": "Modeling",
 		"summary": {
 			"dictionary": "full_CIFAR10_AE_Tune_experiments_MSE_CLASS",
-			"database": "C:\\Users\\yfco6286\\Desktop\\RayTune\\IID avec erreurs\\full_CIFAR10_AE_Tune_experiments_MSE_CLASS.csv",
+			"database": "database path",
 			"samplePercentage": 70,
 			"samplingMode": "Include sample",
 			"selectionVariable": "",
@@ -70,7 +70,7 @@
 		"evaluationType": "Train",
 		"summary": {
 			"dictionary": "full_CIFAR10_AE_Tune_experiments_MSE_CLASS",
-			"database": "C:\\Users\\yfco6286\\Desktop\\RayTune\\IID avec erreurs\\full_CIFAR10_AE_Tune_experiments_MSE_CLASS.csv",
+			"database": "database path",
 			"samplePercentage": 70,
 			"samplingMode": "Include sample",
 			"selectionVariable": "",
@@ -149,7 +149,7 @@
 		"evaluationType": "Test",
 		"summary": {
 			"dictionary": "full_CIFAR10_AE_Tune_experiments_MSE_CLASS",
-			"database": "C:\\Users\\yfco6286\\Desktop\\RayTune\\IID avec erreurs\\full_CIFAR10_AE_Tune_experiments_MSE_CLASS.csv",
+			"database": "database path",
 			"samplePercentage": 70,
 			"samplingMode": "Exclude sample",
 			"selectionVariable": "",
@@ -237,7 +237,7 @@
 					21
 				]
 			},
-			"database": "C:\\Users\\yfco6286\\Desktop\\RayTune\\IID avec erreurs\\full_CIFAR10_AE_Tune_experiments_MSE_CLASS.csv",
+			"database": "database path",
 			"samplePercentage": 70,
 			"samplingMode": "Include sample",
 			"selectionVariable": "",
@@ -1331,7 +1331,7 @@
 					21
 				]
 			},
-			"database": "C:\\Users\\yfco6286\\Desktop\\RayTune\\IID avec erreurs\\full_CIFAR10_AE_Tune_experiments_MSE_CLASS.csv",
+			"database": "database path",
 			"samplePercentage": 70,
 			"samplingMode": "Include sample",
 			"selectionVariable": "",
@@ -1776,7 +1776,7 @@
 					21
 				]
 			},
-			"database": "C:\\Users\\yfco6286\\Desktop\\RayTune\\IID avec erreurs\\full_CIFAR10_AE_Tune_experiments_MSE_CLASS.csv",
+			"database": "database path",
 			"samplePercentage": 70,
 			"samplingMode": "Include sample",
 			"selectionVariable": "",

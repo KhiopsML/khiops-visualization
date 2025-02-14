@@ -6,14 +6,14 @@
 		"reportType": "Modeling",
 		"summary": {
 			"dictionary": "20210303.result.models.021",
-			"database": "C:\\Users\\yfco6286\\Desktop\\LAROSE Cyril\\essai_07\\20210303.result.models.021.csv",
+			"database": "database path",
 			"samplePercentage": 70,
 			"samplingMode": "Include sample",
 			"selectionVariable": "",
 			"selectionValue": "",
 			"learningTask": "Classification analysis",
 			"targetVariable": "typologie des contenus",
-			"mainTargetValue": "Evènements sportifs"
+			"mainTargetValue": "Evï¿½nements sportifs"
 		},
 		"trainedPredictors": [
 			{
@@ -91,8 +91,8 @@
 						"importance": 0.0331096
 					},
 					{
-						"preparedName": "Pgenre@téléréalité",
-						"name": "genre@téléréalité",
+						"preparedName": "Pgenre@tï¿½lï¿½rï¿½alitï¿½",
+						"name": "genre@tï¿½lï¿½rï¿½alitï¿½",
 						"level": 0.00658695,
 						"weight": 0.101563,
 						"importance": 0.0258648
@@ -113,7 +113,7 @@
 		"evaluationType": "Train",
 		"summary": {
 			"dictionary": "20210303.result.models.021",
-			"database": "C:\\Users\\yfco6286\\Desktop\\LAROSE Cyril\\essai_07\\20210303.result.models.021.csv",
+			"database": "database path",
 			"samplePercentage": 70,
 			"samplingMode": "Include sample",
 			"selectionVariable": "",
@@ -121,7 +121,7 @@
 			"instances": 123,
 			"learningTask": "Classification analysis",
 			"targetVariable": "typologie des contenus",
-			"mainTargetValue": "Evènements sportifs"
+			"mainTargetValue": "Evï¿½nements sportifs"
 		},
 		"predictorsPerformance": [
 			{
@@ -137,7 +137,7 @@
 		"predictorsDetailedPerformance": {
 			"R1": {
 				"confusionMatrix": {
-					"values": ["Emission TV : coaching (maison à vendre, super-nanie,…)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,…)","Emission TV : téléréalité et jeux (les anges de téléréalités, les marseillais, the loft,...)","Evènements sportifs","Fiction - Films dont films d’animation (long métrage…)","Fiction - feuilletons (GoT, …)","Fiction - feuilletons animés (Mangas,…)","Fiction - series animés (Simpson, Pokemon, …)","Fiction - series, sitcoms, soap (+ belle la vie, …)","Information - JT, Le Quotidien, Consommation ritualisée BFM","Information - en continu : BFM, CNews,","information - Reportages, documentaires"],
+					"values": ["Emission TV : coaching (maison ï¿½ vendre, super-nanie,ï¿½)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,ï¿½)","Emission TV : tï¿½lï¿½rï¿½alitï¿½ et jeux (les anges de tï¿½lï¿½rï¿½alitï¿½s, les marseillais, the loft,...)","Evï¿½nements sportifs","Fiction - Films dont films dï¿½animation (long mï¿½trageï¿½)","Fiction - feuilletons (GoT, ï¿½)","Fiction - feuilletons animï¿½s (Mangas,ï¿½)","Fiction - series animï¿½s (Simpson, Pokemon, ï¿½)","Fiction - series, sitcoms, soap (+ belle la vie, ï¿½)","Informationï¿½- JT, Le Quotidien, Consommation ritualisï¿½e BFM","Informationï¿½- en continu : BFM, CNews,","information - Reportages, documentaires"],
 					"matrix": [
 						[0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 						[0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -159,7 +159,7 @@
 		},
 		"liftCurves": [
 			{
-				"targetValue": "Emission TV : coaching (maison à vendre, super-nanie,…)",
+				"targetValue": "Emission TV : coaching (maison ï¿½ vendre, super-nanie,ï¿½)",
 				"curves": [
 					{
 						"classifier": "Optimal",
@@ -198,7 +198,7 @@
 				]
 			},
 			{
-				"targetValue": "Emission TV : plateau (ONPC, TPMP,…)",
+				"targetValue": "Emission TV : plateau (ONPC, TPMP,ï¿½)",
 				"curves": [
 					{
 						"classifier": "Optimal",
@@ -211,7 +211,7 @@
 				]
 			},
 			{
-				"targetValue": "Emission TV : téléréalité et jeux (les anges de téléréalités, les marseillais, the loft,...)",
+				"targetValue": "Emission TV : tï¿½lï¿½rï¿½alitï¿½ et jeux (les anges de tï¿½lï¿½rï¿½alitï¿½s, les marseillais, the loft,...)",
 				"curves": [
 					{
 						"classifier": "Optimal",
@@ -224,7 +224,7 @@
 				]
 			},
 			{
-				"targetValue": "Evènements sportifs",
+				"targetValue": "Evï¿½nements sportifs",
 				"curves": [
 					{
 						"classifier": "Optimal",
@@ -237,7 +237,7 @@
 				]
 			},
 			{
-				"targetValue": "Fiction - Films dont films d’animation (long métrage…)",
+				"targetValue": "Fiction - Films dont films dï¿½animation (long mï¿½trageï¿½)",
 				"curves": [
 					{
 						"classifier": "Optimal",
@@ -250,7 +250,7 @@
 				]
 			},
 			{
-				"targetValue": "Fiction - feuilletons (GoT, …)",
+				"targetValue": "Fiction - feuilletons (GoT, ï¿½)",
 				"curves": [
 					{
 						"classifier": "Optimal",
@@ -263,7 +263,7 @@
 				]
 			},
 			{
-				"targetValue": "Fiction - feuilletons animés (Mangas,…)",
+				"targetValue": "Fiction - feuilletons animï¿½s (Mangas,ï¿½)",
 				"curves": [
 					{
 						"classifier": "Optimal",
@@ -276,7 +276,7 @@
 				]
 			},
 			{
-				"targetValue": "Fiction - series animés (Simpson, Pokemon, …)",
+				"targetValue": "Fiction - series animï¿½s (Simpson, Pokemon, ï¿½)",
 				"curves": [
 					{
 						"classifier": "Optimal",
@@ -289,7 +289,7 @@
 				]
 			},
 			{
-				"targetValue": "Fiction - series, sitcoms, soap (+ belle la vie, …)",
+				"targetValue": "Fiction - series, sitcoms, soap (+ belle la vie, ï¿½)",
 				"curves": [
 					{
 						"classifier": "Optimal",
@@ -302,7 +302,7 @@
 				]
 			},
 			{
-				"targetValue": "Information - JT, Le Quotidien, Consommation ritualisée BFM",
+				"targetValue": "Informationï¿½- JT, Le Quotidien, Consommation ritualisï¿½e BFM",
 				"curves": [
 					{
 						"classifier": "Optimal",
@@ -315,7 +315,7 @@
 				]
 			},
 			{
-				"targetValue": "Information - en continu : BFM, CNews,",
+				"targetValue": "Informationï¿½- en continu : BFM, CNews,",
 				"curves": [
 					{
 						"classifier": "Optimal",
@@ -347,7 +347,7 @@
 		"evaluationType": "Test",
 		"summary": {
 			"dictionary": "20210303.result.models.021",
-			"database": "C:\\Users\\yfco6286\\Desktop\\LAROSE Cyril\\essai_07\\20210303.result.models.021.csv",
+			"database": "database path",
 			"samplePercentage": 70,
 			"samplingMode": "Exclude sample",
 			"selectionVariable": "",
@@ -355,7 +355,7 @@
 			"instances": 64,
 			"learningTask": "Classification analysis",
 			"targetVariable": "typologie des contenus",
-			"mainTargetValue": "Evènements sportifs"
+			"mainTargetValue": "Evï¿½nements sportifs"
 		},
 		"predictorsPerformance": [
 			{
@@ -371,7 +371,7 @@
 		"predictorsDetailedPerformance": {
 			"R1": {
 				"confusionMatrix": {
-					"values": ["Emission TV : coaching (maison à vendre, super-nanie,…)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,…)","Emission TV : téléréalité et jeux (les anges de téléréalités, les marseillais, the loft,...)","Emission, événements, débats politiques","Evènements sportifs","Fiction - Films dont films d’animation (long métrage…)","Fiction - feuilletons (GoT, …)","Fiction - feuilletons animés (Mangas,…)","Fiction - series animés (Simpson, Pokemon, …)","Fiction - series, sitcoms, soap (+ belle la vie, …)","Information - JT, Le Quotidien, Consommation ritualisée BFM","Information - en continu : BFM, CNews,","information - Reportages, documentaires"],
+					"values": ["Emission TV : coaching (maison ï¿½ vendre, super-nanie,ï¿½)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,ï¿½)","Emission TV : tï¿½lï¿½rï¿½alitï¿½ et jeux (les anges de tï¿½lï¿½rï¿½alitï¿½s, les marseillais, the loft,...)","Emission, ï¿½vï¿½nements, dï¿½bats politiques","Evï¿½nements sportifs","Fiction - Films dont films dï¿½animation (long mï¿½trageï¿½)","Fiction - feuilletons (GoT, ï¿½)","Fiction - feuilletons animï¿½s (Mangas,ï¿½)","Fiction - series animï¿½s (Simpson, Pokemon, ï¿½)","Fiction - series, sitcoms, soap (+ belle la vie, ï¿½)","Informationï¿½- JT, Le Quotidien, Consommation ritualisï¿½e BFM","Informationï¿½- en continu : BFM, CNews,","information - Reportages, documentaires"],
 					"matrix": [
 						[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 						[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -394,7 +394,7 @@
 		},
 		"liftCurves": [
 			{
-				"targetValue": "Emission TV : coaching (maison à vendre, super-nanie,…)",
+				"targetValue": "Emission TV : coaching (maison ï¿½ vendre, super-nanie,ï¿½)",
 				"curves": [
 					{
 						"classifier": "Optimal",
@@ -433,7 +433,7 @@
 				]
 			},
 			{
-				"targetValue": "Emission TV : plateau (ONPC, TPMP,…)",
+				"targetValue": "Emission TV : plateau (ONPC, TPMP,ï¿½)",
 				"curves": [
 					{
 						"classifier": "Optimal",
@@ -446,7 +446,7 @@
 				]
 			},
 			{
-				"targetValue": "Emission TV : téléréalité et jeux (les anges de téléréalités, les marseillais, the loft,...)",
+				"targetValue": "Emission TV : tï¿½lï¿½rï¿½alitï¿½ et jeux (les anges de tï¿½lï¿½rï¿½alitï¿½s, les marseillais, the loft,...)",
 				"curves": [
 					{
 						"classifier": "Optimal",
@@ -459,7 +459,7 @@
 				]
 			},
 			{
-				"targetValue": "Evènements sportifs",
+				"targetValue": "Evï¿½nements sportifs",
 				"curves": [
 					{
 						"classifier": "Optimal",
@@ -472,7 +472,7 @@
 				]
 			},
 			{
-				"targetValue": "Fiction - Films dont films d’animation (long métrage…)",
+				"targetValue": "Fiction - Films dont films dï¿½animation (long mï¿½trageï¿½)",
 				"curves": [
 					{
 						"classifier": "Optimal",
@@ -485,7 +485,7 @@
 				]
 			},
 			{
-				"targetValue": "Fiction - feuilletons (GoT, …)",
+				"targetValue": "Fiction - feuilletons (GoT, ï¿½)",
 				"curves": [
 					{
 						"classifier": "Optimal",
@@ -498,7 +498,7 @@
 				]
 			},
 			{
-				"targetValue": "Fiction - feuilletons animés (Mangas,…)",
+				"targetValue": "Fiction - feuilletons animï¿½s (Mangas,ï¿½)",
 				"curves": [
 					{
 						"classifier": "Optimal",
@@ -511,7 +511,7 @@
 				]
 			},
 			{
-				"targetValue": "Fiction - series animés (Simpson, Pokemon, …)",
+				"targetValue": "Fiction - series animï¿½s (Simpson, Pokemon, ï¿½)",
 				"curves": [
 					{
 						"classifier": "Optimal",
@@ -524,7 +524,7 @@
 				]
 			},
 			{
-				"targetValue": "Fiction - series, sitcoms, soap (+ belle la vie, …)",
+				"targetValue": "Fiction - series, sitcoms, soap (+ belle la vie, ï¿½)",
 				"curves": [
 					{
 						"classifier": "Optimal",
@@ -537,7 +537,7 @@
 				]
 			},
 			{
-				"targetValue": "Information - JT, Le Quotidien, Consommation ritualisée BFM",
+				"targetValue": "Informationï¿½- JT, Le Quotidien, Consommation ritualisï¿½e BFM",
 				"curves": [
 					{
 						"classifier": "Optimal",
@@ -550,7 +550,7 @@
 				]
 			},
 			{
-				"targetValue": "Information - en continu : BFM, CNews,",
+				"targetValue": "Informationï¿½- en continu : BFM, CNews,",
 				"curves": [
 					{
 						"classifier": "Optimal",
@@ -589,7 +589,7 @@
 					176
 				]
 			},
-			"database": "C:\\Users\\yfco6286\\Desktop\\LAROSE Cyril\\essai_07\\20210303.result.models.021.csv",
+			"database": "database path",
 			"samplePercentage": 70,
 			"samplingMode": "Include sample",
 			"selectionVariable": "",
@@ -597,14 +597,14 @@
 			"instances": 123,
 			"learningTask": "Classification analysis",
 			"targetVariable": "typologie des contenus",
-			"mainTargetValue": "Evènements sportifs",
+			"mainTargetValue": "Evï¿½nements sportifs",
 			"targetDescriptiveStats": {
 				"values": 14,
-				"mode": "Fiction - Films dont films d’animation (long métrage…)",
+				"mode": "Fiction - Films dont films dï¿½animation (long mï¿½trageï¿½)",
 				"modeFrequency": 35
 			},
 			"targetValues": {
-				"values": ["Emission TV : coaching (maison à vendre, super-nanie,…)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,…)","Emission TV : téléréalité et jeux (les anges de téléréalités, les marseillais, the loft,...)","Evènements sportifs","Fiction - Films dont films d’animation (long métrage…)","Fiction - feuilletons (GoT, …)","Fiction - feuilletons animés (Mangas,…)","Fiction - series animés (Simpson, Pokemon, …)","Fiction - series, sitcoms, soap (+ belle la vie, …)","Information - JT, Le Quotidien, Consommation ritualisée BFM","Information - en continu : BFM, CNews,","information - Reportages, documentaires"],
+				"values": ["Emission TV : coaching (maison ï¿½ vendre, super-nanie,ï¿½)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,ï¿½)","Emission TV : tï¿½lï¿½rï¿½alitï¿½ et jeux (les anges de tï¿½lï¿½rï¿½alitï¿½s, les marseillais, the loft,...)","Evï¿½nements sportifs","Fiction - Films dont films dï¿½animation (long mï¿½trageï¿½)","Fiction - feuilletons (GoT, ï¿½)","Fiction - feuilletons animï¿½s (Mangas,ï¿½)","Fiction - series animï¿½s (Simpson, Pokemon, ï¿½)","Fiction - series, sitcoms, soap (+ belle la vie, ï¿½)","Informationï¿½- JT, Le Quotidien, Consommation ritualisï¿½e BFM","Informationï¿½- en continu : BFM, CNews,","information - Reportages, documentaires"],
 				"frequencies": [1,3,2,9,3,2,35,20,1,7,9,4,15,12]
 			},
 			"evaluatedVariables": 175,
@@ -841,7 +841,7 @@
 			},
 			{
 				"rank": "R018",
-				"name": "genre@téléréalité",
+				"name": "genre@tï¿½lï¿½rï¿½alitï¿½",
 				"type": "Categorical",
 				"level": 0.00658695,
 				"parts": 2,
@@ -1088,7 +1088,7 @@
 			},
 			{
 				"rank": "R037",
-				"name": "genre@comédie",
+				"name": "genre@comï¿½die",
 				"type": "Categorical",
 				"level": 0,
 				"parts": 1,
@@ -1101,7 +1101,7 @@
 			},
 			{
 				"rank": "R038",
-				"name": "genre@comédie dramatique",
+				"name": "genre@comï¿½die dramatique",
 				"type": "Categorical",
 				"level": 0,
 				"parts": 1,
@@ -1114,7 +1114,7 @@
 			},
 			{
 				"rank": "R039",
-				"name": "genre@comédie romantique",
+				"name": "genre@comï¿½die romantique",
 				"type": "Categorical",
 				"level": 0,
 				"parts": 1,
@@ -1127,7 +1127,7 @@
 			},
 			{
 				"rank": "R040",
-				"name": "genre@court-métrage",
+				"name": "genre@court-mï¿½trage",
 				"type": "Categorical",
 				"level": 0,
 				"parts": 1,
@@ -1140,7 +1140,7 @@
 			},
 			{
 				"rank": "R041",
-				"name": "genre@dessin animé",
+				"name": "genre@dessin animï¿½",
 				"type": "Categorical",
 				"level": 0,
 				"parts": 1,
@@ -1205,7 +1205,7 @@
 			},
 			{
 				"rank": "R046",
-				"name": "genre@doc. société",
+				"name": "genre@doc. sociï¿½tï¿½",
 				"type": "Categorical",
 				"level": 0,
 				"parts": 1,
@@ -1218,7 +1218,7 @@
 			},
 			{
 				"rank": "R047",
-				"name": "genre@doc. évasion",
+				"name": "genre@doc. ï¿½vasion",
 				"type": "Categorical",
 				"level": 0,
 				"parts": 1,
@@ -1413,7 +1413,7 @@
 			},
 			{
 				"rank": "R062",
-				"name": "genre@mag. société",
+				"name": "genre@mag. sociï¿½tï¿½",
 				"type": "Categorical",
 				"level": 0,
 				"parts": 1,
@@ -1465,7 +1465,7 @@
 			},
 			{
 				"rank": "R066",
-				"name": "genre@série",
+				"name": "genre@sï¿½rie",
 				"type": "Categorical",
 				"level": 0,
 				"parts": 1,
@@ -1478,7 +1478,7 @@
 			},
 			{
 				"rank": "R067",
-				"name": "genre@série animation",
+				"name": "genre@sï¿½rie animation",
 				"type": "Categorical",
 				"level": 0,
 				"parts": 1,
@@ -1491,7 +1491,7 @@
 			},
 			{
 				"rank": "R068",
-				"name": "genre@série comédie",
+				"name": "genre@sï¿½rie comï¿½die",
 				"type": "Categorical",
 				"level": 0,
 				"parts": 1,
@@ -1504,7 +1504,7 @@
 			},
 			{
 				"rank": "R069",
-				"name": "genre@série comédie dramatique",
+				"name": "genre@sï¿½rie comï¿½die dramatique",
 				"type": "Categorical",
 				"level": 0,
 				"parts": 1,
@@ -1517,7 +1517,7 @@
 			},
 			{
 				"rank": "R070",
-				"name": "genre@série dramatique",
+				"name": "genre@sï¿½rie dramatique",
 				"type": "Categorical",
 				"level": 0,
 				"parts": 1,
@@ -1530,7 +1530,7 @@
 			},
 			{
 				"rank": "R071",
-				"name": "genre@série fantastique\/SF",
+				"name": "genre@sï¿½rie fantastique\/SF",
 				"type": "Categorical",
 				"level": 0,
 				"parts": 1,
@@ -1543,7 +1543,7 @@
 			},
 			{
 				"rank": "R072",
-				"name": "genre@série jeunesse",
+				"name": "genre@sï¿½rie jeunesse",
 				"type": "Categorical",
 				"level": 0,
 				"parts": 1,
@@ -1556,7 +1556,7 @@
 			},
 			{
 				"rank": "R073",
-				"name": "genre@série suspense",
+				"name": "genre@sï¿½rie suspense",
 				"type": "Categorical",
 				"level": 0,
 				"parts": 1,
@@ -1582,7 +1582,7 @@
 			},
 			{
 				"rank": "R075",
-				"name": "genre@émission football",
+				"name": "genre@ï¿½mission football",
 				"type": "Categorical",
 				"level": 0,
 				"parts": 1,
@@ -1595,7 +1595,7 @@
 			},
 			{
 				"rank": "R076",
-				"name": "genre@émission sport mécanique",
+				"name": "genre@ï¿½mission sport mï¿½canique",
 				"type": "Categorical",
 				"level": 0,
 				"parts": 1,
@@ -2913,7 +2913,7 @@
 							"variable": "typologie des contenus",
 							"type": "Categorical",
 							"partitionType": "Values",
-							"partition": ["Emission TV : coaching (maison à vendre, super-nanie,…)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,…)","Emission TV : téléréalité et jeux (les anges de téléréalités, les marseillais, the loft,...)","Evènements sportifs","Fiction - Films dont films d’animation (long métrage…)","Fiction - feuilletons (GoT, …)","Fiction - feuilletons animés (Mangas,…)","Fiction - series animés (Simpson, Pokemon, …)","Fiction - series, sitcoms, soap (+ belle la vie, …)","Information - JT, Le Quotidien, Consommation ritualisée BFM","Information - en continu : BFM, CNews,","information - Reportages, documentaires"]
+							"partition": ["Emission TV : coaching (maison ï¿½ vendre, super-nanie,ï¿½)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,ï¿½)","Emission TV : tï¿½lï¿½rï¿½alitï¿½ et jeux (les anges de tï¿½lï¿½rï¿½alitï¿½s, les marseillais, the loft,...)","Evï¿½nements sportifs","Fiction - Films dont films dï¿½animation (long mï¿½trageï¿½)","Fiction - feuilletons (GoT, ï¿½)","Fiction - feuilletons animï¿½s (Mangas,ï¿½)","Fiction - series animï¿½s (Simpson, Pokemon, ï¿½)","Fiction - series, sitcoms, soap (+ belle la vie, ï¿½)","Informationï¿½- JT, Le Quotidien, Consommation ritualisï¿½e BFM","Informationï¿½- en continu : BFM, CNews,","information - Reportages, documentaires"]
 						}
 					],
 					"partTargetFrequencies": [
@@ -2945,7 +2945,7 @@
 							"variable": "typologie des contenus",
 							"type": "Categorical",
 							"partitionType": "Values",
-							"partition": ["Emission TV : coaching (maison à vendre, super-nanie,…)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,…)","Emission TV : téléréalité et jeux (les anges de téléréalités, les marseillais, the loft,...)","Evènements sportifs","Fiction - Films dont films d’animation (long métrage…)","Fiction - feuilletons (GoT, …)","Fiction - feuilletons animés (Mangas,…)","Fiction - series animés (Simpson, Pokemon, …)","Fiction - series, sitcoms, soap (+ belle la vie, …)","Information - JT, Le Quotidien, Consommation ritualisée BFM","Information - en continu : BFM, CNews,","information - Reportages, documentaires"]
+							"partition": ["Emission TV : coaching (maison ï¿½ vendre, super-nanie,ï¿½)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,ï¿½)","Emission TV : tï¿½lï¿½rï¿½alitï¿½ et jeux (les anges de tï¿½lï¿½rï¿½alitï¿½s, les marseillais, the loft,...)","Evï¿½nements sportifs","Fiction - Films dont films dï¿½animation (long mï¿½trageï¿½)","Fiction - feuilletons (GoT, ï¿½)","Fiction - feuilletons animï¿½s (Mangas,ï¿½)","Fiction - series animï¿½s (Simpson, Pokemon, ï¿½)","Fiction - series, sitcoms, soap (+ belle la vie, ï¿½)","Informationï¿½- JT, Le Quotidien, Consommation ritualisï¿½e BFM","Informationï¿½- en continu : BFM, CNews,","information - Reportages, documentaires"]
 						}
 					],
 					"partTargetFrequencies": [
@@ -2977,7 +2977,7 @@
 							"variable": "typologie des contenus",
 							"type": "Categorical",
 							"partitionType": "Values",
-							"partition": ["Emission TV : coaching (maison à vendre, super-nanie,…)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,…)","Emission TV : téléréalité et jeux (les anges de téléréalités, les marseillais, the loft,...)","Evènements sportifs","Fiction - Films dont films d’animation (long métrage…)","Fiction - feuilletons (GoT, …)","Fiction - feuilletons animés (Mangas,…)","Fiction - series animés (Simpson, Pokemon, …)","Fiction - series, sitcoms, soap (+ belle la vie, …)","Information - JT, Le Quotidien, Consommation ritualisée BFM","Information - en continu : BFM, CNews,","information - Reportages, documentaires"]
+							"partition": ["Emission TV : coaching (maison ï¿½ vendre, super-nanie,ï¿½)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,ï¿½)","Emission TV : tï¿½lï¿½rï¿½alitï¿½ et jeux (les anges de tï¿½lï¿½rï¿½alitï¿½s, les marseillais, the loft,...)","Evï¿½nements sportifs","Fiction - Films dont films dï¿½animation (long mï¿½trageï¿½)","Fiction - feuilletons (GoT, ï¿½)","Fiction - feuilletons animï¿½s (Mangas,ï¿½)","Fiction - series animï¿½s (Simpson, Pokemon, ï¿½)","Fiction - series, sitcoms, soap (+ belle la vie, ï¿½)","Informationï¿½- JT, Le Quotidien, Consommation ritualisï¿½e BFM","Informationï¿½- en continu : BFM, CNews,","information - Reportages, documentaires"]
 						}
 					],
 					"partTargetFrequencies": [
@@ -3009,7 +3009,7 @@
 							"variable": "typologie des contenus",
 							"type": "Categorical",
 							"partitionType": "Values",
-							"partition": ["Emission TV : coaching (maison à vendre, super-nanie,…)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,…)","Emission TV : téléréalité et jeux (les anges de téléréalités, les marseillais, the loft,...)","Evènements sportifs","Fiction - Films dont films d’animation (long métrage…)","Fiction - feuilletons (GoT, …)","Fiction - feuilletons animés (Mangas,…)","Fiction - series animés (Simpson, Pokemon, …)","Fiction - series, sitcoms, soap (+ belle la vie, …)","Information - JT, Le Quotidien, Consommation ritualisée BFM","Information - en continu : BFM, CNews,","information - Reportages, documentaires"]
+							"partition": ["Emission TV : coaching (maison ï¿½ vendre, super-nanie,ï¿½)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,ï¿½)","Emission TV : tï¿½lï¿½rï¿½alitï¿½ et jeux (les anges de tï¿½lï¿½rï¿½alitï¿½s, les marseillais, the loft,...)","Evï¿½nements sportifs","Fiction - Films dont films dï¿½animation (long mï¿½trageï¿½)","Fiction - feuilletons (GoT, ï¿½)","Fiction - feuilletons animï¿½s (Mangas,ï¿½)","Fiction - series animï¿½s (Simpson, Pokemon, ï¿½)","Fiction - series, sitcoms, soap (+ belle la vie, ï¿½)","Informationï¿½- JT, Le Quotidien, Consommation ritualisï¿½e BFM","Informationï¿½- en continu : BFM, CNews,","information - Reportages, documentaires"]
 						}
 					],
 					"partTargetFrequencies": [
@@ -3041,7 +3041,7 @@
 							"variable": "typologie des contenus",
 							"type": "Categorical",
 							"partitionType": "Values",
-							"partition": ["Emission TV : coaching (maison à vendre, super-nanie,…)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,…)","Emission TV : téléréalité et jeux (les anges de téléréalités, les marseillais, the loft,...)","Evènements sportifs","Fiction - Films dont films d’animation (long métrage…)","Fiction - feuilletons (GoT, …)","Fiction - feuilletons animés (Mangas,…)","Fiction - series animés (Simpson, Pokemon, …)","Fiction - series, sitcoms, soap (+ belle la vie, …)","Information - JT, Le Quotidien, Consommation ritualisée BFM","Information - en continu : BFM, CNews,","information - Reportages, documentaires"]
+							"partition": ["Emission TV : coaching (maison ï¿½ vendre, super-nanie,ï¿½)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,ï¿½)","Emission TV : tï¿½lï¿½rï¿½alitï¿½ et jeux (les anges de tï¿½lï¿½rï¿½alitï¿½s, les marseillais, the loft,...)","Evï¿½nements sportifs","Fiction - Films dont films dï¿½animation (long mï¿½trageï¿½)","Fiction - feuilletons (GoT, ï¿½)","Fiction - feuilletons animï¿½s (Mangas,ï¿½)","Fiction - series animï¿½s (Simpson, Pokemon, ï¿½)","Fiction - series, sitcoms, soap (+ belle la vie, ï¿½)","Informationï¿½- JT, Le Quotidien, Consommation ritualisï¿½e BFM","Informationï¿½- en continu : BFM, CNews,","information - Reportages, documentaires"]
 						}
 					],
 					"partTargetFrequencies": [
@@ -3073,7 +3073,7 @@
 							"variable": "typologie des contenus",
 							"type": "Categorical",
 							"partitionType": "Values",
-							"partition": ["Emission TV : coaching (maison à vendre, super-nanie,…)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,…)","Emission TV : téléréalité et jeux (les anges de téléréalités, les marseillais, the loft,...)","Evènements sportifs","Fiction - Films dont films d’animation (long métrage…)","Fiction - feuilletons (GoT, …)","Fiction - feuilletons animés (Mangas,…)","Fiction - series animés (Simpson, Pokemon, …)","Fiction - series, sitcoms, soap (+ belle la vie, …)","Information - JT, Le Quotidien, Consommation ritualisée BFM","Information - en continu : BFM, CNews,","information - Reportages, documentaires"]
+							"partition": ["Emission TV : coaching (maison ï¿½ vendre, super-nanie,ï¿½)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,ï¿½)","Emission TV : tï¿½lï¿½rï¿½alitï¿½ et jeux (les anges de tï¿½lï¿½rï¿½alitï¿½s, les marseillais, the loft,...)","Evï¿½nements sportifs","Fiction - Films dont films dï¿½animation (long mï¿½trageï¿½)","Fiction - feuilletons (GoT, ï¿½)","Fiction - feuilletons animï¿½s (Mangas,ï¿½)","Fiction - series animï¿½s (Simpson, Pokemon, ï¿½)","Fiction - series, sitcoms, soap (+ belle la vie, ï¿½)","Informationï¿½- JT, Le Quotidien, Consommation ritualisï¿½e BFM","Informationï¿½- en continu : BFM, CNews,","information - Reportages, documentaires"]
 						}
 					],
 					"partTargetFrequencies": [
@@ -3105,7 +3105,7 @@
 							"variable": "typologie des contenus",
 							"type": "Categorical",
 							"partitionType": "Values",
-							"partition": ["Emission TV : coaching (maison à vendre, super-nanie,…)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,…)","Emission TV : téléréalité et jeux (les anges de téléréalités, les marseillais, the loft,...)","Evènements sportifs","Fiction - Films dont films d’animation (long métrage…)","Fiction - feuilletons (GoT, …)","Fiction - feuilletons animés (Mangas,…)","Fiction - series animés (Simpson, Pokemon, …)","Fiction - series, sitcoms, soap (+ belle la vie, …)","Information - JT, Le Quotidien, Consommation ritualisée BFM","Information - en continu : BFM, CNews,","information - Reportages, documentaires"]
+							"partition": ["Emission TV : coaching (maison ï¿½ vendre, super-nanie,ï¿½)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,ï¿½)","Emission TV : tï¿½lï¿½rï¿½alitï¿½ et jeux (les anges de tï¿½lï¿½rï¿½alitï¿½s, les marseillais, the loft,...)","Evï¿½nements sportifs","Fiction - Films dont films dï¿½animation (long mï¿½trageï¿½)","Fiction - feuilletons (GoT, ï¿½)","Fiction - feuilletons animï¿½s (Mangas,ï¿½)","Fiction - series animï¿½s (Simpson, Pokemon, ï¿½)","Fiction - series, sitcoms, soap (+ belle la vie, ï¿½)","Informationï¿½- JT, Le Quotidien, Consommation ritualisï¿½e BFM","Informationï¿½- en continu : BFM, CNews,","information - Reportages, documentaires"]
 						}
 					],
 					"partTargetFrequencies": [
@@ -3137,7 +3137,7 @@
 							"variable": "typologie des contenus",
 							"type": "Categorical",
 							"partitionType": "Values",
-							"partition": ["Emission TV : coaching (maison à vendre, super-nanie,…)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,…)","Emission TV : téléréalité et jeux (les anges de téléréalités, les marseillais, the loft,...)","Evènements sportifs","Fiction - Films dont films d’animation (long métrage…)","Fiction - feuilletons (GoT, …)","Fiction - feuilletons animés (Mangas,…)","Fiction - series animés (Simpson, Pokemon, …)","Fiction - series, sitcoms, soap (+ belle la vie, …)","Information - JT, Le Quotidien, Consommation ritualisée BFM","Information - en continu : BFM, CNews,","information - Reportages, documentaires"]
+							"partition": ["Emission TV : coaching (maison ï¿½ vendre, super-nanie,ï¿½)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,ï¿½)","Emission TV : tï¿½lï¿½rï¿½alitï¿½ et jeux (les anges de tï¿½lï¿½rï¿½alitï¿½s, les marseillais, the loft,...)","Evï¿½nements sportifs","Fiction - Films dont films dï¿½animation (long mï¿½trageï¿½)","Fiction - feuilletons (GoT, ï¿½)","Fiction - feuilletons animï¿½s (Mangas,ï¿½)","Fiction - series animï¿½s (Simpson, Pokemon, ï¿½)","Fiction - series, sitcoms, soap (+ belle la vie, ï¿½)","Informationï¿½- JT, Le Quotidien, Consommation ritualisï¿½e BFM","Informationï¿½- en continu : BFM, CNews,","information - Reportages, documentaires"]
 						}
 					],
 					"partTargetFrequencies": [
@@ -3169,7 +3169,7 @@
 							"variable": "typologie des contenus",
 							"type": "Categorical",
 							"partitionType": "Values",
-							"partition": ["Emission TV : coaching (maison à vendre, super-nanie,…)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,…)","Emission TV : téléréalité et jeux (les anges de téléréalités, les marseillais, the loft,...)","Evènements sportifs","Fiction - Films dont films d’animation (long métrage…)","Fiction - feuilletons (GoT, …)","Fiction - feuilletons animés (Mangas,…)","Fiction - series animés (Simpson, Pokemon, …)","Fiction - series, sitcoms, soap (+ belle la vie, …)","Information - JT, Le Quotidien, Consommation ritualisée BFM","Information - en continu : BFM, CNews,","information - Reportages, documentaires"]
+							"partition": ["Emission TV : coaching (maison ï¿½ vendre, super-nanie,ï¿½)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,ï¿½)","Emission TV : tï¿½lï¿½rï¿½alitï¿½ et jeux (les anges de tï¿½lï¿½rï¿½alitï¿½s, les marseillais, the loft,...)","Evï¿½nements sportifs","Fiction - Films dont films dï¿½animation (long mï¿½trageï¿½)","Fiction - feuilletons (GoT, ï¿½)","Fiction - feuilletons animï¿½s (Mangas,ï¿½)","Fiction - series animï¿½s (Simpson, Pokemon, ï¿½)","Fiction - series, sitcoms, soap (+ belle la vie, ï¿½)","Informationï¿½- JT, Le Quotidien, Consommation ritualisï¿½e BFM","Informationï¿½- en continu : BFM, CNews,","information - Reportages, documentaires"]
 						}
 					],
 					"partTargetFrequencies": [
@@ -3201,7 +3201,7 @@
 							"variable": "typologie des contenus",
 							"type": "Categorical",
 							"partitionType": "Values",
-							"partition": ["Emission TV : coaching (maison à vendre, super-nanie,…)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,…)","Emission TV : téléréalité et jeux (les anges de téléréalités, les marseillais, the loft,...)","Evènements sportifs","Fiction - Films dont films d’animation (long métrage…)","Fiction - feuilletons (GoT, …)","Fiction - feuilletons animés (Mangas,…)","Fiction - series animés (Simpson, Pokemon, …)","Fiction - series, sitcoms, soap (+ belle la vie, …)","Information - JT, Le Quotidien, Consommation ritualisée BFM","Information - en continu : BFM, CNews,","information - Reportages, documentaires"]
+							"partition": ["Emission TV : coaching (maison ï¿½ vendre, super-nanie,ï¿½)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,ï¿½)","Emission TV : tï¿½lï¿½rï¿½alitï¿½ et jeux (les anges de tï¿½lï¿½rï¿½alitï¿½s, les marseillais, the loft,...)","Evï¿½nements sportifs","Fiction - Films dont films dï¿½animation (long mï¿½trageï¿½)","Fiction - feuilletons (GoT, ï¿½)","Fiction - feuilletons animï¿½s (Mangas,ï¿½)","Fiction - series animï¿½s (Simpson, Pokemon, ï¿½)","Fiction - series, sitcoms, soap (+ belle la vie, ï¿½)","Informationï¿½- JT, Le Quotidien, Consommation ritualisï¿½e BFM","Informationï¿½- en continu : BFM, CNews,","information - Reportages, documentaires"]
 						}
 					],
 					"partTargetFrequencies": [
@@ -3233,7 +3233,7 @@
 							"variable": "typologie des contenus",
 							"type": "Categorical",
 							"partitionType": "Values",
-							"partition": ["Emission TV : coaching (maison à vendre, super-nanie,…)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,…)","Emission TV : téléréalité et jeux (les anges de téléréalités, les marseillais, the loft,...)","Evènements sportifs","Fiction - Films dont films d’animation (long métrage…)","Fiction - feuilletons (GoT, …)","Fiction - feuilletons animés (Mangas,…)","Fiction - series animés (Simpson, Pokemon, …)","Fiction - series, sitcoms, soap (+ belle la vie, …)","Information - JT, Le Quotidien, Consommation ritualisée BFM","Information - en continu : BFM, CNews,","information - Reportages, documentaires"]
+							"partition": ["Emission TV : coaching (maison ï¿½ vendre, super-nanie,ï¿½)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,ï¿½)","Emission TV : tï¿½lï¿½rï¿½alitï¿½ et jeux (les anges de tï¿½lï¿½rï¿½alitï¿½s, les marseillais, the loft,...)","Evï¿½nements sportifs","Fiction - Films dont films dï¿½animation (long mï¿½trageï¿½)","Fiction - feuilletons (GoT, ï¿½)","Fiction - feuilletons animï¿½s (Mangas,ï¿½)","Fiction - series animï¿½s (Simpson, Pokemon, ï¿½)","Fiction - series, sitcoms, soap (+ belle la vie, ï¿½)","Informationï¿½- JT, Le Quotidien, Consommation ritualisï¿½e BFM","Informationï¿½- en continu : BFM, CNews,","information - Reportages, documentaires"]
 						}
 					],
 					"partTargetFrequencies": [
@@ -3265,7 +3265,7 @@
 							"variable": "typologie des contenus",
 							"type": "Categorical",
 							"partitionType": "Values",
-							"partition": ["Emission TV : coaching (maison à vendre, super-nanie,…)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,…)","Emission TV : téléréalité et jeux (les anges de téléréalités, les marseillais, the loft,...)","Evènements sportifs","Fiction - Films dont films d’animation (long métrage…)","Fiction - feuilletons (GoT, …)","Fiction - feuilletons animés (Mangas,…)","Fiction - series animés (Simpson, Pokemon, …)","Fiction - series, sitcoms, soap (+ belle la vie, …)","Information - JT, Le Quotidien, Consommation ritualisée BFM","Information - en continu : BFM, CNews,","information - Reportages, documentaires"]
+							"partition": ["Emission TV : coaching (maison ï¿½ vendre, super-nanie,ï¿½)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,ï¿½)","Emission TV : tï¿½lï¿½rï¿½alitï¿½ et jeux (les anges de tï¿½lï¿½rï¿½alitï¿½s, les marseillais, the loft,...)","Evï¿½nements sportifs","Fiction - Films dont films dï¿½animation (long mï¿½trageï¿½)","Fiction - feuilletons (GoT, ï¿½)","Fiction - feuilletons animï¿½s (Mangas,ï¿½)","Fiction - series animï¿½s (Simpson, Pokemon, ï¿½)","Fiction - series, sitcoms, soap (+ belle la vie, ï¿½)","Informationï¿½- JT, Le Quotidien, Consommation ritualisï¿½e BFM","Informationï¿½- en continu : BFM, CNews,","information - Reportages, documentaires"]
 						}
 					],
 					"partTargetFrequencies": [
@@ -3297,7 +3297,7 @@
 							"variable": "typologie des contenus",
 							"type": "Categorical",
 							"partitionType": "Values",
-							"partition": ["Emission TV : coaching (maison à vendre, super-nanie,…)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,…)","Emission TV : téléréalité et jeux (les anges de téléréalités, les marseillais, the loft,...)","Evènements sportifs","Fiction - Films dont films d’animation (long métrage…)","Fiction - feuilletons (GoT, …)","Fiction - feuilletons animés (Mangas,…)","Fiction - series animés (Simpson, Pokemon, …)","Fiction - series, sitcoms, soap (+ belle la vie, …)","Information - JT, Le Quotidien, Consommation ritualisée BFM","Information - en continu : BFM, CNews,","information - Reportages, documentaires"]
+							"partition": ["Emission TV : coaching (maison ï¿½ vendre, super-nanie,ï¿½)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,ï¿½)","Emission TV : tï¿½lï¿½rï¿½alitï¿½ et jeux (les anges de tï¿½lï¿½rï¿½alitï¿½s, les marseillais, the loft,...)","Evï¿½nements sportifs","Fiction - Films dont films dï¿½animation (long mï¿½trageï¿½)","Fiction - feuilletons (GoT, ï¿½)","Fiction - feuilletons animï¿½s (Mangas,ï¿½)","Fiction - series animï¿½s (Simpson, Pokemon, ï¿½)","Fiction - series, sitcoms, soap (+ belle la vie, ï¿½)","Informationï¿½- JT, Le Quotidien, Consommation ritualisï¿½e BFM","Informationï¿½- en continu : BFM, CNews,","information - Reportages, documentaires"]
 						}
 					],
 					"partTargetFrequencies": [
@@ -3329,7 +3329,7 @@
 							"variable": "typologie des contenus",
 							"type": "Categorical",
 							"partitionType": "Values",
-							"partition": ["Emission TV : coaching (maison à vendre, super-nanie,…)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,…)","Emission TV : téléréalité et jeux (les anges de téléréalités, les marseillais, the loft,...)","Evènements sportifs","Fiction - Films dont films d’animation (long métrage…)","Fiction - feuilletons (GoT, …)","Fiction - feuilletons animés (Mangas,…)","Fiction - series animés (Simpson, Pokemon, …)","Fiction - series, sitcoms, soap (+ belle la vie, …)","Information - JT, Le Quotidien, Consommation ritualisée BFM","Information - en continu : BFM, CNews,","information - Reportages, documentaires"]
+							"partition": ["Emission TV : coaching (maison ï¿½ vendre, super-nanie,ï¿½)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,ï¿½)","Emission TV : tï¿½lï¿½rï¿½alitï¿½ et jeux (les anges de tï¿½lï¿½rï¿½alitï¿½s, les marseillais, the loft,...)","Evï¿½nements sportifs","Fiction - Films dont films dï¿½animation (long mï¿½trageï¿½)","Fiction - feuilletons (GoT, ï¿½)","Fiction - feuilletons animï¿½s (Mangas,ï¿½)","Fiction - series animï¿½s (Simpson, Pokemon, ï¿½)","Fiction - series, sitcoms, soap (+ belle la vie, ï¿½)","Informationï¿½- JT, Le Quotidien, Consommation ritualisï¿½e BFM","Informationï¿½- en continu : BFM, CNews,","information - Reportages, documentaires"]
 						}
 					],
 					"partTargetFrequencies": [
@@ -3361,7 +3361,7 @@
 							"variable": "typologie des contenus",
 							"type": "Categorical",
 							"partitionType": "Values",
-							"partition": ["Emission TV : coaching (maison à vendre, super-nanie,…)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,…)","Emission TV : téléréalité et jeux (les anges de téléréalités, les marseillais, the loft,...)","Evènements sportifs","Fiction - Films dont films d’animation (long métrage…)","Fiction - feuilletons (GoT, …)","Fiction - feuilletons animés (Mangas,…)","Fiction - series animés (Simpson, Pokemon, …)","Fiction - series, sitcoms, soap (+ belle la vie, …)","Information - JT, Le Quotidien, Consommation ritualisée BFM","Information - en continu : BFM, CNews,","information - Reportages, documentaires"]
+							"partition": ["Emission TV : coaching (maison ï¿½ vendre, super-nanie,ï¿½)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,ï¿½)","Emission TV : tï¿½lï¿½rï¿½alitï¿½ et jeux (les anges de tï¿½lï¿½rï¿½alitï¿½s, les marseillais, the loft,...)","Evï¿½nements sportifs","Fiction - Films dont films dï¿½animation (long mï¿½trageï¿½)","Fiction - feuilletons (GoT, ï¿½)","Fiction - feuilletons animï¿½s (Mangas,ï¿½)","Fiction - series animï¿½s (Simpson, Pokemon, ï¿½)","Fiction - series, sitcoms, soap (+ belle la vie, ï¿½)","Informationï¿½- JT, Le Quotidien, Consommation ritualisï¿½e BFM","Informationï¿½- en continu : BFM, CNews,","information - Reportages, documentaires"]
 						}
 					],
 					"partTargetFrequencies": [
@@ -3393,7 +3393,7 @@
 							"variable": "typologie des contenus",
 							"type": "Categorical",
 							"partitionType": "Values",
-							"partition": ["Emission TV : coaching (maison à vendre, super-nanie,…)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,…)","Emission TV : téléréalité et jeux (les anges de téléréalités, les marseillais, the loft,...)","Evènements sportifs","Fiction - Films dont films d’animation (long métrage…)","Fiction - feuilletons (GoT, …)","Fiction - feuilletons animés (Mangas,…)","Fiction - series animés (Simpson, Pokemon, …)","Fiction - series, sitcoms, soap (+ belle la vie, …)","Information - JT, Le Quotidien, Consommation ritualisée BFM","Information - en continu : BFM, CNews,","information - Reportages, documentaires"]
+							"partition": ["Emission TV : coaching (maison ï¿½ vendre, super-nanie,ï¿½)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,ï¿½)","Emission TV : tï¿½lï¿½rï¿½alitï¿½ et jeux (les anges de tï¿½lï¿½rï¿½alitï¿½s, les marseillais, the loft,...)","Evï¿½nements sportifs","Fiction - Films dont films dï¿½animation (long mï¿½trageï¿½)","Fiction - feuilletons (GoT, ï¿½)","Fiction - feuilletons animï¿½s (Mangas,ï¿½)","Fiction - series animï¿½s (Simpson, Pokemon, ï¿½)","Fiction - series, sitcoms, soap (+ belle la vie, ï¿½)","Informationï¿½- JT, Le Quotidien, Consommation ritualisï¿½e BFM","Informationï¿½- en continu : BFM, CNews,","information - Reportages, documentaires"]
 						}
 					],
 					"partTargetFrequencies": [
@@ -3425,7 +3425,7 @@
 							"variable": "typologie des contenus",
 							"type": "Categorical",
 							"partitionType": "Values",
-							"partition": ["Emission TV : coaching (maison à vendre, super-nanie,…)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,…)","Emission TV : téléréalité et jeux (les anges de téléréalités, les marseillais, the loft,...)","Evènements sportifs","Fiction - Films dont films d’animation (long métrage…)","Fiction - feuilletons (GoT, …)","Fiction - feuilletons animés (Mangas,…)","Fiction - series animés (Simpson, Pokemon, …)","Fiction - series, sitcoms, soap (+ belle la vie, …)","Information - JT, Le Quotidien, Consommation ritualisée BFM","Information - en continu : BFM, CNews,","information - Reportages, documentaires"]
+							"partition": ["Emission TV : coaching (maison ï¿½ vendre, super-nanie,ï¿½)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,ï¿½)","Emission TV : tï¿½lï¿½rï¿½alitï¿½ et jeux (les anges de tï¿½lï¿½rï¿½alitï¿½s, les marseillais, the loft,...)","Evï¿½nements sportifs","Fiction - Films dont films dï¿½animation (long mï¿½trageï¿½)","Fiction - feuilletons (GoT, ï¿½)","Fiction - feuilletons animï¿½s (Mangas,ï¿½)","Fiction - series animï¿½s (Simpson, Pokemon, ï¿½)","Fiction - series, sitcoms, soap (+ belle la vie, ï¿½)","Informationï¿½- JT, Le Quotidien, Consommation ritualisï¿½e BFM","Informationï¿½- en continu : BFM, CNews,","information - Reportages, documentaires"]
 						}
 					],
 					"partTargetFrequencies": [
@@ -3444,7 +3444,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "genre@téléréalité",
+							"variable": "genre@tï¿½lï¿½rï¿½alitï¿½",
 							"type": "Categorical",
 							"partitionType": "Value groups",
 							"partition": [
@@ -3457,7 +3457,7 @@
 							"variable": "typologie des contenus",
 							"type": "Categorical",
 							"partitionType": "Values",
-							"partition": ["Emission TV : coaching (maison à vendre, super-nanie,…)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,…)","Emission TV : téléréalité et jeux (les anges de téléréalités, les marseillais, the loft,...)","Evènements sportifs","Fiction - Films dont films d’animation (long métrage…)","Fiction - feuilletons (GoT, …)","Fiction - feuilletons animés (Mangas,…)","Fiction - series animés (Simpson, Pokemon, …)","Fiction - series, sitcoms, soap (+ belle la vie, …)","Information - JT, Le Quotidien, Consommation ritualisée BFM","Information - en continu : BFM, CNews,","information - Reportages, documentaires"]
+							"partition": ["Emission TV : coaching (maison ï¿½ vendre, super-nanie,ï¿½)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,ï¿½)","Emission TV : tï¿½lï¿½rï¿½alitï¿½ et jeux (les anges de tï¿½lï¿½rï¿½alitï¿½s, les marseillais, the loft,...)","Evï¿½nements sportifs","Fiction - Films dont films dï¿½animation (long mï¿½trageï¿½)","Fiction - feuilletons (GoT, ï¿½)","Fiction - feuilletons animï¿½s (Mangas,ï¿½)","Fiction - series animï¿½s (Simpson, Pokemon, ï¿½)","Fiction - series, sitcoms, soap (+ belle la vie, ï¿½)","Informationï¿½- JT, Le Quotidien, Consommation ritualisï¿½e BFM","Informationï¿½- en continu : BFM, CNews,","information - Reportages, documentaires"]
 						}
 					],
 					"partTargetFrequencies": [
@@ -3489,7 +3489,7 @@
 							"variable": "typologie des contenus",
 							"type": "Categorical",
 							"partitionType": "Values",
-							"partition": ["Emission TV : coaching (maison à vendre, super-nanie,…)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,…)","Emission TV : téléréalité et jeux (les anges de téléréalités, les marseillais, the loft,...)","Evènements sportifs","Fiction - Films dont films d’animation (long métrage…)","Fiction - feuilletons (GoT, …)","Fiction - feuilletons animés (Mangas,…)","Fiction - series animés (Simpson, Pokemon, …)","Fiction - series, sitcoms, soap (+ belle la vie, …)","Information - JT, Le Quotidien, Consommation ritualisée BFM","Information - en continu : BFM, CNews,","information - Reportages, documentaires"]
+							"partition": ["Emission TV : coaching (maison ï¿½ vendre, super-nanie,ï¿½)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,ï¿½)","Emission TV : tï¿½lï¿½rï¿½alitï¿½ et jeux (les anges de tï¿½lï¿½rï¿½alitï¿½s, les marseillais, the loft,...)","Evï¿½nements sportifs","Fiction - Films dont films dï¿½animation (long mï¿½trageï¿½)","Fiction - feuilletons (GoT, ï¿½)","Fiction - feuilletons animï¿½s (Mangas,ï¿½)","Fiction - series animï¿½s (Simpson, Pokemon, ï¿½)","Fiction - series, sitcoms, soap (+ belle la vie, ï¿½)","Informationï¿½- JT, Le Quotidien, Consommation ritualisï¿½e BFM","Informationï¿½- en continu : BFM, CNews,","information - Reportages, documentaires"]
 						}
 					],
 					"partTargetFrequencies": [
@@ -3521,7 +3521,7 @@
 							"variable": "typologie des contenus",
 							"type": "Categorical",
 							"partitionType": "Values",
-							"partition": ["Emission TV : coaching (maison à vendre, super-nanie,…)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,…)","Emission TV : téléréalité et jeux (les anges de téléréalités, les marseillais, the loft,...)","Evènements sportifs","Fiction - Films dont films d’animation (long métrage…)","Fiction - feuilletons (GoT, …)","Fiction - feuilletons animés (Mangas,…)","Fiction - series animés (Simpson, Pokemon, …)","Fiction - series, sitcoms, soap (+ belle la vie, …)","Information - JT, Le Quotidien, Consommation ritualisée BFM","Information - en continu : BFM, CNews,","information - Reportages, documentaires"]
+							"partition": ["Emission TV : coaching (maison ï¿½ vendre, super-nanie,ï¿½)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,ï¿½)","Emission TV : tï¿½lï¿½rï¿½alitï¿½ et jeux (les anges de tï¿½lï¿½rï¿½alitï¿½s, les marseillais, the loft,...)","Evï¿½nements sportifs","Fiction - Films dont films dï¿½animation (long mï¿½trageï¿½)","Fiction - feuilletons (GoT, ï¿½)","Fiction - feuilletons animï¿½s (Mangas,ï¿½)","Fiction - series animï¿½s (Simpson, Pokemon, ï¿½)","Fiction - series, sitcoms, soap (+ belle la vie, ï¿½)","Informationï¿½- JT, Le Quotidien, Consommation ritualisï¿½e BFM","Informationï¿½- en continu : BFM, CNews,","information - Reportages, documentaires"]
 						}
 					],
 					"partTargetFrequencies": [
@@ -3553,7 +3553,7 @@
 							"variable": "typologie des contenus",
 							"type": "Categorical",
 							"partitionType": "Values",
-							"partition": ["Emission TV : coaching (maison à vendre, super-nanie,…)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,…)","Emission TV : téléréalité et jeux (les anges de téléréalités, les marseillais, the loft,...)","Evènements sportifs","Fiction - Films dont films d’animation (long métrage…)","Fiction - feuilletons (GoT, …)","Fiction - feuilletons animés (Mangas,…)","Fiction - series animés (Simpson, Pokemon, …)","Fiction - series, sitcoms, soap (+ belle la vie, …)","Information - JT, Le Quotidien, Consommation ritualisée BFM","Information - en continu : BFM, CNews,","information - Reportages, documentaires"]
+							"partition": ["Emission TV : coaching (maison ï¿½ vendre, super-nanie,ï¿½)","Emission TV : concours\/jeux (Top Chef, Koh Lanta, The Voice,...)","Emission TV : jeux quotidiens","Emission TV : plateau (ONPC, TPMP,ï¿½)","Emission TV : tï¿½lï¿½rï¿½alitï¿½ et jeux (les anges de tï¿½lï¿½rï¿½alitï¿½s, les marseillais, the loft,...)","Evï¿½nements sportifs","Fiction - Films dont films dï¿½animation (long mï¿½trageï¿½)","Fiction - feuilletons (GoT, ï¿½)","Fiction - feuilletons animï¿½s (Mangas,ï¿½)","Fiction - series animï¿½s (Simpson, Pokemon, ï¿½)","Fiction - series, sitcoms, soap (+ belle la vie, ï¿½)","Informationï¿½- JT, Le Quotidien, Consommation ritualisï¿½e BFM","Informationï¿½- en continu : BFM, CNews,","information - Reportages, documentaires"]
 						}
 					],
 					"partTargetFrequencies": [

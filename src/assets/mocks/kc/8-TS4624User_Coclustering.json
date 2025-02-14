@@ -12,7 +12,7 @@
 			"initialDimensions": 3,
 			"frequencyVariable": "",
 			"dictionary": "date_username_srv_event_count_long",
-			"database": "C:\\Users\\yfco6286\\OneDrive - orange.com\\Documents\\! - FABRICE_DOCUMENTS\\! - WORK 2024\\DSEC\\SOC OFR\\CSV\\UserServerEvent\\date_username_srv_event_count_long.csv",
+			"database": "database path",
 			"samplePercentage": 100,
 			"samplingMode": "Include sample",
 			"selectionVariable": "Select4624",

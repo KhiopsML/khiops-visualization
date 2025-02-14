@@ -44,7 +44,7 @@
 					49
 				]
 			},
-			"database": "C:\\Users\\yfco6286\\Documents\\! - FABRICE_DOCUMENTS\\! - WORK 2022\\MARTINEZ LOPEZ Sofia\\jointure2.txt",
+			"database": "database path",
 			"samplePercentage": 100,
 			"samplingMode": "Include sample",
 			"selectionVariable": "",

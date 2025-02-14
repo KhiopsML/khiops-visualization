@@ -5,7 +5,7 @@
 		"reportType": "Modeling",
 		"summary": {
 			"dictionary": "Complete_set",
-			"database": "C:\\Users\\yfco6286\\Documents\\! - FABRICE_DOCUMENTS\\! - WORK 2020\\Mathura\\Deuxième Essai\\Complete_set.csv",
+			"database": "database path",
 			"learningTask": "Classification analysis",
 			"targetVariable": "Botnet_family",
 			"mainTargetValue": "Virut"
@@ -156,7 +156,7 @@
 		"evaluationType": "Train",
 		"summary": {
 			"dictionary": "Complete_set",
-			"database": "C:\\Users\\yfco6286\\Documents\\! - FABRICE_DOCUMENTS\\! - WORK 2020\\Mathura\\Deuxième Essai\\Complete_set.csv",
+			"database": "database path",
 			"instances": 939941,
 			"learningTask": "Classification analysis",
 			"targetVariable": "Botnet_family",
@@ -339,7 +339,7 @@
 		"evaluationType": "Test",
 		"summary": {
 			"dictionary": "Complete_set",
-			"database": "C:\\Users\\yfco6286\\Documents\\! - FABRICE_DOCUMENTS\\! - WORK 2020\\Mathura\\Deuxième Essai\\Complete_set.csv",
+			"database": "database path",
 			"instances": 402739,
 			"learningTask": "Classification analysis",
 			"targetVariable": "Botnet_family",
@@ -531,7 +531,7 @@
 					22
 				]
 			},
-			"database": "C:\\Users\\yfco6286\\Documents\\! - FABRICE_DOCUMENTS\\! - WORK 2020\\Mathura\\Deuxième Essai\\Complete_set.csv",
+			"database": "database path",
 			"instances": 939941,
 			"learningTask": "Classification analysis",
 			"targetVariable": "Botnet_family",

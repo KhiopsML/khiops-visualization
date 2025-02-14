@@ -5,7 +5,7 @@
 		"reportType": "Modeling",
 		"summary": {
 			"dictionary": "extract_baro_online",
-			"database": "C:\\Users\\yfco6286\\Desktop\\extract_baro_online\\extract_baro_online.txt",
+			"database": "database path",
 			"learningTask": "Regression analysis",
 			"targetVariable": "q2"
 		},
@@ -122,7 +122,7 @@
 		"evaluationType": "Train",
 		"summary": {
 			"dictionary": "extract_baro_online",
-			"database": "C:\\Users\\yfco6286\\Desktop\\extract_baro_online\\extract_baro_online.txt",
+			"database": "database path",
 			"instances": 72483,
 			"learningTask": "Regression analysis",
 			"targetVariable": "q2"
@@ -153,7 +153,7 @@
 		"evaluationType": "Test",
 		"summary": {
 			"dictionary": "extract_baro_online",
-			"database": "C:\\Users\\yfco6286\\Desktop\\extract_baro_online\\extract_baro_online.txt",
+			"database": "database path",
 			"instances": 31027,
 			"learningTask": "Regression analysis",
 			"targetVariable": "q2"
@@ -193,7 +193,7 @@
 					19
 				]
 			},
-			"database": "C:\\Users\\yfco6286\\Desktop\\extract_baro_online\\extract_baro_online.txt",
+			"database": "database path",
 			"instances": 72483,
 			"learningTask": "Regression analysis",
 			"targetVariable": "q2",

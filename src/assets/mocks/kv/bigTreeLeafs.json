@@ -6,7 +6,7 @@
 		"reportType": "Modeling",
 		"summary": {
 			"dictionary": "Accidents",
-			"database": "c:\\APPLIC~1\\src\\tmp\\pykhiops\\KhiopsClassifier_fit_xlddrq_l\\Accidents.txt",
+			"database": "database path",
 			"samplePercentage": 100,
 			"samplingMode": "Include sample",
 			"selectionVariable": "",
@@ -196,7 +196,7 @@
 		"evaluationType": "Train",
 		"summary": {
 			"dictionary": "Accidents",
-			"database": "c:\\APPLIC~1\\src\\tmp\\pykhiops\\KhiopsClassifier_fit_xlddrq_l\\Accidents.txt",
+			"database": "database path",
 			"samplePercentage": 100,
 			"samplingMode": "Include sample",
 			"selectionVariable": "",
@@ -272,7 +272,7 @@
 					1
 				]
 			},
-			"database": "c:\\APPLIC~1\\src\\tmp\\pykhiops\\KhiopsClassifier_fit_xlddrq_l\\Accidents.txt",
+			"database": "database path",
 			"samplePercentage": 100,
 			"samplingMode": "Include sample",
 			"selectionVariable": "",
@@ -4149,7 +4149,7 @@
 					1
 				]
 			},
-			"database": "c:\\APPLIC~1\\src\\tmp\\pykhiops\\KhiopsClassifier_fit_xlddrq_l\\Accidents.txt",
+			"database": "database path",
 			"samplePercentage": 100,
 			"samplingMode": "Include sample",
 			"selectionVariable": "",

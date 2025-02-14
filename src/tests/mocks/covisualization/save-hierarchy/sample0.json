@@ -11,7 +11,7 @@
 			"initialDimensions": 3,
 			"frequencyVariable": "Frequence",
 			"dictionary": "Exemple",
-			"database": "C:\\Users\\yfco6286\\Desktop\\Exemple\\Exemple.txt"
+			"database": "database path"
 		},
 		"dimensionSummaries": [
 			{

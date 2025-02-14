@@ -6,7 +6,7 @@
 		"reportType": "Modeling",
 		"summary": {
 			"dictionary": "2021_2022_AvantApres",
-			"database": "C:\\Users\\yfco6286\\Documents\\! - FABRICE_DOCUMENTS\\! - WORK 2022\\BOSQ Jean-Michel\\Avant-Apr\u00E8s\\2021_2022_AvantApres.csv",
+			"database": "database path",
 			"samplePercentage": 70,
 			"samplingMode": "Include sample",
 			"selectionVariable": "",
@@ -64,7 +64,7 @@
 		"evaluationType": "Train",
 		"summary": {
 			"dictionary": "2021_2022_AvantApres",
-			"database": "C:\\Users\\yfco6286\\Documents\\! - FABRICE_DOCUMENTS\\! - WORK 2022\\BOSQ Jean-Michel\\Avant-Apr\u00E8s\\2021_2022_AvantApres.csv",
+			"database": "database path",
 			"samplePercentage": 70,
 			"samplingMode": "Include sample",
 			"selectionVariable": "",
@@ -130,7 +130,7 @@
 		"evaluationType": "Test",
 		"summary": {
 			"dictionary": "2021_2022_AvantApres",
-			"database": "C:\\Users\\yfco6286\\Documents\\! - FABRICE_DOCUMENTS\\! - WORK 2022\\BOSQ Jean-Michel\\Avant-Apr\u00E8s\\2021_2022_AvantApres.csv",
+			"database": "database path",
 			"samplePercentage": 70,
 			"samplingMode": "Exclude sample",
 			"selectionVariable": "",
@@ -205,7 +205,7 @@
 					3
 				]
 			},
-			"database": "C:\\Users\\yfco6286\\Documents\\! - FABRICE_DOCUMENTS\\! - WORK 2022\\BOSQ Jean-Michel\\Avant-Apr\u00E8s\\2021_2022_AvantApres.csv",
+			"database": "database path",
 			"samplePercentage": 70,
 			"samplingMode": "Include sample",
 			"selectionVariable": "",
@@ -517,7 +517,7 @@
 					3
 				]
 			},
-			"database": "C:\\Users\\yfco6286\\Documents\\! - FABRICE_DOCUMENTS\\! - WORK 2022\\BOSQ Jean-Michel\\Avant-Apr\u00E8s\\2021_2022_AvantApres.csv",
+			"database": "database path",
 			"samplePercentage": 70,
 			"samplingMode": "Include sample",
 			"selectionVariable": "",
@@ -915,7 +915,7 @@
 					3
 				]
 			},
-			"database": "C:\\Users\\yfco6286\\Documents\\! - FABRICE_DOCUMENTS\\! - WORK 2022\\BOSQ Jean-Michel\\Avant-Apr\u00E8s\\2021_2022_AvantApres.csv",
+			"database": "database path",
 			"samplePercentage": 70,
 			"samplingMode": "Include sample",
 			"selectionVariable": "",

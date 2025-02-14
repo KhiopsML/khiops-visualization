@@ -6,7 +6,7 @@
 		"reportType": "Modeling",
 		"summary": {
 			"dictionary": "RayTuneAutoencoderTuning",
-			"database": "C:\\Users\\yfco6286\\Desktop\\RayTune\\RayTuneAutoencoderTuning.csv",
+			"database": "database path",
 			"samplePercentage": 70,
 			"samplingMode": "Include sample",
 			"selectionVariable": "",
@@ -63,7 +63,7 @@
 		"evaluationType": "Train",
 		"summary": {
 			"dictionary": "RayTuneAutoencoderTuning",
-			"database": "C:\\Users\\yfco6286\\Desktop\\RayTune\\RayTuneAutoencoderTuning.csv",
+			"database": "database path",
 			"samplePercentage": 70,
 			"samplingMode": "Include sample",
 			"selectionVariable": "",
@@ -98,7 +98,7 @@
 		"evaluationType": "Test",
 		"summary": {
 			"dictionary": "RayTuneAutoencoderTuning",
-			"database": "C:\\Users\\yfco6286\\Desktop\\RayTune\\RayTuneAutoencoderTuning.csv",
+			"database": "database path",
 			"samplePercentage": 70,
 			"samplingMode": "Exclude sample",
 			"selectionVariable": "",
@@ -142,7 +142,7 @@
 					11
 				]
 			},
-			"database": "C:\\Users\\yfco6286\\Desktop\\RayTune\\RayTuneAutoencoderTuning.csv",
+			"database": "database path",
 			"samplePercentage": 70,
 			"samplingMode": "Include sample",
 			"selectionVariable": "",

@@ -11,8 +11,8 @@
 			"initialDimensions": 3,
 			"frequencyVariable": "",
 			"dictionary": "DigitCurve",
-			"database": "D:\\Utilisateur\\Marc\\Digits\\S_digit_train_curves.txt"
-		},
+			"database": "database path"
+				},
 		"dimensionSummaries": [
 			{
 				"name": "DigitCurve",

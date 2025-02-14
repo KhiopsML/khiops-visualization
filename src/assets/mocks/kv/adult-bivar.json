@@ -5,7 +5,7 @@
 		"reportType": "Modeling",
 		"summary": {
 			"dictionary": "Adult",
-			"database": "C:\\Users\\YFCO6286\\Desktop\\KHIOPS INTERFACE\\ADULT example\\Adult.txt",
+			"database": "database path",
 			"learningTask": "Classification analysis",
 			"targetVariable": "class",
 			"mainTargetValue": "more"
@@ -174,7 +174,7 @@
 		"evaluationType": "Train",
 		"summary": {
 			"dictionary": "Adult",
-			"database": "C:\\Users\\YFCO6286\\Desktop\\KHIOPS INTERFACE\\ADULT example\\Adult.txt",
+			"database": "database path",
 			"instances": 34174,
 			"learningTask": "Classification analysis",
 			"targetVariable": "class",
@@ -262,7 +262,7 @@
 		"evaluationType": "Test",
 		"summary": {
 			"dictionary": "Adult",
-			"database": "C:\\Users\\YFCO6286\\Desktop\\KHIOPS INTERFACE\\ADULT example\\Adult.txt",
+			"database": "database path",
 			"instances": 14668,
 			"learningTask": "Classification analysis",
 			"targetVariable": "class",
@@ -359,7 +359,7 @@
 					6
 				]
 			},
-			"database": "C:\\Users\\YFCO6286\\Desktop\\KHIOPS INTERFACE\\ADULT example\\Adult.txt",
+			"database": "database path",
 			"instances": 34174,
 			"learningTask": "Classification analysis",
 			"targetVariable": "class",
@@ -1136,7 +1136,7 @@
 					6
 				]
 			},
-			"database": "C:\\Users\\YFCO6286\\Desktop\\KHIOPS INTERFACE\\ADULT example\\Adult.txt",
+			"database": "database path",
 			"instances": 34174,
 			"learningTask": "Classification analysis",
 			"targetVariable": "class",

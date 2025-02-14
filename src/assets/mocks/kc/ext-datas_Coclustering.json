@@ -11,7 +11,7 @@
 			"initialDimensions": 2,
 			"frequencyVariable": "FREQ",
 			"dictionary": "T_LEM1_F20_verbatimouvertnormalise",
-			"database": "C:\\Users\\yfco6286\\Documents\\! - FABRICE_DOCUMENTS\\! - Présentation - Technique\\Formation KCC\\DEMO KCC - Reclamations\\T_LEM1_F20_verbatimouvertnormalise.txt"
+			"database": "database path"
 		},
 		"dimensionSummaries": [
 			{

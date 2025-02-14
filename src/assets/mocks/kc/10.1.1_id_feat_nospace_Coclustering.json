@@ -12,7 +12,7 @@
 			"initialDimensions": 2,
 			"frequencyVariable": "weight_1000",
 			"dictionary": "khiops_coclust_2nd_table_file",
-			"database": "C:\\Users\\reet7236\\Documents\\EmergData\\PicoCredit\\2022\\Graph Learning - stage\\CORA\\python_output\\khiops_coclust_2nd_table_file.csv",
+			"database": "database path",
 			"samplePercentage": 100,
 			"samplingMode": "Include sample",
 			"selectionVariable": "",

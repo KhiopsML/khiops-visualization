@@ -4,8 +4,8 @@
 	"modelingReport": {
 		"reportType": "Modeling",
 		"summary": {
-			"dictionary": "extract sondés baro mail 2020 Ytd 28052020",
-			"database": "C:\\Users\\yfco6286\\Desktop\\NPS\\extract sondés baro mail 2020 Ytd 28052020.txt",
+			"dictionary": "extract sondï¿½s baro mail 2020 Ytd 28052020",
+			"database": "database path",
 			"learningTask": "Classification analysis",
 			"targetVariable": "Q2 - Recommandation (code)",
 			"mainTargetValue": "0"
@@ -35,13 +35,13 @@
 						"level": 0.242295
 					},
 					{
-						"preparedName": "PPrésence d'un verbatim (code)",
-						"name": "Présence d'un verbatim (code)",
+						"preparedName": "PPrï¿½sence d'un verbatim (code)",
+						"name": "Prï¿½sence d'un verbatim (code)",
 						"level": 0.0125508
 					},
 					{
-						"preparedName": "POffre courante libellé niveau 2",
-						"name": "Offre courante libellé niveau 2",
+						"preparedName": "POffre courante libellï¿½ niveau 2",
+						"name": "Offre courante libellï¿½ niveau 2",
 						"level": 0.00500358
 					}
 				]
@@ -49,27 +49,27 @@
 			"R2": {
 				"selectedVariables": [
 					{
-						"preparedName": "PPrésence d'un verbatim (code)",
-						"name": "Présence d'un verbatim (code)",
+						"preparedName": "PPrï¿½sence d'un verbatim (code)",
+						"name": "Prï¿½sence d'un verbatim (code)",
 						"level": 0.0125508,
 						"weight": 0.643554,
 						"map": true
 					},
 					{
-						"preparedName": "PDernière question répondue",
-						"name": "Dernière question répondue",
+						"preparedName": "PDerniï¿½re question rï¿½pondue",
+						"name": "Derniï¿½re question rï¿½pondue",
 						"level": 0.00803527,
 						"weight": 0.469678
 					},
 					{
-						"preparedName": "PNom du système d'exploitation",
-						"name": "Nom du système d'exploitation",
+						"preparedName": "PNom du systï¿½me d'exploitation",
+						"name": "Nom du systï¿½me d'exploitation",
 						"level": 0.00107845,
 						"weight": 0.450293
 					},
 					{
-						"preparedName": "PQ3 - Satisfaction réseau Internet (code)",
-						"name": "Q3 - Satisfaction réseau Internet (code)",
+						"preparedName": "PQ3 - Satisfaction rï¿½seau Internet (code)",
+						"name": "Q3 - Satisfaction rï¿½seau Internet (code)",
 						"level": 0.0726256,
 						"weight": 0.43162
 					},
@@ -80,20 +80,20 @@
 						"weight": 0.280848
 					},
 					{
-						"preparedName": "PExpéditeur",
-						"name": "Expéditeur",
+						"preparedName": "PExpï¿½diteur",
+						"name": "Expï¿½diteur",
 						"level": 0.00446615,
 						"weight": 0.161311
 					},
 					{
-						"preparedName": "PQ13_3 - Capacité de réponse aux demandes (code)",
-						"name": "Q13_3 - Capacité de réponse aux demandes (code)",
+						"preparedName": "PQ13_3 - Capacitï¿½ de rï¿½ponse aux demandes (code)",
+						"name": "Q13_3 - Capacitï¿½ de rï¿½ponse aux demandes (code)",
 						"level": 0.183385,
 						"weight": 0.149752
 					},
 					{
-						"preparedName": "PQ15_1 - Contact par téléphone (code)",
-						"name": "Q15_1 - Contact par téléphone (code)",
+						"preparedName": "PQ15_1 - Contact par tï¿½lï¿½phone (code)",
+						"name": "Q15_1 - Contact par tï¿½lï¿½phone (code)",
 						"level": 0.00539172,
 						"weight": 0.135756
 					},
@@ -104,8 +104,8 @@
 						"weight": 0.128347
 					},
 					{
-						"preparedName": "POffre courante libellé",
-						"name": "Offre courante libellé",
+						"preparedName": "POffre courante libellï¿½",
+						"name": "Offre courante libellï¿½",
 						"level": 0.00461448,
 						"weight": 0.116442
 					},
@@ -116,8 +116,8 @@
 						"weight": 0.116005
 					},
 					{
-						"preparedName": "PQ8_1 - Qualité du réseau mobile au domicile (code)",
-						"name": "Q8_1 - Qualité du réseau mobile au domicile (code)",
+						"preparedName": "PQ8_1 - Qualitï¿½ du rï¿½seau mobile au domicile (code)",
+						"name": "Q8_1 - Qualitï¿½ du rï¿½seau mobile au domicile (code)",
 						"level": 0.0834529,
 						"weight": 0.107545
 					},
@@ -128,8 +128,8 @@
 						"weight": 0.103867
 					},
 					{
-						"preparedName": "POffre courante libellé niveau 2",
-						"name": "Offre courante libellé niveau 2",
+						"preparedName": "POffre courante libellï¿½ niveau 2",
+						"name": "Offre courante libellï¿½ niveau 2",
 						"level": 0.00500358,
 						"weight": 0.097909,
 						"map": true
@@ -195,8 +195,8 @@
 						"weight": 0.082342
 					},
 					{
-						"preparedName": "PQ10_2 - Offre facilement évolutive (code)",
-						"name": "Q10_2 - Offre facilement évolutive (code)",
+						"preparedName": "PQ10_2 - Offre facilement ï¿½volutive (code)",
+						"name": "Q10_2 - Offre facilement ï¿½volutive (code)",
 						"level": 0.119311,
 						"weight": 0.0805624
 					},
@@ -207,8 +207,8 @@
 						"weight": 0.0740438
 					},
 					{
-						"preparedName": "POffre précédente code",
-						"name": "Offre précédente code",
+						"preparedName": "POffre prï¿½cï¿½dente code",
+						"name": "Offre prï¿½cï¿½dente code",
 						"level": 0.0046753,
 						"weight": 0.0738012
 					},
@@ -219,14 +219,14 @@
 						"weight": 0.0735188
 					},
 					{
-						"preparedName": "POffre mobile précédente code",
-						"name": "Offre mobile précédente code",
+						"preparedName": "POffre mobile prï¿½cï¿½dente code",
+						"name": "Offre mobile prï¿½cï¿½dente code",
 						"level": 0.00324304,
 						"weight": 0.069475
 					},
 					{
-						"preparedName": "PPrestation offre mobile précédente code",
-						"name": "Prestation offre mobile précédente code",
+						"preparedName": "PPrestation offre mobile prï¿½cï¿½dente code",
+						"name": "Prestation offre mobile prï¿½cï¿½dente code",
 						"level": 0.00286226,
 						"weight": 0.0676084
 					},
@@ -249,14 +249,14 @@
 						"weight": 0.0561124
 					},
 					{
-						"preparedName": "PQ7 - Satisfaction réseau mobile (code)",
-						"name": "Q7 - Satisfaction réseau mobile (code)",
+						"preparedName": "PQ7 - Satisfaction rï¿½seau mobile (code)",
+						"name": "Q7 - Satisfaction rï¿½seau mobile (code)",
 						"level": 0.120781,
 						"weight": 0.0528538
 					},
 					{
-						"preparedName": "PQ4_3 - Qualité du Wi-Fi au domicile (code)",
-						"name": "Q4_3 - Qualité du Wi-Fi au domicile (code)",
+						"preparedName": "PQ4_3 - Qualitï¿½ du Wi-Fi au domicile (code)",
+						"name": "Q4_3 - Qualitï¿½ du Wi-Fi au domicile (code)",
 						"level": 0.0381816,
 						"weight": 0.0521463
 					},
@@ -267,26 +267,26 @@
 						"weight": 0.0505151
 					},
 					{
-						"preparedName": "PQ6_1 - Qualité technique de la TV d'Orange (code)",
-						"name": "Q6_1 - Qualité technique de la TV d'Orange (code)",
+						"preparedName": "PQ6_1 - Qualitï¿½ technique de la TV d'Orange (code)",
+						"name": "Q6_1 - Qualitï¿½ technique de la TV d'Orange (code)",
 						"level": 0.026692,
 						"weight": 0.0493053
 					},
 					{
-						"preparedName": "PQ13_4 - Capacité à suivre les demandes (code)",
-						"name": "Q13_4 - Capacité à suivre les demandes (code)",
+						"preparedName": "PQ13_4 - Capacitï¿½ ï¿½ suivre les demandes (code)",
+						"name": "Q13_4 - Capacitï¿½ ï¿½ suivre les demandes (code)",
 						"level": 0.168509,
 						"weight": 0.046178
 					},
 					{
-						"preparedName": "PQ10_1 - Offre adaptée aux besoins (code)",
-						"name": "Q10_1 - Offre adaptée aux besoins (code)",
+						"preparedName": "PQ10_1 - Offre adaptï¿½e aux besoins (code)",
+						"name": "Q10_1 - Offre adaptï¿½e aux besoins (code)",
 						"level": 0.141989,
 						"weight": 0.0461192
 					},
 					{
-						"preparedName": "PQ8_2 - Qualité du réseau mobile hors domicile (code)",
-						"name": "Q8_2 - Qualité du réseau mobile hors domicile (code)",
+						"preparedName": "PQ8_2 - Qualitï¿½ du rï¿½seau mobile hors domicile (code)",
+						"name": "Q8_2 - Qualitï¿½ du rï¿½seau mobile hors domicile (code)",
 						"level": 0.0809392,
 						"weight": 0.0456926
 					},
@@ -297,8 +297,8 @@
 						"weight": 0.0443964
 					},
 					{
-						"preparedName": "PAncienneté client",
-						"name": "Ancienneté client",
+						"preparedName": "PAnciennetï¿½ client",
+						"name": "Anciennetï¿½ client",
 						"level": 0.000541978,
 						"weight": 0.0344381
 					},
@@ -316,20 +316,20 @@
 						"map": true
 					},
 					{
-						"preparedName": "PModèle Livebox",
-						"name": "Modèle Livebox",
+						"preparedName": "PModï¿½le Livebox",
+						"name": "Modï¿½le Livebox",
 						"level": 0.000961977,
 						"weight": 0.0323544
 					},
 					{
-						"preparedName": "PNuméro téléphone",
-						"name": "Numéro téléphone",
+						"preparedName": "PNumï¿½ro tï¿½lï¿½phone",
+						"name": "Numï¿½ro tï¿½lï¿½phone",
 						"level": 0.000571488,
 						"weight": 0.0321734
 					},
 					{
-						"preparedName": "PQ4_2 - Qualité de la fiabilité de connexion (code)",
-						"name": "Q4_2 - Qualité de la fiabilité de connexion (code)",
+						"preparedName": "PQ4_2 - Qualitï¿½ de la fiabilitï¿½ de connexion (code)",
+						"name": "Q4_2 - Qualitï¿½ de la fiabilitï¿½ de connexion (code)",
 						"level": 0.0439381,
 						"weight": 0.0319681
 					},
@@ -370,8 +370,8 @@
 						"weight": 0.0302338
 					},
 					{
-						"preparedName": "PQ4_1 - Qualité du débit Internet (code)",
-						"name": "Q4_1 - Qualité du débit Internet (code)",
+						"preparedName": "PQ4_1 - Qualitï¿½ du dï¿½bit Internet (code)",
+						"name": "Q4_1 - Qualitï¿½ du dï¿½bit Internet (code)",
 						"level": 0.0430497,
 						"weight": 0.0298721
 					},
@@ -388,8 +388,8 @@
 						"weight": 0.0281525
 					},
 					{
-						"preparedName": "PEnquête valide (code)",
-						"name": "Enquête valide (code)",
+						"preparedName": "PEnquï¿½te valide (code)",
+						"name": "Enquï¿½te valide (code)",
 						"level": 2.40759e-05,
 						"weight": 0.0127067
 					},
@@ -400,8 +400,8 @@
 						"weight": 0.0127012
 					},
 					{
-						"preparedName": "PDécodeur TV",
-						"name": "Décodeur TV",
+						"preparedName": "PDï¿½codeur TV",
+						"name": "Dï¿½codeur TV",
 						"level": 0.000276951,
 						"weight": 0.0126894
 					},
@@ -412,8 +412,8 @@
 						"weight": 0.0126828
 					},
 					{
-						"preparedName": "PMarque dernier terminal mobile utilisé",
-						"name": "Marque dernier terminal mobile utilisé",
+						"preparedName": "PMarque dernier terminal mobile utilisï¿½",
+						"name": "Marque dernier terminal mobile utilisï¿½",
 						"level": 0.000724539,
 						"weight": 0.0126754
 					},
@@ -430,14 +430,14 @@
 						"weight": 0.0126404
 					},
 					{
-						"preparedName": "PNuméro mobile",
-						"name": "Numéro mobile",
+						"preparedName": "PNumï¿½ro mobile",
+						"name": "Numï¿½ro mobile",
 						"level": 0.00103818,
 						"weight": 0.0126381
 					},
 					{
-						"preparedName": "PNuméro client",
-						"name": "Numéro client",
+						"preparedName": "PNumï¿½ro client",
+						"name": "Numï¿½ro client",
 						"level": 0.000478196,
 						"weight": 0.0126368
 					},
@@ -454,8 +454,8 @@
 						"weight": 0.0125791
 					},
 					{
-						"preparedName": "POffre courante libellé niveau 1",
-						"name": "Offre courante libellé niveau 1",
+						"preparedName": "POffre courante libellï¿½ niveau 1",
+						"name": "Offre courante libellï¿½ niveau 1",
 						"level": 0.00492428,
 						"weight": 0.0125212
 					},
@@ -478,26 +478,26 @@
 						"weight": 0.0124555
 					},
 					{
-						"preparedName": "PMode accès TV",
-						"name": "Mode accès TV",
+						"preparedName": "PMode accï¿½s TV",
+						"name": "Mode accï¿½s TV",
 						"level": 0.000786777,
 						"weight": 0.0124531
 					},
 					{
-						"preparedName": "PQ12_5 - Satisfaction réseaux sociaux (code)",
-						"name": "Q12_5 - Satisfaction réseaux sociaux (code)",
+						"preparedName": "PQ12_5 - Satisfaction rï¿½seaux sociaux (code)",
+						"name": "Q12_5 - Satisfaction rï¿½seaux sociaux (code)",
 						"level": 0.0139877,
 						"weight": 0.0124371
 					},
 					{
-						"preparedName": "POffre SIM Only \/ Subventionnée",
-						"name": "Offre SIM Only \/ Subventionnée",
+						"preparedName": "POffre SIM Only \/ Subventionnï¿½e",
+						"name": "Offre SIM Only \/ Subventionnï¿½e",
 						"level": 0.00131339,
 						"weight": 0.0124322
 					},
 					{
-						"preparedName": "PCouverture 4G à domicile",
-						"name": "Couverture 4G à domicile",
+						"preparedName": "PCouverture 4G ï¿½ domicile",
+						"name": "Couverture 4G ï¿½ domicile",
 						"level": 0.000594802,
 						"weight": 0.0124185
 					},
@@ -508,8 +508,8 @@
 						"weight": 0.0123899
 					},
 					{
-						"preparedName": "PQ6_2 - Facilité d'utilisation de la TV d'orange (code)",
-						"name": "Q6_2 - Facilité d'utilisation de la TV d'orange (code)",
+						"preparedName": "PQ6_2 - Facilitï¿½ d'utilisation de la TV d'orange (code)",
+						"name": "Q6_2 - Facilitï¿½ d'utilisation de la TV d'orange (code)",
 						"level": 0.0249248,
 						"weight": 0.0122468
 					},
@@ -520,20 +520,20 @@
 						"weight": 0.0122369
 					},
 					{
-						"preparedName": "PTechno accès internet",
-						"name": "Techno accès internet",
+						"preparedName": "PTechno accï¿½s internet",
+						"name": "Techno accï¿½s internet",
 						"level": 0.00169573,
 						"weight": 0.012013
 					},
 					{
-						"preparedName": "POffre courante libellé niveau 4",
-						"name": "Offre courante libellé niveau 4",
+						"preparedName": "POffre courante libellï¿½ niveau 4",
+						"name": "Offre courante libellï¿½ niveau 4",
 						"level": 0.00519536,
 						"weight": 0.0119383
 					},
 					{
-						"preparedName": "PQ10_3 - Proactivité d'Orange sur l'offre (code)",
-						"name": "Q10_3 - Proactivité d'Orange sur l'offre (code)",
+						"preparedName": "PQ10_3 - Proactivitï¿½ d'Orange sur l'offre (code)",
+						"name": "Q10_3 - Proactivitï¿½ d'Orange sur l'offre (code)",
 						"level": 0.0971664,
 						"weight": 0.0108057
 					}
@@ -545,8 +545,8 @@
 		"reportType": "Evaluation",
 		"evaluationType": "Train",
 		"summary": {
-			"dictionary": "extract sondés baro mail 2020 Ytd 28052020",
-			"database": "C:\\Users\\yfco6286\\Desktop\\NPS\\extract sondés baro mail 2020 Ytd 28052020.txt",
+			"dictionary": "extract sondï¿½s baro mail 2020 Ytd 28052020",
+			"database": "database path",
 			"instances": 38765,
 			"learningTask": "Classification analysis",
 			"targetVariable": "Q2 - Recommandation (code)",
@@ -823,8 +823,8 @@
 		"reportType": "Evaluation",
 		"evaluationType": "Test",
 		"summary": {
-			"dictionary": "extract sondés baro mail 2020 Ytd 28052020",
-			"database": "C:\\Users\\yfco6286\\Desktop\\NPS\\extract sondés baro mail 2020 Ytd 28052020.txt",
+			"dictionary": "extract sondï¿½s baro mail 2020 Ytd 28052020",
+			"database": "database path",
 			"instances": 16543,
 			"learningTask": "Classification analysis",
 			"targetVariable": "Q2 - Recommandation (code)",
@@ -1100,7 +1100,7 @@
 	"preparationReport": {
 		"reportType": "Preparation",
 		"summary": {
-			"dictionary": "extract sondés baro mail 2020 Ytd 28052020",
+			"dictionary": "extract sondï¿½s baro mail 2020 Ytd 28052020",
 			"variables": {
 				"types": [
 					"Categorical",
@@ -1115,7 +1115,7 @@
 					1
 				]
 			},
-			"database": "C:\\Users\\yfco6286\\Desktop\\NPS\\extract sondés baro mail 2020 Ytd 28052020.txt",
+			"database": "database path",
 			"instances": 38765,
 			"learningTask": "Classification analysis",
 			"targetVariable": "Q2 - Recommandation (code)",
@@ -1174,7 +1174,7 @@
 			},
 			{
 				"rank": "R003",
-				"name": "Q13_3 - Capacité de réponse aux demandes (code)",
+				"name": "Q13_3 - Capacitï¿½ de rï¿½ponse aux demandes (code)",
 				"type": "Numerical",
 				"level": 0.183385,
 				"parts": 12,
@@ -1190,7 +1190,7 @@
 			},
 			{
 				"rank": "R004",
-				"name": "Q13_4 - Capacité à suivre les demandes (code)",
+				"name": "Q13_4 - Capacitï¿½ ï¿½ suivre les demandes (code)",
 				"type": "Numerical",
 				"level": 0.168509,
 				"parts": 11,
@@ -1206,7 +1206,7 @@
 			},
 			{
 				"rank": "R005",
-				"name": "Q10_1 - Offre adaptée aux besoins (code)",
+				"name": "Q10_1 - Offre adaptï¿½e aux besoins (code)",
 				"type": "Numerical",
 				"level": 0.141989,
 				"parts": 12,
@@ -1222,7 +1222,7 @@
 			},
 			{
 				"rank": "R006",
-				"name": "Q7 - Satisfaction réseau mobile (code)",
+				"name": "Q7 - Satisfaction rï¿½seau mobile (code)",
 				"type": "Numerical",
 				"level": 0.120781,
 				"parts": 11,
@@ -1238,7 +1238,7 @@
 			},
 			{
 				"rank": "R007",
-				"name": "Q10_2 - Offre facilement évolutive (code)",
+				"name": "Q10_2 - Offre facilement ï¿½volutive (code)",
 				"type": "Numerical",
 				"level": 0.119311,
 				"parts": 11,
@@ -1286,7 +1286,7 @@
 			},
 			{
 				"rank": "R010",
-				"name": "Q10_3 - Proactivité d'Orange sur l'offre (code)",
+				"name": "Q10_3 - Proactivitï¿½ d'Orange sur l'offre (code)",
 				"type": "Numerical",
 				"level": 0.0971664,
 				"parts": 11,
@@ -1302,7 +1302,7 @@
 			},
 			{
 				"rank": "R011",
-				"name": "Q8_1 - Qualité du réseau mobile au domicile (code)",
+				"name": "Q8_1 - Qualitï¿½ du rï¿½seau mobile au domicile (code)",
 				"type": "Numerical",
 				"level": 0.0834529,
 				"parts": 9,
@@ -1318,7 +1318,7 @@
 			},
 			{
 				"rank": "R012",
-				"name": "Q8_2 - Qualité du réseau mobile hors domicile (code)",
+				"name": "Q8_2 - Qualitï¿½ du rï¿½seau mobile hors domicile (code)",
 				"type": "Numerical",
 				"level": 0.0809392,
 				"parts": 10,
@@ -1350,7 +1350,7 @@
 			},
 			{
 				"rank": "R014",
-				"name": "Q3 - Satisfaction réseau Internet (code)",
+				"name": "Q3 - Satisfaction rï¿½seau Internet (code)",
 				"type": "Numerical",
 				"level": 0.0726256,
 				"parts": 12,
@@ -1382,7 +1382,7 @@
 			},
 			{
 				"rank": "R016",
-				"name": "Q4_2 - Qualité de la fiabilité de connexion (code)",
+				"name": "Q4_2 - Qualitï¿½ de la fiabilitï¿½ de connexion (code)",
 				"type": "Numerical",
 				"level": 0.0439381,
 				"parts": 10,
@@ -1398,7 +1398,7 @@
 			},
 			{
 				"rank": "R017",
-				"name": "Q4_1 - Qualité du débit Internet (code)",
+				"name": "Q4_1 - Qualitï¿½ du dï¿½bit Internet (code)",
 				"type": "Numerical",
 				"level": 0.0430497,
 				"parts": 11,
@@ -1414,7 +1414,7 @@
 			},
 			{
 				"rank": "R018",
-				"name": "Q4_3 - Qualité du Wi-Fi au domicile (code)",
+				"name": "Q4_3 - Qualitï¿½ du Wi-Fi au domicile (code)",
 				"type": "Numerical",
 				"level": 0.0381816,
 				"parts": 9,
@@ -1446,7 +1446,7 @@
 			},
 			{
 				"rank": "R020",
-				"name": "Q6_1 - Qualité technique de la TV d'Orange (code)",
+				"name": "Q6_1 - Qualitï¿½ technique de la TV d'Orange (code)",
 				"type": "Numerical",
 				"level": 0.026692,
 				"parts": 9,
@@ -1462,7 +1462,7 @@
 			},
 			{
 				"rank": "R021",
-				"name": "Q6_2 - Facilité d'utilisation de la TV d'orange (code)",
+				"name": "Q6_2 - Facilitï¿½ d'utilisation de la TV d'orange (code)",
 				"type": "Numerical",
 				"level": 0.0249248,
 				"parts": 8,
@@ -1526,7 +1526,7 @@
 			},
 			{
 				"rank": "R025",
-				"name": "Q12_5 - Satisfaction réseaux sociaux (code)",
+				"name": "Q12_5 - Satisfaction rï¿½seaux sociaux (code)",
 				"type": "Numerical",
 				"level": 0.0139877,
 				"parts": 8,
@@ -1542,7 +1542,7 @@
 			},
 			{
 				"rank": "R026",
-				"name": "Présence d'un verbatim (code)",
+				"name": "Prï¿½sence d'un verbatim (code)",
 				"type": "Numerical",
 				"level": 0.0125508,
 				"parts": 2,
@@ -1558,7 +1558,7 @@
 			},
 			{
 				"rank": "R027",
-				"name": "Dernière question répondue",
+				"name": "Derniï¿½re question rï¿½pondue",
 				"type": "Numerical",
 				"level": 0.00803527,
 				"parts": 6,
@@ -1574,7 +1574,7 @@
 			},
 			{
 				"rank": "R028",
-				"name": "Q15_1 - Contact par téléphone (code)",
+				"name": "Q15_1 - Contact par tï¿½lï¿½phone (code)",
 				"type": "Numerical",
 				"level": 0.00539172,
 				"parts": 2,
@@ -1590,7 +1590,7 @@
 			},
 			{
 				"rank": "R029",
-				"name": "Offre courante libellé niveau 4",
+				"name": "Offre courante libellï¿½ niveau 4",
 				"type": "Categorical",
 				"level": 0.00519536,
 				"parts": 3,
@@ -1642,7 +1642,7 @@
 			},
 			{
 				"rank": "R033",
-				"name": "Offre courante libellé niveau 2",
+				"name": "Offre courante libellï¿½ niveau 2",
 				"type": "Categorical",
 				"level": 0.00500358,
 				"parts": 3,
@@ -1655,7 +1655,7 @@
 			},
 			{
 				"rank": "R034",
-				"name": "Offre courante libellé niveau 1",
+				"name": "Offre courante libellï¿½ niveau 1",
 				"type": "Categorical",
 				"level": 0.00492428,
 				"parts": 4,
@@ -1668,7 +1668,7 @@
 			},
 			{
 				"rank": "R035",
-				"name": "Offre précédente code",
+				"name": "Offre prï¿½cï¿½dente code",
 				"type": "Categorical",
 				"level": 0.0046753,
 				"parts": 3,
@@ -1681,7 +1681,7 @@
 			},
 			{
 				"rank": "R036",
-				"name": "Offre courante libellé",
+				"name": "Offre courante libellï¿½",
 				"type": "Categorical",
 				"level": 0.00461448,
 				"parts": 3,
@@ -1694,7 +1694,7 @@
 			},
 			{
 				"rank": "R037",
-				"name": "Expéditeur",
+				"name": "Expï¿½diteur",
 				"type": "Categorical",
 				"level": 0.00446615,
 				"parts": 2,
@@ -1736,7 +1736,7 @@
 			},
 			{
 				"rank": "R040",
-				"name": "Offre mobile précédente code",
+				"name": "Offre mobile prï¿½cï¿½dente code",
 				"type": "Categorical",
 				"level": 0.00324304,
 				"parts": 3,
@@ -1749,7 +1749,7 @@
 			},
 			{
 				"rank": "R041",
-				"name": "Prestation offre mobile précédente code",
+				"name": "Prestation offre mobile prï¿½cï¿½dente code",
 				"type": "Categorical",
 				"level": 0.00286226,
 				"parts": 3,
@@ -1820,7 +1820,7 @@
 			},
 			{
 				"rank": "R046",
-				"name": "Techno accès internet",
+				"name": "Techno accï¿½s internet",
 				"type": "Categorical",
 				"level": 0.00169573,
 				"parts": 3,
@@ -1849,7 +1849,7 @@
 			},
 			{
 				"rank": "R048",
-				"name": "Offre SIM Only \/ Subventionnée",
+				"name": "Offre SIM Only \/ Subventionnï¿½e",
 				"type": "Categorical",
 				"level": 0.00131339,
 				"parts": 2,
@@ -1878,7 +1878,7 @@
 			},
 			{
 				"rank": "R050",
-				"name": "Nom du système d'exploitation",
+				"name": "Nom du systï¿½me d'exploitation",
 				"type": "Categorical",
 				"level": 0.00107845,
 				"parts": 2,
@@ -1904,7 +1904,7 @@
 			},
 			{
 				"rank": "R052",
-				"name": "Numéro mobile",
+				"name": "Numï¿½ro mobile",
 				"type": "Categorical",
 				"level": 0.00103818,
 				"parts": 2,
@@ -1917,7 +1917,7 @@
 			},
 			{
 				"rank": "R053",
-				"name": "Modèle Livebox",
+				"name": "Modï¿½le Livebox",
 				"type": "Categorical",
 				"level": 0.000961977,
 				"parts": 2,
@@ -1959,7 +1959,7 @@
 			},
 			{
 				"rank": "R056",
-				"name": "Mode accès TV",
+				"name": "Mode accï¿½s TV",
 				"type": "Categorical",
 				"level": 0.000786777,
 				"parts": 3,
@@ -1972,7 +1972,7 @@
 			},
 			{
 				"rank": "R057",
-				"name": "Marque dernier terminal mobile utilisé",
+				"name": "Marque dernier terminal mobile utilisï¿½",
 				"type": "Categorical",
 				"level": 0.000724539,
 				"parts": 2,
@@ -2017,7 +2017,7 @@
 			},
 			{
 				"rank": "R060",
-				"name": "Couverture 4G à domicile",
+				"name": "Couverture 4G ï¿½ domicile",
 				"type": "Numerical",
 				"level": 0.000594802,
 				"parts": 2,
@@ -2033,7 +2033,7 @@
 			},
 			{
 				"rank": "R061",
-				"name": "Numéro téléphone",
+				"name": "Numï¿½ro tï¿½lï¿½phone",
 				"type": "Numerical",
 				"level": 0.000571488,
 				"parts": 2,
@@ -2049,7 +2049,7 @@
 			},
 			{
 				"rank": "R062",
-				"name": "Ancienneté client",
+				"name": "Anciennetï¿½ client",
 				"type": "Categorical",
 				"level": 0.000541978,
 				"parts": 2,
@@ -2062,7 +2062,7 @@
 			},
 			{
 				"rank": "R063",
-				"name": "Numéro client",
+				"name": "Numï¿½ro client",
 				"type": "Numerical",
 				"level": 0.000478196,
 				"parts": 3,
@@ -2123,7 +2123,7 @@
 			},
 			{
 				"rank": "R067",
-				"name": "Décodeur TV",
+				"name": "Dï¿½codeur TV",
 				"type": "Categorical",
 				"level": 0.000276951,
 				"parts": 2,
@@ -2165,7 +2165,7 @@
 			},
 			{
 				"rank": "R070",
-				"name": "Enquête valide (code)",
+				"name": "Enquï¿½te valide (code)",
 				"type": "Numerical",
 				"level": 2.40759e-05,
 				"parts": 2,
@@ -2197,7 +2197,7 @@
 			},
 			{
 				"rank": "R072",
-				"name": "Adresse Piège",
+				"name": "Adresse Piï¿½ge",
 				"type": "Numerical",
 				"level": 0,
 				"parts": 1,
@@ -2213,7 +2213,7 @@
 			},
 			{
 				"rank": "R073",
-				"name": "Ancienneté sur l'offre",
+				"name": "Anciennetï¿½ sur l'offre",
 				"type": "Categorical",
 				"level": 0,
 				"parts": 1,
@@ -2226,7 +2226,7 @@
 			},
 			{
 				"rank": "R074",
-				"name": "Année de réponse (code)",
+				"name": "Annï¿½e de rï¿½ponse (code)",
 				"type": "Numerical",
 				"level": 0,
 				"parts": 1,
@@ -2271,7 +2271,7 @@
 			},
 			{
 				"rank": "R077",
-				"name": "Client salarié Orange",
+				"name": "Client salariï¿½ Orange",
 				"type": "Categorical",
 				"level": 0,
 				"parts": 1,
@@ -2316,7 +2316,7 @@
 			},
 			{
 				"rank": "R080",
-				"name": "Code segmentation marché",
+				"name": "Code segmentation marchï¿½",
 				"type": "Categorical",
 				"level": 0,
 				"parts": 1,
@@ -2355,7 +2355,7 @@
 			},
 			{
 				"rank": "R083",
-				"name": "Délai de réponse (jours) (code)",
+				"name": "Dï¿½lai de rï¿½ponse (jours) (code)",
 				"type": "Numerical",
 				"level": 0,
 				"parts": 1,
@@ -2371,7 +2371,7 @@
 			},
 			{
 				"rank": "R084",
-				"name": "Eligibilité fibre",
+				"name": "Eligibilitï¿½ fibre",
 				"type": "Categorical",
 				"level": 0,
 				"parts": 1,
@@ -2384,12 +2384,12 @@
 			},
 			{
 				"rank": "R085",
-				"name": "Etat de réponse",
+				"name": "Etat de rï¿½ponse",
 				"type": "Categorical",
 				"level": 0,
 				"parts": 1,
 				"values": 2,
-				"mode": "Réponse complète",
+				"mode": "Rï¿½ponse complï¿½te",
 				"modeFrequency": 35115,
 				"constructionCost": 0.693147,
 				"preparationCost": 98.7174,
@@ -2426,7 +2426,7 @@
 			},
 			{
 				"rank": "R088",
-				"name": "Heure de Réponse (code)",
+				"name": "Heure de Rï¿½ponse (code)",
 				"type": "Numerical",
 				"level": 0,
 				"parts": 1,
@@ -2468,7 +2468,7 @@
 			},
 			{
 				"rank": "R091",
-				"name": "Jour semaine de réponse (code)",
+				"name": "Jour semaine de rï¿½ponse (code)",
 				"type": "Numerical",
 				"level": 0,
 				"parts": 1,
@@ -2497,7 +2497,7 @@
 			},
 			{
 				"rank": "R093",
-				"name": "Maille Libellé",
+				"name": "Maille Libellï¿½",
 				"type": "Categorical",
 				"level": 0,
 				"parts": 1,
@@ -2526,7 +2526,7 @@
 			},
 			{
 				"rank": "R095",
-				"name": "Mois de réponse (code)",
+				"name": "Mois de rï¿½ponse (code)",
 				"type": "Numerical",
 				"level": 0,
 				"parts": 1,
@@ -2542,7 +2542,7 @@
 			},
 			{
 				"rank": "R096",
-				"name": "Numéro d'enquête",
+				"name": "Numï¿½ro d'enquï¿½te",
 				"type": "Numerical",
 				"level": 0,
 				"parts": 1,
@@ -2558,7 +2558,7 @@
 			},
 			{
 				"rank": "R097",
-				"name": "Numéro de Sollicitation",
+				"name": "Numï¿½ro de Sollicitation",
 				"type": "Categorical",
 				"level": 0,
 				"parts": 1,
@@ -2571,7 +2571,7 @@
 			},
 			{
 				"rank": "R098",
-				"name": "Q15_5 - Consultation des réseaux sociaux (code)",
+				"name": "Q15_5 - Consultation des rï¿½seaux sociaux (code)",
 				"type": "Numerical",
 				"level": 0,
 				"parts": 1,
@@ -2603,7 +2603,7 @@
 			},
 			{
 				"rank": "R100",
-				"name": "Semaine de réponse (code)",
+				"name": "Semaine de rï¿½ponse (code)",
 				"type": "Numerical",
 				"level": 0,
 				"parts": 1,
@@ -2619,7 +2619,7 @@
 			},
 			{
 				"rank": "R101",
-				"name": "Trimestre de réponse (code)",
+				"name": "Trimestre de rï¿½ponse (code)",
 				"type": "Numerical",
 				"level": 0,
 				"parts": 1,
@@ -2734,7 +2734,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Q13_3 - Capacité de réponse aux demandes (code)",
+							"variable": "Q13_3 - Capacitï¿½ de rï¿½ponse aux demandes (code)",
 							"type": "Numerical",
 							"partitionType": "Intervals",
 							"partition": [
@@ -2781,7 +2781,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Q13_4 - Capacité à suivre les demandes (code)",
+							"variable": "Q13_4 - Capacitï¿½ ï¿½ suivre les demandes (code)",
 							"type": "Numerical",
 							"partitionType": "Intervals",
 							"partition": [
@@ -2826,7 +2826,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Q10_1 - Offre adaptée aux besoins (code)",
+							"variable": "Q10_1 - Offre adaptï¿½e aux besoins (code)",
 							"type": "Numerical",
 							"partitionType": "Intervals",
 							"partition": [
@@ -2873,7 +2873,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Q7 - Satisfaction réseau mobile (code)",
+							"variable": "Q7 - Satisfaction rï¿½seau mobile (code)",
 							"type": "Numerical",
 							"partitionType": "Intervals",
 							"partition": [
@@ -2918,7 +2918,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Q10_2 - Offre facilement évolutive (code)",
+							"variable": "Q10_2 - Offre facilement ï¿½volutive (code)",
 							"type": "Numerical",
 							"partitionType": "Intervals",
 							"partition": [
@@ -3049,7 +3049,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Q10_3 - Proactivité d'Orange sur l'offre (code)",
+							"variable": "Q10_3 - Proactivitï¿½ d'Orange sur l'offre (code)",
 							"type": "Numerical",
 							"partitionType": "Intervals",
 							"partition": [
@@ -3094,7 +3094,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Q8_1 - Qualité du réseau mobile au domicile (code)",
+							"variable": "Q8_1 - Qualitï¿½ du rï¿½seau mobile au domicile (code)",
 							"type": "Numerical",
 							"partitionType": "Intervals",
 							"partition": [
@@ -3135,7 +3135,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Q8_2 - Qualité du réseau mobile hors domicile (code)",
+							"variable": "Q8_2 - Qualitï¿½ du rï¿½seau mobile hors domicile (code)",
 							"type": "Numerical",
 							"partitionType": "Intervals",
 							"partition": [
@@ -3223,7 +3223,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Q3 - Satisfaction réseau Internet (code)",
+							"variable": "Q3 - Satisfaction rï¿½seau Internet (code)",
 							"type": "Numerical",
 							"partitionType": "Intervals",
 							"partition": [
@@ -3313,7 +3313,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Q4_2 - Qualité de la fiabilité de connexion (code)",
+							"variable": "Q4_2 - Qualitï¿½ de la fiabilitï¿½ de connexion (code)",
 							"type": "Numerical",
 							"partitionType": "Intervals",
 							"partition": [
@@ -3356,7 +3356,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Q4_1 - Qualité du débit Internet (code)",
+							"variable": "Q4_1 - Qualitï¿½ du dï¿½bit Internet (code)",
 							"type": "Numerical",
 							"partitionType": "Intervals",
 							"partition": [
@@ -3401,7 +3401,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Q4_3 - Qualité du Wi-Fi au domicile (code)",
+							"variable": "Q4_3 - Qualitï¿½ du Wi-Fi au domicile (code)",
 							"type": "Numerical",
 							"partitionType": "Intervals",
 							"partition": [
@@ -3485,7 +3485,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Q6_1 - Qualité technique de la TV d'Orange (code)",
+							"variable": "Q6_1 - Qualitï¿½ technique de la TV d'Orange (code)",
 							"type": "Numerical",
 							"partitionType": "Intervals",
 							"partition": [
@@ -3526,7 +3526,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Q6_2 - Facilité d'utilisation de la TV d'orange (code)",
+							"variable": "Q6_2 - Facilitï¿½ d'utilisation de la TV d'orange (code)",
 							"type": "Numerical",
 							"partitionType": "Intervals",
 							"partition": [
@@ -3686,7 +3686,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Q12_5 - Satisfaction réseaux sociaux (code)",
+							"variable": "Q12_5 - Satisfaction rï¿½seaux sociaux (code)",
 							"type": "Numerical",
 							"partitionType": "Intervals",
 							"partition": [
@@ -3725,7 +3725,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Présence d'un verbatim (code)",
+							"variable": "Prï¿½sence d'un verbatim (code)",
 							"type": "Numerical",
 							"partitionType": "Intervals",
 							"partition": [
@@ -3752,7 +3752,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Dernière question répondue",
+							"variable": "Derniï¿½re question rï¿½pondue",
 							"type": "Numerical",
 							"partitionType": "Intervals",
 							"partition": [
@@ -3787,7 +3787,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Q15_1 - Contact par téléphone (code)",
+							"variable": "Q15_1 - Contact par tï¿½lï¿½phone (code)",
 							"type": "Numerical",
 							"partitionType": "Intervals",
 							"partition": [
@@ -3814,7 +3814,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Offre courante libellé niveau 4",
+							"variable": "Offre courante libellï¿½ niveau 4",
 							"type": "Categorical",
 							"partitionType": "Value groups",
 							"partition": [
@@ -3839,7 +3839,7 @@
 					"partInterests": [0.0732902,0.68394,0.24277]
 				},
 				"inputValues": {
-					"values": ["OPEN","SOSH","REFLEX","Net Zen-Autres","Net Play","Fibre Play","Fibre Zen","SOSH+BOX","Sosh ADSL","ORANGE","Formule Zen-Autres","Net Zen","Formule Play","Sosh Fibre","INTENSE","Découverte","Formule Zen","Net Jet","PRO","Fibre Jet","CMO","Formule Jet","Net Autre"],
+					"values": ["OPEN","SOSH","REFLEX","Net Zen-Autres","Net Play","Fibre Play","Fibre Zen","SOSH+BOX","Sosh ADSL","ORANGE","Formule Zen-Autres","Net Zen","Formule Play","Sosh Fibre","INTENSE","Dï¿½couverte","Formule Zen","Net Jet","PRO","Fibre Jet","CMO","Formule Jet","Net Autre"],
 					"frequencies": [19770,7718,3031,1319,1308,941,808,717,578,475,392,331,290,284,220,190,102,94,74,65,35,22,1]
 				}
 			},
@@ -3886,7 +3886,7 @@
 							"type": "Categorical",
 							"partitionType": "Value groups",
 							"partition": [
-								["mobile Orange","Open Orange","la Boîte Sosh","Sosh mobile + Livebox"],
+								["mobile Orange","Open Orange","la Boï¿½te Sosh","Sosh mobile + Livebox"],
 								["Sosh mobile"],
 								["Internet Orange"]
 							],
@@ -3907,7 +3907,7 @@
 					"partInterests": [0.0502692,0.686974,0.262757]
 				},
 				"inputValues": {
-					"values": ["mobile Orange","Open Orange","Sosh mobile","Internet Orange","la Boîte Sosh","Sosh mobile + Livebox"],
+					"values": ["mobile Orange","Open Orange","Sosh mobile","Internet Orange","la Boï¿½te Sosh","Sosh mobile + Livebox"],
 					"frequencies": [13185,10420,7718,5863,862,717]
 				}
 			},
@@ -3950,13 +3950,13 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Offre courante libellé niveau 2",
+							"variable": "Offre courante libellï¿½ niveau 2",
 							"type": "Categorical",
 							"partitionType": "Value groups",
 							"partition": [
-								["OPEN Principal","OPEN ML Forfait","OPEN ML Bloqué","BLOQUE SMART\/ZAP","FORFAIT PLAY","FORFAIT ZEN","Net Livebox Play 2014","FORFAIT AUTRE","Formule Livebox Zen 2011-2013","SOSH+LIVEBOX 44,99E","PC CARD MULTI-SIM A&I","Découverte 2014","Formule 1L Zen 2011-2016","Formule Livebox Play 2013","Formule 1L Play 2014","Net Livebox Zen 2016","Découverte 2015"],
-								["SOSH 24,99E","SOSH 19,99E","SOSH 4,99E","SOSH 9,99E","La Boîte Sosh","SOSH+LIVEBOX 29,99E","SOSH+LIVEBOX 34,99E"],
-								["Net Livebox Zen","Fibre Livebox","Net Livebox Play 2016","Net Livebox","Fibre Livebox Up","Fibre Livebox Up 2019","La Boîte Sosh Fibre","FORFAIT JET","Net Livebox Up","Net Livebox Initiale","Fibre Livebox Play 2016","Net Livebox Essentielle","Fibre Livebox Zen 2016","Net Livebox Play 2013","Net Livebox Up 2019"]
+								["OPEN Principal","OPEN ML Forfait","OPEN ML Bloquï¿½","BLOQUE SMART\/ZAP","FORFAIT PLAY","FORFAIT ZEN","Net Livebox Play 2014","FORFAIT AUTRE","Formule Livebox Zen 2011-2013","SOSH+LIVEBOX 44,99E","PC CARD MULTI-SIM A&I","Dï¿½couverte 2014","Formule 1L Zen 2011-2016","Formule Livebox Play 2013","Formule 1L Play 2014","Net Livebox Zen 2016","Dï¿½couverte 2015"],
+								["SOSH 24,99E","SOSH 19,99E","SOSH 4,99E","SOSH 9,99E","La Boï¿½te Sosh","SOSH+LIVEBOX 29,99E","SOSH+LIVEBOX 34,99E"],
+								["Net Livebox Zen","Fibre Livebox","Net Livebox Play 2016","Net Livebox","Fibre Livebox Up","Fibre Livebox Up 2019","La Boï¿½te Sosh Fibre","FORFAIT JET","Net Livebox Up","Net Livebox Initiale","Fibre Livebox Play 2016","Net Livebox Essentielle","Fibre Livebox Zen 2016","Net Livebox Play 2013","Net Livebox Up 2019"]
 							],
 							"defaultGroupIndex": 0
 						},
@@ -3975,7 +3975,7 @@
 					"partInterests": [0.0922128,0.660244,0.247544]
 				},
 				"inputValues": {
-					"values": ["OPEN Principal","OPEN ML Forfait","SOSH 24,99E","SOSH 19,99E","OPEN ML Bloqué","SOSH 4,99E","BLOQUE SMART\/ZAP","FORFAIT PLAY","SOSH 9,99E","FORFAIT ZEN","Net Livebox Zen","La Boîte Sosh","Fibre Livebox","Net Livebox Play 2016","Net Livebox","Fibre Livebox Up","Net Livebox Play 2014","FORFAIT AUTRE","Fibre Livebox Up 2019","Formule Livebox Zen 2011-2013","La Boîte Sosh Fibre","FORFAIT JET","SOSH+LIVEBOX 44,99E","PC CARD MULTI-SIM A&I","Net Livebox Up","Net Livebox Initiale","SOSH+LIVEBOX 29,99E","Fibre Livebox Play 2016","Net Livebox Essentielle","Fibre Livebox Zen 2016","Net Livebox Play 2013","Découverte 2014","SOSH+LIVEBOX 34,99E","Formule 1L Zen 2011-2016","Formule Livebox Play 2013","Formule 1L Play 2014","Net Livebox Up 2019","Net Livebox Zen 2016","Découverte 2015","SOSH+LIVEBOX FIBRE 49,99E","Net  Livebox","Formule Livebox Zen 2013","Fibre Livebox Zen Initiale","Net Livebox Zen 2014","Fibre Livebox Zen","Formule Livebox 1L Play 2016","Formule 1L Play 2013","Fibre Livebox Jet 2016","SOSH+LIVEBOX FIBRE 34,99E","Fibre Livebox Play 2014","SOSH+LIVEBOX 49,99E","Fibre Livebox Zen Essentielle","Net Livebox Jet 2014","Net Livebox Jet 2015","Net Livebox Zen 2011","Net Livebox Jet 2016","Net Livebox Initiale 2015","Net Livebox Jet 2015-07","Fibre Livebox Zen Exclusif","Fibre Livebox Play Exclusif","SOSH+LIVEBOX FIBRE 39,99E","Net Livebox Zen 2013","Formule 1L Zen 2014","Fibre Livebox Jet 2015","Formule Livebox 1L","SOSH AUTRE","Fibre Livebox Jet 2015-07","Fibre Livebox Play 2015","Net Livebox Initiale 2014","Coup de Pouce Livebox","Fibre Livebox Jet 2014","Formule 1L Jet 2014","Formule 1L Jet 2015-07","SOSH+LIVEBOX FIBRE 54,99E","Formule 1L Zen 2013","Fibre Livebox Play 2013","Formule 1L Jet 2015","Formule Livebox Up 1L","Formule 1L Zen 2011","Formule 1L Zen 2016","Formule 1L Jet 2016","Coup de Pouce Livebox Fibre","Formule Pro"],
+					"values": ["OPEN Principal","OPEN ML Forfait","SOSH 24,99E","SOSH 19,99E","OPEN ML Bloquï¿½","SOSH 4,99E","BLOQUE SMART\/ZAP","FORFAIT PLAY","SOSH 9,99E","FORFAIT ZEN","Net Livebox Zen","La Boï¿½te Sosh","Fibre Livebox","Net Livebox Play 2016","Net Livebox","Fibre Livebox Up","Net Livebox Play 2014","FORFAIT AUTRE","Fibre Livebox Up 2019","Formule Livebox Zen 2011-2013","La Boï¿½te Sosh Fibre","FORFAIT JET","SOSH+LIVEBOX 44,99E","PC CARD MULTI-SIM A&I","Net Livebox Up","Net Livebox Initiale","SOSH+LIVEBOX 29,99E","Fibre Livebox Play 2016","Net Livebox Essentielle","Fibre Livebox Zen 2016","Net Livebox Play 2013","Dï¿½couverte 2014","SOSH+LIVEBOX 34,99E","Formule 1L Zen 2011-2016","Formule Livebox Play 2013","Formule 1L Play 2014","Net Livebox Up 2019","Net Livebox Zen 2016","Dï¿½couverte 2015","SOSH+LIVEBOX FIBRE 49,99E","Net  Livebox","Formule Livebox Zen 2013","Fibre Livebox Zen Initiale","Net Livebox Zen 2014","Fibre Livebox Zen","Formule Livebox 1L Play 2016","Formule 1L Play 2013","Fibre Livebox Jet 2016","SOSH+LIVEBOX FIBRE 34,99E","Fibre Livebox Play 2014","SOSH+LIVEBOX 49,99E","Fibre Livebox Zen Essentielle","Net Livebox Jet 2014","Net Livebox Jet 2015","Net Livebox Zen 2011","Net Livebox Jet 2016","Net Livebox Initiale 2015","Net Livebox Jet 2015-07","Fibre Livebox Zen Exclusif","Fibre Livebox Play Exclusif","SOSH+LIVEBOX FIBRE 39,99E","Net Livebox Zen 2013","Formule 1L Zen 2014","Fibre Livebox Jet 2015","Formule Livebox 1L","SOSH AUTRE","Fibre Livebox Jet 2015-07","Fibre Livebox Play 2015","Net Livebox Initiale 2014","Coup de Pouce Livebox","Fibre Livebox Jet 2014","Formule 1L Jet 2014","Formule 1L Jet 2015-07","SOSH+LIVEBOX FIBRE 54,99E","Formule 1L Zen 2013","Fibre Livebox Play 2013","Formule 1L Jet 2015","Formule Livebox Up 1L","Formule 1L Zen 2011","Formule 1L Zen 2016","Formule 1L Jet 2016","Coup de Pouce Livebox Fibre","Formule Pro"],
 					"frequencies": [10420,7283,2914,2338,2067,1619,1296,998,835,698,618,578,520,504,393,382,354,352,317,284,284,260,236,231,229,216,214,175,147,135,129,117,107,106,106,97,92,83,73,68,65,62,56,52,46,42,40,35,35,34,33,30,29,23,23,22,20,20,19,17,17,15,14,12,12,12,11,11,10,9,7,7,7,7,6,5,5,5,4,4,3,2,2]
 				}
 			},
@@ -3984,13 +3984,13 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Offre courante libellé niveau 1",
+							"variable": "Offre courante libellï¿½ niveau 1",
 							"type": "Categorical",
 							"partitionType": "Value groups",
 							"partition": [
 								["REFLEX OPEN MOBILE","REFLEX OPEN FIBRE","REFLEX","OPEN Mobile","PANKA OPEN MOBILE","SOSH+LIVEBOX","OPEN 9 Fibre v05-2016","Fibre Livebox Up 2019"],
-								["REFLEX OPEN ADSL","OPEN 9 v05-2016","Net Livebox Play 2016","Net Livebox Zen 2016","Fibre Livebox Up 2018","Net Livebox Play 2014","Formule Livebox Zen 2013","La Boîte Sosh Fibre"],
-								["SOSH","La Boîte Sosh"],
+								["REFLEX OPEN ADSL","OPEN 9 v05-2016","Net Livebox Play 2016","Net Livebox Zen 2016","Fibre Livebox Up 2018","Net Livebox Play 2014","Formule Livebox Zen 2013","La Boï¿½te Sosh Fibre"],
+								["SOSH","La Boï¿½te Sosh"],
 								["Fibre Livebox 2018","Net Livebox 2018"]
 							],
 							"defaultGroupIndex": 1
@@ -4011,7 +4011,7 @@
 					"partInterests": [0.0146512,0.229243,0.645541,0.110564]
 				},
 				"inputValues": {
-					"values": ["REFLEX OPEN MOBILE","SOSH","REFLEX OPEN ADSL","REFLEX OPEN FIBRE","REFLEX","OPEN 9 v05-2016","OPEN Mobile","PANKA OPEN MOBILE","SOSH+LIVEBOX","La Boîte Sosh","Fibre Livebox 2018","Net Livebox Play 2016","Net Livebox 2018","OPEN 9 Fibre v05-2016","Net Livebox Zen 2016","Fibre Livebox Up 2018","Net Livebox Play 2014","Formule Livebox Zen 2013","Fibre Livebox Up 2019","La Boîte Sosh Fibre","PANKA","Carte SIM Multi-sim","Net Livebox Zen 2014","Net Livebox Up 2018","ZEN v9","OPEN 7 v10-2014","Fibre Livebox Play 2016","PLAY Origami v9","Net Livebox Initiale 2015","Net Livebox Zen 2011","Net Livebox Essentielle","Fibre Livebox Zen 2016","OPEN 8 v07-2015","Net Livebox Play 2013","SOSH+LIVEBOX FIBRE","Découverte 2014","OPEN 6 v04-2014","Formule Livebox Play 2013","Formule 1L Play 2014","Net Livebox Up 2019","Net Livebox Initiale 2014","PANKA OPEN FIBRE","Découverte 2015","PANKA OPEN ADSL","JET Origami v9","Formule 1L Zen 2014","Fibre Livebox Zen Initiale","OPEN 5 v06-2013","PLAY Origami","MINI","Formule Livebox 1L Play 2016","Formule 1L Play 2013","Formule 1L Zen 2013","Fibre Livebox Zen 2014","Fibre Livebox Jet 2016","Fibre Livebox Play 2014","INITIAL v5","Fibre Livebox Essentielle 2015","Net Livebox Jet 2014","Formule 1L Zen 2016","Net Livebox Jet 2015","Net Livebox Jet 2016","Net Livebox Jet 2015-07","Fibre Livebox Zen Exclusif 2016","Net Livebox Zen 2013","Fibre Livebox Play Exclusif 2016","Fibre Livebox Jet 2015","Formule Livebox 1L 2018","Fibre Livebox Jet 2015-07","Fibre Livebox Play 2015","Formule 1L Zen 2011","OPEN 8 Fibre v07-2015","Coup de Pouce Livebox DSL","Fibre Livebox Jet 2014","Formule 1L Jet 2014","Formule 1L Jet 2015-07","Fibre Livebox Play 2013","Fibre Livebox Zen 2013","Formule 1L Jet 2015","Formule Livebox Up 1L 2018","Fibre Livebox Exclusif 2019","JET Origami v5","JET Origami v7","OPEN 6 Fibre v04-2014","OPEN 7 Fibre v10-2014","Fibre Livebox Zen 2011","Formule 1L Jet 2016","OPEN 5 Fibre v06-2013","Coup de Pouce Livebox Fibre","Fibre Livebox Up Exclusif 2019","Internet pro POUR abo tel 2013","JET Origami v6","Net Livebox Zen 2019","JET Origami v4"," * "],
+					"values": ["REFLEX OPEN MOBILE","SOSH","REFLEX OPEN ADSL","REFLEX OPEN FIBRE","REFLEX","OPEN 9 v05-2016","OPEN Mobile","PANKA OPEN MOBILE","SOSH+LIVEBOX","La Boï¿½te Sosh","Fibre Livebox 2018","Net Livebox Play 2016","Net Livebox 2018","OPEN 9 Fibre v05-2016","Net Livebox Zen 2016","Fibre Livebox Up 2018","Net Livebox Play 2014","Formule Livebox Zen 2013","Fibre Livebox Up 2019","La Boï¿½te Sosh Fibre","PANKA","Carte SIM Multi-sim","Net Livebox Zen 2014","Net Livebox Up 2018","ZEN v9","OPEN 7 v10-2014","Fibre Livebox Play 2016","PLAY Origami v9","Net Livebox Initiale 2015","Net Livebox Zen 2011","Net Livebox Essentielle","Fibre Livebox Zen 2016","OPEN 8 v07-2015","Net Livebox Play 2013","SOSH+LIVEBOX FIBRE","Dï¿½couverte 2014","OPEN 6 v04-2014","Formule Livebox Play 2013","Formule 1L Play 2014","Net Livebox Up 2019","Net Livebox Initiale 2014","PANKA OPEN FIBRE","Dï¿½couverte 2015","PANKA OPEN ADSL","JET Origami v9","Formule 1L Zen 2014","Fibre Livebox Zen Initiale","OPEN 5 v06-2013","PLAY Origami","MINI","Formule Livebox 1L Play 2016","Formule 1L Play 2013","Formule 1L Zen 2013","Fibre Livebox Zen 2014","Fibre Livebox Jet 2016","Fibre Livebox Play 2014","INITIAL v5","Fibre Livebox Essentielle 2015","Net Livebox Jet 2014","Formule 1L Zen 2016","Net Livebox Jet 2015","Net Livebox Jet 2016","Net Livebox Jet 2015-07","Fibre Livebox Zen Exclusif 2016","Net Livebox Zen 2013","Fibre Livebox Play Exclusif 2016","Fibre Livebox Jet 2015","Formule Livebox 1L 2018","Fibre Livebox Jet 2015-07","Fibre Livebox Play 2015","Formule 1L Zen 2011","OPEN 8 Fibre v07-2015","Coup de Pouce Livebox DSL","Fibre Livebox Jet 2014","Formule 1L Jet 2014","Formule 1L Jet 2015-07","Fibre Livebox Play 2013","Fibre Livebox Zen 2013","Formule 1L Jet 2015","Formule Livebox Up 1L 2018","Fibre Livebox Exclusif 2019","JET Origami v5","JET Origami v7","OPEN 6 Fibre v04-2014","OPEN 7 Fibre v10-2014","Fibre Livebox Zen 2011","Formule 1L Jet 2016","OPEN 5 Fibre v06-2013","Coup de Pouce Livebox Fibre","Fibre Livebox Up Exclusif 2019","Internet pro POUR abo tel 2013","JET Origami v6","Net Livebox Zen 2019","JET Origami v4"," * "],
 					"frequencies": [7962,7718,5426,2786,2782,1100,738,650,590,578,516,504,458,458,382,380,354,346,317,284,249,231,230,229,194,183,175,169,159,159,147,135,132,129,127,117,110,106,97,92,87,80,73,71,63,61,56,53,51,50,42,40,39,38,35,34,34,30,29,24,23,22,20,19,18,17,12,12,11,11,10,10,9,7,7,7,5,5,5,5,4,4,4,4,4,3,3,3,2,2,2,2,2,1,1]
 				}
 			},
@@ -4020,7 +4020,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Offre précédente code",
+							"variable": "Offre prï¿½cï¿½dente code",
 							"type": "Categorical",
 							"partitionType": "Value groups",
 							"partition": [
@@ -4054,13 +4054,13 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Offre courante libellé",
+							"variable": "Offre courante libellï¿½",
 							"type": "Categorical",
 							"partitionType": "Value groups",
 							"partition": [
-								["Forfait Mobile OPEN 50Go","Forfait Mobile OPEN 2h 100 Mo Bloqué","OPEN 10Go ADSL 2018","Forfait Mobile OPEN 2H 5Go Bloqué","Open 100 Mo ADSL","Forfait Mobile OPEN 10Go","Open Up 50Go ADSL 2018","Open Up 50Go ADSL Plus avec mobile","OPEN 10Go Fibre 2018","Forfait Mobile OPEN 2h 100 Mo","Open 2h 100 Mo ADSL 2018","Forfait Mobile OPEN 2H 5Go","Forfait 50Go","Forfait 2H 100Mo Bloqué","Forfait Mobile OPEN 60Go","OPEN Zen 2Go - 05\/2016","Forfait 10Go","Open Up 50Go Fibre 2018","Forfait 2h 5Go Bloqué","OC50309 ZZLB Play - sans abo tel 2016","OPEN Play 30Go - 04\/2017","OC50426 ZZLivebox Up Fibre 2018","OC50217 ZZLB Play - ss abo tel Fev2014","OC50202 ZZ LB-Zen SIP 2013 + abo tel","Open 2h 100Mo Fibre 2018","Forfait Mobile OPEN 100Go","Multiligne Bloqué OPEN mini SIM 04\/17","OC50303 ZZLB Zen - sans abo tel 2015","Forfait 2H 100Mo","Forfait 2h 5Go","SOSH MOBILE+LIVEBOX 44,99E 4G\/H+","OC50219 ZZLB Zen - ss abo tel Avr2014","OC50439 ZZLivebox Up sans abo tel 2018","SOSH MOBILE+LIVEBOX 29,99E","Open Up 50Go ADSL","Forfait 60Go","OC50308 ZZLivebox Play - fibre 2016","Open Up 10Go ADSL 2018","OPEN Play 30Go Fibre - 04\/2017","E-Carte multi-sim Voix+Internet","OC50141 ZZLB zen 2011 - sans abo tel","OPEN Play 30Go  4G+ - 10\/2014","Origami Zen 2Go v9 4G+","Open Up 50Go Fibre Plus avec mobile","Open Up 10Go Fibre","Open Up 10Go Fibre 2018","Open 100Mo Fibre","OC50179 ZZLB Play - sans abo tel 2013","Forfait 100Go","OPEN Zen 2Go Fibre - 05\/2016","Forfait Mobile OPEN 110Go","Open Up 2h 5Go ADSL 2018","OC50121 ZZDécouverte 2014","OPEN Play 30Go (07\/02\/2019)","OC50390 LB Initiale sans abo tel","SOSH MOBILE+LIVEBOX 34,99E","OC50229 ZZ LB-Play SIP 2013 + abo tel","OC50222 ZZLB Play - ligne fixe Avr2014","Open Up 100Go ADSL 2018","Forfait pr Client OPEN Play 30Go","Open Up 2h 100Mo ADSL 2018","OC50190 ZZLvb Initiale-ss abo tel 2014","OPEN Play 3Go  4G\/H+","OPEN Play 60Go (07\/02\/2019)","OPEN 10Go ADSL","Forfait pr client OPEN JET 80Go","Open Up 2h 100Mo Fibre 2018","Open 2h 100Mo Plus ADSL 2018","OC50269 ZZ Découverte (TV) 2015","Forfait Mobile Play 60Go (07\/02\/2019)","Open Up 100Go Fibre 2018","Open Up 2h 100Mo Fibre","Carte multi-sim Voix+Internet","SOSH MOBILE+LIVEBOX FIBRE 49,99E","Open Up 2h 5Go Fibre 2018","OPEN mini 1H 50Mo - 05\/2016","Open Up 2h 5Go Fibre","Open Up 60Go Fibre","OC50216 ZZLB Zen - ligne fixe Fev2014","Open Up 60Go ADSL","OC50405 Livebox Initiale - fibre","OC50205 ZZLB Essentielle 2013","OC50298 ZZLB Initiale ss abo tel 2015","Open Up 100Go Fibre","Origami Zen 50mo v9","Forfait pr Client OPEN mini Bloqué 2H 5Go","OPEN Jet 80Go - 07\/2017","Open 10Go Fibre Exclu SIM","Open Up 100Go ADSL","OC50311 ZZLivebox Play-ligne fixe 2016","Open Up 2h 100Mo ADSL","Origami Play 30Go (07\/02\/2019)","Edition OPEN Play 4G\/H+ (Noel 2013)","OC50187 ZZLB Play 1 Ligne 2013","OC50188 ZZLB zen 1 Ligne 2013","OPEN Jet 30Go  4G+ - 10\/2014","Forfait Mobile Play 30Go","OC50299 ZZLivebox Jet - fibre 2015","Open Up 2h 5Go ADSL","SOSH MOBILE+LIVEBOX FIBRE 34,99E","Forfait Initial 30mn SE 7E v11\/2012","OC50223 ZZLivebox Play - fibre 2014","SOSH MOBILE+LIVEBOX 49,99E4G\/H+","Forfait Bloqué Mini 2H 5Go","OC50225 ZZLB Jet - sans abo tel 2014","OC50215 ZZLivebox zen - fibre 2014","OPEN mini 50Mo Fibre Exclusif - 10\/2016","OPEN Play 60Go Fibre - 07\/02\/2019","OC50310 ZZLivebox Zen -ligne fixe 2016","OC50270 ZZLB Jet-sans abo tel fev2015","OPEN Jet 80Go Fibre - 05\/2017","Forfait Mobile Jet 80Go","OPEN Jet 30Go  4G\/H+","Forfait Mobile Jet 100Go","OC50294 ZZLB Jet - ss abo tel Juil2015","Origami Play 60Go (07\/02\/2019)","OC50332 Livebox Zen Fibre Exclusif","Open 2h 100Mo Plus Fibre 2018","OC50178 ZZLB zen - sans abo tel 2013"],
-								["SOSH 24,99E (50Go)","SOSH 19,99E (20Go 24\/7) 4G\/H+","SOSH 4,99E (2H + SMS\/MMS 24\/7)","SOSH 9,99E 24\/7 (ex 2h-modif 02\/13)","SOSH 4,99E Bloqué (2H + SMS\/MMS 24\/7)","OC50427 La Boîte Sosh","SL SOSH 80Go 14,99E","SL SOSH 50Go 9,99E pdt 12M","SL SOSH 50Go 14,99E"],
-								["OC50429 Livebox Fibre","OC50425 Livebox sans abo tel","Open Up 50Go Fibre","OC50450 Livebox Up Fibre 2019","OC50430 La Boîte Sosh Fibre","OC50307 ZZLivebox Zen - fibre 2016","Forfait pr Client OPEN Play 60Go (02\/2019)","OC50394 Livebox Essentielle","OC50452 Livebox Up sans abo tel 2019","OC50363 ZZNSCA LB Zen ss abo tel 2017","OC50392 ZZNSCA LB Play ss abo tel 2018","Forfait 110Go","OC50300 Livebox Essentielle fibre"]
+								["Forfait Mobile OPEN 50Go","Forfait Mobile OPEN 2h 100 Mo Bloquï¿½","OPEN 10Go ADSL 2018","Forfait Mobile OPEN 2H 5Go Bloquï¿½","Open 100 Mo ADSL","Forfait Mobile OPEN 10Go","Open Up 50Go ADSL 2018","Open Up 50Go ADSL Plus avec mobile","OPEN 10Go Fibre 2018","Forfait Mobile OPEN 2h 100 Mo","Open 2h 100 Mo ADSL 2018","Forfait Mobile OPEN 2H 5Go","Forfait 50Go","Forfait 2H 100Mo Bloquï¿½","Forfait Mobile OPEN 60Go","OPEN Zen 2Go - 05\/2016","Forfait 10Go","Open Up 50Go Fibre 2018","Forfait 2h 5Go Bloquï¿½","OC50309 ZZLB Play - sans abo tel 2016","OPEN Play 30Go - 04\/2017","OC50426 ZZLivebox Up Fibre 2018","OC50217 ZZLB Play - ss abo tel Fev2014","OC50202 ZZ LB-Zen SIP 2013 + abo tel","Open 2h 100Mo Fibre 2018","Forfait Mobile OPEN 100Go","Multiligne Bloquï¿½ OPEN mini SIM 04\/17","OC50303 ZZLB Zen - sans abo tel 2015","Forfait 2H 100Mo","Forfait 2h 5Go","SOSH MOBILE+LIVEBOX 44,99E 4G\/H+","OC50219 ZZLB Zen - ss abo tel Avr2014","OC50439 ZZLivebox Up sans abo tel 2018","SOSH MOBILE+LIVEBOX 29,99E","Open Up 50Go ADSL","Forfait 60Go","OC50308 ZZLivebox Play - fibre 2016","Open Up 10Go ADSL 2018","OPEN Play 30Go Fibre - 04\/2017","E-Carte multi-sim Voix+Internet","OC50141 ZZLB zen 2011 - sans abo tel","OPEN Play 30Go  4G+ - 10\/2014","Origami Zen 2Go v9 4G+","Open Up 50Go Fibre Plus avec mobile","Open Up 10Go Fibre","Open Up 10Go Fibre 2018","Open 100Mo Fibre","OC50179 ZZLB Play - sans abo tel 2013","Forfait 100Go","OPEN Zen 2Go Fibre - 05\/2016","Forfait Mobile OPEN 110Go","Open Up 2h 5Go ADSL 2018","OC50121 ZZDï¿½couverte 2014","OPEN Play 30Go (07\/02\/2019)","OC50390 LB Initiale sans abo tel","SOSH MOBILE+LIVEBOX 34,99E","OC50229 ZZ LB-Play SIP 2013 + abo tel","OC50222 ZZLB Play - ligne fixe Avr2014","Open Up 100Go ADSL 2018","Forfait pr Client OPEN Play 30Go","Open Up 2h 100Mo ADSL 2018","OC50190 ZZLvb Initiale-ss abo tel 2014","OPEN Play 3Go  4G\/H+","OPEN Play 60Go (07\/02\/2019)","OPEN 10Go ADSL","Forfait pr client OPEN JET 80Go","Open Up 2h 100Mo Fibre 2018","Open 2h 100Mo Plus ADSL 2018","OC50269 ZZ Dï¿½couverte (TV) 2015","Forfait Mobile Play 60Go (07\/02\/2019)","Open Up 100Go Fibre 2018","Open Up 2h 100Mo Fibre","Carte multi-sim Voix+Internet","SOSH MOBILE+LIVEBOX FIBRE 49,99E","Open Up 2h 5Go Fibre 2018","OPEN mini 1H 50Mo - 05\/2016","Open Up 2h 5Go Fibre","Open Up 60Go Fibre","OC50216 ZZLB Zen - ligne fixe Fev2014","Open Up 60Go ADSL","OC50405 Livebox Initiale - fibre","OC50205 ZZLB Essentielle 2013","OC50298 ZZLB Initiale ss abo tel 2015","Open Up 100Go Fibre","Origami Zen 50mo v9","Forfait pr Client OPEN mini Bloquï¿½ 2H 5Go","OPEN Jet 80Go - 07\/2017","Open 10Go Fibre Exclu SIM","Open Up 100Go ADSL","OC50311 ZZLivebox Play-ligne fixe 2016","Open Up 2h 100Mo ADSL","Origami Play 30Go (07\/02\/2019)","Edition OPEN Play 4G\/H+ (Noel 2013)","OC50187 ZZLB Play 1 Ligne 2013","OC50188 ZZLB zen 1 Ligne 2013","OPEN Jet 30Go  4G+ - 10\/2014","Forfait Mobile Play 30Go","OC50299 ZZLivebox Jet - fibre 2015","Open Up 2h 5Go ADSL","SOSH MOBILE+LIVEBOX FIBRE 34,99E","Forfait Initial 30mn SE 7E v11\/2012","OC50223 ZZLivebox Play - fibre 2014","SOSH MOBILE+LIVEBOX 49,99E4G\/H+","Forfait Bloquï¿½ Mini 2H 5Go","OC50225 ZZLB Jet - sans abo tel 2014","OC50215 ZZLivebox zen - fibre 2014","OPEN mini 50Mo Fibre Exclusif - 10\/2016","OPEN Play 60Go Fibre - 07\/02\/2019","OC50310 ZZLivebox Zen -ligne fixe 2016","OC50270 ZZLB Jet-sans abo tel fev2015","OPEN Jet 80Go Fibre - 05\/2017","Forfait Mobile Jet 80Go","OPEN Jet 30Go  4G\/H+","Forfait Mobile Jet 100Go","OC50294 ZZLB Jet - ss abo tel Juil2015","Origami Play 60Go (07\/02\/2019)","OC50332 Livebox Zen Fibre Exclusif","Open 2h 100Mo Plus Fibre 2018","OC50178 ZZLB zen - sans abo tel 2013"],
+								["SOSH 24,99E (50Go)","SOSH 19,99E (20Go 24\/7) 4G\/H+","SOSH 4,99E (2H + SMS\/MMS 24\/7)","SOSH 9,99E 24\/7 (ex 2h-modif 02\/13)","SOSH 4,99E Bloquï¿½ (2H + SMS\/MMS 24\/7)","OC50427 La Boï¿½te Sosh","SL SOSH 80Go 14,99E","SL SOSH 50Go 9,99E pdt 12M","SL SOSH 50Go 14,99E"],
+								["OC50429 Livebox Fibre","OC50425 Livebox sans abo tel","Open Up 50Go Fibre","OC50450 Livebox Up Fibre 2019","OC50430 La Boï¿½te Sosh Fibre","OC50307 ZZLivebox Zen - fibre 2016","Forfait pr Client OPEN Play 60Go (02\/2019)","OC50394 Livebox Essentielle","OC50452 Livebox Up sans abo tel 2019","OC50363 ZZNSCA LB Zen ss abo tel 2017","OC50392 ZZNSCA LB Play ss abo tel 2018","Forfait 110Go","OC50300 Livebox Essentielle fibre"]
 							],
 							"defaultGroupIndex": 0
 						},
@@ -4079,7 +4079,7 @@
 					"partInterests": [0.127937,0.6531,0.218962]
 				},
 				"inputValues": {
-					"values": ["SOSH 24,99E (50Go)","SOSH 19,99E (20Go 24\/7) 4G\/H+","Forfait Mobile OPEN 50Go","Forfait Mobile OPEN 2h 100 Mo Bloqué","OPEN 10Go ADSL 2018","Forfait Mobile OPEN 2H 5Go Bloqué","Open 100 Mo ADSL","Forfait Mobile OPEN 10Go","SOSH 4,99E (2H + SMS\/MMS 24\/7)","SOSH 9,99E 24\/7 (ex 2h-modif 02\/13)","SOSH 4,99E Bloqué (2H + SMS\/MMS 24\/7)","Open Up 50Go ADSL 2018","Open Up 50Go ADSL Plus avec mobile","OPEN 10Go Fibre 2018","Forfait Mobile OPEN 2h 100 Mo","Open 2h 100 Mo ADSL 2018","Forfait Mobile OPEN 2H 5Go","OC50427 La Boîte Sosh","Forfait 50Go","Forfait 2H 100Mo Bloqué","Forfait Mobile OPEN 60Go","OC50429 Livebox Fibre","OPEN Zen 2Go - 05\/2016","Forfait 10Go","Open Up 50Go Fibre 2018","OC50425 Livebox sans abo tel","Forfait 2h 5Go Bloqué","OC50309 ZZLB Play - sans abo tel 2016","OPEN Play 30Go - 04\/2017","OC50426 ZZLivebox Up Fibre 2018","Open Up 50Go Fibre","OC50217 ZZLB Play - ss abo tel Fev2014","OC50202 ZZ LB-Zen SIP 2013 + abo tel","OC50450 Livebox Up Fibre 2019","Open 2h 100Mo Fibre 2018","Forfait Mobile OPEN 100Go","Multiligne Bloqué OPEN mini SIM 04\/17","OC50303 ZZLB Zen - sans abo tel 2015","Forfait 2H 100Mo","OC50430 La Boîte Sosh Fibre","Forfait 2h 5Go","SOSH MOBILE+LIVEBOX 44,99E 4G\/H+","OC50219 ZZLB Zen - ss abo tel Avr2014","OC50439 ZZLivebox Up sans abo tel 2018","SOSH MOBILE+LIVEBOX 29,99E","Open Up 50Go ADSL","Forfait 60Go","OC50308 ZZLivebox Play - fibre 2016","Open Up 10Go ADSL 2018","OPEN Play 30Go Fibre - 04\/2017","E-Carte multi-sim Voix+Internet","OC50141 ZZLB zen 2011 - sans abo tel","OPEN Play 30Go  4G+ - 10\/2014","Origami Zen 2Go v9 4G+","Open Up 50Go Fibre Plus avec mobile","Open Up 10Go Fibre","OC50307 ZZLivebox Zen - fibre 2016","Open Up 10Go Fibre 2018","Forfait pr Client OPEN Play 60Go (02\/2019)","Open 100Mo Fibre","OC50179 ZZLB Play - sans abo tel 2013","Forfait 100Go","OPEN Zen 2Go Fibre - 05\/2016","Forfait Mobile OPEN 110Go","Open Up 2h 5Go ADSL 2018","OC50121 ZZDécouverte 2014","OPEN Play 30Go (07\/02\/2019)","OC50390 LB Initiale sans abo tel","SOSH MOBILE+LIVEBOX 34,99E","OC50229 ZZ LB-Play SIP 2013 + abo tel","OC50222 ZZLB Play - ligne fixe Avr2014","OC50394 Livebox Essentielle","Open Up 100Go ADSL 2018","Forfait pr Client OPEN Play 30Go","Open Up 2h 100Mo ADSL 2018","OC50452 Livebox Up sans abo tel 2019","OC50190 ZZLvb Initiale-ss abo tel 2014","OPEN Play 3Go  4G\/H+","OPEN Play 60Go (07\/02\/2019)","OPEN 10Go ADSL","Forfait pr client OPEN JET 80Go","Open Up 2h 100Mo Fibre 2018","OC50363 ZZNSCA LB Zen ss abo tel 2017","Open 2h 100Mo Plus ADSL 2018","OC50269 ZZ Découverte (TV) 2015","Forfait Mobile Play 60Go (07\/02\/2019)","Open Up 100Go Fibre 2018","Open Up 2h 100Mo Fibre","SL SOSH 80Go 14,99E","Carte multi-sim Voix+Internet","SL SOSH 50Go 9,99E pdt 12M","SOSH MOBILE+LIVEBOX FIBRE 49,99E","Open Up 2h 5Go Fibre 2018","OPEN mini 1H 50Mo - 05\/2016","Open Up 2h 5Go Fibre","Open Up 60Go Fibre","OC50216 ZZLB Zen - ligne fixe Fev2014","OC50392 ZZNSCA LB Play ss abo tel 2018","Open Up 60Go ADSL","OC50405 Livebox Initiale - fibre","OC50205 ZZLB Essentielle 2013","OC50298 ZZLB Initiale ss abo tel 2015","Open Up 100Go Fibre","Origami Zen 50mo v9","Forfait 110Go","Forfait pr Client OPEN mini Bloqué 2H 5Go","OPEN Jet 80Go - 07\/2017","Open 10Go Fibre Exclu SIM","Open Up 100Go ADSL","OC50311 ZZLivebox Play-ligne fixe 2016","Open Up 2h 100Mo ADSL","Origami Play 30Go (07\/02\/2019)","Edition OPEN Play 4G\/H+ (Noel 2013)","OC50187 ZZLB Play 1 Ligne 2013","OC50188 ZZLB zen 1 Ligne 2013","OPEN Jet 30Go  4G+ - 10\/2014","SL SOSH 50Go 14,99E","Forfait Mobile Play 30Go","OC50299 ZZLivebox Jet - fibre 2015","Open Up 2h 5Go ADSL","SOSH MOBILE+LIVEBOX FIBRE 34,99E","Forfait Initial 30mn SE 7E v11\/2012","OC50223 ZZLivebox Play - fibre 2014","SOSH MOBILE+LIVEBOX 49,99E4G\/H+","Forfait Bloqué Mini 2H 5Go","OC50300 Livebox Essentielle fibre","OC50225 ZZLB Jet - sans abo tel 2014","OC50215 ZZLivebox zen - fibre 2014","OPEN mini 50Mo Fibre Exclusif - 10\/2016","OPEN Play 60Go Fibre - 07\/02\/2019","OC50310 ZZLivebox Zen -ligne fixe 2016","OC50270 ZZLB Jet-sans abo tel fev2015","OPEN Jet 80Go Fibre - 05\/2017","Forfait Mobile Jet 80Go","OPEN Jet 30Go  4G\/H+","Forfait Mobile Jet 100Go","OC50294 ZZLB Jet - ss abo tel Juil2015","Origami Play 60Go (07\/02\/2019)","OC50332 Livebox Zen Fibre Exclusif","Open 2h 100Mo Plus Fibre 2018","OC50178 ZZLB zen - sans abo tel 2013","OC50273 ZZLB Jet - sans abo tel 2015","Open Up 110Go Fibre","OC50333 Livebox Play Fibre Exclusif","SOSH MOBILE+LIVEBOX FIBRE 39,99E","Forfait pr Client OPEN mini FNB 2H 5Go","OPEN Zen 2Go Fibre Exclusif -02\/2017","Origami Play 3Go - 4G\/H+","Forfait Mini 2H 5Go","Mobile OPEN JET 30Go 4G\/H+","Origami Play 500Mo 4G\/H+","Forfait Mobile OPEN 150Go","OPEN Jet 80Go  4G+ - 08\/2017","OPEN Play 30Go Fibre Exclusif -02\/2018","Open Up 110Go ADSL","Mobile OPEN JET 30Go 4G+","Open Up 50Go Fibre Exclusif","Forfait 150Go","Forfait pr client OPEN JET 100Go","OC50271 ZZLB Jet-fibre fev2015","OC50428 Livebox ligne fixe","SOSH 2h 1Go 14,9E","OC50296 ZZLB Play - Fibre Aout2015","Open Up 50Go Fibre Exclusif Plus avec mobile","Origami Jet 100Go 4G+","OC50162 ZZLB zen 1 ligne 2011","OC50240 ZZLB Zen - Fibre Fev2015","OPEN Jet 100Go - 07\/2017","Origami Play 24\/7 2Go Fu","Mobile OPEN PLAY 4G\/H+","OC50407 Coup de Pouce Livebox","OPEN PLAY 4G\/H+","OPEN Play 30Go Fibre (07\/02\/2019)","Open Up 150Go Fibre","OC50297 LB Jet - Fibre Aout2015","Mobile OPEN PLAY 3Go 4G\/H+","OC50224 ZZLivebox Jet - fibre 2014","OC50226 ZZLB Jet sur ligne fixe 2014","OC50293 ZZLB Jet - ligne fixe Juil2015","OPEN Jet 100Go  4G+ - 08\/2017","Origami Play 24\/7 2Go Fu 4G\/H+ bis","SOSH MOBILE+LIVEBOX FIBRE 54,99E","Mobile OPEN JET 4G\/H+ 30Go","Open Up 150Go ADSL","Origami Jet 80Go 4G+","OC50176 ZZLB zen - fibre 2013","OC50177 ZZLB Play - fibre 2013","OC50272 ZZLB Jet ligne fixe fev2015","OC50433 ZZLivebox Up ligne fixe 2018","OPEN Play 30Go Fibre Exclusif - 02\/2019","Open 2h 100Mo Fibre Exclusif","OC50398 ZZNSCA LB Jet ss abo tel 2018","OC50443 Livebox Fibre Exclusif","OPEN Jet 100Go Fibre - 05\/2017","OPEN Play 3Go Fibre 4G\/H+","OPEN mini 1H 50Mo Fibre - 05\/2016","Open Up 150Go ADSL 2018","Origami Jet Europe 40Go 4G","Forfait Bloqué Mini 2H 50Mo","Forfait Mobile Jet Premier 100Go","OC50143 ZZLB zen fibre 2011","OC50292 ZZLivebox Jet - fibre juil2015","OC50312 ZZLivebox Jet -ligne fixe 2016","OPEN Jet 4G\/H+ 30Go","OPEN Play 30Go Fibre (07\/02\/12019)","OPEN Zen 2Go Fibre Exclusif 1hFvM -10\/2016","Open Up 150Go Fibre 2018","Origami Jet France 24\/7 4G 40Go","Edition OPEN Play Fibre 4G\/H+ (Noel 2013)","OC50203 ZZInternet pro POUR abotel2013","OC50442 Livebox Up Fibre Exclusif","OC50444 ZZNSCA LB Zen  ss abo tel 2019","OC50448 Coup de Pouce Livebox Fibre","OPEN Jet International 40Go","OPEN Play 3Go Fibre Exclusif - 10\/2016","Origami Play 24\/7 4Go 4G Bis - TV 70 chaînes","ES JET riposte"," * "],
+					"values": ["SOSH 24,99E (50Go)","SOSH 19,99E (20Go 24\/7) 4G\/H+","Forfait Mobile OPEN 50Go","Forfait Mobile OPEN 2h 100 Mo Bloquï¿½","OPEN 10Go ADSL 2018","Forfait Mobile OPEN 2H 5Go Bloquï¿½","Open 100 Mo ADSL","Forfait Mobile OPEN 10Go","SOSH 4,99E (2H + SMS\/MMS 24\/7)","SOSH 9,99E 24\/7 (ex 2h-modif 02\/13)","SOSH 4,99E Bloquï¿½ (2H + SMS\/MMS 24\/7)","Open Up 50Go ADSL 2018","Open Up 50Go ADSL Plus avec mobile","OPEN 10Go Fibre 2018","Forfait Mobile OPEN 2h 100 Mo","Open 2h 100 Mo ADSL 2018","Forfait Mobile OPEN 2H 5Go","OC50427 La Boï¿½te Sosh","Forfait 50Go","Forfait 2H 100Mo Bloquï¿½","Forfait Mobile OPEN 60Go","OC50429 Livebox Fibre","OPEN Zen 2Go - 05\/2016","Forfait 10Go","Open Up 50Go Fibre 2018","OC50425 Livebox sans abo tel","Forfait 2h 5Go Bloquï¿½","OC50309 ZZLB Play - sans abo tel 2016","OPEN Play 30Go - 04\/2017","OC50426 ZZLivebox Up Fibre 2018","Open Up 50Go Fibre","OC50217 ZZLB Play - ss abo tel Fev2014","OC50202 ZZ LB-Zen SIP 2013 + abo tel","OC50450 Livebox Up Fibre 2019","Open 2h 100Mo Fibre 2018","Forfait Mobile OPEN 100Go","Multiligne Bloquï¿½ OPEN mini SIM 04\/17","OC50303 ZZLB Zen - sans abo tel 2015","Forfait 2H 100Mo","OC50430 La Boï¿½te Sosh Fibre","Forfait 2h 5Go","SOSH MOBILE+LIVEBOX 44,99E 4G\/H+","OC50219 ZZLB Zen - ss abo tel Avr2014","OC50439 ZZLivebox Up sans abo tel 2018","SOSH MOBILE+LIVEBOX 29,99E","Open Up 50Go ADSL","Forfait 60Go","OC50308 ZZLivebox Play - fibre 2016","Open Up 10Go ADSL 2018","OPEN Play 30Go Fibre - 04\/2017","E-Carte multi-sim Voix+Internet","OC50141 ZZLB zen 2011 - sans abo tel","OPEN Play 30Go  4G+ - 10\/2014","Origami Zen 2Go v9 4G+","Open Up 50Go Fibre Plus avec mobile","Open Up 10Go Fibre","OC50307 ZZLivebox Zen - fibre 2016","Open Up 10Go Fibre 2018","Forfait pr Client OPEN Play 60Go (02\/2019)","Open 100Mo Fibre","OC50179 ZZLB Play - sans abo tel 2013","Forfait 100Go","OPEN Zen 2Go Fibre - 05\/2016","Forfait Mobile OPEN 110Go","Open Up 2h 5Go ADSL 2018","OC50121 ZZDï¿½couverte 2014","OPEN Play 30Go (07\/02\/2019)","OC50390 LB Initiale sans abo tel","SOSH MOBILE+LIVEBOX 34,99E","OC50229 ZZ LB-Play SIP 2013 + abo tel","OC50222 ZZLB Play - ligne fixe Avr2014","OC50394 Livebox Essentielle","Open Up 100Go ADSL 2018","Forfait pr Client OPEN Play 30Go","Open Up 2h 100Mo ADSL 2018","OC50452 Livebox Up sans abo tel 2019","OC50190 ZZLvb Initiale-ss abo tel 2014","OPEN Play 3Go  4G\/H+","OPEN Play 60Go (07\/02\/2019)","OPEN 10Go ADSL","Forfait pr client OPEN JET 80Go","Open Up 2h 100Mo Fibre 2018","OC50363 ZZNSCA LB Zen ss abo tel 2017","Open 2h 100Mo Plus ADSL 2018","OC50269 ZZ Dï¿½couverte (TV) 2015","Forfait Mobile Play 60Go (07\/02\/2019)","Open Up 100Go Fibre 2018","Open Up 2h 100Mo Fibre","SL SOSH 80Go 14,99E","Carte multi-sim Voix+Internet","SL SOSH 50Go 9,99E pdt 12M","SOSH MOBILE+LIVEBOX FIBRE 49,99E","Open Up 2h 5Go Fibre 2018","OPEN mini 1H 50Mo - 05\/2016","Open Up 2h 5Go Fibre","Open Up 60Go Fibre","OC50216 ZZLB Zen - ligne fixe Fev2014","OC50392 ZZNSCA LB Play ss abo tel 2018","Open Up 60Go ADSL","OC50405 Livebox Initiale - fibre","OC50205 ZZLB Essentielle 2013","OC50298 ZZLB Initiale ss abo tel 2015","Open Up 100Go Fibre","Origami Zen 50mo v9","Forfait 110Go","Forfait pr Client OPEN mini Bloquï¿½ 2H 5Go","OPEN Jet 80Go - 07\/2017","Open 10Go Fibre Exclu SIM","Open Up 100Go ADSL","OC50311 ZZLivebox Play-ligne fixe 2016","Open Up 2h 100Mo ADSL","Origami Play 30Go (07\/02\/2019)","Edition OPEN Play 4G\/H+ (Noel 2013)","OC50187 ZZLB Play 1 Ligne 2013","OC50188 ZZLB zen 1 Ligne 2013","OPEN Jet 30Go  4G+ - 10\/2014","SL SOSH 50Go 14,99E","Forfait Mobile Play 30Go","OC50299 ZZLivebox Jet - fibre 2015","Open Up 2h 5Go ADSL","SOSH MOBILE+LIVEBOX FIBRE 34,99E","Forfait Initial 30mn SE 7E v11\/2012","OC50223 ZZLivebox Play - fibre 2014","SOSH MOBILE+LIVEBOX 49,99E4G\/H+","Forfait Bloquï¿½ Mini 2H 5Go","OC50300 Livebox Essentielle fibre","OC50225 ZZLB Jet - sans abo tel 2014","OC50215 ZZLivebox zen - fibre 2014","OPEN mini 50Mo Fibre Exclusif - 10\/2016","OPEN Play 60Go Fibre - 07\/02\/2019","OC50310 ZZLivebox Zen -ligne fixe 2016","OC50270 ZZLB Jet-sans abo tel fev2015","OPEN Jet 80Go Fibre - 05\/2017","Forfait Mobile Jet 80Go","OPEN Jet 30Go  4G\/H+","Forfait Mobile Jet 100Go","OC50294 ZZLB Jet - ss abo tel Juil2015","Origami Play 60Go (07\/02\/2019)","OC50332 Livebox Zen Fibre Exclusif","Open 2h 100Mo Plus Fibre 2018","OC50178 ZZLB zen - sans abo tel 2013","OC50273 ZZLB Jet - sans abo tel 2015","Open Up 110Go Fibre","OC50333 Livebox Play Fibre Exclusif","SOSH MOBILE+LIVEBOX FIBRE 39,99E","Forfait pr Client OPEN mini FNB 2H 5Go","OPEN Zen 2Go Fibre Exclusif -02\/2017","Origami Play 3Go - 4G\/H+","Forfait Mini 2H 5Go","Mobile OPEN JET 30Go 4G\/H+","Origami Play 500Mo 4G\/H+","Forfait Mobile OPEN 150Go","OPEN Jet 80Go  4G+ - 08\/2017","OPEN Play 30Go Fibre Exclusif -02\/2018","Open Up 110Go ADSL","Mobile OPEN JET 30Go 4G+","Open Up 50Go Fibre Exclusif","Forfait 150Go","Forfait pr client OPEN JET 100Go","OC50271 ZZLB Jet-fibre fev2015","OC50428 Livebox ligne fixe","SOSH 2h 1Go 14,9E","OC50296 ZZLB Play - Fibre Aout2015","Open Up 50Go Fibre Exclusif Plus avec mobile","Origami Jet 100Go 4G+","OC50162 ZZLB zen 1 ligne 2011","OC50240 ZZLB Zen - Fibre Fev2015","OPEN Jet 100Go - 07\/2017","Origami Play 24\/7 2Go Fu","Mobile OPEN PLAY 4G\/H+","OC50407 Coup de Pouce Livebox","OPEN PLAY 4G\/H+","OPEN Play 30Go Fibre (07\/02\/2019)","Open Up 150Go Fibre","OC50297 LB Jet - Fibre Aout2015","Mobile OPEN PLAY 3Go 4G\/H+","OC50224 ZZLivebox Jet - fibre 2014","OC50226 ZZLB Jet sur ligne fixe 2014","OC50293 ZZLB Jet - ligne fixe Juil2015","OPEN Jet 100Go  4G+ - 08\/2017","Origami Play 24\/7 2Go Fu 4G\/H+ bis","SOSH MOBILE+LIVEBOX FIBRE 54,99E","Mobile OPEN JET 4G\/H+ 30Go","Open Up 150Go ADSL","Origami Jet 80Go 4G+","OC50176 ZZLB zen - fibre 2013","OC50177 ZZLB Play - fibre 2013","OC50272 ZZLB Jet ligne fixe fev2015","OC50433 ZZLivebox Up ligne fixe 2018","OPEN Play 30Go Fibre Exclusif - 02\/2019","Open 2h 100Mo Fibre Exclusif","OC50398 ZZNSCA LB Jet ss abo tel 2018","OC50443 Livebox Fibre Exclusif","OPEN Jet 100Go Fibre - 05\/2017","OPEN Play 3Go Fibre 4G\/H+","OPEN mini 1H 50Mo Fibre - 05\/2016","Open Up 150Go ADSL 2018","Origami Jet Europe 40Go 4G","Forfait Bloquï¿½ Mini 2H 50Mo","Forfait Mobile Jet Premier 100Go","OC50143 ZZLB zen fibre 2011","OC50292 ZZLivebox Jet - fibre juil2015","OC50312 ZZLivebox Jet -ligne fixe 2016","OPEN Jet 4G\/H+ 30Go","OPEN Play 30Go Fibre (07\/02\/12019)","OPEN Zen 2Go Fibre Exclusif 1hFvM -10\/2016","Open Up 150Go Fibre 2018","Origami Jet France 24\/7 4G 40Go","Edition OPEN Play Fibre 4G\/H+ (Noel 2013)","OC50203 ZZInternet pro POUR abotel2013","OC50442 Livebox Up Fibre Exclusif","OC50444 ZZNSCA LB Zen  ss abo tel 2019","OC50448 Coup de Pouce Livebox Fibre","OPEN Jet International 40Go","OPEN Play 3Go Fibre Exclusif - 10\/2016","Origami Play 24\/7 4Go 4G Bis - TV 70 chaï¿½nes","ES JET riposte"," * "],
 					"frequencies": [2741,2338,2302,1715,1605,1523,913,883,864,835,755,676,653,624,612,605,603,578,575,561,524,516,513,504,463,458,455,447,381,380,375,354,346,317,313,310,306,303,302,284,245,236,230,229,214,204,203,175,166,165,163,159,145,144,143,140,135,135,133,133,129,128,128,126,125,117,110,109,107,106,97,97,96,94,94,92,87,87,87,85,80,80,79,74,73,72,72,71,69,68,68,68,65,63,62,62,61,57,57,56,50,50,50,50,46,46,46,43,43,42,42,42,41,40,39,37,36,35,35,35,35,34,34,33,32,30,29,28,26,25,24,23,23,22,21,20,20,20,19,19,18,18,18,17,17,16,16,16,15,15,15,14,14,14,14,13,13,12,12,12,12,12,11,11,11,10,10,10,10,9,9,9,9,9,8,7,7,7,7,7,7,7,6,6,6,5,5,5,5,5,5,4,4,4,4,4,4,4,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,2,2,2,1,12]
 				}
 			},
@@ -4088,7 +4088,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Expéditeur",
+							"variable": "Expï¿½diteur",
 							"type": "Categorical",
 							"partitionType": "Value groups",
 							"partition": [
@@ -4185,7 +4185,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Offre mobile précédente code",
+							"variable": "Offre mobile prï¿½cï¿½dente code",
 							"type": "Categorical",
 							"partitionType": "Value groups",
 							"partition": [
@@ -4219,7 +4219,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Prestation offre mobile précédente code",
+							"variable": "Prestation offre mobile prï¿½cï¿½dente code",
 							"type": "Categorical",
 							"partitionType": "Value groups",
 							"partition": [
@@ -4375,7 +4375,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Techno accès internet",
+							"variable": "Techno accï¿½s internet",
 							"type": "Categorical",
 							"partitionType": "Value groups",
 							"partition": [
@@ -4436,7 +4436,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Offre SIM Only \/ Subventionnée",
+							"variable": "Offre SIM Only \/ Subventionnï¿½e",
 							"type": "Categorical",
 							"partitionType": "Value groups",
 							"partition": [
@@ -4495,7 +4495,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Nom du système d'exploitation",
+							"variable": "Nom du systï¿½me d'exploitation",
 							"type": "Categorical",
 							"partitionType": "Value groups",
 							"partition": [
@@ -4559,7 +4559,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Numéro mobile",
+							"variable": "Numï¿½ro mobile",
 							"type": "Categorical",
 							"partitionType": "Value groups",
 							"partition": [
@@ -4591,7 +4591,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Modèle Livebox",
+							"variable": "Modï¿½le Livebox",
 							"type": "Categorical",
 							"partitionType": "Value groups",
 							"partition": [
@@ -4684,7 +4684,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Mode accès TV",
+							"variable": "Mode accï¿½s TV",
 							"type": "Categorical",
 							"partitionType": "Value groups",
 							"partition": [
@@ -4718,7 +4718,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Marque dernier terminal mobile utilisé",
+							"variable": "Marque dernier terminal mobile utilisï¿½",
 							"type": "Categorical",
 							"partitionType": "Value groups",
 							"partition": [
@@ -4804,7 +4804,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Couverture 4G à domicile",
+							"variable": "Couverture 4G ï¿½ domicile",
 							"type": "Numerical",
 							"partitionType": "Intervals",
 							"partition": [
@@ -4831,7 +4831,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Numéro téléphone",
+							"variable": "Numï¿½ro tï¿½lï¿½phone",
 							"type": "Numerical",
 							"partitionType": "Intervals",
 							"partition": [
@@ -4858,7 +4858,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Ancienneté client",
+							"variable": "Anciennetï¿½ client",
 							"type": "Categorical",
 							"partitionType": "Value groups",
 							"partition": [
@@ -4890,7 +4890,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Numéro client",
+							"variable": "Numï¿½ro client",
 							"type": "Numerical",
 							"partitionType": "Intervals",
 							"partition": [
@@ -5009,7 +5009,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Décodeur TV",
+							"variable": "Dï¿½codeur TV",
 							"type": "Categorical",
 							"partitionType": "Value groups",
 							"partition": [
@@ -5100,7 +5100,7 @@
 					"isSupervised": true,
 					"dimensions": [
 						{
-							"variable": "Enquête valide (code)",
+							"variable": "Enquï¿½te valide (code)",
 							"type": "Numerical",
 							"partitionType": "Intervals",
 							"partition": [
