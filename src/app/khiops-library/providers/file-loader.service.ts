@@ -79,7 +79,8 @@ export class FileLoaderService {
     // let urlKV = './assets/mocks/kv/analyse_supervisee_multiclasse.json';
     // let urlKV = './assets/mocks/kv/reg.json';
     // let urlKV = './assets/mocks/kv/copydatas.json';
-    let urlKV = './assets/mocks/kv/iris2d.json';
+    // let urlKV = './assets/mocks/kv/iris2d.json';
+    let urlKV = './assets/mocks/kv/AnalysisRegressionQ99.json';
     // let urlKV = './assets/mocks/kv/mainTargetValue.json';
     // let urlKV = './assets/mocks/kv/leafrules.khj';
     // let urlKV = './assets/mocks/kv/Filtered_Iris_AnalysisResults.khj';

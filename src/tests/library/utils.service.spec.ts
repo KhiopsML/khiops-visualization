@@ -778,4 +778,47 @@ describe('UtilsService', () => {
     // @ts-ignore
     expect(result).toEqual([1]);
   });
+
+  it('generateArrayPercentsFromArrayLengthAndDefaultGroupIndex - Some partitions are empty', () => {
+    // The default group index can be huge: the maximum width should be limited to half of the figure.
+    // The size of the default group index should be calculated as the difference between the number of modalities
+    // of the variable found in the "variablesStatistics" section.
+    const result =
+      UtilsService.generateArrayPercentsFromArrayLengthAndDefaultGroupIndex(
+        [['Monday'], ['Friday'], ['Sunday'], ['Saturday']],
+        7,
+        0,
+      );
+    expect(result).toEqual([
+      0, 50, 66.66666666666667, 83.33333333333334, 100.00000000000001,
+    ]);
+  });
+
+  it('generateArrayPercentsFromArrayLengthAndDefaultGroupIndex - All partitions are set', () => {
+    // A variable with groups that are not singletons (and with a default group index given with two modalities):
+    // "year_week" has 19 values (from "variablesStatistics"); counting the modalities listed in the
+    // non-default group index groups, we reach 17, so the default group index has a size of 2
+    // (which matches its description here).
+    const result =
+      UtilsService.generateArrayPercentsFromArrayLengthAndDefaultGroupIndex(
+        [
+          ['2024-W47', '2024-W48', '2024-W43', '2024-W42'],
+          ['2024-W36', '2024-W37', '2024-W38'],
+          ['2024-W50', '2024-W49'],
+          ['2024-W45', '2024-W40'],
+          ['2024-W46', '2024-W44'],
+          ['2024-W52', '2024-W53'],
+          ['2024-W51', '2024-W35'],
+          ['2024-W39'],
+          ['2024-W41'],
+        ],
+        19,
+        6,
+      );
+    expect(result).toEqual([
+      0, 21.05263157894737, 36.8421052631579, 47.36842105263158,
+      57.89473684210527, 68.42105263157896, 78.94736842105264,
+      89.47368421052633, 94.73684210526318, 100.00000000000003,
+    ]);
+  });
 });
