@@ -100,7 +100,7 @@ export class LevelDistributionGraphComponent
 
     // simulate click on dialog to make copy available
     setTimeout(() => {
-      this.levelGraph?.nativeElement.click();
+      this.triggerClickEvent();
 
       // Resize graph after delay to set its width
       this.resizeGraph();
@@ -128,6 +128,15 @@ export class LevelDistributionGraphComponent
         TYPES.LEVEL_DISTRIBUTION,
       );
     }
+  }
+
+  private triggerClickEvent() {
+    const trustedClick = new CustomEvent('trustedClick', {
+      bubbles: true,
+      cancelable: true,
+      composed: true,
+    });
+    this.levelGraph?.nativeElement.dispatchEvent(trustedClick);
   }
 
   onScaleChanged(value: number) {

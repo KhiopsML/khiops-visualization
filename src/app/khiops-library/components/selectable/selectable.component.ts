@@ -71,4 +71,9 @@ export class SelectableComponent
       this.selectableService.setSelectedArea(this);
     }
   }
+
+  @HostListener('trustedClick', ['$event'])
+  trustedClick() {
+    this.selectableService.setSelectedArea(this);
+  }
 }
