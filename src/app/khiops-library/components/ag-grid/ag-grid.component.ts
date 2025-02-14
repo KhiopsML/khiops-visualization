@@ -479,6 +479,9 @@ export class AgGridComponent
 
     // Update the table
     this.updateTable();
+
+    // When filtering a column, the selection is lost. #246
+    this.restoreState();
   }
 
   checkIsSmallDiv() {
@@ -669,52 +672,52 @@ export class AgGridComponent
   }
 
   restoreState() {
-    setTimeout(() => {
-      if (this.id) {
-        const PREV_STATE = this.ls.get(
-          LS.OPTIONS_AG_GRID + '_' + this.id.toUpperCase(),
-        );
-        const state = (PREV_STATE && JSON.parse(PREV_STATE)) || {};
+    // setTimeout(() => {
+    if (this.id) {
+      const PREV_STATE = this.ls.get(
+        LS.OPTIONS_AG_GRID + '_' + this.id.toUpperCase(),
+      );
+      const state = (PREV_STATE && JSON.parse(PREV_STATE)) || {};
 
-        if (
-          this.displayedColumns &&
-          state.sortState &&
-          this.gridOptions.columnApi
-        ) {
-          // First reorder state according to displayed columns order
-          const sortedState: any = [];
-          for (let i = 0; i < this.displayedColumns.length; i++) {
-            const currentState = state.sortState.find(
-              (e: any) => e.colId === this.displayedColumns?.[i]?.headerName,
-            );
-            if (currentState) {
-              sortedState.push(currentState);
-            }
+      if (
+        this.displayedColumns &&
+        state.sortState &&
+        this.gridOptions.columnApi
+      ) {
+        // First reorder state according to displayed columns order
+        const sortedState: any = [];
+        for (let i = 0; i < this.displayedColumns.length; i++) {
+          const currentState = state.sortState.find(
+            (e: any) => e.colId === this.displayedColumns?.[i]?.headerName,
+          );
+          if (currentState) {
+            sortedState.push(currentState);
           }
-          state.sortState = sortedState;
+        }
+        state.sortState = sortedState;
 
-          // Remove width and hide managment from ag lib
-          for (let i = 0; i < state.sortState.length; i++) {
-            state.sortState[i] && delete state.sortState[i].width;
-            state.sortState[i] && delete state.sortState[i].hide;
-          }
-          this.gridOptions.columnApi.applyColumnState({
-            state: state.sortState,
-            applyOrder: true,
-          });
+        // Remove width and hide managment from ag lib
+        for (let i = 0; i < state.sortState.length; i++) {
+          state.sortState[i] && delete state.sortState[i].width;
+          state.sortState[i] && delete state.sortState[i].hide;
         }
-        // Restore search
-        this.searchInput = this.ls.get(
-          LS.OPTIONS_AG_GRID_SEARCH + '_' + this.id.toUpperCase(),
-          '',
-        );
-        if (this.searchInput) {
-          this.showSearchForm();
-          this.search();
-        }
+        this.gridOptions.columnApi.applyColumnState({
+          state: state.sortState,
+          applyOrder: true,
+        });
       }
+      // Restore search
+      this.searchInput = this.ls.get(
+        LS.OPTIONS_AG_GRID_SEARCH + '_' + this.id.toUpperCase(),
+        '',
+      );
+      if (this.searchInput) {
+        this.showSearchForm();
+        this.search();
+      }
+    }
 
-      this.selectNode(this.selectedVariable);
-    });
+    this.selectNode(this.selectedVariable);
+    // });
   }
 }
