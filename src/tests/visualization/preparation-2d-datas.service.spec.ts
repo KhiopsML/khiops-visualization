@@ -142,5 +142,29 @@ describe('Visualization', () => {
       expect(values['PROB_CELL_REVERSE']).toEqual([0, 1]);
       expect(values['PROB_CELL_WITH_TARGET']).toEqual([0, 1]);
     });
+
+    it('getGlobalMinAndMax2dValues should return valid datas - No target [bi2, R1]', () => {
+      const fileDatas = require('../../assets/mocks/kv/bi2.json');
+      appService.setFileDatas(fileDatas);
+      preparation2dDatasService.initialize();
+
+      const variable = preparation2dDatasService.getVariablesd2Datas();
+      const values =
+        preparation2dDatasService.getGlobalMinAndMax2dValues(variable);
+
+      expect(values['CELL_INTEREST']).toEqual([Infinity, -Infinity]);
+      expect(values['FREQUENCY']).toEqual([1, 44030]);
+      expect(values['FREQUENCY_CELL']).toEqual([1, 44030]);
+      expect(values['MUTUAL_INFO']).toEqual([
+        -0.0027743422416338388, 0.0027743422416338388,
+      ]);
+      expect(values['MUTUAL_INFO_TARGET_WITH_CELL']).toEqual([
+        -0.0027743422416338388, 0.0027743422416338388,
+      ]);
+      expect(values['PROB_CELL']).toEqual([0, 1]);
+      expect(values['PROB_CELL_REVERSE']).toEqual([0, 1]);
+      expect(values['PROB_CELL_WITH_TARGET']).toEqual([0, 1]);
+      expect(values['PROB_TARGET_WITH_CELL']).toEqual([0, 1]);
+    });
   });
 });
