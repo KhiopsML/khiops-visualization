@@ -820,9 +820,7 @@ export class Preparation2dDatasService {
             undefined,
             0,
           );
-        currentRes[MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL]!.push(
-          matrixValues!,
-        );
+        currentRes[MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL] = matrixValues!;
 
         graphMode = {
           mode: MATRIX_MODES.CELL_INTEREST,
@@ -834,7 +832,7 @@ export class Preparation2dDatasService {
             undefined,
             0,
           );
-        currentRes[MATRIX_MODES.CELL_INTEREST]!.push(matrixValues!);
+        currentRes[MATRIX_MODES.CELL_INTEREST] = matrixValues!;
 
         for (let j = 0; j < inputDatas.matrixCellDatas!.length; j++) {
           const cellFreqs = inputDatas.matrixCellDatas?.[j]?.cellFreqs;

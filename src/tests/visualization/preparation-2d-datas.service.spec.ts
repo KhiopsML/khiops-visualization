@@ -119,5 +119,28 @@ describe('Visualization', () => {
       expect(currentCellDatas?.values[0]![0]!.interval).toEqual(2);
       expect(currentCellDatas?.values[0]![1]!.interval).toEqual(3.05);
     });
+
+    it('getGlobalMinAndMax2dValues should return valid datas [co-oc, R1]', () => {
+      const fileDatas = require('../../assets/mocks/kv/co-oc.json');
+      appService.setFileDatas(fileDatas);
+      preparation2dDatasService.initialize();
+
+      const values = preparation2dDatasService.getGlobalMinAndMax2dValues(
+        preparation2dDatasService.getVariablesd2Datas(),
+      );
+      expect(values['MUTUAL_INFO_TARGET_WITH_CELL']).toEqual([
+        -0.06620028577546967, 0.06620028577546967,
+      ]);
+      expect(values['MUTUAL_INFO']).toEqual([
+        -0.06620028577546967, 0.06620028577546967,
+      ]);
+      expect(values['CELL_INTEREST']).toEqual([0.0159151, 0.499678]);
+      expect(values['FREQUENCY']).toEqual([339, 343]);
+      expect(values['FREQUENCY_CELL']).toEqual([6, 219]);
+      expect(values['PROB_CELL']).toEqual([0, 1]);
+      expect(values['PROB_TARGET_WITH_CELL']).toEqual([0, 1]);
+      expect(values['PROB_CELL_REVERSE']).toEqual([0, 1]);
+      expect(values['PROB_CELL_WITH_TARGET']).toEqual([0, 1]);
+    });
   });
 });
