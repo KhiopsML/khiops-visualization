@@ -11,8 +11,11 @@ import * as _ from 'lodash'; // Important to import lodash in karma
 import { TranslateModule } from '@ngstack/translate';
 import { Preparation2dDatasService } from '../../app/khiops-visualization/providers/preparation2d-datas.service';
 import { AppService } from '../../app/khiops-visualization/providers/app.service';
+import { PreparationDatasService } from '../../app/khiops-visualization/providers/preparation-datas.service';
+import { REPORT } from '../../app/khiops-library/enum/report';
 
 let preparation2dDatasService: Preparation2dDatasService;
+let preparationDatasService: PreparationDatasService;
 let appService: AppService;
 
 describe('Visualization', () => {
@@ -24,6 +27,7 @@ describe('Visualization', () => {
 
       // Inject services
       preparation2dDatasService = TestBed.inject(Preparation2dDatasService);
+      preparationDatasService = TestBed.inject(PreparationDatasService);
       appService = TestBed.inject(AppService);
     });
 
@@ -160,6 +164,33 @@ describe('Visualization', () => {
       ]);
       expect(values['MUTUAL_INFO_TARGET_WITH_CELL']).toEqual([
         -0.0027743422416338388, 0.0027743422416338388,
+      ]);
+      expect(values['PROB_CELL']).toEqual([0, 1]);
+      expect(values['PROB_CELL_REVERSE']).toEqual([0, 1]);
+      expect(values['PROB_CELL_WITH_TARGET']).toEqual([0, 1]);
+      expect(values['PROB_TARGET_WITH_CELL']).toEqual([0, 1]);
+    });
+
+    it('getGlobalMinAndMax2dValues should return valid datas - Regression [irisR, R1]', () => {
+      const fileDatas = require('../../assets/mocks/kv/irisR.json');
+      appService.setFileDatas(fileDatas);
+      preparationDatasService.initialize();
+      preparation2dDatasService.initialize();
+
+      const variable = preparationDatasService.getVariablesDatas(
+        REPORT.PREPARATION_REPORT,
+      );
+      const values =
+        preparation2dDatasService.getGlobalMinAndMax2dValues(variable);
+
+      expect(values['CELL_INTEREST']).toEqual([Infinity, -Infinity]);
+      expect(values['FREQUENCY']).toEqual([1, 68]);
+      expect(values['FREQUENCY_CELL']).toEqual([1, 68]);
+      expect(values['MUTUAL_INFO']).toEqual([
+        -0.20633751581298684, 0.20633751581298684,
+      ]);
+      expect(values['MUTUAL_INFO_TARGET_WITH_CELL']).toEqual([
+        -0.20633751581298684, 0.20633751581298684,
       ]);
       expect(values['PROB_CELL']).toEqual([0, 1]);
       expect(values['PROB_CELL_REVERSE']).toEqual([0, 1]);
