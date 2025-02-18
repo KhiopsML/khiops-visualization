@@ -17,7 +17,38 @@
       <h2 title="{{ 'TOOLTIPS.DISTRIBUTION.TITLE' | translate }}">
         {{ 'GLOBAL.DENSITY' | translate }}
       </h2>
+      <div
+        class="app-histogram-slider"
+        fxFlex
+        style="width: 100%"
+        *ngIf="histogramNumber > 1"
+      >
+        <span> {{ 'GLOBAL.INTERPRETABLE_HISTOGRAM' | translate }}</span>
+        <mat-slider
+          [max]="histogramNumber - 1"
+          [min]="0"
+          [step]="1"
+          style="width: 100%"
+        >
+          <input
+            [(ngModel)]="defaultInterpretableHistogramNumber"
+            matSliderThumb
+          />
+        </mat-slider>
+        <mat-slider
+          [max]="histogramNumber - 1"
+          [min]="0"
+          [step]="1"
+          (input)="
+            onInterpretableHistogramChanged($event?.target?.['valueAsNumber'])
+          "
+          style="width: 100%"
+        >
+          <input [(ngModel)]="interpretableHistogramNumber" matSliderThumb />
+        </mat-slider>
+      </div>
     </div>
+
     <kl-legend
       [inputDatas]="datas"
       [type]="'histogram'"

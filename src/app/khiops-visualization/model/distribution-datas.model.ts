@@ -18,6 +18,9 @@ export class DistributionDatasModel {
   distributionType: string = HistogramType.YLIN;
   distributionTypeX: string | undefined = '';
   distributionTypeY: string | undefined = '';
+  interpretableHistogramNumber: number = 0;
+  defaultInterpretableHistogramNumber: number = 0;
+  histogramNumber: number = 0;
 
   distributionGraphOptionsX: DistributionOptionsI | undefined = undefined;
   distributionGraphOptionsY: DistributionOptionsI | undefined = undefined;

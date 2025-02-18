@@ -258,6 +258,13 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
     this.selectedItemChanged.emit(index);
   }
 
+  onInterpretableHistogramChanged(index: number) {
+    this.distributionDatasService.getHistogramGraphDatas(
+      this.selectedVariable!,
+      index,
+    );
+  }
+
   onSelectedTargetDistributionGraphItemChanged(index: number) {
     this.activeEntries = index;
 

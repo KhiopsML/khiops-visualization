@@ -3,6 +3,28 @@
   top: 0;
   padding: 1px;
 
+  .app-histogram-slider {
+    min-width: 150px;
+    position: relative;
+    margin: 0 2rem 0 1rem;
+
+    span {
+      position: fixed;
+      font-size: 10px;
+      color: var(--selected);
+      padding-left: 10px;
+    }
+
+    ::ng-deep mat-slider:nth-of-type(1) {
+      position: absolute;
+      .mdc-slider__thumb-knob {
+        border-color: var(--selected) !important;
+        box-shadow: 0 0px 4px rgba(0, 0, 0, 0.8);
+        border-radius: 0;
+      }
+    }
+  }
+
   #histogram-container {
     overflow: auto;
     display: flex;

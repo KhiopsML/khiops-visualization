@@ -69,6 +69,14 @@
       [datas]="distributionDatas?.histogramDatas"
       [selectedItem]="activeEntries"
       (selectedItemChanged)="onSelectedDistributionGraphItemChanged($event)"
+      [interpretableHistogramNumber]="
+        distributionDatas?.interpretableHistogramNumber
+      "
+      [defaultInterpretableHistogramNumber]="
+        distributionDatas?.defaultInterpretableHistogramNumber - 1
+      "
+      [histogramNumber]="distributionDatas?.histogramNumber"
+      (interpretableHistogramChanged)="onInterpretableHistogramChanged($event)"
     >
     </app-histogram>
     <app-target-distribution-graph

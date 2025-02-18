@@ -185,7 +185,7 @@ describe('Visualization', () => {
       expect(res!.datasets[0]!.extra[3].defaultGroupIndex).toEqual(true);
     });
 
-    it('getdistributionGraphDatas should return valid datas [defaultGroup, Numerical, R1, Missing informations Non supervised]', () => {
+    it('getHistogramGraphDatas should return valid datas [defaultGroup, Numerical, R1, Missing informations Non supervised]', () => {
       const fileDatas = require('../../assets/mocks/kv/defaultGroup.json');
       appService.setFileDatas(fileDatas);
 

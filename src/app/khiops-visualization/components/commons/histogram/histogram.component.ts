@@ -58,11 +58,17 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   private resizeSubject = new Subject<ResizedEvent>();
 
   // Outputs
-  @Output() private selectedItemChanged: EventEmitter<any> = new EventEmitter();
+  @Output() private selectedItemChanged: EventEmitter<number> =
+    new EventEmitter();
+  @Output() private interpretableHistogramChanged: EventEmitter<number> =
+    new EventEmitter();
 
   // Dynamic values
   @Input() public datas?: HistogramValuesI[];
   @Input() private selectedItem: number = 0;
+  @Input() public histogramNumber: number = 0;
+  @Input() public interpretableHistogramNumber: number = 0;
+  @Input() public defaultInterpretableHistogramNumber: number = 0;
   @Input() public graphOptionsX: DistributionOptionsI | undefined = undefined;
   @Input() public graphOptionsY: DistributionOptionsI | undefined = undefined;
 
@@ -182,6 +188,11 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 
   public showActiveEntries() {
     this.histogramSelectedCanvas!.style.display = 'block';
+  }
+
+  public onInterpretableHistogramChanged(interpretableHistogram: number) {
+    this.interpretableHistogram = interpretableHistogram;
+    this.interpretableHistogramChanged.emit(interpretableHistogram);
   }
 
   override ngOnDestroy() {

@@ -583,45 +583,62 @@ export class DistributionDatasService {
    */
   getHistogramGraphDatas(
     selectedVariable: PreparationVariableModel | TreePreparationVariableModel,
+    interpretableHistogramNumber?: number,
   ): HistogramValuesI[] | undefined {
     const varDatas =
       this.appService.appDatas?.preparationReport
-        ?.variablesDetailedStatistics?.[selectedVariable?.rank]?.dataGrid;
+        ?.variablesDetailedStatistics?.[selectedVariable?.rank]?.modlHistograms;
     let histogramGraphDetails: HistogramValuesI[] | undefined = undefined;
 
     if (varDatas) {
       this.distributionDatas.setDefaultGraphOptions();
 
       histogramGraphDetails = [];
-      const totalFreq = varDatas.frequencies?.reduce(
-        (partialSum: number, a: number) => partialSum + a,
-        0,
-      );
+      const histogramIndex =
+        interpretableHistogramNumber !== undefined
+          ? interpretableHistogramNumber
+          : varDatas.interpretableHistogramNumber - 1;
+      const histogram = varDatas.histograms[histogramIndex];
+      this.distributionDatas.defaultInterpretableHistogramNumber =
+        varDatas.interpretableHistogramNumber;
+      this.distributionDatas.interpretableHistogramNumber = histogramIndex;
+      this.distributionDatas.histogramNumber = varDatas.histogramNumber;
+      if (histogram) {
+        const totalFreq = histogram.frequencies?.reduce(
+          (partialSum: number, a: number) => partialSum + a,
+          0,
+        );
 
-      varDatas.dimensions[0]?.partition.forEach(
-        //@ts-ignore
-        (partition: number[], i: number) => {
-          // partition is always numbers in this case
-          if (partition.length !== 0) {
-            const delta = partition[1]! - partition[0]!;
-            let value = varDatas.frequencies![i]! / totalFreq! / delta;
+        histogram.bounds.forEach((bound: number, i: number) => {
+          if (i < histogram.bounds.length - 1) {
+            let delta = histogram.bounds[i + 1]! - bound;
+            if (delta < 1) {
+              // Important to limit delta to 1 to avoid positive log values
+              delta = 1;
+            }
+
+            let value = histogram.frequencies![i]! / totalFreq! / delta;
             let logValue = Math.log10(value);
+
             if (logValue === -Infinity) {
               logValue = 0;
             }
             const data: HistogramValuesI = {
-              frequency: varDatas.frequencies![i] || 0,
-              partition: partition,
+              frequency: histogram.frequencies![i] || 0,
+
+              partition: [bound, histogram.bounds[i + 1]!],
+
               value: value,
               logValue: logValue,
             };
+
             histogramGraphDetails?.push(data);
           }
-        },
-      );
+        });
+      }
     }
-
     this.distributionDatas.histogramDatas = histogramGraphDetails;
+
     return histogramGraphDetails;
   }
 

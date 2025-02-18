@@ -78,3 +78,23 @@ export interface PreparationVariableStatistic {
   missingNumber?: number;
   sparseMissingNumber?: number; // unused var
 }
+
+export interface ModlHistograms {
+  histogramNumber: number;
+  interpretableHistogramNumber: number;
+  truncationEpsilon: number;
+  removedSingularIntervalNumber: number;
+  granularities: number[];
+  intervalNumbers: number[];
+  peakIntervalNumbers: number[];
+  spikeIntervalNumbers: number[];
+  emptyIntervalNumbers: number[];
+  levels: number[];
+  informationRates: number[];
+  histograms: Histogram[];
+}
+
+export interface Histogram {
+  bounds: number[];
+  frequencies: number[];
+}

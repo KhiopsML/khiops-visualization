@@ -8,7 +8,7 @@ import { DynamicI } from '@khiops-library/interfaces/globals';
 import { ModelingReport } from './modeling-report';
 import { TrainEvaluationReport } from './train-evaluation-report';
 import { TestEvaluationReport } from './test-evaluation-report';
-import { PreparationReport } from './preparation-report';
+import { ModlHistograms, PreparationReport } from './preparation-report';
 import { TreePreparationReport } from './tree-preparation-report';
 import { BivariatePreparationReport } from './bivariate-preparation-report';
 import { TextPreparationReport } from './text-preparation-report';
@@ -42,6 +42,7 @@ interface Log {
 export interface VariableDetail {
   dataGrid: DataGrid;
   inputValues?: InputValues;
+  modlHistograms?: ModlHistograms;
 }
 
 export interface DataGrid {
