@@ -57,8 +57,8 @@ export class HistogramTooltipComponent {
     if (left < 10) {
       left = 10;
     }
-    if (left > this.canvasW - 170) {
-      left = this.posX - 170;
+    if (left > this.canvasW - 200) {
+      left = this.posX - 200;
     }
     return left;
   }
