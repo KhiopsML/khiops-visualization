@@ -70,7 +70,7 @@ export class LegendComponent implements OnChanges {
         this.legend.push({
           name: this.translate.get('GLOBAL.DEFAULT_GROUP_INDEX'),
           color: UtilsService.hexToRGBa(this.colorSet?.domain[0]!, 0.3),
-          borderColor: 'color(a98-rgb 0.84 0.41 0.12)',
+          borderColor: UtilsService.hexToRGBa('#ff6600', 0.8),
         });
       }
     }
