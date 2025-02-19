@@ -118,7 +118,7 @@ export class HeaderToolsComponent {
 
               if (this.eltsToHide?.[0]) {
                 for (let i = 0; i < this.eltsToHide.length; i++) {
-                  this.eltsToHide[i].style.display = 'flex';
+                  this.eltsToHide[i].style.display = 'inline-flex';
                 }
               }
 

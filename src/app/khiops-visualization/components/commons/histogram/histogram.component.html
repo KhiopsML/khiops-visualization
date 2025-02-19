@@ -19,7 +19,7 @@
           {{ 'GLOBAL.DENSITY' | translate }}
         </h2>
         <div
-          class="app-histogram-slider"
+          class="app-histogram-slider screenshot-hide"
           fxFlex
           style="width: 100%"
           *ngIf="histogramNumber > 1"
@@ -49,12 +49,6 @@
           </mat-slider>
         </div>
       </div>
-
-      <kl-legend
-        [inputDatas]="datas"
-        [type]="'histogram'"
-        [colorSet]="colorSet"
-      ></kl-legend>
       <div class="comp-header-tools" fxLayout="row">
         <div>
           <button
@@ -63,7 +57,7 @@
             [matMenuTriggerFor]="graphOptionsXTypes"
           >
             {{ graphOptionsX?.selected | translate }}
-            <em>v</em>
+            <em class="screenshot-hide">v</em>
           </button>
           <mat-menu #graphOptionsXTypes>
             <button
@@ -82,7 +76,7 @@
             [matMenuTriggerFor]="graphOptionsYTypes"
           >
             {{ graphOptionsY?.selected | translate }}
-            <em>v</em>
+            <em class="screenshot-hide">v</em>
           </button>
           <mat-menu #graphOptionsYTypes>
             <button
