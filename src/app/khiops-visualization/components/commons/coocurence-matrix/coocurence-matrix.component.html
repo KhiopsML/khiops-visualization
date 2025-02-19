@@ -45,7 +45,8 @@
                   color="accent"
                   [matMenuTriggerFor]="matrixSelectTargets"
                 >
-                  {{ matrixTargets.selected }} <em>v</em>
+                  {{ matrixTargets.selected }}
+                  <em class="screenshot-hide">v</em>
                 </button>
                 <mat-menu #matrixSelectTargets>
                   <button
@@ -108,6 +109,7 @@
     </mat-tab>
   </mat-tab-group>
   <kl-matrix-toggle
+    class="screenshot-hide"
     [hidden]="!preparation2dDatas?.matrixDatas"
     [matrixOptions]="matrixOptions"
   ></kl-matrix-toggle>

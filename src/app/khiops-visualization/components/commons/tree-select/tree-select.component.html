@@ -11,7 +11,10 @@
     class="mat-elevation-z1"
   >
     <h1 fxFlex>{{ 'GLOBAL.DECISION_TREE' | translate }}</h1>
-    <kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">
+    <kl-btn-fullscreen
+      class="screenshot-hide"
+      (toggleFullscreen)="onToggleFullscreen($event)"
+    >
     </kl-btn-fullscreen>
   </div>
   <div id="tree-select-comp-content" fxFlex>

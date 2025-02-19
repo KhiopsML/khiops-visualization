@@ -23,7 +23,10 @@
       [type]="'chart-nd'"
       [colorSet]="colorSet"
     ></kl-legend>
-    <kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">
+    <kl-btn-fullscreen
+      class="screenshot-hide"
+      (toggleFullscreen)="onToggleFullscreen($event)"
+    >
     </kl-btn-fullscreen>
   </div>
   <kl-chart

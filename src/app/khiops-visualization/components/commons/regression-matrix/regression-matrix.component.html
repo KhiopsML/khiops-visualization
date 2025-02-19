@@ -14,9 +14,15 @@
           <kl-matrix-mode [matrixModes]="matrixModes"> </kl-matrix-mode>
         </div>
         <div fxLayout="row" fxLayoutAlign="end center">
-          <kl-matrix-toggle [matrixOptions]="matrixOptions"></kl-matrix-toggle>
+          <kl-matrix-toggle
+            class="screenshot-hide"
+            [matrixOptions]="matrixOptions"
+          ></kl-matrix-toggle>
         </div>
-        <kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">
+        <kl-btn-fullscreen
+          class="screenshot-hide"
+          (toggleFullscreen)="onToggleFullscreen($event)"
+        >
         </kl-btn-fullscreen>
       </div>
     </div>

@@ -44,10 +44,14 @@
             {{ 'GLOBAL.CONDITIONAL_ON_CONTEXT' | translate }}</mat-checkbox
           >
           <kl-matrix-toggle
+            class="screenshot-hide"
             [matrixOptions]="matrixOptions"
             (matrixOptionChange)="changeMatrixType($event)"
           ></kl-matrix-toggle>
-          <kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">
+          <kl-btn-fullscreen
+            class="screenshot-hide"
+            (toggleFullscreen)="onToggleFullscreen($event)"
+          >
           </kl-btn-fullscreen>
         </div>
         <kl-matrix

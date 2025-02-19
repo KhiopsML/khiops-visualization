@@ -8,12 +8,7 @@
     <div fxFlex fxLayout="row" fxLayoutAlign="start center">
       <div fxFlex fxLayout="row" fxLayoutAlign="start center">
         <h1>{{ titleWithoutDetails }}</h1>
-        <div
-          fxLayout="row"
-          class="screenshot-hide"
-          fxLayoutAlign="start center"
-          *ngIf="targetLift"
-        >
+        <div fxLayout="row" fxLayoutAlign="start center" *ngIf="targetLift">
           <button
             mat-stroked-button
             title="{{ 'TOOLTIPS.EVALUATION.GAIN_CHART.SELECT' | translate }}"
@@ -21,7 +16,7 @@
             color="accent"
             [matMenuTriggerFor]="targetLiftSelect"
           >
-            {{ targetLift.selected }} <em>v</em>
+            {{ targetLift.selected }} <em class="screenshot-hide">v</em>
           </button>
           <mat-menu #targetLiftSelect>
             <button

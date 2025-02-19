@@ -11,7 +11,8 @@
     [title]="matrixModes.selected?.tooltip || ''"
     [matMenuTriggerFor]="matrixModesTypes"
   >
-    {{ matrixModes.selected?.title | translate }} <em>v</em>
+    {{ matrixModes.selected?.title | translate }}
+    <em class="screenshot-hide">v</em>
   </button>
   <mat-menu #matrixModesTypes>
     <button
