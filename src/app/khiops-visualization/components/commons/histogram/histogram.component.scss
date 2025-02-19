@@ -55,6 +55,9 @@
     > div {
       overflow-x: auto;
       overflow-y: hidden;
+      > div {
+        min-height: 44px;
+      }
     }
   }
   #histogram-chart {
