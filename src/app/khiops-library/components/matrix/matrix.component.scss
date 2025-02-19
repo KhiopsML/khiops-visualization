@@ -105,7 +105,9 @@
       margin-top: 6px !important;
     }
   }
-
+  #matrix-comp-left {
+    min-width: 42px;
+  }
   #matrix-comp-right {
     max-width: 60px;
     width: 60px;
