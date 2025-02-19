@@ -589,11 +589,11 @@ export class DistributionDatasService {
       this.appService.appDatas?.preparationReport
         ?.variablesDetailedStatistics?.[selectedVariable?.rank];
     let histogramGraphDetails: HistogramValuesI[] | undefined = undefined;
-    if (varDatas?.modlHistograms) {
-      if (varDatas) {
-        this.distributionDatas.setDefaultGraphOptions();
-
-        histogramGraphDetails = [];
+    if (varDatas) {
+      this.distributionDatas.setDefaultGraphOptions();
+      histogramGraphDetails = [];
+      if (varDatas?.modlHistograms) {
+        // modlHistograms is given: there are multiple histograms #238
         const histogramIndex =
           interpretableHistogramNumber !== undefined
             ? interpretableHistogramNumber
@@ -626,9 +626,7 @@ export class DistributionDatasService {
               }
               const data: HistogramValuesI = {
                 frequency: histogram.frequencies![i] || 0,
-
                 partition: [bound, histogram.bounds[i + 1]!],
-
                 value: value,
                 logValue: logValue,
               };
@@ -637,12 +635,8 @@ export class DistributionDatasService {
             }
           });
         }
-      }
-    } else {
-      if (varDatas) {
-        this.distributionDatas.setDefaultGraphOptions();
-
-        histogramGraphDetails = [];
+      } else {
+        // modlHistograms is not given: take histogram from dataGrid
         const totalFreq = varDatas.dataGrid.frequencies?.reduce(
           (partialSum: number, a: number) => partialSum + a,
           0,
