@@ -592,7 +592,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     ratio: number = 0,
     selectedItem: number = -1,
   ) {
-    if (ctx) {
+    if (ctx && bar) {
       let barX: number, barH: number, barW: number;
 
       if (this.graphOptionsX?.selected === HistogramType.XLIN) {

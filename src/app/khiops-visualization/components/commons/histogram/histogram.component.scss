@@ -4,12 +4,13 @@
   padding: 1px;
 
   .app-histogram-slider {
-    min-width: 150px;
+    min-width: 170px;
     position: relative;
     margin: 0 2rem 0 1rem;
 
     span {
-      position: fixed;
+      top: 2px;
+      position: absolute;
       font-size: 10px;
       color: var(--selected);
       padding-left: 10px;
@@ -46,9 +47,15 @@
     background-color: var(--bgColor);
   }
   .comp-header {
+    overflow: hidden;
     padding-top: 1rem;
     margin-top: 1px !important;
     min-height: 54px !important;
+    padding-bottom: 10px;
+    > div {
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
   }
   #histogram-chart {
     width: 100%;

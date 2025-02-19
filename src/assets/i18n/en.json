@@ -104,7 +104,7 @@
     "MESSAGE": "Enable Dark mode"
   },
   "GLOBAL": {
-    "INTERPRETABLE_HISTOGRAM": "Best interpretable histogram",
+    "INTERPRETABLE_HISTOGRAM": "Default interpretable histogram",
     "NO_DERIVATION_RULE": "No derivation rule",
     "BOUNDS": "Bounds",
     "DENSITY": "Density",

@@ -13,85 +13,87 @@
     <span>{{ 'GLOBAL.BIG_FILES_LOADING_WARNING' | translate }}</span>
   </div>
   <div fxLayout="row" fxLayoutAlign="end center" class="comp-header">
-    <div fxFlex fxLayout="row" fxLayoutAlign="start center">
-      <h2 title="{{ 'TOOLTIPS.DISTRIBUTION.TITLE' | translate }}">
-        {{ 'GLOBAL.DENSITY' | translate }}
-      </h2>
-      <div
-        class="app-histogram-slider"
-        fxFlex
-        style="width: 100%"
-        *ngIf="histogramNumber > 1"
-      >
-        <span> {{ 'GLOBAL.INTERPRETABLE_HISTOGRAM' | translate }}</span>
-        <mat-slider
-          [max]="histogramNumber - 1"
-          [min]="0"
-          [step]="1"
+    <div fxFlexFill>
+      <div fxFlex fxLayout="row" fxLayoutAlign="start center">
+        <h2 title="{{ 'TOOLTIPS.DISTRIBUTION.TITLE' | translate }}">
+          {{ 'GLOBAL.DENSITY' | translate }}
+        </h2>
+        <div
+          class="app-histogram-slider"
+          fxFlex
           style="width: 100%"
+          *ngIf="histogramNumber > 1"
         >
-          <input
-            [(ngModel)]="defaultInterpretableHistogramNumber"
-            matSliderThumb
-          />
-        </mat-slider>
-        <mat-slider
-          [max]="histogramNumber - 1"
-          [min]="0"
-          [step]="1"
-          (input)="
-            onInterpretableHistogramChanged($event?.target?.['valueAsNumber'])
-          "
-          style="width: 100%"
-        >
-          <input [(ngModel)]="interpretableHistogramNumber" matSliderThumb />
-        </mat-slider>
+          <span> {{ 'GLOBAL.INTERPRETABLE_HISTOGRAM' | translate }}</span>
+          <mat-slider
+            [max]="histogramNumber - 1"
+            [min]="0"
+            [step]="1"
+            style="width: 100%"
+          >
+            <input
+              [(ngModel)]="defaultInterpretableHistogramNumber"
+              matSliderThumb
+            />
+          </mat-slider>
+          <mat-slider
+            [max]="histogramNumber - 1"
+            [min]="0"
+            [step]="1"
+            (input)="
+              onInterpretableHistogramChanged($event?.target?.['valueAsNumber'])
+            "
+            style="width: 100%"
+          >
+            <input [(ngModel)]="interpretableHistogramNumber" matSliderThumb />
+          </mat-slider>
+        </div>
       </div>
-    </div>
 
-    <kl-legend
-      [inputDatas]="datas"
-      [type]="'histogram'"
-      [colorSet]="colorSet"
-    ></kl-legend>
-    <div class="comp-header-tools" fxLayout="row">
-      <div>
-        <button
-          mat-stroked-button
-          color="primary"
-          [matMenuTriggerFor]="graphOptionsXTypes"
-        >
-          {{ graphOptionsX?.selected | translate }}
-          <em>v</em>
-        </button>
-        <mat-menu #graphOptionsXTypes>
+      <kl-legend
+        [inputDatas]="datas"
+        [type]="'histogram'"
+        [colorSet]="colorSet"
+      ></kl-legend>
+      <div class="comp-header-tools" fxLayout="row">
+        <div>
           <button
-            mat-menu-item
-            *ngFor="let opt of graphOptionsX?.types"
-            (click)="changeGraphTypeX(opt)"
+            mat-stroked-button
+            color="primary"
+            [matMenuTriggerFor]="graphOptionsXTypes"
           >
-            {{ opt | translate }}
+            {{ graphOptionsX?.selected | translate }}
+            <em>v</em>
           </button>
-        </mat-menu>
-      </div>
-      <div>
-        <button
-          mat-stroked-button
-          color="primary"
-          [matMenuTriggerFor]="graphOptionsYTypes"
-        >
-          {{ graphOptionsY?.selected | translate }}
-          <em>v</em>
-        </button>
-        <mat-menu #graphOptionsYTypes>
+          <mat-menu #graphOptionsXTypes>
+            <button
+              mat-menu-item
+              *ngFor="let opt of graphOptionsX?.types"
+              (click)="changeGraphTypeX(opt)"
+            >
+              {{ opt | translate }}
+            </button>
+          </mat-menu>
+        </div>
+        <div>
           <button
-            mat-menu-item
-            *ngFor="let opt of graphOptionsY?.types"
-            (click)="changeGraphTypeY(opt)"
+            mat-stroked-button
+            color="primary"
+            [matMenuTriggerFor]="graphOptionsYTypes"
           >
-            {{ opt | translate }}
+            {{ graphOptionsY?.selected | translate }}
+            <em>v</em>
           </button>
-        </mat-menu>
+          <mat-menu #graphOptionsYTypes>
+            <button
+              mat-menu-item
+              *ngFor="let opt of graphOptionsY?.types"
+              (click)="changeGraphTypeY(opt)"
+            >
+              {{ opt | translate }}
+            </button>
+          </mat-menu>
+        </div>
       </div>
     </div>
   </div>
