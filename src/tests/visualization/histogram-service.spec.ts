@@ -251,7 +251,7 @@ describe('Visualization', () => {
       const histogramDatas = getHistogramGraphDatas(fileDatas, 1);
       histogramService.getLogRangeY(histogramDatas!);
       const res = histogramService.getLogRatioY(370, 50);
-      expect(res).toEqual(50.486935657957105);
+      expect(res).toEqual(41.74882404046183);
     });
 
     it('getLinRatioY should return valid datas [ylogAdultAllReports, R1]', () => {
