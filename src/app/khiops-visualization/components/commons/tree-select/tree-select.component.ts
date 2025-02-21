@@ -35,9 +35,10 @@ import {
 import { TreePreparationState } from '@khiops-visualization/model/tree-preparation-datas.model';
 
 @Component({
-  selector: 'app-tree-select',
-  templateUrl: './tree-select.component.html',
-  styleUrls: ['./tree-select.component.scss'],
+    selector: 'app-tree-select',
+    templateUrl: './tree-select.component.html',
+    styleUrls: ['./tree-select.component.scss'],
+    standalone: false
 })
 export class TreeSelectComponent
   extends SelectableComponent

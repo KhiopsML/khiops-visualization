@@ -1,11 +1,11 @@
-@import '../app/khiops-library/components/ag-grid/ag-grid-theme.scss';
-@import '../app/khiops-library/components/ag-grid/ag-theme-balham.scss';
-@import '../app/khiops-library/components/ag-grid/ag-theme-material.scss';
-@import '../../libs/khiops-treeview/treeview.scss';
-@import '../../libs/khiops-hypertree/dist/d3-hypertree-light';
-@import 'material.scss';
-@import 'ag-grid.scss';
-@import 'as-split.scss';
+@use'../app/khiops-library/components/ag-grid/ag-grid-theme.scss';
+@use'../app/khiops-library/components/ag-grid/ag-theme-balham.scss';
+@use'../app/khiops-library/components/ag-grid/ag-theme-material.scss';
+@use'../../libs/khiops-treeview/treeview.scss';
+@use'../../libs/khiops-hypertree/dist/d3-hypertree-light';
+@use'material.scss';
+@use'ag-grid.scss';
+@use'as-split.scss';
 html,
 body {
   margin: 0;

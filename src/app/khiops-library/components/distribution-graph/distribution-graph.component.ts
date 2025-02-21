@@ -30,10 +30,11 @@ import { LS } from '@khiops-library/enum/ls';
 import { Ls } from '@khiops-library/providers/ls.service';
 
 @Component({
-  selector: 'kl-distribution-graph',
-  templateUrl: './distribution-graph.component.html',
-  styleUrls: ['./distribution-graph.component.scss'],
-  providers: [ToPrecisionPipe],
+    selector: 'kl-distribution-graph',
+    templateUrl: './distribution-graph.component.html',
+    styleUrls: ['./distribution-graph.component.scss'],
+    providers: [ToPrecisionPipe],
+    standalone: false
 })
 export class DistributionGraphComponent
   extends ScrollableGraphComponent

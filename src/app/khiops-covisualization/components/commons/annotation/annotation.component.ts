@@ -22,9 +22,10 @@ import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.c
 import { COMPONENT_TYPES } from '../../../../khiops-library/enum/component-types';
 
 @Component({
-  selector: 'app-annotation',
-  templateUrl: './annotation.component.html',
-  styleUrls: ['./annotation.component.scss'],
+    selector: 'app-annotation',
+    templateUrl: './annotation.component.html',
+    styleUrls: ['./annotation.component.scss'],
+    standalone: false
 })
 export class AnnotationComponent
   extends SelectableComponent

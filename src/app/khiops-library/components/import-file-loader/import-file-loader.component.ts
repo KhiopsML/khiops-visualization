@@ -11,9 +11,10 @@ import { TranslateService } from '@ngstack/translate';
 import { FileModel } from '../../model/file.model';
 
 @Component({
-  selector: 'kl-import-file-loader',
-  templateUrl: './import-file-loader.component.html',
-  styleUrls: ['./import-file-loader.component.scss'],
+    selector: 'kl-import-file-loader',
+    templateUrl: './import-file-loader.component.html',
+    styleUrls: ['./import-file-loader.component.scss'],
+    standalone: false
 })
 export class ImportFileLoaderComponent implements OnInit {
   @Output() datasLoaded: EventEmitter<any> = new EventEmitter();

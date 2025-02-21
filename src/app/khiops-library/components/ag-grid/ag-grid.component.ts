@@ -49,9 +49,10 @@ import { DynamicI } from '@khiops-library/interfaces/globals';
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
 @Component({
-  selector: 'kl-ag-grid',
-  templateUrl: './ag-grid.component.html',
-  styleUrls: ['./ag-grid.component.scss'],
+    selector: 'kl-ag-grid',
+    templateUrl: './ag-grid.component.html',
+    styleUrls: ['./ag-grid.component.scss'],
+    standalone: false
 })
 export class AgGridComponent
   extends SelectableComponent

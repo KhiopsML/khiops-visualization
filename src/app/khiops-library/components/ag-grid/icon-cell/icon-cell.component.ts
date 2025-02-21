@@ -12,8 +12,9 @@ import {
 } from '@ag-grid-community/core';
 
 @Component({
-  selector: 'kl-icon-cell',
-  templateUrl: './icon-cell.component.html',
+    selector: 'kl-icon-cell',
+    templateUrl: './icon-cell.component.html',
+    standalone: false
 })
 export class IconCellComponent implements AgRendererComponent {
   public params: any;

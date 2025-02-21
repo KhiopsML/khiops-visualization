@@ -30,10 +30,11 @@ import { TYPES } from '@khiops-library/enum/types';
 import { Variable2dModel } from '@khiops-visualization/model/variable-2d.model';
 
 @Component({
-  selector: 'app-level-distribution-graph',
-  templateUrl: './level-distribution-graph.component.html',
-  styleUrls: ['./level-distribution-graph.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-level-distribution-graph',
+    templateUrl: './level-distribution-graph.component.html',
+    styleUrls: ['./level-distribution-graph.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class LevelDistributionGraphComponent
   extends ScrollableGraphComponent

@@ -47,9 +47,10 @@ import {
 } from '@khiops-visualization/selectors/tree-preparation.selector';
 
 @Component({
-  selector: 'app-tree-hyper',
-  templateUrl: './tree-hyper.component.html',
-  styleUrls: ['./tree-hyper.component.scss'],
+    selector: 'app-tree-hyper',
+    templateUrl: './tree-hyper.component.html',
+    styleUrls: ['./tree-hyper.component.scss'],
+    standalone: false
 })
 export class TreeHyperComponent
   extends SelectableComponent

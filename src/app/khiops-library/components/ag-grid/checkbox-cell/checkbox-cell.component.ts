@@ -11,8 +11,9 @@ import { ICellRendererParams } from '@ag-grid-community/core';
 import { GridCheckboxEventI } from '@khiops-library/interfaces/events';
 
 @Component({
-  selector: 'kl-checkbox-cell',
-  templateUrl: './checkbox-cell.component.html',
+    selector: 'kl-checkbox-cell',
+    templateUrl: './checkbox-cell.component.html',
+    standalone: false
 })
 export class CheckboxCellComponent implements AgRendererComponent {
   public params: ICellRendererParams | undefined;

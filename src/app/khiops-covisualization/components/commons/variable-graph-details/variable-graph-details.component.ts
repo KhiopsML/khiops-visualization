@@ -31,9 +31,10 @@ import { HistogramType } from '@khiops-visualization/components/commons/histogra
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 
 @Component({
-  selector: 'app-variable-graph-details',
-  templateUrl: './variable-graph-details.component.html',
-  styleUrls: ['./variable-graph-details.component.scss'],
+    selector: 'app-variable-graph-details',
+    templateUrl: './variable-graph-details.component.html',
+    styleUrls: ['./variable-graph-details.component.scss'],
+    standalone: false
 })
 export class VariableGraphDetailsComponent
   implements OnChanges, OnDestroy, AfterViewInit

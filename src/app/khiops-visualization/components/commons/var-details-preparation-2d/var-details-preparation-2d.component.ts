@@ -17,9 +17,10 @@ import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 
 @Component({
-  selector: 'app-var-details-preparation-2d',
-  templateUrl: './var-details-preparation-2d.component.html',
-  styleUrls: ['./var-details-preparation-2d.component.scss'],
+    selector: 'app-var-details-preparation-2d',
+    templateUrl: './var-details-preparation-2d.component.html',
+    styleUrls: ['./var-details-preparation-2d.component.scss'],
+    standalone: false
 })
 export class VarDetailsPreparation2dComponent {
   @ViewChild('targetDistributionGraph', {

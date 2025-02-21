@@ -34,9 +34,10 @@ import {
 import { ChartOptions } from 'chart.js';
 
 @Component({
-  selector: 'app-unfold-hierarchy',
-  templateUrl: './unfold-hierarchy.component.html',
-  styleUrls: ['./unfold-hierarchy.component.scss'],
+    selector: 'app-unfold-hierarchy',
+    templateUrl: './unfold-hierarchy.component.html',
+    styleUrls: ['./unfold-hierarchy.component.scss'],
+    standalone: false
 })
 export class UnfoldHierarchyComponent implements OnInit {
   public currentUnfoldHierarchy: number = 0;

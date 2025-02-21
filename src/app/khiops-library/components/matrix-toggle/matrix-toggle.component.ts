@@ -17,10 +17,11 @@ import { MatrixOptionsModel } from '@khiops-library/model/matrix-options.model';
 import { Ls } from '@khiops-library/providers/ls.service';
 
 @Component({
-  selector: 'kl-matrix-toggle',
-  templateUrl: './matrix-toggle.component.html',
-  styleUrls: ['./matrix-toggle.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'kl-matrix-toggle',
+    templateUrl: './matrix-toggle.component.html',
+    styleUrls: ['./matrix-toggle.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class MatrixToggleComponent implements OnChanges {
   @Input() public matrixOptions: MatrixOptionsModel = new MatrixOptionsModel();

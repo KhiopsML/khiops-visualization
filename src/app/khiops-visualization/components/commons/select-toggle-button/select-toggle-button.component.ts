@@ -21,9 +21,10 @@ import { AppConfig } from 'src/environments/environment';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
-  selector: 'app-select-toggle-button',
-  templateUrl: './select-toggle-button.component.html',
-  styleUrls: ['./select-toggle-button.component.scss'],
+    selector: 'app-select-toggle-button',
+    templateUrl: './select-toggle-button.component.html',
+    styleUrls: ['./select-toggle-button.component.scss'],
+    standalone: false
 })
 export class SelectToggleButtonComponent implements OnInit, OnChanges {
   @Input() public buttonTitle?: string;

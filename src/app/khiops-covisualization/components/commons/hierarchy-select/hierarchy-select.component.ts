@@ -26,27 +26,25 @@ import { LS } from '@khiops-library/enum/ls';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 
 @Component({
-  selector: 'app-hierarchy-select',
-  templateUrl: './hierarchy-select.component.html',
-  styleUrls: ['./hierarchy-select.component.scss'],
-  animations: [
-    trigger('slideInOut', [
-      transition(':enter', [
-        style({
-          opacity: 0,
-        }),
-        animate('150ms ease-in'),
-      ]),
-      transition(':leave', [
-        animate(
-          '150ms ease-in',
-          style({
-            opacity: 0,
-          }),
-        ),
-      ]),
-    ]),
-  ],
+    selector: 'app-hierarchy-select',
+    templateUrl: './hierarchy-select.component.html',
+    styleUrls: ['./hierarchy-select.component.scss'],
+    animations: [
+        trigger('slideInOut', [
+            transition(':enter', [
+                style({
+                    opacity: 0,
+                }),
+                animate('150ms ease-in'),
+            ]),
+            transition(':leave', [
+                animate('150ms ease-in', style({
+                    opacity: 0,
+                })),
+            ]),
+        ]),
+    ],
+    standalone: false
 })
 export class HierarchySelectComponent implements OnChanges, AfterViewInit {
   @Input() public selectedDimension: DimensionCovisualizationModel | undefined;

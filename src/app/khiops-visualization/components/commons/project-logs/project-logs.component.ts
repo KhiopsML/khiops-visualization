@@ -13,9 +13,10 @@ import { Subscription } from 'rxjs';
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
 
 @Component({
-  selector: 'app-project-logs',
-  templateUrl: './project-logs.component.html',
-  styleUrls: ['./project-logs.component.scss'],
+    selector: 'app-project-logs',
+    templateUrl: './project-logs.component.html',
+    styleUrls: ['./project-logs.component.scss'],
+    standalone: false
 })
 export class ProjectLogsComponent {
   public projectLogsDatas?: ProjectLogModel[];

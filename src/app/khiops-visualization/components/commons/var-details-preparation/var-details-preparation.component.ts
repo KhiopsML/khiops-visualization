@@ -17,9 +17,10 @@ import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 
 @Component({
-  selector: 'app-var-details-preparation',
-  templateUrl: './var-details-preparation.component.html',
-  styleUrls: ['./var-details-preparation.component.scss'],
+    selector: 'app-var-details-preparation',
+    templateUrl: './var-details-preparation.component.html',
+    styleUrls: ['./var-details-preparation.component.scss'],
+    standalone: false
 })
 export class VarDetailsPreparationComponent implements OnInit, OnChanges {
   @ViewChild('appVariableGraphDetails', {

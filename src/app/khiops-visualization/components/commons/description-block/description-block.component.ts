@@ -10,10 +10,11 @@ import { SelectableComponent } from '@khiops-library/components/selectable/selec
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 
 @Component({
-  selector: 'app-description-block',
-  templateUrl: './description-block.component.html',
-  styleUrls: ['./description-block.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-description-block',
+    templateUrl: './description-block.component.html',
+    styleUrls: ['./description-block.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class DescriptionBlockComponent extends SelectableComponent {
   @Input() title?: string;

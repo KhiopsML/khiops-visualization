@@ -30,9 +30,10 @@ import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { getPreparationVariablesGridColumns } from './preparation-view.config';
 
 @Component({
-  selector: 'app-preparation-view',
-  templateUrl: './preparation-view.component.html',
-  styleUrls: ['./preparation-view.component.scss'],
+    selector: 'app-preparation-view',
+    templateUrl: './preparation-view.component.html',
+    styleUrls: ['./preparation-view.component.scss'],
+    standalone: false
 })
 export class PreparationViewComponent extends SelectableTabComponent {
   @Input() public preparationSource = REPORT.PREPARATION_REPORT; // By default

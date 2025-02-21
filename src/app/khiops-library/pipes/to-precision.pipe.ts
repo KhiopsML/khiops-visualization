@@ -9,8 +9,9 @@ import { KhiopsLibraryService } from '../providers/khiops-library.service';
 import { UtilsService } from '../providers/utils.service';
 
 @Pipe({
-  name: 'toPrecision',
-  pure: false,
+    name: 'toPrecision',
+    pure: false,
+    standalone: false
 })
 export class ToPrecisionPipe implements PipeTransform {
   numberPrecision: number;

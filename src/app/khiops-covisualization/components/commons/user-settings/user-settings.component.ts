@@ -23,9 +23,10 @@ import { AppService } from '@khiops-covisualization/providers/app.service';
 import { THEME } from '@khiops-library/enum/theme';
 
 @Component({
-  selector: 'app-user-settings',
-  templateUrl: './user-settings.component.html',
-  styleUrls: ['./user-settings.component.scss'],
+    selector: 'app-user-settings',
+    templateUrl: './user-settings.component.html',
+    styleUrls: ['./user-settings.component.scss'],
+    standalone: false
 })
 export class UserSettingsComponent implements OnChanges {
   @Output() private toggleNavDrawerChanged: EventEmitter<any> =

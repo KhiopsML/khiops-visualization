@@ -7,9 +7,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-library',
-  styleUrls: ['./library.component.scss'],
-  template: '',
+    selector: 'app-library',
+    styleUrls: ['./library.component.scss'],
+    template: '',
+    standalone: false
 })
 export class LibraryComponent {
   // Component used to load styles

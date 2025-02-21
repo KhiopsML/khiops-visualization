@@ -20,9 +20,10 @@ import {
 import { TreePreparationState } from '@khiops-visualization/model/tree-preparation-datas.model';
 
 @Component({
-  selector: 'app-tree-details',
-  templateUrl: './tree-details.component.html',
-  styleUrls: ['./tree-details.component.scss'],
+    selector: 'app-tree-details',
+    templateUrl: './tree-details.component.html',
+    styleUrls: ['./tree-details.component.scss'],
+    standalone: false
 })
 export class TreeDetailsComponent {
   public treeDetails?: GridDatasI;

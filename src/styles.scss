@@ -1,4 +1,4 @@
 /* You can add global styles to this file, and also import other style files */
-@import './fonts/Poppins.scss';
-@import './fonts/MaterialIcons.scss';
-@import './styles/theme.scss';
+@use'./fonts/Poppins.scss';
+@use'./fonts/MaterialIcons.scss';
+@use'./styles/theme.scss';

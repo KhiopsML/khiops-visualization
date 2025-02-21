@@ -18,10 +18,11 @@ import { MatrixModesModel } from '@khiops-library/model/matrix-modes.model';
 import { Ls } from '@khiops-library/providers/ls.service';
 
 @Component({
-  selector: 'kl-matrix-mode',
-  templateUrl: './matrix-mode.component.html',
-  styleUrls: ['./matrix-mode.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'kl-matrix-mode',
+    templateUrl: './matrix-mode.component.html',
+    styleUrls: ['./matrix-mode.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class MatrixModeComponent implements OnChanges {
   @Input() public matrixModes: MatrixModesModel = new MatrixModesModel();

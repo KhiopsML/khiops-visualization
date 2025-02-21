@@ -8,9 +8,10 @@ import { Component, Input } from '@angular/core';
 import { ZoomToolsEventsService } from '@khiops-library/components/zoom-tools/zoom-tools.service';
 
 @Component({
-  selector: 'kl-zoom-tools',
-  templateUrl: './zoom-tools.component.html',
-  styleUrls: ['./zoom-tools.component.scss'],
+    selector: 'kl-zoom-tools',
+    templateUrl: './zoom-tools.component.html',
+    styleUrls: ['./zoom-tools.component.scss'],
+    standalone: false
 })
 export class ZoomToolsComponent {
   @Input() public alignment: string = 'column';

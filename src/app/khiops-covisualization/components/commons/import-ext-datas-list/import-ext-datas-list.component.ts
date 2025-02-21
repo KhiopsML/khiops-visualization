@@ -20,9 +20,10 @@ import { LoadExtDatasComponent } from '../load-ext-datas/load-ext-datas.componen
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 
 @Component({
-  selector: 'app-import-ext-datas-list',
-  templateUrl: './import-ext-datas-list.component.html',
-  styleUrls: ['./import-ext-datas-list.component.scss'],
+    selector: 'app-import-ext-datas-list',
+    templateUrl: './import-ext-datas-list.component.html',
+    styleUrls: ['./import-ext-datas-list.component.scss'],
+    standalone: false
 })
 export class ImportExtDatasListComponent {
   importExtDatas: FileModel | undefined;

@@ -30,9 +30,10 @@ import { EvaluationPredictorModel } from '@khiops-visualization/model/evaluation
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 
 @Component({
-  selector: 'app-target-lift-graph',
-  templateUrl: './target-lift-graph.component.html',
-  styleUrls: ['./target-lift-graph.component.scss'],
+    selector: 'app-target-lift-graph',
+    templateUrl: './target-lift-graph.component.html',
+    styleUrls: ['./target-lift-graph.component.scss'],
+    standalone: false
 })
 export class TargetLiftGraphComponent
   extends SelectableComponent

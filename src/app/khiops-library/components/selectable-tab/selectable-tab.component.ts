@@ -28,8 +28,9 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
  * - loadView(): void - Dispatches a resize event to refresh the graph after the view is loaded.
  */
 @Component({
-  template: '',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    template: '',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class SelectableTabComponent implements OnChanges {
   @Input() selectedTab?: MatTabChangeEvent;

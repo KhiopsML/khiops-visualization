@@ -14,10 +14,11 @@ import {
 import { TranslateService } from '@ngstack/translate';
 
 @Component({
-  selector: 'kl-btn-fullscreen',
-  templateUrl: './btn-fullscreen.component.html',
-  styleUrls: ['./btn-fullscreen.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'kl-btn-fullscreen',
+    templateUrl: './btn-fullscreen.component.html',
+    styleUrls: ['./btn-fullscreen.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class BtnFullscreenComponent {
   isFullscreen: boolean = false;

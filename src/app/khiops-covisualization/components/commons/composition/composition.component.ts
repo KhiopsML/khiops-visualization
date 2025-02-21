@@ -29,9 +29,10 @@ import { ImportExtDatasService } from '@khiops-covisualization/providers/import-
 import { getCompositionDisplayedColumns } from './composition.config';
 
 @Component({
-  selector: 'app-composition',
-  templateUrl: './composition.component.html',
-  styleUrls: ['./composition.component.scss'],
+    selector: 'app-composition',
+    templateUrl: './composition.component.html',
+    styleUrls: ['./composition.component.scss'],
+    standalone: false
 })
 export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() public position: number = 0;

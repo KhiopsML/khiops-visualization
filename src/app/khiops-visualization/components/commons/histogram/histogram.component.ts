@@ -43,9 +43,10 @@ import { BIG_CHART_SIZE } from '@khiops-library/config/global';
 import { ZoomToolsEventsService } from '@khiops-library/components/zoom-tools/zoom-tools.service';
 
 @Component({
-  selector: 'app-histogram',
-  templateUrl: './histogram.component.html',
-  styleUrls: ['./histogram.component.scss'],
+    selector: 'app-histogram',
+    templateUrl: './histogram.component.html',
+    styleUrls: ['./histogram.component.scss'],
+    standalone: false
 })
 export class HistogramComponent extends SelectableComponent implements OnInit {
   @ViewChild('histogramContainer', { static: false })

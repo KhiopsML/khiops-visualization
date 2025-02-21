@@ -14,10 +14,11 @@ import {
 import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options';
 
 @Component({
-  selector: 'kl-graph-options-menu',
-  templateUrl: './graph-options-menu.component.html',
-  styleUrls: ['./graph-options-menu.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'kl-graph-options-menu',
+    templateUrl: './graph-options-menu.component.html',
+    styleUrls: ['./graph-options-menu.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class GraphOptionsMenuComponent {
   @Input() graphOptions: DistributionOptionsI | undefined;

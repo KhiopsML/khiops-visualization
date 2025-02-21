@@ -8,8 +8,9 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngstack/translate';
 
 @Component({
-  selector: 'kl-confirm-dialog',
-  templateUrl: './confirm-dialog.component.html',
+    selector: 'kl-confirm-dialog',
+    templateUrl: './confirm-dialog.component.html',
+    standalone: false
 })
 export class ConfirmDialogComponent implements OnInit {
   public title: string = '';

@@ -10,9 +10,10 @@ import { TrainedPredictor } from '@khiops-visualization/interfaces/modeling-repo
 import { AppService } from '@khiops-visualization/providers/app.service';
 
 @Component({
-  selector: 'app-select-trained-predictor',
-  templateUrl: './select-trained-predictor.component.html',
-  styleUrls: ['./select-trained-predictor.component.scss'],
+    selector: 'app-select-trained-predictor',
+    templateUrl: './select-trained-predictor.component.html',
+    styleUrls: ['./select-trained-predictor.component.scss'],
+    standalone: false
 })
 export class SelectTrainedPredictorComponent implements OnInit {
   @Input() inputDatas: TrainedPredictor[] | undefined;

@@ -13,9 +13,10 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 import { COMPONENT_TYPES } from '../../../../khiops-library/enum/component-types';
 
 @Component({
-  selector: 'app-external-datas',
-  templateUrl: './external-datas.component.html',
-  styleUrls: ['./external-datas.component.scss'],
+    selector: 'app-external-datas',
+    templateUrl: './external-datas.component.html',
+    styleUrls: ['./external-datas.component.scss'],
+    standalone: false
 })
 export class ExternalDatasComponent
   extends SelectableComponent

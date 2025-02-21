@@ -45,9 +45,10 @@ import {
 import { getTreePreparationVariablesGridColumns } from './tree-preparation-view.config';
 
 @Component({
-  selector: 'app-tree-preparation-view',
-  templateUrl: './tree-preparation-view.component.html',
-  styleUrls: ['./tree-preparation-view.component.scss'],
+    selector: 'app-tree-preparation-view',
+    templateUrl: './tree-preparation-view.component.html',
+    styleUrls: ['./tree-preparation-view.component.scss'],
+    standalone: false
 })
 export class TreePreparationViewComponent extends SelectableTabComponent {
   @ViewChild('appVariableGraphDetails', {

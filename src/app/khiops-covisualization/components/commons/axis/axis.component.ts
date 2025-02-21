@@ -14,9 +14,10 @@ import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 
 @Component({
-  selector: 'app-axis',
-  templateUrl: './axis.component.html',
-  styleUrls: ['./axis.component.scss'],
+    selector: 'app-axis',
+    templateUrl: './axis.component.html',
+    styleUrls: ['./axis.component.scss'],
+    standalone: false
 })
 export class AxisComponent implements OnInit {
   @Input() public sizeId: string = '';

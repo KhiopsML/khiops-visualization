@@ -24,9 +24,10 @@ import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
 import { getClusterGridColumns } from './cluster-details.config';
 
 @Component({
-  selector: 'app-cluster-details',
-  templateUrl: './cluster-details.component.html',
-  styleUrls: ['./cluster-details.component.scss'],
+    selector: 'app-cluster-details',
+    templateUrl: './cluster-details.component.html',
+    styleUrls: ['./cluster-details.component.scss'],
+    standalone: false
 })
 export class ClusterDetailsComponent implements OnInit, OnChanges {
   @Input() public position: number = 0;

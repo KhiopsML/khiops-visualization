@@ -36,10 +36,11 @@ import { MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs';
 import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas';
 
 @Component({
-  selector: 'app-home-layout',
-  templateUrl: './homeLayout.component.html',
-  styleUrls: ['./homeLayout.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+    selector: 'app-home-layout',
+    templateUrl: './homeLayout.component.html',
+    styleUrls: ['./homeLayout.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class HomeLayoutComponent implements OnInit {
   @ViewChild('mainTabGroup') public mainTabGroup!: MatTabGroup;

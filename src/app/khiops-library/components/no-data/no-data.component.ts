@@ -8,8 +8,9 @@ import { Component, Input } from '@angular/core';
 import { TranslateService } from '@ngstack/translate';
 
 @Component({
-  selector: 'kl-no-data',
-  templateUrl: './no-data.component.html',
+    selector: 'kl-no-data',
+    templateUrl: './no-data.component.html',
+    standalone: false
 })
 export class NoDataComponent {
   @Input() private message?: string;

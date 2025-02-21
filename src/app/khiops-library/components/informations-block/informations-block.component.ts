@@ -18,10 +18,11 @@ import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 
 @Component({
-  selector: 'kl-informations-block',
-  templateUrl: './informations-block.component.html',
-  styleUrls: ['./informations-block.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'kl-informations-block',
+    templateUrl: './informations-block.component.html',
+    styleUrls: ['./informations-block.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class InformationsBlockComponent extends SelectableComponent {
   @Input() public inputDatas: InfosDatasI[] | undefined;

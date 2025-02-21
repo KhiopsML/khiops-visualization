@@ -23,9 +23,10 @@ import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.c
 import { getClustersDisplayedColumns } from './selected-clusters.config';
 
 @Component({
-  selector: 'app-selected-clusters',
-  templateUrl: './selected-clusters.component.html',
-  styleUrls: ['./selected-clusters.component.scss'],
+    selector: 'app-selected-clusters',
+    templateUrl: './selected-clusters.component.html',
+    styleUrls: ['./selected-clusters.component.scss'],
+    standalone: false
 })
 export class SelectedClustersComponent implements OnDestroy, OnChanges {
   @Input() private selectedNodes: TreeNodeModel[] | undefined;

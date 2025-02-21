@@ -7,8 +7,8 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-histogram-tooltip',
-  template: `
+    selector: 'app-histogram-tooltip',
+    template: `
     <div
       [ngStyle]="{
         'left.px': this.computeXPos(),
@@ -20,8 +20,8 @@ import { Component, Input } from '@angular/core';
       <p [innerHTML]="text"></p>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .tooltip {
         position: absolute;
         background-color: rgba(0, 0, 0, 0.8);
@@ -35,7 +35,8 @@ import { Component, Input } from '@angular/core';
         pointer-events: none;
       }
     `,
-  ],
+    ],
+    standalone: false
 })
 export class HistogramTooltipComponent {
   @Input() public text: string = '';

@@ -16,9 +16,10 @@ import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 
 @Component({
-  selector: 'app-evaluation-view',
-  templateUrl: './evaluation-view.component.html',
-  styleUrls: ['./evaluation-view.component.scss'],
+    selector: 'app-evaluation-view',
+    templateUrl: './evaluation-view.component.html',
+    styleUrls: ['./evaluation-view.component.scss'],
+    standalone: false
 })
 export class EvaluationViewComponent
   extends SelectableTabComponent

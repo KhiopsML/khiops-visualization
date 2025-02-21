@@ -12,10 +12,11 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'kl-header-title',
-  templateUrl: './header-title.component.html',
-  styleUrls: ['./header-title.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'kl-header-title',
+    templateUrl: './header-title.component.html',
+    styleUrls: ['./header-title.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class HeaderTitleComponent implements OnInit {
   @Input() title: string = '';

@@ -21,9 +21,10 @@ import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { SelectedTreeClusterModel } from '@khiops-covisualization/model/selected-tree-cluster.model';
 
 @Component({
-  selector: 'app-hierarchy-details',
-  templateUrl: './hierarchy-details.component.html',
-  styleUrls: ['./hierarchy-details.component.scss'],
+    selector: 'app-hierarchy-details',
+    templateUrl: './hierarchy-details.component.html',
+    styleUrls: ['./hierarchy-details.component.scss'],
+    standalone: false
 })
 export class HierarchyDetailsComponent extends SelectableComponent {
   @ViewChild(TreeSelectComponent)

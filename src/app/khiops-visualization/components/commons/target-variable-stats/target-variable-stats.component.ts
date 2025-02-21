@@ -25,11 +25,12 @@ import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 
 @Component({
-  selector: 'app-target-variable-stats',
-  templateUrl: './target-variable-stats.component.html',
-  styleUrls: ['./target-variable-stats.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [ToPrecisionPipe],
+    selector: 'app-target-variable-stats',
+    templateUrl: './target-variable-stats.component.html',
+    styleUrls: ['./target-variable-stats.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [ToPrecisionPipe],
+    standalone: false
 })
 export class TargetVariableStatsComponent
   extends SelectableComponent

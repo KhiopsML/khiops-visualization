@@ -11,9 +11,10 @@ import { TranslateService } from '@ngstack/translate';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
 
 @Component({
-  selector: 'app-load-ext-datas',
-  templateUrl: './load-ext-datas.component.html',
-  styleUrls: ['./load-ext-datas.component.scss'],
+    selector: 'app-load-ext-datas',
+    templateUrl: './load-ext-datas.component.html',
+    styleUrls: ['./load-ext-datas.component.scss'],
+    standalone: false
 })
 export class LoadExtDatasComponent implements OnInit {
   loadingDatasStatus: string = '';

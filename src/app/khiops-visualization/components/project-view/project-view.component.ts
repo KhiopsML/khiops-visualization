@@ -17,9 +17,10 @@ import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 
 @Component({
-  selector: 'app-project-view',
-  templateUrl: './project-view.component.html',
-  styleUrls: ['./project-view.component.scss'],
+    selector: 'app-project-view',
+    templateUrl: './project-view.component.html',
+    styleUrls: ['./project-view.component.scss'],
+    standalone: false
 })
 export class ProjectViewComponent
   extends SelectableTabComponent

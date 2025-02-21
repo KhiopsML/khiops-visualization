@@ -16,10 +16,11 @@ import {
 import { CellModel } from '@khiops-library/model/cell.model';
 
 @Component({
-  selector: 'kl-matrix-tooltip',
-  templateUrl: './matrix-tooltip.component.html',
-  styleUrls: ['./matrix-tooltip.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'kl-matrix-tooltip',
+    templateUrl: './matrix-tooltip.component.html',
+    styleUrls: ['./matrix-tooltip.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class MatrixTooltipComponent implements OnChanges {
   @Input() public cell?: CellModel;

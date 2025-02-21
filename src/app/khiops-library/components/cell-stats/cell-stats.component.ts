@@ -11,9 +11,10 @@ import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 import { CellStatsI } from '@khiops-library/interfaces/cell-stats';
 
 @Component({
-  selector: 'kl-cell-stats',
-  templateUrl: './cell-stats.component.html',
-  styleUrls: ['./cell-stats.component.scss'],
+    selector: 'kl-cell-stats',
+    templateUrl: './cell-stats.component.html',
+    styleUrls: ['./cell-stats.component.scss'],
+    standalone: false
 })
 export class CellStatsComponent implements OnChanges {
   @Input() private selectedCells: CellModel[] = [];

@@ -15,9 +15,10 @@ import { GridCheckboxEventI } from '@khiops-library/interfaces/events';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 
 @Component({
-  selector: 'app-import-ext-datas',
-  templateUrl: './import-ext-datas.component.html',
-  styleUrls: ['./import-ext-datas.component.scss'],
+    selector: 'app-import-ext-datas',
+    templateUrl: './import-ext-datas.component.html',
+    styleUrls: ['./import-ext-datas.component.scss'],
+    standalone: false
 })
 export class ImportExtDatasComponent implements OnInit {
   separatorInput: string = '';

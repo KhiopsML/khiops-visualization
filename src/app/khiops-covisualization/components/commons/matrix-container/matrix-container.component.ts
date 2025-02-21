@@ -34,9 +34,10 @@ import { DynamicI } from '@khiops-library/interfaces/globals';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 
 @Component({
-  selector: 'app-matrix-container',
-  templateUrl: './matrix-container.component.html',
-  styleUrls: ['./matrix-container.component.scss'],
+    selector: 'app-matrix-container',
+    templateUrl: './matrix-container.component.html',
+    styleUrls: ['./matrix-container.component.scss'],
+    standalone: false
 })
 export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild('matrix', {

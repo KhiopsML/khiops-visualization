@@ -29,9 +29,10 @@ import { CHART_TYPES } from '@khiops-library/enum/chart-types';
 import { THEME } from '@khiops-library/enum/theme';
 
 @Component({
-  selector: 'kl-chart',
-  templateUrl: './chart.component.html',
-  styleUrls: ['./chart.component.scss'],
+    selector: 'kl-chart',
+    templateUrl: './chart.component.html',
+    styleUrls: ['./chart.component.scss'],
+    standalone: false
 })
 export class ChartComponent implements AfterViewInit, OnChanges {
   @Input() public canvasIdContainer = 'kl-chart'; // May be updated if multiple graph

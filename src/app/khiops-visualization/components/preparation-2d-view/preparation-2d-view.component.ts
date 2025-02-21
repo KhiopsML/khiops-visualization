@@ -32,9 +32,10 @@ import { VariableModel } from '@khiops-visualization/model/variable.model';
 import { getPreparation2dVariablesGridColumns } from './preparation-2d-view.config';
 
 @Component({
-  selector: 'app-preparation-2d-view',
-  templateUrl: './preparation-2d-view.component.html',
-  styleUrls: ['./preparation-2d-view.component.scss'],
+    selector: 'app-preparation-2d-view',
+    templateUrl: './preparation-2d-view.component.html',
+    styleUrls: ['./preparation-2d-view.component.scss'],
+    standalone: false
 })
 export class Preparation2dViewComponent extends SelectableTabComponent {
   @ViewChild('targetDistributionGraph', {

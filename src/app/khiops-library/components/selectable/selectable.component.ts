@@ -19,8 +19,9 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  template: '',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    template: '',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class SelectableComponent
   extends WatchResizeComponent

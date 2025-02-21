@@ -14,9 +14,10 @@ import { MAT_RIPPLE_COLOR } from '@khiops-covisualization/config/colors';
 import { DimensionViewLayoutModel } from '@khiops-covisualization/model/dimension-view-layout.model';
 
 @Component({
-  selector: 'app-manage-views',
-  templateUrl: './manage-views.component.html',
-  styleUrls: ['./manage-views.component.scss'],
+    selector: 'app-manage-views',
+    templateUrl: './manage-views.component.html',
+    styleUrls: ['./manage-views.component.scss'],
+    standalone: false
 })
 export class ManageViewsComponent {
   public viewsLayout: ViewLayoutVO | undefined;

@@ -22,8 +22,9 @@ import { SelectableService } from '../selectable/selectable.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
 
 @Component({
-  template: '',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    template: '',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class ScrollableGraphComponent
   extends SelectableComponent

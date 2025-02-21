@@ -15,10 +15,11 @@ import {
 import { KhiopsLibraryService } from '../../providers/khiops-library.service';
 
 @Component({
-  selector: 'kl-graph-header',
-  templateUrl: './graph-header.component.html',
-  styleUrls: ['./graph-header.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'kl-graph-header',
+    templateUrl: './graph-header.component.html',
+    styleUrls: ['./graph-header.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class GraphHeaderComponent implements OnInit {
   @Output() public toggleFullscreen?: EventEmitter<boolean> =

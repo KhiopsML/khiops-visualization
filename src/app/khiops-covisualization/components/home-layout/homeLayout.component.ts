@@ -44,10 +44,11 @@ import { FileLoaderService } from '@khiops-library/providers/file-loader.service
 import { CovisualizationDatas } from '@khiops-covisualization/interfaces/app-datas';
 
 @Component({
-  selector: 'app-home-layout',
-  templateUrl: './homeLayout.component.html',
-  styleUrls: ['./homeLayout.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+    selector: 'app-home-layout',
+    templateUrl: './homeLayout.component.html',
+    styleUrls: ['./homeLayout.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class HomeLayoutComponent implements OnInit, OnDestroy {
   public showProjectTab: boolean = true;

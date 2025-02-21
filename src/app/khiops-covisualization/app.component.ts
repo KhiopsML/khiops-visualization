@@ -33,10 +33,11 @@ import { ConfigModel } from '@khiops-library/model/config.model';
 import { SaveService } from './providers/save.service';
 
 @Component({
-  selector: 'app-root-covisualization',
-  styleUrls: ['./app.component.scss'],
-  templateUrl: './app.component.html',
-  encapsulation: ViewEncapsulation.ShadowDom,
+    selector: 'app-root-covisualization',
+    styleUrls: ['./app.component.scss'],
+    templateUrl: './app.component.html',
+    encapsulation: ViewEncapsulation.ShadowDom,
+    standalone: false
 })
 export class AppComponent implements AfterViewInit {
   appdatas: CovisualizationDatas | undefined;

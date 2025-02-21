@@ -36,9 +36,10 @@ import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
  * Test it with iris2d file
  */
 @Component({
-  selector: 'app-coocurence-matrix',
-  templateUrl: './coocurence-matrix.component.html',
-  styleUrls: ['./coocurence-matrix.component.scss'],
+    selector: 'app-coocurence-matrix',
+    templateUrl: './coocurence-matrix.component.html',
+    styleUrls: ['./coocurence-matrix.component.scss'],
+    standalone: false
 })
 export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
   @ViewChild('matrix', {
