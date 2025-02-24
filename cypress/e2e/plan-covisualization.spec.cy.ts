@@ -50,6 +50,8 @@ describe('Test Plan for Khiops Covisualization', () => {
           position: 'bottomLeft',
         });
 
+        cy.wait(500);
+
         // Check Matrix tooltip
         cy.get('.matrix-tooltip-comp').contains(res.matrixTooltip[0]);
 
@@ -63,7 +65,9 @@ describe('Test Plan for Khiops Covisualization', () => {
           position: 'bottomLeft',
         });
 
-        // Check MAtrix tooltip
+        cy.wait(500);
+
+        // Check Matrix tooltip
         cy.get('.matrix-tooltip-comp').contains(res.matrixTooltip[1]);
 
         // Check Clusters table
