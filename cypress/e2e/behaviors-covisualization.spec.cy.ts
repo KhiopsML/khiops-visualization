@@ -113,7 +113,7 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       cy.loadFile('covisualization', fileName);
 
       // Now we check matrix values
-      cy.get('#matrix-selected').trigger('mousemove', {
+      cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
         position: 'center',
       });
       cy.wait(500);
@@ -155,7 +155,7 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       cy.wait(500);
 
       // Now we check matrix values
-      cy.get('#matrix-selected').trigger('mousemove', {
+      cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
         position: 'bottomRight',
       });
       cy.wait(500);
@@ -231,7 +231,7 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       cy.get('#cluster-composition-0').contains('A10');
       cy.get('.annotation-comp').first().contains('A10');
       cy.get('#cluster-distribution-1').contains('A10');
-      cy.get('#matrix-selected').trigger('mousemove', {
+      cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
         position: 'bottomRight',
       });
       cy.get('.matrix-tooltip-comp').contains('A10');
@@ -239,6 +239,7 @@ describe('Behaviors tests for Khiops Covisualization', () => {
 
       // ### Click on matrix cell
       cy.get('#matrix-selected')
+        .should('be.visible')
         .trigger('mousemove', {
           position: 'topLeft',
         })
