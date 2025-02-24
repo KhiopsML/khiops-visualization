@@ -82,7 +82,6 @@
     "angular2-hotkeys": "16.0.1",
     "chart.js": "4.4.8",
     "d3": "7.9.0",
-    "d3-force-gravity": "1.0.2",
     "document-register-element": "1.14.10",
     "fast-equals": "5.2.2",
     "file-saver": "2.0.5",
@@ -92,8 +91,6 @@
     "mathjs": "14.2.1",
     "pan-zoom": "3.5.2",
     "rxjs": "7.8.1",
-    "stream-browserify": "3.0.0",
-    "text-table": "0.2.0",
     "tslib": "2.8.1",
     "typeface-poppins": "1.1.13",
     "zone.js": "0.15.0"
