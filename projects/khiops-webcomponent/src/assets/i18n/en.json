@@ -324,7 +324,7 @@
     },
     "PREPARATION": {
       "VARIABLES": {
-        "TITLE": "Univariate data analysis results\nRight click on a column title to get new columns",
+        "TITLE": "Univariate data analysis results",
         "TYPE": "Type of the variable :\n\t Cat for Categorical \n\t Num for Numerical",
         "RANK": "Rank of the variable, sorted by decreasing Level",
         "NAME": "Name of the variable",
