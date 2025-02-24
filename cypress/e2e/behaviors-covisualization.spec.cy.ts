@@ -4,7 +4,7 @@ import { initLS } from 'cypress/setups/init-ls';
 
 describe('Behaviors tests for Khiops Covisualization', () => {
   let files = ['DigitCoclustering.json'];
-  files.forEach((fileName, fileIndex) => {
+  files.forEach((fileName) => {
     it(`Test unfold hierarchy slider on big datas and hierarchy checkboxes`, () => {
       // Initialize ls with all views enabled
       initLS();
@@ -102,7 +102,7 @@ describe('Behaviors tests for Khiops Covisualization', () => {
   });
 
   files = ['DigitCoclustering.json'];
-  files.forEach((fileName, fileIndex) => {
+  files.forEach((fileName) => {
     it(`Test unfold hierarchy on big datas`, () => {
       // Initialize ls with all views enabled
       initLS();
@@ -164,7 +164,7 @@ describe('Behaviors tests for Khiops Covisualization', () => {
   });
 
   files = ['CC_3_Coclustering.json'];
-  files.forEach((fileName, fileIndex) => {
+  files.forEach((fileName) => {
     it(`Test dimension change`, () => {
       // Initialize ls with all views enabled
       initLS();
@@ -197,7 +197,7 @@ describe('Behaviors tests for Khiops Covisualization', () => {
   });
 
   files = ['CC_3_Coclustering.json'];
-  files.forEach((fileName, fileIndex) => {
+  files.forEach((fileName) => {
     it(`Test behaviors clicks`, () => {
       // Initialize ls with all views enabled
       initLS();

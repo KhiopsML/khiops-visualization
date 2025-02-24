@@ -41,7 +41,7 @@ describe('Test Khiops Covisualization sample files', () => {
     // "VerbNounCoclustering27mo.json",
   ];
 
-  files.forEach((fileName, fileIndex) => {
+  files.forEach((fileName) => {
     it(`Check values for ${fileName}`, () => {
       // Initialize ls with all views enabled
       initLS();

@@ -70,7 +70,7 @@ describe('Test Khiops Visualization sample files', () => {
     // "Natives_AllReports.json", // Do not load it, encoding issue
   ];
 
-  files.forEach((fileName, fileIndex) => {
+  files.forEach((fileName) => {
     it(`Check values for ${fileName}`, () => {
       //@ts-ignore
       cy.loadFile('visualization', fileName);
