@@ -154,10 +154,10 @@ describe('Behaviors tests for Khiops Covisualization', () => {
 
       // Now we check matrix values
       cy.get('#matrix-selected').trigger('mousemove', {
-        position: 'center',
+        position: 'bottomRight',
       });
       cy.wait(500);
-      cy.get('.matrix-tooltip-comp').contains(221);
+      cy.get('.matrix-tooltip-comp').contains(23);
     });
   });
 
