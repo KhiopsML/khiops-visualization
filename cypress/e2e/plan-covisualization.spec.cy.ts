@@ -45,8 +45,7 @@ describe('Test Plan for Khiops Covisualization', () => {
 
       cy.readFile('./src/assets/mocks/kc/' + fileName).then((datas) => {
         // Move to the first matrix cell
-        //@ts-ignore
-        cy.get('#matrix-selected').trigger('mousemove', {
+        cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
           position: 'bottomLeft',
         });
 
@@ -60,8 +59,7 @@ describe('Test Plan for Khiops Covisualization', () => {
         cy.get('#tree_1').find('.tree-expando:eq(1)').click();
 
         // Move to the first matrix cell
-        //@ts-ignore
-        cy.get('#matrix-selected').trigger('mousemove', {
+        cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
           position: 'bottomLeft',
         });
 
@@ -129,12 +127,12 @@ describe('Test Plan for Khiops Covisualization', () => {
         cy.get('.button-confirm-hierarchy').click();
 
         // Move to the last matrix cell
-        cy.get('#matrix-container').trigger('mousemove', {
+        cy.get('#matrix-container').should('be.visible').trigger('mousemove', {
           position: 'topRight',
         });
         cy.wait(500);
         // Move to the last matrix cell
-        cy.get('#matrix-container').trigger('mousemove', {
+        cy.get('#matrix-container').should('be.visible').trigger('mousemove', {
           position: 'topRight',
         });
         cy.wait(500);
