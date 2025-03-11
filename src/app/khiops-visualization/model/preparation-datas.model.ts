@@ -6,6 +6,7 @@
 
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { PreparationVariableModel } from './preparation-variable.model';
+import { TreePreparationVariableModel } from './tree-preparation-variable.model';
 
 export class PreparationDatasModel {
   [key: string]: any;
@@ -36,5 +37,17 @@ export class PreparationDatasModel {
       displayedColumns: [],
     },
   };
-  treePreparationReport: any;
+  treePreparationReport:
+    | {
+        selectedVariable?: TreePreparationVariableModel;
+        currentIntervalDatas: GridDatasI;
+      }
+    | undefined = {
+    selectedVariable: undefined,
+    currentIntervalDatas: {
+      title: undefined,
+      values: undefined,
+      displayedColumns: [],
+    },
+  };
 }

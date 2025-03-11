@@ -50,43 +50,39 @@ export class PreparationDatasService {
   initialize() {
     this.preparationDatas = new PreparationDatasModel();
 
-    // select the first item of the list by default
-    if (this.appService.appDatas?.preparationReport?.variablesStatistics?.[0]) {
-      let defaultVariable =
-        this.appService.appDatas.preparationReport.variablesStatistics[0];
+    const reports = [
+      {
+        type: REPORT.PREPARATION_REPORT,
+        data: this.appService.appDatas?.preparationReport?.variablesStatistics,
+      },
+      {
+        type: REPORT.TEXT_PREPARATION_REPORT,
+        data: this.appService.appDatas?.textPreparationReport
+          ?.variablesStatistics,
+      },
+      {
+        type: REPORT.TREE_PREPARATION_REPORT,
+        data: this.appService.appDatas?.treePreparationReport
+          ?.variablesStatistics,
+      },
+    ];
 
-      // Check if there is a saved selected variable into json
-      const savedSelectedRank = this.appService.getSavedDatas('selectedRank');
-      if (savedSelectedRank) {
-        defaultVariable = this.getVariableFromRank(
-          savedSelectedRank,
-          REPORT.PREPARATION_REPORT,
-        );
+    reports.forEach((report) => {
+      if (report.data?.[0]) {
+        let defaultVariable = report.data[0];
+
+        // Check if there is a saved selected variable into json
+        const savedSelectedRank = this.appService.getSavedDatas('selectedRank');
+        if (savedSelectedRank) {
+          defaultVariable = this.getVariableFromRank(
+            savedSelectedRank,
+            report.type,
+          );
+        }
+
+        this.setSelectedVariable(defaultVariable.name, report.type);
       }
-
-      this.setSelectedVariable(defaultVariable.name, REPORT.PREPARATION_REPORT);
-    }
-    // select the first item of the list by default
-    if (
-      this.appService.appDatas?.textPreparationReport?.variablesStatistics?.[0]
-    ) {
-      let defaultVariable: TextPreparationVariableStatistic =
-        this.appService.appDatas.textPreparationReport.variablesStatistics[0];
-
-      // Check if there is a saved selected variable into json
-      const savedSelectedRank = this.appService.getSavedDatas('selectedRank');
-      if (savedSelectedRank) {
-        defaultVariable = this.getVariableFromRank(
-          savedSelectedRank,
-          REPORT.TEXT_PREPARATION_REPORT,
-        );
-      }
-
-      this.setSelectedVariable(
-        defaultVariable.name,
-        REPORT.TEXT_PREPARATION_REPORT,
-      );
-    }
+    });
   }
 
   /**
