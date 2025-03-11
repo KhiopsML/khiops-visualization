@@ -36,6 +36,7 @@ import {
 } from '@khiops-visualization/interfaces/app-datas';
 import { MatrixDatasModel } from '@khiops-library/model/matrix-datas.model';
 import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
+import { VARIABLE_TYPES } from '@khiops-library/enum/variable-types';
 
 @Injectable({
   providedIn: 'root',
@@ -356,7 +357,7 @@ export class Preparation2dDatasService {
     };
 
     if (selectedVariable) {
-      const variableDetails = this.getVariableDetails(selectedVariable.rank);
+      const variableDetails = this.getVariableDetails(selectedVariable);
       const selectedCell = this.getSelectedCell();
 
       if (selectedCell && variableDetails?.dataGrid) {
@@ -508,7 +509,7 @@ export class Preparation2dDatasService {
     let targets: string[] | undefined;
 
     const variablesDetails: VariableDetailsModel | undefined =
-      this.getVariableDetails(this.preparation2dDatas?.selectedVariable?.rank!);
+      this.getVariableDetails(this.preparation2dDatas?.selectedVariable);
 
     if (variablesDetails?.dataGrid?.cellIds) {
       const TargetDimension: DimensionVisualization | undefined =
@@ -536,44 +537,35 @@ export class Preparation2dDatasService {
    * @param rank - The rank of the variable.
    * @returns The VariableDetailsModel containing detailed information about the variable, or undefined if not found.
    */
-  getVariableDetails(rank: string): VariableDetailsModel | undefined {
+  getVariableDetails(selectedVariable: any): VariableDetailsModel | undefined {
     let variableDetails: VariableDetailsModel | undefined;
-    const isRegressionOrExplanatoryAnalysis =
-      this.preparationDatasService.isExplanatoryAnalysis() ||
-      this.evaluationDatasService.isRegressionAnalysis();
 
-    if (
-      !isRegressionOrExplanatoryAnalysis &&
-      this.appService.appDatas?.bivariatePreparationReport
-        ?.variablesPairsDetailedStatistics?.[rank]
-    ) {
-      // normal case
-      const currentVar =
-        this.appService.appDatas.bivariatePreparationReport
-          .variablesPairsDetailedStatistics?.[rank];
-      variableDetails = new VariableDetailsModel(currentVar);
-    } else if (
-      isRegressionOrExplanatoryAnalysis &&
-      this.appService.appDatas?.textPreparationReport
-        ?.variablesDetailedStatistics?.[rank]
-    ) {
-      // regression or explanatory case: textPreparationReport
-      const currentVar =
-        this.appService.appDatas.textPreparationReport
-          .variablesDetailedStatistics?.[rank];
-      variableDetails = new VariableDetailsModel(currentVar);
-    } else if (
-      isRegressionOrExplanatoryAnalysis &&
-      this.appService.appDatas?.preparationReport
-        ?.variablesDetailedStatistics?.[rank]
-    ) {
-      // regression or explanatory case: preparationReport
-      const currentVar =
-        this.appService.appDatas.preparationReport.variablesDetailedStatistics[
-          rank
-        ];
-      variableDetails = new VariableDetailsModel(currentVar);
+    let currentVar;
+    if (selectedVariable) {
+      switch (selectedVariable.variableType) {
+        case VARIABLE_TYPES.TEXT_PREPARATION:
+          currentVar =
+            this.appService.appDatas?.textPreparationReport
+              ?.variablesDetailedStatistics?.[selectedVariable.rank];
+          break;
+        case VARIABLE_TYPES.PREPARATION:
+          currentVar =
+            this.appService.appDatas?.preparationReport
+              ?.variablesDetailedStatistics?.[selectedVariable.rank];
+          break;
+        case VARIABLE_TYPES.PREPARATION_2D:
+          currentVar =
+            this.appService.appDatas?.bivariatePreparationReport
+              .variablesPairsDetailedStatistics?.[selectedVariable.rank];
+
+          break;
+        default:
+          break;
+      }
+
+      variableDetails = new VariableDetailsModel(currentVar!);
     }
+
     return variableDetails;
   }
 
@@ -594,12 +586,12 @@ export class Preparation2dDatasService {
   ): MatrixDatasModel | undefined {
     this.preparation2dDatas!.matrixDatas = undefined;
     const variablesDetails: VariableDetailsModel | undefined =
-      this.getVariableDetails(selectedVariable.rank!);
+      this.getVariableDetails(selectedVariable!);
 
     if (variablesDetails) {
       const variableDatas: VariableDetailsModel = _.cloneDeep(variablesDetails);
 
-      if (variableDatas) {
+      if (variableDatas?.dataGrid) {
         const xDimension = new DimensionVisualizationModel(
           variableDatas.dataGrid.dimensions[0]!,
         );

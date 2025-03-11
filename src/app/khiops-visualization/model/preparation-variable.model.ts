@@ -7,6 +7,7 @@
 import { TYPES } from '@khiops-library/enum/types';
 import { VARIABLE_TYPES } from '@khiops-library/enum/variable-types';
 import { PreparationVariableStatistic } from '../interfaces/preparation-report';
+import { REPORT } from '@khiops-library/enum/report';
 
 export class PreparationVariableModel implements PreparationVariableStatistic {
   _id: string;
@@ -38,7 +39,11 @@ export class PreparationVariableModel implements PreparationVariableStatistic {
   missingNumber!: number;
   sparseMissingNumber!: number;
 
-  constructor(object: PreparationVariableStatistic, id: string) {
+  constructor(
+    object: PreparationVariableStatistic,
+    id: string,
+    preparationSource: string,
+  ) {
     // Assign values from input
     Object.assign(this, object);
 
@@ -48,6 +53,9 @@ export class PreparationVariableModel implements PreparationVariableStatistic {
     this.isNumerical = this.type === TYPES.NUMERICAL;
     this.isCategorical = this.type === TYPES.CATEGORICAL;
 
-    this.variableType = VARIABLE_TYPES.PREPARATION;
+    this.variableType =
+      preparationSource === REPORT.PREPARATION_REPORT
+        ? VARIABLE_TYPES.PREPARATION
+        : VARIABLE_TYPES.TEXT_PREPARATION;
   }
 }

@@ -5,7 +5,8 @@
  */
 
 export enum VARIABLE_TYPES {
-  PREPARATION_TREE = 'preparation-tree',
+  TREE_PREPARATION = 'tree-preparation',
+  TEXT_PREPARATION = 'text-preparation',
   PREPARATION = 'preparation',
   PREPARATION_2D = 'preparation-2d',
 }

@@ -36,10 +36,10 @@ import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
  * Test it with iris2d file
  */
 @Component({
-    selector: 'app-coocurence-matrix',
-    templateUrl: './coocurence-matrix.component.html',
-    styleUrls: ['./coocurence-matrix.component.scss'],
-    standalone: false
+  selector: 'app-coocurence-matrix',
+  templateUrl: './coocurence-matrix.component.html',
+  styleUrls: ['./coocurence-matrix.component.scss'],
+  standalone: false,
 })
 export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
   @ViewChild('matrix', {
@@ -56,7 +56,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
   public matrixModes: MatrixModesModel = new MatrixModesModel();
   public matrixTargets: MatrixTargetsModel = new MatrixTargetsModel();
   public matrixCells?: CoocurenceCellsModel;
-  public minMaxValues: MatrixRangeValuesI;
+  public minMaxValues?: MatrixRangeValuesI;
   public isFullscreen = false;
 
   constructor(
@@ -67,26 +67,23 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
     private preparation2dDatasService: Preparation2dDatasService,
   ) {
     this.preparation2dDatas = this.preparation2dDatasService.getDatas();
+  }
+
+  ngAfterViewInit() {
     this.minMaxValues =
       this.preparation2dDatasService.getGlobalMinAndMax2dValues(
         this.preparation2dDatasService.getVariablesd2Datas(),
       );
-  }
+    this.preparation2dDatasService.getMatrixDatas(
+      this.preparation2dDatas?.selectedVariable!,
+    );
 
-  ngAfterViewInit() {
-    setTimeout(() => {
-      // Avoid ExpressionChangedAfterItHasBeenCheckedError
-      this.preparation2dDatasService.getMatrixDatas(
-        this.preparation2dDatas?.selectedVariable!,
-      );
+    // Check if there is a saved selected cell into json
+    const defaultCellIndex =
+      this.appService.getSavedDatas('selected2dCell') || 0;
+    this.preparation2dDatasService.setSelectedCellIndex(defaultCellIndex);
 
-      // Check if there is a saved selected cell into json
-      const defaultCellIndex =
-        this.appService.getSavedDatas('selected2dCell') || 0;
-      this.preparation2dDatasService.setSelectedCellIndex(defaultCellIndex);
-
-      this.preparation2dDatasService.getCurrentCellDatas();
-    });
+    this.preparation2dDatasService.getCurrentCellDatas();
   }
 
   ngOnChanges(changes: SimpleChanges) {

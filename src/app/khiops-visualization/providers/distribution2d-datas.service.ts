@@ -68,7 +68,7 @@ export class Distribution2dDatasService {
     const preparation2dDatas = this.preparation2dDatasService.getDatas();
     const variablesDetails: VariableDetailsModel | undefined =
       this.preparation2dDatasService.getVariableDetails(
-        preparation2dDatas?.selectedVariable?.rank!,
+        preparation2dDatas?.selectedVariable,
       );
 
     this.distributionDatas.targetDistributionGraphDatas!.labels = [''];

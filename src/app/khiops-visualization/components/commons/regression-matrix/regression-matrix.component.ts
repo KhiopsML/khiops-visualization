@@ -32,10 +32,10 @@ import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
  * Test it with irisR file
  */
 @Component({
-    selector: 'app-regression-matrix',
-    templateUrl: './regression-matrix.component.html',
-    styleUrls: ['./regression-matrix.component.scss'],
-    standalone: false
+  selector: 'app-regression-matrix',
+  templateUrl: './regression-matrix.component.html',
+  styleUrls: ['./regression-matrix.component.scss'],
+  standalone: false,
 })
 export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
   @ViewChild('matrix', {

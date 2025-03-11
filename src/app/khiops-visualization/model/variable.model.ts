@@ -4,13 +4,18 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
+import { REPORT } from '@khiops-library/enum/report';
 import { TYPES } from '@khiops-library/enum/types';
+import { VARIABLE_TYPES } from '@khiops-library/enum/variable-types';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { VariableDetail } from '@khiops-visualization/interfaces/app-datas';
 import { PreparationVariableStatistic } from '@khiops-visualization/interfaces/preparation-report';
 import { TextPreparationVariableStatistic } from '@khiops-visualization/interfaces/text-preparation-report';
 import { TreePreparationVariableStatistic } from '@khiops-visualization/interfaces/tree-preparation-report';
 
+/**
+ * Model of variable for grid display
+ */
 export class VariableModel {
   _id: string;
   rank?: string;
@@ -28,6 +33,7 @@ export class VariableModel {
   missingNumber?: number;
   derivationRule?: string;
   targetParts?: number;
+  variableType?: string;
 
   constructor(
     object:
@@ -35,6 +41,7 @@ export class VariableModel {
       | TextPreparationVariableStatistic
       | TreePreparationVariableStatistic,
     detailedDatas: VariableDetail,
+    preparationSource: string,
   ) {
     // Assign values from input
     Object.assign(this, object);
@@ -43,6 +50,18 @@ export class VariableModel {
     this._id = object.name;
 
     this.level = object.level || 0;
+
+    switch (preparationSource) {
+      case REPORT.PREPARATION_REPORT:
+        this.variableType = VARIABLE_TYPES.PREPARATION;
+        break;
+      case REPORT.TEXT_PREPARATION_REPORT:
+        this.variableType = VARIABLE_TYPES.TEXT_PREPARATION;
+        break;
+      case REPORT.TREE_PREPARATION_REPORT:
+        this.variableType = VARIABLE_TYPES.TREE_PREPARATION;
+        break;
+    }
 
     this.values = object.values || 0;
     if (this.type === TYPES.CATEGORICAL && detailedDatas) {

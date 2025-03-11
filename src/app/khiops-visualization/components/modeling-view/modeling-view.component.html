@@ -119,7 +119,9 @@
           <app-var-details-preparation
             [preparationSource]="preparationSource"
             *ngIf="
-              modelingDatas?.selectedVariable?.variableType === 'preparation'
+              modelingDatas?.selectedVariable?.variableType === 'preparation' ||
+              modelingDatas?.selectedVariable?.variableType ===
+                'text-preparation'
             "
           >
           </app-var-details-preparation>
@@ -132,7 +134,7 @@
           <app-var-details-tree-preparation
             *ngIf="
               modelingDatas?.selectedVariable?.variableType ===
-              'preparation-tree'
+              'tree-preparation'
             "
           >
           </app-var-details-tree-preparation>

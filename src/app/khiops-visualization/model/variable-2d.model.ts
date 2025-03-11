@@ -4,8 +4,12 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
+import { VARIABLE_TYPES } from '@khiops-library/enum/variable-types';
 import { VariablePairStatistics } from '@khiops-visualization/interfaces/bivariate-preparation-report';
 
+/**
+ * Model of 2D variable for grid display
+ */
 export class Variable2dModel {
   _id: string;
   rank?: string;
@@ -20,11 +24,14 @@ export class Variable2dModel {
   parts1?: number;
   parts2?: number;
   values?: number;
+  variableType: string;
 
   constructor(object: VariablePairStatistics) {
     // Assign values from input
     Object.assign(this, object);
 
     this._id = object.name1 + '`' + object.name2;
+
+    this.variableType = VARIABLE_TYPES.PREPARATION_2D;
   }
 }

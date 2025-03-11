@@ -33,7 +33,7 @@ export class TreePreparationVariableModel
     // Generate id for grid
     this._id = id;
 
-    this.variableType = VARIABLE_TYPES.PREPARATION_TREE;
+    this.variableType = VARIABLE_TYPES.TREE_PREPARATION;
 
     this.isNumerical = this.type === TYPES.NUMERICAL;
     this.isCategorical = this.type === TYPES.CATEGORICAL;

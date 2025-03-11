@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { REPORT } from '@khiops-library/enum/report';
 import { TranslateModule } from '@ngstack/translate';
+import { VARIABLE_TYPES } from '@khiops-library/enum/variable-types';
 
 let appService: AppService;
 let preparation2dDatasService: Preparation2dDatasService;
@@ -44,6 +45,7 @@ describe('Visualization', () => {
       currentVar.name2 = preparationDatasService.getTargetVariable(
         REPORT.PREPARATION_REPORT,
       );
+      currentVar.variableType = VARIABLE_TYPES.PREPARATION;
       // Set the variable
       preparation2dDatasService.setSelectedRegressionVariable(currentVar);
 

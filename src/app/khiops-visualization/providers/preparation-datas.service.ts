@@ -119,7 +119,11 @@ export class PreparationDatasService {
       );
       if (variable) {
         this.preparationDatas[preparationSource]!.selectedVariable =
-          new PreparationVariableModel(variable, variable.name);
+          new PreparationVariableModel(
+            variable,
+            variable.name,
+            preparationSource,
+          );
         return this.preparationDatas[preparationSource]?.selectedVariable;
       }
     }
@@ -218,7 +222,7 @@ export class PreparationDatasService {
     const displayedColumns: GridColumnsI[] = [];
 
     // init the object
-    this.preparationDatas[preparationSource].currentIntervalDatas = {
+    this.preparationDatas[preparationSource]!.currentIntervalDatas = {
       title: title,
       values: datas,
       displayedColumns: displayedColumns,
@@ -397,6 +401,7 @@ export class PreparationDatasService {
         const varItem: VariableModel = new VariableModel(
           currentDatas[i]!,
           currentDetailedDatas?.[currentDatas[i]!.rank]!,
+          preparationSource,
         );
         variableDatas.push(varItem);
       }
