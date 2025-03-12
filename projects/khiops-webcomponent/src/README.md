@@ -11,6 +11,10 @@ npm i khiops-visualization
 ## Usage
 
 ```
+import 'khiops-visualization';
+```
+
+```
 <khiops-visualization></khiops-visualization>
 <khiops-covisualization></khiops-covisualization>
 ```

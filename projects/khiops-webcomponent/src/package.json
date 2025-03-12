@@ -1,6 +1,8 @@
 {
   "name": "khiops-visualization",
   "version": "NPM_PUBLISH_VERSION",
+  "main": "khiops-webcomponents.bundle.js",
+  "module": "khiops-webcomponents.bundle.js",
   "license": "BSD-3-Clause-Clear",
   "author": {
     "name": "Orange",
