@@ -21,7 +21,8 @@ npm i khiops-visualization@11.5.5
 Into you html app file:
 
 ```html
-<khiops-visualization></khiops-visualization> <khiops-covisualization></khiops-covisualization>
+<khiops-visualization></khiops-visualization>
+<khiops-covisualization></khiops-covisualization>
 ```
 
 Into your .ts app component:
