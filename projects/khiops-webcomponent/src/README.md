@@ -1,62 +1,95 @@
-# Khiops visualization & covisualization webcomponents
+# Khiops visualization & covisualization Angular components
 
 Khiops Visualization is a visualization plug-in of the data preparation and scoring tool Khiops. Khiops Visualization allows visualizing all analysis results in an intuitive way, providing a quick and easy interpretation of the discovered patterns.
 
 ## Installation
 
+Latest version:
+
+```bash
+npm i khiops-visualization@latest
 ```
-npm i khiops-visualization
+
+Or specific version:
+
+```bash
+npm i khiops-visualization@11.5.5
 ```
 
 ## Usage
 
+Into you html app file:
+
+```html
+<khiops-visualization></khiops-visualization> <khiops-covisualization></khiops-covisualization>
 ```
+
+Into your .ts app component:
+
+```ts
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import 'khiops-visualization';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  standalone: false,
+  styleUrl: './app.component.scss',
+})
+export class AppComponent {
+  jsonData = {}; // JSON data to be displayed
+
+  @ViewChild('visualizationComponent', {
+    static: false,
+  })
+  visualizationComponent?: ElementRef<HTMLElement>;
+
+  @ViewChild('covisualizationComponent', {
+    static: false,
+  })
+  covisualizationComponent?: ElementRef<HTMLElement>;
+
+  ngOnInit(): void {
+    this.visualizationComponent?.nativeElement.setConfig({
+      showProjectTab: false,
+      // ... see Configuration
+    });
+    this.visualizationComponent?.nativeElement.setDatas(jsonData);
+
+    this.covisualizationComponent?.nativeElement.setConfig({
+      showProjectTab: false,
+      // ... see Configuration
+    });
+    this.covisualizationComponent?.nativeElement.setDatas(jsonData);
+  }
+}
 ```
 
-```
-<khiops-visualization></khiops-visualization>
-<khiops-covisualization></khiops-covisualization>
+You may have to allow CUSTOM_ELEMENTS_SCHEMA into your module:
+
+```ts
+@NgModule({
+  declarations: [AppComponent],
+  imports: [BrowserModule, AppRoutingModule, FormsModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  bootstrap: [AppComponent],
+})
 ```
 
-```
-const kv = document.querySelector('khiops-visualization');
-kv.setConfig({
-	appSource : 'WEB', // WEB or ELECTRON
-	showProjectTab: true, // Show or hide project tab
-	onFileOpen : function() {
-		// Callback when a file is open
-		console.log('fileOpen');
-	},
-	onCopyData : function(data) {
-		// Callback when datas are copied
-		console.log(data);
-	},
-	onCopyImage : function(base64data: any) {
-		// Callback when screenshot is copied
-		console.log(base64data);
-	},
-	onThemeChanged : function(data: string) {
-		// Callback when theme has changed
-		console.log(data);
-	},
-	readLocalFile : function(file: File | any, cb: Function) {
-		// Callback when a local file is loaded automatically
-		// For security reasons, local files can not be loaded automatically without Electron
-		// Used to load external datas at startup
-		// This method takes a file in input and a callback when file is loaded
-	},
-	onSendEvent : function(event: { message: string; data: any }) {
-		// Send custom events
-		// Event must have a message and may have additionnal datas of any type
-		console.log(message, data);
-	},
-});
-const datas: CovisualizationDatas | VisualizationDatas;
-kv.setDatas(datas);
-kv.getDatas();
+## Configuration
 
-```
+| Option         | Type     | Description                                                                                                                                                                                                                                                    | Default |
+| -------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| showProjectTab | boolean  | Show or hide project's tab                                                                                                                                                                                                                                     | true    |
+| appSource      | string   | Specify app source for metrics                                                                                                                                                                                                                                 | WEB     |
+| trackerId      | string   | Matomo tracker id                                                                                                                                                                                                                                              |         |
+| onFileOpen     | Callback | Callback when a file is open                                                                                                                                                                                                                                   |         |
+| onCopyData     | Callback | Callback when datas are copied                                                                                                                                                                                                                                 |         |
+| onCopyImage    | Callback | Callback when screenshot is copied                                                                                                                                                                                                                             |         |
+| onThemeChanged | Callback | Callback when theme has changed                                                                                                                                                                                                                                |         |
+| onSendEvent    | Callback |                                                                                                                                                                                                                                                                |         |
+| readLocalFile  | Callback | Callback when a local file is loaded automatically. <br>For security reasons, local files can not be loaded automatically without Electron.<br>Used to load external datas at startup.<br>This method takes a file in input and a callback when file is loaded |         |
+| onSendEvent    | Callback | Send custom events<br> Event must have a message and may have additionnal datas of any type                                                                                                                                                                    |         |
 
 ## Datas models
 
