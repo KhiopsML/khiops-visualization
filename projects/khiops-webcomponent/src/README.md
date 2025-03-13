@@ -88,9 +88,9 @@ You may have to allow CUSTOM_ELEMENTS_SCHEMA into your module:
 | onCopyData     | Callback | Callback when datas are copied                                                                                                                                                                                                                                 |         |
 | onCopyImage    | Callback | Callback when screenshot is copied                                                                                                                                                                                                                             |         |
 | onThemeChanged | Callback | Callback when theme has changed                                                                                                                                                                                                                                |         |
-| onSendEvent    | Callback |                                                                                                                                                                                                                                                                |         |
-| readLocalFile  | Callback | Callback when a local file is loaded automatically. <br>For security reasons, local files can not be loaded automatically without Electron.<br>Used to load external datas at startup.<br>This method takes a file in input and a callback when file is loaded |         |
 | onSendEvent    | Callback | Send custom events<br> Event must have a message and may have additionnal datas of any type                                                                                                                                                                    |         |
+| readLocalFile  | Callback | Callback when a local file is loaded automatically. <br>For security reasons, local files can not be loaded automatically without Electron.<br>Used to load external datas at startup.<br>This method takes a file in input and a callback when file is loaded |         |
+
 
 ## Datas models
 
