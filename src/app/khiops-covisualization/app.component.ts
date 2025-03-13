@@ -33,11 +33,11 @@ import { ConfigModel } from '@khiops-library/model/config.model';
 import { SaveService } from './providers/save.service';
 
 @Component({
-    selector: 'app-root-covisualization',
-    styleUrls: ['./app.component.scss'],
-    templateUrl: './app.component.html',
-    encapsulation: ViewEncapsulation.ShadowDom,
-    standalone: false
+  selector: 'app-root-covisualization',
+  styleUrls: ['./app.component.scss'],
+  templateUrl: './app.component.html',
+  encapsulation: ViewEncapsulation.ShadowDom,
+  standalone: false,
 })
 export class AppComponent implements AfterViewInit {
   appdatas: CovisualizationDatas | undefined;
@@ -67,25 +67,6 @@ export class AppComponent implements AfterViewInit {
     AppService.Ls.setLsId(AppConfig.covisualizationCommon.GLOBAL.LS_ID);
     this.theme = AppService.Ls.get(LS.THEME_COLOR, THEME.LIGHT);
     this.appService.initialize();
-  }
-
-  updateElementValue() {
-    setInterval(() => {
-      if (
-        this.treenodesService.isSaveChanged(
-          this.element.nativeElement.value,
-          this.saveService.constructDatasToSave(),
-        )
-      ) {
-        this.element.nativeElement.value =
-          this.saveService.constructDatasToSave();
-        this.element.nativeElement.dispatchEvent(
-          new CustomEvent(this._valueChangeEvent, {
-            detail: this.element.nativeElement.value,
-          }),
-        );
-      }
-    }, 500);
   }
 
   ngAfterViewInit(): void {
@@ -146,11 +127,6 @@ export class AppComponent implements AfterViewInit {
     };
     this.element.nativeElement.setConfig = (config: ConfigModel) => {
       this.configService.setConfig(config);
-
-      if (this.configService.getConfig().changeDetector) {
-        this.updateElementValue();
-      }
-
       this.trackerService.initTracker();
     };
     this.element.nativeElement.snack = (
