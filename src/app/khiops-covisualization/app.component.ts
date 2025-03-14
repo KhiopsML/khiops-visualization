@@ -47,7 +47,6 @@ export class AppComponent implements AfterViewInit {
   })
   appElement: ElementRef<HTMLElement> | undefined;
 
-  private _valueChangeEvent = 'valueChanged';
   theme: string;
 
   constructor(
