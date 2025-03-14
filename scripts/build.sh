@@ -11,3 +11,5 @@ node wrap-css.js dist/khiops-webcomponent/styles.css dist/khiops-webcomponent/st
 
 cd dist/khiops-webcomponent
 cat polyfills.js styles.js main.js > khiops-webcomponents.bundle.js
+
+$SHELL

@@ -2,45 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>KhiopsWebcomponent</title>
+    <title>Khiops Visualization</title>
     <base href="/" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
-    <style>
-      html,
-      body {
-        padding: 0;
-        margin: 0;
-      }
-    </style>
   </head>
-  <body>
-    <khiops-visualization></khiops-visualization>
-    <!-- <khiops-covisualization></khiops-covisualization> -->
-    <script>
-      document.onreadystatechange = () => {
-        if (document.readyState === 'complete') {
-          const kv = document.querySelector('khiops-visualization');
-          kv.setConfig({
-            appSource: 'WEB',
-            showProjectTab: true,
-            onFileOpen: function () {
-              console.log('fileOpen');
-            },
-            onCopyData: function (data) {
-              console.log(data);
-            },
-            onCopyImage: function (data) {
-              console.log(data);
-            },
-            onThemeChanged: function (data) {
-              console.log(data);
-            },
-          });
-          kv.setDatas();
-          setTimeout(() => console.log(kv.getDatas()), 2000);
-        }
-      };
-    </script>
-  </body>
+  <body></body>
 </html>
