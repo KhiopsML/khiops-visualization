@@ -51,7 +51,7 @@ import { CovisualizationDatas } from '@khiops-covisualization/interfaces/app-dat
     standalone: false
 })
 export class HomeLayoutComponent implements OnInit, OnDestroy {
-  public showProjectTab: boolean = true;
+  public showProjectTab: boolean | undefined = true;
   public get appDatas(): CovisualizationDatas | undefined {
     return this.appService.appDatas;
   }
@@ -238,7 +238,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     const isCollidingJson = this.appService.isCollidingJson(datas);
     UtilsService.resetSearch(AppConfig.covisualizationCommon.GLOBAL.LS_ID);
 
-    this.showProjectTab = this.configService.getConfig().showProjectTab || true;
+    this.showProjectTab = this.configService.getConfig().showProjectTab;
     if (this.showProjectTab === undefined) {
       this.showProjectTab = true;
     }
