@@ -43,10 +43,10 @@ import { BIG_CHART_SIZE } from '@khiops-library/config/global';
 import { ZoomToolsEventsService } from '@khiops-library/components/zoom-tools/zoom-tools.service';
 
 @Component({
-    selector: 'app-histogram',
-    templateUrl: './histogram.component.html',
-    styleUrls: ['./histogram.component.scss'],
-    standalone: false
+  selector: 'app-histogram',
+  templateUrl: './histogram.component.html',
+  styleUrls: ['./histogram.component.scss'],
+  standalone: false,
 })
 export class HistogramComponent extends SelectableComponent implements OnInit {
   @ViewChild('histogramContainer', { static: false })
@@ -288,14 +288,10 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   }
 
   private handleResized(_event: ResizedEvent) {
-    if (_event.isFirst || (this.scaleFactor === 1 && !this.isZooming)) {
-      this.computeChartDimensions();
-    }
+    this.computeChartDimensions();
 
-    if (!this.isZooming) {
-      // Do it every timesto be sure that chart height has been computed
-      this.datas && this.update();
-    }
+    // Do it every timesto be sure that chart height has been computed
+    this.datas && this.update();
     this.isZooming = false;
   }
 

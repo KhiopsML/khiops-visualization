@@ -1,4 +1,10 @@
-<div class="app-histogram" *ngIf="datas" fxFlexFill fxLayout="column">
+<div
+  class="app-histogram"
+  *ngIf="datas"
+  fxFlexFill
+  fxLayout="column"
+  (resized)="onResized($event)"
+>
   <div
     fxLayout="column"
     class="histogram-loading-indicator"
@@ -91,10 +97,10 @@
       </div>
     </div>
   </div>
+
   <div id="histogram-container" #histogramContainer>
     <div
       fxFlexFill
-      (resized)="onResized($event)"
       (wheel)="onWheel($event)"
       (mousedown)="onMouseDown($event)"
       (mousemove)="onMouseMove($event)"
