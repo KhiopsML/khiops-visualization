@@ -110,7 +110,6 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
    * zoom and drag variables
    */
   private scaleFactor = 1;
-  private isZooming = false;
   private isDragging = false;
   private startX = 0;
   private startY = 0;
