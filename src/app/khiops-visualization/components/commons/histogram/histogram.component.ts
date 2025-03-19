@@ -600,7 +600,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
       }
 
       if (this.graphOptionsY?.selected === HistogramType.YLIN) {
-        barH = d.value * this.ratioY;
+        barH = d.density * this.ratioY;
       } else {
         if (d.logValue !== 0) {
           let shift = Math.abs(this.rangeYLog?.max!);

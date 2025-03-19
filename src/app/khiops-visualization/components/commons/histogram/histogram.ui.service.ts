@@ -66,7 +66,11 @@ export class HistogramUIService {
     return (
       AppService.translate.get('GLOBAL.DENSITY') +
       ': ' +
-      d3.format('.2e')(d.value) +
+      d3.format('.2e')(d.density) +
+      '<br>' +
+      AppService.translate.get('GLOBAL.PROBABILITY') +
+      ': ' +
+      d3.format('.2e')(d.probability) +
       '<br>' +
       AppService.translate.get('GLOBAL.FREQUENCY') +
       ': ' +

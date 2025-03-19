@@ -613,13 +613,15 @@ export class DistributionDatasService {
           histogram.bounds.forEach((bound: number, i: number) => {
             if (i < histogram.bounds.length - 1) {
               let delta = histogram.bounds[i + 1]! - bound;
-              if (delta < 1) {
+              if (delta < 0.0001) {
                 // Important to limit delta to 1 to avoid positive log values
+                // Otherwise chart is out of bounds
                 delta = 1;
               }
 
-              let value = histogram.frequencies![i]! / totalFreq! / delta;
-              let logValue = Math.log10(value);
+              const density = histogram.frequencies![i]! / (totalFreq! * delta);
+              const probability = histogram.frequencies![i]! / totalFreq!;
+              let logValue = Math.log10(density);
 
               if (logValue === -Infinity) {
                 logValue = 0;
@@ -627,7 +629,8 @@ export class DistributionDatasService {
               const data: HistogramValuesI = {
                 frequency: histogram.frequencies![i] || 0,
                 partition: [bound, histogram.bounds[i + 1]!],
-                value: value,
+                density: density,
+                probability: probability,
                 logValue: logValue,
               };
 
@@ -648,16 +651,20 @@ export class DistributionDatasService {
             // partition is always numbers in this case
             if (partition.length !== 0) {
               const delta = partition[1]! - partition[0]!;
-              let value =
-                varDatas.dataGrid.frequencies![i]! / totalFreq! / delta;
-              let logValue = Math.log10(value);
+              const density =
+                varDatas.dataGrid.frequencies![i]! / (totalFreq! * delta);
+              const probability =
+                varDatas.dataGrid.frequencies![i]! / totalFreq!;
+              let logValue = Math.log10(density);
+
               if (logValue === -Infinity) {
                 logValue = 0;
               }
               const data: HistogramValuesI = {
                 frequency: varDatas.dataGrid.frequencies![i] || 0,
                 partition: partition,
-                value: value,
+                density: density,
+                probability: probability,
                 logValue: logValue,
               };
               histogramGraphDetails?.push(data);

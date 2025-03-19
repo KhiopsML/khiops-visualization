@@ -76,7 +76,7 @@ export class HistogramService {
   }
 
   getLinRangeY(datas: HistogramValuesI[]): number {
-    const dataValues = datas.map((d: HistogramValuesI) => d.value);
+    const dataValues = datas.map((d: HistogramValuesI) => d.density);
     this.rangeYLin = Math.max(...dataValues);
     return this.rangeYLin;
   }

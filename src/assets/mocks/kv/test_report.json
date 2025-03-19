@@ -1,0 +1,163 @@
+{
+	"tool": "Khiops",
+	"version": "10.6.1-b.0",
+	"shortDescription": "",
+	"preparationReport": {
+		"reportType": "Preparation",
+		"summary": {
+			"dictionary": "scores",
+			"variables": {
+				"types": [
+					"Categorical",
+					"Numerical"
+				],
+				"numbers": [
+					1,
+					1
+				]
+			},
+			"database": "test.tsv",
+			"samplePercentage": 70,
+			"samplingMode": "Include sample",
+			"selectionVariable": "",
+			"selectionValue": "",
+			"instances": 1421,
+			"learningTask": "Unsupervised analysis",
+			"evaluatedVariables": 2,
+			"featureEngineering": {
+				"maxNumberOfConstructedVariables": 1000,
+				"maxNumberOfTextFeatures": 10000,
+				"maxNumberOfTrees": 10,
+				"maxNumberOfVariablePairs": 0
+			},
+			"discretization": "MODL",
+			"valueGrouping": "MODL"
+		},
+		"variablesStatistics": [
+			{
+				"rank": "R1",
+				"name": "y",
+				"type": "Categorical",
+				"parts": 2,
+				"values": 2,
+				"mode": "0",
+				"modeFrequency": 762,
+				"missingNumber": 0,
+				"sparseMissingNumber": 0,
+				"constructionCost": 1.38629
+			},
+			{
+				"rank": "R2",
+				"name": "y_score",
+				"type": "Numerical",
+				"parts": 7,
+				"values": 1421,
+				"min": 8.343680376e-06,
+				"max": 0.9999999969,
+				"mean": 0.4578809351,
+				"stdDev": 0.3432831277,
+				"missingNumber": 0,
+				"sparseMissingNumber": 0,
+				"constructionCost": 1.38629
+			}
+		],
+		"variablesDetailedStatistics": {
+			"R1": {
+				"dataGrid": {
+					"isSupervised": false,
+					"dimensions": [
+						{
+							"variable": "y",
+							"type": "Categorical",
+							"partitionType": "Value groups",
+							"partition": [
+								["0"],
+								["1"]
+							],
+							"defaultGroupIndex": 1
+						}
+					],
+					"frequencies": [762,659]
+				},
+				"inputValues": {
+					"values": ["0","1"],
+					"frequencies": [762,659]
+				}
+			},
+			"R2": {
+				"dataGrid": {
+					"isSupervised": false,
+					"dimensions": [
+						{
+							"variable": "y_score",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[7.629394531e-06,0.00390625],
+								[0.00390625,0.015625],
+								[0.015625,0.05078125],
+								[0.05078125,0.21484375],
+								[0.21484375,0.88671875],
+								[0.88671875,0.9921875],
+								[0.9921875,1]
+							]
+						}
+					],
+					"frequencies": [61,72,107,250,677,201,53]
+				},
+				"modlHistograms": {
+					"histogramNumber": 9,
+					"interpretableHistogramNumber": 9,
+					"truncationEpsilon": 0,
+					"removedSingularIntervalNumber": 0,
+					"granularities": [0,1,2,3,4,5,6,7,8],
+					"intervalNumbers": [1,2,3,3,4,5,6,7,7],
+					"peakIntervalNumbers": [0,0,0,0,0,0,0,0,0],
+					"spikeIntervalNumbers": [0,0,0,0,0,0,0,0,0],
+					"emptyIntervalNumbers": [0,0,0,0,0,0,0,0,0],
+					"levels": [0,0.0001021604907,0.001944689848,0.003709585142,0.005053448908,0.006097737717,0.00675031736,0.00687651234,0.007033069825],
+					"informationRates": [0,1.452573246,27.65065464,52.74489283,71.85267648,86.70094096,95.97967214,97.77398079,100],
+					"histograms": [
+						{
+							"bounds": [7.629394531e-06,1],
+							"frequencies": [1421]
+						},
+						{
+							"bounds": [7.629394531e-06,0.5,1],
+							"frequencies": [790,631]
+						},
+						{
+							"bounds": [7.629394531e-06,0.25,0.75,1],
+							"frequencies": [525,506,390]
+						},
+						{
+							"bounds": [7.629394531e-06,0.125,0.875,1],
+							"frequencies": [359,802,260]
+						},
+						{
+							"bounds": [7.629394531e-06,0.0625,0.1875,0.9375,1],
+							"frequencies": [255,197,798,171]
+						},
+						{
+							"bounds": [7.629394531e-06,0.03125,0.1875,0.90625,0.96875,1],
+							"frequencies": [189,263,749,110,110]
+						},
+						{
+							"bounds": [7.629394531e-06,0.015625,0.046875,0.1875,0.890625,0.984375,1],
+							"frequencies": [133,96,223,722,172,75]
+						},
+						{
+							"bounds": [7.629394531e-06,0.0078125,0.015625,0.0546875,0.2109375,0.890625,0.9921875,1],
+							"frequencies": [87,46,115,236,690,194,53]
+						},
+						{
+							"bounds": [7.629394531e-06,0.00390625,0.015625,0.05078125,0.21484375,0.88671875,0.9921875,1],
+							"frequencies": [61,72,107,250,677,201,53]
+						}
+					]
+				}
+			}
+		}
+	},
+	"khiops_encoding": "ascii"
+}

@@ -29,7 +29,8 @@ export interface HistogramValuesI {
   frequency: number;
   logValue: number;
   partition: number[];
-  value: number;
+  density: number;
+  probability: number;
   coords?: {
     x: number;
     y: number;
