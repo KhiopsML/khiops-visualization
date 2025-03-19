@@ -613,8 +613,8 @@ export class DistributionDatasService {
           histogram.bounds.forEach((bound: number, i: number) => {
             if (i < histogram.bounds.length - 1) {
               let delta = histogram.bounds[i + 1]! - bound;
-              if (delta < 0.0001) {
-                // Important to limit delta to 1 to avoid positive log values
+              if (delta < 0.001) {
+                // Important to limit delta to avoid positive log values
                 // Otherwise chart is out of bounds
                 delta = 1;
               }
@@ -622,7 +622,6 @@ export class DistributionDatasService {
               const density = histogram.frequencies![i]! / (totalFreq! * delta);
               const probability = histogram.frequencies![i]! / totalFreq!;
               let logValue = Math.log10(density);
-
               if (logValue === -Infinity) {
                 logValue = 0;
               }
