@@ -639,6 +639,7 @@ export class DistributionDatasService {
         }
       } else {
         // modlHistograms is not given: take histogram from dataGrid
+        // eg. defaulGroup.json
         const totalFreq = varDatas.dataGrid.frequencies?.reduce(
           (partialSum: number, a: number) => partialSum + a,
           0,

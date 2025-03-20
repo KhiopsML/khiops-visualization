@@ -81,7 +81,8 @@ export class FileLoaderService {
     // let urlKV = './assets/mocks/kv/copydatas.json';
     // let urlKV = './assets/mocks/kv/iris2d.json';
     // let urlKV = './assets/mocks/kv/AnalysisRegressionQ99.json';
-    let urlKV = './assets/mocks/kv/AnalysisResults.json';
+    // let urlKV = './assets/mocks/kv/AnalysisResults.json';
+    // let urlKV = './assets/mocks/kv/test_report.json';
     // let urlKV = './assets/mocks/kv/mainTargetValue.json';
     // let urlKV = './assets/mocks/kv/leafrules.khj';
     // let urlKV = './assets/mocks/kv/Filtered_Iris_AnalysisResults.khj';
@@ -114,7 +115,7 @@ export class FileLoaderService {
     // let urlKV = './assets/mocks/kv/CriteoAnalysisResults.khj';
     // let urlKV = './assets/mocks/kv/Words100_AllReports.json';
     // let urlKV = './assets/mocks/kv/UnivariateAnalysisResults.json';
-    // let urlKV = './assets/mocks/kv/ylogAdultAllReports.json';
+    let urlKV = './assets/mocks/kv/ylogAdultAllReports.json';
     // let urlKV = './assets/mocks/kv/ko-AnalysisResults.khj';
     // let urlKV = './assets/mocks/kv/AdultAllReports.json';
     // let urlKV = './assets/mocks/kv/20NewsgroupAllReports.json';

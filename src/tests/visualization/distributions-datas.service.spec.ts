@@ -207,7 +207,7 @@ describe('Visualization', () => {
       expect(res![0]!.frequency).toEqual(1263);
       expect(res![0]!.logValue).toEqual(-5.167337100368651);
       expect(res![0]!.partition).toEqual([1000, 11550]);
-      expect(res![0]!.value).toEqual(0.0000068024114898816155);
+      expect(res![0]!.density).toEqual(0.000006802411489881615);
     });
 
     it('getdistributionGraphDatas should return valid datas [C100_AllReports, Numerical, R15]', () => {
@@ -395,7 +395,7 @@ describe('Visualization', () => {
       expect(res![0]!.frequency).toEqual(595);
       expect(res![0]!.logValue).toEqual(-1.9142764735569882);
       expect(res![0]!.partition).toEqual([16.5, 17.5]);
-      expect(res![0]!.value).toEqual(0.012182138323573974);
+      expect(res![0]!.density).toEqual(0.012182138323573974);
     });
 
     it('getHistogramGraphDatas should return valid datas [ylogAdultAllReports, R3]', () => {
@@ -420,7 +420,7 @@ describe('Visualization', () => {
       expect(res![0]!.frequency).toEqual(46560);
       expect(res![0]!.logValue).toEqual(-0.020780467643705575);
       expect(res![0]!.partition).toEqual([-0.5, 0.5]);
-      expect(res![0]!.value).toEqual(0.9532779165472339);
+      expect(res![0]!.density).toEqual(0.9532779165472339);
     });
 
     it('getdistributionGraphDatas should return default group index information datas [AnalysisRegressionQ99, preparationReport, R04]', () => {

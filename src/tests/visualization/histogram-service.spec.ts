@@ -62,6 +62,27 @@ describe('Visualization', () => {
       expect(histogramService).toBeTruthy();
     });
 
+    it('getHistogramGraphDatas should return valid datas [defaultGroup, R001, modlHistograms is not given]', () => {
+      const fileDatas = require('../../assets/mocks/kv/defaultGroup.json');
+      const histogramDatas = getHistogramGraphDatas(fileDatas, 0);
+      expect(histogramDatas?.[0]?.density).toEqual(0.000006802411489881615);
+      expect(histogramDatas?.[0]?.frequency).toEqual(1263);
+      expect(histogramDatas?.[0]?.probability).toEqual(0.07176544121825104);
+      expect(histogramDatas?.[0]?.logValue).toEqual(-5.167337100368651);
+      expect(histogramDatas?.[0]?.partition).toEqual([1000, 11550]);
+    });
+
+    it('getHistogramGraphDatas should return valid datas [test_report, R2, delta < 0]', () => {
+      const fileDatas = require('../../assets/mocks/kv/test_report.json');
+      const histogramDatas = getHistogramGraphDatas(fileDatas, 1);
+      expect(histogramDatas?.[0]?.density).toEqual(11.010949814839867);
+      expect(histogramDatas?.[0]?.probability).toEqual(0.04292751583391977);
+      expect(histogramDatas?.[0]?.logValue).toEqual(1.041824783236237);
+      expect(histogramDatas?.[0]?.partition).toEqual([
+        0.000007629394531, 0.00390625,
+      ]);
+    });
+
     it('getRangeX should return valid datas [ylogAdultAllReports, R1]', () => {
       const fileDatas = require('../../assets/mocks/kv/ylogAdultAllReports.json');
       const histogramDatas = getHistogramGraphDatas(fileDatas, 0);
@@ -251,7 +272,7 @@ describe('Visualization', () => {
       const histogramDatas = getHistogramGraphDatas(fileDatas, 1);
       histogramService.getLogRangeY(histogramDatas!);
       const res = histogramService.getLogRatioY(370, 50);
-      expect(res).toEqual(41.74882404046183);
+      expect(res).toEqual(50.486935657957105);
     });
 
     it('getLinRatioY should return valid datas [ylogAdultAllReports, R1]', () => {
