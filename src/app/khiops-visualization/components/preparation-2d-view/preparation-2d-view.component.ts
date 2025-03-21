@@ -32,10 +32,10 @@ import { VariableModel } from '@khiops-visualization/model/variable.model';
 import { getPreparation2dVariablesGridColumns } from './preparation-2d-view.config';
 
 @Component({
-    selector: 'app-preparation-2d-view',
-    templateUrl: './preparation-2d-view.component.html',
-    styleUrls: ['./preparation-2d-view.component.scss'],
-    standalone: false
+  selector: 'app-preparation-2d-view',
+  templateUrl: './preparation-2d-view.component.html',
+  styleUrls: ['./preparation-2d-view.component.scss'],
+  standalone: false,
 })
 export class Preparation2dViewComponent extends SelectableTabComponent {
   @ViewChild('targetDistributionGraph', {
@@ -108,10 +108,6 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
   }
 
   onShowLevelDistributionGraph(datas: VariableModel[] | Variable2dModel[]) {
-    console.log(
-      'Preparation2dViewComponent ~ onShowLevelDistributionGraph ~ datas:',
-      datas,
-    );
     const config = new MatDialogConfig();
     config.width = AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.WIDTH;
     config.height =
