@@ -15,7 +15,7 @@ export class ConfigService {
 
   private config: ConfigModel = new ConfigModel();
 
-  setRootElement(appRoot: ElementRef<HTMLElement>) {
+  setRootElement(appRoot: any) {
     this.appRootElement = appRoot;
   }
 
@@ -24,7 +24,7 @@ export class ConfigService {
   }
 
   getRootElementDom() {
-    return this.appRootElement.nativeElement;
+    return this.appRootElement?.nativeElement;
   }
 
   setConfig(config: ConfigModel) {
