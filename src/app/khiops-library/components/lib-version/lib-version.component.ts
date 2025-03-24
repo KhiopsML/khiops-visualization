@@ -4,14 +4,13 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
 import { LibVersionService } from './lib-version.service';
 
 @Component({
-    selector: 'kl-lib-version',
-    template: ` <p>Khiops-library {{ libVersion }}</p> `,
-    encapsulation: ViewEncapsulation.None,
-    standalone: false
+  selector: 'kl-lib-version',
+  template: ` <p>Khiops-library {{ libVersion }}</p> `,
+  standalone: false,
 })
 export class LibVersionComponent {
   libVersion: string | undefined;

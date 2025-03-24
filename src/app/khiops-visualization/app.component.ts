@@ -29,13 +29,12 @@ import { FileLoaderService } from '@khiops-library/providers/file-loader.service
 import { THEME } from '@khiops-library/enum/theme';
 import { VisualizationDatas } from './interfaces/app-datas';
 import { ConfigModel } from '@khiops-library/model/config.model';
-
 @Component({
-    selector: 'app-root-visualization',
-    styleUrls: ['./app.component.scss'],
-    templateUrl: './app.component.html',
-    encapsulation: ViewEncapsulation.ShadowDom,
-    standalone: false
+  selector: 'app-root-visualization',
+  styleUrls: ['./app.component.scss'],
+  templateUrl: './app.component.html',
+  encapsulation: ViewEncapsulation.ShadowDom,
+  standalone: false,
 })
 export class AppComponent implements AfterViewInit {
   appdatas: VisualizationDatas | undefined;

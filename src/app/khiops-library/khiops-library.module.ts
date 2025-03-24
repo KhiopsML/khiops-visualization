@@ -72,6 +72,8 @@ import EnTransaltion from '../../assets/i18n/en.json';
 import { ProjectSummaryComponent } from './components/project-summary/project-summary.component';
 import { ZoomToolsComponent } from './components/zoom-tools/zoom-tools.component';
 import { AngularSplitModule } from 'angular-split';
+import { OverlayContainer } from '@angular/cdk/overlay';
+import { InAppOverlayContainer } from '../khiops-visualization/overlay/in-app-overlay-provider';
 
 @NgModule({
   imports: [
@@ -147,7 +149,12 @@ import { AngularSplitModule } from 'angular-split';
     ImportFileLoaderComponent,
     ProjectSummaryComponent,
   ],
-  providers: [ConfigService, TranslateService],
+  providers: [
+    ConfigService,
+    TranslateService,
+    InAppOverlayContainer,
+    { provide: OverlayContainer, useClass: InAppOverlayContainer },
+  ],
   exports: [
     LibraryComponent,
     CommonModule,

@@ -33,8 +33,6 @@ import { ManageViewsComponent } from './components/commons/manage-views/manage-v
 import { AgGridModule } from '@ag-grid-community/angular';
 import { UserSettingsComponent } from './components/commons/user-settings/user-settings.component';
 import { ExternalDatasComponent } from './components/commons/external-datas/external-datas.component';
-import { InAppRootOverlayContainer } from '@khiops-covisualization/providers/in-app-root-overlay/in-app-root-overlay-container';
-import { OverlayContainer } from '@angular/cdk/overlay';
 import { HierarchyDetailsComponent } from './components/commons/hierarchy-details/hierarchy-details.component';
 
 @NgModule({
@@ -71,9 +69,6 @@ import { HierarchyDetailsComponent } from './components/commons/hierarchy-detail
     ReactiveFormsModule,
     AgGridModule,
     HttpClientModule,
-  ],
-  providers: [
-    { provide: OverlayContainer, useClass: InAppRootOverlayContainer },
   ],
   exports: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

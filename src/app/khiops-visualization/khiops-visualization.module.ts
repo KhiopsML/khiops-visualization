@@ -38,8 +38,6 @@ import { TreeSelectComponent } from './components/commons/tree-select/tree-selec
 import { VarDetailsPreparationComponent } from './components/commons/var-details-preparation/var-details-preparation.component';
 import { VarDetailsTreePreparationComponent } from './components/commons/var-details-tree-preparation/var-details-tree-preparation.component';
 import { VarDetailsPreparation2dComponent } from './components/commons/var-details-preparation-2d/var-details-preparation-2d.component';
-import { OverlayContainer } from '@angular/cdk/overlay';
-import { InAppRootOverlayContainer } from '@khiops-visualization/providers/in-app-root-overlay/in-app-root-overlay-container';
 import { HistogramComponent } from './components/commons/histogram/histogram.component';
 import { AngularResizeEventModule } from 'angular-resize-event';
 import { BrowserModule } from '@angular/platform-browser';
@@ -98,9 +96,6 @@ import { EffectsModule } from '@ngrx/effects';
     EffectsModule.forRoot([TreePreparationEffects]),
   ],
   exports: [AppComponent],
-  providers: [
-    { provide: OverlayContainer, useClass: InAppRootOverlayContainer },
-  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class KhiopsVisualizationModule {}
