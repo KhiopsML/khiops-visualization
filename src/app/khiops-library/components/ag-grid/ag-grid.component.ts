@@ -205,6 +205,43 @@ export class AgGridComponent
     this.selectNode(this.selectedVariable);
   }
 
+  override ngAfterViewInit() {
+    // Call ngAfterViewInit of extend component
+    super.ngAfterViewInit();
+    setTimeout(() => {
+      this.showHeader = true;
+
+      if (
+        this.levelDistributionTitle === '' ||
+        this.levelDistributionTitle === undefined
+      ) {
+        this.levelDistributionTitle = this.translate.get(
+          TYPES.LEVEL_DISTRIBUTION,
+        );
+      }
+
+      // Change default height of rows if defined
+      if (this.rowHeight && this.gridOptions?.api) {
+        this.gridOptions.rowHeight = this.rowHeight;
+        this.gridOptions.api.resetRowHeights();
+      }
+
+      // Do not show level distribution graph if no level into datas.
+      if (this.inputDatas?.[0] && !this.inputDatas[0].level) {
+        this.showLevelDistribution = false;
+      }
+
+      if (this.agGrid) {
+        if (!this.showHeader) {
+          this.agGrid?.api?.sizeColumnsToFit();
+        } else {
+          this.resizeColumnsToFit();
+        }
+      }
+      this.updateColumnFilterBadge();
+    });
+  }
+
   ngOnChanges(changes: SimpleChanges) {
     if (changes.displayedColumns?.currentValue) {
       if (
@@ -229,7 +266,6 @@ export class AgGridComponent
             col.show = this.visibleColumns[this.id!][col.field];
           }
         }
-        this.updateGridSettings();
       }
     }
     if (changes.inputDatas?.currentValue) {
@@ -271,41 +307,6 @@ export class AgGridComponent
     // _id is always hidden
     this.hideFilterBadge =
       (hiddenColumns && hiddenColumns.length <= 1) || false;
-  }
-
-  updateGridSettings() {
-    setTimeout(() => {
-      this.showHeader = true;
-
-      if (
-        this.levelDistributionTitle === '' ||
-        this.levelDistributionTitle === undefined
-      ) {
-        this.levelDistributionTitle = this.translate.get(
-          TYPES.LEVEL_DISTRIBUTION,
-        );
-      }
-
-      // Change default height of rows if defined
-      if (this.rowHeight && this.gridOptions?.api) {
-        this.gridOptions.rowHeight = this.rowHeight;
-        this.gridOptions.api.resetRowHeights();
-      }
-
-      // Do not show level distribution graph if no level into datas.
-      if (this.inputDatas?.[0] && !this.inputDatas[0].level) {
-        this.showLevelDistribution = false;
-      }
-
-      if (this.agGrid) {
-        if (!this.showHeader) {
-          this.agGrid?.api?.sizeColumnsToFit();
-        } else {
-          this.resizeColumnsToFit();
-        }
-      }
-      this.updateColumnFilterBadge();
-    });
   }
 
   onCellClicked(e: any) {
@@ -498,7 +499,7 @@ export class AgGridComponent
       this.saveVisibleColumns(currentColumn.field, currentColumn.show);
     }
 
-    this.updateGridSettings();
+    this.updateColumnFilterBadge();
 
     // Update the table
     this.updateTable();
