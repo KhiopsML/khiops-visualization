@@ -44,14 +44,15 @@ import { FileLoaderService } from '@khiops-library/providers/file-loader.service
 import { CovisualizationDatas } from '@khiops-covisualization/interfaces/app-datas';
 
 @Component({
-    selector: 'app-home-layout',
-    templateUrl: './homeLayout.component.html',
-    styleUrls: ['./homeLayout.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    standalone: false
+  selector: 'app-home-layout',
+  templateUrl: './homeLayout.component.html',
+  styleUrls: ['./homeLayout.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  standalone: false,
 })
 export class HomeLayoutComponent implements OnInit, OnDestroy {
   public showProjectTab: boolean | undefined = true;
+  public showLogo: boolean | undefined = true;
   public get appDatas(): CovisualizationDatas | undefined {
     return this.appService.appDatas;
   }
@@ -241,6 +242,10 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     this.showProjectTab = this.configService.getConfig().showProjectTab;
     if (this.showProjectTab === undefined) {
       this.showProjectTab = true;
+    }
+    this.showLogo = this.configService.getConfig().showLogo;
+    if (this.showLogo === undefined) {
+      this.showLogo = true;
     }
     if (!UtilsService.isEmpty(datas)) {
       if (!this.isCompatibleJson) {

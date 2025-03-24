@@ -12,14 +12,15 @@ import {
 } from '@angular/core';
 
 @Component({
-    selector: 'kl-header-title',
-    templateUrl: './header-title.component.html',
-    styleUrls: ['./header-title.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  selector: 'kl-header-title',
+  templateUrl: './header-title.component.html',
+  styleUrls: ['./header-title.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class HeaderTitleComponent implements OnInit {
   @Input() title: string = '';
+  @Input() showLogo: boolean = true;
   displayedTitle: string[] = [];
   appName: string | undefined;
 

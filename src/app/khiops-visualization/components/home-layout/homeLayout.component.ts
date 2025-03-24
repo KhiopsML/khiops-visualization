@@ -36,11 +36,11 @@ import { MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs';
 import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas';
 
 @Component({
-    selector: 'app-home-layout',
-    templateUrl: './homeLayout.component.html',
-    styleUrls: ['./homeLayout.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    standalone: false
+  selector: 'app-home-layout',
+  templateUrl: './homeLayout.component.html',
+  styleUrls: ['./homeLayout.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  standalone: false,
 })
 export class HomeLayoutComponent implements OnInit {
   @ViewChild('mainTabGroup') public mainTabGroup!: MatTabGroup;
@@ -52,6 +52,7 @@ export class HomeLayoutComponent implements OnInit {
     this.appService.setFileDatas(datas);
   }
   public showProjectTab: boolean | undefined = true;
+  public showLogo: boolean | undefined = true;
   public activeTab = AppConfig.visualizationCommon.HOME.ACTIVE_TAB_INDEX;
   public appTitle?: string;
   public appVersion?: string;
@@ -146,7 +147,10 @@ export class HomeLayoutComponent implements OnInit {
     if (this.showProjectTab === undefined) {
       this.showProjectTab = true;
     }
-
+    this.showLogo = this.configService.getConfig().showLogo;
+    if (this.showProjectTab === undefined) {
+      this.showProjectTab = true;
+    }
     if (!this.isCompatibleJson) {
       this.closeFile();
       this.snackBar.open(

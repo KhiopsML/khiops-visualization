@@ -15,7 +15,8 @@
     </mat-sidenav>
     <mat-sidenav-content>
       <div class="container">
-        <kl-header-title [title]="appTitle"> </kl-header-title>
+        <kl-header-title [title]="appTitle" [showLogo]="showLogo">
+        </kl-header-title>
         <kl-file-loader #fileLoader [hidden]="true"></kl-file-loader>
         <kl-no-data
           id="welcome-message"

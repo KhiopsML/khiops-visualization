@@ -21,8 +21,7 @@ npm i khiops-visualization@11.5.5
 Into you html app file:
 
 ```html
-<khiops-visualization></khiops-visualization>
-<khiops-covisualization></khiops-covisualization>
+<khiops-visualization></khiops-visualization> <khiops-covisualization></khiops-covisualization>
 ```
 
 Into your .ts app component:
@@ -53,12 +52,14 @@ export class AppComponent {
   ngOnInit(): void {
     this.visualizationComponent?.nativeElement.setConfig({
       showProjectTab: false,
+      showLogo: false,
       // ... see Configuration
     });
     this.visualizationComponent?.nativeElement.setDatas(jsonData);
 
     this.covisualizationComponent?.nativeElement.setConfig({
       showProjectTab: false,
+      showLogo: false,
       // ... see Configuration
     });
     this.covisualizationComponent?.nativeElement.setDatas(jsonData);
@@ -82,6 +83,7 @@ You may have to allow CUSTOM_ELEMENTS_SCHEMA into your module:
 | Option         | Type     | Description                                                                                                                                                                                                                                                    | Default |
 | -------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
 | showProjectTab | boolean  | Show or hide project's tab                                                                                                                                                                                                                                     | true    |
+| showLogo       | boolean  | Show or hide header's logo                                                                                                                                                                                                                                     | true    |
 | appSource      | string   | Specify app source for metrics                                                                                                                                                                                                                                 | WEB     |
 | trackerId      | string   | Matomo tracker id                                                                                                                                                                                                                                              |         |
 | onFileOpen     | Callback | Callback when a file is open                                                                                                                                                                                                                                   |         |
@@ -90,7 +92,6 @@ You may have to allow CUSTOM_ELEMENTS_SCHEMA into your module:
 | onThemeChanged | Callback | Callback when theme has changed                                                                                                                                                                                                                                |         |
 | onSendEvent    | Callback | Send custom events<br> Event must have a message and may have additionnal datas of any type                                                                                                                                                                    |         |
 | readLocalFile  | Callback | Callback when a local file is loaded automatically. <br>For security reasons, local files can not be loaded automatically without Electron.<br>Used to load external datas at startup.<br>This method takes a file in input and a callback when file is loaded |         |
-
 
 ## Datas models
 

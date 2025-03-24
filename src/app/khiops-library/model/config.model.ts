@@ -6,6 +6,7 @@
 
 export class ConfigModel {
   showProjectTab?: boolean;
+  showLogo?: boolean;
   appSource!: string;
   trackerId?: string;
   onFileOpen!: Function;
