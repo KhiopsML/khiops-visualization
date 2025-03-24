@@ -52,7 +52,7 @@ import { CovisualizationDatas } from '@khiops-covisualization/interfaces/app-dat
 })
 export class HomeLayoutComponent implements OnInit, OnDestroy {
   public showProjectTab: boolean | undefined = true;
-  public showLogo: boolean | undefined = true;
+  public showLogo: boolean | undefined = false;
   public get appDatas(): CovisualizationDatas | undefined {
     return this.appService.appDatas;
   }

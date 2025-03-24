@@ -20,7 +20,6 @@ import {
 })
 export class HeaderTitleComponent implements OnInit {
   @Input() title: string = '';
-  @Input() showLogo: boolean = true;
   displayedTitle: string[] = [];
   appName: string | undefined;
 

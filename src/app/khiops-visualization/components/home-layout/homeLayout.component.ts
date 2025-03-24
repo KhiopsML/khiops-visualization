@@ -52,7 +52,7 @@ export class HomeLayoutComponent implements OnInit {
     this.appService.setFileDatas(datas);
   }
   public showProjectTab: boolean | undefined = true;
-  public showLogo: boolean | undefined = true;
+  public showLogo: boolean | undefined = false;
   public activeTab = AppConfig.visualizationCommon.HOME.ACTIVE_TAB_INDEX;
   public appTitle?: string;
   public appVersion?: string;
@@ -148,8 +148,8 @@ export class HomeLayoutComponent implements OnInit {
       this.showProjectTab = true;
     }
     this.showLogo = this.configService.getConfig().showLogo;
-    if (this.showProjectTab === undefined) {
-      this.showProjectTab = true;
+    if (this.showLogo === undefined) {
+      this.showLogo = true;
     }
     if (!this.isCompatibleJson) {
       this.closeFile();
