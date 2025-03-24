@@ -296,3 +296,9 @@ button.mdc-icon-button {
 .mat-mdc-menu-item-text {
   line-height: 1rem !important;
 }
+
+.cdk-overlay-connected-position-bounding-box {
+  // Restrict full-screen mode to the component's layout. #30
+  // sticky otherwize menu dialog shift
+  position: sticky !important;
+}
