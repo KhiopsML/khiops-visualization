@@ -181,7 +181,7 @@
   </div>
   <ag-grid-angular
     fxFlex
-    *ngIf="rowData.length !== 0"
+    *ngIf="rowData.length !== 0 && this.agGridVisible"
     [context]="context"
     #agGrid
     class="ag-theme-balham"
@@ -195,7 +195,7 @@
     (cellClicked)="onCellClicked($event)"
     (cellDoubleClicked)="onCellDoubleClicked($event)"
     [rowSelection]="rowSelection"
-    [pagination]="inputDatas && inputDatas.length > paginationSize!"
+    [pagination]="shouldShowPagination"
     [columnDefs]="columnDefs"
     [modules]="modules"
   >

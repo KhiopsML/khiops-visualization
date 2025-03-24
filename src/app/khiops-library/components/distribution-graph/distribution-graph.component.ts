@@ -30,18 +30,18 @@ import { LS } from '@khiops-library/enum/ls';
 import { Ls } from '@khiops-library/providers/ls.service';
 
 @Component({
-    selector: 'kl-distribution-graph',
-    templateUrl: './distribution-graph.component.html',
-    styleUrls: ['./distribution-graph.component.scss'],
-    providers: [ToPrecisionPipe],
-    standalone: false
+  selector: 'kl-distribution-graph',
+  templateUrl: './distribution-graph.component.html',
+  styleUrls: ['./distribution-graph.component.scss'],
+  providers: [ToPrecisionPipe],
+  standalone: false,
 })
 export class DistributionGraphComponent
   extends ScrollableGraphComponent
   implements OnInit
 {
   @Input() public position = 0;
-  @Input() public declare inputDatas: ChartDatasModel | undefined;
+  @Input() declare public inputDatas: ChartDatasModel | undefined;
   @Input() public graphOptions: DistributionOptionsI | undefined;
   @Input() public activeEntries: number = 0;
   @Input() public hideGraphOptions = false;

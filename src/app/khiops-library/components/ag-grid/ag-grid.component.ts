@@ -49,10 +49,10 @@ import { DynamicI } from '@khiops-library/interfaces/globals';
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
 @Component({
-    selector: 'kl-ag-grid',
-    templateUrl: './ag-grid.component.html',
-    styleUrls: ['./ag-grid.component.scss'],
-    standalone: false
+  selector: 'kl-ag-grid',
+  templateUrl: './ag-grid.component.html',
+  styleUrls: ['./ag-grid.component.scss'],
+  standalone: false,
 })
 export class AgGridComponent
   extends SelectableComponent
@@ -130,6 +130,9 @@ export class AgGridComponent
   private gridMode: string = '';
   private gridModes: DynamicI = {}; //  values can be: 'fitToSpace' or 'fitToContent'
   private divWidth: number = 0;
+
+  public agGridVisible = true;
+  public shouldShowPagination = false;
 
   constructor(
     public override selectableService: SelectableService,
@@ -226,12 +229,13 @@ export class AgGridComponent
             col.show = this.visibleColumns[this.id!][col.field];
           }
         }
-        this.updateColumnFilterBadge();
+        this.updateGridSettings();
       }
     }
     if (changes.inputDatas?.currentValue) {
       // We must update table always, even if content do not changed, to update header informations
       this.updateTable();
+      this.checkToggleAgGridVisibility();
     }
     if (changes.selectedVariable?.currentValue) {
       // always do it in case of shortdesc change
@@ -239,21 +243,38 @@ export class AgGridComponent
     }
   }
 
+  /**
+   * Checks and toggles the visibility of the AG Grid component based on the input data length
+   * and pagination size. If the visibility state changes, it temporarily hides and then shows
+   * the AG Grid component to trigger a re-render.
+   */
+  checkToggleAgGridVisibility() {
+    const previousState = this.shouldShowPagination;
+    this.shouldShowPagination =
+      (this.inputDatas && this.inputDatas.length > this.paginationSize!) ||
+      false;
+    if (previousState !== this.shouldShowPagination) {
+      this.agGridVisible = false;
+      setTimeout(() => {
+        this.agGridVisible = true;
+      });
+    }
+  }
+
+  /**
+   * Updates the column filter badge
+   */
   updateColumnFilterBadge() {
     const hiddenColumns = this.displayedColumns?.filter(
       (e) => e.show === false,
     );
     // _id is always hidden
-    this.hideFilterBadge = (hiddenColumns && hiddenColumns.length <= 1) || true;
+    this.hideFilterBadge =
+      (hiddenColumns && hiddenColumns.length <= 1) || false;
   }
 
-  override ngAfterViewInit() {
-    // Call ngAfterViewInit of extend component
-    super.ngAfterViewInit();
-
+  updateGridSettings() {
     setTimeout(() => {
-      // Avoid ExpressionChangedAfterItHasBeenCheckedError
-
       this.showHeader = true;
 
       if (
@@ -283,6 +304,7 @@ export class AgGridComponent
           this.resizeColumnsToFit();
         }
       }
+      this.updateColumnFilterBadge();
     });
   }
 
@@ -476,7 +498,7 @@ export class AgGridComponent
       this.saveVisibleColumns(currentColumn.field, currentColumn.show);
     }
 
-    this.updateColumnFilterBadge();
+    this.updateGridSettings();
 
     // Update the table
     this.updateTable();
