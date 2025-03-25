@@ -47,6 +47,8 @@ import { treePreparationReducer } from './reducers/tree-preparation.reducer';
 import { StoreModule } from '@ngrx/store';
 import { TreePreparationEffects } from './effects/tree-preparation.effect';
 import { EffectsModule } from '@ngrx/effects';
+import { OverlayContainer } from '@angular/cdk/overlay';
+import { InAppOverlayContainer } from '../khiops-library/overlay/in-app-overlay-provider';
 
 @NgModule({
   declarations: [
@@ -95,6 +97,7 @@ import { EffectsModule } from '@ngrx/effects';
     StoreModule.forRoot({ TreePreparationState: treePreparationReducer }),
     EffectsModule.forRoot([TreePreparationEffects]),
   ],
+  providers: [{ provide: OverlayContainer, useClass: InAppOverlayContainer }],
   exports: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

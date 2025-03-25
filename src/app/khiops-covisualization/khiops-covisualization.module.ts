@@ -34,6 +34,8 @@ import { AgGridModule } from '@ag-grid-community/angular';
 import { UserSettingsComponent } from './components/commons/user-settings/user-settings.component';
 import { ExternalDatasComponent } from './components/commons/external-datas/external-datas.component';
 import { HierarchyDetailsComponent } from './components/commons/hierarchy-details/hierarchy-details.component';
+import { OverlayContainer } from '@angular/cdk/overlay';
+import { InAppOverlayContainer } from '../khiops-library/overlay/in-app-overlay-provider';
 
 @NgModule({
   declarations: [
@@ -70,6 +72,7 @@ import { HierarchyDetailsComponent } from './components/commons/hierarchy-detail
     AgGridModule,
     HttpClientModule,
   ],
+  providers: [{ provide: OverlayContainer, useClass: InAppOverlayContainer }],
   exports: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

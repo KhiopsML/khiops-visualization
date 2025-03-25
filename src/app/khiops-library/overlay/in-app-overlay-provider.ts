@@ -1,13 +1,19 @@
-import { Injectable, Inject } from '@angular/core';
+import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { DOCUMENT } from '@angular/common';
 import { ConfigService } from '@khiops-library/providers/config.service';
-import { Platform } from '@angular/cdk/platform';
-import { filter } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
 import { Router, NavigationEnd } from '@angular/router';
+import { Platform } from '@angular/cdk/platform';
+import { DOCUMENT } from '@angular/common';
+import { Subject } from 'rxjs';
 
-@Injectable({ providedIn: 'root' })
-export class InAppOverlayContainer extends OverlayContainer {
+@Injectable()
+export class InAppOverlayContainer
+  extends OverlayContainer
+  implements OnDestroy
+{
+  private destroy$ = new Subject<void>();
+
   constructor(
     @Inject(DOCUMENT) _document: any,
     platform: Platform,
@@ -16,15 +22,27 @@ export class InAppOverlayContainer extends OverlayContainer {
   ) {
     super(_document, platform);
 
-    // Listen to route changes to re-attach the container
+    // Use takeUntil to properly unsubscribe when the service is destroyed
     this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
+      .pipe(
+        filter((event) => event instanceof NavigationEnd),
+        takeUntil(this.destroy$),
+      )
       .subscribe(() => {
+        console.log('khiops-visulization - route changed');
         this._updateContainerPosition();
       });
   }
-  override ngOnDestroy() {
+
+  override ngOnDestroy(): void {
+    // Emit a value to trigger unsubscription of all observables
+    this.destroy$.next();
+    this.destroy$.complete();
+
+    // Call the parent class's ngOnDestroy method
     super.ngOnDestroy();
+
+    console.log('khiops-visulization - ngOnDestroy');
     this._updateContainerPosition();
   }
 
@@ -44,22 +62,22 @@ export class InAppOverlayContainer extends OverlayContainer {
   }
 
   private _updateContainerPosition(): void {
-    // Wait for the DOM to be updated after navigation
+    console.log('khiops-visulization - updateContainerPosition');
     setTimeout(() => {
       if (this._containerElement) {
-        // First detach the container if it is already attached
         if (this._containerElement.parentNode) {
           this._containerElement.parentNode.removeChild(this._containerElement);
         }
-        // Then reattach it to the correct element
         this._appendToRootComponent();
       }
     }, 0);
   }
 
   getRootElement(): Element | null {
-    return this.configService
-      .getRootElementDom()
-      .querySelector('app-home-layout');
+    return (
+      this.configService
+        .getRootElementDom()
+        ?.querySelector('app-home-layout') || null
+    );
   }
 }
