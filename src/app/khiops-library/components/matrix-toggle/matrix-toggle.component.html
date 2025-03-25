@@ -1,12 +1,15 @@
 <mat-button-toggle-group
   id="matrix-option-toggle"
   class="matrix-toggle-comp"
+  [hideSingleSelectionIndicator]="true"
+  [hideMultipleSelectionIndicator]="true"
   #group="matButtonToggleGroup"
   [value]="matrixOptions.selected"
 >
   <mat-button-toggle
     *ngFor="let opt of matrixOptions.types"
     [value]="opt"
+ 
     title="{{ 'TOOLTIPS.COMMONS.MATRIX_MODE' | translate }}"
     (click)="changeMatrixType(opt)"
   >

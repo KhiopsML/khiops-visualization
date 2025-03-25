@@ -1,6 +1,8 @@
 /*******************************************************************/
 /* This file override Angular Material styles                      */
 /*******************************************************************/
+@use 'sass:map';
+@use '@angular/material' as mat;
 
 .mat-mdc-progress-bar .mat-mdc-progress-bar-fill {
   transition-duration: initial !important;
@@ -189,11 +191,6 @@ button {
   }
 }
 
-.mat-mdc-tooltip {
-  font-size: 12px !important;
-  background: var(--bgTooltip) !important;
-}
-
 .checkbox-select-all {
   margin-bottom: 1em;
 
@@ -224,7 +221,7 @@ mat-button-toggle-group {
   max-height: 36px;
 
   .mat-button-toggle-label-content {
-    line-height: 0px !important;
+    line-height: 30px !important;
   }
 
   .mat-button-toggle-checked {
@@ -301,4 +298,59 @@ button.mdc-icon-button {
   // Restrict full-screen mode to the component's layout. #30
   // sticky otherwize menu dialog shift
   position: sticky !important;
+}
+
+/**
+  * Angular 19 Material styles Migration
+  */
+
+.mat-mdc-tooltip {
+  font-size: 12px !important;
+  background: var(--bgTooltip) !important;
+  color: var(--bgColor) !important;
+}
+
+.mat-mdc-menu-content {
+  background-color: var(--bgColor) !important;
+}
+
+.mat-mdc-tab-label-container {
+  border-bottom-style: unset !important;
+}
+
+.mdc-slider__thumb-knob {
+  border-radius: 50% !important;
+}
+
+.mat-badge-active {
+  background-color: var(--selected) !important;
+  border-radius: 50% !important;
+}
+
+.mdc-tab__content {
+  cursor: pointer !important;
+  label {
+    cursor: pointer !important;
+  }
+}
+
+mat-tab-body {
+  animation-duration: 0s !important;
+}
+
+.mat-mdc-menu-trigger {
+  padding: 0 0.6rem !important;
+}
+
+.mat-mdc-dialog-surface {
+  background: var(--bgColor) !important;
+  border-radius: 4px !important;
+}
+
+.cdk-overlay-pane.mat-mdc-dialog-panel {
+  max-width: unset !important;
+}
+
+mat-sidenav {
+  border-radius: 0 !important;
 }

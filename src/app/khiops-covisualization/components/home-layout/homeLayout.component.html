@@ -29,6 +29,7 @@
       <div *ngIf="isCompatibleJson" class="container" fxLayout="column">
         <mat-tab-group
           #tabsMenu
+          [animationDuration]="0"
           mat-align-tabs="center"
           color="primary"
           [@.disabled]="true"

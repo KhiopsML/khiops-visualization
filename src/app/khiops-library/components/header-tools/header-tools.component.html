@@ -6,9 +6,8 @@
 >
   <button
     *ngIf="showMenu"
-    mat-flat-button
+    mat-stroked-button
     (click)="toggleSideBar()"
-    color="accent"
     attr.aria-label="{{ 'ARIA.HEADER.DISPLAY_SETTINGS' | translate }}"
     matTooltip="{{ 'GLOBAL.SETTINGS' | translate }}"
   >

@@ -5,11 +5,11 @@
     class="mat-elevation-z1"
     fxLayoutAlign="center center"
   >
-    <button mat-stroked-button (click)="onClickOnCancel()">
+    <button mat-flat-button (click)="onClickOnCancel()">
       {{ 'GLOBAL.CANCEL' | translate }}
     </button>
     <h2 fxFlex>{{ 'GLOBAL.SETTINGS' | translate }}</h2>
-    <button mat-flat-button (click)="onClickOnSave()" color="primary">
+    <button mat-stroked-button (click)="onClickOnSave()" color="primary">
       {{ 'GLOBAL.SAVE' | translate }}
     </button>
   </div>
@@ -63,15 +63,14 @@
     </h2>
     <div fxLayout="row" fxLayoutAlign="start center">
       <mat-button-toggle-group
+        [hideSingleSelectionIndicator]="true"
+        [hideMultipleSelectionIndicator]="true"
         name="theme"
         attr.aria-label="{{ 'DARK_THEME.TITLE' | translate }}"
         (change)="onThemeChange($event)"
       >
         <mat-button-toggle [checked]="isThemeChecked('light')" value="light"
           >Light</mat-button-toggle
-        >
-        <mat-button-toggle [checked]="isThemeChecked('dark')" value="dark"
-          >Dark</mat-button-toggle
         >
         <mat-button-toggle [checked]="isThemeChecked('orange')" value="orange"
           >Orange</mat-button-toggle
