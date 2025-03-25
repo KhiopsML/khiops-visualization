@@ -58,19 +58,7 @@
         >
       </mat-button-toggle-group>
     </div>
-    <div
-      id="user-settings-clear-datas"
-      fxLayout="column"
-      fxLayoutAlign="start start"
-    >
-      <h2>{{ 'SETTINGS.LOCAL_DATAS' | translate }}</h2>
-      <div fxLayout="row" fxLayoutAlign="center center">
-        <button mat-stroked-button (click)="onClickOnClearDatas()">
-          {{ 'SETTINGS.CLEAR' | translate }}
-        </button>
-        <span>{{ 'SETTINGS.CLEAR_DATA_INSTRUCTIONS' | translate }}</span>
-      </div>
-    </div>
+    <kl-clear-ls></kl-clear-ls>
     <kl-npm-version></kl-npm-version>
   </div>
 </div>

@@ -73,6 +73,7 @@ import { ProjectSummaryComponent } from './components/project-summary/project-su
 import { ZoomToolsComponent } from './components/zoom-tools/zoom-tools.component';
 import { AngularSplitModule } from 'angular-split';
 import { NpmVersionComponent } from './components/npm-version/npm-version.component';
+import { ClearLsComponent } from './components/clear-ls/clear-ls.component';
 
 @NgModule({
   imports: [
@@ -115,6 +116,7 @@ import { NpmVersionComponent } from './components/npm-version/npm-version.compon
     }),
   ],
   declarations: [
+    ClearLsComponent,
     NpmVersionComponent,
     ZoomToolsComponent,
     LibraryComponent,
@@ -151,6 +153,7 @@ import { NpmVersionComponent } from './components/npm-version/npm-version.compon
   ],
   providers: [ConfigService, TranslateService],
   exports: [
+    ClearLsComponent,
     NpmVersionComponent,
     LibraryComponent,
     CommonModule,

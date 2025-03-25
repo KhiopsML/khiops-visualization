@@ -14,8 +14,6 @@ import {
 } from '@angular/core';
 import { AppConfig } from 'src/environments/environment';
 import * as _ from 'lodash'; // Important to import lodash in karma
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { TranslateService } from '@ngstack/translate';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { TrackerService } from '../../../../khiops-library/providers/tracker.service';
 import { LS } from '@khiops-library/enum/ls';
@@ -23,10 +21,10 @@ import { AppService } from '@khiops-visualization/providers/app.service';
 import { THEME } from '@khiops-library/enum/theme';
 
 @Component({
-    selector: 'app-user-settings',
-    templateUrl: './user-settings.component.html',
-    styleUrls: ['./user-settings.component.scss'],
-    standalone: false
+  selector: 'app-user-settings',
+  templateUrl: './user-settings.component.html',
+  styleUrls: ['./user-settings.component.scss'],
+  standalone: false,
 })
 export class UserSettingsComponent implements OnChanges {
   @Output() private toggleNavDrawerChanged: EventEmitter<any> =
@@ -40,11 +38,7 @@ export class UserSettingsComponent implements OnChanges {
   public allowCookies?: boolean;
   private currentTheme: string;
 
-  constructor(
-    private translate: TranslateService,
-    private snackBar: MatSnackBar,
-    private trackerService: TrackerService,
-  ) {
+  constructor(private trackerService: TrackerService) {
     this.currentTheme = AppService.Ls.get(LS.THEME_COLOR, THEME.LIGHT);
   }
 
@@ -105,14 +99,6 @@ export class UserSettingsComponent implements OnChanges {
       // Wait for drawer close before reload
       location.reload();
     }, 200);
-  }
-
-  onClickOnClearDatas() {
-    localStorage.clear();
-    this.snackBar.open(this.translate.get('SNACKS.DATAS_DELETED'), undefined, {
-      duration: 2000,
-      panelClass: 'success',
-    });
   }
 
   isThemeChecked(theme: string): boolean {
