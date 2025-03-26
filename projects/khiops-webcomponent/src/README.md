@@ -95,7 +95,7 @@ You may have to allow CUSTOM_ELEMENTS_SCHEMA into your module:
 
 ## Datas models
 
-VisualizationDatas & CovisualizationDatas Models interfaces can be fount here:\
+VisualizationDatas & CovisualizationDatas Models interfaces can be found here:\
 [VisualizationDatas](https://github.com/KhiopsML/khiops-visualization/blob/master/src/app/khiops-visualization/interfaces/app-datas.d.ts)\
 [CovisualizationDatas](https://github.com/KhiopsML/khiops-visualization/blob/master/src/app/khiops-covisualization/interfaces/app-datas.d.ts)
 
