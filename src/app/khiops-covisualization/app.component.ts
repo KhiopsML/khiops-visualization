@@ -31,6 +31,7 @@ import { THEME } from '@khiops-library/enum/theme';
 import { CovisualizationDatas } from './interfaces/app-datas';
 import { ConfigModel } from '@khiops-library/model/config.model';
 import { SaveService } from './providers/save.service';
+import { InAppOverlayContainer } from '@khiops-library/overlay/in-app-overlay-provider';
 
 @Component({
   selector: 'app-root-covisualization',
@@ -50,6 +51,7 @@ export class AppComponent implements AfterViewInit {
   theme: string;
 
   constructor(
+    private overlayContainer: InAppOverlayContainer,
     private ngzone: NgZone,
     private dialogRef: MatDialog,
     private appService: AppService,
@@ -69,6 +71,12 @@ export class AppComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    setTimeout(() => {
+      // Force the creation of the overlay container
+      // when reinstantiating the visualization component #32
+      this.overlayContainer.createContainer();
+    });
+
     this.configService.setRootElement(this.appElement!);
     this.element.nativeElement.getDatas = () =>
       this.saveService.constructDatasToSave();

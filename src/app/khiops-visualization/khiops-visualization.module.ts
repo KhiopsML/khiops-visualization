@@ -97,7 +97,11 @@ import { InAppOverlayContainer } from '../khiops-library/overlay/in-app-overlay-
     StoreModule.forRoot({ TreePreparationState: treePreparationReducer }),
     EffectsModule.forRoot([TreePreparationEffects]),
   ],
-  providers: [{ provide: OverlayContainer, useClass: InAppOverlayContainer }],
+  providers: [
+    InAppOverlayContainer,
+    // make sure that InAppOverlayContainer and OverlayContainer share the same instance
+    { provide: OverlayContainer, useExisting: InAppOverlayContainer },
+  ],
   exports: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
