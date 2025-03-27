@@ -14,25 +14,9 @@
     </button>
   </div>
   <div fxLayout="column" id="user-settings-content" fxLayoutAlign="start start">
-    <h2>{{ 'SETTINGS.NUMBER_PRECISION' | translate }}</h2>
-    <div fxLayout="row" fxLayoutAlign="start center">
-      <mat-slider
-        color="primary"
-        attr.aria-label="{{
-          'ARIA.SETTINGS.UPDATE_NUMBER_PRECISION' | translate
-        }}"
-        [min]="1"
-        [max]="8"
-        [step]="1"
-      >
-        <input
-          [value]="numberPrecision"
-          matSliderThumb
-          (valueChange)="numberPrecision = $event"
-        />
-      </mat-slider>
-      <span>{{ numberPrecision }} {{ 'SETTINGS.NUMBER' | translate }}</span>
-    </div>
+    <kl-number-precision
+      [(numberPrecision)]="numberPrecision"
+    ></kl-number-precision>
     <kl-matrix-contrast-setting
       [(contrastValue)]="contrastValue"
     ></kl-matrix-contrast-setting>

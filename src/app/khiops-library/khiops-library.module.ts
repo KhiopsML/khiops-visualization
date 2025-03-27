@@ -76,6 +76,7 @@ import { NpmVersionComponent } from './components/npm-version/npm-version.compon
 import { ClearLsComponent } from './components/clear-ls/clear-ls.component';
 import { CookieConsentComponent } from './components/cookie-consent/cookie-consent.component';
 import { MatrixContrastSettingComponent } from './components/matrix-contrast-setting/matrix-contrast-setting.component';
+import { NumberPrecisionComponent } from './components/number-precision/number-precision.component';
 
 @NgModule({
   imports: [
@@ -118,6 +119,7 @@ import { MatrixContrastSettingComponent } from './components/matrix-contrast-set
     }),
   ],
   declarations: [
+    NumberPrecisionComponent,
     MatrixContrastSettingComponent,
     CookieConsentComponent,
     ClearLsComponent,
@@ -157,6 +159,7 @@ import { MatrixContrastSettingComponent } from './components/matrix-contrast-set
   ],
   providers: [ConfigService, TranslateService],
   exports: [
+    NumberPrecisionComponent,
     MatrixContrastSettingComponent,
     CookieConsentComponent,
     ClearLsComponent,

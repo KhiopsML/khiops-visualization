@@ -1,0 +1,21 @@
+<div class="kl-number-precision" fxLayout="column" fxLayoutAlign="start start">
+  <h2>{{ 'SETTINGS.NUMBER_PRECISION' | translate }}</h2>
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <mat-slider
+      color="primary"
+      attr.aria-label="{{
+        'ARIA.SETTINGS.UPDATE_NUMBER_PRECISION' | translate
+      }}"
+      [min]="1"
+      [max]="8"
+      [step]="1"
+    >
+      <input
+        [value]="numberPrecision"
+        matSliderThumb
+        (valueChange)="onChange($event)"
+      />
+    </mat-slider>
+    <span>{{ numberPrecision }} {{ 'SETTINGS.NUMBER' | translate }}</span>
+  </div>
+</div>
