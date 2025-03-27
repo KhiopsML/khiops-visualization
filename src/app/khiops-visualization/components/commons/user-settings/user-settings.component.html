@@ -33,25 +33,9 @@
       </mat-slider>
       <span>{{ numberPrecision }} {{ 'SETTINGS.NUMBER' | translate }}</span>
     </div>
-    <h2>{{ 'GLOBAL.MATRIX_DEFAULT_CONTRAST' | translate }}</h2>
-    <div fxLayout="row" fxLayoutAlign="start center">
-      <mat-slider
-        color="primary"
-        attr.aria-label="{{
-          'ARIA.SETTINGS.UPDATE_DEFAULT_MATRIX_CONTRAST' | translate
-        }}"
-        [max]="90"
-        [min]="0"
-        [step]="10"
-      >
-        <input
-          [value]="contrastValue"
-          matSliderThumb
-          (valueChange)="contrastValue = $event"
-        />
-      </mat-slider>
-      <span>{{ contrastValue }} %</span>
-    </div>
+    <kl-matrix-contrast-setting
+      [(contrastValue)]="contrastValue"
+    ></kl-matrix-contrast-setting>
     <kl-cookie-consent [(allowCookies)]="allowCookies"></kl-cookie-consent>
     <kl-clear-ls></kl-clear-ls>
     <kl-npm-version></kl-npm-version>
