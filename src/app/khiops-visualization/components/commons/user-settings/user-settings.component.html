@@ -58,26 +58,6 @@
         {{ 'COOKIE_CONSENT.MESSAGE' | translate }}
       </mat-slide-toggle>
     </div>
-    <h2 id="user-settings-dark-mode">
-      {{ 'DARK_THEME.TITLE' | translate }}
-    </h2>
-    <div fxLayout="row" fxLayoutAlign="start center">
-      <mat-button-toggle-group
-        name="theme"
-        attr.aria-label="{{ 'DARK_THEME.TITLE' | translate }}"
-        (change)="onThemeChange($event)"
-      >
-        <mat-button-toggle [checked]="isThemeChecked('light')" value="light"
-          >Light</mat-button-toggle
-        >
-        <mat-button-toggle [checked]="isThemeChecked('dark')" value="dark"
-          >Dark</mat-button-toggle
-        >
-        <mat-button-toggle [checked]="isThemeChecked('orange')" value="orange"
-          >Orange</mat-button-toggle
-        >
-      </mat-button-toggle-group>
-    </div>
     <kl-clear-ls></kl-clear-ls>
     <kl-npm-version></kl-npm-version>
   </div>
