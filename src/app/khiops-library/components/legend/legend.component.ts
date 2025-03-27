@@ -19,10 +19,10 @@ import { DynamicI } from '@khiops-library/interfaces/globals';
 import { ChartDatasetModel } from '@khiops-library/model/chart-dataset.model';
 
 @Component({
-    selector: 'kl-legend',
-    templateUrl: './legend.component.html',
-    styleUrls: ['./legend.component.scss'],
-    standalone: false
+  selector: 'kl-legend',
+  templateUrl: './legend.component.html',
+  styleUrls: ['./legend.component.scss'],
+  standalone: false,
 })
 export class LegendComponent implements OnChanges {
   @Input() public tooltip: string = '';

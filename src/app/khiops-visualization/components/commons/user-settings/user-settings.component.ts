@@ -14,8 +14,7 @@ import {
 } from '@angular/core';
 import { AppConfig } from 'src/environments/environment';
 import * as _ from 'lodash'; // Important to import lodash in karma
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { TranslateService } from '@ngstack/translate';
+import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { TrackerService } from '../../../../khiops-library/providers/tracker.service';
 import { LS } from '@khiops-library/enum/ls';
 import { AppService } from '@khiops-visualization/providers/app.service';
@@ -37,12 +36,7 @@ export class UserSettingsComponent implements OnChanges {
     AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST;
   public allowCookies?: boolean;
 
-  constructor(
-    private translate: TranslateService,
-    private snackBar: MatSnackBar,
-    private trackerService: TrackerService,
-  ) {
-  }
+  constructor(private trackerService: TrackerService) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.opened?.currentValue) {
@@ -98,13 +92,5 @@ export class UserSettingsComponent implements OnChanges {
       // Wait for drawer close before reload
       location.reload();
     }, 200);
-  }
-
-  onClickOnClearDatas() {
-    localStorage.clear();
-    this.snackBar.open(this.translate.get('SNACKS.DATAS_DELETED'), undefined, {
-      duration: 2000,
-      panelClass: 'success',
-    });
   }
 }

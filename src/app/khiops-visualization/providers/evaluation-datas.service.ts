@@ -28,6 +28,7 @@ import { TestEvaluationReport } from '@khiops-visualization/interfaces/test-eval
 import { TrainEvaluationReport } from '@khiops-visualization/interfaces/train-evaluation-report';
 import { EvaluationReport } from '@khiops-visualization/interfaces/evaluation-report';
 import { DynamicI } from '@khiops-library/interfaces/globals';
+import _ from 'lodash';
 
 @Injectable({
   providedIn: 'root',
@@ -572,7 +573,11 @@ export class EvaluationDatasService {
       currentData.pointHoverRadius = 2;
       this.evaluationDatas.liftGraphDatas.datasets.push(currentData);
     }
-
+    // Clone the displayed values
+    // Otherwise when filtering Evaluation curves, legend is not updated #259
+    this.evaluationDatas.liftGraphDisplayedValues = _.cloneDeep(
+      this.evaluationDatas.liftGraphDisplayedValues,
+    );
     return this.evaluationDatas.liftGraphDatas;
   }
 

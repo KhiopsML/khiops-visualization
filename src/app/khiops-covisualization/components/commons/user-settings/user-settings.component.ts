@@ -15,8 +15,6 @@ import {
 import { AppConfig } from 'src/environments/environment';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { TrackerService } from '../../../../khiops-library/providers/tracker.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { TranslateService } from '@ngstack/translate';
 import { LS } from '@khiops-library/enum/ls';
 import { AppService } from '@khiops-covisualization/providers/app.service';
 
@@ -35,11 +33,7 @@ export class UserSettingsComponent implements OnChanges {
   public contrastValue: number =
     AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST;
 
-  constructor(
-    private translate: TranslateService,
-    private trackerService: TrackerService,
-    private snackBar: MatSnackBar,
-  ) {}
+  constructor(private trackerService: TrackerService) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes?.opened?.currentValue) {
@@ -80,13 +74,5 @@ export class UserSettingsComponent implements OnChanges {
 
     // this.trackerService.trackEvent('click', 'settings', 'significant_number', this.numberPrecision);
     // this.trackerService.trackEvent('click', 'settings', 'matrix_contrast', this.contrastValue);
-  }
-
-  onClickOnClearDatas() {
-    localStorage.clear();
-    this.snackBar.open(this.translate.get('SNACKS.DATAS_DELETED'), undefined, {
-      duration: 2000,
-      panelClass: 'success',
-    });
   }
 }

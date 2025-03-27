@@ -5,6 +5,7 @@ import { AppComponent as visualizationComponent } from '@khiops-visualization/ap
 import { AppComponent as covisualizationComponent } from '@khiops-covisualization/app.component';
 import { KhiopsCovisualizationModule } from '@khiops-covisualization/khiops-covisualization.module';
 import { KhiopsVisualizationModule } from '@khiops-visualization/khiops-visualization.module';
+import packageInfo from '../../../../package.json';
 
 @NgModule({
   imports: [
@@ -14,7 +15,9 @@ import { KhiopsVisualizationModule } from '@khiops-visualization/khiops-visualiz
   ],
 })
 export class AppModule {
-  constructor(private injector: Injector) {}
+  constructor(private injector: Injector) {
+    console.log('khiops-visulization - NPM Version: ', packageInfo?.version);
+  }
 
   ngDoBootstrap() {
     const visuElement = createCustomElement(visualizationComponent, {
