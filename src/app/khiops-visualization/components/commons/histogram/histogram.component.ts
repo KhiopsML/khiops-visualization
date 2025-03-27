@@ -38,7 +38,6 @@ import { debounceTime, Subject } from 'rxjs';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { LS } from '@khiops-library/enum/ls';
 import { AppService } from '@khiops-visualization/providers/app.service';
-import { THEME } from '@khiops-library/enum/theme';
 import { BIG_CHART_SIZE } from '@khiops-library/config/global';
 import { ZoomToolsEventsService } from '@khiops-library/components/zoom-tools/zoom-tools.service';
 
@@ -126,8 +125,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   ) {
     super(selectableService, ngzone, configService);
 
-    this.defaultBarColor =
-      AppService.Ls.get(LS.THEME_COLOR) === THEME.DARK ? 'white' : 'black';
+    this.defaultBarColor = 'black';
 
     this.colorSet = HistogramUIService.getColors();
 

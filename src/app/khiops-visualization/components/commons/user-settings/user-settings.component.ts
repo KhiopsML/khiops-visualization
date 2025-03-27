@@ -16,17 +16,15 @@ import { AppConfig } from 'src/environments/environment';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngstack/translate';
-import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { TrackerService } from '../../../../khiops-library/providers/tracker.service';
 import { LS } from '@khiops-library/enum/ls';
 import { AppService } from '@khiops-visualization/providers/app.service';
-import { THEME } from '@khiops-library/enum/theme';
 
 @Component({
-    selector: 'app-user-settings',
-    templateUrl: './user-settings.component.html',
-    styleUrls: ['./user-settings.component.scss'],
-    standalone: false
+  selector: 'app-user-settings',
+  templateUrl: './user-settings.component.html',
+  styleUrls: ['./user-settings.component.scss'],
+  standalone: false,
 })
 export class UserSettingsComponent implements OnChanges {
   @Output() private toggleNavDrawerChanged: EventEmitter<any> =
@@ -38,14 +36,12 @@ export class UserSettingsComponent implements OnChanges {
   public contrastValue: number =
     AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST;
   public allowCookies?: boolean;
-  private currentTheme: string;
 
   constructor(
     private translate: TranslateService,
     private snackBar: MatSnackBar,
     private trackerService: TrackerService,
   ) {
-    this.currentTheme = AppService.Ls.get(LS.THEME_COLOR, THEME.LIGHT);
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -93,9 +89,6 @@ export class UserSettingsComponent implements OnChanges {
     AppService.Ls.set(LS.SETTING_MATRIX_CONTRAST, this.contrastValue);
     AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
 
-    // theme
-    AppService.Ls.set(LS.THEME_COLOR, this.currentTheme);
-
     // Close the nav drawer
     this.toggleNavDrawerChanged.emit(true);
 
@@ -113,13 +106,5 @@ export class UserSettingsComponent implements OnChanges {
       duration: 2000,
       panelClass: 'success',
     });
-  }
-
-  isThemeChecked(theme: string): boolean {
-    return theme === this.currentTheme;
-  }
-
-  onThemeChange($event: MatButtonToggleChange) {
-    this.currentTheme = $event.value;
   }
 }

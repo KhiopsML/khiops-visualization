@@ -21,9 +21,6 @@ import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { HierarchyDatasModel } from '@khiops-covisualization/model/hierarchy-datas.model';
 import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
-import { LS } from '@khiops-library/enum/ls';
-import { AppService } from '@khiops-covisualization/providers/app.service';
-import { THEME } from '@khiops-library/enum/theme';
 import { GridCheckboxEventI } from '@khiops-library/interfaces/events';
 import {
   getClusterPerDimChartOptions,
@@ -34,10 +31,10 @@ import {
 import { ChartOptions } from 'chart.js';
 
 @Component({
-    selector: 'app-unfold-hierarchy',
-    templateUrl: './unfold-hierarchy.component.html',
-    styleUrls: ['./unfold-hierarchy.component.scss'],
-    standalone: false
+  selector: 'app-unfold-hierarchy',
+  templateUrl: './unfold-hierarchy.component.html',
+  styleUrls: ['./unfold-hierarchy.component.scss'],
+  standalone: false,
 })
 export class UnfoldHierarchyComponent implements OnInit {
   public currentUnfoldHierarchy: number = 0;
@@ -73,8 +70,7 @@ export class UnfoldHierarchyComponent implements OnInit {
     private khiopsLibraryService: KhiopsLibraryService,
     private dialogRef: MatDialogRef<UnfoldHierarchyComponent>,
   ) {
-    this.borderColor =
-      AppService.Ls.get(LS.THEME_COLOR) === THEME.DARK ? '#ffffff' : '#000000';
+    this.borderColor = '#000000';
 
     this.hierarchyDisplayedColumns = getHierarchyGridColumns(this.translate);
 

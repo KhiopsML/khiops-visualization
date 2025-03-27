@@ -25,9 +25,7 @@ import { AppConfig } from 'src/environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TreenodesService } from './providers/treenodes.service';
 import { TrackerService } from '@khiops-library/providers/tracker.service';
-import { LS } from '@khiops-library/enum/ls';
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
-import { THEME } from '@khiops-library/enum/theme';
 import { CovisualizationDatas } from './interfaces/app-datas';
 import { ConfigModel } from '@khiops-library/model/config.model';
 import { SaveService } from './providers/save.service';
@@ -47,8 +45,6 @@ export class AppComponent implements AfterViewInit {
   })
   appElement: ElementRef<HTMLElement> | undefined;
 
-  theme: string;
-
   constructor(
     private ngzone: NgZone,
     private dialogRef: MatDialog,
@@ -64,7 +60,6 @@ export class AppComponent implements AfterViewInit {
     private element: ElementRef,
   ) {
     AppService.Ls.setLsId(AppConfig.covisualizationCommon.GLOBAL.LS_ID);
-    this.theme = AppService.Ls.get(LS.THEME_COLOR, THEME.LIGHT);
     this.appService.initialize();
   }
 
@@ -141,14 +136,5 @@ export class AppComponent implements AfterViewInit {
       });
     };
     this.element.nativeElement.clean = () => (this.appdatas = undefined);
-    this.setTheme();
-  }
-
-  setTheme() {
-    setTimeout(() => {
-      let themeColor = AppService.Ls.get(LS.THEME_COLOR, THEME.LIGHT);
-      document.documentElement.setAttribute('data-color-scheme', themeColor);
-      this.configService?.getConfig()?.onThemeChanged?.(themeColor);
-    });
   }
 }

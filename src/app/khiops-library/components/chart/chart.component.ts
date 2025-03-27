@@ -23,16 +23,13 @@ import { ChartOptions } from 'chart.js';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { ChartDatasetModel } from '@khiops-library/model/chart-dataset.model';
-import { LS } from '@khiops-library/enum/ls';
-import { Ls } from '@khiops-library/providers/ls.service';
 import { CHART_TYPES } from '@khiops-library/enum/chart-types';
-import { THEME } from '@khiops-library/enum/theme';
 
 @Component({
-    selector: 'kl-chart',
-    templateUrl: './chart.component.html',
-    styleUrls: ['./chart.component.scss'],
-    standalone: false
+  selector: 'kl-chart',
+  templateUrl: './chart.component.html',
+  styleUrls: ['./chart.component.scss'],
+  standalone: false,
 })
 export class ChartComponent implements AfterViewInit, OnChanges {
   @Input() public canvasIdContainer = 'kl-chart'; // May be updated if multiple graph
@@ -54,17 +51,12 @@ export class ChartComponent implements AfterViewInit, OnChanges {
   public isLoading: boolean = false;
 
   constructor(
-    private ls: Ls,
     private configService: ConfigService,
     private el: ElementRef,
     private khiopsLibraryService: KhiopsLibraryService,
   ) {
-    this.color =
-      this.ls.get(LS.THEME_COLOR) === THEME.DARK ? '#555' : '#e5e5e5';
-    this.barColor =
-      this.ls.get(LS.THEME_COLOR) === THEME.DARK
-        ? 'rgba(255, 255, 255, 1)'
-        : 'rgba(0, 0, 0, 1)';
+    this.color = '#e5e5e5';
+    this.barColor = 'rgba(0, 0, 0, 1)';
     this.colorSet = this.khiopsLibraryService.getGraphColorSet()[0];
   }
 

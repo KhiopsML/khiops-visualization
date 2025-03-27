@@ -99,10 +99,6 @@
     "MESSAGE": "Allow this application to use cookies for usage statistics purposes only?",
     "ALLOW": "Ok"
   },
-  "DARK_THEME": {
-    "TITLE": "Theme",
-    "MESSAGE": "Enable Dark mode"
-  },
   "GLOBAL": {
     "INTERPRETABLE_HISTOGRAM": "Default interpretable histogram",
     "NO_DERIVATION_RULE": "No derivation rule",

@@ -19,41 +19,6 @@
   }
 }
 
-@media (prefers-color-scheme: light) {
-}
-
-@media (prefers-color-scheme: dark) {
-}
-
-[data-color-scheme='light'] {
-  color-scheme: light;
-  --bgColorContrast: #000;
-  --grid: #ddd;
-  --bgColor: #fff;
-  --bgColor-10: #eee;
-  --bgColor-20: #f6f8fb;
-  --bgColor-30: #eee;
-  --bgColor-40: #bbb;
-  --bgColor-50: #aaa;
-  --scrollbar: #eee;
-  --primary: #374779;
-  --primary-10: #1e326d;
-  --grey-text: #757575;
-  --black-text: #000;
-  --primary-contrast: #374779;
-  --accent: #880e4f;
-  --selected: #7abdf3;
-  --gutter-hover: #ededed;
-  --bgTooltip: #444;
-  --chart-border: #e5e5e5;
-  --yellowMain: #fbb33a;
-  --redMain: #fb473a;
-  --greenMain: #3afb74;
-  --gripOpacity: 1;
-  --cell-type-num: #d1dcee;
-  --cell-type-cat: #f5ddaf;
-}
-
 [data-color-scheme='orange'] {
   color-scheme: orange;
   --bgColorContrast: #000;

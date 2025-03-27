@@ -1,9 +1,4 @@
-<div #appElement class="mat-app-background">
+<div #appElement class="mat-app-background" data-color-scheme="orange">
   <app-library></app-library>
-  <app-home-layout
-    [ngClass]="{
-      'orange-theme': theme === 'dark' || theme === 'orange',
-    }"
-    [appDatas]="appdatas"
-  ></app-home-layout>
+  <app-home-layout class="orange-theme" [appDatas]="appdatas"></app-home-layout>
 </div>

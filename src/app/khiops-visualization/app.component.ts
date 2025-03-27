@@ -24,9 +24,7 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 import { TrackerService } from '@khiops-library/providers/tracker.service';
 import { SaveService } from './providers/save.service';
 import { AppConfig } from 'src/environments/environment';
-import { LS } from '@khiops-library/enum/ls';
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
-import { THEME } from '@khiops-library/enum/theme';
 import { VisualizationDatas } from './interfaces/app-datas';
 import { ConfigModel } from '@khiops-library/model/config.model';
 @Component({
@@ -44,8 +42,6 @@ export class AppComponent implements AfterViewInit {
   })
   appElement: ElementRef<HTMLElement> | undefined;
 
-  theme: string;
-
   constructor(
     private dialogRef: MatDialog,
     private ngzone: NgZone,
@@ -59,7 +55,6 @@ export class AppComponent implements AfterViewInit {
     private element: ElementRef,
   ) {
     AppService.Ls.setLsId(AppConfig.visualizationCommon.GLOBAL.LS_ID);
-    this.theme = AppService.Ls.get(LS.THEME_COLOR) || THEME.LIGHT;
     this.appService.initialize();
   }
 
@@ -107,19 +102,10 @@ export class AppComponent implements AfterViewInit {
         this.clean();
       });
     };
-    this.setTheme();
   }
 
   clean() {
     this.appdatas = undefined;
     this.appService.initialize();
-  }
-
-  setTheme() {
-    setTimeout(() => {
-      let themeColor = AppService.Ls.get(LS.THEME_COLOR, THEME.LIGHT);
-      document.documentElement.setAttribute('data-color-scheme', themeColor);
-      this.configService?.getConfig()?.onThemeChanged?.(themeColor);
-    });
   }
 }

@@ -12,7 +12,6 @@ export class ConfigModel {
   onFileOpen!: Function;
   onCopyData!: Function;
   onCopyImage!: Function;
-  onThemeChanged!: Function;
   onSendEvent!: Function;
   readLocalFile?: Function;
 }
