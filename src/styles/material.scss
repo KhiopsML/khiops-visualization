@@ -273,10 +273,6 @@ mat-checkbox .mdc-form-field label {
   transform: scale(0.7) translate(-70%, -80%) !important;
 }
 
-.mdc-slider__track--active,
-.mdc-slider__track--inactive {
-  height: 3px !important;
-}
 .mat-mdc-dialog-container .mdc-dialog__surface {
   padding: 1rem;
 }
@@ -353,4 +349,10 @@ mat-tab-body {
 
 mat-sidenav {
   border-radius: 0 !important;
+}
+
+.mdc-slider__track--active,
+.mdc-slider__track--inactive {
+  height: 3px !important;
+  background-color: var(--bgColor-30) !important;
 }
