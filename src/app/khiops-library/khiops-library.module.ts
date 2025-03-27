@@ -74,6 +74,7 @@ import { ZoomToolsComponent } from './components/zoom-tools/zoom-tools.component
 import { AngularSplitModule } from 'angular-split';
 import { NpmVersionComponent } from './components/npm-version/npm-version.component';
 import { ClearLsComponent } from './components/clear-ls/clear-ls.component';
+import { CookieConsentComponent } from './components/cookie-consent/cookie-consent.component';
 
 @NgModule({
   imports: [
@@ -116,6 +117,7 @@ import { ClearLsComponent } from './components/clear-ls/clear-ls.component';
     }),
   ],
   declarations: [
+    CookieConsentComponent,
     ClearLsComponent,
     NpmVersionComponent,
     ZoomToolsComponent,
@@ -153,6 +155,7 @@ import { ClearLsComponent } from './components/clear-ls/clear-ls.component';
   ],
   providers: [ConfigService, TranslateService],
   exports: [
+    CookieConsentComponent,
     ClearLsComponent,
     NpmVersionComponent,
     LibraryComponent,

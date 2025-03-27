@@ -32,12 +32,7 @@
       </mat-slider>
       <span>{{ contrastValue }} %</span>
     </div>
-    <h2>{{ 'COOKIE_CONSENT.TITLE' | translate }}</h2>
-    <div fxLayout="row" fxLayoutAlign="start center">
-      <mat-slide-toggle color="primary" [(ngModel)]="allowCookies">
-        {{ 'COOKIE_CONSENT.MESSAGE' | translate }}
-      </mat-slide-toggle>
-    </div>
+    <kl-cookie-consent [(allowCookies)]="allowCookies"></kl-cookie-consent>
     <kl-clear-ls></kl-clear-ls>
     <kl-npm-version></kl-npm-version>
   </div>

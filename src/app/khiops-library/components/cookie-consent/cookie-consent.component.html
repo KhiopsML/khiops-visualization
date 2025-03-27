@@ -1,0 +1,12 @@
+<div class="kl-cookie-consent" fxLayout="column" fxLayoutAlign="start start">
+  <h2>{{ 'COOKIE_CONSENT.TITLE' | translate }}</h2>
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <mat-slide-toggle
+      color="primary"
+      [(ngModel)]="allowCookies"
+      (change)="onChange($event)"
+    >
+      {{ 'COOKIE_CONSENT.MESSAGE' | translate }}
+    </mat-slide-toggle>
+  </div>
+</div>
