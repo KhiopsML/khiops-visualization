@@ -141,12 +141,12 @@ button {
 
 .mat-badge-small .mat-badge-content {
   font-size: 0px !important;
-  border: 3px solid var(--bgColor) !important;
+  border: 3px solid var(--bgColorContrast) !important;
   width: 15px !important;
   height: 15px !important;
   line-height: 12px !important;
-  top: 1px !important;
-  right: 4px !important;
+  top: 0px !important;
+  right: 2px !important;
   left: unset !important;
 }
 
