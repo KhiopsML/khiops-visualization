@@ -47,6 +47,7 @@ export class SelectToggleButtonComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (
       changes?.displayedValues?.currentValue &&
+      // Do not close the filter curves evaluation dialog on each change. #263
       !deepEqual(
         changes?.displayedValues?.currentValue,
         changes?.displayedValues?.previousValue,
