@@ -68,6 +68,7 @@
           <mat-menu #graphOptionsXTypes>
             <button
               mat-menu-item
+              [class.selected-item]="opt === graphOptionsX?.selected"
               *ngFor="let opt of graphOptionsX?.types"
               (click)="changeGraphTypeX(opt)"
             >
@@ -88,6 +89,7 @@
             <button
               mat-menu-item
               *ngFor="let opt of graphOptionsY?.types"
+              [class.selected-item]="opt === graphOptionsY?.selected"
               (click)="changeGraphTypeY(opt)"
             >
               {{ opt | translate }}

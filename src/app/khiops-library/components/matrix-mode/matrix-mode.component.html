@@ -18,6 +18,7 @@
     <button
       mat-menu-item
       *ngFor="let opt of matrixModes.types"
+      [class.selected-item]="opt.mode === matrixModes.selected?.mode"
       (click)="changeMatrixMode(opt)"
     >
       <span [title]="opt.tooltip || ''">

@@ -53,6 +53,7 @@
                   <button
                     mat-menu-item
                     *ngFor="let target of matrixTargets.targets"
+                    [class.selected-item]="target === matrixTargets.selected"
                     (click)="changeMatrixTarget(target)"
                   >
                     {{ target }}

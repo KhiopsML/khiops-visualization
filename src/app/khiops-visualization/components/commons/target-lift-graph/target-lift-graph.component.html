@@ -23,8 +23,6 @@
               mat-menu-item
               *ngFor="let target of targetLift.targets; let i = index"
               (click)="changeTargetLift(target)"
-              [attr.data-target-index]="i"
-              [attr.data-target-value]="target"
               [class.selected-item]="target === targetLift.selected"
             >
               {{ target }}

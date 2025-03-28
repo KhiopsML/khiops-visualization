@@ -26,6 +26,7 @@
         <button
           mat-menu-item
           *ngFor="let dimension of dimensions; let i = index"
+          [class.selected-item]="dimension.name === selectedDimension?.name"
           (click)="changeSelectedDimension(dimension, i)"
         >
           {{ dimension.name }}

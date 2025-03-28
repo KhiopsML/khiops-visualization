@@ -17,6 +17,7 @@
     <mat-menu #trainedPredictors>
       <button
         mat-menu-item
+        [class.selected-item]="opt.name === selectedPredictor"
         *ngFor="let opt of inputDatas"
         (click)="changeTrainedPredictorsType(opt)"
       >

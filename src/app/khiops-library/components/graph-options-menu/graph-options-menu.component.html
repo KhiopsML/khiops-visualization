@@ -11,6 +11,7 @@
       mat-menu-item
       *ngFor="let opt of graphOptions?.types"
       (click)="changeGraphOption(opt)"
+      [class.selected-item]="opt === graphOptions?.selected"
     >
       {{ opt | translate }}
     </button>

@@ -76,6 +76,7 @@
             'ARIA.AG_GRID.CHANGE_TO' | translate: { type: opt | translate }
           }}"
           mat-menu-item
+          [class.selected-item]="opt === dataOptions?.selected"
           *ngFor="let opt of dataOptions.types"
           (click)="changeDataType(opt)"
         >

@@ -59,7 +59,7 @@ export class FileLoaderService {
     // let urlKV = './assets/mocks/kv/new-hyper-tree.json';
     // let urlKV = './assets/mocks/kv/NGrams10_AnalysisResults.json';
     // let urlKV = './assets/mocks/kv/NGrams100_AnalysisResults.json';
-    let urlKV = './assets/mocks/kv/000_000_10000words_AllReports.json';
+    // let urlKV = './assets/mocks/kv/000_000_10000words_AllReports.json';
     // let urlKV = './assets/mocks/kv/Regression_AllReports_All.json';
     // let urlKV = './assets/mocks/kv/Regression_AllReports_PreparationOnly.json';
     // let urlKV = './assets/mocks/kv/missing-zero.json';
@@ -113,7 +113,7 @@ export class FileLoaderService {
     // let urlKV = './assets/mocks/kv/CoronaWords100000_AllReports.V11.json';
     // let urlKV = './assets/mocks/kv/CrirteoAllReports.json';
     // let urlKV = './assets/mocks/kv/CriteoAnalysisResults.khj';
-    // let urlKV = './assets/mocks/kv/Words100_AllReports.json';
+    let urlKV = './assets/mocks/kv/Words100_AllReports.json';
     // let urlKV = './assets/mocks/kv/UnivariateAnalysisResults.json';
     // let urlKV = './assets/mocks/kv/ylogAdultAllReports.json';
     // let urlKV = './assets/mocks/kv/ko-AnalysisResults.khj';
