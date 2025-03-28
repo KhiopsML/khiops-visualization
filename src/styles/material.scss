@@ -356,3 +356,7 @@ mat-sidenav {
   height: 3px !important;
   background-color: var(--bgColor-30) !important;
 }
+
+.mat-mdc-menu-item.selected-item {
+  border: 1px solid black;
+}

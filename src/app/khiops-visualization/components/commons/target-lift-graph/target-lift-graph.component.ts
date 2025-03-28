@@ -203,26 +203,4 @@ export class TargetLiftGraphComponent
     this.targetLift!.selected = target;
     this.computeTargetLiftDatas();
   }
-
-  /**
-   * Handles the menu opening event
-   * Focuses on the previously selected item in the dropdown menu
-   */
-  onMenuOpened(): void {
-    setTimeout(() => {
-      if (this.targetLift?.selected) {
-        const selectedItem = this.configService
-          .getRootElementDom()
-          .querySelector(
-            `[data-target-value="${this.targetLift.selected}"]`,
-          ) as HTMLElement;
-
-        if (selectedItem) {
-          console.log('Found selected item:', selectedItem);
-          selectedItem.focus();
-          selectedItem.scrollIntoView({ block: 'nearest' });
-        }
-      }
-    }, 50);
-  }
 }
