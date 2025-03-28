@@ -19,12 +19,13 @@ import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggl
 import { PageChangeEventI } from '@khiops-visualization/interfaces/page-change-event';
 import { AppConfig } from 'src/environments/environment';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { deepEqual } from 'fast-equals';
 
 @Component({
-    selector: 'app-select-toggle-button',
-    templateUrl: './select-toggle-button.component.html',
-    styleUrls: ['./select-toggle-button.component.scss'],
-    standalone: false
+  selector: 'app-select-toggle-button',
+  templateUrl: './select-toggle-button.component.html',
+  styleUrls: ['./select-toggle-button.component.scss'],
+  standalone: false,
 })
 export class SelectToggleButtonComponent implements OnInit, OnChanges {
   @Input() public buttonTitle?: string;
@@ -44,7 +45,13 @@ export class SelectToggleButtonComponent implements OnInit, OnChanges {
   constructor(private translate: TranslateService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes?.displayedValues?.currentValue) {
+    if (
+      changes?.displayedValues?.currentValue &&
+      !deepEqual(
+        changes?.displayedValues?.currentValue,
+        changes?.displayedValues?.previousValue,
+      )
+    ) {
       // simulate page change if only one page
       this.onPageChange({
         pageIndex: 0,
