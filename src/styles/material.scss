@@ -364,3 +364,11 @@ mat-sidenav {
 .mat-mdc-menu-item {
   min-height: 36px !important;
 }
+
+.mdc-switch__handle,
+.mdc-switch__track {
+  border-radius: 0 !important;
+}
+.mat-internal-form-field > label {
+  padding-left: 10px !important;
+}
