@@ -358,7 +358,8 @@ mat-sidenav {
 }
 
 .mat-mdc-menu-item.selected-item {
-  border: 1px solid black;
+  background-color: var(--bgTooltip) !important;
+  color: var(--bgColor) !important;
 }
 
 .mat-mdc-menu-item {
