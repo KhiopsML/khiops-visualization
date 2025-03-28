@@ -360,3 +360,7 @@ mat-sidenav {
 .mat-mdc-menu-item.selected-item {
   border: 1px solid black;
 }
+
+.mat-mdc-menu-item {
+  min-height: 36px !important;
+}
