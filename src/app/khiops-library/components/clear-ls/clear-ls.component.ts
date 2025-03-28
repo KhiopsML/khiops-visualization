@@ -6,6 +6,7 @@
 
 import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Ls } from '@khiops-library/providers/ls.service';
 import { TranslateService } from '@ngstack/translate';
 
 @Component({
@@ -18,10 +19,11 @@ export class ClearLsComponent {
   constructor(
     private translate: TranslateService,
     private snackBar: MatSnackBar,
+    private ls: Ls,
   ) {}
 
   onClickOnClearDatas() {
-    localStorage.clear();
+    this.ls.clear();
     this.snackBar.open(this.translate.get('SNACKS.DATAS_DELETED'), undefined, {
       duration: 2000,
       panelClass: 'success',

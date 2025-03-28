@@ -33,4 +33,8 @@ export class Ls {
   del(key: string) {
     localStorage.removeItem(this.LS_ID + key);
   }
+
+  clear() {
+    localStorage.clear();
+  }
 }
