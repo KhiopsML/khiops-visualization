@@ -10,6 +10,7 @@ import {
   Input,
   NgZone,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
 import { EvaluationDatasService } from '@khiops-visualization/providers/evaluation-datas.service';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
@@ -28,6 +29,7 @@ import { LS } from '@khiops-library/enum/ls';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { EvaluationPredictorModel } from '@khiops-visualization/model/evaluation-predictor.model';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
+import { MatMenuTrigger } from '@angular/material/menu';
 
 @Component({
   selector: 'app-target-lift-graph',
@@ -40,6 +42,7 @@ export class TargetLiftGraphComponent
   implements OnChanges
 {
   @Input() selectedVariable?: EvaluationPredictorModel;
+  @ViewChild(MatMenuTrigger) menuTrigger?: MatMenuTrigger;
 
   public targetLift?: TargetLiftValuesI;
   public targetLiftGraph?: ChartDatasModel;
@@ -199,5 +202,27 @@ export class TargetLiftGraphComponent
     AppService.Ls.set(LS.TARGET_LIFT, target);
     this.targetLift!.selected = target;
     this.computeTargetLiftDatas();
+  }
+
+  /**
+   * Handles the menu opening event
+   * Focuses on the previously selected item in the dropdown menu
+   */
+  onMenuOpened(): void {
+    setTimeout(() => {
+      if (this.targetLift?.selected) {
+        const selectedItem = this.configService
+          .getRootElementDom()
+          .querySelector(
+            `[data-target-value="${this.targetLift.selected}"]`,
+          ) as HTMLElement;
+
+        if (selectedItem) {
+          console.log('Found selected item:', selectedItem);
+          selectedItem.focus();
+          selectedItem.scrollIntoView({ block: 'nearest' });
+        }
+      }
+    }, 50);
   }
 }
