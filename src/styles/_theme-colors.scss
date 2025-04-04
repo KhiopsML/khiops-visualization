@@ -29,20 +29,20 @@ $_palettes: (
   ),
   secondary: (
     0: #000000,
-    10: #360f00,
-    20: #581e00,
-    25: #6a2600,
-    30: #7c2e00,
-    35: #8f3600,
-    40: #a33e00,
-    50: #cb5000,
-    60: #f56200,
-    70: #ff8c56,
-    80: #ffb596,
-    90: #ffdbcd,
-    95: #ffede7,
-    98: #fff8f6,
-    99: #fffbff,
+    10: #000000,
+    20: #000000,
+    25: #000000,
+    30: #000000,
+    35: #000000,
+    40: #000000,
+    50: #000000,
+    60: #ffffff,
+    70: #ffffff,
+    80: #ffffff,
+    90: #ffffff,
+    95: #ffffff,
+    98: #ffffff,
+    99: #ffffff,
     100: #ffffff,
   ),
   tertiary: (
@@ -127,7 +127,6 @@ $_rest: (
 );
 
 $primary-palette: map.merge(map.get($_palettes, primary), $_rest);
-$tertiary-palette: map.merge(map.get($_palettes, tertiary), $_rest);
 
 html {
   color-scheme: light dark;

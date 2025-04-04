@@ -6,6 +6,11 @@
 @use 'material.scss';
 @use 'ag-grid.scss';
 @use 'as-split.scss';
+
+:host {
+  font-size: 12px !important;
+}
+
 html,
 body {
   margin: 0;

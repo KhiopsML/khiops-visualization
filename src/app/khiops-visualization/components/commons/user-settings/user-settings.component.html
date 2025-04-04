@@ -5,7 +5,12 @@
     class="mat-elevation-z1"
     fxLayoutAlign="center center"
   >
-    <button mat-flat-button (click)="onClickOnCancel()">
+    <button
+      mat-flat-button
+      matRipple
+      [matRippleColor]="'rgba(122 122 122 / 0.4)'"
+      (click)="onClickOnCancel()"
+    >
       {{ 'GLOBAL.CANCEL' | translate }}
     </button>
     <h2 fxFlex>{{ 'GLOBAL.SETTINGS' | translate }}</h2>

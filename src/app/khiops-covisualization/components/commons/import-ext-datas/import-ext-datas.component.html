@@ -111,7 +111,13 @@
     <button mat-stroked-button (click)="onClickOnCancel()">
       {{ 'GLOBAL.CANCEL' | translate }}
     </button>
-    <button mat-flat-button (click)="onClickOnSave()" color="primary">
+    <button
+      mat-flat-button
+      matRipple
+      [matRippleColor]="'rgba(122 122 122 / 0.4)'"
+      (click)="onClickOnSave()"
+      color="primary"
+    >
       {{ 'GLOBAL.LOAD_DATAS' | translate }}
     </button>
   </div>

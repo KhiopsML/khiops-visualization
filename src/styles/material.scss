@@ -1,8 +1,6 @@
 /*******************************************************************/
 /* This file override Angular Material styles                      */
 /*******************************************************************/
-@use 'sass:map';
-@use '@angular/material' as mat;
 
 .mat-mdc-progress-bar .mat-mdc-progress-bar-fill {
   transition-duration: initial !important;
@@ -141,12 +139,11 @@ button {
 
 .mat-badge-small .mat-badge-content {
   font-size: 0px !important;
-  border: 3px solid var(--bgColorContrast) !important;
-  width: 15px !important;
-  height: 15px !important;
+  width: 8px !important;
+  height: 8px !important;
   line-height: 12px !important;
-  top: 0px !important;
-  right: 2px !important;
+  top: 7px !important;
+  right: 7px !important;
   left: unset !important;
 }
 
@@ -364,6 +361,7 @@ mat-sidenav {
 
 .mat-mdc-menu-item {
   min-height: 36px !important;
+  max-height: unset !important;
 }
 
 .mdc-switch__handle,
@@ -372,4 +370,15 @@ mat-sidenav {
 }
 .mat-internal-form-field > label {
   padding-left: 10px !important;
+}
+.mat-mdc-menu-item-text {
+  padding: 5px 0 !important;
+}
+
+.mat-ripple:not(:empty) {
+  transform: none !important;
+}
+
+button {
+  overflow: hidden !important;
 }

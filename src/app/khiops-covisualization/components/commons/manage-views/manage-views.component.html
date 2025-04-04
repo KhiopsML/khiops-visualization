@@ -4,7 +4,13 @@
     <button mat-stroked-button (click)="onClickOnCancel()">
       {{ 'GLOBAL.CANCEL' | translate }}
     </button>
-    <button mat-flat-button (click)="onClickOnSave()" color="primary">
+    <button
+      mat-flat-button
+      matRipple
+      [matRippleColor]="'rgba(122 122 122 / 0.4)'"
+      (click)="onClickOnSave()"
+      color="primary"
+    >
       {{ 'GLOBAL.SAVE' | translate }}
     </button>
   </div>
@@ -43,7 +49,7 @@
                 !dimensionLayout.isHierarchyChecked
             "
             [ngClass]="{
-              disabled: !dimensionLayout.isHierarchyChecked
+              disabled: !dimensionLayout.isHierarchyChecked,
             }"
           >
             {{ 'GLOBAL.HIERARCHY' | translate }}
@@ -59,7 +65,7 @@
                 !dimensionLayout.isClustersChecked
             "
             [ngClass]="{
-              disabled: !dimensionLayout.isClustersChecked
+              disabled: !dimensionLayout.isClustersChecked,
             }"
           >
             {{ 'GLOBAL.CURRENT_CLUSTERS' | translate }}
@@ -72,7 +78,7 @@
               fxLayoutAlign="center center"
               fxFlex
               [ngClass]="{
-                disabled: !dimensionLayout.isAnnotationChecked
+                disabled: !dimensionLayout.isAnnotationChecked,
               }"
               (click)="
                 dimensionLayout.isAnnotationChecked =
@@ -88,7 +94,7 @@
               fxLayoutAlign="center center"
               fxFlex
               [ngClass]="{
-                disabled: !dimensionLayout.isCompositionChecked
+                disabled: !dimensionLayout.isCompositionChecked,
               }"
               (click)="
                 dimensionLayout.isCompositionChecked =
@@ -109,7 +115,7 @@
                 !dimensionLayout.isExternalDataChecked
             "
             [ngClass]="{
-              disabled: !dimensionLayout.isExternalDataChecked
+              disabled: !dimensionLayout.isExternalDataChecked,
             }"
           >
             {{ 'GLOBAL.EXTERNAL_DATA' | translate }}
@@ -122,7 +128,7 @@
             *ngIf="!isContextView"
             fxFlex="15"
             [ngClass]="{
-              disabled: !dimensionLayout.isDistributionChecked
+              disabled: !dimensionLayout.isDistributionChecked,
             }"
             (click)="
               dimensionLayout.isDistributionChecked =
@@ -141,7 +147,8 @@
       fxFlex="20"
       [ngClass]="{
         disabled:
-          !viewsLayout?.isDimensionsChecked && !viewsLayout?.isCoocurenceChecked
+          !viewsLayout?.isDimensionsChecked &&
+          !viewsLayout?.isCoocurenceChecked,
       }"
     >
       <div

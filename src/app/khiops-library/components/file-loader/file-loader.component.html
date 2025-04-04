@@ -7,6 +7,8 @@
     <button
       type="button"
       mat-flat-button
+      matRipple
+      [matRippleColor]="'rgba(122 122 122 / 0.4)'"
       color="primary"
       (click)="onClickOpen(fileInput)"
     >
@@ -51,6 +53,8 @@
       id="open-file-button"
       type="button"
       mat-flat-button
+      matRipple
+      [matRippleColor]="'rgba(122 122 122 / 0.4)'"
       color="primary"
       (click)="loadDebugFile(cyInputText)"
     >

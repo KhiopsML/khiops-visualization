@@ -4,14 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  OnDestroy,
-  ViewEncapsulation,
-  Input,
-} from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, Input } from '@angular/core';
 import {
   MatTabGroup,
   MatTabHeader,
@@ -47,7 +40,6 @@ import { CovisualizationDatas } from '@khiops-covisualization/interfaces/app-dat
   selector: 'app-home-layout',
   templateUrl: './homeLayout.component.html',
   styleUrls: ['./homeLayout.component.scss'],
-  encapsulation: ViewEncapsulation.None,
   standalone: false,
 })
 export class HomeLayoutComponent implements OnInit, OnDestroy {

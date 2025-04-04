@@ -1,6 +1,8 @@
 <div class="header-manage-view-comp">
   <button
     mat-flat-button
+    matRipple
+    [matRippleColor]="'rgba(122 122 122 / 0.4)'"
     color="warn"
     matTooltip="{{ 'MENU.IMPORT_EXTERNAL_DATA' | translate }}"
     (click)="clickImportExternalData()"
@@ -11,6 +13,8 @@
   <button
     class="button-unfold-hierarchy"
     mat-flat-button
+    matRipple
+    [matRippleColor]="'rgba(122 122 122 / 0.4)'"
     color="warn"
     matTooltip="{{ 'GLOBAL.UNFOLD_HIERARCHY_DESC' | translate }}"
     (click)="clickUnfodHierarchy()"
@@ -21,6 +25,8 @@
   <button
     class="button-manage-views"
     mat-flat-button
+    matRipple
+    [matRippleColor]="'rgba(122 122 122 / 0.4)'"
     color="warn"
     attr.aria-label="{{ 'GLOBAL.MANAGE_VIEWS_DESC' | translate }}"
     matTooltip="{{ 'GLOBAL.MANAGE_VIEWS_DESC' | translate }}"

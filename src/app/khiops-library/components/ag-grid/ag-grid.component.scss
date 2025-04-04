@@ -14,7 +14,7 @@
     }
 
     .comp-header-tools {
-      .mdc-button.mat-warn {
+      .mdc-button--unelevated {
         height: 33px !important;
         min-width: 34px !important;
         width: 34px !important;
@@ -52,7 +52,7 @@
           height: 30px;
           line-height: 30px;
           width: 30px;
-          margin: 0 1px 0 2px;
+          margin: 0 1px 0 1px;
           display: flex;
           padding: 7px !important;
         }

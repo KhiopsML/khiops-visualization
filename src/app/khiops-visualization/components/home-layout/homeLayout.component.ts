@@ -4,13 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import {
-  Component,
-  OnInit,
-  ViewEncapsulation,
-  ViewChild,
-  Input,
-} from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 
 import { FileLoaderComponent } from '@khiops-library/components/file-loader/file-loader.component';
 import { AppConfig } from 'src/environments/environment';
@@ -39,7 +33,6 @@ import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas';
   selector: 'app-home-layout',
   templateUrl: './homeLayout.component.html',
   styleUrls: ['./homeLayout.component.scss'],
-  encapsulation: ViewEncapsulation.None,
   standalone: false,
 })
 export class HomeLayoutComponent implements OnInit {

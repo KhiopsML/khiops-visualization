@@ -45,7 +45,6 @@
         title="{{ levelDistributionTitle }}"
         class="level-distribution-btn"
         mat-stroked-button
-        color="primary"
         (click)="openLevelDistributionDialog()"
       >
         <span *ngIf="!isSmallDiv && !searchFormVisible">{{
@@ -65,7 +64,6 @@
         *ngIf="showDataTypeSelection"
         attr.aria-label="{{ 'ARIA.AG_GRID.CHANGE_DATAS_OPTION' | translate }}"
         mat-stroked-button
-        color="primary"
         [matMenuTriggerFor]="dataOptionsTypes"
       >
         {{ dataOptions.selected | translate }} <em>v</em>
@@ -92,7 +90,6 @@
         <button
           attr.aria-label="{{ 'ARIA.AG_GRID.OPEN_SEARCH_INPUT' | translate }}"
           mat-icon-button
-          color="primary"
           [disabled]="this.searchFormVisible"
           (click)="showSearchForm()"
         >
@@ -118,7 +115,10 @@
       </form>
       <button
         mat-flat-button
-        color="warn"
+        matRipple
+        [matRippleColor]="'rgba(122 122 122 / 0.4)'"
+        matRipple
+        [matRippleColor]="'rgba(122 122 122 / 0.4)'"
         attr.aria-label="{{ 'GLOBAL.FIT_COLUMNS_TO_SPACE' | translate }}"
         matTooltip="{{ 'GLOBAL.FIT_COLUMNS_TO_SPACE' | translate }}"
         matTooltipPosition="above"
@@ -130,7 +130,8 @@
       </button>
       <button
         mat-flat-button
-        color="warn"
+        matRipple
+        [matRippleColor]="'rgba(122 122 122 / 0.4)'"
         attr.aria-label="{{ 'GLOBAL.FIT_COLUMNS_TO_CONTENT' | translate }}"
         matTooltip="{{ 'GLOBAL.FIT_COLUMNS_TO_CONTENT' | translate }}"
         matTooltipPosition="above"
@@ -141,13 +142,14 @@
         >
       </button>
       <button
-        color="warn"
         matBadge="-"
         matBadgeSize="small"
         [matBadgeHidden]="hideFilterBadge"
         attr.aria-label="{{ 'ARIA.AG_GRID.FILTER_DATAS_GRID' | translate }}"
         matBadgeColor="accent"
         mat-flat-button
+        matRipple
+        [matRippleColor]="'rgba(122 122 122 / 0.4)'"
         matTooltip="{{ 'GLOBAL.FILTER_COLUMS' | translate }}"
         matTooltipPosition="above"
         *ngIf="showColumnsSelection"
