@@ -368,6 +368,14 @@ mat-sidenav {
 .mdc-switch__track {
   border-radius: 0 !important;
 }
+.mdc-switch {
+  border: 2px solid black !important;
+  min-height: 26px;
+  width: 50px;
+}
+.mdc-switch__track {
+  height: 2rem !important;
+}
 .mat-internal-form-field > label {
   padding-left: 10px !important;
 }
@@ -381,4 +389,10 @@ mat-sidenav {
 
 button {
   overflow: hidden !important;
+}
+
+.mat-menu-item-checkbox {
+  .mat-mdc-menu-item-text {
+    padding: 0 !important;
+  }
 }

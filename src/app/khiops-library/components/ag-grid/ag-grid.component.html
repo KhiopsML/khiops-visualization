@@ -165,6 +165,7 @@
           *ngFor="
             let opt of displayedColumns | rowIdentifierPipe: 'rowIdentifiers'
           "
+          class="mat-menu-item-checkbox"
           (click)="$event.stopPropagation()"
         >
           <mat-checkbox

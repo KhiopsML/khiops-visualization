@@ -13,7 +13,7 @@
   <mat-menu #selectToggleButton>
     <button
       mat-menu-item
-      class="checkbox-select-all"
+      class="mat-menu-item-checkbox checkbox-select-all"
       (click)="$event.stopPropagation()"
     >
       <mat-checkbox
@@ -25,7 +25,7 @@
     </button>
     <button
       mat-menu-item
-      class="checkbox-select"
+      class="mat-menu-item-checkbox checkbox-select"
       *ngFor="let opt of currentItemsToShow; let i = index"
       (click)="$event.stopPropagation()"
     >
