@@ -26,25 +26,28 @@ import { LS } from '@khiops-library/enum/ls';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 
 @Component({
-    selector: 'app-hierarchy-select',
-    templateUrl: './hierarchy-select.component.html',
-    styleUrls: ['./hierarchy-select.component.scss'],
-    animations: [
-        trigger('slideInOut', [
-            transition(':enter', [
-                style({
-                    opacity: 0,
-                }),
-                animate('150ms ease-in'),
-            ]),
-            transition(':leave', [
-                animate('150ms ease-in', style({
-                    opacity: 0,
-                })),
-            ]),
-        ]),
-    ],
-    standalone: false
+  selector: 'app-hierarchy-select',
+  templateUrl: './hierarchy-select.component.html',
+  styleUrls: ['./hierarchy-select.component.scss'],
+  animations: [
+    trigger('slideInOut', [
+      transition(':enter', [
+        style({
+          opacity: 0,
+        }),
+        animate('150ms ease-in'),
+      ]),
+      transition(':leave', [
+        animate(
+          '150ms ease-in',
+          style({
+            opacity: 0,
+          }),
+        ),
+      ]),
+    ]),
+  ],
+  standalone: false,
 })
 export class HierarchySelectComponent implements OnChanges, AfterViewInit {
   @Input() public selectedDimension: DimensionCovisualizationModel | undefined;
@@ -66,7 +69,7 @@ export class HierarchySelectComponent implements OnChanges, AfterViewInit {
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.selectedDimension?.currentValue && this.selectedDimension) {
+    if (changes.selectedNode?.currentValue && this.selectedDimension) {
       this.selectedTreeCluster = new SelectedTreeClusterModel(
         this.selectedDimension,
       );
@@ -74,8 +77,6 @@ export class HierarchySelectComponent implements OnChanges, AfterViewInit {
         this.dimensionsDatasService.getDimensionIntervals(
           this.selectedDimension.name,
         );
-    }
-    if (changes.selectedNode?.currentValue && this.selectedDimension) {
       const currentNode = this.treenodesService.getNodeFromDimensionTree(
         this.selectedDimension.name,
         changes.selectedNode?.currentValue.name,
