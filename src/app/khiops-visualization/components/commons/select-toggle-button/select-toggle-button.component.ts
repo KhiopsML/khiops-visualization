@@ -58,10 +58,9 @@ export class SelectToggleButtonComponent implements OnInit, OnChanges {
         pageIndex: 0,
         pageSize: this.pageSize,
       });
-
-      // At init some elts may be hidden from last context
-      this.updateSelectElts(this.displayedValues!);
     }
+    // At init some elts may be hidden from last context
+    this.updateSelectElts(this.displayedValues!);
   }
 
   ngOnInit() {
