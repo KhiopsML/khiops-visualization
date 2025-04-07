@@ -290,10 +290,10 @@
               clonedContainer.querySelectorAll('.tree-leaf-text'),
               function (node) {
                 let parent = node.parentNode;
-                parent.classList.remove('selected');
+                parent.classList.remove('tree-selected');
               },
             );
-            parent.classList.add('selected');
+            parent.classList.add('tree-selected');
 
             if (!e.isTrusted) {
               parent.scrollIntoViewIfNeeded({
@@ -477,10 +477,10 @@
               // Select node without click propagation
               forEach(nodes, function (node) {
                 let parent = node.parentNode;
-                parent.classList.remove('selected');
+                parent.classList.remove('tree-selected');
               });
               if (currentNode?.parentNode) {
-                currentNode.parentNode.classList.add('selected');
+                currentNode.parentNode.classList.add('tree-selected');
 
                 currentNode.parentNode.scrollIntoViewIfNeeded({
                   // block: 'center'
@@ -503,7 +503,7 @@
             if (nodes) {
               forEach(nodes, function (node) {
                 let parent = node.parentNode;
-                parent.classList.remove('selected');
+                parent.classList.remove('tree-selected');
               });
             }
           }
@@ -522,7 +522,7 @@
             if (nodes) {
               forEach(nodes, function (node) {
                 let parent = node.parentNode;
-                parent.classList.remove('selected');
+                parent.classList.remove('tree-selected');
               });
 
               for (let i = 0; i < nodesToSelect.length; i++) {
@@ -541,7 +541,7 @@
 
                 // Select node without click propagation
                 if (currentNode && currentNode.parentNode) {
-                  currentNode.parentNode.classList.add('selected');
+                  currentNode.parentNode.classList.add('tree-selected');
                   if (currentNodeToSelect.isTrusted) {
                     currentNode.parentNode.scrollIntoViewIfNeeded({
                       block: 'center',
