@@ -55,34 +55,49 @@
     fxLayoutAlign="start start"
     fxLayout="column"
   >
-    <span
-      >{{ 'GLOBAL.TYPE' | translate }} :
-      <strong>{{ selectedTreeCluster?.dimensionType }}</strong></span
-    >
-    <span *ngIf="selectedTreeCluster?.isNumerical"
-      >{{ 'GLOBAL.INTERVALS' | translate }} :
-      <strong>{{ selectedTreeCluster?.intervals }}</strong></span
-    >
-    <span *ngIf="selectedTreeCluster?.isCategorical"
-      >{{ 'GLOBAL.CLUSTERS' | translate }} :
-      <strong>{{ selectedTreeCluster?.intervals }}</strong></span
-    >
-    <br />
-    <span *ngIf="selectedDimension?.isNumerical"
-      >{{ 'GLOBAL.INTERVAL' | translate }} :
-      <strong>{{ selectedTreeCluster?.interval }}</strong></span
-    >
-    <span *ngIf="selectedDimension?.isCategorical"
-      >{{ 'GLOBAL.CLUSTER' | translate }} :
-      <strong>{{ selectedTreeCluster?.interval }}</strong></span
-    >
-    <span *ngIf="selectedTreeCluster?.isCategorical"
-      >{{ 'GLOBAL.CLUSTER_LENGTH' | translate }} :
-      <strong>{{ selectedTreeCluster?.nbClusters }}</strong></span
-    >
-    <span
-      >{{ 'GLOBAL.FREQUENCY' | translate }} :
-      <strong>{{ selectedTreeCluster?.frequency }}</strong></span
-    >
+    <table class="stats-table">
+      <tr>
+        <td>{{ 'GLOBAL.TYPE' | translate }}</td>
+        <td>
+          <strong>{{ selectedTreeCluster?.dimensionType }}</strong>
+        </td>
+      </tr>
+      <tr *ngIf="selectedTreeCluster?.isNumerical">
+        <td>{{ 'GLOBAL.INTERVALS' | translate }}</td>
+        <td>
+          <strong>{{ selectedTreeCluster?.intervals }}</strong>
+        </td>
+      </tr>
+      <tr *ngIf="selectedTreeCluster?.isCategorical">
+        <td>{{ 'GLOBAL.CLUSTERS' | translate }}</td>
+        <td>
+          <strong>{{ selectedTreeCluster?.intervals }}</strong>
+        </td>
+      </tr>
+      <tr *ngIf="selectedDimension?.isNumerical">
+        <td>{{ 'GLOBAL.INTERVAL' | translate }}</td>
+        <td>
+          <strong>{{ selectedTreeCluster?.interval }}</strong>
+        </td>
+      </tr>
+      <tr *ngIf="selectedDimension?.isCategorical">
+        <td>{{ 'GLOBAL.CLUSTER' | translate }}</td>
+        <td>
+          <strong>{{ selectedTreeCluster?.interval }}</strong>
+        </td>
+      </tr>
+      <tr *ngIf="selectedTreeCluster?.isCategorical">
+        <td>{{ 'GLOBAL.CLUSTER_LENGTH' | translate }}</td>
+        <td>
+          <strong>{{ selectedTreeCluster?.nbClusters }}</strong>
+        </td>
+      </tr>
+      <tr>
+        <td>{{ 'GLOBAL.FREQUENCY' | translate }}</td>
+        <td>
+          <strong>{{ selectedTreeCluster?.frequency }}</strong>
+        </td>
+      </tr>
+    </table>
   </div>
 </div>

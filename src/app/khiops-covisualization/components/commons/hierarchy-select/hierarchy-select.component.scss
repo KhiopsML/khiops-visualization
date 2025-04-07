@@ -36,12 +36,12 @@
     margin-top: 1em;
     padding: 0.55em;
 
-    span {
+    td {
       font-weight: 400;
       font-size: 0.75rem;
-      display: flex;
       align-items: center;
       min-height: 20px;
+      padding-right: 5px;
     }
 
     strong {
