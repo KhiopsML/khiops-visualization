@@ -46,7 +46,9 @@
                   [matMenuTriggerFor]="matrixSelectTargets"
                 >
                   {{ matrixTargets.selected }}
-                  <em class="screenshot-hide">v</em>
+                  <em class="screenshot-hide"
+                    ><mat-icon>keyboard_arrow_down</mat-icon>
+                  </em>
                 </button>
                 <mat-menu #matrixSelectTargets>
                   <button

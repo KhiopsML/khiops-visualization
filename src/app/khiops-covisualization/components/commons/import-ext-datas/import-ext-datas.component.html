@@ -32,7 +32,8 @@
             color="accent"
             [matMenuTriggerFor]="joinKeyMenu"
           >
-            {{ joinKeys.selected }}<em>v</em>
+            {{ joinKeys.selected
+            }}<em><mat-icon>keyboard_arrow_down</mat-icon> </em>
           </button>
           <mat-menu #joinKeyMenu>
             <button
@@ -84,7 +85,8 @@
             color="accent"
             [matMenuTriggerFor]="dimensionMenu"
           >
-            {{ selectedDimension?.name }} <em>v</em>
+            {{ selectedDimension?.name }}
+            <em><mat-icon>keyboard_arrow_down</mat-icon> </em>
           </button>
           <mat-menu #dimensionMenu>
             <button

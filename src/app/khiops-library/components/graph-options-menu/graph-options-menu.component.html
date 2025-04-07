@@ -4,7 +4,8 @@
     color="primary"
     [matMenuTriggerFor]="graphOptionsTypes"
   >
-    {{ graphOptions?.selected | translate }} <em>v</em>
+    {{ graphOptions?.selected | translate }}
+    <em><mat-icon>keyboard_arrow_down</mat-icon> </em>
   </button>
   <mat-menu #graphOptionsTypes>
     <button

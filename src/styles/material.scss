@@ -95,12 +95,10 @@ button {
   }
 
   em {
-    margin-left: 1em;
-    font-style: normal;
-    transform: scaleX(2);
-    display: inline-block;
-    font-size: 0.7em;
-    font-family: verdana;
+    .mat-icon {
+      font-size: 24px !important;
+      margin: 6px 0 0 5px !important;
+    }
   }
 }
 .mdc-tab__text-label {
@@ -395,4 +393,9 @@ button {
   .mat-mdc-menu-item-text {
     padding: 0 !important;
   }
+}
+
+.mdc-button__label {
+  align-items: center;
+  display: flex;
 }

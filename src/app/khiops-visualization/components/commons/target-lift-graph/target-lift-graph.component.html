@@ -16,7 +16,10 @@
             color="accent"
             [matMenuTriggerFor]="targetLiftSelect"
           >
-            {{ targetLift.selected }} <em class="screenshot-hide">v</em>
+            {{ targetLift.selected }}
+            <em class="screenshot-hide"
+              ><mat-icon>keyboard_arrow_down</mat-icon>
+            </em>
           </button>
           <mat-menu #targetLiftSelect>
             <button

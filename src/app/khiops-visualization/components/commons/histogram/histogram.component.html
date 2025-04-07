@@ -63,7 +63,9 @@
             [matMenuTriggerFor]="graphOptionsXTypes"
           >
             {{ graphOptionsX?.selected | translate }}
-            <em class="screenshot-hide">v</em>
+            <em class="screenshot-hide"
+              ><mat-icon>keyboard_arrow_down</mat-icon>
+            </em>
           </button>
           <mat-menu #graphOptionsXTypes>
             <button
@@ -83,7 +85,9 @@
             [matMenuTriggerFor]="graphOptionsYTypes"
           >
             {{ graphOptionsY?.selected | translate }}
-            <em class="screenshot-hide">v</em>
+            <em class="screenshot-hide"
+              ><mat-icon>keyboard_arrow_down</mat-icon>
+            </em>
           </button>
           <mat-menu #graphOptionsYTypes>
             <button
