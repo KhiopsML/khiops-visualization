@@ -44,6 +44,7 @@
 
 .mat-mdc-flat-button,
 .search-input-btn,
+.mat-mdc-unelevated-button,
 .mat-mdc-stroked-button,
 .mat-mdc-outlined-button,
 mat-button-toggle-group {
@@ -56,6 +57,7 @@ mat-button-toggle-group {
 }
 .mat-mdc-flat-button:hover,
 .search-input-btn:hover,
+.mat-mdc-unelevated-button:hover,
 .mat-mdc-outlined-button:hover,
 .mat-mdc-stroked-button:hover,
 mat-button-toggle-group:hover {
@@ -283,6 +285,8 @@ button.mdc-icon-button {
 }
 .mat-mdc-menu-item-text {
   line-height: 1rem !important;
+  font-family: 'poppins', sans-serif !important;
+  font-size: 0.9em !important;
 }
 
 .cdk-overlay-connected-position-bounding-box {

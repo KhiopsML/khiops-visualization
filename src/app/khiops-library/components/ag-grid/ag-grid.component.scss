@@ -49,12 +49,11 @@
         min-width: 36px;
 
         button {
-          height: 30px;
-          line-height: 30px;
-          width: 30px;
-          margin: 0 1px 0 1px;
+          height: 32px;
+          width: 34px;
+          margin: 0;
           display: flex;
-          padding: 7px !important;
+          padding: 8px 7px !important;
         }
 
         ::-webkit-input-placeholder {
@@ -72,6 +71,7 @@
           width: 0px;
           height: 25px;
           margin-top: 2px;
+          padding-top: 2px;
         }
       }
     }
