@@ -43,8 +43,6 @@ describe('Test Khiops Covisualization sample files', () => {
 
   files.forEach((fileName) => {
     it(`Check values for ${fileName}`, () => {
-      // Initialize ls with all views enabled
-      initLS();
 
       //@ts-ignore
       cy.initViews();

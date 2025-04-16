@@ -155,18 +155,16 @@ export class AgGridComponent
 
     try {
       const PREV_CELL_AG_GRID = this.ls.get(LS.CELL_AG_GRID);
-      this.cellsSizes =
-        (PREV_CELL_AG_GRID && JSON.parse(PREV_CELL_AG_GRID)) || {};
+      this.cellsSizes = (PREV_CELL_AG_GRID && PREV_CELL_AG_GRID) || {};
     } catch (e) {}
     try {
       const PREV_COLUMNS_AG_GRID = this.ls.get(LS.COLUMNS_AG_GRID);
       this.visibleColumns =
-        (PREV_COLUMNS_AG_GRID && JSON.parse(PREV_COLUMNS_AG_GRID)) || {};
+        (PREV_COLUMNS_AG_GRID && PREV_COLUMNS_AG_GRID) || {};
     } catch (e) {}
     try {
       const PREV_MODES_AG_GRID = this.ls.get(LS.MODES_AG_GRID);
-      this.gridModes =
-        (PREV_MODES_AG_GRID && JSON.parse(PREV_MODES_AG_GRID)) || {}; // 'fitToSpace' or 'fitToContent'
+      this.gridModes = (PREV_MODES_AG_GRID && PREV_MODES_AG_GRID) || {}; // 'fitToSpace' or 'fitToContent'
     } catch (e) {}
   }
 
@@ -186,8 +184,15 @@ export class AgGridComponent
   }
 
   onGridReady(_params: GridReadyEvent) {
+    this.updateTable();
+    // Reinit current saved columns sizes when user fit grid to space
+    delete this.cellsSizes[this.id!];
+    this.ls.set(LS.CELL_AG_GRID, this.cellsSizes);
+
+    this.saveGridModes(this.gridMode);
+    this.agGrid?.api?.sizeColumnsToFit();
+
     this.restoreState();
-    this.fitToSpace();
   }
 
   changeDataType(type: string) {
@@ -632,7 +637,6 @@ export class AgGridComponent
     this.visibleColumns[this.id!][column] = isVisible;
     this.ls.set(LS.COLUMNS_AG_GRID, this.visibleColumns);
   }
-
   fitToSpace() {
     this.gridMode = 'fitToSpace';
 
@@ -689,10 +693,7 @@ export class AgGridComponent
     const state = {
       sortState: this.gridOptions?.columnApi?.getColumnState(),
     };
-    this.ls.set(
-      LS.OPTIONS_AG_GRID + '_' + this.id?.toUpperCase(),
-      JSON.stringify(state),
-    );
+    this.ls.set(LS.OPTIONS_AG_GRID + '_' + this.id?.toUpperCase(), state);
   }
 
   restoreState() {
@@ -701,7 +702,7 @@ export class AgGridComponent
       const PREV_STATE = this.ls.get(
         LS.OPTIONS_AG_GRID + '_' + this.id.toUpperCase(),
       );
-      const state = (PREV_STATE && JSON.parse(PREV_STATE)) || {};
+      const state = (PREV_STATE && PREV_STATE) || {};
 
       if (
         this.displayedColumns &&

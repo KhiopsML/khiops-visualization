@@ -66,6 +66,7 @@ export class AppService {
    * initializing the layout service, and setting initial data structures.
    */
   initialize() {
+    this.resetSearch();
     this.initGlobalConfigVariables();
     this.layoutService.initialize(VIEW_LAYOUT);
     this._appDatas = {
@@ -75,6 +76,11 @@ export class AppService {
     this._initialDatas = {
       datas: undefined,
     };
+  }
+
+  resetSearch() {
+    // #127, #201 Reset grid search on file change
+    this.ls.delStartWith('OPTIONS_AG_GRID_SEARCH_');
   }
 
   /**

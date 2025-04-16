@@ -50,6 +50,7 @@ export class AppService {
    * session variables, and initializing the layout service.
    */
   initialize() {
+    this.resetSearch();
     this.initGlobalConfigVariables();
     this.initSessionVariables();
     this.layoutService.initialize(VIEW_LAYOUT);
@@ -57,6 +58,11 @@ export class AppService {
     this._appDatas = {
       datas: undefined,
     };
+  }
+
+  resetSearch() {
+    // #127, #201 Reset grid search on file change
+    this.ls.delStartWith('OPTIONS_AG_GRID_SEARCH_');
   }
 
   /**

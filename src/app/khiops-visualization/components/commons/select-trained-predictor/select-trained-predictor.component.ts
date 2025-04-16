@@ -10,10 +10,10 @@ import { TrainedPredictor } from '@khiops-visualization/interfaces/modeling-repo
 import { AppService } from '@khiops-visualization/providers/app.service';
 
 @Component({
-    selector: 'app-select-trained-predictor',
-    templateUrl: './select-trained-predictor.component.html',
-    styleUrls: ['./select-trained-predictor.component.scss'],
-    standalone: false
+  selector: 'app-select-trained-predictor',
+  templateUrl: './select-trained-predictor.component.html',
+  styleUrls: ['./select-trained-predictor.component.scss'],
+  standalone: false,
 })
 export class SelectTrainedPredictorComponent implements OnInit {
   @Input() inputDatas: TrainedPredictor[] | undefined;
@@ -55,7 +55,7 @@ export class SelectTrainedPredictorComponent implements OnInit {
 
   changeTrainedPredictorsType(opt: TrainedPredictor) {
     // this.trackerService.trackEvent('click', 'select_trained_predictor');
-    AppService.Ls.set(LS.SELECTED_TRAIN_PREDICTOR, JSON.stringify(opt));
+    AppService.Ls.set(LS.SELECTED_TRAIN_PREDICTOR, opt);
     this.selectedPredictor = opt.name;
     this.selectedPredictorChanged.emit(opt);
   }

@@ -229,7 +229,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 
     this.isCompatibleJson = this.appService.isCompatibleJson(datas);
     const isCollidingJson = this.appService.isCollidingJson(datas);
-    UtilsService.resetSearch(AppConfig.covisualizationCommon.GLOBAL.LS_ID);
+    this.appService.resetSearch();
 
     this.showProjectTab = this.configService.getConfig().showProjectTab;
     if (this.showProjectTab === undefined) {

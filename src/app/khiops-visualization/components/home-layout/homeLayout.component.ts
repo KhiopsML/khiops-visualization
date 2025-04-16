@@ -134,7 +134,7 @@ export class HomeLayoutComponent implements OnInit {
 
   private initializeHome(datas: VisualizationDatas) {
     this.isCompatibleJson = this.appService.isCompatibleJson(datas);
-    UtilsService.resetSearch(AppConfig.visualizationCommon.GLOBAL.LS_ID);
+    this.appService.resetSearch();
 
     this.showProjectTab = this.configService.getConfig().showProjectTab;
     if (this.showProjectTab === undefined) {

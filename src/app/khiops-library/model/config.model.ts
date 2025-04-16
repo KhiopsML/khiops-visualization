@@ -8,6 +8,7 @@ export class ConfigModel {
   showProjectTab?: boolean;
   showLogo?: boolean;
   appSource!: string;
+  storage: string = 'DEFAULT';
   trackerId?: string;
   onFileOpen!: Function;
   onCopyData!: Function;

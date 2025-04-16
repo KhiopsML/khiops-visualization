@@ -57,16 +57,9 @@ export class AppComponent implements AfterViewInit {
     private element: ElementRef,
   ) {
     AppService.Ls.setLsId(AppConfig.visualizationCommon.GLOBAL.LS_ID);
-    this.appService.initialize();
   }
 
   ngAfterViewInit(): void {
-    setTimeout(() => {
-      // Force the creation of the overlay container
-      // when reinstantiating the visualization component #32
-      this.overlayContainer.createContainer();
-    });
-
     this.configService.setRootElement(this.appElement!);
     this.element.nativeElement.getDatas = () =>
       this.saveService.constructDatasToSave();
@@ -103,13 +96,23 @@ export class AppComponent implements AfterViewInit {
     };
     this.element.nativeElement.setConfig = (config: ConfigModel) => {
       this.configService.setConfig(config);
-      this.trackerService.initTracker();
     };
     this.element.nativeElement.clean = () => {
       this.ngzone.run(() => {
         this.clean();
       });
     };
+
+    setTimeout(() => {
+      AppService.Ls.getAll().then(() => {
+        this.appService.initialize();
+        this.trackerService.initTracker();
+      });
+
+      // Force the creation of the overlay container
+      // when reinstantiating the visualization component #32
+      this.overlayContainer.createContainer();
+    });
   }
 
   clean() {

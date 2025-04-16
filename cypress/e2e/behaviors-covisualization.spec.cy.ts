@@ -6,11 +6,10 @@ describe('Behaviors tests for Khiops Covisualization', () => {
   let files = ['DigitCoclustering.json'];
   files.forEach((fileName) => {
     it(`Test unfold hierarchy slider on big datas and hierarchy checkboxes`, () => {
-      // Initialize ls with all views enabled
-      initLS();
 
       //@ts-ignore
       cy.initViews();
+
       //@ts-ignore
       cy.loadFile('covisualization', fileName);
 
@@ -53,8 +52,6 @@ describe('Behaviors tests for Khiops Covisualization', () => {
     });
 
     it(`Test unfold hierarchy slider on big datas`, () => {
-      // Initialize ls with all views enabled
-      initLS();
 
       //@ts-ignore
       cy.initViews();
@@ -104,8 +101,6 @@ describe('Behaviors tests for Khiops Covisualization', () => {
   files = ['DigitCoclustering.json'];
   files.forEach((fileName) => {
     it(`Test unfold hierarchy on big datas`, () => {
-      // Initialize ls with all views enabled
-      initLS();
 
       //@ts-ignore
       cy.initViews();
@@ -166,8 +161,6 @@ describe('Behaviors tests for Khiops Covisualization', () => {
   files = ['CC_3_Coclustering.json'];
   files.forEach((fileName) => {
     it(`Test dimension change`, () => {
-      // Initialize ls with all views enabled
-      initLS();
 
       //@ts-ignore
       cy.initViews();
@@ -199,8 +192,6 @@ describe('Behaviors tests for Khiops Covisualization', () => {
   files = ['CC_3_Coclustering.json'];
   files.forEach((fileName) => {
     it(`Test behaviors clicks`, () => {
-      // Initialize ls with all views enabled
-      initLS();
 
       //@ts-ignore
       cy.initViews();
@@ -215,13 +206,13 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       cy.get('#tree-expando-8')
         .parent()
         .then((parent) => {
-          cy.wrap(parent).should('have.class', 'selected');
+          cy.wrap(parent).should('have.class', 'tree-selected');
         });
       cy.get('#cluster-details-grid-0').contains('A10');
       cy.get('#tree-expando-8')
         .parent()
         .then((parent) => {
-          cy.wrap(parent).should('have.class', 'selected');
+          cy.wrap(parent).should('have.class', 'tree-selected');
         });
 
       cy.get('#cluster-details-grid-0 [row-id="3"]').then((element) => {
@@ -261,7 +252,7 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       cy.get('#tree-expando-0')
         .parent()
         .then((parent) => {
-          cy.wrap(parent).should('have.class', 'selected');
+          cy.wrap(parent).should('have.class', 'tree-selected');
         });
       cy.get('#cluster-composition-0').contains('Self');
       cy.get('.annotation-comp').first().contains('Self');

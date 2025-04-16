@@ -38,4 +38,8 @@ export class ConfigService {
   get isElectron(): boolean {
     return this.getConfig().appSource === 'ELECTRON';
   }
+
+  get isDefaultStorage(): boolean {
+    return this.getConfig().storage === 'DEFAULT';
+  }
 }

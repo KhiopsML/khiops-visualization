@@ -87,6 +87,8 @@ export class UserSettingsComponent implements OnChanges {
 
     AppService.Ls.set(LS.COOKIE_CONSENT, this.allowCookies);
 
+    AppService.Ls.setAll();
+
     setTimeout(() => {
       // Wait for drawer close before reload
       location.reload();

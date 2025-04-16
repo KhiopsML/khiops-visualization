@@ -113,9 +113,9 @@ export class FileLoaderService {
     // let urlKV = './assets/mocks/kv/CoronaWords100000_AllReports.V11.json';
     // let urlKV = './assets/mocks/kv/CrirteoAllReports.json';
     // let urlKV = './assets/mocks/kv/CriteoAnalysisResults.khj';
-    let urlKV = './assets/mocks/kv/Words100_AllReports.json';
+    // let urlKV = './assets/mocks/kv/Words100_AllReports.json';
     // let urlKV = './assets/mocks/kv/UnivariateAnalysisResults.json';
-    // let urlKV = './assets/mocks/kv/ylogAdultAllReports.json';
+    let urlKV = './assets/mocks/kv/ylogAdultAllReports.json';
     // let urlKV = './assets/mocks/kv/ko-AnalysisResults.khj';
     // let urlKV = './assets/mocks/kv/AdultAllReports.json';
     // let urlKV = './assets/mocks/kv/20NewsgroupAllReports.json';
@@ -140,6 +140,7 @@ export class FileLoaderService {
     // let urlKC = './assets/mocks/kc/adultmissing.json';
     // let urlKC = './assets/mocks/kc/DigitCoclustering.json';
     let urlKC = './assets/mocks/kc/8-TS4624User_Coclustering.json';
+    // let urlKC = './assets/mocks/kc/Coclustering_NewSeparator.khcj';
     // let urlKC = './assets/mocks/kc/check-ext-datas.json';
     // let urlKC = './assets/mocks/kc/mushroom.json';
     // let urlKC = './assets/mocks/kc/SimplifiedCoclusteringIrisOldFormat_BugUndefined.json';
@@ -236,7 +237,8 @@ export class FileLoaderService {
       files: [],
     };
     if (currentLs) {
-      parsedLs = JSON.parse(currentLs);
+      // parsedLs = JSON.parse(currentLs);
+      parsedLs = (currentLs);
       const isExistingHistoryIndex = parsedLs.files.indexOf(filename);
 
       if (isExistingHistoryIndex !== -1) {
@@ -258,7 +260,8 @@ export class FileLoaderService {
   getFileHistory() {
     const currentLs = this.ls.get(LS.OPEN_FILE);
     if (currentLs) {
-      return JSON.parse(currentLs);
+      // return JSON.parse(currentLs);
+      return (currentLs);
     } else {
       return {
         files: [],

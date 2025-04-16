@@ -846,7 +846,7 @@ export class UtilsService {
    */
   static setDefaultLSValues(storedSplitValues: any, splitSizes: any) {
     if (storedSplitValues) {
-      const parsedSplitSizes = JSON.parse(storedSplitValues);
+      const parsedSplitSizes = storedSplitValues;
       Object.keys(splitSizes).forEach((value) => {
         Object.keys(splitSizes[value]).forEach((size) => {
           if (!parsedSplitSizes[value]) {
@@ -1350,26 +1350,6 @@ export class UtilsService {
     const g = parseInt(c.slice(3, 5), 16);
     const b = parseInt(c.slice(5, 7), 16);
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-  }
-
-  /**
-   * #127, #201 Reset grid search on file change
-   * Resets the search options stored in the local storage for a given identifier.
-   *
-   * This method iterates through all keys in the local storage and removes any key
-   * that starts with the specified identifier followed by 'OPTIONS_AG_GRID_SEARCH_'.
-   *
-   * @param ls_id - The identifier used to match the keys in the local storage.
-   */
-  static resetSearch(ls_id: string) {
-    for (let i = 0; i < localStorage.length; i++) {
-      let key = localStorage.key(i);
-      if (key?.startsWith(ls_id + 'OPTIONS_AG_GRID_SEARCH_')) {
-        localStorage.removeItem(key);
-        // Decrement i to avoid skipping a key because the length of localStorage has decreased.
-        i--;
-      }
-    }
   }
 
   /**

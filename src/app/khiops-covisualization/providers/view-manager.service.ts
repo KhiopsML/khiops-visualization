@@ -12,6 +12,7 @@ import * as _ from 'lodash'; // Important to import lodash in karma
 import { AppService } from './app.service';
 import { LS } from '@khiops-library/enum/ls';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
+import { initLS } from '../../khiops-library/providers/init-ls';
 
 @Injectable({
   providedIn: 'root',
@@ -49,11 +50,13 @@ export class ViewManagerService {
     // Do not restore LS values because we have a save functionnality
     if (AppConfig.cypress) {
       // Do it only for cypress tests
+      initLS();
+
       const lsStorage = this.ls.get(LS.VIEWS_LAYOUT);
+
       if (lsStorage && lsStorage !== 'undefined') {
-        const lsValues = JSON.parse(lsStorage);
         // Merge current values with values from LS
-        this.viewsLayout.megeWithPreviousValues(lsValues);
+        this.viewsLayout.megeWithPreviousValues(lsStorage);
       }
     }
 
@@ -76,41 +79,6 @@ export class ViewManagerService {
     if (viewsLayout !== undefined) {
       this.setViewsLayout(viewsLayout);
     }
-  }
-
-  /**
-   * Updates the views layout based on the provided dimensions.
-   * This method creates a new instance of `ViewLayoutVO` and iterates over the given dimensions
-   * to add dimension view layouts. It also merges previous values and local storage values.
-   *
-   * @param dimensions - An array of dimension objects, each containing a `name` property.
-   * @returns The updated `ViewLayoutVO` instance.
-   */
-  updateViewsLayout(
-    dimensions: DimensionCovisualizationModel[],
-  ): ViewLayoutVO | undefined {
-    const previousValues = _.cloneDeep(this.viewsLayout);
-    if (previousValues) {
-      this.viewsLayout = new ViewLayoutVO();
-      for (let i = 0; i < dimensions.length; i++) {
-        const previousLayout = previousValues.dimensionsViewsLayoutsVO.find(
-          (e) => e.name === dimensions[i]?.name,
-        );
-        const isContextView = i >= 2;
-        this.viewsLayout.addDimensionViewLayout(
-          dimensions[i]?.name!,
-          isContextView,
-          previousLayout,
-        );
-      }
-      const lsStorage = this.ls.get(LS.VIEWS_LAYOUT);
-      if (lsStorage && lsStorage !== 'undefined') {
-        const lsValues = JSON.parse(lsStorage);
-        // Merge current values with values from LS
-        this.viewsLayout.megeWithPreviousValues(lsValues);
-      }
-    }
-    return this.viewsLayout;
   }
 
   /**
