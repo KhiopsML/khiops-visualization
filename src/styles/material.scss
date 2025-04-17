@@ -9,7 +9,7 @@
 .mat-button-toggle-standalone,
 .mat-button-toggle-group {
   font-size: 0.8em !important;
-  height: 32px !important;
+  max-height: 28px !important;
 }
 
 .mat-badge-small .mat-badge-content {
@@ -211,7 +211,7 @@ button {
 
 .mat-mdc-tab-group {
   background: white;
-  z-index: 999;
+  z-index: 99;
   position: relative;
 }
 
@@ -406,4 +406,11 @@ button {
 .mdc-button__label {
   align-items: center;
   display: flex;
+}
+
+mat-dialog-container {
+  .mat-mdc-dialog-surface {
+    border: 2px solid #000000 !important;
+    border-radius: 0 !important;
+  }
 }

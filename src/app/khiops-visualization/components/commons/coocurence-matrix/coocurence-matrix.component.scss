@@ -1,4 +1,16 @@
 #coocurence-matrix-comp {
+  position: relative;
+  .coocurence-matrix-tools {
+    position: absolute;
+    right: 0 !important;
+    padding-right: 0 !important;
+    z-index: 1000;
+    margin-top: 0.5rem;
+    background: white;
+    kl-btn-fullscreen {
+      margin-right: 5px;
+    }
+  }
   .mat-tab-group {
     padding: 1px;
   }
@@ -12,17 +24,6 @@
       white-space: pre-wrap;
       text-transform: none;
     }
-  }
-  kl-btn-fullscreen {
-    margin-left: 1em;
-  }
-
-  kl-matrix-toggle {
-    position: absolute;
-    right: 0 !important;
-    padding-right: 0 !important;
-    z-index: 1000;
-    margin-top: 0.4rem;
   }
 
   ::ng-deep .mat-mdc-tab-header {

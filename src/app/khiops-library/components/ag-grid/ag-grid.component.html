@@ -180,7 +180,10 @@
           >
         </button>
       </mat-menu>
-      <kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">
+      <kl-btn-fullscreen
+        *ngIf="showFullscreenBtn"
+        (toggleFullscreen)="onToggleFullscreen($event)"
+      >
       </kl-btn-fullscreen>
     </div>
   </div>

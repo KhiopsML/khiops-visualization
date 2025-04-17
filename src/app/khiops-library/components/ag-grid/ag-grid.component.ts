@@ -78,6 +78,7 @@ export class AgGridComponent
   @Input() public levelDistributionTitle: string = '';
   @Input() public showColumnsSelection = true;
   @Input() public showDataTypeSelection = false;
+  @Input() public showFullscreenBtn = true;
   @Input() public showSearch = true;
   @Input() public displayCount = false;
   @Input() public paginationSize: number | undefined;
