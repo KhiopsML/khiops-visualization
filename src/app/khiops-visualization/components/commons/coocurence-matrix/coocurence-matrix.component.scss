@@ -2,13 +2,13 @@
   position: relative;
   .coocurence-matrix-tools {
     position: absolute;
-    right: 0 !important;
+    right: 1px !important;
     padding-right: 0 !important;
     z-index: 1000;
     margin-top: 0.5rem;
     background: white;
     kl-btn-fullscreen {
-      margin-right: 5px;
+      margin-right: 4px;
     }
   }
   .mat-tab-group {
