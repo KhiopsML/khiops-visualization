@@ -40,7 +40,7 @@ export class Ls {
   }
 
   get(key: string, defaultValue?: any) {
-    if (this.configService.isDefaultStorage) {
+    if (!this.configService.isElectronStorage) {
       const item = localStorage.getItem(this.LS_ID + key);
       // if item is object
       if (item && item.startsWith('{')) {
@@ -58,7 +58,7 @@ export class Ls {
   }
 
   set(key: string, value: any) {
-    if (this.configService.isDefaultStorage) {
+    if (!this.configService.isElectronStorage) {
       if (typeof value === 'object' && value !== null) {
         value = UtilsService.roundNumbersInJson(value);
         localStorage.setItem(this.LS_ID + key, JSON.stringify(value));
@@ -85,18 +85,18 @@ export class Ls {
   }
 
   del(key: string) {
-    if (this.configService.isDefaultStorage) {
+    if (!this.configService.isElectronStorage) {
       localStorage.removeItem(this.LS_ID + key);
     } else {
       this.lsDatas && this.lsDatas[key] && delete this.lsDatas[key];
     }
   }
 
-  delStartWith(key: string) {
-    if (this.configService.isDefaultStorage) {
+  delStartWith(keyToDel: string) {
+    if (!this.configService.isElectronStorage) {
       for (let i = 0; i < localStorage.length; i++) {
         let key = localStorage.key(i);
-        if (key?.startsWith(key)) {
+        if (key?.startsWith(this.LS_ID + keyToDel)) {
           localStorage.removeItem(key);
           // Decrement i to avoid skipping a key because the length of localStorage has decreased.
           i--;
@@ -105,7 +105,7 @@ export class Ls {
     } else {
       if (this.lsDatas) {
         Object.keys(this.lsDatas).forEach((k) => {
-          if (k.startsWith(key)) {
+          if (k.startsWith(keyToDel)) {
             delete this.lsDatas[k];
           }
         });
@@ -114,7 +114,7 @@ export class Ls {
   }
 
   clear() {
-    if (this.configService.isDefaultStorage) {
+    if (!this.configService.isElectronStorage) {
       localStorage.clear();
     } else {
       this.lsDatas = undefined;
