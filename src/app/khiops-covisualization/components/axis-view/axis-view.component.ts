@@ -23,10 +23,10 @@ import { DynamicI } from '@khiops-library/interfaces/globals';
 import { SaveService } from '@khiops-covisualization/providers/save.service';
 
 @Component({
-    selector: 'app-axis-view',
-    templateUrl: './axis-view.component.html',
-    styleUrls: ['./axis-view.component.scss'],
-    standalone: false
+  selector: 'app-axis-view',
+  templateUrl: './axis-view.component.html',
+  styleUrls: ['./axis-view.component.scss'],
+  standalone: false,
 })
 export class AxisViewComponent
   extends SelectableTabComponent
