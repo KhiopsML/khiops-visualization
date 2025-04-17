@@ -24,6 +24,7 @@
         padding-left: 15px !important;
         background: var(--bgColor-20);
         ::ng-deep .mdc-form-field {
+          overflow: hidden;
           .mdc-checkbox {
             position: absolute !important;
             left: -3px;
