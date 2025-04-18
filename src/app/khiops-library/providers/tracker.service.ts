@@ -54,7 +54,7 @@ export class TrackerService {
   getCookieStatus(): boolean | undefined {
     const cookieStatus = this.ls.get(LS.COOKIE_CONSENT);
     if (cookieStatus !== undefined) {
-      return cookieStatus === 'true';
+      return cookieStatus.toString() === 'true';
     } else {
       return undefined;
     }

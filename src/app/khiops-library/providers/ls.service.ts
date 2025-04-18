@@ -53,7 +53,9 @@ export class Ls {
         return item || defaultValue || undefined;
       }
     } else {
-      return (this.lsDatas && this.lsDatas[key]) || defaultValue || undefined;
+      return this.lsDatas?.[key] !== undefined && this.lsDatas[key] !== ''
+        ? this.lsDatas[key]
+        : defaultValue;
     }
   }
 
