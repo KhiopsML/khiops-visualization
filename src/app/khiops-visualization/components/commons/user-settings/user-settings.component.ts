@@ -82,11 +82,11 @@ export class UserSettingsComponent implements OnChanges {
     AppService.Ls.set(LS.SETTING_MATRIX_CONTRAST, this.contrastValue);
     AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
 
-    // Close the nav drawer
-    this.toggleNavDrawerChanged.emit(true);
-
     AppService.Ls.set(LS.COOKIE_CONSENT, this.allowCookies);
 
     AppService.Ls.setAll();
+
+    // Close the nav drawer
+    this.toggleNavDrawerChanged.emit(true);
   }
 }
