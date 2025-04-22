@@ -605,7 +605,11 @@ export class SaveService {
           currentNodeBound = currentNodeBound.replaceAll('[', '');
           currentNodeBound = currentNodeBound.replaceAll(']', '');
           currentNodeBound = currentNodeBound.replaceAll('Missing U ', ''); // #73
-          currentNodeBound = currentNodeBound.split(';');
+
+          // Adaptation to new value separator "," instead of ";" #192
+          currentNodeBound = currentNodeBound.includes(';')
+            ? currentNodeBound.split(';')
+            : currentNodeBound.split(',');
           // convert each array string to number
           for (let j = 0; j < currentNodeBound.length; j++) {
             currentNodeBound[j] = 1 * currentNodeBound[j];
