@@ -8,7 +8,7 @@
       [(opened)]="opened"
     >
       <app-user-settings
-        (toggleNavDrawerChanged)="onToggleNavDrawerChanged($event)"
+        (toggleNavDrawerChanged)="onToggleNavDrawerChanged()"
         [opened]="opened"
       >
       </app-user-settings>
@@ -82,7 +82,7 @@
         <kl-header-tools
           fxFlex
           *ngIf="isCompatibleJson"
-          (toggleNavDrawerChanged)="onToggleNavDrawerChanged($event)"
+          (toggleNavDrawerChanged)="onToggleNavDrawerChanged()"
         >
         </kl-header-tools>
       </div>

@@ -17,6 +17,7 @@ import * as _ from 'lodash'; // Important to import lodash in karma
 import { TrackerService } from '../../../../khiops-library/providers/tracker.service';
 import { LS } from '@khiops-library/enum/ls';
 import { AppService } from '@khiops-covisualization/providers/app.service';
+import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 
 @Component({
   selector: 'app-user-settings',
@@ -33,7 +34,10 @@ export class UserSettingsComponent implements OnChanges {
   public contrastValue: number =
     AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST;
 
-  constructor(private trackerService: TrackerService) {}
+  constructor(
+    private trackerService: TrackerService,
+    private dimensionsDatasService: DimensionsDatasService,
+  ) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes?.opened?.currentValue) {
@@ -69,7 +73,10 @@ export class UserSettingsComponent implements OnChanges {
 
     AppService.Ls.setAll();
 
-    // this.trackerService.trackEvent('click', 'settings', 'significant_number', this.numberPrecision);
-    // this.trackerService.trackEvent('click', 'settings', 'matrix_contrast', this.contrastValue);
+    this.dimensionsDatasService.dimensionsDatas.matrixContrast =
+      this.contrastValue;
+
+    // Close the nav drawer
+    this.toggleNavDrawerChanged.emit();
   }
 }

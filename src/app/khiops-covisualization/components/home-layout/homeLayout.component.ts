@@ -76,7 +76,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
       this.tabsMenu._handleClick = this.interceptTabChange.bind(this);
     }
   }
-  private currentDatas: CovisualizationDatas | undefined;
   private importedDatasChangedSub: Subscription;
   private fileLoadedSub?: Subscription;
 
@@ -199,12 +198,8 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     this.appService.setActiveTabIndex(this.activeTab);
   }
 
-  onToggleNavDrawerChanged(mustReload: boolean) {
+  onToggleNavDrawerChanged() {
     this.opened = !this.opened;
-
-    if (mustReload) {
-      this.reloadView();
-    }
   }
 
   private selectFirstTab() {
@@ -215,7 +210,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
   }
 
   private initialize(datas: CovisualizationDatas | undefined = undefined) {
-    this.currentDatas = datas;
     this.appService.setFileDatas(datas);
     if (datas && !UtilsService.isEmpty(datas)) {
       this.initializeHome(datas);
@@ -295,16 +289,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
       config,
     );
     dialogRef.disableClose = true;
-  }
-
-  private reloadView() {
-    const currentDatas = this.currentDatas;
-    setTimeout(() => {
-      this.initialize();
-      setTimeout(() => {
-        this.initialize(currentDatas);
-      }); // do it after timeout to be launched
-    }, 250); // do it after nav drawer anim
   }
 
   closeFile() {

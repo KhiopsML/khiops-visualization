@@ -37,10 +37,10 @@ import { DynamicI } from '@khiops-library/interfaces/globals';
 import { ZoomToolsEventsService } from '../zoom-tools/zoom-tools.service';
 
 @Component({
-    selector: 'kl-matrix',
-    templateUrl: './matrix.component.html',
-    styleUrls: ['./matrix.component.scss'],
-    standalone: false
+  selector: 'kl-matrix',
+  templateUrl: './matrix.component.html',
+  styleUrls: ['./matrix.component.scss'],
+  standalone: false,
 })
 export class MatrixComponent extends SelectableComponent implements OnChanges {
   @Input() public isAxisInverted: boolean = false;
@@ -238,6 +238,10 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
         } else {
           this.drawMatrix();
         }
+      }
+      if (changes.contrast?.currentValue !== undefined) {
+        // improve setting save (reload) #130
+        this.drawMatrix();
       }
     });
   }
