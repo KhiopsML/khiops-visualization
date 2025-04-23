@@ -9,6 +9,7 @@ import {
   OnChanges,
   OnDestroy,
   ViewChild,
+  AfterViewInit,
   Input,
   Output,
   EventEmitter,
@@ -35,7 +36,9 @@ import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.c
   styleUrls: ['./variable-graph-details.component.scss'],
   standalone: false,
 })
-export class VariableGraphDetailsComponent implements OnChanges, OnDestroy {
+export class VariableGraphDetailsComponent
+  implements OnChanges, OnDestroy, AfterViewInit
+{
   @ViewChild('distributionGraph', {
     static: false,
   })
@@ -105,6 +108,10 @@ export class VariableGraphDetailsComponent implements OnChanges, OnDestroy {
         this.getFilteredDistribution();
       });
     }
+  }
+
+  ngAfterViewInit() {
+    this.getFilteredDistribution();
   }
 
   private updateGraphTitle() {
