@@ -38,7 +38,7 @@ export class TreeNodeModel {
   annotation: string;
 
   childrenList: string[] = [];
-  childrenLeafIndexes: number[] | string[] = [];
+  childrenLeafIndexes: number[] = [];
   childrenLeafList: string[] = [];
 
   isCollapsed: boolean;
