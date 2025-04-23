@@ -577,12 +577,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
       );
 
       this.matrixSelectedCtx.lineWidth = 2;
-      this.matrixSelectedCtx.strokeStyle =
-        this.graphMode?.mode === MATRIX_MODES.MUTUAL_INFO ||
-        this.graphMode?.mode === MATRIX_MODES.HELLINGER ||
-        this.graphMode?.mode === MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL
-          ? '#000000'
-          : '#57689d';
+      this.matrixSelectedCtx.strokeStyle = '#000000';
       this.matrixSelectedCtx.strokeRect(
         cell.xCanvas,
         cell.yCanvas,
@@ -620,7 +615,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     const y1 = 32;
     const offset = 16;
 
-    pctx.strokeStyle = '#57689d';
+    pctx.strokeStyle = '#000000';
     pctx.lineWidth = 1;
     pctx.beginPath();
     pctx.moveTo(x0, y0);
