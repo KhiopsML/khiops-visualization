@@ -4,7 +4,6 @@ const sass = require('gulp-sass')(require('sass'));
 const concat = require('gulp-concat');
 const plumber = require('gulp-plumber');
 const mergeStream = require('ordered-read-streams');
-const del = require('del');
 const webpack = require('webpack-stream');
 
 // commonjs lib (hypertree)
@@ -22,7 +21,10 @@ const files = {
 };
 
 // Clean task
-const clean = () => del(['dist/**/*']);
+const clean = () =>
+  import('del').then((del) => {
+    del(['dist/**/*']);
+  });
 
 // SCSS compilation
 const scss = (t) =>
