@@ -32,7 +32,7 @@
     "merge2": "^1.4.1",
     "sass": "^1.87.0",
     "typescript": "^5.8.3",
-    "webpack": "^5.94.0",
+    "webpack": "^5.99.6",
     "webpack-stream": "^7.0.0",
     "yargs": "17.7.2"
   },
