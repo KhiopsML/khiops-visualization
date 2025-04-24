@@ -13,11 +13,10 @@
     "d3-color": "3.1.0",
     "d3-force-gravity": "^1.0.2",
     "glob-parent": "6.0.2",
-    "ordered-read-streams": "^2.0.0",
     "timers": "^0.1.1"
   },
   "devDependencies": {
-    "@types/d3": "5.16.0",
+    "@types/d3": "5.16.7",
     "@types/node": "22.14.1",
     "del": "8.0.0",
     "gulp": "5.0.0",
@@ -31,6 +30,7 @@
     "gulp-uglifyes": "0.2.1",
     "gulp-util": "^3.0.8",
     "merge2": "^1.4.1",
+    "ordered-read-streams": "^2.0.0",
     "sass": "^1.87.0",
     "typescript": "^5.8.3",
     "webpack": "^5.99.6",
