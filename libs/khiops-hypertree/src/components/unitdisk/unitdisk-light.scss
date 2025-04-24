@@ -1,4 +1,5 @@
-@use'unitdisk';
+@use 'unitdisk';
+@use 'sass:color';
 
 $leafcolor: #ee9f0c; //"#e3f2fd" "#ffe082
 $hovercolor: #999; //#65f;
@@ -57,13 +58,13 @@ $nodeStroke: #90caf9;
     }
 
     .root {
-      stroke: darken($rootcolor, 15%);
-      fill: lighten($rootcolor, 5%);
+      stroke: color.adjust($rootcolor, $lightness: -15%);
+      fill: color.adjust($rootcolor, $lightness: 5%);
     }
 
     .root.cell {
-      stroke: rgba(darken($rootcolor, 0%), 0.9);
-      fill: rgba(lighten($rootcolor, 0%), 0.05);
+      stroke: rgba(color.adjust($rootcolor, $lightness: 0%), 0.9);
+      fill: rgba(color.adjust($rootcolor, $lightness: 0%), 0.05);
     }
 
     .root.node {
@@ -72,8 +73,8 @@ $nodeStroke: #90caf9;
     }
 
     .lazy {
-      stroke: darken($lazycolor, 15%);
-      fill: lighten($lazycolor, 5%);
+      stroke: color.adjust($lazycolor, $lightness: -15%);
+      fill: color.adjust($lazycolor, $lightness: 5%);
     }
 
     .lazy.cell {
@@ -83,21 +84,21 @@ $nodeStroke: #90caf9;
     }
 
     .lazy.node {
-      stroke: rgba(darken($lazycolor, 20%), 0.5);
+      stroke: rgba(color.adjust($lazycolor, $lightness: -20%), 0.5);
     }
 
     .exit {
-      stroke: darken($exitcolor, 15%);
-      fill: lighten($exitcolor, 5%);
+      stroke: color.adjust($exitcolor, $lightness: -15%);
+      fill: color.adjust($exitcolor, $lightness: 5%);
     }
 
     .exit.cell {
-      stroke: rgba(darken($exitcolor, 95%), 0.9);
-      fill: rgba(lighten($exitcolor, 0%), 0.05);
+      stroke: rgba(color.adjust($exitcolor, $lightness: -95%), 0.9);
+      fill: rgba(color.adjust($exitcolor, $lightness: 0%), 0.05);
     }
 
     .exit.node {
-      stroke: rgba(darken($exitcolor, 50%), 0.5);
+      stroke: rgba(color.adjust($exitcolor, $lightness: -50%), 0.5);
     }
 
     .hovered.arc {
@@ -113,7 +114,7 @@ $nodeStroke: #90caf9;
     }
 
     .hovered.node {
-      stroke: darken($hovercolor, 10%);
+      stroke: color.adjust($hovercolor, $lightness: -10%);
     }
 
     .selected.arc {
@@ -127,11 +128,11 @@ $nodeStroke: #90caf9;
 
     .selected.cell {
       stroke: rgba($selectedcolor, 0.2);
-      fill: rgba(lighten($selectedcolor, 0%), 0.1);
+      fill: rgba(color.adjust($selectedcolor, $lightness: 0%), 0.1);
     }
 
     .selected.node {
-      stroke: darken($selectedcolor, 100%);
+      stroke: color.adjust($selectedcolor, $lightness: -100%);
       stroke-width: 0.025;
     }
 
@@ -146,7 +147,7 @@ $nodeStroke: #90caf9;
 
     .focus-circle {
       fill: none;
-      stroke: darken($nodeStroke, 25%);
+      stroke: color.adjust($nodeStroke, $lightness: -25%);
       stroke-width: 0.0005;
     }
 
@@ -164,12 +165,12 @@ $nodeStroke: #90caf9;
       .node {
         fill: rgba(255, 255, 255, 1); //fill: #BBDEFB;
         stroke-width: 0.015;
-        stroke: darken($leafcolor, 5%);
+        stroke: color.adjust($leafcolor, $lightness: -5%);
       }
 
       .node:first-child {
         fill: rgba(255, 255, 255, 0.15);
-        stroke: darken($nodeStroke, 25%);
+        stroke: color.adjust($nodeStroke, $lightness: -25%);
         stroke-width: 0.003;
       }
 
