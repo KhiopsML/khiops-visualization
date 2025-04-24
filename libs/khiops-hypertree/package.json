@@ -30,7 +30,7 @@
     "gulp-uglifyes": "0.2.1",
     "gulp-util": "^3.0.8",
     "merge2": "^1.4.1",
-    "sass": "^1.75.0",
+    "sass": "^1.87.0",
     "typescript": "^3.0.0",
     "webpack": "^5.94.0",
     "webpack-stream": "^7.0.0",
