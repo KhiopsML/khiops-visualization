@@ -17,8 +17,8 @@
   },
   "devDependencies": {
     "@types/d3": "5.16.0",
-    "@types/node": "14.14.36",
-    "del": "6.1.1",
+    "@types/node": "22.14.1",
+    "del": "8.0.0",
     "gulp": "4.0.2",
     "gulp-concat": "^2.6.1",
     "gulp-debug": "5.0.1",
