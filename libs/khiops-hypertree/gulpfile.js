@@ -3,7 +3,7 @@ const ts = require('gulp-typescript');
 const sass = require('gulp-sass')(require('sass'));
 const concat = require('gulp-concat');
 const plumber = require('gulp-plumber');
-const merge = require('merge2');
+const mergeStream = require('ordered-read-streams');
 const del = require('del');
 const webpack = require('webpack-stream');
 
@@ -21,7 +21,10 @@ const files = {
   mainjs: projectname + `.js`,
 };
 
-gulp.task('clean', () => del(['dist/**/*']));
+// Clean task
+const clean = () => del(['dist/**/*']);
+
+// SCSS compilation
 const scss = (t) =>
   gulp
     .src(paths.src + `**/*${t}.scss`)
@@ -30,45 +33,65 @@ const scss = (t) =>
     .pipe(concat(files[t + 'css']))
     .pipe(gulp.dest(paths.dist));
 
-gulp.task('sass', () => merge([scss('light'), scss('dark')]));
+const sassTask = () => mergeStream([scss('light'), scss('dark')]);
 
-gulp.task('tsc', () => {
+// TypeScript compilation
+const tsc = () => {
   const tsResult = gulp
     .src(paths.src + '**/*.ts')
     .pipe(plumber())
     .pipe(ts.createProject(require('./tsconfig').compilerOptions)());
 
-  return merge([
+  return mergeStream([
     tsResult.dts.pipe(gulp.dest(paths.dist + 'd/')),
     tsResult.js.pipe(gulp.dest(paths.dist + 'js/')),
   ]);
-});
-gulp.task('webpack', gulp.series('tsc'), () =>
-  gulp
-    .src(paths.dist + 'js/' + files.mainjs)
-    .pipe(plumber())
-    .pipe(
-      webpack({
-        output: {
-          filename: files.mainjs,
-          library: 'hyt',
-        },
-        devtool: 'source-map',
-      }),
-    )
-    .pipe(gulp.dest(paths.dist)),
-);
+};
 
-gulp.task('copyducd', () =>
-  gulp.src(['src/ducd/**/*']).pipe(gulp.dest('dist/js/ducd')),
-);
+// Webpack bundling
+const webpackTask = () => {
+  return new Promise((resolve, reject) => {
+    gulp
+      .src(paths.dist + 'js/' + files.mainjs)
+      .pipe(plumber())
+      .pipe(
+        webpack({
+          mode: 'production', // Set the mode to 'production'
+          output: {
+            filename: files.mainjs,
+            library: 'hyt',
+          },
+          devtool: 'source-map',
+          performance: {
+            hints: false, // Disable performance warnings
+          },
+        }),
+      )
+      .pipe(gulp.dest(paths.dist))
+      .on('end', resolve) // Signal task completion
+      .on('error', reject); // Handle errors
+  });
+};
 
-gulp.task('build', gulp.series('copyducd', 'webpack', 'sass'));
+// Copy DUCD files
+const copyducd = () =>
+  gulp.src(['src/ducd/**/*']).pipe(gulp.dest('dist/js/ducd'));
 
-gulp.task('watch', function (done) {
-  gulp.watch(paths.src + '**/*.ts', gulp.series('build'));
-  gulp.watch(paths.src + '**/*.scss', gulp.series('sass'));
-  done();
-});
+// Build task
+const build = gulp.series(copyducd, gulp.series(tsc, webpackTask), sassTask);
 
-gulp.task('default', gulp.series('watch'));
+// Watch task
+const watch = () => {
+  gulp.watch(paths.src + '**/*.ts', build);
+  gulp.watch(paths.src + '**/*.scss', sassTask);
+};
+
+// Export tasks
+exports.clean = clean;
+exports.sass = sassTask;
+exports.tsc = tsc;
+exports.webpack = webpackTask;
+exports.copyducd = copyducd;
+exports.build = build;
+exports.watch = watch;
+exports.default = watch;
