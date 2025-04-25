@@ -7,10 +7,15 @@
       display: none !important;
     }
   }
-  ::ng-deep .comp-header .comp-header-tools {
-    align-items: flex-end;
-    button {
+  ::ng-deep .comp-header {
+    kl-btn-fullscreen {
       margin-bottom: 4px;
+    }
+    .comp-header-tools {
+      align-items: flex-end;
+      button {
+        margin-bottom: 4px;
+      }
     }
   }
 }
