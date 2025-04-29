@@ -24,6 +24,7 @@ export class DimensionCovisualizationModel implements DimensionCovisualization {
   max!: number | undefined;
   description!: string;
   type!: string | TYPES;
+  isVarPart!: boolean;
 
   hierarchyFold: boolean;
   isNumerical: boolean;
