@@ -29,10 +29,10 @@ import { ImportExtDatasService } from '@khiops-covisualization/providers/import-
 import { getCompositionDisplayedColumns } from './composition.config';
 
 @Component({
-    selector: 'app-composition',
-    templateUrl: './composition.component.html',
-    styleUrls: ['./composition.component.scss'],
-    standalone: false
+  selector: 'app-composition',
+  templateUrl: './composition.component.html',
+  styleUrls: ['./composition.component.scss'],
+  standalone: false,
 })
 export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() public position: number = 0;
@@ -58,10 +58,6 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
     private clustersService: ClustersService,
     private eventsService: EventsService,
   ) {
-    this.compositionDisplayedColumns = getCompositionDisplayedColumns(
-      this.translate,
-    );
-
     this.treeSelectedNodeChangedSub =
       this.eventsService.treeSelectedNodeChanged.subscribe((e) => {
         if (e.realNodeVO && e.hierarchyName === this.selectedDimension?.name) {
@@ -114,6 +110,10 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
         changes.selectedDimension?.previousValue?.name &&
       changes.selectedNode
     ) {
+      this.compositionDisplayedColumns = getCompositionDisplayedColumns(
+        this.translate,
+        this.selectedDimension?.isVarPart,
+      );
       this.updateTable(this.selectedNode);
     }
   }

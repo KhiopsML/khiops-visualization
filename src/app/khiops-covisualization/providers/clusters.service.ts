@@ -462,7 +462,7 @@ export class ClustersService {
             position
           ];
 
-        // Set  dimension partitions from intervals or valueGroup
+        // Set dimension partitions from intervals or valueGroup
         currentInitialDimensionDetails.setPartition(dimensionPartition!);
 
         // Composition only available for numerical Dimensions
