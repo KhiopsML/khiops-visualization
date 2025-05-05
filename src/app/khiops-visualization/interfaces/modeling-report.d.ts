@@ -40,6 +40,9 @@ export interface TrainedPredictorsDetails {
 
 export interface ModelingVariableStatistic {
   name: string;
+  isPair?: boolean;
+  name1?: string;
+  name2?: string;
   preparedName?: string;
   level?: number;
   weight?: number;

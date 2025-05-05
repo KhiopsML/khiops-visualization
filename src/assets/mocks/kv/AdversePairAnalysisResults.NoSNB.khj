@@ -1,0 +1,424 @@
+{
+	"tool": "Khiops",
+	"version": "VERSION",
+	"shortDescription": "",
+	"preparationReport": {
+		"reportType": "Preparation",
+		"summary": {
+			"dictionary": "Adverse2D",
+			"variables": {
+				"types": [
+					"Categorical"
+				],
+				"numbers": [
+					6
+				]
+			},
+			"database": ".\/Adverse2D.txt",
+			"samplePercentage": 100,
+			"samplingMode": "Include sample",
+			"selectionVariable": "",
+			"selectionValue": "",
+			"instances": 200,
+			"learningTask": "Classification analysis",
+			"targetVariable": "Class",
+			"targetDescriptiveStats": {
+				"values": 2,
+				"mode": "0",
+				"modeFrequency": 109,
+				"missingNumber": 0,
+				"sparseMissingNumber": 0
+			},
+			"targetValues": {
+				"values": ["0","1"],
+				"frequencies": [109,91]
+			},
+			"evaluatedVariables": 5,
+			"informativeVariables": 0,
+			"featureEngineering": {
+				"maxNumberOfConstructedVariables": 0,
+				"maxNumberOfTextFeatures": 0,
+				"maxNumberOfTrees": 0,
+				"maxNumberOfVariablePairs": 10
+			},
+			"discretization": "MODL",
+			"valueGrouping": "MODL",
+			"nullModel": {
+				"constructionCost": 0.693147,
+				"preparationCost": 5.3033,
+				"dataCost": 134.946
+			}
+		},
+		"variablesStatistics": [
+			{
+				"rank": "R1",
+				"name": "v1",
+				"type": "Categorical",
+				"level": 0,
+				"parts": 1,
+				"values": 2,
+				"mode": "1",
+				"modeFrequency": 101,
+				"missingNumber": 0,
+				"sparseMissingNumber": 0,
+				"constructionCost": 0.693147,
+				"preparationCost": 5.3033,
+				"dataCost": 134.946
+			},
+			{
+				"rank": "R2",
+				"name": "v1`v2",
+				"type": "Categorical",
+				"level": 0,
+				"parts": 1,
+				"values": 2,
+				"mode": "1",
+				"modeFrequency": 106,
+				"missingNumber": 0,
+				"sparseMissingNumber": 0,
+				"constructionCost": 0.693147,
+				"preparationCost": 5.3033,
+				"dataCost": 134.946
+			},
+			{
+				"rank": "R3",
+				"name": "v2",
+				"type": "Categorical",
+				"level": 0,
+				"parts": 1,
+				"values": 2,
+				"mode": "0",
+				"modeFrequency": 108,
+				"missingNumber": 0,
+				"sparseMissingNumber": 0,
+				"constructionCost": 0.693147,
+				"preparationCost": 5.3033,
+				"dataCost": 134.946
+			},
+			{
+				"rank": "R4",
+				"name": "v2`v3",
+				"type": "Categorical",
+				"level": 0,
+				"parts": 1,
+				"values": 2,
+				"mode": "1",
+				"modeFrequency": 112,
+				"missingNumber": 0,
+				"sparseMissingNumber": 0,
+				"constructionCost": 0.693147,
+				"preparationCost": 5.3033,
+				"dataCost": 134.946
+			},
+			{
+				"rank": "R5",
+				"name": "v3",
+				"type": "Categorical",
+				"level": 0,
+				"parts": 1,
+				"values": 2,
+				"mode": "1",
+				"modeFrequency": 117,
+				"missingNumber": 0,
+				"sparseMissingNumber": 0,
+				"constructionCost": 0.693147,
+				"preparationCost": 5.3033,
+				"dataCost": 134.946
+			}
+		]
+	},
+	"bivariatePreparationReport": {
+		"reportType": "BivariatePreparation",
+		"summary": {
+			"dictionary": "Adverse2D",
+			"variables": {
+				"types": [
+					"Categorical"
+				],
+				"numbers": [
+					6
+				]
+			},
+			"database": ".\/Adverse2D.txt",
+			"samplePercentage": 100,
+			"samplingMode": "Include sample",
+			"selectionVariable": "",
+			"selectionValue": "",
+			"instances": 200,
+			"learningTask": "Classification analysis",
+			"targetVariable": "Class",
+			"targetDescriptiveStats": {
+				"values": 2,
+				"mode": "0",
+				"modeFrequency": 109,
+				"missingNumber": 0,
+				"sparseMissingNumber": 0
+			},
+			"targetValues": {
+				"values": ["0","1"],
+				"frequencies": [109,91]
+			},
+			"evaluatedVariablePairs": 10,
+			"informativeVariablePairs": 2
+		},
+		"variablesPairsStatistics": [
+			{
+				"rank": "R01",
+				"name1": "v1`v2",
+				"name2": "v3",
+				"deltaLevel": 0.0878269,
+				"level": 0.0878269,
+				"level1": 0,
+				"level2": 0,
+				"variables": 2,
+				"parts1": 2,
+				"parts2": 2,
+				"cells": 4,
+				"constructionCost": 6.75639,
+				"preparationCost": 21.327,
+				"dataCost": 100.481
+			},
+			{
+				"rank": "R02",
+				"name1": "v1",
+				"name2": "v2`v3",
+				"deltaLevel": 0.0843751,
+				"level": 0.0843751,
+				"level1": 0,
+				"level2": 0,
+				"variables": 2,
+				"parts1": 2,
+				"parts2": 2,
+				"cells": 4,
+				"constructionCost": 6.75639,
+				"preparationCost": 21.4226,
+				"dataCost": 100.872
+			},
+			{
+				"rank": "R03",
+				"name1": "v1",
+				"name2": "v1`v2",
+				"deltaLevel": 0,
+				"level": 0,
+				"level1": 0,
+				"level2": 0,
+				"variables": 0,
+				"parts1": 1,
+				"parts2": 1,
+				"cells": 1,
+				"constructionCost": 0.693147,
+				"preparationCost": 5.3033,
+				"dataCost": 134.946
+			},
+			{
+				"rank": "R04",
+				"name1": "v1",
+				"name2": "v2",
+				"deltaLevel": 0,
+				"level": 0,
+				"level1": 0,
+				"level2": 0,
+				"variables": 0,
+				"parts1": 1,
+				"parts2": 1,
+				"cells": 1,
+				"constructionCost": 0.693147,
+				"preparationCost": 5.3033,
+				"dataCost": 134.946
+			},
+			{
+				"rank": "R05",
+				"name1": "v1",
+				"name2": "v3",
+				"deltaLevel": 0,
+				"level": 0,
+				"level1": 0,
+				"level2": 0,
+				"variables": 0,
+				"parts1": 1,
+				"parts2": 1,
+				"cells": 1,
+				"constructionCost": 0.693147,
+				"preparationCost": 5.3033,
+				"dataCost": 134.946
+			},
+			{
+				"rank": "R06",
+				"name1": "v1`v2",
+				"name2": "v2",
+				"deltaLevel": 0,
+				"level": 0,
+				"level1": 0,
+				"level2": 0,
+				"variables": 0,
+				"parts1": 1,
+				"parts2": 1,
+				"cells": 1,
+				"constructionCost": 0.693147,
+				"preparationCost": 5.3033,
+				"dataCost": 134.946
+			},
+			{
+				"rank": "R07",
+				"name1": "v1`v2",
+				"name2": "v2`v3",
+				"deltaLevel": 0,
+				"level": 0,
+				"level1": 0,
+				"level2": 0,
+				"variables": 0,
+				"parts1": 1,
+				"parts2": 1,
+				"cells": 1,
+				"constructionCost": 0.693147,
+				"preparationCost": 5.3033,
+				"dataCost": 134.946
+			},
+			{
+				"rank": "R08",
+				"name1": "v2",
+				"name2": "v2`v3",
+				"deltaLevel": 0,
+				"level": 0,
+				"level1": 0,
+				"level2": 0,
+				"variables": 0,
+				"parts1": 1,
+				"parts2": 1,
+				"cells": 1,
+				"constructionCost": 0.693147,
+				"preparationCost": 5.3033,
+				"dataCost": 134.946
+			},
+			{
+				"rank": "R09",
+				"name1": "v2",
+				"name2": "v3",
+				"deltaLevel": 0,
+				"level": 0,
+				"level1": 0,
+				"level2": 0,
+				"variables": 0,
+				"parts1": 1,
+				"parts2": 1,
+				"cells": 1,
+				"constructionCost": 0.693147,
+				"preparationCost": 5.3033,
+				"dataCost": 134.946
+			},
+			{
+				"rank": "R10",
+				"name1": "v2`v3",
+				"name2": "v3",
+				"deltaLevel": 0,
+				"level": 0,
+				"level1": 0,
+				"level2": 0,
+				"variables": 0,
+				"parts1": 1,
+				"parts2": 1,
+				"cells": 1,
+				"constructionCost": 0.693147,
+				"preparationCost": 5.3033,
+				"dataCost": 134.946
+			}
+		],
+		"variablesPairsDetailedStatistics": {
+			"R01": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "v1`v2",
+							"type": "Categorical",
+							"partitionType": "Value groups",
+							"partition": [
+								["1"],
+								["0"]
+							],
+							"defaultGroupIndex": 1
+						},
+						{
+							"variable": "v3",
+							"type": "Categorical",
+							"partitionType": "Value groups",
+							"partition": [
+								["1"],
+								["0"]
+							],
+							"defaultGroupIndex": 1
+						},
+						{
+							"variable": "Target",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1"]
+						}
+					],
+					"cellIds": ["C1","C2","C3","C4"],
+					"cellPartIndexes": [
+						[0,0],
+						[1,0],
+						[0,1],
+						[1,1]
+					],
+					"cellTargetFrequencies": [
+						[57,14],
+						[13,33],
+						[6,29],
+						[33,15]
+					],
+					"cellInterests": [0.353597,0.221193,0.356015,0.0691952]
+				}
+			},
+			"R02": {
+				"dataGrid": {
+					"isSupervised": true,
+					"dimensions": [
+						{
+							"variable": "v1",
+							"type": "Categorical",
+							"partitionType": "Value groups",
+							"partition": [
+								["1"],
+								["0"]
+							],
+							"defaultGroupIndex": 1
+						},
+						{
+							"variable": "v2`v3",
+							"type": "Categorical",
+							"partitionType": "Value groups",
+							"partition": [
+								["1"],
+								["0"]
+							],
+							"defaultGroupIndex": 1
+						},
+						{
+							"variable": "Target",
+							"type": "Categorical",
+							"partitionType": "Values",
+							"partition": ["0","1"]
+						}
+					],
+					"cellIds": ["C1","C2","C3","C4"],
+					"cellPartIndexes": [
+						[0,0],
+						[1,0],
+						[0,1],
+						[1,1]
+					],
+					"cellTargetFrequencies": [
+						[48,10],
+						[16,38],
+						[11,32],
+						[34,11]
+					],
+					"cellInterests": [0.358487,0.236272,0.257221,0.148021]
+				}
+			}
+		}
+	},
+	"khiops_encoding": "ascii"
+}
