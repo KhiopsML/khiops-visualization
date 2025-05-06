@@ -15,11 +15,22 @@ export class TrainedPredictorModel implements ModelingVariableStatistic {
   importance: number | undefined;
   map: boolean | undefined;
 
-  constructor(object: ModelingVariableStatistic, availableKeys: string[]) {
+  isPair: boolean | undefined;
+  name1: string | undefined;
+  name2: string | undefined;
+
+  constructor(
+    object: ModelingVariableStatistic,
+    availableKeys: string[],
+    rank: string,
+  ) {
     // Generate id for grid
-    this._id = object.name;
+    this._id = rank + '_' + object.name;
 
     this.name = object.name;
+    this.isPair = object.isPair;
+    this.name1 = object.name1;
+    this.name2 = object.name2;
 
     // Do not add into VO datas that are not defined into avaliable keys
     // We do that because VO is different when user change "select train predictor"

@@ -33,10 +33,10 @@ import { TrainedPredictorModel } from '@khiops-visualization/model/trained-predi
 import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas';
 
 @Component({
-    selector: 'app-modeling-view',
-    templateUrl: './modeling-view.component.html',
-    styleUrls: ['./modeling-view.component.scss'],
-    standalone: false
+  selector: 'app-modeling-view',
+  templateUrl: './modeling-view.component.html',
+  styleUrls: ['./modeling-view.component.scss'],
+  standalone: false,
 })
 export class ModelingViewComponent extends SelectableTabComponent {
   public preparationSource: string;
@@ -138,11 +138,12 @@ export class ModelingViewComponent extends SelectableTabComponent {
         this.preparationDatasService.getPreparationSourceFromVariable(item);
       if (item.name?.includes('`')) {
         // Check the case of 2d variable : names are separated by `
+        // #269 Check if Name1 and Name2 are given
+        const name1 = item.name1 || item.name.split('`')[0]!;
+        const name2 = item.name2 || item.name.split('`')[1]!;
+
         this.preparationVariable =
-          this.preparation2dDatasService.setSelectedVariable(
-            item.name.split('`')[0]!,
-            item.name.split('`')[1]!,
-          );
+          this.preparation2dDatasService.setSelectedVariable(name1!, name2!);
       } else {
         this.preparationVariable =
           this.preparationDatasService.setSelectedVariable(

@@ -50,6 +50,6 @@ export class Preparation2dVariableModel implements VariablePairStatistics {
     }
 
     // Generate id for grid
-    this._id = this.name;
+    this._id = this.rank + '_' + this.name;
   }
 }
