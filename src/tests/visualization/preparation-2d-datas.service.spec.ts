@@ -48,7 +48,7 @@ describe('Visualization', () => {
         'UpperPetalWidth',
       );
 
-      expect(selectedVariable?.name).toEqual('SepalWidth`UpperPetalWidth');
+      expect(selectedVariable?.name).toEqual('SepalWidth ` UpperPetalWidth');
       expect(selectedVariable?.cells).toEqual(4);
       expect(selectedVariable?.dataCost).toEqual(39.3147);
       expect(selectedVariable?.variableType).toEqual('preparation-2d');

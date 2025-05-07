@@ -88,21 +88,25 @@ describe('Visualization', () => {
         {
           headerName: 'Name',
           field: 'name',
+          hidden: false,
           tooltip: 'TOOLTIPS.MODELING.VARIABLES.NAME',
         },
         {
           headerName: 'Level',
           field: 'level',
+          hidden: false,
           tooltip: 'TOOLTIPS.MODELING.VARIABLES.LEVEL',
         },
         {
           headerName: 'Weight',
           field: 'weight',
+          hidden: false,
           tooltip: 'TOOLTIPS.MODELING.VARIABLES.WEIGHT',
         },
         {
           headerName: 'Map',
           field: 'map',
+          hidden: false,
           tooltip: 'TOOLTIPS.MODELING.VARIABLES.MAP',
         },
       ];
