@@ -172,13 +172,11 @@ export class ModelingDatasService {
       const typicalData: any = this.modelingDatas.trainedPredictorsListDatas[0];
       Object.keys(typicalData).forEach((key) => {
         // Add columns of available objects (defined into ModelingPredictorModel)
-        if (
-          !['_id', 'isPair', 'name1', 'name2'].includes(key) &&
-          typicalData[key] !== undefined
-        ) {
+        if (!['_id'].includes(key) && typicalData[key] !== undefined) {
           displayedColumns.push({
             headerName: UtilsService.capitalizeFirstLetter(key),
             field: key,
+            hidden: ['isPair', 'name1', 'name2'].includes(key),
             tooltip: this.translate.get(
               'TOOLTIPS.MODELING.VARIABLES.' + key.toUpperCase(),
             ),

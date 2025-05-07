@@ -1441,4 +1441,16 @@ export class UtilsService {
   static duplicateBackQuotes(str?: string) {
     return str?.replace(/`/g, (match) => match + match);
   }
+
+  /**
+   * Generates a unique identifier by concatenating two strings with a backquote separator.
+   * Name collisions for variable pairs #269
+   * @param str1 - The first string to include in the unique identifier.
+   * @param str2 - The second string to include in the unique identifier.
+   */
+  static generateUniqueId(str1?: string, str2?: string): string {
+    return (
+      this.duplicateBackQuotes(str1) + ' ` ' + this.duplicateBackQuotes(str2)
+    );
+  }
 }

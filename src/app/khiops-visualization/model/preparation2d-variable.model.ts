@@ -45,10 +45,7 @@ export class Preparation2dVariableModel implements VariablePairStatistics {
     }
 
     if (this.name1 && this.name2) {
-      this.name =
-        UtilsService.duplicateBackQuotes(this.name1) +
-        ' ` ' +
-        UtilsService.duplicateBackQuotes(this.name2);
+      this.name = UtilsService.generateUniqueId(this.name1, this.name2);
     }
     this.nameX = this.name1;
     this.nameY = this.name2;

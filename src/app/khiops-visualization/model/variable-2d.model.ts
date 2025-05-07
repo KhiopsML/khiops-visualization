@@ -30,10 +30,7 @@ export class Variable2dModel {
   constructor(object: VariablePairStatistics) {
     // Assign values from input
     Object.assign(this, object);
-    this._id =
-      UtilsService.duplicateBackQuotes(object.name1) +
-      ' ` ' +
-      UtilsService.duplicateBackQuotes(object.name2);
+    this._id = UtilsService.generateUniqueId(object.name1, object.name2);
 
     this.variableType = VARIABLE_TYPES.PREPARATION_2D;
   }

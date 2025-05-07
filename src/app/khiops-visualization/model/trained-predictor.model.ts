@@ -22,10 +22,7 @@ export class TrainedPredictorModel implements ModelingVariableStatistic {
 
   constructor(object: ModelingVariableStatistic, availableKeys: string[]) {
     // Generate id for grid
-    this._id =
-      UtilsService.duplicateBackQuotes(object.name1) +
-      ' ` ' +
-      UtilsService.duplicateBackQuotes(object.name2);
+    this._id = UtilsService.generateUniqueId(object.name1, object.name2);
 
     this.name = object.name;
     this.isPair = object.isPair;
