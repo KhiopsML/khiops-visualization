@@ -292,7 +292,6 @@ export class ModelingDatasService {
           const varItem: TrainedPredictorModel = new TrainedPredictorModel(
             currentVar!,
             availableKeys,
-            selectedPredictor?.rank!,
           );
           this.modelingDatas!.trainedPredictorsListDatas.push(varItem);
         }

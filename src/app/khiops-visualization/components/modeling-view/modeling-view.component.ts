@@ -139,8 +139,8 @@ export class ModelingViewComponent extends SelectableTabComponent {
       if (item.name?.includes('`')) {
         // Check the case of 2d variable : names are separated by `
         // #269 Check if Name1 and Name2 are given
-        const name1 = item.name1 || item.name.split('`')[0]!;
-        const name2 = item.name2 || item.name.split('`')[1]!;
+        const name1 = item.isPair ? item.name1 : item.name.split('`')[0]!;
+        const name2 = item.isPair ? item.name2 : item.name.split('`')[1]!;
 
         this.preparationVariable =
           this.preparation2dDatasService.setSelectedVariable(name1!, name2!);

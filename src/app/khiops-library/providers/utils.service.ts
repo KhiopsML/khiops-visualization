@@ -1431,4 +1431,14 @@ export class UtilsService {
       return 0;
     });
   }
+
+  /**
+   * Duplicates back quotes in a string.
+   * This method replaces each back quote (`) in the input string with two back quotes (``).
+   * @param {string} str - The input string to process.
+   * @returns {string} - The processed string with duplicated back quotes.
+   */
+  static duplicateBackQuotes(str?: string) {
+    return str?.replace(/`/g, (match) => match + match);
+  }
 }

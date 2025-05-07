@@ -187,10 +187,10 @@ export class Preparation2dDatasService {
     name2: string,
   ): Preparation2dVariableModel | undefined {
     if (name1 && name2) {
-      const variable = this.getVariableFromNames(name1, name2);
+      const variable: Preparation2dVariableModel | undefined =
+        this.getVariableFromNames(name1, name2);
       if (variable) {
-        this.preparation2dDatas!.selectedVariable =
-          new Preparation2dVariableModel(variable);
+        this.preparation2dDatas!.selectedVariable = variable;
         this.setSelectedCellIndex(0);
         return this.preparation2dDatas?.selectedVariable;
       }
@@ -245,10 +245,12 @@ export class Preparation2dDatasService {
           .variablesPairsStatistics;
       if (currentDatas) {
         for (let i = 0; i < currentDatas.length; i++) {
-          const varItem: Variable2dModel | undefined = new Variable2dModel(
-            currentDatas[i]!,
-          );
-          variableDatas.push(varItem);
+          if (currentDatas[i]) {
+            const varItem: Variable2dModel | undefined = new Variable2dModel(
+              currentDatas[i]!,
+            );
+            variableDatas.push(varItem);
+          }
         }
       }
     }

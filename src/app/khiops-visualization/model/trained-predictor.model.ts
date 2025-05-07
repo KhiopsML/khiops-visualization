@@ -5,6 +5,7 @@
  */
 
 import { ModelingVariableStatistic } from '@khiops-visualization/interfaces/modeling-report';
+import { UtilsService } from '../../khiops-library/providers/utils.service';
 
 export class TrainedPredictorModel implements ModelingVariableStatistic {
   _id: string;
@@ -19,13 +20,12 @@ export class TrainedPredictorModel implements ModelingVariableStatistic {
   name1: string | undefined;
   name2: string | undefined;
 
-  constructor(
-    object: ModelingVariableStatistic,
-    availableKeys: string[],
-    rank: string,
-  ) {
+  constructor(object: ModelingVariableStatistic, availableKeys: string[]) {
     // Generate id for grid
-    this._id = rank + '_' + object.name;
+    this._id =
+      UtilsService.duplicateBackQuotes(object.name1) +
+      ' ` ' +
+      UtilsService.duplicateBackQuotes(object.name2);
 
     this.name = object.name;
     this.isPair = object.isPair;

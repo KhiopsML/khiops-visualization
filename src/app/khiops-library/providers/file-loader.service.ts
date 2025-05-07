@@ -115,7 +115,10 @@ export class FileLoaderService {
     // let urlKV = './assets/mocks/kv/CriteoAnalysisResults.khj';
     // let urlKV = './assets/mocks/kv/Words100_AllReports.json';
     // let urlKV = './assets/mocks/kv/UnivariateAnalysisResults.json';
-    let urlKV = './assets/mocks/kv/ylogAdultAllReports.json';
+    // let urlKV = './assets/mocks/kv/ylogAdultAllReports.json';
+    // let urlKV = './assets/mocks/kv/AdversePairAnalysisResults.Bug.khj';
+    // let urlKV = './assets/mocks/kv/AdversePairAnalysisResults.NoSNB.khj';
+    let urlKV = './assets/mocks/kv/AdversePairAnalysisResults.Corrected.khj';
     // let urlKV = './assets/mocks/kv/ko-AnalysisResults.khj';
     // let urlKV = './assets/mocks/kv/AdultAllReports.json';
     // let urlKV = './assets/mocks/kv/20NewsgroupAllReports.json';

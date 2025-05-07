@@ -5,6 +5,7 @@
  */
 
 import { VARIABLE_TYPES } from '@khiops-library/enum/variable-types';
+import { UtilsService } from '@khiops-library/providers/utils.service';
 import { VariablePairStatistics } from '@khiops-visualization/interfaces/bivariate-preparation-report';
 
 export class Preparation2dVariableModel implements VariablePairStatistics {
@@ -44,12 +45,15 @@ export class Preparation2dVariableModel implements VariablePairStatistics {
     }
 
     if (this.name1 && this.name2) {
-      this.nameX = this.name1;
-      this.nameY = this.name2;
-      this.name = this.name1 + '`' + this.name2;
+      this.name =
+        UtilsService.duplicateBackQuotes(this.name1) +
+        ' ` ' +
+        UtilsService.duplicateBackQuotes(this.name2);
     }
+    this.nameX = this.name1;
+    this.nameY = this.name2;
 
     // Generate id for grid
-    this._id = this.rank + '_' + this.name;
+    this._id = this.name;
   }
 }

@@ -5,6 +5,7 @@
  */
 
 import { VARIABLE_TYPES } from '@khiops-library/enum/variable-types';
+import { UtilsService } from '@khiops-library/providers/utils.service';
 import { VariablePairStatistics } from '@khiops-visualization/interfaces/bivariate-preparation-report';
 
 /**
@@ -29,8 +30,10 @@ export class Variable2dModel {
   constructor(object: VariablePairStatistics) {
     // Assign values from input
     Object.assign(this, object);
-
-    this._id = object.rank + '_' + object.name1 + '`' + object.name2;
+    this._id =
+      UtilsService.duplicateBackQuotes(object.name1) +
+      ' ` ' +
+      UtilsService.duplicateBackQuotes(object.name2);
 
     this.variableType = VARIABLE_TYPES.PREPARATION_2D;
   }
