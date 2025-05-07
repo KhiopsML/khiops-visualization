@@ -412,7 +412,7 @@ export class AgGridComponent
       // Advanced tables (for instance unfold hierarchy)
       for (let i = 0; i < this.displayedColumns.length; i++) {
         const col = this.displayedColumns[i];
-        if (col) {
+        if (col && !col.hidden) {
           const gridCol: ColDef | any = {
             headerName: col.headerName,
             headerTooltip: col.tooltip

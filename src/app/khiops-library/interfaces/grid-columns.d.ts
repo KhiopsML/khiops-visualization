@@ -7,7 +7,8 @@
 export interface GridColumnsI {
   headerName: string;
   field: string;
-  show?: boolean;
+  show?: boolean; // visible by default
+  hidden?: boolean; // technical datas never visible
   tooltip?: string;
   cellRendererFramework?: any;
   cellRendererParams?: any;
