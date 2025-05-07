@@ -3,7 +3,9 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@khiops-library/*": ["*"]
+      "@khiops-library/*": ["*"],
+      "@khiops-visualization/*": ["./src/app/khiops-visualization/*"],
+      "@khiops-covisualization/*": ["./src/app/khiops-covisualization/*"]
     }
   }
 }

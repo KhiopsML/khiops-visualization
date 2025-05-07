@@ -150,9 +150,9 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
         ),
       );
       // if composition values : categorical
-      if (this.compositionValues.length > 0) {
+      if (this.compositionValues!.length > 0) {
         // Select first by default
-        this.selectedComposition = this.compositionValues[0];
+        this.selectedComposition = this.compositionValues?.[0];
         this.selectedCompositionChanged.emit(this.selectedComposition);
       }
     }
