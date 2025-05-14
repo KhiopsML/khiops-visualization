@@ -227,9 +227,9 @@ export class CompositionService {
       interval: string,
     ): { lowerBound: number; upperBound: number } => {
       // Patterns for different interval formats
-      const infPattern = /\]-inf;([\d.]+)\]/;
-      const rangePattern = /\]([\d.]+);([\d.]+)\]/;
-      const plusInfPattern = /\]([\d.]+);\+inf\[/;
+      const infPattern = /\]-inf[;,]([\d.]+)\]/;
+      const rangePattern = /\]([\d.]+)[;,]([\d.]+)\]/;
+      const plusInfPattern = /\]([\d.]+)[;,]\+inf\[/;
 
       let lowerBound: number, upperBound: number;
 
@@ -268,34 +268,50 @@ export class CompositionService {
   mergeIntervals(interval1: string, interval2: string): string {
     const extractBounds = (
       interval: string,
-    ): { lowerBound: number; upperBound: number; format: string } => {
+    ): {
+      lowerBound: number;
+      upperBound: number;
+      format: string;
+      separator: string;
+    } => {
       // Patterns for different interval formats
-      const infPattern = /\]-inf;([\d.]+)\]/;
-      const rangePattern = /\]([\d.]+);([\d.]+)\]/;
-      const plusInfPattern = /\]([\d.]+);\+inf\[/;
+      const infPattern = /\]-inf([;,])([\d.]+)\]/;
+      const rangePattern = /\]([\d.]+)([;,])([\d.]+)\]/;
+      const plusInfPattern = /\]([\d.]+)([;,])\+inf\[/;
 
-      let lowerBound: number, upperBound: number, format: string;
+      let lowerBound: number,
+        upperBound: number,
+        format: string,
+        separator: string;
 
       if (infPattern.test(interval)) {
         const match = interval.match(infPattern);
         lowerBound = -Infinity;
-        upperBound = match ? parseFloat(match[1]!) : NaN;
+        upperBound = match ? parseFloat(match[2]!) : NaN;
+        separator = match ? match[1]! : ';';
         format = 'inf';
       } else if (plusInfPattern.test(interval)) {
         const match = interval.match(plusInfPattern);
         lowerBound = match ? parseFloat(match[1]!) : NaN;
         upperBound = Infinity;
+        separator = match ? match[2]! : ';';
         format = 'plusInf';
       } else if (rangePattern.test(interval)) {
         const match = interval.match(rangePattern);
         lowerBound = match ? parseFloat(match[1]!) : NaN;
-        upperBound = match ? parseFloat(match[2]!) : NaN;
+        upperBound = match ? parseFloat(match[3]!) : NaN;
+        separator = match ? match[2]! : ';';
         format = 'range';
       } else {
-        return { lowerBound: NaN, upperBound: NaN, format: 'unknown' };
+        return {
+          lowerBound: NaN,
+          upperBound: NaN,
+          format: 'unknown',
+          separator: ';',
+        };
       }
 
-      return { lowerBound, upperBound, format };
+      return { lowerBound, upperBound, format, separator };
     };
 
     const bounds1 = extractBounds(interval1);
@@ -305,72 +321,19 @@ export class CompositionService {
     const minLowerBound = Math.min(bounds1.lowerBound, bounds2.lowerBound);
     const maxUpperBound = Math.max(bounds1.upperBound, bounds2.upperBound);
 
+    // Use the separator from the first interval
+    const separator = bounds1.separator;
+
     // Format the new interval
     if (minLowerBound === -Infinity && maxUpperBound === Infinity) {
-      return ']-inf;+inf[';
+      return `]-inf${separator}+inf[`;
     } else if (minLowerBound === -Infinity) {
-      return `]-inf;${maxUpperBound}]`;
+      return `]-inf${separator}${maxUpperBound}]`;
     } else if (maxUpperBound === Infinity) {
-      return `]${minLowerBound};+inf[`;
+      return `]${minLowerBound}${separator}+inf[`;
     } else {
-      return `]${minLowerBound};${maxUpperBound}]`;
+      return `]${minLowerBound}${separator}${maxUpperBound}]`;
     }
-  }
-
-  /**
-   * Determines if two CompositionModel objects have contiguous parts
-   */
-  haveContiguousParts(
-    model1: CompositionModel,
-    model2: CompositionModel,
-  ): boolean {
-    // Check if models concern the same variable
-    if (model1.innerVariable !== model2.innerVariable) {
-      return false;
-    }
-
-    // Iterate through parts of both models to find contiguous intervals
-    for (const part1 of model1.part!) {
-      for (const part2 of model2.part!) {
-        if (this.areIntervalsContiguous(part1, part2)) {
-          return true;
-        }
-      }
-    }
-
-    return false;
-  }
-
-  /**
-   * Sorts interval strings in ascending order
-   * @param intervals Array of interval strings to sort
-   * @returns Sorted array of interval strings
-   */
-  sortIntervals(intervals: string[]): string[] {
-    return [...intervals].sort((a, b) => {
-      // Extract lower bounds for comparison
-      const extractLowerBound = (interval: string): number => {
-        const infPattern = /\]-inf;([\d.]+)\]/;
-        const rangePattern = /\]([\d.]+);([\d.]+)\]/;
-        const plusInfPattern = /\]([\d.]+);\+inf\[/;
-
-        if (infPattern.test(interval)) {
-          return -Infinity;
-        } else if (rangePattern.test(interval)) {
-          const match = interval.match(rangePattern);
-          return match ? parseFloat(match[1]!) : NaN;
-        } else if (plusInfPattern.test(interval)) {
-          const match = interval.match(plusInfPattern);
-          return match ? parseFloat(match[1]!) : NaN;
-        }
-        return NaN;
-      };
-
-      const lowerBoundA = extractLowerBound(a);
-      const lowerBoundB = extractLowerBound(b);
-
-      return lowerBoundA - lowerBoundB;
-    });
   }
 
   /**
@@ -388,9 +351,9 @@ export class CompositionService {
     const ranges: Array<{ lower: number; upper: number }> = [];
 
     sortedIntervals.forEach((interval) => {
-      const infPattern = /\]-inf;([\d.]+)\]/;
-      const rangePattern = /\]([\d.]+);([\d.]+)\]/;
-      const plusInfPattern = /\]([\d.]+);\+inf\[/;
+      const infPattern = /\]-inf[;,]([\d.]+)\]/;
+      const rangePattern = /\]([\d.]+)[;,]([\d.]+)\]/;
+      const plusInfPattern = /\]([\d.]+)[;,]\+inf\[/;
 
       let lower: number, upper: number;
 
@@ -446,18 +409,75 @@ export class CompositionService {
 
     // Convert back to interval strings
     const result = mergedRanges.map((range) => {
+      const separator = intervals[0]?.includes(',') ? ',' : ';';
       if (range.lower === -Infinity && range.upper === Infinity) {
-        return ']-inf;+inf[';
+        return `]-inf${separator}+inf[`;
       } else if (range.lower === -Infinity) {
-        return `]-inf;${range.upper}]`;
+        return `]-inf${separator}${range.upper}]`;
       } else if (range.upper === Infinity) {
-        return `]${range.lower};+inf[`;
+        return `]${range.lower}${separator}+inf[`;
       } else {
-        return `]${range.lower};${range.upper}]`;
+        return `]${range.lower}${separator}${range.upper}]`;
       }
     });
 
     return result;
+  }
+
+  /**
+   * Determines if two CompositionModel objects have contiguous parts
+   */
+  haveContiguousParts(
+    model1: CompositionModel,
+    model2: CompositionModel,
+  ): boolean {
+    // Check if models concern the same variable
+    if (model1.innerVariable !== model2.innerVariable) {
+      return false;
+    }
+
+    // Iterate through parts of both models to find contiguous intervals
+    for (const part1 of model1.part!) {
+      for (const part2 of model2.part!) {
+        if (this.areIntervalsContiguous(part1, part2)) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Sorts interval strings in ascending order
+   * @param intervals Array of interval strings to sort
+   * @returns Sorted array of interval strings
+   */
+  sortIntervals(intervals: string[]): string[] {
+    return [...intervals].sort((a, b) => {
+      // Extract lower bounds for comparison
+      const extractLowerBound = (interval: string): number => {
+        const infPattern = /\]-inf[;,]([\d.]+)\]/;
+        const rangePattern = /\]([\d.]+)[;,]([\d.]+)\]/;
+        const plusInfPattern = /\]([\d.]+)[;,]\+inf\[/;
+
+        if (infPattern.test(interval)) {
+          return -Infinity;
+        } else if (rangePattern.test(interval)) {
+          const match = interval.match(rangePattern);
+          return match ? parseFloat(match[1]!) : NaN;
+        } else if (plusInfPattern.test(interval)) {
+          const match = interval.match(plusInfPattern);
+          return match ? parseFloat(match[1]!) : NaN;
+        }
+        return NaN;
+      };
+
+      const lowerBoundA = extractLowerBound(a);
+      const lowerBoundB = extractLowerBound(b);
+
+      return lowerBoundA - lowerBoundB;
+    });
   }
 
   /**
@@ -591,11 +611,17 @@ export class CompositionService {
 
         // Check if numeric intervals cover the entire range
         const finalModels = workingModels.map((model) => {
-          // @ts-ignore
-          if (model.part.length === 1 && model.part[0] === ']-inf;+inf[') {
+          if (
+            // @ts-ignore
+            model.part.length === 1 &&
+            // @ts-ignore
+            (model.part[0] === ']-inf;+inf[' || model.part[0] === ']-inf,+inf[')
+          ) {
+            // @ts-ignore
+            const separator = model.part[0].includes(',') ? ',' : ';';
             return {
               ...model,
-              value: model.innerVariable + ' ]-inf;+inf[',
+              value: model.innerVariable + ` ]-inf${separator}+inf[`,
             };
           }
           return model;
