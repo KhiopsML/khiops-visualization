@@ -165,6 +165,11 @@ export class CompositionService {
 
     if (node.isCollapsed) {
       compositionValues = this.mergeAllContiguousModels(compositionValues);
+
+      // set the rank of all childs to the rank of the parent #206
+      for (const composition of compositionValues) {
+        composition.rank = node.rank;
+      }
     }
 
     return compositionValues;
