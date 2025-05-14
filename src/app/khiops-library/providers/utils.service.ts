@@ -1453,4 +1453,28 @@ export class UtilsService {
       this.duplicateBackQuotes(str1) + ' ` ' + this.duplicateBackQuotes(str2)
     );
   }
+
+  static formatValueGroup(arr?: string[]): (string | string[])[][] | undefined {
+    return arr?.map((item) => {
+      const index = item.indexOf(' ');
+      if (index !== -1) {
+        return [item.substring(0, index), [item.substring(index + 1)]];
+      }
+      return [item, []];
+    });
+  }
+
+  static mergeIdenticalValues(values: string[] | undefined) {
+    return this.formatValueGroup(values ?? [])?.reduce((acc, current) => {
+      const existing = acc?.find((item) => item[0] === current?.[0]);
+      if (existing) {
+        //@ts-ignore
+        existing[1] = existing[1].concat(current[1]);
+      } else {
+        //@ts-ignore
+        acc?.push(current);
+      }
+      return acc;
+    }, []);
+  }
 }

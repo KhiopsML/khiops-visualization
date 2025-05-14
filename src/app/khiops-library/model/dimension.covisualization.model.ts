@@ -35,6 +35,13 @@ export class DimensionCovisualizationModel implements DimensionCovisualization {
   intervals!: Interval[] | undefined;
   valueGroups!: ValueGroup[] | undefined;
 
+  innerVariables!:
+    | {
+        dimensionSummaries: DimensionCovisualization[];
+        dimensionPartitions: DimensionPartition[];
+      }
+    | undefined;
+
   constructor(
     object: DimensionCovisualization | DimensionVisualization,
     startPosition = 0,
@@ -88,6 +95,8 @@ export class DimensionCovisualizationModel implements DimensionCovisualization {
       this.max = this.intervals?.[this.intervals?.length - 1]?.bounds[1];
     } else {
       this.valueGroups = dimensionPartition.valueGroups;
+
+      this.innerVariables = dimensionPartition.innerVariables;
     }
   }
 }

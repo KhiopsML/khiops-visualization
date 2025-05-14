@@ -11,6 +11,7 @@ import {
 import { TYPES } from '@khiops-library/enum/types';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
+import { UtilsService } from '@khiops-library/providers/utils.service';
 
 export class TreeNodeModel {
   id: number;
@@ -49,6 +50,7 @@ export class TreeNodeModel {
   externalData!: DynamicI;
 
   clusterCompositionSize: number | undefined;
+  formatedValues: ((string | string[])[][] | undefined)[] = [];
 
   /**
    * Constructor to initialize a TreeNodeModel instance.
@@ -156,6 +158,46 @@ export class TreeNodeModel {
     this.childrenLeafList = [];
     this.childrenLeafIndexes = [];
     this.deepGetChildrenNames(this.children, this.name, this.matrixIndex);
+  }
+
+  getValueGroups(dimension: DimensionCovisualizationModel) {
+    if (
+      this.valueGroups &&
+      dimension.type === TYPES.CATEGORICAL &&
+      dimension.isVarPart &&
+      this.isLeaf
+    ) {
+      // it's a leaf node
+      // valueGroups are already set
+      // Merge identical elements in formatedValues
+      //@ts-ignore
+      const mergedGroums = UtilsService.mergeIdenticalValues(
+        this.valueGroups?.values,
+      );
+
+      //@ts-ignore
+      this.formatedValues.push(mergedGroums);
+    } else {
+      // it's a node
+      // get valueGroups of children
+      for (let index = 0; index < this.childrenList.length; index++) {
+        const node = this.childrenList[index];
+        if (node !== this.name) {
+          const valueGroups = dimension.valueGroups?.find(
+            (child) => child.cluster === node,
+          );
+          if (valueGroups) {
+            // Merge identical elements in formatedValues
+            //@ts-ignore
+            const mergedGroums = UtilsService.mergeIdenticalValues(
+              valueGroups?.values,
+            );
+            //@ts-ignore
+            this.formatedValues.push(mergedGroums);
+          }
+        }
+      }
+    }
   }
 
   /**
