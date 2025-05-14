@@ -36,7 +36,7 @@ export class CompositionModel {
           dimensionPartitions: DimensionPartition[];
         }
       | undefined,
-    formatedValues?: (string | string[])[] | undefined,
+    formatedValues?: string | (string | string[])[] | undefined,
   ) {
     this.terminalCluster =
       object.cluster || currentDimensionHierarchyCluster.shortDescription;

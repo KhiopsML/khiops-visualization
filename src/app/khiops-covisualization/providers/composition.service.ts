@@ -13,6 +13,12 @@ import { CompositionModel } from '../model/composition.model';
 import { ExtDatasModel } from '@khiops-covisualization/model/ext-datas.model';
 import { ImportExtDatasService } from './import-ext-datas.service';
 import { TYPES } from '@khiops-library/enum/types';
+
+// Define global constants for interval patterns
+const INF_PATTERN = /\]-inf[;,]([\d.]+)\]/;
+const RANGE_PATTERN = /\]([\d.]+)[;,]([\d.]+)\]/;
+const PLUS_INF_PATTERN = /\]([\d.]+)[;,]\+inf\[/;
+
 @Injectable({
   providedIn: 'root',
 })
@@ -91,16 +97,23 @@ export class CompositionService {
     return [];
   }
 
-  getIndiVarCompositionValues(
+  /**
+   * Retrieves composition values for a given node and dimension details.
+   * Handles both "Individuals * Variables" and "Variable * Variable" cases.
+   */
+  private getCompositionValues(
     currentDimensionDetails: DimensionCovisualizationModel,
     currentInitialDimensionDetails: DimensionCovisualizationModel,
     node: TreeNodeModel,
     currentIndex: number,
-  ) {
+    isIndiVarCase: boolean,
+  ): CompositionModel[] {
     let compositionValues: CompositionModel[] = [];
     if (currentDimensionDetails?.isCategorical) {
       node.getChildrenList();
-      node.getValueGroups(currentInitialDimensionDetails);
+      if (isIndiVarCase) {
+        node.getValueGroups(currentInitialDimensionDetails);
+      }
 
       if (node.childrenLeafList) {
         const currentDimensionClusters = Object.assign(
@@ -109,20 +122,20 @@ export class CompositionService {
             currentIndex
           ],
         );
-
         const childrenLeafListLength = node.childrenLeafList.length;
 
         for (let i = 0; i < childrenLeafListLength; i++) {
           const currentLeafName = node.childrenLeafList[i];
-          // Check if this name has been updated
           const currentClusterDetails =
             currentInitialDimensionDetails.valueGroups?.find(
               (e) => e.cluster === currentLeafName,
             );
           if (currentClusterDetails) {
-            const currentParts = node.formatedValues?.[i];
+            const parts = isIndiVarCase
+              ? node.formatedValues?.[i]
+              : currentClusterDetails.values;
 
-            for (let j = 0; j < (currentParts?.length ?? 0); j++) {
+            for (let j = 0; j < (parts?.length ?? 0); j++) {
               const currentDimensionHierarchyCluster: any =
                 currentDimensionClusters.find(
                   (e: any) => e.cluster === currentLeafName,
@@ -141,7 +154,7 @@ export class CompositionService {
                 j,
                 externalDatas,
                 currentDimensionDetails.innerVariables,
-                currentParts?.[j],
+                parts?.[j],
               );
               compositionValues.push(composition);
             }
@@ -151,11 +164,25 @@ export class CompositionService {
     }
 
     if (node.isCollapsed) {
-      // Merge compositionValues elements with contiguous intervals
       compositionValues = this.mergeAllContiguousModels(compositionValues);
     }
 
     return compositionValues;
+  }
+
+  getIndiVarCompositionValues(
+    currentDimensionDetails: DimensionCovisualizationModel,
+    currentInitialDimensionDetails: DimensionCovisualizationModel,
+    node: TreeNodeModel,
+    currentIndex: number,
+  ): CompositionModel[] {
+    return this.getCompositionValues(
+      currentDimensionDetails,
+      currentInitialDimensionDetails,
+      node,
+      currentIndex,
+      true,
+    );
   }
 
   getVarVarCompositionValues(
@@ -163,58 +190,14 @@ export class CompositionService {
     currentInitialDimensionDetails: DimensionCovisualizationModel,
     node: TreeNodeModel,
     currentIndex: number,
-  ) {
-    const compositionValues: CompositionModel[] = [];
-    // Composition only available for categorical Dimensions
-    if (currentDimensionDetails?.isCategorical) {
-      node.getChildrenList();
-
-      if (node.childrenLeafList) {
-        const currentDimensionClusters = Object.assign(
-          [],
-          this.dimensionsDatasService.dimensionsDatas.dimensionsClusters[
-            currentIndex
-          ],
-        );
-        const childrenLeafListLength = node.childrenLeafList.length;
-
-        for (let i = 0; i < childrenLeafListLength; i++) {
-          const currentLeafName = node.childrenLeafList[i];
-          // Check if this name has been updated
-          const currentClusterDetails =
-            currentInitialDimensionDetails.valueGroups?.find(
-              (e) => e.cluster === currentLeafName,
-            );
-          if (currentClusterDetails) {
-            const currentClusterDetailsLength =
-              currentClusterDetails.values.length;
-            for (let j = 0; j < currentClusterDetailsLength; j++) {
-              const currentDimensionHierarchyCluster: any =
-                currentDimensionClusters.find(
-                  (e: any) => e.cluster === currentLeafName,
-                );
-              if (node.isCollapsed) {
-                currentDimensionHierarchyCluster.shortDescription =
-                  node.shortDescription;
-              }
-              const externalDatas: ExtDatasModel =
-                this.importExtDatasService.getImportedDatasFromDimension(
-                  currentDimensionDetails,
-                );
-
-              const composition = new CompositionModel(
-                currentClusterDetails,
-                currentDimensionHierarchyCluster,
-                j,
-                externalDatas,
-              );
-              compositionValues.push(composition);
-            }
-          }
-        }
-      }
-    }
-    return compositionValues;
+  ): CompositionModel[] {
+    return this.getCompositionValues(
+      currentDimensionDetails,
+      currentInitialDimensionDetails,
+      node,
+      currentIndex,
+      false,
+    );
   }
 
   /**
@@ -226,23 +209,18 @@ export class CompositionService {
     const extractBounds = (
       interval: string,
     ): { lowerBound: number; upperBound: number } => {
-      // Patterns for different interval formats
-      const infPattern = /\]-inf[;,]([\d.]+)\]/;
-      const rangePattern = /\]([\d.]+)[;,]([\d.]+)\]/;
-      const plusInfPattern = /\]([\d.]+)[;,]\+inf\[/;
-
       let lowerBound: number, upperBound: number;
 
-      if (infPattern.test(interval)) {
-        const match = interval.match(infPattern);
+      if (INF_PATTERN.test(interval)) {
+        const match = interval.match(INF_PATTERN);
         lowerBound = -Infinity;
         upperBound = match ? parseFloat(match[1]!) : NaN;
-      } else if (plusInfPattern.test(interval)) {
-        const match = interval.match(plusInfPattern);
+      } else if (PLUS_INF_PATTERN.test(interval)) {
+        const match = interval.match(PLUS_INF_PATTERN);
         lowerBound = match ? parseFloat(match[1]!) : NaN;
         upperBound = Infinity;
-      } else if (rangePattern.test(interval)) {
-        const match = interval.match(rangePattern);
+      } else if (RANGE_PATTERN.test(interval)) {
+        const match = interval.match(RANGE_PATTERN);
         lowerBound = match ? parseFloat(match[1]!) : NaN;
         upperBound = match ? parseFloat(match[2]!) : NaN;
       } else {
@@ -274,30 +252,25 @@ export class CompositionService {
       format: string;
       separator: string;
     } => {
-      // Patterns for different interval formats
-      const infPattern = /\]-inf([;,])([\d.]+)\]/;
-      const rangePattern = /\]([\d.]+)([;,])([\d.]+)\]/;
-      const plusInfPattern = /\]([\d.]+)([;,])\+inf\[/;
-
       let lowerBound: number,
         upperBound: number,
         format: string,
         separator: string;
 
-      if (infPattern.test(interval)) {
-        const match = interval.match(infPattern);
+      if (INF_PATTERN.test(interval)) {
+        const match = interval.match(INF_PATTERN);
         lowerBound = -Infinity;
         upperBound = match ? parseFloat(match[2]!) : NaN;
         separator = match ? match[1]! : ';';
         format = 'inf';
-      } else if (plusInfPattern.test(interval)) {
-        const match = interval.match(plusInfPattern);
+      } else if (PLUS_INF_PATTERN.test(interval)) {
+        const match = interval.match(PLUS_INF_PATTERN);
         lowerBound = match ? parseFloat(match[1]!) : NaN;
         upperBound = Infinity;
         separator = match ? match[2]! : ';';
         format = 'plusInf';
-      } else if (rangePattern.test(interval)) {
-        const match = interval.match(rangePattern);
+      } else if (RANGE_PATTERN.test(interval)) {
+        const match = interval.match(RANGE_PATTERN);
         lowerBound = match ? parseFloat(match[1]!) : NaN;
         upperBound = match ? parseFloat(match[3]!) : NaN;
         separator = match ? match[2]! : ';';
@@ -351,22 +324,18 @@ export class CompositionService {
     const ranges: Array<{ lower: number; upper: number }> = [];
 
     sortedIntervals.forEach((interval) => {
-      const infPattern = /\]-inf[;,]([\d.]+)\]/;
-      const rangePattern = /\]([\d.]+)[;,]([\d.]+)\]/;
-      const plusInfPattern = /\]([\d.]+)[;,]\+inf\[/;
-
       let lower: number, upper: number;
 
-      if (infPattern.test(interval)) {
-        const match = interval.match(infPattern);
+      if (INF_PATTERN.test(interval)) {
+        const match = interval.match(INF_PATTERN);
         lower = -Infinity;
         upper = match ? parseFloat(match[1]!) : NaN;
-      } else if (plusInfPattern.test(interval)) {
-        const match = interval.match(plusInfPattern);
+      } else if (PLUS_INF_PATTERN.test(interval)) {
+        const match = interval.match(PLUS_INF_PATTERN);
         lower = match ? parseFloat(match[1]!) : NaN;
         upper = Infinity;
-      } else if (rangePattern.test(interval)) {
-        const match = interval.match(rangePattern);
+      } else if (RANGE_PATTERN.test(interval)) {
+        const match = interval.match(RANGE_PATTERN);
         lower = match ? parseFloat(match[1]!) : NaN;
         upper = match ? parseFloat(match[2]!) : NaN;
       } else {
@@ -457,17 +426,13 @@ export class CompositionService {
     return [...intervals].sort((a, b) => {
       // Extract lower bounds for comparison
       const extractLowerBound = (interval: string): number => {
-        const infPattern = /\]-inf[;,]([\d.]+)\]/;
-        const rangePattern = /\]([\d.]+)[;,]([\d.]+)\]/;
-        const plusInfPattern = /\]([\d.]+)[;,]\+inf\[/;
-
-        if (infPattern.test(interval)) {
+        if (INF_PATTERN.test(interval)) {
           return -Infinity;
-        } else if (rangePattern.test(interval)) {
-          const match = interval.match(rangePattern);
+        } else if (RANGE_PATTERN.test(interval)) {
+          const match = interval.match(RANGE_PATTERN);
           return match ? parseFloat(match[1]!) : NaN;
-        } else if (plusInfPattern.test(interval)) {
-          const match = interval.match(plusInfPattern);
+        } else if (PLUS_INF_PATTERN.test(interval)) {
+          const match = interval.match(PLUS_INF_PATTERN);
           return match ? parseFloat(match[1]!) : NaN;
         }
         return NaN;
