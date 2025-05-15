@@ -170,6 +170,18 @@ export class CompositionService {
       for (const composition of compositionValues) {
         composition.rank = node.rank;
       }
+      // for each composition, if valueGroups.values count is greater than 3
+      // crop the composition.part and add ellipsis
+      for (const composition of compositionValues) {
+        if (
+          composition.valueGroups?.values &&
+          composition.valueGroups.values.length > 3
+        ) {
+          const croppedValues = composition.valueGroups.values.slice(0, 3);
+          const ellipsis = '...';
+          composition.part = '{' + [...croppedValues, ellipsis] + '}';
+        }
+      }
     }
 
     return compositionValues;
