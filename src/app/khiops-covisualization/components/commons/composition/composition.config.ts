@@ -64,6 +64,7 @@ export function getCompositionDisplayedColumns(
       {
         headerName: translate.get('GLOBAL.TYPICALITY'),
         field: 'typicality',
+        show: false,
         tooltip: translate.get('TOOLTIPS.AXIS.COMPOSITION.TYPICALITY'),
       },
       {
