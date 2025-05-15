@@ -165,28 +165,69 @@ export class CompositionService {
 
     if (node.isCollapsed) {
       compositionValues = this.mergeAllContiguousModels(compositionValues);
-
-      // set the rank of all childs to the rank of the parent #206
-      for (const composition of compositionValues) {
-        composition.rank = node.rank;
-      }
-      // for each composition, if valueGroups.values count is greater than 3
-      // crop the composition.part and add ellipsis
-      for (const composition of compositionValues) {
-        if (
-          composition.valueGroups?.values &&
-          composition.valueGroups.values.length > 3
-        ) {
-          const croppedValues = composition.valueGroups.values.slice(0, 3);
-          const ellipsis = '...';
-          composition.part = '{' + [...croppedValues, ellipsis] + '}';
-        }
-      }
+      compositionValues = this.formatCompositions(node, compositionValues);
     }
 
     return compositionValues;
   }
 
+  /**
+   * Formats the composition values by setting the rank and adjusting the part
+   * representation based on the number of values.
+   */
+  formatCompositions(
+    node: TreeNodeModel,
+    compositionValues: CompositionModel[],
+  ): CompositionModel[] {
+    for (const composition of compositionValues) {
+      // set the rank of all childs to the rank of the parent #206
+      composition.rank = node.rank;
+
+      // now sort the composition valueGroups.valueFrequencies and valueGroups.values in the same order
+      if (composition.valueGroups) {
+        const { values, valueFrequencies } = composition.valueGroups;
+
+        if (values && valueFrequencies) {
+          // Combine, sort by frequency, and update in one step
+          const sorted = values
+            .map((value, index) => ({
+              value,
+              frequency: valueFrequencies[index],
+            }))
+            .sort((a, b) => b.frequency! - a.frequency!);
+
+          composition.valueGroups.values = sorted.map((item) => item.value);
+          composition.valueGroups.valueFrequencies = sorted
+            .map((item) => item.frequency)
+            .filter((freq): freq is number => freq !== undefined);
+        }
+      }
+
+      if (
+        composition.valueGroups?.values &&
+        composition.valueGroups.values.length > 3
+      ) {
+        // if valueGroups.values count is greater than 3
+        // crop the composition.part and add ellipsis
+        const croppedValues = composition.valueGroups.values.slice(0, 3);
+        const ellipsis = '...';
+        const separator = composition.part?.includes(',') ? ', ' : '; ';
+        composition.part = `{${croppedValues.join(separator)}${separator}${ellipsis}}`;
+      } else if (
+        composition.valueGroups?.values &&
+        composition.valueGroups.values.length < 3
+      ) {
+        // if valueGroups.values count is less than 3
+        // concatenate the values surrounded by { and } separated by the existing separator
+        const separator = composition.part?.includes(',') ? ', ' : '; ';
+        composition.part = `{${composition.valueGroups.values.join(separator)}}`;
+      }
+    }
+    return compositionValues;
+  }
+  /**
+   * Retrieves composition values for the "Individuals * Variables" case.
+   */
   getIndiVarCompositionValues(
     currentDimensionDetails: DimensionCovisualizationModel,
     currentInitialDimensionDetails: DimensionCovisualizationModel,
@@ -202,6 +243,9 @@ export class CompositionService {
     );
   }
 
+  /**
+   * Retrieves composition values for the "Variable * Variable" case.
+   */
   getVarVarCompositionValues(
     currentDimensionDetails: DimensionCovisualizationModel,
     currentInitialDimensionDetails: DimensionCovisualizationModel,
