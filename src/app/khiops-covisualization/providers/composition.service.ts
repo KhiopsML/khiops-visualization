@@ -112,7 +112,7 @@ export class CompositionService {
     if (currentDimensionDetails?.isCategorical) {
       node.getChildrenList();
       if (isIndiVarCase) {
-        node.getValueGroups(currentInitialDimensionDetails);
+        node.getInnerValueGroups(currentInitialDimensionDetails);
       }
 
       if (node.childrenLeafList) {
@@ -132,7 +132,7 @@ export class CompositionService {
             );
           if (currentClusterDetails) {
             const parts = isIndiVarCase
-              ? node.formatedValues?.[i]
+              ? node.innerValues?.[i]
               : currentClusterDetails.values;
 
             for (let j = 0; j < (parts?.length ?? 0); j++) {

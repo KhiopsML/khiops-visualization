@@ -1454,16 +1454,31 @@ export class UtilsService {
     );
   }
 
+  /**
+   * Formats an array of strings into a 2D array, where each sub-array contains a string and an array of additional values.
+   * This method is used to process the input array and separate the main value from any additional values.
+   *
+   * @param arr - The array of strings to format.
+   * @returns A 2D array where each sub-array contains a string and an array of additional values.
+   */
   static formatValueGroup(arr?: string[]): (string | string[])[][] | undefined {
     return arr?.map((item) => {
-      const index = item.indexOf(' ');
+      const index = Math.max(item.indexOf(']'), item.indexOf('{'));
       if (index !== -1) {
-        return [item.substring(0, index), [item.substring(index + 1)]];
+        return [item.substring(0, index - 1), [item.substring(index)]];
       }
       return [item, []];
     });
   }
 
+  /**
+   * Merges identical values in an array of strings.
+   * This method takes an array of strings and groups identical values together.
+   * It returns an array of arrays, where each inner array contains the identical values.
+   *
+   * @param values - The array of strings to merge.
+   * @returns An array of arrays containing the merged identical values.
+   */
   static mergeIdenticalValues(values: string[] | undefined) {
     return this.formatValueGroup(values ?? [])?.reduce((acc, current) => {
       const existing = acc?.find((item) => item[0] === current?.[0]);

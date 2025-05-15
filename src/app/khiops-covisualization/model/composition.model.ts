@@ -36,7 +36,7 @@ export class CompositionModel {
           dimensionPartitions: DimensionPartition[];
         }
       | undefined,
-    formatedValues?: string | (string | string[])[] | undefined,
+      innerValues?: string | (string | string[])[] | undefined,
   ) {
     this.terminalCluster =
       object.cluster || currentDimensionHierarchyCluster.shortDescription;
@@ -48,10 +48,10 @@ export class CompositionModel {
     this.frequency = object.valueFrequencies[index];
 
     if (innerVariables) {
-      this.innerVariable = formatedValues?.[0]?.toString();
+      this.innerVariable = innerValues?.[0]?.toString();
       this.innerVariableType =
         innerVariables?.dimensionSummaries?.[index]?.type;
-      const currentParts = formatedValues?.[1];
+      const currentParts = innerValues?.[1];
       this.part = currentParts;
 
       this.frequency = 0;
