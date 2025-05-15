@@ -583,10 +583,17 @@ export class CompositionService {
 
         // Use valueGroups.values instead of part for categorical variables
         const allValues: string[] = [];
+        const allValueFrequencies: number[] = [];
+
         variableModels?.forEach((model) => {
           // Use valueGroups.values which contains the exhaustive list of parts
           if (model.valueGroups?.values) {
             allValues.push(...model.valueGroups.values);
+
+            // Add corresponding frequencies if they exist
+            if (model.valueGroups.valueFrequencies) {
+              allValueFrequencies.push(...model.valueGroups.valueFrequencies);
+            }
           } else if (model.part) {
             // Fallback to part if valueGroups isn't available
             allValues.push(
@@ -615,6 +622,10 @@ export class CompositionService {
           mergedCategoricalModel.valueGroups = {
             ...baseModel.valueGroups,
             values: allValues, // Use the full list of values
+            valueFrequencies:
+              allValueFrequencies.length > 0
+                ? allValueFrequencies
+                : baseModel.valueGroups.valueFrequencies,
           };
         }
 
