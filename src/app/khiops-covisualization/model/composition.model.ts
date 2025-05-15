@@ -24,6 +24,7 @@ export class CompositionModel {
   rank: number;
   externalData: string | undefined;
   innerVariableType?: string;
+  valueGroups?: ValueGroup | undefined;
 
   constructor(
     object: ValueGroup,
@@ -36,7 +37,7 @@ export class CompositionModel {
           dimensionPartitions: DimensionPartition[];
         }
       | undefined,
-      innerValues?: string | (string | string[])[] | undefined,
+    innerValues?: string | (string | string[])[] | undefined,
   ) {
     this.terminalCluster =
       object.cluster || currentDimensionHierarchyCluster.shortDescription;
@@ -48,6 +49,16 @@ export class CompositionModel {
     this.frequency = object.valueFrequencies[index];
 
     if (innerVariables) {
+      // get the valueGroups of current cluster to have the exhaustive list of values
+      const clusterIndex = innerVariables.dimensionPartitions[
+        index
+      ]?.valueGroups?.findIndex((item) => item.cluster === this.value);
+      this.valueGroups =
+        innerVariables?.dimensionPartitions[index]?.valueGroups &&
+        clusterIndex !== undefined
+          ? innerVariables.dimensionPartitions[index]?.valueGroups[clusterIndex]
+          : undefined;
+
       this.innerVariable = innerValues?.[0]?.toString();
       this.innerVariableType =
         innerVariables?.dimensionSummaries?.[index]?.type;
