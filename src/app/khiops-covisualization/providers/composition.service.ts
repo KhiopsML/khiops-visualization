@@ -410,9 +410,18 @@ export class CompositionService {
       return false;
     }
 
+    // Early return for categorical variables
+    if (model1.innerVariableType === TYPES.CATEGORICAL) {
+      return true; // Categorical variables with same innerVariable can always be merged
+    }
+
+    // For numerical variables, get parts from model.part
+    const parts1 = model1.part || [];
+    const parts2 = model2.part || [];
+
     // Iterate through parts of both models to find contiguous intervals
-    for (const part1 of model1.part!) {
-      for (const part2 of model2.part!) {
+    for (const part1 of parts1) {
+      for (const part2 of parts2) {
         if (this.areIntervalsContiguous(part1, part2)) {
           return true;
         }
@@ -466,27 +475,61 @@ export class CompositionService {
     }
 
     let mergedParts: string[];
+    let allValues: string[] = [];
 
     // Handle categorical variables
     if (model1.innerVariableType === TYPES.CATEGORICAL) {
-      mergedParts = this.mergeCategoricalSets([
-        ...model1.part!,
-        ...model2.part!,
-      ]);
+      // Collect values from both models' valueGroups if available
+      if (model1.valueGroups?.values) {
+        allValues.push(...model1.valueGroups.values);
+      }
+      if (model2.valueGroups?.values) {
+        allValues.push(...model2.valueGroups.values);
+      }
+
+      // Fallback to part if valueGroups isn't available
+      if (allValues.length === 0) {
+        if (model1.part) {
+          allValues.push(
+            ...(Array.isArray(model1.part) ? model1.part : [model1.part]),
+          );
+        }
+        if (model2.part) {
+          allValues.push(
+            ...(Array.isArray(model2.part) ? model2.part : [model2.part]),
+          );
+        }
+      }
+
+      mergedParts = this.mergeCategoricalSets(allValues);
     } else {
       // Handle numerical variables (intervals)
-      mergedParts = this.simplifyIntervals([...model1.part!, ...model2.part!]);
+      const parts1 = model1.part || [];
+      const parts2 = model2.part || [];
+      mergedParts = this.simplifyIntervals([...parts1, ...parts2]);
     }
 
     // Create the merged model
     const mergedModel: CompositionModel = {
       ...model1,
-      frequency: model1.frequency! + model2.frequency!,
+      frequency: (model1.frequency || 0) + (model2.frequency || 0),
       part: mergedParts,
       _id: `${model1._id}_${model2._id}_merged`, // Temporary ID
       // Update value to reflect the merged parts
       value: model1.innerVariable + ' ' + mergedParts[0],
     };
+
+    // Update valueGroups if it's a categorical variable
+    if (model1.innerVariableType === TYPES.CATEGORICAL) {
+      if (model1.valueGroups) {
+        mergedModel.valueGroups = {
+          ...model1.valueGroups,
+          values: allValues, // Use the comprehensive list of values
+        };
+      } else if (mergedModel.valueGroups) {
+        mergedModel.valueGroups.values = allValues;
+      }
+    }
 
     return mergedModel;
   }
@@ -514,8 +557,7 @@ export class CompositionService {
       const variableModels = modelsByVariable[variable];
 
       // Skip if there's only one model for this variable
-      // @ts-ignore
-      if (variableModels.length <= 1) {
+      if ((variableModels ?? []).length <= 1) {
         results.push(...variableModels!);
         continue;
       }
@@ -526,24 +568,43 @@ export class CompositionService {
       if (variableType === TYPES.CATEGORICAL) {
         // For categorical variables, merge all models with the same innerVariable
         const baseModel = variableModels?.[0];
-        const allParts = variableModels?.flatMap((model) => model.part);
+
+        // Use valueGroups.values instead of part for categorical variables
+        const allValues: string[] = [];
+        variableModels?.forEach((model) => {
+          // Use valueGroups.values which contains the exhaustive list of parts
+          if (model.valueGroups?.values) {
+            allValues.push(...model.valueGroups.values);
+          } else if (model.part) {
+            // Fallback to part if valueGroups isn't available
+            allValues.push(
+              ...(Array.isArray(model.part) ? model.part : [model.part]),
+            );
+          }
+        });
+
         const totalFrequency = variableModels?.reduce(
-          (sum, model) => sum + model.frequency!,
+          (sum, model) => sum + (model.frequency || 0),
           0,
         );
 
+        // Create merged categorical model
+        const mergedCategoricalValues = this.mergeCategoricalSets(allValues);
         const mergedCategoricalModel = {
           ...baseModel,
           frequency: totalFrequency,
-          // @ts-ignore
-          part: this.mergeCategoricalSets(allParts!),
+          part: mergedCategoricalValues,
           _id: variableModels?.map((m) => m._id).join('_') + '_merged',
-          value:
-            baseModel?.innerVariable +
-            ' ' +
-            // @ts-ignore
-            this.mergeCategoricalSets(allParts)[0],
+          value: baseModel?.innerVariable + ' ' + mergedCategoricalValues[0],
         };
+
+        // Update valueGroups in the merged model
+        if (baseModel?.valueGroups) {
+          mergedCategoricalModel.valueGroups = {
+            ...baseModel.valueGroups,
+            values: allValues, // Use the full list of values
+          };
+        }
 
         // @ts-ignore
         results.push(mergedCategoricalModel);
@@ -582,12 +643,9 @@ export class CompositionService {
         // Check if numeric intervals cover the entire range
         const finalModels = workingModels.map((model) => {
           if (
-            // @ts-ignore
-            model.part.length === 1 &&
-            // @ts-ignore
+            model.part?.length === 1 &&
             (model.part[0] === ']-inf;+inf[' || model.part[0] === ']-inf,+inf[')
           ) {
-            // @ts-ignore
             const separator = model.part[0].includes(',') ? ',' : ';';
             return {
               ...model,
@@ -606,35 +664,38 @@ export class CompositionService {
   }
 
   /**
-   * For categorical values, merges the contents of sets in the format "{value1, value2, ...}"
-   * @param categoricalSets Array of string sets in the format "{value1, value2, ...}"
+   * For categorical values, merges the contents of sets or direct values
+   * @param categoricalValues Array of values, either formatted strings or direct values
    * @returns Merged set of values
    */
-  mergeCategoricalSets(categoricalSets: string[]): string[] {
-    // Helper function to extract values from a set string
-    const extractValues = (setStr: string): string[] => {
-      // Match content inside curly braces
-      const match = setStr.match(/{([^}]*)}/);
-      if (!match) return [];
-
-      // Split by comma and trim
-      // @ts-ignore
-      return match[1].split(',').map((s) => s.trim());
+  mergeCategoricalSets(categoricalValues: string[]): string[] {
+    // Helper function to extract values from a set string or direct value
+    const extractValues = (value: string): string[] => {
+      // Check if the value is in the format "{value1, value2, ...}"
+      const match = value.match(/{([^}]*)}/);
+      if (match) {
+        // Split by comma and trim
+        return match[1]?.split(',').map((s) => s.trim()) || [];
+      }
+      // If not in braces format, return as-is
+      return [value.trim()];
     };
 
     // Collect all unique values
     const allValues = new Set<string>();
 
-    categoricalSets.forEach((set) => {
-      extractValues(set).forEach((value) => {
-        allValues.add(value);
-      });
+    categoricalValues.forEach((value) => {
+      if (value) {
+        // Check for null/undefined values
+        extractValues(value).forEach((v) => {
+          allValues.add(v);
+        });
+      }
     });
 
     // Create a new set string with all values
     return [`{${Array.from(allValues).join(', ')}}`];
   }
-
   /**
    * Checks if two CompositionModel objects can be merged
    * @param model1 First CompositionModel
