@@ -455,5 +455,287 @@ describe('coVisualization', () => {
         expect(singleModelResult?._id).toBe('single'); // Should maintain original ID since not merged
       });
     });
+
+    describe('sortIntervals', () => {
+      it('should sort intervals in ascending order by lower bound', () => {
+        // Test with mixed order intervals
+        const intervals = [']10;20]', ']0;10]', ']20;30]'];
+        const result = compositionService.sortIntervals(intervals);
+        expect(result).toEqual([']0;10]', ']10;20]', ']20;30]']);
+      });
+
+      it('should handle intervals with negative infinity at the beginning', () => {
+        // Test with negative infinity interval
+        const intervals = [']10;20]', ']-inf;0]', ']0;10]'];
+        const result = compositionService.sortIntervals(intervals);
+        expect(result).toEqual([']-inf;0]', ']0;10]', ']10;20]']);
+      });
+
+      it('should handle intervals with positive infinity at the end', () => {
+        // Test with positive infinity interval
+        const intervals = [']20;+inf[', ']0;10]', ']10;20]'];
+        const result = compositionService.sortIntervals(intervals);
+        expect(result).toEqual([']0;10]', ']10;20]', ']20;+inf[']);
+      });
+
+      it('should handle intervals with comma separators', () => {
+        // Test with comma-separated intervals
+        const intervals = [']10,20]', ']0,10]', ']20,30]'];
+        const result = compositionService.sortIntervals(intervals);
+        expect(result).toEqual([']0,10]', ']10,20]', ']20,30]']);
+      });
+      it('should handle complex mixed intervals with infinity and decimal values', () => {
+        // Test with complex intervals including infinity and decimals
+        const intervals = [
+          ']15.5;25.7]',
+          ']-inf;0.1]',
+          ']0.1;15.5]',
+          ']25.7;+inf[',
+        ];
+        const result = compositionService.sortIntervals(intervals);
+        expect(result).toEqual([
+          ']-inf;0.1]',
+          ']0.1;15.5]',
+          ']15.5;25.7]',
+          ']25.7;+inf[',
+        ]);
+      });
+    });
+
+    describe('haveContiguousParts', () => {
+      it('should return false for models with different innerVariable', () => {
+        // Create two models with different innerVariable
+        const model1: CompositionModel = {
+          _id: 'model1',
+          cluster: 'cluster1',
+          terminalCluster: 'terminalCluster1',
+          innerVariable: 'Variable1',
+          innerVariableType: TYPES.NUMERICAL,
+          part: [']0;10]'],
+          frequency: 10,
+          rank: 1,
+          value: 'Variable1 ]0;10]',
+        } as CompositionModel;
+
+        const model2: CompositionModel = {
+          _id: 'model2',
+          cluster: 'cluster2',
+          terminalCluster: 'terminalCluster2',
+          innerVariable: 'Variable2',
+          innerVariableType: TYPES.NUMERICAL,
+          part: [']10;20]'],
+          frequency: 15,
+          rank: 1,
+          value: 'Variable2 ]10;20]',
+        } as CompositionModel;
+
+        const result = compositionService.haveContiguousParts(model1, model2);
+        expect(result).toEqual(false);
+      });
+
+      it('should return true for categorical models with same innerVariable', () => {
+        // Create two categorical models with same innerVariable
+        const model1: CompositionModel = {
+          _id: 'cat1',
+          cluster: 'cluster1',
+          terminalCluster: 'terminalCluster1',
+          innerVariable: 'CategoryVar',
+          innerVariableType: TYPES.CATEGORICAL,
+          part: ['{A, B}'],
+          frequency: 10,
+          rank: 1,
+          value: 'CategoryVar {A, B}',
+        } as CompositionModel;
+
+        const model2: CompositionModel = {
+          _id: 'cat2',
+          cluster: 'cluster2',
+          terminalCluster: 'terminalCluster2',
+          innerVariable: 'CategoryVar',
+          innerVariableType: TYPES.CATEGORICAL,
+          part: ['{C, D}'],
+          frequency: 15,
+          rank: 1,
+          value: 'CategoryVar {C, D}',
+        } as CompositionModel;
+
+        const result = compositionService.haveContiguousParts(model1, model2);
+        expect(result).toEqual(true);
+      });
+
+      it('should return true for numerical models with contiguous intervals', () => {
+        // Create two numerical models with contiguous intervals
+        const model1: CompositionModel = {
+          _id: 'num1',
+          cluster: 'cluster1',
+          terminalCluster: 'terminalCluster1',
+          innerVariable: 'NumericalVar',
+          innerVariableType: TYPES.NUMERICAL,
+          part: [']0;10]'],
+          frequency: 20,
+          rank: 1,
+          value: 'NumericalVar ]0;10]',
+        } as CompositionModel;
+
+        const model2: CompositionModel = {
+          _id: 'num2',
+          cluster: 'cluster2',
+          terminalCluster: 'terminalCluster2',
+          innerVariable: 'NumericalVar',
+          innerVariableType: TYPES.NUMERICAL,
+          part: [']10;20]'],
+          frequency: 12,
+          rank: 1,
+          value: 'NumericalVar ]10;20]',
+        } as CompositionModel;
+
+        const result = compositionService.haveContiguousParts(model1, model2);
+        expect(result).toEqual(true);
+      });
+
+      it('should return false for numerical models with non-contiguous intervals', () => {
+        // Create two numerical models with non-contiguous intervals
+        const model1: CompositionModel = {
+          _id: 'num1',
+          cluster: 'cluster1',
+          terminalCluster: 'terminalCluster1',
+          innerVariable: 'NumericalVar',
+          innerVariableType: TYPES.NUMERICAL,
+          part: [']0;10]'],
+          frequency: 20,
+          rank: 1,
+          value: 'NumericalVar ]0;10]',
+        } as CompositionModel;
+
+        const model2: CompositionModel = {
+          _id: 'num2',
+          cluster: 'cluster2',
+          terminalCluster: 'terminalCluster2',
+          innerVariable: 'NumericalVar',
+          innerVariableType: TYPES.NUMERICAL,
+          part: [']15;25]'],
+          frequency: 12,
+          rank: 1,
+          value: 'NumericalVar ]15;25]',
+        } as CompositionModel;
+
+        const result = compositionService.haveContiguousParts(model1, model2);
+        expect(result).toEqual(false);
+      });
+
+      it('should return true when any intervals are contiguous in multi-part models', () => {
+        // Create two numerical models with multiple parts, some contiguous
+        const model1: CompositionModel = {
+          _id: 'num1',
+          cluster: 'cluster1',
+          terminalCluster: 'terminalCluster1',
+          innerVariable: 'NumericalVar',
+          innerVariableType: TYPES.NUMERICAL,
+          part: [']0;5]', ']15;20]'],
+          frequency: 20,
+          rank: 1,
+          value: 'NumericalVar multiple intervals',
+        } as CompositionModel;
+
+        const model2: CompositionModel = {
+          _id: 'num2',
+          cluster: 'cluster2',
+          terminalCluster: 'terminalCluster2',
+          innerVariable: 'NumericalVar',
+          innerVariableType: TYPES.NUMERICAL,
+          part: [']5;10]', ']25;30]'],
+          frequency: 12,
+          rank: 1,
+          value: 'NumericalVar multiple intervals',
+        } as CompositionModel;
+
+        const result = compositionService.haveContiguousParts(model1, model2);
+        expect(result).toEqual(true); // ]0;5] and ]5;10] are contiguous
+      });
+    });
+
+    describe('simplifyIntervals', () => {
+      it('should merge contiguous intervals into a single interval', () => {
+        // Test merging of contiguous intervals
+        const intervals = [']0;10]', ']10;20]', ']20;30]'];
+        const result = compositionService.simplifyIntervals(intervals);
+        expect(result).toEqual([']0;30]']);
+      });
+
+      it('should keep non-contiguous intervals separate', () => {
+        // Test with non-contiguous intervals
+        const intervals = [']0;10]', ']15;25]', ']30;40]'];
+        const result = compositionService.simplifyIntervals(intervals);
+        expect(result).toEqual([']0;10]', ']15;25]', ']30;40]']);
+      });
+
+      it('should handle intervals with negative infinity', () => {
+        // Test with negative infinity interval
+        const intervals = [']-inf;10]', ']10;20]'];
+        const result = compositionService.simplifyIntervals(intervals);
+        expect(result).toEqual([']-inf;20]']);
+      });
+
+      it('should handle intervals with positive infinity', () => {
+        // Test with positive infinity interval
+        const intervals = [']10;20]', ']20;+inf['];
+        const result = compositionService.simplifyIntervals(intervals);
+        expect(result).toEqual([']10;+inf[']);
+      });
+
+      it('should return empty array for empty input', () => {
+        // Test with empty array
+        const intervals: string[] = [];
+        const result = compositionService.simplifyIntervals(intervals);
+        expect(result).toEqual([]);
+      });
+    });
+
+    describe('areIntervalsContiguous', () => {
+      it('should return true for contiguous intervals with semicolon separator', () => {
+        // Test basic contiguous intervals
+        const result = compositionService.areIntervalsContiguous(
+          ']0;10]',
+          ']10;20]',
+        );
+        expect(result).toEqual(true);
+      });
+
+      it('should return true for contiguous intervals with comma separator', () => {
+        // Test contiguous intervals with comma
+        const result = compositionService.areIntervalsContiguous(
+          ']0,10]',
+          ']10,20]',
+        );
+        expect(result).toEqual(true);
+      });
+
+      it('should return false for non-contiguous intervals', () => {
+        // Test non-contiguous intervals
+        const result = compositionService.areIntervalsContiguous(
+          ']0;10]',
+          ']15;20]',
+        );
+        expect(result).toEqual(false);
+      });
+
+      it('should return true for intervals involving negative infinity', () => {
+        // Test contiguous with negative infinity
+        const result = compositionService.areIntervalsContiguous(
+          ']-inf;10]',
+          ']10;20]',
+        );
+        expect(result).toEqual(true);
+      });
+
+      it('should return true for intervals involving positive infinity', () => {
+        // Test contiguous with positive infinity
+        const result = compositionService.areIntervalsContiguous(
+          ']10;20]',
+          ']20;+inf[',
+        );
+        expect(result).toEqual(true);
+      });
+    });
   });
 });
