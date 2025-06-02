@@ -100,6 +100,7 @@ export class CompositionService {
   /**
    * Retrieves composition values for a given node and dimension details.
    * Handles both "Individuals * Variables" and "Variable * Variable" cases.
+   * Recursively processes collapsed children before processing the current node.
    */
   private getCompositionValues(
     currentDimensionDetails: DimensionCovisualizationModel,
@@ -109,6 +110,18 @@ export class CompositionService {
     isIndiVarCase: boolean,
   ): CompositionModel[] {
     let compositionValues: CompositionModel[] = [];
+
+    // First, recursively process collapsed children and sub-children
+    const processedCollapsedChildren = this.processCollapsedChildren(
+      currentDimensionDetails,
+      currentInitialDimensionDetails,
+      node,
+      currentIndex,
+      isIndiVarCase,
+      compositionValues,
+    );
+
+    // Then process the current node
     if (currentDimensionDetails?.isCategorical) {
       node.getChildrenList();
       if (isIndiVarCase) {
@@ -123,9 +136,17 @@ export class CompositionService {
           ],
         );
         const childrenLeafListLength = node.childrenLeafList.length;
-
         for (let i = 0; i < childrenLeafListLength; i++) {
           const currentLeafName = node.childrenLeafList[i];
+
+          // Skip if currentLeafName is undefined or if it was already processed as part of a collapsed child
+          if (
+            !currentLeafName ||
+            processedCollapsedChildren.has(currentLeafName)
+          ) {
+            continue;
+          }
+
           const currentClusterDetails =
             currentInitialDimensionDetails.valueGroups?.find(
               (e) => e.cluster === currentLeafName,
@@ -829,5 +850,140 @@ export class CompositionService {
     // Models with the same innerVariable can always be merged
     // regardless of whether they are categorical or numerical
     return true;
+  }
+
+  /**
+   * Recursively processes collapsed children and sub-children nodes.
+   * For each collapsed child, it processes its compositions and merges them.
+   * This method is called before processing the current node to ensure that
+   * collapsed children's compositions are properly handled even when the parent is expanded.
+   * Returns a Set of collapsed child names that have been processed to avoid double processing.
+   */
+  private processCollapsedChildren(
+    currentDimensionDetails: DimensionCovisualizationModel,
+    currentInitialDimensionDetails: DimensionCovisualizationModel,
+    node: TreeNodeModel,
+    currentIndex: number,
+    isIndiVarCase: boolean,
+    compositionValues: CompositionModel[],
+  ): Set<string> {
+    const processedCollapsedChildren = new Set<string>();
+
+    // Check if the node has children
+    if (node.children && node.children.length > 0) {
+      for (const child of node.children) {
+        // If the child is collapsed, process its compositions
+        if (child.isCollapsed) {
+          const childCompositions = this.getCompositionValuesForNode(
+            currentDimensionDetails,
+            currentInitialDimensionDetails,
+            child,
+            currentIndex,
+            isIndiVarCase,
+          );
+          // Merge the child's compositions and add them to the main composition values
+          const mergedChildCompositions =
+            this.mergeAllContiguousModels(childCompositions);
+          const formattedChildCompositions = this.formatCompositions(
+            child,
+            mergedChildCompositions,
+          );
+          compositionValues.push(...formattedChildCompositions);
+
+          // Mark all children of this collapsed node as processed
+          if (child.childrenLeafList) {
+            child.childrenLeafList.forEach((leafName) => {
+              processedCollapsedChildren.add(leafName);
+            });
+          }
+        } else {
+          // If the child is not collapsed, recursively check its children
+          const childProcessedCollapsed = this.processCollapsedChildren(
+            currentDimensionDetails,
+            currentInitialDimensionDetails,
+            child,
+            currentIndex,
+            isIndiVarCase,
+            compositionValues,
+          );
+          // Add the processed collapsed children from the recursive call
+          childProcessedCollapsed.forEach((name) =>
+            processedCollapsedChildren.add(name),
+          );
+        }
+      }
+    }
+
+    return processedCollapsedChildren;
+  }
+
+  /**
+   * Helper method to get composition values for a specific node without recursive processing.
+   * This is used to avoid infinite recursion when processing collapsed children.
+   */
+  private getCompositionValuesForNode(
+    currentDimensionDetails: DimensionCovisualizationModel,
+    currentInitialDimensionDetails: DimensionCovisualizationModel,
+    node: TreeNodeModel,
+    currentIndex: number,
+    isIndiVarCase: boolean,
+  ): CompositionModel[] {
+    let compositionValues: CompositionModel[] = [];
+
+    if (currentDimensionDetails?.isCategorical) {
+      node.getChildrenList();
+      if (isIndiVarCase) {
+        node.getInnerValueGroups(currentInitialDimensionDetails);
+      }
+
+      if (node.childrenLeafList) {
+        const currentDimensionClusters = Object.assign(
+          [],
+          this.dimensionsDatasService.dimensionsDatas.dimensionsClusters[
+            currentIndex
+          ],
+        );
+        const childrenLeafListLength = node.childrenLeafList.length;
+
+        for (let i = 0; i < childrenLeafListLength; i++) {
+          const currentLeafName = node.childrenLeafList[i];
+          const currentClusterDetails =
+            currentInitialDimensionDetails.valueGroups?.find(
+              (e) => e.cluster === currentLeafName,
+            );
+          if (currentClusterDetails) {
+            const parts = isIndiVarCase
+              ? node.innerValues?.[i]
+              : currentClusterDetails.values;
+
+            for (let j = 0; j < (parts?.length ?? 0); j++) {
+              const currentDimensionHierarchyCluster: any =
+                currentDimensionClusters.find(
+                  (e: any) => e.cluster === currentLeafName,
+                );
+              if (node.isCollapsed) {
+                currentDimensionHierarchyCluster.shortDescription =
+                  node.shortDescription;
+              }
+              const externalDatas: ExtDatasModel =
+                this.importExtDatasService.getImportedDatasFromDimension(
+                  currentDimensionDetails,
+                );
+              const composition = new CompositionModel(
+                currentClusterDetails,
+                currentDimensionHierarchyCluster,
+                j,
+                externalDatas,
+                currentDimensionDetails.innerVariables,
+                parts?.[j],
+              );
+              compositionValues.push(composition);
+            }
+          }
+        }
+      }
+    }
+
+    return compositionValues;
   }
 }
