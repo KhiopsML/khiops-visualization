@@ -562,7 +562,17 @@ export class CompositionService {
       // Handle numerical variables (intervals)
       const parts1 = model1.part || [];
       const parts2 = model2.part || [];
-      mergedParts = this.simplifyIntervals([...parts1, ...parts2]);
+
+      // Check if intervals are contiguous
+      const areContiguous = this.haveContiguousParts(model1, model2);
+
+      if (areContiguous) {
+        // If contiguous, merge the intervals
+        mergedParts = this.simplifyIntervals([...parts1, ...parts2]);
+      } else {
+        // If not contiguous, keep all parts separate (don't merge)
+        mergedParts = [...parts1, ...parts2];
+      }
     }
 
     // Create the merged model
@@ -572,7 +582,12 @@ export class CompositionService {
       part: mergedParts,
       _id: `${model1._id}_${model2._id}_merged`, // Temporary ID
       // Update value to reflect the merged parts
-      value: model1.innerVariable + ' ' + mergedParts[0],
+      value:
+        model1.innerVariable +
+        ' ' +
+        (mergedParts.length > 1
+          ? `[${mergedParts.length} intervals]`
+          : mergedParts[0]),
     };
 
     // Update valueGroups if it's a categorical variable
@@ -584,6 +599,27 @@ export class CompositionService {
         };
       } else if (mergedModel.valueGroups) {
         mergedModel.valueGroups.values = allValues;
+      }
+    } else {
+      // For numerical variables, merge valueGroups appropriately
+      if (model1.valueGroups && model2.valueGroups) {
+        // Combine values from both models
+        const combinedValues = [
+          ...(model1.valueGroups.values || []),
+          ...(model2.valueGroups.values || []),
+        ];
+
+        const combinedFrequencies = [
+          ...(model1.valueGroups.valueFrequencies || []),
+          ...(model2.valueGroups.valueFrequencies || []),
+        ];
+
+        mergedModel.valueGroups = {
+          ...model1.valueGroups,
+          values: combinedValues,
+          valueFrequencies:
+            combinedFrequencies.length > 0 ? combinedFrequencies : [],
+        };
       }
     }
 
@@ -676,54 +712,68 @@ export class CompositionService {
         // @ts-ignore
         results.push(mergedCategoricalModel);
       } else {
-        // For numerical variables, continue with the existing merging logic
-        let workingModels = [...variableModels!];
-        let mergeOccurred = true;
+        // For numerical variables, merge all models with the same innerVariable
+        // regardless of whether their intervals are contiguous
 
-        // Continue merging until no more merges are possible
-        while (mergeOccurred) {
-          mergeOccurred = false;
+        // Simply merge all models with the same innerVariable
+        const baseModel = variableModels?.[0];
+        const allParts: string[] = [];
+        const allValues: string[] = [];
+        const allValueFrequencies: number[] = [];
 
-          for (let i = 0; i < workingModels.length; i++) {
-            if (mergeOccurred) break;
+        variableModels?.forEach((model) => {
+          // Collect all parts
+          if (model.part) {
+            allParts.push(
+              ...(Array.isArray(model.part) ? model.part : [model.part]),
+            );
+          }
 
-            for (let j = i + 1; j < workingModels.length; j++) {
-              if (this.canMergeModels(workingModels[i]!, workingModels[j]!)) {
-                // Merge models
-                const mergedModel = this.mergeCompositionModels(
-                  workingModels[i]!,
-                  workingModels[j]!,
-                );
+          // Collect all values from valueGroups
+          if (model.valueGroups?.values) {
+            allValues.push(...model.valueGroups.values);
 
-                // Remove original models and add merged model
-                workingModels.splice(j, 1);
-                workingModels.splice(i, 1);
-                workingModels.push(mergedModel);
-
-                mergeOccurred = true;
-                break;
-              }
+            if (model.valueGroups.valueFrequencies) {
+              allValueFrequencies.push(...model.valueGroups.valueFrequencies);
             }
           }
-        }
-
-        // Check if numeric intervals cover the entire range
-        const finalModels = workingModels.map((model) => {
-          if (
-            model.part?.length === 1 &&
-            (model.part[0] === ']-inf;+inf[' || model.part[0] === ']-inf,+inf[')
-          ) {
-            const separator = model.part[0].includes(',') ? ',' : ';';
-            return {
-              ...model,
-              value: model.innerVariable + ` ]-inf${separator}+inf[`,
-            };
-          }
-          return model;
         });
 
-        // Add processed models to results
-        results.push(...finalModels);
+        const totalFrequency = variableModels?.reduce(
+          (sum, model) => sum + (model.frequency || 0),
+          0,
+        );
+
+        // Try to simplify intervals if they are contiguous
+        const simplifiedParts = this.simplifyIntervals(allParts);
+
+        const mergedNumericalModel = {
+          ...baseModel,
+          frequency: totalFrequency,
+          part: simplifiedParts,
+          _id: variableModels?.map((m) => m._id).join('_') + '_merged',
+          value:
+            baseModel?.innerVariable +
+            ' ' +
+            (simplifiedParts.length > 1
+              ? `[${simplifiedParts.length} intervals]`
+              : simplifiedParts[0]),
+        };
+
+        // Update valueGroups for numerical variables
+        if (baseModel?.valueGroups) {
+          mergedNumericalModel.valueGroups = {
+            ...baseModel.valueGroups,
+            values: allValues,
+            valueFrequencies:
+              allValueFrequencies.length > 0
+                ? allValueFrequencies
+                : baseModel.valueGroups.valueFrequencies,
+          };
+        }
+
+        // @ts-ignore
+        results.push(mergedNumericalModel);
       }
     }
 
@@ -763,6 +813,7 @@ export class CompositionService {
     // Create a new set string with all values
     return [`{${Array.from(allValues).join(', ')}}`];
   }
+
   /**
    * Checks if two CompositionModel objects can be merged
    * @param model1 First CompositionModel
@@ -775,15 +826,8 @@ export class CompositionService {
       return false;
     }
 
-    // Categorical variables can always be merged if they have the same innerVariable
-    if (
-      model1.innerVariableType === TYPES.CATEGORICAL &&
-      model2.innerVariableType === TYPES.CATEGORICAL
-    ) {
-      return true;
-    }
-
-    // For numerical variables, check if parts are contiguous
-    return this.haveContiguousParts(model1, model2);
+    // Models with the same innerVariable can always be merged
+    // regardless of whether they are categorical or numerical
+    return true;
   }
 }
