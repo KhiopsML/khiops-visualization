@@ -5,40 +5,91 @@
  */
 
 import { TranslateService } from '@ngstack/translate';
+import { GridColumnsI } from '../../../../khiops-library/interfaces/grid-columns';
 
-export function getCompositionDisplayedColumns(translate: TranslateService) {
-  return [
-    {
-      headerName: translate.get('GLOBAL.CLUSTER'),
-      field: 'cluster',
-      tooltip: translate.get('TOOLTIPS.AXIS.COMPOSITION.CLUSTER'),
-    },
-    {
-      headerName: translate.get('GLOBAL.TERMINAL_CLUSTER'),
-      show: false,
-      field: 'terminalCluster',
-      tooltip: translate.get('TOOLTIPS.AXIS.COMPOSITION.TERMINAL_CLUSTER'),
-    },
-    {
-      headerName: translate.get('GLOBAL.RANK'),
-      show: false,
-      field: 'rank',
-      tooltip: translate.get('TOOLTIPS.AXIS.COMPOSITION.RANK'),
-    },
-    {
-      headerName: translate.get('GLOBAL.TYPICALITY'),
-      field: 'typicality',
-      tooltip: translate.get('TOOLTIPS.AXIS.COMPOSITION.TYPICALITY'),
-    },
-    {
-      headerName: translate.get('GLOBAL.VALUE'),
-      field: 'value',
-      tooltip: translate.get('TOOLTIPS.AXIS.COMPOSITION.VALUE'),
-    },
-    {
-      headerName: translate.get('GLOBAL.FREQUENCY'),
-      field: 'frequency',
-      tooltip: translate.get('TOOLTIPS.AXIS.COMPOSITION.FREQUENCY'),
-    },
-  ];
+export function getCompositionDisplayedColumns(
+  translate: TranslateService,
+  isVarPart?: boolean,
+): GridColumnsI[] {
+  if (!isVarPart) {
+    // Common case
+    return [
+      {
+        headerName: translate.get('GLOBAL.CLUSTER'),
+        field: 'cluster',
+        tooltip: translate.get('TOOLTIPS.AXIS.COMPOSITION.CLUSTER'),
+      },
+      {
+        headerName: translate.get('GLOBAL.TERMINAL_CLUSTER'),
+        show: false,
+        field: 'terminalCluster',
+        tooltip: translate.get('TOOLTIPS.AXIS.COMPOSITION.TERMINAL_CLUSTER'),
+      },
+      {
+        headerName: translate.get('GLOBAL.RANK'),
+        show: false,
+        field: 'rank',
+        tooltip: translate.get('TOOLTIPS.AXIS.COMPOSITION.RANK'),
+      },
+      {
+        headerName: translate.get('GLOBAL.TYPICALITY'),
+        field: 'typicality',
+        tooltip: translate.get('TOOLTIPS.AXIS.COMPOSITION.TYPICALITY'),
+      },
+      {
+        headerName: translate.get('GLOBAL.VALUE'),
+        field: 'value',
+        tooltip: translate.get('TOOLTIPS.AXIS.COMPOSITION.VALUE'),
+      },
+      {
+        headerName: translate.get('GLOBAL.FREQUENCY'),
+        field: 'frequency',
+        tooltip: translate.get('TOOLTIPS.AXIS.COMPOSITION.FREQUENCY'),
+      },
+    ];
+  } else {
+    // Individuals * variables case
+    return [
+      {
+        headerName: translate.get('GLOBAL.CLUSTER'),
+        field: 'cluster',
+        tooltip: translate.get('TOOLTIPS.AXIS.COMPOSITION.CLUSTER'),
+      },
+      {
+        headerName: translate.get('GLOBAL.RANK'),
+        show: false,
+        field: 'rank',
+        tooltip: translate.get('TOOLTIPS.AXIS.COMPOSITION.RANK'),
+      },
+      {
+        headerName: translate.get('GLOBAL.TYPICALITY'),
+        field: 'typicality',
+        show: false,
+        tooltip: translate.get('TOOLTIPS.AXIS.COMPOSITION.TYPICALITY'),
+      },
+      {
+        headerName: translate.get('GLOBAL.INNER_VARIABLE'),
+        field: 'innerVariable',
+        tooltip: translate.get('TOOLTIPS.AXIS.COMPOSITION.INNER_VARIABLE'),
+      },
+      {
+        headerName: translate.get('GLOBAL.PART'),
+        field: 'part',
+        tooltip: translate.get('TOOLTIPS.AXIS.COMPOSITION.PART'),
+      },
+      {
+        headerName: translate.get('GLOBAL.FREQUENCY'),
+        field: 'frequency',
+        tooltip: translate.get('TOOLTIPS.AXIS.COMPOSITION.FREQUENCY'),
+      },
+      {
+        headerName: 'type',
+        field: 'type',
+      },
+      {
+        headerName: 'debug',
+        field: 'debug',
+      },
+    ];
+  }
 }
