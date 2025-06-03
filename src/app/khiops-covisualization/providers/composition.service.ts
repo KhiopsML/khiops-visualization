@@ -110,16 +110,18 @@ export class CompositionService {
     isIndiVarCase: boolean,
   ): CompositionModel[] {
     let compositionValues: CompositionModel[] = [];
-
-    // First, recursively process collapsed children and sub-children
-    const processedCollapsedChildren = this.processCollapsedChildren(
-      currentDimensionDetails,
-      currentInitialDimensionDetails,
-      node,
-      currentIndex,
-      isIndiVarCase,
-      compositionValues,
-    );
+    let processedCollapsedChildren = new Set<string>();
+    if (isIndiVarCase) {
+      // First, recursively process collapsed children and sub-children
+      processedCollapsedChildren = this.processCollapsedChildren(
+        currentDimensionDetails,
+        currentInitialDimensionDetails,
+        node,
+        currentIndex,
+        isIndiVarCase,
+        compositionValues,
+      );
+    }
 
     // Then process the current node
     if (currentDimensionDetails?.isCategorical) {
@@ -140,11 +142,13 @@ export class CompositionService {
           const currentLeafName = node.childrenLeafList[i];
 
           // Skip if currentLeafName is undefined or if it was already processed as part of a collapsed child
-          if (
-            !currentLeafName ||
-            processedCollapsedChildren.has(currentLeafName)
-          ) {
-            continue;
+          if (isIndiVarCase) {
+            if (
+              !currentLeafName ||
+              processedCollapsedChildren.has(currentLeafName)
+            ) {
+              continue;
+            }
           }
 
           const currentClusterDetails =
@@ -184,7 +188,7 @@ export class CompositionService {
       }
     }
 
-    if (node.isCollapsed) {
+    if (node.isCollapsed && isIndiVarCase) {
       compositionValues = this.mergeAllContiguousModels(compositionValues);
       compositionValues = this.formatCompositions(node, compositionValues);
     }
