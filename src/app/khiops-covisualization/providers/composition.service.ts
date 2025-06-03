@@ -173,9 +173,14 @@ export class CompositionService {
                 this.importExtDatasService.getImportedDatasFromDimension(
                   currentDimensionDetails,
                 );
+              const currentPartIndex =
+                currentDimensionDetails.innerVariables?.dimensionSummaries?.findIndex(
+                  (e) => e.name === parts?.[j]?.[0],
+                );
               const composition = new CompositionModel(
                 currentClusterDetails,
                 currentDimensionHierarchyCluster,
+                currentPartIndex ?? -1,
                 j,
                 externalDatas,
                 currentDimensionDetails.innerVariables,
@@ -905,9 +910,14 @@ export class CompositionService {
                 this.importExtDatasService.getImportedDatasFromDimension(
                   currentDimensionDetails,
                 );
+              const currentPartIndex =
+                currentDimensionDetails.innerVariables?.dimensionSummaries?.findIndex(
+                  (e) => e.name === parts?.[j]?.[0],
+                );
               const composition = new CompositionModel(
                 currentClusterDetails,
                 currentDimensionHierarchyCluster,
+                currentPartIndex ?? -1,
                 j,
                 externalDatas,
                 currentDimensionDetails.innerVariables,

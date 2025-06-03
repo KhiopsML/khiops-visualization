@@ -29,6 +29,7 @@ export class CompositionModel {
   constructor(
     object: ValueGroup,
     currentDimensionHierarchyCluster: TreeNodeModel,
+    currentPartIndex: number,
     index: number,
     externalDatas: ExtDatasModel,
     innerVariables?:
@@ -51,12 +52,14 @@ export class CompositionModel {
     if (innerVariables) {
       // get the valueGroups of current cluster to have the exhaustive list of values
       const clusterIndex = innerVariables.dimensionPartitions[
-        index
+        currentPartIndex
       ]?.valueGroups?.findIndex((item) => item.cluster === this.value);
       this.valueGroups =
-        innerVariables?.dimensionPartitions[index]?.valueGroups &&
+        innerVariables?.dimensionPartitions[currentPartIndex]?.valueGroups &&
         clusterIndex !== undefined
-          ? innerVariables.dimensionPartitions[index]?.valueGroups[clusterIndex]
+          ? innerVariables.dimensionPartitions[currentPartIndex]?.valueGroups[
+              clusterIndex
+            ]
           : undefined;
 
       this.innerVariable = innerValues?.[0]?.toString();
