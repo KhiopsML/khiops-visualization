@@ -34,7 +34,9 @@
             [ngClass]="{ disabled: !dimensionLayout.isChecked }"
             (click)="toggleDimension(dimensionLayout)"
           >
-            <mat-checkbox [checked]="dimensionLayout.isChecked"
+            <mat-checkbox
+              [checked]="dimensionLayout.isChecked"
+              (change)="changeDimensionChecked($event)"
               >{{ dimensionLayout.name }}
             </mat-checkbox>
           </div>
