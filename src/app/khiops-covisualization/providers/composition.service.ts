@@ -231,26 +231,27 @@ export class CompositionService {
             .map((item) => item.frequency)
             .filter((freq): freq is number => freq !== undefined);
         }
-      }
 
-      if (
-        composition.valueGroups?.values &&
-        composition.valueGroups.values.length > 3
-      ) {
-        // if valueGroups.values count is greater than 3
-        // crop the composition.part and add ellipsis
-        const croppedValues = composition.valueGroups.values.slice(0, 3);
-        const ellipsis = '...';
-        let separator = ', ';
-        composition.part = `{${croppedValues.join(separator)}${separator}${ellipsis}}`;
-      } else if (
-        composition.valueGroups?.values &&
-        composition.valueGroups.values.length < 3
-      ) {
-        // if valueGroups.values count is less than 3
-        // concatenate the values surrounded by { and }
-        let separator = ', ';
-        composition.part = `{${composition.valueGroups.values.join(separator)}}`;
+        if (
+          composition.valueGroups?.values &&
+          composition.valueGroups.values.length > 3
+        ) {
+          // if valueGroups.values count is greater than 3
+          // crop the composition.part and add ellipsis
+          const croppedValues = composition.valueGroups.values.slice(0, 3);
+          const ellipsis = '...';
+          let separator = ', ';
+          composition.part = `{${croppedValues.join(separator)}${separator}${ellipsis}}`;
+        } else if (
+          composition.valueGroups?.values &&
+          composition.valueGroups.values.length < 3
+        ) {
+          // if valueGroups.values count is less than 3
+          // concatenate the values surrounded by { and }
+          let separator = ', ';
+          composition.part = `{${composition.valueGroups.values.join(separator)}}`;
+        }
+        composition.valueGroups.cluster = node.cluster;
       }
     }
     return compositionValues;
