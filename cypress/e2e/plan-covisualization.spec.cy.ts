@@ -32,7 +32,6 @@ describe('Test Plan for Khiops Covisualization', () => {
 
   files.forEach((fileName, fileIndex) => {
     it(`Check values for ${fileName}`, () => {
-
       //@ts-ignore
       cy.initViews();
 
@@ -42,6 +41,8 @@ describe('Test Plan for Khiops Covisualization', () => {
       const res = expectedResults[fileIndex];
 
       cy.readFile('./src/assets/mocks/kc/' + fileName).then((datas) => {
+        cy.wait(500);
+
         // Move to the first matrix cell
         cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
           position: 'bottomLeft',
@@ -55,6 +56,8 @@ describe('Test Plan for Khiops Covisualization', () => {
         // Fold some nodes nodes
         cy.get('#tree_0').find('.tree-expando:eq(1)').click();
         cy.get('#tree_1').find('.tree-expando:eq(1)').click();
+
+        cy.wait(500);
 
         // Move to the first matrix cell
         cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
