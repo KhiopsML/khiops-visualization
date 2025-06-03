@@ -232,20 +232,21 @@ export class CompositionService {
         // crop the composition.part and add ellipsis
         const croppedValues = composition.valueGroups.values.slice(0, 3);
         const ellipsis = '...';
-        const separator = composition.part?.includes(',') ? ', ' : '; ';
+        let separator = ', ';
         composition.part = `{${croppedValues.join(separator)}${separator}${ellipsis}}`;
       } else if (
         composition.valueGroups?.values &&
         composition.valueGroups.values.length < 3
       ) {
         // if valueGroups.values count is less than 3
-        // concatenate the values surrounded by { and } separated by the existing separator
-        const separator = composition.part?.includes(',') ? ', ' : '; ';
+        // concatenate the values surrounded by { and }
+        let separator = ', ';
         composition.part = `{${composition.valueGroups.values.join(separator)}}`;
       }
     }
     return compositionValues;
   }
+
   /**
    * Retrieves composition values for the "Individuals * Variables" case.
    */
@@ -320,75 +321,6 @@ export class CompositionService {
       bounds1.upperBound === bounds2.lowerBound ||
       bounds2.upperBound === bounds1.lowerBound
     );
-  }
-
-  /**
-   * Merges two contiguous intervals into a single one
-   */
-  mergeIntervals(interval1: string, interval2: string): string {
-    const extractBounds = (
-      interval: string,
-    ): {
-      lowerBound: number;
-      upperBound: number;
-      format: string;
-      separator: string;
-    } => {
-      let lowerBound: number,
-        upperBound: number,
-        format: string,
-        separator: string;
-
-      if (INF_PATTERN.test(interval)) {
-        const match = interval.match(INF_PATTERN);
-        lowerBound = -Infinity;
-        upperBound = match ? parseFloat(match[2]!) : NaN;
-        separator = match ? match[1]! : ';';
-        format = 'inf';
-      } else if (PLUS_INF_PATTERN.test(interval)) {
-        const match = interval.match(PLUS_INF_PATTERN);
-        lowerBound = match ? parseFloat(match[1]!) : NaN;
-        upperBound = Infinity;
-        separator = match ? match[2]! : ';';
-        format = 'plusInf';
-      } else if (RANGE_PATTERN.test(interval)) {
-        const match = interval.match(RANGE_PATTERN);
-        lowerBound = match ? parseFloat(match[1]!) : NaN;
-        upperBound = match ? parseFloat(match[3]!) : NaN;
-        separator = match ? match[2]! : ';';
-        format = 'range';
-      } else {
-        return {
-          lowerBound: NaN,
-          upperBound: NaN,
-          format: 'unknown',
-          separator: ';',
-        };
-      }
-
-      return { lowerBound, upperBound, format, separator };
-    };
-
-    const bounds1 = extractBounds(interval1);
-    const bounds2 = extractBounds(interval2);
-
-    // Determine new min and max bounds
-    const minLowerBound = Math.min(bounds1.lowerBound, bounds2.lowerBound);
-    const maxUpperBound = Math.max(bounds1.upperBound, bounds2.upperBound);
-
-    // Use the separator from the first interval
-    const separator = bounds1.separator;
-
-    // Format the new interval
-    if (minLowerBound === -Infinity && maxUpperBound === Infinity) {
-      return `]-inf${separator}+inf[`;
-    } else if (minLowerBound === -Infinity) {
-      return `]-inf${separator}${maxUpperBound}]`;
-    } else if (maxUpperBound === Infinity) {
-      return `]${minLowerBound}${separator}+inf[`;
-    } else {
-      return `]${minLowerBound}${separator}${maxUpperBound}]`;
-    }
   }
 
   /**
