@@ -737,5 +737,293 @@ describe('coVisualization', () => {
         expect(result).toEqual(true);
       });
     });
+
+    describe('formatCompositions', () => {
+      it('should set rank of all compositions to match the parent node rank', () => {
+        // Create a mock TreeNodeModel with rank
+        const parentNode = {
+          rank: 5,
+        } as any;
+
+        // Create compositions with different ranks
+        const compositions: CompositionModel[] = [
+          {
+            _id: 'comp1',
+            cluster: 'cluster1',
+            terminalCluster: 'terminalCluster1',
+            innerVariable: 'TestVar',
+            innerVariableType: TYPES.CATEGORICAL,
+            part: ['{A, B}'],
+            frequency: 10,
+            rank: 1, // Different rank
+            value: 'TestVar {A, B}',
+          } as CompositionModel,
+          {
+            _id: 'comp2',
+            cluster: 'cluster2',
+            terminalCluster: 'terminalCluster2',
+            innerVariable: 'TestVar2',
+            innerVariableType: TYPES.NUMERICAL,
+            part: [']0;10]'],
+            frequency: 15,
+            rank: 3, // Different rank
+            value: 'TestVar2 ]0;10]',
+          } as CompositionModel,
+        ];
+
+        const result = compositionService.formatCompositions(
+          parentNode,
+          compositions,
+        );
+
+        // Verify all compositions have the parent node's rank
+        expect(result.length).toBe(2);
+        expect(result[0]?.rank).toEqual(5);
+        expect(result[1]?.rank).toEqual(5);
+      });
+
+      it('should sort valueGroups values and frequencies by frequency in descending order', () => {
+        const parentNode = { rank: 2 } as any;
+
+        const compositions: CompositionModel[] = [
+          {
+            _id: 'comp1',
+            cluster: 'cluster1',
+            terminalCluster: 'terminalCluster1',
+            innerVariable: 'TestVar',
+            innerVariableType: TYPES.CATEGORICAL,
+            part: ['{A, B, C}'],
+            frequency: 10,
+            rank: 1,
+            value: 'TestVar {A, B, C}',
+            valueGroups: {
+              cluster: 'cluster1',
+              values: ['A', 'B', 'C'], // Will be sorted by frequency
+              valueFrequencies: [5, 15, 10], // B(15), C(10), A(5)
+              valueTypicalities: [0.8, 0.9, 0.7],
+            },
+          } as CompositionModel,
+        ];
+
+        const result = compositionService.formatCompositions(
+          parentNode,
+          compositions,
+        );
+
+        // Verify sorting by frequency (descending)
+        expect(result[0]?.valueGroups?.values).toEqual(['B', 'C', 'A']);
+        expect(result[0]?.valueGroups?.valueFrequencies).toEqual([15, 10, 5]);
+      });
+
+      it('should format part with ellipsis when more than 3 values with semicolon separator', () => {
+        const parentNode = { rank: 2 } as any;
+
+        const compositions: CompositionModel[] = [
+          {
+            _id: 'comp1',
+            cluster: 'cluster1',
+            terminalCluster: 'terminalCluster1',
+            innerVariable: 'TestVar',
+            innerVariableType: TYPES.CATEGORICAL,
+            part: ['{A; B; C; D; E}'], // More than 3 values with semicolon
+            frequency: 10,
+            rank: 1,
+            value: 'TestVar {A, B, C, D, E}',
+            valueGroups: {
+              cluster: 'cluster1',
+              values: ['A', 'B', 'C', 'D', 'E'],
+              valueFrequencies: [5, 15, 10, 8, 12],
+              valueTypicalities: [0.8, 0.9, 0.7, 0.6, 0.85],
+            },
+          } as CompositionModel,
+        ];
+
+        const result = compositionService.formatCompositions(
+          parentNode,
+          compositions,
+        );
+
+        // Should show first 3 highest frequency values + ellipsis with semicolon separator
+        expect(result[0]?.part).toEqual('{B, E, C, ...}');
+      });
+
+      it('should format part with ellipsis when more than 3 values with comma separator', () => {
+        const parentNode = { rank: 2 } as any;
+
+        const compositions: CompositionModel[] = [
+          {
+            _id: 'comp1',
+            cluster: 'cluster1',
+            terminalCluster: 'terminalCluster1',
+            innerVariable: 'TestVar',
+            innerVariableType: TYPES.CATEGORICAL,
+            part: ['{A, B, C, D}'], // More than 3 values with comma
+            frequency: 10,
+            rank: 1,
+            value: 'TestVar {A, B, C, D}',
+            valueGroups: {
+              cluster: 'cluster1',
+              values: ['A', 'B', 'C', 'D'],
+              valueFrequencies: [5, 15, 10, 8],
+              valueTypicalities: [0.8, 0.9, 0.7, 0.6],
+            },
+          } as CompositionModel,
+        ];
+
+        const result = compositionService.formatCompositions(
+          parentNode,
+          compositions,
+        );
+
+        // Should show first 3 highest frequency values + ellipsis with comma separator
+        expect(result[0]?.part).toEqual('{B, C, D, ...}');
+      });
+
+      it('should format part without ellipsis when less than 3 values', () => {
+        const parentNode = { rank: 3 } as any;
+
+        const compositions: CompositionModel[] = [
+          {
+            _id: 'comp1',
+            cluster: 'cluster1',
+            terminalCluster: 'terminalCluster1',
+            innerVariable: 'TestVar',
+            innerVariableType: TYPES.CATEGORICAL,
+            part: ['{A, B}'], // Less than 3 values
+            frequency: 10,
+            rank: 1,
+            value: 'TestVar {A, B}',
+            valueGroups: {
+              cluster: 'cluster1',
+              values: ['A', 'B'],
+              valueFrequencies: [5, 15],
+              valueTypicalities: [0.8, 0.9],
+            },
+          } as CompositionModel,
+          {
+            _id: 'comp2',
+            cluster: 'cluster2',
+            terminalCluster: 'terminalCluster2',
+            innerVariable: 'TestVar2',
+            innerVariableType: TYPES.CATEGORICAL,
+            part: ['{X; Y}'], // Less than 3 values with semicolon
+            frequency: 8,
+            rank: 2,
+            value: 'TestVar2 {X, Y}',
+            valueGroups: {
+              cluster: 'cluster2',
+              values: ['X', 'Y'],
+              valueFrequencies: [12, 8],
+              valueTypicalities: [0.7, 0.6],
+            },
+          } as CompositionModel,
+        ];
+
+        const result = compositionService.formatCompositions(
+          parentNode,
+          compositions,
+        );
+
+        // Should show all values without ellipsis, preserving separator style
+        expect(result[0]?.part).toEqual('{B, A}'); // Sorted by frequency: B(15), A(5)
+        expect(result[1]?.part).toEqual('{X, Y}'); // Sorted by frequency: X(12), Y(8)
+      });
+
+      it('should format numerical part with semicolon separator when less than 3 intervals', () => {
+        const parentNode = { rank: 2 } as any;
+
+        const compositions: CompositionModel[] = [
+          {
+            _id: 'comp1',
+            cluster: 'cluster1',
+            terminalCluster: 'terminalCluster1',
+            innerVariable: 'NumericalVar',
+            innerVariableType: TYPES.NUMERICAL,
+            part: [']0;10]', ']10;20]'], // 2 intervals with semicolon
+            frequency: 25,
+            rank: 1,
+            value: 'NumericalVar intervals',
+            valueGroups: {
+              cluster: 'cluster1',
+              values: [']0;10]', ']10;20]'],
+              valueFrequencies: [15, 10],
+              valueTypicalities: [0.8, 0.7],
+            },
+          } as CompositionModel,
+        ];
+
+        const result = compositionService.formatCompositions(
+          parentNode,
+          compositions,
+        );
+
+        // Should show all intervals without ellipsis, preserving semicolon separator
+        expect(result[0]?.part).toEqual('{]0;10], ]10;20]}');
+      });
+
+      it('should format numerical part with comma separator when less than 3 intervals', () => {
+        const parentNode = { rank: 3 } as any;
+
+        const compositions: CompositionModel[] = [
+          {
+            _id: 'comp1',
+            cluster: 'cluster1',
+            terminalCluster: 'terminalCluster1',
+            innerVariable: 'NumericalVar',
+            innerVariableType: TYPES.NUMERICAL,
+            part: [']0,10]'], // 1 interval with comma
+            frequency: 20,
+            rank: 1,
+            value: 'NumericalVar single interval',
+            valueGroups: {
+              cluster: 'cluster1',
+              values: [']0,10]'],
+              valueFrequencies: [20],
+              valueTypicalities: [0.9],
+            },
+          } as CompositionModel,
+        ];
+
+        const result = compositionService.formatCompositions(
+          parentNode,
+          compositions,
+        );
+
+        // Should show the interval without ellipsis, preserving comma separator
+        expect(result[0]?.part).toEqual('{]0,10]}');
+      });
+
+      it('should format numerical part with ellipsis when more than 3 intervals', () => {
+        const parentNode = { rank: 4 } as any;
+
+        const compositions: CompositionModel[] = [
+          {
+            _id: 'comp1',
+            cluster: 'cluster1',
+            terminalCluster: 'terminalCluster1',
+            innerVariable: 'NumericalVar',
+            innerVariableType: TYPES.NUMERICAL,
+            part: [']0;10]', ']10;20]', ']20;30]', ']30;40]', ']40;50]'], // 5 intervals
+            frequency: 50,
+            rank: 1,
+            value: 'NumericalVar multiple intervals',
+            valueGroups: {
+              cluster: 'cluster1',
+              values: [']0;10]', ']10;20]', ']20;30]', ']30;40]', ']40;50]'],
+              valueFrequencies: [8, 15, 12, 10, 5],
+              valueTypicalities: [0.7, 0.9, 0.8, 0.75, 0.6],
+            },
+          } as CompositionModel,
+        ];
+
+        const result = compositionService.formatCompositions(
+          parentNode,
+          compositions,
+        );
+
+        // Should show first 3 highest frequency intervals + ellipsis with semicolon separator
+        expect(result[0]?.part).toEqual('{]10;20], ]20;30], ]30;40], ...}');
+      });
+    });
   });
 });
