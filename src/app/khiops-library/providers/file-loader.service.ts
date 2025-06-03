@@ -143,8 +143,10 @@ export class FileLoaderService {
     // let urlKC = './assets/mocks/kc/adultmissing.json';
     // let urlKC = './assets/mocks/kc/DigitCoclustering.json';
     // let urlKC = './assets/mocks/kc/8-TS4624User_Coclustering.json';
-    // let urlKC = './assets/mocks/kc/IV-AdultEducation.khcj';
-    let urlKC = './assets/mocks/kc/IV-Iris.khcj';
+    let urlKC = './assets/mocks/kc/IV-AdultEducation.khcj';
+    // let urlKC = './assets/mocks/kc/Coclustering-IV-Glass.khcj';
+    // let urlKC = './assets/mocks/kc/IV-Iris.khcj';
+    // let urlKC = './assets/mocks/kc/Coclustering-IV-Pima.khcj';
     // let urlKC = './assets/mocks/kc/Coclustering_NewSeparator.khcj';
     // let urlKC = './assets/mocks/kc/check-ext-datas.json';
     // let urlKC = './assets/mocks/kc/mushroom.json';
@@ -243,7 +245,7 @@ export class FileLoaderService {
     };
     if (currentLs) {
       // parsedLs = JSON.parse(currentLs);
-      parsedLs = (currentLs);
+      parsedLs = currentLs;
       const isExistingHistoryIndex = parsedLs.files.indexOf(filename);
 
       if (isExistingHistoryIndex !== -1) {
@@ -266,7 +268,7 @@ export class FileLoaderService {
     const currentLs = this.ls.get(LS.OPEN_FILE);
     if (currentLs) {
       // return JSON.parse(currentLs);
-      return (currentLs);
+      return currentLs;
     } else {
       return {
         files: [],

@@ -82,6 +82,14 @@ export function getCompositionDisplayedColumns(
         field: 'frequency',
         tooltip: translate.get('TOOLTIPS.AXIS.COMPOSITION.FREQUENCY'),
       },
+      {
+        headerName: 'type',
+        field: 'type',
+      },
+      {
+        headerName: 'debug',
+        field: 'debug',
+      },
     ];
   }
 }

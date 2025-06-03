@@ -198,6 +198,13 @@ export class CompositionService {
       compositionValues = this.formatCompositions(node, compositionValues);
     }
 
+    // debug display
+    for (const composition of compositionValues) {
+      // @ts-ignore
+      composition.debug = JSON.stringify(composition.valueGroups);
+      // @ts-ignore
+      composition.type = composition.innerVariableType;
+    }
     return compositionValues;
   }
 
