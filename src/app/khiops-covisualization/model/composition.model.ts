@@ -7,10 +7,12 @@
 import {
   DimensionCovisualization,
   DimensionPartition,
+  Interval,
   ValueGroup,
 } from '@khiops-covisualization/interfaces/app-datas';
 import { ExtDatasModel } from './ext-datas.model';
 import { TreeNodeModel } from './tree-node.model';
+import { TYPES } from '@khiops-library/enum/types';
 
 export class CompositionModel {
   _id: string;
@@ -25,6 +27,8 @@ export class CompositionModel {
   externalData: string | undefined;
   innerVariableType?: string;
   valueGroups?: ValueGroup | undefined;
+  intervals?: Interval | undefined;
+  detailedParts?: ValueGroup | undefined;
 
   constructor(
     object: ValueGroup,
@@ -50,24 +54,31 @@ export class CompositionModel {
     this.frequency = object.valueFrequencies[index];
 
     if (innerVariables) {
-      // get the valueGroups of current cluster to have the exhaustive list of values
-      const clusterIndex = innerVariables.dimensionPartitions[
-        currentPartIndex
-      ]?.valueGroups?.findIndex((item) => item.cluster === this.value);
-      this.valueGroups =
-        innerVariables?.dimensionPartitions[currentPartIndex]?.valueGroups &&
-        clusterIndex !== undefined
-          ? innerVariables.dimensionPartitions[currentPartIndex]?.valueGroups[
-              clusterIndex
-            ]
-          : undefined;
+      const partition = innerVariables.dimensionPartitions[currentPartIndex];
+      if (partition?.type === TYPES.CATEGORICAL) {
+        // get the valueGroups of current cluster to have the exhaustive list of values
+        const clusterIndex = partition?.valueGroups?.findIndex(
+          (item) => item.cluster === this.value,
+        );
+        this.valueGroups =
+          partition?.valueGroups && clusterIndex !== undefined
+            ? partition?.valueGroups[clusterIndex]
+            : undefined;
+      } else {
+        const clusterIndex = partition?.intervals?.findIndex(
+          (item) => item.cluster === this.value,
+        );
+        this.intervals =
+          partition?.intervals && clusterIndex !== undefined
+            ? partition?.intervals[clusterIndex]
+            : undefined;
+      }
 
       this.innerVariable = innerValues?.[0]?.toString();
       this.innerVariableType =
         innerVariables?.dimensionSummaries?.[index]?.type;
       const currentParts = innerValues?.[1];
       this.part = currentParts;
-
       this.frequency = 0;
       for (let j = 0; currentParts && j < currentParts.length; j++) {
         const currentPart = currentParts[j];

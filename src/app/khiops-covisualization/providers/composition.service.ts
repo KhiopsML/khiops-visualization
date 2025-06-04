@@ -23,6 +23,8 @@ const PLUS_INF_PATTERN = /\]([\d.]+)[;,]\+inf\[/;
   providedIn: 'root',
 })
 export class CompositionService {
+  public compositionValues!: CompositionModel[];
+
   constructor(
     private appService: AppService,
     private dimensionsDatasService: DimensionsDatasService,
@@ -198,13 +200,12 @@ export class CompositionService {
       compositionValues = this.formatCompositions(node, compositionValues);
     }
 
-    // debug display
     for (const composition of compositionValues) {
-      // @ts-ignore
-      composition.debug = JSON.stringify(composition.valueGroups);
+      composition.detailedParts = composition.valueGroups;
       // @ts-ignore
       composition.type = composition.innerVariableType;
     }
+    this.compositionValues = compositionValues;
     return compositionValues;
   }
 
@@ -939,5 +940,20 @@ export class CompositionService {
     }
 
     return compositionValues;
+  }
+
+  /**
+   * Retrieves the detailedParts for a composition based on its _id.
+   *
+   * @param id - The unique identifier of the composition
+   * @returns The detailedParts of the composition, or undefined if not found
+   */
+  getCompositionDetailedPartsFromId(id: string): any | undefined {
+    if (!this.compositionValues || this.compositionValues.length === 0) {
+      return undefined;
+    }
+
+    const composition = this.compositionValues.find((comp) => comp._id === id);
+    return composition?.detailedParts;
   }
 }
