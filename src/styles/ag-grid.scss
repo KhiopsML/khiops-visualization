@@ -40,6 +40,10 @@ ag-grid-angular {
   color: white !important;
   // transition: background-color 0.1s !important;
   transition: none !important;
+
+  mat-icon {
+    color: white !important;
+  }
 }
 
 .ag-theme-balham .ag-cell {

@@ -1,0 +1,44 @@
+#composition-detailed-parts-comp {
+  padding-bottom: 1.6em;
+
+  #composition-detailed-parts-header {
+    height: 68px;
+
+    h2 {
+      margin-left: 1em;
+    }
+
+    button {
+      margin-left: 1em;
+    }
+  }
+
+  #composition-detailed-parts-content {
+    overflow: hidden;
+    max-height: 70vh;
+
+    #composition-detailed-parts-list-table {
+      padding: 1em;
+      margin-bottom: 1em;
+    }
+  }
+
+  #composition-detailed-parts-content-empty {
+    margin: 3em;
+
+    span {
+      text-align: center;
+    }
+  }
+
+  kl-ag-grid {
+    border: 1px solid #eee;
+    min-height: 212px;
+    max-height: 212px;
+    height: 212px !important;
+
+    ::ng-deep .ag-center-cols-viewport {
+      overflow-x: hidden;
+    }
+  }
+}

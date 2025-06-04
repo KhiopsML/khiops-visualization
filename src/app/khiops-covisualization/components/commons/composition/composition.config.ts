@@ -6,10 +6,13 @@
 
 import { TranslateService } from '@ngstack/translate';
 import { GridColumnsI } from '../../../../khiops-library/interfaces/grid-columns';
+import { IconCellComponent } from '../../../../khiops-library/components/ag-grid/icon-cell/icon-cell.component';
+import { ICellRendererParams } from '@ag-grid-community/core';
 
 export function getCompositionDisplayedColumns(
   translate: TranslateService,
   isVarPart?: boolean,
+  showDetailedPartsCallback?: (data: any) => void,
 ): GridColumnsI[] {
   if (!isVarPart) {
     // Common case
@@ -78,6 +81,19 @@ export function getCompositionDisplayedColumns(
         tooltip: translate.get('TOOLTIPS.AXIS.COMPOSITION.PART'),
       },
       {
+        headerName: translate.get('GLOBAL.PART_DETAILS'),
+        field: 'remove',
+        cellRendererFramework: IconCellComponent,
+        cellRendererParams: {
+          icon: 'add_box',
+          action: (e: ICellRendererParams) => {
+            if (showDetailedPartsCallback) {
+              showDetailedPartsCallback(e);
+            }
+          },
+        },
+      },
+      {
         headerName: translate.get('GLOBAL.FREQUENCY'),
         field: 'frequency',
         tooltip: translate.get('TOOLTIPS.AXIS.COMPOSITION.FREQUENCY'),
@@ -87,8 +103,8 @@ export function getCompositionDisplayedColumns(
         field: 'type',
       },
       {
-        headerName: 'debug',
-        field: 'debug',
+        headerName: 'detailedParts',
+        field: 'detailedParts',
       },
     ];
   }

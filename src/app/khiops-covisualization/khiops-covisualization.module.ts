@@ -36,6 +36,7 @@ import { ExternalDatasComponent } from './components/commons/external-datas/exte
 import { HierarchyDetailsComponent } from './components/commons/hierarchy-details/hierarchy-details.component';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { InAppOverlayContainer } from '../khiops-library/overlay/in-app-overlay-provider';
+import { CompositionDetailedPartsComponent } from './components/commons/composition-detailed-parts/composition-detailed-parts.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { InAppOverlayContainer } from '../khiops-library/overlay/in-app-overlay-
     LoadExtDatasComponent,
     ImportExtDatasComponent,
     ImportExtDatasListComponent,
+    CompositionDetailedPartsComponent,
     ExternalDatasComponent,
   ],
   imports: [

@@ -27,6 +27,14 @@ import { ExtDatasModel } from '@khiops-covisualization/model/ext-datas.model';
 import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
 import { getCompositionDisplayedColumns } from './composition.config';
 import { CompositionService } from '@khiops-covisualization/providers/composition.service';
+import { ICellRendererParams } from '@ag-grid-community/core';
+import {
+  MatDialog,
+  MatDialogConfig,
+  MatDialogRef,
+} from '@angular/material/dialog';
+import { AppConfig } from '../../../../../environments/environment.dev';
+import { CompositionDetailedPartsComponent } from '../composition-detailed-parts/composition-detailed-parts.component';
 
 @Component({
   selector: 'app-composition',
@@ -57,6 +65,7 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
     private treenodesService: TreenodesService,
     private compositionService: CompositionService,
     private eventsService: EventsService,
+    private dialog: MatDialog,
   ) {
     this.treeSelectedNodeChangedSub =
       this.eventsService.treeSelectedNodeChanged.subscribe((e) => {
@@ -113,6 +122,7 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
       this.compositionDisplayedColumns = getCompositionDisplayedColumns(
         this.translate,
         this.selectedDimension?.isVarPart,
+        (e) => this.showDetailedPartsDialog(e),
       );
       this.updateTable(this.selectedNode);
     }
@@ -130,6 +140,30 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
       this.selectedDimension?.name!,
       item.cluster,
     );
+  }
+
+  showDetailedPartsDialog(e: ICellRendererParams) {
+    console.log('Show detailed parts dialog', e);
+
+    // get the current composition
+    if (!e.data || !e.data._id) {
+      return;
+    }
+    // get detailed parts from _id
+    const detailedParts: CompositionModel | undefined =
+      this.compositionService.getCompositionDetailedPartsFromId(e.data._id);
+    console.log(
+      ' CompositionComponent ~ showDetailedPartsDialog ~ detailedParts:',
+      detailedParts,
+    );
+
+    const config = new MatDialogConfig();
+    config.width = AppConfig.covisualizationCommon.MANAGE_VIEWS.WIDTH;
+    config.maxWidth = AppConfig.covisualizationCommon.MANAGE_VIEWS.MAX_WIDTH;
+    const dialogRef: MatDialogRef<CompositionDetailedPartsComponent> =
+      this.dialog.open(CompositionDetailedPartsComponent, config);
+    dialogRef.componentInstance.detailedParts = detailedParts;
+    dialogRef.disableClose = false;
   }
 
   onSelectRowChanged(item: CompositionModel) {
