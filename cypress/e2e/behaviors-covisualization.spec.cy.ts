@@ -6,7 +6,6 @@ describe('Behaviors tests for Khiops Covisualization', () => {
   let files = ['DigitCoclustering.json'];
   files.forEach((fileName) => {
     it(`Test unfold hierarchy slider on big datas and hierarchy checkboxes`, () => {
-
       //@ts-ignore
       cy.initViews();
 
@@ -52,7 +51,6 @@ describe('Behaviors tests for Khiops Covisualization', () => {
     });
 
     it(`Test unfold hierarchy slider on big datas`, () => {
-
       //@ts-ignore
       cy.initViews();
       //@ts-ignore
@@ -101,12 +99,12 @@ describe('Behaviors tests for Khiops Covisualization', () => {
   files = ['DigitCoclustering.json'];
   files.forEach((fileName) => {
     it(`Test unfold hierarchy on big datas`, () => {
-
       //@ts-ignore
       cy.initViews();
       //@ts-ignore
       cy.loadFile('covisualization', fileName);
 
+      cy.wait(500);
       // Now we check matrix values
       cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
         position: 'center',
@@ -161,7 +159,6 @@ describe('Behaviors tests for Khiops Covisualization', () => {
   files = ['CC_3_Coclustering.json'];
   files.forEach((fileName) => {
     it(`Test dimension change`, () => {
-
       //@ts-ignore
       cy.initViews();
 
@@ -192,7 +189,6 @@ describe('Behaviors tests for Khiops Covisualization', () => {
   files = ['CC_3_Coclustering.json'];
   files.forEach((fileName) => {
     it(`Test behaviors clicks`, () => {
-
       //@ts-ignore
       cy.initViews();
 
@@ -222,12 +218,14 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       cy.get('#cluster-composition-0').contains('A10');
       cy.get('.annotation-comp').first().contains('A10');
       cy.get('#cluster-distribution-1').contains('A10');
+      cy.wait(500);
       cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
         position: 'bottomRight',
       });
       cy.get('.matrix-tooltip-comp').contains('A10');
       cy.get('#selected-clusters-grid').contains('A10');
 
+      cy.wait(500);
       // ### Click on matrix cell
       cy.get('#matrix-selected')
         .should('be.visible')

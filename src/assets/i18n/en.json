@@ -100,6 +100,8 @@
     "ALLOW": "Ok"
   },
   "GLOBAL": {
+    "INNER_VARIABLE": "Inner variable",
+    "PART": "Part",
     "INTERPRETABLE_HISTOGRAM": "Default interpretable histogram",
     "NO_DERIVATION_RULE": "No derivation rule",
     "BOUNDS": "Bounds",
@@ -517,7 +519,9 @@
         "RANK": "The column “Rank” provides the  ordering of the items in the hierarchy view.",
         "TYPICALITY": "Interest measure of the value within its cluster, between 0 (least representative) and 1 (most representative)",
         "VALUE": "Value of the item",
-        "FREQUENCY": "The “Frequency” of an item is its number of occurrences in the cluster"
+        "FREQUENCY": "The “Frequency” of an item is its number of occurrences in the cluster",
+        "INNER_VARIABLE": "Inner variable description",
+        "PART": "Part description"
       },
       "EXTERNAL_DATAS": {
         "TITLE": "Integrate external data associated to each cluster element. The selection of an item in the composition view display the corresponding data in this view. There are 3 types of data fields: textual, numerical and categorical. The display is optimized according to the data type. Several fields can be associated for each item."

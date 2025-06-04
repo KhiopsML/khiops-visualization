@@ -14,10 +14,10 @@ import { MAT_RIPPLE_COLOR } from '@khiops-covisualization/config/colors';
 import { DimensionViewLayoutModel } from '@khiops-covisualization/model/dimension-view-layout.model';
 
 @Component({
-    selector: 'app-manage-views',
-    templateUrl: './manage-views.component.html',
-    styleUrls: ['./manage-views.component.scss'],
-    standalone: false
+  selector: 'app-manage-views',
+  templateUrl: './manage-views.component.html',
+  styleUrls: ['./manage-views.component.scss'],
+  standalone: false,
 })
 export class ManageViewsComponent {
   public viewsLayout: ViewLayoutVO | undefined;
@@ -44,9 +44,13 @@ export class ManageViewsComponent {
     this.dialogRef.close();
   }
 
-  toggleDimension(dimensionLayout: DimensionViewLayoutModel): boolean {
+  toggleDimension(dimensionLayout: DimensionViewLayoutModel) {
     dimensionLayout.isChecked = !dimensionLayout.isChecked;
-    return false;
+  }
+
+  changeDimensionChecked(event: Event): void {
+    event.stopPropagation();
+    event.preventDefault();
   }
 
   /**

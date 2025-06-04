@@ -50,6 +50,7 @@ export interface DimensionCovisualization {
   description: string;
   min?: number;
   max?: number;
+  isVarPart?: boolean;
 }
 
 export interface DimensionPartition {
@@ -57,6 +58,10 @@ export interface DimensionPartition {
   type: string;
   intervals?: Interval[];
   valueGroups?: ValueGroup[];
+  innerVariables?: {
+    dimensionSummaries: DimensionCovisualization[];
+    dimensionPartitions: DimensionPartition[];
+  };
   defaultGroupIndex?: number;
 }
 

@@ -18,7 +18,6 @@ import { TranslateService } from '@ngstack/translate';
 import { CompositionModel } from '@khiops-covisualization/model/composition.model';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
-import { ClustersService } from '@khiops-covisualization/providers/clusters.service';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
 import { Subscription } from 'rxjs';
 import _ from 'lodash';
@@ -27,12 +26,13 @@ import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
 import { ExtDatasModel } from '@khiops-covisualization/model/ext-datas.model';
 import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
 import { getCompositionDisplayedColumns } from './composition.config';
+import { CompositionService } from '@khiops-covisualization/providers/composition.service';
 
 @Component({
-    selector: 'app-composition',
-    templateUrl: './composition.component.html',
-    styleUrls: ['./composition.component.scss'],
-    standalone: false
+  selector: 'app-composition',
+  templateUrl: './composition.component.html',
+  styleUrls: ['./composition.component.scss'],
+  standalone: false,
 })
 export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() public position: number = 0;
@@ -55,13 +55,9 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
     private translate: TranslateService,
     private importExtDatasService: ImportExtDatasService,
     private treenodesService: TreenodesService,
-    private clustersService: ClustersService,
+    private compositionService: CompositionService,
     private eventsService: EventsService,
   ) {
-    this.compositionDisplayedColumns = getCompositionDisplayedColumns(
-      this.translate,
-    );
-
     this.treeSelectedNodeChangedSub =
       this.eventsService.treeSelectedNodeChanged.subscribe((e) => {
         if (e.realNodeVO && e.hierarchyName === this.selectedDimension?.name) {
@@ -114,6 +110,10 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
         changes.selectedDimension?.previousValue?.name &&
       changes.selectedNode
     ) {
+      this.compositionDisplayedColumns = getCompositionDisplayedColumns(
+        this.translate,
+        this.selectedDimension?.isVarPart,
+      );
       this.updateTable(this.selectedNode);
     }
   }
@@ -144,15 +144,15 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
     if (selectedNode) {
       this.compositionValues = Object.assign(
         [],
-        this.clustersService.getCompositionClusters(
+        this.compositionService.getCompositionClusters(
           selectedNode.hierarchy,
           _.cloneDeep(selectedNode),
         ),
       );
       // if composition values : categorical
-      if (this.compositionValues.length > 0) {
+      if (this.compositionValues!.length > 0) {
         // Select first by default
-        this.selectedComposition = this.compositionValues[0];
+        this.selectedComposition = this.compositionValues?.[0];
         this.selectedCompositionChanged.emit(this.selectedComposition);
       }
     }

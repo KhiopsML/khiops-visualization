@@ -11,12 +11,9 @@ import { ChartDatasetModel } from '@khiops-library/model/chart-dataset.model';
 import { TranslateService } from '@ngstack/translate';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { AppService } from './app.service';
-import { CompositionModel } from '../model/composition.model';
 import { ClusterDetailsModel } from '@khiops-covisualization/model/cluster-details.model';
 import { TreenodesService } from './treenodes.service';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
-import { ExtDatasModel } from '@khiops-covisualization/model/ext-datas.model';
-import { ImportExtDatasService } from './import-ext-datas.service';
 import { CHART_TYPES } from '@khiops-library/enum/chart-types';
 import { MatrixUtilsService } from '@khiops-library/components/matrix/matrix.utils.service';
 import {
@@ -34,7 +31,6 @@ export class ClustersService {
     private appService: AppService,
     private treenodesService: TreenodesService,
     private dimensionsDatasService: DimensionsDatasService,
-    private importExtDatasService: ImportExtDatasService,
   ) {}
 
   /**
@@ -415,109 +411,6 @@ export class ClustersService {
     }
 
     return clustersPerDimDatas;
-  }
-
-  /**
-   * Retrieves the composition clusters for a given hierarchy and node.
-   * This method processes the dimension partitions and clusters to generate
-   * composition models, which include details about the clusters and their
-   * associated data.
-   *
-   * @param hierarchyName - The name of the hierarchy for which composition clusters are being retrieved.
-   * @param node - The node representing the current cluster in the hierarchy.
-   * @returns An array of CompositionModel containing details of the composition clusters.
-   */
-  getCompositionClusters(
-    hierarchyName: string,
-    node: TreeNodeModel,
-  ): CompositionModel[] {
-    const compositionValues: CompositionModel[] = [];
-
-    if (
-      this.appService.initialDatas?.coclusteringReport?.dimensionSummaries &&
-      this.appService.appDatas?.coclusteringReport?.dimensionPartitions &&
-      this.dimensionsDatasService.dimensionsDatas?.selectedDimensions
-    ) {
-      const currentDimensionDetails: DimensionCovisualizationModel | undefined =
-        this.dimensionsDatasService.dimensionsDatas.selectedDimensions.find(
-          (e) => e.name === hierarchyName,
-        );
-      if (currentDimensionDetails) {
-        const currentIndex: number =
-          this.dimensionsDatasService.dimensionsDatas.selectedDimensions.findIndex(
-            (e) => {
-              return hierarchyName === e.name;
-            },
-          );
-        const position = currentDimensionDetails.startPosition;
-        const currentInitialDimensionDetails: DimensionCovisualizationModel =
-          new DimensionCovisualizationModel(
-            this.appService.initialDatas.coclusteringReport.dimensionSummaries[
-              position
-            ]!,
-            currentIndex,
-          );
-        const dimensionPartition =
-          this.appService.initialDatas.coclusteringReport.dimensionPartitions[
-            position
-          ];
-
-        // Set  dimension partitions from intervals or valueGroup
-        currentInitialDimensionDetails.setPartition(dimensionPartition!);
-
-        // Composition only available for numerical Dimensions
-        if (currentDimensionDetails?.isCategorical) {
-          node.getChildrenList();
-
-          if (node.childrenLeafList) {
-            const currentDimensionClusters = Object.assign(
-              [],
-              this.dimensionsDatasService.dimensionsDatas.dimensionsClusters[
-                currentIndex
-              ],
-            );
-            const childrenLeafListLength = node.childrenLeafList.length;
-
-            for (let i = 0; i < childrenLeafListLength; i++) {
-              const currentLeafName = node.childrenLeafList[i];
-              // Check if this name has been updated
-              const currentClusterDetails =
-                currentInitialDimensionDetails.valueGroups?.find(
-                  (e) => e.cluster === currentLeafName,
-                );
-              if (currentClusterDetails) {
-                const currentClusterDetailsLength =
-                  currentClusterDetails.values.length;
-                for (let j = 0; j < currentClusterDetailsLength; j++) {
-                  const currentDimensionHierarchyCluster: any =
-                    currentDimensionClusters.find(
-                      (e: any) => e.cluster === currentLeafName,
-                    );
-                  if (node.isCollapsed) {
-                    currentDimensionHierarchyCluster.shortDescription =
-                      node.shortDescription;
-                  }
-                  const externalDatas: ExtDatasModel =
-                    this.importExtDatasService.getImportedDatasFromDimension(
-                      currentDimensionDetails,
-                    );
-
-                  const composition = new CompositionModel(
-                    currentClusterDetails,
-                    currentDimensionHierarchyCluster,
-                    j,
-                    externalDatas,
-                  );
-                  compositionValues.push(composition);
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-
-    return compositionValues;
   }
 
   /**

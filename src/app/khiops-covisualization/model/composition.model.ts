@@ -4,7 +4,11 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { ValueGroup } from '@khiops-covisualization/interfaces/app-datas';
+import {
+  DimensionCovisualization,
+  DimensionPartition,
+  ValueGroup,
+} from '@khiops-covisualization/interfaces/app-datas';
 import { ExtDatasModel } from './ext-datas.model';
 import { TreeNodeModel } from './tree-node.model';
 
@@ -14,15 +18,27 @@ export class CompositionModel {
   terminalCluster: string;
   typicality: number | undefined;
   value: string | undefined;
+  innerVariable: string | undefined;
+  part: string | string[] | undefined;
   frequency: number | undefined;
   rank: number;
   externalData: string | undefined;
+  innerVariableType?: string;
+  valueGroups?: ValueGroup | undefined;
 
   constructor(
     object: ValueGroup,
     currentDimensionHierarchyCluster: TreeNodeModel,
+    currentPartIndex: number,
     index: number,
     externalDatas: ExtDatasModel,
+    innerVariables?:
+      | {
+          dimensionSummaries: DimensionCovisualization[];
+          dimensionPartitions: DimensionPartition[];
+        }
+      | undefined,
+    innerValues?: string | (string | string[])[] | undefined,
   ) {
     this.terminalCluster =
       object.cluster || currentDimensionHierarchyCluster.shortDescription;
@@ -32,6 +48,38 @@ export class CompositionModel {
     this.value = this.value?.replace(/[\n\r]+/g, ''); // remove carriage return #53
     this.typicality = object.valueTypicalities[index];
     this.frequency = object.valueFrequencies[index];
+
+    if (innerVariables) {
+      // get the valueGroups of current cluster to have the exhaustive list of values
+      const clusterIndex = innerVariables.dimensionPartitions[
+        currentPartIndex
+      ]?.valueGroups?.findIndex((item) => item.cluster === this.value);
+      this.valueGroups =
+        innerVariables?.dimensionPartitions[currentPartIndex]?.valueGroups &&
+        clusterIndex !== undefined
+          ? innerVariables.dimensionPartitions[currentPartIndex]?.valueGroups[
+              clusterIndex
+            ]
+          : undefined;
+
+      this.innerVariable = innerValues?.[0]?.toString();
+      this.innerVariableType =
+        innerVariables?.dimensionSummaries?.[index]?.type;
+      const currentParts = innerValues?.[1];
+      this.part = currentParts;
+
+      this.frequency = 0;
+      for (let j = 0; currentParts && j < currentParts.length; j++) {
+        const currentPart = currentParts[j];
+
+        const matchingGroupIndex = object.values?.findIndex(
+          (item) => item === this.innerVariable + ' ' + currentPart,
+        );
+        if (matchingGroupIndex !== -1) {
+          this.frequency += object.valueFrequencies?.[matchingGroupIndex] ?? 0;
+        }
+      }
+    }
 
     // @ts-ignore
     this.externalData = externalDatas?.[this.value] || undefined;
