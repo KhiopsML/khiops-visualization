@@ -4,7 +4,6 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { TranslateService } from '@ngstack/translate';
 import { GridColumnsI } from '../../../../khiops-library/interfaces/grid-columns';
 

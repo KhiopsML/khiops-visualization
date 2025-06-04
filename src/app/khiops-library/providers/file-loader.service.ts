@@ -143,9 +143,9 @@ export class FileLoaderService {
     // let urlKC = './assets/mocks/kc/adultmissing.json';
     // let urlKC = './assets/mocks/kc/DigitCoclustering.json';
     // let urlKC = './assets/mocks/kc/8-TS4624User_Coclustering.json';
-    let urlKC = './assets/mocks/kc/IV-AdultEducation.khcj';
+    let urlKC = './assets/mocks/kc/Coclustering-IVAdultEducation.json';
     // let urlKC = './assets/mocks/kc/Coclustering-IV-Glass.khcj';
-    // let urlKC = './assets/mocks/kc/IV-Iris.khcj';
+    // let urlKC = './assets/mocks/kc/Coclustering-IV-Iris.khcj';
     // let urlKC = './assets/mocks/kc/Coclustering-IV-Pima.khcj';
     // let urlKC = './assets/mocks/kc/Coclustering_NewSeparator.khcj';
     // let urlKC = './assets/mocks/kc/check-ext-datas.json';
