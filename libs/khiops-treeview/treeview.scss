@@ -76,6 +76,10 @@
   background: var(--bgColor-20);
 }
 
+.tree-leaf .tree-leaf-content.tree-selected:hover {
+  background: var(--primary-20);
+}
+
 .tree-leaf .tree-leaf-content:before,
 .tree-leaf .tree-leaf-content:after {
   content: ' ';
