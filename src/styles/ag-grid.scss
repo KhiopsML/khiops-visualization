@@ -44,6 +44,12 @@ ag-grid-angular {
   mat-icon {
     color: white !important;
   }
+  mat-icon:hover {
+    background-color: var(--grey-text) !important;
+  }
+}
+.ag-theme-balham .ag-row-selected:hover {
+  background: var(--primary-20) !important;
 }
 
 .ag-theme-balham .ag-cell {
