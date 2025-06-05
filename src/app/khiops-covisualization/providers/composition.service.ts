@@ -13,11 +13,7 @@ import { CompositionModel } from '../model/composition.model';
 import { ExtDatasModel } from '@khiops-covisualization/model/ext-datas.model';
 import { ImportExtDatasService } from './import-ext-datas.service';
 import { TYPES } from '@khiops-library/enum/types';
-
-// Define global constants for interval patterns
-const INF_PATTERN = /\]-inf[;,]([\d.]+)\]/;
-const RANGE_PATTERN = /\]([\d.]+)[;,]([\d.]+)\]/;
-const PLUS_INF_PATTERN = /\]([\d.]+)[;,]\+inf\[/;
+import { CompositionUtils } from './composition.utils.service';
 
 @Injectable({
   providedIn: 'root',
@@ -201,7 +197,13 @@ export class CompositionService {
     }
 
     for (const composition of compositionValues) {
-      composition.detailedParts = composition.valueGroups;
+      composition.detailedParts =
+        composition.valueGroups ??
+        (Array.isArray(composition.intervals)
+          ? composition.intervals
+          : composition.intervals
+            ? [composition.intervals]
+            : undefined);
       // @ts-ignore
       composition.type = composition.innerVariableType;
     }
@@ -299,302 +301,6 @@ export class CompositionService {
       currentIndex,
       false,
     );
-  }
-
-  /**
-   * Checks if two intervals are contiguous
-   * Supported interval format: ]-inf;a], ]a;b], ]b;+inf[
-   */
-  areIntervalsContiguous(interval1: string, interval2: string): boolean {
-    // Extract bounds from intervals
-    const extractBounds = (
-      interval: string,
-    ): { lowerBound: number; upperBound: number } => {
-      let lowerBound: number, upperBound: number;
-
-      if (INF_PATTERN.test(interval)) {
-        const match = interval.match(INF_PATTERN);
-        lowerBound = -Infinity;
-        upperBound = match ? parseFloat(match[1]!) : NaN;
-      } else if (PLUS_INF_PATTERN.test(interval)) {
-        const match = interval.match(PLUS_INF_PATTERN);
-        lowerBound = match ? parseFloat(match[1]!) : NaN;
-        upperBound = Infinity;
-      } else if (RANGE_PATTERN.test(interval)) {
-        const match = interval.match(RANGE_PATTERN);
-        lowerBound = match ? parseFloat(match[1]!) : NaN;
-        upperBound = match ? parseFloat(match[2]!) : NaN;
-      } else {
-        return { lowerBound: NaN, upperBound: NaN };
-      }
-
-      return { lowerBound, upperBound };
-    };
-
-    const bounds1 = extractBounds(interval1);
-    const bounds2 = extractBounds(interval2);
-
-    // Check if intervals are contiguous (one upper bound equals one lower bound)
-    return (
-      bounds1.upperBound === bounds2.lowerBound ||
-      bounds2.upperBound === bounds1.lowerBound
-    );
-  }
-
-  /**
-   * Merges a list of intervals into a simplified form
-   * @param intervals Array of interval strings to merge
-   * @returns Array of simplified interval strings
-   */
-  simplifyIntervals(intervals: string[]): string[] {
-    if (intervals.length === 0) return [];
-
-    // First, sort the intervals
-    const sortedIntervals = this.sortIntervals(intervals);
-
-    // Extract numeric ranges from the intervals
-    const ranges: Array<{ lower: number; upper: number }> = [];
-
-    sortedIntervals.forEach((interval) => {
-      let lower: number, upper: number;
-
-      if (INF_PATTERN.test(interval)) {
-        const match = interval.match(INF_PATTERN);
-        lower = -Infinity;
-        upper = match ? parseFloat(match[1]!) : NaN;
-      } else if (PLUS_INF_PATTERN.test(interval)) {
-        const match = interval.match(PLUS_INF_PATTERN);
-        lower = match ? parseFloat(match[1]!) : NaN;
-        upper = Infinity;
-      } else if (RANGE_PATTERN.test(interval)) {
-        const match = interval.match(RANGE_PATTERN);
-        lower = match ? parseFloat(match[1]!) : NaN;
-        upper = match ? parseFloat(match[2]!) : NaN;
-      } else {
-        // Non-numeric interval, keep as is
-        return;
-      }
-
-      ranges.push({ lower, upper });
-    });
-
-    // No ranges to merge
-    if (ranges.length === 0) return sortedIntervals;
-
-    // Merge overlapping or contiguous ranges
-    const mergedRanges: Array<{ lower: number; upper: number }> = [];
-    let currentRange = ranges[0];
-
-    for (let i = 1; i < ranges.length; i++) {
-      const range = ranges[i];
-
-      // Check if current range overlaps or is contiguous with the next one
-      if (
-        // @ts-ignore
-        currentRange.upper >= range.lower ||
-        // @ts-ignore
-        Math.abs(currentRange.upper - range.lower) < 0.0001
-      ) {
-        // Merge ranges
-        // @ts-ignore
-        currentRange.upper = Math.max(currentRange.upper, range.upper);
-      } else {
-        // No overlap, store current range and start a new one
-        mergedRanges.push(currentRange!);
-        currentRange = range;
-      }
-    }
-
-    // Add the last range
-    mergedRanges.push(currentRange!);
-
-    // Convert back to interval strings
-    const result = mergedRanges.map((range) => {
-      const separator = intervals[0]?.includes(',') ? ',' : ';';
-      if (range.lower === -Infinity && range.upper === Infinity) {
-        return `]-inf${separator}+inf[`;
-      } else if (range.lower === -Infinity) {
-        return `]-inf${separator}${range.upper}]`;
-      } else if (range.upper === Infinity) {
-        return `]${range.lower}${separator}+inf[`;
-      } else {
-        return `]${range.lower}${separator}${range.upper}]`;
-      }
-    });
-
-    return result;
-  }
-
-  /**
-   * Determines if two CompositionModel objects have contiguous parts
-   */
-  haveContiguousParts(
-    model1: CompositionModel,
-    model2: CompositionModel,
-  ): boolean {
-    // Check if models concern the same variable
-    if (model1.innerVariable !== model2.innerVariable) {
-      return false;
-    }
-
-    // Early return for categorical variables
-    if (model1.innerVariableType === TYPES.CATEGORICAL) {
-      return true; // Categorical variables with same innerVariable can always be merged
-    }
-
-    // For numerical variables, get parts from model.part
-    const parts1 = model1.part || [];
-    const parts2 = model2.part || [];
-
-    // Iterate through parts of both models to find contiguous intervals
-    for (const part1 of parts1) {
-      for (const part2 of parts2) {
-        if (this.areIntervalsContiguous(part1, part2)) {
-          return true;
-        }
-      }
-    }
-
-    return false;
-  }
-
-  /**
-   * Sorts interval strings in ascending order
-   * @param intervals Array of interval strings to sort
-   * @returns Sorted array of interval strings
-   */
-  sortIntervals(intervals: string[]): string[] {
-    return [...intervals].sort((a, b) => {
-      // Extract lower bounds for comparison
-      const extractLowerBound = (interval: string): number => {
-        if (INF_PATTERN.test(interval)) {
-          return -Infinity;
-        } else if (RANGE_PATTERN.test(interval)) {
-          const match = interval.match(RANGE_PATTERN);
-          return match ? parseFloat(match[1]!) : NaN;
-        } else if (PLUS_INF_PATTERN.test(interval)) {
-          const match = interval.match(PLUS_INF_PATTERN);
-          return match ? parseFloat(match[1]!) : NaN;
-        }
-        return NaN;
-      };
-
-      const lowerBoundA = extractLowerBound(a);
-      const lowerBoundB = extractLowerBound(b);
-
-      return lowerBoundA - lowerBoundB;
-    });
-  }
-
-  /**
-   * Fuses two CompositionModel objects that can be merged
-   * @param model1 First CompositionModel
-   * @param model2 Second CompositionModel
-   * @returns Merged CompositionModel
-   */
-  mergeCompositionModels(
-    model1: CompositionModel,
-    model2: CompositionModel,
-  ): CompositionModel {
-    // Check if models can be merged
-    if (!this.canMergeModels(model1, model2)) {
-      throw new Error('Models cannot be merged');
-    }
-
-    let mergedParts: string[];
-    let allValues: string[] = [];
-
-    // Handle categorical variables
-    if (model1.innerVariableType === TYPES.CATEGORICAL) {
-      // Collect values from both models' valueGroups if available
-      if (model1.valueGroups?.values) {
-        allValues.push(...model1.valueGroups.values);
-      }
-      if (model2.valueGroups?.values) {
-        allValues.push(...model2.valueGroups.values);
-      }
-
-      // Fallback to part if valueGroups isn't available
-      if (allValues.length === 0) {
-        if (model1.part) {
-          allValues.push(
-            ...(Array.isArray(model1.part) ? model1.part : [model1.part]),
-          );
-        }
-        if (model2.part) {
-          allValues.push(
-            ...(Array.isArray(model2.part) ? model2.part : [model2.part]),
-          );
-        }
-      }
-
-      mergedParts = this.mergeCategoricalSets(allValues);
-    } else {
-      // Handle numerical variables (intervals)
-      const parts1 = model1.part || [];
-      const parts2 = model2.part || [];
-
-      // Check if intervals are contiguous
-      const areContiguous = this.haveContiguousParts(model1, model2);
-
-      if (areContiguous) {
-        // If contiguous, merge the intervals
-        mergedParts = this.simplifyIntervals([...parts1, ...parts2]);
-      } else {
-        // If not contiguous, keep all parts separate (don't merge)
-        mergedParts = [...parts1, ...parts2];
-      }
-    }
-
-    // Create the merged model
-    const mergedModel: CompositionModel = {
-      ...model1,
-      frequency: (model1.frequency || 0) + (model2.frequency || 0),
-      part: mergedParts,
-      _id: `${model1._id}_${model2._id}_merged`, // Temporary ID
-      // Update value to reflect the merged parts
-      value:
-        model1.innerVariable +
-        ' ' +
-        (mergedParts.length > 1
-          ? `[${mergedParts.length} intervals]`
-          : mergedParts[0]),
-    };
-
-    // Update valueGroups if it's a categorical variable
-    if (model1.innerVariableType === TYPES.CATEGORICAL) {
-      if (model1.valueGroups) {
-        mergedModel.valueGroups = {
-          ...model1.valueGroups,
-          values: allValues, // Use the comprehensive list of values
-        };
-      } else if (mergedModel.valueGroups) {
-        mergedModel.valueGroups.values = allValues;
-      }
-    } else {
-      // For numerical variables, merge valueGroups appropriately
-      if (model1.valueGroups && model2.valueGroups) {
-        // Combine values from both models
-        const combinedValues = [
-          ...(model1.valueGroups.values || []),
-          ...(model2.valueGroups.values || []),
-        ];
-
-        const combinedFrequencies = [
-          ...(model1.valueGroups.valueFrequencies || []),
-          ...(model2.valueGroups.valueFrequencies || []),
-        ];
-
-        mergedModel.valueGroups = {
-          ...model1.valueGroups,
-          values: combinedValues,
-          valueFrequencies:
-            combinedFrequencies.length > 0 ? combinedFrequencies : [],
-        };
-      }
-    }
-
-    return mergedModel;
   }
 
   /**
@@ -700,12 +406,20 @@ export class CompositionService {
             );
           }
 
-          // Collect all values from valueGroups
-          if (model.valueGroups?.values) {
-            allValues.push(...model.valueGroups.values);
+          // Collect all values from intervals
+          if (model.intervals?.bounds) {
+            // @ts-ignore
+            allValues.push(model.part.join(', '));
 
-            if (model.valueGroups.valueFrequencies) {
-              allValueFrequencies.push(...model.valueGroups.valueFrequencies);
+            // @ts-ignore
+            if (model.intervals.valueFrequencies) {
+              // @ts-ignore
+              console.log(
+                ' CompositionService ~ variableModels?.forEach ~ model.intervals.valueFrequencies:',
+                model.intervals.valueFrequencies,
+              );
+              // @ts-ignore
+              allValueFrequencies.push(...model.intervals.valueFrequencies);
             }
           }
         });
@@ -716,7 +430,7 @@ export class CompositionService {
         );
 
         // Try to simplify intervals if they are contiguous
-        const simplifiedParts = this.simplifyIntervals(allParts);
+        const simplifiedParts = CompositionUtils.simplifyIntervals(allParts);
 
         const mergedNumericalModel = {
           ...baseModel,
@@ -732,14 +446,16 @@ export class CompositionService {
         };
 
         // Update valueGroups for numerical variables
-        if (baseModel?.valueGroups) {
-          mergedNumericalModel.valueGroups = {
-            ...baseModel.valueGroups,
+        if (baseModel?.intervals) {
+          mergedNumericalModel.intervals = {
+            ...baseModel.intervals,
+            //@ts-ignore
             values: allValues,
             valueFrequencies:
               allValueFrequencies.length > 0
                 ? allValueFrequencies
-                : baseModel.valueGroups.valueFrequencies,
+                : //@ts-ignore
+                  baseModel.intervals.valueFrequencies,
           };
         }
 
@@ -783,23 +499,6 @@ export class CompositionService {
 
     // Create a new set string with all values
     return [`{${Array.from(allValues).join(', ')}}`];
-  }
-
-  /**
-   * Checks if two CompositionModel objects can be merged
-   * @param model1 First CompositionModel
-   * @param model2 Second CompositionModel
-   * @returns Boolean indicating if models can be merged
-   */
-  canMergeModels(model1: CompositionModel, model2: CompositionModel): boolean {
-    // Must have the same innerVariable
-    if (model1.innerVariable !== model2.innerVariable) {
-      return false;
-    }
-
-    // Models with the same innerVariable can always be merged
-    // regardless of whether they are categorical or numerical
-    return true;
   }
 
   /**
