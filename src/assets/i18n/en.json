@@ -227,6 +227,7 @@
     "SIZE": "Size",
     "FATHER": "Father",
     "TERMINAL_CLUSTER": "Terminal Cluster",
+    "PART_DETAILS": "Part details",
     "TYPICALITY": "Typicality",
     "HIERARCHICAL_LEVEL": "Hierarchical Level",
     "DERIVATION_RULE": "Derivation rule",
