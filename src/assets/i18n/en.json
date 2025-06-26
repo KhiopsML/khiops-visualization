@@ -272,6 +272,7 @@
     "RANDOM": "Random",
     "POPULATION": "Population",
     "TARGET_MODALITY": "Target Modality",
+    "MODALITY": "Modality",
     "RANK_ERROR": "Rank error",
     "SETTINGS": "Settings",
     "SAVE": "Save",
