@@ -136,29 +136,54 @@ export class CompositionUtils {
 
   /**
    * Sorts interval strings in ascending order
+   * Handles multiple interval formats and special cases like -inf and +inf
    * @param intervals Array of interval strings to sort
    * @returns Sorted array of interval strings
    */
   static sortIntervals(intervals: string[]): string[] {
     return [...intervals].sort((a, b) => {
-      // Extract lower bounds for comparison
-      const extractLowerBound = (interval: string): number => {
+      // Helper function to extract numeric value from interval bound
+      const extractBound = (interval: string, isStart: boolean): number => {
+        // Handle ]-inf and +inf[ cases
+        if (interval.includes('-inf')) return -Infinity;
+        if (interval.includes('+inf')) return +Infinity;
+
+        // Try specific patterns first for better precision
         if (INF_PATTERN.test(interval)) {
-          return -Infinity;
-        } else if (RANGE_PATTERN.test(interval)) {
-          const match = interval.match(RANGE_PATTERN);
-          return match ? parseFloat(match[1]!) : NaN;
+          const match = interval.match(INF_PATTERN);
+          return isStart ? -Infinity : match ? parseFloat(match[1]!) : 0;
         } else if (PLUS_INF_PATTERN.test(interval)) {
           const match = interval.match(PLUS_INF_PATTERN);
-          return match ? parseFloat(match[1]!) : NaN;
+          return isStart ? (match ? parseFloat(match[1]!) : 0) : Infinity;
+        } else if (RANGE_PATTERN.test(interval)) {
+          const match = interval.match(RANGE_PATTERN);
+          if (match) {
+            return isStart ? parseFloat(match[1]!) : parseFloat(match[2]!);
+          }
         }
-        return NaN;
+
+        // Fallback: Extract all numbers from interval format like [1.5, 3.2] or ]2, 5[
+        const numbers = interval.match(/-?\d+(?:\.\d+)?/g);
+        if (!numbers || numbers.length === 0) return 0;
+
+        // Return start bound or end bound based on isStart parameter
+        return parseFloat(isStart ? numbers[0]! : numbers[numbers.length - 1]!);
       };
 
-      const lowerBoundA = extractLowerBound(a);
-      const lowerBoundB = extractLowerBound(b);
+      // Extract start bounds for comparison
+      const startA = extractBound(a, true);
+      const startB = extractBound(b, true);
 
-      return lowerBoundA - lowerBoundB;
+      // Primary sort by start bound
+      if (startA !== startB) {
+        return startA - startB;
+      }
+
+      // Secondary sort by end bound if start bounds are equal
+      const endA = extractBound(a, false);
+      const endB = extractBound(b, false);
+
+      return endA - endB;
     });
   }
 }

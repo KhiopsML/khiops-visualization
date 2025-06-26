@@ -429,7 +429,7 @@ export class CompositionService {
           frequency: totalFrequency,
           part: simplifiedParts,
           partFrequencies: allPartFrequencies.length > 0 ? allPartFrequencies : undefined,
-          partDetails: allPartDetails.length > 0 ? allPartDetails : undefined,
+          partDetails: allPartDetails.length > 0 ? CompositionUtils.sortIntervals(allPartDetails) : undefined,
           _id: variableModels?.map((m) => m._id).join('_') + '_merged',
           value: baseModel?.innerVariable + ' ' + allParts.join(', '), // Use all parts for the value representation
         };

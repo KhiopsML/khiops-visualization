@@ -12,6 +12,7 @@ import {
 import { ExtDatasModel } from './ext-datas.model';
 import { TreeNodeModel } from './tree-node.model';
 import { TYPES } from '@khiops-library/enum/types';
+import { CompositionUtils } from '../providers/composition.utils.service';
 
 export class CompositionModel {
   _id: string;
@@ -76,6 +77,9 @@ export class CompositionModel {
       if (this.innerVariableType === TYPES.NUMERICAL && currentParts) {
         this.partFrequencies = [];
         this.partDetails = Array.isArray(currentParts) ? [...currentParts] : [currentParts];
+        
+        // Sort partDetails by interval order using centralized utility
+        this.partDetails = CompositionUtils.sortIntervals(this.partDetails);
       }
       
       for (let j = 0; currentParts && j < currentParts.length; j++) {
