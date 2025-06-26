@@ -326,7 +326,8 @@
     "NODE": "Node",
     "PARENT_CLUSTER": "Parent cluster",
     "HIERARCHICAL_RANK": "Hierarchical rank",
-    "CELLS_INTERESTS": "Cells Interests"
+    "CELLS_INTERESTS": "Cells Interests",
+    "PARTS_DETAILS": "Parts details"
   },
   "ARIA": {
     "AG_GRID": {
