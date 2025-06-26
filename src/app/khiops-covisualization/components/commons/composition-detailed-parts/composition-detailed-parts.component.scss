@@ -15,7 +15,6 @@
 
   #composition-detailed-parts-content {
     overflow: hidden;
-    max-height: 70vh;
 
     #composition-detailed-parts-list-table {
       padding: 1em;
@@ -34,8 +33,6 @@
   kl-ag-grid {
     border: 1px solid #eee;
     min-height: 212px;
-    max-height: 212px;
-    height: 212px !important;
 
     ::ng-deep .ag-center-cols-viewport {
       overflow-x: hidden;

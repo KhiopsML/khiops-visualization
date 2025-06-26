@@ -4,48 +4,46 @@
   #manageViews
   fxLayout="column"
 >
-  <div fxFlexFill>
-    <div
-      fxLayout="row"
-      id="composition-detailed-parts-header"
-      fxLayoutAlign="center center"
+  <div
+    fxLayout="row"
+    id="composition-detailed-parts-header"
+    fxLayoutAlign="center center"
+  >
+    <h2 fxFlex>{{ 'GLOBAL.PARTS_DETAILS' | translate | uppercase }}</h2>
+    <button
+      class="grey-btn"
+      mat-icon-button
+      matTooltip="{{ 'GLOBAL.CLOSE' | translate }}"
+      (click)="onClickOnClose()"
     >
-      <h2 fxFlex>{{ 'GLOBAL.PARTS_DETAILS' | translate | uppercase }}</h2>
-      <button
-        class="grey-btn"
-        mat-icon-button
-        matTooltip="{{ 'GLOBAL.CLOSE' | translate }}"
-        (click)="onClickOnClose()"
-      >
-        <mat-icon fxFlexFill fxLayoutAlign="center center">close</mat-icon>
-      </button>
-    </div>
+      <mat-icon fxFlexFill fxLayoutAlign="center center">close</mat-icon>
+    </button>
+  </div>
+  <div
+    id="composition-detailed-parts-content"
+    fxLayout="column"
+    fxFlexFill
+    fxLayoutAlign="start center"
+  >
     <div
-      id="composition-detailed-parts-content"
-      fxLayout="column"
+      *ngIf="detailedDatas && detailedDatas.values"
+      id="composition-detailed-parts-list-table"
       fxFlexFill
+      fxLayout="column"
       fxLayoutAlign="start center"
     >
-      <div
-        *ngIf="detailedDatas && detailedDatas.values"
-        id="composition-detailed-parts-list-table"
+      <kl-ag-grid
         fxFlexFill
-        fxLayout="column"
-        fxLayoutAlign="start center"
+        [showLevelDistribution]="false"
+        [showSearch]="false"
+        [showLineSelection]="false"
+        [showColumnsSelection]="false"
+        [rowHeight]="40"
+        [inputDatas]="detailedDatas.values"
+        [title]="''"
+        [displayedColumns]="detailedDatas.displayedColumns"
       >
-        <kl-ag-grid
-          fxFlexFill
-          [showLevelDistribution]="false"
-          [showSearch]="false"
-          [showLineSelection]="false"
-          [showColumnsSelection]="false"
-          [rowHeight]="40"
-          [inputDatas]="detailedDatas.values"
-          [title]="''"
-          [displayedColumns]="detailedDatas.displayedColumns"
-        >
-        </kl-ag-grid>
-      </div>
+      </kl-ag-grid>
     </div>
   </div>
 </div>
