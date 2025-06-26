@@ -5,20 +5,11 @@
  */
 
 import { Component } from '@angular/core';
-import {
-  MatDialogRef,
-  //   MatDialog,
-  //   MatDialogConfig,
-} from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
+import { CompositionModel } from '@khiops-covisualization/model/composition.model';
+import { TYPES } from '@khiops-library/enum/types';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
-// import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
 import { TranslateService } from '@ngstack/translate';
-// import { FileModel } from '@khiops-library/model/file.model';
-// import { ExtDatasModel } from '@khiops-covisualization/model/ext-datas.model';
-// import { MatSnackBar } from '@angular/material/snack-bar';
-// import { AppConfig } from 'src/environments/environment';
-// import { LoadExtDatasComponent } from '../load-ext-datas/load-ext-datas.component';
-// import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 
 @Component({
   selector: 'app-composition-detailed-parts',
@@ -27,134 +18,68 @@ import { TranslateService } from '@ngstack/translate';
   standalone: false,
 })
 export class CompositionDetailedPartsComponent {
-  // importExtDatas: FileModel | undefined;
   detailedDatas: GridDatasI | undefined;
-  isLoadingDatas = false;
-  detailedParts: any;
+  detailedParts: CompositionModel | undefined;
 
   constructor(
-    // private importExtDatasService: ImportExtDatasService,
-    // private dialog: MatDialog,
-    // private snackBar: MatSnackBar,
     public translate: TranslateService,
     private dialogRef: MatDialogRef<CompositionDetailedPartsComponent>,
   ) {
-    this.constructImportedDatasTable();
+    // Initialize with default columns, will be updated in ngOnInit based on data type
+    this.detailedDatas = {
+      displayedColumns: [],
+      values: [],
+    };
   }
 
   ngOnInit() {
-    console.log(
-      ' CompositionDetailedPartsComponent ~ constructImportedDatasTable ~  this.detailedDatas :',
-      this.detailedParts,
-    );
+    if (this.detailedParts?.innerVariableType === TYPES.NUMERICAL) {
+      // For numerical variables: Interval and Frequency columns
+      this.detailedDatas!.displayedColumns = [
+        {
+          headerName: this.translate.get('GLOBAL.INTERVAL'),
+          field: 'interval',
+        },
+        {
+          headerName: this.translate.get('GLOBAL.FREQUENCY'),
+          field: 'frequency',
+        },
+      ];
+
+      this.detailedDatas!.values = this.detailedParts!.partDetails!.map(
+        (part, index) => ({
+          interval: part,
+          frequency: this.detailedParts!.partFrequencies![index],
+        }),
+      );
+    } else {
+      // For categorical variables: Modality and Frequency columns
+      this.detailedDatas!.displayedColumns = [
+        {
+          headerName: this.translate.get('GLOBAL.MODALITY'),
+          field: 'modality',
+        },
+        {
+          headerName: this.translate.get('GLOBAL.FREQUENCY'),
+          field: 'frequency',
+        },
+      ];
+
+      // Use valueGroups for categorical data
+      if (this.detailedParts!.valueGroups?.values) {
+        this.detailedDatas!.values =
+          this.detailedParts!.valueGroups!.values.map(
+            (value: string, index: number) => ({
+              modality: value,
+              frequency:
+                this.detailedParts!.valueGroups!.valueFrequencies[index],
+            }),
+          );
+      }
+    }
   }
-
-  constructImportedDatasTable() {
-    this.detailedDatas = {
-      displayedColumns: [
-        {
-          headerName: this.translate.get('GLOBAL.FILE_NAME'),
-          field: 'filename',
-        },
-        {
-          headerName: this.translate.get('GLOBAL.JOIN_KEY'),
-          field: 'joinKey',
-        },
-        {
-          headerName: this.translate.get('GLOBAL.FIELD'),
-          field: 'field',
-        },
-        {
-          headerName: this.translate.get('GLOBAL.DIMENSION'),
-          field: 'dimension',
-        },
-        // {
-        //   headerName: '',
-        //   field: 'remove',
-        //   cellRendererFramework: IconCellComponent,
-        //   cellRendererParams: {
-        //     icon: 'delete',
-        //     action: this.removeExtDatasFromList.bind(this),
-        //   },
-        // },
-      ],
-      values: [],
-    };
-
-    // const importedValues: ExtDatasModel[] =
-    //   this.importExtDatasService.getImportedDatas();
-    // if (importedValues.length > 0) {
-    //   for (let i = 0; i < importedValues.length; i++) {
-    //     this.importedDatas.values!.push({
-    //       filename: importedValues[i]?.filename,
-    //       field: importedValues[i]?.field.name,
-    //       joinKey: importedValues[i]?.joinKey,
-    //       dimension: importedValues[i]?.dimension,
-    //     });
-    //   }
-    // }
-  }
-
-  // removeExtDatasFromList(e: any) {
-  //   const importedDatas = this.importExtDatasService.removeImportedDatas(
-  //     e.data.filename,
-  //     e.data.dimension,
-  //     e.data.joinKey,
-  //     e.data.separator,
-  //     e.data.field,
-  //   );
-  //   this.snackBar.open(
-  //     this.translate.get('SNACKS.EXTERNAL_DATA_DELETED'),
-  //     undefined,
-  //     {
-  //       duration: 2000,
-  //       panelClass: 'success',
-  //     },
-  //   );
-  //   if (importedDatas) {
-  //     this.snackBar.open(
-  //       this.translate.get('SNACKS.EXTERNAL_DATA_DELETED'),
-  //       undefined,
-  //       {
-  //         duration: 2000,
-  //         panelClass: 'success',
-  //       },
-  //     );
-  //   } else {
-  //     this.snackBar.open(
-  //       this.translate.get('SNACKS.EXTERNAL_DATA_DELETE_ERROR'),
-  //       undefined,
-  //       {
-  //         duration: 2000,
-  //         panelClass: 'error',
-  //       },
-  //     );
-  //   }
-  //   // Update datas table
-  //   this.constructImportedDatasTable();
-  // }
 
   onClickOnClose() {
     this.dialogRef.close();
   }
-
-  // openLoadExternalDataDialog() {
-  //   const config = new MatDialogConfig();
-  //   config.width = AppConfig.covisualizationCommon.MANAGE_VIEWS.WIDTH;
-  //   config.maxWidth = AppConfig.covisualizationCommon.MANAGE_VIEWS.MAX_WIDTH;
-  //   const dialogRef: MatDialogRef<LoadExtDatasComponent> = this.dialog.open(
-  //     LoadExtDatasComponent,
-  //     config,
-  //   );
-  //   dialogRef.disableClose = true;
-  // }
-
-  // closeImport() {
-  //   this.importExtDatas = undefined;
-  //   this.constructImportedDatasTable();
-  // }
-
-  // datasLoaded(fileDatas: FileModel) {
-  //   this.importExtDatas = fileDatas;
-  // }
 }

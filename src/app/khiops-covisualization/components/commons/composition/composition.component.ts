@@ -155,6 +155,7 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
 
     const config = new MatDialogConfig();
     config.width = AppConfig.covisualizationCommon.MANAGE_VIEWS.WIDTH;
+    config.height = AppConfig.covisualizationCommon.MANAGE_VIEWS.HEIGHT;
     config.maxWidth = AppConfig.covisualizationCommon.MANAGE_VIEWS.MAX_WIDTH;
     const dialogRef: MatDialogRef<CompositionDetailedPartsComponent> =
       this.dialog.open(CompositionDetailedPartsComponent, config);
