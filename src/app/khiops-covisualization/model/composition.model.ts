@@ -7,16 +7,11 @@
 import {
   DimensionCovisualization,
   DimensionPartition,
-  Interval,
   ValueGroup,
 } from '@khiops-covisualization/interfaces/app-datas';
 import { ExtDatasModel } from './ext-datas.model';
 import { TreeNodeModel } from './tree-node.model';
 import { TYPES } from '@khiops-library/enum/types';
-
-export interface DetailedInterval extends Interval {
-  valueFrequencies: number[];
-}
 
 export class CompositionModel {
   _id: string;
@@ -31,8 +26,6 @@ export class CompositionModel {
   externalData: string | undefined;
   innerVariableType?: string;
   valueGroups?: ValueGroup | undefined;
-  intervals?: DetailedInterval | undefined;
-  detailedParts?: any;
 
   constructor(
     object: ValueGroup,
@@ -59,7 +52,6 @@ export class CompositionModel {
 
     if (innerVariables) {
       const partition = innerVariables.dimensionPartitions[currentPartIndex];
-      console.log(' CompositionModel ~ partition:', partition);
       if (partition?.type === TYPES.CATEGORICAL) {
         // get the valueGroups of current cluster to have the exhaustive list of values
         const clusterIndex = partition?.valueGroups?.findIndex(
@@ -69,20 +61,6 @@ export class CompositionModel {
           partition?.valueGroups && clusterIndex !== undefined
             ? partition?.valueGroups[clusterIndex]
             : undefined;
-      } else {
-        const clusterIndex = partition?.intervals?.findIndex(
-          (item) => item.cluster === this.value,
-        );
-        // @ts-ignore
-        this.intervals =
-          partition?.intervals && clusterIndex !== undefined
-            ? partition?.intervals[clusterIndex]
-            : undefined;
-        if (!this.intervals?.valueFrequencies) {
-          this.intervals!.valueFrequencies = [];
-        }
-
-        this.frequency && this.intervals?.valueFrequencies.push(this.frequency);
       }
 
       this.innerVariable = innerValues?.[0]?.toString();
@@ -100,10 +78,8 @@ export class CompositionModel {
         if (matchingGroupIndex !== -1) {
           this.frequency += object.valueFrequencies?.[matchingGroupIndex] ?? 0;
         }
-        // this.detailedParts?.push(currentPart);
       }
     }
-    // console.log(' CompositionModel ~  this.part:', this);
 
     // @ts-ignore
     this.externalData = externalDatas?.[this.value] || undefined;

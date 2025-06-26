@@ -152,10 +152,6 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
     // get detailed parts from _id
     const detailedParts: CompositionModel | undefined =
       this.compositionService.getCompositionDetailedPartsFromId(e.data._id);
-    console.log(
-      ' CompositionComponent ~ showDetailedPartsDialog ~ detailedParts:',
-      detailedParts,
-    );
 
     const config = new MatDialogConfig();
     config.width = AppConfig.covisualizationCommon.MANAGE_VIEWS.WIDTH;

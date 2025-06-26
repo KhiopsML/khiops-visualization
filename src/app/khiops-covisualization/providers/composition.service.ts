@@ -196,17 +196,6 @@ export class CompositionService {
       compositionValues = this.formatCompositions(node, compositionValues);
     }
 
-    for (const composition of compositionValues) {
-      composition.detailedParts =
-        composition.valueGroups ??
-        (Array.isArray(composition.intervals)
-          ? composition.intervals
-          : composition.intervals
-            ? [composition.intervals]
-            : undefined);
-      // @ts-ignore
-      composition.type = composition.innerVariableType;
-    }
     this.compositionValues = compositionValues;
     return compositionValues;
   }
@@ -222,7 +211,9 @@ export class CompositionService {
     for (const composition of compositionValues) {
       // set the rank of all childs to the rank of the parent #206
       composition.rank = node.rank;
-
+      // @ts-ignore
+      composition.type = composition.innerVariableType;
+      composition.cluster = node.cluster;
       // now sort the composition valueGroups.valueFrequencies and valueGroups.values in the same order
       if (composition.valueGroups) {
         const { values, valueFrequencies } = composition.valueGroups;
@@ -262,6 +253,9 @@ export class CompositionService {
           composition.part = `{${composition.valueGroups.values.join(separator)}}`;
         }
         composition.valueGroups.cluster = node.cluster;
+      } else {
+        // not necessary for numerical variables
+        // because they are sorted by part, not by frequencies
       }
     }
     return compositionValues;
@@ -395,8 +389,6 @@ export class CompositionService {
         // Simply merge all models with the same innerVariable
         const baseModel = variableModels?.[0];
         const allParts: string[] = [];
-        const allValues: string[] = [];
-        const allValueFrequencies: number[] = [];
 
         variableModels?.forEach((model) => {
           // Collect all parts
@@ -404,23 +396,6 @@ export class CompositionService {
             allParts.push(
               ...(Array.isArray(model.part) ? model.part : [model.part]),
             );
-          }
-
-          // Collect all values from intervals
-          if (model.intervals?.bounds) {
-            // @ts-ignore
-            allValues.push(model.part.join(', '));
-
-            // @ts-ignore
-            if (model.intervals.valueFrequencies) {
-              // @ts-ignore
-              console.log(
-                ' CompositionService ~ variableModels?.forEach ~ model.intervals.valueFrequencies:',
-                model.intervals.valueFrequencies,
-              );
-              // @ts-ignore
-              allValueFrequencies.push(...model.intervals.valueFrequencies);
-            }
           }
         });
 
@@ -437,27 +412,8 @@ export class CompositionService {
           frequency: totalFrequency,
           part: simplifiedParts,
           _id: variableModels?.map((m) => m._id).join('_') + '_merged',
-          value:
-            baseModel?.innerVariable +
-            ' ' +
-            (simplifiedParts.length > 1
-              ? `[${simplifiedParts.length} intervals]`
-              : simplifiedParts[0]),
+          value: baseModel?.innerVariable + ' ' + allParts.join(', '), // Use all parts for the value representation
         };
-
-        // Update valueGroups for numerical variables
-        if (baseModel?.intervals) {
-          mergedNumericalModel.intervals = {
-            ...baseModel.intervals,
-            //@ts-ignore
-            values: allValues,
-            valueFrequencies:
-              allValueFrequencies.length > 0
-                ? allValueFrequencies
-                : //@ts-ignore
-                  baseModel.intervals.valueFrequencies,
-          };
-        }
 
         // @ts-ignore
         results.push(mergedNumericalModel);
@@ -638,6 +594,7 @@ export class CompositionService {
       }
     }
 
+    console.log(' compositionValues:', compositionValues);
     return compositionValues;
   }
 
@@ -653,6 +610,6 @@ export class CompositionService {
     }
 
     const composition = this.compositionValues.find((comp) => comp._id === id);
-    return composition?.detailedParts;
+    return composition;
   }
 }

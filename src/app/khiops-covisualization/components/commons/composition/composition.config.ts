@@ -82,7 +82,7 @@ export function getCompositionDisplayedColumns(
       },
       {
         headerName: translate.get('GLOBAL.PART_DETAILS'),
-        field: 'remove',
+        field: 'partDetails',
         cellRendererFramework: IconCellComponent,
         cellRendererParams: {
           icon: 'add_box',
@@ -97,14 +97,6 @@ export function getCompositionDisplayedColumns(
         headerName: translate.get('GLOBAL.FREQUENCY'),
         field: 'frequency',
         tooltip: translate.get('TOOLTIPS.AXIS.COMPOSITION.FREQUENCY'),
-      },
-      {
-        headerName: 'type',
-        field: 'type',
-      },
-      {
-        headerName: 'detailedParts',
-        field: 'detailedParts',
       },
     ];
   }
