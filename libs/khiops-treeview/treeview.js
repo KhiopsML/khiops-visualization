@@ -135,6 +135,17 @@
 
             text.textContent = item.shortDescription;
 
+            // Add edit button if editing is enabled
+            if (!self.options.disableUpdateName) {
+              let editButton = document.createElement('button');
+              editButton.setAttribute('class', 'edit-button');
+              editButton.setAttribute('title', 'Edit name');
+              editButton.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+              </svg>`;
+              text.appendChild(editButton);
+            }
+
             if (!self.options.disableCollapse) {
               expando.setAttribute(
                 'class',
@@ -180,16 +191,25 @@
             .join('');
 
           dblclick = function (e) {
-            let parent = (e.target || e.currentTarget).parentNode;
+            let node = e.target || e.currentTarget;
+            let parent = node.parentNode;
 
-            let node = e.target;
+            // Hide the text element and its edit button
             node.style.display = 'none';
 
             let inputForm = document.createElement('div');
             inputForm.setAttribute('class', 'tree-leaf-text-input');
 
             let input = document.createElement('input');
-            input.setAttribute('placeholder', node.innerHTML);
+            // Get text content without the edit button
+            let textContent = node.childNodes[0] ? node.childNodes[0].textContent : node.textContent;
+            if (node.querySelector('.edit-button')) {
+              textContent = Array.from(node.childNodes)
+                .filter(child => child.nodeType === Node.TEXT_NODE)
+                .map(child => child.textContent)
+                .join('');
+            }
+            input.setAttribute('placeholder', textContent);
 
             let iconAccept = document.createElement('mat-icon');
             iconAccept.setAttribute(
@@ -205,9 +225,12 @@
               newName = newName.replace(/[^\w\s]/gi, '-'); // replace all special chars
 
               if (newName !== '') {
-                // change current node name
+                // change current node name - preserve the edit button
+                let editButton = node.querySelector('.edit-button');
                 node.innerHTML = newName;
-                node.innerText = newName;
+                if (editButton && !self.options.disableUpdateName) {
+                  node.appendChild(editButton);
+                }
 
                 // change data-item object
                 let data = JSON.parse(parent.getAttribute('data-item'));
@@ -278,6 +301,12 @@
 
           click = function (e) {
             let currentNode = e.target || e.currentTarget;
+            
+            // Don't trigger selection if clicking on edit button
+            if (currentNode.classList.contains('edit-button')) {
+              return;
+            }
+            
             let parent = currentNode.parentNode;
             removeAllEditInputs();
 
@@ -335,9 +364,14 @@
 
           if (!self.options.disableUpdateName) {
             forEach(
-              clonedContainer.querySelectorAll('.tree-leaf-text'),
-              function (node) {
-                node.ondblclick = dblclick;
+              clonedContainer.querySelectorAll('.edit-button'),
+              function (button) {
+                button.onclick = function(e) {
+                  e.stopPropagation(); // Prevent the tree node selection
+                  // Find the parent tree-leaf-text element
+                  let textElement = button.parentNode;
+                  dblclick({ target: textElement });
+                };
               },
             );
           }
