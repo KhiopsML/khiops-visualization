@@ -81,29 +81,37 @@
   right: 0px;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.6);
-  color: white;
+  background: rgba(0, 0, 0, 0.7);
+  color: white !important;
   border: none;
   border-radius: 3px;
-  width: 18px;
-  height: 18px;
+  width: 24px !important;
+  height: 24px !important;
   cursor: pointer;
   opacity: 0;
   transition:
     opacity 0.2s ease,
     background-color 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
   z-index: 10;
-  font-size: 12px;
-  font-family: Arial, sans-serif;
   pointer-events: none; /* Disable clicks by default */
+
+  svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+  }
 }
 
 .tree-leaf .tree-leaf-text .edit-button:hover {
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.9);
+  color: white !important;
 }
 
 .tree-leaf .tree-leaf-content.tree-selected:hover .tree-leaf-text .edit-button {
@@ -111,14 +119,14 @@
 }
 
 .tree-leaf .tree-leaf-content.tree-selected .tree-leaf-text .edit-button {
-  background: rgba(255, 255, 255, 0.7);
-  color: var(--primary);
+  background: rgba(0, 0, 0, 0.7);
+  color: white !important;
   pointer-events: auto; /* Enable clicks only on selected line */
 }
 
 .tree-leaf .tree-leaf-content.tree-selected .tree-leaf-text .edit-button:hover {
-  background: rgba(255, 255, 255, 0.9);
-  // transform: translateY(-50%) scale(1.1)C;
+  background: rgba(0, 0, 0, 0.9);
+  color: white !important;
 }
 
 .tree-leaf .tree-leaf-content:not(.tree-selected):hover {
@@ -173,40 +181,48 @@
   margin-top: 2px;
 
   .tree-leaf-text-input {
-    min-width: 260px;
-    place-content: flex-start;
-    align-items: center;
-    flex-direction: row;
-    box-sizing: border-box;
     display: flex;
+    align-items: center;
+    gap: 8px;
     margin: 1px;
     margin-left: 10px;
+    width: fit-content;
 
     input {
       width: 174px;
       border: 3px solid var(--primary);
       padding: 1px 8px 0 8px !important;
       font-size: 1em;
-      float: left;
       height: 24px;
-    }
-
-    .edit-icons {
-      color: rgba(255, 255, 255, 0.9);
-      cursor: pointer;
-      margin: auto 0px auto 8px;
-      float: left;
-      font-size: 24px !important;
-      width: 24px;
-      height: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       flex-shrink: 0;
     }
 
+    .edit-icons {
+      background: rgba(0, 0, 0, 0.7);
+      color: white !important;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      width: 24px !important;
+      height: 24px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      flex-shrink: 0 !important;
+      flex-grow: 0 !important;
+      padding: 0 !important;
+      margin: 0 !important;
+
+      svg {
+        width: 16px;
+        height: 16px;
+        fill: currentColor;
+      }
+    }
+
     .edit-icons:hover {
-      color: white;
+      background: rgba(0, 0, 0, 0.9);
+      color: white !important;
     }
   }
 }

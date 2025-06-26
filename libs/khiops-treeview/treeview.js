@@ -140,7 +140,7 @@
               let editButton = document.createElement('button');
               editButton.setAttribute('class', 'edit-button');
               editButton.setAttribute('title', 'Edit name');
-              editButton.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+              editButton.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
               </svg>`;
               text.appendChild(editButton);
@@ -202,22 +202,22 @@
 
             let input = document.createElement('input');
             // Get text content without the edit button
-            let textContent = node.childNodes[0] ? node.childNodes[0].textContent : node.textContent;
+            let textContent = node.childNodes[0]
+              ? node.childNodes[0].textContent
+              : node.textContent;
             if (node.querySelector('.edit-button')) {
               textContent = Array.from(node.childNodes)
-                .filter(child => child.nodeType === Node.TEXT_NODE)
-                .map(child => child.textContent)
+                .filter((child) => child.nodeType === Node.TEXT_NODE)
+                .map((child) => child.textContent)
                 .join('');
             }
             input.setAttribute('placeholder', textContent);
 
-            let iconAccept = document.createElement('mat-icon');
-            iconAccept.setAttribute(
-              'class',
-              'edit-icons valid-rename mat-icon material-icons',
-            );
-
-            iconAccept.textContent = 'check_circle_outline';
+            let iconAccept = document.createElement('button');
+            iconAccept.setAttribute('class', 'edit-icons');
+            iconAccept.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+            </svg>`; // Modern check SVG
             iconAccept.onclick = function (e) {
               let newName = input.value;
               newName = newName.replace(/\./g, ''); // dots are replaced by "-" in css
@@ -265,12 +265,11 @@
               }
             });
 
-            let iconCancel = document.createElement('mat-icon');
-            iconCancel.setAttribute(
-              'class',
-              'edit-icons mat-icon material-icons',
-            );
-            iconCancel.textContent = 'cancel';
+            let iconCancel = document.createElement('button');
+            iconCancel.setAttribute('class', 'edit-icons');
+            iconCancel.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+            </svg>`; // Modern X SVG
             iconCancel.onclick = function () {
               removeAllEditInputs();
             };
@@ -301,12 +300,12 @@
 
           click = function (e) {
             let currentNode = e.target || e.currentTarget;
-            
+
             // Don't trigger selection if clicking on edit button
             if (currentNode.classList.contains('edit-button')) {
               return;
             }
-            
+
             let parent = currentNode.parentNode;
             removeAllEditInputs();
 
@@ -366,7 +365,7 @@
             forEach(
               clonedContainer.querySelectorAll('.edit-button'),
               function (button) {
-                button.onclick = function(e) {
+                button.onclick = function (e) {
                   e.stopPropagation(); // Prevent the tree node selection
                   // Find the parent tree-leaf-text element
                   let textElement = button.parentNode;
