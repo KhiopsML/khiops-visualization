@@ -21,6 +21,8 @@ export class CompositionModel {
   value: string | undefined;
   innerVariable: string | undefined;
   part: string | string[] | undefined;
+  partFrequencies?: number[] | undefined; // Frequencies corresponding to each part element for numerical variables
+  partDetails?: string[] | undefined; // Exhaustive list of parts (non-simplified) for numerical variables
   frequency: number | undefined;
   rank: number;
   externalData: string | undefined;
@@ -69,6 +71,13 @@ export class CompositionModel {
       const currentParts = innerValues?.[1];
       this.part = currentParts;
       this.frequency = 0;
+      
+      // Initialize partFrequencies and partDetails arrays for numerical variables
+      if (this.innerVariableType === TYPES.NUMERICAL && currentParts) {
+        this.partFrequencies = [];
+        this.partDetails = Array.isArray(currentParts) ? [...currentParts] : [currentParts];
+      }
+      
       for (let j = 0; currentParts && j < currentParts.length; j++) {
         const currentPart = currentParts[j];
 
@@ -76,7 +85,13 @@ export class CompositionModel {
           (item) => item === this.innerVariable + ' ' + currentPart,
         );
         if (matchingGroupIndex !== -1) {
-          this.frequency += object.valueFrequencies?.[matchingGroupIndex] ?? 0;
+          const partFrequency = object.valueFrequencies?.[matchingGroupIndex] ?? 0;
+          this.frequency += partFrequency;
+          
+          // Store individual part frequency for numerical variables
+          if (this.innerVariableType === TYPES.NUMERICAL && this.partFrequencies) {
+            this.partFrequencies.push(partFrequency);
+          }
         }
       }
     }

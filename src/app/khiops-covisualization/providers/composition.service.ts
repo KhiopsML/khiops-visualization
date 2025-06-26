@@ -389,11 +389,28 @@ export class CompositionService {
         // Simply merge all models with the same innerVariable
         const baseModel = variableModels?.[0];
         const allParts: string[] = [];
+        const allPartFrequencies: number[] = [];
+        const allPartDetails: string[] = [];
 
         variableModels?.forEach((model) => {
           // Collect all parts
           if (model.part) {
             allParts.push(
+              ...(Array.isArray(model.part) ? model.part : [model.part]),
+            );
+          }
+          
+          // Collect all part frequencies for numerical variables
+          if (model.partFrequencies) {
+            allPartFrequencies.push(...model.partFrequencies);
+          }
+          
+          // Collect all part details (exhaustive list) for numerical variables
+          if (model.partDetails) {
+            allPartDetails.push(...model.partDetails);
+          } else if (model.part) {
+            // Fallback to part if partDetails isn't available
+            allPartDetails.push(
               ...(Array.isArray(model.part) ? model.part : [model.part]),
             );
           }
@@ -411,6 +428,8 @@ export class CompositionService {
           ...baseModel,
           frequency: totalFrequency,
           part: simplifiedParts,
+          partFrequencies: allPartFrequencies.length > 0 ? allPartFrequencies : undefined,
+          partDetails: allPartDetails.length > 0 ? allPartDetails : undefined,
           _id: variableModels?.map((m) => m._id).join('_') + '_merged',
           value: baseModel?.innerVariable + ' ' + allParts.join(', '), // Use all parts for the value representation
         };
