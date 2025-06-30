@@ -11,46 +11,6 @@ const PLUS_INF_PATTERN = /\]([\d.]+)[;,]\+inf\[/;
 
 export class CompositionUtils {
   /**
-   * Checks if two intervals are contiguous
-   * Supported interval format: ]-inf;a], ]a;b], ]b;+inf[
-   */
-  static areIntervalsContiguous(interval1: string, interval2: string): boolean {
-    // Extract bounds from intervals
-    const extractBounds = (
-      interval: string,
-    ): { lowerBound: number; upperBound: number } => {
-      let lowerBound: number, upperBound: number;
-
-      if (INF_PATTERN.test(interval)) {
-        const match = interval.match(INF_PATTERN);
-        lowerBound = -Infinity;
-        upperBound = match ? parseFloat(match[1]!) : NaN;
-      } else if (PLUS_INF_PATTERN.test(interval)) {
-        const match = interval.match(PLUS_INF_PATTERN);
-        lowerBound = match ? parseFloat(match[1]!) : NaN;
-        upperBound = Infinity;
-      } else if (RANGE_PATTERN.test(interval)) {
-        const match = interval.match(RANGE_PATTERN);
-        lowerBound = match ? parseFloat(match[1]!) : NaN;
-        upperBound = match ? parseFloat(match[2]!) : NaN;
-      } else {
-        return { lowerBound: NaN, upperBound: NaN };
-      }
-
-      return { lowerBound, upperBound };
-    };
-
-    const bounds1 = extractBounds(interval1);
-    const bounds2 = extractBounds(interval2);
-
-    // Check if intervals are contiguous (one upper bound equals one lower bound)
-    return (
-      bounds1.upperBound === bounds2.lowerBound ||
-      bounds2.upperBound === bounds1.lowerBound
-    );
-  }
-
-  /**
    * Merges a list of intervals into a simplified form
    * @param intervals Array of interval strings to merge
    * @returns Array of simplified interval strings

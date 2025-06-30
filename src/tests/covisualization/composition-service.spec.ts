@@ -8,6 +8,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngstack/translate';
+import { CompositionUtils } from '../../app/khiops-covisualization/providers/composition.utils.service';
 import { CompositionService } from '../../app/khiops-covisualization/providers/composition.service';
 import { CompositionModel } from '../../app/khiops-covisualization/model/composition.model';
 import { TYPES } from '../../app/khiops-library/enum/types';
@@ -214,17 +215,12 @@ describe('coVisualization', () => {
         const mergedNumerical = result.find(
           (model) => model.innerVariable === 'Variable2',
         );
+        console.log(' it ~ mergedNumerical:', JSON.stringify(mergedNumerical));
         expect(mergedNumerical).toBeDefined();
         expect(mergedNumerical?.innerVariableType).toBe(TYPES.NUMERICAL);
         expect(mergedNumerical?.frequency).toBe(32); // 20 + 12
         expect(mergedNumerical?.part).toEqual([']0;20]']); // Simplified contiguous intervals
-        expect(mergedNumerical?.valueGroups?.values).toEqual([
-          ']0;10]',
-          ']10;20]',
-        ]);
-        expect(mergedNumerical?.valueGroups?.valueFrequencies).toEqual([
-          20, 12,
-        ]);
+        expect(mergedNumerical?.partDetails).toEqual([']0;10]', ']10;20]']);
 
         // Find the single model (should remain unchanged)
         const singleModelResult = result.find(
@@ -241,28 +237,28 @@ describe('coVisualization', () => {
       it('should sort intervals in ascending order by lower bound', () => {
         // Test with mixed order intervals
         const intervals = [']10;20]', ']0;10]', ']20;30]'];
-        const result = compositionService.sortIntervals(intervals);
+        const result = CompositionUtils.sortIntervals(intervals);
         expect(result).toEqual([']0;10]', ']10;20]', ']20;30]']);
       });
 
       it('should handle intervals with negative infinity at the beginning', () => {
         // Test with negative infinity interval
         const intervals = [']10;20]', ']-inf;0]', ']0;10]'];
-        const result = compositionService.sortIntervals(intervals);
+        const result = CompositionUtils.sortIntervals(intervals);
         expect(result).toEqual([']-inf;0]', ']0;10]', ']10;20]']);
       });
 
       it('should handle intervals with positive infinity at the end', () => {
         // Test with positive infinity interval
         const intervals = [']20;+inf[', ']0;10]', ']10;20]'];
-        const result = compositionService.sortIntervals(intervals);
+        const result = CompositionUtils.sortIntervals(intervals);
         expect(result).toEqual([']0;10]', ']10;20]', ']20;+inf[']);
       });
 
       it('should handle intervals with comma separators', () => {
         // Test with comma-separated intervals
         const intervals = [']10,20]', ']0,10]', ']20,30]'];
-        const result = compositionService.sortIntervals(intervals);
+        const result = CompositionUtils.sortIntervals(intervals);
         expect(result).toEqual([']0,10]', ']10,20]', ']20,30]']);
       });
       it('should handle complex mixed intervals with infinity and decimal values', () => {
@@ -273,7 +269,7 @@ describe('coVisualization', () => {
           ']0.1;15.5]',
           ']25.7;+inf[',
         ];
-        const result = compositionService.sortIntervals(intervals);
+        const result = CompositionUtils.sortIntervals(intervals);
         expect(result).toEqual([
           ']-inf;0.1]',
           ']0.1;15.5]',
@@ -287,83 +283,36 @@ describe('coVisualization', () => {
       it('should merge contiguous intervals into a single interval', () => {
         // Test merging of contiguous intervals
         const intervals = [']0;10]', ']10;20]', ']20;30]'];
-        const result = compositionService.simplifyIntervals(intervals);
+        const result = CompositionUtils.simplifyIntervals(intervals);
         expect(result).toEqual([']0;30]']);
       });
 
       it('should keep non-contiguous intervals separate', () => {
         // Test with non-contiguous intervals
         const intervals = [']0;10]', ']15;25]', ']30;40]'];
-        const result = compositionService.simplifyIntervals(intervals);
+        const result = CompositionUtils.simplifyIntervals(intervals);
         expect(result).toEqual([']0;10]', ']15;25]', ']30;40]']);
       });
 
       it('should handle intervals with negative infinity', () => {
         // Test with negative infinity interval
         const intervals = [']-inf;10]', ']10;20]'];
-        const result = compositionService.simplifyIntervals(intervals);
+        const result = CompositionUtils.simplifyIntervals(intervals);
         expect(result).toEqual([']-inf;20]']);
       });
 
       it('should handle intervals with positive infinity', () => {
         // Test with positive infinity interval
         const intervals = [']10;20]', ']20;+inf['];
-        const result = compositionService.simplifyIntervals(intervals);
+        const result = CompositionUtils.simplifyIntervals(intervals);
         expect(result).toEqual([']10;+inf[']);
       });
 
       it('should return empty array for empty input', () => {
         // Test with empty array
         const intervals: string[] = [];
-        const result = compositionService.simplifyIntervals(intervals);
+        const result = CompositionUtils.simplifyIntervals(intervals);
         expect(result).toEqual([]);
-      });
-    });
-
-    describe('areIntervalsContiguous', () => {
-      it('should return true for contiguous intervals with semicolon separator', () => {
-        // Test basic contiguous intervals
-        const result = compositionService.areIntervalsContiguous(
-          ']0;10]',
-          ']10;20]',
-        );
-        expect(result).toEqual(true);
-      });
-
-      it('should return true for contiguous intervals with comma separator', () => {
-        // Test contiguous intervals with comma
-        const result = compositionService.areIntervalsContiguous(
-          ']0,10]',
-          ']10,20]',
-        );
-        expect(result).toEqual(true);
-      });
-
-      it('should return false for non-contiguous intervals', () => {
-        // Test non-contiguous intervals
-        const result = compositionService.areIntervalsContiguous(
-          ']0;10]',
-          ']15;20]',
-        );
-        expect(result).toEqual(false);
-      });
-
-      it('should return true for intervals involving negative infinity', () => {
-        // Test contiguous with negative infinity
-        const result = compositionService.areIntervalsContiguous(
-          ']-inf;10]',
-          ']10;20]',
-        );
-        expect(result).toEqual(true);
-      });
-
-      it('should return true for intervals involving positive infinity', () => {
-        // Test contiguous with positive infinity
-        const result = compositionService.areIntervalsContiguous(
-          ']10;20]',
-          ']20;+inf[',
-        );
-        expect(result).toEqual(true);
       });
     });
 
