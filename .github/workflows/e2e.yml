@@ -1,5 +1,7 @@
 name: End-to-end tests
 on: [push, workflow_dispatch]
+permissions:
+  contents: read
 
 jobs:
   cypress-run:
