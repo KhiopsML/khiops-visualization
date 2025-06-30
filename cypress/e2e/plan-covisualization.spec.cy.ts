@@ -101,9 +101,9 @@ describe('Test Plan for Khiops Covisualization', () => {
         cy.get('#cell-stats-comp').contains(res.matrixValues);
 
         // Rename node
-        cy.get('#tree_0').find('.tree-leaf-text:eq(1)').dblclick();
+        cy.get('#tree_0').find('.edit-button:eq(1)').click();
         cy.get('.tree-leaf-text-input input').type('renamed');
-        cy.get('#tree_0').find('.valid-rename').dblclick();
+        cy.get('#tree_0').find('.valid-rename').click();
 
         // Check renamed name into all components
         cy.get('#cluster-details-grid-0').contains('renamed');
