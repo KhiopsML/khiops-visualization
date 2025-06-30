@@ -12,10 +12,10 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 import { Ls } from '@khiops-library/providers/ls.service';
 
 @Component({
-    selector: 'kl-file-loader',
-    templateUrl: './file-loader.component.html',
-    styleUrls: ['./file-loader.component.scss'],
-    standalone: false
+  selector: 'kl-file-loader',
+  templateUrl: './file-loader.component.html',
+  styleUrls: ['./file-loader.component.scss'],
+  standalone: false,
 })
 export class FileLoaderComponent implements OnInit {
   public fileLoaderDatas: any;

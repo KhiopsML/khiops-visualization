@@ -126,7 +126,7 @@ export class FileLoaderService {
     // Co visualization files
     // ======================
     //
-    // let urlKC = './assets/mocks/kc/Coclustering-100x100.json';
+    let urlKC = './assets/mocks/kc/Coclustering-100x100.json';
     // let urlKC = './assets/mocks/kc/cc.json';
     // let urlKC = './assets/mocks/kc/Coclustering.json';
     // let urlKC = './assets/mocks/kc/Co-simple-2vars.json';
@@ -143,7 +143,7 @@ export class FileLoaderService {
     // let urlKC = './assets/mocks/kc/adultmissing.json';
     // let urlKC = './assets/mocks/kc/DigitCoclustering.json';
     // let urlKC = './assets/mocks/kc/8-TS4624User_Coclustering.json';
-    let urlKC = './assets/mocks/kc/IV-AdultEducation.khcj';
+    // let urlKC = './assets/mocks/kc/IV-AdultEducation.khcj';
     // let urlKC = './assets/mocks/kc/Coclustering-IVAdultEducation.json';
     // let urlKC = './assets/mocks/kc/Coclustering-IV-Glass.khcj';
     // let urlKC = './assets/mocks/kc/Coclustering-IV-Iris.khcj';

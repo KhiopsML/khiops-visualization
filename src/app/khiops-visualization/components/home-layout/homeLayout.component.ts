@@ -98,7 +98,7 @@ export class HomeLayoutComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    if (AppConfig.debugFile && !AppConfig.cypress) {
+    if (AppConfig.debugFile) {
       setTimeout(() => {
         this.fileLoader?.loadDebugFile();
       }, 100);
