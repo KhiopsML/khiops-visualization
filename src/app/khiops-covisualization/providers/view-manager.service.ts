@@ -50,16 +50,10 @@ export class ViewManagerService {
     // Do not restore LS values because we have a save functionnality
     if (AppConfig.cypress) {
       // Do it only for cypress tests
-      initLS();
-
-      const lsStorage = this.ls.get(LS.VIEWS_LAYOUT);
-
-      if (lsStorage && lsStorage !== 'undefined') {
-        // Merge current values with values from LS
-        this.viewsLayout.megeWithPreviousValues(lsStorage);
-      }
+      const lsStorage = initLS();
+      // Merge current values with values from LS
+      this.viewsLayout.megeWithPreviousValues(lsStorage);
     }
-
     // Then get saved json state
     const savedDatas = this.appService.getSavedDatas('viewsLayout');
     if (savedDatas) {

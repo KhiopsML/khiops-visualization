@@ -1,5 +1,4 @@
 import { setupAxisTests } from 'cypress/setups/axis-tests';
-import { initLS } from 'cypress/setups/init-ls';
 import '../support/commands';
 import '../utils/utils';
 import { setupContextTests } from 'cypress/setups/context-tests';

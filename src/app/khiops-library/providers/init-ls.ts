@@ -1,5 +1,8 @@
+import { ViewLayoutVO } from '../../khiops-covisualization/model/view-layout.model';
 export function initLS() {
-  const ls = {
+  let ls: ViewLayoutVO = new ViewLayoutVO();
+  // @ts-ignore
+  ls = {
     isDimensionsChecked: true,
     isCoocurenceChecked: true,
     dimensionsViewsLayoutsVO: [
@@ -11,6 +14,7 @@ export function initLS() {
         isCompositionChecked: true,
         isExternalDataChecked: true,
         isDistributionChecked: true,
+        name: '',
       },
       {
         isChecked: true,
@@ -20,6 +24,7 @@ export function initLS() {
         isCompositionChecked: true,
         isExternalDataChecked: true,
         isDistributionChecked: true,
+        name: '',
       },
       {
         isChecked: true,
@@ -29,6 +34,7 @@ export function initLS() {
         isCompositionChecked: true,
         isExternalDataChecked: true,
         isDistributionChecked: true,
+        name: '',
       },
       {
         isChecked: true,
@@ -38,6 +44,7 @@ export function initLS() {
         isCompositionChecked: true,
         isExternalDataChecked: true,
         isDistributionChecked: true,
+        name: '',
       },
       {
         isChecked: true,
@@ -47,6 +54,7 @@ export function initLS() {
         isCompositionChecked: true,
         isExternalDataChecked: true,
         isDistributionChecked: true,
+        name: '',
       },
       {
         isChecked: true,
@@ -56,12 +64,10 @@ export function initLS() {
         isCompositionChecked: true,
         isExternalDataChecked: true,
         isDistributionChecked: true,
+        name: '',
       },
     ],
   };
 
-  window.localStorage.setItem(
-    'KHIOPS_COVISUALIZATION_VIEWS_LAYOUT',
-    JSON.stringify(ls),
-  );
+  return ls;
 }

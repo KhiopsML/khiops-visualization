@@ -1,6 +1,5 @@
 import '../support/commands';
 import '../utils/utils';
-import { initLS } from 'cypress/setups/init-ls';
 
 describe('Behaviors tests for Khiops Covisualization', () => {
   let files = ['DigitCoclustering.json'];

@@ -32,9 +32,4 @@ Cypress.Commands.add('initViews', () => {
       isDistributionChecked: true,
     });
   }
-
-  window.localStorage.setItem(
-    'KHIOPS_COVISUALIZATION_VIEWS_LAYOUT',
-    JSON.stringify(viewsLayout),
-  );
 });
