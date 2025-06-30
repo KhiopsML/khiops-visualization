@@ -20,7 +20,7 @@ import { HistogramService } from './histogram.service';
 import { format } from 'mathjs';
 import { HistogramUIService } from './histogram.ui.service';
 import { HistogramBarModel } from './histogram.bar.model';
-import { ResizedEvent } from 'angular-resize-event';
+import { ResizedEvent } from 'angular-resize-event-package';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';

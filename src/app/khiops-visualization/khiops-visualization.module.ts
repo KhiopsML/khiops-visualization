@@ -39,7 +39,7 @@ import { VarDetailsPreparationComponent } from './components/commons/var-details
 import { VarDetailsTreePreparationComponent } from './components/commons/var-details-tree-preparation/var-details-tree-preparation.component';
 import { VarDetailsPreparation2dComponent } from './components/commons/var-details-preparation-2d/var-details-preparation-2d.component';
 import { HistogramComponent } from './components/commons/histogram/histogram.component';
-import { AngularResizeEventModule } from 'angular-resize-event';
+import { AngularResizeEventModule } from 'angular-resize-event-package';
 import { BrowserModule } from '@angular/platform-browser';
 import { HistogramTooltipComponent } from './components/commons/histogram/histogram.tooltip.component';
 import { ProjectLogsComponent } from './components/commons/project-logs/project-logs.component';
