@@ -5,7 +5,7 @@
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "emitDecoratorMetadata": true,
     "importHelpers": true,
@@ -26,20 +26,44 @@
     "baseUrl": "./",
     "target": "ES2022",
     "allowJs": true,
-    "typeRoots": ["node_modules/@types"],
-    "lib": ["es2020", "es2019", "es2017", "es2016", "es2015", "dom"],
-    "types": ["jasmine", "node"],
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2020",
+      "es2019",
+      "es2017",
+      "es2016",
+      "es2015",
+      "dom"
+    ],
+    "types": [
+      "jasmine",
+      "node"
+    ],
     "paths": {
-      "@khiops-library/*": ["./src/app/khiops-library/*"],
-      "@khiops-treeview/*": ["./libs/khiops-treeview/*"],
-      "@khiops-hypertree/*": ["./libs/khiops-hypertree/dist/*"],
-      "@khiops-visualization/*": ["./src/app/khiops-visualization/*"],
-      "@khiops-covisualization/*": ["./src/app/khiops-covisualization/*"],
+      "@khiops-library/*": [
+        "./src/app/khiops-library/*"
+      ],
+      "@khiops-treeview/*": [
+        "./libs/khiops-treeview/*"
+      ],
+      "@khiops-hypertree/*": [
+        "./libs/khiops-hypertree/dist/*"
+      ],
+      "@khiops-visualization/*": [
+        "./src/app/khiops-visualization/*"
+      ],
+      "@khiops-covisualization/*": [
+        "./src/app/khiops-covisualization/*"
+      ],
       "khiops-visualization-components": [
         "dist/khiops-visualization-components/khiops-visualization-components",
         "dist/khiops-visualization-components"
       ],
-      "stream": ["./node_modules/stream-browserify"]
+      "stream": [
+        "./node_modules/stream-browserify"
+      ]
     }
   },
   "exclude": ["node_modules", "./libs", "**/*.spec.ts"],
