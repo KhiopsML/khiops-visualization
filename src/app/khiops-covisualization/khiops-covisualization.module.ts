@@ -37,6 +37,8 @@ import { HierarchyDetailsComponent } from './components/commons/hierarchy-detail
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { InAppOverlayContainer } from '../khiops-library/overlay/in-app-overlay-provider';
 import { CompositionDetailedPartsComponent } from './components/commons/composition-detailed-parts/composition-detailed-parts.component';
+import { VariableSearchDialogComponent } from './components/commons/variable-search-dialog/variable-search-dialog.component';
+import { VariableSearchButtonComponent } from './components/commons/variable-search-button/variable-search-button.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +64,8 @@ import { CompositionDetailedPartsComponent } from './components/commons/composit
     ImportExtDatasComponent,
     ImportExtDatasListComponent,
     CompositionDetailedPartsComponent,
+    VariableSearchDialogComponent,
+    VariableSearchButtonComponent,
     ExternalDatasComponent,
   ],
   imports: [
@@ -79,7 +83,7 @@ import { CompositionDetailedPartsComponent } from './components/commons/composit
     // make sure that InAppOverlayContainer and OverlayContainer share the same instance
     { provide: OverlayContainer, useExisting: InAppOverlayContainer },
   ],
-  exports: [AppComponent],
+  exports: [AppComponent, VariableSearchDialogComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class KhiopsCovisualizationModule {}

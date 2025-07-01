@@ -1,0 +1,68 @@
+<div id="variable-search-dialog-comp" fxFlexFill fxLayout="column">
+  <div
+    id="variable-search-dialog-content"
+    fxLayout="column"
+    fxFlexFill
+    fxLayoutAlign="start stretch"
+  >
+    <div fxLayout="column" fxLayoutGap="10px" class="search-controls">
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+        <span class="label">{{ 'GLOBAL.INNER_VARIABLE' | translate }}:</span>
+        <div fxFlex>
+          <button
+            class="button-accent inner-variable-select"
+            title="{{ 'TOOLTIPS.VARIABLE.INNER.SELECT' | translate }}"
+            mat-stroked-button
+            color="accent"
+            [matMenuTriggerFor]="selectInnerVariable"
+          >
+            {{ selectedInnerVariable || 'GLOBAL.SELECT_VARIABLE' | translate }}
+            <em class="screenshot-hide">
+              <mat-icon>keyboard_arrow_down</mat-icon>
+            </em>
+          </button>
+          <mat-menu #selectInnerVariable>
+            <button
+              mat-menu-item
+              *ngFor="let variable of innerVariables; let i = index"
+              [class.selected-item]="variable === selectedInnerVariable"
+              (click)="onInnerVariableSelected(variable)"
+            >
+              {{ variable }}
+            </button>
+          </mat-menu>
+        </div>
+        <button
+          class="grey-btn"
+          mat-icon-button
+          matTooltip="{{ 'GLOBAL.CLOSE' | translate }}"
+          (click)="onClickOnClose()"
+        >
+          <mat-icon fxFlexFill fxLayoutAlign="center center">close</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div
+      id="variable-search-results-table"
+      fxFlexFill
+      fxLayout="column"
+      fxLayoutAlign="start center"
+    >
+      <kl-ag-grid
+        fxFlexFill
+        [showFullSearch]="true"
+        [showLevelDistribution]="false"
+        [showSearch]="true"
+        [showLineSelection]="true"
+        [showColumnsSelection]="false"
+        [rowHeight]="40"
+        [inputDatas]="searchResults?.values"
+        [title]="''"
+        [displayedColumns]="searchResults?.displayedColumns"
+        (selectListItem)="onSelectRowChanged($event)"
+      >
+      </kl-ag-grid>
+    </div>
+  </div>
+</div>

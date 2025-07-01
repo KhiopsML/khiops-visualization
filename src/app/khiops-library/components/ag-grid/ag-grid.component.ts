@@ -87,6 +87,7 @@ export class AgGridComponent
   @Input() private rowHeight = 28;
   @Input() private enablePrecision = true;
   @Input() private selectedVariable: any; // Can be any types of data
+  @Input() public showFullSearch = false;
 
   @Output() private selectListItem: EventEmitter<any> = new EventEmitter();
   @Output() private doubleClickListItem: EventEmitter<any> = new EventEmitter();
@@ -245,6 +246,18 @@ export class AgGridComponent
         }
       }
       this.updateColumnFilterBadge();
+    });
+
+    if (this.showFullSearch) {
+      this.searchFormVisible = true;
+    }
+    setTimeout(() => {
+      if (this.showFullSearch) {
+        // set min size of .search-input-btn
+        if (this.searchInputEl) {
+          this.searchInputEl.nativeElement.style.minWidth = '160px';
+        }
+      }
     });
   }
 
@@ -548,9 +561,10 @@ export class AgGridComponent
 
   removeSearch() {
     this.searchInput = '';
-    console.log('removeSearch ~ this.searchInput :', this.searchInput);
     this.search();
-    this.searchFormVisible = false;
+    if (!this.showFullSearch) {
+      this.searchFormVisible = false;
+    }
   }
 
   search() {

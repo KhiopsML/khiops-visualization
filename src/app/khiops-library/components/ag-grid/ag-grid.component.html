@@ -11,7 +11,12 @@
     #headerContainer
     *ngIf="showHeader && rowData.length !== 0"
   >
-    <div fxFlex fxLayoutAlign="start center" fxLayout="row">
+    <div
+      *ngIf="!showFullSearch"
+      fxFlex
+      fxLayoutAlign="start center"
+      fxLayout="row"
+    >
       <h1
         fxLayoutAlign="start center"
         fxLayout="row"
@@ -35,6 +40,7 @@
       class="comp-header-tools screenshot-hide"
       fxLayoutAlign="end center"
       fxLayout="row"
+      fxFlex
     >
       <button
         [ngClass]="{ 'small-div': isSmallDiv || searchFormVisible }"
@@ -109,11 +115,13 @@
           mat-icon-button
           (click)="removeSearch()"
           color="primary"
+          [hidden]="!searchInput"
           *ngIf="this.searchFormVisible"
         >
           <mat-icon fxFlexFill fxLayoutAlign="center center">close</mat-icon>
         </button>
       </form>
+      <div *ngIf="showFullSearch" fxFlex></div>
       <button
         mat-flat-button
         matRipple

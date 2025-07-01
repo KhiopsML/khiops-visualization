@@ -1,0 +1,10 @@
+<button
+  class="variable-search-button-comp"
+  *ngIf="isSearchModeAvailable()"
+  mat-stroked-button
+  color="primary"
+  (click)="openVariableSearchDialog()"
+>
+  <mat-icon>search</mat-icon>
+  {{ 'GLOBAL.SEARCH' | translate }}
+</button>
