@@ -337,10 +337,6 @@ export class AgGridComponent
     this.fitToSpace();
   }
 
-  onCellDoubleClicked(e: CellDoubleClickedEvent) {
-    this.doubleClickListItem.emit(e.data);
-  }
-
   /**
    * Selects a node or multiple nodes in the ag-Grid based on the provided variable(s).
    *
