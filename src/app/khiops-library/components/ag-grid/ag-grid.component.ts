@@ -202,6 +202,15 @@ export class AgGridComponent
     this.dataTypeChanged.emit(type);
   }
 
+  /**
+   * Focus on search input
+   */
+  public focusSearch() {
+    if (this.searchInputEl) {
+      this.searchInputEl.nativeElement.focus();
+    }
+  }
+
   public hideActiveEntries() {
     this.gridOptions?.api?.deselectAll();
   }
