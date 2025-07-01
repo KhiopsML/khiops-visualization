@@ -18,7 +18,6 @@ import { TranslateService } from '@ngstack/translate';
 import { CompositionModel } from '@khiops-covisualization/model/composition.model';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
-import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
 import { Subscription } from 'rxjs';
 import _ from 'lodash';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
@@ -62,7 +61,6 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private translate: TranslateService,
     private importExtDatasService: ImportExtDatasService,
-    private treenodesService: TreenodesService,
     private compositionService: CompositionService,
     private eventsService: EventsService,
     private dialog: MatDialog,
@@ -113,6 +111,7 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    console.log(' CompositionComponent ~ ngOnChanges ~ changes:', changes);
     // update when dimension change (with combo)
     if (
       changes.selectedDimension?.currentValue?.name !==
@@ -133,13 +132,6 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
     this.importedDatasChangedSub?.unsubscribe();
     this.selectedComposition = undefined;
     this.selectedCompositionChanged.emit(this.selectedComposition);
-  }
-
-  onDoubleClickListItem(item: TreeNodeModel) {
-    this.treenodesService.setSelectedNode(
-      this.selectedDimension?.name!,
-      item.cluster,
-    );
   }
 
   showDetailedPartsDialog(e: ICellRendererParams) {
