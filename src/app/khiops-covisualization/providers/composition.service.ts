@@ -399,12 +399,12 @@ export class CompositionService {
               ...(Array.isArray(model.part) ? model.part : [model.part]),
             );
           }
-          
+
           // Collect all part frequencies for numerical variables
           if (model.partFrequencies) {
             allPartFrequencies.push(...model.partFrequencies);
           }
-          
+
           // Collect all part details (exhaustive list) for numerical variables
           if (model.partDetails) {
             allPartDetails.push(...model.partDetails);
@@ -428,8 +428,12 @@ export class CompositionService {
           ...baseModel,
           frequency: totalFrequency,
           part: simplifiedParts,
-          partFrequencies: allPartFrequencies.length > 0 ? allPartFrequencies : undefined,
-          partDetails: allPartDetails.length > 0 ? CompositionUtils.sortIntervals(allPartDetails) : undefined,
+          partFrequencies:
+            allPartFrequencies.length > 0 ? allPartFrequencies : undefined,
+          partDetails:
+            allPartDetails.length > 0
+              ? CompositionUtils.sortIntervals(allPartDetails)
+              : undefined,
           _id: variableModels?.map((m) => m._id).join('_') + '_merged',
           value: baseModel?.innerVariable + ' ' + allParts.join(', '), // Use all parts for the value representation
         };
@@ -613,7 +617,6 @@ export class CompositionService {
       }
     }
 
-    console.log(' compositionValues:', compositionValues);
     return compositionValues;
   }
 

@@ -165,6 +165,28 @@ export class VariableSearchDialogComponent {
             });
           }
         });
+        // Sort by interval (assuming intervals are strings like '[a, b)')
+        this.searchResults!.values = this.searchResults!.values!.sort(
+          (a: any, b: any) => {
+            // Helper to check if interval is -inf or +inf
+            const isMinusInf = (interval: string) =>
+              /-inf|−inf|Infinity|−Infinity|\u2212inf/i.test(interval) &&
+              interval.trim().startsWith(']');
+            const isPlusInf = (interval: string) =>
+              /\+inf|\+Infinity|Infinity/i.test(interval) &&
+              interval.trim().endsWith('[');
+            if (isMinusInf(a.interval)) return -1;
+            if (isMinusInf(b.interval)) return 1;
+            if (isPlusInf(a.interval)) return 1;
+            if (isPlusInf(b.interval)) return -1;
+            // Try to extract the lower bound as a number
+            const getLower = (interval: string) => {
+              const match = interval.match(/[-+]?[0-9]*\.?[0-9]+/);
+              return match ? parseFloat(match[0]) : 0;
+            };
+            return getLower(a.interval) - getLower(b.interval);
+          },
+        );
       } else {
         // For categorical variables, show modalities
         this.searchResults!.displayedColumns = [
@@ -195,6 +217,10 @@ export class VariableSearchDialogComponent {
             });
           }
         });
+        // Sort by frequency descending
+        this.searchResults!.values = this.searchResults!.values!.sort(
+          (a: any, b: any) => b.frequency - a.frequency,
+        );
       }
     }
   }
@@ -202,7 +228,7 @@ export class VariableSearchDialogComponent {
   onSelectRowChanged(selectedRow: any) {
     // Get the selected value (modality for categorical, interval for numerical)
     const selectedValue = selectedRow.modality || selectedRow.interval;
-    
+
     this.treenodesService.setSelectedNode(
       this.data.selectedDimension?.name!,
       selectedRow.cluster,
