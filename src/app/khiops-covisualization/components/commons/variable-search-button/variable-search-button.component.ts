@@ -20,6 +20,7 @@ import {
 })
 export class VariableSearchButtonComponent {
   @Input() public selectedDimension: DimensionCovisualizationModel | undefined;
+  private lastSelectedInnerVariable: string | undefined;
 
   constructor(private dialog: MatDialog) {}
 
@@ -38,9 +39,23 @@ export class VariableSearchButtonComponent {
     config.maxHeight = '80vh';
     config.data = {
       selectedDimension: this.selectedDimension,
+      selectedInnerVariable: this.lastSelectedInnerVariable,
     } as VariableSearchDialogData;
 
-    this.dialog.open(VariableSearchDialogComponent, config);
+    const dialogRef = this.dialog.open(VariableSearchDialogComponent, config);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result?.selectedInnerVariable) {
+        this.lastSelectedInnerVariable = result.selectedInnerVariable;
+      } else if (result === undefined) {
+        // We can retrieve the selected variable from the component instance
+        const componentInstance = dialogRef.componentInstance;
+        if (componentInstance?.selectedInnerVariable) {
+          this.lastSelectedInnerVariable =
+            componentInstance.selectedInnerVariable;
+        }
+      }
+    });
   }
 
   /**

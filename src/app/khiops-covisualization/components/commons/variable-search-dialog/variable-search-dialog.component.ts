@@ -18,6 +18,7 @@ import { TreenodesService } from '@khiops-covisualization/providers/treenodes.se
 
 export interface VariableSearchDialogData {
   selectedDimension: DimensionCovisualizationModel;
+  selectedInnerVariable?: string;
 }
 
 export interface VariableSearchResult {
@@ -52,6 +53,13 @@ export class VariableSearchDialogComponent {
   ) {
     this.initializeInnerVariables();
     this.initializeSearchResults();
+    // Restore selectedInnerVariable if provided in data
+    if (
+      this.data.selectedInnerVariable &&
+      this.innerVariables.includes(this.data.selectedInnerVariable)
+    ) {
+      this.selectedInnerVariable = this.data.selectedInnerVariable;
+    }
     this.performSearch();
   }
 
@@ -81,7 +89,7 @@ export class VariableSearchDialogComponent {
   }
 
   onClickOnClose() {
-    this.dialogRef.close();
+    this.dialogRef.close({ selectedInnerVariable: this.selectedInnerVariable });
   }
 
   private performSearch() {
@@ -236,6 +244,6 @@ export class VariableSearchDialogComponent {
       selectedValue,
     );
 
-    this.dialogRef.close();
+    this.dialogRef.close({ selectedInnerVariable: this.selectedInnerVariable });
   }
 }
