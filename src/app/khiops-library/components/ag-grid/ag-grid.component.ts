@@ -35,7 +35,6 @@ import {
   Column,
   GridReadyEvent,
   SortChangedEvent,
-  CellDoubleClickedEvent,
   NavigateToNextCellParams,
 } from '@ag-grid-community/core';
 import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
@@ -90,7 +89,6 @@ export class AgGridComponent
   @Input() public showFullSearch = false;
 
   @Output() private selectListItem: EventEmitter<any> = new EventEmitter();
-  @Output() private doubleClickListItem: EventEmitter<any> = new EventEmitter();
   @Output() private dataTypeChanged: EventEmitter<any> = new EventEmitter();
   @Output() private gridCheckboxChanged: EventEmitter<GridCheckboxEventI> =
     new EventEmitter();
