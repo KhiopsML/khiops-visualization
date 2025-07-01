@@ -10,7 +10,7 @@ export interface ResultI {
 
 describe('Test Plan for Khiops Covisualization', () => {
   const files = [
-    // '1-Adult2varsEducationOccupation.khcj',
+    '1-Adult2varsEducationOccupation.khcj',
     'Coclustering-100x100.json',
   ];
 
