@@ -68,7 +68,7 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
     this.treeSelectedNodeChangedSub =
       this.eventsService.treeSelectedNodeChanged.subscribe((e) => {
         if (e.realNodeVO && e.hierarchyName === this.selectedDimension?.name) {
-          this.updateTable(e.realNodeVO);
+          this.updateTable(e.realNodeVO, e.selectedValue);
         }
       });
 
@@ -163,7 +163,7 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
     this.selectedCompositionChanged.emit(this.selectedComposition);
   }
 
-  private updateTable(selectedNode: TreeNodeModel | undefined) {
+  private updateTable(selectedNode: TreeNodeModel | undefined, selectedValue?: string) {
     if (selectedNode) {
       this.compositionValues = Object.assign(
         [],
@@ -174,7 +174,28 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
       );
       // if composition values : categorical
       if (this.compositionValues!.length > 0) {
-        // Select first by default
+        // If selectedValue is provided, try to find the corresponding composition
+        if (selectedValue) {
+          const foundComposition = this.compositionValues.find((comp) => {
+            // Check if value matches (for categorical variables)
+            if (comp.value === selectedValue) {
+              return true;
+            }
+            // Check if selectedValue is within an interval (for numerical variables)
+            if (comp.partDetails) {
+              return comp.partDetails.some(interval => interval === selectedValue);
+            }
+            return false;
+          });
+          
+          if (foundComposition) {
+            this.selectedComposition = foundComposition;
+            this.selectedCompositionChanged.emit(this.selectedComposition);
+            return;
+          }
+        }
+        
+        // Select first by default if no selectedValue or not found
         this.selectedComposition = this.compositionValues?.[0];
         this.selectedCompositionChanged.emit(this.selectedComposition);
       }

@@ -200,9 +200,14 @@ export class VariableSearchDialogComponent {
   }
 
   onSelectRowChanged(selectedRow: any) {
+    // Get the selected value (modality for categorical, interval for numerical)
+    const selectedValue = selectedRow.modality || selectedRow.interval;
+    
     this.treenodesService.setSelectedNode(
       this.data.selectedDimension?.name!,
       selectedRow.cluster,
+      false,
+      selectedValue,
     );
 
     this.dialogRef.close();

@@ -11,6 +11,7 @@ export interface TreeNodeChangedEventI {
   realNodeVO: TreeNodeModel;
   selectedNode: TreeNodeModel;
   stopPropagation: boolean;
+  selectedValue?: string; // For specific modality or interval selection
 }
 
 export interface TreeViewErrorEventI {

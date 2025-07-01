@@ -151,12 +151,14 @@ export class TreenodesService {
    * @param {string} hierarchyName - The name of the hierarchy.
    * @param {string} nodeName - The name of the node.
    * @param {boolean} stopPropagation - Flag to stop event propagation.
+   * @param {string} selectedValue - Optional selected value (modality or interval).
    * @returns {TreeNodeModel} - The selected node model.
    */
   setSelectedNode(
     hierarchyName: string,
     nodeName: string | number,
     stopPropagation = false,
+    selectedValue?: string,
   ): TreeNodeModel | undefined {
     let nodeVO: TreeNodeModel | undefined;
     if (this.dimensionsDatasService.dimensionsDatas.selectedDimensions) {
@@ -251,6 +253,7 @@ export class TreenodesService {
               selectedNode: nodeVO!,
               realNodeVO: realNodeVO,
               stopPropagation: stopPropagation,
+              selectedValue: selectedValue,
             });
           }
         }
