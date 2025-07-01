@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, Inject, ViewChild } from '@angular/core';
+import { Component, Inject, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { TYPES } from '@khiops-library/enum/types';
@@ -19,6 +19,7 @@ import { TreenodesService } from '@khiops-covisualization/providers/treenodes.se
 export interface VariableSearchDialogData {
   selectedDimension: DimensionCovisualizationModel;
   selectedInnerVariable?: string;
+  searchInput?: string;
 }
 
 export interface VariableSearchResult {
@@ -33,7 +34,7 @@ export interface VariableSearchResult {
   styleUrls: ['./variable-search-dialog.component.scss'],
   standalone: false,
 })
-export class VariableSearchDialogComponent {
+export class VariableSearchDialogComponent implements AfterViewInit {
   innerVariables: string[] = [];
   selectedInnerVariable = '';
   searchValue = '';
@@ -60,7 +61,18 @@ export class VariableSearchDialogComponent {
     ) {
       this.selectedInnerVariable = this.data.selectedInnerVariable;
     }
+    // Store searchInput for later restoration in ngAfterViewInit
     this.performSearch();
+  }
+
+  ngAfterViewInit() {
+    // Restore search input after view is initialized
+    if (this.data.searchInput && this.agGridComponent) {
+      setTimeout(() => {
+        this.agGridComponent!.searchInput = this.data.searchInput!;
+        this.agGridComponent!.search();
+      }, 100);
+    }
   }
 
   private initializeInnerVariables() {
@@ -85,23 +97,32 @@ export class VariableSearchDialogComponent {
   onInnerVariableSelected(variable: string) {
     this.selectedInnerVariable = variable;
     this.searchValue = '';
+    // Reset search input when changing inner variable
+    if (this.agGridComponent) {
+      this.agGridComponent.searchInput = '';
+      this.agGridComponent.search();
+    }
     this.performSearch();
   }
 
   onClickOnClose() {
-    this.dialogRef.close({ selectedInnerVariable: this.selectedInnerVariable });
+    // Get current search input from AgGrid component
+    const currentSearchInput = this.agGridComponent?.searchInput || '';
+    this.dialogRef.close({
+      selectedInnerVariable: this.selectedInnerVariable,
+      searchInput: currentSearchInput,
+    });
   }
 
   private performSearch() {
-    // Reset aggrid search input
-    if (this.agGridComponent) {
+    // Don't try to restore search input here - it will be done in ngAfterViewInit
+    if (this.agGridComponent && !this.data.searchInput) {
       this.agGridComponent.searchInput = '';
       this.agGridComponent.search();
     }
 
     this.searchResults!.displayedColumns = [];
     this.searchResults!.values = [];
-    this.searchInput = '';
     if (!this.selectedInnerVariable) {
       return;
     }
@@ -244,6 +265,11 @@ export class VariableSearchDialogComponent {
       selectedValue,
     );
 
-    this.dialogRef.close({ selectedInnerVariable: this.selectedInnerVariable });
+    // Get current search input from AgGrid component
+    const currentSearchInput = this.agGridComponent?.searchInput || '';
+    this.dialogRef.close({
+      selectedInnerVariable: this.selectedInnerVariable,
+      searchInput: currentSearchInput,
+    });
   }
 }

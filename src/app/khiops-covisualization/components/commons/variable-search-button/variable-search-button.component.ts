@@ -21,6 +21,7 @@ import {
 export class VariableSearchButtonComponent {
   @Input() public selectedDimension: DimensionCovisualizationModel | undefined;
   private lastSelectedInnerVariable: string | undefined;
+  private lastSearchInput: string | undefined;
 
   constructor(private dialog: MatDialog) {}
 
@@ -40,6 +41,7 @@ export class VariableSearchButtonComponent {
     config.data = {
       selectedDimension: this.selectedDimension,
       selectedInnerVariable: this.lastSelectedInnerVariable,
+      searchInput: this.lastSearchInput,
     } as VariableSearchDialogData;
 
     const dialogRef = this.dialog.open(VariableSearchDialogComponent, config);
@@ -47,12 +49,16 @@ export class VariableSearchButtonComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result?.selectedInnerVariable) {
         this.lastSelectedInnerVariable = result.selectedInnerVariable;
+        this.lastSearchInput = result.searchInput;
       } else if (result === undefined) {
-        // We can retrieve the selected variable from the component instance
+        // We can retrieve the selected variable and search input from the component instance
         const componentInstance = dialogRef.componentInstance;
         if (componentInstance?.selectedInnerVariable) {
           this.lastSelectedInnerVariable =
             componentInstance.selectedInnerVariable;
+        }
+        if (componentInstance?.agGridComponent?.searchInput) {
+          this.lastSearchInput = componentInstance.agGridComponent.searchInput;
         }
       }
     });
