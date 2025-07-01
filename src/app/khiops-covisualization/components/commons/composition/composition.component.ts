@@ -111,7 +111,6 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(' CompositionComponent ~ ngOnChanges ~ changes:', changes);
     // update when dimension change (with combo)
     if (
       changes.selectedDimension?.currentValue?.name !==
@@ -163,7 +162,10 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
     this.selectedCompositionChanged.emit(this.selectedComposition);
   }
 
-  private updateTable(selectedNode: TreeNodeModel | undefined, selectedValue?: string) {
+  private updateTable(
+    selectedNode: TreeNodeModel | undefined,
+    selectedValue?: string,
+  ) {
     if (selectedNode) {
       this.compositionValues = Object.assign(
         [],
@@ -183,18 +185,20 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
             }
             // Check if selectedValue is within an interval (for numerical variables)
             if (comp.partDetails) {
-              return comp.partDetails.some(interval => interval === selectedValue);
+              return comp.partDetails.some(
+                (interval) => interval === selectedValue,
+              );
             }
             return false;
           });
-          
+
           if (foundComposition) {
             this.selectedComposition = foundComposition;
             this.selectedCompositionChanged.emit(this.selectedComposition);
             return;
           }
         }
-        
+
         // Select first by default if no selectedValue or not found
         this.selectedComposition = this.compositionValues?.[0];
         this.selectedCompositionChanged.emit(this.selectedComposition);
