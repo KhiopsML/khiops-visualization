@@ -76,7 +76,7 @@ export class VariableSearchDialogComponent implements AfterViewInit {
         // Set focus on the search input field
         this.agGridComponent.focusSearch();
       }
-    }, 100);
+    }, 250);
   }
 
   private initializeInnerVariables() {
