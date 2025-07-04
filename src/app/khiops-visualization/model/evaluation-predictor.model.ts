@@ -74,8 +74,8 @@ export class EvaluationPredictorModel {
       delete this.rankNlpd;
     }
 
-    // Remove normal vaules if it's a reg
-    if (this.rmse) {
+    // Remove normal values if it's a reg
+    if (this.rmse !== undefined) {
       delete this.accuracy;
       delete this.compression;
       delete this.auc;
