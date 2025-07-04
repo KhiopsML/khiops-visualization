@@ -29,7 +29,7 @@ import { TrainedPredictorModel } from '@khiops-visualization/model/trained-predi
 import { PreparationVariableStatistic } from '@khiops-visualization/interfaces/preparation-report';
 import { TreePreparationVariableStatistic } from '@khiops-visualization/interfaces/tree-preparation-report';
 import { VariableDetail } from '@khiops-visualization/interfaces/app-datas';
-import { AppConfig } from 'src/environments/environment';
+import { AppConfig } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',

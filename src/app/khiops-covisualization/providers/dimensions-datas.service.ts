@@ -10,7 +10,7 @@ import { TreeNodeModel } from '../model/tree-node.model';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { MatrixUtilsService } from '@khiops-library/components/matrix/matrix.utils.service';
 import * as _ from 'lodash'; // Important to import lodash in karma
-import { AppConfig } from 'src/environments/environment';
+import { AppConfig } from '../../../environments/environment';
 import { DimensionsDatasModel } from '../model/dimensions-data.model';
 import { TYPES } from '@khiops-library/enum/types';
 import { ExtDatasModel } from '@khiops-covisualization/model/ext-datas.model';

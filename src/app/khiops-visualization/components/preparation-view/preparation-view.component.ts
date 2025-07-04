@@ -6,7 +6,6 @@
 
 import { Component, Input } from '@angular/core';
 import { PreparationDatasService } from '../../providers/preparation-datas.service';
-import { AppConfig } from 'src/environments/environment';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { ModelingDatasService } from '@khiops-visualization/providers/modeling-datas.service';
 import {
@@ -28,12 +27,13 @@ import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { getPreparationVariablesGridColumns } from './preparation-view.config';
+import { AppConfig } from '../../../../environments/environment';
 
 @Component({
-    selector: 'app-preparation-view',
-    templateUrl: './preparation-view.component.html',
-    styleUrls: ['./preparation-view.component.scss'],
-    standalone: false
+  selector: 'app-preparation-view',
+  templateUrl: './preparation-view.component.html',
+  styleUrls: ['./preparation-view.component.scss'],
+  standalone: false,
 })
 export class PreparationViewComponent extends SelectableTabComponent {
   @Input() public preparationSource = REPORT.PREPARATION_REPORT; // By default

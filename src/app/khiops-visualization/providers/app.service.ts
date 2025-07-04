@@ -5,7 +5,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AppConfig } from 'src/environments/environment';
+import { AppConfig } from '../../../environments/environment';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { REPORT } from '@khiops-library/enum/report';
 import { LS } from '@khiops-library/enum/ls';

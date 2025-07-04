@@ -12,7 +12,6 @@ import {
 } from '@angular/material/dialog';
 import { ModelingDatasService } from '@khiops-visualization/providers/modeling-datas.service';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
-import { AppConfig } from 'src/environments/environment';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
 import { LevelDistributionGraphComponent } from '@khiops-visualization/components/commons/level-distribution-graph/level-distribution-graph.component';
@@ -31,6 +30,7 @@ import { AppService } from '../../../khiops-visualization/providers/app.service'
 import { TrainedPredictor } from '@khiops-visualization/interfaces/modeling-report';
 import { TrainedPredictorModel } from '@khiops-visualization/model/trained-predictor.model';
 import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas';
+import { AppConfig } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-modeling-view',

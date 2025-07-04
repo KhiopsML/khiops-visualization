@@ -7,7 +7,7 @@
 import { Injectable } from '@angular/core';
 import { AppService } from './app.service';
 import * as _ from 'lodash'; // Important to import lodash in karma
-import { AppConfig } from 'src/environments/environment';
+import { AppConfig } from '../../../environments/environment';
 import { BarModel } from '../model/bar.model';
 import { ChartDatasetModel } from '@khiops-library/model/chart-dataset.model';
 import { UtilsService } from '@khiops-library/providers/utils.service';

@@ -7,7 +7,6 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 
 import { FileLoaderComponent } from '@khiops-library/components/file-loader/file-loader.component';
-import { AppConfig } from 'src/environments/environment';
 import { TranslateService } from '@ngstack/translate';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
@@ -28,6 +27,7 @@ import { FileLoaderService } from '@khiops-library/providers/file-loader.service
 import { Subscription } from 'rxjs';
 import { MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs';
 import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas';
+import { AppConfig } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-home-layout',

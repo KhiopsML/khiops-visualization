@@ -9,7 +9,7 @@ import {
   VariableDetail,
 } from '@khiops-visualization/interfaces/app-datas';
 import * as _ from 'lodash'; // Important to import lodash in karma
-import { AppConfig } from 'src/environments/environment';
+import { AppConfig } from '../../../environments/environment';
 
 export class VariableDetailsModel {
   dataGrid!: {

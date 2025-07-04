@@ -10,16 +10,16 @@ import {
   MatDialog,
   MatDialogConfig,
 } from '@angular/material/dialog';
-import { AppConfig } from 'src/environments/environment';
+import { AppConfig } from '../../../../../environments/environment';
 import { UnfoldHierarchyComponent } from '../unfold-hierarchy/unfold-hierarchy.component';
 import { ManageViewsComponent } from '../manage-views/manage-views.component';
 import { ImportExtDatasListComponent } from '../import-ext-datas-list/import-ext-datas-list.component';
 
 @Component({
-    selector: 'app-header-manage-view',
-    templateUrl: './header-manage-view.component.html',
-    styleUrls: ['./header-manage-view.component.scss'],
-    standalone: false
+  selector: 'app-header-manage-view',
+  templateUrl: './header-manage-view.component.html',
+  styleUrls: ['./header-manage-view.component.scss'],
+  standalone: false,
 })
 export class HeaderManageViewComponent {
   constructor(private dialog: MatDialog) {}

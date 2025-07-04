@@ -16,7 +16,6 @@ import {
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
-import { AppConfig } from 'src/environments/environment';
 import { TranslateService } from '@ngstack/translate';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ScrollableGraphComponent } from '@khiops-library/components/scrollable-graph/scrollable-graph.component';
@@ -28,6 +27,7 @@ import { VariableModel } from '@khiops-visualization/model/variable.model';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { TYPES } from '@khiops-library/enum/types';
 import { Variable2dModel } from '@khiops-visualization/model/variable-2d.model';
+import { AppConfig } from '../../../../../environments/environment';
 
 @Component({
     selector: 'app-level-distribution-graph',

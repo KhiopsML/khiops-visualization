@@ -11,7 +11,6 @@ import {
   MatDialogConfig,
 } from '@angular/material/dialog';
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
-import { AppConfig } from 'src/environments/environment';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { LevelDistributionGraphComponent } from '@khiops-visualization/components/commons/level-distribution-graph/level-distribution-graph.component';
@@ -30,6 +29,7 @@ import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { VariableModel } from '@khiops-visualization/model/variable.model';
 import { getPreparation2dVariablesGridColumns } from './preparation-2d-view.config';
+import { AppConfig } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-preparation-2d-view',

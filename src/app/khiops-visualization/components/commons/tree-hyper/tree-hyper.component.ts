@@ -22,7 +22,6 @@ import * as hyt from '@khiops-hypertree/js/d3-hypertree';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { Hypertree } from '@khiops-hypertree/js/components/hypertree/hypertree';
-import { AppConfig } from 'src/environments/environment';
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 import { ConfigService } from '@khiops-library/providers/config.service';
@@ -45,12 +44,13 @@ import {
   selectedNodeSelector,
   selectedNodesSelector,
 } from '@khiops-visualization/selectors/tree-preparation.selector';
+import { AppConfig } from '../../../../../environments/environment';
 
 @Component({
-    selector: 'app-tree-hyper',
-    templateUrl: './tree-hyper.component.html',
-    styleUrls: ['./tree-hyper.component.scss'],
-    standalone: false
+  selector: 'app-tree-hyper',
+  templateUrl: './tree-hyper.component.html',
+  styleUrls: ['./tree-hyper.component.scss'],
+  standalone: false,
 })
 export class TreeHyperComponent
   extends SelectableComponent

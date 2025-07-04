@@ -5,7 +5,6 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { AppConfig } from 'src/environments/environment';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
@@ -15,12 +14,13 @@ import { FileLoaderService } from '@khiops-library/providers/file-loader.service
 import { Subscription } from 'rxjs';
 import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals';
+import { AppConfig } from '../../../../environments/environment';
 
 @Component({
-    selector: 'app-project-view',
-    templateUrl: './project-view.component.html',
-    styleUrls: ['./project-view.component.scss'],
-    standalone: false
+  selector: 'app-project-view',
+  templateUrl: './project-view.component.html',
+  styleUrls: ['./project-view.component.scss'],
+  standalone: false,
 })
 export class ProjectViewComponent
   extends SelectableTabComponent

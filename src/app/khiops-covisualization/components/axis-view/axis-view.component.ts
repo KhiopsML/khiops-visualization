@@ -6,7 +6,7 @@
 
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
-import { AppConfig } from 'src/environments/environment';
+import { AppConfig } from '../../../../environments/environment';
 import { AppService } from '@khiops-covisualization/providers/app.service';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { ViewLayoutVO } from '@khiops-covisualization/model/view-layout.model';

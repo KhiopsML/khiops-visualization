@@ -11,7 +11,7 @@ import {
   MatTab,
   MatTabChangeEvent,
 } from '@angular/material/tabs';
-import { AppConfig } from 'src/environments/environment';
+import { AppConfig } from '../../../../environments/environment';
 import { FileLoaderComponent } from '@khiops-library/components/file-loader/file-loader.component';
 import { AppService } from '@khiops-covisualization/providers/app.service';
 import { TranslateService } from '@ngstack/translate';

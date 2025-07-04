@@ -17,9 +17,9 @@ import { TranslateService } from '@ngstack/translate';
 import _ from 'lodash';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 import { PageChangeEventI } from '@khiops-visualization/interfaces/page-change-event';
-import { AppConfig } from 'src/environments/environment';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { deepEqual } from 'fast-equals';
+import { AppConfig } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-select-toggle-button',

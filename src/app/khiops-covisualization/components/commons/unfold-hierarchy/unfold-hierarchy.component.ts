@@ -12,7 +12,7 @@ import { TranslateService } from '@ngstack/translate';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
 import { ClustersService } from '@khiops-covisualization/providers/clusters.service';
-import { AppConfig } from 'src/environments/environment';
+import { AppConfig } from '../../../../../environments/environment';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HierarchyService } from '@khiops-covisualization/providers/hierarchy.service';

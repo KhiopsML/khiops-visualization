@@ -5,7 +5,6 @@
  */
 
 import { Component, ViewChild } from '@angular/core';
-import { AppConfig } from 'src/environments/environment';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { ModelingDatasService } from '@khiops-visualization/providers/modeling-datas.service';
 import {
@@ -43,6 +42,7 @@ import {
   selectedNodesSelector,
 } from '@khiops-visualization/selectors/tree-preparation.selector';
 import { getTreePreparationVariablesGridColumns } from './tree-preparation-view.config';
+import { AppConfig } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-tree-preparation-view',

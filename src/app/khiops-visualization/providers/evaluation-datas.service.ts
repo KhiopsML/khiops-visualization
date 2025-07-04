@@ -7,7 +7,7 @@
 import { Injectable } from '@angular/core';
 import { AppService } from './app.service';
 import { TranslateService } from '@ngstack/translate';
-import { AppConfig } from 'src/environments/environment';
+import { AppConfig } from '../../../environments/environment';
 import { EvaluationTypeModel } from '../model/evaluation-type.model';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { EvaluationPredictorModel } from '../model/evaluation-predictor.model';

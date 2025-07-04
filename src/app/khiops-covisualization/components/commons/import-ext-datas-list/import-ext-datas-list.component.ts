@@ -15,15 +15,15 @@ import { TranslateService } from '@ngstack/translate';
 import { FileModel } from '@khiops-library/model/file.model';
 import { ExtDatasModel } from '@khiops-covisualization/model/ext-datas.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AppConfig } from 'src/environments/environment';
+import { AppConfig } from '../../../../../../src/environments/environment';
 import { LoadExtDatasComponent } from '../load-ext-datas/load-ext-datas.component';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 
 @Component({
-    selector: 'app-import-ext-datas-list',
-    templateUrl: './import-ext-datas-list.component.html',
-    styleUrls: ['./import-ext-datas-list.component.scss'],
-    standalone: false
+  selector: 'app-import-ext-datas-list',
+  templateUrl: './import-ext-datas-list.component.html',
+  styleUrls: ['./import-ext-datas-list.component.scss'],
+  standalone: false,
 })
 export class ImportExtDatasListComponent {
   importExtDatas: FileModel | undefined;

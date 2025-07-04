@@ -6,7 +6,7 @@
 
 import { Injectable } from '@angular/core';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
-import { AppConfig } from 'src/environments/environment';
+import { AppConfig } from '../../../environments/environment';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { Ls } from '@khiops-library/providers/ls.service';
 import { LayoutService } from '@khiops-library/providers/layout.service';
