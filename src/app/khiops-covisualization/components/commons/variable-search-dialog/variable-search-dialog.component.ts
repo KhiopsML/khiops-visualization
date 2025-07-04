@@ -167,7 +167,15 @@ export class VariableSearchDialogComponent implements AfterViewInit {
         return;
       }
 
-      // let filteredValues: any[] = [];
+      // Filter compositions by the selected inner variable
+      const filteredCompositions = relevantCompositions.filter(
+        (comp) => comp.innerVariable === this.selectedInnerVariable,
+      );
+
+      if (filteredCompositions.length === 0) {
+        return;
+      }
+
       if (innerVariableType === TYPES.NUMERICAL) {
         // For numerical variables, show intervals and filter by inclusion
         this.searchResults!.displayedColumns = [
@@ -186,7 +194,7 @@ export class VariableSearchDialogComponent implements AfterViewInit {
           },
         ];
 
-        relevantCompositions.forEach((comp) => {
+        filteredCompositions.forEach((comp) => {
           if (comp.partDetails && comp.partFrequencies) {
             comp.partDetails.forEach((interval, index) => {
               this.searchResults!.values!.push({
@@ -238,7 +246,7 @@ export class VariableSearchDialogComponent implements AfterViewInit {
           },
         ];
 
-        relevantCompositions.forEach((comp) => {
+        filteredCompositions.forEach((comp) => {
           if (comp.valueGroups?.values && comp.valueGroups?.valueFrequencies) {
             comp.valueGroups.values.forEach((modality, index) => {
               this.searchResults!.values!.push({
