@@ -40,6 +40,11 @@ export class VariableSearchDialogComponent implements AfterViewInit {
   searchValue = '';
   searchResults: GridDatasI | undefined;
   searchInput = '';
+  // Store cluster information separately from grid data
+  private clusterMapping: { cluster: string; _id: string }[] = [];
+  // Map to quickly find cluster info by row data
+  private rowToClusterMap: Map<string, { cluster: string; _id: string }> =
+    new Map();
 
   @ViewChild(AgGridComponent) agGridComponent?: AgGridComponent;
 
@@ -127,6 +132,8 @@ export class VariableSearchDialogComponent implements AfterViewInit {
 
     this.searchResults!.displayedColumns = [];
     this.searchResults!.values = [];
+    this.clusterMapping = []; // Reset cluster mapping
+    this.rowToClusterMap.clear(); // Reset row to cluster mapping
     if (!this.selectedInnerVariable) {
       return;
     }
@@ -187,21 +194,26 @@ export class VariableSearchDialogComponent implements AfterViewInit {
             headerName: this.translate.get('GLOBAL.FREQUENCY'),
             field: 'frequency',
           },
-          {
-            headerName: this.translate.get('GLOBAL.CLUSTER'),
-            field: 'cluster',
-            show: false,
-          },
         ];
 
         filteredCompositions.forEach((comp) => {
           if (comp.partDetails && comp.partFrequencies) {
             comp.partDetails.forEach((interval, index) => {
+              const frequency = comp.partFrequencies![index] || 0;
               this.searchResults!.values!.push({
+                interval: interval,
+                frequency: frequency,
+              });
+              // Store cluster info separately with same index
+              this.clusterMapping.push({
                 cluster: comp.cluster,
                 _id: comp._id,
-                interval: interval,
-                frequency: comp.partFrequencies![index] || 0,
+              });
+              // Create a unique key for this row and map it to cluster info
+              const rowKey = `${interval}_${frequency}`;
+              this.rowToClusterMap.set(rowKey, {
+                cluster: comp.cluster,
+                _id: comp._id,
               });
             });
           }
@@ -239,21 +251,26 @@ export class VariableSearchDialogComponent implements AfterViewInit {
             headerName: this.translate.get('GLOBAL.FREQUENCY'),
             field: 'frequency',
           },
-          {
-            headerName: this.translate.get('GLOBAL.CLUSTER'),
-            field: 'cluster',
-            show: false,
-          },
         ];
 
         filteredCompositions.forEach((comp) => {
           if (comp.valueGroups?.values && comp.valueGroups?.valueFrequencies) {
             comp.valueGroups.values.forEach((modality, index) => {
+              const frequency = comp.valueGroups!.valueFrequencies[index] || 0;
               this.searchResults!.values!.push({
+                modality: modality,
+                frequency: frequency,
+              });
+              // Store cluster info separately with same index
+              this.clusterMapping.push({
                 cluster: comp.cluster,
                 _id: comp._id,
-                modality: modality,
-                frequency: comp.valueGroups!.valueFrequencies[index] || 0,
+              });
+              // Create a unique key for this row and map it to cluster info
+              const rowKey = `${modality}_${frequency}`;
+              this.rowToClusterMap.set(rowKey, {
+                cluster: comp.cluster,
+                _id: comp._id,
               });
             });
           }
@@ -270,12 +287,20 @@ export class VariableSearchDialogComponent implements AfterViewInit {
     // Get the selected value (modality for categorical, interval for numerical)
     const selectedValue = selectedRow.modality || selectedRow.interval;
 
-    this.treenodesService.setSelectedNode(
-      this.data.selectedDimension?.name!,
-      selectedRow.cluster,
-      false,
-      selectedValue,
-    );
+    // Create the same key format used when building the map
+    const rowKey = `${selectedValue}_${selectedRow.frequency}`;
+
+    // Get cluster info directly from the map
+    const clusterInfo = this.rowToClusterMap.get(rowKey);
+
+    if (clusterInfo) {
+      this.treenodesService.setSelectedNode(
+        this.data.selectedDimension?.name!,
+        clusterInfo.cluster,
+        false,
+        selectedValue,
+      );
+    }
 
     // Get current search input from AgGrid component
     const currentSearchInput = this.agGridComponent?.searchInput || '';
