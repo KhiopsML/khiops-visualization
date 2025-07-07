@@ -100,6 +100,7 @@
     "ALLOW": "Ok"
   },
   "GLOBAL": {
+    "GRAVITY": "Gravity",
     "INNER_VARIABLE": "Inner variable",
     "PART": "Part",
     "INTERPRETABLE_HISTOGRAM": "Default interpretable histogram",

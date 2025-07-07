@@ -43,6 +43,7 @@ import { AngularResizeEventModule } from 'angular-resize-event-package';
 import { BrowserModule } from '@angular/platform-browser';
 import { HistogramTooltipComponent } from './components/commons/histogram/histogram.tooltip.component';
 import { ProjectLogsComponent } from './components/commons/project-logs/project-logs.component';
+import { GravityCellComponent } from './components/commons/project-logs/gravity-cell/gravity-cell.component';
 import { treePreparationReducer } from './reducers/tree-preparation.reducer';
 import { StoreModule } from '@ngrx/store';
 import { TreePreparationEffects } from './effects/tree-preparation.effect';
@@ -54,6 +55,7 @@ import { InAppOverlayContainer } from '../khiops-library/overlay/in-app-overlay-
   declarations: [
     HistogramComponent,
     ProjectLogsComponent,
+    GravityCellComponent,
     HistogramTooltipComponent,
     AppComponent,
     HomeLayoutComponent,

@@ -11,12 +11,13 @@ import { ProjectDatasService } from '@khiops-visualization/providers/project-dat
 import { TranslateService } from '@ngstack/translate';
 import { Subscription } from 'rxjs';
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
+import { GravityCellComponent } from './gravity-cell/gravity-cell.component';
 
 @Component({
-    selector: 'app-project-logs',
-    templateUrl: './project-logs.component.html',
-    styleUrls: ['./project-logs.component.scss'],
-    standalone: false
+  selector: 'app-project-logs',
+  templateUrl: './project-logs.component.html',
+  styleUrls: ['./project-logs.component.scss'],
+  standalone: false,
 })
 export class ProjectLogsComponent {
   public projectLogsDatas?: ProjectLogModel[];
@@ -35,6 +36,11 @@ export class ProjectLogsComponent {
       {
         headerName: this.translate.get('GLOBAL.TASK'),
         field: 'task',
+      },
+      {
+        headerName: this.translate.get('GLOBAL.GRAVITY'),
+        field: 'gravity',
+        cellRendererFramework: GravityCellComponent,
       },
       {
         headerName: this.translate.get('GLOBAL.MESSAGE'),
