@@ -86,9 +86,13 @@ export class AppService {
    * @param datas - The cropped file data.
    */
   setCroppedFileDatas(datas: CovisualizationDatas) {
-    if (this._appDatas) {
-      this._appDatas.datas = datas;
+    // Initialize _appDatas if it's undefined
+    if (!this._appDatas) {
+      this._appDatas = {
+        datas: undefined,
+      };
     }
+    this._appDatas.datas = datas;
     this.setSavedDatas(datas);
   }
 
@@ -97,12 +101,22 @@ export class AppService {
    * @param datas - The file data.
    */
   setFileDatas(datas: CovisualizationDatas | undefined) {
-    if (this._appDatas) {
-      this._appDatas.datas = datas;
+    // Initialize _appDatas if it's undefined
+    if (!this._appDatas) {
+      this._appDatas = {
+        datas: undefined,
+      };
     }
-    if (this._initialDatas) {
-      this._initialDatas.datas = _.cloneDeep(datas);
+
+    // Initialize _initialDatas if it's undefined
+    if (!this._initialDatas) {
+      this._initialDatas = {
+        datas: undefined,
+      };
     }
+
+    this._appDatas.datas = datas;
+    this._initialDatas.datas = _.cloneDeep(datas);
     this.setSavedDatas(datas);
   }
 
