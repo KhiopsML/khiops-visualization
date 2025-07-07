@@ -3,7 +3,7 @@
  * This software is distributed under the BSD 3-Clause-clear License, the text of which is available
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
-// ts-nocheck
+// @ts-nocheck
 
 import { TestBed } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
@@ -601,6 +601,741 @@ describe('coVisualization', () => {
 
         // Should show first 3 highest frequency intervals + ellipsis with semicolon separator
         expect(result[0]?.part).toEqual('{]10;20], ]20;30], ]30;40], ...}');
+      });
+    });
+
+    describe('getCompositionClusters', () => {
+      beforeEach(() => {
+        // Mock the required services and data
+        compositionService['appService'] = {
+          initialDatas: {
+            coclusteringReport: {
+              dimensionSummaries: [
+                {
+                  name: 'testHierarchy',
+                  type: TYPES.CATEGORICAL,
+                  partition: { clusters: 2 },
+                },
+              ],
+              dimensionPartitions: [
+                {
+                  name: 'testHierarchy',
+                  type: TYPES.CATEGORICAL,
+                  valueGroups: [
+                    { cluster: 'cluster1', values: ['A', 'B'] },
+                    { cluster: 'cluster2', values: ['C', 'D'] },
+                  ],
+                },
+              ],
+            },
+          },
+          appDatas: {
+            coclusteringReport: {
+              dimensionPartitions: [
+                {
+                  name: 'testHierarchy',
+                  type: TYPES.CATEGORICAL,
+                  valueGroups: [
+                    { cluster: 'cluster1', values: ['A', 'B'] },
+                    { cluster: 'cluster2', values: ['C', 'D'] },
+                  ],
+                },
+              ],
+            },
+          },
+        } as any;
+
+        compositionService['dimensionsDatasService'] = {
+          dimensionsDatas: {
+            selectedDimensions: [
+              {
+                name: 'testHierarchy',
+                isCategorical: true,
+                isVarPart: false,
+                startPosition: 0,
+              },
+            ],
+            dimensionsClusters: [
+              [
+                { cluster: 'cluster1', shortDescription: 'C1' },
+                { cluster: 'cluster2', shortDescription: 'C2' },
+              ],
+            ],
+          },
+        } as any;
+
+        compositionService['importExtDatasService'] = {
+          getImportedDatasFromDimension: jasmine
+            .createSpy('getImportedDatasFromDimension')
+            .and.returnValue({}),
+        } as any;
+      });
+
+      it('should return empty array when required data is missing', () => {
+        // Mock appService to return null for initialDatas
+        compositionService['appService'] = {
+          initialDatas: null,
+          appDatas: null,
+        } as any;
+
+        const result = compositionService.getCompositionClusters(
+          'testHierarchy',
+          {} as any,
+        );
+
+        expect(result).toEqual([]);
+      });
+
+      it('should return empty array when dimension is not found', () => {
+        const result = compositionService.getCompositionClusters(
+          'unknownHierarchy',
+          {} as any,
+        );
+
+        expect(result).toEqual([]);
+      });
+
+      it('should call getIndiVarCompositionValues for variable part dimensions', () => {
+        // Setup for isVarPart = true
+        compositionService[
+          'dimensionsDatasService'
+        ].dimensionsDatas.selectedDimensions[0].isVarPart = true;
+
+        const getIndiVarSpy = spyOn(
+          compositionService,
+          'getIndiVarCompositionValues' as any,
+        ).and.returnValue([]);
+        const getVarVarSpy = spyOn(
+          compositionService,
+          'getVarVarCompositionValues' as any,
+        ).and.returnValue([]);
+
+        const mockNode = { cluster: 'testCluster' } as any;
+        compositionService.getCompositionClusters('testHierarchy', mockNode);
+
+        expect(getIndiVarSpy).toHaveBeenCalled();
+        expect(getVarVarSpy).not.toHaveBeenCalled();
+      });
+
+      it('should call getVarVarCompositionValues for non-variable part dimensions', () => {
+        // Setup for isVarPart = false (default)
+        const getIndiVarSpy = spyOn(
+          compositionService,
+          'getIndiVarCompositionValues' as any,
+        ).and.returnValue([]);
+        const getVarVarSpy = spyOn(
+          compositionService,
+          'getVarVarCompositionValues' as any,
+        ).and.returnValue([]);
+
+        const mockNode = { cluster: 'testCluster' } as any;
+        compositionService.getCompositionClusters('testHierarchy', mockNode);
+
+        expect(getVarVarSpy).toHaveBeenCalled();
+        expect(getIndiVarSpy).not.toHaveBeenCalled();
+      });
+    });
+
+    describe('processNodeCompositions', () => {
+      let mockCurrentDimensionDetails: any;
+      let mockCurrentInitialDimensionDetails: any;
+      let mockNode: any;
+
+      beforeEach(() => {
+        mockCurrentDimensionDetails = {
+          isCategorical: true,
+          innerVariables: {
+            dimensionSummaries: [{ name: 'var1' }, { name: 'var2' }],
+          },
+        };
+
+        mockCurrentInitialDimensionDetails = {
+          valueGroups: [
+            {
+              cluster: 'cluster1',
+              values: ['A', 'B'],
+            },
+            {
+              cluster: 'cluster2',
+              values: ['C', 'D'],
+            },
+          ],
+        };
+
+        mockNode = {
+          getChildrenList: jasmine.createSpy('getChildrenList'),
+          getInnerValueGroups: jasmine.createSpy('getInnerValueGroups'),
+          childrenLeafList: ['cluster1', 'cluster2'],
+          innerValues: [
+            ['var1', [['A'], ['B']]],
+            ['var2', [['C'], ['D']]],
+          ],
+          isCollapsed: false,
+          shortDescription: 'Test Node',
+        };
+
+        // Mock dimensionsDatasService
+        compositionService['dimensionsDatasService'] = {
+          dimensionsDatas: {
+            dimensionsClusters: [
+              [
+                { cluster: 'cluster1', shortDescription: 'C1' },
+                { cluster: 'cluster2', shortDescription: 'C2' },
+              ],
+            ],
+          },
+        } as any;
+
+        // Mock importExtDatasService
+        compositionService['importExtDatasService'] = {
+          getImportedDatasFromDimension: jasmine
+            .createSpy('getImportedDatasFromDimension')
+            .and.returnValue({}),
+        } as any;
+      });
+
+      it('should handle non-categorical dimensions', () => {
+        mockCurrentDimensionDetails.isCategorical = false;
+
+        const result = compositionService['processNodeCompositions'](
+          mockCurrentDimensionDetails,
+          mockCurrentInitialDimensionDetails,
+          mockNode,
+          0,
+          false,
+        );
+
+        expect(result).toEqual([]);
+        expect(mockNode.getChildrenList).not.toHaveBeenCalled();
+      });
+
+      it('should handle nodes without childrenLeafList', () => {
+        mockNode.childrenLeafList = null;
+
+        const result = compositionService['processNodeCompositions'](
+          mockCurrentDimensionDetails,
+          mockCurrentInitialDimensionDetails,
+          mockNode,
+          0,
+          true,
+        );
+
+        expect(result).toEqual([]);
+      });
+
+      it('should handle missing cluster details gracefully', () => {
+        mockCurrentInitialDimensionDetails.valueGroups = [];
+
+        const result = compositionService['processNodeCompositions'](
+          mockCurrentDimensionDetails,
+          mockCurrentInitialDimensionDetails,
+          mockNode,
+          0,
+          true,
+        );
+
+        expect(result).toBeDefined();
+        expect(Array.isArray(result)).toBe(true);
+      });
+    });
+
+    describe('processCollapsedChildren', () => {
+      let mockCurrentDimensionDetails: any;
+      let mockCurrentInitialDimensionDetails: any;
+      let mockNode: any;
+      let compositionValues: any[];
+
+      beforeEach(() => {
+        mockCurrentDimensionDetails = { isCategorical: true };
+        mockCurrentInitialDimensionDetails = { valueGroups: [] };
+        compositionValues = [];
+
+        // Mock the helper methods
+        spyOn(
+          compositionService,
+          'getCompositionValuesForNode' as any,
+        ).and.returnValue([{ _id: 'test1' }, { _id: 'test2' }]);
+        spyOn(compositionService, 'mergeAllContiguousModels').and.returnValue([
+          {
+            _id: 'merged1',
+            cluster: 'cluster1',
+            terminalCluster: 'terminal1',
+            typicality: 0.5,
+            value: 'value1',
+            innerVariable: 'var1',
+            part: 'part1',
+            frequency: 10,
+            rank: 1,
+            externalData: 'data1',
+          } as any,
+        ]);
+        spyOn(compositionService, 'formatCompositions').and.returnValue([
+          {
+            _id: 'formatted1',
+            cluster: 'cluster1',
+            terminalCluster: 'terminal1',
+            typicality: 0.5,
+            value: 'value1',
+            innerVariable: 'var1',
+            part: 'part1',
+            frequency: 10,
+            rank: 1,
+            externalData: 'data1',
+          } as any,
+        ]);
+      });
+
+      it('should process collapsed children and return processed names', () => {
+        mockNode = {
+          children: [
+            {
+              isCollapsed: true,
+              childrenLeafList: ['leaf1', 'leaf2'],
+            },
+            {
+              isCollapsed: false,
+              children: [
+                {
+                  isCollapsed: true,
+                  childrenLeafList: ['leaf3'],
+                },
+              ],
+            },
+          ],
+        };
+
+        const result = compositionService['processCollapsedChildren'](
+          mockCurrentDimensionDetails,
+          mockCurrentInitialDimensionDetails,
+          mockNode,
+          0,
+          true,
+          compositionValues,
+        );
+
+        expect(result).toBeInstanceOf(Set);
+        expect(result.has('leaf1')).toBe(true);
+        expect(result.has('leaf2')).toBe(true);
+        expect(result.has('leaf3')).toBe(true);
+        expect(compositionValues.length).toBeGreaterThan(0);
+      });
+
+      it('should handle nodes without children', () => {
+        mockNode = { children: null };
+
+        const result = compositionService['processCollapsedChildren'](
+          mockCurrentDimensionDetails,
+          mockCurrentInitialDimensionDetails,
+          mockNode,
+          0,
+          true,
+          compositionValues,
+        );
+
+        expect(result).toBeInstanceOf(Set);
+        expect(result.size).toBe(0);
+        expect(compositionValues.length).toBe(0);
+      });
+
+      it('should recursively process nested children', () => {
+        mockNode = {
+          children: [
+            {
+              isCollapsed: false,
+              children: [
+                {
+                  isCollapsed: false,
+                  children: [
+                    {
+                      isCollapsed: true,
+                      childrenLeafList: ['deepLeaf'],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        };
+
+        const result = compositionService['processCollapsedChildren'](
+          mockCurrentDimensionDetails,
+          mockCurrentInitialDimensionDetails,
+          mockNode,
+          0,
+          true,
+          compositionValues,
+        );
+
+        expect(result.has('deepLeaf')).toBe(true);
+      });
+    });
+
+    describe('getCompositionValuesForNode', () => {
+      it('should call processNodeCompositions without processedCollapsedChildren', () => {
+        const mockParams = [
+          { isCategorical: true },
+          { valueGroups: [] },
+          { cluster: 'test' },
+          0,
+          true,
+        ];
+
+        const processNodeSpy = spyOn(
+          compositionService,
+          'processNodeCompositions' as any,
+        ).and.returnValue([]);
+
+        compositionService['getCompositionValuesForNode'](
+          mockParams[0],
+          mockParams[1],
+          mockParams[2],
+          mockParams[3],
+          mockParams[4],
+        );
+
+        expect(processNodeSpy).toHaveBeenCalledWith(
+          mockParams[0],
+          mockParams[1],
+          mockParams[2],
+          mockParams[3],
+          mockParams[4],
+        );
+      });
+    });
+
+    describe('getCompositionDetailedPartsFromId', () => {
+      beforeEach(() => {
+        compositionService.compositionValues = [
+          { _id: 'comp1', part: ['A', 'B'] },
+          { _id: 'comp2', part: ['C', 'D'] },
+          { _id: 'comp3', part: ['E', 'F'] },
+        ] as any;
+      });
+
+      it('should return composition when found by id', () => {
+        const result =
+          compositionService.getCompositionDetailedPartsFromId('comp2');
+
+        expect(result).toBeDefined();
+        expect(result._id).toBe('comp2');
+        expect(result.part).toEqual(['C', 'D']);
+      });
+
+      it('should return undefined when id is not found', () => {
+        const result =
+          compositionService.getCompositionDetailedPartsFromId('nonexistent');
+
+        expect(result).toBeUndefined();
+      });
+
+      it('should return undefined when compositionValues is empty', () => {
+        compositionService.compositionValues = [];
+
+        const result =
+          compositionService.getCompositionDetailedPartsFromId('comp1');
+
+        expect(result).toBeUndefined();
+      });
+
+      it('should return undefined when compositionValues is null', () => {
+        compositionService.compositionValues = null as any;
+
+        const result =
+          compositionService.getCompositionDetailedPartsFromId('comp1');
+
+        expect(result).toBeUndefined();
+      });
+    });
+
+    describe('getCompositionValues (private method)', () => {
+      let mockCurrentDimensionDetails: any;
+      let mockCurrentInitialDimensionDetails: any;
+      let mockNode: any;
+
+      beforeEach(() => {
+        mockCurrentDimensionDetails = { isCategorical: true };
+        mockCurrentInitialDimensionDetails = { valueGroups: [] };
+        mockNode = {
+          isCollapsed: false,
+          cluster: 'testCluster',
+          rank: 1,
+        };
+
+        // Mock private methods
+        spyOn(
+          compositionService,
+          'processCollapsedChildren' as any,
+        ).and.returnValue(new Set());
+        spyOn(
+          compositionService,
+          'processNodeCompositions' as any,
+        ).and.returnValue([
+          {
+            _id: 'node1',
+            cluster: 'cluster1',
+            terminalCluster: 'terminal1',
+            typicality: 0.5,
+            value: 'value1',
+            innerVariable: 'var1',
+            part: 'part1',
+            frequency: 10,
+            rank: 1,
+            externalData: 'data1',
+          } as any,
+          {
+            _id: 'node2',
+            cluster: 'cluster2',
+            terminalCluster: 'terminal2',
+            typicality: 0.7,
+            value: 'value2',
+            innerVariable: 'var2',
+            part: 'part2',
+            frequency: 20,
+            rank: 2,
+            externalData: 'data2',
+          } as any,
+        ]);
+        spyOn(compositionService, 'mergeAllContiguousModels').and.returnValue([
+          {
+            _id: 'merged1',
+            cluster: 'cluster1',
+            terminalCluster: 'terminal1',
+            typicality: 0.5,
+            value: 'value1',
+            innerVariable: 'var1',
+            part: 'part1',
+            frequency: 10,
+            rank: 1,
+            externalData: 'data1',
+          } as any,
+        ]);
+        spyOn(compositionService, 'formatCompositions').and.returnValue([
+          {
+            _id: 'formatted1',
+            cluster: 'cluster1',
+            terminalCluster: 'terminal1',
+            typicality: 0.5,
+            value: 'value1',
+            innerVariable: 'var1',
+            part: 'part1',
+            frequency: 10,
+            rank: 1,
+            externalData: 'data1',
+          } as any,
+        ]);
+      });
+
+      it('should process collapsed children for IndiVar case', () => {
+        compositionService['getCompositionValues'](
+          mockCurrentDimensionDetails,
+          mockCurrentInitialDimensionDetails,
+          mockNode,
+          0,
+          true, // isIndiVarCase
+        );
+
+        expect(
+          compositionService['processCollapsedChildren'],
+        ).toHaveBeenCalled();
+      });
+
+      it('should not process collapsed children for VarVar case', () => {
+        compositionService['getCompositionValues'](
+          mockCurrentDimensionDetails,
+          mockCurrentInitialDimensionDetails,
+          mockNode,
+          0,
+          false, // isIndiVarCase
+        );
+
+        expect(
+          compositionService['processCollapsedChildren'],
+        ).not.toHaveBeenCalled();
+      });
+
+      it('should merge and format compositions for collapsed IndiVar nodes', () => {
+        mockNode.isCollapsed = true;
+
+        const result = compositionService['getCompositionValues'](
+          mockCurrentDimensionDetails,
+          mockCurrentInitialDimensionDetails,
+          mockNode,
+          0,
+          true, // isIndiVarCase
+        );
+
+        expect(
+          compositionService['mergeAllContiguousModels'],
+        ).toHaveBeenCalled();
+        expect(compositionService['formatCompositions']).toHaveBeenCalledWith(
+          mockNode,
+          [
+            {
+              _id: 'merged1',
+              cluster: 'cluster1',
+              terminalCluster: 'terminal1',
+              typicality: 0.5,
+              value: 'value1',
+              innerVariable: 'var1',
+              part: 'part1',
+              frequency: 10,
+              rank: 1,
+              externalData: 'data1',
+            } as any,
+          ],
+        );
+        expect(result).toEqual([
+          {
+            _id: 'formatted1',
+            cluster: 'cluster1',
+            terminalCluster: 'terminal1',
+            typicality: 0.5,
+            value: 'value1',
+            innerVariable: 'var1',
+            part: 'part1',
+            frequency: 10,
+            rank: 1,
+            externalData: 'data1',
+          } as any,
+        ]);
+      });
+
+      it('should not merge and format for non-collapsed nodes', () => {
+        mockNode.isCollapsed = false;
+
+        const result = compositionService['getCompositionValues'](
+          mockCurrentDimensionDetails,
+          mockCurrentInitialDimensionDetails,
+          mockNode,
+          0,
+          true, // isIndiVarCase
+        );
+
+        expect(
+          compositionService['mergeAllContiguousModels'],
+        ).not.toHaveBeenCalled();
+        expect(compositionService['formatCompositions']).not.toHaveBeenCalled();
+        expect(result).toEqual([
+          {
+            _id: 'node1',
+            cluster: 'cluster1',
+            terminalCluster: 'terminal1',
+            typicality: 0.5,
+            value: 'value1',
+            innerVariable: 'var1',
+            part: 'part1',
+            frequency: 10,
+            rank: 1,
+            externalData: 'data1',
+          } as any,
+          {
+            _id: 'node2',
+            cluster: 'cluster2',
+            terminalCluster: 'terminal2',
+            typicality: 0.7,
+            value: 'value2',
+            innerVariable: 'var2',
+            part: 'part2',
+            frequency: 20,
+            rank: 2,
+            externalData: 'data2',
+          } as any,
+        ]);
+      });
+
+      it('should set compositionValues property', () => {
+        const result = compositionService['getCompositionValues'](
+          mockCurrentDimensionDetails,
+          mockCurrentInitialDimensionDetails,
+          mockNode,
+          0,
+          false,
+        );
+
+        expect(compositionService.compositionValues).toBe(result);
+      });
+    });
+
+    describe('getIndiVarCompositionValues', () => {
+      it('should call getCompositionValues with isIndiVarCase = true', () => {
+        const getCompositionValuesSpy = spyOn(
+          compositionService,
+          'getCompositionValues' as any,
+        ).and.returnValue([]);
+
+        const mockParams = [
+          { name: 'test' },
+          { name: 'initial' },
+          { cluster: 'node' },
+          0,
+        ];
+
+        compositionService.getIndiVarCompositionValues(
+          mockParams[0] as any,
+          mockParams[1] as any,
+          mockParams[2] as any,
+          mockParams[3] as any,
+        );
+
+        expect(getCompositionValuesSpy).toHaveBeenCalledWith(
+          mockParams[0],
+          mockParams[1],
+          mockParams[2],
+          mockParams[3],
+          true,
+        );
+      });
+    });
+
+    describe('getVarVarCompositionValues', () => {
+      it('should call getCompositionValues with isIndiVarCase = false', () => {
+        const getCompositionValuesSpy = spyOn(
+          compositionService,
+          'getCompositionValues' as any,
+        ).and.returnValue([]);
+
+        const mockParams = [
+          { name: 'test' },
+          { name: 'initial' },
+          { cluster: 'node' },
+          0,
+        ];
+
+        compositionService.getVarVarCompositionValues(
+          mockParams[0] as any,
+          mockParams[1] as any,
+          mockParams[2] as any,
+          mockParams[3] as any,
+        );
+
+        expect(getCompositionValuesSpy).toHaveBeenCalledWith(
+          mockParams[0],
+          mockParams[1],
+          mockParams[2],
+          mockParams[3],
+          false,
+        );
+      });
+    });
+
+    describe('Integration Tests', () => {
+      it('should handle error conditions gracefully', () => {
+        // Test with completely missing data
+        compositionService['appService'] = {
+          initialDatas: null,
+          appDatas: null,
+        } as any;
+
+        compositionService['dimensionsDatasService'] = {
+          dimensionsDatas: null,
+        } as any;
+
+        const result = compositionService.getCompositionClusters(
+          'nonexistent',
+          {} as any,
+        );
+
+        expect(result).toEqual([]);
       });
     });
   });
