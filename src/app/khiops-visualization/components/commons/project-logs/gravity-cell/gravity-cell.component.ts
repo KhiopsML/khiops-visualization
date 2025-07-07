@@ -21,13 +21,13 @@ export class GravityCellComponent implements AgRendererComponent {
 
   agInit(params: ICellRendererParams): void {
     this.params = params;
-    this.gravityValue = params.value || '';
+    this.gravityValue = params.value || 'info';
     this.setGravityClass();
   }
 
   refresh(params: ICellRendererParams): boolean {
     this.params = params;
-    this.gravityValue = params.value || '';
+    this.gravityValue = params.value || 'info';
     this.setGravityClass();
     return true;
   }

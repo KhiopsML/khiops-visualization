@@ -15,5 +15,6 @@
 }
 
 .gravity-default {
-  color: inherit;
+  color: var(--grey-text) !important;
+  font-weight: 600;
 }
