@@ -61,7 +61,10 @@ export class AppComponent implements AfterViewInit {
     private saveService: SaveService,
     private element: ElementRef,
   ) {
+    // Set LS_ID first before any initialization that uses localStorage
     AppService.Ls.setLsId(AppConfig.covisualizationCommon.GLOBAL.LS_ID);
+    // Now we can safely initialize the app service
+    this.appService.initialize();
   }
 
   ngAfterViewInit(): void {

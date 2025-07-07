@@ -37,8 +37,6 @@ export class AppService {
     // Render Ls static methods with current instance
     AppService.Ls = this.ls;
     AppService.translate = this.translate;
-
-    this.initialize();
   }
 
   get appDatas(): VisualizationDatas | undefined {

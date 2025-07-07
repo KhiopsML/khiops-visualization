@@ -33,8 +33,6 @@ export class AppService {
   ) {
     // Render Ls static methods with current instance
     AppService.Ls = this.ls;
-
-    this.initialize();
   }
 
   get appDatas(): CovisualizationDatas | undefined {
