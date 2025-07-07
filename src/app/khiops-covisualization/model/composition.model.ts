@@ -67,21 +67,25 @@ export class CompositionModel {
       }
 
       this.innerVariable = innerValues?.[0]?.toString();
-      this.innerVariableType =
-        innerVariables?.dimensionSummaries?.[index]?.type;
+      this.innerVariableType = innerVariables?.dimensionSummaries?.find(
+        (item) => item.name === this.innerVariable,
+      )?.type;
+
       const currentParts = innerValues?.[1];
       this.part = currentParts;
       this.frequency = 0;
-      
+
       // Initialize partFrequencies and partDetails arrays for numerical variables
       if (this.innerVariableType === TYPES.NUMERICAL && currentParts) {
         this.partFrequencies = [];
-        this.partDetails = Array.isArray(currentParts) ? [...currentParts] : [currentParts];
-        
+        this.partDetails = Array.isArray(currentParts)
+          ? [...currentParts]
+          : [currentParts];
+
         // Sort partDetails by interval order using centralized utility
         this.partDetails = CompositionUtils.sortIntervals(this.partDetails);
       }
-      
+
       for (let j = 0; currentParts && j < currentParts.length; j++) {
         const currentPart = currentParts[j];
 
@@ -89,11 +93,15 @@ export class CompositionModel {
           (item) => item === this.innerVariable + ' ' + currentPart,
         );
         if (matchingGroupIndex !== -1) {
-          const partFrequency = object.valueFrequencies?.[matchingGroupIndex] ?? 0;
+          const partFrequency =
+            object.valueFrequencies?.[matchingGroupIndex] ?? 0;
           this.frequency += partFrequency;
-          
+
           // Store individual part frequency for numerical variables
-          if (this.innerVariableType === TYPES.NUMERICAL && this.partFrequencies) {
+          if (
+            this.innerVariableType === TYPES.NUMERICAL &&
+            this.partFrequencies
+          ) {
             this.partFrequencies.push(partFrequency);
           }
         }

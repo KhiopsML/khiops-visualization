@@ -134,8 +134,6 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   showDetailedPartsDialog(e: ICellRendererParams) {
-    console.log('Show detailed parts dialog', e);
-
     // get the current composition
     if (!e.data || !e.data._id) {
       return;

@@ -158,7 +158,11 @@ export class CompositionService {
               ? node.innerValues?.[i]
               : currentClusterDetails.values;
 
+            let cIndex = -1;
             for (let j = 0; j < (parts?.length ?? 0); j++) {
+              // @ts-ignore
+              cIndex = cIndex + parts?.[j]?.[1]?.length ?? 0;
+
               const currentDimensionHierarchyCluster: any =
                 currentDimensionClusters.find(
                   (e: any) => e.cluster === currentLeafName,
@@ -179,7 +183,7 @@ export class CompositionService {
                 currentClusterDetails,
                 currentDimensionHierarchyCluster,
                 currentPartIndex ?? -1,
-                j,
+                cIndex,
                 externalDatas,
                 currentDimensionDetails.innerVariables,
                 parts?.[j],
@@ -584,7 +588,10 @@ export class CompositionService {
               ? node.innerValues?.[i]
               : currentClusterDetails.values;
 
+            let cIndex = -1;
             for (let j = 0; j < (parts?.length ?? 0); j++) {
+              // @ts-ignore
+              cIndex = cIndex + parts?.[j]?.[1]?.length ?? 0;
               const currentDimensionHierarchyCluster: any =
                 currentDimensionClusters.find(
                   (e: any) => e.cluster === currentLeafName,
@@ -605,7 +612,7 @@ export class CompositionService {
                 currentClusterDetails,
                 currentDimensionHierarchyCluster,
                 currentPartIndex ?? -1,
-                j,
+                cIndex,
                 externalDatas,
                 currentDimensionDetails.innerVariables,
                 parts?.[j],
