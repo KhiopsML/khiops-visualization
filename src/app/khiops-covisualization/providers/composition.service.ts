@@ -96,32 +96,19 @@ export class CompositionService {
   }
 
   /**
-   * Retrieves composition values for a given node and dimension details.
-   * Handles both "Individuals * Variables" and "Variable * Variable" cases.
-   * Recursively processes collapsed children before processing the current node.
+   * Core method to process node compositions without recursive processing.
+   * This method contains the shared logic for creating CompositionModel objects.
    */
-  private getCompositionValues(
+  private processNodeCompositions(
     currentDimensionDetails: DimensionCovisualizationModel,
     currentInitialDimensionDetails: DimensionCovisualizationModel,
     node: TreeNodeModel,
     currentIndex: number,
     isIndiVarCase: boolean,
+    processedCollapsedChildren?: Set<string>,
   ): CompositionModel[] {
-    let compositionValues: CompositionModel[] = [];
-    let processedCollapsedChildren = new Set<string>();
-    if (isIndiVarCase) {
-      // First, recursively process collapsed children and sub-children
-      processedCollapsedChildren = this.processCollapsedChildren(
-        currentDimensionDetails,
-        currentInitialDimensionDetails,
-        node,
-        currentIndex,
-        isIndiVarCase,
-        compositionValues,
-      );
-    }
+    const compositionValues: CompositionModel[] = [];
 
-    // Then process the current node
     if (currentDimensionDetails?.isCategorical) {
       node.getChildrenList();
       if (isIndiVarCase) {
@@ -136,11 +123,12 @@ export class CompositionService {
           ],
         );
         const childrenLeafListLength = node.childrenLeafList.length;
+
         for (let i = 0; i < childrenLeafListLength; i++) {
           const currentLeafName = node.childrenLeafList[i];
 
           // Skip if currentLeafName is undefined or if it was already processed as part of a collapsed child
-          if (isIndiVarCase) {
+          if (isIndiVarCase && processedCollapsedChildren) {
             if (
               !currentLeafName ||
               processedCollapsedChildren.has(currentLeafName)
@@ -162,7 +150,6 @@ export class CompositionService {
             for (let j = 0; j < (parts?.length ?? 0); j++) {
               // @ts-ignore
               cIndex = cIndex + parts?.[j]?.[1]?.length ?? 0;
-
               const currentDimensionHierarchyCluster: any =
                 currentDimensionClusters.find(
                   (e: any) => e.cluster === currentLeafName,
@@ -194,6 +181,47 @@ export class CompositionService {
         }
       }
     }
+
+    return compositionValues;
+  }
+
+  /**
+   * Retrieves composition values for a given node and dimension details.
+   * Handles both "Individuals * Variables" and "Variable * Variable" cases.
+   * Recursively processes collapsed children before processing the current node.
+   */
+  private getCompositionValues(
+    currentDimensionDetails: DimensionCovisualizationModel,
+    currentInitialDimensionDetails: DimensionCovisualizationModel,
+    node: TreeNodeModel,
+    currentIndex: number,
+    isIndiVarCase: boolean,
+  ): CompositionModel[] {
+    let compositionValues: CompositionModel[] = [];
+    let processedCollapsedChildren = new Set<string>();
+
+    if (isIndiVarCase) {
+      // First, recursively process collapsed children and sub-children
+      processedCollapsedChildren = this.processCollapsedChildren(
+        currentDimensionDetails,
+        currentInitialDimensionDetails,
+        node,
+        currentIndex,
+        isIndiVarCase,
+        compositionValues,
+      );
+    }
+
+    // Then process the current node using the factorized method
+    const nodeCompositions = this.processNodeCompositions(
+      currentDimensionDetails,
+      currentInitialDimensionDetails,
+      node,
+      currentIndex,
+      isIndiVarCase,
+      processedCollapsedChildren,
+    );
+    compositionValues.push(...nodeCompositions);
 
     if (node.isCollapsed && isIndiVarCase) {
       compositionValues = this.mergeAllContiguousModels(compositionValues);
@@ -560,71 +588,13 @@ export class CompositionService {
     currentIndex: number,
     isIndiVarCase: boolean,
   ): CompositionModel[] {
-    let compositionValues: CompositionModel[] = [];
-
-    if (currentDimensionDetails?.isCategorical) {
-      node.getChildrenList();
-      if (isIndiVarCase) {
-        node.getInnerValueGroups(currentInitialDimensionDetails);
-      }
-
-      if (node.childrenLeafList) {
-        const currentDimensionClusters = Object.assign(
-          [],
-          this.dimensionsDatasService.dimensionsDatas.dimensionsClusters[
-            currentIndex
-          ],
-        );
-        const childrenLeafListLength = node.childrenLeafList.length;
-
-        for (let i = 0; i < childrenLeafListLength; i++) {
-          const currentLeafName = node.childrenLeafList[i];
-          const currentClusterDetails =
-            currentInitialDimensionDetails.valueGroups?.find(
-              (e) => e.cluster === currentLeafName,
-            );
-          if (currentClusterDetails) {
-            const parts = isIndiVarCase
-              ? node.innerValues?.[i]
-              : currentClusterDetails.values;
-
-            let cIndex = -1;
-            for (let j = 0; j < (parts?.length ?? 0); j++) {
-              // @ts-ignore
-              cIndex = cIndex + parts?.[j]?.[1]?.length ?? 0;
-              const currentDimensionHierarchyCluster: any =
-                currentDimensionClusters.find(
-                  (e: any) => e.cluster === currentLeafName,
-                );
-              if (node.isCollapsed) {
-                currentDimensionHierarchyCluster.shortDescription =
-                  node.shortDescription;
-              }
-              const externalDatas: ExtDatasModel =
-                this.importExtDatasService.getImportedDatasFromDimension(
-                  currentDimensionDetails,
-                );
-              const currentPartIndex =
-                currentDimensionDetails.innerVariables?.dimensionSummaries?.findIndex(
-                  (e) => e.name === parts?.[j]?.[0],
-                );
-              const composition = new CompositionModel(
-                currentClusterDetails,
-                currentDimensionHierarchyCluster,
-                currentPartIndex ?? -1,
-                cIndex,
-                externalDatas,
-                currentDimensionDetails.innerVariables,
-                parts?.[j],
-              );
-              compositionValues.push(composition);
-            }
-          }
-        }
-      }
-    }
-
-    return compositionValues;
+    return this.processNodeCompositions(
+      currentDimensionDetails,
+      currentInitialDimensionDetails,
+      node,
+      currentIndex,
+      isIndiVarCase,
+    );
   }
 
   /**
