@@ -66,9 +66,22 @@ export class SaveService {
    * @returns {any} - The constructed data object to be saved.
    */
   constructDatasToSave(collapsedNodesInput?: DynamicI): CovisualizationDatas {
-    const initialDatas = JSON.parse(
-      JSON.stringify(this.appService.initialDatas),
-    );
+    // Check that initialDatas exists
+    if (!this.appService.initialDatas) {
+      throw new Error('Initial data is not available');
+    }
+
+    // Optimization: avoid a full deep copy by creating a lightweight structure
+    // with references to unmodified objects
+    const initialDatas: CovisualizationDatas = {
+      tool: this.appService.initialDatas.tool,
+      version: this.appService.initialDatas.version,
+      khiops_encoding: this.appService.initialDatas.khiops_encoding,
+      // Reuse the reference to coclusteringReport because it will not be modified in this method
+      coclusteringReport: this.appService.initialDatas.coclusteringReport,
+      // savedDatas will be added below
+      savedDatas: {},
+    };
 
     const selectedDimensions =
       this.dimensionsDatasService.getDimensionsToSave();
@@ -138,7 +151,9 @@ export class SaveService {
   ): CovisualizationDatas {
     let newJson = this.constructDatasToSave(collapsedNodesInput);
     if (collapsedNodesInput) {
-      // Transform json if collapsed nodes
+      // Here we are going to modify the coclusteringReport, so we need to perform a deep clone
+      // only now to preserve the initial object
+      newJson.coclusteringReport = structuredClone(newJson.coclusteringReport);
       newJson = this.truncateJsonHierarchy(newJson);
       newJson = this.updateSummariesParts(newJson);
       newJson = this.truncateJsonPartition(newJson);
@@ -165,7 +180,7 @@ export class SaveService {
    * @returns {CovisualizationDatas} - The updated data object with the truncated partitions.
    */
   truncateJsonPartition(datas: CovisualizationDatas): CovisualizationDatas {
-    const truncatedPartition = _.cloneDeep(
+    const truncatedPartition = structuredClone(
       datas.coclusteringReport.dimensionPartitions,
     );
 
