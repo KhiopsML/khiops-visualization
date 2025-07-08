@@ -15,6 +15,8 @@ import _ from 'lodash';
 import { HierarchyDatasModel } from '@khiops-covisualization/model/hierarchy-datas.model';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
+import rfdc from 'rfdc';
+const clone = rfdc();
 
 @Injectable({
   providedIn: 'root',
@@ -471,7 +473,7 @@ export class TreenodesService {
         });
       }
     }
-    return structuredClone(nodeVO); // important to clone datas to keep origin immmutable
+    return clone(nodeVO); // important to clone datas to keep origin immmutable
   }
 
   /**
@@ -594,7 +596,10 @@ export class TreenodesService {
    * @returns {number} - The selected unfold hierarchy value.
    */
   getUnfoldHierarchy(): number {
-    return this.dimensionsDatasService.dimensionsDatas?.hierarchyDatas?.selectedUnfoldHierarchy || 0;
+    return (
+      this.dimensionsDatasService.dimensionsDatas?.hierarchyDatas
+        ?.selectedUnfoldHierarchy || 0
+    );
   }
 
   /**
