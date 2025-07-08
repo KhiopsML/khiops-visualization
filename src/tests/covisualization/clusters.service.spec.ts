@@ -6,12 +6,12 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { ClustersService } from './clusters.service';
-import { DimensionsDatasService } from './dimensions-datas.service';
-import { TreeNodeModel } from '../model/tree-node.model';
+import { ClustersService } from '../../app/khiops-covisualization/providers/clusters.service';
+import { DimensionsDatasService } from '../../app/khiops-covisualization/providers/dimensions-datas.service';
+import { TreeNodeModel } from '../../app/khiops-covisualization/model/tree-node.model';
 import { TranslateService } from '@ngstack/translate';
-import { AppService } from './app.service';
-import { TreenodesService } from './treenodes.service';
+import { AppService } from '../../app/khiops-covisualization/providers/app.service';
+import { TreenodesService } from '../../app/khiops-covisualization/providers/treenodes.service';
 import { ChartDatasetModel } from '@khiops-library/model/chart-dataset.model';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
