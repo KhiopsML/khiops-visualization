@@ -71,16 +71,14 @@ export class VariableSearchDialogComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // Restore search input and set focus after view is initialized
+    // Restore search input
+    if (this.data.searchInput) {
+      this.agGridComponent!.searchInput = this.data.searchInput;
+      this.agGridComponent?.search();
+    }
     setTimeout(() => {
-      if (this.agGridComponent) {
-        if (this.data.searchInput) {
-          this.agGridComponent.searchInput = this.data.searchInput;
-          this.agGridComponent.search();
-        }
-        // Set focus on the search input field
-        this.agGridComponent.focusSearch();
-      }
+      // Set focus on the search input field
+      this.agGridComponent?.focusSearch();
     }, 250);
   }
 
