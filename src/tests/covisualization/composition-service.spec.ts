@@ -10,10 +10,19 @@ import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngstack/translate';
 import { CompositionUtils } from '../../app/khiops-covisualization/providers/composition.utils.service';
 import { CompositionService } from '../../app/khiops-covisualization/providers/composition.service';
+import { TreenodesService } from '../../app/khiops-covisualization/providers/treenodes.service';
 import { CompositionModel } from '../../app/khiops-covisualization/model/composition.model';
 import { TYPES } from '../../app/khiops-library/enum/types';
+import { TreeNodeModel } from '../../app/khiops-covisualization/model/tree-node.model';
+import { AppService } from '@khiops-covisualization/providers/app.service';
+import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
+import { SaveService } from '../../app/khiops-covisualization/providers/save.service';
 
 let compositionService: CompositionService;
+let treenodesService: TreenodesService;
+let appService: AppService;
+let dimensionsDatasService: DimensionsDatasService;
+let saveService: SaveService;
 
 describe('coVisualization', () => {
   describe('Composition service datas', () => {
@@ -24,6 +33,8 @@ describe('coVisualization', () => {
 
       // Inject services
       compositionService = TestBed.inject(CompositionService);
+      treenodesService = TestBed.inject(TreenodesService);
+      saveService = TestBed.inject(SaveService);
     });
     describe('mergeCategoricalSets', () => {
       it('should merge categorical sets with different formats', () => {
@@ -215,7 +226,6 @@ describe('coVisualization', () => {
         const mergedNumerical = result.find(
           (model) => model.innerVariable === 'Variable2',
         );
-        console.log(' it ~ mergedNumerical:', JSON.stringify(mergedNumerical));
         expect(mergedNumerical).toBeDefined();
         expect(mergedNumerical?.innerVariableType).toBe(TYPES.NUMERICAL);
         expect(mergedNumerical?.frequency).toBe(32); // 20 + 12
@@ -358,6 +368,24 @@ describe('coVisualization', () => {
         expect(result.length).toBe(2);
         expect(result[0]?.rank).toEqual(5);
         expect(result[1]?.rank).toEqual(5);
+        expect(result[0]?.value).toEqual('TestVar {A, B}');
+        expect(result[1]?.value).toEqual('TestVar2 ]0;10]');
+
+        // Verify that the part is formatted correctly
+        expect(result[0]?.part).toEqual(['{A, B}']);
+        expect(result[1]?.part).toEqual([']0;10]']);
+
+        // Verify that the terminalCluster is set correctly
+        expect(result[0]?.terminalCluster).toEqual('terminalCluster1');
+        expect(result[1]?.terminalCluster).toEqual('terminalCluster2');
+
+        // Verify that the innerVariable is set correctly
+        expect(result[0]?.innerVariable).toEqual('TestVar');
+        expect(result[1]?.innerVariable).toEqual('TestVar2');
+
+        // Verify that the innerVariableType is set correctly
+        expect(result[0]?.innerVariableType).toEqual(TYPES.CATEGORICAL);
+        expect(result[1]?.innerVariableType).toEqual(TYPES.NUMERICAL);
       });
 
       it('should sort valueGroups values and frequencies by frequency in descending order', () => {
@@ -1336,6 +1364,162 @@ describe('coVisualization', () => {
         );
 
         expect(result).toEqual([]);
+      });
+    });
+
+    describe('innerVariable Tests', () => {
+      beforeEach(() => {
+        // Inject services
+        dimensionsDatasService = TestBed.inject(DimensionsDatasService);
+        appService = TestBed.inject(AppService);
+
+        const fileDatas = require('../../assets/mocks/kc/IV-AdultEducation.json');
+        appService.setFileDatas(fileDatas);
+
+        dimensionsDatasService.initialize();
+        dimensionsDatasService.getDimensions();
+        dimensionsDatasService.initSelectedDimensions();
+        dimensionsDatasService.constructDimensionsTrees();
+      });
+
+      it('getCompositionValues root node should return valid values', () => {
+        const rootNode: TreeNodeModel | undefined =
+          dimensionsDatasService.dimensionsDatas.dimensionsTrees?.[1]?.[0];
+
+        // Get composition of highest level node
+        const relevantCompositions = compositionService.getCompositionClusters(
+          'Variables',
+          rootNode,
+        );
+
+        expect(relevantCompositions[0].cluster).toEqual(
+          '{education {HS-grad}, education_num ]8.5;9.5]}',
+        );
+        expect(relevantCompositions[0].innerVariable).toEqual('education');
+        expect(relevantCompositions[0].innerVariableType).toEqual(
+          'Categorical',
+        );
+        expect(relevantCompositions[0].frequency).toEqual(163);
+        expect(relevantCompositions[0].valueGroups.cluster).toEqual(
+          'education {HS-grad}',
+        );
+        expect(relevantCompositions[0].valueGroups.valueFrequencies).toEqual([
+          163,
+        ]);
+      });
+
+      it('getCompositionValues with folded nodes should return valid values, categorical variable', () => {
+        treenodesService.collapseNode('Variables', 'B5');
+        saveService.updateJSon(
+          'Variables',
+          treenodesService.getSavedCollapsedNodes(),
+        );
+
+        let nodeVO = treenodesService.getNodeFromDimensionTree(
+          'Variables',
+          'B5',
+        );
+        // Get composition of highest level node
+        const relevantCompositions = compositionService.getCompositionClusters(
+          'Variables',
+          nodeVO,
+        );
+
+        expect(relevantCompositions[0].cluster).toEqual('B5');
+        expect(relevantCompositions[0].innerVariable).toEqual('education');
+        expect(relevantCompositions[0].part).toEqual(
+          '{Some-college, Bachelors}',
+        );
+        expect(relevantCompositions[0].innerVariableType).toEqual(
+          'Categorical',
+        );
+        expect(relevantCompositions[0].frequency).toEqual(209);
+        expect(relevantCompositions[0].valueGroups.values).toEqual([
+          'Some-college',
+          'Bachelors',
+        ]);
+        expect(relevantCompositions[0].valueGroups.valueFrequencies).toEqual([
+          124, 85,
+        ]);
+      });
+
+      it('getCompositionValues with folded nodes should return valid values, numerical variable', () => {
+        treenodesService.collapseNode('Variables', 'B5');
+        saveService.updateJSon(
+          'Variables',
+          treenodesService.getSavedCollapsedNodes(),
+        );
+        let nodeVO = treenodesService.getNodeFromDimensionTree(
+          'Variables',
+          'B5',
+        );
+        // Get composition of highest level node
+        const relevantCompositions = compositionService.getCompositionClusters(
+          'Variables',
+          nodeVO,
+        );
+
+        expect(relevantCompositions[1].cluster).toEqual('B5');
+        expect(relevantCompositions[1].innerVariable).toEqual('education_num');
+        expect(relevantCompositions[1].part).toEqual([
+          ']9.5;10.5]',
+          ']12.5;13.5]',
+        ]);
+        expect(relevantCompositions[1].innerVariableType).toEqual('Numerical');
+        expect(relevantCompositions[1].frequency).toEqual(974);
+        expect(relevantCompositions[1].partDetails).toEqual([
+          ']9.5;10.5]',
+          ']12.5;13.5]',
+        ]);
+        expect(relevantCompositions[1].partFrequencies).toEqual([850, 124]);
+      });
+
+      it('getCompositionValues with folded nodes should return valid values, concat values', () => {
+        treenodesService.collapseNode('Variables', 'B3');
+        saveService.updateJSon(
+          'Variables',
+          treenodesService.getSavedCollapsedNodes(),
+        );
+        let nodeVO = treenodesService.getNodeFromDimensionTree(
+          'Variables',
+          'B3',
+        );
+        // Get composition of highest level node
+        const relevantCompositions = compositionService.getCompositionClusters(
+          'Variables',
+          nodeVO,
+        );
+        expect(relevantCompositions[0].cluster).toEqual('B3');
+        expect(relevantCompositions[0].part).toEqual(
+          '{HS-grad, Masters, 11th, ...}',
+        );
+        expect(relevantCompositions[0].value).toEqual(
+          'education {HS-grad, 11th, 10th, Prof-school, 7th-8th, 9th, 12th, 5th-6th, Doctorate, 1st-4th, Preschool, Masters, Assoc-acdm, Assoc-voc}',
+        );
+        expect(relevantCompositions[0].valueGroups.values.length).toEqual(14);
+        expect(
+          relevantCompositions[0].valueGroups.valueFrequencies.length,
+        ).toEqual(14);
+
+        expect(relevantCompositions[1].cluster).toEqual('B3');
+        expect(relevantCompositions[1].part).toEqual([
+          ']-inf;9.5]',
+          ']10.5;12.5]',
+          ']13.5;+inf[',
+        ]);
+        expect(relevantCompositions[1].value).toEqual(
+          'education_num ]8.5;9.5], ]-inf;8.5], ]14.5;+inf[, ]10.5;12.5], ]13.5;14.5]',
+        );
+        expect(relevantCompositions[1].partDetails).toEqual([
+          ']-inf;8.5]',
+          ']8.5;9.5]',
+          ']10.5;12.5]',
+          ']13.5;14.5]',
+          ']14.5;+inf[',
+        ]);
+        expect(relevantCompositions[1].partFrequencies).toEqual([
+          163, 69, 16, 33, 32,
+        ]);
       });
     });
   });

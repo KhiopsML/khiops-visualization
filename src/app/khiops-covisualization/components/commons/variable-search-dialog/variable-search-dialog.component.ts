@@ -167,7 +167,6 @@ export class VariableSearchDialogComponent implements AfterViewInit {
           this.data.selectedDimension.name,
           rootNode,
         );
-
       if (!relevantCompositions || relevantCompositions.length === 0) {
         return;
       }

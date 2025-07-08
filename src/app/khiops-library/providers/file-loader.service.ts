@@ -143,7 +143,7 @@ export class FileLoaderService {
     // let urlKC = './assets/mocks/kc/adultmissing.json';
     // let urlKC = './assets/mocks/kc/DigitCoclustering.json';
     // let urlKC = './assets/mocks/kc/8-TS4624User_Coclustering.json';
-    // let urlKC = './assets/mocks/kc/IV-AdultEducation.khcj';
+    // let urlKC = './assets/mocks/kc/IV-AdultEducation.json';
     // let urlKC = './assets/mocks/kc/Coclustering-IVAdultEducation.json';
     // let urlKC = './assets/mocks/kc/Coclustering-IV-Glass.khcj';
     // let urlKC = './assets/mocks/kc/Coclustering-IV-Iris.khcj';
