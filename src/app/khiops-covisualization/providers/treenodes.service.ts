@@ -471,7 +471,7 @@ export class TreenodesService {
         });
       }
     }
-    return _.cloneDeep(nodeVO); // important to clone datas to keep origin immmutable
+    return structuredClone(nodeVO); // important to clone datas to keep origin immmutable
   }
 
   /**
