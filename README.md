@@ -1,5 +1,5 @@
 [![Unit tests](https://github.com/KhiopsML/khiops-visualization/actions/workflows/test.yml/badge.svg)](https://github.com/KhiopsML/khiops-visualization/actions/workflows/test.yml) 
-[![Publish to NPM](https://github.com/KhiopsML/khiops-visualization/actions/workflows/publish.yml/badge.svg?branch=master)](https://github.com/KhiopsML/khiops-visualization/actions/workflows/publish.yml) 
+[![Publish to NPM](https://github.com/KhiopsML/khiops-visualization/actions/workflows/publish.yml/badge.svg)](https://github.com/KhiopsML/khiops-visualization/actions/workflows/publish.yml)
 [![npm version](https://badge.fury.io/js/khiops-visualization.svg)](https://www.npmjs.com/package/khiops-visualization) 
 [![End-to-end tests](https://github.com/KhiopsML/khiops-visualization/actions/workflows/e2e.yml/badge.svg)](https://github.com/KhiopsML/khiops-visualization/actions/workflows/e2e.yml) <img alt="gitleaks badge" src="https://img.shields.io/badge/protected%20by-gitleaks-blue">
 
