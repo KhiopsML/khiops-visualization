@@ -116,7 +116,7 @@ export class AppService {
     }
 
     this._appDatas.datas = datas;
-    this._initialDatas.datas = _.cloneDeep(datas);
+    this._initialDatas.datas = structuredClone(datas);
     this.setSavedDatas(datas);
   }
 
