@@ -35,7 +35,7 @@ import { AppConfig } from '../../../environments/environment';
   providedIn: 'root',
 })
 export class PreparationDatasService {
-  private preparationDatas: PreparationDatasModel = new PreparationDatasModel();
+  private preparationDatas: PreparationDatasModel | undefined;
 
   constructor(
     private translate: TranslateService,
@@ -99,7 +99,7 @@ export class PreparationDatasService {
         currentIntervalDatas: GridDatasI;
       }
     | undefined {
-    return this.preparationDatas[preparationSource];
+    return this.preparationDatas?.[preparationSource];
   }
 
   /**
@@ -116,7 +116,7 @@ export class PreparationDatasService {
         name,
         preparationSource,
       );
-      if (variable && this.preparationDatas[preparationSource]) {
+      if (variable && this.preparationDatas?.[preparationSource]) {
         this.preparationDatas[preparationSource].selectedVariable =
           new PreparationVariableModel(
             variable,
@@ -137,7 +137,7 @@ export class PreparationDatasService {
   getSelectedVariable(
     preparationSource: string,
   ): PreparationVariableModel | undefined {
-    return this.preparationDatas[preparationSource]?.selectedVariable;
+    return this.preparationDatas?.[preparationSource]?.selectedVariable;
   }
 
   /**
@@ -145,7 +145,7 @@ export class PreparationDatasService {
    * @returns {string} The rank of the selected variable.
    */
   getSelectedVariableRank(): string | undefined {
-    return this.preparationDatas.preparationReport?.selectedVariable?.rank;
+    return this.preparationDatas?.preparationReport?.selectedVariable?.rank;
   }
 
   /**
@@ -219,26 +219,20 @@ export class PreparationDatasService {
     const datas: DynamicI = [];
     let title = '';
     const displayedColumns: GridColumnsI[] = [];
-
-    // init the object
-    if (!this.preparationDatas[preparationSource]) {
-      this.preparationDatas[preparationSource] = {
-        selectedVariable: undefined,
-        currentIntervalDatas: { title: '', values: [], displayedColumns: [] },
+    if (this.preparationDatas) {
+      this.preparationDatas[preparationSource].currentIntervalDatas = {
+        title: title,
+        values: datas,
+        displayedColumns: displayedColumns,
       };
     }
-    this.preparationDatas[preparationSource].currentIntervalDatas = {
-      title: title,
-      values: datas,
-      displayedColumns: displayedColumns,
-    };
 
     if (
       // @ts-ignore
       this.appService.appDatas?.[preparationSource]?.variablesDetailedStatistics
     ) {
       const selectedVar =
-        this.preparationDatas[preparationSource]?.selectedVariable;
+        this.preparationDatas?.[preparationSource]?.selectedVariable;
       const selectedRank = selectedVar?.rank;
       const currentVar: VariableDetail | undefined =
         // @ts-ignore
@@ -247,7 +241,7 @@ export class PreparationDatasService {
               .variablesDetailedStatistics[selectedRank]
           : undefined;
       if (!currentVar)
-        return this.preparationDatas[preparationSource].currentIntervalDatas;
+        return this.preparationDatas?.[preparationSource].currentIntervalDatas;
       const variableDetails: VariableDetailsModel = new VariableDetailsModel(
         currentVar,
       );
@@ -382,11 +376,13 @@ export class PreparationDatasService {
             ')';
         }
       }
-      this.preparationDatas[preparationSource].currentIntervalDatas.title =
-        title;
+      if (this.preparationDatas && this.preparationDatas[preparationSource]) {
+        this.preparationDatas[preparationSource].currentIntervalDatas.title =
+          title;
+      }
     }
 
-    return this.preparationDatas[preparationSource].currentIntervalDatas;
+    return this.preparationDatas?.[preparationSource].currentIntervalDatas;
   }
 
   /**
@@ -408,16 +404,17 @@ export class PreparationDatasService {
         ?.variablesDetailedStatistics;
     const variableDatas: VariableModel[] = [];
 
-    if (currentDatas && currentDetailedDatas) {
+    if (currentDatas) {
       for (let i = 0; i < currentDatas.length; i++) {
         const currentData = currentDatas[i];
-        if (!currentData) continue;
-        const varItem: VariableModel = new VariableModel(
-          currentData,
-          currentDetailedDatas?.[currentData.rank],
-          preparationSource,
-        );
-        variableDatas.push(varItem);
+        if (currentData) {
+          const varItem: VariableModel = new VariableModel(
+            currentData,
+            currentDetailedDatas?.[currentData.rank],
+            preparationSource,
+          );
+          variableDatas.push(varItem);
+        }
       }
     }
     return variableDatas;
@@ -539,7 +536,7 @@ export class PreparationDatasService {
       !this.appService.appDatas?.bivariatePreparationReport
     ) {
       const selectedVar =
-        this.preparationDatas[preparationSource]?.selectedVariable;
+        this.preparationDatas?.[preparationSource]?.selectedVariable;
       const selectedRank = selectedVar?.rank;
       const detailedStats = (this.appService.appDatas as any)[preparationSource]
         ?.variablesDetailedStatistics;
@@ -584,7 +581,7 @@ export class PreparationDatasService {
       this.appService.appDatas?.[preparationSource]?.variablesDetailedStatistics
     ) {
       const selectedVar =
-        this.preparationDatas[preparationSource]?.selectedVariable;
+        this.preparationDatas?.[preparationSource]?.selectedVariable;
       const selectedRank = selectedVar?.rank;
       const detailedVar =
         selectedRank !== undefined
