@@ -13,7 +13,6 @@ import { MatrixUtilsService } from '@khiops-library/components/matrix/matrix.uti
 import { VariableDetailsModel } from '../model/variable-details.model';
 import { ChartDatasetModel } from '@khiops-library/model/chart-dataset.model';
 import { Preparation2dDatasService } from './preparation2d-datas.service';
-import { AppService } from './app.service';
 import { DistributionDatasModel } from '../model/distribution-datas.model';
 import { TYPES } from '@khiops-library/enum/types';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
@@ -28,7 +27,6 @@ export class Distribution2dDatasService {
   constructor(
     private distributionDatasService: DistributionDatasService,
     private preparation2dDatasService: Preparation2dDatasService,
-    private appService: AppService,
   ) {
     this.initialize();
   }
@@ -39,9 +37,7 @@ export class Distribution2dDatasService {
    * @returns The initialized DistributionDatasModel instance.
    */
   initialize() {
-    this.distributionDatas = new DistributionDatasModel(
-      this.appService.appDatas!,
-    );
+    this.distributionDatas = new DistributionDatasModel();
 
     return this.distributionDatas;
   }

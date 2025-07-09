@@ -12,7 +12,6 @@ import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggl
 import { HistogramValuesI } from '@khiops-visualization/components/commons/histogram/histogram.interfaces';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { LS } from '@khiops-library/enum/ls';
-import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas';
 
 export class DistributionDatasModel {
   distributionType: string = HistogramType.YLIN;
@@ -38,20 +37,7 @@ export class DistributionDatasModel {
   treeNodeTargetDistributionGraphDatas: ChartDatasModel | undefined = undefined;
 
   preparationSource!: string;
-
-  appDatas: any = undefined;
   treeHyperGraphDatas: ChartDatasModel | undefined = undefined;
-
-  constructor(appDatas?: VisualizationDatas) {
-    this.appDatas = appDatas;
-  }
-
-  /**
-   * Check if current datas are valid
-   */
-  isValid(): boolean {
-    return this.appDatas?.[this.preparationSource]?.variablesDetailedStatistics;
-  }
 
   initTreeNodeTargetDistributionGraphDatas() {
     this.treeNodeTargetDistributionGraphDatas = new ChartDatasModel();
