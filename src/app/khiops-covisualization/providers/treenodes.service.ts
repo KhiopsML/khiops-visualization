@@ -15,8 +15,6 @@ import _ from 'lodash';
 import { HierarchyDatasModel } from '@khiops-covisualization/model/hierarchy-datas.model';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
-import rfdc from 'rfdc';
-const clone = rfdc();
 
 @Injectable({
   providedIn: 'root',
@@ -473,7 +471,7 @@ export class TreenodesService {
         });
       }
     }
-    return clone(nodeVO); // important to clone datas to keep origin immmutable
+    return _.cloneDeep(nodeVO); // important to clone datas to keep origin immmutable
   }
 
   /**
