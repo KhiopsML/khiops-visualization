@@ -88,7 +88,11 @@ export class ModelingDatasService {
    * Removes the currently selected variable from the modeling data.
    */
   removeSelectedVariable() {
-    this.modelingDatas!.selectedVariable = undefined;
+    if (this.modelingDatas) {
+      this.modelingDatas.selectedVariable = undefined;
+    } else {
+      throw new Error('ModelingDatas not initialized');
+    }
   }
 
   /**
@@ -117,15 +121,17 @@ export class ModelingDatasService {
       if (key) {
         const variable: ModelingVariableStatistic | undefined =
           variables[key]?.selectedVariables[0];
-        this.setSelectedVariable(this.getVariableFromName(variable?.name!));
+        if (variable?.name) {
+          this.setSelectedVariable(this.getVariableFromName(variable.name));
 
-        // Also set the preparation selected variable if json is incomplete
-        const preparationSource =
-          this.preparationDatasService.getAvailablePreparationReport();
-        this.preparationDatasService.setSelectedVariable(
-          variable?.name!,
-          preparationSource,
-        );
+          // Also set the preparation selected variable if json is incomplete
+          const preparationSource =
+            this.preparationDatasService.getAvailablePreparationReport();
+          this.preparationDatasService.setSelectedVariable(
+            variable.name,
+            preparationSource,
+          );
+        }
       }
     }
   }
@@ -219,22 +225,27 @@ export class ModelingDatasService {
    */
   getTrainedPredictorsSummaryDatas(): InfosDatasI[] {
     const trainedPredictorsSummaryDatas: InfosDatasI[] = [];
-
-    for (
-      let i = 0;
-      i < this.appService.appDatas!.modelingReport.trainedPredictors.length;
-      i++
-    ) {
-      trainedPredictorsSummaryDatas.push({
-        title:
-          this.appService.appDatas?.modelingReport.trainedPredictors[i]?.name!,
-        value:
-          this.appService.appDatas?.modelingReport.trainedPredictors[i]
-            ?.variables +
-          ' ' +
-          this.translate.get('GLOBAL.VARIABLES'),
-      });
+    if (this.appService.appDatas) {
+      for (
+        let i = 0;
+        i < this.appService.appDatas.modelingReport.trainedPredictors.length;
+        i++
+      ) {
+        trainedPredictorsSummaryDatas.push({
+          title:
+            this.appService.appDatas.modelingReport.trainedPredictors[i]
+              ?.name ?? '',
+          value:
+            this.appService.appDatas.modelingReport.trainedPredictors[i]
+              ?.variables +
+            ' ' +
+            this.translate.get('GLOBAL.VARIABLES'),
+        });
+      }
+    } else {
+      throw new Error('appDatas not initialized');
     }
+
     return trainedPredictorsSummaryDatas;
   }
 
@@ -243,9 +254,13 @@ export class ModelingDatasService {
    * @param predictor - The predictor to be set as selected.
    */
   setSelectedPredictor(predictor: TrainedPredictor) {
-    this.modelingDatas!.selectedPredictor = new ModelingPredictorModel(
-      predictor,
-    );
+    if (this.modelingDatas) {
+      this.modelingDatas.selectedPredictor = new ModelingPredictorModel(
+        predictor,
+      );
+    } else {
+      throw new Error('ModelingDatas not initialized');
+    }
   }
 
   /**
@@ -268,35 +283,46 @@ export class ModelingDatasService {
    */
   getTrainedPredictorListDatas(): TrainedPredictorModel[] | undefined {
     const selectedPredictor = this.getSelectedPredictor();
-    if (
-      this.appService.appDatas?.modelingReport?.trainedPredictorsDetails?.[
-        selectedPredictor?.rank!
-      ]
-    ) {
-      const currentDatas: ModelingVariableStatistic[] | undefined =
-        this.appService.appDatas.modelingReport.trainedPredictorsDetails[
-          selectedPredictor?.rank!
-        ]?.selectedVariables;
-      if (currentDatas) {
-        // Get a typical data object
-        const availableKeys: string[] = Object.keys(currentDatas?.[0]!);
+    if (this.modelingDatas) {
+      if (
+        selectedPredictor &&
+        selectedPredictor.rank !== undefined &&
+        this.appService.appDatas?.modelingReport?.trainedPredictorsDetails?.[
+          selectedPredictor.rank
+        ]
+      ) {
+        const currentDatas: ModelingVariableStatistic[] | undefined =
+          this.appService.appDatas.modelingReport.trainedPredictorsDetails[
+            selectedPredictor.rank
+          ]?.selectedVariables;
+        if (currentDatas) {
+          // Get a typical data object
+          const availableKeys: string[] =
+            currentDatas && currentDatas[0] ? Object.keys(currentDatas[0]) : [];
 
-        this.modelingDatas!.trainedPredictorsListDatas = [];
-        for (let i = 0; i < currentDatas.length; i++) {
-          // Find the corresponding rank of the current variable into preparation, 2d or tree
-          const currentVar: ModelingVariableStatistic | undefined =
-            currentDatas[i];
+          this.modelingDatas.trainedPredictorsListDatas = [];
 
-          const varItem: TrainedPredictorModel = new TrainedPredictorModel(
-            currentVar!,
-            availableKeys,
-          );
-          this.modelingDatas!.trainedPredictorsListDatas.push(varItem);
+          for (let i = 0; i < currentDatas.length; i++) {
+            // Find the corresponding rank of the current variable into preparation, 2d or tree
+            const currentVar: ModelingVariableStatistic | undefined =
+              currentDatas[i];
+
+            if (currentVar) {
+              const varItem: TrainedPredictorModel = new TrainedPredictorModel(
+                currentVar,
+                availableKeys,
+              );
+              this.modelingDatas.trainedPredictorsListDatas.push(varItem);
+            }
+          }
         }
+      } else {
+        this.modelingDatas.trainedPredictorsListDatas = undefined;
       }
     } else {
-      this.modelingDatas!.trainedPredictorsListDatas = undefined;
+      throw new Error('ModelingDatas not initialized');
     }
-    return this.modelingDatas!.trainedPredictorsListDatas;
+
+    return this.modelingDatas.trainedPredictorsListDatas;
   }
 }
