@@ -116,17 +116,19 @@ export class AppService {
     );
 
     // #86 Remove missing informations for numerical variables
-    this._appDatas.datas =
-      EnrichDatasService.ignoreMissingPartitionForNumerical(
-        this._appDatas.datas!,
-        REPORT.PREPARATION_REPORT,
-      );
-    this._appDatas.datas =
-      EnrichDatasService.ignoreMissingPartitionForNumerical(
-        this._appDatas.datas,
-        REPORT.TEXT_PREPARATION_REPORT,
-      );
-    this.setSavedDatas(this._appDatas.datas);
+    if (this._appDatas.datas) {
+      this._appDatas.datas =
+        EnrichDatasService.ignoreMissingPartitionForNumerical(
+          this._appDatas.datas,
+          REPORT.PREPARATION_REPORT,
+        );
+      this._appDatas.datas =
+        EnrichDatasService.ignoreMissingPartitionForNumerical(
+          this._appDatas.datas,
+          REPORT.TEXT_PREPARATION_REPORT,
+        );
+      this.setSavedDatas(this._appDatas.datas);
+    }
   }
 
   /**
