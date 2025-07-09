@@ -33,7 +33,8 @@ import { selectedNodesSelector } from '@khiops-visualization/selectors/tree-prep
   providedIn: 'root',
 })
 export class TreePreparationDatasService {
-  private treePreparationDatas: TreePreparationDatasModel | undefined;
+  private treePreparationDatas: TreePreparationDatasModel =
+    new TreePreparationDatasModel();
   selectedNodes$: Observable<TreeNodeModel[]>;
 
   constructor(
@@ -95,9 +96,9 @@ export class TreePreparationDatasService {
         ?.variablesDetailedStatistics;
     if (this.treePreparationDatas?.selectedVariable) {
       const rank: string = this.treePreparationDatas.selectedVariable.rank;
-      if (rank && variablesDetailedStatistics![rank]) {
+      if (rank && variablesDetailedStatistics?.[rank]) {
         const dimensions =
-          variablesDetailedStatistics![rank].dataGrid.dimensions;
+          variablesDetailedStatistics[rank].dataGrid.dimensions;
         const firstpartition: any = dimensions[0]?.partition[0];
         nodes = this.setSelectedNodes(firstpartition, firstpartition[0]);
       }
@@ -129,7 +130,7 @@ export class TreePreparationDatasService {
       const partition =
         this.appService.appDatas?.treePreparationReport
           ?.variablesDetailedStatistics?.[
-          this.treePreparationDatas?.selectedVariable?.rank!
+          this.treePreparationDatas?.selectedVariable?.rank || ''
         ]?.inputValues?.values;
 
       // put each element of partition into an array
@@ -138,10 +139,10 @@ export class TreePreparationDatasService {
       currentValues =
         this.appService.appDatas?.treePreparationReport
           ?.variablesDetailedStatistics?.[
-          this.treePreparationDatas?.selectedVariable?.rank!
+          this.treePreparationDatas?.selectedVariable?.rank || ''
         ]?.dataGrid?.dimensions[0]?.partition;
     }
-    return currentValues![index] as string[];
+    return currentValues?.[index] as string[];
   }
 
   /**
@@ -161,7 +162,7 @@ export class TreePreparationDatasService {
       const rank: string | undefined =
         this.treePreparationDatas?.selectedVariable?.rank;
       const varDetails: VariableDetail | undefined =
-        variablesDetailedStatistics?.[rank!];
+        variablesDetailedStatistics?.[rank || ''];
       const dimensions = varDetails?.inputValues?.values;
       const dimDatasIndex = dimensions?.findIndex((e: string) => e === id) || 0;
       const nodeToSelect = dimensions?.[dimDatasIndex] || '';
@@ -175,7 +176,7 @@ export class TreePreparationDatasService {
       const rank: string | undefined =
         this.treePreparationDatas?.selectedVariable?.rank;
       const varDetails: VariableDetail | undefined =
-        variablesDetailedStatistics?.[rank!];
+        variablesDetailedStatistics?.[rank || ''];
       const dimensions = varDetails?.dataGrid?.dimensions;
       const dimIndex = dimensions?.findIndex(
         (e: any) =>
@@ -227,7 +228,7 @@ export class TreePreparationDatasService {
         [],
         _.cloneDeep(treeDatas[rank].treeNodes),
       );
-      this.treePreparationDatas!.selectedFlattenTree = flattenTree;
+      this.treePreparationDatas.selectedFlattenTree = flattenTree;
     }
   }
 
@@ -245,7 +246,7 @@ export class TreePreparationDatasService {
         nodeDatas,
         this.treePreparationDatas,
       );
-      this.treePreparationDatas!.dimensionTree = _.cloneDeep([currentDimTree]);
+      this.treePreparationDatas.dimensionTree = _.cloneDeep([currentDimTree]);
     }
   }
 
@@ -266,8 +267,10 @@ export class TreePreparationDatasService {
         UtilsService.sumArrayItemsOfArray(treeLeafs);
       const [minVal, maxVal]: any =
         UtilsService.getMinAndMaxFromArray(treeLeafsSums);
-      this.treePreparationDatas!.maxFrequencies = maxVal;
-      this.treePreparationDatas!.minFrequencies = minVal;
+      if (this.treePreparationDatas) {
+        this.treePreparationDatas.maxFrequencies = maxVal;
+        this.treePreparationDatas.minFrequencies = minVal;
+      }
     }
   }
 
@@ -311,7 +314,7 @@ export class TreePreparationDatasService {
     const selectedNodes: TreeNodeModel[] = [];
     for (let i = 0; i < nodes.length; i++) {
       const nodeDatas: TreeChildNode | undefined = this.getNodeFromName(
-        nodes[i]!,
+        nodes[i] || '',
       );
       if (nodeDatas) {
         // Define the trusted node selection to go to clicked node into hyper tree
@@ -436,8 +439,8 @@ export class TreePreparationDatasService {
 
       // get a hierarchy branch with all recursive parents
       const nodeHierarchy: TreeNodeModel[] = UtilsService.returnHierarchy(
-        _.cloneDeep(this.treePreparationDatas?.dimensionTree)!,
-        currentNode?.id!,
+        _.cloneDeep(this.treePreparationDatas?.dimensionTree) || [],
+        currentNode?.id || '',
       );
 
       // get obj rules into one array
@@ -554,7 +557,7 @@ export class TreePreparationDatasService {
           ?.values;
       if (values) {
         for (let i = 0; i < values.length; i++) {
-          this.treePreparationDatas.treeColorsMap[values[i]!] =
+          this.treePreparationDatas.treeColorsMap[values[i] || ''] =
             TREE_COLORS[i % TREE_COLORS.length];
         }
       }
@@ -573,8 +576,8 @@ export class TreePreparationDatasService {
       const dimDatas = dimensions?.[dimIndex]?.partition;
       if (dimDatas) {
         for (let i = 0; i < dimDatas.length; i++) {
-          for (let j = 0; j < dimDatas[i]!.length; j++) {
-            this.treePreparationDatas.treeColorsMap[dimDatas[i]![j]!] =
+          for (let j = 0; j < (dimDatas[i]?.length || 0); j++) {
+            this.treePreparationDatas.treeColorsMap[dimDatas[i]?.[j] || ''] =
               TREE_COLORS[i % TREE_COLORS.length];
           }
         }
