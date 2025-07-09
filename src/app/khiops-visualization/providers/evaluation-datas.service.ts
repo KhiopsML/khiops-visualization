@@ -63,11 +63,26 @@ export class EvaluationDatasService {
     private appService: AppService,
   ) {}
 
+  private get evaluationDatas(): EvaluationDatasModel {
+    return this.evaluationDatasSubject.value;
+  }
+
+  private set evaluationDatas(val: EvaluationDatasModel) {
+    this.evaluationDatasSubject.next(val);
+  }
+
+  /**
+   * Creates a new immutable copy of the current evaluation data
+   */
+  private createDatasCopy(): EvaluationDatasModel {
+    return Object.assign(new EvaluationDatasModel(), this.evaluationDatas);
+  }
+
   /**
    * Initializes the evaluation data model.
    */
   initialize() {
-    this.evaluationDatasSubject.next(new EvaluationDatasModel());
+    this.evaluationDatas = new EvaluationDatasModel();
   }
 
   /**
@@ -75,25 +90,7 @@ export class EvaluationDatasService {
    * @returns The evaluation data model.
    */
   getDatas(): EvaluationDatasModel {
-    return this.evaluationDatasSubject.value;
-  }
-
-  /**
-   * Gets the current evaluation data value
-   */
-  private getCurrentEvaluationDatas(): EvaluationDatasModel {
-    return this.evaluationDatasSubject.value;
-  }
-
-  /**
-   * Updates the evaluation data and emits the new value
-   */
-  private updateEvaluationDatas(
-    updateFn: (data: EvaluationDatasModel) => void,
-  ) {
-    const currentData = this.getCurrentEvaluationDatas();
-    updateFn(currentData);
-    this.evaluationDatasSubject.next({ ...currentData });
+    return this.evaluationDatas;
   }
 
   /**
@@ -101,9 +98,9 @@ export class EvaluationDatasService {
    * @param object - The chart toggle values to set.
    */
   setLiftGraphDisplayedValues(object: ChartToggleValuesI[]) {
-    this.updateEvaluationDatas((data) => {
-      data.liftGraphDisplayedValues = object;
-    });
+    const newData = this.createDatasCopy();
+    newData.liftGraphDisplayedValues = object;
+    this.evaluationDatas = newData;
     this.liftGraphDisplayedValuesSubject.next(object);
   }
 
@@ -120,9 +117,9 @@ export class EvaluationDatasService {
    * @param object - The evaluation type model to set.
    */
   setSelectedEvaluationTypeVariable(object: EvaluationTypeModel | undefined) {
-    this.updateEvaluationDatas((data) => {
-      data.selectedEvaluationTypeVariable = object;
-    });
+    const newData = this.createDatasCopy();
+    newData.selectedEvaluationTypeVariable = object;
+    this.evaluationDatas = newData;
     this.selectedEvaluationTypeVariableSubject.next(object);
   }
 
@@ -139,9 +136,9 @@ export class EvaluationDatasService {
    * @param object - The evaluation predictor model to set.
    */
   setSelectedPredictorEvaluationVariable(object: EvaluationPredictorModel) {
-    this.updateEvaluationDatas((data) => {
-      data.selectedPredictorEvaluationVariable = object;
-    });
+    const newData = this.createDatasCopy();
+    newData.selectedPredictorEvaluationVariable = object;
+    this.evaluationDatas = newData;
     this.selectedPredictorEvaluationVariableSubject.next(object);
   }
 
@@ -153,7 +150,7 @@ export class EvaluationDatasService {
   getPredictorEvaluationVariableFromEvaluationType(
     type: string,
   ): EvaluationPredictorModel {
-    const currentData = this.getCurrentEvaluationDatas();
+    const currentData = this.evaluationDatas;
     return currentData.predictorEvaluations?.values?.find(
       (e: any) =>
         e.type === type &&
@@ -169,7 +166,7 @@ export class EvaluationDatasService {
   getEvaluationVariableFromPredictorEvaluationType(
     type: string,
   ): EvaluationTypeModel {
-    const currentData = this.getCurrentEvaluationDatas();
+    const currentData = this.evaluationDatas;
     return currentData.evaluationTypesSummary?.values?.find(
       (e: any) => e.type === type,
     );
@@ -183,18 +180,18 @@ export class EvaluationDatasService {
     | EvaluationReport[]
     | TestEvaluationReport[]
     | TrainEvaluationReport[] {
-    this.updateEvaluationDatas((data) => {
-      data.evaluationTypes = [];
+    const newData = this.createDatasCopy();
+    newData.evaluationTypes = [];
+    // @ts-ignore
+    Object.keys(this.appService.appDatas).forEach((value: any) => {
       // @ts-ignore
-      Object.keys(this.appService.appDatas).forEach((value: any) => {
-        // @ts-ignore
-        const currentReport = this.appService.appDatas[value];
-        if (currentReport.reportType === 'Evaluation') {
-          data?.evaluationTypes?.push(currentReport);
-        }
-      });
+      const currentReport = this.appService.appDatas[value];
+      if (currentReport.reportType === 'Evaluation') {
+        newData?.evaluationTypes?.push(currentReport);
+      }
     });
-    return this.getCurrentEvaluationDatas().evaluationTypes || [];
+    this.evaluationDatas = newData;
+    return this.evaluationDatas.evaluationTypes || [];
   }
 
   /**
@@ -203,19 +200,19 @@ export class EvaluationDatasService {
    * @returns The confusion matrix as a GridDatasI object.
    */
   getConfusionMatrix(type?: string): GridDatasI | undefined {
-    const currentData = this.getCurrentEvaluationDatas();
+    const currentData = this.evaluationDatas;
 
     if (type) {
-      this.updateEvaluationDatas((data) => {
-        data.confusionMatrixType = type;
-      });
+      const newData = this.createDatasCopy();
+      newData.confusionMatrixType = type;
+      this.evaluationDatas = newData;
     }
 
     if (currentData.selectedPredictorEvaluationVariable) {
       const confusionMatrix = this.buildConfusionMatrix(currentData);
-      this.updateEvaluationDatas((data) => {
-        data.confusionMatrix = confusionMatrix;
-      });
+      const newData = this.createDatasCopy();
+      newData.confusionMatrix = confusionMatrix;
+      this.evaluationDatas = newData;
       return confusionMatrix;
     }
 
@@ -457,7 +454,7 @@ export class EvaluationDatasService {
    * @returns The evaluation types summary as a GridDatasI object.
    */
   getEvaluationTypesSummary(): GridDatasI {
-    const currentData = this.getCurrentEvaluationDatas();
+    const currentData = this.evaluationDatas;
 
     // init the object
     const evaluationTypesSummary: GridDatasI = {
@@ -502,9 +499,9 @@ export class EvaluationDatasService {
       }
     }
 
-    this.updateEvaluationDatas((data) => {
-      data.evaluationTypesSummary = evaluationTypesSummary;
-    });
+    const newData = this.createDatasCopy();
+    newData.evaluationTypesSummary = evaluationTypesSummary;
+    this.evaluationDatas = newData;
 
     return evaluationTypesSummary;
   }
@@ -514,7 +511,7 @@ export class EvaluationDatasService {
    * @returns The predictor evaluations as a GridDatasI object.
    */
   getPredictorEvaluations(): GridDatasI {
-    const currentData = this.getCurrentEvaluationDatas();
+    const currentData = this.evaluationDatas;
 
     const predictorEvaluations: GridDatasI = {
       title: this.translate.get('GLOBAL.PREDICTOR_EVALUATIONS'),
@@ -603,9 +600,9 @@ export class EvaluationDatasService {
       }
     }
 
-    this.updateEvaluationDatas((data) => {
-      data.predictorEvaluations = predictorEvaluations;
-    });
+    const newData = this.createDatasCopy();
+    newData.predictorEvaluations = predictorEvaluations;
+    this.evaluationDatas = newData;
 
     return predictorEvaluations;
   }
@@ -721,9 +718,9 @@ export class EvaluationDatasService {
     this.setLiftGraphDisplayedValues(clonedDisplayedValues || []);
 
     // Update the evaluation data
-    this.updateEvaluationDatas((data) => {
-      data.liftGraphDatas = liftGraphDatasModel;
-    });
+    const newData = this.createDatasCopy();
+    newData.liftGraphDatas = liftGraphDatasModel;
+    this.evaluationDatas = newData;
 
     return liftGraphDatasModel;
   }
@@ -839,7 +836,7 @@ export class EvaluationDatasService {
    */
   getLiftTargets(currentTarget?: string): TargetLiftValuesI | undefined {
     let targetLift: TargetLiftValuesI | undefined;
-    const currentData = this.getCurrentEvaluationDatas();
+    const currentData = this.evaluationDatas;
 
     let currentEvalReport:
       | TestEvaluationReport
