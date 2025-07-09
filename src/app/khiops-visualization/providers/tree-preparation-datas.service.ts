@@ -11,6 +11,7 @@ import { TranslateService } from '@ngstack/translate';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { TreePreparationVariableModel } from '../model/tree-preparation-variable.model';
 import { TreeNodeModel } from '../model/tree-node.model';
+import { TREE_COLORS } from '@khiops-visualization/config/colors';
 import {
   TreePreparationDatasModel,
   TreePreparationState,
@@ -49,12 +50,10 @@ export class TreePreparationDatasService {
    * and setting the default selected variable.
    */
   initialize() {
-    this.treePreparationDatas = new TreePreparationDatasModel(
-      this.appService.appDatas!,
-    );
+    this.treePreparationDatas = new TreePreparationDatasModel();
 
     // select the first item of the list by default
-    if (this.treePreparationDatas.isValid()) {
+    if (this.isValid()) {
       let defaultVariable: TreePreparationVariableStatistic | undefined =
         this.appService.appDatas?.treePreparationReport.variablesStatistics[0];
 
@@ -206,8 +205,8 @@ export class TreePreparationDatasService {
           new TreePreparationVariableModel(variable, variable.name);
         this.setSelectedFlattenTree(variable.rank);
         this.computeNodesFreqsComparedToOthers();
-        this.treePreparationDatas.computeRegressionClassesCount();
-        this.treePreparationDatas.computeTreeColorsMap();
+        this.computeRegressionClassesCount();
+        this.computeTreeColorsMap();
         this.treePreparationDatas.computeTreePartTargetFrequencies();
         this.constructDimensionTree();
         return this.treePreparationDatas.selectedVariable;
@@ -500,5 +499,87 @@ export class TreePreparationDatasService {
     } else {
       return rules;
     }
+  }
+
+  /**
+   * Checks if the tree data is valid
+   */
+  isValid(): boolean {
+    return !!this.appService.appDatas?.treePreparationReport
+      ?.variablesStatistics?.[0];
+  }
+
+  /**
+   * Computes whether the analysis is a regression and the number of classes.
+   */
+  computeRegressionClassesCount() {
+    if (!this.treePreparationDatas) return;
+    const appDatas = this.appService.appDatas;
+    this.treePreparationDatas.isRegressionAnalysis =
+      appDatas?.treePreparationReport?.summary?.learningTask === 'Regression';
+    if (
+      this.treePreparationDatas.isRegressionAnalysis &&
+      this.treePreparationDatas.selectedVariable
+    ) {
+      const details =
+        appDatas?.treePreparationReport?.variablesDetailedStatistics?.[
+          this.treePreparationDatas.selectedVariable.rank
+        ];
+      this.treePreparationDatas.classesCount =
+        details?.inputValues?.values.length || 0;
+    } else {
+      this.treePreparationDatas.classesCount =
+        appDatas?.treePreparationReport?.summary?.targetValues?.values
+          ?.length || 0;
+    }
+  }
+
+  /**
+   * Compute the color map for the tree based on the selected variable's data.
+   * It uses a predefined set of colors and assigns them to the partitions of the selected variable.
+   * The color map is stored in the `treeColorsMap` property.
+   *
+   * @returns The computed tree color map or undefined if no variable is selected.
+   */
+  computeTreeColorsMap() {
+    if (!this.treePreparationDatas?.selectedVariable) return;
+    const appDatas = this.appService.appDatas;
+
+    if (this.treePreparationDatas.isRegressionAnalysis) {
+      this.treePreparationDatas.treeColorsMap = {};
+      const details =
+        appDatas?.treePreparationReport?.variablesDetailedStatistics;
+      const values =
+        details?.[this.treePreparationDatas.selectedVariable.rank]?.inputValues
+          ?.values;
+      if (values) {
+        for (let i = 0; i < values.length; i++) {
+          this.treePreparationDatas.treeColorsMap[values[i]!] =
+            TREE_COLORS[i % TREE_COLORS.length];
+        }
+      }
+    } else {
+      const details =
+        appDatas?.treePreparationReport?.variablesDetailedStatistics;
+      this.treePreparationDatas.treeColorsMap = {};
+      const dimensions =
+        details?.[this.treePreparationDatas.selectedVariable.rank]?.dataGrid
+          ?.dimensions;
+      const dimIndex =
+        dimensions?.findIndex(
+          (e: any) =>
+            e.variable === this.treePreparationDatas?.selectedVariable?.name,
+        ) || 0;
+      const dimDatas = dimensions?.[dimIndex]?.partition;
+      if (dimDatas) {
+        for (let i = 0; i < dimDatas.length; i++) {
+          for (let j = 0; j < dimDatas[i]!.length; j++) {
+            this.treePreparationDatas.treeColorsMap[dimDatas[i]![j]!] =
+              TREE_COLORS[i % TREE_COLORS.length];
+          }
+        }
+      }
+    }
+    return this.treePreparationDatas.treeColorsMap;
   }
 }
