@@ -22,7 +22,7 @@ import { ModalityCountsModel } from '@khiops-visualization/model/modality-counts
   providedIn: 'root',
 })
 export class Distribution2dDatasService {
-  private distributionDatas!: DistributionDatasModel;
+  private distributionDatas: DistributionDatasModel = new DistributionDatasModel();
 
   constructor(
     private distributionDatasService: DistributionDatasService,
@@ -38,7 +38,6 @@ export class Distribution2dDatasService {
    */
   initialize() {
     this.distributionDatas = new DistributionDatasModel();
-
     return this.distributionDatas;
   }
 
@@ -67,56 +66,74 @@ export class Distribution2dDatasService {
         preparation2dDatas?.selectedVariable,
       );
 
-    this.distributionDatas.targetDistributionGraphDatas!.labels = [''];
+    if (this.distributionDatas.targetDistributionGraphDatas) {
+      this.distributionDatas.targetDistributionGraphDatas.labels = [''];
+    }
 
     if (variablesDetails?.dataGrid?.cellTargetFrequencies) {
-      const computedCellTargetFreqs = MatrixUtilsService.getCellFrequencies(
-        [selectedVariable?.parts1!, selectedVariable?.parts2!],
-        variablesDetails.dataGrid.cellPartIndexes,
-        variablesDetails.dataGrid.cellTargetFrequencies,
-      );
+      const parts1 = selectedVariable?.parts1;
+      const parts2 = selectedVariable?.parts2;
+      const cellPartIndexes = variablesDetails.dataGrid.cellPartIndexes;
+      const cellTargetFrequencies = variablesDetails.dataGrid.cellTargetFrequencies;
+      if (parts1 && parts2 && cellPartIndexes && cellTargetFrequencies) {
+        const computedCellTargetFreqs = MatrixUtilsService.getCellFrequencies(
+          [parts1, parts2],
+          cellPartIndexes,
+          cellTargetFrequencies,
+        );
 
-      const currentDatas =
-        computedCellTargetFreqs[preparation2dDatas?.selectedCellIndex!];
-      const targets = this.preparation2dDatasService.getTargetsIfAvailable();
-      if (currentDatas && targets) {
-        const modalityCounts: ModalityCountsModel =
-          this.distributionDatasService.computeModalityCounts(
-            computedCellTargetFreqs,
-          );
+        const selectedCellIndex = preparation2dDatas?.selectedCellIndex;
+        if (typeof selectedCellIndex === 'number') {
+          const currentDatas = computedCellTargetFreqs[selectedCellIndex];
+          const targets = this.preparation2dDatasService.getTargetsIfAvailable();
+          if (currentDatas && targets) {
+            const modalityCounts: ModalityCountsModel =
+              this.distributionDatasService.computeModalityCounts(
+                computedCellTargetFreqs,
+              );
 
-        for (let i = 0; i < currentDatas.length; i++) {
-          const el = currentDatas[i];
+            for (let i = 0; i < currentDatas.length; i++) {
+              const el = currentDatas[i];
 
-          const graphItem: BarModel = new BarModel();
-          graphItem.name = targets[i]?.toString();
+              const graphItem: BarModel = new BarModel();
+              graphItem.name = targets[i]?.toString();
 
-          if (type && type === TYPES.LIFT) {
-            // compute lift
-            graphItem.value =
-              el /
-              UtilsService.arraySum(currentDatas) /
-              modalityCounts.totalProbability[i]!;
-          } else {
-            graphItem.value = (el * 100) / UtilsService.arraySum(currentDatas);
+              if (type && type === TYPES.LIFT) {
+                // compute lift
+                const sumCurrentDatas = UtilsService.arraySum(currentDatas);
+                const totalProbability = modalityCounts.totalProbability[i];
+                if (sumCurrentDatas && totalProbability) {
+                  graphItem.value =
+                    el / sumCurrentDatas / totalProbability;
+                } else {
+                  graphItem.value = 0;
+                }
+              } else {
+                const sumCurrentDatas = UtilsService.arraySum(currentDatas);
+                graphItem.value = sumCurrentDatas ? (el * 100) / sumCurrentDatas : 0;
+              }
+
+              graphItem.extra.value = el;
+              const sumCurrentDatas = UtilsService.arraySum(currentDatas);
+              graphItem.extra.percent = sumCurrentDatas ? (el * 100) / sumCurrentDatas : 0;
+
+              const currentDataSet = new ChartDatasetModel(graphItem.name);
+              currentDataSet.data.push(graphItem.value);
+              currentDataSet.extra.push(graphItem);
+              if (this.distributionDatas.targetDistributionGraphDatas) {
+                this.distributionDatas.targetDistributionGraphDatas.datasets.push(
+                  currentDataSet,
+                );
+              }
+            }
           }
-
-          graphItem.extra.value = el;
-          graphItem.extra.percent =
-            (el * 100) / UtilsService.arraySum(currentDatas);
-
-          const currentDataSet = new ChartDatasetModel(graphItem.name);
-          currentDataSet.data.push(graphItem.value);
-          currentDataSet.extra.push(graphItem);
-          this.distributionDatas.targetDistributionGraphDatas?.datasets.push(
-            currentDataSet,
-          );
         }
       }
     }
 
     if (
-      this.distributionDatas.targetDistributionGraphDatas?.datasets.length === 0
+      this.distributionDatas.targetDistributionGraphDatas &&
+      this.distributionDatas.targetDistributionGraphDatas.datasets.length === 0
     ) {
       this.distributionDatas.targetDistributionGraphDatas = undefined;
     }
