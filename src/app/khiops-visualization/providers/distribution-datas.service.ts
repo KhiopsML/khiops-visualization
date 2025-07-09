@@ -61,21 +61,22 @@ export class DistributionDatasService {
    * for the component.
    */
   initialize() {
-    this.updateDistributionDatas(new DistributionDatasModel());
+    this.distributionDatas = new DistributionDatasModel();
   }
 
-  /**
-   * Updates the distribution data and emits the new value
-   */
-  private updateDistributionDatas(newDatas: DistributionDatasModel) {
-    this.distributionDatasSubject.next(newDatas);
+  private get distributionDatas(): DistributionDatasModel {
+    return this.distributionDatasSubject.value;
+  }
+
+  private set distributionDatas(val: DistributionDatasModel) {
+    this.distributionDatasSubject.next(val);
   }
 
   /**
    * Gets the current distribution data value
    */
   getDatas(): DistributionDatasModel {
-    return this.distributionDatasSubject.value;
+    return this.distributionDatas;
   }
 
   /**
@@ -84,9 +85,9 @@ export class DistributionDatasService {
    * @param preparationSource - The source of the preparation to be set.
    */
   setPreparationSource(preparationSource: string) {
-    const currentDatas = this.getDatas();
+    const currentDatas = this.distributionDatas;
     currentDatas.preparationSource = preparationSource;
-    this.updateDistributionDatas(currentDatas);
+    this.distributionDatas = currentDatas;
   }
 
   /**
@@ -95,9 +96,9 @@ export class DistributionDatasService {
    * @param values - An array of `ChartToggleValuesI` representing the values to be displayed.
    */
   setTargetDistributionDisplayedValues(values: ChartToggleValuesI[]) {
-    const currentDatas = this.getDatas();
+    const currentDatas = this.distributionDatas;
     currentDatas.targetDistributionDisplayedValues = values;
-    this.updateDistributionDatas(currentDatas);
+    this.distributionDatas = currentDatas;
   }
 
   /**
@@ -117,10 +118,10 @@ export class DistributionDatasService {
     if (initActiveEntries === undefined) {
       initActiveEntries = initActiveEntries || true;
     }
-    const currentDatas = this.getDatas();
+    const currentDatas = this.distributionDatas;
     currentDatas.initTargetDistributionGraphDatas();
     currentDatas.setTargetDistributionType(type);
-    this.updateDistributionDatas(currentDatas);
+    this.distributionDatas = currentDatas;
 
     if (this.isValid()) {
       const currentVar: VariableDetail =
@@ -161,7 +162,7 @@ export class DistributionDatasService {
           }
 
           if (partition && currentXAxis) {
-            const updatedCurrentDatas = this.getDatas();
+            const updatedCurrentDatas = this.distributionDatas;
             updatedCurrentDatas.targetDistributionGraphDatas =
               this.computeTargetDistributionGraph(
                 partition,
@@ -171,16 +172,16 @@ export class DistributionDatasService {
                 updatedCurrentDatas.targetDistributionType,
                 selectedVariable.type,
               );
-            this.updateDistributionDatas(updatedCurrentDatas);
+            this.distributionDatas = updatedCurrentDatas;
           }
         }
       }
     }
-    const finalDatas = this.getDatas();
+    const finalDatas = this.distributionDatas;
     finalDatas.checkTargetDistributionGraphDatas();
-    this.updateDistributionDatas(finalDatas);
+    this.distributionDatas = finalDatas;
 
-    return this.getDatas().targetDistributionGraphDatas;
+    return this.distributionDatas.targetDistributionGraphDatas;
   }
 
   /**
@@ -201,10 +202,10 @@ export class DistributionDatasService {
     currentNode: TreeNodeModel,
     type?: string,
   ): ChartDatasModel | undefined {
-    const currentDatas = this.getDatas();
+    const currentDatas = this.distributionDatas;
     currentDatas.initTreeNodeTargetDistributionGraphDatas();
     currentDatas.setTreeNodeTargetDistributionType(type);
-    this.updateDistributionDatas(currentDatas);
+    this.distributionDatas = currentDatas;
 
     const selectedVariable =
       this.treePreparationDatasService.getSelectedVariable();
@@ -283,7 +284,7 @@ export class DistributionDatasService {
       }
 
       if (allTargetValues) {
-        const updatedCurrentDatas = this.getDatas();
+        const updatedCurrentDatas = this.distributionDatas;
         updatedCurrentDatas.treeNodeTargetDistributionGraphDatas =
           this.computeTargetDistributionGraph(
             allTargetValues,
@@ -293,13 +294,13 @@ export class DistributionDatasService {
             updatedCurrentDatas.treeNodeTargetDistributionType,
             selectedVariable.type,
           );
-        this.updateDistributionDatas(updatedCurrentDatas);
+        this.distributionDatas = updatedCurrentDatas;
       }
     }
-    const finalDatas = this.getDatas();
+    const finalDatas = this.distributionDatas;
     finalDatas.checkTreeNodeTargetDistributionGraphDatas();
-    this.updateDistributionDatas(finalDatas);
-    return this.getDatas().treeNodeTargetDistributionGraphDatas;
+    this.distributionDatas = finalDatas;
+    return this.distributionDatas.treeNodeTargetDistributionGraphDatas;
   }
 
   /**
@@ -310,7 +311,7 @@ export class DistributionDatasService {
    */
   initTargetDistributionDisplayedValues(partition: string[] | number[][]) {
     // init graph option to show all values if not already set
-    const currentDatas = this.getDatas();
+    const currentDatas = this.distributionDatas;
     if (
       JSON.stringify(
         currentDatas.targetDistributionDisplayedValues?.map(
@@ -325,7 +326,7 @@ export class DistributionDatasService {
           show: true,
         });
       }
-      this.updateDistributionDatas(currentDatas);
+      this.distributionDatas = currentDatas;
     }
   }
 
@@ -384,7 +385,7 @@ export class DistributionDatasService {
           const currentTotal = UtilsService.arraySum(el);
 
           // if currentPartition must be displayed (graph options)
-          const currentDatas = this.getDatas();
+          const currentDatas = this.distributionDatas;
           const kObj: ChartToggleValuesI | undefined =
             currentDatas.targetDistributionDisplayedValues?.find(
               (e: ChartToggleValuesI) =>
@@ -445,21 +446,21 @@ export class DistributionDatasService {
       initActiveEntries = true;
     }
     if (type) {
-      const currentDatas = this.getDatas();
+      const currentDatas = this.distributionDatas;
       currentDatas.distributionType = type;
-      this.updateDistributionDatas(currentDatas);
+      this.distributionDatas = currentDatas;
     }
 
     if (this.isValid()) {
-      const currentDatas = this.getDatas();
+      const currentDatas = this.distributionDatas;
       const currentVar: VariableDetail =
         // @ts-ignore
         this.appService.appDatas[currentDatas.preparationSource]
           .variablesDetailedStatistics[selectedVariable.rank];
       if (currentVar) {
-        const updatedDatas = this.getDatas();
+        const updatedDatas = this.distributionDatas;
         updatedDatas.setDefaultGraphOptions();
-        this.updateDistributionDatas(updatedDatas);
+        this.distributionDatas = updatedDatas;
 
         const variableDetails: VariableDetailsModel = new VariableDetailsModel(
           currentVar,
@@ -506,9 +507,9 @@ export class DistributionDatasService {
     if (distributionsGraphDetails?.datasets.length === 0) {
       distributionsGraphDetails = undefined;
     }
-    const finalDatas = this.getDatas();
+    const finalDatas = this.distributionDatas;
     finalDatas.distributionGraphDatas = distributionsGraphDetails;
-    this.updateDistributionDatas(finalDatas);
+    this.distributionDatas = finalDatas;
 
     return distributionsGraphDetails;
   }
@@ -548,7 +549,7 @@ export class DistributionDatasService {
     // Add trash info to the defaultGroupIndex
 
     const currentDataSet = new ChartDatasetModel(
-      this.getDatas().distributionType,
+      this.distributionDatas.distributionType,
     );
     const [frequencyArray, coverageArray] =
       this.getAllFrequencyAndCoverageValues(currentDatas, dimensions);
@@ -576,7 +577,7 @@ export class DistributionDatasService {
       graphItem.extra.index = i;
 
       let total = 0;
-      const currentDistributionType = this.getDatas().distributionType;
+      const currentDistributionType = this.distributionDatas.distributionType;
       if (currentDistributionType === TYPES.FREQUENCY) {
         currentValue = frequencyValue;
         graphItem.value = coverageValue;
@@ -608,7 +609,7 @@ export class DistributionDatasService {
    * @returns A boolean indicating whether the variable is a big distribution variable.
    */
   isBigDistributionVariable(rank: string) {
-    const currentDatas = this.getDatas();
+    const currentDatas = this.distributionDatas;
     // @ts-ignore
     const currentVar = this.appService.appDatas[
       currentDatas.preparationSource
@@ -638,9 +639,9 @@ export class DistributionDatasService {
         ?.variablesDetailedStatistics?.[selectedVariable?.rank];
     let histogramGraphDetails: HistogramValuesI[] | undefined = undefined;
     if (varDatas) {
-      const currentDatas = this.getDatas();
+      const currentDatas = this.distributionDatas;
       currentDatas.setDefaultGraphOptions();
-      this.updateDistributionDatas(currentDatas);
+      this.distributionDatas = currentDatas;
       histogramGraphDetails = [];
       if (varDatas?.modlHistograms) {
         // modlHistograms is given: there are multiple histograms #238
@@ -649,12 +650,12 @@ export class DistributionDatasService {
             ? interpretableHistogramNumber
             : varDatas.modlHistograms.interpretableHistogramNumber - 1;
         const histogram = varDatas.modlHistograms.histograms[histogramIndex];
-        const updatedDatas = this.getDatas();
+        const updatedDatas = this.distributionDatas;
         updatedDatas.defaultInterpretableHistogramNumber =
           varDatas.modlHistograms.interpretableHistogramNumber;
         updatedDatas.interpretableHistogramNumber = histogramIndex;
         updatedDatas.histogramNumber = varDatas.modlHistograms.histogramNumber;
-        this.updateDistributionDatas(updatedDatas);
+        this.distributionDatas = updatedDatas;
         if (histogram) {
           const totalFreq = histogram.frequencies?.reduce(
             (partialSum: number, a: number) => partialSum + a,
@@ -725,9 +726,9 @@ export class DistributionDatasService {
       }
     }
 
-    const finalDatas = this.getDatas();
+    const finalDatas = this.distributionDatas;
     finalDatas.histogramDatas = histogramGraphDetails;
-    this.updateDistributionDatas(finalDatas);
+    this.distributionDatas = finalDatas;
 
     return histogramGraphDetails;
   }
@@ -931,7 +932,7 @@ export class DistributionDatasService {
   }
 
   isValid(): boolean {
-    const currentDatas = this.getDatas();
+    const currentDatas = this.distributionDatas;
     // @ts-ignore
     return !!this.appService.appDatas?.[currentDatas.preparationSource]
       ?.variablesDetailedStatistics;
