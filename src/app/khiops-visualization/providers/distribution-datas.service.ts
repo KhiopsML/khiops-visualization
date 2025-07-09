@@ -57,11 +57,7 @@ export class DistributionDatasService {
    * for the component.
    */
   initialize() {
-    if (this.appService.appDatas) {
-      this.distributionDatas = new DistributionDatasModel(
-        this.appService.appDatas,
-      );
-    }
+    this.distributionDatas = new DistributionDatasModel();
   }
 
   /**
@@ -111,7 +107,7 @@ export class DistributionDatasService {
     this.distributionDatas.initTargetDistributionGraphDatas();
     this.distributionDatas.setTargetDistributionType(type);
 
-    if (this.distributionDatas.isValid()) {
+    if (this.isValid()) {
       const currentVar: VariableDetail =
         // @ts-ignore
         this.appService.appDatas[this.distributionDatas.preparationSource]
@@ -423,7 +419,7 @@ export class DistributionDatasService {
       this.distributionDatas.distributionType = type;
     }
 
-    if (this.distributionDatas.isValid()) {
+    if (this.isValid()) {
       const currentVar: VariableDetail =
         // @ts-ignore
         this.appService.appDatas[this.distributionDatas.preparationSource]
@@ -889,5 +885,12 @@ export class DistributionDatasService {
     }
 
     return counts;
+  }
+
+  isValid(): boolean {
+    // @ts-ignore
+    return !!this.appService.appDatas?.[
+      this.distributionDatas.preparationSource
+    ]?.variablesDetailedStatistics;
   }
 }
