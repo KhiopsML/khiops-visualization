@@ -155,46 +155,12 @@ export class SaveService {
     if (collapsedNodesInput) {
       // Here we are going to modify the coclusteringReport, so we need to perform a deep clone
       // only now to preserve the initial object
-      const start = performance.now();
-
       newJson.coclusteringReport = copy(newJson.coclusteringReport);
-      const afterClone = performance.now();
-      console.log(
-        `[SaveService] clone coclusteringReport: ${(afterClone - start).toFixed(2)} ms`,
-      );
-
       newJson = this.truncateJsonHierarchy(newJson);
-      const afterHierarchy = performance.now();
-      console.log(
-        `[SaveService] truncateJsonHierarchy: ${(afterHierarchy - afterClone).toFixed(2)} ms`,
-      );
-
       newJson = this.updateSummariesParts(newJson);
-      const afterSummariesParts = performance.now();
-      console.log(
-        `[SaveService] updateSummariesParts: ${(afterSummariesParts - afterHierarchy).toFixed(2)} ms`,
-      );
-
       newJson = this.truncateJsonPartition(newJson);
-      const afterPartition = performance.now();
-      console.log(
-        `[SaveService] truncateJsonPartition: ${(afterPartition - afterSummariesParts).toFixed(2)} ms`,
-      );
-
       newJson = this.truncateJsonCells(newJson);
-      const afterCells = performance.now();
-      console.log(
-        `[SaveService] truncateJsonCells: ${(afterCells - afterPartition).toFixed(2)} ms`,
-      );
-
       newJson = this.updateSummariesCells(newJson);
-      const afterSummariesCells = performance.now();
-      console.log(
-        `[SaveService] updateSummariesCells: ${(afterSummariesCells - afterCells).toFixed(2)} ms`,
-      );
-      console.log(
-        `[SaveService] Total time: ${(afterSummariesCells - start).toFixed(2)} ms`,
-      );
 
       if (!collapsedNodesInput || isReduced) {
         // Remove collapsed nodes and selected nodes because they have been reduced
