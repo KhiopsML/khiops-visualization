@@ -15,9 +15,8 @@ import {
   AppDatasI,
   CovisualizationDatas,
 } from '@khiops-covisualization/interfaces/app-datas';
-
-import rfdc from 'rfdc';
-const clone = rfdc();
+// @ts-ignore
+import { copy } from 'fastest-json-copy';
 
 @Injectable({
   providedIn: 'root',
@@ -119,7 +118,7 @@ export class AppService {
     }
 
     this._appDatas.datas = datas;
-    this._initialDatas.datas = clone(datas);
+    this._initialDatas.datas = copy(datas);
     this.setSavedDatas(datas);
   }
 
