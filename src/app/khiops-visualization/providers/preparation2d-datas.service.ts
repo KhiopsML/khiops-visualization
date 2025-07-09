@@ -55,12 +55,9 @@ export class Preparation2dDatasService {
    * Selects the first variable by default or a saved variable if available.
    */
   initialize() {
-    this.preparation2dDatas = new Preparation2dDatasModel(
-      this.appService.appDatas!,
-    );
-
+    this.preparation2dDatas = new Preparation2dDatasModel();
     // select the first item of the list by default
-    if (this.preparation2dDatas.isValid()) {
+    if (this.isValid()) {
       let defaultVariable: VariablePairStatistics | undefined =
         this.appService.appDatas?.bivariatePreparationReport
           .variablesPairsStatistics[0];
@@ -75,6 +72,7 @@ export class Preparation2dDatasService {
         this.setSelectedVariable(defaultVariable.name1, defaultVariable.name2);
       }
     }
+    this.preparation2dDatas.isSupervised = this.isSupervised();
   }
 
   /**
@@ -227,7 +225,14 @@ export class Preparation2dDatasService {
    * @returns True if the variable is supervised, otherwise false.
    */
   isSupervised(): boolean {
-    return this.preparation2dDatas?.isSupervisedVariable() || false;
+    const details =
+      this.appService.appDatas?.bivariatePreparationReport
+        ?.variablesPairsDetailedStatistics;
+    if (details) {
+      const firstKey = Object.keys(details)?.[0];
+      return details?.[firstKey!]?.dataGrid?.isSupervised || false;
+    }
+    return false;
   }
 
   /**
@@ -871,5 +876,13 @@ export class Preparation2dDatasService {
     res[MATRIX_MODES.PROB_CELL_WITH_TARGET] = [0, 1];
 
     return res;
+  }
+
+  /**
+   * Checks if the 2D data is valid
+   */
+  isValid(): boolean {
+    return !!this.appService.appDatas?.bivariatePreparationReport
+      ?.variablesPairsStatistics?.[0];
   }
 }
