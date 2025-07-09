@@ -42,16 +42,15 @@ export class ProjectDatasService {
     if (this.appService.appDatas?.logs) {
       logs = [];
       for (let i = 0; i < this.appService.appDatas.logs.length; i++) {
-        for (
-          let j = 0;
-          j < this.appService.appDatas.logs[i]!.messages.length;
-          j++
-        ) {
-          const log = new ProjectLogModel(
-            this.appService.appDatas.logs[i]!,
-            this.appService.appDatas.logs[i]!.messages[j]!,
-          );
-          logs.push(log);
+        const currentLog = this.appService.appDatas.logs[i];
+        if (currentLog) {
+          for (let j = 0; j < currentLog.messages.length; j++) {
+            const message = currentLog.messages[j];
+            if (message) {
+              const log = new ProjectLogModel(currentLog, message);
+              logs.push(log);
+            }
+          }
         }
       }
     }
