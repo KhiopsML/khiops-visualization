@@ -261,10 +261,12 @@ export class PreparationDatasService {
           // init datas array
           datas[0] = {};
           if (
-            variableDetails.dataGrid.dimensions[0]!.partition[index]!.length > 0
+            variableDetails.dataGrid.dimensions[0]?.partition?.[index] &&
+            (variableDetails.dataGrid.dimensions[0]?.partition?.[index]
+              ?.length || 0) > 0
           ) {
             let currentPartition = JSON.stringify(
-              variableDetails.dataGrid.dimensions[0]!.partition[index],
+              variableDetails.dataGrid.dimensions[0].partition[index],
             );
             if (index !== 0) {
               // replace [ by ] for all indexes excepting 0
@@ -297,10 +299,10 @@ export class PreparationDatasService {
           });
 
           const partValuesLength = UtilsService.flatten(
-            variableDetails.dataGrid.dimensions[0]?.partition!,
+            variableDetails.dataGrid.dimensions[0]?.partition || [],
           ).length;
           const partLength =
-            variableDetails.dataGrid.dimensions[0]!.partition.length;
+            variableDetails.dataGrid.dimensions[0]?.partition?.length || 0;
           const isMultiDimPartition = partValuesLength !== partLength;
           const defaultGroupIndex =
             variableDetails.dataGrid.dimensions[0]?.defaultGroupIndex;
@@ -308,27 +310,28 @@ export class PreparationDatasService {
           // If multi dimension array, trash cat is managed at the end of treatment
           if (!isMultiDimPartition) {
             startIter = variableDetails.inputValues.values.indexOf(
-              currentVal!.toString(),
+              currentVal?.toString() || '',
             );
             if (index === defaultGroupIndex) {
               dimensionLength = variableDetails.inputValues.values.length;
             } else {
               dimensionLength =
                 startIter +
-                variableDetails.dataGrid.dimensions[0]!.partition[index]!
-                  .length;
+                (variableDetails.dataGrid.dimensions[0]?.partition?.[index]
+                  ?.length || 0);
             }
           } else {
             startIter = 0;
             dimensionLength =
-              variableDetails.dataGrid.dimensions[0]!.partition[index]!.length;
+              variableDetails.dataGrid.dimensions[0]?.partition?.[index]
+                ?.length || 0;
           }
 
           for (let i = startIter; i < dimensionLength; i++) {
             let currentPartitionInput;
             if (isMultiDimPartition) {
               currentPartitionInput =
-                variableDetails.dataGrid.dimensions[0]!.partition[index]![i];
+                variableDetails.dataGrid.dimensions[0]?.partition?.[index]?.[i];
             } else {
               currentPartitionInput = variableDetails.inputValues.values[i];
             }
