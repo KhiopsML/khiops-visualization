@@ -42,7 +42,8 @@ import { VARIABLE_TYPES } from '@khiops-library/enum/variable-types';
   providedIn: 'root',
 })
 export class Preparation2dDatasService {
-  private preparation2dDatas?: Preparation2dDatasModel;
+  private preparation2dDatas: Preparation2dDatasModel =
+    new Preparation2dDatasModel();
 
   constructor(
     private translate: TranslateService,
@@ -88,18 +89,23 @@ export class Preparation2dDatasService {
    * @returns An array of InfosDatasI or undefined.
    */
   getInformationsDatas(): InfosDatasI[] | undefined {
-    const informationsDatas = new InformationsModel(
-      this.appService.appDatas!.bivariatePreparationReport.summary,
-    );
-    return informationsDatas.displayDatas;
+    if (this.appService.appDatas?.bivariatePreparationReport?.summary) {
+      const informationsDatas = new InformationsModel(
+        this.appService.appDatas.bivariatePreparationReport.summary,
+      );
+      return informationsDatas.displayDatas;
+    }
+    return undefined;
   }
 
   /**
    * Toggles the isAxisInverted property of preparation2dDatas.
    */
   toggleIsAxisInverted() {
-    this.preparation2dDatas!.isAxisInverted =
-      !this.preparation2dDatas?.isAxisInverted;
+    if (this.preparation2dDatas) {
+      this.preparation2dDatas.isAxisInverted =
+        !this.preparation2dDatas?.isAxisInverted;
+    }
   }
 
   /**
@@ -119,7 +125,9 @@ export class Preparation2dDatasService {
       // Index may have been converted to string by component
       index = Number(index);
     }
-    this.preparation2dDatas!.selectedCellIndex = index;
+    if (this.preparation2dDatas) {
+      this.preparation2dDatas.selectedCellIndex = index;
+    }
     if (this.preparation2dDatas?.matrixDatas?.matrixCellDatas) {
       const currentCell =
         this.preparation2dDatas.matrixDatas.matrixCellDatas.find(
@@ -136,9 +144,9 @@ export class Preparation2dDatasService {
    * @param cell - The cell to select.
    */
   setSelectedCell(cell: CellModel) {
-    if (cell) {
-      this.preparation2dDatas!.selectedCellIndex = cell.index;
-      this.preparation2dDatas!.selectedCell = cell;
+    if (cell && this.preparation2dDatas) {
+      this.preparation2dDatas.selectedCellIndex = cell.index;
+      this.preparation2dDatas.selectedCell = cell;
     }
   }
 
@@ -165,11 +173,11 @@ export class Preparation2dDatasService {
    */
   computeDistributionIndexFromMatrixCellIndex(index: number): number {
     // get distribution bar chart index from selected matrix cell index
-    if (this.preparation2dDatas?.matrixDatas) {
+    if (this.preparation2dDatas?.matrixDatas && this.preparation2dDatas?.selectedVariable?.parts) {
       let moduloOfCellIndex = 0;
       moduloOfCellIndex =
-        ((index / this.preparation2dDatas?.selectedVariable?.parts!) % 1) *
-        this.preparation2dDatas?.selectedVariable?.parts!;
+        ((index / this.preparation2dDatas.selectedVariable.parts) % 1) *
+        this.preparation2dDatas.selectedVariable.parts;
       moduloOfCellIndex = Math.round(moduloOfCellIndex);
       return moduloOfCellIndex;
     }
@@ -187,8 +195,8 @@ export class Preparation2dDatasService {
     if (name1 && name2) {
       const variable: Preparation2dVariableModel | undefined =
         this.getVariableFromNames(name1, name2);
-      if (variable) {
-        this.preparation2dDatas!.selectedVariable = variable;
+      if (variable && this.preparation2dDatas) {
+        this.preparation2dDatas.selectedVariable = variable;
         this.setSelectedCellIndex(0);
         return this.preparation2dDatas?.selectedVariable;
       }
@@ -201,7 +209,9 @@ export class Preparation2dDatasService {
    * @param currentVar - The current regression variable to select.
    */
   setSelectedRegressionVariable(currentVar: Preparation2dVariableModel) {
-    this.preparation2dDatas!.selectedVariable = currentVar;
+    if (this.preparation2dDatas) {
+      this.preparation2dDatas.selectedVariable = currentVar;
+    }
   }
 
   /**
@@ -209,7 +219,7 @@ export class Preparation2dDatasService {
    * @returns The selected Preparation2dVariableModel or undefined.
    */
   getSelectedVariable(): Preparation2dVariableModel | undefined {
-    return this.preparation2dDatas!.selectedVariable;
+    return this.preparation2dDatas?.selectedVariable;
   }
 
   /**
@@ -230,7 +240,9 @@ export class Preparation2dDatasService {
         ?.variablesPairsDetailedStatistics;
     if (details) {
       const firstKey = Object.keys(details)?.[0];
-      return details?.[firstKey!]?.dataGrid?.isSupervised || false;
+      if (firstKey) {
+        return details?.[firstKey]?.dataGrid?.isSupervised || false;
+      }
     }
     return false;
   }
@@ -250,9 +262,10 @@ export class Preparation2dDatasService {
           .variablesPairsStatistics;
       if (currentDatas) {
         for (let i = 0; i < currentDatas.length; i++) {
-          if (currentDatas[i]) {
+          const currentItem = currentDatas[i];
+          if (currentItem) {
             const varItem: Variable2dModel | undefined = new Variable2dModel(
-              currentDatas[i]!,
+              currentItem,
             );
             variableDatas.push(varItem);
           }
@@ -315,8 +328,8 @@ export class Preparation2dDatasService {
     if (this.preparation2dDatas?.matrixDatas?.matrixCellDatas) {
       const selectedVariable = this.getSelectedVariable();
       matrixCells = new CoocurenceCellsModel(
-        selectedVariable?.nameX!,
-        selectedVariable?.nameY!,
+        selectedVariable?.nameX || '',
+        selectedVariable?.nameY || '',
       );
 
       const values: CoocurenceCellModel[] = [];
@@ -328,16 +341,22 @@ export class Preparation2dDatasService {
       ) {
         const cell: CellModel | undefined =
           this.preparation2dDatas.matrixDatas.matrixCellDatas[i];
-        const coocurenceCell = new CoocurenceCellModel(cell!.index);
+        if (cell) {
+          const coocurenceCell = new CoocurenceCellModel(cell.index);
 
-        // coocurenceCell has dynamic fields
-        coocurenceCell[matrixCells.displayedColumns[1]!.field] =
-          UtilsService.ellipsis(cell!.xDisplayaxisPart!, 60);
-        coocurenceCell[matrixCells.displayedColumns[2]!.field] =
-          UtilsService.ellipsis(cell!.yDisplayaxisPart!, 60);
-        coocurenceCell.frequency = cell?.cellFreq;
-        coocurenceCell.coverage = cell?.coverage;
-        values.push(coocurenceCell);
+          // coocurenceCell has dynamic fields
+          if (matrixCells.displayedColumns[1]?.field) {
+            coocurenceCell[matrixCells.displayedColumns[1].field] =
+              UtilsService.ellipsis(cell.xDisplayaxisPart || '', 60);
+          }
+          if (matrixCells.displayedColumns[2]?.field) {
+            coocurenceCell[matrixCells.displayedColumns[2].field] =
+              UtilsService.ellipsis(cell.yDisplayaxisPart || '', 60);
+          }
+          coocurenceCell.frequency = cell?.cellFreq;
+          coocurenceCell.coverage = cell?.coverage;
+          values.push(coocurenceCell);
+        }
       }
       matrixCells.values = values;
     }
@@ -358,10 +377,12 @@ export class Preparation2dDatasService {
     | undefined {
     const selectedVariable = this.getSelectedVariable();
 
-    this.preparation2dDatas!.currentCellDatas = {
-      values: [],
-      displayedColumns: [],
-    };
+    if (this.preparation2dDatas) {
+      this.preparation2dDatas.currentCellDatas = {
+        values: [],
+        displayedColumns: [],
+      };
+    }
 
     if (selectedVariable) {
       const variableDetails = this.getVariableDetails(selectedVariable);
@@ -421,22 +442,24 @@ export class Preparation2dDatasService {
           );
         }
         const datasX = this.computeCellDatasByAxis(
-          selectedCell.xaxisPartValues!,
+          selectedCell.xaxisPartValues || [],
           displayedColumnsX,
           xName,
           isCurrentDefaultGroup,
         );
         const datasY = this.computeCellDatasByAxis(
-          selectedCell.yaxisPartValues!,
+          selectedCell.yaxisPartValues || [],
           displayedColumnsY,
           yName,
           isCurrentDefaultGroup,
         );
-        this.preparation2dDatas!.currentCellDatas.values = [datasX, datasY];
-        this.preparation2dDatas!.currentCellDatas.displayedColumns = [
-          displayedColumnsX,
-          displayedColumnsY,
-        ];
+        if (this.preparation2dDatas?.currentCellDatas) {
+          this.preparation2dDatas.currentCellDatas.values = [datasX, datasY];
+          this.preparation2dDatas.currentCellDatas.displayedColumns = [
+            displayedColumnsX,
+            displayedColumnsY,
+          ];
+        }
       }
     }
 
@@ -462,11 +485,13 @@ export class Preparation2dDatasService {
       for (let k = 0; k < axisPartValues.length; k++) {
         // get value into global json
         datasAxis[k] = {};
-        datasAxis[k][displayedColumns[0]?.field!] = axisPartValues[k];
+        if (displayedColumns[0]?.field) {
+          datasAxis[k][displayedColumns[0].field] = axisPartValues[k];
+        }
         if (displayedColumns[1]) {
           const modalityFreq = this.getModalityFrequency(
             variableName,
-            axisPartValues[k]?.toString()!,
+            axisPartValues[k]?.toString() || '',
           );
           datasAxis[k][displayedColumns[1].field] = modalityFreq;
         }
@@ -512,7 +537,9 @@ export class Preparation2dDatasService {
    */
   getTargetsIfAvailable(): string[] | undefined {
     // Initialize
-    this.preparation2dDatas!.isTargetAvailable = false;
+    if (this.preparation2dDatas) {
+      this.preparation2dDatas.isTargetAvailable = false;
+    }
     let targets: string[] | undefined;
 
     const variablesDetails: VariableDetailsModel | undefined =
@@ -531,9 +558,11 @@ export class Preparation2dDatasService {
             ? (TargetDimension.partition as string[])
             : undefined;
       }
-      this.preparation2dDatas!.isTargetAvailable = TargetDimension
-        ? true
-        : false;
+      if (this.preparation2dDatas) {
+        this.preparation2dDatas.isTargetAvailable = TargetDimension
+          ? true
+          : false;
+      }
       return targets;
     }
     return undefined;
@@ -570,7 +599,9 @@ export class Preparation2dDatasService {
           break;
       }
 
-      variableDetails = new VariableDetailsModel(currentVar!);
+      if (currentVar) {
+        variableDetails = new VariableDetailsModel(currentVar);
+      }
     }
 
     return variableDetails;
@@ -591,19 +622,21 @@ export class Preparation2dDatasService {
       | Preparation2dVariableModel
       | VariableModel,
   ): MatrixDatasModel | undefined {
-    this.preparation2dDatas!.matrixDatas = undefined;
+    if (this.preparation2dDatas) {
+      this.preparation2dDatas.matrixDatas = undefined;
+    }
     const variablesDetails: VariableDetailsModel | undefined =
-      this.getVariableDetails(selectedVariable!);
+      this.getVariableDetails(selectedVariable);
 
     if (variablesDetails) {
       const variableDatas: VariableDetailsModel = _.cloneDeep(variablesDetails);
 
-      if (variableDatas?.dataGrid) {
+      if (variableDatas?.dataGrid && variableDatas.dataGrid.dimensions[0] && variableDatas.dataGrid.dimensions[1]) {
         const xDimension = new DimensionVisualizationModel(
-          variableDatas.dataGrid.dimensions[0]!,
+          variableDatas.dataGrid.dimensions[0],
         );
         const yDimension = new DimensionVisualizationModel(
-          variableDatas.dataGrid.dimensions[1]!,
+          variableDatas.dataGrid.dimensions[1],
         );
 
         if (
@@ -696,17 +729,19 @@ export class Preparation2dDatasService {
 
           // TO display axis names
           // Maybe can be improved and be taken into cell datas ?
-          this.preparation2dDatas!.matrixDatas = {
-            variable: {
-              // @ts-ignore
-              nameX: selectedVariable.name1, // can be undefined in case of regression
-              // @ts-ignore
-              nameY: selectedVariable.name2, // can be undefined in case of regression
-              xParts: xDimension.parts,
-              yParts: yDimension.parts,
-            },
-            matrixCellDatas: cellDatas,
-          };
+          if (this.preparation2dDatas) {
+            this.preparation2dDatas.matrixDatas = {
+              variable: {
+                // @ts-ignore
+                nameX: selectedVariable.name1, // can be undefined in case of regression
+                // @ts-ignore
+                nameY: selectedVariable.name2, // can be undefined in case of regression
+                xParts: xDimension.parts,
+                yParts: yDimension.parts,
+              },
+              matrixCellDatas: cellDatas,
+            };
+          }
         }
       }
     }
@@ -807,68 +842,89 @@ export class Preparation2dDatasService {
       MUTUAL_INFO_TARGET_WITH_CELL: [],
     };
     for (let i = 0; i < variablesDatas.length; i++) {
-      const inputDatas = this.getMatrixDatas(variablesDatas[i]!);
-      if (inputDatas) {
-        let graphMode: MatrixModeI = {
-          mode: MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL,
-        };
-        let [_matrixFreqsValues, matrixValues, _matrixExtras] =
-          MatrixUtilsService.computeMatrixValues(
-            graphMode,
-            inputDatas.matrixCellDatas!,
-            undefined,
-            0,
-          );
-        currentRes[MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL] = matrixValues!;
+      const currentVariableData = variablesDatas[i];
+      if (currentVariableData) {
+        const inputDatas = this.getMatrixDatas(currentVariableData);
+        if (inputDatas) {
+          let graphMode: MatrixModeI = {
+            mode: MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL,
+          };
+          let [_matrixFreqsValues, matrixValues, _matrixExtras] =
+            MatrixUtilsService.computeMatrixValues(
+              graphMode,
+              inputDatas.matrixCellDatas || [],
+              undefined,
+              0,
+            );
+          if (matrixValues) {
+            currentRes[MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL] = matrixValues;
+          }
 
-        graphMode = {
-          mode: MATRIX_MODES.CELL_INTEREST,
-        };
-        [_matrixFreqsValues, matrixValues, _matrixExtras] =
-          MatrixUtilsService.computeMatrixValues(
-            graphMode,
-            inputDatas.matrixCellDatas!,
-            undefined,
-            0,
-          );
-        currentRes[MATRIX_MODES.CELL_INTEREST] = matrixValues!;
+          graphMode = {
+            mode: MATRIX_MODES.CELL_INTEREST,
+          };
+          [_matrixFreqsValues, matrixValues, _matrixExtras] =
+            MatrixUtilsService.computeMatrixValues(
+              graphMode,
+              inputDatas.matrixCellDatas || [],
+              undefined,
+              0,
+            );
+          if (matrixValues) {
+            currentRes[MATRIX_MODES.CELL_INTEREST] = matrixValues;
+          }
 
-        for (let j = 0; j < inputDatas.matrixCellDatas!.length; j++) {
-          const cellFreqs = inputDatas.matrixCellDatas?.[j]?.cellFreqs;
-          currentRes[MATRIX_MODES.FREQUENCY]!.push(
-            UtilsService.arraySum(cellFreqs),
-          );
-          // @ts-ignore
-          currentRes[MATRIX_MODES.FREQUENCY_CELL].push(cellFreqs);
+          if (inputDatas.matrixCellDatas) {
+            for (let j = 0; j < inputDatas.matrixCellDatas.length; j++) {
+              const cellFreqs = inputDatas.matrixCellDatas?.[j]?.cellFreqs;
+              if (cellFreqs) {
+                currentRes[MATRIX_MODES.FREQUENCY]?.push(
+                  UtilsService.arraySum(cellFreqs),
+                );
+                // @ts-ignore
+                currentRes[MATRIX_MODES.FREQUENCY_CELL]?.push(cellFreqs);
+              }
+            }
+          }
         }
       }
     }
 
     // Reinit values after computing
-    this.preparation2dDatas!.matrixDatas = undefined;
+    if (this.preparation2dDatas) {
+      this.preparation2dDatas.matrixDatas = undefined;
+    }
     const res: any = {};
 
-    res[MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL] =
-      UtilsService.getMinAndMaxFromArray(
-        currentRes[MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL]!.flat(),
-      );
-    res[MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL] =
-      UtilsService.averageMinAndMaxValues(
-        res[MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL][0],
-        res[MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL][1],
-      );
-    res[MATRIX_MODES.MUTUAL_INFO] =
-      res[MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL];
+    if (currentRes[MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL]) {
+      res[MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL] =
+        UtilsService.getMinAndMaxFromArray(
+          currentRes[MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL].flat(),
+        );
+      res[MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL] =
+        UtilsService.averageMinAndMaxValues(
+          res[MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL][0],
+          res[MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL][1],
+        );
+      res[MATRIX_MODES.MUTUAL_INFO] =
+        res[MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL];
+    }
 
-    res[MATRIX_MODES.CELL_INTEREST] = UtilsService.getMinAndMaxFromArray(
-      currentRes[MATRIX_MODES.CELL_INTEREST]!.flat(),
-    );
-    res[MATRIX_MODES.FREQUENCY] = UtilsService.getMinAndMaxFromArray(
-      currentRes[MATRIX_MODES.FREQUENCY]!.flat(),
-    );
-    res[MATRIX_MODES.FREQUENCY_CELL] = UtilsService.getMinAndMaxFromArray(
-      currentRes[MATRIX_MODES.FREQUENCY_CELL]!.flat(),
-    );
+    if (currentRes[MATRIX_MODES.CELL_INTEREST]) {
+      res[MATRIX_MODES.CELL_INTEREST] = UtilsService.getMinAndMaxFromArray(
+        currentRes[MATRIX_MODES.CELL_INTEREST].flat(),
+      );
+    }
+    if (currentRes[MATRIX_MODES.FREQUENCY]) {
+      res[MATRIX_MODES.FREQUENCY] = UtilsService.getMinAndMaxFromArray(
+        currentRes[MATRIX_MODES.FREQUENCY].flat(),
+      );
+    }
+    if (currentRes[MATRIX_MODES.FREQUENCY_CELL]) {
+      res[MATRIX_MODES.FREQUENCY_CELL] = UtilsService.getMinAndMaxFromArray(
+        currentRes[MATRIX_MODES.FREQUENCY_CELL].flat(),
+      );
+    }
 
     res[MATRIX_MODES.PROB_CELL] = [0, 1];
     res[MATRIX_MODES.PROB_TARGET_WITH_CELL] = [0, 1];
