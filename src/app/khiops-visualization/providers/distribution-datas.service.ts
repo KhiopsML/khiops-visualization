@@ -73,6 +73,13 @@ export class DistributionDatasService {
   }
 
   /**
+   * Creates a new immutable copy of the current distribution data
+   */
+  private createDatasCopy(): DistributionDatasModel {
+    return Object.assign(new DistributionDatasModel(), this.distributionDatas);
+  }
+
+  /**
    * Gets the current distribution data value
    */
   getDatas(): DistributionDatasModel {
@@ -85,9 +92,9 @@ export class DistributionDatasService {
    * @param preparationSource - The source of the preparation to be set.
    */
   setPreparationSource(preparationSource: string) {
-    const currentDatas = this.distributionDatas;
-    currentDatas.preparationSource = preparationSource;
-    this.distributionDatas = currentDatas;
+    const newDatas = this.createDatasCopy();
+    newDatas.preparationSource = preparationSource;
+    this.distributionDatas = newDatas;
   }
 
   /**
@@ -96,9 +103,9 @@ export class DistributionDatasService {
    * @param values - An array of `ChartToggleValuesI` representing the values to be displayed.
    */
   setTargetDistributionDisplayedValues(values: ChartToggleValuesI[]) {
-    const currentDatas = this.distributionDatas;
-    currentDatas.targetDistributionDisplayedValues = values;
-    this.distributionDatas = currentDatas;
+    const newDatas = this.createDatasCopy();
+    newDatas.targetDistributionDisplayedValues = values;
+    this.distributionDatas = newDatas;
   }
 
   /**
@@ -446,9 +453,9 @@ export class DistributionDatasService {
       initActiveEntries = true;
     }
     if (type) {
-      const currentDatas = this.distributionDatas;
-      currentDatas.distributionType = type;
-      this.distributionDatas = currentDatas;
+      const newDatas = this.createDatasCopy();
+      newDatas.distributionType = type;
+      this.distributionDatas = newDatas;
     }
 
     if (this.isValid()) {
