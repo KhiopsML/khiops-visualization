@@ -35,7 +35,7 @@ import { AppConfig } from '../../../environments/environment';
   providedIn: 'root',
 })
 export class PreparationDatasService {
-  private preparationDatas: PreparationDatasModel | undefined;
+  private preparationDatas: PreparationDatasModel = new PreparationDatasModel();
 
   constructor(
     private translate: TranslateService,
