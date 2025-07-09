@@ -87,9 +87,13 @@ export class VariableModel {
    */
   computeModeCoverage(detailedDatas: VariableDetail) {
     const modeIndex = detailedDatas.inputValues?.values.indexOf(this.mode!);
-    if (modeIndex !== undefined && modeIndex !== -1) {
+    if (
+      modeIndex !== undefined &&
+      modeIndex !== -1 &&
+      detailedDatas.inputValues?.frequencies[modeIndex]
+    ) {
       const modeCoverage =
-        detailedDatas.inputValues?.frequencies[modeIndex]! /
+        detailedDatas.inputValues?.frequencies[modeIndex] /
         UtilsService.arraySum(detailedDatas.inputValues?.frequencies);
       return modeCoverage;
     } else {
