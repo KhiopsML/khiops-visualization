@@ -22,17 +22,30 @@ import {
   ModelingVariableStatistic,
   TrainedPredictor,
 } from '@khiops-visualization/interfaces/modeling-report';
+import { BehaviorSubject } from 'rxjs';
+
 @Injectable({
   providedIn: 'root',
 })
 export class ModelingDatasService {
-  private modelingDatas: ModelingDatasModel | undefined;
+  private modelingDatasSubject = new BehaviorSubject<
+    ModelingDatasModel | undefined
+  >(undefined);
+  modelingDatas$ = this.modelingDatasSubject.asObservable();
 
   constructor(
     private translate: TranslateService,
     private appService: AppService,
     private preparationDatasService: PreparationDatasService,
   ) {}
+
+  private get modelingDatas(): ModelingDatasModel | undefined {
+    return this.modelingDatasSubject.value;
+  }
+
+  private set modelingDatas(val: ModelingDatasModel | undefined) {
+    this.modelingDatasSubject.next(val);
+  }
 
   /**
    * Initializes the modeling data and sets the selected variable.
@@ -78,7 +91,8 @@ export class ModelingDatasService {
       | TreePreparationVariableModel,
   ) {
     if (this.modelingDatas && object) {
-      this.modelingDatas.selectedVariable = object;
+      const newDatas = { ...this.modelingDatas, selectedVariable: object };
+      this.modelingDatas = newDatas;
     } else {
       this.initSelectedVariable();
     }
@@ -89,7 +103,8 @@ export class ModelingDatasService {
    */
   removeSelectedVariable() {
     if (this.modelingDatas) {
-      this.modelingDatas.selectedVariable = undefined;
+      const newDatas = { ...this.modelingDatas, selectedVariable: undefined };
+      this.modelingDatas = newDatas;
     } else {
       throw new Error('ModelingDatas not initialized');
     }
@@ -255,9 +270,11 @@ export class ModelingDatasService {
    */
   setSelectedPredictor(predictor: TrainedPredictor) {
     if (this.modelingDatas) {
-      this.modelingDatas.selectedPredictor = new ModelingPredictorModel(
-        predictor,
-      );
+      const newDatas = {
+        ...this.modelingDatas,
+        selectedPredictor: new ModelingPredictorModel(predictor),
+      };
+      this.modelingDatas = newDatas;
     } else {
       throw new Error('ModelingDatas not initialized');
     }
@@ -300,29 +317,35 @@ export class ModelingDatasService {
           const availableKeys: string[] =
             currentDatas && currentDatas[0] ? Object.keys(currentDatas[0]) : [];
 
-          this.modelingDatas.trainedPredictorsListDatas = [];
-
+          const newList: TrainedPredictorModel[] = [];
           for (let i = 0; i < currentDatas.length; i++) {
             // Find the corresponding rank of the current variable into preparation, 2d or tree
             const currentVar: ModelingVariableStatistic | undefined =
               currentDatas[i];
-
             if (currentVar) {
               const varItem: TrainedPredictorModel = new TrainedPredictorModel(
                 currentVar,
                 availableKeys,
               );
-              this.modelingDatas.trainedPredictorsListDatas.push(varItem);
+              newList.push(varItem);
             }
           }
+          const newDatas = {
+            ...this.modelingDatas,
+            trainedPredictorsListDatas: newList,
+          };
+          this.modelingDatas = newDatas;
         }
       } else {
-        this.modelingDatas.trainedPredictorsListDatas = undefined;
+        const newDatas = {
+          ...this.modelingDatas,
+          trainedPredictorsListDatas: undefined,
+        };
+        this.modelingDatas = newDatas;
       }
     } else {
       throw new Error('ModelingDatas not initialized');
     }
-
-    return this.modelingDatas.trainedPredictorsListDatas;
+    return this.modelingDatas?.trainedPredictorsListDatas;
   }
 }

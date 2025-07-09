@@ -20,7 +20,6 @@ import { REPORT } from '@khiops-library/enum/report';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
-import { ModelingDatasModel } from '@khiops-visualization/model/modeling-datas.model';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { SplitGutterInteractionEvent } from 'angular-split';
@@ -45,13 +44,13 @@ export class ModelingViewComponent extends SelectableTabComponent {
   public summaryDatas?: InfosDatasI[];
   public targetVariableStatsDatas?: ChartDatasModel;
   public trainedPredictorsSummaryDatas?: InfosDatasI[];
-  public modelingDatas?: ModelingDatasModel;
   public trainedPredictorsDisplayedColumns?: GridColumnsI[];
   public targetVariableStatsInformations?: InfosDatasI[];
   public override tabIndex = 3; // managed by selectable-tab component
   public trainedPredictors?: TrainedPredictor[];
 
-  private preparationVariable: any; // Complex, can be multiple types according to the preparationSource
+  public modelingDatas$;
+  private preparationVariable: any;
 
   constructor(
     private modelingDatasService: ModelingDatasService,
@@ -64,22 +63,18 @@ export class ModelingViewComponent extends SelectableTabComponent {
     private appService: AppService,
   ) {
     super();
-
     this.preparationSource =
       this.preparationDatasService.getAvailablePreparationReport();
+    this.modelingDatas$ = this.modelingDatasService.modelingDatas$;
   }
 
   ngOnInit() {
     this.trackerService.trackEvent('page_view', 'modeling');
     this.trainedPredictors =
       this.appService.appDatas?.modelingReport?.trainedPredictors;
-
     this.preparationSource =
       this.preparationDatasService.getAvailablePreparationReport();
-
-    this.modelingDatas = this.modelingDatasService.getDatas();
     this.sizes = this.layoutService.getViewSplitSizes('modelingView');
-
     this.summaryDatas = this.modelingDatasService.getSummaryDatas();
     this.targetVariableStatsDatas =
       this.preparationDatasService.getTargetVariableStatsDatas();
@@ -103,28 +98,28 @@ export class ModelingViewComponent extends SelectableTabComponent {
     this.modelingDatasService.getTrainedPredictorListDatas();
     this.trainedPredictorsDisplayedColumns =
       this.modelingDatasService.getTrainedPredictorDisplayedColumns();
-
-    // Check if selected variable from another tab is available into current modeling datas.
-    // Otherwise, select a new one
-    if (
-      this.modelingDatas?.trainedPredictorsListDatas &&
-      this.modelingDatas?.selectedVariable
-    ) {
-      const isVarAvailable = this.modelingDatas.trainedPredictorsListDatas.find(
-        (e) => e.name === this.modelingDatas?.selectedVariable?.name,
-      );
-      if (!isVarAvailable) {
-        this.onSelectListItemChanged(
-          this.modelingDatas.trainedPredictorsListDatas[0]!,
+    // Subscribe to modelingDatas$ to get the latest state after update
+    const sub = this.modelingDatas$.subscribe((modelingDatas) => {
+      if (
+        modelingDatas?.trainedPredictorsListDatas &&
+        modelingDatas?.selectedVariable
+      ) {
+        const isVarAvailable = modelingDatas.trainedPredictorsListDatas.find(
+          (e) => e.name === modelingDatas.selectedVariable?.name,
         );
+        if (!isVarAvailable) {
+          this.onSelectListItemChanged(
+            modelingDatas.trainedPredictorsListDatas[0]!,
+          );
+        } else {
+          this.onSelectListItemChanged(isVarAvailable);
+        }
       } else {
-        // Select trained predictor auto redirection #202
-        this.onSelectListItemChanged(isVarAvailable);
+        this.modelingDatasService.removeSelectedVariable();
       }
-    } else {
-      // no modeling datas
-      this.modelingDatasService.removeSelectedVariable();
-    }
+    });
+    // Unsubscribe immediately since we only need the latest value after update
+    sub.unsubscribe();
   }
 
   onSelectListItemChanged(item: TrainedPredictorModel) {

@@ -49,6 +49,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
   public targetVariableStatsInformations?: InfosDatasI[];
   public override tabIndex = 1; // managed by selectable-tab component
   public variablesDisplayedColumns: GridColumnsI[] = [];
+  public modelingDatas$;
 
   constructor(
     private preparationDatasService: PreparationDatasService,
@@ -59,10 +60,10 @@ export class PreparationViewComponent extends SelectableTabComponent {
     private modelingDatasService: ModelingDatasService,
   ) {
     super();
-
     this.variablesDisplayedColumns = getPreparationVariablesGridColumns(
       this.translate,
     );
+    this.modelingDatas$ = this.modelingDatasService.modelingDatas$;
   }
 
   ngOnInit() {

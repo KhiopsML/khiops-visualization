@@ -79,7 +79,7 @@
         <as-split-area [size]="sizes?.row1Col[0]">
           <as-split
             [gutterSize]="7"
-            *ngIf="modelingDatas?.trainedPredictorsListDatas"
+            *ngIf="(modelingDatas$ | async)?.trainedPredictorsListDatas"
             direction="vertical"
             (dragEnd)="onSplitDragEnd($event, 'row1Col0Row')"
           >
@@ -95,12 +95,12 @@
                 [showSearch]="true"
                 [watchResize]="true"
                 [displayCount]="true"
-                [selectedVariable]="modelingDatas?.selectedVariable"
+                [selectedVariable]="(modelingDatas$ | async)?.selectedVariable"
                 (selectListItem)="onSelectListItemChanged($event)"
                 [showLineSelection]="true"
                 [showColumnsSelection]="true"
                 [rowHeight]="30"
-                [inputDatas]="modelingDatas?.trainedPredictorsListDatas"
+                [inputDatas]="(modelingDatas$ | async)?.trainedPredictorsListDatas"
                 (showLevelDistributionGraph)="
                   onShowLevelDistributionGraph($event)
                 "
@@ -111,7 +111,7 @@
           </as-split>
           <kl-no-data
             fxFlexFill
-            *ngIf="!modelingDatas?.trainedPredictorsListDatas"
+            *ngIf="!(modelingDatas$ | async)?.trainedPredictorsListDatas"
             [message]="'NO_DATAS.NO_PREDICTORS_DETAILS'"
           ></kl-no-data>
         </as-split-area>
@@ -119,21 +119,21 @@
           <app-var-details-preparation
             [preparationSource]="preparationSource"
             *ngIf="
-              modelingDatas?.selectedVariable?.variableType === 'preparation' ||
-              modelingDatas?.selectedVariable?.variableType ===
+              (modelingDatas$ | async)?.selectedVariable?.variableType === 'preparation' ||
+              (modelingDatas$ | async)?.selectedVariable?.variableType ===
                 'text-preparation'
             "
           >
           </app-var-details-preparation>
           <app-var-details-preparation-2d
             *ngIf="
-              modelingDatas?.selectedVariable?.variableType === 'preparation-2d'
+              (modelingDatas$ | async)?.selectedVariable?.variableType === 'preparation-2d'
             "
           >
           </app-var-details-preparation-2d>
           <app-var-details-tree-preparation
             *ngIf="
-              modelingDatas?.selectedVariable?.variableType ===
+              (modelingDatas$ | async)?.selectedVariable?.variableType ===
               'tree-preparation'
             "
           >
@@ -141,8 +141,8 @@
           <kl-no-data
             fxFlexFill
             *ngIf="
-              !modelingDatas?.trainedPredictorsListDatas ||
-              !modelingDatas?.selectedVariable
+              !(modelingDatas$ | async)?.trainedPredictorsListDatas ||
+              !(modelingDatas$ | async)?.selectedVariable
             "
             [message]="'NO_DATAS.NO_PREDICTORS_DETAILS'"
           ></kl-no-data>
