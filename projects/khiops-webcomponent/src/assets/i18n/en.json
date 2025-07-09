@@ -294,7 +294,7 @@
       "PREPARATION_2D": "Preparation 2d: Bivariate data analysis",
       "MODELING": "Modeling: description of SNB model",
       "EVALUATION": "Evaluation: evaluation of the predictors on databases (train, test and others)",
-      "TEXT_PREPARATION": "Text Preparation",
+      "TEXT_PREPARATION": "Text Preparation: Constructed text features analysis",
       "TREE_PREPARATION": "Tree preparation: Tree variables analysis",
       "AXIS": "Axis",
       "CONTEXT": "Context"
