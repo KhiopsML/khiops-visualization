@@ -20,7 +20,6 @@ import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { VariableModel } from '@khiops-visualization/model/variable.model';
-import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
 import {
   TreePreparationDatasModel,
   TreePreparationState,
@@ -43,6 +42,7 @@ import {
 } from '@khiops-visualization/selectors/tree-preparation.selector';
 import { getTreePreparationVariablesGridColumns } from './tree-preparation-view.config';
 import { AppConfig } from '../../../../environments/environment';
+import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
 
 @Component({
   selector: 'app-tree-preparation-view',
@@ -65,7 +65,7 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
   public variablesDatas?: VariableModel[];
   public targetVariableStatsInformations?: InfosDatasI[];
   public treePreparationDatas?: TreePreparationDatasModel;
-  public distributionDatas?: DistributionDatasModel;
+  public distributionDatas$!: Observable<DistributionDatasModel>;
   public variablesDisplayedColumns: GridColumnsI[] = [];
   public override tabIndex = 5; // managed by selectable-tab component
 
@@ -115,7 +115,7 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
     this.variablesDatas = this.preparationDatasService.getVariablesDatas(
       this.preparationSource,
     );
-    this.distributionDatas = this.distributionDatasService.getDatas();
+    this.distributionDatas$ = this.distributionDatasService.distributionDatas$;
 
     this.selectedNode$?.subscribe((selectedNode) => {
       if (selectedNode?._id) {

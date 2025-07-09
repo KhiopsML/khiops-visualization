@@ -35,7 +35,6 @@ import {
   TreePreparationDatasModel,
   TreePreparationState,
 } from '@khiops-visualization/model/tree-preparation-datas.model';
-import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
 import { firstValueFrom, Observable, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectNodesFromId } from '@khiops-visualization/actions/tree-preparation.action';
@@ -45,6 +44,7 @@ import {
   selectedNodesSelector,
 } from '@khiops-visualization/selectors/tree-preparation.selector';
 import { AppConfig } from '../../../../../environments/environment';
+import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
 
 @Component({
   selector: 'app-tree-hyper',
@@ -71,7 +71,7 @@ export class TreeHyperComponent
   private options: any;
   private ht?: Hypertree;
   private treePreparationDatas?: TreePreparationDatasModel;
-  public distributionDatas?: DistributionDatasModel;
+  public distributionDatas$!: Observable<DistributionDatasModel>;
 
   selectedNodes$: Observable<TreeNodeModel[]>;
   previousSelectedNodes$: Observable<TreeNodeModel[]>;
@@ -117,7 +117,7 @@ export class TreeHyperComponent
 
   ngOnInit() {
     this.treePreparationDatas = this.treePreparationDatasService.getDatas();
-    this.distributionDatas = this.distributionDatasService.getDatas();
+    this.distributionDatas$ = this.distributionDatasService.distributionDatas$;
 
     // listen for selectedNodes change
     this.selectedNodes$?.subscribe((selectedNodes) => {

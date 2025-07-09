@@ -21,19 +21,20 @@ import { TargetDistributionGraphComponent } from '@khiops-visualization/componen
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { PreparationVariableModel } from '@khiops-visualization/model/preparation-variable.model';
 import { TreePreparationVariableModel } from '@khiops-visualization/model/tree-preparation-variable.model';
-import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
 import { REPORT } from '@khiops-library/enum/report';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { LS } from '@khiops-library/enum/ls';
 import { AppService } from '@khiops-visualization/providers/app.service';
+import { Observable } from 'rxjs';
+import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
 
 @Component({
-    selector: 'app-variable-graph-details',
-    templateUrl: './variable-graph-details.component.html',
-    styleUrls: ['./variable-graph-details.component.scss'],
-    standalone: false
+  selector: 'app-variable-graph-details',
+  templateUrl: './variable-graph-details.component.html',
+  styleUrls: ['./variable-graph-details.component.scss'],
+  standalone: false,
 })
 export class VariableGraphDetailsComponent implements OnInit, OnChanges {
   @ViewChild('distributionGraph', {
@@ -62,7 +63,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
   public scaleValue?: number;
   public activeEntries = 0;
   public isFullscreen: boolean = false;
-  public distributionDatas?: DistributionDatasModel;
+  public distributionDatas$!: Observable<DistributionDatasModel>;
   public isLoading: boolean = false;
 
   private distributionGraphType?: string;
@@ -81,7 +82,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.distributionDatas = this.distributionDatasService.getDatas();
+    this.distributionDatas$ = this.distributionDatasService.distributionDatas$;
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -119,10 +120,6 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
             );
           }
           if (this.showDistributionGraph) {
-            // Reinit datas
-            this.distributionDatas!.histogramDatas = undefined;
-            this.distributionDatas!.distributionGraphDatas = undefined;
-
             if (this.isHistogramDisplayed()) {
               this.distributionDatasService.getHistogramGraphDatas(
                 this.selectedVariable!,
@@ -274,9 +271,12 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
   }
 
   hideScaleElt() {
+    // Hide scale when histogram is displayed, as histograms have their own scaling controls
+    // Also hide scale when there are less than 10 labels in the distribution graph
+    const currentData = this.distributionDatasService.getDatas();
     return (
-      this.distributionDatas?.histogramDatas ||
-      this.distributionDatas?.distributionGraphDatas?.labels?.length! < 10
+      this.isHistogramDisplayed() ||
+      (currentData?.distributionGraphDatas?.labels?.length || 0) < 10
     );
   }
 }

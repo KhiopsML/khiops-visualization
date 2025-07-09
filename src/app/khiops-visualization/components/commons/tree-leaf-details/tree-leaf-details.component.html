@@ -31,7 +31,7 @@
               class="target-distribution-graph"
               [displayedValues]="displayedValues"
               [inputDatas]="
-                distributionDatas?.treeNodeTargetDistributionGraphDatas
+                (distributionDatas$ | async)?.treeNodeTargetDistributionGraphDatas
               "
               (graphTypeChanged)="
                 onTreeNodeTargetDistributionGraphTypeChanged($event)

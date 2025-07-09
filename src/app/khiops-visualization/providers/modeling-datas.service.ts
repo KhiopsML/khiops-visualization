@@ -71,14 +71,6 @@ export class ModelingDatasService {
   }
 
   /**
-   * Retrieves the modeling data.
-   * @returns The current modeling data model.
-   */
-  getDatas(): ModelingDatasModel | undefined {
-    return this.modelingDatas;
-  }
-
-  /**
    * Sets the selected variable in the modeling data.
    * If the provided variable object is valid, it is set as the selected variable.
    * Otherwise, the first variable from the trained predictors details is set as the selected variable.

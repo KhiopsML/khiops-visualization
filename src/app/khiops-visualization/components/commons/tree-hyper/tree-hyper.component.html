@@ -44,10 +44,10 @@
       <app-select-toggle-button
         class="screenshot-hide"
         *ngIf="
-          distributionDatas &&
-          distributionDatas.targetDistributionDisplayedValues
+          (distributionDatas$ | async) &&
+          (distributionDatas$ | async)?.targetDistributionDisplayedValues
         "
-        [displayedValues]="distributionDatas.targetDistributionDisplayedValues"
+        [displayedValues]="(distributionDatas$ | async)?.targetDistributionDisplayedValues"
         (selectToggleButtonChanged)="onSelectToggleButtonChanged($event)"
         [buttonTitle]="buttonTitle"
       >

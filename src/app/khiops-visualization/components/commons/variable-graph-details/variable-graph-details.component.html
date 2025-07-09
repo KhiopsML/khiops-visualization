@@ -3,6 +3,11 @@
   fxLayout="column"
   fxFlexFill
   [ngClass]="{ fullscreen: isFullscreen }"
+  *ngIf="
+    ((distributionDatas$ | async)?.distributionGraphDatas ||
+      (distributionDatas$ | async)?.targetDistributionGraphDatas ||
+      (distributionDatas$ | async)?.histogramDatas)
+  "
 >
   <div
     fxLayout="column"
@@ -23,9 +28,9 @@
     fxFlexFill
     *ngIf="
       !isLoading &&
-      (distributionDatas?.distributionGraphDatas ||
-        distributionDatas?.targetDistributionGraphDatas ||
-        distributionDatas?.histogramDatas)
+      ((distributionDatas$ | async)?.distributionGraphDatas ||
+        (distributionDatas$ | async)?.targetDistributionGraphDatas ||
+        (distributionDatas$ | async)?.histogramDatas)
     "
   >
     <kl-graph-header
@@ -33,7 +38,7 @@
       (scaleValueChanged)="onScaleValueChanged($event)"
       (toggleFullscreen)="onToggleFullscreen($event)"
       [hideScale]="hideScaleElt()"
-      [showZoom]="distributionDatas?.histogramDatas ? true : false"
+      [showZoom]="(distributionDatas$ | async)?.histogramDatas ? true : false"
     >
     </kl-graph-header>
     <kl-distribution-graph
@@ -41,8 +46,8 @@
       fxFlex="1 1 100%"
       *ngIf="
         showDistributionGraph &&
-        distributionDatas?.distributionGraphDatas &&
-        !distributionDatas?.histogramDatas
+        (distributionDatas$ | async)?.distributionGraphDatas &&
+        !(distributionDatas$ | async)?.histogramDatas
       "
       class="distribution-graph"
       id="{{ 'distribution-graph' + position }}"
@@ -51,8 +56,8 @@
       [scrollPosition]="scrollPosition"
       (scrollPositionChanged)="onScrollPositionChanged($event)"
       [scaleValue]="scaleValue"
-      [graphOptions]="distributionDatas?.distributionGraphOptionsY"
-      [inputDatas]="distributionDatas?.distributionGraphDatas"
+      [graphOptions]="(distributionDatas$ | async)?.distributionGraphOptionsY"
+      [inputDatas]="(distributionDatas$ | async)?.distributionGraphDatas"
       (graphTypeChanged)="onDistributionGraphTypeChanged($event)"
       [activeEntries]="activeEntries"
       (selectedItemChanged)="onSelectedDistributionGraphItemChanged($event)"
@@ -62,20 +67,20 @@
     <app-histogram
       id="app-histogram"
       class="app-histogram"
-      *ngIf="distributionDatas?.histogramDatas"
+      *ngIf="(distributionDatas$ | async)?.histogramDatas"
       fxFlex="1 1 100%"
-      [graphOptionsX]="distributionDatas?.distributionGraphOptionsX"
-      [graphOptionsY]="distributionDatas?.distributionGraphOptionsY"
-      [datas]="distributionDatas?.histogramDatas"
+      [graphOptionsX]="(distributionDatas$ | async)?.distributionGraphOptionsX"
+      [graphOptionsY]="(distributionDatas$ | async)?.distributionGraphOptionsY"
+      [datas]="(distributionDatas$ | async)?.histogramDatas"
       [selectedItem]="activeEntries"
       (selectedItemChanged)="onSelectedDistributionGraphItemChanged($event)"
       [interpretableHistogramNumber]="
-        distributionDatas?.interpretableHistogramNumber
+        (distributionDatas$ | async)?.interpretableHistogramNumber
       "
       [defaultInterpretableHistogramNumber]="
-        distributionDatas?.defaultInterpretableHistogramNumber - 1
+        (distributionDatas$ | async)?.defaultInterpretableHistogramNumber - 1
       "
-      [histogramNumber]="distributionDatas?.histogramNumber"
+      [histogramNumber]="(distributionDatas$ | async)?.histogramNumber"
       (interpretableHistogramChanged)="onInterpretableHistogramChanged($event)"
     >
     </app-histogram>
@@ -88,18 +93,18 @@
       [position]="position"
       *ngIf="
         showTargetDistributionGraph &&
-        distributionDatas?.targetDistributionGraphDatas
+        (distributionDatas$ | async)?.targetDistributionGraphDatas
       "
       class="target-distribution-graph"
       id="{{ 'target-distribution-graph' + position }}"
       [attr.id]="'target-distribution-graph' + position"
-      [displayedValues]="distributionDatas?.targetDistributionDisplayedValues"
+      [displayedValues]="(distributionDatas$ | async)?.targetDistributionDisplayedValues"
       (scrollPositionChanged)="onScrollPositionChanged($event)"
       [scrollPosition]="scrollPosition"
       (selectedItemChanged)="
         onSelectedTargetDistributionGraphItemChanged($event)
       "
-      [inputDatas]="distributionDatas?.targetDistributionGraphDatas"
+      [inputDatas]="(distributionDatas$ | async)?.targetDistributionGraphDatas"
       (graphTypeChanged)="onTargetDistributionGraphTypeChanged($event)"
       [scaleValue]="scaleValue"
       (targetDistributionGraphDisplayedValuesChanged)="
@@ -111,9 +116,9 @@
   <kl-no-data
     fxFlexFill
     *ngIf="
-      !distributionDatas?.distributionGraphDatas &&
-      !distributionDatas?.targetDistributionGraphDatas &&
-      !distributionDatas?.histogramDatas
+      !(distributionDatas$ | async)?.distributionGraphDatas &&
+      !(distributionDatas$ | async)?.targetDistributionGraphDatas &&
+      !(distributionDatas$ | async)?.histogramDatas
     "
   >
   </kl-no-data>

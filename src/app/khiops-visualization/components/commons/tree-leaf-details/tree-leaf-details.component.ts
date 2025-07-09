@@ -14,19 +14,19 @@ import {
   TreePreparationDatasModel,
   TreePreparationState,
 } from '@khiops-visualization/model/tree-preparation-datas.model';
-import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { selectedNodeSelector } from '@khiops-visualization/selectors/tree-preparation.selector';
+import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
 
 @Component({
-    selector: 'app-tree-leaf-details',
-    templateUrl: './tree-leaf-details.component.html',
-    styleUrls: ['./tree-leaf-details.component.scss'],
-    standalone: false
+  selector: 'app-tree-leaf-details',
+  templateUrl: './tree-leaf-details.component.html',
+  styleUrls: ['./tree-leaf-details.component.scss'],
+  standalone: false,
 })
 export class TreeLeafDetailsComponent implements OnInit {
   @Input() public displayedValues?: ChartToggleValuesI[];
@@ -36,7 +36,7 @@ export class TreeLeafDetailsComponent implements OnInit {
 
   public populationCount: number = 10;
   public treePreparationDatas: TreePreparationDatasModel | undefined;
-  public distributionDatas?: DistributionDatasModel;
+  public distributionDatas$!: Observable<DistributionDatasModel>;
   public position = 1; // to change graph id
   public treeLeafRules?: GridDatasI;
 
@@ -53,7 +53,7 @@ export class TreeLeafDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.treePreparationDatas = this.treePreparationDatasService.getDatas();
-    this.distributionDatas = this.distributionDatasService.getDatas();
+    this.distributionDatas$ = this.distributionDatasService.distributionDatas$;
     this.selectedNode$.subscribe((selectedNode) => {
       this.selectedNode = selectedNode;
       this.updateComponentDatas(selectedNode);
