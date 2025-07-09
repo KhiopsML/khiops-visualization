@@ -290,12 +290,12 @@
   "TOOLTIPS": {
     "TABS": {
       "PROJECT": "Project: list of output analysis files",
-      "PREPARATION": "Preparation:  univariate data analysis on the train database",
-      "PREPARATION_2D": "Preparation 2d",
+      "PREPARATION": "Preparation: univariate data analysis on the train database",
+      "PREPARATION_2D": "Preparation 2d: Bivariate data analysis",
       "MODELING": "Modeling: description of SNB model",
       "EVALUATION": "Evaluation: evaluation of the predictors on databases (train, test and others)",
       "TEXT_PREPARATION": "Text Preparation",
-      "TREE_PREPARATION": "Tree Preparation",
+      "TREE_PREPARATION": "Tree preparation: Tree variables analysis",
       "AXIS": "Axis",
       "CONTEXT": "Context"
     },
@@ -329,7 +329,7 @@
         "RANK": "Rank of the variable, sorted by decreasing Level",
         "NAME": "Name of the variable",
         "LEVEL": "Evaluation of the predictive importance of the variable. The Level is a value between 0 (variable without predictive interest) and 1 (variable with optimal predictive importance).",
-        "TARGET_PARTS": "",
+        "TARGET_PARTS": "Number of part resulting from the grouping preprocessing of the target variable",
         "PARTS": "Number of parts resulting from the grouping preprocessing of the variable.",
         "VALUES": "Number of initial values of the variable.",
         "MODE": "Most frequent initial value.",
