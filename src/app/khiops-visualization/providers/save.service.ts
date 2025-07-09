@@ -36,12 +36,15 @@ export class SaveService {
       this.preparation2dDatasService.getSelectedVariableRank();
     const selected2dCell =
       this.preparation2dDatasService.getSelectedCellIndex();
-    this.appService.appDatas!.savedDatas = new SavedDatasModel(
-      splitSizes,
-      selectedRank,
-      selected2dRank,
-      selected2dCell,
-    );
-    return this.appService.appDatas;
+    if (this.appService.appDatas) {
+      this.appService.appDatas.savedDatas = new SavedDatasModel(
+        splitSizes,
+        selectedRank,
+        selected2dRank,
+        selected2dCell,
+      );
+      return this.appService.appDatas;
+    }
+    return undefined;
   }
 }
