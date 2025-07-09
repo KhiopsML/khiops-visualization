@@ -35,7 +35,7 @@ import { AppConfig } from '../../../environments/environment';
   providedIn: 'root',
 })
 export class PreparationDatasService {
-  private preparationDatas!: PreparationDatasModel;
+  private preparationDatas: PreparationDatasModel = new PreparationDatasModel();
 
   constructor(
     private translate: TranslateService,
@@ -68,16 +68,19 @@ export class PreparationDatasService {
     ];
 
     reports.forEach((report) => {
-      if (report.data?.[0]) {
+      if (report.data && report.data[0]) {
         let defaultVariable = report.data[0];
 
         // Check if there is a saved selected variable into json
         const savedSelectedRank = this.appService.getSavedDatas('selectedRank');
         if (savedSelectedRank) {
-          defaultVariable = this.getVariableFromRank(
+          const foundVar = this.getVariableFromRank(
             savedSelectedRank,
             report.type,
           );
+          if (foundVar) {
+            defaultVariable = foundVar;
+          }
         }
 
         this.setSelectedVariable(defaultVariable.name, report.type);
@@ -113,14 +116,14 @@ export class PreparationDatasService {
         name,
         preparationSource,
       );
-      if (variable) {
-        this.preparationDatas[preparationSource]!.selectedVariable =
+      if (variable && this.preparationDatas[preparationSource]) {
+        this.preparationDatas[preparationSource].selectedVariable =
           new PreparationVariableModel(
             variable,
             variable.name,
             preparationSource,
           );
-        return this.preparationDatas[preparationSource]?.selectedVariable;
+        return this.preparationDatas[preparationSource].selectedVariable;
       }
     }
     return undefined;
@@ -153,9 +156,9 @@ export class PreparationDatasService {
    */
   getVariableFromName(name: string, preparationSource: string): any {
     // @ts-ignore
-    return this.appService.appDatas[preparationSource].variablesStatistics.find(
-      (e: any) => e.name === name,
-    );
+    return this.appService.appDatas?.[
+      preparationSource
+    ]?.variablesStatistics?.find((e: any) => e.name === name);
   }
 
   /**
@@ -168,7 +171,7 @@ export class PreparationDatasService {
     // @ts-ignore
     return this.appService.appDatas?.[
       preparationSource
-    ].variablesStatistics.find((e: any) => e.rank === rank);
+    ]?.variablesStatistics?.find((e: any) => e.rank === rank);
   }
 
   /**
@@ -181,10 +184,10 @@ export class PreparationDatasService {
     if (!preparationSource) {
       preparationSource = this.getAvailablePreparationReport();
     }
-    const summary = new SummaryModel(
-      // @ts-ignore
-      this.appService.appDatas![preparationSource].summary,
-    );
+    // @ts-ignore
+    const summaryData = this.appService.appDatas?.[preparationSource]?.summary;
+    if (!summaryData) return [];
+    const summary = new SummaryModel(summaryData);
     return summary.displayDatas;
   }
 
@@ -194,10 +197,10 @@ export class PreparationDatasService {
    * @returns {InfosDatasI[] | undefined} The information data.
    */
   getInformationsDatas(preparationSource: string): InfosDatasI[] | undefined {
-    const informationsDatas = new InformationsModel(
-      // @ts-ignore
-      this.appService.appDatas![preparationSource].summary,
-    );
+    // @ts-ignore
+    const summaryData = this.appService.appDatas?.[preparationSource]?.summary;
+    if (!summaryData) return undefined;
+    const informationsDatas = new InformationsModel(summaryData);
     return informationsDatas.displayDatas;
   }
 
@@ -218,7 +221,13 @@ export class PreparationDatasService {
     const displayedColumns: GridColumnsI[] = [];
 
     // init the object
-    this.preparationDatas[preparationSource]!.currentIntervalDatas = {
+    if (!this.preparationDatas[preparationSource]) {
+      this.preparationDatas[preparationSource] = {
+        selectedVariable: undefined,
+        currentIntervalDatas: { title: '', values: [], displayedColumns: [] },
+      };
+    }
+    this.preparationDatas[preparationSource].currentIntervalDatas = {
       title: title,
       values: datas,
       displayedColumns: displayedColumns,
@@ -228,13 +237,19 @@ export class PreparationDatasService {
       // @ts-ignore
       this.appService.appDatas?.[preparationSource]?.variablesDetailedStatistics
     ) {
+      const selectedVar =
+        this.preparationDatas[preparationSource]?.selectedVariable;
+      const selectedRank = selectedVar?.rank;
       const currentVar: VariableDetail | undefined =
         // @ts-ignore
-        this.appService.appDatas[preparationSource].variablesDetailedStatistics[
-          this.preparationDatas[preparationSource].selectedVariable.rank
-        ];
+        selectedRank !== undefined
+          ? (this.appService.appDatas as any)[preparationSource]
+              .variablesDetailedStatistics[selectedRank]
+          : undefined;
+      if (!currentVar)
+        return this.preparationDatas[preparationSource].currentIntervalDatas;
       const variableDetails: VariableDetailsModel = new VariableDetailsModel(
-        currentVar!,
+        currentVar,
       );
 
       if (variableDetails?.dataGrid) {
@@ -386,17 +401,20 @@ export class PreparationDatasService {
       | TreePreparationVariableStatistic[]
       | undefined =
       // @ts-ignore
-      this.appService.appDatas?.[preparationSource].variablesStatistics;
+      this.appService.appDatas?.[preparationSource]?.variablesStatistics;
     const currentDetailedDatas =
       // @ts-ignore
-      this.appService.appDatas?.[preparationSource].variablesDetailedStatistics;
+      this.appService.appDatas?.[preparationSource]
+        ?.variablesDetailedStatistics;
     const variableDatas: VariableModel[] = [];
 
-    if (currentDatas) {
+    if (currentDatas && currentDetailedDatas) {
       for (let i = 0; i < currentDatas.length; i++) {
+        const currentData = currentDatas[i];
+        if (!currentData) continue;
         const varItem: VariableModel = new VariableModel(
-          currentDatas[i]!,
-          currentDetailedDatas?.[currentDatas[i]!.rank]!,
+          currentData,
+          currentDetailedDatas?.[currentData.rank],
           preparationSource,
         );
         variableDatas.push(varItem);
@@ -419,7 +437,7 @@ export class PreparationDatasService {
       preparationSource = this.getAvailablePreparationReport();
     }
     // @ts-ignore
-    const summary: any = this.appService.appDatas?.[preparationSource].summary;
+    const summary: any = this.appService.appDatas?.[preparationSource]?.summary;
     if (summary) {
       variableStatsDatas.emptyLabels();
       const currentDatas = summary.targetValues;
@@ -481,12 +499,11 @@ export class PreparationDatasService {
     let informationsDatas: InfosDatasI[] | undefined;
 
     // @ts-ignore
-    const summary: any = this.appService.appDatas?.[preparationSource].summary;
+    const summary: any = this.appService.appDatas?.[preparationSource]?.summary;
     if (summary && summary.targetDescriptiveStats) {
       informationsDatas = [];
       // @ts-ignore
-      for (const item in this.appService.appDatas?.[preparationSource].summary
-        .targetDescriptiveStats) {
+      for (const item in summary.targetDescriptiveStats) {
         if (item) {
           informationsDatas.push({
             title: item,
@@ -505,7 +522,8 @@ export class PreparationDatasService {
    */
   getTargetVariable(preparationSource: string): string | undefined {
     // @ts-ignore
-    return this.appService.appDatas?.[preparationSource].summary.targetVariable;
+    return this.appService.appDatas?.[preparationSource]?.summary
+      ?.targetVariable;
   }
 
   /**
@@ -518,15 +536,20 @@ export class PreparationDatasService {
     if (
       this.appService.appDatas?.[preparationSource]
         ?.variablesDetailedStatistics &&
-      !this.appService.appDatas.bivariatePreparationReport
+      !this.appService.appDatas?.bivariatePreparationReport
     ) {
+      const selectedVar =
+        this.preparationDatas[preparationSource]?.selectedVariable;
+      const selectedRank = selectedVar?.rank;
+      const detailedStats = (this.appService.appDatas as any)[preparationSource]
+        ?.variablesDetailedStatistics;
       const detailedVar =
-        this.appService.appDatas[preparationSource].variablesDetailedStatistics[
-          this.preparationDatas[preparationSource]!.selectedVariable!.rank
-        ];
+        selectedRank !== undefined && detailedStats
+          ? detailedStats[selectedRank]
+          : undefined;
       if (detailedVar?.dataGrid) {
         const detailedVarTypes = detailedVar.dataGrid.dimensions.map(
-          (e) => e.partitionType,
+          (e: any) => e.partitionType,
         );
         if (
           detailedVar.dataGrid.dimensions.length > 1 &&
@@ -560,10 +583,14 @@ export class PreparationDatasService {
     if (
       this.appService.appDatas?.[preparationSource]?.variablesDetailedStatistics
     ) {
+      const selectedVar =
+        this.preparationDatas[preparationSource]?.selectedVariable;
+      const selectedRank = selectedVar?.rank;
       const detailedVar =
-        this.appService.appDatas[preparationSource].variablesDetailedStatistics[
-          this.preparationDatas[preparationSource]!.selectedVariable!.rank
-        ];
+        selectedRank !== undefined
+          ? this.appService.appDatas[preparationSource]
+              .variablesDetailedStatistics[selectedRank]
+          : undefined;
       if (detailedVar?.dataGrid) {
         return detailedVar.dataGrid.isSupervised;
       }
