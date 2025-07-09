@@ -22,7 +22,6 @@ import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { ChartOptions } from 'chart.js';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
-import { EvaluationDatasModel } from '@khiops-visualization/model/evaluation-datas.model';
 import { TargetLiftValuesI } from '@khiops-visualization/interfaces/target-lift-values';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { LS } from '@khiops-library/enum/ls';
@@ -30,6 +29,7 @@ import { AppService } from '@khiops-visualization/providers/app.service';
 import { EvaluationPredictorModel } from '@khiops-visualization/model/evaluation-predictor.model';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 import { MatMenuTrigger } from '@angular/material/menu';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-target-lift-graph',
@@ -48,7 +48,9 @@ export class TargetLiftGraphComponent
   public targetLiftGraph?: ChartDatasModel;
   public colorSet?: ChartColorsSetI;
   public legendColorSet?: ChartColorsSetI;
-  public evaluationDatas: EvaluationDatasModel;
+  public liftGraphDisplayedValues$: Observable<
+    ChartToggleValuesI[] | undefined
+  >;
   public buttonTitle: string;
   public isFullscreen = false;
   public componentType = COMPONENT_TYPES.ND_LINE_CHART; // needed to copy datas
@@ -66,7 +68,9 @@ export class TargetLiftGraphComponent
     private khiopsLibraryService: KhiopsLibraryService,
   ) {
     super(selectableService, ngzone, configService);
-    this.evaluationDatas = this.evaluationDatasService.getDatas();
+
+    this.liftGraphDisplayedValues$ =
+      this.evaluationDatasService.liftGraphDisplayedValues$;
 
     this.legendColorSet = _.cloneDeep(
       this.khiopsLibraryService.getGraphColorSet()[1],
@@ -178,6 +182,7 @@ export class TargetLiftGraphComponent
   }
 
   onSelectToggleButtonChanged(displayedValues: ChartToggleValuesI[]) {
+    this.evaluationDatasService.setLiftGraphDisplayedValues(displayedValues);
     this.computeTargetLiftDatas();
 
     this.colorSet = _.cloneDeep(

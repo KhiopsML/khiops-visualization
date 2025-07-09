@@ -34,15 +34,20 @@
             [showSearch]="false"
             [displayCount]="false"
             titleTooltip="{{ 'TOOLTIPS.EVALUATION.TYPES.TITLE' | translate }}"
-            [selectedVariable]="evaluationDatas.selectedEvaluationTypeVariable"
+            [selectedVariable]="
+              (evaluationDatas$ | async)?.selectedEvaluationTypeVariable
+            "
             (selectListItem)="onSelectEvaluationTypeChanged($event)"
             [showLineSelection]="true"
             [showColumnsSelection]="false"
             [rowHeight]="30"
-            [inputDatas]="evaluationDatas.evaluationTypesSummary?.values"
-            [title]="evaluationDatas.evaluationTypesSummary?.title"
+            [inputDatas]="
+              (evaluationDatas$ | async)?.evaluationTypesSummary?.values
+            "
+            [title]="(evaluationDatas$ | async)?.evaluationTypesSummary?.title"
             [displayedColumns]="
-              evaluationDatas.evaluationTypesSummary?.displayedColumns
+              (evaluationDatas$ | async)?.evaluationTypesSummary
+                ?.displayedColumns
             "
           >
           </kl-ag-grid>
@@ -64,13 +69,15 @@
             [showLineSelection]="true"
             [showColumnsSelection]="false"
             [rowHeight]="30"
-            [inputDatas]="evaluationDatas.predictorEvaluations?.values"
-            [title]="evaluationDatas.predictorEvaluations?.title"
+            [inputDatas]="
+              (evaluationDatas$ | async)?.predictorEvaluations?.values
+            "
+            [title]="(evaluationDatas$ | async)?.predictorEvaluations?.title"
             [displayedColumns]="
-              evaluationDatas.predictorEvaluations?.displayedColumns
+              (evaluationDatas$ | async)?.predictorEvaluations?.displayedColumns
             "
             [selectedVariable]="
-              evaluationDatas.selectedPredictorEvaluationVariable
+              (evaluationDatas$ | async)?.selectedPredictorEvaluationVariable
             "
             (selectListItem)="onSelectPredictorEvaluationChanged($event)"
           >
@@ -88,13 +95,13 @@
           <app-target-lift-graph
             id="evaluation-lift-curves"
             [selectedVariable]="
-              evaluationDatas.selectedPredictorEvaluationVariable
+              (evaluationDatas$ | async)?.selectedPredictorEvaluationVariable
             "
           >
           </app-target-lift-graph>
         </as-split-area>
         <as-split-area
-          *ngIf="evaluationDatas.confusionMatrix"
+          *ngIf="(evaluationDatas$ | async)?.confusionMatrix"
           class="variables-list-container"
           [size]="sizes.col1Row[1]"
         >
@@ -109,10 +116,10 @@
             [showDataTypeSelection]="true"
             [showColumnsSelection]="false"
             [rowHeight]="30"
-            [inputDatas]="evaluationDatas.confusionMatrix.values"
-            [title]="evaluationDatas.confusionMatrix.title"
+            [inputDatas]="(evaluationDatas$ | async)?.confusionMatrix?.values"
+            [title]="(evaluationDatas$ | async)?.confusionMatrix?.title"
             [displayedColumns]="
-              evaluationDatas.confusionMatrix.displayedColumns
+              (evaluationDatas$ | async)?.confusionMatrix?.displayedColumns
             "
           >
           </kl-ag-grid>

@@ -14,12 +14,13 @@ import { TrackerService } from '../../../khiops-library/providers/tracker.servic
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals';
+import { Observable } from 'rxjs';
 
 @Component({
-    selector: 'app-evaluation-view',
-    templateUrl: './evaluation-view.component.html',
-    styleUrls: ['./evaluation-view.component.scss'],
-    standalone: false
+  selector: 'app-evaluation-view',
+  templateUrl: './evaluation-view.component.html',
+  styleUrls: ['./evaluation-view.component.scss'],
+  standalone: false,
 })
 export class EvaluationViewComponent
   extends SelectableTabComponent
@@ -27,7 +28,7 @@ export class EvaluationViewComponent
 {
   public sizes: DynamicI;
   public override tabIndex = 4; // managed by selectable-tab component
-  public evaluationDatas: EvaluationDatasModel;
+  public evaluationDatas$: Observable<EvaluationDatasModel>;
 
   constructor(
     private trackerService: TrackerService,
@@ -37,7 +38,9 @@ export class EvaluationViewComponent
     super();
 
     this.sizes = this.layoutService.getViewSplitSizes('evaluationView');
-    this.evaluationDatas = this.evaluationDatasService.getDatas();
+    this.evaluationDatas$ = this.evaluationDatasService.evaluationDatas$;
+
+    // Initialize data
     this.evaluationDatasService.getEvaluationTypes();
     this.evaluationDatasService.getEvaluationTypesSummary();
     this.evaluationDatasService.getPredictorEvaluations();
