@@ -36,7 +36,8 @@ import { REPORT } from '@khiops-library/enum/report';
   providedIn: 'root',
 })
 export class DistributionDatasService {
-  private distributionDatas!: DistributionDatasModel;
+  private distributionDatas: DistributionDatasModel =
+    new DistributionDatasModel();
 
   constructor(
     private translate: TranslateService,
@@ -56,9 +57,11 @@ export class DistributionDatasService {
    * for the component.
    */
   initialize() {
-    this.distributionDatas = new DistributionDatasModel(
-      this.appService.appDatas!,
-    );
+    if (this.appService.appDatas) {
+      this.distributionDatas = new DistributionDatasModel(
+        this.appService.appDatas,
+      );
+    }
   }
 
   /**
@@ -142,18 +145,21 @@ export class DistributionDatasService {
             partition = variableDetails.dataGrid.dimensions[1]?.partition;
             currentXAxis = variableDetails.dataGrid.dimensions[0]?.partition;
           }
+          if (variableDetails.dataGrid.dimensions[0]) {
+            this.defineDefaultGroup(variableDetails.dataGrid.dimensions[0]);
+          }
 
-          this.defineDefaultGroup(variableDetails.dataGrid.dimensions[0]!);
-
-          this.distributionDatas.targetDistributionGraphDatas =
-            this.computeTargetDistributionGraph(
-              partition!,
-              currentDatas,
-              currentDatas,
-              currentXAxis!,
-              this.distributionDatas.targetDistributionType,
-              selectedVariable.type,
-            );
+          if (partition && currentXAxis) {
+            this.distributionDatas.targetDistributionGraphDatas =
+              this.computeTargetDistributionGraph(
+                partition,
+                currentDatas,
+                currentDatas,
+                currentXAxis,
+                this.distributionDatas.targetDistributionType,
+                selectedVariable.type,
+              );
+          }
         }
       }
     }
@@ -245,7 +251,7 @@ export class DistributionDatasService {
         if (allTargetValues) {
           for (let i = 0; i < allTargetValues.length; i++) {
             const currentTargetIndex = currentNode.targetValues.values.indexOf(
-              allTargetValues[i]?.toString()!,
+              allTargetValues[i]?.toString() || '',
             );
             if (currentTargetIndex !== -1) {
               fullTarget.push(
@@ -293,7 +299,7 @@ export class DistributionDatasService {
       this.distributionDatas.targetDistributionDisplayedValues = [];
       for (let l = 0; l < partition.length; l++) {
         this.distributionDatas.targetDistributionDisplayedValues?.push({
-          name: partition[l]!.toString(),
+          name: partition[l]?.toString() || '',
           show: true,
         });
       }
@@ -334,14 +340,14 @@ export class DistributionDatasService {
       for (let k = 0; k < dimensionLength; k++) {
         const currentPartition = partition[k];
         const currentDataSet = new ChartDatasetModel(
-          currentPartition!.toString(),
+          currentPartition?.toString() || '',
         );
         targetDistributionGraphDatas.datasets.push(currentDataSet);
 
         let l: number = currentXAxis.length;
         for (let i = 0; i < l; i++) {
           const currentLabel = this.formatXAxis(
-            currentXAxis[i]!.toString(),
+            currentXAxis[i]?.toString() || '',
             i,
             selectedVariableType,
           ).toString();
@@ -371,7 +377,9 @@ export class DistributionDatasService {
               );
               // compute lift
               currentValue =
-                el[k] / currentTotalProba / modalityCounts.totalProbability[k]!;
+                el[k] /
+                currentTotalProba /
+                (modalityCounts.totalProbability[k] || 1);
             }
           } else {
             currentValue = 0;
@@ -450,15 +458,19 @@ export class DistributionDatasService {
           }
         }
 
-        this.defineDefaultGroup(dimensions[0]!);
+        if (dimensions[0]) {
+          this.defineDefaultGroup(dimensions[0]);
+        }
 
-        distributionsGraphDetails = this.computeDistributionGraph(
-          currentDatas,
-          dimensions,
-          currentXAxis!,
-          selectedVariable,
-          dimensions[0]?.defaultGroupIndex,
-        );
+        if (currentXAxis) {
+          distributionsGraphDetails = this.computeDistributionGraph(
+            currentDatas,
+            dimensions,
+            currentXAxis,
+            selectedVariable,
+            dimensions[0]?.defaultGroupIndex,
+          );
+        }
       }
     }
     if (distributionsGraphDetails?.datasets.length === 0) {
@@ -470,11 +482,13 @@ export class DistributionDatasService {
   }
 
   defineDefaultGroup(dimension: DimensionVisualization) {
-    let partition;
     if (dimension?.defaultGroupIndex !== undefined) {
-      partition = dimension.partition[dimension.defaultGroupIndex];
+      const partition = dimension.partition[dimension.defaultGroupIndex];
       // @ts-ignore
-      partition[partition?.length - 1] += ',*';
+      if (partition && partition.length > 0) {
+        // @ts-ignore
+        partition[partition.length - 1] += ',*';
+      }
     }
   }
 
@@ -516,7 +530,7 @@ export class DistributionDatasService {
 
       // format x axis legend text
       const currentName: string = this.formatXAxis(
-        currentXAxis[i]!,
+        currentXAxis[i] || '',
         i,
         selectedVariable.type,
       );
@@ -537,12 +551,12 @@ export class DistributionDatasService {
       } else {
         currentValue = coverageValue;
         total = UtilsService.arraySum(coverageArray);
-        graphItem.value = (currentValue! * 100) / total;
+        graphItem.value = currentValue ? (currentValue * 100) / total : 0;
       }
       graphItem.extra.frequencyValue = frequencyValue;
       graphItem.extra.coverageValue = coverageValue;
       graphItem.extra.value = coverageValue;
-      graphItem.extra.percent = (currentValue! * 100) / total;
+      graphItem.extra.percent = currentValue ? (currentValue * 100) / total : 0;
 
       currentDataSet.data.push(graphItem.value);
       currentDataSet.extra.push(graphItem);
@@ -612,22 +626,23 @@ export class DistributionDatasService {
 
           histogram.bounds.forEach((bound: number, i: number) => {
             if (i < histogram.bounds.length - 1) {
-              let delta = histogram.bounds[i + 1]! - bound;
+              let delta = (histogram.bounds[i + 1] || 0) - bound;
               if (delta < 0.001) {
                 // Important to limit delta to avoid positive log values
                 // Otherwise chart is out of bounds
                 delta = 1;
               }
 
-              const density = histogram.frequencies![i]! / (totalFreq! * delta);
-              const probability = histogram.frequencies![i]! / totalFreq!;
+              const frequency = histogram.frequencies?.[i] || 0;
+              const density = totalFreq ? frequency / (totalFreq * delta) : 0;
+              const probability = totalFreq ? frequency / totalFreq : 0;
               let logValue = Math.log10(density);
               if (logValue === -Infinity) {
                 logValue = 0;
               }
               const data: HistogramValuesI = {
-                frequency: histogram.frequencies![i] || 0,
-                partition: [bound, histogram.bounds[i + 1]!],
+                frequency: frequency,
+                partition: [bound, histogram.bounds[i + 1] || 0],
                 density: density,
                 probability: probability,
                 logValue: logValue,
@@ -650,18 +665,17 @@ export class DistributionDatasService {
           (partition: number[], i: number) => {
             // partition is always numbers in this case
             if (partition.length !== 0) {
-              const delta = partition[1]! - partition[0]!;
-              const density =
-                varDatas.dataGrid.frequencies![i]! / (totalFreq! * delta);
-              const probability =
-                varDatas.dataGrid.frequencies![i]! / totalFreq!;
+              const delta = (partition[1] || 0) - (partition[0] || 0);
+              const frequency = varDatas.dataGrid.frequencies?.[i] || 0;
+              const density = totalFreq ? frequency / (totalFreq * delta) : 0;
+              const probability = totalFreq ? frequency / totalFreq : 0;
               let logValue = Math.log10(density);
 
               if (logValue === -Infinity) {
                 logValue = 0;
               }
               const data: HistogramValuesI = {
-                frequency: varDatas.dataGrid.frequencies![i] || 0,
+                frequency: frequency,
                 partition: partition,
                 density: density,
                 probability: probability,
@@ -703,7 +717,7 @@ export class DistributionDatasService {
       const coverageValue = this.getCoverageValueFromDimensionAndPartition(
         dimensions,
         partitionSize,
-        currentDatas[i]!,
+        currentDatas[i] || 0,
       );
       const frequencyValue = Math.log(coverageValue);
       coverageArray.push(coverageValue);
@@ -733,7 +747,7 @@ export class DistributionDatasService {
       for (let j = 0; j < partitionSize; j++) {
         if (Array.isArray(el)) {
           // Normal case
-          coverageValue = coverageValue + el[j]!;
+          coverageValue = coverageValue + (el[j] || 0);
         } else {
           // Descriptive analysis
           coverageValue = coverageValue + el;
@@ -856,18 +870,21 @@ export class DistributionDatasService {
     const counts = new ModalityCountsModel();
     if (modality) {
       const dimensionLength = modality[0]?.length;
-      for (let i = 0; i < modality.length; i++) {
-        for (let j = 0; j < dimensionLength!; j++) {
-          if (!counts.series[j]) {
-            counts.series[j] = 0;
+      if (dimensionLength) {
+        for (let i = 0; i < modality.length; i++) {
+          for (let j = 0; j < dimensionLength; j++) {
+            if (!counts.series[j]) {
+              counts.series[j] = 0;
+            }
+            const modalityValue = modality[i]?.[j] || 0;
+            counts.series[j] = (counts.series[j] || 0) + modalityValue;
+            counts.total = counts.total + modalityValue;
           }
-          counts.series[j] = counts.series[j]! + modality[i]![j]!;
-          counts.total = counts.total + modality[i]![j]!;
         }
-      }
-      for (let k = 0; k < dimensionLength!; k++) {
-        counts.totalProbability[k] =
-          counts.series[k]! / counts.series.reduce((a, b) => a + b, 0);
+        for (let k = 0; k < dimensionLength; k++) {
+          counts.totalProbability[k] =
+            (counts.series[k] || 0) / counts.series.reduce((a, b) => a + b, 0);
+        }
       }
     }
 

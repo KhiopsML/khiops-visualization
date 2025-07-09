@@ -42,7 +42,7 @@ export class DistributionDatasModel {
   appDatas: any = undefined;
   treeHyperGraphDatas: ChartDatasModel | undefined = undefined;
 
-  constructor(appDatas: VisualizationDatas) {
+  constructor(appDatas?: VisualizationDatas) {
     this.appDatas = appDatas;
   }
 
