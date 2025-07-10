@@ -63,20 +63,21 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
   }
 
   ngAfterViewInit() {
+    if (!this.preparationSource) return;
     const variable = this.preparationDatasService.getVariablesDatas(
-      this.preparationSource!,
+      this.preparationSource,
     );
     this.minMaxValues =
       this.preparation2dDatasService.getGlobalMinAndMax2dValues(variable);
-    this.preparation2dDatasService.getMatrixDatas(
-      this.preparation2dDatas?.selectedVariable!,
-    );
-
+    if (this.preparation2dDatas?.selectedVariable) {
+      this.preparation2dDatasService.getMatrixDatas(
+        this.preparation2dDatas.selectedVariable,
+      );
+    }
     // Check if there is a saved selected cell into json
     const defaultCellIndex =
       this.appService.getSavedDatas('selected2dCell') || 0;
     this.preparation2dDatasService.setSelectedCellIndex(defaultCellIndex);
-
     this.preparation2dDatasService.getCurrentCellDatas();
   }
 
@@ -94,16 +95,18 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
       currentVar.name1 = currentVar.nameX = currentVar.name;
       currentVar.name2 = currentVar.nameY =
         this.preparationDatasService.getTargetVariable(
-          this.preparationSource!,
+          this.preparationSource ?? '',
         ) || '';
 
       // Set the variable
       this.preparation2dDatasService.setSelectedRegressionVariable(currentVar);
 
       this.constructModeSelectBox();
-      this.preparation2dDatasService.getMatrixDatas(
-        this.preparation2dDatas?.selectedVariable!,
-      );
+      if (this.preparation2dDatas?.selectedVariable) {
+        this.preparation2dDatasService.getMatrixDatas(
+          this.preparation2dDatas.selectedVariable,
+        );
+      }
       this.preparation2dDatasService.setSelectedCellIndex(0);
       this.preparation2dDatasService.getCurrentCellDatas();
     }

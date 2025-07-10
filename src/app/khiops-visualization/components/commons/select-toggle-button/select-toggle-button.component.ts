@@ -60,7 +60,9 @@ export class SelectToggleButtonComponent implements OnInit, OnChanges {
       });
     }
     // At init some elts may be hidden from last context
-    this.updateSelectElts(this.displayedValues!);
+    if (this.displayedValues) {
+      this.updateSelectElts(this.displayedValues);
+    }
   }
 
   ngOnInit() {
@@ -100,10 +102,14 @@ export class SelectToggleButtonComponent implements OnInit, OnChanges {
   toggleGraphOptionValue($event: MatCheckboxChange, opt: ChartToggleValuesI) {
     const currentOpt: ChartToggleValuesI | undefined =
       this.displayedValues?.find((e) => e.name === opt.name);
-    currentOpt!.show = $event.checked;
+    if (currentOpt) {
+      currentOpt.show = $event.checked;
+    }
 
     // Force update
-    this.displayedValues = [...this.displayedValues!];
+    if (this.displayedValues) {
+      this.displayedValues = [...this.displayedValues];
+    }
 
     // emit to update graph
     this.selectToggleButtonChanged.emit(this.displayedValues);
@@ -115,9 +121,13 @@ export class SelectToggleButtonComponent implements OnInit, OnChanges {
     this.isSelectAllChecked = $event.checked;
 
     // update checkboxes
-    for (let i = 0; i < this.displayedValues!.length; i++) {
-      const opt: ChartToggleValuesI | undefined = this.displayedValues?.[i];
-      opt!.show = $event.checked;
+    if (this.displayedValues) {
+      for (let i = 0; i < this.displayedValues.length; i++) {
+        const opt: ChartToggleValuesI | undefined = this.displayedValues[i];
+        if (opt) {
+          opt.show = $event.checked;
+        }
+      }
     }
     if ($event.checked) {
       this.selectAllCheckboxText = this.translate.get('GLOBAL.UNSELECT_ALL');
@@ -126,7 +136,9 @@ export class SelectToggleButtonComponent implements OnInit, OnChanges {
     }
 
     // Force update
-    this.displayedValues = [...this.displayedValues!];
+    if (this.displayedValues) {
+      this.displayedValues = [...this.displayedValues];
+    }
     // emit to update graph
     this.selectToggleButtonChanged.emit(this.displayedValues);
 

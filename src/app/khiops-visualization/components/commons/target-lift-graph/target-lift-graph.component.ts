@@ -200,7 +200,9 @@ export class TargetLiftGraphComponent
       ' ' +
       this.targetLift?.selected;
     AppService.Ls.set(LS.TARGET_LIFT, target);
-    this.targetLift!.selected = target;
+    if (this.targetLift) {
+      this.targetLift.selected = target;
+    }
     this.computeTargetLiftDatas();
   }
 }

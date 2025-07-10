@@ -25,12 +25,12 @@ import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 
 @Component({
-    selector: 'app-target-variable-stats',
-    templateUrl: './target-variable-stats.component.html',
-    styleUrls: ['./target-variable-stats.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [ToPrecisionPipe],
-    standalone: false
+  selector: 'app-target-variable-stats',
+  templateUrl: './target-variable-stats.component.html',
+  styleUrls: ['./target-variable-stats.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ToPrecisionPipe],
+  standalone: false,
 })
 export class TargetVariableStatsComponent
   extends SelectableComponent
@@ -109,11 +109,13 @@ export class TargetVariableStatsComponent
     if (changes?.inputDatas?.currentValue) {
       // Keep labels into displayedvalues to copy datas into clipboard
       this.displayedValues = [];
-      Object.keys(this.inputDatas?.datasets!).map((_key, i) => {
-        this.displayedValues.push({
-          name: this.inputDatas?.datasets[i]?.label,
+      if (this.inputDatas?.datasets) {
+        Object.keys(this.inputDatas.datasets).map((_key, i) => {
+          this.displayedValues.push({
+            name: this.inputDatas?.datasets[i]?.label,
+          });
         });
-      });
+      }
     }
   }
 }
