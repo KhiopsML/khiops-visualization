@@ -321,10 +321,15 @@ export class SaveService {
           (e) =>
             e.name === datas.coclusteringReport.dimensionSummaries[i]?.name,
         );
-      datas.coclusteringReport.dimensionSummaries[dimIndex]!.parts =
-        datas.coclusteringReport.dimensionHierarchies[
+      if (
+        datas.coclusteringReport.dimensionSummaries[dimIndex] &&
+        datas.coclusteringReport.dimensionHierarchies[dimIndex]
+      ) {
+        const leafCount = datas.coclusteringReport.dimensionHierarchies[
           dimIndex
-        ]!.clusters.filter((e) => e.isLeaf === true).length;
+        ].clusters.filter((e) => e.isLeaf === true).length;
+        datas.coclusteringReport.dimensionSummaries[dimIndex].parts = leafCount;
+      }
     }
 
     return datas;
@@ -645,11 +650,19 @@ export class SaveService {
     }
 
     const includedIntervals = UtilsService.findIncludedIntervals(
-      currentTruncatedPartition.intervals?.map((e) => e.bounds)!,
+      currentTruncatedPartition.intervals?.map((e) => e.bounds) || [],
     );
     if (includedIntervals.length > 0) {
       for (let k = includedIntervals.length - 1; k >= 0; k--) {
-        currentTruncatedPartition.intervals?.splice(includedIntervals[k]!, 1);
+        if (
+          currentTruncatedPartition.intervals &&
+          typeof includedIntervals[k] === 'number'
+        ) {
+          currentTruncatedPartition.intervals.splice(
+            includedIntervals[k] as number,
+            1,
+          );
+        }
       }
     }
 

@@ -33,18 +33,9 @@ export class HierarchyService {
       i < this.dimensionsDatasService.dimensionsDatas.dimensions.length;
       i++
     ) {
-      if (
-        this.hierarchyFold[
-          this.dimensionsDatasService.dimensionsDatas.dimensions[i]!.name
-        ] !== undefined
-      ) {
-        this.dimensionsDatasService.dimensionsDatas.dimensions[
-          i
-        ]?.setHierarchyFold(
-          this.hierarchyFold[
-            this.dimensionsDatasService.dimensionsDatas.dimensions[i]!.name
-          ],
-        );
+      const dim = this.dimensionsDatasService.dimensionsDatas.dimensions[i];
+      if (dim && this.hierarchyFold[dim.name] !== undefined) {
+        dim.setHierarchyFold(this.hierarchyFold[dim.name]);
       }
     }
   }
@@ -77,15 +68,11 @@ export class HierarchyService {
       i < this.dimensionsDatasService.dimensionsDatas.dimensions.length;
       i++
     ) {
+      const dim = this.dimensionsDatasService.dimensionsDatas.dimensions[i];
       // Remove dimension if unchecked
-      if (
-        this.dimensionsDatasService.dimensionsDatas.dimensions[i]
-          ?.hierarchyFold === false
-      ) {
+      if (dim?.hierarchyFold === false) {
         // @ts-ignore
-        delete collapsedNodes[
-          this.dimensionsDatasService.dimensionsDatas.dimensions[i]!.name
-        ];
+        delete collapsedNodes[dim.name];
       }
     }
     this.treenodesService.setSavedCollapsedNodes(collapsedNodes);
