@@ -33,6 +33,9 @@ export class FileLoaderService {
     this.initialize();
   }
 
+  /**
+   * Initializes the file loader service by setting up the initial state of fileLoaderDatas.
+   */
   initialize() {
     this.fileLoaderDatas = {
       isLoadingDatas: false,
@@ -42,15 +45,31 @@ export class FileLoaderService {
     };
   }
 
+  /**
+   * Returns the data loaded from a file.
+   *
+   * @returns The data loaded from a file.
+   */
   getDatas(): any {
     return this.fileLoaderDatas;
   }
 
+  /**
+   * Sets the data loaded from a file and emits it through the fileLoaded BehaviorSubject.
+   *
+   * @param datas - The data to set.
+   */
   setDatas(datas: any): any {
     this.fileLoaderDatas.datas = datas;
     this.fileLoaded.next(datas);
   }
 
+  /**
+   * Debugs the reading of visualization files.
+   *
+   * @param fileName - The name of the file to read.
+   * @returns The file data or an error message.
+   */
   debugReadDatas(fileName?: string): any {
     // Visualization files
     // ===================
@@ -181,6 +200,14 @@ export class FileLoaderService {
     return this.readWebFile(url);
   }
 
+  /**
+   * Reads a file from a given URL and returns its content as a Promise.
+   * If the file is successfully read, it resolves with the data.
+   * If an error occurs, it rejects with a status code of 500.
+   *
+   * @param url - The URL of the file to read.
+   * @returns A Promise that resolves with the file data or rejects with an error.
+   */
   readWebFile(url: string): any {
     this.fileLoaderDatas.isLoadingDatas = true;
     this.setDatas(undefined);
@@ -211,6 +238,14 @@ export class FileLoaderService {
     });
   }
 
+  /**
+   * Reads a file from the local file system and returns its content as a Promise.
+   * If the file is successfully read, it resolves with the data.
+   * If an error occurs, it rejects with an error message.
+   *
+   * @param filename - The name of the file to read.
+   * @returns A Promise that resolves with the file data or rejects with an error.
+   */
   readFile(filename: any) {
     this.fileLoaderDatas.isLoadingDatas = true;
     this.fileLoaderDatas.isBigJsonFile = false;
@@ -235,10 +270,18 @@ export class FileLoaderService {
     });
   }
 
+  /**
+   * Closes the currently opened file and resets the file loader state.
+   */
   closeFile() {
     this.setDatas(undefined);
   }
 
+  /**
+   * Sets the file history in local storage.
+   *
+   * @param filename - The name of the file to add to the history.
+   */
   setFileHistory(filename: any) {
     const currentLs = this.ls.get(LS.OPEN_FILE);
     let parsedLs: any = {
@@ -265,6 +308,11 @@ export class FileLoaderService {
     this.ls.set(LS.OPEN_FILE, parsedLs);
   }
 
+  /**
+   * Retrieves the file history from local storage.
+   *
+   * @returns The file history object containing a list of opened files.
+   */
   getFileHistory() {
     const currentLs = this.ls.get(LS.OPEN_FILE);
     if (currentLs) {

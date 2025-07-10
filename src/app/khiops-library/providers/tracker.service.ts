@@ -31,6 +31,12 @@ export class TrackerService {
     private translate: TranslateService,
   ) {}
 
+  /**
+   * Initializes the tracker service by checking the cookie consent status.
+   * If the user has never set a preference, it shows a cookie consent dialog.
+   * If the user has refused cookies, it sends an event to forget consent.
+   * If the user has accepted cookies, it sends an event to set consent.
+   */
   initTracker() {
     const cookieStatus = this.getCookieStatus();
 
@@ -51,6 +57,12 @@ export class TrackerService {
     }
   }
 
+  /**
+   * Retrieves the cookie consent status from local storage.
+   * If the status is 'true', it returns true; if 'false', it returns false.
+   * If the status is not set, it returns undefined.
+   * @returns {boolean | undefined} The cookie consent status.
+   */
   getCookieStatus(): boolean | undefined {
     const cookieStatus = this.ls.get(LS.COOKIE_CONSENT);
     if (cookieStatus !== undefined) {
@@ -60,6 +72,9 @@ export class TrackerService {
     }
   }
 
+  /**
+   * Shows the cookie consent dialog to the user.
+   */
   showCookieConsentDialog() {
     this.ngzone.run(() => {
       this.dialogRef.closeAll();
@@ -102,6 +117,13 @@ export class TrackerService {
     });
   }
 
+  /**
+   * Tracks an event by sending it to the config service.
+   * @param category - The category of the event.
+   * @param action - The action of the event.
+   * @param name - The name of the event (optional).
+   * @param value - The value of the event (optional).
+   */
   trackEvent(category: string, action: string, name?: string, value?: any) {
     this.configService.getConfig().onSendEvent?.({
       message: 'trackEvent',

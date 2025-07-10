@@ -158,10 +158,20 @@ export class UtilsService {
     return (freqLineVals! * freqColVal!) / totalFreqs!;
   }
 
+  /**
+   * Capitalizes the first letter of a string.
+   * @param string - The input string to capitalize.
+   * @returns
+   */
   static capitalizeFirstLetter(string: string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
+  /**
+   * Extracts the file name from a file path.
+   * @param path - The file path to extract the file name from.
+   * @returns The extracted file name.
+   */
   static getFileNameFromPath(path: string) {
     let filename;
     filename = path.substring(path.lastIndexOf('/') + 1);
@@ -550,39 +560,6 @@ export class UtilsService {
     total: number,
     defaultIndex?: number,
   ): number[] {
-    // const percentArray = [];
-    // percentArray.push(0);
-    // const arrayLength = array.reduce(
-    //   (acc, arr) => acc + (Array.isArray(arr) ? arr.length : 0),
-    //   0,
-    // );
-
-    // let multiple = 1;
-    // let currentMultiple = 1;
-    // let totalLength = arrayTotal;
-    // if (arrayLength !== arrayTotal) {
-    //   multiple = arrayTotal - array.length + 1;
-    //   if (multiple > arrayTotal / 2) {
-    //     multiple = Math.floor(arrayTotal / 2);
-    //   }
-    //   totalLength = arrayLength + multiple - 1;
-    // }
-
-    // for (let i = 0; i < array.length; i++) {
-    //   if (arrayLength !== arrayTotal) {
-    //     if (defaultGroupIndex !== i) {
-    //       currentMultiple = 1;
-    //     } else {
-    //       currentMultiple = multiple;
-    //     }
-    //   }
-
-    //   percentArray.push(
-    //     (array[i]!.length * 100 * currentMultiple) / totalLength +
-    //       percentArray[i]!,
-    //   );
-    // }
-    // return percentArray;
     const percents = [0];
     const length = array.reduce(
       (sum, item) => sum + (Array.isArray(item) ? item.length : 0),
@@ -877,10 +854,22 @@ export class UtilsService {
     return res;
   }
 
+  /**
+   * Checks if an object is empty (i.e., has no own enumerable properties).
+   *
+   * @param obj - The object to check.
+   * @returns `true` if the object is empty, otherwise `false`.
+   */
   static isEmpty(obj: any) {
     return Object.keys(obj).length === 0;
   }
 
+  /**
+   * Checks if a value is numeric.
+   *
+   * @param n - The value to check.
+   * @returns `true` if the value is numeric, otherwise `false`.
+   */
   static isNumeric(n: any) {
     return !isNaN(parseFloat(n)) && isFinite(n);
   }
@@ -1224,6 +1213,13 @@ export class UtilsService {
     return null;
   }
 
+  /**
+   * Converts a hexadecimal color code to an RGBA color string.
+   *
+   * @param hex - The hexadecimal color code in the format `#RRGGBB` or `#RGB`.
+   * @param alpha - The alpha (opacity) value for the RGBA color. Defaults to 1.
+   * @returns An RGBA color string in the format `rgba(r, g, b, alpha)`.
+   */
   static hexToRGBa(hex: string, alpha = 1) {
     if (hex) {
       const r = parseInt(hex.slice(1, 3), 16),
@@ -1240,6 +1236,12 @@ export class UtilsService {
     }
   }
 
+  /**
+   * Converts a hexadecimal color code to an RGB object.
+   *
+   * @param hex - The hexadecimal color code in the format `#RRGGBB` or `#RGB`.
+   * @returns An object containing the red, green, and blue components of the color.
+   */
   static hexToRgb(hex: string) {
     const bigint = parseInt(hex.slice(1), 16);
     const r = (bigint >> 16) & 255;

@@ -1,4 +1,10 @@
 import { ViewLayoutVO } from '../../khiops-covisualization/model/view-layout.model';
+
+/**
+ * Initializes the local storage with default view layout settings.
+ *
+ * @returns {ViewLayoutVO} The initialized view layout object with default settings.
+ */
 export function initLS() {
   let ls: ViewLayoutVO = new ViewLayoutVO();
   // @ts-ignore

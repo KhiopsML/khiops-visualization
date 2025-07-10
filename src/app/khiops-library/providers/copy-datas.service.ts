@@ -20,6 +20,11 @@ export class CopyDatasService {
     private configService: ConfigService,
   ) {}
 
+  /**
+   * Copies the data from the selected area to the clipboard.
+   *
+   * @param selectedArea - The area containing the data to copy.
+   */
   copyDatasToClipboard(selectedArea: DynamicI) {
     // console.log(
     //   '​CopyDatasService -> copyDatasToClipboard -> selectedArea',
@@ -85,6 +90,12 @@ export class CopyDatasService {
     }
   }
 
+  /**
+   * Formats the data for a key-value histogram.
+   *
+   * @param selectedArea - The area containing the histogram data.
+   * @returns A formatted string representing the histogram data.
+   */
   getKvHistogramDatas(selectedArea: DynamicI): string {
     let formattedDatas = '';
 
@@ -108,6 +119,12 @@ export class CopyDatasService {
     return formattedDatas;
   }
 
+  /**
+   * Formats the data for a matrix.
+   *
+   * @param selectedArea - The area containing the matrix data.
+   * @returns A formatted string representing the matrix data.
+   */
   getMatrixDatas(selectedArea: DynamicI) {
     let formattedDatas = '';
 
@@ -145,6 +162,12 @@ export class CopyDatasService {
     return formattedDatas;
   }
 
+  /**
+   * Formats the data for a 1D bar chart.
+   *
+   * @param selectedArea - The area containing the 1D bar chart data.
+   * @returns A formatted string representing the 1D bar chart data.
+   */
   get1dBarChartDatas(selectedArea: DynamicI) {
     let formattedDatas = '';
 
@@ -163,6 +186,12 @@ export class CopyDatasService {
     return formattedDatas;
   }
 
+  /**
+   * Formats the data for a multi-dimensional line chart.
+   *
+   * @param selectedArea - The area containing the line chart data.
+   * @returns A formatted string representing the line chart data.
+   */
   getNdLineChart(selectedArea: any) {
     let formattedDatas = '';
 
@@ -192,6 +221,12 @@ export class CopyDatasService {
     return formattedDatas;
   }
 
+  /**
+   * Formats the data for a multi-dimensional bar chart.
+   *
+   * @param selectedArea - The area containing the bar chart data.
+   * @returns A formatted string representing the bar chart data.
+   */
   getNdBarChartDatas(selectedArea: DynamicI) {
     let formattedDatas = '';
     // TITLE
@@ -229,6 +264,12 @@ export class CopyDatasService {
     return formattedDatas;
   }
 
+  /**
+   * Formats the data for a key-value tree.
+   *
+   * @param selectedArea - The area containing the tree data.
+   * @returns A formatted string representing the tree data.
+   */
   getInformationsDatas(selectedArea: DynamicI) {
     let formattedDatas = '';
 
@@ -248,6 +289,12 @@ export class CopyDatasService {
     return formattedDatas;
   }
 
+  /**
+   * Formats the data for a key-value descriptions.
+   *
+   * @param selectedArea - The area containing the descriptions data.
+   * @returns A formatted string representing the descriptions data.
+   */
   getDescriptionsDatas(selectedArea: DynamicI) {
     let formattedDatas = '';
 
@@ -257,6 +304,12 @@ export class CopyDatasService {
     return formattedDatas;
   }
 
+  /**
+   * Formats the data for external data.
+   *
+   * @param selectedArea - The area containing the external data.
+   * @returns A formatted string representing the external data.
+   */
   getExternalDatas(selectedArea: any) {
     let formattedDatas = '';
 
@@ -269,6 +322,12 @@ export class CopyDatasService {
     return formattedDatas;
   }
 
+  /**
+   * Formats the data for a key-value tree.
+   *
+   * @param selectedArea - The area containing the tree data.
+   * @returns A formatted string representing the tree data.
+   */
   getKvTreeDatas(selectedArea: DynamicI) {
     let formattedDatas = '';
 
@@ -297,6 +356,12 @@ export class CopyDatasService {
     return formattedDatas;
   }
 
+  /**
+   * Formats the data for a key-value tree.
+   *
+   * @param selectedArea - The area containing the tree data.
+   * @returns A formatted string representing the tree data.
+   */
   getTreeDatas(selectedArea: DynamicI) {
     let formattedDatas = '';
 
@@ -379,6 +444,12 @@ export class CopyDatasService {
     return formattedDatas;
   }
 
+  /**
+   * Formats the data for a table or grid.
+   *
+   * @param selectedArea - The area containing the table or grid data.
+   * @returns A formatted string representing the table or grid data.
+   */
   getTableDatas(selectedArea: DynamicI) {
     let formattedDatas = '';
 

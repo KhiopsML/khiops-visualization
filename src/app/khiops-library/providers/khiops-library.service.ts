@@ -42,22 +42,48 @@ export class KhiopsLibraryService {
     ];
   }
 
+  /**
+   * Returns the set of colors used for graph visualizations.
+   *
+   * @returns An array of `ChartColorsSetI` objects, each containing a `domain` property
+   *          with an array of color strings.
+   */
   getGraphColorSet(): ChartColorsSetI[] {
     return this.graphColorSet;
   }
 
+  /**
+   * Sets the application configuration.
+   *
+   * @param config - The configuration object to set.
+   */
   setAppConfig(config: any) {
     this.appConfig = config;
   }
 
+  /**
+   * Retrieves the application configuration.
+   *
+   * @returns The application configuration object.
+   */
   getAppConfig(): any {
     return this.appConfig;
   }
 
+  /**
+   * Checks if the current application is Khiops Covisu.
+   *
+   * @returns A boolean indicating whether the application is Khiops Covisu.
+   */
   isKhiopsCovisu(): boolean {
     return this.getAppConfig().common.GLOBAL.DEBUG_SOFTWARE_LABEL === 'KC';
   }
 
+  /**
+   * Checks if the current application is Khiops Visu.
+   *
+   * @returns A boolean indicating whether the application is Khiops Visu.
+   */
   isKhiopsVisu(): boolean {
     return this.getAppConfig().common.GLOBAL.DEBUG_SOFTWARE_LABEL === 'KV';
   }

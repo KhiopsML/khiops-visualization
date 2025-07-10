@@ -17,6 +17,12 @@ export class LayoutService {
 
   constructor(private ls: Ls) {}
 
+  /**
+   * Initializes the layout service with default split sizes.
+   * It retrieves stored split sizes from local storage and sets them to the provided splitSizes.
+   * If no stored values are found, it uses the provided splitSizes as defaults.
+   * @param splitSizes - The default split sizes to initialize with.
+   */
   initialize(splitSizes: any) {
     this.splitSizes = splitSizes;
 
@@ -29,24 +35,49 @@ export class LayoutService {
     );
   }
 
+  /**
+   * Retrieves the split sizes for a specific view.
+   * @param view - The view for which to get the split sizes.
+   * @returns The split sizes for the specified view.
+   */
   getViewSplitSizes(view: any): any {
     return this.splitSizes[view];
   }
 
+  /**
+   * Retrieves the split sizes for all views.
+   * @returns The split sizes object containing sizes for all views.
+   */
   getSplitSizes(): any {
     return this.splitSizes;
   }
 
+  /**
+   * Sets the split sizes for a specific view and updates the local storage.
+   * @param view - The view for which to set the split sizes.
+   * @param sizes - The sizes to set for the specified view.
+   */
   setViewSplitSizes(view: string, sizes: any) {
     this.splitSizes[view] = sizes;
     this.setSplitSizes(this.splitSizes);
   }
 
+  /**
+   * Sets the split sizes for all views and updates the local storage.
+   * @param splitSizes - The new split sizes to set for all views.
+   */
   setSplitSizes(splitSizes: any) {
     this.splitSizes = splitSizes;
     this.ls.set(LS.SPLIT_SIZES, this.splitSizes);
   }
 
+  /**
+   * Resizes an item and updates the split sizes for the specified view.
+   * @param item - The item to resize.
+   * @param sizes - The current split sizes.
+   * @param itemSize - The new size for the item.
+   * @param view - The view for which to update the split sizes.
+   */
   resizeAndSetSplitSizes(
     item: string,
     sizes: any,
@@ -63,6 +94,11 @@ export class LayoutService {
     }
   }
 
+  /**
+   * Switches the split sizes between two views.
+   * @param oldPosition - The old position of the view.
+   * @param newPosition - The new position of the view.
+   */
   switchSplitSizes(oldPosition: number, newPosition: number) {
     const oldView =
       oldPosition === 0 || oldPosition === 1 ? 'axisView' : 'contextView';
