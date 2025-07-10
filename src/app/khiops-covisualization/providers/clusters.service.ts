@@ -47,11 +47,11 @@ export class ClustersService {
         this.dimensionsDatasService.dimensionsDatas.selectedDimensions.length;
         i++
       ) {
-        details.push(
-          this.getCurrentClusterDetailsFromNode(
-            this.dimensionsDatasService.dimensionsDatas.dimensionsTrees[i]!,
-          ),
-        );
+        const dimTree =
+          this.dimensionsDatasService.dimensionsDatas.dimensionsTrees[i];
+        if (dimTree) {
+          details.push(this.getCurrentClusterDetailsFromNode(dimTree));
+        }
       }
     }
     return details;
@@ -71,10 +71,12 @@ export class ClustersService {
         this.dimensionsDatasService.dimensionsDatas.selectedDimensions.length;
         i++
       ) {
-        currentCellsPerCluster =
-          currentCellsPerCluster *
-          this.dimensionsDatasService.dimensionsDatas.selectedDimensions[i]!
-            .currentHierarchyClusterCount;
+        const selectedDim =
+          this.dimensionsDatasService.dimensionsDatas.selectedDimensions[i];
+        if (selectedDim) {
+          currentCellsPerCluster =
+            currentCellsPerCluster * selectedDim.currentHierarchyClusterCount;
+        }
       }
     }
     return currentCellsPerCluster;
@@ -101,10 +103,12 @@ export class ClustersService {
         if (currentNode?.isCollapsed) {
           currentClusterDetailsFromNode.push(currentNode);
         } else {
-          this.getCurrentClusterDetailsFromNode(
-            currentNode!.children,
-            currentClusterDetailsFromNode,
-          );
+          if (currentNode && currentNode.children) {
+            this.getCurrentClusterDetailsFromNode(
+              currentNode.children,
+              currentClusterDetailsFromNode,
+            );
+          }
         }
       }
     }
@@ -121,8 +125,9 @@ export class ClustersService {
     position: number,
   ): ChartDatasModel | undefined {
     let filteredDimensionsClusters: TreeNodeModel[] = [];
+    if (!this.dimensionsDatasService.dimensionsDatas) return undefined;
     filteredDimensionsClusters = this.getCurrentClusterDetailsFromNode(
-      this.dimensionsDatasService.dimensionsDatas.dimensionsTrees[0]!,
+      this.dimensionsDatasService.dimensionsDatas.dimensionsTrees[0] || [],
     );
     let selectedNode =
       this.dimensionsDatasService.dimensionsDatas.selectedNodes[0];
@@ -132,7 +137,7 @@ export class ClustersService {
 
     if (position === 1) {
       filteredDimensionsClusters = this.getCurrentClusterDetailsFromNode(
-        this.dimensionsDatasService.dimensionsDatas.dimensionsTrees[1]!,
+        this.dimensionsDatasService.dimensionsDatas.dimensionsTrees[1] || [],
       );
       selectedNode =
         this.dimensionsDatasService.dimensionsDatas.selectedNodes[1];
@@ -162,15 +167,19 @@ export class ClustersService {
       {
         mode: MATRIX_MODES.FREQUENCY,
       },
-      this.dimensionsDatasService.dimensionsDatas.matrixDatas.matrixCellDatas!,
+      (this.dimensionsDatasService.dimensionsDatas.matrixDatas &&
+        this.dimensionsDatasService.dimensionsDatas.matrixDatas
+          .matrixCellDatas) ||
+        [],
       this.dimensionsDatasService.dimensionsDatas.contextSelection,
       -1,
     );
 
     const currentDataSet = new ChartDatasetModel(
-      this.dimensionsDatasService.dimensionsDatas.selectedNodes[
-        position
-      ]!.shortDescription,
+      (this.dimensionsDatasService.dimensionsDatas.selectedNodes[position] &&
+        this.dimensionsDatasService.dimensionsDatas.selectedNodes[position]
+          .shortDescription) ||
+        '',
     );
 
     let distributionsGraphDetails: ChartDatasModel | undefined =
@@ -193,7 +202,7 @@ export class ClustersService {
     let filteredotherList =
       this.dimensionsDatasService.dimensionsDatas?.matrixDatas?.matrixCellDatas?.map(
         (e: CellModel) => e[axisPartName as keyof CellModel],
-      );
+      ) || [];
     filteredotherList = [...new Set(filteredotherList)]; // keep uniq
 
     const matrixCellFreqDataMap =
@@ -213,13 +222,13 @@ export class ClustersService {
               ? `${otherelement}-${element}`
               : `${element}-${otherelement}`;
 
-          const cell = matrixCellFreqDataMap?.[key];
+          const cell = matrixCellFreqDataMap && matrixCellFreqDataMap[key];
 
-          if (cell !== undefined) {
+          if (cell !== undefined && matrixValues) {
             if (!currentDataSetData[labelIndex]) {
-              currentDataSetData[labelIndex] = matrixValues![cell];
+              currentDataSetData[labelIndex] = matrixValues[cell];
             } else {
-              currentDataSetData[labelIndex] += matrixValues![cell]!;
+              currentDataSetData[labelIndex] += matrixValues[cell] || 0;
             }
           }
         }
@@ -424,19 +433,21 @@ export class ClustersService {
     dimensionsTree: TreeNodeModel[] | undefined,
     selectedDimension: DimensionCovisualizationModel | undefined,
   ): ClusterDetailsModel[] {
-    let filteredDimensionsClusters: ClusterDetailsModel[] = [];
+    const filteredDimensionsClusters: ClusterDetailsModel[] = [];
     if (dimensionsTree && selectedDimension && dimensionsTree) {
       const filteredDimensionsClustersDatas = [].concat(
         // @ts-ignore
         this.getCurrentClusterDetailsFromNode(dimensionsTree),
       );
       for (let i = 0; i < filteredDimensionsClustersDatas.length; i++) {
+        const currentNode = filteredDimensionsClustersDatas[i];
+        if (!currentNode) continue;
         const currentNodesNames =
           this.dimensionsDatasService.dimensionsDatas?.nodesNames[
             selectedDimension.name
           ];
         const clusterDetails: ClusterDetailsModel = new ClusterDetailsModel(
-          filteredDimensionsClustersDatas[i]!,
+          currentNode,
           currentNodesNames,
         );
 

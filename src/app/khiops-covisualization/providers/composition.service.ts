@@ -19,7 +19,7 @@ import { CompositionUtils } from './composition.utils.service';
   providedIn: 'root',
 })
 export class CompositionService {
-  public compositionValues!: CompositionModel[];
+  public compositionValues: CompositionModel[] = [];
 
   constructor(
     private appService: AppService,
@@ -58,20 +58,24 @@ export class CompositionService {
             },
           );
         const position = currentDimensionDetails.startPosition;
+        const dimSummary =
+          this.appService.initialDatas.coclusteringReport.dimensionSummaries[
+            position
+          ];
+        if (!dimSummary) {
+          return [];
+        }
         const currentInitialDimensionDetails: DimensionCovisualizationModel =
-          new DimensionCovisualizationModel(
-            this.appService.initialDatas.coclusteringReport.dimensionSummaries[
-              position
-            ]!,
-            currentIndex,
-          );
+          new DimensionCovisualizationModel(dimSummary, currentIndex);
         const dimensionPartition =
           this.appService.initialDatas.coclusteringReport.dimensionPartitions[
             position
           ];
-
         // Set dimension partitions from intervals or valueGroup
-        currentInitialDimensionDetails.setPartition(dimensionPartition!);
+        if (!dimensionPartition) {
+          return [];
+        }
+        currentInitialDimensionDetails.setPartition(dimensionPartition);
 
         if (currentDimensionDetails?.isVarPart) {
           // Individuals * Variables case
@@ -339,10 +343,15 @@ export class CompositionService {
     const modelsByVariable: Record<string, CompositionModel[]> = {};
 
     models.forEach((model) => {
-      if (!modelsByVariable[model.innerVariable!]) {
-        modelsByVariable[model.innerVariable!] = [];
+      if (model.innerVariable !== undefined) {
+        if (!modelsByVariable[model.innerVariable]) {
+          modelsByVariable[model.innerVariable] = [];
+        }
+        const arr = modelsByVariable[model.innerVariable];
+        if (arr) {
+          arr.push(model);
+        }
       }
-      modelsByVariable[model.innerVariable!]!.push(model);
     });
 
     // Process each group separately
@@ -358,7 +367,8 @@ export class CompositionService {
       }
 
       // Get the type of the variable
-      const variableType = variableModels?.[0]!.innerVariableType;
+      const variableType =
+        variableModels?.[0] && variableModels[0].innerVariableType;
 
       if (variableType === TYPES.CATEGORICAL) {
         // For categorical variables, merge all models with the same innerVariable
@@ -401,7 +411,7 @@ export class CompositionService {
         };
 
         // Update valueGroups in the merged model
-        if (baseModel?.valueGroups) {
+        if (baseModel && baseModel.valueGroups) {
           mergedCategoricalModel.valueGroups = {
             ...baseModel.valueGroups,
             values: allValues, // Use the full list of values
@@ -467,7 +477,10 @@ export class CompositionService {
               ? CompositionUtils.sortIntervals(allPartDetails)
               : undefined,
           _id: variableModels?.map((m) => m._id).join('_') + '_merged',
-          value: baseModel?.innerVariable + ' ' + allParts.join(', '), // Use all parts for the value representation
+          value:
+            baseModel && baseModel.innerVariable
+              ? baseModel.innerVariable + ' ' + allParts.join(', ')
+              : allParts.join(', '),
         };
 
         // @ts-ignore
