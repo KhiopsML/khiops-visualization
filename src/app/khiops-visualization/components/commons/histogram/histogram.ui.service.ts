@@ -36,12 +36,17 @@ export class HistogramUIService {
       let y = event.pageY - canvasPosition.top;
 
       for (let i = 0; i < datas.length; i++) {
+        const coords = datas?.[i]?.coords;
         if (
-          y > datas?.[i]?.coords?.y! &&
-          y <
-            datas?.[i]?.coords?.y! + datas?.[i]?.coords?.barH! + yPadding / 2 &&
-          x > datas?.[i]?.coords?.x! &&
-          x < datas?.[i]?.coords?.x! + datas?.[i]?.coords?.barW!
+          coords &&
+          typeof coords.y === 'number' &&
+          typeof coords.barH === 'number' &&
+          typeof coords.x === 'number' &&
+          typeof coords.barW === 'number' &&
+          y > coords.y &&
+          y < coords.y + coords.barH + yPadding / 2 &&
+          x > coords.x &&
+          x < coords.x + coords.barW
         ) {
           return i;
         }
@@ -84,7 +89,9 @@ export class HistogramUIService {
 
   static initCanvasContext(canvas: HTMLCanvasElement, w: number, h: number) {
     const ctx = canvas.getContext('2d');
-    ctx!.imageSmoothingEnabled = true;
+    if (ctx) {
+      ctx.imageSmoothingEnabled = true;
+    }
     canvas.width = w;
     canvas.height = h;
     return ctx;
