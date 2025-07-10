@@ -30,10 +30,10 @@ import { LS } from '@khiops-library/enum/ls';
 import { AppService } from '@khiops-visualization/providers/app.service';
 
 @Component({
-    selector: 'app-variable-graph-details',
-    templateUrl: './variable-graph-details.component.html',
-    styleUrls: ['./variable-graph-details.component.scss'],
-    standalone: false
+  selector: 'app-variable-graph-details',
+  templateUrl: './variable-graph-details.component.html',
+  styleUrls: ['./variable-graph-details.component.scss'],
+  standalone: false,
 })
 export class VariableGraphDetailsComponent implements OnInit, OnChanges {
   @ViewChild('distributionGraph', {
@@ -89,9 +89,11 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
       setTimeout(
         () => {
           if (this.showTargetDistributionGraph) {
-            this.distributionDatasService.getTargetDistributionGraphDatas(
-              this.selectedVariable!,
-            );
+            if (this.selectedVariable) {
+              this.distributionDatasService.getTargetDistributionGraphDatas(
+                this.selectedVariable,
+              );
+            }
           }
         },
         this.isLoading ? 100 : 0,
@@ -103,39 +105,47 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
       this.initActiveEntries(this.selectedGraphItemIndex);
 
       this.distributionDatasService.setPreparationSource(
-        this.preparationSource!,
+        this.preparationSource || '',
       );
       this.isLoading =
         !this.isHistogramDisplayed() &&
         this.distributionDatasService.isBigDistributionVariable(
-          this.selectedVariable?.rank!,
+          this.selectedVariable?.rank ?? '',
         );
 
       setTimeout(
         () => {
           if (this.showTargetDistributionGraph) {
-            this.distributionDatasService.getTargetDistributionGraphDatas(
-              this.selectedVariable!,
-            );
+            if (this.selectedVariable) {
+              this.distributionDatasService.getTargetDistributionGraphDatas(
+                this.selectedVariable,
+              );
+            }
           }
           if (this.showDistributionGraph) {
             // Reinit datas
-            this.distributionDatas!.histogramDatas = undefined;
-            this.distributionDatas!.distributionGraphDatas = undefined;
+            if (this.distributionDatas) {
+              this.distributionDatas.histogramDatas = undefined;
+              this.distributionDatas.distributionGraphDatas = undefined;
+            }
 
             if (this.isHistogramDisplayed()) {
-              this.distributionDatasService.getHistogramGraphDatas(
-                this.selectedVariable!,
-              );
+              if (this.selectedVariable) {
+                this.distributionDatasService.getHistogramGraphDatas(
+                  this.selectedVariable,
+                );
+              }
             } else {
-              this.distributionDatasService.getdistributionGraphDatas(
-                this.selectedVariable!,
-              );
+              if (this.selectedVariable) {
+                this.distributionDatasService.getdistributionGraphDatas(
+                  this.selectedVariable,
+                );
+              }
             }
           }
 
           this.preparationDatasService.getCurrentIntervalDatas(
-            this.preparationSource!,
+            this.preparationSource || '',
           );
           this.isLoading = false;
         },
@@ -210,30 +220,39 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
     this.distributionDatasService.setTargetDistributionDisplayedValues(
       displayedValues,
     );
-    this.distributionDatasService.getTargetDistributionGraphDatas(
-      this.getCurrentVariable()!,
-      this.targetDistributionGraphType!,
-    );
+    const currentVariable = this.getCurrentVariable();
+    if (currentVariable) {
+      this.distributionDatasService.getTargetDistributionGraphDatas(
+        currentVariable,
+        this.targetDistributionGraphType || undefined,
+      );
+    }
     this.initActiveEntries();
   }
 
   onTargetDistributionGraphTypeChanged(type: string) {
     this.targetDistributionGraphType = type;
-    this.distributionDatasService.getTargetDistributionGraphDatas(
-      this.getCurrentVariable()!,
-      this.targetDistributionGraphType,
-      false,
-    );
+    const currentVariable = this.getCurrentVariable();
+    if (currentVariable) {
+      this.distributionDatasService.getTargetDistributionGraphDatas(
+        currentVariable,
+        this.targetDistributionGraphType,
+        false,
+      );
+    }
     this.initActiveEntries(this.selectedGraphItemIndex);
   }
 
   onDistributionGraphTypeChanged(type: string) {
     this.distributionGraphType = type;
-    this.distributionDatasService.getdistributionGraphDatas(
-      this.getCurrentVariable()!,
-      this.distributionGraphType,
-      false,
-    );
+    const currentVariable = this.getCurrentVariable();
+    if (currentVariable) {
+      this.distributionDatasService.getdistributionGraphDatas(
+        currentVariable,
+        this.distributionGraphType,
+        false,
+      );
+    }
     this.initActiveEntries(this.selectedGraphItemIndex);
   }
 
@@ -243,7 +262,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
       selectedVariable = this.treePreparationDatasService.getSelectedVariable();
     } else {
       selectedVariable = this.preparationDatasService.getSelectedVariable(
-        this.preparationSource!,
+        this.preparationSource || '',
       );
     }
     return selectedVariable;
@@ -260,10 +279,12 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
   }
 
   onInterpretableHistogramChanged(index: number) {
-    this.distributionDatasService.getHistogramGraphDatas(
-      this.selectedVariable!,
-      index,
-    );
+    if (this.selectedVariable) {
+      this.distributionDatasService.getHistogramGraphDatas(
+        this.selectedVariable,
+        index,
+      );
+    }
   }
 
   onSelectedTargetDistributionGraphItemChanged(index: number) {
@@ -275,8 +296,9 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
 
   hideScaleElt() {
     return (
-      this.distributionDatas?.histogramDatas ||
-      this.distributionDatas?.distributionGraphDatas?.labels?.length! < 10
+      (this.distributionDatas?.histogramDatas !== undefined &&
+        this.distributionDatas?.histogramDatas !== null) ||
+      (this.distributionDatas?.distributionGraphDatas?.labels?.length ?? 0) < 10
     );
   }
 }
