@@ -28,7 +28,7 @@ import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.c
   providedIn: 'root',
 })
 export class DimensionsDatasService {
-  public dimensionsDatas!: DimensionsDatasModel;
+  public dimensionsDatas: DimensionsDatasModel = new DimensionsDatasModel();
 
   constructor(
     private importExtDatasService: ImportExtDatasService,
@@ -223,9 +223,12 @@ export class DimensionsDatasService {
     const dimensions = this.getSelectedDimensions();
     if (dimensions) {
       for (let i = 0; i < dimensions.length; i++) {
-        selectedDimensions.push({
-          name: dimensions[i]!.name,
-        });
+        const dim = dimensions[i];
+        if (dim && typeof dim.name === 'string') {
+          selectedDimensions.push({
+            name: dim.name,
+          });
+        }
       }
     }
     return selectedDimensions;
@@ -358,9 +361,11 @@ export class DimensionsDatasService {
       this.dimensionsDatas.contextDimensions = [];
       for (let i = 2; i < this.dimensionsDatas.dimensions.length; i++) {
         const selectedDimension = this.dimensionsDatas.selectedDimensions[i];
-        this.dimensionsDatas.contextDimensions.push(selectedDimension!);
-        this.dimensionsDatas.contextDimensionCount =
-          this.dimensionsDatas.contextDimensionCount + 1;
+        if (selectedDimension) {
+          this.dimensionsDatas.contextDimensions.push(selectedDimension);
+          this.dimensionsDatas.contextDimensionCount =
+            this.dimensionsDatas.contextDimensionCount + 1;
+        }
       }
       this.dimensionsDatas.contextSelection = new Array(
         this.dimensionsDatas.contextDimensions.length,
@@ -375,7 +380,9 @@ export class DimensionsDatasService {
           const dimension = this.dimensionsDatas.selectedDimensions.find(
             (e) => e.name === savedSelectedDimensions[i].name,
           );
-          dimension && this.updateSelectedDimension(dimension, i);
+          if (dimension) {
+            this.updateSelectedDimension(dimension, i);
+          }
         }
       }
     }
@@ -608,18 +615,35 @@ export class DimensionsDatasService {
         this.dimensionsDatas.selectedDimensions[1];
       const zDimension: DimensionCovisualizationModel[] = [];
       for (let i = 2; i < this.dimensionsDatas.selectedDimensions.length; i++) {
-        zDimension.push(this.dimensionsDatas.selectedDimensions[i]!);
+        if (this.dimensionsDatas.selectedDimensions[i]) {
+          zDimension.push(
+            this.dimensionsDatas.selectedDimensions[
+              i
+            ] as DimensionCovisualizationModel,
+          );
+        }
       }
 
       const zType: string[] = [];
       for (let i = 2; i < this.dimensionsDatas.selectedDimensions.length; i++) {
-        zType.push(this.dimensionsDatas.selectedDimensions[i]!.type);
+        if (this.dimensionsDatas.selectedDimensions[i]) {
+          const dim = this.dimensionsDatas.selectedDimensions[i];
+          if (dim) {
+            zType.push(dim.type);
+          }
+        }
       }
 
       // context is an array of array (may have multiple contexts)
       const zDimensionClusters: TreeNodeModel[][] = [];
       for (let i = 2; i < this.dimensionsDatas.dimensionsClusters.length; i++) {
-        zDimensionClusters.push(this.dimensionsDatas.dimensionsClusters[i]!);
+        if (this.dimensionsDatas.dimensionsClusters[i]) {
+          zDimensionClusters.push(
+            this.dimensionsDatas.dimensionsClusters[i] as TreeNodeModel[],
+          );
+        } else {
+          zDimensionClusters.push([]);
+        }
       }
 
       const xDimensionLeafs: Interval[] | ValueGroup[] | undefined =
@@ -640,17 +664,17 @@ export class DimensionsDatasService {
       const yDimensionLeafsShortDescription = yDimensionLeafsNames
         ? [...yDimensionLeafsNames]
         : [];
-      if (this.dimensionsDatas?.nodesNames?.[xDimension!.name]) {
+      if (xDimension && this.dimensionsDatas?.nodesNames?.[xDimension.name]) {
         for (const [key, value] of Object.entries(
-          this.dimensionsDatas.nodesNames[xDimension!.name],
+          this.dimensionsDatas.nodesNames[xDimension.name],
         )) {
           const index = xDimensionLeafsShortDescription.indexOf(key);
           xDimensionLeafsShortDescription.splice(index, 1, value as string);
         }
       }
-      if (this.dimensionsDatas?.nodesNames?.[yDimension!.name]) {
+      if (yDimension && this.dimensionsDatas?.nodesNames?.[yDimension.name]) {
         for (const [key, value] of Object.entries(
-          this.dimensionsDatas.nodesNames[yDimension!.name],
+          this.dimensionsDatas.nodesNames[yDimension.name],
         )) {
           const index = yDimensionLeafsShortDescription.indexOf(key);
           yDimensionLeafsShortDescription.splice(index, 1, value as string);
@@ -666,7 +690,10 @@ export class DimensionsDatasService {
       const cellFrequencies = MatrixUtilsService.getCellFrequencies(
         dimensionParts,
         this.dimensionsDatas.cellPartIndexes,
-        this.appService.appDatas!.coclusteringReport.cellFrequencies,
+        (this.appService.appDatas &&
+          this.appService.appDatas.coclusteringReport &&
+          this.appService.appDatas.coclusteringReport.cellFrequencies) ||
+          [],
         zDimension,
       );
 
@@ -675,31 +702,43 @@ export class DimensionsDatasService {
 
       [xValues.frequency, yValues.frequency] =
         MatrixUtilsService.getFrequencyAxisValues(
-          xDimension!,
-          yDimension!,
+          xDimension as any,
+          yDimension as any,
           cellFrequencies,
         );
 
       xValues.standard =
-        MatrixUtilsService.getStandardCovisualizationAxisValues(xDimension!);
+        MatrixUtilsService.getStandardCovisualizationAxisValues(
+          xDimension as any,
+        );
       yValues.standard =
-        MatrixUtilsService.getStandardCovisualizationAxisValues(yDimension!);
+        MatrixUtilsService.getStandardCovisualizationAxisValues(
+          yDimension as any,
+        );
 
       // To display axis names
       this.dimensionsDatas.matrixDatas.variable = {
-        nameX: this.dimensionsDatas.selectedDimensions[0]!.name,
-        nameY: this.dimensionsDatas.selectedDimensions[1]!.name,
-        xParts: this.dimensionsDatas.selectedDimensions[0]!.parts,
-        yParts: this.dimensionsDatas.selectedDimensions[1]!.parts,
+        nameX: this.dimensionsDatas.selectedDimensions[0]
+          ? this.dimensionsDatas.selectedDimensions[0].name
+          : '',
+        nameY: this.dimensionsDatas.selectedDimensions[1]
+          ? this.dimensionsDatas.selectedDimensions[1].name
+          : '',
+        xParts: this.dimensionsDatas.selectedDimensions[0]
+          ? this.dimensionsDatas.selectedDimensions[0].parts
+          : 0,
+        yParts: this.dimensionsDatas.selectedDimensions[1]
+          ? this.dimensionsDatas.selectedDimensions[1].parts
+          : 0,
       };
 
       // Compute cells
       const cellDatas = MatrixUtilsService.getCellDatas(
-        xDimension!,
-        yDimension!,
+        xDimension as any,
+        yDimension as any,
         zDimension,
-        xDimensionLeafsNames!,
-        yDimensionLeafsNames!,
+        xDimensionLeafsNames || [],
+        yDimensionLeafsNames || [],
         xDimensionLeafsShortDescription,
         yDimensionLeafsShortDescription,
         cellFrequencies,
