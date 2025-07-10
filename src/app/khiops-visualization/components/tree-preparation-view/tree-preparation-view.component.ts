@@ -145,7 +145,9 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
   onSelectListItemChanged(item: TreePreparationVariableModel) {
     const modelingVariable =
       this.treePreparationDatasService.setSelectedVariable(item.name);
-    this.modelingDatasService.setSelectedVariable(modelingVariable!);
+    if (modelingVariable) {
+      this.modelingDatasService.setSelectedVariable(modelingVariable);
+    }
   }
 
   onShowLevelDistributionGraph(datas: VariableModel[]) {

@@ -16,10 +16,10 @@ import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 
 @Component({
-    selector: 'app-evaluation-view',
-    templateUrl: './evaluation-view.component.html',
-    styleUrls: ['./evaluation-view.component.scss'],
-    standalone: false
+  selector: 'app-evaluation-view',
+  templateUrl: './evaluation-view.component.html',
+  styleUrls: ['./evaluation-view.component.scss'],
+  standalone: false,
 })
 export class EvaluationViewComponent
   extends SelectableTabComponent
@@ -58,15 +58,17 @@ export class EvaluationViewComponent
   }
 
   onSelectEvaluationTypeChanged(item: EvaluationTypeModel) {
-    this.evaluationDatasService.setSelectedEvaluationTypeVariable(item);
-    const predictorEvaluationVariable =
-      this.evaluationDatasService.getPredictorEvaluationVariableFromEvaluationType(
-        item.type!,
+    if (item) {
+      this.evaluationDatasService.setSelectedEvaluationTypeVariable(item);
+      const predictorEvaluationVariable =
+        this.evaluationDatasService.getPredictorEvaluationVariableFromEvaluationType(
+          item.type || '',
+        );
+      this.evaluationDatasService.setSelectedPredictorEvaluationVariable(
+        predictorEvaluationVariable,
       );
-    this.evaluationDatasService.setSelectedPredictorEvaluationVariable(
-      predictorEvaluationVariable,
-    );
-    this.evaluationDatasService.getConfusionMatrix();
+      this.evaluationDatasService.getConfusionMatrix();
+    }
   }
 
   onSelectPredictorEvaluationChanged(item: EvaluationPredictorModel) {

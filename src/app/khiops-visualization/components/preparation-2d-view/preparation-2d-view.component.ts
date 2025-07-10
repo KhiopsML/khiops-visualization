@@ -104,7 +104,9 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
         item.name1,
         item.name2,
       );
-    this.modelingDatasService.setSelectedVariable(modelingVariable!);
+    if (modelingVariable) {
+      this.modelingDatasService.setSelectedVariable(modelingVariable);
+    }
   }
 
   onShowLevelDistributionGraph(datas: VariableModel[] | Variable2dModel[]) {

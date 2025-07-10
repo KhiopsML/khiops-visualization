@@ -112,11 +112,16 @@ export class PreparationViewComponent extends SelectableTabComponent {
   }
 
   onSelectListItemChanged(item: VariableModel) {
+    if (!item.name) {
+      return;
+    }
     const modelingVariable = this.preparationDatasService.setSelectedVariable(
-      item.name!,
+      item.name,
       this.preparationSource,
     );
-    this.modelingDatasService.setSelectedVariable(modelingVariable!);
+    if (modelingVariable) {
+      this.modelingDatasService.setSelectedVariable(modelingVariable);
+    }
   }
 
   onShowLevelDistributionGraph(datas: VariableModel[]) {
