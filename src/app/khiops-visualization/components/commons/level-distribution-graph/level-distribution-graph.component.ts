@@ -30,11 +30,11 @@ import { Variable2dModel } from '@khiops-visualization/model/variable-2d.model';
 import { AppConfig } from '../../../../../environments/environment';
 
 @Component({
-    selector: 'app-level-distribution-graph',
-    templateUrl: './level-distribution-graph.component.html',
-    styleUrls: ['./level-distribution-graph.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  selector: 'app-level-distribution-graph',
+  templateUrl: './level-distribution-graph.component.html',
+  styleUrls: ['./level-distribution-graph.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class LevelDistributionGraphComponent
   extends ScrollableGraphComponent
@@ -97,7 +97,9 @@ export class LevelDistributionGraphComponent
   ngOnInit() {
     // load datas
     this.inputDatas =
-      this.distributionDatasService.getLeveldistributionGraphDatas(this.datas!);
+      this.distributionDatasService.getLeveldistributionGraphDatas(
+        this.datas ?? [],
+      );
 
     // simulate click on dialog to make copy available
     setTimeout(() => {
