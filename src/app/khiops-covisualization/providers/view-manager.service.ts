@@ -40,10 +40,9 @@ export class ViewManagerService {
     this.viewsLayout = new ViewLayoutVO();
     for (let i = 0; i < dimensions.length; i++) {
       const isContextView = i >= 2;
-      this.viewsLayout.addDimensionViewLayout(
-        dimensions[i]?.name!,
-        isContextView,
-      );
+      const dim = dimensions[i];
+      const dimName = dim && typeof dim.name === 'string' ? dim.name : '';
+      this.viewsLayout.addDimensionViewLayout(dimName, isContextView);
     }
 
     // View manager behavior #129
