@@ -30,15 +30,15 @@ export class CompositionUtils {
       if (INF_PATTERN.test(interval)) {
         const match = interval.match(INF_PATTERN);
         lower = -Infinity;
-        upper = match ? parseFloat(match[1]!) : NaN;
+        upper = match ? parseFloat(match[1] ?? '') : NaN;
       } else if (PLUS_INF_PATTERN.test(interval)) {
         const match = interval.match(PLUS_INF_PATTERN);
-        lower = match ? parseFloat(match[1]!) : NaN;
+        lower = match ? parseFloat(match[1] ?? '') : NaN;
         upper = Infinity;
       } else if (RANGE_PATTERN.test(interval)) {
         const match = interval.match(RANGE_PATTERN);
-        lower = match ? parseFloat(match[1]!) : NaN;
-        upper = match ? parseFloat(match[2]!) : NaN;
+        lower = match ? parseFloat(match[1] ?? '') : NaN;
+        upper = match ? parseFloat(match[2] ?? '') : NaN;
       } else {
         // Non-numeric interval, keep as is
         return;
@@ -111,14 +111,16 @@ export class CompositionUtils {
         // Try specific patterns first for better precision
         if (INF_PATTERN.test(interval)) {
           const match = interval.match(INF_PATTERN);
-          return isStart ? -Infinity : match ? parseFloat(match[1]!) : 0;
+          return isStart ? -Infinity : match ? parseFloat(match[1] ?? '') : 0;
         } else if (PLUS_INF_PATTERN.test(interval)) {
           const match = interval.match(PLUS_INF_PATTERN);
-          return isStart ? (match ? parseFloat(match[1]!) : 0) : Infinity;
+          return isStart ? (match ? parseFloat(match[1] ?? '') : 0) : Infinity;
         } else if (RANGE_PATTERN.test(interval)) {
           const match = interval.match(RANGE_PATTERN);
           if (match) {
-            return isStart ? parseFloat(match[1]!) : parseFloat(match[2]!);
+            return isStart
+              ? parseFloat(match[1] ?? '')
+              : parseFloat(match[2] ?? '');
           }
         }
 
@@ -127,7 +129,9 @@ export class CompositionUtils {
         if (!numbers || numbers.length === 0) return 0;
 
         // Return start bound or end bound based on isStart parameter
-        return parseFloat(isStart ? numbers[0]! : numbers[numbers.length - 1]!);
+        return parseFloat(
+          isStart ? (numbers[0] ?? '') : (numbers[numbers.length - 1] ?? ''),
+        );
       };
 
       // Extract start bounds for comparison
