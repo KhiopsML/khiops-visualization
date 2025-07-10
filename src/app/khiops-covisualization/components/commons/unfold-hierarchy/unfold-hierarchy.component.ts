@@ -112,7 +112,7 @@ export class UnfoldHierarchyComponent implements OnInit {
     this.hierarchyService.initialize();
 
     this.previousHierarchyRank = _.cloneDeep(
-      this.hierarchyDatas!.selectedUnfoldHierarchy,
+      this.hierarchyDatas?.selectedUnfoldHierarchy ?? 0,
     );
     this.currentUnfoldHierarchy = this.previousHierarchyRank;
 
@@ -151,10 +151,19 @@ export class UnfoldHierarchyComponent implements OnInit {
       );
 
       // set the current hierarchy selection to black
-      this.colorSetInfoPerCluster!.domain[1] = this.borderColor;
-      this.colorSetClusterPerDim!.domain[
-        this.clustersPerDimDatas!.datasets.length - 1
-      ] = this.borderColor;
+      if (this.colorSetInfoPerCluster && this.colorSetInfoPerCluster.domain) {
+        this.colorSetInfoPerCluster.domain[1] = this.borderColor;
+      }
+      if (
+        this.colorSetClusterPerDim &&
+        this.colorSetClusterPerDim.domain &&
+        this.clustersPerDimDatas &&
+        this.clustersPerDimDatas.datasets
+      ) {
+        this.colorSetClusterPerDim.domain[
+          this.clustersPerDimDatas.datasets.length - 1
+        ] = this.borderColor;
+      }
     }); // Do not freeze ui during graph render
   }
 
@@ -230,13 +239,19 @@ export class UnfoldHierarchyComponent implements OnInit {
   }
 
   increaseUnfoldHierarchy() {
-    if (this.hierarchyDatas!.totalClusters > this.currentUnfoldHierarchy) {
+    if (
+      this.hierarchyDatas &&
+      this.hierarchyDatas.totalClusters > this.currentUnfoldHierarchy
+    ) {
       this.onHierarchyChanged(this.currentUnfoldHierarchy + 1);
     }
   }
 
   decreaseUnfoldHierarchy() {
-    if (this.hierarchyDatas!.minClusters < this.currentUnfoldHierarchy) {
+    if (
+      this.hierarchyDatas &&
+      this.hierarchyDatas.minClusters < this.currentUnfoldHierarchy
+    ) {
       this.onHierarchyChanged(this.currentUnfoldHierarchy - 1);
     }
   }

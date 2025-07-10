@@ -127,12 +127,12 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
 
   onCellSelected(event: { datas: CellModel }) {
     this.treenodesService.setSelectedNode(
-      event.datas.xnamePart,
-      event.datas.xaxisPart!,
+      event.datas.xnamePart ?? '',
+      event.datas.xaxisPart ?? '',
     );
     this.treenodesService.setSelectedNode(
-      event.datas.ynamePart,
-      event.datas.yaxisPart!,
+      event.datas.ynamePart ?? '',
+      event.datas.yaxisPart ?? '',
     );
   }
 
@@ -141,17 +141,23 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   changeMatrixType(type: string) {
-    this.dimensionsDatas!.matrixOption = type; // Save it into the global model to keep it into saved datas
+    if (this.dimensionsDatas) {
+      this.dimensionsDatas.matrixOption = type; // Save it into the global model to keep it into saved datas
+    }
   }
 
   changeMatrixMode(_mode: MatrixModeI) {
-    this.dimensionsDatas!.matrixMode = this.matrixModes.selectedIndex; // Save it into the global model to keep it into saved datas
+    if (this.dimensionsDatas) {
+      this.dimensionsDatas.matrixMode = this.matrixModes.selectedIndex; // Save it into the global model to keep it into saved datas
+    }
   }
 
   changeConditionalOnContext() {
     // this.trackerService.trackEvent('click', 'matrix_conditionnal_on_context');
-    this.dimensionsDatas!.conditionalOnContext =
-      !this.dimensionsDatas?.conditionalOnContext;
+    if (this.dimensionsDatas) {
+      this.dimensionsDatas.conditionalOnContext =
+        !this.dimensionsDatas.conditionalOnContext;
+    }
     this.treenodesService.initConditionalOnContextNodes();
     this.eventsService.emitConditionalOnContextChanged();
   }
@@ -196,7 +202,7 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
         this.dimensionsDatas.matrixMode < this.matrixModes.types.length
       ) {
         this.matrixModes.selected =
-          this.matrixModes.types[this.dimensionsDatas?.matrixMode!];
+          this.matrixModes.types[this.dimensionsDatas?.matrixMode];
         this.matrixModes.selectedIndex = this.dimensionsDatas?.matrixMode;
       }
     }
@@ -231,7 +237,7 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
         this.matrix?.drawMatrix();
       } else if (
         !e.stopPropagation &&
-        this.initNodesEvents > this.dimensionsDatas?.dimensions.length!
+        this.initNodesEvents > (this.dimensionsDatas?.dimensions.length ?? 0)
       ) {
         this.matrix?.drawSelectedNodes();
       }

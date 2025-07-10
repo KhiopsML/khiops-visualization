@@ -146,7 +146,7 @@ export class TreeSelectComponent
           // Select previous nodes if unfold hierarchy changed or if hierarchy has been saved
           // Find the node tree id into current tree
           const nodeTree = this.treenodesService.getNodeFromName(
-            this.selectedDimension!.name,
+            this.selectedDimension?.name ?? '',
             selectedNode._id.toString(),
           );
           const nodeTreeId = nodeTree?.id;
@@ -162,7 +162,7 @@ export class TreeSelectComponent
       this.ngzone.run(() => {
         setTimeout(() => {
           this.treenodesService.setSelectedNode(
-            this.selectedDimension!.name,
+            this.selectedDimension?.name ?? '',
             e.data.name,
           );
         });

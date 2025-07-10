@@ -35,7 +35,8 @@ export class CompositionDetailedPartsComponent {
   ngOnInit() {
     if (this.detailedParts?.innerVariableType === TYPES.NUMERICAL) {
       // For numerical variables: Interval and Frequency columns
-      this.detailedDatas!.displayedColumns = [
+      if (!this.detailedDatas) return;
+      this.detailedDatas.displayedColumns = [
         {
           headerName: this.translate.get('GLOBAL.INTERVAL'),
           field: 'interval',
@@ -46,15 +47,16 @@ export class CompositionDetailedPartsComponent {
         },
       ];
 
-      this.detailedDatas!.values = this.detailedParts!.partDetails!.map(
+      this.detailedDatas.values = (this.detailedParts?.partDetails || []).map(
         (part, index) => ({
           interval: part,
-          frequency: this.detailedParts!.partFrequencies![index],
+          frequency: this.detailedParts?.partFrequencies?.[index],
         }),
       );
     } else {
       // For categorical variables: Modality and Frequency columns
-      this.detailedDatas!.displayedColumns = [
+      if (!this.detailedDatas) return;
+      this.detailedDatas.displayedColumns = [
         {
           headerName: this.translate.get('GLOBAL.MODALITY'),
           field: 'modality',
@@ -66,15 +68,14 @@ export class CompositionDetailedPartsComponent {
       ];
 
       // Use valueGroups for categorical data
-      if (this.detailedParts!.valueGroups?.values) {
-        this.detailedDatas!.values =
-          this.detailedParts!.valueGroups!.values.map(
-            (value: string, index: number) => ({
-              modality: value,
-              frequency:
-                this.detailedParts!.valueGroups!.valueFrequencies[index],
-            }),
-          );
+      if (this.detailedParts?.valueGroups?.values) {
+        this.detailedDatas.values = this.detailedParts.valueGroups.values.map(
+          (value: string, index: number) => ({
+            modality: value,
+            frequency:
+              this.detailedParts?.valueGroups?.valueFrequencies?.[index],
+          }),
+        );
       }
     }
   }

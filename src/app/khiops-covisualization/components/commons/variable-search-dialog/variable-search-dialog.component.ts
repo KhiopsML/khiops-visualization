@@ -73,8 +73,10 @@ export class VariableSearchDialogComponent implements AfterViewInit {
   ngAfterViewInit() {
     // Restore search input
     if (this.data.searchInput) {
-      this.agGridComponent!.searchInput = this.data.searchInput;
-      this.agGridComponent?.search();
+      if (this.agGridComponent) {
+        this.agGridComponent.searchInput = this.data.searchInput;
+        this.agGridComponent.search();
+      }
     }
     setTimeout(() => {
       // Set focus on the search input field
@@ -128,8 +130,10 @@ export class VariableSearchDialogComponent implements AfterViewInit {
       this.agGridComponent.search();
     }
 
-    this.searchResults!.displayedColumns = [];
-    this.searchResults!.values = [];
+    if (this.searchResults) {
+      this.searchResults.displayedColumns = [];
+      this.searchResults.values = [];
+    }
     this.clusterMapping = []; // Reset cluster mapping
     this.rowToClusterMap.clear(); // Reset row to cluster mapping
     if (!this.selectedInnerVariable) {
@@ -182,25 +186,30 @@ export class VariableSearchDialogComponent implements AfterViewInit {
 
       if (innerVariableType === TYPES.NUMERICAL) {
         // For numerical variables, show intervals and filter by inclusion
-        this.searchResults!.displayedColumns = [
-          {
-            headerName: this.translate.get('GLOBAL.INTERVAL'),
-            field: 'interval',
-          },
-          {
-            headerName: this.translate.get('GLOBAL.FREQUENCY'),
-            field: 'frequency',
-          },
-        ];
+        if (this.searchResults) {
+          this.searchResults.displayedColumns = [
+            {
+              headerName: this.translate.get('GLOBAL.INTERVAL'),
+              field: 'interval',
+            },
+            {
+              headerName: this.translate.get('GLOBAL.FREQUENCY'),
+              field: 'frequency',
+            },
+          ];
+        }
 
         filteredCompositions.forEach((comp) => {
           if (comp.partDetails && comp.partFrequencies) {
             comp.partDetails.forEach((interval, index) => {
-              const frequency = comp.partFrequencies![index] || 0;
-              this.searchResults!.values!.push({
-                interval: interval,
-                frequency: frequency,
-              });
+              const frequency =
+                (comp.partFrequencies && comp.partFrequencies[index]) || 0;
+              if (this.searchResults && this.searchResults.values) {
+                this.searchResults.values.push({
+                  interval: interval,
+                  frequency: frequency,
+                });
+              }
               // Store cluster info separately with same index
               this.clusterMapping.push({
                 cluster: comp.cluster,
@@ -216,48 +225,58 @@ export class VariableSearchDialogComponent implements AfterViewInit {
           }
         });
         // Sort by interval (assuming intervals are strings like '[a, b)')
-        this.searchResults!.values = this.searchResults!.values!.sort(
-          (a: any, b: any) => {
-            // Helper to check if interval is -inf or +inf
-            const isMinusInf = (interval: string) =>
-              /-inf|−inf|Infinity|−Infinity|\u2212inf/i.test(interval) &&
-              interval.trim().startsWith(']');
-            const isPlusInf = (interval: string) =>
-              /\+inf|\+Infinity|Infinity/i.test(interval) &&
-              interval.trim().endsWith('[');
-            if (isMinusInf(a.interval)) return -1;
-            if (isMinusInf(b.interval)) return 1;
-            if (isPlusInf(a.interval)) return 1;
-            if (isPlusInf(b.interval)) return -1;
-            // Try to extract the lower bound as a number
-            const getLower = (interval: string) => {
-              const match = interval.match(/[-+]?[0-9]*\.?[0-9]+/);
-              return match ? parseFloat(match[0]) : 0;
-            };
-            return getLower(a.interval) - getLower(b.interval);
-          },
-        );
+        if (this.searchResults && this.searchResults.values) {
+          this.searchResults.values = this.searchResults.values.sort(
+            (a: any, b: any) => {
+              // Helper to check if interval is -inf or +inf
+              const isMinusInf = (interval: string) =>
+                /-inf|−inf|Infinity|−Infinity|\u2212inf/i.test(interval) &&
+                interval.trim().startsWith(']');
+              const isPlusInf = (interval: string) =>
+                /\+inf|\+Infinity|Infinity/i.test(interval) &&
+                interval.trim().endsWith('[');
+              if (isMinusInf(a.interval)) return -1;
+              if (isMinusInf(b.interval)) return 1;
+              if (isPlusInf(a.interval)) return 1;
+              if (isPlusInf(b.interval)) return -1;
+              // Try to extract the lower bound as a number
+              const getLower = (interval: string) => {
+                const match = interval.match(/[-+]?[0-9]*\.?[0-9]+/);
+                return match ? parseFloat(match[0]) : 0;
+              };
+              return getLower(a.interval) - getLower(b.interval);
+            },
+          );
+        }
       } else {
         // For categorical variables, show modalities
-        this.searchResults!.displayedColumns = [
-          {
-            headerName: this.translate.get('GLOBAL.MODALITY'),
-            field: 'modality',
-          },
-          {
-            headerName: this.translate.get('GLOBAL.FREQUENCY'),
-            field: 'frequency',
-          },
-        ];
+        if (this.searchResults) {
+          this.searchResults.displayedColumns = [
+            {
+              headerName: this.translate.get('GLOBAL.MODALITY'),
+              field: 'modality',
+            },
+            {
+              headerName: this.translate.get('GLOBAL.FREQUENCY'),
+              field: 'frequency',
+            },
+          ];
+        }
 
         filteredCompositions.forEach((comp) => {
           if (comp.valueGroups?.values && comp.valueGroups?.valueFrequencies) {
             comp.valueGroups.values.forEach((modality, index) => {
-              const frequency = comp.valueGroups!.valueFrequencies[index] || 0;
-              this.searchResults!.values!.push({
-                modality: modality,
-                frequency: frequency,
-              });
+              const frequency =
+                (comp.valueGroups &&
+                  comp.valueGroups.valueFrequencies &&
+                  comp.valueGroups.valueFrequencies[index]) ||
+                0;
+              if (this.searchResults && this.searchResults.values) {
+                this.searchResults.values.push({
+                  modality: modality,
+                  frequency: frequency,
+                });
+              }
               // Store cluster info separately with same index
               this.clusterMapping.push({
                 cluster: comp.cluster,
@@ -273,9 +292,11 @@ export class VariableSearchDialogComponent implements AfterViewInit {
           }
         });
         // Sort by frequency descending
-        this.searchResults!.values = this.searchResults!.values!.sort(
-          (a: any, b: any) => b.frequency - a.frequency,
-        );
+        if (this.searchResults && this.searchResults.values) {
+          this.searchResults.values = this.searchResults.values.sort(
+            (a: any, b: any) => b.frequency - a.frequency,
+          );
+        }
       }
     }
   }
@@ -291,12 +312,14 @@ export class VariableSearchDialogComponent implements AfterViewInit {
     const clusterInfo = this.rowToClusterMap.get(rowKey);
 
     if (clusterInfo) {
-      this.treenodesService.setSelectedNode(
-        this.data.selectedDimension?.name!,
-        clusterInfo.cluster,
-        false,
-        selectedValue,
-      );
+      if (this.data.selectedDimension?.name) {
+        this.treenodesService.setSelectedNode(
+          this.data.selectedDimension.name,
+          clusterInfo.cluster,
+          false,
+          selectedValue,
+        );
+      }
     }
 
     // Get current search input from AgGrid component

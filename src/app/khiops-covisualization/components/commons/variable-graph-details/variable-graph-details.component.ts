@@ -147,10 +147,13 @@ export class VariableGraphDetailsComponent
       bubbles: true, // Propagate
       cancelable: true,
     });
-    this.configService
-      ?.getRootElementDom()
-      ?.querySelector('#cluster-distribution-' + this.position)
-      ?.dispatchEvent(trustedClickEvent);
+    const rootElement = this.configService
+      ?.getRootElementDom();
+    const clusterDistribution = rootElement
+      ?.querySelector('#cluster-distribution-' + this.position);
+    if (clusterDistribution) {
+      clusterDistribution.dispatchEvent(trustedClickEvent);
+    }
   }
 
   ngOnDestroy() {
@@ -209,12 +212,14 @@ export class VariableGraphDetailsComponent
    */
   private setLegendTitle() {
     const otherIndex = this.position === 0 ? 1 : 0;
-    this.graphDetails!.datasets[0]!.label =
-      this.dimensionsDatasService?.dimensionsDatas?.selectedNodes?.[
-        otherIndex
-      ]?.shortDescription;
-    // force legend update
-    this.graphDetails = _.cloneDeep(this.graphDetails);
+    if (this.graphDetails && this.graphDetails.datasets && this.graphDetails.datasets[0]) {
+      this.graphDetails.datasets[0].label =
+        this.dimensionsDatasService?.dimensionsDatas?.selectedNodes?.[
+          otherIndex
+        ]?.shortDescription;
+      // force legend update
+      this.graphDetails = _.cloneDeep(this.graphDetails);
+    }
   }
 
   /**

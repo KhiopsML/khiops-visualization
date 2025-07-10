@@ -23,10 +23,10 @@ import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.c
 import { getClustersDisplayedColumns } from './selected-clusters.config';
 
 @Component({
-    selector: 'app-selected-clusters',
-    templateUrl: './selected-clusters.component.html',
-    styleUrls: ['./selected-clusters.component.scss'],
-    standalone: false
+  selector: 'app-selected-clusters',
+  templateUrl: './selected-clusters.component.html',
+  styleUrls: ['./selected-clusters.component.scss'],
+  standalone: false,
 })
 export class SelectedClustersComponent implements OnDestroy, OnChanges {
   @Input() private selectedNodes: TreeNodeModel[] | undefined;
@@ -93,7 +93,7 @@ export class SelectedClustersComponent implements OnDestroy, OnChanges {
             new SelectedClusterModel(
               nodeVO.hierarchy,
               nodeVO.shortDescription,
-              details[i]?.length!,
+              details[i]?.length ?? 0,
             );
           this.selectedClusters.push(selectedCluster);
         }
@@ -112,11 +112,11 @@ export class SelectedClustersComponent implements OnDestroy, OnChanges {
     if (this.selectedClusters) {
       const firstDimPos =
         this.dimensionsDatasService.getDimensionPositionFromName(
-          this.selectedClusters[0]!.hierarchy,
+          this.selectedClusters[0]?.hierarchy ?? '',
         );
       const secondDimPos =
         this.dimensionsDatasService.getDimensionPositionFromName(
-          this.selectedClusters[1]!.hierarchy,
+          this.selectedClusters[1]?.hierarchy ?? '',
         );
       this.selectedClusters[firstDimPos] &&
         currentActiveClusters.push(this.selectedClusters[firstDimPos]);
