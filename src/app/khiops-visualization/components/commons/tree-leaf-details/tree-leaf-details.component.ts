@@ -23,10 +23,10 @@ import { Observable } from 'rxjs';
 import { selectedNodeSelector } from '@khiops-visualization/selectors/tree-preparation.selector';
 
 @Component({
-    selector: 'app-tree-leaf-details',
-    templateUrl: './tree-leaf-details.component.html',
-    styleUrls: ['./tree-leaf-details.component.scss'],
-    standalone: false
+  selector: 'app-tree-leaf-details',
+  templateUrl: './tree-leaf-details.component.html',
+  styleUrls: ['./tree-leaf-details.component.scss'],
+  standalone: false,
 })
 export class TreeLeafDetailsComponent implements OnInit {
   @Input() public displayedValues?: ChartToggleValuesI[];
@@ -61,10 +61,12 @@ export class TreeLeafDetailsComponent implements OnInit {
   }
 
   onTreeNodeTargetDistributionGraphTypeChanged(type: string) {
-    this.distributionDatasService.getTreeNodeTargetDistributionGraphDatas(
-      this.selectedNode!,
-      type,
-    );
+    if (this.selectedNode) {
+      this.distributionDatasService.getTreeNodeTargetDistributionGraphDatas(
+        this.selectedNode,
+        type,
+      );
+    }
   }
 
   onTreeNodeTargetDistributionGraphDisplayedValuesChanged(

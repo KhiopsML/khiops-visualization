@@ -241,7 +241,10 @@ export class TreeHyperComponent
           layerOptions: {
             'link-arcs': {
               strokeWidth: (n: N) =>
-                TreeHyperService.getLinkStrokeWidth(n, this.displayedValues!),
+                TreeHyperService.getLinkStrokeWidth(
+                  n,
+                  this.displayedValues || [],
+                ),
             },
             λ: {
               invisible: true, // Hide home location circle
@@ -253,15 +256,19 @@ export class TreeHyperComponent
                 return false;
               },
               isVisible: (n: N) =>
-                TreeHyperService.isNodeLayerVisible(this.displayedValues!, n),
+                TreeHyperService.isNodeLayerVisible(
+                  this.displayedValues || [],
+                  n,
+                ),
             },
             'labels-force': {
               invisible: true,
             },
             nodes: {
               opacity: (n: N) =>
+                this.treePreparationDatas &&
                 TreeHyperService.getNodeOpacity(
-                  this.treePreparationDatas!,
+                  this.treePreparationDatas,
                   this.visualization.purity,
                   n,
                 ),
@@ -290,7 +297,7 @@ export class TreeHyperComponent
         this.ht?.initPromise.then(() => {
           // this.ht?.api.gotoλ(0.15)
           // At init select the first node
-          this.selectNodes(this.selectedNodes!);
+          this.selectNodes(this.selectedNodes || []);
         });
       }
       this.ht?.api.updateNodesVisualization();
@@ -361,7 +368,7 @@ export class TreeHyperComponent
       } else {
         const isVisible = TreeHyperService.filterVisibleNodes(
           n,
-          this.displayedValues!,
+          this.displayedValues || [],
         );
         if (isVisible) {
           return 0.03;

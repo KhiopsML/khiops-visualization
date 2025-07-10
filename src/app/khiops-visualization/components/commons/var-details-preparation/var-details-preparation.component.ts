@@ -17,10 +17,10 @@ import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 
 @Component({
-    selector: 'app-var-details-preparation',
-    templateUrl: './var-details-preparation.component.html',
-    styleUrls: ['./var-details-preparation.component.scss'],
-    standalone: false
+  selector: 'app-var-details-preparation',
+  templateUrl: './var-details-preparation.component.html',
+  styleUrls: ['./var-details-preparation.component.scss'],
+  standalone: false,
 })
 export class VarDetailsPreparationComponent implements OnInit, OnChanges {
   @ViewChild('appVariableGraphDetails', {
@@ -56,9 +56,13 @@ export class VarDetailsPreparationComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    this.preparationDatas = this.preparationDatasService.getDatas(
-      this.preparationSource!,
-    );
+    if (this.preparationSource !== undefined) {
+      this.preparationDatas = this.preparationDatasService.getDatas(
+        this.preparationSource,
+      );
+    } else {
+      this.preparationDatas = undefined;
+    }
   }
 
   onSplitDragEnd(event: SplitGutterInteractionEvent, item: string) {
@@ -95,7 +99,7 @@ export class VarDetailsPreparationComponent implements OnInit, OnChanges {
     } else {
       // get interval data if no matrix
       this.preparationDatasService.getCurrentIntervalDatas(
-        this.preparationSource!,
+        this.preparationSource || '',
         index,
       );
     }
