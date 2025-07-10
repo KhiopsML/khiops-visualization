@@ -362,7 +362,7 @@ export class CompositionService {
 
       // Skip if there's only one model for this variable
       if ((variableModels ?? []).length <= 1) {
-        results.push(...variableModels!);
+        results.push(...(variableModels ?? []));
         continue;
       }
 

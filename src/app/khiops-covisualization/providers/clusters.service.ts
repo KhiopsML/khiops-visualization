@@ -264,7 +264,7 @@ export class ClustersService {
         let j =
           this.dimensionsDatasService.dimensionsDatas.dimensions.length - 1;
         j <=
-        this.dimensionsDatasService.dimensionsDatas.hierarchyDatas!
+        this.dimensionsDatasService.dimensionsDatas.hierarchyDatas
           .totalInitialClusters;
         j++
       ) {
@@ -307,7 +307,7 @@ export class ClustersService {
         let j =
           this.dimensionsDatasService.dimensionsDatas.dimensions.length - 1;
         j <
-        this.dimensionsDatasService.dimensionsDatas.hierarchyDatas!
+        this.dimensionsDatasService.dimensionsDatas.hierarchyDatas
           .totalClusters;
         j++
       ) {

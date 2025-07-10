@@ -282,7 +282,10 @@ export class DimensionsDatasService {
     if (!treeNode.isCollapsed) {
       if (treeNode.children.length > 0) {
         for (let i = 0; i < treeNode.children.length; i++) {
-          count = this.getNodeIntervalsCount(treeNode.children[i]!, count);
+          const child = treeNode.children[i];
+          if (child) {
+            count = this.getNodeIntervalsCount(child, count);
+          }
         }
       }
     } else {
