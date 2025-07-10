@@ -45,26 +45,25 @@ export class TreenodesService {
    * @returns {object} - An object containing the leaf nodes for each dimension.
    */
   getLeafNodesForARank(rank: number) {
-    const collapsedNodes = {};
+    const collapsedNodes: { [key: string]: any[] } = {};
     for (
       let i = 0;
       i < this.dimensionsDatasService.dimensionsDatas.selectedDimensions.length;
       i++
     ) {
-      // @ts-ignore
-      collapsedNodes[
-        this.dimensionsDatasService.dimensionsDatas.selectedDimensions[i]?.name!
-      ] = [];
-      const nodesVO: TreeNodeModel[] = UtilsService.fastFilter(
-        this.dimensionsDatasService.dimensionsDatas.dimensionsClusters[i]!,
-        (e: TreeNodeModel) => {
-          return rank <= e.hierarchicalRank && !e.isLeaf;
-        },
-      );
-      // @ts-ignore
-      collapsedNodes[
-        this.dimensionsDatasService.dimensionsDatas.selectedDimensions[i]?.name!
-      ] = nodesVO.map((e) => e.cluster);
+      const dimName =
+        this.dimensionsDatasService.dimensionsDatas.selectedDimensions[i]?.name;
+      if (dimName) {
+        collapsedNodes[dimName] = [];
+        const nodesVO: TreeNodeModel[] = UtilsService.fastFilter(
+          this.dimensionsDatasService.dimensionsDatas.dimensionsClusters[i] ||
+            [],
+          (e: TreeNodeModel) => {
+            return rank <= e.hierarchicalRank && !e.isLeaf;
+          },
+        );
+        collapsedNodes[dimName] = nodesVO.map((e) => e.cluster);
+      }
     }
     return collapsedNodes;
   }
@@ -110,9 +109,10 @@ export class TreenodesService {
       if (i >= 2) {
         // re init context nodes with conditionalOnContext to false
         this.setSelectedNode(
-          this.dimensionsDatasService.dimensionsDatas.selectedDimensions[i]!
-            .name,
-          this.dimensionsDatasService.dimensionsDatas.selectedNodes[i]!._id,
+          this.dimensionsDatasService.dimensionsDatas.selectedDimensions[i]
+            ?.name || '',
+          this.dimensionsDatasService.dimensionsDatas.selectedNodes[i]?._id ||
+            '',
         );
       }
     }
@@ -181,13 +181,14 @@ export class TreenodesService {
           this.dimensionsDatasService.dimensionsDatas.currentDimensionsClusters[
             currentIndex
           ]?.find((e) => {
-            return nodeName === e.name || nodeName === e.shortDescription; // also check into shortDescription (for distribution graph for instance)
+            return nodeName === e.name || nodeName === e.shortDescription;
           });
         if (!nodeVO) {
-          // if not found take the first (it's maybe an unfoldHierarchy)
           nodeVO =
             this.dimensionsDatasService.dimensionsDatas
-              .currentDimensionsClusters[currentIndex]?.[0];
+              .currentDimensionsClusters[currentIndex] &&
+            this.dimensionsDatasService.dimensionsDatas
+              .currentDimensionsClusters[currentIndex][0];
         }
         if (nodeVO) {
           nodeVO.getChildrenList();
@@ -245,12 +246,12 @@ export class TreenodesService {
             // do not check into shortDescription (for distribution graph for instance)
             // otherwise it return multiple nodes
           });
-        if (realNodeVO) {
+        if (realNodeVO && nodeVO) {
           realNodeVO.getChildrenList();
           if (!stopPropagation) {
             this.eventsService.emitTreeSelectedNodeChanged({
               hierarchyName: hierarchyName,
-              selectedNode: nodeVO!,
+              selectedNode: nodeVO,
               realNodeVO: realNodeVO,
               stopPropagation: stopPropagation,
               selectedValue: selectedValue,
@@ -304,7 +305,7 @@ export class TreenodesService {
     if (nodes[0]?.isLeaf) {
       return nodes[0];
     } else if (!nodes[0]?.isCollapsed) {
-      return this.getLastVisibleNode(nodes[0]!.children);
+      return this.getLastVisibleNode(nodes[0]?.children || []);
     } else {
       return nodes[0];
     }
@@ -330,7 +331,11 @@ export class TreenodesService {
       if (parentNode?.isCollapsed) {
         lastVisibleNode = parentNode;
       }
-      return this.getFirstVisibleNode(nodes, parentNode!, lastVisibleNode);
+      return this.getFirstVisibleNode(
+        nodes,
+        parentNode || nodeVO,
+        lastVisibleNode,
+      );
     } else {
       return lastVisibleNode;
     }
@@ -430,7 +435,7 @@ export class TreenodesService {
       nodeVO = searchNode(
         this.dimensionsDatasService.dimensionsDatas.dimensionsTrees[
           currentIndex
-        ]!,
+        ] || [],
         nodeName,
       );
     }
@@ -464,11 +469,15 @@ export class TreenodesService {
         return nodeName === e.name;
       });
       if (!nodeVO) {
-        nodeVO = this.dimensionsDatasService.dimensionsDatas.dimensionsClusters[
-          currentIndex
-        ]?.find((e) => {
-          return nodeName === e.bounds;
-        });
+        nodeVO =
+          this.dimensionsDatasService.dimensionsDatas.dimensionsClusters[
+            currentIndex
+          ] &&
+          this.dimensionsDatasService.dimensionsDatas.dimensionsClusters[
+            currentIndex
+          ].find((e) => {
+            return nodeName === e.bounds;
+          });
       }
     }
     return _.cloneDeep(nodeVO); // important to clone datas to keep origin immmutable
@@ -506,7 +515,7 @@ export class TreenodesService {
       const nodesVO: TreeNodeModel[] = UtilsService.fastFilter(
         this.dimensionsDatasService.dimensionsDatas.dimensionsClusters[
           currentIndex
-        ]!,
+        ] || [],
         (e: TreeNodeModel) => {
           return !e.isLeaf && e.hierarchicalRank < rank;
         },
@@ -533,7 +542,8 @@ export class TreenodesService {
         i++
       ) {
         const nodesVO: TreeNodeModel[] = UtilsService.fastFilter(
-          this.dimensionsDatasService.dimensionsDatas.dimensionsClusters[i]!,
+          this.dimensionsDatasService.dimensionsDatas.dimensionsClusters[i] ||
+            [],
           (e: TreeNodeModel) => {
             return !e.isLeaf && e.hierarchicalRank < maxRank;
           },
@@ -606,8 +616,9 @@ export class TreenodesService {
    * @param {number} selectedUnfoldHierarchy - The value to set for the selected unfold hierarchy.
    */
   setSelectedUnfoldHierarchy(selectedUnfoldHierarchy: number) {
-    this.dimensionsDatasService.dimensionsDatas.hierarchyDatas!.selectedUnfoldHierarchy =
-      selectedUnfoldHierarchy;
+    this.dimensionsDatasService.dimensionsDatas.hierarchyDatas &&
+      (this.dimensionsDatasService.dimensionsDatas.hierarchyDatas.selectedUnfoldHierarchy =
+        selectedUnfoldHierarchy);
   }
 
   /**
