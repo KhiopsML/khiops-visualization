@@ -277,7 +277,8 @@ export class UnfoldHierarchyComponent implements OnInit {
     );
     this.currentInformationPerCluster =
       this.infoPerCluster.datasets[0]?.data[
-        this.currentUnfoldHierarchy - this.dimensions!.length
+        this.currentUnfoldHierarchy -
+          (this.dimensions ? this.dimensions.length : 0)
       ];
     this.treenodesService.updateCurrentHierarchyClustersCount(
       this.currentUnfoldHierarchy,

@@ -81,8 +81,8 @@ export class HierarchySelectComponent implements OnChanges, AfterViewInit {
         this.selectedDimension.name,
         changes.selectedNode?.currentValue.name,
       );
-      if (this.selectedTreeCluster) {
-        this.selectedTreeCluster.setCurrentNodeInformations(currentNode!);
+      if (this.selectedTreeCluster && currentNode) {
+        this.selectedTreeCluster.setCurrentNodeInformations(currentNode);
         this.selectedTreeClusterChange.emit(this.selectedTreeCluster);
       }
     }

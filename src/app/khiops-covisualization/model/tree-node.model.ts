@@ -218,11 +218,14 @@ export class TreeNodeModel {
       this.childrenLeafIndexes.push(matrixIndex);
     }
     for (let i = 0; i < children.length; i++) {
-      this.deepGetChildrenNames(
-        children[i]!.children,
-        children[i]!.name,
-        children[i]!.matrixIndex,
-      );
+      const child = children[i];
+      if (child) {
+        this.deepGetChildrenNames(
+          child.children,
+          child.name,
+          child.matrixIndex,
+        );
+      }
     }
   }
 }

@@ -15,10 +15,10 @@ import { GridCheckboxEventI } from '@khiops-library/interfaces/events';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 
 @Component({
-    selector: 'app-import-ext-datas',
-    templateUrl: './import-ext-datas.component.html',
-    styleUrls: ['./import-ext-datas.component.scss'],
-    standalone: false
+  selector: 'app-import-ext-datas',
+  templateUrl: './import-ext-datas.component.html',
+  styleUrls: ['./import-ext-datas.component.scss'],
+  standalone: false,
 })
 export class ImportExtDatasComponent implements OnInit {
   separatorInput: string = '';
@@ -64,33 +64,47 @@ export class ImportExtDatasComponent implements OnInit {
         // @ts-ignore
         let path = this.importExtDatas?.filename;
 
-        const importedData = this.importExtDatasService.addImportedDatas(
-          this.importExtDatas.file!.name,
-          path,
-          this.selectedDimension?.name!,
-          this.joinKeys.selected,
-          this.separatorInput,
-          currentField,
-          this.importExtDatas.file!,
-        );
-        if (importedData) {
-          this.snackBar.open(
-            this.translate.get('SNACKS.EXTERNAL_DATA_ADDED'),
-            undefined,
-            {
-              duration: 2000,
-              panelClass: 'success',
-            },
+        const fileName =
+          this.importExtDatas && this.importExtDatas.file
+            ? this.importExtDatas.file.name
+            : '';
+        const fileObj =
+          this.importExtDatas && this.importExtDatas.file
+            ? this.importExtDatas.file
+            : undefined;
+        const selectedDimensionName = this.selectedDimension
+          ? this.selectedDimension.name
+          : undefined;
+
+        if (selectedDimensionName && fileObj) {
+          const importedData = this.importExtDatasService.addImportedDatas(
+            fileName,
+            path,
+            selectedDimensionName,
+            this.joinKeys.selected,
+            this.separatorInput,
+            currentField,
+            fileObj,
           );
-        } else {
-          this.snackBar.open(
-            this.translate.get('SNACKS.EXTERNAL_DATA_ALREADY_ADDED'),
-            undefined,
-            {
-              duration: 2000,
-              panelClass: 'error',
-            },
-          );
+          if (importedData) {
+            this.snackBar.open(
+              this.translate.get('SNACKS.EXTERNAL_DATA_ADDED'),
+              undefined,
+              {
+                duration: 2000,
+                panelClass: 'success',
+              },
+            );
+          } else {
+            this.snackBar.open(
+              this.translate.get('SNACKS.EXTERNAL_DATA_ALREADY_ADDED'),
+              undefined,
+              {
+                duration: 2000,
+                panelClass: 'error',
+              },
+            );
+          }
         }
       }
     }

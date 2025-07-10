@@ -56,10 +56,12 @@ export class ViewLayoutVO {
         (!prevValue.name || // Allow init for cypress tests
           prevValue?.name === this.dimensionsViewsLayoutsVO[i]?.name)
       ) {
-        this.dimensionsViewsLayoutsVO[i] = Object.assign(
-          this.dimensionsViewsLayoutsVO[i]!,
-          prevValue,
-        );
+        if (this.dimensionsViewsLayoutsVO[i]) {
+          this.dimensionsViewsLayoutsVO[i] = Object.assign(
+            this.dimensionsViewsLayoutsVO[i]!,
+            prevValue,
+          );
+        }
       }
     }
   }
