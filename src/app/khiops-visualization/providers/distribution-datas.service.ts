@@ -20,6 +20,7 @@ import { TYPES } from '@khiops-library/enum/types';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 import { ModalityCountsModel } from '@khiops-visualization/model/modality-counts.model';
 import { HistogramValuesI } from '@khiops-visualization/components/commons/histogram/histogram.interfaces';
+import { HistogramType } from '@khiops-visualization/components/commons/histogram/histogram.type';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 import { PreparationVariableModel } from '@khiops-visualization/model/preparation-variable.model';
 import { TreePreparationVariableModel } from '@khiops-visualization/model/tree-preparation-variable.model';
@@ -520,7 +521,7 @@ export class DistributionDatasService {
     let l: number = currentDatas.length;
 
     for (let i = 0; i < l; i++) {
-      let currentValue: number | undefined = 0;
+      // let currentValue: number | undefined = 0;
       const coverageValue = coverageArray?.[i];
       const frequencyValue = frequencyArray?.[i];
 
@@ -540,19 +541,28 @@ export class DistributionDatasService {
       graphItem.extra.index = i;
 
       let total = 0;
-      if (this.distributionDatas.distributionType === TYPES.FREQUENCY) {
-        currentValue = frequencyValue;
-        graphItem.value = coverageValue;
+      // According to the new specifications:
+      // - yLin: display Coverage (values between 0 and 1)
+      // - yLog: display Frequency (raw values for logarithmic scale)
+      const safeCoverageValue = coverageValue || 0;
+      const safeFrequencyValue = frequencyValue || 0;
+
+      if (this.distributionDatas.distributionType === HistogramType.YLOG) {
+        // Logarithmic mode: use raw frequency values
+        // currentValue = safeFrequencyValue;
+        graphItem.value = safeFrequencyValue; // The chart data are the frequencies
         total = UtilsService.arraySum(frequencyArray);
       } else {
-        currentValue = coverageValue;
+        // Linear mode: use normalized coverage values between 0 and 1
+        // currentValue = safeCoverageValue;
         total = UtilsService.arraySum(coverageArray);
-        graphItem.value = currentValue ? (currentValue * 100) / total : 0;
+        graphItem.value = total > 0 ? safeCoverageValue / total : 0; // Normalize between 0 and 1
       }
-      graphItem.extra.frequencyValue = frequencyValue;
-      graphItem.extra.coverageValue = coverageValue;
-      graphItem.extra.value = coverageValue;
-      graphItem.extra.percent = currentValue ? (currentValue * 100) / total : 0;
+      graphItem.extra.frequencyValue = safeFrequencyValue;
+      graphItem.extra.coverageValue = total > 0 ? safeCoverageValue / total : 0; // Always normalize Coverage between 0 and 1
+      graphItem.extra.value = safeCoverageValue; // Keep the original value for compatibility
+      graphItem.extra.percent =
+        total > 0 ? (safeCoverageValue * 100) / total : 0;
 
       currentDataSet.data.push(graphItem.value);
       currentDataSet.extra.push(graphItem);
@@ -715,7 +725,9 @@ export class DistributionDatasService {
         partitionSize,
         currentDatas[i] || 0,
       );
-      const frequencyValue = Math.log(coverageValue);
+      // In logarithmic mode, we want the actual frequency values (raw frequency)
+      // not the logarithm of coverage
+      const frequencyValue = coverageValue; // The actual frequency values
       coverageArray.push(coverageValue);
       frequencyArray.push(frequencyValue);
     }

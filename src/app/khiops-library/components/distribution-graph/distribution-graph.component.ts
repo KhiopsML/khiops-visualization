@@ -21,7 +21,7 @@ import { ChartColorsSetI } from '../../interfaces/chart-colors-set';
 import { ChartOptions } from 'chart.js';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { TYPES } from '@khiops-library/enum/types';
-import { HistogramType } from '@khiops-visualization/components/commons/histogram/histogram.type';
+import { HistogramType } from '../../../khiops-visualization/components/commons/histogram/histogram.type';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options';
 import { UtilsService } from '@khiops-library/providers/utils.service';
@@ -89,15 +89,17 @@ export class DistributionGraphComponent
                   !this.hideGraphOptions &&
                   this.graphOptions?.selected === HistogramType.YLIN
                 ) {
+                  // In linear scale, display the same value as in yLog (frequency value)
                   return this.toPrecision.transform(
-                    items.dataset.extra[items.dataIndex].extra.coverageValue,
+                    items.dataset.extra[items.dataIndex].extra.frequencyValue,
                   );
                 } else if (
                   !this.hideGraphOptions &&
                   this.graphOptions?.selected === HistogramType.YLOG
                 ) {
+                  // In logarithmic scale, display the Frequency
                   return this.toPrecision.transform(
-                    items.dataset.extra[items.dataIndex].extra.value,
+                    items.dataset.extra[items.dataIndex].extra.frequencyValue,
                   );
                 } else {
                   return this.toPrecision.transform(
@@ -113,17 +115,11 @@ export class DistributionGraphComponent
                   !this.hideGraphOptions &&
                   this.graphOptions?.selected === HistogramType.YLIN
                 ) {
-                  if (items.dataset.extra[items.dataIndex].extra.percent) {
-                    return (
-                      this.toPrecision.transform(
-                        items.dataset.extra[items.dataIndex].extra.percent,
-                      ) + '%'
-                    );
-                  } else {
-                    return this.toPrecision.transform(
-                      items.dataset.extra[items.dataIndex].extra.value,
-                    );
-                  }
+                  // In Coverage mode, display the percentage calculated from the Coverage
+                  const coverageValue =
+                    items.dataset.extra[items.dataIndex].extra.coverageValue;
+                  const percentValue = coverageValue * 100;
+                  return this.toPrecision.transform(percentValue) + '%';
                 }
               }
               return undefined;
@@ -198,11 +194,15 @@ export class DistributionGraphComponent
     this.chartOptions.scales!.y!.max = undefined;
     this.chartOptions.scales!.y!.min = undefined;
 
-    // Histogram: Missing logarithmic scale for "frequency" mode #185
-    this.chartOptions.scales!.y!.type =
-      this.graphOptions!.selected === TYPES.FREQUENCY
-        ? TYPES.LOGARITHMIC
-        : TYPES.LINEAR;
+    // Configure Y axis scale according to the selected mode
+    if (this.graphOptions!.selected === HistogramType.YLOG) {
+      // In logarithmic mode, use the native logarithmic scale of Chart.js
+      this.chartOptions.scales!.y!.type = TYPES.LOGARITHMIC;
+      // The data will be the frequency values (raw frequency values)
+    } else {
+      // In linear mode, use the linear scale to display Coverage
+      this.chartOptions.scales!.y!.type = TYPES.LINEAR;
+    }
 
     let minValues = this.inputDatas?.datasets?.[0]?.data;
     let minValue = 0;
