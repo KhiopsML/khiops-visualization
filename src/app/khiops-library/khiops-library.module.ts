@@ -77,6 +77,7 @@ import { ClearLsComponent } from './components/clear-ls/clear-ls.component';
 import { CookieConsentComponent } from './components/cookie-consent/cookie-consent.component';
 import { MatrixContrastSettingComponent } from './components/matrix-contrast-setting/matrix-contrast-setting.component';
 import { NumberPrecisionComponent } from './components/number-precision/number-precision.component';
+import { ScalePersistenceSettingComponent } from './components/scale-persistence-setting/scale-persistence-setting.component';
 
 @NgModule({
   imports: [
@@ -122,6 +123,7 @@ import { NumberPrecisionComponent } from './components/number-precision/number-p
     NumberPrecisionComponent,
     MatrixContrastSettingComponent,
     CookieConsentComponent,
+    ScalePersistenceSettingComponent,
     ClearLsComponent,
     NpmVersionComponent,
     ZoomToolsComponent,
@@ -162,6 +164,7 @@ import { NumberPrecisionComponent } from './components/number-precision/number-p
     NumberPrecisionComponent,
     MatrixContrastSettingComponent,
     CookieConsentComponent,
+    ScalePersistenceSettingComponent,
     ClearLsComponent,
     NpmVersionComponent,
     LibraryComponent,

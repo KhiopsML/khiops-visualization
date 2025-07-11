@@ -49,12 +49,22 @@ export class DistributionDatasModel {
       types: [HistogramType.YLIN, HistogramType.YLOG],
       selected: undefined,
     };
-    const savedOption = AppService.Ls.get(LS.DISTRIBUTION_GRAPH_OPTION_Y);
-    if (this.distributionGraphOptionsY.types.includes(savedOption)) {
-      this.distributionGraphOptionsY.selected = savedOption;
+
+    // Check if scale persistence is enabled
+    const persistScaleOptions =
+      AppService.Ls.get(LS.SETTING_PERSIST_SCALE_OPTIONS)?.toString() ===
+      'true';
+
+    if (persistScaleOptions) {
+      const savedOption = AppService.Ls.get(LS.DISTRIBUTION_GRAPH_OPTION_Y);
+      if (this.distributionGraphOptionsY.types.includes(savedOption)) {
+        this.distributionGraphOptionsY.selected = savedOption;
+      } else {
+        this.distributionGraphOptionsY.selected = HistogramType.YLIN;
+      }
     } else {
-      this.distributionGraphOptionsY.selected =
-        this.distributionGraphOptionsY.types[0];
+      // Always use default YLin when persistence is disabled
+      this.distributionGraphOptionsY.selected = HistogramType.YLIN;
     }
     this.distributionTypeY = this.distributionGraphOptionsY.selected;
 
@@ -62,12 +72,17 @@ export class DistributionDatasModel {
       types: [HistogramType.XLIN, HistogramType.XLOG],
       selected: undefined,
     };
-    const savedOptionX = AppService.Ls.get(LS.DISTRIBUTION_GRAPH_OPTION_X);
-    if (this.distributionGraphOptionsX.types.includes(savedOptionX)) {
-      this.distributionGraphOptionsX.selected = savedOptionX;
+
+    if (persistScaleOptions) {
+      const savedOptionX = AppService.Ls.get(LS.DISTRIBUTION_GRAPH_OPTION_X);
+      if (this.distributionGraphOptionsX.types.includes(savedOptionX)) {
+        this.distributionGraphOptionsX.selected = savedOptionX;
+      } else {
+        this.distributionGraphOptionsX.selected = HistogramType.XLIN;
+      }
     } else {
-      this.distributionGraphOptionsX.selected =
-        this.distributionGraphOptionsX.types[0];
+      // Always use default XLin when persistence is disabled
+      this.distributionGraphOptionsX.selected = HistogramType.XLIN;
     }
     this.distributionTypeX = this.distributionGraphOptionsX.selected;
   }

@@ -1,0 +1,17 @@
+<div
+  class="kl-scale-persistence-setting"
+  fxLayout="column"
+  fxLayoutAlign="start start"
+>
+  <h2>{{ 'SCALE_PERSISTENCE.TITLE' | translate }}</h2>
+
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <mat-slide-toggle
+      color="primary"
+      [(ngModel)]="persistScaleOptions"
+      (change)="onChange($event)"
+    >
+      {{ 'SCALE_PERSISTENCE.MESSAGE' | translate }}
+    </mat-slide-toggle>
+  </div>
+</div>

@@ -418,6 +418,8 @@ export class DistributionDatasService {
     }
     if (type) {
       this.distributionDatas.distributionType = type;
+    } else {
+      this.distributionDatas.setDefaultGraphOptions();
     }
 
     if (this.isValid()) {
@@ -426,8 +428,6 @@ export class DistributionDatasService {
         this.appService.appDatas[this.distributionDatas.preparationSource]
           .variablesDetailedStatistics[selectedVariable.rank];
       if (currentVar) {
-        this.distributionDatas.setDefaultGraphOptions();
-
         const variableDetails: VariableDetailsModel = new VariableDetailsModel(
           currentVar,
         );
