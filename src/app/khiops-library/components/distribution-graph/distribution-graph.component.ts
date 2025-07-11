@@ -89,7 +89,7 @@ export class DistributionGraphComponent
                   !this.hideGraphOptions &&
                   this.graphOptions?.selected === HistogramType.YLIN
                 ) {
-                  // In linear scale, display the same value as in yLog (frequency value)
+                  // In linear scale, display the frequency value (same as yLog)
                   return this.toPrecision.transform(
                     items.dataset.extra[items.dataIndex].extra.frequencyValue,
                   );

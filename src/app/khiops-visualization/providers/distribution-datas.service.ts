@@ -549,14 +549,12 @@ export class DistributionDatasService {
 
       if (this.distributionDatas.distributionType === HistogramType.YLOG) {
         // Logarithmic mode: use raw frequency values
-        // currentValue = safeFrequencyValue;
         graphItem.value = safeFrequencyValue; // The chart data are the frequencies
         total = UtilsService.arraySum(frequencyArray);
       } else {
-        // Linear mode: use normalized coverage values between 0 and 1
-        // currentValue = safeCoverageValue;
+        // Linear mode: use coverage values as percentage (0-100)
         total = UtilsService.arraySum(coverageArray);
-        graphItem.value = total > 0 ? safeCoverageValue / total : 0; // Normalize between 0 and 1
+        graphItem.value = total > 0 ? (safeCoverageValue * 100) / total : 0; // Percentage between 0 and 100
       }
       graphItem.extra.frequencyValue = safeFrequencyValue;
       graphItem.extra.coverageValue = total > 0 ? safeCoverageValue / total : 0; // Always normalize Coverage between 0 and 1
