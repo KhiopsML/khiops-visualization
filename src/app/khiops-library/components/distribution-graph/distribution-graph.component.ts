@@ -198,22 +198,23 @@ export class DistributionGraphComponent
     if (this.graphOptions!.selected === HistogramType.YLOG) {
       // In logarithmic mode, use the native logarithmic scale of Chart.js
       this.chartOptions.scales!.y!.type = TYPES.LOGARITHMIC;
-      // The data will be the frequency values (raw frequency values)
+      // Always start the Y axis at 1 in logarithmic mode
+      this.chartOptions.scales!.y!.min = 1;
     } else {
       // In linear mode, use the linear scale to display Coverage
       this.chartOptions.scales!.y!.type = TYPES.LINEAR;
-    }
 
-    let minValues = this.inputDatas?.datasets?.[0]?.data;
-    let minValue = 0;
-    if (minValues) {
-      minValue = Math.min(...minValues);
-    }
+      let minValues = this.inputDatas?.datasets?.[0]?.data;
+      let minValue = 0;
+      if (minValues) {
+        minValue = Math.min(...minValues);
+      }
 
-    if (minValue > 0) {
-      this.chartOptions.scales!.y!.min = 0;
-    } else {
-      this.chartOptions.scales!.y!.min = minValue;
+      if (minValue > 0) {
+        this.chartOptions.scales!.y!.min = 0;
+      } else {
+        this.chartOptions.scales!.y!.min = minValue;
+      }
     }
     this.chartOptions = _.cloneDeep(this.chartOptions);
   }
