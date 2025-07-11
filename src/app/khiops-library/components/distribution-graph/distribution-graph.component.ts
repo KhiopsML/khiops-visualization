@@ -186,8 +186,12 @@ export class DistributionGraphComponent
   changeGraphType(type: string) {
     // this.trackerService.trackEvent('click', 'distribution_graph_type', this.graphOptions.selected);
     this.ls.set(LS.DISTRIBUTION_GRAPH_OPTION_Y, type);
-    this.updateChartOptions();
     this.graphTypeChanged.emit(type);
+
+    // Update the graph options with updated datas
+    setTimeout(() => {
+      this.updateChartOptions();
+    });
   }
 
   private updateChartOptions() {
@@ -199,7 +203,15 @@ export class DistributionGraphComponent
       // In logarithmic mode, use the native logarithmic scale of Chart.js
       this.chartOptions.scales!.y!.type = TYPES.LOGARITHMIC;
       // Always start the Y axis at 1 in logarithmic mode
-      this.chartOptions.scales!.y!.min = 1;
+      let minValues = this.inputDatas?.datasets?.[0]?.data;
+      let minValue = 0;
+      if (minValues) {
+        minValue = Math.min(...minValues);
+      }
+
+      if (minValue > 1) {
+        this.chartOptions.scales!.y!.min = 1;
+      }
     } else {
       // In linear mode, use the linear scale to display Coverage
       this.chartOptions.scales!.y!.type = TYPES.LINEAR;
