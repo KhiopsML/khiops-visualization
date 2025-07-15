@@ -5,7 +5,7 @@
  */
 
 import { ModelingVariableStatistic } from '@khiops-visualization/interfaces/modeling-report';
-import { UtilsService } from '../../khiops-library/providers/utils.service';
+import { UtilsService } from '@khiops-library/providers/utils.service';
 
 export class TrainedPredictorModel implements ModelingVariableStatistic {
   _id: string;
@@ -20,9 +20,19 @@ export class TrainedPredictorModel implements ModelingVariableStatistic {
   name1: string | undefined;
   name2: string | undefined;
 
-  constructor(object: ModelingVariableStatistic, availableKeys: string[]) {
-    // Generate id for grid
-    this._id = UtilsService.generateUniqueId(object.name1, object.name2);
+  constructor(
+    object: ModelingVariableStatistic,
+    availableKeys: string[],
+    _rank: string,
+  ) {
+    // Generate id for grid - use consistent format with preparation models
+    if (object.isPair && object.name1 && object.name2) {
+      // For 2D variables, use the same format as Preparation2dVariableModel
+      this._id = UtilsService.generateUniqueId(object.name1, object.name2);
+    } else {
+      // For regular variables, use name to match with preparation variables
+      this._id = object.name;
+    }
 
     this.name = object.name;
     this.isPair = object.isPair;

@@ -30,6 +30,7 @@ export class Variable2dModel {
   constructor(object: VariablePairStatistics) {
     // Assign values from input
     Object.assign(this, object);
+    // Use same ID format as Preparation2dVariableModel for consistency
     this._id = UtilsService.generateUniqueId(object.name1, object.name2);
 
     this.variableType = VARIABLE_TYPES.PREPARATION_2D;

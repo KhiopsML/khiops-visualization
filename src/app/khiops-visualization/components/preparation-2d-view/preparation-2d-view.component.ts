@@ -13,6 +13,7 @@ import {
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
+import { Variable2dModel } from '@khiops-visualization/model/variable-2d.model';
 import { LevelDistributionGraphComponent } from '@khiops-visualization/components/commons/level-distribution-graph/level-distribution-graph.component';
 import { TargetDistributionGraphComponent } from '@khiops-visualization/components/commons/target-distribution-graph/target-distribution-graph.component';
 import { ModelingDatasService } from '@khiops-visualization/providers/modeling-datas.service';
@@ -20,9 +21,7 @@ import { TranslateService } from '@ngstack/translate';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
-import { Variable2dModel } from '@khiops-visualization/model/variable-2d.model';
 import { Preparation2dDatasModel } from '@khiops-visualization/model/preparation2d-datas.model';
-import { Preparation2dVariableModel } from '@khiops-visualization/model/preparation2d-variable.model';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { SplitGutterInteractionEvent } from 'angular-split';
@@ -97,15 +96,20 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
     this.resizeTargetDistributionGraph();
   }
 
-  onSelectListItemChanged(item: Preparation2dVariableModel) {
-    this.preparation2dDatasService.setSelectedVariable(item.name1, item.name2);
-    const modelingVariable =
-      this.preparation2dDatasService.getVariableFromNames(
+  onSelectListItemChanged(item: Variable2dModel) {
+    if (item.name1 && item.name2) {
+      this.preparation2dDatasService.setSelectedVariable(
         item.name1,
         item.name2,
       );
-    if (modelingVariable) {
-      this.modelingDatasService.setSelectedVariable(modelingVariable);
+      const modelingVariable =
+        this.preparation2dDatasService.getVariableFromNames(
+          item.name1,
+          item.name2,
+        );
+      if (modelingVariable) {
+        this.modelingDatasService.setSelectedVariable(modelingVariable);
+      }
     }
   }
 
