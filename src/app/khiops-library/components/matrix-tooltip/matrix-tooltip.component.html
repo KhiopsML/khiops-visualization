@@ -5,8 +5,12 @@
       fxLayout="column"
       fxLayoutAlign="start start"
     >
-      <span>{{ cell.xnamePart }} : {{ cell.xDisplayaxisPart }}</span>
-      <span>{{ cell.ynamePart }} : {{ cell.yDisplayaxisPart }}</span>
+      <span
+        >{{ cell.xnamePart }} : {{ truncateText(cell.xDisplayaxisPart) }}</span
+      >
+      <span
+        >{{ cell.ynamePart }} : {{ truncateText(cell.yDisplayaxisPart) }}</span
+      >
     </div>
     <div
       class="matrix-tooltip-content"

@@ -16,11 +16,11 @@ import {
 import { CellModel } from '@khiops-library/model/cell.model';
 
 @Component({
-    selector: 'kl-matrix-tooltip',
-    templateUrl: './matrix-tooltip.component.html',
-    styleUrls: ['./matrix-tooltip.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  selector: 'kl-matrix-tooltip',
+  templateUrl: './matrix-tooltip.component.html',
+  styleUrls: ['./matrix-tooltip.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class MatrixTooltipComponent implements OnChanges {
   @Input() public cell?: CellModel;
@@ -53,5 +53,15 @@ export class MatrixTooltipComponent implements OnChanges {
         this.matrixTooltipDiv.nativeElement.style.visibility = 'hidden';
       }
     }
+  }
+
+  /**
+   * Truncate text with ellipsis if it exceeds 100 characters
+   */
+  truncateText(text: string | undefined, maxLength: number = 200): string {
+    if (!text) return '';
+    return text.length > maxLength
+      ? text.substring(0, maxLength) + '...'
+      : text;
   }
 }
