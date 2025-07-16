@@ -44,6 +44,13 @@ export class LegendComponent implements OnChanges {
     this.updateLegend();
   }
 
+  /**
+   * Selects a legend item and emits an event with the selected item.
+   * If the item is already selected, it deselects it.
+   * This method is used to handle user interactions with the legend items.
+   *
+   * @param item - The name of the legend item to select or deselect.
+   */
   selectLegendItem(item: string) {
     if (this.legendItemClicked.observers.length > 0) {
       if (this.selectedItem === item) {
@@ -77,6 +84,12 @@ export class LegendComponent implements OnChanges {
     }
   }
 
+  /**
+   * Updates the legend based on the input data.
+   * It constructs the legend items based on the type of chart and the datasets provided.
+   * For 'chart-1d', 'chart-nd', and 'chart-nd-dynamic' types, it populates the legend with appropriate names and colors.
+   * It also applies ellipsis to long legend text and sorts the legend items in natural order.
+   */
   private updateLegend() {
     if (this.inputDatas) {
       this.legend = [];
