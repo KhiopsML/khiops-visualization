@@ -44,6 +44,7 @@ import { Ls } from '@khiops-library/providers/ls.service';
 import { KEYBOARD } from '@khiops-library/enum/keyboard';
 import { GridCheckboxEventI } from '@khiops-library/interfaces/events';
 import { DynamicI } from '@khiops-library/interfaces/globals';
+import { GridOptionsModel } from '@khiops-library/model/grid-options.model';
 
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
@@ -113,10 +114,7 @@ export class AgGridComponent
   public isSmallDiv: boolean = false;
 
   // For evaluation view
-  public dataOptions: any = {
-    types: [TYPES.FREQUENCY, TYPES.COVERAGE],
-    selected: undefined,
-  };
+  public dataOptions: GridOptionsModel = new GridOptionsModel();
 
   public gridOptions = <GridOptions>{
     suppressAnimationFrame: true,
@@ -167,58 +165,6 @@ export class AgGridComponent
       this.gridModes = (PREV_MODES_AG_GRID && PREV_MODES_AG_GRID) || {}; // 'fitToSpace' or 'fitToContent'
     } catch (e) {}
   }
-
-  sizeChanged(width: number) {
-    this.divWidth = width;
-    this.checkIsSmallDiv();
-
-    if (this.agGrid?.api && this.gridMode === 'fitToSpace' /*&& width*/) {
-      setTimeout(() => {
-        this.agGrid?.api?.sizeColumnsToFit();
-      });
-    }
-  }
-
-  onSortChanged(grid: SortChangedEvent) {
-    this.saveState(grid);
-  }
-
-  onGridReady(_params: GridReadyEvent) {
-    this.updateTable();
-    // Reinit current saved columns sizes when user fit grid to space
-    delete this.cellsSizes[this.id!];
-    this.ls.set(LS.CELL_AG_GRID, this.cellsSizes);
-
-    this.saveGridModes(this.gridMode);
-    this.agGrid?.api?.sizeColumnsToFit();
-
-    this.restoreState();
-  }
-
-  changeDataType(type: string) {
-    this.ls.set(LS.AG_GRID_GRAPH_OPTION, type);
-
-    this.dataOptions.selected = type;
-    this.dataTypeChanged.emit(type);
-  }
-
-  /**
-   * Focus on search input
-   */
-  public focusSearch() {
-    if (this.searchInputEl) {
-      this.searchInputEl.nativeElement.focus();
-    }
-  }
-
-  public hideActiveEntries() {
-    this.gridOptions?.api?.deselectAll();
-  }
-
-  public showActiveEntries() {
-    this.selectNode(this.selectedVariable);
-  }
-
   override ngAfterViewInit() {
     // Call ngAfterViewInit of extend component
     super.ngAfterViewInit();
@@ -306,6 +252,82 @@ export class AgGridComponent
   }
 
   /**
+   * Handles the size changed event in the ag-Grid.
+   * @param width - The new width of the grid.
+   */
+  sizeChanged(width: number) {
+    this.divWidth = width;
+    this.checkIsSmallDiv();
+
+    if (this.agGrid?.api && this.gridMode === 'fitToSpace' /*&& width*/) {
+      setTimeout(() => {
+        this.agGrid?.api?.sizeColumnsToFit();
+      });
+    }
+  }
+
+  /**
+   * Handles the sort changed event in the ag-Grid.
+   * @param grid - The grid instance.
+   */
+  onSortChanged(grid: SortChangedEvent) {
+    this.saveState(grid);
+  }
+
+  /**
+   * Handles the grid ready event, which is triggered when the grid is fully initialized.
+   * It updates the table, saves the grid modes, and restores the state.
+   * @param _params - The parameters of the grid ready event.
+   */
+  onGridReady(_params: GridReadyEvent) {
+    this.updateTable();
+    // Reinit current saved columns sizes when user fit grid to space
+    delete this.cellsSizes[this.id!];
+    this.ls.set(LS.CELL_AG_GRID, this.cellsSizes);
+
+    this.saveGridModes(this.gridMode);
+    this.agGrid?.api?.sizeColumnsToFit();
+
+    this.restoreState();
+  }
+
+  /**
+   * Changes the data type for the grid.
+   * @param type - The new data type to be set.
+   */
+  changeDataType(type: string) {
+    this.ls.set(LS.AG_GRID_GRAPH_OPTION, type);
+
+    this.dataOptions.selected = type;
+    this.dataTypeChanged.emit(type);
+  }
+
+  /**
+   * Focus on search input
+   */
+  public focusSearch() {
+    if (this.searchInputEl) {
+      this.searchInputEl.nativeElement.focus();
+    }
+  }
+
+  /**
+   * Hides all active entries in the grid by deselecting all rows.
+   * This method is typically used to filter out entries that are currently active.
+   */
+  public hideActiveEntries() {
+    this.gridOptions?.api?.deselectAll();
+  }
+
+  /**
+   * Selects the currently active entries in the grid.
+   * This method is typically used to highlight or focus on entries that are currently active.
+   */
+  public showActiveEntries() {
+    this.selectNode(this.selectedVariable);
+  }
+
+  /**
    * Checks and toggles the visibility of the AG Grid component based on the input data length
    * and pagination size. If the visibility state changes, it temporarily hides and then shows
    * the AG Grid component to trigger a re-render.
@@ -335,10 +357,19 @@ export class AgGridComponent
       (hiddenColumns && hiddenColumns.length <= 1) || false;
   }
 
+  /**
+   * Handles the cell click event in the ag-Grid.
+   * Emits the clicked data to the selectListItem output.
+   * @param e - The event object containing information about the clicked cell.
+   */
   onCellClicked(e: any) {
     this.selectListItem.emit(e.data);
   }
 
+  /**
+   * Toggles the fullscreen mode of the grid.
+   * @param isFullscreen - A boolean indicating whether the grid should be in fullscreen mode.
+   */
   onToggleFullscreen(isFullscreen: boolean) {
     this.isFullscreen = isFullscreen;
     this.fitToSpace();
@@ -371,6 +402,10 @@ export class AgGridComponent
     }
   }
 
+  /**
+   * Selects a node in the ag-Grid based on its index.
+   * @param nodeIndex - The index of the node to be selected.
+   */
   selectNodeFromIndex(nodeIndex: number) {
     if (nodeIndex !== undefined && this.showLineSelection) {
       if (this.agGrid?.api) {
@@ -388,6 +423,10 @@ export class AgGridComponent
     }
   }
 
+  /**
+   * Selects a node in the ag-Grid based on its ID.
+   * @param nodeId - The ID of the node to be selected.
+   */
   selectNodeFromId(nodeId: string) {
     if (nodeId !== undefined && this.showLineSelection) {
       if (this.agGrid?.api) {
@@ -412,10 +451,17 @@ export class AgGridComponent
     }
   }
 
+  /**
+   * Toggles the checkbox in the grid.
+   * @param e - The event object containing information about the checkbox state.
+   */
   toggleGridCheckbox(e: GridCheckboxEventI) {
     this.gridCheckboxChanged.emit(e);
   }
 
+  /**
+   * Updates the table by resetting column definitions and row data.
+   */
   updateTable() {
     if (this.displayedColumns && this.inputDatas) {
       // Update columns at any changes to update sort a,d other ...
@@ -497,20 +543,22 @@ export class AgGridComponent
     }
   }
 
+  /**
+   * Opens the level distribution dialog and emits the input data sorted by level.
+   */
   openLevelDistributionDialog(): void {
     // always sort inputDatas by level to show level distributiuon
     this.inputDatas = this.inputDatas?.sort((a: any, b: any) => {
-      return this.compare(a.level || 0, b.level || 0, false);
+      return UtilsService.compare(a.level || 0, b.level || 0, false);
     });
     this.showLevelDistributionGraph.emit(this.inputDatas);
-
-    // this.trackerService.trackEvent('click', 'show_level_distribution');
   }
 
-  compare(a: number | string, b: number | string, isAsc: boolean) {
-    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
-  }
-
+  /**
+   * Toggles the visibility of a column in the grid based on the checkbox state.
+   * @param event - The MatCheckboxChange event containing the new checked state.
+   * @param opt - The GridColumnsI object representing the column to be toggled.
+   */
   toggleTableColumn(event: MatCheckboxChange, opt: GridColumnsI) {
     // Update current displayed column state
     const currentColumn = this.displayedColumns?.find((e) => {
@@ -530,6 +578,10 @@ export class AgGridComponent
     this.restoreState();
   }
 
+  /**
+   * Checks if the current div width is small based on the showSearch and showLevelDistribution flags.
+   * Updates the isSmallDiv property accordingly.
+   */
   checkIsSmallDiv() {
     if (this.showSearch) {
       if (this.showLevelDistribution) {
@@ -543,6 +595,11 @@ export class AgGridComponent
     }
   }
 
+  /**
+   * Toggles the visibility of the search form.
+   * Adjusts the div width and checks if it is small.
+   * Sets the focus on the search input element after a short delay.
+   */
   showSearchForm() {
     this.searchFormVisible = true;
 
@@ -562,6 +619,10 @@ export class AgGridComponent
     });
   }
 
+  /**
+   * Removes the search input and resets the search.
+   * If showFullSearch is false, it hides the search form.
+   */
   removeSearch() {
     this.searchInput = '';
     this.search();
@@ -570,6 +631,11 @@ export class AgGridComponent
     }
   }
 
+  /**
+   * Performs a search in the ag-Grid by setting a quick filter.
+   * If searchInput is not empty, it saves the search input to local storage.
+   * If searchInput is empty, it removes the saved search input from local storage.
+   */
   search() {
     // this.trackerService.trackEvent('click', 'search');
     this.agGrid?.api.setQuickFilter(this.searchInput || '');
@@ -583,6 +649,11 @@ export class AgGridComponent
     }
   }
 
+  /**
+   * Handles keyboard navigation in the ag-Grid.
+   * Moves the selection to the next or previous row based on the pressed key.
+   * @param params - The parameters containing the key pressed.
+   */
   keyboardNavigation = (params: NavigateToNextCellParams) => {
     const selectedNodes = this.agGrid?.api.getSelectedNodes();
     if (selectedNodes?.[0]) {
@@ -622,6 +693,11 @@ export class AgGridComponent
     }
   };
 
+  /**
+   * Handles the column resized event in the ag-Grid.
+   * Saves the column size to local storage if the resize is finished.
+   * @param e - The ColumnResizedEvent containing information about the resized column.
+   */
   onColumnResized(e: ColumnResizedEvent) {
     // Do not check uiColumnDragged to init column sizes at start
     if (e /*&& e.source === 'uiColumnDragged' */ && e.finished) {
@@ -640,6 +716,11 @@ export class AgGridComponent
     }
   }
 
+  /**
+   * Saves the size of a column in local storage.
+   * @param field - The field name of the column.
+   * @param width - The width of the column.
+   */
   saveColumnSize(field: string, width: number) {
     if (!this.cellsSizes[this.id!]) {
       this.cellsSizes[this.id!] = {};
@@ -648,6 +729,11 @@ export class AgGridComponent
     this.ls.set(LS.CELL_AG_GRID, this.cellsSizes);
   }
 
+  /**
+   * Saves the visibility state of a column in local storage.
+   * @param column - The field name of the column.
+   * @param isVisible - A boolean indicating if the column is visible.
+   */
   saveVisibleColumns(column: string, isVisible: boolean) {
     if (!this.visibleColumns[this.id!]) {
       this.visibleColumns[this.id!] = {};
@@ -655,6 +741,12 @@ export class AgGridComponent
     this.visibleColumns[this.id!][column] = isVisible;
     this.ls.set(LS.COLUMNS_AG_GRID, this.visibleColumns);
   }
+
+  /**
+   * Fits the grid to the available space by resizing columns.
+   * Reinitializes the current saved column sizes when the user fits the grid to space.
+   * Updates the table and saves the grid mode.
+   */
   fitToSpace() {
     this.gridMode = 'fitToSpace';
 
@@ -675,6 +767,10 @@ export class AgGridComponent
     this.restoreState();
   }
 
+  /**
+   * Fits the grid to the content by auto-sizing all columns.
+   * Saves the grid mode and restores the state.
+   */
   fitToContent() {
     this.gridMode = 'fitToContent';
     this.gridOptions.columnApi?.autoSizeAllColumns(true);
@@ -683,6 +779,10 @@ export class AgGridComponent
     this.restoreState();
   }
 
+  /**
+   * Saves the current grid mode in local storage.
+   * @param gridMode - The current grid mode (e.g., 'fitToSpace' or 'fitToContent').
+   */
   saveGridModes(gridMode: string) {
     this.gridModes[this.id!] = gridMode;
     this.ls.set(LS.MODES_AG_GRID, this.gridModes);
@@ -707,6 +807,10 @@ export class AgGridComponent
     }
   }
 
+  /**
+   * Saves the current sort state of the grid in local storage.
+   * @param _grid - The SortChangedEvent containing information about the sorted grid.
+   */
   saveState(_grid: SortChangedEvent) {
     const state = {
       sortState: this.gridOptions?.columnApi?.getColumnState(),
@@ -714,6 +818,9 @@ export class AgGridComponent
     this.ls.set(LS.OPTIONS_AG_GRID + '_' + this.id?.toUpperCase(), state);
   }
 
+  /**
+   * Restores the saved state of the grid from local storage.
+   */
   restoreState() {
     // setTimeout(() => {
     if (this.id) {

@@ -1494,4 +1494,17 @@ export class UtilsService {
       return acc;
     }, []);
   }
+
+  /**
+   * Compares two values and returns a comparison result based on the specified order.
+   * This method is used for sorting purposes, allowing for both ascending and descending order.
+   *
+   * @param a - The first value to compare (can be a number or a string).
+   * @param b - The second value to compare (can be a number or a string).
+   * @param isAsc - A boolean indicating whether the comparison should be in ascending order (true) or descending order (false).
+   * @returns A negative number if `a` is less than `b`, a positive number if `a` is greater than `b`, or zero if they are equal.
+   */
+  static compare(a: number | string, b: number | string, isAsc: boolean) {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  }
 }
