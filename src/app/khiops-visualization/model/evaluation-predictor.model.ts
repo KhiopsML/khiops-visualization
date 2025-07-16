@@ -53,6 +53,10 @@ export class EvaluationPredictorModel {
     this._id = this.type + this.name;
   }
 
+  /**
+   * Removes properties that are not applicable based on the predictor type.
+   * This is used to clean up the model before sending it to the server or displaying it.
+   */
   removeUnexistingValues() {
     // Remove non existings values if it's a normal type
     if (this.rmse === undefined) {

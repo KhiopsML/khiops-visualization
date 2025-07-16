@@ -37,11 +37,17 @@ export class DistributionDatasModel {
   preparationSource!: string;
   treeHyperGraphDatas: ChartDatasModel | undefined = undefined;
 
+  /**
+   * Initializes the tree node target distribution graph data.
+   */
   initTreeNodeTargetDistributionGraphDatas() {
     this.treeNodeTargetDistributionGraphDatas = new ChartDatasModel();
     // this.treeNodeTargetDistributionDisplayedValues = undefined; // No !!! otherwise the select box do not work
   }
 
+  /**
+   * Sets the default graph options for distribution visualization.
+   */
   setDefaultGraphOptions() {
     // Check if scale persistence is enabled
     const persistScaleOptions =
@@ -100,10 +106,16 @@ export class DistributionDatasModel {
     return options;
   }
 
+  /**
+   * Initializes the tree hyper graph data.
+   */
   initTreeHyperGraphDatas() {
     this.treeHyperGraphDatas = new ChartDatasModel();
   }
 
+  /**
+   * Initializes the target distribution graph data.
+   */
   checkTreeNodeTargetDistributionGraphDatas() {
     if (
       this.treeNodeTargetDistributionGraphDatas &&
@@ -113,6 +125,9 @@ export class DistributionDatasModel {
     }
   }
 
+  /**
+   * Initializes the tree hyper graph data.
+   */
   checkTreeHyperGraphDatas() {
     if (
       this.treeHyperGraphDatas &&
@@ -122,10 +137,16 @@ export class DistributionDatasModel {
     }
   }
 
+  /**
+   * Initializes the target distribution graph data.
+   */
   initTargetDistributionGraphDatas() {
     this.targetDistributionGraphDatas = new ChartDatasModel();
   }
 
+  /**
+   * Checks the target distribution graph data and sets it to undefined if empty.
+   */
   checkTargetDistributionGraphDatas() {
     if (
       this.targetDistributionGraphDatas &&
@@ -135,12 +156,20 @@ export class DistributionDatasModel {
     }
   }
 
+  /**
+   * Sets the type for the target distribution.
+   * @param type The type to set for the target distribution.
+   */
   setTargetDistributionType(type: string | undefined) {
     if (type) {
       this.targetDistributionType = type;
     }
   }
 
+  /**
+   * Sets the type for the tree node target distribution.
+   * @param type The type to set for the tree node target distribution.
+   */
   setTreeNodeTargetDistributionType(type: string | undefined) {
     if (type) {
       this.treeNodeTargetDistributionType = type;

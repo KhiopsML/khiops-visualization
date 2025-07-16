@@ -45,6 +45,10 @@ export class SummaryModel {
     this.formatDatas();
   }
 
+  /**
+   * Formats the data for display.
+   * This method collects various properties into a structured format for presentation.
+   */
   formatDatas() {
     this.displayDatas = [];
     if (this.dictionary) {

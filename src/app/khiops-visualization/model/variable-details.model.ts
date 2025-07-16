@@ -54,10 +54,18 @@ export class VariableDetailsModel {
     }
   }
 
+  /**
+   * Sets the cell frequencies for the data grid.
+   * @param cellFrequencies - An array of cell frequencies.
+   */
   setCellFrequencies(cellFrequencies: number[]) {
     this.dataGrid.cellFrequencies = cellFrequencies;
   }
 
+  /**
+   * Sets the part target frequencies for the data grid.
+   * @param partTargetFrequencies - A 2D array of part target frequencies.
+   */
   setTargetCellFrequencies(cellTargetFrequencies: number[][]) {
     this.dataGrid.cellTargetFrequencies = cellTargetFrequencies;
   }
