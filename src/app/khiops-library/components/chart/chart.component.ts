@@ -121,7 +121,8 @@ export class ChartComponent implements AfterViewInit, OnChanges {
                 }
               },
             },
-            backgroundColor: 'rgba(27, 36, 67, 0.9)',
+            padding: 10,
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
           },
           legend: {
             display: false,
