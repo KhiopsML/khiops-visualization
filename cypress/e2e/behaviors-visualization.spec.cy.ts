@@ -122,16 +122,24 @@ describe('Test Plan for Khiops Covisualization', () => {
 
         cy.get('#evaluation-types-summary').contains('Train');
         cy.get('#evaluation-types-summary').contains('Test');
+
         // check that 3nd .ag-row contains  .ag-row-selected
         cy.get('#evaluation-types-summary')
           .find('.ag-row:eq(0)')
           .should('have.class', 'ag-row-selected');
         cy.get('#evaluation-predictor-evaluations').contains('Train');
         cy.get('#evaluation-predictor-evaluations').contains('Test');
+
         // check that 3nd .ag-row contains  .ag-row-selected
         cy.get('#evaluation-predictor-evaluations')
           .find('.ag-row:eq(0)')
           .should('have.class', 'ag-row-selected');
+
+        cy.get('.mat-mdc-tab:contains("Project")').first().click();
+        cy.wait(500);
+
+        cy.get('#project-view-comp-table').contains('Regression analysis');
+        cy.get('#project-logs').contains('Variable construction');
       });
     });
   });
