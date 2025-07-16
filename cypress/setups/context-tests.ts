@@ -37,7 +37,7 @@ export function setupContextTests(datas, testsValues, fileName) {
 
   testsValues.Context.push('Name');
   testsValues.Context.push('Interest');
-  testsValues.Context.push('Coverage');
+  testsValues.Context.push('Distribution');
   testsValues.Context.push('Selected clusters');
   testsValues.Context.push('Nb Clusters');
 
