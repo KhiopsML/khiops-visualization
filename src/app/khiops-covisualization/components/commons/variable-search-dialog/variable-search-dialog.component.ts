@@ -227,7 +227,10 @@ export class VariableSearchDialogComponent implements AfterViewInit {
         // Sort by interval (assuming intervals are strings like '[a, b)')
         if (this.searchResults && this.searchResults.values) {
           this.searchResults.values = this.searchResults.values.sort(
-            (a: any, b: any) => {
+            (
+              a: { interval: string; frequency: number },
+              b: { interval: string; frequency: number },
+            ) => {
               // Helper to check if interval is -inf or +inf
               const isMinusInf = (interval: string) =>
                 /-inf|−inf|Infinity|−Infinity|\u2212inf/i.test(interval) &&
@@ -294,16 +297,19 @@ export class VariableSearchDialogComponent implements AfterViewInit {
         // Sort by frequency descending
         if (this.searchResults && this.searchResults.values) {
           this.searchResults.values = this.searchResults.values.sort(
-            (a: any, b: any) => b.frequency - a.frequency,
+            (
+              a: { modality: string; frequency: number },
+              b: { modality: string; frequency: number },
+            ) => b.frequency - a.frequency,
           );
         }
       }
     }
   }
 
-  onSelectRowChanged(selectedRow: any) {
+  onSelectRowChanged(selectedRow: { [key: string]: any }) {
     // Get the selected value (modality for categorical, interval for numerical)
-    const selectedValue = selectedRow.modality || selectedRow.interval;
+    const selectedValue: string = selectedRow.modality || selectedRow.interval;
 
     // Create the same key format used when building the map
     const rowKey = `${selectedValue}_${selectedRow.frequency}`;

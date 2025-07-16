@@ -12,7 +12,7 @@ import { ICellRendererParams } from '@ag-grid-community/core';
 export function getCompositionDisplayedColumns(
   translate: TranslateService,
   isVarPart?: boolean,
-  showDetailedPartsCallback?: (data: any) => void,
+  showDetailedPartsCallback?: (data: ICellRendererParams) => void,
 ): GridColumnsI[] {
   if (!isVarPart) {
     // Common case

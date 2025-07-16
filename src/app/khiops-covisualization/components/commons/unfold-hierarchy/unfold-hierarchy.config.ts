@@ -7,6 +7,7 @@
 import { CheckboxCellComponent } from '@khiops-library/components/ag-grid/checkbox-cell/checkbox-cell.component';
 import { TranslateService } from '@ngstack/translate';
 import * as _ from 'lodash'; // Important to import lodash in karma
+import type { ChartOptions } from 'chart.js';
 
 export function getHierarchyGridColumns(translate: TranslateService) {
   return [
@@ -32,25 +33,27 @@ export function getHierarchyGridColumns(translate: TranslateService) {
 
 export function getClusterPerDimChartOptions(
   translate: TranslateService,
-  baseOptions: any,
-) {
+  baseOptions: ChartOptions<'line'>,
+): ChartOptions<'line'> {
   const options = _.cloneDeep(baseOptions);
-  options.scales.x.title.text = translate.get(
+  options.scales!.x!.title!.text = translate.get(
     'GLOBAL.TOTAL_NUMBER_OF_CLUSTERS',
   );
-  options.scales.y.title.text = translate.get('GLOBAL.NB_OF_CLUSTERS_PER_DIM');
+  options.scales!.y!.title!.text = translate.get(
+    'GLOBAL.NB_OF_CLUSTERS_PER_DIM',
+  );
   return options;
 }
 
 export function getInfoPerClusterChartOptions(
   translate: TranslateService,
-  baseOptions: any,
-) {
+  baseOptions: ChartOptions<'line'>,
+): ChartOptions<'line'> {
   const options = _.cloneDeep(baseOptions);
-  options.scales.x.title.text = translate.get(
+  options.scales!.x!.title!.text = translate.get(
     'GLOBAL.TOTAL_NUMBER_OF_CLUSTERS',
   );
-  options.scales.y.title.text = translate.get('GLOBAL.INFORMATION_RATE');
+  options.scales!.y!.title!.text = translate.get('GLOBAL.INFORMATION_RATE');
   return options;
 }
 

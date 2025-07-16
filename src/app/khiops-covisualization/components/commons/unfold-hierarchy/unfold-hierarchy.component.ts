@@ -51,12 +51,12 @@ export class UnfoldHierarchyComponent implements OnInit {
   public selectedLineChartItem = '';
   public hierarchyDisplayedColumns: GridColumnsI[] = [];
   public currentCellsPerCluster = 0;
-  public legend: any;
+  public legend!: { series: { name: string }[] }[];
 
   private previousHierarchyRank: number = 0;
   private borderColor: string;
   private defaultMaxUnfoldHierarchy = 0;
-  private chartOptions: ChartOptions | undefined;
+  private chartOptions: ChartOptions<'line'> | undefined;
   public clustersPerDimDatasChartOptions: ChartOptions | undefined;
   public infoPerClusterChartOptions: ChartOptions | undefined;
 
@@ -80,11 +80,11 @@ export class UnfoldHierarchyComponent implements OnInit {
     this.unfoldHierarchyTableTitle = this.translate.get(
       'GLOBAL.NB_OF_CLUSTERS_PER_DIM',
     );
-    this.chartOptions = getDefaultChartOptions();
+    this.chartOptions = getDefaultChartOptions() as ChartOptions<'line'>;
 
     this.clustersPerDimDatasChartOptions = getClusterPerDimChartOptions(
       this.translate,
-      this.chartOptions,
+      this.chartOptions!,
     );
 
     this.infoPerClusterChartOptions = getInfoPerClusterChartOptions(
@@ -137,9 +137,11 @@ export class UnfoldHierarchyComponent implements OnInit {
       if (this.clustersPerDimDatas?.datasets) {
         // Do not insert bar chart legend (nb of clusters)
         for (let i = 0; i < this.clustersPerDimDatas.datasets.length - 1; i++) {
-          this.legend[0].series.push({
-            name: this.clustersPerDimDatas.datasets[i]?.label,
-          });
+          if (this.legend && this.legend[0] && this.legend[0].series) {
+            this.legend[0].series.push({
+              name: this.clustersPerDimDatas.datasets[i]?.label ?? '',
+            });
+          }
         }
       }
 

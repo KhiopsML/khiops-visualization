@@ -32,11 +32,11 @@ import {
 import { SaveService } from '@khiops-covisualization/providers/save.service';
 
 @Component({
-    selector: 'app-tree-select',
-    templateUrl: './tree-select.component.html',
-    styleUrls: ['./tree-select.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  selector: 'app-tree-select',
+  templateUrl: './tree-select.component.html',
+  styleUrls: ['./tree-select.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class TreeSelectComponent
   implements AfterViewInit, OnChanges, OnDestroy
@@ -48,8 +48,8 @@ export class TreeSelectComponent
 
   public id: string | undefined = undefined;
   private treeSelectedNodeChangedSub: Subscription;
-  private tree: any;
-  private nodeInSelection: any;
+  private tree: any | undefined;
+  private nodeInSelection: string | undefined;
 
   constructor(
     private dimensionsDatasService: DimensionsDatasService,

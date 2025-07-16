@@ -70,12 +70,12 @@ export class TreeNodeModel {
     id: number,
     object: Cluster,
     dimension: DimensionCovisualizationModel,
-    collapsedNodes: DynamicI,
+    collapsedNodes: string[],
     leafPosition: number,
     j: number,
-    currentNodesNames?: any,
-    currentAnnotations?: any,
-    extData?: any,
+    currentNodesNames?: Record<string, string>,
+    currentAnnotations?: Record<string, string>,
+    extData?: Record<string, any>,
     valueGroups?: ValueGroup,
   ) {
     // Assign values from input
@@ -105,12 +105,12 @@ export class TreeNodeModel {
     this.name = this.cluster;
 
     if (currentNodesNames?.[this.name]) {
-      this.shortDescription = currentNodesNames[this.name];
+      this.shortDescription = currentNodesNames[this.name] ?? '';
     } else {
       this.shortDescription = this.bounds;
     }
     if (currentAnnotations?.[this.name]) {
-      this.annotation = currentAnnotations[this.name];
+      this.annotation = currentAnnotations[this.name] ?? '';
     } else {
       this.annotation = '';
     }
