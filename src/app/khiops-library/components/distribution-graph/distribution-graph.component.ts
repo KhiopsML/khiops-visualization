@@ -16,9 +16,8 @@ import { SelectableService } from '../selectable/selectable.service';
 import { ScrollableGraphComponent } from '../scrollable-graph/scrollable-graph.component';
 import { KhiopsLibraryService } from '../../providers/khiops-library.service';
 import { ToPrecisionPipe } from '../../pipes/to-precision.pipe';
-import * as _ from 'lodash'; // Important to import lodash in karma
 import { ChartColorsSetI } from '../../interfaces/chart-colors-set';
-import { ChartOptions } from 'chart.js';
+import { ChartOptions, TooltipItem } from 'chart.js';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { TYPES } from '@khiops-library/enum/types';
 import { HistogramType } from '../../../khiops-visualization/components/commons/histogram/histogram.type';
@@ -46,8 +45,9 @@ export class DistributionGraphComponent
   @Input() public activeEntries: number = 0;
   @Input() public hideGraphOptions = false;
 
-  @Output() private graphTypeChanged: EventEmitter<any> = new EventEmitter();
-  @Output() private selectedItemChanged: EventEmitter<any> = new EventEmitter();
+  @Output() private graphTypeChanged: EventEmitter<string> = new EventEmitter();
+  @Output() private selectedItemChanged: EventEmitter<number> =
+    new EventEmitter();
 
   public override graphIdContainer: string | undefined = undefined;
   public override maxScale: number = 0;
@@ -56,23 +56,26 @@ export class DistributionGraphComponent
   public colorSet: ChartColorsSetI | undefined;
   public chartOptions: ChartOptions;
 
+  private readonly FALLBACK_MIN_VALUE = 1;
+  private readonly PERCENTAGE_MULTIPLIER = 100;
+
   /**
    * Get the dynamic title based on the selected graph option
    * @returns The title key for translation
    */
   get dynamicTitle(): string {
-    if (
-      !this.hideGraphOptions &&
-      this.graphOptions?.selected === HistogramType.YLOG
-    ) {
-      return 'GLOBAL.FREQUENCY';
-    } else if (
-      !this.hideGraphOptions &&
-      this.graphOptions?.selected === HistogramType.YLIN
-    ) {
-      return 'GLOBAL.COVERAGE';
+    if (this.hideGraphOptions) {
+      return 'GLOBAL.DISTRIBUTION'; // default fallback
     }
-    return 'GLOBAL.DISTRIBUTION'; // default fallback
+
+    switch (this.graphOptions?.selected) {
+      case HistogramType.YLOG:
+        return 'GLOBAL.FREQUENCY';
+      case HistogramType.YLIN:
+        return 'GLOBAL.COVERAGE';
+      default:
+        return 'GLOBAL.DISTRIBUTION';
+    }
   }
 
   constructor(
@@ -93,98 +96,34 @@ export class DistributionGraphComponent
     this.minScale =
       this.khiopsLibraryService.getAppConfig().common.GLOBAL.MIN_GRAPH_SCALE;
 
-    // Keep this into ref to access it into tick callback
-    // We can not use arrow function to access native getLabelForValue function
-    let self = this;
+    // Keep reference for callback context
+    const self = this;
 
     // Override tooltip infos
     this.chartOptions = {
       plugins: {
         tooltip: {
           callbacks: {
-            label: (items: any) => {
-              if (items?.dataset) {
-                if (
-                  !this.hideGraphOptions &&
-                  this.graphOptions?.selected === HistogramType.YLIN
-                ) {
-                  // In linear scale, display the frequency value (same as yLog)
-                  return this.toPrecision.transform(
-                    items.dataset.extra[items.dataIndex].extra.frequencyValue,
-                  );
-                } else if (
-                  !this.hideGraphOptions &&
-                  this.graphOptions?.selected === HistogramType.YLOG
-                ) {
-                  // In logarithmic scale, display the Frequency
-                  return this.toPrecision.transform(
-                    items.dataset.extra[items.dataIndex].extra.frequencyValue,
-                  );
-                } else {
-                  return this.toPrecision.transform(
-                    items.dataset.data[items.dataIndex],
-                  );
-                }
-              }
-              return undefined;
-            },
-            afterLabel: (items: any) => {
-              if (items?.dataset) {
-                if (
-                  !this.hideGraphOptions &&
-                  this.graphOptions?.selected === HistogramType.YLIN
-                ) {
-                  // In Coverage mode, display the percentage calculated from the Coverage
-                  const coverageValue =
-                    items.dataset.extra[items.dataIndex].extra.coverageValue;
-                  const percentValue = coverageValue * 100;
-                  return this.toPrecision.transform(percentValue) + '%';
-                }
-              }
-              return undefined;
-            },
+            label: (items: TooltipItem<'bar'>) => this.getTooltipLabel(items),
+            afterLabel: (items: TooltipItem<'bar'>) =>
+              this.getTooltipAfterLabel(items),
           },
         },
       },
       scales: {
         y: {
           ticks: {
-            callback: (value) => {
-              if (
-                !this.hideGraphOptions &&
-                this.graphOptions?.selected === HistogramType.YLOG
-              ) {
-                // Frequency log mode
-                if (
-                  value.toString().startsWith('0') ||
-                  value.toString().startsWith('1')
-                ) {
-                  return value.toLocaleString();
-                } else {
-                  return '';
-                }
-              } else {
-                if (typeof value === 'number') {
-                  return Math.round(value * 100) / 100;
-                } else {
-                  return value;
-                }
-              }
-            },
+            callback: (value: string | number) => this.getYAxisTickValue(value),
           },
         },
         x: {
           ticks: {
-            // @ts-ignore
-            callback: function (value: number, index: number, e) {
-              let label = this.getLabelForValue(value);
-              label = UtilsService.ellipsis(
-                label,
-                self.khiopsLibraryService.getAppConfig().common.GLOBAL
-                  .MAX_LABEL_LENGTH,
+            callback: function (tickValue: string | number) {
+              // Use regular function to access Chart.js 'this' context and getLabelForValue
+              return self.getXAxisTickValue(
+                tickValue,
+                this.getLabelForValue.bind(this),
               );
-              // Default chartjs
-              return label;
             },
           },
         },
@@ -217,29 +156,19 @@ export class DistributionGraphComponent
     this.chartOptions.scales!.y!.max = undefined;
     this.chartOptions.scales!.y!.min = undefined;
 
+    const minValue = this.calculateMinValue();
+
     // Configure Y axis scale according to the selected mode
     if (this.graphOptions!.selected === HistogramType.YLOG) {
       // In logarithmic mode, use the native logarithmic scale of Chart.js
       this.chartOptions.scales!.y!.type = TYPES.LOGARITHMIC;
       // Always start the Y axis at 1 in logarithmic mode
-      let minValues = this.inputDatas?.datasets?.[0]?.data;
-      let minValue = 0;
-      if (minValues) {
-        minValue = Math.min(...minValues);
-      }
-
-      if (minValue > 1) {
-        this.chartOptions.scales!.y!.min = 1;
+      if (minValue > this.FALLBACK_MIN_VALUE) {
+        this.chartOptions.scales!.y!.min = this.FALLBACK_MIN_VALUE;
       }
     } else {
       // In linear mode, use the linear scale to display Coverage
       this.chartOptions.scales!.y!.type = TYPES.LINEAR;
-
-      let minValues = this.inputDatas?.datasets?.[0]?.data;
-      let minValue = 0;
-      if (minValues) {
-        minValue = Math.min(...minValues);
-      }
 
       if (minValue > 0) {
         this.chartOptions.scales!.y!.min = 0;
@@ -247,6 +176,106 @@ export class DistributionGraphComponent
         this.chartOptions.scales!.y!.min = minValue;
       }
     }
-    this.chartOptions = _.cloneDeep(this.chartOptions);
+
+    // Create a new reference to trigger change detection
+    this.chartOptions = { ...this.chartOptions };
+  }
+
+  /**
+   * Get tooltip label value based on current mode
+   * @param items Tooltip items from Chart.js
+   * @returns Formatted tooltip label or undefined
+   */
+  private getTooltipLabel(items: TooltipItem<'bar'>): string | undefined {
+    if (!items?.dataset) {
+      return undefined;
+    }
+
+    const isLinearMode =
+      !this.hideGraphOptions &&
+      this.graphOptions?.selected === HistogramType.YLIN;
+    const isLogMode =
+      !this.hideGraphOptions &&
+      this.graphOptions?.selected === HistogramType.YLOG;
+
+    if (isLinearMode || isLogMode) {
+      return this.toPrecision.transform(
+        (items.dataset as any).extra[items.dataIndex].extra.frequencyValue,
+      );
+    }
+
+    return this.toPrecision.transform(items.dataset.data[items.dataIndex]);
+  }
+
+  /**
+   * Get tooltip after label value for coverage percentage
+   * @param items Tooltip items from Chart.js
+   * @returns Formatted percentage string or undefined
+   */
+  private getTooltipAfterLabel(items: TooltipItem<'bar'>): string | undefined {
+    const isLinearMode =
+      !this.hideGraphOptions &&
+      this.graphOptions?.selected === HistogramType.YLIN;
+
+    if (isLinearMode && items?.dataset) {
+      const coverageValue = (items.dataset as any).extra[items.dataIndex].extra
+        .coverageValue;
+      const percentValue = coverageValue * this.PERCENTAGE_MULTIPLIER;
+      return this.toPrecision.transform(percentValue) + '%';
+    }
+
+    return undefined;
+  }
+
+  /**
+   * Get Y-axis tick callback value
+   * @param value Tick value
+   * @returns Formatted tick value
+   */
+  private getYAxisTickValue(value: string | number): string | number {
+    const isLogMode =
+      !this.hideGraphOptions &&
+      this.graphOptions?.selected === HistogramType.YLOG;
+
+    if (isLogMode) {
+      const valueStr = value.toString();
+      return valueStr.startsWith('0') || valueStr.startsWith('1')
+        ? value.toLocaleString()
+        : '';
+    }
+
+    return typeof value === 'number'
+      ? Math.round(value * this.PERCENTAGE_MULTIPLIER) /
+          this.PERCENTAGE_MULTIPLIER
+      : value;
+  }
+
+  /**
+   * Get X-axis tick callback value with ellipsis
+   * @param tickValue The tick value from Chart.js
+   * @param getLabelForValue Chart.js function to get the actual label
+   * @returns Formatted label with ellipsis if needed
+   */
+  private getXAxisTickValue(
+    tickValue: string | number,
+    getLabelForValue: (value: number) => string,
+  ): string {
+    const value =
+      typeof tickValue === 'string' ? parseFloat(tickValue) : tickValue;
+    let label = getLabelForValue(value);
+    label = UtilsService.ellipsis(
+      label,
+      this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_LABEL_LENGTH,
+    );
+    return label;
+  }
+
+  /**
+   * Calculate minimum value from dataset
+   * @returns Minimum value from the first dataset
+   */
+  private calculateMinValue(): number {
+    const minValues = this.inputDatas?.datasets?.[0]?.data;
+    return minValues ? Math.min(...minValues) : 0;
   }
 }
