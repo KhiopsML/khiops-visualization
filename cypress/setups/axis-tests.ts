@@ -37,7 +37,7 @@ export function setupAxisTests(datas, testsValues, fileName) {
 
   testsValues.Axis.push('Name');
   testsValues.Axis.push('Interest');
-  testsValues.Axis.push('Distribution');
+  testsValues.Axis.push('Coverage');
   testsValues.Axis.push('Selected clusters');
   testsValues.Axis.push('Nb Clusters');
 

@@ -49,7 +49,7 @@ export function setupPreparationTests(datas, testsValues) {
     if (datas.preparationReport?.summary?.targetValues) {
       testsValues.Preparation.push('Target variable stats');
     }
-    testsValues.Preparation.push('Distribution');
+    testsValues.Preparation.push('Coverage');
   }
 
   if (
@@ -62,7 +62,7 @@ export function setupPreparationTests(datas, testsValues) {
   ) {
     // histogram case
     testsValues.Preparation.push('Density');
-    var index = testsValues.Preparation.indexOf('Distribution');
+    var index = testsValues.Preparation.indexOf('Coverage');
     if (index !== -1) {
       testsValues.Preparation.splice(index, 1);
     }

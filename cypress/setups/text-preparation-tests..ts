@@ -29,7 +29,7 @@ export function setupTextPreparationTests(datas, testsValues) {
     )[0];
 
     if (firstItem) {
-      testsValues.TextPreparation.push('Distribution');
+      testsValues.TextPreparation.push('Coverage');
       testsValues.TextPreparation.push('Derivation rule');
 
       if (isRegressionAnalysis(datas) || isExplanatoryAnalysis(datas)) {

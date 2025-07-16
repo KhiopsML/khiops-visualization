@@ -60,7 +60,7 @@ export function setupModelingTests(datas, testsValues) {
     if (datas.preparationReport?.summary?.targetValues) {
       testsValues.Modeling.push('Target variable stats');
     }
-    testsValues.Modeling.push('Distribution');
+    testsValues.Modeling.push('Coverage');
   }
 
   if (
@@ -73,7 +73,7 @@ export function setupModelingTests(datas, testsValues) {
   ) {
     // histogram case
     testsValues.Modeling.push('Density');
-    var index = testsValues.Modeling.indexOf('Distribution');
+    var index = testsValues.Modeling.indexOf('Coverage');
     if (index !== -1) {
       testsValues.Modeling.splice(index, 1);
     }
