@@ -78,6 +78,17 @@ export class DistributionGraphComponent
     }
   }
 
+  /**
+   * Determine if legend should be visible based on the selected graph option
+   * @returns True if legend should be visible, false otherwise
+   */
+  get shouldShowLegend(): boolean {
+    return !(
+      this.graphOptions?.selected === HistogramType.YLOG ||
+      this.graphOptions?.selected === HistogramType.YLIN
+    );
+  }
+
   constructor(
     public override selectableService: SelectableService,
     public override ngzone: NgZone,
@@ -131,16 +142,27 @@ export class DistributionGraphComponent
     };
   }
 
+  /**
+   * Initialize component and set graph ID
+   */
   ngOnInit() {
     this.graphIdContainer = 'distribution-graph-comp-' + this.position;
     this.updateChartOptions();
   }
 
+  /**
+   * Handle bar selection change event
+   * @param index The index of the selected bar
+   */
   onSelectBarChanged(index: number) {
     // pass event from chart to parent
     this.selectedItemChanged.emit(index);
   }
 
+  /**
+   * Change the graph type and update options
+   * @param type The new graph type to set
+   */
   changeGraphType(type: string) {
     // this.trackerService.trackEvent('click', 'distribution_graph_type', this.graphOptions.selected);
     this.ls.set(LS.DISTRIBUTION_GRAPH_OPTION_Y, type);
@@ -152,6 +174,9 @@ export class DistributionGraphComponent
     });
   }
 
+  /**
+   * Update chart options based on current state
+   */
   private updateChartOptions() {
     this.chartOptions.scales!.y!.max = undefined;
     this.chartOptions.scales!.y!.min = undefined;

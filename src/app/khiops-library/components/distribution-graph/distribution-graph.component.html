@@ -11,6 +11,12 @@
           {{ dynamicTitle | translate }}
         </h2>
       </div>
+      <kl-legend
+        *ngIf="shouldShowLegend"
+        [inputDatas]="inputDatas"
+        [type]="'chart-1d'"
+        [colorSet]="colorSet"
+      ></kl-legend>
       <div
         class="comp-header-tools screenshot-hide"
         fxLayout="row"
