@@ -46,21 +46,25 @@ export class ViewLayoutVO {
    *
    * @param lsValues - The previous values to merge with.
    */
-  megeWithPreviousValues(lsValues: any) {
-    this.isDimensionsChecked = lsValues.isDimensionsChecked;
-    this.isCoocurenceChecked = lsValues.isCoocurenceChecked;
-    for (let i = 0; i < this.dimensionsViewsLayoutsVO.length; i++) {
-      const prevValue = lsValues.dimensionsViewsLayoutsVO[i];
-      if (
-        prevValue &&
-        (!prevValue.name || // Allow init for cypress tests
-          prevValue?.name === this.dimensionsViewsLayoutsVO[i]?.name)
-      ) {
-        if (this.dimensionsViewsLayoutsVO[i]) {
-          this.dimensionsViewsLayoutsVO[i] = Object.assign(
-            this.dimensionsViewsLayoutsVO[i]!,
-            prevValue,
-          );
+  mergeWithPreviousValues(lsValues: Partial<ViewLayoutVO>) {
+    this.isDimensionsChecked =
+      lsValues.isDimensionsChecked ?? this.isDimensionsChecked;
+    this.isCoocurenceChecked =
+      lsValues.isCoocurenceChecked ?? this.isCoocurenceChecked;
+    if (lsValues.dimensionsViewsLayoutsVO) {
+      for (let i = 0; i < this.dimensionsViewsLayoutsVO.length; i++) {
+        const prevValue = lsValues.dimensionsViewsLayoutsVO[i];
+        if (
+          prevValue &&
+          (!prevValue.name || // Allow init for cypress tests
+            prevValue?.name === this.dimensionsViewsLayoutsVO[i]?.name)
+        ) {
+          if (this.dimensionsViewsLayoutsVO[i]) {
+            this.dimensionsViewsLayoutsVO[i] = Object.assign(
+              this.dimensionsViewsLayoutsVO[i]!,
+              prevValue,
+            );
+          }
         }
       }
     }

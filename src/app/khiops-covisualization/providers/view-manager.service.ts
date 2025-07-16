@@ -51,13 +51,13 @@ export class ViewManagerService {
       // Do it only for cypress tests
       const lsStorage = initLS();
       // Merge current values with values from LS
-      this.viewsLayout.megeWithPreviousValues(lsStorage);
+      this.viewsLayout.mergeWithPreviousValues(lsStorage);
     }
     // Then get saved json state
     const savedDatas = this.appService.getSavedDatas('viewsLayout');
     if (savedDatas) {
       // Merge current values with values from LS
-      this.viewsLayout.megeWithPreviousValues(savedDatas);
+      this.viewsLayout.mergeWithPreviousValues(savedDatas);
     }
 
     return this.viewsLayout;

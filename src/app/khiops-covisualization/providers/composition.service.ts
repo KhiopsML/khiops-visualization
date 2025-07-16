@@ -120,7 +120,7 @@ export class CompositionService {
       }
 
       if (node.childrenLeafList) {
-        const currentDimensionClusters = Object.assign(
+        const currentDimensionClusters: TreeNodeModel[] = Object.assign(
           [],
           this.dimensionsDatasService.dimensionsDatas.dimensionsClusters[
             currentIndex
@@ -154,11 +154,11 @@ export class CompositionService {
             for (let j = 0; j < (parts?.length ?? 0); j++) {
               // @ts-ignore
               cIndex = cIndex + parts?.[j]?.[1]?.length ?? 0;
-              const currentDimensionHierarchyCluster: any =
+              const currentDimensionHierarchyCluster =
                 currentDimensionClusters.find(
-                  (e: any) => e.cluster === currentLeafName,
+                  (e) => e.cluster === currentLeafName,
                 );
-              if (node.isCollapsed) {
+              if (node.isCollapsed && currentDimensionHierarchyCluster) {
                 currentDimensionHierarchyCluster.shortDescription =
                   node.shortDescription;
               }
@@ -170,16 +170,18 @@ export class CompositionService {
                 currentDimensionDetails.innerVariables?.dimensionSummaries?.findIndex(
                   (e) => e.name === parts?.[j]?.[0],
                 );
-              const composition = new CompositionModel(
-                currentClusterDetails,
-                currentDimensionHierarchyCluster,
-                currentPartIndex ?? -1,
-                cIndex,
-                externalDatas,
-                currentDimensionDetails.innerVariables,
-                parts?.[j],
-              );
-              compositionValues.push(composition);
+              if (currentDimensionHierarchyCluster) {
+                const composition = new CompositionModel(
+                  currentClusterDetails,
+                  currentDimensionHierarchyCluster,
+                  currentPartIndex ?? -1,
+                  cIndex,
+                  externalDatas,
+                  currentDimensionDetails.innerVariables,
+                  parts?.[j],
+                );
+                compositionValues.push(composition);
+              }
             }
           }
         }
@@ -616,12 +618,11 @@ export class CompositionService {
    * @param id - The unique identifier of the composition
    * @returns The detailedParts of the composition, or undefined if not found
    */
-  getCompositionDetailedPartsFromId(id: string): any | undefined {
+  getCompositionDetailedPartsFromId(id: string): CompositionModel | undefined {
     if (!this.compositionValues || this.compositionValues.length === 0) {
       return undefined;
     }
 
-    const composition = this.compositionValues.find((comp) => comp._id === id);
-    return composition;
+    return this.compositionValues.find((comp) => comp._id === id);
   }
 }
