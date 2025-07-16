@@ -56,6 +56,25 @@ export class DistributionGraphComponent
   public colorSet: ChartColorsSetI | undefined;
   public chartOptions: ChartOptions;
 
+  /**
+   * Get the dynamic title based on the selected graph option
+   * @returns The title key for translation
+   */
+  get dynamicTitle(): string {
+    if (
+      !this.hideGraphOptions &&
+      this.graphOptions?.selected === HistogramType.YLOG
+    ) {
+      return 'GLOBAL.FREQUENCY';
+    } else if (
+      !this.hideGraphOptions &&
+      this.graphOptions?.selected === HistogramType.YLIN
+    ) {
+      return 'GLOBAL.COVERAGE';
+    }
+    return 'GLOBAL.DISTRIBUTION'; // default fallback
+  }
+
   constructor(
     public override selectableService: SelectableService,
     public override ngzone: NgZone,
