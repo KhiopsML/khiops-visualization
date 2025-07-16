@@ -43,45 +43,61 @@ export class DistributionDatasModel {
   }
 
   setDefaultGraphOptions() {
-    this.distributionGraphOptionsY = {
-      types: [HistogramType.YLIN, HistogramType.YLOG],
-      selected: undefined,
-    };
-
     // Check if scale persistence is enabled
     const persistScaleOptions =
       AppService.Ls.get(LS.SETTING_PERSIST_SCALE_OPTIONS)?.toString() ===
       'true';
 
-    if (persistScaleOptions) {
-      const savedOption = AppService.Ls.get(LS.DISTRIBUTION_GRAPH_OPTION_Y);
-      if (this.distributionGraphOptionsY.types.includes(savedOption)) {
-        this.distributionGraphOptionsY.selected = savedOption;
-      } else {
-        this.distributionGraphOptionsY.selected = HistogramType.YLIN;
-      }
-    } else {
-      // Always use default YLin when persistence is disabled
-      this.distributionGraphOptionsY.selected = HistogramType.YLIN;
+    // Configure Y-axis options (Linear/Log)
+    this.distributionGraphOptionsY = this.createGraphOptions(
+      [HistogramType.YLIN, HistogramType.YLOG],
+      HistogramType.YLIN,
+      persistScaleOptions ? LS.DISTRIBUTION_GRAPH_OPTION_Y : null,
+    );
+
+    // Configure X-axis options (Linear/Log)
+    this.distributionGraphOptionsX = this.createGraphOptions(
+      [HistogramType.XLIN, HistogramType.XLOG],
+      HistogramType.XLIN,
+      persistScaleOptions ? LS.DISTRIBUTION_GRAPH_OPTION_X : null,
+    );
+
+    // Set distribution type when persistence is disabled
+    if (!persistScaleOptions) {
       this.distributionType = HistogramType.YLIN;
     }
+  }
 
-    this.distributionGraphOptionsX = {
-      types: [HistogramType.XLIN, HistogramType.XLOG],
+  /**
+   * Creates graph options with persistence handling
+   * @param types Available histogram types
+   * @param defaultType Default type to use
+   * @param persistenceKey LS key for persistence, null to disable persistence
+   * @returns DistributionOptionsI object
+   */
+  private createGraphOptions(
+    types: string[],
+    defaultType: string,
+    persistenceKey: string | null,
+  ): DistributionOptionsI {
+    const options: DistributionOptionsI = {
+      types,
       selected: undefined,
     };
 
-    if (persistScaleOptions) {
-      const savedOptionX = AppService.Ls.get(LS.DISTRIBUTION_GRAPH_OPTION_X);
-      if (this.distributionGraphOptionsX.types.includes(savedOptionX)) {
-        this.distributionGraphOptionsX.selected = savedOptionX;
+    if (persistenceKey) {
+      const savedOption = AppService.Ls.get(persistenceKey);
+      if (types.includes(savedOption)) {
+        options.selected = savedOption;
       } else {
-        this.distributionGraphOptionsX.selected = HistogramType.XLIN;
+        options.selected = defaultType;
       }
     } else {
-      // Always use default XLin when persistence is disabled
-      this.distributionGraphOptionsX.selected = HistogramType.XLIN;
+      // Always use default when persistence is disabled
+      options.selected = defaultType;
     }
+
+    return options;
   }
 
   initTreeHyperGraphDatas() {
