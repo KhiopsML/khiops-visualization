@@ -66,12 +66,14 @@ export class UserSettingsComponent implements OnChanges {
 
     // Allow cookies
     this.allowCookies =
-      AppService.Ls.get(LS.COOKIE_CONSENT).toString() === 'true' || false;
+      AppService.Ls.get(LS.COOKIE_CONSENT)?.toString() === 'true' || false;
 
     // Persist scale options
+    const persistScaleValue = AppService.Ls.get(
+      LS.SETTING_PERSIST_SCALE_OPTIONS,
+    );
     this.persistScaleOptions =
-      AppService.Ls.get(LS.SETTING_PERSIST_SCALE_OPTIONS).toString() ===
-        'true' || false;
+      persistScaleValue === 'true' || persistScaleValue === undefined;
   }
 
   onClickOnCancel() {
