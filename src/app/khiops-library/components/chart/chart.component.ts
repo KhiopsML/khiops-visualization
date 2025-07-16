@@ -15,6 +15,7 @@ import {
   ElementRef,
 } from '@angular/core';
 import * as ChartJs from 'chart.js';
+import type { ChartEvent, ActiveElement, Chart } from 'chart.js';
 
 import { UtilsService } from '../../providers/utils.service';
 import { KhiopsLibraryService } from '../../providers/khiops-library.service';
@@ -24,6 +25,12 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { ChartDatasetModel } from '@khiops-library/model/chart-dataset.model';
 import { CHART_TYPES } from '@khiops-library/enum/chart-types';
+import { createDefaultChartOptions } from './chart-options.config';
+
+interface ChartDatasetExtra {
+  defaultGroupIndex?: boolean;
+  [key: string]: unknown;
+}
 
 @Component({
   selector: 'kl-chart',
@@ -69,6 +76,9 @@ export class ChartComponent implements AfterViewInit, OnChanges {
     this.initChart();
   }
 
+  /**
+   * Initializes the chart instance and sets up its configuration.
+   */
   private initChart() {
     this.ctx = <ChartJs.ChartItem>(
       this.configService
@@ -85,7 +95,11 @@ export class ChartComponent implements AfterViewInit, OnChanges {
 
       const chartAreaBorder = {
         id: 'chartAreaBorder',
-        beforeDraw(chart: any, _args: any, options: ChartJs.LineOptions) {
+        beforeDraw(
+          chart: Chart,
+          _args: Record<string, unknown>,
+          options: ChartJs.LineOptions,
+        ) {
           const {
             ctx,
             chartArea: { left, top, width, height },
@@ -100,84 +114,11 @@ export class ChartComponent implements AfterViewInit, OnChanges {
         },
       };
 
-      let options: ChartOptions | any = {
-        plugins: {
-          chartAreaBorder: {
-            borderColor: 'transparent',
-            borderWidth: 0,
-          },
-          tooltip: {
-            callbacks: {
-              title: (items: any) => {
-                if (items?.[0]) {
-                  return items[0].label;
-                }
-              },
-              label: (items: any) => {
-                if (items?.[0]) {
-                  return items[0].dataset.label;
-                } else if (items?.dataset) {
-                  return items.dataset.label;
-                }
-              },
-            },
-            padding: 10,
-            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-          },
-          legend: {
-            display: false,
-          },
-        },
-        interaction: {
-          mode: 'point',
-        },
-        animation: false,
-        responsive: true,
-        maintainAspectRatio: false,
-        onClick: this.graphClickEvent.bind(this),
-        scales: {
-          y: {
-            border: {
-              dash: [5, 5],
-              display: false,
-            },
-            grid: {
-              color: this.color,
-              drawTick: false,
-            },
-            beginAtZero: true,
-            min: 0,
-            ticks: {
-              color: this.fontColor,
-              maxTicksLimit: 7,
-              callback: function (value: any) {
-                // Fix axis labels display on responsive small size
-                // For example 50 is displayed 50,00000000000
-                return value;
-              },
-            },
-          },
-          x: {
-            border: {
-              dash: [5, 5],
-              display: false,
-            },
-            grid: {
-              color: this.color,
-              drawTick: false,
-              display: false,
-            },
-            min: 0,
-            ticks: {
-              color: this.fontColor,
-              autoSkip: true,
-              autoSkipPadding: 5,
-              maxRotation: 0,
-              minRotation: 0,
-            },
-          },
-        },
-      };
+      let options: ChartOptions = createDefaultChartOptions({
+        color: this.color,
+        fontColor: this.fontColor,
+        graphClickEvent: this.graphClickEvent.bind(this),
+      });
 
       // Merge chart options
       options = UtilsService.mergeDeep(options, this.chartOptions);
@@ -198,6 +139,10 @@ export class ChartComponent implements AfterViewInit, OnChanges {
     }
   }
 
+  /**
+   * Handles changes to input properties and updates the chart accordingly.
+   * @param changes - The changes detected in input properties.
+   */
   ngOnChanges(changes: SimpleChanges) {
     if (
       this.chart &&
@@ -231,6 +176,9 @@ export class ChartComponent implements AfterViewInit, OnChanges {
     }
   }
 
+  /**
+   * Updates the chart data and refreshes the chart display.
+   */
   private updateGraph() {
     setTimeout(
       () => {
@@ -254,31 +202,49 @@ export class ChartComponent implements AfterViewInit, OnChanges {
     );
   }
 
+  /**
+   * Hides the active entries in the chart.
+   */
   public hideActiveEntries() {
     this.selectCurrentBarIndex(undefined);
     this.chart?.update();
   }
 
+  /**
+   * Shows the active entries in the chart.
+   */
   public showActiveEntries() {
     this.selectCurrentBarIndex(this.activeEntries);
     this.chart?.update();
   }
 
-  private graphClickEvent(_e: any, items: string | any[]) {
+  /**
+   * Handles click events on the chart and updates the selection state.
+   * @param _e - The chart event.
+   * @param items - The active elements clicked on the chart.
+   */
+  private graphClickEvent(_e: ChartEvent, items: ActiveElement[]) {
     if (this.enableSelection) {
       const l = items.length;
       if (l > 0) {
         for (let i = 0; i < l; i++) {
           // undefined if click outside bar
-          const selectedIndex = items[i].index;
-          this.selectCurrentBarIndex(selectedIndex);
-          this.selectBarIndex.emit(items[i].index);
-          this.chart?.update();
+          const item = items[i];
+          if (item && item.index !== undefined) {
+            const selectedIndex = item.index;
+            this.selectCurrentBarIndex(selectedIndex);
+            this.selectBarIndex.emit(item.index);
+            this.chart?.update();
+          }
         }
       }
     }
   }
 
+  /**
+   * Selects the current bar index in the chart and updates its appearance.
+   * @param index - The index of the bar to select.
+   */
   private selectCurrentBarIndex(index: number | undefined) {
     if (this.chart && this.enableSelection) {
       this.colorize();
@@ -291,6 +257,9 @@ export class ChartComponent implements AfterViewInit, OnChanges {
     }
   }
 
+  /**
+   * Applies colorization to the chart datasets based on the input data.
+   */
   private colorize() {
     if (this.chart && this.inputDatas) {
       for (let i = 0; i < this.chart.data.datasets.length; i++) {
@@ -306,7 +275,7 @@ export class ChartComponent implements AfterViewInit, OnChanges {
           UtilsService.hexToRGBa(this.colorSet?.domain[i]!, 0.8),
         );
         const defaultGroupIndex = dataset.extra?.findIndex(
-          (e: any) => e.defaultGroupIndex,
+          (e: ChartDatasetExtra) => e.defaultGroupIndex,
         );
         if (defaultGroupIndex !== -1) {
           // @ts-ignore
@@ -346,6 +315,10 @@ export class ChartComponent implements AfterViewInit, OnChanges {
     }
   }
 
+  /**
+   * Handles keyboard events to navigate through active entries in the chart.
+   * @param event - The keyboard event.
+   */
   onKeyUp(event: KeyboardEvent) {
     if (this.activeEntries !== undefined) {
       // can be 0
