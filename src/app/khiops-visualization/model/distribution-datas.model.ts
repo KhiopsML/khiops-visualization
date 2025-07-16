@@ -15,8 +15,6 @@ import { LS } from '@khiops-library/enum/ls';
 
 export class DistributionDatasModel {
   distributionType: string = HistogramType.YLIN;
-  distributionTypeX: string | undefined = '';
-  distributionTypeY: string | undefined = '';
   interpretableHistogramNumber: number = 0;
   defaultInterpretableHistogramNumber: number = 0;
   histogramNumber: number = 0;
@@ -65,8 +63,8 @@ export class DistributionDatasModel {
     } else {
       // Always use default YLin when persistence is disabled
       this.distributionGraphOptionsY.selected = HistogramType.YLIN;
+      this.distributionType = HistogramType.YLIN;
     }
-    this.distributionTypeY = this.distributionGraphOptionsY.selected;
 
     this.distributionGraphOptionsX = {
       types: [HistogramType.XLIN, HistogramType.XLOG],
@@ -84,7 +82,6 @@ export class DistributionDatasModel {
       // Always use default XLin when persistence is disabled
       this.distributionGraphOptionsX.selected = HistogramType.XLIN;
     }
-    this.distributionTypeX = this.distributionGraphOptionsX.selected;
   }
 
   initTreeHyperGraphDatas() {
