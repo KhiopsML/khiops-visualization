@@ -18,7 +18,7 @@ import { ScrollableGraphComponent } from '@khiops-library/components/scrollable-
 import { TranslateService } from '@ngstack/translate';
 import { ToPrecisionPipe } from '@khiops-library/pipes/to-precision.pipe';
 import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
-import { ChartOptions } from 'chart.js';
+import { ChartOptions, TooltipItem } from 'chart.js';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { ResizedEvent } from 'angular-resize-event-package';
 import { TYPES } from '@khiops-library/enum/types';
@@ -30,20 +30,21 @@ import { AppService } from '@khiops-visualization/providers/app.service';
 import { LS } from '@khiops-library/enum/ls';
 
 @Component({
-    selector: 'app-target-distribution-graph',
-    templateUrl: './target-distribution-graph.component.html',
-    styleUrls: ['./target-distribution-graph.component.scss'],
-    providers: [ToPrecisionPipe],
-    standalone: false
+  selector: 'app-target-distribution-graph',
+  templateUrl: './target-distribution-graph.component.html',
+  styleUrls: ['./target-distribution-graph.component.scss'],
+  providers: [ToPrecisionPipe],
+  standalone: false,
 })
 export class TargetDistributionGraphComponent
   extends ScrollableGraphComponent
   implements OnInit
 {
-  @Output() graphTypeChanged: EventEmitter<any> = new EventEmitter();
-  @Output() targetDistributionGraphDisplayedValuesChanged: EventEmitter<any> =
+  @Output() graphTypeChanged: EventEmitter<string> = new EventEmitter();
+  @Output()
+  targetDistributionGraphDisplayedValuesChanged: EventEmitter<ChartToggleValuesI> =
     new EventEmitter();
-  @Output() selectedItemChanged: EventEmitter<any> = new EventEmitter();
+  @Output() selectedItemChanged: EventEmitter<number> = new EventEmitter();
 
   @Input() override scrollPosition = 0;
   @Input() override inputDatas?: ChartDatasModel = undefined;
@@ -70,6 +71,9 @@ export class TargetDistributionGraphComponent
   public isSmallDiv = false;
   private selectedBarIndex?: number;
 
+  private readonly SMALL_DIV_THRESHOLD = 600;
+  private readonly PERCENTAGE_SUFFIX = '%';
+
   constructor(
     public override selectableService: SelectableService,
     public override ngzone: NgZone,
@@ -93,51 +97,30 @@ export class TargetDistributionGraphComponent
     this.colorSet = this.khiopsLibraryService.getGraphColorSet()[1];
     this.buttonTitle = this.translate.get('GLOBAL.VALUES');
 
-    // Keep this into ref to access it into tick callback
-    // We can not use arrow function to access native getLabelForValue function
-    let self = this;
+    // Keep reference for callback context
+    const self = this;
 
     // Override tooltip infos
     this.chartOptions = {
       plugins: {
         tooltip: {
           callbacks: {
-            beforeLabel: (items: any) => {
-              if (items?.dataset) {
-                return this.toPrecision.transform(
-                  items.dataset.extra[items.dataIndex].extra.value,
-                );
-              }
-              return undefined;
-            },
-            afterLabel: (items: any) => {
-              if (items?.dataset) {
-                let value = this.toPrecision.transform(
-                  items.dataset.data[items.dataIndex],
-                );
-                if (this.graphOptions.selected === TYPES.PROBABILITIES) {
-                  value = value + '%';
-                }
-                return value;
-              }
-              return undefined;
-            },
+            beforeLabel: (items: TooltipItem<'bar'>) =>
+              this.getTooltipBeforeLabel(items),
+            afterLabel: (items: TooltipItem<'bar'>) =>
+              this.getTooltipAfterLabel(items),
           },
         },
       },
       scales: {
         x: {
           ticks: {
-            // @ts-ignore
-            callback: function (value: number, index: number, e) {
-              let label = this.getLabelForValue(value);
-              label = UtilsService.ellipsis(
-                label,
-                self.khiopsLibraryService.getAppConfig().common.GLOBAL
-                  .MAX_LABEL_LENGTH,
+            callback: function (tickValue: string | number) {
+              // Use regular function to access Chart.js 'this' context and getLabelForValue
+              return self.getXAxisTickValue(
+                tickValue,
+                this.getLabelForValue.bind(this),
               );
-              // Default chartjs
-              return label;
             },
           },
         },
@@ -145,15 +128,26 @@ export class TargetDistributionGraphComponent
     };
   }
 
+  /**
+   * Initialize component and set graph ID
+   */
   ngOnInit() {
     this.graphIdContainer = 'target-distribution-graph-comp-' + this.position;
     this.title = this.title || this.translate.get('GLOBAL.TARGET_DISTRIBUTION');
   }
 
+  /**
+   * Handle resize event to check if the graph is in small div
+   * @param event The resized event containing new dimensions
+   */
   onResized(event: ResizedEvent) {
-    this.isSmallDiv = event?.newRect?.width < 600;
+    this.isSmallDiv = (event?.newRect?.width || 0) < this.SMALL_DIV_THRESHOLD;
   }
 
+  /**
+   * Handle fullscreen toggle event
+   * @param isFullscreen True if the graph is in fullscreen mode, false otherwise
+   */
   onToggleFullscreen(isFullscreen: boolean) {
     this.isFullscreen = isFullscreen;
     setTimeout(() => {
@@ -161,6 +155,10 @@ export class TargetDistributionGraphComponent
     });
   }
 
+  /**
+   * Handle bar selection change event
+   * @param index The index of the selected bar
+   */
   onSelectBarChanged(index: number) {
     // Debounce each events
     // Each bar of grouped chart launch same event
@@ -171,6 +169,10 @@ export class TargetDistributionGraphComponent
     this.selectedBarIndex = index;
   }
 
+  /**
+   * Change the graph type and update options
+   * @param type The new graph type to set
+   */
   changeGraphType(type: string) {
     // this.trackerService.trackEvent('click', 'target_distribution_graph_type', type);
     AppService.Ls.set(LS.TARGET_DISTRIBUTION_GRAPH_OPTION, type);
@@ -178,7 +180,64 @@ export class TargetDistributionGraphComponent
     this.graphTypeChanged.emit(type);
   }
 
+  /**
+   * Handle toggle button change event
+   * @param displayedValues The new displayed values from toggle button
+   */
   onSelectToggleButtonChanged(displayedValues: ChartToggleValuesI) {
     this.targetDistributionGraphDisplayedValuesChanged.emit(displayedValues);
+  }
+
+  /**
+   * Get tooltip before label value
+   * @param items Tooltip items from Chart.js
+   * @returns Formatted tooltip before label or undefined
+   */
+  private getTooltipBeforeLabel(items: TooltipItem<'bar'>): string | undefined {
+    if (!items?.dataset) {
+      return undefined;
+    }
+    return this.toPrecision.transform(
+      (items.dataset as any).extra[items.dataIndex].extra.value,
+    );
+  }
+
+  /**
+   * Get tooltip after label value with conditional percentage
+   * @param items Tooltip items from Chart.js
+   * @returns Formatted tooltip after label or undefined
+   */
+  private getTooltipAfterLabel(items: TooltipItem<'bar'>): string | undefined {
+    if (!items?.dataset) {
+      return undefined;
+    }
+
+    let value = this.toPrecision.transform(items.dataset.data[items.dataIndex]);
+
+    if (this.graphOptions.selected === TYPES.PROBABILITIES) {
+      value = value + this.PERCENTAGE_SUFFIX;
+    }
+
+    return value;
+  }
+
+  /**
+   * Get X-axis tick callback value with ellipsis
+   * @param tickValue The tick value from Chart.js
+   * @param getLabelForValue Chart.js function to get the actual label
+   * @returns Formatted label with ellipsis if needed
+   */
+  private getXAxisTickValue(
+    tickValue: string | number,
+    getLabelForValue: (value: number) => string,
+  ): string {
+    const value =
+      typeof tickValue === 'string' ? parseFloat(tickValue) : tickValue;
+    let label = getLabelForValue(value);
+    label = UtilsService.ellipsis(
+      label,
+      this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_LABEL_LENGTH,
+    );
+    return label;
   }
 }
