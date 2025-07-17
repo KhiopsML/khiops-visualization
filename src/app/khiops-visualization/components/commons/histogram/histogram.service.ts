@@ -27,6 +27,11 @@ export class HistogramService {
   };
   private rangeXLog: RangeXLogI = {};
 
+  /**
+   * Get the range for the X axis (linear and logarithmic)
+   * @param datas Histogram values data
+   * @returns Tuple containing linear and logarithmic ranges for X axis
+   */
   getRangeX(datas: HistogramValuesI[]): [RangeXLinI, RangeXLogI] {
     this.rangeXLog.inf = datas.find(function (d: HistogramValuesI) {
       return d.partition[0] === 0 || d.partition[1] === 0;
@@ -96,12 +101,22 @@ export class HistogramService {
     return [this.rangeXLin, this.rangeXLog];
   }
 
+  /**
+   * Get the linear range for Y axis
+   * @param datas Histogram values data
+   * @returns Linear range for Y axis
+   */
   getLinRangeY(datas: HistogramValuesI[]): number {
     const dataValues = datas.map((d: HistogramValuesI) => d.density);
     this.rangeYLin = Math.max(...dataValues);
     return this.rangeYLin;
   }
 
+  /**
+   * Get the logarithmic range for Y axis
+   * @param datas Histogram values data
+   * @returns Logarithmic range for Y axis
+   */
   getLogRangeY(datas: HistogramValuesI[]): RangeXLinI {
     const dataValues = datas.map((e) => e.logValue).filter((e) => e !== 0);
 
@@ -116,11 +131,23 @@ export class HistogramService {
     return this.rangeYLog;
   }
 
+  /**
+   * Get the linear ratio for Y axis
+   * @param h Height of the canvas
+   * @param padding Padding for Y axis
+   * @returns Linear ratio for Y axis
+   */
   getLinRatioY(h: number, padding: number): number {
     let ratioY = (h - padding / 2) / this.rangeYLin;
     return ratioY;
   }
 
+  /**
+   * Get the logarithmic ratio for Y axis
+   * @param h Height of the canvas
+   * @param padding Padding for Y axis
+   * @returns Logarithmic ratio for Y axis
+   */
   getLogRatioY(h: number, padding: number): number {
     let ratioY;
     let shift =
@@ -129,6 +156,12 @@ export class HistogramService {
     return ratioY;
   }
 
+  /**
+   * Compute the dimensions of the X bars
+   * @param datas Histogram values data
+   * @param xType Type of X axis (linear or logarithmic)
+   * @returns Array of HistogramBarModel containing the computed dimensions
+   */
   computeXbarsDimensions(
     datas: HistogramValuesI[],
     xType: string,
