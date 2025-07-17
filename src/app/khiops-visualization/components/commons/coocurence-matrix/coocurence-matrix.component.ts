@@ -16,7 +16,6 @@ import {
 } from '@angular/core';
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
-import { TranslateService } from '@ngstack/translate';
 import { deepEqual } from 'fast-equals';
 import { MatrixComponent } from '@khiops-library/components/matrix/matrix.component';
 import { AppService } from '@khiops-visualization/providers/app.service';
@@ -30,7 +29,7 @@ import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { MatrixRangeValuesI } from '@khiops-visualization/interfaces/matrix-range-values';
 import { LS } from '@khiops-library/enum/ls';
-import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
+import { CoocurenceMatrixConfigService } from './coocurence-matrix-config.service';
 
 /**
  * Test it with iris2d file
@@ -64,10 +63,10 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
 
   constructor(
     public selectableService: SelectableService,
-    private translate: TranslateService,
     private configService: ConfigService,
     private appService: AppService,
     private preparation2dDatasService: Preparation2dDatasService,
+    private coocurenceMatrixConfigService: CoocurenceMatrixConfigService,
   ) {
     this.preparation2dDatas = this.preparation2dDatasService.getDatas();
   }
@@ -218,145 +217,24 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
   }
 
   /**
-   * Get variable names considering axis inversion
-   * @returns Object with varName1 and varName2
-   */
-  private getVariableNames(): { varName1?: string; varName2?: string } {
-    let varName1 = this.preparation2dDatas?.selectedVariable?.name1;
-    let varName2 = this.preparation2dDatas?.selectedVariable?.name2;
-
-    if (this.preparation2dDatasService.isAxisInverted()) {
-      varName1 = this.preparation2dDatas?.selectedVariable?.name2;
-      varName2 = this.preparation2dDatas?.selectedVariable?.name1;
-    }
-
-    return { varName1, varName2 };
-  }
-
-  /**
-   * Create matrix modes for components with targets
-   * @param varName1 First variable name
-   * @param varName2 Second variable name
-   * @returns Array of matrix mode configurations
-   */
-  private createMatrixModesWithTargets(
-    varName1?: string,
-    varName2?: string,
-  ): Array<{ mode: string; title: string }> {
-    const targetLabel = this.translate.get('GLOBAL.TARGET');
-    const frequencyLabel = this.translate.get('GLOBAL.FREQUENCY');
-    const cellsInterestsLabel = this.translate.get('GLOBAL.CELLS_INTERESTS');
-
-    return [
-      {
-        mode: MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL,
-        title: `I (${targetLabel} | ${varName2} , ${varName1})`,
-      },
-      {
-        mode: MATRIX_MODES.FREQUENCY,
-        title: frequencyLabel,
-      },
-      {
-        mode: MATRIX_MODES.FREQUENCY_CELL,
-        title: `${frequencyLabel} (${targetLabel} | ${varName2} , ${varName1})`,
-      },
-      {
-        mode: MATRIX_MODES.PROB_TARGET_WITH_CELL,
-        title: `P (${targetLabel} | ${varName2} , ${varName1})`,
-      },
-      {
-        mode: MATRIX_MODES.PROB_CELL_WITH_TARGET,
-        title: `P (${varName2} , ${varName1} | ${targetLabel})`,
-      },
-      {
-        mode: MATRIX_MODES.CELL_INTEREST,
-        title: cellsInterestsLabel,
-      },
-    ];
-  }
-
-  /**
-   * Create matrix modes for components without targets
-   * @param varName1 First variable name
-   * @param varName2 Second variable name
-   * @returns Array of matrix mode configurations
-   */
-  private createMatrixModesWithoutTargets(
-    varName1?: string,
-    varName2?: string,
-  ): Array<{ mode: string; title: string }> {
-    const frequencyLabel = this.translate.get('GLOBAL.FREQUENCY');
-
-    return [
-      {
-        mode: MATRIX_MODES.MUTUAL_INFO,
-        title: `I (${varName1} , ${varName2})`,
-      },
-      {
-        mode: MATRIX_MODES.FREQUENCY,
-        title: frequencyLabel,
-      },
-      {
-        mode: MATRIX_MODES.PROB_CELL,
-        title: `P (${varName2} | ${varName1})`,
-      },
-      {
-        mode: MATRIX_MODES.PROB_CELL_REVERSE,
-        title: `P (${varName1} | ${varName2})`,
-      },
-    ];
-  }
-
-  /**
-   * Check if current matrix mode requires target selection
-   * @returns True if target selection is required
-   */
-  private isTargetSelectionRequired(): boolean {
-    const targetRequiredModes = [
-      MATRIX_MODES.FREQUENCY_CELL,
-      MATRIX_MODES.PROB_TARGET_WITH_CELL,
-      MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL,
-      MATRIX_MODES.PROB_CELL_WITH_TARGET,
-    ];
-
-    return targetRequiredModes.includes(
-      this.matrixModes.selected?.mode as MATRIX_MODES,
-    );
-  }
-
-  /**
    * Construct the mode select box based on current targets and variables
    */
   private constructModeSelectBox() {
-    const { varName1, varName2 } = this.getVariableNames();
-
-    if (this.matrixTargets.targets!.length > 0) {
-      this.matrixModes.types = this.createMatrixModesWithTargets(
-        varName1,
-        varName2,
+    this.matrixModes =
+      this.coocurenceMatrixConfigService.constructModeSelectBox(
+        this.matrixModes,
+        this.matrixTargets,
+        this.preparation2dDatas,
       );
-    } else {
-      this.matrixModes.types = this.createMatrixModesWithoutTargets(
-        varName1,
-        varName2,
-      );
-    }
-
-    this.matrixModes = { ...this.matrixModes };
   }
 
   /**
    * Construct the target select box based on available targets
    */
   private constructTargetSelectBox() {
-    // Add optional targets if available
-    if (this.preparation2dDatasService.getTargetsIfAvailable()) {
-      this.matrixTargets.targets =
-        this.preparation2dDatasService.getTargetsIfAvailable();
-    } else {
-      this.matrixTargets.targets = [];
-      this.matrixTargets.selected = undefined;
-    }
+    this.coocurenceMatrixConfigService.constructTargetSelectBox(
+      this.matrixTargets,
+    );
   }
 
   /**
@@ -364,24 +242,10 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
    * @param selected The previously selected target or undefined
    */
   private selectTargetSelectBox(selected?: string) {
-    // Add optional targets if available
-    if (
-      this.preparation2dDatasService.getTargetsIfAvailable() &&
-      this.isTargetSelectionRequired()
-    ) {
-      // Get previous selected target if compatible
-      const previousSelectedTarget = AppService.Ls.get(LS.MATRIX_TARGET_OPTION);
-      if (
-        previousSelectedTarget &&
-        this.matrixTargets.targets?.includes(previousSelectedTarget)
-      ) {
-        this.matrixTargets.selected = previousSelectedTarget;
-      }
-      // Keep last selected target if defined
-      this.matrixTargets.selected =
-        selected || previousSelectedTarget || this.matrixTargets.targets?.[0];
-    } else {
-      this.matrixTargets.selected = undefined;
-    }
+    this.coocurenceMatrixConfigService.selectTargetSelectBox(
+      this.matrixTargets,
+      this.matrixModes,
+      selected,
+    );
   }
 }
