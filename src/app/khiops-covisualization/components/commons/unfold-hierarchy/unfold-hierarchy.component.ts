@@ -212,10 +212,21 @@ export class UnfoldHierarchyComponent implements OnInit {
       }
     }
 
-    // Dimension changed, clone to update array
-    this.dimensions = _.cloneDeep(
-      this.dimensionsDatasService.dimensionsDatas?.dimensions,
-    );
+    // Dimension changed, sync local dimension states back to service
+    // Note: Using local dimensions array which has been updated by checkbox events
+    // instead of re-cloning from service to preserve checkbox states
+    if (this.dimensions) {
+      // Sync local dimension states back to the service dimensions
+      for (const localDim of this.dimensions) {
+        const serviceDim =
+          this.dimensionsDatasService.dimensionsDatas?.dimensions?.find(
+            (dim) => dim.name === localDim.name,
+          );
+        if (serviceDim) {
+          serviceDim.setHierarchyFold(localDim.hierarchyFold);
+        }
+      }
+    }
 
     this.loadingHierarchy = true;
 
@@ -258,17 +269,35 @@ export class UnfoldHierarchyComponent implements OnInit {
     }
   }
 
+  /**
+   * Handles the checkbox change event for the hierarchy grid.
+   * Updates both the service state and the local dimensions array
+   * to ensure consistency between the UI and the data used during save.
+   * @param event - The grid checkbox event containing the dimension data and new state
+   */
   onGridCheckboxChanged(event: GridCheckboxEventI) {
     this.hierarchyService.toggleDimensionHierarchyFold(
       event.data.name,
       event.state,
     );
+
+    // Update the local dimensions array to ensure the checkbox state
+    // is reflected when saving the hierarchy
+    if (this.dimensions) {
+      const dimension = this.dimensions.find(
+        (dim) => dim.name === event.data.name,
+      );
+      if (dimension) {
+        dimension.setHierarchyFold(event.state);
+      }
+    }
   }
 
   /**
    * Updates the data for clusters per dimension and information per cluster
    * based on the current unfold hierarchy level. Also updates the current
    * information per cluster, current cells per cluster, and dimensions.
+   * Preserves the checkbox states (hierarchyFold) from the current local dimensions.
    */
   private updateDatas() {
     this.clustersPerDimDatas = this.clustersService.getClustersPerDimDatas(
@@ -289,9 +318,29 @@ export class UnfoldHierarchyComponent implements OnInit {
     this.currentCellsPerCluster =
       this.clustersService.getCurrentCellsPerCluster();
 
+    // Preserve checkbox states from current dimensions before updating
+    const currentCheckboxStates: { [name: string]: boolean } = {};
+    if (this.dimensions) {
+      for (const dim of this.dimensions) {
+        currentCheckboxStates[dim.name] = dim.hierarchyFold;
+      }
+    }
+
     // Dimension changed, clone to update array
     this.dimensions = _.cloneDeep(
       this.dimensionsDatasService.dimensionsDatas?.dimensions,
     );
+
+    // Restore checkbox states after cloning
+    if (this.dimensions) {
+      for (const dim of this.dimensions) {
+        if (currentCheckboxStates.hasOwnProperty(dim.name)) {
+          const checkboxState = currentCheckboxStates[dim.name];
+          if (checkboxState !== undefined) {
+            dim.setHierarchyFold(checkboxState);
+          }
+        }
+      }
+    }
   }
 }
