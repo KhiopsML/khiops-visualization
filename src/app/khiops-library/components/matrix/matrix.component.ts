@@ -31,8 +31,8 @@ import { EventsService } from '../../../khiops-covisualization/providers/events.
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { LS } from '@khiops-library/enum/ls';
 import { Ls } from '@khiops-library/providers/ls.service';
-import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 import { MatrixUtilsService } from './matrix.utils.service';
+import { MatrixRendererService } from './matrix.renderer.service';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { ZoomToolsEventsService } from '../zoom-tools/zoom-tools.service';
 
@@ -118,7 +118,6 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   };
   private currentMouseX: number = 0;
   private currentMouseY: number = 0;
-  private canvasPattern: HTMLCanvasElement | undefined;
   private isDrawing = false;
 
   constructor(
@@ -129,6 +128,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     public override ngzone: NgZone,
     public override configService: ConfigService,
     private khiopsLibraryService: KhiopsLibraryService,
+    private matrixRendererService: MatrixRendererService,
   ) {
     super(selectableService, ngzone, configService);
 
@@ -346,18 +346,9 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
    * @param height canvas height
    */
   private setupMatrixLabelsAndLegend(width: number, height: number): void {
-    let [minVal, maxVal, minValH, maxValH] =
-      MatrixUtilsService.getMinAndMaxFromGraphMode(
-        this.matrixValues!,
-        this.minMaxValues!,
-        this.graphMode!.mode,
-      );
-
-    this.legend = MatrixUiService.computeLegendValues(
-      minVal!,
-      maxVal!,
-      minValH!,
-      maxValH!,
+    this.legend = this.matrixRendererService.computeLegendValues(
+      this.matrixValues,
+      this.minMaxValues,
       this.graphMode!.mode,
     );
 
@@ -381,90 +372,22 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
    * @param height canvas height
    */
   private drawMatrixCells(width: number, height: number): void {
-    const totalMutInfo = MatrixUtilsService.computeTotalMutInfo(
-      this.matrixValues!,
-      this.graphMode!.mode,
+    this.matrixRendererService.drawMatrixCells(
+      this.matrixCtx,
+      this.inputDatas,
+      this.matrixValues,
+      this.matrixExtras,
+      this.matrixFreqsValues,
+      this.matrixExpectedFreqsValues,
+      this.graphMode,
+      this.graphType,
       this.isKhiopsCovisu,
-    );
-    const cellsLength = this.inputDatas.matrixCellDatas.length;
-
-    this.matrixCtx.beginPath();
-    this.matrixCtx.strokeStyle = 'rgba(255,255,255,0.3)';
-    this.matrixCtx.lineWidth = 1;
-
-    for (let index = 0; index < cellsLength; index++) {
-      if (totalMutInfo) {
-        // hide zero exeptions do not work anymore #110
-        this.matrixExtras![index] = totalMutInfo;
-      }
-
-      let cellDatas = this.inputDatas.matrixCellDatas[index];
-      this.updateCellData(cellDatas, width, height, index);
-      this.drawCell(cellDatas, index);
-    }
-
-    this.matrixCtx.stroke();
-  }
-
-  /**
-   * Updates cell data with display values and dimensions
-   * @param cellDatas the cell data to update
-   * @param width canvas width
-   * @param height canvas height
-   * @param index the cell index
-   */
-  private updateCellData(
-    cellDatas: CellModel,
-    width: number,
-    height: number,
-    index: number,
-  ): void {
-    const currentVal = this.matrixValues?.[index];
-
-    // Update cell dimensions based on zoom
-    cellDatas = MatrixUiService.adaptCellDimensionsToZoom(
-      cellDatas,
       width,
       height,
-      this.graphType,
+      this.contrast,
+      this.isZerosToggled,
+      this.legend.max,
     );
-
-    // Set display values
-    cellDatas.displayedValue = {
-      type: this.graphMode!.mode,
-      value: currentVal ?? 0,
-      ef: this.matrixExpectedFreqsValues[index] ?? 0,
-      extra: this.matrixExtras?.[index] || 0,
-    };
-    cellDatas.displayedFreqValue = this.matrixFreqsValues[index] ?? 0;
-  }
-
-  /**
-   * Draws a single cell with the appropriate color and pattern
-   * @param cellDatas the cell data to draw
-   * @param index the cell index
-   */
-  private drawCell(cellDatas: CellModel, index: number): void {
-    const currentVal = this.matrixValues?.[index];
-    const maxVal = this.legend.max;
-
-    if (currentVal && maxVal) {
-      // Do not draw empty cells
-      const color = MatrixUiService.getColorForPercentage(
-        currentVal,
-        maxVal,
-        this.contrast,
-        this.graphMode!.mode,
-      );
-      this.matrixCtx.fillStyle = color;
-      const { xCanvas, yCanvas, wCanvas, hCanvas } = cellDatas;
-      this.matrixCtx.fillRect(xCanvas, yCanvas, wCanvas, hCanvas);
-    }
-
-    // Draw pattern if 0 is an exception
-    if (this.matrixExtras?.[index] && this.isZerosToggled) {
-      this.drawProbExceptionCell(cellDatas);
-    }
   }
 
   /**
@@ -655,66 +578,8 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
 
   drawSelectedCell(cell: CellModel) {
     if (cell) {
-      this.matrixSelectedCtx.strokeStyle = '#ffffff';
-      this.matrixSelectedCtx.lineWidth = 4;
-      this.matrixSelectedCtx.shadowBlur = 1;
-      this.matrixSelectedCtx.shadowColor = 'white';
-      this.matrixSelectedCtx.strokeRect(
-        cell.xCanvas,
-        cell.yCanvas,
-        cell.wCanvas,
-        cell.hCanvas,
-      );
-
-      this.matrixSelectedCtx.lineWidth = 2;
-      this.matrixSelectedCtx.strokeStyle = '#000000';
-      this.matrixSelectedCtx.strokeRect(
-        cell.xCanvas,
-        cell.yCanvas,
-        cell.wCanvas,
-        cell.hCanvas,
-      );
+      this.matrixRendererService.drawSelectedCell(this.matrixSelectedCtx, cell);
     }
-  }
-
-  private drawProbExceptionCell(cell: CellModel) {
-    if (!this.canvasPattern) {
-      this.drawZeroExceptionCanvasPattern();
-    }
-    this.matrixCtx.fillStyle = this.matrixCtx.createPattern(
-      this.canvasPattern,
-      'repeat',
-    );
-    this.matrixCtx.fillRect(
-      cell.xCanvas,
-      cell.yCanvas,
-      cell.wCanvas,
-      cell.hCanvas,
-    );
-  }
-
-  private drawZeroExceptionCanvasPattern() {
-    this.canvasPattern = document.createElement('canvas');
-    this.canvasPattern.width = 16;
-    this.canvasPattern.height = 16;
-    const pctx: any = this.canvasPattern.getContext('2d');
-
-    const x0 = 32;
-    const x1 = -1;
-    const y0 = -1;
-    const y1 = 32;
-    const offset = 16;
-
-    pctx.strokeStyle = '#000000';
-    pctx.lineWidth = 1;
-    pctx.beginPath();
-    pctx.moveTo(x0, y0);
-    pctx.lineTo(x1, y1);
-    pctx.moveTo(x0 - offset, y0);
-    pctx.lineTo(x1 - offset, y1);
-    pctx.moveTo(x0 + offset, y0);
-    pctx.lineTo(x1 + offset, y1);
-    pctx.stroke();
   }
 
   /**
@@ -725,9 +590,8 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     if (this.matrixDiv) {
       this.matrixCtx = this.matrixDiv.nativeElement.getContext('2d');
       // clear the canvas for redrawing
-      this.matrixCtx.clearRect(
-        0,
-        0,
+      this.matrixRendererService.cleanDomContext(
+        this.matrixCtx,
         this.matrixDiv.nativeElement.width,
         this.matrixDiv.nativeElement.height,
       );
@@ -744,7 +608,11 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
       this.matrixSelectedCtx =
         this.matrixSelectedDiv.nativeElement.getContext('2d');
       // clear the canvas for redrawing
-      this.matrixSelectedCtx.clearRect(0, 0, width, height);
+      this.matrixRendererService.cleanSelectedDomContext(
+        this.matrixSelectedCtx,
+        width,
+        height,
+      );
     }
   }
 
@@ -810,35 +678,18 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
 
   private updateLegendBar() {
     if (!this.legendBar?.nativeElement) return;
-    if (
-      this.graphMode?.mode === MATRIX_MODES.MUTUAL_INFO ||
-      this.graphMode?.mode === MATRIX_MODES.HELLINGER ||
-      this.graphMode?.mode === MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL
-    ) {
-      this.legendBar.nativeElement.style.background =
-        MatrixUiService.getInterestColorsLegend();
-    } else {
-      this.legendBar.nativeElement.style.background =
-        MatrixUiService.getFrequencyColorsLegend();
-    }
+    this.matrixRendererService.updateLegendBar(
+      this.legendBar.nativeElement,
+      this.graphMode,
+    );
   }
 
   private getZoomDimensions(): [number, number] {
-    if (this.zoom === 1) {
-      this.matrixArea!.nativeElement.style.overflow = 'hidden';
-    } else {
-      this.matrixArea!.nativeElement.style.overflow = 'scroll';
-    }
-    let width = this.matrixContainerDiv?.nativeElement.clientWidth || 0;
-    let height = this.matrixContainerDiv?.nativeElement.clientHeight || 0;
-
-    width = width * this.zoom;
-    height = height * this.zoom;
-
-    width = Number(width.toFixed(0));
-    height = Number(height.toFixed(0));
-
-    return [width, height];
+    return this.matrixRendererService.getZoomDimensions(
+      this.matrixArea!.nativeElement,
+      this.matrixContainerDiv!.nativeElement,
+      this.zoom,
+    );
   }
 
   private getCurrentCell(event: MouseEvent) {
@@ -929,19 +780,15 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   }
 
   private setMatrixEltsOrientation(width: number, height: number) {
-    if (this.isAxisInverted) {
-      [this.xAxisLabel, this.yAxisLabel] = [this.yAxisLabel, this.xAxisLabel];
-      this.matrixCtx.translate(0, width);
-      this.matrixCtx.scale(-1, -1);
-      this.matrixCtx.rotate(Math.PI / 2);
-      this.matrixSelectedCtx.translate(0, width);
-      this.matrixSelectedCtx.scale(-1, -1);
-      this.matrixSelectedCtx.rotate(Math.PI / 2);
-    } else {
-      this.matrixCtx.translate(0, height);
-      this.matrixCtx.scale(1, -1);
-      this.matrixSelectedCtx.translate(0, height);
-      this.matrixSelectedCtx.scale(1, -1);
-    }
+    [this.xAxisLabel, this.yAxisLabel] =
+      this.matrixRendererService.setMatrixEltsOrientation(
+        this.matrixCtx,
+        this.matrixSelectedCtx,
+        this.isAxisInverted,
+        width,
+        height,
+        this.xAxisLabel,
+        this.yAxisLabel,
+      );
   }
 }
