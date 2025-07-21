@@ -4,6 +4,8 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
+// @ts-nocheck
+
 import { TestBed } from '@angular/core/testing';
 import { MatrixRendererService } from '../../app/khiops-library/components/matrix/matrix.renderer.service';
 import { MatrixUiService } from '../../app/khiops-library/components/matrix/matrix.ui.service';
@@ -19,7 +21,7 @@ describe('MatrixRendererService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [MatrixRendererService]
+      providers: [MatrixRendererService],
     });
     service = TestBed.inject(MatrixRendererService);
 
@@ -35,13 +37,13 @@ describe('MatrixRendererService', () => {
       'stroke',
       'createPattern',
       'moveTo',
-      'lineTo'
+      'lineTo',
     ]);
 
     // Create mock canvas element
     mockCanvas = jasmine.createSpyObj('HTMLCanvasElement', ['getContext'], {
       width: 100,
-      height: 100
+      height: 100,
     });
     mockCanvas.getContext.and.returnValue(mockCanvasContext);
 
@@ -60,7 +62,12 @@ describe('MatrixRendererService', () => {
 
       service.cleanDomContext(mockCanvasContext, width, height);
 
-      expect(mockCanvasContext.clearRect).toHaveBeenCalledWith(0, 0, width, height);
+      expect(mockCanvasContext.clearRect).toHaveBeenCalledWith(
+        0,
+        0,
+        width,
+        height,
+      );
     });
   });
 
@@ -71,7 +78,12 @@ describe('MatrixRendererService', () => {
 
       service.cleanSelectedDomContext(mockCanvasContext, width, height);
 
-      expect(mockCanvasContext.clearRect).toHaveBeenCalledWith(0, 0, width, height);
+      expect(mockCanvasContext.clearRect).toHaveBeenCalledWith(
+        0,
+        0,
+        width,
+        height,
+      );
     });
   });
 
@@ -82,8 +94,11 @@ describe('MatrixRendererService', () => {
     const yAxisLabel = 'Y Axis';
 
     it('should handle normal orientation (not inverted)', () => {
-      const mockSelectedCtx = jasmine.createSpyObj('CanvasRenderingContext2D', ['translate', 'scale']);
-      
+      const mockSelectedCtx = jasmine.createSpyObj('CanvasRenderingContext2D', [
+        'translate',
+        'scale',
+      ]);
+
       const [resultX, resultY] = service.setMatrixEltsOrientation(
         mockCanvasContext,
         mockSelectedCtx,
@@ -91,7 +106,7 @@ describe('MatrixRendererService', () => {
         width,
         height,
         xAxisLabel,
-        yAxisLabel
+        yAxisLabel,
       );
 
       expect(resultX).toBe(xAxisLabel);
@@ -103,8 +118,12 @@ describe('MatrixRendererService', () => {
     });
 
     it('should handle inverted orientation', () => {
-      const mockSelectedCtx = jasmine.createSpyObj('CanvasRenderingContext2D', ['translate', 'scale', 'rotate']);
-      
+      const mockSelectedCtx = jasmine.createSpyObj('CanvasRenderingContext2D', [
+        'translate',
+        'scale',
+        'rotate',
+      ]);
+
       const [resultX, resultY] = service.setMatrixEltsOrientation(
         mockCanvasContext,
         mockSelectedCtx,
@@ -112,7 +131,7 @@ describe('MatrixRendererService', () => {
         width,
         height,
         xAxisLabel,
-        yAxisLabel
+        yAxisLabel,
       );
 
       expect(resultX).toBe(yAxisLabel);
@@ -141,7 +160,10 @@ describe('MatrixRendererService', () => {
 
       expect(document.createElement).toHaveBeenCalledWith('canvas');
       expect(mockCanvas.getContext).toHaveBeenCalledWith('2d');
-      expect(mockCanvasContext.createPattern).toHaveBeenCalledWith(mockCanvas, 'repeat');
+      expect(mockCanvasContext.createPattern).toHaveBeenCalledWith(
+        mockCanvas,
+        'repeat',
+      );
       expect(mockCanvasContext.fillRect).toHaveBeenCalledWith(10, 20, 50, 30);
     });
   });
@@ -163,7 +185,7 @@ describe('MatrixRendererService', () => {
       mockCell.hCanvas = 10;
 
       mockInputDatas = {
-        matrixCellDatas: [mockCell]
+        matrixCellDatas: [mockCell],
       };
       mockMatrixValues = [0.5];
       mockMatrixExtras = [1];
@@ -173,8 +195,12 @@ describe('MatrixRendererService', () => {
 
       // Mock static methods
       spyOn(MatrixUtilsService, 'computeTotalMutInfo').and.returnValue(1);
-      spyOn(MatrixUiService, 'adaptCellDimensionsToZoom').and.returnValue(mockCell);
-      spyOn(MatrixUiService, 'getColorForPercentage').and.returnValue('#ff0000');
+      spyOn(MatrixUiService, 'adaptCellDimensionsToZoom').and.returnValue(
+        mockCell,
+      );
+      spyOn(MatrixUiService, 'getColorForPercentage').and.returnValue(
+        '#ff0000',
+      );
     });
 
     it('should draw matrix cells correctly', () => {
@@ -192,7 +218,7 @@ describe('MatrixRendererService', () => {
         600,
         1,
         false,
-        1
+        1,
       );
 
       expect(mockCanvasContext.beginPath).toHaveBeenCalled();
@@ -216,7 +242,7 @@ describe('MatrixRendererService', () => {
         600,
         1,
         false,
-        1
+        1,
       );
 
       expect(mockCanvasContext.beginPath).toHaveBeenCalled();
@@ -251,47 +277,59 @@ describe('MatrixRendererService', () => {
 
     beforeEach(() => {
       mockLegendElement = jasmine.createSpyObj('HTMLElement', [], {
-        style: { background: '' }
+        style: { background: '' },
       });
-      
-      spyOn(MatrixUiService, 'getInterestColorsLegend').and.returnValue('linear-gradient(interest)');
-      spyOn(MatrixUiService, 'getFrequencyColorsLegend').and.returnValue('linear-gradient(frequency)');
+
+      spyOn(MatrixUiService, 'getInterestColorsLegend').and.returnValue(
+        'linear-gradient(interest)',
+      );
+      spyOn(MatrixUiService, 'getFrequencyColorsLegend').and.returnValue(
+        'linear-gradient(frequency)',
+      );
     });
 
     it('should set interest colors for mutual info mode', () => {
       const graphMode = { mode: MATRIX_MODES.MUTUAL_INFO };
-      
+
       service.updateLegendBar(mockLegendElement, graphMode);
-      
+
       expect(MatrixUiService.getInterestColorsLegend).toHaveBeenCalled();
-      expect(mockLegendElement.style.background).toBe('linear-gradient(interest)');
+      expect(mockLegendElement.style.background).toBe(
+        'linear-gradient(interest)',
+      );
     });
 
     it('should set interest colors for hellinger mode', () => {
       const graphMode = { mode: MATRIX_MODES.HELLINGER };
-      
+
       service.updateLegendBar(mockLegendElement, graphMode);
-      
+
       expect(MatrixUiService.getInterestColorsLegend).toHaveBeenCalled();
-      expect(mockLegendElement.style.background).toBe('linear-gradient(interest)');
+      expect(mockLegendElement.style.background).toBe(
+        'linear-gradient(interest)',
+      );
     });
 
     it('should set interest colors for mutual info target with cell mode', () => {
       const graphMode = { mode: MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL };
-      
+
       service.updateLegendBar(mockLegendElement, graphMode);
-      
+
       expect(MatrixUiService.getInterestColorsLegend).toHaveBeenCalled();
-      expect(mockLegendElement.style.background).toBe('linear-gradient(interest)');
+      expect(mockLegendElement.style.background).toBe(
+        'linear-gradient(interest)',
+      );
     });
 
     it('should set frequency colors for other modes', () => {
       const graphMode = { mode: MATRIX_MODES.FREQUENCY };
-      
+
       service.updateLegendBar(mockLegendElement, graphMode);
-      
+
       expect(MatrixUiService.getFrequencyColorsLegend).toHaveBeenCalled();
-      expect(mockLegendElement.style.background).toBe('linear-gradient(frequency)');
+      expect(mockLegendElement.style.background).toBe(
+        'linear-gradient(frequency)',
+      );
     });
   });
 
@@ -301,11 +339,11 @@ describe('MatrixRendererService', () => {
 
     beforeEach(() => {
       mockMatrixAreaElement = jasmine.createSpyObj('HTMLElement', [], {
-        style: { overflow: '' }
+        style: { overflow: '' },
       });
       mockContainerElement = jasmine.createSpyObj('HTMLElement', [], {
         clientWidth: 800,
-        clientHeight: 600
+        clientHeight: 600,
       });
     });
 
@@ -313,7 +351,7 @@ describe('MatrixRendererService', () => {
       const [width, height] = service.getZoomDimensions(
         mockMatrixAreaElement,
         mockContainerElement,
-        1
+        1,
       );
 
       expect(mockMatrixAreaElement.style.overflow).toBe('hidden');
@@ -325,7 +363,7 @@ describe('MatrixRendererService', () => {
       const [width, height] = service.getZoomDimensions(
         mockMatrixAreaElement,
         mockContainerElement,
-        2
+        2,
       );
 
       expect(mockMatrixAreaElement.style.overflow).toBe('scroll');
@@ -336,13 +374,13 @@ describe('MatrixRendererService', () => {
     it('should handle zero client dimensions', () => {
       mockContainerElement = jasmine.createSpyObj('HTMLElement', [], {
         clientWidth: 0,
-        clientHeight: 0
+        clientHeight: 0,
       });
 
       const [width, height] = service.getZoomDimensions(
         mockMatrixAreaElement,
         mockContainerElement,
-        1.5
+        1.5,
       );
 
       expect(width).toBe(0);
@@ -352,13 +390,13 @@ describe('MatrixRendererService', () => {
     it('should return fixed precision numbers', () => {
       mockContainerElement = jasmine.createSpyObj('HTMLElement', [], {
         clientWidth: 333,
-        clientHeight: 666
+        clientHeight: 666,
       });
 
       const [width, height] = service.getZoomDimensions(
         mockMatrixAreaElement,
         mockContainerElement,
-        1.5
+        1.5,
       );
 
       expect(width).toBe(500); // 333 * 1.5 = 499.5 -> 500
@@ -375,27 +413,38 @@ describe('MatrixRendererService', () => {
         min: 0,
         max: 100,
         minH: 0,
-        maxH: 50
+        maxH: 50,
       };
       mockMatrixValues = [10, 20, 30, 40, 50];
 
-      spyOn(MatrixUtilsService, 'getMinAndMaxFromGraphMode').and.returnValue([0, 100, 0, 50]);
-      spyOn(MatrixUiService, 'computeLegendValues').and.returnValue({ min: 0, max: 100 });
+      spyOn(MatrixUtilsService, 'getMinAndMaxFromGraphMode').and.returnValue([
+        0, 100, 0, 50,
+      ]);
+      spyOn(MatrixUiService, 'computeLegendValues').and.returnValue({
+        min: 0,
+        max: 100,
+      });
     });
 
     it('should compute legend values correctly', () => {
       const result = service.computeLegendValues(
         mockMatrixValues,
         mockMinMaxValues,
-        MATRIX_MODES.MUTUAL_INFO
+        MATRIX_MODES.MUTUAL_INFO,
       );
 
       expect(MatrixUtilsService.getMinAndMaxFromGraphMode).toHaveBeenCalledWith(
         mockMatrixValues,
         mockMinMaxValues,
-        MATRIX_MODES.MUTUAL_INFO
+        MATRIX_MODES.MUTUAL_INFO,
       );
-      expect(MatrixUiService.computeLegendValues).toHaveBeenCalledWith(0, 100, 0, 50, MATRIX_MODES.MUTUAL_INFO);
+      expect(MatrixUiService.computeLegendValues).toHaveBeenCalledWith(
+        0,
+        100,
+        0,
+        50,
+        MATRIX_MODES.MUTUAL_INFO,
+      );
       expect(result).toEqual({ min: 0, max: 100 });
     });
 
@@ -403,13 +452,13 @@ describe('MatrixRendererService', () => {
       const result = service.computeLegendValues(
         undefined,
         mockMinMaxValues,
-        MATRIX_MODES.FREQUENCY
+        MATRIX_MODES.FREQUENCY,
       );
 
       expect(MatrixUtilsService.getMinAndMaxFromGraphMode).toHaveBeenCalledWith(
         undefined,
         mockMinMaxValues,
-        MATRIX_MODES.FREQUENCY
+        MATRIX_MODES.FREQUENCY,
       );
       expect(result).toEqual({ min: 0, max: 100 });
     });
@@ -418,13 +467,13 @@ describe('MatrixRendererService', () => {
       const result = service.computeLegendValues(
         mockMatrixValues,
         undefined,
-        MATRIX_MODES.HELLINGER
+        MATRIX_MODES.HELLINGER,
       );
 
       expect(MatrixUtilsService.getMinAndMaxFromGraphMode).toHaveBeenCalledWith(
         mockMatrixValues,
         undefined,
-        MATRIX_MODES.HELLINGER
+        MATRIX_MODES.HELLINGER,
       );
       expect(result).toEqual({ min: 0, max: 100 });
     });
@@ -439,7 +488,7 @@ describe('MatrixRendererService', () => {
       mockCell.hCanvas = 10;
 
       const mockInputDatas = {
-        matrixCellDatas: [mockCell]
+        matrixCellDatas: [mockCell],
       };
       const mockMatrixValues = [0.5];
       const mockMatrixExtras = [false];
@@ -448,8 +497,12 @@ describe('MatrixRendererService', () => {
       const mockGraphMode = { mode: MATRIX_MODES.FREQUENCY };
 
       spyOn(MatrixUtilsService, 'computeTotalMutInfo').and.returnValue(null);
-      spyOn(MatrixUiService, 'adaptCellDimensionsToZoom').and.returnValue(mockCell);
-      spyOn(MatrixUiService, 'getColorForPercentage').and.returnValue('#ff0000');
+      spyOn(MatrixUiService, 'adaptCellDimensionsToZoom').and.returnValue(
+        mockCell,
+      );
+      spyOn(MatrixUiService, 'getColorForPercentage').and.returnValue(
+        '#ff0000',
+      );
 
       service.drawMatrixCells(
         mockCanvasContext,
@@ -465,7 +518,7 @@ describe('MatrixRendererService', () => {
         600,
         1,
         false,
-        1
+        1,
       );
 
       // Verify that the cell's displayedValue was set
