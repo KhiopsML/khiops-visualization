@@ -361,7 +361,17 @@ export class TreenodesService {
    * Initializes the saved data for the service.
    */
   initSavedDatas() {
-    this.collapsedNodesToSave = undefined;
+    // Don't reset collapsedNodesToSave to undefined here, as it would lose
+    // the savedDatas collapsed nodes that were already loaded from JSON
+    // Only reset if there are no existing collapsed nodes from savedDatas
+    const savedCollapsedNodes = this.appService.getSavedDatas('collapsedNodes');
+    if (!savedCollapsedNodes || Object.keys(savedCollapsedNodes).length === 0) {
+      this.collapsedNodesToSave = undefined;
+    } else {
+      // Preserve the collapsed nodes from savedDatas
+      this.collapsedNodesToSave = { ...savedCollapsedNodes };
+    }
+
     this.dimensionsDatasService.dimensionsDatas.nodesNames =
       this.appService.getSavedDatas('nodesNames') || {};
     const savedNodes = this.appService.getSavedDatas('selectedNodes');
