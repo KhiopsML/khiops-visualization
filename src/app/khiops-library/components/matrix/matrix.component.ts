@@ -254,185 +254,275 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     this.drawSelectedNodes();
   }
 
+  /**
+   * Main method to draw the matrix. Orchestrates the drawing process.
+   */
   drawMatrix() {
     if (!this.isDrawing) {
       requestAnimationFrame(() => {
         if (this.graphMode && this.inputDatas?.variable) {
           this.isDrawing = true;
-          // const t2 = performance.now();
 
-          if (this.graphTargets && this.graphTarget) {
-            this.selectedTargetIndex = this.graphTargets.indexOf(
-              this.graphTarget,
-            );
-          } else {
-            this.selectedTargetIndex = -1;
-          }
-
-          [
-            this.matrixFreqsValues,
-            this.matrixValues,
-            this.matrixExtras,
-            this.matrixExpectedFreqsValues,
-          ] = MatrixUtilsService.computeMatrixValues(
-            this.graphMode,
-            this.inputDatas.matrixCellDatas,
-            this.contextSelection,
-            this.selectedTargetIndex,
-          );
+          this.updateSelectedTargetIndex();
+          this.computeMatrixDataValues();
 
           if (this.matrixFreqsValues && !isNaN(this.matrixFreqsValues[0]!)) {
-            // check if we have a wrong context selection
-
             // Clean dom canvas
             this.cleanDomContext();
             this.cleanSelectedDomContext();
 
             if (this.matrixDiv && this.matrixArea) {
-              let [width, height] = this.getZoomDimensions();
-
-              this.matrixCtx.canvas.width = width;
-              this.matrixCtx.canvas.height = height;
-              this.matrixSelectedCtx.canvas.width = width;
-              this.matrixSelectedCtx.canvas.height = height;
-
-              if (this.isAxisInverted) {
-                [width, height] = [height, width];
-              }
+              let [width, height] = this.prepareCanvasDimensions();
 
               if (this.inputDatas.matrixCellDatas) {
-                let [minVal, maxVal, minValH, maxValH] =
-                  MatrixUtilsService.getMinAndMaxFromGraphMode(
-                    this.matrixValues!,
-                    this.minMaxValues!,
-                    this.graphMode.mode,
-                  );
-
-                this.legend = MatrixUiService.computeLegendValues(
-                  minVal!,
-                  maxVal!,
-                  minValH!,
-                  maxValH!,
-                  this.graphMode.mode,
-                );
-
-                this.updateLegendBar();
-
-                this.xAxisLabel = this.inputDatas.variable.nameX;
-                this.yAxisLabel = this.inputDatas.variable.nameY;
-
-                this.setMatrixEltsOrientation(width, height);
-
-                this.selectedCells = [];
-                if (this.selectedCell) {
-                  // null for KC
-                  this.selectedCells.push(this.selectedCell);
-                }
-
-                let totalMutInfo = MatrixUtilsService.computeTotalMutInfo(
-                  this.matrixValues!,
-                  this.graphMode.mode,
-                  this.isKhiopsCovisu,
-                );
-                const cellsLength = this.inputDatas.matrixCellDatas.length;
-
-                this.matrixCtx.beginPath();
-                this.matrixCtx.strokeStyle = 'rgba(255,255,255,0.3)';
-                this.matrixCtx.lineWidth = 1;
-                for (let index = 0; index < cellsLength; index++) {
-                  if (totalMutInfo) {
-                    // hide zero exeptions do not work anymore #110
-                    this.matrixExtras![index] = totalMutInfo;
-                  }
-
-                  let cellDatas = this.inputDatas.matrixCellDatas[index];
-
-                  const currentVal = this.matrixValues?.[index];
-                  cellDatas = MatrixUiService.adaptCellDimensionsToZoom(
-                    cellDatas,
-                    width,
-                    height,
-                    this.graphType,
-                  );
-                  cellDatas.displayedValue = {
-                    type: this.graphMode.mode,
-                    value: currentVal,
-                    ef: this.matrixExpectedFreqsValues[index],
-                    extra: this.matrixExtras?.[index] || 0,
-                  };
-                  cellDatas.displayedFreqValue = this.matrixFreqsValues[index];
-
-                  if (currentVal && maxVal) {
-                    // Do not draw empty cells
-                    const color = MatrixUiService.getColorForPercentage(
-                      currentVal,
-                      maxVal,
-                      this.contrast,
-                      this.graphMode.mode,
-                    );
-                    this.matrixCtx.fillStyle = color;
-                    const { xCanvas, yCanvas, wCanvas, hCanvas } = cellDatas;
-                    this.matrixCtx.fillRect(xCanvas, yCanvas, wCanvas, hCanvas);
-                  }
-
-                  // Draw pattern if 0 is an exception
-                  if (this.matrixExtras?.[index] && this.isZerosToggled) {
-                    this.drawProbExceptionCell(cellDatas);
-                  }
-                }
-                this.matrixCtx.stroke();
-
+                this.setupMatrixLabelsAndLegend(width, height);
+                this.drawMatrixCells(width, height);
                 this.drawSelectedNodes();
               }
 
-              if (!this.unpanzoom) {
-                this.unpanzoom = panzoom(
-                  this.matrixContainerDiv?.nativeElement,
-                  (e: { dz: number; dx: number; dy: number }) => {
-                    if (e.dz) {
-                      if (e.dz > 0) {
-                        this.onClickOnZoomOut();
-                      } else {
-                        this.onClickOnZoomIn();
-                      }
-                    } else {
-                      if (e.dx !== 0 || e.dy !== 0) {
-                        if (this.matrixArea?.nativeElement) {
-                          this.matrixArea.nativeElement.scrollLeft =
-                            this.matrixArea.nativeElement.scrollLeft - e.dx;
-                          this.matrixArea.nativeElement.scrollTop =
-                            this.matrixArea.nativeElement.scrollTop - e.dy;
-
-                          this.lastScrollPosition = {
-                            scrollLeft:
-                              this.matrixArea.nativeElement.scrollLeft,
-                            scrollTop: this.matrixArea.nativeElement.scrollTop,
-                          };
-                        }
-                      }
-                    }
-                    if (this.zoom !== 1) {
-                      this.isPaning = true;
-                    }
-                  },
-                );
-              }
-
-              setTimeout(() => {
-                this.loadingMatrixSvg = false;
-                if (this.isFirstResize) {
-                  this.isFirstResize = false;
-                }
-              }, 100);
+              this.setupPanzoom();
+              this.finalizeDraw();
             }
           }
+
           // Add all events listeners after drawing
           this.addEventsListeners();
           this.isDrawing = false;
-          // const t3 = performance.now();
         }
       });
     }
+  }
+
+  /**
+   * Updates the selected target index based on the graph targets and target
+   */
+  private updateSelectedTargetIndex(): void {
+    if (this.graphTargets && this.graphTarget) {
+      this.selectedTargetIndex = this.graphTargets.indexOf(this.graphTarget);
+    } else {
+      this.selectedTargetIndex = -1;
+    }
+  }
+
+  /**
+   * Computes the matrix data values using the matrix utils service
+   */
+  private computeMatrixDataValues(): void {
+    [
+      this.matrixFreqsValues,
+      this.matrixValues,
+      this.matrixExtras,
+      this.matrixExpectedFreqsValues,
+    ] = MatrixUtilsService.computeMatrixValues(
+      this.graphMode!,
+      this.inputDatas.matrixCellDatas,
+      this.contextSelection,
+      this.selectedTargetIndex,
+    );
+  }
+
+  /**
+   * Prepares canvas dimensions based on zoom level
+   * @returns [width, height] tuple
+   */
+  private prepareCanvasDimensions(): [number, number] {
+    let [width, height] = this.getZoomDimensions();
+
+    this.matrixCtx.canvas.width = width;
+    this.matrixCtx.canvas.height = height;
+    this.matrixSelectedCtx.canvas.width = width;
+    this.matrixSelectedCtx.canvas.height = height;
+
+    if (this.isAxisInverted) {
+      [width, height] = [height, width];
+    }
+
+    return [width, height];
+  }
+
+  /**
+   * Sets up matrix labels and legend based on the data
+   * @param width canvas width
+   * @param height canvas height
+   */
+  private setupMatrixLabelsAndLegend(width: number, height: number): void {
+    let [minVal, maxVal, minValH, maxValH] =
+      MatrixUtilsService.getMinAndMaxFromGraphMode(
+        this.matrixValues!,
+        this.minMaxValues!,
+        this.graphMode!.mode,
+      );
+
+    this.legend = MatrixUiService.computeLegendValues(
+      minVal!,
+      maxVal!,
+      minValH!,
+      maxValH!,
+      this.graphMode!.mode,
+    );
+
+    this.updateLegendBar();
+
+    this.xAxisLabel = this.inputDatas.variable.nameX;
+    this.yAxisLabel = this.inputDatas.variable.nameY;
+
+    this.setMatrixEltsOrientation(width, height);
+
+    this.selectedCells = [];
+    if (this.selectedCell) {
+      // null for KC
+      this.selectedCells.push(this.selectedCell);
+    }
+  }
+
+  /**
+   * Draws all matrix cells with appropriate colors and patterns
+   * @param width canvas width
+   * @param height canvas height
+   */
+  private drawMatrixCells(width: number, height: number): void {
+    const totalMutInfo = MatrixUtilsService.computeTotalMutInfo(
+      this.matrixValues!,
+      this.graphMode!.mode,
+      this.isKhiopsCovisu,
+    );
+    const cellsLength = this.inputDatas.matrixCellDatas.length;
+
+    this.matrixCtx.beginPath();
+    this.matrixCtx.strokeStyle = 'rgba(255,255,255,0.3)';
+    this.matrixCtx.lineWidth = 1;
+
+    for (let index = 0; index < cellsLength; index++) {
+      if (totalMutInfo) {
+        // hide zero exeptions do not work anymore #110
+        this.matrixExtras![index] = totalMutInfo;
+      }
+
+      let cellDatas = this.inputDatas.matrixCellDatas[index];
+      this.updateCellData(cellDatas, width, height, index);
+      this.drawCell(cellDatas, index);
+    }
+
+    this.matrixCtx.stroke();
+  }
+
+  /**
+   * Updates cell data with display values and dimensions
+   * @param cellDatas the cell data to update
+   * @param width canvas width
+   * @param height canvas height
+   * @param index the cell index
+   */
+  private updateCellData(
+    cellDatas: CellModel,
+    width: number,
+    height: number,
+    index: number,
+  ): void {
+    const currentVal = this.matrixValues?.[index];
+
+    // Update cell dimensions based on zoom
+    cellDatas = MatrixUiService.adaptCellDimensionsToZoom(
+      cellDatas,
+      width,
+      height,
+      this.graphType,
+    );
+
+    // Set display values
+    cellDatas.displayedValue = {
+      type: this.graphMode!.mode,
+      value: currentVal ?? 0,
+      ef: this.matrixExpectedFreqsValues[index] ?? 0,
+      extra: this.matrixExtras?.[index] || 0,
+    };
+    cellDatas.displayedFreqValue = this.matrixFreqsValues[index] ?? 0;
+  }
+
+  /**
+   * Draws a single cell with the appropriate color and pattern
+   * @param cellDatas the cell data to draw
+   * @param index the cell index
+   */
+  private drawCell(cellDatas: CellModel, index: number): void {
+    const currentVal = this.matrixValues?.[index];
+    const maxVal = this.legend.max;
+
+    if (currentVal && maxVal) {
+      // Do not draw empty cells
+      const color = MatrixUiService.getColorForPercentage(
+        currentVal,
+        maxVal,
+        this.contrast,
+        this.graphMode!.mode,
+      );
+      this.matrixCtx.fillStyle = color;
+      const { xCanvas, yCanvas, wCanvas, hCanvas } = cellDatas;
+      this.matrixCtx.fillRect(xCanvas, yCanvas, wCanvas, hCanvas);
+    }
+
+    // Draw pattern if 0 is an exception
+    if (this.matrixExtras?.[index] && this.isZerosToggled) {
+      this.drawProbExceptionCell(cellDatas);
+    }
+  }
+
+  /**
+   * Sets up the panzoom functionality for the matrix
+   */
+  private setupPanzoom(): void {
+    if (!this.unpanzoom) {
+      this.unpanzoom = panzoom(
+        this.matrixContainerDiv?.nativeElement,
+        (e: { dz: number; dx: number; dy: number }) => {
+          if (e.dz) {
+            if (e.dz > 0) {
+              this.onClickOnZoomOut();
+            } else {
+              this.onClickOnZoomIn();
+            }
+          } else {
+            if (e.dx !== 0 || e.dy !== 0) {
+              this.handlePan(e.dx, e.dy);
+            }
+          }
+          if (this.zoom !== 1) {
+            this.isPaning = true;
+          }
+        },
+      );
+    }
+  }
+
+  /**
+   * Handles pan movement
+   * @param dx delta x
+   * @param dy delta y
+   */
+  private handlePan(dx: number, dy: number): void {
+    if (this.matrixArea?.nativeElement) {
+      this.matrixArea.nativeElement.scrollLeft =
+        this.matrixArea.nativeElement.scrollLeft - dx;
+      this.matrixArea.nativeElement.scrollTop =
+        this.matrixArea.nativeElement.scrollTop - dy;
+
+      this.lastScrollPosition = {
+        scrollLeft: this.matrixArea.nativeElement.scrollLeft,
+        scrollTop: this.matrixArea.nativeElement.scrollTop,
+      };
+    }
+  }
+
+  /**
+   * Finalizes the drawing process by updating loading state
+   */
+  private finalizeDraw(): void {
+    setTimeout(() => {
+      this.loadingMatrixSvg = false;
+      if (this.isFirstResize) {
+        this.isFirstResize = false;
+      }
+    }, 100);
   }
 
   private addEventsListeners() {

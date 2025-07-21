@@ -23,7 +23,7 @@ export class CellModel {
   displayedValue!: {
     type: string;
     value: number;
-    extra: 0;
+    extra: any;
     ef: number;
   };
   targetCellFreq!: number;
