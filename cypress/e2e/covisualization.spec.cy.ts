@@ -24,7 +24,7 @@ describe('Test Khiops Covisualization sample files', () => {
     'SimplifiedCoclusteringIrisOldFormat_BugUndefined.json',
     'h-Coclustering.json',
     'zero-except.json',
-    '10.1.1_id_feat_nospace_Coclustering.khcj',
+    '10.1.1_id_feat_nospace_Coclustering.json',
     'co-3-num.json',
     'ext-CC_Coclustering.json',
     'ext-datas_Coclustering.json',
@@ -42,7 +42,6 @@ describe('Test Khiops Covisualization sample files', () => {
 
   files.forEach((fileName) => {
     it(`Check values for ${fileName}`, () => {
-
       //@ts-ignore
       cy.initViews();
 
