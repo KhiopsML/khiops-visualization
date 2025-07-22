@@ -85,7 +85,6 @@
     "d3": "7.9.0",
     "document-register-element": "1.14.10",
     "fast-equals": "5.2.2",
-    "fastest-json-copy": "^1.0.1",
     "file-saver": "2.0.5",
     "html2canvas": "1.4.1",
     "lodash": "4.17.21",

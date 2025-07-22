@@ -23,8 +23,6 @@ import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.c
 import { TYPES } from '@khiops-library/enum/types';
 import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
 import _ from 'lodash';
-// @ts-ignore
-import { copy } from 'fastest-json-copy';
 
 @Injectable({
   providedIn: 'root',
@@ -155,7 +153,9 @@ export class SaveService {
     if (collapsedNodesInput) {
       // Here we are going to modify the coclusteringReport, so we need to perform a deep clone
       // only now to preserve the initial object
-      newJson.coclusteringReport = copy(newJson.coclusteringReport);
+      newJson.coclusteringReport = UtilsService.fastestJsonCopyV2(
+        newJson.coclusteringReport,
+      );
       newJson = this.truncateJsonHierarchy(newJson);
       newJson = this.updateSummariesParts(newJson);
       newJson = this.truncateJsonPartition(newJson);
@@ -182,7 +182,7 @@ export class SaveService {
    * @returns {CovisualizationDatas} - The updated data object with the truncated partitions.
    */
   truncateJsonPartition(datas: CovisualizationDatas): CovisualizationDatas {
-    const truncatedPartition = copy(
+    const truncatedPartition = UtilsService.fastestJsonCopyV2(
       datas.coclusteringReport.dimensionPartitions,
     );
 

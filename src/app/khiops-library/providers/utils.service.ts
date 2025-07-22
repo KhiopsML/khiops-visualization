@@ -1507,4 +1507,52 @@ export class UtilsService {
   static compare(a: number | string, b: number | string, isAsc: boolean) {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
+
+  /**
+   * https://github.com/streamich/fastest-json-copy/blob/main/lib/v1.js
+   */
+  static fastestJsonCopyV1(obj: any): any {
+    if (!obj) return obj;
+    if (Array.isArray(obj)) {
+      var arr = [];
+      var length = obj.length;
+      for (var i = 0; i < length; i++) arr.push(this.fastestJsonCopyV1(obj[i]));
+      return arr;
+    } else if (typeof obj === 'object') {
+      var keys = Object.keys(obj);
+      var length = keys.length;
+      var newObject = {};
+      for (var i = 0; i < length; i++) {
+        var key = keys[i];
+        //@ts-ignore
+        newObject[key] = this.fastestJsonCopyV1(obj[key]);
+      }
+      return newObject;
+    }
+    return obj;
+  }
+
+  /**
+   * https://github.com/streamich/fastest-json-copy/blob/main/lib/v2.js
+   */
+  static fastestJsonCopyV2(val: any): any {
+    if (!val) return val;
+    if (Array.isArray(val)) {
+      var arr = [];
+      var length = val.length;
+      //@ts-ignore
+      for (var i = 0; i < length; i++) arr.push(this.fastestJsonCopyV2(val[i]));
+      return arr;
+    } else if (typeof val === 'object') {
+      var keys = Object.keys(val);
+      var newObject = {};
+      for (var i = keys.length - 1; i > -1; i--) {
+        var key = keys[i];
+        //@ts-ignore
+        newObject[key] = this.fastestJsonCopyV2(val[key]);
+      }
+      return newObject;
+    }
+    return val;
+  }
 }

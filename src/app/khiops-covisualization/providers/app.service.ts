@@ -15,8 +15,7 @@ import {
   AppDatasI,
   CovisualizationDatas,
 } from '@khiops-covisualization/interfaces/app-datas';
-// @ts-ignore
-import { copy } from 'fastest-json-copy';
+import { UtilsService } from '@khiops-library/providers/utils.service';
 
 @Injectable({
   providedIn: 'root',
@@ -118,7 +117,7 @@ export class AppService {
     }
 
     this._appDatas.datas = datas;
-    this._initialDatas.datas = copy(datas);
+    this._initialDatas.datas = UtilsService.fastestJsonCopyV2(datas);
     this.setSavedDatas(datas);
   }
 
