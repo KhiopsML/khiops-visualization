@@ -234,70 +234,106 @@ export class SaveService {
    * @returns {CovisualizationDatas} - The updated data object with the truncated hierarchy.
    */
   truncateJsonHierarchy(datas: CovisualizationDatas): CovisualizationDatas {
-    if (datas.savedDatas.collapsedNodes) {
-      const truncatedHierarchy = [
-        ...datas.coclusteringReport.dimensionHierarchies,
-      ];
-      Object.keys(datas.savedDatas.collapsedNodes).forEach((dim) => {
-        const dimIndex =
-          this.dimensionsDatasService.dimensionsDatas.selectedDimensions.findIndex(
-            (e) => e.name === dim,
-          );
+    if (!datas.savedDatas.collapsedNodes) {
+      return datas;
+    }
 
-        // Check for collapsed node integrity
-        if (dimIndex !== -1) {
-          const nodes = datas.savedDatas.collapsedNodes[dim];
-          const dimHierarchy = truncatedHierarchy.find((e) => e.name === dim);
+    const truncatedHierarchy = [
+      ...datas.coclusteringReport.dimensionHierarchies,
+    ];
 
-          const nodesLength = nodes.length;
-          for (let i = 0; i < nodesLength; i++) {
-            const nodeName = nodes[i];
-            let nodeChildren: any[] = [];
-            const nodeDetails: TreeNodeModel | undefined =
-              this.dimensionsDatasService.dimensionsDatas.dimensionsClusters[
-                dimIndex
-              ]?.find((e) => e.cluster === nodeName);
+    // Create a map for faster dimension lookups
+    const selectedDimensionsMap = new Map(
+      this.dimensionsDatasService.dimensionsDatas.selectedDimensions.map(
+        (dim, index) => [dim.name, index],
+      ),
+    );
 
-            // Get children list
-            nodeDetails && nodeDetails.getChildrenList();
+    Object.keys(datas.savedDatas.collapsedNodes).forEach((dim) => {
+      const dimIndex = selectedDimensionsMap.get(dim);
 
-            if (nodeDetails?.childrenList) {
-              nodeChildren = nodeDetails.childrenList;
-              const nodeChildrenLength = nodeChildren.length;
-              for (let j = nodeChildrenLength - 1; j >= 0; j--) {
-                const nodeIndex = dimHierarchy?.clusters.findIndex(
-                  (e) => e.cluster === nodeChildren[j],
-                );
-                if (nodeChildren[j] !== nodeName) {
-                  // Do not remove current collapsed node
-                  if (nodeIndex !== undefined && nodeIndex !== -1) {
-                    dimHierarchy!.clusters.splice(nodeIndex, 1);
-                  }
-                } else {
-                  if (nodeIndex !== undefined && nodeIndex !== -1) {
-                    // Set the isLeaf of the last collapsed node
-                    if (dimHierarchy?.clusters[nodeIndex]) {
-                      dimHierarchy.clusters[nodeIndex].isLeaf = true;
-                    }
-                  }
-                }
+      // Check for collapsed node integrity
+      if (dimIndex === undefined || dimIndex === -1) {
+        return;
+      }
+
+      const nodes = datas.savedDatas.collapsedNodes[dim];
+      const dimHierarchy = truncatedHierarchy.find((e) => e.name === dim);
+
+      if (!dimHierarchy?.clusters) {
+        return;
+      }
+
+      // Create a map for faster cluster lookups
+      const clusterMap = new Map(
+        dimHierarchy.clusters.map((cluster, index) => [cluster.cluster, index]),
+      );
+
+      // Collect all children to remove and nodes to mark as leaf
+      const indicesToRemove = new Set<number>();
+      const nodesToMarkAsLeaf = new Set<string>();
+
+      const dimensionClusters =
+        this.dimensionsDatasService.dimensionsDatas.dimensionsClusters[
+          dimIndex
+        ];
+
+      nodes.forEach((nodeName: string) => {
+        const nodeDetails: TreeNodeModel | undefined = dimensionClusters?.find(
+          (e) => e.cluster === nodeName,
+        );
+
+        if (!nodeDetails) {
+          return;
+        }
+
+        // Get children list
+        nodeDetails.getChildrenList();
+
+        if (nodeDetails.childrenList) {
+          nodeDetails.childrenList.forEach((childName: string) => {
+            const childIndex = clusterMap.get(childName);
+            if (childIndex !== undefined) {
+              if (childName !== nodeName) {
+                // Mark for removal (Do not remove current collapsed node)
+                indicesToRemove.add(childIndex);
+              } else {
+                // Mark the collapsed node as leaf
+                nodesToMarkAsLeaf.add(childName);
               }
             }
-          }
+          });
         }
       });
 
-      // Sort clusters by leaf and rank
-      for (let k = 0; k < truncatedHierarchy.length; k++) {
-        truncatedHierarchy[k]!.clusters = _.sortBy(
-          truncatedHierarchy[k]?.clusters,
-          [(e) => e.isLeaf === false, 'rank'],
-        );
+      // Mark nodes as leaf first (before removing elements that would change indices)
+      nodesToMarkAsLeaf.forEach((nodeName: string) => {
+        const nodeIndex = clusterMap.get(nodeName);
+        if (nodeIndex !== undefined && dimHierarchy.clusters[nodeIndex]) {
+          dimHierarchy.clusters[nodeIndex].isLeaf = true;
+        }
+      });
+
+      // Remove clusters in reverse order to maintain correct indices
+      const sortedIndicesToRemove = Array.from(indicesToRemove).sort(
+        (a, b) => b - a,
+      );
+      sortedIndicesToRemove.forEach((index: number) => {
+        dimHierarchy.clusters.splice(index, 1);
+      });
+    });
+
+    // Sort clusters by leaf and rank only once at the end
+    truncatedHierarchy.forEach((hierarchy) => {
+      if (hierarchy?.clusters) {
+        hierarchy.clusters = _.sortBy(hierarchy.clusters, [
+          (e) => e.isLeaf === false,
+          'rank',
+        ]);
       }
+    });
 
-      datas.coclusteringReport.dimensionHierarchies = truncatedHierarchy;
-    }
-
+    datas.coclusteringReport.dimensionHierarchies = truncatedHierarchy;
     return datas;
   }
 
