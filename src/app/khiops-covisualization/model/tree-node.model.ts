@@ -158,7 +158,7 @@ export class TreeNodeModel {
     this.childrenLeafList = [];
     this.childrenLeafIndexes = [];
     // Use the optimized iterative version by default
-    this.deepGetChildrenNamesV2(this.children, this.name, this.matrixIndex);
+    this.deepGetChildrenNames(this.children, this.name, this.matrixIndex);
   }
 
   getInnerValueGroups(dimension: DimensionCovisualizationModel) {
@@ -208,7 +208,7 @@ export class TreeNodeModel {
    * @param name - The name of the current node.
    * @param matrixIndex - The matrix index of the current node.
    */
-  deepGetChildrenNamesV2(
+  deepGetChildrenNames(
     children: TreeNodeModel[],
     name: string,
     matrixIndex: number | string,
@@ -246,29 +246,6 @@ export class TreeNodeModel {
             });
           }
         }
-      }
-    }
-  }
-
-  deepGetChildrenNames(
-    children: TreeNodeModel[],
-    name: string,
-    matrixIndex: number | string,
-  ) {
-    this.childrenList.push(name);
-    if (children.length === 0) {
-      this.childrenLeafList.push(name);
-      // @ts-ignore
-      this.childrenLeafIndexes.push(matrixIndex);
-    }
-    for (let i = 0; i < children.length; i++) {
-      const child = children[i];
-      if (child) {
-        this.deepGetChildrenNames(
-          child.children,
-          child.name,
-          child.matrixIndex,
-        );
       }
     }
   }
