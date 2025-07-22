@@ -157,7 +157,8 @@ export class TreeNodeModel {
     this.childrenList = [];
     this.childrenLeafList = [];
     this.childrenLeafIndexes = [];
-    this.deepGetChildrenNames(this.children, this.name, this.matrixIndex);
+    // Use the optimized iterative version by default
+    this.deepGetChildrenNamesV2(this.children, this.name, this.matrixIndex);
   }
 
   getInnerValueGroups(dimension: DimensionCovisualizationModel) {
@@ -201,11 +202,54 @@ export class TreeNodeModel {
   }
 
   /**
-   * Recursively traverses the tree to collect names and matrix indexes of children nodes.
+   * Traverses the tree to collect names and matrix indexes of children nodes.
+   * Uses iterative approach with stack to avoid recursion depth issues.
    * @param children - The children nodes to traverse.
    * @param name - The name of the current node.
    * @param matrixIndex - The matrix index of the current node.
    */
+  deepGetChildrenNamesV2(
+    children: TreeNodeModel[],
+    name: string,
+    matrixIndex: number | string,
+  ) {
+    // Use iterative approach with stack to avoid recursion depth issues
+    const stack: Array<{
+      children: TreeNodeModel[];
+      name: string;
+      matrixIndex: number | string;
+    }> = [{ children, name, matrixIndex }];
+
+    // Cache array references to avoid repeated property access
+    const childrenList = this.childrenList;
+    const childrenLeafList = this.childrenLeafList;
+    const childrenLeafIndexes = this.childrenLeafIndexes;
+
+    while (stack.length > 0) {
+      const current = stack.pop()!;
+
+      childrenList.push(current.name);
+
+      if (current.children.length === 0) {
+        childrenLeafList.push(current.name);
+        childrenLeafIndexes.push(current.matrixIndex as number);
+      } else {
+        // Use for...of for better performance and add children to stack in reverse order
+        // to maintain the same traversal order as the recursive version
+        for (let i = current.children.length - 1; i >= 0; i--) {
+          const child = current.children[i];
+          if (child) {
+            stack.push({
+              children: child.children,
+              name: child.name,
+              matrixIndex: child.matrixIndex,
+            });
+          }
+        }
+      }
+    }
+  }
+
   deepGetChildrenNames(
     children: TreeNodeModel[],
     name: string,
