@@ -19,7 +19,7 @@ let treenodesService: TreenodesService;
 let dimensionsDatasService: DimensionsDatasService;
 
 describe('CoVisualization', () => {
-  describe('Loading large coclustering [10.1.1_id_feat_nospace_Coclustering.json]', () => {
+  describe('Loading large coclustering [10.1.1_id_feat_nospace_Coclustering.khcj]', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [HttpClientModule, TranslateModule.forRoot()],
@@ -31,7 +31,7 @@ describe('CoVisualization', () => {
       saveService = TestBed.inject(SaveService);
       appService = TestBed.inject(AppService);
 
-      const fileDatas = require('../../assets/mocks/kc/10.1.1_id_feat_nospace_Coclustering.json');
+      const fileDatas = require('../../assets/mocks/kc/10.1.1_id_feat_nospace_Coclustering.khcj');
       appService.setFileDatas(fileDatas);
     });
 
