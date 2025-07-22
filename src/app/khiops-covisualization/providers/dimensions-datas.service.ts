@@ -55,20 +55,44 @@ export class DimensionsDatasService {
    * @param {string} dimensionName - The name of the dimension to be updated.
    */
   recomputeDatasFromNewJson(dimensionName: string) {
+    const t0 = performance.now();
+
     this.getDimensions();
+    const t1 = performance.now();
+
     this.initSelectedDimensions(false); // do not reinitialize selected context node
+    const t2 = performance.now();
+
     this.saveInitialDimension();
+    const t3 = performance.now();
+
     this.constructDimensionsTrees();
+    const t4 = performance.now();
 
     const currentIndex: number =
       this.dimensionsDatas.selectedDimensions.findIndex((e) => {
-        return dimensionName === e.name;
+      return dimensionName === e.name;
       });
     const propagateChanges = currentIndex <= 1 ? true : false;
     // hack to limit re-rendering and optimize performance
     this.getMatrixDatas(propagateChanges);
+    const t5 = performance.now();
+
     this.computeMatrixDataFreqMap();
+    const t6 = performance.now();
+
     this.setIsLoading(false);
+    const t7 = performance.now();
+
+    // Log timings for performance analysis
+    console.log(`[DimensionsDatasService] getDimensions: ${(t1 - t0).toFixed(2)} ms`);
+    console.log(`[DimensionsDatasService] initSelectedDimensions: ${(t2 - t1).toFixed(2)} ms`);
+    console.log(`[DimensionsDatasService] saveInitialDimension: ${(t3 - t2).toFixed(2)} ms`);
+    console.log(`[DimensionsDatasService] constructDimensionsTrees: ${(t4 - t3).toFixed(2)} ms`);
+    console.log(`[DimensionsDatasService] getMatrixDatas: ${(t5 - t4).toFixed(2)} ms`);
+    console.log(`[DimensionsDatasService] computeMatrixDataFreqMap: ${(t6 - t5).toFixed(2)} ms`);
+    console.log(`[DimensionsDatasService] setIsLoading: ${(t7 - t6).toFixed(2)} ms`);
+    console.log(`[DimensionsDatasService] Total recomputeDatasFromNewJson: ${(t7 - t0).toFixed(2)} ms`);
   }
 
   /**
