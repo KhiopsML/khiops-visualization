@@ -271,11 +271,11 @@ describe('coVisualization', () => {
       // When: constructDimensionsTrees is called
       dimensionsDatasService.constructDimensionsTrees();
 
-      // Then: should call ImportExtDatasService for each dimension
+      // Then: should call ImportExtDatasService once per dimension (optimized to avoid redundant calls)
       const selectedDimensions = dimensionsDatasService.getSelectedDimensions();
       expect(
         importExtDatasService.getImportedDatasFromDimension,
-      ).toHaveBeenCalledTimes(selectedDimensions.length * 2); // Called for both initial and current
+      ).toHaveBeenCalledTimes(selectedDimensions.length); // Called once per dimension (optimized)
     });
   });
 });

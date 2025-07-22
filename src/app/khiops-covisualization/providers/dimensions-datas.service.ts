@@ -55,44 +55,19 @@ export class DimensionsDatasService {
    * @param {string} dimensionName - The name of the dimension to be updated.
    */
   recomputeDatasFromNewJson(dimensionName: string) {
-    const t0 = performance.now();
-
     this.getDimensions();
-    const t1 = performance.now();
-
     this.initSelectedDimensions(false); // do not reinitialize selected context node
-    const t2 = performance.now();
-
     this.saveInitialDimension();
-    const t3 = performance.now();
-
     this.constructDimensionsTrees();
-    const t4 = performance.now();
-
     const currentIndex: number =
       this.dimensionsDatas.selectedDimensions.findIndex((e) => {
-      return dimensionName === e.name;
+        return dimensionName === e.name;
       });
     const propagateChanges = currentIndex <= 1 ? true : false;
     // hack to limit re-rendering and optimize performance
     this.getMatrixDatas(propagateChanges);
-    const t5 = performance.now();
-
     this.computeMatrixDataFreqMap();
-    const t6 = performance.now();
-
     this.setIsLoading(false);
-    const t7 = performance.now();
-
-    // Log timings for performance analysis
-    console.log(`[DimensionsDatasService] getDimensions: ${(t1 - t0).toFixed(2)} ms`);
-    console.log(`[DimensionsDatasService] initSelectedDimensions: ${(t2 - t1).toFixed(2)} ms`);
-    console.log(`[DimensionsDatasService] saveInitialDimension: ${(t3 - t2).toFixed(2)} ms`);
-    console.log(`[DimensionsDatasService] constructDimensionsTrees: ${(t4 - t3).toFixed(2)} ms`);
-    console.log(`[DimensionsDatasService] getMatrixDatas: ${(t5 - t4).toFixed(2)} ms`);
-    console.log(`[DimensionsDatasService] computeMatrixDataFreqMap: ${(t6 - t5).toFixed(2)} ms`);
-    console.log(`[DimensionsDatasService] setIsLoading: ${(t7 - t6).toFixed(2)} ms`);
-    console.log(`[DimensionsDatasService] Total recomputeDatasFromNewJson: ${(t7 - t0).toFixed(2)} ms`);
   }
 
   /**
@@ -486,6 +461,7 @@ export class DimensionsDatasService {
    *
    * @remarks
    * - Collapsed nodes are taken into account if they exist in the saved data.
+   * - Optimized for performance by reducing redundant operations and improving lookups.
    */
   constructDimensionsTrees() {
     this.dimensionsDatas.dimensionsTrees = [];
@@ -494,132 +470,171 @@ export class DimensionsDatasService {
     // At launch check if there are collapsed nodes into input json file
     const collapsedNodes = this.appService.getSavedDatas('collapsedNodes');
 
-    if (this.appService.initialDatas?.coclusteringReport) {
-      const selectedDimensionsLength =
-        this.dimensionsDatas.selectedDimensions.length;
-      for (let i = 0; i < selectedDimensionsLength; i++) {
-        let leafPosition = -1;
+    if (!this.appService.initialDatas?.coclusteringReport) {
+      return;
+    }
 
-        const dimension = this.dimensionsDatas.selectedDimensions[i];
-        const dimensionHierarchy: DimensionHierarchy | undefined =
-          this.appService.initialDatas.coclusteringReport.dimensionHierarchies.find(
-            (e) => e.name === dimension?.name,
-          );
-        if (dimensionHierarchy) {
-          this.dimensionsDatas.dimensionsTrees[i] = [];
-          this.dimensionsDatas.dimensionsClusters[i] = [];
+    const selectedDimensionsLength =
+      this.dimensionsDatas.selectedDimensions.length;
 
-          let index = 0;
+    // Create lookup maps for performance optimization
+    const initialDimensionHierarchiesMap = new Map<
+      string,
+      DimensionHierarchy
+    >();
+    const currentDimensionHierarchiesMap = new Map<
+      string,
+      DimensionHierarchy
+    >();
 
-          const currentNodesNames =
-            this.dimensionsDatas?.nodesNames?.[dimensionHierarchy?.name];
-          const currentAnnotations =
-            this.dimensionsDatas?.annotations?.[dimensionHierarchy?.name];
-          const externalDatas: ExtDatasModel =
-            this.importExtDatasService.getImportedDatasFromDimension(dimension);
+    // Pre-populate hierarchy maps
+    this.appService.initialDatas.coclusteringReport.dimensionHierarchies.forEach(
+      (hierarchy) => {
+        initialDimensionHierarchiesMap.set(hierarchy.name, hierarchy);
+      },
+    );
 
-          // First convert each child into a treenode value object
-          const clustersLength = dimensionHierarchy.clusters.length;
-          for (let j = 0; j < clustersLength; j++) {
-            if (dimensionHierarchy.clusters[j]?.isLeaf) {
-              leafPosition++;
-            }
-            const currentDimensionNodesToCollapse =
-              collapsedNodes?.[dimension!.name] || [];
+    if (this.appService.appDatas?.coclusteringReport?.dimensionHierarchies) {
+      this.appService.appDatas.coclusteringReport.dimensionHierarchies.forEach(
+        (hierarchy) => {
+          currentDimensionHierarchiesMap.set(hierarchy.name, hierarchy);
+        },
+      );
+    }
 
-            const currentValueGroups = dimension?.valueGroups?.find(
-              (e) => e.cluster === dimensionHierarchy.clusters[j]?.cluster,
-            );
-            const currentObj: TreeNodeModel = new TreeNodeModel(
-              index,
-              dimensionHierarchy.clusters[j]!,
-              dimension!,
-              currentDimensionNodesToCollapse,
-              leafPosition,
-              j,
-              currentNodesNames,
-              currentAnnotations,
-              externalDatas,
-              currentValueGroups,
-            );
-            this.dimensionsDatas.dimensionsClusters[i]!.push(currentObj);
+    for (let i = 0; i < selectedDimensionsLength; i++) {
+      const dimension = this.dimensionsDatas.selectedDimensions[i];
+      if (!dimension?.name) continue;
 
-            index++;
-          }
+      // Pre-compute common values for this dimension
+      const dimensionName = dimension.name;
+      const currentDimensionNodesToCollapse =
+        collapsedNodes?.[dimensionName] || [];
+      const currentNodesNames =
+        this.dimensionsDatas?.nodesNames?.[dimensionName];
+      const currentAnnotations =
+        this.dimensionsDatas?.annotations?.[dimensionName];
+      const externalDatas: ExtDatasModel =
+        this.importExtDatasService.getImportedDatasFromDimension(dimension);
 
-          // sort dimensionsClusters by rank to order intervals
-          this.dimensionsDatas.dimensionsClusters[i] = _.orderBy(
-            this.dimensionsDatas.dimensionsClusters[i],
-            (e) => e.rank,
-          );
+      // Create value groups lookup map for better performance
+      const valueGroupsMap = new Map<string, any>();
+      if (dimension.valueGroups) {
+        dimension.valueGroups.forEach((vg) => {
+          valueGroupsMap.set(vg.cluster, vg);
+        });
+      }
 
-          // unflat the tree and set childrens to dimensionsClusters
-          this.dimensionsDatas.dimensionsTrees[i] = UtilsService.unflatten(
-            this.dimensionsDatas.dimensionsClusters[i]!,
-          );
-        }
+      // Process initial dimension hierarchy
+      const dimensionHierarchy =
+        initialDimensionHierarchiesMap.get(dimensionName);
+      if (dimensionHierarchy) {
+        const { clusters, trees } = this.processDimensionHierarchy(
+          dimensionHierarchy,
+          dimension,
+          currentDimensionNodesToCollapse,
+          currentNodesNames,
+          currentAnnotations,
+          externalDatas,
+          valueGroupsMap,
+        );
 
-        const currentDimensionHierarchy: DimensionHierarchy | undefined =
-          this.appService.appDatas?.coclusteringReport.dimensionHierarchies.find(
-            (e) => e.name === dimension?.name,
-          );
-        if (currentDimensionHierarchy) {
-          this.dimensionsDatas.currentDimensionsTrees[i] = [];
-          this.dimensionsDatas.currentDimensionsClusters[i] = [];
+        this.dimensionsDatas.dimensionsClusters[i] = clusters;
+        this.dimensionsDatas.dimensionsTrees[i] = trees;
+      } else {
+        this.dimensionsDatas.dimensionsTrees[i] = [];
+        this.dimensionsDatas.dimensionsClusters[i] = [];
+      }
 
-          let index = 0;
+      // Process current dimension hierarchy
+      const currentDimensionHierarchy =
+        currentDimensionHierarchiesMap.get(dimensionName);
+      if (currentDimensionHierarchy) {
+        const { clusters, trees } = this.processDimensionHierarchy(
+          currentDimensionHierarchy,
+          dimension,
+          currentDimensionNodesToCollapse,
+          currentNodesNames,
+          currentAnnotations,
+          externalDatas,
+          valueGroupsMap,
+        );
 
-          const currentNodesNames =
-            this.dimensionsDatas?.nodesNames?.[currentDimensionHierarchy?.name];
-          const currentAnnotations =
-            this.dimensionsDatas?.annotations?.[
-              currentDimensionHierarchy?.name
-            ];
-          const externalDatas: ExtDatasModel =
-            this.importExtDatasService.getImportedDatasFromDimension(dimension);
-
-          // First convert each child into a treenode value object
-          const clustersLength = currentDimensionHierarchy.clusters.length;
-          for (let j = 0; j < clustersLength; j++) {
-            if (currentDimensionHierarchy.clusters[j]?.isLeaf) {
-              leafPosition++;
-            }
-            const currentDimensionNodesToCollapse =
-              (collapsedNodes && collapsedNodes[dimension!.name]) || [];
-            const currentValueGroups = dimension?.valueGroups?.find(
-              (e) => e.cluster === dimensionHierarchy?.clusters[j]?.cluster,
-            );
-            const currentObj: TreeNodeModel = new TreeNodeModel(
-              index,
-              currentDimensionHierarchy.clusters[j]!,
-              dimension!,
-              currentDimensionNodesToCollapse,
-              leafPosition,
-              j,
-              currentNodesNames,
-              currentAnnotations,
-              externalDatas,
-              currentValueGroups,
-            );
-            this.dimensionsDatas.currentDimensionsClusters[i]!.push(currentObj);
-
-            index++;
-          }
-
-          // sort dimensionsClusters by rank to order intervals
-          this.dimensionsDatas.currentDimensionsClusters[i] = _.orderBy(
-            this.dimensionsDatas.currentDimensionsClusters[i],
-            (e) => e.rank,
-          );
-
-          // unflat the tree and set childrens to currentDimensionsClusters
-          this.dimensionsDatas.currentDimensionsTrees[i] =
-            UtilsService.unflatten(
-              this.dimensionsDatas.currentDimensionsClusters[i]!,
-            );
-        }
+        this.dimensionsDatas.currentDimensionsClusters[i] = clusters;
+        this.dimensionsDatas.currentDimensionsTrees[i] = trees;
+      } else {
+        this.dimensionsDatas.currentDimensionsTrees[i] = [];
+        this.dimensionsDatas.currentDimensionsClusters[i] = [];
       }
     }
+  }
+
+  /**
+   * Processes a single dimension hierarchy to create tree nodes and clusters.
+   * This helper method extracts the common logic for processing both initial and current dimension hierarchies.
+   *
+   * @param {DimensionHierarchy} dimensionHierarchy - The dimension hierarchy to process.
+   * @param {DimensionCovisualizationModel} dimension - The dimension model.
+   * @param {any[]} currentDimensionNodesToCollapse - Array of nodes to collapse.
+   * @param {any} currentNodesNames - Current node names mapping.
+   * @param {any} currentAnnotations - Current annotations mapping.
+   * @param {ExtDatasModel} externalDatas - External data model.
+   * @param {Map<string, any>} valueGroupsMap - Lookup map for value groups.
+   * @returns {object} - Object containing clusters and trees arrays.
+   */
+  private processDimensionHierarchy(
+    dimensionHierarchy: DimensionHierarchy,
+    dimension: DimensionCovisualizationModel,
+    currentDimensionNodesToCollapse: any[],
+    currentNodesNames: any,
+    currentAnnotations: any,
+    externalDatas: ExtDatasModel,
+    valueGroupsMap: Map<string, any>,
+  ): { clusters: TreeNodeModel[]; trees: TreeNodeModel[] } {
+    const clusters: TreeNodeModel[] = [];
+    let leafPosition = -1;
+    let index = 0;
+
+    const clustersLength = dimensionHierarchy.clusters.length;
+
+    // Pre-allocate array for better performance
+    clusters.length = clustersLength;
+
+    for (let j = 0; j < clustersLength; j++) {
+      const cluster = dimensionHierarchy.clusters[j];
+      if (!cluster) continue;
+
+      if (cluster.isLeaf) {
+        leafPosition++;
+      }
+
+      const currentValueGroups = valueGroupsMap.get(cluster.cluster);
+
+      const treeNode = new TreeNodeModel(
+        index,
+        cluster,
+        dimension,
+        currentDimensionNodesToCollapse,
+        leafPosition,
+        j,
+        currentNodesNames,
+        currentAnnotations,
+        externalDatas,
+        currentValueGroups,
+      );
+
+      clusters[index] = treeNode;
+      index++;
+    }
+
+    // Remove any undefined elements and sort by rank
+    const validClusters = clusters.filter(Boolean);
+    const sortedClusters = _.orderBy(validClusters, (e) => e.rank);
+
+    // Unflatten the tree
+    const trees = UtilsService.unflatten(sortedClusters);
+
+    return { clusters: sortedClusters, trees };
   }
 
   /**
