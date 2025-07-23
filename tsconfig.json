@@ -31,7 +31,6 @@
     "types": ["jasmine", "node"],
     "paths": {
       "@khiops-library/*": ["./src/app/khiops-library/*"],
-      "@khiops-treeview/*": ["./libs/khiops-treeview/*"],
       "@khiops-hypertree/*": ["./libs/khiops-hypertree/dist/*"],
       "@khiops-visualization/*": ["./src/app/khiops-visualization/*"],
       "@khiops-covisualization/*": ["./src/app/khiops-covisualization/*"],

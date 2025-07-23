@@ -37,7 +37,6 @@
               "pan-zoom",
               "clone-deep",
               "@khiops-hypertree/js/d3-hypertree",
-              "@khiops-treeview/treeview",
               "typed-function",
               "seedrandom",
               "javascript-natural-sort",
@@ -57,7 +56,7 @@
               "./libs/khiops-hypertree/dist/d3-hypertree-light.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": ["libs/khiops-treeview/treeview.js"]
           },
           "configurations": {
             "production": {
@@ -199,7 +198,6 @@
               "pan-zoom",
               "clone-deep",
               "@khiops-hypertree/js/d3-hypertree",
-              "@khiops-treeview",
               "typed-function",
               "seedrandom",
               "javascript-natural-sort",

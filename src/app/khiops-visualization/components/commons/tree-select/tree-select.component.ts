@@ -14,7 +14,6 @@ import {
   AfterViewInit,
   Input,
 } from '@angular/core';
-import TreeView from '@khiops-treeview/treeview';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 
@@ -33,12 +32,13 @@ import {
   selectedNodeSelector,
 } from '@khiops-visualization/selectors/tree-preparation.selector';
 import { TreePreparationState } from '@khiops-visualization/model/tree-preparation-datas.model';
+import TreeView from '../../../../khiops-library/wrappers/treeview';
 
 @Component({
-    selector: 'app-tree-select',
-    templateUrl: './tree-select.component.html',
-    styleUrls: ['./tree-select.component.scss'],
-    standalone: false
+  selector: 'app-tree-select',
+  templateUrl: './tree-select.component.html',
+  styleUrls: ['./tree-select.component.scss'],
+  standalone: false,
 })
 export class TreeSelectComponent
   extends SelectableComponent
@@ -95,7 +95,6 @@ export class TreeSelectComponent
 
   private initTree() {
     if (this.dimensionTree?.[0]) {
-      // @ts-ignore
       this.tree = new TreeView(
         this.dimensionTree,
         this.configService.getRootElementDom(),
