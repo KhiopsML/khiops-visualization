@@ -3,6 +3,7 @@
  * This software is distributed under the BSD 3-Clause-clear License, the text of which is available
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
+// @ts-nocheck
 
 import { UtilsService } from '../../app/khiops-library/providers/utils.service';
 
@@ -121,7 +122,6 @@ describe('UtilsService', () => {
 
       const result = UtilsService.flatten(input);
 
-      // @ts-ignore
       expect(result).toEqual(expectedOutput);
     });
 
@@ -136,7 +136,6 @@ describe('UtilsService', () => {
 
       const result = UtilsService.flatten(input);
 
-      // @ts-ignore
       expect(result).toEqual(expectedOutput);
     });
     it('should flatten a multi-dimensional array with integers and decimals', () => {
@@ -148,7 +147,6 @@ describe('UtilsService', () => {
 
       const result = UtilsService.flatten(input);
 
-      // @ts-ignore
       expect(result).toEqual(expectedOutput);
     });
     it('should flatten a multi-dimensional array with 10 arrays containing 2 to 10 values each', () => {
@@ -173,7 +171,6 @@ describe('UtilsService', () => {
 
       const result = UtilsService.flatten(input);
 
-      // @ts-ignore
       expect(result).toEqual(expectedOutput);
     });
   });
@@ -380,14 +377,14 @@ describe('UtilsService', () => {
   it('getColumnsTotals', () => {
     const array = [4568, 2256, 1312, 280];
     const result = UtilsService.getColumnsTotals(2, 2, array);
-    // @ts-ignore
+
     expect(result).toEqual([6824, 1592]);
   });
 
   it('getLinesTotals', () => {
     const array = [4568, 2256, 1312, 280];
     const result = UtilsService.getLinesTotals(2, 2, array);
-    // @ts-ignore
+
     expect(result).toEqual([5880, 2536]);
   });
 
@@ -404,13 +401,12 @@ describe('UtilsService', () => {
       [1000, 0],
     ];
     const result = UtilsService.getMultiDimColumnsTotals(3, 3, array);
-    // @ts-ignore
+
     expect(result).toEqual([
-      // @ts-ignore
       [3500, 3000],
-      // @ts-ignore
+
       [3000, 4000],
-      // @ts-ignore
+
       [2500, 2000],
     ]);
   });
@@ -428,13 +424,12 @@ describe('UtilsService', () => {
       [1000, 0],
     ];
     const result = UtilsService.getMultiDimLinesTotals(3, 3, array);
-    // @ts-ignore
+
     expect(result).toEqual([
-      // @ts-ignore
       [3500, 2000],
-      // @ts-ignore
+
       [3000, 4000],
-      // @ts-ignore
+
       [2500, 3000],
     ]);
   });
@@ -557,7 +552,7 @@ describe('UtilsService', () => {
       [4, 5],
     ];
     const result = UtilsService.flatten(nestedArray);
-    // @ts-ignore
+
     expect(result).toEqual([1, 2, 3, 4, 5]);
   });
 
@@ -584,7 +579,7 @@ describe('UtilsService', () => {
   it('fastFilter', () => {
     const array = [1, 2, 3, 4, 5];
     const result = UtilsService.fastFilter(array, (x: number) => x > 3);
-    // @ts-ignore
+
     expect(result).toEqual([4, 5]);
   });
 
@@ -674,7 +669,7 @@ describe('UtilsService', () => {
   it('chunkArray', () => {
     const array = [1, 2, 3, 4, 5];
     const result = UtilsService.chunkArray(array, 2);
-    // @ts-ignore
+
     expect(result).toEqual([[1, 2], [3, 4], [5]]);
   });
 
@@ -685,7 +680,7 @@ describe('UtilsService', () => {
       [7, 8, 9],
     ];
     const result = UtilsService.mergeMultiDimArrayValuesByIndex(array);
-    // @ts-ignore
+
     expect(result).toEqual([12, 15, 18]);
   });
 
@@ -696,7 +691,7 @@ describe('UtilsService', () => {
       [7, 8, 9],
     ];
     const result = UtilsService.getMultiDimArrayValuesByIndex(array, 1);
-    // @ts-ignore
+
     expect(result).toEqual([2, 5, 8]);
   });
 
@@ -742,7 +737,7 @@ describe('UtilsService', () => {
   it('getAllIndexes', () => {
     const array = [1, 2, 3, 1, 2, 3];
     const result = UtilsService.getAllIndexes(array, 2);
-    // @ts-ignore
+
     expect(result).toEqual([1, 4]);
   });
 
@@ -775,7 +770,7 @@ describe('UtilsService', () => {
       [2, 4],
     ];
     const result = UtilsService.findIncludedIntervals(intervals);
-    // @ts-ignore
+
     expect(result).toEqual([1]);
   });
 

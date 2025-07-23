@@ -129,7 +129,8 @@ export class ChartManagerService {
       () => {
         if (inputDatas && this.chart) {
           // Update datas
-          // @ts-ignore force khiops VO into Chart dataset
+          // Force khiops VO into Chart dataset
+          // @ts-ignore
           this.chart.data.datasets = inputDatas.datasets;
           this.chart.data.labels = inputDatas.labels;
 
@@ -157,7 +158,13 @@ export class ChartManagerService {
     colorSet?: ChartColorsSetI,
     selectedLineChartItem?: string,
   ): void {
-    this.selectCurrentBarIndex(undefined, true, inputDatas, colorSet, selectedLineChartItem);
+    this.selectCurrentBarIndex(
+      undefined,
+      true,
+      inputDatas,
+      colorSet,
+      selectedLineChartItem,
+    );
     this.chart?.update();
   }
 
@@ -174,7 +181,13 @@ export class ChartManagerService {
     colorSet?: ChartColorsSetI,
     selectedLineChartItem?: string,
   ): void {
-    this.selectCurrentBarIndex(activeEntries, true, inputDatas, colorSet, selectedLineChartItem);
+    this.selectCurrentBarIndex(
+      activeEntries,
+      true,
+      inputDatas,
+      colorSet,
+      selectedLineChartItem,
+    );
     this.chart?.update();
   }
 
@@ -187,7 +200,7 @@ export class ChartManagerService {
    * @param selectedLineChartItem - The selected line chart item
    */
   selectCurrentBarIndex(
-    index: number | undefined, 
+    index: number | undefined,
     enableSelection: boolean,
     inputDatas?: ChartDatasModel,
     colorSet?: ChartColorsSetI,

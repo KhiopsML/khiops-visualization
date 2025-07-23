@@ -1,6 +1,10 @@
-// cypress/support/commands.js
+/*
+ * Copyright (c) 2023-2025 Orange. All rights reserved.
+ * This software is distributed under the BSD 3-Clause-clear License, the text of which is available
+ * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
+ */
+// @ts-nocheck
 
-//@ts-ignore
 Cypress.Commands.add('loadFile', (ctx: string, file: string) => {
   // Load the visualization or covisualization page
   cy.visit('/' + ctx + '/');
@@ -13,7 +17,6 @@ Cypress.Commands.add('loadFile', (ctx: string, file: string) => {
   cy.get('#open-file-button').first().click({ force: true });
 });
 
-//@ts-ignore
 Cypress.Commands.add('initViews', () => {
   const viewsLayout: any = {
     isDimensionsChecked: true,

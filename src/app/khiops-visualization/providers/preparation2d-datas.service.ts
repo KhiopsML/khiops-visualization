@@ -173,7 +173,10 @@ export class Preparation2dDatasService {
    */
   computeDistributionIndexFromMatrixCellIndex(index: number): number {
     // get distribution bar chart index from selected matrix cell index
-    if (this.preparation2dDatas?.matrixDatas && this.preparation2dDatas?.selectedVariable?.parts) {
+    if (
+      this.preparation2dDatas?.matrixDatas &&
+      this.preparation2dDatas?.selectedVariable?.parts
+    ) {
       let moduloOfCellIndex = 0;
       moduloOfCellIndex =
         ((index / this.preparation2dDatas.selectedVariable.parts) % 1) *
@@ -631,7 +634,11 @@ export class Preparation2dDatasService {
     if (variablesDetails) {
       const variableDatas: VariableDetailsModel = _.cloneDeep(variablesDetails);
 
-      if (variableDatas?.dataGrid && variableDatas.dataGrid.dimensions[0] && variableDatas.dataGrid.dimensions[1]) {
+      if (
+        variableDatas?.dataGrid &&
+        variableDatas.dataGrid.dimensions[0] &&
+        variableDatas.dataGrid.dimensions[1]
+      ) {
         const xDimension = new DimensionVisualizationModel(
           variableDatas.dataGrid.dimensions[0],
         );
@@ -857,7 +864,8 @@ export class Preparation2dDatasService {
               0,
             );
           if (matrixValues) {
-            currentRes[MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL] = matrixValues;
+            currentRes[MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL] =
+              matrixValues;
           }
 
           graphMode = {

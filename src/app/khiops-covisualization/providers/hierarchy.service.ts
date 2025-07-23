@@ -71,7 +71,6 @@ export class HierarchyService {
       const dim = this.dimensionsDatasService.dimensionsDatas.dimensions[i];
       // Remove dimension if unchecked
       if (dim?.hierarchyFold === false) {
-        // @ts-ignore
         delete collapsedNodes[dim.name];
       }
     }

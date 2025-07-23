@@ -471,11 +471,17 @@ export class ClustersService {
               const elementIndex: number =
                 treeNode.childrenLeafIndexes[index] || 0;
               if (selectedDimension.isCategorical) {
-                size +=
-                  // @ts-ignore
-                  this.appService.initialDatas.coclusteringReport
-                    .dimensionPartitions[selectedDimension.startPosition]
-                    .valueGroups[elementIndex].values.length;
+                const coclusteringReport =
+                  this.appService.initialDatas?.coclusteringReport;
+                const dimensionPartitions =
+                  coclusteringReport?.dimensionPartitions?.[
+                    selectedDimension.startPosition
+                  ];
+                const valueGroups =
+                  dimensionPartitions?.valueGroups?.[elementIndex];
+                if (valueGroups?.values) {
+                  size += valueGroups.values.length;
+                }
               }
             }
             clusterDetails.size = size;

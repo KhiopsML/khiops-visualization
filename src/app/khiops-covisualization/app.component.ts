@@ -74,7 +74,6 @@ export class AppComponent implements AfterViewInit {
     this.element.nativeElement.setDatas = (datas: CovisualizationDatas) => {
       // Set data into ngzone to detect change into another context (electron for instance)
       this.ngzone.run(() => {
-        // @ts-ignore
         this.appdatas = {
           ...datas,
         };
