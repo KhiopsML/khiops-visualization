@@ -116,30 +116,34 @@ export class HierarchySelectComponent implements OnChanges, AfterViewInit {
     dimension: DimensionCovisualizationModel,
     newPosition: number,
   ) {
-    const isBigJsonFile = this.appService.isBigJsonFile();
-    if (isBigJsonFile) {
-      this.snackBar.open(
-        this.translate.get('GLOBAL.BIG_FILES_LOADING_WARNING'),
-        undefined,
-        {
-          duration: 2000,
-          panelClass: 'success',
-        },
-      );
-    }
+    this.dimensionsDatasService.setIsLoading(true);
+    setTimeout(() => {
+      const isBigJsonFile = this.appService.isBigJsonFile();
+      if (isBigJsonFile) {
+        this.snackBar.open(
+          this.translate.get('GLOBAL.BIG_FILES_LOADING_WARNING'),
+          undefined,
+          {
+            duration: 2000,
+            panelClass: 'success',
+          },
+        );
+      }
 
-    this.layoutService.switchSplitSizes(this.position, newPosition);
-    // Reverse selected nodes on selection changed
-    this.treenodesService.updateSelectedNodes(dimension, this.position);
-    // Reverse dimensions datas on selection changed
-    this.dimensionsDatasService.updateSelectedDimension(
-      dimension,
-      this.position,
-    );
-    // Recompute datas
-    this.dimensionsDatasService.saveInitialDimension();
-    this.dimensionsDatasService.constructDimensionsTrees();
-    this.dimensionsDatasService.getMatrixDatas();
-    this.dimensionsDatasService.computeMatrixDataFreqMap();
+      this.layoutService.switchSplitSizes(this.position, newPosition);
+      // Reverse selected nodes on selection changed
+      this.treenodesService.updateSelectedNodes(dimension, this.position);
+      // Reverse dimensions datas on selection changed
+      this.dimensionsDatasService.updateSelectedDimension(
+        dimension,
+        this.position,
+      );
+      // Recompute datas
+      this.dimensionsDatasService.saveInitialDimension();
+      this.dimensionsDatasService.constructDimensionsTrees();
+      this.dimensionsDatasService.getMatrixDatas();
+      this.dimensionsDatasService.computeMatrixDataFreqMap();
+      this.dimensionsDatasService.setIsLoading(false);
+    });
   }
 }
