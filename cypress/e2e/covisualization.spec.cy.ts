@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2023-2025 Orange. All rights reserved.
+ * This software is distributed under the BSD 3-Clause-clear License, the text of which is available
+ * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
+ */
+// @ts-nocheck
+
 import { setupAxisTests } from 'cypress/setups/axis-tests';
 import '../support/commands';
 import '../utils/utils';
@@ -42,10 +49,8 @@ describe('Test Khiops Covisualization sample files', () => {
 
   files.forEach((fileName) => {
     it(`Check values for ${fileName}`, () => {
-      //@ts-ignore
       cy.initViews();
 
-      //@ts-ignore
       cy.loadFile('covisualization', fileName);
 
       cy.readFile('./src/assets/mocks/kc/' + fileName).then((datas) => {

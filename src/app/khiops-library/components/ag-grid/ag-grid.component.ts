@@ -437,13 +437,12 @@ export class AgGridComponent
               // Get the page of selected node
               if (this.gridOptions.api) {
                 let pageToSelect =
-                  // @ts-ignore
-                  node.rowIndex / this.gridOptions.api.paginationGetPageSize();
+                  (node.rowIndex ?? 0) /
+                  this.gridOptions.api.paginationGetPageSize();
                 pageToSelect = Math.floor(pageToSelect);
                 this.gridOptions.api.paginationGoToPage(pageToSelect);
               }
-              // @ts-ignore
-              this.agGrid.api.ensureIndexVisible(node.rowIndex);
+              this.agGrid?.api.ensureIndexVisible(node.rowIndex ?? 0);
             }
           }
         });

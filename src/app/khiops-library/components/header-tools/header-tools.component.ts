@@ -18,10 +18,10 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 
 @Component({
-    selector: 'kl-header-tools',
-    templateUrl: './header-tools.component.html',
-    styleUrls: ['./header-tools.component.scss'],
-    standalone: false
+  selector: 'kl-header-tools',
+  templateUrl: './header-tools.component.html',
+  styleUrls: ['./header-tools.component.scss'],
+  standalone: false,
 })
 export class HeaderToolsComponent {
   @Input() public showMenu = true;

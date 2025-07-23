@@ -182,8 +182,11 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
       this.trackerService.trackEvent('page_view', 'axis');
       this.openContextView = false;
     }
-    // @ts-ignore
-    return MatTabGroup.prototype._handleClick.apply(this.tabsMenu, arguments);
+    return MatTabGroup.prototype._handleClick.apply(this.tabsMenu, [
+      _tab,
+      _tabHeader,
+      index,
+    ]);
   }
 
   onSelectedTabChanged(e: MatTabChangeEvent) {

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2023-2025 Orange. All rights reserved.
+ * This software is distributed under the BSD 3-Clause-clear License, the text of which is available
+ * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
+ */
+// @ts-nocheck
+
 import '../support/commands';
 import '../utils/utils';
 
@@ -5,10 +12,8 @@ describe('Behaviors tests for Khiops Covisualization', () => {
   let files = ['DigitCoclustering.json'];
   files.forEach((fileName) => {
     it(`Test unfold hierarchy slider on big datas and hierarchy checkboxes`, () => {
-      //@ts-ignore
       cy.initViews();
 
-      //@ts-ignore
       cy.loadFile('covisualization', fileName);
 
       // Open unfold Hierarchy view
@@ -50,9 +55,8 @@ describe('Behaviors tests for Khiops Covisualization', () => {
     });
 
     it(`Test unfold hierarchy slider on big datas`, () => {
-      //@ts-ignore
       cy.initViews();
-      //@ts-ignore
+
       cy.loadFile('covisualization', fileName);
 
       // Open unfold Hierarchy view
@@ -98,9 +102,8 @@ describe('Behaviors tests for Khiops Covisualization', () => {
   files = ['DigitCoclustering.json'];
   files.forEach((fileName) => {
     it(`Test unfold hierarchy on big datas`, () => {
-      //@ts-ignore
       cy.initViews();
-      //@ts-ignore
+
       cy.loadFile('covisualization', fileName);
 
       cy.wait(500);
@@ -158,10 +161,8 @@ describe('Behaviors tests for Khiops Covisualization', () => {
   files = ['CC_3_Coclustering.json'];
   files.forEach((fileName) => {
     it(`Test dimension change`, () => {
-      //@ts-ignore
       cy.initViews();
 
-      //@ts-ignore
       cy.loadFile('covisualization', fileName);
 
       // Check dimension
@@ -188,10 +189,8 @@ describe('Behaviors tests for Khiops Covisualization', () => {
   files = ['CC_3_Coclustering.json'];
   files.forEach((fileName) => {
     it(`Test behaviors clicks`, () => {
-      //@ts-ignore
       cy.initViews();
 
-      //@ts-ignore
       cy.loadFile('covisualization', fileName);
 
       // ### Collapse and select a node

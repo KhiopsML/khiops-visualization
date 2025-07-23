@@ -249,7 +249,6 @@ export class CompositionService {
     for (const composition of compositionValues) {
       // set the rank of all childs to the rank of the parent #206
       composition.rank = node.rank;
-      // @ts-ignore
       composition.type = composition.innerVariableType;
       composition.cluster = node.cluster;
       // now sort the composition valueGroups.valueFrequencies and valueGroups.values in the same order

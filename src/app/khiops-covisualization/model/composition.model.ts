@@ -29,6 +29,7 @@ export class CompositionModel {
   externalData: string | undefined;
   innerVariableType?: string;
   valueGroups?: ValueGroup | undefined;
+  type?: string;
 
   constructor(
     object: ValueGroup,
