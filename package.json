@@ -41,6 +41,7 @@
     "start:webcomponent": "ng serve khiops-webcomponent",
     "test": "ng test --watch=false",
     "test:watch": "ng test --watch=true",
+    "test:coverage": "ng test --code-coverage",
     "watch": "ng build --watch --configuration development",
     "e2e": "ng e2e",
     "cypress:open": "cypress open",
