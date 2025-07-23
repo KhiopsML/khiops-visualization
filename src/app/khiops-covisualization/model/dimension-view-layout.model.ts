@@ -16,9 +16,6 @@ export class DimensionViewLayoutModel {
 
   constructor(name: string, isContextView: boolean) {
     this.name = name || '';
-
-    if (isContextView) {
-      this.isDistributionChecked = false;
-    }
+    this.isDistributionChecked = !isContextView;
   }
 }

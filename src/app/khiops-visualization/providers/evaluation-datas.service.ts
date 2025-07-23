@@ -20,7 +20,6 @@ import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { TargetLiftValuesI } from '@khiops-visualization/interfaces/target-lift-values';
 import { LiftCurveValuesI } from '@khiops-visualization/interfaces/lift-curve-values';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
-import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { LiftCurveSerieI } from '../interfaces/lift-curve-serie';
 import { CHART_TYPES } from '@khiops-library/enum/chart-types';
@@ -57,35 +56,11 @@ export class EvaluationDatasService {
   }
 
   /**
-   * Sets the displayed values for the lift graph.
-   * @param object - The chart toggle values to set.
-   */
-  setLiftGraphDisplayedValues(object: ChartToggleValuesI[]) {
-    this.evaluationDatas.liftGraphDisplayedValues = object;
-  }
-
-  /**
-   * Retrieves the displayed values for the lift graph.
-   * @returns The chart toggle values.
-   */
-  getLiftGraphDisplayedValues(): ChartToggleValuesI[] | undefined {
-    return this.evaluationDatas.liftGraphDisplayedValues;
-  }
-
-  /**
    * Sets the selected evaluation type variable.
    * @param object - The evaluation type model to set.
    */
   setSelectedEvaluationTypeVariable(object: EvaluationTypeModel | undefined) {
     this.evaluationDatas.selectedEvaluationTypeVariable = object;
-  }
-
-  /**
-   * Retrieves the selected evaluation type variable.
-   * @returns The selected evaluation type model.
-   */
-  getSelectedEvaluationTypeVariable(): EvaluationTypeModel | undefined {
-    return this.evaluationDatas.selectedEvaluationTypeVariable;
   }
 
   /**
@@ -152,9 +127,7 @@ export class EvaluationDatasService {
    * @returns The confusion matrix as a GridDatasI object.
    */
   getConfusionMatrix(type?: string): GridDatasI | undefined {
-    if (type) {
-      this.evaluationDatas.confusionMatrixType = type;
-    }
+    this.evaluationDatas.confusionMatrixType = type ?? '';
 
     if (this.evaluationDatas.selectedPredictorEvaluationVariable) {
       const datas: DynamicI[] = [];
