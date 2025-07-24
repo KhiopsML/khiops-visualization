@@ -78,7 +78,7 @@ export class FileLoaderService {
     // let urlKV = './assets/mocks/kv/new-hyper-tree.json';
     // let urlKV = './assets/mocks/kv/NGrams10_AnalysisResults.json';
     // let urlKV = './assets/mocks/kv/NGrams100_AnalysisResults.json';
-    let urlKV = './assets/mocks/kv/000_000_10000words_AllReports.json';
+    // let urlKV = './assets/mocks/kv/000_000_10000words_AllReports.json';
     // let urlKV = './assets/mocks/kv/Regression_AllReports_All.json';
     // let urlKV = './assets/mocks/kv/Regression_AllReports_PreparationOnly.json';
     // let urlKV = './assets/mocks/kv/missing-zero.json';
@@ -99,6 +99,8 @@ export class FileLoaderService {
     // let urlKV = './assets/mocks/kv/reg.json';
     // let urlKV = './assets/mocks/kv/copydatas.json';
     // let urlKV = './assets/mocks/kv/iris2d.json';
+    let urlKV = './assets/mocks/kv/BugAnalysisResults.khj';
+    // let urlKV = './assets/mocks/kv/BugAnalysisResults_NewBounds.khj';
     // let urlKV = './assets/mocks/kv/AnalysisRegressionQ99.json';
     // let urlKV = './assets/mocks/kv/AnalysisResults.json';
     // let urlKV = './assets/mocks/kv/test_report.json';

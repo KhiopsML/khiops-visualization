@@ -304,5 +304,29 @@ describe('Visualization', () => {
       const expectedRes = require('../mocks/visualization/histogram-datas/ylogAdultAllReports-histogram-xlin-r3.json');
       expect(JSON.stringify(res)).toEqual(JSON.stringify(expectedRes));
     });
+
+    // Test cases for adaptive delta functionality
+    it('should handle very small delta values with large scale data', () => {
+      const fileDatas = require('../../assets/mocks/kv/BugAnalysisResults.json');
+      // Simulate data with large values but very small differences
+
+      const histogramDatas = getHistogramGraphDatas(fileDatas, 2);
+
+      // Verify that density values are finite and reasonable
+      expect(histogramDatas?.[0]?.density).toEqual(2.7184335044762804);
+      expect(histogramDatas?.[0]?.logValue).toEqual(0.4343187142028318);
+    });
+
+    // Test cases for adaptive delta functionality
+    it('should handle very small delta values with normal scale data', () => {
+      const fileDatas = require('../../assets/mocks/kv/BugAnalysisResults_NewBounds.json');
+      // Simulate data with large values but very small differences
+
+      const histogramDatas = getHistogramGraphDatas(fileDatas, 2);
+
+      // Verify that density values are finite and reasonable
+      expect(histogramDatas?.[0]?.density).toEqual(0.0000027184335044764845);
+      expect(histogramDatas?.[0]?.logValue).toEqual(-5.565681285797136);
+    });
   });
 });

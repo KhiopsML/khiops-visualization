@@ -732,6 +732,39 @@ export class DistributionDatasService {
   }
 
   /**
+   * Calculates an adaptive minimum delta based on the partition bounds scale.
+   * This prevents issues with very small deltas that can cause chart rendering problems.
+   *
+   * @param partition - The partition bounds [start, end]
+   * @returns Adaptive minimum delta value
+   */
+  private calculateAdaptiveMinDelta(partition: number[]): number {
+    const start = partition[0] || 0;
+    const end = partition[1] || 0;
+
+    // Calculate the order of magnitude of the values
+    const maxValue = Math.max(Math.abs(start), Math.abs(end));
+
+    if (maxValue === 0) {
+      return 0.001; // Default fallback for zero values
+    }
+
+    // Calculate relative epsilon based on the scale of the data
+    // Use machine epsilon scaled by the magnitude of the data
+    const orderOfMagnitude = Math.floor(Math.log10(maxValue));
+    const relativeEpsilon = Math.pow(10, orderOfMagnitude - 6); // 6 decimal places of precision
+
+    // Ensure minimum delta is at least 1/1000th of the larger value or relative epsilon
+    const adaptiveMinDelta = Math.max(
+      maxValue / 1000,
+      relativeEpsilon,
+      Number.EPSILON * 1000, // Absolute minimum to prevent numerical issues
+    );
+
+    return adaptiveMinDelta;
+  }
+
+  /**
    * Creates a histogram value object with calculated density, probability, and log value.
    *
    * @param frequency - The frequency value for this partition
@@ -744,17 +777,20 @@ export class DistributionDatasService {
     partition: number[],
     totalFreq: number,
   ): HistogramValuesI {
-    let delta = (partition[1] || 0) - (partition[0] || 0);
-    if (delta < 0.001) {
-      // Important to limit delta to avoid positive log values
-      // Otherwise chart is out of bounds
-      delta = 1;
+    let delta = Math.abs((partition[1] || 0) - (partition[0] || 0));
+
+    // Calculate an adaptive minimum delta based on the data scale
+    const minDelta = this.calculateAdaptiveMinDelta(partition);
+
+    if (delta < minDelta) {
+      // Use adaptive delta to maintain proportional scaling across different data ranges
+      delta = minDelta;
     }
 
     const density = totalFreq ? frequency / (totalFreq * delta) : 0;
     const probability = totalFreq ? frequency / totalFreq : 0;
     let logValue = Math.log10(density);
-    if (logValue === -Infinity) {
+    if (logValue === -Infinity || !isFinite(logValue)) {
       logValue = 0;
     }
 
