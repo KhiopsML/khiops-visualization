@@ -96,6 +96,22 @@ export class HistogramRendererService {
 
   /**
    * Draws a rectangle (histogram bar) on the specified canvas context
+   * @param ctx - Canvas rendering context
+   * @param d - Histogram data values containing density, frequency, etc.
+   * @param i - Index of the current bar
+   * @param bar - Histogram bar model with positioning data
+   * @param w - Canvas width
+   * @param h - Canvas height
+   * @param xPadding - Horizontal padding
+   * @param yPadding - Vertical padding
+   * @param graphOptionsX - X-axis display options (linear/logarithmic)
+   * @param graphOptionsY - Y-axis display options (linear/logarithmic)
+   * @param rangeYLog - Y-axis logarithmic range data
+   * @param ratioY - Y-axis scaling ratio
+   * @param ratio - Overall scaling ratio
+   * @param minBarHeight - Minimum height for bars to ensure visibility
+   * @param defaultBarColor - Default color for bars
+   * @param selectedItem - Index of selected item for highlighting
    */
   public drawRect(
     ctx: CanvasRenderingContext2D,
@@ -131,6 +147,11 @@ export class HistogramRendererService {
     // Calculate bar height
     if (graphOptionsY?.selected === HistogramType.YLIN) {
       barH = d.density * ratioY;
+      // Prevent bar height from exceeding canvas height to handle very large density values
+      const maxBarHeight = h - yPadding / 2;
+      if (barH > maxBarHeight) {
+        barH = maxBarHeight;
+      }
     } else {
       if (d.logValue !== 0) {
         let shift = Math.abs(rangeYLog?.max || 0);
@@ -175,7 +196,20 @@ export class HistogramRendererService {
   }
 
   /**
-   * Renders the complete histogram
+   * Renders the complete histogram by drawing all bars on the canvas
+   * @param datasSet - Array of histogram data values
+   * @param ctx - Canvas rendering context (optional)
+   * @param w - Canvas width
+   * @param h - Canvas height
+   * @param xPadding - Horizontal padding
+   * @param yPadding - Vertical padding
+   * @param graphOptionsX - X-axis display options (linear/logarithmic)
+   * @param graphOptionsY - Y-axis display options (linear/logarithmic)
+   * @param rangeYLog - Y-axis logarithmic range data
+   * @param ratioY - Y-axis scaling ratio
+   * @param minBarHeight - Minimum height for bars to ensure visibility
+   * @param defaultBarColor - Default color for bars
+   * @returns Object containing computed bars array and ratio value
    */
   public drawHistogram(
     datasSet: HistogramValuesI[],
@@ -239,6 +273,15 @@ export class HistogramRendererService {
 
   /**
    * Draws the X axis with proper scaling and ticks
+   * @param svg - D3 SVG selection for the chart
+   * @param domain - Domain values for the axis scale
+   * @param shift - Horizontal shift offset for positioning
+   * @param width - Width of the axis
+   * @param h - Canvas height
+   * @param xPadding - Horizontal padding
+   * @param yPadding - Vertical padding
+   * @param xTickCount - Number of ticks to display on the axis
+   * @param graphOptionsX - X-axis display options (linear/logarithmic)
    */
   public drawXAxis(
     svg: any,
@@ -294,6 +337,15 @@ export class HistogramRendererService {
 
   /**
    * Draws the Y axis with proper scaling and ticks
+   * @param svg - D3 SVG selection for the chart
+   * @param h - Canvas height
+   * @param w - Canvas width
+   * @param xPadding - Horizontal padding
+   * @param yPadding - Vertical padding
+   * @param yTicksCount - Number of ticks to display on the Y axis
+   * @param graphOptionsY - Y-axis display options (linear/logarithmic)
+   * @param rangeYLin - Linear range for Y axis
+   * @param rangeYLog - Logarithmic range for Y axis
    */
   public drawYAxis(
     svg: any,
