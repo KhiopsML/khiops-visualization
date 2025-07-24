@@ -44,21 +44,13 @@ describe('Debug Density Calculation', () => {
     ];
 
     const rangeYLin = histogramService.getLinRangeY(testData);
-    console.log('Range Y Lin (max density):', rangeYLin);
 
     const canvasHeight = 400;
     const yPadding = 50;
     const ratioY = histogramService.getLinRatioY(canvasHeight, yPadding);
-    console.log('Ratio Y:', ratioY);
 
     testData.forEach((data, index) => {
       const calculatedHeight = data.density * ratioY;
-      console.log(`Data ${index}:`, {
-        density: data.density,
-        calculatedHeight: calculatedHeight,
-        maxAllowedHeight: canvasHeight - yPadding / 2,
-        wouldExceed: calculatedHeight > canvasHeight - yPadding / 2
-      });
     });
 
     // Vérifier que les calculs sont corrects
