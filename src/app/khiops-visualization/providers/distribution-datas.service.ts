@@ -669,7 +669,12 @@ export class DistributionDatasService {
           (partition: number[], i: number) => {
             // partition is always numbers in this case
             if (partition.length !== 0) {
-              const delta = (partition[1] || 0) - (partition[0] || 0);
+              let delta = (partition[1] || 0) - (partition[0] || 0);
+              if (delta < 0.001) {
+                // Important to limit delta to avoid positive log values
+                // Otherwise chart is out of bounds
+                delta = 1;
+              }
               const frequency = varDatas.dataGrid.frequencies?.[i] || 0;
               const density = totalFreq ? frequency / (totalFreq * delta) : 0;
               const probability = totalFreq ? frequency / totalFreq : 0;
