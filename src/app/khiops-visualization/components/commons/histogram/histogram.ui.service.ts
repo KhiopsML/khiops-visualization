@@ -16,14 +16,31 @@ import { AppService } from '@khiops-visualization/providers/app.service';
 export class HistogramUIService {
   static readonly chartColors: string[] = HISTOGRAM_COLORS;
 
+  /**
+   * Gets a color from the chart color palette by index
+   * @param i - Index of the color to retrieve
+   * @returns Color string from the chart colors array
+   */
   static getColor(i: number): string {
     return this.chartColors[i] || '';
   }
 
+  /**
+   * Gets the complete chart color palette
+   * @returns Array of color strings used for chart styling
+   */
   static getColors(): string[] {
     return this.chartColors;
   }
 
+  /**
+   * Determines which histogram bar is at the current mouse position
+   * @param datas - Array of histogram data values
+   * @param yPadding - Vertical padding for the chart
+   * @param canvasPosition - DOM rectangle of the canvas element
+   * @param event - Mouse event containing cursor coordinates
+   * @returns Index of the bar at the mouse position, or undefined if none
+   */
   // @ts-ignore
   static getCurrentBarPosition(
     datas: HistogramValuesI[],
@@ -56,6 +73,12 @@ export class HistogramUIService {
     return undefined;
   }
 
+  /**
+   * Generates tooltip text for a histogram bar
+   * @param d - Histogram data values for the bar
+   * @param isFirstInterval - Whether this is the first interval in the histogram
+   * @returns Formatted HTML string for the tooltip
+   */
   static generateTooltip(
     d: HistogramValuesI,
     isFirstInterval: boolean,
@@ -87,6 +110,13 @@ export class HistogramUIService {
     );
   }
 
+  /**
+   * Initializes a canvas context with the specified dimensions
+   * @param canvas - HTMLCanvasElement to initialize
+   * @param w - Width to set for the canvas
+   * @param h - Height to set for the canvas
+   * @returns 2D rendering context or null if initialization failed
+   */
   static initCanvasContext(canvas: HTMLCanvasElement, w: number, h: number) {
     const ctx = canvas.getContext('2d');
     if (ctx) {
@@ -98,7 +128,9 @@ export class HistogramUIService {
   }
 
   /**
-   * Before draw canvas, clean dom
+   * Clears the canvas before drawing new content
+   * @param ctx - Canvas rendering context to clear
+   * @param canvas - HTMLCanvasElement to clear
    */
   static cleanDomContext(
     ctx: CanvasRenderingContext2D | null,
