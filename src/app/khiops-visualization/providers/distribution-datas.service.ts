@@ -597,6 +597,7 @@ export class DistributionDatasService {
    * each partition of the variable's data grid.
    *
    * @param selectedVariable - The variable for which histogram data is to be generated. It should have a `rank` property.
+   * @param interpretableHistogramNumber - Optional histogram index to use for modlHistograms
    * @returns An array of `HistogramValuesI` objects containing the histogram graph details, or `undefined` if the data is not available.
    */
   getHistogramGraphDatas(
@@ -606,100 +607,164 @@ export class DistributionDatasService {
     const varDatas =
       this.appService.appDatas?.preparationReport
         ?.variablesDetailedStatistics?.[selectedVariable?.rank];
-    let histogramGraphDetails: HistogramValuesI[] | undefined = undefined;
-    if (varDatas) {
-      this.distributionDatas.setDefaultGraphOptions();
-      histogramGraphDetails = [];
-      if (varDatas?.modlHistograms) {
-        // modlHistograms is given: there are multiple histograms #238
-        const histogramIndex =
-          interpretableHistogramNumber !== undefined
-            ? interpretableHistogramNumber
-            : varDatas.modlHistograms.interpretableHistogramNumber - 1;
-        const histogram = varDatas.modlHistograms.histograms[histogramIndex];
-        this.distributionDatas.defaultInterpretableHistogramNumber =
-          varDatas.modlHistograms.interpretableHistogramNumber;
-        this.distributionDatas.interpretableHistogramNumber = histogramIndex;
-        this.distributionDatas.histogramNumber =
-          varDatas.modlHistograms.histogramNumber;
-        if (histogram) {
-          const totalFreq = histogram.frequencies?.reduce(
-            (partialSum: number, a: number) => partialSum + a,
-            0,
-          );
 
-          histogram.bounds.forEach((bound: number, i: number) => {
-            if (i < histogram.bounds.length - 1) {
-              let delta = (histogram.bounds[i + 1] || 0) - bound;
-              if (delta < 0.001) {
-                // Important to limit delta to avoid positive log values
-                // Otherwise chart is out of bounds
-                delta = 1;
-              }
+    if (!varDatas) {
+      return undefined;
+    }
 
-              const frequency = histogram.frequencies?.[i] || 0;
-              const density = totalFreq ? frequency / (totalFreq * delta) : 0;
-              const probability = totalFreq ? frequency / totalFreq : 0;
-              let logValue = Math.log10(density);
-              if (logValue === -Infinity) {
-                logValue = 0;
-              }
-              const data: HistogramValuesI = {
-                frequency: frequency,
-                partition: [bound, histogram.bounds[i + 1] || 0],
-                density: density,
-                probability: probability,
-                logValue: logValue,
-              };
+    this.distributionDatas.setDefaultGraphOptions();
 
-              histogramGraphDetails?.push(data);
-            }
-          });
-        }
-      } else {
-        // modlHistograms is not given: take histogram from dataGrid
-        // eg. defaulGroup.json
-        const totalFreq = varDatas.dataGrid.frequencies?.reduce(
-          (partialSum: number, a: number) => partialSum + a,
-          0,
-        );
+    let histogramGraphDetails: HistogramValuesI[];
 
-        varDatas.dataGrid.dimensions[0]?.partition.forEach(
-          //@ts-ignore
-          (partition: number[], i: number) => {
-            // partition is always numbers in this case
-            if (partition.length !== 0) {
-              let delta = (partition[1] || 0) - (partition[0] || 0);
-              if (delta < 0.001) {
-                // Important to limit delta to avoid positive log values
-                // Otherwise chart is out of bounds
-                delta = 1;
-              }
-              const frequency = varDatas.dataGrid.frequencies?.[i] || 0;
-              const density = totalFreq ? frequency / (totalFreq * delta) : 0;
-              const probability = totalFreq ? frequency / totalFreq : 0;
-              let logValue = Math.log10(density);
-
-              if (logValue === -Infinity) {
-                logValue = 0;
-              }
-              const data: HistogramValuesI = {
-                frequency: frequency,
-                partition: partition,
-                density: density,
-                probability: probability,
-                logValue: logValue,
-              };
-              histogramGraphDetails?.push(data);
-            }
-          },
-        );
-      }
+    if (varDatas?.modlHistograms) {
+      histogramGraphDetails = this.processModlHistograms(
+        varDatas,
+        interpretableHistogramNumber,
+      );
+    } else {
+      histogramGraphDetails = this.processDataGridHistogram(varDatas);
     }
 
     this.distributionDatas.histogramDatas = histogramGraphDetails;
+    return histogramGraphDetails;
+  }
+
+  /**
+   * Processes histogram data from modlHistograms structure.
+   *
+   * @param varDatas - The variable data containing modlHistograms
+   * @param interpretableHistogramNumber - Optional histogram index to use
+   * @returns Array of histogram values
+   */
+  private processModlHistograms(
+    varDatas: any,
+    interpretableHistogramNumber?: number,
+  ): HistogramValuesI[] {
+    const histogramGraphDetails: HistogramValuesI[] = [];
+
+    // modlHistograms is given: there are multiple histograms #238
+    const histogramIndex =
+      interpretableHistogramNumber !== undefined
+        ? interpretableHistogramNumber
+        : varDatas.modlHistograms.interpretableHistogramNumber - 1;
+
+    const histogram = varDatas.modlHistograms.histograms[histogramIndex];
+
+    this.distributionDatas.defaultInterpretableHistogramNumber =
+      varDatas.modlHistograms.interpretableHistogramNumber;
+    this.distributionDatas.interpretableHistogramNumber = histogramIndex;
+    this.distributionDatas.histogramNumber =
+      varDatas.modlHistograms.histogramNumber;
+
+    if (!histogram) {
+      return histogramGraphDetails;
+    }
+
+    const totalFreq = this.calculateTotalFrequency(histogram.frequencies);
+
+    histogram.bounds.forEach((bound: number, i: number) => {
+      if (i < histogram.bounds.length - 1) {
+        const partition = [bound, histogram.bounds[i + 1] || 0];
+        const frequency = histogram.frequencies?.[i] || 0;
+
+        const histogramValue = this.createHistogramValue(
+          frequency,
+          partition,
+          totalFreq,
+        );
+
+        histogramGraphDetails.push(histogramValue);
+      }
+    });
 
     return histogramGraphDetails;
+  }
+
+  /**
+   * Processes histogram data from dataGrid structure.
+   *
+   * @param varDatas - The variable data containing dataGrid
+   * @returns Array of histogram values
+   */
+  private processDataGridHistogram(varDatas: any): HistogramValuesI[] {
+    const histogramGraphDetails: HistogramValuesI[] = [];
+
+    // modlHistograms is not given: take histogram from dataGrid
+    // eg. defaulGroup.json
+    const totalFreq = this.calculateTotalFrequency(
+      varDatas.dataGrid.frequencies,
+    );
+
+    varDatas.dataGrid.dimensions[0]?.partition.forEach(
+      //@ts-ignore
+      (partition: number[], i: number) => {
+        // partition is always numbers in this case
+        if (partition.length !== 0) {
+          const frequency = varDatas.dataGrid.frequencies?.[i] || 0;
+
+          const histogramValue = this.createHistogramValue(
+            frequency,
+            partition,
+            totalFreq,
+          );
+
+          histogramGraphDetails.push(histogramValue);
+        }
+      },
+    );
+
+    return histogramGraphDetails;
+  }
+
+  /**
+   * Calculates the total frequency from an array of frequencies.
+   *
+   * @param frequencies - Array of frequency values
+   * @returns Total frequency sum
+   */
+  private calculateTotalFrequency(frequencies?: number[]): number {
+    return (
+      frequencies?.reduce(
+        (partialSum: number, a: number) => partialSum + a,
+        0,
+      ) || 0
+    );
+  }
+
+  /**
+   * Creates a histogram value object with calculated density, probability, and log value.
+   *
+   * @param frequency - The frequency value for this partition
+   * @param partition - The partition bounds [start, end]
+   * @param totalFreq - Total frequency across all partitions
+   * @returns HistogramValuesI object with calculated values
+   */
+  private createHistogramValue(
+    frequency: number,
+    partition: number[],
+    totalFreq: number,
+  ): HistogramValuesI {
+    let delta = (partition[1] || 0) - (partition[0] || 0);
+    if (delta < 0.001) {
+      // Important to limit delta to avoid positive log values
+      // Otherwise chart is out of bounds
+      delta = 1;
+    }
+
+    const density = totalFreq ? frequency / (totalFreq * delta) : 0;
+    const probability = totalFreq ? frequency / totalFreq : 0;
+    let logValue = Math.log10(density);
+    if (logValue === -Infinity) {
+      logValue = 0;
+    }
+
+    return {
+      frequency: frequency,
+      partition: partition,
+      density: density,
+      probability: probability,
+      logValue: logValue,
+    };
   }
 
   /**
