@@ -1,0 +1,499 @@
+{
+	"tool": "Khiops",
+	"version": "11.0.0-b.0",
+	"shortDescription": "",
+	"preparationReport": {
+		"reportType": "Preparation",
+		"summary": {
+			"dictionary": "RandomStats",
+			"variables": {
+				"types": [
+					"Categorical",
+					"Numerical"
+				],
+				"numbers": [
+					5,
+					5
+				]
+			},
+			"database": "C:\\Applications\\boullema\\LearningTest.V11\\TestKhiops\\z_Work\\RandomInMonoTable\\Stats\\RandomStats.txt",
+			"samplePercentage": 100,
+			"samplingMode": "Include sample",
+			"selectionVariable": "",
+			"selectionValue": "",
+			"instances": 3136,
+			"learningTask": "Unsupervised analysis",
+			"evaluatedVariables": 10,
+			"featureEngineering": {
+				"maxNumberOfConstructedVariables": 1000,
+				"maxNumberOfTextFeatures": 10000,
+				"maxNumberOfTrees": 10,
+				"maxNumberOfVariablePairs": 0
+			},
+			"discretization": "MODL",
+			"valueGrouping": "MODL"
+		},
+		"variablesStatistics": [
+			{
+				"rank": "R01",
+				"name": "Level",
+				"type": "Categorical",
+				"parts": 1,
+				"values": 1,
+				"mode": "0",
+				"modeFrequency": 3136,
+				"missingNumber": 0,
+				"sparseMissingNumber": 0,
+				"constructionCost": 2.99573
+			},
+			{
+				"rank": "R02",
+				"name": "Max",
+				"type": "Numerical",
+				"parts": 10,
+				"values": 3108,
+				"min": 0.999831789,
+				"max": 0.9999999987,
+				"mean": 0.9999834974,
+				"stdDev": 1.653334345e-05,
+				"missingNumber": 0,
+				"sparseMissingNumber": 0,
+				"constructionCost": 2.99573
+			},
+			{
+				"rank": "R03",
+				"name": "Mean",
+				"type": "Numerical",
+				"parts": 13,
+				"values": 3136,
+				"min": 495645.0674,
+				"max": 504290.9482,
+				"mean": 500015.2114,
+				"stdDev": 1201.569335,
+				"missingNumber": 0,
+				"sparseMissingNumber": 0,
+				"constructionCost": 2.99573
+			},
+			{
+				"rank": "R04",
+				"name": "Min",
+				"type": "Numerical",
+				"parts": 9,
+				"values": 3120,
+				"min": 6.988556391e-10,
+				"max": 0.0001275161909,
+				"mean": 1.650022282e-05,
+				"stdDev": 1.6089291e-05,
+				"missingNumber": 0,
+				"sparseMissingNumber": 0,
+				"constructionCost": 2.99573
+			},
+			{
+				"rank": "R05",
+				"name": "Name",
+				"type": "Categorical",
+				"parts": 1,
+				"values": 3136,
+				"mode": "Pixel_P00_00.Dummy1.Rand1",
+				"modeFrequency": 1,
+				"missingNumber": 0,
+				"sparseMissingNumber": 0,
+				"constructionCost": 2.99573
+			},
+			{
+				"rank": "R06",
+				"name": "Parts",
+				"type": "Categorical",
+				"parts": 1,
+				"values": 1,
+				"mode": "1",
+				"modeFrequency": 3136,
+				"missingNumber": 0,
+				"sparseMissingNumber": 0,
+				"constructionCost": 2.99573
+			},
+			{
+				"rank": "R07",
+				"name": "Rank",
+				"type": "Categorical",
+				"parts": 1,
+				"values": 3136,
+				"mode": "R0002",
+				"modeFrequency": 1,
+				"missingNumber": 0,
+				"sparseMissingNumber": 0,
+				"constructionCost": 2.99573
+			},
+			{
+				"rank": "R08",
+				"name": "Std dev",
+				"type": "Numerical",
+				"parts": 13,
+				"values": 3136,
+				"min": 0.286456495,
+				"max": 0.2903624453,
+				"mean": 0.2886819915,
+				"stdDev": 0.0005313811979,
+				"missingNumber": 0,
+				"sparseMissingNumber": 0,
+				"constructionCost": 2.99573
+			},
+			{
+				"rank": "R09",
+				"name": "Type",
+				"type": "Categorical",
+				"parts": 1,
+				"values": 1,
+				"mode": "Numerical",
+				"modeFrequency": 3136,
+				"missingNumber": 0,
+				"sparseMissingNumber": 0,
+				"constructionCost": 2.99573
+			},
+			{
+				"rank": "R10",
+				"name": "Values",
+				"type": "Numerical",
+				"parts": 4,
+				"values": 4,
+				"min": 59997,
+				"max": 60000,
+				"mean": 59999.84343,
+				"stdDev": 0.4001446832,
+				"missingNumber": 0,
+				"sparseMissingNumber": 0,
+				"constructionCost": 2.99573
+			}
+		],
+		"variablesDetailedStatistics": {
+			"R02": {
+				"dataGrid": {
+					"isSupervised": false,
+					"dimensions": [
+						{
+							"variable": "Max",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0.9998316765,0.9998912811],
+								[0.9998912811,0.9999256134],
+								[0.9999256134,0.9999408722],
+								[0.9999408722,0.999956131],
+								[0.999956131,0.9999675751],
+								[0.9999675751,0.9999732971],
+								[0.9999732971,0.9999847412],
+								[0.9999847412,0.9999885559],
+								[0.9999885559,0.9999961853],
+								[0.9999961853,1]
+							]
+						}
+					],
+					"frequencies": [3,31,50,126,213,185,624,331,928,645]
+				},
+				"modlHistograms": {
+					"histogramNumber": 8,
+					"interpretableHistogramNumber": 8,
+					"truncationEpsilon": 0,
+					"removedSingularIntervalNumber": 0,
+					"granularities": [0,1,2,3,4,5,6,7],
+					"intervalNumbers": [1,2,3,5,7,10,10,10],
+					"peakIntervalNumbers": [0,0,0,0,0,0,0,0],
+					"spikeIntervalNumbers": [0,0,0,0,0,0,0,0],
+					"emptyIntervalNumbers": [0,0,0,0,0,0,0,0],
+					"levels": [0,0.01517807331,0.04301258291,0.05717341566,0.06161224581,0.0622720337,0.06245367142,0.06251419742],
+					"informationRates": [0,24.27940202,68.80450312,91.45668987,98.55720517,99.61262604,99.90318039,100],
+					"histograms": [
+						{
+							"bounds": [0.9998316765,1],
+							"frequencies": [3136]
+						},
+						{
+							"bounds": [0.9998316765,0.9998779297,1],
+							"frequencies": [1,3135]
+						},
+						{
+							"bounds": [0.9998316765,0.9998779297,0.9999389648,1],
+							"frequencies": [1,74,3061]
+						},
+						{
+							"bounds": [0.9998316765,0.9998779297,0.9999084473,0.9999389648,0.9999694824,1],
+							"frequencies": [1,15,59,407,2654]
+						},
+						{
+							"bounds": [0.9998316765,0.9998931885,0.9999237061,0.9999389648,0.9999542236,0.9999694824,0.9999847412,1],
+							"frequencies": [5,27,43,119,288,750,1904]
+						},
+						{
+							"bounds": [0.9998316765,0.9998855591,0.9999237061,0.9999389648,0.9999542236,0.999961853,0.9999694824,0.9999771118,0.9999847412,0.9999923706,1],
+							"frequencies": [2,30,43,119,108,180,313,437,763,1141]
+						},
+						{
+							"bounds": [0.9998316765,0.9998893738,0.9999237061,0.9999389648,0.9999580383,0.9999656677,0.9999732971,0.9999847412,0.9999885559,0.9999961853,1],
+							"frequencies": [3,29,43,165,139,229,624,331,928,645]
+						},
+						{
+							"bounds": [0.9998316765,0.9998912811,0.9999256134,0.9999408722,0.999956131,0.9999675751,0.9999732971,0.9999847412,0.9999885559,0.9999961853,1],
+							"frequencies": [3,31,50,126,213,185,624,331,928,645]
+						}
+					]
+				}
+			},
+			"R03": {
+				"dataGrid": {
+					"isSupervised": false,
+					"dimensions": [
+						{
+							"variable": "Mean",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[495643.6157,496582.0313],
+								[496582.0313,497314.4531],
+								[497314.4531,498046.875],
+								[498046.875,498535.1563],
+								[498535.1563,499023.4375],
+								[499023.4375,499511.7188],
+								[499511.7188,500732.4219],
+								[500732.4219,501220.7031],
+								[501220.7031,501708.9844],
+								[501708.9844,501953.125],
+								[501953.125,502441.4063],
+								[502441.4063,503173.8281],
+								[503173.8281,504295.3491]
+							]
+						}
+					],
+					"frequencies": [8,34,117,175,296,411,1243,387,232,78,84,54,17]
+				},
+				"modlHistograms": {
+					"histogramNumber": 6,
+					"interpretableHistogramNumber": 6,
+					"truncationEpsilon": 0,
+					"removedSingularIntervalNumber": 0,
+					"granularities": [0,8,9,10,11,12],
+					"intervalNumbers": [1,3,5,7,14,13],
+					"peakIntervalNumbers": [0,1,1,1,1,1],
+					"spikeIntervalNumbers": [0,0,0,0,0,0],
+					"emptyIntervalNumbers": [0,0,0,0,0,0],
+					"levels": [0,0.004015412471,0.02173347647,0.02497389632,0.02543754304,0.02552688299],
+					"informationRates": [0,15.73013232,85.13956239,97.8337086,99.65001622,100],
+					"histograms": [
+						{
+							"bounds": [495643.6157,504295.3491],
+							"frequencies": [3136]
+						},
+						{
+							"bounds": [495643.6157,496093.75,503906.25,504295.3491],
+							"frequencies": [5,3128,3]
+						},
+						{
+							"bounds": [495643.6157,496093.75,498046.875,501953.125,503906.25,504295.3491],
+							"frequencies": [5,154,2822,152,3]
+						},
+						{
+							"bounds": [495643.6157,497070.3125,498046.875,499023.4375,500976.5625,501953.125,502929.6875,504295.3491],
+							"frequencies": [27,132,471,1854,497,127,28]
+						},
+						{
+							"bounds": [495643.6157,496582.0313,497070.3125,497558.5938,498046.875,498535.1563,499023.4375,499511.7188,500488.2813,500976.5625,501464.8438,501953.125,502441.4063,502929.6875,504295.3491],
+							"frequencies": [8,19,43,89,175,296,411,1010,433,310,187,84,43,28]
+						},
+						{
+							"bounds": [495643.6157,496582.0313,497314.4531,498046.875,498535.1563,499023.4375,499511.7188,500732.4219,501220.7031,501708.9844,501953.125,502441.4063,503173.8281,504295.3491],
+							"frequencies": [8,34,117,175,296,411,1243,387,232,78,84,54,17]
+						}
+					]
+				}
+			},
+			"R04": {
+				"dataGrid": {
+					"isSupervised": false,
+					"dimensions": [
+						{
+							"variable": "Min",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[6.98491931e-10,3.814697266e-06],
+								[3.814697266e-06,7.629394531e-06],
+								[7.629394531e-06,1.525878906e-05],
+								[1.525878906e-05,2.288818359e-05],
+								[2.288818359e-05,3.433227539e-05],
+								[3.433227539e-05,4.196166992e-05],
+								[4.196166992e-05,5.722045898e-05],
+								[5.722045898e-05,8.392333984e-05],
+								[8.392333984e-05,0.0001275539398]
+							]
+						}
+					],
+					"frequencies": [675,494,714,442,418,148,163,68,14]
+				},
+				"modlHistograms": {
+					"histogramNumber": 7,
+					"interpretableHistogramNumber": 7,
+					"truncationEpsilon": 0,
+					"removedSingularIntervalNumber": 0,
+					"granularities": [0,1,2,3,4,5,6],
+					"intervalNumbers": [1,2,2,4,6,9,9],
+					"peakIntervalNumbers": [0,0,0,0,0,0,0],
+					"spikeIntervalNumbers": [0,0,0,0,0,0,0],
+					"emptyIntervalNumbers": [0,0,0,0,0,0,0],
+					"levels": [0,0.001875419426,0.03007374674,0.04347157422,0.04790500647,0.04903495239,0.04927552269],
+					"informationRates": [0,3.80598586,61.03181681,88.22143703,97.21866732,99.5117854,100],
+					"histograms": [
+						{
+							"bounds": [6.98491931e-10,0.0001275539398],
+							"frequencies": [3136]
+						},
+						{
+							"bounds": [6.98491931e-10,0.0001220703125,0.0001275539398],
+							"frequencies": [3135,1]
+						},
+						{
+							"bounds": [6.98491931e-10,6.103515625e-05,0.0001275539398],
+							"frequencies": [3066,70]
+						},
+						{
+							"bounds": [6.98491931e-10,3.051757813e-05,6.103515625e-05,9.155273438e-05,0.0001275539398],
+							"frequencies": [2624,442,61,9]
+						},
+						{
+							"bounds": [6.98491931e-10,1.525878906e-05,3.051757813e-05,4.577636719e-05,6.103515625e-05,9.155273438e-05,0.0001275539398],
+							"frequencies": [1883,741,317,125,61,9]
+						},
+						{
+							"bounds": [6.98491931e-10,7.629394531e-06,1.525878906e-05,2.288818359e-05,3.051757813e-05,3.814697266e-05,5.340576172e-05,6.866455078e-05,8.392333984e-05,0.0001275539398],
+							"frequencies": [1169,714,442,299,202,193,77,26,14]
+						},
+						{
+							"bounds": [6.98491931e-10,3.814697266e-06,7.629394531e-06,1.525878906e-05,2.288818359e-05,3.433227539e-05,4.196166992e-05,5.722045898e-05,8.392333984e-05,0.0001275539398],
+							"frequencies": [675,494,714,442,418,148,163,68,14]
+						}
+					]
+				}
+			},
+			"R08": {
+				"dataGrid": {
+					"isSupervised": false,
+					"dimensions": [
+						{
+							"variable": "Std dev",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[0.2864551544,0.2869873047],
+								[0.2869873047,0.2873535156],
+								[0.2873535156,0.2877197266],
+								[0.2877197266,0.2878417969],
+								[0.2878417969,0.2880859375],
+								[0.2880859375,0.2883300781],
+								[0.2883300781,0.2889404297],
+								[0.2889404297,0.2891845703],
+								[0.2891845703,0.2893066406],
+								[0.2893066406,0.2895507813],
+								[0.2895507813,0.2897949219],
+								[0.2897949219,0.2900390625],
+								[0.2900390625,0.2903633118]
+							]
+						}
+					],
+					"frequencies": [3,16,85,71,243,373,1353,462,158,219,102,37,14]
+				},
+				"modlHistograms": {
+					"histogramNumber": 7,
+					"interpretableHistogramNumber": 7,
+					"truncationEpsilon": 0,
+					"removedSingularIntervalNumber": 0,
+					"granularities": [0,1,3,4,5,6,7],
+					"intervalNumbers": [1,2,3,5,8,12,13],
+					"peakIntervalNumbers": [0,0,1,1,1,1,1],
+					"spikeIntervalNumbers": [0,0,0,0,0,0,0],
+					"emptyIntervalNumbers": [0,0,0,0,0,0,0],
+					"levels": [0,0.0008583415374,0.01064412143,0.02140063167,0.02540745248,0.02646223594,0.02656068487],
+					"informationRates": [0,3.231624265,40.07472503,80.57258978,95.65812254,99.62934339,100],
+					"histograms": [
+						{
+							"bounds": [0.2864551544,0.2903633118],
+							"frequencies": [3136]
+						},
+						{
+							"bounds": [0.2864551544,0.2890625,0.2903633118],
+							"frequencies": [2379,757]
+						},
+						{
+							"bounds": [0.2864551544,0.287109375,0.2890625,0.2903633118],
+							"frequencies": [7,2372,757]
+						},
+						{
+							"bounds": [0.2864551544,0.287109375,0.2880859375,0.2890625,0.2900390625,0.2903633118],
+							"frequencies": [7,411,1961,743,14]
+						},
+						{
+							"bounds": [0.2864551544,0.287109375,0.2875976563,0.2880859375,0.2885742188,0.2890625,0.2895507813,0.2900390625,0.2903633118],
+							"frequencies": [7,63,348,881,1080,604,139,14]
+						},
+						{
+							"bounds": [0.2864551544,0.287109375,0.2873535156,0.2875976563,0.2878417969,0.2880859375,0.2883300781,0.2890625,0.2893066406,0.2895507813,0.2897949219,0.2900390625,0.2903633118],
+							"frequencies": [7,12,51,105,243,373,1588,385,219,102,37,14]
+						},
+						{
+							"bounds": [0.2864551544,0.2869873047,0.2873535156,0.2877197266,0.2878417969,0.2880859375,0.2883300781,0.2889404297,0.2891845703,0.2893066406,0.2895507813,0.2897949219,0.2900390625,0.2903633118],
+							"frequencies": [3,16,85,71,243,373,1353,462,158,219,102,37,14]
+						}
+					]
+				}
+			},
+			"R10": {
+				"dataGrid": {
+					"isSupervised": false,
+					"dimensions": [
+						{
+							"variable": "Values",
+							"type": "Numerical",
+							"partitionType": "Intervals",
+							"partition": [
+								[59996.5,59997.5],
+								[59997.5,59998.5],
+								[59998.5,59999.5],
+								[59999.5,60000.5]
+							]
+						}
+					],
+					"frequencies": [3,35,412,2686]
+				},
+				"modlHistograms": {
+					"histogramNumber": 4,
+					"interpretableHistogramNumber": 3,
+					"truncationEpsilon": 1,
+					"removedSingularIntervalNumber": 0,
+					"granularities": [0,1,2,15],
+					"intervalNumbers": [1,2,4,7],
+					"peakIntervalNumbers": [0,0,0,2],
+					"spikeIntervalNumbers": [0,0,0,2],
+					"emptyIntervalNumbers": [0,0,0,3],
+					"levels": [0,0.03005774908,0.04439330254,0.3296538379],
+					"informationRates": [0,67.70784636,100,742.5756116],
+					"histograms": [
+						{
+							"bounds": [59996.5,60000.5],
+							"frequencies": [3136]
+						},
+						{
+							"bounds": [59996.5,59998.5,60000.5],
+							"frequencies": [38,3098]
+						},
+						{
+							"bounds": [59996.5,59997.5,59998.5,59999.5,60000.5],
+							"frequencies": [3,35,412,2686]
+						},
+						{
+							"bounds": [59996.99994,59997.00195,59997.99994,59998.00195,59998.99994,59999.00195,59999.99994,60000.00195],
+							"frequencies": [3,0,35,0,412,0,2686]
+						}
+					]
+				}
+			}
+		}
+	},
+	"khiops_encoding": "ascii"
+}
