@@ -206,5 +206,172 @@ describe('HistogramRendererService', () => {
       // Height should be at least the minimum bar height
       expect(height >= minBarHeight).toBeTruthy();
     });
+
+    it('should handle logarithmic Y scale without exceeding canvas bounds', () => {
+      // Test data similar to R12 from irisU.khj with high frequency
+      const testData: HistogramValuesI = {
+        frequency: 68,
+        logValue: 4.2, // High log value that could cause overflow
+        partition: [1.5, 1.65],
+        density: 680.0, // High density value
+        probability: 0.687,
+        coords: undefined,
+      };
+
+      const testBar = new HistogramBarModel(testData, 1.2, HistogramType.XLIN);
+      testBar.barXlin = 10;
+      testBar.barWlin = 5;
+
+      const canvasWidth = 800;
+      const canvasHeight = 400;
+      const xPadding = 40;
+      const yPadding = 50;
+      const ratioY = 30; // Ratio that could cause bar overflow in YLOG mode
+      const minBarHeight = 4;
+      const defaultBarColor = 'black';
+
+      // Mock rangeYLog that could cause overflow
+      const rangeYLog = {
+        min: -1.0,
+        max: 5.0,
+      };
+
+      service.drawRect(
+        mockContext,
+        testData,
+        0,
+        testBar,
+        canvasWidth,
+        canvasHeight,
+        xPadding,
+        yPadding,
+        { selected: HistogramType.XLIN }, // graphOptionsX
+        { selected: HistogramType.YLOG }, // graphOptionsY - logarithmic mode
+        rangeYLog,
+        ratioY,
+        1, // ratio
+        minBarHeight,
+        defaultBarColor,
+        -1, // selectedItem
+      );
+
+      // Verify that fillRect was called
+      expect(mockContext.fillRect).toHaveBeenCalled();
+
+      // Get the parameters passed to fillRect
+      const fillRectCall = (
+        mockContext.fillRect as jasmine.Spy
+      ).calls.mostRecent();
+      const [x, y, width, height] = fillRectCall.args;
+
+      // The height should not exceed the maximum allowed height
+      const maxBarHeight = canvasHeight - yPadding / 2;
+      expect(height <= maxBarHeight).toBeTruthy();
+
+      // The height should be positive (not negative due to overflow)
+      expect(height >= 0).toBeTruthy();
+
+      // The y position should be valid (within canvas bounds)
+      expect(y >= 0).toBeTruthy();
+      expect(y + height <= canvasHeight).toBeTruthy();
+
+      // Verify logarithmic calculation is correct
+      // logValue = 4.2, range is -1.0 to 5.0, so relative position = (4.2 - (-1.0)) / (5.0 - (-1.0)) = 5.2 / 6.0 ≈ 0.867
+      const expectedRelativePosition =
+        (testData.logValue - rangeYLog.min) / (rangeYLog.max - rangeYLog.min);
+      const expectedHeight =
+        expectedRelativePosition * (canvasHeight - yPadding / 2);
+      expect(height).toBeCloseTo(expectedHeight, 1);
+    });
+
+    it('should correctly calculate logarithmic heights for different values', () => {
+      // Test multiple values to ensure logarithmic scale is working
+      const rangeYLog = { min: 0.0, max: 4.0 };
+      const canvasHeight = 400;
+      const yPadding = 50;
+      const maxBarHeight = canvasHeight - yPadding / 2;
+
+      // Test data with logValue = 1.0 (should be 1/4 of the way up)
+      const testData1: HistogramValuesI = {
+        frequency: 10,
+        logValue: 1.0,
+        partition: [0, 1],
+        density: 10.0,
+        probability: 0.1,
+        coords: undefined,
+      };
+
+      // Test data with logValue = 3.0 (should be 3/4 of the way up)
+      const testData2: HistogramValuesI = {
+        frequency: 30,
+        logValue: 3.0,
+        partition: [1, 2],
+        density: 30.0,
+        probability: 0.3,
+        coords: undefined,
+      };
+
+      const testBar = new HistogramBarModel(testData1, 1.2, HistogramType.XLIN);
+      testBar.barXlin = 10;
+      testBar.barWlin = 5;
+
+      // Test first value
+      service.drawRect(
+        mockContext,
+        testData1,
+        0,
+        testBar,
+        800,
+        canvasHeight,
+        40,
+        yPadding,
+        { selected: HistogramType.XLIN },
+        { selected: HistogramType.YLOG },
+        rangeYLog,
+        1,
+        1,
+        4,
+        'black',
+        -1,
+      );
+
+      let fillRectCall = (
+        mockContext.fillRect as jasmine.Spy
+      ).calls.mostRecent();
+      let height1 = fillRectCall.args[3];
+
+      // Test second value
+      service.drawRect(
+        mockContext,
+        testData2,
+        0,
+        testBar,
+        800,
+        canvasHeight,
+        40,
+        yPadding,
+        { selected: HistogramType.XLIN },
+        { selected: HistogramType.YLOG },
+        rangeYLog,
+        1,
+        1,
+        4,
+        'black',
+        -1,
+      );
+
+      fillRectCall = (mockContext.fillRect as jasmine.Spy).calls.mostRecent();
+      let height2 = fillRectCall.args[3];
+
+      // Verify that the higher logValue results in a higher bar
+      expect(height2).toBeGreaterThan(height1);
+
+      // Verify expected heights
+      const expectedHeight1 = (1.0 / 4.0) * maxBarHeight; // 1/4 of max height
+      const expectedHeight2 = (3.0 / 4.0) * maxBarHeight; // 3/4 of max height
+
+      expect(height1).toBeCloseTo(expectedHeight1, 1);
+      expect(height2).toBeCloseTo(expectedHeight2, 1);
+    });
   });
 });

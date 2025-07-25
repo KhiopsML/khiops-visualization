@@ -11,10 +11,7 @@ import { HistogramService } from './histogram.service';
 import { HistogramUIService } from './histogram.ui.service';
 import { HistogramBarModel } from './histogram.bar.model';
 import { HistogramType } from './histogram.type';
-import {
-  HistogramValuesI,
-  RangeYLogI,
-} from './histogram.interfaces';
+import { HistogramValuesI, RangeYLogI } from './histogram.interfaces';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options';
 
@@ -23,10 +20,9 @@ import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-op
  * Handles all drawing operations, canvas management, and D3.js chart rendering
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class HistogramRendererService {
-
   constructor(private histogramService: HistogramService) {}
 
   /**
@@ -37,7 +33,7 @@ export class HistogramRendererService {
     histogramHoverCanvas: HTMLCanvasElement | null,
     histogramSelectedCanvas: HTMLCanvasElement | null,
     w: number,
-    h: number
+    h: number,
   ): {
     ctx?: CanvasRenderingContext2D;
     ctxHover?: CanvasRenderingContext2D;
@@ -46,13 +42,15 @@ export class HistogramRendererService {
     const ctx = histogramCanvas
       ? HistogramUIService.initCanvasContext(histogramCanvas, w, h) || undefined
       : undefined;
-    
+
     const ctxHover = histogramHoverCanvas
-      ? HistogramUIService.initCanvasContext(histogramHoverCanvas, w, h) || undefined
+      ? HistogramUIService.initCanvasContext(histogramHoverCanvas, w, h) ||
+        undefined
       : undefined;
-    
+
     const ctxSelected = histogramSelectedCanvas
-      ? HistogramUIService.initCanvasContext(histogramSelectedCanvas, w, h) || undefined
+      ? HistogramUIService.initCanvasContext(histogramSelectedCanvas, w, h) ||
+        undefined
       : undefined;
 
     return { ctx, ctxHover, ctxSelected };
@@ -67,7 +65,7 @@ export class HistogramRendererService {
     ctxSelected?: CanvasRenderingContext2D,
     histogramCanvas?: HTMLCanvasElement | null,
     histogramHoverCanvas?: HTMLCanvasElement | null,
-    histogramSelectedCanvas?: HTMLCanvasElement | null
+    histogramSelectedCanvas?: HTMLCanvasElement | null,
   ): void {
     if (ctx && histogramCanvas) {
       HistogramUIService.cleanDomContext(ctx, histogramCanvas);
@@ -83,7 +81,12 @@ export class HistogramRendererService {
   /**
    * Creates and configures the main SVG chart container
    */
-  public createChart(chartElement: any, chartW: number, h: number, yPadding: number): any {
+  public createChart(
+    chartElement: any,
+    chartW: number,
+    h: number,
+    yPadding: number,
+  ): any {
     // First remove svg if already added to the dom
     d3.select(chartElement).select('svg').remove();
 
@@ -129,7 +132,7 @@ export class HistogramRendererService {
     ratio: number,
     minBarHeight: number,
     defaultBarColor: string,
-    selectedItem: number = -1
+    selectedItem: number = -1,
   ): void {
     if (!ctx || !bar) return;
 
@@ -154,9 +157,27 @@ export class HistogramRendererService {
       }
     } else {
       if (d.logValue !== 0) {
-        let shift = Math.abs(rangeYLog?.max || 0);
-        barH = Math.abs(d.logValue) * ratioY - shift * ratioY;
-        barH = h - yPadding / 2 - barH;
+        // Logarithmic scale calculation: map logValue to canvas height
+        // The range is from rangeYLog.min to rangeYLog.max
+        const logRange = (rangeYLog?.max || 0) - (rangeYLog?.min || 0);
+        if (logRange > 0) {
+          // Calculate relative position in log space (0 to 1)
+          const relativePosition =
+            (d.logValue - (rangeYLog?.min || 0)) / logRange;
+          // Map to canvas height
+          barH = relativePosition * (h - yPadding / 2);
+        } else {
+          barH = 0;
+        }
+
+        // Prevent bar height from exceeding canvas bounds in logarithmic scale
+        const maxBarHeight = h - yPadding / 2;
+        if (barH > maxBarHeight) {
+          barH = maxBarHeight;
+        }
+        if (barH < 0) {
+          barH = 0;
+        }
       } else {
         barH = 0;
       }
@@ -223,7 +244,7 @@ export class HistogramRendererService {
     rangeYLog: RangeYLogI | undefined,
     ratioY: number,
     minBarHeight: number,
-    defaultBarColor: string
+    defaultBarColor: string,
   ): { bars: HistogramBarModel[]; ratio: number } {
     const bars = this.histogramService.computeXbarsDimensions(
       datasSet,
@@ -262,7 +283,7 @@ export class HistogramRendererService {
             ratioY,
             ratio,
             minBarHeight,
-            defaultBarColor
+            defaultBarColor,
           );
         }
       });
@@ -292,7 +313,7 @@ export class HistogramRendererService {
     xPadding: number,
     yPadding: number,
     xTickCount: number | undefined,
-    graphOptionsX: DistributionOptionsI | undefined
+    graphOptionsX: DistributionOptionsI | undefined,
   ): void {
     if (width === 0) return;
 
@@ -323,10 +344,7 @@ export class HistogramRendererService {
     svg
       .insert('g', ':first-child')
       .attr('class', 'barXlog axis-grid')
-      .attr(
-        'transform',
-        'translate(' + (shift + xPadding / 2) + ',' + h + ') ',
-      )
+      .attr('transform', 'translate(' + (shift + xPadding / 2) + ',' + h + ') ')
       .call(axis)
       .selectAll('text')
       .style('text-anchor', 'end')
@@ -356,7 +374,7 @@ export class HistogramRendererService {
     yTicksCount: number,
     graphOptionsY: DistributionOptionsI | undefined,
     rangeYLin: number | undefined,
-    rangeYLog: RangeYLogI | undefined
+    rangeYLog: RangeYLogI | undefined,
   ): void {
     let y;
 
@@ -398,11 +416,7 @@ export class HistogramRendererService {
       .attr('class', 'y axis-grid')
       .attr(
         'transform',
-        'translate(' +
-          (shift + xPadding / 2) +
-          ',' +
-          yPadding / 2 +
-          ')',
+        'translate(' + (shift + xPadding / 2) + ',' + yPadding / 2 + ')',
       )
       .call(axis, 0);
   }
