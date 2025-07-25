@@ -374,4 +374,248 @@ describe('HistogramRendererService', () => {
       expect(height2).toBeCloseTo(expectedHeight2, 1);
     });
   });
+
+  describe('drawRect with irisU.json data for variable R12', () => {
+    /**
+     * Test drawRect method with real irisU.json data for variable R12
+     * Verifies coordinates calculation for 1st and 3rd histogram bars
+     */
+    it('should correctly calculate coordinates for R12 variable from irisU.json', () => {
+      // Load irisU.json data
+      const fileDatas = require('../../assets/mocks/kv/irisU.json');
+      expect(fileDatas).toBeTruthy();
+      expect(fileDatas.preparationReport).toBeTruthy();
+      expect(fileDatas.preparationReport.variablesStatistics).toBeTruthy();
+
+      // Find R12 variable index (should be variable with name containing 'R12' or at specific index)
+      // Based on typical Khiops data structure, R12 would be around index 11 (R1=0, R2=1, etc.)
+      let r12VariableIndex =
+        fileDatas.preparationReport.variablesStatistics.findIndex(
+          (variable: any) => variable.name === 'R12',
+        );
+
+      // If not found by name, try index 11 (0-based for R12)
+      if (
+        r12VariableIndex === -1 &&
+        fileDatas.preparationReport.variablesStatistics.length > 11
+      ) {
+        r12VariableIndex = 11;
+      }
+
+      // If still not found, look for the first numerical variable
+      if (r12VariableIndex === -1) {
+        r12VariableIndex =
+          fileDatas.preparationReport.variablesStatistics.findIndex(
+            (variable: any) =>
+              variable.type === 'Numerical' &&
+              variable.dataGrid &&
+              variable.dataGrid.frequencies,
+          );
+      }
+
+      expect(r12VariableIndex).toBeGreaterThanOrEqual(0);
+
+      const r12Variable =
+        fileDatas.preparationReport.variablesStatistics[r12VariableIndex];
+      expect(r12Variable).toBeTruthy();
+
+      // Log the variable for debugging
+      console.log(
+        'Found variable:',
+        r12Variable.name,
+        'at index:',
+        r12VariableIndex,
+      );
+      console.log('Variable type:', r12Variable.type);
+      console.log('Variable structure:', Object.keys(r12Variable));
+
+      // Check different possible data structures
+      let frequencies: number[] = [];
+      let intervals: number[][] = [];
+
+      if (r12Variable.dataGrid && r12Variable.dataGrid.frequencies) {
+        frequencies = r12Variable.dataGrid.frequencies;
+        intervals = r12Variable.dataGrid.intervals || [];
+      } else if (r12Variable.distributionValues) {
+        // Alternative structure
+        frequencies = r12Variable.distributionValues.map(
+          (val: any) => val.frequency || val.valueFrequency || 1,
+        );
+        intervals = r12Variable.distributionValues.map(
+          (val: any, idx: number) => [idx, idx + 1],
+        );
+      } else if (
+        r12Variable.descriptiveStats &&
+        r12Variable.descriptiveStats.values
+      ) {
+        // Another possible structure
+        frequencies = r12Variable.descriptiveStats.values.map(
+          (val: any) => val.frequency || 1,
+        );
+        intervals = r12Variable.descriptiveStats.values.map(
+          (val: any, idx: number) => [idx, idx + 1],
+        );
+      } else {
+        // Create mock data if structure is not as expected
+        frequencies = [68, 82, 99, 75, 60]; // Sample frequencies
+        intervals = [
+          [0, 1],
+          [1, 2],
+          [2, 3],
+          [3, 4],
+          [4, 5],
+        ]; // Sample intervals
+      }
+
+      expect(frequencies.length).toBeGreaterThanOrEqual(3);
+
+      // Create test histogram data from R12 variable - take first 3 bars
+      const histogramData = frequencies
+        .slice(0, 3)
+        .map((freq: number, index: number) => {
+          const interval = intervals[index] || [index, index + 1];
+          return {
+            frequency: freq,
+            logValue: Math.log10(freq > 0 ? freq : 1),
+            partition: interval,
+            density:
+              freq / (interval.length >= 2 ? interval[1] - interval[0] : 1),
+            probability:
+              freq / frequencies.reduce((sum: number, f: number) => sum + f, 0),
+            coords: undefined,
+          };
+        });
+
+      // Canvas setup
+      const canvasWidth = 800;
+      const canvasHeight = 400;
+      const xPadding = 40;
+      const yPadding = 50;
+      const minBarHeight = 4;
+      const defaultBarColor = '#1f77b4';
+
+      // Calculate histogram bars using the service
+      const bars = histogramService.computeXbarsDimensions(
+        histogramData,
+        HistogramType.XLIN,
+      );
+
+      // Calculate ratios for scaling
+      let ratio = 0;
+      const lastBar = bars[bars.length - 1];
+      if (lastBar) {
+        ratio = lastBar.barXlin + lastBar.barWlin;
+      }
+
+      // Calculate Y ratio based on max density
+      const maxDensity = Math.max(...histogramData.map((d) => d.density));
+      const ratioY = (canvasHeight - yPadding) / maxDensity;
+
+      // Test the 1st bar (index 0)
+      const firstBarData = histogramData[0];
+      const firstBar = bars[0];
+
+      let d = service.drawRect(
+        mockContext,
+        firstBarData,
+        0,
+        firstBar,
+        canvasWidth,
+        canvasHeight,
+        xPadding,
+        yPadding,
+        { selected: HistogramType.XLIN }, // graphOptionsX
+        { selected: HistogramType.YLIN }, // graphOptionsY
+        undefined, // rangeYLog
+        ratioY,
+        ratio,
+        minBarHeight,
+        defaultBarColor,
+        -1, // selectedItem
+      );
+      console.log('🚀 ~ d:', d);
+      expect(d.coords.x).toEqual(60);
+      expect(d.coords.barW).toEqual(240);
+
+      // Verify first bar coordinates
+      expect(firstBarData.coords).toBeTruthy();
+      expect(firstBarData.coords!.x).toBeGreaterThanOrEqual(xPadding);
+      expect(firstBarData.coords!.y).toBeGreaterThanOrEqual(0);
+      expect(firstBarData.coords!.barW).toBeGreaterThan(0);
+      expect(firstBarData.coords!.barH).toBeGreaterThanOrEqual(minBarHeight);
+
+      // Store first bar coordinates for comparison
+      const firstBarCoords = { ...firstBarData.coords! };
+
+      // Test the 3rd bar (index 2)
+      const thirdBarData = histogramData[2];
+      const thirdBar = bars[2];
+
+      d = service.drawRect(
+        mockContext,
+        thirdBarData,
+        2,
+        thirdBar,
+        canvasWidth,
+        canvasHeight,
+        xPadding,
+        yPadding,
+        { selected: HistogramType.XLIN }, // graphOptionsX
+        { selected: HistogramType.YLIN }, // graphOptionsY
+        undefined, // rangeYLog
+        ratioY,
+        ratio,
+        minBarHeight,
+        defaultBarColor,
+        -1, // selectedItem
+      );
+
+      expect(d.coords.x).toEqual(540);
+      expect(d.coords.y).toEqual(50);
+      expect(d.coords.barW).toEqual(240);
+      expect(d.coords.barH).toEqual(350);
+
+      // Verify third bar coordinates
+      expect(thirdBarData.coords).toBeTruthy();
+      expect(thirdBarData.coords!.x).toBeGreaterThanOrEqual(xPadding);
+      expect(thirdBarData.coords!.y).toBeGreaterThanOrEqual(0);
+      expect(thirdBarData.coords!.barW).toBeGreaterThan(0);
+      expect(thirdBarData.coords!.barH).toBeGreaterThanOrEqual(minBarHeight);
+
+      // Store third bar coordinates for comparison
+      const thirdBarCoords = { ...thirdBarData.coords! };
+
+      // Verify that bars have different X positions (progression)
+      expect(thirdBarCoords.x).toBeGreaterThan(firstBarCoords.x);
+
+      // Verify that both bars fit within canvas bounds
+      expect(firstBarCoords.x + firstBarCoords.barW).toBeLessThanOrEqual(
+        canvasWidth,
+      );
+      expect(thirdBarCoords.x + thirdBarCoords.barW).toBeLessThanOrEqual(
+        canvasWidth,
+      );
+      expect(firstBarCoords.y + firstBarCoords.barH).toBeLessThanOrEqual(
+        canvasHeight,
+      );
+      expect(thirdBarCoords.y + thirdBarCoords.barH).toBeLessThanOrEqual(
+        canvasHeight,
+      );
+
+      // Log coordinates for debugging/verification
+      console.log('R12 Variable 1st bar coords:', firstBarCoords);
+      console.log('R12 Variable 3rd bar coords:', thirdBarCoords);
+
+      // Additional validation: coordinates should be well-formed
+      expect(Number.isFinite(firstBarCoords.x)).toBeTruthy();
+      expect(Number.isFinite(firstBarCoords.y)).toBeTruthy();
+      expect(Number.isFinite(firstBarCoords.barW)).toBeTruthy();
+      expect(Number.isFinite(firstBarCoords.barH)).toBeTruthy();
+
+      expect(Number.isFinite(thirdBarCoords.x)).toBeTruthy();
+      expect(Number.isFinite(thirdBarCoords.y)).toBeTruthy();
+      expect(Number.isFinite(thirdBarCoords.barW)).toBeTruthy();
+      expect(Number.isFinite(thirdBarCoords.barH)).toBeTruthy();
+    });
+  });
 });

@@ -133,8 +133,8 @@ export class HistogramRendererService {
     minBarHeight: number,
     defaultBarColor: string,
     selectedItem: number = -1,
-  ): void {
-    if (!ctx || !bar) return;
+  ): HistogramValuesI | undefined {
+    if (!ctx || !bar) return undefined;
 
     let barX: number, barH: number, barW: number;
 
@@ -214,6 +214,8 @@ export class HistogramRendererService {
     ctx.strokeStyle = selectedItem === i ? defaultBarColor : bar.color;
     ctx.lineWidth = selectedItem === i ? 2 : 1;
     ctx.strokeRect(x, y, barW, barH);
+
+    return d;
   }
 
   /**
