@@ -162,6 +162,7 @@ export class TreeNodeModel {
   }
 
   getInnerValueGroups(dimension: DimensionCovisualizationModel) {
+    this.innerValues = [];
     if (
       this.valueGroups &&
       dimension.type === TYPES.CATEGORICAL &&

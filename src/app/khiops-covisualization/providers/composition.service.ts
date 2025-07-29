@@ -5,6 +5,7 @@
  */
 
 import { Injectable } from '@angular/core';
+import * as _ from 'lodash'; // Important to import lodash in karma
 import { DimensionsDatasService } from './dimensions-datas.service';
 import { TreeNodeModel } from '../model/tree-node.model';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
@@ -246,7 +247,12 @@ export class CompositionService {
     node: TreeNodeModel,
     compositionValues: CompositionModel[],
   ): CompositionModel[] {
-    for (const composition of compositionValues) {
+    // Create deep copies to avoid mutating the original objects
+    const formattedCompositions = compositionValues.map((composition) =>
+      _.cloneDeep(composition),
+    );
+
+    for (const composition of formattedCompositions) {
       // set the rank of all childs to the rank of the parent #206
       composition.rank = node.rank;
       composition.type = composition.innerVariableType;
@@ -295,7 +301,7 @@ export class CompositionService {
         // because they are sorted by part, not by frequencies
       }
     }
-    return compositionValues;
+    return formattedCompositions;
   }
 
   /**

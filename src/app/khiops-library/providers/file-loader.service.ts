@@ -148,6 +148,7 @@ export class FileLoaderService {
     // ======================
     //
     let urlKC = './assets/mocks/kc/Coclustering-100x100.json';
+    // let urlKC = './assets/mocks/kc/IV-Poissons.khcj';
     // let urlKC = './assets/mocks/kc/cc.json';
     // let urlKC = './assets/mocks/kc/Coclustering.json';
     // let urlKC = './assets/mocks/kc/Co-simple-2vars.json';
