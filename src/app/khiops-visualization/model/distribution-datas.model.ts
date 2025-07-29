@@ -50,11 +50,9 @@ export class DistributionDatasModel {
    */
   setDefaultGraphOptions() {
     // Check if scale persistence is enabled
-    const persistScaleValue = AppService.Ls.get(
-      LS.SETTING_PERSIST_SCALE_OPTIONS,
-    );
     const persistScaleOptions =
-      persistScaleValue === 'true' || persistScaleValue === undefined;
+      AppService.Ls.get(LS.SETTING_PERSIST_SCALE_OPTIONS)?.toString() ===
+        'true' || false;
 
     // Configure Y-axis options (Linear/Log)
     this.distributionGraphOptionsY = this.createGraphOptions(
