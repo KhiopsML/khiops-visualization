@@ -1,0 +1,1207 @@
+{
+	"tool": "Khiops Coclustering",
+	"version": "VERSION",
+	"shortDescription": "",
+	"coclusteringReport": {
+		"summary": {
+			"instances": 2354,
+			"cells": 112,
+			"nullCost": 28275.43954,
+			"cost": 27884.20558,
+			"level": 0.0138365297,
+			"initialDimensions": 2,
+			"frequencyVariable": "",
+			"dictionary": "Glass",
+			"database": "..\/..\/..\/datasets\/Glass\/Glass.txt",
+			"samplePercentage": 100,
+			"samplingMode": "Include sample",
+			"selectionVariable": "",
+			"selectionValue": ""
+		},
+		"dimensionSummaries": [
+			{
+				"name": "Instance index",
+				"type": "Categorical",
+				"parts": 8,
+				"initialParts": 8,
+				"values": 214,
+				"interest": 1,
+				"description": ""
+			},
+			{
+				"name": "Variables",
+				"isVarPart": true,
+				"type": "Categorical",
+				"parts": 17,
+				"initialParts": 17,
+				"values": 48,
+				"interest": 1,
+				"description": ""
+			}
+		],
+		"dimensionPartitions": [
+			{
+				"name": "Instance index",
+				"type": "Categorical",
+				"valueGroups": [
+					{
+						"cluster": "{140, 141, 76, ...}",
+						"values": ["140","141","76","121","125","142","75","85","123","89","139","77","79","120","144","83","81","82","145","84","78","88","95","124","90","74","91","96","87","100","119","93","80"],
+						"valueFrequencies": [11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11],
+						"valueTypicalities": [1,1,0.99112,0.959022,0.959022,0.959022,0.959022,0.959022,0.955883,0.955883,0.91811,0.916225,0.884128,0.880989,0.865474,0.86078,0.860499,0.860499,0.851619,0.834807,0.769596,0.768791,0.768791,0.757648,0.757648,0.743076,0.737495,0.694014,0.682754,0.492946,0.485332,0.430722,0.416687]
+					},
+					{
+						"cluster": "{32, 34, 25, ...}",
+						"values": ["32","34","25","42","29","15","46","17","30","33","35","43","39","36","59","27","13","22","157","18","16","14","24","26","28","31","150","11","156","6","60","8","149","155","158","37","12","7","21","9","61","152","5","58","151","4"],
+						"valueFrequencies": [11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11],
+						"valueTypicalities": [1,1,0.98376,0.98376,0.978895,0.963699,0.950039,0.947459,0.947459,0.947459,0.947459,0.947459,0.933799,0.928934,0.928934,0.916552,0.909076,0.889476,0.882632,0.882504,0.877639,0.871335,0.859114,0.853608,0.853608,0.853608,0.840793,0.838481,0.828753,0.824724,0.824724,0.824724,0.824553,0.824553,0.824553,0.824553,0.810585,0.804904,0.790986,0.790805,0.780402,0.772,0.752826,0.664162,0.658708,0.328786]
+					},
+					{
+						"cluster": "{118, 137, 115, ...}",
+						"values": ["118","137","115","143","127","116","117","122","92","98","138","147","101","73","134","136","97","146","128","130","126","102","135","103","94"],
+						"valueFrequencies": [11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11],
+						"valueTypicalities": [1,0.974277,0.958088,0.957726,0.925289,0.919759,0.919759,0.919759,0.908153,0.908153,0.907357,0.869792,0.843556,0.836053,0.82948,0.82948,0.789396,0.78097,0.754236,0.719788,0.690893,0.656525,0.655129,0.618789,0.437057]
+					},
+					{
+						"cluster": "{51, 55, 54, ...}",
+						"values": ["51","55","54","53","48","56","162","20","47","38","10","161","3","44","62","160","154","57","163","148"],
+						"valueFrequencies": [11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11],
+						"valueTypicalities": [1,0.988864,0.979001,0.977266,0.960321,0.959309,0.958712,0.951503,0.942493,0.912096,0.894359,0.874804,0.851297,0.845281,0.8063,0.797637,0.766722,0.630146,0.54459,0.49154]
+					},
+					{
+						"cluster": "{202, 204, 214, ...}",
+						"values": ["202","204","214","193","196","205","206","208","195","212","192","215","200","213","199","197","198","210","207","211","201","194","191"],
+						"valueFrequencies": [11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11],
+						"valueTypicalities": [1,1,0.979373,0.94394,0.94394,0.94394,0.94394,0.94394,0.924532,0.924532,0.893757,0.893757,0.883357,0.834956,0.822154,0.821455,0.821455,0.801551,0.792836,0.63824,0.635878,0.575522,0.528307]
+					},
+					{
+						"cluster": "{187, 165, 209, ...}",
+						"values": ["187","165","209","186","188","182","173","174","185","184","176","183","170","190","180","178","169","172","166","179","181","175","203","167","168","177","86","171","189"],
+						"valueFrequencies": [11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11],
+						"valueTypicalities": [1,0.997448,0.94304,0.939774,0.936234,0.929583,0.917213,0.917213,0.828092,0.814186,0.803894,0.79927,0.780673,0.756413,0.751403,0.661318,0.659983,0.657315,0.648767,0.647069,0.627487,0.610647,0.593318,0.585386,0.541957,0.532133,0.502518,0.415341,0.27266]
+					},
+					{
+						"cluster": "{49, 52, 159, ...}",
+						"values": ["49","52","159","45","19","40","41","64","50","66","23","65","153","67","68","71","164","69","70","63","2","72"],
+						"valueFrequencies": [11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11],
+						"valueTypicalities": [1,0.99225,0.977441,0.969691,0.94831,0.94831,0.94831,0.890625,0.880778,0.880778,0.873912,0.853059,0.823928,0.803001,0.772121,0.759042,0.668678,0.650384,0.650384,0.621491,0.555611,0.17609]
+					},
+					{
+						"cluster": "{108, 109, 133, ...}",
+						"values": ["108","109","133","105","132","111","106","107","129","114","112","113","131","110","104","99"],
+						"valueFrequencies": [11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11],
+						"valueTypicalities": [1,0.973876,0.973876,0.944625,0.887894,0.883038,0.881547,0.863142,0.845999,0.829952,0.81267,0.803444,0.711541,0.684322,0.611517,0.557356]
+					}
+				],
+				"defaultGroupIndex": 7
+			},
+			{
+				"name": "Variables",
+				"type": "Categorical",
+				"innerVariables": {
+					"dimensionSummaries": [
+						{
+							"name": "Al",
+							"type": "Numerical",
+							"parts": 4,
+							"initialParts": 4,
+							"values": 214,
+							"interest": 1,
+							"description": "",
+							"min": 0.29,
+							"max": 3.5
+						},
+						{
+							"name": "Ba",
+							"type": "Numerical",
+							"parts": 2,
+							"initialParts": 2,
+							"values": 214,
+							"interest": 1,
+							"description": "",
+							"min": 0,
+							"max": 3.15
+						},
+						{
+							"name": "Ca",
+							"type": "Numerical",
+							"parts": 5,
+							"initialParts": 5,
+							"values": 214,
+							"interest": 1,
+							"description": "",
+							"min": 5.43,
+							"max": 16.19
+						},
+						{
+							"name": "Fe",
+							"type": "Numerical",
+							"parts": 2,
+							"initialParts": 2,
+							"values": 214,
+							"interest": 1,
+							"description": "",
+							"min": 0,
+							"max": 0.51
+						},
+						{
+							"name": "Id",
+							"type": "Numerical",
+							"parts": 5,
+							"initialParts": 5,
+							"values": 214,
+							"interest": 1,
+							"description": "",
+							"min": 1,
+							"max": 214
+						},
+						{
+							"name": "K",
+							"type": "Numerical",
+							"parts": 5,
+							"initialParts": 5,
+							"values": 214,
+							"interest": 1,
+							"description": "",
+							"min": 0,
+							"max": 6.21
+						},
+						{
+							"name": "Mg",
+							"type": "Numerical",
+							"parts": 4,
+							"initialParts": 4,
+							"values": 214,
+							"interest": 1,
+							"description": "",
+							"min": 0,
+							"max": 4.49
+						},
+						{
+							"name": "Na",
+							"type": "Numerical",
+							"parts": 6,
+							"initialParts": 6,
+							"values": 214,
+							"interest": 1,
+							"description": "",
+							"min": 10.73,
+							"max": 17.38
+						},
+						{
+							"name": "RI",
+							"type": "Numerical",
+							"parts": 5,
+							"initialParts": 5,
+							"values": 214,
+							"interest": 1,
+							"description": "",
+							"min": 1.51115,
+							"max": 1.53393
+						},
+						{
+							"name": "Si",
+							"type": "Numerical",
+							"parts": 6,
+							"initialParts": 6,
+							"values": 214,
+							"interest": 1,
+							"description": "",
+							"min": 69.81,
+							"max": 75.41
+						},
+						{
+							"name": "Type",
+							"type": "Categorical",
+							"parts": 4,
+							"initialParts": 4,
+							"values": 6,
+							"interest": 1,
+							"description": ""
+						}
+					],
+					"dimensionPartitions": [
+						{
+							"name": "Al",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "Al ]-inf;0.905]",
+									"bounds": [0.29,0.905]
+								},
+								{
+									"cluster": "Al ]0.905;1.435]",
+									"bounds": [0.905,1.435]
+								},
+								{
+									"cluster": "Al ]1.435;1.775]",
+									"bounds": [1.435,1.775]
+								},
+								{
+									"cluster": "Al ]1.775;+inf[",
+									"bounds": [1.775,3.5]
+								}
+							]
+						},
+						{
+							"name": "Ba",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "Ba ]-inf;0.535]",
+									"bounds": [0,0.535]
+								},
+								{
+									"cluster": "Ba ]0.535;+inf[",
+									"bounds": [0.535,3.15]
+								}
+							]
+						},
+						{
+							"name": "Ca",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "Ca ]-inf;7.845]",
+									"bounds": [5.43,7.845]
+								},
+								{
+									"cluster": "Ca ]7.845;8.235]",
+									"bounds": [7.845,8.235]
+								},
+								{
+									"cluster": "Ca ]8.235;8.8]",
+									"bounds": [8.235,8.8]
+								},
+								{
+									"cluster": "Ca ]8.8;9.59]",
+									"bounds": [8.8,9.59]
+								},
+								{
+									"cluster": "Ca ]9.59;+inf[",
+									"bounds": [9.59,16.19]
+								}
+							]
+						},
+						{
+							"name": "Fe",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "Fe ]-inf;0.095]",
+									"bounds": [0,0.095]
+								},
+								{
+									"cluster": "Fe ]0.095;+inf[",
+									"bounds": [0.095,0.51]
+								}
+							]
+						},
+						{
+							"name": "Id",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "Id ]-inf;67.5]",
+									"bounds": [1,67.5]
+								},
+								{
+									"cluster": "Id ]67.5;147.5]",
+									"bounds": [67.5,147.5]
+								},
+								{
+									"cluster": "Id ]147.5;161.5]",
+									"bounds": [147.5,161.5]
+								},
+								{
+									"cluster": "Id ]161.5;187.5]",
+									"bounds": [161.5,187.5]
+								},
+								{
+									"cluster": "Id ]187.5;+inf[",
+									"bounds": [187.5,214]
+								}
+							]
+						},
+						{
+							"name": "K",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "K ]-inf;0.01]",
+									"bounds": [0,0.01]
+								},
+								{
+									"cluster": "K ]0.01;0.415]",
+									"bounds": [0.01,0.415]
+								},
+								{
+									"cluster": "K ]0.415;0.605]",
+									"bounds": [0.415,0.605]
+								},
+								{
+									"cluster": "K ]0.605;0.725]",
+									"bounds": [0.605,0.725]
+								},
+								{
+									"cluster": "K ]0.725;+inf[",
+									"bounds": [0.725,6.21]
+								}
+							]
+						},
+						{
+							"name": "Mg",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "Mg ]-inf;1.98]",
+									"bounds": [0,1.98]
+								},
+								{
+									"cluster": "Mg ]1.98;3.335]",
+									"bounds": [1.98,3.335]
+								},
+								{
+									"cluster": "Mg ]3.335;3.575]",
+									"bounds": [3.335,3.575]
+								},
+								{
+									"cluster": "Mg ]3.575;+inf[",
+									"bounds": [3.575,4.49]
+								}
+							]
+						},
+						{
+							"name": "Na",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "Na ]-inf;12.555]",
+									"bounds": [10.73,12.555]
+								},
+								{
+									"cluster": "Na ]12.555;12.895]",
+									"bounds": [12.555,12.895]
+								},
+								{
+									"cluster": "Na ]12.895;13.67]",
+									"bounds": [12.895,13.67]
+								},
+								{
+									"cluster": "Na ]13.67;13.85]",
+									"bounds": [13.67,13.85]
+								},
+								{
+									"cluster": "Na ]13.85;14.365]",
+									"bounds": [13.85,14.365]
+								},
+								{
+									"cluster": "Na ]14.365;+inf[",
+									"bounds": [14.365,17.38]
+								}
+							]
+						},
+						{
+							"name": "RI",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "RI ]-inf;1.51561]",
+									"bounds": [1.51115,1.51561]
+								},
+								{
+									"cluster": "RI ]1.51561;1.517195]",
+									"bounds": [1.51561,1.517195]
+								},
+								{
+									"cluster": "RI ]1.517195;1.518265]",
+									"bounds": [1.517195,1.518265]
+								},
+								{
+									"cluster": "RI ]1.518265;1.51917]",
+									"bounds": [1.518265,1.51917]
+								},
+								{
+									"cluster": "RI ]1.51917;+inf[",
+									"bounds": [1.51917,1.53393]
+								}
+							]
+						},
+						{
+							"name": "Si",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "Si ]-inf;72.07]",
+									"bounds": [69.81,72.07]
+								},
+								{
+									"cluster": "Si ]72.07;72.445]",
+									"bounds": [72.07,72.445]
+								},
+								{
+									"cluster": "Si ]72.445;72.965]",
+									"bounds": [72.445,72.965]
+								},
+								{
+									"cluster": "Si ]72.965;73.095]",
+									"bounds": [72.965,73.095]
+								},
+								{
+									"cluster": "Si ]73.095;73.47]",
+									"bounds": [73.095,73.47]
+								},
+								{
+									"cluster": "Si ]73.47;+inf[",
+									"bounds": [73.47,75.41]
+								}
+							]
+						},
+						{
+							"name": "Type",
+							"type": "Categorical",
+							"valueGroups": [
+								{
+									"cluster": "Type {1, 3}",
+									"values": ["1","3"],
+									"valueFrequencies": [70,17]
+								},
+								{
+									"cluster": "Type {2}",
+									"values": ["2"],
+									"valueFrequencies": [76]
+								},
+								{
+									"cluster": "Type {7}",
+									"values": ["7"],
+									"valueFrequencies": [29]
+								},
+								{
+									"cluster": "Type {5, 6}",
+									"values": ["5","6"],
+									"valueFrequencies": [13,9]
+								}
+							],
+							"defaultGroupIndex": 3
+						}
+					]
+				},
+				"valueGroups": [
+					{
+						"cluster": "{Al ]-inf;0.905], K ]0.01;0.415], RI ]1.51917;+inf[, ...}",
+						"values": ["Al ]-inf;0.905]","K ]0.01;0.415]","RI ]1.51917;+inf[","Si ]-inf;72.07]"],
+						"valueFrequencies": [27,50,53,40],
+						"valueTypicalities": [0,0,0,0]
+					},
+					{
+						"cluster": "{Ca ]9.59;+inf[, Na ]-inf;12.555], Na ]13.67;13.85]}",
+						"values": ["Ca ]9.59;+inf[","Na ]-inf;12.555]","Na ]13.67;13.85]"],
+						"valueFrequencies": [40,13,14],
+						"valueTypicalities": [0,0,0]
+					},
+					{
+						"cluster": "{Al ]1.775;+inf[, Ba ]0.535;+inf[, Id ]187.5;+inf[, ...}",
+						"values": ["Al ]1.775;+inf[","Ba ]0.535;+inf[","Id ]187.5;+inf[","K ]-inf;0.01]","Mg ]-inf;1.98]","Na ]14.365;+inf[","RI ]-inf;1.51561]","Si ]73.47;+inf[","Type {7}"],
+						"valueFrequencies": [41,27,27,30,53,26,13,13,29],
+						"valueTypicalities": [0,0,0,0,0,0,0,0,0]
+					},
+					{
+						"cluster": "{Ca ]-inf;7.845], Id ]161.5;187.5], K ]0.725;+inf[, ...}",
+						"values": ["Ca ]-inf;7.845]","Id ]161.5;187.5]","K ]0.725;+inf[","Type {5, 6}"],
+						"valueFrequencies": [13,26,13,22],
+						"valueTypicalities": [0,0,0,0]
+					},
+					{
+						"cluster": "{Ca ]8.8;9.59], Na ]13.85;14.365]}",
+						"values": ["Ca ]8.8;9.59]","Na ]13.85;14.365]"],
+						"valueFrequencies": [41,27],
+						"valueTypicalities": [0,0]
+					},
+					{
+						"cluster": "{Mg ]1.98;3.335], RI ]1.518265;1.51917], Si ]72.07;72.445]}",
+						"values": ["Mg ]1.98;3.335]","RI ]1.518265;1.51917]","Si ]72.07;72.445]"],
+						"valueFrequencies": [26,28,27],
+						"valueTypicalities": [0,0,0]
+					},
+					{
+						"cluster": "{Al ]0.905;1.435], K ]0.415;0.605], RI ]1.517195;1.518265]}",
+						"values": ["Al ]0.905;1.435]","K ]0.415;0.605]","RI ]1.517195;1.518265]"],
+						"valueFrequencies": [93,78,53],
+						"valueTypicalities": [0,0,0]
+					},
+					{
+						"cluster": "{Ca ]8.235;8.8], Si ]72.965;73.095]}",
+						"values": ["Ca ]8.235;8.8]","Si ]72.965;73.095]"],
+						"valueFrequencies": [80,27],
+						"valueTypicalities": [0,0]
+					},
+					{
+						"cluster": "{Id ]-inf;67.5], Id ]147.5;161.5], Type {1, 3}}",
+						"values": ["Id ]-inf;67.5]","Id ]147.5;161.5]","Type {1, 3}"],
+						"valueFrequencies": [67,14,87],
+						"valueTypicalities": [0,0,0]
+					},
+					{
+						"cluster": "{Al ]1.435;1.775], Na ]12.895;13.67], Si ]72.445;72.965]}",
+						"values": ["Al ]1.435;1.775]","Na ]12.895;13.67]","Si ]72.445;72.965]"],
+						"valueFrequencies": [53,94,67],
+						"valueTypicalities": [0,0,0]
+					},
+					{
+						"cluster": "{Ba ]-inf;0.535], Fe ]0.095;+inf[}",
+						"values": ["Ba ]-inf;0.535]","Fe ]0.095;+inf["],
+						"valueFrequencies": [187,55],
+						"valueTypicalities": [0,0]
+					},
+					{
+						"cluster": "{Mg ]3.575;+inf[}",
+						"values": ["Mg ]3.575;+inf["],
+						"valueFrequencies": [67],
+						"valueTypicalities": [0]
+					},
+					{
+						"cluster": "{Id ]67.5;147.5], Type {2}}",
+						"values": ["Id ]67.5;147.5]","Type {2}"],
+						"valueFrequencies": [80,76],
+						"valueTypicalities": [0,0]
+					},
+					{
+						"cluster": "{Ca ]7.845;8.235], K ]0.605;0.725]}",
+						"values": ["Ca ]7.845;8.235]","K ]0.605;0.725]"],
+						"valueFrequencies": [40,43],
+						"valueTypicalities": [0,0]
+					},
+					{
+						"cluster": "{Mg ]3.335;3.575], Na ]12.555;12.895]}",
+						"values": ["Mg ]3.335;3.575]","Na ]12.555;12.895]"],
+						"valueFrequencies": [68,40],
+						"valueTypicalities": [0,0]
+					},
+					{
+						"cluster": "{Fe ]-inf;0.095]}",
+						"values": ["Fe ]-inf;0.095]"],
+						"valueFrequencies": [159],
+						"valueTypicalities": [0]
+					},
+					{
+						"cluster": "{RI ]1.51561;1.517195], Si ]73.095;73.47]}",
+						"values": ["RI ]1.51561;1.517195]","Si ]73.095;73.47]"],
+						"valueFrequencies": [67,40],
+						"valueTypicalities": [0,0]
+					}
+				],
+				"defaultGroupIndex": 0
+			}
+		],
+		"dimensionHierarchies": [
+			{
+				"name": "Instance index",
+				"type": "Categorical",
+				"clusters": [
+					{
+						"cluster": "{140, 141, 76, ...}",
+						"parentCluster": "A6",
+						"frequency": 363,
+						"interest": 0.864268,
+						"hierarchicalLevel": 1,
+						"rank": 1,
+						"hierarchicalRank": 25,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{32, 34, 25, ...}",
+						"parentCluster": "A9",
+						"frequency": 506,
+						"interest": 1,
+						"hierarchicalLevel": 1,
+						"rank": 3,
+						"hierarchicalRank": 25,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{118, 137, 115, ...}",
+						"parentCluster": "A17",
+						"frequency": 275,
+						"interest": 0.696936,
+						"hierarchicalLevel": 1,
+						"rank": 5,
+						"hierarchicalRank": 25,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{51, 55, 54, ...}",
+						"parentCluster": "A17",
+						"frequency": 220,
+						"interest": 0.607281,
+						"hierarchicalLevel": 1,
+						"rank": 7,
+						"hierarchicalRank": 25,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{202, 204, 214, ...}",
+						"parentCluster": "A10",
+						"frequency": 253,
+						"interest": 0.997228,
+						"hierarchicalLevel": 1,
+						"rank": 9,
+						"hierarchicalRank": 25,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{187, 165, 209, ...}",
+						"parentCluster": "A10",
+						"frequency": 319,
+						"interest": 0.828597,
+						"hierarchicalLevel": 1,
+						"rank": 11,
+						"hierarchicalRank": 25,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{49, 52, 159, ...}",
+						"parentCluster": "A20",
+						"frequency": 242,
+						"interest": 0.743848,
+						"hierarchicalLevel": 1,
+						"rank": 13,
+						"hierarchicalRank": 25,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{108, 109, 133, ...}",
+						"parentCluster": "A20",
+						"frequency": 176,
+						"interest": 0.612562,
+						"hierarchicalLevel": 1,
+						"rank": 15,
+						"hierarchicalRank": 25,
+						"isLeaf": true
+					},
+					{
+						"cluster": "A6",
+						"parentCluster": "A2",
+						"frequency": 1364,
+						"interest": 0.839434,
+						"hierarchicalLevel": 0.583027,
+						"rank": 2,
+						"hierarchicalRank": 7,
+						"isLeaf": false
+					},
+					{
+						"cluster": "A9",
+						"parentCluster": "A6",
+						"frequency": 1001,
+						"interest": 0.830429,
+						"hierarchicalLevel": 0.700843,
+						"rank": 4,
+						"hierarchicalRank": 10,
+						"isLeaf": false
+					},
+					{
+						"cluster": "A17",
+						"parentCluster": "A9",
+						"frequency": 495,
+						"interest": 0.657089,
+						"hierarchicalLevel": 0.939768,
+						"rank": 6,
+						"hierarchicalRank": 18,
+						"isLeaf": false
+					},
+					{
+						"cluster": "A2",
+						"parentCluster": "",
+						"frequency": 2354,
+						"interest": 0.828136,
+						"hierarchicalLevel": 0.317333,
+						"rank": 8,
+						"hierarchicalRank": 3,
+						"isLeaf": false
+					},
+					{
+						"cluster": "A10",
+						"parentCluster": "A4",
+						"frequency": 572,
+						"interest": 0.903184,
+						"hierarchicalLevel": 0.736944,
+						"rank": 10,
+						"hierarchicalRank": 11,
+						"isLeaf": false
+					},
+					{
+						"cluster": "A4",
+						"parentCluster": "A2",
+						"frequency": 990,
+						"interest": 0.812569,
+						"hierarchicalLevel": 0.557969,
+						"rank": 12,
+						"hierarchicalRank": 5,
+						"isLeaf": false
+					},
+					{
+						"cluster": "A20",
+						"parentCluster": "A4",
+						"frequency": 418,
+						"interest": 0.68857,
+						"hierarchicalLevel": 0.973481,
+						"rank": 14,
+						"hierarchicalRank": 21,
+						"isLeaf": false
+					}
+				]
+			},
+			{
+				"name": "Variables",
+				"type": "Categorical",
+				"clusters": [
+					{
+						"cluster": "{Al ]-inf;0.905], K ]0.01;0.415], RI ]1.51917;+inf[, ...}",
+						"parentCluster": "B23",
+						"frequency": 170,
+						"interest": 0.662773,
+						"hierarchicalLevel": 1,
+						"rank": 1,
+						"hierarchicalRank": 25,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Ca ]9.59;+inf[, Na ]-inf;12.555], Na ]13.67;13.85]}",
+						"parentCluster": "B23",
+						"frequency": 67,
+						"interest": 0.44233,
+						"hierarchicalLevel": 1,
+						"rank": 3,
+						"hierarchicalRank": 25,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Al ]1.775;+inf[, Ba ]0.535;+inf[, Id ]187.5;+inf[, ...}",
+						"parentCluster": "B7",
+						"frequency": 259,
+						"interest": 1,
+						"hierarchicalLevel": 1,
+						"rank": 5,
+						"hierarchicalRank": 25,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Ca ]-inf;7.845], Id ]161.5;187.5], K ]0.725;+inf[, ...}",
+						"parentCluster": "B13",
+						"frequency": 74,
+						"interest": 0.567512,
+						"hierarchicalLevel": 1,
+						"rank": 7,
+						"hierarchicalRank": 25,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Ca ]8.8;9.59], Na ]13.85;14.365]}",
+						"parentCluster": "B19",
+						"frequency": 68,
+						"interest": 0.40609,
+						"hierarchicalLevel": 1,
+						"rank": 9,
+						"hierarchicalRank": 25,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Mg ]1.98;3.335], RI ]1.518265;1.51917], Si ]72.07;72.445]}",
+						"parentCluster": "B19",
+						"frequency": 81,
+						"interest": 0.438302,
+						"hierarchicalLevel": 1,
+						"rank": 11,
+						"hierarchicalRank": 25,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Al ]0.905;1.435], K ]0.415;0.605], RI ]1.517195;1.518265]}",
+						"parentCluster": "B18",
+						"frequency": 224,
+						"interest": 0.591357,
+						"hierarchicalLevel": 1,
+						"rank": 13,
+						"hierarchicalRank": 25,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Ca ]8.235;8.8], Si ]72.965;73.095]}",
+						"parentCluster": "B18",
+						"frequency": 107,
+						"interest": 0.469689,
+						"hierarchicalLevel": 1,
+						"rank": 15,
+						"hierarchicalRank": 25,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Id ]-inf;67.5], Id ]147.5;161.5], Type {1, 3}}",
+						"parentCluster": "B14",
+						"frequency": 168,
+						"interest": 0.735173,
+						"hierarchicalLevel": 1,
+						"rank": 17,
+						"hierarchicalRank": 25,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Al ]1.435;1.775], Na ]12.895;13.67], Si ]72.445;72.965]}",
+						"parentCluster": "B15",
+						"frequency": 214,
+						"interest": 0.497762,
+						"hierarchicalLevel": 1,
+						"rank": 19,
+						"hierarchicalRank": 25,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Ba ]-inf;0.535], Fe ]0.095;+inf[}",
+						"parentCluster": "B21",
+						"frequency": 242,
+						"interest": 0.469305,
+						"hierarchicalLevel": 1,
+						"rank": 21,
+						"hierarchicalRank": 25,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Mg ]3.575;+inf[}",
+						"parentCluster": "B21",
+						"frequency": 67,
+						"interest": 0.373582,
+						"hierarchicalLevel": 1,
+						"rank": 23,
+						"hierarchicalRank": 25,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Id ]67.5;147.5], Type {2}}",
+						"parentCluster": "B12",
+						"frequency": 156,
+						"interest": 0.686891,
+						"hierarchicalLevel": 1,
+						"rank": 25,
+						"hierarchicalRank": 25,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Ca ]7.845;8.235], K ]0.605;0.725]}",
+						"parentCluster": "B22",
+						"frequency": 83,
+						"interest": 0.495777,
+						"hierarchicalLevel": 1,
+						"rank": 27,
+						"hierarchicalRank": 25,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Mg ]3.335;3.575], Na ]12.555;12.895]}",
+						"parentCluster": "B22",
+						"frequency": 108,
+						"interest": 0.468644,
+						"hierarchicalLevel": 1,
+						"rank": 29,
+						"hierarchicalRank": 25,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Fe ]-inf;0.095]}",
+						"parentCluster": "B16",
+						"frequency": 159,
+						"interest": 0.415392,
+						"hierarchicalLevel": 1,
+						"rank": 31,
+						"hierarchicalRank": 25,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{RI ]1.51561;1.517195], Si ]73.095;73.47]}",
+						"parentCluster": "B16",
+						"frequency": 107,
+						"interest": 0.497429,
+						"hierarchicalLevel": 1,
+						"rank": 33,
+						"hierarchicalRank": 25,
+						"isLeaf": true
+					},
+					{
+						"cluster": "B23",
+						"parentCluster": "B3",
+						"frequency": 237,
+						"interest": 0.600453,
+						"hierarchicalLevel": 0.995749,
+						"rank": 2,
+						"hierarchicalRank": 24,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B3",
+						"parentCluster": "B1",
+						"frequency": 719,
+						"interest": 0.704339,
+						"hierarchicalLevel": 0.582395,
+						"rank": 4,
+						"hierarchicalRank": 4,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B7",
+						"parentCluster": "B3",
+						"frequency": 482,
+						"interest": 0.75542,
+						"hierarchicalLevel": 0.63928,
+						"rank": 6,
+						"hierarchicalRank": 8,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B13",
+						"parentCluster": "B7",
+						"frequency": 223,
+						"interest": 0.471357,
+						"hierarchicalLevel": 0.85063,
+						"rank": 8,
+						"hierarchicalRank": 14,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B19",
+						"parentCluster": "B13",
+						"frequency": 149,
+						"interest": 0.423602,
+						"hierarchicalLevel": 0.964554,
+						"rank": 10,
+						"hierarchicalRank": 20,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B1",
+						"parentCluster": "",
+						"frequency": 2354,
+						"interest": 0.584521,
+						"hierarchicalLevel": 0.350211,
+						"rank": 12,
+						"hierarchicalRank": 2,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B18",
+						"parentCluster": "B14",
+						"frequency": 331,
+						"interest": 0.552026,
+						"hierarchicalLevel": 0.954408,
+						"rank": 14,
+						"hierarchicalRank": 19,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B14",
+						"parentCluster": "B5",
+						"frequency": 499,
+						"interest": 0.613687,
+						"hierarchicalLevel": 0.888343,
+						"rank": 16,
+						"hierarchicalRank": 15,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B5",
+						"parentCluster": "B1",
+						"frequency": 1635,
+						"interest": 0.531831,
+						"hierarchicalLevel": 0.593199,
+						"rank": 18,
+						"hierarchicalRank": 6,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B15",
+						"parentCluster": "B12",
+						"frequency": 523,
+						"interest": 0.468686,
+						"hierarchicalLevel": 0.907964,
+						"rank": 20,
+						"hierarchicalRank": 16,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B21",
+						"parentCluster": "B15",
+						"frequency": 309,
+						"interest": 0.448549,
+						"hierarchicalLevel": 0.981296,
+						"rank": 22,
+						"hierarchicalRank": 22,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B12",
+						"parentCluster": "B8",
+						"frequency": 679,
+						"interest": 0.518819,
+						"hierarchicalLevel": 0.813467,
+						"rank": 24,
+						"hierarchicalRank": 13,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B8",
+						"parentCluster": "B5",
+						"frequency": 1136,
+						"interest": 0.495874,
+						"hierarchicalLevel": 0.679843,
+						"rank": 26,
+						"hierarchicalRank": 9,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B22",
+						"parentCluster": "B11",
+						"frequency": 191,
+						"interest": 0.480435,
+						"hierarchicalLevel": 0.989561,
+						"rank": 28,
+						"hierarchicalRank": 23,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B11",
+						"parentCluster": "B8",
+						"frequency": 457,
+						"interest": 0.461784,
+						"hierarchicalLevel": 0.776916,
+						"rank": 30,
+						"hierarchicalRank": 12,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B16",
+						"parentCluster": "B11",
+						"frequency": 266,
+						"interest": 0.448392,
+						"hierarchicalLevel": 0.924186,
+						"rank": 32,
+						"hierarchicalRank": 17,
+						"isLeaf": false
+					}
+				]
+			}
+		],
+		"cellPartIndexes": [
+			[4,2],
+			[1,6],
+			[1,8],
+			[6,0],
+			[5,2],
+			[0,12],
+			[5,3],
+			[0,9],
+			[1,10],
+			[1,14],
+			[0,13],
+			[1,7],
+			[2,12],
+			[1,9],
+			[2,6],
+			[0,16],
+			[2,10],
+			[3,6],
+			[0,10],
+			[6,8],
+			[3,8],
+			[2,9],
+			[7,0],
+			[1,15],
+			[7,12],
+			[0,14],
+			[6,10],
+			[0,15],
+			[5,10],
+			[5,15],
+			[4,16],
+			[7,1],
+			[2,5],
+			[5,9],
+			[3,9],
+			[5,5],
+			[1,16],
+			[3,10],
+			[7,10],
+			[5,0],
+			[4,15],
+			[6,11],
+			[7,2],
+			[5,1],
+			[1,13],
+			[4,7],
+			[2,7],
+			[2,11],
+			[3,5],
+			[3,4],
+			[6,4],
+			[3,15],
+			[4,4],
+			[6,1],
+			[6,15],
+			[3,0],
+			[1,11],
+			[7,6],
+			[5,4],
+			[2,15],
+			[4,0],
+			[5,6],
+			[6,9],
+			[3,14],
+			[7,15],
+			[2,13],
+			[0,11],
+			[3,7],
+			[7,5],
+			[0,6],
+			[2,16],
+			[3,11],
+			[2,0],
+			[2,4],
+			[0,2],
+			[0,7],
+			[5,14],
+			[6,2],
+			[6,12],
+			[2,14],
+			[0,0],
+			[5,16],
+			[6,6],
+			[7,4],
+			[0,5],
+			[4,6],
+			[6,5],
+			[7,9],
+			[7,14],
+			[2,1],
+			[0,3],
+			[0,1],
+			[5,12],
+			[4,9],
+			[4,10],
+			[6,3],
+			[6,7],
+			[3,3],
+			[7,3],
+			[7,13],
+			[7,7],
+			[7,16],
+			[0,4],
+			[5,7],
+			[1,0],
+			[1,2],
+			[1,3],
+			[1,1],
+			[6,16],
+			[3,2],
+			[3,1],
+			[3,12]
+		],
+		"cellFrequencies": [152,104,92,77,74,66,66,65,59,57,54,53,50,47,46,44,40,39,38,38,38,37,36,33,32,31,29,28,27,27,27,26,26,26,26,24,24,24,23,23,23,22,21,20,20,19,18,18,18,17,16,16,15,15,14,14,13,12,11,10,10,9,9,9,8,8,8,8,7,7,6,6,5,5,5,5,5,5,5,4,4,4,4,3,3,3,3,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+	},
+	"khiops_encoding": "ascii"
+}
