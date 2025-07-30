@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 // @ts-nocheck
-import '../support/commands';
+import '../../support/commands';
 
 describe('Variable Search Bug Fixes Tests', () => {
   describe('Inner variable: Successive searches within same cluster', () => {

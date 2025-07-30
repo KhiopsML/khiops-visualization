@@ -6,8 +6,8 @@
 // @ts-nocheck
 
 import { setupAxisTests } from 'cypress/setups/axis-tests';
-import '../support/commands';
-import '../utils/utils';
+import '../../support/commands';
+import '../../utils/utils';
 import { setupContextTests } from 'cypress/setups/context-tests';
 import { setupHierarchyTests } from 'cypress/setups/hierarchy-tests';
 

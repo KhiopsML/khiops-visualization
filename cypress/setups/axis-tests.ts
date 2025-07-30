@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2023-2025 Orange. All rights reserved.
+ * This software is distributed under the BSD 3-Clause-clear License, the text of which is available
+ * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
+ */
+// @ts-nocheck
+
 export function setupAxisTests(datas, testsValues, fileName) {
   testsValues.Axis.push('Hierarchy');
   testsValues.Axis.push(datas.coclusteringReport?.dimensionSummaries[0]?.name);

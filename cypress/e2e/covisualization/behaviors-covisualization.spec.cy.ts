@@ -5,8 +5,8 @@
  */
 // @ts-nocheck
 
-import '../support/commands';
-import '../utils/utils';
+import '../../support/commands';
+import '../../utils/utils';
 
 describe('Behaviors tests for Khiops Covisualization', () => {
   let files = ['DigitCoclustering.json'];

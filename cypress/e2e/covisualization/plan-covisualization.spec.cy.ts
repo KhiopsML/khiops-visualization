@@ -5,8 +5,8 @@
  */
 // @ts-nocheck
 
-import '../support/commands';
-import { isNumericalDimension } from '../utils/utils';
+import '../../support/commands';
+import { isNumericalDimension } from '../../utils/utils';
 
 export interface ResultI {
   matrixTooltip: number[]; // default, after folding first 2 nodes, after unfoldHierarchy

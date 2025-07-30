@@ -4,9 +4,9 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 // @ts-nocheck
-import '../support/commands';
-import '../utils/utils';
-import { setupPreparationTests } from '../setups/preparation-tests';
+import '../../support/commands';
+import '../../utils/utils';
+import { setupPreparationTests } from '../../setups/preparation-tests';
 import { setupPreparation2dTests } from 'cypress/setups/preparation-2d-tests';
 import { setupModelingTests } from 'cypress/setups/modeling-tests';
 import { setupEvaluationTests } from 'cypress/setups/evaluation-tests';
