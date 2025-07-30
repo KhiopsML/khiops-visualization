@@ -49,14 +49,14 @@ describe('CopyDatasService', () => {
     beforeEach(() => {
       // Mock document.execCommand
       execCommandSpy = spyOn(document, 'execCommand').and.returnValue(true);
-      
+
       // Mock DOM methods
       spyOn(document, 'createElement').and.returnValue({
         style: {},
         focus: jasmine.createSpy('focus'),
         select: jasmine.createSpy('select'),
       } as any);
-      
+
       spyOn(document.body, 'appendChild').and.stub();
       spyOn(document.body, 'removeChild').and.stub();
 
@@ -81,10 +81,12 @@ describe('CopyDatasService', () => {
       };
 
       spyOn(service, 'getKvHistogramDatas').and.returnValue('histogram data');
-      
+
       service.copyDatasToClipboard(mockSelectedArea);
-      
-      expect(service.getKvHistogramDatas).toHaveBeenCalledWith(mockSelectedArea);
+
+      expect(service.getKvHistogramDatas).toHaveBeenCalledWith(
+        mockSelectedArea,
+      );
       expect(execCommandSpy).toHaveBeenCalledWith('copy');
     });
 
@@ -103,15 +105,15 @@ describe('CopyDatasService', () => {
       };
 
       spyOn(service, 'getTableDatas').and.returnValue('table data');
-      
+
       service.copyDatasToClipboard(mockSelectedArea);
-      
+
       expect(service.getTableDatas).toHaveBeenCalledWith(mockSelectedArea);
     });
 
     it('should use custom onCopyData callback when configured', () => {
       const mockOnCopyData = jasmine.createSpy('onCopyData');
-      
+
       // Reset the existing spy and reconfigure it
       (configService.getConfig as jasmine.Spy).and.returnValue({
         onCopyData: mockOnCopyData,
@@ -124,9 +126,9 @@ describe('CopyDatasService', () => {
       };
 
       spyOn(service, 'getInformationsDatas').and.returnValue('info data');
-      
+
       service.copyDatasToClipboard(mockSelectedArea);
-      
+
       expect(mockOnCopyData).toHaveBeenCalledWith('info data');
       expect(execCommandSpy).not.toHaveBeenCalled();
     });
@@ -306,19 +308,11 @@ describe('CopyDatasService', () => {
         targetLiftAllGraph: [
           {
             name: 'Series1',
-            series: [
-              { value: 10 },
-              { value: 15 },
-              { value: 20 },
-            ],
+            series: [{ value: 10 }, { value: 15 }, { value: 20 }],
           },
           {
             name: 'Series2',
-            series: [
-              { value: 5 },
-              null,
-              { value: 25 },
-            ],
+            series: [{ value: 5 }, null, { value: 25 }],
           },
         ],
       };
@@ -341,16 +335,10 @@ describe('CopyDatasService', () => {
         graphOptions: {
           selected: 'GLOBAL.FREQUENCY',
         },
-        displayedValues: [
-          { name: 'Value1' },
-          { name: 'Value2' },
-        ],
+        displayedValues: [{ name: 'Value1' }, { name: 'Value2' }],
         inputDatas: {
           labels: ['Cat1', 'Cat2'],
-          datasets: [
-            { data: [10, 15] },
-            { data: [20, 25] },
-          ],
+          datasets: [{ data: [10, 15] }, { data: [20, 25] }],
         },
       };
 
@@ -368,10 +356,7 @@ describe('CopyDatasService', () => {
       const mockSelectedArea: DynamicI = {
         inputDatas: {
           labels: ['Cat1', 'Cat2'],
-          datasets: [
-            { data: [null, 15] },
-            { data: [20, null] },
-          ],
+          datasets: [{ data: [null, 15] }, { data: [20, null] }],
         },
       };
 
@@ -429,7 +414,9 @@ describe('CopyDatasService', () => {
       const result = service.getDescriptionsDatas(mockSelectedArea);
 
       expect(result).toContain('Description Title');
-      expect(result).toContain('This is a description value with multiple words.');
+      expect(result).toContain(
+        'This is a description value with multiple words.',
+      );
     });
   });
 
@@ -538,7 +525,9 @@ describe('CopyDatasService', () => {
 
     it('should format tree data with numerical selected cluster', () => {
       const mockSelectedArea: DynamicI = {
-        dimensionsTree: [/* mock tree structure */],
+        dimensionsTree: [
+          /* mock tree structure */
+        ],
         selectedTreeCluster: {
           dimensionType: 'Numerical',
           intervals: 5,
@@ -561,7 +550,9 @@ describe('CopyDatasService', () => {
 
     it('should format tree data with categorical selected cluster', () => {
       const mockSelectedArea: DynamicI = {
-        dimensionsTree: [/* mock tree structure */],
+        dimensionsTree: [
+          /* mock tree structure */
+        ],
         selectedTreeCluster: {
           dimensionType: 'Categorical',
           intervals: 3,
@@ -583,7 +574,9 @@ describe('CopyDatasService', () => {
 
     it('should format tree data without selected cluster', () => {
       const mockSelectedArea: DynamicI = {
-        dimensionsTree: [/* mock tree structure */],
+        dimensionsTree: [
+          /* mock tree structure */
+        ],
         selectedTreeCluster: null,
       };
 
@@ -598,9 +591,9 @@ describe('CopyDatasService', () => {
     });
 
     it('should handle empty flattened tree', () => {
-      UtilsService.flattenUncollapsedTree = jasmine.createSpy().and.returnValue([
-        { hierarchy: 'EmptyHierarchy' },
-      ]);
+      UtilsService.flattenUncollapsedTree = jasmine
+        .createSpy()
+        .and.returnValue([{ hierarchy: 'EmptyHierarchy' }]);
 
       const mockSelectedArea: DynamicI = {
         dimensionsTree: [],
@@ -610,10 +603,9 @@ describe('CopyDatasService', () => {
       const result = service.getTreeDatas(mockSelectedArea);
 
       expect(result).toContain('EmptyHierarchy');
-      expect(UtilsService.flattenUncollapsedTree).toHaveBeenCalledWith(
-        [],
-        { children: [] },
-      );
+      expect(UtilsService.flattenUncollapsedTree).toHaveBeenCalledWith([], {
+        children: [],
+      });
     });
   });
 
@@ -647,13 +639,8 @@ describe('CopyDatasService', () => {
 
     it('should handle inputDatas instead of dataSource', () => {
       const mockSelectedArea: DynamicI = {
-        displayedColumns: [
-          { field: 'id', headerName: 'ID', show: true },
-        ],
-        inputDatas: [
-          { id: 1 },
-          { id: 2 },
-        ],
+        displayedColumns: [{ field: 'id', headerName: 'ID', show: true }],
+        inputDatas: [{ id: 1 }, { id: 2 }],
       };
 
       const result = service.getTableDatas(mockSelectedArea);
@@ -669,10 +656,7 @@ describe('CopyDatasService', () => {
           { field: 'existing', headerName: 'Existing', show: true },
           { field: 'missing', headerName: 'Missing', show: true },
         ],
-        dataSource: [
-          { existing: 'value1' },
-          { existing: 'value2' },
-        ],
+        dataSource: [{ existing: 'value1' }, { existing: 'value2' }],
       };
 
       const result = service.getTableDatas(mockSelectedArea);
@@ -684,18 +668,613 @@ describe('CopyDatasService', () => {
 
     it('should handle table without title', () => {
       const mockSelectedArea: DynamicI = {
-        displayedColumns: [
-          { field: 'data', headerName: 'Data', show: true },
-        ],
-        dataSource: [
-          { data: 'test' },
-        ],
+        displayedColumns: [{ field: 'data', headerName: 'Data', show: true }],
+        dataSource: [{ data: 'test' }],
       };
 
       const result = service.getTableDatas(mockSelectedArea);
 
       expect(result).toContain('Data');
       expect(result).toContain('test');
+    });
+  });
+});
+
+/**
+ * Additional tests with real data scenarios
+ * These tests use realistic data structures as they would appear in the actual application
+ */
+describe('CopyDatasService - Real Data Tests', () => {
+  let service: CopyDatasService;
+  let configService: ConfigService;
+  let translateService: TranslateService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientModule, TranslateModule.forRoot()],
+      providers: [CopyDatasService, ConfigService],
+    });
+
+    service = TestBed.inject(CopyDatasService);
+    configService = TestBed.inject(ConfigService);
+    translateService = TestBed.inject(TranslateService);
+
+    // Mock translate service to return actual translation keys for realistic tests
+    spyOn(translateService, 'get').and.callFake((key: string, params?: any) => {
+      const translations: any = {
+        'GLOBAL.DISTRIBUTION': 'Distribution',
+        'GLOBAL.PARTITION': 'Partition',
+        'GLOBAL.FREQUENCY': 'Frequency',
+        'GLOBAL.PROBABILITY': 'Probability',
+        'GLOBAL.DENSITY': 'Density',
+        'GLOBAL.LOGVALUE': 'Log Value',
+        'GLOBAL.DECISION_TREE': 'Decision Tree',
+        'GLOBAL.NODE': 'Node',
+        'GLOBAL.TYPE': 'Type',
+        'GLOBAL.VARIABLE': 'Variable',
+        'GLOBAL.HIERARCHY': 'Hierarchy',
+        'GLOBAL.NAME': 'Name',
+        'GLOBAL.PARENT_CLUSTER': 'Parent Cluster',
+        'GLOBAL.INTEREST': 'Interest',
+        'GLOBAL.HIERARCHICAL_LEVEL': 'Hierarchical Level',
+        'GLOBAL.RANK': 'Rank',
+        'GLOBAL.HIERARCHICAL_RANK': 'Hierarchical Rank',
+        'GLOBAL.INTERVALS': 'Intervals',
+        'GLOBAL.INTERVAL': 'Interval',
+        'GLOBAL.CLUSTERS': 'Clusters',
+        'GLOBAL.CLUSTER': 'Cluster',
+        'GLOBAL.CLUSTER_LENGTH': 'Cluster Length',
+        'GLOBAL.DICTIONARY': 'Dictionary',
+        'GLOBAL.DATABASE': 'Database',
+        'GLOBAL.TARGET_VARIABLE': 'Target Variable',
+        'GLOBAL.INSTANCES': 'Instances',
+        'GLOBAL.LEARNING_TASK': 'Learning Task',
+        'GLOBAL.SAMPLE_PERCENTAGE': 'Sample Percentage',
+        'GLOBAL.SAMPLING_MODE': 'Sampling Mode',
+        'GLOBAL.EVALUATED_VARIABLES': 'Evaluated Variables',
+        'GLOBAL.INFORMATIVE_VARIABLES': 'Informative Variables',
+        'GLOBAL.DISCRETIZATION': 'Discretization',
+        'GLOBAL.VALUE_GROUPING': 'Value Grouping',
+        'GLOBAL.EXTERNAL_DATA_OF': 'External data of {{value}}',
+      };
+
+      let result = translations[key] || key;
+
+      // Handle interpolation for parameterized translations
+      if (params && params.value) {
+        result = result.replace('{{value}}', params.value);
+      }
+
+      return result;
+    });
+
+    // Mock config service
+    spyOn(configService, 'getConfig').and.returnValue({
+      onCopyData: undefined,
+    });
+  });
+
+  /**
+   * Test with real histogram data from Iris dataset
+   */
+  describe('Real Histogram Data', () => {
+    it('should format iris sepal length histogram correctly', () => {
+      const irisSepalLengthHistogram: DynamicI = {
+        componentType: 'histogram',
+        datas: [
+          {
+            partition: [4.3, 4.8],
+            frequency: 9,
+            probability: 0.06,
+            density: 0.12,
+            logValue: -2.813,
+          },
+          {
+            partition: [4.8, 5.4],
+            frequency: 29,
+            probability: 0.193,
+            density: 0.322,
+            logValue: -1.643,
+          },
+          {
+            partition: [5.4, 6.0],
+            frequency: 57,
+            probability: 0.38,
+            density: 0.633,
+            logValue: -0.968,
+          },
+          {
+            partition: [6.0, 6.6],
+            frequency: 37,
+            probability: 0.247,
+            density: 0.411,
+            logValue: -1.397,
+          },
+          {
+            partition: [6.6, 7.9],
+            frequency: 18,
+            probability: 0.12,
+            density: 0.092,
+            logValue: -2.12,
+          },
+        ],
+      };
+
+      const result = service.getKvHistogramDatas(irisSepalLengthHistogram);
+
+      expect(result).toContain('Distribution');
+      expect(result).toContain(
+        'Partition\tFrequency\tProbability\tDensity\tLog Value',
+      );
+      expect(result).toContain('[4.3,4.8]\t9\t0.06\t0.12\t-2.813');
+      expect(result).toContain(']4.8,5.4]\t29\t0.193\t0.322\t-1.643');
+      expect(result).toContain(']5.4,6]\t57\t0.38\t0.633\t-0.968');
+      expect(result).toContain(']6,6.6]\t37\t0.247\t0.411\t-1.397');
+      expect(result).toContain(']6.6,7.9]\t18\t0.12\t0.092\t-2.12');
+    });
+  });
+
+  /**
+   * Test with real matrix data from bivariate analysis
+   */
+  describe('Real Matrix Data', () => {
+    it('should format age vs salary matrix correctly', () => {
+      const ageSalaryMatrix: DynamicI = {
+        componentType: 'matrix',
+        xAxisLabel: 'Age',
+        yAxisLabel: 'Salary',
+        inputDatas: {
+          variable: {
+            yParts: 3,
+          },
+          matrixCellDatas: [
+            {
+              displayedValue: { value: 156 },
+              yDisplayaxisPart: 'Low',
+              xDisplayaxisPart: 'Young',
+            },
+            {
+              displayedValue: { value: 89 },
+              yDisplayaxisPart: 'Medium',
+              xDisplayaxisPart: 'Young',
+            },
+            {
+              displayedValue: { value: 23 },
+              yDisplayaxisPart: 'High',
+              xDisplayaxisPart: 'Young',
+            },
+            {
+              displayedValue: { value: 112 },
+              yDisplayaxisPart: 'Low',
+              xDisplayaxisPart: 'Middle',
+            },
+            {
+              displayedValue: { value: 198 },
+              yDisplayaxisPart: 'Medium',
+              xDisplayaxisPart: 'Middle',
+            },
+            {
+              displayedValue: { value: 145 },
+              yDisplayaxisPart: 'High',
+              xDisplayaxisPart: 'Middle',
+            },
+            {
+              displayedValue: { value: 45 },
+              yDisplayaxisPart: 'Low',
+              xDisplayaxisPart: 'Senior',
+            },
+            {
+              displayedValue: { value: 67 },
+              yDisplayaxisPart: 'Medium',
+              xDisplayaxisPart: 'Senior',
+            },
+            {
+              displayedValue: { value: 234 },
+              yDisplayaxisPart: 'High',
+              xDisplayaxisPart: 'Senior',
+            },
+          ],
+        },
+      };
+
+      const result = service.getMatrixDatas(ageSalaryMatrix);
+
+      expect(result).toContain('Age x Salary');
+      expect(result).toContain('\tLow\tMedium\tHigh');
+      expect(result).toContain('Young\t156\t89\t23');
+      expect(result).toContain('Middle\t112\t198\t145');
+      expect(result).toContain('Senior\t45\t67\t234');
+    });
+  });
+
+  /**
+   * Test with real information data from Adult dataset
+   */
+  describe('Real Information Data', () => {
+    it('should format adult dataset summary correctly', () => {
+      const adultSummary: DynamicI = {
+        componentType: 'informations',
+        title: 'Adult Dataset Summary',
+        inputDatas: [
+          {
+            title: 'GLOBAL.DICTIONARY',
+            value: 'Adult',
+          },
+          {
+            title: 'GLOBAL.DATABASE',
+            value: '/data/adult.txt',
+          },
+          {
+            title: 'GLOBAL.TARGET_VARIABLE',
+            value: 'income',
+          },
+          {
+            title: 'GLOBAL.INSTANCES',
+            value: 32561,
+          },
+          {
+            title: 'GLOBAL.LEARNING_TASK',
+            value: 'Classification analysis',
+          },
+          {
+            title: 'GLOBAL.SAMPLE_PERCENTAGE',
+            value: 70,
+          },
+          {
+            title: 'GLOBAL.SAMPLING_MODE',
+            value: 'Include sample',
+          },
+          {
+            title: 'GLOBAL.EVALUATED_VARIABLES',
+            value: 14,
+          },
+          {
+            title: 'GLOBAL.INFORMATIVE_VARIABLES',
+            value: 8,
+          },
+        ],
+      };
+
+      const result = service.getInformationsDatas(adultSummary);
+
+      expect(result).toContain('Adult Dataset Summary');
+      expect(result).toContain('Dictionary\tAdult');
+      expect(result).toContain('Database\t/data/adult.txt');
+      expect(result).toContain('Target Variable\tincome');
+      expect(result).toContain('Instances\t32561');
+      expect(result).toContain('Learning Task\tClassification analysis');
+      expect(result).toContain('Sample Percentage\t70');
+      expect(result).toContain('Sampling Mode\tInclude sample');
+      expect(result).toContain('Evaluated Variables\t14');
+      expect(result).toContain('Informative Variables\t8');
+    });
+  });
+
+  /**
+   * Test with real variable statistics table
+   */
+  describe('Real Table Data', () => {
+    it('should format variable statistics table correctly', () => {
+      const variableStatsTable: DynamicI = {
+        componentType: 'table',
+        title: 'Variable Statistics',
+        displayedColumns: [
+          { field: 'name', headerName: 'Variable Name', show: true },
+          { field: 'type', headerName: 'Type', show: true },
+          { field: 'level', headerName: 'Level', show: true },
+          { field: 'parts', headerName: 'Parts', show: true },
+          { field: 'values', headerName: 'Values', show: true },
+          { field: 'mode', headerName: 'Mode', show: true },
+          { field: 'modeFrequency', headerName: 'Mode Frequency', show: true },
+          {
+            field: 'constructionCost',
+            headerName: 'Construction Cost',
+            show: false,
+          },
+        ],
+        dataSource: [
+          {
+            name: 'age',
+            type: 'Numerical',
+            level: 0.995,
+            parts: 7,
+            values: 73,
+            mode: '23',
+            modeFrequency: 523,
+            constructionCost: 45.67,
+          },
+          {
+            name: 'workclass',
+            type: 'Categorical',
+            level: 0.889,
+            parts: 8,
+            values: 9,
+            mode: 'Private',
+            modeFrequency: 22696,
+            constructionCost: 67.89,
+          },
+          {
+            name: 'education',
+            type: 'Categorical',
+            level: 0.923,
+            parts: 15,
+            values: 16,
+            mode: 'HS-grad',
+            modeFrequency: 10501,
+            constructionCost: 89.12,
+          },
+          {
+            name: 'marital-status',
+            type: 'Categorical',
+            level: 0.945,
+            parts: 6,
+            values: 7,
+            mode: 'Married-civ-spouse',
+            modeFrequency: 14976,
+            constructionCost: 23.45,
+          },
+        ],
+      };
+
+      const result = service.getTableDatas(variableStatsTable);
+
+      expect(result).toContain('Variable Statistics');
+      expect(result).toContain(
+        'Variable Name\tType\tLevel\tParts\tValues\tMode\tMode Frequency',
+      );
+      expect(result).not.toContain('Construction Cost'); // Hidden column
+      expect(result).toContain('"age"\tNumerical\t0.995\t7\t73\t23\t523');
+      expect(result).toContain(
+        '"workclass"\tCategorical\t0.889\t8\t9\tPrivate\t22696',
+      );
+      expect(result).toContain(
+        '"education"\tCategorical\t0.923\t15\t16\tHS-grad\t10501',
+      );
+      expect(result).toContain(
+        '"marital-status"\tCategorical\t0.945\t6\t7\tMarried-civ-spouse\t14976',
+      );
+    });
+  });
+
+  /**
+   * Test with real tree preparation data
+   */
+  describe('Real Tree Data', () => {
+    it('should format decision tree data correctly', () => {
+      const mockTreeService = {
+        treePreparationDatas: {
+          selectedFlattenTree: [
+            {
+              nodeId: 'R',
+              type: 'InternalNode',
+              variable: 'marital-status',
+            },
+            {
+              nodeId: 'R1',
+              type: 'InternalNode',
+              variable: 'capital-gain',
+            },
+            {
+              nodeId: 'R2',
+              type: 'InternalNode',
+              variable: 'education-num',
+            },
+            {
+              nodeId: 'R11',
+              type: 'Leaf',
+              variable: null,
+            },
+            {
+              nodeId: 'R12',
+              type: 'Leaf',
+              variable: null,
+            },
+            {
+              nodeId: 'R21',
+              type: 'Leaf',
+              variable: null,
+            },
+            {
+              nodeId: 'R22',
+              type: 'Leaf',
+              variable: null,
+            },
+          ],
+        },
+      };
+
+      const treeData: DynamicI = {
+        componentType: 'kvtree',
+        treePreparationDatasService: mockTreeService,
+      };
+
+      const result = service.getKvTreeDatas(treeData);
+
+      expect(result).toContain('Decision Tree');
+      expect(result).toContain('Node\tType\tVariable');
+      expect(result).toContain('R\tInternalNode\tmarital-status');
+      expect(result).toContain('R1\tInternalNode\tcapital-gain');
+      expect(result).toContain('R2\tInternalNode\teducation-num');
+      expect(result).toContain('R11\tLeaf\t');
+      expect(result).toContain('R12\tLeaf\t');
+      expect(result).toContain('R21\tLeaf\t');
+      expect(result).toContain('R22\tLeaf\t');
+    });
+  });
+
+  /**
+   * Test with real lift curve data
+   */
+  describe('Real Line Chart Data', () => {
+    it('should format lift curve data correctly', () => {
+      const liftCurveData = {
+        componentType: 'ndLineChart',
+        title: 'Lift Curves',
+        targetLiftAllGraph: [
+          {
+            name: 'more',
+            series: [
+              { value: 1.0 },
+              { value: 2.87 },
+              { value: 2.45 },
+              { value: 2.12 },
+              { value: 1.89 },
+              { value: 1.67 },
+              { value: 1.45 },
+              { value: 1.23 },
+              { value: 1.11 },
+              { value: 1.0 },
+            ],
+          },
+          {
+            name: 'less',
+            series: [
+              { value: 1.0 },
+              { value: 0.34 },
+              { value: 0.56 },
+              { value: 0.72 },
+              { value: 0.84 },
+              { value: 0.91 },
+              { value: 0.96 },
+              { value: 0.98 },
+              { value: 0.99 },
+              { value: 1.0 },
+            ],
+          },
+        ],
+      };
+
+      const result = service.getNdLineChart(liftCurveData);
+
+      expect(result).toContain('Lift Curves');
+      expect(result).toContain(
+        'more\t1\t2.87\t2.45\t2.12\t1.89\t1.67\t1.45\t1.23\t1.11\t1',
+      );
+      expect(result).toContain(
+        'less\t1\t0.34\t0.56\t0.72\t0.84\t0.91\t0.96\t0.98\t0.99\t1',
+      );
+    });
+  });
+
+  /**
+   * Test with real target variable stats
+   */
+  describe('Real Bar Chart Data', () => {
+    it('should format target variable distribution correctly', () => {
+      const targetVariableStats: DynamicI = {
+        componentType: 'ndBarChart',
+        title: 'Target Variable Distribution',
+        graphOptions: {
+          selected: 'GLOBAL.FREQUENCY',
+        },
+        displayedValues: [{ name: '<=50K' }, { name: '>50K' }],
+        inputDatas: {
+          labels: ['Income Distribution'],
+          datasets: [
+            { data: [24720] }, // <=50K
+            { data: [7841] }, // >50K
+          ],
+        },
+      };
+
+      const result = service.getNdBarChartDatas(targetVariableStats);
+
+      expect(result).toContain('Target Variable Distribution');
+      expect(result).toContain('Frequency\t<=50K\t>50K');
+      expect(result).toContain('Income Distribution\t24720\t7841');
+    });
+  });
+
+  /**
+   * Test with real external data
+   */
+  describe('Real External Data', () => {
+    it('should format variable external data correctly', () => {
+      const externalDataInfo = {
+        componentType: 'external-datas',
+        inputValue: 'education',
+        externalData: `education = Bachelors | Masters | Doctorate
+Bachelors: Bachelor's degree
+Masters: Master's degree  
+Doctorate: Doctorate degree
+...additional education levels...`,
+      };
+
+      const result = service.getExternalDatas(externalDataInfo);
+
+      expect(result).toContain('External data of education');
+      expect(result).toContain('education = Bachelors | Masters | Doctorate');
+      expect(result).toContain("Bachelors: Bachelor's degree");
+      expect(result).toContain("Masters: Master's degree");
+      expect(result).toContain('Doctorate: Doctorate degree');
+    });
+  });
+
+  /**
+   * Test with real hierarchy data
+   */
+  describe('Real Hierarchy Tree Data', () => {
+    it('should format co-clustering hierarchy correctly', () => {
+      // Mock the UtilsService.flattenUncollapsedTree for this test
+      spyOn(UtilsService, 'flattenUncollapsedTree').and.returnValue([
+        {
+          hierarchy: 'Age x Education',
+          name: 'C11',
+          parentCluster: 'C1',
+          frequency: 5642,
+          interest: 0.234,
+          hierarchicalLevel: 2,
+          rank: 1,
+          hierarchicalRank: 1,
+        },
+        {
+          hierarchy: 'Age x Education',
+          name: 'C12',
+          parentCluster: 'C1',
+          frequency: 3421,
+          interest: 0.189,
+          hierarchicalLevel: 2,
+          rank: 2,
+          hierarchicalRank: 2,
+        },
+        {
+          hierarchy: 'Age x Education',
+          name: 'C21',
+          parentCluster: 'C2',
+          frequency: 8934,
+          interest: 0.445,
+          hierarchicalLevel: 2,
+          rank: 3,
+          hierarchicalRank: 3,
+        },
+      ]);
+
+      const hierarchyData: DynamicI = {
+        componentType: 'tree',
+        dimensionsTree: [],
+        selectedTreeCluster: {
+          dimensionType: 'Categorical',
+          intervals: 4,
+          interval: 'Higher Education',
+          nbClusters: 12,
+          frequency: 8934,
+        },
+      };
+
+      const result = service.getTreeDatas(hierarchyData);
+
+      expect(result).toContain('Hierarchy\tAge x Education');
+      expect(result).toContain('Type: Categorical');
+      expect(result).toContain('Clusters: 4');
+      expect(result).toContain('Cluster: Higher Education');
+      expect(result).toContain('Cluster Length: 12');
+      expect(result).toContain('Frequency: 8934');
+      expect(result).toContain(
+        'Name\tParent Cluster\tFrequency\tInterest\tHierarchical Level\tRank\tHierarchical Rank',
+      );
+      expect(result).toContain('C11\tC1\t5642\t0.234\t2\t1\t1');
+      expect(result).toContain('C12\tC1\t3421\t0.189\t2\t2\t2');
+      expect(result).toContain('C21\tC2\t8934\t0.445\t2\t3\t3');
     });
   });
 });
