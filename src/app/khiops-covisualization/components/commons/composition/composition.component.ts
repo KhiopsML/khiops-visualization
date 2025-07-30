@@ -181,6 +181,10 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
             if (comp.value === selectedValue) {
               return true;
             }
+            // For categorical variables, check if selectedValue is in valueGroups.values
+            if (comp.valueGroups?.values) {
+              return comp.valueGroups.values.includes(selectedValue);
+            }
             // Check if selectedValue is within an interval (for numerical variables)
             if (comp.partDetails) {
               return comp.partDetails.some(
