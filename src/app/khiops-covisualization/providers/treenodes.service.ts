@@ -147,11 +147,15 @@ export class TreenodesService {
 
   /**
    * Sets the selected node for a given hierarchy and node name.
+   * This method updates the selected node in the dimensions data and emits
+   * a tree selection changed event if the nodes have changed or if a 
+   * selectedValue is provided (for variable search within the same cluster).
    *
    * @param {string} hierarchyName - The name of the hierarchy.
    * @param {string} nodeName - The name of the node.
    * @param {boolean} stopPropagation - Flag to stop event propagation.
    * @param {string} selectedValue - Optional selected value (modality or interval).
+   *                                  When provided, forces event emission even if node hasn't changed.
    * @returns {TreeNodeModel} - The selected node model.
    */
   setSelectedNode(
@@ -226,12 +230,14 @@ export class TreenodesService {
       }
 
       // Do not send event changed if only one node selected and if nodes does not changed
-      if (
-        !deepEqual(
-          previousSelectedNodes,
-          this.dimensionsDatasService.dimensionsDatas.selectedNodes,
-        )
-      ) {
+      // However, if selectedValue is provided, we should emit the event even if the node hasn't changed
+      // This is important for variable search where we search within the same cluster
+      const nodesChanged = !deepEqual(
+        previousSelectedNodes,
+        this.dimensionsDatasService.dimensionsDatas.selectedNodes,
+      );
+      
+      if (nodesChanged || selectedValue) {
         // search in the complete datas the corresponding node
         const realNodeVO =
           this.dimensionsDatasService.dimensionsDatas.dimensionsClusters[
