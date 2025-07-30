@@ -65,7 +65,7 @@ describe('Visualization', () => {
     it('getHistogramGraphDatas should return valid datas [defaultGroup, R001, modlHistograms is not given]', () => {
       const fileDatas = require('../../assets/mocks/kv/defaultGroup.json');
       const histogramDatas = getHistogramGraphDatas(fileDatas, 0);
-      expect(histogramDatas?.[0]?.density).toEqual(0.000006802411489881615);
+      expect(histogramDatas?.[0]?.density).toEqual(0.0000068024114898816155);
       expect(histogramDatas?.[0]?.frequency).toEqual(1263);
       expect(histogramDatas?.[0]?.probability).toEqual(0.07176544121825104);
       expect(histogramDatas?.[0]?.logValue).toEqual(-5.167337100368651);
@@ -313,8 +313,14 @@ describe('Visualization', () => {
       const histogramDatas = getHistogramGraphDatas(fileDatas, 2);
 
       // Verify that density values are finite and reasonable
-      expect(histogramDatas?.[0]?.density).toEqual(2.7184335044762804);
-      expect(histogramDatas?.[0]?.logValue).toEqual(0.4343187142028318);
+      expect(histogramDatas?.[0]?.density).toEqual(2.71843350447628);
+      expect(histogramDatas?.[0]?.logValue).toEqual(0.43431871420283175);
+
+      expect(histogramDatas?.[6]?.density).toEqual(324.70204746622505);
+      expect(histogramDatas?.[6]?.logValue).toEqual(2.5114850271553513);
+
+      expect(histogramDatas?.[12]?.density).toEqual(4.8335415630622505);
+      expect(histogramDatas?.[12]?.logValue).toEqual(0.6842654573927486);
     });
 
     // Test cases for adaptive delta functionality

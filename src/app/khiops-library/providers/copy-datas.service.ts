@@ -104,15 +104,26 @@ export class CopyDatasService {
 
     // HEADER
     formattedDatas += this.translate.get('GLOBAL.PARTITION') + '\t';
+    formattedDatas += this.translate.get('GLOBAL.FREQUENCY') + '\t';
+    formattedDatas += this.translate.get('GLOBAL.PROBABILITY') + '\t';
+    formattedDatas += this.translate.get('GLOBAL.DENSITY') + '\t';
     formattedDatas += this.translate.get('GLOBAL.LOGVALUE') + '\t';
-    formattedDatas += this.translate.get('GLOBAL.VALUE') + '\t';
     formattedDatas += '\n';
 
     // CONTENT
     for (let i = 0; i < selectedArea.datas.length; i++) {
-      formattedDatas += selectedArea.datas[i].partition + '\t';
+      const partition = selectedArea.datas[i].partition;
+      let partitionStr = `]${partition[0]},${partition[1]}]`;
+      if (i === 0) {
+        // First interval is closed on the left
+        partitionStr = `[${partition[0]},${partition[1]}]`;
+      }
+      
+      formattedDatas += partitionStr + '\t';
+      formattedDatas += selectedArea.datas[i].frequency + '\t';
+      formattedDatas += selectedArea.datas[i].probability + '\t';
+      formattedDatas += selectedArea.datas[i].density + '\t';
       formattedDatas += selectedArea.datas[i].logValue + '\t';
-      formattedDatas += selectedArea.datas[i].value + '\t';
       formattedDatas += '\n';
     }
 

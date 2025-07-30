@@ -207,7 +207,7 @@ describe('Visualization', () => {
       expect(res![0]!.frequency).toEqual(1263);
       expect(res![0]!.logValue).toEqual(-5.167337100368651);
       expect(res![0]!.partition).toEqual([1000, 11550]);
-      expect(res![0]!.density).toEqual(0.000006802411489881615);
+      expect(res![0]!.density).toEqual(0.0000068024114898816155);
     });
 
     it('getdistributionGraphDatas should return valid datas [C100_AllReports, Numerical, R15]', () => {

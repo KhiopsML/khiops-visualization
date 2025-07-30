@@ -732,40 +732,11 @@ export class DistributionDatasService {
   }
 
   /**
-   * Calculates an adaptive minimum delta based on the partition bounds scale.
-   * This prevents issues with very small deltas that can cause chart rendering problems.
-   *
-   * @param partition - The partition bounds [start, end]
-   * @returns Adaptive minimum delta value
-   */
-  private calculateAdaptiveMinDelta(partition: number[]): number {
-    const start = partition[0] || 0;
-    const end = partition[1] || 0;
-
-    // Calculate the order of magnitude of the values
-    const maxValue = Math.max(Math.abs(start), Math.abs(end));
-
-    if (maxValue === 0) {
-      return 0.001; // Default fallback for zero values
-    }
-
-    // Calculate relative epsilon based on the scale of the data
-    // Use machine epsilon scaled by the magnitude of the data
-    const orderOfMagnitude = Math.floor(Math.log10(maxValue));
-    const relativeEpsilon = Math.pow(10, orderOfMagnitude - 6); // 6 decimal places of precision
-
-    // Ensure minimum delta is at least 1/1000th of the larger value or relative epsilon
-    const adaptiveMinDelta = Math.max(
-      maxValue / 1000,
-      relativeEpsilon,
-      Number.EPSILON * 1000, // Absolute minimum to prevent numerical issues
-    );
-
-    return adaptiveMinDelta;
-  }
-
-  /**
    * Creates a histogram value object with calculated density, probability, and log value.
+   *
+   * Note: The density calculation uses the real delta (actual interval width) to ensure
+   * correct mathematical density: Density = Probability / (Upper bound - Lower bound).
+   * This differs from previous implementations that used an adapted delta for rendering purposes.
    *
    * @param frequency - The frequency value for this partition
    * @param partition - The partition bounds [start, end]
@@ -777,18 +748,16 @@ export class DistributionDatasService {
     partition: number[],
     totalFreq: number,
   ): HistogramValuesI {
-    let delta = Math.abs((partition[1] || 0) - (partition[0] || 0));
+    // Calculate the real delta (actual interval width) for correct density calculation
+    const realDelta = Math.abs((partition[1] || 0) - (partition[0] || 0));
 
-    // Calculate an adaptive minimum delta based on the data scale
-    const minDelta = this.calculateAdaptiveMinDelta(partition);
-
-    if (delta < minDelta) {
-      // Use adaptive delta to maintain proportional scaling across different data ranges
-      delta = minDelta;
-    }
-
-    const density = totalFreq ? frequency / (totalFreq * delta) : 0;
+    // Calculate probability first
     const probability = totalFreq ? frequency / totalFreq : 0;
+
+    // Calculate density using real delta: Density = Probability / (Upper bound - Lower bound)
+    const density = realDelta > 0 ? probability / realDelta : 0;
+
+    // Calculate logValue based on density
     let logValue = Math.log10(density);
     if (logValue === -Infinity || !isFinite(logValue)) {
       logValue = 0;
