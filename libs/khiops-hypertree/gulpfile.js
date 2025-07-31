@@ -63,7 +63,8 @@ const webpackTask = () => {
             filename: files.mainjs,
             library: 'hyt',
           },
-          devtool: 'source-map',
+          // devtool: 'source-map',
+          devtool: false,
           performance: {
             hints: false, // Disable performance warnings
           },
