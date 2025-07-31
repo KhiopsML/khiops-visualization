@@ -58,6 +58,24 @@ export class VariableSearchDialogComponent
   public componentType = COMPONENT_TYPES.GRID; // needed to copy datas
   public override id: string = 'variable-search-dialog-comp';
 
+  /**
+   * Title for the copied data output
+   * Will be set dynamically based on the selected inner variable
+   */
+  public title?: string;
+
+  /**
+   * Columns configuration for data copy functionality
+   * Maps grid columns to copy-friendly format with headerName and field properties
+   */
+  public displayedColumns: any[] = [];
+
+  /**
+   * Data source for the copy functionality
+   * Contains the actual row data to be copied
+   */
+  public inputDatas?: any[];
+
   @ViewChild(AgGridComponent) agGridComponent?: AgGridComponent;
 
   constructor(
@@ -160,6 +178,8 @@ export class VariableSearchDialogComponent
     this.rowToClusterMap.clear(); // Reset row to cluster mapping
 
     if (!this.selectedInnerVariable) {
+      // Clear copy data properties when no variable selected
+      this.updateCopyDataProperties();
       return;
     }
 
@@ -172,6 +192,40 @@ export class VariableSearchDialogComponent
     if (searchData) {
       this.searchResults = searchData.searchResults;
       this.rowToClusterMap = searchData.clusterMapping;
+
+      // Update properties for data copy functionality
+      this.updateCopyDataProperties();
+    }
+  }
+
+  /**
+   * Updates the properties needed for the copy data functionality
+   */
+  private updateCopyDataProperties() {
+    if (
+      this.searchResults &&
+      this.searchResults.values &&
+      this.searchResults.displayedColumns
+    ) {
+      // Set title for the copied data
+      this.title = `${this.translate.get('GLOBAL.INNER_VARIABLE')} - ${this.selectedInnerVariable}`;
+
+      // Set displayed columns for copy functionality
+      this.displayedColumns = this.searchResults.displayedColumns.map(
+        (col) => ({
+          headerName: col.headerName,
+          field: col.field,
+          show: true,
+        }),
+      );
+
+      // Set inputDatas directly from searchResults.values - no copy needed!
+      this.inputDatas = this.searchResults.values as any[];
+    } else {
+      // Clear properties when no data
+      this.title = '';
+      this.displayedColumns = [];
+      this.inputDatas = [];
     }
   }
 
