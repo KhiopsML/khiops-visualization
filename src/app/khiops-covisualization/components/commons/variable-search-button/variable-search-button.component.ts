@@ -34,10 +34,10 @@ export class VariableSearchButtonComponent {
     }
 
     const config = new MatDialogConfig();
-    config.width = '80vw';
-    config.height = '80vh';
-    config.maxWidth = '80vw';
-    config.maxHeight = '80vh';
+    config.width = '50vw';
+    config.height = '50vh';
+    config.maxWidth = '50vw';
+    config.maxHeight = '50vh';
     config.data = {
       selectedDimension: this.selectedDimension,
       selectedInnerVariable: this.lastSelectedInnerVariable,
