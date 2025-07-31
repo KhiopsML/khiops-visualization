@@ -277,18 +277,29 @@ export class AgGridComponent
   /**
    * Handles the grid ready event, which is triggered when the grid is fully initialized.
    * It updates the table, saves the grid modes, and restores the state.
+   * On first display (when no saved grid mode exists), automatically applies fitToSpace.
    * @param _params - The parameters of the grid ready event.
    */
   onGridReady(_params: GridReadyEvent) {
     this.updateTable();
-    // Reinit current saved columns sizes when user fit grid to space
-    delete this.cellsSizes[this.id!];
-    this.ls.set(LS.CELL_AG_GRID, this.cellsSizes);
 
-    this.saveGridModes(this.gridMode);
-    this.agGrid?.api?.sizeColumnsToFit();
+    // Check if this is the first display of this grid (no saved grid mode)
+    const isFirstDisplay = !this.gridModes[this.id!];
 
-    this.restoreState();
+    if (isFirstDisplay) {
+      // First display: automatically fit to space
+      this.fitToSpace();
+    } else {
+      // Not first display: use existing logic
+      // Reinit current saved columns sizes when user fit grid to space
+      delete this.cellsSizes[this.id!];
+      this.ls.set(LS.CELL_AG_GRID, this.cellsSizes);
+
+      this.saveGridModes(this.gridMode);
+      this.agGrid?.api?.sizeColumnsToFit();
+
+      this.restoreState();
+    }
   }
 
   /**
