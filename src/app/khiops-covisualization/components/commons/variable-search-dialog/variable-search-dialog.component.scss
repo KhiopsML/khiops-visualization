@@ -51,6 +51,12 @@
     background-color: #e3f2fd;
     font-weight: 500;
   }
+
+  ::ng-deep kl-header-tools {
+    #header-tools-comp {
+      padding-right: 0 !important;
+    }
+  }
 }
 
 #variable-search-results-table {

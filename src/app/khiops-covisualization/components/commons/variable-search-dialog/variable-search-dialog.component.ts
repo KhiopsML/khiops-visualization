@@ -4,7 +4,13 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, Inject, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  Inject,
+  ViewChild,
+  AfterViewInit,
+  NgZone,
+} from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
@@ -12,6 +18,10 @@ import { TranslateService } from '@ngstack/translate';
 import { AgGridComponent } from '@khiops-library/components/ag-grid/ag-grid.component';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
 import { VariableSearchService } from '@khiops-covisualization/providers/variable-search.service';
+import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
+import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
+import { ConfigService } from '@khiops-library/providers/config.service';
+import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 
 export interface VariableSearchDialogData {
   selectedDimension: DimensionCovisualizationModel;
@@ -31,7 +41,10 @@ export interface VariableSearchResult {
   styleUrls: ['./variable-search-dialog.component.scss'],
   standalone: false,
 })
-export class VariableSearchDialogComponent implements AfterViewInit {
+export class VariableSearchDialogComponent
+  extends SelectableComponent
+  implements AfterViewInit
+{
   innerVariables: string[] = [];
   selectedInnerVariable = '';
   searchValue = '';
@@ -41,6 +54,10 @@ export class VariableSearchDialogComponent implements AfterViewInit {
   private rowToClusterMap: Map<string, { cluster: string; _id: string }> =
     new Map();
 
+  // Properties needed for kl-header-tools functionality
+  public componentType = COMPONENT_TYPES.GRID; // needed to copy datas
+  public override id: string = 'variable-search-dialog-comp';
+
   @ViewChild(AgGridComponent) agGridComponent?: AgGridComponent;
 
   constructor(
@@ -48,8 +65,13 @@ export class VariableSearchDialogComponent implements AfterViewInit {
     private dialogRef: MatDialogRef<VariableSearchDialogComponent>,
     private treenodesService: TreenodesService,
     private variableSearchService: VariableSearchService,
+    public override selectableService: SelectableService,
+    public override ngzone: NgZone,
+    public override configService: ConfigService,
     @Inject(MAT_DIALOG_DATA) public data: VariableSearchDialogData,
   ) {
+    super(selectableService, ngzone, configService);
+
     this.initializeInnerVariables();
     this.initializeSearchResults();
     // Restore selectedInnerVariable if provided in data
@@ -63,7 +85,9 @@ export class VariableSearchDialogComponent implements AfterViewInit {
     this.performSearch();
   }
 
-  ngAfterViewInit() {
+  override ngAfterViewInit() {
+    super.ngAfterViewInit();
+
     // Restore search input
     if (this.data.searchInput) {
       if (this.agGridComponent) {
@@ -74,6 +98,9 @@ export class VariableSearchDialogComponent implements AfterViewInit {
     setTimeout(() => {
       // Set focus on the search input field
       this.agGridComponent?.focusSearch();
+
+      // Trigger click event for copy functionality
+      this.triggerClickEvent();
     }, 250);
   }
 
@@ -180,5 +207,20 @@ export class VariableSearchDialogComponent implements AfterViewInit {
       selectedInnerVariable: this.selectedInnerVariable,
       searchInput: currentSearchInput,
     });
+  }
+
+  /**
+   * Triggers a click event to enable copy functionality
+   */
+  private triggerClickEvent() {
+    const trustedClick = new CustomEvent('trustedClick', {
+      bubbles: true,
+      cancelable: true,
+      composed: true,
+    });
+    const element = this.configService
+      .getRootElementDom()
+      .querySelector('#' + this.id);
+    element?.dispatchEvent(trustedClick);
   }
 }
