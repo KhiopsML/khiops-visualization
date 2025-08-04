@@ -1,9 +1,10 @@
-// @ts-nocheck
-/**
- * Unit tests for LayoutService
- *
- * Uses Jasmine and Angular TestBed. Mocks Ls service and localStorage.
+/*
+ * Copyright (c) 2023-2025 Orange. All rights reserved.
+ * This software is distributed under the BSD 3-Clause-clear License, the text of which is available
+ * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
+
+// @ts-nocheck
 import { TestBed } from '@angular/core/testing';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { Ls } from '@khiops-library/providers/ls.service';

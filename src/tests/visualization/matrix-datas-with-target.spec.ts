@@ -3,6 +3,7 @@
  * This software is distributed under the BSD 3-Clause-clear License, the text of which is available
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
+// @ts-nocheck
 
 import { TestBed } from '@angular/core/testing';
 import { AppService } from '@khiops-visualization/providers/app.service';
