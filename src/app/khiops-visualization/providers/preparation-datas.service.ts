@@ -208,11 +208,16 @@ export class PreparationDatasService {
    * Retrieves the current interval data for the specified preparation source and index.
    * @param {string} preparationSource - The source of the preparation data.
    * @param {number} [index] - The index of the interval data.
+   * @param {object} [histogramInfo] - Optional histogram information for correct interval bounds.
    * @returns {GridDatasI} The current interval data.
    */
   getCurrentIntervalDatas(
     preparationSource: string,
     index?: number,
+    histogramInfo?: {
+      interpretableHistogramNumber: number;
+      histogramDatas?: any[];
+    },
   ): GridDatasI {
     index = index || 0;
 
@@ -260,12 +265,33 @@ export class PreparationDatasService {
 
           // init datas array
           datas[0] = {};
+
+          // Use histogram data if available, otherwise fall back to dataGrid partition
+          let currentPartition: string;
+
           if (
+            histogramInfo?.histogramDatas &&
+            index < histogramInfo.histogramDatas.length
+          ) {
+            // Use the partition from the current histogram data
+            const histogramInterval = histogramInfo.histogramDatas[index];
+            if (histogramInterval && histogramInterval.partition) {
+              currentPartition = JSON.stringify(histogramInterval.partition);
+              if (index !== 0) {
+                // replace [ by ] for all indexes excepting 0
+                currentPartition = currentPartition.replace(/\[/g, ']');
+              }
+              datas[0]['interval'] = currentPartition;
+            } else {
+              datas[0]['interval'] = this.translate.get('GLOBAL.MISSING');
+            }
+          } else if (
             variableDetails.dataGrid.dimensions[0]?.partition?.[index] &&
             (variableDetails.dataGrid.dimensions[0]?.partition?.[index]
               ?.length || 0) > 0
           ) {
-            let currentPartition = JSON.stringify(
+            // Fallback to original dataGrid partition logic
+            currentPartition = JSON.stringify(
               variableDetails.dataGrid.dimensions[0].partition[index],
             );
             if (index !== 0) {

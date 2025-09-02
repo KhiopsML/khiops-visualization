@@ -98,9 +98,22 @@ export class VarDetailsPreparationComponent implements OnInit, OnChanges {
       this.matrixRegSelectedCell = index;
     } else {
       // get interval data if no matrix
+      // Get current histogram information to ensure correct interval bounds
+      const currentHistogramInfo = this.appVariableGraphDetails
+        ?.distributionDatas
+        ? {
+            interpretableHistogramNumber:
+              this.appVariableGraphDetails.distributionDatas
+                .interpretableHistogramNumber,
+            histogramDatas:
+              this.appVariableGraphDetails.distributionDatas.histogramDatas,
+          }
+        : undefined;
+
       this.preparationDatasService.getCurrentIntervalDatas(
         this.preparationSource || '',
         index,
+        currentHistogramInfo,
       );
     }
   }
