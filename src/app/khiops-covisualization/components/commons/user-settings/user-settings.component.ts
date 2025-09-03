@@ -30,6 +30,7 @@ export class UserSettingsComponent implements OnChanges {
     new EventEmitter();
   @Input() opened: boolean = false;
 
+  public numberPrecision?: number;
   public allowCookies: boolean = false;
   public contrastValue: number =
     AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST;
@@ -47,6 +48,16 @@ export class UserSettingsComponent implements OnChanges {
 
   private onNavDrawerOpen() {
     this.trackerService.trackEvent('page_view', 'settings');
+
+    // Global number precision
+    this.numberPrecision = parseInt(
+      AppService.Ls.get(LS.SETTING_NUMBER_PRECISION) ||
+        AppConfig.covisualizationCommon.GLOBAL.TO_FIXED.toString(),
+      10,
+    );
+
+    AppService.Ls.set(LS.SETTING_NUMBER_PRECISION, this.numberPrecision);
+    AppConfig.covisualizationCommon.GLOBAL.TO_FIXED = this.numberPrecision;
 
     // Matrix contrast
     this.contrastValue =
@@ -66,6 +77,11 @@ export class UserSettingsComponent implements OnChanges {
 
   onClickOnSave() {
     // Save all items
+    AppService.Ls.set(LS.SETTING_NUMBER_PRECISION, this.numberPrecision);
+    if (this.numberPrecision !== undefined) {
+      AppConfig.covisualizationCommon.GLOBAL.TO_FIXED = this.numberPrecision;
+    }
+
     AppService.Ls.set(LS.SETTING_MATRIX_CONTRAST, this.contrastValue);
     AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
 
@@ -77,6 +93,6 @@ export class UserSettingsComponent implements OnChanges {
       this.contrastValue;
 
     // Close the nav drawer
-    this.toggleNavDrawerChanged.emit();
+    this.toggleNavDrawerChanged.emit(true);
   }
 }

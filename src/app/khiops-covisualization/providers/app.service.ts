@@ -16,6 +16,7 @@ import {
   CovisualizationDatas,
 } from '@khiops-covisualization/interfaces/app-datas';
 import { UtilsService } from '@khiops-library/providers/utils.service';
+import { LS } from '@khiops-library/enum/ls';
 
 @Injectable({
   providedIn: 'root',
@@ -180,6 +181,13 @@ export class AppService {
    * in the KhiopsLibraryService.
    */
   initGlobalConfigVariables() {
+    AppConfig.covisualizationCommon.GLOBAL.TO_FIXED =
+      parseInt(this.ls.get(LS.SETTING_NUMBER_PRECISION) || '', 10) ||
+      AppConfig.covisualizationCommon.GLOBAL.TO_FIXED;
+    AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST =
+      parseInt(this.ls.get(LS.SETTING_MATRIX_CONTRAST) || '', 10) ||
+      AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST;
+
     AppConfig.common = {
       ...AppConfig.covisualizationCommon,
     };

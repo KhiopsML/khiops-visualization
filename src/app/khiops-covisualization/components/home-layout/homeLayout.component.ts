@@ -58,6 +58,8 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     static: false,
   })
   public fileLoader: FileLoaderComponent | undefined;
+  private currentDatas?: CovisualizationDatas;
+
   public appTitle: string = '';
   public isContextDimensions = false;
   public appVersion: string = '';
@@ -201,8 +203,23 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     this.appService.setActiveTabIndex(this.activeTab);
   }
 
-  onToggleNavDrawerChanged() {
+  onToggleNavDrawerChanged(mustReload: boolean) {
     this.opened = !this.opened;
+
+    if (mustReload) {
+      this.reloadView();
+    }
+  }
+
+  private reloadView() {
+    const currentDatas = this.currentDatas;
+    setTimeout(() => {
+      this.initialize();
+      this.initializeHome();
+      setTimeout(() => {
+        this.initialize(currentDatas);
+      }); // do it after timeout to be launched
+    }, 250); // do it after nav drawer anim
   }
 
   private selectFirstTab() {
@@ -213,6 +230,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
   }
 
   private initialize(datas: CovisualizationDatas | undefined = undefined) {
+    this.currentDatas = datas;
     this.appService.setFileDatas(datas);
     if (datas && !UtilsService.isEmpty(datas)) {
       this.initializeHome(datas);
@@ -220,12 +238,13 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     }
   }
 
-  private initializeHome(datas: CovisualizationDatas) {
+  private initializeHome(datas?: CovisualizationDatas) {
     // Close dialogs when opening new file #148
     this.dialogRef.closeAll();
 
-    this.isCompatibleJson = this.appService.isCompatibleJson(datas);
-    const isCollidingJson = this.appService.isCollidingJson(datas);
+    this.isCompatibleJson = this.appService.isCompatibleJson(datas!);
+    const isCollidingJson = this.appService.isCollidingJson(datas!);
+
     this.appService.resetSearch();
 
     this.showProjectTab = this.configService.getConfig().showProjectTab;
@@ -236,7 +255,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     if (this.showLogo === undefined) {
       this.showLogo = true;
     }
-    if (!UtilsService.isEmpty(datas)) {
+    if (datas && !UtilsService.isEmpty(datas)) {
       if (!this.isCompatibleJson) {
         this.closeFile();
         this.snackBar.open(

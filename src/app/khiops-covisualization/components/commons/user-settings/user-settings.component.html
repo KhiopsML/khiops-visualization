@@ -20,6 +20,9 @@
     </button>
   </div>
   <div fxLayout="column" id="user-settings-content" fxLayoutAlign="start start">
+    <kl-number-precision
+      [(numberPrecision)]="numberPrecision"
+    ></kl-number-precision>
     <kl-matrix-contrast-setting
       [(contrastValue)]="contrastValue"
     ></kl-matrix-contrast-setting>
