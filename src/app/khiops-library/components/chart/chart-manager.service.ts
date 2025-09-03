@@ -48,11 +48,11 @@ export class ChartManagerService {
     type: ChartJs.ChartType,
     chartOptions: ChartOptions | undefined,
     graphClickEvent: (_e: ChartEvent, items: ActiveElement[]) => void,
+    hostElement?: HTMLElement,
   ): boolean {
+    const searchContext = hostElement || this.configService.getRootElementDom();
     const ctx = <ChartJs.ChartItem>(
-      this.configService
-        .getRootElementDom()
-        .querySelector<HTMLElement>('#' + canvasIdContainer)
+      searchContext.querySelector<HTMLElement>('#' + canvasIdContainer)
     );
 
     if (ctx) {

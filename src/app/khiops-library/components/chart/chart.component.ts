@@ -70,12 +70,14 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
   /**
    * Initializes the chart instance and sets up its configuration.
    */
+
   private initChart() {
     this.chartManagerService.initChart(
       this.canvasIdContainer,
       this.type,
       this.chartOptions,
       this.graphClickEvent.bind(this),
+      this.el.nativeElement,
     );
   }
 
@@ -175,7 +177,7 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
           const item = items[i];
           if (item && item.index !== undefined) {
             this.chartManagerService.selectCurrentBarIndex(
-              item.index, 
+              item.index,
               this.enableSelection,
               this.inputDatas,
               this.colorSet,
@@ -206,7 +208,7 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
         this.activeEntries = this.activeEntries + 1;
       }
       this.chartManagerService.selectCurrentBarIndex(
-        this.activeEntries, 
+        this.activeEntries,
         this.enableSelection,
         this.inputDatas,
         this.colorSet,
