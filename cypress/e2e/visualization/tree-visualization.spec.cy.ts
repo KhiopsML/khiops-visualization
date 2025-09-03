@@ -65,6 +65,44 @@ describe('Test Plan for Khiops Covisualization', () => {
         cy.get('#hyperTree').should('exist');
 
         cy.get('#hyperTree').find('circle').should('have.length', 53);
+
+        cy.wait(500);
+        cy.get('.mat-mdc-tab:contains("Modeling")').first().click();
+
+        cy.get('#distribution-chart-0').then(($canvas) => {
+          const canvas = $canvas[0];
+          const context = canvas.getContext('2d');
+          const pixels = context.getImageData(
+            0,
+            0,
+            canvas.width,
+            canvas.height,
+          ).data;
+
+          // Checks if at least one pixel is not transparent
+          const isNotEmpty = Array.from(pixels).some((value) => value !== 0);
+          expect(isNotEmpty).to.be.true;
+        });
+        cy.wait(500);
+
+        cy.get('#modeling-variables-list').find('.ag-row:eq(3)').click();
+        cy.wait(500);
+
+        cy.get('#modeling-variables-list').find('.ag-row:eq(0)').click();
+        cy.get('#distribution-chart-0').then(($canvas) => {
+          const canvas = $canvas[0];
+          const context = canvas.getContext('2d');
+          const pixels = context.getImageData(
+            0,
+            0,
+            canvas.width,
+            canvas.height,
+          ).data;
+
+          // Checks if at least one pixel is not transparent
+          const isNotEmpty = Array.from(pixels).some((value) => value !== 0);
+          expect(isNotEmpty).to.be.true;
+        });
       });
     });
   });
