@@ -18,6 +18,7 @@
           [selectedVariable]="preparationDatas?.selectedVariable"
           [selectedGraphItemIndex]="distributionSelectedBarIndex"
           (selectedItemChanged)="onSelectedGraphItemChanged($event)"
+          (interpretableHistogramChanged)="onSelectedGraphItemChanged($event)"
           fxFlex="1 1 100%"
           [showTargetDistributionGraph]="!isRegressionOrExplanatoryAnalysis"
         >

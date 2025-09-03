@@ -24,9 +24,9 @@ import { PreparationDatasService } from '@khiops-visualization/providers/prepara
 import { REPORT } from '@khiops-library/enum/report';
 
 @Component({
-    selector: 'app-var-details-tree-preparation',
-    templateUrl: './var-details-tree-preparation.component.html',
-    standalone: false
+  selector: 'app-var-details-tree-preparation',
+  templateUrl: './var-details-tree-preparation.component.html',
+  standalone: false,
 })
 export class VarDetailsTreePreparationComponent {
   @ViewChild('appVariableGraphDetails', {

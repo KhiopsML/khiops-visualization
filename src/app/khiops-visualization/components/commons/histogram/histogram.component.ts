@@ -357,7 +357,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
           this.ratio,
           this.minBarHeight,
           this.defaultBarColor,
-          this.selectedItem
+          this.selectedItem,
         );
       }
     }
@@ -416,7 +416,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
               this.ratio,
               this.minBarHeight,
               this.defaultBarColor,
-              barPosition
+              barPosition,
             );
           }
         }
@@ -446,7 +446,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
         this.ctxSelected,
         this.histogramCanvas,
         this.histogramHoverCanvas,
-        this.histogramSelectedCanvas
+        this.histogramSelectedCanvas,
       );
 
       // Initialize contexts using renderer service
@@ -455,7 +455,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
         this.histogramHoverCanvas || null,
         this.histogramSelectedCanvas || null,
         this.w,
-        this.h
+        this.h,
       );
 
       this.ctx = contexts.ctx;
@@ -500,7 +500,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
       this.chart.nativeElement,
       this.w,
       this.h,
-      this.yPadding
+      this.yPadding,
     );
 
     if (this.datas) {
@@ -527,7 +527,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
       this.yTicksCount,
       this.graphOptionsY,
       this.rangeYLin,
-      this.rangeYLog
+      this.rangeYLog,
     );
 
     if (this.datas) {
@@ -544,9 +544,9 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
         this.rangeYLog,
         this.ratioY,
         this.minBarHeight,
-        this.defaultBarColor
+        this.defaultBarColor,
       );
-      
+
       this.bars = result.bars;
       this.ratio = result.ratio;
     }
@@ -571,7 +571,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
           this.xPadding,
           this.yPadding,
           this.xTickCount,
-          this.graphOptionsX
+          this.graphOptionsX,
         );
       }
     } else {
@@ -618,7 +618,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
             this.xPadding,
             this.yPadding,
             this.xTickCount,
-            this.graphOptionsX
+            this.graphOptionsX,
           );
         }
 
@@ -639,7 +639,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
               this.xPadding,
               this.yPadding,
               this.xTickCount,
-              this.graphOptionsX
+              this.graphOptionsX,
             );
           } else {
             let middleShift = this.w - 2 * this.xPadding;
@@ -653,7 +653,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
               this.xPadding,
               this.yPadding,
               this.xTickCount,
-              this.graphOptionsX
+              this.graphOptionsX,
             ); // 1 to make bigger line
           }
         }
@@ -690,7 +690,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
             this.xPadding,
             this.yPadding,
             this.xTickCount,
-            this.graphOptionsX
+            this.graphOptionsX,
           );
         }
       }

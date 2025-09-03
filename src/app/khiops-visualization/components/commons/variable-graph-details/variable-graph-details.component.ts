@@ -47,6 +47,8 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
   private targetDistributionGraph?: TargetDistributionGraphComponent;
 
   @Output() private selectedItemChanged: EventEmitter<any> = new EventEmitter();
+  @Output() private interpretableHistogramChanged: EventEmitter<number> =
+    new EventEmitter();
 
   @Input() public showTargetDistributionGraph = true;
   @Input() public showDistributionGraph = true;
@@ -284,6 +286,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
         this.selectedVariable,
         index,
       );
+      this.interpretableHistogramChanged.emit(index);
     }
   }
 
