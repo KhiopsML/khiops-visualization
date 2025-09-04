@@ -13,7 +13,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import {
   getVisualizationMockFile,
   getCoviszalizationMockFile,
-} from './mock-files.config';
+} from '../config/mock-files';
 
 @Injectable({
   providedIn: 'root',
