@@ -229,9 +229,9 @@ export class TargetDistributionGraphComponent
   }
 
   /**
-   * Get tooltip before label value (Probability)
+   * Get tooltip before label value (Probability or Lift)
    * @param items Tooltip items from Chart.js
-   * @returns Formatted probability label
+   * @returns Formatted probability or lift label
    */
   private getTooltipBeforeLabel(items: TooltipItem<'bar'>): string | undefined {
     if (!items?.dataset) {
@@ -239,12 +239,15 @@ export class TargetDistributionGraphComponent
     }
 
     let value = this.toPrecision.transform(items.dataset.data[items.dataIndex]);
+    let labelKey = 'GLOBAL.PROBABILITY';
 
     if (this.graphOptions.selected === TYPES.PROBABILITIES) {
       value = value + this.PERCENTAGE_SUFFIX;
+    } else if (this.graphOptions.selected === TYPES.LIFT) {
+      labelKey = 'GLOBAL.LIFT';
     }
 
-    return this.translate.get('GLOBAL.PROBABILITY') + ': ' + value;
+    return this.translate.get(labelKey) + ': ' + value;
   }
 
   /**
