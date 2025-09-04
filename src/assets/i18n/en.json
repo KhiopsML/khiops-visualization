@@ -104,6 +104,7 @@
     "MESSAGE": "Keep Y/X linear/log scales when changing variable"
   },
   "GLOBAL": {
+    "GROUP": "Group",
     "GRAVITY": "Gravity",
     "INNER_VARIABLE": "Inner variable",
     "PART": "Part",

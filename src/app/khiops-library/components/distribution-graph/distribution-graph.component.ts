@@ -29,6 +29,7 @@ import { UtilsService } from '@khiops-library/providers/utils.service';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { LS } from '@khiops-library/enum/ls';
 import { Ls } from '@khiops-library/providers/ls.service';
+import { TranslateService } from '@ngstack/translate';
 
 @Component({
   selector: 'kl-distribution-graph',
@@ -95,6 +96,7 @@ export class DistributionGraphComponent
     public override selectableService: SelectableService,
     public override ngzone: NgZone,
     public override configService: ConfigService,
+    public translate: TranslateService,
     private toPrecision: ToPrecisionPipe,
     private khiopsLibraryService: KhiopsLibraryService,
     private ls: Ls,
@@ -118,6 +120,7 @@ export class DistributionGraphComponent
         tooltip: {
           displayColors: false, // Hide color square in tooltip since we only have one bar series
           callbacks: {
+            title: (items: TooltipItem<'bar'>[]) => this.getTooltipTitle(items),
             label: (items: TooltipItem<'bar'>) => this.getTooltipLabel(items),
             afterLabel: (items: TooltipItem<'bar'>) =>
               this.getTooltipAfterLabel(items),
@@ -221,9 +224,21 @@ export class DistributionGraphComponent
   }
 
   /**
+   * Get tooltip title (Group label)
+   * @param items Tooltip items from Chart.js
+   * @returns Group label with "Group:" prefix
+   */
+  private getTooltipTitle(items: TooltipItem<'bar'>[]): string {
+    if (!items?.length || !items[0]) {
+      return '';
+    }
+    return this.translate.get('GLOBAL.GROUP') + ': ' + items[0].label;
+  }
+
+  /**
    * Get tooltip label value based on current mode
    * @param items Tooltip items from Chart.js
-   * @returns Formatted tooltip label or undefined
+   * @returns Formatted tooltip label with "Frequency:" prefix or undefined
    */
   private getTooltipLabel(items: TooltipItem<'bar'>): string | undefined {
     if (!items?.dataset) {
@@ -237,19 +252,22 @@ export class DistributionGraphComponent
       !this.hideGraphOptions &&
       this.graphOptions?.selected === HistogramType.YLOG;
 
+    let value: string;
     if (isLinearMode || isLogMode) {
-      return this.toPrecision.transform(
+      value = this.toPrecision.transform(
         (items.dataset as any).extra[items.dataIndex].extra.frequencyValue,
       );
+    } else {
+      value = this.toPrecision.transform(items.dataset.data[items.dataIndex]);
     }
 
-    return this.toPrecision.transform(items.dataset.data[items.dataIndex]);
+    return this.translate.get('GLOBAL.FREQUENCY') + ': ' + value;
   }
 
   /**
    * Get tooltip after label value for coverage percentage
    * @param items Tooltip items from Chart.js
-   * @returns Formatted percentage string or undefined
+   * @returns Formatted percentage string with "Probability:" prefix or undefined
    */
   private getTooltipAfterLabel(items: TooltipItem<'bar'>): string | undefined {
     const isLinearMode =
@@ -260,7 +278,12 @@ export class DistributionGraphComponent
       const coverageValue = (items.dataset as any).extra[items.dataIndex].extra
         .coverageValue;
       const percentValue = coverageValue * this.PERCENTAGE_MULTIPLIER;
-      return this.toPrecision.transform(percentValue) + '%';
+      return (
+        this.translate.get('GLOBAL.PROBABILITY') +
+        ': ' +
+        this.toPrecision.transform(percentValue) +
+        '%'
+      );
     }
 
     return undefined;
