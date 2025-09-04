@@ -32,6 +32,7 @@ export function createDefaultChartOptions(
       },
       // https://www.chartjs.org/docs/latest/configuration/tooltip.html
       tooltip: {
+        boxPadding: 10,
         titleFont: {
           family: 'Poppins, Verdana, Arial, sans-serif',
           size: 12.5,
