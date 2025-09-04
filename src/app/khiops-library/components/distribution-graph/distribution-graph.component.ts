@@ -116,6 +116,7 @@ export class DistributionGraphComponent
     this.chartOptions = {
       plugins: {
         tooltip: {
+          displayColors: false, // Hide color square in tooltip since we only have one bar series
           callbacks: {
             label: (items: TooltipItem<'bar'>) => this.getTooltipLabel(items),
             afterLabel: (items: TooltipItem<'bar'>) =>
