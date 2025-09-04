@@ -105,7 +105,6 @@ export class TargetDistributionGraphComponent
     this.chartOptions = {
       plugins: {
         tooltip: {
-          boxPadding: 10,
           displayColors: true, // Show color square for target value
           callbacks: {
             title: (items: TooltipItem<'bar'>[]) => this.getTooltipTitle(items),
