@@ -47,6 +47,7 @@
           }}"
           id="preparation-2d-target-distribution-graph"
           [inputDatas]="distribution2dDatas.targetDistributionGraphDatas"
+          [variableType]="preparation2dDatas?.selectedVariable?.type"
           [scaleValue]="scaleValue"
           (graphTypeChanged)="onTargetDistributionGraphTypeChanged($event)"
         >

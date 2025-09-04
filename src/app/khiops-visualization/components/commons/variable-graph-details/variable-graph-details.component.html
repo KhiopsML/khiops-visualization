@@ -101,6 +101,7 @@
         onSelectedTargetDistributionGraphItemChanged($event)
       "
       [inputDatas]="distributionDatas?.targetDistributionGraphDatas"
+      [variableType]="selectedVariable?.type"
       (graphTypeChanged)="onTargetDistributionGraphTypeChanged($event)"
       [scaleValue]="scaleValue"
       (targetDistributionGraphDisplayedValuesChanged)="

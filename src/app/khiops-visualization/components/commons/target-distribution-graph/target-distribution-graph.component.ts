@@ -54,6 +54,7 @@ export class TargetDistributionGraphComponent
   @Input() public activeEntries?: number;
   @Input() public displayedValues?: ChartToggleValuesI[];
   @Input() public showFullscreenBtn = false;
+  @Input() public variableType?: string;
 
   public override view: any = undefined; // managed into ScrollableGraphComponent
   public override graphIdContainer: string | undefined = undefined;
@@ -104,7 +105,11 @@ export class TargetDistributionGraphComponent
     this.chartOptions = {
       plugins: {
         tooltip: {
+          boxPadding: 10,
+          displayColors: true, // Show color square for target value
           callbacks: {
+            title: () => '',
+            label: (items: TooltipItem<'bar'>) => this.getTooltipLabel(items),
             beforeLabel: (items: TooltipItem<'bar'>) =>
               this.getTooltipBeforeLabel(items),
             afterLabel: (items: TooltipItem<'bar'>) =>
@@ -189,27 +194,39 @@ export class TargetDistributionGraphComponent
   }
 
   /**
-   * Get tooltip before label value
+   * Get tooltip label value (Target value only)
    * @param items Tooltip items from Chart.js
-   * @returns Formatted tooltip before label or undefined
+   * @returns Formatted target value label
+   */
+  private getTooltipLabel(items: TooltipItem<'bar'>): string {
+    if (!items?.dataset) {
+      return '';
+    }
+
+    return (
+      this.translate.get('GLOBAL.TARGET_VALUE') + ': ' + items.dataset.label
+    );
+  }
+
+  /**
+   * Get tooltip before label value (Group/Interval + Probability)
+   * @param items Tooltip items from Chart.js
+   * @returns Formatted group/interval and probability labels
    */
   private getTooltipBeforeLabel(items: TooltipItem<'bar'>): string | undefined {
     if (!items?.dataset) {
       return undefined;
     }
-    return this.toPrecision.transform(
-      (items.dataset as any).extra[items.dataIndex].extra.value,
-    );
-  }
 
-  /**
-   * Get tooltip after label value with conditional percentage
-   * @param items Tooltip items from Chart.js
-   * @returns Formatted tooltip after label or undefined
-   */
-  private getTooltipAfterLabel(items: TooltipItem<'bar'>): string | undefined {
-    if (!items?.dataset) {
-      return undefined;
+    // Check if the variable type is numerical (intervals) or categorical (groups)
+    const isNumerical = this.variableType === TYPES.NUMERICAL;
+
+    let groupOrInterval = '';
+    if (isNumerical) {
+      groupOrInterval =
+        this.translate.get('GLOBAL.INTERVAL') + ': ' + items.label;
+    } else {
+      groupOrInterval = this.translate.get('GLOBAL.GROUP') + ': ' + items.label;
     }
 
     let value = this.toPrecision.transform(items.dataset.data[items.dataIndex]);
@@ -218,7 +235,27 @@ export class TargetDistributionGraphComponent
       value = value + this.PERCENTAGE_SUFFIX;
     }
 
-    return value;
+    const probabilityLine =
+      this.translate.get('GLOBAL.PROBABILITY') + ': ' + value;
+
+    return groupOrInterval + '\n' + probabilityLine;
+  }
+
+  /**
+   * Get tooltip after label value (Frequency)
+   * @param items Tooltip items from Chart.js
+   * @returns Formatted frequency label
+   */
+  private getTooltipAfterLabel(items: TooltipItem<'bar'>): string | undefined {
+    if (!items?.dataset) {
+      return undefined;
+    }
+
+    const frequencyValue = this.toPrecision.transform(
+      (items.dataset as any).extra[items.dataIndex].extra.value,
+    );
+
+    return this.translate.get('GLOBAL.FREQUENCY') + ': ' + frequencyValue;
   }
 
   /**
