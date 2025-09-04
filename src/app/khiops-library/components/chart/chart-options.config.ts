@@ -30,7 +30,25 @@ export function createDefaultChartOptions(
         borderColor: 'transparent',
         borderWidth: 0,
       },
+      // https://www.chartjs.org/docs/latest/configuration/tooltip.html
       tooltip: {
+        titleFont: {
+          family: 'Poppins, Verdana, Arial, sans-serif',
+          size: 12.5,
+          weight: 'normal',
+          lineHeight: 1.2,
+        },
+        bodyFont: {
+          family: 'Poppins, Verdana, Arial, sans-serif',
+          size: 12.5,
+          weight: 'normal',
+          lineHeight: 1.2,
+        },
+        titleMarginBottom: 3,
+        titleSpacing: 3,
+        bodySpacing: 3,
+        footerSpacing: 3,
+        caretSize: 0,
         callbacks: {
           title: (items: TooltipItem<'bar' | 'line'>[]): string => {
             if (items?.[0]) {
