@@ -10,6 +10,8 @@ import {
   Output,
   NgZone,
   OnInit,
+  OnChanges,
+  SimpleChanges,
   EventEmitter,
 } from '@angular/core';
 import { SelectableService } from '../selectable/selectable.service';
@@ -37,7 +39,7 @@ import { Ls } from '@khiops-library/providers/ls.service';
 })
 export class DistributionGraphComponent
   extends ScrollableGraphComponent
-  implements OnInit
+  implements OnInit, OnChanges
 {
   @Input() public position = 0;
   @Input() declare public inputDatas: ChartDatasModel | undefined;
@@ -148,6 +150,17 @@ export class DistributionGraphComponent
   ngOnInit() {
     this.graphIdContainer = 'distribution-graph-comp-' + this.position;
     this.updateChartOptions();
+  }
+
+  /**
+   * Handle changes to input properties
+   * Update chart options when graphOptions changes (especially important when scale persistence is disabled)
+   */
+  override ngOnChanges(changes: SimpleChanges) {
+    if (changes['graphOptions'] && !changes['graphOptions'].firstChange) {
+      // Update chart options when graphOptions changes to ensure the scale type is correct
+      this.updateChartOptions();
+    }
   }
 
   /**
