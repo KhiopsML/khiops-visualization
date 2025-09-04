@@ -35,7 +35,7 @@ export function createDefaultChartOptions(
         titleFont: {
           family: 'Poppins, Verdana, Arial, sans-serif',
           size: 12.5,
-          weight: 'normal',
+          weight: 'bold',
           lineHeight: 1.2,
         },
         bodyFont: {
@@ -44,7 +44,7 @@ export function createDefaultChartOptions(
           weight: 'normal',
           lineHeight: 1.2,
         },
-        titleMarginBottom: 3,
+        titleMarginBottom: 10,
         titleSpacing: 3,
         bodySpacing: 3,
         footerSpacing: 3,

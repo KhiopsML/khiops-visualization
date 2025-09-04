@@ -245,11 +245,11 @@ export class DistributionGraphComponent
   }
 
   /**
-   * Get tooltip label value based on current mode
+   * Get tooltip after label value for coverage percentage
    * @param items Tooltip items from Chart.js
-   * @returns Formatted tooltip label with "Frequency:" prefix or undefined
+   * @returns Formatted percentage string with "Probability:" prefix or undefined
    */
-  private getTooltipLabel(items: TooltipItem<'bar'>): string | undefined {
+  private getTooltipAfterLabel(items: TooltipItem<'bar'>): string | undefined {
     if (!items?.dataset) {
       return undefined;
     }
@@ -274,11 +274,11 @@ export class DistributionGraphComponent
   }
 
   /**
-   * Get tooltip after label value for coverage percentage
+   * Get tooltip label value based on current mode
    * @param items Tooltip items from Chart.js
-   * @returns Formatted percentage string with "Probability:" prefix or undefined
+   * @returns Formatted tooltip label with "Frequency:" prefix or undefined
    */
-  private getTooltipAfterLabel(items: TooltipItem<'bar'>): string | undefined {
+  private getTooltipLabel(items: TooltipItem<'bar'>): string | undefined {
     const isLinearMode =
       !this.hideGraphOptions &&
       this.graphOptions?.selected === HistogramType.YLIN;

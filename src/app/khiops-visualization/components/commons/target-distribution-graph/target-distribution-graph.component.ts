@@ -108,7 +108,7 @@ export class TargetDistributionGraphComponent
           boxPadding: 10,
           displayColors: true, // Show color square for target value
           callbacks: {
-            title: () => '',
+            title: (items: TooltipItem<'bar'>[]) => this.getTooltipTitle(items),
             label: (items: TooltipItem<'bar'>) => this.getTooltipLabel(items),
             beforeLabel: (items: TooltipItem<'bar'>) =>
               this.getTooltipBeforeLabel(items),
@@ -194,6 +194,27 @@ export class TargetDistributionGraphComponent
   }
 
   /**
+   * Get tooltip title value (Group/Interval)
+   * @param items Tooltip items from Chart.js
+   * @returns Formatted group/interval title
+   */
+  private getTooltipTitle(items: TooltipItem<'bar'>[]): string {
+    if (!items || items.length === 0 || !items[0]) {
+      return '';
+    }
+
+    const firstItem = items[0];
+    // Check if the variable type is numerical (intervals) or categorical (groups)
+    const isNumerical = this.variableType === TYPES.NUMERICAL;
+
+    if (isNumerical) {
+      return this.translate.get('GLOBAL.INTERVAL') + ': ' + firstItem.label;
+    } else {
+      return this.translate.get('GLOBAL.GROUP') + ': ' + firstItem.label;
+    }
+  }
+
+  /**
    * Get tooltip label value (Target value only)
    * @param items Tooltip items from Chart.js
    * @returns Formatted target value label
@@ -209,24 +230,13 @@ export class TargetDistributionGraphComponent
   }
 
   /**
-   * Get tooltip before label value (Group/Interval + Probability)
+   * Get tooltip before label value (Probability)
    * @param items Tooltip items from Chart.js
-   * @returns Formatted group/interval and probability labels
+   * @returns Formatted probability label
    */
   private getTooltipBeforeLabel(items: TooltipItem<'bar'>): string | undefined {
     if (!items?.dataset) {
       return undefined;
-    }
-
-    // Check if the variable type is numerical (intervals) or categorical (groups)
-    const isNumerical = this.variableType === TYPES.NUMERICAL;
-
-    let groupOrInterval = '';
-    if (isNumerical) {
-      groupOrInterval =
-        this.translate.get('GLOBAL.INTERVAL') + ': ' + items.label;
-    } else {
-      groupOrInterval = this.translate.get('GLOBAL.GROUP') + ': ' + items.label;
     }
 
     let value = this.toPrecision.transform(items.dataset.data[items.dataIndex]);
@@ -235,10 +245,7 @@ export class TargetDistributionGraphComponent
       value = value + this.PERCENTAGE_SUFFIX;
     }
 
-    const probabilityLine =
-      this.translate.get('GLOBAL.PROBABILITY') + ': ' + value;
-
-    return groupOrInterval + '\n' + probabilityLine;
+    return this.translate.get('GLOBAL.PROBABILITY') + ': ' + value;
   }
 
   /**
