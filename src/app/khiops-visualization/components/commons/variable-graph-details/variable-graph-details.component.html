@@ -53,6 +53,7 @@
       [scaleValue]="scaleValue"
       [graphOptions]="distributionDatas?.distributionGraphOptionsY"
       [inputDatas]="distributionDatas?.distributionGraphDatas"
+      [variableType]="selectedVariable?.type"
       (graphTypeChanged)="onDistributionGraphTypeChanged($event)"
       [activeEntries]="activeEntries"
       (selectedItemChanged)="onSelectedDistributionGraphItemChanged($event)"

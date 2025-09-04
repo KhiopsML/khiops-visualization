@@ -77,7 +77,7 @@ export class FileLoaderService {
    */
   debugReadDatas(fileName?: string): any {
     // Visualization files and Co visualization files
-    // File selection is configured in mock-files.config.ts
+    // File selection is configured in mock-files.ts
     let urlKV = getVisualizationMockFile();
     let urlKC = getCoviszalizationMockFile();
 
@@ -211,7 +211,6 @@ export class FileLoaderService {
   getFileHistory() {
     const currentLs = this.ls.get(LS.OPEN_FILE);
     if (currentLs) {
-      // return JSON.parse(currentLs);
       return currentLs;
     } else {
       return {

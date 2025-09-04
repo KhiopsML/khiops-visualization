@@ -27,7 +27,7 @@ import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-op
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import * as _ from 'lodash';
 import { ConfigService } from '@khiops-library/providers/config.service';
-import { HistogramType } from '@khiops-visualization/components/commons/histogram/histogram.type';
+import { HistogramType } from '../../../../khiops-visualization/components/commons/histogram/histogram.type';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 
 @Component({
@@ -147,10 +147,10 @@ export class VariableGraphDetailsComponent
       bubbles: true, // Propagate
       cancelable: true,
     });
-    const rootElement = this.configService
-      ?.getRootElementDom();
-    const clusterDistribution = rootElement
-      ?.querySelector('#cluster-distribution-' + this.position);
+    const rootElement = this.configService?.getRootElementDom();
+    const clusterDistribution = rootElement?.querySelector(
+      '#cluster-distribution-' + this.position,
+    );
     if (clusterDistribution) {
       clusterDistribution.dispatchEvent(trustedClickEvent);
     }
@@ -212,7 +212,7 @@ export class VariableGraphDetailsComponent
    */
   private setLegendTitle() {
     const otherIndex = this.position === 0 ? 1 : 0;
-    if (this.graphDetails && this.graphDetails.datasets && this.graphDetails.datasets[0]) {
+    if (this.graphDetails?.datasets?.[0]) {
       this.graphDetails.datasets[0].label =
         this.dimensionsDatasService?.dimensionsDatas?.selectedNodes?.[
           otherIndex
@@ -237,6 +237,14 @@ export class VariableGraphDetailsComponent
       otherIndex = 1;
     }
     return [currentIndex, otherIndex];
+  }
+
+  /**
+   * Gets the variable type for the current position's dimension
+   * @returns The type of the variable (e.g., 'Numerical', 'Categorical')
+   */
+  get currentDimensionType(): string | undefined {
+    return this.selectedDimensions?.[this.position]?.type;
   }
 
   hideScaleElt() {

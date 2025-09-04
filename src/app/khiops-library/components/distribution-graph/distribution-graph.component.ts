@@ -47,6 +47,7 @@ export class DistributionGraphComponent
   @Input() public graphOptions: DistributionOptionsI | undefined;
   @Input() public activeEntries: number = 0;
   @Input() public hideGraphOptions = false;
+  @Input() public variableType?: string;
 
   @Output() private graphTypeChanged: EventEmitter<string> = new EventEmitter();
   @Output() private selectedItemChanged: EventEmitter<number> =
@@ -226,13 +227,21 @@ export class DistributionGraphComponent
   /**
    * Get tooltip title (Group label)
    * @param items Tooltip items from Chart.js
-   * @returns Group label with "Group:" prefix
+   * @returns Group label with "Group:" or "Interval:" prefix
    */
   private getTooltipTitle(items: TooltipItem<'bar'>[]): string {
     if (!items?.length || !items[0]) {
       return '';
     }
-    return this.translate.get('GLOBAL.GROUP') + ': ' + items[0].label;
+
+    // Check if the variable type is numerical (intervals) or categorical (groups)
+    const isNumerical = this.variableType === TYPES.NUMERICAL;
+
+    if (isNumerical) {
+      return this.translate.get('GLOBAL.INTERVAL') + ': ' + items[0].label;
+    } else {
+      return this.translate.get('GLOBAL.GROUP') + ': ' + items[0].label;
+    }
   }
 
   /**
