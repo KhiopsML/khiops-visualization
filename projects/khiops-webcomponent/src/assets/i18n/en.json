@@ -86,7 +86,7 @@
     "PROB_CELL_REVERSE": "P",
     "PROB_CELL_WITH_TARGET": "P",
     "FREQUENCY": "F",
-    "FREQUENCY_CELL": "CF"
+    "CONDITIONAL_FREQUENCY": "CF"
   },
   "COOKIE_CONSENT": {
     "TITLE": "Cookies consent",

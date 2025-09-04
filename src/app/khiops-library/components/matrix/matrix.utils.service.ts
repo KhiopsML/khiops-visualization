@@ -212,7 +212,7 @@ export class MatrixUtilsService {
 
       if (
         graphMode.mode === MATRIX_MODES.FREQUENCY ||
-        graphMode.mode === MATRIX_MODES.FREQUENCY_CELL
+        graphMode.mode === MATRIX_MODES.CONDITIONAL_FREQUENCY
       ) {
         matrixValues = matrixFreqsValues;
       } else {

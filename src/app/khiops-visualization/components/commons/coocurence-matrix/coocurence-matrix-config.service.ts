@@ -70,7 +70,7 @@ export class CoocurenceMatrixConfigService {
         title: frequencyLabel,
       },
       {
-        mode: MATRIX_MODES.FREQUENCY_CELL,
+        mode: MATRIX_MODES.CONDITIONAL_FREQUENCY,
         title: `${frequencyLabel} (${targetLabel} | ${varName2} , ${varName1})`,
       },
       {
@@ -127,7 +127,7 @@ export class CoocurenceMatrixConfigService {
    */
   isTargetSelectionRequired(matrixModes: MatrixModesModel): boolean {
     const targetRequiredModes = [
-      MATRIX_MODES.FREQUENCY_CELL,
+      MATRIX_MODES.CONDITIONAL_FREQUENCY,
       MATRIX_MODES.PROB_TARGET_WITH_CELL,
       MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL,
       MATRIX_MODES.PROB_CELL_WITH_TARGET,

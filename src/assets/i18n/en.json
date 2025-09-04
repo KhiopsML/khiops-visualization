@@ -92,7 +92,7 @@
     "PROB_CELL_REVERSE": "P",
     "PROB_CELL_WITH_TARGET": "P",
     "FREQUENCY": "F",
-    "FREQUENCY_CELL": "CF"
+    "CONDITIONAL_FREQUENCY": "CF"
   },
   "MATRIX_MODES_DETAILED": {
     "MUTUAL_INFO": "Mutual information",
@@ -104,7 +104,7 @@
     "PROB_CELL_REVERSE": "Probability",
     "PROB_CELL_WITH_TARGET": "Probability",
     "FREQUENCY": "Frequency",
-    "FREQUENCY_CELL": "Conditional frequency"
+    "CONDITIONAL_FREQUENCY": "Conditional frequency"
   },
   "COOKIE_CONSENT": {
     "TITLE": "Cookies consent",

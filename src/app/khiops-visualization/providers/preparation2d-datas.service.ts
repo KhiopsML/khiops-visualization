@@ -844,7 +844,7 @@ export class Preparation2dDatasService {
     const currentRes: MatrixRangeValuesI = {
       CELL_INTEREST: [],
       FREQUENCY: [],
-      FREQUENCY_CELL: [],
+      CONDITIONAL_FREQUENCY: [],
       MUTUAL_INFO: [],
       MUTUAL_INFO_TARGET_WITH_CELL: [],
     };
@@ -890,7 +890,7 @@ export class Preparation2dDatasService {
                   UtilsService.arraySum(cellFreqs),
                 );
                 // @ts-ignore
-                currentRes[MATRIX_MODES.FREQUENCY_CELL]?.push(cellFreqs);
+                currentRes[MATRIX_MODES.CONDITIONAL_FREQUENCY]?.push(cellFreqs);
               }
             }
           }
@@ -928,9 +928,9 @@ export class Preparation2dDatasService {
         currentRes[MATRIX_MODES.FREQUENCY].flat(),
       );
     }
-    if (currentRes[MATRIX_MODES.FREQUENCY_CELL]) {
-      res[MATRIX_MODES.FREQUENCY_CELL] = UtilsService.getMinAndMaxFromArray(
-        currentRes[MATRIX_MODES.FREQUENCY_CELL].flat(),
+    if (currentRes[MATRIX_MODES.CONDITIONAL_FREQUENCY]) {
+      res[MATRIX_MODES.CONDITIONAL_FREQUENCY] = UtilsService.getMinAndMaxFromArray(
+        currentRes[MATRIX_MODES.CONDITIONAL_FREQUENCY].flat(),
       );
     }
 
