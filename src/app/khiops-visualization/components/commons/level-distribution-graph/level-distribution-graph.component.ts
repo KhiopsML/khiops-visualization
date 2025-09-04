@@ -81,10 +81,15 @@ export class LevelDistributionGraphComponent
     this.chartOptions = {
       plugins: {
         tooltip: {
+          displayColors: false, // Hide color square for target value
           callbacks: {
             label: (items) => {
               if (items && items.dataset) {
-                return items.formattedValue;
+                return (
+                  this.translate.get('GLOBAL.LEVEL') +
+                  ': ' +
+                  items.formattedValue
+                );
               }
               return undefined;
             },
