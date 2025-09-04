@@ -1,38 +1,34 @@
 <div class="matrix-tooltip-comp" #matrixTooltipDiv>
-  <div *ngIf="cell" fxLayout="column" fxFlex fxLayoutAlign="start start">
-    <div
-      class="matrix-tooltip-title"
-      fxLayout="column"
-      fxLayoutAlign="start start"
-    >
-      <span
-        >{{ cell.xnamePart }} : {{ truncateText(cell.xDisplayaxisPart) }}</span
-      >
-      <span
-        >{{ cell.ynamePart }} : {{ truncateText(cell.yDisplayaxisPart) }}</span
-      >
+  <ng-container *ngIf="cell">
+    <div class="matrix-tooltip-title">
+      <div>{{ cell.xnamePart }}: {{ truncateText(cell.xDisplayaxisPart) }}</div>
+      <div>{{ cell.ynamePart }}: {{ truncateText(cell.yDisplayaxisPart) }}</div>
     </div>
-    <div
-      class="matrix-tooltip-content"
-      fxLayout="column"
-      fxLayoutAlign="start start"
-    >
-      <span *ngIf="cell.displayedValue.type !== 'HELLINGER'"
-        >{{ 'MATRIX_MODES_DETAILED.' + cell.displayedValue.type | translate }}:
-        {{ cell.displayedValue.value | toPrecision }}</span
-      >
-      <span *ngIf="cell.displayedValue.type !== 'FREQUENCY'"
-        >{{ 'GLOBAL.FREQUENCY' | translate }}:
-        {{ cell.displayedFreqValue | toPrecision }}</span
-      >
-      <span
-        >{{ 'GLOBAL.EXPECTED_FREQUENCY' | translate }}:
-        {{ cell.displayedValue.ef | toPrecision }}</span
-      >
-      <span *ngIf="cell.displayedValue.type === 'HELLINGER'"
-        >{{ 'MATRIX_MODES_DETAILED.' + cell.displayedValue.type | translate }}:
-        {{ cell.displayedValue.extra | toPrecision }}</span
-      >
+
+    <div class="matrix-tooltip-content">
+      <!-- Main value (not for Hellinger type) -->
+      <div *ngIf="shouldShowMainValue">
+        {{ getMainValueLabel() | translate }}:
+        {{ cell.displayedValue.value | toPrecision }}
+      </div>
+
+      <!-- Frequency (not for Frequency type) -->
+      <div *ngIf="shouldShowFrequency">
+        {{ 'GLOBAL.FREQUENCY' | translate }}:
+        {{ cell.displayedFreqValue | toPrecision }}
+      </div>
+
+      <!-- Expected frequency (always shown) -->
+      <div>
+        {{ 'GLOBAL.EXPECTED_FREQUENCY' | translate }}:
+        {{ cell.displayedValue.ef | toPrecision }}
+      </div>
+
+      <!-- Hellinger value (only for Hellinger type) -->
+      <div *ngIf="shouldShowHellingerValue">
+        {{ getHellingerValueLabel() | translate }}:
+        {{ cell.displayedValue.extra | toPrecision }}
+      </div>
     </div>
-  </div>
+  </ng-container>
 </div>

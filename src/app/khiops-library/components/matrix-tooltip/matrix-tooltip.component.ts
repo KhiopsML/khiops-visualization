@@ -56,12 +56,49 @@ export class MatrixTooltipComponent implements OnChanges {
   }
 
   /**
-   * Truncate text with ellipsis if it exceeds 100 characters
+   * Truncate text with ellipsis if it exceeds specified characters
    */
   truncateText(text: string | undefined, maxLength: number = 200): string {
     if (!text) return '';
     return text.length > maxLength
       ? text.substring(0, maxLength) + '...'
       : text;
+  }
+
+  /**
+   * Check if main value should be displayed (not for Hellinger type)
+   */
+  get shouldShowMainValue(): boolean {
+    return this.cell?.displayedValue?.type !== 'HELLINGER';
+  }
+
+  /**
+   * Check if frequency should be displayed (not for Frequency type)
+   */
+  get shouldShowFrequency(): boolean {
+    return this.cell?.displayedValue?.type !== 'FREQUENCY';
+  }
+
+  /**
+   * Check if Hellinger value should be displayed (only for Hellinger type)
+   */
+  get shouldShowHellingerValue(): boolean {
+    return this.cell?.displayedValue?.type === 'HELLINGER';
+  }
+
+  /**
+   * Get the translated label for main value
+   */
+  getMainValueLabel(): string {
+    if (!this.cell?.displayedValue?.type) return '';
+    return `MATRIX_MODES_DETAILED.${this.cell.displayedValue.type}`;
+  }
+
+  /**
+   * Get the translated label for Hellinger value
+   */
+  getHellingerValueLabel(): string {
+    if (!this.cell?.displayedValue?.type) return '';
+    return `MATRIX_MODES_DETAILED.${this.cell.displayedValue.type}`;
   }
 }

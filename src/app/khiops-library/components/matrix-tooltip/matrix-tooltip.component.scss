@@ -1,7 +1,7 @@
 .matrix-tooltip-comp {
   visibility: hidden;
   position: fixed;
-  text-align: center;
+  text-align: left;
   word-break: break-all;
   max-width: 300px;
   min-width: 300px;
@@ -16,7 +16,8 @@
     width: 100%;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    span {
+
+    div {
       margin: 0;
       padding: 0;
       font-weight: 500;
@@ -27,9 +28,9 @@
     width: 100%;
     padding: 10px;
     font-weight: 300;
-  }
 
-  span {
-    text-align: left;
+    div {
+      margin: 2px 0;
+    }
   }
 }
