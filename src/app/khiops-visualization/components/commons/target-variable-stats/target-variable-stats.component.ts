@@ -19,7 +19,7 @@ import { SelectableService } from '@khiops-library/components/selectable/selecta
 import { TranslateService } from '@ngstack/translate';
 import { ToPrecisionPipe } from '@khiops-library/pipes/to-precision.pipe';
 import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
-import { ChartOptions } from 'chart.js';
+import { ChartOptions, TooltipItem } from 'chart.js';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
@@ -62,30 +62,10 @@ export class TargetVariableStatsComponent
       plugins: {
         tooltip: {
           callbacks: {
-            label: (items: any) => {
-              if (items?.dataset) {
-                return items.dataset.label;
-              }
-              return undefined;
-            },
-            beforeLabel: (items: any) => {
-              if (items?.dataset) {
-                return (
-                  this.toPrecision.transform(
-                    items.dataset.extra[0].extra.percent,
-                  ) + '%'
-                );
-              }
-              return undefined;
-            },
-            afterLabel: (items: any) => {
-              if (items?.dataset) {
-                return this.toPrecision.transform(
-                  items.dataset.extra[0].extra.value,
-                );
-              }
-              return undefined;
-            },
+            title: (items: any) => this.getTooltipTitle(items),
+            label: (items: TooltipItem<'bar'>) => this.getTooltipLabel(items),
+            afterLabel: (items: TooltipItem<'bar'>) =>
+              this.getTooltipAfterLabel(items),
           },
         },
       },
@@ -101,8 +81,63 @@ export class TargetVariableStatsComponent
     };
   }
 
+  /**
+   * Handles fullscreen toggle event
+   * @param isFullscreen - Indicates if the component is in fullscreen mode
+   */
   onToggleFullscreen(isFullscreen: boolean) {
     this.isFullscreen = isFullscreen;
+  }
+
+  /**
+   * Get tooltip title for chart
+   * @param items - Tooltip items
+   * @returns Title string or undefined
+   */
+  private getTooltipTitle(items: any): string | undefined {
+    if (!items || items.length === 0 || !items[0]) {
+      return undefined;
+    }
+    return (
+      this.translate.get('GLOBAL.VARIABLE') + ': ' + items[0].dataset.label
+    );
+  }
+
+  /**
+   * Get tooltip label for chart
+   * @param items - Tooltip item
+   * @returns Label string or undefined
+   */
+  private getTooltipLabel(items: TooltipItem<'bar'>): string | undefined {
+    if (items?.dataset) {
+      return (
+        this.translate.get('GLOBAL.PROBABILITY') +
+        ': ' +
+        this.toPrecision.transform(
+          (items.dataset as any).extra?.[0]?.extra?.percent,
+        ) +
+        '%'
+      );
+    }
+    return undefined;
+  }
+
+  /**
+   * Get tooltip after label for chart
+   * @param items - Tooltip item
+   * @returns After label string or undefined
+   */
+  private getTooltipAfterLabel(items: TooltipItem<'bar'>): string | undefined {
+    if (items?.dataset) {
+      return (
+        this.translate.get('GLOBAL.FREQUENCY') +
+        ': ' +
+        this.toPrecision.transform(
+          (items.dataset as any)?.extra?.[0]?.extra?.value,
+        )
+      );
+    }
+    return undefined;
   }
 
   ngOnChanges(changes: SimpleChanges) {
