@@ -94,6 +94,18 @@
     "FREQUENCY": "F",
     "FREQUENCY_CELL": "CF"
   },
+  "MATRIX_MODES_DETAILED": {
+    "MUTUAL_INFO": "Mutual information",
+    "CELL_INTEREST": "Cell interest",
+    "PROB_CELL": "Probability",
+    "HELLINGER": "Hellinger",
+    "MUTUAL_INFO_TARGET_WITH_CELL": "Mutual information",
+    "PROB_TARGET_WITH_CELL": "Probability",
+    "PROB_CELL_REVERSE": "Probability",
+    "PROB_CELL_WITH_TARGET": "Probability",
+    "FREQUENCY": "Frequency",
+    "FREQUENCY_CELL": "Conditional frequency"
+  },
   "COOKIE_CONSENT": {
     "TITLE": "Cookies consent",
     "MESSAGE": "Allow this application to use cookies for usage statistics purposes only?",
@@ -104,6 +116,7 @@
     "MESSAGE": "Keep Y/X linear/log scales when changing variable"
   },
   "GLOBAL": {
+    "EXPECTED_FREQUENCY": "Expected frequency",
     "GROUP": "Group",
     "GRAVITY": "Gravity",
     "INNER_VARIABLE": "Inner variable",

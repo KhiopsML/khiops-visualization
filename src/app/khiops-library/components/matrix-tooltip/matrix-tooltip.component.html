@@ -18,15 +18,19 @@
       fxLayoutAlign="start start"
     >
       <span *ngIf="cell.displayedValue.type !== 'HELLINGER'"
-        >{{ 'MATRIX_MODES.' + cell.displayedValue.type | translate }} =
+        >{{ 'MATRIX_MODES_DETAILED.' + cell.displayedValue.type | translate }}:
         {{ cell.displayedValue.value | toPrecision }}</span
       >
       <span *ngIf="cell.displayedValue.type !== 'FREQUENCY'"
-        >F = {{ cell.displayedFreqValue | toPrecision }}</span
+        >{{ 'GLOBAL.FREQUENCY' | translate }}:
+        {{ cell.displayedFreqValue | toPrecision }}</span
       >
-      <span>EF = {{ cell.displayedValue.ef | toPrecision }}</span>
+      <span
+        >{{ 'GLOBAL.EXPECTED_FREQUENCY' | translate }}:
+        {{ cell.displayedValue.ef | toPrecision }}</span
+      >
       <span *ngIf="cell.displayedValue.type === 'HELLINGER'"
-        >{{ 'MATRIX_MODES.' + cell.displayedValue.type | translate }} =
+        >{{ 'MATRIX_MODES_DETAILED.' + cell.displayedValue.type | translate }}:
         {{ cell.displayedValue.extra | toPrecision }}</span
       >
     </div>
