@@ -10,6 +10,11 @@ import { HistogramValuesI } from './histogram.interfaces';
 import { HISTOGRAM_COLORS } from '@khiops-visualization/config/colors';
 import { AppService } from '@khiops-visualization/providers/app.service';
 
+export interface TooltipData {
+  title: string;
+  body: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -74,15 +79,15 @@ export class HistogramUIService {
   }
 
   /**
-   * Generates tooltip text for a histogram bar
+   * Generates tooltip data for a histogram bar
    * @param d - Histogram data values for the bar
    * @param isFirstInterval - Whether this is the first interval in the histogram
-   * @returns Formatted HTML string for the tooltip
+   * @returns Object with title and body for the tooltip
    */
   static generateTooltip(
     d: HistogramValuesI,
     isFirstInterval: boolean,
-  ): string {
+  ): TooltipData {
     let bounds = '';
     if (isFirstInterval) {
       bounds += '[';
@@ -91,12 +96,14 @@ export class HistogramUIService {
     }
     bounds += d.partition[0] + ', ' + d.partition[1] + ']';
 
-    return `
-      ${AppService.translate.get('GLOBAL.INTERVAL')}: ${bounds}<br>
+    const title = `${AppService.translate.get('GLOBAL.INTERVAL')}: ${bounds}`;
+    const body = `
       ${AppService.translate.get('GLOBAL.DENSITY')}: ${d3.format('.2e')(d.density)}<br>
       ${AppService.translate.get('GLOBAL.PROBABILITY')}: ${d3.format('.2e')(d.probability)}%<br>
       ${AppService.translate.get('GLOBAL.FREQUENCY')}: ${d.frequency}
     `.trim();
+
+    return { title, body };
   }
 
   /**

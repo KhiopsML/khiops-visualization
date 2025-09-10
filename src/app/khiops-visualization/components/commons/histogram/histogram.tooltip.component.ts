@@ -7,21 +7,22 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-    selector: 'app-histogram-tooltip',
-    template: `
+  selector: 'app-histogram-tooltip',
+  template: `
     <div
       [ngStyle]="{
         'left.px': this.computeXPos(),
-        'top.px': this.computeYPos()
+        'top.px': this.computeYPos(),
       }"
       class="tooltip"
       [style.display]="display ? 'block' : 'none'"
     >
-      <p [innerHTML]="text"></p>
+      <p class="title" [innerHTML]="title" *ngIf="title"></p>
+      <p [innerHTML]="body" *ngIf="body"></p>
     </div>
   `,
-    styles: [
-        `
+  styles: [
+    `
       .tooltip {
         position: absolute;
         background-color: rgba(0, 0, 0, 0.8);
@@ -34,12 +35,17 @@ import { Component, Input } from '@angular/core';
         min-width: 140px;
         pointer-events: none;
       }
+      .title {
+        font-weight: bold;
+        margin-bottom: -5px;
+      }
     `,
-    ],
-    standalone: false
+  ],
+  standalone: false,
 })
 export class HistogramTooltipComponent {
-  @Input() public text: string = '';
+  @Input() public title: string = '';
+  @Input() public body: string = '';
   @Input() public display: boolean = false;
   @Input() private posX: number = 0;
   @Input() private posY: number = 0;

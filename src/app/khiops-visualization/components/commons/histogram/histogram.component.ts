@@ -17,7 +17,7 @@ import {
 } from '@angular/core';
 import { HistogramService } from './histogram.service';
 import { HistogramRendererService } from './histogram-renderer.service';
-import { HistogramUIService } from './histogram.ui.service';
+import { HistogramUIService, TooltipData } from './histogram.ui.service';
 import { HistogramBarModel } from './histogram.bar.model';
 import { ResizedEvent } from 'angular-resize-event-package';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
@@ -85,7 +85,8 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   // Local variables
   public isLoading: boolean = false;
   public colorSet: string[];
-  public tooltipText: string = '';
+  public tooltipTitle: string = '';
+  public tooltipBody: string = '';
   public tooltipPosX: number = 0;
   public tooltipPosY: number = 0;
   public tooltipDisplay: boolean = false;
@@ -385,11 +386,11 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
       const bar = this.datas?.[barPosition || 0];
 
       if (barPosition !== undefined) {
-        const tooltipText = HistogramUIService.generateTooltip(
+        const tooltipData = HistogramUIService.generateTooltip(
           bar || this.datas[0] || ({} as HistogramValuesI),
           barPosition === 0,
         );
-        this.showTooltip(event, tooltipText);
+        this.showTooltipData(event, tooltipData);
 
         if (this.ctxHover && this.histogramHoverCanvas) {
           HistogramUIService.cleanDomContext(
@@ -426,10 +427,11 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     }
   }
 
-  private showTooltip(event: MouseEvent, text: string) {
+  private showTooltipData(event: MouseEvent, tooltipData: TooltipData) {
     this.tooltipPosX = event.offsetX + 20;
     this.tooltipPosY = event.offsetY - 40;
-    this.tooltipText = text;
+    this.tooltipTitle = tooltipData.title;
+    this.tooltipBody = tooltipData.body;
     this.tooltipDisplay = true;
   }
 

@@ -117,7 +117,8 @@
       <canvas id="histogram-canvas-selected" fxFlex> </canvas>
       <div #chart id="histogram-chart" fxFlexFill></div>
       <app-histogram-tooltip
-        [text]="tooltipText"
+        [title]="tooltipTitle"
+        [body]="tooltipBody"
         [canvasW]="w"
         [posX]="tooltipPosX"
         [posY]="tooltipPosY"
