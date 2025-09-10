@@ -13,7 +13,7 @@
 
   .matrix-tooltip-title {
     padding: 10px 10px 0 10px;
-    width: 100%;
+    width: calc(100% - 20px);
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 
