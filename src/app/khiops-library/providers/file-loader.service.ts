@@ -82,8 +82,8 @@ export class FileLoaderService {
     let urlKC = getCoviszalizationMockFile();
 
     if (fileName) {
-      urlKV = './assets/mocks/kv/' + fileName;
-      urlKC = './assets/mocks/kc/' + fileName;
+      urlKV = fileName;
+      urlKC = fileName;
     }
 
     let url;
