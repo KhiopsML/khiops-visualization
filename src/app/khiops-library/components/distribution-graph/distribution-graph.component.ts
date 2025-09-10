@@ -279,13 +279,10 @@ export class DistributionGraphComponent
    * @returns Formatted tooltip label with "Frequency:" prefix or undefined
    */
   private getTooltipLabel(items: TooltipItem<'bar'>): string | undefined {
-    const isLinearMode =
-      !this.hideGraphOptions &&
-      this.graphOptions?.selected === HistogramType.YLIN;
-
-    if (isLinearMode && items?.dataset) {
-      const coverageValue = (items.dataset as any).extra[items.dataIndex].extra
-        .coverageValue;
+    const datasetWithExtra = items?.dataset as any;
+    if (datasetWithExtra?.extra?.[items.dataIndex]?.extra) {
+      const coverageValue =
+        datasetWithExtra.extra[items.dataIndex].extra.coverageValue;
       const percentValue = coverageValue * this.PERCENTAGE_MULTIPLIER;
       return (
         this.translate.get('GLOBAL.PROBABILITY') +
@@ -294,8 +291,7 @@ export class DistributionGraphComponent
         '%'
       );
     }
-
-    return undefined;
+    return '';
   }
 
   /**
