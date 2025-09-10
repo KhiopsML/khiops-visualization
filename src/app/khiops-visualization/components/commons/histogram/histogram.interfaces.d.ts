@@ -38,3 +38,8 @@ export interface HistogramValuesI {
     barH: number;
   };
 }
+
+export interface TooltipData {
+  title: string;
+  body: string;
+}

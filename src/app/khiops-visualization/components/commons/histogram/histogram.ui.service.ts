@@ -6,14 +6,9 @@
 
 import { Injectable } from '@angular/core';
 import * as d3 from 'd3';
-import { HistogramValuesI } from './histogram.interfaces';
+import { HistogramValuesI, TooltipData } from './histogram.interfaces';
 import { HISTOGRAM_COLORS } from '@khiops-visualization/config/colors';
 import { AppService } from '@khiops-visualization/providers/app.service';
-
-export interface TooltipData {
-  title: string;
-  body: string;
-}
 
 @Injectable({
   providedIn: 'root',

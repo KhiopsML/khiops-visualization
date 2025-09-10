@@ -17,7 +17,7 @@ import {
 } from '@angular/core';
 import { HistogramService } from './histogram.service';
 import { HistogramRendererService } from './histogram-renderer.service';
-import { HistogramUIService, TooltipData } from './histogram.ui.service';
+import { HistogramUIService } from './histogram.ui.service';
 import { HistogramBarModel } from './histogram.bar.model';
 import { ResizedEvent } from 'angular-resize-event-package';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
@@ -30,6 +30,7 @@ import {
   RangeXLinI,
   RangeXLogI,
   RangeYLogI,
+  TooltipData,
 } from './histogram.interfaces';
 import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options';
 import { debounceTime, Subject } from 'rxjs';
