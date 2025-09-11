@@ -27,6 +27,7 @@ import { MatrixRangeValuesI } from '@khiops-visualization/interfaces/matrix-rang
 import { CellModel } from '@khiops-library/model/cell.model';
 import { Preparation2dVariableModel } from '@khiops-visualization/model/preparation2d-variable.model';
 import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
+import { TranslateService } from '@ngstack/translate';
 
 /**
  * Test it with irisR file
@@ -56,6 +57,7 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
 
   constructor(
     private preparationDatasService: PreparationDatasService,
+    private translate: TranslateService,
     private appService: AppService,
     private preparation2dDatasService: Preparation2dDatasService,
   ) {
@@ -128,18 +130,22 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
       {
         mode: MATRIX_MODES.MUTUAL_INFO,
         title: 'I (' + varName1 + ' , ' + varName2 + ')',
+        tooltip: this.translate.get('TOOLTIPS.MATRIX.I'),
       },
       {
         mode: MATRIX_MODES.FREQUENCY,
         title: 'Frequency',
+        tooltip: this.translate.get('TOOLTIPS.MATRIX.F'),
       },
       {
         mode: MATRIX_MODES.PROB_CELL,
         title: 'P (' + varName2 + ' | ' + varName1 + ')',
+        tooltip: this.translate.get('TOOLTIPS.MATRIX.P'),
       },
       {
         mode: MATRIX_MODES.PROB_CELL_REVERSE,
         title: 'P (' + varName1 + ' | ' + varName2 + ')',
+        tooltip: this.translate.get('TOOLTIPS.MATRIX.P'),
       },
     ];
     this.matrixModes = { ...this.matrixModes };

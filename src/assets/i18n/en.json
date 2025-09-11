@@ -511,15 +511,17 @@
         "COVERAGE": "coverage of the cell"
       }
     },
+    "MATRIX": {
+      "CELL_STATS_FREQUENCY": "Frequency : number of occurences in the selected co-cluster",
+      "CELL_STATS_EXPECTED_FREQUENCY": "Expected frequency in case of independence of the two dimensions",
+      "F": "Number of occurences",
+      "I": "Mutual information",
+      "P": "Conditional probability",
+      "CF": "Conditional frequency",
+      "CI": "Cell interests",
+      "H": "Hellinger distance"
+    },
     "AXIS": {
-      "MATRIX": {
-        "CELL_STATS_FREQUENCY": "Frequency : number of occurences in the selected co-cluster",
-        "CELL_STATS_EXPECTED_FREQUENCY": "Expected frequency in case of independence of the two dimensions",
-        "F": "Number of occurences",
-        "I": "Mutual information",
-        "P": "Conditional probability",
-        "H": "Hellinger distance"
-      },
       "DIMENSION": {
         "SELECT": "Select the dimension to display here",
         "STATISTICS": "This view shows the cluster hierarchy. It allows to navigate and to modify the hierarchy of clusters. The hierarchy is presented like a file manager, each directory being a cluster. By opening or closing a cluster, you can choose the appropriate hierarchy."

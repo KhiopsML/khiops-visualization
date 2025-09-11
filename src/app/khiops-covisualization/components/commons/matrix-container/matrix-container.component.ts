@@ -171,27 +171,27 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
         {
           mode: MATRIX_MODES.MUTUAL_INFO,
           title: 'I (' + varName1 + ' , ' + varName2 + ')',
-          tooltip: this.translate.get('TOOLTIPS.AXIS.MATRIX.I'),
+          tooltip: this.translate.get('TOOLTIPS.MATRIX.I'),
         },
         {
           mode: MATRIX_MODES.FREQUENCY,
           title: 'Frequency',
-          tooltip: this.translate.get('TOOLTIPS.AXIS.MATRIX.F'),
+          tooltip: this.translate.get('TOOLTIPS.MATRIX.F'),
         },
         {
           mode: MATRIX_MODES.PROB_CELL,
           title: 'P (' + varName2 + ' | ' + varName1 + ')',
-          tooltip: this.translate.get('TOOLTIPS.AXIS.MATRIX.P'),
+          tooltip: this.translate.get('TOOLTIPS.MATRIX.P'),
         },
         {
           mode: MATRIX_MODES.PROB_CELL_REVERSE,
           title: 'P (' + varName1 + ' | ' + varName2 + ')',
-          tooltip: this.translate.get('TOOLTIPS.AXIS.MATRIX.P'),
+          tooltip: this.translate.get('TOOLTIPS.MATRIX.P'),
         },
         {
           mode: MATRIX_MODES.HELLINGER,
           title: 'H (' + varName1 + ' , ' + varName2 + ')',
-          tooltip: this.translate.get('TOOLTIPS.AXIS.MATRIX.H'),
+          tooltip: this.translate.get('TOOLTIPS.MATRIX.H'),
         },
       ];
       this.matrixModes = { ...this.matrixModes };

@@ -6,12 +6,12 @@
 >
   <div *ngIf="cellStats" class="cell-stats-content">
     <b>{{ 'GLOBAL.CELL_STATS' | translate }}</b>
-    <span title="{{ 'TOOLTIPS.AXIS.MATRIX.CELL_STATS_FREQUENCY' | translate }}"
+    <span title="{{ 'TOOLTIPS.MATRIX.CELL_STATS_FREQUENCY' | translate }}"
       >F= {{ cellStats.F | toPrecision }}</span
     >
     <span
       title="{{
-        'TOOLTIPS.AXIS.MATRIX.CELL_STATS_EXPECTED_FREQUENCY' | translate
+        'TOOLTIPS.MATRIX.CELL_STATS_EXPECTED_FREQUENCY' | translate
       }}"
       >EF= {{ cellStats.EF | toPrecision }}</span
     >

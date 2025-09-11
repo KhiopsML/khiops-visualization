@@ -13,6 +13,7 @@ import { MatrixModesModel } from '@khiops-library/model/matrix-modes.model';
 import { MatrixTargetsModel } from '@khiops-library/model/matrix-targets.model';
 import { LS } from '@khiops-library/enum/ls';
 import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
+import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 
 /**
  * Service for managing coocurrence matrix configuration including modes and targets
@@ -55,35 +56,40 @@ export class CoocurenceMatrixConfigService {
   createMatrixModesWithTargets(
     varName1?: string,
     varName2?: string,
-  ): Array<{ mode: string; title: string }> {
+  ): MatrixModeI[] {
     const targetLabel = this.translate.get('GLOBAL.TARGET');
     const frequencyLabel = this.translate.get('GLOBAL.FREQUENCY');
-    const cellsInterestsLabel = this.translate.get('GLOBAL.CELLS_INTERESTS');
 
     return [
       {
         mode: MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL,
         title: `I (${targetLabel} | ${varName2} , ${varName1})`,
+        tooltip: this.translate.get('TOOLTIPS.MATRIX.I'),
       },
       {
         mode: MATRIX_MODES.FREQUENCY,
         title: frequencyLabel,
+        tooltip: this.translate.get('TOOLTIPS.MATRIX.F'),
       },
       {
         mode: MATRIX_MODES.CONDITIONAL_FREQUENCY,
         title: `${frequencyLabel} (${targetLabel} | ${varName2} , ${varName1})`,
+        tooltip: this.translate.get('TOOLTIPS.MATRIX.CF'),
       },
       {
         mode: MATRIX_MODES.PROB_TARGET_WITH_CELL,
         title: `P (${targetLabel} | ${varName2} , ${varName1})`,
+        tooltip: this.translate.get('TOOLTIPS.MATRIX.P'),
       },
       {
         mode: MATRIX_MODES.PROB_CELL_WITH_TARGET,
         title: `P (${varName2} , ${varName1} | ${targetLabel})`,
+        tooltip: this.translate.get('TOOLTIPS.MATRIX.P'),
       },
       {
         mode: MATRIX_MODES.CELL_INTEREST,
-        title: cellsInterestsLabel,
+        title: this.translate.get('GLOBAL.CELLS_INTERESTS'),
+        tooltip: this.translate.get('TOOLTIPS.MATRIX.CI'),
       },
     ];
   }
