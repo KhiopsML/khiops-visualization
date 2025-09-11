@@ -20,7 +20,7 @@ import { SelectableService } from '@khiops-library/components/selectable/selecta
 import _ from 'lodash';
 import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
 import { ConfigService } from '@khiops-library/providers/config.service';
-import { ChartOptions } from 'chart.js';
+import { ChartOptions, TooltipItem } from 'chart.js';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { EvaluationDatasModel } from '@khiops-visualization/model/evaluation-datas.model';
 import { TargetLiftValuesI } from '@khiops-visualization/interfaces/target-lift-values';
@@ -103,6 +103,20 @@ export class TargetLiftGraphComponent
       },
       normalized: true,
       animation: false,
+      plugins: {
+        tooltip: {
+          displayColors: true, // Show color square for curve names
+          callbacks: {
+            title: (items: TooltipItem<'line'>[]) =>
+              this.getTooltipTitle(items),
+            beforeBody: (items: TooltipItem<'line'>[]) =>
+              this.getTooltipBeforeBody(items),
+            label: (items: TooltipItem<'line'>) => this.getTooltipLabel(items),
+            afterLabel: (items: TooltipItem<'line'>) =>
+              this.getTooltipAfterLabel(items),
+          },
+        },
+      },
       scales: {
         x: {
           title: {
@@ -205,5 +219,102 @@ export class TargetLiftGraphComponent
       this.targetLift.selected = target;
     }
     this.computeTargetLiftDatas();
+  }
+
+  /**
+   * Get tooltip title for chart - displays this.title
+   * @param items - Tooltip items
+   * @returns Title string or undefined
+   */
+  private getTooltipTitle(items: TooltipItem<'line'>[]): string | undefined {
+    if (!items || items.length === 0) {
+      return undefined;
+    }
+    return this.title;
+  }
+
+  /**
+   * Get tooltip label for chart - displays curve name as currently shown
+   * @param items - Tooltip item
+   * @returns Label string or undefined
+   */
+  private getTooltipLabel(items: TooltipItem<'line'>): string | undefined {
+    if (items?.dataset?.label) {
+      return items.dataset.label;
+    }
+    return undefined;
+  }
+
+  /**
+   * Get tooltip after label for chart - displays Target modality for each curve
+   * @param items - Tooltip item
+   * @returns After label string or undefined
+   */
+  private getTooltipAfterLabel(items: TooltipItem<'line'>): string | undefined {
+    if (!items || items.dataIndex === undefined) {
+      return undefined;
+    }
+
+    const yValue = items.parsed?.y; // Target modality percentage from y-axis
+
+    if (yValue === undefined) {
+      return undefined;
+    }
+
+    if (this.evaluationDatasService.isRegressionAnalysis()) {
+      // For regression: y = Population %
+      return (
+        this.translate.get('GLOBAL.POPULATION') + ': ' + yValue.toFixed(2) + '%'
+      );
+    } else {
+      // For classification: y = Target Modality %
+      return (
+        this.translate.get('GLOBAL.TARGET_MODALITY') +
+        ': ' +
+        yValue.toFixed(2) +
+        '%'
+      );
+    }
+  }
+
+  /**
+   * Get tooltip before body for chart - displays Population info once (common to all curves)
+   * @param items - Tooltip items array
+   * @returns Before body string array or undefined
+   */
+  private getTooltipBeforeBody(
+    items: TooltipItem<'line'>[],
+  ): string[] | undefined {
+    if (
+      !items ||
+      items.length === 0 ||
+      !items[0] ||
+      items[0].dataIndex === undefined
+    ) {
+      return undefined;
+    }
+
+    // Use the first item to get the common x value (same for all curves at this point)
+    const firstItem = items[0];
+    const xValue = firstItem.label; // Population percentage from x-axis
+
+    const result: string[] = [];
+
+    if (this.evaluationDatasService.isRegressionAnalysis()) {
+      // For regression: x = Rank Error %
+      result.push(
+        this.translate.get('GLOBAL.RANK_ERROR') + ': ' + xValue + '%',
+      );
+    } else {
+      // For classification: x = Population %
+      result.push(
+        this.translate.get('GLOBAL.POPULATION') + ': ' + xValue + '%',
+      );
+    }
+
+    // Add empty line for margin bottom
+    result.push('');
+
+    return result;
   }
 }
