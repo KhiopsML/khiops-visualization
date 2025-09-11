@@ -4,6 +4,8 @@
 
   .comp-header {
     margin: 10px 1px;
+    overflow-x: auto;
+    overflow-y: hidden;
 
     h1 {
       margin-right: 1em !important;
