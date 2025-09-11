@@ -89,6 +89,7 @@ export class TargetLiftGraphComponent
       interaction: {
         intersect: true,
         mode: 'nearest',
+        axis: 'x',
       },
       datasets: {
         line: {
