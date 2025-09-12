@@ -146,6 +146,11 @@ export class TargetVariableStatsComponent
       this.displayedValues = [];
       if (this.inputDatas?.datasets) {
         Object.keys(this.inputDatas.datasets).map((_key, i) => {
+          // Add bar spacing properties to each dataset
+          if (this.inputDatas?.datasets[i]) {
+            this.inputDatas.datasets[i].barPercentage = 0.9;
+            this.inputDatas.datasets[i].categoryPercentage = 0.3;
+          }
           this.displayedValues.push({
             name: this.inputDatas?.datasets[i]?.label,
           });
