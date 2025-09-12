@@ -24,7 +24,6 @@ const modelBase: () => HypertreeArgs = () => ({
   langloader: (ok) => ok(),
   langInitBFS: (ht: Hypertree, n: N) => {
     n.precalc.label = undefined;
-    n.precalc.wiki = undefined;
   },
 
   objects: {

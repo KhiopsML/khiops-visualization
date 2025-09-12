@@ -1,20 +1,14 @@
 import { C, Cp, Ck } from '../transformation/hyperbolic-math';
-import { HierarchyNode } from 'd3';
 import { Path } from '../path/path';
 
 export interface NodePrecalulations {
   layoutWeight: number;
   cullingWeight: number;
   visWeight: number;
-
   weight: number;
   weightScale: number;
   label: string;
   labellen: number;
-
-  icon: string;
-  imageHref: string;
-  wiki: string;
   clickable: boolean;
   cell: boolean;
 }

@@ -83,7 +83,7 @@ export const navBackgroundLayers = [
       name: 'emojis',
       className: 'caption label-big',
       data: () => ud.cache.emojis,
-      text: (d: N) => d.precalc.icon,
+      text: undefined,
       delta: labelDelta(ud),
       transform: (d: N, delta: C) =>
         ` translate(${CtoStr(CaddC((d.layoutReference || d.layout).z, delta))})`,

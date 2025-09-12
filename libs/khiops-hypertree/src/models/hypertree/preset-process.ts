@@ -14,9 +14,7 @@ export function setHoverNodeCache(node: N, cache: TransformationCache) {
 }
 
 export function doLabelStuff(ud: IUnitDisk, cache: TransformationCache) {
-  var labels = cache.unculledNodes.filter(
-    (e: N) => e.precalc.label || e.precalc.icon,
-  );
+  var labels = cache.unculledNodes.filter((e: N) => e.precalc.label);
 
   var stdlabels = labels.filter((e) => !e.parent || !e.isOutλ);
 
@@ -32,8 +30,4 @@ export function doLabelStuff(ud: IUnitDisk, cache: TransformationCache) {
     damping /= 0.8;
   }
   cache.labels = stdlabels;
-}
-
-export function doImageStuff(ud: IUnitDisk, cache: TransformationCache) {
-  cache.images = cache.unculledNodes.filter((e: N) => e.precalc.imageHref);
 }

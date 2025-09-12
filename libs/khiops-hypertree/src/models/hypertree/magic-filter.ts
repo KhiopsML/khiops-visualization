@@ -6,7 +6,6 @@ import { CktoCp } from '../transformation/hyperbolic-math';
 import { CassignC } from '../transformation/hyperbolic-math';
 import { doVoronoiStuff } from './preset-process';
 import { doLabelStuff } from './preset-process';
-import { doImageStuff } from './preset-process';
 
 function adjustMagic(ud: IUnitDisk, cache: TransformationCache) {
   const filter = ud.view.hypertree.args.filter.weightFilter;
@@ -142,8 +141,6 @@ export function cacheUpdate(ud: IUnitDisk, cache: TransformationCache) {
   )
     doVoronoiStuff(ud, cache);
 
-  doImageStuff(ud, cache);
-
   if (cache.centerNode) ud.view.hypertree.update.centernode(cache.centerNode);
 
   // only for meta view
@@ -224,6 +221,4 @@ function peocessNode(
 
   if (!cache.centerNode || cache.centerNode.cachep.r > n.cachep.r)
     cache.centerNode = n;
-
-  if (n.precalc.icon && !n.isOut) cache.emojis.push(n);
 }
