@@ -58,7 +58,7 @@ const modelBase: () => HypertreeArgs = () => ({
     },
     focusExtension: 3, //1.6 Nb nodes to display
     maxFocusRadius: 1, // 0.85
-    maxlabels: 50, // 25
+    maxlabels: 500, // 25
   },
   geometry: {
     decorator: UnitDisk,
@@ -69,13 +69,9 @@ const modelBase: () => HypertreeArgs = () => ({
     nodeRadius: nodeInitR(0.01),
     nodeScale: nodeScale,
     nodeFilter: hasCircle,
-    offsetEmoji: labeloffsets.labeloffset, //outwards,
     offsetLabels: labeloffsets.labeloffset, //outwardsPlusNodeRadius,
     linkWidth: arcWidth,
     linkCurvature: '-',
-    captionBackground: 'all',
-    captionFont: '6.5px Roboto',
-    captionHeight: 0.04,
     transformation: new HyperbolicTransformation({
       P: {
         re: 0,

@@ -171,12 +171,8 @@ export class UnitDiskNav implements IUnitDisk {
         linkCurvature: args.linkCurvature,
         layers: navBackgroundLayers,
         layerOptions: {}, //args.layerOptions,
-        offsetEmoji: args.offsetLabels,
         offsetLabels: args.offsetLabels,
         clipRadius: 1,
-        captionBackground: args.captionBackground,
-        captionFont: args.captionFont,
-        captionHeight: args.captionHeight,
       },
     );
 
@@ -238,12 +234,8 @@ export class UnitDiskNav implements IUnitDisk {
         nodeFilter: () => true,
         linkWidth: args.linkWidth,
         linkCurvature: args.linkCurvature,
-        offsetEmoji: args.offsetLabels,
         offsetLabels: args.offsetLabels,
         clipRadius: 1.7,
-        captionBackground: args.captionBackground,
-        captionFont: args.captionFont,
-        captionHeight: args.captionHeight,
       },
     );
   }

@@ -31,30 +31,16 @@ export class LabelLayer implements ILayer {
     data: () => {
       if (this.d3updatePattern) {
         this.d3updatePattern.update.data();
-
-        // console.log("🚀 ~ file: label-layer.ts ~ line 42 ~ LabelLayer ~ this.args.background", this.args.background)
-        // if (this.args.background)
-        //     this.d3updatePattern.addTextBackgroundRects(
-        //         paddingLeftRight,
-        //         paddingTopBottom,
-        //         .05,
-        // 		this.args.name)
-
-        //this.d3updatePattern2.update.data()
       }
     },
     transformation: () => {
       if (this.d3updatePattern) {
-        // console.log("🚀 ~ file: label-layer.ts ~ line 56 ~ LabelLayer ~ this.d3updatePattern", this.d3updatePattern)
         this.d3updatePattern.update.transformation();
-        //this.d3updatePattern2.update.transformation()
       }
     },
     style: () => {
-      // console.log("🚀 ~ file: label-layer.ts ~ line 64 ~ LabelLayer ~ this", this.isVisible)
       if (this.d3updatePattern) {
         this.d3updatePattern.update.style();
-        //this.d3updatePattern2.update.style()
       }
     },
   };

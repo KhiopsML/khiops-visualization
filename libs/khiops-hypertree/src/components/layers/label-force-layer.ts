@@ -44,14 +44,6 @@ export class LabelForceLayer implements ILayer {
       this.update.force();
       this.d3updatePattern.update.data();
       this.d3updatePattern2.update.data();
-
-      if (this.args.background)
-        this.d3updatePattern.addTextBackgroundRects(
-          paddingLeftRight,
-          paddingTopBottom,
-          0.05,
-          this.args.name,
-        );
     },
     transformation: () => {
       this.update.force();

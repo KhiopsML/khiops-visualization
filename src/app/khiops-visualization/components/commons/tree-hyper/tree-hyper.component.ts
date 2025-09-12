@@ -265,7 +265,6 @@ export class TreeHyperComponent
             return n.data.isLeaf || n.data.isCollapsed;
           },
           captionHeight: 0.04, // Node text overlay white bg
-          captionBackground: 'all',
           layerOptions: {
             'link-arcs': {
               strokeWidth: (n: N) =>

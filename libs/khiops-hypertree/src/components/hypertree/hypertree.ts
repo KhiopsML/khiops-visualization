@@ -324,11 +324,7 @@ export class Hypertree {
         nodeFilter: this.args.geometry.nodeFilter,
         linkWidth: this.args.geometry.linkWidth,
         linkCurvature: this.args.geometry.linkCurvature,
-        offsetEmoji: this.args.geometry.offsetLabels,
         offsetLabels: this.args.geometry.offsetLabels,
-        captionBackground: this.args.geometry.captionBackground,
-        captionFont: this.args.geometry.captionFont,
-        captionHeight: this.args.geometry.captionHeight,
       },
     );
   }
@@ -477,7 +473,6 @@ export class Hypertree {
     var context =
       this.virtualCanvasContext ||
       (this.virtualCanvasContext = canvas.getContext('2d'));
-    context.font = this.args.geometry.captionFont;
 
     const updateLabelLen_ = (txtprop, lenprop) => {
       this.data.each((n) => {

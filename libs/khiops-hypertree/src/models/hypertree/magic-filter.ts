@@ -186,7 +186,6 @@ function peocessNodeTransformation(
   n.cache = n.cache || { re: 0, im: 0 };
   ud.view.hypertree.args.layout.type(n, ud.args.transformation.state.λ, true);
   CassignC(n.cache, ud.args.transform(n));
-  //CassignC(n.cache, n.layout.z)
   n.cachep = CktoCp(n.cache);
 }
 

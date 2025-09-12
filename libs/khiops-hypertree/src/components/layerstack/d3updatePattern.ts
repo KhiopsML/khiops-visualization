@@ -69,47 +69,4 @@ export class D3UpdatePattern {
       .call(this.args.updateTransform)
       .call(this.args.updateColor);
   }
-
-  public addTextBackgroundRects(
-    paddingLeftRight,
-    paddingTopBottom,
-    height,
-    layername,
-  ) {
-    this.mainSvgGroup.selectAll('rect').remove();
-    var svgRootHere = this.mainSvgGroup;
-    var T = this;
-    var geometry = T.args.layer.view.hypertree.args.geometry;
-
-    if (T.args.layer.view.unitdisk) {
-      this.mainSvgGroup.selectAll('text').each(function (
-        d: N,
-        i,
-        v: SVGTextElement[],
-      ) {
-        if (
-          true ||
-          d === T.args.layer.view.unitdisk.cache.centerNode ||
-          d.cachep.r < 0.6
-        ) {
-          var view: any = v[i];
-          var w = d.precalc[layername + 'len'] || 0;
-          var h = geometry.captionHeight;
-
-          if (!w) console.warn('labellen == 0', d);
-          else
-            svgRootHere
-              .insert('rect', (d) => this)
-              .attr('x', (x) => -paddingLeftRight / 2)
-              .attr('y', (x) => -paddingTopBottom - h / 2)
-              .attr('rx', (x) => 0.01) //.009
-              .attr('ry', (x) => 0.03) //.009
-              .attr('width', (x) => w + paddingLeftRight)
-              .attr('height', (x) => h + paddingTopBottom)
-              .attr('transform', (x) => view.attributes.transform.value) //d.transformStrCache + d.scaleStrText)
-              .classed('caption-background', true);
-        }
-      });
-    }
-  }
 }

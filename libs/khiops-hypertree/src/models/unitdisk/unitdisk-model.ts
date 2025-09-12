@@ -32,12 +32,7 @@ export interface UnitDiskArgs {
   nodeRadius: (ud: IUnitDisk, n: N) => number;
   nodeScale: (n: N) => number;
   nodeFilter: (n: N) => boolean;
-  offsetEmoji: (ls: UnitDisk) => (d, i, v) => C;
   offsetLabels: (ls: UnitDisk) => (d, i, v) => C;
-
-  captionBackground: 'all' | 'center' | 'none'; // x
-  captionFont: string;
-  captionHeight: number;
 
   linkWidth: (n: N) => number;
   linkCurvature: ArcCurvature;
