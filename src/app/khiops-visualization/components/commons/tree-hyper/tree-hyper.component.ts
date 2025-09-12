@@ -14,6 +14,7 @@ import {
   Input,
   ViewChild,
   ElementRef,
+  OnDestroy,
 } from '@angular/core';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
@@ -54,7 +55,7 @@ import { AppConfig } from '../../../../../environments/environment';
 })
 export class TreeHyperComponent
   extends SelectableComponent
-  implements OnInit, AfterViewInit, OnChanges
+  implements OnInit, AfterViewInit, OnChanges, OnDestroy
 {
   @ViewChild('hyperTree') private hyperTree?: ElementRef<HTMLElement>;
 
@@ -76,6 +77,8 @@ export class TreeHyperComponent
   selectedNodes$: Observable<TreeNodeModel[]>;
   previousSelectedNodes$: Observable<TreeNodeModel[]>;
   selectedNode$: Observable<TreeNodeModel | undefined>;
+
+  private resizeObserver?: ResizeObserver;
 
   constructor(
     public override ngzone: NgZone,
@@ -147,6 +150,25 @@ export class TreeHyperComponent
 
   override ngAfterViewInit() {
     this.initHyperTree();
+    this.setupResizeObserver();
+  }
+
+  override ngOnDestroy() {
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+    }
+  }
+
+  private setupResizeObserver() {
+    if (this.hyperTree?.nativeElement) {
+      this.resizeObserver = new ResizeObserver(() => {
+        if (this.ht) {
+          this.ht?.api.updateNodesVisualization();
+        }
+      });
+
+      this.resizeObserver.observe(this.hyperTree.nativeElement);
+    }
   }
 
   private removeNodes(selectedNodes: TreeNodeModel[]) {
@@ -230,7 +252,8 @@ export class TreeHyperComponent
         geometry: {
           nodeRadius: (_ud: any, n: N) => this.getNodeRadius(n),
           nodeScale: (_ud: any, _n: N) => {
-            return 1;
+            // Return a scale that makes nodes pixel-perfect size
+            return this.getFixedNodeScale();
           },
           nodeFilter: (n: N) => {
             // callback to show / hide nodes circles
@@ -315,6 +338,30 @@ export class TreeHyperComponent
   }
 
   /**
+   * Calculates a fixed scale factor to keep node sizes constant regardless of container size.
+   * @returns A scale factor that makes nodes appear the same pixel size always.
+   */
+  private getFixedNodeScale(): number {
+    // Get the container size
+    const containerElement = this.hyperTree?.nativeElement;
+    if (!containerElement) {
+      return 1; // fallback
+    }
+
+    const containerWidth = containerElement.clientWidth || 800;
+    const containerHeight = containerElement.clientHeight || 600;
+    const containerSize = Math.min(containerWidth, containerHeight);
+
+    // Base size for calculations (typical container size)
+    const BASE_CONTAINER_SIZE = 600;
+
+    // Calculate inverse scale to maintain constant pixel size
+    const scale = BASE_CONTAINER_SIZE / containerSize;
+
+    return scale;
+  }
+
+  /**
    * Calculates the radius of a node in the hypertree visualization.
    *
    * @param n - The node for which the radius is being calculated.
@@ -322,14 +369,18 @@ export class TreeHyperComponent
    *
    * The radius is determined based on several factors:
    * - If the node is a leaf and population visualization is enabled, the radius is proportional to the node's population.
-   * - If the node is a leaf and population visualization is not enabled, the radius is determined by whether the node is visible based on the displayed values.
-   * - If the node is not a leaf, the radius is smaller and depends on whether the node is collapsed.
+   * - If the node is a leaf and population visualization is not enabled, the radius is constant for all visible nodes.
+   * - If the node is not a leaf, the radius is constant and smaller.
    */
   private getNodeRadius(n: N) {
-    // Max diameter of a node
-    const Dmax = 0.2;
+    // Base constant radius values (will be scaled by getFixedNodeScale())
+    const BASE_LEAF_RADIUS = 0.03;
+    const BASE_COLLAPSED_RADIUS = 0.015;
+    const BASE_INTERNAL_RADIUS = 0.009;
+
     if (this.treePreparationDatas && n.data.isLeaf) {
       if (this.visualization.population) {
+        // Keep original population-based sizing logic
         let totalFreqsToShow = this.displayedValues ? 0 : n.data.totalFreqs;
         if (this.displayedValues) {
           const values = n.data.targetValues.values;
@@ -358,6 +409,7 @@ export class TreeHyperComponent
           }
         }
         // display of the size of the leaves of the hypertree according to their population #60
+        const Dmax = 0.2;
         const percent =
           ((totalFreqsToShow - this.treePreparationDatas.minFrequencies) /
             (this.treePreparationDatas.maxFrequencies -
@@ -366,21 +418,23 @@ export class TreeHyperComponent
         const D = (Dmax * percent) / 100;
         return D;
       } else {
+        // Constant size when population visualization is off
         const isVisible = TreeHyperService.filterVisibleNodes(
           n,
           this.displayedValues || [],
         );
         if (isVisible) {
-          return 0.03;
+          return BASE_LEAF_RADIUS;
         } else {
           return 0;
         }
       }
     } else {
+      // Constant size for non-leaf nodes
       if (n.data.isCollapsed) {
-        return 0.005;
+        return BASE_COLLAPSED_RADIUS;
       } else {
-        return 0.001;
+        return BASE_INTERNAL_RADIUS;
       }
     }
   }
