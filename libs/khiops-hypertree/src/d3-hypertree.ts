@@ -5,7 +5,6 @@ export * from './models/transformation/hyperbolic-math';
 export * from './models/transformation/hyperbolic-transformation';
 
 export * from './models/n/n';
-export * from './models/n/n-loaders';
 export * from './models/n/n-layouts';
 
 export * from './components/layerstack/layerstack';
@@ -43,9 +42,7 @@ export namespace layers {
 }
 
 export * from './components/unitdisk/unitdisk';
-import * as loaders_ from './models/n/n-loaders';
 import * as layouts_ from './models/n/n-layouts';
-export var loaders = loaders_;
 export var layouts = layouts_;
 
 export { presets } from './models/hypertree/preset-base';

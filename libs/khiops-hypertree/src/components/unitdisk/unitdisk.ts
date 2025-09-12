@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 import { N } from '../../models/n/n';
-import { navdata } from '../../models/n/n-loaders';
+// import { navdata } from '../../models/n/n-loaders';
 import { C, CktoCp, CptoCk } from '../../models/transformation/hyperbolic-math';
 import { CmulR } from '../../models/transformation/hyperbolic-math';
 import { dfsFlat } from '../../models/transformation/hyperbolic-math';
@@ -193,7 +193,6 @@ export class UnitDiskNav implements IUnitDisk {
         hypertree: view.hypertree,
       },
       {
-        data: navdata(),
         decorator: null,
         layers: navParameterLayers,
         layerOptions: {}, //args.layerOptions,

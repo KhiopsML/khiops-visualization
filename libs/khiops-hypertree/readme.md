@@ -1,8 +1,9 @@
 # D3-Hypertree
 
- fork from https://glouwa.github.io/d3-hypertree/
+fork from https://glouwa.github.io/d3-hypertree/
 
 ## Resources
+
 - [API Reference](https://github.com/glouwa/d3-hypertree/blob/master/docs/readme.md)
 - [Tree of Life Demo](https://hyperbolic-tree-of-life.github.io/)
 - [API Demo](https://glouwa.github.io/d3-hypertree-examples/examples-html/mouse-events/)
@@ -10,227 +11,239 @@
 - [Observable Examples](https://observablehq.com/collection/@glouwa/d3-hypertree/)
 
 ## Installation
+
 ```bash
 yarn install
 ```
 
 ## Build
+
 ```bash
 yarn build
 ```
 
 ## Usage
-The following examples will guide you through the most important concepts, 
+
+The following examples will guide you through the most important concepts,
 beginning with the most simple configuration, followed by more complex configurations.
-For a complete list of configurations parameters 
-See [API Reference](https://github.com/glouwa/d3-hypertree/blob/master/docs/readme.md) 
+For a complete list of configurations parameters
+See [API Reference](https://github.com/glouwa/d3-hypertree/blob/master/docs/readme.md)
 or section [Cheat Sheet](#Options-Cheat-Sheet)
 
-The Hypertree constructor takes all configuration parameters, 
+The Hypertree constructor takes all configuration parameters,
 and returns a handle for starting animations or updating the data set.
-d3 like callbacks are supplied to the constructor to create a data driven visualisation, 
+d3 like callbacks are supplied to the constructor to create a data driven visualisation,
 see "Data Driven Configuration".
 
 Guess what: The hypertree configuration is structured like a hierarchy.
-The topmost objects component positioning configuration, 
-and the visualisation configuration, 
+The topmost objects component positioning configuration,
+and the visualisation configuration,
 containing configuration groups `layout`, `filter`, `interaction`, `geometry`.
 See section [Cheat Sheet](#options-cheat-sheet) for the complete structure.
 The following examples will only show some selected options.
 
 ### Constructing a Component
+
 This first snippet shows the minimal configuration for creating a Hypertree component.
 Parent DOM element and data source are required settings.
+
 ```typescript
 mytree = new hyt.Hypertree(
-    {
-        parent: document.body,        
-    },
-    {        
-        dataloader: hyt.loaders.fromFile('data/LDA128-ward.d3.json'),
-        //dataloader: ok=> ok(d3.hierarchy(...)),
-        //dataloader: ok=> ok(d3.stratify()...(table)),        
-    }
-)
+  {
+    parent: document.body,
+  },
+  {
+    dataloader: hyt.loaders.fromFile('data/LDA128-ward.d3.json'),
+    //dataloader: ok=> ok(d3.hierarchy(...)),
+    //dataloader: ok=> ok(d3.stratify()...(table)),
+  },
+);
 ```
+
 You can also use `d3-hierarchy` object as data source, as shown in the comments.
-You will see a hypertree without any labels or other features, see [Demo 1](). 
+You will see a hypertree without any labels or other features, see [Demo 1]().
 When a Hypertree is attached to a DOM node, all existing child nodes are removed.
 
 ### Data Driven Configuration
+
 Visualizing node properties is achieved by using callbacks with the node as parameter.
-It is the same concept as d3 uses, and in fact d3 is behind the scenes. 
+It is the same concept as d3 uses, and in fact d3 is behind the scenes.
 However, in this case the for d3 typical parameter `d` is a always a node,
 named `n` in the following examples.
 
 A typical data driven property configuration looks like this:
+
 ```typescript
     nodeColor: function(n, i, v) {
         if (n.data.valueX>30) return 'red'
         else return 'blue'
     }
 ```
+
 The given function is called by the renderer, for each frame, for each visible node.
 JavaScript supports a shorter syntax for functions, called lambda expressions.
 Most code snippets will use this syntax equivalent to the function above.
+
 ```typescript
-    nodeColor: n=> (n.data.valueX>30 ? 'red' : 'blue')
+nodeColor: (n) => (n.data.valueX > 30 ? 'red' : 'blue');
 ```
 
 #### The Node objects `n`
-To calculate colors, or other visual properties, the `n` objects provide 
-the following information: 
--   All properties derived from [d3-hierarchy](https://github.com/d3/d3-hierarchy#hierarchy) like: 
-    -   User defined data of the node, accessible by `n.data`.
-    -   Hierarchy structure derived from d3 like `parent`, `children` and more.
--   Hyperbolic coordinates, euclidean coordinates, layout. 
--   Precalculated properties such as labels, image urls or properties hard to compute.
-    See section [User defined Node Initialization](User-defined-Node-Initialization) for a complete list.
 
-See [TypeScript interface](https://github.com/glouwa/d3-hypertree/blob/master/src/models/n/n.ts) for a complete list of node properties, 
+To calculate colors, or other visual properties, the `n` objects provide
+the following information:
+
+- All properties derived from [d3-hierarchy](https://github.com/d3/d3-hierarchy#hierarchy) like:
+  - User defined data of the node, accessible by `n.data`.
+  - Hierarchy structure derived from d3 like `parent`, `children` and more.
+- Hyperbolic coordinates, euclidean coordinates, layout.
+- Precalculated properties such as labels, image urls or properties hard to compute.
+  See section [User defined Node Initialization](User-defined-Node-Initialization) for a complete list.
+
+See [TypeScript interface](https://github.com/glouwa/d3-hypertree/blob/master/src/models/n/n.ts) for a complete list of node properties,
 and [d3-hierarchy]() for base functionality.
 Keep in mind, usually its the most simple way to print the object `n` to the console when working with data driven functions.
 
 #### User defined Node Initialization
+
 `dataInitBFS` and `langInitBFS` are called at startup in Breath first order.
-Use this functions to calculate static properties. 
+Use this functions to calculate static properties.
 Some layers expect specific properties in `n.precalc` like `label`, `icon`, `imageHref`, `clickable`, `cell`.
-Label dimensions and layout weight will be stored by the hypertree component 
+Label dimensions and layout weight will be stored by the hypertree component
 in `n.precalc`.
+
 ```typescript
     // dataInitBFS is called when data set changes.
-    // node properties which do not change during runtime 
+    // node properties which do not change during runtime
     // should be set in this function.
     // this way calculations are not necessary for each frame.
     dataInitBFS: (ht, n)=> {
         if (n.mergeId == 12)
-            n.precalc.imageHref = 'img/example.png'   
-    }, 
-    // is called when data or language is changed, 
+            n.precalc.imageHref = 'img/example.png'
+    },
+    // is called when data or language is changed,
     // otherwise similar to dataInitBFS.
     // typically node labels are calculated in this function.
-    langInitBFS: (ht, n)=> {                        
+    langInitBFS: (ht, n)=> {
         n.precalc.label = `Label ${n.mergeId} / ${n.precalc.layoutWeight}`
     }
 ```
 
-### Layer Configuration 
+### Layer Configuration
+
 This example shows how to add labels and images to nodes by
-enabling the according layers, 
+enabling the according layers,
 and providing necessary node properties `n.precalc.label` and `n.precalc.imageHref`.
 
-All Layers have the prperties `invisible` and `hideOnDrag`. 
-Use invisible to deactivate a layer, use hideOnDrag to increase framerate 
+All Layers have the prperties `invisible` and `hideOnDrag`.
+Use invisible to deactivate a layer, use hideOnDrag to increase framerate
 if necessary. hideOnDrag will hide the layer only when animations or interactions are active.
-Layers might contain additional configuration properties, 
+Layers might contain additional configuration properties,
 see [Cheat Sheet](#options-cheat-sheet) for a complete list of options.
+
 ```typescript
 const mytree = new hyt.Hypertree(
-    { parent: document.body },
-    { 
-        dataloader: hyt.loaders.generators.nT1,
-        dataInitBFS: (ht, n)=> {
-            if (n.mergeId == 12)
-                n.precalc.imageHref = 'img/example.png'         
-        }, 
-        langInitBFS: (ht, n)=> {                        
-            n.precalc.label = `Label ${n.mergeId} / ${n.precalc.layoutWeight}`
-        },        
-        geometry: {                        
-            layerOptions:       {                
-                'cells':       { invisible: true, hideOnDrag: true },                
-                'images':      { width: .1, height: .1 },
-                'link-arcs':   { 
-                    linkColor: n=> {
-                        if (n.mergeId == 12) return 'orange'
-                        return undefined
-                    }
-                }, 
-                'nodes': {                     
-                    nodeColor: n=> {
-                        if (n.mergeId == 12) return 'yellow'
-                        if (!n.children) return 'red'
-                        return '#a5d6a7'
-                    }
-                }
-            },                                               
-        }
-    }
-)
+  { parent: document.body },
+  {
+    dataInitBFS: (ht, n) => {
+      if (n.mergeId == 12) n.precalc.imageHref = 'img/example.png';
+    },
+    langInitBFS: (ht, n) => {
+      n.precalc.label = `Label ${n.mergeId} / ${n.precalc.layoutWeight}`;
+    },
+    geometry: {
+      layerOptions: {
+        cells: { invisible: true, hideOnDrag: true },
+        images: { width: 0.1, height: 0.1 },
+        'link-arcs': {
+          linkColor: (n) => {
+            if (n.mergeId == 12) return 'orange';
+            return undefined;
+          },
+        },
+        nodes: {
+          nodeColor: (n) => {
+            if (n.mergeId == 12) return 'yellow';
+            if (!n.children) return 'red';
+            return '#a5d6a7';
+          },
+        },
+      },
+    },
+  },
+);
 ```
-It is possible to write [custom layer sets](https://github.com/glouwa/d3-hypertree/blob/master/src/models/hypertree/preset-layers.ts), and apply it by setting the `geometry.layers` property. 
 
+It is possible to write [custom layer sets](https://github.com/glouwa/d3-hypertree/blob/master/src/models/hypertree/preset-layers.ts), and apply it by setting the `geometry.layers` property.
 
 ### Non blocking API for Animations and Data updates
+
 This example shows how to attach an annimation to the load process.
 The Hypertree compoenent provides a JavaScript `Promise` for initialisation.
 Attach promises to handle asyncronouse execution.
 To start animations use the promise returning functions in `mytree.api` whereby `mytree` is your hypertree component variable.
-```typescript
-const mytree = new hyt.Hypertree(
-    { parent: document.body }, 
-    { dataloader: hyt.loaders.generators.nT1 }
-)
 
-var animationNode1 = mytree.data.children[1]
-var animationNode2 = mytree.data.children[0].children[1]
+```typescript
+const mytree = new hyt.Hypertree({ parent: document.body });
+
+var animationNode1 = mytree.data.children[1];
+var animationNode2 = mytree.data.children[0].children[1];
 
 mytree.initPromise
-    .then(()=> new Promise((ok, err)=> mytree.animateUp(ok, err)))
-    .then(()=> mytree.api.gotoNode(animationNode1))
-    .then(()=> mytree.api.gotoNode(animationNode2))
-    .then(()=> mytree.api.gotoHome())
-    .then(()=> mytree.api.gotoλ(.25))
-    .then(()=> mytree.api.gotoλ(.5))
-    .then(()=> mytree.api.gotoλ(.4))
-    .then(()=> mytree.drawDetailFrame())
+  .then(() => new Promise((ok, err) => mytree.animateUp(ok, err)))
+  .then(() => mytree.api.gotoNode(animationNode1))
+  .then(() => mytree.api.gotoNode(animationNode2))
+  .then(() => mytree.api.gotoHome())
+  .then(() => mytree.api.gotoλ(0.25))
+  .then(() => mytree.api.gotoλ(0.5))
+  .then(() => mytree.api.gotoλ(0.4))
+  .then(() => mytree.drawDetailFrame());
 ```
 
-
 ### Interaction Event Handling
-Basically some callbacks. 
+
+Basically some callbacks.
 Typical functions used in them:
+
 - uer action like open view
-- toggle path 
+- toggle path
 - ripple
 - update path like root-hover path, or root-centernode path
 - got animaion
+
 ```typescript
 mytree = new hyt.Hypertree(
-    { parent: document.body },
-    { 
-        dataloader: hyt.loaders.generators.nT1,
-        interaction: {
+  { parent: document.body },
+  {
+    interaction: {
+      // the node click area is the voronoi cell in euclidean space.
+      // this way, wherever the user clicks, a node can be associated.
+      onNodeClick: (n, m, l) => {
+        console.log(`#onNodeClick: Node=${n}, click coordinates=${m}, source layer=${l}`);
 
-            // the node click area is the voronoi cell in euclidean space.
-            // this way, wherever the user clicks, a node can be associated.
-            onNodeClick: (n, m, l)=> { 
-                console.log(`#onNodeClick: Node=${n}, click coordinates=${m}, source layer=${l}`)
-
-                mytree.api.goto({ re:-n.layout.z.re, im:-n.layout.z.im }, null)
-                    .then(()=> l.view.hypertree.drawDetailFrame())       
-                /*
+        mytree.api.goto({ re: -n.layout.z.re, im: -n.layout.z.im }, null).then(() => l.view.hypertree.drawDetailFrame());
+        /*
                 var s = n.ancestors().find(e=> true)                
                 ud.view.hypertree.api.toggleSelection(s)
                 ud.view.hypertree.args.interaction.onNodeSelect(s)
                 */
-            },
-            
-            // center node is defined as node with minimal distance to the center.
-            onCenterNodeChange: n=> console.log(`#onCenterNodeChange: Node=${n}`)
-        }       
-    }
-)
+      },
+
+      // center node is defined as node with minimal distance to the center.
+      onCenterNodeChange: (n) => console.log(`#onCenterNodeChange: Node=${n}`),
+    },
+  },
+);
 ```
 
 ### Coordinate Systems and Transformations
 
 ## Options Cheat Sheet
 
-This example shows a component instantiation using all configuration options. 
+This example shows a component instantiation using all configuration options.
 It uses TypeScript annotations to show parameter types.
 
-For detailed documentation and a complete list of features see 
+For detailed documentation and a complete list of features see
 [API Reference](https://github.com/glouwa/d3-hypertree/blob/master/docs/readme.md).
 
 ```typescript
@@ -238,17 +251,17 @@ new hyt.Hypertree(
     {
         id:                     string
         classes:                string
-        parent:                 HTMLElement        
+        parent:                 HTMLElement
         preserveAspectRatio:    'xMidYMid meet' | ...
     },
     {
-        dataloader?:            (ok:(root:N, t0:number, dl:number)=>void, err:(err)=>void)=> void   
+        dataloader?:            (ok:(root:N, t0:number, dl:number)=>void, err:(err)=>void)=> void
         dataInitBFS:            (ht:Hypertree, n:N)=> void
-        langInitBFS:            (ht:Hypertree, n:N)=> void         
+        langInitBFS:            (ht:Hypertree, n:N)=> void
         layout: {
             type:               (root:N, t?:number, noRecursion?:boolean) => void
             weight:             (n:N)=> number
-            linklen:            (n:N)=> number            
+            linklen:            (n:N)=> number
             rootWedge: {
                 orientation:    number
                 angle:          number
@@ -256,22 +269,22 @@ new hyt.Hypertree(
         }
         filter: {
             cullingRadius:      number
-            weightFilter:       null | number | {            
+            weightFilter:       null | number | {
                 weight:         (n)=> number
                 rangeWeight:    { min:number, max:number }
                 rangeNodes:     { min:number, max:number }
                 alpha:          number
             }
             focusExtension:     number
-            maxFocusRadius:     number            
-            maxlabels:          number       
-        }       
+            maxFocusRadius:     number
+            maxlabels:          number
+        }
         geometry: {
             layers:             ((v, ls:IUnitDisk)=> ILayer)[]
             layerOptions: {
                 layerbase: {
                     invisible:  false
-                    hideOnDrag: false                    
+                    hideOnDrag: false
                 },
                 cells: {
                     invisible:         false
@@ -290,18 +303,18 @@ new hyt.Hypertree(
                     stroke:            (n:N)=> color
                     strokeWidth:       (n:N)=> number
                 },
-                labels: {                                        
-                    font:              string                    
+                labels: {
+                    font:              string
                     delta:             (n:N)=> C
                     color:             (n:N)=> color
                     background:        (n:N)=> (undefined | color)
-                    backgroundHeight:  number                    
+                    backgroundHeight:  number
                 },
                 /*
                 'cells',
                 'culling-r', 'mouse-r', 'focus-r', 'labels-r-𝐖', 'λ', 'zerozero-circle',
-                'center-node', 'path-arcs', 'stem-arc', 'nodes', 'symbols', 'images', 'emojis',  
-                'labels', 'labels2', 'labels-force', 
+                'center-node', 'path-arcs', 'stem-arc', 'nodes', 'symbols', 'images', 'emojis',
+                'labels', 'labels2', 'labels-force',
                 'traces',
                 */
             }
@@ -309,9 +322,9 @@ new hyt.Hypertree(
             nodeScale:         (n:N)=> number
             nodeFilter:        (n:N)=> boolean
         }
-        interaction: {            
+        interaction: {
             onNodeClick:        (n:N, m:C, l:ILayer)=> void
-            onCenterNodeChange: (n:N)=> void 
+            onCenterNodeChange: (n:N)=> void
             λbounds:            [ number, number ]
             wheelSensitivity:   number
             mouseRadius:        number
