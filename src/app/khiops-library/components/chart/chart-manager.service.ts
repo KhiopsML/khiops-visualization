@@ -243,7 +243,7 @@ export class ChartManagerService {
         }
 
         dataset.backgroundColor = new Array(inputDatas.labels.length).fill(
-          UtilsService.hexToRGBa(colorSet?.domain[i]!, 0.8),
+          UtilsService.hexToRGBa(colorSet?.domain[i]!, 0.7),
         );
         const defaultGroupIndex = dataset.extra?.findIndex(
           (e: ChartDatasetExtra) => e.defaultGroupIndex,

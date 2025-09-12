@@ -208,7 +208,7 @@ export class HistogramRendererService {
     };
 
     // Draw the rectangle
-    ctx.fillStyle = UtilsService.hexToRgba(bar.color, 0.8);
+    ctx.fillStyle = UtilsService.hexToRgba(bar.color, 0.7);
     ctx.lineWidth = 0;
     ctx.fillRect(x, y, barW, barH);
     ctx.strokeStyle = selectedItem === i ? defaultBarColor : bar.color;
