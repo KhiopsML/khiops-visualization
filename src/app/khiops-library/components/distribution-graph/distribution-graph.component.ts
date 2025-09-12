@@ -162,6 +162,7 @@ export class DistributionGraphComponent
    * Update chart options when graphOptions changes (especially important when scale persistence is disabled)
    */
   override ngOnChanges(changes: SimpleChanges) {
+    super.ngOnChanges(changes);
     if (changes['graphOptions'] && !changes['graphOptions'].firstChange) {
       // Update chart options when graphOptions changes to ensure the scale type is correct
       this.updateChartOptions();
