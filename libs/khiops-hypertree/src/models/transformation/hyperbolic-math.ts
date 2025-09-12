@@ -6,12 +6,6 @@ export function dfs(n, fpre, idx?) {
     for (var i = 0; i < n.children.length; i++) dfs(n.children[i], fpre, i);
 }
 
-/*
-es git zwei arten von filter:
- - nur element reausnehmen (kinder trotzdem besuchen)
- - element und kinder rausnehmen (gar nicht erst besuchen)
-*/
-
 export function dfsFlat(n, f?) {
   if (!n) return [];
   var r = [];
@@ -20,18 +14,6 @@ export function dfsFlat(n, f?) {
   });
   return r;
 }
-
-type VisitOrder = 'dfs' | 'bfs' | 'dfsReverse' | 'bfsReverse';
-interface VisitArgs {
-  tree: {}; // N eigentlich
-  order: VisitOrder;
-  abortFilter: (n) => boolean;
-  visitFilter: (n) => boolean;
-  preAction: (n) => void;
-  postAction: (n) => void;
-}
-
-function visit(args: VisitArgs) {}
 
 export function dfs2({ node, abortFilter, preAction, highway, idx = 0 }) {
   if (!node) return;
@@ -89,8 +71,6 @@ export function πify(α: number): number {
   return α;
 }
 
-//----------------------------------------------------------------------------------------
-
 export interface T {
   P: C;
   θ: C;
@@ -108,22 +88,10 @@ export var one = {
   im: 0,
 };
 
-//----------------------------------------------------------------------------------------
-
 export function h2e(t: T, z: C): C {
-  //var möbiusConstraint = CsubC(t.θ, CmulC(t.P, Ccon(t.P)))
-  //console.assert(möbiusConstraint.re !== 0 || möbiusConstraint.im)
-  //console.assert(CktoCp(t.θ).r === 1)
-
   var oben = CaddC(CmulC(t.θ, z), t.P);
   var unten = CaddC(CmulC(CmulC(Ccon(t.P), t.θ), z), one);
   return CdivC(oben, unten);
-}
-
-function e2h(t: T, z: C): C {
-  var θ = Cneg(CmulC(Ccon(t.θ), t.P));
-  var P = Ccon(t.θ);
-  return h2e(makeT(P, θ), z);
 }
 
 export function compose(t1: T, t2: T): T {
@@ -177,8 +145,6 @@ export function lengthDilledation(p: C): number {
   return Math.sin(Math.acos(r > 1 ? 1 : r));
 }
 
-//----------------------------------------------------------------------------------------
-
 export type R2 = {
   x: number;
   y: number;
@@ -193,37 +159,6 @@ export type Cp = {
 };
 export type C = Ck;
 
-var R2toArr = (p: R2) => [p.x, p.y];
-var R2assignR2 = (a, b) => {
-  a.x = b.x;
-  a.y = b.y;
-  return a;
-};
-var R2toC = (p: R2) => ({
-  re: p.x,
-  im: p.y,
-});
-var R2neg = (p: R2) => ({
-  x: -p.x,
-  y: -p.y,
-});
-var R2addR2 = (a: R2, b: R2) => ({
-  x: a.x + b.x,
-  y: a.y + b.y,
-});
-var R2subR2 = (a: R2, b: R2) => ({
-  x: a.x - b.x,
-  y: a.y - b.y,
-});
-var R2mulR = (p: R2, s: number) => ({
-  x: p.x * s,
-  y: p.y * s,
-});
-var R2divR = (p: R2, s: number) => ({
-  x: p.x / s,
-  y: p.y / s,
-});
-
 export var CktoCp = (k: Ck) => ({
   θ: Math.atan2(k.im, k.re),
   r: Math.sqrt(k.re * k.re + k.im * k.im),
@@ -233,16 +168,11 @@ export var CptoCk = (p: Cp) => ({
   im: p.r * Math.sin(p.θ),
 });
 
-var CktoArr = (p: Ck) => [p.re, p.im];
 var CkassignCk = (a: Ck, b: Ck) => {
   a.re = b.re;
   a.im = b.im;
   return a;
 };
-var CktoR2 = (p: Ck) => ({
-  x: p.re,
-  y: p.im,
-});
 var Ckneg = (p: Ck) => ({
   re: -p.re,
   im: -p.im,
@@ -278,20 +208,8 @@ var CkdivR = (p: Ck, s: number) => ({
 var CkdivCk = (a: Ck, b: Ck) => CkdivCkImpl2(a, b);
 var Cklog = (a: Ck) => CptoCk(Cplog(CktoCp(a)));
 
-var CpmulCp = (a: Cp, b: Cp) =>
-  CktoCp({
-    re: a.r * b.r * Math.cos(a.θ + b.θ),
-    im: a.r * b.r * Math.sin(a.θ + b.θ),
-  });
-var CpdivCp = (a: Cp, b: Cp) =>
-  CktoCp({
-    re: (a.r / b.r) * Math.cos(a.θ - b.θ),
-    im: (a.r / b.r) * Math.sin(a.θ - b.θ),
-  });
 var Cplog = (a: Cp) => CplogImpl(a);
-var CtoArr = CktoArr;
 export var CassignC = CkassignCk;
-var CtoR2 = CktoR2;
 export var Cneg = Ckneg;
 var Ccon = Ckcon;
 export var CaddC = CkaddC;
@@ -307,33 +225,9 @@ export var ArrtoC = (p: number[]) => ({
   re: p[0],
   im: p[1],
 });
-var ArrtoR2 = (p: number[]) => ({
-  x: p[0],
-  y: p[1],
-});
+
 export function ArrAddR(p: [number, number], s: number): [number, number] {
   return [p[0] + s, p[1] + s];
-}
-
-function ArrDivR(p: [number, number], s: number): [number, number] {
-  return [p[0] / s, p[1] / s];
-}
-
-function CkdivCkImpl(a: Ck, b: Ck) {
-  var dn = b.re * b.re + b.im * b.im;
-  var r = {
-    re: (a.re * b.re + a.im * b.im) / dn,
-    im: (a.im * b.re - a.re * b.im) / dn,
-  };
-  if (isNaN(r.re)) {
-    r.re = 0;
-    // console.log('r.re=NaN')
-  }
-  if (isNaN(r.im)) {
-    r.im = 0;
-    // console.log('r.im=NaN')
-  }
-  return r;
 }
 
 function CkdivCkImpl2(a: Ck, b: Ck) {

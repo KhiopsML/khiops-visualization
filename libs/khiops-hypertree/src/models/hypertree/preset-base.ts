@@ -58,7 +58,6 @@ const modelBase: () => HypertreeArgs = () => ({
     },
     focusExtension: 3, //1.6 Nb nodes to display
     maxFocusRadius: 1, // 0.85
-    wikiRadius: 1, // 0.85
     maxlabels: 50, // 25
   },
   geometry: {

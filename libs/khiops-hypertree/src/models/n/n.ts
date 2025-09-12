@@ -30,11 +30,9 @@ export interface NodeTransformation {
   strCache?: string;
   transformStrCache?: string;
   transformStrCacheZ?: string;
-
   scaleStrText?: string;
   distScale?: number;
   dampedDistScale?: number;
-
   isOutλ;
   isOut99;
   isOutWeight;
@@ -49,7 +47,6 @@ export interface NodePath {
   partof: Path[];
   finalcolor: string;
   labelcolor: string;
-
   isPartOfAnySelectionPath?: boolean;
   isPartOfAnyHoverPath?: boolean;
 }
@@ -57,25 +54,21 @@ export interface NodePath {
 export interface N extends NodeTransformation {
   color: string;
   mergeId: number;
-  id: string; // mess
+  id: string;
   name?: string;
-
   data: any; // d3
   parent: N;
   children: Array<N>;
   depth: number;
   height: number;
   value?: number;
-
   ancestors;
   descendants;
   leaves;
   each;
   sum;
-
   precalc: NodePrecalulations;
   pathes: NodePath;
-
   minWeight: number;
   layout: NodeLayout;
   layoutReference: NodeLayout;

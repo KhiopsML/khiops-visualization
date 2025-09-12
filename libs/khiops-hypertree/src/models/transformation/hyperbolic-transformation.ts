@@ -1,10 +1,9 @@
 import { N } from '../n/n';
 import { T } from './hyperbolic-math';
 import { C, CassignC, CktoCp, CptoCk } from './hyperbolic-math';
-import { Ck } from './hyperbolic-math';
 import { CaddC, CsubC, CmulR, CdivR } from './hyperbolic-math';
 import { h2e, compose, shift, lengthDilledation } from './hyperbolic-math';
-import { dfs, clone, πify, setR, maxR } from './hyperbolic-math';
+import { clone, setR, maxR } from './hyperbolic-math';
 
 export interface Transformation<OT> {
   state: T;
@@ -43,7 +42,6 @@ export class HyperbolicTransformation implements Transformation<N> {
     const nt = compose(this.dST, shift(this.dST, s, maxR(e, this.maxMouseR)));
     this.state.P = nt.P;
     this.state.θ = nt.θ;
-    //this.state.θ = setR(nt.θ)
   };
   onDragθ = (s: C, e: C) => {};
   onDragλ = (l: number) => (this.state.λ = l);

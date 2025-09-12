@@ -66,14 +66,7 @@ export const layerSrc = [
       r: () => ud.cache.focusR,
       center: () => '0 0',
     }),
-  (v, ud: UnitDisk) =>
-    new FocusLayer(v, {
-      invisible: true,
-      hideOnDrag: true,
-      name: 'labels-r-𝐖',
-      r: () => ud.view.hypertree.args.filter.wikiRadius,
-      center: () => '0 0',
-    }),
+
   (v, ud: UnitDisk) =>
     new FocusLayer(v, {
       invisible: false,
@@ -92,7 +85,6 @@ export const layerSrc = [
       center: () => '0 0',
     }),
 
-  // @ts-ignore
   (v, ud: UnitDisk) =>
     new NodeLayer(v, {
       invisible: true,
@@ -100,7 +92,6 @@ export const layerSrc = [
       name: 'center-node',
       className: 'center-node',
       fill: (n) => undefined,
-      // @ts-ignore
       stroke: (n) => undefined,
       strokeWidth: (n) => undefined,
       data: () => (ud.cache.centerNode ? [ud.cache.centerNode] : []),
@@ -111,7 +102,6 @@ export const layerSrc = [
   /**
    * important part or path rendering
    */
-  // @ts-ignore
   (v, ud: UnitDisk) =>
     new ArcLayer(v, {
       invisible: false,
@@ -141,7 +131,6 @@ export const layerSrc = [
           ),
     }),
 
-  // @ts-ignore
   (v, ud: UnitDisk) =>
     new NodeLayer(v, {
       invisible: false,
@@ -150,7 +139,6 @@ export const layerSrc = [
       className: 'node',
       data: () => ud.cache.leafOrLazy,
       fill: (n) => undefined,
-      // @ts-ignore
       stroke: (n) => undefined,
       strokeWidth: (n) => undefined,
       r: (d) => ud.args.nodeRadius(ud, d),
@@ -173,7 +161,6 @@ export const layerSrc = [
         ` translate(${d.cache.re + delta.re} ${d.cache.im + delta.im})` +
         d.scaleStrText,
     }),
-  // @ts-ignore
   (v, ud: UnitDisk) =>
     new LabelLayer(v, {
       invisible: true,

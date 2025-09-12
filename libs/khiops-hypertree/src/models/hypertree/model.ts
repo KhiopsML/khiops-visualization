@@ -36,7 +36,7 @@ export interface HypertreeArgs {
     };
     focusExtension: number;
     maxFocusRadius: number;
-    wikiRadius: number;
+    // : number;
     maxlabels: number;
   };
   geometry: UnitDiskArgs; // layer -+

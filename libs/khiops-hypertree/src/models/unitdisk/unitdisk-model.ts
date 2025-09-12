@@ -3,7 +3,7 @@ import { IUnitDisk } from '../../components/unitdisk/unitdisk';
 import { Hypertree } from '../../components/hypertree/hypertree';
 
 import { N } from '../n/n';
-import { C, Ck, Cp } from '../transformation/hyperbolic-math';
+import { C } from '../transformation/hyperbolic-math';
 import { Transformation } from '../transformation/hyperbolic-transformation';
 import { TransformationCache } from '../transformation/hyperbolic-transformation';
 import { ArcCurvature } from '../../components/layers/link-layer';
@@ -25,9 +25,7 @@ export interface UnitDiskArgs {
   cacheUpdate: (ud: IUnitDisk, cache: TransformationCache) => void;
 
   layers: ((v, ls: IUnitDisk) => ILayer)[];
-  layerOptions: {
-    ///[string]: LayerType1 | Layertype 2 ...
-  };
+  layerOptions: {};
 
   clipRadius: number;
 
