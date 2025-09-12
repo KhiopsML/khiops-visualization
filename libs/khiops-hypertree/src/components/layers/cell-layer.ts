@@ -41,10 +41,7 @@ export class CellLayer implements ILayer {
       create: (s) =>
         s
           .attr('id', (d) => 'cell-' + d.data.mergeId)
-          .classed(
-            'leaf',
-            false,
-          ) /*s.classed("root",      d=> !d.data.parent)   */
+          .classed('leaf', false)
           .classed('lazy', true)
           .style(
             'stroke',
@@ -56,12 +53,7 @@ export class CellLayer implements ILayer {
               (d.pathes && d.pathes.labelcolor) || this.args.strokeWidth(d),
           ),
 
-      /*
-                                    .classed("lazy",      d=> d.data.hasOutChildren)
-                                    .classed("leaf",      d=> !d.data.children),*/
-      updateColor: (
-        s, //s.classed("lazy",      d=> d.data.hasOutChildren),
-      ) =>
+      updateColor: (s) =>
         s
           .classed(
             'hovered',
@@ -71,12 +63,10 @@ export class CellLayer implements ILayer {
             'fill',
             (d) => (d.pathes && d.pathes.labelcolor) || this.args.fill(d),
           ),
-      //.classed("selected",  d=> d.data.isPartOfAnySelectionPath && d.data.parent),
       updateTransform: (s) =>
-        s //.classed("lazy",      d=> d.data.hasOutChildren)
-          .attr('points', (d) => {
-            return d && d.join(' ');
-          }),
+        s.attr('points', (d) => {
+          return d && d.join(' ');
+        }),
     });
   }
 }

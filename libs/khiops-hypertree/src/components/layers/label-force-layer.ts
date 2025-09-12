@@ -18,9 +18,6 @@ export interface LabelForceLayerArgs extends ILayerArgs {
   clip?: string;
 }
 
-var paddingLeftRight = 0.08;
-var paddingTopBottom = 0.02;
-
 export class LabelForceLayer implements ILayer {
   view: ILayerView;
   args: LabelForceLayerArgs;
@@ -51,7 +48,6 @@ export class LabelForceLayer implements ILayer {
       this.d3updatePattern2.update.transformation();
     },
     style: () => {
-      //this.update.force()
       this.d3updatePattern.update.style();
       this.d3updatePattern2.update.style();
     },
@@ -65,21 +61,9 @@ export class LabelForceLayer implements ILayer {
     this.simulation = d3
       .forceSimulation()
       .alphaTarget(0.001)
-      .force(
-        'link',
-        d3
-          .forceLink()
-          //.distance(2)
-          .strength(-0.05),
-      )
+      .force('link', d3.forceLink().strength(-0.05))
       .force('charge', d3.forceManyBody().strength(-0.05))
       .force('collide', d3.forceCollide().strength(0.0025).radius(0.18)) // .18
-      //  .force('gravity', d3f(0,0)
-      //       .strength(-.001))
-      /*.on("tick", ()=> {
-                //console.log('sim tick')
-                this.update.transformation()
-            })*/
       .stop();
   }
 
@@ -98,15 +82,11 @@ export class LabelForceLayer implements ILayer {
       );
       n.forcepoints.x = initxyp.re;
       n.forcepoints.y = initxyp.im;
-      // console.assert(typeof n.forcepoints.x === 'number')
-      // console.assert(typeof n.forcepoints.y === 'number')
 
       n.forcepoints2 = n.forcepoints2 || {};
       n.forcepoints2.index = n.mergeId + 2000;
       n.forcepoints2.fx = n.cache.re;
       n.forcepoints2.fy = n.cache.im;
-      // console.assert(typeof n.forcepoints2.fx === 'number')
-      // console.assert(typeof n.forcepoints2.fy === 'number')
 
       labelpoints.push(n.forcepoints);
       labelpoints.push(n.forcepoints2);
@@ -117,11 +97,7 @@ export class LabelForceLayer implements ILayer {
     });
 
     this.simulation.nodes(labelpoints); // labels aka this.args.data
-    //.restart()
-
     this.simulation.force('link').links(labellinks);
-
-    //console.log('labelSetUpdate')
   }
 
   simulationTick() {}
@@ -134,9 +110,7 @@ export class LabelForceLayer implements ILayer {
     const T = this;
 
     function calctransform(d, i, v) {
-      //bboxCenter(d)(v[i])
       if (!d.forcepoints) return ` translate(${d.cache.re} ${d.cache.im})`;
-      // console.assert(d.forcepoints.x || d.depth === 0)
       return ` translate(${(d.forcepoints.x || 0) - T.labellen(d) / 2} ${d.forcepoints.y || 0})`;
     }
 
@@ -155,7 +129,6 @@ export class LabelForceLayer implements ILayer {
             'caption-icon',
             (d) => d.precalc.icon && navigator.platform.includes('inux'),
           )
-          //.style("fill",           d=> d.pathes.finalcolor)
           .style('fill', (d) => d.pathes && d.pathes.labelcolor)
           .text(this.args.text)
           .attr('transform', calctransform),
@@ -165,7 +138,6 @@ export class LabelForceLayer implements ILayer {
         s.attr('transform', calctransform).text(this.args.text),
     });
 
-    function calcXY(d, xy, fp) {}
     this.d3updatePattern2 = new D3UpdatePattern({
       parent: this.view.parent,
       layer: this,
@@ -182,7 +154,6 @@ export class LabelForceLayer implements ILayer {
           .attr('y1', (d) => (d.forcepoints && d.forcepoints.y) || 0)
           .attr('x2', (d) => (d.forcepoints2 && d.forcepoints2.x) || 0)
           .attr('y2', (d) => (d.forcepoints2 && d.forcepoints2.y) || 0),
-      //.text(                   this.args.text)
     });
   }
 }

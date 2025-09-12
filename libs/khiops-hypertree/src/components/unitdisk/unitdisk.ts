@@ -1,6 +1,5 @@
 import * as d3 from 'd3';
 import { N } from '../../models/n/n';
-// import { navdata } from '../../models/n/n-loaders';
 import { C, CktoCp, CptoCk } from '../../models/transformation/hyperbolic-math';
 import { CmulR } from '../../models/transformation/hyperbolic-math';
 import { dfsFlat } from '../../models/transformation/hyperbolic-math';
@@ -43,13 +42,12 @@ export interface IUnitDisk {
 export class UnitDisk implements IUnitDisk {
   public view: UnitDiskView;
   public args: UnitDiskArgs;
-  public cache: TransformationCache; // zeigt auf transformation.cache
+  public cache: TransformationCache;
   public voronoiLayout: d3.VoronoiLayout<N>;
 
   public layerStack: LayerStack;
   public pinchcenter: C;
   public isDraging: boolean;
-  // public HypertreeMetaType = HypertreeMeta
   public cacheMeta;
 
   private mainsvg; // d3 select
@@ -74,19 +72,16 @@ export class UnitDisk implements IUnitDisk {
       this.layerStack.update.data();
     },
     transformation: () => {
-      // console.log("🚀 ~ file: unitdisk.ts ~ line 84 ~ transformation")
       this.args.cacheUpdate(this, this.cache);
       this.layerStack.update.data();
     },
     pathes: () => {
       this.args.cacheUpdate(this, this.cache);
       this.layerStack.update.pathes();
-      //this.layerStack.update.transformation()
     },
   };
 
   private updateParent() {
-    // console.log('UPDATING UNITDISK PARENT')
     this.mainsvg = d3
       .select(this.view.parent)
       .append('g')
@@ -109,8 +104,6 @@ export class UnitDisk implements IUnitDisk {
         console.assert(typeof d.cache.re === 'number');
         return d.cache.im;
       })
-      //.x(d=> d.cache.re)
-      //.y(d=> d.cache.im)
       .extent([
         [-2, -2],
         [2, 2],
@@ -135,11 +128,9 @@ export class UnitDiskNav implements IUnitDisk {
     return this.mainView.voronoiLayout;
   }
 
-  public mainView: UnitDisk; // public wegen hypertreemeta
-  public navBackground: UnitDisk; // public wegen hypertreemeta
-  public navParameter: UnitDisk; // public wegen hypertreemeta
-
-  // public HypertreeMetaType = HypertreeMetaNav
+  public mainView: UnitDisk;
+  public navBackground: UnitDisk;
+  public navParameter: UnitDisk;
 
   constructor(view: UnitDiskView, args: UnitDiskArgs) {
     this.view = view;
@@ -180,7 +171,6 @@ export class UnitDiskNav implements IUnitDisk {
       new PanTransformation(args.transformation.state),
     );
 
-    //var ncount = 1
     this.navParameter = new UnitDisk(
       {
         parent: view.parent,
@@ -249,7 +239,6 @@ export class UnitDiskNav implements IUnitDisk {
 
   update = {
     data: () => {
-      // TODO: wenns h bei jeden des gleiche ist dann getter
       this.navBackground.args.data = this.args.data;
       this.mainView.args.data = this.args.data;
 
@@ -279,7 +268,7 @@ export class UnitDiskNav implements IUnitDisk {
       this.mainView.update.cache();
       this.mainView.layerStack.update.data();
       this.navBackground.layerStack.update.pathes();
-      this.navParameter.layerStack.update.data(); // wegen node hover
+      this.navParameter.layerStack.update.data();
     },
   };
 }

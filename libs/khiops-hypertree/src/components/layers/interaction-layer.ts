@@ -44,32 +44,11 @@ export class InteractionLayer implements ILayer {
   private initMouseStuff() {
     var dragStartPoint = null;
     var dragStartElement = null;
-    /*var drag = d3.drag()
-            //.filter(()=> console.log(d3.event.type); return true; )
-            .on("start", ()=> this.onDragStart(
-                dragStartElement = this.findNodeByCell(),
-                dragStartPoint = this.currMousePosAsC()
-            ))
-            .on("end",   ()=> this.onDragEnd(
-                dragStartElement,
-                dragStartPoint,
-                this.currMousePosAsC()
-            ))
-            .on("drag",  ()=> this.onDragByNode(
-                dragStartElement,
-                dragStartPoint,
-                this.currMousePosAsC()
-            ))*/
-
     let lasttransform = null;
     var zoom = d3
       .zoom() // zoomevents: start, end, mulitiple,
-      //.scaleExtent([.51, 1.49])
       .on('zoom', () => {
         console.assert(d3.event);
-        /*
-                const tid = d3.event.sourceEvent.touches[0].identifier || 'mouse'
-                */
 
         if (
           d3.event &&
@@ -83,9 +62,6 @@ export class InteractionLayer implements ILayer {
 
           const min = 0.1 * Math.PI;
           const max = 0.8 * Math.PI * 2;
-          //if (newλp.θ >= max) console.log('to big')
-          //if (newλp.θ <= min) console.log('to small')
-
           if (newλp < max && newλp > min) this.onDragλ(newλp);
         }
         //
@@ -99,16 +75,11 @@ export class InteractionLayer implements ILayer {
             lasttransform = d3.event.transform.k;
 
             const newλp = d3.event.transform.k + 0.5;
-
-            //console.log('touch zoom', newλp.θ)
             const min = 0.1 * Math.PI;
             const max = 0.8 * Math.PI * 2;
-            //if (newλp.θ >= max) console.log('to big')
-            //if (newλp.θ <= min) console.log('to small')
 
             if (newλp.θ < max && newλp.θ > min) this.onDragλ(newλp);
           } else {
-            //console.log('touch drag')
             this.onDragByNode(
               dragStartElement,
               dragStartPoint,
@@ -126,14 +97,12 @@ export class InteractionLayer implements ILayer {
         }
       })
       .on('start', () => {
-        //console.log('start')
         this.onDragStart(
           (dragStartElement = this.findNodeByCell()),
           (dragStartPoint = this.currMousePosAsC()),
         );
       })
       .on('end', () => {
-        //console.log('end')
         this.onDragEnd(
           dragStartElement,
           dragStartPoint,
@@ -141,10 +110,7 @@ export class InteractionLayer implements ILayer {
         );
       });
 
-    //var transform = d3.zoomTransform(selection.node());
-    //var transform = d3.zoomTransform(this); in event sinks
     const htapi = this.view.hypertree.api;
-    //const hoverpath = this.view.hypertree.args.objects.pathes.firstornull(e=> type==='HoverPath')[0]
     const hoverpath = this.view.hypertree.args.objects.pathes[0];
 
     this.view.parent
@@ -152,32 +118,17 @@ export class InteractionLayer implements ILayer {
       .attr('class', 'mouse-circle')
       .attr('r', this.args.mouseRadius)
       .on('dblclick', (d) => this.onDblClick(this.findNodeByCell()))
-      //.on("click",     d=> this.onClick(findNodeByCell()))
       .on('mousemove', (d) =>
         htapi.setPathHead(hoverpath, this.findNodeByCell()),
       )
       .on('mouseout', (d) => htapi.setPathHead(hoverpath, undefined))
-      //.call(drag)
       .call(zoom)
       .on('dblclick.zoom', null);
   }
 
   //-----------------------------------------------------------------------------------------
 
-  private ping(p: C) {
-    /*
-        if (this.view.hypertree.args.objects.traces.length === 0)
-            this.view.hypertree.args.objects.traces.push({
-                id: 'gibt eh nur ans',
-                points: []
-            })
-        this.view.hypertree.args.objects.traces[0].points.push(p)
-        */
-  }
-
   private onDragStart = (n: N, m: C) => {
-    this.ping(m); //#####################
-
     if (!this.animationTimer)
       this.view.unitdisk.args.transformation.onDragStart(m);
   };
@@ -199,26 +150,20 @@ export class InteractionLayer implements ILayer {
     } else {
       this.view.unitdisk.args.transformation.onDragP(s, e);
       this.view.hypertree.update.transformation();
-      this.ping(e); //#####################
     }
   };
 
   private onDragEnd = (n: N, s: C, e: C) => {
     const ti3 = d3.timer(() => {
-      //#####################
       ti3.stop();
       this.view.hypertree.args.objects.traces.length = 0;
       this.view.hypertree.update.transformation();
     }, 2000);
 
-    this.ping(e); //#####################
-
     var dc = CsubC(s, e);
     var dist = Math.sqrt(dc.re * dc.re + dc.im * dc.im);
 
-    if (dist < 0.006) this.onClick(n, e); // sollte on click sein und auch timer berücksichtigen oder?
-
-    // immer?
+    if (dist < 0.006) this.onClick(n, e);
     this.view.unitdisk.args.transformation.onDragEnd(e);
     this.view.hypertree.update.transformation();
   };
@@ -275,7 +220,6 @@ export class InteractionLayer implements ILayer {
     var m = this.currMousePosAsC();
 
     this.cancelClickTimer();
-    //this.animateTo(n, ArrtoC(d3.mouse(this.args.parent)))
     this.args.onClick(n, m);
   };
 }

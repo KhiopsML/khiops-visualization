@@ -53,7 +53,6 @@ export class LabelLayer implements ILayer {
   }
 
   private attach() {
-    // console.log("🚀 ~ file: label-layer.ts ~ line 81 ~ LabelLayer ~ attach ~ attach")
     if (!this.args.invisible) {
       const $this = this;
 
@@ -61,7 +60,6 @@ export class LabelLayer implements ILayer {
         return $this.args.transform(d, $this.args.delta(d, i, v));
       }
 
-      // console.warn(this.args.isVisible(d))
       this.d3updatePattern = new D3UpdatePattern({
         parent: this.view.parent,
         layer: this,
@@ -73,8 +71,6 @@ export class LabelLayer implements ILayer {
         create: (s) =>
           s
             .classed('P', (d) => d.name == 'P')
-            // .classed("caption-icon", d => d.precalc.icon && navigator.platform.includes('inux'))
-            //.style("fill",           d=> d.pathes.finalcolor)
             .style('stroke', (d) => d.pathes && d.pathes.labelcolor)
             .style('fill', (d) => this.args.color(d))
             .style('display', (d) => this.args.isVisible(d))
@@ -84,7 +80,6 @@ export class LabelLayer implements ILayer {
             .style('stroke', (d) => d.pathes && d.pathes.labelcolor)
             .style('fill', (d) => this.args.color(d)),
         updateTransform: (s) => s.attr('transform', offset),
-        //                         .text(                   this.args.text)
       });
     }
   }
@@ -96,7 +91,6 @@ var paddingTopBottom = 0.02;
 export var bboxCenter = (d, cacheId = 'labelslen') => {
   var w = d.precalc[cacheId];
   var h = 0.045;
-  // console.assert(w)
   return {
     re: -w / 2,
     im: h / 3,
@@ -106,21 +100,11 @@ export var bboxCenter = (d, cacheId = 'labelslen') => {
 export var bboxOval = (d, cacheId = 'labelslen', θn = undefined) => {
   var w = d.precalc[cacheId];
   var h = 0.045;
-  // console.assert(w)
   const θ = θn ? θn.θ : d.cachep.θ;
-  /*
-        return CsubC(
-            {
-                re:(w/2+paddingLeftRight/2)*Math.cos(θ),
-                im:(h/2+paddingTopBottom/2)*Math.sin(θ)
-            },
-            { re:w/2, im:h/2}
-        )
-    */
+
   const result = {
     re: (paddingLeftRight / 2 + w / 2) * Math.cos(θ) - w / 2,
     im: (paddingTopBottom / 2 + h / 2) * Math.sin(θ) + h / 3,
   };
-  // console.assert(result.re)
   return result;
 };

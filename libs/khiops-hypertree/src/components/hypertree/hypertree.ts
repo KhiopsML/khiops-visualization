@@ -61,7 +61,6 @@ export class Hypertree {
    */
   public api = {
     setModel: (model: HypertreeArgs) => {
-      // console.log('setModel ~ model:', model);
       return new Promise<void>((ok, err) => {
         this.isInitializing = true;
         const base = presets.modelBase();
@@ -72,55 +71,19 @@ export class Hypertree {
       });
     },
     updateNodesVisualization: () => {
-      // console.log('updateNodesVisualization:');
       return new Promise<void>((ok, err) => {
         const previousPosition = JSON.parse(
           JSON.stringify(this.args.geometry.transformation.state.P),
         );
-        // this.updateLabelLen_();
         this.updateWeights_();
         this.update.transformation();
-
-        // this.updateLabelsVisibility()
-        // doLabelStuff();
-        // this.unitdisk.args.cacheUpdate(this.unitdisk, this.unitdisk.cache)
-        // this.unitdisk.update.pathes()
-        // this.view.layerstack.layers['labels-force'].update.force()
-        // this.unitdisk.update.layout()
-        // this.unitdisk.update.cache()
-        // this.unitdisk.update.data()
-        // this.unitdisk.update.pathes()
-        // this.unitdisk.update.transformation()
-        // this.updateLang_()
-        // this.updateUnitdiskView()
 
         // Go to previous state without animation
         this.animateTo(ok, err, previousPosition, null);
       });
     },
-    // updateNodesDatas: (model: HypertreeArgs) => {
-    //   console.log('updateNodesDatas ~ model:', model);
-    //   return new Promise<void>((ok, err) => {
-    //     const previousPosition = JSON.parse(
-    //       JSON.stringify(this.args.geometry.transformation.state.P),
-    //     );
 
-    //     this.isInitializing = false;
-    //     const base = presets.modelBase();
-    //     this.args = mergeDeep(base, model);
-
-    //     // wenn parent updatedated hat wraum ist da nich eine alte transformations in der disk
-    //     // this.update.view.parent()
-    //     this.updateUnitdiskView();
-    //     this.api.updateDataloader(ok, err, this.args.dataloader); // resetData is hier drin
-    //     // this.update.data();
-    //     // this.api.setLangloader(ok, err, this.args.langloader)
-    //     this.animateTo(ok, err, previousPosition, null, 0);
-    //     // this.animateTo(ok, err, n.layout.z, null, 0)
-    //   });
-    // },
     setLangloader: (ok, err, ll) => {
-      // console.log('setLangloader ~ ok:');
       this.args.langloader = ll;
       this.args.langloader((langMap, t1, dl) => {
         this.langMap = langMap || {};
@@ -137,7 +100,6 @@ export class Hypertree {
       });
     },
     setDataloader: (ok, err, dl) => {
-      // console.log('setDataloader ~ ok:');
       this.args.dataloader = dl;
       const t0 = performance.now();
       this.resetData();
@@ -150,7 +112,6 @@ export class Hypertree {
       });
     },
     updateDataloader: (ok, err, dl) => {
-      // console.log('updateDataloader ~ ok:');
       this.args.dataloader = dl;
       const t0 = performance.now();
       this.resetData();
@@ -248,16 +209,13 @@ export class Hypertree {
   public update = {
     view: {
       parent: () => {
-        // console.log("🚀 ~ file: hypertree.ts ~ line 252 ~ Hypertree ~ parent")
         this.updateParent();
       },
       unitdisk: () => {
-        // console.log("🚀 ~ file: hypertree.ts ~ line 255 ~ Hypertree ~ unitdisk")
         this.updateUnitdiskView();
       },
     },
     data: () => {
-      // console.log("🚀 ~ file: hypertree.ts ~ line 250 ~ Hypertree ~ update data")
       this.unitdisk.update.data();
     },
     transformation: () => this.unitdisk.update.transformation(),
@@ -278,7 +236,6 @@ export class Hypertree {
           '',
         );
 
-      //this.view_.path.innerText = pathStr // todo: html m frame?
       if (this.args.interaction.onCenterNodeChange)
         this.args.interaction.onCenterNodeChange(centerNode, pathStr);
     },
@@ -291,7 +248,6 @@ export class Hypertree {
   //########################################################################################################
 
   protected updateParent() {
-    // console.log('_updateParent');
     this.view_.parent.innerHTML = ''; // actually just remove this.view if present ... do less
     this.view_.html = HTML.parse<HTMLElement>(hypertreehtml)();
     this.view_.parent.appendChild(this.view_.html);
@@ -300,7 +256,6 @@ export class Hypertree {
   }
 
   protected updateUnitdiskView() {
-    // console.log('_updateUnitdiskView');
     var udparent = this.view_.html.querySelector('.unitdisk-nav > svg');
     this.unitdisk = new this.args.geometry.decorator(
       {
@@ -336,7 +291,6 @@ export class Hypertree {
   //########################################################################################################
 
   protected resetData() {
-    // console.log('_resetData');
     this.unitdisk.args.data = undefined;
     this.data = undefined;
     this.langMap = undefined;
@@ -346,7 +300,6 @@ export class Hypertree {
     this.args.geometry.transformation.state.P.im = 0;
     this.args.filter.weightFilter.magic = 20;
     this.args.geometry.transformation.cache.centerNode = undefined;
-    //this.args.geometry.transformation.cache.hoverNode = undefined
 
     this.args.objects.selections = [];
     this.args.objects.pathes = [];
@@ -356,7 +309,6 @@ export class Hypertree {
   }
 
   protected initData(d3h, t0, t1, dl) {
-    // console.log('_initData');
     var t2 = performance.now();
     var ncount = 1;
     globelhtid++;
@@ -402,13 +354,10 @@ export class Hypertree {
   }
 
   protected updateWeights_(): void {
-    // console.log("_updateWeights")
     this.sum(this.data, this.args.layout.weight, 'layoutWeight');
     this.sum(this.data, this.args.filter.weightFilter.weight, 'cullingWeight');
     this.sum(this.data, this.args.layout.weight, 'visWeight');
-    //this.sum(this.data, this.args.geometry.weight[0], (n, s)=> n.visprop[0] = s)
 
-    // node dinger
     // for arc width and node radius in some cases, not flexible enough
     this.data.each(
       (n) =>
@@ -739,17 +688,13 @@ class Animation extends Transition {
   constructor(args) {
     super(args.hypertree);
     if (args.hypertree.transition) {
-      // console.warn("Animaiion collision")
       return;
     }
 
-    // console.group('Transition: ' + args.name)
     args.hypertree.transition = this;
     this.hypertree.log.push(this.hypertree.transition);
 
     const frame = () => {
-      //console.group("Frame")
-
       this.currentframe = new Frame(0);
       this.frames.push(this.currentframe);
 
@@ -765,7 +710,6 @@ class Animation extends Transition {
       if (now > this.endTime) {
         args.frame(1);
         this.end();
-        // console.log('resolve by: time (maybe jump at end)')
         args.resolve();
       } else {
         args.frame(p01);
@@ -773,8 +717,6 @@ class Animation extends Transition {
       }
 
       this.currentframe = undefined;
-      //console.groupEnd()
-      // console.debug('frame end', )
     };
 
     requestAnimationFrame(() => frame());

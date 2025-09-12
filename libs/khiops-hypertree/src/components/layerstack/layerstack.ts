@@ -26,7 +26,6 @@ export class LayerStack {
   }
 
   private updateLayers(): void {
-    // console.log('UPATEING LAYERSTACK')
     this.layers = {};
     for (var layerfactoryfunc of this.args.unitdisk.args.layers) {
       const view = {
@@ -76,7 +75,6 @@ export class LayerStack {
     if (this.layers['link-arcs-focus'])
       this.layers['link-arcs-focus'].update.data();
 
-    // navigation params, ok, aber die normale disk?
     var t2 = performance.now();
     if (this.layers['labels']) this.layers['labels'].update.data();
 
