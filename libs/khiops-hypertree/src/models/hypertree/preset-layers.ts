@@ -145,6 +145,9 @@ export const layerSrc = [
       transform: (d) => d.transformStrCache + ` scale(${ud.args.nodeScale(d)})`,
     }),
 
+  /**
+   * Nodes labels
+   */
   (v, ud: UnitDisk) =>
     new LabelLayer(v, {
       invisible: false,
@@ -161,20 +164,9 @@ export const layerSrc = [
         ` translate(${d.cache.re + delta.re} ${d.cache.im + delta.im})` +
         d.scaleStrText,
     }),
-  (v, ud: UnitDisk) =>
-    new LabelLayer(v, {
-      invisible: true,
-      hideOnDrag: true,
-      name: 'labels2',
-      className: 'caption',
-      data: () => ud.cache.labels,
-      text: (d) => d.precalc.label,
-      delta: labeloffsets.labeloffset(ud),
-      color: () => undefined,
-      transform: (d, delta) =>
-        ` translate(${d.cache.re + delta.re} ${d.cache.im + delta.im})` +
-        d.scaleStrText,
-    }),
+  /**
+   * Mouse interactions
+   */
   (v, ud: UnitDisk) =>
     new LabelForceLayer(v, {
       invisible: true,
@@ -188,6 +180,9 @@ export const layerSrc = [
         ` translate(${d.cache.re + delta.re} ${d.cache.im + delta.im})` +
         d.scaleStrText,
     }),
+  /**
+   * Mouse interactions
+   */
   (v, ud: UnitDisk) =>
     new InteractionLayer(v, {
       invisible: true,
@@ -199,6 +194,9 @@ export const layerSrc = [
         ud.view.hypertree.args.interaction.onNodeSelect(s); // focus splitter
       },
     }),
+  /**
+   * Mouse interactions
+   */
   (v, ud: UnitDisk) =>
     new InteractionLayer2(v, {
       mouseRadius: ud.view.hypertree.args.interaction.mouseRadius,
