@@ -15,6 +15,115 @@ import { TreePreparationDatasModel } from '@khiops-visualization/model/tree-prep
 })
 export class TreeHyperService {
   /**
+   * Calculates a fixed scale factor to keep node sizes constant regardless of container size.
+   * @param containerElement - The container element to measure.
+   * @returns A scale factor that makes nodes appear the same pixel size always.
+   */
+  static getFixedNodeScale(containerElement?: HTMLElement | null): number {
+    if (!containerElement) {
+      return 1; // fallback
+    }
+
+    const containerWidth = containerElement.clientWidth || 800;
+    const containerHeight = containerElement.clientHeight || 600;
+    const containerSize = Math.min(containerWidth, containerHeight);
+
+    // Base size for calculations (typical container size)
+    const BASE_CONTAINER_SIZE = 600;
+
+    // Calculate inverse scale to maintain constant pixel size
+    const scale = BASE_CONTAINER_SIZE / containerSize;
+
+    return scale;
+  }
+
+  /**
+   * Calculates the radius of a node in the hypertree visualization.
+   *
+   * @param n - The node for which the radius is being calculated.
+   * @param treePreparationDatas - The tree preparation data containing min/max frequencies.
+   * @param visualization - The visualization settings (population, purity).
+   * @param displayedValues - The values that determine visibility.
+   * @returns The radius of the node.
+   *
+   * The radius is determined based on several factors:
+   * - If the node is a leaf and population visualization is enabled, the radius is proportional to the node's population.
+   * - If the node is a leaf and population visualization is not enabled, the radius is constant for all visible nodes.
+   * - If the node is not a leaf, the radius is constant and smaller.
+   */
+  static getNodeRadius(
+    n: N,
+    treePreparationDatas?: TreePreparationDatasModel,
+    visualization?: { population: boolean },
+    displayedValues?: ChartToggleValuesI[]
+  ): number {
+    // Base constant radius values (will be scaled by getFixedNodeScale())
+    const BASE_LEAF_RADIUS = 0.03;
+    const BASE_COLLAPSED_RADIUS = 0.015;
+    const BASE_INTERNAL_RADIUS = 0.009;
+
+    if (treePreparationDatas && n.data.isLeaf) {
+      if (visualization?.population) {
+        // Keep original population-based sizing logic
+        let totalFreqsToShow = displayedValues ? 0 : n.data.totalFreqs;
+        if (displayedValues) {
+          const values = n.data.targetValues.values;
+          for (let i = 0; i < n.data.targetValues.values.length; i++) {
+            if (n.data.isRegressionAnalysis) {
+              // In case of regression
+              const index = parseInt(values[i].replace(/\D/g, ''), 10);
+              if (displayedValues[index]?.show) {
+                totalFreqsToShow += n.data.targetValues.frequencies[i];
+              }
+            } else {
+              // In Classification case
+              if (
+                displayedValues.find((e) => e.show && e.name === values[i])
+              ) {
+                totalFreqsToShow += n.data.targetValues.frequencies[i];
+              }
+            }
+            if (
+              displayedValues.find(
+                (e) => e.show && e.name === n.data.targetValues.values[i],
+              )
+            ) {
+              totalFreqsToShow += n.data.targetValues.frequencies[i];
+            }
+          }
+        }
+        // display of the size of the leaves of the hypertree according to their population #60
+        const Dmax = 0.2;
+        const percent =
+          ((totalFreqsToShow - treePreparationDatas.minFrequencies) /
+            (treePreparationDatas.maxFrequencies -
+              treePreparationDatas.minFrequencies)) *
+          100;
+        const D = (Dmax * percent) / 100;
+        return D;
+      } else {
+        // Constant size when population visualization is off
+        const isVisible = TreeHyperService.filterVisibleNodes(
+          n,
+          displayedValues || [],
+        );
+        if (isVisible) {
+          return BASE_LEAF_RADIUS;
+        } else {
+          return 0;
+        }
+      }
+    } else {
+      // Constant size for non-leaf nodes
+      if (n.data.isCollapsed) {
+        return BASE_COLLAPSED_RADIUS;
+      } else {
+        return BASE_INTERNAL_RADIUS;
+      }
+    }
+  }
+
+  /**
    * Determines the stroke width of a link based on its visibility.
    * @param n - The node to check.
    * @param displayedValues - The values that determine visibility.

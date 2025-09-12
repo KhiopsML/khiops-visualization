@@ -250,10 +250,15 @@ export class TreeHyperComponent
           maxlabels: 100000,
         },
         geometry: {
-          nodeRadius: (_ud: any, n: N) => this.getNodeRadius(n),
+          nodeRadius: (_ud: any, n: N) => TreeHyperService.getNodeRadius(
+            n,
+            this.treePreparationDatas,
+            this.visualization,
+            this.displayedValues
+          ),
           nodeScale: (_ud: any, _n: N) => {
             // Return a scale that makes nodes pixel-perfect size
-            return this.getFixedNodeScale();
+            return TreeHyperService.getFixedNodeScale(this.hyperTree?.nativeElement);
           },
           nodeFilter: (n: N) => {
             // callback to show / hide nodes circles
@@ -335,107 +340,5 @@ export class TreeHyperComponent
         }),
       );
     });
-  }
-
-  /**
-   * Calculates a fixed scale factor to keep node sizes constant regardless of container size.
-   * @returns A scale factor that makes nodes appear the same pixel size always.
-   */
-  private getFixedNodeScale(): number {
-    // Get the container size
-    const containerElement = this.hyperTree?.nativeElement;
-    if (!containerElement) {
-      return 1; // fallback
-    }
-
-    const containerWidth = containerElement.clientWidth || 800;
-    const containerHeight = containerElement.clientHeight || 600;
-    const containerSize = Math.min(containerWidth, containerHeight);
-
-    // Base size for calculations (typical container size)
-    const BASE_CONTAINER_SIZE = 600;
-
-    // Calculate inverse scale to maintain constant pixel size
-    const scale = BASE_CONTAINER_SIZE / containerSize;
-
-    return scale;
-  }
-
-  /**
-   * Calculates the radius of a node in the hypertree visualization.
-   *
-   * @param n - The node for which the radius is being calculated.
-   * @returns The radius of the node.
-   *
-   * The radius is determined based on several factors:
-   * - If the node is a leaf and population visualization is enabled, the radius is proportional to the node's population.
-   * - If the node is a leaf and population visualization is not enabled, the radius is constant for all visible nodes.
-   * - If the node is not a leaf, the radius is constant and smaller.
-   */
-  private getNodeRadius(n: N) {
-    // Base constant radius values (will be scaled by getFixedNodeScale())
-    const BASE_LEAF_RADIUS = 0.03;
-    const BASE_COLLAPSED_RADIUS = 0.015;
-    const BASE_INTERNAL_RADIUS = 0.009;
-
-    if (this.treePreparationDatas && n.data.isLeaf) {
-      if (this.visualization.population) {
-        // Keep original population-based sizing logic
-        let totalFreqsToShow = this.displayedValues ? 0 : n.data.totalFreqs;
-        if (this.displayedValues) {
-          const values = n.data.targetValues.values;
-          for (let i = 0; i < n.data.targetValues.values.length; i++) {
-            if (n.data.isRegressionAnalysis) {
-              // In case of regression
-              const index = parseInt(values[i].replace(/\D/g, ''), 10);
-              if (this.displayedValues[index]?.show) {
-                totalFreqsToShow += n.data.targetValues.frequencies[i];
-              }
-            } else {
-              // In Classification case
-              if (
-                this.displayedValues.find((e) => e.show && e.name === values[i])
-              ) {
-                totalFreqsToShow += n.data.targetValues.frequencies[i];
-              }
-            }
-            if (
-              this.displayedValues.find(
-                (e) => e.show && e.name === n.data.targetValues.values[i],
-              )
-            ) {
-              totalFreqsToShow += n.data.targetValues.frequencies[i];
-            }
-          }
-        }
-        // display of the size of the leaves of the hypertree according to their population #60
-        const Dmax = 0.2;
-        const percent =
-          ((totalFreqsToShow - this.treePreparationDatas.minFrequencies) /
-            (this.treePreparationDatas.maxFrequencies -
-              this.treePreparationDatas.minFrequencies)) *
-          100;
-        const D = (Dmax * percent) / 100;
-        return D;
-      } else {
-        // Constant size when population visualization is off
-        const isVisible = TreeHyperService.filterVisibleNodes(
-          n,
-          this.displayedValues || [],
-        );
-        if (isVisible) {
-          return BASE_LEAF_RADIUS;
-        } else {
-          return 0;
-        }
-      }
-    } else {
-      // Constant size for non-leaf nodes
-      if (n.data.isCollapsed) {
-        return BASE_COLLAPSED_RADIUS;
-      } else {
-        return BASE_INTERNAL_RADIUS;
-      }
-    }
   }
 }
