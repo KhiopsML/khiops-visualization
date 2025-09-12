@@ -4,7 +4,14 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, OnInit, NgZone, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  NgZone,
+  Input,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
 import { TranslateService } from '@ngstack/translate';
@@ -28,7 +35,7 @@ import { selectedNodeSelector } from '@khiops-visualization/selectors/tree-prepa
   styleUrls: ['./tree-leaf-details.component.scss'],
   standalone: false,
 })
-export class TreeLeafDetailsComponent implements OnInit {
+export class TreeLeafDetailsComponent implements OnInit, OnChanges {
   @Input() public displayedValues?: ChartToggleValuesI[];
 
   selectedNode$: Observable<TreeNodeModel | undefined>;
@@ -60,6 +67,17 @@ export class TreeLeafDetailsComponent implements OnInit {
     });
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.displayedValues?.currentValue && this.selectedNode) {
+      // When displayedValues change, update the target distribution graph
+      setTimeout(() => {
+        this.distributionDatasService.getTreeNodeTargetDistributionGraphDatas(
+          this.selectedNode!,
+        );
+      }, 0); // do it async to dont freeze during graph rendering
+    }
+  }
+
   onTreeNodeTargetDistributionGraphTypeChanged(type: string) {
     if (this.selectedNode) {
       this.distributionDatasService.getTreeNodeTargetDistributionGraphDatas(
@@ -75,6 +93,12 @@ export class TreeLeafDetailsComponent implements OnInit {
     this.distributionDatasService.setTargetDistributionDisplayedValues(
       displayedValues,
     );
+    // Update the graph when displayed values change
+    if (this.selectedNode) {
+      this.distributionDatasService.getTreeNodeTargetDistributionGraphDatas(
+        this.selectedNode,
+      );
+    }
   }
 
   private updateComponentDatas(selectedNode: TreeNodeModel | undefined) {
