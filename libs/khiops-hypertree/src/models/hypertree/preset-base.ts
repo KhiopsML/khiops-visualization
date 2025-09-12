@@ -48,8 +48,6 @@ const modelBase: () => HypertreeArgs = () => ({
       magic: 160,
       alpha: 1.05,
       weight: (n) => (isLeaf(n) ? 1 : 0),
-      //weight:             n=> (isLeaf(n) ? 1 : Math.pow(n.height, 5)),
-      // weight:             n=> (isLeaf(n) ? 1 : n.height*n.height),
       rangeCullingWeight: {
         min: 4,
         max: 500,
@@ -104,7 +102,7 @@ const modelBase: () => HypertreeArgs = () => ({
     onNodeSelect: () => {},
     onNodeHold: () => {},
     onNodeHover: () => {
-      console.log('ON NODE HOVER=============');
+      // console.log('ON NODE HOVER=============');
     },
     λbounds: [1 / 40, 0.45],
     wheelFactor: 1.175,

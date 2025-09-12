@@ -31,15 +31,6 @@ labeloffsets.outwards = labeloffsets.nodeRadiusOffset;
 labeloffsets.outwardsPlusNodeRadius = labeloffsets.labeloffset;
 
 export const layerSrc = [
-  // nodes
-  // nodes-leafs
-  // nodes-lazy
-  // bounds (lambda, P)
-  // wedges
-  // weight circle (radius)
-  // weight cell (color)
-  // interaction-d3
-  // interaction-hammer
   (v, ud: UnitDisk) => new BackgroundLayer(v, {}),
   (v, ud: UnitDisk) =>
     new CellLayer(v, {
@@ -101,39 +92,13 @@ export const layerSrc = [
       center: () => '0 0',
     }),
 
-  // CIRCLE STUFF END
-  /*
-        (v, ud:UnitDisk)=> new NodeLayer(v, {
-            invisible:  true,
-            hideOnDrag: true,
-            name:       'weigths',
-            className:  'weigths',
-            data:       ()=> ud.cache.weights,
-            r:          d=> ud.args.nodeRadius(ud, d),
-            transform:  d=> d.transformStrCache
-                            + ` scale(${ud.args.nodeScale(d)})`,
-        }),
-        (v, ud:UnitDisk)=> new NodeLayer(v, {
-            invisible:  true,
-            hideOnDrag: true,
-            name:       'wedges',
-            className:  'wedges',
-            data:       ()=> ud.cache.weights,
-            r:          d=> ud.args.nodeRadius(ud, d),
-            transform:  d=> d.transformStrCache
-                            + ` scale(${ud.args.nodeScale(d)})`,
-        }),
-
-    */
   // @ts-ignore
-
   (v, ud: UnitDisk) =>
     new NodeLayer(v, {
       invisible: true,
       hideOnDrag: true,
       name: 'center-node',
       className: 'center-node',
-      //clip:       '#node-32-clip', centernode.id
       fill: (n) => undefined,
       // @ts-ignore
       stroke: (n) => undefined,
@@ -143,25 +108,6 @@ export const layerSrc = [
       transform: (d) => d.transformStrCache + ` scale(${ud.args.nodeScale(d)})`,
     }),
 
-  // links
-  // @ts-ignore
-
-  // (v, ud: UnitDisk) => new ArcLayer(v, {
-  //     invisible: false,
-  //     hideOnDrag: false,
-  //     name: 'path-arcs',
-  //     className: 'arc',
-  //     curvature: ud.view.hypertree.args.geometry.linkCurvature, // + - 0 l
-  //     data: () => ud.cache.paths,
-  //     nodePos: n => n.cache,
-  //     nodePosStr: n => n.strCache,
-  //     stroke: n => undefined,
-  //     strokeWidth: d => ud.args.linkWidth(d) + (.013 * d.dampedDistScale),
-  //     classed: s => s
-  //         .classed("hovered-path", d => d.pathes && d.pathes.isPartOfAnyHoverPath)
-  //         .classed("selected-path", d => d.pathes && d.pathes.isPartOfAnySelectionPath)
-  //         .style("stroke", d => d.pathes && d.pathes.finalcolor)
-  // }),
   /**
    * important part or path rendering
    */
@@ -193,8 +139,6 @@ export const layerSrc = [
             'selected',
             (d) => d.pathes && d.pathes.isPartOfAnySelectionPath,
           ),
-
-      //.attr("stroke-width", d=> w(d))
     }),
 
   // @ts-ignore
@@ -207,30 +151,12 @@ export const layerSrc = [
       data: () => ud.cache.leafOrLazy,
       fill: (n) => undefined,
       // @ts-ignore
-
       stroke: (n) => undefined,
       strokeWidth: (n) => undefined,
       r: (d) => ud.args.nodeRadius(ud, d),
       transform: (d) => d.transformStrCache + ` scale(${ud.args.nodeScale(d)})`,
     }),
 
-  (v, ud: UnitDisk) =>
-    new LabelLayer(v, {
-      //invisible:  true,
-      //hideOnDrag: true,
-      name: 'emojis',
-      className: 'caption',
-      data: () => ud.cache.emojis,
-      text: (d) => d.precalc.icon,
-      isVisible: () => undefined,
-      delta: labeloffsets.centerOffset('emojislen'),
-      //delta:      (d, i, v)=> ({ re:0, im:0 }),
-      color: () => undefined,
-      background: undefined,
-      transform: (d, delta) =>
-        ` translate(${d.cache.re + delta.re} ${d.cache.im + delta.im})` +
-        `scale(${d.dampedDistScale * 2})`,
-    }),
   (v, ud: UnitDisk) =>
     new LabelLayer(v, {
       invisible: false,
@@ -281,8 +207,7 @@ export const layerSrc = [
       hideOnDrag: true,
       mouseRadius: ud.view.hypertree.args.interaction.mouseRadius,
       onClick: (n: N, m: C) => {
-        var s = n.ancestors().find((e) => true); // obsolete
-        //ud.args.hypertree.updatePath('SelectionPath', s) // toggle selection
+        var s = n.ancestors().find((e) => true);
         ud.view.hypertree.api.toggleSelection(s); // toggle selection
         ud.view.hypertree.args.interaction.onNodeSelect(s); // focus splitter
       },
@@ -291,8 +216,7 @@ export const layerSrc = [
     new InteractionLayer2(v, {
       mouseRadius: ud.view.hypertree.args.interaction.mouseRadius,
       onClick: (n: N, m: C) => {
-        var s = n.ancestors().find((e) => true); // obsolete
-        //ud.args.hypertree.updatePath('SelectionPath', s) // toggle selection
+        var s = n.ancestors().find((e) => true);
         ud.view.hypertree.api.toggleSelection(s); // toggle selection
         ud.view.hypertree.args.interaction.onNodeSelect(s); // focus splitter
       },

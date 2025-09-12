@@ -142,14 +142,12 @@ export function cacheUpdate(ud: IUnitDisk, cache: TransformationCache) {
   )
     doVoronoiStuff(ud, cache);
 
-  //if (!ud.view.hypertree.isAnimationRunning())
   doImageStuff(ud, cache);
 
   if (cache.centerNode) ud.view.hypertree.update.centernode(cache.centerNode);
 
   // only for meta view
   // @ts-ignore
-
   ud.cacheMeta = {
     minWeight: path.map(
       (n) =>
@@ -158,16 +156,6 @@ export function cacheUpdate(ud: IUnitDisk, cache: TransformationCache) {
     ),
     Δ: [t1 - t0, t2 - t1, t3 - t2, performance.now() - t3],
   };
-
-  if (
-    ud.view.hypertree.transition &&
-    ud.view.hypertree.transition.currentframe
-  ) {
-    //ud.view.hypertree.transition.currentframe.cache = ud.cache
-    //ud.view.hypertree.transition.currentframe.cacheMeta = ud.cacheMeta
-  }
-  //else
-  //    // console.log("why is there a cache update without a assigne transition?")
 }
 
 function pathToLastVisible(ud: IUnitDisk, cache: TransformationCache) {

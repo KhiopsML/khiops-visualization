@@ -14,7 +14,6 @@ export type LayoutFunction = (
   noRecursion?: boolean,
 ) => void;
 
-const π = Math.PI;
 const unitVectors = [
   {
     re: 1,
@@ -35,7 +34,6 @@ const unitVectors = [
 ];
 
 export function setZ(container, z) {
-  // console.assert(z, "set Z to null!")
   if (!z) return;
   z = maxR(z, 0.99999999);
   container.layout = container.layout || {};
@@ -64,7 +62,6 @@ export function layoutUnitVectors(root) {
 }
 
 export function layoutUnitLines(root: N, λ: number, noRecursion = false) {
-  //root.z = { re:0, im:0 }
   setZ(root, {
     re: 0,
     im: 0,
@@ -131,28 +128,16 @@ export function layoutLamping(
     α: Math.PI,
   },
 ) {
-  // console.log(wedge.p, wedge.m, wedge.α)
-
   setZ(n, wedge.p);
 
   if (n.children) {
     for (let i = 0; i < n.children.length; i++) {
       const cα = (wedge.α / n.children.length) * (i + 1);
-      // console.assert(isFinite(cα))
-      // console.log('cα', cα)
-
       const s = 0.1;
       const it = ((1 - s * s) * Math.sin(cα)) / (2 * s);
-      // console.log('it', it)
       const d = (Math.sqrt(Math.pow(it, 2) + 1) - it) * 0.5;
-
-      // console.assert(isFinite(d))
-      // console.log('d', d)
-
       const p1 = makeT(wedge.p, one);
       const np = h2e(p1, CmulR(wedge.m, d));
-      // console.log('np', np)
-
       const npp1 = makeT(Cneg(np), one);
       const nd1 = makeT(
         {
@@ -162,9 +147,7 @@ export function layoutLamping(
         one,
       );
       const nm = h2e(npp1, h2e(p1, wedge.m));
-      // console.log('nm', nm)
       const nα = Clog(h2e(nd1, Cpow(cα))).im;
-      // console.assert(isFinite(nα))
 
       layoutLamping(n.children[i], {
         p: np,
@@ -190,10 +173,6 @@ function wedgeTranslate(w, P) {
   w.Ω = CktoCp(h2e(t, pΩ)).θ;
 }
 
-function r2g(r) {
-  return (r / π) * 360;
-}
-
 export function layoutBergé(n: N, λ: number, noRecursion = false) {
   let count = 0;
 
@@ -203,8 +182,6 @@ export function layoutBergé(n: N, λ: number, noRecursion = false) {
       α: n.layout.wedge.α,
     };
     const L = n.layout.wedge.L;
-    //if (L !== 1)
-    //    console.log(L)
     if (n.parent) {
       const angleWidth = πify(wedge.Ω - wedge.α);
       const bisectionAngle = wedge.α + angleWidth / 2.0;
@@ -223,15 +200,6 @@ export function layoutBergé(n: N, λ: number, noRecursion = false) {
     }
 
     let angleWidth = πify(wedge.Ω - wedge.α);
-    /*
-        if (angleWidth > 2*π) 
-        {
-            const anglediff = angleWidth - 2 * π            
-            wedge.α = πify(wedge.α + anglediff / 2.0)            
-            wedge.Ω = πify(wedge.Ω - anglediff / 2.0)
-            angleWidth = 2 * π
-            // console.assert('angleWidth > 2*π')
-        }*/
 
     let currentAngle = wedge.α;
     const cl = n.children || [];
@@ -241,32 +209,14 @@ export function layoutBergé(n: N, λ: number, noRecursion = false) {
     let resetCount = 0;
     let anglesum = 0;
 
-    //const parentWeight = n.precalc.layoutWeight
     const parentWeight = (n.children || []).reduce(
       (a, ccn) => a + ccn.precalc.layoutWeight,
       0,
     );
     cl.forEach((cn, i) => {
-      const nlen = (n.children || []).length;
-      const cnlen = (cn.children || []).length;
-      //const angleWeight = (Math.log10(n.value  || cllen || 1))
-      //                  / (Math.log10(cn.value || 1))
-
-      //const angleWeight = (cn.precalc.layoutWeight || 1) / ( n.precalc.layoutWeight || cllen || 1)
-
-      // verhältniss von parent weight zu child weight
-      // sum(c=> c.eight) != parent weight
-      // d.h. dieser wert liegt nicht zwischen 0 und 1
-      //
-      // angleWeight wird aber zu alglesum addiert,
-
-      // angleWeights der children müssen in summe 1 ergeben
-      // da angleWidth die ganze wegde ist
       const angleWeight = cn.precalc.layoutWeight / parentWeight;
-      //const angleWeight = .99 / nlen
 
       anglesum += angleWeight;
-      //const angleWeight = 1 / cllen
       const angleOffset = angleWidth * angleWeight;
 
       // current angle iterated through wegde borders (as hyperbolic angle)
@@ -296,7 +246,6 @@ export function layoutBergé(n: N, λ: number, noRecursion = false) {
         resetCount++;
       }
     });
-    //console.log(anglesum)
 
     if (!noRecursion) for (let cn of n.children || []) layoutNode(cn);
 
@@ -304,42 +253,4 @@ export function layoutBergé(n: N, λ: number, noRecursion = false) {
   }
 
   layoutNode(n);
-  //console.log('layouted nodes ', count, λ)
 }
-
-/*
-    let currentAngle = wedge.α
-    const cl = n.children || []        
-    const cllen = cl.length
-    let linecount = 0
-    let liner = 0
-    let resetCount = 0
-    cl.forEach((cn,i)=> 
-    {          
-        const cnlen = (cn.children || []).length
-        const angleWeight = (cn.value||1) / (n.value||cllen||1) 
-        //const angleWeight = 1 / cllen
-        const angleOffset = angleWidth * angleWeight
-        const α  = currentAngle             
-        currentAngle += angleOffset
-        const Ω  = πify(currentAngle)            
-        
-        const cL = liner
-        const w = { α, Ω, L:cL }
-        cn.layout = cn.layout || { wedge:w }
-        cn.layout.wedge = w
-
-        linecount++
-        if (cn.height === 0)
-            liner += .1
-
-        const rowcount = cllen / Math.log(cllen) / 2
-    
-        if (linecount >= rowcount)
-        {
-            linecount = 0
-            liner = 0    
-            resetCount++                            
-        }
-    })
-*/

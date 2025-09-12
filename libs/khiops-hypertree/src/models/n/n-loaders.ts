@@ -1,6 +1,5 @@
 import { N } from './n';
 
-// todo loader MUSS ein generic sein
 export type LoaderFunction = (
   ok: (root: N, t0: number, dl: number) => void,
 ) => void;
@@ -102,7 +101,6 @@ export function obj2data(o) {
     newN.mergeId = mergeId++;
     newN.precalc = {};
     newN.name = name;
-    //newN.parent = cur
     newN.children = [];
 
     if (cur) cur.children.push(newN);
@@ -140,17 +138,13 @@ export function code(ok) {
 }
 
 export namespace generators {
-  //    export var star5 = star_(5)
-  //    export var star51 = star_(50)
   export var star120 = deepStar;
   export var star501 = function degree(ok) {
     return star(ok, 250);
   };
-  //    export var path50 = path_(50)
   export var path500 = function spiral(ok) {
     return path(ok, 50);
   };
-  //    export var path5000 = path_(5000)
   export var nT1 = nTree;
   export var nT2 = nTreeAtFirst;
 }

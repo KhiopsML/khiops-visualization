@@ -83,18 +83,6 @@ export interface N extends NodeTransformation {
   pathes: NodePath;
 
   minWeight: number;
-  /*
-        unitdisk: 
-        {
-            layout:         NodeLayout,
-            transformation: NodeTransformation
-        }
-        navigationUnitdisk: 
-        {
-            layout:         NodeLayout,
-            transformation: NodeTransformation
-        }    
-        */
   layout: NodeLayout;
   layoutReference: NodeLayout;
 }
