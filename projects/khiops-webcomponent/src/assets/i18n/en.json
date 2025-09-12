@@ -78,7 +78,6 @@
   },
   "MATRIX_MODES": {
     "MUTUAL_INFO": "I",
-    "CELL_INTEREST": "CI",
     "PROB_CELL": "P",
     "HELLINGER": "H",
     "MUTUAL_INFO_TARGET_WITH_CELL": "I",

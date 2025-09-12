@@ -5,7 +5,6 @@
  */
 
 export interface MatrixRangeValuesI {
-  CELL_INTEREST?: number[];
   FREQUENCY?: number[];
   CONDITIONAL_FREQUENCY?: number[] | number[][];
   MUTUAL_INFO?: number[];

@@ -842,7 +842,6 @@ export class Preparation2dDatasService {
       | VariableModel[], // for regression,
   ): MatrixRangeValuesI {
     const currentRes: MatrixRangeValuesI = {
-      CELL_INTEREST: [],
       FREQUENCY: [],
       CONDITIONAL_FREQUENCY: [],
       MUTUAL_INFO: [],
@@ -866,20 +865,6 @@ export class Preparation2dDatasService {
           if (matrixValues) {
             currentRes[MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL] =
               matrixValues;
-          }
-
-          graphMode = {
-            mode: MATRIX_MODES.CELL_INTEREST,
-          };
-          [_matrixFreqsValues, matrixValues, _matrixExtras] =
-            MatrixUtilsService.computeMatrixValues(
-              graphMode,
-              inputDatas.matrixCellDatas || [],
-              undefined,
-              0,
-            );
-          if (matrixValues) {
-            currentRes[MATRIX_MODES.CELL_INTEREST] = matrixValues;
           }
 
           if (inputDatas.matrixCellDatas) {
@@ -918,20 +903,16 @@ export class Preparation2dDatasService {
         res[MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL];
     }
 
-    if (currentRes[MATRIX_MODES.CELL_INTEREST]) {
-      res[MATRIX_MODES.CELL_INTEREST] = UtilsService.getMinAndMaxFromArray(
-        currentRes[MATRIX_MODES.CELL_INTEREST].flat(),
-      );
-    }
     if (currentRes[MATRIX_MODES.FREQUENCY]) {
       res[MATRIX_MODES.FREQUENCY] = UtilsService.getMinAndMaxFromArray(
         currentRes[MATRIX_MODES.FREQUENCY].flat(),
       );
     }
     if (currentRes[MATRIX_MODES.CONDITIONAL_FREQUENCY]) {
-      res[MATRIX_MODES.CONDITIONAL_FREQUENCY] = UtilsService.getMinAndMaxFromArray(
-        currentRes[MATRIX_MODES.CONDITIONAL_FREQUENCY].flat(),
-      );
+      res[MATRIX_MODES.CONDITIONAL_FREQUENCY] =
+        UtilsService.getMinAndMaxFromArray(
+          currentRes[MATRIX_MODES.CONDITIONAL_FREQUENCY].flat(),
+        );
     }
 
     res[MATRIX_MODES.PROB_CELL] = [0, 1];

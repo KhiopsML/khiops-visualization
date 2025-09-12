@@ -274,11 +274,6 @@ export class MatrixUtilsService {
                 : e.cellFreqs[0]! / e.freqLineVals[0]!;
             });
             break;
-          case MATRIX_MODES.CELL_INTEREST:
-            // Only on KV do not need to recompute because nodes can not be folded
-            // @ts-ignore
-            matrixValues = matrixCellDatas.map((e) => e.cellInterest);
-            break;
           case MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL:
             for (let i = 0; i < matrixCellDatas[0]!.cellFreqs.length; i++) {
               const currentMatrixValues = matrixCellDatas.map((e) => {

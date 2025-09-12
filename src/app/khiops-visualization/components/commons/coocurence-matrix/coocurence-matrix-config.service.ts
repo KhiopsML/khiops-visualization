@@ -86,11 +86,6 @@ export class CoocurenceMatrixConfigService {
         title: `P (${varName2} , ${varName1} | ${targetLabel})`,
         tooltip: this.translate.get('TOOLTIPS.MATRIX.P'),
       },
-      {
-        mode: MATRIX_MODES.CELL_INTEREST,
-        title: this.translate.get('GLOBAL.CELLS_INTERESTS'),
-        tooltip: this.translate.get('TOOLTIPS.MATRIX.CI'),
-      },
     ];
   }
 

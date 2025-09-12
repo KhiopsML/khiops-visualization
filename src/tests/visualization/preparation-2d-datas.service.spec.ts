@@ -140,7 +140,6 @@ describe('Visualization', () => {
       expect(values['MUTUAL_INFO']).toEqual([
         -0.06620028577546967, 0.06620028577546967,
       ]);
-      expect(values['CELL_INTEREST']).toEqual([0.0159151, 0.499678]);
       expect(values['FREQUENCY']).toEqual([339, 343]);
       expect(values['CONDITIONAL_FREQUENCY']).toEqual([6, 219]);
       expect(values['PROB_CELL']).toEqual([0, 1]);
@@ -158,7 +157,6 @@ describe('Visualization', () => {
       const values =
         preparation2dDatasService.getGlobalMinAndMax2dValues(variable);
 
-      expect(values['CELL_INTEREST']).toEqual([Infinity, -Infinity]);
       expect(values['FREQUENCY']).toEqual([1, 44030]);
       expect(values['CONDITIONAL_FREQUENCY']).toEqual([1, 44030]);
       expect(values['MUTUAL_INFO']).toEqual([
@@ -185,7 +183,6 @@ describe('Visualization', () => {
       const values =
         preparation2dDatasService.getGlobalMinAndMax2dValues(variable);
 
-      expect(values['CELL_INTEREST']).toEqual([Infinity, -Infinity]);
       expect(values['FREQUENCY']).toEqual([1, 68]);
       expect(values['CONDITIONAL_FREQUENCY']).toEqual([1, 68]);
       expect(values['MUTUAL_INFO']).toEqual([

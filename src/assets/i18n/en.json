@@ -84,7 +84,6 @@
   },
   "MATRIX_MODES": {
     "MUTUAL_INFO": "I",
-    "CELL_INTEREST": "CI",
     "PROB_CELL": "P",
     "HELLINGER": "H",
     "MUTUAL_INFO_TARGET_WITH_CELL": "I",
@@ -96,7 +95,6 @@
   },
   "MATRIX_MODES_DETAILED": {
     "MUTUAL_INFO": "Mutual information",
-    "CELL_INTEREST": "Cell interest",
     "PROB_CELL": "Probability",
     "HELLINGER": "Hellinger",
     "MUTUAL_INFO_TARGET_WITH_CELL": "Mutual information",
@@ -346,8 +344,7 @@
     "CLUSTER_LENGTH": "Values",
     "NODE": "Node",
     "PARENT_CLUSTER": "Parent cluster",
-    "HIERARCHICAL_RANK": "Hierarchical rank",
-    "CELLS_INTERESTS": "Cells Interests"
+    "HIERARCHICAL_RANK": "Hierarchical rank"
   },
   "ARIA": {
     "AG_GRID": {
@@ -518,7 +515,6 @@
       "I": "Mutual information",
       "P": "Conditional probability",
       "CF": "Conditional frequency",
-      "CI": "Cell interests",
       "H": "Hellinger distance"
     },
     "AXIS": {

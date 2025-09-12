@@ -162,21 +162,6 @@ describe('Visualization', () => {
       ]);
     });
 
-    it('matrixValues should return valid datas, 2D CELL_INTEREST index 2', () => {
-      const inputDatas = require('../mocks/visualization/matrix-inputs/iris2d-R10.json');
-      const graphMode = {
-        mode: 'CELL_INTEREST',
-      };
-      [matrixFreqsValues, matrixValues, matrixExtras] =
-        MatrixUtilsService.computeMatrixValues(
-          graphMode,
-          inputDatas.matrixCellDatas,
-          undefined,
-          2,
-        );
-      expect(matrixValues).toEqual([0.225374, 0.324608, 0.343006, 0.107012]);
-    });
-
     it('matrixFreqsValues should return valid datas Regression FREQUENCY', () => {
       const inputDatas = require('../mocks/visualization/matrix-inputs/irisR-R3.json');
       const graphMode = {
