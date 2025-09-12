@@ -218,6 +218,7 @@ export class UnitDiskNav implements IUnitDisk {
         },
         transformation: navTransformation,
         transform: (n: any) => CmulR(n, -1),
+        //caption:            (n:N)=> undefined,
         nodeRadius: () => 0.16,
         nodeScale: () => 1,
         nodeFilter: () => true,

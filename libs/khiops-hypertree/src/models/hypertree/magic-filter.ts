@@ -7,6 +7,25 @@ import { CassignC } from '../transformation/hyperbolic-math';
 import { doVoronoiStuff } from './preset-process';
 import { doLabelStuff } from './preset-process';
 
+function adjustMagic(ud: IUnitDisk, cache: TransformationCache) {
+  const filter = ud.view.hypertree.args.filter.weightFilter;
+  const rangeNodes = filter.rangeNodes; //{ min:300, max:700 }
+  const rangeMagic = filter.rangeCullingWeight; //{ min:4,   max:500 }
+  const alpha = filter.alpha;
+  if (cache.unculledNodes) {
+    if (cache.unculledNodes.length > rangeNodes.max) {
+      if (filter.magic > rangeMagic.min) {
+        filter.magic /= alpha;
+      }
+    }
+    if (cache.unculledNodes.length < rangeNodes.min) {
+      if (filter.magic < rangeMagic.max) {
+        filter.magic *= alpha;
+      }
+    }
+  }
+}
+
 function collectNodesByWeight(
   ud: IUnitDisk,
   cache: TransformationCache,
@@ -17,6 +36,7 @@ function collectNodesByWeight(
     normλ * ud.view.hypertree.args.filter.focusExtension,
     ud.view.hypertree.args.filter.maxFocusRadius,
   );
+  adjustMagic(ud, cache);
 
   // select visible nodes
   const startNode = path[0];
@@ -62,12 +82,35 @@ function collectNodesByWeight(
   return t1;
 }
 
+function addPathToUnculled(ud: IUnitDisk, cache: TransformationCache, p) {
+  if (p.type !== 'HoverPath') {
+    const pathnodes = [];
+    // go down
+    let n = p.head;
+    while (n.parent && !cache.unculledNodes.includes(n)) {
+      pathnodes.push(n);
+      n = n.parent;
+    }
+    // go up and transform
+    pathnodes.reverse().forEach((n) => {
+      peocessNodeTransformation(ud, cache, n);
+      peocessNode(ud, cache, n, cache.focusR, 0);
+    });
+    cache.unculledNodes = cache.unculledNodes.concat(pathnodes);
+  }
+}
+
 export function cacheUpdate(ud: IUnitDisk, cache: TransformationCache) {
   // constants
   const t0 = performance.now();
   const path = pathToLastVisible(ud, cache);
   const t1 = collectNodesByWeight(ud, cache, path); // also updates centernode
   const t2 = performance.now();
+
+  // add pathes to unculled nodes
+  ud.view.hypertree.args.objects.pathes.forEach((p) =>
+    addPathToUnculled(ud, cache, p),
+  );
 
   // groups of nodes
   cache.links = cache.unculledNodes.slice(1);
