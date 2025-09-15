@@ -17,7 +17,8 @@
   }
 
   #main-tab-group {
-    ::ng-deep .mat-mdc-tab-header {
+    > ::ng-deep .mat-mdc-tab-header {
+      margin: 0 auto 10px auto;
       max-width: calc(100% - 400px);
     }
     > .mat-mdc-tab-body-wrapper {

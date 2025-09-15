@@ -1,9 +1,10 @@
 @use '../../../../styles/theme.scss';
 #home-layout-comp {
   #main-tab-group {
-    ::ng-deep .mat-mdc-tab-header {
+    > ::ng-deep .mat-mdc-tab-header {
       max-width: calc(100% - 600px);
       min-width: 200px !important;
+      margin: 0 auto 10px auto;
     }
   }
   .mat-mdc-tab-label-container {
