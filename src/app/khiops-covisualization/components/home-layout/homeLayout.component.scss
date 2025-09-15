@@ -1,5 +1,11 @@
 @use '../../../../styles/theme.scss';
 #home-layout-comp {
+  #main-tab-group {
+    ::ng-deep .mat-mdc-tab-header {
+      max-width: calc(100% - 600px);
+      min-width: 200px !important;
+    }
+  }
   .mat-mdc-tab-label-container {
     margin-right: 10rem;
   }

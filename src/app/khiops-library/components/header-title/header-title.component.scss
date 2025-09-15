@@ -23,18 +23,6 @@
     }
   }
 
-  @media screen and (max-width: 1000px) {
-    #header-title-text {
-      font-size: 0.9rem;
-    }
-  }
-
-  @media screen and (max-width: 1024px) {
-    #header-title-text {
-      display: none;
-    }
-  }
-
   #header-title-logo {
     z-index: 100;
     width: 52px;
