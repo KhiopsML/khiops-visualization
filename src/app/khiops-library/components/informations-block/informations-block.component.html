@@ -16,7 +16,17 @@
         <strong>{{ data.title | translate }}</strong>
       </th>
       <td scope="col">
-        <em>{{ show_value(data.value) }}</em>
+        <div *ngIf="data.title === 'GLOBAL.SAMPLE_PERCENTAGE'">
+          <kl-gauge [value]="getPercentageValue(data.value)" [size]="85">
+          </kl-gauge>
+        </div>
+        <em
+          *ngIf="data.title !== 'GLOBAL.SAMPLE_PERCENTAGE'"
+          [ngClass]="
+            data.title === 'GLOBAL.LEARNING_TASK' ? 'important-badge' : ''
+          "
+          >{{ show_value(data.value) }}</em
+        >
       </td>
     </tr>
   </table>

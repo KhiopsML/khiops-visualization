@@ -18,11 +18,11 @@ import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 
 @Component({
-    selector: 'kl-informations-block',
-    templateUrl: './informations-block.component.html',
-    styleUrls: ['./informations-block.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  selector: 'kl-informations-block',
+  templateUrl: './informations-block.component.html',
+  styleUrls: ['./informations-block.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class InformationsBlockComponent extends SelectableComponent {
   @Input() public inputDatas: InfosDatasI[] | undefined;
@@ -41,5 +41,15 @@ export class InformationsBlockComponent extends SelectableComponent {
   show_value(value: any) {
     if (value instanceof File) return value.name;
     return value;
+  }
+
+  /**
+   * Get the percentage value from the input data for sample percentage
+   * @param value - The value to parse as percentage
+   * @returns The percentage as a number (0-100)
+   */
+  getPercentageValue(value: any): number {
+    const numValue = parseFloat(value);
+    return isNaN(numValue) ? 0 : Math.max(0, Math.min(100, numValue));
   }
 }
