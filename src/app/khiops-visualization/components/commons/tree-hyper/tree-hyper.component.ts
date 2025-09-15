@@ -127,7 +127,6 @@ export class TreeHyperComponent
       if (selectedNodes) {
         // get previous values of selected nodes from store synchronously
         let previousSelectedNodes: TreeNodeModel[] = [];
-        this.previousSelectedNodes$;
         this.store
           .select(previousSelectedNodesSelector)
           .pipe(take(1))
@@ -135,15 +134,29 @@ export class TreeHyperComponent
 
         this.removeNodes(previousSelectedNodes);
         this.selectNodes(selectedNodes);
-      }
-    });
 
-    this.selectedNode$?.subscribe((selectedNode) => {
-      if (selectedNode) {
-        const treeNode = UtilsService.deepFind(this.ht?.data, selectedNode.id);
-        if (treeNode?.data.isLeaf) {
-          this.ht?.initPromise.then(() => this.ht?.api.gotoNode(treeNode));
-        }
+        // Handle centering on leaf with proper timing
+        setTimeout(() => {
+          this.selectedNode$.pipe(take(1)).subscribe((selectedNode) => {
+            if (selectedNode) {
+              const treeNode = UtilsService.deepFind(
+                this.ht?.data,
+                selectedNode.id,
+              );
+              if (treeNode?.data.isLeaf) {
+                // Center on leaf then update visualization
+                this.ht?.initPromise.then(async () => {
+                  await this.ht?.api.gotoNode(treeNode, 300);
+                  setTimeout(() => {
+                    this.ht?.api.updateNodesVisualization();
+                  });
+                });
+              } else {
+                this.ht?.api.updateNodesVisualization();
+              }
+            }
+          });
+        });
       }
     });
   }
@@ -250,15 +263,18 @@ export class TreeHyperComponent
           maxlabels: 100000,
         },
         geometry: {
-          nodeRadius: (_ud: any, n: N) => TreeHyperService.getNodeRadius(
-            n,
-            this.treePreparationDatas,
-            this.visualization,
-            this.displayedValues
-          ),
+          nodeRadius: (_ud: any, n: N) =>
+            TreeHyperService.getNodeRadius(
+              n,
+              this.treePreparationDatas,
+              this.visualization,
+              this.displayedValues,
+            ),
           nodeScale: (_ud: any, _n: N) => {
             // Return a scale that makes nodes pixel-perfect size
-            return TreeHyperService.getFixedNodeScale(this.hyperTree?.nativeElement);
+            return TreeHyperService.getFixedNodeScale(
+              this.hyperTree?.nativeElement,
+            );
           },
           nodeFilter: (n: N) => {
             // callback to show / hide nodes circles
