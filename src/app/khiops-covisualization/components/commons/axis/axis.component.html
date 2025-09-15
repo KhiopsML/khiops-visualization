@@ -1,6 +1,6 @@
 <div class="axis-comp" fxFlexFill *ngIf="axisLayout && dimensionsDatas">
   <as-split
-    [gutterSize]="7"
+    [gutterSize]="15"
     direction="horizontal"
     (dragEnd)="onSplitDragEnd($event, sizeId)"
     fxFlexFill
@@ -9,6 +9,7 @@
       [size]="sizes?.[sizeId]?.[column0Index]"
       order="1"
       [visible]="axisLayout.isHierarchyChecked"
+      class="kl-card"
     >
       <app-hierarchy-details
         [position]="position"
@@ -20,7 +21,7 @@
     </as-split-area>
     <as-split-area
       [size]="sizes?.[sizeId]?.[column1Index]"
-      class="app-cluster-details-container"
+      class="app-cluster-details-container kl-card"
       order="2"
       *ngIf="axisLayout.isClustersChecked"
     >
@@ -36,11 +37,12 @@
       order="3"
       *ngIf="axisLayout.isAnnotationChecked || axisLayout.isCompositionChecked"
     >
-      <as-split [gutterSize]="7" direction="vertical" fxFlexFill>
+      <as-split [gutterSize]="15" direction="vertical" fxFlexFill>
         <as-split-area
           [size]="30"
           order="1"
           *ngIf="axisLayout.isAnnotationChecked"
+          class="kl-card"
         >
           <app-annotation
             [attr.id]="'cluster-annotation-' + position"
@@ -53,6 +55,7 @@
           [size]="70"
           order="1"
           *ngIf="axisLayout.isCompositionChecked"
+          class="kl-card"
         >
           <app-composition
             [position]="position"
@@ -67,6 +70,7 @@
       [size]="sizes?.[sizeId]?.[column3Index]"
       order="4"
       *ngIf="axisLayout.isExternalDataChecked"
+      class="kl-card"
     >
       <app-external-datas
         [attr.id]="'external-datas-' + position"
@@ -84,6 +88,7 @@
       *ngIf="
         axisLayout.isDistributionChecked && (position === 0 || position === 1)
       "
+      class="kl-card"
     >
       <app-variable-graph-details
         title="{{ 'TOOLTIPS.AXIS.DISTRIBUTION.TITLE' | translate }}"

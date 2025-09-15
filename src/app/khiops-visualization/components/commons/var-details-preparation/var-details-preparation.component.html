@@ -1,12 +1,16 @@
 <as-split
-  [gutterSize]="7"
+  [gutterSize]="14"
   id="app-var-details-preparation-comp"
   direction="vertical"
   (dragEnd)="onSplitDragEnd($event, 'row1Col1Row')"
 >
-  <as-split-area [size]="sizes?.row1Col1Row[0]" fxLayout="column">
+  <as-split-area
+    [size]="sizes?.row1Col1Row[0]"
+    fxLayout="column"
+    class="kl-card"
+  >
     <as-split
-      [gutterSize]="7"
+      [gutterSize]="14"
       direction="vertical"
       (dragEnd)="onSplitDragEnd($event, 'row1Col1Row0Col')"
     >
@@ -45,7 +49,7 @@
     </as-split>
   </as-split-area>
   <as-split-area
-    class="variables-list-container"
+    class="variables-list-container kl-card"
     [size]="sizes?.row1Col1Row[1]"
   >
     <kl-ag-grid
@@ -75,7 +79,7 @@
       *ngIf="!preparationDatas?.currentIntervalDatas?.values"
     ></kl-no-data>
     <as-split
-      [gutterSize]="7"
+      [gutterSize]="14"
       direction="horizontal"
       *ngIf="
         (!preparationDatas?.currentIntervalDatas?.values &&

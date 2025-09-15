@@ -341,11 +341,11 @@ canvas:focus {
 .fullscreen {
   position: fixed !important;
   z-index: 10000 !important;
-  width: calc(100% - 10px) !important;
-  height: calc(100% - 80px) !important;
-  min-width: calc(100% - 10px) !important;
-  min-height: calc(100% - 80px) !important;
-  margin: 74px 5px 5px 5px;
+  width: calc(100% - 0px) !important;
+  height: calc(100% - 70px) !important;
+  min-width: calc(100% - 0px) !important;
+  min-height: calc(100% - 70px) !important;
+  margin: 69px 0px 0px 0px;
   left: 0 !important;
   top: 0 !important;
   transition: all 0s linear !important;
@@ -397,4 +397,21 @@ canvas:focus {
 
 .cc-floating .cc-compliance > .cc-btn:hover {
   background-color: #000000cc;
+}
+
+.kl-card {
+  border: 1px solid #eee;
+  background-color: white !important;
+  // border-radius: 10px;
+  padding: 12px;
+}
+app-home-layout {
+  background: var(--bgColor-20);
+}
+#home-layout-comp {
+  height: calc(100% - 25px);
+  width: calc(100% - 30px);
+  contain: layout;
+  margin-top: 10px;
+  margin-left: 15px;
 }

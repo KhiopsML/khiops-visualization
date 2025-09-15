@@ -9,6 +9,7 @@
  * To change the default file, uncomment the desired line and comment the current active one.
  */
 export function getVisualizationMockFile(): string {
+  let urlKV = 'ALLREPORTS_Std_Iris_AnalysisResults.khj';
   // let urlKV = 'new-hyper-tree.json';
   // let urlKV = 'NGrams10_AnalysisResults.json';
   // let urlKV = 'NGrams100_AnalysisResults.json';
@@ -17,7 +18,7 @@ export function getVisualizationMockFile(): string {
   // let urlKV = 'Regression_AllReports_PreparationOnly.json';
   // let urlKV = 'missing-zero.json';
   // let urlKV = 'C1000_AllReports.json';
-  let urlKV = 'C100_AllReports.json';
+  // let urlKV = 'C100_AllReports.json';
   // let urlKV = 'AdultRegressionAllReports.json';
   // let urlKV = 'onlyEvaluationReport.json';
   // let urlKV = 'explanatory.json';
@@ -26,7 +27,6 @@ export function getVisualizationMockFile(): string {
   // let urlKV = 'irisR.json';
   // let urlKV = 'bi2.json';
   // let urlKV = 'bi3.json';
-  // let urlKV = 'Std_Iris_AnalysisResults.khj';
   // let urlKV = 'C1_AllReports.json';
   // let urlKV = 'C0_AllReports.json';
   // let urlKV = 'analyse_supervisee_multiclasse.json';

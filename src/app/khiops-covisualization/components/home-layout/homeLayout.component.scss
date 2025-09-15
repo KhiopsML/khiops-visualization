@@ -1,4 +1,4 @@
-@use'../../../../styles/theme.scss';
+@use '../../../../styles/theme.scss';
 #home-layout-comp {
   .mat-mdc-tab-label-container {
     margin-right: 10rem;
@@ -7,7 +7,7 @@
     position: absolute;
     top: 0;
     right: 0;
-    height: 68px;
+    height: var(--header-height);
     z-index: 1000;
   }
 
@@ -25,12 +25,12 @@
 
   app-project-view,
   app-axis-view {
-    width: calc(100% - 10px);
     background: var(--bgColor-20) !important;
-    padding: 5px;
-    margin-top: 69px;
+    padding: 0;
+    width: 100%;
+    margin-top: calc(var(--header-height) + 10px);
     top: 0;
     position: absolute;
-    height: calc(100% - 80px);
+    height: calc(100% - var(--header-height) - 10px);
   }
 }

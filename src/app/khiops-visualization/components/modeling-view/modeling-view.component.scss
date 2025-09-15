@@ -1,10 +1,4 @@
 #modeling-view-comp {
-  background: var(--bgColor) !important;
-
-  // ::ng-deep .mat-tab-label {
-  //   opacity: 1;
-  // }
-
   #coocurence-matrix-cells-container {
     ::ng-deep .comp-header {
       margin-right: 1px !important;
@@ -14,17 +8,12 @@
   ::ng-deep mat-tab-body {
     background-color: var(--bgColor) !important;
   }
-  // ::ng-deep .mat-tab-body-content {
-  //   overflow: hidden !important;
-  //   height: calc(100% - 1px);
-  //   width: calc(100% - 1px);
-  // }
 
   app-regression-matrix {
     overflow: hidden;
   }
 
   .trained-predictor-details-container {
-    height: calc(100% - 50px) !important;
+    height: calc(100% - 55px) !important;
   }
 }

@@ -5,11 +5,11 @@
   fxLayoutAlign="start start"
 >
   <as-split
-    [gutterSize]="7"
+    [gutterSize]="15"
     direction="vertical"
     (dragEnd)="onSplitDragEnd($event, 'row')"
   >
-    <as-split-area [size]="sizes?.row[0]">
+    <as-split-area [size]="sizes?.row[0]" class="kl-card">
       <div fxLayout="column" fxFlexFill fxLayoutAlign="start start">
         <div
           id="project-view-comp-table"
@@ -25,7 +25,7 @@
         </div>
       </div>
     </as-split-area>
-    <as-split-area [size]="sizes?.row[1]">
+    <as-split-area [size]="sizes?.row[1]" class="kl-card">
       <app-project-logs></app-project-logs>
     </as-split-area>
   </as-split>

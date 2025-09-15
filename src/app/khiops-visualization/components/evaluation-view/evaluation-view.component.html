@@ -12,19 +12,19 @@
     ></mat-spinner>
   </div>
   <as-split
-    [gutterSize]="7"
+    [gutterSize]="15"
     *ngIf="!loadingView"
     direction="horizontal"
     (dragEnd)="onSplitDragEnd($event, 'col')"
   >
     <as-split-area [size]="sizes.col[0]">
       <as-split
-        [gutterSize]="7"
+        [gutterSize]="15"
         direction="vertical"
         (dragEnd)="onSplitDragEnd($event, 'col0Row')"
       >
         <as-split-area
-          class="variables-list-container"
+          class="variables-list-container kl-card"
           [size]="sizes.col0Row[0]"
         >
           <kl-ag-grid
@@ -48,7 +48,7 @@
           </kl-ag-grid>
         </as-split-area>
         <as-split-area
-          class="variables-list-container"
+          class="variables-list-container kl-card"
           [size]="sizes.col0Row[1]"
         >
           <kl-ag-grid
@@ -80,11 +80,11 @@
     </as-split-area>
     <as-split-area [size]="sizes.col[1]">
       <as-split
-        [gutterSize]="7"
+        [gutterSize]="15"
         direction="vertical"
         (dragEnd)="onSplitDragEnd($event, 'col1Row')"
       >
-        <as-split-area [size]="sizes.col1Row[0]">
+        <as-split-area [size]="sizes.col1Row[0]" class="kl-card">
           <app-target-lift-graph
             id="evaluation-lift-curves"
             [selectedVariable]="
@@ -95,7 +95,7 @@
         </as-split-area>
         <as-split-area
           *ngIf="evaluationDatas.confusionMatrix"
-          class="variables-list-container"
+          class="variables-list-container kl-card"
           [size]="sizes.col1Row[1]"
         >
           <kl-ag-grid

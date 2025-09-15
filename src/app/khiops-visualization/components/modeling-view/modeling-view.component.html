@@ -12,25 +12,25 @@
     ></mat-spinner>
   </div>
   <as-split
-    [gutterSize]="7"
+    [gutterSize]="15"
     *ngIf="!loadingView"
     direction="vertical"
     (dragEnd)="onSplitDragEnd($event, 'row')"
   >
     <as-split-area [size]="sizes?.row[0]">
       <as-split
-        [gutterSize]="7"
+        [gutterSize]="15"
         direction="horizontal"
         (dragEnd)="onSplitDragEnd($event, 'row0Col')"
       >
-        <as-split-area [size]="sizes?.row0Col[0]">
+        <as-split-area [size]="sizes?.row0Col[0]" class="kl-card">
           <kl-informations-block
             id="modeling-informations-block-summary"
             title="{{ 'GLOBAL.SUMMARY' | translate }}"
             [inputDatas]="summaryDatas"
           ></kl-informations-block>
         </as-split-area>
-        <as-split-area [size]="sizes?.row0Col[1]">
+        <as-split-area [size]="sizes?.row0Col[1]" class="kl-card">
           <app-target-variable-stats
             *ngIf="targetVariableStatsDatas"
             id="modeling-target-variable-stats"
@@ -53,7 +53,7 @@
             [inputDatas]="targetVariableStatsInformations"
           ></kl-informations-block>
         </as-split-area>
-        <as-split-area [size]="sizes?.row0Col[2]">
+        <as-split-area [size]="sizes?.row0Col[2]" class="kl-card">
           <kl-informations-block
             id="modeling-informations-block-informations"
             title="{{ 'GLOBAL.TRAINED_PREDICTORS' | translate }}"
@@ -72,18 +72,18 @@
 
       <as-split
         class="trained-predictor-details-container"
-        [gutterSize]="7"
+        [gutterSize]="15"
         direction="horizontal"
         (dragEnd)="onSplitDragEnd($event, 'row1Col')"
       >
         <as-split-area [size]="sizes?.row1Col[0]">
           <as-split
-            [gutterSize]="7"
+            [gutterSize]="15"
             *ngIf="modelingDatas?.trainedPredictorsListDatas"
             direction="vertical"
             (dragEnd)="onSplitDragEnd($event, 'row1Col0Row')"
           >
-            <as-split-area class="variables-list-container">
+            <as-split-area class="variables-list-container kl-card">
               <kl-ag-grid
                 id="modeling-variables-list"
                 class="variables-list"

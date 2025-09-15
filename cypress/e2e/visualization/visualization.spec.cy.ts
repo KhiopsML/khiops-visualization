@@ -43,7 +43,7 @@ describe('Test Khiops Visualization sample files', () => {
     'onlyEvaluationReport.json',
     'explanatory.json',
     'bi3.json',
-    'Std_Iris_AnalysisResults.khj',
+    'ALLREPORTS_Std_Iris_AnalysisResults.khj',
     'C1_AllReports.json',
     'C0_AllReports.json',
     'analyse_supervisee_multiclasse.json',

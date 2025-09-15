@@ -1,6 +1,6 @@
 <div class="matrix-container-comp" fxFlexFill>
   <as-split
-    [gutterSize]="7"
+    [gutterSize]="15"
     direction="vertical"
     (dragEnd)="onSplitDragEnd($event, sizeId)"
   >
@@ -8,6 +8,7 @@
       [size]="sizes?.[sizeId]?.[0]"
       order="1"
       [visible]="viewsLayout?.isDimensionsChecked"
+      class="kl-card"
     >
       <app-selected-clusters
         [selectedNodes]="dimensionsDatas?.selectedNodes"
@@ -16,7 +17,7 @@
       </app-selected-clusters>
     </as-split-area>
     <as-split-area
-      class="matrix-container-comp-wrapper"
+      class="matrix-container-comp-wrapper kl-card"
       [size]="sizes?.[sizeId]?.[1]"
       order="2"
       [visible]="viewsLayout?.isCoocurenceChecked"

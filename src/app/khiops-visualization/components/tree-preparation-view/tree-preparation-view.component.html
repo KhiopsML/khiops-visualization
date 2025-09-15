@@ -12,24 +12,24 @@
     ></mat-spinner>
   </div>
   <as-split
-    [gutterSize]="7"
+    [gutterSize]="15"
     *ngIf="!loadingView && sizes"
     direction="horizontal"
     (dragEnd)="onSplitDragEnd($event, 'col')"
   >
     <as-split-area [size]="sizes.col[0]">
       <as-split
-        [gutterSize]="7"
+        [gutterSize]="15"
         direction="vertical"
         (dragEnd)="onSplitDragEnd($event, 'col0Row')"
       >
         <as-split-area [size]="sizes.col0Row[0]">
           <as-split
-            [gutterSize]="7"
+            [gutterSize]="15"
             direction="horizontal"
             (dragEnd)="onSplitDragEnd($event, 'col0Row0Col')"
           >
-            <as-split-area [size]="sizes.col0Row0Col[0]">
+            <as-split-area [size]="sizes.col0Row0Col[0]" class="kl-card">
               <kl-informations-block
                 id="tree-preparation-informations-block-summary"
                 title="{{ 'GLOBAL.SUMMARY' | translate }}"
@@ -37,7 +37,7 @@
               >
               </kl-informations-block>
             </as-split-area>
-            <as-split-area [size]="sizes.col0Row0Col[1]">
+            <as-split-area [size]="sizes.col0Row0Col[1]" class="kl-card">
               <app-target-variable-stats
                 *ngIf="targetVariableStatsDatas"
                 id="tree-preparation-target-variable-stats"
@@ -62,7 +62,7 @@
                 [inputDatas]="targetVariableStatsInformations"
               ></kl-informations-block>
             </as-split-area>
-            <as-split-area [size]="sizes.col0Row0Col[2]">
+            <as-split-area [size]="sizes.col0Row0Col[2]" class="kl-card">
               <kl-informations-block
                 id="tree-preparation-informations-block-informations"
                 icon="subject"
@@ -78,11 +78,11 @@
           [size]="sizes.col0Row[1]"
         >
           <as-split
-            [gutterSize]="7"
+            [gutterSize]="15"
             direction="horizontal"
             (dragEnd)="onSplitDragEnd($event, 'col0Row1Col')"
           >
-            <as-split-area [size]="sizes.col0Row1Col[0]">
+            <as-split-area [size]="sizes.col0Row1Col[0]" class="kl-card">
               <kl-ag-grid
                 id="tree-preparation-variables-list"
                 class="variables-list"
@@ -104,7 +104,7 @@
               >
               </kl-ag-grid>
             </as-split-area>
-            <as-split-area [size]="sizes.col0Row1Col[1]">
+            <as-split-area [size]="sizes.col0Row1Col[1]" class="kl-card">
               <app-variable-graph-details
                 #appVariableGraphDetails
                 *ngIf="treePreparationDatas?.selectedVariable"
@@ -128,12 +128,12 @@
         </as-split-area>
         <as-split-area [size]="sizes.col0Row[2]">
           <as-split
-            [gutterSize]="7"
+            [gutterSize]="15"
             direction="horizontal"
             (dragEnd)="onSplitDragEnd($event, 'col0Row2Col')"
           >
             <as-split-area
-              class="variables-list-container"
+              class="variables-list-container kl-card"
               [size]="sizes.col0Row2Col[0]"
             >
               <app-tree-select
@@ -146,18 +146,18 @@
               [size]="sizes.col0Row2Col[1]"
             >
               <as-split
-                [gutterSize]="7"
+                [gutterSize]="15"
                 direction="horizontal"
                 (dragEnd)="onSplitDragEnd($event, 'col0Row2Col1Row')"
               >
                 <as-split-area
-                  class="variables-list-container"
+                  class="variables-list-container kl-card"
                   [size]="sizes.col0Row2Col1Row[0]"
                 >
                   <app-tree-details> </app-tree-details>
                 </as-split-area>
                 <as-split-area
-                  class="variables-list-container"
+                  class="variables-list-container kl-card"
                   [size]="sizes.col0Row2Col1Row[1]"
                 >
                   <app-tree-leaf-details
@@ -179,7 +179,7 @@
         </as-split-area>
       </as-split>
     </as-split-area>
-    <as-split-area [size]="sizes.col[1]">
+    <as-split-area [size]="sizes.col[1]" class="kl-card">
       <app-tree-hyper
         id="tree-preparation-hyper"
         [displayedValues]="distributionDatas?.targetDistributionDisplayedValues"

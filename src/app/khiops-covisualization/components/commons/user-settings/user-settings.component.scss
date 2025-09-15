@@ -10,7 +10,7 @@
 
   #user-settings-header {
     padding: 1em;
-    height: 68px;
+    height: var(--header-height);
   }
 
   #user-settings-content {

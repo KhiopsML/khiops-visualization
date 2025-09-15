@@ -1,5 +1,5 @@
 <as-split
-  [gutterSize]="7"
+  [gutterSize]="15"
   id="app-var-details-preparation-2d-comp"
   *ngIf="
     preparation2dDatas?.selectedVariable &&
@@ -8,14 +8,14 @@
   direction="vertical"
   (dragEnd)="onSplitDragEnd($event, 'row1Col1Row')"
 >
-  <as-split-area [size]="sizes.row1Col1Row[0]" fxLayout="column">
+  <as-split-area [size]="sizes.row1Col1Row[0]" fxLayout="column" class="">
     <as-split
-      [gutterSize]="7"
+      [gutterSize]="15"
       direction="vertical"
       (dragEnd)="onSplitDragEnd($event, 'row1Col1Row0Col')"
     >
       <as-split-area
-        class="variables-list-container"
+        class="variables-list-container kl-card"
         [size]="sizes.row1Col1Row0Col[0]"
       >
         <app-coocurence-matrix
@@ -36,7 +36,7 @@
           distribution2dDatas.targetDistributionGraphDatas.datasets
         "
         [size]="sizes.row1Col1Row0Col[1]"
-        class="variables-list-container"
+        class="variables-list-container kl-card"
       >
         <app-target-distribution-graph
           #targetDistributionGraph
@@ -60,8 +60,8 @@
     [size]="sizes.row1Col1Row[1]"
     fxLayout="row"
   >
-    <as-split [gutterSize]="7" direction="horizontal">
-      <as-split-area class="variables-list-container">
+    <as-split [gutterSize]="15" direction="horizontal">
+      <as-split-area class="variables-list-container kl-card">
         <kl-ag-grid
           id="preparation-2d-current-cell-x"
           class="variables-list"
@@ -78,7 +78,7 @@
         >
         </kl-ag-grid>
       </as-split-area>
-      <as-split-area class="variables-list-container">
+      <as-split-area class="variables-list-container kl-card">
         <kl-ag-grid
           id="preparation-2d-current-cell-y"
           class="variables-list"
