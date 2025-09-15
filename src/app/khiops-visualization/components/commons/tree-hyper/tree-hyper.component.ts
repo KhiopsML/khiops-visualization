@@ -143,8 +143,8 @@ export class TreeHyperComponent
                 this.ht?.data,
                 selectedNode.id,
               );
-              if (treeNode?.data.isLeaf) {
-                // Center on leaf then update visualization
+              if (treeNode?.data) {
+                // Center on any node (leaf or non-leaf) then update visualization
                 this.ht?.initPromise.then(async () => {
                   await this.ht?.api.gotoNode(treeNode, 300);
                   setTimeout(() => {
