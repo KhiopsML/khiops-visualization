@@ -369,7 +369,7 @@ mat-sidenav {
   border-radius: 0 !important;
 }
 .mdc-switch {
-  border: 2px solid black !important;
+  border: 1px solid black !important;
   min-height: 26px;
   width: 50px;
   margin-right: 0.8em !important;
@@ -408,4 +408,7 @@ mat-dialog-container {
     border: 2px solid #000000 !important;
     border-radius: 0 !important;
   }
+}
+.mdc-checkbox .mdc-checkbox__background {
+  border-width: 1px;
 }
