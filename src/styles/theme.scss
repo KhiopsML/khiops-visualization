@@ -1,21 +1,3 @@
-::ng-deep .orange-theme {
-  mat-button-toggle-group,
-  button,
-  .search-input-btn {
-    border-width: 1px !important;
-    border-color: black !important;
-    border-radius: 2px !important;
-  }
-
-  button.mat-accent {
-    color: black !important;
-  }
-
-  .mdc-tab-indicator .mdc-tab-indicator__content {
-    border-color: #ff6600 !important;
-  }
-}
-
 [data-color-scheme='orange'] {
   color-scheme: orange;
   --bgColorContrast: #000;
@@ -34,7 +16,7 @@
   --black-text: #000;
   --primary-contrast: #222;
   --accent: #cd3c14;
-  --selected: #ff6600;
+  --selected: #ff66008c;
   --gutter-hover: #f1f1f1;
   --bgTooltip: #444;
   --chart-border: #e5e5e5;
@@ -46,4 +28,23 @@
   --cell-type-cat: #f5ddaf;
   --mat-tab-active-indicator-height: 1px;
   --header-height: 60px;
+  --border-radius: 2px;
+}
+
+::ng-deep .orange-theme {
+  mat-button-toggle-group,
+  button,
+  .search-input-btn {
+    border-width: 1px !important;
+    border-color: black !important;
+    border-radius: var(--border-radius) !important;
+  }
+
+  button.mat-accent {
+    color: black !important;
+  }
+
+  .mdc-tab-indicator .mdc-tab-indicator__content {
+    border-color: #ff6600 !important;
+  }
 }

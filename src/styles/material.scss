@@ -406,7 +406,7 @@ button {
 mat-dialog-container {
   .mat-mdc-dialog-surface {
     border: 1px solid #000000 !important;
-    border-radius: 2px !important;
+    border-radius: var(--border-radius) !important;
   }
 }
 .mdc-checkbox .mdc-checkbox__background {
