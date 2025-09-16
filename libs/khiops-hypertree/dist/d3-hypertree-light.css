@@ -1,0 +1,306 @@
+.unitdisk-nav svg {
+  cursor: default;
+}
+.unitdisk-nav svg .cell {
+  pointer-events: none;
+}
+.unitdisk-nav svg .arc {
+  pointer-events: none;
+}
+.unitdisk-nav svg .node {
+  pointer-events: none;
+}
+@keyframes nodefadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.unitdisk-nav svg .caption {
+  font-size: 0.002em;
+  font-weight: 300;
+  user-select: none;
+  pointer-events: none;
+  text-rendering: optimizeSpeed;
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.unitdisk-nav svg .caption-background {
+  pointer-events: none;
+}
+.unitdisk-nav svg .label-link {
+  stroke-width: 0.02;
+  stroke-dasharray: 0.001;
+  stroke-linecap: round;
+}
+.unitdisk-nav svg .background-circle {
+  pointer-events: none;
+}
+.unitdisk-nav svg .mouse-circle {
+  pointer-events: visibleFill;
+  fill: none;
+}
+.unitdisk-nav svg .mouse-circle-cursor {
+  pointer-events: visibleFill;
+  fill: none;
+  cursor: default;
+}
+.unitdisk-nav svg .ripple-world {
+  pointer-events: none;
+  cursor: default;
+}
+.unitdisk-nav svg .ripple-circle {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0;
+  animation: ripple 500ms ease-out;
+}
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.8;
+  }
+  12% {
+    transform: scale(0.45);
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(3);
+  }
+}
+.unitdisk-nav svg #path-arcs {
+  opacity: 0.3;
+  display: none !important;
+}
+.unitdisk-nav svg #stem-path {
+  opacity: 0.3;
+}
+.unitdisk-nav svg .focus-circle {
+  pointer-events: none;
+}
+.unitdisk-nav svg .ping-circle {
+  opacity: 1;
+  pointer-events: none;
+}
+.unitdisk-nav svg .trace-polyline {
+  opacity: 0.8;
+  stroke: orange;
+  stroke-width: 0.03;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  pointer-events: none;
+}
+.unitdisk-nav svg .center-node {
+  animation: centernodemove 500ms ease-out;
+  stroke: none;
+  stroke-width: 0.006;
+}
+@keyframes centernodemove {
+  0% {
+    transform: scale(0);
+    transform: rotate(1);
+  }
+  10% {
+    transform: scale(0);
+  }
+  75% {
+    transform: scale(0.1);
+  }
+}
+.unitdisk-nav svg .nav-parameter-disc .caption {
+  dominant-baseline: middle;
+  text-anchor: middle;
+  font-size: 0.16pt;
+}
+.unitdisk-nav svg .nav-parameter-disc .caption.P {
+  font-size: 0.48pt;
+  font-weight: 100;
+}
+.unitdisk-nav svg .nav-parameter-disc .background-circle {
+  pointer-events: none;
+}
+.unitdisk-nav svg .nav-parameter-disc .mouse-circle {
+  pointer-events: visibleFill;
+  cursor: default;
+}
+.unitdisk-nav svg .nav-background-disc .background-circle {
+  pointer-events: none;
+}
+.unitdisk-nav svg .nav-background-disc .caption {
+  font-size: 0.005em;
+}
+.unitdisk-nav svg .nav-background-disc .label-big {
+  font-size: 0.0095em;
+  font-weight: 300;
+  paint-order: stroke;
+  stroke-width: 0.04;
+}
+
+.hypertree-background {
+  background-color: white;
+}
+
+.unitdisk-nav svg .cell {
+  stroke: rgba(255, 255, 255, 0);
+  fill: rgba(255, 255, 255, 0);
+  stroke-width: 0.0013;
+}
+.unitdisk-nav svg .arc {
+  stroke: #999;
+  fill: none;
+}
+.unitdisk-nav svg .arc-focus {
+  stroke: rgba(153, 153, 153, 0.35);
+  fill: none;
+}
+.unitdisk-nav svg .node {
+  stroke-width: 0;
+}
+.unitdisk-nav svg .caption {
+  paint-order: stroke;
+  stroke: rgba(255, 255, 255, 0.7);
+  stroke-width: 0.005;
+  stroke-linecap: butt;
+  stroke-linejoin: miter;
+  font-weight: 300;
+  font-size: 0.0025rem;
+}
+.unitdisk-nav svg .caption-background {
+  fill: rgba(255, 255, 255, 0.76);
+}
+.unitdisk-nav svg .label-link {
+  stroke: rgb(25, 94, 4);
+  opacity: 0.6;
+  stroke-width: 0.001;
+  stroke-dasharray: 0.018, 0.015;
+}
+.unitdisk-nav svg .root {
+  stroke: rgb(237.5, 213.2653061224, 0);
+  fill: rgb(255, 237.6020408163, 84.5);
+}
+.unitdisk-nav svg .root.cell {
+  stroke: rgba(255, 235, 59, 0.9);
+  fill: rgba(255, 235, 59, 0.05);
+}
+.unitdisk-nav svg .root.node {
+  stroke: #ef6c00;
+  stroke-width: 0.0015;
+}
+.unitdisk-nav svg .lazy {
+  stroke: rgb(182.0657894737, 27.0394736842, 23.4342105263);
+  fill: rgb(231.9078947368, 79.1447368421, 75.5921052632);
+}
+.unitdisk-nav svg .lazy.cell {
+  stroke: #ececec;
+  stroke-width: 0.00075;
+  fill: none;
+}
+.unitdisk-nav svg .lazy.node {
+  stroke: rgba(159.4736842105, 23.6842105263, 20.5263157895, 0.5);
+}
+.unitdisk-nav svg .exit {
+  stroke: rgb(180.5, 90.7959183673, 195.7040816327);
+  fill: rgb(214.5, 165.7346938776, 222.7653061224);
+}
+.unitdisk-nav svg .exit.cell {
+  stroke: hsla(291.3043478261, 46.9387755102%, -23.8235294118%, 0.9);
+  fill: rgba(206, 147, 216, 0.05);
+}
+.unitdisk-nav svg .exit.node {
+  stroke: rgba(72, 28.6530612245, 79.3469387755, 0.5);
+}
+.unitdisk-nav svg .hovered.arc {
+  stroke: #999;
+}
+.unitdisk-nav svg .hovered-path.arc {
+  stroke: rgba(153, 153, 153, 0.8);
+}
+.unitdisk-nav svg .hovered-path-nav.arc {
+  stroke: red;
+}
+.unitdisk-nav svg .hovered.node {
+  stroke: rgb(127.5, 127.5, 127.5);
+}
+.unitdisk-nav svg .selected.arc {
+  stroke: orange;
+  stroke-width: 0.01;
+}
+.unitdisk-nav svg .selected-path.arc {
+  stroke: rgba(255, 165, 0, 0.2);
+}
+.unitdisk-nav svg .selected.cell {
+  stroke: rgba(255, 165, 0, 0.2);
+  fill: rgba(255, 165, 0, 0.1);
+}
+.unitdisk-nav svg .selected.node {
+  stroke: hsl(38.8235294118, 100%, -50%);
+  stroke-width: 0.025;
+}
+.unitdisk-nav svg .center-node {
+  fill: rgba(0, 0, 0, 0.25);
+  opacity: 0.5;
+}
+.unitdisk-nav svg .background-circle {
+  fill-opacity: 0.15;
+}
+.unitdisk-nav svg .focus-circle {
+  fill: none;
+  stroke: rgb(23.0384615385, 144.2435897436, 242.4615384615);
+  stroke-width: 0.0005;
+}
+.unitdisk-nav svg .zerozero-circle {
+  fill: none;
+  stroke: #555;
+  stroke-width: 0.1;
+}
+.unitdisk-nav svg .ripple-circle {
+  fill: rgba(153, 153, 153, 0.6);
+}
+.unitdisk-nav svg .nav-parameter-disc .node {
+  fill: rgb(255, 255, 255);
+  stroke-width: 0.015;
+  stroke: rgb(213.724, 142.782, 10.776);
+}
+.unitdisk-nav svg .nav-parameter-disc .node:first-child {
+  fill: rgba(255, 255, 255, 0.15);
+  stroke: rgb(23.0384615385, 144.2435897436, 242.4615384615);
+  stroke-width: 0.003;
+}
+.unitdisk-nav svg .nav-parameter-disc .cell {
+  stroke: #999;
+  fill: none;
+}
+.unitdisk-nav svg .nav-parameter-disc .caption {
+  fill: #666;
+}
+.unitdisk-nav svg .nav-parameter-disc .caption.P {
+  fill: #666;
+}
+.unitdisk-nav svg .nav-parameter-disc .caption-background {
+  visibility: hidden;
+}
+.unitdisk-nav svg .nav-parameter-disc .background-circle {
+  fill: none;
+  stroke: none;
+}
+.unitdisk-nav svg .nav-background-disc .label-big {
+  stroke-width: 0.015;
+  font-weight: 100;
+  fill: black;
+}
+.unitdisk-nav svg .nav-background-disc .hovered-path-nav.arc {
+  stroke: red;
+}
+.unitdisk-nav svg .nav-background-disc .arc {
+  stroke: #aaa;
+}
