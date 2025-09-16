@@ -104,9 +104,7 @@
             [showLevelDistribution]="false"
             [showSearch]="false"
             [displayCount]="false"
-            (dataTypeChanged)="onDataTypeChanged($event)"
             [showLineSelection]="true"
-            [showDataTypeSelection]="true"
             [showColumnsSelection]="false"
             [rowHeight]="30"
             [inputDatas]="evaluationDatas.confusionMatrix.values"
@@ -115,6 +113,11 @@
               evaluationDatas.confusionMatrix.displayedColumns
             "
           >
+            <app-data-type-selector
+              slot="header-tools"
+              (dataTypeChanged)="onDataTypeChanged($event)"
+            >
+            </app-data-type-selector>
           </kl-ag-grid>
         </as-split-area>
       </as-split>

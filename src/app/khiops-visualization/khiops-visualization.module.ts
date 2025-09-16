@@ -50,6 +50,7 @@ import { TreePreparationEffects } from './effects/tree-preparation.effect';
 import { EffectsModule } from '@ngrx/effects';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { InAppOverlayContainer } from '../khiops-library/overlay/in-app-overlay-provider';
+import { DataTypeSelectorComponent } from './components/commons/data-type-selector/data-type-selector.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +84,7 @@ import { InAppOverlayContainer } from '../khiops-library/overlay/in-app-overlay-
     CoocurenceMatrixComponent,
     RegressionMatrixComponent,
     TargetDistributionGraphComponent,
+    DataTypeSelectorComponent,
     AppComponent,
   ],
   imports: [

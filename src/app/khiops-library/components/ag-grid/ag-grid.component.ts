@@ -44,7 +44,6 @@ import { Ls } from '@khiops-library/providers/ls.service';
 import { KEYBOARD } from '@khiops-library/enum/keyboard';
 import { GridCheckboxEventI } from '@khiops-library/interfaces/events';
 import { DynamicI } from '@khiops-library/interfaces/globals';
-import { GridOptionsModel } from '@khiops-library/model/grid-options.model';
 
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
@@ -77,7 +76,6 @@ export class AgGridComponent
   @Input() public showLevelDistribution = true;
   @Input() public levelDistributionTitle: string = '';
   @Input() public showColumnsSelection = true;
-  @Input() public showDataTypeSelection = false;
   @Input() public showFullscreenBtn = true;
   @Input() public showSearch = true;
   @Input() public displayCount = false;
@@ -90,7 +88,6 @@ export class AgGridComponent
   @Input() public showFullSearch = false;
 
   @Output() private selectListItem: EventEmitter<any> = new EventEmitter();
-  @Output() private dataTypeChanged: EventEmitter<any> = new EventEmitter();
   @Output() private gridCheckboxChanged: EventEmitter<GridCheckboxEventI> =
     new EventEmitter();
   @Output() private showLevelDistributionGraph: EventEmitter<any> =
@@ -112,9 +109,6 @@ export class AgGridComponent
     componentParent: this, // used by CheckboxCellComponent
   };
   public isSmallDiv: boolean = false;
-
-  // For evaluation view
-  public dataOptions: GridOptionsModel = new GridOptionsModel();
 
   public gridOptions = <GridOptions>{
     suppressAnimationFrame: true,
@@ -143,11 +137,6 @@ export class AgGridComponent
     super(selectableService, ngzone, configService);
     this.AppConfig = this.khiopsLibraryService.getAppConfig().common;
     this.paginationSize = this.AppConfig.GLOBAL.PAGINATION_SIZE;
-
-    this.dataOptions.selected = this.ls.get(
-      LS.AG_GRID_GRAPH_OPTION,
-      this.dataOptions.types[0],
-    );
 
     this.title = this.translate.get('GLOBAL.VARIABLES') || this.title;
 
@@ -300,17 +289,6 @@ export class AgGridComponent
 
       this.restoreState();
     }
-  }
-
-  /**
-   * Changes the data type for the grid.
-   * @param type - The new data type to be set.
-   */
-  changeDataType(type: string) {
-    this.ls.set(LS.AG_GRID_GRAPH_OPTION, type);
-
-    this.dataOptions.selected = type;
-    this.dataTypeChanged.emit(type);
   }
 
   /**

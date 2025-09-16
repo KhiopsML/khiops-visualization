@@ -1,0 +1,21 @@
+<button
+  attr.aria-label="{{ 'ARIA.AG_GRID.CHANGE_DATAS_OPTION' | translate }}"
+  mat-stroked-button
+  [matMenuTriggerFor]="dataOptionsTypes"
+>
+  {{ dataOptions?.selected | translate }}
+  <em><mat-icon>keyboard_arrow_down</mat-icon> </em>
+</button>
+<mat-menu #dataOptionsTypes>
+  <button
+    attr.aria-label="{{
+      'ARIA.AG_GRID.CHANGE_TO' | translate: { type: opt | translate }
+    }}"
+    mat-menu-item
+    [class.selected-item]="opt === dataOptions?.selected"
+    *ngFor="let opt of dataOptions.types"
+    (click)="changeDataType(opt)"
+  >
+    {{ opt | translate }}
+  </button>
+</mat-menu>
