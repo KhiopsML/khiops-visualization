@@ -23,13 +23,13 @@ describe('Test Plan for Khiops Covisualization', () => {
 
   const expectedResults: ResultI[] = [
     {
-      matrixTooltip: [1608, 5097, 6951],
+      matrixTooltip: [1608, 5097, 1893],
       nodesName: ['A7', 'B5'],
       unfoldH: 5,
       matrixValues: 5097,
     },
     {
-      matrixTooltip: [3942, 27815, 17],
+      matrixTooltip: [3942, 27815, 0],
       nodesName: ['[-0.999999999;0.57661]', '[-0.999988212;0.577313]'],
       unfoldH: 150,
       matrixValues: 27815, // selected cell excpected Freq
@@ -130,15 +130,11 @@ describe('Test Plan for Khiops Covisualization', () => {
         });
 
         cy.get('.button-confirm-hierarchy').click();
+        cy.wait(500);
 
         // Move to the last matrix cell
         cy.get('#matrix-container').should('be.visible').trigger('mousemove', {
-          position: 'topRight',
-        });
-        cy.wait(500);
-        // Move to the last matrix cell
-        cy.get('#matrix-container').should('be.visible').trigger('mousemove', {
-          position: 'topRight',
+          position: 'bottomRight',
         });
         cy.wait(500);
 
