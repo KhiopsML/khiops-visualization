@@ -19,7 +19,7 @@
       }
       .graph-header-tools {
         mat-checkbox {
-          margin: 0.5rem 0 0.5rem 1rem;
+          margin: 0rem 0 0rem 1rem;
         }
 
         ::ng-deep mat-checkbox .mdc-form-field label {
@@ -27,6 +27,7 @@
           white-space: normal !important;
           line-height: inherit !important;
           font-size: 0.75rem !important;
+          padding: 0 10px 0 0 !important;
         }
       }
     }
