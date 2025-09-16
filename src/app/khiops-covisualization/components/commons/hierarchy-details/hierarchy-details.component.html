@@ -2,6 +2,7 @@
   class="hierarchy-details-comp"
   fxFlexFill
   fxLayout="column"
+  [ngClass]="{ fullscreen: isFullscreen }"
   [attr.id]="'hierarchy-details-comp-' + position"
 >
   <div fxFlexFill fxLayout="column" class="selected-area-inner-div">
@@ -12,7 +13,14 @@
       [dimensions]="dimensions"
       [selectedTreeCluster]="selectedTreeCluster"
       (selectedTreeClusterChange)="onClusterChange($event)"
-    ></app-hierarchy-select>
+    >
+      <kl-btn-fullscreen
+        slot="header-tools"
+        class="screenshot-hide"
+        (toggleFullscreen)="onToggleFullscreen($event)"
+      >
+      </kl-btn-fullscreen>
+    </app-hierarchy-select>
     <app-tree-select
       [attr.id]="'tree-comp-' + position"
       [selectedNode]="selectedNode"

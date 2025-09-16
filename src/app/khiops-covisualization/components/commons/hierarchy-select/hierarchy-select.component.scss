@@ -3,6 +3,7 @@
   margin: 0 !important;
   width: 100%;
   overflow-x: auto;
+  position: relative;
 
   h1 {
     margin: 0 1em 0 0.4em;
@@ -12,6 +13,10 @@
     .mat-icon {
       margin-top: 5px !important;
     }
+  }
+
+  .hierarchy-infos-button {
+    margin-right: 5px;
   }
 
   button {
