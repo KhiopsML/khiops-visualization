@@ -87,11 +87,11 @@
               <kl-ag-grid
                 id="modeling-variables-list"
                 class="variables-list"
+                #agGridRef
                 fxFlexFill
                 titleTooltip="{{
                   'TOOLTIPS.MODELING.VARIABLES.TITLE' | translate
                 }}"
-                [showLevelDistribution]="true"
                 [showSearch]="true"
                 [watchResize]="true"
                 [displayCount]="true"
@@ -101,11 +101,15 @@
                 [showColumnsSelection]="true"
                 [rowHeight]="30"
                 [inputDatas]="modelingDatas?.trainedPredictorsListDatas"
-                (showLevelDistributionGraph)="
-                  onShowLevelDistributionGraph($event)
-                "
                 [displayedColumns]="trainedPredictorsDisplayedColumns"
               >
+                <app-level-distribution-button
+                  slot="header-tools"
+                  [isSmallDiv]="agGridRef.isSmallDiv"
+                  [searchFormVisible]="agGridRef.searchFormVisible"
+                  (openLevelDistribution)="onShowLevelDistributionFromButton()"
+                >
+                </app-level-distribution-button>
               </kl-ag-grid>
             </as-split-area>
           </as-split>

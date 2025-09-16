@@ -51,6 +51,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { InAppOverlayContainer } from '../khiops-library/overlay/in-app-overlay-provider';
 import { DataTypeSelectorComponent } from './components/commons/data-type-selector/data-type-selector.component';
+import { LevelDistributionButtonComponent } from './components/commons/level-distribution-button/level-distribution-button.component';
 
 @NgModule({
   declarations: [
@@ -85,6 +86,7 @@ import { DataTypeSelectorComponent } from './components/commons/data-type-select
     RegressionMatrixComponent,
     TargetDistributionGraphComponent,
     DataTypeSelectorComponent,
+    LevelDistributionButtonComponent,
     AppComponent,
   ],
   imports: [

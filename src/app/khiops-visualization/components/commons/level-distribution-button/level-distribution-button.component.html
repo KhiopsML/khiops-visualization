@@ -1,0 +1,18 @@
+<button
+  [ngClass]="{ 'small-div': isSmallDiv || searchFormVisible }"
+  attr.aria-label="{{ 'ARIA.AG_GRID.OPEN_LEVEL_DISTRIBUTION' | translate }}"
+  [title]="title"
+  class="level-distribution-btn"
+  mat-stroked-button
+  (click)="onOpenLevelDistribution()"
+>
+  <span *ngIf="!isSmallDiv && !searchFormVisible">{{ title }}</span>
+  <mat-icon
+    *ngIf="isSmallDiv || searchFormVisible"
+    fxFlexFill
+    fxLayoutAlign="center center"
+    matTooltipPosition="above"
+    matTooltip="{{ 'GLOBAL.LEVEL_DISTRIBUTION' | translate }}"
+    >show_chart</mat-icon
+  >
+</button>

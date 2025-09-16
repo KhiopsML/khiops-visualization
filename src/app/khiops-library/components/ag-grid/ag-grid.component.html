@@ -42,30 +42,6 @@
       fxLayout="row"
       fxFlex
     >
-      <button
-        [ngClass]="{ 'small-div': isSmallDiv || searchFormVisible }"
-        *ngIf="showLevelDistribution"
-        attr.aria-label="{{
-          'ARIA.AG_GRID.OPEN_LEVEL_DISTRIBUTION' | translate
-        }}"
-        title="{{ levelDistributionTitle }}"
-        class="level-distribution-btn"
-        mat-stroked-button
-        (click)="openLevelDistributionDialog()"
-      >
-        <span *ngIf="!isSmallDiv && !searchFormVisible">{{
-          levelDistributionTitle
-        }}</span>
-        <mat-icon
-          *ngIf="isSmallDiv || searchFormVisible"
-          fxFlexFill
-          fxLayoutAlign="center center"
-          (click)="removeSearch()"
-          matTooltipPosition="above"
-          matTooltip="{{ 'GLOBAL.LEVEL_DISTRIBUTION' | translate }}"
-          >show_chart</mat-icon
-        >
-      </button>
       <!-- Slot for custom header tools -->
       <ng-content select="[slot=header-tools]"></ng-content>
       <form

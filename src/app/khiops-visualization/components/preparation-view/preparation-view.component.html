@@ -81,10 +81,10 @@
               [size]="sizes.row1Col0Row[0]"
             >
               <kl-ag-grid
+                #agGridRef
                 id="preparation-variables-list"
                 class="variables-list"
                 fxFlexFill
-                [showLevelDistribution]="true"
                 [showSearch]="true"
                 [watchResize]="true"
                 [displayCount]="true"
@@ -98,10 +98,14 @@
                 [inputDatas]="variablesDatas"
                 [displayedColumns]="variablesDisplayedColumns"
                 [selectedVariable]="preparationDatas?.selectedVariable"
-                (showLevelDistributionGraph)="
-                  onShowLevelDistributionGraph($event)
-                "
               >
+                <app-level-distribution-button
+                  slot="header-tools"
+                  [isSmallDiv]="agGridRef.isSmallDiv"
+                  [searchFormVisible]="agGridRef.searchFormVisible"
+                  (openLevelDistribution)="onShowLevelDistributionFromButton()"
+                >
+                </app-level-distribution-button>
               </kl-ag-grid>
             </as-split-area>
             <as-split-area

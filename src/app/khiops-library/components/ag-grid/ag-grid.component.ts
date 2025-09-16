@@ -23,7 +23,6 @@ import { TranslateService } from '@ngstack/translate';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
-import { TYPES } from '@khiops-library/enum/types';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import {
@@ -73,8 +72,6 @@ export class AgGridComponent
   @Input() public override id: string | undefined = undefined;
   @Input() public title: string = '';
   @Input() public titleTooltip: string = '';
-  @Input() public showLevelDistribution = true;
-  @Input() public levelDistributionTitle: string = '';
   @Input() public showColumnsSelection = true;
   @Input() public showFullscreenBtn = true;
   @Input() public showSearch = true;
@@ -89,8 +86,6 @@ export class AgGridComponent
 
   @Output() private selectListItem: EventEmitter<any> = new EventEmitter();
   @Output() private gridCheckboxChanged: EventEmitter<GridCheckboxEventI> =
-    new EventEmitter();
-  @Output() private showLevelDistributionGraph: EventEmitter<any> =
     new EventEmitter();
 
   public AppConfig: any;
@@ -160,24 +155,10 @@ export class AgGridComponent
     setTimeout(() => {
       this.showHeader = true;
 
-      if (
-        this.levelDistributionTitle === '' ||
-        this.levelDistributionTitle === undefined
-      ) {
-        this.levelDistributionTitle = this.translate.get(
-          TYPES.LEVEL_DISTRIBUTION,
-        );
-      }
-
       // Change default height of rows if defined
       if (this.rowHeight && this.gridOptions?.api) {
         this.gridOptions.rowHeight = this.rowHeight;
         this.gridOptions.api.resetRowHeights();
-      }
-
-      // Do not show level distribution graph if no level into datas.
-      if (this.inputDatas?.[0] && !this.inputDatas[0].level) {
-        this.showLevelDistribution = false;
       }
 
       if (this.agGrid) {
@@ -529,17 +510,6 @@ export class AgGridComponent
       this.agGrid.api.setColumnDefs(this.columnDefs);
       this.agGrid.api.setRowData(this.rowData);
     }
-  }
-
-  /**
-   * Opens the level distribution dialog and emits the input data sorted by level.
-   */
-  openLevelDistributionDialog(): void {
-    // always sort inputDatas by level to show level distributiuon
-    this.inputDatas = this.inputDatas?.sort((a: any, b: any) => {
-      return UtilsService.compare(a.level || 0, b.level || 0, false);
-    });
-    this.showLevelDistributionGraph.emit(this.inputDatas);
   }
 
   /**
