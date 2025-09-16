@@ -1,4 +1,8 @@
-<div class="hierarchy-select-comp" fxLayout="column" fxLayoutAlign="end center">
+<div
+  class="hierarchy-select-comp scrollbar-thin"
+  fxLayout="column"
+  fxLayoutAlign="end center"
+>
   <div
     class="comp-header-tools"
     fxFlex
@@ -32,6 +36,12 @@
         </button>
       </mat-menu>
     </div>
+    <mat-spinner
+      diameter="20"
+      color="accent"
+      mode="indeterminate"
+      *ngIf="dimensionsDatasService.dimensionsDatas?.isLoading"
+    ></mat-spinner>
     <app-variable-search-button
       [selectedDimension]="selectedDimension"
     ></app-variable-search-button>
