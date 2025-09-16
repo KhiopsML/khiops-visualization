@@ -6,13 +6,11 @@
   mat-stroked-button
   (click)="onOpenLevelDistribution()"
 >
-  <span *ngIf="!isSmallDiv && !searchFormVisible">{{ title }}</span>
   <mat-icon
-    *ngIf="isSmallDiv || searchFormVisible"
-    fxFlexFill
     fxLayoutAlign="center center"
     matTooltipPosition="above"
     matTooltip="{{ 'GLOBAL.LEVEL_DISTRIBUTION' | translate }}"
     >show_chart</mat-icon
   >
+  <span *ngIf="!isSmallDiv && !searchFormVisible">{{ title }}</span>
 </button>
