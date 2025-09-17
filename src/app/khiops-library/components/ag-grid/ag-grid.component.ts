@@ -21,7 +21,6 @@ import { SelectableComponent } from '@khiops-library/components/selectable/selec
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { TranslateService } from '@ngstack/translate';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
-import { UtilsService } from '@khiops-library/providers/utils.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { MatCheckboxChange } from '@angular/material/checkbox';
@@ -43,6 +42,7 @@ import { Ls } from '@khiops-library/providers/ls.service';
 import { KEYBOARD } from '@khiops-library/enum/keyboard';
 import { GridCheckboxEventI } from '@khiops-library/interfaces/events';
 import { DynamicI } from '@khiops-library/interfaces/globals';
+import { AgGridService } from '@khiops-library/providers/ag-grid.service';
 
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
@@ -117,50 +117,6 @@ export class AgGridComponent
   private gridModes: DynamicI = {}; //  values can be: 'fitToSpace' or 'fitToContent'
   private divWidth: number = 0;
 
-  /**
-   * Determines if a value represents a number (including string numbers like '10')
-   * @param value - The value to check
-   * @returns true if the value is numeric, false otherwise
-   */
-  private isNumeric(value: any): boolean {
-    if (value === null || value === undefined || value === '') {
-      return false;
-    }
-
-    // Convert to string and trim whitespace
-    const stringValue = String(value).trim();
-
-    // Check if it's a valid number (including decimal numbers, negative numbers, etc.)
-    return !isNaN(Number(stringValue)) && !isNaN(parseFloat(stringValue));
-  }
-
-  /**
-   * Determines the cell alignment based on the column data
-   * @param columnField - The field name of the column
-   * @returns 'right' for numeric data, 'left' for text data
-   */
-  private getCellAlignment(columnField: string): 'left' | 'right' {
-    if (!this.inputDatas || this.inputDatas.length === 0) {
-      return 'left';
-    }
-
-    // Sample a few values from the column to determine if it's numeric
-    const sampleSize = Math.min(10, this.inputDatas.length);
-    let numericCount = 0;
-
-    for (let i = 0; i < sampleSize; i++) {
-      const value = this.inputDatas[i][columnField];
-      if (value !== null && value !== undefined && value !== '') {
-        if (this.isNumeric(value)) {
-          numericCount++;
-        }
-      }
-    }
-
-    // If most values are numeric, align right, otherwise align left
-    return numericCount >= sampleSize * 0.7 ? 'right' : 'left';
-  }
-
   public agGridVisible = true;
   public shouldShowPagination = false;
 
@@ -171,6 +127,7 @@ export class AgGridComponent
     private ls: Ls,
     private khiopsLibraryService: KhiopsLibraryService,
     private translate: TranslateService,
+    private agGridService: AgGridService,
   ) {
     super(selectableService, ngzone, configService);
     this.AppConfig = this.khiopsLibraryService.getAppConfig().common;
@@ -476,85 +433,29 @@ export class AgGridComponent
    */
   updateTable() {
     if (this.displayedColumns && this.inputDatas) {
-      // Update columns at any changes to update sort a,d other ...
+      // Update columns at any changes to update sort and other ...
       this.columnDefs = [];
       // Reset column defs in case of show/hide colum to reorder
       if (this.agGrid?.api) {
         this.agGrid.api.setColumnDefs(this.columnDefs);
       }
 
-      // Advanced tables (for instance unfold hierarchy)
-      for (let i = 0; i < this.displayedColumns.length; i++) {
-        const col = this.displayedColumns[i];
-        if (col && !col.hidden) {
-          // Determine cell alignment based on data type
-          const cellAlignment = this.getCellAlignment(col.field);
-
-          const gridCol: ColDef | any = {
-            headerName: col.headerName,
-            headerTooltip: col.tooltip
-              ? col.headerName + ': ' + col.tooltip
-              : col.headerName,
-            // tooltipShowDelay: 500,
-            colId: col.headerName,
-            field: col.field,
-            sortable: true,
-            suppressMovable: true,
-            resizable: true,
-            valueFormatter: (params: any) =>
-              params.value &&
-              UtilsService.getPrecisionNumber(
-                params.value,
-                this.AppConfig.GLOBAL.TO_FIXED,
-              ),
-            hide: col.show === false, // ! if undefined : show it
-            width: this.cellsSizes?.[this.id!]?.[col.field],
-            cellRendererFramework: col.cellRendererFramework,
-            cellRendererParams: col.cellRendererParams,
-            cellClass:
-              cellAlignment === 'right'
-                ? 'ag-right-aligned-cell'
-                : 'ag-left-aligned-cell',
-            headerClass:
-              cellAlignment === 'right'
-                ? 'ag-right-aligned-header'
-                : 'ag-left-aligned-header',
-            comparator: function (a: any, b: any) {
-              const result = a - b;
-              if (isNaN(result)) {
-                if (!a || a === '' || a === 'undefined') {
-                  a = '0';
-                }
-                if (!b || b === '' || b === 'undefined') {
-                  b = '0';
-                }
-                return a
-                  .toString()
-                  .trim()
-                  .localeCompare(b.toString().trim(), undefined, {
-                    numeric: true,
-                  });
-              } else {
-                return result;
-              }
-            },
-          };
-          this.columnDefs.push(gridCol);
+      // Use AgGridService to create column definitions with automatic alignment
+      this.columnDefs = this.agGridService.createColumnDefs(
+        this.displayedColumns,
+        this.inputDatas,
+        {
+          cellsSizes: this.cellsSizes,
+          gridId: this.id,
+          appConfig: this.AppConfig,
         }
-      }
+      );
 
-      this.rowData = [];
-      for (let i = 0; i < this.inputDatas.length; i++) {
-        const currentData = this.inputDatas[i];
-        if (currentData) {
-          const currentRow: DynamicI = {};
-          for (let j = 0; j < this.displayedColumns.length; j++) {
-            currentRow[this.displayedColumns[j]!.field] =
-              currentData[this.displayedColumns[j]!.field];
-          }
-          this.rowData.push(currentRow);
-        }
-      }
+      // Sanitize and prepare row data using the service
+      this.rowData = this.agGridService.sanitizeGridData(
+        this.inputDatas,
+        this.displayedColumns
+      );
     }
 
     // Update grid data
