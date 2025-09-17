@@ -6,6 +6,7 @@
 // @ts-nocheck
 
 import '../utils/utils';
+import { UtilsService } from '../../src/app/khiops-library/providers/utils.service';
 
 export function setupEvaluationTests(datas, testsValues) {
   testsValues.Evaluation.push('Evaluation type');
@@ -14,7 +15,7 @@ export function setupEvaluationTests(datas, testsValues) {
 
   if (datas.trainEvaluationReport?.summary?.instances) {
     testsValues.Evaluation.push(
-      datas.trainEvaluationReport?.summary?.instances,
+      UtilsService.getPrecisionNumber(datas.trainEvaluationReport?.summary?.instances),
     );
   }
 
