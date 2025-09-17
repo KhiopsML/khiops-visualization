@@ -647,14 +647,14 @@ export class UtilsService {
       }
 
       if (!exp || exp <= 0) {
-        return value.toString();
+        return UtilsService.formatWithSpaces(value.toString());
       }
 
       const sign = value < 0 ? '-' : '';
       const absValue = Math.abs(value);
 
       // Convert to string and parse
-      const valueStr = this.toPlainString(absValue);
+      const valueStr = UtilsService.toPlainString(absValue);
       const parts = valueStr.split('.');
       const integerPart = parts[0] || '0';
       const decimalPart = parts[1] || '';
@@ -663,7 +663,9 @@ export class UtilsService {
       if (absValue >= 1) {
         // First, check if it's a pure integer
         if (Number.isInteger(absValue)) {
-          return sign + Math.floor(absValue).toString();
+          return UtilsService.formatWithSpaces(
+            sign + Math.floor(absValue).toString(),
+          );
         }
 
         // Count significant digits in integer part
@@ -671,7 +673,7 @@ export class UtilsService {
 
         if (integerSignificantDigits >= exp) {
           // All exp digits are in the integer part, return just the integer
-          return sign + integerPart;
+          return UtilsService.formatWithSpaces(sign + integerPart);
         }
 
         // We need some decimal digits
@@ -681,9 +683,11 @@ export class UtilsService {
           // We need more digits than available, return what we have
           const cleanDecimal = decimalPart.replace(/0+$/, '');
           if (cleanDecimal.length === 0) {
-            return sign + integerPart;
+            return UtilsService.formatWithSpaces(sign + integerPart);
           }
-          return sign + integerPart + '.' + cleanDecimal;
+          return UtilsService.formatWithSpaces(
+            sign + integerPart + '.' + cleanDecimal,
+          );
         }
 
         // Extract the needed decimal digits with rounding
@@ -719,15 +723,17 @@ export class UtilsService {
 
               // Check if we now have enough significant digits in integer
               if (newInteger.length >= exp) {
-                return sign + newInteger;
+                return UtilsService.formatWithSpaces(sign + newInteger);
               } else {
                 const newRemainingDigits = exp - newInteger.length;
                 decimalDigits = decimalDigits.substring(0, newRemainingDigits);
                 const cleanDecimal = decimalDigits.replace(/0+$/, '');
                 if (cleanDecimal.length === 0) {
-                  return sign + newInteger;
+                  return UtilsService.formatWithSpaces(sign + newInteger);
                 }
-                return sign + newInteger + '.' + cleanDecimal;
+                return UtilsService.formatWithSpaces(
+                  sign + newInteger + '.' + cleanDecimal,
+                );
               }
             } else {
               decimalDigits = roundedDecimal;
@@ -738,10 +744,12 @@ export class UtilsService {
         // Remove trailing zeros from decimal part
         const cleanDecimal = decimalDigits.replace(/0+$/, '');
         if (cleanDecimal.length === 0) {
-          return sign + integerPart;
+          return UtilsService.formatWithSpaces(sign + integerPart);
         }
 
-        return sign + integerPart + '.' + cleanDecimal;
+        return UtilsService.formatWithSpaces(
+          sign + integerPart + '.' + cleanDecimal,
+        );
       } else {
         // For numbers < 1, find first non-zero digit and count from there
 
@@ -809,11 +817,27 @@ export class UtilsService {
         }
 
         const result = '0.' + '0'.repeat(firstNonZeroIndex) + significantDigits;
-        return sign + result;
+        return UtilsService.formatWithSpaces(sign + result);
       }
     } else {
-      return value;
+      return UtilsService.formatWithSpaces(String(value));
     }
+  }
+
+  private static formatWithSpaces(numStr: any): string {
+    // Convert to string if not already a string
+    const numString = typeof numStr === 'string' ? numStr : String(numStr);
+
+    // If it's not a number (ex: ""), return as is
+    if (!numString || isNaN(Number(numString))) {
+      return numString;
+    }
+    const [intPart, decimalPart] = numString.split('.');
+    // Use en-US formatting but replace commas with spaces to match test expectations
+    const formattedInt = new Intl.NumberFormat('en-US')
+      .format(Number(intPart))
+      .replace(/,/g, ' ');
+    return decimalPart ? `${formattedInt}.${decimalPart}` : formattedInt;
   }
 
   /**
@@ -843,6 +867,11 @@ export class UtilsService {
    * @returns The plain string representation of the number.
    */
   static toPlainString(num: number) {
+    // Handle edge cases
+    if (num === null || num === undefined || !isFinite(num)) {
+      return String(num);
+    }
+
     return ('' + +num).replace(
       /(-?)(\d*)\.?(\d*)e([+-]\d+)/,
       function (_a, b, c, d, e) {

@@ -80,7 +80,6 @@ export class AgGridComponent
   @Input() public rowSelection = 'single';
   @Input() private showLineSelection = true;
   @Input() private rowHeight = 28;
-  @Input() private enablePrecision = true;
   @Input() private selectedVariable: any; // Can be any types of data
   @Input() public showFullSearch = false;
 
@@ -455,14 +454,12 @@ export class AgGridComponent
             sortable: true,
             suppressMovable: true,
             resizable: true,
-            valueFormatter: this.enablePrecision
-              ? (params: any) =>
-                  params.value &&
-                  UtilsService.getPrecisionNumber(
-                    params.value,
-                    this.AppConfig.GLOBAL.TO_FIXED,
-                  )
-              : undefined,
+            valueFormatter: (params: any) =>
+              params.value &&
+              UtilsService.getPrecisionNumber(
+                params.value,
+                this.AppConfig.GLOBAL.TO_FIXED,
+              ),
             hide: col.show === false, // ! if undefined : show it
             width: this.cellsSizes?.[this.id!]?.[col.field],
             cellRendererFramework: col.cellRendererFramework,

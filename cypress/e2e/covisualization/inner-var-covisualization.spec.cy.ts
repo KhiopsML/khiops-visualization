@@ -23,8 +23,8 @@ describe('Test Plan for Khiops Covisualization', () => {
         cy.get('.variable-search-button-comp').first().click();
         cy.wait(200);
 
-        cy.get('#variable-search-results-table').contains('3316');
-        cy.get('#variable-search-results-table').contains('2767');
+        cy.get('#variable-search-results-table').contains('3 316');
+        cy.get('#variable-search-results-table').contains('2 767');
         cy.get('#variable-search-results-table').contains('230');
         cy.get('#variable-search-results-table').contains('32');
 
@@ -33,8 +33,8 @@ describe('Test Plan for Khiops Covisualization', () => {
         cy.get('.variable-search-button-comp').first().click();
         cy.wait(200);
 
-        cy.get('#variable-search-results-table').contains('3316');
-        cy.get('#variable-search-results-table').contains('2767');
+        cy.get('#variable-search-results-table').contains('3 316');
+        cy.get('#variable-search-results-table').contains('2 767');
         cy.get('#variable-search-results-table').contains('230');
         cy.get('#variable-search-results-table').contains('32');
 

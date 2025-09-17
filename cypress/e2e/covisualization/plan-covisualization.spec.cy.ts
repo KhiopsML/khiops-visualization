@@ -23,16 +23,16 @@ describe('Test Plan for Khiops Covisualization', () => {
 
   const expectedResults: ResultI[] = [
     {
-      matrixTooltip: [1608, 5097, 1893],
+      matrixTooltip: ['1 608', '5 097', '1 893'],
       nodesName: ['A7', 'B5'],
       unfoldH: 5,
-      matrixValues: 5097,
+      matrixValues: '5 097',
     },
     {
-      matrixTooltip: [3942, 27815, 0],
+      matrixTooltip: ['3 942', '27 815', '0'],
       nodesName: ['[-0.999999999;0.57661]', '[-0.999988212;0.577313]'],
       unfoldH: 150,
-      matrixValues: 27815, // selected cell excpected Freq
+      matrixValues: '27 815', // selected cell excpected Freq
     },
   ];
 

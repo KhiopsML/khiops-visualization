@@ -22,19 +22,17 @@ describe('UtilsService', () => {
       expect(result).toBe('123.4');
     });
     it('3should return 1000000 for input 1000000 and numberPrecision 2', function () {
-      expect(UtilsService.getPrecisionNumber(1000000, 2)).toEqual('1000000');
+      expect(UtilsService.getPrecisionNumber(1000000, 2)).toEqual('1 000 000');
     });
     it('should return 10000 for input 10000.12345 and numberPrecision 2', function () {
-      expect(UtilsService.getPrecisionNumber(10000.12345, 2)).toEqual(
-        '10000',
-      );
+      expect(UtilsService.getPrecisionNumber(10000.12345, 2)).toEqual('10 000');
     });
     it('should return 1.32 for input 1.3212132 and numberPrecision 3', function () {
       expect(UtilsService.getPrecisionNumber(1.3212132, 3)).toEqual('1.32');
     });
     it('should return 165465432 for input 165465432 and numberPrecision 3', function () {
       expect(UtilsService.getPrecisionNumber(165465432, 3)).toEqual(
-        '165465432',
+        '165 465 432',
       );
     });
     it('should return 1.3212 for input 1.3212132 and numberPrecision 5', function () {

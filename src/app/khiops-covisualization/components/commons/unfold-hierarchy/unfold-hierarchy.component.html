@@ -93,11 +93,11 @@
         >
           <span
             >{{ 'GLOBAL.CELLS' | translate }}:
-            {{ currentCellsPerCluster }}</span
+            {{ currentCellsPerCluster | toPrecision }}</span
           >
           <span
             >{{ 'GLOBAL.INFORMATION_RATE' | translate }}:
-            {{ currentInformationPerCluster | toPrecision: 1 }}%</span
+            {{ currentInformationPerCluster | toPrecision: 3 }}%</span
           >
           <span
             class="non-info-warning"
