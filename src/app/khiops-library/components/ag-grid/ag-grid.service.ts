@@ -14,7 +14,6 @@ import { UtilsService } from '@khiops-library/providers/utils.service';
   providedIn: 'root',
 })
 export class AgGridService {
-  
   /**
    * Determines if a value represents a number (including string numbers like '10')
    * @param value - The value to check
@@ -39,7 +38,11 @@ export class AgGridService {
    * @param threshold - The percentage threshold for considering a column numeric (default: 0.7)
    * @returns 'right' for numeric data, 'left' for text data
    */
-  getCellAlignment(inputDatas: any[], columnField: string, threshold: number = 0.7): 'left' | 'right' {
+  getCellAlignment(
+    inputDatas: any[],
+    columnField: string,
+    threshold: number = 0.7,
+  ): 'left' | 'right' {
     if (!inputDatas || inputDatas.length === 0) {
       return 'left';
     }
@@ -75,7 +78,7 @@ export class AgGridService {
       cellsSizes?: DynamicI;
       gridId?: string;
       appConfig?: any;
-    } = {}
+    } = {},
   ): ColDef[] {
     const columnDefs: ColDef[] = [];
 
@@ -99,15 +102,25 @@ export class AgGridService {
           width: options.cellsSizes?.[options.gridId!]?.[col.field],
           cellRendererFramework: col.cellRendererFramework,
           cellRendererParams: col.cellRendererParams,
-          cellClass: cellAlignment === 'right' ? 'ag-right-aligned-cell' : 'ag-left-aligned-cell',
-          headerClass: cellAlignment === 'right' ? 'ag-right-aligned-header' : 'ag-left-aligned-header',
+          cellClass:
+            cellAlignment === 'right'
+              ? 'ag-right-aligned-cell'
+              : 'ag-left-aligned-cell',
+          headerClass:
+            cellAlignment === 'right'
+              ? 'ag-right-aligned-header'
+              : 'ag-left-aligned-header',
           comparator: this.createComparator(),
         };
 
         // Add value formatter if app config is provided
         if (options.appConfig) {
           gridCol.valueFormatter = (params: any) =>
-            params.value && UtilsService.getPrecisionNumber(params.value, options.appConfig.GLOBAL.TO_FIXED);
+            params.value &&
+            UtilsService.getPrecisionNumber(
+              params.value,
+              options.appConfig.GLOBAL.TO_FIXED,
+            );
         }
 
         columnDefs.push(gridCol);
@@ -149,22 +162,25 @@ export class AgGridService {
    * @param displayedColumns - Current column configuration
    * @returns Enhanced column configuration with suggested types
    */
-  analyzeAndEnhanceColumns(inputDatas: any[], displayedColumns: GridColumnsI[]): GridColumnsI[] {
-    return displayedColumns.map(col => {
+  analyzeAndEnhanceColumns(
+    inputDatas: any[],
+    displayedColumns: GridColumnsI[],
+  ): GridColumnsI[] {
+    return displayedColumns.map((col) => {
       const alignment = this.getCellAlignment(inputDatas, col.field);
-      
+
       // Enhance column with detected type information
       return {
         ...col,
         // Add custom properties for better handling
         _detectedType: alignment === 'right' ? 'numeric' : 'text',
-        _alignment: alignment
+        _alignment: alignment,
       } as GridColumnsI & { _detectedType: string; _alignment: string };
     });
   }
 
   /**
-   * Validates and sanitizes grid data
+   * Validates and sanitizes grid data - replicates original logic exactly
    * @param inputDatas - The raw input data
    * @param displayedColumns - Column configuration
    * @returns Sanitized data ready for AG Grid
@@ -174,23 +190,19 @@ export class AgGridService {
       return [];
     }
 
-    return inputDatas.map(dataRow => {
-      const sanitizedRow: DynamicI = {};
-      
-      displayedColumns.forEach(col => {
-        let value = dataRow[col.field];
-        
-        // Clean up numeric values
-        if (value !== null && value !== undefined && this.isNumeric(value)) {
-          // Ensure numeric values are properly formatted
-          value = parseFloat(value.toString().trim());
+    const rowData: any[] = [];
+    for (let i = 0; i < inputDatas.length; i++) {
+      const currentData = inputDatas[i];
+      if (currentData) {
+        const currentRow: DynamicI = {};
+        for (let j = 0; j < displayedColumns.length; j++) {
+          currentRow[displayedColumns[j]!.field] =
+            currentData[displayedColumns[j]!.field];
         }
-        
-        sanitizedRow[col.field] = value;
-      });
-      
-      return sanitizedRow;
-    });
+        rowData.push(currentRow);
+      }
+    }
+    return rowData;
   }
 
   /**
@@ -198,10 +210,19 @@ export class AgGridService {
    * @param alignment - The alignment type ('left' or 'right')
    * @returns Object with cell and header CSS classes
    */
-  getAlignmentClasses(alignment: 'left' | 'right'): { cellClass: string; headerClass: string } {
+  getAlignmentClasses(alignment: 'left' | 'right'): {
+    cellClass: string;
+    headerClass: string;
+  } {
     return {
-      cellClass: alignment === 'right' ? 'ag-right-aligned-cell' : 'ag-left-aligned-cell',
-      headerClass: alignment === 'right' ? 'ag-right-aligned-header' : 'ag-left-aligned-header'
+      cellClass:
+        alignment === 'right'
+          ? 'ag-right-aligned-cell'
+          : 'ag-left-aligned-cell',
+      headerClass:
+        alignment === 'right'
+          ? 'ag-right-aligned-header'
+          : 'ag-left-aligned-header',
     };
   }
 }

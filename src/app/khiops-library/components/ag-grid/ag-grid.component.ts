@@ -42,7 +42,7 @@ import { Ls } from '@khiops-library/providers/ls.service';
 import { KEYBOARD } from '@khiops-library/enum/keyboard';
 import { GridCheckboxEventI } from '@khiops-library/interfaces/events';
 import { DynamicI } from '@khiops-library/interfaces/globals';
-import { AgGridService } from '@khiops-library/providers/ag-grid.service';
+import { AgGridService } from '@khiops-library/components/ag-grid/ag-grid.service';
 
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
@@ -448,13 +448,13 @@ export class AgGridComponent
           cellsSizes: this.cellsSizes,
           gridId: this.id,
           appConfig: this.AppConfig,
-        }
+        },
       );
 
       // Sanitize and prepare row data using the service
       this.rowData = this.agGridService.sanitizeGridData(
         this.inputDatas,
-        this.displayedColumns
+        this.displayedColumns,
       );
     }
 
