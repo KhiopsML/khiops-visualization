@@ -39,6 +39,7 @@
     "ng": "ng",
     "start": "ng serve",
     "start:webcomponent": "ng serve khiops-webcomponent",
+    "test:simple": "yarn test --watch=false 2>&1 | findstr /C:\"FAILED\" /C:\"SUCCESS\" /C:\"Expected\" /C:\"to equal\" /C:\"to be\"",
     "test": "ng test --watch=false",
     "test:watch": "ng test --watch=true",
     "test:coverage": "ng test --code-coverage",

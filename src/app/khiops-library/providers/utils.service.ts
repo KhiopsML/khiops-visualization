@@ -642,28 +642,174 @@ export class UtilsService {
    */
   static getPrecisionNumber(value: any, exp?: number) {
     if (typeof value === 'number' && isFinite(value)) {
-      let num = this.toPlainString(value).split('.');
-      let part1 = num[1];
       if (value === 0) {
         return value;
-      } else if (Math.abs(value) < 0.1) {
-        let zeroAfterComma = -Math.floor(Math.log10(Math.abs(value)) + 1);
-        let usefullInfo = part1?.slice(zeroAfterComma, zeroAfterComma + exp!);
-        let res = '0.';
-        res += '0'.repeat(zeroAfterComma);
-        res += usefullInfo;
-        return this.getSign(value) + res.toString();
-      } else if (part1) {
-        let e = Number(value);
-        let entier = Math.floor(e);
-        let decimal = e - entier;
-        if (decimal < Math.pow(10, -exp!)) {
-          decimal = 0;
-        }
-        let res = Math.round(e * Math.pow(10, exp!)) / Math.pow(10, exp!);
-        return res.toString();
-      } else {
+      }
+
+      if (!exp || exp <= 0) {
         return value.toString();
+      }
+
+      const sign = value < 0 ? '-' : '';
+      const absValue = Math.abs(value);
+
+      // Convert to string and parse
+      const valueStr = this.toPlainString(absValue);
+      const parts = valueStr.split('.');
+      const integerPart = parts[0] || '0';
+      const decimalPart = parts[1] || '';
+
+      // For numbers >= 1, count all digits from the left
+      if (absValue >= 1) {
+        // First, check if it's a pure integer
+        if (Number.isInteger(absValue)) {
+          return sign + Math.floor(absValue).toString();
+        }
+
+        // Count significant digits in integer part
+        let integerSignificantDigits = integerPart.length;
+
+        if (integerSignificantDigits >= exp) {
+          // All exp digits are in the integer part, return just the integer
+          return sign + integerPart;
+        }
+
+        // We need some decimal digits
+        const remainingDigits = exp - integerSignificantDigits;
+
+        if (remainingDigits >= decimalPart.length) {
+          // We need more digits than available, return what we have
+          const cleanDecimal = decimalPart.replace(/0+$/, '');
+          if (cleanDecimal.length === 0) {
+            return sign + integerPart;
+          }
+          return sign + integerPart + '.' + cleanDecimal;
+        }
+
+        // Extract the needed decimal digits with rounding
+        let decimalDigits = decimalPart.substring(0, remainingDigits);
+
+        // Check if we need to round
+        if (remainingDigits < decimalPart.length) {
+          const nextDigitChar = decimalPart[remainingDigits];
+          if (nextDigitChar && parseInt(nextDigitChar) >= 5) {
+            // Round up
+            let carry = 1;
+            let roundedDecimal = '';
+
+            // Round the decimal part
+            for (let i = decimalDigits.length - 1; i >= 0; i--) {
+              const digitChar = decimalDigits[i];
+              if (digitChar) {
+                const digit = parseInt(digitChar) + carry;
+                if (digit === 10) {
+                  roundedDecimal = '0' + roundedDecimal;
+                  carry = 1;
+                } else {
+                  roundedDecimal = digit + roundedDecimal;
+                  carry = 0;
+                }
+              }
+            }
+
+            // If there's still a carry, add it to the integer part
+            if (carry === 1) {
+              const newInteger = (parseInt(integerPart) + 1).toString();
+              decimalDigits = roundedDecimal;
+
+              // Check if we now have enough significant digits in integer
+              if (newInteger.length >= exp) {
+                return sign + newInteger;
+              } else {
+                const newRemainingDigits = exp - newInteger.length;
+                decimalDigits = decimalDigits.substring(0, newRemainingDigits);
+                const cleanDecimal = decimalDigits.replace(/0+$/, '');
+                if (cleanDecimal.length === 0) {
+                  return sign + newInteger;
+                }
+                return sign + newInteger + '.' + cleanDecimal;
+              }
+            } else {
+              decimalDigits = roundedDecimal;
+            }
+          }
+        }
+
+        // Remove trailing zeros from decimal part
+        const cleanDecimal = decimalDigits.replace(/0+$/, '');
+        if (cleanDecimal.length === 0) {
+          return sign + integerPart;
+        }
+
+        return sign + integerPart + '.' + cleanDecimal;
+      } else {
+        // For numbers < 1, find first non-zero digit and count from there
+
+        // Find first non-zero digit position in decimal part
+        let firstNonZeroIndex = 0;
+        for (let i = 0; i < decimalPart.length; i++) {
+          if (decimalPart[i] !== '0') {
+            firstNonZeroIndex = i;
+            break;
+          }
+        }
+
+        // Extract the exact number of significant digits we need
+        let significantDigits = '';
+        let count = 0;
+        for (
+          let i = firstNonZeroIndex;
+          i < decimalPart.length && count < exp;
+          i++
+        ) {
+          significantDigits += decimalPart[i];
+          count++;
+        }
+
+        // Handle rounding if there's a next digit
+        if (firstNonZeroIndex + exp < decimalPart.length) {
+          const nextDigitChar = decimalPart[firstNonZeroIndex + exp];
+          if (nextDigitChar && parseInt(nextDigitChar) >= 5) {
+            // Round up the last digit
+            const lastIndex = significantDigits.length - 1;
+            const lastDigitChar = significantDigits[lastIndex];
+            if (lastDigitChar) {
+              const lastDigit = parseInt(lastDigitChar);
+              if (lastDigit < 9) {
+                significantDigits =
+                  significantDigits.substring(0, lastIndex) + (lastDigit + 1);
+              } else {
+                // Need to handle carry-over (9 becomes 10)
+                let carry = 1;
+                let rounded = '';
+                for (let i = significantDigits.length - 1; i >= 0; i--) {
+                  const digitChar = significantDigits[i];
+                  if (digitChar) {
+                    const digit = parseInt(digitChar) + carry;
+                    if (digit === 10) {
+                      rounded = '0' + rounded;
+                      carry = 1;
+                    } else {
+                      rounded = digit + rounded;
+                      carry = 0;
+                    }
+                  }
+                }
+
+                if (carry === 1) {
+                  // Overflow: 0.099... -> 0.1...
+                  firstNonZeroIndex = Math.max(0, firstNonZeroIndex - 1);
+                  significantDigits = '1' + '0'.repeat(exp - 1);
+                } else {
+                  significantDigits = rounded;
+                }
+              }
+            }
+          }
+        }
+
+        const result = '0.' + '0'.repeat(firstNonZeroIndex) + significantDigits;
+        return sign + result;
       }
     } else {
       return value;
