@@ -76,4 +76,35 @@
       }
     }
   }
+
+  // Cell alignment styles
+  ::ng-deep .ag-left-aligned-cell {
+    text-align: left !important;
+    justify-content: flex-start !important;
+  }
+
+  ::ng-deep .ag-right-aligned-cell {
+    text-align: right !important;
+    justify-content: flex-end !important;
+  }
+
+  // Header alignment styles
+  ::ng-deep .ag-left-aligned-header .ag-header-cell-text {
+    text-align: left !important;
+    justify-content: flex-start !important;
+  }
+
+  ::ng-deep .ag-right-aligned-header .ag-header-cell-text {
+    text-align: right !important;
+    justify-content: flex-end !important;
+  }
+
+  // Ensure the header container also aligns properly
+  ::ng-deep .ag-left-aligned-header {
+    justify-content: flex-start !important;
+  }
+
+  ::ng-deep .ag-right-aligned-header {
+    justify-content: flex-end !important;
+  }
 }

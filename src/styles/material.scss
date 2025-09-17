@@ -144,7 +144,6 @@ button {
 }
 
 .mat-elevation-z1 {
-  // border-bottom: 1px solid var(--bgColor-10) !important;
   border-bottom: 0px solid var(--bgColor-10) !important;
   box-shadow: none !important;
 }
@@ -370,7 +369,7 @@ mat-sidenav {
   border-radius: 0 !important;
 }
 .mdc-switch {
-  border: 2px solid black !important;
+  border: 1px solid black !important;
   min-height: 26px;
   width: 50px;
   margin-right: 0.8em !important;
@@ -406,7 +405,10 @@ button {
 
 mat-dialog-container {
   .mat-mdc-dialog-surface {
-    border: 2px solid #000000 !important;
-    border-radius: 0 !important;
+    border: 1px solid #000000 !important;
+    border-radius: var(--border-radius) !important;
   }
+}
+.mdc-checkbox .mdc-checkbox__background {
+  border-width: 1px;
 }

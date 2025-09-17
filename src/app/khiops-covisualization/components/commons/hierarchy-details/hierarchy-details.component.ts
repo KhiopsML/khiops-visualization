@@ -39,6 +39,7 @@ export class HierarchyDetailsComponent extends SelectableComponent {
   public selectedTreeCluster: SelectedTreeClusterModel | undefined;
   public componentType = COMPONENT_TYPES.TREE; // needed to copy datas
   public override id: string | undefined = undefined;
+  public isFullscreen = false;
 
   constructor(
     public override selectableService: SelectableService,
@@ -62,6 +63,10 @@ export class HierarchyDetailsComponent extends SelectableComponent {
    */
   onClusterChange(cluster: SelectedTreeClusterModel) {
     this.selectedTreeCluster = cluster;
+  }
+
+  onToggleFullscreen(isFullscreen: boolean) {
+    this.isFullscreen = isFullscreen;
   }
 
   @HostListener('window:keyup', ['$event'])

@@ -113,6 +113,12 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
     }
   }
 
+  onShowLevelDistributionFromButton() {
+    if (this.variables2dDatas) {
+      this.onShowLevelDistributionGraph(this.variables2dDatas);
+    }
+  }
+
   onShowLevelDistributionGraph(datas: VariableModel[] | Variable2dModel[]) {
     const config = new MatDialogConfig();
     config.width = AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.WIDTH;

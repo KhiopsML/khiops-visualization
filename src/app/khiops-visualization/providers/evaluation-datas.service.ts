@@ -28,6 +28,7 @@ import { TrainEvaluationReport } from '@khiops-visualization/interfaces/train-ev
 import { EvaluationReport } from '@khiops-visualization/interfaces/evaluation-report';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import _ from 'lodash';
+import { LS } from '@khiops-library/enum/ls';
 
 @Injectable({
   providedIn: 'root',
@@ -127,7 +128,8 @@ export class EvaluationDatasService {
    * @returns The confusion matrix as a GridDatasI object.
    */
   getConfusionMatrix(type?: string): GridDatasI | undefined {
-    this.evaluationDatas.confusionMatrixType = type ?? '';
+    this.evaluationDatas.confusionMatrixType =
+      type ?? AppService.Ls.get(LS.AG_GRID_GRAPH_OPTION);
 
     if (this.evaluationDatas.selectedPredictorEvaluationVariable) {
       const datas: DynamicI[] = [];

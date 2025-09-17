@@ -55,7 +55,7 @@ export class TreeHyperService {
     n: N,
     treePreparationDatas?: TreePreparationDatasModel,
     visualization?: { population: boolean },
-    displayedValues?: ChartToggleValuesI[]
+    displayedValues?: ChartToggleValuesI[],
   ): number {
     // Base constant radius values (will be scaled by getFixedNodeScale())
     const BASE_LEAF_RADIUS = 0.03;
@@ -77,9 +77,7 @@ export class TreeHyperService {
               }
             } else {
               // In Classification case
-              if (
-                displayedValues.find((e) => e.show && e.name === values[i])
-              ) {
+              if (displayedValues.find((e) => e.show && e.name === values[i])) {
                 totalFreqsToShow += n.data.targetValues.frequencies[i];
               }
             }
@@ -93,13 +91,19 @@ export class TreeHyperService {
           }
         }
         // display of the size of the leaves of the hypertree according to their population #60
-        const Dmax = 0.2;
+        // Limit max size to ensure it doesn't exceed 100px equivalent
+        const MAX_RADIUS = 0.15; // Reduced max radius to limit final size
+
         const percent =
           ((totalFreqsToShow - treePreparationDatas.minFrequencies) /
             (treePreparationDatas.maxFrequencies -
               treePreparationDatas.minFrequencies)) *
           100;
-        const D = (Dmax * percent) / 100;
+        let D = (MAX_RADIUS * percent) / 100;
+        // Hypertree out of bounds #293
+        if (D > 0.2) {
+          D = 0.2;
+        }
         return D;
       } else {
         // Constant size when population visualization is off

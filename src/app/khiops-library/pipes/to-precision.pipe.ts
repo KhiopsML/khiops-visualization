@@ -9,9 +9,9 @@ import { KhiopsLibraryService } from '../providers/khiops-library.service';
 import { UtilsService } from '../providers/utils.service';
 
 @Pipe({
-    name: 'toPrecision',
-    pure: false,
-    standalone: false
+  name: 'toPrecision',
+  pure: false,
+  standalone: false,
 })
 export class ToPrecisionPipe implements PipeTransform {
   numberPrecision: number;
@@ -23,6 +23,6 @@ export class ToPrecisionPipe implements PipeTransform {
 
   transform(input: any, count?: number): string {
     const precision = count || this.numberPrecision;
-    return UtilsService.getPrecisionNumber(input, precision);
+    return String(UtilsService.getPrecisionNumber(input, precision));
   }
 }

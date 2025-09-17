@@ -20,13 +20,13 @@ describe('Test Plan for Khiops Covisualization', () => {
 
         // Move to the first matrix cell
         cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
-          position: 'bottomLeft',
+          position: 'topRight',
         });
 
         cy.wait(500);
 
         // Check Matrix tooltip
-        cy.get('.matrix-tooltip-comp').contains(146);
+        cy.get('.matrix-tooltip-comp').contains(122);
 
         // check that first .ag-row contains  .ag-row-selected
         cy.get('#preparation-variables-list')
@@ -54,13 +54,13 @@ describe('Test Plan for Khiops Covisualization', () => {
 
         // Move to the first matrix cell
         cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
-          position: 'bottomLeft',
+          position: 'topRight',
         });
 
         cy.wait(500);
 
         // Check Matrix tooltip
-        cy.get('.matrix-tooltip-comp').contains(2444);
+        cy.get('.matrix-tooltip-comp').contains(254);
 
         cy.get('.mat-mdc-tab:contains("Modeling")').first().click();
         cy.wait(500);
@@ -73,11 +73,11 @@ describe('Test Plan for Khiops Covisualization', () => {
 
         // Move to the first matrix cell
         cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
-          position: 'bottomLeft',
+          position: 'topRight',
         });
 
         // Check Matrix tooltip
-        cy.get('.matrix-tooltip-comp').contains(2444);
+        cy.get('.matrix-tooltip-comp').contains(254);
 
         cy.get('#modeling-informations-block-informations').contains(
           '783 Variables',
@@ -107,11 +107,11 @@ describe('Test Plan for Khiops Covisualization', () => {
 
         // Move to the first matrix cell
         cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
-          position: 'bottomLeft',
+          position: 'topRight',
         });
 
         // Check Matrix tooltip
-        cy.get('.matrix-tooltip-comp').contains(471);
+        cy.get('.matrix-tooltip-comp').contains(105);
         cy.get('#preparation-2d-current-cell-x').contains(1.5);
         cy.get('#preparation-2d-current-cell-y').contains(80);
 

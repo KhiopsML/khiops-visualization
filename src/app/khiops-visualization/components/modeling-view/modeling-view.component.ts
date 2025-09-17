@@ -160,6 +160,13 @@ export class ModelingViewComponent extends SelectableTabComponent {
     this.modelingDatasService.setSelectedVariable(this.preparationVariable);
   }
 
+  onShowLevelDistributionFromButton() {
+    if (this.modelingDatas?.trainedPredictorsListDatas) {
+      // Cast to VariableModel[] as the level distribution expects this type
+      this.onShowLevelDistributionGraph(this.modelingDatas.trainedPredictorsListDatas as any);
+    }
+  }
+
   onShowLevelDistributionGraph(datas: VariableModel[]) {
     const config = new MatDialogConfig();
     config.width = AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.WIDTH;

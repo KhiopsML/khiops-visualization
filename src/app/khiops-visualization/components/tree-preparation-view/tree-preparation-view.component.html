@@ -84,10 +84,10 @@
           >
             <as-split-area [size]="sizes.col0Row1Col[0]" class="kl-card">
               <kl-ag-grid
+                #agGridRef
                 id="tree-preparation-variables-list"
                 class="variables-list"
                 fxFlexFill
-                [showLevelDistribution]="true"
                 [showSearch]="true"
                 [watchResize]="true"
                 [displayCount]="true"
@@ -98,10 +98,14 @@
                 [inputDatas]="variablesDatas"
                 [displayedColumns]="variablesDisplayedColumns"
                 [selectedVariable]="treePreparationDatas?.selectedVariable"
-                (showLevelDistributionGraph)="
-                  onShowLevelDistributionGraph($event)
-                "
               >
+                <app-level-distribution-button
+                  slot="header-tools"
+                  [isSmallDiv]="agGridRef.isSmallDiv"
+                  [searchFormVisible]="agGridRef.searchFormVisible"
+                  (openLevelDistribution)="onShowLevelDistributionFromButton()"
+                >
+                </app-level-distribution-button>
               </kl-ag-grid>
             </as-split-area>
             <as-split-area [size]="sizes.col0Row1Col[1]" class="kl-card">

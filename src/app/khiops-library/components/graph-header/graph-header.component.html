@@ -3,14 +3,15 @@
   fxFlexFill
   fxLayout="row"
   fxLayoutAlign="start center"
-  class="mat-elevation-z1"
+  class="scrollbar-thin"
 >
   <h1
-    fxLayout="column"
-    fxLayoutAlign="start start"
+    fxLayout="row"
+    fxLayoutAlign="start center"
     fxFlex
     [ngClass]="{ 'small-title': smallTitle === true }"
   >
+    <mat-icon>equalizer</mat-icon>
     <span>{{ title || (selectedVariable && selectedVariable.name) }}</span>
   </h1>
   <div

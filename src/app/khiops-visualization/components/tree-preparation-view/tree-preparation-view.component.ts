@@ -160,6 +160,12 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
     dialogRef.componentInstance.datas = datas;
   }
 
+  onShowLevelDistributionFromButton() {
+    if (this.variablesDatas) {
+      this.onShowLevelDistributionGraph(this.variablesDatas);
+    }
+  }
+
   onSelectedGraphItemChanged(index: number) {
     // Keep in memory to keep bar charts index on type change
     this.selectedBarIndex = index;

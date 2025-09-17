@@ -21,9 +21,7 @@ import { SelectableComponent } from '@khiops-library/components/selectable/selec
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { TranslateService } from '@ngstack/translate';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
-import { UtilsService } from '@khiops-library/providers/utils.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
-import { TYPES } from '@khiops-library/enum/types';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import {
@@ -44,7 +42,7 @@ import { Ls } from '@khiops-library/providers/ls.service';
 import { KEYBOARD } from '@khiops-library/enum/keyboard';
 import { GridCheckboxEventI } from '@khiops-library/interfaces/events';
 import { DynamicI } from '@khiops-library/interfaces/globals';
-import { GridOptionsModel } from '@khiops-library/model/grid-options.model';
+import { AgGridService } from '@khiops-library/components/ag-grid/ag-grid.service';
 
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
@@ -74,10 +72,7 @@ export class AgGridComponent
   @Input() public override id: string | undefined = undefined;
   @Input() public title: string = '';
   @Input() public titleTooltip: string = '';
-  @Input() public showLevelDistribution = true;
-  @Input() public levelDistributionTitle: string = '';
   @Input() public showColumnsSelection = true;
-  @Input() public showDataTypeSelection = false;
   @Input() public showFullscreenBtn = true;
   @Input() public showSearch = true;
   @Input() public displayCount = false;
@@ -85,15 +80,11 @@ export class AgGridComponent
   @Input() public rowSelection = 'single';
   @Input() private showLineSelection = true;
   @Input() private rowHeight = 28;
-  @Input() private enablePrecision = true;
   @Input() private selectedVariable: any; // Can be any types of data
   @Input() public showFullSearch = false;
 
   @Output() private selectListItem: EventEmitter<any> = new EventEmitter();
-  @Output() private dataTypeChanged: EventEmitter<any> = new EventEmitter();
   @Output() private gridCheckboxChanged: EventEmitter<GridCheckboxEventI> =
-    new EventEmitter();
-  @Output() private showLevelDistributionGraph: EventEmitter<any> =
     new EventEmitter();
 
   public AppConfig: any;
@@ -112,9 +103,6 @@ export class AgGridComponent
     componentParent: this, // used by CheckboxCellComponent
   };
   public isSmallDiv: boolean = false;
-
-  // For evaluation view
-  public dataOptions: GridOptionsModel = new GridOptionsModel();
 
   public gridOptions = <GridOptions>{
     suppressAnimationFrame: true,
@@ -139,15 +127,11 @@ export class AgGridComponent
     private ls: Ls,
     private khiopsLibraryService: KhiopsLibraryService,
     private translate: TranslateService,
+    private agGridService: AgGridService,
   ) {
     super(selectableService, ngzone, configService);
     this.AppConfig = this.khiopsLibraryService.getAppConfig().common;
     this.paginationSize = this.AppConfig.GLOBAL.PAGINATION_SIZE;
-
-    this.dataOptions.selected = this.ls.get(
-      LS.AG_GRID_GRAPH_OPTION,
-      this.dataOptions.types[0],
-    );
 
     this.title = this.translate.get('GLOBAL.VARIABLES') || this.title;
 
@@ -171,24 +155,10 @@ export class AgGridComponent
     setTimeout(() => {
       this.showHeader = true;
 
-      if (
-        this.levelDistributionTitle === '' ||
-        this.levelDistributionTitle === undefined
-      ) {
-        this.levelDistributionTitle = this.translate.get(
-          TYPES.LEVEL_DISTRIBUTION,
-        );
-      }
-
       // Change default height of rows if defined
       if (this.rowHeight && this.gridOptions?.api) {
         this.gridOptions.rowHeight = this.rowHeight;
         this.gridOptions.api.resetRowHeights();
-      }
-
-      // Do not show level distribution graph if no level into datas.
-      if (this.inputDatas?.[0] && !this.inputDatas[0].level) {
-        this.showLevelDistribution = false;
       }
 
       if (this.agGrid) {
@@ -300,17 +270,6 @@ export class AgGridComponent
 
       this.restoreState();
     }
-  }
-
-  /**
-   * Changes the data type for the grid.
-   * @param type - The new data type to be set.
-   */
-  changeDataType(type: string) {
-    this.ls.set(LS.AG_GRID_GRAPH_OPTION, type);
-
-    this.dataOptions.selected = type;
-    this.dataTypeChanged.emit(type);
   }
 
   /**
@@ -474,76 +433,29 @@ export class AgGridComponent
    */
   updateTable() {
     if (this.displayedColumns && this.inputDatas) {
-      // Update columns at any changes to update sort a,d other ...
+      // Update columns at any changes to update sort and other ...
       this.columnDefs = [];
       // Reset column defs in case of show/hide colum to reorder
       if (this.agGrid?.api) {
         this.agGrid.api.setColumnDefs(this.columnDefs);
       }
 
-      // Advanced tables (for instance unfold hierarchy)
-      for (let i = 0; i < this.displayedColumns.length; i++) {
-        const col = this.displayedColumns[i];
-        if (col && !col.hidden) {
-          const gridCol: ColDef | any = {
-            headerName: col.headerName,
-            headerTooltip: col.tooltip
-              ? col.headerName + ': ' + col.tooltip
-              : col.headerName,
-            // tooltipShowDelay: 500,
-            colId: col.headerName,
-            field: col.field,
-            sortable: true,
-            suppressMovable: true,
-            resizable: true,
-            valueFormatter: this.enablePrecision
-              ? (params: any) =>
-                  params.value &&
-                  UtilsService.getPrecisionNumber(
-                    params.value,
-                    this.AppConfig.GLOBAL.TO_FIXED,
-                  )
-              : undefined,
-            hide: col.show === false, // ! if undefined : show it
-            width: this.cellsSizes?.[this.id!]?.[col.field],
-            cellRendererFramework: col.cellRendererFramework,
-            cellRendererParams: col.cellRendererParams,
-            comparator: function (a: any, b: any) {
-              const result = a - b;
-              if (isNaN(result)) {
-                if (!a || a === '' || a === 'undefined') {
-                  a = '0';
-                }
-                if (!b || b === '' || b === 'undefined') {
-                  b = '0';
-                }
-                return a
-                  .toString()
-                  .trim()
-                  .localeCompare(b.toString().trim(), undefined, {
-                    numeric: true,
-                  });
-              } else {
-                return result;
-              }
-            },
-          };
-          this.columnDefs.push(gridCol);
-        }
-      }
+      // Use AgGridService to create column definitions with automatic alignment
+      this.columnDefs = this.agGridService.createColumnDefs(
+        this.displayedColumns,
+        this.inputDatas,
+        {
+          cellsSizes: this.cellsSizes,
+          gridId: this.id,
+          appConfig: this.AppConfig,
+        },
+      );
 
-      this.rowData = [];
-      for (let i = 0; i < this.inputDatas.length; i++) {
-        const currentData = this.inputDatas[i];
-        if (currentData) {
-          const currentRow: DynamicI = {};
-          for (let j = 0; j < this.displayedColumns.length; j++) {
-            currentRow[this.displayedColumns[j]!.field] =
-              currentData[this.displayedColumns[j]!.field];
-          }
-          this.rowData.push(currentRow);
-        }
-      }
+      // Sanitize and prepare row data using the service
+      this.rowData = this.agGridService.sanitizeGridData(
+        this.inputDatas,
+        this.displayedColumns,
+      );
     }
 
     // Update grid data
@@ -551,17 +463,6 @@ export class AgGridComponent
       this.agGrid.api.setColumnDefs(this.columnDefs);
       this.agGrid.api.setRowData(this.rowData);
     }
-  }
-
-  /**
-   * Opens the level distribution dialog and emits the input data sorted by level.
-   */
-  openLevelDistributionDialog(): void {
-    // always sort inputDatas by level to show level distributiuon
-    this.inputDatas = this.inputDatas?.sort((a: any, b: any) => {
-      return UtilsService.compare(a.level || 0, b.level || 0, false);
-    });
-    this.showLevelDistributionGraph.emit(this.inputDatas);
   }
 
   /**

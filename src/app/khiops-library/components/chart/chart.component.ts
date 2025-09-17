@@ -106,8 +106,12 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
       this.updateGraph();
     }
 
-    if (changes.chartOptions?.currentValue) {
+    if (
+      changes.chartOptions?.currentValue &&
+      !changes.chartOptions.firstChange
+    ) {
       // We must reconstruct the chart if the scale change
+      this.chartManagerService.destroy(); // Clean up existing chart
       this.initChart();
     }
 

@@ -21,7 +21,8 @@ import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { PreparationVariableModel } from '@khiops-visualization/model/preparation-variable.model';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { VariableModel } from '@khiops-visualization/model/variable.model';
-import { TrackerService } from '../../../khiops-library/providers/tracker.service';
+import { TrackerService } from '@khiops-library/providers/tracker.service';
+import { LevelDistributionService } from '../../providers/level-distribution.service';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals';
@@ -57,6 +58,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
     private dialog: MatDialog,
     private layoutService: LayoutService,
     private modelingDatasService: ModelingDatasService,
+    private levelDistributionService: LevelDistributionService,
   ) {
     super();
 
@@ -132,6 +134,16 @@ export class PreparationViewComponent extends SelectableTabComponent {
     const dialogRef: MatDialogRef<LevelDistributionGraphComponent> =
       this.dialog.open(LevelDistributionGraphComponent, config);
     dialogRef.componentInstance.datas = datas;
+  }
+
+  onShowLevelDistributionFromButton() {
+    if (this.variablesDatas) {
+      // Sort data by level before showing distribution
+      const sortedData = this.levelDistributionService.sortDatasByLevel(
+        this.variablesDatas,
+      );
+      this.onShowLevelDistributionGraph(sortedData);
+    }
   }
 
   getDerivationRuleValue(): string {

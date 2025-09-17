@@ -60,11 +60,11 @@ export class HierarchySelectComponent implements OnChanges, AfterViewInit {
   public showStats = false;
 
   constructor(
+    public dimensionsDatasService: DimensionsDatasService,
     private treenodesService: TreenodesService,
     private snackBar: MatSnackBar,
     private translate: TranslateService,
     private appService: AppService,
-    private dimensionsDatasService: DimensionsDatasService,
     private layoutService: LayoutService,
   ) {}
 

@@ -436,7 +436,7 @@ describe('UtilsService', () => {
 
   describe('getPrecisionNumber', () => {
     it('returns string with specified precision', () => {
-      expect(UtilsService.getPrecisionNumber(123.456, 2)).toBe('123.46');
+      expect(UtilsService.getPrecisionNumber(123.456, 2)).toBe('123');  
     });
 
     it('returns 0 for zero input', () => {

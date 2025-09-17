@@ -1,5 +1,4 @@
 # datatmp
-dist/*
 res/tmp/tree/*
 res/hierarchy/demos/fs.d3.json
 

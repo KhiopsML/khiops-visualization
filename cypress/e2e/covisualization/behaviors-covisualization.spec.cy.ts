@@ -79,7 +79,7 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       cy.get('#unfold-hierarchy-table').contains('15');
       cy.get('#unfold-hierarchy-table').contains('22');
 
-      cy.get('.unfold-information-rate').contains('112530');
+      cy.get('.unfold-information-rate').contains('112 530');
       cy.get('#unfold-hierarchy-settings').contains('Number of clusters : 378');
       cy.wait(250);
 
@@ -88,13 +88,13 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       // Check table values
       cy.get('#unfold-hierarchy-table').contains('340');
 
-      cy.get('.unfold-information-rate').contains('112200');
+      cy.get('.unfold-information-rate').contains('112 200');
       cy.get('#unfold-hierarchy-settings').contains('Number of clusters : 377');
 
       cy.get('.button-increase-hierarchy').click();
       cy.wait(250);
 
-      cy.get('.unfold-information-rate').contains('112530');
+      cy.get('.unfold-information-rate').contains('112 530');
       cy.get('#unfold-hierarchy-settings').contains('Number of clusters : 378');
     });
   });
@@ -112,7 +112,7 @@ describe('Behaviors tests for Khiops Covisualization', () => {
         position: 'center',
       });
       cy.wait(500);
-      cy.get('.matrix-tooltip-comp').contains(2496);
+      cy.get('.matrix-tooltip-comp').contains('2 496');
 
       // Open unfold Hierarchy view
       cy.get('.button-unfold-hierarchy').click();
@@ -127,7 +127,7 @@ describe('Behaviors tests for Khiops Covisualization', () => {
         force: true,
       });
       cy.wait(250);
-      cy.get('.unfold-information-rate').contains('53790');
+      cy.get('.unfold-information-rate').contains('53 790');
       cy.get('.unfold-information-rate').contains('92.4%');
 
       // Reduce hierarchy and check values
@@ -138,7 +138,7 @@ describe('Behaviors tests for Khiops Covisualization', () => {
         force: true,
       });
       cy.wait(250);
-      cy.get('.unfold-information-rate').contains('5746');
+      cy.get('.unfold-information-rate').contains('5 746');
       cy.get('.unfold-information-rate').contains('69.8%');
 
       // Close dialog

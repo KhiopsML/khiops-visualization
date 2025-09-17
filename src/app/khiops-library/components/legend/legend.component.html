@@ -1,5 +1,9 @@
 <div class="legend-comp" [ngClass]="position">
-  <div class="legend" *ngIf="legend && legend.length !== 0" tabindex="0">
+  <div
+    class="legend scrollbar-thin"
+    *ngIf="legend && legend.length !== 0"
+    tabindex="0"
+  >
     <div
       *ngFor="let data of legend"
       class="legend-item"
