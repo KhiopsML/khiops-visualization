@@ -117,6 +117,50 @@ export class AgGridComponent
   private gridModes: DynamicI = {}; //  values can be: 'fitToSpace' or 'fitToContent'
   private divWidth: number = 0;
 
+  /**
+   * Determines if a value represents a number (including string numbers like '10')
+   * @param value - The value to check
+   * @returns true if the value is numeric, false otherwise
+   */
+  private isNumeric(value: any): boolean {
+    if (value === null || value === undefined || value === '') {
+      return false;
+    }
+
+    // Convert to string and trim whitespace
+    const stringValue = String(value).trim();
+
+    // Check if it's a valid number (including decimal numbers, negative numbers, etc.)
+    return !isNaN(Number(stringValue)) && !isNaN(parseFloat(stringValue));
+  }
+
+  /**
+   * Determines the cell alignment based on the column data
+   * @param columnField - The field name of the column
+   * @returns 'right' for numeric data, 'left' for text data
+   */
+  private getCellAlignment(columnField: string): 'left' | 'right' {
+    if (!this.inputDatas || this.inputDatas.length === 0) {
+      return 'left';
+    }
+
+    // Sample a few values from the column to determine if it's numeric
+    const sampleSize = Math.min(10, this.inputDatas.length);
+    let numericCount = 0;
+
+    for (let i = 0; i < sampleSize; i++) {
+      const value = this.inputDatas[i][columnField];
+      if (value !== null && value !== undefined && value !== '') {
+        if (this.isNumeric(value)) {
+          numericCount++;
+        }
+      }
+    }
+
+    // If most values are numeric, align right, otherwise align left
+    return numericCount >= sampleSize * 0.7 ? 'right' : 'left';
+  }
+
   public agGridVisible = true;
   public shouldShowPagination = false;
 
@@ -443,6 +487,9 @@ export class AgGridComponent
       for (let i = 0; i < this.displayedColumns.length; i++) {
         const col = this.displayedColumns[i];
         if (col && !col.hidden) {
+          // Determine cell alignment based on data type
+          const cellAlignment = this.getCellAlignment(col.field);
+
           const gridCol: ColDef | any = {
             headerName: col.headerName,
             headerTooltip: col.tooltip
@@ -464,6 +511,14 @@ export class AgGridComponent
             width: this.cellsSizes?.[this.id!]?.[col.field],
             cellRendererFramework: col.cellRendererFramework,
             cellRendererParams: col.cellRendererParams,
+            cellClass:
+              cellAlignment === 'right'
+                ? 'ag-right-aligned-cell'
+                : 'ag-left-aligned-cell',
+            headerClass:
+              cellAlignment === 'right'
+                ? 'ag-right-aligned-header'
+                : 'ag-left-aligned-header',
             comparator: function (a: any, b: any) {
               const result = a - b;
               if (isNaN(result)) {
