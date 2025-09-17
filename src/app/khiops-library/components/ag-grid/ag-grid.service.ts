@@ -115,12 +115,16 @@ export class AgGridService {
 
         // Add value formatter if app config is provided
         if (options.appConfig) {
-          gridCol.valueFormatter = (params: any) =>
-            params.value &&
-            UtilsService.getPrecisionNumber(
+          gridCol.valueFormatter = (params: any) => {
+            if (!params.value) {
+              return '';
+            }
+            const formatted = UtilsService.getPrecisionNumber(
               params.value,
               options.appConfig.GLOBAL.TO_FIXED,
             );
+            return String(formatted);
+          };
         }
 
         columnDefs.push(gridCol);
