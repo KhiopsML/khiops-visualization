@@ -86,8 +86,6 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
    * @param changes - The changes detected in input properties.
    */
   ngOnChanges(changes: SimpleChanges) {
-    let shouldUpdateGraph = false;
-
     if (
       this.chartManagerService.getChart() &&
       changes.selectedLineChartItem &&
@@ -105,7 +103,7 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
 
     if (changes.inputDatas?.currentValue) {
-      shouldUpdateGraph = true;
+      this.updateGraph();
     }
 
     if (
@@ -115,8 +113,6 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
       // We must reconstruct the chart if the scale change
       this.chartManagerService.destroy(); // Clean up existing chart
       this.initChart();
-      // No need to update graph after init as it will be handled by initChart
-      shouldUpdateGraph = false;
     }
 
     if (
@@ -124,15 +120,10 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
       changes.activeEntries.currentValue !== undefined
     ) {
       // can be 0
-      shouldUpdateGraph = true;
+      this.updateGraph();
     }
 
     if (changes.scaleValue?.currentValue && !changes.scaleValue.firstChange) {
-      shouldUpdateGraph = true;
-    }
-
-    // Call updateGraph only once if needed
-    if (shouldUpdateGraph) {
       this.updateGraph();
     }
   }
