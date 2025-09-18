@@ -118,7 +118,9 @@ describe('Test Plan for Khiops Covisualization', () => {
         cy.get('#preparation-description-block-derivation').contains(
           'TextTokens',
         );
-        cy.get('#preparation-informations-block-informations').contains(1083);
+        cy.get('#preparation-informations-block-informations').contains(
+          '1 083',
+        );
         cy.get('#variable-stats-block-summary').contains(21);
 
         cy.get('.mat-mdc-tab:contains("Evaluation")').first().click();

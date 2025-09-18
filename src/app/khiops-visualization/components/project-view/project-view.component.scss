@@ -1,5 +1,12 @@
 #project-view-comp {
   display: inline-table !important;
+  position: relative;
+
+  kl-file-loader {
+    margin-right: 20px;
+    position: absolute;
+    right: 0;
+  }
 
   #project-view-comp-table {
     margin: auto;
@@ -10,10 +17,6 @@
 
     kl-informations-block {
       padding-bottom: 1em;
-    }
-
-    kl-file-loader {
-      margin-right: 1rem;
     }
   }
 }

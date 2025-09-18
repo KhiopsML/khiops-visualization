@@ -1,0 +1,46 @@
+<svg
+  [attr.width]="size"
+  [attr.height]="size"
+  [attr.viewBox]="getViewBox()"
+  version="1.1"
+  xmlns="http://www.w3.org/2000/svg"
+  style="transform: rotate(-90deg)"
+>
+  <!-- Background circle -->
+  <circle
+    [attr.r]="getRadius()"
+    [attr.cx]="getCenter()"
+    [attr.cy]="getCenter()"
+    fill="transparent"
+    stroke="#eee"
+    [attr.stroke-width]="getBackgroundStrokeWidth()"
+  ></circle>
+
+  <!-- Progress circle -->
+  <circle
+    [attr.r]="getRadius()"
+    [attr.cx]="getCenter()"
+    [attr.cy]="getCenter()"
+    stroke="#1e3e52"
+    [attr.stroke-width]="getProgressStrokeWidth()"
+    stroke-linecap="butt"
+    [attr.stroke-dashoffset]="getStrokeDashOffset()"
+    fill="transparent"
+    [attr.stroke-dasharray]="getStrokeDashArray()"
+  ></circle>
+
+  <!-- Percentage text -->
+  <text
+    [attr.x]="getCenter()"
+    [attr.y]="getCenter()"
+    fill="#1e3e52"
+    [attr.font-size]="getFontSize() + 'px'"
+    font-weight="bold"
+    text-anchor="middle"
+    dominant-baseline="central"
+    style="transform: rotate(90deg)"
+    [attr.transform-origin]="getCenter() + ' ' + getCenter()"
+  >
+    {{ getPercentageValue() }}%
+  </text>
+</svg>

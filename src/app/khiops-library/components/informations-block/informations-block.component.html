@@ -6,19 +6,58 @@
   *ngIf="inputDatas"
   tabindex="0"
 >
+  <!-- Header -->
   <h1 fxLayout="row" fxLayoutAlign="start center">
     <mat-icon>{{ icon }}</mat-icon>
     {{ title }}
   </h1>
-  <table>
-    <tr *ngFor="let data of inputDatas" ceil>
+
+  <!-- Main metrics display -->
+  <div fxLayout="row" class="metrics-container">
+    <!-- Metric displays for instances and evaluated variables -->
+    <div
+      *ngFor="let data of metricData"
+      fxFlex
+      fxLayoutAlign="center center"
+      class="informations-main-values"
+    >
+      <div fxFlex fxLayout="column">
+        <span fxLayoutAlign="center center" fxFlex class="metric-value">{{
+          formatValue(data.value) | toPrecision
+        }}</span>
+        <strong>{{ data.title | translate }}</strong>
+      </div>
+    </div>
+
+    <!-- Gauge display for sample percentage -->
+    <div
+      *ngIf="gaugeData"
+      fxFlex
+      class="informations-main-values gauge-container"
+      fxLayoutAlign="center center"
+    >
+      <div fxLayoutAlign="start center" fxLayout="row">
+        <kl-gauge [value]="getPercentageValue(gaugeData.value)" [size]="75">
+        </kl-gauge>
+
+        <strong>{{ gaugeData.title | translate }}</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table for additional information -->
+  <table *ngIf="tableData.length > 0">
+    <tr *ngFor="let data of tableData">
       <th>
         <strong>{{ data.title | translate }}</strong>
       </th>
       <td scope="col">
-        <em>{{ show_value(data.value) }}</em>
+        <em [ngClass]="{ 'important-badge': data.isImportant }">
+          {{ formatValue(data.value) }}
+        </em>
       </td>
     </tr>
   </table>
 </div>
+
 <kl-no-data fxFlexFill *ngIf="!inputDatas"></kl-no-data>

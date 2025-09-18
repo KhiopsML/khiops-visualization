@@ -1,7 +1,11 @@
 #project-view-comp {
   display: inline-table !important;
   background: var(--bgColor) !important;
-
+  kl-file-loader {
+    margin-right: 20px;
+    position: absolute;
+    right: 0;
+  }
   #project-view-comp-table {
     display: flex;
     flex-direction: column;
@@ -9,10 +13,6 @@
 
     kl-informations-block {
       padding-bottom: 1em;
-    }
-
-    kl-file-loader {
-      margin-right: 1rem;
     }
   }
 }

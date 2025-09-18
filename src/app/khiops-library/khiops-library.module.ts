@@ -48,6 +48,7 @@ import { NoDataComponent } from './components/no-data/no-data.component';
 import { LegendComponent } from './components/legend/legend.component';
 import { SelectableTabComponent } from './components/selectable-tab/selectable-tab.component';
 import { CellStatsComponent } from './components/cell-stats/cell-stats.component';
+import { GaugeComponent } from './components/gauge/gauge.component';
 import { GraphHeaderComponent } from './components/graph-header/graph-header.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatrixComponent } from './components/matrix/matrix.component';
@@ -144,6 +145,7 @@ import { ScalePersistenceSettingComponent } from './components/scale-persistence
     NoDataComponent,
     LegendComponent,
     SelectableTabComponent,
+    GaugeComponent,
     InformationsBlockComponent,
     MatrixComponent,
     AgGridComponent,
@@ -209,6 +211,7 @@ import { ScalePersistenceSettingComponent } from './components/scale-persistence
     NoDataComponent,
     LegendComponent,
     SelectableTabComponent,
+    GaugeComponent,
     BtnFullscreenComponent,
     GraphHeaderComponent,
     ToPrecisionPipe,
