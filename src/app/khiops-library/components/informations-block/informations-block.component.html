@@ -23,7 +23,7 @@
     >
       <div fxFlex fxLayout="column">
         <span fxLayoutAlign="center center" fxFlex class="metric-value">{{
-          formatValue(data.value) | toPrecision
+          data.value | toPrecision
         }}</span>
         <strong>{{ data.title | translate }}</strong>
       </div>
@@ -53,7 +53,7 @@
       </th>
       <td scope="col">
         <em [ngClass]="{ 'important-badge': data.isImportant }">
-          {{ formatValue(data.value) }}
+          {{ data.value | toPrecision }}
         </em>
       </td>
     </tr>

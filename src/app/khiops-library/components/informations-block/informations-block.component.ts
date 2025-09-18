@@ -106,18 +106,6 @@ export class InformationsBlockComponent extends SelectableComponent {
   }
 
   /**
-   * Formats display value handling File objects and other types
-   * @param value - The value to format
-   * @returns Formatted string representation
-   */
-  formatValue(value: any): string {
-    if (value instanceof File) {
-      return value.name;
-    }
-    return String(value ?? '');
-  }
-
-  /**
    * Get the percentage value from the input data for sample percentage
    * @param value - The value to parse as percentage
    * @returns The percentage as a number (0-100)
@@ -125,12 +113,5 @@ export class InformationsBlockComponent extends SelectableComponent {
   getPercentageValue(value: any): number {
     const numValue = parseFloat(value);
     return isNaN(numValue) ? 0 : Math.max(0, Math.min(100, numValue));
-  }
-
-  /**
-   * @deprecated Use formatValue instead
-   */
-  show_value(value: any): string {
-    return this.formatValue(value);
   }
 }

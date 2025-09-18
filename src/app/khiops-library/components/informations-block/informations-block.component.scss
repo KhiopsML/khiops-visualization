@@ -21,7 +21,7 @@
     margin: 0 10px;
     border-radius: var(--border-radius);
     border: 1px solid #eee;
-    padding: 10px;
+    padding: 7px;
     min-height: 80px;
     flex: 1;
 
@@ -83,6 +83,7 @@
         padding: 1px 5px;
         border-radius: 4px;
         margin: 4px 0;
+        word-break: break-word;
       }
       .important-badge {
         background: var(--primary-contrast);
