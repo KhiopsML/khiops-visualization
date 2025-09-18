@@ -24,10 +24,9 @@
     padding: 7px;
     min-height: 80px;
     flex: 1;
-
+    max-width: 300px;
     strong {
       padding: 0 5px;
-      // min-width: 150px;
       text-align: center;
       font-weight: 500;
       display: block;
