@@ -27,10 +27,9 @@ export interface TargetLiftGraphData {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TargetLiftGraphService {
-
   constructor(
     private evaluationDatasService: EvaluationDatasService,
     private translate: TranslateService,
@@ -44,7 +43,7 @@ export class TargetLiftGraphService {
   createChartOptions(): ChartOptions {
     let xAxisLabel: string;
     let yAxisLabel: string;
-    
+
     if (this.evaluationDatasService.isRegressionAnalysis()) {
       xAxisLabel = this.translate.get('GLOBAL.RANK_ERROR') + ' %';
       yAxisLabel = this.translate.get('GLOBAL.POPULATION') + ' %';
@@ -73,12 +72,17 @@ export class TargetLiftGraphService {
       animation: false,
       plugins: {
         tooltip: {
+          mode: 'index',
+          intersect: false,
           displayColors: true,
           callbacks: {
-            title: (items: TooltipItem<'line'>[]) => this.getTooltipTitle(items),
-            beforeBody: (items: TooltipItem<'line'>[]) => this.getTooltipBeforeBody(items),
+            title: (items: TooltipItem<'line'>[]) =>
+              this.getTooltipTitle(items),
+            beforeBody: (items: TooltipItem<'line'>[]) =>
+              this.getTooltipBeforeBody(items),
             label: (items: TooltipItem<'line'>) => this.getTooltipLabel(items),
-            afterLabel: (items: TooltipItem<'line'>) => this.getTooltipAfterLabel(items),
+            afterLabel: (items: TooltipItem<'line'>) =>
+              this.getTooltipAfterLabel(items),
           },
         },
       },
@@ -105,9 +109,12 @@ export class TargetLiftGraphService {
    * @returns TargetLiftGraphData object containing all computed data
    */
   computeTargetLiftData(currentTarget?: string): TargetLiftGraphData {
-    const targetLift = this.evaluationDatasService.getLiftTargets(currentTarget);
-    
-    const colorSet = _.cloneDeep(this.khiopsLibraryService.getGraphColorSet()[1]);
+    const targetLift =
+      this.evaluationDatasService.getLiftTargets(currentTarget);
+
+    const colorSet = _.cloneDeep(
+      this.khiopsLibraryService.getGraphColorSet()[1],
+    );
     let title: string;
     let titleWithoutDetails: string;
     let targetLiftGraph: ChartDatasModel | undefined;
@@ -116,20 +123,32 @@ export class TargetLiftGraphService {
     if (targetLift) {
       // Get previous selected target if compatible
       const previousSelectedTarget = AppService.Ls.get(LS.TARGET_LIFT);
-      if (previousSelectedTarget && targetLift.targets?.includes(previousSelectedTarget)) {
+      if (
+        previousSelectedTarget &&
+        targetLift.targets?.includes(previousSelectedTarget)
+      ) {
         targetLift.selected = previousSelectedTarget;
       }
 
-      titleWithoutDetails = this.translate.get('GLOBAL.CUMULATIVE_GAIN_CHART_OF');
-      title = this.translate.get('GLOBAL.CUMULATIVE_GAIN_CHART_OF') + ' ' + targetLift.selected;
-      
-      targetLiftGraph = this.evaluationDatasService.getLiftGraphDatas(targetLift.selected);
-      targetLiftAllGraph = this.evaluationDatasService.getLiftGraphDatas(targetLift.selected);
+      titleWithoutDetails = this.translate.get(
+        'GLOBAL.CUMULATIVE_GAIN_CHART_OF',
+      );
+      title =
+        this.translate.get('GLOBAL.CUMULATIVE_GAIN_CHART_OF') +
+        ' ' +
+        targetLift.selected;
+
+      targetLiftGraph = this.evaluationDatasService.getLiftGraphDatas(
+        targetLift.selected,
+      );
+      targetLiftAllGraph = this.evaluationDatasService.getLiftGraphDatas(
+        targetLift.selected,
+      );
     } else {
       // Regression case
       titleWithoutDetails = this.translate.get('GLOBAL.REC_CURVES');
       title = this.translate.get('GLOBAL.REC_CURVES');
-      
+
       targetLiftGraph = this.evaluationDatasService.getLiftGraphDatas();
       targetLiftAllGraph = this.evaluationDatasService.getLiftGraphDatas();
     }
@@ -140,7 +159,7 @@ export class TargetLiftGraphService {
       targetLiftAllGraph,
       colorSet,
       title,
-      titleWithoutDetails
+      titleWithoutDetails,
     };
   }
 
@@ -151,18 +170,18 @@ export class TargetLiftGraphService {
    * @returns Updated color set
    */
   updateColorSetForDisplayedValues(
-    colorSet: ChartColorsSetI, 
-    displayedValues: ChartToggleValuesI[]
+    colorSet: ChartColorsSetI,
+    displayedValues: ChartToggleValuesI[],
   ): ChartColorsSetI {
     const updatedColorSet = _.cloneDeep(colorSet);
-    
+
     let i = displayedValues.length;
     while (i--) {
       if (displayedValues[i]?.show === false) {
         updatedColorSet.domain.splice(i, 1);
       }
     }
-    
+
     return updatedColorSet;
   }
 
@@ -174,11 +193,11 @@ export class TargetLiftGraphService {
    */
   changeTarget(target: string, targetLift?: TargetLiftValuesI): string {
     AppService.Ls.set(LS.TARGET_LIFT, target);
-    
+
     if (targetLift) {
       targetLift.selected = target;
     }
-    
+
     return this.translate.get('GLOBAL.CUMULATIVE_GAIN_CHART_OF') + ' ' + target;
   }
 
@@ -188,7 +207,10 @@ export class TargetLiftGraphService {
    * @param title - Chart title
    * @returns Title string or undefined
    */
-  getTooltipTitle(items: TooltipItem<'line'>[], title?: string): string | undefined {
+  getTooltipTitle(
+    items: TooltipItem<'line'>[],
+    title?: string,
+  ): string | undefined {
     if (!items || items.length === 0) {
       return undefined;
     }
@@ -196,38 +218,38 @@ export class TargetLiftGraphService {
   }
 
   /**
-   * Get tooltip label for chart - displays curve name
+   * Get tooltip label for chart - displays curve name and value
    * @param items - Tooltip item
    * @returns Label string or undefined
    */
   getTooltipLabel(items: TooltipItem<'line'>): string | undefined {
-    if (items?.dataset?.label) {
-      return items.dataset.label;
-    }
-    return undefined;
-  }
-
-  /**
-   * Get tooltip after label for chart - displays Target modality for each curve
-   * @param items - Tooltip item
-   * @returns After label string or undefined
-   */
-  getTooltipAfterLabel(items: TooltipItem<'line'>): string | undefined {
-    if (!items || items.dataIndex === undefined) {
+    if (!items?.dataset?.label) {
       return undefined;
     }
 
     const yValue = items.parsed?.y;
-
     if (yValue === undefined) {
       return undefined;
     }
 
+    const curveName = items.dataset.label;
+    const formattedValue = yValue.toFixed(2) + '%';
+
     if (this.evaluationDatasService.isRegressionAnalysis()) {
-      return this.translate.get('GLOBAL.POPULATION') + ': ' + yValue.toFixed(2) + '%';
+      return `${curveName}: ${formattedValue}`;
     } else {
-      return this.translate.get('GLOBAL.TARGET_MODALITY') + ': ' + yValue.toFixed(2) + '%';
+      return `${curveName}: ${formattedValue}`;
     }
+  }
+
+  /**
+   * Get tooltip after label for chart - no additional info needed since values are in label
+   * @param _items - Tooltip item (unused)
+   * @returns After label string or undefined
+   */
+  getTooltipAfterLabel(_items: TooltipItem<'line'>): string | undefined {
+    // No additional information needed since values are now displayed in the label
+    return undefined;
   }
 
   /**
@@ -236,7 +258,12 @@ export class TargetLiftGraphService {
    * @returns Before body string array or undefined
    */
   getTooltipBeforeBody(items: TooltipItem<'line'>[]): string[] | undefined {
-    if (!items || items.length === 0 || !items[0] || items[0].dataIndex === undefined) {
+    if (
+      !items ||
+      items.length === 0 ||
+      !items[0] ||
+      items[0].dataIndex === undefined
+    ) {
       return undefined;
     }
 
@@ -245,9 +272,13 @@ export class TargetLiftGraphService {
     const result: string[] = [];
 
     if (this.evaluationDatasService.isRegressionAnalysis()) {
-      result.push(this.translate.get('GLOBAL.RANK_ERROR') + ': ' + xValue + '%');
+      result.push(
+        this.translate.get('GLOBAL.RANK_ERROR') + ': ' + xValue + '%',
+      );
     } else {
-      result.push(this.translate.get('GLOBAL.POPULATION') + ': ' + xValue + '%');
+      result.push(
+        this.translate.get('GLOBAL.POPULATION') + ': ' + xValue + '%',
+      );
     }
 
     result.push(''); // Add empty line for margin
