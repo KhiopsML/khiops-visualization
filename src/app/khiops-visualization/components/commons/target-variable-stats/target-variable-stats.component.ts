@@ -140,16 +140,58 @@ export class TargetVariableStatsComponent
     return undefined;
   }
 
+  /**
+   * Calculate proportional bar spacing based on number of bars
+   * @param barCount - Number of bars in the chart
+   * @returns Object containing barPercentage and categoryPercentage
+   */
+  private calculateBarSpacing(barCount: number): {
+    barPercentage: number;
+    categoryPercentage: number;
+  } {
+    // Base values for few bars
+    const minBarPercentage = 0.9;
+    const minCategoryPercentage = 0.3;
+
+    // Maximum values for many bars (to prevent chart from becoming too wide)
+    const maxCategoryPercentage = 0.8;
+
+    // Calculate proportional spacing
+    // For 1-2 bars: use minimum values
+    // For 3+ bars: increase categoryPercentage proportionally
+    const barPercentage = minBarPercentage;
+    let categoryPercentage = minCategoryPercentage;
+
+    if (barCount > 2) {
+      // Increase category percentage by 0.1 for each additional bar above 2
+      // But cap at maximum value
+      const increment = Math.min(
+        (barCount - 2) * 0.1,
+        maxCategoryPercentage - minCategoryPercentage,
+      );
+      categoryPercentage = Math.min(
+        minCategoryPercentage + increment,
+        maxCategoryPercentage,
+      );
+    }
+
+    return { barPercentage, categoryPercentage };
+  }
+
   ngOnChanges(changes: SimpleChanges) {
     if (changes?.inputDatas?.currentValue) {
       // Keep labels into displayedvalues to copy datas into clipboard
       this.displayedValues = [];
       if (this.inputDatas?.datasets) {
+        const barCount = this.inputDatas.datasets.length;
+        const spacing = this.calculateBarSpacing(barCount);
+
         Object.keys(this.inputDatas.datasets).map((_key, i) => {
-          // Add bar spacing properties to each dataset
+          // Add proportional bar spacing properties to each dataset
           if (this.inputDatas?.datasets[i]) {
-            this.inputDatas.datasets[i].barPercentage = 0.9;
-            this.inputDatas.datasets[i].categoryPercentage = 0.3;
+            this.inputDatas.datasets[i].barPercentage = spacing.barPercentage;
+            this.inputDatas.datasets[i].categoryPercentage =
+              spacing.categoryPercentage;
           }
           this.displayedValues.push({
             name: this.inputDatas?.datasets[i]?.label,
