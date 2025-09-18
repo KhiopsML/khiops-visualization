@@ -90,4 +90,13 @@ export class GaugeComponent {
   getProgressStrokeWidth(): number {
     return Math.max(2, this.size * 0.06);
   }
+
+  /**
+   * Get the SVG transform to position the circle start at the top
+   * @returns The transform string to rotate the circle -90 degrees around its center
+   */
+  getCircleTransform(): string {
+    const center = this.getCenter();
+    return `rotate(-90 ${center} ${center})`;
+  }
 }

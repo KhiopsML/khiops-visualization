@@ -4,7 +4,6 @@
   [attr.viewBox]="getViewBox()"
   version="1.1"
   xmlns="http://www.w3.org/2000/svg"
-  style="transform: rotate(-90deg)"
 >
   <!-- Background circle -->
   <circle
@@ -27,6 +26,7 @@
     [attr.stroke-dashoffset]="getStrokeDashOffset()"
     fill="transparent"
     [attr.stroke-dasharray]="getStrokeDashArray()"
+    [attr.transform]="getCircleTransform()"
   ></circle>
 
   <!-- Percentage text -->
@@ -38,8 +38,6 @@
     font-weight="bold"
     text-anchor="middle"
     dominant-baseline="central"
-    style="transform: rotate(90deg)"
-    [attr.transform-origin]="getCenter() + ' ' + getCenter()"
   >
     {{ getPercentageValue() }}%
   </text>
