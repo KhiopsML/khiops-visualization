@@ -5,6 +5,7 @@
  */
 // @ts-nocheck
 
+import { UtilsService } from '@khiops-library/providers/utils.service';
 import '../utils/utils';
 
 export function setupPreparation2dTests(datas, testsValues) {
@@ -13,7 +14,9 @@ export function setupPreparation2dTests(datas, testsValues) {
     datas.bivariatePreparationReport?.summary?.database,
   );
   testsValues.Preparation2d.push(
-    datas.bivariatePreparationReport?.summary?.instances,
+    UtilsService.getPrecisionNumber(
+      datas.bivariatePreparationReport?.summary?.instances,
+    ),
   );
   testsValues.Preparation2d.push(
     datas.bivariatePreparationReport?.summary?.learningTask,

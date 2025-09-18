@@ -5,6 +5,7 @@
  */
 // @ts-nocheck
 
+import { UtilsService } from '@khiops-library/providers/utils.service';
 import '../utils/utils';
 
 export function setupTreePreparationTests(datas, testsValues) {
@@ -13,7 +14,9 @@ export function setupTreePreparationTests(datas, testsValues) {
     datas.treePreparationReport?.summary?.database,
   );
   testsValues.TreePreparation.push(
-    datas.treePreparationReport?.summary?.instances,
+    UtilsService.getPrecisionNumber(
+      datas.treePreparationReport?.summary?.instances,
+    ),
   );
   testsValues.TreePreparation.push('Evaluated variables');
   if (datas.treePreparationReport?.dimensionTree) {
