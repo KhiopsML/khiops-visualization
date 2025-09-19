@@ -425,11 +425,27 @@ canvas:focus {
   background-color: #000000cc;
 }
 
+// Fade-in animation keyframes
+@keyframes klCardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .kl-card {
   border: 1px solid var(--border-color);
   background-color: white !important;
   border-radius: var(--border-radius);
   padding: 12px;
+
+  // Add fade-in animation on first display
+  // animation: klCardFadeIn 0.2s ease-out;
+  // animation-fill-mode: both;
 }
 app-home-layout {
   background: var(--bgColor-20);
