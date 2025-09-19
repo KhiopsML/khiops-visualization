@@ -426,7 +426,7 @@ canvas:focus {
 }
 
 .kl-card {
-  border: 1px solid #eee;
+  border: 1px solid var(--border-color);
   background-color: white !important;
   border-radius: var(--border-radius);
   padding: 12px;

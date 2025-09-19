@@ -1,8 +1,9 @@
 .kl-border-text-cell {
   padding: 2px 8px;
-  border-radius: 10px;
+  border-radius: var(--border-radius);
   color: var(--bgColorContrast) !important;
   font-size: 0.9em !important;
+  font-weight: 500;
 }
 
 .kl-border-text-cell.Numerical {

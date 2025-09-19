@@ -4,7 +4,7 @@
   --grid: #ddd;
   --bgColor: #fff;
   --bgColor-10: #eee;
-  --bgColor-20: #fafafa;
+  --bgColor-20: #f9fafb;
   --bgColor-30: #eeeeee;
   --bgColor-40: #bbb;
   --bgColor-50: #aaa;
@@ -29,6 +29,7 @@
   --mat-tab-active-indicator-height: 1px;
   --header-height: 60px;
   --border-radius: 2px;
+  --border-color: rgba(4, 32, 69, 0.1);
 }
 
 ::ng-deep .orange-theme {

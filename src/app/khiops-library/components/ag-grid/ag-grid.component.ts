@@ -79,7 +79,7 @@ export class AgGridComponent
   @Input() public paginationSize: number | undefined;
   @Input() public rowSelection = 'single';
   @Input() private showLineSelection = true;
-  @Input() private rowHeight = 28;
+  @Input() private rowHeight = 34;
   @Input() private selectedVariable: any; // Can be any types of data
   @Input() public showFullSearch = false;
 

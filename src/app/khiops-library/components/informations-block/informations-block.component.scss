@@ -17,14 +17,13 @@
   }
 
   .informations-main-values {
-    background: #fafafa;
+    background: var(--bgColor-20);
     margin: 0 10px;
     border-radius: var(--border-radius);
-    border: 1px solid #eee;
+    border: 1px solid var(--border-color);
     padding: 7px;
     min-height: 80px;
     flex: 1;
-    max-width: 300px;
     strong {
       padding: 0 5px;
       text-align: center;

@@ -31,7 +31,7 @@
   }
 
   kl-ag-grid {
-    border: 1px solid #eee;
+    border: 1px solid var(--border-color);
     min-height: 212px;
 
     ::ng-deep .ag-center-cols-viewport {

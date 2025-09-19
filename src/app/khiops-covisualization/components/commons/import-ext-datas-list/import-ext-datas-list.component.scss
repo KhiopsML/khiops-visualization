@@ -32,7 +32,7 @@
   }
 
   kl-ag-grid {
-    border: 1px solid #eee;
+    border: 1px solid var(--border-color);
     min-height: 212px;
     max-height: 212px;
     height: 212px !important;
