@@ -79,7 +79,6 @@ export class AgGridComponent
   @Input() public paginationSize: number | undefined;
   @Input() public rowSelection = 'single';
   @Input() private showLineSelection = true;
-  @Input() private rowHeight = 34;
   @Input() private selectedVariable: any; // Can be any types of data
   @Input() public showFullSearch = false;
 
@@ -108,6 +107,7 @@ export class AgGridComponent
     enableBrowserTooltips: true,
     suppressColumnMoveAnimation: true,
     animateRows: false,
+    rowHeight: 34,
   };
 
   private cellsSizes: DynamicI = {};
@@ -151,12 +151,6 @@ export class AgGridComponent
   override ngAfterViewInit() {
     // Call ngAfterViewInit of extend component
     super.ngAfterViewInit();
-
-    // Change default height of rows if defined
-    if (this.rowHeight && this.gridOptions?.api) {
-      this.gridOptions.rowHeight = this.rowHeight;
-      this.gridOptions.api.resetRowHeights();
-    }
 
     if (this.showFullSearch) {
       this.searchFormVisible = true;
