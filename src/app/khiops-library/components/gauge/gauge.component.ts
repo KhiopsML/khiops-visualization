@@ -80,7 +80,7 @@ export class GaugeComponent {
    * @returns The stroke width
    */
   getBackgroundStrokeWidth(): number {
-    return Math.max(2, this.size * 0.05);
+    return Math.max(2, this.size * 0.07);
   }
 
   /**
@@ -88,7 +88,7 @@ export class GaugeComponent {
    * @returns The stroke width
    */
   getProgressStrokeWidth(): number {
-    return Math.max(2, this.size * 0.06);
+    return Math.max(2, this.size * 0.08);
   }
 
   /**
