@@ -88,7 +88,6 @@ export class AgGridComponent
     new EventEmitter();
 
   public AppConfig: any;
-  public showHeader = false;
   public hideFilterBadge = true;
   public isFullscreen = false;
   public searchFormVisible = false;
@@ -153,8 +152,6 @@ export class AgGridComponent
     // Call ngAfterViewInit of extend component
     super.ngAfterViewInit();
     setTimeout(() => {
-      this.showHeader = true;
-
       // Change default height of rows if defined
       if (this.rowHeight && this.gridOptions?.api) {
         this.gridOptions.rowHeight = this.rowHeight;
@@ -162,11 +159,7 @@ export class AgGridComponent
       }
 
       if (this.agGrid) {
-        if (!this.showHeader) {
-          this.agGrid?.api?.sizeColumnsToFit();
-        } else {
-          this.resizeColumnsToFit();
-        }
+        this.agGrid?.api?.sizeColumnsToFit();
       }
       this.updateColumnFilterBadge();
     });

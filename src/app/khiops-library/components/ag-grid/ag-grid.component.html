@@ -9,7 +9,7 @@
     fxLayout="row"
     class="comp-header"
     #headerContainer
-    *ngIf="showHeader && rowData.length !== 0"
+    *ngIf="inputDatas?.length > 0"
   >
     <div
       *ngIf="!showFullSearch"
