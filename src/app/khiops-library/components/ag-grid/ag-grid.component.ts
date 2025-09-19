@@ -151,23 +151,21 @@ export class AgGridComponent
   override ngAfterViewInit() {
     // Call ngAfterViewInit of extend component
     super.ngAfterViewInit();
-    setTimeout(() => {
-      // Change default height of rows if defined
-      if (this.rowHeight && this.gridOptions?.api) {
-        this.gridOptions.rowHeight = this.rowHeight;
-        this.gridOptions.api.resetRowHeights();
-      }
-
-      if (this.agGrid) {
-        this.agGrid?.api?.sizeColumnsToFit();
-      }
-      this.updateColumnFilterBadge();
-    });
+    // Change default height of rows if defined
+    if (this.rowHeight && this.gridOptions?.api) {
+      this.gridOptions.rowHeight = this.rowHeight;
+      this.gridOptions.api.resetRowHeights();
+    }
 
     if (this.showFullSearch) {
       this.searchFormVisible = true;
     }
     setTimeout(() => {
+      if (this.agGrid) {
+        this.agGrid?.api?.sizeColumnsToFit();
+      }
+      this.updateColumnFilterBadge();
+
       if (this.showFullSearch) {
         // set min size of .search-input-btn
         if (this.searchInputEl) {
