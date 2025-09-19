@@ -29,7 +29,7 @@ interface ChartDatasetExtra {
 @Injectable()
 export class ChartManagerService {
   private chart: ChartJs.Chart | undefined;
-  private color: string = '#e5e5e5';
+  private color: string = '#eeeeee';
   private barColor: string = 'rgba(0, 0, 0, 1)';
   private fontColor: string = '#999';
 

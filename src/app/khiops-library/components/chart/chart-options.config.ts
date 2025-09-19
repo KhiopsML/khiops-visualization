@@ -81,7 +81,7 @@ export function createDefaultChartOptions(
     scales: {
       y: {
         border: {
-          dash: [4, 5],
+          dash: [10, 5],
           display: false,
         },
         grid: {

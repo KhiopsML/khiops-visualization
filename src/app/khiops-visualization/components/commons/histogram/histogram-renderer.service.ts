@@ -343,11 +343,20 @@ export class HistogramRendererService {
       });
     }
 
-    svg
+    const xAxisGroup = svg
       .insert('g', ':first-child')
       .attr('class', 'barXlog axis-grid')
       .attr('transform', 'translate(' + (shift + xPadding / 2) + ',' + h + ') ')
-      .call(axis)
+      .call(axis);
+
+    // Apply dashed style to grid lines (similar to Chart.js dash: [10, 5])
+    xAxisGroup
+      .selectAll('.tick line')
+      .style('stroke-dasharray', '10,5')
+      .style('stroke', '#eeeeee'); // Couleur des lignes de grille uniquement
+
+    // Style text labels
+    xAxisGroup
       .selectAll('text')
       .style('text-anchor', 'end')
       .attr('dx', '-0.4em')
@@ -413,7 +422,7 @@ export class HistogramRendererService {
       })
       .ticks(yTicksCount);
 
-    svg
+    const yAxisGroup = svg
       .append('g')
       .attr('class', 'y axis-grid')
       .attr(
@@ -421,5 +430,11 @@ export class HistogramRendererService {
         'translate(' + (shift + xPadding / 2) + ',' + yPadding / 2 + ')',
       )
       .call(axis, 0);
+
+    // Apply dashed style to grid lines (similar to Chart.js dash: [10, 5])
+    yAxisGroup
+      .selectAll('.tick line')
+      .style('stroke-dasharray', '10,5')
+      .style('stroke', '#eeeeee'); // Couleur des lignes de grille uniquement
   }
 }

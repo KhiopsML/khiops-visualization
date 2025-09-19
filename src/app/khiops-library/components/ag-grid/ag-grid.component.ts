@@ -151,6 +151,7 @@ export class AgGridComponent
   override ngAfterViewInit() {
     // Call ngAfterViewInit of extend component
     super.ngAfterViewInit();
+
     // Change default height of rows if defined
     if (this.rowHeight && this.gridOptions?.api) {
       this.gridOptions.rowHeight = this.rowHeight;
