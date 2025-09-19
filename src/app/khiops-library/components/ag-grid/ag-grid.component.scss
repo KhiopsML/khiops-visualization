@@ -93,4 +93,22 @@
   ::ng-deep .ag-right-aligned-header {
     justify-content: flex-end !important;
   }
+
+  // Make header wrapper take full space for easier sorting
+  ::ng-deep .ag-header-cell-comp-wrapper {
+    width: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  // Control alignment at the label level for left alignment
+  ::ng-deep .ag-left-aligned-header .ag-header-cell-label {
+    justify-content: flex-start !important;
+  }
+
+  // Control alignment at the label level for right alignment
+  ::ng-deep .ag-right-aligned-header .ag-header-cell-label {
+    justify-content: flex-end !important;
+  }
 }
