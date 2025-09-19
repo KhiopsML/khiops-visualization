@@ -50,6 +50,11 @@ export function createDefaultChartOptions(
         bodySpacing: 3,
         footerSpacing: 3,
         caretSize: 0,
+        // Tooltip-specific animations
+        animation: {
+          duration: 250,
+          easing: 'easeOutQuart',
+        },
         callbacks: {
           title: (items: TooltipItem<'bar' | 'line'>[]): string => {
             if (items?.[0]) {
@@ -74,7 +79,12 @@ export function createDefaultChartOptions(
     interaction: {
       mode: 'point',
     },
-    animation: false,
+    animation: {
+      duration: 0, // Disable animations for chart elements (bars, lines, etc.)
+      resize: {
+        duration: 0,
+      },
+    },
     responsive: true,
     maintainAspectRatio: false,
     onClick: params.graphClickEvent,
