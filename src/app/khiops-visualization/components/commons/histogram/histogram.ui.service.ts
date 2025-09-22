@@ -5,10 +5,11 @@
  */
 
 import { Injectable } from '@angular/core';
-import * as d3 from 'd3';
 import { HistogramValuesI, TooltipData } from './histogram.interfaces';
 import { HISTOGRAM_COLORS } from '@khiops-visualization/config/colors';
 import { AppService } from '@khiops-visualization/providers/app.service';
+import { UtilsService } from '@khiops-library/providers/utils.service';
+import { LS } from '@khiops-library/enum/ls';
 
 @Injectable({
   providedIn: 'root',
@@ -92,10 +93,12 @@ export class HistogramUIService {
     bounds += d.partition[0] + ', ' + d.partition[1] + ']';
 
     const title = `${AppService.translate.get('GLOBAL.INTERVAL')}: ${bounds}`;
+    const numPrecision = AppService.Ls.get(LS.SETTING_NUMBER_PRECISION);
+
     const body = `
-      ${AppService.translate.get('GLOBAL.DENSITY')}: ${d3.format('.2e')(d.density)}<br>
-      ${AppService.translate.get('GLOBAL.PROBABILITY')}: ${d3.format('.2e')(d.probability)}%<br>
-      ${AppService.translate.get('GLOBAL.FREQUENCY')}: ${d.frequency}
+      ${AppService.translate.get('GLOBAL.DENSITY')}: ${UtilsService.getPrecisionNumber(d.density, numPrecision)}<br>
+      ${AppService.translate.get('GLOBAL.PROBABILITY')}: ${UtilsService.getPrecisionNumber(d.probability, numPrecision)}%<br>
+      ${AppService.translate.get('GLOBAL.FREQUENCY')}: ${UtilsService.getPrecisionNumber(d.frequency, numPrecision)}
     `.trim();
 
     return { title, body };
