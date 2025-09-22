@@ -27,8 +27,21 @@ export class AgGridService {
     // Convert to string and trim whitespace
     const stringValue = String(value).trim();
 
+    // Handle empty string after trimming
+    if (stringValue === '') {
+      return false;
+    }
+
+    // Remove common number separators for better detection
+    const cleanedValue = stringValue.replace(/[,\s]/g, '');
+
     // Check if it's a valid number (including decimal numbers, negative numbers, etc.)
-    return !isNaN(Number(stringValue)) && !isNaN(parseFloat(stringValue));
+    const numberValue = Number(cleanedValue);
+    const parseFloatValue = parseFloat(cleanedValue);
+
+    return (
+      !isNaN(numberValue) && !isNaN(parseFloatValue) && isFinite(numberValue)
+    );
   }
 
   /**
@@ -47,21 +60,31 @@ export class AgGridService {
       return 'left';
     }
 
-    // Sample a few values from the column to determine if it's numeric
-    const sampleSize = Math.min(10, inputDatas.length);
+    // Sample a larger set of values to be more accurate
+    const sampleSize = Math.min(20, inputDatas.length);
     let numericCount = 0;
+    let totalValidValues = 0;
 
     for (let i = 0; i < sampleSize; i++) {
       const value = inputDatas[i][columnField];
       if (value !== null && value !== undefined && value !== '') {
+        totalValidValues++;
         if (this.isNumeric(value)) {
           numericCount++;
         }
       }
     }
 
+    // If we don't have enough valid values, default to left alignment
+    if (totalValidValues === 0) {
+      return 'left';
+    }
+
+    // Calculate the ratio based on valid values only
+    const numericRatio = numericCount / totalValidValues;
+
     // If most values are numeric, align right, otherwise align left
-    return numericCount >= sampleSize * threshold ? 'right' : 'left';
+    return numericRatio >= threshold ? 'right' : 'left';
   }
 
   /**
