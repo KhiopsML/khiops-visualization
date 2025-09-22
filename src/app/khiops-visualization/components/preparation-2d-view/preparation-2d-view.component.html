@@ -12,14 +12,12 @@
     ></mat-spinner>
   </div>
   <as-split
-    [gutterSize]="15"
     *ngIf="!loadingView"
     direction="vertical"
     (dragEnd)="onSplitDragEnd($event, 'row')"
   >
     <as-split-area [size]="sizes.row[0]">
       <as-split
-        [gutterSize]="15"
         direction="horizontal"
         (dragEnd)="onSplitDragEnd($event, 'row0Col')"
       >
@@ -65,13 +63,11 @@
     </as-split-area>
     <as-split-area [size]="sizes.row[1]">
       <as-split
-        [gutterSize]="15"
         direction="horizontal"
         (dragEnd)="onSplitDragEnd($event, 'row1Col')"
       >
         <as-split-area [size]="sizes.row1Col[0]">
           <as-split
-            [gutterSize]="15"
             direction="vertical"
             (dragEnd)="onSplitDragEnd($event, 'row1Col0Row')"
           >
@@ -90,7 +86,6 @@
                 (selectListItem)="onSelectListItemChanged($event)"
                 [showLineSelection]="true"
                 [showColumnsSelection]="true"
-                
                 [inputDatas]="variables2dDatas"
                 [displayedColumns]="variablesDisplayedColumns"
                 title="{{ 'GLOBAL.PAIR_VARIABLES' | translate }}"

@@ -12,20 +12,17 @@
     ></mat-spinner>
   </div>
   <as-split
-    [gutterSize]="15"
     *ngIf="!loadingView && sizes"
     direction="horizontal"
     (dragEnd)="onSplitDragEnd($event, 'col')"
   >
     <as-split-area [size]="sizes.col[0]">
       <as-split
-        [gutterSize]="15"
         direction="vertical"
         (dragEnd)="onSplitDragEnd($event, 'col0Row')"
       >
         <as-split-area [size]="sizes.col0Row[0]">
           <as-split
-            [gutterSize]="15"
             direction="horizontal"
             (dragEnd)="onSplitDragEnd($event, 'col0Row0Col')"
           >
@@ -78,7 +75,6 @@
           [size]="sizes.col0Row[1]"
         >
           <as-split
-            [gutterSize]="15"
             direction="horizontal"
             (dragEnd)="onSplitDragEnd($event, 'col0Row1Col')"
           >
@@ -94,7 +90,6 @@
                 (selectListItem)="onSelectListItemChanged($event)"
                 [showLineSelection]="true"
                 [showColumnsSelection]="true"
-                
                 [inputDatas]="variablesDatas"
                 [displayedColumns]="variablesDisplayedColumns"
                 [selectedVariable]="treePreparationDatas?.selectedVariable"
@@ -132,7 +127,6 @@
         </as-split-area>
         <as-split-area [size]="sizes.col0Row[2]">
           <as-split
-            [gutterSize]="15"
             direction="horizontal"
             (dragEnd)="onSplitDragEnd($event, 'col0Row2Col')"
           >
@@ -150,7 +144,6 @@
               [size]="sizes.col0Row2Col[1]"
             >
               <as-split
-                [gutterSize]="15"
                 direction="horizontal"
                 (dragEnd)="onSplitDragEnd($event, 'col0Row2Col1Row')"
               >

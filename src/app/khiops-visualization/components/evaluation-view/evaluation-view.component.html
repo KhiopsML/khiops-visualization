@@ -12,14 +12,12 @@
     ></mat-spinner>
   </div>
   <as-split
-    [gutterSize]="15"
     *ngIf="!loadingView"
     direction="horizontal"
     (dragEnd)="onSplitDragEnd($event, 'col')"
   >
     <as-split-area [size]="sizes.col[0]">
       <as-split
-        [gutterSize]="15"
         direction="vertical"
         (dragEnd)="onSplitDragEnd($event, 'col0Row')"
       >
@@ -38,7 +36,6 @@
             (selectListItem)="onSelectEvaluationTypeChanged($event)"
             [showLineSelection]="true"
             [showColumnsSelection]="false"
-            
             [inputDatas]="evaluationDatas.evaluationTypesSummary?.values"
             [title]="evaluationDatas.evaluationTypesSummary?.title"
             [displayedColumns]="
@@ -63,7 +60,6 @@
             }}"
             [showLineSelection]="true"
             [showColumnsSelection]="false"
-            
             [inputDatas]="evaluationDatas.predictorEvaluations?.values"
             [title]="evaluationDatas.predictorEvaluations?.title"
             [displayedColumns]="
@@ -80,7 +76,6 @@
     </as-split-area>
     <as-split-area [size]="sizes.col[1]">
       <as-split
-        [gutterSize]="15"
         direction="vertical"
         (dragEnd)="onSplitDragEnd($event, 'col1Row')"
       >
@@ -106,7 +101,6 @@
             [displayCount]="false"
             [showLineSelection]="true"
             [showColumnsSelection]="false"
-            
             [inputDatas]="evaluationDatas.confusionMatrix.values"
             [title]="evaluationDatas.confusionMatrix.title"
             [displayedColumns]="

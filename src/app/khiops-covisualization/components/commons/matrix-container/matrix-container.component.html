@@ -1,9 +1,5 @@
 <div class="matrix-container-comp" fxFlexFill>
-  <as-split
-    [gutterSize]="15"
-    direction="vertical"
-    (dragEnd)="onSplitDragEnd($event, sizeId)"
-  >
+  <as-split direction="vertical" (dragEnd)="onSplitDragEnd($event, sizeId)">
     <as-split-area
       [size]="sizes?.[sizeId]?.[0]"
       order="1"

@@ -12,6 +12,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MenuComponent } from './khiops-library/components/main-menu/menu.component';
 import { MatButtonModule } from '@angular/material/button';
+import { provideAngularSplitOptions } from 'angular-split';
 
 @NgModule({
   declarations: [AppComponent, MenuComponent],
@@ -21,6 +22,11 @@ import { MatButtonModule } from '@angular/material/button';
     KhiopsCovisualizationModule,
     AppRoutingModule,
     MatButtonModule,
+  ],
+  providers: [
+    provideAngularSplitOptions({
+      gutterSize: 15,
+    }),
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

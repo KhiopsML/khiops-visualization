@@ -12,14 +12,12 @@
     ></mat-spinner>
   </div>
   <as-split
-    [gutterSize]="15"
     *ngIf="!loadingView && sizes"
     direction="vertical"
     (dragEnd)="onSplitDragEnd($event, 'row')"
   >
     <as-split-area [size]="sizes.row[0]">
       <as-split
-        [gutterSize]="15"
         direction="horizontal"
         (dragEnd)="onSplitDragEnd($event, 'row0Col')"
       >
@@ -66,13 +64,11 @@
     </as-split-area>
     <as-split-area [size]="sizes.row[1]">
       <as-split
-        [gutterSize]="15"
         direction="horizontal"
         (dragEnd)="onSplitDragEnd($event, 'row1Col')"
       >
         <as-split-area [size]="sizes.row1Col[0]">
           <as-split
-            [gutterSize]="15"
             direction="vertical"
             (dragEnd)="onSplitDragEnd($event, 'row1Col0Row')"
           >
@@ -94,7 +90,6 @@
                 }}"
                 [showLineSelection]="true"
                 [showColumnsSelection]="true"
-                
                 [inputDatas]="variablesDatas"
                 [displayedColumns]="variablesDisplayedColumns"
                 [selectedVariable]="preparationDatas?.selectedVariable"
@@ -113,7 +108,7 @@
               fxLayout="row"
               class="kl-card"
             >
-              <as-split [gutterSize]="15" direction="horizontal" disabled>
+              <as-split direction="horizontal" disabled>
                 <as-split-area fxFlex="50%">
                   <app-description-block
                     id="preparation-description-block-variable"

@@ -16,14 +16,12 @@
     }}</span>
   </div>
   <as-split
-    [gutterSize]="15"
     *ngIf="!loadingView && dimensionsDatasService.dimensionsDatas?.matrixDatas"
     direction="horizontal"
     (dragEnd)="onSplitDragEnd($event, 'col')"
   >
     <as-split-area id="axis-container" [size]="sizes?.col[0]">
       <as-split
-        [gutterSize]="15"
         direction="vertical"
         (dragEnd)="onSplitDragEnd($event, 'col0Row')"
         *ngIf="
@@ -60,7 +58,6 @@
         </as-split-area>
       </as-split>
       <as-split
-        [gutterSize]="15"
         direction="vertical"
         class="app-axis-context-container"
         [hidden]="!openContextView"

@@ -1,5 +1,4 @@
 <as-split
-  [gutterSize]="15"
   id="app-var-details-preparation-2d-comp"
   *ngIf="
     preparation2dDatas?.selectedVariable &&
@@ -10,7 +9,6 @@
 >
   <as-split-area [size]="sizes.row1Col1Row[0]" fxLayout="column" class="">
     <as-split
-      [gutterSize]="15"
       direction="vertical"
       (dragEnd)="onSplitDragEnd($event, 'row1Col1Row0Col')"
     >
@@ -60,7 +58,7 @@
     [size]="sizes.row1Col1Row[1]"
     fxLayout="row"
   >
-    <as-split [gutterSize]="15" direction="horizontal">
+    <as-split direction="horizontal">
       <as-split-area class="variables-list-container kl-card">
         <kl-ag-grid
           id="preparation-2d-current-cell-x"

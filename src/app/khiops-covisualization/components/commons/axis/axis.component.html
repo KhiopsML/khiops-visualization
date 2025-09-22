@@ -1,6 +1,5 @@
 <div class="axis-comp" fxFlexFill *ngIf="axisLayout && dimensionsDatas">
   <as-split
-    [gutterSize]="15"
     direction="horizontal"
     (dragEnd)="onSplitDragEnd($event, sizeId)"
     fxFlexFill
@@ -37,7 +36,7 @@
       order="3"
       *ngIf="axisLayout.isAnnotationChecked || axisLayout.isCompositionChecked"
     >
-      <as-split [gutterSize]="15" direction="vertical" fxFlexFill>
+      <as-split direction="vertical" fxFlexFill>
         <as-split-area
           [size]="30"
           order="1"

@@ -1,5 +1,4 @@
 <as-split
-  [gutterSize]="14"
   id="app-var-details-preparation-comp"
   direction="vertical"
   (dragEnd)="onSplitDragEnd($event, 'row1Col1Row')"
@@ -10,7 +9,6 @@
     class="kl-card"
   >
     <as-split
-      [gutterSize]="14"
       direction="vertical"
       (dragEnd)="onSplitDragEnd($event, 'row1Col1Row0Col')"
     >
@@ -79,7 +77,6 @@
       *ngIf="!preparationDatas?.currentIntervalDatas?.values"
     ></kl-no-data>
     <as-split
-      [gutterSize]="14"
       direction="horizontal"
       *ngIf="
         (!preparationDatas?.currentIntervalDatas?.values &&

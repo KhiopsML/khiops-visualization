@@ -4,11 +4,7 @@
   fxFlexFill
   fxLayoutAlign="start start"
 >
-  <as-split
-    [gutterSize]="15"
-    direction="vertical"
-    (dragEnd)="onSplitDragEnd($event, 'row')"
-  >
+  <as-split direction="vertical" (dragEnd)="onSplitDragEnd($event, 'row')">
     <as-split-area [size]="sizes?.row[0]" class="kl-card">
       <div fxLayout="column" fxFlexFill fxLayoutAlign="start start">
         <div
