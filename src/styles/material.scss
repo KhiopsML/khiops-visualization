@@ -424,3 +424,10 @@ button.mat-accent {
 .mdc-tab-indicator .mdc-tab-indicator__content {
   border-color: #ff6600 !important;
 }
+
+.mdc-checkbox,
+.mdc-checkbox__native-control,
+.mdc-checkbox__background {
+  width: 16px !important;
+  height: 16px !important;
+}

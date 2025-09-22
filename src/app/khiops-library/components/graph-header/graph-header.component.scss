@@ -39,11 +39,14 @@
   }
 
   #graph-header-tools {
-    margin-right: 4px;
     height: 100%;
     padding: 3px 8px;
     border-radius: 5px;
     position: relative;
+
+    .kl-slider-container {
+      width: 110px !important;
+    }
     h2 {
       white-space: nowrap;
       font-size: 0.8em;

@@ -14,22 +14,34 @@
     <mat-icon>equalizer</mat-icon>
     <span>{{ title || (selectedVariable && selectedVariable.name) }}</span>
   </h1>
-  <div
-    id="graph-header-tools"
-    *ngIf="!hideScale"
-    fxLayout="column"
-    fxLayoutAlign="center center"
-  >
-    <h2>{{ 'GLOBAL.SCALE' | translate }}</h2>
-    <mat-slider
-      attr.aria-label="{{ 'ARIA.CHARTS.UPDATE_GRAPH_SCALE' | translate }}"
-      [max]="maxScale"
-      [min]="minScale"
-      [step]="stepScale"
-      (input)="onScaleChanged($event?.target?.['valueAsNumber'])"
+  <div id="graph-header-tools" fxLayout="row" fxLayoutAlign="start center">
+    <mat-checkbox
+      *ngIf="!hidePersistScale"
+      color="accent"
+      class="kl-checkbox"
+      matTooltip="{{ 'SCALE_PERSISTENCE.MESSAGE' | translate }}"
+      [checked]="persistScaleOptions"
+      (change)="onPersistScaleOptionsChange($event.checked)"
     >
-      <input [(ngModel)]="scaleValue" matSliderThumb />
-    </mat-slider>
+      {{ 'SCALE_PERSISTENCE.TITLE' | translate }}
+    </mat-checkbox>
+    <div
+      *ngIf="!hideScale"
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      class="kl-slider-container"
+    >
+      <h2>{{ 'GLOBAL.SCALE' | translate }}</h2>
+      <mat-slider
+        attr.aria-label="{{ 'ARIA.CHARTS.UPDATE_GRAPH_SCALE' | translate }}"
+        [max]="maxScale"
+        [min]="minScale"
+        [step]="stepScale"
+        (input)="onScaleChanged($event?.target?.['valueAsNumber'])"
+      >
+        <input [(ngModel)]="scaleValue" matSliderThumb />
+      </mat-slider>
+    </div>
   </div>
   <kl-zoom-tools [alignment]="'row'" *ngIf="showZoom"></kl-zoom-tools>
   <kl-btn-fullscreen

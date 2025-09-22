@@ -13,13 +13,15 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { KhiopsLibraryService } from '../../providers/khiops-library.service';
+import { LS } from '../../enum/ls';
+import { Ls } from '@khiops-library/providers/ls.service';
 
 @Component({
-    selector: 'kl-graph-header',
-    templateUrl: './graph-header.component.html',
-    styleUrls: ['./graph-header.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  selector: 'kl-graph-header',
+  templateUrl: './graph-header.component.html',
+  styleUrls: ['./graph-header.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class GraphHeaderComponent implements OnInit {
   @Output() public toggleFullscreen?: EventEmitter<boolean> =
@@ -31,14 +33,19 @@ export class GraphHeaderComponent implements OnInit {
   @Input() public title: string = '';
   @Input() public smallTitle = false;
   @Input() public hideScale = false;
+  @Input() public hidePersistScale = false;
   @Input() public showZoom = false;
 
   public maxScale: number;
   public minScale: number;
   public stepScale: number;
   public scaleValue: number;
+  public persistScaleOptions: boolean = false;
 
-  constructor(private khiopsLibraryService: KhiopsLibraryService) {
+  constructor(
+    private ls: Ls,
+    private khiopsLibraryService: KhiopsLibraryService,
+  ) {
     this.maxScale =
       this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_GRAPH_SCALE;
     this.minScale =
@@ -50,7 +57,26 @@ export class GraphHeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.initializePersistScaleOptions();
     this.scaleValueChanged.emit(this.scaleValue);
+  }
+
+  /**
+   * Initialize the persist scale options based on the current context
+   */
+  private initializePersistScaleOptions() {
+    this.persistScaleOptions =
+      this.ls.get(LS.SETTING_PERSIST_SCALE_OPTIONS)?.toString() === 'true' ||
+      false;
+  }
+
+  /**
+   * Handle changes to the persist scale options checkbox
+   */
+  onPersistScaleOptionsChange(checked: boolean) {
+    this.persistScaleOptions = checked;
+    this.ls.set(LS.SETTING_PERSIST_SCALE_OPTIONS, checked);
+    this.ls.setAll();
   }
 
   onToggleFullscreen($event: boolean | undefined) {

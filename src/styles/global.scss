@@ -494,3 +494,16 @@ app-home-layout {
   padding-top: 10px;
   padding-left: 15px;
 }
+
+mat-checkbox.kl-checkbox {
+  margin: auto 0.5rem !important;
+  padding: 0px !important;
+  border-radius: var(--border-radius);
+  background: var(--bgColor-20);
+  border: 1px solid var(--border-color);
+  .mdc-form-field {
+    label {
+      min-width: unset !important;
+    }
+  }
+}

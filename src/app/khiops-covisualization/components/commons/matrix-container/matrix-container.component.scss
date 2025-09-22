@@ -16,28 +16,6 @@
         margin-left: 1rem;
         margin-right: 0.5rem;
       }
-
-      ::ng-deep .matrix-conditionalOnContext-checkbox {
-        margin: auto 0.5rem !important;
-        padding: 0px 5px 0px 8px;
-        border-radius: 4px;
-        padding-left: 15px !important;
-        background: var(--bgColor-20);
-        ::ng-deep .mdc-form-field {
-          overflow: hidden;
-          .mdc-checkbox {
-            position: absolute !important;
-            left: -3px;
-          }
-          .mdc-label {
-            font-size: 0.8rem;
-            max-width: 100px !important;
-            line-height: 13px !important;
-            white-space: pre-line !important;
-            margin-left: 18px !important;
-          }
-        }
-      }
     }
   }
 }
