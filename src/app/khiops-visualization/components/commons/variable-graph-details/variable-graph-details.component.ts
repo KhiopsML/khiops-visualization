@@ -133,8 +133,11 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
 
             if (this.isHistogramDisplayed()) {
               if (this.selectedVariable) {
+                // Reset graph options when changing variable (respects SCALE PERSISTENCE setting)
                 this.distributionDatasService.getHistogramGraphDatas(
                   this.selectedVariable,
+                  undefined,
+                  true, // resetGraphOptions = true for variable change
                 );
               }
             } else {
@@ -282,9 +285,12 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
 
   onInterpretableHistogramChanged(index: number) {
     if (this.selectedVariable) {
+      // Don't reset graph options when only changing interpretable histogram 
+      // This preserves SCALE PERSISTENCE settings
       this.distributionDatasService.getHistogramGraphDatas(
         this.selectedVariable,
         index,
+        false, // resetGraphOptions = false to preserve scale settings
       );
       this.interpretableHistogramChanged.emit(index);
     }

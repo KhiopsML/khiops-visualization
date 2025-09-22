@@ -598,11 +598,13 @@ export class DistributionDatasService {
    *
    * @param selectedVariable - The variable for which histogram data is to be generated. It should have a `rank` property.
    * @param interpretableHistogramNumber - Optional histogram index to use for modlHistograms
+   * @param resetGraphOptions - Whether to reset graph options (scale settings). Set to false when only changing interpretable histogram to preserve SCALE PERSISTENCE settings
    * @returns An array of `HistogramValuesI` objects containing the histogram graph details, or `undefined` if the data is not available.
    */
   getHistogramGraphDatas(
     selectedVariable: PreparationVariableModel | TreePreparationVariableModel,
     interpretableHistogramNumber?: number,
+    resetGraphOptions: boolean = true,
   ): HistogramValuesI[] | undefined {
     const varDatas =
       this.appService.appDatas?.preparationReport
@@ -612,7 +614,11 @@ export class DistributionDatasService {
       return undefined;
     }
 
-    this.distributionDatas.setDefaultGraphOptions();
+    // Only reset graph options when explicitly requested (e.g., variable change)
+    // This preserves SCALE PERSISTENCE settings when only changing interpretable histogram
+    if (resetGraphOptions) {
+      this.distributionDatas.setDefaultGraphOptions();
+    }
 
     let histogramGraphDetails: HistogramValuesI[];
 
