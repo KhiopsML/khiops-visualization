@@ -4,10 +4,13 @@
   fxLayout="column"
   [ngClass]="{ fullscreen: isFullscreen }"
 >
-  <div class="coocurence-matrix-tools" fxLayout="row">
+  <div
+    class="coocurence-matrix-tools"
+    fxLayout="row"
+    [hidden]="!preparation2dDatas?.matrixDatas"
+  >
     <kl-matrix-toggle
       class="screenshot-hide"
-      [hidden]="!preparation2dDatas?.matrixDatas"
       [matrixOptions]="matrixOptions"
     ></kl-matrix-toggle>
     <kl-btn-fullscreen
@@ -110,7 +113,6 @@
             (selectListItem)="onSelectCellRowChanged($event)"
             [showLineSelection]="true"
             [showColumnsSelection]="false"
-            
             [inputDatas]="matrixCells?.values"
             [title]="matrixCells?.title"
             [displayedColumns]="matrixCells?.displayedColumns"
