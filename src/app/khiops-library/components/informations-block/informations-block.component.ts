@@ -9,6 +9,10 @@ import {
   NgZone,
   Input,
   ChangeDetectionStrategy,
+  OnInit,
+  OnDestroy,
+  HostListener,
+  ChangeDetectorRef,
 } from '@angular/core';
 
 import { SelectableComponent } from '../../components/selectable/selectable.component';
@@ -29,11 +33,15 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: false,
 })
-export class InformationsBlockComponent extends SelectableComponent {
+export class InformationsBlockComponent
+  extends SelectableComponent
+  implements OnInit, OnDestroy
+{
   @Input() public inputDatas: InfosDatasI[] | undefined;
   @Input() public title: string = '';
   @Input() public icon = 'tune';
   public componentType = COMPONENT_TYPES.INFORMATIONS; // needed to copy datas
+  public gaugeSize: number = 75; // Default gauge size
 
   metricTypes = [
     INFO_DATA_TYPES.INSTANCES,
@@ -52,8 +60,37 @@ export class InformationsBlockComponent extends SelectableComponent {
     public override selectableService: SelectableService,
     public override ngzone: NgZone,
     public override configService: ConfigService,
+    private cdr: ChangeDetectorRef,
   ) {
     super(selectableService, ngzone, configService);
+  }
+
+  ngOnInit() {
+    this.updateGaugeSize();
+  }
+
+  override ngOnDestroy() {
+    super.ngOnDestroy();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.updateGaugeSize();
+  }
+
+  /**
+   * Update gauge size based on current screen resolution
+   */
+  private updateGaugeSize() {
+    if (typeof window !== 'undefined') {
+      const isSmallScreen =
+        window.innerWidth <= 1440 || window.innerHeight <= 1080;
+      const newSize = isSmallScreen ? 60 : 75;
+      if (this.gaugeSize !== newSize) {
+        this.gaugeSize = newSize;
+        this.cdr.detectChanges(); // Trigger change detection
+      }
+    }
   }
 
   /**

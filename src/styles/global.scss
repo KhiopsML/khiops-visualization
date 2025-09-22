@@ -380,14 +380,51 @@ canvas:focus {
   }
 }
 
-@media screen and (max-width: 1280px), screen and (max-height: 1024px) {
+@media screen and (max-width: 1440px), screen and (max-height: 1080px) {
+  #home-layout-comp {
+    height: calc(100% - 15px) !important;
+    width: calc(100% - 20px) !important;
+    padding-top: 5px !important;
+    padding-left: 10px !important;
+  }
   h1 {
-    margin: 0.8em 0em 0.4em 1em;
+    margin: 0.4em 0em 0.4em 1em !important;
   }
 
   .clear-bottom-graph {
     height: 0.4em;
     width: 100%;
+  }
+
+  .comp-header {
+    padding-top: 5px !important;
+    padding-bottom: 10px !important;
+  }
+
+  .kl-card {
+    padding: 5px !important;
+  }
+  .informations-block-comp {
+    .metrics-container {
+      margin-bottom: 5px !important;
+    }
+    .metric-value {
+      font-size: 18px !important;
+      em {
+        font-size: 13px !important;
+      }
+    }
+    table {
+      font-size: 0.9em !important;
+      th {
+        min-width: 100px !important;
+      }
+    }
+    .informations-main-values {
+      padding: 2px !important;
+      margin: 0 5px !important;
+      min-height: 60px !important;
+    }
   }
 }
 

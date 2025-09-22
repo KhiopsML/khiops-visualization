@@ -1,3 +1,10 @@
+:root {
+  --mat-tab-active-indicator-height: 1px;
+  --header-height: 60px;
+  --border-radius: 2px;
+  --gripOpacity: 1;
+}
+
 [data-color-scheme='orange'] {
   color-scheme: orange;
   --bgColorContrast: #000;
@@ -23,29 +30,7 @@
   --yellowMain: #ff6600;
   --redMain: #fb473a;
   --greenMain: #3afb74;
-  --gripOpacity: 1;
   --cell-type-num: #d1dcee;
   --cell-type-cat: #f5ddaf;
-  --mat-tab-active-indicator-height: 1px;
-  --header-height: 60px;
-  --border-radius: 2px;
   --border-color: rgba(4, 32, 69, 0.1);
-}
-
-::ng-deep .orange-theme {
-  mat-button-toggle-group,
-  button,
-  .search-input-btn {
-    border-width: 1px !important;
-    border-color: black !important;
-    border-radius: var(--border-radius) !important;
-  }
-
-  button.mat-accent {
-    color: black !important;
-  }
-
-  .mdc-tab-indicator .mdc-tab-indicator__content {
-    border-color: #ff6600 !important;
-  }
 }

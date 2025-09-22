@@ -23,11 +23,7 @@ import { provideAngularSplitOptions } from 'angular-split';
     AppRoutingModule,
     MatButtonModule,
   ],
-  providers: [
-    provideAngularSplitOptions({
-      gutterSize: 15,
-    }),
-  ],
+  providers: [provideAngularSplitOptions({})],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

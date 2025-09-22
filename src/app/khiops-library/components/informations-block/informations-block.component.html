@@ -37,7 +37,10 @@
       fxLayoutAlign="center center"
     >
       <div fxLayoutAlign="start center" fxLayout="row">
-        <kl-gauge [value]="getPercentageValue(gaugeData.value)" [size]="75">
+        <kl-gauge
+          [value]="getPercentageValue(gaugeData.value)"
+          [size]="gaugeSize"
+        >
         </kl-gauge>
 
         <strong>{{ gaugeData.title | translate }}</strong>
