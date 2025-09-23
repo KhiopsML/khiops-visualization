@@ -11,9 +11,11 @@ import {
   NgZone,
   OnInit,
   OnChanges,
+  OnDestroy,
   SimpleChanges,
   EventEmitter,
 } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { SelectableService } from '../selectable/selectable.service';
 import { ScrollableGraphComponent } from '../scrollable-graph/scrollable-graph.component';
 import { KhiopsLibraryService } from '../../providers/khiops-library.service';
@@ -27,9 +29,9 @@ import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
-import { LS } from '@khiops-library/enum/ls';
-import { Ls } from '@khiops-library/providers/ls.service';
 import { TranslateService } from '@ngstack/translate';
+import { VariableScaleSettingsService } from '../../../khiops-visualization/providers/variable-scale-settings.service';
+import { ScaleChangeEventsService } from '../../../khiops-visualization/providers/scale-change-events.service';
 
 @Component({
   selector: 'kl-distribution-graph',
@@ -40,7 +42,7 @@ import { TranslateService } from '@ngstack/translate';
 })
 export class DistributionGraphComponent
   extends ScrollableGraphComponent
-  implements OnInit, OnChanges
+  implements OnInit, OnChanges, OnDestroy
 {
   @Input() public position = 0;
   @Input() declare public inputDatas: ChartDatasModel | undefined;
@@ -48,6 +50,7 @@ export class DistributionGraphComponent
   @Input() public activeEntries: number = 0;
   @Input() public hideGraphOptions = false;
   @Input() public variableType?: string;
+  @Input() public variableName?: string;
 
   @Output() private graphTypeChanged: EventEmitter<string> = new EventEmitter();
   @Output() private selectedItemChanged: EventEmitter<number> =
@@ -59,6 +62,8 @@ export class DistributionGraphComponent
   public componentType = COMPONENT_TYPES.BAR_CHART; // needed to copy datas
   public colorSet: ChartColorsSetI | undefined;
   public chartOptions: ChartOptions;
+
+  private scaleChangeSubscription: Subscription | undefined;
 
   private readonly FALLBACK_MIN_VALUE = 1;
   private readonly PERCENTAGE_MULTIPLIER = 100;
@@ -100,7 +105,8 @@ export class DistributionGraphComponent
     public translate: TranslateService,
     private toPrecision: ToPrecisionPipe,
     private khiopsLibraryService: KhiopsLibraryService,
-    private ls: Ls,
+    private variableScaleSettingsService: VariableScaleSettingsService,
+    private scaleChangeEventsService: ScaleChangeEventsService,
   ) {
     super(selectableService, ngzone, configService);
 
@@ -154,7 +160,40 @@ export class DistributionGraphComponent
    */
   ngOnInit() {
     this.graphIdContainer = 'distribution-graph-comp-' + this.position;
+    this.restoreVariableScaleSettings();
     this.updateChartOptions();
+
+    // Listen for global scale change events from ChangeScaleButtonComponent
+    this.scaleChangeSubscription =
+      this.scaleChangeEventsService.scaleChange$.subscribe(() => {
+        // Update chart options when global scale changes
+        setTimeout(() => {
+          this.updateChartOptions();
+        });
+      });
+  }
+
+  /**
+   * Cleanup subscriptions
+   */
+  override ngOnDestroy() {
+    this.scaleChangeSubscription?.unsubscribe();
+  }
+
+  /**
+   * Restore variable-specific scale settings from storage
+   */
+  private restoreVariableScaleSettings() {
+    if (this.variableName) {
+      const savedYScale = this.variableScaleSettingsService.getVariableYScale(
+        this.variableName,
+      );
+
+      if (savedYScale && this.graphOptions) {
+        // Create new object reference for OnPush change detection
+        this.graphOptions = { ...this.graphOptions, selected: savedYScale };
+      }
+    }
   }
 
   /**
@@ -165,6 +204,12 @@ export class DistributionGraphComponent
     super.ngOnChanges(changes);
     if (changes['graphOptions'] && !changes['graphOptions'].firstChange) {
       // Update chart options when graphOptions changes to ensure the scale type is correct
+      this.restoreVariableScaleSettings();
+      this.updateChartOptions();
+    }
+    // Restore variable-specific settings when variable changes
+    if (changes['variableName'] && !changes['variableName'].firstChange) {
+      this.restoreVariableScaleSettings();
       this.updateChartOptions();
     }
   }
@@ -183,8 +228,14 @@ export class DistributionGraphComponent
    * @param type The new graph type to set
    */
   changeGraphType(type: string) {
-    // this.trackerService.trackEvent('click', 'distribution_graph_type', this.graphOptions.selected);
-    this.ls.set(LS.DISTRIBUTION_GRAPH_OPTION_Y, type);
+    // Save the scale setting for this specific variable
+    if (this.variableName) {
+      this.variableScaleSettingsService.setVariableYScale(
+        this.variableName,
+        type,
+      );
+    }
+
     this.graphTypeChanged.emit(type);
 
     // Update the graph options with updated datas

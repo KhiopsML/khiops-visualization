@@ -54,6 +54,7 @@
       [graphOptions]="distributionDatas?.distributionGraphOptionsY"
       [inputDatas]="distributionDatas?.distributionGraphDatas"
       [variableType]="selectedVariable?.type"
+      [variableName]="selectedVariable?.name"
       (graphTypeChanged)="onDistributionGraphTypeChanged($event)"
       [activeEntries]="activeEntries"
       (selectedItemChanged)="onSelectedDistributionGraphItemChanged($event)"
@@ -77,6 +78,7 @@
         distributionDatas?.defaultInterpretableHistogramNumber - 1
       "
       [histogramNumber]="distributionDatas?.histogramNumber"
+      [variableName]="selectedVariable?.name"
       (interpretableHistogramChanged)="onInterpretableHistogramChanged($event)"
     >
     </app-histogram>

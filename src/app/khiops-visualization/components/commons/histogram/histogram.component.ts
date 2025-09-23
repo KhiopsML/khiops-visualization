@@ -35,10 +35,9 @@ import {
 import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options';
 import { debounceTime, Subject } from 'rxjs';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
-import { LS } from '@khiops-library/enum/ls';
-import { AppService } from '@khiops-visualization/providers/app.service';
 import { BIG_CHART_SIZE } from '@khiops-library/config/global';
 import { ZoomToolsEventsService } from '@khiops-library/components/zoom-tools/zoom-tools.service';
+import { VariableScaleSettingsService } from '@khiops-visualization/providers/variable-scale-settings.service';
 
 @Component({
   selector: 'app-histogram',
@@ -70,6 +69,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   @Input() public defaultInterpretableHistogramNumber: number = 0;
   @Input() public graphOptionsX: DistributionOptionsI | undefined = undefined;
   @Input() public graphOptionsY: DistributionOptionsI | undefined = undefined;
+  @Input() public variableName?: string; // For scale settings per variable
 
   private h: number = 0;
   public w: number = 0;
@@ -122,6 +122,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     public override selectableService: SelectableService,
     public override ngzone: NgZone,
     public override configService: ConfigService,
+    private variableScaleSettingsService: VariableScaleSettingsService,
   ) {
     super(selectableService, ngzone, configService);
 
@@ -177,7 +178,34 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
       this.zoom(0);
     });
 
+    // Restore variable-specific scale settings
+    this.restoreVariableScaleSettings();
+
     this.datas && this.update();
+  }
+
+  /**
+   * Restore scale settings for the current variable if they exist
+   */
+  private restoreVariableScaleSettings(): void {
+    if (this.variableName) {
+      const savedXScale = this.variableScaleSettingsService.getVariableXScale(
+        this.variableName,
+      );
+      const savedYScale = this.variableScaleSettingsService.getVariableYScale(
+        this.variableName,
+      );
+
+      // Apply saved X scale - create new object reference for OnPush change detection
+      if (savedXScale && this.graphOptionsX) {
+        this.graphOptionsX = { ...this.graphOptionsX, selected: savedXScale };
+      }
+
+      // Apply saved Y scale - create new object reference for OnPush change detection
+      if (savedYScale && this.graphOptionsY) {
+        this.graphOptionsY = { ...this.graphOptionsY, selected: savedYScale };
+      }
+    }
   }
 
   public hideActiveEntries() {
@@ -213,7 +241,14 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   }
 
   public changeGraphTypeX(type: string) {
-    AppService.Ls.set(LS.DISTRIBUTION_GRAPH_OPTION_X, type);
+    // Save scale setting for this specific variable
+    if (this.variableName) {
+      this.variableScaleSettingsService.setVariableXScale(
+        this.variableName,
+        type,
+      );
+    }
+
     if (this.graphOptionsX) {
       this.graphOptionsX.selected = type;
     }
@@ -221,7 +256,14 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   }
 
   public changeGraphTypeY(type: string) {
-    AppService.Ls.set(LS.DISTRIBUTION_GRAPH_OPTION_Y, type);
+    // Save scale setting for this specific variable
+    if (this.variableName) {
+      this.variableScaleSettingsService.setVariableYScale(
+        this.variableName,
+        type,
+      );
+    }
+
     if (this.graphOptionsY) {
       this.graphOptionsY.selected = type;
     }
@@ -307,6 +349,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.datas && !changes.datas.firstChange) {
+      this.restoreVariableScaleSettings();
       this.datas && this.update();
     }
     if (changes.selectedItem) {
