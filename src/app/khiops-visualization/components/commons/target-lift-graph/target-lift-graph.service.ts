@@ -16,6 +16,7 @@ import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 import { LS } from '@khiops-library/enum/ls';
 import _ from 'lodash';
+import { UtilsService } from '../../../../khiops-library/providers/utils.service';
 
 export interface TargetLiftGraphData {
   targetLift?: TargetLiftValuesI;
@@ -205,16 +206,37 @@ export class TargetLiftGraphService {
    * Get tooltip title for chart
    * @param items - Tooltip items
    * @param title - Chart title
-   * @returns Title string or undefined
+   * @returns Title string or string array or undefined
    */
   getTooltipTitle(
     items: TooltipItem<'line'>[],
     title?: string,
-  ): string | undefined {
+  ): string | string[] | undefined {
     if (!items || items.length === 0) {
       return undefined;
     }
-    return title;
+
+    const result: string[] = [];
+
+    if (title) {
+      result.push(title);
+    }
+
+    // Add target modality percentage
+    if (items[0]) {
+      const yValue = items[0].parsed?.y;
+      if (yValue !== undefined) {
+        const numPrecision = AppService.Ls.get(LS.SETTING_NUMBER_PRECISION);
+        result.push(
+          this.translate.get('GLOBAL.TARGET_MODALITY') +
+            ': ' +
+            UtilsService.getPrecisionNumber(yValue, numPrecision) +
+            '%',
+        );
+      }
+    }
+
+    return result.length > 1 ? result : result[0] || title;
   }
 
   /**
@@ -233,7 +255,9 @@ export class TargetLiftGraphService {
     }
 
     const curveName = items.dataset.label;
-    const formattedValue = yValue.toFixed(2) + '%';
+    const numPrecision = AppService.Ls.get(LS.SETTING_NUMBER_PRECISION);
+    const formattedValue =
+      UtilsService.getPrecisionNumber(yValue, numPrecision) + '%';
 
     if (this.evaluationDatasService.isRegressionAnalysis()) {
       return `${curveName}: ${formattedValue}`;
