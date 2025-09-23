@@ -50,7 +50,7 @@ export class DistributionGraphComponent
   @Input() public activeEntries: number = 0;
   @Input() public hideGraphOptions = false;
   @Input() public variableType?: string;
-  @Input() public variableName?: string;
+  @Input() public variableRank?: number;
 
   @Output() private graphTypeChanged: EventEmitter<string> = new EventEmitter();
   @Output() private selectedItemChanged: EventEmitter<number> =
@@ -184,9 +184,9 @@ export class DistributionGraphComponent
    * Restore variable-specific scale settings from storage
    */
   private restoreVariableScaleSettings() {
-    if (this.variableName) {
+    if (this.variableRank !== undefined) {
       const savedYScale = this.variableScaleSettingsService.getVariableYScale(
-        this.variableName,
+        this.variableRank,
       );
 
       if (savedYScale && this.graphOptions) {
@@ -207,8 +207,8 @@ export class DistributionGraphComponent
       this.restoreVariableScaleSettings();
       this.updateChartOptions();
     }
-    // Restore variable-specific settings when variable changes
-    if (changes['variableName'] && !changes['variableName'].firstChange) {
+    // Restore variable-specific settings when variable rank changes
+    if (changes['variableRank'] && !changes['variableRank'].firstChange) {
       this.restoreVariableScaleSettings();
       this.updateChartOptions();
     }
@@ -229,9 +229,9 @@ export class DistributionGraphComponent
    */
   changeGraphType(type: string) {
     // Save the scale setting for this specific variable
-    if (this.variableName) {
+    if (this.variableRank !== undefined) {
       this.variableScaleSettingsService.setVariableYScale(
-        this.variableName,
+        this.variableRank,
         type,
       );
     }

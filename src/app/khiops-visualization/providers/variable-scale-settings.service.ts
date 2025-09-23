@@ -6,6 +6,7 @@
 
 import { Injectable } from '@angular/core';
 import { Ls } from '@khiops-library/providers/ls.service';
+import { LS } from '@khiops-library/enum/ls';
 
 export interface VariableScaleSettings {
   xScale?: string;
@@ -18,103 +19,105 @@ export interface VariableScaleSettings {
 export class VariableScaleSettingsService {
   private readonly VARIABLE_SCALE_SETTINGS_PREFIX = 'VARIABLE_SCALE_';
 
-  constructor(private ls: Ls) {}
+  constructor(private ls: Ls) {
+    // Clear all session variable scale settings on service initialization
+    this.clearAllVariableScaleSettings();
+  }
 
   /**
    * Set scale settings for a specific variable
-   * @param variableName The name of the variable
+   * @param variableRank The rank of the variable
    * @param settings The scale settings to save
    */
   setVariableScaleSettings(
-    variableName: string,
+    variableRank: number,
     settings: VariableScaleSettings,
   ): void {
-    const key = this.generateVariableKey(variableName);
-    const currentSettings = this.getVariableScaleSettings(variableName) || {};
+    const key = this.generateVariableKey(variableRank);
+    const currentSettings = this.getVariableScaleSettings(variableRank) || {};
     const updatedSettings = { ...currentSettings, ...settings };
     this.ls.set(key, updatedSettings);
   }
 
   /**
    * Get scale settings for a specific variable
-   * @param variableName The name of the variable
+   * @param variableRank The rank of the variable
    * @returns The scale settings or undefined if not found
    */
   getVariableScaleSettings(
-    variableName: string,
+    variableRank: number,
   ): VariableScaleSettings | undefined {
-    const key = this.generateVariableKey(variableName);
+    const key = this.generateVariableKey(variableRank);
     return this.ls.get(key);
   }
 
   /**
    * Set X scale for a specific variable
-   * @param variableName The name of the variable
+   * @param variableRank The rank of the variable
    * @param xScale The X scale to set
    */
-  setVariableXScale(variableName: string, xScale: string): void {
-    this.setVariableScaleSettings(variableName, { xScale });
+  setVariableXScale(variableRank: number, xScale: string): void {
+    this.setVariableScaleSettings(variableRank, { xScale });
   }
 
   /**
    * Set Y scale for a specific variable
-   * @param variableName The name of the variable
+   * @param variableRank The rank of the variable
    * @param yScale The Y scale to set
    */
-  setVariableYScale(variableName: string, yScale: string): void {
-    this.setVariableScaleSettings(variableName, { yScale });
+  setVariableYScale(variableRank: number, yScale: string): void {
+    this.setVariableScaleSettings(variableRank, { yScale });
   }
 
   /**
    * Get X scale for a specific variable
-   * @param variableName The name of the variable
-   * @param defaultValue The default value if not found
-   * @returns The X scale or the default value
+   * @param variableRank The rank of the variable
+   * @returns The X scale or the default global value if not found
    */
-  getVariableXScale(
-    variableName: string,
-    defaultValue?: string,
-  ): string | undefined {
-    const settings = this.getVariableScaleSettings(variableName);
-    return settings?.xScale || defaultValue;
+  getVariableXScale(variableRank: number): string | undefined {
+    const settings = this.getVariableScaleSettings(variableRank);
+    if (settings?.xScale) {
+      return settings.xScale;
+    }
+    // Return global default if no variable-specific setting
+    return this.ls.get(LS.DISTRIBUTION_GRAPH_OPTION_X);
   }
 
   /**
    * Get Y scale for a specific variable
-   * @param variableName The name of the variable
-   * @param defaultValue The default value if not found
-   * @returns The Y scale or the default value
+   * @param variableRank The rank of the variable
+   * @returns The Y scale or the default global value if not found
    */
-  getVariableYScale(
-    variableName: string,
-    defaultValue?: string,
-  ): string | undefined {
-    const settings = this.getVariableScaleSettings(variableName);
-    return settings?.yScale || defaultValue;
+  getVariableYScale(variableRank: number): string | undefined {
+    const settings = this.getVariableScaleSettings(variableRank);
+    if (settings?.yScale) {
+      return settings.yScale;
+    }
+    // Return global default if no variable-specific setting
+    return this.ls.get(LS.DISTRIBUTION_GRAPH_OPTION_Y);
   }
 
   /**
    * Clear scale settings for a specific variable
    */
-  clearVariableScaleSettings(variableName: string): void {
-    const key = this.generateVariableKey(variableName);
+  clearVariableScaleSettings(variableRank: number): void {
+    const key = this.generateVariableKey(variableRank);
     this.ls.del(key);
   }
 
   /**
-   * Clear all variable scale settings
+   * Clear all variable scale settings (session variables)
    */
   clearAllVariableScaleSettings(): void {
     this.ls.delStartWith(this.VARIABLE_SCALE_SETTINGS_PREFIX);
   }
 
   /**
-   * Generate a unique key for a variable based only on its name
-   * Note: preparationSource is not used because a variable should have the same scale across all tabs
-   * @param variableName The name of the variable
+   * Generate a unique key for a variable based on its rank
+   * @param variableRank The rank of the variable
    * @returns A unique key for the variable
    */
-  private generateVariableKey(variableName: string): string {
-    return `${this.VARIABLE_SCALE_SETTINGS_PREFIX}${variableName}`;
+  private generateVariableKey(variableRank: number): string {
+    return `${this.VARIABLE_SCALE_SETTINGS_PREFIX}${variableRank}`;
   }
 }

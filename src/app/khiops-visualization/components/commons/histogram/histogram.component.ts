@@ -69,7 +69,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   @Input() public defaultInterpretableHistogramNumber: number = 0;
   @Input() public graphOptionsX: DistributionOptionsI | undefined = undefined;
   @Input() public graphOptionsY: DistributionOptionsI | undefined = undefined;
-  @Input() public variableName?: string; // For scale settings per variable
+  @Input() public variableRank?: number; // For scale settings per variable
 
   private h: number = 0;
   public w: number = 0;
@@ -188,12 +188,12 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
    * Restore scale settings for the current variable if they exist
    */
   private restoreVariableScaleSettings(): void {
-    if (this.variableName) {
+    if (this.variableRank !== undefined) {
       const savedXScale = this.variableScaleSettingsService.getVariableXScale(
-        this.variableName,
+        this.variableRank,
       );
       const savedYScale = this.variableScaleSettingsService.getVariableYScale(
-        this.variableName,
+        this.variableRank,
       );
 
       // Apply saved X scale - create new object reference for OnPush change detection
@@ -242,9 +242,9 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 
   public changeGraphTypeX(type: string) {
     // Save scale setting for this specific variable
-    if (this.variableName) {
+    if (this.variableRank !== undefined) {
       this.variableScaleSettingsService.setVariableXScale(
-        this.variableName,
+        this.variableRank,
         type,
       );
     }
@@ -257,9 +257,9 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 
   public changeGraphTypeY(type: string) {
     // Save scale setting for this specific variable
-    if (this.variableName) {
+    if (this.variableRank !== undefined) {
       this.variableScaleSettingsService.setVariableYScale(
-        this.variableName,
+        this.variableRank,
         type,
       );
     }
