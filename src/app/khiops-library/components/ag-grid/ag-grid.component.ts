@@ -156,7 +156,11 @@ export class AgGridComponent
       this.searchFormVisible = true;
     }
     setTimeout(() => {
-      if (this.agGrid) {
+      // Only auto-fit if there's no saved grid mode or if the mode is fitToSpace
+      if (
+        this.agGrid &&
+        (!this.gridModes[this.id!] || this.gridModes[this.id!] === 'fitToSpace')
+      ) {
         this.agGrid?.api?.sizeColumnsToFit();
       }
       this.updateColumnFilterBadge();
@@ -246,13 +250,26 @@ export class AgGridComponent
       // First display: automatically fit to space
       this.fitToSpace();
     } else {
-      // Not first display: use existing logic
-      // Reinit current saved columns sizes when user fit grid to space
-      delete this.cellsSizes[this.id!];
-      this.ls.set(LS.CELL_AG_GRID, this.cellsSizes);
+      // Not first display: restore the saved grid mode
+      this.gridMode = this.gridModes[this.id!];
 
-      this.saveGridModes(this.gridMode);
-      this.agGrid?.api?.sizeColumnsToFit();
+      if (this.gridMode === 'fitToContent') {
+        // Apply fit to content
+        this.gridOptions.columnApi?.autoSizeAllColumns(true);
+      } else if (this.gridMode === 'fitToSpace') {
+        // Reinit current saved columns sizes when user fit grid to space
+        delete this.cellsSizes[this.id!];
+        this.ls.set(LS.CELL_AG_GRID, this.cellsSizes);
+
+        this.agGrid?.api?.sizeColumnsToFit();
+      } else {
+        // Fallback to fitToSpace if mode is unknown or corrupted
+        this.gridMode = 'fitToSpace';
+        delete this.cellsSizes[this.id!];
+        this.ls.set(LS.CELL_AG_GRID, this.cellsSizes);
+        this.agGrid?.api?.sizeColumnsToFit();
+        this.saveGridModes(this.gridMode);
+      }
 
       this.restoreState();
     }
@@ -661,6 +678,7 @@ export class AgGridComponent
       this.agGrid?.api?.sizeColumnsToFit();
     });
 
+    // Restore state but without affecting column sizes (already handled by sizeColumnsToFit)
     this.restoreState();
   }
 
@@ -670,9 +688,15 @@ export class AgGridComponent
    */
   fitToContent() {
     this.gridMode = 'fitToContent';
+
+    // Clear saved column sizes since we want auto-sizing
+    delete this.cellsSizes[this.id!];
+    this.ls.set(LS.CELL_AG_GRID, this.cellsSizes);
+
     this.gridOptions.columnApi?.autoSizeAllColumns(true);
     this.saveGridModes(this.gridMode);
 
+    // Restore state but without affecting column sizes (already handled by autoSizeAllColumns)
     this.restoreState();
   }
 
