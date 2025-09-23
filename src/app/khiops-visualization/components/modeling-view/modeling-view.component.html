@@ -51,13 +51,20 @@
             [inputDatas]="targetVariableStatsInformations"
           ></kl-informations-block>
         </as-split-area>
-        <as-split-area [size]="sizes?.row0Col[2]" class="kl-card">
-          <kl-informations-block
-            id="modeling-informations-block-informations"
-            title="{{ 'GLOBAL.TRAINED_PREDICTORS' | translate }}"
-            icon="subject"
-            [inputDatas]="trainedPredictorsSummaryDatas"
-          ></kl-informations-block>
+        <as-split-area [size]="sizes?.row0Col[2]">
+          <as-split direction="vertical" disabled unit="pixel">
+            <as-split-area class="kl-card">
+              <kl-informations-block
+                id="modeling-informations-block-informations"
+                title="{{ 'GLOBAL.TRAINED_PREDICTORS' | translate }}"
+                icon="subject"
+                [inputDatas]="trainedPredictorsSummaryDatas"
+              ></kl-informations-block>
+            </as-split-area>
+            <as-split-area [size]="50" class="kl-card">
+              <app-change-scale-button fxFlexFill></app-change-scale-button>
+            </as-split-area>
+          </as-split>
         </as-split-area>
       </as-split>
     </as-split-area>
