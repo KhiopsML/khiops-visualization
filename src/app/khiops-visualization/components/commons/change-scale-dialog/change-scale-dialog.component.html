@@ -1,0 +1,44 @@
+<div id="change-scale-dialog-comp">
+  <h1 style="margin-left: 0; margin-bottom: 1.5rem">
+    {{ 'GLOBAL.CHANGE_ALL_SCALES' | translate }}
+  </h1>
+
+  <mat-dialog-content>
+    <div class="scale-options">
+      <!-- X-axis scale selection -->
+      <div class="scale-group">
+        <h3>{{ 'GLOBAL.X_AXIS' | translate }}</h3>
+        <mat-button-toggle-group
+          [(ngModel)]="xScale"
+          aria-label="X-axis scale"
+          class="scale-toggle-group"
+        >
+          <mat-button-toggle value="linear"> xLin </mat-button-toggle>
+          <mat-button-toggle value="logarithmic"> xLog </mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+
+      <!-- Y-axis scale selection -->
+      <div class="scale-group">
+        <h3>{{ 'GLOBAL.Y_AXIS' | translate }}</h3>
+        <mat-button-toggle-group
+          [(ngModel)]="yScale"
+          aria-label="Y-axis scale"
+          class="scale-toggle-group"
+        >
+          <mat-button-toggle value="linear"> yLin </mat-button-toggle>
+          <mat-button-toggle value="logarithmic"> yLog </mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="onApply()" cdkFocusInitial>
+      {{ 'GLOBAL.APPLY' | translate }}
+    </button>
+    <button mat-button (click)="onCancel()">
+      {{ 'GLOBAL.CANCEL' | translate }}
+    </button>
+  </mat-dialog-actions>
+</div>

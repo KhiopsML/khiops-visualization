@@ -312,6 +312,13 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     if (changes.selectedItem) {
       this.drawSelectedItem();
     }
+    // Force update when graph options change (scale changes)
+    if (changes.graphOptionsX && !changes.graphOptionsX.firstChange) {
+      this.datas && this.update();
+    }
+    if (changes.graphOptionsY && !changes.graphOptionsY.firstChange) {
+      this.datas && this.update();
+    }
   }
 
   private handleCanvasClick(event: any) {

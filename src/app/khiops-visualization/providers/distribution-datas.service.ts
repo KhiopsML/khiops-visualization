@@ -71,6 +71,14 @@ export class DistributionDatasService {
   }
 
   /**
+   * Forces update of distribution graph options.
+   * This method regenerates the graph options to trigger ngOnChanges detection.
+   */
+  updateGraphOptions(): void {
+    this.distributionDatas.setDefaultGraphOptions();
+  }
+
+  /**
    * Sets the preparation source for the distribution data.
    *
    * @param preparationSource - The source of the preparation to be set.

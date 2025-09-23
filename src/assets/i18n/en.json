@@ -114,6 +114,10 @@
     "MESSAGE": "Keep Y/X linear/log scales when changing variable"
   },
   "GLOBAL": {
+    "X_AXIS": "X Axis",
+    "Y_AXIS": "Y Axis",
+    "APPLY": "Apply",
+    "CHANGE_ALL_SCALES": "Change all scales",
     "EXPECTED_FREQUENCY": "Expected frequency",
     "GROUP": "Group",
     "GRAVITY": "Gravity",

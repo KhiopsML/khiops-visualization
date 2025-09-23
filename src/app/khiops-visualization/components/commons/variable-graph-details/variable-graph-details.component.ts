@@ -13,6 +13,7 @@ import {
   Output,
   OnChanges,
   OnInit,
+  OnDestroy,
 } from '@angular/core';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
@@ -28,6 +29,8 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { LS } from '@khiops-library/enum/ls';
 import { AppService } from '@khiops-visualization/providers/app.service';
+import { ScaleChangeEventsService } from '@khiops-visualization/providers/scale-change-events.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-variable-graph-details',
@@ -35,7 +38,9 @@ import { AppService } from '@khiops-visualization/providers/app.service';
   styleUrls: ['./variable-graph-details.component.scss'],
   standalone: false,
 })
-export class VariableGraphDetailsComponent implements OnInit, OnChanges {
+export class VariableGraphDetailsComponent
+  implements OnInit, OnChanges, OnDestroy
+{
   @ViewChild('distributionGraph', {
     static: false,
   })
@@ -69,6 +74,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
 
   private distributionGraphType?: string;
   private targetDistributionGraphType: string | null;
+  private scaleChangeSubscription?: Subscription;
 
   constructor(
     private preparationDatasService: PreparationDatasService,
@@ -76,6 +82,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
     private selectableService: SelectableService,
     private treePreparationDatasService: TreePreparationDatasService,
     private distributionDatasService: DistributionDatasService,
+    private scaleChangeEventsService: ScaleChangeEventsService,
   ) {
     this.targetDistributionGraphType = AppService.Ls.get(
       LS.TARGET_DISTRIBUTION_GRAPH_OPTION,
@@ -84,6 +91,18 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.distributionDatas = this.distributionDatasService.getDatas();
+
+    // Subscribe to scale change events
+    this.scaleChangeSubscription =
+      this.scaleChangeEventsService.scaleChange$.subscribe(() => {
+        this.onScaleChanged();
+      });
+  }
+
+  ngOnDestroy() {
+    if (this.scaleChangeSubscription) {
+      this.scaleChangeSubscription.unsubscribe();
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -261,6 +280,34 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
     this.initActiveEntries(this.selectedGraphItemIndex);
   }
 
+  /**
+   * Handle scale change events from the scale change dialog
+   * This simulates what happens in onDistributionGraphTypeChanged
+   */
+  private onScaleChanged() {
+    const currentVariable = this.getCurrentVariable();
+    if (currentVariable) {
+      // Force regeneration of distribution graph data with current variable
+      if (this.showDistributionGraph) {
+        this.distributionDatasService.getdistributionGraphDatas(
+          currentVariable,
+          this.distributionGraphType,
+          false,
+        );
+      }
+
+      // Force regeneration of target distribution graph data
+      if (this.showTargetDistributionGraph) {
+        this.distributionDatasService.getTargetDistributionGraphDatas(
+          currentVariable,
+          this.targetDistributionGraphType || undefined,
+          false,
+        );
+      }
+    }
+    this.initActiveEntries(this.selectedGraphItemIndex);
+  }
+
   private getCurrentVariable() {
     let selectedVariable;
     if (this.preparationSource === REPORT.TREE_PREPARATION_REPORT) {
@@ -285,7 +332,7 @@ export class VariableGraphDetailsComponent implements OnInit, OnChanges {
 
   onInterpretableHistogramChanged(index: number) {
     if (this.selectedVariable) {
-      // Don't reset graph options when only changing interpretable histogram 
+      // Don't reset graph options when only changing interpretable histogram
       // This preserves SCALE PERSISTENCE settings
       this.distributionDatasService.getHistogramGraphDatas(
         this.selectedVariable,

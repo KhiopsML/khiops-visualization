@@ -15,16 +15,6 @@
     <span>{{ title || (selectedVariable && selectedVariable.name) }}</span>
   </h1>
   <div id="graph-header-tools" fxLayout="row" fxLayoutAlign="start center">
-    <mat-checkbox
-      *ngIf="!hidePersistScale"
-      color="accent"
-      class="kl-checkbox"
-      matTooltip="{{ 'SCALE_PERSISTENCE.MESSAGE' | translate }}"
-      [checked]="persistScaleOptions"
-      (change)="onPersistScaleOptionsChange($event.checked)"
-    >
-      {{ 'SCALE_PERSISTENCE.TITLE' | translate }}
-    </mat-checkbox>
     <div
       *ngIf="!hideScale"
       fxLayout="column"

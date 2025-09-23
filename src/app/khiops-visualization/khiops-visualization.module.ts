@@ -52,6 +52,8 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { InAppOverlayContainer } from '../khiops-library/overlay/in-app-overlay-provider';
 import { DataTypeSelectorComponent } from './components/commons/data-type-selector/data-type-selector.component';
 import { LevelDistributionButtonComponent } from './components/commons/level-distribution-button/level-distribution-button.component';
+import { ChangeScaleButtonComponent } from './components/commons/change-scale-button/change-scale-button.component';
+import { ChangeScaleDialogComponent } from './components/commons/change-scale-dialog/change-scale-dialog.component';
 
 @NgModule({
   declarations: [
@@ -87,6 +89,8 @@ import { LevelDistributionButtonComponent } from './components/commons/level-dis
     TargetDistributionGraphComponent,
     DataTypeSelectorComponent,
     LevelDistributionButtonComponent,
+    ChangeScaleButtonComponent,
+    ChangeScaleDialogComponent,
     AppComponent,
   ],
   imports: [

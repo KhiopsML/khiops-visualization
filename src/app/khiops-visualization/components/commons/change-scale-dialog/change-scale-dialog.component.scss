@@ -1,0 +1,39 @@
+#change-scale-dialog-comp {
+  margin-top: 1rem;
+  min-width: 350px;
+  padding: 0;
+
+  .scale-options {
+    margin-bottom: 2rem;
+
+    .scale-group {
+      margin-bottom: 1.5rem;
+
+      h3 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1rem;
+        font-weight: 500;
+        color: var(--theme-text-color);
+      }
+
+      .scale-toggle-group {
+        width: 100%;
+
+        mat-button-toggle {
+          flex: 1;
+          ::ng-deep button {
+            padding-left: 0 !important;
+          }
+        }
+      }
+    }
+  }
+
+  mat-dialog-actions {
+    margin-top: 1rem;
+
+    button {
+      margin-left: 0.5rem;
+    }
+  }
+}
