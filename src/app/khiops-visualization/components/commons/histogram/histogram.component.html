@@ -56,50 +56,14 @@
         </div>
       </div>
       <div class="comp-header-tools" fxLayout="row">
-        <div>
-          <button
-            mat-stroked-button
-            color="primary"
-            [matMenuTriggerFor]="graphOptionsXTypes"
-          >
-            {{ graphOptionsX?.selected | translate }}
-            <em class="screenshot-hide"
-              ><mat-icon>keyboard_arrow_down</mat-icon>
-            </em>
-          </button>
-          <mat-menu #graphOptionsXTypes>
-            <button
-              mat-menu-item
-              [class.selected-item]="opt === graphOptionsX?.selected"
-              *ngFor="let opt of graphOptionsX?.types"
-              (click)="changeGraphTypeX(opt)"
-            >
-              {{ opt | translate }}
-            </button>
-          </mat-menu>
-        </div>
-        <div>
-          <button
-            mat-stroked-button
-            color="primary"
-            [matMenuTriggerFor]="graphOptionsYTypes"
-          >
-            {{ graphOptionsY?.selected | translate }}
-            <em class="screenshot-hide"
-              ><mat-icon>keyboard_arrow_down</mat-icon>
-            </em>
-          </button>
-          <mat-menu #graphOptionsYTypes>
-            <button
-              mat-menu-item
-              *ngFor="let opt of graphOptionsY?.types"
-              [class.selected-item]="opt === graphOptionsY?.selected"
-              (click)="changeGraphTypeY(opt)"
-            >
-              {{ opt | translate }}
-            </button>
-          </mat-menu>
-        </div>
+        <kl-graph-options-menu
+          [graphOptions]="graphOptionsX"
+          (graphOptionsChange)="changeGraphTypeX($event)"
+        ></kl-graph-options-menu>
+        <kl-graph-options-menu
+          [graphOptions]="graphOptionsY"
+          (graphOptionsChange)="changeGraphTypeY($event)"
+        ></kl-graph-options-menu>
       </div>
     </div>
   </div>
