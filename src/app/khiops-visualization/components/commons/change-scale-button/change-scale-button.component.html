@@ -5,7 +5,11 @@
   class="app-change-scale-button"
 >
   <h2 fxFlex>{{ 'GLOBAL.CHANGE_ALL_SCALES' | translate }}</h2>
-  <button mat-stroked-button (click)="openChangeScaleDialog()">
+  <button
+    mat-stroked-button
+    (click)="openChangeScaleDialog()"
+    matTooltip="{{ 'GLOBAL.CHANGE_ALL_SCALES_TOOLTIP' | translate }}"
+  >
     <mat-icon fxLayoutAlign="center center" matTooltipPosition="above"
       >tune</mat-icon
     >

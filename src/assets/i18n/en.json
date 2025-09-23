@@ -118,6 +118,7 @@
     "Y_AXIS": "Y Axis",
     "APPLY": "Apply",
     "CHANGE_ALL_SCALES": "Change all scales",
+    "CHANGE_ALL_SCALES_TOOLTIP": "Set X and Y scales for all variables at once",
     "CHANGE_ALL_SCALES_DESCRIPTION": "Apply a linear or logarithmic scale to X and/or Y axes for all variables at once. Local changes per variable remain possible afterward.",
     "EXPECTED_FREQUENCY": "Expected frequency",
     "GROUP": "Group",
