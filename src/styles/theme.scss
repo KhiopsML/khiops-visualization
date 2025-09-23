@@ -34,3 +34,15 @@
   --cell-type-cat: #f5ddaf;
   --border-color: rgba(4, 32, 69, 0.1);
 }
+
+@media screen and (max-width: 1440px) {
+  :root {
+    --header-height: 50px;
+  }
+}
+
+@media screen and (max-height: 1080px) {
+  :root {
+    --header-height: 50px;
+  }
+}
