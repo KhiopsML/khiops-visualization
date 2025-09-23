@@ -1,0 +1,75 @@
+/**
+  Responsive design for 1440p
+*/
+@media screen and (max-width: 1440px), screen and (max-height: 1080px) {
+  kl-header-title {
+    #header-title-comp {
+      top: 5px !important;
+
+      svg {
+        width: 40px;
+        height: 40px;
+      }
+      .header-title-text {
+        font-size: 0.9rem;
+      }
+    }
+  }
+  #home-layout-comp {
+    height: calc(100% - 20px) !important;
+    width: calc(100% - 20px) !important;
+    padding-top: 10px !important;
+    padding-left: 10px !important;
+  }
+  h1 {
+    margin: 0.4em 0.4em 0.4em 1em !important;
+  }
+
+  .clear-bottom-graph {
+    height: 0.4em;
+    width: 100%;
+  }
+
+  .comp-header {
+    padding-top: 5px !important;
+    padding-bottom: 10px !important;
+  }
+
+  .kl-card {
+    padding: 4px !important;
+  }
+  .informations-block-comp {
+    .metrics-container {
+      margin-bottom: 5px !important;
+    }
+    .metric-value {
+      font-size: 18px !important;
+      em {
+        font-size: 13px !important;
+      }
+    }
+    table {
+      font-size: 0.9em !important;
+      th {
+        min-width: 100px !important;
+      }
+    }
+    .informations-main-values {
+      padding: 2px !important;
+      margin: 0 5px !important;
+      min-height: 60px !important;
+    }
+  }
+  .legend-comp.top {
+    margin: 0 !important;
+  }
+  .fullscreen {
+    width: calc(100% - 12px) !important;
+    height: calc(100% - 72px) !important;
+    min-width: calc(100% - 12px) !important;
+    min-height: calc(100% - 72px) !important;
+    margin: 69px 0px 0px 0px;
+    left: 11px !important;
+    top: 2px !important;
+  }
+}
