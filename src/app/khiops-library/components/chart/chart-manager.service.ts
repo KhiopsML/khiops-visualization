@@ -87,6 +87,8 @@ export class ChartManagerService {
         color: this.color,
         fontColor: this.fontColor,
         graphClickEvent: graphClickEvent,
+        // Extract displayColors from chartOptions if provided, default to true
+        displayColors: chartOptions?.plugins?.tooltip?.displayColors !== false,
       });
 
       // Merge chart options
