@@ -95,6 +95,7 @@
                 [selectedVariable]="preparation2dDatas?.selectedVariable"
               >
                 <app-level-distribution-button
+                  *ngIf="hasLevelData()"
                   slot="header-tools"
                   [title]="levelDistributionTitle"
                   [isSmallDiv]="agGridRef.isSmallDiv"

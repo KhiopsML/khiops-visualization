@@ -28,6 +28,7 @@ import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { VariableModel } from '@khiops-visualization/model/variable.model';
 import { getPreparation2dVariablesGridColumns } from './preparation-2d-view.config';
+import { LevelDistributionService } from '@khiops-visualization/providers/level-distribution.service';
 import { AppConfig } from '../../../../environments/environment';
 
 @Component({
@@ -60,6 +61,7 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
     private modelingDatasService: ModelingDatasService,
     private preparation2dDatasService: Preparation2dDatasService,
     private layoutService: LayoutService,
+    private levelDistributionService: LevelDistributionService,
   ) {
     super();
 
@@ -138,5 +140,13 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
         this.targetDistributionGraph.resizeGraph();
       }
     }); // do it after view dom complete
+  }
+
+  /**
+   * Checks if the variables data has level information for displaying the level distribution button
+   * @returns true if variables data has level property
+   */
+  hasLevelData(): boolean {
+    return this.levelDistributionService.hasLevelData(this.variables2dDatas || []);
   }
 }

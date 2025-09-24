@@ -493,20 +493,11 @@ export class AgGridComponent
   }
 
   /**
-   * Checks if the current div width is small based on the showSearch and showLevelDistribution flags.
+   * Checks if the current div width is small
    * Updates the isSmallDiv property accordingly.
    */
   checkIsSmallDiv() {
-    if (this.showSearch) {
-      if (this.showLevelDistribution) {
-        this.isSmallDiv = this.divWidth <= 500;
-      } else {
-        this.isSmallDiv = this.divWidth <= 350;
-      }
-    }
-    if (!this.showSearch && !this.showLevelDistribution) {
-      this.isSmallDiv = this.divWidth <= 300;
-    }
+    this.isSmallDiv = this.divWidth <= 500;
   }
 
   /**

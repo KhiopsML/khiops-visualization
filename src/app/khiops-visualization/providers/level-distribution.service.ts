@@ -28,6 +28,6 @@ export class LevelDistributionService {
    * @returns true if data has level property
    */
   hasLevelData(inputDatas: any[]): boolean {
-    return !!(inputDatas?.[0] && inputDatas[0].level !== undefined);
+    return !!(inputDatas?.[0] && inputDatas[0].level !== 0);
   }
 }

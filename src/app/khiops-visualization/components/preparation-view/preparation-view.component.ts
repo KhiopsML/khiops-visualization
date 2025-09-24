@@ -152,4 +152,12 @@ export class PreparationViewComponent extends SelectableTabComponent {
       this.translate.get('GLOBAL.NO_DERIVATION_RULE')
     );
   }
+
+  /**
+   * Checks if the variables data has level information for displaying the level distribution button
+   * @returns true if variables data has level property
+   */
+  hasLevelData(): boolean {
+    return this.levelDistributionService.hasLevelData(this.variablesDatas || []);
+  }
 }

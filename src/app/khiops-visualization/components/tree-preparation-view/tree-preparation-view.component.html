@@ -103,6 +103,7 @@
                 [selectedVariable]="treePreparationDatas?.selectedVariable"
               >
                 <app-level-distribution-button
+                  *ngIf="hasLevelData()"
                   slot="header-tools"
                   [isSmallDiv]="agGridRef.isSmallDiv"
                   [searchFormVisible]="agGridRef.searchFormVisible"

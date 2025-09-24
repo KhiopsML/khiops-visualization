@@ -28,6 +28,7 @@ import { DynamicI } from '@khiops-library/interfaces/globals';
 import { VariableModel } from '@khiops-visualization/model/variable.model';
 import { AppService } from '../../../khiops-visualization/providers/app.service';
 import { TrainedPredictor } from '@khiops-visualization/interfaces/modeling-report';
+import { LevelDistributionService } from '@khiops-visualization/providers/level-distribution.service';
 import { TrainedPredictorModel } from '@khiops-visualization/model/trained-predictor.model';
 import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas';
 import { AppConfig } from '../../../../environments/environment';
@@ -62,6 +63,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
     private treePreparationDatasService: TreePreparationDatasService,
     private layoutService: LayoutService,
     private appService: AppService,
+    private levelDistributionService: LevelDistributionService,
   ) {
     super();
 
@@ -175,5 +177,13 @@ export class ModelingViewComponent extends SelectableTabComponent {
     const dialogRef: MatDialogRef<LevelDistributionGraphComponent> =
       this.dialog.open(LevelDistributionGraphComponent, config);
     dialogRef.componentInstance.datas = datas;
+  }
+
+  /**
+   * Checks if the trained predictors data has level information for displaying the level distribution button
+   * @returns true if trained predictors data has level property
+   */
+  hasLevelData(): boolean {
+    return this.levelDistributionService.hasLevelData(this.modelingDatas?.trainedPredictorsListDatas || []);
   }
 }

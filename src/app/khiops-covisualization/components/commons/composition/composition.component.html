@@ -2,7 +2,6 @@
   <kl-ag-grid
     *ngIf="selectedDimension?.isCategorical"
     fxFlexFill
-    [showLevelDistribution]="false"
     [paginationSize]="50"
     titleTooltip="{{ 'TOOLTIPS.AXIS.COMPOSITION.TITLE' | translate }}"
     [attr.id]="'cluster-composition-' + position"
