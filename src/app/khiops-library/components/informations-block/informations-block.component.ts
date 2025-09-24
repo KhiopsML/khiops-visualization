@@ -41,7 +41,7 @@ export class InformationsBlockComponent
   @Input() public title: string = '';
   @Input() public icon = 'tune';
   public componentType = COMPONENT_TYPES.INFORMATIONS; // needed to copy datas
-  public gaugeSize: number = 75; // Default gauge size
+  public gaugeSize: number = 0;
 
   metricTypes = [
     INFO_DATA_TYPES.INSTANCES,
@@ -85,7 +85,7 @@ export class InformationsBlockComponent
     if (typeof window !== 'undefined') {
       const isSmallScreen =
         window.innerWidth <= 1440 || window.innerHeight <= 1080;
-      const newSize = isSmallScreen ? 60 : 75;
+      const newSize = isSmallScreen ? 60 : 70;
       if (this.gaugeSize !== newSize) {
         this.gaugeSize = newSize;
         this.cdr.detectChanges(); // Trigger change detection

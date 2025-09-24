@@ -22,7 +22,6 @@
     border-radius: var(--border-radius);
     border: 1px solid var(--border-color);
     padding: 7px;
-    min-height: 80px;
     flex: 1;
     strong {
       padding: 0 5px;
@@ -34,7 +33,7 @@
     }
 
     .metric-value {
-      font-size: 28px;
+      font-size: 22px;
       font-weight: 500;
       color: #555;
       line-height: 1;
