@@ -17,6 +17,7 @@ import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggl
 import { LS } from '@khiops-library/enum/ls';
 import _ from 'lodash';
 import { UtilsService } from '../../../../khiops-library/providers/utils.service';
+import { AppConfig } from '../../../../../environments/environment';
 
 export interface TargetLiftGraphData {
   targetLift?: TargetLiftValuesI;
@@ -31,6 +32,11 @@ export interface TargetLiftGraphData {
   providedIn: 'root',
 })
 export class TargetLiftGraphService {
+  numPrecision = AppService.Ls.get(
+    LS.SETTING_NUMBER_PRECISION,
+    AppConfig.visualizationCommon.GLOBAL.TO_FIXED,
+  );
+
   constructor(
     private evaluationDatasService: EvaluationDatasService,
     private translate: TranslateService,
@@ -226,11 +232,10 @@ export class TargetLiftGraphService {
     if (items[0]) {
       const yValue = items[0].parsed?.y;
       if (yValue !== undefined) {
-        const numPrecision = AppService.Ls.get(LS.SETTING_NUMBER_PRECISION);
         result.push(
           this.translate.get('GLOBAL.TARGET_MODALITY') +
             ': ' +
-            UtilsService.getPrecisionNumber(yValue, numPrecision) +
+            UtilsService.getPrecisionNumber(yValue, this.numPrecision) +
             '%',
         );
       }
@@ -255,9 +260,8 @@ export class TargetLiftGraphService {
     }
 
     const curveName = items.dataset.label;
-    const numPrecision = AppService.Ls.get(LS.SETTING_NUMBER_PRECISION);
     const formattedValue =
-      UtilsService.getPrecisionNumber(yValue, numPrecision) + '%';
+      UtilsService.getPrecisionNumber(yValue, this.numPrecision) + '%';
 
     if (this.evaluationDatasService.isRegressionAnalysis()) {
       return `${curveName}: ${formattedValue}`;
