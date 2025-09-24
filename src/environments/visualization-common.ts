@@ -6,7 +6,7 @@
 
 export const visualizationCommonEnvironment = {
   GLOBAL: {
-    TO_FIXED: 8,
+    TO_FIXED: 4,
     LS_ID: 'KHIOPS_VISUALIZATION_',
     DEBUG_SOFTWARE_LABEL: 'KV',
     MATRIX_CONTRAST: 10,
