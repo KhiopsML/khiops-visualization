@@ -6,7 +6,7 @@
 // @ts-nocheck
 import '../../support/commands';
 
-describe('Test Plan for Khiops Covisualization', () => {
+describe('Behaviors Test Plan for Khiops Visualization', () => {
   const files = ['000_000_10000words_AllReports.json'];
 
   files.forEach((fileName) => {

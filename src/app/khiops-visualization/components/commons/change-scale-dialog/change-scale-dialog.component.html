@@ -16,8 +16,12 @@
           aria-label="X-axis scale"
           class="scale-toggle-group"
         >
-          <mat-button-toggle value="linear"> xLin </mat-button-toggle>
-          <mat-button-toggle value="logarithmic"> xLog </mat-button-toggle>
+          <mat-button-toggle id="scale-toggle-group-xLin" value="linear">
+            xLin
+          </mat-button-toggle>
+          <mat-button-toggle id="scale-toggle-group-xLog" value="logarithmic">
+            xLog
+          </mat-button-toggle>
         </mat-button-toggle-group>
       </div>
 
@@ -29,15 +33,24 @@
           aria-label="Y-axis scale"
           class="scale-toggle-group"
         >
-          <mat-button-toggle value="linear"> yLin </mat-button-toggle>
-          <mat-button-toggle value="logarithmic"> yLog </mat-button-toggle>
+          <mat-button-toggle id="scale-toggle-group-yLin" value="linear">
+            yLin
+          </mat-button-toggle>
+          <mat-button-toggle id="scale-toggle-group-yLog" value="logarithmic">
+            yLog
+          </mat-button-toggle>
         </mat-button-toggle-group>
       </div>
     </div>
   </mat-dialog-content>
 
   <mat-dialog-actions align="end">
-    <button mat-button (click)="onApply()" cdkFocusInitial>
+    <button
+      id="change-scale-dialog-apply-btn"
+      mat-button
+      (click)="onApply()"
+      cdkFocusInitial
+    >
       {{ 'GLOBAL.APPLY' | translate }}
     </button>
     <button mat-button (click)="onCancel()">

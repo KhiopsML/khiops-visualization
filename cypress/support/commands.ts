@@ -36,3 +36,15 @@ Cypress.Commands.add('initViews', () => {
     });
   }
 });
+
+Cypress.Commands.add('checkCanvasIsNotEmpty', (canvasSelector: string) => {
+  cy.get(canvasSelector).then(($canvas) => {
+    const canvas = $canvas[0];
+    const context = canvas.getContext('2d');
+    const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data;
+
+    // Checks if at least one pixel is not transparent
+    const isNotEmpty = Array.from(pixels).some((value) => value !== 0);
+    expect(isNotEmpty).to.be.true;
+  });
+});

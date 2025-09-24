@@ -68,12 +68,5 @@ export class ChangeScaleButtonComponent {
       xScale: xScaleType,
       yScale: yScaleType,
     });
-
-    console.log('Applied global scale settings:', {
-      xScale: scaleSettings.xScale,
-      yScale: scaleSettings.yScale,
-      xScaleType,
-      yScaleType,
-    });
   }
 }

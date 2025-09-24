@@ -14,4 +14,14 @@
 // ***********************************************************
 
 // When a command from ./commands is ready to use, import with `import './commands'` syntax
-// import './commands';
+import './commands';
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      loadFile(ctx: string, file: string): Chainable<Element>;
+      initViews(): Chainable<Element>;
+      checkCanvasIsNotEmpty(canvasSelector: string): Chainable<Element>;
+    }
+  }
+}
