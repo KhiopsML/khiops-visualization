@@ -28,7 +28,7 @@
 
       async function loadDemoData() {
         try {
-          const response = await fetch('./demo.khj');
+          const response = await fetch('./demo.json');
           const data = await response.json();
 
           const kv1 = document.querySelector('khiops-visualization');
