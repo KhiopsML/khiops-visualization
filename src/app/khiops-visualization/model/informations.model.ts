@@ -49,60 +49,33 @@ export class InformationsModel {
    * This method collects various properties into a structured format for presentation.
    */
   formatDatas() {
-    this.displayDatas = [];
-    if (this.evaluatedVariables !== undefined) {
-      this.displayDatas.push({
-        title: 'GLOBAL.EVALUATED_VARIABLES',
-        value: this.evaluatedVariables,
-      });
-    }
-    if (this.evaluatedVariablePairs !== undefined) {
-      this.displayDatas.push({
+    // List of properties and their corresponding titles
+    const fields: { key: keyof InformationsModel; title: string }[] = [
+      { key: 'evaluatedVariables', title: 'GLOBAL.EVALUATED_VARIABLES' },
+      {
+        key: 'evaluatedVariablePairs',
         title: 'GLOBAL.EVALUATED_VARIABLES_PAIRS',
-        value: this.evaluatedVariablePairs,
-      });
-    }
-    if (this.constructedVariables !== undefined) {
-      this.displayDatas.push({
-        title: 'GLOBAL.CONSTRUCTED_VARIABLES',
-        value: this.constructedVariables,
-      });
-    }
-    if (this.informativeVariables !== undefined) {
-      this.displayDatas.push({
-        title: 'GLOBAL.INFORMATIVE_VARIABLES',
-        value: this.informativeVariables,
-      });
-    }
-    if (this.informativeVariablePairs !== undefined) {
-      this.displayDatas.push({
+      },
+      { key: 'constructedVariables', title: 'GLOBAL.CONSTRUCTED_VARIABLES' },
+      { key: 'informativeVariables', title: 'GLOBAL.INFORMATIVE_VARIABLES' },
+      {
+        key: 'informativeVariablePairs',
         title: 'GLOBAL.INFORMATIVE_VARIABLES_PAIRS',
-        value: this.informativeVariablePairs,
-      });
-    }
-    if (this.selectedVariables !== undefined) {
-      this.displayDatas.push({
-        title: 'GLOBAL.SELECTED_VARIABLES',
-        value: this.selectedVariables,
-      });
-    }
-    if (this.selectedVariablePairs !== undefined) {
-      this.displayDatas.push({
+      },
+      { key: 'selectedVariables', title: 'GLOBAL.SELECTED_VARIABLES' },
+      {
+        key: 'selectedVariablePairs',
         title: 'GLOBAL.SELECTED_VARIABLES_PAIRS',
-        value: this.selectedVariablePairs,
-      });
-    }
-    if (this.discretization !== undefined) {
-      this.displayDatas.push({
-        title: 'GLOBAL.DISCRETIZATION',
-        value: this.discretization,
-      });
-    }
-    if (this.valueGrouping !== undefined) {
-      this.displayDatas.push({
-        title: 'GLOBAL.VALUE_GROUPING',
-        value: this.valueGrouping,
-      });
-    }
+      },
+      { key: 'discretization', title: 'GLOBAL.DISCRETIZATION' },
+      { key: 'valueGrouping', title: 'GLOBAL.VALUE_GROUPING' },
+    ];
+
+    this.displayDatas = fields
+      .filter((field) => this[field.key] !== undefined)
+      .map((field) => ({
+        title: field.title,
+        value: this[field.key],
+      }));
   }
 }

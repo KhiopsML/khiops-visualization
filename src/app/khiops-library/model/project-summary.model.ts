@@ -65,48 +65,23 @@ export class ProjectSummaryModel {
    * into the displayDatas array.
    */
   formatDatas() {
-    this.displayDatas = [];
-    if (this.filename) {
-      this.displayDatas.push({
-        title: 'GLOBAL.PROJECT_FILE',
-        value: this.filename,
-      });
-    }
-    if (this.database) {
-      this.displayDatas.push({
-        title: 'GLOBAL.DATABASE',
-        value: this.database,
-      });
-    }
-    if (this.shortDescription) {
-      this.displayDatas.push({
-        title: 'GLOBAL.SHORT_DESCRIPTION',
-        value: this.shortDescription,
-      });
-    }
-    if (this.learningTask) {
-      this.displayDatas.push({
-        title: 'GLOBAL.LEARNING_TASK',
-        value: this.learningTask,
-      });
-    }
-    if (this.targetVariable) {
-      this.displayDatas.push({
-        title: 'GLOBAL.TARGET_VARIABLE',
-        value: this.targetVariable,
-      });
-    }
-    if (this.instances) {
-      this.displayDatas.push({
-        title: 'GLOBAL.INSTANCES',
-        value: this.instances,
-      });
-    }
-    if (this.variables) {
-      this.displayDatas.push({
-        title: 'GLOBAL.VARIABLES',
-        value: this.variables,
-      });
-    }
+    // Define the mapping between property keys and their display titles
+    const fields: { key: keyof ProjectSummaryModel; title: string }[] = [
+      { key: 'filename', title: 'GLOBAL.PROJECT_FILE' },
+      { key: 'database', title: 'GLOBAL.DATABASE' },
+      { key: 'shortDescription', title: 'GLOBAL.SHORT_DESCRIPTION' },
+      { key: 'learningTask', title: 'GLOBAL.LEARNING_TASK' },
+      { key: 'targetVariable', title: 'GLOBAL.TARGET_VARIABLE' },
+      { key: 'instances', title: 'GLOBAL.INSTANCES' },
+      { key: 'variables', title: 'GLOBAL.VARIABLES' },
+    ];
+
+    // Build the displayDatas array by filtering out falsy values
+    this.displayDatas = fields
+      .filter((field) => this[field.key])
+      .map((field) => ({
+        title: field.title,
+        value: this[field.key] as string | number,
+      }));
   }
 }

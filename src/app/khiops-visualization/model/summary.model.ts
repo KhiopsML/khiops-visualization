@@ -50,66 +50,28 @@ export class SummaryModel {
    * This method collects various properties into a structured format for presentation.
    */
   formatDatas() {
-    this.displayDatas = [];
-    if (this.dictionary) {
-      this.displayDatas.push({
-        title: 'GLOBAL.DICTIONARY',
-        value: this.dictionary,
-      });
-    }
-    if (this.database) {
-      this.displayDatas.push({
-        title: 'GLOBAL.DATABASE',
-        value: this.database,
-      });
-    }
-    if (this.targetVariable) {
-      this.displayDatas.push({
-        title: 'GLOBAL.TARGET_VARIABLE',
-        value: this.targetVariable,
-      });
-    }
-    if (this.instances) {
-      this.displayDatas.push({
-        title: 'GLOBAL.INSTANCES',
-        value: this.instances,
-      });
-    }
-    if (this.learningTask) {
-      this.displayDatas.push({
-        title: 'GLOBAL.LEARNING_TASK',
-        value: this.learningTask,
-      });
-    }
-    if (this.samplePercentage) {
-      this.displayDatas.push({
-        title: 'GLOBAL.SAMPLE_PERCENTAGE',
-        value: this.samplePercentage,
-      });
-    }
-    if (this.samplingMode) {
-      this.displayDatas.push({
-        title: 'GLOBAL.SAMPLING_MODE',
-        value: this.samplingMode,
-      });
-    }
-    if (this.selectionVariable) {
-      this.displayDatas.push({
-        title: 'GLOBAL.SELECTION_VARIABLE',
-        value: this.selectionVariable,
-      });
-    }
-    if (this.selectionValue) {
-      this.displayDatas.push({
-        title: 'GLOBAL.SELECTION_VALUE',
-        value: this.selectionValue,
-      });
-    }
-    if (this.evaluatedVariables) {
-      this.displayDatas.push({
-        title: 'GLOBAL.EVALUATED_VARIABLES',
-        value: this.evaluatedVariables,
-      });
-    }
+    // Define mapping between property keys and display titles
+    const fields: { key: keyof SummaryModel; title: string }[] = [
+      { key: 'dictionary', title: 'GLOBAL.DICTIONARY' },
+      { key: 'database', title: 'GLOBAL.DATABASE' },
+      { key: 'targetVariable', title: 'GLOBAL.TARGET_VARIABLE' },
+      { key: 'instances', title: 'GLOBAL.INSTANCES' },
+      { key: 'learningTask', title: 'GLOBAL.LEARNING_TASK' },
+      { key: 'samplePercentage', title: 'GLOBAL.SAMPLE_PERCENTAGE' },
+      { key: 'samplingMode', title: 'GLOBAL.SAMPLING_MODE' },
+      { key: 'selectionVariable', title: 'GLOBAL.SELECTION_VARIABLE' },
+      { key: 'selectionValue', title: 'GLOBAL.SELECTION_VALUE' },
+      { key: 'evaluatedVariables', title: 'GLOBAL.EVALUATED_VARIABLES' },
+    ];
+
+    // Build displayDatas array by filtering out empty values
+    this.displayDatas = fields
+      .filter(
+        (field) => this[field.key] !== undefined && this[field.key] !== '',
+      )
+      .map((field) => ({
+        title: field.title,
+        value: this[field.key],
+      }));
   }
 }
