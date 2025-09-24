@@ -10,6 +10,8 @@
 
 ![khiops-demo][demoGif]
 
+**🌐 [Live Demo](https://khiopsml.github.io/khiops-visualization/)**
+
 ---
 
 ## 📖 Table of Contents
