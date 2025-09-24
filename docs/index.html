@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Khiops-visualilzation demo</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <khiops-visualization
+      id="kv1"
+      style="width: 100%; height: 100%"
+    ></khiops-visualization>
+    <script src="https://unpkg.com/khiops-visualization/khiops-webcomponents.bundle.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        // Load the demo.khj file and set the data to the visualization component
+        loadDemoData();
+      });
+
+      async function loadDemoData() {
+        try {
+          const response = await fetch('./demo.khj');
+          const data = await response.json();
+
+          const kv1 = document.querySelector('khiops-visualization');
+          if (kv1) {
+            kv1.clean();
+            kv1.setDatas(data);
+          } else {
+            console.error('khiops-visualization element not found');
+          }
+        } catch (error) {
+          console.error('Error loading demo data:', error);
+        }
+      }
+    </script>
+  </body>
+</html>
