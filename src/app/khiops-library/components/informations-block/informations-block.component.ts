@@ -127,7 +127,7 @@ export class InformationsBlockComponent
    * Gets table data (all other information)
    */
   get tableData(): ProcessedInfoDataI[] {
-    return (
+    const filteredData =
       this.inputDatas
         ?.filter(
           (data) =>
@@ -138,8 +138,21 @@ export class InformationsBlockComponent
           ...data,
           displayType: DISPLAY_TYPE.TABLE,
           isImportant: data.title === INFO_DATA_TYPES.LEARNING_TASK,
-        })) || []
+        })) || [];
+
+    // Put LEARNING_TASK at the first position if present
+    const learningTaskIndex = filteredData.findIndex(
+      (data) => data.title === INFO_DATA_TYPES.LEARNING_TASK,
     );
+
+    if (learningTaskIndex > 0) {
+      const learningTaskData = filteredData.splice(learningTaskIndex, 1)[0];
+      if (learningTaskData) {
+        filteredData.unshift(learningTaskData);
+      }
+    }
+
+    return filteredData;
   }
 
   /**
