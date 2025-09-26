@@ -22,6 +22,7 @@ import {
 } from '@khiops-covisualization/interfaces/app-datas';
 import { CellModel } from '@khiops-library/model/cell.model';
 import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
+import { BarModel } from '../../khiops-visualization/model/bar.model';
 @Injectable({
   providedIn: 'root',
 })
@@ -235,8 +236,27 @@ export class ClustersService {
       }
     }
 
+    // Create extra data for tooltips - only frequency for covisualization
+    const currentDataSetExtras = [];
+    for (let i = 0; i < distributionsGraphLabels.length; i++) {
+      const graphItem: BarModel = new BarModel();
+      const frequencyValue = currentDataSetData[i] || 0;
+
+      graphItem.name = distributionsGraphLabels[i];
+      graphItem.value = frequencyValue;
+      graphItem.extra.frequencyValue = frequencyValue;
+      graphItem.extra.value = frequencyValue;
+      graphItem.extra.index = i;
+      graphItem.extra.name = distributionsGraphLabels[i];
+      // Explicitly set coverageValue to undefined to prevent probability display
+      graphItem.extra.coverageValue = undefined;
+
+      currentDataSetExtras.push(graphItem);
+    }
+
     distributionsGraphDetails.labels.push(...distributionsGraphLabels);
     currentDataSet.data.push(...currentDataSetData);
+    currentDataSet.extra.push(...currentDataSetExtras);
 
     distributionsGraphDetails.datasets.push(currentDataSet);
 

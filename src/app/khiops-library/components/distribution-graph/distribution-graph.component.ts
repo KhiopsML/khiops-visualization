@@ -335,15 +335,33 @@ export class DistributionGraphComponent
     if (datasetWithExtra?.extra?.[items.dataIndex]?.extra) {
       const coverageValue =
         datasetWithExtra.extra[items.dataIndex].extra.coverageValue;
-      const percentValue = coverageValue * this.PERCENTAGE_MULTIPLIER;
-      return (
-        this.translate.get('GLOBAL.PROBABILITY') +
-        ': ' +
-        this.toPrecision.transform(percentValue) +
-        '%'
-      );
+
+      // Only show probability if coverageValue is defined and is a valid number
+      if (
+        coverageValue !== undefined &&
+        coverageValue !== null &&
+        !isNaN(coverageValue)
+      ) {
+        const percentValue = coverageValue * this.PERCENTAGE_MULTIPLIER;
+        return (
+          this.translate.get('GLOBAL.PROBABILITY') +
+          ': ' +
+          this.toPrecision.transform(percentValue) +
+          '%'
+        );
+      } else {
+        // For covisualization (no coverageValue), show frequency in the main label
+        const frequencyValue =
+          datasetWithExtra.extra[items.dataIndex].extra.frequencyValue;
+
+        return (
+          this.translate.get('GLOBAL.FREQUENCY') +
+          ': ' +
+          this.toPrecision.transform(frequencyValue)
+        );
+      }
     }
-    return '';
+    return undefined;
   }
 
   /**
