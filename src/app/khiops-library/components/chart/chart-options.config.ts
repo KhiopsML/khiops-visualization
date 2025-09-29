@@ -73,7 +73,7 @@ export function createDefaultChartOptions(
 
             titleLines.forEach(function (title) {
               innerHtml +=
-                '<div style="font-weight: bold; margin-bottom: 10px;">' +
+                '<div style="font-weight: bold; margin-bottom: 10px; white-space: normal; word-break: break-word;">' +
                 title +
                 '</div>';
             });
