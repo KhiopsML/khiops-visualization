@@ -45,6 +45,7 @@ export class ClusterDetailsComponent implements OnInit, OnChanges, OnDestroy {
   public id: string = '';
 
   private conditionalOnContextChangedSub: Subscription;
+  private contextSelectionChangedSub: Subscription;
 
   constructor(
     private translate: TranslateService,
@@ -58,6 +59,11 @@ export class ClusterDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
     this.conditionalOnContextChangedSub =
       this.eventsService.conditionalOnContextChanged.subscribe(() => {
+        this.updateClusterTable();
+      });
+
+    this.contextSelectionChangedSub =
+      this.eventsService.contextSelectionChanged.subscribe(() => {
         this.updateClusterTable();
       });
   }
@@ -93,6 +99,7 @@ export class ClusterDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnDestroy() {
     this.conditionalOnContextChangedSub.unsubscribe();
+    this.contextSelectionChangedSub.unsubscribe();
   }
 
   onSelectRowChanged(item: ClusterDetailsModel) {
