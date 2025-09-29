@@ -57,6 +57,7 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private treeSelectedNodeChangedSub: Subscription;
   private importedDatasChangedSub: Subscription;
+  private conditionalOnContextChangedSub: Subscription;
 
   constructor(
     private translate: TranslateService,
@@ -70,6 +71,11 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
         if (e.realNodeVO && e.hierarchyName === this.selectedDimension?.name) {
           this.updateTable(e.realNodeVO, e.selectedValue);
         }
+      });
+
+    this.conditionalOnContextChangedSub =
+      this.eventsService.conditionalOnContextChanged.subscribe(() => {
+        this.updateTable(this.selectedNode);
       });
 
     this.importedDatasChangedSub =
@@ -129,6 +135,7 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy() {
     this.treeSelectedNodeChangedSub?.unsubscribe();
     this.importedDatasChangedSub?.unsubscribe();
+    this.conditionalOnContextChangedSub?.unsubscribe();
     this.selectedComposition = undefined;
     this.selectedCompositionChanged.emit(this.selectedComposition);
   }
