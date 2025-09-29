@@ -9,6 +9,7 @@ import {
   Input,
   OnInit,
   OnChanges,
+  OnDestroy,
   NgZone,
   SimpleChanges,
 } from '@angular/core';
@@ -22,14 +23,16 @@ import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { TYPES } from '@khiops-library/enum/types';
 import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
 import { getClusterGridColumns } from './cluster-details.config';
+import { EventsService } from '@khiops-covisualization/providers/events.service';
+import { Subscription } from 'rxjs';
 
 @Component({
-    selector: 'app-cluster-details',
-    templateUrl: './cluster-details.component.html',
-    styleUrls: ['./cluster-details.component.scss'],
-    standalone: false
+  selector: 'app-cluster-details',
+  templateUrl: './cluster-details.component.html',
+  styleUrls: ['./cluster-details.component.scss'],
+  standalone: false,
 })
-export class ClusterDetailsComponent implements OnInit, OnChanges {
+export class ClusterDetailsComponent implements OnInit, OnChanges, OnDestroy {
   @Input() public position: number = 0;
   @Input() private dimensionsTree: TreeNodeModel[] | undefined;
   @Input() private selectedDimension: DimensionCovisualizationModel | undefined;
@@ -41,14 +44,22 @@ export class ClusterDetailsComponent implements OnInit, OnChanges {
   public filteredDimensionsClusters: ClusterDetailsModel[] | undefined;
   public id: string = '';
 
+  private conditionalOnContextChangedSub: Subscription;
+
   constructor(
     private translate: TranslateService,
     public ngzone: NgZone,
     private treenodesService: TreenodesService,
     private clustersService: ClustersService,
+    private eventsService: EventsService,
   ) {
     this.title = this.translate.get('GLOBAL.CURRENT_CLUSTERS');
     this.clusterDisplayedColumns = getClusterGridColumns(this.translate);
+
+    this.conditionalOnContextChangedSub =
+      this.eventsService.conditionalOnContextChanged.subscribe(() => {
+        this.updateClusterTable();
+      });
   }
 
   ngOnInit() {
@@ -80,11 +91,26 @@ export class ClusterDetailsComponent implements OnInit, OnChanges {
     }
   }
 
+  ngOnDestroy() {
+    this.conditionalOnContextChangedSub.unsubscribe();
+  }
+
   onSelectRowChanged(item: ClusterDetailsModel) {
     this.treenodesService.setSelectedNode(
       this.selectedDimension?.name!,
       item._id,
     );
+  }
+
+  updateClusterTable() {
+    if (this.dimensionsTree && this.selectedDimension) {
+      this.filteredDimensionsClusters =
+        this.clustersService.getFilteredDimensionTree(
+          this.dimensionsTree,
+          this.selectedDimension,
+        );
+      this.updateSelectedNode();
+    }
   }
 
   private updateSelectedNode() {

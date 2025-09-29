@@ -507,9 +507,82 @@ export class ClustersService {
             clusterDetails.size = size;
           }
         }
+
+        // Calculate contextual frequency if conditional on context is enabled
+        if (this.dimensionsDatasService.dimensionsDatas.conditionalOnContext) {
+          this.calculateContextualValues(clusterDetails, selectedDimension);
+        }
+
         filteredDimensionsClusters.push(clusterDetails);
       }
     }
     return filteredDimensionsClusters;
+  }
+
+  /**
+   * Calculates contextual values (frequency, interest) for a cluster detail based on the current context selection.
+   *
+   * @param clusterDetails - The cluster details model to update.
+   * @param selectedDimension - The selected dimension.
+   */
+  public calculateContextualValues(
+    clusterDetails: ClusterDetailsModel,
+    selectedDimension: DimensionCovisualizationModel,
+  ): void {
+    // Only calculate contextual values if conditional on context is enabled and there are context dimensions
+    if (
+      !this.dimensionsDatasService.dimensionsDatas.conditionalOnContext ||
+      this.dimensionsDatasService.dimensionsDatas.contextDimensionCount === 0
+    ) {
+      return;
+    }
+
+    // Get all matrix data and context selection
+    const matrixCellDatas =
+      this.dimensionsDatasService.dimensionsDatas.matrixDatas?.matrixCellDatas;
+    const contextSelection =
+      this.dimensionsDatasService.dimensionsDatas.contextSelection;
+
+    if (
+      !matrixCellDatas ||
+      !contextSelection ||
+      contextSelection.length === 0
+    ) {
+      return;
+    }
+
+    // Get the dimension position to determine if it's xaxis or yaxis
+    const dimensionPosition =
+      this.dimensionsDatasService.dimensionsDatas.selectedDimensions.findIndex(
+        (dim) => dim.name === selectedDimension.name,
+      );
+
+    if (dimensionPosition === -1) {
+      return;
+    }
+
+    const axisProperty = dimensionPosition === 0 ? 'xDisplayaxisPart' : 'yDisplayaxisPart';
+
+    // Calculate contextual frequency
+    const [matrixFreqsValues] = MatrixUtilsService.computeMatrixValues(
+      { mode: MATRIX_MODES.FREQUENCY },
+      matrixCellDatas,
+      contextSelection,
+      -1,
+    );
+
+    if (matrixFreqsValues) {
+      // Find all cells that match this cluster and sum their frequencies
+      let contextualFrequency = 0;
+
+      for (let i = 0; i < matrixCellDatas.length; i++) {
+        const cell = matrixCellDatas[i];
+        if (cell && cell[axisProperty] === clusterDetails.name) {
+          contextualFrequency += matrixFreqsValues[i] || 0;
+        }
+      }
+
+      clusterDetails.frequency = contextualFrequency;
+    }
   }
 }

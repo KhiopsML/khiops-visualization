@@ -14,6 +14,7 @@ export class EventsService {
   public treeSelectedNodeChanged: EventEmitter<any> = new EventEmitter();
   public importedDatasChanged: EventEmitter<any> = new EventEmitter();
   public conditionalOnContextChanged: EventEmitter<any> = new EventEmitter();
+  public contextSelectionChanged: EventEmitter<any> = new EventEmitter();
 
   /**
    * Emits an event when the selected tree node changes.
@@ -37,5 +38,13 @@ export class EventsService {
    */
   emitConditionalOnContextChanged() {
     this.conditionalOnContextChanged.emit();
+  }
+
+  /**
+   * Emits an event when the context selection changes.
+   * @param event - The event data to emit.
+   */
+  emitContextSelectionChanged() {
+    this.contextSelectionChanged.emit();
   }
 }

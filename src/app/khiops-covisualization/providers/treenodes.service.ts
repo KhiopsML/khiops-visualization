@@ -219,6 +219,8 @@ export class TreenodesService {
                 ] = parentNodeVO.childrenLeafIndexes;
               }
             }
+            // Emit context selection changed event when context dimensions are updated
+            this.eventsService.emitContextSelectionChanged();
           }
         }
 
