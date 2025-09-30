@@ -79,7 +79,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 
   // Static config values
   private xTickCount?: number;
-  private yTicksCount = 10;
+  private yTicksCount = 6;
   private minBarHeight = 4;
   private defaultBarColor: string;
 
