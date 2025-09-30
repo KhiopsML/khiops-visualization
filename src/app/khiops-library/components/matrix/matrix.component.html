@@ -48,7 +48,7 @@
         matTooltip="{{ 'GLOBAL.INVERT_AXIS' | translate }}"
         (click)="onClickOnInvertAxis()"
         attr.aria-label="{{ 'GLOBAL.INVERT_AXIS' | translate }}"
-        [ngClass]="['invert-axis', 'toggled-' + isAxisInverted]"
+        [ngClass]="['invert-axis', 'toggled-' + !isAxisInverted]"
       >
         <mat-icon fxFlexFill fxLayoutAlign="center center">transform</mat-icon>
       </button>

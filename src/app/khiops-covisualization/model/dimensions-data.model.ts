@@ -30,7 +30,7 @@ export class DimensionsDatasModel {
 
   // Saved datas
   // Those variables will be saved into json
-  isAxisInverted: boolean = false;
+  isAxisInverted: boolean = true;
   conditionalOnContext: boolean = true;
   matrixContrast: number | undefined = undefined;
   matrixOption: string | undefined = undefined;

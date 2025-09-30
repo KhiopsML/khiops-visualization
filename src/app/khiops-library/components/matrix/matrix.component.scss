@@ -34,7 +34,7 @@
 
   button.invert-axis.toggled-true {
     background: var(--primary) !important;
-    transform: rotate(-90deg);
+    transform: rotate(180deg);
 
     mat-icon {
       color: white;
@@ -42,7 +42,7 @@
   }
 
   button.toggle-zero.toggled-true {
-    transform: rotate(-180deg);
+    transform: rotate(90deg);
   }
 
   #matrix-area {
