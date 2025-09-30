@@ -211,11 +211,12 @@ export class VariableGraphDetailsComponent
    * It then forces an update of the legend by cloning the graph details object.
    */
   private setLegendTitle() {
-    const otherIndex = this.position === 0 ? 1 : 0;
+    // Always set the legend label to the current axis, not the other axis
+    const currentIndex = this.position;
     if (this.graphDetails?.datasets?.[0]) {
       this.graphDetails.datasets[0].label =
         this.dimensionsDatasService?.dimensionsDatas?.selectedNodes?.[
-          otherIndex
+          currentIndex
         ]?.shortDescription;
       // force legend update
       this.graphDetails = _.cloneDeep(this.graphDetails);
