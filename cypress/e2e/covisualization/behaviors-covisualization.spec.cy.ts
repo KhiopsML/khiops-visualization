@@ -154,7 +154,7 @@ describe('Behaviors tests for Khiops Covisualization', () => {
         position: 'bottomRight',
       });
       cy.wait(500);
-      cy.get('.matrix-tooltip-comp').contains(23);
+      cy.get('.matrix-tooltip-comp').contains('0.043');
     });
   });
 
