@@ -11,6 +11,7 @@ import {
   NgZone,
   SimpleChanges,
   ViewChild,
+  AfterViewInit,
 } from '@angular/core';
 import { EvaluationDatasService } from '@khiops-visualization/providers/evaluation-datas.service';
 import { TranslateService } from '@ngstack/translate';
@@ -36,7 +37,7 @@ import { TargetLiftGraphService } from './target-lift-graph.service';
 })
 export class TargetLiftGraphComponent
   extends SelectableComponent
-  implements OnChanges
+  implements OnChanges, AfterViewInit
 {
   @Input() selectedVariable?: EvaluationPredictorModel;
   @ViewChild(MatMenuTrigger) menuTrigger?: MatMenuTrigger;
@@ -67,16 +68,28 @@ export class TargetLiftGraphComponent
 
     // Initialize chart options using service
     this.chartOptions = this.targetLiftGraphService.createChartOptions();
-    
+
     // Override tooltip callbacks to use component context
     this.chartOptions.plugins!.tooltip!.callbacks = {
-      title: (items) => this.targetLiftGraphService.getTooltipTitle(items, this.title),
-      beforeBody: (items) => this.targetLiftGraphService.getTooltipBeforeBody(items),
+      title: (items) =>
+        this.targetLiftGraphService.getTooltipTitle(items, this.title),
+      beforeBody: (items) =>
+        this.targetLiftGraphService.getTooltipBeforeBody(items),
       label: (items) => this.targetLiftGraphService.getTooltipLabel(items),
-      afterLabel: (items) => this.targetLiftGraphService.getTooltipAfterLabel(items),
+      afterLabel: (items) =>
+        this.targetLiftGraphService.getTooltipAfterLabel(items),
     };
 
     this.buttonTitle = this.translate.get('GLOBAL.FILTER_CURVES');
+  }
+
+  override ngAfterViewInit() {
+    if (this.menuTrigger) {
+      // Listen to menu opened event
+      this.menuTrigger.menuOpened.subscribe(() => {
+        this.handleMenuOpened();
+      });
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -98,8 +111,9 @@ export class TargetLiftGraphComponent
    */
   private computeTargetLiftDatas() {
     const currentTarget = this.targetLift?.selected || undefined;
-    const computedData = this.targetLiftGraphService.computeTargetLiftData(currentTarget);
-    
+    const computedData =
+      this.targetLiftGraphService.computeTargetLiftData(currentTarget);
+
     // Update component properties with computed data
     this.targetLift = computedData.targetLift;
     this.targetLiftGraph = computedData.targetLiftGraph;
@@ -107,9 +121,11 @@ export class TargetLiftGraphComponent
     this.colorSet = computedData.colorSet;
     this.title = computedData.title;
     this.titleWithoutDetails = computedData.titleWithoutDetails;
-    
+
     // Initialize legend color set from the computed color set
-    this.legendColorSet = computedData.colorSet ? { ...computedData.colorSet } : undefined;
+    this.legendColorSet = computedData.colorSet
+      ? { ...computedData.colorSet }
+      : undefined;
   }
 
   onSelectToggleButtonChanged(displayedValues: ChartToggleValuesI[]) {
@@ -117,16 +133,67 @@ export class TargetLiftGraphComponent
 
     // Update color set based on displayed values using service
     if (this.colorSet) {
-      this.colorSet = this.targetLiftGraphService.updateColorSetForDisplayedValues(
-        this.colorSet,
-        displayedValues
-      );
+      this.colorSet =
+        this.targetLiftGraphService.updateColorSetForDisplayedValues(
+          this.colorSet,
+          displayedValues,
+        );
     }
   }
 
   changeTargetLift(target: string) {
     // this.trackerService.trackEvent('click', 'change_target_lift');
-    this.title = this.targetLiftGraphService.changeTarget(target, this.targetLift);
+    this.title = this.targetLiftGraphService.changeTarget(
+      target,
+      this.targetLift,
+    );
     this.computeTargetLiftDatas();
+  }
+
+  /**
+   * Handle menu opened event to set the active item in Angular Material's FocusKeyManager.
+   * This approach works with Angular Material's internal keyboard navigation.
+   */
+  private handleMenuOpened() {
+    // Wait for the menu to be rendered
+    setTimeout(() => {
+      if (
+        this.targetLift?.selected &&
+        this.targetLift?.targets &&
+        this.menuTrigger?.menu
+      ) {
+        // Find the selected index
+        const selectedIndex = this.targetLift.targets.findIndex(
+          (target) => target === this.targetLift?.selected,
+        );
+
+        if (selectedIndex >= 0) {
+          try {
+            // Access Angular Material's internal FocusKeyManager
+            const menu = this.menuTrigger.menu as any;
+            if (menu._keyManager && menu._keyManager.setActiveItem) {
+              // Set the active item in the key manager
+              menu._keyManager.setActiveItem(selectedIndex);
+
+              // Also update the tabindex to ensure proper focus
+              const menuItems = document.querySelectorAll(
+                '.cdk-overlay-pane .mat-mdc-menu-panel button[mat-menu-item]',
+              );
+              if (menuItems[selectedIndex]) {
+                (menuItems[selectedIndex] as HTMLElement).focus();
+              }
+            }
+          } catch (error) {
+            // Fallback to simple focus if internal API changes
+            const menuItems = document.querySelectorAll(
+              '.cdk-overlay-pane .mat-mdc-menu-panel button[mat-menu-item]',
+            );
+            if (menuItems[selectedIndex]) {
+              (menuItems[selectedIndex] as HTMLElement).focus();
+            }
+          }
+        }
+      }
+    }, 150); // Ensure menu is fully initialized
   }
 }

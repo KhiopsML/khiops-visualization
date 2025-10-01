@@ -27,6 +27,7 @@
               *ngFor="let target of targetLift.targets; let i = index"
               (click)="changeTargetLift(target)"
               [class.selected-item]="target === targetLift.selected"
+              [attr.data-selected]="target === targetLift.selected"
             >
               {{ target }}
             </button>
