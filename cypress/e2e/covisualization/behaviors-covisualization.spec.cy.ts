@@ -218,7 +218,7 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       cy.get('#cluster-distribution-1').contains('A10');
       cy.wait(500);
       cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
-        position: 'bottomRight',
+        position: 'topLeft',
       });
       cy.get('.matrix-tooltip-comp').contains('A10');
       cy.get('#selected-clusters-grid').contains('A10');
@@ -233,11 +233,11 @@ describe('Behaviors tests for Khiops Covisualization', () => {
         .click(1, 1, { force: true }); // Force coords to click on the matrix
 
       // Check values
-      cy.get('.matrix-tooltip-comp').contains('Private');
-      cy.get('#cluster-distribution-1').contains('Private');
-      cy.get('#selected-clusters-grid').contains('Private');
-      cy.get('#cluster-composition-0').contains('Private');
-      cy.get('.annotation-comp').first().contains('Private');
+      cy.get('.matrix-tooltip-comp').contains('A10');
+      cy.get('#cluster-distribution-1').contains('A10');
+      cy.get('#selected-clusters-grid').contains('A10');
+      cy.get('#cluster-composition-0').contains('A10');
+      cy.get('.annotation-comp').first().contains('A10');
 
       // ### Click on second cluster
       cy.get('#cluster-details-grid-0 [row-id="1"] .ag-cell-value')

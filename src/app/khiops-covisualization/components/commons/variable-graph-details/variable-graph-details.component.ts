@@ -87,6 +87,7 @@ export class VariableGraphDetailsComponent
     this.conditionalOnContextChangedSub =
       this.eventsService.conditionalOnContextChanged.subscribe(() => {
         this.getFilteredDistribution();
+        this.setLegendTitle();
       });
   }
 
