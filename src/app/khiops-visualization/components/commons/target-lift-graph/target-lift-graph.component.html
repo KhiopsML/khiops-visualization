@@ -15,6 +15,8 @@
             class="button-accent"
             color="accent"
             [matMenuTriggerFor]="targetLiftSelect"
+            appMenuFocusSelected
+            [getSelectedIndex]="getSelectedTargetIndex"
           >
             {{ targetLift.selected }}
             <em class="screenshot-hide"
@@ -27,7 +29,6 @@
               *ngFor="let target of targetLift.targets; let i = index"
               (click)="changeTargetLift(target)"
               [class.selected-item]="target === targetLift.selected"
-              [attr.data-selected]="target === targetLift.selected"
             >
               {{ target }}
             </button>

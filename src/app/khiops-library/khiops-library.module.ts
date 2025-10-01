@@ -79,6 +79,7 @@ import { CookieConsentComponent } from './components/cookie-consent/cookie-conse
 import { MatrixContrastSettingComponent } from './components/matrix-contrast-setting/matrix-contrast-setting.component';
 import { NumberPrecisionComponent } from './components/number-precision/number-precision.component';
 import { ScalePersistenceSettingComponent } from './components/scale-persistence-setting/scale-persistence-setting.component';
+import { MenuFocusSelectedDirective } from './directives/menu-focus-selected.directive';
 
 @NgModule({
   imports: [
@@ -160,6 +161,7 @@ import { ScalePersistenceSettingComponent } from './components/scale-persistence
     RowIdentifierPipe,
     ImportFileLoaderComponent,
     ProjectSummaryComponent,
+    MenuFocusSelectedDirective,
   ],
   providers: [ConfigService, TranslateService],
   exports: [
@@ -228,6 +230,7 @@ import { ScalePersistenceSettingComponent } from './components/scale-persistence
     ChartComponent,
     ImportFileLoaderComponent,
     ProjectSummaryComponent,
+    MenuFocusSelectedDirective,
   ],
 })
 export class KhiopsLibraryModule {

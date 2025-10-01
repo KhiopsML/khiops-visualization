@@ -11,7 +11,6 @@ import {
   NgZone,
   SimpleChanges,
   ViewChild,
-  AfterViewInit,
 } from '@angular/core';
 import { EvaluationDatasService } from '@khiops-visualization/providers/evaluation-datas.service';
 import { TranslateService } from '@ngstack/translate';
@@ -37,7 +36,7 @@ import { TargetLiftGraphService } from './target-lift-graph.service';
 })
 export class TargetLiftGraphComponent
   extends SelectableComponent
-  implements OnChanges, AfterViewInit
+  implements OnChanges
 {
   @Input() selectedVariable?: EvaluationPredictorModel;
   @ViewChild(MatMenuTrigger) menuTrigger?: MatMenuTrigger;
@@ -81,15 +80,6 @@ export class TargetLiftGraphComponent
     };
 
     this.buttonTitle = this.translate.get('GLOBAL.FILTER_CURVES');
-  }
-
-  override ngAfterViewInit() {
-    if (this.menuTrigger) {
-      // Listen to menu opened event
-      this.menuTrigger.menuOpened.subscribe(() => {
-        this.handleMenuOpened();
-      });
-    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -151,49 +141,15 @@ export class TargetLiftGraphComponent
   }
 
   /**
-   * Handle menu opened event to set the active item in Angular Material's FocusKeyManager.
-   * This approach works with Angular Material's internal keyboard navigation.
+   * Get the index of the currently selected target.
+   * Used by the menu-focus-selected directive to determine which item to focus.
    */
-  private handleMenuOpened() {
-    // Wait for the menu to be rendered
-    setTimeout(() => {
-      if (
-        this.targetLift?.selected &&
-        this.targetLift?.targets &&
-        this.menuTrigger?.menu
-      ) {
-        // Find the selected index
-        const selectedIndex = this.targetLift.targets.findIndex(
-          (target) => target === this.targetLift?.selected,
-        );
-
-        if (selectedIndex >= 0) {
-          try {
-            // Access Angular Material's internal FocusKeyManager
-            const menu = this.menuTrigger.menu as any;
-            if (menu._keyManager && menu._keyManager.setActiveItem) {
-              // Set the active item in the key manager
-              menu._keyManager.setActiveItem(selectedIndex);
-
-              // Also update the tabindex to ensure proper focus
-              const menuItems = document.querySelectorAll(
-                '.cdk-overlay-pane .mat-mdc-menu-panel button[mat-menu-item]',
-              );
-              if (menuItems[selectedIndex]) {
-                (menuItems[selectedIndex] as HTMLElement).focus();
-              }
-            }
-          } catch (error) {
-            // Fallback to simple focus if internal API changes
-            const menuItems = document.querySelectorAll(
-              '.cdk-overlay-pane .mat-mdc-menu-panel button[mat-menu-item]',
-            );
-            if (menuItems[selectedIndex]) {
-              (menuItems[selectedIndex] as HTMLElement).focus();
-            }
-          }
-        }
-      }
-    }, 150); // Ensure menu is fully initialized
-  }
+  getSelectedTargetIndex = (): number => {
+    if (!this.targetLift?.targets || !this.targetLift?.selected) {
+      return -1;
+    }
+    return this.targetLift.targets.findIndex(
+      (target) => target === this.targetLift?.selected,
+    );
+  };
 }
