@@ -176,9 +176,13 @@ export class ClustersService {
       -1,
     );
 
+    // For distribution chart, we want to show the label of the OTHER dimension
+    const otherPosition = position === 0 ? 1 : 0;
     const currentDataSet = new ChartDatasetModel(
-      (this.dimensionsDatasService.dimensionsDatas.selectedNodes[position] &&
-        this.dimensionsDatasService.dimensionsDatas.selectedNodes[position]
+      (this.dimensionsDatasService.dimensionsDatas.selectedNodes[
+        otherPosition
+      ] &&
+        this.dimensionsDatasService.dimensionsDatas.selectedNodes[otherPosition]
           .shortDescription) ||
         '',
     );
@@ -561,7 +565,8 @@ export class ClustersService {
       return;
     }
 
-    const axisProperty = dimensionPosition === 0 ? 'xDisplayaxisPart' : 'yDisplayaxisPart';
+    const axisProperty =
+      dimensionPosition === 0 ? 'xDisplayaxisPart' : 'yDisplayaxisPart';
 
     // Calculate contextual frequency
     const [matrixFreqsValues] = MatrixUtilsService.computeMatrixValues(

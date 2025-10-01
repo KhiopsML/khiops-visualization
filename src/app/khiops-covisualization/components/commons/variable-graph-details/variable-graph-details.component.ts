@@ -19,7 +19,7 @@ import { TranslateService } from '@ngstack/translate';
 import { DistributionGraphComponent } from '@khiops-library/components/distribution-graph/distribution-graph.component';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
-import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
+
 import { ClustersService } from '@khiops-covisualization/providers/clusters.service';
 import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
 import { Subscription } from 'rxjs';
@@ -68,7 +68,6 @@ export class VariableGraphDetailsComponent
 
   constructor(
     private translate: TranslateService,
-    private dimensionsDatasService: DimensionsDatasService,
     private treenodesService: TreenodesService,
     private configService: ConfigService,
     private clustersService: ClustersService,
@@ -76,18 +75,14 @@ export class VariableGraphDetailsComponent
   ) {
     this.treeSelectedNodeChangedSub =
       this.eventsService.treeSelectedNodeChanged.subscribe((e) => {
-        setTimeout(() => {
-          if (e.selectedNode) {
-            // Only compute distribution of the other node
-            this.getFilteredDistribution();
-          }
-          this.setLegendTitle();
-        });
+        if (e.selectedNode) {
+          // Only compute distribution of the other node
+          this.getFilteredDistribution();
+        }
       });
     this.conditionalOnContextChangedSub =
       this.eventsService.conditionalOnContextChanged.subscribe(() => {
         this.getFilteredDistribution();
-        this.setLegendTitle();
       });
   }
 
@@ -98,7 +93,6 @@ export class VariableGraphDetailsComponent
         this.activeEntries = this.graphDetails.labels.findIndex(
           (e) => e === this.selectedNode?.shortDescription,
         );
-        this.setLegendTitle();
       }
     }
     if (
@@ -201,25 +195,6 @@ export class VariableGraphDetailsComponent
         );
       }
       this.updateGraphTitle();
-    }
-  }
-
-  /**
-   * Sets the legend title for the graph.
-   *
-   * This method updates the label of the first dataset in the graph details
-   * to the short description of the selected node from the other dimension.
-   * It then forces an update of the legend by cloning the graph details object.
-   */
-  private setLegendTitle() {
-    const otherIndex = this.position === 0 ? 1 : 0;
-    if (this.graphDetails?.datasets?.[0]) {
-      this.graphDetails.datasets[0].label =
-        this.dimensionsDatasService?.dimensionsDatas?.selectedNodes?.[
-          otherIndex
-        ]?.shortDescription;
-      // force legend update
-      this.graphDetails = _.cloneDeep(this.graphDetails);
     }
   }
 
