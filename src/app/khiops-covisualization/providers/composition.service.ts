@@ -375,9 +375,14 @@ export class CompositionService {
     // Get matrix data and context selection
     const matrixCellDatas =
       this.dimensionsDatasService.dimensionsDatas.matrixDatas?.matrixCellDatas;
-    const contextSelection = currentIndex > 1;
+    const contextSelection =
+      this.dimensionsDatasService.dimensionsDatas.contextSelection;
 
-    if (!matrixCellDatas || contextSelection) {
+    if (
+      !matrixCellDatas ||
+      !contextSelection ||
+      contextSelection.length === 0
+    ) {
       return;
     }
 
