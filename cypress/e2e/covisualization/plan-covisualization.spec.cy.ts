@@ -134,7 +134,7 @@ describe('Test Plan for Khiops Covisualization', () => {
 
         // Move to the last matrix cell
         cy.get('#matrix-container').should('be.visible').trigger('mousemove', {
-          position: 'bottomRight',
+          position: 'topLeft',
         });
         cy.wait(500);
 
