@@ -80,7 +80,7 @@ body {
 }
 
 * {
-  font-family: 'Poppins', Verdana, Arial, sans-serif;
+  font-family: 'Poppins', Verdana, Arial, sans-serif !important;
   -webkit-font-smoothing: antialiased;
   &:focus {
     outline: none !important;
