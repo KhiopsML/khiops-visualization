@@ -491,6 +491,12 @@
 
       TreeView.prototype.selectNode = function (nodeId, propagateEvent = true) {
         let self = this;
+
+        // Avoid redundant selection if the same node is already selected
+        if (self.currentSelectedNodeId === nodeId) {
+          return;
+        }
+
         let el = self.rootElementDom.querySelector('#' + self.node);
         if (el) {
           let nodes = el.querySelectorAll('.tree-leaf-text');
