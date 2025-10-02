@@ -636,12 +636,14 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
 
       const containerPosition =
         this.matrixArea?.nativeElement.getBoundingClientRect();
-      this.currentMouseY = Math.round(
-        this.currentEvent!.y - containerPosition!.top,
-      );
-      this.currentMouseX = Math.round(
-        this.currentEvent!.x - containerPosition!.left,
-      );
+      if (this.currentEvent && containerPosition) {
+        this.currentMouseY = Math.round(
+          this.currentEvent.y - containerPosition.top,
+        );
+        this.currentMouseX = Math.round(
+          this.currentEvent.x - containerPosition.left,
+        );
+      }
 
       this.drawMatrix();
 
