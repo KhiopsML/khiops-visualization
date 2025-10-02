@@ -3,10 +3,10 @@
 */
 
 .ag-grid-comp {
-  background: var(--bgColor) !important;
+  background: var(--bg-color) !important;
 }
 ag-grid-angular {
-  background: var(--bgColor) !important;
+  background: var(--bg-color) !important;
 }
 
 .ag-header {
@@ -14,15 +14,15 @@ ag-grid-angular {
 }
 
 .ag-theme-balham .ag-row-even:not(.ag-row-selected) {
-  background: var(--bgColor) !important;
+  background: var(--bg-color) !important;
 }
 
 .ag-theme-balham .ag-row-odd:not(.ag-row-selected) {
-  background: var(--bgColor-20) !important;
+  background: var(--bg-color-20) !important;
 }
 
 .ag-row {
-  color: var(--bgColorContrast) !important;
+  color: var(--bg-color-contrast) !important;
 }
 
 // Override grid style
@@ -65,7 +65,7 @@ ag-grid-angular {
 }
 
 .ag-theme-balham .ag-row:hover:not(.ag-row-selected) {
-  background-color: var(--bgColor-30) !important;
+  background-color: var(--bg-color-30) !important;
 }
 
 .ag-paging-panel {
@@ -78,7 +78,7 @@ ag-grid-angular {
 }
 
 .ag-theme-balham .ag-header {
-  background-color: var(--bgColor-20) !important;
+  background-color: var(--bg-color-20) !important;
   font-weight: 600;
   font-size: 1.2em;
   border: none !important;
@@ -94,7 +94,7 @@ ag-grid-angular {
 // Style for expected frequency cells when conditional on context is enabled
 .aggrid-warn-header {
   font-style: italic;
-  color: var(--yellowMain) !important;
+  color: var(--orange-accent) !important;
 }
 
 .aggrid-warn-cell {

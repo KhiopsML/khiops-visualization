@@ -11,7 +11,7 @@
 
   #matrix-loading {
     position: absolute;
-    background: var(--bgColor) !important;
+    background: var(--bg-color) !important;
     z-index: 100;
   }
 
@@ -49,7 +49,7 @@
     width: 50px; // important everything but 100% (min width)
     height: 100%;
     overflow: auto;
-    border: 1px solid var(--bgColor-10);
+    border: 1px solid var(--bg-color-10);
 
     #matrix-container {
       height: 100%;
@@ -75,7 +75,7 @@
     font-size: 0.95em;
     font-weight: 500;
     color: var(--primary-contrast);
-    background: var(--bgColor-30);
+    background: var(--bg-color-30);
     padding: 1px 5px;
     border-radius: 4px;
     margin: 4px 0;

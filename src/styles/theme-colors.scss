@@ -142,7 +142,7 @@ html {
 :root {
   @include mat.slider-overrides(
     (
-      inactive-track-color: var(--bgColor-50),
+      inactive-track-color: var(--bg-color-50),
     )
   );
   @include mat.progress-spinner-overrides(

@@ -140,7 +140,7 @@ button {
 }
 
 .mat-elevation-z1 {
-  border-bottom: 0px solid var(--bgColor-10) !important;
+  border-bottom: 0px solid var(--bg-color-10) !important;
   box-shadow: none !important;
 }
 
@@ -166,7 +166,7 @@ button {
 
 .mat-mdc-snack-bar-container.warning {
   .mdc-snackbar__surface {
-    background: var(--yellowMain) !important;
+    background: var(--orange-accent) !important;
 
     .mat-mdc-snack-bar-label {
       color: var(--black-text);
@@ -180,7 +180,7 @@ button {
 
 .mat-mdc-snack-bar-container.error {
   .mdc-snackbar__surface {
-    background: var(--redMain) !important;
+    background: var(--red-main) !important;
   }
 }
 
@@ -246,7 +246,7 @@ mat-pseudo-checkbox {
 }
 
 .mat-drawer-container {
-  color: var(--bgColorContrast) !important;
+  color: var(--bg-color-contrast) !important;
 }
 
 mat-checkbox .mdc-form-field label {
@@ -295,12 +295,12 @@ button.mdc-icon-button {
 
 .mat-mdc-tooltip {
   font-size: 12px !important;
-  background: var(--bgTooltip) !important;
-  color: var(--bgColor) !important;
+  background: var(--bg-tooltip) !important;
+  color: var(--bg-color) !important;
 }
 
 .mat-mdc-menu-content {
-  background-color: var(--bgColor) !important;
+  background-color: var(--bg-color) !important;
 }
 
 .mat-mdc-tab-label-container {
@@ -332,7 +332,7 @@ mat-tab-body {
 }
 
 .mat-mdc-dialog-surface {
-  background: var(--bgColor) !important;
+  background: var(--bg-color) !important;
   border-radius: 4px !important;
 }
 
@@ -347,12 +347,12 @@ mat-sidenav {
 .mdc-slider__track--active,
 .mdc-slider__track--inactive {
   height: 3px !important;
-  background-color: var(--bgColor-30) !important;
+  background-color: var(--bg-color-30) !important;
 }
 
 .mat-mdc-menu-item.selected-item {
-  background-color: var(--bgTooltip) !important;
-  color: var(--bgColor) !important;
+  background-color: var(--bg-tooltip) !important;
+  color: var(--bg-color) !important;
 }
 
 .mat-mdc-menu-item {

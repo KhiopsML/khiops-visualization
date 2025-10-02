@@ -2,7 +2,7 @@
   height: 100%;
   padding: 0;
 
-  background-color: var(--bgColor) !important;
+  background-color: var(--bg-color) !important;
 
   #graph-header-comp {
     flex-wrap: wrap;
@@ -43,7 +43,7 @@
 
         .caption {
           stroke: transparent;
-          fill: var(--bgColorContrast);
+          fill: var(--bg-color-contrast);
         }
       }
     }

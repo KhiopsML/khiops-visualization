@@ -1,5 +1,5 @@
 #unfold-hierarchy-comp {
-  background-color: var(--bgColor) !important; // for copy image
+  background-color: var(--bg-color) !important; // for copy image
 
   #unfold-hierarchy-header {
     padding: 0 0 1em 0;
@@ -50,7 +50,7 @@
       }
 
       .non-info-warning {
-        color: var(--redMain);
+        color: var(--red-main);
         margin-top: 5px;
 
         mat-icon {

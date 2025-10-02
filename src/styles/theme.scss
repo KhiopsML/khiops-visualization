@@ -7,14 +7,13 @@
 
 [data-color-scheme='orange'] {
   color-scheme: orange;
-  --bgColorContrast: #000;
-  --grid: #ddd;
-  --bgColor: #fff;
-  --bgColor-10: #eee;
-  --bgColor-20: #f9fafb;
-  --bgColor-30: #eeeeee;
-  --bgColor-40: #bbb;
-  --bgColor-50: #aaa;
+  --bg-color-contrast: #000;
+  --bg-color: #fff;
+  --bg-color-10: #eee;
+  --bg-color-20: #f9fafb;
+  --bg-color-30: #eeeeee;
+  --bg-color-40: #bbb;
+  --bg-color-50: #aaa;
   --scrollbar: #eee;
   --primary: #000;
   --primary-10: #222222;
@@ -25,11 +24,10 @@
   --accent: #cd3c14;
   --selected: #ff66008c;
   --gutter-hover: #f1f1f1;
-  --bgTooltip: #444;
+  --bg-tooltip: #444;
   --chart-border: #e5e5e5;
-  --yellowMain: #ff6600;
-  --redMain: #fb473a;
-  --greenMain: #3afb74;
+  --orange-accent: #531212;
+  --red-main: #fb473a;
   --cell-type-num: #d1dcee;
   --cell-type-cat: #f5ddaf;
   --border-color: rgba(4, 32, 69, 0.1);

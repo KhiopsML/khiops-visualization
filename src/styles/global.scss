@@ -34,17 +34,17 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--bgColor-40) !important;
+  background: var(--bg-color-40) !important;
 }
 
 ::-webkit-scrollbar-thumb:active {
-  background: var(--bgColor-40) !important;
+  background: var(--bg-color-40) !important;
 }
 
 ::-webkit-scrollbar-track {
   width: 10px;
   height: 10px;
-  background: var(--bgColor) !important;
+  background: var(--bg-color) !important;
 }
 
 ::-webkit-scrollbar-track:hover {
@@ -225,7 +225,7 @@ app-home-layout {
 .comp-header {
   background: transparent !important;
   min-height: 42px !important;
-  background: var(--bgColor) !important;
+  background: var(--bg-color) !important;
   margin: 0em 0.4em 0em 1px;
 
   h1 {
@@ -362,7 +362,7 @@ canvas:focus {
   margin: 69px 0px 0px 0px;
   left: 15px !important;
   top: 11px !important;
-  background-color: var(--bgColor) !important;
+  background-color: var(--bg-color) !important;
   box-shadow: 0 1px 5px 0px rgba(0, 0, 0, 0.2);
   animation: expandToFullscreen 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
   border-radius: var(--border-radius);
@@ -437,7 +437,7 @@ canvas:focus {
   // animation-fill-mode: both;
 }
 app-home-layout {
-  background: var(--bgColor-20);
+  background: var(--bg-color-20);
 }
 #home-layout-comp {
   height: calc(100% - 25px);
@@ -451,7 +451,7 @@ mat-checkbox.kl-checkbox {
   margin: auto 0.5rem !important;
   padding: 0px !important;
   border-radius: var(--border-radius);
-  background: var(--bgColor-20);
+  background: var(--bg-color-20);
   border: 1px solid var(--border-color);
   .mdc-form-field {
     label {

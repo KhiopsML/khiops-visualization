@@ -1,6 +1,6 @@
 .target-distribution-graph-comp {
   padding: 10px 1px 1px 1px;
-  background-color: var(--bgColor) !important; // for copy image
+  background-color: var(--bg-color) !important; // for copy image
 
   ::ng-deep .bar-chart {
     g[ng-reflect-height='0'] {
