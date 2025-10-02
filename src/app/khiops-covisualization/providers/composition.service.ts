@@ -242,7 +242,6 @@ export class CompositionService {
     ) {
       this.calculateContextualCompositionFrequencies(
         compositionValues,
-        node.shortDescription,
         currentIndex,
       );
     }
@@ -361,7 +360,6 @@ export class CompositionService {
    */
   private calculateContextualCompositionFrequencies(
     compositionValues: CompositionModel[],
-    selectedClusterName: string,
     currentIndex: number,
   ): void {
     // Only calculate contextual frequencies if conditional on context is enabled and there are context dimensions
@@ -372,199 +370,161 @@ export class CompositionService {
       return;
     }
 
-    // Get matrix data and context selection
+    // Get matrix data
     const matrixCellDatas =
       this.dimensionsDatasService.dimensionsDatas.matrixDatas?.matrixCellDatas;
-    const contextSelection = currentIndex > 1;
 
-    if (!matrixCellDatas || contextSelection) {
+    if (!matrixCellDatas) {
       return;
     }
 
-    console.log(
-      '[DEBUG] Calculating contextual frequencies for:',
-      selectedClusterName,
-      'dimension:',
-      currentIndex,
-    );
-    console.log('[DEBUG] Context selection:', contextSelection);
-    console.log('[DEBUG] Number of matrix cells:', matrixCellDatas.length);
-
-    // Build the context key based on the number of context dimensions
-    // For 2 contexts: "0,0", for 3 contexts: "0,0,0", etc.
+    // Build the context key based on the currently selected context dimensions
+    const selectedContextValues =
+      this.dimensionsDatasService.dimensionsDatas.contextSelection;
     const numContextDimensions =
       this.dimensionsDatasService.dimensionsDatas.contextDimensionCount;
-    const contextIndices = Array(numContextDimensions).fill(0); // Start with first context [0, 0, ...]
-    const contextKey = contextIndices.join(',');
-    console.log(
-      '[DEBUG] Context key:',
-      contextKey,
-      'for',
-      numContextDimensions,
-      'context dimensions',
-    );
+
+    // Generate all possible context key combinations from selected leaf indices
+    // selectedContextValues[i] contains all leaf indices for dimension i (e.g., [1,2,3] if a node contains leaves 1,2,3)
+    const contextDimensionIndices: number[][] = [];
+    for (let i = 0; i < numContextDimensions; i++) {
+      const dimensionIndices = selectedContextValues[i] || [0];
+      contextDimensionIndices.push(dimensionIndices);
+    }
 
     // Determine which axis contains our selected cluster
     const dimensionProperty =
       currentIndex === 0 ? 'xDisplayaxisPart' : 'yDisplayaxisPart';
-    const otherDimensionProperty =
-      currentIndex === 0 ? 'yDisplayaxisPart' : 'xDisplayaxisPart';
 
-    console.log('[DEBUG] Looking for cluster in:', dimensionProperty);
-
-    // Create a map to accumulate frequencies by other axis part (composition cluster)
-    const compositionFrequencyMap = new Map<string, number>();
-
-    // For each composition, find its contextual frequency by looking through matrix cells
+    // Step 1: Group compositions by their terminal cluster (cluster that contains multiple values)
+    const compositionsByCluster = new Map<string, CompositionModel[]>();
     for (const composition of compositionValues) {
       if (!composition.terminalCluster) continue;
 
-      let totalContextualFrequency = 0;
-      console.log(
-        '[DEBUG] Looking for composition:',
-        composition.terminalCluster,
-        'in matrix cells',
-      );
+      if (!compositionsByCluster.has(composition.terminalCluster)) {
+        compositionsByCluster.set(composition.terminalCluster, []);
+      }
+      compositionsByCluster.get(composition.terminalCluster)?.push(composition);
+    }
 
-      // Look through all cells to find ones that contain this composition
+    // Step 2: For each cluster, calculate its total contextual frequency and distribute it among its values
+    for (const [clusterName, clusterCompositions] of compositionsByCluster) {
+      // Calculate total contextual frequency for this cluster
+      let totalContextualFrequency = 0;
       for (let i = 0; i < matrixCellDatas.length; i++) {
         const cell = matrixCellDatas[i];
         if (!cell) continue;
 
-        // Check if this cell contains our composition on the correct axis
-        const cellContainsComposition =
-          cell[dimensionProperty] === composition.terminalCluster;
-
-        if (cellContainsComposition) {
-          console.log('[DEBUG] Found composition in cell:', {
-            index: i,
-            [dimensionProperty]: cell[dimensionProperty],
-            [otherDimensionProperty]: cell[otherDimensionProperty],
-            cellFreqHashKeys: Object.keys(cell.cellFreqHash || {}),
-          });
-
-          // Get the contextual frequency from this cell
+        // Check if this cell contains our cluster on the correct axis
+        if (cell[dimensionProperty] === clusterName) {
+          // Get the contextual frequency from this cell for all possible context combinations
           if (cell.cellFreqHash && cell.cellFreqs) {
-            const contextPosition = (cell.cellFreqHash as any)[contextKey];
-            if (
-              contextPosition !== undefined &&
-              contextPosition < cell.cellFreqs.length
-            ) {
-              const contextualFrequency = cell.cellFreqs[contextPosition] || 0;
-              console.log(
-                '[DEBUG] Found contextual frequency:',
-                contextualFrequency,
-                'at position:',
-                contextPosition,
-              );
-              totalContextualFrequency += contextualFrequency;
-            } else {
-              console.log(
-                '[DEBUG] Context key not found or invalid position:',
-                contextKey,
-                contextPosition,
-              );
+            // Generate all possible combinations of context indices and sum their frequencies
+            const contextCombinations = this.generateContextCombinations(
+              contextDimensionIndices,
+            );
+
+            for (const combination of contextCombinations) {
+              const contextKey = combination.join(',');
+              const contextPosition = (cell.cellFreqHash as any)[contextKey];
+              if (
+                contextPosition !== undefined &&
+                contextPosition < cell.cellFreqs.length
+              ) {
+                const contextualFrequency =
+                  cell.cellFreqs[contextPosition] || 0;
+                totalContextualFrequency += contextualFrequency;
+              }
             }
           }
         }
       }
 
       if (totalContextualFrequency > 0) {
-        compositionFrequencyMap.set(
-          composition.terminalCluster,
-          totalContextualFrequency,
-        );
-        console.log(
-          '[DEBUG] Total contextual frequency for',
-          composition.terminalCluster,
-          ':',
-          totalContextualFrequency,
-        );
-      }
-    }
-
-    console.log(
-      '[DEBUG] Final composition frequency map:',
-      compositionFrequencyMap,
-    );
-    console.log(
-      '[DEBUG] Number of compositions to update:',
-      compositionValues.length,
-    );
-
-    // Now update the composition values with the calculated contextual frequencies
-    for (const composition of compositionValues) {
-      let contextualFrequency = 0;
-
-      console.log('[DEBUG] Processing composition:', {
-        cluster: composition.cluster,
-        terminalCluster: composition.terminalCluster,
-        valueGroupsCluster: composition.valueGroups?.cluster,
-        part: composition.part,
-        originalFrequency: composition.frequency,
-      });
-
-      // Get the contextual frequency directly from our map
-      if (composition.terminalCluster) {
-        contextualFrequency =
-          compositionFrequencyMap.get(composition.terminalCluster) || 0;
-        if (contextualFrequency > 0) {
-          console.log(
-            '[DEBUG] Found contextual frequency for',
-            composition.terminalCluster,
-            ':',
-            contextualFrequency,
-          );
-        }
-      }
-
-      // Update the composition's frequency with the contextual value
-      if (contextualFrequency > 0) {
-        const originalFrequency = composition.frequency || 1; // Avoid division by zero
-        console.log(
-          '[DEBUG] Updating composition frequency from',
-          originalFrequency,
-          'to',
-          contextualFrequency,
-        );
-        composition.frequency = contextualFrequency;
-
-        // For numerical variables, also update partFrequencies proportionally
-        if (composition.partFrequencies && originalFrequency > 0) {
-          const scaleFactor = contextualFrequency / originalFrequency;
-          composition.partFrequencies = composition.partFrequencies.map(
-            (freq) => Math.round(freq * scaleFactor),
-          );
-          console.log(
-            '[DEBUG] Updated partFrequencies with scale factor:',
-            scaleFactor,
-          );
+        // Calculate total original frequency for this cluster
+        let totalOriginalFrequency = 0;
+        for (const composition of clusterCompositions) {
+          totalOriginalFrequency += composition.frequency || 0;
         }
 
-        // For categorical variables, also update valueFrequencies proportionally
-        if (
-          composition.valueGroups?.valueFrequencies &&
-          originalFrequency > 0
-        ) {
-          const scaleFactor = contextualFrequency / originalFrequency;
-          composition.valueGroups.valueFrequencies =
-            composition.valueGroups.valueFrequencies.map((freq) =>
-              Math.round(freq * scaleFactor),
+        // Step 3: Distribute the contextual frequency among values based on their original proportions
+        // Expected Frequency(value) = Total Contextual Frequency × (Original Frequency of value / Total Original Frequency of cluster)
+        for (const composition of clusterCompositions) {
+          const originalFrequency = composition.frequency || 0;
+
+          if (totalOriginalFrequency > 0) {
+            const proportion = originalFrequency / totalOriginalFrequency;
+            const expectedFrequency = Math.round(
+              totalContextualFrequency * proportion,
             );
-          console.log(
-            '[DEBUG] Updated valueFrequencies with scale factor:',
-            scaleFactor,
-          );
+
+            composition.frequency = expectedFrequency;
+
+            // For numerical variables, also update partFrequencies proportionally
+            if (composition.partFrequencies && originalFrequency > 0) {
+              const scaleFactor = expectedFrequency / originalFrequency;
+              composition.partFrequencies = composition.partFrequencies.map(
+                (freq) => Math.round(freq * scaleFactor),
+              );
+            }
+
+            // For categorical variables, also update valueFrequencies proportionally
+            if (
+              composition.valueGroups?.valueFrequencies &&
+              originalFrequency > 0
+            ) {
+              const scaleFactor = expectedFrequency / originalFrequency;
+              composition.valueGroups.valueFrequencies =
+                composition.valueGroups.valueFrequencies.map((freq) =>
+                  Math.round(freq * scaleFactor),
+                );
+            }
+          } else {
+            composition.frequency = 0;
+          }
         }
       } else {
-        console.log(
-          '[DEBUG] No contextual frequency found for composition:',
-          composition.terminalCluster,
-        );
+        // Set all compositions in this cluster to 0 frequency
+        for (const composition of clusterCompositions) {
+          composition.frequency = 0;
+        }
+      }
+    }
+  }
+
+  /**
+   * Generates all possible combinations of context dimension indices.
+   * For example, if contextIndices = [[1,2], [3,4]], it returns [[1,3], [1,4], [2,3], [2,4]]
+   *
+   * @param contextIndices - Array of arrays where each sub-array contains the leaf indices for a context dimension
+   * @returns Array of all possible combinations
+   */
+  private generateContextCombinations(contextIndices: number[][]): number[][] {
+    if (contextIndices.length === 0) {
+      return [[]];
+    }
+
+    if (contextIndices.length === 1) {
+      const firstDimension = contextIndices[0];
+      return firstDimension ? firstDimension.map((index) => [index]) : [[]];
+    }
+
+    const result: number[][] = [];
+    const firstDimension = contextIndices[0];
+    if (!firstDimension) {
+      return [[]];
+    }
+
+    const restDimensions = contextIndices.slice(1);
+    const restCombinations = this.generateContextCombinations(restDimensions);
+
+    for (const firstIndex of firstDimension) {
+      for (const restCombination of restCombinations) {
+        result.push([firstIndex, ...restCombination]);
       }
     }
 
-    console.log('[DEBUG] Contextual frequency calculation completed');
+    return result;
   }
 
   /**

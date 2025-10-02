@@ -89,7 +89,21 @@ ag-grid-angular {
 .ag-header-cell-label .ag-header-cell-text {
   font-weight: 400;
   font-size: 0.85em;
-  color: var(--grey-text) !important;
+}
+
+// Style for expected frequency cells when conditional on context is enabled
+.aggrid-warn-header {
+  font-style: italic;
+  color: var(--yellowMain) !important;
+}
+
+.aggrid-warn-cell {
+  // font-style: italic;
+  // padding-right: 5px;
+}
+
+.aggrid-warn-header .ag-header-cell-text::after {
+  content: '\00a0'; /* non-breaking space */
 }
 
 .ag-theme-balham .ag-root {

@@ -8,12 +8,17 @@ import { TranslateService } from '@ngstack/translate';
 import { GridColumnsI } from '../../../../khiops-library/interfaces/grid-columns';
 import { IconCellComponent } from '../../../../khiops-library/components/ag-grid/icon-cell/icon-cell.component';
 import { ICellRendererParams } from '@ag-grid-community/core';
+import { DimensionsDatasService } from '../../../providers/dimensions-datas.service';
 
 export function getCompositionDisplayedColumns(
   translate: TranslateService,
   isVarPart?: boolean,
   showDetailedPartsCallback?: (data: ICellRendererParams) => void,
+  dimensionsDatasService?: DimensionsDatasService,
 ): GridColumnsI[] {
+  const isConditionalOnContext =
+    dimensionsDatasService?.dimensionsDatas.conditionalOnContext &&
+    dimensionsDatasService?.dimensionsDatas.contextDimensionCount > 0;
   if (!isVarPart) {
     // Common case
     return [
@@ -45,9 +50,15 @@ export function getCompositionDisplayedColumns(
         tooltip: translate.get('TOOLTIPS.AXIS.COMPOSITION.VALUE'),
       },
       {
-        headerName: translate.get('GLOBAL.FREQUENCY'),
+        headerName: isConditionalOnContext
+          ? '* ' + translate.get('GLOBAL.EXPECTED_FREQUENCY')
+          : translate.get('GLOBAL.FREQUENCY'),
         field: 'frequency',
-        tooltip: translate.get('TOOLTIPS.AXIS.COMPOSITION.FREQUENCY'),
+        tooltip: isConditionalOnContext
+          ? translate.get('TOOLTIPS.AXIS.COMPOSITION.EXPECTED_FREQUENCY')
+          : translate.get('TOOLTIPS.AXIS.COMPOSITION.FREQUENCY'),
+        cellClass: isConditionalOnContext ? 'aggrid-warn-cell' : '',
+        headerClass: isConditionalOnContext ? 'aggrid-warn-header' : '',
       },
     ];
   } else {
@@ -94,9 +105,15 @@ export function getCompositionDisplayedColumns(
         },
       },
       {
-        headerName: translate.get('GLOBAL.FREQUENCY'),
+        headerName: isConditionalOnContext
+          ? '* ' + translate.get('GLOBAL.EXPECTED_FREQUENCY')
+          : translate.get('GLOBAL.FREQUENCY'),
         field: 'frequency',
-        tooltip: translate.get('TOOLTIPS.AXIS.COMPOSITION.FREQUENCY'),
+        tooltip: isConditionalOnContext
+          ? translate.get('TOOLTIPS.AXIS.COMPOSITION.EXPECTED_FREQUENCY')
+          : translate.get('TOOLTIPS.AXIS.COMPOSITION.FREQUENCY'),
+        cellClass: isConditionalOnContext ? 'aggrid-warn-cell' : '',
+        headerClass: isConditionalOnContext ? 'aggrid-warn-header' : '',
       },
     ];
   }

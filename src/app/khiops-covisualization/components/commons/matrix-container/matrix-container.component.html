@@ -37,6 +37,10 @@
             *ngIf="dimensionsDatas?.contextDimensionCount"
             [checked]="dimensionsDatas?.conditionalOnContext"
             (change)="changeConditionalOnContext()"
+            matTooltipPosition="above"
+            matTooltip="{{
+              'TOOLTIPS.COMMONS.CONDITIONAL_ON_CONTEXT' | translate
+            }}"
           >
             {{ 'GLOBAL.CONDITIONAL_ON_CONTEXT' | translate }}</mat-checkbox
           >

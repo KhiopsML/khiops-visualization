@@ -125,14 +125,42 @@ export class AgGridService {
           width: options.cellsSizes?.[options.gridId!]?.[col.field],
           cellRendererFramework: col.cellRendererFramework,
           cellRendererParams: col.cellRendererParams,
-          cellClass:
-            cellAlignment === 'right'
-              ? 'ag-right-aligned-cell'
-              : 'ag-left-aligned-cell',
-          headerClass:
-            cellAlignment === 'right'
-              ? 'ag-right-aligned-header'
-              : 'ag-left-aligned-header',
+          cellClass: (params: any) => {
+            const alignmentClass =
+              cellAlignment === 'right'
+                ? 'ag-right-aligned-cell'
+                : 'ag-left-aligned-cell';
+
+            let customClass = '';
+            if (col.cellClass) {
+              customClass =
+                typeof col.cellClass === 'function'
+                  ? col.cellClass(params)
+                  : col.cellClass;
+            }
+
+            return customClass
+              ? `${alignmentClass} ${customClass}`
+              : alignmentClass;
+          },
+          headerClass: (params: any) => {
+            const alignmentClass =
+              cellAlignment === 'right'
+                ? 'ag-right-aligned-header'
+                : 'ag-left-aligned-header';
+
+            let customHeaderClass = '';
+            if (col.headerClass) {
+              customHeaderClass =
+                typeof col.headerClass === 'function'
+                  ? col.headerClass(params)
+                  : col.headerClass;
+            }
+
+            return customHeaderClass
+              ? `${alignmentClass} ${customHeaderClass}`
+              : alignmentClass;
+          },
           comparator: this.createComparator(),
         };
 

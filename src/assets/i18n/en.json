@@ -394,6 +394,7 @@
     },
     "COMMONS": {
       "LEVEL_DISTRIBUTION": "display the level distribution of the variables",
+      "CONDITIONAL_ON_CONTEXT": "When checked, frequencies are calculated conditionally on the selected context.",
       "MATRIX_MODE": "Set frequency or clusters/intervals matrix.",
       "MATRIX_CONTRAST": "The contrast allows to highlight the interesting patterns",
       "MATRIX_GLOBAL_LOCAL": "The scale is local when the patterns are scaled according to their local context, and global when their are scaled w.r.t. the entire dataset"
@@ -547,7 +548,8 @@
         "VALUE": "Value of the item",
         "FREQUENCY": "The “Frequency” of an item is its number of occurrences in the cluster",
         "INNER_VARIABLE": "Name of numerical or categorical variable of the Variables axis for Instances * Variables coclustering",
-        "PART": "Value of the part ( intervals or modalities)"
+        "PART": "Value of the part ( intervals or modalities)",
+        "EXPECTED_FREQUENCY": "provides an estimate.\nCluster size filtered by context × proportion of each value in the original cluster"
       },
       "EXTERNAL_DATAS": {
         "TITLE": "Integrate external data associated to each cluster element. The selection of an item in the composition view display the corresponding data in this view. There are 3 types of data fields: textual, numerical and categorical. The display is optimized according to the data type. Several fields can be associated for each item."

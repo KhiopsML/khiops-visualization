@@ -34,6 +34,7 @@ import {
 } from '@angular/material/dialog';
 import { AppConfig } from '../../../../../environments/environment.dev';
 import { CompositionDetailedPartsComponent } from '../composition-detailed-parts/composition-detailed-parts.component';
+import { DimensionsDatasService } from '../../../providers/dimensions-datas.service';
 
 @Component({
   selector: 'app-composition',
@@ -58,6 +59,7 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
   private treeSelectedNodeChangedSub: Subscription;
   private importedDatasChangedSub: Subscription;
   private conditionalOnContextChangedSub: Subscription;
+  private contextSelectionChangedSub: Subscription;
 
   constructor(
     private translate: TranslateService,
@@ -65,6 +67,7 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
     private compositionService: CompositionService,
     private eventsService: EventsService,
     private dialog: MatDialog,
+    private dimensionsDatasService: DimensionsDatasService,
   ) {
     this.treeSelectedNodeChangedSub =
       this.eventsService.treeSelectedNodeChanged.subscribe((e) => {
@@ -75,6 +78,19 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.conditionalOnContextChangedSub =
       this.eventsService.conditionalOnContextChanged.subscribe(() => {
+        // Update columns to show Expected Frequency when conditional on context is enabled
+        this.compositionDisplayedColumns = getCompositionDisplayedColumns(
+          this.translate,
+          this.selectedDimension?.isVarPart,
+          (e) => this.showDetailedPartsDialog(e),
+          this.dimensionsDatasService,
+        );
+        this.updateTable(this.selectedNode);
+      });
+
+    this.contextSelectionChangedSub =
+      this.eventsService.contextSelectionChanged.subscribe(() => {
+        // Recalculate Expected Frequencies when context selection changes
         this.updateTable(this.selectedNode);
       });
 
@@ -127,6 +143,7 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
         this.translate,
         this.selectedDimension?.isVarPart,
         (e) => this.showDetailedPartsDialog(e),
+        this.dimensionsDatasService,
       );
       this.updateTable(this.selectedNode);
     }
@@ -136,6 +153,7 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
     this.treeSelectedNodeChangedSub?.unsubscribe();
     this.importedDatasChangedSub?.unsubscribe();
     this.conditionalOnContextChangedSub?.unsubscribe();
+    this.contextSelectionChangedSub?.unsubscribe();
     this.selectedComposition = undefined;
     this.selectedCompositionChanged.emit(this.selectedComposition);
   }
