@@ -12,7 +12,7 @@
 
 **🌐 [Khiops Visualization Live Demo](https://khiopsml.github.io/khiops-visualization/)**
 
-**🌐 [Khiops Covisualization Live Demo](https://khiopsml.github.io/khiops-visualization/khiops-covisualization.html)**
+**🌐 [Khiops Covisualization Live Demo](https://khiopsml.github.io/khiops-visualization/demo-covisualization.html)**
 
 ---
 
