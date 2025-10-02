@@ -56,6 +56,7 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
   public id: string = '';
   public compositionDisplayedColumns: GridColumnsI[] = [];
 
+  private currentNode: TreeNodeModel | undefined; // Store the actual node to use for updates
   private treeSelectedNodeChangedSub: Subscription;
   private importedDatasChangedSub: Subscription;
   private conditionalOnContextChangedSub: Subscription;
@@ -72,6 +73,8 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
     this.treeSelectedNodeChangedSub =
       this.eventsService.treeSelectedNodeChanged.subscribe((e) => {
         if (e.realNodeVO && e.hierarchyName === this.selectedDimension?.name) {
+          // Store the realNodeVO to use it for subsequent updates
+          this.currentNode = e.realNodeVO;
           this.updateTable(e.realNodeVO, e.selectedValue);
         }
       });
@@ -85,13 +88,15 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
           (e) => this.showDetailedPartsDialog(e),
           this.dimensionsDatasService,
         );
-        this.updateTable(this.selectedNode);
+        // Use currentNode instead of selectedNode to avoid timing issues
+        this.updateTable(this.currentNode || this.selectedNode);
       });
 
     this.contextSelectionChangedSub =
       this.eventsService.contextSelectionChanged.subscribe(() => {
         // Recalculate Expected Frequencies when context selection changes
-        this.updateTable(this.selectedNode);
+        // Use currentNode instead of selectedNode to avoid timing issues
+        this.updateTable(this.currentNode || this.selectedNode);
       });
 
     this.importedDatasChangedSub =
@@ -129,22 +134,26 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
     // #40 loss of display after resizing the coclustering
     // We need to update table at init if component was hidden
     // Also linked to #111
+    // Initialize currentNode with selectedNode
+    this.currentNode = this.selectedNode;
     this.updateTable(this.selectedNode);
   }
 
   ngOnChanges(changes: SimpleChanges) {
     // update when dimension change (with combo)
-    if (
+    const dimensionChanged =
       changes.selectedDimension?.currentValue?.name !==
-        changes.selectedDimension?.previousValue?.name &&
-      changes.selectedNode
-    ) {
+      changes.selectedDimension?.previousValue?.name;
+
+    if (dimensionChanged && changes.selectedNode) {
       this.compositionDisplayedColumns = getCompositionDisplayedColumns(
         this.translate,
         this.selectedDimension?.isVarPart,
         (e) => this.showDetailedPartsDialog(e),
         this.dimensionsDatasService,
       );
+      // Update currentNode when dimension changes
+      this.currentNode = this.selectedNode;
       this.updateTable(this.selectedNode);
     }
   }
