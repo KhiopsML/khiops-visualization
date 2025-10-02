@@ -32,8 +32,48 @@ export class ChartManagerService {
   private color: string = '#eeeeee';
   private barColor: string = 'rgba(0, 0, 0, 1)';
   private fontColor: string = '#999';
+  private lastDataHash: string | null = null;
 
   constructor(private configService: ConfigService) {}
+
+  /**
+   * Creates a hash from the input data to detect changes.
+   * @param inputDatas - The chart data
+   * @param activeEntries - The active entries index
+   * @param colorSet - The color set
+   * @param selectedLineChartItem - The selected line chart item
+   * @returns A hash string representing the current state
+   */
+  private createDataHash(
+    inputDatas: ChartDatasModel,
+    activeEntries: number | undefined,
+    colorSet: ChartColorsSetI | undefined,
+    selectedLineChartItem: string | undefined,
+  ): string {
+    // Create a normalized representation for better comparison
+    const normalizedData = {
+      datasets:
+        inputDatas.datasets?.map((dataset) => ({
+          data: dataset.data,
+          label: dataset.label,
+          type: dataset.type,
+        })) || [],
+      labels: inputDatas.labels || [],
+      activeEntries: activeEntries,
+      colorSetDomain: colorSet?.domain || null,
+      selectedLineChartItem: selectedLineChartItem || null,
+    };
+
+    const dataString = JSON.stringify(normalizedData, null, 0); // No indentation for consistent string
+
+    // Improved hash function (djb2 algorithm)
+    let hash = 5381;
+    for (let i = 0; i < dataString.length; i++) {
+      const char = dataString.charCodeAt(i);
+      hash = (hash << 5) + hash + char; // hash * 33 + char
+    }
+    return (hash >>> 0).toString(); // Convert to unsigned 32-bit integer
+  }
 
   /**
    * Initializes the chart instance and sets up its configuration.
@@ -61,6 +101,7 @@ export class ChartManagerService {
       try {
         this.chart?.destroy();
       } catch (e) {}
+      this.lastDataHash = null; // Reset hash when reinitializing chart
 
       const chartAreaBorder = {
         id: 'chartAreaBorder',
@@ -129,7 +170,28 @@ export class ChartManagerService {
   ): void {
     setTimeout(
       () => {
-        if (inputDatas && this.chart) {
+        if (
+          inputDatas &&
+          this.chart &&
+          inputDatas.datasets[0]?.data.length > 0
+        ) {
+          // Create hash of current data state
+          const currentDataHash = this.createDataHash(
+            inputDatas,
+            activeEntries,
+            colorSet,
+            selectedLineChartItem,
+          );
+
+          // Check if data has changed
+          if (currentDataHash === this.lastDataHash) {
+            // No changes detected, skip update
+            return;
+          }
+
+          // Update last hash
+          this.lastDataHash = currentDataHash;
+
           // Update datas
           // Force khiops VO into Chart dataset
           // @ts-ignore
@@ -311,5 +373,6 @@ export class ChartManagerService {
       this.chart?.destroy();
     } catch (e) {}
     this.chart = undefined;
+    this.lastDataHash = null; // Reset hash when chart is destroyed
   }
 }

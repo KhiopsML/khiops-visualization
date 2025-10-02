@@ -45,6 +45,7 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Output() private selectBarIndex: EventEmitter<number> = new EventEmitter();
 
   public isLoading: boolean = false;
+  private updateGraphTimeout: any;
 
   constructor(
     private el: ElementRef,
@@ -64,6 +65,9 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    if (this.updateGraphTimeout) {
+      clearTimeout(this.updateGraphTimeout);
+    }
     this.chartManagerService.destroy();
   }
 
@@ -130,18 +134,27 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   /**
    * Updates the chart data and refreshes the chart display.
+   * Uses debounce to prevent multiple calls in the same change detection cycle.
    */
   private updateGraph() {
-    if (this.inputDatas) {
-      this.chartManagerService.updateGraph(
-        this.inputDatas,
-        this.activeEntries,
-        this.colorSet,
-        this.selectedLineChartItem,
-        this.isLoading,
-      );
-      this.isLoading = false;
+    // Clear any pending update
+    if (this.updateGraphTimeout) {
+      clearTimeout(this.updateGraphTimeout);
     }
+    
+    // Debounce the update to avoid multiple calls
+    this.updateGraphTimeout = setTimeout(() => {
+      if (this.inputDatas) {
+        this.chartManagerService.updateGraph(
+          this.inputDatas,
+          this.activeEntries,
+          this.colorSet,
+          this.selectedLineChartItem,
+          this.isLoading,
+        );
+        this.isLoading = false;
+      }
+    }, 0); // Execute on next tick
   }
 
   /**
