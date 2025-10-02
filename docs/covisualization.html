@@ -15,10 +15,10 @@
     </style>
   </head>
   <body>
-    <khiops-visualization
+    <khiops-covisualization
       id="kv1"
       style="width: 100%; height: 100%"
-    ></khiops-visualization>
+    ></khiops-covisualization>
     <script src="https://unpkg.com/khiops-visualization/khiops-webcomponents.bundle.js"></script>
     <script>
       document.addEventListener('DOMContentLoaded', function () {
@@ -28,15 +28,15 @@
 
       async function loadDemoData() {
         try {
-          const response = await fetch('./demo-visualization.json');
+          const response = await fetch('./demo-covisualization.json');
           const data = await response.json();
 
-          const kv1 = document.querySelector('khiops-visualization');
+          const kv1 = document.querySelector('khiops-covisualization');
           if (kv1) {
             kv1.clean();
             kv1.setDatas(data);
           } else {
-            console.error('khiops-visualization element not found');
+            console.error('khiops-covisualization element not found');
           }
         } catch (error) {
           console.error('Error loading demo data:', error);
