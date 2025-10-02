@@ -194,11 +194,11 @@ export class VariableGraphDetailsComponent
    * Also, updates the graph title accordingly.
    */
   private getFilteredDistribution() {
-    if (this.dimensionsTree && this.selectedNode) {
+    if (this.dimensionsTree) {
       this.graphDetails = this.clustersService.getDistributionDetailsFromNode(
         this.position,
       );
-      if (this.graphDetails?.labels) {
+      if (this.graphDetails?.labels && this.selectedNode) {
         this.activeEntries = this.graphDetails.labels.findIndex(
           (e) => e === this.selectedNode?.shortDescription,
         );
