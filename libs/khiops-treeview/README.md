@@ -245,7 +245,6 @@ The component uses SCSS for styling with CSS custom properties for theming:
 ```scss
 :root {
   --primary: #1976d2; // Primary color for file icons
-  --yellowMain: #ffc107; // Folder icon color
 }
 ```
 
