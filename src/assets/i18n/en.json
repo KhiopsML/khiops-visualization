@@ -309,6 +309,7 @@
     "INVERT_AXIS": "Invert axis",
     "COOCURENCE": "Co-occurrence",
     "CELLS_OF": "Cells of",
+    "FILTERED_BY_CONTEXT": "* Filtered by current context",
     "TARGET_DISTRIBUTION_OF_CELL": "Target distribution of cell",
     "MANAGE_VIEWS": "Manage views",
     "MANAGE_VIEWS_DESC": "Add or remove different views on each dimension",

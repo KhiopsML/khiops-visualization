@@ -5,15 +5,19 @@
   fxLayoutAlign="start center"
   class="scrollbar-thin"
 >
-  <h1
-    fxLayout="row"
-    fxLayoutAlign="start center"
-    fxFlex
-    [ngClass]="{ 'small-title': smallTitle === true }"
-  >
-    <mat-icon>equalizer</mat-icon>
-    <span>{{ title || (selectedVariable && selectedVariable.name) }}</span>
-  </h1>
+  <div fxLayout="column" fxFlex>
+    <h1
+      fxLayout="row"
+      fxLayoutAlign="start center"
+      [ngClass]="{ 'small-title': smallTitle === true }"
+    >
+      <mat-icon>equalizer</mat-icon>
+      <span>{{ title || (selectedVariable && selectedVariable.name) }}</span>
+    </h1>
+    <h2 *ngIf="subTitle" class="subtitle">
+      {{ subTitle }}
+    </h2>
+  </div>
   <div id="graph-header-tools" fxLayout="row" fxLayoutAlign="start center">
     <div
       *ngIf="!hideScale"

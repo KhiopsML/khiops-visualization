@@ -29,6 +29,7 @@ import * as _ from 'lodash';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { HistogramType } from '../../../../khiops-visualization/components/commons/histogram/histogram.type';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
+import { DimensionsDatasService } from '../../../providers/dimensions-datas.service';
 
 @Component({
   selector: 'app-variable-graph-details',
@@ -66,12 +67,20 @@ export class VariableGraphDetailsComponent
   private treeSelectedNodeChangedSub: Subscription;
   private conditionalOnContextChangedSub: Subscription;
 
+  get subTitle(): string | undefined {
+    return this.dimensionsDatasService?.dimensionsDatas.conditionalOnContext &&
+      this.dimensionsDatasService?.dimensionsDatas.contextDimensionCount > 0
+      ? this.translate.get('GLOBAL.FILTERED_BY_CONTEXT')
+      : undefined;
+  }
+
   constructor(
     private translate: TranslateService,
     private treenodesService: TreenodesService,
     private configService: ConfigService,
     private clustersService: ClustersService,
     private eventsService: EventsService,
+    private dimensionsDatasService: DimensionsDatasService,
   ) {
     this.treeSelectedNodeChangedSub =
       this.eventsService.treeSelectedNodeChanged.subscribe((e) => {

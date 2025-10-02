@@ -35,6 +35,7 @@ export class GraphHeaderComponent implements OnInit {
   @Input() public hideScale = false;
   @Input() public hidePersistScale = false;
   @Input() public showZoom = false;
+  @Input() public subTitle?: string;
 
   public maxScale: number;
   public minScale: number;

@@ -24,6 +24,15 @@
     }
   }
 
+  .subtitle {
+    color: var(--yellowMain) !important;
+    font-size: 0.75em;
+    font-weight: 400;
+    font-style: italic;
+    margin: 0 0 0 15px !important;
+    line-height: 1em;
+  }
+
   kl-zoom-tools {
     margin-right: 0.5rem;
   }
