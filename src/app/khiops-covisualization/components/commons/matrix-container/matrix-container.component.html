@@ -34,11 +34,18 @@
 
           <!-- Inner Variables Filter Component -->
           <app-matrix-inner-variables-filter
+            class="screenshot-hide"
             fxFlex
             [selectedDimensions]="selectedDimensions"
             [showComponent]="showInnerVariablesFilter"
             (selectionChanged)="onInnerVariablesSelectionChanged($event)"
           ></app-matrix-inner-variables-filter>
+          <kl-matrix-toggle
+            class="screenshot-hide"
+            [matrixOptions]="matrixFilterOptions"
+            [lsId]="LS.MATRIX_FILTER_OPTION"
+            (matrixOptionChange)="changeMatrixFilterType($event)"
+          ></kl-matrix-toggle>
           <mat-checkbox
             color="accent"
             class="kl-checkbox"

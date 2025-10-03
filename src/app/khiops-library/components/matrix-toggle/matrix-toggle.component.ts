@@ -17,14 +17,15 @@ import { MatrixOptionsModel } from '@khiops-library/model/matrix-options.model';
 import { Ls } from '@khiops-library/providers/ls.service';
 
 @Component({
-    selector: 'kl-matrix-toggle',
-    templateUrl: './matrix-toggle.component.html',
-    styleUrls: ['./matrix-toggle.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  selector: 'kl-matrix-toggle',
+  templateUrl: './matrix-toggle.component.html',
+  styleUrls: ['./matrix-toggle.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class MatrixToggleComponent implements OnChanges {
   @Input() public matrixOptions: MatrixOptionsModel = new MatrixOptionsModel();
+  @Input() private lsId: string = LS.MATRIX_TYPE_OPTION;
   @Output() private matrixOptionChange = new EventEmitter<string>();
 
   constructor(private ls: Ls) {}
@@ -33,7 +34,7 @@ export class MatrixToggleComponent implements OnChanges {
     // may has been set by saved datas
     if (!this.matrixOptions.selected) {
       this.matrixOptions.selected = this.ls.get(
-        LS.MATRIX_TYPE_OPTION,
+        this.lsId,
         this.matrixOptions.types[0],
       );
     }
@@ -41,7 +42,7 @@ export class MatrixToggleComponent implements OnChanges {
 
   changeMatrixType(type: string) {
     // this.trackerService.trackEvent('click', 'matrix_type', type);
-    this.ls.set(LS.MATRIX_TYPE_OPTION, type);
+    this.ls.set(this.lsId, type);
     this.matrixOptions.selected = type;
     this.matrixOptionChange.emit(type);
   }

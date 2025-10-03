@@ -34,6 +34,7 @@ export class DimensionsDatasModel {
   conditionalOnContext: boolean = true;
   matrixContrast: number | undefined = undefined;
   matrixOption: string | undefined = undefined;
+  matrixFilterOption: string | undefined = undefined;
   matrixMode: number | undefined = undefined;
   nodesNames: DynamicI = {};
   annotations: DynamicI = {};

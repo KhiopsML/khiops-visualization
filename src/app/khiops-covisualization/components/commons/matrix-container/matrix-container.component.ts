@@ -33,6 +33,8 @@ import { TreeNodeChangedEventI } from '@khiops-covisualization/interfaces/events
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { InnerVariablesSelectionEvent } from '../matrix-inner-variables-filter/matrix-inner-variables-filter.component';
+import { MatrixFilterOptionsModel } from '../../../../khiops-library/model/matrix-filter-options.model';
+import { LS } from '@khiops-library/enum/ls';
 
 @Component({
   selector: 'app-matrix-container',
@@ -52,9 +54,12 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
   @Input() selectedDimensions: DimensionCovisualizationModel[] | undefined; // Used to check for dim change
   @Input() public dimensionsDatas: DimensionsDatasModel | undefined;
 
+  public LS = LS;
   public sizes: DynamicI | undefined;
   public matrixModes: MatrixModesModel = new MatrixModesModel();
   public matrixOptions: MatrixOptionsModel = new MatrixOptionsModel();
+  public matrixFilterOptions: MatrixFilterOptionsModel =
+    new MatrixFilterOptionsModel();
   public initNodesEvents = 0; // improve draw matrix perf
   public isFullscreen = false;
 
@@ -103,6 +108,11 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
     // Check if saved into json
     if (this.dimensionsDatas?.matrixOption !== undefined) {
       this.matrixOptions.selected = this.dimensionsDatas.matrixOption;
+    }
+    // Check if saved into json
+    if (this.dimensionsDatas?.matrixFilterOption !== undefined) {
+      this.matrixFilterOptions.selected =
+        this.dimensionsDatas.matrixFilterOption;
     }
   }
 
@@ -153,6 +163,12 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
   changeMatrixType(type: string) {
     if (this.dimensionsDatas) {
       this.dimensionsDatas.matrixOption = type; // Save it into the global model to keep it into saved datas
+    }
+  }
+
+  changeMatrixFilterType(type: string) {
+    if (this.dimensionsDatas) {
+      this.dimensionsDatas.matrixFilterOption = type; // Save it into the global model to keep it into saved datas
     }
   }
 
