@@ -86,7 +86,7 @@ export function getVisualizationMockFile(): string {
  * To change the default file, uncomment the desired line and comment the current active one.
  */
 export function getCoviszalizationMockFile(): string {
-  let urlKC = 'Coclustering-100x100.json';
+  // let urlKC = 'Coclustering-100x100.json';
   // let urlKC = 'IV-Poissons.json';
   // let urlKC = 'cc.json';
   // let urlKC = 'Coclustering.json';
@@ -106,7 +106,7 @@ export function getCoviszalizationMockFile(): string {
   // let urlKC = '8-TS4624User_Coclustering.json';
   // let urlKC = 'IV-AdultEducation.json';
   // let urlKC = 'Coclustering-IVAdultEducation.json';
-  // let urlKC = 'Coclustering-IV-Glass.json';
+  let urlKC = 'Coclustering-IV-Glass.khcj';
   // let urlKC = 'Coclustering-IV-Iris.khcj';
   // let urlKC = 'Coclustering-IV-Pima.khcj';
   // let urlKC = 'Coclustering_NewSeparator.khcj';

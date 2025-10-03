@@ -31,6 +31,14 @@
             (matrixModeChange)="changeMatrixMode($event)"
           >
           </kl-matrix-mode>
+
+          <!-- Inner Variables Filter Component -->
+          <app-matrix-inner-variables-filter
+            fxFlex
+            [selectedDimensions]="selectedDimensions"
+            [showComponent]="showInnerVariablesFilter"
+            (selectionChanged)="onInnerVariablesSelectionChanged($event)"
+          ></app-matrix-inner-variables-filter>
           <mat-checkbox
             color="accent"
             class="kl-checkbox"

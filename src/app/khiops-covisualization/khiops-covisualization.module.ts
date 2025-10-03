@@ -39,6 +39,7 @@ import { InAppOverlayContainer } from '../khiops-library/overlay/in-app-overlay-
 import { CompositionDetailedPartsComponent } from './components/commons/composition-detailed-parts/composition-detailed-parts.component';
 import { VariableSearchDialogComponent } from './components/commons/variable-search-dialog/variable-search-dialog.component';
 import { VariableSearchButtonComponent } from './components/commons/variable-search-button/variable-search-button.component';
+import { MatrixInnerVariablesFilterComponent } from './components/commons/matrix-inner-variables-filter/matrix-inner-variables-filter.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { VariableSearchButtonComponent } from './components/commons/variable-sea
     CompositionDetailedPartsComponent,
     VariableSearchDialogComponent,
     VariableSearchButtonComponent,
+    MatrixInnerVariablesFilterComponent,
     ExternalDatasComponent,
   ],
   imports: [

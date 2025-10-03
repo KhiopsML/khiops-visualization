@@ -32,6 +32,7 @@ import { SplitGutterInteractionEvent } from 'angular-split';
 import { TreeNodeChangedEventI } from '@khiops-covisualization/interfaces/events';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
+import { InnerVariablesSelectionEvent } from '../matrix-inner-variables-filter/matrix-inner-variables-filter.component';
 
 @Component({
   selector: 'app-matrix-container',
@@ -56,6 +57,13 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
   public matrixOptions: MatrixOptionsModel = new MatrixOptionsModel();
   public initNodesEvents = 0; // improve draw matrix perf
   public isFullscreen = false;
+
+  // Inner variables filter properties
+  public showInnerVariablesFilter = false;
+  public selectedInnerVariablesState: InnerVariablesSelectionEvent = {
+    selectedInnerVariables: [],
+    allSelected: true,
+  };
 
   private treeSelectedNodeChangedSub: Subscription;
   private viewsLayoutChangedSub: Subscription;
@@ -90,6 +98,7 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
   ngOnInit() {
     this.sizes = this.layoutService.getViewSplitSizes(this.viewId);
     this.constructModeSelectBox();
+    this.initializeInnerVariablesFilter();
 
     // Check if saved into json
     if (this.dimensionsDatas?.matrixOption !== undefined) {
@@ -101,6 +110,7 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
     // #141 Update combobox on selection change
     if (changes.selectedDimensions) {
       this.constructModeSelectBox();
+      this.initializeInnerVariablesFilter();
     }
   }
 
@@ -242,5 +252,35 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
         this.matrix?.drawSelectedNodes();
       }
     }
+  }
+
+  /**
+   * Initializes the inner variables filter visibility
+   */
+  private initializeInnerVariablesFilter() {
+    this.showInnerVariablesFilter = false;
+
+    if (this.selectedDimensions && this.selectedDimensions.length > 0) {
+      // Check if any dimension has inner variables
+      for (const dimension of this.selectedDimensions) {
+        if (
+          dimension?.innerVariables?.dimensionSummaries &&
+          dimension.innerVariables.dimensionSummaries.length > 0
+        ) {
+          this.showInnerVariablesFilter = true;
+          break;
+        }
+      }
+    }
+  }
+
+  /**
+   * Called when the inner variables selection changes
+   */
+  onInnerVariablesSelectionChanged(event: InnerVariablesSelectionEvent) {
+    this.selectedInnerVariablesState = event;
+    // TODO: Apply the filter to the matrix based on selected inner variables
+    // This might require updating the matrix data or applying filters
+    console.log('Inner variables selection changed:', event);
   }
 }
