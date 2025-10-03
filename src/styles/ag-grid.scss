@@ -106,6 +106,10 @@ ag-grid-angular {
   content: '\00a0'; /* non-breaking space */
 }
 
+.ag-cell-value::after {
+  content: '\00a0'; /* non-breaking space */
+}
+
 .ag-theme-balham .ag-root {
   border: none !important;
 }
