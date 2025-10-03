@@ -54,6 +54,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   @Input() private selectedNodes: TreeNodeModel[] | undefined; // KC use case
   @Input() private selectedCell: CellModel | undefined; // KV use case
   @Input() private contextSelection: number[][] = [];
+  @Input() public selectedInnerVariables: string[] = []; // For inner variables filtering
 
   @Output() private matrixAxisInverted: EventEmitter<any> = new EventEmitter();
   @Output() private cellSelected: EventEmitter<any> = new EventEmitter();
@@ -387,6 +388,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
       this.contrast,
       this.isZerosToggled,
       this.legend.max,
+      this.selectedInnerVariables,
     );
   }
 

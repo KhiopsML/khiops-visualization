@@ -749,11 +749,13 @@ export class DimensionsDatasService {
           cellFrequencies,
         );
 
-      xValues.standard =
+      let xAxisFullPart;
+      let yAxisFullPart;
+      [xValues.standard, xAxisFullPart] =
         MatrixUtilsService.getStandardCovisualizationAxisValues(
           xDimension as any,
         );
-      yValues.standard =
+      [yValues.standard, yAxisFullPart] =
         MatrixUtilsService.getStandardCovisualizationAxisValues(
           yDimension as any,
         );
@@ -788,6 +790,8 @@ export class DimensionsDatasService {
         undefined, // cellTargetFrequencies only for KV
         xValues,
         yValues,
+        xAxisFullPart,
+        yAxisFullPart,
       );
 
       this.dimensionsDatas.matrixDatas.matrixCellDatas = cellDatas;

@@ -381,7 +381,7 @@ export class MatrixUtilsService {
    */
   static getStandardCovisualizationAxisValues(
     dimension: DimensionCovisualizationModel,
-  ): number[] {
+  ): [number[], string[][]] {
     let axisValues: number[] = [];
     let currentAxisFullPart: any;
     if (dimension.type === TYPES.CATEGORICAL) {
@@ -407,7 +407,7 @@ export class MatrixUtilsService {
           axisPartTotal,
         );
     }
-    return axisValues;
+    return [axisValues, currentAxisFullPart];
   }
 
   /**
@@ -527,6 +527,8 @@ export class MatrixUtilsService {
     cellTargetFrequencies: number[][] | undefined, // KC: undefined
     xValues: MatrixValuesModel,
     yValues: MatrixValuesModel,
+    xAxisFullPart?: string[][],
+    yAxisFullPart?: string[][],
   ): CellModel[] {
     // var t0 = performance.now();
     const cells: CellModel[] = [];
@@ -604,6 +606,7 @@ export class MatrixUtilsService {
           xDimension.type,
         );
         cell.xnamePart = xDimension.name;
+        cell.xAxisFullPart = xAxisFullPart?.[i] || []; // only on KC for inner variables matrix filter
 
         cell.yaxisPartValues = yAxisPartNames[j];
         cell.yaxisPart = yAxisPartNames[j]!.toString();
@@ -613,6 +616,7 @@ export class MatrixUtilsService {
           yDimension.type,
         );
         cell.ynamePart = yDimension.name;
+        cell.yAxisFullPart = yAxisFullPart?.[j] || []; // only on KC for inner variables matrix filter
 
         cell.setCoordValues(i, j, xValues, yValues);
 

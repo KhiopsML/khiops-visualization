@@ -19,6 +19,7 @@ import { DynamicI } from '@khiops-library/interfaces/globals';
 })
 export class MatrixRendererService {
   private canvasPattern: HTMLCanvasElement | undefined;
+  private innerVariableFilterPattern: HTMLCanvasElement | undefined;
 
   constructor() {}
 
@@ -150,6 +151,7 @@ export class MatrixRendererService {
    * @param contrast Contrast value
    * @param isZerosToggled Whether zeros are toggled
    * @param legendMax Maximum legend value
+   * @param selectedInnerVariables Selected inner variables for filtering
    */
   drawMatrixCells(
     matrixCtx: CanvasRenderingContext2D,
@@ -166,6 +168,7 @@ export class MatrixRendererService {
     contrast: number,
     isZerosToggled: boolean,
     legendMax: number | undefined,
+    selectedInnerVariables: string[] = [],
   ): void {
     const totalMutInfo = MatrixUtilsService.computeTotalMutInfo(
       matrixValues!,
@@ -207,6 +210,7 @@ export class MatrixRendererService {
         contrast,
         graphMode.mode,
         isZerosToggled,
+        selectedInnerVariables,
       );
     }
 
@@ -269,6 +273,8 @@ export class MatrixRendererService {
    * @param contrast Contrast value
    * @param graphMode Graph mode
    * @param isZerosToggled Whether zeros are toggled
+   * @param selectedInnerVariables Selected inner variables for filtering
+   * @param inputDatas Input data containing matrix and dimension information
    */
   private drawCell(
     matrixCtx: CanvasRenderingContext2D,
@@ -280,9 +286,16 @@ export class MatrixRendererService {
     contrast: number,
     graphMode: string,
     isZerosToggled: boolean,
+    selectedInnerVariables: string[] = [],
   ): void {
     const currentVal = matrixValues?.[index];
     const maxVal = legendMax;
+
+    // Check if cell should be filtered based on inner variables
+    const shouldHatchCell = this.shouldHatchCellForInnerVariables(
+      cellDatas,
+      selectedInnerVariables,
+    );
 
     if (currentVal && maxVal) {
       // Do not draw empty cells
@@ -300,6 +313,11 @@ export class MatrixRendererService {
     // Draw pattern if 0 is an exception
     if (matrixExtras?.[index] && isZerosToggled) {
       this.drawProbExceptionCell(matrixCtx, cellDatas);
+    }
+
+    // Draw hatch pattern if cell should be filtered based on inner variables
+    if (shouldHatchCell) {
+      this.drawInnerVariableFilterPattern(matrixCtx, cellDatas);
     }
   }
 
@@ -409,5 +427,124 @@ export class MatrixRendererService {
       maxValH!,
       graphMode,
     );
+  }
+
+  /**
+   * Determines if a cell should be hatched based on selected inner variables
+   * @param cellData Cell data to check
+   * @param selectedInnerVariables Selected inner variables
+   * @param inputDatas Input data containing matrix and dimension information
+   * @returns true if cell should be hatched (filtered)
+   */
+  private shouldHatchCellForInnerVariables(
+    cellData: CellModel,
+    selectedInnerVariables: string[],
+  ): boolean {
+    // If no inner variables are selected, hatch ALL cells (filter everything)
+    if (!selectedInnerVariables || selectedInnerVariables.length === 0) {
+      return true; // HATCH when nothing is selected
+    }
+
+    // Check if this cell's cluster contains any of the selected inner variables
+    // If cell contains selected variables, DON'T hatch it
+    // If cell doesn't contain selected variables, HATCH it
+    const cellContainsSelectedVars =
+      this.checkCellContainsSelectedInnerVariables(
+        cellData,
+        selectedInnerVariables,
+      );
+
+    // Return the OPPOSITE: hatch cells that DON'T contain selected variables
+    return !cellContainsSelectedVars;
+  }
+
+  /**
+   * Checks if a cell's cluster contains any of the selected inner variables
+   * @param cellData Cell data
+   * @param selectedInnerVariables Selected inner variables
+   * @param inputDatas Input data containing matrix and dimension information
+   * @returns true if cell contains selected inner variables, false if it should be filtered
+   */
+  private checkCellContainsSelectedInnerVariables(
+    cellData: CellModel,
+    selectedInnerVariables: string[],
+  ): boolean {
+    if (
+      !cellData ||
+      !selectedInnerVariables ||
+      selectedInnerVariables.length === 0
+    ) {
+      return false;
+    }
+
+    // Ensure yAxisFullPart and xAxisFullPart are treated as arrays of strings
+    const yAxisFullPart: string[] = Array.isArray(cellData.yAxisFullPart)
+      ? cellData.yAxisFullPart
+      : [];
+    const xAxisFullPart: string[] = Array.isArray(cellData.xAxisFullPart)
+      ? cellData.xAxisFullPart
+      : [];
+
+    // Check if any value in selectedInnerVariables is a substring of yAxisFullPart or xAxisFullPart
+    const containsInYAxis = yAxisFullPart.some((value: string) =>
+      selectedInnerVariables.some((innerVar) => value.includes(innerVar)),
+    );
+
+    const containsInXAxis = xAxisFullPart.some((value: string) =>
+      selectedInnerVariables.some((innerVar) => value.includes(innerVar)),
+    );
+
+    return containsInYAxis || containsInXAxis;
+  }
+
+  /**
+   * Draws a hatch pattern for cells that should be filtered based on inner variables
+   * @param matrixCtx Canvas context
+   * @param cell Cell to draw pattern on
+   */
+  private drawInnerVariableFilterPattern(
+    matrixCtx: CanvasRenderingContext2D,
+    cell: CellModel,
+  ): void {
+    // Create a distinct pattern for inner variable filtering
+    if (!this.innerVariableFilterPattern) {
+      this.createInnerVariableFilterCanvasPattern();
+    }
+    const pattern = matrixCtx.createPattern(
+      this.innerVariableFilterPattern!,
+      'repeat',
+    );
+    if (pattern) {
+      matrixCtx.fillStyle = pattern;
+    }
+    matrixCtx.fillRect(cell.xCanvas, cell.yCanvas, cell.wCanvas, cell.hCanvas);
+  }
+
+  /**
+   * Creates a canvas pattern for inner variable filtering (diagonal stripes)
+   */
+  private createInnerVariableFilterCanvasPattern(): void {
+    this.innerVariableFilterPattern = document.createElement('canvas');
+    this.innerVariableFilterPattern.width = 16;
+    this.innerVariableFilterPattern.height = 16;
+    const pctx: CanvasRenderingContext2D =
+      this.innerVariableFilterPattern.getContext('2d')!;
+
+    const x0 = 32;
+    const x1 = -1;
+    const y0 = -1;
+    const y1 = 32;
+    const offset = 16;
+
+    pctx.strokeStyle = '#000000';
+    pctx.lineWidth = 1;
+    pctx.beginPath();
+    pctx.moveTo(x0, y0);
+    pctx.lineTo(x1, y1);
+    pctx.moveTo(x0 - offset, y0);
+    pctx.lineTo(x1 - offset, y1);
+    pctx.moveTo(x0 + offset, y0);
+    pctx.lineTo(x1 + offset, y1);
+    pctx.stroke();
   }
 }

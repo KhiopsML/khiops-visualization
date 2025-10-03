@@ -279,8 +279,10 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
    */
   onInnerVariablesSelectionChanged(event: InnerVariablesSelectionEvent) {
     this.selectedInnerVariablesState = event;
-    // TODO: Apply the filter to the matrix based on selected inner variables
-    // This might require updating the matrix data or applying filters
-    console.log('Inner variables selection changed:', event);
+
+    // Force matrix re-render with new inner variables selection
+    if (this.matrix) {
+      this.matrix.drawMatrix();
+    }
   }
 }

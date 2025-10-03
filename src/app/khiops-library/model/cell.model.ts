@@ -42,6 +42,8 @@ export class CellModel {
   concatName!: string[];
   xaxisPart?: string;
   yaxisPart?: string;
+  xAxisFullPart?: string[];
+  yAxisFullPart?: string[];
   xaxisPartValues?: number[] | string; // KV use only
   yaxisPartValues?: number[] | string; // KV use only
   xDisplayaxisPart?: string;
