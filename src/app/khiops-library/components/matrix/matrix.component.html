@@ -31,7 +31,7 @@
       </div>
       <button
         class="screenshot-hide"
-        *ngIf="graphMode && graphMode.mode === 'MUTUAL_INFO' && !isKhiopsCovisu"
+        *ngIf="graphMode?.mode === 'MUTUAL_INFO' && !isKhiopsCovisu"
         mat-icon-button
         matTooltip="{{ 'GLOBAL.TOGGLE_ZERO' | translate }}"
         (click)="onClickOnToggleZeros()"
