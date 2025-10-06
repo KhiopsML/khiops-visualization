@@ -255,7 +255,11 @@ export class MatrixRendererService {
       ef: matrixExpectedFreqsValues[index] ?? 0,
       extra: matrixExtras?.[index] || 0,
     };
-    cellDatas.displayedFreqValue = matrixFreqsValues[index] ?? 0;
+    if (graphMode === MATRIX_MODES.TARGET_FREQUENCY) {
+      cellDatas.displayedFreqValue = matrixExpectedFreqsValues[index] ?? 0;
+    } else {
+      cellDatas.displayedFreqValue = matrixFreqsValues[index] ?? 0;
+    }
   }
 
   /**
