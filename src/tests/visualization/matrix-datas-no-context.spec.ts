@@ -51,10 +51,10 @@ describe('Visualization', () => {
       expect(matrixValues).toEqual([37, 21, 29, 12]);
     });
 
-    it('matrixValues should return valid datas, 2D CONDITIONAL_FREQUENCY index 0', () => {
+    it('matrixValues should return valid datas, 2D TARGET_FREQUENCY index 0', () => {
       const inputDatas = require('../mocks/visualization/matrix-inputs/iris2d-R10.json');
       const graphMode = {
-        mode: 'CONDITIONAL_FREQUENCY',
+        mode: 'TARGET_FREQUENCY',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
         MatrixUtilsService.computeMatrixValues(
@@ -66,10 +66,10 @@ describe('Visualization', () => {
       expect(matrixValues).toEqual([6, 0, 25, 0]);
     });
 
-    it('matrixFreqsValues should return valid datas, 2D CONDITIONAL_FREQUENCY index 0', () => {
+    it('matrixFreqsValues should return valid datas, 2D TARGET_FREQUENCY index 0', () => {
       const inputDatas = require('../mocks/visualization/matrix-inputs/iris2d-R10.json');
       const graphMode = {
-        mode: 'CONDITIONAL_FREQUENCY',
+        mode: 'TARGET_FREQUENCY',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
         MatrixUtilsService.computeMatrixValues(
@@ -81,10 +81,10 @@ describe('Visualization', () => {
       expect(matrixFreqsValues).toEqual([6, 0, 25, 0]);
     });
 
-    it('matrixValues should return valid datas, 2D CONDITIONAL_FREQUENCY index 2', () => {
+    it('matrixValues should return valid datas, 2D TARGET_FREQUENCY index 2', () => {
       const inputDatas = require('../mocks/visualization/matrix-inputs/iris2d-R10.json');
       const graphMode = {
-        mode: 'CONDITIONAL_FREQUENCY',
+        mode: 'TARGET_FREQUENCY',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
         MatrixUtilsService.computeMatrixValues(
@@ -96,10 +96,10 @@ describe('Visualization', () => {
       expect(matrixValues).toEqual([2, 20, 0, 9]);
     });
 
-    it('matrixFreqsValues should return valid datas, 2D CONDITIONAL_FREQUENCY index 2', () => {
+    it('matrixFreqsValues should return valid datas, 2D TARGET_FREQUENCY index 2', () => {
       const inputDatas = require('../mocks/visualization/matrix-inputs/iris2d-R10.json');
       const graphMode = {
-        mode: 'CONDITIONAL_FREQUENCY',
+        mode: 'TARGET_FREQUENCY',
       };
       [matrixFreqsValues, matrixValues, matrixExtras] =
         MatrixUtilsService.computeMatrixValues(
