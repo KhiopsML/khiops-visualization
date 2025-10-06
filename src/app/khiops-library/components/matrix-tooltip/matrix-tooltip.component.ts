@@ -24,6 +24,7 @@ import { CellModel } from '@khiops-library/model/cell.model';
 })
 export class MatrixTooltipComponent implements OnChanges {
   @Input() public cell?: CellModel;
+  @Input() public hideExpectedFrequency?: boolean = false;
   @Input() private position?: {
     x: number;
     y: number;
@@ -84,6 +85,13 @@ export class MatrixTooltipComponent implements OnChanges {
    */
   get shouldShowHellingerValue(): boolean {
     return this.cell?.displayedValue?.type === 'HELLINGER';
+  }
+
+  /**
+   * Check if expected frequency should be displayed
+   */
+  get shouldShowExpectedFrequency(): boolean {
+    return !this.hideExpectedFrequency;
   }
 
   /**
