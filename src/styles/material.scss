@@ -24,10 +24,6 @@
   display: none !important;
 }
 
-.mat-app-background {
-  font-size: 14px;
-}
-
 .mat-mdc-progress-bar {
   height: 5px !important;
 }
@@ -98,10 +94,6 @@ button {
       margin: 6px 0 0 5px !important;
     }
   }
-}
-.mdc-tab__text-label {
-  font-size: 0.9em;
-  font-weight: 500;
 }
 
 .mat-icon {
@@ -397,6 +389,7 @@ button {
 .mdc-button__label {
   align-items: center;
   display: flex;
+  font-size: 1em;
 }
 
 mat-dialog-container {
@@ -430,4 +423,16 @@ button.mat-accent {
 .mdc-checkbox__background {
   width: 16px !important;
   height: 16px !important;
+}
+
+.mat-mdc-tab-group,
+.mat-mdc-tab,
+.mat-mdc-tab-labels,
+.mat-mdc-tab-body {
+  font-size: inherit !important;
+}
+
+.mdc-tab__text-label {
+  font-weight: 500;
+  font-size: 0.94em !important;
 }
