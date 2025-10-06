@@ -62,11 +62,6 @@ export class CoocurenceMatrixConfigService {
 
     return [
       {
-        mode: MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL,
-        title: `I (${targetLabel} | ${varName2} , ${varName1})`,
-        tooltip: this.translate.get('TOOLTIPS.MATRIX.I'),
-      },
-      {
         mode: MATRIX_MODES.FREQUENCY,
         title: frequencyLabel,
         tooltip: this.translate.get('TOOLTIPS.MATRIX.F'),
