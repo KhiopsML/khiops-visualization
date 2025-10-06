@@ -206,10 +206,19 @@ export class TargetDistributionGraphComponent
     // Check if the variable type is numerical (intervals) or categorical (groups)
     const isNumerical = this.variableType === TYPES.NUMERICAL;
 
-    if (isNumerical) {
-      return this.translate.get('GLOBAL.INTERVAL') + ': ' + firstItem.label;
+    if (firstItem.label) {
+      if (isNumerical) {
+        return this.translate.get('GLOBAL.INTERVAL') + ': ' + firstItem.label;
+      } else {
+        return this.translate.get('GLOBAL.GROUP') + ': ' + firstItem.label;
+      }
     } else {
-      return this.translate.get('GLOBAL.GROUP') + ': ' + firstItem.label;
+      // It's a target value (supervised)
+      return (
+        this.translate.get('GLOBAL.TARGET_VALUE') +
+        ': ' +
+        firstItem.dataset.label
+      );
     }
   }
 
@@ -218,14 +227,8 @@ export class TargetDistributionGraphComponent
    * @param items Tooltip items from Chart.js
    * @returns Formatted target value label
    */
-  private getTooltipLabel(items: TooltipItem<'bar'>): string {
-    if (!items?.dataset) {
-      return '';
-    }
-
-    return (
-      this.translate.get('GLOBAL.TARGET_VALUE') + ': ' + items.dataset.label
-    );
+  private getTooltipBeforeLabel(_items: TooltipItem<'bar'>): string {
+    return '';
   }
 
   /**
@@ -233,7 +236,7 @@ export class TargetDistributionGraphComponent
    * @param items Tooltip items from Chart.js
    * @returns Formatted probability or lift label
    */
-  private getTooltipBeforeLabel(items: TooltipItem<'bar'>): string | undefined {
+  private getTooltipLabel(items: TooltipItem<'bar'>): string | undefined {
     if (!items?.dataset) {
       return undefined;
     }
