@@ -169,6 +169,7 @@ export class MatrixRendererService {
     isZerosToggled: boolean,
     legendMax: number | undefined,
     selectedInnerVariables: string[] = [],
+    matrixFilterOption?: string,
   ): void {
     const totalMutInfo = MatrixUtilsService.computeTotalMutInfo(
       matrixValues!,
@@ -199,6 +200,7 @@ export class MatrixRendererService {
         matrixExtras,
         graphMode.mode,
         index,
+        matrixFilterOption,
       );
       this.drawCell(
         matrixCtx,
@@ -241,6 +243,7 @@ export class MatrixRendererService {
     matrixExtras: (number | boolean)[] | undefined,
     graphMode: string,
     index: number,
+    matrixFilterOption?: string,
   ): void {
     const currentVal = matrixValues?.[index];
 
@@ -250,6 +253,7 @@ export class MatrixRendererService {
       width,
       height,
       graphType,
+      matrixFilterOption,
     );
 
     // Set display values

@@ -55,6 +55,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   @Input() private selectedCell: CellModel | undefined; // KV use case
   @Input() private contextSelection: number[][] = [];
   @Input() public selectedInnerVariables: string[] = []; // For inner variables filtering
+  @Input() public matrixFilterOption: string = ''; // For matrix filter option (cluster or inner variables)
 
   @Output() private matrixAxisInverted: EventEmitter<any> = new EventEmitter();
   @Output() private cellSelected: EventEmitter<any> = new EventEmitter();
@@ -389,6 +390,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
       this.isZerosToggled,
       this.legend.max,
       this.selectedInnerVariables,
+      this.matrixFilterOption,
     );
   }
 
@@ -710,7 +712,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
         y = canvasPosition.height - y;
       }
 
-      const cellsLength = this.inputDatas.matrixCellDatas.length;
+      const cellsLength = this.inputDatas?.matrixCellDatas?.length || 0;
       for (let i = 0; i < cellsLength; i++) {
         if (
           y > this.inputDatas.matrixCellDatas[i].yCanvas &&

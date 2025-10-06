@@ -292,24 +292,51 @@ export class MatrixUiService {
     width: number | undefined,
     height: number | undefined,
     graphType: string,
+    matrixFilterOption?: string,
   ) {
     if (width && height) {
-      cellDatas.xCanvas =
-        graphType === TYPES.STANDARD
-          ? cellDatas.x.standard * width * 0.01
-          : cellDatas.x.frequency * width * 0.01;
-      cellDatas.yCanvas =
-        graphType === TYPES.STANDARD
-          ? cellDatas.y.standard * height * 0.01
-          : cellDatas.y.frequency * height * 0.01;
-      cellDatas.wCanvas =
-        graphType === TYPES.STANDARD
-          ? cellDatas.w.standard * width * 0.01
-          : cellDatas.w.frequency * width * 0.01;
-      cellDatas.hCanvas =
-        graphType === TYPES.STANDARD
-          ? cellDatas.h.standard * height * 0.01
-          : cellDatas.h.frequency * height * 0.01;
+      // Use inner variables dimensions if inner variable filter is active and coordinates are available
+      const useInnerCoords =
+        matrixFilterOption === TYPES.INNER_VARIABLES &&
+        cellDatas.x.standardInner !== undefined &&
+        cellDatas.x.frequencyInner !== undefined;
+
+      if (useInnerCoords) {
+        cellDatas.xCanvas =
+          graphType === TYPES.STANDARD
+            ? cellDatas.x.standardInner! * width * 0.01
+            : cellDatas.x.frequencyInner! * width * 0.01;
+        cellDatas.yCanvas =
+          graphType === TYPES.STANDARD
+            ? cellDatas.y.standardInner! * height * 0.01
+            : cellDatas.y.frequencyInner! * height * 0.01;
+        cellDatas.wCanvas =
+          graphType === TYPES.STANDARD
+            ? cellDatas.w.standardInner! * width * 0.01
+            : cellDatas.w.frequencyInner! * width * 0.01;
+        cellDatas.hCanvas =
+          graphType === TYPES.STANDARD
+            ? cellDatas.h.standardInner! * height * 0.01
+            : cellDatas.h.frequencyInner! * height * 0.01;
+      } else {
+        // Use standard coordinates
+        cellDatas.xCanvas =
+          graphType === TYPES.STANDARD
+            ? cellDatas.x.standard * width * 0.01
+            : cellDatas.x.frequency * width * 0.01;
+        cellDatas.yCanvas =
+          graphType === TYPES.STANDARD
+            ? cellDatas.y.standard * height * 0.01
+            : cellDatas.y.frequency * height * 0.01;
+        cellDatas.wCanvas =
+          graphType === TYPES.STANDARD
+            ? cellDatas.w.standard * width * 0.01
+            : cellDatas.w.frequency * width * 0.01;
+        cellDatas.hCanvas =
+          graphType === TYPES.STANDARD
+            ? cellDatas.h.standard * height * 0.01
+            : cellDatas.h.frequency * height * 0.01;
+      }
     }
 
     return cellDatas;
