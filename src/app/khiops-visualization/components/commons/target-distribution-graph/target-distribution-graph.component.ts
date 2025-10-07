@@ -132,8 +132,12 @@ export class TargetDistributionGraphComponent
           // min: 0,
           // max: 100,
           ticks: {
-            callback: function (tickValue: string | number) {
-              return tickValue + '%';
+            callback: (tickValue: string | number) => {
+              if (self.graphOptions.selected === TYPES.PROBABILITIES) {
+                return tickValue + '%';
+              } else {
+                return tickValue;
+              }
             },
           },
         },
