@@ -16,28 +16,10 @@
     fxLayout="column"
     *ngIf="clustersPerDimDatas && !loadingHierarchy"
   >
-    <div
-      fxLayout="row"
-      id="unfold-hierarchy-header"
-      fxLayoutAlign="center center"
-    >
-      <h2 fxFlex>
-        {{ 'GLOBAL.UNFOLD_HIERARCHY' | translate | uppercase }}
-      </h2>
-      <button mat-stroked-button (click)="onClickOnCancel()">
-        {{ 'GLOBAL.CANCEL' | translate }}
-      </button>
-      <button
-        class="button-confirm-hierarchy"
-        mat-flat-button
-        matRipple
-        [matRippleColor]="'rgba(122 122 122 / 0.4)'"
-        (click)="onClickOnSave()"
-        color="primary"
-      >
-        {{ 'GLOBAL.OK' | translate }}
-      </button>
-    </div>
+    <kl-unfold-hierarchy-header
+      (cancel)="onClickOnCancel()"
+      (save)="onClickOnSave()"
+    ></kl-unfold-hierarchy-header>
 
     <as-split id="unfold-hierarchy-content" direction="horizontal">
       <as-split-area fxLayout="column">

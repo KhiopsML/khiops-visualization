@@ -1,17 +1,4 @@
 #unfold-hierarchy-comp {
-  #unfold-hierarchy-header {
-    padding: 0 0 1em 0;
-    height: 68px;
-
-    h2 {
-      margin-left: 1em;
-    }
-
-    button {
-      margin-right: 1em;
-    }
-  }
-
   #unfold-hierarchy-content {
     flex: 1;
     overflow-y: auto;

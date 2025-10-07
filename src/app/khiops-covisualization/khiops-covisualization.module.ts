@@ -41,6 +41,7 @@ import { CompositionDetailedPartsComponent } from './components/commons/composit
 import { VariableSearchDialogComponent } from './components/commons/variable-search-dialog/variable-search-dialog.component';
 import { VariableSearchButtonComponent } from './components/commons/variable-search-button/variable-search-button.component';
 import { MatrixInnerVariablesFilterComponent } from './components/commons/matrix-inner-variables-filter/matrix-inner-variables-filter.component';
+import { UnfoldHierarchyHeaderComponent } from './components/commons/unfold-hierarchy-header/unfold-hierarchy-header.component';
 
 @NgModule({
   declarations: [
@@ -71,6 +72,7 @@ import { MatrixInnerVariablesFilterComponent } from './components/commons/matrix
     VariableSearchButtonComponent,
     MatrixInnerVariablesFilterComponent,
     ExternalDatasComponent,
+    UnfoldHierarchyHeaderComponent,
   ],
   imports: [
     CommonModule,
