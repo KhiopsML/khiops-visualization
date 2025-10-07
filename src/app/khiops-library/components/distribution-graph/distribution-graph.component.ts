@@ -81,7 +81,7 @@ export class DistributionGraphComponent
       case HistogramType.YLOG:
         return 'GLOBAL.FREQUENCY';
       case HistogramType.YLIN:
-        return 'GLOBAL.COVERAGE';
+        return 'GLOBAL.FREQUENCY';
       default:
         return 'GLOBAL.DISTRIBUTION';
     }

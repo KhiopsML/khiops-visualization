@@ -20,7 +20,6 @@ import { TYPES } from '@khiops-library/enum/types';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 import { ModalityCountsModel } from '@khiops-visualization/model/modality-counts.model';
 import { HistogramValuesI } from '@khiops-visualization/components/commons/histogram/histogram.interfaces';
-import { HistogramType } from '@khiops-visualization/components/commons/histogram/histogram.type';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 import { PreparationVariableModel } from '@khiops-visualization/model/preparation-variable.model';
 import { TreePreparationVariableModel } from '@khiops-visualization/model/tree-preparation-variable.model';
@@ -555,15 +554,9 @@ export class DistributionDatasService {
       const safeCoverageValue = coverageValue || 0;
       const safeFrequencyValue = frequencyValue || 0;
 
-      if (this.distributionDatas.distributionType === HistogramType.YLOG) {
-        // Logarithmic mode: use raw frequency values
-        graphItem.value = safeFrequencyValue; // The chart data are the frequencies
-        total = UtilsService.arraySum(frequencyArray);
-      } else {
-        // Linear mode: use coverage values as percentage (0-100)
-        total = UtilsService.arraySum(coverageArray);
-        graphItem.value = total > 0 ? (safeCoverageValue * 100) / total : 0; // Percentage between 0 and 100
-      }
+      // Use raw frequency values
+      graphItem.value = safeFrequencyValue; // The chart data are the frequencies
+      total = UtilsService.arraySum(frequencyArray);
       graphItem.extra.frequencyValue = safeFrequencyValue;
       graphItem.extra.coverageValue = total > 0 ? safeCoverageValue / total : 0; // Always normalize Coverage between 0 and 1
       graphItem.extra.value = safeCoverageValue; // Keep the original value for compatibility
