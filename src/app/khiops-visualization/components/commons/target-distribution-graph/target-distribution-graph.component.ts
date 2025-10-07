@@ -128,6 +128,15 @@ export class TargetDistributionGraphComponent
             },
           },
         },
+        y: {
+          // min: 0,
+          // max: 100,
+          ticks: {
+            callback: function (tickValue: string | number) {
+              return tickValue + '%';
+            },
+          },
+        },
       },
     };
   }
