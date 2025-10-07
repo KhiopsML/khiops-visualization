@@ -19,7 +19,17 @@ export class ProjectSummaryModel {
   displayDatas!: InfosDatasI[];
 
   constructor(appDatas: any, source: string) {
-    this.filename = appDatas.filename || '';
+    if (
+      appDatas.filename &&
+      typeof appDatas.filename === 'object' &&
+      appDatas.filename.name
+    ) {
+      // If filename is an object with a 'name' property, use that
+      this.filename = appDatas.filename.name;
+    } else {
+      // Otherwise, use filename directly or default to empty string
+      this.filename = appDatas.filename || '';
+    }
     this.database = appDatas[source]?.summary?.database || '';
     this.shortDescription = appDatas.shortDescription || '';
     this.learningTask = appDatas[source]?.summary?.learningTask || '';

@@ -1,6 +1,10 @@
 /**
   Responsive design for 1440p
 */
+.mat-app-background {
+  font-size: 14px;
+}
+
 @media screen and (max-width: 1440px), screen and (max-height: 1080px) {
   kl-header-title {
     #header-title-comp {
@@ -71,5 +75,29 @@
     margin: 69px 0px 0px 0px;
     left: 11px !important;
     top: 2px !important;
+  }
+}
+
+@media (min-width: 1100px) and (max-width: 1440px) {
+  .mat-app-background {
+    font-size: 13px;
+  }
+}
+
+@media (min-height: 1000px) and (max-height: 1080px) {
+  .mat-app-background {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .mat-app-background {
+    font-size: 12px;
+  }
+}
+
+@media (max-height: 1000px) {
+  .mat-app-background {
+    font-size: 12px;
   }
 }

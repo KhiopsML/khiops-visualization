@@ -34,6 +34,11 @@
   --border-color: rgba(4, 32, 69, 0.1);
 }
 
+:host ::ng-deep .ag-theme-balham {
+  --ag-font-size: 0.9em;
+  font-size: inherit;
+}
+
 @media screen and (max-width: 1440px) {
   :root {
     --header-height: 50px;

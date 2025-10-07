@@ -91,7 +91,7 @@
     "PROB_CELL_REVERSE": "P",
     "PROB_CELL_WITH_TARGET": "P",
     "FREQUENCY": "F",
-    "CONDITIONAL_FREQUENCY": "CF"
+    "TARGET_FREQUENCY": "TF"
   },
   "MATRIX_MODES_DETAILED": {
     "MUTUAL_INFO": "Mutual information",
@@ -102,7 +102,7 @@
     "PROB_CELL_REVERSE": "Probability",
     "PROB_CELL_WITH_TARGET": "Probability",
     "FREQUENCY": "Frequency",
-    "CONDITIONAL_FREQUENCY": "Conditional frequency"
+    "TARGET_FREQUENCY": "Target frequency"
   },
   "COOKIE_CONSENT": {
     "TITLE": "Cookies consent",
@@ -114,6 +114,7 @@
     "MESSAGE": "Keep Y/X linear/log scales when changing variable"
   },
   "GLOBAL": {
+    "TARGET_FREQUENCY": "Target Frequency",
     "X_AXIS": "X Axis",
     "Y_AXIS": "Y Axis",
     "APPLY": "Apply",
@@ -523,7 +524,7 @@
       "F": "Number of occurences",
       "I": "Mutual information",
       "P": "Conditional probability",
-      "CF": "Conditional frequency",
+      "TF": "Target frequency",
       "H": "Hellinger distance"
     },
     "AXIS": {

@@ -1,7 +1,11 @@
 /**
   ag grid overriding styles
 */
-
+.ag-root,
+.ag-header,
+.ag-cell {
+  font-size: 0.97em !important;
+}
 .ag-grid-comp {
   background: var(--bg-color) !important;
 }
@@ -52,7 +56,6 @@ ag-grid-angular {
 
 .ag-theme-balham .ag-cell {
   border: none !important;
-  font-size: 0.8rem !important;
   cursor: pointer;
   height: 100%;
   display: flex;
@@ -88,7 +91,6 @@ ag-grid-angular {
 
 .ag-header-cell-label .ag-header-cell-text {
   font-weight: 400;
-  font-size: 0.85em;
 }
 
 // Style for expected frequency cells when conditional on context is enabled

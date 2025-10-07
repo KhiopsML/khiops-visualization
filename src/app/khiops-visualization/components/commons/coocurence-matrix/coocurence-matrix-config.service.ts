@@ -58,23 +58,17 @@ export class CoocurenceMatrixConfigService {
     varName2?: string,
   ): MatrixModeI[] {
     const targetLabel = this.translate.get('GLOBAL.TARGET');
-    const frequencyLabel = this.translate.get('GLOBAL.FREQUENCY');
 
     return [
       {
-        mode: MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL,
-        title: `I (${targetLabel} | ${varName2} , ${varName1})`,
-        tooltip: this.translate.get('TOOLTIPS.MATRIX.I'),
-      },
-      {
         mode: MATRIX_MODES.FREQUENCY,
-        title: frequencyLabel,
+        title: this.translate.get('GLOBAL.FREQUENCY'),
         tooltip: this.translate.get('TOOLTIPS.MATRIX.F'),
       },
       {
-        mode: MATRIX_MODES.CONDITIONAL_FREQUENCY,
-        title: `${frequencyLabel} (${targetLabel} | ${varName2} , ${varName1})`,
-        tooltip: this.translate.get('TOOLTIPS.MATRIX.CF'),
+        mode: MATRIX_MODES.TARGET_FREQUENCY,
+        title: this.translate.get('GLOBAL.TARGET_FREQUENCY'),
+        tooltip: this.translate.get('GLOBAL.TARGET_FREQUENCY'),
       },
       {
         mode: MATRIX_MODES.PROB_TARGET_WITH_CELL,
@@ -128,7 +122,7 @@ export class CoocurenceMatrixConfigService {
    */
   isTargetSelectionRequired(matrixModes: MatrixModesModel): boolean {
     const targetRequiredModes = [
-      MATRIX_MODES.CONDITIONAL_FREQUENCY,
+      MATRIX_MODES.TARGET_FREQUENCY,
       MATRIX_MODES.PROB_TARGET_WITH_CELL,
       MATRIX_MODES.MUTUAL_INFO_TARGET_WITH_CELL,
       MATRIX_MODES.PROB_CELL_WITH_TARGET,

@@ -56,6 +56,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   @Input() private contextSelection: number[][] = [];
   @Input() public selectedInnerVariables: string[] = []; // For inner variables filtering
   @Input() public matrixFilterOption: string = ''; // For matrix filter option (cluster or inner variables)
+  @Input() public isSupervised?: boolean = false;
 
   @Output() private matrixAxisInverted: EventEmitter<any> = new EventEmitter();
   @Output() private cellSelected: EventEmitter<any> = new EventEmitter();

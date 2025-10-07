@@ -18,8 +18,8 @@
         {{ cell.displayedFreqValue | toPrecision }}
       </div>
 
-      <!-- Expected frequency (always shown) -->
-      <div>
+      <!-- Expected frequency (conditionally shown) -->
+      <div *ngIf="shouldShowExpectedFrequency">
         {{ 'GLOBAL.EXPECTED_FREQUENCY' | translate }}:
         {{ cell.displayedValue.ef | toPrecision }}
       </div>

@@ -206,7 +206,6 @@ export class AxisViewComponent
         this.translate.get('GLOBAL.OK'),
         {
           duration: 4000,
-          panelClass: 'warning',
           verticalPosition: 'bottom',
         },
       );
