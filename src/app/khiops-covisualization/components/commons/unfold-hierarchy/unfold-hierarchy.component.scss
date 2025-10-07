@@ -21,6 +21,12 @@
       }
     }
   }
+  ::ng-deep .kl-chart-comp {
+    min-width: 200px !important;
+    canvas {
+      min-width: 200px !important;
+    }
+  }
 }
 
 ::ng-deep .unfold-hierarchy-dialog-container {
