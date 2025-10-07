@@ -35,23 +35,18 @@
           (cyInputSet)="setCypressInput($event)"
         ></kl-unfold-hierarchy-settings>
 
-        <div
+        <kl-ag-grid
           fxFlex
           id="unfold-hierarchy-table"
-          fxLayout="column"
           class="kl-card"
-        >
-          <kl-ag-grid
-            fxFlex
-            [showSearch]="false"
-            [showColumnsSelection]="false"
-            [inputDatas]="dimensions"
-            [title]="unfoldHierarchyTableTitle"
-            (gridCheckboxChanged)="onGridCheckboxChanged($event)"
-            [rowSelection]="'multiple'"
-            [displayedColumns]="hierarchyDisplayedColumns"
-          ></kl-ag-grid>
-        </div>
+          [showSearch]="false"
+          [showColumnsSelection]="false"
+          [inputDatas]="dimensions"
+          [title]="unfoldHierarchyTableTitle"
+          (gridCheckboxChanged)="onGridCheckboxChanged($event)"
+          [rowSelection]="'multiple'"
+          [displayedColumns]="hierarchyDisplayedColumns"
+        ></kl-ag-grid>
       </as-split-area>
       <as-split-area fxLayout="column">
         <as-split direction="vertical" disabled="true">
@@ -82,41 +77,17 @@
           </as-split-area>
 
           <as-split-area fxLayout="column">
-            <div fxFlex fxLayout="column" class="kl-card">
-              <div
-                fxLayout="row"
-                fxLayoutAlign="start center"
-                class="comp-header"
-              >
-                <div fxFlex fxLayout="row" fxLayoutAlign="start center">
-                  <h1>
-                    {{ 'GLOBAL.NB_OF_CLUSTERS_PER_DIM' | translate }}
-                  </h1>
-                </div>
-                <kl-legend
-                  fxLayoutAlign="end end"
-                  fxLayout="row"
-                  [inputDatas]="legend"
-                  [type]="'chart-nd'"
-                  tooltip="{{
-                    'TOOLTIPS.AXIS.UNFOLD_HIERARCHY.LEGEND' | translate
-                  }}"
-                  (legendItemClicked)="highlightChartLine($event)"
-                  [colorSet]="colorSetClusterPerDim"
-                >
-                </kl-legend>
-              </div>
-              <kl-chart
-                [canvasIdContainer]="'clusters-per-dim-graph'"
-                fxFlex
-                [inputDatas]="clustersPerDimDatas"
-                [enableSelection]="false"
-                [colorSet]="colorSetClusterPerDim"
-                [selectedLineChartItem]="selectedLineChartItem"
-                [chartOptions]="clustersPerDimDatasChartOptions"
-              >
-              </kl-chart>
-            </div>
+            <kl-unfold-hierarchy-clusters-graph
+              fxFlexFill
+              [legend]="legend"
+              [colorSetClusterPerDim]="colorSetClusterPerDim"
+              [clustersPerDimDatas]="clustersPerDimDatas"
+              [selectedLineChartItem]="selectedLineChartItem"
+              [clustersPerDimDatasChartOptions]="
+                clustersPerDimDatasChartOptions
+              "
+              (legendItemClicked)="highlightChartLine($event)"
+            ></kl-unfold-hierarchy-clusters-graph>
           </as-split-area>
         </as-split>
       </as-split-area>

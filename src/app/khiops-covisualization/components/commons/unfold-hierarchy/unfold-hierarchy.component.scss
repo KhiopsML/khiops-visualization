@@ -21,14 +21,6 @@
       }
     }
   }
-
-  ::ng-deep .chart-legend li:last-child {
-    display: none !important;
-  }
-
-  ::ng-deep .chart-legend .legend-wrap {
-    width: calc(100% - 40px) !important;
-  }
 }
 
 ::ng-deep .unfold-hierarchy-dialog-container {

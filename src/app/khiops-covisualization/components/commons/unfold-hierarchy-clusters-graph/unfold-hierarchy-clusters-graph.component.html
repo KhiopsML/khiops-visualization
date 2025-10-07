@@ -1,0 +1,29 @@
+<div fxFlexFill fxLayout="column" class="kl-card">
+  <div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
+    <div fxFlex fxLayout="row" fxLayoutAlign="start center">
+      <h1>
+        {{ 'GLOBAL.NB_OF_CLUSTERS_PER_DIM' | translate }}
+      </h1>
+    </div>
+    <kl-legend
+      fxLayoutAlign="end end"
+      fxLayout="row"
+      [inputDatas]="legend"
+      [type]="'chart-nd'"
+      [tooltip]="'TOOLTIPS.AXIS.UNFOLD_HIERARCHY.LEGEND' | translate"
+      (legendItemClicked)="highlightChartLine($event)"
+      [colorSet]="colorSetClusterPerDim"
+    >
+    </kl-legend>
+  </div>
+  <kl-chart
+    [canvasIdContainer]="'clusters-per-dim-graph'"
+    fxFlex
+    [inputDatas]="clustersPerDimDatas"
+    [enableSelection]="false"
+    [colorSet]="colorSetClusterPerDim"
+    [selectedLineChartItem]="selectedLineChartItem"
+    [chartOptions]="clustersPerDimDatasChartOptions"
+  >
+  </kl-chart>
+</div>
