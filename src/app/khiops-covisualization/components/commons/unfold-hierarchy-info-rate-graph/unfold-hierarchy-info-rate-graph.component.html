@@ -1,0 +1,17 @@
+<div fxFlex fxLayout="column" class="kl-card">
+  <div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
+    <div fxFlex fxLayout="row" fxLayoutAlign="start center">
+      <h1>{{ 'GLOBAL.INFORMATION_RATE' | translate }}</h1>
+    </div>
+  </div>
+  <kl-chart
+    title="{{ 'TOOLTIPS.AXIS.UNFOLD_HIERARCHY.INFO_RATE_CHART' | translate }}"
+    [canvasIdContainer]="'info-per-cluster-graph'"
+    fxFlex
+    [inputDatas]="infoPerCluster"
+    [enableSelection]="false"
+    [colorSet]="colorSetInfoPerCluster"
+    [chartOptions]="infoPerClusterChartOptions"
+  >
+  </kl-chart>
+</div>

@@ -51,31 +51,13 @@
       <as-split-area fxLayout="column">
         <as-split direction="vertical" disabled="true">
           <as-split-area fxLayout="column">
-            <div fxFlex fxLayout="column" class="kl-card">
-              <div
-                fxLayout="row"
-                fxLayoutAlign="start center"
-                class="comp-header"
-              >
-                <div fxFlex fxLayout="row" fxLayoutAlign="start center">
-                  <h1>{{ 'GLOBAL.INFORMATION_RATE' | translate }}</h1>
-                </div>
-              </div>
-              <kl-chart
-                title="{{
-                  'TOOLTIPS.AXIS.UNFOLD_HIERARCHY.INFO_RATE_CHART' | translate
-                }}"
-                [canvasIdContainer]="'info-per-cluster-graph'"
-                fxFlex
-                [inputDatas]="infoPerCluster"
-                [enableSelection]="false"
-                [colorSet]="colorSetInfoPerCluster"
-                [chartOptions]="infoPerClusterChartOptions"
-              >
-              </kl-chart>
-            </div>
+            <kl-unfold-hierarchy-info-rate-graph
+              fxFlexFill
+              [infoPerCluster]="infoPerCluster"
+              [colorSetInfoPerCluster]="colorSetInfoPerCluster"
+              [infoPerClusterChartOptions]="infoPerClusterChartOptions"
+            ></kl-unfold-hierarchy-info-rate-graph>
           </as-split-area>
-
           <as-split-area fxLayout="column">
             <kl-unfold-hierarchy-clusters-graph
               fxFlexFill

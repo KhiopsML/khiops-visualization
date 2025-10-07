@@ -43,6 +43,7 @@ import { VariableSearchButtonComponent } from './components/commons/variable-sea
 import { MatrixInnerVariablesFilterComponent } from './components/commons/matrix-inner-variables-filter/matrix-inner-variables-filter.component';
 import { UnfoldHierarchyHeaderComponent } from './components/commons/unfold-hierarchy-header/unfold-hierarchy-header.component';
 import { UnfoldHierarchyClustersGraphComponent } from './components/commons/unfold-hierarchy-clusters-graph/unfold-hierarchy-clusters-graph.component';
+import { UnfoldHierarchyInfoRateGraphComponent } from './components/commons/unfold-hierarchy-info-rate-graph/unfold-hierarchy-info-rate-graph.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { UnfoldHierarchyClustersGraphComponent } from './components/commons/unfo
     ExternalDatasComponent,
     UnfoldHierarchyHeaderComponent,
     UnfoldHierarchyClustersGraphComponent,
+    UnfoldHierarchyInfoRateGraphComponent,
   ],
   imports: [
     CommonModule,
