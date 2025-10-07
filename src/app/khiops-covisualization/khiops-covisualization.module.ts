@@ -26,6 +26,7 @@ import { VariableGraphDetailsComponent } from './components/commons/variable-gra
 import { SelectedClustersComponent } from './components/commons/selected-clusters/selected-clusters.component';
 import { MatrixContainerComponent } from './components/commons/matrix-container/matrix-container.component';
 import { UnfoldHierarchyComponent } from './components/commons/unfold-hierarchy/unfold-hierarchy.component';
+import { UnfoldHierarchySettingsComponent } from './components/commons/unfold-hierarchy-settings/unfold-hierarchy-settings.component';
 import { LoadExtDatasComponent } from './components/commons/load-ext-datas/load-ext-datas.component';
 import { ImportExtDatasComponent } from './components/commons/import-ext-datas/import-ext-datas.component';
 import { ImportExtDatasListComponent } from './components/commons/import-ext-datas-list/import-ext-datas-list.component';
@@ -60,6 +61,7 @@ import { MatrixInnerVariablesFilterComponent } from './components/commons/matrix
     SelectedClustersComponent,
     MatrixContainerComponent,
     UnfoldHierarchyComponent,
+    UnfoldHierarchySettingsComponent,
     ManageViewsComponent,
     LoadExtDatasComponent,
     ImportExtDatasComponent,

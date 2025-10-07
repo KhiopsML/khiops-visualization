@@ -1,0 +1,75 @@
+<div
+  fxLayout="column"
+  id="unfold-hierarchy-settings"
+  fxLayoutAlign="start start"
+  class="kl-card"
+>
+  <div class="comp-header">
+    <h1>
+      {{ 'GLOBAL.NUMBER_OF_CLUSTERS' | translate }} :
+      {{ currentUnfoldHierarchy }}
+    </h1>
+  </div>
+  <div fxLayout="column" class="unfold-hierarchy-settings-container">
+    <div fxLayout="row">
+      <div fxLayout="column" class="unfold-hierarchy-settings-slider">
+        <!-- <span>
+        {{ 'GLOBAL.NUMBER_OF_CLUSTERS' | translate }} :
+        <em>{{ currentUnfoldHierarchy }}</em></span
+      > -->
+        <mat-slider
+          [max]="hierarchyDatas?.totalClusters"
+          [min]="hierarchyDatas?.minClusters"
+          [step]="1"
+          (input)="onHierarchyChanged($event?.target?.['valueAsNumber'])"
+        >
+          <input [(ngModel)]="currentUnfoldHierarchy" matSliderThumb />
+        </mat-slider>
+      </div>
+      <div fxLayout="column" class="increment">
+        <button
+          class="button-increase-hierarchy"
+          mat-stroked-button
+          (click)="increaseUnfoldHierarchy()"
+        >
+          +
+        </button>
+        <button
+          class="button-reduce-hierarchy"
+          mat-stroked-button
+          (click)="decreaseUnfoldHierarchy()"
+        >
+          -
+        </button>
+      </div>
+      <!-- DO NOT REMOVE - used by cypress to load files -->
+      <div id="cy-unfold-form" style="visibility: hidden; width: 0">
+        <input [(ngModel)]="cyInput" type="text" id="cy-unfold-value-input" />
+        <button id="cy-unfold-value-button" (click)="setCypressInput(cyInput)">
+          cyoress set
+        </button>
+      </div>
+      <!-- END DO NOT REMOVE -->
+    </div>
+    <div class="unfold-information-rate" fxLayout="column">
+      <span>
+        {{ 'GLOBAL.CELLS' | translate }}:
+        <em>
+          {{ currentCellsPerCluster | toPrecision }}
+        </em>
+      </span>
+      <span>
+        {{ 'GLOBAL.INFORMATION_RATE' | translate }}:
+        <em>{{ currentInformationPerCluster | toPrecision: 3 }}%</em>
+      </span>
+      <span
+        class="non-info-warning"
+        *ngIf="currentInformationPerCluster === 0"
+        fxLayoutAlign="start center"
+      >
+        {{ 'GLOBAL.NON_INFORMATIVE_COCLUSTERING' | translate }}
+        <mat-icon fxLayoutAlign="center center">warning</mat-icon>
+      </span>
+    </div>
+  </div>
+</div>
