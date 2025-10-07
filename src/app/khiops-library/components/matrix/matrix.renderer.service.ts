@@ -152,6 +152,7 @@ export class MatrixRendererService {
    * @param isZerosToggled Whether zeros are toggled
    * @param legendMax Maximum legend value
    * @param selectedInnerVariables Selected inner variables for filtering
+   * @param hasInnerVariables Whether inner variables are available in the data
    */
   drawMatrixCells(
     matrixCtx: CanvasRenderingContext2D,
@@ -170,6 +171,7 @@ export class MatrixRendererService {
     legendMax: number | undefined,
     selectedInnerVariables: string[] = [],
     matrixFilterOption?: string,
+    hasInnerVariables: boolean = false,
   ): void {
     const totalMutInfo = MatrixUtilsService.computeTotalMutInfo(
       matrixValues!,
@@ -213,6 +215,7 @@ export class MatrixRendererService {
         graphMode.mode,
         isZerosToggled,
         selectedInnerVariables,
+        hasInnerVariables,
       );
     }
 
@@ -282,7 +285,7 @@ export class MatrixRendererService {
    * @param graphMode Graph mode
    * @param isZerosToggled Whether zeros are toggled
    * @param selectedInnerVariables Selected inner variables for filtering
-   * @param inputDatas Input data containing matrix and dimension information
+   * @param hasInnerVariables Whether inner variables are available in the data
    */
   private drawCell(
     matrixCtx: CanvasRenderingContext2D,
@@ -295,6 +298,7 @@ export class MatrixRendererService {
     graphMode: string,
     isZerosToggled: boolean,
     selectedInnerVariables: string[] = [],
+    hasInnerVariables: boolean = false,
   ): void {
     const currentVal = matrixValues?.[index];
     const maxVal = legendMax;
@@ -303,6 +307,7 @@ export class MatrixRendererService {
     const shouldHatchCell = this.shouldHatchCellForInnerVariables(
       cellDatas,
       selectedInnerVariables,
+      hasInnerVariables,
     );
 
     if (currentVal && maxVal) {
@@ -441,14 +446,20 @@ export class MatrixRendererService {
    * Determines if a cell should be hatched based on selected inner variables
    * @param cellData Cell data to check
    * @param selectedInnerVariables Selected inner variables
-   * @param inputDatas Input data containing matrix and dimension information
+   * @param hasInnerVariables Whether inner variables are available in the data
    * @returns true if cell should be hatched (filtered)
    */
   private shouldHatchCellForInnerVariables(
     cellData: CellModel,
     selectedInnerVariables: string[],
+    hasInnerVariables: boolean = false,
   ): boolean {
-    // If no inner variables are selected, hatch ALL cells (filter everything)
+    // If no inner variables are available in the data, never hatch
+    if (!hasInnerVariables) {
+      return false;
+    }
+
+    // If inner variables are available but none are selected, hatch ALL cells (filter everything)
     if (!selectedInnerVariables || selectedInnerVariables.length === 0) {
       return true; // HATCH when nothing is selected
     }
