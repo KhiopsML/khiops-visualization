@@ -27,6 +27,10 @@ export function getHierarchyGridColumns(translate: TranslateService) {
       headerName: translate.get('GLOBAL.FOLD_UNFOLD'),
       field: 'hierarchyFold',
       cellRendererFramework: CheckboxCellComponent,
+      // Prevent unnecessary cell refreshes to avoid blinking
+      suppressCellFlash: true,
+      // Use object comparison to determine if cell needs refresh
+      equals: (valueA: any, valueB: any) => valueA === valueB,
     },
   ];
 }
