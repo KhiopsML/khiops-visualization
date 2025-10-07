@@ -44,7 +44,9 @@
           [inputDatas]="dimensions"
           [title]="unfoldHierarchyTableTitle"
           (gridCheckboxChanged)="onGridCheckboxChanged($event)"
-          [rowSelection]="'multiple'"
+          [showLineSelection]="false"
+          [suppressRowClickSelection]="true"
+          [showColumnsSelection]="false"
           [displayedColumns]="hierarchyDisplayedColumns"
         ></kl-ag-grid>
       </as-split-area>
