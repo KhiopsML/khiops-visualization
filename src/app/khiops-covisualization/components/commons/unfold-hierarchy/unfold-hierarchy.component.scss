@@ -1,6 +1,4 @@
 #unfold-hierarchy-comp {
-  background-color: var(--bg-color) !important; // for copy image
-
   #unfold-hierarchy-header {
     padding: 0 0 1em 0;
     height: 68px;
@@ -24,13 +22,9 @@
     }
     #unfold-hierarchy-settings {
       background: rgba(0, 0, 0, 0.03);
-      margin-bottom: 3em;
+      padding: 30px 20px !important;
       border-radius: 5px;
-      padding: 1em;
 
-      mat-slider {
-        width: 30vw;
-      }
       .unfold-information-rate {
         margin-left: 1rem;
         span {
@@ -60,7 +54,7 @@
     }
 
     #unfold-hierarchy-table {
-      margin-top: 3em;
+      margin-top: 12px;
 
       kl-ag-grid {
         min-height: 242px;
@@ -79,5 +73,11 @@
 
   ::ng-deep .chart-legend .legend-wrap {
     width: calc(100% - 40px) !important;
+  }
+}
+
+::ng-deep .unfold-hierarchy-dialog-container {
+  .mat-mdc-dialog-surface {
+    background-color: var(--bg-color-20) !important;
   }
 }

@@ -1,4 +1,4 @@
-<div id="unfold-hierarchy-comp" fxFlexFill #unfoldHierarchy fxLayout="column">
+<div id="unfold-hierarchy-comp" fxFlexFill #unfoldHierarchy fxLayout="row">
   <div
     fxLayout="column"
     fxFlexFill
@@ -38,137 +38,172 @@
         {{ 'GLOBAL.OK' | translate }}
       </button>
     </div>
-    <div id="unfold-hierarchy-content" fxLayout="column">
-      <div
-        fxLayout="row"
-        id="unfold-hierarchy-settings"
-        fxLayoutAlign="start start"
-      >
-        <div fxLayout="column">
-          <span
-            >{{ 'GLOBAL.NUMBER_OF_CLUSTERS' | translate }} :
-            <b>{{ currentUnfoldHierarchy }}</b></span
-          >
-          <mat-slider
-            [max]="hierarchyDatas?.totalClusters"
-            [min]="hierarchyDatas?.minClusters"
-            [step]="1"
-            (input)="onHierarchyChanged($event?.target?.['valueAsNumber'])"
-          >
-            <input [(ngModel)]="currentUnfoldHierarchy" matSliderThumb />
-          </mat-slider>
-        </div>
-        <div fxLayout="column" class="increment">
-          <button
-            class="button-increase-hierarchy"
-            mat-stroked-button
-            (click)="increaseUnfoldHierarchy()"
-          >
-            +
-          </button>
-          <button
-            class="button-reduce-hierarchy"
-            mat-stroked-button
-            (click)="decreaseUnfoldHierarchy()"
-          >
-            -
-          </button>
-        </div>
-        <!-- DO NOT REMOVE - used by cypress to load files -->
-        <div id="cy-unfold-form" style="visibility: hidden; width: 0">
-          <input [(ngModel)]="cyInput" type="text" id="cy-unfold-value-input" />
-          <button
-            id="cy-unfold-value-button"
-            (click)="setCypressInput(cyInput)"
-          >
-            cyoress set
-          </button>
-        </div>
-        <!-- END DO NOT REMOVE -->
+
+    <as-split id="unfold-hierarchy-content" direction="horizontal">
+      <as-split-area fxLayout="column">
         <div
-          class="unfold-information-rate"
           fxLayout="column"
-          fxFlex
-          fxLayoutAlign="center end"
+          id="unfold-hierarchy-settings"
+          fxLayoutAlign="start start"
+          class="kl-card"
         >
-          <span
-            >{{ 'GLOBAL.CELLS' | translate }}:
-            {{ currentCellsPerCluster | toPrecision }}</span
+          <div fxLayout="row">
+            <div fxLayout="column">
+              <span
+                >{{ 'GLOBAL.NUMBER_OF_CLUSTERS' | translate }} :
+                <b>{{ currentUnfoldHierarchy }}</b></span
+              >
+              <mat-slider
+                [max]="hierarchyDatas?.totalClusters"
+                [min]="hierarchyDatas?.minClusters"
+                [step]="1"
+                (input)="onHierarchyChanged($event?.target?.['valueAsNumber'])"
+              >
+                <input [(ngModel)]="currentUnfoldHierarchy" matSliderThumb />
+              </mat-slider>
+            </div>
+            <div fxLayout="column" class="increment">
+              <button
+                class="button-increase-hierarchy"
+                mat-stroked-button
+                (click)="increaseUnfoldHierarchy()"
+              >
+                +
+              </button>
+              <button
+                class="button-reduce-hierarchy"
+                mat-stroked-button
+                (click)="decreaseUnfoldHierarchy()"
+              >
+                -
+              </button>
+            </div>
+            <!-- DO NOT REMOVE - used by cypress to load files -->
+            <div id="cy-unfold-form" style="visibility: hidden; width: 0">
+              <input
+                [(ngModel)]="cyInput"
+                type="text"
+                id="cy-unfold-value-input"
+              />
+              <button
+                id="cy-unfold-value-button"
+                (click)="setCypressInput(cyInput)"
+              >
+                cyoress set
+              </button>
+            </div>
+            <!-- END DO NOT REMOVE -->
+          </div>
+          <div
+            class="unfold-information-rate"
+            fxLayout="column"
+            fxFlex
+            fxLayoutAlign="center end"
           >
-          <span
-            >{{ 'GLOBAL.INFORMATION_RATE' | translate }}:
-            {{ currentInformationPerCluster | toPrecision: 3 }}%</span
-          >
-          <span
-            class="non-info-warning"
-            *ngIf="currentInformationPerCluster === 0"
-            fxLayoutAlign="start center"
-          >
-            {{ 'GLOBAL.NON_INFORMATIVE_COCLUSTERING' | translate }}
-            <mat-icon fxLayoutAlign="center center">warning</mat-icon>
-          </span>
-        </div>
-      </div>
-      <div fxFlex fxLayout="column">
-        <div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
-          <div fxFlex fxLayout="row" fxLayoutAlign="start center">
-            <h1>{{ 'GLOBAL.INFORMATION_RATE' | translate }}</h1>
+            <span
+              >{{ 'GLOBAL.CELLS' | translate }}:
+              {{ currentCellsPerCluster | toPrecision }}</span
+            >
+            <span
+              >{{ 'GLOBAL.INFORMATION_RATE' | translate }}:
+              {{ currentInformationPerCluster | toPrecision: 3 }}%</span
+            >
+            <span
+              class="non-info-warning"
+              *ngIf="currentInformationPerCluster === 0"
+              fxLayoutAlign="start center"
+            >
+              {{ 'GLOBAL.NON_INFORMATIVE_COCLUSTERING' | translate }}
+              <mat-icon fxLayoutAlign="center center">warning</mat-icon>
+            </span>
           </div>
         </div>
-        <kl-chart
-          title="{{
-            'TOOLTIPS.AXIS.UNFOLD_HIERARCHY.INFO_RATE_CHART' | translate
-          }}"
-          [canvasIdContainer]="'info-per-cluster-graph'"
+
+        <div
           fxFlex
-          [inputDatas]="infoPerCluster"
-          [enableSelection]="false"
-          [colorSet]="colorSetInfoPerCluster"
-          [chartOptions]="infoPerClusterChartOptions"
+          id="unfold-hierarchy-table"
+          fxLayout="column"
+          class="kl-card"
         >
-        </kl-chart>
-      </div>
-      <div fxFlex fxLayout="column">
-        <div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
-          <div fxFlex fxLayout="row" fxLayoutAlign="start center">
-            <h1>
-              {{ 'GLOBAL.NB_OF_CLUSTERS_PER_DIM' | translate }}
-            </h1>
-          </div>
-          <kl-legend
-            fxLayoutAlign="end end"
-            fxLayout="row"
-            [inputDatas]="legend"
-            [type]="'chart-nd'"
-            tooltip="{{ 'TOOLTIPS.AXIS.UNFOLD_HIERARCHY.LEGEND' | translate }}"
-            (legendItemClicked)="highlightChartLine($event)"
-            [colorSet]="colorSetClusterPerDim"
-          >
-          </kl-legend>
+          <kl-ag-grid
+            fxFlex
+            [showSearch]="false"
+            [showColumnsSelection]="false"
+            [inputDatas]="dimensions"
+            [title]="unfoldHierarchyTableTitle"
+            (gridCheckboxChanged)="onGridCheckboxChanged($event)"
+            [rowSelection]="'multiple'"
+            [displayedColumns]="hierarchyDisplayedColumns"
+          ></kl-ag-grid>
         </div>
-        <kl-chart
-          [canvasIdContainer]="'clusters-per-dim-graph'"
-          fxFlex
-          [inputDatas]="clustersPerDimDatas"
-          [enableSelection]="false"
-          [colorSet]="colorSetClusterPerDim"
-          [selectedLineChartItem]="selectedLineChartItem"
-          [chartOptions]="clustersPerDimDatasChartOptions"
-        >
-        </kl-chart>
-      </div>
-      <div fxFlex id="unfold-hierarchy-table" fxLayout="column">
-        <kl-ag-grid
-          fxFlex
-                [showSearch]="false"
-          [showColumnsSelection]="false"
-          [inputDatas]="dimensions"
-          [title]="unfoldHierarchyTableTitle"
-          (gridCheckboxChanged)="onGridCheckboxChanged($event)"
-          [rowSelection]="'multiple'"
-          [displayedColumns]="hierarchyDisplayedColumns"
-        ></kl-ag-grid>
-      </div>
-    </div>
+      </as-split-area>
+      <as-split-area fxLayout="column">
+        <as-split direction="vertical" disabled="true">
+          <as-split-area fxLayout="column">
+            <div fxFlex fxLayout="column" class="kl-card">
+              <div
+                fxLayout="row"
+                fxLayoutAlign="start center"
+                class="comp-header"
+              >
+                <div fxFlex fxLayout="row" fxLayoutAlign="start center">
+                  <h1>{{ 'GLOBAL.INFORMATION_RATE' | translate }}</h1>
+                </div>
+              </div>
+              <kl-chart
+                title="{{
+                  'TOOLTIPS.AXIS.UNFOLD_HIERARCHY.INFO_RATE_CHART' | translate
+                }}"
+                [canvasIdContainer]="'info-per-cluster-graph'"
+                fxFlex
+                [inputDatas]="infoPerCluster"
+                [enableSelection]="false"
+                [colorSet]="colorSetInfoPerCluster"
+                [chartOptions]="infoPerClusterChartOptions"
+              >
+              </kl-chart>
+            </div>
+          </as-split-area>
+
+          <as-split-area fxLayout="column">
+            <div fxFlex fxLayout="column" class="kl-card">
+              <div
+                fxLayout="row"
+                fxLayoutAlign="start center"
+                class="comp-header"
+              >
+                <div fxFlex fxLayout="row" fxLayoutAlign="start center">
+                  <h1>
+                    {{ 'GLOBAL.NB_OF_CLUSTERS_PER_DIM' | translate }}
+                  </h1>
+                </div>
+                <kl-legend
+                  fxLayoutAlign="end end"
+                  fxLayout="row"
+                  [inputDatas]="legend"
+                  [type]="'chart-nd'"
+                  tooltip="{{
+                    'TOOLTIPS.AXIS.UNFOLD_HIERARCHY.LEGEND' | translate
+                  }}"
+                  (legendItemClicked)="highlightChartLine($event)"
+                  [colorSet]="colorSetClusterPerDim"
+                >
+                </kl-legend>
+              </div>
+              <kl-chart
+                [canvasIdContainer]="'clusters-per-dim-graph'"
+                fxFlex
+                [inputDatas]="clustersPerDimDatas"
+                [enableSelection]="false"
+                [colorSet]="colorSetClusterPerDim"
+                [selectedLineChartItem]="selectedLineChartItem"
+                [chartOptions]="clustersPerDimDatasChartOptions"
+              >
+              </kl-chart>
+            </div>
+          </as-split-area>
+        </as-split>
+      </as-split-area>
+    </as-split>
   </div>
 </div>
