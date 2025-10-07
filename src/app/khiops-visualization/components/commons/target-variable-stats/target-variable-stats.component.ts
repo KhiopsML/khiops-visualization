@@ -75,6 +75,9 @@ export class TargetVariableStatsComponent
           beginAtZero: true,
           ticks: {
             maxTicksLimit: 5,
+            callback: (tickValue: string | number) => {
+              return tickValue + '%';
+            },
           },
         },
       },
