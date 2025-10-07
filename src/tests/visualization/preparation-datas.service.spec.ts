@@ -63,11 +63,11 @@ describe('Visualization', () => {
         datasets: [
           {
             label: '0',
-            data: [0.4700365714285714],
+            data: [47.00365714285714],
             extra: [
               {
                 name: '0',
-                value: 0.4700365714285714,
+                value: 47.00365714285714,
                 defaultGroupIndex: false,
                 extra: {
                   value: 4935384,
@@ -82,15 +82,15 @@ describe('Visualization', () => {
           },
           {
             label: '1',
-            data: [0.5299634285714285],
+            data: [52.99634285714285],
             extra: [
               {
                 name: '1',
-                value: 0.5299634285714285,
+                value: 52.99634285714285,
                 defaultGroupIndex: false,
                 extra: {
                   value: 5564616,
-                  percent: 52.99634285714286,
+                  percent: 52.99634285714285,
                 },
               },
             ],
@@ -120,11 +120,11 @@ describe('Visualization', () => {
         datasets: [
           {
             label: 'less',
-            data: [0.7616316497922397],
+            data: [76.16316497922398],
             extra: [
               {
                 name: 'less',
-                value: 0.7616316497922397,
+                value: 76.16316497922398,
                 defaultGroupIndex: false,
                 extra: {
                   value: 26028,
@@ -139,11 +139,11 @@ describe('Visualization', () => {
           },
           {
             label: 'more',
-            data: [0.2383683502077603],
+            data: [23.83683502077603],
             extra: [
               {
                 name: 'more',
-                value: 0.2383683502077603,
+                value: 23.83683502077603,
                 defaultGroupIndex: false,
                 extra: {
                   value: 8146,

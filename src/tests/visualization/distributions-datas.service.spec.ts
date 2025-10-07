@@ -161,7 +161,7 @@ describe('Visualization', () => {
       const res = distributionDatasService.getdistributionGraphDatas(
         selectedVariable!,
       );
-      expect(res!.datasets[0]!.data[0]).toEqual(50.012209523809524);
+      expect(res!.datasets[0]!.data[0]).toEqual(5251282);
     });
 
     it('getdistributionGraphDatas should return valid default group index [2d-cells-AllReports, Categorical, R06]', () => {
@@ -229,7 +229,7 @@ describe('Visualization', () => {
       const res = distributionDatasService.getdistributionGraphDatas(
         selectedVariable!,
       );
-      expect(res!.datasets[0]!.data[0]).toEqual(49.042657142857145);
+      expect(res!.datasets[0]!.data[0]).toEqual(5149479);
     });
 
     it('getdistributionGraphDatas should return valid lables [C100_AllReports, Numerical, R15]', () => {
@@ -271,7 +271,7 @@ describe('Visualization', () => {
       const res = distributionDatasService.getdistributionGraphDatas(
         selectedVariable!,
       );
-      expect(res!.datasets[0]!.data[0]).toEqual(37.37373737373738);
+      expect(res!.datasets[0]!.data[0]).toEqual(37);
     });
 
     it('getdistributionGraphDatas should return valid labels [irisU, Categorical, R1]', () => {
@@ -315,7 +315,7 @@ describe('Visualization', () => {
       const res = distributionDatasService.getdistributionGraphDatas(
         selectedVariable!,
       );
-      expect(res!.datasets[0]!.data[0]).toEqual(27.55896295429274);
+      expect(res!.datasets[0]!.data[0]).toEqual(9418);
     });
 
     it('getTreeNodeTargetDistributionGraphDatas should return valid datas [new-hyper-tree, treePreparationReport, R1]', () => {
