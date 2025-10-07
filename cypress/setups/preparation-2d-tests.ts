@@ -31,7 +31,7 @@ export function setupPreparation2dTests(datas, testsValues) {
     datas.bivariatePreparationReport?.variablesPairsStatistics[0]?.label,
   );
   if (datas.bivariatePreparationReport?.variablesPairsDetailedStatistics?.R01) {
-    testsValues.Preparation2d.push('I ('); // check if matrix component is displayed
+    testsValues.Preparation2d.push('Frequency'); // check if matrix component is displayed
     testsValues.Preparation2d.push(
       datas.bivariatePreparationReport?.variablesPairsDetailedStatistics?.R01?.dataGrid?.dimensions[0]?.partition[0][0].toString(),
     );
@@ -39,7 +39,7 @@ export function setupPreparation2dTests(datas, testsValues) {
   if (
     datas.bivariatePreparationReport?.variablesPairsDetailedStatistics?.R001
   ) {
-    testsValues.Preparation2d.push('I ('); // check if matrix component is displayed
+    testsValues.Preparation2d.push('Frequency'); // check if matrix component is displayed
     testsValues.Preparation2d.push(
       datas.bivariatePreparationReport?.variablesPairsDetailedStatistics?.R001?.dataGrid?.dimensions[0]?.partition[0][0].toString(),
     );
