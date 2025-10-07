@@ -482,19 +482,19 @@ export class PreparationDatasService {
           variableStatsDatas.labels.push(title);
         }
 
+        // Calculate total frequency sum once
+        const freqSum = UtilsService.arraySum(currentDatas.frequencies);
+
         for (let i = 0; i < currentDatas.values.length; i++) {
           const currentDataSet = new ChartDatasetModel();
 
           const graphItem: BarModel = new BarModel();
           graphItem.name = currentDatas.values[i];
-          graphItem.value =
-            (currentDatas.frequencies[i] * 100) /
-            UtilsService.arraySum(currentDatas.frequencies) /
-            100;
+          // Value and percent are now in 0-100 range directly
+          graphItem.value = (currentDatas.frequencies[i] / freqSum) * 100;
           graphItem.extra.value = currentDatas.frequencies[i];
           graphItem.extra.percent =
-            (currentDatas.frequencies[i] * 100) /
-            UtilsService.arraySum(currentDatas.frequencies);
+            (currentDatas.frequencies[i] / freqSum) * 100;
 
           currentDataSet.label = graphItem.name;
           currentDataSet.data.push(graphItem.value);

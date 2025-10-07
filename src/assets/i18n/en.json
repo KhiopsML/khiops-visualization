@@ -228,6 +228,7 @@
     "DATABASE": "Database",
     "TARGET_VARIABLE": "Target variable",
     "TARGET_VARIABLE_STATS": "Target variable stats",
+    "GLOBAL_TARGET_DISTRIBUTION": "Global target distribution",
     "INSTANCES": "Instances",
     "EVALUATED_VARIABLES": "Evaluated variables",
     "CONSTRUCTED_VARIABLES": "Constructed variables",

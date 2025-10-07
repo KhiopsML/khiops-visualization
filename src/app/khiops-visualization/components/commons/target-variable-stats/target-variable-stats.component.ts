@@ -55,7 +55,7 @@ export class TargetVariableStatsComponent
     super(selectableService, ngzone, configService);
     this.colorSet = this.khiopsLibraryService.getGraphColorSet()[1];
     if (!this.title) {
-      this.title = this.translate.get('GLOBAL.TARGET_VARIABLE_STATS');
+      this.title = this.translate.get('GLOBAL.GLOBAL_TARGET_DISTRIBUTION');
     }
     // Override tooltip infos
     this.chartOptions = {
