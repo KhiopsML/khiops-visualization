@@ -54,9 +54,9 @@ export function setupPreparationTests(datas, testsValues) {
       testsValues.Preparation.push('Target distribution'); // normal case
     }
     if (datas.preparationReport?.summary?.targetValues) {
-      testsValues.Preparation.push('Target variable stats');
+      testsValues.Preparation.push('Global target distribution');
     }
-    testsValues.Preparation.push('Coverage');
+    testsValues.Preparation.push('Frequency');
   }
 
   if (

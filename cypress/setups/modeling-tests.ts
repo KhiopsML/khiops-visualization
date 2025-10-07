@@ -65,9 +65,9 @@ export function setupModelingTests(datas, testsValues) {
       testsValues.Modeling.push('Target distribution'); // normal case
     }
     if (datas.preparationReport?.summary?.targetValues) {
-      testsValues.Modeling.push('Target variable stats');
+      testsValues.Modeling.push('Global target distribution');
     }
-    testsValues.Modeling.push('Coverage');
+    testsValues.Modeling.push('Frequency');
   }
 
   if (

@@ -112,7 +112,7 @@ describe('Visualization', () => {
 
     it('copyDatasToClipboard should return valid datas [adult-bivar, getNdBarChartDatas]', () => {
       const currentSelectedArea = {
-        title: 'Target variable stats',
+        title: 'Global target distribution',
         displayedValues: [
           {
             name: 'less',
@@ -137,7 +137,7 @@ describe('Visualization', () => {
       const intervalDatas =
         copyDatasService.getNdBarChartDatas(currentSelectedArea);
       const expectedRes =
-        'Target variable stats\nless\tmore\t\n0.7616316497922397\t0.2383683502077603\t\n';
+        'Global target distribution\nless\tmore\t\n0.7616316497922397\t0.2383683502077603\t\n';
       expect(JSON.stringify(intervalDatas)).toEqual(
         JSON.stringify(expectedRes),
       );

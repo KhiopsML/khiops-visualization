@@ -1163,7 +1163,7 @@ describe('CopyDatasService - Real Data Tests', () => {
     it('should format target variable distribution correctly', () => {
       const targetVariableStats: DynamicI = {
         componentType: 'ndBarChart',
-        title: 'Target Variable Distribution',
+        title: 'Global target distribution',
         graphOptions: {
           selected: 'GLOBAL.FREQUENCY',
         },
@@ -1179,7 +1179,7 @@ describe('CopyDatasService - Real Data Tests', () => {
 
       const result = service.getNdBarChartDatas(targetVariableStats);
 
-      expect(result).toContain('Target Variable Distribution');
+      expect(result).toContain('Global target distribution');
       expect(result).toContain('Frequency\t<=50K\t>50K');
       expect(result).toContain('Income Distribution\t24720\t7841');
     });
