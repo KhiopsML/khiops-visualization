@@ -26,7 +26,7 @@ import { VariableGraphDetailsComponent } from './components/commons/variable-gra
 import { TargetLiftGraphComponent } from './components/commons/target-lift-graph/target-lift-graph.component';
 import { SelectToggleButtonComponent } from './components/commons/select-toggle-button/select-toggle-button.component';
 import { UserSettingsComponent } from './components/commons/user-settings/user-settings.component';
-import { CoocurenceMatrixComponent } from './components/commons/coocurence-matrix/coocurence-matrix.component';
+import { CooccurrenceMatrixComponent } from './components/commons/cooccurrence-matrix/cooccurrence-matrix.component';
 import { RegressionMatrixComponent } from './components/commons/regression-matrix/regression-matrix.component';
 import { AgGridModule } from '@ag-grid-community/angular';
 import { TargetDistributionGraphComponent } from './components/commons/target-distribution-graph/target-distribution-graph.component';
@@ -84,7 +84,7 @@ import { ChangeScaleDialogComponent } from './components/commons/change-scale-di
     TargetLiftGraphComponent,
     SelectToggleButtonComponent,
     UserSettingsComponent,
-    CoocurenceMatrixComponent,
+    CooccurrenceMatrixComponent,
     RegressionMatrixComponent,
     TargetDistributionGraphComponent,
     DataTypeSelectorComponent,

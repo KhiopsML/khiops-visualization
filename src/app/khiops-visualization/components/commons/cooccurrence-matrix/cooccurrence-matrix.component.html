@@ -1,11 +1,11 @@
 <div
-  id="coocurence-matrix-comp"
+  id="cooccurrence-matrix-comp"
   fxFlexFill
   fxLayout="column"
   [ngClass]="{ fullscreen: isFullscreen }"
 >
   <div
-    class="coocurence-matrix-tools"
+    class="cooccurrence-matrix-tools"
     fxLayout="row"
     [hidden]="!preparation2dDatas?.matrixDatas"
   >
@@ -37,11 +37,11 @@
               <div fxFlex fxLayout="row" fxLayoutAlign="start center">
                 <h2
                   title="{{
-                    'TOOLTIPS.PREPARATION_2D.COOCURENCE_MATRIX.TITLE'
+                    'TOOLTIPS.PREPARATION_2D.COOCCURRENCE_MATRIX.TITLE'
                       | translate
                   }}"
                 >
-                  {{ 'GLOBAL.COOCURENCE' | translate }}
+                  {{ 'GLOBAL.COOCCURRENCE' | translate }}
                 </h2>
                 <kl-matrix-mode
                   [matrixModes]="matrixModes"
@@ -84,7 +84,7 @@
             fxFlex
             fxLayout="row"
             (cellSelected)="onCellSelected($event)"
-            [id]="'coocurence-matrix-comp'"
+            [id]="'cooccurrence-matrix-comp'"
             [selectedCell]="preparation2dDatas?.selectedCell"
             [isAxisInverted]="preparation2dDatas?.isAxisInverted"
             [minMaxValues]="minMaxValues"
@@ -104,7 +104,7 @@
       <ng-template matTabContent>
         <div class="variables-list-container" fxFlexFill>
           <kl-ag-grid
-            id="coocurence-matrix-cells-container"
+            id="cooccurrence-matrix-cells-container"
             class="variables-list"
             [showFullscreenBtn]="false"
             [showSearch]="false"

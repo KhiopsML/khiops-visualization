@@ -21,7 +21,7 @@ import { MatrixComponent } from '@khiops-library/components/matrix/matrix.compon
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { Preparation2dDatasModel } from '@khiops-visualization/model/preparation2d-datas.model';
 import { Preparation2dVariableModel } from '@khiops-visualization/model/preparation2d-variable.model';
-import { CoocurenceCellsModel } from '@khiops-visualization/model/coocurence-cells.model';
+import { CooccurrenceCellsModel } from '@khiops-visualization/model/cooccurrence-cells.model';
 import { MatrixModesModel } from '@khiops-library/model/matrix-modes.model';
 import { MatrixTargetsModel } from '@khiops-library/model/matrix-targets.model';
 import { MatrixOptionsModel } from '@khiops-library/model/matrix-options.model';
@@ -29,18 +29,18 @@ import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { MatrixRangeValuesI } from '@khiops-visualization/interfaces/matrix-range-values';
 import { LS } from '@khiops-library/enum/ls';
-import { CoocurenceMatrixConfigService } from './coocurence-matrix-config.service';
+import { CooccurrenceMatrixConfigService } from './cooccurrence-matrix-config.service';
 
 /**
  * Test it with iris2d file
  */
 @Component({
-  selector: 'app-coocurence-matrix',
-  templateUrl: './coocurence-matrix.component.html',
-  styleUrls: ['./coocurence-matrix.component.scss'],
+  selector: 'app-cooccurrence-matrix',
+  templateUrl: './cooccurrence-matrix.component.html',
+  styleUrls: ['./cooccurrence-matrix.component.scss'],
   standalone: false,
 })
-export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
+export class CooccurrenceMatrixComponent implements OnChanges, AfterViewInit {
   @ViewChild('matrix', {
     static: false,
   })
@@ -54,7 +54,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
   public matrixOptions: MatrixOptionsModel = new MatrixOptionsModel();
   public matrixModes: MatrixModesModel = new MatrixModesModel();
   public matrixTargets: MatrixTargetsModel = new MatrixTargetsModel();
-  public matrixCells?: CoocurenceCellsModel;
+  public matrixCells?: CooccurrenceCellsModel;
   public minMaxValues?: MatrixRangeValuesI;
   public isFullscreen = false;
 
@@ -66,7 +66,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
     private configService: ConfigService,
     private appService: AppService,
     private preparation2dDatasService: Preparation2dDatasService,
-    private coocurenceMatrixConfigService: CoocurenceMatrixConfigService,
+    private cooccurrenceMatrixConfigService: CooccurrenceMatrixConfigService,
   ) {
     this.preparation2dDatas = this.preparation2dDatasService.getDatas();
   }
@@ -116,7 +116,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
       this.preparation2dDatasService.getCurrentCellDatas();
 
       this.matrixCells =
-        this.preparation2dDatasService.getMatrixCoocurenceCellsDatas();
+        this.preparation2dDatasService.getMatrixCooccurrenceCellsDatas();
 
       // initialize with first cell index
       this.onCellSelected({
@@ -221,7 +221,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
    */
   private constructModeSelectBox() {
     this.matrixModes =
-      this.coocurenceMatrixConfigService.constructModeSelectBox(
+      this.cooccurrenceMatrixConfigService.constructModeSelectBox(
         this.matrixModes,
         this.matrixTargets,
         this.preparation2dDatas,
@@ -232,7 +232,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
    * Construct the target select box based on available targets
    */
   private constructTargetSelectBox() {
-    this.coocurenceMatrixConfigService.constructTargetSelectBox(
+    this.cooccurrenceMatrixConfigService.constructTargetSelectBox(
       this.matrixTargets,
     );
   }
@@ -242,7 +242,7 @@ export class CoocurenceMatrixComponent implements OnChanges, AfterViewInit {
    * @param selected The previously selected target or undefined
    */
   private selectTargetSelectBox(selected?: string) {
-    this.coocurenceMatrixConfigService.selectTargetSelectBox(
+    this.cooccurrenceMatrixConfigService.selectTargetSelectBox(
       this.matrixTargets,
       this.matrixModes,
       selected,

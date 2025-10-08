@@ -277,7 +277,7 @@ c3ae85358 - 21-01-2019 11:21 : Fix add % into target lift label axis.
 072ee0128 - 21-01-2019 10:23 : Change smooth lift curve min value to 1.
 eef68df1b - 21-01-2019 10:17 : Search into lists from 1 char.
 1734cb5e1 - 17-01-2019 16:31 : Add invert matrix axis functionnality.
-1d4f6686c - 17-01-2019 15:16 : Add Coocurence matrix component.
+1d4f6686c - 17-01-2019 15:16 : Add cooccurrence matrix component.
 a2906cebb - 15-01-2019 18:47 : Add categorical and numerical matrix types.
 061ab18c7 - 15-01-2019 14:02 : Add preparation 2d variables list.
 d06d94ad4 - 15-01-2019 12:06 : Add preparation 2d tab view.

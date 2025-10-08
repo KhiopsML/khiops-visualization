@@ -7,7 +7,7 @@
 import '../../support/commands';
 
 describe('Matrix visualization Test Plan for Khiops Visualization', () => {
-  it(`Check matrix in coocurence`, () => {
+  it(`Check matrix in cooccurrence`, () => {
     cy.initViews();
     cy.loadFile('visualization', 'co-oc.json');
     cy.readFile('./src/assets/mocks/kv/co-oc.json').then(() => {
@@ -15,7 +15,7 @@ describe('Matrix visualization Test Plan for Khiops Visualization', () => {
 
       cy.get('.mat-mdc-tab:contains("Preparation 2D")').first().click();
       cy.wait(500);
-      cy.get('app-coocurence-matrix').contains('Co-occurrence');
+      cy.get('app-cooccurrence-matrix').contains('Co-occurrence');
 
       // Move to the first matrix cell
       cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {

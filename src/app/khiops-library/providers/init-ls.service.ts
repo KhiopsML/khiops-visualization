@@ -10,7 +10,7 @@ export function initLS() {
   // @ts-ignore
   ls = {
     isDimensionsChecked: true,
-    isCoocurenceChecked: true,
+    isCooccurrenceChecked: true,
     dimensionsViewsLayoutsVO: [
       {
         isChecked: true,

@@ -8,7 +8,7 @@ import { DimensionViewLayoutModel } from './dimension-view-layout.model';
 
 export class ViewLayoutVO {
   isDimensionsChecked = true;
-  isCoocurenceChecked = true;
+  isCooccurrenceChecked = true;
 
   dimensionsViewsLayoutsVO: DimensionViewLayoutModel[];
 
@@ -49,8 +49,8 @@ export class ViewLayoutVO {
   mergeWithPreviousValues(lsValues: Partial<ViewLayoutVO>) {
     this.isDimensionsChecked =
       lsValues.isDimensionsChecked ?? this.isDimensionsChecked;
-    this.isCoocurenceChecked =
-      lsValues.isCoocurenceChecked ?? this.isCoocurenceChecked;
+    this.isCooccurrenceChecked =
+      lsValues.isCooccurrenceChecked ?? this.isCooccurrenceChecked;
     if (lsValues.dimensionsViewsLayoutsVO) {
       for (let i = 0; i < this.dimensionsViewsLayoutsVO.length; i++) {
         const prevValue = lsValues.dimensionsViewsLayoutsVO[i];

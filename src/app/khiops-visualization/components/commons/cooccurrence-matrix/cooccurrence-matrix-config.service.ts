@@ -16,12 +16,12 @@ import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 
 /**
- * Service for managing coocurrence matrix configuration including modes and targets
+ * Service for managing cooccurrence matrix configuration including modes and targets
  */
 @Injectable({
   providedIn: 'root',
 })
-export class CoocurenceMatrixConfigService {
+export class CooccurrenceMatrixConfigService {
   constructor(
     private translate: TranslateService,
     private preparation2dDatasService: Preparation2dDatasService,

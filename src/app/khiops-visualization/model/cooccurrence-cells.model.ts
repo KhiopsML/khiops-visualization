@@ -5,14 +5,14 @@
  */
 
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
-import { CoocurenceCellModel } from './coocurence-cell.model';
+import { CooccurrenceCellModel } from './cooccurrence-cell.model';
 import { AppService } from '@khiops-visualization/providers/app.service';
 
-export class CoocurenceCellsModel {
+export class CooccurrenceCellsModel {
   title: string;
-  values!: CoocurenceCellModel[];
+  values!: CooccurrenceCellModel[];
 
-  // coocurenceCell has dynamic fields
+  // cooccurrenceCell has dynamic fields
   displayedColumns: GridColumnsI[] = [];
 
   constructor(nameX: string, nameY: string) {

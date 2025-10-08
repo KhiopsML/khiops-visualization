@@ -16,14 +16,14 @@
         class="variables-list-container kl-card"
         [size]="sizes.row1Col1Row0Col[0]"
       >
-        <app-coocurence-matrix
+        <app-cooccurrence-matrix
           fxFlexFill
-          id="coocurence-matrix-comp-container"
+          id="cooccurrence-matrix-comp-container"
           fxFlex="1 1 100%"
           (selectCellRowChanged)="onSelectCellRowChanged()"
           [selectedVariable]="preparation2dDatas?.selectedVariable"
         >
-        </app-coocurence-matrix>
+        </app-cooccurrence-matrix>
       </as-split-area>
       <as-split-area
         *ngIf="

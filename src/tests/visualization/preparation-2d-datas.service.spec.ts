@@ -57,7 +57,7 @@ describe('Visualization', () => {
       expect(selectedVariable?.level).toEqual(0.385522);
     });
 
-    it('getMatrixCoocurenceCellsDatas should return valid datas [iris2d, R10]', () => {
+    it('getMatrixCooccurrenceCellsDatas should return valid datas [iris2d, R10]', () => {
       const fileDatas = require('../../assets/mocks/kv/iris2d.json');
       appService.setFileDatas(fileDatas);
       preparation2dDatasService.initialize();
@@ -68,7 +68,7 @@ describe('Visualization', () => {
       preparation2dDatasService.getMatrixDatas(selectedVariable!);
 
       const matrixCells =
-        preparation2dDatasService.getMatrixCoocurenceCellsDatas();
+        preparation2dDatasService.getMatrixCooccurrenceCellsDatas();
 
       expect(matrixCells?.values[0]!.frequency).toEqual(37);
       expect(matrixCells?.values[0]!.coverage).toEqual(0.37373737373737376);

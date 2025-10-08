@@ -310,7 +310,7 @@
     "CELLS": "Cells",
     "STANDARD": "Standard",
     "INVERT_AXIS": "Invert axis",
-    "COOCURENCE": "Co-occurrence",
+    "COOCCURRENCE": "Co-occurrence",
     "CELLS_OF": "Cells of",
     "FILTERED_BY_CONTEXT": "* Filtered by current context",
     "TARGET_DISTRIBUTION_OF_CELL": "Target distribution of cell",
@@ -499,7 +499,7 @@
         "CELLS": "Number of non-empty cells in the data grid resulting from the cross-product of the two univariate partitions",
         "DELTALEVEL": "Evaluation of the relative predictive contribution of the pair of variables. \n Contribution =[level-max(level1,level2))/[level-min(level1-level2)] \n The DeltaLevel is strictly positive if and only if the variable pair is informative, that is if it brings more information than both variables taken individually."
       },
-      "COOCURENCE_MATRIX": {
+      "COOCCURRENCE_MATRIX": {
         "TITLE": "2D chart of selected dimension according variables"
       },
       "REGRESSION_MATRIX": {

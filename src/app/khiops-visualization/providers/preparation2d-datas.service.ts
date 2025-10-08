@@ -16,9 +16,9 @@ import { MatrixUtilsService } from '@khiops-library/components/matrix/matrix.uti
 import { PreparationDatasService } from './preparation-datas.service';
 import { VariableDetailsModel } from '../model/variable-details.model';
 import { Variable2dModel } from '../model/variable-2d.model';
-import { CoocurenceCellModel } from '../model/coocurence-cell.model';
+import { CooccurrenceCellModel } from '../model/cooccurrence-cell.model';
 import { Preparation2dDatasModel } from '../model/preparation2d-datas.model';
-import { CoocurenceCellsModel } from '../model/coocurence-cells.model';
+import { CooccurrenceCellsModel } from '../model/cooccurrence-cells.model';
 import { InformationsModel } from '@khiops-visualization/model/informations.model';
 import { TYPES } from '@khiops-library/enum/types';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
@@ -323,19 +323,19 @@ export class Preparation2dDatasService {
 
   /**
    * Retrieves and formats co-occurrence cell data for display.
-   * @returns A CoocurenceCellsModel containing the formatted co-occurrence cell data, or undefined if no matrix data is available.
+   * @returns A CooccurrenceCellsModel containing the formatted co-occurrence cell data, or undefined if no matrix data is available.
    */
-  getMatrixCoocurenceCellsDatas(): CoocurenceCellsModel | undefined {
-    let matrixCells: CoocurenceCellsModel | undefined;
+  getMatrixCooccurrenceCellsDatas(): CooccurrenceCellsModel | undefined {
+    let matrixCells: CooccurrenceCellsModel | undefined;
 
     if (this.preparation2dDatas?.matrixDatas?.matrixCellDatas) {
       const selectedVariable = this.getSelectedVariable();
-      matrixCells = new CoocurenceCellsModel(
+      matrixCells = new CooccurrenceCellsModel(
         selectedVariable?.nameX || '',
         selectedVariable?.nameY || '',
       );
 
-      const values: CoocurenceCellModel[] = [];
+      const values: CooccurrenceCellModel[] = [];
 
       for (
         let i = 0;
@@ -345,20 +345,20 @@ export class Preparation2dDatasService {
         const cell: CellModel | undefined =
           this.preparation2dDatas.matrixDatas.matrixCellDatas[i];
         if (cell) {
-          const coocurenceCell = new CoocurenceCellModel(cell.index);
+          const cooccurrenceCell = new CooccurrenceCellModel(cell.index);
 
-          // coocurenceCell has dynamic fields
+          // cooccurrenceCell has dynamic fields
           if (matrixCells.displayedColumns[1]?.field) {
-            coocurenceCell[matrixCells.displayedColumns[1].field] =
+            cooccurrenceCell[matrixCells.displayedColumns[1].field] =
               UtilsService.ellipsis(cell.xDisplayaxisPart || '', 60);
           }
           if (matrixCells.displayedColumns[2]?.field) {
-            coocurenceCell[matrixCells.displayedColumns[2].field] =
+            cooccurrenceCell[matrixCells.displayedColumns[2].field] =
               UtilsService.ellipsis(cell.yDisplayaxisPart || '', 60);
           }
-          coocurenceCell.frequency = cell?.cellFreq;
-          coocurenceCell.coverage = cell?.coverage;
-          values.push(coocurenceCell);
+          cooccurrenceCell.frequency = cell?.cellFreq;
+          cooccurrenceCell.coverage = cell?.coverage;
+          values.push(cooccurrenceCell);
         }
       }
       matrixCells.values = values;

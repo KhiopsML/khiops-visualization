@@ -150,7 +150,7 @@
       [ngClass]="{
         disabled:
           !viewsLayout?.isDimensionsChecked &&
-          !viewsLayout?.isCoocurenceChecked,
+          !viewsLayout?.isCooccurrenceChecked,
       }"
     >
       <div
@@ -173,11 +173,11 @@
         fxLayoutAlign="center center"
         fxFlex="70"
         (click)="
-          viewsLayout!.isCoocurenceChecked = !viewsLayout?.isCoocurenceChecked
+          viewsLayout!.isCooccurrenceChecked = !viewsLayout?.isCooccurrenceChecked
         "
-        [ngClass]="{ disabled: !viewsLayout?.isCoocurenceChecked }"
+        [ngClass]="{ disabled: !viewsLayout?.isCooccurrenceChecked }"
       >
-        {{ 'GLOBAL.COOCURENCE' | translate }}
+        {{ 'GLOBAL.COOCCURRENCE' | translate }}
       </div>
     </div>
   </div>

@@ -47,7 +47,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   @Input() public graphMode: MatrixModeI | undefined;
   @Input() public contrast: number = 0;
   @Input() private inputDatas: any;
-  @Input() private minMaxValues: DynamicI | undefined; // dynamic and complex value object. Regression and Coocurence matrix purposes
+  @Input() private minMaxValues: DynamicI | undefined; // dynamic and complex value object. Regression and cooccurrence matrix purposes
   @Input() private graphType: string = '';
   @Input() private graphTargets: string[] = [];
   @Input() private graphTarget: string = '';
