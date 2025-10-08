@@ -128,6 +128,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
 
   onShowLevelDistributionGraph(datas: VariableModel[]) {
     const config = new MatDialogConfig();
+    config.maxWidth = 'unset';
     config.width = AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.WIDTH;
     config.height =
       AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.HEIGHT;
@@ -158,6 +159,8 @@ export class PreparationViewComponent extends SelectableTabComponent {
    * @returns true if variables data has level property
    */
   hasLevelData(): boolean {
-    return this.levelDistributionService.hasLevelData(this.variablesDatas || []);
+    return this.levelDistributionService.hasLevelData(
+      this.variablesDatas || [],
+    );
   }
 }

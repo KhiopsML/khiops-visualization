@@ -165,12 +165,15 @@ export class ModelingViewComponent extends SelectableTabComponent {
   onShowLevelDistributionFromButton() {
     if (this.modelingDatas?.trainedPredictorsListDatas) {
       // Cast to VariableModel[] as the level distribution expects this type
-      this.onShowLevelDistributionGraph(this.modelingDatas.trainedPredictorsListDatas as any);
+      this.onShowLevelDistributionGraph(
+        this.modelingDatas.trainedPredictorsListDatas as any,
+      );
     }
   }
 
   onShowLevelDistributionGraph(datas: VariableModel[]) {
     const config = new MatDialogConfig();
+    config.maxWidth = 'unset';
     config.width = AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.WIDTH;
     config.height =
       AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.HEIGHT;
@@ -184,6 +187,8 @@ export class ModelingViewComponent extends SelectableTabComponent {
    * @returns true if trained predictors data has level property
    */
   hasLevelData(): boolean {
-    return this.levelDistributionService.hasLevelData(this.modelingDatas?.trainedPredictorsListDatas || []);
+    return this.levelDistributionService.hasLevelData(
+      this.modelingDatas?.trainedPredictorsListDatas || [],
+    );
   }
 }

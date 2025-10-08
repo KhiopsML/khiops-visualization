@@ -28,6 +28,7 @@ export class HeaderManageViewComponent {
     const config = new MatDialogConfig();
     config.width = AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.WIDTH;
     config.height = AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.HEIGHT;
+    config.maxWidth = 'unset';
     config.panelClass = 'unfold-hierarchy-dialog-container';
     this.dialog.open(UnfoldHierarchyComponent, config);
   }
