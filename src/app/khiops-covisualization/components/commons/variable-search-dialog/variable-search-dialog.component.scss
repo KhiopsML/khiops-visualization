@@ -4,6 +4,9 @@
   min-height: 400px;
   max-height: 80vh;
 }
+#variable-search-dialog-comp.selected::before {
+  border: none !important;
+}
 
 #variable-search-dialog-header {
   padding: 20px;
