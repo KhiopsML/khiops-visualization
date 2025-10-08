@@ -8,7 +8,8 @@
 
 **Intuitive visualization of [Khiops][khiops] analysis results**
 
-![khiops-demo][demoGif]
+<img width="821" height="608" alt="demo-khiops" src="https://github.com/user-attachments/assets/df2b03a0-1e12-4dec-8f43-f6ba1ec744c3" />
+
 
 **🌐 [Khiops Visualization Live Demo](https://khiopsml.github.io/khiops-visualization/)**
 
@@ -156,7 +157,6 @@ This software is distributed under the BSD 3-Clause-clear License, the text of w
 <https://spdx.org/licenses/BSD-3-Clause-Clear.html> or see the [LICENSE](./LICENSE) for more
 details.
 
-[demoGif]: https://github.com/KhiopsML/khiops-visualization/assets/13203455/53a90746-64da-4d44-adaf-f18c6f854622
 [khiops]: https://khiops.org/
 [kv]: https://github.com/KhiopsML/kv-electron
 [kc]: https://github.com/KhiopsML/kc-electron
