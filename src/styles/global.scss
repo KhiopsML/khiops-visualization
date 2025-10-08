@@ -368,6 +368,10 @@ canvas:focus {
   padding: 10px !important;
 }
 
+.fullscreen.selected::before {
+  border: none !important;
+}
+
 @keyframes expandToFullscreen {
   0% {
     opacity: 0;
