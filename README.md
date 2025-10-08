@@ -8,7 +8,7 @@
 
 **Intuitive visualization of [Khiops][khiops] analysis results**
 
-<img width="821" height="608" alt="demo-khiops" src="https://github.com/user-attachments/assets/df2b03a0-1e12-4dec-8f43-f6ba1ec744c3" />
+<img width="791" height="546" alt="demo-khiops" src="https://github.com/user-attachments/assets/194483be-215e-49dd-b4f0-84e81fdbf415" />
 
 
 **🌐 [Khiops Visualization Live Demo](https://khiopsml.github.io/khiops-visualization/)**
