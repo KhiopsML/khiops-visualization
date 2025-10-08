@@ -1,4 +1,8 @@
-<mat-checkbox
-  [(ngModel)]="params!.value"
-  (change)="this.refresh(this.params)"
-></mat-checkbox>
+<label class="custom-checkbox">
+  <input
+    type="checkbox"
+    [checked]="params!.value"
+    (change)="params!.value = $event.target.checked; refresh(params)"
+  />
+  <span class="checkmark"></span>
+</label>
