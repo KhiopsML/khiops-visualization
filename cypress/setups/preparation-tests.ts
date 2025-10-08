@@ -56,7 +56,15 @@ export function setupPreparationTests(datas, testsValues) {
     if (datas.preparationReport?.summary?.targetValues) {
       testsValues.Preparation.push('Global target distribution');
     }
-    testsValues.Preparation.push('Frequency');
+    if (
+      datas.preparationReport?.variablesStatistics &&
+      datas.preparationReport?.variablesStatistics[0]?.type === 'Numerical' &&
+      datas.preparationReport?.summary?.learningTask === 'Unsupervised analysis'
+    ) {
+      testsValues.Preparation.push('Density');
+    } else {
+      testsValues.Preparation.push('Frequency');
+    }
   }
 
   if (
