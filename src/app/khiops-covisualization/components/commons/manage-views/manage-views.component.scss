@@ -1,5 +1,4 @@
 #manage-views-comp {
-  background-color: var(--bg-color) !important;
   padding: 0 10px 10px 10px;
 
   #manage-views-header {
@@ -19,6 +18,7 @@
     max-height: 70vh;
 
     .views-container {
+      background-color: white;
       border: 1px solid var(--primary);
       border-radius: var(--border-radius);
       box-shadow: 0 2px 6px 0px rgba(0, 0, 0, 0.1);
@@ -26,6 +26,11 @@
       margin-top: 20px;
       display: flex;
       overflow: auto;
+
+      ::ng-deep mat-checkbox .mdc-form-field label {
+        min-width: 75% !important;
+        word-break: break-word !important;
+      }
 
       .parent-box {
         height: 150px;
