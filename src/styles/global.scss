@@ -364,7 +364,7 @@ canvas:focus {
   box-shadow: 0 1px 5px 0px rgba(0, 0, 0, 0.2);
   animation: expandToFullscreen 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
   border-radius: var(--border-radius);
-  padding: 10px !important;
+  padding: 20px !important;
 }
 
 .fullscreen.selected::before {
