@@ -45,12 +45,12 @@
   </mat-dialog-content>
 
   <mat-dialog-actions align="end">
-    <button mat-button (click)="onCancel()">
+    <button mat-stroked-button (click)="onCancel()">
       {{ 'GLOBAL.CANCEL' | translate }}
     </button>
     <button
       id="change-scale-dialog-apply-btn"
-      mat-button
+      mat-flat-button
       (click)="onApply()"
       cdkFocusInitial
     >
