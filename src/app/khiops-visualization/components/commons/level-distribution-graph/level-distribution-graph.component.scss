@@ -1,14 +1,17 @@
 #level-distribution-graph-comp {
-  background-color: var(--bg-color) !important; // for copy image
-
   kl-chart {
     padding-top: 30px;
     height: 90% !important;
+    margin-bottom: 15px;
   }
 
-  .comp-header-tools {
-    h2 {
-      margin: 0.8em 1em 0em 2em;
+  .comp-header {
+    padding: 20px 10px;
+    background-color: unset !important;
+    .comp-header-tools {
+      h2 {
+        margin: 0.8em 1em 0em 2em;
+      }
     }
   }
 }
@@ -17,4 +20,8 @@
   > div {
     box-shadow: none !important;
   }
+}
+
+#level-distribution-graph-comp.selected::before {
+  border: none !important;
 }
