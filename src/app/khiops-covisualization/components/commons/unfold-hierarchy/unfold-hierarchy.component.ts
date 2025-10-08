@@ -318,27 +318,26 @@ export class UnfoldHierarchyComponent implements OnInit {
     this.currentCellsPerCluster =
       this.clustersService.getCurrentCellsPerCluster();
 
-    // Only update dimensions if they don't exist yet or if the structure has changed
-    const newDimensions =
-      this.dimensionsDatasService.dimensionsDatas?.dimensions;
+    // Preserve checkbox states from current dimensions before updating
+    const currentCheckboxStates: { [name: string]: boolean } = {};
+    if (this.dimensions) {
+      for (const dim of this.dimensions) {
+        currentCheckboxStates[dim.name] = dim.hierarchyFold;
+      }
+    }
 
-    if (!this.dimensions || this.dimensions.length !== newDimensions?.length) {
-      // First time or structure changed - clone new dimensions
-      this.dimensions = _.cloneDeep(newDimensions);
-    } else {
-      // Update only the values that might have changed (like currentHierarchyClusterCount)
-      // while preserving existing objects to avoid unnecessary re-renders
-      if (this.dimensions && newDimensions) {
-        for (let i = 0; i < this.dimensions.length; i++) {
-          const currentDim = this.dimensions[i];
-          const newDim = newDimensions[i];
+    // Dimension changed, clone to update array
+    this.dimensions = _.cloneDeep(
+      this.dimensionsDatasService.dimensionsDatas?.dimensions,
+    );
 
-          // Update properties that change with hierarchy level
-          if (currentDim && newDim) {
-            currentDim.currentHierarchyClusterCount =
-              newDim.currentHierarchyClusterCount;
-            currentDim.initialParts = newDim.initialParts;
-            // Keep the existing hierarchyFold value to preserve checkbox state
+    // Restore checkbox states after cloning
+    if (this.dimensions) {
+      for (const dim of this.dimensions) {
+        if (currentCheckboxStates.hasOwnProperty(dim.name)) {
+          const checkboxState = currentCheckboxStates[dim.name];
+          if (checkboxState !== undefined) {
+            dim.setHierarchyFold(checkboxState);
           }
         }
       }
