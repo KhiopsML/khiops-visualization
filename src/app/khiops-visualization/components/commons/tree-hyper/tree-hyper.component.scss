@@ -18,6 +18,7 @@
         margin-right: 0.3rem;
       }
       .graph-header-tools {
+        flex-wrap: wrap;
         mat-checkbox {
           margin: 0rem 0 0rem 1rem;
         }
@@ -30,6 +31,10 @@
           padding: 0 10px 0 0 !important;
         }
       }
+    }
+
+    .graph-header-tools {
+      margin-top: 10px;
     }
   }
 
