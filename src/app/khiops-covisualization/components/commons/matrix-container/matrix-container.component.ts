@@ -214,11 +214,12 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
           title: 'P (' + varName1 + ' | ' + varName2 + ')',
           tooltip: this.translate.get('TOOLTIPS.MATRIX.P'),
         },
-        {
-          mode: MATRIX_MODES.HELLINGER,
-          title: 'H (' + varName1 + ' , ' + varName2 + ')',
-          tooltip: this.translate.get('TOOLTIPS.MATRIX.H'),
-        },
+        // Remove Hellinger distance criteria #243
+        // {
+        //   mode: MATRIX_MODES.HELLINGER,
+        //   title: 'H (' + varName1 + ' , ' + varName2 + ')',
+        //   tooltip: this.translate.get('TOOLTIPS.MATRIX.H'),
+        // },
       ];
       this.matrixModes = { ...this.matrixModes };
 
