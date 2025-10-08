@@ -4,6 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
+import { UtilsService } from '@khiops-library/providers/utils.service';
 import { ChartOptions } from 'chart.js';
 import type { TooltipItem, ChartEvent, ActiveElement } from 'chart.js';
 
@@ -32,16 +33,22 @@ export function createDefaultChartOptions(
       },
       // https://www.chartjs.org/docs/latest/configuration/tooltip.html
       tooltip: {
-        boxPadding: 10,
+        boxPadding: UtilsService.isSmallScreen() ? 0 : 10,
         titleFont: {
           family: 'Poppins, Verdana, Arial, sans-serif',
-          size: 12.5,
+          size: UtilsService.isSmallScreen() ? 11 : 12.5,
           weight: 'bold',
           lineHeight: 1.2,
         },
         bodyFont: {
           family: 'Poppins, Verdana, Arial, sans-serif',
-          size: 12.5,
+          size: UtilsService.isSmallScreen() ? 11 : 12.5,
+          weight: 'normal',
+          lineHeight: 1.2,
+        },
+        footerFont: {
+          family: 'Poppins, Verdana, Arial, sans-serif',
+          size: UtilsService.isSmallScreen() ? 11 : 12.5,
           weight: 'normal',
           lineHeight: 1.2,
         },

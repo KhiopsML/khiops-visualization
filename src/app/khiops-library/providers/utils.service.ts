@@ -1730,4 +1730,12 @@ export class UtilsService {
     }
     return val;
   }
+
+  /**
+   * Checks if the current screen size is considered small.
+   * @returns True if the screen width is less than or equal to 1440px or the height is less than or equal to 1080px, false otherwise.
+   */
+  static isSmallScreen() {
+    return window.innerWidth <= 1440 || window.innerHeight <= 1080;
+  }
 }

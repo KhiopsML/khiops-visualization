@@ -25,6 +25,7 @@ import {
   INFO_DATA_TYPES,
   DISPLAY_TYPE,
 } from '@khiops-library/enum/info-data-types';
+import { UtilsService } from '@khiops-library/providers/utils.service';
 
 @Component({
   selector: 'kl-informations-block',
@@ -83,9 +84,7 @@ export class InformationsBlockComponent
    */
   private updateGaugeSize() {
     if (typeof window !== 'undefined') {
-      const isSmallScreen =
-        window.innerWidth <= 1440 || window.innerHeight <= 1080;
-      const newSize = isSmallScreen ? 60 : 70;
+      const newSize = UtilsService.isSmallScreen() ? 60 : 70;
       if (this.gaugeSize !== newSize) {
         this.gaugeSize = newSize;
         this.cdr.detectChanges(); // Trigger change detection
