@@ -25,6 +25,7 @@
       <div
         *ngIf="importedDatas && importedDatas.values"
         id="import-ext-datas-list-table"
+        class="kl-card"
         fxFlexFill
         fxLayout="column"
         fxLayoutAlign="start center"
@@ -36,6 +37,7 @@
           fxFlexFill
           [showSearch]="false"
           [showLineSelection]="false"
+          [suppressRowClickSelection]="true"
           [showColumnsSelection]="false"
           [inputDatas]="importedDatas.values"
           [title]="''"

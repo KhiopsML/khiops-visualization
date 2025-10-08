@@ -8,15 +8,14 @@
       {{ 'GLOBAL.IMPORT_NEW_EXTERNAL_DATA' | translate | uppercase }}
     </h2>
   </div>
-  <div id="import-ext-datas-content" fxLayout="column">
+  <div id="import-ext-datas-content" fxLayout="column" class="kl-card">
     <div *ngIf="importExtDatas && importExtDatas.datas" fxLayout="column">
       <div
         class="import-ext-datas-row"
         fxLayout="row"
         fxLayoutAlign="start center"
       >
-        <span>{{ translate.get('GLOBAL.EXTERNAL_DATA_FILE') }}</span>
-        <span>{{ importExtDatas.filename }}</span>
+        <h1>{{ translate.get('GLOBAL.EXTERNAL_DATA_FILE') }}</h1>
       </div>
 
       <div

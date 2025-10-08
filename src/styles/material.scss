@@ -323,11 +323,6 @@ mat-tab-body {
   padding: 0 0.6rem !important;
 }
 
-.mat-mdc-dialog-surface {
-  background: var(--bg-color) !important;
-  border-radius: 4px !important;
-}
-
 .cdk-overlay-pane.mat-mdc-dialog-panel {
   max-width: unset !important;
 }
@@ -395,6 +390,8 @@ button {
 mat-dialog-container {
   .mat-mdc-dialog-surface {
     border: 1px solid #000000 !important;
+    border-radius: var(--border-radius) !important;
+    background-color: var(--bg-color-20) !important;
     border-radius: var(--border-radius) !important;
   }
 }
