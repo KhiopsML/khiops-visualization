@@ -12,6 +12,7 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { TranslateModule, TranslateService } from '@ngstack/translate';
 import { DynamicI } from '@khiops-library/interfaces/globals';
+import { AppConfig } from '../../environments/environment';
 
 describe('CopyDatasService', () => {
   let service: CopyDatasService;
@@ -30,6 +31,9 @@ describe('CopyDatasService', () => {
 
     // Mock translate service to return the key as-is for testing
     spyOn(translateService, 'get').and.returnValue('MOCKED_TRANSLATION');
+
+    // Set precision to 8 for all tests to maintain compatibility with existing expectations
+    (AppConfig.common as any) = { GLOBAL: { TO_FIXED: 8 } };
   });
 
   /**
@@ -941,7 +945,7 @@ describe('CopyDatasService - Real Data Tests', () => {
       expect(result).toContain('Dictionary\tAdult');
       expect(result).toContain('Database\t/data/adult.txt');
       expect(result).toContain('Target Variable\tincome');
-      expect(result).toContain('Instances\t32561');
+      expect(result).toContain('Instances\t32 561');
       expect(result).toContain('Learning Task\tClassification analysis');
       expect(result).toContain('Sample Percentage\t70');
       expect(result).toContain('Sampling Mode\tInclude sample');
@@ -1025,13 +1029,13 @@ describe('CopyDatasService - Real Data Tests', () => {
       expect(result).not.toContain('Construction Cost'); // Hidden column
       expect(result).toContain('"age"\tNumerical\t0.995\t7\t73\t23\t523');
       expect(result).toContain(
-        '"workclass"\tCategorical\t0.889\t8\t9\tPrivate\t22696',
+        '"workclass"\tCategorical\t0.889\t8\t9\tPrivate\t22 696',
       );
       expect(result).toContain(
-        '"education"\tCategorical\t0.923\t15\t16\tHS-grad\t10501',
+        '"education"\tCategorical\t0.923\t15\t16\tHS-grad\t10 501',
       );
       expect(result).toContain(
-        '"marital-status"\tCategorical\t0.945\t6\t7\tMarried-civ-spouse\t14976',
+        '"marital-status"\tCategorical\t0.945\t6\t7\tMarried-civ-spouse\t14 976',
       );
     });
   });
@@ -1181,7 +1185,7 @@ describe('CopyDatasService - Real Data Tests', () => {
 
       expect(result).toContain('Global target distribution');
       expect(result).toContain('Frequency\t<=50K\t>50K');
-      expect(result).toContain('Income Distribution\t24720\t7841');
+      expect(result).toContain('Income Distribution\t24 720\t7 841');
     });
   });
 
@@ -1268,13 +1272,137 @@ Doctorate: Doctorate degree
       expect(result).toContain('Clusters: 4');
       expect(result).toContain('Cluster: Higher Education');
       expect(result).toContain('Cluster Length: 12');
-      expect(result).toContain('Frequency: 8934');
+      expect(result).toContain('Frequency: 8 934');
       expect(result).toContain(
         'Name\tParent Cluster\tFrequency\tInterest\tHierarchical Level\tRank\tHierarchical Rank',
       );
-      expect(result).toContain('C11\tC1\t5642\t0.234\t2\t1\t1');
-      expect(result).toContain('C12\tC1\t3421\t0.189\t2\t2\t2');
-      expect(result).toContain('C21\tC2\t8934\t0.445\t2\t3\t3');
+      expect(result).toContain('C11\tC1\t5 642\t0.234\t2\t1\t1');
+      expect(result).toContain('C12\tC1\t3 421\t0.189\t2\t2\t2');
+      expect(result).toContain('C21\tC2\t8 934\t0.445\t2\t3\t3');
+    });
+  });
+
+  /**
+   * Test formatNumberWithPrecision method
+   */
+  describe('formatNumberWithPrecision', () => {
+    beforeEach(() => {
+      // Reset AppConfig.common before each test in this specific describe block
+      (AppConfig.common as any) = {};
+    });
+
+    afterEach(() => {
+      // Restore precision to 8 for other tests
+      (AppConfig.common as any) = { GLOBAL: { TO_FIXED: 8 } };
+    });
+
+    it('should format number with precision 2', () => {
+      (AppConfig.common as any) = { GLOBAL: { TO_FIXED: 2 } };
+
+      const result = service['formatNumberWithPrecision'](123.456789);
+      expect(result).toEqual('123');
+    });
+
+    it('should format number with precision 3', () => {
+      (AppConfig.common as any) = { GLOBAL: { TO_FIXED: 3 } };
+
+      const result = service['formatNumberWithPrecision'](123.456789);
+      expect(result).toEqual('123');
+    });
+
+    it('should format decimal numbers with precision 4', () => {
+      (AppConfig.common as any) = { GLOBAL: { TO_FIXED: 4 } };
+
+      const result = service['formatNumberWithPrecision'](0.123456);
+      expect(result).toEqual('0.1235');
+    });
+
+    it('should return original value as string when not a number', () => {
+      (AppConfig.common as any) = { GLOBAL: { TO_FIXED: 2 } };
+
+      const result = service['formatNumberWithPrecision']('not a number');
+      expect(result).toEqual('not a number');
+    });
+
+    it('should return empty string when value is undefined', () => {
+      const result = service['formatNumberWithPrecision'](undefined);
+      expect(result).toEqual('');
+    });
+
+    it('should return original number as string when no precision is set', () => {
+      const result = service['formatNumberWithPrecision'](123.456);
+      expect(result).toEqual('123.456');
+    });
+
+    it('should return original number as string when precision is 0', () => {
+      (AppConfig.common as any) = { GLOBAL: { TO_FIXED: 0 } };
+
+      const result = service['formatNumberWithPrecision'](123.456);
+      expect(result).toEqual('123.456');
+    });
+
+    it('should handle negative numbers with precision', () => {
+      (AppConfig.common as any) = { GLOBAL: { TO_FIXED: 3 } };
+
+      const result = service['formatNumberWithPrecision'](-123.456789);
+      expect(result).toEqual('-123');
+    });
+  });
+
+  /**
+   * Test precision formatting integration with data methods
+   */
+  describe('Data methods with precision formatting', () => {
+    beforeEach(() => {
+      (AppConfig.common as any) = { GLOBAL: { TO_FIXED: 2 } };
+    });
+
+    afterEach(() => {
+      // Restore precision to 8 for other tests
+      (AppConfig.common as any) = { GLOBAL: { TO_FIXED: 8 } };
+    });
+
+    it('should format histogram data with precision', () => {
+      const selectedArea: DynamicI = {
+        componentType: 'histogram',
+        datas: [
+          {
+            partition: [0, 10],
+            frequency: 123.456,
+            probability: 0.789123,
+            density: 12.345678,
+            logValue: -1.234567,
+          },
+        ],
+      };
+
+      const result = service.getKvHistogramDatas(selectedArea);
+
+      // Check that numbers are formatted with precision 2
+      expect(result).toContain('123');
+      expect(result).toContain('0.79');
+      expect(result).toContain('12');
+      expect(result).toContain('-1.2');
+    });
+
+    it('should format 1D bar chart data with precision', () => {
+      const selectedArea: DynamicI = {
+        title: 'Test Chart',
+        inputDatas: {
+          labels: ['Label1', 'Label2'],
+          datasets: [
+            {
+              data: [123.456789, 987.654321],
+            },
+          ],
+        },
+      };
+
+      const result = service.get1dBarChartDatas(selectedArea);
+
+      // Check that numbers are formatted with precision 2
+      expect(result).toContain('123');
+      expect(result).toContain('987');
     });
   });
 });

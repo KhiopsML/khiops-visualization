@@ -137,7 +137,7 @@ describe('Visualization', () => {
       const intervalDatas =
         copyDatasService.getNdBarChartDatas(currentSelectedArea);
       const expectedRes =
-        'Global target distribution\nless\tmore\t\n0.7616316497922397\t0.2383683502077603\t\n';
+        'Global target distribution\nless\tmore\t\n0.76163165\t0.23836835\t\n';
       expect(JSON.stringify(intervalDatas)).toEqual(
         JSON.stringify(expectedRes),
       );

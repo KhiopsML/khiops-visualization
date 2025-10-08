@@ -10,6 +10,7 @@ import { TranslateService } from '@ngstack/translate';
 import { UtilsService } from './utils.service';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { TreeChildNode } from '@khiops-visualization/interfaces/tree-preparation-report';
+import { AppConfig } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +20,26 @@ export class CopyDatasService {
     private translate: TranslateService,
     private configService: ConfigService,
   ) {}
+
+  /**
+   * Formats a numeric value with the current precision setting.
+   *
+   * @param value - The numeric value to format.
+   * @returns The formatted value as a string with the appropriate precision.
+   */
+  private formatNumberWithPrecision(value: any): string {
+    if (typeof value !== 'number' || !isFinite(value)) {
+      return value?.toString() || '';
+    }
+
+    const precision = (AppConfig.common as any)?.GLOBAL?.TO_FIXED;
+    if (precision !== undefined && precision > 0) {
+      const result = UtilsService.getPrecisionNumber(value, precision);
+      return typeof result === 'string' ? result : result.toString();
+    }
+
+    return value.toString();
+  }
 
   /**
    * Copies the data from the selected area to the clipboard.
@@ -118,12 +139,17 @@ export class CopyDatasService {
         // First interval is closed on the left
         partitionStr = `[${partition[0]},${partition[1]}]`;
       }
-      
+
       formattedDatas += partitionStr + '\t';
-      formattedDatas += selectedArea.datas[i].frequency + '\t';
-      formattedDatas += selectedArea.datas[i].probability + '\t';
-      formattedDatas += selectedArea.datas[i].density + '\t';
-      formattedDatas += selectedArea.datas[i].logValue + '\t';
+      formattedDatas +=
+        this.formatNumberWithPrecision(selectedArea.datas[i].frequency) + '\t';
+      formattedDatas +=
+        this.formatNumberWithPrecision(selectedArea.datas[i].probability) +
+        '\t';
+      formattedDatas +=
+        this.formatNumberWithPrecision(selectedArea.datas[i].density) + '\t';
+      formattedDatas +=
+        this.formatNumberWithPrecision(selectedArea.datas[i].logValue) + '\t';
       formattedDatas += '\n';
     }
 
@@ -166,7 +192,7 @@ export class CopyDatasService {
             '\t';
         }
         // Add displayed value
-        formattedDatas += input[i].value + '\t';
+        formattedDatas += this.formatNumberWithPrecision(input[i].value) + '\t';
       }
     }
 
@@ -190,7 +216,10 @@ export class CopyDatasService {
     // CONTENT
     for (let i = 0; i < selectedArea.inputDatas.labels.length; i++) {
       formattedDatas += selectedArea.inputDatas.labels[i] + '\t';
-      formattedDatas += selectedArea.inputDatas.datasets[0].data[i] + '\t';
+      formattedDatas +=
+        this.formatNumberWithPrecision(
+          selectedArea.inputDatas.datasets[0].data[i],
+        ) + '\t';
       formattedDatas += '\n';
     }
 
@@ -221,7 +250,9 @@ export class CopyDatasService {
       ) {
         if (selectedArea.targetLiftAllGraph[i].series[j]) {
           formattedDatas +=
-            selectedArea.targetLiftAllGraph[i].series[j].value + '\t';
+            this.formatNumberWithPrecision(
+              selectedArea.targetLiftAllGraph[i].series[j].value,
+            ) + '\t';
         } else {
           formattedDatas += '\t';
         }
@@ -264,7 +295,10 @@ export class CopyDatasService {
       }
       for (let j = 0; j < selectedArea.inputDatas.datasets.length; j++) {
         if (selectedArea.inputDatas.datasets[j].data[i]) {
-          formattedDatas += selectedArea.inputDatas.datasets[j].data[i] + '\t';
+          formattedDatas +=
+            this.formatNumberWithPrecision(
+              selectedArea.inputDatas.datasets[j].data[i],
+            ) + '\t';
         } else {
           formattedDatas += '\t';
         }
@@ -293,7 +327,8 @@ export class CopyDatasService {
     for (let i = 0; i < selectedArea.inputDatas.length; i++) {
       formattedDatas +=
         this.translate.get(selectedArea.inputDatas[i].title) + '\t';
-      formattedDatas += selectedArea.inputDatas[i].value + '\t';
+      formattedDatas +=
+        this.formatNumberWithPrecision(selectedArea.inputDatas[i].value) + '\t';
       formattedDatas += '\n';
     }
 
@@ -427,7 +462,9 @@ export class CopyDatasService {
       formattedDatas +=
         this.translate.get('GLOBAL.FREQUENCY') +
         ': ' +
-        selectedArea.selectedTreeCluster.frequency +
+        this.formatNumberWithPrecision(
+          selectedArea.selectedTreeCluster.frequency,
+        ) +
         '\n\n';
     }
 
@@ -445,8 +482,10 @@ export class CopyDatasService {
       const treeData = flattenDatas[i];
       formattedDatas += treeData.name + '\t';
       formattedDatas += treeData.parentCluster + '\t';
-      formattedDatas += treeData.frequency + '\t';
-      formattedDatas += treeData.interest + '\t';
+      formattedDatas +=
+        this.formatNumberWithPrecision(treeData.frequency) + '\t';
+      formattedDatas +=
+        this.formatNumberWithPrecision(treeData.interest) + '\t';
       formattedDatas += treeData.hierarchicalLevel + '\t';
       formattedDatas += treeData.rank + '\t';
       formattedDatas += treeData.hierarchicalRank + '\n';
@@ -488,7 +527,8 @@ export class CopyDatasService {
               // #85 TSV format
               formattedDatas += '"' + datas[i][field] + '"' + '\t';
             } else {
-              formattedDatas += datas[i][field] + '\t';
+              const value = datas[i][field];
+              formattedDatas += this.formatNumberWithPrecision(value) + '\t';
             }
           } else {
             formattedDatas += '\t';
