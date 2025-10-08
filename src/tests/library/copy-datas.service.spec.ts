@@ -756,6 +756,9 @@ describe('CopyDatasService - Real Data Tests', () => {
     spyOn(configService, 'getConfig').and.returnValue({
       onCopyData: undefined,
     });
+
+    // Set precision to 8 for all tests to maintain compatibility with existing expectations
+    (AppConfig.common as any) = { GLOBAL: { TO_FIXED: 8 } };
   });
 
   /**

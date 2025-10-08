@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import * as _ from 'lodash'; // Important to import lodash in karma
 import { CopyDatasService } from '@khiops-library/providers/copy-datas.service';
 import { TranslateModule } from '@ngstack/translate';
+import { AppConfig } from '../../environments/environment';
 
 let preparationDatasService: PreparationDatasService;
 let copyDatasService: CopyDatasService;
@@ -27,6 +28,9 @@ describe('Visualization', () => {
       preparationDatasService = TestBed.inject(PreparationDatasService);
       copyDatasService = TestBed.inject(CopyDatasService);
       preparationDatasService.initialize();
+
+      // Set precision to 8 for all tests to maintain compatibility with existing expectations
+      (AppConfig.common as any) = { GLOBAL: { TO_FIXED: 8 } };
     });
 
     it('copyDatasToClipboard should return valid datas [Natives-Arbres_Paires_AllReports, getInformationsDatas]', () => {
