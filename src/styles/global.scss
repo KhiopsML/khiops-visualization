@@ -169,7 +169,6 @@ h2 {
 .selected {
   position: relative;
   .mat-mdc-tab-group {
-    box-shadow: inset 0px 0px 0px 1px var(--selected);
     padding: 1px;
 
     ::ng-deep .ag-grid-comp {
