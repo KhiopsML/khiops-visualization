@@ -4,13 +4,7 @@
     <button mat-stroked-button (click)="onClickOnCancel()">
       {{ 'GLOBAL.CANCEL' | translate }}
     </button>
-    <button
-      mat-flat-button
-      matRipple
-      [matRippleColor]="'rgba(122 122 122 / 0.4)'"
-      (click)="onClickOnSave()"
-      color="primary"
-    >
+    <button mat-flat-button (click)="onClickOnSave()" color="primary">
       {{ 'GLOBAL.SAVE' | translate }}
     </button>
   </div>
@@ -173,7 +167,8 @@
         fxLayoutAlign="center center"
         fxFlex="70"
         (click)="
-          viewsLayout!.isCooccurrenceChecked = !viewsLayout?.isCooccurrenceChecked
+          viewsLayout!.isCooccurrenceChecked =
+            !viewsLayout?.isCooccurrenceChecked
         "
         [ngClass]="{ disabled: !viewsLayout?.isCooccurrenceChecked }"
       >

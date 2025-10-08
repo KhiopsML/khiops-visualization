@@ -1,20 +1,10 @@
 <div id="user-settings-comp" fxFlexFill fxLayout="column">
-  <div
-    fxLayout="row"
-    id="user-settings-header"
-    fxLayoutAlign="center center"
-  >
-    <button
-      mat-flat-button
-      matRipple
-      [matRippleColor]="'rgba(122 122 122 / 0.4)'"
-      color="secondary"
-      (click)="onClickOnCancel()"
-    >
+  <div fxLayout="row" id="user-settings-header" fxLayoutAlign="center center">
+    <button mat-stroked-button color="secondary" (click)="onClickOnCancel()">
       {{ 'GLOBAL.CANCEL' | translate }}
     </button>
     <h2 fxFlex>{{ 'GLOBAL.SETTINGS' | translate }}</h2>
-    <button mat-stroked-button (click)="onClickOnSave()" color="primary">
+    <button mat-flat-button (click)="onClickOnSave()" color="primary">
       {{ 'GLOBAL.SAVE' | translate }}
     </button>
   </div>

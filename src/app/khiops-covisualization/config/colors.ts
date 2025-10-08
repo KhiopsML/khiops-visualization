@@ -4,4 +4,4 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-export const MAT_RIPPLE_COLOR = 'rgba(80, 124, 182, .4)';
+export const MAT_RIPPLE_COLOR = 'rgba(122 122 122 / 0.4)';
