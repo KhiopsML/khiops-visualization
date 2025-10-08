@@ -460,7 +460,7 @@ export class Hypertree {
 
   protected btnPathId = (pathType: string, n: N) =>
     `btn-path-${pathType}` +
-    (pathType === 'SelectionPath' ? `-${n.mergeId}` : '');
+    (pathType === 'SelectionPath' ? `-${n?.mergeId}` : '');
   protected addIfNotInSafe<ArrET>(
     arr: ArrET[],
     newE: ArrET,
@@ -473,8 +473,6 @@ export class Hypertree {
 
   protected toggleSelection(n: N) {
     if (this.args.objects.selections.includes(n)) {
-      //const nidx = this.args.objects.selections.indexOf(n)
-      //delete this.args.objects.selections[nidx]
       this.args.objects.selections = this.args.objects.selections.filter(
         (e) => e !== n,
       );
@@ -485,8 +483,6 @@ export class Hypertree {
     }
   }
 
-  // es kann nur einen pro id geben, gibt es bereits einen wird dieser entfernt
-  // (praktisch für hover)
   protected setPathHead(path: Path, n: N) {
     const pt = path ? path.type : 'HoverPath';
 
@@ -595,7 +591,6 @@ export class Hypertree {
       reject: err,
       frame: (progress01) => {
         const waydone01 = 1 - sigmoid(progress01);
-        // console.assert(waydone01 >= 0 && waydone01 <= 1)
         const waydone = way * waydone01;
         const λ = newλ + waydone;
         this.args.geometry.transformation.state.λ = λ;
