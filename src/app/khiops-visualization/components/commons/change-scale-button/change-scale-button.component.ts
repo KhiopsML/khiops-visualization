@@ -12,10 +12,10 @@ import {
   ScaleSettings,
 } from '../change-scale-dialog/change-scale-dialog.component';
 import { LS } from '@khiops-library/enum/ls';
-import { HistogramType } from '../histogram/histogram.type';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
 import { ScaleChangeEventsService } from '@khiops-visualization/providers/scale-change-events.service';
+import { Axis } from '@khiops-library/enum/axis';
 
 @Component({
   selector: 'app-change-scale-button',
@@ -46,15 +46,11 @@ export class ChangeScaleButtonComponent {
   }
 
   private applyScaleSettings(scaleSettings: ScaleSettings) {
-    // Map the scale settings to HistogramType values
+    // Map the scale settings to Axis values
     const xScaleType =
-      scaleSettings.xScale === 'linear'
-        ? HistogramType.XLIN
-        : HistogramType.XLOG;
+      scaleSettings.xScale === 'linear' ? Axis.XLIN : Axis.XLOG;
     const yScaleType =
-      scaleSettings.yScale === 'linear'
-        ? HistogramType.YLIN
-        : HistogramType.YLOG;
+      scaleSettings.yScale === 'linear' ? Axis.YLIN : Axis.YLOG;
 
     // Update global scale settings in Local Storage
     AppService.Ls.set(LS.DISTRIBUTION_GRAPH_OPTION_X, xScaleType);

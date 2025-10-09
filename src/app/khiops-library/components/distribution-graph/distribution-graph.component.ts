@@ -24,7 +24,7 @@ import { ChartColorsSetI } from '../../interfaces/chart-colors-set';
 import { ChartOptions, TooltipItem } from 'chart.js';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { TYPES } from '@khiops-library/enum/types';
-import { HistogramType } from '../../../khiops-visualization/components/commons/histogram/histogram.type';
+import { Axis } from '../../enum/axis';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options';
 import { UtilsService } from '@khiops-library/providers/utils.service';
@@ -78,9 +78,9 @@ export class DistributionGraphComponent
     }
 
     switch (this.graphOptions?.selected) {
-      case HistogramType.YLOG:
+      case Axis.YLOG:
         return 'GLOBAL.FREQUENCY';
-      case HistogramType.YLIN:
+      case Axis.YLIN:
         return 'GLOBAL.FREQUENCY';
       default:
         return 'GLOBAL.DISTRIBUTION';
@@ -93,8 +93,8 @@ export class DistributionGraphComponent
    */
   get shouldShowLegend(): boolean {
     return !(
-      this.graphOptions?.selected === HistogramType.YLOG ||
-      this.graphOptions?.selected === HistogramType.YLIN
+      this.graphOptions?.selected === Axis.YLOG ||
+      this.graphOptions?.selected === Axis.YLIN
     );
   }
 
@@ -254,7 +254,7 @@ export class DistributionGraphComponent
     const minValue = this.calculateMinValue();
 
     // Configure Y axis scale according to the selected mode
-    if (this.graphOptions!.selected === HistogramType.YLOG) {
+    if (this.graphOptions!.selected === Axis.YLOG) {
       // In logarithmic mode, use the native logarithmic scale of Chart.js
       this.chartOptions.scales!.y!.type = TYPES.LOGARITHMIC;
       // Always start the Y axis at 1 in logarithmic mode
@@ -308,10 +308,10 @@ export class DistributionGraphComponent
 
     const isLinearMode =
       !this.hideGraphOptions &&
-      this.graphOptions?.selected === HistogramType.YLIN;
+      this.graphOptions?.selected === Axis.YLIN;
     const isLogMode =
       !this.hideGraphOptions &&
-      this.graphOptions?.selected === HistogramType.YLOG;
+      this.graphOptions?.selected === Axis.YLOG;
 
     let value: string;
     if (isLinearMode || isLogMode) {
@@ -372,7 +372,7 @@ export class DistributionGraphComponent
   private getYAxisTickValue(value: string | number): string | number {
     const isLogMode =
       !this.hideGraphOptions &&
-      this.graphOptions?.selected === HistogramType.YLOG;
+      this.graphOptions?.selected === Axis.YLOG;
 
     if (isLogMode) {
       const valueStr = value.toString();

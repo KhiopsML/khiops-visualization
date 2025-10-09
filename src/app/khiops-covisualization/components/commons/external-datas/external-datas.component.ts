@@ -10,7 +10,7 @@ import { SelectableComponent } from '@khiops-library/components/selectable/selec
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { ConfigService } from '@khiops-library/providers/config.service';
-import { COMPONENT_TYPES } from '../../../../khiops-library/enum/component-types';
+import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 
 @Component({
     selector: 'app-external-datas',

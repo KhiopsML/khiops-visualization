@@ -6,7 +6,7 @@
 
 import { HistogramUIService } from './histogram.ui.service';
 import { HistogramValuesI } from './histogram.interfaces';
-import { HistogramType } from './histogram.type';
+import { Axis } from '@khiops-library/enum/axis';
 
 export class HistogramBarModel {
   public barWlog: number = 0;
@@ -18,7 +18,7 @@ export class HistogramBarModel {
 
   constructor(d: HistogramValuesI, middlewidth: number, xType: string) {
     this.partition = d.partition;
-    if (xType === HistogramType.XLIN) {
+    if (xType === Axis.XLIN) {
       let barWlin = 0;
       if (this.partition[0]! < 0 && this.partition[1]! > 0) {
         barWlin = Math.abs(this.partition[0]!) + Math.abs(this.partition[1]!);

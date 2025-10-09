@@ -27,7 +27,7 @@ import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-op
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import * as _ from 'lodash';
 import { ConfigService } from '@khiops-library/providers/config.service';
-import { HistogramType } from '../../../../khiops-visualization/components/commons/histogram/histogram.type';
+import { Axis } from '@khiops-library/enum/axis';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { DimensionsDatasService } from '../../../providers/dimensions-datas.service';
 
@@ -57,7 +57,7 @@ export class VariableGraphDetailsComponent
   public scaleValue: number = 0;
   public graphDetails: ChartDatasModel | undefined;
   public graphOptions: DistributionOptionsI = {
-    types: [HistogramType.YLIN, HistogramType.YLOG],
+    types: [Axis.YLIN, Axis.YLOG],
     selected: undefined,
   };
   public activeEntries: number = 0;

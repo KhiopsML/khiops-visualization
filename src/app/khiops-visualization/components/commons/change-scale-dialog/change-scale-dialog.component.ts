@@ -7,7 +7,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { LS } from '@khiops-library/enum/ls';
-import { HistogramType } from '../histogram/histogram.type';
+import { Axis } from '@khiops-library/enum/axis';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { TYPES } from '@khiops-library/enum/types';
 
@@ -35,9 +35,9 @@ export class ChangeScaleDialogComponent implements OnInit {
 
     // Map histogram types to dialog values
     this.xScale =
-      currentXScale === HistogramType.XLOG ? TYPES.LOGARITHMIC : TYPES.LINEAR;
+      currentXScale === Axis.XLOG ? TYPES.LOGARITHMIC : TYPES.LINEAR;
     this.yScale =
-      currentYScale === HistogramType.YLOG ? TYPES.LOGARITHMIC : TYPES.LINEAR;
+      currentYScale === Axis.YLOG ? TYPES.LOGARITHMIC : TYPES.LINEAR;
   }
 
   onCancel(): void {

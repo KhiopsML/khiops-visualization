@@ -10,7 +10,7 @@ import { format } from 'mathjs';
 import { HistogramService } from './histogram.service';
 import { HistogramUIService } from './histogram.ui.service';
 import { HistogramBarModel } from './histogram.bar.model';
-import { HistogramType } from './histogram.type';
+import { Axis } from '@khiops-library/enum/axis';
 import { HistogramValuesI, RangeYLogI } from './histogram.interfaces';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options';
@@ -139,7 +139,7 @@ export class HistogramRendererService {
     let barX: number, barH: number, barW: number;
 
     // Calculate bar position and width
-    if (graphOptionsX?.selected === HistogramType.XLIN) {
+    if (graphOptionsX?.selected === Axis.XLIN) {
       barX = ((w - 2 * xPadding) / ratio) * bar.barXlin;
       barW = ((w - 2 * xPadding) / ratio) * bar.barWlin;
     } else {
@@ -148,7 +148,7 @@ export class HistogramRendererService {
     }
 
     // Calculate bar height
-    if (graphOptionsY?.selected === HistogramType.YLIN) {
+    if (graphOptionsY?.selected === Axis.YLIN) {
       barH = d.density * ratioY;
       // Prevent bar height from exceeding canvas height to handle very large density values
       const maxBarHeight = h - yPadding / 2;
@@ -187,7 +187,7 @@ export class HistogramRendererService {
     if (barH !== 0 && barH < minBarHeight) {
       barH = minBarHeight;
     }
-    if (graphOptionsY?.selected === HistogramType.YLOG && barH === 0) {
+    if (graphOptionsY?.selected === Axis.YLOG && barH === 0) {
       barH = minBarHeight;
     }
 
@@ -250,11 +250,11 @@ export class HistogramRendererService {
   ): { bars: HistogramBarModel[]; ratio: number } {
     const bars = this.histogramService.computeXbarsDimensions(
       datasSet,
-      graphOptionsX?.selected || HistogramType.XLIN,
+      graphOptionsX?.selected || Axis.XLIN,
     );
 
     let ratio = 0;
-    if (graphOptionsX?.selected === HistogramType.XLIN) {
+    if (graphOptionsX?.selected === Axis.XLIN) {
       const lastBar = bars[bars.length - 1];
       if (lastBar) {
         ratio = lastBar.barXlin + lastBar.barWlin;
@@ -322,7 +322,7 @@ export class HistogramRendererService {
     let xAxis;
     shift = shift + xPadding;
 
-    if (graphOptionsX?.selected === HistogramType.XLIN) {
+    if (graphOptionsX?.selected === Axis.XLIN) {
       xAxis = d3.scaleLinear().domain(domain).range([0, width]);
     } else {
       xAxis = d3.scaleLog().base(10).domain(domain).range([0, width]);
@@ -335,7 +335,7 @@ export class HistogramRendererService {
       .tickArguments([xTickCount, '.0e'])
       .tickSize(-h + yPadding / 2);
 
-    if (graphOptionsX?.selected === HistogramType.XLIN) {
+    if (graphOptionsX?.selected === Axis.XLIN) {
       // @ts-ignore
       axis.tickFormat((d: number) => {
         let val: any = d;
@@ -390,7 +390,7 @@ export class HistogramRendererService {
     let y;
 
     // Create the scale
-    if (graphOptionsY?.selected === HistogramType.YLIN) {
+    if (graphOptionsY?.selected === Axis.YLIN) {
       y = d3
         .scaleLinear()
         .domain([0, rangeYLin || 0])
@@ -413,7 +413,7 @@ export class HistogramRendererService {
       // @ts-ignore
       .tickFormat((d: number) => {
         let val: number = d;
-        if (graphOptionsY?.selected === HistogramType.YLIN) {
+        if (graphOptionsY?.selected === Axis.YLIN) {
           return '' + format(val);
         } else {
           const antiLog = Math.pow(10, val);

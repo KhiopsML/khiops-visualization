@@ -10,7 +10,7 @@ import { HistogramRendererService } from '../../app/khiops-visualization/compone
 import { HistogramService } from '../../app/khiops-visualization/components/commons/histogram/histogram.service';
 import { HistogramBarModel } from '../../app/khiops-visualization/components/commons/histogram/histogram.bar.model';
 import { HistogramValuesI } from '../../app/khiops-visualization/components/commons/histogram/histogram.interfaces';
-import { HistogramType } from '../../app/khiops-visualization/components/commons/histogram/histogram.type';
+import { Axis } from '@khiops-library/enum/axis';
 
 describe('HistogramRendererService', () => {
   let service: HistogramRendererService;
@@ -46,7 +46,7 @@ describe('HistogramRendererService', () => {
         coords: undefined,
       };
 
-      const testBar = new HistogramBarModel(testData, 1.2, HistogramType.XLIN);
+      const testBar = new HistogramBarModel(testData, 1.2, Axis.XLIN);
       testBar.barXlin = 10;
       testBar.barWlin = 5;
 
@@ -68,8 +68,8 @@ describe('HistogramRendererService', () => {
         canvasHeight,
         xPadding,
         yPadding,
-        { selected: HistogramType.XLIN }, // graphOptionsX
-        { selected: HistogramType.YLIN }, // graphOptionsY
+        { selected: Axis.XLIN }, // graphOptionsX
+        { selected: Axis.YLIN }, // graphOptionsY
         undefined, // rangeYLog
         ratioY,
         1, // ratio
@@ -110,7 +110,7 @@ describe('HistogramRendererService', () => {
         coords: undefined,
       };
 
-      const testBar = new HistogramBarModel(testData, 1.2, HistogramType.XLIN);
+      const testBar = new HistogramBarModel(testData, 1.2, Axis.XLIN);
       testBar.barXlin = 10;
       testBar.barWlin = 5;
 
@@ -134,8 +134,8 @@ describe('HistogramRendererService', () => {
         canvasHeight,
         xPadding,
         yPadding,
-        { selected: HistogramType.XLIN },
-        { selected: HistogramType.YLIN },
+        { selected: Axis.XLIN },
+        { selected: Axis.YLIN },
         undefined,
         ratioY,
         1,
@@ -165,7 +165,7 @@ describe('HistogramRendererService', () => {
         coords: undefined,
       };
 
-      const testBar = new HistogramBarModel(testData, 1.2, HistogramType.XLIN);
+      const testBar = new HistogramBarModel(testData, 1.2, Axis.XLIN);
       testBar.barXlin = 10;
       testBar.barWlin = 5;
 
@@ -186,8 +186,8 @@ describe('HistogramRendererService', () => {
         canvasHeight,
         xPadding,
         yPadding,
-        { selected: HistogramType.XLIN },
-        { selected: HistogramType.YLIN },
+        { selected: Axis.XLIN },
+        { selected: Axis.YLIN },
         undefined,
         ratioY,
         1,
@@ -218,7 +218,7 @@ describe('HistogramRendererService', () => {
         coords: undefined,
       };
 
-      const testBar = new HistogramBarModel(testData, 1.2, HistogramType.XLIN);
+      const testBar = new HistogramBarModel(testData, 1.2, Axis.XLIN);
       testBar.barXlin = 10;
       testBar.barWlin = 5;
 
@@ -245,8 +245,8 @@ describe('HistogramRendererService', () => {
         canvasHeight,
         xPadding,
         yPadding,
-        { selected: HistogramType.XLIN }, // graphOptionsX
-        { selected: HistogramType.YLOG }, // graphOptionsY - logarithmic mode
+        { selected: Axis.XLIN }, // graphOptionsX
+        { selected: Axis.YLOG }, // graphOptionsY - logarithmic mode
         rangeYLog,
         ratioY,
         1, // ratio
@@ -311,7 +311,7 @@ describe('HistogramRendererService', () => {
         coords: undefined,
       };
 
-      const testBar = new HistogramBarModel(testData1, 1.2, HistogramType.XLIN);
+      const testBar = new HistogramBarModel(testData1, 1.2, Axis.XLIN);
       testBar.barXlin = 10;
       testBar.barWlin = 5;
 
@@ -325,8 +325,8 @@ describe('HistogramRendererService', () => {
         canvasHeight,
         40,
         yPadding,
-        { selected: HistogramType.XLIN },
-        { selected: HistogramType.YLOG },
+        { selected: Axis.XLIN },
+        { selected: Axis.YLOG },
         rangeYLog,
         1,
         1,
@@ -350,8 +350,8 @@ describe('HistogramRendererService', () => {
         canvasHeight,
         40,
         yPadding,
-        { selected: HistogramType.XLIN },
-        { selected: HistogramType.YLOG },
+        { selected: Axis.XLIN },
+        { selected: Axis.YLOG },
         rangeYLog,
         1,
         1,
@@ -487,7 +487,7 @@ describe('HistogramRendererService', () => {
       // Calculate histogram bars using the service
       const bars = histogramService.computeXbarsDimensions(
         histogramData,
-        HistogramType.XLIN,
+        Axis.XLIN,
       );
 
       // Calculate ratios for scaling
@@ -514,8 +514,8 @@ describe('HistogramRendererService', () => {
         canvasHeight,
         xPadding,
         yPadding,
-        { selected: HistogramType.XLIN }, // graphOptionsX
-        { selected: HistogramType.YLIN }, // graphOptionsY
+        { selected: Axis.XLIN }, // graphOptionsX
+        { selected: Axis.YLIN }, // graphOptionsY
         undefined, // rangeYLog
         ratioY,
         ratio,
@@ -549,8 +549,8 @@ describe('HistogramRendererService', () => {
         canvasHeight,
         xPadding,
         yPadding,
-        { selected: HistogramType.XLIN }, // graphOptionsX
-        { selected: HistogramType.YLIN }, // graphOptionsY
+        { selected: Axis.XLIN }, // graphOptionsX
+        { selected: Axis.YLIN }, // graphOptionsY
         undefined, // rangeYLog
         ratioY,
         ratio,
@@ -721,7 +721,7 @@ describe('HistogramRendererService', () => {
       // Calculate histogram bars using the service with XLOG type for logarithmic X axis
       const bars = histogramService.computeXbarsDimensions(
         histogramData,
-        HistogramType.XLOG,
+        Axis.XLOG,
       );
 
       // Calculate ratios for scaling using logarithmic X axis
@@ -755,8 +755,8 @@ describe('HistogramRendererService', () => {
         canvasHeight,
         xPadding,
         yPadding,
-        { selected: HistogramType.XLOG }, // graphOptionsX - LOGARITHMIC
-        { selected: HistogramType.YLOG }, // graphOptionsY - LOGARITHMIC
+        { selected: Axis.XLOG }, // graphOptionsX - LOGARITHMIC
+        { selected: Axis.YLOG }, // graphOptionsY - LOGARITHMIC
         rangeYLog, // rangeYLog for logarithmic Y scale
         ratioY,
         ratio,
@@ -793,8 +793,8 @@ describe('HistogramRendererService', () => {
         canvasHeight,
         xPadding,
         yPadding,
-        { selected: HistogramType.XLOG }, // graphOptionsX - LOGARITHMIC
-        { selected: HistogramType.YLOG }, // graphOptionsY - LOGARITHMIC
+        { selected: Axis.XLOG }, // graphOptionsX - LOGARITHMIC
+        { selected: Axis.YLOG }, // graphOptionsY - LOGARITHMIC
         rangeYLog, // rangeYLog for logarithmic Y scale
         ratioY,
         ratio,

@@ -16,7 +16,7 @@ import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 import { LS } from '@khiops-library/enum/ls';
 import _ from 'lodash';
-import { UtilsService } from '../../../../khiops-library/providers/utils.service';
+import { UtilsService } from '@khiops-library/providers/utils.service';
 import { AppConfig } from '../../../../../environments/environment';
 
 export interface TargetLiftGraphData {

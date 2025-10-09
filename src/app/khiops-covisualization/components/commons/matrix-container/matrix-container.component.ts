@@ -33,7 +33,7 @@ import { TreeNodeChangedEventI } from '@khiops-covisualization/interfaces/events
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { InnerVariablesSelectionEvent } from '../matrix-inner-variables-filter/matrix-inner-variables-filter.component';
-import { MatrixFilterOptionsModel } from '../../../../khiops-library/model/matrix-filter-options.model';
+import { MatrixFilterOptionsModel } from '@khiops-library/model/matrix-filter-options.model';
 import { LS } from '@khiops-library/enum/ls';
 
 @Component({

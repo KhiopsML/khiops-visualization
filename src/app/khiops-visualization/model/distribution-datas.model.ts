@@ -7,14 +7,14 @@
 import { TYPES } from '@khiops-library/enum/types';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options';
-import { HistogramType } from '@khiops-visualization/components/commons/histogram/histogram.type';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 import { HistogramValuesI } from '@khiops-visualization/components/commons/histogram/histogram.interfaces';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { LS } from '@khiops-library/enum/ls';
+import { Axis } from '@khiops-library/enum/axis';
 
 export class DistributionDatasModel {
-  distributionType: string = HistogramType.YLIN;
+  distributionType: string = Axis.YLIN;
   interpretableHistogramNumber: number = 0;
   defaultInterpretableHistogramNumber: number = 0;
   histogramNumber: number = 0;
@@ -56,21 +56,21 @@ export class DistributionDatasModel {
 
     // Configure Y-axis options (Linear/Log)
     this.distributionGraphOptionsY = this.createGraphOptions(
-      [HistogramType.YLIN, HistogramType.YLOG],
-      HistogramType.YLIN,
+      [Axis.YLIN, Axis.YLOG],
+      Axis.YLIN,
       persistScaleOptions ? LS.DISTRIBUTION_GRAPH_OPTION_Y : null,
     );
 
     // Configure X-axis options (Linear/Log)
     this.distributionGraphOptionsX = this.createGraphOptions(
-      [HistogramType.XLIN, HistogramType.XLOG],
-      HistogramType.XLIN,
+      [Axis.XLIN, Axis.XLOG],
+      Axis.XLIN,
       persistScaleOptions ? LS.DISTRIBUTION_GRAPH_OPTION_X : null,
     );
 
     // Set distribution type when persistence is disabled
     if (!persistScaleOptions) {
-      this.distributionType = HistogramType.YLIN;
+      this.distributionType = Axis.YLIN;
     }
   }
 

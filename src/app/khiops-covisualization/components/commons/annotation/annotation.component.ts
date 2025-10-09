@@ -19,7 +19,7 @@ import { TranslateService } from '@ngstack/translate';
 import { AnnotationService } from '@khiops-covisualization/providers/annotation.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
-import { COMPONENT_TYPES } from '../../../../khiops-library/enum/component-types';
+import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 
 @Component({
     selector: 'app-annotation',

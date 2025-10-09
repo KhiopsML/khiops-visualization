@@ -23,7 +23,7 @@ import { ResizedEvent } from 'angular-resize-event-package';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
-import { HistogramType } from './histogram.type';
+import { Axis } from '@khiops-library/enum/axis';
 import { TranslateService } from '@ngstack/translate';
 import {
   HistogramValuesI,
@@ -536,7 +536,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   }
 
   private draw() {
-    if (this.graphOptionsY?.selected === HistogramType.YLOG) {
+    if (this.graphOptionsY?.selected === Axis.YLOG) {
       if (this.datas) {
         this.rangeYLog = this.histogramService.getLogRangeY(this.datas);
         this.ratioY = this.histogramService.getLogRatioY(this.h, this.yPadding);
@@ -604,7 +604,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
       this.ratio = result.ratio;
     }
 
-    if (this.graphOptionsX?.selected === HistogramType.XLIN) {
+    if (this.graphOptionsX?.selected === Axis.XLIN) {
       if (this.rangeXLin) {
         let shift = 0;
         let width = this.w - 2 * this.xPadding;

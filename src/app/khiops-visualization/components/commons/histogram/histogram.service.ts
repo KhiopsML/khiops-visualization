@@ -6,7 +6,7 @@
 
 import { Injectable } from '@angular/core';
 import { HistogramBarModel } from './histogram.bar.model';
-import { HistogramType } from './histogram.type';
+import { Axis } from '@khiops-library/enum/axis';
 import {
   HistogramValuesI,
   RangeXLinI,
@@ -174,7 +174,7 @@ export class HistogramService {
         this.rangeXLog.middlewidth || MIDDLE_WIDTH,
         xType,
       );
-      if (xType === HistogramType.XLIN) {
+      if (xType === Axis.XLIN) {
         histogramBar.computeXLin(bars);
       } else {
         histogramBar.computeXLog(bars);

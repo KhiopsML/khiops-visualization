@@ -13,7 +13,7 @@ import { DistributionDatasService } from '@khiops-visualization/providers/distri
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { REPORT } from '@khiops-library/enum/report';
 import { TranslateModule } from '@ngstack/translate';
-import { HistogramType } from '@khiops-visualization/components/commons/histogram/histogram.type';
+import { Axis } from '@khiops-library/enum/axis';
 import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas';
 import { provideMockStore } from '@ngrx/store/testing';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
@@ -275,7 +275,7 @@ describe('HistogramService - BugAnalysisResults_NewBounds Tests', () => {
     histogramService.getRangeX(histogramDatas!);
     
     // Test computeXbarsDimensions with linear type
-    const bars = histogramService.computeXbarsDimensions(histogramDatas!, HistogramType.XLIN);
+    const bars = histogramService.computeXbarsDimensions(histogramDatas!, Axis.XLIN);
     
     expect(bars).toBeTruthy();
     expect(Array.isArray(bars)).toBe(true);
@@ -313,7 +313,7 @@ describe('HistogramService - BugAnalysisResults_NewBounds Tests', () => {
     const [rangeXLin, rangeXLog] = histogramService.getRangeX(histogramDatas!);
     
     // Test computeXbarsDimensions with logarithmic type
-    const bars = histogramService.computeXbarsDimensions(histogramDatas!, HistogramType.XLOG);
+    const bars = histogramService.computeXbarsDimensions(histogramDatas!, Axis.XLOG);
     
     expect(bars).toBeTruthy();
     expect(Array.isArray(bars)).toBe(true);
