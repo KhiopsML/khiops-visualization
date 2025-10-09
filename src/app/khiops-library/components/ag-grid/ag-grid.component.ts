@@ -233,14 +233,9 @@ export class AgGridComponent
     if (changes.selectedVariable?.currentValue) {
       // always do it in case of shortdesc change
       const selectedVar = changes.selectedVariable.currentValue;
-      if (this.gridOptions.rowModelType === 'infinite') {
-        // For infinite model, ensure data is loaded before selection
-        setTimeout(() => {
-          this.selectNode(selectedVar);
-        });
-      } else {
+      setTimeout(() => {
         this.selectNode(selectedVar);
-      }
+      });
     }
   }
 
@@ -308,7 +303,7 @@ export class AgGridComponent
     }
 
     // For infinite row model, ensure initial selection after data is loaded
-    if (this.gridOptions.rowModelType === 'infinite' && this.selectedVariable) {
+    if (this.selectedVariable) {
       setTimeout(() => {
         this.selectNode(this.selectedVariable);
       });
@@ -347,22 +342,9 @@ export class AgGridComponent
    */
   checkToggleAgGridVisibility() {
     // For infinite row model, don't toggle visibility as it causes unnecessary blinking
-    if (this.gridOptions.rowModelType === 'infinite') {
-      this.shouldShowPagination = false; // Infinite scroll doesn't need pagination UI
-      return;
-    }
-
-    const previousState = this.shouldShowPagination;
     this.shouldShowPagination =
       (this.inputDatas && this.inputDatas.length > this.paginationSize!) ||
       false;
-    if (previousState !== this.shouldShowPagination) {
-      // Use requestAnimationFrame for smoother transitions
-      this.agGridVisible = false;
-      requestAnimationFrame(() => {
-        this.agGridVisible = true;
-      });
-    }
   }
 
   /**
@@ -429,34 +411,25 @@ export class AgGridComponent
   selectNodeFromIndex(nodeIndex: number) {
     if (nodeIndex !== undefined && this.showLineSelection) {
       if (this.agGrid?.api) {
-        if (this.gridOptions.rowModelType === 'infinite') {
-          // First try to select if the node is already visible
-          let nodeFound = false;
-          this.agGrid.api.forEachNode((node) => {
-            if (nodeIndex === node.rowIndex) {
-              node.setSelected(true);
-              nodeFound = true;
-            }
-          });
-
-          // Only ensure visibility if node wasn't found (not yet loaded)
-          if (!nodeFound) {
-            this.agGrid.api.ensureIndexVisible(nodeIndex);
-            // Use requestAnimationFrame for smoother selection
-            requestAnimationFrame(() => {
-              this.agGrid?.api.forEachNode((node) => {
-                if (nodeIndex === node.rowIndex) {
-                  node.setSelected(true);
-                }
-              });
-            });
+        // First try to select if the node is already visible
+        let nodeFound = false;
+        this.agGrid.api.forEachNode((node) => {
+          if (nodeIndex === node.rowIndex) {
+            node.setSelected(true);
+            nodeFound = true;
           }
-        } else {
-          this.agGrid.api.forEachNode((node) => {
-            if (nodeIndex === node.rowIndex) {
-              node.setSelected(true);
-              this.agGrid?.api.ensureIndexVisible(node.rowIndex || 0);
-            }
+        });
+
+        // Only ensure visibility if node wasn't found (not yet loaded)
+        if (!nodeFound) {
+          this.agGrid.api.ensureIndexVisible(nodeIndex);
+          // Use requestAnimationFrame for smoother selection
+          requestAnimationFrame(() => {
+            this.agGrid?.api.forEachNode((node) => {
+              if (nodeIndex === node.rowIndex) {
+                node.setSelected(true);
+              }
+            });
           });
         }
       }
@@ -470,54 +443,35 @@ export class AgGridComponent
   selectNodeFromId(nodeId: string) {
     if (nodeId !== undefined && this.showLineSelection) {
       if (this.agGrid?.api) {
-        if (this.gridOptions.rowModelType === 'infinite') {
-          // First try to select if the node is already visible
-          let nodeFound = false;
-          this.agGrid.api.forEachNode((node) => {
-            if (nodeId.toString() === node.data?.['_id']) {
-              if (!node.isSelected()) {
-                node.setSelected(true);
-                nodeFound = true;
-              }
-            }
-          });
-
-          // Only ensure visibility if node wasn't found (not yet loaded)
-          if (!nodeFound) {
-            const rowIndex = this.rowData?.findIndex(
-              (row: any) => row['_id'] === nodeId.toString(),
-            );
-            if (rowIndex !== undefined && rowIndex >= 0) {
-              this.agGrid.api.ensureIndexVisible(rowIndex);
-              // Use requestAnimationFrame for smoother selection
-              requestAnimationFrame(() => {
-                this.agGrid?.api.forEachNode((node) => {
-                  if (nodeId.toString() === node.data?.['_id']) {
-                    if (!node.isSelected()) {
-                      node.setSelected(true);
-                    }
-                  }
-                });
-              });
+        // First try to select if the node is already visible
+        let nodeFound = false;
+        this.agGrid.api.forEachNode((node) => {
+          if (nodeId.toString() === node.data?.['_id']) {
+            if (!node.isSelected()) {
+              node.setSelected(true);
+              nodeFound = true;
             }
           }
-        } else {
-          this.agGrid.api.forEachNode((node) => {
-            if (nodeId.toString() === node.data['_id']) {
-              if (!node.isSelected()) {
-                node.setSelected(true);
-                // Get the page of selected node
-                if (this.gridOptions.api) {
-                  let pageToSelect =
-                    (node.rowIndex ?? 0) /
-                    this.gridOptions.api.paginationGetPageSize();
-                  pageToSelect = Math.floor(pageToSelect);
-                  this.gridOptions.api.paginationGoToPage(pageToSelect);
+        });
+
+        // Only ensure visibility if node wasn't found (not yet loaded)
+        if (!nodeFound) {
+          const rowIndex = this.rowData?.findIndex(
+            (row: any) => row['_id'] === nodeId.toString(),
+          );
+          if (rowIndex !== undefined && rowIndex >= 0) {
+            this.agGrid.api.ensureIndexVisible(rowIndex);
+            // Use requestAnimationFrame for smoother selection
+            requestAnimationFrame(() => {
+              this.agGrid?.api.forEachNode((node) => {
+                if (nodeId.toString() === node.data?.['_id']) {
+                  if (!node.isSelected()) {
+                    node.setSelected(true);
+                  }
                 }
-                this.agGrid?.api.ensureIndexVisible(node.rowIndex ?? 0);
-              }
-            }
-          });
+              });
+            });
+          }
         }
       }
     }
@@ -658,28 +612,22 @@ export class AgGridComponent
 
       // Apply all changes at once to minimize flicker
       if (this.agGrid?.api) {
-        if (this.gridOptions.rowModelType === 'infinite') {
-          // Set columns first
-          this.agGrid.api.setColumnDefs(this.columnDefs);
+        // Set columns first
+        this.agGrid.api.setColumnDefs(this.columnDefs);
 
-          // Create or update datasource
-          if (!this.datasourceCreated) {
-            // First time: create and set datasource
-            this.createDatasource();
-            if (this.gridOptions.datasource) {
-              this.agGrid.api.setDatasource(this.gridOptions.datasource);
-              this.datasourceCreated = true;
-            }
-          } else {
-            // Subsequent times: just refresh the cache with new data
-            if (this.gridOptions.datasource) {
-              this.agGrid.api.refreshInfiniteCache();
-            }
+        // Create or update datasource
+        if (!this.datasourceCreated) {
+          // First time: create and set datasource
+          this.createDatasource();
+          if (this.gridOptions.datasource) {
+            this.agGrid.api.setDatasource(this.gridOptions.datasource);
+            this.datasourceCreated = true;
           }
         } else {
-          // For other row models, use the standard approach
-          this.agGrid.api.setColumnDefs(this.columnDefs);
-          this.agGrid.api.setRowData(this.rowData);
+          // Subsequent times: just refresh the cache with new data
+          if (this.gridOptions.datasource) {
+            this.agGrid.api.refreshInfiniteCache();
+          }
         }
       }
     }
@@ -761,14 +709,11 @@ export class AgGridComponent
   search() {
     // this.trackerService.trackEvent('click', 'search');
     // For infinite row model, we need to refresh the datasource
-    if (this.agGrid?.api && this.gridOptions.rowModelType === 'infinite') {
+    if (this.agGrid?.api) {
       // Store the search input in the API for the datasource to use
       (this.agGrid.api as any).quickFilterText = this.searchInput || '';
       // Refresh the infinite cache to apply the search
       this.agGrid.api.refreshInfiniteCache();
-    } else {
-      // Fallback for other row models
-      this.agGrid?.api.setQuickFilter(this.searchInput || '');
     }
 
     if (this.searchInput) {
@@ -1006,8 +951,5 @@ export class AgGridComponent
     }
 
     // For infinite row model, selection is handled in the datasource
-    if (this.gridOptions.rowModelType !== 'infinite') {
-      this.selectNode(this.selectedVariable);
-    }
   }
 }
