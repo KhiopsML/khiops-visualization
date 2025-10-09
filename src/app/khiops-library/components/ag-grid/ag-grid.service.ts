@@ -180,7 +180,7 @@ export class AgGridService {
           // Add value getter to ensure search uses formatted values
           gridCol.valueGetter = (params: any) => {
             if (!params.data || !params.data[col.field]) {
-              return '';
+              return false;
             }
             const rawValue = params.data[col.field];
             if (options.appConfig) {
