@@ -176,6 +176,21 @@ export class AgGridService {
             );
             return String(formatted);
           };
+
+          // Add value getter to ensure search uses formatted values
+          gridCol.valueGetter = (params: any) => {
+            if (!params.data || !params.data[col.field]) {
+              return '';
+            }
+            const rawValue = params.data[col.field];
+            if (options.appConfig) {
+              return UtilsService.getPrecisionNumber(
+                rawValue,
+                options.appConfig.GLOBAL.TO_FIXED,
+              );
+            }
+            return rawValue;
+          };
         }
 
         columnDefs.push(gridCol);
