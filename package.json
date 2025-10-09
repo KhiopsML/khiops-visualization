@@ -62,6 +62,7 @@
   },
   "dependencies": {
     "@ag-grid-community/angular": "29.3.5",
+    "@ag-grid-community/infinite-row-model": "29.3.5",
     "@ag-grid-community/client-side-row-model": "29.3.5",
     "@ag-grid-community/core": "29.3.5",
     "@angular/animations": "20.3.1",

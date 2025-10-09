@@ -21,6 +21,13 @@
   resolved "https://registry.npmjs.org/@ag-grid-community/core/-/core-29.3.5.tgz"
   integrity sha512-r86bOCscnKVtaYyKqlN2UCtfbjf4UcmxHfVuXzJ94iN8Jy3iiQVrbQnbNArnjR589Bt/1VR/m+SdAMsOLcdpag==
 
+"@ag-grid-community/infinite-row-model@29.3.5":
+  version "29.3.5"
+  resolved "https://registry.yarnpkg.com/@ag-grid-community/infinite-row-model/-/infinite-row-model-29.3.5.tgz#1245bae9d972565d5c1f0535469e193b3ead72dc"
+  integrity sha512-O2pKhw5piPo11Z7RV0tOyjTyaCUIAROa/1h6MeAikVvh4uOaPYTyBZqX3365Ty3C2QPHJvDc12fR1DxfORq09A==
+  dependencies:
+    "@ag-grid-community/core" "~29.3.5"
+
 "@algolia/abtesting@1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@algolia/abtesting/-/abtesting-1.1.0.tgz#32c84876956727dcdca8df03c567f12fb39edf0d"

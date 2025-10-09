@@ -35,6 +35,7 @@ import {
   SortChangedEvent,
   NavigateToNextCellParams,
 } from '@ag-grid-community/core';
+import { InfiniteRowModelModule } from '@ag-grid-community/infinite-row-model';
 import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { LS } from '@khiops-library/enum/ls';
@@ -44,7 +45,10 @@ import { GridCheckboxEventI } from '@khiops-library/interfaces/events';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { AgGridService } from '@khiops-library/components/ag-grid/ag-grid.service';
 
-ModuleRegistry.registerModules([ClientSideRowModelModule]);
+ModuleRegistry.registerModules([
+  ClientSideRowModelModule,
+  InfiniteRowModelModule,
+]);
 
 @Component({
   selector: 'kl-ag-grid',
@@ -108,6 +112,21 @@ export class AgGridComponent
     suppressColumnMoveAnimation: true,
     animateRows: false,
     rowHeight: 34,
+    rowModelType: 'infinite',
+    cacheBlockSize: 200, // number of rows per load
+    maxBlocksInCache: 2,
+    datasource: undefined, // Will be set in updateTable
+    suppressRowDeselection: false, // Allow deselection
+    suppressCellSelection: false, // Allow cell selection
+    suppressRowTransform: true, // Reduce visual transformations
+    suppressLoadingOverlay: true, // Remove loading overlay that can cause flicker
+    suppressNoRowsOverlay: true, // Remove "no rows" overlay that can cause flicker
+    suppressCellFocus: false, // Allow cell focus but don't animate
+    debounceVerticalScrollbar: true, // Debounce scrollbar to reduce flicker
+    suppressScrollOnNewData: true, // Don't auto-scroll when data changes
+    suppressFlash: true, // Suppress cell flash animation
+    suppressBrowserResizeObserver: true, // Reduce resize-related redraws
+    suppressParentsInRowNodes: true, // Reduce memory and processing overhead
   };
 
   private cellsSizes: DynamicI = {};
@@ -115,6 +134,7 @@ export class AgGridComponent
   private gridMode: string = '';
   private gridModes: DynamicI = {}; //  values can be: 'fitToSpace' or 'fitToContent'
   private divWidth: number = 0;
+  private datasourceCreated: boolean = false;
 
   public agGridVisible = true;
   public shouldShowPagination = false;
@@ -176,6 +196,9 @@ export class AgGridComponent
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.displayedColumns?.currentValue) {
+      // Reset datasource flag when columns change significantly
+      this.datasourceCreated = false;
+
       if (
         this.showLineSelection !== false &&
         this.displayedColumns?.findIndex((e) => e.field === '_id') === -1
@@ -200,14 +223,24 @@ export class AgGridComponent
         }
       }
     }
+
     if (changes.inputDatas?.currentValue) {
       // We must update table always, even if content do not changed, to update header informations
       this.updateTable();
       this.checkToggleAgGridVisibility();
     }
+
     if (changes.selectedVariable?.currentValue) {
       // always do it in case of shortdesc change
-      this.selectNode(changes.selectedVariable.currentValue);
+      const selectedVar = changes.selectedVariable.currentValue;
+      if (this.gridOptions.rowModelType === 'infinite') {
+        // For infinite model, ensure data is loaded before selection
+        setTimeout(() => {
+          this.selectNode(selectedVar);
+        });
+      } else {
+        this.selectNode(selectedVar);
+      }
     }
   }
 
@@ -273,6 +306,13 @@ export class AgGridComponent
 
       this.restoreState();
     }
+
+    // For infinite row model, ensure initial selection after data is loaded
+    if (this.gridOptions.rowModelType === 'infinite' && this.selectedVariable) {
+      setTimeout(() => {
+        this.selectNode(this.selectedVariable);
+      });
+    }
   }
 
   /**
@@ -306,13 +346,20 @@ export class AgGridComponent
    * the AG Grid component to trigger a re-render.
    */
   checkToggleAgGridVisibility() {
+    // For infinite row model, don't toggle visibility as it causes unnecessary blinking
+    if (this.gridOptions.rowModelType === 'infinite') {
+      this.shouldShowPagination = false; // Infinite scroll doesn't need pagination UI
+      return;
+    }
+
     const previousState = this.shouldShowPagination;
     this.shouldShowPagination =
       (this.inputDatas && this.inputDatas.length > this.paginationSize!) ||
       false;
     if (previousState !== this.shouldShowPagination) {
+      // Use requestAnimationFrame for smoother transitions
       this.agGridVisible = false;
-      setTimeout(() => {
+      requestAnimationFrame(() => {
         this.agGridVisible = true;
       });
     }
@@ -382,16 +429,36 @@ export class AgGridComponent
   selectNodeFromIndex(nodeIndex: number) {
     if (nodeIndex !== undefined && this.showLineSelection) {
       if (this.agGrid?.api) {
-        this.agGrid.api.forEachNode((node) => {
-          if (nodeIndex === node.rowIndex) {
-            node.setSelected(true);
-            // Get the page of selected node
-            // let pageToSelect = node.rowIndex / this.gridOptions.api.paginationGetPageSize();
-            // pageToSelect = Math.ceil(pageToSelect) - 1; // -1 to begin at 0
-            // this.gridOptions.api.paginationGoToPage(pageToSelect);
-            this.agGrid?.api.ensureIndexVisible(node.rowIndex || 0);
+        if (this.gridOptions.rowModelType === 'infinite') {
+          // First try to select if the node is already visible
+          let nodeFound = false;
+          this.agGrid.api.forEachNode((node) => {
+            if (nodeIndex === node.rowIndex) {
+              node.setSelected(true);
+              nodeFound = true;
+            }
+          });
+
+          // Only ensure visibility if node wasn't found (not yet loaded)
+          if (!nodeFound) {
+            this.agGrid.api.ensureIndexVisible(nodeIndex);
+            // Use requestAnimationFrame for smoother selection
+            requestAnimationFrame(() => {
+              this.agGrid?.api.forEachNode((node) => {
+                if (nodeIndex === node.rowIndex) {
+                  node.setSelected(true);
+                }
+              });
+            });
           }
-        });
+        } else {
+          this.agGrid.api.forEachNode((node) => {
+            if (nodeIndex === node.rowIndex) {
+              node.setSelected(true);
+              this.agGrid?.api.ensureIndexVisible(node.rowIndex || 0);
+            }
+          });
+        }
       }
     }
   }
@@ -403,22 +470,55 @@ export class AgGridComponent
   selectNodeFromId(nodeId: string) {
     if (nodeId !== undefined && this.showLineSelection) {
       if (this.agGrid?.api) {
-        this.agGrid.api.forEachNode((node) => {
-          if (nodeId.toString() === node.data['_id']) {
-            if (!node.isSelected()) {
-              node.setSelected(true);
-              // Get the page of selected node
-              if (this.gridOptions.api) {
-                let pageToSelect =
-                  (node.rowIndex ?? 0) /
-                  this.gridOptions.api.paginationGetPageSize();
-                pageToSelect = Math.floor(pageToSelect);
-                this.gridOptions.api.paginationGoToPage(pageToSelect);
+        if (this.gridOptions.rowModelType === 'infinite') {
+          // First try to select if the node is already visible
+          let nodeFound = false;
+          this.agGrid.api.forEachNode((node) => {
+            if (nodeId.toString() === node.data?.['_id']) {
+              if (!node.isSelected()) {
+                node.setSelected(true);
+                nodeFound = true;
               }
-              this.agGrid?.api.ensureIndexVisible(node.rowIndex ?? 0);
+            }
+          });
+
+          // Only ensure visibility if node wasn't found (not yet loaded)
+          if (!nodeFound) {
+            const rowIndex = this.rowData?.findIndex(
+              (row: any) => row['_id'] === nodeId.toString(),
+            );
+            if (rowIndex !== undefined && rowIndex >= 0) {
+              this.agGrid.api.ensureIndexVisible(rowIndex);
+              // Use requestAnimationFrame for smoother selection
+              requestAnimationFrame(() => {
+                this.agGrid?.api.forEachNode((node) => {
+                  if (nodeId.toString() === node.data?.['_id']) {
+                    if (!node.isSelected()) {
+                      node.setSelected(true);
+                    }
+                  }
+                });
+              });
             }
           }
-        });
+        } else {
+          this.agGrid.api.forEachNode((node) => {
+            if (nodeId.toString() === node.data['_id']) {
+              if (!node.isSelected()) {
+                node.setSelected(true);
+                // Get the page of selected node
+                if (this.gridOptions.api) {
+                  let pageToSelect =
+                    (node.rowIndex ?? 0) /
+                    this.gridOptions.api.paginationGetPageSize();
+                  pageToSelect = Math.floor(pageToSelect);
+                  this.gridOptions.api.paginationGoToPage(pageToSelect);
+                }
+                this.agGrid?.api.ensureIndexVisible(node.rowIndex ?? 0);
+              }
+            }
+          });
+        }
       }
     }
   }
@@ -432,19 +532,111 @@ export class AgGridComponent
   }
 
   /**
-   * Updates the table by resetting column definitions and row data.
+   * Creates the datasource for infinite scrolling
+   */
+  createDatasource() {
+    if (!this.rowData) return;
+
+    const that = this;
+    this.gridOptions.datasource = {
+      getRows: (params: any) => {
+        // Store selected nodes before processing
+        const selectedNodeIds: string[] = [];
+        if (that.agGrid?.api) {
+          that.agGrid.api.getSelectedNodes().forEach((node) => {
+            if (node.data?.['_id']) {
+              selectedNodeIds.push(node.data['_id']);
+            }
+          });
+        }
+
+        const startRow = params.startRow;
+        const endRow = params.endRow;
+
+        let filteredData = [...that.rowData];
+
+        // Apply quick filter if exists
+        const quickFilterText =
+          that.searchInput || (that.agGrid?.api as any)?.quickFilterText;
+        if (quickFilterText) {
+          const filterText = quickFilterText.toLowerCase();
+          filteredData = filteredData.filter((row: any) => {
+            return Object.values(row).some(
+              (value: any) =>
+                value && value.toString().toLowerCase().includes(filterText),
+            );
+          });
+        }
+
+        // Apply sorting if exists
+        const sortModel = params.sortModel;
+        if (sortModel && sortModel.length > 0) {
+          filteredData.sort((a: any, b: any) => {
+            for (const sort of sortModel) {
+              const { colId, sort: sortDirection } = sort;
+              const aValue = a[colId];
+              const bValue = b[colId];
+
+              let result = 0;
+              if (aValue < bValue) result = -1;
+              if (aValue > bValue) result = 1;
+
+              if (result !== 0) {
+                return sortDirection === 'asc' ? result : -result;
+              }
+            }
+            return 0;
+          });
+        }
+
+        // Get the slice of data for this page
+        const rowsThisPage = filteredData.slice(startRow, endRow);
+
+        // Determine if there are more rows
+        const lastRow = filteredData.length;
+
+        // Call the success callback
+        params.successCallback(rowsThisPage, lastRow);
+
+        // Handle selection restoration and initial selection
+        requestAnimationFrame(() => {
+          // First restore any previously selected nodes
+          if (selectedNodeIds.length > 0) {
+            selectedNodeIds.forEach((selectedId) => {
+              that.agGrid?.api.forEachNode((node) => {
+                if (node.data?.['_id'] === selectedId) {
+                  node.setSelected(true);
+                }
+              });
+            });
+          }
+
+          // If no previous selection but we have a selectedVariable, select it
+          if (selectedNodeIds.length === 0 && that.selectedVariable) {
+            const targetId = Array.isArray(that.selectedVariable)
+              ? that.selectedVariable[0]?._id
+              : that.selectedVariable._id;
+
+            if (targetId) {
+              that.agGrid?.api.forEachNode((node) => {
+                if (node.data?.['_id'] === targetId.toString()) {
+                  node.setSelected(true);
+                }
+              });
+            }
+          }
+        });
+      },
+    };
+  }
+
+  /**
+   * Updates the table by resetting column definitions and creating datasource.
    */
   updateTable() {
     if (this.displayedColumns && this.inputDatas) {
-      // Update columns at any changes to update sort and other ...
-      this.columnDefs = [];
-      // Reset column defs in case of show/hide colum to reorder
-      if (this.agGrid?.api) {
-        this.agGrid.api.setColumnDefs(this.columnDefs);
-      }
-
-      // Use AgGridService to create column definitions with automatic alignment
-      this.columnDefs = this.agGridService.createColumnDefs(
+      // Prepare new column definitions without clearing current ones immediately
+      const newColumnDefs = this.agGridService.createColumnDefs(
         this.displayedColumns,
         this.inputDatas,
         {
@@ -455,16 +647,41 @@ export class AgGridComponent
       );
 
       // Sanitize and prepare row data using the service
-      this.rowData = this.agGridService.sanitizeGridData(
+      const newRowData = this.agGridService.sanitizeGridData(
         this.inputDatas,
         this.displayedColumns,
       );
-    }
 
-    // Update grid data
-    if (this.agGrid?.api) {
-      this.agGrid.api.setColumnDefs(this.columnDefs);
-      this.agGrid.api.setRowData(this.rowData);
+      // Update internal state
+      this.columnDefs = newColumnDefs;
+      this.rowData = newRowData;
+
+      // Apply all changes at once to minimize flicker
+      if (this.agGrid?.api) {
+        if (this.gridOptions.rowModelType === 'infinite') {
+          // Set columns first
+          this.agGrid.api.setColumnDefs(this.columnDefs);
+
+          // Create or update datasource
+          if (!this.datasourceCreated) {
+            // First time: create and set datasource
+            this.createDatasource();
+            if (this.gridOptions.datasource) {
+              this.agGrid.api.setDatasource(this.gridOptions.datasource);
+              this.datasourceCreated = true;
+            }
+          } else {
+            // Subsequent times: just refresh the cache with new data
+            if (this.gridOptions.datasource) {
+              this.agGrid.api.refreshInfiniteCache();
+            }
+          }
+        } else {
+          // For other row models, use the standard approach
+          this.agGrid.api.setColumnDefs(this.columnDefs);
+          this.agGrid.api.setRowData(this.rowData);
+        }
+      }
     }
   }
 
@@ -537,13 +754,23 @@ export class AgGridComponent
   }
 
   /**
-   * Performs a search in the ag-Grid by setting a quick filter.
+   * Performs a search in the ag-Grid by refreshing the datasource.
    * If searchInput is not empty, it saves the search input to local storage.
    * If searchInput is empty, it removes the saved search input from local storage.
    */
   search() {
     // this.trackerService.trackEvent('click', 'search');
-    this.agGrid?.api.setQuickFilter(this.searchInput || '');
+    // For infinite row model, we need to refresh the datasource
+    if (this.agGrid?.api && this.gridOptions.rowModelType === 'infinite') {
+      // Store the search input in the API for the datasource to use
+      (this.agGrid.api as any).quickFilterText = this.searchInput || '';
+      // Refresh the infinite cache to apply the search
+      this.agGrid.api.refreshInfiniteCache();
+    } else {
+      // Fallback for other row models
+      this.agGrid?.api.setQuickFilter(this.searchInput || '');
+    }
+
     if (this.searchInput) {
       this.ls.set(
         LS.OPTIONS_AG_GRID_SEARCH + '_' + this.id?.toUpperCase(),
@@ -734,7 +961,6 @@ export class AgGridComponent
    * Restores the saved state of the grid from local storage.
    */
   restoreState() {
-    // setTimeout(() => {
     if (this.id) {
       const PREV_STATE = this.ls.get(
         LS.OPTIONS_AG_GRID + '_' + this.id.toUpperCase(),
@@ -779,7 +1005,9 @@ export class AgGridComponent
       }
     }
 
-    this.selectNode(this.selectedVariable);
-    // });
+    // For infinite row model, selection is handled in the datasource
+    if (this.gridOptions.rowModelType !== 'infinite') {
+      this.selectNode(this.selectedVariable);
+    }
   }
 }
