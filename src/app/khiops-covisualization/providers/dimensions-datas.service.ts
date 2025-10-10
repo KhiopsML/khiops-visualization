@@ -796,6 +796,10 @@ export class DimensionsDatasService {
 
       this.dimensionsDatas.matrixDatas.matrixCellDatas = cellDatas;
 
+      // CRITICAL: Create immutable backup of original matrix data
+      // This must be done after matrixCellDatas is set but before any external service can access it
+      this.dimensionsDatas.setMatrixDatas(this.dimensionsDatas.matrixDatas);
+
       // hack to limit re-rendering and optimize perf
       this.dimensionsDatas.matrixDatas.propagateChanges = propagateChanges;
 

@@ -92,7 +92,7 @@ export function getCoviszalizationMockFile(): string {
   // let urlKC = 'Coclustering.json';
   // let urlKC = 'Co-simple-2vars.json';
   // let urlKC = 'Coclustering-6.json';
-  // let urlKC = 'Coclustering-4.json';
+  let urlKC = 'Coclustering-4.khcj';
   // let urlKC = '1-Adult2varsEducationOccupation.khcj';
   // let urlKC = '2-Iris3vars-Coclustering.khcj';
   // let urlKC = 'co-IrisMissing.json';
@@ -106,7 +106,7 @@ export function getCoviszalizationMockFile(): string {
   // let urlKC = '8-TS4624User_Coclustering.json';
   // let urlKC = 'IV-AdultEducation.json';
   // let urlKC = 'Coclustering-IVAdultEducation.json';
-  let urlKC = 'Coclustering-IV-Glass.khcj';
+  // let urlKC = 'Coclustering-IV-Glass.khcj';
   // let urlKC = 'Coclustering-IV-Iris.khcj';
   // let urlKC = 'Coclustering-IV-Pima.khcj';
   // let urlKC = 'Coclustering_NewSeparator.khcj';

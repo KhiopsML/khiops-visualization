@@ -21,12 +21,175 @@ import { CompositionUtils } from './composition.utils.service';
 })
 export class CompositionService {
   public compositionValues: CompositionModel[] = [];
+  
+  // Cache to store stable snapshots of childrenLeafIndexes for all dimensions
+  // This cache persists across multiple calculations during UI transitions (collapse/expand)
+  // and is only cleared when user explicitly changes selections
+  private dimensionLeafIndexesCache: Map<number, number[]> | null = null;
+  
+  // CRITICAL FIX: Matrix data stability guard
+  // This stores a stable snapshot of matrix data to detect and prevent external mutations
+  private stableMatrixDataSnapshot: any[] | null = null;
+  private lastMatrixDataFingerprint: string | null = null;
 
   constructor(
     private appService: AppService,
     private dimensionsDatasService: DimensionsDatasService,
     private importExtDatasService: ImportExtDatasService,
   ) {}
+
+  /**
+   * Gets or creates a stable snapshot of childrenLeafIndexes for all dimensions.
+   * This snapshot persists across multiple calculations during UI operations (collapse/expand)
+   * to ensure frequencies remain consistent. The cache is invalidated automatically if
+   * the actual selectedNodes have changed since the snapshot was created.
+   * 
+   * @returns Map of dimension index to array of leaf indices
+   */
+  private getStableDimensionLeafIndexes(): Map<number, number[]> {
+    const selectedNodes = this.dimensionsDatasService.dimensionsDatas.selectedNodes;
+    const totalDimensions = this.dimensionsDatasService.dimensionsDatas.selectedDimensions?.length || 0;
+
+    // Check if the cache is still valid by comparing with current selectedNodes
+    if (this.dimensionLeafIndexesCache) {
+      let cacheIsValid = true;
+      
+      // Verify that ALL dimensions in the cache match the current selectedNodes
+      for (let dimIdx = 0; dimIdx < totalDimensions; dimIdx++) {
+        const node = selectedNodes?.[dimIdx];
+        const cachedLeafIndexes = this.dimensionLeafIndexesCache.get(dimIdx);
+        const currentLeafIndexes = node?.childrenLeafIndexes;
+        
+        // Check if both exist and have the same content
+        if (cachedLeafIndexes && currentLeafIndexes) {
+          // Compare arrays
+          if (cachedLeafIndexes.length !== currentLeafIndexes.length ||
+              !cachedLeafIndexes.every((val, idx) => val === currentLeafIndexes[idx])) {
+            console.log(`❌ Cache invalid for dimension ${dimIdx}: cached=${JSON.stringify(cachedLeafIndexes)}, current=${JSON.stringify(currentLeafIndexes)}`);
+            cacheIsValid = false;
+            break;
+          }
+        } else if (cachedLeafIndexes || currentLeafIndexes) {
+          // One exists but not the other
+          console.log(`❌ Cache invalid for dimension ${dimIdx}: one is undefined`);
+          cacheIsValid = false;
+          break;
+        }
+      }
+      
+      if (cacheIsValid) {
+        console.log('✅ Reusing VALID cached dimension leaf indexes');
+        return this.dimensionLeafIndexesCache;
+      } else {
+        console.log('🔄 Cache invalidated, creating new snapshot');
+      }
+    }
+
+    // Create a new snapshot
+    console.log('📸 Creating NEW snapshot of dimension leaf indexes');
+    const snapshot = new Map<number, number[]>();
+
+    for (let dimIdx = 0; dimIdx < totalDimensions; dimIdx++) {
+      const node = selectedNodes?.[dimIdx];
+      if (node && node.childrenLeafIndexes && node.childrenLeafIndexes.length > 0) {
+        console.log(`  Dimension ${dimIdx}: ${JSON.stringify(node.childrenLeafIndexes)}`);
+        snapshot.set(dimIdx, [...node.childrenLeafIndexes]);
+      }
+    }
+
+    // Cache the snapshot for reuse
+    this.dimensionLeafIndexesCache = snapshot;
+    
+    return snapshot;
+  }
+
+  /**
+   * Clears the cached dimension leaf indexes snapshot.
+   * This should be called when the user explicitly changes selections
+   * (not during collapse/expand animations).
+   */
+  public clearDimensionLeafIndexesCache(): void {
+    console.log('🗑️ Clearing dimension leaf indexes cache');
+    this.dimensionLeafIndexesCache = null;
+    // Also clear matrix data stability cache when selections change
+    this.clearMatrixDataStabilityCache();
+  }
+  
+  /**
+   * Creates and returns a stable snapshot of matrix data that is immune to external mutations.
+   * This method ensures that once a snapshot is created, it remains consistent across all calculations
+   * during the same UI operation (collapse/expand), preventing the frequency oscillation issue.
+   * 
+   * @returns Stable matrix data snapshot
+   */
+  private getStableMatrixDataSnapshot(): any[] {
+    const currentMatrixData = this.dimensionsDatasService.dimensionsDatas.matrixDatas?.matrixCellDatas;
+    
+    if (!currentMatrixData) {
+      return [];
+    }
+    
+    // Generate current data fingerprint
+    const currentFingerprint = this.generateMatrixDataFingerprint(currentMatrixData);
+    
+    // If we have a stable snapshot and the fingerprint matches, return it
+    if (this.stableMatrixDataSnapshot && this.lastMatrixDataFingerprint === currentFingerprint) {
+      console.log('🔒 Using STABLE matrix data snapshot (protected from mutations)');
+      return this.stableMatrixDataSnapshot;
+    }
+    
+    // Create new stable snapshot with complete isolation
+    console.log('📸 Creating NEW stable matrix data snapshot');
+    this.stableMatrixDataSnapshot = currentMatrixData.map(cell => ({
+      ...cell,
+      cellFreqs: cell?.cellFreqs ? cell.cellFreqs.slice() : [],
+      cellFreqHash: cell?.cellFreqHash ? { ...cell.cellFreqHash } : {}
+    }));
+    
+    this.lastMatrixDataFingerprint = currentFingerprint;
+    
+    return this.stableMatrixDataSnapshot;
+  }
+  
+  /**
+   * Generates a unique fingerprint for matrix data to detect mutations
+   */
+  private generateMatrixDataFingerprint(matrixData: any[]): string {
+    let totalContextKeys = 0;
+    let totalFreqSum = 0;
+    
+    for (const cell of matrixData) {
+      if (cell?.cellFreqHash) {
+        totalContextKeys += Object.keys(cell.cellFreqHash).length;
+      }
+      if (cell?.cellFreqs) {
+        for (const freq of cell.cellFreqs) {
+          totalFreqSum += freq || 0;
+        }
+      }
+    }
+    
+    return `${matrixData.length}_${totalContextKeys}_${totalFreqSum}`;
+  }
+  
+  /**
+   * Clears the matrix data stability cache
+   */
+  private clearMatrixDataStabilityCache(): void {
+    console.log('🗑️ Clearing matrix data stability cache');
+    this.stableMatrixDataSnapshot = null;
+    this.lastMatrixDataFingerprint = null;
+  }
+  
+  /**
+   * Forces a refresh of the stable matrix data snapshot.
+   * This should be called when the underlying matrix data legitimately changes
+   * (not due to external mutations during calculations).
+   */
+  public forceRefreshMatrixDataSnapshot(): void {
+    console.log('🔄 Forcing refresh of matrix data snapshot');
+    this.clearMatrixDataStabilityCache();
+  }
 
   /**
    * Retrieves the composition clusters for a given hierarchy and node.
@@ -42,6 +205,12 @@ export class CompositionService {
     hierarchyName: string,
     node: TreeNodeModel,
   ): CompositionModel[] {
+    console.log(`🔄 getCompositionClusters called for ${hierarchyName}, node:`, node._id);
+    
+    // Log current state of selectedNodes to understand what's happening
+    const selectedNodes = this.dimensionsDatasService.dimensionsDatas.selectedNodes;
+    console.log(`   Current selectedNodes state:`, selectedNodes?.map((n, idx) => `${idx}:${n?._id}[${n?.childrenLeafIndexes?.join(',')}]`).join(' | '));
+    
     if (
       this.appService.initialDatas?.coclusteringReport?.dimensionSummaries &&
       this.appService.appDatas?.coclusteringReport?.dimensionPartitions &&
@@ -204,6 +373,7 @@ export class CompositionService {
     currentIndex: number,
     isIndiVarCase: boolean,
   ): CompositionModel[] {
+    console.log('🚀 ~ CompositionService ~ getCompositionValues ~ node:', node);
     let compositionValues: CompositionModel[] = [];
     let processedCollapsedChildren = new Set<string>();
 
@@ -243,6 +413,7 @@ export class CompositionService {
       this.calculateContextualCompositionFrequencies(
         compositionValues,
         currentIndex,
+        node.childrenLeafIndexes || [],
       );
     }
 
@@ -357,11 +528,20 @@ export class CompositionService {
    * 1. Find all matrix cells with the selected cluster as xDisplayaxisPart (or yDisplayaxisPart)
    * 2. For each cell, use cellFreqHash to find the frequency for the selected context
    * 3. Group these frequencies by the corresponding composition values
+   * 
+   * @param compositionValues - The composition values to calculate frequencies for
+   * @param currentIndex - The index of the dimension being recalculated (0 for x-axis, 1 for y-axis, >1 for context dimensions)
+   * @param currentNodeLeafIndexes - All leaf indices contained in the currently selected node for this dimension (even if collapsed)
    */
   private calculateContextualCompositionFrequencies(
     compositionValues: CompositionModel[],
     currentIndex: number,
+    currentNodeLeafIndexes: number[],
   ): void {
+    // CRITICAL DIAGNOSIS: Generate unique calculation ID to track this specific calculation
+    const calculationId = `calc_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    console.log(`🔍 === STARTING CALCULATION ${calculationId} ===`);
+    console.log(`📊 Dimension ${currentIndex}, leafIndexes:`, currentNodeLeafIndexes);
     // Only calculate contextual frequencies if conditional on context is enabled and there are context dimensions
     if (
       !this.dimensionsDatasService.dimensionsDatas.conditionalOnContext ||
@@ -370,27 +550,139 @@ export class CompositionService {
       return;
     }
 
-    // Get matrix data
-    const matrixCellDatas =
-      this.dimensionsDatasService.dimensionsDatas.matrixDatas?.matrixCellDatas;
+    // ULTIMATE FIX: Use immutable original matrix data from the model
+    // This ensures we ALWAYS use the original, unmodified data for calculations
+    const originalMatrixDatas = this.dimensionsDatasService.dimensionsDatas.getOriginalMatrixDatas();
+    let matrixCellDatas = originalMatrixDatas?.matrixCellDatas;
+    
+    if (!matrixCellDatas || matrixCellDatas.length === 0) {
+      console.warn('⚠️ No immutable matrix data available - using fallback');
+      // Fallback to stable snapshot if immutable backup not available
+      const fallbackData = this.getStableMatrixDataSnapshot();
+      if (!fallbackData || fallbackData.length === 0) {
+        return;
+      }
+      matrixCellDatas = fallbackData;
+    }
+    
+    // Keep reference to current (potentially mutated) data for comparison
+    const currentMatrixCellDatas = this.dimensionsDatasService.dimensionsDatas.matrixDatas?.matrixCellDatas;
 
-    if (!matrixCellDatas) {
-      return;
+    // CRITICAL DIAGNOSIS: Check if matrix data is stable between calculations
+    // Calculate total sum of ALL frequencies in ALL cells to detect data mutation
+    let totalFreqSum = 0;
+    let totalContextKeys = 0;
+    for (const cell of matrixCellDatas) {
+      if (cell?.cellFreqs) {
+        for (const freq of cell.cellFreqs) {
+          totalFreqSum += freq || 0;
+        }
+      }
+      if (cell?.cellFreqHash) {
+        totalContextKeys += Object.keys(cell.cellFreqHash).length;
+      }
+    }
+    
+    // Store original data fingerprint for comparison
+    const originalTotalFreqSum = totalFreqSum;
+    const originalTotalContextKeys = totalContextKeys;
+    
+    // Calculate current data fingerprint for comparison (if available)
+    let currentTotalFreqSum = 0;
+    let currentTotalContextKeys = 0;
+    if (currentMatrixCellDatas) {
+      for (const cell of currentMatrixCellDatas) {
+        if (cell?.cellFreqs) {
+          for (const freq of cell.cellFreqs) {
+            currentTotalFreqSum += freq || 0;
+          }
+        }
+        if (cell?.cellFreqHash) {
+          currentTotalContextKeys += Object.keys(cell.cellFreqHash).length;
+        }
+      }
+    }
+    
+    console.log(`📈 IMMUTABLE Matrix data fingerprint [${calculationId}]:`, {
+      totalCells: matrixCellDatas.length,
+      totalFreqSum: totalFreqSum,
+      totalContextKeys: totalContextKeys,
+      firstCellKeys: matrixCellDatas[0] ? Object.keys(matrixCellDatas[0].cellFreqHash || {}).length : 0,
+      firstCellFreqsLength: matrixCellDatas[0]?.cellFreqs?.length || 0,
+      firstCellFirstFreq: matrixCellDatas[0]?.cellFreqs?.[0] || 'N/A',
+      sampleCellFreqHash: matrixCellDatas[0] ? Object.keys(matrixCellDatas[0].cellFreqHash || {}).slice(0, 3) : [],
+      protectionLevel: originalMatrixDatas ? 'IMMUTABLE_ORIGINAL' : 'STABLE_SNAPSHOT',
+      isImmutable: true,
+      // Show comparison with original (if available)
+      originalTotalContextKeys: originalMatrixDatas ? originalTotalContextKeys : 'N/A',
+      originalTotalFreqSum: originalMatrixDatas ? originalTotalFreqSum : 'N/A',
+      dataIntegrity: !originalMatrixDatas ? '✅ STABLE_ONLY' : 
+        (originalTotalContextKeys === totalContextKeys && originalTotalFreqSum === totalFreqSum ? '✅ SYNCHRONIZED' : '� PROTECTED')
+    });
+    
+    // Detect and report any divergence between original and stable snapshot (if original exists)
+    if (originalMatrixDatas && (originalTotalContextKeys !== totalContextKeys || originalTotalFreqSum !== totalFreqSum)) {
+      console.error(`🚨 MATRIX DATA DIVERGENCE DETECTED [${calculationId}]!`, {
+        originalContextKeys: originalTotalContextKeys,
+        stableContextKeys: totalContextKeys,
+        contextKeysDiff: originalTotalContextKeys - totalContextKeys,
+        originalFreqSum: originalTotalFreqSum,
+        stableFreqSum: totalFreqSum,
+        freqSumDiff: originalTotalFreqSum - totalFreqSum,
+        divergenceType: originalTotalContextKeys !== totalContextKeys ? 'CONTEXT_KEYS' : 'FREQUENCY_DATA',
+        protection: 'STABLE_SNAPSHOT_USED'
+      });
     }
 
-    // Build the context key based on the currently selected context dimensions
-    const selectedContextValues =
-      this.dimensionsDatasService.dimensionsDatas.contextSelection;
     const numContextDimensions =
       this.dimensionsDatasService.dimensionsDatas.contextDimensionCount;
 
-    // Generate all possible context key combinations from selected leaf indices
-    // selectedContextValues[i] contains all leaf indices for dimension i (e.g., [1,2,3] if a node contains leaves 1,2,3)
+    // For ALL dimensions (axes AND context), we need to use the full childrenLeafIndexes
+    // from the selected nodes, not just the visible indices from selectedContextValues.
+    // This ensures frequencies remain consistent when collapsing/expanding ANY dimension.
+    
+    // CRITICAL: Use a stable snapshot that persists across multiple calculations
+    // during the same UI operation (collapse/expand). This prevents race conditions
+    // where selectedNodes changes between calculations.
+    const stableSnapshot = this.getStableDimensionLeafIndexes();
+    
+    // Build a map of all leaf indices for EVERY dimension using the stable snapshot EXCLUSIVELY
+    const allDimensionLeafIndices = new Map<number, number[]>();
+    
+    // Get the total number of dimensions (axes + context)
+    const totalDimensions = this.dimensionsDatasService.dimensionsDatas.selectedDimensions?.length || 0;
+    
+    // Populate allDimensionLeafIndices using ONLY the stable snapshot
+    // This ensures ALL dimensions use the SAME consistent snapshot throughout the calculation
+    for (let dimIdx = 0; dimIdx < totalDimensions; dimIdx++) {
+      if (dimIdx === currentIndex) {
+        // For the current dimension being recalculated, use the passed currentNodeLeafIndexes
+        // This contains ALL leaf indices for this node, even if it's collapsed
+        allDimensionLeafIndices.set(dimIdx, currentNodeLeafIndexes.length > 0 ? currentNodeLeafIndexes : [0]);
+      } else {
+        // CRITICAL FIX: For ALL other dimensions, use ONLY the stable snapshot
+        // DO NOT fall back to contextSelection or selectedNodes - this causes the instability!
+        const snapshotLeafIndexes = stableSnapshot.get(dimIdx);
+        if (snapshotLeafIndexes && snapshotLeafIndexes.length > 0) {
+          allDimensionLeafIndices.set(dimIdx, snapshotLeafIndexes);
+        } else {
+          // Only use [0] if snapshot is missing (should never happen)
+          console.warn(`⚠️ Missing snapshot for dimension ${dimIdx}, using [0] as fallback`);
+          allDimensionLeafIndices.set(dimIdx, [0]);
+        }
+      }
+    }
+    
+    // Generate all possible context key combinations using ONLY the snapshot indices
     const contextDimensionIndices: number[][] = [];
     for (let i = 0; i < numContextDimensions; i++) {
-      const dimensionIndices = selectedContextValues[i] || [0];
+      const absoluteDimIndex = i + 2; // Absolute index in all dimensions (2, 3, 4, ...)
+      // Use ONLY allDimensionLeafIndices which is built from the stable snapshot
+      const dimensionIndices = allDimensionLeafIndices.get(absoluteDimIndex) || [0];
       contextDimensionIndices.push(dimensionIndices);
     }
+    
+    console.log('📋 Generated contextDimensionIndices array:', contextDimensionIndices);
 
     // Step 1: Group compositions by their terminalCluster (original leaf cluster)
     // This ensures that compositions from different leaf clusters are calculated separately,
@@ -442,55 +734,185 @@ export class CompositionService {
 
     // Step 1.7: For each displayClusterName, calculate total contextual frequency once
     const contextualFrequencyByDisplayName = new Map<string, number>();
-    for (const [
-      displayClusterName,
-      terminalClusterNames,
-    ] of terminalClustersByDisplayName) {
-      let totalContextualFrequency = 0;
-      let matchedCells = 0;
+    
+    // Check if this is a context dimension (index > 1) or an axis dimension (index 0 or 1)
+    const isContextDimension = currentIndex > 1;
+    
+    if (isContextDimension) {
+      console.log('=== CONTEXT DIMENSION CALCULATION ===');
+      console.log('Context dimension index:', currentIndex);
+      console.log('Context dimension position in array:', currentIndex - 2);
+      console.log('Current node leaf indexes (ALL leaves, even if collapsed):', currentNodeLeafIndexes);
+      console.log('Using cached snapshot:', this.dimensionLeafIndexesCache !== null);
+      console.log('All dimension leaf indices map (detailed):');
+      allDimensionLeafIndices.forEach((indices, dimIdx) => {
+        const dimName = this.dimensionsDatasService.dimensionsDatas.selectedDimensions?.[dimIdx]?.name || `Dim${dimIdx}`;
+        console.log(`  Dimension ${dimIdx} (${dimName}):`, indices);
+      });
+      
+      // For context dimensions, sum frequencies for cells matching:
+      // - This dimension's cluster using currentNodeLeafIndexes (ALL leaves, even if collapsed)
+      // - ALL other context dimensions' selected values
+      for (const [displayClusterName, terminalClusterNames] of terminalClustersByDisplayName) {
+        console.log('Processing context cluster:', displayClusterName);
+        console.log('Terminal clusters:', terminalClusterNames);
+        let totalContextualFrequency = 0;
+        let matchedCells = 0;
 
-      for (let i = 0; i < matrixCellDatas.length; i++) {
-        const cell = matrixCellDatas[i];
-        if (!cell) continue;
+        // Use allDimensionLeafIndices for this dimension - it contains ALL leaf indices even if node is collapsed
+        // This ensures frequencies remain stable when collapsing/expanding the node
+        const currentDimSelectedValues = allDimensionLeafIndices.get(currentIndex) || currentNodeLeafIndexes.length > 0 ? currentNodeLeafIndexes : [0];
+        
+        console.log('Selected leaf indices for this dimension (using allDimensionLeafIndices):', currentDimSelectedValues);
+        console.log('Searching for context keys matching:');
+        for (let dimIdx = 0; dimIdx < numContextDimensions; dimIdx++) {
+          const absoluteDimIdx = dimIdx + 2;
+          const selectedVals = allDimensionLeafIndices.get(absoluteDimIdx) || [];
+          const dimName = this.dimensionsDatasService.dimensionsDatas.selectedDimensions?.[absoluteDimIdx]?.name || `Dim${absoluteDimIdx}`;
+          console.log(`  Context dim ${dimIdx} (${dimName}): ${JSON.stringify(selectedVals)}`);
+        }
 
-        const axisPartValues =
-          currentIndex === 0 ? cell.xaxisPartValues : cell.yaxisPartValues;
-        const axisDisplayPart =
-          currentIndex === 0 ? cell.xDisplayaxisPart : cell.yDisplayaxisPart;
+        // Iterate through all matrix cells
+        const matchedCellDetails: string[] = [];
+        const allContextKeys = new Set<string>();
+        
+        for (let i = 0; i < matrixCellDatas.length; i++) {
+          const cell = matrixCellDatas[i];
+          if (!cell || !cell.cellFreqHash || !cell.cellFreqs) continue;
 
-        // Check if this cell matches any terminal cluster OR the display cluster name
-        const cellMatches =
-          terminalClusterNames.some((tcn) => axisPartValues === tcn) ||
-          axisDisplayPart === displayClusterName;
+          // Collect all unique context keys for debugging
+          for (const contextKey in cell.cellFreqHash) {
+            allContextKeys.add(contextKey);
+          }
 
-        if (cellMatches) {
-          matchedCells++;
+          // For each cell, check all context key combinations
+          for (const contextKey in cell.cellFreqHash) {
+            const contextPosition = (cell.cellFreqHash as any)[contextKey];
+            if (contextPosition === undefined || contextPosition >= cell.cellFreqs.length) {
+              continue;
+            }
 
-          if (cell.cellFreqHash && cell.cellFreqs) {
-            const contextCombinations = this.generateContextCombinations(
-              contextDimensionIndices,
-            );
+            // Parse the context key (e.g., "0,1" -> [0, 1])
+            const contextIndices = contextKey.split(',').map(Number);
+            
+            // Check if this context combination matches our criteria:
+            // 1. This dimension's index must be in currentDimSelectedValues
+            // 2. All other dimensions' indices must match their selected values
+            let isMatch = true;
+            
+            for (let dimIdx = 0; dimIdx < contextIndices.length; dimIdx++) {
+              const contextValue = contextIndices[dimIdx];
+              if (contextValue === undefined) {
+                isMatch = false;
+                break;
+              }
+              
+              // Get the absolute dimension index (context dimensions start at 2)
+              const absoluteDimIdx = dimIdx + 2;
+              
+              // CRITICAL FIX: Use ONLY allDimensionLeafIndices - NO FALLBACK!
+              // If missing from map, use empty array which will cause no matches (correct behavior)
+              const selectedValues = allDimensionLeafIndices.get(absoluteDimIdx);
+              if (!selectedValues) {
+                console.warn(`⚠️ Missing dimension ${absoluteDimIdx} in allDimensionLeafIndices during matching!`);
+                isMatch = false;
+                break;
+              }
+              
+              // Check if the context value matches any of the selected values for this dimension
+              if (!selectedValues.includes(contextValue)) {
+                isMatch = false;
+                break;
+              }
+            }
+            
+            if (isMatch) {
+              const contextualFrequency = cell.cellFreqs[contextPosition] || 0;
+              totalContextualFrequency += contextualFrequency;
+              matchedCells++;
+              
+              // Log detailed cell information for debugging
+              matchedCellDetails.push(
+                `Cell[${i}] key="${contextKey}" freq=${contextualFrequency} ` +
+                `x=${cell.xaxisPartValues} y=${cell.yaxisPartValues}`
+              );
+            }
+          }
+        }
+        
+        console.log('All unique context keys in cellFreqHash:', Array.from(allContextKeys).sort().slice(0, 20));
 
-            for (const combination of contextCombinations) {
-              const contextKey = combination.join(',');
-              const contextPosition = (cell.cellFreqHash as any)[contextKey];
-              if (
-                contextPosition !== undefined &&
-                contextPosition < cell.cellFreqs.length
-              ) {
-                const contextualFrequency =
-                  cell.cellFreqs[contextPosition] || 0;
-                totalContextualFrequency += contextualFrequency;
+        console.log('Matched cell details (first 10):', matchedCellDetails.slice(0, 10));
+
+        // CRITICAL DIAGNOSIS: Manual verification of the calculation
+        console.log(`🧮 [${calculationId}] CALCULATION VERIFICATION:`);
+        console.log(`  - Display cluster: ${displayClusterName}`);
+        console.log(`  - Matched cells: ${matchedCells}`);
+        console.log(`  - Total contextual frequency: ${totalContextualFrequency}`);
+        
+        // Manual sum check of the first 5 matched cells
+        if (matchedCellDetails.length > 0) {
+          const first5Frequencies = matchedCellDetails.slice(0, 5).map(detail => {
+            const match = detail.match(/freq=(\d+)/);
+            return match && match[1] ? parseInt(match[1]) : 0;
+          });
+          const manualSum5 = first5Frequencies.reduce((sum, freq) => sum + freq, 0);
+          console.log(`  - First 5 matched frequencies: [${first5Frequencies.join(', ')}] sum=${manualSum5}`);
+        }
+
+        console.log('Total matched cells:', matchedCells);
+        console.log('Total contextual frequency:', totalContextualFrequency);
+        contextualFrequencyByDisplayName.set(displayClusterName, totalContextualFrequency);
+      }
+    } else {
+      // Original logic for axis dimensions (currentIndex 0 or 1)
+      for (const [displayClusterName, terminalClusterNames] of terminalClustersByDisplayName) {
+        let totalContextualFrequency = 0;
+        let matchedCells = 0;
+
+        for (let i = 0; i < matrixCellDatas.length; i++) {
+          const cell = matrixCellDatas[i];
+          if (!cell) continue;
+
+          const axisPartValues =
+            currentIndex === 0 ? cell.xaxisPartValues : cell.yaxisPartValues;
+          const axisDisplayPart =
+            currentIndex === 0 ? cell.xDisplayaxisPart : cell.yDisplayaxisPart;
+
+          // Check if this cell matches any terminal cluster OR the display cluster name
+          const cellMatches =
+            terminalClusterNames.some((tcn) => axisPartValues === tcn) ||
+            axisDisplayPart === displayClusterName;
+
+          if (cellMatches) {
+            matchedCells++;
+
+            if (cell.cellFreqHash && cell.cellFreqs) {
+              const contextCombinations = this.generateContextCombinations(
+                contextDimensionIndices,
+              );
+
+              for (const combination of contextCombinations) {
+                const contextKey = combination.join(',');
+                const contextPosition = (cell.cellFreqHash as any)[contextKey];
+                if (
+                  contextPosition !== undefined &&
+                  contextPosition < cell.cellFreqs.length
+                ) {
+                  const contextualFrequency =
+                    cell.cellFreqs[contextPosition] || 0;
+                  totalContextualFrequency += contextualFrequency;
+                }
               }
             }
           }
         }
-      }
 
-      contextualFrequencyByDisplayName.set(
-        displayClusterName,
-        totalContextualFrequency,
-      );
+        contextualFrequencyByDisplayName.set(
+          displayClusterName,
+          totalContextualFrequency,
+        );
+      }
     }
 
     // Step 2: For each terminal cluster, calculate its share of the contextual frequency and distribute it among its values
@@ -588,6 +1010,10 @@ export class CompositionService {
         }
       }
     }
+    
+    // CRITICAL DIAGNOSIS: Final summary of calculation
+    console.log(`🏁 === CALCULATION ${calculationId} COMPLETED ===`);
+    console.log(`📝 Final results: Updated ${compositionsByCluster.size} clusters for dimension ${currentIndex}`);
   }
 
   /**

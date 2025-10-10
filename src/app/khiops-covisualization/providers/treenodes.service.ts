@@ -685,6 +685,10 @@ export class TreenodesService {
    */
   collapseNode(dimensionName: string, nodeName: string) {
     this.updateCollapsedNodesToSave(dimensionName, nodeName, 1);
+    
+    // CRITICAL FIX: Update the node's isCollapsed state and recalculate childrenLeafIndexes
+    this.updateNodeCollapsedState(dimensionName, nodeName, true);
+    
     this.setSelectedNode(dimensionName, nodeName, true);
   }
 
@@ -696,7 +700,54 @@ export class TreenodesService {
    */
   expandNode(dimensionName: string, nodeName: string) {
     this.updateCollapsedNodesToSave(dimensionName, nodeName, -1);
+    
+    // CRITICAL FIX: Update the node's isCollapsed state and recalculate childrenLeafIndexes
+    this.updateNodeCollapsedState(dimensionName, nodeName, false);
+    
     this.setSelectedNode(dimensionName, nodeName, true);
+  }
+
+  /**
+   * Updates the collapsed state of a specific node and recalculates its childrenLeafIndexes.
+   * This is critical for maintaining correct leaf indexes when nodes are collapsed/expanded.
+   *
+   * @param {string} dimensionName - The name of the dimension.
+   * @param {string} nodeName - The name of the node.
+   * @param {boolean} isCollapsed - The new collapsed state.
+   */
+  private updateNodeCollapsedState(dimensionName: string, nodeName: string, isCollapsed: boolean) {
+    // Find the dimension index
+    const dimensionIndex = this.dimensionsDatasService.dimensionsDatas.selectedDimensions.findIndex(
+      (dim) => dim.name === dimensionName
+    );
+    
+    if (dimensionIndex === -1) {
+      console.warn(`⚠️ Dimension ${dimensionName} not found`);
+      return;
+    }
+    
+    // Find the node in currentDimensionsClusters
+    const clusters = this.dimensionsDatasService.dimensionsDatas.currentDimensionsClusters[dimensionIndex];
+    if (!clusters) {
+      console.warn(`⚠️ No clusters found for dimension ${dimensionName}`);
+      return;
+    }
+    
+    const node = clusters.find((n) => n.name === nodeName);
+    if (!node) {
+      console.warn(`⚠️ Node ${nodeName} not found in dimension ${dimensionName}`);
+      return;
+    }
+    
+    console.log(`🔄 Updating ${nodeName} collapsed state: ${node.isCollapsed} → ${isCollapsed}`);
+    
+    // Update the collapsed state
+    node.isCollapsed = isCollapsed;
+    
+    // Recalculate childrenLeafIndexes based on the new collapsed state
+    node.getChildrenList();
+    
+    console.log(`✅ Updated ${nodeName} childrenLeafIndexes:`, node.childrenLeafIndexes);
   }
 
   /**

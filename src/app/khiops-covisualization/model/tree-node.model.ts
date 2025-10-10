@@ -157,8 +157,38 @@ export class TreeNodeModel {
     this.childrenList = [];
     this.childrenLeafList = [];
     this.childrenLeafIndexes = [];
+    
+    // If this node is collapsed, treat it as a single leaf node
+    if (this.isCollapsed) {
+      this.childrenList.push(this.name);
+      this.childrenLeafList.push(this.name);
+      // Use leafPosition instead of matrixIndex for collapsed nodes
+      this.childrenLeafIndexes.push(this.leafPosition);
+      return;
+    }
+    
     // Use the optimized iterative version by default
     this.deepGetChildrenNames(this.children, this.name, this.matrixIndex);
+  }
+
+  /**
+   * Recursively finds a node by name in the tree
+   * @param nodeName - The name of the node to find
+   * @returns The found node or undefined
+   */
+  private findNodeInTree(nodeName: string): TreeNodeModel | undefined {
+    if (this.name === nodeName) {
+      return this;
+    }
+    
+    for (const child of this.children) {
+      const found = child.findNodeInTree(nodeName);
+      if (found) {
+        return found;
+      }
+    }
+    
+    return undefined;
   }
 
   getInnerValueGroups(dimension: DimensionCovisualizationModel) {
@@ -229,9 +259,30 @@ export class TreeNodeModel {
 
       childrenList.push(current.name);
 
-      if (current.children.length === 0) {
+      // Check if we need to find the actual node to check its collapsed state
+      let isCurrentNodeCollapsed = false;
+      if (current.name === this.name) {
+        // This is the root node, use our own collapsed state
+        isCurrentNodeCollapsed = this.isCollapsed;
+      } else {
+        // Find the actual child node to check its collapsed state
+        const actualNode = this.findNodeInTree(current.name);
+        isCurrentNodeCollapsed = actualNode?.isCollapsed || false;
+      }
+
+      // If this node is collapsed OR has no children, treat it as a leaf
+      if (current.children.length === 0 || isCurrentNodeCollapsed) {
         childrenLeafList.push(current.name);
-        childrenLeafIndexes.push(current.matrixIndex as number);
+        
+        // For collapsed nodes, use leafPosition instead of matrixIndex if matrixIndex is empty
+        let indexToUse = current.matrixIndex;
+        if (isCurrentNodeCollapsed && (current.matrixIndex === '' || current.matrixIndex === undefined)) {
+          // Find the actual node to get its leafPosition
+          const actualNode = current.name === this.name ? this : this.findNodeInTree(current.name);
+          indexToUse = actualNode?.leafPosition || current.matrixIndex;
+        }
+        
+        childrenLeafIndexes.push(indexToUse as number);
       } else {
         // Use for...of for better performance and add children to stack in reverse order
         // to maintain the same traversal order as the recursive version

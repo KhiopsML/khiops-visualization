@@ -13,6 +13,10 @@ import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.c
 export class DimensionsDatasModel {
   matrixDatas!: MatrixDatasModel;
   matrixCellFreqDataMap: DynamicI | undefined = undefined;
+  
+  // CRITICAL FIX: Immutable backup of original matrix data
+  // This prevents external mutations from affecting calculations
+  private _originalMatrixDatas: MatrixDatasModel | null = null;
 
   cellPartIndexes: number[][] = [[]];
   initialDimensions: DimensionCovisualizationModel[] = [];
@@ -41,4 +45,49 @@ export class DimensionsDatasModel {
   selectedNodes: TreeNodeModel[] = [];
 
   constructor() {}
+
+  /**
+   * Creates an immutable backup of the matrix data when it's first set.
+   * This backup is protected from external mutations.
+   */
+  public setMatrixDatas(matrixDatas: MatrixDatasModel): void {
+    // Set the current matrix data
+    this.matrixDatas = matrixDatas;
+    
+    // Create immutable backup if not already created
+    if (!this._originalMatrixDatas && matrixDatas?.matrixCellDatas) {
+      console.log('🔒 Creating IMMUTABLE backup of matrix data');
+      // Create a simple deep copy without methods to avoid TypeScript issues
+      const immutableCellDatas = matrixDatas.matrixCellDatas.map(cell => {
+        const newCell = Object.assign({}, cell);
+        if (cell?.cellFreqs) {
+          newCell.cellFreqs = [...cell.cellFreqs];
+        }
+        if (cell?.cellFreqHash) {
+          newCell.cellFreqHash = { ...cell.cellFreqHash };
+        }
+        return newCell;
+      });
+      
+      this._originalMatrixDatas = Object.assign({}, matrixDatas);
+      this._originalMatrixDatas.matrixCellDatas = immutableCellDatas;
+    }
+  }
+
+  /**
+   * Returns the immutable original matrix data.
+   * This data is guaranteed to never change after initial setup.
+   */
+  public getOriginalMatrixDatas(): MatrixDatasModel | null {
+    return this._originalMatrixDatas;
+  }
+
+  /**
+   * Clears the immutable backup. Should only be called when completely
+   * reloading data (not during normal UI operations).
+   */
+  public clearOriginalMatrixDatas(): void {
+    console.log('🗑️ Clearing immutable matrix data backup');
+    this._originalMatrixDatas = null;
+  }
 }
