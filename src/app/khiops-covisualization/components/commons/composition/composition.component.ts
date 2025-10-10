@@ -199,13 +199,14 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
     selectedValue?: string,
   ) {
     if (selectedNode) {
-      this.compositionValues = Object.assign(
-        [],
+      // Force a complete new array reference to trigger change detection
+      const newCompositionValues =
         this.compositionService.getCompositionClusters(
           selectedNode.hierarchy,
           _.cloneDeep(selectedNode),
-        ),
-      );
+        );
+      // Create a new array to ensure Angular detects the change
+      this.compositionValues = [...newCompositionValues];
       // if composition values : categorical
       if (this.compositionValues!.length > 0) {
         // If selectedValue is provided, try to find the corresponding composition

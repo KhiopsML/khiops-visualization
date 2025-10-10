@@ -392,11 +392,9 @@ export class CompositionService {
       contextDimensionIndices.push(dimensionIndices);
     }
 
-    // Determine which axis contains our selected cluster
-    const dimensionProperty =
-      currentIndex === 0 ? 'xDisplayaxisPart' : 'yDisplayaxisPart';
-
-    // Step 1: Group compositions by their terminal cluster (cluster that contains multiple values)
+    // Step 1: Group compositions by their terminalCluster (original leaf cluster)
+    // This ensures that compositions from different leaf clusters are calculated separately,
+    // even when their parent node is collapsed
     const compositionsByCluster = new Map<string, CompositionModel[]>();
     for (const composition of compositionValues) {
       if (!composition.terminalCluster) continue;
@@ -407,19 +405,68 @@ export class CompositionService {
       compositionsByCluster.get(composition.terminalCluster)?.push(composition);
     }
 
-    // Step 2: For each cluster, calculate its total contextual frequency and distribute it among its values
-    for (const [clusterName, clusterCompositions] of compositionsByCluster) {
-      // Calculate total contextual frequency for this cluster
+    // Step 1.5: Group terminal clusters by their displayClusterName to handle collapsed nodes
+    // When collapsed, multiple terminal clusters share the same displayClusterName (e.g., "B10")
+    // and need to share the total contextual frequency proportionally
+    const terminalClustersByDisplayName = new Map<string, string[]>();
+    for (const [
+      terminalClusterName,
+      clusterCompositions,
+    ] of compositionsByCluster) {
+      const displayClusterName =
+        clusterCompositions[0]?.cluster || terminalClusterName;
+      if (!terminalClustersByDisplayName.has(displayClusterName)) {
+        terminalClustersByDisplayName.set(displayClusterName, []);
+      }
+      terminalClustersByDisplayName
+        .get(displayClusterName)
+        ?.push(terminalClusterName);
+    }
+
+    // Step 1.6: Calculate and cache original frequencies for ALL terminal clusters BEFORE any modifications
+    // This is crucial because Step 2 will modify composition.frequency values
+    const originalFrequencyByTerminalCluster = new Map<string, number>();
+    for (const [
+      terminalClusterName,
+      clusterCompositions,
+    ] of compositionsByCluster) {
+      let totalOriginalFrequency = 0;
+      for (const composition of clusterCompositions) {
+        totalOriginalFrequency += composition.frequency || 0;
+      }
+      originalFrequencyByTerminalCluster.set(
+        terminalClusterName,
+        totalOriginalFrequency,
+      );
+    }
+
+    // Step 1.7: For each displayClusterName, calculate total contextual frequency once
+    const contextualFrequencyByDisplayName = new Map<string, number>();
+    for (const [
+      displayClusterName,
+      terminalClusterNames,
+    ] of terminalClustersByDisplayName) {
       let totalContextualFrequency = 0;
+      let matchedCells = 0;
+
       for (let i = 0; i < matrixCellDatas.length; i++) {
         const cell = matrixCellDatas[i];
         if (!cell) continue;
 
-        // Check if this cell contains our cluster on the correct axis
-        if (cell[dimensionProperty] === clusterName) {
-          // Get the contextual frequency from this cell for all possible context combinations
+        const axisPartValues =
+          currentIndex === 0 ? cell.xaxisPartValues : cell.yaxisPartValues;
+        const axisDisplayPart =
+          currentIndex === 0 ? cell.xDisplayaxisPart : cell.yDisplayaxisPart;
+
+        // Check if this cell matches any terminal cluster OR the display cluster name
+        const cellMatches =
+          terminalClusterNames.some((tcn) => axisPartValues === tcn) ||
+          axisDisplayPart === displayClusterName;
+
+        if (cellMatches) {
+          matchedCells++;
+
           if (cell.cellFreqHash && cell.cellFreqs) {
-            // Generate all possible combinations of context indices and sum their frequencies
             const contextCombinations = this.generateContextCombinations(
               contextDimensionIndices,
             );
@@ -438,6 +485,57 @@ export class CompositionService {
             }
           }
         }
+      }
+
+      contextualFrequencyByDisplayName.set(
+        displayClusterName,
+        totalContextualFrequency,
+      );
+    }
+
+    // Step 2: For each terminal cluster, calculate its share of the contextual frequency and distribute it among its values
+    for (const [
+      terminalClusterName,
+      clusterCompositions,
+    ] of compositionsByCluster) {
+      // Get the display cluster name (may be collapsed parent name like "B10")
+      const displayClusterName =
+        clusterCompositions[0]?.cluster || terminalClusterName;
+
+      // Get the total contextual frequency for this display cluster
+      const totalDisplayContextualFrequency =
+        contextualFrequencyByDisplayName.get(displayClusterName) || 0;
+
+      // If this display cluster has multiple terminal clusters (collapsed case),
+      // calculate this terminal cluster's share of the contextual frequency
+      let totalContextualFrequency = 0;
+
+      const terminalClustersInDisplayCluster =
+        terminalClustersByDisplayName.get(displayClusterName) || [];
+      if (terminalClustersInDisplayCluster.length > 1) {
+        // Calculate total original frequency across all terminal clusters in this display cluster
+        // IMPORTANT: Use cached original frequencies to avoid using modified values
+        let totalOriginalFrequencyAllClusters = 0;
+        for (const tcn of terminalClustersInDisplayCluster) {
+          totalOriginalFrequencyAllClusters +=
+            originalFrequencyByTerminalCluster.get(tcn) || 0;
+        }
+
+        // Get this terminal cluster's cached original frequency
+        const thisClusterOriginalFrequency =
+          originalFrequencyByTerminalCluster.get(terminalClusterName) || 0;
+
+        // Calculate this terminal cluster's share of the contextual frequency
+        if (totalOriginalFrequencyAllClusters > 0) {
+          const proportion =
+            thisClusterOriginalFrequency / totalOriginalFrequencyAllClusters;
+          totalContextualFrequency = Math.round(
+            totalDisplayContextualFrequency * proportion,
+          );
+        }
+      } else {
+        // Expanded case: This terminal cluster gets the full contextual frequency
+        totalContextualFrequency = totalDisplayContextualFrequency;
       }
 
       if (totalContextualFrequency > 0) {
