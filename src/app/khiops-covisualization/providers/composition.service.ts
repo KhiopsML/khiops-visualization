@@ -236,9 +236,12 @@ export class CompositionService {
     }
 
     // Calculate contextual frequencies if conditional on context is enabled
+    // but only for axis dimensions (position 0 and 1), never for context dimensions (position >= 2)
+    const isContextDimension = currentIndex >= 2;
     if (
       this.dimensionsDatasService.dimensionsDatas.conditionalOnContext &&
-      this.dimensionsDatasService.dimensionsDatas.contextDimensionCount > 0
+      this.dimensionsDatasService.dimensionsDatas.contextDimensionCount > 0 &&
+      !isContextDimension
     ) {
       this.calculateContextualCompositionFrequencies(
         compositionValues,

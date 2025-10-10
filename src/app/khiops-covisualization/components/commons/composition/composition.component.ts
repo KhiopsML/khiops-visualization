@@ -87,6 +87,7 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
           this.selectedDimension?.isVarPart,
           (e) => this.showDetailedPartsDialog(e),
           this.dimensionsDatasService,
+          this.position,
         );
         // Use currentNode instead of selectedNode to avoid timing issues
         this.updateTable(this.currentNode || this.selectedNode);
@@ -151,6 +152,7 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
         this.selectedDimension?.isVarPart,
         (e) => this.showDetailedPartsDialog(e),
         this.dimensionsDatasService,
+        this.position,
       );
       // Update currentNode when dimension changes
       this.currentNode = this.selectedNode;
