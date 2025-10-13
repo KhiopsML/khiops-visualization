@@ -1167,7 +1167,7 @@ describe('coVisualization', () => {
         ).toHaveBeenCalled();
       });
 
-      it('should not process collapsed children for VarVar case', () => {
+      it('should process collapsed children for VarVar case', () => {
         compositionService['getCompositionValues'](
           mockCurrentDimensionDetails,
           mockCurrentInitialDimensionDetails,
@@ -1178,7 +1178,7 @@ describe('coVisualization', () => {
 
         expect(
           compositionService['processCollapsedChildren'],
-        ).not.toHaveBeenCalled();
+        ).toHaveBeenCalled();
       });
 
       it('should merge and format compositions for collapsed IndiVar nodes', () => {
