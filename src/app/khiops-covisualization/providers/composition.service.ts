@@ -207,17 +207,15 @@ export class CompositionService {
     let compositionValues: CompositionModel[] = [];
     let processedCollapsedChildren = new Set<string>();
 
-    if (isIndiVarCase) {
-      // First, recursively process collapsed children and sub-children
-      processedCollapsedChildren = this.processCollapsedChildren(
-        currentDimensionDetails,
-        currentInitialDimensionDetails,
-        node,
-        currentIndex,
-        isIndiVarCase,
-        compositionValues,
-      );
-    }
+    // Process collapsed children for both IndiVar and VarVar cases
+    processedCollapsedChildren = this.processCollapsedChildren(
+      currentDimensionDetails,
+      currentInitialDimensionDetails,
+      node,
+      currentIndex,
+      isIndiVarCase,
+      compositionValues,
+    );
 
     // Then process the current node using the factorized method
     const nodeCompositions = this.processNodeCompositions(
@@ -233,8 +231,8 @@ export class CompositionService {
     if (node.isCollapsed && isIndiVarCase) {
       compositionValues = this.mergeAllContiguousModels(compositionValues);
       compositionValues = this.formatCompositions(node, compositionValues);
-    } else if (isIndiVarCase && processedCollapsedChildren.size > 0) {
-      // When we have collapsed children, preserve their cluster names
+    } else if (processedCollapsedChildren.size > 0) {
+      // When we have collapsed children, preserve their cluster names for both IndiVar and VarVar cases
       compositionValues = this.formatCompositions(
         node,
         compositionValues,
