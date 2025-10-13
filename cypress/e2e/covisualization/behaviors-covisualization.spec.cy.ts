@@ -9,7 +9,32 @@ import '../../support/commands';
 import '../../utils/utils';
 
 describe('Behaviors tests for Khiops Covisualization', () => {
-  let files = ['DigitCoclustering.json'];
+  let files = ['CC_3_Coclustering.json'];
+  files.forEach((fileName) => {
+    it(`Test behaviors clicks`, () => {
+      cy.initViews();
+
+      cy.loadFile('covisualization', fileName);
+
+      cy.get('#tree-expando-6').first().click();
+
+      cy.get('#cluster-composition-0').contains('A11');
+
+      // ### Click on first node
+      cy.get('.tree-leaf-text').eq(1).click({ force: true });
+
+      cy.get('#cluster-composition-0').contains('A11');
+      cy.get('#tree-expando-5').first().click();
+
+      cy.get('#cluster-composition-0').contains('A4');
+
+      cy.get('#tree-expando-5').first().click();
+
+      cy.get('#cluster-composition-0').contains('A11');
+    });
+  });
+
+  files = ['DigitCoclustering.json'];
   files.forEach((fileName) => {
     it(`Test unfold hierarchy slider on big datas and hierarchy checkboxes`, () => {
       cy.initViews();
