@@ -11,7 +11,7 @@ import '../../utils/utils';
 describe('Behaviors tests for Khiops Covisualization', () => {
   let files = ['CC_3_Coclustering.json'];
   files.forEach((fileName) => {
-    it(`Test behaviors clicks`, () => {
+    it(`Test composition values when folding nodes VAR VAR case clicks`, () => {
       cy.initViews();
 
       cy.loadFile('covisualization', fileName);
@@ -31,6 +31,36 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       cy.get('#tree-expando-5').first().click();
 
       cy.get('#cluster-composition-0').contains('A11');
+    });
+  });
+
+  files = ['Coclustering-IV-Glass.khcj'];
+  files.forEach((fileName) => {
+    it(`Test composition values when folding nodes INDI VAR case clicks`, () => {
+      cy.initViews();
+
+      cy.loadFile('covisualization', fileName);
+
+      //  reverse dimenions
+      cy.get('.hierarchy-select-comp-button').first().click();
+      cy.wait(500);
+      cy.get('.mat-mdc-menu-item').eq(1).click();
+
+      cy.get('#tree-expando-19').first().click();
+
+      cy.get('#cluster-composition-0').contains('B7');
+
+      // ### Click on first node
+      cy.get('.tree-leaf-text').eq(1).click({ force: true });
+
+      cy.get('#cluster-composition-0').contains('B7');
+      cy.get('#tree-expando-18').first().click();
+
+      cy.get('#cluster-composition-0').contains('B3');
+
+      cy.get('#tree-expando-18').first().click();
+
+      cy.get('#cluster-composition-0').contains('B7');
     });
   });
 
