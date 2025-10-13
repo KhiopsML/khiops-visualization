@@ -233,6 +233,13 @@ export class CompositionService {
     if (node.isCollapsed && isIndiVarCase) {
       compositionValues = this.mergeAllContiguousModels(compositionValues);
       compositionValues = this.formatCompositions(node, compositionValues);
+    } else if (isIndiVarCase && processedCollapsedChildren.size > 0) {
+      // When we have collapsed children, preserve their cluster names
+      compositionValues = this.formatCompositions(
+        node,
+        compositionValues,
+        true,
+      );
     }
 
     // Calculate contextual frequencies if conditional on context is enabled
@@ -260,6 +267,7 @@ export class CompositionService {
   formatCompositions(
     node: TreeNodeModel,
     compositionValues: CompositionModel[],
+    preserveCollapsedClusterNames: boolean = false,
   ): CompositionModel[] {
     // Create deep copies to avoid mutating the original objects
     const formattedCompositions = compositionValues.map((composition) =>
@@ -270,7 +278,15 @@ export class CompositionService {
       // set the rank of all childs to the rank of the parent #206
       composition.rank = node.rank;
       composition.type = composition.innerVariableType;
-      composition.cluster = node.cluster;
+
+      // Only update cluster name if we're not preserving collapsed cluster names
+      // or if the composition doesn't have a different cluster name (meaning it's not from a collapsed node)
+      if (
+        !preserveCollapsedClusterNames ||
+        composition.cluster === node.cluster
+      ) {
+        composition.cluster = node.cluster;
+      }
       // now sort the composition valueGroups.valueFrequencies and valueGroups.values in the same order
       if (composition.valueGroups) {
         const { values, valueFrequencies } = composition.valueGroups;
@@ -856,6 +872,10 @@ export class CompositionService {
             child,
             mergedChildCompositions,
           );
+          // Ensure the collapsed child compositions keep the child's cluster name
+          formattedChildCompositions.forEach((composition) => {
+            composition.cluster = child.cluster;
+          });
           compositionValues.push(...formattedChildCompositions);
 
           // Mark all children of this collapsed node as processed
