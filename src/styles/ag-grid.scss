@@ -47,7 +47,7 @@ ag-grid-angular {
     color: white !important;
   }
   mat-icon:hover {
-    background-color: var(--grey-text) !important;
+    background-color: var(--primary-30) !important;
   }
 }
 .ag-theme-balham .ag-row-selected:hover {
@@ -73,7 +73,7 @@ ag-grid-angular {
 
 .ag-paging-panel {
   border-color: transparent !important;
-  color: var(--grey-text) !important;
+  color: var(--primary-30) !important;
 
   button {
     display: none;

@@ -75,7 +75,7 @@
       em {
         font-size: 0.95em;
         font-weight: 500;
-        color: var(--primary-contrast);
+        color: var(--primary-10);
         background: var(--bg-color-30);
         padding: 1px 5px;
         border-radius: 4px;
@@ -83,7 +83,7 @@
         word-break: break-word;
       }
       .important-badge {
-        background: var(--primary-contrast);
+        background: var(--primary-10);
         color: var(--bg-color-30);
       }
     }

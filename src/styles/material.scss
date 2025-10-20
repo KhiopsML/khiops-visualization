@@ -161,11 +161,11 @@ button {
     background: var(--orange-accent) !important;
 
     .mat-mdc-snack-bar-label {
-      color: var(--black-text);
+      color: var(--primary);
     }
     button {
-      border: 2px solid var(--black-text);
-      color: var(--black-text) !important;
+      border: 2px solid var(--primary);
+      color: var(--primary) !important;
     }
   }
 }

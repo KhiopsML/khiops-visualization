@@ -20,6 +20,7 @@ body {
   min-height: 600px;
   overflow: hidden;
   font-size: 12px !important;
+  color: var(--primary-10);
 }
 
 ::-webkit-input-placeholder {
@@ -89,6 +90,10 @@ body {
 
 em {
   font-style: normal;
+}
+
+p {
+  color: var(--primary-10);
 }
 
 h1 {
@@ -431,6 +436,7 @@ canvas:focus {
 .kl-card {
   border: 1px solid var(--border-color);
   background-color: white !important;
+  color: var(--primary-10);
   border-radius: var(--border-radius);
   padding: 12px;
 
