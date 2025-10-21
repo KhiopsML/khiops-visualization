@@ -55,21 +55,29 @@ export class DistributionDatasModel {
         'true' || false;
 
     // Configure Y-axis options (Linear/Log)
+    // When persistence is enabled, use saved global values
+    // When persistence is disabled, use the current global defaults (allows "Change all scales" to work)
+    const yDefaultType = persistScaleOptions
+      ? HistogramType.YLIN
+      : AppService.Ls.get(LS.DISTRIBUTION_GRAPH_OPTION_Y) || HistogramType.YLIN;
     this.distributionGraphOptionsY = this.createGraphOptions(
       [HistogramType.YLIN, HistogramType.YLOG],
-      HistogramType.YLIN,
+      yDefaultType,
       persistScaleOptions ? LS.DISTRIBUTION_GRAPH_OPTION_Y : null,
     );
 
     // Configure X-axis options (Linear/Log)
+    const xDefaultType = persistScaleOptions
+      ? HistogramType.XLIN
+      : AppService.Ls.get(LS.DISTRIBUTION_GRAPH_OPTION_X) || HistogramType.XLIN;
     this.distributionGraphOptionsX = this.createGraphOptions(
       [HistogramType.XLIN, HistogramType.XLOG],
-      HistogramType.XLIN,
+      xDefaultType,
       persistScaleOptions ? LS.DISTRIBUTION_GRAPH_OPTION_X : null,
     );
 
-    // Set distribution type when persistence is disabled
-    if (!persistScaleOptions) {
+    // Set distribution type when persistence is disabled, but preserve current value
+    if (!persistScaleOptions && !this.distributionType) {
       this.distributionType = HistogramType.YLIN;
     }
   }
@@ -99,7 +107,8 @@ export class DistributionDatasModel {
         options.selected = defaultType;
       }
     } else {
-      // Always use default when persistence is disabled
+      // When persistence is disabled, use default type
+      // This allows "Change all scales" button to work by setting global defaults
       options.selected = defaultType;
     }
 

@@ -152,11 +152,10 @@ export class VariableGraphDetailsComponent
 
             if (this.isHistogramDisplayed()) {
               if (this.selectedVariable) {
-                // Reset graph options when changing variable (respects SCALE PERSISTENCE setting)
+                // Get histogram graph data for the selected variable
                 this.distributionDatasService.getHistogramGraphDatas(
                   this.selectedVariable,
                   undefined,
-                  true, // resetGraphOptions = true for variable change
                 );
               }
             } else {
@@ -287,8 +286,16 @@ export class VariableGraphDetailsComponent
   private onScaleChanged() {
     const currentVariable = this.getCurrentVariable();
     if (currentVariable) {
-      // Force regeneration of distribution graph data with current variable
-      if (this.showDistributionGraph) {
+      // Handle histogram case
+      if (this.isHistogramDisplayed() && this.showDistributionGraph) {
+        // Force regeneration of histogram data with current variable
+        this.distributionDatasService.getHistogramGraphDatas(
+          currentVariable,
+          this.distributionDatas?.interpretableHistogramNumber,
+        );
+      }
+      // Handle regular distribution graph case
+      else if (this.showDistributionGraph) {
         this.distributionDatasService.getdistributionGraphDatas(
           currentVariable,
           this.distributionGraphType,
@@ -332,12 +339,10 @@ export class VariableGraphDetailsComponent
 
   onInterpretableHistogramChanged(index: number) {
     if (this.selectedVariable) {
-      // Don't reset graph options when only changing interpretable histogram
-      // This preserves SCALE PERSISTENCE settings
+      // Get histogram graph data for the selected variable with new interpretable histogram
       this.distributionDatasService.getHistogramGraphDatas(
         this.selectedVariable,
         index,
-        false, // resetGraphOptions = false to preserve scale settings
       );
       this.interpretableHistogramChanged.emit(index);
     }

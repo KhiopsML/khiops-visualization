@@ -189,21 +189,26 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
    */
   private restoreVariableScaleSettings(): void {
     if (this.variableRank !== undefined) {
-      const savedXScale = this.variableScaleSettingsService.getVariableXScale(
-        this.variableRank,
-      );
-      const savedYScale = this.variableScaleSettingsService.getVariableYScale(
-        this.variableRank,
-      );
+      // Get variable-specific settings (not global defaults)
+      const variableSettings =
+        this.variableScaleSettingsService.getVariableScaleSettings(
+          this.variableRank,
+        );
 
-      // Apply saved X scale - create new object reference for OnPush change detection
-      if (savedXScale && this.graphOptionsX) {
-        this.graphOptionsX = { ...this.graphOptionsX, selected: savedXScale };
+      // Only restore if there are actual variable-specific settings saved
+      // This prevents overriding local changes with global defaults
+      if (variableSettings?.xScale && this.graphOptionsX) {
+        this.graphOptionsX = {
+          ...this.graphOptionsX,
+          selected: variableSettings.xScale,
+        };
       }
 
-      // Apply saved Y scale - create new object reference for OnPush change detection
-      if (savedYScale && this.graphOptionsY) {
-        this.graphOptionsY = { ...this.graphOptionsY, selected: savedYScale };
+      if (variableSettings?.yScale && this.graphOptionsY) {
+        this.graphOptionsY = {
+          ...this.graphOptionsY,
+          selected: variableSettings.yScale,
+        };
       }
     }
   }
@@ -250,7 +255,8 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     }
 
     if (this.graphOptionsX) {
-      this.graphOptionsX.selected = type;
+      // Create new object reference for OnPush change detection
+      this.graphOptionsX = { ...this.graphOptionsX, selected: type };
     }
     this.datas && this.update();
   }
@@ -265,7 +271,8 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     }
 
     if (this.graphOptionsY) {
-      this.graphOptionsY.selected = type;
+      // Create new object reference for OnPush change detection
+      this.graphOptionsY = { ...this.graphOptionsY, selected: type };
     }
     this.datas && this.update();
   }
@@ -348,8 +355,10 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log('🚀 ~ HistogramComponent ~ ngOnChanges ~ changes:', changes);
     if (changes.datas && !changes.datas.firstChange) {
-      this.restoreVariableScaleSettings();
+      // Don't restore variable scale settings here - it would override user's local changes
+      // Only restore on component initialization (ngOnInit)
       this.datas && this.update();
     }
     if (changes.selectedItem) {
@@ -357,9 +366,13 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     }
     // Force update when graph options change (scale changes)
     if (changes.graphOptionsX && !changes.graphOptionsX.firstChange) {
+      // Check if we have variable-specific settings that should override the global change
+      this.restoreVariableScaleSettings();
       this.datas && this.update();
     }
     if (changes.graphOptionsY && !changes.graphOptionsY.firstChange) {
+      // Check if we have variable-specific settings that should override the global change
+      this.restoreVariableScaleSettings();
       this.datas && this.update();
     }
   }
