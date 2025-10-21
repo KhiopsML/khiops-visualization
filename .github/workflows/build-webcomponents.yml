@@ -1,0 +1,52 @@
+name: Build WebComponents Bundle
+
+on: 
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to build from'
+        required: false
+        default: 'master'
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  build-webcomponents:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.branch || 'master' }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Build webcomponents
+        run: yarn build:webcomponents
+
+      - name: Create docs/dist directory
+        run: mkdir -p docs/dist
+
+      - name: Copy bundle to docs/dist
+        run: cp dist/khiops-webcomponent/khiops-webcomponents.bundle.js docs/dist/
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add docs/dist/khiops-webcomponents.bundle.js
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Generate khiops-webcomponents.bundle.js"
+            git push
+          fi
