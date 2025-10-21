@@ -6,6 +6,7 @@
 
 export class ConfigModel {
   showProjectTab?: boolean;
+  showOpenFileBtn?: boolean;
   showLogo?: boolean;
   appSource!: string;
   storage: string = 'DEFAULT';
