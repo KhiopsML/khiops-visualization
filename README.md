@@ -10,7 +10,6 @@
 
 <img width="791" height="546" alt="demo-khiops" src="https://github.com/user-attachments/assets/194483be-215e-49dd-b4f0-84e81fdbf415" />
 
-
 **🌐 [Khiops Visualization Live Demo](https://khiopsml.github.io/khiops-visualization/)**
 
 **🌐 [Khiops Covisualization Live Demo](https://khiopsml.github.io/khiops-visualization/covisualization.html)**
@@ -149,6 +148,18 @@ Generate and view test results:
 
 ```bash
 yarn test
+```
+
+### Bundle Compilation
+
+```powershell
+powershell -ExecutionPolicy Bypass -File ".\scripts\build.ps1"
+```
+
+or
+
+```bash
+yarn build:webcomponents
 ```
 
 ## 📄 License
