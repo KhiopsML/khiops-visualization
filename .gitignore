@@ -6,6 +6,9 @@
 # But keep the dist inside libs/khiops-hypertree
 !/libs/khiops-hypertree/dist/
 
+# Allow docs/dist for generated bundles
+!/docs/dist/
+
 # compiled output
 /tmp
 /out-tsc
