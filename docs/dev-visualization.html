@@ -35,6 +35,9 @@
           if (kv1) {
             kv1.clean();
             kv1.setDatas(data);
+            kv1.setConfig({
+              showOpenFileBtn: true,
+            });
           } else {
             console.error('khiops-visualization element not found');
           }
