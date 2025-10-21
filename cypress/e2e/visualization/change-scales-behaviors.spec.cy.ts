@@ -33,6 +33,9 @@ describe('Level distribution Test Plan for Khiops Visualization', () => {
         cy.get('#change-scale-dialog-apply-btn').click();
         cy.wait(200);
 
+        cy.get('.graph-options-menu-comp').first().contains('xLog');
+        cy.get('.graph-options-menu-comp').eq(1).contains('yLog');
+
         cy.checkCanvasIsNotEmpty('#histogram-canvas');
 
         // change variable
