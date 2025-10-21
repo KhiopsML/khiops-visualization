@@ -57,8 +57,8 @@ export class UnfoldHierarchyComponent implements OnInit {
   private borderColor: string;
   private defaultMaxUnfoldHierarchy = 0;
   private chartOptions: ChartOptions<'line'> | undefined;
-  public clustersPerDimDatasChartOptions: ChartOptions | undefined;
-  public infoPerClusterChartOptions: ChartOptions | undefined;
+  public clustersPerDimDatasChartOptions: ChartOptions<'line'> | undefined;
+  public infoPerClusterChartOptions: ChartOptions<'line'> | undefined;
 
   constructor(
     private translate: TranslateService,
