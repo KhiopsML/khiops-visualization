@@ -1,6 +1,6 @@
 name: Build WebComponents Bundle
 
-on: 
+on:
   workflow_dispatch:
     inputs:
       branch:
@@ -32,6 +32,15 @@ jobs:
 
       - name: Build webcomponents
         run: yarn build:webcomponents
+
+      - name: Debug - List dist directory
+        run: |
+          echo "Contents of dist directory:"
+          ls -la dist/
+          echo "Contents of dist/khiops-webcomponent directory:"
+          ls -la dist/khiops-webcomponent/ || echo "Directory does not exist"
+          echo "Looking for bundle files:"
+          find . -name "*bundle*" -type f || echo "No bundle files found"
 
       - name: Create docs/dist directory
         run: mkdir -p docs/dist
