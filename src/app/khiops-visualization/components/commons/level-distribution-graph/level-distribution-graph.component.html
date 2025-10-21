@@ -1,11 +1,13 @@
-<div id="level-distribution-graph-comp" fxFlexFill #levelGraph>
+<div [id]="id" fxFlexFill #levelGraph>
   <div fxFlexFill fxLayout="column">
     <div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
       <div fxFlex fxLayout="row" fxLayoutAlign="start center">
         <h1>{{ levelDistributionTitle }}</h1>
       </div>
       <kl-legend
-        [inputDatas]="'GLOBAL.LEVEL'"
+        [inputDatas]="
+          distributionType === 'level' ? 'GLOBAL.LEVEL' : 'GLOBAL.IMPORTANCE'
+        "
         [type]="'chart-1d'"
         [colorSet]="colorSet"
       ></kl-legend>
@@ -23,7 +25,7 @@
         <kl-header-tools [showMenu]="false"></kl-header-tools>
       </div>
       <button
-        id="level-distribution-graph-close-btn"
+        [id]="graphIdContainer + '-close-btn'"
         color="primary"
         class="screenshot-hide"
         matDialogClose
@@ -35,8 +37,8 @@
     </div>
     <kl-chart
       class="kl-card"
-      id="level-distribution-graph"
-      [canvasIdContainer]="'level-distribution-chart'"
+      [id]="graphIdContainer"
+      [canvasIdContainer]="graphIdContainer + '-chart'"
       [chartOptions]="chartOptions"
       [colorSet]="colorSet"
       [inputDatas]="inputDatas"

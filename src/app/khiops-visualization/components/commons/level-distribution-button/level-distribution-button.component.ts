@@ -7,6 +7,7 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { TranslateService } from '@ngstack/translate';
 import { TYPES } from '@khiops-library/enum/types';
+import { DistributionType } from '@khiops-visualization/types/distribution-type';
 
 @Component({
   selector: 'app-level-distribution-button',
@@ -18,17 +19,34 @@ export class LevelDistributionButtonComponent {
   @Input() title: string = '';
   @Input() isSmallDiv: boolean = false;
   @Input() searchFormVisible: boolean = false;
+  @Input() distributionType: DistributionType = 'level';
   @Output() openLevelDistribution: EventEmitter<void> = new EventEmitter();
 
   constructor(private translate: TranslateService) {}
 
   ngOnInit() {
     if (this.title === '' || this.title === undefined) {
-      this.title = this.translate.get(TYPES.LEVEL_DISTRIBUTION);
+      if (this.distributionType === 'level') {
+        this.title = this.translate.get(TYPES.LEVEL_DISTRIBUTION);
+      } else {
+        this.title = this.translate.get(TYPES.IMPORTANCE_DISTRIBUTION);
+      }
     }
   }
 
   onOpenLevelDistribution() {
     this.openLevelDistribution.emit();
+  }
+
+  get ariaLabel(): string {
+    return this.distributionType === 'level'
+      ? 'ARIA.AG_GRID.OPEN_LEVEL_DISTRIBUTION'
+      : 'ARIA.AG_GRID.OPEN_IMPORTANCE_DISTRIBUTION';
+  }
+
+  get tooltipKey(): string {
+    return this.distributionType === 'level'
+      ? 'GLOBAL.LEVEL_DISTRIBUTION'
+      : 'GLOBAL.IMPORTANCE_DISTRIBUTION';
   }
 }

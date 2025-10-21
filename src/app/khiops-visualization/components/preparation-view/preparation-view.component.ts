@@ -22,7 +22,7 @@ import { PreparationVariableModel } from '@khiops-visualization/model/preparatio
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 import { VariableModel } from '@khiops-visualization/model/variable.model';
 import { TrackerService } from '@khiops-library/providers/tracker.service';
-import { LevelDistributionService } from '../../providers/level-distribution.service';
+import { DistributionService } from '../../providers/distribution.service';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals';
@@ -58,7 +58,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
     private dialog: MatDialog,
     private layoutService: LayoutService,
     private modelingDatasService: ModelingDatasService,
-    private levelDistributionService: LevelDistributionService,
+    private distributionService: DistributionService,
   ) {
     super();
 
@@ -140,7 +140,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
   onShowLevelDistributionFromButton() {
     if (this.variablesDatas) {
       // Sort data by level before showing distribution
-      const sortedData = this.levelDistributionService.sortDatasByLevel(
+      const sortedData = this.distributionService.sortDatasByLevel(
         this.variablesDatas,
       );
       this.onShowLevelDistributionGraph(sortedData);
@@ -159,8 +159,6 @@ export class PreparationViewComponent extends SelectableTabComponent {
    * @returns true if variables data has level property
    */
   hasLevelData(): boolean {
-    return this.levelDistributionService.hasLevelData(
-      this.variablesDatas || [],
-    );
+    return this.distributionService.hasLevelData(this.variablesDatas || []);
   }
 }

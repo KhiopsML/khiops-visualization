@@ -1,4 +1,6 @@
-#level-distribution-graph-comp {
+/* Generic styles for distribution graphs, supporting both level and importance */
+#level-distribution-graph-comp,
+#importance-distribution-graph-comp {
   kl-chart {
     padding-top: 30px;
     height: 90% !important;
@@ -16,12 +18,14 @@
   }
 }
 
-#level-distribution-graph-comp.selected {
+#level-distribution-graph-comp.selected,
+#importance-distribution-graph-comp.selected {
   > div {
     box-shadow: none !important;
   }
 }
 
-#level-distribution-graph-comp.selected::before {
+#level-distribution-graph-comp.selected::before,
+#importance-distribution-graph-comp.selected::before {
   border: none !important;
 }

@@ -10,7 +10,29 @@ import { UtilsService } from '@khiops-library/providers/utils.service';
 @Injectable({
   providedIn: 'root',
 })
-export class LevelDistributionService {
+export class DistributionService {
+  /**
+   * Sorts input data by importance for importance distribution display
+   * @param inputDatas - Array of data to sort
+   * @returns Sorted array by importance
+   */
+  sortDatasByImportance(inputDatas: any[]): any[] {
+    return inputDatas?.sort((a: any, b: any) => {
+      return UtilsService.compare(a.importance || 0, b.importance || 0, false);
+    });
+  }
+  /**
+   * Checks if data has importance property for importance distribution display
+   * @param inputDatas - Array of data to check
+   * @returns true if data has importance property
+   */
+  hasImportanceData(inputDatas: any[]): boolean {
+    return !!(
+      inputDatas?.[0] &&
+      inputDatas[0].importance !== undefined &&
+      inputDatas[0].importance !== 0
+    );
+  }
   /**
    * Sorts input data by level for level distribution display
    * @param inputDatas - Array of data to sort

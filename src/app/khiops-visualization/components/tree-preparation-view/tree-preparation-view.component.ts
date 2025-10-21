@@ -30,7 +30,7 @@ import { TrackerService } from '@khiops-library/providers/tracker.service';
 import { TranslateService } from '@ngstack/translate';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { LayoutService } from '@khiops-library/providers/layout.service';
-import { LevelDistributionService } from '@khiops-visualization/providers/level-distribution.service';
+import { DistributionService } from '@khiops-visualization/providers/distribution.service';
 import { REPORT } from '@khiops-library/enum/report';
 import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals';
@@ -83,7 +83,7 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
     private modelingDatasService: ModelingDatasService,
     private layoutService: LayoutService,
     private store: Store<{ TreePreparationState: TreePreparationState }>,
-    private levelDistributionService: LevelDistributionService,
+    private distributionService: DistributionService,
   ) {
     super();
 
@@ -185,8 +185,6 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
    * @returns true if variables data has level property
    */
   hasLevelData(): boolean {
-    return this.levelDistributionService.hasLevelData(
-      this.variablesDatas || [],
-    );
+    return this.distributionService.hasLevelData(this.variablesDatas || []);
   }
 }

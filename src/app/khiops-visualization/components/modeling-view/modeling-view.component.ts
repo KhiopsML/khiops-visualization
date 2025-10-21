@@ -14,7 +14,6 @@ import { ModelingDatasService } from '@khiops-visualization/providers/modeling-d
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
-import { LevelDistributionGraphComponent } from '@khiops-visualization/components/commons/level-distribution-graph/level-distribution-graph.component';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { REPORT } from '@khiops-library/enum/report';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
@@ -28,7 +27,8 @@ import { DynamicI } from '@khiops-library/interfaces/globals';
 import { VariableModel } from '@khiops-visualization/model/variable.model';
 import { AppService } from '../../../khiops-visualization/providers/app.service';
 import { TrainedPredictor } from '@khiops-visualization/interfaces/modeling-report';
-import { LevelDistributionService } from '@khiops-visualization/providers/level-distribution.service';
+import { DistributionService } from '@khiops-visualization/providers/distribution.service';
+import { LevelDistributionGraphComponent } from '@khiops-visualization/components/commons/level-distribution-graph/level-distribution-graph.component';
 import { TrainedPredictorModel } from '@khiops-visualization/model/trained-predictor.model';
 import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas';
 import { AppConfig } from '../../../../environments/environment';
@@ -63,7 +63,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
     private treePreparationDatasService: TreePreparationDatasService,
     private layoutService: LayoutService,
     private appService: AppService,
-    private levelDistributionService: LevelDistributionService,
+    private distributionService: DistributionService,
   ) {
     super();
 
@@ -172,6 +172,23 @@ export class ModelingViewComponent extends SelectableTabComponent {
   }
 
   onShowLevelDistributionGraph(datas: VariableModel[]) {
+    this.onShowDistributionGraph(datas, 'level');
+  }
+
+  onShowImportanceDistributionFromButton() {
+    if (this.modelingDatas?.trainedPredictorsListDatas) {
+      // Cast to VariableModel[] as the importance distribution expects this type
+      this.onShowDistributionGraph(
+        this.modelingDatas.trainedPredictorsListDatas as any,
+        'importance',
+      );
+    }
+  }
+
+  onShowDistributionGraph(
+    datas: VariableModel[],
+    distributionType: 'level' | 'importance',
+  ) {
     const config = new MatDialogConfig();
     config.maxWidth = 'unset';
     config.width = AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.WIDTH;
@@ -180,6 +197,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
     const dialogRef: MatDialogRef<LevelDistributionGraphComponent> =
       this.dialog.open(LevelDistributionGraphComponent, config);
     dialogRef.componentInstance.datas = datas;
+    dialogRef.componentInstance.distributionType = distributionType;
   }
 
   /**
@@ -187,7 +205,17 @@ export class ModelingViewComponent extends SelectableTabComponent {
    * @returns true if trained predictors data has level property
    */
   hasLevelData(): boolean {
-    return this.levelDistributionService.hasLevelData(
+    return this.distributionService.hasLevelData(
+      this.modelingDatas?.trainedPredictorsListDatas || [],
+    );
+  }
+
+  /**
+   * Checks if the trained predictors data has importance information for displaying the importance distribution button
+   * @returns true if trained predictors data has importance property
+   */
+  hasImportanceData(): boolean {
+    return this.distributionService.hasImportanceData(
       this.modelingDatas?.trainedPredictorsListDatas || [],
     );
   }

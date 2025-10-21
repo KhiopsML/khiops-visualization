@@ -28,6 +28,7 @@ import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { TYPES } from '@khiops-library/enum/types';
 import { Variable2dModel } from '@khiops-visualization/model/variable-2d.model';
 import { AppConfig } from '../../../../../environments/environment';
+import { DistributionType } from '@khiops-visualization/types/distribution-type';
 
 @Component({
   selector: 'app-level-distribution-graph',
@@ -47,6 +48,7 @@ export class LevelDistributionGraphComponent
 
   @Input() public datas?: VariableModel[] | Variable2dModel[];
   @Input() public levelDistributionTitle?: string;
+  @Input() public distributionType: DistributionType = 'level';
 
   public override inputDatas?: ChartDatasModel = undefined;
   public colorSet?: ChartColorsSetI;
@@ -85,10 +87,12 @@ export class LevelDistributionGraphComponent
           callbacks: {
             label: (items) => {
               if (items && items.dataset) {
+                const labelKey =
+                  this.distributionType === 'level'
+                    ? 'GLOBAL.LEVEL'
+                    : 'GLOBAL.IMPORTANCE';
                 return (
-                  this.translate.get('GLOBAL.LEVEL') +
-                  ': ' +
-                  items.formattedValue
+                  this.translate.get(labelKey) + ': ' + items.formattedValue
                 );
               }
               return undefined;
@@ -100,11 +104,14 @@ export class LevelDistributionGraphComponent
   }
 
   ngOnInit() {
+    // Initialize dynamic properties
+    this.initializeDynamicProperties();
+
     // load datas
-    this.inputDatas =
-      this.distributionDatasService.getLeveldistributionGraphDatas(
-        this.datas ?? [],
-      );
+    this.inputDatas = this.distributionDatasService.getDistributionGraphDatas(
+      this.datas ?? [],
+      this.distributionType,
+    );
 
     // simulate click on dialog to make copy available
     setTimeout(() => {
@@ -132,10 +139,21 @@ export class LevelDistributionGraphComponent
       this.levelDistributionTitle === '' ||
       this.levelDistributionTitle === undefined
     ) {
-      this.levelDistributionTitle = this.translate.get(
-        TYPES.LEVEL_DISTRIBUTION,
-      );
+      const titleKey =
+        this.distributionType === 'level'
+          ? TYPES.LEVEL_DISTRIBUTION
+          : TYPES.IMPORTANCE_DISTRIBUTION;
+      this.levelDistributionTitle = this.translate.get(titleKey);
     }
+  }
+
+  private initializeDynamicProperties() {
+    const typePrefix =
+      this.distributionType === 'level' ? 'level' : 'importance';
+
+    // Set dynamic graphIdContainer and id
+    this.graphIdContainer = `${typePrefix}-distribution-graph`;
+    this.id = `${typePrefix}-distribution-graph-comp`;
   }
 
   private triggerClickEvent() {

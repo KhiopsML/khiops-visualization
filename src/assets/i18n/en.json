@@ -242,6 +242,7 @@
     "VARIABLES": "Variables",
     "DELTA_LEVEL_DISTRIBUTION": "Delta level distribution",
     "LEVEL_DISTRIBUTION": "Level distribution",
+    "IMPORTANCE_DISTRIBUTION": "Importance distribution",
     "LEVEL": "Level",
     "SEARCH": "Search",
     "LEARNING_TASK": "Learning task",
@@ -397,6 +398,7 @@
       "CONTEXT": "cCntextual dimensions of the coclustering (if more than 2 dimensions)"
     },
     "COMMONS": {
+      "IMPORTANCE_DISTRIBUTION": "display the importance distribution of the variables",
       "LEVEL_DISTRIBUTION": "display the level distribution of the variables",
       "CONDITIONAL_ON_CONTEXT": "When checked, frequencies are calculated conditionally on the selected context.",
       "MATRIX_MODE": "Set frequency or clusters/intervals matrix.",

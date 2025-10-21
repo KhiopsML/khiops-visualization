@@ -19,6 +19,7 @@ import { TreePreparationDatasService } from './tree-preparation-datas.service';
 import { TYPES } from '@khiops-library/enum/types';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 import { ModalityCountsModel } from '@khiops-visualization/model/modality-counts.model';
+import { DistributionType } from '@khiops-visualization/types/distribution-type';
 import { HistogramValuesI } from '@khiops-visualization/components/commons/histogram/histogram.interfaces';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 import { PreparationVariableModel } from '@khiops-visualization/model/preparation-variable.model';
@@ -842,6 +843,22 @@ export class DistributionDatasService {
   }
 
   /**
+   * Generates distribution graph data for both level and importance from the provided input data.
+   *
+   * @param variables - The input data array containing objects with level or importance information.
+   * @param distributionType - The type of distribution to generate ('level' or 'importance')
+   * @returns A `ChartDatasModel` object containing the datasets and labels for the distribution graph.
+   */
+  getDistributionGraphDatas(
+    variables: VariableModel[] | Variable2dModel[],
+    distributionType: DistributionType = 'level',
+  ): ChartDatasModel {
+    return distributionType === 'level'
+      ? this.getLeveldistributionGraphDatas(variables)
+      : this.getImportanceDistributionGraphDatas(variables);
+  }
+
+  /**
    * Generates level distribution graph data from the provided input data.
    *
    * @param inputDatas - The input data array containing objects with level information.
@@ -878,6 +895,45 @@ export class DistributionDatasService {
     }
 
     return levelDistributionGraphDatas;
+  }
+
+  /**
+   * Generates importance distribution graph data from the provided input data.
+   *
+   * @param variables - The input data array containing objects with importance information.
+   * @returns A `ChartDatasModel` object containing the datasets and labels for the importance distribution graph.
+   */
+  getImportanceDistributionGraphDatas(
+    variables: VariableModel[] | Variable2dModel[],
+  ): ChartDatasModel {
+    const importanceDistributionGraphDatas: ChartDatasModel =
+      new ChartDatasModel();
+
+    const currentDataSet = new ChartDatasetModel('importance');
+    importanceDistributionGraphDatas.datasets.push(currentDataSet);
+
+    let l = variables.length;
+    if (
+      l > AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.MAX_VARIABLES
+    ) {
+      l = AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.MAX_VARIABLES;
+    }
+
+    for (let i = 0; i < l; i++) {
+      const graphItem: BarModel = new BarModel();
+
+      const el = variables[i];
+      if (el instanceof VariableModel) {
+        graphItem.name = el.name;
+      } else if (el instanceof Variable2dModel) {
+        graphItem.name = el.name1 + ' x ' + el.name2;
+      }
+      graphItem.value = (el as any)?.importance || 0; // Do not add tofixed here because datas are < 0.00
+      currentDataSet.data.push(graphItem.value);
+      importanceDistributionGraphDatas.labels.push(graphItem.name || '');
+    }
+
+    return importanceDistributionGraphDatas;
   }
 
   /**

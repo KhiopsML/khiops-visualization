@@ -108,9 +108,21 @@
                 <app-level-distribution-button
                   *ngIf="hasLevelData()"
                   slot="header-tools"
+                  distributionType="level"
                   [isSmallDiv]="agGridRef.isSmallDiv"
                   [searchFormVisible]="agGridRef.searchFormVisible"
                   (openLevelDistribution)="onShowLevelDistributionFromButton()"
+                >
+                </app-level-distribution-button>
+                <app-level-distribution-button
+                  *ngIf="hasImportanceData()"
+                  slot="header-tools"
+                  distributionType="importance"
+                  [isSmallDiv]="agGridRef.isSmallDiv"
+                  [searchFormVisible]="agGridRef.searchFormVisible"
+                  (openLevelDistribution)="
+                    onShowImportanceDistributionFromButton()
+                  "
                 >
                 </app-level-distribution-button>
               </kl-ag-grid>
