@@ -34,7 +34,6 @@ export class UserSettingsComponent implements OnChanges {
   public contrastValue: number =
     AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST;
   public allowCookies?: boolean;
-  public persistScaleValue?: boolean;
 
   constructor(private trackerService: TrackerService) {}
 
@@ -67,11 +66,6 @@ export class UserSettingsComponent implements OnChanges {
     // Allow cookies
     this.allowCookies =
       AppService.Ls.get(LS.COOKIE_CONSENT)?.toString() === 'true' || false;
-
-    // Persist scale options
-    this.persistScaleValue =
-      AppService.Ls.get(LS.SETTING_PERSIST_SCALE_OPTIONS)?.toString() ===
-        'true' || false;
   }
 
   onClickOnCancel() {
@@ -89,8 +83,6 @@ export class UserSettingsComponent implements OnChanges {
     AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
 
     AppService.Ls.set(LS.COOKIE_CONSENT, this.allowCookies);
-
-    AppService.Ls.set(LS.SETTING_PERSIST_SCALE_OPTIONS, this.persistScaleValue);
 
     AppService.Ls.setAll();
 
