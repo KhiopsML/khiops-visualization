@@ -31,6 +31,7 @@ export class ProjectViewComponent
   public sizes?: DynamicI;
   public isElectron: boolean = false;
   public debugFile = AppConfig.debugFile;
+  public showOpenFileBtn: boolean | undefined = false;
 
   // managed by selectable-tab component
   public override tabIndex = 0;
@@ -48,6 +49,7 @@ export class ProjectViewComponent
 
   ngOnInit() {
     this.trackerService.trackEvent('page_view', 'project');
+    this.showOpenFileBtn = this.configService.getConfig().showOpenFileBtn;
   }
 
   ngAfterViewInit() {

@@ -18,7 +18,8 @@
             [projectDatasService]="projectDatasService"
           ></app-project-summary>
         </div>
-        <kl-file-loader *ngIf="debugFile && !isElectron"> </kl-file-loader>
+        <kl-file-loader *ngIf="(debugFile && !isElectron) || showOpenFileBtn">
+        </kl-file-loader>
       </div>
     </as-split-area>
     <as-split-area [size]="sizes?.row[1]" class="kl-card">
