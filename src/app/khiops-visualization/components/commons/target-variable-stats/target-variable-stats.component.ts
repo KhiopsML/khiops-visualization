@@ -19,7 +19,7 @@ import { SelectableService } from '@khiops-library/components/selectable/selecta
 import { TranslateService } from '@ngstack/translate';
 import { ToPrecisionPipe } from '@khiops-library/pipes/to-precision.pipe';
 import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
-import { ChartOptions, TooltipItem } from 'chart.js';
+import { ChartOptions, TooltipItem, ChartTypeRegistry } from 'chart.js';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
@@ -63,8 +63,9 @@ export class TargetVariableStatsComponent
         tooltip: {
           callbacks: {
             title: (items: any) => this.getTooltipTitle(items),
-            label: (items: TooltipItem<'bar'>) => this.getTooltipLabel(items),
-            afterLabel: (items: TooltipItem<'bar'>) =>
+            label: (items: TooltipItem<keyof ChartTypeRegistry>) =>
+              this.getTooltipLabel(items),
+            afterLabel: (items: TooltipItem<keyof ChartTypeRegistry>) =>
               this.getTooltipAfterLabel(items),
           },
         },
@@ -111,7 +112,9 @@ export class TargetVariableStatsComponent
    * @param items - Tooltip item
    * @returns Label string or undefined
    */
-  private getTooltipLabel(items: TooltipItem<'bar'>): string | undefined {
+  private getTooltipLabel(
+    items: TooltipItem<keyof ChartTypeRegistry>,
+  ): string | undefined {
     if (items?.dataset) {
       return (
         this.translate.get('GLOBAL.PROBABILITY') +
@@ -130,7 +133,9 @@ export class TargetVariableStatsComponent
    * @param items - Tooltip item
    * @returns After label string or undefined
    */
-  private getTooltipAfterLabel(items: TooltipItem<'bar'>): string | undefined {
+  private getTooltipAfterLabel(
+    items: TooltipItem<keyof ChartTypeRegistry>,
+  ): string | undefined {
     if (items?.dataset) {
       return (
         this.translate.get('GLOBAL.FREQUENCY') +

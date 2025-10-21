@@ -70,12 +70,12 @@ export class TargetLiftGraphComponent
 
     // Override tooltip callbacks to use component context
     this.chartOptions.plugins!.tooltip!.callbacks = {
-      title: (items) =>
+      title: (items: any) =>
         this.targetLiftGraphService.getTooltipTitle(items, this.title),
-      beforeBody: (items) =>
+      beforeBody: (items: any) =>
         this.targetLiftGraphService.getTooltipBeforeBody(items),
-      label: (items) => this.targetLiftGraphService.getTooltipLabel(items),
-      afterLabel: (items) =>
+      label: (items: any) => this.targetLiftGraphService.getTooltipLabel(items),
+      afterLabel: (items: any) =>
         this.targetLiftGraphService.getTooltipAfterLabel(items),
     };
 

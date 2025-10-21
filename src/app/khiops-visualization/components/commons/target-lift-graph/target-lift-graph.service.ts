@@ -5,7 +5,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { ChartOptions, TooltipItem } from 'chart.js';
+import { ChartOptions, TooltipItem, ChartTypeRegistry } from 'chart.js';
 import { TranslateService } from '@ngstack/translate';
 import { EvaluationDatasService } from '@khiops-visualization/providers/evaluation-datas.service';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
@@ -83,13 +83,10 @@ export class TargetLiftGraphService {
           intersect: false,
           displayColors: true,
           callbacks: {
-            title: (items: TooltipItem<'line'>[]) =>
-              this.getTooltipTitle(items),
-            beforeBody: (items: TooltipItem<'line'>[]) =>
-              this.getTooltipBeforeBody(items),
-            label: (items: TooltipItem<'line'>) => this.getTooltipLabel(items),
-            afterLabel: (items: TooltipItem<'line'>) =>
-              this.getTooltipAfterLabel(items),
+            title: (items: any) => this.getTooltipTitle(items),
+            beforeBody: (items: any) => this.getTooltipBeforeBody(items),
+            label: (items: any) => this.getTooltipLabel(items),
+            afterLabel: (items: any) => this.getTooltipAfterLabel(items),
           },
         },
       },
@@ -215,7 +212,7 @@ export class TargetLiftGraphService {
    * @returns Title string or string array or undefined
    */
   getTooltipTitle(
-    items: TooltipItem<'line'>[],
+    items: TooltipItem<keyof ChartTypeRegistry>[],
     title?: string,
   ): string | string[] | undefined {
     if (!items || items.length === 0) {
@@ -249,7 +246,9 @@ export class TargetLiftGraphService {
    * @param items - Tooltip item
    * @returns Label string or undefined
    */
-  getTooltipLabel(items: TooltipItem<'line'>): string | undefined {
+  getTooltipLabel(
+    items: TooltipItem<keyof ChartTypeRegistry>,
+  ): string | undefined {
     if (!items?.dataset?.label) {
       return undefined;
     }
@@ -275,7 +274,9 @@ export class TargetLiftGraphService {
    * @param _items - Tooltip item (unused)
    * @returns After label string or undefined
    */
-  getTooltipAfterLabel(_items: TooltipItem<'line'>): string | undefined {
+  getTooltipAfterLabel(
+    _items: TooltipItem<keyof ChartTypeRegistry>,
+  ): string | undefined {
     // No additional information needed since values are now displayed in the label
     return undefined;
   }
@@ -285,7 +286,9 @@ export class TargetLiftGraphService {
    * @param items - Tooltip items array
    * @returns Before body string array or undefined
    */
-  getTooltipBeforeBody(items: TooltipItem<'line'>[]): string[] | undefined {
+  getTooltipBeforeBody(
+    items: TooltipItem<keyof ChartTypeRegistry>[],
+  ): string[] | undefined {
     if (
       !items ||
       items.length === 0 ||

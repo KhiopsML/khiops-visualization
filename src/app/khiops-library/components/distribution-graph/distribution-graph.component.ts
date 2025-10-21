@@ -21,7 +21,7 @@ import { ScrollableGraphComponent } from '../scrollable-graph/scrollable-graph.c
 import { KhiopsLibraryService } from '../../providers/khiops-library.service';
 import { ToPrecisionPipe } from '../../pipes/to-precision.pipe';
 import { ChartColorsSetI } from '../../interfaces/chart-colors-set';
-import { ChartOptions, TooltipItem } from 'chart.js';
+import { ChartOptions, ChartTypeRegistry, TooltipItem } from 'chart.js';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { TYPES } from '@khiops-library/enum/types';
 import { HistogramType } from '../../../khiops-visualization/components/commons/histogram/histogram.type';
@@ -127,9 +127,11 @@ export class DistributionGraphComponent
         tooltip: {
           displayColors: false, // Hide color square in tooltip since we only have one bar series
           callbacks: {
-            title: (items: TooltipItem<'bar'>[]) => this.getTooltipTitle(items),
-            label: (items: TooltipItem<'bar'>) => this.getTooltipLabel(items),
-            afterLabel: (items: TooltipItem<'bar'>) =>
+            title: (items: TooltipItem<keyof ChartTypeRegistry>[]) =>
+              this.getTooltipTitle(items),
+            label: (items: TooltipItem<keyof ChartTypeRegistry>) =>
+              this.getTooltipLabel(items),
+            afterLabel: (items: TooltipItem<keyof ChartTypeRegistry>) =>
               this.getTooltipAfterLabel(items),
           },
         },
@@ -281,7 +283,9 @@ export class DistributionGraphComponent
    * @param items Tooltip items from Chart.js
    * @returns Group label with "Group:" or "Interval:" prefix
    */
-  private getTooltipTitle(items: TooltipItem<'bar'>[]): string {
+  private getTooltipTitle(
+    items: TooltipItem<keyof ChartTypeRegistry>[],
+  ): string {
     if (!items?.length || !items[0]) {
       return '';
     }
@@ -301,7 +305,9 @@ export class DistributionGraphComponent
    * @param items Tooltip items from Chart.js
    * @returns Formatted percentage string with "Probability:" prefix or undefined
    */
-  private getTooltipAfterLabel(items: TooltipItem<'bar'>): string | undefined {
+  private getTooltipAfterLabel(
+    items: TooltipItem<keyof ChartTypeRegistry>,
+  ): string | undefined {
     if (!items?.dataset) {
       return undefined;
     }
@@ -330,7 +336,9 @@ export class DistributionGraphComponent
    * @param items Tooltip items from Chart.js
    * @returns Formatted tooltip label with "Frequency:" prefix or undefined
    */
-  private getTooltipLabel(items: TooltipItem<'bar'>): string | undefined {
+  private getTooltipLabel(
+    items: TooltipItem<keyof ChartTypeRegistry>,
+  ): string | undefined {
     const datasetWithExtra = items?.dataset as any;
     if (datasetWithExtra?.extra?.[items.dataIndex]?.extra) {
       const coverageValue =
