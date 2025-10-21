@@ -30,17 +30,66 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Build webcomponents
-        run: yarn build:webcomponents
-
-      - name: Debug - List dist directory
+      - name: Debug - Check Angular CLI and project structure
         run: |
-          echo "Contents of dist directory:"
-          ls -la dist/
-          echo "Contents of dist/khiops-webcomponent directory:"
-          ls -la dist/khiops-webcomponent/ || echo "Directory does not exist"
-          echo "Looking for bundle files:"
-          find . -name "*bundle*" -type f || echo "No bundle files found"
+          echo "Angular CLI version:"
+          npx ng version
+          echo "Project structure:"
+          ls -la projects/
+          echo "khiops-webcomponent project:"
+          ls -la projects/khiops-webcomponent/
+
+      - name: Build khiops-hypertree first
+        run: |
+          cd libs/khiops-hypertree
+          mkdir -p dist
+          yarn install
+          yarn build
+          cd ../..
+
+      - name: Build Angular webcomponent
+        run: |
+          echo "Building Angular webcomponent..."
+          npx ng build khiops-webcomponent --single-bundle
+          echo "Build completed, checking results..."
+          ls -la dist/ || echo "No dist directory"
+          ls -la dist/khiops-webcomponent/ || echo "No khiops-webcomponent directory"
+
+      - name: Process CSS and create bundle
+        run: |
+          if [ -f "dist/khiops-webcomponent/styles.css" ]; then
+            echo "Processing CSS file..."
+            node ./scripts/wrap-css.js dist/khiops-webcomponent/styles.css dist/khiops-webcomponent/styles.js
+          else
+            echo "No styles.css found, creating empty styles.js"
+            touch dist/khiops-webcomponent/styles.js
+          fi
+
+          cd dist/khiops-webcomponent
+
+          # Process main.js if it exists
+          if [ -f "main.js" ]; then
+            sed -i -E 's/(--mdc-[^:]*color[^:]*)([^\w-]|:)/--mdc-v2-\1\2/g' main.js
+          else
+            echo "No main.js found"
+            touch main.js
+          fi
+
+          # Create empty files if they don't exist
+          [ ! -f "polyfills.js" ] && touch polyfills.js
+          [ ! -f "styles.js" ] && touch styles.js
+
+          # Create bundle
+          cat polyfills.js styles.js main.js > khiops-webcomponents.bundle.js
+
+          echo "Bundle created, contents:"
+          ls -la
+          cd ../..
+
+      - name: Debug - Final check
+        run: |
+          echo "Final check - Contents of dist directory:"
+          find dist/ -type f -name "*.js" || echo "No JS files found"
 
       - name: Create docs/dist directory
         run: mkdir -p docs/dist
