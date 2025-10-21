@@ -27,7 +27,7 @@ describe('Level distribution Test Plan for Khiops Visualization', () => {
           cy.get('#level-distribution-graph-comp').contains(
             'Level distribution',
           );
-          cy.checkCanvasIsNotEmpty('#level-distribution-chart');
+          cy.checkCanvasIsNotEmpty('#level-distribution-graph-chart');
           cy.get('#level-distribution-graph-close-btn').click();
         } else {
           // .level-distribution-btn should not exist when level is not available
