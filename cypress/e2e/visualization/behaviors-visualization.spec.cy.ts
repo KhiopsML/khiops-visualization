@@ -7,7 +7,7 @@
 import '../../support/commands';
 
 describe('Behaviors Test Plan for Khiops Visualization', () => {
-  const files = ['000_000_10000words_AllReports.json'];
+  let files = ['000_000_10000words_AllReports.json'];
 
   files.forEach((fileName) => {
     it(`Check values for ${fileName}`, () => {
@@ -146,6 +146,69 @@ describe('Behaviors Test Plan for Khiops Visualization', () => {
 
         cy.get('#project-view-comp-table').contains('Regression analysis');
         cy.get('#project-logs').contains('Variable construction');
+      });
+    });
+  });
+
+  files = ['2d-cells-AllReports.json'];
+
+  files.forEach((fileName) => {
+    it(`Check Matrix tooltip values if unsupervised for ${fileName}`, () => {
+      cy.initViews();
+
+      cy.loadFile('visualization', fileName);
+
+      cy.readFile('./src/assets/mocks/kv/' + fileName).then(() => {
+        cy.wait(500);
+
+        cy.get('.mat-mdc-tab:contains("Preparation 2D")').first().click();
+        cy.wait(500);
+
+        cy.get('.matrix-mode-comp-option').first().click();
+        cy.wait(200);
+
+        // select 2nd option of menu
+        cy.get('.mat-mdc-menu-item').eq(1).click();
+
+        cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
+          position: 'topLeft',
+        });
+        cy.get('.matrix-tooltip-comp').contains('Expected frequency');
+      });
+    });
+  });
+
+  files = ['iris2d.json'];
+
+  files.forEach((fileName) => {
+    it(`Check Matrix tooltip values if supervised for ${fileName}`, () => {
+      cy.initViews();
+
+      cy.loadFile('visualization', fileName);
+
+      cy.readFile('./src/assets/mocks/kv/' + fileName).then(() => {
+        cy.wait(500);
+
+        cy.get('.mat-mdc-tab:contains("Preparation 2D")').first().click();
+        cy.wait(500);
+
+        cy.get('#preparation-2d-variables-list [row-id="19"] .ag-cell-value')
+          .first()
+          .click({ force: true });
+
+        cy.get('.matrix-mode-comp-option').first().click();
+        cy.wait(200);
+
+        // select 2nd option of menu
+        cy.get('.mat-mdc-menu-item').eq(1).click();
+
+        cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
+          position: 'topLeft',
+        });
+        cy.get('.matrix-tooltip-comp').should(
+          'not.contain',
+          'Expected frequency',
+        );
       });
     });
   });
