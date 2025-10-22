@@ -212,4 +212,25 @@ describe('Behaviors Test Plan for Khiops Visualization', () => {
       });
     });
   });
+  files = ['irisR.json'];
+
+  files.forEach((fileName) => {
+    it(`Check Matrix tooltip values if supervised for ${fileName}`, () => {
+      cy.initViews();
+
+      cy.loadFile('visualization', fileName);
+
+      cy.readFile('./src/assets/mocks/kv/' + fileName).then(() => {
+        cy.wait(500);
+
+        cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
+          position: 'topLeft',
+        });
+        cy.get('.matrix-tooltip-comp').should(
+          'not.contain',
+          'Expected frequency',
+        );
+      });
+    });
+  });
 });
