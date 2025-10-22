@@ -14,6 +14,9 @@ import { MenuComponent } from './khiops-library/components/main-menu/menu.compon
 import { MatButtonModule } from '@angular/material/button';
 import { provideAngularSplitOptions } from 'angular-split';
 
+// Import to trigger commit ID logging
+import './khiops-library/services/build-info.service';
+
 @NgModule({
   declarations: [AppComponent, MenuComponent],
   imports: [
