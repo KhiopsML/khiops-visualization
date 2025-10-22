@@ -29,11 +29,13 @@ import { TYPES } from '@khiops-library/enum/types';
 import { Variable2dModel } from '@khiops-visualization/model/variable-2d.model';
 import { AppConfig } from '../../../../../environments/environment';
 import { DistributionType } from '@khiops-visualization/types/distribution-type';
+import { ToPrecisionPipe } from '@khiops-library/pipes/to-precision.pipe';
 
 @Component({
   selector: 'app-level-distribution-graph',
   templateUrl: './level-distribution-graph.component.html',
   styleUrls: ['./level-distribution-graph.component.scss'],
+  providers: [ToPrecisionPipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: false,
 })
@@ -74,6 +76,7 @@ export class LevelDistributionGraphComponent
     private translate: TranslateService,
     private snackBar: MatSnackBar,
     private khiopsLibraryService: KhiopsLibraryService,
+    private toPrecision: ToPrecisionPipe,
   ) {
     super(selectableService, ngzone, configService);
 
@@ -91,9 +94,8 @@ export class LevelDistributionGraphComponent
                   this.distributionType === 'level'
                     ? 'GLOBAL.LEVEL'
                     : 'GLOBAL.IMPORTANCE';
-                return (
-                  this.translate.get(labelKey) + ': ' + items.formattedValue
-                );
+                const value = this.toPrecision.transform(items.raw);
+                return this.translate.get(labelKey) + ': ' + value;
               }
               return undefined;
             },
