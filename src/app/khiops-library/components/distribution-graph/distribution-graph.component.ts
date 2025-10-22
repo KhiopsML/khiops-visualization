@@ -383,10 +383,6 @@ export class DistributionGraphComponent
         // For covisualization (no coverageValue), show frequency in the main label
         const frequencyValue =
           datasetWithExtra.extra[items.dataIndex].extra.frequencyValue;
-        console.log(
-          '🚀 ~ DistributionGraphComponent ~ getTooltipLabel ~ datasetWithExtra:',
-          datasetWithExtra,
-        );
 
         return (
           this.translate.get('GLOBAL.FREQUENCY') +

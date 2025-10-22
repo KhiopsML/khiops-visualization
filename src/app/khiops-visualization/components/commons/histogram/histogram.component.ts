@@ -355,7 +355,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('🚀 ~ HistogramComponent ~ ngOnChanges ~ changes:', changes);
+    // console.log('🚀 ~ HistogramComponent ~ ngOnChanges ~ changes:', changes);
     if (changes.datas && !changes.datas.firstChange) {
       // Don't restore variable scale settings here - it would override user's local changes
       // Only restore on component initialization (ngOnInit)
