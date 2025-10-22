@@ -311,24 +311,46 @@ export class DistributionGraphComponent
     if (!items?.dataset) {
       return undefined;
     }
+    const datasetWithExtra = items?.dataset as any;
+    if (datasetWithExtra?.extra?.[items.dataIndex]?.extra) {
+      const coverageValue =
+        datasetWithExtra.extra[items.dataIndex].extra.coverageValue;
+      const conditionalProba =
+        datasetWithExtra.extra[items.dataIndex].extra.conditionalProba;
+      if (
+        coverageValue !== undefined &&
+        coverageValue !== null &&
+        !isNaN(coverageValue)
+      ) {
+        const isLinearMode =
+          !this.hideGraphOptions &&
+          this.graphOptions?.selected === HistogramType.YLIN;
+        const isLogMode =
+          !this.hideGraphOptions &&
+          this.graphOptions?.selected === HistogramType.YLOG;
 
-    const isLinearMode =
-      !this.hideGraphOptions &&
-      this.graphOptions?.selected === HistogramType.YLIN;
-    const isLogMode =
-      !this.hideGraphOptions &&
-      this.graphOptions?.selected === HistogramType.YLOG;
+        let value: string;
+        if (isLinearMode || isLogMode) {
+          value = this.toPrecision.transform(
+            (items.dataset as any).extra[items.dataIndex].extra.frequencyValue,
+          );
+        } else {
+          value = this.toPrecision.transform(
+            items.dataset.data[items.dataIndex],
+          );
+        }
 
-    let value: string;
-    if (isLinearMode || isLogMode) {
-      value = this.toPrecision.transform(
-        (items.dataset as any).extra[items.dataIndex].extra.frequencyValue,
-      );
-    } else {
-      value = this.toPrecision.transform(items.dataset.data[items.dataIndex]);
+        return this.translate.get('GLOBAL.FREQUENCY') + ': ' + value;
+      } else if (conditionalProba) {
+        // For covisualization return conditional proba
+        return (
+          this.translate.get('GLOBAL.PROBABILITY') +
+          ': ' +
+          this.toPrecision.transform(conditionalProba)
+        );
+      }
     }
-
-    return this.translate.get('GLOBAL.FREQUENCY') + ': ' + value;
+    return;
   }
 
   /**
@@ -361,6 +383,10 @@ export class DistributionGraphComponent
         // For covisualization (no coverageValue), show frequency in the main label
         const frequencyValue =
           datasetWithExtra.extra[items.dataIndex].extra.frequencyValue;
+        console.log(
+          '🚀 ~ DistributionGraphComponent ~ getTooltipLabel ~ datasetWithExtra:',
+          datasetWithExtra,
+        );
 
         return (
           this.translate.get('GLOBAL.FREQUENCY') +

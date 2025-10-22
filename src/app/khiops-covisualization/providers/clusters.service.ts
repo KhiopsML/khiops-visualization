@@ -242,9 +242,22 @@ export class ClustersService {
 
     // Create extra data for tooltips - only frequency for covisualization
     const currentDataSetExtras = [];
+
+    // Calculate marginal frequency for conditional probability calculation
+    const totalMarginalFrequency = currentDataSetData.reduce(
+      (sum: number, freq) => sum + (freq || 0),
+      0,
+    );
+
     for (let i = 0; i < distributionsGraphLabels.length; i++) {
       const graphItem: BarModel = new BarModel();
       const frequencyValue = currentDataSetData[i] || 0;
+
+      // Calculate conditional probability: P(cluster | context)
+      const conditionalProba =
+        totalMarginalFrequency > 0
+          ? frequencyValue / totalMarginalFrequency
+          : 0;
 
       graphItem.name = distributionsGraphLabels[i];
       graphItem.value = frequencyValue;
@@ -254,6 +267,8 @@ export class ClustersService {
       graphItem.extra.name = distributionsGraphLabels[i];
       // Explicitly set coverageValue to undefined to prevent probability display
       graphItem.extra.coverageValue = undefined;
+      // Add conditional probability to extras
+      (graphItem.extra as any).conditionalProba = conditionalProba;
 
       currentDataSetExtras.push(graphItem);
     }
